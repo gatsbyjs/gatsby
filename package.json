@@ -1,0 +1,23 @@
+{
+  "name": "gatsby",
+  "version": "0.0.1",
+  "description": "React.js Static Site Generator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gatsby-group/gatsby.git"
+  },
+  "keywords": [
+    "react",
+    "ssg"
+  ],
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gatsby-group/gatsby/issues"
+  },
+  "homepage": "https://github.com/gatsby-group/gatsby#readme"
+}
