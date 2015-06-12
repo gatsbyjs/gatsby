@@ -5,19 +5,20 @@ createRoutes = require 'create-routes'
 app = require 'app'
 
 # TODO add extra file watcher here to reload config when file add/removed
+# TODO check if this is called when a new file is added. Narrow down problems
 loadConfig = (cb) ->
   stuff = require 'config'
   if module.hot
     module.hot.accept stuff.id, ->
-      stuff = require 'config'
-      cb stuff
+      cb()
 
-  cb stuff
+  cb()
 
-loadConfig (stuff) ->
-  {pages, config, relativePath} = stuff
-
+loadConfig ->
   app.loadContext (pagesReq) ->
+    stuff = require 'config'
+    {pages, config, relativePath} = stuff
+
     app = createRoutes(pages, pagesReq)
     {pages, config, relativePath} = require 'config'
 
