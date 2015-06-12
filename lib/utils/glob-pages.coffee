@@ -8,6 +8,8 @@ _ = require 'underscore'
 module.exports = (directory, callback) ->
   pagesData = []
 
+  app = require directory + "/app"
+
   glob directory + '/pages/**/?(*.coffee|*.cjsx|*.jsx|*.md|*.html)', null, (err, pages) =>
     if err then return callback(err)
 
@@ -25,6 +27,7 @@ module.exports = (directory, callback) ->
       # Determine require path
       relativePath = path.relative(directory, page)
       pageData.requirePath = path.relative(directory + "/pages", page)
+      pageData.dirname = parsed.dirname
 
       # Load data for each file type.
       if ext is "md"
@@ -38,7 +41,11 @@ module.exports = (directory, callback) ->
       if data.path
         # Path was hardcoded.
         pageData.path = data.path
-      else
+      else if app.rewritePath
+        pageData.path = app.rewritePath(parsed, pageData)
+
+      # If none of the above options set a path.
+      unless pageData.path?
         # If this is an index page, it's path is /foo/bar/
         if parsed.name is "index"
           if parsed.dirname is "."

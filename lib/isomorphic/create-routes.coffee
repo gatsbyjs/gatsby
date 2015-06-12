@@ -45,4 +45,3 @@ module.exports = (pages, pagesReq) ->
       })
 
   return app
-
