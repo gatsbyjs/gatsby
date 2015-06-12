@@ -7,7 +7,7 @@ colorPicker = require 'color-pairs-picker'
 module.exports = React.createClass
   render: ->
     {rhythm} = @props.typography
-    colors = colorPicker('#795548', contrast: 8)
+    colors = colorPicker('#75A0A0', contrast: 8)
     <div>
       <Container
         style={{
