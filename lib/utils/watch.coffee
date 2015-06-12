@@ -18,11 +18,10 @@ module.exports = (program) ->
   catch
     HTML = require "#{__dirname}/../isomorphic/html"
 
-
   compilerConfig = {
     entry: [
-      "webpack-dev-server/client?#{program.host}:11122",
-      'webpack/hot/only-dev-server',
+      "#{__dirname}/../../node_modules/webpack-dev-server/client?#{program.host}:11122",
+      "#{__dirname}/../../node_modules/webpack/hot/only-dev-server",
       "#{__dirname}/web-entry"
     ],
     devtool: "eval",
@@ -31,14 +30,14 @@ module.exports = (program) ->
       filename: 'bundle.js'
       publicPath: "http://#{program.host}:11122/"
     resolveLoader: {
-      modulesDirectories: ['node_modules', "#{__dirname}/../loaders"]
+      modulesDirectories: ["#{__dirname}/../../node_modules", "#{__dirname}/../loaders"]
     },
     plugins: [
       new webpack.HotModuleReplacementPlugin(),
     ],
     resolve: {
       extensions: ['', '.js', '.cjsx', '.coffee', '.json', '.toml', '.yaml']
-      modulesDirectories: [directory, "#{__dirname}/../isomorphic", 'node_modules']
+      modulesDirectories: [directory, "#{__dirname}/../isomorphic", "#{directory}/node_modules", "node_modules"]
     },
     module: {
       loaders: [
@@ -64,8 +63,8 @@ module.exports = (program) ->
 
   webpackDevServer = new WebpackDevServer(compiler, {
     hot: true
-    quiet: true
-    noInfo: true
+    #quiet: true
+    #noInfo: true
     host: program.host
     stats:
       colors: true
