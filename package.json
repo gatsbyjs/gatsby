@@ -10,6 +10,7 @@
     "url": "https://github.com/gatsby-group/gatsby/issues"
   },
   "dependencies": {
+    "async": "^1.2.1",
     "boom": "^2.7.2",
     "cjsx-loader": "^2.0.1",
     "coffee-loader": "^0.7.2",

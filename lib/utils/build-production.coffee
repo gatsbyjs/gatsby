@@ -1,41 +1,35 @@
-program = require 'commander'
-WebpackDevServer = require 'webpack-dev-server'
 webpack = require 'webpack'
-path = require 'path'
-StaticSiteGeneratorPlugin = require 'static-site-generator-webpack-plugin'
-globPages = require './lib/utils/glob-pages'
 
-program
-  .option('-h, --host <url>', 'set host. defaults to 0.0.0.0', "0.0.0.0")
-  .parse(process.argv)
-
-relativeDirectory = program.args[0]
-directory = path.resolve(relativeDirectory)
-
-globPages directory, (err, pages) ->
-  routes = pages.map (page) -> page.path
+module.exports = (program, callback) ->
+  {relativeDirectory, directory} = program
 
   compilerConfig = {
     entry: [
-      "./static-entry"
+      "#{__dirname}/web-entry"
     ],
     output:
       filename: "bundle.js"
       path: directory + "/public"
-      libraryTarget: 'umd'
     resolveLoader: {
-      modulesDirectories: ['node_modules', 'lib/loaders']
+      modulesDirectories: ['node_modules', "#{__dirname}/../loaders"]
     },
     plugins: [
-      new StaticSiteGeneratorPlugin('bundle.js', routes)
+      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
+      new webpack.DefinePlugin({
+        "process.env": {
+          NODE_ENV: JSON.stringify("production")
+        }
+      })
+      new webpack.optimize.DedupePlugin()
+      new webpack.optimize.UglifyJsPlugin()
     ],
     resolve: {
       extensions: ['', '.js', '.cjsx', '.coffee', '.json', '.toml', '.yaml']
-      modulesDirectories: [relativeDirectory, 'lib/isomorphic', 'node_modules']
+      modulesDirectories: [directory, "#{__dirname}/../isomorphic", 'node_modules']
     },
     module: {
       loaders: [
-        { test: /\.css$/, loaders: ['css']},
+        { test: /\.css$/, loaders: ['style', 'css']},
         { test: /\.cjsx$/, loaders: ['coffee', 'cjsx']},
         { test: /\.coffee$/, loader: 'coffee' }
         { test: /\.toml$/, loader: 'config', query: {
@@ -53,10 +47,7 @@ globPages directory, (err, pages) ->
     }
   }
 
-  console.log compilerConfig
-
-  #### Static site generation.
+  #### Build production js.
   webpack(compilerConfig).run (err, stats) ->
-    console.log 'done'
-    console.log err
-    #console.log err, stats
+    callback err, stats
+
