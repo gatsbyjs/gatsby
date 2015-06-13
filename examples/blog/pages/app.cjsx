@@ -48,7 +48,7 @@ module.exports = React.createClass
     <Container
       style={{
         maxWidth: rhythm(24)
-        padding: "#{rhythm(2)} #{rhythm(1)}"
+        padding: "#{rhythm(2)} #{rhythm(1/2)}"
       }}
     >
       {header}
