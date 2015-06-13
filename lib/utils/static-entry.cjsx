@@ -14,5 +14,5 @@ module.exports = (locals, callback) ->
   Router.run [routes], locals.path, (Handler, state) ->
     page = find pages, (page) -> page.path is state.pathname
     body = React.renderToString(<Handler config={config} pages={pages} page={page} state={state}/>)
-    html = React.renderToString(<HTML body={body}/>)
+    html = React.renderToStaticMarkup(<HTML body={body}/>)
     callback null, html
