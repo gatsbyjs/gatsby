@@ -2,17 +2,43 @@ path = require 'path'
 glob = require('glob')
 fs = require 'fs-extra'
 async = require 'async'
+parsePath = require 'parse-filepath'
+_ = require 'underscore'
+
+globPages = require './glob-pages'
 
 module.exports = (program, cb) ->
   {relativeDirectory, directory} = program
 
-  copy = (file, callback) ->
-    newPath = directory + "/public/" + path.relative directory + "/pages", file
-    fs.copy(file, newPath, (err) ->
-      callback err
-    )
+  globPages directory, (err, pages) ->
 
-  # Copy static assets to public folder.
-  glob directory + '/pages/**/?(*.jpg|*.png|*.pdf)', null, (err, files) ->
-    async.map files, copy, (err, results) ->
-      cb(err, results)
+    # Async callback to copy each file.
+    copy = (file, callback) ->
+      # Map file to path generated for that directory.
+      # e.g. if file is in directory 2015-06-16-my-sweet-blog-post that got
+      # rewritten to my-sweet-blog-post, we find that path rewrite so
+      # our asset gets copied to the right directory.
+      parsed = parsePath file
+      relativePath = path.relative(directory + "/pages", file)
+      oldPath = parsePath(relativePath).dirname
+
+      # Wouldn't rewrite basePath
+      if oldPath is "."
+        oldPath = "/"
+        newPath = "/#{parsed.basename}"
+
+      unless oldPath is "/"
+        page = _.find pages, (page) ->
+          parsePath(page.requirePath).dirname is oldPath
+
+        newPath = parsePath(page.path).dirname + parsed.basename
+
+      newPath = directory + "/public/" + newPath
+      fs.copy(file, newPath, (err) ->
+        callback err
+      )
+
+    # Copy static assets to public folder.
+    glob directory + '/pages/**/?(*.jpg|*.png|*.pdf)', null, (err, files) ->
+      async.map files, copy, (err, results) ->
+        cb(err, results)

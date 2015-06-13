@@ -6,11 +6,12 @@ HTML = require 'html'
 app = require 'app'
 {pages, config} = require 'config'
 
-pagesReq = app.context()
-app = createRoutes(pages, pagesReq)
+routes = {}
+app.loadContext (pagesReq) ->
+  routes = createRoutes(pages, pagesReq)
 
 module.exports = (locals, callback) ->
-  Router.run [app], locals.path, (Handler, state) ->
+  Router.run [routes], locals.path, (Handler, state) ->
     page = find pages, (page) -> page.path is state.pathname
     body = React.renderToString(<Handler config={config} pages={pages} page={page} state={state}/>)
     html = React.renderToString(<HTML body={body}/>)

@@ -1,3 +1,4 @@
+require('node-cjsx').transform()
 webpack = require 'webpack'
 StaticSiteGeneratorPlugin = require 'static-site-generator-webpack-plugin'
 globPages = require './glob-pages'
@@ -8,23 +9,24 @@ module.exports = (program, callback) ->
   globPages directory, (err, pages) ->
     routes = pages.map (page) -> page.path
 
+    console.log "#{__dirname}/static-entry"
     compilerConfig = {
       entry: [
         "#{__dirname}/static-entry"
       ],
       output:
-        filename: "bundle.js"
         path: directory + "/public"
+        filename: "bundle.js"
         libraryTarget: 'umd'
       resolveLoader: {
-        modulesDirectories: ['node_modules', "#{__dirname}/../loaders"]
+        modulesDirectories: ["#{__dirname}/../../node_modules", "#{__dirname}/../loaders"]
       },
       plugins: [
         new StaticSiteGeneratorPlugin('bundle.js', routes)
       ],
       resolve: {
         extensions: ['', '.js', '.cjsx', '.coffee', '.json', '.toml', '.yaml']
-        modulesDirectories: [directory, "#{__dirname}/../isomorphic", 'node_modules']
+        modulesDirectories: [directory, "#{__dirname}/../isomorphic", "#{directory}/node_modules", "node_modules"]
       },
       module: {
         loaders: [

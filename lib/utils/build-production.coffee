@@ -11,7 +11,7 @@ module.exports = (program, callback) ->
       filename: "bundle.js"
       path: directory + "/public"
     resolveLoader: {
-      modulesDirectories: ['node_modules', "#{__dirname}/../loaders"]
+      modulesDirectories: ["#{__dirname}/../../node_modules", "#{__dirname}/../loaders"]
     },
     plugins: [
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
@@ -25,7 +25,7 @@ module.exports = (program, callback) ->
     ],
     resolve: {
       extensions: ['', '.js', '.cjsx', '.coffee', '.json', '.toml', '.yaml']
-      modulesDirectories: [directory, "#{__dirname}/../isomorphic", 'node_modules']
+      modulesDirectories: [directory, "#{__dirname}/../isomorphic", "#{directory}/node_modules", "node_modules"]
     },
     module: {
       loaders: [

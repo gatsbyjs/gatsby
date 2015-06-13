@@ -19,13 +19,13 @@ loadConfig ->
     stuff = require 'config'
     {pages, config, relativePath} = stuff
 
-    app = createRoutes(pages, pagesReq)
+    routes = createRoutes(pages, pagesReq)
     {pages, config, relativePath} = require 'config'
 
     if router
       router.replaceRoutes [app]
     else
-      router = Router.run [app], Router.HistoryLocation, (Handler, state) ->
+      router = Router.run [routes], Router.HistoryLocation, (Handler, state) ->
         page = find pages, (page) -> page.path is state.pathname
         React.render(
           <Handler
