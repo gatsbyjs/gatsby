@@ -19,7 +19,8 @@ module.exports = (program) ->
   globPages directory, (err, pages) ->
     try
       HTML = require directory + '/html'
-    catch
+    catch e
+      console.log e
       HTML = require "#{__dirname}/../isomorphic/html"
 
     compilerConfig = {

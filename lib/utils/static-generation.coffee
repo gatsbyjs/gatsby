@@ -9,7 +9,6 @@ module.exports = (program, callback) ->
   globPages directory, (err, pages) ->
     routes = pages.map (page) -> page.path
 
-    console.log "#{__dirname}/static-entry"
     compilerConfig = {
       entry: [
         "#{__dirname}/static-entry"

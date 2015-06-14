@@ -9,7 +9,6 @@ module.exports = (program) ->
   try
     customPostBuild = require directory + "/post-build"
   catch e
-    console.log e
 
   console.log "Generating static html pages"
   generateStaticPages program, (err, stats) ->
