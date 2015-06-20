@@ -5,7 +5,6 @@ globPages = require './glob-pages'
 
 module.exports = (program) ->
   {directory} = program
-  app = require directory + "/app"
   try
     customPostBuild = require directory + "/post-build"
   catch e

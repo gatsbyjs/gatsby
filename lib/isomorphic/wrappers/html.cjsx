@@ -4,8 +4,6 @@ module.exports = React.createClass
   displayName: "HTMLWrapper"
 
   render: ->
-    #html = require "../" + @props.page.requirePath
-    console.log @props
-    html = "<div>fix me</div>"
+    html = @props.page.data
     <div dangerouslySetInnerHTML={{__html: html}}/>
 

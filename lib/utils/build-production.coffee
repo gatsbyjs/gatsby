@@ -7,6 +7,7 @@ module.exports = (program, callback) ->
     entry: [
       "#{__dirname}/web-entry"
     ],
+    debug: true,
     output:
       filename: "bundle.js"
       path: directory + "/public"
@@ -24,13 +25,15 @@ module.exports = (program, callback) ->
       new webpack.optimize.UglifyJsPlugin()
     ],
     resolve: {
-      extensions: ['', '.js', '.cjsx', '.coffee', '.json', '.toml', '.yaml']
+      extensions: ['', '.js', '.jsx', '.cjsx', '.coffee', '.json', '.less', '.toml', '.yaml']
       modulesDirectories: [directory, "#{__dirname}/../isomorphic", "#{directory}/node_modules", "node_modules"]
     },
     module: {
       loaders: [
         { test: /\.css$/, loaders: ['style', 'css']},
         { test: /\.cjsx$/, loaders: ['coffee', 'cjsx']},
+        { test: /\.jsx/, loaders: ['babel']},
+        { test: /\.less/, loaders: ['style', 'css', 'less']},
         { test: /\.coffee$/, loader: 'coffee' }
         { test: /\.toml$/, loader: 'config', query: {
           directory: directory

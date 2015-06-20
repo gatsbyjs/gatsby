@@ -14,26 +14,24 @@ module.exports = (directory, callback) ->
     if err then return callback(err)
 
     for page in pages
-      # Ignore template pages.
-      if page.indexOf('/pages/app') > -1
-        continue
-
       pageData = {}
+      pageData.file = {}
 
-      parsed = parsePath(path.relative(directory + "/pages", page))
+      pageData.file = parsed = parsePath(path.relative(directory + "/pages", page))
 
-      pageData.ext = ext = parsed.extname.slice(1)
+      pageData.file.ext = ext = parsed.extname.slice(1)
 
       # Determine require path
       relativePath = path.relative(directory, page)
       pageData.requirePath = path.relative(directory + "/pages", page)
-      pageData.dirname = parsed.dirname
 
       # Load data for each file type.
       if ext is "md"
         rawData = frontMatter(fs.readFileSync(page, 'utf-8'))
         data = _.extend {}, rawData.attributes
         pageData.data = data
+      else if ext is "html"
+        pageData.data = fs.readFileSync(page, 'utf-8')
       else
         data = {}
 
@@ -46,8 +44,8 @@ module.exports = (directory, callback) ->
 
       # If none of the above options set a path.
       unless pageData.path?
-        # If this is an index page, it's path is /foo/bar/
-        if parsed.name is "index"
+        # If this is an index page or template, it's path is /foo/bar/
+        if parsed.name is "index" or parsed.name is "template"
           if parsed.dirname is "."
             pageData.path = "/"
           else

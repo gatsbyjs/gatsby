@@ -12,7 +12,8 @@ module.exports = (program, callback) ->
     compilerConfig = {
       entry: [
         "#{__dirname}/static-entry"
-      ],
+      ]
+      debug: true
       output:
         path: directory + "/public"
         filename: "bundle.js"
@@ -24,13 +25,15 @@ module.exports = (program, callback) ->
         new StaticSiteGeneratorPlugin('bundle.js', routes)
       ],
       resolve: {
-        extensions: ['', '.js', '.cjsx', '.coffee', '.json', '.toml', '.yaml']
+        extensions: ['', '.js', '.jsx', '.cjsx', '.coffee', '.json', '.less', '.toml', '.yaml']
         modulesDirectories: [directory, "#{__dirname}/../isomorphic", "#{directory}/node_modules", "node_modules"]
       },
       module: {
         loaders: [
           { test: /\.css$/, loaders: ['css']},
           { test: /\.cjsx$/, loaders: ['coffee', 'cjsx']},
+          { test: /\.jsx/, loaders: ['babel']},
+          { test: /\.less/, loaders: ['raw', 'css', 'less']},
           { test: /\.coffee$/, loader: 'coffee' }
           { test: /\.toml$/, loader: 'config', query: {
             directory: directory

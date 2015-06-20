@@ -30,6 +30,7 @@ module.exports = (program) ->
         "#{__dirname}/web-entry"
       ],
       devtool: "eval",
+      debug: true
       output:
         path: directory
         filename: 'bundle.js'
@@ -41,13 +42,15 @@ module.exports = (program) ->
         new webpack.HotModuleReplacementPlugin(),
       ],
       resolve: {
-        extensions: ['', '.js', '.cjsx', '.coffee', '.json', '.toml', '.yaml']
+        extensions: ['', '.js', '.jsx', '.cjsx', '.coffee', '.json', '.less', '.toml', '.yaml']
         modulesDirectories: [directory, "#{__dirname}/../isomorphic", "#{directory}/node_modules", "node_modules"]
       },
       module: {
         loaders: [
           { test: /\.css$/, loaders: ['style', 'css']},
           { test: /\.cjsx$/, loaders: ['react-hot', 'coffee', 'cjsx']},
+          { test: /\.jsx/, loaders: ['react-hot', 'babel']},
+          { test: /\.less/, loaders: ['style', 'css', 'less']},
           { test: /\.coffee$/, loader: 'coffee' }
           { test: /\.toml$/, loader: 'config', query: {
             directory: directory
