@@ -35,12 +35,13 @@ module.exports = (program, callback) ->
           { test: /\.jsx/, loaders: ['babel']},
           { test: /\.less/, loaders: ['raw', 'css', 'less']},
           { test: /\.coffee$/, loader: 'coffee' }
-          { test: /\.toml$/, loader: 'config', query: {
+          { test: /^config\.toml$/, loader: 'config', query: {
             directory: directory
           } }
           { test: /\.md$/, loader: 'markdown' }
           { test: /\.html$/, loader: 'raw' }
-          { test: /\.json$/, loaders: ['config', 'json'] }
+          { test: /\.json$/, loaders: ['json'] }
+          { test: /\.toml/, loaders: ['toml'] }
           { test: /\.png$/, loader: 'null' }
           { test: /\.jpg$/, loader: 'null' }
           { test: /\.ico$/, loader: 'null' }

@@ -57,7 +57,8 @@ module.exports = (program) ->
           } }
           { test: /\.md$/, loader: 'markdown' }
           { test: /\.html$/, loader: 'raw' }
-          { test: /\.json$/, loaders: ['config', 'json'] }
+          { test: /\.json$/, loaders: ['json'] }
+          { test: /\.toml/, loaders: ['toml'] }
           { test: /\.png$/, loader: 'null' }
           { test: /\.jpg$/, loader: 'null' }
           { test: /\.ico$/, loader: 'null' }
