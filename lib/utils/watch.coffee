@@ -15,6 +15,10 @@ globPages = require './glob-pages'
 module.exports = (program) ->
   {relativeDirectory, directory} = program
 
+  # Generate random port for webpack to listen on.
+  # Perhaps should check if port is open.
+  webpackPort = Math.round(Math.random() * 1000 + 1000)
+
   # Load pages for the site.
   globPages directory, (err, pages) ->
     try
@@ -25,7 +29,7 @@ module.exports = (program) ->
 
     compilerConfig = {
       entry: [
-        "#{__dirname}/../../node_modules/webpack-dev-server/client?#{program.host}:11122",
+        "#{__dirname}/../../node_modules/webpack-dev-server/client?#{program.host}:#{webpackPort}",
         "#{__dirname}/../../node_modules/webpack/hot/only-dev-server",
         "#{__dirname}/web-entry"
       ],
@@ -34,7 +38,7 @@ module.exports = (program) ->
       output:
         path: directory
         filename: 'bundle.js'
-        publicPath: "http://#{program.host}:11122/"
+        publicPath: "http://#{program.host}:#{webpackPort}/"
       resolveLoader: {
         modulesDirectories: ["#{__dirname}/../../node_modules", "#{__dirname}/../loaders"]
       },
@@ -80,18 +84,18 @@ module.exports = (program) ->
     })
 
     # Start webpack-dev-server
-    webpackDevServer.listen(11122, program.host, ->)
+    webpackDevServer.listen(webpackPort, program.host, ->)
 
     # Setup and start Hapi to serve html + static files.
     server = new Hapi.Server()
-    server.connection({host: program.host, port: 8000})
+    server.connection({host: program.host, port: program.port})
 
     server.route
       method: "GET"
       path: '/bundle.js'
       handler:
         proxy:
-          uri: "http://localhost:11122/bundle.js"
+          uri: "http://localhost:#{webpackPort}/bundle.js"
           passThrough: true
           xforward: true
 
