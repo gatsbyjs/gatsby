@@ -39,6 +39,6 @@ module.exports = (program, cb) ->
       )
 
     # Copy static assets to public folder.
-    glob directory + '/pages/**/?(*.jpg|*.png|*.pdf)', null, (err, files) ->
+    glob directory + '/pages/**/?(*.jpg|*.png|*.pdf|*.gif|*.ico)', null, (err, files) ->
       async.map files, copy, (err, results) ->
         cb(err, results)
