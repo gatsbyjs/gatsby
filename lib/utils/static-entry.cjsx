@@ -1,6 +1,7 @@
 React = require 'react'
 Router = require 'react-router'
 find = require 'lodash/collection/find'
+filter = require 'lodash/collection/filter'
 createRoutes = require 'create-routes'
 HTML = require 'html'
 app = require 'app'
@@ -9,6 +10,9 @@ app = require 'app'
 routes = {}
 app.loadContext (pagesReq) ->
   routes = createRoutes(pages, pagesReq)
+
+  # Remove templates files.
+  pages = filter(pages, (page) -> page.path?)
 
 module.exports = (locals, callback) ->
   Router.run [routes], locals.path, (Handler, state) ->

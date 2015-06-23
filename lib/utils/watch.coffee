@@ -6,18 +6,14 @@ Router = require 'react-router'
 path = require 'path'
 WebpackDevServer = require 'webpack-dev-server'
 webpack = require 'webpack'
-StaticSiteGeneratorPlugin = require 'static-site-generator-webpack-plugin'
 Negotiator = require 'negotiator'
 parsePath = require 'parse-filepath'
 _ = require 'underscore'
 globPages = require './glob-pages'
+webpackConfig = require './webpack.config'
 
 module.exports = (program) ->
   {relativeDirectory, directory} = program
-
-  # Generate random port for webpack to listen on.
-  # Perhaps should check if port is open.
-  webpackPort = Math.round(Math.random() * 1000 + 1000)
 
   # Load pages for the site.
   globPages directory, (err, pages) ->
@@ -27,51 +23,11 @@ module.exports = (program) ->
       console.log e
       HTML = require "#{__dirname}/../isomorphic/html"
 
-    compilerConfig = {
-      entry: [
-        "#{__dirname}/../../node_modules/webpack-dev-server/client?#{program.host}:#{webpackPort}",
-        "#{__dirname}/../../node_modules/webpack/hot/only-dev-server",
-        "#{__dirname}/web-entry"
-      ],
-      devtool: "eval",
-      debug: true
-      output:
-        path: directory
-        filename: 'bundle.js'
-        publicPath: "http://#{program.host}:#{webpackPort}/"
-      resolveLoader: {
-        modulesDirectories: ["#{__dirname}/../../node_modules", "#{__dirname}/../loaders"]
-      },
-      plugins: [
-        new webpack.HotModuleReplacementPlugin(),
-      ],
-      resolve: {
-        extensions: ['', '.js', '.jsx', '.cjsx', '.coffee', '.json', '.less', '.toml', '.yaml']
-        modulesDirectories: [directory, "#{__dirname}/../isomorphic", "#{directory}/node_modules", "node_modules"]
-      },
-      module: {
-        loaders: [
-          { test: /\.css$/, loaders: ['style', 'css']},
-          { test: /\.cjsx$/, loaders: ['react-hot', 'coffee', 'cjsx']},
-          { test: /\.jsx/, loaders: ['react-hot', 'babel']},
-          { test: /\.less/, loaders: ['style', 'css', 'less']},
-          { test: /\.coffee$/, loader: 'coffee' }
-          { test: /\.toml$/, loader: 'config', query: {
-            directory: directory
-          } }
-          { test: /\.md$/, loader: 'markdown' }
-          { test: /\.html$/, loader: 'raw' }
-          { test: /\.json$/, loaders: ['json'] }
-          { test: /\.toml/, loaders: ['toml'] }
-          { test: /\.png$/, loader: 'null' }
-          { test: /\.jpg$/, loader: 'null' }
-          { test: /\.ico$/, loader: 'null' }
-          { test: /\.pdf$/, loader: 'null' }
-          { test: /\.txt$/, loader: 'null' }
-        ]
-      }
-    }
+    # Generate random port for webpack to listen on.
+    # Perhaps should check if port is open.
+    webpackPort = Math.round(Math.random() * 1000 + 1000)
 
+    compilerConfig = webpackConfig(program, directory, 'watch', webpackPort)
     compiler = webpack(compilerConfig)
 
     webpackDevServer = new WebpackDevServer(compiler, {

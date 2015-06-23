@@ -1,6 +1,7 @@
 React = require 'react'
 Router = require 'react-router'
 find = require 'lodash/collection/find'
+filter = require 'lodash/collection/filter'
 createRoutes = require 'create-routes'
 app = require 'app'
 
@@ -16,11 +17,12 @@ loadConfig = (cb) ->
 
 loadConfig ->
   app.loadContext (pagesReq) ->
-    stuff = require 'config'
-    {pages, config, relativePath} = stuff
+    {pages, config, relativePath} = require 'config'
 
     routes = createRoutes(pages, pagesReq)
-    {pages, config, relativePath} = require 'config'
+
+    # Remove templates files.
+    pages = filter(pages, (page) -> page.path?)
 
     if router
       router.replaceRoutes [app]

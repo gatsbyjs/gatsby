@@ -13,6 +13,7 @@ module.exports = (source) ->
 
   directory = loaderUtils.parseQuery(@query).directory
 
+  # TODO support YAML + JSON + CSON as well here.
   config = toml.parse(source)
   value.config = config
   value.relativePath = path.relative('.', directory)
