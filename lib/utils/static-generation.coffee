@@ -7,7 +7,7 @@ module.exports = (program, callback) ->
   {relativeDirectory, directory} = program
 
   globPages directory, (err, pages) ->
-    routes = pages.map (page) -> page.path
+    routes = pages.filter((page) -> page.path?).map((page) -> page.path)
 
     compilerConfig = {
       entry: [

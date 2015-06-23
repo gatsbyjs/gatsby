@@ -6,7 +6,7 @@ module.exports = (pages, pagesReq) ->
   templates.root = Router.createRoute({
     name: 'root-template'
     path: "/"
-    handler: pagesReq './template'
+    handler: pagesReq './_template'
   })
 
   # Arrange pages in data structure according to their position
@@ -19,7 +19,7 @@ module.exports = (pages, pagesReq) ->
   # 4. Create normal routes for each remaining file under the appropriate
   # template
   templateFiles = filter pages, (page) ->
-    page.file.name is "template" and
+    page.file.name is "_template" and
       page.file.dirname isnt "."
 
   for templateFile in templateFiles
@@ -30,7 +30,9 @@ module.exports = (pages, pagesReq) ->
       handler: pagesReq "./" + templateFile.requirePath
     })
 
-  filteredPages = filter pages, (page) -> page.file.name isnt 'template'
+  # Remove files that start with an underscore as this indicates
+  # the file shouldn't be turned into a page.
+  filteredPages = filter pages, (page) -> page.file.name.slice(0,1) isnt '_'
 
   markdownWrapper = require 'wrappers/md'
   htmlWrapper = require 'wrappers/html'

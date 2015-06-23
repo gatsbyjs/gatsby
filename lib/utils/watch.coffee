@@ -110,13 +110,12 @@ module.exports = (program) ->
       path: '/{path*}'
       handler:
         directory:
-          path: directory + "/pages/"
+          path: directory + "/pages"
           listing: false
           index: false
 
     server.ext 'onRequest', (request, reply) ->
       negotiator = new Negotiator(request.raw.req)
-
 
       if negotiator.mediaType() is "text/html"
         request.setUrl "/html" + request.path

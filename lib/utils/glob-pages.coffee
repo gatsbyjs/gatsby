@@ -35,27 +35,29 @@ module.exports = (directory, callback) ->
       else
         data = {}
 
-      # Determine path for page.
-      if data.path
-        # Path was hardcoded.
-        pageData.path = data.path
-      else if app.rewritePath
-        pageData.path = app.rewritePath(parsed, pageData)
+      # Determine path for page (unless it's a file that starts with an
+      # underscore as these don't become pages).
+      unless parsed.name.slice(0,1) is "_"
+        if data.path
+          # Path was hardcoded.
+          pageData.path = data.path
+        else if app.rewritePath
+          pageData.path = app.rewritePath(parsed, pageData)
 
-      # If none of the above options set a path.
-      unless pageData.path?
-        # If this is an index page or template, it's path is /foo/bar/
-        if parsed.name is "index" or parsed.name is "template"
-          if parsed.dirname is "."
-            pageData.path = "/"
+        # If none of the above options set a path.
+        unless pageData.path?
+          # If this is an index page or template, it's path is /foo/bar/
+          if parsed.name is "index" or parsed.name is "template"
+            if parsed.dirname is "."
+              pageData.path = "/"
+            else
+              pageData.path = "/" + parsed.dirname + "/"
+          # Else if not an index, create a path like /foo/bar.html
           else
-            pageData.path = "/" + parsed.dirname + "/"
-        # Else if not an index, create a path like /foo/bar.html
-        else
-          if parsed.dirname is "."
-            pageData.path = "/" + parsed.name + ".html"
-          else
-            pageData.path = "/" + parsed.dirname + "/" + parsed.name + ".html"
+            if parsed.dirname is "."
+              pageData.path = "/" + parsed.name + ".html"
+            else
+              pageData.path = "/" + parsed.dirname + "/" + parsed.name + ".html"
 
       pagesData.push pageData
 
