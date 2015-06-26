@@ -1,5 +1,8 @@
 Router = require 'react-router'
 filter = require 'lodash/collection/filter'
+sortBy = require 'lodash/collection/sortBy'
+last = require 'lodash/array/last'
+includes = require 'underscore.string/include'
 
 module.exports = (pages, pagesReq) ->
   templates = {}
@@ -23,10 +26,26 @@ module.exports = (pages, pagesReq) ->
       page.file.dirname isnt "."
 
   for templateFile in templateFiles
-    parentRoute = templates.root
+    # Find parent template.
+    parentTemplates = filter(templateFiles, (template) ->
+      includes(templateFile.requirePath, template.file.dirname)
+    )
+    parentTemplates = sortBy(parentTemplates, (template) -> template?.file.dirname.length)
+    parentTemplateFile = last(parentTemplates)
+    parentRoute = templates[parentTemplateFile?.file.dirname]
+
+    unless parentRoute
+      parentRoute = templates.root
+
+    #if templateFile.file.dirname isnt "."
+      #parentRoute = templates.root
+    #else
+      #parentRoute = null
+
     templates[templateFile.file.dirname] = Router.createRoute({
       name: templateFile.file.dirname + "-template"
       path: templateFile.path
+      parentRoute: parentRoute
       handler: pagesReq "./" + templateFile.requirePath
     })
 
@@ -48,24 +67,31 @@ module.exports = (pages, pagesReq) ->
         handler = pagesReq "./" + page.requirePath
 
     # Determine parent route.
-    # TODO
-    root = templates.root
+    parentRoutes = filter(templateFiles, (templateFile) ->
+      includes(page.requirePath, templateFile.file.dirname)
+    )
+    parentRoutes = sortBy(parentRoutes, (route) -> route?.file.dirname.length)
+    parentTemplateFile = last(parentRoutes)
+    parentRoute = templates[parentTemplateFile?.file.dirname]
+
+    unless parentRoute
+      parentRoute = templates.root
 
     # If page is an index page *and* in the same directory as a template,
     # create it as the default route.
-    #if page.path.indexOf('/index') > -1 #TODO
-    if page.requirePath is "index.cjsx"
+    if includes(page.path, "/index") and
+        parentRoute.file.dirname is parentTemplateFile.file.dirname
       Router.createDefaultRoute({
         name: page.path
-        parentRoute: root
+        parentRoute: parentRoute
         handler: handler
       })
     else
       Router.createRoute({
         name: page.path
         path: page.path
-        parentRoute: root
+        parentRoute: parentRoute
         handler: handler
       })
 
-  return root
+  return templates.root
