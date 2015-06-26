@@ -24,11 +24,16 @@ loadConfig ->
     # Remove templates files.
     pages = filter(pages, (page) -> page.path?)
 
+    # Route already exists meaning we're hot-reloading.
     if router
       router.replaceRoutes [app]
     else
       router = Router.run [routes], Router.HistoryLocation, (Handler, state) ->
         page = find pages, (page) -> page.path is state.pathname
+
+        # Let app know the route is changing.
+        if app.onRouteChange then app.onRouteChange(state, page, pages, config)
+
         React.render(
           <Handler
             config={config}
