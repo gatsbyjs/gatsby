@@ -126,6 +126,7 @@ module.exports = (program, directory, stage, webpackPort = 1500, routes=[]) ->
   return {
     entry: entry()
     debug: true
+    devtool: 'eval'
     output: output()
     resolveLoader: {
       modulesDirectories: ["#{__dirname}/../../node_modules", "#{__dirname}/../loaders"]
