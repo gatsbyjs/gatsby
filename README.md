@@ -3,5 +3,6 @@ React.js Static Site Generator
 
 More docs coming soon!
 
-## Sites build with Gatsby
-* [http://bricolage.io](http://bricolage.io?utm_source=github)
+## Sites built with Gatsby
+* [bricolage.io](http://bricolage.io?utm_source=github.com)
+* [relaterocket.co](https://relaterocket.co?utm_source=github.com)
