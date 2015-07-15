@@ -11,12 +11,13 @@ typography = Typography()
 
 module.exports = React.createClass
   render: ->
-    colors = colorPicker('brown', contrast: 8)
+    headerColors = colorPicker('brown', contrast: 8)
+    footerColors = colorPicker('rgb(56, 36, 36)', contrast: 5)
     <div>
       <div
         style={{
-          background: colors.bg
-          color: colors.fg
+          background: headerColors.bg
+          color: headerColors.fg
         }}
       >
         <Container
@@ -74,5 +75,69 @@ module.exports = React.createClass
         </Container>
       </div>
       <RouteHandler typography={typography} {...@props}/>
+      <div
+        style={{
+          background: footerColors.bg
+          color: footerColors.fg
+        }}
+      >
+        <Container
+          style={{
+            maxWidth: rhythm(30)
+            padding: "#{rhythm(2)} #{rhythm(1)}"
+          }}
+        >
+          <Grid
+            columns=12
+          >
+            <Span columns=3 post=1>
+              <h6
+                style={{
+                  color: 'inherit'
+                  marginBottom: 0
+                }}
+              >
+                Some important info
+              </h6>
+              <small>
+                <ul style={{marginBottom: 0}}>
+                  <li>About us</li>
+                  <li>Contact us</li>
+                  <li>Our story</li>
+                  <li>Press information</li>
+                </ul>
+              </small>
+            </Span>
+            <Span columns=3 post=1>
+              <h6
+                style={{
+                  color: 'inherit'
+                  marginBottom: 0
+                }}
+              >
+                Other important info
+              </h6>
+              <small>
+                <ul style={{marginBottom: 0}}>
+                  <li>Careers</li>
+                  <li>Team</li>
+                  <li>Funding</li>
+                </ul>
+              </small>
+            </Span>
+            <Span columns=3 post=1 last>
+              <h6
+                style={{
+                  color: 'inherit'
+                  marginBottom: 0
+                }}
+              >
+                We're awesome!
+              </h6>
+              <small>A not very interesting narrative about why we're (kinda) awesome</small>
+            </Span>
+          </Grid>
+        </Container>
+      </div>
     </div>
 
