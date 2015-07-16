@@ -5,8 +5,6 @@ filter = require 'lodash/collection/filter'
 createRoutes = require 'create-routes'
 app = require 'app'
 
-# TODO add extra file watcher here to reload config when file add/removed
-# TODO check if this is called when a new file is added. Narrow down problems
 loadConfig = (cb) ->
   stuff = require 'config'
   if module.hot

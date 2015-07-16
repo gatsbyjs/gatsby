@@ -26,21 +26,17 @@ module.exports = (pages, pagesReq) ->
       page.file.dirname isnt "."
 
   for templateFile in templateFiles
-    # Find parent template.
+    # Find the parent template of this template.
     parentTemplates = filter(templateFiles, (template) ->
       includes(templateFile.requirePath, template.file.dirname)
     )
-    parentTemplates = sortBy(parentTemplates, (template) -> template?.file.dirname.length)
+    parentTemplates = sortBy(parentTemplates, (template) ->
+      template?.file.dirname.length)
     parentTemplateFile = last(parentTemplates)
     parentRoute = templates[parentTemplateFile?.file.dirname]
 
     unless parentRoute
       parentRoute = templates.root
-
-    #if templateFile.file.dirname isnt "."
-      #parentRoute = templates.root
-    #else
-      #parentRoute = null
 
     templates[templateFile.file.dirname] = Router.createRoute({
       name: templateFile.file.dirname + "-template"
@@ -57,16 +53,25 @@ module.exports = (pages, pagesReq) ->
   htmlWrapper = require 'wrappers/html'
 
   for page in filteredPages
+    # TODO add ways to load data for other file types.
     switch page.file.ext
       when "md"
         handler = markdownWrapper
         page.data = pagesReq "./" + page.requirePath
       when "html"
         handler = htmlWrapper
+      when "jsx"
+        handler = pagesReq "./" + page.requirePath
+        page.data = if pagesReq("./" + page.requirePath).metadata
+          pagesReq("./" + page.requirePath).metadata()
+      when "cjsx"
+        handler = pagesReq "./" + page.requirePath
+        page.data = if pagesReq("./" + page.requirePath).metadata
+          pagesReq("./" + page.requirePath).metadata()
       else
         handler = pagesReq "./" + page.requirePath
 
-    # Determine parent route.
+    # Determine parent template for page.
     parentRoutes = filter(templateFiles, (templateFile) ->
       includes(page.requirePath, templateFile.file.dirname)
     )
@@ -78,7 +83,7 @@ module.exports = (pages, pagesReq) ->
       parentRoute = templates.root
 
     # If page is an index page *and* in the same directory as a template,
-    # create it as the default route.
+    # it is the default route (for that template).
     if includes(page.path, "/index") and
         parentRoute.file.dirname is parentTemplateFile.file.dirname
       Router.createDefaultRoute({

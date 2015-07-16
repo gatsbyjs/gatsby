@@ -10,6 +10,8 @@ module.exports = (directory, callback) ->
 
   app = require directory + "/app"
 
+  # Make this easy to add to through the config?
+  # Or just keep adding extensions...?
   glob directory + '/pages/**/?(*.coffee|*.cjsx|*.jsx|*.md|*.html)', null, (err, pages) =>
     if err then return callback(err)
 
