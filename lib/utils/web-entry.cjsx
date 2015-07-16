@@ -27,6 +27,13 @@ loadConfig ->
       router.replaceRoutes [app]
     else
       router = Router.run [routes], Router.HistoryLocation, (Handler, state) ->
+        # Pull out direct children of the template for this path.
+        childrenPaths = state.routes[state.routes.length - 2].childRoutes.map (route) -> route.path
+        if childrenPaths
+          children = filter pages, (page) -> page.path in childrenPaths
+        else
+          children = []
+
         page = find pages, (page) -> page.path is state.pathname
 
         # Let app know the route is changing.
@@ -37,6 +44,7 @@ loadConfig ->
             config={config}
             pages={pages}
             page={page}
+            children={children}
             state={state}
           />,
           document?.getElementById("react-mount")
