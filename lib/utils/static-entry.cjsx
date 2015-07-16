@@ -17,6 +17,22 @@ app.loadContext (pagesReq) ->
 module.exports = (locals, callback) ->
   Router.run [routes], locals.path, (Handler, state) ->
     page = find pages, (page) -> page.path is state.pathname
-    body = React.renderToString(<Handler config={config} pages={pages} page={page} state={state}/>)
+
+    # Pull out direct children of the template for this path.
+    childrenPaths = state.routes[state.routes.length - 2].childRoutes.map (route) -> route.path
+    if childrenPaths
+      childPages = filter pages, (page) -> page.path in childrenPaths
+    else
+      childPages = []
+
+    body = React.renderToString(
+      <Handler
+        config={config}
+        pages={pages}
+        page={page}
+        childPages={childPages}
+        state={state}
+      />
+    )
     html = "<!DOCTYPE html>\n" + React.renderToStaticMarkup(<HTML page={page} body={body}/>)
     callback null, html

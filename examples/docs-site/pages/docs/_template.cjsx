@@ -12,18 +12,16 @@ module.exports = React.createClass
   mixins: [State]
   render: ->
     {rhythm} = @props.typography
-    console.log @props.children
-    children = @props.children.map (child) ->
-      console.log child
+    childPages = @props.childPages.map (child) ->
       {
         title: child.data.title
         order: child.data.order
         path: child.path
       }
 
-    children = sortBy children, (child) -> child.order
+    childPages = sortBy childPages, (child) -> child.order
 
-    docPages = children.map (child) =>
+    docPages = childPages.map (child) =>
       isActive = @isActive(child.path)
       <li
         style={{

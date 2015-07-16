@@ -30,9 +30,9 @@ loadConfig ->
         # Pull out direct children of the template for this path.
         childrenPaths = state.routes[state.routes.length - 2].childRoutes.map (route) -> route.path
         if childrenPaths
-          children = filter pages, (page) -> page.path in childrenPaths
+          childPages = filter pages, (page) -> page.path in childrenPaths
         else
-          children = []
+          childPages = []
 
         page = find pages, (page) -> page.path is state.pathname
 
@@ -44,7 +44,7 @@ loadConfig ->
             config={config}
             pages={pages}
             page={page}
-            children={children}
+            childPages={childPages}
             state={state}
           />,
           document?.getElementById("react-mount")
