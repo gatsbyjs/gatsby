@@ -4,8 +4,8 @@ Typography = require 'typography'
 typography = new Typography({
   baseFontSize: '15px'
   baseLineHeight: '22.5px'
-  bodyFontFamily: 'helvetica neue'
-  headerFontFamily: 'helvetica neue'
+  bodyFontFamily: '"Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif'
+  headerFontFamily: '"Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif'
   bodyWeight: 300
   headerWeight: 600
   boldWeight: 600
@@ -33,6 +33,10 @@ module.exports = React.createClass
           a {
             color: #884499;
           }
+          pre {
+            background: whitesmoke;
+            padding: 1.5rem;
+          }
           .demo1-ball {
             border-radius: 99px;
             background-color: white;
@@ -43,22 +47,22 @@ module.exports = React.createClass
             background-size: 50px;
           }
           .ball-0 {
-            background-image: url(0.jpg);
+            background-image: url(/docs/some-react-code/0.jpg);
           }
           .ball-1 {
-            background-image: url(1.jpg);
+            background-image: url(/docs/some-react-code/1.jpg);
           }
           .ball-2 {
-            background-image: url(2.jpg);
+            background-image: url(/docs/some-react-code/2.jpg);
           }
           .ball-3 {
-            background-image: url(3.jpg);
+            background-image: url(/docs/some-react-code/3.jpg);
           }
           .ball-4 {
-            background-image: url(4.jpg);
+            background-image: url(/docs/some-react-code/4.jpg);
           }
           .ball-5 {
-            background-image: url(5.jpg);
+            background-image: url(/docs/some-react-code/5.jpg);
           }
         """}}
         />

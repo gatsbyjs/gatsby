@@ -8,12 +8,15 @@ const Demo = React.createClass({
   },
 
   componentDidMount() {
-    console.log(React.findDOMNode(this).offset)
+    const rect = React.findDOMNode(this).getBoundingClientRect();
+    this.setState({
+      left: rect.left,
+      top: rect.top
+    })
   },
 
   handleMouseMove({pageX, pageY}) {
-    console.log(pageX, pageY);
-    this.setState({mouse: [pageX, pageY]});
+    this.setState({mouse: [pageX-this.state.left, pageY-this.state.top]});
   },
 
   handleTouchMove({touches}) {
@@ -40,6 +43,9 @@ const Demo = React.createClass({
       <Spring endValue={this.getValues}>
         {({val}) =>
           <div
+            style={{
+              height: 400
+            }}
             className="demo1"
             onMouseMove={this.handleMouseMove}
             onTouchMove={this.handleTouchMove}>

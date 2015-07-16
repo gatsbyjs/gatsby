@@ -16,7 +16,8 @@ module.exports = React.createClass
         are all written in Markdown but this page is a normal React.js component.
       </p>
       <p>
-        Which makes it easy to embed sample/runnable code to illustrate your documentation.
+        Which makes it easy to embed sample/runnable code to illustrate your documentation. (This demo is
+        from <a href="https://github.com/chenglou/react-motion">React Motion</a>).
       </p>
       <div
         style={{

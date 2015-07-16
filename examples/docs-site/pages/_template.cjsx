@@ -6,7 +6,7 @@ Typography = require 'typography'
 colorPairsPicker = require 'color-pairs-picker'
 
 # Style code
-require 'css/zenburn.css'
+require 'css/github.css'
 
 typography = Typography()
 {rhythm, fontSizeToPx} = typography
@@ -14,7 +14,6 @@ typography = Typography()
 module.exports = React.createClass
   render: ->
     headerColors = colorPairsPicker('#884499')
-    console.log fontSizeToPx("20px")
     <div>
       <div
         style={{
