@@ -29,7 +29,9 @@ module.exports = (program, cb) ->
 
       unless oldPath is "/"
         page = _.find pages, (page) ->
-          parsePath(page.requirePath).dirname is oldPath
+          # Ignore files that start with underscore (they're not pages).
+          if page.file.name.slice(0,1) isnt '_'
+            parsePath(page.requirePath).dirname is oldPath
 
         newPath = parsePath(page.path).dirname + parsed.basename
 

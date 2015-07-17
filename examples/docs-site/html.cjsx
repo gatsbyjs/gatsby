@@ -1,5 +1,6 @@
 React = require 'react'
 Typography = require 'typography'
+DocumentTitle = require 'react-document-title'
 
 typography = new Typography({
   baseFontSize: '15px'
@@ -17,16 +18,18 @@ typography = new Typography({
 
 module.exports = React.createClass
   getDefaultProps: ->
-    title: "Default title"
     body: ""
 
   render: ->
+    title = DocumentTitle.rewind()
+    if @props.title then title = @props.title
+
     <html lang="en">
       <head>
         <meta charSet="utf-8"/>
         <meta httpEquiv="X-UA-Compatible" content="IE=edge"/>
         <meta name='viewport' content='user-scalable=no width=device-width, initial-scale=1.0 maximum-scale=1.0'/>
-        <title>{@props.title}</title>
+        <title>{title}</title>
         <link rel="shortcut icon" href={@props.favicon}/>
         <TypographyStyle/>
         <style dangerouslySetInnerHTML={{__html: """

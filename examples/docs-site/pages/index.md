@@ -1,5 +1,5 @@
 ---
-title: AlphabetJS—The latest and greatest Javascript framework
+title: "AlphabetJS: The latest and greatest Javascript framework"
 ---
 
 ## Inops magnis Acrisius remisit Circes
