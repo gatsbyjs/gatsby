@@ -54,6 +54,9 @@ module.exports = (pages, pagesReq) ->
 
   for page in filteredPages
     # TODO add ways to load data for other file types.
+    # Should be able to install a gatsby-toml plugin to add support
+    # for TOML. Perhaps everything other than JSX and Markdown should be plugins.
+    # Or even they are plugins but they have built-in "blessed" plugins.
     switch page.file.ext
       when "md"
         handler = markdownWrapper
