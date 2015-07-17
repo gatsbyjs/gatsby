@@ -1,9 +1,11 @@
 React = require 'react'
 Router = require 'react-router'
-{RouteHandler, Link} = Router
+{RouteHandler, Link, State} = Router
 {Container, Grid, Breakpoint, Span} = require 'react-responsive-grid'
 Typography = require 'typography'
 colorPairsPicker = require 'color-pairs-picker'
+includes = require 'underscore.string/include'
+last = require 'lodash/array/last'
 
 # Style code
 require 'css/github.css'
@@ -12,8 +14,13 @@ typography = Typography()
 {rhythm, fontSizeToPx} = typography
 
 module.exports = React.createClass
+  mixins: [State]
   render: ->
     headerColors = colorPairsPicker('#884499')
+    activeHeaderColors = colorPairsPicker('rgb(107, 47, 121)', contrast: 7)
+    docsActive = includes last(@getRoutes()).path, '/docs/'
+    examplesActive = includes last(@getRoutes()).path, '/examples/'
+
     <div>
       <div
         style={{
@@ -54,6 +61,7 @@ module.exports = React.createClass
                   float: 'right'
                   color: headerColors.fg
                   textDecoration: 'none'
+                  marginLeft: rhythm(1/2)
                 }}
                 href="https://github.com"
               >
@@ -62,10 +70,16 @@ module.exports = React.createClass
               <Link
                 to="/examples/"
                 style={{
-                  color: headerColors.fg
+                  background: if @isActive('/examples/') then activeHeaderColors.bg else headerColors.bg
+                  color: if @isActive('/examples/') then activeHeaderColors.fg else headerColors.fg
                   float: 'right'
                   textDecoration: 'none'
-                  marginRight: rhythm(1)
+                  paddingLeft: rhythm(1/2)
+                  paddingRight: rhythm(1/2)
+                  paddingBottom: rhythm(1)
+                  marginBottom: rhythm(-1)
+                  paddingTop: rhythm(1)
+                  marginTop: rhythm(-1)
                 }}
               >
                 Examples
@@ -73,10 +87,16 @@ module.exports = React.createClass
               <Link
                 to="/docs/"
                 style={{
-                  color: headerColors.fg
+                  background: if @isActive('docs-template') then activeHeaderColors.bg else headerColors.bg
+                  color: if @isActive('docs-template') then activeHeaderColors.fg else headerColors.fg
                   float: 'right'
                   textDecoration: 'none'
-                  marginRight: rhythm(1)
+                  paddingLeft: rhythm(1/2)
+                  paddingRight: rhythm(1/2)
+                  paddingBottom: rhythm(1)
+                  marginBottom: rhythm(-1)
+                  paddingTop: rhythm(1)
+                  marginTop: rhythm(-1)
                 }}
               >
                 Documentation

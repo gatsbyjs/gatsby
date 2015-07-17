@@ -40,7 +40,7 @@ module.exports = (pages, pagesReq) ->
 
     templates[templateFile.file.dirname] = Router.createRoute({
       name: templateFile.file.dirname + "-template"
-      path: templateFile.path
+      path: "/" + templateFile.file.dirname + "/"
       parentRoute: parentRoute
       handler: pagesReq "./" + templateFile.requirePath
     })

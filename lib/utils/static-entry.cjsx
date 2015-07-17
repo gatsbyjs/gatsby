@@ -34,5 +34,12 @@ module.exports = (locals, callback) ->
         state={state}
       />
     )
-    html = "<!DOCTYPE html>\n" + React.renderToStaticMarkup(<HTML page={page} body={body}/>)
+
+    html = "<!DOCTYPE html>\n" + React.renderToStaticMarkup(
+      <HTML
+        page={page}
+        body={body}
+      />
+    )
+
     callback null, html
