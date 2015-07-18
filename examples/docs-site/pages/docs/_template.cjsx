@@ -41,9 +41,10 @@ module.exports = React.createClass
     <div>
       <div
         style={{
-          overflowY: 'scroll'
+          overflowY: 'auto'
           position: 'fixed'
-          width: rhythm(8)
+          width: "calc(#{rhythm(8)} - 1px)"
+          borderRight: '1px solid lightgrey'
         }}
       >
         <ul
