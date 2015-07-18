@@ -66,7 +66,7 @@ module.exports = React.createClass
                   textDecoration: 'none'
                   marginLeft: rhythm(1/2)
                 }}
-                href="https://github.com"
+                href="https://github.com/gatsbyjs/gatsby"
               >
                 Github
               </a>
