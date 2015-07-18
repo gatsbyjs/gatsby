@@ -27,11 +27,12 @@ module.exports = React.createClass
     childPages = sortBy childPages, (child) -> child.order
 
     docOptions = childPages.map (child) ->
-      <option value={child.path}>{child.title}</option>
+      <option key={child.path} value={child.path}>{child.title}</option>
 
     docPages = childPages.map (child) =>
       isActive = @isActive(child.path)
       <li
+        key={child.path}
         style={{
           marginBottom: rhythm(1/2)
         }}
