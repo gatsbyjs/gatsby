@@ -46,46 +46,48 @@ module.exports = React.createClass
         </Link>
       </li>
 
-    <Breakpoint minWidth=700>
-      <div>
-        <div
-          style={{
-            overflowY: 'auto'
-            position: 'fixed'
-            width: "calc(#{rhythm(8)} - 1px)"
-            borderRight: '1px solid lightgrey'
-          }}
-        >
-          <ul
+    <div>
+      <Breakpoint minWidth=700>
+        <div>
+          <div
             style={{
-              listStyle: 'none'
-              marginLeft: 0
-              marginTop: rhythm(1/2)
+              overflowY: 'auto'
+              position: 'fixed'
+              width: "calc(#{rhythm(8)} - 1px)"
+              borderRight: '1px solid lightgrey'
             }}
           >
-            {docPages}
-          </ul>
+            <ul
+              style={{
+                listStyle: 'none'
+                marginLeft: 0
+                marginTop: rhythm(1/2)
+              }}
+            >
+              {docPages}
+            </ul>
+          </div>
+          <div
+            style={{
+              padding: "0 #{rhythm(1)}"
+              paddingLeft: "calc(#{rhythm(8)} + #{rhythm(1)})"
+            }}
+          >
+            <RouteHandler typography={typography} {...@props}/>
+          </div>
         </div>
-        <div
-          style={{
-            padding: "0 #{rhythm(1)}"
-            paddingLeft: "calc(#{rhythm(8)} + #{rhythm(1)})"
-          }}
+      </Breakpoint>
+      <Breakpoint maxWidth=700>
+        <strong>Topics:</strong>
+        {' '}
+        <select
+          defaultValue={@props.state.path}
+          onChange={@handleTopicChange}
         >
-          <RouteHandler typography={typography} {...@props}/>
-        </div>
-      </div>
-    </Breakpoint>
-    <Breakpoint maxWidth=700>
-      <strong>Topics:</strong>
-      {' '}
-      <select
-        defaultValue={@props.state.path}
-        onChange={@handleTopicChange}
-      >
-        {docOptions}
-      </select>
-      <br />
-      <br />
-      <RouteHandler typography={typography} {...@props}/>
-    </Breakpoint>
+          {docOptions}
+        </select>
+        <br />
+        <br />
+        <RouteHandler typography={typography} {...@props}/>
+      </Breakpoint>
+    </div>
