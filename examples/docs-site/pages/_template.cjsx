@@ -18,7 +18,7 @@ module.exports = React.createClass
   mixins: [State]
   render: ->
     headerColors = colorPairsPicker(@props.config.headerColor)
-    darker = chroma(@props.config.headerColor).darken(11).hex()
+    darker = chroma(@props.config.headerColor).darken(9).hex()
     activeHeaderColors = colorPairsPicker(darker, contrast: 7)
     docsActive = includes last(@getRoutes()).path, '/docs/'
     examplesActive = includes last(@getRoutes()).path, '/examples/'
@@ -46,7 +46,7 @@ module.exports = React.createClass
               padding: "#{rhythm(1/2)} 0"
             }}
           >
-            <Span columns=6>
+            <Span columns=4>
               <Link
                 to="/"
                 style={{
@@ -58,7 +58,7 @@ module.exports = React.createClass
                 AlphabetJS
               </Link>
             </Span>
-            <Span columns=6 last>
+            <Span columns=8 last>
               <a
                 style={{
                   float: 'right'
