@@ -10,7 +10,7 @@ module.exports = React.createClass
       title: "Some React Code"
 
   render: ->
-    <DocumentTitle title={module.exports.metadata().title + " | AlphabetJS"}>
+    <DocumentTitle title={module.exports.metadata().title + " | #{@props.config.siteTitle}"}>
       <div>
         <h1>Some React Code</h1>
         <p>
