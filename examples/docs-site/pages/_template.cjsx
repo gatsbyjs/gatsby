@@ -55,7 +55,7 @@ module.exports = React.createClass
                   fontSize: fontSizeToPx("25.5px").fontSize
                 }}
               >
-                AlphabetJS
+                {@props.config.siteTitle}
               </Link>
             </Span>
             <Span columns=8 last>
