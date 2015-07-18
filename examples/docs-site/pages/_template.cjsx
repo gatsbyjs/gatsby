@@ -4,6 +4,7 @@ Router = require 'react-router'
 {Container, Grid, Breakpoint, Span} = require 'react-responsive-grid'
 Typography = require 'typography'
 colorPairsPicker = require 'color-pairs-picker'
+chroma = require 'chroma-js'
 includes = require 'underscore.string/include'
 last = require 'lodash/array/last'
 
@@ -16,8 +17,9 @@ typography = Typography()
 module.exports = React.createClass
   mixins: [State]
   render: ->
-    headerColors = colorPairsPicker('#884499')
-    activeHeaderColors = colorPairsPicker('rgb(107, 47, 121)', contrast: 7)
+    headerColors = colorPairsPicker(@props.config.headerColor)
+    darker = chroma(@props.config.headerColor).darken(11).hex()
+    activeHeaderColors = colorPairsPicker(darker, contrast: 7)
     docsActive = includes last(@getRoutes()).path, '/docs/'
     examplesActive = includes last(@getRoutes()).path, '/examples/'
 
