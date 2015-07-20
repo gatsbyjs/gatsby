@@ -17,7 +17,7 @@ typography = Typography()
 module.exports = React.createClass
   mixins: [State]
   render: ->
-    headerColors = colorPairsPicker(@props.config.headerColor)
+    headerColors = colorPairsPicker(@props.config.headerColor, contrast: 5.5)
     darker = chroma(@props.config.headerColor).darken(9).hex()
     activeHeaderColors = colorPairsPicker(darker, contrast: 7)
     docsActive = includes last(@getRoutes()).path, '/docs/'
