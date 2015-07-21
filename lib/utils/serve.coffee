@@ -27,7 +27,7 @@ module.exports = (program) ->
     # Perhaps should check if port is open.
     webpackPort = Math.round(Math.random() * 1000 + 1000)
 
-    compilerConfig = webpackConfig(program, directory, 'watch', webpackPort)
+    compilerConfig = webpackConfig(program, directory, 'serve', webpackPort)
     compiler = webpack(compilerConfig)
 
     webpackDevServer = new WebpackDevServer(compiler, {

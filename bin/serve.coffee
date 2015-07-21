@@ -2,7 +2,7 @@ program = require 'commander'
 path = require 'path'
 
 packageJson = require '../package.json'
-watch = require '../lib/utils/watch'
+serve = require '../lib/utils/serve'
 
 program
   .version(packageJson.version)
@@ -17,4 +17,4 @@ directory = path.resolve(relativeDirectory)
 program.directory = directory
 program.relativeDirectory = relativeDirectory
 
-watch(program)
+serve(program)

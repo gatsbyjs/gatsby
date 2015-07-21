@@ -4,7 +4,7 @@ StaticSiteGeneratorPlugin = require 'static-site-generator-webpack-plugin'
 module.exports = (program, directory, stage, webpackPort = 1500, routes=[]) ->
   output = ->
     switch stage
-      when "watch"
+      when "serve"
         path: directory
         filename: 'bundle.js'
         publicPath: "http://#{program.host}:#{webpackPort}/"
@@ -18,7 +18,7 @@ module.exports = (program, directory, stage, webpackPort = 1500, routes=[]) ->
 
   entry = ->
     switch stage
-      when "watch"
+      when "serve"
         [
           "#{__dirname}/../../node_modules/webpack-dev-server/client?#{program.host}:#{webpackPort}",
           "#{__dirname}/../../node_modules/webpack/hot/only-dev-server",
@@ -35,7 +35,7 @@ module.exports = (program, directory, stage, webpackPort = 1500, routes=[]) ->
 
   plugins = ->
     switch stage
-      when "watch"
+      when "serve"
         [
           new webpack.HotModuleReplacementPlugin(),
         ]
@@ -63,7 +63,7 @@ module.exports = (program, directory, stage, webpackPort = 1500, routes=[]) ->
 
   module = ->
     switch stage
-      when "watch"
+      when "serve"
         loaders: [
           { test: /\.css$/, loaders: ['style', 'css']},
           { test: /\.cjsx$/, loaders: ['react-hot', 'coffee', 'cjsx']},
