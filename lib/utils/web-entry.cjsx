@@ -4,6 +4,7 @@ find = require 'lodash/collection/find'
 filter = require 'lodash/collection/filter'
 createRoutes = require 'create-routes'
 app = require 'app'
+first = require 'lodash/array/first'
 
 loadConfig = (cb) ->
   stuff = require 'config'
@@ -27,15 +28,6 @@ loadConfig ->
       router.replaceRoutes [app]
     else
       router = Router.run [routes], Router.HistoryLocation, (Handler, state) ->
-        # Pull out direct children of the template for this path.
-        # TODO, this always shows children of deepest route. How to get each
-        # template their actual children.
-        childrenPaths = state.routes[state.routes.length - 2].childRoutes.map (route) -> route.path
-        if childrenPaths
-          childPages = filter pages, (page) -> page.path in childrenPaths
-        else
-          childPages = []
-
         page = find pages, (page) -> page.path is state.pathname
 
         # Let app know the route is changing.
@@ -46,7 +38,6 @@ loadConfig ->
             config={config}
             pages={pages}
             page={page}
-            childPages={childPages}
             state={state}
           />,
           document?.getElementById("react-mount")

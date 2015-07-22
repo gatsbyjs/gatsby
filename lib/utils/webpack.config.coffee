@@ -134,6 +134,9 @@ module.exports = (program, directory, stage, webpackPort = 1500, routes=[]) ->
           } }
         ]
   return {
+    context: directory + "/pages"
+    node:
+      __filename: true
     entry: entry()
     debug: true
     devtool: 'eval'
