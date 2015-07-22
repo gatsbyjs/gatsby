@@ -24,6 +24,10 @@ to make templating incredibly intuitive.
 * Support "Starters" — install starter sites directly from Github. Use open sourced
   starters or build your own.
 
+## Demos
+* [Documentation site](http://gatsbyjs.github.io/gatsby-starter-documentation/)
+* [Blog](http://gatsbyjs.github.io/gatsby-starter-blog/)
+
 ## Install
 `npm install -g gatsby`
 
@@ -35,10 +39,6 @@ to make templating incredibly intuitive.
 3. `gatsby serve` — Gatsby will compile your code using Webpack and
    serve the site at [localhost:8000](http://localhost:8000)
 4. See the tutorial below for more.
-
-## Demos
-* [Documentation site](http://gatsbyjs.github.io/gatsby-starter-documentation/)
-* [Blog](http://gatsbyjs.github.io/gatsby-starter-blog/)
 
 ## Why use Gatsby instead of other Static Site Generators
 * No-refresh page transitions
