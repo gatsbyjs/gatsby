@@ -5,22 +5,22 @@ Transform plain text into dynamic blogs and websites using the latest
 web technologies.
 
 Build sites like it's 1995. Files are translated into HTML pages at the
-same position within the filesystem. Add a markdown file at `/docs/index.md` and
+same position within the file system. Add a markdown file at `/docs/index.md` and
 it'll be converted to `/docs/index.html`.
 
 Supports Markdown, HTML, and React.js components out of the box. Easy to add
 support for additional files types.
 
 Leverages [React Router's "nested component hierarchy"](http://rackt.github.io/react-router/#Router Overview)
-to make templating incredibly intuative.
+to make templating incredibly intuitive.
 
 ## Goals
-* Make React.js component model and ecosystem available for building static sites
 * No-reload page transitions
-* Intuative directory-based URLs. The URL of a page is derived from its
-  spot on the file system.
 * Hot reload editing. Tweak your pages, templates, and styles and see changes in
   real time.
+* Make React.js component model and ecosystem available for building static sites
+* Intuitive directory-based URLs. The URL of a page is derived from its
+  spot on the file system.
 * Support "Starters" — install starter sites directly from Github. Use open sourced
   starters or build your own.
 
@@ -82,7 +82,7 @@ The process is file --> Webpack loader --> React.js wrapper component
 --> static html page.
 
 Gatsby leverages [Webpack](http://webpack.github.io/) extensively.
- Webpack is a sophesticated module bundler that can turn any sort of
+ Webpack is a sophisticated module bundler that can turn any sort of
 file into a commonjs module. Webpack uses "Loaders" to convert a file
 into a module. These loaded modules are then wrapped inside a react.js
 component that's specific to a given file type. Gatsby then generates a
@@ -126,7 +126,7 @@ following.
 }
 
 ```
-Now gatsby wraps the markdown file in this very simple React.js component.
+Now Gatsby wraps the markdown file in this very simple React.js component.
 
 ```javascript
 module.exports = React.createClass({
