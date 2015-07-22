@@ -28,6 +28,12 @@ to make templating incredibly intuitive.
 * [Documentation site](http://gatsbyjs.github.io/gatsby-starter-documentation/)
 * [Blog](http://gatsbyjs.github.io/gatsby-starter-blog/)
 
+## Warning!
+Gatsby is very new. APIs will break. Functionality is missing. It's
+usable but if you plan on using it, expect a rocky road for some time.
+
+Contributions welcome!
+
 ## Install
 `npm install -g gatsby`
 
