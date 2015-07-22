@@ -37,6 +37,7 @@ module.exports = (locals, callback) ->
 
     html = "<!DOCTYPE html>\n" + React.renderToStaticMarkup(
       <HTML
+        config={config}
         page={page}
         body={body}
       />

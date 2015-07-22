@@ -4,8 +4,13 @@ parsePath = require 'parse-filepath'
 fs = require 'fs'
 frontMatter = require 'front-matter'
 _ = require 'underscore'
+toml = require('toml')
 
 module.exports = (directory, callback) ->
+  # Read in site config.
+  try
+    siteConfig = toml.parse(fs.readFileSync(directory + "/config.toml"))
+
   pagesData = []
 
   app = require directory + "/app"
@@ -60,6 +65,18 @@ module.exports = (directory, callback) ->
               pageData.path = "/" + parsed.name + ".html"
             else
               pageData.path = "/" + parsed.dirname + "/" + parsed.name + ".html"
+      # Set the "template path"
+      else if parsed.name is "_template"
+        pageData.templatePath = "/" + parsed.dirname + "/"
+
+      # If we're building for gh-pages
+      if process.env.GATSBY_ENV is "gh-pages" and
+          siteConfig.ghPagesURLPrefix?
+        if pageData.path
+          pageData.path = siteConfig.ghPagesURLPrefix + pageData.path
+        else if pageData.templatePath
+          pageData.templatePath =
+            siteConfig.ghPagesURLPrefix + pageData.templatePath
 
       pagesData.push pageData
 

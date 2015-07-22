@@ -38,6 +38,9 @@ module.exports = (program, directory, stage, webpackPort = 1500, routes=[]) ->
       when "serve"
         [
           new webpack.HotModuleReplacementPlugin(),
+          new webpack.DefinePlugin({
+            __GH_PAGES__: JSON.stringify(JSON.parse(process.env.GATSBY_ENV is "gh-pages"))
+          })
         ]
       when "production"
         [
@@ -46,6 +49,7 @@ module.exports = (program, directory, stage, webpackPort = 1500, routes=[]) ->
             "process.env": {
               NODE_ENV: JSON.stringify("production")
             }
+            __GH_PAGES__: JSON.stringify(JSON.parse(process.env.GATSBY_ENV is "gh-pages"))
           })
           new webpack.optimize.DedupePlugin()
           new webpack.optimize.UglifyJsPlugin()
@@ -53,6 +57,12 @@ module.exports = (program, directory, stage, webpackPort = 1500, routes=[]) ->
       when "static"
         [
           new StaticSiteGeneratorPlugin('bundle.js', routes)
+          new webpack.DefinePlugin({
+            "process.env": {
+              NODE_ENV: JSON.stringify("production")
+            }
+            __GH_PAGES__: JSON.stringify(JSON.parse(process.env.GATSBY_ENV is "gh-pages"))
+          })
         ]
 
   resolve = ->

@@ -28,6 +28,8 @@ loadConfig ->
     else
       router = Router.run [routes], Router.HistoryLocation, (Handler, state) ->
         # Pull out direct children of the template for this path.
+        # TODO, this always shows children of deepest route. How to get each
+        # template their actual children.
         childrenPaths = state.routes[state.routes.length - 2].childRoutes.map (route) -> route.path
         if childrenPaths
           childPages = filter pages, (page) -> page.path in childrenPaths
