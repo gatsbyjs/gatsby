@@ -82,6 +82,9 @@ proved wrong!).
    appreciated here](https://github.com/webpack/webpack/issues/1162)).
    So to see your new page, restart `gatsby serve` and then refresh your
    browser.
+7. Build your site `gatsby build`. The site is built to the `/public`
+   directory. Serve the site by going into the public directory and
+   typing `python -m SimpleHTTPServer`
 
 ## How Gatsby converts files into pages
 The process is file --> Webpack loader --> React.js wrapper component
