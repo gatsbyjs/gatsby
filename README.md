@@ -1,3 +1,8 @@
+[![npm
+package](https://img.shields.io/npm/v/gatsby.svg?style=flat-square)](https://www.npmjs.org/package/gatsby)
+[![gatsby channel on
+slack](https://img.shields.io/badge/slack-gatsby@reactiflux-61DAFB.svg?style=flat-square)](http://www.reactiflux.com)
+
 # Gatsby
 A fast & modern framework for building blogs and websites.
 
