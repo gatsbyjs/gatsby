@@ -4,10 +4,8 @@ package](https://img.shields.io/npm/v/gatsby.svg?style=flat-square)](https://www
 slack](https://img.shields.io/badge/slack-gatsby@reactiflux-61DAFB.svg?style=flat-square)](http://www.reactiflux.com)
 
 # Gatsby
-A fast & modern framework for building blogs and websites.
-
 Transform plain text into dynamic blogs and websites using the latest
-web technologies.
+web technologies. A React.js static site generator.
 
 Build sites like it's 1995. Files are translated into HTML pages at the
 same position within the file system. Add a markdown file at `/docs/index.md` and
