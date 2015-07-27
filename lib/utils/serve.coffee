@@ -90,6 +90,8 @@ module.exports = (program) ->
 
         reply.continue()
 
-    server.start ->
+    server.start (err) ->
+      if err
+        console.log err
       console.log "Listening at:", server.info.uri
 
