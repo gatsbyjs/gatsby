@@ -33,7 +33,7 @@ to make templating incredibly intuitive.
 
 ## Warning!
 Gatsby is very new. APIs will break. Functionality is missing. It's
-usable but if you plan on using it, expect a rocky road for some time.
+usable but if you plan on building with it, expect a rocky road for some time.
 
 Contributions welcome!
 
@@ -145,7 +145,6 @@ module.exports = React.createClass({
   displayName: "MarkdownWrapper",
 
   render: function() {
-    {rhythm} = @props.typography
     post = @props.page.data
 
     <div className="markdown">
