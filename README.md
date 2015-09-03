@@ -18,6 +18,7 @@ Leverages [React Router's "nested component hierarchy"](http://rackt.github.io/r
 to make templating incredibly intuitive.
 
 All templates, css, and content is hot reloadable.
+
 ![live-reloading example](http://zippy.gfycat.com/UltimateWeeklyBarebirdbat.gif)
 
 ## Goals
