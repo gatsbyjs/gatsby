@@ -17,7 +17,7 @@ support for additional files types.
 Leverages [React Router's "nested component hierarchy"](http://rackt.github.io/react-router/#Router Overview)
 to make templating incredibly intuitive.
 
-![live-reloading example](http://www.gfycat.com/UltimateWeeklyBarebirdbat)
+![live-reloading example](http://zippy.gfycat.com/UltimateWeeklyBarebirdbat.gif)
 
 ## Goals
 * No-reload page transitions
