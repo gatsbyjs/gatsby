@@ -17,7 +17,7 @@ support for additional files types.
 Leverages [React Router's "nested component hierarchy"](http://rackt.github.io/react-router/#Router Overview)
 to make templating incredibly intuitive.
 
-All templates, css, and content is hot reloadable.
+All templates, css, and content are hot reloadable.
 
 ![live-reloading example](http://zippy.gfycat.com/UltimateWeeklyBarebirdbat.gif)
 
