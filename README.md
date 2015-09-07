@@ -174,3 +174,18 @@ files which start with an underscore
 * [bricolage.io](http://bricolage.io?utm_source=github.com)
 * [relaterocket.co](https://relaterocket.co?utm_source=github.com)
 * [Add yours!](https://github.com/gatsbyjs/gatsby/issues/new)
+
+## FAQ
+
+### Configuring Babel
+
+Configuring babel-loader is as easy as creating a
+[.babelrc](https://babeljs.io/docs/usage/babelrc/) in the root of the
+project. To enable stage 0 transforms, the following `.babelrc` could
+be used:
+
+```javascript
+{
+  "stage": 0
+}
+```
