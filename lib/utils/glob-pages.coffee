@@ -17,7 +17,7 @@ module.exports = (directory, callback) ->
 
   # Make this easy to add to through the config?
   # Or just keep adding extensions...?
-  glob directory + '/pages/**/?(*.coffee|*.cjsx|*.jsx|*.md|*.html)', null, (err, pages) =>
+  glob directory + '/pages/**/?(*.coffee|*.cjsx|*.jsx|*.js|*.md|*.html)', null, (err, pages) =>
     if err then return callback(err)
 
     for page in pages
@@ -83,4 +83,3 @@ module.exports = (directory, callback) ->
       pagesData.push pageData
 
     callback(null, pagesData)
-
