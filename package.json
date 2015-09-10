@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "async": "^1.2.1",
+    "babel": "^5.8.23",
     "babel-core": "^5.5.8",
     "babel-loader": "^5.1.4",
     "boom": "^2.7.2",
@@ -73,8 +74,5 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "devDependencies": {
-    "babel": "^5.8.23"
   }
 }
