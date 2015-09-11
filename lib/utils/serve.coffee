@@ -1,5 +1,4 @@
 require('node-cjsx').transform()
-require("babel/register")
 Hapi = require 'hapi'
 Boom = require 'boom'
 React = require 'react'
