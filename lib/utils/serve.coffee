@@ -1,4 +1,5 @@
 require('node-cjsx').transform()
+require("babel/register")
 Hapi = require 'hapi'
 Boom = require 'boom'
 React = require 'react'
@@ -20,7 +21,7 @@ module.exports = (program) ->
     try
       HTML = require directory + '/html'
     catch e
-      console.log e
+      console.log "error loading html template", e
       HTML = require "#{__dirname}/../isomorphic/html"
 
     # Generate random port for webpack to listen on.

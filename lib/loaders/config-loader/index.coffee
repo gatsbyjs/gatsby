@@ -19,7 +19,7 @@ module.exports = (source) ->
   value.relativePath = path.relative('.', directory)
 
   # Load pages.
-  globPages directory, (err, pagesData) ->
+  globPages directory, (err, pagesData) =>
     value.pages = pagesData
     @value = [value]
     callback null, 'module.exports = ' + JSON.stringify(value, undefined, "\t")
