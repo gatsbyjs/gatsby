@@ -63,6 +63,7 @@ module.exports = (program) ->
           return reply Boom.notFound()
 
         html = React.renderToStaticMarkup(React.createElement(HTML))
+        html = "<!DOCTYPE html>\n" + html
         reply html
 
     server.route
