@@ -73,6 +73,9 @@ The Gatsby cli tool lets you install "starters". These are
 partially built sites preconfigured to help you get moving faster on
 creating a certain type of site.
 
+When creating a new site, you can optionally specify a starter to
+base your new site on e.g. `gatsby new [URL_OF_STARTER]`
+
 For example, to quickly create a blog using Gatsby, you could install
 the Gatsby Starter Blog by running:
 
@@ -80,6 +83,10 @@ the Gatsby Starter Blog by running:
 
 This downloads the files and initializes the site by running `npm
 install`
+
+If you don't specify a custom starter, your site will created
+from the [minimal default
+starter](https://github.com/gatsbyjs/gatsby-starter-default).
 
 There are several starters that have been created. Create a PR to
 include yours!
