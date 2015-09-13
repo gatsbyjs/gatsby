@@ -77,7 +77,16 @@ module.exports = (program, directory, stage, webpackPort = 1500, routes=[]) ->
         loaders: [
           { test: /\.css$/, loaders: ['style', 'css']},
           { test: /\.cjsx$/, loaders: ['react-hot', 'coffee', 'cjsx']},
-          { test: /\.jsx/, loaders: ['react-hot', 'babel']},
+          {
+            test: /\.jsx?$/,
+            exclude: /(node_modules|bower_components)/,
+            loaders: ['react-hot', 'babel']
+          }
+          {
+            test: /\.js?$/,
+            exclude: /(node_modules|bower_components)/,
+            loaders: ['react-hot', 'babel']
+          }
           { test: /\.less/, loaders: ['style', 'css', 'less']},
           { test: /\.coffee$/, loader: 'coffee' }
           { test: /\.md$/, loader: 'markdown' }
@@ -97,7 +106,16 @@ module.exports = (program, directory, stage, webpackPort = 1500, routes=[]) ->
         loaders: [
           { test: /\.css$/, loaders: ['css']},
           { test: /\.cjsx$/, loaders: ['coffee', 'cjsx']},
-          { test: /\.jsx/, loaders: ['babel']},
+          {
+            test: /\.jsx?$/,
+            exclude: /(node_modules|bower_components)/,
+            loaders: ['react-hot', 'babel']
+          }
+          {
+            test: /\.js?$/,
+            exclude: /(node_modules|bower_components)/,
+            loaders: ['react-hot', 'babel']
+          }
           { test: /\.less/, loaders: ['css', 'less']},
           { test: /\.coffee$/, loader: 'coffee' }
           { test: /\.md$/, loader: 'markdown' }
@@ -117,7 +135,16 @@ module.exports = (program, directory, stage, webpackPort = 1500, routes=[]) ->
         loaders: [
           { test: /\.css$/, loaders: ['style', 'css']},
           { test: /\.cjsx$/, loaders: ['coffee', 'cjsx']},
-          { test: /\.jsx/, loaders: ['babel']},
+          {
+            test: /\.jsx?$/,
+            exclude: /(node_modules|bower_components)/,
+            loaders: ['react-hot', 'babel']
+          }
+          {
+            test: /\.js?$/,
+            exclude: /(node_modules|bower_components)/,
+            loaders: ['react-hot', 'babel']
+          }
           { test: /\.less/, loaders: ['style', 'css', 'less']},
           { test: /\.coffee$/, loader: 'coffee' }
           { test: /\.md$/, loader: 'markdown' }
