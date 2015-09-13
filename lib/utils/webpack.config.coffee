@@ -109,12 +109,12 @@ module.exports = (program, directory, stage, webpackPort = 1500, routes=[]) ->
           {
             test: /\.jsx?$/,
             exclude: /(node_modules|bower_components)/,
-            loaders: ['react-hot', 'babel']
+            loaders: ['babel']
           }
           {
             test: /\.js?$/,
             exclude: /(node_modules|bower_components)/,
-            loaders: ['react-hot', 'babel']
+            loaders: ['babel']
           }
           { test: /\.less/, loaders: ['css', 'less']},
           { test: /\.coffee$/, loader: 'coffee' }
@@ -138,12 +138,12 @@ module.exports = (program, directory, stage, webpackPort = 1500, routes=[]) ->
           {
             test: /\.jsx?$/,
             exclude: /(node_modules|bower_components)/,
-            loaders: ['react-hot', 'babel']
+            loaders: ['babel']
           }
           {
             test: /\.js?$/,
             exclude: /(node_modules|bower_components)/,
-            loaders: ['react-hot', 'babel']
+            loaders: ['babel']
           }
           { test: /\.less/, loaders: ['style', 'css', 'less']},
           { test: /\.coffee$/, loader: 'coffee' }
