@@ -21,7 +21,7 @@ All templates, css, and content are hot reloadable.
 
 ![live-reloading example](http://zippy.gfycat.com/UltimateWeeklyBarebirdbat.gif)
 
-## Goals
+### Goals
 * No-reload page transitions
 * Hot reload editing. Tweak your pages, templates, and styles and see changes in
   real time.
@@ -31,20 +31,35 @@ All templates, css, and content are hot reloadable.
 * Support "Starters" — install starter sites directly from Github. Use open sourced
   starters or build your own.
 
-## Demos
+### Demos
 * [Documentation site](http://gatsbyjs.github.io/gatsby-starter-documentation/)
 * [Blog](http://gatsbyjs.github.io/gatsby-starter-blog/)
 
-## Warning!
+### Why use Gatsby instead of other Static Site Generators
+* No-refresh page transitions
+* The awesome React.js component model
+* Live editing on every part of your site. Dramatically speed development.
+
+### I'm already building a server-rendered React.js site, is Gatsby a good fit?
+If you're site falls closer to the site end of the app<---->site spectrum
+then yes.
+
+Gatsby is an excellent fit for blogs, marketing sites, docs sites, etc. Proper web
+apps should probably remain as normal web apps (though I'd love to be
+proved wrong!).
+
+### Warning!
 Gatsby is very new. APIs will break. Functionality is missing. It's
 usable but if you plan on building with it, expect a rocky road for some time.
 
 Contributions welcome!
 
-## Install
+## Getting started
+
+### Install
 `npm install -g gatsby`
 
-## Usage
+### Usage
 1. Create new Gatsby site `gatsby new my-test-gatsby-site` This creates the
    directory for your Gatsby project and adds the minimal files
    needed.
@@ -53,20 +68,26 @@ Contributions welcome!
    serve the site at [localhost:8000](http://localhost:8000)
 4. See the tutorial below for more.
 
-## Why use Gatsby instead of other Static Site Generators
-* No-refresh page transitions
-* The awesome React.js component model
-* Live editing on every part of your site. Dramatically speed development.
+### Gatsby Starters
+The Gatsby cli tool lets you install "starters". These are
+partially built sites preconfigured to help you get moving faster on
+creating a certain type of site.
 
-## I'm already building a server-rendered React.js site, is Gatsby a good fit?
-If you're site falls closer to the site end of the app<---->site spectrum
-then yes.
+For example, to quickly create a blog using Gatsby, you could install
+the Gatsby Starter Blog by running:
 
-Gatsby is an excellent fit for blogs, marketing sites, docs sites, etc. Proper web
-apps should probably remain as normal web apps (though I'd love to be
-proved wrong!).
+`gatsby new blog https://github.com/gatsbyjs/gatsby-starter-blog`
 
-## Tutorial: Building a documentation site from the Gatsby Documentation Starter
+This downloads the files and initializes the site by running `npm
+install`
+
+There are several starters that have been created. Create a PR to
+include yours!
+
+* https://github.com/gatsbyjs/gatsby-starter-blog
+* https://github.com/gatsbyjs/gatsby-starter-documentation
+
+### Tutorial: Building a documentation site from the Gatsby Documentation Starter
 1. Install gatsby `npm install -g gatsby`
 1. Install documentation site starter `gatsby new docs-site
    gh:gatsbyjs/gatsby-starter-documentation`
@@ -93,7 +114,9 @@ proved wrong!).
    directory. Serve the site by going into the public directory and
    typing `python -m SimpleHTTPServer`
 
-## How Gatsby converts files into pages
+## How Gatsby works
+
+### How files become pages
 The process is file --> Webpack loader --> React.js wrapper component
 --> static html page.
 
@@ -159,13 +182,10 @@ module.exports = React.createClass({
 })
 ```
 
-## Writing your own loaders/wrappers
+### How to write your own loaders/wrappers
 * Coming...
 
-## Extending Gatsby
-* Coming...
-
-## Structure of a Gatsby site
+### Structure of a Gatsby site
 * `/pages` — All pages go here. Everything is turned into a page except
 files which start with an underscore
 * `_template` files — coming...
