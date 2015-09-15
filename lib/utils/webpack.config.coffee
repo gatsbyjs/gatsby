@@ -95,6 +95,7 @@ module.exports = (program, directory, stage, webpackPort = 1500, routes=[]) ->
           { test: /^((?!config).)*\.toml$/, loaders: ['toml'] } # Match everything except config.toml
           { test: /\.png$/, loader: 'null' }
           { test: /\.jpg$/, loader: 'null' }
+          { test: /\.svg$/, loader: 'null' }
           { test: /\.ico$/, loader: 'null' }
           { test: /\.pdf$/, loader: 'null' }
           { test: /\.txt$/, loader: 'null' }
@@ -124,6 +125,7 @@ module.exports = (program, directory, stage, webpackPort = 1500, routes=[]) ->
           { test: /^((?!config).)*\.toml$/, loaders: ['toml'] } # Match everything except config.toml
           { test: /\.png$/, loader: 'null' }
           { test: /\.jpg$/, loader: 'null' }
+          { test: /\.svg$/, loader: 'null' }
           { test: /\.ico$/, loader: 'null' }
           { test: /\.pdf$/, loader: 'null' }
           { test: /\.txt$/, loader: 'null' }
@@ -153,6 +155,7 @@ module.exports = (program, directory, stage, webpackPort = 1500, routes=[]) ->
           { test: /^((?!config).)*\.toml$/, loaders: ['toml'] } # Match everything except config.toml
           { test: /\.png$/, loader: 'null' }
           { test: /\.jpg$/, loader: 'null' }
+          { test: /\.svg$/, loader: 'null' }
           { test: /\.ico$/, loader: 'null' }
           { test: /\.pdf$/, loader: 'null' }
           { test: /\.txt$/, loader: 'null' }
