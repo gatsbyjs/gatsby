@@ -33,7 +33,16 @@ module.exports = (program, cb) ->
           if page.file.name.slice(0,1) isnt '_'
             parsePath(page.requirePath).dirname is oldPath
 
-        newPath = parsePath(page.path).dirname + parsed.basename
+        if page?
+          newPath = parsePath(page.path).dirname + parsed.basename
+
+        # If a page wasn't found, this probably means the asset is in
+        # a folder without a page e.g. an images directory. In this case,
+        # there is no path rewriting so just copy to a directory with
+        # the same name.
+        else
+          relativePath = path.relative(directory + "/pages", parsed.dirname)
+          newPath = "#{relativePath}/#{parsed.basename}"
 
       newPath = directory + "/public/" + newPath
       fs.copy(file, newPath, (err) ->
