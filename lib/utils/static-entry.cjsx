@@ -25,22 +25,28 @@ module.exports = (locals, callback) ->
     else
       childPages = []
 
-    body = React.renderToString(
-      <Handler
-        config={config}
-        pages={pages}
-        page={page}
-        childPages={childPages}
-        state={state}
-      />
-    )
+    body = ''
+    html = ''
+    try
+      body = React.renderToString(
+        <Handler
+          config={config}
+          pages={pages}
+          page={page}
+          childPages={childPages}
+          state={state}
+        />
+      )
 
-    html = "<!DOCTYPE html>\n" + React.renderToStaticMarkup(
-      <HTML
-        config={config}
-        page={page}
-        body={body}
-      />
-    )
+      html = "<!DOCTYPE html>\n" + React.renderToStaticMarkup(
+        <HTML
+          config={config}
+          page={page}
+          body={body}
+        />
+      )
+    catch e
+      console.error e.stack
+      return callback(e)
 
     callback null, html

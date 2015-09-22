@@ -13,4 +13,8 @@ module.exports = (program, callback) ->
     compilerConfig = webpackConfig(program, directory, 'static', null, routes)
 
     webpack(compilerConfig).run (err, stats) ->
-      callback(err, stats)
+      if err
+        return callback(err, stats)
+      if stats.hasErrors()
+        return callback('Error: ' + stats.toJson().errors, stats)
+      callback(null, stats)
