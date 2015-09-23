@@ -1,6 +1,21 @@
 webpack = require 'webpack'
 StaticSiteGeneratorPlugin = require 'static-site-generator-webpack-plugin'
 
+gatsbyLib = /(gatsby.lib)/i
+libDirs = /(node_modules|bower_components)/i
+babelExcludeTest = (absPath) ->
+  result = false
+  # There is a match, don't exclude this file.
+  if absPath.match(gatsbyLib) isnt null
+    result = false
+  # There is a match, do exclude this file.
+  else if absPath.match(libDirs) isnt null
+    result = true
+  else
+    result = false
+
+  return result
+
 module.exports = (program, directory, stage, webpackPort = 1500, routes=[]) ->
   output = ->
     switch stage
@@ -82,12 +97,12 @@ module.exports = (program, directory, stage, webpackPort = 1500, routes=[]) ->
           { test: /\.cjsx$/, loaders: ['react-hot', 'coffee', 'cjsx']},
           {
             test: /\.jsx?$/,
-            exclude: /(node_modules|bower_components)/,
+            exclude: babelExcludeTest
             loaders: ['react-hot', 'babel']
           }
           {
             test: /\.js?$/,
-            exclude: /(node_modules|bower_components)/,
+            exclude: babelExcludeTest
             loaders: ['react-hot', 'babel']
           }
           { test: /\.less/, loaders: ['style', 'css', 'less']},
@@ -112,12 +127,12 @@ module.exports = (program, directory, stage, webpackPort = 1500, routes=[]) ->
           { test: /\.cjsx$/, loaders: ['coffee', 'cjsx']},
           {
             test: /\.jsx?$/,
-            exclude: /(node_modules|bower_components)/,
+            exclude: babelExcludeTest
             loaders: ['babel']
           }
           {
             test: /\.js?$/,
-            exclude: /(node_modules|bower_components)/,
+            exclude: babelExcludeTest
             loaders: ['babel']
           }
           { test: /\.less/, loaders: ['css', 'less']},
@@ -142,12 +157,12 @@ module.exports = (program, directory, stage, webpackPort = 1500, routes=[]) ->
           { test: /\.cjsx$/, loaders: ['coffee', 'cjsx']},
           {
             test: /\.jsx?$/,
-            exclude: /(node_modules|bower_components)/,
+            exclude: babelExcludeTest
             loaders: ['babel']
           }
           {
             test: /\.js?$/,
-            exclude: /(node_modules|bower_components)/,
+            exclude: babelExcludeTest
             loaders: ['babel']
           }
           { test: /\.less/, loaders: ['style', 'css', 'less']},
