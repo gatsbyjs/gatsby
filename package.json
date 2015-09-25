@@ -44,7 +44,6 @@
     "react": "^0.13.3",
     "react-document-title": "^1.0.2",
     "react-hot-loader": "^1.2.7",
-    "react-responsive-grid": "^0.2.0",
     "react-router": "^0.13.3",
     "rimraf": "^2.4.2",
     "static-site-generator-webpack-plugin": "^1.0.0",
