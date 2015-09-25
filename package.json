@@ -19,7 +19,7 @@
     "coffee-loader": "^0.7.2",
     "coffee-script": "^1.9.3",
     "commander": "^2.8.1",
-    "css-loader": "^0.14.4",
+    "css-loader": "^0.19.0",
     "front-matter": "^1.0.0",
     "fs-extra": "^0.19.0",
     "glob": "^5.0.7",
