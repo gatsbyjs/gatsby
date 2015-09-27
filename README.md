@@ -200,6 +200,7 @@ files which start with an underscore
 ## Sites built with Gatsby
 * [bricolage.io](http://bricolage.io?utm_source=github.com)
 * [relaterocket.co](https://relaterocket.co?utm_source=github.com)
+* [reindex.io](https://www.reindex.io)
 * [Add yours!](https://github.com/gatsbyjs/gatsby/issues/new)
 
 ## FAQ
