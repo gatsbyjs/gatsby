@@ -190,7 +190,7 @@ module.exports = (program, directory, stage, webpackPort = 1500, routes=[]) ->
     devtool: 'eval'
     output: output()
     resolveLoader: {
-      modulesDirectories: ["#{__dirname}/../../node_modules", "#{__dirname}/../loaders"]
+      modulesDirectories: ["#{directory}/node_modules", "#{__dirname}/../../node_modules", "#{__dirname}/../loaders"]
     },
     plugins: plugins()
     resolve: resolve()
