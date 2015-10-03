@@ -3,6 +3,7 @@ filter = require 'lodash/collection/filter'
 sortBy = require 'lodash/collection/sortBy'
 last = require 'lodash/array/last'
 includes = require 'underscore.string/include'
+{ config } = require 'config'
 
 module.exports = (pages, pagesReq) ->
   templates = {}
@@ -11,6 +12,15 @@ module.exports = (pages, pagesReq) ->
     path: "/"
     handler: pagesReq './_template'
   })
+
+  # Adds a handler for <NotFoundRoute /> that will serve as a 404 Page
+  if config.notFound
+    templates.rootNotFound = Router.createNotFoundRoute({
+      name: 'root-not-found'
+      path: "*"
+      handler: pagesReq './_404'
+      parentRoute: templates.root
+    })
 
   # Arrange pages in data structure according to their position
   # on the file system. Then use this to create routes.
