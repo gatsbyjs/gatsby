@@ -14,7 +14,8 @@ it'll be converted to `/docs/index.html`.
 Supports Markdown, HTML, and React.js components out of the box. Easy to add
 support for additional files types.
 
-Leverages [React Router's "nested component hierarchy"](http://rackt.github.io/react-router/#Router Overview)
+Leverages [React Router's "nested component
+hierarchy"](https://github.com/rackt/react-router/blob/master/docs/Introduction.md)
 to make templating incredibly intuitive.
 
 All templates, css, and content are hot reloadable.
