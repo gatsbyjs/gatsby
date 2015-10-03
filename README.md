@@ -41,7 +41,7 @@ All templates, css, and content are hot reloadable.
 * Live editing on every part of your site. Dramatically speed development.
 
 ### I'm already building a server-rendered React.js site, is Gatsby a good fit?
-If you're site falls closer to the site end of the app<---->site spectrum
+If your site falls closer to the site end of the app<---->site spectrum
 then yes.
 
 Gatsby is an excellent fit for blogs, marketing sites, docs sites, etc. Proper web
