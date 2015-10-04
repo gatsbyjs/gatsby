@@ -1,11 +1,11 @@
-import React from 'react';
-import Router from 'react-router';
-import find from 'lodash/collection/find';
-import filter from 'lodash/collection/filter';
-import createRoutes from 'create-routes';
-import HTML from 'html';
-import app from 'app';
-import values from 'config';
+var React = require('react');
+var Router = require('react-router');
+var find = require('lodash/collection/find');
+var filter = require('lodash/collection/filter');
+var createRoutes = require('create-routes');
+var HTML = require('html');
+var app = require('app');
+var values = require('config');
 
 var pages = values.pages, config = values.config;
 var routes = {};

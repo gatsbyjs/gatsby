@@ -1,10 +1,10 @@
-import React from 'react';
-import Router from 'react-router';
-import find from 'lodash/collection/find';
-import filter from 'lodash/collection/filter';
-import createRoutes from 'create-routes';
-import app from 'app';
-import first from 'lodash/array/first';
+var React = require('react');
+var Router = require('react-router');
+var find = require('lodash/collection/find');
+var filter = require('lodash/collection/filter');
+var createRoutes = require('create-routes');
+var app = require('app');
+var first = require('lodash/array/first');
 
 function loadConfig(cb) {
   var stuff = require('config');
