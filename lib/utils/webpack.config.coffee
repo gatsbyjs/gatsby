@@ -89,6 +89,13 @@ module.exports = (program, directory, stage, webpackPort = 1500, routes=[]) ->
       modulesDirectories: [directory, "#{__dirname}/../isomorphic", "#{directory}/node_modules", "node_modules"]
     }
 
+  devtool = ->
+    switch stage
+      when "serve", "static"
+        "eval"
+      when "production"
+        "source-map"
+
   module = ->
     switch stage
       when "serve"
@@ -187,7 +194,7 @@ module.exports = (program, directory, stage, webpackPort = 1500, routes=[]) ->
       __filename: true
     entry: entry()
     debug: true
-    devtool: 'eval'
+    devtool: devtool()
     output: output()
     resolveLoader: {
       modulesDirectories: ["#{directory}/node_modules", "#{__dirname}/../../node_modules", "#{__dirname}/../loaders"]
