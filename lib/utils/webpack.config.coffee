@@ -55,7 +55,7 @@ module.exports = (program, directory, stage, webpackPort = 1500, routes=[]) ->
           new webpack.HotModuleReplacementPlugin(),
           new webpack.DefinePlugin({
             "process.env": {
-              NODE_ENV: JSON.stringify("development")
+              NODE_ENV: JSON.stringify(if process.env.NODE_ENV then process.env.NODE_ENV else "development")
             }
             __GH_PAGES__: JSON.stringify(JSON.parse(process.env.GATSBY_ENV is "gh-pages"))
           })
@@ -65,7 +65,7 @@ module.exports = (program, directory, stage, webpackPort = 1500, routes=[]) ->
           new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
           new webpack.DefinePlugin({
             "process.env": {
-              NODE_ENV: JSON.stringify("production")
+              NODE_ENV: JSON.stringify(if process.env.NODE_ENV then process.env.NODE_ENV else "production")
             }
             __GH_PAGES__: JSON.stringify(JSON.parse(process.env.GATSBY_ENV is "gh-pages"))
           })
@@ -77,7 +77,7 @@ module.exports = (program, directory, stage, webpackPort = 1500, routes=[]) ->
           new StaticSiteGeneratorPlugin('bundle.js', routes)
           new webpack.DefinePlugin({
             "process.env": {
-              NODE_ENV: JSON.stringify("production")
+              NODE_ENV: JSON.stringify(if process.env.NODE_ENV then process.env.NODE_ENV else "production")
             }
             __GH_PAGES__: JSON.stringify(JSON.parse(process.env.GATSBY_ENV is "gh-pages"))
           })
