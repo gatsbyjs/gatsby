@@ -75,7 +75,7 @@ partially built sites preconfigured to help you get moving faster on
 creating a certain type of site.
 
 When creating a new site, you can optionally specify a starter to
-base your new site on e.g. `gatsby new [URL_OF_STARTER]`
+base your new site on e.g. `gatsby new [SITE_DIRECTORY] [URL_OF_STARTER]`
 
 For example, to quickly create a blog using Gatsby, you could install
 the Gatsby Starter Blog by running:
