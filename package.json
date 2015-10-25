@@ -53,7 +53,7 @@
     "typography": "^0.3.5",
     "underscore": "^1.8.3",
     "underscore.string": "^3.1.1",
-    "webpack": "^1.9.8",
+    "webpack": "^1.12.2",
     "webpack-dev-server": "^1.9.0"
   },
   "homepage": "https://github.com/gatsby-group/gatsby#readme",
