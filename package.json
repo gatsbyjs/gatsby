@@ -12,7 +12,7 @@
   "dependencies": {
     "async": "^1.2.1",
     "babel": "^5.8.29",
-    "babel-core": "^5.5.8",
+    "babel-core": "^5.8.33",
     "babel-loader": "^5.1.4",
     "boom": "^2.7.2",
     "cjsx-loader": "^2.0.1",
