@@ -203,6 +203,7 @@ files which start with an underscore
 * [relaterocket.co](https://relaterocket.co?utm_source=github.com)
 * [reindex.io](https://www.reindex.io)
 * [syncano.io](https://www.syncano.io)
+* [fixt.co](https://www.fixt.co)
 * [Add yours!](https://github.com/gatsbyjs/gatsby/issues/new)
 
 ## FAQ
