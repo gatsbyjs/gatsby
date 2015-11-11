@@ -1,4 +1,5 @@
 var React = require('react');
+var ReactDOMServer = require('react-dom/server');
 var Router = require('react-router');
 var find = require('lodash/collection/find');
 var filter = require('lodash/collection/filter');
@@ -41,7 +42,7 @@ module.exports = function(locals, callback) {
     body = "";
     html = "";
     try {
-      body = React.renderToString(
+      body = ReactDOMServer.renderToString(
         <Handler
           config={config}
           pages={pages}
@@ -50,7 +51,7 @@ module.exports = function(locals, callback) {
           state={state}
         />
       );
-      html = "<!DOCTYPE html>\n" + React.renderToStaticMarkup(
+      html = "<!DOCTYPE html>\n" + ReactDOMServer.renderToStaticMarkup(
         <HTML
           config={config}
           page={page}
