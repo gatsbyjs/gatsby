@@ -1,7 +1,5 @@
-[![npm
-package](https://img.shields.io/npm/v/gatsby.svg?style=flat-square)](https://www.npmjs.org/package/gatsby)
-[![gatsby channel on
-slack](https://img.shields.io/badge/slack-gatsby@reactiflux-61DAFB.svg?style=flat-square)](http://www.reactiflux.com)
+[![npm package](https://img.shields.io/npm/v/gatsby.svg?style=flat-square)](https://www.npmjs.org/package/gatsby)
+[![gatsby channel on discord](https://img.shields.io/badge/discord-gatsby%40reactiflux-738bd7.svg?style=flat-square)](https://discord.gg/0ZcbPKXt5bVoxkfV)
 
 # Gatsby
 Transform plain text into dynamic blogs and websites using the latest
