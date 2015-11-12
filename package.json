@@ -55,6 +55,7 @@
     "underscore": "^1.8.3",
     "underscore.string": "^3.1.1",
     "webpack": "^1.12.8",
+    "webpack-configurator": "^0.3.0",
     "webpack-dev-server": "^1.12.1",
     "webpack-require": "0.0.15"
   },

@@ -188,7 +188,28 @@ module.exports = React.createClass({
 })
 ```
 
-### How to write your own loaders/wrappers
+### How to use your own loaders
+
+Create a `gatsby.config.js` in the root of your
+project. `gatsby.config.js` exports a function which accepts a config
+object and an environment string. The environment string will be one
+of `serve`, `static` or `production`.
+
+Consider the following example which removes the default css loader
+and replaces it with a loader that uses css-modules.
+
+```javascript
+modules.exports = function(config, env) {
+  config.removeLoader('css');
+  config.loader('css', function(cfg) {
+    cfg.test = /\.css$/;
+    cfg.loader = 'style!css?modules'
+    return cfg
+  })
+});
+```
+
+### How to write your own wrappers
 * Coming...
 
 ### Structure of a Gatsby site
