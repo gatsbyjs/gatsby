@@ -1,4 +1,5 @@
 var React = require('react');
+var ReactDOM = require('react-dom');
 var Router = require('react-router');
 var find = require('lodash/collection/find');
 var filter = require('lodash/collection/filter');
@@ -44,7 +45,7 @@ loadConfig(function() {
         if (app.onRouteChange) {
           app.onRouteChange(state, page, pages, config);
         }
-        return React.render(
+        return ReactDOM.render(
           <Handler
             config={config}
             pages={pages}
