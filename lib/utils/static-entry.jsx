@@ -7,9 +7,16 @@ var createRoutes = require('create-routes');
 var HTML = require('html');
 var app = require('app');
 var values = require('config');
+var helpers = require('../isomorphic/gatsby-helpers');
+var link = helpers.link;
 
 var pages = values.pages, config = values.config;
 var routes = {};
+
+var linkPrefix = config.linkPrefix
+if (!__PREFIX_LINKS__ || !linkPrefix) {
+  linkPrefix = ""
+}
 
 app.loadContext(function(pagesReq) {
   routes = createRoutes(pages, pagesReq);
@@ -21,10 +28,10 @@ app.loadContext(function(pagesReq) {
 });
 
 module.exports = function(locals, callback) {
-  return Router.run([routes], locals.path, function(Handler, state) {
+  return Router.run([routes], link(locals.path), function(Handler, state) {
     var body, childPages, childrenPaths, html, page;
     page = find(pages, function(page) {
-      return page.path === state.pathname;
+      return linkPrefix + page.path === state.path;
     });
 
     // Pull out direct children of the template for this path.
@@ -33,7 +40,7 @@ module.exports = function(locals, callback) {
     });
     if (childrenPaths) {
       childPages = filter(pages, function(page) {
-        return childrenPaths.indexOf(page.path) >= 0;
+        return childrenPaths.indexOf(linkPrefix + page.path) >= 0;
       });
     } else {
       childPages = [];

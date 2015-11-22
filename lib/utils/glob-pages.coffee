@@ -71,15 +71,6 @@ module.exports = (directory, callback) ->
       else if parsed.name is "_template"
         pageData.templatePath = "/" + parsed.dirname + "/"
 
-      # If we're building for gh-pages
-      if process.env.GATSBY_ENV is "gh-pages" and
-          siteConfig.ghPagesURLPrefix?
-        if pageData.path
-          pageData.path = siteConfig.ghPagesURLPrefix + pageData.path
-        else if pageData.templatePath
-          pageData.templatePath =
-            siteConfig.ghPagesURLPrefix + pageData.templatePath
-
       pagesData.push pageData
 
     callback(null, pagesData)

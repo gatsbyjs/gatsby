@@ -57,7 +57,7 @@ module.exports = (program, directory, stage, webpackPort = 1500, routes=[]) ->
             "process.env": {
               NODE_ENV: JSON.stringify(if process.env.NODE_ENV then process.env.NODE_ENV else "development")
             }
-            __GH_PAGES__: JSON.stringify(JSON.parse(process.env.GATSBY_ENV is "gh-pages"))
+            __PREFIX_LINKS__: program.prefixLinks
           })
         ]
       when "production"
@@ -67,7 +67,7 @@ module.exports = (program, directory, stage, webpackPort = 1500, routes=[]) ->
             "process.env": {
               NODE_ENV: JSON.stringify(if process.env.NODE_ENV then process.env.NODE_ENV else "production")
             }
-            __GH_PAGES__: JSON.stringify(JSON.parse(process.env.GATSBY_ENV is "gh-pages"))
+            __PREFIX_LINKS__: program.prefixLinks
           })
           new webpack.optimize.DedupePlugin()
           new webpack.optimize.UglifyJsPlugin()
@@ -79,7 +79,7 @@ module.exports = (program, directory, stage, webpackPort = 1500, routes=[]) ->
             "process.env": {
               NODE_ENV: JSON.stringify(if process.env.NODE_ENV then process.env.NODE_ENV else "production")
             }
-            __GH_PAGES__: JSON.stringify(JSON.parse(process.env.GATSBY_ENV is "gh-pages"))
+            __PREFIX_LINKS__: program.prefixLinks
           })
         ]
 

@@ -19,11 +19,15 @@ function loadConfig(cb) {
 
 loadConfig(function() {
   return app.loadContext(function(pagesReq) {
-    var config, pages, ref, relativePath, router, routes;
+    var config, pages, ref, relativePath, router, routes, linkPrefix;
     ref = require('config'),
     pages = ref.pages,
     config = ref.config,
     relativePath = ref.relativePath;
+    linkPrefix = config.linkPrefix
+    if (!__PREFIX_LINKS__ || !linkPrefix) {
+      linkPrefix = ""
+    }
 
     routes = createRoutes(pages, pagesReq);
     // Remove templates files.
@@ -38,13 +42,14 @@ loadConfig(function() {
       return router = Router.run([routes], Router.HistoryLocation, function(Handler, state) {
         var page;
         page = find(pages, function(page) {
-          return page.path === state.pathname;
+          return linkPrefix + page.path === state.path;
         });
 
         // Let app know the route is changing.
         if (app.onRouteChange) {
           app.onRouteChange(state, page, pages, config);
         }
+
         return ReactDOM.render(
           <Handler
             config={config}

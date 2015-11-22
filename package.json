@@ -42,8 +42,8 @@
     "parse-filepath": "^0.5.0",
     "raw-loader": "^0.5.1",
     "react": "^0.14.2",
-    "react-dom": "^0.14.2",
     "react-document-title": "^2.0.1",
+    "react-dom": "^0.14.2",
     "react-hot-loader": "^1.2.7",
     "react-router": "^0.13.5",
     "rimraf": "^2.4.2",
@@ -54,8 +54,9 @@
     "typography": "^0.6.2",
     "underscore": "^1.8.3",
     "underscore.string": "^3.1.1",
-    "webpack": "^1.9.8",
-    "webpack-dev-server": "^1.9.0"
+    "webpack": "^1.12.8",
+    "webpack-dev-server": "^1.12.1",
+    "webpack-require": "0.0.15"
   },
   "homepage": "https://github.com/gatsby-group/gatsby#readme",
   "keywords": [

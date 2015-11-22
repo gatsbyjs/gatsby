@@ -4,12 +4,13 @@ sortBy = require 'lodash/collection/sortBy'
 last = require 'lodash/array/last'
 includes = require 'underscore.string/include'
 { config } = require 'config'
+{ link } = require './gatsby-helpers'
 
 module.exports = (pages, pagesReq) ->
   templates = {}
   templates.root = Router.createRoute({
     name: 'root-template'
-    path: "/"
+    path: link("/")
     handler: pagesReq './_template'
   })
 
@@ -41,7 +42,7 @@ module.exports = (pages, pagesReq) ->
 
     templates[templateFile.file.dirname] = Router.createRoute({
       name: templateFile.file.dirname + "-template"
-      path: templateFile.templatePath
+      path: link(templateFile.templatePath)
       parentRoute: parentRoute
       handler: pagesReq "./" + templateFile.requirePath
     })
@@ -98,7 +99,7 @@ module.exports = (pages, pagesReq) ->
     else
       Router.createRoute({
         name: page.path
-        path: page.path
+        path: link(page.path)
         parentRoute: parentRoute
         handler: handler
       })

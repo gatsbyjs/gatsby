@@ -6,6 +6,7 @@ build = require '../lib/utils/build'
 
 program
   .version(packageJson.version)
+  .option('--prefix-links', 'Build site with links prefixed (set prefix in your config).')
   .parse(process.argv)
 
 relativeDirectory = program.args[0]
