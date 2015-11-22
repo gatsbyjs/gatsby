@@ -188,18 +188,32 @@ module.exports = React.createClass({
 })
 ```
 
-### How to use your own loaders
+### How to use your own webpack loaders
 
-Create a `gatsby.config.js` in the root of your
-project. `gatsby.config.js` exports a function which accepts a config
-object and an environment string. The environment string will be one
-of `serve`, `static` or `production`.
+Gatsby uses
+[webpack-configurator](https://github.com/lewie9021/webpack-configurator)
+to make changing the webpack loaders easy. The default set of loaders
+is organized by [key](lib/utils/webpack.config.js#L125).
+
+Gatsby uses `gatsby.config.js` to pass control to the user before
+resolving the final webpack configuration. `gatsby.config.js` should
+live in the root of your project and export a function which accepts a
+webpack-configurator config object and an environment string. The
+environment string will be one of `develop`, `static` or
+`production`.
+
+Create a `gatsby.config.js` in the root of your project:
+
+```javscript
+module.exports = function(config, env) {
+  // edit loaders here
+}
 
 Consider the following example which removes the default css loader
 and replaces it with a loader that uses css-modules.
 
 ```javascript
-modules.exports = function(config, env) {
+module.exports = function(config, env) {
   config.removeLoader('css');
   config.loader('css', function(cfg) {
     cfg.test = /\.css$/;
@@ -208,6 +222,54 @@ modules.exports = function(config, env) {
   })
 });
 ```
+
+Each loader (`cfg` in the above example) can be a valid
+[webpack loader](https://webpack.github.io/docs/configuration.html#module-loaders)
+and there are a host of
+[preexisting loaders](https://webpack.github.io/docs/list-of-loaders.html)
+which you can use to enhance Gatsby.
+
+It is also possible to
+[write your own loaders](https://webpack.github.io/docs/how-to-write-a-loader.html).
+
+### How to use your own webpack plugins
+
+Similar to the loaders, plugins are handled via
+[webpack-configurator](https://github.com/lewie9021/webpack-configurator)
+and `gatsby.config.js`.
+
+If we wanted to extract all of the css in our project into a since
+`styles.css` file for production, we could add the
+`ExtractTextWebpackPlugin`. To do this, we need to modify the loader
+and add the plugin when generating the static html for our site.
+
+```javascript
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
+
+module.exports = function(config, env) {
+  if(env === 'static') {
+    config.removeLoader('css');
+    config.loader('css', function(cfg) {
+      cfg.test = /\.css$/;
+      cfg.loader = ExtractTextPlugin.extract('css?minimize');
+      return cfg
+    })
+    config.plugin('extract-css',
+                  ExtractTextPlugin,
+                  ["styles.css", { allChunks: true }]);
+  }
+}
+```
+
+Each plugin (`extract-css` in the above example) can be a valid
+[webpack plugin](https://webpack.github.io/docs/using-plugins.html)
+and there are a host of
+[preexisting plugins](https://webpack.github.io/docs/list-of-plugins.html)
+which you can use to enhance Gatsby.
+
+It is also possible to
+[write your own plugins](https://webpack.github.io/docs/how-to-write-a-plugin.html).
+
 
 ### How to write your own wrappers
 * Coming...
