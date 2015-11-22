@@ -19,7 +19,7 @@ babelExcludeTest = (absPath) ->
 module.exports = (program, directory, stage, webpackPort = 1500, routes=[]) ->
   output = ->
     switch stage
-      when "serve"
+      when "develop"
         path: directory
         filename: 'bundle.js'
         publicPath: "http://#{program.host}:#{webpackPort}/"
@@ -33,7 +33,7 @@ module.exports = (program, directory, stage, webpackPort = 1500, routes=[]) ->
 
   entry = ->
     switch stage
-      when "serve"
+      when "develop"
         [
           "#{__dirname}/../../node_modules/webpack-dev-server/client?#{program.host}:#{webpackPort}",
           "#{__dirname}/../../node_modules/webpack/hot/only-dev-server",
@@ -50,7 +50,7 @@ module.exports = (program, directory, stage, webpackPort = 1500, routes=[]) ->
 
   plugins = ->
     switch stage
-      when "serve"
+      when "develop"
         [
           new webpack.HotModuleReplacementPlugin(),
           new webpack.DefinePlugin({
@@ -91,14 +91,14 @@ module.exports = (program, directory, stage, webpackPort = 1500, routes=[]) ->
 
   devtool = ->
     switch stage
-      when "serve", "static"
+      when "develop", "static"
         "eval"
       when "production"
         "source-map"
 
   module = ->
     switch stage
-      when "serve"
+      when "develop"
         loaders: [
           { test: /\.css$/, loaders: ['style', 'css']},
           { test: /\.cjsx$/, loaders: ['react-hot', 'coffee', 'cjsx']},

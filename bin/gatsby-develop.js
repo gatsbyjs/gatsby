@@ -2,4 +2,4 @@
 require('babel/register');
 
 require('coffee-script/register');
-require('./serve');
+require('./develop');

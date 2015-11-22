@@ -2,7 +2,7 @@ program = require 'commander'
 path = require 'path'
 
 packageJson = require '../package.json'
-serve = require '../lib/utils/serve'
+develop = require '../lib/utils/develop'
 
 program
   .version(packageJson.version)
@@ -17,4 +17,4 @@ directory = path.resolve(relativeDirectory)
 program.directory = directory
 program.relativeDirectory = relativeDirectory
 
-serve(program)
+develop(program)

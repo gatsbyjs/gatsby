@@ -63,8 +63,8 @@ Contributions welcome!
    directory for your Gatsby project and adds the minimal files
    needed.
 2. `cd my-test-gatsby-site`
-3. `gatsby serve` — Gatsby will compile your code using Webpack and
-   serve the site at [localhost:8000](http://localhost:8000)
+3. `gatsby develop` — Gatsby will start a hot-reloading development
+   server accessible at [localhost:8000](http://localhost:8000)
 4. See the tutorial below for more.
 
 ### Gatsby Starters
@@ -98,7 +98,7 @@ include yours!
 1. Install documentation site starter `gatsby new docs-site
    gh:gatsbyjs/gatsby-starter-documentation`
 2. type `cd docs-site`
-2. type `gatsby serve`
+2. type `gatsby develop`
 3. Open site in browser at [localhost:8000](http://localhost:8000). Verify clicking on links works.
 4. Try editing the site's config file `config.toml`.
    Change the `siteTitle` key. The site's title should change shortly
@@ -114,7 +114,7 @@ include yours!
    this. Ideally this new file would be hot reloaded like other changes
    but I haven't figured out how to make this happen yet ([help
    appreciated here](https://github.com/webpack/webpack/issues/1162)).
-   So to see your new page, restart `gatsby serve` and then refresh your
+   So to see your new page, restart `gatsby develop` and then refresh your
    browser.
 7. Build your site `gatsby build`. The site is built to the `/public`
    directory. Serve the site by going into the public directory and
