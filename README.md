@@ -218,3 +218,25 @@ be used:
   "stage": 0
 }
 ```
+
+### Deploying to Github Pages (and other times your site's links need prefixes)
+Gatsby supports automatically prefixing links with its `link` helper function.
+
+To use simply import the function and run all links in your site
+thorough it e.g.
+
+```javascript
+import { link } from 'gatsby-helpers'
+
+link('/')
+// During development this will return "/"
+// When deployed to example.github.io/your-project/ this will return "/your-project/"
+```
+
+Set the prefix in your config file e.g. `linkPrefix = '/your-project'`
+
+Then finally when building your site run `gatsby build --prefix-links`
+
+Both the sample sites are deployed to github pages and use link
+prefixing. Read the
+[documentation](https://github.com/gatsbyjs/gatsby-starter-documentation) and [blog](https://github.com/gatsbyjs/gatsby-starter-blog) source for more help.
