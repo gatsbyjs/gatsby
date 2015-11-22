@@ -42,7 +42,8 @@ loadConfig(function() {
       return router = Router.run([routes], Router.HistoryLocation, function(Handler, state) {
         var page;
         page = find(pages, function(page) {
-          return linkPrefix + page.path === state.path;
+          var path = linkPrefix + page.path
+          return path === state.path || path === state.pathname;
         });
 
         // Let app know the route is changing.
