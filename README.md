@@ -219,7 +219,7 @@ be used:
 }
 ```
 
-### Deploying to Github Pages (and other times your site's links need prefixes)
+### Deploying to Github Pages (and other hosts where your site's links need prefixes)
 Gatsby supports automatically prefixing links with its `link` helper function.
 
 To use simply import the function and run all links in your site
