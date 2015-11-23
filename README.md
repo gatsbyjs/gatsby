@@ -237,6 +237,10 @@ Set the prefix in your config file e.g. `linkPrefix = '/your-project'`
 
 Then finally when building your site run `gatsby build --prefix-links`
 
+The built site is now in `/public`. These files need copied to your
+`gh-pages` branch and committed and pushed`. You can do this manually or
+use the handy `[gh-pages](https://www.npmjs.com/package/gh-pages)` cli tool.
+
 Both the sample sites are deployed to github pages and use link
-prefixing. Read the
-[documentation](https://github.com/gatsbyjs/gatsby-starter-documentation) and [blog](https://github.com/gatsbyjs/gatsby-starter-blog) source for more help.
+prefixing. Read their source for more help:
+[documentation](https://github.com/gatsbyjs/gatsby-starter-documentation)/[blog](https://github.com/gatsbyjs/gatsby-starter-blog).
