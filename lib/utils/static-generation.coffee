@@ -2,7 +2,7 @@ require('node-cjsx').transform()
 webpack = require 'webpack'
 globPages = require './glob-pages'
 webpackConfig = require './webpack.config'
-path = require 'path'
+getUserGatsbyConfig = require './get-user-gatsby-config'
 
 module.exports = (program, callback) ->
   {relativeDirectory, directory} = program
@@ -12,7 +12,7 @@ module.exports = (program, callback) ->
 
     #### Static site generation.
     compilerConfig = webpackConfig(program, directory, 'static', null, routes)
-    config = require(path.resolve(process.cwd(), './gatsby.config.js'))(compilerConfig, 'static');
+    config = getUserGatsbyConfig(compilerConfig, 'static')
 
     webpack(config.resolve()).run (err, stats) ->
       if err
