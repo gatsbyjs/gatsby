@@ -12,7 +12,6 @@ module.exports = (program, callback) ->
 
     #### Static site generation.
     compilerConfig = webpackConfig(program, directory, 'static', null, routes)
-    console.log(compilerConfig)
     config = require(path.resolve(process.cwd(), './gatsby.config.js'))(compilerConfig, 'static');
 
     webpack(config.resolve()).run (err, stats) ->
