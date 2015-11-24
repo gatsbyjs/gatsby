@@ -2,6 +2,7 @@ require('node-cjsx').transform()
 webpack = require 'webpack'
 globPages = require './glob-pages'
 webpackConfig = require './webpack.config'
+getUserGatsbyConfig = require './get-user-gatsby-config'
 
 module.exports = (program, callback) ->
   {relativeDirectory, directory} = program
@@ -11,8 +12,9 @@ module.exports = (program, callback) ->
 
     #### Static site generation.
     compilerConfig = webpackConfig(program, directory, 'static', null, routes)
+    config = getUserGatsbyConfig(compilerConfig, 'static')
 
-    webpack(compilerConfig).run (err, stats) ->
+    webpack(config.resolve()).run (err, stats) ->
       if err
         return callback(err, stats)
       if stats.hasErrors()
