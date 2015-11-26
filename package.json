@@ -39,6 +39,7 @@
     "node-cjsx": "^1.0.0",
     "node-libs-browser": "^0.5.2",
     "null-loader": "^0.1.1",
+    "object-assign": "^4.0.1",
     "parse-filepath": "^0.5.0",
     "raw-loader": "^0.5.1",
     "react": "^0.14.2",
