@@ -1,3 +1,9 @@
+// Quick hack for having constant reactids when rendering in Server-side
+var ServerReactRootIndex = require('react/lib/ServerReactRootIndex');
+ServerReactRootIndex.createReactRootIndex = function(){
+    return "gatsby";
+};
+
 var React = require('react');
 var ReactDOMServer = require('react-dom/server');
 var Router = require('react-router');
