@@ -17,7 +17,6 @@ else
 
 initStarter starter, {
   rootPath: rootPath
-  commandName: 'gatsby new'
   logger: loggy
 }, (error) ->
   if error

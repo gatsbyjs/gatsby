@@ -1,59 +1,62 @@
 // Quick hack for having constant reactids when rendering in Server-side
-var ServerReactRootIndex = require('react/lib/ServerReactRootIndex');
-ServerReactRootIndex.createReactRootIndex = function(){
-    return "gatsby";
-};
-
-var React = require('react');
-var ReactDOMServer = require('react-dom/server');
-var Router = require('react-router');
-var find = require('lodash/collection/find');
-var filter = require('lodash/collection/filter');
-var createRoutes = require('create-routes');
-var HTML = require('html');
-var app = require('app');
-var values = require('config');
-var helpers = require('../isomorphic/gatsby-helpers');
-var link = helpers.link;
-
-var pages = values.pages, config = values.config;
-var routes = {};
-
-var linkPrefix = config.linkPrefix
-if (!__PREFIX_LINKS__ || !linkPrefix) {
-  linkPrefix = ""
+import ServerReactRootIndex from 'react/lib/ServerReactRootIndex'
+ServerReactRootIndex.createReactRootIndex = () => {
+  return 'gatsby'
 }
 
-app.loadContext(function(pagesReq) {
-  routes = createRoutes(pages, pagesReq);
+import React from 'react'
+import ReactDOMServer from 'react-dom/server'
+import Router from 'react-router'
+import find from 'lodash/collection/find'
+import filter from 'lodash/collection/filter'
+import createRoutes from 'create-routes'
+import HTML from 'html'
+import app from 'app'
+import values from 'config'
+import helpers from '../isomorphic/gatsby-helpers'
+const link = helpers.link
+let pages = values.pages
+const config = values.config
+let routes = {}
+let linkPrefix = config.linkPrefix
+if (!__PREFIX_LINKS__ || !linkPrefix) {
+  linkPrefix = ''
+}
+
+app.loadContext((pagesReq) => {
+  routes = createRoutes(pages, pagesReq)
 
   // Remove templates files.
-  return pages = filter(pages, function(page) {
-    return page.path != null;
-  });
-});
+  pages = filter(pages, (page) => {
+    return page.path !== null
+  })
+})
 
-module.exports = function(locals, callback) {
-  return Router.run([routes], link(locals.path), function(Handler, state) {
-    var body, childPages, childrenPaths, html, page;
-    page = find(pages, function(page) {
-      return linkPrefix + page.path === state.path;
-    });
+module.exports = (locals, callback) => {
+  return Router.run([routes], link(locals.path), (Handler, state) => {
+    let body
+    let childPages
+    let childrenPaths
+    let html
+    let page
+    page = find(pages, (p) => {
+      return linkPrefix + p.path === state.path
+    })
 
     // Pull out direct children of the template for this path.
-    childrenPaths = state.routes[state.routes.length - 2].childRoutes.map(function(route) {
-      return route.path;
-    });
+    childrenPaths = state.routes[state.routes.length - 2].childRoutes.map((route) => {
+      return route.path
+    })
     if (childrenPaths) {
-      childPages = filter(pages, function(page) {
-        return childrenPaths.indexOf(linkPrefix + page.path) >= 0;
-      });
+      childPages = filter(pages, (p) => {
+        return childrenPaths.indexOf(linkPrefix + p.path) >= 0
+      })
     } else {
-      childPages = [];
+      childPages = []
     }
 
-    body = "";
-    html = "";
+    body = ''
+    html = ''
     try {
       body = ReactDOMServer.renderToString(
         <Handler
@@ -61,21 +64,15 @@ module.exports = function(locals, callback) {
           pages={pages}
           page={page}
           childPages={childPages}
-          state={state}
-        />
-      );
-      html = "<!DOCTYPE html>\n" + ReactDOMServer.renderToStaticMarkup(
-        <HTML
-          config={config}
-          page={page}
-          body={body}
-        />
-      );
-    }
-    catch (e) {
-      console.error(e.stack);
+          state={state} />
+      )
+      html = '<!DOCTYPE html>\n' + ReactDOMServer.renderToStaticMarkup(
+          <HTML config={config} page={page} body={body} />
+      )
+    } catch (e ) {
+      console.error(e.stack)
     }
 
-    return callback(null, html);
-  });
-};
+    return callback(null, html)
+  })
+}
