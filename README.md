@@ -289,6 +289,10 @@ files which start with an underscore
 
 ## FAQ
 
+### I added a new page and it's not showing up!
+
+[Webpack doesn't currently support hot-reloading new files added to a context](https://github.com/webpack/webpack/issues/1162). When you add a new file, restart the `gatsby develop` process and your new page will show up.
+
 ### Configuring Babel
 
 Configuring babel-loader is as easy as creating a
