@@ -280,11 +280,12 @@ files which start with an underscore
 * `_template` files — coming...
 
 ## Sites built with Gatsby
-* [bricolage.io](http://bricolage.io?utm_source=github.com)
+* [bricolage.io](http://bricolage.io?utm_source=github.com) ([source](https://github.com/KyleAMathews/blog))
 * [relaterocket.co](https://relaterocket.co?utm_source=github.com)
 * [reindex.io](https://www.reindex.io)
 * [syncano.io](https://www.syncano.io)
 * [fixt.co](https://www.fixt.co)
+* [graphene-python.org](http://graphene-python.org/) ([source](https://github.com/graphql-python/graphene/tree/master/docs))
 * [Add yours!](https://github.com/gatsbyjs/gatsby/issues/new)
 
 ## FAQ
