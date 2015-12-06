@@ -3,11 +3,13 @@ webpack = require 'webpack'
 globPages = require './glob-pages'
 webpackConfig = require './webpack.config'
 getUserGatsbyConfig = require './get-user-gatsby-config'
+debug = require('debug')('gatsby:static')
 
 module.exports = (program, callback) ->
   {relativeDirectory, directory} = program
 
   globPages directory, (err, pages) ->
+    debug('generating static site')
     routes = pages.filter((page) -> page.path?).map((page) -> page.path)
 
     #### Static site generation.

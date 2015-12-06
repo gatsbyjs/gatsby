@@ -5,6 +5,7 @@ fs = require 'fs'
 frontMatter = require 'front-matter'
 _ = require 'underscore'
 toml = require('toml')
+debug = require('debug')('gatsby:glob')
 
 module.exports = (directory, callback) ->
   # Read in site config.
@@ -73,4 +74,5 @@ module.exports = (directory, callback) ->
 
       pagesData.push pageData
 
+    debug('globbed', pagesData.length, 'pages');
     callback(null, pagesData)
