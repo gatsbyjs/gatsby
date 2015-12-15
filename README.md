@@ -204,10 +204,12 @@ environment string will be one of `develop`, `static` or
 
 Create a `gatsby.config.js` in the root of your project:
 
-```javscript
+```javascript
 module.exports = function(config, env) {
   // edit loaders here
+  return config;
 }
+```
 
 Consider the following example which removes the default css loader
 and replaces it with a loader that uses css-modules.
@@ -220,6 +222,7 @@ module.exports = function(config, env) {
     cfg.loader = 'style!css?modules'
     return cfg
   })
+  return config;
 });
 ```
 
