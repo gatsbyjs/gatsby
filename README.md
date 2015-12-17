@@ -310,6 +310,34 @@ be used:
 }
 ```
 
+### Configuring PostCSS Plugins
+
+Gatsby uses PostCSS to process CSS files by default. Let's say we
+found some great new PostCSS plugins on
+[postcss.parts](http://postcss.parts/). To add them, we can use a
+`gatsby.config.js` in the root of our project to merge in the
+additional config. In the following example, we add
+[postcss-nested](https://github.com/postcss/postcss-nested) to enable
+nested syntax and [lost](https://github.com/corysimmons/lost), which
+is a flexbox and calc based grid.
+
+```
+module.exports = function(config, env) {
+
+  if(env === 'develop' || env === 'static') {
+  // merge some postcss config into the cached webpack config
+    config.merge({
+      postcss: [
+        require('postcss-nested'),
+        require('lost')
+      ]
+    });
+  }
+
+  return config;
+}
+```
+
 ### Deploying to Github Pages (and other hosts where your site's links need prefixes)
 Gatsby supports automatically prefixing links with its `link` helper function.
 
