@@ -64,7 +64,12 @@
   "homepage": "https://github.com/gatsby-group/gatsby#readme",
   "keywords": [
     "react",
-    "ssg"
+    "ssg",
+    "markdown",
+    "jekyll",
+    "generator",
+    "blog",
+    "website"
   ],
   "license": "MIT",
   "main": "index.js",
