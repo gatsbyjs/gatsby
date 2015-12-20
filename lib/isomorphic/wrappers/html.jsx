@@ -1,10 +1,16 @@
-import React from 'react';
+import React, {PropTypes} from 'react'
 
 module.exports = React.createClass({
-  render: function() {
-    var html = this.props.page.data;
+  propTypes: {
+    page: PropTypes.shape({
+      data: PropTypes.string,
+    }),
+  },
+
+  render: function () {
+    const html = this.props.page.data
     return (
-      <div dangerouslySetInnerHTML={{__html: html}}/>
-    );
-  }
-});
+    <div dangerouslySetInnerHTML={{__html: html}} />
+    )
+  },
+})

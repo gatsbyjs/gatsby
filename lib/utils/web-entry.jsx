@@ -1,54 +1,52 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var Router = require('react-router');
-var find = require('lodash/collection/find');
-var filter = require('lodash/collection/filter');
-var createRoutes = require('create-routes');
-var app = require('app');
-var first = require('lodash/array/first');
+import React from 'react'
+import ReactDOM from 'react-dom'
+import Router from 'react-router'
+import find from 'lodash/collection/find'
+import filter from 'lodash/collection/filter'
+import createRoutes from 'create-routes'
+import app from 'app'
 
-function loadConfig(cb) {
-  var stuff = require('config');
+function loadConfig (cb) {
+  const stuff = require('config')
   if (module.hot) {
-    module.hot.accept(stuff.id, function() {
-      return cb();
-    });
+    module.hot.accept(stuff.id, function hotAccept () {
+      return cb()
+    })
   }
-  return cb();
-};
+  return cb()
+}
 
-loadConfig(function() {
-  return app.loadContext(function(pagesReq) {
-    var config, pages, ref, relativePath, router, routes, linkPrefix;
-    ref = require('config'),
-    pages = ref.pages,
-    config = ref.config,
-    relativePath = ref.relativePath;
-    linkPrefix = config.linkPrefix
+loadConfig(function loadConfigFunc () {
+  return app.loadContext(function loadContextFunc (pagesReq) {
+    let router
+    const ref = require('config')
+    let pages = ref.pages
+    const config = ref.config
+    let linkPrefix = config.linkPrefix
     if (!__PREFIX_LINKS__ || !linkPrefix) {
-      linkPrefix = ""
+      linkPrefix = ''
     }
 
-    routes = createRoutes(pages, pagesReq);
+    const routes = createRoutes(pages, pagesReq)
     // Remove templates files.
-    pages = filter(pages, function(page) {
-      return page.path != null;
-    });
+    pages = filter(pages, (page) => {
+      return page.path !== null
+    })
 
     // Route already exists meaning we're hot-reloading.
     if (router) {
-      return router.replaceRoutes([app]);
+      router.replaceRoutes([app])
     } else {
-      return router = Router.run([routes], Router.HistoryLocation, function(Handler, state) {
-        var page;
-        page = find(pages, function(page) {
-          var path = linkPrefix + page.path
-          return path === state.path || path === state.pathname;
-        });
+      router = Router.run([routes], Router.HistoryLocation, (Handler, state) => {
+        let page
+        page = find(pages, (p) => {
+          const path = linkPrefix + p.path
+          return path === state.path || path === state.pathname
+        })
 
         // Let app know the route is changing.
         if (app.onRouteChange) {
-          app.onRouteChange(state, page, pages, config);
+          app.onRouteChange(state, page, pages, config)
         }
 
         return ReactDOM.render(
@@ -56,10 +54,8 @@ loadConfig(function() {
             config={config}
             pages={pages}
             page={page}
-            state={state}
-          />, typeof window !== "undefined" ? document.getElementById("react-mount") : void 0);
-      });
+            state={state} />, typeof window !== 'undefined' ? document.getElementById('react-mount') : void 0)
+      })
     }
-
-  });
-});
+  })
+})

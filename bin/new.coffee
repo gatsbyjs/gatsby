@@ -1,8 +1,14 @@
 program = require 'commander'
-initStarter = require '../lib/utils/init-starter'
 loggy = require 'loggy'
 
 packageJson = require '../package.json'
+
+# Use compiled version of code when installed globally, otherwise use
+# babelscript version.
+if !!process.env.npm_config_global
+  initStarter = require '../dist/utils/init-starter'
+else
+  initStarter = require '../lib/utils/init-starter'
 
 program
   .version(packageJson.version)
@@ -17,7 +23,6 @@ else
 
 initStarter starter, {
   rootPath: rootPath
-  commandName: 'gatsby new'
   logger: loggy
 }, (error) ->
   if error
