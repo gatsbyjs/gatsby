@@ -20,6 +20,7 @@
     "coffee-script": "^1.9.3",
     "commander": "^2.8.1",
     "css-loader": "^0.22.0",
+    "debug": "^2.2.0",
     "front-matter": "^1.0.0",
     "fs-extra": "^0.19.0",
     "glob": "^5.0.7",
@@ -73,7 +74,7 @@
   },
   "scripts": {
     "test": "npm run lint",
-    "lint": "./node_modules/.bin/eslint --ext .js,.jsx --ignore-pattern build ."
+    "lint": "./node_modules/.bin/eslint --ext .js,.jsx --ignore-pattern dist ."
   },
   "devDependencies": {
     "babel": "^5.8.34",
