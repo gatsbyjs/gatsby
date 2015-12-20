@@ -22,5 +22,8 @@ directory = path.resolve(relativeDirectory)
 program.directory = directory
 program.relativeDirectory = relativeDirectory
 
-build(program)
-
+build program, (err) ->
+  if err?
+    throw err
+  else
+    console.log('Done')
