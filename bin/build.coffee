@@ -2,7 +2,13 @@ program = require 'commander'
 path = require 'path'
 
 packageJson = require '../package.json'
-build = require '../lib/utils/build'
+
+# Use compiled version of code when installed globally, otherwise use
+# babelscript version.
+if !!process.env.npm_config_global
+  build = require '../dist/utils/build'
+else
+  build = require '../lib/utils/build'
 
 program
   .version(packageJson.version)

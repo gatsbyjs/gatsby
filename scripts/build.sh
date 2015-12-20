@@ -1,1 +1,1 @@
-node_modules/.bin/babel lib/ --out-dir build
+node_modules/.bin/babel lib/ --out-dir dist
