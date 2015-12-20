@@ -72,10 +72,11 @@
     "url": "git+https://github.com/gatsby-group/gatsby.git"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "./node_modules/.bin/eslint --ext .js,.jsx ."
+    "test": "npm run lint",
+    "lint": "./node_modules/.bin/eslint --ext .js,.jsx --ignore-pattern build ."
   },
   "devDependencies": {
+    "babel": "^5.8.34",
     "babel-eslint": "^4.1.6",
     "eslint": "^1.10.2",
     "eslint-config-airbnb": "^1.0.2",
