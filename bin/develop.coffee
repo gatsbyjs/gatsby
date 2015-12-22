@@ -5,7 +5,7 @@ packageJson = require '../package.json'
 
 # Use compiled version of code when installed globally, otherwise use
 # babelscript version.
-if "dist" of packageJson
+if require './published'
   develop = require '../dist/utils/develop'
 else
   develop = require '../lib/utils/develop'
