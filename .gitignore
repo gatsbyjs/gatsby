@@ -24,9 +24,12 @@ build/Release
 
 # Dependency directory
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
-node_modules
+node_modules/
 examples/biz-website/public/
 examples/blog/public/
 *.un~
-dist
+dist/
 bin/published.js
+
+# JetBrains IntelliJ IDEA-based project configuration directory
+.idea/

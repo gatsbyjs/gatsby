@@ -1,7 +1,7 @@
-import frontMatter from 'front-matter'
-import markdownIt from 'markdown-it'
-import hljs from 'highlight.js'
-import _ from 'underscore'
+import frontMatter from 'front-matter';
+import markdownIt from 'markdown-it';
+import hljs from 'highlight';
+import _ from 'underscore';
 
 const highlight = (str, lang) => {
   if ((lang !== null) && hljs.getLanguage(lang)) {
@@ -17,23 +17,23 @@ const highlight = (str, lang) => {
     console.error(_error)
   }
   return ''
-}
+};
 
 const md = markdownIt({
   html: true,
   linkify: true,
   typographer: true,
-  highlight: highlight,
-})
+  highlight: highlight
+});
 
 module.exports = function (content) {
-  let body
-  this.cacheable()
-  const meta = frontMatter(content)
-  body = md.render(meta.body)
+  let body;
+  this.cacheable();
+  const meta = frontMatter(content);
+  body = md.render(meta.body);
   const result = _.extend({}, meta.attributes, {
-    body: body,
-  })
-  this.value = result
+    body: body
+  });
+  this.value = result;
   return 'module.exports = ' + JSON.stringify(result)
-}
+};

@@ -1,5 +1,4 @@
 #!/usr/bin/env node
 
-require('coffee-script/register')
-require('babel/register')
-require('./new')
+require('babel-register');
+require('./new');

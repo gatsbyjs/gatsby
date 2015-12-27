@@ -1,19 +1,19 @@
-import React, {PropTypes} from 'react'
-import Typography from 'typography'
+import React, {PropTypes} from 'react';
+import Typography from 'typography';
 
-const TypographyStyle = new Typography().TypographyStyle
+const TypographyStyle = new Typography().TypographyStyle;
 
 module.exports = React.createClass({
   propTypes: {
     title: PropTypes.string,
     body: PropTypes.string,
-    favicon: PropTypes.string,
+    favicon: PropTypes.string
   },
 
   getDefaultProps: function () {
     return {
       title: 'Default title',
-      body: '',
+      body: ''
     }
   },
 
@@ -37,5 +37,5 @@ module.exports = React.createClass({
     </body>
     </html>
     )
-  },
-})
+  }
+});

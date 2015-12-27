@@ -1,7 +1,7 @@
-import { pages, config } from 'config'
-import filter from 'lodash/collection/filter'
-import first from 'lodash/array/first'
-import includes from 'underscore.string/include'
+import { pages, config } from 'config';
+import filter from 'lodash/collection/filter';
+import first from 'lodash/array/first';
+import includes from 'underscore.string/include';
 
 // Prefix links for Github Pages.
 // TODO make this generic for all prefixing?
@@ -11,17 +11,16 @@ const link = exports.link = function (_link) {
   } else {
     return _link
   }
-}
+};
 
 // Get the child pages for a given template.
 exports.templateChildrenPages = function (filename, state) {
-  // Pop off the file name to leave the relative directory
-  // path to this template.
-  const split = filename.split('/')
-  split.pop()
-  let result = '/' + split.join('/')
+  // Pop off the file name to leave the relative directory path to this template.
+  const split = filename.split('/');
+  split.pop();
+  let result = '/' + split.join('/');
 
-  result = link(result)
+  result = link(result);
 
   const childrenRoutes = first(
     filter(
@@ -29,13 +28,13 @@ exports.templateChildrenPages = function (filename, state) {
         return includes(route.path, result)
       }
     )
-  ).childRoutes
+  ).childRoutes;
 
   const childrenPaths = childrenRoutes.map(function (path) {
     return path.path
-  })
+  });
 
-  let childPages
+  let childPages;
   if (childrenPaths) {
     childPages = filter(pages, function (page) {
       return childrenPaths.indexOf(link(page.path)) >= 0
@@ -45,4 +44,4 @@ exports.templateChildrenPages = function (filename, state) {
   }
 
   return childPages
-}
+};
