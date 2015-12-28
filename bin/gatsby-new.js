@@ -1,4 +1,4 @@
 #!/usr/bin/env node
 
-require('babel-register');
-require('./new');
+require('babel-register')
+require('./new')

@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 
-require('./index.es6');
+require('./index')
