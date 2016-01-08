@@ -1,2 +1,1 @@
-node_modules/.bin/babel lib/ --out-dir dist
-node_modules/.bin/coffee -co dist/ lib/
+babel lib/ --out-dir dist/ --presets es2015,stage-0,react

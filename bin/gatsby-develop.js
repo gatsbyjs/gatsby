@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-require('babel/register')
 
-require('coffee-script/register')
+require('babel-register')
 require('./develop')

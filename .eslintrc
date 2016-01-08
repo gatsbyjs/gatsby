@@ -1,15 +1,33 @@
 {
+  "ecmaFeatures": {
+    "jsx": true,
+    "modules": true
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "parser": "babel-eslint",
   "extends": "eslint-config-airbnb",
   "rules": {
+    "no-loop-func": 0,
+    "quotes": [2, "single"],
+    "strict": [2, "never"],
+    "react/jsx-uses-react": 2,
+    "react/jsx-uses-vars": 2,
+    "react/react-in-jsx-scope": 2,
     "indent": [2, 2, {"SwitchCase": 1}],
     "no-console": [0],
     "func-names": [0],
     "semi": [2, "never"],
     "no-extra-semi": [2],
     "space-before-function-paren": [2, "always"],
-    "no-else-return": [0],
+    "no-else-return": [0]
   },
   "globals": {
-    "__PREFIX_LINKS__": true,
+    "__PREFIX_LINKS__": true
   },
+  "plugins": [
+    "react"
+  ]
 }

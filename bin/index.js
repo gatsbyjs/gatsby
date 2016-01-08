@@ -1,7 +1,6 @@
-program = require 'commander'
-path = require 'path'
+const program = require('commander')
 
-packageJson = require '../package.json'
+const packageJson = require('../package.json')
 
 program
   .version(packageJson.version)
