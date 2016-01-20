@@ -3,6 +3,7 @@ path = require 'path'
 parsePath = require 'parse-filepath'
 fs = require 'fs'
 frontMatter = require 'front-matter'
+htmlFrontMatter = require 'html-frontmatter'
 _ = require 'underscore'
 toml = require('toml')
 debug = require('debug')('gatsby:glob')
@@ -39,7 +40,9 @@ module.exports = (directory, callback) ->
         data = _.extend {}, rawData.attributes
         pageData.data = data
       else if ext is "html"
-        pageData.data = fs.readFileSync(page, 'utf-8')
+        html = fs.readFileSync(page, 'utf-8')
+        data = _.extend({}, htmlFrontMatter(html), { body: html })
+        pageData.data = data
       else
         data = {}
 
