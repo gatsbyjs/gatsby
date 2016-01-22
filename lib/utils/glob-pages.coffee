@@ -75,4 +75,4 @@ module.exports = (directory, callback) ->
       pagesData.push pageData
 
     debug('globbed', pagesData.length, 'pages');
-    callback(null, pagesData)
+    callback(null, pagesData, siteConfig)
