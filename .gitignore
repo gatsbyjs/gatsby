@@ -29,4 +29,3 @@ examples/biz-website/public/
 examples/blog/public/
 *.un~
 dist
-bin/published.js
