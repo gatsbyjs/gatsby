@@ -4,19 +4,14 @@ parsePath = require 'parse-filepath'
 fs = require 'fs'
 frontMatter = require 'front-matter'
 _ = require 'underscore'
-toml = require('toml')
 debug = require('debug')('gatsby:glob')
 
 module.exports = (directory, callback) ->
-  # Read in site config.
-  try
-    siteConfig = toml.parse(fs.readFileSync(directory + "/config.toml"))
-
   pagesData = []
 
   app = require directory + "/app"
 
-  # Make this easy to add to through the config?
+  # Make this list easy to modify through the config?
   # Or just keep adding extensions...?
   glob directory + '/pages/**/?(*.coffee|*.cjsx|*.jsx|*.js|*.md|*.html)', null, (err, pages) =>
     if err then return callback(err)
