@@ -26,6 +26,7 @@
     "glob": "^5.0.7",
     "hapi": "^8.5.1",
     "highlight.js": "^8.6.0",
+    "html-frontmatter": "^1.5.1",
     "json-loader": "^0.5.2",
     "less": "^2.5.1",
     "less-loader": "^2.2.0",
