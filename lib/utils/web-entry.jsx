@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Router from 'react-router'
-import find from 'lodash/collection/find'
-import filter from 'lodash/collection/filter'
+import find from 'lodash/find'
+import filter from 'lodash/filter'
 import createRoutes from 'create-routes'
 import app from 'app'
 
@@ -30,12 +30,12 @@ loadConfig(function loadConfigFunc () {
     const routes = createRoutes(pages, pagesReq)
     // Remove templates files.
     pages = filter(pages, (page) => {
-      return page.path !== null
+      return page.path !== null && page.path !== undefined
     })
 
     // Route already exists meaning we're hot-reloading.
     if (router) {
-      router.replaceRoutes([app])
+      router.replaceRoutes([routes])
     } else {
       router = Router.run([routes], Router.HistoryLocation, (Handler, state) => {
         let page

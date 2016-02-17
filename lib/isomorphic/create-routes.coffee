@@ -1,7 +1,7 @@
 Router = require 'react-router'
-filter = require 'lodash/collection/filter'
-sortBy = require 'lodash/collection/sortBy'
-last = require 'lodash/array/last'
+filter = require 'lodash/filter'
+sortBy = require 'lodash/sortBy'
+last = require 'lodash/last'
 includes = require 'underscore.string/include'
 { config } = require 'config'
 { link } = require './gatsby-helpers'
@@ -25,7 +25,7 @@ module.exports = (pages, pagesReq) ->
   # template
   templateFiles = filter pages, (page) ->
     page.file.name is "_template" and
-      page.file.dirname isnt "."
+      page.file.dirname isnt ""
 
   for templateFile in templateFiles
     # Find the parent template of this template.

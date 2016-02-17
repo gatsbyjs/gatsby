@@ -54,14 +54,14 @@ module.exports = (directory, callback) ->
         unless pageData.path?
           # If this is an index page or template, it's path is /foo/bar/
           if parsed.name is "index" or parsed.name is "template"
-            if parsed.dirname is "."
+            if parsed.dirname is ""
               pageData.path = "/"
             else
               pageData.path = "/" + parsed.dirname + "/"
           # Else if not an index, create a path like /foo/bar/
           # and rely upon static-site-generator-webpack-plugin to add index.html
           else
-            if parsed.dirname is "."
+            if parsed.dirname is ""
               pageData.path = "/" + parsed.name + "/"
             else
               pageData.path = "/" + parsed.dirname + "/" + parsed.name + "/"
@@ -72,5 +72,5 @@ module.exports = (directory, callback) ->
 
       pagesData.push pageData
 
-    debug('globbed', pagesData.length, 'pages');
+    debug('globbed', pagesData.length, 'pages')
     callback(null, pagesData)
