@@ -21,6 +21,7 @@
     "commander": "^2.8.1",
     "css-loader": "^0.23.1",
     "debug": "^2.2.0",
+    "extract-text-webpack-plugin": "^1.0.1",
     "front-matter": "^2.0.5",
     "fs-extra": "^0.26.5",
     "glob": "^7.0.0",
@@ -42,14 +43,19 @@
     "null-loader": "^0.1.1",
     "object-assign": "^4.0.1",
     "parse-filepath": "^0.6.3",
+    "postcss-browser-reporter": "^0.4.0",
+    "postcss-cssnext": "^2.4.0",
+    "postcss-import": "^8.0.2",
+    "postcss-loader": "^0.8.1",
+    "postcss-url": "^5.1.1",
     "raw-loader": "^0.5.1",
     "react": "^0.14.7",
     "react-document-title": "^2.0.1",
     "react-dom": "^0.14.7",
     "react-hot-loader": "^1.3.0",
     "react-router": "^0.13.5",
-    "static-site-generator-webpack-plugin": "^2.0.1",
     "sass-loader": "^3.1.2",
+    "static-site-generator-webpack-plugin": "^2.0.1",
     "style-loader": "^0.13.0",
     "toml": "^2.2.2",
     "toml-loader": "^1.0.0",
@@ -61,14 +67,21 @@
     "webpack-dev-server": "^1.12.1",
     "webpack-require": "0.0.16"
   },
+  "devDependencies": {
+    "babel": "^5.8.34",
+    "babel-eslint": "^4.1.6",
+    "eslint": "^1.10.2",
+    "eslint-config-airbnb": "^5.0.0",
+    "eslint-plugin-react": "^3.11.2"
+  },
   "homepage": "https://github.com/gatsby-group/gatsby#readme",
   "keywords": [
+    "blog",
+    "generator",
+    "jekyll",
+    "markdown",
     "react",
     "ssg",
-    "markdown",
-    "jekyll",
-    "generator",
-    "blog",
     "website"
   ],
   "license": "MIT",
@@ -78,14 +91,7 @@
     "url": "git+https://github.com/gatsby-group/gatsby.git"
   },
   "scripts": {
-    "test": "npm run lint",
-    "lint": "./node_modules/.bin/eslint --ext .js,.jsx --ignore-pattern dist ."
-  },
-  "devDependencies": {
-    "babel": "^5.8.34",
-    "babel-eslint": "^4.1.6",
-    "eslint": "^1.10.2",
-    "eslint-config-airbnb": "^5.0.0",
-    "eslint-plugin-react": "^3.11.2"
+    "lint": "./node_modules/.bin/eslint --ext .js,.jsx --ignore-pattern dist .",
+    "test": "npm run lint"
   }
 }
