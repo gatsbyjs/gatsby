@@ -9,15 +9,13 @@ import app from 'app'
 function loadConfig (cb) {
   const stuff = require('config')
   if (module.hot) {
-    module.hot.accept(stuff.id, function hotAccept () {
-      return cb()
-    })
+    module.hot.accept(stuff.id, () => cb())
   }
   return cb()
 }
 
-loadConfig(function loadConfigFunc () {
-  return app.loadContext(function loadContextFunc (pagesReq) {
+loadConfig(() =>
+  app.loadContext((pagesReq) => {
     let router
     const ref = require('config')
     let pages = ref.pages
@@ -29,9 +27,9 @@ loadConfig(function loadConfigFunc () {
 
     const routes = createRoutes(pages, pagesReq)
     // Remove templates files.
-    pages = filter(pages, (page) => {
-      return page.path !== null && page.path !== undefined
-    })
+    pages = filter(pages, (page) =>
+      page.path !== null && page.path !== undefined
+    )
 
     // Route already exists meaning we're hot-reloading.
     if (router) {
@@ -54,8 +52,10 @@ loadConfig(function loadConfigFunc () {
             config={config}
             pages={pages}
             page={page}
-            state={state} />, typeof window !== 'undefined' ? document.getElementById('react-mount') : void 0)
+            state={state}
+          />,
+          typeof window !== 'undefined' ? document.getElementById('react-mount') : void 0)
       })
     }
   })
-})
+)

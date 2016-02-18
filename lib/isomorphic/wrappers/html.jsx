@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react'
+import React, { PropTypes } from 'react'
 
 module.exports = React.createClass({
   propTypes: {
@@ -9,10 +9,10 @@ module.exports = React.createClass({
     }),
   },
 
-  render: function () {
+  render () {
     const html = this.props.page.data.body
     return (
-      <div dangerouslySetInnerHTML={{__html: html}} />
+      <div dangerouslySetInnerHTML={{ __html: html }} />
     )
   },
 })
