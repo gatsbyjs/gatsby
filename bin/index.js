@@ -1,7 +1,6 @@
-program = require 'commander'
-path = require 'path'
+import program from 'commander'
 
-packageJson = require '../package.json'
+import packageJson from '../package.json'
 
 program
   .version(packageJson.version)
