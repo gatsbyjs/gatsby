@@ -69,6 +69,7 @@
     "underscore.string": "^3.2.3",
     "webpack": "^1.12.13",
     "webpack-configurator": "^0.3.0",
+    "webpack-hot-middleware": "^2.7.1",
     "webpack-require": "0.0.16",
     "yaml-loader": "^0.1.0"
   },
