@@ -7,7 +7,8 @@ var packageJson = require('../package.json')
 
 // Use compiled version of code when installed globally, otherwise use
 // babelscript version.
-let develop
+var develop // eslint-disable-line no-var
+var relativeDirectory // eslint-disable-line no-var
 if (require('./published')) {
   develop = require('../dist/utils/develop')
 } else {
@@ -20,7 +21,7 @@ program
   .option('-p, --port <port>', 'Set port. Defaults to 8000', '8000')
   .parse(process.argv)
 
-let relativeDirectory = program.args[0]
+relativeDirectory = program.args[0]
 if (!relativeDirectory) {
   relativeDirectory = '.'
 }

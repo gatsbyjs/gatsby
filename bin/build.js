@@ -7,7 +7,8 @@ var packageJson = require('../package.json')
 
 // Use compiled version of code when installed globally, otherwise use
 // babelscript version.
-let build
+var build // eslint-disable-line no-var
+var relativeDirectory // eslint-disable-line no-var
 if (require('./published')) {
   build = require('../dist/utils/build')
 } else {
@@ -19,7 +20,7 @@ program
   .option('--prefix-links', 'Build site with links prefixed (set prefix in your config).')
   .parse(process.argv)
 
-let relativeDirectory = program.args[0]
+relativeDirectory = program.args[0]
 if (!relativeDirectory) {
   relativeDirectory = '.'
 }

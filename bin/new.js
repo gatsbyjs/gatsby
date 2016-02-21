@@ -7,7 +7,9 @@ var packageJson = require('../package.json')
 
 // Use compiled version of code when installed globally, otherwise use
 // babelscript version.
-let initStarter
+var initStarter // eslint-disable-line no-var
+var rootPath // eslint-disable-line no-var
+var starter // eslint-disable-line no-var
 if (require('./published')) {
   initStarter = require('../dist/utils/init-starter')
 } else {
@@ -18,8 +20,6 @@ program
   .version(packageJson.version)
   .parse(process.argv)
 
-let rootPath
-let starter
 if (program.args.length === 1) {
   rootPath = program.args[0]
   starter = 'gh:gatsbyjs/gatsby-starter-default'
