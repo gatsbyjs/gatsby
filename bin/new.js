@@ -1,7 +1,9 @@
-import program from 'commander'
-import loggy from 'loggy'
+/*eslint-disable */
+var program = require('commander')
+var loggy = require('loggy')
 
-import packageJson from '../package.json'
+var packageJson = require('../package.json')
+/*eslint-enable */
 
 // Use compiled version of code when installed globally, otherwise use
 // babelscript version.

@@ -1,7 +1,9 @@
-import program from 'commander'
-import path from 'path'
+/*eslint-disable */
+var program = require('commander')
+var path = require('path')
 
-import packageJson from '../package.json'
+var packageJson = require('../package.json')
+/*eslint-enable */
 
 // Use compiled version of code when installed globally, otherwise use
 // babelscript version.

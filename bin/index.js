@@ -1,6 +1,7 @@
-import program from 'commander'
-
-import packageJson from '../package.json'
+/*eslint-disable */
+var program = require('commander')
+var packageJson = require('../package.json')
+/*eslint-enable */
 
 program
   .version(packageJson.version)
