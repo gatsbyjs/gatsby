@@ -21,6 +21,7 @@
     "coffee-script": "^1.9.3",
     "commander": "^2.8.1",
     "css-loader": "^0.23.1",
+    "cssnano": "^3.5.2",
     "debug": "^2.2.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "front-matter": "^2.0.5",
