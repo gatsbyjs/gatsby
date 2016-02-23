@@ -61,6 +61,7 @@
     "react-transform-hmr": "^1.0.0",
     "redbox-react": "^1.0.1",
     "sass-loader": "^3.1.2",
+    "slash": "^1.0.0",
     "static-site-generator-webpack-plugin": "^2.0.1",
     "style-loader": "^0.13.0",
     "toml": "^2.2.2",
