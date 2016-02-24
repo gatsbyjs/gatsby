@@ -48,7 +48,7 @@ apps should probably remain as normal web apps (though I'd love to be
 proved wrong!).
 
 ### Warning!
-Gatsby is very new. APIs will break. Functionality is missing. It's
+Gatsby is not yet stable. APIs will break. Functionality is missing. It's
 usable but if you plan on building with it, expect a rocky road for some time.
 
 Contributions welcome!
