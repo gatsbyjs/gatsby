@@ -287,7 +287,6 @@ files which start with an underscore
 * [relaterocket.co](https://relaterocket.co?utm_source=github.com)
 * [reindex.io](https://www.reindex.io)
 * [syncano.io](https://www.syncano.io)
-* [fixt.co](https://www.fixt.co)
 * [graphene-python.org](http://graphene-python.org/) ([source](https://github.com/graphql-python/graphene/tree/master/docs))
 * [back-to-the-basics.io](http://back-to-the-basics.io/)
 * [Add yours!](https://github.com/gatsbyjs/gatsby/issues/new)
