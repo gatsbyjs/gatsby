@@ -16,7 +16,7 @@ Leverages [React Router's "nested component
 hierarchy"](https://github.com/rackt/react-router/blob/master/docs/Introduction.md)
 to make templating incredibly intuitive.
 
-All templates, css, and content are hot reloadable.
+All templates, css, and content are *hot reloadable*.
 
 ![live-reloading example](http://zippy.gfycat.com/UltimateWeeklyBarebirdbat.gif)
 
@@ -33,6 +33,16 @@ All templates, css, and content are hot reloadable.
 ### Demos
 * [Documentation site](http://gatsbyjs.github.io/gatsby-starter-documentation/)
 * [Blog](http://gatsbyjs.github.io/gatsby-starter-blog/)
+
+## Sites built with Gatsby
+* [bricolage.io](http://bricolage.io?utm_source=github.com) ([source](https://github.com/KyleAMathews/blog))
+* [relaterocket.co](https://relaterocket.co?utm_source=github.com)
+* [reindex.io](https://www.reindex.io)
+* [syncano.io](https://www.syncano.io)
+* [graphene-python.org](http://graphene-python.org/) ([source](https://github.com/graphql-python/graphene/tree/master/docs))
+* [back-to-the-basics.io](http://back-to-the-basics.io/)
+* [ashk.io](http://ashk.io/) ([source](https://github.com/wpioneer/mysites-blog))
+* [Add yours!](https://github.com/gatsbyjs/gatsby/issues/new)
 
 ### Why use Gatsby instead of other Static Site Generators
 * No-refresh page transitions
@@ -281,16 +291,6 @@ It is also possible to
 * `/pages` — All pages go here. Everything is turned into a page except
 files which start with an underscore
 * `_template` files — coming...
-
-## Sites built with Gatsby
-* [bricolage.io](http://bricolage.io?utm_source=github.com) ([source](https://github.com/KyleAMathews/blog))
-* [relaterocket.co](https://relaterocket.co?utm_source=github.com)
-* [reindex.io](https://www.reindex.io)
-* [syncano.io](https://www.syncano.io)
-* [graphene-python.org](http://graphene-python.org/) ([source](https://github.com/graphql-python/graphene/tree/master/docs))
-* [back-to-the-basics.io](http://back-to-the-basics.io/)
-* [ashk.io](http://ashk.io/) ([source](https://github.com/wpioneer/mysites-blog))
-* [Add yours!](https://github.com/gatsbyjs/gatsby/issues/new)
 
 ## FAQ
 
