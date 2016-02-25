@@ -289,6 +289,7 @@ files which start with an underscore
 * [syncano.io](https://www.syncano.io)
 * [graphene-python.org](http://graphene-python.org/) ([source](https://github.com/graphql-python/graphene/tree/master/docs))
 * [back-to-the-basics.io](http://back-to-the-basics.io/)
+* [ashk.io](http://ashk.io/) ([source](https://github.com/wpioneer/mysites-blog))
 * [Add yours!](https://github.com/gatsbyjs/gatsby/issues/new)
 
 ## FAQ
