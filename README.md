@@ -233,7 +233,7 @@ module.exports = function(config, env) {
     return cfg
   })
   return config;
-});
+};
 ```
 
 Each loader (`cfg` in the above example) can be a valid
