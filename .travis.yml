@@ -4,10 +4,6 @@ sudo: false
 env:
   - export NODE_VERSION="0.10"
   - export NODE_VERSION="0.12"
-  - export NODE_VERSION="iojs-v1.0"
-  - export NODE_VERSION="iojs-v1"
-  - export NODE_VERSION="iojs-v2"
-  - export NODE_VERSION="iojs-v3"
   - export NODE_VERSION="4"
   - export NODE_VERSION="5"
 os:
