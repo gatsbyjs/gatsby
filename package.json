@@ -67,7 +67,6 @@
     "toml": "^2.2.2",
     "toml-loader": "^1.0.0",
     "typography": "^0.7.0",
-    "underscore": "^1.8.3",
     "underscore.string": "^3.2.3",
     "webpack": "^1.12.13",
     "webpack-configurator": "^0.3.0",
