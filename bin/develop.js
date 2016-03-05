@@ -15,9 +15,13 @@ if (require('./published')) {
   develop = require('../lib/utils/develop')
 }
 
+var defaultHost = process.platform === 'win32' 
+  ? 'localhost'
+  : '0.0.0.0';
+  
 program
   .version(packageJson.version)
-  .option('-h, --host <url>', 'Set host. Defaults to 0.0.0.0', '0.0.0.0')
+  .option('-h, --host <url>', 'Set host. Defaults to ' + defaultHost, defaultHost)
   .option('-p, --port <port>', 'Set port. Defaults to 8000', '8000')
   .parse(process.argv)
 
