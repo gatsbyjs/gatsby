@@ -169,8 +169,7 @@ title: This is a title
 This is a markdown file.
 ```
 
-When loaded and required, the resulting javascript object looks like the
-following.
+When loaded and required, the resulting javascript object looks like the following:
 
 ```javascript
 {
@@ -191,9 +190,9 @@ module.exports = React.createClass({
   displayName: "MarkdownWrapper",
 
   render: function() {
-    post = @props.page.data
+    var post = this.props.route.page.data
 
-    <div className="markdown">
+    return <div className="markdown">
       <h1>{post.title}</h1>
       <div dangerouslySetInnerHTML={{__html: post.body}}/>
     </div>
