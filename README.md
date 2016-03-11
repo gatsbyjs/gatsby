@@ -99,8 +99,8 @@ starter](https://github.com/gatsbyjs/gatsby-starter-default).
 There are several starters that have been created. Create a PR to
 include yours!
 
-* https://github.com/gatsbyjs/gatsby-starter-blog ([Demo](http://gatsbyjs.github.io/gatsby-starter-documentation/))
-* https://github.com/gatsbyjs/gatsby-starter-documentation ([Demo](http://gatsbyjs.github.io/gatsby-starter-blog/))
+* https://github.com/gatsbyjs/gatsby-starter-blog ([Demo](http://gatsbyjs.github.io/gatsby-starter-blog/))
+* https://github.com/gatsbyjs/gatsby-starter-documentation ([Demo](http://gatsbyjs.github.io/gatsby-starter-documentation/))
 
 ### Tutorial: Building a documentation site from the Gatsby Documentation Starter
 1. Install gatsby `npm install -g gatsby`
