@@ -201,14 +201,25 @@ module.exports = React.createClass({
 ```
 
 ### Structure of a Gatsby site
-* `config.toml` - Core application configuration is stored here. Available via a `require` or `import` of 'config'. Values:
-  * `spa` - set to a falsey value to prevent generation of bundle.js (containing your client-side Single Page App - SPA) during a `gatbsy build`. You'll need to update your top-level `html.js` file so that it doesn't pull in `bundle.js` in production, but you'll want to keep it for `gatsby develop` mode.
+* `config.toml` - Core application configuration is stored here. Available via a `require`
+or `import` of 'config'. Values:
+  * `noProductionJavascript` - set to a truthy value to prevent generation of bundle.js
+  (containing your client-side Single Page App) during a `gatbsy build`. You'll need
+  to update your top-level `html.js` file so that it doesn't pull in `bundle.js` in
+  production, but you'll want to keep it for `gatsby develop` mode.
 * `/pages` - All pages go here. Everything is turned into a page except
 files which start with an underscore:
-  * `_template` files under `/pages` are treated as parent templates for other pages in the same directory tree.
-  * (optional) `pages/404.js` or `pages/404.html` - automatically picked up as your 'not found' page. If you `<Link>` to an unknown URL, this page will be shown. Note: in production, you'll need to [set up your server host to show this page when it can't find the requested file](https://github.com/gatsbyjs/gatsby/pull/121#issuecomment-194715068).
-* (optional) `post-build.js` - a `function(pages, cb)` you can provide to do final processing on all generated content.
-* (optional) `app.js` - a way to hook into key application events. Provide an `onRouteChange` key of type `function(state, page)` to be notified whenever React-Router navigates.
+  * `_template` files under `/pages` are treated as parent templates for other pages in
+  the same directory tree.
+  * (optional) `pages/404.js` or `pages/404.html` - automatically picked up as your 'not
+  found' page. If you `<Link>` to an unknown URL, this page will be shown. Note: in
+  production, you'll need to [set up your server host to show this page when it can't find
+  the requested file](https://github.com/gatsbyjs/gatsby/pull/121#issuecomment-194715068).
+* (optional) `post-build.js` - a `function(pages, cb)` you can provide to do final
+processing on all generated content.
+* (optional) `app.js` - a way to hook into key application events. Provide an
+`onRouteChange` key of type `function(state, page)` to be notified whenever React-Router
+navigates.
 
 ### How to use your own webpack loaders
 
