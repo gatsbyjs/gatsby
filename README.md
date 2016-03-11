@@ -32,10 +32,6 @@ All templates, css, and content are *hot reloadable*.
 * Support "Starters" — install starter sites directly from Github. Use open sourced
   starters or build your own.
 
-### Demos
-* [Documentation site](http://gatsbyjs.github.io/gatsby-starter-documentation/)
-* [Blog](http://gatsbyjs.github.io/gatsby-starter-blog/)
-
 ## Sites built with Gatsby
 * [bricolage.io](http://bricolage.io?utm_source=github.com) ([source](https://github.com/KyleAMathews/blog))
 * [relaterocket.co](https://relaterocket.co?utm_source=github.com)
@@ -103,8 +99,8 @@ starter](https://github.com/gatsbyjs/gatsby-starter-default).
 There are several starters that have been created. Create a PR to
 include yours!
 
-* https://github.com/gatsbyjs/gatsby-starter-blog
-* https://github.com/gatsbyjs/gatsby-starter-documentation
+* https://github.com/gatsbyjs/gatsby-starter-blog ([Demo](http://gatsbyjs.github.io/gatsby-starter-documentation/))
+* https://github.com/gatsbyjs/gatsby-starter-documentation ([Demo](http://gatsbyjs.github.io/gatsby-starter-blog/))
 
 ### Tutorial: Building a documentation site from the Gatsby Documentation Starter
 1. Install gatsby `npm install -g gatsby`
