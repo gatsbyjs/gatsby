@@ -78,9 +78,9 @@
   },
   "devDependencies": {
     "babel-eslint": "^5.0.0",
-    "eslint": "^1.10.2",
-    "eslint-config-airbnb": "^5.0.0",
-    "eslint-plugin-react": "^3.11.2"
+    "eslint": "^2.4.0",
+    "eslint-config-airbnb": "^6.1.0",
+    "eslint-plugin-react": "^4.2.1"
   },
   "homepage": "https://github.com/gatsby-group/gatsby#readme",
   "keywords": [
