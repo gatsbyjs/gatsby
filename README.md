@@ -350,3 +350,9 @@ use the handy [`gh-pages`](https://www.npmjs.com/package/gh-pages) cli tool.
 Both the sample sites are deployed to github pages and use link
 prefixing. Read their source for more help:
 [documentation](https://github.com/gatsbyjs/gatsby-starter-documentation)/[blog](https://github.com/gatsbyjs/gatsby-starter-blog).
+
+### I have an existing site in (Wordpress|Drupal|Blogger|Tumblr|*), how do I convert it to Gatsby?
+Jekyll has a comprehensive import tool for these and many other tools.
+Once your pages are converted to markdown, change the file extensions to
+`.md` from the `.markdown` the tool outputs and then use them in your
+site.
