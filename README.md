@@ -41,6 +41,7 @@ All templates, css, and content are *hot reloadable*.
 * [back-to-the-basics.io](http://back-to-the-basics.io/)
 * [ashk.io](http://ashk.io/) ([source](https://github.com/wpioneer/mysites-blog))
 * [nordnet.se/brand](https://www.nordnet.se/brand/)
+* [likescoffee.com](http://likescoffee.com/)([source](https://github.com/pamo/pamo.github.io/tree/development))
 * [Add yours!](https://github.com/gatsbyjs/gatsby/issues/new)
 
 ### Why use Gatsby instead of other Static Site Generators
@@ -260,9 +261,13 @@ and there are a host of
 which you can use to enhance Gatsby.
 
 It is also possible to [write your own loaders](https://webpack.github.io/docs/how-to-write-a-loader.html).
+
 Gatsby includes [its own loaders](https://github.com/gatsbyjs/gatsby/tree/master/lib/loaders) that you can additionally override.
-To write your own loader or override a Gatsby loader, make a ```loaders``` directory at the root and include the directory and loader you'd like to configure.
-e.g. ```loaders/markdown-loader/index.js``` at the root of your site [will take precedence](https://github.com/gatsbyjs/gatsby/blob/master/lib/utils/webpack.config.js#L325) over the markdown-loader that Gatsby includes.
+
+To write your own loader or override a Gatsby loader, make a `loaders` directory at the root of your site that contains directories for custom loaders.
+
+e.g. `loaders/markdown-loader/index.js` [will take precedence](https://github.com/gatsbyjs/gatsby/blob/master/lib/utils/webpack.config.js#L325)
+over the markdown-loader that Gatsby includes.
 
 ### How to use your own webpack plugins
 
