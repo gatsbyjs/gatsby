@@ -219,10 +219,8 @@ navigates.
 
 ### How to use your own webpack loaders
 
-Gatsby uses
-[webpack-configurator](https://github.com/lewie9021/webpack-configurator)
-to make changing the webpack loaders easy. The default set of loaders
-is organized by [key](lib/utils/webpack.config.js#L125).
+Gatsby uses [webpack-configurator](https://github.com/lewie9021/webpack-configurator)
+to make changing the webpack loaders easy. The default set of loaders is organized by [key](lib/utils/webpack.config.js#L125).
 
 Gatsby uses `gatsby.config.js` to pass control to the user before
 resolving the final webpack configuration. `gatsby.config.js` should
@@ -261,8 +259,10 @@ and there are a host of
 [preexisting loaders](https://webpack.github.io/docs/list-of-loaders.html)
 which you can use to enhance Gatsby.
 
-It is also possible to
-[write your own loaders](https://webpack.github.io/docs/how-to-write-a-loader.html).
+It is also possible to [write your own loaders](https://webpack.github.io/docs/how-to-write-a-loader.html).
+Gatsby includes [its own loaders](https://github.com/gatsbyjs/gatsby/tree/master/lib/loaders) that you can additionally override.
+To write your own loader or override a Gatsby loader, make a ```loaders``` directory at the root and include the directory and loader you'd like to configure.
+e.g. ```loaders/markdown-loader/index.js``` at the root of your site [will take precedence](https://github.com/gatsbyjs/gatsby/blob/master/lib/utils/webpack.config.js#L325) over the markdown-loader that Gatsby includes.
 
 ### How to use your own webpack plugins
 
