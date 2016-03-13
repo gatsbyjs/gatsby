@@ -262,7 +262,7 @@ which you can use to enhance Gatsby.
 
 It is also possible to [write your own loaders](https://webpack.github.io/docs/how-to-write-a-loader.html).
 
-Gatsby includes [its own loaders](https://github.com/gatsbyjs/gatsby/tree/master/lib/loaders) that you can additionally override.
+Gatsby includes [some default loaders](https://github.com/gatsbyjs/gatsby/tree/master/lib/loaders) that you can also override.
 
 To write your own loader or override a Gatsby loader, make a `loaders` directory at the root of your site that contains directories for custom loaders.
 
