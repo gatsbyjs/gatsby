@@ -41,7 +41,7 @@ All templates, css, and content are *hot reloadable*.
 * [back-to-the-basics.io](http://back-to-the-basics.io/)
 * [ashk.io](http://ashk.io/) ([source](https://github.com/wpioneer/mysites-blog))
 * [nordnet.se/brand](https://www.nordnet.se/brand/)
-* [likescoffee.com](http://likescoffee.com/)([source](https://github.com/pamo/pamo.github.io/tree/development))
+* [likescoffee.com](http://likescoffee.com/) ([source](https://github.com/pamo/pamo.github.io/tree/development))
 * [Add yours!](https://github.com/gatsbyjs/gatsby/issues/new)
 
 ### Why use Gatsby instead of other Static Site Generators
@@ -94,12 +94,13 @@ This downloads the files and initializes the site by running `npm
 install`
 
 If you don't specify a custom starter, your site will created
-from the [minimal default
+from the [default
 starter](https://github.com/gatsbyjs/gatsby-starter-default).
 
 There are several starters that have been created. Create a PR to
 include yours!
 
+* [Kitchen sink default starter](https://github.com/gatsbyjs/gatsby-starter-default) ([Demo](http://gatsbyjs.github.io/gatsby-starter-default/))
 * [Simple blog](https://github.com/gatsbyjs/gatsby-starter-blog) ([Demo](http://gatsbyjs.github.io/gatsby-starter-blog/))
 * [Simple documentation site](https://github.com/gatsbyjs/gatsby-starter-documentation) ([Demo](http://gatsbyjs.github.io/gatsby-starter-documentation/))
 
