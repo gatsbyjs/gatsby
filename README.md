@@ -270,6 +270,8 @@ To write your own loader or override a Gatsby loader, make a `loaders` directory
 e.g. `loaders/markdown-loader/index.js` [will take precedence](https://github.com/gatsbyjs/gatsby/blob/master/lib/utils/webpack.config.js#L325)
 over the markdown-loader that Gatsby includes.
 
+[See an example of a custom loader in the default starter](https://github.com/gatsbyjs/gatsby-starter-default/blob/master/loaders/markdown-loader/index.js).
+
 ### How to use your own webpack plugins
 
 Similar to the loaders, plugins are handled via
