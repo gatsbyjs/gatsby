@@ -7,14 +7,17 @@
     "gatsby": "./bin/gatsby.js"
   },
   "bugs": {
-    "url": "https://github.com/gatsby-group/gatsby/issues"
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
     "async": "^1.2.1",
-    "babel": "^5.8.35",
-    "babel-core": "^5.8.35",
-    "babel-loader": "^5.4.0",
-    "babel-plugin-react-transform": "^1.1.1",
+    "babel-core": "^6.7.2",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-add-module-exports": "^0.1.2",
+    "babel-preset-es2015": "^6.6.0",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-react-hmre": "^1.1.1",
+    "babel-preset-stage-0": "^6.5.0",
     "boom": "^2.7.2",
     "cjsx-loader": "^2.0.1",
     "coffee-loader": "^0.7.2",
@@ -58,9 +61,6 @@
     "react-dom": "^0.14.7",
     "react-hot-loader": "^1.3.0",
     "react-router": "^2.0.0",
-    "react-transform-catch-errors": "^1.0.0",
-    "react-transform-hmr": "^1.0.0",
-    "redbox-react": "^1.0.1",
     "sass-loader": "^3.1.2",
     "scroll-behavior": "^0.3.2",
     "slash": "^1.0.0",
@@ -77,12 +77,13 @@
     "yaml-loader": "^0.1.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.6.5",
     "babel-eslint": "^5.0.0",
     "eslint": "^2.4.0",
     "eslint-config-airbnb": "^6.1.0",
     "eslint-plugin-react": "^4.2.1"
   },
-  "homepage": "https://github.com/gatsby-group/gatsby#readme",
+  "homepage": "https://github.com/gatsbyjs/gatsby#readme",
   "keywords": [
     "blog",
     "generator",
@@ -96,10 +97,11 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gatsby-group/gatsby.git"
+    "url": "git+https://github.com/gatsbyjs/gatsby.git"
   },
   "scripts": {
-    "lint": "./node_modules/.bin/eslint --ext .js,.jsx --ignore-pattern dist .",
-    "test": "npm run lint"
+    "lint": "eslint --ext .js,.jsx --ignore-pattern dist .",
+    "test": "npm run lint",
+    "watch": "babel -w lib --out-dir dist/"
   }
 }
