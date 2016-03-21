@@ -102,6 +102,7 @@
   "scripts": {
     "lint": "eslint --ext .js,.jsx --ignore-pattern dist .",
     "test": "npm run lint",
-    "watch": "babel -w lib --out-dir dist/"
+    "watch": "babel -w lib --out-dir dist/",
+    "build": "babel lib --out-dir dist/"
   }
 }

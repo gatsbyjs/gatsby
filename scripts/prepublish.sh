@@ -1,2 +1,2 @@
 npm test
-./scripts/build.sh
+npm run build
