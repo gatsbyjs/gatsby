@@ -1,20 +1,11 @@
-/*eslint-disable */
-var program = require('commander')
-var path = require('path')
+var program = require('commander') // eslint-disable-line no-var
+var path = require('path') // eslint-disable-line no-var
 
-var packageJson = require('../package.json')
+var packageJson = require('../package.json') // eslint-disable-line no-var
+var relativeDirectory // eslint-disable-line no-var
+var develop = require('../dist/utils/develop') // eslint-disable-line no-var
 
-// Use compiled version of code when installed globally, otherwise use
-// babelscript version.
-var develop
-var relativeDirectory
-if (require('./published')) {
-  develop = require('../dist/utils/develop')
-} else {
-  develop = require('../lib/utils/develop')
-}
-
-var defaultHost = process.platform === 'win32'
+var defaultHost = process.platform === 'win32' // eslint-disable-line no-var
   ? 'localhost'
   : '0.0.0.0'
 
@@ -34,4 +25,3 @@ program.directory = directory
 program.relativeDirectory = relativeDirectory
 
 develop(program)
-/*eslint-enable */

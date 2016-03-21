@@ -1,20 +1,10 @@
-/*eslint-disable */
-var program = require('commander')
-var loggy = require('loggy')
+var program = require('commander') // eslint-disable-line no-var
+var loggy = require('loggy') // eslint-disable-line no-var
 
-var packageJson = require('../package.json')
-/*eslint-enable */
-
-// Use compiled version of code when installed globally, otherwise use
-// babelscript version.
-var initStarter // eslint-disable-line no-var
+var packageJson = require('../package.json') // eslint-disable-line no-var
 var rootPath // eslint-disable-line no-var
 var starter // eslint-disable-line no-var
-if (require('./published')) {
-  initStarter = require('../dist/utils/init-starter')
-} else {
-  initStarter = require('../lib/utils/init-starter')
-}
+var initStarter = require('../dist/utils/init-starter') // eslint-disable-line no-var
 
 program
   .version(packageJson.version)

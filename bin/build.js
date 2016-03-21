@@ -1,19 +1,9 @@
-/*eslint-disable */
-var program = require('commander')
-var path = require('path')
+var program = require('commander') // eslint-disable-line no-var
+var path = require('path') // eslint-disable-line no-var
 
-var packageJson = require('../package.json')
-/*eslint-enable */
-
-// Use compiled version of code when installed globally, otherwise use
-// babelscript version.
-var build // eslint-disable-line no-var
+var packageJson = require('../package.json') // eslint-disable-line no-var
+var build = require('../dist/utils/build') // eslint-disable-line no-var
 var relativeDirectory // eslint-disable-line no-var
-if (require('./published')) {
-  build = require('../dist/utils/build')
-} else {
-  build = require('../lib/utils/build')
-}
 
 program
   .version(packageJson.version)
