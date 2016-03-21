@@ -43,7 +43,7 @@ All templates, css, and content are *hot reloadable*.
 * [nordnet.se/brand](https://www.nordnet.se/brand/)
 * [likescoffee.com](http://likescoffee.com/) ([source](https://github.com/pamo/pamo.github.io/tree/development))
 * [vii.campjs.com](http://vii.campjs.com/) ([source](https://github.com/campjs/campjs-vii))
-* [Add yours!](https://github.com/gatsbyjs/gatsby/issues/new)
+* [Edit this file to add yours!](https://github.com/gatsbyjs/gatsby/blob/master/README.md)
 
 ### Why use Gatsby instead of other Static Site Generators
 * No-refresh page transitions
