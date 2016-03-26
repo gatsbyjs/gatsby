@@ -11,7 +11,10 @@ var defaultHost = process.platform === 'win32' // eslint-disable-line no-var
 
 program
   .version(packageJson.version)
-  .option('-h, --host <url>', 'Set host. Defaults to ' + defaultHost, defaultHost)
+  .option('-h, --host <url>',
+          'Set host. Defaults to ' + defaultHost, // eslint-disable-line prefer-template
+          defaultHost
+         )
   .option('-p, --port <port>', 'Set port. Defaults to 8000', '8000')
   .parse(process.argv)
 
