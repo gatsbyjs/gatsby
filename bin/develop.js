@@ -2,7 +2,6 @@ var program = require('commander') // eslint-disable-line no-var
 var path = require('path') // eslint-disable-line no-var
 
 var packageJson = require('../package.json') // eslint-disable-line no-var
-var relativeDirectory // eslint-disable-line no-var
 var develop = require('../dist/utils/develop') // eslint-disable-line no-var
 
 var defaultHost = process.platform === 'win32' // eslint-disable-line no-var
@@ -18,13 +17,8 @@ program
   .option('-p, --port <port>', 'Set port. Defaults to 8000', '8000')
   .parse(process.argv)
 
-relativeDirectory = program.args[0]
-if (!relativeDirectory) {
-  relativeDirectory = '.'
-}
-const directory = path.resolve(relativeDirectory)
+const directory = path.resolve('.')
 
 program.directory = directory
-program.relativeDirectory = relativeDirectory
 
 develop(program)
