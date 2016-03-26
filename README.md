@@ -287,7 +287,7 @@ and add the plugin when generating the static html for our site.
 ```javascript
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-module.exports = function(config, env) {
+exports.modifyWebpackConfig = function(config, env) {
   if(env === 'static') {
     config.removeLoader('css');
     config.loader('css', function(cfg) {
