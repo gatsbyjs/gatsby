@@ -335,15 +335,15 @@ be used:
 ```
 
 ### Deploying to Github Pages (and other hosts where your site's links need prefixes)
-Gatsby supports automatically prefixing links with its `link` helper function.
+Gatsby supports automatically prefixing links with its `prefixLink` helper function.
 
 To use simply import the function and run all links in your site
 thorough it e.g.
 
 ```javascript
-import { link } from 'gatsby-helpers'
+import { prefixLink } from 'gatsby-helpers'
 
-link('/')
+prefixLink('/')
 // During development this will return "/"
 // When deployed to example.github.io/your-project/ this will return "/your-project/"
 ```
