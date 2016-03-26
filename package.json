@@ -36,6 +36,7 @@
     "highlight.js": "^9.1.0",
     "history": "^2.0.0",
     "html-frontmatter": "^1.5.1",
+    "invariant": "^2.2.1",
     "json-loader": "^0.5.2",
     "less": "^2.6.0",
     "less-loader": "^2.2.0",
