@@ -216,8 +216,8 @@ files which start with an underscore:
   the requested file](https://github.com/gatsbyjs/gatsby/pull/121#issuecomment-194715068).
 * (optional) `post-build.js` - a `function(pages, cb)` you can provide to do final
 processing on all generated content.
-* (optional) `app.js` - a way to hook into key application events. Provide an
-`onRouteChange` key of type `function(state, page)` to be notified whenever React-Router
+* (optional) `gatsby-client-utils.js` - a way to hook into key application events. Export
+`onRouteChange` of type `function(location)` to be notified whenever React-Router
 navigates.
 
 ### How to use your own webpack loaders
@@ -235,7 +235,7 @@ environment string will be one of `develop`, `static` or
 Create a `gatsby.config.js` in the root of your project:
 
 ```javascript
-module.exports = function(config, env) {
+exports.modifyWebpackConfig = function(config, env) {
   // edit loaders here
   return config;
 }
@@ -245,7 +245,7 @@ Consider the following example which removes the default css loader
 and replaces it with a loader that uses css-modules.
 
 ```javascript
-module.exports = function(config, env) {
+exports.modifyWebpackConfig = function(config, env) {
   config.removeLoader('css');
   config.loader('css', function(cfg) {
     cfg.test = /\.css$/;
