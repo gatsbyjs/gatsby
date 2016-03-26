@@ -86,6 +86,9 @@
     "eslint-config-airbnb": "^6.1.0",
     "eslint-plugin-react": "^4.2.1"
   },
+  "engines": {
+    "node": ">0.12.0"
+  },
   "homepage": "https://github.com/gatsbyjs/gatsby#readme",
   "keywords": [
     "blog",
@@ -103,9 +106,9 @@
     "url": "git+https://github.com/gatsbyjs/gatsby.git"
   },
   "scripts": {
+    "build": "babel lib --out-dir dist/",
     "lint": "eslint --ext .js,.jsx --ignore-pattern dist .",
     "test": "npm run lint",
-    "watch": "babel -w lib --out-dir dist/",
-    "build": "babel lib --out-dir dist/"
+    "watch": "babel -w lib --out-dir dist/"
   }
 }
