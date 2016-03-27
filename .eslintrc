@@ -1,4 +1,5 @@
 {
+  "parser": "babel-eslint",
   "extends": "eslint-config-airbnb",
   "rules": {
     "indent": [2, 2, {"SwitchCase": 1}],
