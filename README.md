@@ -216,7 +216,7 @@ files which start with an underscore:
   the requested file](https://github.com/gatsbyjs/gatsby/pull/121#issuecomment-194715068).
 * (optional) `post-build.js` - a `function(pages, cb)` you can provide to do final
 processing on all generated content.
-* (optional) `gatsby-client-utils.js` - a way to hook into key application events. Export
+* (optional) `gatsby-browser.js` - a way to hook into key application events. Export
 `onRouteChange` of type `function(location)` to be notified whenever React-Router
 navigates.
 
@@ -225,14 +225,14 @@ navigates.
 Gatsby uses [webpack-configurator](https://github.com/lewie9021/webpack-configurator)
 to make changing the webpack loaders easy. The default set of loaders is organized by [key](lib/utils/webpack.config.js#L125).
 
-Gatsby uses `gatsby.config.js` to pass control to the user before
-resolving the final webpack configuration. `gatsby.config.js` should
+Gatsby uses `gatsby-node.js` to pass control to the user before
+resolving the final webpack configuration. `gatsby-node.js` should
 live in the root of your project and export a function which accepts a
 webpack-configurator config object and an environment string. The
 environment string will be one of `develop`, `static` or
 `production`.
 
-Create a `gatsby.config.js` in the root of your project:
+Create a `gatsby-node.js` in the root of your project:
 
 ```javascript
 exports.modifyWebpackConfig = function(config, env) {
@@ -277,7 +277,7 @@ over the markdown-loader that Gatsby includes.
 
 Similar to the loaders, plugins are handled via
 [webpack-configurator](https://github.com/lewie9021/webpack-configurator)
-and `gatsby.config.js`.
+and `gatsby-node.js`.
 
 If we wanted to extract all of the css in our project into a since
 `styles.css` file for production, we could add the
