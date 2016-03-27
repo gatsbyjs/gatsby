@@ -4,7 +4,7 @@ If you want your issue to be resolved quickly, please include in your
 issue:
 
 * Gatsby version, node.js version, OS version
-* The contents of your `gatsby.config.js` and `package.json`.
+* The contents of your `gatsby-node.js`, `gatsby-browser.js`, and `package.json`.
 
 # Contributing
 You can install the latest `master` version of Gatsby by following these
