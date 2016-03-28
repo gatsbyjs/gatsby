@@ -3,6 +3,10 @@
 [![gatsby channel on discord](https://img.shields.io/badge/discord-gatsby%40reactiflux-738bd7.svg?style=flat-square)](https://discord.gg/0ZcbPKXt5bVoxkfV)
 [![Twitter Follow](https://img.shields.io/twitter/follow/gatsbyjs.svg?style=social)](https://twitter.com/gatsbyjs)
 
+## The README has updates for the not-quite-yet-released version 0.9. [Go
+here to read documentation for the current version (0.8.11) on
+NPM.](https://github.com/gatsbyjs/gatsby/blob/db094ca4168d532ddd77f5ff3de0b4d5b5a8ef6c/README.md)
+
 # Gatsby
 Transform plain text into dynamic blogs and websites using the latest
 web technologies. A React.js static site generator.
