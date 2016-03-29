@@ -24,6 +24,8 @@ The usual contributing steps are:
 * Make sure tests are passing for you: npm install && npm test
 * Create a topic branch: git checkout -b topics/new-feature-name
 * Run `npm run watch` to watch code and compile your changes.
+* Clone one of the official repositories and "link" your fork of Gatsby
+  to it (run `npm link gatsby`).
 * Add tests and code for your changes.
 * Once you‘re done, make sure all tests still pass: npm install && npm test
 * Commit and push to your fork.
