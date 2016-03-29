@@ -325,16 +325,11 @@ It is also possible to
 
 ### Configuring Babel
 
-Configuring babel-loader is as easy as creating a
-[.babelrc](https://babeljs.io/docs/usage/babelrc/) in the root of the
-project. To enable stage 0 transforms, the following `.babelrc` could
-be used:
+For **Webpack loaded code** you can't modify Babel's behavior as normal
+by modifying the .babelrc in your site's root directory.
 
-```javascript
-{
-  "stage": 0
-}
-```
+Instead you'll need to modify the Webpack babel loader as [described
+above](https://github.com/gatsbyjs/gatsby#how-to-use-your-own-webpack-loaders).
 
 ### Deploying to Github Pages (and other hosts where your site's links need prefixes)
 Gatsby supports automatically prefixing links with its `prefixLink` helper function.
