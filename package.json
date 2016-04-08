@@ -81,7 +81,7 @@
     "yaml-loader": "^0.1.0"
   },
   "devDependencies": {
-    "ava": "^0.13.0",
+    "ava": "^0.14.0",
     "babel-cli": "^6.6.5",
     "babel-eslint": "^6.0.0",
     "eslint": "^2.4.0",
@@ -114,7 +114,9 @@
     "watch": "babel -w lib --out-dir dist/"
   },
   "ava": {
-    "require": [ "babel-register" ],
+    "require": [
+      "babel-register"
+    ],
     "babel": "inherit"
   }
 }

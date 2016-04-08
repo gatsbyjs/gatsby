@@ -6,14 +6,14 @@ import pathResolver from '../../../lib/utils/build-page/path-resolver'
 test('it returns an object', t => {
   const pagePath = '/'
   const result = pathResolver(pagePath)
-  t.ok(result)
+  t.truthy(result)
   t.is(typeof result, 'object')
 })
 
 test('it has a require path', t => {
   const pagePath = '/a-blog-post/index.md'
   const result = pathResolver(pagePath)
-  t.ok(result.requirePath)
+  t.truthy(result.requirePath)
   t.is(typeof result.requirePath, 'string')
 })
 
@@ -24,15 +24,15 @@ test('it does not has a path if the name start with _', t => {
 })
 
 test('it has a path if the name doesnt start with _', t => {
-  t.ok(pathResolver('/2015/back-to-the-future.md').path)
-  t.ok(pathResolver('/my-first-blog.md').path)
-  t.ok(pathResolver('/index.md').path)
+  t.truthy(pathResolver('/2015/back-to-the-future.md').path)
+  t.truthy(pathResolver('/my-first-blog.md').path)
+  t.truthy(pathResolver('/index.md').path)
 })
 
 test('it has a templatePath if the name is _template', t => {
   const pagePath = '/_template.js'
   const result = pathResolver(pagePath)
-  t.ok(result.templatePath)
+  t.truthy(result.templatePath)
   t.is(typeof result.templatePath, 'string')
 })
 
@@ -46,8 +46,8 @@ test('the directory name has / slashes', t => {
   const pagePath = '/2016/testing-middleman-sites-with-capybara/index.md'
   const result = pathResolver(pagePath)
 
-  t.same(result.file.dirname, path.posix.normalize(result.file.dirname))
-  t.same(result.file.dirname, '/2016/testing-middleman-sites-with-capybara')
+  t.is(result.file.dirname, path.posix.normalize(result.file.dirname))
+  t.is(result.file.dirname, '/2016/testing-middleman-sites-with-capybara')
 })
 
 test('the ext doesnt have a leading .', t => {
