@@ -50,7 +50,7 @@ test('if not an index create a path like /foo/bar/', t => {
   t.is(pagePath, '/blog/2016/creating-static-websites/')
 })
 
-test('if not an index create a path like /foo/bar/', t => {
+test('if not an index create a path like /foo/bar/ from file at root', t => {
   const parsedPath = { name: 'about-us', dirname: '' }
   const data = {}
   const pagePath = urlResolver(data, parsedPath)

@@ -1,6 +1,12 @@
 {
   "parser": "babel-eslint",
-  "extends": "eslint-config-airbnb",
+  "extends": [
+    "eslint-config-airbnb",
+    "plugin:ava/recommended"
+  ],
+  "plugins": [
+    "ava"
+  ],
   "rules": {
     "indent": [2, 2, {"SwitchCase": 1}],
     "no-console": [0],
