@@ -109,7 +109,8 @@
   "scripts": {
     "build": "babel lib --out-dir dist/",
     "lint": "eslint --ext .js,.jsx --ignore-pattern dist .",
-    "test": "node_modules/.bin/ava",
+    "test": "npm run lint && npm run test-node",
+    "test-node": "node_modules/.bin/ava",
     "watch": "babel -w lib --out-dir dist/"
   },
   "ava": {
