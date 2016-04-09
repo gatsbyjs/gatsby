@@ -44,6 +44,7 @@ All templates, css, and content are *hot reloadable*.
 * [likescoffee.com](http://likescoffee.com/) ([source](https://github.com/pamo/pamo.github.io/tree/development))
 * [vii.campjs.com](http://vii.campjs.com/) ([source](https://github.com/campjs/campjs-vii))
 * [michaeljdeeb.com](http://michaeljdeeb.com) ([source](https://github.com/michaeljdeeb/michaeljdeeb-gatsby-blog))
+* [brittcrawford.com](http://brittcrawford.com) ([source](https://github.com/britt/britt.github.com/tree/gatsby))
 * [Edit this file to add yours!](https://github.com/gatsbyjs/gatsby/blob/master/README.md)
 
 ### Why use Gatsby instead of other Static Site Generators
