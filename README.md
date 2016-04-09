@@ -281,6 +281,10 @@ Similar to the loaders, plugins are handled via
 [webpack-configurator](https://github.com/lewie9021/webpack-configurator)
 and `gatsby-node.js`.
 
+_Note: the following example is now redundant since
+ExtractTextWebpackPlugin is now setup by default but you can still use
+it as an example of how to modify the Webpack plugins._
+
 If we wanted to extract all of the css in our project into a since
 `styles.css` file for production, we could add the
 `ExtractTextWebpackPlugin`. To do this, we need to modify the loader
