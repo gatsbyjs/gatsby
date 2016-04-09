@@ -131,8 +131,8 @@ include yours!
    So to see your new page, restart `gatsby develop` and then refresh your
    browser.
 7. Build your site `gatsby build`. The site is built to the `/public`
-   directory. Serve the site by going into the public directory and
-   typing `python -m SimpleHTTPServer`
+   directory. Test that the build worked by running `gatsby serve-build`
+   which serves the contents of the `/public` directory.
 
 ## How Gatsby works
 
