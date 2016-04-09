@@ -80,6 +80,7 @@
     "yaml-loader": "^0.1.0"
   },
   "devDependencies": {
+    "ava": "^0.14.0",
     "babel-cli": "^6.6.5",
     "babel-eslint": "^6.0.0",
     "eslint": "^2.4.0",
@@ -108,7 +109,13 @@
   "scripts": {
     "build": "babel lib --out-dir dist/",
     "lint": "eslint --ext .js,.jsx --ignore-pattern dist .",
-    "test": "npm run lint",
+    "test": "node_modules/.bin/ava",
     "watch": "babel -w lib --out-dir dist/"
+  },
+  "ava": {
+    "require": [
+      "babel-register"
+    ],
+    "babel": "inherit"
   }
 }
