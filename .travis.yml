@@ -35,4 +35,5 @@ addons:
 # script needed to test, because defaults don't work on osx
 script:
   - npm install
+  - npm run setup
   - npm run test

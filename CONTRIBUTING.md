@@ -12,6 +12,7 @@ simple steps:
 
 * Clone the repo, navigate to its directory.
 * Execute `npm install` to install packages.
+* Execute `npm run setup` to set up the test suite.
 * Execute `npm uninstall -g gatsby && npm link`
 * Use `git pull` to update to latest Gatsby.
 

@@ -84,10 +84,12 @@
     "babel-cli": "^6.7.5",
     "babel-eslint": "^6.0.2",
     "babel-register": "^6.7.2",
+    "bluebird": "^3.3.4",
     "eslint": "^2.7.0",
     "eslint-config-airbnb": "^6.1.0",
     "eslint-plugin-ava": "^2.0.1",
-    "eslint-plugin-react": "^4.3.0"
+    "eslint-plugin-react": "^4.3.0",
+    "jsdom": "^8.3.0"
   },
   "engines": {
     "node": ">0.12.0"
@@ -110,9 +112,11 @@
   },
   "scripts": {
     "build": "babel lib --out-dir dist/",
-    "lint": "eslint --ext .js,.jsx --ignore-pattern dist .",
-    "test": "npm run lint && npm run test-node",
-    "test-node": "node_modules/.bin/ava",
+    "lint": "eslint --ext .js,.jsx --ignore-pattern dist --ignore-pattern public .",
+    "test": "npm run lint && npm run test-node && npm run test-integration",
+    "test-integration": "npm run build && node_modules/.bin/ava test/integration",
+    "test-node": "node_modules/.bin/ava test/utils",
+    "setup": "npm run build && scripts/setup.sh",
     "watch": "babel -w lib --out-dir dist/"
   },
   "ava": {
