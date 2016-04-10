@@ -222,6 +222,8 @@ processing on all generated content.
 * (optional) `gatsby-browser.js` - a way to hook into key application events. Export
 `onRouteChange` of type `function(location)` to be notified whenever React-Router
 navigates.
+* (optional) `gatsby-node.js` - a way to hook into events during build
+and development.
 
 ### How to use your own webpack loaders
 
