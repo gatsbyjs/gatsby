@@ -7,18 +7,19 @@
 Transform plain text into dynamic blogs and websites using the latest
 web technologies. A React.js static site generator.
 
-Build sites like it's 1995. Files are translated into HTML pages at the
-same position within the file system. Add a markdown file at `/docs/index.md` and
-it'll be converted to `/docs/index.html`.
-
-Supports Markdown, HTML, and React.js components out of the box. Easy to add
+Supports Markdown, HTML, and React.js pages out of the box. Easy to add
 support for additional files types.
 
 Leverages [React Router's "nested component
 hierarchy"](https://github.com/rackt/react-router/blob/master/docs/Introduction.md)
 to make templating incredibly intuitive.
 
-All templates, css, and content are *hot reloadable*.
+All templates, css, and content are *hot reloadable* — powered by
+Webpack.
+
+Build sites like it's 1995. Files are translated into HTML pages at the
+same position within the file system. Add a markdown file at `/docs/index.md` and
+it'll be converted to `/docs/index.html`.
 
 ![live-reloading example](http://zippy.gfycat.com/UltimateWeeklyBarebirdbat.gif)
 
