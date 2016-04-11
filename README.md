@@ -47,6 +47,7 @@ it'll be converted to `/docs/index.html`.
 * [michaeljdeeb.com](http://michaeljdeeb.com) ([source](https://github.com/michaeljdeeb/michaeljdeeb-gatsby-blog))
 * [brittcrawford.com](http://brittcrawford.com) ([source](https://github.com/britt/britt.github.com/tree/gatsby))
 * [React-MDL](https://tleunen.github.io/react-mdl/) ([source](https://github.com/tleunen/react-mdl/tree/master/docs))
+* [Snapgit](https://snapgit.com) ([source](https://github.com/snapgit/snapgit.com))
 * [Edit this file to add yours!](https://github.com/gatsbyjs/gatsby/blob/master/README.md)
 
 ### Why use Gatsby instead of other Static Site Generators
