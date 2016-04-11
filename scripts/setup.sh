@@ -17,7 +17,7 @@ function linkNodeModules (directory) {
   var fixtureNodeModules = path.join(fixturesDirectory, directory, 'node_modules')
 
   return remove(fixtureNodeModules)
-    .then(() => symlink(nodeModulesDirectory, fixtureNodeModules))
+    .then(function() { symlink(nodeModulesDirectory, fixtureNodeModules) })
 }
 
 function linkGatsby () {
@@ -27,8 +27,8 @@ function linkGatsby () {
   var fixtureDistPath = path.join(gatsbyDirectory, 'dist')
 
   return remove(gatsbyDirectory)
-    .then(() => mkdir(gatsbyDirectory))
-    .then(() => {
+    .then(function () { return mkdir(gatsbyDirectory) })
+    .then(function () {
       return Promise.all([
         symlink(gatsbyPackagePath, fixturePackagePath),
         symlink(gatsbyDistPath, fixtureDistPath)
@@ -37,5 +37,5 @@ function linkGatsby () {
 }
 
 linkGatsby()
-  .then(() => readdir(fixturesDirectory))
-  .then(fixtures => fixtures.map(linkNodeModules))
+  .then(function () { return readdir(fixturesDirectory) })
+  .then(function (fixtures) { return fixtures.map(linkNodeModules) })
