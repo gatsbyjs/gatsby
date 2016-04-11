@@ -2,7 +2,7 @@ import test from 'ava'
 import path from 'path'
 import Promise from 'bluebird'
 import fsExtra from 'fs-extra'
-import { exec, jsdom } from '../support'
+import { exec, dom } from '../support'
 const fs = Promise.promisifyAll(fsExtra)
 
 const starterPath = path.resolve('../', 'fixtures', 'starter-wrappers')
@@ -20,24 +20,20 @@ test.serial('can build the starter', async t => {
 })
 
 test('html/index.html has an h1 that states file extention', async t => {
-  const { document } = await jsdom(path.join(buildPath, 'html/index.html'))
-  t.truthy(document)
+  const $ = await dom(path.join(buildPath, 'html/index.html'))
 
-  const heading = document.querySelector('h1')
+  const heading = $('h1')
   t.truthy(heading)
-
-  const headingText = heading.textContent
+  const headingText = heading.text()
   t.is(headingText, 'html')
 })
 
 test('md/index.html has an h1 that states file extention', async t => {
-  const { document } = await jsdom(path.join(buildPath, 'md/index.html'))
-  t.truthy(document)
+  const $ = await dom(path.join(buildPath, 'md/index.html'))
 
   // MD wrapper spits out an h1 tag. Shouldn't it be consistent with HTML
-  const heading = document.querySelectorAll('h1')[1]
+  const heading = $('h1').last()
   t.truthy(heading)
-
-  const headingText = heading.textContent
+  const headingText = heading.text()
   t.is(headingText, 'md')
 })

@@ -1,4 +1,5 @@
-import jsdomlib from 'jsdom'
+import fs from 'fs'
+import cheerio from 'cheerio'
 import Promise from 'bluebird'
 import { spawn } from 'child_process'
 
@@ -12,7 +13,8 @@ export function exec (command, args, options) {
   })
 }
 
-export function jsdom (html) {
-  const env = Promise.promisify(jsdomlib.env)
-  return env(html)
+export function dom (path) {
+  const readFile = Promise.promisify(fs.readFile)
+  return readFile(path)
+    .then(html => cheerio.load(html))
 }
