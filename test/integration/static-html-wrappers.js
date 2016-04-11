@@ -7,11 +7,12 @@ const fs = Promise.promisifyAll(fsExtra)
 
 const starterPath = path.resolve('../', 'fixtures', 'starter-wrappers')
 const buildPath = path.join(starterPath, 'public')
+const gatsby = path.resolve('../../bin', 'gatsby.js')
 
 test.serial('can build the starter', async t => {
   await fs.remove(buildPath)
 
-  const exitCode = await exec('gatsby', ['build'], { cwd: starterPath })
+  const exitCode = await exec(gatsby, ['build'], { cwd: starterPath })
   const bundle = await fs.statAsync(path.join(buildPath, 'bundle.js'))
 
   t.is(exitCode, 0)
