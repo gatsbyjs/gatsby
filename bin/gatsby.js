@@ -8,7 +8,10 @@ global.appStartTime = Date.now()
 var sysPath = require('path')
 var fs = require('fs')
 var version = process.version
-var verDigit = parseInt(version.match(/^v(\d+)\./)[1], 10)
+var versionDigits = version.split('.')
+  .map(function (d) { return d.match(/\d+/)[0] })
+  .slice(0, 2).join('.')
+var verDigit = Number(versionDigits)
 
 if (verDigit < 0.12) {
   console.error(

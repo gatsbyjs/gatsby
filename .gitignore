@@ -33,3 +33,4 @@ bin/published.js
 
 # Build Path of Test Fixtures
 test/**/public
+.gatsby-context.js

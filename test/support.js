@@ -1,15 +1,17 @@
 import fs from 'fs'
 import cheerio from 'cheerio'
 import Promise from 'bluebird'
-import { spawn } from 'child_process'
+import { spawn as spawnNative } from 'child_process'
 
-export function exec (command, args, options) {
+export function spawn (command, args, options) {
   return new Promise((resolve, reject) => {
-    const child = spawn(command, args, options)
-    child.on('exit', code => resolve(code))
-    child.on('error', error => reject(error))
-    child.stdout.on('data', data => { console.log(data.toString()) })
-    child.stderr.on('data', data => { console.error(data.toString()) })
+    let stdout = ''
+    let stderr = ''
+    const child = spawnNative(command, args, options)
+    child.on('exit', code => resolve({ code, stdout }))
+    child.on('error', error => reject({ error, stderr }))
+    child.stdout.on('data', data => { stdout += data })
+    child.stderr.on('data', data => { stderr += data })
   })
 }
 

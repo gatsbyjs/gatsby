@@ -2,7 +2,7 @@ import test from 'ava'
 import path from 'path'
 import Promise from 'bluebird'
 import fsExtra from 'fs-extra'
-import { exec, dom } from '../support'
+import { spawn, dom } from '../support'
 const fs = Promise.promisifyAll(fsExtra)
 
 const starterPath = path.resolve('../', 'fixtures', 'starter-wrappers')
@@ -12,7 +12,7 @@ const gatsby = path.resolve('../../bin', 'gatsby.js')
 test.serial('can build the starter', async t => {
   await fs.remove(buildPath)
 
-  const exitCode = await exec(gatsby, ['build'], { cwd: starterPath })
+  const { code: exitCode } = await spawn(gatsby, ['build'], { cwd: starterPath })
   const bundle = await fs.statAsync(path.join(buildPath, 'bundle.js'))
 
   t.is(exitCode, 0)
