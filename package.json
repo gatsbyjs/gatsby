@@ -52,6 +52,7 @@
     "node-sass": "^3.4.2",
     "null-loader": "^0.1.1",
     "object-assign": "^4.0.1",
+    "opn": "^4.0.1",
     "parse-filepath": "^0.6.3",
     "postcss-browser-reporter": "^0.4.0",
     "postcss-cssnext": "^2.5.2",
