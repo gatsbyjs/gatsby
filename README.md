@@ -52,6 +52,12 @@ it'll be converted to `/docs/index.html`.
 * [React Hardware](http://iamdustan.com/react-hardware) ([source](https://github.com/iamdustan/react-hardware/tree/master/docs))
 * [Edit this file to add yours!](https://github.com/gatsbyjs/gatsby/blob/master/README.md)
 
+### Videos and blogs
+* Scott Nonnenberg presents on Gatsby to the Seattle React.js Meetup https://www.youtube.com/watch?v=Wpkc8o1V_SU
+* Kyle Mathews gave a lightning talk @ the 2016 React.js Conference on Gatsby https://www.youtube.com/watch?v=RFkNRKL6ZoE
+* [ReactJS E-Commerce With No Backend Using Snipcart & Gatsby](https://snipcart.com/blog/snipcart-reactjs-static-ecommerce-gatsby)
+* [A step-by-step guide: Gatsby on Netlify](https://www.netlify.com/blog/2016/02/24/a-step-by-step-guide-gatsby-on-netlify)
+
 ### Why use Gatsby instead of other Static Site Generators
 * No-refresh page transitions
 * The awesome React.js component model
