@@ -27,14 +27,14 @@ export function spawn (command, args = [], options = {}) {
 }
 
 export function gatsby (args = [], options = {}) {
-  const spawnArguments = concat([gatsbyCli], args)
+  const spawnArguments = concat(['--', gatsbyCli], args)
   return spawn(babel, spawnArguments, options)
 }
 
 export function build (fixturePath) {
   const buildPath = path.resolve(fixturePath, 'public')
   return remove(buildPath)
-    .then(() => spawn(babel, [gatsbyCli, 'build'], { cwd: fixturePath }))
+    .then(() => gatsby(['build'], { cwd: fixturePath }))
 }
 
 export function dom (filePath) {
