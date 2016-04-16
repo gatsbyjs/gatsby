@@ -22,7 +22,6 @@ test('md/index.html has an h1 that states file extention', async t => {
   const filePath = path.join(fixturePath, 'public', 'md', 'index.html')
   const $ = await dom(filePath)
 
-  // MD wrapper spits out an h1 tag. Shouldn't it be consistent with HTML
   const heading = $('h1').last()
   t.truthy(heading)
   const headingText = heading.text()
