@@ -89,7 +89,8 @@
     "eslint": "^2.7.0",
     "eslint-config-airbnb": "^6.1.0",
     "eslint-plugin-ava": "^2.0.1",
-    "eslint-plugin-react": "^4.3.0"
+    "eslint-plugin-react": "^4.3.0",
+    "nyc": "^6.4.0"
   },
   "engines": {
     "node": ">0.12.0"
@@ -112,11 +113,11 @@
   },
   "scripts": {
     "build": "babel lib --out-dir dist/",
-    "lint": "eslint --ext .js,.jsx --ignore-pattern dist --ignore-pattern public .",
+    "lint": "eslint --ext .js,.jsx --ignore-path .gitignore .",
     "test": "npm run lint && npm run test-node && npm run test-integration",
-    "test-integration": "npm run build && node_modules/.bin/ava test/integration",
+    "test-coverage": "node_modules/.bin/nyc --reporter=lcov --reporter=text npm test",
+    "test-integration": "node_modules/.bin/ava test/integration",
     "test-node": "node_modules/.bin/ava test/utils",
-    "setup": "npm run build && scripts/setup.sh",
     "watch": "babel -w lib --out-dir dist/"
   },
   "ava": {

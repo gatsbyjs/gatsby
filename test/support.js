@@ -1,9 +1,14 @@
-import fs from 'fs'
+import fs from 'fs-extra'
+import path from 'path'
 import cheerio from 'cheerio'
 import Promise from 'bluebird'
+import { concat } from 'lodash'
 import { spawn as spawnNative } from 'child_process'
+const remove = Promise.promisify(fs.remove)
+const gatsbyCli = path.resolve('..', '..', 'lib', 'bin', 'cli.js')
+const babel = path.resolve('..', '..', 'node_modules', '.bin', 'babel-node')
 
-export function spawn (command, args, options) {
+export function spawn (command, args = [], options = {}) {
   return new Promise((resolve, reject) => {
     let stdout = ''
     let stderr = ''
@@ -21,8 +26,19 @@ export function spawn (command, args, options) {
   })
 }
 
-export function dom (path) {
+export function gatsby (args = [], options = {}) {
+  const spawnArguments = concat([gatsbyCli], args)
+  return spawn(babel, spawnArguments, options)
+}
+
+export function build (fixturePath) {
+  const buildPath = path.resolve(fixturePath, 'public')
+  return remove(buildPath)
+    .then(() => spawn(babel, [gatsbyCli, 'build'], { cwd: fixturePath }))
+}
+
+export function dom (filePath) {
   const readFile = Promise.promisify(fs.readFile)
-  return readFile(path)
+  return readFile(filePath)
     .then(html => cheerio.load(html))
 }
