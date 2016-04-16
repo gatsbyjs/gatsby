@@ -12,6 +12,7 @@ lib-cov
 
 # Coverage directory used by tools like istanbul
 coverage
+.nyc_output
 
 # Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
@@ -30,3 +31,7 @@ examples/blog/public/
 *.un~
 dist
 bin/published.js
+
+# Build Path of Test Fixtures
+test/**/public
+.gatsby-context.js
