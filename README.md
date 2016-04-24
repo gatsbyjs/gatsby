@@ -93,7 +93,7 @@ Contributions welcome!
 4. See the tutorial below for more.
 
 ### Gatsby Starters
-The Gatsby cli tool lets you install "starters". These are
+The Gatsby CLI tool lets you install "starters". These are
 partially built sites preconfigured to help you get moving faster on
 creating a certain type of site.
 
@@ -369,7 +369,7 @@ Then finally when building your site run `gatsby build --prefix-links`
 
 The built site is now in `/public`. These files need copied to your
 `gh-pages` branch and committed and pushed. You can do this manually or
-use the handy [`gh-pages`](https://www.npmjs.com/package/gh-pages) cli tool.
+use the handy [`gh-pages`](https://www.npmjs.com/package/gh-pages) CLI tool.
 
 Both the sample sites are deployed to github pages and use link
 prefixing. Read their source for more help:
