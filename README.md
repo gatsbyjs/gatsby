@@ -50,6 +50,7 @@ it'll be converted to `/docs/index.html`.
 * [Snapgit](https://snapgit.com) ([source](https://github.com/snapgit/snapgit.com))
 * [iamdustan.com](http://iamdustan.com/) ([source](https://github.com/iamdustan/iamdustan.github.io))
 * [React Hardware](http://iamdustan.com/react-hardware) ([source](https://github.com/iamdustan/react-hardware/tree/master/docs))
+* [peterp.me](https://www.peterp.me) ([source](https://github.com/peterpme/peterpme.github.io))
 * [Edit this file to add yours!](https://github.com/gatsbyjs/gatsby/blob/master/README.md)
 
 ### Videos and blogs
