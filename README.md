@@ -150,21 +150,21 @@ include yours!
 
 ### How files become pages
 The process is file --> Webpack loader --> React.js wrapper component
---> static html page.
+--> static HTML page.
 
 Gatsby leverages [Webpack](http://webpack.github.io/) extensively.
  Webpack is a sophisticated module bundler that can turn any sort of
 file into a commonjs module. Webpack uses "Loaders" to convert a file
-into a module. These loaded modules are then wrapped inside a react.js
+into a module. These loaded modules are then wrapped inside a React.js
 component that's specific to a given file type. Gatsby then generates a
-static html page from this component.
+static HTML page from this component.
 
 Gatsby ships with default loaders and wrappers for HTML, Markdown, and
 JSX/CJSX but for most projects you'll want to write your own loaders and
 wrappers (very easy to do).
 
 As an example of how this process works, let's walk quickly through
-converting a markdown file into an html page.
+converting a markdown file into an HTML page.
 
 The [default Gatsby markdown
 loader](https://github.com/gatsbyjs/gatsby/blob/master/lib/loaders/markdown-loader/index.js)
@@ -302,7 +302,7 @@ it as an example of how to modify the Webpack plugins._
 If we wanted to extract all of the css in our project into a since
 `styles.css` file for production, we could add the
 `ExtractTextWebpackPlugin`. To do this, we need to modify the loader
-and add the plugin when generating the static html for our site.
+and add the plugin when generating the static HTML for our site.
 
 ```javascript
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
