@@ -18,6 +18,9 @@
     "space-infix-ops": [0],
     "react/prefer-es6-class": [0],
     "react/prefer-stateless-function": [0],
+    "no-underscore-dangle": ["error", { "allow": ["_config"] }],
+    "import/no-unresolved": [0],
+    "global-require": [0]
   },
   "globals": {
     "__PREFIX_LINKS__": true,
