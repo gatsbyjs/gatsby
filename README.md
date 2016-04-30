@@ -10,9 +10,9 @@ web technologies. A React.js static site generator.
 Supports Markdown, HTML, and React.js pages out of the box. Easy to add
 support for additional files types.
 
-Leverages [React Router's "nested component
-hierarchy"](https://github.com/rackt/react-router/blob/master/docs/Introduction.md)
-to make templating incredibly intuitive.
+Leverages React's [component model](https://facebook.github.io/react/blog/2013/06/05/why-react.html)
+ and [React Router's "nested component hierarchy"](https://github.com/rackt/react-router/blob/master/docs/Introduction.md)
+to make templating incredibly powerful and intuitive.
 
 All templates, css, and content are *hot reloadable* — powered by
 Webpack.
