@@ -30,6 +30,13 @@ var loadGatsby = function (path) {
 }
 
 var loadGlobalGatsby = function () {
+  if (process.argv[2] !== "new") {
+    console.log(
+      "A local install of Gatsby was not found.\n" +
+      "Generally you should save Gatsby as a site dependency e.g. npm install --save gatsby\n" +
+      "Continuing with global install.\n\n"
+    )
+  }
   fs.realpath(__dirname, function (err, real) {
     if (err) throw err
     loadGatsby(sysPath.join(real, '..', cliFile))
@@ -43,7 +50,7 @@ fs.access(localPath, function (error) {
     try {
       loadGatsby(localPath)
     } catch(error) {
-      console.error(
+      console.log(
         'Gatsby: Local install exists but failed to load it. ' +
         'Continuing with global install:', error
       )
