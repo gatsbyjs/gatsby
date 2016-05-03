@@ -326,6 +326,7 @@ exports.modifyWebpackConfig = function(config, env) {
                   ExtractTextPlugin,
                   ["styles.css", { allChunks: true }]);
   }
+  return config;
 }
 ```
 
