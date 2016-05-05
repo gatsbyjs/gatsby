@@ -249,8 +249,8 @@ Gatsby uses [webpack-configurator](https://github.com/lewie9021/webpack-configur
 to make changing the webpack loaders easy. The default set of loaders is organized by [key](lib/utils/webpack.config.js#L125).
 
 Gatsby uses `gatsby-node.js` to pass control to the user before
-resolving the final webpack configuration. `gatsby-node.js` should
-live in the root of your project and export a function which accepts a
+resolving the final build configuration. `gatsby-node.js` should
+live in the root of your project can export a function which accepts a
 webpack-configurator config object and an environment string. The
 environment string will be one of `develop`, `static` or
 `production`.
@@ -339,6 +339,18 @@ which you can use to enhance Gatsby.
 It is also possible to
 [write your own plugins](https://webpack.github.io/docs/how-to-write-a-plugin.html).
 
+### Perform additional post build step
+
+Gatsby also uses `gatsby-node.js` to pass control of the final build step over
+to the user when running `gatsby build`. The post build function takes two arguments, the pages and the callback for completing the build:
+
+```javascript
+export.postBuild = function(pages, callback) {
+  // perform actions on pages here
+
+  callback();
+}
+```
 
 ### How to write your own wrappers
 * Coming...
