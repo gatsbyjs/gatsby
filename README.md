@@ -235,8 +235,6 @@ files which start with an underscore:
   found' page. If you `<Link>` to an unknown URL, this page will be shown. Note: in
   production, you'll need to [set up your server host to show this page when it can't find
   the requested file](https://github.com/gatsbyjs/gatsby/pull/121#issuecomment-194715068).
-* (optional) `post-build.js` - a `function(pages, cb)` you can provide to do final
-processing on all generated content.
 * (optional) `gatsby-browser.js` - a way to hook into key application events. Export
 `onRouteChange` of type `function(location)` to be notified whenever React-Router
 navigates.
