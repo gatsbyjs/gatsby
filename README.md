@@ -56,6 +56,7 @@ install them locally by running `gatsby new SITE_NAME SOURCE_URL`.*
 * [peterp.me](https://www.peterp.me) ([source](https://github.com/peterpme/peterpme.github.io))
 * [k-create.com](https://k-create.com) ([source](https://github.com/kristofferh/kristoffer))
 * [kylegach.com](https://kylegach.com) ([source](https://github.com/kylegach/kylegach_com))
+* [jazlal.li](http://jazlal.li) ([source](https://github.com/jazlalli/jazlal.li))
 * [Edit this file to add yours!](https://github.com/gatsbyjs/gatsby/blob/master/README.md)
 
 ### Videos and blogs
