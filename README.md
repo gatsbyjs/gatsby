@@ -34,9 +34,6 @@ it'll be converted to `/docs/index.html`.
   starters or build your own.
 
 ## Sites built with Gatsby
-*Note, for the sites that have made their source available, you can
-install them locally by running `gatsby new SITE_NAME SOURCE_URL`.*
-
 * [bricolage.io](http://bricolage.io?utm_source=github.com) ([source](https://github.com/KyleAMathews/blog))
 * [relaterocket.co](https://relaterocket.co?utm_source=github.com)
 * [reindex.io](https://www.reindex.io)
@@ -58,6 +55,9 @@ install them locally by running `gatsby new SITE_NAME SOURCE_URL`.*
 * [kylegach.com](https://kylegach.com) ([source](https://github.com/kylegach/kylegach_com))
 * [jazlal.li](http://jazlal.li) ([source](https://github.com/jazlalli/jazlal.li))
 * [Edit this file to add yours!](https://github.com/gatsbyjs/gatsby/blob/master/README.md)
+
+*Note, for the sites that have made their source available, you can
+install them locally by running `gatsby new SITE_NAME SOURCE_URL`.*
 
 ### Videos and blogs
 * [Scott Nonnenberg](https://twitter.com/scottnonnenberg) presents on Gatsby to the Seattle React.js Meetup https://blog.scottnonnenberg.com/static-site-generation-with-gatsby-js/
