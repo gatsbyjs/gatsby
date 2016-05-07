@@ -1,6 +1,6 @@
 import test from 'ava'
 import path from 'path'
-import { build, dom } from '../support'
+import { build, dom } from '../helpers'
 
 const fixturePath = path.resolve('..', 'fixtures', 'static-wrappers')
 

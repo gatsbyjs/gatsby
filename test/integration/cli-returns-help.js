@@ -1,6 +1,6 @@
 import test from 'ava'
 import packageJson from '../../package.json'
-import { gatsby } from '../support'
+import { gatsby } from '../helpers'
 
 test('cli can be called and exits with 0', async t => {
   const noArgs = await gatsby()
