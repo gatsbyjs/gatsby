@@ -42,3 +42,5 @@ export function dom (filePath) {
   return readFile(filePath)
     .then(html => cheerio.load(html))
 }
+
+export { develop } from './develop'

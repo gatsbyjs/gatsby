@@ -1,7 +1,7 @@
 import test from 'ava'
 import path from 'path'
 import Promise from 'bluebird'
-import { build } from '../support'
+import { build } from '../helpers'
 import fse from 'fs-extra'
 const fs = Promise.promisifyAll(fse)
 
