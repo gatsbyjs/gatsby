@@ -236,8 +236,6 @@ files which start with an underscore:
   found' page. If you `<Link>` to an unknown URL, this page will be shown. Note: in
   production, you'll need to [set up your server host to show this page when it can't find
   the requested file](https://github.com/gatsbyjs/gatsby/pull/121#issuecomment-194715068).
-* (optional) `post-build.js` - a `function(pages, cb)` you can provide to do final
-processing on all generated content.
 * (optional) `gatsby-browser.js` - a way to hook into key application events. Export
 `onRouteChange` of type `function(location)` to be notified whenever React-Router
 navigates.
@@ -250,8 +248,8 @@ Gatsby uses [webpack-configurator](https://github.com/lewie9021/webpack-configur
 to make changing the webpack loaders easy. The default set of loaders is organized by [key](lib/utils/webpack.config.js#L125).
 
 Gatsby uses `gatsby-node.js` to pass control to the user before
-resolving the final webpack configuration. `gatsby-node.js` should
-live in the root of your project and export a function which accepts a
+resolving the final build configuration. `gatsby-node.js` should
+live in the root of your project can export a function which accepts a
 webpack-configurator config object and an environment string. The
 environment string will be one of `develop`, `static` or
 `production`.
@@ -340,6 +338,18 @@ which you can use to enhance Gatsby.
 It is also possible to
 [write your own plugins](https://webpack.github.io/docs/how-to-write-a-plugin.html).
 
+### Perform additional post build step
+
+Gatsby also uses `gatsby-node.js` to pass control of the final build step over
+to the user when running `gatsby build`. The post build function takes two arguments, the pages and the callback for completing the build:
+
+```javascript
+export.postBuild = function(pages, callback) {
+  // perform actions on pages here
+
+  callback();
+}
+```
 
 ### How to write your own wrappers
 * Coming...
