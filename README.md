@@ -247,14 +247,8 @@ and development.
 Gatsby uses [webpack-configurator](https://github.com/lewie9021/webpack-configurator)
 to make changing the webpack loaders easy. The default set of loaders is organized by [key](lib/utils/webpack.config.js#L125).
 
-Gatsby uses `gatsby-node.js` to pass control to the user before
-resolving the final build configuration. `gatsby-node.js` should
-live in the root of your project can export a function which accepts a
-webpack-configurator config object and an environment string. The
-environment string will be one of `develop`, `static` or
-`production`.
-
-Create a `gatsby-node.js` in the root of your project:
+To modify the Webpack configuration, create a `gatsby-node.js` in the root of your project
+and export there a `modifyWebpackConfig` function.
 
 ```javascript
 exports.modifyWebpackConfig = function(config, env) {
@@ -262,6 +256,16 @@ exports.modifyWebpackConfig = function(config, env) {
   return config;
 }
 ```
+
+Gatsby calls this function with the webpack-configurator object and
+environment string when it creates a Webpack config. It first
+loads the defaults and then allows you to modify it.
+
+The `env` can be
+
+* `develop` (when running `gatsby develop`)
+* `static` (when Gatsby is building static HTML pages)
+* `production` (when Gatsby is generating the CSS/JS bundles)
 
 Consider the following example which removes the default css loader
 and replaces it with a loader that uses css-modules.
