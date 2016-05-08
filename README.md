@@ -366,10 +366,28 @@ export.postBuild = function(pages, callback) {
 
 ### Configuring Babel
 
-For **Webpack loaded code** you can't modify Babel's behavior as normal
-by modifying the .babelrc in your site's root directory.
+You can modify Babel's behavior as normal by either providing a `.babelrc` in
+your site's root directory or by adding a "babel" section in your site's
+`package.json`. You can find out more about how to configure babel
+[here](https://babeljs.io/docs/usage/babelrc/).
 
-Instead you'll need to modify the Webpack babel loader as [described
+Gatsby by default will use your Babel configuration over the default if it can
+find it. Gatsby will automatically add react-hmre to your Babel config during
+development.
+
+Note that if you want to use babel-plugin that is not provided by Gatsby, you
+will have to also add it to your package.json. You can use any babel-plugin
+that Gatsby packs as a dependency without having to add it to your own
+package.json:
+
+* babel-plugin-add-module-exports
+* babel-plugin-transform-object-assign
+* babel-preset-es2015
+* babel-preset-react
+* babel-preset-stage-0
+
+If you need to change the loader to be something completely custom. You will
+have to define your own webpack loader by following the steps [described
 above](https://github.com/gatsbyjs/gatsby#how-to-use-your-own-webpack-loaders).
 
 ### Deploying to Github Pages (and other hosts where your site's links need prefixes)
