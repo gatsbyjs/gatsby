@@ -30,7 +30,6 @@ test('fixture can resolve plugins in gatsby directory (crawling up)', t => {
 
   const config = babelConfig(program)
   t.truthy(config.presets.length)
-  t.truthy(config.plugins.length)
 })
 
 test('throws error when babelrc is not parseable', t => {
