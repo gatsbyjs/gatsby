@@ -252,7 +252,7 @@ and export there a `modifyWebpackConfig` function.
 ```javascript
 exports.modifyWebpackConfig = function(config, env) {
   // edit loaders here
-  return config;
+  return config
 }
 ```
 
@@ -271,14 +271,14 @@ and replaces it with a loader that uses css-modules.
 
 ```javascript
 exports.modifyWebpackConfig = function(config, env) {
-  config.removeLoader('css');
+  config.removeLoader('css')
   config.loader('css', function(cfg) {
-    cfg.test = /\.css$/;
+    cfg.test = /\.css$/
     cfg.loader = 'style!css?modules'
     return cfg
   })
-  return config;
-};
+  return config
+}
 ```
 
 Each loader (`cfg` in the above example) can be a valid
@@ -314,21 +314,21 @@ If we wanted to extract all of the css in our project into a since
 and add the plugin when generating the static HTML for our site.
 
 ```javascript
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var ExtractTextPlugin = require("extract-text-webpack-plugin")
 
 exports.modifyWebpackConfig = function(config, env) {
   if(env === 'static') {
-    config.removeLoader('css');
+    config.removeLoader('css')
     config.loader('css', function(cfg) {
-      cfg.test = /\.css$/;
-      cfg.loader = ExtractTextPlugin.extract('css?minimize');
+      cfg.test = /\.css$/
+      cfg.loader = ExtractTextPlugin.extract('css?minimize')
       return cfg
     })
     config.plugin('extract-css',
                   ExtractTextPlugin,
-                  ["styles.css", { allChunks: true }]);
+                  ["styles.css", { allChunks: true }])
   }
-  return config;
+  return config
 }
 ```
 
@@ -350,7 +350,7 @@ to the user when running `gatsby build`. The post build function takes two argum
 export.postBuild = function(pages, callback) {
   // perform actions on pages here
 
-  callback();
+  callback()
 }
 ```
 
