@@ -202,7 +202,6 @@ When loaded and required, the resulting javascript object looks like the followi
     body: "<h1>Hi friends.</h1><p>This is a markdown file</p>"
   }
 }
-
 ```
 Now Gatsby wraps the markdown file in this very simple React.js component.
 
