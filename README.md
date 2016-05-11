@@ -418,7 +418,9 @@ above](https://github.com/gatsbyjs/gatsby#how-to-use-your-own-webpack-loaders).
 ### Deploying to Github Pages (and other hosts where your site's links need prefixes)
 Gatsby supports automatically prefixing links with its `prefixLink` helper function.
 
-To use simply import the function and run all links in your site
+First set the prefix in your config file e.g. `linkPrefix = '/your-project'`
+
+Then simply import the function and run all links in your site
 thorough it e.g.
 
 ```javascript
@@ -429,9 +431,7 @@ prefixLink('/')
 // When deployed to example.github.io/your-project/ this will return "/your-project/"
 ```
 
-Set the prefix in your config file e.g. `linkPrefix = '/your-project'`
-
-Then finally when building your site run `gatsby build --prefix-links`
+Then finally, when building your site, run `gatsby build --prefix-links`
 
 The built site is now in `/public`. These files need copied to your
 `gh-pages` branch and committed and pushed. You can do this manually or
