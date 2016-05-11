@@ -2,6 +2,7 @@
 
 /*eslint-disable */
 require('babel-core/register')
+require('coffee-script/register')
 
 global.appStartTime = Date.now()
 
