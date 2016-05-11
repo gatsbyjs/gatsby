@@ -39,10 +39,10 @@
     "html-frontmatter": "^1.5.1",
     "invariant": "^2.2.1",
     "json-loader": "^0.5.2",
-    "less": "^2.7.0",
+    "less": "^2.7.1",
     "less-loader": "^2.2.0",
     "loader-utils": "^0.2.14",
-    "lodash": "^4.11.2",
+    "lodash": "^4.12.0",
     "loggy": "^0.3.2",
     "markdown-it": "^6.0.1",
     "moment": "^2.11.2",
@@ -54,7 +54,7 @@
     "object-assign": "^4.1.0",
     "opn": "^4.0.1",
     "parse-filepath": "^1.0.1",
-    "postcss-browser-reporter": "^0.4.0",
+    "postcss-browser-reporter": "^0.5.0",
     "postcss-cssnext": "^2.5.2",
     "postcss-import": "^8.1.2",
     "postcss-loader": "^0.9.1",
@@ -89,12 +89,12 @@
     "bluebird": "^3.3.5",
     "cheerio": "^0.20.0",
     "eslint": "^2.9.0",
-    "eslint-config-airbnb": "^9.0.0",
+    "eslint-config-airbnb": "^9.0.1",
     "eslint-plugin-ava": "^2.3.1",
     "eslint-plugin-import": "^1.7.0",
     "eslint-plugin-jsx-a11y": "^1.2.0",
-    "eslint-plugin-react": "^5.0.1",
-    "nyc": "^6.4.3"
+    "eslint-plugin-react": "^5.1.1",
+    "nyc": "^6.4.4"
   },
   "engines": {
     "node": ">0.12.0"
