@@ -363,6 +363,32 @@ export.postBuild = function(pages, callback) {
 
 [Webpack doesn't currently support hot-reloading new files added to a context](https://github.com/webpack/webpack/issues/1162). When you add a new file, restart the `gatsby develop` process and your new page will show up.
 
+### Inline CSS
+
+A neat performance feature supported by Gatsby is inlining your CSS in
+the `<head>` of each HTML page. Not referencing external style sheets
+significantly speeds up the initial render of your site by avoiding
+another round trip to your server as the initial render of a page is
+blocked by external CSS files. This is a best practice suggested by
+many groups including [Google's AMP
+project](https://www.ampproject.org/docs/guides/responsive/style_pages.html).
+
+Each of [the official starters supports this pattern](https://github.com/gatsbyjs/gatsby-starter-default/blob/master/html.js).
+ The code to make it happen is in brief:
+
+```javascript
+// In your html.js
+let css
+// In development, css is injected by Javascript by the Webpack style-loader.
+if (process.env.NODE_ENV === 'production') {
+  css = <style dangerouslySetInnerHTML={{ __html: require('!raw!./public/styles.css') }} />
+}
+
+// Then in your <head>
+{css}
+```
+
+
 ### Configuring Babel
 
 You can modify Babel's behavior as normal by either providing a `.babelrc` in
