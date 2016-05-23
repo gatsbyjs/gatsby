@@ -387,7 +387,9 @@ if (process.env.NODE_ENV === 'production') {
 // Then in your <head>
 {css}
 ```
+### CSS modules
 
+[Css modules](https://github.com/css-modules/css-modules) are support by default for all files with `.module.(css|less|scss|sass)` extension.
 
 ### Configuring Babel
 
