@@ -17,6 +17,10 @@ simple steps:
 
 Test suite can be run via `npm test`.
 
+This project uses [FlowType](https://flowtype.org/) for static type checking.
+
+**Note for Windows Users** - Flow is not currently supported on Windows. Please do not let this prevent you from contributing. If you can use a VM for this part, great! Otherwise, feel free to open a PR and ask for assistance.
+
 The usual contributing steps are:
 
 * Fork the [official repository](https://github.com/gatsbyjs/gatsby).

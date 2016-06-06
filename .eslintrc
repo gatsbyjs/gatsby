@@ -5,7 +5,9 @@
     "plugin:ava/recommended"
   ],
   "plugins": [
-    "ava"
+    "ava",
+    "flowtype",
+    "flow-vars"
   ],
   "rules": {
     "indent": [2, 2, {"SwitchCase": 1}],
@@ -20,9 +22,37 @@
     "react/prefer-stateless-function": [0],
     "no-underscore-dangle": ["error", { "allow": ["_config"] }],
     "import/no-unresolved": [0],
-    "global-require": [0]
+    "global-require": [0],
+    "no-duplicate-imports": [0],
+    "flowtype/require-parameter-type": 1,
+    "flowtype/require-return-type": [
+      1,
+      "always",
+      {
+        "annotateUndefined": "never"
+      }
+    ],
+    "flowtype/space-after-type-colon": [
+      1,
+      "always"
+    ],
+    "flowtype/space-before-type-colon": [
+      1,
+      "never"
+    ],
+    "flowtype/type-id-match": [
+      0,
+      "^([A-Z][a-z0-9]+)+Type$"
+    ],
+    "flow-vars/define-flow-type": 1,
+    "flow-vars/use-flow-type": 1,
   },
   "globals": {
     "__PREFIX_LINKS__": true,
   },
+  "settings": {
+    "flowtype": {
+      "onlyFilesWithFlowAnnotation": true
+    }
+  }
 }
