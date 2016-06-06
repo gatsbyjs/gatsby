@@ -56,6 +56,7 @@ it'll be converted to `/docs/index.html`.
 * [jazlal.li](http://jazlal.li) ([source](https://github.com/jazlalli/jazlal.li))
 * [React Headroom](https://kyleamathews.github.io/react-headroom/) ([source](https://github.com/KyleAMathews/react-headroom/tree/master/website))
 * [Völlig Ohne](http://volligohne.com/) ([source](https://github.com/timurc/voellig-ohne-website/))
+* [michaelcereda.com](http://michaelcereda.com) ([source](https://github.com/MichaelCereda/michaelcereda.com))
 * [Edit this file to add yours!](https://github.com/gatsbyjs/gatsby/blob/master/README.md)
 
 *Note, for the sites that have made their source available, you can
