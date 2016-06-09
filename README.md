@@ -389,7 +389,15 @@ if (process.env.NODE_ENV === 'production') {
 ```
 ### CSS modules
 
-[Css modules](https://github.com/css-modules/css-modules) are support by default for all files with `.module.(css|less|scss|sass)` extension.
+[CSS modules](https://github.com/css-modules/css-modules) are support by default for all files with `.module.(css|less|scss|sass)` extension.
+
+```javascript
+// Uses CSS Modules
+import './my-component.module.css'
+
+// Doesn't use CSS Modules
+import './main.css'
+```
 
 ### Configuring Babel
 
