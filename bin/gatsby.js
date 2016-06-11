@@ -31,7 +31,8 @@ var loadGatsby = function (path) {
 }
 
 var loadGlobalGatsby = function () {
-  if (process.argv[2] !== "new") {
+  var commandsToIgnore = ['new', '--help']
+  if (commandsToIgnore.indexOf(process.argv[2]) === -1) {
     console.log(
       "A local install of Gatsby was not found.\n" +
       "Generally you should save Gatsby as a site dependency e.g. npm install --save gatsby\n" +

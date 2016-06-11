@@ -54,6 +54,9 @@ it'll be converted to `/docs/index.html`.
 * [k-create.com](https://k-create.com) ([source](https://github.com/kristofferh/kristoffer))
 * [kylegach.com](https://kylegach.com) ([source](https://github.com/kylegach/kylegach_com))
 * [jazlal.li](http://jazlal.li) ([source](https://github.com/jazlalli/jazlal.li))
+* [React Headroom](https://kyleamathews.github.io/react-headroom/) ([source](https://github.com/KyleAMathews/react-headroom/tree/master/website))
+* [Völlig Ohne](http://volligohne.com/) ([source](https://github.com/timurc/voellig-ohne-website/))
+* [michaelcereda.com](http://michaelcereda.com) ([source](https://github.com/MichaelCereda/michaelcereda.com))
 * [Edit this file to add yours!](https://github.com/gatsbyjs/gatsby/blob/master/README.md)
 
 *Note, for the sites that have made their source available, you can
@@ -66,6 +69,7 @@ install them locally by running `gatsby new SITE_NAME SOURCE_URL`.*
 * [ReactJS E-Commerce With No Backend Using Snipcart & Gatsby](https://snipcart.com/blog/snipcart-reactjs-static-ecommerce-gatsby)
 * [A step-by-step guide: Gatsby on Netlify](https://www.netlify.com/blog/2016/02/24/a-step-by-step-guide-gatsby-on-netlify)
 * [Hosting GatsbyJS – A React Static Site Generator](https://www.aerobatic.com/blog/gatsbyjs)
+* [Michael Cereda's multi-part series of blog posts on building his site with Gatsby](https://medium.com/@michaelcereda/creating-an-isomorphic-universal-website-with-react-part-1-a905350acba8#.akoo25l6j)
 
 ### Why use Gatsby instead of other Static Site Generators
 * No-refresh page transitions
