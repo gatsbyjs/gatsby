@@ -243,7 +243,7 @@ files which start with an underscore:
   production, you'll need to [set up your server host to show this page when it can't find
   the requested file](https://github.com/gatsbyjs/gatsby/pull/121#issuecomment-194715068).
 * (optional) `gatsby-browser.js` - a way to hook into key application events. Export
-`onRouteChange` of type `function(location)` to be notified whenever React-Router
+`onRouteUpdate` of type `function()` to be notified whenever React-Router
 navigates.
 * (optional) `gatsby-node.js` - a way to hook into events during build
 and development.
