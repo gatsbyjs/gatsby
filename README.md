@@ -60,6 +60,7 @@ it'll be converted to `/docs/index.html`.
 * [openFDA](https://open.fda.gov/) ([source](https://github.com/FDA/open.fda.gov))
 * [emilyaviva.com](http://emilyaviva.com) ([source](https://github.com/emilyaviva/eakm-website-gatsby))
 * [dynamicext.com](http://www.dynamicext.com/)
+* [React Gravatar](http://kyleamathews.github.io/react-gravatar/) ([source](https://github.com/KyleAMathews/react-gravatar/tree/master/www))
 * [Edit this file to add yours!](https://github.com/gatsbyjs/gatsby/blob/master/README.md)
 
 *Note, for the sites that have made their source available, you can
