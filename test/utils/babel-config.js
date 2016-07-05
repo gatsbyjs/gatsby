@@ -1,6 +1,6 @@
 import test from 'ava'
 import path from 'path'
-import includes from 'lodash/includes'
+import _ from 'lodash'
 import babelConfig from '../../lib/utils/babel-config'
 
 function programStub (fixture) {
@@ -51,7 +51,7 @@ test('when in development has hmre', t => {
 
   // regex matches: babel followed by any amount of hyphen or word characters
   const presetNames = config.presets.map(p => p.match(/babel[-|\w]+/)[0])
-  t.true(includes(presetNames, 'babel-preset-react-hmre'))
+  t.true(_.includes(presetNames, 'babel-preset-react-hmre'))
 })
 
 test('throws when a plugin is not available', t => {
