@@ -2,7 +2,7 @@ import fs from 'fs-extra'
 import path from 'path'
 import cheerio from 'cheerio'
 import Promise from 'bluebird'
-import { concat } from 'lodash'
+import _ from 'lodash'
 import { spawn as spawnNative } from 'child_process'
 const remove = Promise.promisify(fs.remove)
 const gatsbyCli = path.resolve('..', '..', 'lib', 'bin', 'cli.js')
@@ -27,7 +27,7 @@ export function spawn (command, args = [], options = {}) {
 }
 
 export function gatsby (args = [], options = {}) {
-  const spawnArguments = concat(['--', gatsbyCli], args)
+  const spawnArguments = _.concat(['--', gatsbyCli], args)
   return spawn(babel, spawnArguments, options)
 }
 

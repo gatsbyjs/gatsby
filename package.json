@@ -86,6 +86,7 @@
     "ava-http": "^0.2.1",
     "babel-cli": "^6.9.0",
     "babel-eslint": "^6.1.0",
+    "babel-plugin-lodash": "^3.2.0",
     "babel-plugin-transform-flow-strip-types": "^6.8.0",
     "babel-register": "^6.9.0",
     "bluebird": "^3.4.1",
@@ -125,6 +126,7 @@
   },
   "scripts": {
     "build": "babel lib --out-dir dist/",
+    "clean-test-bundles": "find test/ -type f -name bundle.js* -exec rm -rf {} +",
     "lint": "eslint --ext .js,.jsx --ignore-path .gitignore .",
     "lint:flow": "babel-node scripts/flow-check.js",
     "test": "npm run lint && npm run test-node && npm run test-integration",
