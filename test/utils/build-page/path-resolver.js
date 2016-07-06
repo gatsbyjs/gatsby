@@ -1,6 +1,6 @@
 import test from 'ava'
 import path from 'path'
-import _ from 'lodash'
+import startsWith from 'lodash/startsWith'
 import pathResolver from '../../../lib/utils/build-page/path-resolver'
 
 test('it returns an object', t => {
@@ -52,5 +52,5 @@ test('the directory name has / slashes', t => {
 
 test('the ext doesnt have a leading .', t => {
   const result = pathResolver('/index.md')
-  t.false(_.startsWith(result.file.ext, '.'))
+  t.false(startsWith(result.file.ext, '.'))
 })
