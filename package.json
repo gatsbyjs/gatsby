@@ -36,7 +36,6 @@
     "highlight.js": "^9.5.0",
     "history": "^2.1.2",
     "html-frontmatter": "^1.6.0",
-    "image-webpack-loader": "^2.0.0",
     "invariant": "^2.2.1",
     "json-loader": "^0.5.2",
     "json5": "^0.5.0",
