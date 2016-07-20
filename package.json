@@ -98,7 +98,7 @@
     "eslint-plugin-flow-vars": "^0.4.0",
     "eslint-plugin-flowtype": "^2.3.1",
     "eslint-plugin-import": "^1.11.0",
-    "eslint-plugin-jsx-a11y": "^2.0.1",
+    "eslint-plugin-jsx-a11y": "^1.5.5",
     "eslint-plugin-react": "^5.2.2",
     "flow-bin": "^0.29.0",
     "iflow-debug": "^1.0.15",
