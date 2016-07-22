@@ -139,6 +139,7 @@ include yours!
 * [Simple blog](https://github.com/gatsbyjs/gatsby-starter-blog) ([Demo](http://gatsbyjs.github.io/gatsby-starter-blog/))
 * [Simple documentation site](https://github.com/gatsbyjs/gatsby-starter-documentation) ([Demo](http://gatsbyjs.github.io/gatsby-starter-documentation/))
 * [Lumen](https://github.com/wpioneer/gatsby-starter-lumen) ([Demo](http://wpioneer.github.io/gatsby-starter-lumen/))
+* [DrunkenBlog](https://github.com/konsumer/gatsby-starter-drunkenblog) ([Demo](http://konsumer.js.org/gatsby-starter-drunkenblog/))
 
 ### Tutorial: Building a documentation site from the Gatsby Documentation Starter
 1. Install gatsby `npm install -g gatsby`
