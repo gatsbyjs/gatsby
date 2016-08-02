@@ -66,6 +66,7 @@ it'll be converted to `/docs/index.html`.
 * [Beau Han Xu](http://www.beauhanxu.com/)
 * [HalfAtheist](https://halfatheist.com/) ([source](https://github.com/halfatheist/halfatheist.github.io))
 * [joshuahorwitz.net](http://joshuahorwitz.net)
+* [DOSH](http://www.dosh.cash/)
 * [Edit this file to add yours!](https://github.com/gatsbyjs/gatsby/blob/master/README.md)
 
 *Note, for the sites that have made their source available, you can
