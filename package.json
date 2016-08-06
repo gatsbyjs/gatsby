@@ -1,8 +1,14 @@
 {
   "name": "gatsby",
   "description": "React.js Static Site Generator",
-  "version": "0.12.2",
+  "version": "0.12.3",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "ava": {
+    "require": [
+      "babel-register"
+    ],
+    "babel": "inherit"
+  },
   "bin": {
     "gatsby": "./bin/gatsby.js"
   },
@@ -73,7 +79,7 @@
     "toml": "^2.2.2",
     "toml-loader": "^1.0.0",
     "tracer": "^0.8.3",
-    "typography": "^0.11.11",
+    "typography": "^0.12.1",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.1",
     "webpack-configurator": "^0.3.0",
@@ -101,7 +107,7 @@
     "eslint-plugin-react": "^5.2.2",
     "flow-bin": "^0.30.0",
     "iflow-debug": "^1.0.15",
-    "iflow-lodash": "^1.1.20",
+    "iflow-lodash": "^1.1.23",
     "iflow-react-router": "^1.1.17",
     "nyc": "^7.0.0"
   },
@@ -134,11 +140,5 @@
     "test-integration": "node_modules/.bin/ava test/integration",
     "test-node": "node_modules/.bin/ava test/utils",
     "watch": "babel -w lib --out-dir dist/"
-  },
-  "ava": {
-    "require": [
-      "babel-register"
-    ],
-    "babel": "inherit"
   }
 }
