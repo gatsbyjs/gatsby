@@ -13,7 +13,7 @@ var verDigit = Number(version.match(/\d+/)[0])
 
 if (verDigit < 4) {
   console.error(
-    'Error: Gatsby 0.9+ requires node.js v4 or higher (you have ' + version + ') ' +
+    'Error: Gatsby 0.13+ requires node.js v4 or higher (you have ' + version + ') ' +
     'Upgrade node to the latest stable release.'
   )
   process.exit()
