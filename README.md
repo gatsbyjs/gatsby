@@ -37,7 +37,7 @@ it'll be converted to `/docs/index.html`.
 * [bricolage.io](https://bricolage.io/?utm_source=github.com) ([source](https://github.com/KyleAMathews/blog))
 * [relaterocket.co](https://relaterocket.co?utm_source=github.com)
 * [reindex.io](https://www.reindex.io)
-* [syncano.io](https://www.syncano.io)
+* [syncano.io](https://www.syncano.io) ([source](https://github.com/Syncano/syncano.com))
 * [graphene-python.org](http://graphene-python.org/) ([source](https://github.com/graphql-python/graphene/tree/master/docs))
 * [back-to-the-basics.io](http://back-to-the-basics.io/)
 * [ashk.io](http://ashk.io/) ([source](https://github.com/wpioneer/blog))
@@ -68,6 +68,8 @@ it'll be converted to `/docs/index.html`.
 * [joshuahorwitz.net](http://joshuahorwitz.net)
 * [DOSH](http://www.dosh.cash/)
 * [Outcomes.com](https://www.outcomes.com/)
+* [Codefellows.org](https://www.codefellows.org)
+* [ollieglass.com](http://ollieglass.com/)
 * [Edit this file to add yours!](https://github.com/gatsbyjs/gatsby/blob/master/README.md)
 
 *Note, for the sites that have made their source available, you can
