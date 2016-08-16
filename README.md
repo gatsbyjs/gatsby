@@ -70,7 +70,7 @@ it'll be converted to `/docs/index.html`.
 * [Outcomes.com](https://www.outcomes.com/)
 * [Codefellows.org](https://www.codefellows.org)
 * [ollieglass.com](http://ollieglass.com/)
-* [waigojs.com](https://waigojs.com/)
+* [waigojs.com](https://waigojs.com/) ([source](https://github.com/waigo/waigo.github.io))
 * [Edit this file to add yours!](https://github.com/gatsbyjs/gatsby/blob/master/README.md)
 
 *Note, for the sites that have made their source available, you can
