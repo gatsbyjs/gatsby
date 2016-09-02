@@ -33,6 +33,11 @@ it'll be converted to `/docs/index.html`.
 * Support "Starters" — install starter sites directly from Github. Use open sourced
   starters or build your own.
 
+### Why use Gatsby instead of other Static Site Generators
+* No-refresh page transitions
+* The awesome React.js component model
+* Live editing on every part of your site. Dramatically speed development.
+
 ## Sites built with Gatsby
 * [bricolage.io](https://bricolage.io/?utm_source=github.com) ([source](https://github.com/KyleAMathews/blog))
 * [relaterocket.co](https://relaterocket.co?utm_source=github.com)
@@ -86,11 +91,6 @@ install them locally by running `gatsby new SITE_NAME SOURCE_URL`.*
 * [A step-by-step guide: Gatsby on Netlify](https://www.netlify.com/blog/2016/02/24/a-step-by-step-guide-gatsby-on-netlify)
 * [Hosting GatsbyJS – A React Static Site Generator](https://www.aerobatic.com/blog/gatsbyjs)
 * [Michael Cereda's multi-part series of blog posts on building his site with Gatsby](https://medium.com/@michaelcereda/creating-an-isomorphic-universal-website-with-react-part-1-a905350acba8#.akoo25l6j)
-
-### Why use Gatsby instead of other Static Site Generators
-* No-refresh page transitions
-* The awesome React.js component model
-* Live editing on every part of your site. Dramatically speed development.
 
 ### I'm already building a server-rendered React.js site, is Gatsby a good fit?
 If your site falls closer to the site end of the app<---->site spectrum
