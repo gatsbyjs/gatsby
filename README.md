@@ -23,7 +23,7 @@ it'll be converted to `/docs/index.html`.
 
 ![live-reloading example](http://zippy.gfycat.com/UltimateWeeklyBarebirdbat.gif)
 
-### Goals
+## Goals
 * No-reload page transitions
 * Hot reload editing. Tweak your pages, templates, and styles and see changes in
   real time.
@@ -33,7 +33,7 @@ it'll be converted to `/docs/index.html`.
 * Support "Starters" — install starter sites directly from Github. Use open sourced
   starters or build your own.
 
-### Why use Gatsby instead of other Static Site Generators
+## Why use Gatsby instead of other Static Site Generators
 * No-refresh page transitions
 * The awesome React.js component model
 * Live editing on every part of your site. Dramatically speed development.
@@ -83,7 +83,11 @@ it'll be converted to `/docs/index.html`.
 *Note, for the sites that have made their source available, you can
 install them locally by running `gatsby new SITE_NAME SOURCE_URL`.*
 
-### Videos and blogs
+## Sponsors
+* [RelateRocket](https://relaterocket.co)
+* [Thinkmill](http://thinkmill.com.au/)
+
+## Videos and blogs
 * [Scott Nonnenberg](https://twitter.com/scottnonnenberg) presents on Gatsby to the Seattle React.js Meetup https://blog.scottnonnenberg.com/static-site-generation-with-gatsby-js/
 * [Kyle Mathews](https://twitter.com/kylemathews) gave a lightning talk @ the 2016 React.js Conference on Gatsby https://www.youtube.com/watch?v=RFkNRKL6ZoE
 * [Kyle Mathews](https://twitter.com/kylemathews) spoke on Gatsby to the San Francisco Static Web Tech meetup http://www.staticwebtech.com/presentations/developing-with-react-gatsbyjs/
@@ -92,7 +96,8 @@ install them locally by running `gatsby new SITE_NAME SOURCE_URL`.*
 * [Hosting GatsbyJS – A React Static Site Generator](https://www.aerobatic.com/blog/gatsbyjs)
 * [Michael Cereda's multi-part series of blog posts on building his site with Gatsby](https://medium.com/@michaelcereda/creating-an-isomorphic-universal-website-with-react-part-1-a905350acba8#.akoo25l6j)
 
-### I'm already building a server-rendered React.js site, is Gatsby a good fit?
+## I'm already building a server-rendered React.js site, is Gatsby a good fit?
+
 If your site falls closer to the site end of the app<---->site spectrum
 then yes.
 
@@ -100,7 +105,8 @@ Gatsby is an excellent fit for blogs, marketing sites, docs sites, etc. Proper w
 apps should probably remain as normal web apps (though I'd love to be
 proved wrong!).
 
-### Warning!
+## Warning!
+
 Gatsby is not yet stable. APIs will break. Functionality is missing. It's
 usable but if you plan on building with it, expect a rocky road for some time.
 
