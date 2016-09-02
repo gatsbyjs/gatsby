@@ -384,6 +384,11 @@ export.postBuild = function(pages, callback) {
 
 [Webpack doesn't currently support hot-reloading new files added to a context](https://github.com/webpack/webpack/issues/1162). When you add a new file, restart the `gatsby develop` process and your new page will show up.
 
+Make sure you also including the **trailing slash** in your URLs:
+
+- Bad: `http://localhost:8000/foo`
+- Good: `http://localhost:8000/foo/`
+
 ### Inline CSS
 
 A neat performance feature supported by Gatsby is inlining your CSS in
