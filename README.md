@@ -15,7 +15,7 @@ Leverages React's [component model](https://facebook.github.io/react/blog/2013/0
 to make templating incredibly powerful and intuitive.
 
 All templates, css, and content are *hot reloadable* — powered by
-Webpack.
+[webpack](https://github.com/webpack/webpack).
 
 Build sites like it's 1995. Files are translated into HTML pages at the
 same position within the file system. Add a markdown file at `/docs/index.md` and
