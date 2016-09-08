@@ -146,7 +146,7 @@ the Gatsby Starter Blog by running:
 This downloads the files and initializes the site by running `npm
 install`
 
-If you don't specify a custom starter, your site will created
+If you don't specify a custom starter, your site will be created
 from the [default
 starter](https://github.com/gatsbyjs/gatsby-starter-default).
 
