@@ -41,7 +41,6 @@ it'll be converted to `/docs/index.html`.
 * Live editing on every part of your site. Dramatically speed development.
 
 ## Sites built with Gatsby
-* [ethereumclassic.org](http://ethereumclassic.org/) ([source](https://github.com/ethereumclassic/ethereumclassic.github.io/tree/source))
 * [bricolage.io](https://bricolage.io/?utm_source=github.com) ([source](https://github.com/KyleAMathews/blog))
 * [relaterocket.co](https://relaterocket.co?utm_source=github.com)
 * [reindex.io](https://www.reindex.io)
@@ -82,6 +81,7 @@ it'll be converted to `/docs/index.html`.
 * [The State Of JavaScript](http://stateofjs.com/)
 * [FlashMobile](http://www.flashmobile.mx/en/)
 * [ZBT MIT Website](http://zbt.mit.edu) ([source](https://github.com/Slava/zbt-website))
+* [ethereumclassic.org](http://ethereumclassic.org/) ([source](https://github.com/ethereumclassic/ethereumclassic.github.io/tree/source))
 * [Husam Machlovi, Portfolio & Blog](http://husammachlovi.com)
 * [Edit this file to add yours!](https://github.com/gatsbyjs/gatsby/blob/master/README.md)
 
