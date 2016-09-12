@@ -15,15 +15,17 @@ Leverages React's [component model](https://facebook.github.io/react/blog/2013/0
 to make templating incredibly powerful and intuitive.
 
 All templates, css, and content are *hot reloadable* — powered by
-Webpack.
+[webpack](https://github.com/webpack/webpack).
 
 Build sites like it's 1995. Files are translated into HTML pages at the
 same position within the file system. Add a markdown file at `/docs/index.md` and
 it'll be converted to `/docs/index.html`.
 
+*[We've started work on a 1.0 release of Gatsby!](https://github.com/gatsbyjs/gatsby/issues/419)*
+
 ![live-reloading example](http://zippy.gfycat.com/UltimateWeeklyBarebirdbat.gif)
 
-### Goals
+## Goals
 * No-reload page transitions
 * Hot reload editing. Tweak your pages, templates, and styles and see changes in
   real time.
@@ -32,6 +34,11 @@ it'll be converted to `/docs/index.html`.
   spot on the file system.
 * Support "Starters" — install starter sites directly from Github. Use open sourced
   starters or build your own.
+
+## Why use Gatsby instead of other Static Site Generators
+* No-refresh page transitions
+* The awesome React.js component model
+* Live editing on every part of your site. Dramatically speed development.
 
 ## Sites built with Gatsby
 * [bricolage.io](https://bricolage.io/?utm_source=github.com) ([source](https://github.com/KyleAMathews/blog))
@@ -71,12 +78,21 @@ it'll be converted to `/docs/index.html`.
 * [Codefellows.org](https://www.codefellows.org)
 * [ollieglass.com](http://ollieglass.com/)
 * [waigojs.com](https://waigojs.com/) ([source](https://github.com/waigo/waigo.github.io))
+* [The State Of JavaScript](http://stateofjs.com/)
+* [FlashMobile](http://www.flashmobile.mx/en/)
+* [ZBT MIT Website](http://zbt.mit.edu) ([source](https://github.com/Slava/zbt-website))
+* [ethereumclassic.org](http://ethereumclassic.org/) ([source](https://github.com/ethereumclassic/ethereumclassic.github.io/tree/source))
+* [Husam Machlovi, Portfolio & Blog](http://husammachlovi.com)
 * [Edit this file to add yours!](https://github.com/gatsbyjs/gatsby/blob/master/README.md)
 
 *Note, for the sites that have made their source available, you can
 install them locally by running `gatsby new SITE_NAME SOURCE_URL`.*
 
-### Videos and blogs
+## Sponsors
+* [RelateRocket](https://relaterocket.co)
+* [Thinkmill](http://thinkmill.com.au/)
+
+## Videos and blogs
 * [Scott Nonnenberg](https://twitter.com/scottnonnenberg) presents on Gatsby to the Seattle React.js Meetup https://blog.scottnonnenberg.com/static-site-generation-with-gatsby-js/
 * [Kyle Mathews](https://twitter.com/kylemathews) gave a lightning talk @ the 2016 React.js Conference on Gatsby https://www.youtube.com/watch?v=RFkNRKL6ZoE
 * [Kyle Mathews](https://twitter.com/kylemathews) spoke on Gatsby to the San Francisco Static Web Tech meetup http://www.staticwebtech.com/presentations/developing-with-react-gatsbyjs/
@@ -85,12 +101,8 @@ install them locally by running `gatsby new SITE_NAME SOURCE_URL`.*
 * [Hosting GatsbyJS – A React Static Site Generator](https://www.aerobatic.com/blog/gatsbyjs)
 * [Michael Cereda's multi-part series of blog posts on building his site with Gatsby](https://medium.com/@michaelcereda/creating-an-isomorphic-universal-website-with-react-part-1-a905350acba8#.akoo25l6j)
 
-### Why use Gatsby instead of other Static Site Generators
-* No-refresh page transitions
-* The awesome React.js component model
-* Live editing on every part of your site. Dramatically speed development.
+## I'm already building a server-rendered React.js site, is Gatsby a good fit?
 
-### I'm already building a server-rendered React.js site, is Gatsby a good fit?
 If your site falls closer to the site end of the app<---->site spectrum
 then yes.
 
@@ -98,7 +110,8 @@ Gatsby is an excellent fit for blogs, marketing sites, docs sites, etc. Proper w
 apps should probably remain as normal web apps (though I'd love to be
 proved wrong!).
 
-### Warning!
+## Warning!
+
 Gatsby is not yet stable. APIs will break. Functionality is missing. It's
 usable but if you plan on building with it, expect a rocky road for some time.
 
@@ -134,7 +147,7 @@ the Gatsby Starter Blog by running:
 This downloads the files and initializes the site by running `npm
 install`
 
-If you don't specify a custom starter, your site will created
+If you don't specify a custom starter, your site will be created
 from the [default
 starter](https://github.com/gatsbyjs/gatsby-starter-default).
 
@@ -382,6 +395,11 @@ export.postBuild = function(pages, callback) {
 ### I added a new page and it's not showing up!
 
 [Webpack doesn't currently support hot-reloading new files added to a context](https://github.com/webpack/webpack/issues/1162). When you add a new file, restart the `gatsby develop` process and your new page will show up.
+
+Make sure you also including the **trailing slash** in your URLs:
+
+- Bad: `http://localhost:8000/foo`
+- Good: `http://localhost:8000/foo/`
 
 ### Inline CSS
 
