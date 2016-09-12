@@ -100,6 +100,7 @@ install them locally by running `gatsby new SITE_NAME SOURCE_URL`.*
 * [A step-by-step guide: Gatsby on Netlify](https://www.netlify.com/blog/2016/02/24/a-step-by-step-guide-gatsby-on-netlify)
 * [Hosting GatsbyJS – A React Static Site Generator](https://www.aerobatic.com/blog/gatsbyjs)
 * [Michael Cereda's multi-part series of blog posts on building his site with Gatsby](https://medium.com/@michaelcereda/creating-an-isomorphic-universal-website-with-react-part-1-a905350acba8#.akoo25l6j)
+* [Talk on GatsbyJS @ ViennaJS](https://www.youtube.com/watch?v=f0O1nCgqA3E&feature=youtu.be&a)
 
 ## I'm already building a server-rendered React.js site, is Gatsby a good fit?
 
