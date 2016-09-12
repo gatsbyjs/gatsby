@@ -8,7 +8,7 @@ Transform plain text into dynamic blogs and websites using the latest
 web technologies. A React.js static site generator.
 
 Supports Markdown, HTML, and React.js pages out of the box. Easy to add
-support for additional files types.
+support for additional file types.
 
 Leverages React's [component model](https://facebook.github.io/react/blog/2013/06/05/why-react.html)
  and [React Router's "nested component hierarchy"](https://github.com/rackt/react-router/blob/master/docs/Introduction.md)
