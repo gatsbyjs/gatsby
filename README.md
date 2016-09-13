@@ -83,7 +83,7 @@ it'll be converted to `/docs/index.html`.
 * [ZBT MIT Website](http://zbt.mit.edu) ([source](https://github.com/Slava/zbt-website))
 * [ethereumclassic.org](http://ethereumclassic.org/) ([source](https://github.com/ethereumclassic/ethereumclassic.github.io/tree/source))
 * [Husam Machlovi, Portfolio & Blog](http://husammachlovi.com)
-* [numenta.com](http://numenta.com)
+* [numenta.com](http://numenta.com) ([source](https://github.com/numenta/numenta-web/tree/master/numenta.com))
 * [Edit this file to add yours!](https://github.com/gatsbyjs/gatsby/blob/master/README.md)
 
 *Note, for the sites that have made their source available, you can
