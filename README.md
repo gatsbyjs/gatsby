@@ -92,6 +92,7 @@ install them locally by running `gatsby new SITE_NAME SOURCE_URL`.*
 ## Sponsors
 * [RelateRocket](https://relaterocket.co)
 * [Thinkmill](http://thinkmill.com.au/)
+* [Loanpal](https://loanpal.com/)
 
 ## Videos and blogs
 * [Scott Nonnenberg](https://twitter.com/scottnonnenberg) presents on Gatsby to the Seattle React.js Meetup https://blog.scottnonnenberg.com/static-site-generation-with-gatsby-js/
