@@ -6,7 +6,7 @@ env:
   - export NODE_VERSION="6"
 os:
   - linux
-  - osx
+  #- osx
 # pre-install to bring in the correct version of node via nvm
 before_install:
   - git submodule update --init --recursive

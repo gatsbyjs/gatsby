@@ -10,9 +10,30 @@ test('returns undefined when filename starts with _', t => {
 
 test('uses the path from page data', t => {
   const parsedPath = { name: 'page', dirname: 'a-directory/' }
-  const data = { path: '/page-at-root' }
+  const data = { path: '/page-at-root/' }
   const pagePath = urlResolver(data, parsedPath)
-  t.is(pagePath, '/page-at-root')
+  t.is(pagePath, '/page-at-root/')
+})
+
+test('appends a trailing slash to path from page data', t => {
+  const parsedPath = { name: 'page', dirname: 'a-directory/' }
+  const data = { path: '/user-defined-path' }
+  const pagePath = urlResolver(data, parsedPath)
+  t.is(pagePath, '/user-defined-path/')
+})
+
+test('does not append trailing slash to .html paths from page data', t => {
+  const parsedPath = { name: 'page', dirname: 'a-directory/' }
+  const data = { path: '/user-defined-path.html' }
+  const pagePath = urlResolver(data, parsedPath)
+  t.is(pagePath, '/user-defined-path.html')
+})
+
+test('prepends a slash to all paths from page data', t => {
+  const parsedPath = { name: 'page', dirname: 'a-directory/' }
+  const data = { path: 'user-defined-path/' }
+  const pagePath = urlResolver(data, parsedPath)
+  t.is(pagePath, '/user-defined-path/')
 })
 
 test('removes index from path', t => {
