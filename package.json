@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "React.js Static Site Generator",
-  "version": "0.12.8",
+  "version": "0.12.9",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "ava": {
     "require": [
