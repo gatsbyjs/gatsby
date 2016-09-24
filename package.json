@@ -26,6 +26,7 @@
     "babel-preset-react-hmre": "^1.1.1",
     "babel-preset-stage-0": "^6.5.0",
     "boom": "^2.7.2",
+    "chalk": "^1.1.3",
     "cjsx-loader": "^3.0.0",
     "coffee-loader": "^0.7.2",
     "coffee-script": "^1.9.3",
@@ -85,6 +86,7 @@
     "webpack-configurator": "^0.3.0",
     "webpack-hot-middleware": "^2.12.2",
     "webpack-require": "0.0.16",
+    "webpack-validator": "^2.2.7",
     "yaml-loader": "^0.4.0"
   },
   "devDependencies": {
@@ -112,7 +114,7 @@
     "nyc": "^7.0.0"
   },
   "engines": {
-    "node": ">0.12.0"
+    "node": ">4.0.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby#readme",
   "keywords": [

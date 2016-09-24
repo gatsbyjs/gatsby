@@ -9,14 +9,11 @@ global.appStartTime = Date.now()
 var sysPath = require('path')
 var fs = require('fs')
 var version = process.version
-var versionDigits = version.split('.')
-  .map(function (d) { return d.match(/\d+/)[0] })
-  .slice(0, 2).join('.')
-var verDigit = Number(versionDigits)
+var verDigit = Number(version.match(/\d+/)[0])
 
-if (verDigit < 0.12) {
+if (verDigit < 4) {
   console.error(
-    'Error: Gatsby 0.9+ requires node.js v0.12 or higher (you have ' + version + ') ' +
+    'Error: Gatsby 0.13+ requires node.js v4 or higher (you have ' + version + ') ' +
     'Upgrade node to the latest stable release.'
   )
   process.exit()
