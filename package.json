@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "React.js Static Site Generator",
-  "version": "0.12.7",
+  "version": "0.12.9",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "ava": {
     "require": [
@@ -31,7 +31,7 @@
     "coffee-loader": "^0.7.2",
     "coffee-script": "^1.9.3",
     "commander": "^2.9.0",
-    "css-loader": "^0.23.1",
+    "css-loader": "^0.25.0",
     "debug": "^2.2.0",
     "detect-port": "^1.0.0",
     "extract-text-webpack-plugin": "^1.0.1",
@@ -65,7 +65,7 @@
     "postcss-browser-reporter": "^0.5.0",
     "postcss-cssnext": "^2.7.0",
     "postcss-import": "^8.1.2",
-    "postcss-loader": "^0.10.1",
+    "postcss-loader": "^0.13.0",
     "postcss-reporter": "^1.4.1",
     "raw-loader": "^0.5.1",
     "react": "^15.3.0",
