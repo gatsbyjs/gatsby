@@ -125,7 +125,7 @@
     "nyc": "^7.0.0"
   },
   "engines": {
-    "node": ">0.12.0"
+    "node": ">4.0.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby#readme",
   "keywords": [
