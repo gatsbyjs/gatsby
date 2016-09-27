@@ -396,6 +396,10 @@ export.postBuild = function(pages, callback) {
 
 ## FAQ
 
+### Pre-Requisites
+
+[Python v2](https://www.python.org/) is required to install Gatsby. Please ensure python is in your path before running `npm install -g gatsby`. 
+
 ### I added a new page and it's not showing up!
 
 [Webpack doesn't currently support hot-reloading new files added to a context](https://github.com/webpack/webpack/issues/1162). When you add a new file, restart the `gatsby develop` process and your new page will show up.
