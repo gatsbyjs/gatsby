@@ -10,5 +10,6 @@
     'transform-flow-strip-types',
     'transform-runtime',
     'lodash',
+    'transform-async-to-generator',
   ],
 }
