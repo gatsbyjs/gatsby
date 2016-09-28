@@ -27,6 +27,7 @@
     "babel-preset-es2015": "^6.14.0",
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-0": "^6.5.0",
+    "babel-runtime": "^6.11.6",
     "boom": "^2.7.2",
     "bundle-loader": "^0.5.4",
     "chalk": "^1.1.3",
