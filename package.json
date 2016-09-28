@@ -99,6 +99,7 @@
     "webpack-md5-hash": "0.0.5",
     "webpack-require": "0.0.16",
     "webpack-stats-plugin": "^0.1.3",
+    "webpack-validator": "^2.2.7",
     "yaml-js": "^0.1.4"
   },
   "devDependencies": {
