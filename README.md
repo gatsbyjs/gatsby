@@ -85,6 +85,7 @@ it'll be converted to `/docs/index.html`.
 * [Husam Machlovi, Portfolio & Blog](http://husammachlovi.com)
 * [numenta.com](http://numenta.com) ([source](https://github.com/numenta/numenta-web/tree/master/numenta.com))
 * [chiedolabs.com](https://labs.chie.do)
+* [Yuppies](https://yuppi.es) ([source](https://github.com/f0rr0/f0rr0.github.io))
 * [Edit this file to add yours!](https://github.com/gatsbyjs/gatsby/blob/master/README.md)
 
 *Note, for the sites that have made their source available, you can
@@ -398,7 +399,7 @@ export.postBuild = function(pages, callback) {
 
 ### Pre-Requisites
 
-[Python v2](https://www.python.org/) is required to install Gatsby. Please ensure python is in your path before running `npm install -g gatsby`. 
+[Python v2](https://www.python.org/) is required to install Gatsby. Please ensure python is in your path before running `npm install -g gatsby`.
 
 ### I added a new page and it's not showing up!
 
