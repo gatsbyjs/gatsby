@@ -1,5 +1,20 @@
 # Change Log
 
+## [1.0.0-alpha3] - 2016-10-05
+### Added
+- Introduce way to programatically add components to <head> + API to take over SSR rendering a39c2a5
+- Extract webpack manifest from commons.js so it doesn't change on every
+  build improving its cachability 0941d33
+- Always add babel-plugin-add-module-exports 97f083d
+
+### Changed
+- Upgraded React Hot Loader to 3.0-beta5 5185c3a
+
+### Fixed
+- Ensure bundle names for components and paths are unique 342030d
+  a1dfe19
+- Remove old code loading config.toml 66f9013
+
 ## [1.0.0-alpha2] - 2016-09-21
 ### Added
 - New system for specifying page layouts inspired by Jekyll.
