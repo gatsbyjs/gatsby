@@ -2,18 +2,22 @@
 
 ## [1.0.0-alpha3] - 2016-10-05
 ### Added
-- Introduce way to programatically add components to <head> + API to take over SSR rendering a39c2a5
+- Introduce way to programatically add components to <head> + API to take over SSR rendering [a39c2a5](https://github.com/gatsbyjs/gatsby/commit/a39c2a5)
 - Extract webpack manifest from commons.js so it doesn't change on every
-  build improving its cachability 0941d33
-- Always add babel-plugin-add-module-exports 97f083d
+  build improving its cachability
+[0941d33](https://github.com/gatsbyjs/gatsby/commit/0941d33)
+- Always add babel-plugin-add-module-exports
+  [97f083d](https://github.com/gatsbyjs/gatsby/commit/97f083d)
 
 ### Changed
-- Upgraded React Hot Loader to 3.0-beta5 5185c3a
+- Upgraded React Hot Loader to 3.0-beta5
+  [5185c3a](https://github.com/gatsbyjs/gatsby/commit/5185c3a)
 
 ### Fixed
-- Ensure bundle names for components and paths are unique 342030d
-  a1dfe19
-- Remove old code loading config.toml 66f9013
+- Ensure bundle names for components and paths are unique [342030d](https://github.com/gatsbyjs/gatsby/commit/342030d)
+  [a1dfe19](https://github.com/gatsbyjs/gatsby/commit/a1dfe19)
+- Remove old code loading config.toml
+  [66f901](https://github.com/gatsbyjs/gatsby/commit/66f901)
 
 ## [1.0.0-alpha2] - 2016-09-21
 ### Added
@@ -29,7 +33,7 @@ in plugins.
 ### Changed
 - Removed remaining 0.x code
 - Exit if can't find local install of Gatsby.
-  https://github.com/gatsbyjs/gatsby/commit/030f655075be5ad91af1dc12a05e6bd153a861df
+  [030f655](https://github.com/gatsbyjs/gatsby/commit/030f655075be5ad91af1dc12a05e6bd153a861df)
 - Fix folder hierarchy for looking for loaders and modules #435
 - Changed default `Config` GraphQL type to `Site` and added some
   Jekyll-inspired fields.
