@@ -1,6 +1,10 @@
 # Change Log
 
 ## Unreleased
+### Added
+- Add more file extensions to file/url loader config. Default to url
+  loader unless it never makes sense to use data-uri e.g. favicons.
+
 ### Fixed
 - Actually use the "sources" key from gatsby-config.js for looking for
 markdown files. This will be getting an overhaul soon.
