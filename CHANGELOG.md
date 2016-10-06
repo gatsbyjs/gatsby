@@ -1,8 +1,13 @@
 # Change Log
 
+## Unreleased
+### Fixed
+- Actually use the "sources" key from gatsby-config.js for looking for
+markdown files. This will be getting an overhaul soon.
+
 ## [1.0.0-alpha3] - 2016-10-05
 ### Added
-- Introduce way to programatically add components to <head> + API to take over SSR rendering [a39c2a5](https://github.com/gatsbyjs/gatsby/commit/a39c2a5)
+- Introduce way to programatically add components to `<head>` + API to take over SSR rendering [a39c2a5](https://github.com/gatsbyjs/gatsby/commit/a39c2a5)
 - Extract webpack manifest from commons.js so it doesn't change on every
   build improving its cachability
 [0941d33](https://github.com/gatsbyjs/gatsby/commit/0941d33)
