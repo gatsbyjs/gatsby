@@ -1,13 +1,25 @@
 # Change Log
 
-## Unreleased
+## [1.0.0-alpha4] - 2016-10-07
 ### Added
 - Add more file extensions to file/url loader config. Default to url
   loader unless it never makes sense to use data-uri e.g. favicons.
+- Use api-runner-browser for calling browser extension
+  APIs/replacements. Prep for plugin system.
+- Add extension API `clientEntry` that let's site code and plugins to
+  run code at the very start of client app.
+
+### Changed
+- Add config to uglify to ignore ie8.
+- Disable building AppCache until can research if useful.
+- Turn on screw_ie8 options in UglifyJS.
 
 ### Fixed
 - Actually use the "sources" key from gatsby-config.js for looking for
 markdown files. This will be getting an overhaul soon.
+- Don't use null-loader for css during the build-js stage as this
+  prevents offline-plugin from caching files referenced in your CSS.
+- Add missing publicPath for build-html step.
 
 ## [1.0.0-alpha3] - 2016-10-05
 ### Added
