@@ -86,6 +86,7 @@ it'll be converted to `/docs/index.html`.
 * [numenta.com](http://numenta.com) ([source](https://github.com/numenta/numenta-web/tree/master/numenta.com))
 * [chiedolabs.com](https://labs.chie.do)
 * [Yuppies](https://yuppi.es) ([source](https://github.com/f0rr0/f0rr0.github.io))
+* [Go7hic](http://blog.yongyuan.us)
 * [Edit this file to add yours!](https://github.com/gatsbyjs/gatsby/blob/master/README.md)
 
 *Note, for the sites that have made their source available, you can
