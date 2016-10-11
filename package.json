@@ -49,6 +49,7 @@
     "graphql-relay": "^0.4.3",
     "hapi": "^8.5.1",
     "hapi-graphql": "^1.0.1",
+    "hard-source-webpack-plugin": "^0.1.0",
     "highlight.js": "^9.6.0",
     "history": "^2.1.2",
     "invariant": "^2.2.1",
