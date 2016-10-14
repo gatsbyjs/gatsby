@@ -1,5 +1,20 @@
 # Change Log
 
+## [1.0.0-alpha5] - 2016-10-14
+### Added
+- hard-source-webpack-plugin
+  [commit](https://github.com/gatsbyjs/gatsby/commit/2c48e5c42887fecabc01c5f5b6f3dd8e06d3372f)
+- New replacement API to wrap root component (useful for Redux, et
+  al.)
+[commit](https://github.com/gatsbyjs/gatsby/commit/ebd57d2bd6c39b51a455b76018737e2957e146ef)
+- yarn.lock
+  [commit](https://github.com/gatsbyjs/gatsby/commit/5ce3321b84e912925c4705ececef6f2c817b0684)
+
+### Changed
+- Disable extracting the Webpack chunk manifest until understand why
+  this breaks updates when using Service Workers
+[commit](https://github.com/gatsbyjs/gatsby/commit/07ed5b010ad27b1816084b361f06fd0ae6a017ba)
+
 ## [1.0.0-alpha4] - 2016-10-07
 ### Added
 - Add more file extensions to file/url loader config. Default to url
