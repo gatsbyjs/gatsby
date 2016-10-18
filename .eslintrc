@@ -2,10 +2,8 @@
   "parser": "babel-eslint",
   "extends": [
     "eslint-config-airbnb",
-    "plugin:ava/recommended"
   ],
   "plugins": [
-    "ava",
     "flowtype",
     "flow-vars"
   ],
