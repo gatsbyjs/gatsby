@@ -475,6 +475,19 @@ If you need to change the loader to be something completely custom. You will
 have to define your own webpack loader by following the steps [described
 above](https://github.com/gatsbyjs/gatsby#how-to-use-your-own-webpack-loaders).
 
+### Extending Markdown Syntax with Plugins
+
+Gatsby uses [markdown-it](https://github.com/markdown-it/markdown-it) to parse 
+markdown files into HTML. By default Gatsy ships with only basic markdown
+support. You can extend the syntax (e.g. for mathematical equations) by installing 
+[markdown-it plugins](https://www.npmjs.org/browse/keyword/markdown-it-plugin).
+
+If you want to do this you will need to use a custom markdown loader. You can 
+copy the one provided in the default starter [here](https://github.com/gatsbyjs/gatsby-starter-default/blob/master/loaders/markdown-loader/index.js)
+
+Add the relevant packages to your dependencies, including the markdown-it
+plugins that you want to use and enable them with `md.use(require('markdown-it-plugin-name'))`
+
 ### Deploying to Github Pages (and other hosts where your site's links need prefixes)
 Gatsby supports automatically prefixing links with its `prefixLink` helper function.
 
