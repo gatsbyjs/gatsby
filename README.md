@@ -79,7 +79,6 @@ it'll be converted to `/docs/index.html`.
 * [ollieglass.com](http://ollieglass.com/)
 * [waigojs.com](https://waigojs.com/) ([source](https://github.com/waigo/waigo.github.io))
 * [The State Of JavaScript](http://stateofjs.com/)
-* [FlashMobile](http://www.flashmobile.mx/en/)
 * [ZBT MIT Website](http://zbt.mit.edu) ([source](https://github.com/Slava/zbt-website))
 * [ethereumclassic.org](http://ethereumclassic.org/) ([source](https://github.com/ethereumclassic/ethereumclassic.github.io/tree/source))
 * [Husam Machlovi, Portfolio & Blog](http://husammachlovi.com)
