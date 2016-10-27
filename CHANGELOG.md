@@ -1,5 +1,13 @@
 # Change Log
 
+## [1.0.0-alpha7] - 2016-10-27
+### Fixed
+- Removed entries from the webpack config looking for
+  `node_modules/gatsby/node_modules`. This was added to help when
+developing Gatsby using `npm link` but when Gatsby is installed
+regularly, it then fails the Webpack validation as
+`node_modules/gatsby/node_modules` doesn't now exist.
+
 ## [1.0.0-alpha6] - 2016-10-27
 ### Added
 - extension API for adding types to the GraphQL schema
