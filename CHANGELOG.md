@@ -1,5 +1,15 @@
 # Change Log
 
+## [1.0.0-alpha6] - 2016-10-27
+### Added
+- extension API for adding types to the GraphQL schema
+  [commit](https://github.com/gatsbyjs/gatsby/commit/18b8b64ed4cbe3399fb262395c0c6e6a5a16099a)
+
+### Fixed
+- Use babel-traverse instead of using babel-plugin so that don't say
+  done early when running graphql queries that have async resolvers
+[commit](https://github.com/gatsbyjs/gatsby/commit/a19677e38d1ce8ba4fb39ddff75482904f168db6)
+
 ## [1.0.0-alpha5] - 2016-10-14
 ### Added
 - hard-source-webpack-plugin
