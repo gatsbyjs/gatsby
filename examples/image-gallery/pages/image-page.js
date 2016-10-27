@@ -10,7 +10,6 @@ class ImagePage extends React.Component {
   }
 
   render () {
-    console.log(this.props)
     const {regular, retina, micro} = this.props.data.image
     return (
       <div>
