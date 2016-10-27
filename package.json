@@ -46,7 +46,7 @@
     "front-matter": "^2.1.0",
     "fs-extra": "^0.30.0",
     "glob": "^7.1.0",
-    "graphql": "^0.7.0",
+    "graphql": "^0.7.2",
     "graphql-relay": "^0.4.3",
     "hapi": "^8.5.1",
     "hapi-graphql": "^1.0.1",
