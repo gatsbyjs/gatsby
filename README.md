@@ -387,7 +387,7 @@ Gatsby also uses `gatsby-node.js` to pass control of the final build step over
 to the user when running `gatsby build`. The post build function takes two arguments, the pages and the callback for completing the build:
 
 ```javascript
-export.postBuild = function(pages, callback) {
+exports.postBuild = function(pages, callback) {
   // perform actions on pages here
 
   callback()
