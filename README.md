@@ -87,6 +87,7 @@ it'll be converted to `/docs/index.html`.
 * [Yuppies](https://yuppi.es) ([source](https://github.com/f0rr0/f0rr0.github.io))
 * [Go7hic](http://blog.yongyuan.us)
 * [Video streaming devops blog](https://devops.spuul.com/) ([source](https://github.com/Spuul/devops-blog/))
+* [oRanger - gatsby scaffold](https://github.com/withpulp/gatsby-oRanger)
 * [Edit this file to add yours!](https://github.com/gatsbyjs/gatsby/blob/master/README.md)
 
 *Note, for the sites that have made their source available, you can
