@@ -5,7 +5,7 @@ import path from 'path'
 exports.createPages = ({ graphql }) => (
   new Promise((resolve, reject) => {
     const pages = []
-    const imagePage = path.resolve('templates/image-page.js')
+    const imagePage = path.resolve('pages/image-page.js')
     graphql(`
       {
         allImages(first: 1000) {
