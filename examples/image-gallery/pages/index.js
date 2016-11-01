@@ -3,7 +3,6 @@ import {rhythm} from 'utils/typography'
 import Link from 'react-router/lib/Link'
 
 const ImageIndex = (props) => {
-  console.log(props)
   return (
     <div>
       {props.data.allImages.edges.map((edge) => {
@@ -40,12 +39,12 @@ query allImages {
     edges {
       node {
         path
-        regular: image(width: 290) {
+        regular: image(height: 290, width: 387) {
           src
           height
           width
         }
-        retina: image(width: 580) {
+        retina: image(height: 580, width: 794) {
           src
         }
       }
