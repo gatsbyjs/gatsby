@@ -1,5 +1,35 @@
 # Change Log
 
+## [1.0.0-alpha8] - 2016-11-01
+### Added
+- Extension API `swOnUpdated` for when a service worker finishes
+  updating. Use this to alert users of your app to reload to see the
+latest version.
+[commit](https://github.com/gatsbyjs/gatsby/commit/5173bdc5424e7c874b3f2abfad706cea2e38ebc3)
+### Fixed
+- hot reloading now fully works. Apparently you can't use function
+  components for top-level routes on react-router with react-hot-loader
+3.0 `¯\_(ツ)_/¯` [#532](https://github.com/gatsbyjs/gatsby/pull/532) and
+[commit](https://github.com/gatsbyjs/gatsby/commit/36f2c169586ea30518639d7b1493e08e05befb73)
+- Webpack needs the help of an obscure setting `recordsPath` to preserve
+  module ids across builds. Big thanks to @NekR for pointing this out to
+me. Previous to this change, loading changed JS chunks could cause a JS
+error as the module ids the new chunk expects wouldn't match the module
+ids from the older chunks.
+[#533](https://github.com/gatsbyjs/gatsby/pull/533)
+### Changed
+- Disabled hard-source-webpack-plugin. It speeds up builds significantly
+  but has been causing hard-to-debug errors while developing. We'll
+circle back to it down the road.
+[commit](https://github.com/gatsbyjs/gatsby/commit/4bc9660ac8c371d23c0295cde52002775eee5aa1)
+- Restored using ChunkManifestPlugin. It was disabled while trying to
+  debug the mismatched module id bug but that being fixed, we're using
+it again.
+[commit](https://github.com/gatsbyjs/gatsby/commit/8d16905f31b80ca56db225904d60ed78c6091ca9)
+- Name modules ids in development for easier debugging. Primary benefit
+  is you can see which modules are getting hot reloaded.
+[commit](https://github.com/gatsbyjs/gatsby/commit/93f6bd2c4206e71623c1a7fa007322f8dc9887be)
+
 ## [1.0.0-alpha7] - 2016-10-27
 ### Fixed
 - Removed entries from the webpack config looking for
