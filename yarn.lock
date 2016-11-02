@@ -2571,6 +2571,12 @@ diffie-hellman@^5.0.0:
     miller-rabin "^4.0.0"
     randombytes "^2.0.0"
 
+dist-exiftool:
+  version "10.25.0"
+  resolved "https://registry.yarnpkg.com/dist-exiftool/-/dist-exiftool-10.25.0.tgz#30bf47f0cd13dd932f6af1e02cc9818085ac6e74"
+  dependencies:
+    platform-dependent-modules "0.0.14"
+
 doctrine@^1.2.2:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/doctrine/-/doctrine-1.4.0.tgz#e2db32defa752407b935b381e89f3740e469e599"
@@ -5133,7 +5139,7 @@ node-cjsx@^2.0.0:
     coffee-react-transform "^4.0.0"
     coffee-script "^1.9.1"
 
-node-exiftool:
+node-exiftool@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/node-exiftool/-/node-exiftool-2.0.0.tgz#ba0c0c522d15f706390df2146ded9b66840a86ea"
 
@@ -5725,6 +5731,10 @@ pkg-up@^1.0.0:
   resolved "https://registry.yarnpkg.com/pkg-up/-/pkg-up-1.0.0.tgz#3e08fb461525c4421624a33b9f7e6d0af5b05a26"
   dependencies:
     find-up "^1.0.0"
+
+platform-dependent-modules@0.0.14:
+  version "0.0.14"
+  resolved "https://registry.yarnpkg.com/platform-dependent-modules/-/platform-dependent-modules-0.0.14.tgz#3c53d0415d81ce22dcfde15665d0cfd541d41617"
 
 pleeease-filters@^3.0.0:
   version "3.0.0"
