@@ -29,3 +29,8 @@ examples/biz-website/public/
 examples/blog/public/
 *.un~
 yarn.lock
+lib
+flow-typed
+coverage
+decls
+examples
