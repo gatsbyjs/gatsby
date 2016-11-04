@@ -1,11 +1,23 @@
 # Change Log
 
+## [1.0.0-alpha9] - 2016-11-04
+### Added
+- Put the routes module on `window` to support experimental idea. See
+  this issue for more](https://github.com/gatsbyjs/gatsby/issues/537).
+[commit](https://github.com/gatsbyjs/gatsby/commit/28e84f3aed480d1f5a8f9859172d1c6f531696d4)
+
+### Changed
+- Removed the package `sharp` as it's not used and is preventing Gatsby
+  1.0 from being installed on Windows.
+[commit](https://github.com/gatsbyjs/gatsby/commit/34fff74e6fb3cae88010b42f74d784382ead4031)
+
 ## [1.0.0-alpha8] - 2016-11-01
 ### Added
 - Extension API `swOnUpdated` for when a service worker finishes
   updating. Use this to alert users of your app to reload to see the
 latest version.
 [commit](https://github.com/gatsbyjs/gatsby/commit/5173bdc5424e7c874b3f2abfad706cea2e38ebc3)
+
 ### Fixed
 - hot reloading now fully works. Apparently you can't use function
   components for top-level routes on react-router with react-hot-loader
@@ -17,6 +29,7 @@ me. Previous to this change, loading changed JS chunks could cause a JS
 error as the module ids the new chunk expects wouldn't match the module
 ids from the older chunks.
 [#533](https://github.com/gatsbyjs/gatsby/pull/533)
+
 ### Changed
 - Disabled hard-source-webpack-plugin. It speeds up builds significantly
   but has been causing hard-to-debug errors while developing. We'll
