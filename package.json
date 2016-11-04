@@ -94,7 +94,6 @@
     "remark-html": "^5.0.1",
     "remark-parse": "^2.2.0",
     "sanitize-html": "^1.13.0",
-    "sharp": "^0.16.2",
     "slash": "^1.0.0",
     "static-site-generator-webpack-plugin": "^3.1.0",
     "style-loader": "^0.13.0",
