@@ -79,12 +79,15 @@ it'll be converted to `/docs/index.html`.
 * [ollieglass.com](http://ollieglass.com/)
 * [waigojs.com](https://waigojs.com/) ([source](https://github.com/waigo/waigo.github.io))
 * [The State Of JavaScript](http://stateofjs.com/)
-* [FlashMobile](http://www.flashmobile.mx/en/)
 * [ZBT MIT Website](http://zbt.mit.edu) ([source](https://github.com/Slava/zbt-website))
 * [ethereumclassic.org](http://ethereumclassic.org/) ([source](https://github.com/ethereumclassic/ethereumclassic.github.io/tree/source))
 * [Husam Machlovi, Portfolio & Blog](http://husammachlovi.com)
 * [numenta.com](http://numenta.com) ([source](https://github.com/numenta/numenta-web/tree/master/numenta.com))
 * [chiedolabs.com](https://labs.chie.do)
+* [Yuppies](https://yuppi.es) ([source](https://github.com/f0rr0/f0rr0.github.io))
+* [Go7hic](http://blog.yongyuan.us)
+* [Video streaming devops blog](https://devops.spuul.com/) ([source](https://github.com/Spuul/devops-blog/))
+* [blog.rphl.io](https://blog.rphl.io)
 * [Edit this file to add yours!](https://github.com/gatsbyjs/gatsby/blob/master/README.md)
 
 *Note, for the sites that have made their source available, you can
@@ -163,6 +166,7 @@ include yours!
 * [Simple documentation site](https://github.com/gatsbyjs/gatsby-starter-documentation) ([Demo](http://gatsbyjs.github.io/gatsby-starter-documentation/))
 * [Lumen](https://github.com/wpioneer/gatsby-starter-lumen) ([Demo](http://wpioneer.github.io/gatsby-starter-lumen/))
 * [DrunkenBlog](https://github.com/konsumer/gatsby-starter-drunkenblog) ([Demo](http://konsumer.js.org/gatsby-starter-drunkenblog/))
+* [Clean start](https://github.com/brianstone/gatsby-starter-clean) ([Demo](http://gatsby-starter-clean.netlify.com/))
 
 ### Tutorial: Building a documentation site from the Gatsby Documentation Starter
 1. Install gatsby `npm install -g gatsby`
@@ -384,7 +388,7 @@ Gatsby also uses `gatsby-node.js` to pass control of the final build step over
 to the user when running `gatsby build`. The post build function takes two arguments, the pages and the callback for completing the build:
 
 ```javascript
-export.postBuild = function(pages, callback) {
+exports.postBuild = function(pages, callback) {
   // perform actions on pages here
 
   callback()
@@ -395,6 +399,10 @@ export.postBuild = function(pages, callback) {
 * Coming...
 
 ## FAQ
+
+### Pre-Requisites
+
+[Python v2](https://www.python.org/) is required to install Gatsby. Please ensure python is in your path before running `npm install -g gatsby`.
 
 ### I added a new page and it's not showing up!
 
@@ -466,6 +474,19 @@ package.json:
 If you need to change the loader to be something completely custom. You will
 have to define your own webpack loader by following the steps [described
 above](https://github.com/gatsbyjs/gatsby#how-to-use-your-own-webpack-loaders).
+
+### Extending Markdown Syntax with Plugins
+
+Gatsby uses [markdown-it](https://github.com/markdown-it/markdown-it) to parse 
+markdown files into HTML. By default Gatsy ships with only basic markdown
+support. You can extend the syntax (e.g. for mathematical equations) by installing 
+[markdown-it plugins](https://www.npmjs.org/browse/keyword/markdown-it-plugin).
+
+If you want to do this you will need to use a custom markdown loader. You can 
+copy the one provided in the default starter [here](https://github.com/gatsbyjs/gatsby-starter-default/blob/master/loaders/markdown-loader/index.js).
+Add the relevant packages to your dependencies, including the markdown-it
+plugins that you want to use and enable them with `md.use(require('markdown-it-plugin-name'))`
+within the markdown loader file.
 
 ### Deploying to Github Pages (and other hosts where your site's links need prefixes)
 Gatsby supports automatically prefixing links with its `prefixLink` helper function.
