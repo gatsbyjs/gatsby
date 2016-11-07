@@ -167,6 +167,7 @@ include yours!
 * [Lumen](https://github.com/wpioneer/gatsby-starter-lumen) ([Demo](http://wpioneer.github.io/gatsby-starter-lumen/))
 * [DrunkenBlog](https://github.com/konsumer/gatsby-starter-drunkenblog) ([Demo](http://konsumer.js.org/gatsby-starter-drunkenblog/))
 * [Clean start](https://github.com/brianstone/gatsby-starter-clean) ([Demo](http://gatsby-starter-clean.netlify.com/))
+* [Project AMP blog](https://github.com/chiedo/gatsby-amp-starter-blog)
 
 ### Tutorial: Building a documentation site from the Gatsby Documentation Starter
 1. Install gatsby `npm install -g gatsby`
