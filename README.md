@@ -41,7 +41,6 @@ it'll be converted to `/docs/index.html`.
 * Live editing on every part of your site. Dramatically speed development.
 
 ## Sites built with Gatsby
-* [oliverbenns.com](http://oliverbenns.com?utm_source=github.com) ([source](https://github.com/oliverbenns/oliverbenns.com))
 * [bricolage.io](https://bricolage.io/?utm_source=github.com) ([source](https://github.com/KyleAMathews/blog))
 * [relaterocket.co](https://relaterocket.co?utm_source=github.com)
 * [reindex.io](https://www.reindex.io)
@@ -89,6 +88,7 @@ it'll be converted to `/docs/index.html`.
 * [Go7hic](http://blog.yongyuan.us)
 * [Video streaming devops blog](https://devops.spuul.com/) ([source](https://github.com/Spuul/devops-blog/))
 * [blog.rphl.io](https://blog.rphl.io)
+* [oliverbenns.com](http://oliverbenns.com?utm_source=github.com) ([source](https://github.com/oliverbenns/oliverbenns.com))
 * [Edit this file to add yours!](https://github.com/gatsbyjs/gatsby/blob/master/README.md)
 
 *Note, for the sites that have made their source available, you can
