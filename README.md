@@ -89,6 +89,7 @@ it'll be converted to `/docs/index.html`.
 * [Video streaming devops blog](https://devops.spuul.com/) ([source](https://github.com/Spuul/devops-blog/))
 * [blog.rphl.io](https://blog.rphl.io)
 * [oliverbenns.com](http://oliverbenns.com?utm_source=github.com) ([source](https://github.com/oliverbenns/oliverbenns.com))
+* [Kapadiya.net](https://www.kapadiya.net/?utm_source=github.com) ([source](https://github.com/vikas5914/vikas5914.github.io))
 * [Edit this file to add yours!](https://github.com/gatsbyjs/gatsby/blob/master/README.md)
 
 *Note, for the sites that have made their source available, you can
