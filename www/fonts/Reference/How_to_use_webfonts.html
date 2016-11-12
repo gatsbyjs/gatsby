@@ -1,0 +1,230 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<link rel="stylesheet" href="stylesheet.css" type="text/css" charset="utf-8" />
+
+	<style type="text/css" media="screen">
+		/*-- RESET ------*/
+		html, body, div, span, applet, object, iframe,
+		h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+		a, abbr, acronym, address, big, cite, code,
+		del, dfn, em, font, img, ins, kbd, q, s, samp,
+		small, strike, strong, sub, sup, tt, var,
+		b, u, i, center, dl, dt, dd, ol, ul, li,
+		fieldset, form, label, legend, table, 
+		caption, tbody, tfoot, thead, tr, th, td 
+		                  {margin: 0;padding: 0;border: 0;outline: 0;
+		                  font-size: 100%;vertical-align: baseline;
+		                  background: transparent;}
+		body              {line-height: 1;}
+		ol, ul            {list-style: none;}
+		blockquote, q     {quotes: none;}
+		blockquote:before, blockquote:after,
+		q:before, q:after {content: '';	content: none;}
+		:focus            {outline: 0;}
+		ins               {text-decoration: none;}
+		del               {text-decoration: line-through;}
+		table             {border-collapse: collapse;border-spacing: 0;}
+		
+		/*-- GRID -----*/
+		.section {margin-bottom: 18px;
+		}
+		.section:after	{content: ".";display: block;height: 0;clear: both;visibility: hidden;}
+		.section 		{*zoom: 1;}
+
+		.section .firstcolumn,
+		.section .firstcol {margin-left: 0;}
+		
+		.grid1, .grid1_2cols, .grid1_3cols, .grid1_4cols, .grid2, .grid2_3cols, .grid2_4cols, .grid3, .grid3_2cols, .grid3_4cols, .grid4, .grid4_3cols, .grid5, .grid5_2cols, .grid5_3cols, .grid5_4cols, .grid6, .grid6_4cols, .grid7, .grid7_2cols, .grid7_3cols, .grid7_4cols, .grid8, .grid8_3cols, .grid9, .grid9_2cols, .grid9_4cols, .grid10, .grid10_3cols, .grid10_4cols, .grid11, .grid11_2cols, .grid11_3cols, .grid11_4cols, .grid12
+		{margin-left: 15px;float: left;display: inline; overflow: hidden;}
+		.width5, .grid5, .span-5 {width: 335px;}
+		.width5_2cols,.grid5_2cols {width: 160px;}
+		.width5_3cols,.grid5_3cols  {width: 101px;}
+		.width5_4cols,.grid5_4cols  {width: 72px;}
+		.input_width5 {width: 329px;}
+
+		.width6, .grid6, .span-6 {width: 405px;}
+		.width6_4cols,.grid6_4cols  {width: 90px;}
+		.input_width6 {width: 399px;}
+
+		.width7, .grid7, .span-7 {width: 475px;}
+		.width7_2cols,.grid7_2cols {width: 230px;}
+		.width7_3cols,.grid7_3cols  {width: 148px;}
+		.width7_4cols,.grid7_4cols  {width: 107px;}
+		.input_width7 {width: 469px;}
+		
+		/*-- STYLES -----*/
+		body {
+			color: #000;
+			background-color: #dcdcdc;
+			font: 13px Arial, sans-serif;
+		}
+
+		a {
+			text-decoration: none;
+			color: #1883ba;
+		}
+
+		h1{
+			font-size: 32px;
+			font-weight: normal;
+			font-style: normal;
+			margin-bottom: 18px;
+		}
+
+		h2{
+			font-size: 18px;
+		}
+
+		#container {
+			width: 865px;
+			margin: 0px auto;
+		}
+		
+
+
+		#header {
+			height:109px;
+			font-size: 36px;
+			background-color: #000;
+			color: #fff;
+			text-indent:-9999px;
+			background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASoAAABtCAMAAAAhztx9AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADBQTFRFzen3mNLwDCc17fj8GVRwUbXlLprOrNzyesbrEjtOZb3oJXulP63iAAAA////MqfgopnD5wAABSNJREFUeNrs2u1yqyAQBmBARATU+7/bo6CRTwMp7ZnJvPurjUbrU1gWkGyIyiAgABWoQAUqUIEKASpQgQpUoAIVAlSgAhWoQAUqxJdSCbYsHFQ1MS/Lr1h9IRU7qBZQVVNpUL0PDao2K1BVJ/ZjKORdyb6SSiwLc0VDT6uvohKcMS72H/gyn0VDx7Lhq6hsM2LiyFZ6404KrSobzuawWoQ4pRhyVZnKdj7b/djMO1btX0V197m9UbHe5cJ3jYB7Wj873TwL1FUVw+CR1DEHrMT6jct+59Ke1qD6nwGqn1HpTATJQPN9rGGcR+1caC1y17oOPl/XSDoRQiiV4/2ZumMML6zKh4z/UXLUfTX+iNL93hOl6dmPVGxJwkuUevY+5yJc/WAiLQvZvTSSxnXeSNY7hul6gnUNPvaecA0PEek99/4Bvc8b4qc/vhDQ0qF0l59QiTk6osOFIvYZFQ2ffM1S7UFMnmr1RSKqdTCPVHKIb9KFSqTHeEB1TCvaqWKpItVttZatYqr42UMqmt6jjYqHoQNF96vQ0YpQbqn2RSWuS7kdlStc77NPeuaoUVHiU+3Zy8Vk//uT97w0PERKVK8vZaik07luLvebN1I9zLK8OYPDEcFvoVXaJ3W6oTLF/0qTe+jN2Hw25pqGOS6xyhLVKktUo0Wm4ajQgUokPUz7XfDqY6KV6vhzTe6GIdVmhvv3ODcPd+PJUK2qQDUlkM0jYL4KjiHOdhZR+cNgFVUxP0RUfvOLqeh9KEflD4PeV8ekTXWimjMLsF6XOxDmqOH1pZJlKlWmIiQYOzdyf5VmBsguVGmjCvi0zfjhqNiXSn1GZRMSyVGRJOf3odK5HW6vmLJU0TZcda6SP6SSD1Sun00ZqiFKYz2p2Fsqt1WiW0fAdRrfU9EyFSmndXKWBDKhMvFVPqFifvAHKnE/+Unlii/RQGWGc3ay11DKPFB5HnHJ/VAskPO/caX2m+o4c/gpVa5W59lttZTKlvTnMFhFdVY3V7EsS1Q0X1cZJW3FdeXnHJX1OU8Iqcj/pPJnOHVU8Yw1N0UxzoMUJzavDpalMvcwWKC6Z1H076i8yrSS6pxTkCG0UuWJXlkqT+Va7vQLVNVpXeSoXGWqm6iupOO3HVVePkjmuOP2TOXSGS3nql+nSkfAV7l1WDVTnY805qgGb5T0p8vRkF+gcqlOFkfA0V6LdKNaKqm2M7V/QGUfRaUrC1SV5rw0zM4lqmsYfKyraBeqqmo96JjsI6rp9deq8gzNpzJhDVukOofBx2q9E1XFHDBe6PuEirZS2T57T+XKVNaUPM4BO1FVrCzw6Oyfd8Aaqm3wTyxT3QVccWWhE1XFehWPGdupxjCtV1HJpwVjEo8ZT+tVnagqVkF53GFrqILZn927IVsbVZB0lJ+A4nqchlTJKmgvqvdr6wGVYHVUZJikm/sZ5ZbJZSuV8pY6g2opmbqQ9WFt3U2RulC93bHhaY+toIrryWlrpdq8tmgz1zAVqNwKfdolvehC9XYfkL+tWiuo6NZONXqNka7BYg3JzM2f9gE7Ub3ZXU5qCV1DJQOradw+oHL1pcmtwZPMuPEwV2/ZXY7fUUhaln1nYc69s5B9aSE9S+cmy9S+saDCfSZVeokgefHAvt9gXpOUaXqdl1xhTN5ZGF/vLJimRRgEqEAFKlCBClQIUIEKVKACFahAhQAVqEAFKlCBCgEqUIEKVKACFQJUoAIVqEAFKgSoQAUqUIEKVKBCgApUfx3/BBgAeuw63hnBp0AAAAAASUVORK5CYII=) no-repeat left center;
+			background-color: #31a7e0;
+			
+		}
+		
+		#main_content {
+			background-color: #fff;
+			padding: 20px 20px 20px;
+		}
+
+
+		#footer p {
+			margin: 0;
+			padding-top: 10px;
+			padding-bottom: 50px;
+			color: #333;
+			font: 10px Arial, sans-serif;
+		}
+		code {
+			white-space: pre;
+			background-color: #eee;
+			display: block;
+			padding: 10px;
+			margin-bottom: 18px;
+			overflow: auto;
+		}
+
+		.box  { 
+		  padding: 18px; 
+		  margin-bottom: 18px; 
+		  background: #eee; 
+		}
+		.bottom,.last 	{margin-bottom:0 !important; padding-bottom:0 !important;}
+		
+
+		
+		p{
+			line-height: 1.2em;
+			margin-bottom: 18px;
+			font: 13px Arial, sans-serif;
+		}
+
+
+
+		h3{
+			font-size: 15px;
+			margin-top: 18px;
+		}
+		
+		.sidebar p{
+			font-size: 12px;
+			line-height: 1.4em;
+		}
+		
+	</style>
+
+<title>How to Use Webfonts</title>
+	
+</head>
+
+<body>
+<div id="container">
+	<div id="header">
+		Fontspring
+	</div>
+	<div id="main_content">
+			<div class="section">
+				<div class="grid7 firstcol">
+					<h1>Installing Webfonts</h1>
+					
+					<p>Webfonts are supported by all major browser platforms but not all in the same way. There are currently four different font formats that must be included in order to target all browsers. This includes TTF, WOFF, EOT and SVG.</p>
+					
+					<h2>1. Upload your webfonts</h2>
+					<p>You must upload your webfont kit to your website. They should be in or near the same directory as your CSS files.</p>
+					
+					<h2>2. Include the webfont stylesheet</h2>
+					<p>A special CSS @font-face declaration helps the various browsers select the appropriate font it needs without causing you a bunch of headaches. Learn more about this syntax by reading the <a href="http://www.fontspring.com/blog/further-hardening-of-the-bulletproof-syntax">Fontspring blog post</a> about it. The code for it is as follows:</p>
+
+
+<code>
+@font-face{ 
+	font-family: 'MyWebFont';
+	src: url('WebFont.eot');
+	src: url('WebFont.eot?#iefix') format('embedded-opentype'),
+	     url('WebFont.woff') format('woff'),
+	     url('WebFont.ttf') format('truetype'),
+	     url('WebFont.svg#webfont') format('svg');
+}
+</code>
+	<p>We've already gone ahead and generated the code for you. All you have to do is link to the stylesheet in your HTML, like this:</p>
+	<code>&lt;link rel=&quot;stylesheet&quot; href=&quot;stylesheet.css&quot; type=&quot;text/css&quot; charset=&quot;utf-8&quot; /&gt;</code>
+
+					<h2>3. Modify your own stylesheet</h2>
+					<p>To take advantage of your new fonts, you must tell your stylesheet to use them. Look at the original @font-face declaration above and find the property called "font-family." The name linked there will be what you use to reference the font. Prepend that webfont name to the font stack in the "font-family" property, inside the selector you want to change. For example:</p>
+<code>p { font-family: 'MyWebFont', Arial, sans-serif; }</code>
+
+<h2>4. Test</h2>
+<p>Getting webfonts to work cross-browser <em>can</em> be tricky. Use the information in the sidebar to help you if you find that fonts aren't loading in a particular browser.</p>
+				</div>
+				
+				<div class="grid5 sidebar">
+					<div class="box">
+						<h2>Troubleshooting<br />Font-Face Problems</h2>
+						<p>Having trouble getting your webfonts to load in your new website? Here are some tips to sort out what might be the problem.</p>
+
+						<h3>Fonts not showing in any browser</h3>
+
+						<p>This sounds like you need to work on the plumbing. You either did not upload the fonts to the correct directory, or you did not link the fonts properly in the CSS. If you've confirmed that all this is correct and you still have a problem, take a look at your .htaccess file and see if requests are getting intercepted.</p>
+
+						<h3>Fonts not loading in iPhone or iPad</h3>
+
+						<p>The most common problem here is that you are serving the fonts from an IIS server. IIS refuses to serve files that have unknown MIME types. If that is the case, you must set the MIME type for SVG to "image/svg+xml" in the server settings. Follow these instructions from Microsoft if you need help.</p>
+
+						<h3>Fonts not loading in Firefox</h3>
+
+						<p>The primary reason for this failure? You are still using a version Firefox older than 3.5. So upgrade already! If that isn't it, then you are very likely serving fonts from a different domain. Firefox requires that all font assets be served from the same domain. Lastly it is possible that you need to add WOFF to your list of MIME types (if you are serving via IIS.)</p>
+
+						<h3>Fonts not loading in IE</h3>
+
+						<p>Are you looking at Internet Explorer on an actual Windows machine or are you cheating by using a service like Adobe BrowserLab? Many of these screenshot services do not render @font-face for IE. Best to test it on a real machine.</p>
+
+						<h3>Fonts not loading in IE9</h3>
+
+						<p>IE9, like Firefox, requires that fonts be served from the same domain as the website. Make sure that is the case.</p>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	
+	</div>
+	
+</div>
+</body>
+</html>
