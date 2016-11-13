@@ -294,27 +294,29 @@ To modify the Webpack configuration, create a `gatsby-node.js` in the root of yo
 and export there a `modifyWebpackConfig` function.
 
 ```javascript
-exports.modifyWebpackConfig = function(config, env) {
+exports.modifyWebpackConfig = function(config, stage) {
   // edit loaders here
   return config
 }
 ```
 
 Gatsby calls this function with the webpack-configurator object and
-environment string when it creates a Webpack config. It first
+"stage" string when it creates a Webpack config. It first
 loads the defaults and then allows you to modify it.
 
-The `env` can be
+The `stage` can be
 
-* `develop` (when running `gatsby develop`)
-* `static` (when Gatsby is building static HTML pages)
-* `production` (when Gatsby is generating the CSS/JS bundles)
+1) develop: for `gatsby develop` command, hot reload and CSS injection into page
+2) develop-html: same as develop without react-hmre in the babel config for html renderer
+3) build-css: build styles.css file
+4) build-html: build all HTML files
+5) build-javascript: Build bundle.js for Single Page App in production
 
 Consider the following example which removes the default css loader
 and replaces it with a loader that uses css-modules.
 
 ```javascript
-exports.modifyWebpackConfig = function(config, env) {
+exports.modifyWebpackConfig = function(config, stage) {
   config.removeLoader('css')
   config.loader('css', function(cfg) {
     cfg.test = /\.css$/
@@ -360,8 +362,8 @@ and add the plugin when generating the static HTML for our site.
 ```javascript
 var ExtractTextPlugin = require("extract-text-webpack-plugin")
 
-exports.modifyWebpackConfig = function(config, env) {
-  if(env === 'static') {
+exports.modifyWebpackConfig = function(config, stage) {
+  if(stage === 'build-html') {
     config.removeLoader('css')
     config.loader('css', function(cfg) {
       cfg.test = /\.css$/
