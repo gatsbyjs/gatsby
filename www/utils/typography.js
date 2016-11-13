@@ -37,12 +37,16 @@ const options = {
     'tt,code': {
       background: `rgba(246, 224, 196, 0.38)`,
       fontFamily: `"Space Mono",Consolas,"Roboto Mono","Droid Sans Mono","Liberation Mono",Menlo,Courier,monospace`,
-      fontSize: '80%',
+      fontSize: `80%`,
       fontVariant: `none`,
     },
     pre: {
       background: `rgba(246, 224, 196, 0.38)`,
-      fontSize: '100%',
+      fontSize: `100%`,
+      lineHeight: 1,
+    },
+    'pre code': {
+      lineHeight: 1.32,
     },
     a: {
       color: `#367f8a`,
