@@ -3,7 +3,6 @@ import React from 'react'
 import { prefixLink } from 'gatsby-helpers'
 import { GoogleFont, TypographyStyle } from 'react-typography'
 import typography from './utils/typography'
-import HTMLScripts from 'html-scripts'
 import HTMLStyles from 'html-styles'
 
 module.exports = React.createClass({
@@ -29,7 +28,7 @@ module.exports = React.createClass({
         </head>
         <body>
           <div id="react-mount" dangerouslySetInnerHTML={{ __html: this.props.body }} />
-          <HTMLScripts scripts={this.props.scripts} />
+          {this.props.postBodyComponents}
         </body>
       </html>
     )
