@@ -10,6 +10,7 @@ module.exports = React.createClass({
     return (
       <html lang="en">
         <head>
+          {this.props.headComponents}
           <title>Gatsby</title>
           <meta charSet="utf-8" />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -24,7 +25,6 @@ module.exports = React.createClass({
           <GoogleFont typography={typography} />
           <TypographyStyle typography={typography} />
           <HTMLStyles />
-          {this.props.headComponents}
         </head>
         <body>
           <div id="react-mount" dangerouslySetInnerHTML={{ __html: this.props.body }} />
