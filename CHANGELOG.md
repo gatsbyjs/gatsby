@@ -1,5 +1,30 @@
 # Change Log
 
+## [1.0.0-alpha10] - 2016-11-17
+### Added
+- Did the intitial build of the new gatsbyjs.org! It's in the `www`
+  subdirectory on the 1.0 branch and is built on each push! That's my
+kind of integration testing :-) You can see the early version of the
+site at https://gatsbyjs.netlify.com/. PRs welcome!
+- Added <link preload> for page scripts. This speeds up loading scripts
+  slightly by telling the browser to start downloading the scripts when
+the HTML first starts being parsed instead of when the browser reaches
+the end. This is especially helpful for large HTML documents on slow
+mobile networks. [PR](https://github.com/gatsbyjs/gatsby/pull/558)
+
+## Changed
+- Use namedmodulesplugin instead of recordsPath for ensuring
+  deterministic builds and long-term cachability. The [previous PR adding
+support for recordsPath](https://github.com/gatsbyjs/gatsby/pull/533)
+proved unpleasant as you had to build locally and commit the outputted
+records.json which was confusing and annoying.
+[PR](https://github.com/gatsbyjs/gatsby/pull/559)
+
+### Changed
+- Removed the package `sharp` as it's not used and is preventing Gatsby
+  1.0 from being installed on Windows.
+[commit](https://github.com/gatsbyjs/gatsby/commit/34fff74e6fb3cae88010b42f74d784382ead4031)
+
 ## [1.0.0-alpha9] - 2016-11-04
 ### Added
 - Put the routes module on `window` to support experimental idea. See
