@@ -13,6 +13,12 @@ const options = {
       ],
     },
     {
+      name: 'Prata',
+      styles: [
+        '400',
+      ],
+    },
+    {
       name: 'Space Mono',
       styles: [
         '400',
@@ -22,14 +28,15 @@ const options = {
       ],
     },
   ],
-  headerFontFamily: [`Playfair Display`, `sans-serif`],
+  headerFontFamily: [`Prata`, `sans-serif`],
   bodyFontFamily: [`Futura PT`, `sans-serif`],
   baseFontSize: `18px`,
   baseLineHeight: 1.4,
+  scaleRatio: 1.666,
+  headerWeight: `400`,
   headerColor: `hsla(0,0%,0%,0.8)`,
   bodyColor: `hsla(0,0%,0%,0.7)`,
   blockMarginBottom: 0.75,
-  scale: 2,
   plugins: [
     new CodePlugin(),
   ],
