@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "React.js Static Site Generator",
-  "version": "1.0.0-alpha9",
+  "version": "1.0.0-alpha10",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "ava": {
     "require": [
@@ -43,7 +43,6 @@
     "css-loader": "^0.25.0",
     "debug": "^2.3.2",
     "detect-port": "^1.0.5",
-    "dist-exiftool": "^10.25.0",
     "eslint-plugin-react": "^6.5.0",
     "excerpt-html": "^1.1.1",
     "extract-text-webpack-plugin": "^1.0.1",
@@ -70,7 +69,6 @@
     "moment": "^2.16.0",
     "negotiator": "^0.6.1",
     "node-cjsx": "^2.0.0",
-    "node-exiftool": "^2.0.0",
     "node-libs-browser": "^1.0.0",
     "null-loader": "^0.1.1",
     "object-assign": "^4.1.0",
@@ -85,9 +83,9 @@
     "postcss-loader": "^0.13.0",
     "postcss-reporter": "^1.4.1",
     "raw-loader": "^0.5.1",
-    "react": "^15.3.2",
+    "react": "^15.4.0",
     "react-document-title": "^2.0.1",
-    "react-dom": "^15.3.2",
+    "react-dom": "^15.4.0",
     "react-hot-loader": "^3.0.0-beta.6",
     "react-router": "^2.8.1",
     "react-router-scroll": "^0.3.3",
@@ -110,6 +108,7 @@
     "webpack-dev-server": "^1.16.1",
     "webpack-md5-hash": "0.0.5",
     "webpack-require": "0.0.16",
+    "webpack-stable-module-id-and-hash": "^1.0.2",
     "webpack-stats-plugin": "^0.1.4",
     "webpack-validator": "^2.2.7",
     "yaml-js": "^0.1.4"
