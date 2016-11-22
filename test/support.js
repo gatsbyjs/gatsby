@@ -5,8 +5,9 @@ import Promise from 'bluebird'
 import _ from 'lodash'
 import { spawn as spawnNative } from 'child_process'
 const remove = Promise.promisify(fs.remove)
-const gatsbyCli = path.resolve('..', '..', 'lib', 'bin', 'cli.js')
-const babel = path.resolve('..', '..', 'node_modules', '.bin', 'babel-node')
+const gatsbyBin = path.resolve(`..`, `..`, `bin`, `gatsby.js`)
+const gatsbyCli = path.resolve(`..`, `..`, `lib`, `bin`, `cli.js`)
+const babel = path.resolve(`..`, `..`, `node_modules`, `.bin`, `babel-node`)
 
 export function spawn (command, args = [], options = {}) {
   return new Promise((resolve, reject) => {
@@ -24,6 +25,11 @@ export function spawn (command, args = [], options = {}) {
       }
     })
   })
+}
+
+export function gatsbyCmd (args = [], options = {}) {
+  const spawnArguments = _.concat([`--`, gatsbyBin], args)
+  return spawn(babel, spawnArguments, options)
 }
 
 export function gatsby (args = [], options = {}) {
