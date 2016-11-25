@@ -93,6 +93,7 @@ it'll be converted to `/docs/index.html`.
 * [anvilabs.co](https://anvilabs.co/?utm_source=github.com) ([source](https://github.com/anvilabs/anvilabs.co))
 * [Cardiogram](https://cardiogr.am)
 * [Geographer](https://geographer.su) ([source](https://github.com/MenaraSolutions/geographer-docs))
+* [fuchs+wald](https://fuchsundwald.de) ([source](https://github.com/voellig-ohne/cf-website))
 * [Edit this file to add yours!](https://github.com/gatsbyjs/gatsby/blob/master/README.md)
 
 *Note, for the sites that have made their source available, you can
