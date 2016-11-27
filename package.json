@@ -80,6 +80,7 @@
     "toml": "^2.2.2",
     "toml-loader": "^1.0.0",
     "tracer": "^0.8.3",
+    "ts-loader": "^1.2.2",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.2",
     "webpack-configurator": "^0.3.0",
