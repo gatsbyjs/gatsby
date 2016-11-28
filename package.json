@@ -88,7 +88,6 @@
     "yaml-loader": "^0.4.0"
   },
   "devDependencies": {
-    "@gutenye/react-dev-utils": "^0.3.4",
     "ava": "^0.16.0",
     "ava-http": "^0.2.1",
     "babel-cli": "^6.11.4",
