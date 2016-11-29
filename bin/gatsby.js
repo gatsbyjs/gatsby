@@ -34,7 +34,7 @@ var loadGatsby = function (path) {
   - Bypass the required file check
  */
 const commandsToIgnore = [undefined, 'new', '--help', '-h', '--version', '-V']
-const isGlobal = commandsToIgnore.includes(process.argv[2])
+const isIgnored = commandsToIgnore.includes(process.argv[2])
 
 const requiredFiles = [
   'html.js',
@@ -44,23 +44,27 @@ const requiredFiles = [
   return sysPath.join(cwd, file)
 })
 
+var useGlobalGatsby = function () {
+  if (isIgnored) {
+    console.warn('Proceeding with global Gatsby package.\n');
+    fs.realpath(__dirname, function (err, real) {
+      if (err) throw err
+      loadGatsby(sysPath.join(real, '..', cliFile))
+    })
+  } else {
+    console.error(
+      "A local install of Gatsby was not found.\n" +
+      "You should save Gatsby as a site dependency e.g. npm install --save gatsby\n"
+    )
+    process.exit(1)
+  }
+}
+
 fs.access(localPath, function (error) {
   if (error) {
-    if (!isGlobal) {
-      console.error(
-        "A local install of Gatsby was not found.\n" +
-        "You should save Gatsby as a site dependency e.g. npm install --save gatsby\n"
-      )
-      process.exit(1)
-    } else {
-      console.warn('Proceeding with global Gatsby package.\n');
-      fs.realpath(__dirname, function (err, real) {
-        if (err) throw err
-        loadGatsby(sysPath.join(real, '..', cliFile))
-      })
-    }
+    useGlobalGatsby()
   } else {
-    if (!isGlobal && !checkRequiredFiles(requiredFiles)) {
+    if (!isIgnored && !checkRequiredFiles(requiredFiles)) {
       process.exit(1)
     }
 
