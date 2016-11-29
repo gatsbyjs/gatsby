@@ -51,7 +51,7 @@ fs.access(localPath, function (error) {
         "A local install of Gatsby was not found.\n" +
         "You should save Gatsby as a site dependency e.g. npm install --save gatsby\n"
       )
-      process.exit()
+      process.exit(1)
     } else {
       console.warn('Proceeding with global Gatsby package.\n');
       fs.realpath(__dirname, function (err, real) {
@@ -61,7 +61,7 @@ fs.access(localPath, function (error) {
     }
   } else {
     if (!isGlobal && !checkRequiredFiles(requiredFiles)) {
-      process.exit()
+      process.exit(1)
     }
 
     try {
