@@ -45,6 +45,7 @@
     "html-frontmatter": "^1.6.0",
     "image-webpack-loader": "^2.0.0",
     "invariant": "^2.2.1",
+    "js-yaml": "^3.7.0",
     "json-loader": "^0.5.2",
     "json5": "^0.5.0",
     "less": "^2.7.1",
