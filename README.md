@@ -42,7 +42,6 @@ it'll be converted to `/docs/index.html`.
 
 ## Sites built with Gatsby
 * [bricolage.io](https://bricolage.io/?utm_source=github.com) ([source](https://github.com/KyleAMathews/blog))
-* [AngularToReact.com](https://angulartoreact.com)
 * [relaterocket.co](https://relaterocket.co?utm_source=github.com)
 * [reindex.io](https://www.reindex.io)
 * [syncano.io](https://www.syncano.io) ([source](https://github.com/Syncano/syncano.com))
@@ -95,6 +94,7 @@ it'll be converted to `/docs/index.html`.
 * [Cardiogram](https://cardiogr.am)
 * [Geographer](https://geographer.su) ([source](https://github.com/MenaraSolutions/geographer-docs))
 * [fuchs+wald](https://fuchsundwald.de) ([source](https://github.com/voellig-ohne/cf-website))
+* [AngularToReact.com](https://angulartoreact.com)
 * [Edit this file to add yours!](https://github.com/gatsbyjs/gatsby/blob/master/README.md)
 
 *Note, for the sites that have made their source available, you can
