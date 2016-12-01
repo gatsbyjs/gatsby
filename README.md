@@ -95,7 +95,7 @@ it'll be converted to `/docs/index.html`.
 * [Geographer](https://geographer.su) ([source](https://github.com/MenaraSolutions/geographer-docs))
 * [fuchs+wald](https://fuchsundwald.de) ([source](https://github.com/voellig-ohne/cf-website))
 * [AngularToReact.com](https://angulartoreact.com)
-* [Spencer Dixon's Blog](https://www.spencerdixon.com/)
+* [Spencer Dixon's Blog](https://www.spencerdixon.com/)([source](https://github.com/SpencerCDixon/blog))
 * [Edit this file to add yours!](https://github.com/gatsbyjs/gatsby/blob/master/README.md)
 
 *Note, for the sites that have made their source available, you can
