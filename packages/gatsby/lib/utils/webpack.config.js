@@ -74,9 +74,8 @@ module.exports = (program, directory, suppliedStage, webpackPort = 1500, pages =
       case `develop`:
         return {
           commons: [
-            `${require.resolve('webpack-dev-server/client')}?http://${program.host}:${webpackPort}/`,
-            require.resolve(`webpack/hot/only-dev-server`),
             require.resolve(`react-hot-loader/patch`),
+            `${require.resolve(`webpack-hot-middleware/client`)}?path=http://${program.host}:${webpackPort}/__webpack_hmr`,
             `${directory}/.intermediate-representation/app`,
           ],
         }

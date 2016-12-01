@@ -1,0 +1,33 @@
+{
+  "name": "gatsby-source-filesystem",
+  "version": "0.0.0",
+  "description": "Gatsby plugin which parses files within a directory for further parsing by other plugins",
+  "scripts": {
+    "build": "babel src --presets babel-preset-es2015 --out-dir .",
+    "watch": "babel -w src --presets babel-preset-es2015 --out-dir ."
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin"
+  ],
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "async": "^2.1.2",
+    "babel-cli": "^6.18.0",
+    "babel-preset-es2015": "^6.18.0",
+    "bluebird": "^3.4.6",
+    "dist-exiftool": "^10.33.0",
+    "exiftool.pl": "^10.33.0",
+    "gatsby-graphql-utils": "latest",
+    "glob": "^7.1.1",
+    "graphql": "^0.8.2",
+    "graphql-relay": "^0.4.4",
+    "lodash": "^4.17.2",
+    "node-exiftool": "^2.0.1",
+    "parse-filepath": "^1.0.1",
+    "purdy": "^2.2.0",
+    "slash": "^1.0.0",
+    "unist-builder": "^1.0.2"
+  }
+}

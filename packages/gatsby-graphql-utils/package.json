@@ -1,0 +1,24 @@
+{
+  "name": "gatsby-graphql-utils",
+  "version": "0.0.0",
+  "description": "Various utilities to help construct GraphQL Schemas in Gatsby",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src --presets babel-preset-es2015 --out-dir .",
+    "watch": "babel -w src --presets babel-preset-es2015 --out-dir ."
+  },
+  "keywords": [
+    "gatsby",
+    "graphql"
+  ],
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "graphql": "^0.8.2",
+    "graphql-relay": "^0.4.4"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-preset-es2015": "^6.18.0"
+  }
+}

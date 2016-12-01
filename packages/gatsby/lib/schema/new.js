@@ -1,66 +1,100 @@
 /* @flow weak */
 import _ from 'lodash'
-import path from 'path'
-import Promise from 'bluebird'
+//import path from 'path'
+//import Promise from 'bluebird'
 
 import { siteDB } from '../utils/globals'
-import markdownSchema from './markdown'
+//import markdownSchema from './markdown'
 import siteSchema from './site-schema'
-import apiRunnerNode from '../utils/api-runner-node'
 
-import exiftool from 'node-exiftool'
-import glob from 'glob'
-import moment from 'moment'
-import qs from 'querystring'
+//import moment from 'moment'
+//import qs from 'querystring'
 import {
   GraphQLSchema,
   GraphQLObjectType,
-  GraphQLString,
-  GraphQLInt,
-  GraphQLID,
-  GraphQLList,
-  GraphQLBoolean,
-  GraphQLNonNull,
-  GraphQLInterfaceType,
+  //GraphQLString,
+  //GraphQLInt,
+  //GraphQLID,
+  //GraphQLList,
+  //GraphQLBoolean,
+  //GraphQLNonNull,
+  //GraphQLInterfaceType,
 } from 'graphql'
-import {
-  connectionFromArray,
-  connectionArgs,
-  connectionDefinitions,
-  toGlobalId,
-} from 'graphql-relay'
-import md5File from 'md5-file'
-import MarkdownIt from 'markdown-it'
-import parseFilepath from 'parse-filepath'
-import u from 'unist-builder'
-import fs from 'fs'
-import grayMatter from 'gray-matter'
-import purdy from 'purdy'
-var visit = require('unist-util-visit')
-var select = require('unist-util-select')
-import remark from 'remark'
-import remarkHtml from 'remark-html'
-import excerptHTML from 'excerpt-html'
+//import {
+  //connectionFromArray,
+  //connectionArgs,
+  //connectionDefinitions,
+  //toGlobalId,
+//} from 'graphql-relay'
+//import md5File from 'md5-file'
+//import MarkdownIt from 'markdown-it'
+//import parseFilepath from 'parse-filepath'
+//import u from 'unist-builder'
+//import fs from 'fs'
+//import grayMatter from 'gray-matter'
+//import purdy from 'purdy'
+//const visit = require('unist-util-visit')
+//const select = require('unist-util-select')
+//import remark from 'remark'
+//import remarkHtml from 'remark-html'
+//import excerptHTML from 'excerpt-html'
+import apiRunner from '../utils/api-runner-node'
+//const parents = require(`unist-util-parents`)
 
-const md = new MarkdownIt({
-  html: true,
-  typographer: true,
-})
+//const md = new MarkdownIt({
+  //html: true,
+  //typographer: true,
+//})
 
-import inferGraphQLType from './infer-graphql-type'
+const buildNodeTypes = require(`./build-node-types`)
+const buildNodeConnections = require(`./build-node-connections`)
 
-const ep = new exiftool.ExiftoolProcess(`/usr/local/bin/exiftool`)
-const isOpen = ep.open()
+module.exports = async () => {
+  console.time(`building ast`)
+  const sourceAST = await apiRunner(`sourceNodes`)
+  const root = { type: `root`, children: sourceAST }
+  await apiRunner(`modifyAST`, { ast: root })
+  console.timeEnd(`building ast`)
 
-module.exports = async (directory) => {
-  const config = siteDB().get(`config`)
-  console.log(config, directory)
+  console.time(`building schema`)
+  let typesIR = await apiRunner(`registerGraphQLNodes`, { ast: root })
+  typesIR = _.flatten(typesIR)
+  // For each type, infer remaining fields, add node fields, construct type w/
+  // node as its interface, and then create various connections.
+  const typesGQL = _.merge(...buildNodeTypes(typesIR))
+  console.log(typesGQL)
+  const connections = buildNodeConnections(typesGQL, typesIR)
+  console.timeEnd(`building schema`)
+  console.log({
+    ...typesGQL,
+    ...connections,
+    ...siteSchema(),
+  })
 
+  return new GraphQLSchema({
+    query: new GraphQLObjectType({
+      name: `RootQueryType`,
+      fields: () => ({
+        ...typesGQL,
+        ...connections,
+        ...siteSchema(),
+      }),
+    }),
+  })
+}
+
+  //purdy(modifiedAST, { depth: null })
+  //purdy(select(root, `File`))
+  //purdy(select(root, `File[extension="js"]`))
+  // TODO sourcedirectory passes files AST to its parsers
+  // and then returns
+  // then call next API runner for compiling to graphql schema.
+  /*
   return new Promise((resolve, reject) => {
     isOpen
     .catch((err) => reject(err))
     .then(() => {
-      glob(`${config.sources}/**/**`, { nodir: true }, (err, files) => {
+    glob(`${config.sources}/**//**`, { nodir: true }, (err, files) => {
         Promise.all(files.map((file) => ep.readMetadata(file)))
         .then((results) => {
           const cleanedResults = _.filter(results, (result) => {
@@ -293,6 +327,10 @@ module.exports = async (directory) => {
             //name: `Files`,
             //fields,
           //})
+          //
+          // TODO make a gatsby-graphql helper package
+          // that lets you pass in a node type and array of items
+          // and it'll construct various connections w/ args.
 
           // Create a connection for each node type.
           const connectionTypes = {}
@@ -395,7 +433,6 @@ module.exports = async (directory) => {
 
           Really need to have hot reloading of new pages. Client should reload
           routes table forcably when the actual routes change.
-          **/
 
           const schema = new GraphQLSchema({
             query: new GraphQLObjectType({
@@ -432,3 +469,4 @@ module.exports = async (directory) => {
     })
   })
 }
+*/

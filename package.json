@@ -1,10 +1,15 @@
 {
-  "private": true,
-  "devDependencies": {
+  "dependencies": {
     "babel-cli": "^6.18.0",
     "babel-eslint": "^7.1.0",
+    "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-lodash": "^3.2.9",
+    "babel-plugin-transform-async-to-generator": "^6.16.0",
     "babel-plugin-transform-flow-strip-types": "^6.18.0",
+    "babel-plugin-transform-runtime": "^6.15.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
+    "babel-preset-stage-0": "^6.16.0",
     "babel-register": "^6.18.0",
     "eslint": "^3.10.1",
     "eslint-config-airbnb": "^12.0.0",
@@ -17,11 +22,14 @@
     "iflow-debug": "^1.0.15",
     "iflow-lodash": "^1.1.24",
     "iflow-react-router": "^1.2.1",
-    "nyc": "^7.0.0",
-    "lerna": "2.0.0-beta.30"
+    "jest": "^17.0.3",
+    "lerna": "2.0.0-beta.30",
+    "purdy": "^2.2.0"
   },
+  "private": true,
   "scripts": {
     "build": "lerna run build",
+    "jest": "jest",
     "lint": "eslint --ext .js,.jsx --ignore-path .gitignore .",
     "lint:flow": "babel-node scripts/flow-check.js",
     "test": "npm run lint && npm run test-node && npm run test-integration",

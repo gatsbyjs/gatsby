@@ -312,10 +312,10 @@ const q = queue(({ file, graphql, directory }, callback) => {
       pathContext = { ...pathInfo }
     }
     return graphql(query, pathContext)
-    .catch(error => console.log(`graphql error`, error))
+    .catch(error => console.log(`graphql error from file: ${absFile}`, error))
     .then(result => {
       if (result.errors) {
-        console.log(`graphql errors`, result.errors)
+        console.log(`graphql errors from file: ${absFile}`, result.errors)
       }
       // Combine the result with the path context.
       result.pathContext = pathInfo.context

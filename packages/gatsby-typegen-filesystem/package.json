@@ -1,0 +1,24 @@
+{
+  "name": "gatsby-typegen-filesystem",
+  "version": "0.0.0",
+  "description": "Gatsby plugin which generates graphql types for querying files and directories",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src --presets babel-preset-es2015 --out-dir .",
+    "watch": "babel -w src --presets babel-preset-es2015 --out-dir ."
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin"
+  ],
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "unist-util-select": "^1.5.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-preset-es2015": "^6.18.0"
+  }
+}

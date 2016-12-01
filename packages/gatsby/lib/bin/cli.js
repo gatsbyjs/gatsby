@@ -1,7 +1,8 @@
 const program = require(`commander`)
 const packageJson = require(`../../package.json`)
 const path = require(`path`)
-import _ from 'lodash'
+const _ = require(`lodash`)
+console.log('bin/cli: time since started:', process.uptime())
 
 const defaultHost = process.platform === `win32`
   ? `localhost`
@@ -13,6 +14,7 @@ program
   .version(packageJson.version)
   .usage(`[command] [options]`)
 
+console.time(`time to load develop`)
 program.command(`develop`)
   .description(`Start development server. Watches files and rebuilds and hot reloads if something changes`) // eslint-disable-line max-len
   .option(`-H, --host <url>`,
@@ -23,6 +25,7 @@ program.command(`develop`)
   .option(`-o, --open`, `Open the site in your browser for you.`)
   .action((command) => {
     const develop = require(`../utils/develop`)
+    console.timeEnd(`time to load develop`)
     const p = {
       ...command,
       directory,

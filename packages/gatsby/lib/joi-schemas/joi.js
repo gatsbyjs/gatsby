@@ -1,9 +1,9 @@
 const Joi = require(`joi`)
 
 export const gatsbyConfigSchema = Joi.object().keys({
-  sources: Joi.string().required(),
   siteMetadata: Joi.object(),
   linkPrefix: Joi.string(),
+  plugins: Joi.array(),
 })
 
 export const pageSchema = Joi.object().keys({

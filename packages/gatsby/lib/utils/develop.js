@@ -1,49 +1,38 @@
 /* @flow weak */
-require(`node-cjsx`).transform()
-import detect from 'detect-port'
-import Hapi from 'hapi'
-import Boom from 'boom'
-import React from 'react'
-import ReactDOMServer from 'react-dom/server'
-import webpack from 'webpack'
-import Negotiator from 'negotiator'
-import parsePath from 'parse-filepath'
-import _ from 'lodash'
-import webpackRequire from 'webpack-require'
-import opn from 'opn'
-import fs from 'fs'
-import glob from 'glob'
-import rl from 'readline'
-import GraphQL from 'hapi-graphql'
-import WebpackDevServer from 'webpack-dev-server'
-import { pagesDB } from './globals'
-
-import bootstrap from '../bootstrap'
+const express = require(`express`)
+const graphqlHTTP = require(`express-graphql`)
+const glob = require(`glob`)
+const webpackRequire = require(`webpack-require`)
+const bootstrap = require(`../bootstrap`)
+const webpack = require(`webpack`)
+const webpackConfig = require(`./webpack.config`)
+const React = require(`react`)
+const ReactDOMServer = require(`react-dom/server`)
+const rl = require(`readline`)
 
 const rlInterface = rl.createInterface({
   input: process.stdin,
   output: process.stdout,
 })
 
-import webpackConfig from './webpack.config'
 const debug = require(`debug`)(`gatsby:application`)
 
 function startServer (program) {
   const directory = program.directory
-
   // Load pages for the site.
   return bootstrap(program, (err, schema) => {
     // Generate random port for webpack to listen on.
     // Perhaps should check if port is open.
-    const webpackPort = Math.round(Math.random() * 1000 + 1000)
-    const compilerConfig = webpackConfig(program, directory, `develop`, webpackPort)
+    //const webpackPort = Math.round(Math.random() * 1000 + 1000)
+    const compilerConfig = webpackConfig(program, directory, `develop`, program.port)
 
-    const compiler = webpack(compilerConfig.resolve())
+    const devConfig = compilerConfig.resolve()
+    const compiler = webpack(devConfig)
 
-    let HTMLPath = `${directory}/html`
+    let HTMLPath = glob.sync(`${directory}/html.*`)[0]
     // Check if we can't find an html component in root of site.
-    if (glob.sync(`${HTMLPath}.*`).length === 0) {
-      HTMLPath = `../isomorphic/html`
+    if (!HTMLPath) {
+      HTMLPath = `../isomorphic/html.js`
     }
 
     // We use the program port not the webpack-dev-server port as if you import
@@ -54,7 +43,7 @@ function startServer (program) {
     // this discprenecy between dev and prod.
     const htmlCompilerConfig = webpackConfig(program, directory, `develop-html`, program.port)
 
-    webpackRequire(htmlCompilerConfig.resolve(), require.resolve(HTMLPath), (error, factory) => {
+    webpackRequire(htmlCompilerConfig.resolve(), HTMLPath, (error, factory) => {
       if (error) {
         console.log(`Failed to require ${directory}/html.js`)
         error.forEach((e) => {
@@ -81,74 +70,148 @@ function startServer (program) {
       //// Start webpack-dev-server
       //webpackDevServer.listen(webpackPort, program.host)
 
-      const server = new Hapi.Server()
+      const app = express()
+      app.use(require(`webpack-dev-middleware`)(compiler, {
+        noInfo: true,
+        publicPath: devConfig.output.publicPath,
+        historyApiFallback: true,
+      }))
 
-      server.connection({
-        host: program.host,
-        port: program.port,
+      app.use(require(`webpack-hot-middleware`)(compiler, {
+        log: console.log,
+        path: `/__webpack_hmr`,
+        heartbeat: 10 * 1000,
+      }))
+      //app.use(require(`webpack-dev-middleware`)(compiler, {
+        //publicPath: devConfig.output.publicPath,
+        //historyApiFallback: true,
+      //}))
+      //app.use(require(`webpack-hot-middleware`)(compiler))
+      app.use(`/graphql`, graphqlHTTP({
+        schema,
+        graphiql: true,
+      }))
+      let htmlStr
+      app.use((req, res, next) => {
+        if (req.accepts(`html`) && !req.query.t) {
+          console.log(req)
+          if (htmlStr) {
+            return res.send(htmlStr)
+          } else {
+            try {
+              const htmlElement = React.createElement(
+                HTML, {
+                  body: ``,
+                  headComponents: [],
+                  postBodyComponents: [
+                    <script src="/commons.js" />,
+                  ],
+                }
+              )
+              htmlStr = ReactDOMServer.renderToStaticMarkup(htmlElement)
+              htmlStr = `<!DOCTYPE html>\n${htmlStr}`
+              return res.send(htmlStr)
+            } catch (e) {
+              console.log(e.stack)
+              throw e
+            }
+          }
+        } else {
+          return next()
+        }
       })
+      app.use(express.static(`public`))
+      const listener = app.listen(program.port, program.host, (e) => {
+        if (e) {
+          if (e.code === `EADDRINUSE`) {
+            // eslint-disable-next-line max-len
+            console.log(`Unable to start Gatsby on port ${program.port} as there's already a process listing on that port.`)
+          } else {
+            console.log(e)
+          }
+
+          process.exit()
+        } else {
+          // TODO restore
+          //if (program.open) {
+            const opn = require(`opn`)
+            //opn(server.info.uri)
+          //}
+          console.log(listener.address())
+          console.log(`Listening at: http://${listener.address().address}:${listener.address().port}`)//, server.info.uri)
+        }
+      })
+    })
+  })
+}
+      //const server = new Hapi.Server()
+
+      //server.connection({
+        //host: program.host,
+        //port: program.port,
+      //})
 
       // As our two processes (Webpack-Dev-Server + this Hapi.js server) are
       // running on different ports, we proxy requests for the bundle.js to
       // Webpack.
-      server.route({
-        method: 'GET',
-        path: '/commons.js',
-        handler: {
-          proxy: {
-            uri: `http://0.0.0.0:${webpackPort}/commons.js`,
-            passThrough: true,
-            xforward: true,
-          },
-        },
-      })
+      //server.route({
+        //method: 'GET',
+        //path: '/commons.js',
+        //handler: {
+          //proxy: {
+            //uri: `http://0.0.0.0:${webpackPort}/commons.js`,
+            //passThrough: true,
+            //xforward: true,
+          //},
+        //},
+      //})
 
-      server.route({
-        method: `GET`,
-        path: `/html/{path*}`,
-        handler: (request, reply) => {
-          if (request.path === `favicon.ico`) {
-            return reply(Boom.notFound())
-          }
+      //server.route({
+        //method: `GET`,
+        //path: `/html/{path*}`,
+        //handler: (request, reply) => {
+          //if (request.path === `favicon.ico`) {
+            //return reply(Boom.notFound())
+          //}
 
-          try {
-            const htmlElement = React.createElement(
-              HTML, {
-                body: ``,
-                headComponents: [],
-                postBodyComponents: [
-                  <script src="/commons.js" />
-                ]
-              }
-            )
-            let html = ReactDOMServer.renderToStaticMarkup(htmlElement)
-            html = `<!DOCTYPE html>\n${html}`
-            return reply(html)
-          } catch (e) {
-            console.log(e.stack)
-            throw e
-          }
-        },
-      })
+          //try {
+            //const htmlElement = React.createElement(
+              //HTML, {
+                //body: ``,
+                //headComponents: [],
+                //postBodyComponents: [
+                  //<script src="/commons.js" />
+                //]
+              //}
+            //)
+            //let html = ReactDOMServer.renderToStaticMarkup(htmlElement)
+            //html = `<!DOCTYPE html>\n${html}`
+            //return reply(html)
+          //} catch (e) {
+            //console.log(e.stack)
+            //throw e
+          //}
+        //},
+      //})
 
-      server.route({
-        method: `GET`,
-        path: `/{path*}`,
-        handler: {
-          directory: {
-            path: `${program.directory}/public`,
-            listing: false,
-            index: false,
-          },
-        },
-      })
+      //server.route({
+        //method: `GET`,
+        //path: `/{path*}`,
+        //handler: {
+          //directory: {
+            //path: `${program.directory}/public`,
+            //listing: false,
+            //index: false,
+          //},
+        //},
+      //})
 
-      server.ext(`onRequest`, (request, reply) => {
-        if (request.path === `/graphql`) {
-          return reply.continue()
-        }
+      //server.ext(`onRequest`, (request, reply) => {
+        //if (request.path === `/graphql`) {
+          //return reply.continue()
+        //}
 
-        const negotiator = new Negotiator(request.raw.req)
+        //const negotiator = new Negotiator(request.raw.req)
 
         // Try to map the url path to match an actual path of a file on disk.
         //const parsed = parsePath(request.path)
@@ -176,60 +239,61 @@ function startServer (program) {
           //reply.continue()
         // Let people load the bundle.js directly.
         //} else if (request.path === `/bundle.js`) {
-        if (request.path === `/bundle.js`) {
-          reply.continue()
-        } else if (negotiator.mediaType() === `text/html`) {
-          request.setUrl(`/html${request.path}`)
-          reply.continue()
-        } else {
-          reply.continue()
-        }
-      })
+        //if (request.path === `/bundle.js`) {
+          //reply.continue()
+        //} else if (negotiator.mediaType() === `text/html`) {
+          //request.setUrl(`/html${request.path}`)
+          //reply.continue()
+        //} else {
+          //reply.continue()
+        //}
+      //})
 
-      return server.register([
-        // Add GraphQL support
-        {
-          register: GraphQL,
-          options: {
-            query: {
-              graphiql: true,
-              pretty: true,
-              schema,
-            },
-            route: {
-              path: `/graphql`,
-            },
-          },
-        },
-      ], (er) => {
-        if (er) {
-          console.log(er)
-          process.exit()
-        }
+      //return server.register([
+        //// Add GraphQL support
+        //{
+          //register: GraphQL,
+          //options: {
+            //query: {
+              //graphiql: true,
+              //pretty: true,
+              //schema,
+            //},
+            //route: {
+              //path: `/graphql`,
+            //},
+          //},
+        //},
+      //], (er) => {
+        //if (er) {
+          //console.log(er)
+          //process.exit()
+        //}
 
-        server.start((e) => {
-          if (e) {
-            if (e.code === `EADDRINUSE`) {
-              // eslint-disable-next-line max-len
-              console.log(`Unable to start Gatsby on port ${program.port} as there's already a process listing on that port.`)
-            } else {
-              console.log(e)
-            }
+        //server.start((e) => {
+          //if (e) {
+            //if (e.code === `EADDRINUSE`) {
+              //// eslint-disable-next-line max-len
+              //console.log(`Unable to start Gatsby on port ${program.port} as there's already a process listing on that port.`)
+            //} else {
+              //console.log(e)
+            //}
 
-            process.exit()
-          } else {
-            if (program.open) {
-              opn(server.info.uri)
-            }
-            console.log(`Listening at:`, server.info.uri)
-          }
-        })
-      })
-    })
-  })
-}
+            //process.exit()
+          //} else {
+            //if (program.open) {
+              //opn(server.info.uri)
+            //}
+            //console.log(`Listening at:`, server.info.uri)
+          //}
+        //})
+      //})
+    //})
+  //})
+//}
 
 module.exports = (program) => {
+  const detect = require(`detect-port`)
   const port = typeof program.port === 'string'
     ? parseInt(program.port, 10)
     : program.port

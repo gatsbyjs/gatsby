@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-/*eslint-disable */
-require('babel-core/register')
-require('coffee-script/register')
+console.log('bin/gatsby: time since started:', process.uptime())
+
+console.time(`initial loading`)
 
 global.appStartTime = Date.now()
 
@@ -48,6 +48,7 @@ fs.access(localPath, function (error) {
   } else {
     try {
       loadGatsby(localPath)
+      console.timeEnd(`initial loading`)
     } catch(error) {
       console.log(
         'Gatsby: Local install exists but failed to load it.'

@@ -11,6 +11,7 @@ import mkdirp from 'mkdirp'
 import fs from 'fs-extra'
 import Joi from 'joi'
 import chalk from 'chalk'
+import purdy from 'purdy'
 const { layoutComponentChunkName } = require(`../utils/js-chunk-names`)
 
 const mkdirs = Promise.promisify(fs.mkdirs)
@@ -81,6 +82,7 @@ const autoPathCreator = (program) => {
 
 
 module.exports = async (program, cb) => {
+  console.log('lib/bootstrap/index.js time since started:', process.uptime())
   // Set the program to the globals programDB
   programDB(program)
 
@@ -114,6 +116,46 @@ module.exports = async (program, cb) => {
     process.exit()
   }
   console.timeEnd('open and validate gatsby-config.js')
+
+  // Instantiate plugins.
+  let plugins = []
+  const processPlugin = (plugin) => {
+    if (_.isString(plugin)) {
+      const resolvedPath = path.dirname(require.resolve(plugin))
+      const packageJSON = JSON.parse(fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`))
+      return {
+        resolve: resolvedPath,
+        name: packageJSON.name,
+        version: packageJSON.version,
+        pluginOptions: {},
+      }
+    } else {
+      // Plugins can have plugins.
+      const plugins = []
+      if (plugin.options && plugin.options.plugins) {
+        plugin.options.plugins.forEach((plugin) => {
+          plugins.push(processPlugin(plugin))
+        })
+      }
+      plugin.options.plugins = plugins
+
+      const resolvedPath = path.dirname(require.resolve(plugin.resolve))
+      const packageJSON = JSON.parse(fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`))
+      return {
+        resolve: resolvedPath,
+        name: packageJSON.name,
+        version: packageJSON.version,
+        pluginOptions: plugin.options,
+      }
+    }
+  }
+
+  if (normalizedConfig.plugins) {
+    normalizedConfig.plugins.forEach((plugin) => {
+      plugins.push(processPlugin(plugin))
+    })
+  }
+  siteDB(siteDB().set(`plugins`, plugins))
 
   // Copy our site files to the root of the site.
   console.time('copy gatsby files')
@@ -158,59 +200,61 @@ module.exports = async (program, cb) => {
   // / --> html.js, gatsby-node.js, gatsby-browser.js, gatsby-config.js
 
   // Collect pages.
-  //const pages = await apiRunnerNode(`createPages`, { graphql: graphqlRunner }, [])
+  let pages = await apiRunnerNode(`createPages`, { graphql: graphqlRunner }, [])
+  pages = _.merge(...pages)
 
   // Add chunkName.
-  //pages.forEach((page) => (
-    //page.componentChunkName = layoutComponentChunkName(program.directory, page.component)
-  //))
+  pages.forEach((page) => {
+    page.componentChunkName = layoutComponentChunkName(program.directory, page.component)
+  })
 
   // Validate pages.
-  //if (pages) {
-    //pages.forEach((page) => {
-      //const { error } = Joi.validate(page, pageSchema)
-      //if (error) {
-        //console.log(chalk.blue.bgYellow(`A page object failed validation`))
-        //console.log(chalk.bold.red(error))
-        //console.log(`page object`)
-        //console.log(page)
-      //}
-    //})
-  //}
+  if (pages) {
+    pages.forEach((page) => {
+      const { error } = Joi.validate(page, pageSchema)
+      if (error) {
+        console.log(chalk.blue.bgYellow(`A page object failed validation`))
+        console.log(chalk.bold.red(error))
+        console.log(`page object`)
+        console.log(page)
+      }
+    })
+  }
 
   // Save pages to in-memory database.
-  //if (pages) {
-    //const pagesMap = new Map()
-    //pages.forEach((page) => {
-      //pagesMap.set(page.path, page)
-    //})
-    //pagesDB(pagesMap)
-  //}
+  if (pages) {
+    const pagesMap = new Map()
+    pages.forEach((page) => {
+      pagesMap.set(page.path, page)
+    })
+    pagesDB(pagesMap)
+  }
 
   // TODO move this to own source plugin per component type (js/cjsx/typescript, etc.)
-  //const autoPages = await autoPathCreator(program, pages)
-  //if (autoPages) {
-    //const pagesMap = new Map()
-    //autoPages.forEach((page) => pagesMap.set(page.path, page))
-    //pagesDB(new Map([...pagesDB(), ...pagesMap]))
-  //}
+  const autoPages = await autoPathCreator(program, pages)
+  if (autoPages) {
+    const pagesMap = new Map()
+    autoPages.forEach((page) => pagesMap.set(page.path, page))
+    pagesDB(new Map([...pagesDB(), ...pagesMap]))
+  }
 
-  //const modifiedPages = await apiRunnerNode(`onPostCreatePages`, pagesDB(), pagesDB())
+  const modifiedPages = await apiRunnerNode(`onPostCreatePages`, pagesDB(), pagesDB())
 
   // Validate pages.
-  //modifiedPages.forEach((page) => {
-    //const { error } = Joi.validate(page, pageSchema)
-    //if (error) {
-      //console.log(chalk.blue.bgYellow(`A page object failed validation`))
-      //console.log(chalk.bold.red(error))
-      //console.log(`page object`)
-      //console.log(page)
-    //}
-  //})
+  modifiedPages.forEach((page) => {
+    const { error } = Joi.validate(page, pageSchema)
+    if (error) {
+      console.log(chalk.blue.bgYellow(`A page object failed validation`))
+      console.log(chalk.bold.red(error))
+      console.log(`page object`)
+      console.log(page)
+    }
+  })
 
-  cb(null, schema)
+  //cb(null, schema)
 
-  //queryRunner(program, graphqlRunner, () => {
-    //cb(null, schema)
-  //})
+  queryRunner(program, graphqlRunner, () => {
+    console.log('bootstrap finished, time since started:', process.uptime())
+    cb(null, schema)
+  })
 }
