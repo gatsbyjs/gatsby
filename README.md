@@ -268,6 +268,35 @@ module.exports = React.createClass({
 })
 ```
 
+#### frontmatter and metadata
+Gatsby uses frontmatter and html-frontmatter to pull metadata out of files. This data is typically used in links leading to each page. The most relevant example is a list of blog posts in which you display the title, description, tags, etc. in the form of `{post.title}` in the React.js component.
+
+As seen in our previous markdown file, the title is part of the frontmatter
+```
+---
+title: This is a title
+---
+
+# Hi friends.
+This is a markdown file.
+```
+
+An html example as follows.
+```
+<!--
+title: This is a title
+-->
+ 
+<h1>Hello World</h1>
+```
+
+Gatsby will additionally pull data out of js|jsx files. The files are statically analyzed and an `exports.data` object is pulled. An example as follows.
+```
+exports.data = {
+  title: 'This is a title'
+}
+```
+
 ### Structure of a Gatsby site
 * `config.toml` - Core application configuration is stored here. Available via a `require`
 or `import` of 'config'. Values:
