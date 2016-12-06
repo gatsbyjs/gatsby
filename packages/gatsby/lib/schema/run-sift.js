@@ -60,7 +60,8 @@ module.exports = ({ args, nodes, connection=false }) => {
 
   // Sort results.
   if (clonedArgs.sortBy) {
-    result = _.orderBy(result, clonedArgs.sortBy.fields, clonedArgs.sortBy.order)
+    const convertedFields = clonedArgs.sortBy.fields.map((field) => field.replace(`___`, `.`))
+    result = _.orderBy(result, convertedFields, clonedArgs.sortBy.order)
   }
 
   if (connection) {

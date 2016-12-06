@@ -193,7 +193,7 @@ describe(`GraphQL Input args`, () => {
   it(`sorts results`, () => {
     return graphql(schema, `
           {
-            allNode(first: 10, sortBy: { fields: [name], order: DESC } ) {
+            allNode(first: 10, sortBy: { fields: [frontmatter___blue], order: DESC } ) {
               edges { node { name }}
             }
           }

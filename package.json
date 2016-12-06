@@ -37,6 +37,8 @@
   },
   "jest": {
     "verbose": true,
-    "modulePathIgnorePatterns": ["<rootDir>/dist/"]
+    "modulePathIgnorePatterns": ["<rootDir>/dist/", "<rootDir>/node_modules/"],
+    "coveragePathIgnorePatterns": ["<rootDir>/dist/"],
+    "notify": true
   }
 }
