@@ -1,16 +1,7 @@
 exports[`Gatsby AST utils build enum values for fields from array on nodes 1`] = `
 Object {
-  "anArray___0": Object {
-    "field": "anArray.0",
-  },
-  "anArray___1": Object {
-    "field": "anArray.1",
-  },
-  "anArray___2": Object {
-    "field": "anArray.2",
-  },
-  "anArray___3": Object {
-    "field": "anArray.3",
+  "anArray": Object {
+    "field": "anArray",
   },
   "date": Object {
     "field": "date",

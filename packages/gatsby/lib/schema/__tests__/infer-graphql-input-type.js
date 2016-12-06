@@ -186,14 +186,20 @@ describe(`GraphQL Input args`, () => {
             allNode {
               totalCount
               names: distinct(field: name)
+              array: distinct(field: anArray)
               blue: distinct(field: frontmatter___blue)
             }
           }
           `)
     .then((result) => {
       expect(result.errors).not.toBeDefined()
+
       expect(result.data.allNode.names.length).toEqual(2)
       expect(result.data.allNode.names[0]).toEqual(`The Mad Max`)
+
+      expect(result.data.allNode.array.length).toEqual(5)
+      expect(result.data.allNode.array[0]).toEqual(`1`)
+
       expect(result.data.allNode.blue.length).toEqual(2)
       expect(result.data.allNode.blue[0]).toEqual(`100`)
     })

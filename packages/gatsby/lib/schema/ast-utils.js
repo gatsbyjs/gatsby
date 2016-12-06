@@ -29,7 +29,21 @@ const extractFieldExamples = exports.extractFieldExamples = ({ nodes, selector, 
 }
 const buildFieldEnumValues = exports.buildFieldEnumValues = (nodes) => {
   const enumValues = {}
-  const fieldExamples = _.keys(flatten(extractFieldExamples({ nodes, selector: ``, deleteNodeFields: true }), { maxDepth: 3 }))
+  const fieldExamples = _.keys(
+    flatten(
+      extractFieldExamples(
+        {
+          nodes,
+          selector: ``,
+          deleteNodeFields: true,
+        }
+      ),
+      {
+        maxDepth: 3,
+        safe: true, // don't flatten arrays.
+      }
+    )
+  )
   fieldExamples.forEach((field) => {
     enumValues[field.replace(`.`, `___`)] = { field }
   })
