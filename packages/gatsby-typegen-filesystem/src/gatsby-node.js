@@ -6,20 +6,13 @@ const {
   GraphQLString,
   GraphQLInt,
 } = require(`graphql`)
-const {
-  connectionFromArray,
-  connectionArgs,
-  connectionDefinitions,
-} = require(`graphql-relay`)
 const select = require(`unist-util-select`)
 const parsePath = require(`parse-filepath`)
 const path = require(`path`)
-const _ = require(`lodash`)
 
-const { nodeInterface } = require(`../gatsby-graphql-utils`)
-const inferGraphQLType = require(`../gatsby/dist/schema/infer-graphql-type`)
 
 exports.registerGraphQLNodes = ({ args }) => {
+  console.log(`inside registerGraphQLNodes for filesystem`)
   const { ast } = args
   const nodes = select(ast, `File`)
 
@@ -48,7 +41,7 @@ exports.registerGraphQLNodes = ({ args }) => {
       nodes,
     },
   ]
-
+  /*
   const fileType = new GraphQLObjectType({
     name: `File`,
     fields: {
@@ -104,4 +97,5 @@ exports.registerGraphQLNodes = ({ args }) => {
   }
 
   return types
+  */
 }

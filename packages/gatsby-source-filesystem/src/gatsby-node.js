@@ -38,14 +38,17 @@ exports.sourceNodes = ({ args, pluginOptions }) => {
         console.timeEnd(`glob`)
         console.log(`parsed files count from ${pluginOptions.path}:`, files.length)
 
-        const readMetadata = (file, cb) => {
-          ep.readMetadata(file)
-          .then((result) => cb(null, result))
-          .catch((error) => console.log(error))
-        }
+        //const readMetadata = (file) => (
+          //ep.readMetadata(file)
+          //.then((result) => result)
+          //.catch((error) => console.log(error))
+        //)
 
         console.time(`readMetadata`)
-        mapSeries(files, readMetadata, (err, results) => {
+        console.log('no more mapSeries')
+        Promise.all(files.map((file) => ep.readMetadata(file)))
+        //mapSeries(files, readMetadata, (err, results) => {
+        .then((results) => {
           console.timeEnd(`readMetadata`)
           console.log(`read metadata`)
           console.log(results.length)

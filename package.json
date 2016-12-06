@@ -29,10 +29,14 @@
   "private": true,
   "scripts": {
     "build": "lerna run build",
-    "jest": "jest",
     "lint": "eslint --ext .js,.jsx --ignore-path .gitignore .",
     "lint:flow": "babel-node scripts/flow-check.js",
-    "test": "npm run lint && npm run test-node && npm run test-integration",
+    "test": "jest",
+    "test_bkup": "npm run lint && npm run test-node && npm run test-integration",
     "watch": "lerna run watch"
+  },
+  "jest": {
+    "verbose": true,
+    "modulePathIgnorePatterns": ["<rootDir>/dist/"]
   }
 }

@@ -15,8 +15,9 @@ const runAPI = (plugin, api, args) => {
     gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
   } catch (e) {
     // TODO What's a fool proof way to identify a require error as
-    // MODULE_NOT_FOUND?
-    if (e.code !== `MODULE_NOT_FOUND`) { // &&*/ true) { // !_.includes(e.toString(), `gatsby-node`)) {
+    // MODULE_NOT_FOUND but only for the actual module you're trying to require
+    // not that that module itself couldn't require a module?
+    if (e.code !== `MODULE_NOT_FOUND` || !_.includes(e.toString(), `gatsby-node`)) {
       console.log(chalk.bold.red(`Couldn't open the gatsby-node.js file from the plugin at ${plugin.resolve}`))
       throw e
     }

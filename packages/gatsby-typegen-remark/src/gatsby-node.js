@@ -127,7 +127,7 @@ exports.registerGraphQLNodes = ({ args }) => {
       nodes,
     },
   ]
-
+  /*
   const markdownType = new GraphQLObjectType({
     name: `MarkdownRemark`,
     fields,
@@ -166,4 +166,5 @@ exports.registerGraphQLNodes = ({ args }) => {
   }
 
   return types
+  */
 }

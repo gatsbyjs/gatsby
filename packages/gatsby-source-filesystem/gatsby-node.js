@@ -65,16 +65,19 @@ exports.sourceNodes = function (_ref) {
         console.timeEnd('glob');
         console.log('parsed files count from ' + pluginOptions.path + ':', files.length);
 
-        var readMetadata = function readMetadata(file, cb) {
-          ep.readMetadata(file).then(function (result) {
-            return cb(null, result);
-          }).catch(function (error) {
-            return console.log(error);
-          });
-        };
+        //const readMetadata = (file) => (
+        //ep.readMetadata(file)
+        //.then((result) => result)
+        //.catch((error) => console.log(error))
+        //)
 
         console.time('readMetadata');
-        (0, _mapSeries2.default)(files, readMetadata, function (err, results) {
+        console.log('no more mapSeries');
+        _bluebird2.default.all(files.map(function (file) {
+          return ep.readMetadata(file);
+        }))
+        //mapSeries(files, readMetadata, (err, results) => {
+        .then(function (results) {
           console.timeEnd('readMetadata');
           console.log('read metadata');
           console.log(results.length);

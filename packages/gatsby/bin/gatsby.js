@@ -42,7 +42,7 @@ var useGlobalGatsby = function () {
   })
 }
 
-fs.access(localPath, function (error) {
+fs.access(localPath, fs.F_OK, function (error) {
   if (error) {
     useGlobalGatsby()
   } else {

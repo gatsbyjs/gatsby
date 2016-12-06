@@ -94,7 +94,6 @@ function startServer (program) {
       let htmlStr
       app.use((req, res, next) => {
         if (req.accepts(`html`) && !req.query.t) {
-          console.log(req)
           if (htmlStr) {
             return res.send(htmlStr)
           } else {
@@ -137,7 +136,6 @@ function startServer (program) {
             const opn = require(`opn`)
             //opn(server.info.uri)
           //}
-          console.log(listener.address())
           console.log(`Listening at: http://${listener.address().address}:${listener.address().port}`)//, server.info.uri)
         }
       })

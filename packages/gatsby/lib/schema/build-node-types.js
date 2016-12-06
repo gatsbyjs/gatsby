@@ -8,16 +8,19 @@ const {
 } = require(`graphql`)
 
 const { inferObjectStructureFromNodes } = require(`./infer-graphql-type`)
+const { inferInputObjectStructureFromNodes } = require(`./infer-graphql-input-fields`)
 const nodeInterface = require(`./node-interface`)
 
 module.exports = (types) => {
   return types.map((type) => {
+    // TOOO
     // Loop through nodes getting instances — always take the first instance
     // and then based on 10/total size of nodes odds get another 5 instances.
     // then take majority decision of infer-graphql-types based on these
     // five instances.
 
     const inferredFields = inferObjectStructureFromNodes(type.nodes)
+    const inferredInputFields = inferInputObjectStructureFromNodes(type.nodes, ``, type.name)
 
     const nodeFields = {
       id: {
@@ -53,20 +56,16 @@ module.exports = (types) => {
           isTypeOf: (value) => value.type === type.type,
         }),
         args: {
-          path: {
-            type: GraphQLString,
-          },
+          // Do same thing here — infer input fields + standard node fields
+          // plus any input fields that the node definer wants to include.
+          ...inferredInputFields,
         },
-        // TODO add arg filters for fields to nodes + connections.
-        // sub-objects searches like (frontmatter: { title: { eq: "ab*" }})
-        // eventually can do simple string match or more complex stuff
-        // like regex, partial string matches, glob, etc.
         resolve (a, args) {
-          if (args.path) {
-            return _.find(type.nodes, (node) => node.path === args.path)
-          } else {
-            return type.nodes[0]
-          }
+          const runSift = require(`./run-sift`)
+          return runSift({
+            args,
+            nodes: type.nodes,
+          })[0]
         },
       },
     }

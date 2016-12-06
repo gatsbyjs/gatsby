@@ -12,6 +12,7 @@ import siteSchema from './site-schema'
 import {
   GraphQLSchema,
   GraphQLObjectType,
+  printSchema,
   //GraphQLString,
   //GraphQLInt,
   //GraphQLID,
@@ -57,21 +58,20 @@ module.exports = async () => {
   console.timeEnd(`building ast`)
 
   console.time(`building schema`)
-  let typesIR = await apiRunner(`registerGraphQLNodes`, { ast: root })
-  typesIR = _.flatten(typesIR)
+  let typesIntermediateRepresentation = await apiRunner(`registerGraphQLNodes`, { ast: root })
+  typesIntermediateRepresentation = _.flatten(typesIntermediateRepresentation)
   // For each type, infer remaining fields, add node fields, construct type w/
   // node as its interface, and then create various connections.
-  const typesGQL = _.merge(...buildNodeTypes(typesIR))
-  console.log(typesGQL)
-  const connections = buildNodeConnections(typesGQL, typesIR)
+  const typesGQL = _.merge(...buildNodeTypes(typesIntermediateRepresentation))
+  const connections = buildNodeConnections(typesGQL, typesIntermediateRepresentation)
   console.timeEnd(`building schema`)
-  console.log({
-    ...typesGQL,
-    ...connections,
-    ...siteSchema(),
-  })
+  //console.log({
+    //...typesGQL,
+    //...connections,
+    //...siteSchema(),
+  //})
 
-  return new GraphQLSchema({
+  const schema = new GraphQLSchema({
     query: new GraphQLObjectType({
       name: `RootQueryType`,
       fields: () => ({
@@ -81,6 +81,7 @@ module.exports = async () => {
       }),
     }),
   })
+  return schema
 }
 
   //purdy(modifiedAST, { depth: null })
