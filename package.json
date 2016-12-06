@@ -39,6 +39,7 @@
     "verbose": true,
     "modulePathIgnorePatterns": ["<rootDir>/dist/", "<rootDir>/node_modules/"],
     "coveragePathIgnorePatterns": ["<rootDir>/dist/"],
+    "testPathIgnorePatterns": ["/dist/", "/node_modules/"],
     "notify": true
   }
 }
