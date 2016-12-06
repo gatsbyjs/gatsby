@@ -1,0 +1,53 @@
+exports[`Gatsby AST utils build enum values for fields from array on nodes 1`] = `
+Object {
+  "anArray___0": Object {
+    "field": "anArray.0",
+  },
+  "anArray___1": Object {
+    "field": "anArray.1",
+  },
+  "anArray___2": Object {
+    "field": "anArray.2",
+  },
+  "anArray___3": Object {
+    "field": "anArray.3",
+  },
+  "date": Object {
+    "field": "date",
+  },
+  "frontmatter___blue": Object {
+    "field": "frontmatter.blue",
+  },
+  "frontmatter___date": Object {
+    "field": "frontmatter.date",
+  },
+  "frontmatter___title": Object {
+    "field": "frontmatter.title",
+  },
+  "hair": Object {
+    "field": "hair",
+  },
+  "name": Object {
+    "field": "name",
+  },
+}
+`;
+
+exports[`Gatsby AST utils builds field examples from an array of nodes 1`] = `
+Object {
+  "anArray": Array [
+    1,
+    2,
+    3,
+    4,
+  ],
+  "date": "2006-07-22T22:39:53.000Z",
+  "frontmatter": Object {
+    "blue": 100,
+    "date": "2006-07-22T22:39:53.000Z",
+    "title": "The world of dash and adventure",
+  },
+  "hair": 1,
+  "name": "The Mad Max",
+}
+`;

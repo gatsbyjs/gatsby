@@ -9,6 +9,7 @@ const {
   connectionDefinitions,
 } = require(`graphql-relay`)
 const { inferInputObjectStructureFromNodes } = require(`./infer-graphql-input-fields`)
+const buildConnectionFields = require(`./build-connection-fields`)
 
 module.exports = (types, typesIR) => {
   const connections = {}
@@ -18,17 +19,7 @@ module.exports = (types, typesIR) => {
       connectionDefinitions(
         {
           nodeType: type.type,
-          connectionFields: () => ({
-            totalCount: {
-              type: GraphQLInt,
-            },
-            distinct: {
-              type: new GraphQLList(GraphQLString),
-              resolve (a, b) {
-                console.log(a, b)
-              },
-            },
-          }),
+          connectionFields: () => (buildConnectionFields(nodes, type.type)),
         }
       )
 

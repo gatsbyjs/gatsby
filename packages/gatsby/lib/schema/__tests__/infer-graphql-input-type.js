@@ -5,6 +5,7 @@ const {
   connectionArgs,
   connectionDefinitions,
 } = require(`graphql-relay`)
+const buildConnectionFields = require(`../build-connection-fields`)
 
 describe(`GraphQL Input args`, () => {
   const { inferObjectStructureFromNodes } = require(`../infer-graphql-type`)
@@ -22,10 +23,10 @@ describe(`GraphQL Input args`, () => {
     {
       name: `The Mad Max`,
       hair: 1,
-      date: '2006-07-22T22:39:53.000Z',
+      date: `2006-07-22T22:39:53.000Z`,
       anArray: [1, 2, 3, 4],
       frontmatter: {
-        date: '2006-07-22T22:39:53.000Z',
+        date: `2006-07-22T22:39:53.000Z`,
         title: `The world of dash and adventure`,
         blue: 100,
       },
@@ -33,10 +34,10 @@ describe(`GraphQL Input args`, () => {
     {
       name: `The Mad Wax`,
       hair: 2,
-      date: '2006-07-22T22:39:53.000Z',
+      date: `2006-07-22T22:39:53.000Z`,
       anArray: [1, 2, 5, 4],
       frontmatter: {
-        date: '2006-07-22T22:39:53.000Z',
+        date: `2006-07-22T22:39:53.000Z`,
         title: `The world of slash and adventure`,
         blue: 10010,
       },
@@ -53,35 +54,8 @@ describe(`GraphQL Input args`, () => {
   const { connectionType: nodeConnection } =
     connectionDefinitions(
       {
-        nodeType: nodeType,
-        connectionFields: () => ({
-          totalCount: {
-            type: GraphQLInt,
-          },
-          // TODO add all field names (prob move enum creation to util method).
-          // TODO move creating connection fields to its own file.
-          distinct: {
-            type: new GraphQLList(GraphQLString),
-            args: {
-              field: {
-                type: new GraphQLEnumType({
-                  name: `TESTINPUTFIELD`,
-                  values: {
-                    name: { value: `name` },
-                  },
-                }),
-              },
-            },
-            resolve (a, b) {
-              console.log(b)
-              const names = a.edges.map((edge) => {
-                const name = _.pick(edge.node, `name`).name
-                return name
-              })
-              return _.flatten(names)
-            },
-          },
-        }),
+        nodeType,
+        connectionFields: () => (buildConnectionFields(nodes)),
       }
     )
 
@@ -211,14 +185,17 @@ describe(`GraphQL Input args`, () => {
           {
             allNode {
               totalCount
-              distinct(field: name)
+              names: distinct(field: name)
+              blue: distinct(field: frontmatter___blue)
             }
           }
           `)
     .then((result) => {
       expect(result.errors).not.toBeDefined()
-      expect(result.data.allNode.distinct.length).toEqual(2)
-      expect(result.data.allNode.distinct[0]).toEqual(`The Mad Max`)
+      expect(result.data.allNode.names.length).toEqual(2)
+      expect(result.data.allNode.names[0]).toEqual(`The Mad Max`)
+      expect(result.data.allNode.blue.length).toEqual(2)
+      expect(result.data.allNode.blue[0]).toEqual(`100`)
     })
     .catch((err) => expect(err).not.toBeDefined())
   })

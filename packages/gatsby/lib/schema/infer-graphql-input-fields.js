@@ -12,6 +12,8 @@ const _ = require(`lodash`)
 const moment = require(`moment`)
 const typeOf = require(`type-of`)
 
+const { extractFieldExamples, buildFieldEnumValues } = require(`./ast-utils`)
+
 const typeFields = (type) => {
   switch (type) {
     case `boolean`:
@@ -129,26 +131,7 @@ const inferGraphQLInputFields = exports.inferGraphQLInputFields = (value, key, n
 }
 
 const inferInputObjectStructureFromNodes = exports.inferInputObjectStructureFromNodes = (nodes, selector, namespace) => {
-  const fieldExamples = {}
-  _.each(nodes, (node) => {
-    let subNode
-    if (selector) {
-      subNode = _.get(node, selector)
-    } else {
-      subNode = node
-    }
-    _.each(subNode, (v, k) => {
-      if (!fieldExamples[k]) {
-        fieldExamples[k] = v
-      }
-    })
-  })
-
-  // Remove fields common to all nodes.
-  delete fieldExamples.type
-  delete fieldExamples.id
-  delete fieldExamples.children
-  delete fieldExamples.parent
+  const fieldExamples = extractFieldExamples({nodes, selector, deleteNodeFields: true})
 
   const inferredFields = {}
   _.each(fieldExamples, (v, k) => {
@@ -157,11 +140,7 @@ const inferInputObjectStructureFromNodes = exports.inferInputObjectStructureFrom
 
   // Add sorting (but only to the top level).
   if (_.isEmpty(selector)) {
-    const flatten = require('flat')
-    const enumValues = {}
-    _.keys(flatten(fieldExamples)).map((value) => {
-      enumValues[value.replace(`.`, `___`)] = { value }
-    })
+    const enumValues = buildFieldEnumValues(nodes)
 
     const SortByType = new GraphQLEnumType({
       name: `${namespace}SortByFieldsEnum`,
