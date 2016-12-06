@@ -30,7 +30,7 @@ module.exports = (nodes, namespace=``) => {
           fieldName = args.field.replace(`___`, `.`)
         }
         const fields = connection.edges.map((edge) => _.get(edge.node, fieldName))
-        return _.uniq(_.flatten(fields))
+        return _.filter(_.uniq(_.flatten(fields)), _.identity)
       },
     },
   }

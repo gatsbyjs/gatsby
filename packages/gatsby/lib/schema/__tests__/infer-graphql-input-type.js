@@ -40,12 +40,12 @@ describe(`GraphQL Input args`, () => {
         date: `2006-07-22T22:39:53.000Z`,
         title: `The world of slash and adventure`,
         blue: 10010,
+        circle: `happy`,
       },
     },
   ]
   const inferredFields = inferObjectStructureFromNodes(nodes)
   const inferredInputFields = inferInputObjectStructureFromNodes(nodes, ``, `test`)
-  //console.log(`inferredInputFields`, inferredInputFields)
   const nodeType = new GraphQLObjectType({
     name: `TEST`,
     fields: { ...inferredFields },
@@ -188,6 +188,7 @@ describe(`GraphQL Input args`, () => {
               names: distinct(field: name)
               array: distinct(field: anArray)
               blue: distinct(field: frontmatter___blue)
+              circle: distinct(field: frontmatter___circle)
             }
           }
           `)
@@ -202,6 +203,9 @@ describe(`GraphQL Input args`, () => {
 
       expect(result.data.allNode.blue.length).toEqual(2)
       expect(result.data.allNode.blue[0]).toEqual(`100`)
+
+      expect(result.data.allNode.circle.length).toEqual(1)
+      expect(result.data.allNode.circle[0]).toEqual(`happy`)
     })
     .catch((err) => expect(err).not.toBeDefined())
   })

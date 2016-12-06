@@ -120,9 +120,9 @@ const inferGraphQLInputFields = exports.inferGraphQLInputFields = (value, key, n
           type: new GraphQLInputObjectType({
             name: _.camelCase(`${namespace} ${selector} ${key}QueryFloat`),
             fields: {
-              ...typeFields(`float`)
+              ...typeFields(`float`),
             },
-          })
+          }),
         }
       }
     default:
@@ -131,7 +131,13 @@ const inferGraphQLInputFields = exports.inferGraphQLInputFields = (value, key, n
 }
 
 const inferInputObjectStructureFromNodes = exports.inferInputObjectStructureFromNodes = (nodes, selector, namespace) => {
-  const fieldExamples = extractFieldExamples({nodes, selector, deleteNodeFields: true})
+  const fieldExamples = extractFieldExamples(
+    {
+      nodes,
+      selector,
+      deleteNodeFields: true,
+    }
+  )
 
   const inferredFields = {}
   _.each(fieldExamples, (v, k) => {
@@ -139,7 +145,7 @@ const inferInputObjectStructureFromNodes = exports.inferInputObjectStructureFrom
   })
 
   // Add sorting (but only to the top level).
-  if (_.isEmpty(selector)) {
+  if (!selector || selector === ``) {
     const enumValues = buildFieldEnumValues(nodes)
 
     const SortByType = new GraphQLEnumType({

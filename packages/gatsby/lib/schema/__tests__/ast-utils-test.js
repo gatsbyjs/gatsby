@@ -18,16 +18,22 @@ describe(`Gatsby AST utils`, () => {
       hair: 2,
       date: `2006-07-22T22:39:53.000Z`,
       anArray: [1, 2, 5, 4],
+      iAmNull: null,
       frontmatter: {
         date: `2006-07-22T22:39:53.000Z`,
         title: `The world of slash and adventure`,
         blue: 10010,
+        circle: `happy`,
       },
     },
   ]
 
   it(`builds field examples from an array of nodes`, () => {
     expect(extractFieldExamples({ nodes })).toMatchSnapshot()
+  })
+
+  it(`ignores fields that have a null value`, () => {
+    expect(extractFieldExamples({ nodes }).iAmNull).not.toBeDefined()
   })
 
   it(`build enum values for fields from array on nodes`, () => {
