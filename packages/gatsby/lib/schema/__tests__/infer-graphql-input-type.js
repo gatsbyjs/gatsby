@@ -55,7 +55,7 @@ describe(`GraphQL Input args`, () => {
     connectionDefinitions(
       {
         nodeType,
-        connectionFields: () => (buildConnectionFields(nodes)),
+        connectionFields: () => (buildConnectionFields(nodes, nodeType)),
       }
     )
 
@@ -188,7 +188,7 @@ describe(`GraphQL Input args`, () => {
               names: distinct(field: name)
               array: distinct(field: anArray)
               blue: distinct(field: frontmatter___blue)
-              circle: distinct(field: frontmatter___circle)
+              circle: distinct(field: frontmatter___circle) # Only one node has this field
             }
           }
           `)
@@ -210,4 +210,36 @@ describe(`GraphQL Input args`, () => {
     .catch((err) => expect(err).not.toBeDefined())
   })
 
+  it(`handles the groupBy connection field`, () => {
+    return graphql(schema, `
+          {
+            allNode {
+              blue: groupBy(field: frontmatter___blue) {
+                field
+                fieldValue
+                totalCount
+              }
+              anArray: groupBy(field: anArray) {
+                field
+                fieldValue
+                totalCount
+              }
+            }
+          }
+          `)
+    .then((result) => {
+      expect(result.errors).not.toBeDefined()
+
+      expect(result.data.allNode.blue).toHaveLength(2)
+      expect(result.data.allNode.blue[0].fieldValue).toEqual(`100`)
+      expect(result.data.allNode.blue[0].field).toEqual(`frontmatter.blue`)
+      expect(result.data.allNode.blue[0].totalCount).toEqual(1)
+
+      expect(result.data.allNode.anArray).toHaveLength(5)
+      expect(result.data.allNode.anArray[0].fieldValue).toEqual(`1`)
+      expect(result.data.allNode.anArray[0].field).toEqual(`anArray`)
+      expect(result.data.allNode.anArray[0].totalCount).toEqual(2)
+    })
+    .catch((err) => expect(err).not.toBeDefined())
+  })
 })

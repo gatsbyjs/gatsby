@@ -4,12 +4,31 @@ const {
   GraphQLList,
   GraphQLString,
   GraphQLEnumType,
+  GraphQLNonNull,
 } = require(`graphql`)
+const {
+  connectionArgs,
+  connectionDefinitions,
+  connectionFromArray,
+} = require(`graphql-relay`)
 
 const { buildFieldEnumValues } = require(`./ast-utils`)
 
-module.exports = (nodes, namespace=``) => {
+module.exports = (nodes, nodeType) => {
   const enumValues = buildFieldEnumValues(nodes)
+  const { connectionType: groupConnection } =
+    connectionDefinitions(
+      {
+        name: _.camelCase(`${nodeType} groupConnection`),
+        nodeType,
+        connectionFields: () => ({
+          field: { type: GraphQLString },
+          fieldValue: { type: GraphQLString },
+          totalCount: { type: GraphQLInt },
+        }),
+      }
+    )
+
   return {
     totalCount: {
       type: GraphQLInt,
@@ -19,7 +38,7 @@ module.exports = (nodes, namespace=``) => {
       args: {
         field: {
           type: new GraphQLEnumType({
-            name: _.camelCase(`${namespace} distinct enum`),
+            name: _.camelCase(`${nodeType} distinct enum`),
             values: enumValues,
           }),
         },
@@ -30,7 +49,57 @@ module.exports = (nodes, namespace=``) => {
           fieldName = args.field.replace(`___`, `.`)
         }
         const fields = connection.edges.map((edge) => _.get(edge.node, fieldName))
-        return _.filter(_.uniq(_.flatten(fields)), _.identity)
+        return _.sortBy(_.filter(_.uniq(_.flatten(fields)), _.identity))
+      },
+    },
+    groupBy: {
+      type: new GraphQLList(groupConnection),
+      args: {
+        ...connectionArgs,
+        field: {
+          type: new GraphQLEnumType({
+            name: _.camelCase(`${nodeType} groupBy enum`),
+            values: enumValues,
+          }),
+        },
+      },
+      resolve (connection, args) {
+        const fieldName = args.field.replace(`___`, `.`)
+        const connectionNodes = connection.edges.map((edge) => edge.node)
+
+        let groups = {}
+        // Do a custom groupBy for arrays (w/ a group per array value)
+        // Find the first node with this field and check if it's an array.
+        if (_.isArray(_.get(_.find(connectionNodes, fieldName), fieldName))) {
+          const values = _.uniq(
+            _.reduce(connectionNodes, (vals, n) => {
+              if (_.has(n, fieldName)) {
+                return vals.concat(_.get(n, fieldName))
+              } else {
+                return vals
+              }
+            }, [])
+          )
+          values.forEach((val) => groups[val] = _.filter(connectionNodes, (n) => (
+            _.includes(_.get(n, fieldName), val)
+          )))
+        } else {
+          groups = _.groupBy(connectionNodes, fieldName)
+        }
+        const groupConnections = []
+
+        // Do default sort by fieldValue
+        const sortedFieldValues = _.sortBy(_.keys(groups))
+        _.each(sortedFieldValues, (fieldValue) => {
+          const groupNodes = groups[fieldValue]
+          const groupConn = connectionFromArray(groupNodes, args)
+          groupConn.totalCount = groupNodes.length
+          groupConn.field = fieldName
+          groupConn.fieldValue = fieldValue
+          groupConnections.push(groupConn)
+        })
+
+        return groupConnections
       },
     },
   }
