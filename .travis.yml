@@ -2,9 +2,9 @@
 language: cpp
 sudo: false
 env:
-  - export NODE_VERSION="0.12"
   - export NODE_VERSION="4"
   - export NODE_VERSION="6"
+  - export NODE_VERSION="7"
 os:
   - linux
   #- osx

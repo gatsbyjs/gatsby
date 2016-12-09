@@ -21,7 +21,7 @@ Build sites like it's 1995. Files are translated into HTML pages at the
 same position within the file system. Add a markdown file at `/docs/index.md` and
 it'll be converted to `/docs/index.html`.
 
-*[We've started work on a 1.0 release of Gatsby!](https://github.com/gatsbyjs/gatsby/issues/419)*
+*[We've started work on a 1.0 release of Gatsby!](https://github.com/gatsbyjs/gatsby/issues/419)* Find the code in the `1.0` branch.
 
 ![live-reloading example](http://zippy.gfycat.com/UltimateWeeklyBarebirdbat.gif)
 
@@ -93,6 +93,12 @@ it'll be converted to `/docs/index.html`.
 * [anvilabs.co](https://anvilabs.co/?utm_source=github.com) ([source](https://github.com/anvilabs/anvilabs.co))
 * [Cardiogram](https://cardiogr.am)
 * [Geographer](https://geographer.su) ([source](https://github.com/MenaraSolutions/geographer-docs))
+* [fuchs+wald](https://fuchsundwald.de) ([source](https://github.com/voellig-ohne/cf-website))
+* [AngularToReact.com](https://angulartoreact.com)
+* [damianmullins.com](http://www.damianmullins.com) ([source](https://github.com/DamianMullins/damianmullins.github.io))
+* [Spencer Dixon's Blog](https://www.spencerdixon.com/) ([source](https://github.com/SpencerCDixon/blog))
+* [LandlordAccountz.com](http://www.landlordaccountz.com)
+* [Timo Becker](https://timobecker.com) ([source](https://github.com/voellig-ohne/timobecker))
 * [Edit this file to add yours!](https://github.com/gatsbyjs/gatsby/blob/master/README.md)
 
 *Note, for the sites that have made their source available, you can

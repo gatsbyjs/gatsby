@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "React.js Static Site Generator",
-  "version": "0.12.19",
+  "version": "0.12.21",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "ava": {
     "require": [
@@ -68,9 +68,9 @@
     "postcss-loader": "^0.13.0",
     "postcss-reporter": "^1.4.1",
     "raw-loader": "^0.5.1",
-    "react": "^15.3.0",
+    "react": "^15.4.1",
     "react-document-title": "^2.0.1",
-    "react-dom": "^15.3.0",
+    "react-dom": "^15.4.1",
     "react-hot-loader": "^1.3.0",
     "react-router": "^2.6.1",
     "react-router-scroll": "^0.3.1",
@@ -81,6 +81,7 @@
     "toml": "^2.2.2",
     "toml-loader": "^1.0.0",
     "tracer": "^0.8.3",
+    "ts-loader": "^1.2.2",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.2",
     "webpack-configurator": "^0.3.0",
@@ -97,6 +98,7 @@
     "babel-plugin-transform-flow-strip-types": "^6.8.0",
     "babel-register": "^6.11.6",
     "bluebird": "^3.4.1",
+    "chalk": "^1.1.3",
     "cheerio": "^0.20.0",
     "eslint": "^2.11.1",
     "eslint-config-airbnb": "^9.0.1",
