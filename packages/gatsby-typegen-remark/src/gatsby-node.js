@@ -4,17 +4,17 @@ const {
   GraphQLString,
   GraphQLInt,
 } = require(`graphql`)
-const {
-  connectionFromArray,
-  connectionArgs,
-  connectionDefinitions,
-} = require(`graphql-relay`)
 const Remark = require(`remark`)
 const remarkHtml = require(`remark-html`)
 const excerptHTML = require(`excerpt-html`)
 const select = require(`unist-util-select`)
 const sanitizeHTML = require(`sanitize-html`)
 const _ = require(`lodash`)
+const path = require(`path`)
+const fs = require(`fs`)
+const fsExtra = require(`fs-extra`)
+const isRelativeUrl = require(`is-relative-url`)
+const parseFilepath = require(`parse-filepath`)
 
 const { nodeInterface } = require(`../gatsby-graphql-utils`)
 
@@ -24,14 +24,56 @@ exports.registerGraphQLNodes = ({ args }) => {
   const htmlCompiler = {}
   remarkHtml(htmlCompiler)
 
-  const { ast } = args
+  const { ast, programDB } = args
   const nodes = select(ast, `Markdown`)
 
   const getAST = (markdownNode) => {
     if (markdownNode.ast) {
       return markdownNode
     } else {
-      markdownNode.ast = remark.parse(markdownNode.src)
+      const markdownAST = remark.parse(markdownNode.src)
+
+      // Handle side effects — copy linked files & images to the public directory
+      // and modify the AST to point to new location of the files.
+      const links = select(markdownAST, `link`)
+      links.forEach((link) => {
+        if (isRelativeUrl(link.url) &&
+            parseFilepath(link.url).extname !== `` &&
+            link.url.slice(0, 6) !== `mailto` &&
+            link.url.slice(0, 4) !== `data`
+        ) {
+          const linkPath = path.join(markdownNode.parent.dirname, link.url)
+          const linkNode = select(ast, `File[sourceFile=${linkPath}]`)[0]
+          if (linkNode.sourceFile) {
+            const newPath = path.join(programDB().directory, `public`, `${linkNode.hash}.${linkNode.extension}`)
+            const relativePath = path.join(`/${linkNode.hash}.${linkNode.extension}`)
+            link.url = `http://${programDB().host}:${programDB().port}${relativePath}`
+            if (!fs.existsSync(newPath)) {
+              fsExtra.copy(linkPath, newPath, (err) => {
+                if (err) { console.error(`error copying file`, err) }
+              })
+            }
+          }
+        }
+      })
+      const images = select(markdownAST, 'image')
+      if (images.length > 0) {
+        images.forEach((image) => {
+          const imagePath = path.join(markdownNode.parent.dirname, image.url)
+          const imageNode = select(ast, `File[sourceFile=${imagePath}]`)[0]
+          if (imageNode.sourceFile) {
+            const newPath = path.join(programDB().directory, `public`, `${imageNode.hash}.${imageNode.extension}`)
+            const relativePath = path.join(`/${imageNode.hash}.${imageNode.extension}`)
+            image.url = `http://${programDB().host}:${programDB().port}${relativePath}`
+            if (!fs.existsSync(newPath)) {
+              fsExtra.copy(linkPath, newPath, (err) => {
+                if (err) { console.error(`error copying file`, err) }
+              })
+            }
+          }
+        })
+      }
+      markdownNode.ast = markdownAST
       return markdownNode
     }
   }

@@ -17,7 +17,9 @@
   "dependencies": {
     "excerpt-html": "^1.2.0",
     "graphql": "^0.8.2",
+    "is-relative-url": "^2.0.0",
     "lodash": "^4.17.2",
+    "parse-filepath": "^1.0.1",
     "remark": "^6.2.0",
     "remark-html": "^5.0.1",
     "sanitize-html": "^1.13.0",
