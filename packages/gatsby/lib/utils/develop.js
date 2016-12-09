@@ -9,6 +9,7 @@ const webpackConfig = require(`./webpack.config`)
 const React = require(`react`)
 const ReactDOMServer = require(`react-dom/server`)
 const rl = require(`readline`)
+const parsePath = require(`parse-filepath`)
 
 const rlInterface = rl.createInterface({
   input: process.stdin,
@@ -93,7 +94,8 @@ function startServer (program) {
       }))
       let htmlStr
       app.use((req, res, next) => {
-        if (req.accepts(`html`) && !req.query.t) {
+        const parsedPath = parsePath(req.originalUrl)
+        if (parsedPath.extname === `` || parsedPath.extname === `.html`) {
           if (htmlStr) {
             return res.send(htmlStr)
           } else {

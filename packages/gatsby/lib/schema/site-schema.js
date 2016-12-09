@@ -7,25 +7,14 @@ import moment from 'moment'
 import _ from 'lodash'
 
 //import pagesSchema from './pages-schema'
-const { inferGraphQLType } = require(`./infer-graphql-type`)
+const { inferObjectStructureFromNodes } = require(`./infer-graphql-type`)
 const { siteDB } = require(`../utils/globals`)
-console.log(require(`./infer-graphql-type`))
 
 module.exports = () => {
   const config = siteDB().get(`config`)
   // Create site/page types.
   const metadataFields = () => {
-    const fields = { empty: { type: GraphQLBoolean } }
-    if (config.siteMetadata) {
-      _.each(config.siteMetadata, (v, k) => {
-        fields[k] = inferGraphQLType(v)
-      })
-    }
-
-    if (Object.keys(fields).length > 2) {
-      delete fields.empty
-    }
-
+    const fields = inferObjectStructureFromNodes({ nodes: [config.siteMetadata] })
     return fields
   }
 

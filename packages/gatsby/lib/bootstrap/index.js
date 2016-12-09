@@ -230,7 +230,8 @@ module.exports = async (program, cb) => {
     pagesDB(pagesMap)
   }
 
-  // TODO move this to own source plugin per component type (js/cjsx/typescript, etc.)
+  // TODO move this to own source plugin per component type
+  // (js/cjsx/typescript, etc.)
   const autoPages = await autoPathCreator(program, pages)
   if (autoPages) {
     const pagesMap = new Map()

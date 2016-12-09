@@ -8,7 +8,9 @@ test(`Infers graphql type from array of nodes`, () => {
   } = require(`graphql`)
   const nodes = [
     {
+      id: `foo`,
       name: `The Mad Max`,
+      type: `Test`,
       hair: 1,
       date: `1012-11-01`,
       anArray: [1, 2, 3, 4],
@@ -19,7 +21,9 @@ test(`Infers graphql type from array of nodes`, () => {
       },
     },
     {
+      id: `boo`,
       name: `The Mad Wax`,
+      type: `Test`,
       hair: 2,
       date: `1984-10-12`,
       anArray: [1, 2, 5, 4],
@@ -30,7 +34,7 @@ test(`Infers graphql type from array of nodes`, () => {
       },
     },
   ]
-  const inferredFields = inferObjectStructureFromNodes(nodes)
+  const inferredFields = inferObjectStructureFromNodes({ nodes })
   const nodeType = new GraphQLObjectType({
     name: `TEST`,
     fields: { ...inferredFields },

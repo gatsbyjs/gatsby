@@ -44,7 +44,7 @@ describe(`GraphQL Input args`, () => {
       },
     },
   ]
-  const inferredFields = inferObjectStructureFromNodes(nodes)
+  const inferredFields = inferObjectStructureFromNodes({ nodes })
   const inferredInputFields = inferInputObjectStructureFromNodes(nodes, ``, `test`)
   const nodeType = new GraphQLObjectType({
     name: `TEST`,

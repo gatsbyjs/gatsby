@@ -10,9 +10,7 @@ const select = require(`unist-util-select`)
 const parsePath = require(`parse-filepath`)
 const path = require(`path`)
 
-
 exports.registerGraphQLNodes = ({ args }) => {
-  console.log(`inside registerGraphQLNodes for filesystem`)
   const { ast } = args
   const nodes = select(ast, `File`)
 

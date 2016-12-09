@@ -9,9 +9,9 @@ const {
 const _ = require(`lodash`)
 const moment = require(`moment`)
 
-const inferGraphQLType = exports.inferGraphQLType = (value, key, nodes) => {
+const inferGraphQLType = ({ value, fieldName, ...otherArgs }) => {
   if (Array.isArray(value)) {
-    const headType = inferGraphQLType(value[0]).type
+    const headType = inferGraphQLType({ value: value[0] }).type
     return { type: new GraphQLList(headType) }
   }
 
@@ -67,8 +67,8 @@ const inferGraphQLType = exports.inferGraphQLType = (value, key, nodes) => {
     case `object`:
       return {
         type: new GraphQLObjectType({
-          name: _.camelCase(key),
-          fields: inferObjectStructureFromNodes(nodes, key),
+          name: _.camelCase(fieldName),
+          fields: inferObjectStructureFromNodes({ selector: fieldName, ...otherArgs }),
         }),
       }
     case `number`:
@@ -80,7 +80,12 @@ const inferGraphQLType = exports.inferGraphQLType = (value, key, nodes) => {
   }
 }
 
-const inferObjectStructureFromNodes = exports.inferObjectStructureFromNodes = (nodes, selector) => {
+const inferObjectStructureFromNodes = exports.inferObjectStructureFromNodes = (
+  {
+    nodes,
+    selector,
+    types,
+  }) => {
   const fieldExamples = {}
   _.each(nodes, (node) => {
     let subNode
@@ -99,14 +104,40 @@ const inferObjectStructureFromNodes = exports.inferObjectStructureFromNodes = (n
   // Remove fields common to all nodes.
   delete fieldExamples.type
   delete fieldExamples.id
-  delete fieldExamples.children
   delete fieldExamples.parent
-
-  //console.log(`fieldExamples`, fieldExamples, selector)
+  delete fieldExamples.children
 
   const inferredFields = {}
   _.each(fieldExamples, (v, k) => {
-    inferredFields[k] = inferGraphQLType(v, k, nodes)
+    // Create fields for children.
+    // TODO reconsider this?
+    //if (k === `children`) {
+      ////console.log(`children`, v)
+      //_.each(v, (node) => {
+        //const matchedTypes = _.filter(types, (type) => {
+          //return type.type === node.type
+        //})
+        ////console.log(`matchedTypes for ${node.type}`, matchedTypes)
+        //matchedTypes.forEach((matchedType) => {
+          //inferredFields[_.camelCase(matchedType.name)] = matchedType.field
+        //})
+      //})
+    //}
+    // Check if field is pointing to custom type.
+    if (_.includes(k, `___`)) {
+      const fieldType = _.capitalize(k.split(`___`)[1])
+      const matchedType = _.find(types, (type) => type.type === fieldType)
+      if (matchedType) {
+        inferredFields[k] = matchedType.field
+      }
+    } else {
+      inferredFields[k] = inferGraphQLType({
+        value: v,
+        fieldName: k,
+        nodes,
+        types,
+      })
+    }
   })
 
   return inferredFields

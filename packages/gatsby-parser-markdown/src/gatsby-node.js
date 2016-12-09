@@ -13,12 +13,15 @@ exports.modifyAST = ({ args }) => {
       const fileContents = fs.readFileSync(file.sourceFile, `utf-8`)
       const data = grayMatter(fileContents)
       const markdownNode = {
+        _sourceNodeId: file.id,
         type: `Markdown`,
-        parent: file,
         id: toGlobalId(`Markdown`, `${file.sourceFile} >> markdown`),
         children: [],
         src: data.content,
-        frontmatter: data.data,
+      }
+      markdownNode.frontmatter = {
+        _sourceNodeId: file.id,
+        ...data.data,
       }
 
       file.children.push(markdownNode)

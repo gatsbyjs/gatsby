@@ -4,7 +4,6 @@ const {
   GraphQLList,
   GraphQLString,
   GraphQLEnumType,
-  GraphQLNonNull,
 } = require(`graphql`)
 const {
   connectionArgs,
@@ -80,9 +79,11 @@ module.exports = (nodes, nodeType) => {
               }
             }, [])
           )
-          values.forEach((val) => groups[val] = _.filter(connectionNodes, (n) => (
-            _.includes(_.get(n, fieldName), val)
-          )))
+          values.forEach((val) => {
+            groups[val] = _.filter(connectionNodes, (n) => (
+              _.includes(_.get(n, fieldName), val)
+            ))
+          })
         } else {
           groups = _.groupBy(connectionNodes, fieldName)
         }

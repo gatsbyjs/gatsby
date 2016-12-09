@@ -19,6 +19,7 @@ import {
 import _ from 'lodash'
 import mapSeries from 'async/mapSeries'
 const path = require(`path`)
+const md5File = require(`md5-file`)
 
 const parseFilepath = require(`parse-filepath`)
 const u = require(`unist-builder`)
@@ -36,22 +37,11 @@ exports.sourceNodes = ({ args, pluginOptions }) => {
       console.time(`glob`)
       glob(`${pluginOptions.path}/**/**`, { nodir: true }, (err, files) => {
         console.timeEnd(`glob`)
-        console.log(`parsed files count from ${pluginOptions.path}:`, files.length)
-
-        //const readMetadata = (file) => (
-          //ep.readMetadata(file)
-          //.then((result) => result)
-          //.catch((error) => console.log(error))
-        //)
 
         console.time(`readMetadata`)
-        console.log('no more mapSeries')
         Promise.all(files.map((file) => ep.readMetadata(file)))
-        //mapSeries(files, readMetadata, (err, results) => {
         .then((results) => {
           console.timeEnd(`readMetadata`)
-          console.log(`read metadata`)
-          console.log(results.length)
           const cleanedResults = _.filter(results, (result) => {
             if (result.error === null) {
               return true
@@ -72,8 +62,8 @@ exports.sourceNodes = ({ args, pluginOptions }) => {
 
             return newObj
           })
-          console.log('total files', mappedResults.length)
-          console.time('create filesystem ast')
+          console.log(`total files`, mappedResults.length)
+          console.time(`create filesystem ast`)
           // Create Unist nodes
           const ast = u(`rootDirectory`, {}, pluginOptions.path)
           ast.children = []
@@ -81,7 +71,7 @@ exports.sourceNodes = ({ args, pluginOptions }) => {
             file.sourceFile = slash(file.sourceFile)
             ast.children.push({
               type: `File`,
-              id: toGlobalId(`File`, file.sourceFile),
+              id: file.sourceFile,
               children: [],
               sourceFile: file.sourceFile,
               relativePath: path.posix.relative(pluginOptions.path, file.sourceFile),
@@ -94,6 +84,7 @@ exports.sourceNodes = ({ args, pluginOptions }) => {
               accessDate: file.fileAccessDate,
               inodeChangeDate: file.fileInodeChangeDate,
               permissions: file.filePermissions,
+              hash: md5File.sync(file.sourceFile), // This adds about 10 milliseconds / 180 files. Make async/lazy?
             })
           })
           console.timeEnd(`create filesystem ast`)
