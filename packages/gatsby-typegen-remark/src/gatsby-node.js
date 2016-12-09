@@ -47,7 +47,7 @@ exports.registerGraphQLNodes = ({ args }) => {
           if (linkNode.sourceFile) {
             const newPath = path.join(programDB().directory, `public`, `${linkNode.hash}.${linkNode.extension}`)
             const relativePath = path.join(`/${linkNode.hash}.${linkNode.extension}`)
-            link.url = `http://${programDB().host}:${programDB().port}${relativePath}`
+            link.url = `${relativePath}`
             if (!fs.existsSync(newPath)) {
               fsExtra.copy(linkPath, newPath, (err) => {
                 if (err) { console.error(`error copying file`, err) }
@@ -63,10 +63,10 @@ exports.registerGraphQLNodes = ({ args }) => {
           const imageNode = select(ast, `File[sourceFile=${imagePath}]`)[0]
           if (imageNode.sourceFile) {
             const newPath = path.join(programDB().directory, `public`, `${imageNode.hash}.${imageNode.extension}`)
-            const relativePath = path.join(`/${imageNode.hash}.${imageNode.extension}`)
-            image.url = `http://${programDB().host}:${programDB().port}${relativePath}`
+            const relativePath = path.join(`${imageNode.hash}.${imageNode.extension}`)
+            image.url = `/${relativePath}`
             if (!fs.existsSync(newPath)) {
-              fsExtra.copy(linkPath, newPath, (err) => {
+              fsExtra.copy(imagePath, newPath, (err) => {
                 if (err) { console.error(`error copying file`, err) }
               })
             }
