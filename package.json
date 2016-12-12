@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "React.js Static Site Generator",
-  "version": "0.12.21",
+  "version": "0.12.24",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "ava": {
     "require": [
@@ -25,6 +25,8 @@
     "babel-preset-react": "^6.11.1",
     "babel-preset-react-hmre": "^1.1.1",
     "babel-preset-stage-0": "^6.5.0",
+    "babel-traverse": "^6.18.0",
+    "babylon": "^6.14.1",
     "boom": "^2.7.2",
     "cjsx-loader": "^3.0.0",
     "coffee-loader": "^0.7.2",
