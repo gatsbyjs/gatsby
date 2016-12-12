@@ -4,9 +4,13 @@ engines:
    config:
      languages:
      - javascript
- eslint:
-  enabled: true
-  channel: "eslint-3"
+ fixme:
+   enabled: true
+   config:
+     strings:
+     - FIXME
+     - BUG
+     - CUSTOM
 ratings:
  paths:
  - "**.js"
