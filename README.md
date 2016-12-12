@@ -343,13 +343,13 @@ Gatsby calls this function with the webpack-configurator object and
 "stage" string when it creates a Webpack config. It first
 loads the defaults and then allows you to modify it.
 
-The `stage` can be
+The `stage` can be:
 
-1) develop: for `gatsby develop` command, hot reload and CSS injection into page
-2) develop-html: same as develop without react-hmre in the babel config for html renderer
-3) build-css: build styles.css file
-4) build-html: build all HTML files
-5) build-javascript: Build bundle.js for Single Page App in production
+1. develop: for `gatsby develop` command, hot reload and CSS injection into page
+2. develop-html: same as develop without react-hmre in the babel config for html renderer
+3. build-css: build styles.css file
+4. build-html: build all HTML files
+5. build-javascript: Build bundle.js for Single Page App in production
 
 Consider the following example which removes the default css loader
 and replaces it with a loader that uses css-modules.
