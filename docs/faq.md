@@ -115,3 +115,9 @@ Jekyll has a [comprehensive import tool](http://import.jekyllrb.com/) for these 
 Once your pages are converted to markdown, change the file extensions to
 `.md` from the `.markdown` the tool outputs and then use them in your
 site.
+
+## Using hash history with React Router
+
+It is possible to use the `hashHistory` instead of the `browserHistory` with
+Gatsby's React Router. Add `history = "hashHistory"` to your `config.toml` to
+enable it. In other cases the `browserHistory` will be used.
