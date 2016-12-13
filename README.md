@@ -483,7 +483,7 @@ if (process.env.NODE_ENV === 'production') {
 ```
 ### CSS modules
 
-[CSS modules](https://github.com/css-modules/css-modules) are support by default for all files with `.module.(css|less|scss|sass)` extension.
+[CSS modules](https://github.com/css-modules/css-modules) are supported by default for all files with `.module.(css|less|scss|sass)` extension.
 
 ```javascript
 // Uses CSS Modules
