@@ -117,7 +117,6 @@ Once your pages are converted to markdown, change the file extensions to
 site.
 
 ## Using hash history with React Router
-
 It is possible to use the `hashHistory` instead of the `browserHistory` with
 Gatsby's React Router. Add `history = "hashHistory"` to your `config.toml` to
 enable it. In other cases the `browserHistory` will be used.
