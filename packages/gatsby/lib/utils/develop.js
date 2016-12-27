@@ -94,6 +94,13 @@ function startServer (program) {
       }))
       let htmlStr
       app.use((req, res, next) => {
+        if (req.query.fromFile) {
+          res.sendFile(decodeURIComponent(req.query.fromFile))
+        } else {
+          next()
+        }
+      })
+      app.use((req, res, next) => {
         const parsedPath = parsePath(req.originalUrl)
         if (parsedPath.extname === `` || parsedPath.extname === `.html`) {
           if (htmlStr) {
