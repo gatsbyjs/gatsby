@@ -26,19 +26,20 @@ module.exports = async () => {
   console.timeEnd(`building ast`)
 
   console.time(`building schema`)
-  let typesIntermediateRepresentation = await apiRunner(`registerGraphQLNodes`, { ast: root, programDB })
-  typesIntermediateRepresentation = _.flatten(typesIntermediateRepresentation)
-  // For each type, infer remaining fields, add node fields, construct type w/
-  // node as its interface, and then create various connections.
-  const typesGQL = _.merge(...buildNodeTypes(typesIntermediateRepresentation, root))
-  const connections = buildNodeConnections(typesGQL, typesIntermediateRepresentation)
+  // For each type in the AST, create a graphql field, by first infering fields
+  // from fields in AST nodes and then allowing plugins to add additional node
+  // fields, then create connections for each node type.
+  // [ { type, nodes, name } ]
+  const typesGQL = await buildNodeTypes(root)
+  const connections = buildNodeConnections(_.values(typesGQL))
   console.timeEnd(`building schema`)
 
   const schema = new GraphQLSchema({
     query: new GraphQLObjectType({
       name: `RootQueryType`,
       fields: () => ({
-        ...typesGQL,
+        // Pull off just the graphql node from each type object.
+        ..._.mapValues(typesGQL, 'node'),
         ...connections,
         ...siteSchema(),
       }),

@@ -1,7 +1,7 @@
 {
-  "name": "gatsby-parser-markdown",
+  "name": "gatsby-parser-remark",
   "version": "0.0.0",
-  "description": "Gatsby parser plugin for Markdown",
+  "description": "Gatsby parser plugin for Remark",
   "scripts": {
     "build": "babel src --presets babel-preset-es2015 --out-dir .",
     "watch": "babel -w src --presets babel-preset-es2015 --out-dir ."
@@ -9,7 +9,8 @@
   "keywords": [
     "gatsby",
     "gatsby-plugin",
-    "remark"
+    "remark",
+    "markdown"
   ],
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "license": "MIT",
