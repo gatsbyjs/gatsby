@@ -106,6 +106,7 @@
     "tracer": "^0.8.7",
     "type-of": "^2.0.1",
     "unist-builder": "^1.0.2",
+    "unist-util-find": "^1.0.1",
     "unist-util-parents": "^0.1.2",
     "unist-util-select": "^1.5.0",
     "unist-util-visit": "^1.1.0",

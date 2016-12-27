@@ -292,6 +292,7 @@ const q = queue(({ file, graphql, directory }, callback) => {
       paths.push(value)
     }
   })
+  console.log(`running queries for ${paths.length} paths for ${file}`)
   const pathsInfo = {
     componentPath: absFile,
     directory,
