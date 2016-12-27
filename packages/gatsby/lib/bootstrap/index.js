@@ -57,7 +57,7 @@ const autoPathCreator = (program) => {
       autoPages = _.filter(autoPages, (page) => page.path.slice(0, 1) !== `_`)
 
       // Remove page templates.
-      autoPages = _.filter(autoPages, (page) => !_.includes(page.path, `PAGE_TEMPLATE`))
+      autoPages = _.filter(autoPages, (page) => page.path.slice(0, 9) !== `template-`)
 
       // Convert to our path format.
       autoPages = autoPages.map((page) => ({
