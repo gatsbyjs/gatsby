@@ -11,21 +11,21 @@ const {
 const { inferInputObjectStructureFromNodes } = require(`./infer-graphql-input-fields`)
 const buildConnectionFields = require(`./build-connection-fields`)
 
-module.exports = (types, typesIR) => {
+module.exports = (types) => {
   const connections = {}
 
   _.each(types, ((type/*, fieldName*/) => {
+    const nodes = type.nodes
     const { connectionType: typeConnection } =
       connectionDefinitions(
         {
-          nodeType: type.type,
-          connectionFields: () => (buildConnectionFields(nodes, type.type)),
+          nodeType: type.nodeObjectType,
+          connectionFields: () => (buildConnectionFields(type)),
         }
       )
 
-    let nodes = _.find(typesIR, (t) => t.name === type.name).nodes
     const inferredInputFields = inferInputObjectStructureFromNodes(nodes, ``, `${type.name}Connection`)
-    connections[_.camelCase(`all${type.name}`)] = {
+    connections[_.camelCase(`all ${type.name}`)] = {
       type: typeConnection,
       description: `Connection to all ${type.name} nodes`,
       args: {
@@ -38,7 +38,6 @@ module.exports = (types, typesIR) => {
       },
       resolve (object, resolveArgs) {
         const runSift = require(`./run-sift`)
-        let resolveNodes = _.find(typesIR, (t) => t.name === type.name).nodes
         return runSift({
           args: resolveArgs,
           nodes,

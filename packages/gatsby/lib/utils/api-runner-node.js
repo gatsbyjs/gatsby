@@ -28,6 +28,9 @@ const runAPI = (plugin, api, args) => {
       args,
       pluginOptions: plugin.pluginOptions,
     })
+    //if (api === `extendNodeType` && plugin.resolve === `/Users/kylemathews/programs/exponent-docs/gatsby/node_modules/gatsby-typegen-remark`) {
+      //console.log(`result of extendNodeType`, result)
+    //}
     if (!result) {
       throw new Error(`The API "${api}" in gatsby-node.js of the plugin at ${plugin.resolve} did not return a value`)
     }
@@ -73,6 +76,6 @@ module.exports = async (api, args={}) => {
   const filteredPromises = resultPromises.filter((promise) => isPromise(promise))
 
   // Return promises with empty results filtered out.
-  return await Promise.all(filteredPromises)
+  return Promise.all(filteredPromises)
   .then((results) => results.filter((result) => !_.isEmpty(result)))
 }

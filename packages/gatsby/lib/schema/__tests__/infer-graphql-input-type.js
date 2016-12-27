@@ -13,11 +13,7 @@ describe(`GraphQL Input args`, () => {
   const {
     graphql,
     GraphQLObjectType,
-    GraphQLInt,
     GraphQLSchema,
-    GraphQLList,
-    GraphQLString,
-    GraphQLEnumType,
   } = require(`graphql`)
   const nodes = [
     {
@@ -55,7 +51,11 @@ describe(`GraphQL Input args`, () => {
     connectionDefinitions(
       {
         nodeType,
-        connectionFields: () => (buildConnectionFields(nodes, nodeType)),
+        connectionFields: () => (buildConnectionFields({
+          name: `Test`,
+          nodes,
+          nodeObjectType: nodeType,
+        })),
       }
     )
 

@@ -10,15 +10,18 @@ const extractFieldExamples = exports.extractFieldExamples = ({ nodes, selector, 
     } else {
       subNode = node
     }
-    const flattened = flatten(subNode, { maxDepth: 3, flatten: true })
-    // Remove non-truthy values
-    const truthyExamples = {}
-    _.each(flattened, (v, k) => {
-      if (v) {
-        truthyExamples[k] = v
-      }
-    })
-    examples = _.merge(examples, truthyExamples)
+    // Ignore undefined/null subnodes
+    if (subNode) {
+      const flattened = flatten(subNode, { maxDepth: 3, flatten: true })
+      // Remove non-truthy values
+      const truthyExamples = {}
+      _.each(flattened, (v, k) => {
+        if (v) {
+          truthyExamples[k] = v
+        }
+      })
+      examples = _.merge(examples, truthyExamples)
+    }
   })
 
   examples = flatten.unflatten(examples, { safe: true })

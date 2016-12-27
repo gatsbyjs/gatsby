@@ -13,13 +13,13 @@ const {
 
 const { buildFieldEnumValues } = require(`./ast-utils`)
 
-module.exports = (nodes, nodeType) => {
-  const enumValues = buildFieldEnumValues(nodes)
+module.exports = (type) => { //nodes, nodeType) => {
+  const enumValues = buildFieldEnumValues(type.nodes)
   const { connectionType: groupConnection } =
     connectionDefinitions(
       {
-        name: _.camelCase(`${nodeType} groupConnection`),
-        nodeType,
+        name: _.camelCase(`${type.name} groupConnection`),
+        nodeType: type.nodeObjectType,
         connectionFields: () => ({
           field: { type: GraphQLString },
           fieldValue: { type: GraphQLString },
@@ -37,7 +37,7 @@ module.exports = (nodes, nodeType) => {
       args: {
         field: {
           type: new GraphQLEnumType({
-            name: _.camelCase(`${nodeType} distinct enum`),
+            name: _.camelCase(`${type.name} distinct enum`),
             values: enumValues,
           }),
         },
@@ -57,7 +57,7 @@ module.exports = (nodes, nodeType) => {
         ...connectionArgs,
         field: {
           type: new GraphQLEnumType({
-            name: _.camelCase(`${nodeType} groupBy enum`),
+            name: _.camelCase(`${type.name} groupBy enum`),
             values: enumValues,
           }),
         },

@@ -126,7 +126,7 @@ const inferObjectStructureFromNodes = exports.inferObjectStructureFromNodes = (
     // Check if field is pointing to custom type.
     if (_.includes(k, `___`)) {
       const fieldType = _.capitalize(k.split(`___`)[1])
-      const matchedType = _.find(types, (type) => type.type === fieldType)
+      const matchedType = _.find(types, (type) => type.name === fieldType)
       if (matchedType) {
         inferredFields[k] = matchedType.field
       }
