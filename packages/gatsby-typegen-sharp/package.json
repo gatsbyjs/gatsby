@@ -1,0 +1,26 @@
+{
+  "name": "gatsby-typegen-sharp",
+  "version": "0.0.0",
+  "description": "Gatsby plugin to expose graphql types to manipulate images using Sharp",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src --presets babel-preset-es2015 --out-dir .",
+    "watch": "babel -w src --presets babel-preset-es2015 --out-dir ."
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "sharp",
+    "images"
+  ],
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "graphql": "^0.8.2",
+    "lodash": "^4.17.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-preset-es2015": "^6.18.0"
+  }
+}

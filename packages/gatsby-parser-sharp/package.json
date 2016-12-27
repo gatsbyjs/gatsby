@@ -1,0 +1,25 @@
+{
+  "name": "gatsby-parser-sharp",
+  "version": "0.0.0",
+  "description": "Gatsby parser plugin for images using Sharp",
+  "scripts": {
+    "build": "babel src --presets babel-preset-es2015 --out-dir .",
+    "watch": "babel -w src --presets babel-preset-es2015 --out-dir ."
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "sharp",
+    "image"
+  ],
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.4.6",
+    "unist-util-select": "^1.5.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-preset-es2015": "^6.18.0"
+  }
+}
