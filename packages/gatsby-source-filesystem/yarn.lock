@@ -1249,11 +1249,9 @@ nan@^2.3.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.4.0.tgz#fb3c59d45fe4effe215f0b890f8adf6eb32d2232"
 
-node-exiftool@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/node-exiftool/-/node-exiftool-2.0.1.tgz#7847485fe7cb4252998fb8920cdbeb753f776920"
-  dependencies:
-    stream-snitch "0.0.3"
+node-exiftool@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/node-exiftool/-/node-exiftool-2.1.1.tgz#51ff9cd35e98bf7f2e9a05151f2091de6610fb6f"
 
 node-pre-gyp@^0.6.29:
   version "0.6.32"
@@ -1585,10 +1583,6 @@ sshpk@^1.7.0:
     jodid25519 "^1.0.0"
     jsbn "~0.1.0"
     tweetnacl "~0.14.0"
-
-stream-snitch@0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/stream-snitch/-/stream-snitch-0.0.3.tgz#897a78f13a2714fa844aa77be15477a896d852a9"
 
 string-width@^1.0.1:
   version "1.0.2"

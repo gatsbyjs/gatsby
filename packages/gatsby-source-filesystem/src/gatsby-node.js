@@ -1,23 +1,9 @@
 import Promise from 'bluebird'
 import exiftool from 'node-exiftool'
 import glob from 'glob'
-import purdy from 'purdy'
-import {
-  GraphQLSchema,
-  GraphQLObjectType,
-  GraphQLString,
-  GraphQLInt,
-  GraphQLID,
-  GraphQLList,
-  GraphQLBoolean,
-  GraphQLNonNull,
-  GraphQLInterfaceType,
-} from 'graphql'
-import {
-  toGlobalId,
-} from 'graphql-relay'
-import _ from 'lodash'
-import mapSeries from 'async/mapSeries'
+import mapLimit from 'async/mapLimit'
+
+const _ = require(`lodash`)
 const path = require(`path`)
 const md5File = require(`md5-file`)
 
@@ -25,7 +11,6 @@ const parseFilepath = require(`parse-filepath`)
 const u = require(`unist-builder`)
 const exiftoolBin = require(`dist-exiftool`)
 const slash = require(`slash`)
-
 const ep = new exiftool.ExiftoolProcess(exiftoolBin)
 const isOpen = ep.open()
 
@@ -62,33 +47,41 @@ exports.sourceNodes = ({ args, pluginOptions }) => {
 
             return newObj
           })
-          console.log(`total files`, mappedResults.length)
-          console.time(`create filesystem ast`)
-          // Create Unist nodes
-          const ast = u(`rootDirectory`, {}, pluginOptions.path)
-          ast.children = []
-          mappedResults.forEach((file) => {
-            file.sourceFile = slash(file.sourceFile)
-            ast.children.push({
-              type: `File`,
-              id: file.sourceFile,
-              children: [],
-              sourceFile: file.sourceFile,
-              relativePath: path.posix.relative(pluginOptions.path, file.sourceFile),
-              extension: file.ext.slice(1),
-              name: file.name,
-              extname: file.extname,
-              filename: file.basename,
-              dirname: file.dirname,
-              modifyDate: file.fileModifyDate,
-              accessDate: file.fileAccessDate,
-              inodeChangeDate: file.fileInodeChangeDate,
-              permissions: file.filePermissions,
-              hash: md5File.sync(file.sourceFile), // This adds about 10 milliseconds / 180 files. Make async/lazy?
+
+          console.time(`hash files`)
+          // Get hash for each file.
+          mapLimit(mappedResults, 15, (file, cb) => md5File(file.sourceFile, cb), (e, hashes) => {
+            hashes.forEach((hash, index) => { mappedResults[index].hash = hash })
+            console.timeEnd(`hash files`)
+
+            console.log(`total files`, mappedResults.length)
+            console.time(`create filesystem ast`)
+            // Create Unist nodes
+            const ast = u(`rootDirectory`, {}, pluginOptions.path)
+            ast.children = []
+            mappedResults.forEach((file) => {
+              file.sourceFile = slash(file.sourceFile)
+              ast.children.push({
+                type: `File`,
+                id: file.sourceFile,
+                children: [],
+                sourceFile: file.sourceFile,
+                relativePath: path.posix.relative(pluginOptions.path, file.sourceFile),
+                extension: file.ext.slice(1),
+                name: file.name,
+                extname: file.extname,
+                filename: file.basename,
+                dirname: file.dirname,
+                modifyDate: file.fileModifyDate,
+                accessDate: file.fileAccessDate,
+                inodeChangeDate: file.fileInodeChangeDate,
+                permissions: file.filePermissions,
+                hash: file.hash,
+              })
             })
+            console.timeEnd(`create filesystem ast`)
+            return resolve(ast)
           })
-          console.timeEnd(`create filesystem ast`)
-          return resolve(ast)
         })
       })
     })
