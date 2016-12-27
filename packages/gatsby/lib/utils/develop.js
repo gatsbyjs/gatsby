@@ -33,7 +33,7 @@ function startServer (program) {
     let HTMLPath = glob.sync(`${directory}/html.*`)[0]
     // Check if we can't find an html component in root of site.
     if (!HTMLPath) {
-      HTMLPath = `../isomorphic/html.js`
+      throw new Error(`Couldn't find an html.js at the root of your site`)
     }
 
     // We use the program port not the webpack-dev-server port as if you import
