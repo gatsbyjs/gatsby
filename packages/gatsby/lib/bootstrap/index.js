@@ -203,32 +203,36 @@ module.exports = async (program, cb) => {
   let pages = await apiRunnerNode(`createPages`, { graphql: graphqlRunner }, [])
   pages = _.merge(...pages)
 
-  // Add chunkName.
-  pages.forEach((page) => {
-    page.componentChunkName = layoutComponentChunkName(program.directory, page.component)
-  })
-
-  // Validate pages.
-  if (pages) {
+  if (_.isArray(pages) && pages.length > 0) {
+    // Add chunkName.
     pages.forEach((page) => {
-      const { error } = Joi.validate(page, pageSchema)
-      if (error) {
-        console.log(chalk.blue.bgYellow(`A page object failed validation`))
-        console.log(chalk.bold.red(error))
-        console.log(`page object`)
-        console.log(page)
-      }
+      page.componentChunkName = layoutComponentChunkName(program.directory, page.component)
     })
+
+    // Validate pages.
+    if (pages) {
+      pages.forEach((page) => {
+        const { error } = Joi.validate(page, pageSchema)
+        if (error) {
+          console.log(chalk.blue.bgYellow(`A page object failed validation`))
+          console.log(chalk.bold.red(error))
+          console.log(`page object`)
+          console.log(page)
+        }
+      })
+    }
+    console.log(`validated pages`)
+  } else {
+    pages = []
   }
 
   // Save pages to in-memory database.
-  if (pages) {
-    const pagesMap = new Map()
-    pages.forEach((page) => {
-      pagesMap.set(page.path, page)
-    })
-    pagesDB(pagesMap)
-  }
+  const pagesMap = new Map()
+  pages.forEach((page) => {
+    pagesMap.set(page.path, page)
+  })
+  pagesDB(pagesMap)
+  console.log(`added pages to in-memory db`)
 
   // TODO move this to own source plugin per component type
   // (js/cjsx/typescript, etc.)
@@ -238,6 +242,7 @@ module.exports = async (program, cb) => {
     autoPages.forEach((page) => pagesMap.set(page.path, page))
     pagesDB(new Map([...pagesDB(), ...pagesMap]))
   }
+  console.log(`created js pages`)
 
   const modifiedPages = await apiRunnerNode(`onPostCreatePages`, pagesDB(), pagesDB())
 
@@ -251,11 +256,13 @@ module.exports = async (program, cb) => {
       console.log(page)
     }
   })
+  console.log(`validated modified pages`)
 
+  //console.log(`bootstrap finished, time since started:`, process.uptime())
   //cb(null, schema)
 
   queryRunner(program, graphqlRunner, () => {
-    console.log('bootstrap finished, time since started:', process.uptime())
+    console.log(`bootstrap finished, time since started: ${process.uptime()}`)
     cb(null, schema)
   })
 }
