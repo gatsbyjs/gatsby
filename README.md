@@ -295,7 +295,7 @@ title: This is a title
  
 <h1>Hello World</h1>
 ```
-In a .js|.jsx file export a data object to set your metadata variables, like so: 
+In a .js|.jsx file, export a data object to set your metadata variables, like so: 
 ```
 import React from 'react'
 
