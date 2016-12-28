@@ -12,7 +12,7 @@ exports.modifyAST = ({ args }) => (
       File[extension="tif"],
       File[extension="tiff"],
       File[extension="gif"],
-      File[extension="svg"],
+      File[extension="svg"]
     `)
     files.forEach((file) => {
       const imageNode = {

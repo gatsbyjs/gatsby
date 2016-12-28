@@ -17,7 +17,9 @@
   "license": "MIT",
   "dependencies": {
     "graphql": "^0.8.2",
-    "lodash": "^4.17.2"
+    "image-size": "^0.5.1",
+    "lodash": "^4.17.2",
+    "sharp": "^0.17.0"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",

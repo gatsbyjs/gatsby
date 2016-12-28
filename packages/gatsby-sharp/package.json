@@ -1,12 +1,12 @@
 {
-  "name": "gatsby-parser-remark",
-  "description": "Gatsby parser plugin for Remark",
+  "name": "gatsby-sharp",
+  "description": "Wrapper of the Sharp image manipulation library for Gatsby plugins",
   "version": "0.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "bluebird": "^3.4.6",
-    "gray-matter": "^2.1.0",
-    "unist-util-select": "^1.5.0"
+    "bluebird": "^3.4.7",
+    "lodash": "^4.17.3",
+    "sharp": "^0.17.0"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
@@ -15,11 +15,11 @@
   },
   "keywords": [
     "gatsby",
-    "gatsby-plugin",
-    "markdown",
-    "remark"
+    "image",
+    "sharp"
   ],
   "license": "MIT",
+  "main": "index.js",
   "scripts": {
     "build": "babel src --out-dir .",
     "watch": "babel -w src --out-dir ."
