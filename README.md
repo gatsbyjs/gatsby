@@ -303,7 +303,7 @@ exports.data = {
   title: 'This is a title',
 }
 
-export defualt MyComponent ...
+export default MyComponent ...
 ```
 
 ### Structure of a Gatsby site
