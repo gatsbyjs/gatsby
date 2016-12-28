@@ -67,7 +67,7 @@ exports.sourceNodes = ({ args, pluginOptions }) => {
                 children: [],
                 sourceFile: file.sourceFile,
                 relativePath: path.posix.relative(pluginOptions.path, file.sourceFile),
-                extension: file.ext.slice(1),
+                extension: file.ext.slice(1).toLowerCase(),
                 name: file.name,
                 extname: file.extname,
                 filename: file.basename,
