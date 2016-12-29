@@ -295,12 +295,15 @@ title: This is a title
  
 <h1>Hello World</h1>
 ```
-
-Gatsby will additionally pull data out of js|jsx files. The files are statically analyzed and an `exports.data` object is pulled. An example as follows.
+In a .js|.jsx file, export a data object to set your metadata variables, like so: 
 ```
+import React from 'react'
+
 exports.data = {
-  title: 'This is a title'
+  title: 'This is a title',
 }
+
+export default MyComponent ...
 ```
 
 ### Structure of a Gatsby site
