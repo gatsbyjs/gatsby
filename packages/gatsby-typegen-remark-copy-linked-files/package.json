@@ -1,16 +1,14 @@
 {
-  "name": "gatsby-sharp",
-  "description": "Wrapper of the Sharp image manipulation library for Gatsby plugins",
+  "name": "gatsby-typegen-remark-copy-linked-files",
+  "description": "Find files which are linked to from markdown and copy them to the public directory",
   "version": "0.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "bluebird": "^3.4.7",
-    "image-size": "^0.5.1",
-    "imagemin": "^5.2.2",
-    "imagemin-pngquant": "^5.0.0",
+    "fs-extra": "^1.0.0",
+    "is-relative-url": "^2.0.0",
     "lodash": "^4.17.3",
-    "progress": "^1.1.8",
-    "sharp": "^0.17.0"
+    "parse-filepath": "^1.0.1",
+    "unist-util-visit": "^1.1.1"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
@@ -19,8 +17,9 @@
   },
   "keywords": [
     "gatsby",
-    "image",
-    "sharp"
+    "gatsby-plugin",
+    "prismjs",
+    "remark"
   ],
   "license": "MIT",
   "main": "index.js",

@@ -6,6 +6,7 @@ import traverse from 'babel-traverse'
 import path from 'path'
 import parseFilepath from 'parse-filepath'
 import glob from 'glob'
+const Promise = require(`bluebird`)
 
 import { pagesDB, siteDB, programDB } from './globals'
 import { layoutComponentChunkName, pathChunkName } from './js-chunk-names'
@@ -341,7 +342,7 @@ const q = queue(({ file, graphql, directory }, callback) => {
 
       return null
     })
-  }))
+  })).timeout(5000)
   .then(() => {
     console.log(`rewrote JSON for queries for ${absFile}`)
     console.timeEnd(`graphql query time`)

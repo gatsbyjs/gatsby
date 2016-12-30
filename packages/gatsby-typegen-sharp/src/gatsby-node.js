@@ -52,10 +52,10 @@ exports.extendNodeType = (options) => {
       resolve (image, args) {
         return new Promise((resolve) => {
           const file = image.parent
-          processImage({
+          resolve(processImage({
             file,
             args,
-          }, (result) => resolve(result))
+          }))
         })
       },
     },

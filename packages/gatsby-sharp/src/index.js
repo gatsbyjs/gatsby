@@ -4,22 +4,26 @@ const imageSize = require(`image-size`)
 const _ = require(`lodash`)
 const Promise = require(`bluebird`)
 const fs = require(`fs`)
+const ProgressBar = require(`progress`)
+const imagemin = require('imagemin')
+const imageminPngquant = require('imagemin-pngquant')
+
+// Try to enable the use of SIMD instructions. Seems to provide a smallish
+// speedup on resizing heavy loads (~10%). The feature is off by default as
+// there's been problems with segfaulting in the past.
+sharp.simd(true)
 
 const toProcess = []
 
 const processJobs = (jobs, count) => {
-  console.time(`processing images`)
-  Promise.all(_.values(jobs).map((job) => job.outsideResolve))
-  .then(() => console.timeEnd(`processing images`))
-  console.log("")
-  console.log(`processing ${count} jobs!`)
-  console.log(jobs)
-  console.log("")
+  const bar = new ProgressBar(`creating image thumbnails [:bar] :current/:total :elapsed secs :percent`, {
+    total: count,
+    width: 30,
+  })
+  console.log(``)
   _.each(jobs, (fileJobs, file) => {
     const pipeline = sharp(file).rotate().withoutEnlargement()
     _.each(fileJobs, (job) => {
-      // Move job processing to own function so can call it
-      // directly to get a base64 version of a file.
       const args = job.args
       let clonedPipeline
       if (fileJobs.length > 1) {
@@ -28,15 +32,6 @@ const processJobs = (jobs, count) => {
         clonedPipeline = pipeline
       }
       clonedPipeline.resize(args.width, args.height)
-      // TODO compress pngs with imagemin-pngquant as libvps doesn't do
-      // lossy compression for pngs.
-      //
-      // TODO create gatsby-typegen-remark-resize-images which
-      // goes through each image and creates images at
-      // 2000, 1500, 1000, 500 and changes image to use srcset (in ast)
-      // with explicit height/width. Make a sharp utils module
-      // which has the processing queue + immediate mode (for base64)
-      // so that anyone who wants to use image resizing can.
       .png({
         compressionLevel: args.pngCompressionLevel,
         adaptiveFiltering: false,
@@ -66,9 +61,33 @@ const processJobs = (jobs, count) => {
           })
         })
       } else {
-        clonedPipeline
-        .toFile(job.outputPath)
-        .then(() => job.outsideResolve())
+        if (job.file.extension.match(/^jp/)) {
+          clonedPipeline
+          .toFile(job.outputPath, (err, info) => {
+            bar.tick()
+            job.outsideResolve(info)
+          })
+          // Compress pngs
+        } else if (job.file.extension === `png`) {
+          clonedPipeline.toBuffer()
+          .then((sharpBuffer) => {
+            imagemin.buffer(sharpBuffer, {
+              plugins: [
+                imageminPngquant({
+                  quality: '50-80',
+                  verbose: true,
+                }),
+              ],
+            })
+            .then((imageminBuffer) => {
+              fs.writeFile(job.outputPath, imageminBuffer, () => {
+                console.log(`finished processing png`)
+                bar.tick()
+                job.outsideResolve()
+              })
+            })
+          })
+        }
       }
     })
   })
@@ -76,7 +95,7 @@ const processJobs = (jobs, count) => {
 
 const debouncedProcess = _.debounce(() => {
   // Filter out jobs for images that have already been created.
-  const filteredJobs = toProcess.filter((job) => !fs.existsSync(job.outputPath))
+  let filteredJobs = toProcess.filter((job) => !fs.existsSync(job.outputPath))
   const count = filteredJobs.length
 
   // Group jobs by inputPath so Sharp can reuse work.
@@ -86,10 +105,32 @@ const debouncedProcess = _.debounce(() => {
   toProcess.length = 0
 
   processJobs(groupedJobs, count)
-}, 250)
+}, 500)
 
-module.exports = ({ file, args }, cb) => {
-  const imgSrc = `/${file.hash}-${qs.stringify(args)}.${file.extension}`
+exports.queueImageResizing = ({ file, args = {} }, cb) => {
+  const defaultArgs = {
+    width: 400,
+    jpegQuality: 50,
+    jpegProgressive: true,
+    pngCompressionLevel: 9,
+    grayscale: false,
+  }
+  const allArgs = _.defaults(args, defaultArgs)
+  // Filter out false args, and args not for this extension and put width at
+  // end (for the file path)
+  const pairedArgs = _.toPairs(args)
+  let filteredArgs
+  filteredArgs = _.filter(pairedArgs, (arg) => arg[1])
+  filteredArgs = _.filter(filteredArgs, (arg) => {
+    if (file.extension.match(/^jp*/)) {
+      return !_.includes(arg[0], `png`)
+    } else if (file.extension.match(/^png/)) {
+      return !arg[0].match(/^jp*/)
+    }
+    return true
+  })
+  const sortedArgs = _.sortBy(filteredArgs, (arg) => arg[0] === `width`)
+  const imgSrc = `/${file.hash}-${qs.stringify(_.fromPairs(sortedArgs))}.${file.extension}`
   const filePath = `${process.cwd()}/public${imgSrc}`
   // Create function to call when the image is finished.
   let outsideResolve
@@ -101,46 +142,88 @@ module.exports = ({ file, args }, cb) => {
   let height
   let aspectRatio
   // Calculate the eventual width/height of the image.
-  imageSize(file.id, (err, dimensions) => {
-    aspectRatio = dimensions.width / dimensions.height
+  const dimensions = imageSize(file.id) //, (err, dimensions) => {
+  aspectRatio = dimensions.width / dimensions.height
 
-    // We don't allow enlargement so if either the requested height or
-    // width is larger, we just return things as they are.
-    if (args.width > dimensions.width || args.height > dimensions.height) {
-      width = dimensions.width
-      height = dimensions.height
+  // We don't allow enlargement so if either the requested height or
+  // width is larger, we just return things as they are.
+  if (allArgs.width > dimensions.width || allArgs.height > dimensions.height) {
+    width = dimensions.width
+    height = dimensions.height
 
-    // If the width/height are both set, we're cropping so just return
-    // that.
-    } else if (args.width && args.height) {
-      width = args.width
-      height = args.height
-    } else {
+  // If the width/height are both set, we're cropping so just return
+  // that.
+  } else if (allArgs.width && allArgs.height) {
+    width = allArgs.width
+    height = allArgs.height
+  } else {
 
-      // Use the aspect ratio of the image to calculate the resulting
-      // height.
-      width = args.width
-      height = args.width / aspectRatio
-    }
+    // Use the aspect ratio of the image to calculate the resulting
+    // height.
+    width = allArgs.width
+    height = allArgs.width / aspectRatio
+  }
 
-    // Create job and process.
-    const job = {
-      file,
-      args,
-      outsideResolve,
-      inputPath: file.id,
-      outputPath: filePath,
-    }
-    toProcess.push(job)
-    debouncedProcess()
+  // Create job and process.
+  const job = {
+    file,
+    args: allArgs,
+    finished,
+    outsideResolve,
+    inputPath: file.id,
+    outputPath: filePath,
+  }
+  toProcess.push(job)
+  debouncedProcess()
 
-    return cb({
-      src: imgSrc,
-      absolutePath: filePath,
-      width,
-      height,
-      aspectRatio,
-      finished,
+  return {
+    src: imgSrc,
+    absolutePath: filePath,
+    width,
+    height,
+    aspectRatio,
+    finished,
+  }
+}
+
+exports.base64 = ({ file, args = {} }, cb) => {
+  const defaultArgs = {
+    width: 40,
+    jpegQuality: 50,
+    jpegProgressive: true,
+    pngCompressionLevel: 9,
+    grayscale: false,
+  }
+  const allArgs = _.defaults(args, defaultArgs)
+  let pipeline = sharp(file.id).rotate().withoutEnlargement()
+  pipeline.resize(allArgs.width, allArgs.height)
+  .png({
+    compressionLevel: allArgs.pngCompressionLevel,
+    adaptiveFiltering: false,
+    force: false,
+  })
+  .jpeg({
+    quality: allArgs.jpegQuality,
+    progressive: allArgs.jpegProgressive,
+    force: false,
+  })
+
+  // grayscale
+  if (allArgs.grayscale) {
+    pipeline = pipeline.grayscale()
+  }
+
+  // rotate
+  if (allArgs.rotate) {
+    pipeline = pipeline.rotate(allArgs.rotate)
+  }
+
+  pipeline.toBuffer((err, buffer, info) => {
+    cb(err, {
+      src: `data:image/${info.format};base64,${buffer.toString(`base64`)}`,
+      width: info.width,
+      height: info.height,
+      aspectRatio: info.width / info.height,
     })
   })
 }

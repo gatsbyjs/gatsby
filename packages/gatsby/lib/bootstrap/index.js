@@ -127,17 +127,19 @@ module.exports = async (program, cb) => {
         resolve: resolvedPath,
         name: packageJSON.name,
         version: packageJSON.version,
-        pluginOptions: {},
+        pluginOptions: {
+          plugins: [],
+        },
       }
     } else {
       // Plugins can have plugins.
-      const plugins = []
+      const subplugins = []
       if (plugin.options && plugin.options.plugins) {
-        plugin.options.plugins.forEach((plugin) => {
-          plugins.push(processPlugin(plugin))
+        plugin.options.plugins.forEach((p) => {
+          subplugins.push(processPlugin(p))
         })
       }
-      plugin.options.plugins = plugins
+      plugin.options.plugins = subplugins
 
       const resolvedPath = path.dirname(require.resolve(plugin.resolve))
       const packageJSON = JSON.parse(fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`))
@@ -145,7 +147,7 @@ module.exports = async (program, cb) => {
         resolve: resolvedPath,
         name: packageJSON.name,
         version: packageJSON.version,
-        pluginOptions: plugin.options,
+        pluginOptions: _.merge({ plugins: [] }, plugin.options),
       }
     }
   }
