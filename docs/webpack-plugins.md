@@ -8,7 +8,7 @@ _Note: the following example is now redundant since
 ExtractTextWebpackPlugin is now setup by default but you can still use
 it as an example of how to modify the Webpack plugins._
 
-If we wanted to extract all of the css in our project into a since
+If we wanted to extract all of the css in our project into a single
 `styles.css` file for production, we could add the
 `ExtractTextWebpackPlugin`. To do this, we need to modify the loader
 and add the plugin when generating the static HTML for our site.
