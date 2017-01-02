@@ -1,14 +1,8 @@
 {
-  babelrc: false,
-  "presets": [
-    'stage-0',
-    'es2015',
-    'react',
-  ],
+  "presets": ["es2015", "stage-3"],
   "plugins": [
-    'add-module-exports',
-    'transform-runtime',
-    'lodash',
-    'transform-async-to-generator',
-  ],
+    "transform-runtime",
+    "transform-object-rest-spread",
+    "transform-async-to-generator",
+  ]
 }
