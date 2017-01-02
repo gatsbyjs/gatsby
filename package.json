@@ -7,6 +7,7 @@
     "babel-plugin-transform-async-to-generator": "^6.16.0",
     "babel-plugin-transform-flow-strip-types": "^6.18.0",
     "babel-plugin-transform-runtime": "^6.15.0",
+    "babel-preset-env": "^1.1.4",
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-0": "^6.16.0",
@@ -26,6 +27,24 @@
     "lerna": "2.0.0-beta.30",
     "purdy": "^2.2.0"
   },
+  "devDependencies": {
+    "babel-runtime": "^6.20.0"
+  },
+  "jest": {
+    "verbose": true,
+    "modulePathIgnorePatterns": [
+      "<rootDir>/dist/",
+      "<rootDir>/node_modules/"
+    ],
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/dist/"
+    ],
+    "testPathIgnorePatterns": [
+      "/dist/",
+      "/node_modules/"
+    ],
+    "notify": true
+  },
   "private": true,
   "scripts": {
     "build": "lerna run build",
@@ -34,12 +53,5 @@
     "test": "jest",
     "test_bkup": "npm run lint && npm run test-node && npm run test-integration",
     "watch": "lerna run watch"
-  },
-  "jest": {
-    "verbose": true,
-    "modulePathIgnorePatterns": ["<rootDir>/dist/", "<rootDir>/node_modules/"],
-    "coveragePathIgnorePatterns": ["<rootDir>/dist/"],
-    "testPathIgnorePatterns": ["/dist/", "/node_modules/"],
-    "notify": true
   }
 }
