@@ -84,7 +84,6 @@ exports.extendNodeType = ({ args, pluginOptions }) => {
           // use...
           // explicitly mark dependecies — e.g. remark has plugins to parse its AST
           // which remark controls when these run.
-
           Promise.all(pluginOptions.plugins.map((plugin) => {
             const requiredPlugin = require(plugin.resolve)
             return requiredPlugin({

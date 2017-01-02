@@ -1,7 +1,6 @@
 const select = require(`unist-util-select`)
 const path = require(`path`)
 const isRelativeUrl = require(`is-relative-url`)
-const parseFilepath = require(`parse-filepath`)
 const _ = require(`lodash`)
 const { queueImageResizing, base64 } = require(`gatsby-sharp`)
 //const base64 = require(`gatsby-sharp`).base64
@@ -79,9 +78,7 @@ module.exports = ({ files, markdownNode, markdownAST, pluginOptions }) => {
 
         base64({
           file: imageNode,
-        }, (err, base64Result) => {
-          if (err) return reject(err)
-
+        }).then((base64Result) => {
           // Calculate the paddingBottom %
           const ratio = `${(1 / images[0].aspectRatio) * 100}%`
 
@@ -95,6 +92,8 @@ module.exports = ({ files, markdownNode, markdownAST, pluginOptions }) => {
           // add support for sub-plugins having a gatsby-node.js so can add a
           // bit of js/css to add blurry fade-in.
           // https://www.perpetual-beta.org/weblog/silky-smooth-image-loading.html
+          //
+          // TODO make linking to original image optional.
 
           // Construct new image node w/ aspect ratio placeholder
           const rawHTML = `

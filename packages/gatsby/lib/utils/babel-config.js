@@ -120,7 +120,7 @@ function findBabelPackage (directory) {
  * Returns a normalized Babel config to use with babel-loader. All of
  * the paths will be absolute so that Babel behaves as expected.
  */
-export default function babelConfig (program, stage) {
+module.exports = function babelConfig (program, stage) {
   const { directory } = program
 
   const babelrc = findBabelrc(directory) ||
