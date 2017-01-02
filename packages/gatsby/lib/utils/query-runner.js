@@ -313,6 +313,7 @@ const q = queue(({ file, graphql, directory }, callback) => {
     } else {
       pathContext = { ...pathInfo }
     }
+
     return graphql(query, pathContext)
     .catch(error => console.log(`graphql error from file: ${absFile}`, error))
     .then(result => {
@@ -342,7 +343,7 @@ const q = queue(({ file, graphql, directory }, callback) => {
 
       return null
     })
-  })).timeout(5000)
+  }))
   .then(() => {
     console.log(`rewrote JSON for queries for ${absFile}`)
     console.timeEnd(`graphql query time`)

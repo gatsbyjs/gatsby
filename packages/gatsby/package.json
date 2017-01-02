@@ -124,13 +124,6 @@
     "yaml-js": "^0.1.4"
   },
   "devDependencies": {
-    "ava": "^0.16.0",
-    "ava-http": "^0.2.1",
-    "babel-cli": "^6.18.0",
-    "babel-eslint": "^7.1.0",
-    "babel-plugin-lodash": "^3.2.9",
-    "babel-plugin-transform-flow-strip-types": "^6.18.0",
-    "babel-register": "^6.18.0",
     "cheerio": "^0.22.0",
     "eslint": "^3.10.1",
     "eslint-config-airbnb": "^12.0.0",

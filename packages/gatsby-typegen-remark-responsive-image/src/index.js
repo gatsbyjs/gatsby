@@ -18,10 +18,14 @@ module.exports = ({ files, markdownNode, markdownAST, pluginOptions }) => {
   const defaults = {
     maxWidth: 800,
     wrapperStyle: ``,
-    sizes: `(max-width: 700px ) 100vw, (min-width: 700px) 800px`,
   }
   const options = _.defaults(pluginOptions, defaults)
   options.maxWidth = parseInt(options.maxWidth, 10)
+
+  // If the users didn't set a default sizes, we'll make one.
+  if (!options.sizes) {
+    options.sizes = `(max-width: ${options.maxWidth}px) 100vw, {${options.maxWidth}px}`
+  }
 
   // Create sizes (in width) for the image. If the max width of the container
   // for the rendered markdown file is 800px, the sizes would then be: 200,
@@ -86,10 +90,6 @@ module.exports = ({ files, markdownNode, markdownAST, pluginOptions }) => {
           const originalImg = _.maxBy(images, (image) => image.width).src
           const fallbackSrc = _.minBy(images, (image) => Math.abs(options.maxWidth - image.width)).src
           const srcSet = images.map((image) => `${image.src} ${image.width}w`).join(`,`)
-
-          //
-          // TODO move prism code highlighting to its own plugin.
-          // cleanup and make new canary release.
 
           // TODO
           // add support for sub-plugins having a gatsby-node.js so can add a

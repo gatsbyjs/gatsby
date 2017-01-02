@@ -4,8 +4,8 @@
   "description": "Gatsby plugin to expose graphql types to manipulate images using Sharp",
   "main": "index.js",
   "scripts": {
-    "build": "babel src --presets babel-preset-es2015 --out-dir .",
-    "watch": "babel -w src --presets babel-preset-es2015 --out-dir ."
+    "build": "babel src --out-dir .",
+    "watch": "babel -w src --out-dir ."
   },
   "keywords": [
     "gatsby",
@@ -20,9 +20,5 @@
     "image-size": "^0.5.1",
     "lodash": "^4.17.2",
     "sharp": "^0.17.0"
-  },
-  "devDependencies": {
-    "babel-cli": "^6.18.0",
-    "babel-preset-es2015": "^6.18.0"
   }
 }

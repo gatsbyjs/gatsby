@@ -27,9 +27,8 @@ const extractFieldExamples = exports.extractFieldExamples = ({ nodes, selector, 
   examples = flatten.unflatten(examples, { safe: true })
 
   if (deleteNodeFields) {
-    // Remove fields common to all nodes.
-    delete examples.type
-    delete examples.id
+    // Remove fields for traversing through nodes as we want to control
+    // setting traversing up not try to automatically infer them.
     delete examples.children
     delete examples.parent
   }
