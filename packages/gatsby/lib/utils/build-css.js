@@ -10,7 +10,7 @@ module.exports = (program, callback) => {
 
   webpack(compilerConfig.resolve()).run((err) => {
     // We don't want any javascript produced by this step in the process.
-    fs.unlinkSync(`{directory}/public/bundle-for-css.js`)
+    fs.unlinkSync(`${directory}/public/bundle-for-css.js`)
 
     callback(err)
   })
