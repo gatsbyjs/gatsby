@@ -1,7 +1,7 @@
 import React from 'react'
 import { applyRouterMiddleware, Router, browserHistory } from 'react-router'
 import useScroll from 'react-router-scroll/lib/useScroll'
-import apiRunner from 'api-runner-browser'
+import apiRunner from './api-runner-browser'
 
 const rootRoute = require(`./child-routes`)
 

@@ -1,4 +1,4 @@
-import apiRunner from 'api-runner-browser'
+import apiRunner from './api-runner-browser'
 // Let the site/plugins run code very early.
 apiRunner('clientEntry')
 
