@@ -21,7 +21,7 @@ sharp.simd(true)
 const toProcess = []
 
 const processJobs = (jobs, count) => {
-  const bar = new ProgressBar(`creating image thumbnails [:bar] :current/:total :elapsed secs :percent`, {
+  const bar = new ProgressBar(`Generating image thumbnails [:bar] :current/:total :elapsed secs :percent`, {
     total: count,
     width: 30,
   })
