@@ -8,9 +8,9 @@ module.exports = (program, callback) => {
 
   const compilerConfig = webpackConfig(program, directory, `build-css`)
 
-  webpack(compilerConfig.resolve()).run((err) => {
+  webpack(compilerConfig.resolve()).run((err, stats) => {
     // We don't want any javascript produced by this step in the process.
-    fs.unlinkSync(`${directory}/public/bundle-for-css.js`)
+    //fs.unlinkSync(`{directory}/public/bundle-for-css.js`)
 
     callback(err)
   })

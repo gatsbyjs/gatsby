@@ -164,7 +164,7 @@ module.exports = async (program, cb) => {
   const srcDir = `${__dirname}/../intermediate-representation-dir`
   const siteDir = `${program.directory}/.intermediate-representation`
   try {
-    await removeDir(siteDir)
+    //await removeDir(siteDir)
     await copy(srcDir, siteDir, { clobber: true })
     await mkdirs(`${program.directory}/.intermediate-representation/json`)
   } catch (e) {

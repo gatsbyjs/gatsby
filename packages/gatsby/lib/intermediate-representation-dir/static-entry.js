@@ -3,11 +3,25 @@ import { renderToString, renderToStaticMarkup } from 'react-dom/server'
 import { match, RouterContext } from 'react-router'
 import Html from 'html'
 import _ from 'lodash'
-import { prefixLink } from '../isomorphic/gatsby-helpers'
+//import { prefixLink } from '../isomorphic/gatsby-helpers'
 import rootRoute from '.intermediate-representation/child-routes.js'
 import pages from 'public/tmp-pages.json'
-import { pathChunkName } from './js-chunk-names'
-import apiRunner from '../utils/api-runner-ssr'
+//import { pathChunkName } from './js-chunk-names'
+//import apiRunner from '../utils/api-runner-ssr'
+
+//let gatsbySSR
+//try {
+  //gatsbySSR = require('gatsby-ssr')
+//} catch (e) {
+  //// do nothing
+//}
+
+const apiRunner = () => { return {} }
+
+const pathChunkName = (path) => {
+  const name = path === `/` ? `index` : _.kebabCase(path)
+  return `path---${name}`
+}
 
 module.exports = (locals, callback) => {
   match({ routes: rootRoute, location: locals.path }, (error, redirectLocation, renderProps) => {
@@ -71,7 +85,8 @@ module.exports = (locals, callback) => {
       ]
       dascripts.forEach((script) => {
         const fetchKey = `assetsByChunkName[${script}][0]`
-        const prefixedScript = prefixLink(`/${_.get(stats, fetchKey, ``)}`)
+        //const prefixedScript = prefixLink(`/${_.get(stats, fetchKey, ``)}`)
+        const prefixedScript = `/${_.get(stats, fetchKey, ``)}`
 
         // Add preload <link>s for scripts.
         headComponents.unshift(

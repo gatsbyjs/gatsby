@@ -1,7 +1,4 @@
-const Promise = require(`bluebird`)
-const path = require(`path`)
-import invariant from 'invariant'
-import _ from 'lodash'
+const _ = require(`lodash`)
 
 module.exports = (api, args, defaultReturn) => {
   let gatsbySSR
@@ -16,13 +13,10 @@ module.exports = (api, args, defaultReturn) => {
   if (gatsbySSR && gatsbySSR[api]) {
     const result = gatsbySSR[api](args)
     if (!result) {
-      throw new Error(`The API "${api}" in gatsby-browser.js did not return a value`)
-      process.exit()
+      throw new Error(`The API "${api}" in gatsby-ssr.js did not return a value`)
     }
     return result
   }
 
   return defaultReturn
 }
-
-

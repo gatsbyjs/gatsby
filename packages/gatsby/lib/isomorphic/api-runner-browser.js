@@ -26,3 +26,4 @@
 // TODO revamp this — identify ahead of time which plugins export a
 // gatsby-browser.js and write that to the .intermediate-reprensentation
 // directory.
+module.exports = () => {}

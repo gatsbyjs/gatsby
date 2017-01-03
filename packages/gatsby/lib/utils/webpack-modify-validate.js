@@ -14,8 +14,7 @@ try {
   }
 }
 
-export default function ValidateWebpackConfig (module, config, stage) {
-  let userWebpackConfig = module(config)
+export default function ValidateWebpackConfig (userWebpackConfig, stage) {
   if (modifyWebpackConfig) {
     userWebpackConfig = modifyWebpackConfig(userWebpackConfig, stage)
 

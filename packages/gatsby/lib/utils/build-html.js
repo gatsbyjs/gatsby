@@ -25,7 +25,7 @@ module.exports = (program, callback) => {
     }
 
     // Remove the temp JS bundle file built for the static-site-generator-plugin
-    fs.unlinkSync(`${directory}/public/render-page.js`)
+    //fs.unlinkSync(`${directory}/public/render-page.js`)
 
     return callback(null, stats)
   })

@@ -85,7 +85,8 @@ module.exports = (program, directory, suppliedStage, webpackPort = 1500, pages =
         }
       case `build-html`:
         return {
-          main: `${__dirname}/static-entry`,
+          //main: `${__dirname}/static-entry`,
+          main: `${directory}/.intermediate-representation/static-entry`,
         }
       case `build-javascript`:
         return {
@@ -205,9 +206,9 @@ module.exports = (program, directory, suppliedStage, webpackPort = 1500, pages =
           // optimizations for React) and whether prefixing links is enabled
           // (__PREFIX_LINKS__) and what the link prefix is (__LINK_PREFIX__).
           new webpack.DefinePlugin({
-            'process.env': {
-              NODE_ENV: JSON.stringify(process.env.NODE_ENV ? process.env.NODE_ENV : `production`),
-            },
+            //'process.env': {
+              //NODE_ENV: JSON.stringify(process.env.NODE_ENV ? process.env.NODE_ENV : `production`),
+            //},
             __PREFIX_LINKS__: program.prefixLinks,
             __LINK_PREFIX__: JSON.stringify(siteDB().get(`config`).linkPrefix),
           }),
@@ -224,19 +225,19 @@ module.exports = (program, directory, suppliedStage, webpackPort = 1500, pages =
             manifestVariable: `webpackManifest`,
           }),
           // Minify Javascript.
-          new webpack.optimize.UglifyJsPlugin({
-            compress: {
-              screw_ie8: true, // React doesn't support IE8
-              warnings: false,
-            },
-            mangle: {
-              screw_ie8: true,
-            },
-            output: {
-              comments: false,
-              screw_ie8: true,
-            },
-          }),
+          //new webpack.optimize.UglifyJsPlugin({
+            //compress: {
+              //screw_ie8: true, // React doesn't support IE8
+              //warnings: false,
+            //},
+            //mangle: {
+              //screw_ie8: true,
+            //},
+            //output: {
+              //comments: false,
+              //screw_ie8: true,
+            //},
+          //}),
           // Ensure module order stays the same. Supposibly fixed in webpack 2.0.
           new webpack.optimize.OccurenceOrderPlugin(),
           //new WebpackStableModuleIdAndHash({ seed: 9, hashSize: 47 }),
@@ -312,6 +313,7 @@ module.exports = (program, directory, suppliedStage, webpackPort = 1500, pages =
   }
 
   function module (config) {
+    console.log(`adding common loaders`)
     // Common config for every env.
     config.loader(`cjsx`, {
       test: /\.cjsx$/,
@@ -335,10 +337,10 @@ module.exports = (program, directory, suppliedStage, webpackPort = 1500, pages =
     // When you `import` an asset, you get its filename.
     config.loader(`file-loader`, {
       test: /\.(ico|eot|otf|webp|ttf)(\?.*)?$/,
-      loader: 'file',
+      loader: `file`,
       query: {
-        name: 'static/[name].[hash:8].[ext]'
-      }
+        name: `static/[name].[hash:8].[ext]`,
+      },
     })
     // "url" loader works just like "file" loader but it also embeds
     // assets smaller than specified size as data URLs to avoid requests.
@@ -348,7 +350,7 @@ module.exports = (program, directory, suppliedStage, webpackPort = 1500, pages =
       query: {
         limit: 7500,
         name: 'static/[name].[hash:8].[ext]'
-      }
+      },
     })
     // Font loader.
     config.loader(`woff`, {
@@ -394,6 +396,7 @@ module.exports = (program, directory, suppliedStage, webpackPort = 1500, pages =
         return config
 
       case `build-css`:
+        console.log(`adding build-css loaders`)
         config.loader(`css`, {
           test: /\.css$/,
           loader: ExtractTextPlugin.extract([`css?minimize`, `postcss`]),
@@ -465,9 +468,10 @@ module.exports = (program, directory, suppliedStage, webpackPort = 1500, pages =
   function resolveLoader () {
     const root = [
       path.resolve(directory, `node_modules`),
+      //path.resolve(directory),
     ]
 
-    const userLoaderDirectoryPath = path.resolve(directory, 'loaders')
+    const userLoaderDirectoryPath = path.resolve(directory, `loaders`)
 
     try {
       if (fs.statSync(userLoaderDirectoryPath).isDirectory()) {
@@ -479,6 +483,13 @@ module.exports = (program, directory, suppliedStage, webpackPort = 1500, pages =
       }
     }
 
+    console.log({
+      root,
+      modulesDirectories: [
+        `node_modules`,
+      ],
+    })
+
     return {
       root,
       modulesDirectories: [
@@ -488,6 +499,7 @@ module.exports = (program, directory, suppliedStage, webpackPort = 1500, pages =
   }
 
   const config = new Config()
+  module(config, stage)
 
   config.merge({
     // Context is the base directory for resolving the entry option.
@@ -509,5 +521,8 @@ module.exports = (program, directory, suppliedStage, webpackPort = 1500, pages =
     resolve: resolve(),
   })
 
-  return webpackModifyValidate(module, config, stage)
+  const util = require(`util`)
+  console.log(util.inspect(config.resolve(), { showHidden: false, depth: null}))
+
+  return webpackModifyValidate(config, stage)
 }
