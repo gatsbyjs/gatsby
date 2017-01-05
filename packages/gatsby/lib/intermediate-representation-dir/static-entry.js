@@ -7,16 +7,7 @@ import _ from 'lodash'
 import rootRoute from '.intermediate-representation/child-routes.js'
 import pages from 'public/tmp-pages.json'
 //import { pathChunkName } from './js-chunk-names'
-//import apiRunner from '../utils/api-runner-ssr'
-
-//let gatsbySSR
-//try {
-  //gatsbySSR = require('gatsby-ssr')
-//} catch (e) {
-  //// do nothing
-//}
-
-const apiRunner = () => { return {} }
+import apiRunner from '.intermediate-representation/api-runner-ssr'
 
 const pathChunkName = (path) => {
   const name = path === `/` ? `index` : _.kebabCase(path)
@@ -41,7 +32,7 @@ module.exports = (locals, callback) => {
         { component, headComponents: [] },
         {},
       )
-      let { body, headComponents, postBodyComponents, ...bodyRenderProps } = results
+      let { body, headComponents, postBodyComponents, ...bodyRenderProps } = results[0]
 
       // If no one stepped up, we'll handle it.
       if (!body) {

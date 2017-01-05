@@ -1,8 +1,8 @@
 import React from 'react'
 import { applyRouterMiddleware, Router, browserHistory } from 'react-router'
 import useScroll from 'react-router-scroll/lib/useScroll'
-import apiRunner from './api-runner-browser'
 
+const apiRunner = require(`./api-runner-browser`)
 const rootRoute = require(`./child-routes`)
 
 let currentLocation
@@ -26,11 +26,11 @@ const Root = () => (
     history={browserHistory}
     routes={rootRoute}
     render={applyRouterMiddleware(useScroll(shouldUpdateScroll))}
-    onUpdate={() => {apiRunner('onRouteUpdate', currentLocation)}}
+    onUpdate={() => { apiRunner(`onRouteUpdate`, currentLocation) }}
   />
 )
 
 // Let site, plugins wrap the site e.g. for Redux.
-const WrappedRoot = apiRunner('wrapRootComponent', { Root: Root }, Root)
+const WrappedRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
 
 export default WrappedRoot

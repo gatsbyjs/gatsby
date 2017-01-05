@@ -82,7 +82,7 @@ match({ history: browserHistory, routes: rootRoute }, (error, redirectLocation, 
       onUpdate={() => {apiRunner('onRouteUpdate', currentLocation)}}
     />
   )
-  const NewRoot = apiRunner('wrapRootComponent', { Root: Root }, Root)
+  const NewRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
   ReactDOM.render((
     <NewRoot />
   ), typeof window !== `undefined` ? document.getElementById(`react-mount`) : void 0)

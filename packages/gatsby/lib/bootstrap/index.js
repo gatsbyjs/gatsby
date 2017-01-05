@@ -180,6 +180,22 @@ module.exports = async (program, cb) => {
     console.log(`Unable to copy site files to .intermediate-representation`)
     console.log(e)
   }
+
+  // Find plugins which implement gatsby-browser and gatsby-ssr and write
+  // out api-runners for them.
+  const hasAPIFile = (env, plugin) => (
+    glob.sync(`${plugin.resolve}/gatsby-${env}*`)[0]
+  )
+
+  const ssrPlugins = _.filter(plugins.map((plugin) => hasAPIFile(`ssr`, plugin)))
+  const browserPlugins = _.filter(plugins.map((plugin) => hasAPIFile(`browser`, plugin)))
+  let browserAPIRunner = fs.readFileSync(`${siteDir}/api-runner-browser.js`, `utf-8`)
+  browserAPIRunner = `var plugins = [${browserPlugins.map((plugin) => `require('${plugin}')`).join(`,`)}]\n${browserAPIRunner}`
+  let sSRAPIRunner = fs.readFileSync(`${siteDir}/api-runner-ssr.js`, `utf-8`)
+  sSRAPIRunner = `var plugins = [${ssrPlugins.map((plugin) => `require('${plugin}')`).join(`,`)}]\n${sSRAPIRunner}`
+  fs.writeFileSync(`${siteDir}/api-runner-browser.js`, browserAPIRunner, `utf-8`)
+  fs.writeFileSync(`${siteDir}/api-runner-ssr.js`, sSRAPIRunner, `utf-8`)
+
   console.timeEnd('copy gatsby files')
 
   // Create Schema.
