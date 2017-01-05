@@ -1,81 +1,40 @@
 const Promise = require(`bluebird`)
-const path = require(`path`)
-import invariant from 'invariant'
-import _ from 'lodash'
-import chalk from 'chalk'
-import { siteDB } from '../utils/globals'
-
-const isPromise = (promise) => {
-  return !_.isEmpty(promise) && _.isObject(promise) && _.isFunction(promise.then)
-}
+const glob = require(`glob`)
+const _ = require(`lodash`)
+const { siteDB } = require(`../utils/globals`)
 
 const runAPI = (plugin, api, args) => {
-  let gatsbyNode
-  try {
-    gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
-  } catch (e) {
-    // TODO What's a fool proof way to identify a require error as
-    // MODULE_NOT_FOUND but only for the actual module you're trying to require
-    // not that that module itself couldn't require a module?
-    if (e.code !== `MODULE_NOT_FOUND` || !_.includes(e.toString(), `gatsby-node`)) {
-      console.log(chalk.bold.red(`Couldn't open the gatsby-node.js file from the plugin at ${plugin.resolve}`))
-      throw e
-    }
-  }
-  if (gatsbyNode && gatsbyNode[api]) {
+  const gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
+  if (gatsbyNode[api]) {
     console.log(`calling api handler in ${plugin.resolve} for api ${api}`)
     const result = gatsbyNode[api]({
       args,
       pluginOptions: plugin.pluginOptions,
     })
-    //if (api === `extendNodeType` && plugin.resolve === `/Users/kylemathews/programs/exponent-docs/gatsby/node_modules/gatsby-typegen-remark`) {
-      //console.log(`result of extendNodeType`, result)
-    //}
     if (!result) {
       throw new Error(`The API "${api}" in gatsby-node.js of the plugin at ${plugin.resolve} did not return a value`)
     }
-    if (isPromise(result)) {
-      return result
-    } else {
-      return Promise.resolve(result)
-    }
-  } else {
-    return null
+    return Promise.resolve(result)
   }
+
+  return null
 }
+
+let filteredPlugins
+const hasAPIFile = (plugin) => (
+  glob.sync(`${plugin.resolve}/gatsby-node*`)[0]
+)
 
 module.exports = async (api, args={}) => {
   const plugins = siteDB().get(`plugins`)
-  const resultPromises = plugins.map((plugin) => runAPI(plugin, api, args))
-  const runSiteGatsbyNode = () => {
-    let gatsbyNode
-    try {
-      gatsbyNode = require(`${path.resolve(`.`)}/gatsby-node`)
-    } catch (e) {
-      if (/*e.code !== `MODULE_NOT_FOUND` &&*/ !_.includes(e.toString(), `gatsby-node`)) {
-        console.log(chalk.bold.red(`Couldn't open your site's gatsby-node.js file`))
-        console.log(e)
-      }
-    }
-    if (gatsbyNode && gatsbyNode[api]) {
-      const result = gatsbyNode[api]({ args })
-      if (!result) {
-        console.warn(`The handler for the API "${api}" in your site's gatsby-node.js did not return a value`)
-        return null
-      }
-      if (isPromise(result)) {
-        return result
-      } else {
-        return Promise.resolve(result)
-      }
-    } else {
-      return null
-    }
+  // Get the list of plugins that implement gatsby-node
+  if (!filteredPlugins) {
+    filteredPlugins = plugins.filter((plugin) => hasAPIFile(plugin))
   }
-  resultPromises.push(runSiteGatsbyNode())
-  const filteredPromises = resultPromises.filter((promise) => isPromise(promise))
+
+  const resultPromises = filteredPlugins.map((plugin) => runAPI(plugin, api, args))
 
   // Return promises with empty results filtered out.
-  return Promise.all(filteredPromises)
+  return Promise.all(resultPromises)
   .then((results) => results.filter((result) => !_.isEmpty(result)))
 }
