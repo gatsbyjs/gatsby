@@ -157,6 +157,15 @@ module.exports = async (program, cb) => {
       plugins.push(processPlugin(plugin))
     })
   }
+
+  // Add the site's default "plugin" i.e. gatsby-x files in root of site.
+  plugins.push({
+    resolve: process.cwd(),
+    name: `defaultSitePlugin`,
+    version: `n/a`,
+    pluginOptions: {},
+  })
+
   siteDB(siteDB().set(`plugins`, plugins))
 
   // Copy our site files to the root of the site.
