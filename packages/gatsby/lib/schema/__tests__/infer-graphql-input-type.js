@@ -4,7 +4,7 @@ const {
   connectionFromArray,
   connectionArgs,
   connectionDefinitions,
-} = require(`graphql-relay`)
+} = require(`graphql-skip-limit`)
 const buildConnectionFields = require(`../build-connection-fields`)
 
 describe(`GraphQL Input args`, () => {
@@ -43,7 +43,7 @@ describe(`GraphQL Input args`, () => {
   const inferredFields = inferObjectStructureFromNodes({ nodes })
   const inferredInputFields = inferInputObjectStructureFromNodes(nodes, ``, `test`)
   const nodeType = new GraphQLObjectType({
-    name: `TEST`,
+    name: `Test`,
     fields: { ...inferredFields },
   })
 
@@ -151,7 +151,7 @@ describe(`GraphQL Input args`, () => {
   it(`handles the glob operator`, () => {
     return graphql(schema, `
           {
-            allNode(first: 10, name: { glob: "*Wax" }) {
+            allNode(limit: 10, name: { glob: "*Wax" }) {
               edges { node { name }}
             }
           }
@@ -167,7 +167,7 @@ describe(`GraphQL Input args`, () => {
   it(`sorts results`, () => {
     return graphql(schema, `
           {
-            allNode(first: 10, sortBy: { fields: [frontmatter___blue], order: DESC } ) {
+            allNode(limit: 10, sortBy: { fields: [frontmatter___blue], order: DESC } ) {
               edges { node { name }}
             }
           }

@@ -9,7 +9,7 @@ const {
   connectionArgs,
   connectionDefinitions,
   connectionFromArray,
-} = require(`graphql-relay`)
+} = require(`graphql-skip-limit`)
 
 const { buildFieldEnumValues } = require(`./ast-utils`)
 

@@ -55,6 +55,7 @@
     "glob": "^7.1.0",
     "graphql": "^0.8.2",
     "graphql-relay": "^0.4.3",
+    "graphql-skip-limit": "^0.0.0",
     "graphql-union-input-type": "^0.2.1",
     "gray-matter": "^2.1.0",
     "hapi": "^8.5.1",

@@ -10,5 +10,6 @@
     "transform-runtime",
     "transform-object-rest-spread",
     "transform-async-to-generator",
+    "transform-flow-strip-types",
   ]
 }

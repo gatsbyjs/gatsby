@@ -7,7 +7,7 @@ const {
 const {
   connectionArgs,
   connectionDefinitions,
-} = require(`graphql-relay`)
+} = require(`graphql-skip-limit`)
 const { inferInputObjectStructureFromNodes } = require(`./infer-graphql-input-fields`)
 const buildConnectionFields = require(`./build-connection-fields`)
 

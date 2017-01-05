@@ -2,7 +2,7 @@ const sift = require(`sift`)
 const _ = require(`lodash`)
 const {
   connectionFromArray,
-} = require(`graphql-relay`)
+} = require(`graphql-skip-limit`)
 
 module.exports = ({ args, nodes, connection=false }) => {
   // Clone args as for some reason graphql-js removes the constructor
@@ -40,7 +40,7 @@ module.exports = ({ args, nodes, connection=false }) => {
   const siftArgs = []
   _.each(clonedArgs, (v, k) => {
     // Ignore connection and sorting args
-    if (_.includes([`first`, `last`, `after`, `before`, `sortBy`], k)) {
+    if (_.includes([`skip`, `limit`, `sortBy`], k)) {
       return
     }
     const tempObject = {}
