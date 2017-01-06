@@ -24,6 +24,13 @@
     "import/no-unresolved": [0],
     "global-require": [0],
     "no-duplicate-imports": [0],
+    "import/no-extraneous-dependencies": [0],
+    "import/extensions": [0],
+    "import/first": [0],
+    "import/no-dynamic-require": [0],
+    "import/newline-after-import": [0],
+    "react/jsx-filename-extension": [0],
+    "react/no-danger": [0],
     /*"flowtype/require-parameter-type": 1,*/
     /*"flowtype/require-return-type": [*/
       /*1,*/
@@ -49,6 +56,7 @@
   },
   "globals": {
     "__PREFIX_LINKS__": true,
+    "document": true,
   },
   "settings": {
     "flowtype": {

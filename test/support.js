@@ -13,10 +13,10 @@ export function spawn (command, args = [], options = {}) {
     let stdout = ''
     let stderr = ''
     const child = spawnNative(command, args, options)
-    child.stdout.on('data', data => { stdout += data })
-    child.stderr.on('data', data => { stderr += data })
+    child.stdout.on('data', (data) => { stdout += data })
+    child.stderr.on('data', (data) => { stderr += data })
     child.on('error', error => reject({ error, stderr, stdout }))
-    child.on('exit', code => {
+    child.on('exit', (code) => {
       if (code === 0) {
         resolve({ code, stdout, stderr })
       } else {

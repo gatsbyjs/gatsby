@@ -21,7 +21,7 @@ Build sites like it's 1995. Files are translated into HTML pages at the
 same position within the file system. Add a markdown file at `/docs/index.md` and
 it'll be converted to `/docs/index.html`.
 
-*[We've started work on a 1.0 release of Gatsby!](https://github.com/gatsbyjs/gatsby/issues/419)*
+*[We've started work on a 1.0 release of Gatsby!](https://github.com/gatsbyjs/gatsby/issues/419)* Find the code in the `1.0` branch.
 
 ![live-reloading example](http://zippy.gfycat.com/UltimateWeeklyBarebirdbat.gif)
 
@@ -42,7 +42,6 @@ it'll be converted to `/docs/index.html`.
 
 ## Sites built with Gatsby
 * [bricolage.io](https://bricolage.io/?utm_source=github.com) ([source](https://github.com/KyleAMathews/blog))
-* [relaterocket.co](https://relaterocket.co?utm_source=github.com)
 * [reindex.io](https://www.reindex.io)
 * [syncano.io](https://www.syncano.io) ([source](https://github.com/Syncano/syncano.com))
 * [graphene-python.org](http://graphene-python.org/) ([source](https://github.com/graphql-python/graphene/tree/master/docs))
@@ -93,6 +92,14 @@ it'll be converted to `/docs/index.html`.
 * [anvilabs.co](https://anvilabs.co/?utm_source=github.com) ([source](https://github.com/anvilabs/anvilabs.co))
 * [Cardiogram](https://cardiogr.am)
 * [Geographer](https://geographer.su) ([source](https://github.com/MenaraSolutions/geographer-docs))
+* [fuchs+wald](https://fuchsundwald.de) ([source](https://github.com/voellig-ohne/cf-website))
+* [AngularToReact.com](https://angulartoreact.com)
+* [damianmullins.com](http://www.damianmullins.com) ([source](https://github.com/DamianMullins/damianmullins.github.io))
+* [Spencer Dixon's Blog](https://www.spencerdixon.com/) ([source](https://github.com/SpencerCDixon/blog))
+* [LandlordAccountz.com](http://www.landlordaccountz.com)
+* [Timo Becker](https://timobecker.com) ([source](https://github.com/voellig-ohne/timobecker))
+* [Sacha Greif](http://sachagreif.com/) ([source](https://github.com/SachaG/sg2017))
+* [Crypto Christmas](https://crypto.christmas/) ([source](https://github.com/rileyjshaw/crypto.christmas))
 * [Edit this file to add yours!](https://github.com/gatsbyjs/gatsby/blob/master/README.md)
 
 *Note, for the sites that have made their source available, you can
@@ -268,6 +275,38 @@ module.exports = React.createClass({
 })
 ```
 
+#### frontmatter and metadata
+Gatsby uses frontmatter and html-frontmatter to pull metadata out of files. This data is typically used in links leading to each page. The most relevant example is a list of blog posts in which you display the title, description, tags, etc. in the form of `{post.title}` in the React.js component.
+
+As seen in our previous markdown file, the title is part of the frontmatter
+```
+---
+title: This is a title
+---
+
+# Hi friends.
+This is a markdown file.
+```
+
+An html example as follows.
+```
+<!--
+title: This is a title
+-->
+ 
+<h1>Hello World</h1>
+```
+In a .js|.jsx file, export a data object to set your metadata variables, like so: 
+```
+import React from 'react'
+
+exports.data = {
+  title: 'This is a title',
+}
+
+export default MyComponent ...
+```
+
 ### Structure of a Gatsby site
 * `config.toml` - Core application configuration is stored here. Available via a `require`
 or `import` of 'config'. Values:
@@ -308,13 +347,13 @@ Gatsby calls this function with the webpack-configurator object and
 "stage" string when it creates a Webpack config. It first
 loads the defaults and then allows you to modify it.
 
-The `stage` can be
+The `stage` can be:
 
-1) develop: for `gatsby develop` command, hot reload and CSS injection into page
-2) develop-html: same as develop without react-hmre in the babel config for html renderer
-3) build-css: build styles.css file
-4) build-html: build all HTML files
-5) build-javascript: Build bundle.js for Single Page App in production
+1. develop: for `gatsby develop` command, hot reload and CSS injection into page
+2. develop-html: same as develop without react-hmre in the babel config for html renderer
+3. build-css: build styles.css file
+4. build-html: build all HTML files
+5. build-javascript: Build bundle.js for Single Page App in production
 
 Consider the following example which removes the default css loader
 and replaces it with a loader that uses css-modules.
@@ -448,7 +487,7 @@ if (process.env.NODE_ENV === 'production') {
 ```
 ### CSS modules
 
-[CSS modules](https://github.com/css-modules/css-modules) are support by default for all files with `.module.(css|less|scss|sass)` extension.
+[CSS modules](https://github.com/css-modules/css-modules) are supported by default for all files with `.module.(css|less|scss|sass)` extension.
 
 ```javascript
 // Uses CSS Modules
