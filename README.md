@@ -1,6 +1,8 @@
 [![Travis CI Build Status](https://travis-ci.org/gatsbyjs/gatsby.svg?branch=master)](https://travis-ci.org/gatsbyjs/gatsby)
 [![npm package](https://img.shields.io/npm/v/gatsby.svg?style=flat-square)](https://www.npmjs.org/package/gatsby)
 [![gatsby channel on discord](https://img.shields.io/badge/discord-gatsby%40reactiflux-738bd7.svg?style=flat-square)](https://discord.gg/0ZcbPKXt5bVoxkfV)
+[![OpenCollective](https://opencollective.com/gatsby/backers/badge.svg)](#backers) 
+[![OpenCollective](https://opencollective.com/gatsby/sponsors/badge.svg)](#sponsors)
 [![Twitter Follow](https://img.shields.io/twitter/follow/gatsbyjs.svg?style=social)](https://twitter.com/gatsbyjs)
 
 # Gatsby
@@ -569,3 +571,74 @@ Jekyll has a [comprehensive import tool](http://import.jekyllrb.com/) for these 
 Once your pages are converted to markdown, change the file extensions to
 `.md` from the `.markdown` the tool outputs and then use them in your
 site.
+
+## Backers
+
+Support us with a monthly donation and help us continue our activities. [[Become a backer](https://opencollective.com/gatsby#backer)]
+
+<a href="https://opencollective.com/gatsby/backer/0/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/0/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/1/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/1/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/2/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/2/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/3/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/3/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/4/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/4/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/5/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/5/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/6/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/6/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/7/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/7/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/8/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/8/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/9/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/9/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/10/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/10/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/11/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/11/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/12/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/12/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/13/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/13/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/14/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/14/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/15/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/15/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/16/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/16/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/17/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/17/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/18/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/18/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/19/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/19/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/20/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/20/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/21/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/21/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/22/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/22/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/23/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/23/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/24/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/24/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/25/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/25/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/26/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/26/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/27/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/27/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/28/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/28/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/29/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/29/avatar.svg"></a>
+
+
+## Sponsors
+
+Become a sponsor and get your logo on our README on Github with a link to your site. [[Become a sponsor](https://opencollective.com/gatsby#sponsor)]
+
+<a href="https://opencollective.com/gatsby/sponsor/0/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/1/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/1/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/2/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/2/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/3/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/3/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/4/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/4/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/5/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/5/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/6/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/6/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/7/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/7/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/8/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/8/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/9/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/9/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/10/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/10/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/11/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/11/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/12/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/12/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/13/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/13/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/14/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/14/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/15/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/15/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/16/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/16/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/17/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/17/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/18/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/18/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/19/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/19/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/20/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/20/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/21/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/21/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/22/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/22/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/23/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/23/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/24/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/24/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/25/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/25/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/26/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/26/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/27/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/27/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/28/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/28/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/29/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/29/avatar.svg"></a>
