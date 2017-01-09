@@ -101,6 +101,7 @@ it'll be converted to `/docs/index.html`.
 * [Sacha Greif](http://sachagreif.com/) ([source](https://github.com/SachaG/sg2017))
 * [Crypto Christmas](https://crypto.christmas/) ([source](https://github.com/rileyjshaw/crypto.christmas))
 * [Perspexi Labs](https://www.perspexilabs.com/)
+* [Scaphold.io Community](https://scaphold.io/community/) ([source](https://github.com/scaphold-io/scaphold-community))
 * [Edit this file to add yours!](https://github.com/gatsbyjs/gatsby/blob/master/README.md)
 
 *Note, for the sites that have made their source available, you can
