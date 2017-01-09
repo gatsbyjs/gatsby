@@ -543,7 +543,7 @@ Gatsby supports automatically prefixing links with its `prefixLink` helper funct
 First set the prefix in your config file e.g. `linkPrefix = '/your-project'`
 
 Then simply import the function and run all links in your site
-thorough it e.g.
+through it e.g.
 
 ```javascript
 import { prefixLink } from 'gatsby-helpers'
