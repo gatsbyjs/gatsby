@@ -97,12 +97,22 @@ module.exports = ({ files, markdownNode, markdownAST, pluginOptions }) => {
 
           // Construct new image node w/ aspect ratio placeholder
           const rawHTML = `
-          <a title="original image" href="${originalImg}" style="display: block">
-            <div style="position: relative; z-index: -1; ${options.wrapperStyle}">
+          <a
+            class="gatsby-resp-image-link"
+            title="original image"
+            href="${originalImg}"
+            style="display: block"
+          >
+            <div
+              class="gatsby-resp-image-wrapper"
+              style="position: relative; z-index: -1; ${options.wrapperStyle}"
+            >
               <div
+                class="gatsby-resp-image-background-image"
                 style="padding-bottom: ${ratio};position: relative; width: 100%; bottom: 0; left: 0; background-image: url('${base64Result.src}'); background-size: cover;"
               >
                 <img
+                  class="gatsby-resp-image-image"
                   style="width: 100%; margin: 0; vertical-align: middle; position: absolute;"
                   alt="${node.alt ? node.alt : ``}"
                   title="${node.title ? node.title : ``}"
@@ -128,6 +138,9 @@ module.exports = ({ files, markdownNode, markdownAST, pluginOptions }) => {
           node.type = `unknown`
           return resolve()
         })
+      } else {
+        // Image isn't relative so there's nothing for us to do.
+        resolve()
       }
     })
   )))
