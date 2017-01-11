@@ -5,17 +5,18 @@ const _ = require(`lodash`)
 const Promise = require(`bluebird`)
 const fs = require(`fs`)
 const ProgressBar = require(`progress`)
-const imagemin = require('imagemin')
-const imageminPngquant = require('imagemin-pngquant')
+const imagemin = require(`imagemin`)
+const imageminPngquant = require(`imagemin-pngquant`)
 const async = require(`async`)
 
 // Promisify the sharp prototype (methods) to promisify the alternative (for
 // raw) callback-accepting toBuffer(...) method
-Promise.promisifyAll(sharp.prototype, {multiArgs: true})
+Promise.promisifyAll(sharp.prototype, { multiArgs: true })
 
 // Try to enable the use of SIMD instructions. Seems to provide a smallish
-// speedup on resizing heavy loads (~10%). The feature is off by default as
-// there's been problems with segfaulting in the past.
+// speedup on resizing heavy loads (~10%). Sharp disables this feature by
+// default as there's been problems with segfaulting in the past but we'll be
+// adventurous and see what happens with it on.
 sharp.simd(true)
 
 const toProcess = []
@@ -36,14 +37,18 @@ const processJobs = (jobs, count) => {
       } else {
         clonedPipeline = pipeline
       }
-      clonedPipeline.resize(Math.round(args.width), args.height)
+      // Sharp only allows ints as height/width. Since height isn't always
+      // set, check first before trying to round it.
+      let roundedHeight = args.height
+      if (roundedHeight) { roundedHeight = Math.round(roundedHeight) }
+      clonedPipeline.resize(Math.round(args.width), roundedHeight)
       .png({
         compressionLevel: args.pngCompressionLevel,
         adaptiveFiltering: false,
         force: false,
       })
       .jpeg({
-        quality: args.jpegQuality,
+        quality: args.quality,
         progressive: args.jpegProgressive,
         force: false,
       })
@@ -71,7 +76,7 @@ const processJobs = (jobs, count) => {
           imagemin.buffer(sharpBuffer, {
             plugins: [
               imageminPngquant({
-                quality: `20-45`,
+                quality: `${args.quality - 25}-${args.quality}`, // e.g. 40-65
               }),
             ],
           })
@@ -104,7 +109,7 @@ const debouncedProcess = _.debounce(() => {
 function queueImageResizing ({ file, args = {} }) {
   const defaultArgs = {
     width: 400,
-    jpegQuality: 50,
+    quality: 50,
     jpegProgressive: true,
     pngCompressionLevel: 9,
     grayscale: false,
@@ -183,7 +188,7 @@ function queueImageResizing ({ file, args = {} }) {
 async function base64 ({ file, args = {} }) {
   const defaultArgs = {
     width: 20,
-    jpegQuality: 50,
+    quality: 50,
     jpegProgressive: true,
     pngCompressionLevel: 9,
     grayscale: false,
@@ -197,7 +202,7 @@ async function base64 ({ file, args = {} }) {
     force: false,
   })
   .jpeg({
-    quality: options.jpegQuality,
+    quality: options.quality,
     progressive: options.jpegProgressive,
     force: false,
   })
@@ -225,7 +230,7 @@ async function base64 ({ file, args = {} }) {
 async function responsiveSizes ({ file, args = {} }) {
   const defaultArgs = {
     maxWidth: 800,
-    jpegQuality: 50,
+    quality: 50,
     jpegProgressive: true,
     pngCompressionLevel: 9,
     grayscale: false,
@@ -262,11 +267,12 @@ async function responsiveSizes ({ file, args = {} }) {
   // Queue sizes for processing.
   const images = sortedSizes.map((size) => {
     const arrrgs = {
+      ...options,
       width: Math.round(size),
     }
     // Queue sizes for processing.
     if (options.maxHeight) {
-      arrrgs.height = size * (options.maxHeight / options.maxWidth)
+      arrrgs.height = Math.round(size * (options.maxHeight / options.maxWidth))
     }
 
     return queueImageResizing({
@@ -293,7 +299,7 @@ async function responsiveSizes ({ file, args = {} }) {
 async function responsiveResolution ({ file, args = {} }) {
   const defaultArgs = {
     width: 400,
-    jpegQuality: 50,
+    quality: 50,
     jpegProgressive: true,
     pngCompressionLevel: 9,
     grayscale: false,
@@ -316,11 +322,12 @@ async function responsiveResolution ({ file, args = {} }) {
 
   const images = sortedSizes.map((size) => {
     const arrrgs = {
+      ...options,
       width: Math.round(size),
     }
     // Queue sizes for processing.
     if (options.height) {
-      arrrgs.height = size * (options.height / options.width)
+      arrrgs.height = Math.round(size * (options.height / options.width))
     }
 
     return queueImageResizing({

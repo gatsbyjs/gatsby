@@ -41,6 +41,10 @@ exports.extendNodeType = (options) => {
           type: GraphQLBoolean,
           defaultValue: false,
         },
+        quality: {
+          type: GraphQLInt,
+          defaultValue: 50,
+        },
       },
       resolve (image, args) {
         return responsiveResolution({
@@ -71,6 +75,10 @@ exports.extendNodeType = (options) => {
           type: GraphQLBoolean,
           defaultValue: false,
         },
+        quality: {
+          type: GraphQLInt,
+          defaultValue: 50,
+        },
       },
       resolve (image, args) {
         return responsiveSizes({
@@ -97,7 +105,7 @@ exports.extendNodeType = (options) => {
         height: {
           type: GraphQLInt,
         },
-        jpegQuality: {
+        quality: {
           type: GraphQLInt,
           defaultValue: 50,
         },
