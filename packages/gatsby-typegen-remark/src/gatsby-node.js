@@ -21,6 +21,7 @@ const toHAST = require(`mdast-util-to-hast`)
 const hastToHTML = require(`hast-util-to-html`)
 const inspect = require(`unist-util-inspect`)
 const Promise = require(`bluebird`)
+const prune = require(`underscore.string/prune`)
 
 exports.extendNodeType = ({ args, pluginOptions }) => {
   return new Promise((resolve, reject) => {
@@ -174,9 +175,11 @@ exports.extendNodeType = ({ args, pluginOptions }) => {
           },
         },
         resolve (markdownNode, { pruneLength }) {
-          return getHTML(markdownNode).then((node) => (
-            excerptHTML(node.html, { pruneLength })
-          ))
+          return getAST(markdownNode).then((node) => {
+            const textNodes = []
+            visit(node.ast, 'text', (textNode) => textNodes.push(textNode.value))
+            return prune(textNodes.join(` `), pruneLength)
+          })
         },
       },
       headings: {
