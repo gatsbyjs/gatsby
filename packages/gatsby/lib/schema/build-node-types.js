@@ -9,11 +9,13 @@ const {
 const select = require(`unist-util-select`)
 const path = require(`path`)
 const Promise = require(`bluebird`)
+const mime = require(`mime`)
 
 const apiRunner = require(`../utils/api-runner-node`)
 const { inferObjectStructureFromNodes } = require(`./infer-graphql-type`)
 const { inferInputObjectStructureFromNodes } = require(`./infer-graphql-input-fields`)
 const nodeInterface = require(`./node-interface`)
+const { siteDB } = require('../utils/globals')
 
 module.exports = async (ast) => (
   new Promise((resolve) => {
@@ -104,12 +106,37 @@ module.exports = async (ast) => (
             name: _.camelCase(`${typeName} field`),
             type: nodeType.nodeObjectType,
             resolve: (node, a, b, { fieldName }) => {
-              const linkedType = _.capitalize(fieldName.split(`___`)[1])
-              if (node[fieldName]) {
-                const sourceFileNode = _.find(allNodes, (n) => (
-                  n.type === `File` && n.id === node._sourceNodeId
+              const mapping = siteDB().get(`config`).mapping
+              const fieldSelector = `${node.___path}.${fieldName}`
+              const fieldValue = node[fieldName]
+              const sourceFileNode = _.find(allNodes, (n) => (
+                n.type === `File` && n.id === node._sourceNodeId
+              ))
+              // First test if this field is mapped in gatsby-config.js.
+              if (_.includes(Object.keys(mapping), fieldSelector)) {
+                const linkedType = mapping[fieldSelector]
+                const linkedNode = _.find(allNodes, (n) => (
+                  n.type === linkedType && n.id === fieldValue
                 ))
+                if (linkedNode) {
+                  return linkedNode
+                }
+              }
 
+              // Then test if the field is linking to a file.
+              if (_.isString(fieldValue) && mime.lookup(fieldValue) !== `application/octet-stream`) {
+                const fileLinkPath = path.resolve(sourceFileNode.dirname, fieldValue)
+                const linkedFileNode = _.find(allNodes, (n) => (
+                  n.type === `File` && n.id === fileLinkPath
+                ))
+                if (linkedFileNode) {
+                  return linkedFileNode
+                }
+              }
+
+              // Next assume the field is using the ___TYPE notation.
+              const linkedType = _.capitalize(fieldName.split(`___`)[1])
+              if (fieldValue) {
                 // First assume the user is linking using the desired node's ID.
                 // This is a temp hack but then assume the link is a relative path
                 // and try to resolve it. Probably a better way is that each typegen

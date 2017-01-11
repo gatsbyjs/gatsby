@@ -207,7 +207,6 @@ module.exports = async (program, cb) => {
 
   // TODO create new folder structure for files to reflect major systems.
   // TODO validate page objects when adding them.
-  // TODO validate gatsby-config.js.
   // TODO pass names of layout/page components into commons plugin for proper
   // code splitting.
   // TODO split layout components into their own files as well.

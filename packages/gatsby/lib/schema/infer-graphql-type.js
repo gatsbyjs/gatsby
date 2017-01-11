@@ -8,6 +8,9 @@ const {
 } = require(`graphql`)
 const _ = require(`lodash`)
 const moment = require(`moment`)
+const parseFilepath = require(`parse-filepath`)
+const mime = require(`mime`)
+const { siteDB } = require('../utils/globals')
 
 const inferGraphQLType = ({ value, fieldName, ...otherArgs }) => {
   if (Array.isArray(value)) {
@@ -80,12 +83,15 @@ const inferGraphQLType = ({ value, fieldName, ...otherArgs }) => {
   }
 }
 
+// Call this for the top level node + recursively for each sub-object.
+// E.g. This gets called for Markdown and then for its frontmatter subobject.
 const inferObjectStructureFromNodes = exports.inferObjectStructureFromNodes = (
   {
     nodes,
     selector,
     types,
   }) => {
+  const type = nodes[0].type
   const fieldExamples = {}
   _.each(nodes, (node) => {
     let subNode
@@ -101,12 +107,25 @@ const inferObjectStructureFromNodes = exports.inferObjectStructureFromNodes = (
     })
   })
 
-  // Remove fields common to all nodes.
-  delete fieldExamples.type
-  delete fieldExamples.id
-  delete fieldExamples.parent
-  delete fieldExamples.children
+  // Add the "path" to each subnode as we'll need this later when resolving
+  // mapped fields to types in GraphQL land. We do that here (after creating
+  // field examples) so our special field is not added to the GraphQL type.
+  if (selector) {
+    nodes.forEach((node) => {
+      _.set(node, `${selector}.___path`, `${type}.${selector}`)
+    })
+  }
 
+  // Remove fields common to the top-level of all nodes.  We add these
+  // elsewhere so don't need to infer there type.
+  if (!selector) {
+    delete fieldExamples.type
+    delete fieldExamples.id
+    delete fieldExamples.parent
+    delete fieldExamples.children
+  }
+
+  const mapping = siteDB().get(`config`).mapping
   const inferredFields = {}
   _.each(fieldExamples, (v, k) => {
     // Create fields for children.
@@ -124,12 +143,21 @@ const inferObjectStructureFromNodes = exports.inferObjectStructureFromNodes = (
       //})
     //}
     // Check if field is pointing to custom type.
-    if (_.includes(k, `___`)) {
+    // First check field => type mappings in gatsby-config.js
+    const fieldSelector = `${nodes[0].type}.${selector}.${k}`
+    if (_.includes(Object.keys(mapping), fieldSelector)) {
+      const matchedTypes = types.filter((type) => type.name === mapping[fieldSelector])
+      inferredFields[k] = matchedTypes[0].field
+    } else if (_.includes(k, `___`)) {
       const fieldType = _.capitalize(k.split(`___`)[1])
       const matchedType = _.find(types, (type) => type.name === fieldType)
       if (matchedType) {
         inferredFields[k] = matchedType.field
       }
+    // Special case fields that look like they're pointing at a file — if the
+    // field has a known extension then assume it should be a file field.
+    } else if (nodes[0].type !== `File` && _.isString(v) && mime.lookup(v) !== `application/octet-stream`) {
+      inferredFields[k] = types.filter((type) => type.name === `File`)[0].field
     } else {
       inferredFields[k] = inferGraphQLType({
         value: v,

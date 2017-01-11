@@ -352,7 +352,7 @@ const q = queue(({ file, graphql, directory }, callback) => {
     debouncedWriteChildRoutes()
     callback()
   })
-}, 2)
+}, 1)
 
 module.exports = (program, graphql, cb) => {
   // Get unique array of component paths and then watch them.

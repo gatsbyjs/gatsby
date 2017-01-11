@@ -3,6 +3,7 @@ const Joi = require(`joi`)
 export const gatsbyConfigSchema = Joi.object().keys({
   siteMetadata: Joi.object(),
   linkPrefix: Joi.string(),
+  mapping: Joi.object(),
   plugins: Joi.array(),
 })
 
