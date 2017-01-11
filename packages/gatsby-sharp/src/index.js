@@ -185,7 +185,7 @@ function queueImageResizing ({ file, args = {} }) {
   }
 }
 
-async function base64 ({ file, args = {} }) {
+async function notMemoizedbase64 ({ file, args = {} }) {
   const defaultArgs = {
     width: 20,
     quality: 50,
@@ -225,6 +225,12 @@ async function base64 ({ file, args = {} }) {
     height: info.height,
     aspectRatio: info.width / info.height,
   }
+}
+
+const memoizedBase64 = _.memoize(notMemoizedbase64, ({ file, args }) => `${file.id}${JSON.stringify(args)}`)
+
+async function base64 (args) {
+  return await memoizedBase64(args)
 }
 
 async function responsiveSizes ({ file, args = {} }) {
