@@ -76,7 +76,7 @@ const processJobs = (jobs, count) => {
           imagemin.buffer(sharpBuffer, {
             plugins: [
               imageminPngquant({
-                quality: `${args.quality - 25}-${args.quality}`, // e.g. 40-65
+                quality: `${args.quality}-${args.quality + 25}`, // e.g. 40-65
               }),
             ],
           })
