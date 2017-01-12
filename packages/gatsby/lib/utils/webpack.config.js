@@ -333,6 +333,11 @@ module.exports = async (program, directory, suppliedStage, webpackPort = 1500, p
       test: /\.json$/,
       loaders: [`json`],
     })
+    config.loader(`yaml`, {
+      test: /\.ya?ml/,
+      loaders: [`json`, `yaml`],
+    })
+
     // "file" loader makes sure those assets end up in the `public` folder.
     // When you `import` an asset, you get its filename.
     config.loader(`file-loader`, {

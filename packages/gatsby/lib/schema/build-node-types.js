@@ -113,7 +113,7 @@ module.exports = async (ast) => (
                 n.type === `File` && n.id === node._sourceNodeId
               ))
               // First test if this field is mapped in gatsby-config.js.
-              if (_.includes(Object.keys(mapping), fieldSelector)) {
+              if (mapping && _.includes(Object.keys(mapping), fieldSelector)) {
                 const linkedType = mapping[fieldSelector]
                 const linkedNode = _.find(allNodes, (n) => (
                   n.type === linkedType && n.id === fieldValue

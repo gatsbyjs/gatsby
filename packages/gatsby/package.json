@@ -54,7 +54,7 @@
     "glob": "^7.1.0",
     "graphql": "^0.8.2",
     "graphql-relay": "^0.4.3",
-    "graphql-skip-limit": "^0.0.0",
+    "graphql-skip-limit": "^1.0.0-alpha11-alpha.68e8f9a1",
     "graphql-union-input-type": "^0.2.1",
     "gray-matter": "^2.1.0",
     "hapi": "^8.5.1",
@@ -123,7 +123,8 @@
     "webpack-stable-module-id-and-hash": "^1.0.2",
     "webpack-stats-plugin": "^0.1.4",
     "webpack-validator": "^2.2.7",
-    "yaml-js": "^0.1.4"
+    "yaml-js": "^0.1.4",
+    "yaml-loader": "^0.4.0"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
