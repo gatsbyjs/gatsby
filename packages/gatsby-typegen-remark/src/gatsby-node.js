@@ -42,68 +42,89 @@ exports.extendNodeType = ({ args, pluginOptions }) => {
         return astPromiseCache[markdownNode.id]
       } else {
         astPromiseCache[markdownNode.id] = new Promise((resolve, reject) => {
-          const markdownAST = remark.parse(markdownNode.src)
 
-          // source => parse (can order parsing for dependencies) => typegen
-          //
-          // source plugins identify nodes, provide id, initial parse, know
-          // when nodes are created/removed/deleted
-          // get passed cached AST and return list of clean and dirty nodes.
-          // Also get passed `dirtyNodes` function which they can call with an array
-          // of node ids which will then get re-parsed and the inferred schema
-          // recreated (if inferring schema gets too expensive, can also
-          // cache the schema until a query fails at which point recreate the
-          // schema).
-          //
-          // parse plugins take data from source nodes and extend it, never mutate
-          // it. Freeze all nodes once done so typegen plugins can't change it
-          // this lets us save off the AST at that point as well as create
-          // indexes.
-          //
-          // typegen plugins identify further types of data that should be lazily
-          // computed due to their expense, or are hard to infer graphql type
-          // (markdown ast), or are need user input in order to derive e.g.
-          // markdown headers or date fields.
-          //
-          // wrap all resolve functions to (a) auto-memoize and (b) cache to disk any
-          // resolve function that takes longer than ~10ms (do research on this
-          // e.g. how long reading/writing to cache takes), and (c) track which
-          // queries are based on which source nodes. Also if connection of what
-          // which are always rerun if their underlying nodes change..
-          //
-          // every node type in AST gets a schema type automatically.
-          // typegen plugins just modify the auto-generated types to add derived fields
-          // as well as computationally expensive fields.
-
-          // Use PrismJS to add syntax highlighting to code blocks.
-          // TODO move this to its own plugin w/ peerDependency to this.
-          // this should parse ast. everything it puts on markdown nodes
-          // should be namespaced with remark_
-          // stage 0 — source nodes
-          // stage 1 — generic parse, identify types
-          // stage 2 — dive deeper — remark
-          // stage 3 — work on sub-asts e.g. markdown
-          // stage 4 — compile to graphql types.
-          // how to order work? Stages? People will get confused about what stage to
-          // use...
-          // explicitly mark dependecies — e.g. remark has plugins to parse its AST
-          // which remark controls when these run.
           Promise.all(pluginOptions.plugins.map((plugin) => {
             const requiredPlugin = require(plugin.resolve)
-            return requiredPlugin({
-              markdownAST,
-              markdownNode,
-              files,
-              pluginOptions: plugin.pluginOptions,
-            })
+            if (_.isFunction(requiredPlugin.mutateSource)) {
+              console.log(`running plugin to mutate markdown source`)
+              return requiredPlugin.mutateSource({
+                markdownNode,
+                files,
+                pluginOptions: plugin.pluginOptions,
+              })
+            } else {
+              return Promise.resolve()
+            }
           }))
           .then(() => {
-            markdownNode.ast = markdownAST
-            resolve(markdownNode)
+            const markdownAST = remark.parse(markdownNode.src)
+
+            // source => parse (can order parsing for dependencies) => typegen
+            //
+            // source plugins identify nodes, provide id, initial parse, know
+            // when nodes are created/removed/deleted
+            // get passed cached AST and return list of clean and dirty nodes.
+            // Also get passed `dirtyNodes` function which they can call with an array
+            // of node ids which will then get re-parsed and the inferred schema
+            // recreated (if inferring schema gets too expensive, can also
+            // cache the schema until a query fails at which point recreate the
+            // schema).
+            //
+            // parse plugins take data from source nodes and extend it, never mutate
+            // it. Freeze all nodes once done so typegen plugins can't change it
+            // this lets us save off the AST at that point as well as create
+            // indexes.
+            //
+            // typegen plugins identify further types of data that should be lazily
+            // computed due to their expense, or are hard to infer graphql type
+            // (markdown ast), or are need user input in order to derive e.g.
+            // markdown headers or date fields.
+            //
+            // wrap all resolve functions to (a) auto-memoize and (b) cache to disk any
+            // resolve function that takes longer than ~10ms (do research on this
+            // e.g. how long reading/writing to cache takes), and (c) track which
+            // queries are based on which source nodes. Also if connection of what
+            // which are always rerun if their underlying nodes change..
+            //
+            // every node type in AST gets a schema type automatically.
+            // typegen plugins just modify the auto-generated types to add derived fields
+            // as well as computationally expensive fields.
+
+            // Use PrismJS to add syntax highlighting to code blocks.
+            // TODO move this to its own plugin w/ peerDependency to this.
+            // this should parse ast. everything it puts on markdown nodes
+            // should be namespaced with remark_
+            // stage 0 — source nodes
+            // stage 1 — generic parse, identify types
+            // stage 2 — dive deeper — remark
+            // stage 3 — work on sub-asts e.g. markdown
+            // stage 4 — compile to graphql types.
+            // how to order work? Stages? People will get confused about what stage to
+            // use...
+            // explicitly mark dependecies — e.g. remark has plugins to parse its AST
+            // which remark controls when these run.
+            Promise.all(pluginOptions.plugins.map((plugin) => {
+              const requiredPlugin = require(plugin.resolve)
+              if (_.isFunction(requiredPlugin)) {
+                return requiredPlugin({
+                  markdownAST,
+                  markdownNode,
+                  files,
+                  pluginOptions: plugin.pluginOptions,
+                })
+              } else {
+                return Promise.resolve()
+              }
+            }))
+            .then(() => {
+              markdownNode.ast = markdownAST
+              resolve(markdownNode)
+            })
           })
         })
-        return astPromiseCache[markdownNode.id]
       }
+
+      return astPromiseCache[markdownNode.id]
     }
 
     async function getHeadings (markdownNode) {

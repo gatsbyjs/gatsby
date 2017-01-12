@@ -92,6 +92,8 @@ const processJobs = (jobs, count) => {
   })
 }
 
+// TODO when we emit a new group, merge that group with the files not
+// yet processed.
 const debouncedProcess = _.debounce(() => {
   // Filter out jobs for images that have already been created.
   let filteredJobs = toProcess.filter((job) => !fs.existsSync(job.outputPath))
