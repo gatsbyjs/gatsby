@@ -17,7 +17,7 @@ const OfflinePlugin = require(`offline-plugin`)
 const ChunkManifestPlugin = require(`chunk-manifest-webpack-plugin`)
 const { pagesDB, siteDB } = require(`../utils/globals`)
 const { layoutComponentChunkName } = require(`./js-chunk-names`)
-const babelConfig = require(`./babel-config`)
+const genBabelConfig = require(`./babel-config`)
 
 // Five stages or modes:
 //   1) develop: for `gatsby develop` command, hot reload and CSS injection into page
@@ -26,9 +26,10 @@ const babelConfig = require(`./babel-config`)
 //   4) build-html: build all HTML files
 //   5) build-javascript: Build js chunks for Single Page App in production
 
-module.exports = (program, directory, suppliedStage, webpackPort = 1500, pages = []) => {
+module.exports = async (program, directory, suppliedStage, webpackPort = 1500, pages = []) => {
   const babelStage = suppliedStage
   const stage = (suppliedStage === `develop-html`) ? `develop` : suppliedStage
+  const babelConfig = await genBabelConfig(program, babelStage)
 
   debug(`Loading webpack config for stage "${stage}"`)
   function output () {
@@ -322,7 +323,7 @@ module.exports = (program, directory, suppliedStage, webpackPort = 1500, pages =
       test: /\.jsx?$/, // Accept either .js or .jsx files.
       exclude: /(node_modules|bower_components)/,
       loader: `babel`,
-      query: babelConfig(program, babelStage),
+      query: _.merge(...babelConfig),
     })
     config.loader(`coffee`, {
       test: /\.coffee$/,
@@ -512,7 +513,7 @@ module.exports = (program, directory, suppliedStage, webpackPort = 1500, pages =
 
   module(config, stage)
 
-  const validatedConfig = webpackModifyValidate(config, stage)
+  const validatedConfig = await webpackModifyValidate(config, stage)
 
   return validatedConfig
 }

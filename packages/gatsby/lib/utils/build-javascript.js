@@ -1,11 +1,14 @@
 /* @flow weak */
 import webpack from 'webpack'
+import Promise from 'bluebird'
 import webpackConfig from './webpack.config'
 
-module.exports = (program, callback) => {
+module.exports = async (program) => {
   const { directory } = program
 
-  const compilerConfig = webpackConfig(program, directory, `build-javascript`)
+  const compilerConfig = await webpackConfig(program, directory, `build-javascript`)
 
-  webpack(compilerConfig.resolve()).run(callback)
+  return new Promise((resolve) => {
+    webpack(compilerConfig.resolve()).run(() => resolve())
+  })
 }

@@ -81,7 +81,7 @@ const autoPathCreator = (program) => {
 }
 
 
-module.exports = async (program, cb) => {
+module.exports = async (program) => {
   console.log('lib/bootstrap/index.js time since started:', process.uptime())
   // Set the program to the globals programDB
   programDB(program)
@@ -287,8 +287,8 @@ module.exports = async (program, cb) => {
   //console.log(`bootstrap finished, time since started:`, process.uptime())
   //cb(null, schema)
 
-  queryRunner(program, graphqlRunner, () => {
-    console.log(`bootstrap finished, time since started: ${process.uptime()}`)
-    cb(null, schema)
-  })
+  await queryRunner(program, graphqlRunner)
+  console.log(`bootstrap finished, time since started: ${process.uptime()}`)
+
+  return { schema, graphqlRunner }
 }

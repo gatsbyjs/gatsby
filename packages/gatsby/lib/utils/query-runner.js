@@ -354,19 +354,21 @@ const q = queue(({ file, graphql, directory }, callback) => {
   })
 }, 1)
 
-module.exports = (program, graphql, cb) => {
+module.exports = async (program, graphql) => {
   // Get unique array of component paths and then watch them.
   // When a component is updated, rerun queries.
   const components = _.uniq([...pagesDB().values()].map((page) => page.component))
 
-  // If there's no components yet, call the callback early.
+  let outsideResolve
+
+  // If there's no components yet, call the resolve early.
   if (components.length === 0) {
-    cb()
+    outsideResolve()
   } else {
     q.drain = () => {
-      // Only call callback once.
+      // Only call resolve once.
       q.drain = _.noop
-      cb()
+      outsideResolve()
     }
   }
 
@@ -388,4 +390,6 @@ module.exports = (program, graphql, cb) => {
     .on(`change`, path => q.push({ file: path, graphql, directory: program.directory }))
     .on(`unlink`, path => q.push({ file: path, graphql, directory: program.directory }))
   }
+
+  return new Promise((resolve) => outsideResolve = resolve)
 }

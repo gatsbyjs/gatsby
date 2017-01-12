@@ -2,36 +2,25 @@ import _ from 'lodash'
 import invariant from 'invariant'
 import path from 'path'
 import validate from 'webpack-validator'
+import apiRunnerNode from './api-runner-node'
 
-let modifyWebpackConfig
-try {
-  const gatsbyNodeConfig = path.resolve(process.cwd(), `./gatsby-node`)
-  const nodeConfig = require(gatsbyNodeConfig)
-  modifyWebpackConfig = nodeConfig.modifyWebpackConfig
-} catch (e) {
-  if (e.code !== `MODULE_NOT_FOUND` && !_.includes(e.Error, `gatsby-node`)) {
-    console.log(e)
-  }
-}
+export default async function ValidateWebpackConfig (config, stage) {
+  // We don't care about the return as plugins just mutate the config directly.
+  await apiRunnerNode(`modifyWebpackConfig`, { config, stage })
 
-export default function ValidateWebpackConfig (userWebpackConfig, stage) {
-  if (modifyWebpackConfig) {
-    userWebpackConfig = modifyWebpackConfig(userWebpackConfig, stage)
+  invariant(_.isObject(config) && _.isFunction(config.resolve),
+    `
+    You must return an webpack-configurator instance when modifying the Webpack config.
+    Returned: ${config}
+    stage: ${stage}
+    `)
 
-    invariant(_.isObject(userWebpackConfig) && _.isFunction(userWebpackConfig.resolve),
-      `
-      You must return an webpack-configurator instance when modifying the Webpack config.
-      Returned: ${userWebpackConfig}
-      stage: ${stage}
-      `)
-  }
-
-  const validationState = validate(userWebpackConfig.resolve(), {
+  const validationState = validate(config.resolve(), {
     returnValidation: true,
   })
 
   if (!validationState.error) {
-    return userWebpackConfig
+    return config
   }
 
   console.log(`There were errors with your webpack config:`)

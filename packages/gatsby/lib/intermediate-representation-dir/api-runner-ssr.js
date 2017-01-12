@@ -13,17 +13,13 @@ module.exports = (api, args, defaultReturn) => {
       return result
     }
   })
-  console.log(`ssr plugin results`, results)
 
   // Filter out undefined/falsey results.
   results = results.filter((result) => result)
-  console.log(`filtered results`, results)
 
   if (results.length > 0) {
-    console.log(`returning results`)
     return results
   } else {
-    console.log(`returning defaultReturn`)
     return [defaultReturn]
   }
 }

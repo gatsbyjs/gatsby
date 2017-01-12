@@ -37,28 +37,32 @@ module.exports = (locals, callback) => {
       // If no one stepped up, we'll handle it.
       if (!body) {
         body = renderToString(component)
-        bodyRenderProps = {}
       }
 
+      // Check if vars were created.
+      if (!bodyRenderProps) {
+        bodyRenderProps = {}
+      }
       if (!headComponents) {
         headComponents = []
       }
-
       if (!postBodyComponents) {
         postBodyComponents = []
       }
 
       // Add the chunk-manifest as a head component.
-      const chunkManifest = require('!raw!public/chunk-manifest.json')
+      const chunkManifest = require(`!raw!public/chunk-manifest.json`)
 
       headComponents.push(
         <script
           id="webpack-manifest"
-          dangerouslySetInnerHTML={{ __html: `
-          //<![CDATA[
-          window.webpackManifest = ${chunkManifest}
-          //]]>
-          ` }}
+          dangerouslySetInnerHTML={{ __html:
+            `
+            //<![CDATA[
+            window.webpackManifest = ${chunkManifest}
+            //]]>
+            `,
+          }}
         />
       )
 
@@ -93,6 +97,17 @@ module.exports = (locals, callback) => {
           <script key={prefixedScript} src={prefixedScript} />
         )
       })
+
+      // Call plugins to let them add to or modify components/props.
+      const pluginHeadComponents = apiRunner(`modifyHeadComponents`, { headComponents }, [])
+      headComponents = headComponents.concat(pluginHeadComponents)
+      console.log(pluginHeadComponents, headComponents)
+
+      const pluginPostBodyComponents = apiRunner(`modifyPostBodyComponents`, { postBodyComponents }, [])
+      postBodyComponents = postBodyComponents.concat(pluginPostBodyComponents)
+
+      const pluginBodyRenderProps = apiRunner(`modifyBodyRenderProps`, { bodyRenderProps }, {})
+      bodyRenderProps = _.merge(bodyRenderProps, pluginBodyRenderProps)
 
       const html = `<!DOCTYPE html>\n ${renderToStaticMarkup(
         <Html

@@ -6,6 +6,7 @@ import json5 from 'json5'
 import _ from 'lodash'
 import objectAssign from 'object-assign'
 import invariant from 'invariant'
+import apiRunnerNode from './api-runner-node'
 
 function defaultConfig () {
   return {
@@ -120,7 +121,7 @@ function findBabelPackage (directory) {
  * Returns a normalized Babel config to use with babel-loader. All of
  * the paths will be absolute so that Babel behaves as expected.
  */
-module.exports = function babelConfig (program, stage) {
+module.exports = async function babelConfig (program, stage) {
   const { directory } = program
 
   const babelrc = findBabelrc(directory) ||
@@ -146,5 +147,8 @@ module.exports = function babelConfig (program, stage) {
     babelrc.cacheDirectory = true
   }
 
-  return normalizeConfig(babelrc, directory)
+  const normalizedConfig = normalizeConfig(babelrc, directory)
+  const modifiedConfig = await apiRunnerNode(`modifyBabelrc`, { babelrc }, babelrc)
+
+  return modifiedConfig
 }

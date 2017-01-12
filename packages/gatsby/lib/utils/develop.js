@@ -18,136 +18,137 @@ const rlInterface = rl.createInterface({
 
 const debug = require(`debug`)(`gatsby:application`)
 
-function startServer (program) {
+async function startServer (program) {
   const directory = program.directory
+
   // Load pages for the site.
-  return bootstrap(program, (err, schema) => {
-    // Generate random port for webpack to listen on.
-    // Perhaps should check if port is open.
-    //const webpackPort = Math.round(Math.random() * 1000 + 1000)
-    const compilerConfig = webpackConfig(program, directory, `develop`, program.port)
+  const { schema } = await bootstrap(program)
 
-    const devConfig = compilerConfig.resolve()
-    const compiler = webpack(devConfig)
+  // Generate random port for webpack to listen on.
+  // Perhaps should check if port is open.
+  //const webpackPort = Math.round(Math.random() * 1000 + 1000)
+  const compilerConfig = await webpackConfig(program, directory, `develop`, program.port)
 
-    let HTMLPath = glob.sync(`${directory}/html.*`)[0]
-    // Check if we can't find an html component in root of site.
-    if (!HTMLPath) {
-      throw new Error(`Couldn't find an html.js at the root of your site`)
+  const devConfig = compilerConfig.resolve()
+  const compiler = webpack(devConfig)
+
+  let HTMLPath = glob.sync(`${directory}/html.*`)[0]
+  // Check if we can't find an html component in root of site.
+  if (!HTMLPath) {
+    throw new Error(`Couldn't find an html.js at the root of your site`)
+  }
+
+  // We use the program port not the webpack-dev-server port as if you import
+  // files in your html.js they won't be available through the webpack-dev-server.
+  // By using the program port, requesting these imported files might accidentally work
+  // as the imported files will be available in /public. TODO test how expensive
+  // it'd be to do an actual static compile of the html.js on startup to avoid
+  // this discprenecy between dev and prod.
+  const htmlCompilerConfig = await webpackConfig(program, directory, `develop-html`, program.port)
+
+  webpackRequire(htmlCompilerConfig.resolve(), HTMLPath, (error, factory) => {
+    if (error) {
+      console.log(`Failed to require ${directory}/html.js`)
+      error.forEach((e) => {
+        console.log(e)
+      })
+      process.exit()
     }
+    const HTML = factory()
+    debug(`Configuring develop server`)
 
-    // We use the program port not the webpack-dev-server port as if you import
-    // files in your html.js they won't be available through the webpack-dev-server.
-    // By using the program port, requesting these imported files might accidentally work
-    // as the imported files will be available in /public. TODO test how expensive
-    // it'd be to do an actual static compile of the html.js on startup to avoid
-    // this discprenecy between dev and prod.
-    const htmlCompilerConfig = webpackConfig(program, directory, `develop-html`, program.port)
+    //const webpackDevServer = new WebpackDevServer(compiler, {
+      //hot: true,
+      //quiet: false,
+      //noInfo: true,
+      //host: program.host,
+      //headers: {
+        //'Access-Control-Allow-Origin': '*',
+      //},
+      //stats: {
+        //colors: true,
+      //},
+    //})
 
-    webpackRequire(htmlCompilerConfig.resolve(), HTMLPath, (error, factory) => {
-      if (error) {
-        console.log(`Failed to require ${directory}/html.js`)
-        error.forEach((e) => {
-          console.log(e)
-        })
-        process.exit()
+    //// Start webpack-dev-server
+    //webpackDevServer.listen(webpackPort, program.host)
+
+    const app = express()
+    app.use(require(`webpack-dev-middleware`)(compiler, {
+      noInfo: true,
+      publicPath: devConfig.output.publicPath,
+      historyApiFallback: true,
+    }))
+
+    app.use(require(`webpack-hot-middleware`)(compiler, {
+      log: console.log,
+      path: `/__webpack_hmr`,
+      heartbeat: 10 * 1000,
+    }))
+    //app.use(require(`webpack-dev-middleware`)(compiler, {
+      //publicPath: devConfig.output.publicPath,
+      //historyApiFallback: true,
+    //}))
+    //app.use(require(`webpack-hot-middleware`)(compiler))
+    app.use(`/graphql`, graphqlHTTP({
+      schema,
+      graphiql: true,
+    }))
+    let htmlStr
+    app.use((req, res, next) => {
+      if (req.query.fromFile) {
+        res.sendFile(decodeURIComponent(req.query.fromFile))
+      } else {
+        next()
       }
-      const HTML = factory()
-      debug(`Configuring develop server`)
-
-      //const webpackDevServer = new WebpackDevServer(compiler, {
-        //hot: true,
-        //quiet: false,
-        //noInfo: true,
-        //host: program.host,
-        //headers: {
-          //'Access-Control-Allow-Origin': '*',
-        //},
-        //stats: {
-          //colors: true,
-        //},
-      //})
-
-      //// Start webpack-dev-server
-      //webpackDevServer.listen(webpackPort, program.host)
-
-      const app = express()
-      app.use(require(`webpack-dev-middleware`)(compiler, {
-        noInfo: true,
-        publicPath: devConfig.output.publicPath,
-        historyApiFallback: true,
-      }))
-
-      app.use(require(`webpack-hot-middleware`)(compiler, {
-        log: console.log,
-        path: `/__webpack_hmr`,
-        heartbeat: 10 * 1000,
-      }))
-      //app.use(require(`webpack-dev-middleware`)(compiler, {
-        //publicPath: devConfig.output.publicPath,
-        //historyApiFallback: true,
-      //}))
-      //app.use(require(`webpack-hot-middleware`)(compiler))
-      app.use(`/graphql`, graphqlHTTP({
-        schema,
-        graphiql: true,
-      }))
-      let htmlStr
-      app.use((req, res, next) => {
-        if (req.query.fromFile) {
-          res.sendFile(decodeURIComponent(req.query.fromFile))
+    })
+    app.use((req, res, next) => {
+      const parsedPath = parsePath(req.originalUrl)
+      if (parsedPath.extname === `` || parsedPath.extname === `.html`) {
+        if (htmlStr) {
+          return res.send(htmlStr)
         } else {
-          next()
-        }
-      })
-      app.use((req, res, next) => {
-        const parsedPath = parsePath(req.originalUrl)
-        if (parsedPath.extname === `` || parsedPath.extname === `.html`) {
-          if (htmlStr) {
+          try {
+            const htmlElement = React.createElement(
+              HTML, {
+                body: ``,
+                headComponents: [],
+                postBodyComponents: [
+                  <script src="/commons.js" />,
+                ],
+              }
+            )
+            htmlStr = ReactDOMServer.renderToStaticMarkup(htmlElement)
+            htmlStr = `<!DOCTYPE html>\n${htmlStr}`
             return res.send(htmlStr)
-          } else {
-            try {
-              const htmlElement = React.createElement(
-                HTML, {
-                  body: ``,
-                  headComponents: [],
-                  postBodyComponents: [
-                    <script src="/commons.js" />,
-                  ],
-                }
-              )
-              htmlStr = ReactDOMServer.renderToStaticMarkup(htmlElement)
-              htmlStr = `<!DOCTYPE html>\n${htmlStr}`
-              return res.send(htmlStr)
-            } catch (e) {
-              console.log(e.stack)
-              throw e
-            }
+          } catch (e) {
+            console.log(e.stack)
+            throw e
           }
-        } else {
-          return next()
         }
-      })
-      app.use(express.static(`public`))
-      const listener = app.listen(program.port, program.host, (e) => {
-        if (e) {
-          if (e.code === `EADDRINUSE`) {
-            // eslint-disable-next-line max-len
-            console.log(`Unable to start Gatsby on port ${program.port} as there's already a process listing on that port.`)
-          } else {
-            console.log(e)
-          }
+      } else {
+        return next()
+      }
+    })
+    app.use(express.static(`public`))
+    const listener = app.listen(program.port, program.host, (e) => {
+      if (e) {
+        if (e.code === `EADDRINUSE`) {
+          // eslint-disable-next-line max-len
+          console.log(`Unable to start Gatsby on port ${program.port} as there's already a process listing on that port.`)
+        } else {
+          console.log(e)
+        }
 
-          process.exit()
-        } else {
-          // TODO restore
-          //if (program.open) {
-            const opn = require(`opn`)
-            //opn(server.info.uri)
-          //}
-          console.log(`Listening at: http://${listener.address().address}:${listener.address().port}`)//, server.info.uri)
-        }
-      })
+        process.exit()
+      } else {
+        // TODO restore
+        //if (program.open) {
+          const opn = require(`opn`)
+          //opn(server.info.uri)
+        //}
+        console.log(`Listening at: http://${listener.address().address}:${listener.address().port}`)
+      }
     })
   })
 }

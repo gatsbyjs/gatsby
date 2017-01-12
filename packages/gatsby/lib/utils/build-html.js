@@ -1,12 +1,14 @@
 /* @flow weak */
-require(`node-cjsx`).transform()
 import webpack from 'webpack'
-import webpackConfig from './webpack.config'
+import Promise from 'bluebird'
 import fs from 'fs'
-const debug = require(`debug`)(`gatsby:html`)
+import webpackConfig from './webpack.config'
 import { pagesDB } from './globals'
 
-module.exports = (program, callback) => {
+const debug = require(`debug`)(`gatsby:html`)
+require(`node-cjsx`).transform()
+
+module.exports = async (program) => {
   const { directory } = program
 
   debug(`generating static HTML`)
@@ -14,19 +16,21 @@ module.exports = (program, callback) => {
   const pages = [...pagesDB().values()].map((page) => page.path)
 
   // Static site generation.
-  const compilerConfig = webpackConfig(program, directory, `build-html`, null, pages)
+  const compilerConfig = await webpackConfig(program, directory, `build-html`, null, pages)
 
-  webpack(compilerConfig.resolve()).run((e, stats) => {
-    if (e) {
-      return callback(e, stats)
-    }
-    if (stats.hasErrors()) {
-      return callback(`Error: ${stats.toJson().errors}`, stats)
-    }
+  return new Promise((resolve, reject) => {
+    webpack(compilerConfig.resolve()).run((e, stats) => {
+      if (e) {
+        reject(e)
+      }
+      if (stats.hasErrors()) {
+        reject(`Error: ${stats.toJson().errors}`, stats)
+      }
 
-    // Remove the temp JS bundle file built for the static-site-generator-plugin
-    //fs.unlinkSync(`${directory}/public/render-page.js`)
+      // Remove the temp JS bundle file built for the static-site-generator-plugin
+      fs.unlinkSync(`${directory}/public/render-page.js`)
 
-    return callback(null, stats)
+      resolve(null, stats)
+    })
   })
 }
