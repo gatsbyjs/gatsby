@@ -30,7 +30,11 @@ exports.extendNodeType = ({ args, pluginOptions }) => {
     const files = select(ast, `File`)
 
     // Setup Remark.
-    const remark = new Remark({ commonmark: true })
+    const remark = new Remark({
+      commonmark: true,
+      footnotes: true,
+      pedantic: true,
+    })
 
     const astPromiseCache = {}
     async function getAST (markdownNode) {

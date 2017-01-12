@@ -32,7 +32,6 @@ async function html (program) {
   await buildHTML(program).catch((err) => console.log(`Generating HTML failed`, err))
 
   console.log(`Running postBuild plugins`)
-
   await apiRunnerNode(`postBuild`, { graphql: graphqlRunner })
 
   return
