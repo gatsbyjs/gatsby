@@ -140,7 +140,7 @@ module.exports = ({ files, markdownNode, markdownAST, pluginOptions }) => {
         })
       } else {
         // Image isn't relative so there's nothing for us to do.
-        resolve()
+        return resolve()
       }
     })
   )))

@@ -5,12 +5,11 @@ const {
   GraphQLInt,
   GraphQLFloat,
 } = require(`graphql`)
-const _ = require(`lodash`)
 const {
   queueImageResizing,
   base64,
   responsiveSizes,
-  responsiveResolution
+  responsiveResolution,
 } = require(`gatsby-sharp`)
 
 exports.extendNodeType = (options) => {
@@ -47,10 +46,11 @@ exports.extendNodeType = (options) => {
         },
       },
       resolve (image, args) {
-        return responsiveResolution({
+        const promise = responsiveResolution({
           file: image.parent,
           args,
         })
+        return promise
       },
     },
     responsiveSizes: {

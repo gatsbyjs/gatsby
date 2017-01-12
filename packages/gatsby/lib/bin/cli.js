@@ -45,13 +45,9 @@ program.command(`build`)
       ...command,
       directory,
     }
-    build(p, (err) => {
-      if (err) {
-        throw err
-      } else {
-        console.log(`Done`)
-        process.exit()
-      }
+    build(p).then(() => {
+      console.log(`Done`)
+      process.exit()
     })
   })
 

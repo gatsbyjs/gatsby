@@ -5,6 +5,7 @@
         "node": 4.0
       },
     }],
+    'react',
   ],
   "plugins": [
     "transform-runtime",

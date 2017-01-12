@@ -358,6 +358,12 @@ async function responsiveResolution ({ file, args = {} }) {
   const base64Image = await base64({ file })
 
   // Construct src and srcSet strings.
+  if (images.length === 0) {
+    console.log(`images`, images)
+    console.log(`dimensions`, dimensions)
+    console.log(`options`, options)
+    console.log(`sizes`, sizes)
+  }
   const fallbackSrc = images[0].src
   const srcSet = images.map((image, i) => {
     let resolution

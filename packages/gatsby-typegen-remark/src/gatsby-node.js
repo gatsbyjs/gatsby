@@ -5,7 +5,6 @@ const {
   GraphQLInt,
 } = require(`graphql`)
 const Remark = require(`remark`)
-const excerptHTML = require(`excerpt-html`)
 const select = require(`unist-util-select`)
 const sanitizeHTML = require(`sanitize-html`)
 const _ = require(`lodash`)
