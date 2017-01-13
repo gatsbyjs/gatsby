@@ -101,7 +101,6 @@ module.exports = (locals, callback) => {
       // Call plugins to let them add to or modify components/props.
       const pluginHeadComponents = apiRunner(`modifyHeadComponents`, { headComponents }, [])
       headComponents = headComponents.concat(pluginHeadComponents)
-      console.log(pluginHeadComponents, headComponents)
 
       const pluginPostBodyComponents = apiRunner(`modifyPostBodyComponents`, { postBodyComponents }, [])
       postBodyComponents = postBodyComponents.concat(pluginPostBodyComponents)
