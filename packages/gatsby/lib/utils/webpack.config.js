@@ -323,7 +323,7 @@ module.exports = async (program, directory, suppliedStage, webpackPort = 1500, p
       test: /\.jsx?$/, // Accept either .js or .jsx files.
       exclude: /(node_modules|bower_components)/,
       loader: `babel`,
-      query: _.merge(...babelConfig),
+      query: babelConfig,
     })
     config.loader(`coffee`, {
       test: /\.coffee$/,

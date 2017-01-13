@@ -288,6 +288,8 @@ module.exports = async (program) => {
   //cb(null, schema)
 
   await queryRunner(program, graphqlRunner)
+  // TODO get handle on images and don't say done until queue is at zero.
+  //
   console.log(`bootstrap finished, time since started: ${process.uptime()}`)
 
   return { schema, graphqlRunner }

@@ -10,7 +10,7 @@ import apiRunnerNode from './api-runner-node'
 
 function defaultConfig () {
   return {
-    presets: [`react`, `es2015`, `stage-0`],
+    presets: [`es2015`, `stage-0`, `react`],
     plugins: [`add-module-exports`, `transform-object-assign`],
   }
 }
@@ -148,7 +148,15 @@ module.exports = async function babelConfig (program, stage) {
   }
 
   const normalizedConfig = normalizeConfig(babelrc, directory)
-  const modifiedConfig = await apiRunnerNode(`modifyBabelrc`, { babelrc }, babelrc)
+  let modifiedConfig = await apiRunnerNode(`modifyBabelrc`, { babelrc })
+  if (modifiedConfig.length > 0) {
+    modifiedConfig = _.merge({}, ...modifiedConfig)
+    // Otherwise this means no plugin changed the babel config.
+  } else {
+    modifiedConfig = {}
+  }
 
-  return modifiedConfig
+  // Merge all together.
+  const merged = _.defaultsDeep(modifiedConfig, normalizedConfig)
+  return merged
 }
