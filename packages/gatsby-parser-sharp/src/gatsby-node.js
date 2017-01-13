@@ -11,7 +11,6 @@ exports.modifyAST = ({ args }) => (
       File[extension="webp"],
       File[extension="tif"],
       File[extension="tiff"],
-      File[extension="gif"],
       File[extension="svg"]
     `)
     files.forEach((file) => {

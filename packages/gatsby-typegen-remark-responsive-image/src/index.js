@@ -45,7 +45,8 @@ module.exports = ({ files, markdownNode, markdownAST, pluginOptions }) => {
   const imageNodes = select(markdownAST, `image`)
   return Promise.all(imageNodes.map((node) => (
     new Promise((resolve, reject) => {
-      if (isRelativeUrl(node.url)) {
+      // Ignore gifs as we can't process them.
+      if (isRelativeUrl(node.url) && node.url.slice(-3) !== `gif`) {
         const imagePath = path.join(markdownNode.parent.dirname, node.url)
         const imageNode = _.find(files, (file) => {
           if (file && file.id) {
@@ -113,7 +114,7 @@ module.exports = ({ files, markdownNode, markdownAST, pluginOptions }) => {
               >
                 <img
                   class="gatsby-resp-image-image"
-                  style="width: 100%; margin: 0; vertical-align: middle; position: absolute;"
+                  style="width: 100%; margin: 0; vertical-align: middle; position: absolute; box-shadow: inset 0px 0px 0px 400px white;"
                   alt="${node.alt ? node.alt : ``}"
                   title="${node.title ? node.title : ``}"
                   src="${fallbackSrc}"

@@ -8,7 +8,7 @@ const _ = require(`lodash`)
 module.exports = ({ files, markdownNode, markdownAST }) => {
   // Copy linked files to the public directory and modify the AST to point to
   // new location of the files.
-  visit(markdownAST, `link`, (link) => {
+  const visitor = (link) => {
     if (isRelativeUrl(link.url)) {
       const linkPath = path.join(markdownNode.parent.dirname, link.url)
       const linkNode = _.find(files, (file) => {
@@ -27,6 +27,17 @@ module.exports = ({ files, markdownNode, markdownAST }) => {
           })
         }
       }
+    }
+  }
+
+  visit(markdownAST, `link`, (link) => {
+    visitor(link)
+  })
+
+  // Also copy gifs since Sharp can't process them.
+  visit(markdownAST, `image`, (image) => {
+    if (image.url.slice(-3) === `gif`) {
+      visitor(image)
     }
   })
 }
