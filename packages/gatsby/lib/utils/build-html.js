@@ -21,16 +21,16 @@ module.exports = async (program) => {
   return new Promise((resolve, reject) => {
     webpack(compilerConfig.resolve()).run((e, stats) => {
       if (e) {
-        reject(e)
+        return reject(e)
       }
       if (stats.hasErrors()) {
-        reject(`Error: ${stats.toJson().errors}`, stats)
+        return reject(`Error: ${stats.toJson().errors}`, stats)
       }
 
       // Remove the temp JS bundle file built for the static-site-generator-plugin
       fs.unlinkSync(`${directory}/public/render-page.js`)
 
-      resolve(null, stats)
+      return resolve(null, stats)
     })
   })
 }
