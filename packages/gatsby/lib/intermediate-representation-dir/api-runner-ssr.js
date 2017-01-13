@@ -8,10 +8,11 @@
 module.exports = (api, args, defaultReturn) => {
   // Run each plugin in series.
   let results = plugins.map((plugin) => {
-    if (plugin[api]) {
-      const result = plugin[api](args)
+    if (plugin.plugin[api]) {
+      const result = plugin.plugin[api](args, plugin.options)
       return result
     }
+    return false
   })
 
   // Filter out undefined/falsey results.

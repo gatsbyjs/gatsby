@@ -187,12 +187,33 @@ module.exports = async (program) => {
     glob.sync(`${plugin.resolve}/gatsby-${env}*`)[0]
   )
 
-  const ssrPlugins = _.filter(plugins.map((plugin) => hasAPIFile(`ssr`, plugin)))
-  const browserPlugins = _.filter(plugins.map((plugin) => hasAPIFile(`browser`, plugin)))
+  const ssrPlugins = _.filter(plugins.map((plugin) => ({
+    resolve: hasAPIFile(`ssr`, plugin),
+    options: plugin.pluginOptions,
+  })), (plugin) => plugin.resolve)
+  const browserPlugins = _.filter(plugins.map((plugin) => ({
+    resolve: hasAPIFile(`browser`, plugin),
+    options: plugin.pluginOptions,
+  })), (plugin) => plugin.resolve)
+
   let browserAPIRunner = fs.readFileSync(`${siteDir}/api-runner-browser.js`, `utf-8`)
-  browserAPIRunner = `var plugins = [${browserPlugins.map((plugin) => `require('${plugin}')`).join(`,`)}]\n${browserAPIRunner}`
+  const browserPluginsRequires = browserPlugins.map((plugin) => (
+    `{
+      plugin: require('${plugin.resolve}')
+      options: ${JSON.stringify(plugin.options)},
+    }`
+  )).join(`,`)
+  browserAPIRunner = `var plugins = [${browserPluginsRequires}]\n${browserAPIRunner}`
+
   let sSRAPIRunner = fs.readFileSync(`${siteDir}/api-runner-ssr.js`, `utf-8`)
-  sSRAPIRunner = `var plugins = [${ssrPlugins.map((plugin) => `require('${plugin}')`).join(`,`)}]\n${sSRAPIRunner}`
+  const ssrPluginsRequires = ssrPlugins.map((plugin) => (
+    `{
+      plugin: require('${plugin.resolve}')
+      options: ${JSON.stringify(plugin.options)},
+    }`
+  )).join(`,`)
+  sSRAPIRunner = `var plugins = [${ssrPluginsRequires}]\n${sSRAPIRunner}`
+
   fs.writeFileSync(`${siteDir}/api-runner-browser.js`, browserAPIRunner, `utf-8`)
   fs.writeFileSync(`${siteDir}/api-runner-ssr.js`, sSRAPIRunner, `utf-8`)
 
