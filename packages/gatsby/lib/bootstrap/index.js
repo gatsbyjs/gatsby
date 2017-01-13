@@ -199,7 +199,7 @@ module.exports = async (program) => {
   let browserAPIRunner = fs.readFileSync(`${siteDir}/api-runner-browser.js`, `utf-8`)
   const browserPluginsRequires = browserPlugins.map((plugin) => (
     `{
-      plugin: require('${plugin.resolve}')
+      plugin: require('${plugin.resolve}'),
       options: ${JSON.stringify(plugin.options)},
     }`
   )).join(`,`)
@@ -208,7 +208,7 @@ module.exports = async (program) => {
   let sSRAPIRunner = fs.readFileSync(`${siteDir}/api-runner-ssr.js`, `utf-8`)
   const ssrPluginsRequires = ssrPlugins.map((plugin) => (
     `{
-      plugin: require('${plugin.resolve}')
+      plugin: require('${plugin.resolve}'),
       options: ${JSON.stringify(plugin.options)},
     }`
   )).join(`,`)

@@ -1,10 +1,16 @@
 import ReactGA from 'react-ga'
 
 exports.clientEntry = (args, pluginOptions) => {
-  ReactGA.initialize(pluginOptions.siteId)
+  // Don't track while developing.
+  if (process.env.NODE_ENV === `production`) {
+    ReactGA.initialize(pluginOptions.trackingId)
+  }
 }
 
 exports.onRouteUpdate = function (location) {
-  ReactGA.set({ page: window.location.pathname })
-  ReactGA.pageview(window.location.pathname)
+  // Don't track while developing.
+  if (process.env.NODE_ENV === `production`) {
+    ReactGA.set({ page: location.pathname })
+    ReactGA.pageview(location.pathname)
+  }
 }
