@@ -132,7 +132,16 @@ async function startServer (program) {
         return next()
       }
     })
-    app.use(express.static(`public`))
+
+    // As last step, check if the file exists in the public folder except for
+    // HTML files which could be there from a previous build — we want the app
+    // to load our special development html file.
+    app.get(`*`, (req, res) => {
+      if (!req.url.match(/.*html$/)) {
+        res.sendFile(`${process.cwd()}/public/${req.url}`)
+      }
+    })
+
     const listener = app.listen(program.port, program.host, (e) => {
       if (e) {
         if (e.code === `EADDRINUSE`) {
