@@ -163,10 +163,28 @@ module.exports = async (program) => {
     resolve: process.cwd(),
     name: `defaultSitePlugin`,
     version: `n/a`,
-    pluginOptions: {},
+    pluginOptions: {
+      plugins: [],
+    },
+  })
+
+  // Create a "flattened" array of plugins with all subplugins brought to the top-level.
+  // This simplifies running gatsby-* files for subplugins.
+  const flattenedPlugins = []
+  const extractPlugins = (plugin) => {
+    plugin.pluginOptions.plugins.forEach((subPlugin) => {
+      flattenedPlugins.push(subPlugin)
+      extractPlugins(subPlugin)
+    })
+  }
+
+  plugins.forEach((plugin) => {
+    flattenedPlugins.push(plugin)
+    extractPlugins(plugin)
   })
 
   siteDB(siteDB().set(`plugins`, plugins))
+  siteDB(siteDB().set(`flattenedPlugins`, flattenedPlugins))
 
   // Copy our site files to the root of the site.
   console.time('copy gatsby files')
@@ -187,11 +205,11 @@ module.exports = async (program) => {
     glob.sync(`${plugin.resolve}/gatsby-${env}*`)[0]
   )
 
-  const ssrPlugins = _.filter(plugins.map((plugin) => ({
+  const ssrPlugins = _.filter(flattenedPlugins.map((plugin) => ({
     resolve: hasAPIFile(`ssr`, plugin),
     options: plugin.pluginOptions,
   })), (plugin) => plugin.resolve)
-  const browserPlugins = _.filter(plugins.map((plugin) => ({
+  const browserPlugins = _.filter(flattenedPlugins.map((plugin) => ({
     resolve: hasAPIFile(`browser`, plugin),
     options: plugin.pluginOptions,
   })), (plugin) => plugin.resolve)

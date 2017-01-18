@@ -1,5 +1,4 @@
-// During bootstrap, we write requires at top of this file which looks
-// basically like:
+// During bootstrap, we write requires at top of this file which looks like:
 // var plugins = [
 //   require('/path/to/plugin1/gatsby-ssr.js'),
 //   require('/path/to/plugin2/gatsby-ssr.js'),

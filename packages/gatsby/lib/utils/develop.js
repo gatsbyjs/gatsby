@@ -10,6 +10,7 @@ const React = require(`react`)
 const ReactDOMServer = require(`react-dom/server`)
 const rl = require(`readline`)
 const parsePath = require(`parse-filepath`)
+const _ = require(`lodash`)
 
 const rlInterface = rl.createInterface({
   input: process.stdin,
@@ -20,6 +21,7 @@ const debug = require(`debug`)(`gatsby:application`)
 
 async function startServer (program) {
   const directory = program.directory
+  const apiRunner = require(`${directory}/.intermediate-representation/api-runner-ssr`)
 
   // Load pages for the site.
   const { schema } = await bootstrap(program)
@@ -112,10 +114,10 @@ async function startServer (program) {
             const htmlElement = React.createElement(
               HTML, {
                 body: ``,
-                headComponents: [],
-                postBodyComponents: [
+                headComponents: _.flattenDeep(apiRunner(`modifyHeadComponents`, { headComponents: [] }, [])),
+                postBodyComponents: _.flattenDeep(apiRunner(`modifyPostBodyComponents`, { headComponents: [] }, [])).concat([
                   <script src="/commons.js" />,
-                ],
+                ]),
               }
             )
             htmlStr = ReactDOMServer.renderToStaticMarkup(htmlElement)

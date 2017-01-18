@@ -26,7 +26,7 @@ const hasAPIFile = (plugin) => (
 )
 
 module.exports = async (api, args={}) => {
-  const plugins = siteDB().get(`plugins`)
+  const plugins = siteDB().get(`flattenedPlugins`)
   // Get the list of plugins that implement gatsby-node
   if (!filteredPlugins) {
     filteredPlugins = plugins.filter((plugin) => hasAPIFile(plugin))
