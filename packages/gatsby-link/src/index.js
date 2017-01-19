@@ -1,6 +1,11 @@
 import React from 'react'
 import Link from 'react-router/lib/Link'
 
+let linkPrefix = ``
+if (__PREFIX_LINKS__) {
+  linkPrefix = __LINK_PREFIX__
+}
+
 // Use createClass instead of ES6 class as Babel spews out a ton of code
 // for polyfilling classes which there's no reason to pay for this.
 // A function component would be ideal but we need componentDidMount.
@@ -29,7 +34,8 @@ const GatsbyLink = React.createClass({
   },
 
   render () {
-    return <Link {...this.props} />
+    const to = linkPrefix + this.props.to
+    return <Link {...this.props} to={to} />
   },
 })
 
