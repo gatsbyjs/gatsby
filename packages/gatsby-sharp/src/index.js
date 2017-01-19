@@ -7,7 +7,7 @@ const fs = require(`fs`)
 const ProgressBar = require(`progress`)
 const imagemin = require(`imagemin`)
 const imageminPngquant = require(`imagemin-pngquant`)
-const async = require(`async`)
+const queue = require(`queue`)
 
 // Promisify the sharp prototype (methods) to promisify the alternative (for
 // raw) callback-accepting toBuffer(...) method
@@ -19,94 +19,119 @@ Promise.promisifyAll(sharp.prototype, { multiArgs: true })
 // adventurous and see what happens with it on.
 sharp.simd(true)
 
-const toProcess = []
+const bar = new ProgressBar(`Generating image thumbnails [:bar] :current/:total :elapsed secs :percent`, {
+  total: 0,
+  width: 30,
+})
+const processFile = (file, jobs, cb) => {
+  Promise.all(jobs.map((job) => job.finished)).then(() => cb())
+  const pipeline = sharp(file).rotate()
+  _.each(jobs, (job) => {
+    const args = job.args
+    let clonedPipeline
+    if (jobs.length > 1) {
+      clonedPipeline = pipeline.clone()
+    } else {
+      clonedPipeline = pipeline
+    }
+    // Sharp only allows ints as height/width. Since height isn't always
+    // set, check first before trying to round it.
+    let roundedHeight = args.height
+    if (roundedHeight) { roundedHeight = Math.round(roundedHeight) }
+    const roundedWidth = Math.round(args.width)
+    clonedPipeline = clonedPipeline
+      .resize(roundedWidth, roundedHeight)
+      // Use a more effective cropping strategy at the expense of some additional
+      // processing time (how much?).
+      .crop(sharp.strategy.entropy)
 
-const processJobs = (jobs, count) => {
-  const bar = new ProgressBar(`Generating image thumbnails [:bar] :current/:total :elapsed secs :percent`, {
-    total: count,
-    width: 30,
-  })
-  async.eachOfLimit(jobs, 4, (fileJobs, file, cb) => {
-    Promise.all(fileJobs.map((job) => job.finished)).then(() => cb())
-    const pipeline = sharp(file).rotate().withoutEnlargement()
-    _.each(fileJobs, (job) => {
-      const args = job.args
-      let clonedPipeline
-      if (fileJobs.length > 1) {
-        clonedPipeline = pipeline.clone()
-      } else {
-        clonedPipeline = pipeline
-      }
-      // Sharp only allows ints as height/width. Since height isn't always
-      // set, check first before trying to round it.
-      let roundedHeight = args.height
-      if (roundedHeight) { roundedHeight = Math.round(roundedHeight) }
-      clonedPipeline.resize(Math.round(args.width), roundedHeight)
-      .png({
-        compressionLevel: args.pngCompressionLevel,
-        adaptiveFiltering: false,
-        force: false,
-      })
-      .jpeg({
-        quality: args.quality,
-        progressive: args.jpegProgressive,
-        force: false,
-      })
-
-      // grayscale
-      if (args.grayscale) {
-        clonedPipeline = clonedPipeline.grayscale()
-      }
-
-      // rotate
-      if (args.rotate) {
-        clonedPipeline = clonedPipeline.rotate(args.rotate)
-      }
-
-      if (job.file.extension.match(/^jp/)) {
-        clonedPipeline
-        .toFile(job.outputPath, (err, info) => {
-          bar.tick()
-          job.outsideResolve(info)
-        })
-        // Compress pngs
-      } else if (job.file.extension === `png`) {
-        clonedPipeline.toBuffer()
-        .then((sharpBuffer) => {
-          imagemin.buffer(sharpBuffer, {
-            plugins: [
-              imageminPngquant({
-                quality: `${args.quality}-${args.quality + 25}`, // e.g. 40-65
-              }),
-            ],
-          })
-          .then((imageminBuffer) => {
-            fs.writeFile(job.outputPath, imageminBuffer, () => {
-              bar.tick()
-              job.outsideResolve()
-            })
-          })
-        })
-      }
+    clonedPipeline.png({
+      compressionLevel: args.pngCompressionLevel,
+      adaptiveFiltering: false,
+      force: false,
     })
+    .jpeg({
+      quality: args.quality,
+      progressive: args.jpegProgressive,
+      force: false,
+    })
+
+    // grayscale
+    if (args.grayscale) {
+      clonedPipeline = clonedPipeline.grayscale()
+    }
+
+    // rotate
+    if (args.rotate) {
+      clonedPipeline = clonedPipeline.rotate(args.rotate)
+    }
+
+    if (job.file.extension.match(/^jp/)) {
+      clonedPipeline
+      .toFile(job.outputPath, (err, info) => {
+        bar.tick()
+        job.outsideResolve(info)
+      })
+      // Compress pngs
+    } else if (job.file.extension === `png`) {
+      clonedPipeline.toBuffer()
+      .then((sharpBuffer) => {
+        imagemin.buffer(sharpBuffer, {
+          plugins: [
+            imageminPngquant({
+              quality: `${args.quality}-${args.quality + 25}`, // e.g. 40-65
+            }),
+          ],
+        })
+        .then((imageminBuffer) => {
+          fs.writeFile(job.outputPath, imageminBuffer, () => {
+            bar.tick()
+            job.outsideResolve()
+          })
+        })
+      })
+    }
   })
 }
 
-// TODO when we emit a new group, merge that group with the files not
-// yet processed.
-const debouncedProcess = _.debounce(() => {
-  // Filter out jobs for images that have already been created.
-  let filteredJobs = toProcess.filter((job) => !fs.existsSync(job.outputPath))
-  const count = filteredJobs.length
+let totalCount = 0
+const toProcess = {}
+const q = queue()
+q.concurrency = 1
 
-  // Group jobs by inputPath so Sharp can reuse work.
-  const groupedJobs = _.groupBy(filteredJobs, (job) => job.inputPath)
+const queueJob = (job) => {
+  const inputFileKey = job.file.id.replace(/\./g, `%2E`)
+  const outputFileKey = job.outputPath.replace(/\./g, `%2E`)
 
-  // Delete old jobs
-  toProcess.length = 0
+  // Check if the job has already been queued. If it has, there's nothing
+  // to do, return.
+  if (_.has(toProcess, `${inputFileKey}.${outputFileKey}`)) {
+    return
+  }
 
-  processJobs(groupedJobs, count)
-}, 500)
+  // Check if the output file already exists so we don't redo work.
+  if (fs.existsSync(job.outputPath)) {
+    return
+  }
+
+  totalCount += 1
+
+  let notQueued = true
+  if (toProcess[inputFileKey]) {
+    notQueued = false
+  }
+  _.set(toProcess, `${job.file.id.replace(/\./g, `%2E`)}.${job.outputPath.replace(/\./g, `%2E`)}`, job)
+  if (notQueued) {
+    q.push((cb) => {
+      // We're now processing the file's jobs.
+      processFile(job.file.id, _.values(toProcess[inputFileKey]), () => {
+        cb()
+      })
+    })
+  }
+
+  bar.total = totalCount
+}
 
 function queueImageResizing ({ file, args = {} }) {
   const defaultArgs = {
@@ -115,13 +140,17 @@ function queueImageResizing ({ file, args = {} }) {
     jpegProgressive: true,
     pngCompressionLevel: 9,
     grayscale: false,
+    linkPrefix: ``,
   }
   const options = _.defaults(args, defaultArgs)
   // Filter out false args, and args not for this extension and put width at
   // end (for the file path)
   const pairedArgs = _.toPairs(args)
   let filteredArgs
+  // Remove non-true arguments
   filteredArgs = _.filter(pairedArgs, (arg) => arg[1])
+  // Remove linkPrefix
+  filteredArgs = _.filter(pairedArgs, (arg) => arg[0] !== `linkPrefix`)
   filteredArgs = _.filter(filteredArgs, (arg) => {
     if (file.extension.match(/^jp*/)) {
       return !_.includes(arg[0], `png`)
@@ -141,25 +170,17 @@ function queueImageResizing ({ file, args = {} }) {
 
   let width
   let height
-  let aspectRatio
   // Calculate the eventual width/height of the image.
   const dimensions = imageSize(file.id)
-  aspectRatio = dimensions.width / dimensions.height
-
-  // We don't allow enlargement so if either the requested height or
-  // width is larger, we just return things as they are.
-  if (options.width > dimensions.width || options.height > dimensions.height) {
-    width = dimensions.width
-    height = dimensions.height
+  const aspectRatio = dimensions.width / dimensions.height
 
   // If the width/height are both set, we're cropping so just return
   // that.
-  } else if (options.width && options.height) {
+  if (options.width && options.height) {
     width = options.width
     height = options.height
   } else {
-
-    // Use the aspect ratio of the image to calculate the resulting
+    // Use the aspect ratio of the image to calculate what will be the resulting
     // height.
     width = options.width
     height = options.width / aspectRatio
@@ -174,11 +195,13 @@ function queueImageResizing ({ file, args = {} }) {
     inputPath: file.id,
     outputPath: filePath,
   }
-  toProcess.push(job)
-  debouncedProcess()
+  queueJob(job)
+
+  // Prefix the image src.
+  const prefixedSrc = options.linkPrefix + imgSrc
 
   return {
-    src: imgSrc,
+    src: prefixedSrc,
     absolutePath: filePath,
     width,
     height,
@@ -196,7 +219,7 @@ async function notMemoizedbase64 ({ file, args = {} }) {
     grayscale: false,
   }
   const options = _.defaults(args, defaultArgs)
-  let pipeline = sharp(file.id).rotate().withoutEnlargement()
+  let pipeline = sharp(file.id).rotate()
   pipeline.resize(options.width, options.height)
   .png({
     compressionLevel: options.pngCompressionLevel,
@@ -242,6 +265,7 @@ async function responsiveSizes ({ file, args = {} }) {
     jpegProgressive: true,
     pngCompressionLevel: 9,
     grayscale: false,
+    linkPrefix: ``,
   }
   const options = _.defaults(args, defaultArgs)
   options.maxWidth = parseInt(options.maxWidth, 10)
@@ -311,6 +335,7 @@ async function responsiveResolution ({ file, args = {} }) {
     jpegProgressive: true,
     pngCompressionLevel: 9,
     grayscale: false,
+    linkPrefix: ``,
   }
   const options = _.defaults(args, defaultArgs)
   options.width = parseInt(options.width, 10)
@@ -359,13 +384,6 @@ async function responsiveResolution ({ file, args = {} }) {
   // Get base64 version
   const base64Image = await base64({ file })
 
-  // Construct src and srcSet strings.
-  if (images.length === 0) {
-    console.log(`images`, images)
-    console.log(`dimensions`, dimensions)
-    console.log(`options`, options)
-    console.log(`sizes`, sizes)
-  }
   const fallbackSrc = images[0].src
   const srcSet = images.map((image, i) => {
     let resolution
@@ -397,6 +415,7 @@ async function responsiveResolution ({ file, args = {} }) {
   }
 }
 
+exports.queue = q
 exports.queueImageResizing = queueImageResizing
 exports.base64 = base64
 exports.responsiveSizes = responsiveSizes

@@ -2348,6 +2348,12 @@ qs@~6.3.0:
   version "6.3.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.3.0.tgz#f403b264f23bc01228c74131b407f18d5ea5d442"
 
+queue@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/queue/-/queue-4.0.1.tgz#18bb2f4c1f8d99fb643da9fead89869256291617"
+  dependencies:
+    inherits "~2.0.0"
+
 randomatic@^1.1.3:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/randomatic/-/randomatic-1.1.6.tgz#110dcabff397e9dcff7c0789ccc0a49adf1ec5bb"
