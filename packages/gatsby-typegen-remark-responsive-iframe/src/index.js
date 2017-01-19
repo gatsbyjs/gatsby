@@ -26,6 +26,9 @@ module.exports = ({ markdownAST, pluginOptions = {} }) => (
           `)
           $(`iframe`).attr(`width`, null).attr(`height`, null)
           const newIframe = $.html()
+
+          // TODO add youtube preview image as background-image.
+
           const rawHTML = `
           <div
             class="gatsby-resp-iframe-wrapper"

@@ -12,8 +12,8 @@ const {
   responsiveResolution,
 } = require(`gatsby-sharp`)
 
-exports.extendNodeType = (options) => {
-  if (options.args.type.name !== `ImageSharp`) { return {} }
+exports.extendNodeType = ({ args }) => {
+  if (args.type.name !== `ImageSharp`) { return {} }
 
   return {
     responsiveResolution: {
@@ -45,10 +45,10 @@ exports.extendNodeType = (options) => {
           defaultValue: 50,
         },
       },
-      resolve (image, args) {
+      resolve (image, fieldArgs) {
         const promise = responsiveResolution({
           file: image.parent,
-          args,
+          args: { ...fieldArgs, linkPrefix: args.linkPrefix },
         })
         return promise
       },
@@ -80,10 +80,10 @@ exports.extendNodeType = (options) => {
           defaultValue: 50,
         },
       },
-      resolve (image, args) {
+      resolve (image, fieldArgs) {
         return responsiveSizes({
           file: image.parent,
-          args,
+          args: { ...fieldArgs, linkPrefix: args.linkPrefix },
         })
       },
     },
@@ -126,17 +126,17 @@ exports.extendNodeType = (options) => {
           defaultValue: false,
         },
       },
-      resolve (image, args) {
+      resolve (image, fieldArgs) {
         return new Promise((resolve) => {
           const file = image.parent
-          if (args.base64) {
+          if (fieldArgs.base64) {
             resolve(base64({
               file,
             }))
           } else {
             resolve(queueImageResizing({
               file,
-              args,
+              args: { ...fieldArgs, linkPrefix: args.linkPrefix },
             }))
           }
         })

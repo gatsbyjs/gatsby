@@ -15,6 +15,11 @@ const pathChunkName = (path) => {
 }
 
 module.exports = (locals, callback) => {
+  let linkPrefix = ``
+  if (__PREFIX_LINKS__) {
+    linkPrefix = __LINK_PREFIX__
+  }
+
   match({ routes: rootRoute, location: locals.path }, (error, redirectLocation, renderProps) => {
     if (error) {
       console.log(`error when building page ${locals.path}`, error)
@@ -81,7 +86,7 @@ module.exports = (locals, callback) => {
       dascripts.forEach((script) => {
         const fetchKey = `assetsByChunkName[${script}][0]`
         //const prefixedScript = prefixLink(`/${_.get(stats, fetchKey, ``)}`)
-        const prefixedScript = `/${_.get(stats, fetchKey, ``)}`
+        const prefixedScript = `${linkPrefix}/${_.get(stats, fetchKey, ``)}`
 
         // Add preload <link>s for scripts.
         headComponents.unshift(

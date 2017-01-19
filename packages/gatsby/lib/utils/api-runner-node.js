@@ -1,14 +1,19 @@
 const Promise = require(`bluebird`)
 const glob = require(`glob`)
 const _ = require(`lodash`)
-const { siteDB } = require(`../utils/globals`)
+const { siteDB, programDB } = require(`../utils/globals`)
 
 const runAPI = (plugin, api, args) => {
+  let linkPrefix = ``
+  if (programDB().prefixLinks) {
+    linkPrefix = siteDB().get(`config`).linkPrefix
+  }
+
   const gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
   if (gatsbyNode[api]) {
     console.log(`calling api handler in ${plugin.resolve} for api ${api}`)
     const result = gatsbyNode[api]({
-      args,
+      args: { ...args, linkPrefix },
       pluginOptions: plugin.pluginOptions,
     })
     if (!result) {

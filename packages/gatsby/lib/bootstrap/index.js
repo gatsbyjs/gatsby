@@ -186,6 +186,9 @@ module.exports = async (program) => {
   siteDB(siteDB().set(`plugins`, plugins))
   siteDB(siteDB().set(`flattenedPlugins`, flattenedPlugins))
 
+  // Ensure the public directory is created.
+  await mkdirs(`${program.directory}/public`)
+
   // Copy our site files to the root of the site.
   console.time('copy gatsby files')
   const srcDir = `${__dirname}/../intermediate-representation-dir`
@@ -327,8 +330,7 @@ module.exports = async (program) => {
   //cb(null, schema)
 
   await queryRunner(program, graphqlRunner)
-  // TODO get handle on images and don't say done until queue is at zero.
-  //
+  await apiRunnerNode(`generateSideEffects`)
   console.log(`bootstrap finished, time since started: ${process.uptime()}`)
 
   return { schema, graphqlRunner }

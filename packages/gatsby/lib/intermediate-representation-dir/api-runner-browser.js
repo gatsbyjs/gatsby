@@ -6,9 +6,7 @@
 // ]
 
 module.exports = (api, args, defaultReturn) => {
-  if (process.env.NODE_ENV !== `production`) {
-    console.log(`running browser plugins for api "${api}" with args`, args)
-  }
+  console.log(`running gatsby plugins for api "${api}" with args`, args)
 
   // Run each plugin in series.
   let results = plugins.map((plugin) => {
@@ -18,17 +16,14 @@ module.exports = (api, args, defaultReturn) => {
     }
     return false
   })
-  console.log(results)
+  console.log(`results`, results)
 
   // Filter out undefined/falsey results.
   results = results.filter((result) => result)
-  console.log(results)
 
   if (results.length > 0) {
-    console.log(`returning results`)
     return results
   } else {
-    console.log(`returning defaultReturn`, [defaultReturn])
     return [defaultReturn]
   }
 }

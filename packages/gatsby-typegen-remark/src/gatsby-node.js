@@ -24,7 +24,7 @@ const prune = require(`underscore.string/prune`)
 
 exports.extendNodeType = ({ args, pluginOptions }) => {
   return new Promise((resolve, reject) => {
-    const { ast, type } = args
+    const { ast, type, linkPrefix } = args
     if (type.name !== `MarkdownRemark`) { return resolve({}) }
 
     const files = select(ast, `File`)
@@ -111,6 +111,7 @@ exports.extendNodeType = ({ args, pluginOptions }) => {
                   markdownNode,
                   files,
                   pluginOptions: plugin.pluginOptions,
+                  linkPrefix,
                 })
               } else {
                 return Promise.resolve()

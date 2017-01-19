@@ -21,7 +21,6 @@ const debug = require(`debug`)(`gatsby:application`)
 
 async function startServer (program) {
   const directory = program.directory
-  const apiRunner = require(`${directory}/.intermediate-representation/api-runner-ssr`)
 
   // Load pages for the site.
   const { schema } = await bootstrap(program)
@@ -76,22 +75,11 @@ async function startServer (program) {
     //webpackDevServer.listen(webpackPort, program.host)
 
     const app = express()
-    app.use(require(`webpack-dev-middleware`)(compiler, {
-      noInfo: true,
-      publicPath: devConfig.output.publicPath,
-      historyApiFallback: true,
-    }))
-
     app.use(require(`webpack-hot-middleware`)(compiler, {
       log: console.log,
       path: `/__webpack_hmr`,
       heartbeat: 10 * 1000,
     }))
-    //app.use(require(`webpack-dev-middleware`)(compiler, {
-      //publicPath: devConfig.output.publicPath,
-      //historyApiFallback: true,
-    //}))
-    //app.use(require(`webpack-hot-middleware`)(compiler))
     app.use(`/graphql`, graphqlHTTP({
       schema,
       graphiql: true,
@@ -111,6 +99,7 @@ async function startServer (program) {
           return res.send(htmlStr)
         } else {
           try {
+            const apiRunner = require(`${directory}/.intermediate-representation/api-runner-ssr`)
             const htmlElement = React.createElement(
               HTML, {
                 body: ``,
@@ -132,12 +121,15 @@ async function startServer (program) {
         return next()
       }
     })
-
+    app.use(require(`webpack-dev-middleware`)(compiler, {
+      noInfo: true,
+      publicPath: devConfig.output.publicPath,
+    }))
     // As last step, check if the file exists in the public folder except for
     // HTML files which could be there from a previous build — we want the app
     // to load our special development html file.
     app.get(`*`, (req, res) => {
-      if (!req.url.match(/.*html$/)) {
+      if (!req.url.match(/.*html/)) {
         res.sendFile(`${process.cwd()}/public/${req.url}`)
       }
     })
