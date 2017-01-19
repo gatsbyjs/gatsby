@@ -1,6 +1,8 @@
 [![Travis CI Build Status](https://travis-ci.org/gatsbyjs/gatsby.svg?branch=master)](https://travis-ci.org/gatsbyjs/gatsby)
 [![npm package](https://img.shields.io/npm/v/gatsby.svg?style=flat-square)](https://www.npmjs.org/package/gatsby)
 [![gatsby channel on discord](https://img.shields.io/badge/discord-gatsby%40reactiflux-738bd7.svg?style=flat-square)](https://discord.gg/0ZcbPKXt5bVoxkfV)
+[![OpenCollective](https://opencollective.com/gatsby/backers/badge.svg)](#backers)
+[![OpenCollective](https://opencollective.com/gatsby/sponsors/badge.svg)](#sponsors)
 [![Twitter Follow](https://img.shields.io/twitter/follow/gatsbyjs.svg?style=social)](https://twitter.com/gatsbyjs)
 
 # Gatsby
@@ -8,22 +10,24 @@ Transform plain text into dynamic blogs and websites using the latest
 web technologies. A React.js static site generator.
 
 Supports Markdown, HTML, and React.js pages out of the box. Easy to add
-support for additional files types.
+support for additional file types.
 
 Leverages React's [component model](https://facebook.github.io/react/blog/2013/06/05/why-react.html)
  and [React Router's "nested component hierarchy"](https://github.com/rackt/react-router/blob/master/docs/Introduction.md)
 to make templating incredibly powerful and intuitive.
 
 All templates, css, and content are *hot reloadable* — powered by
-Webpack.
+[webpack](https://github.com/webpack/webpack).
 
 Build sites like it's 1995. Files are translated into HTML pages at the
 same position within the file system. Add a markdown file at `/docs/index.md` and
 it'll be converted to `/docs/index.html`.
 
+*[We've started work on a 1.0 release of Gatsby!](https://github.com/gatsbyjs/gatsby/issues/419)* Find the code in the `1.0` branch.
+
 ![live-reloading example](http://zippy.gfycat.com/UltimateWeeklyBarebirdbat.gif)
 
-### Goals
+## Goals
 * No-reload page transitions
 * Hot reload editing. Tweak your pages, templates, and styles and see changes in
   real time.
@@ -33,38 +37,85 @@ it'll be converted to `/docs/index.html`.
 * Support "Starters" — install starter sites directly from Github. Use open sourced
   starters or build your own.
 
+## Why use Gatsby instead of other Static Site Generators
+* No-refresh page transitions
+* The awesome React.js component model
+* Live editing on every part of your site. Dramatically speed development.
+
 ## Sites built with Gatsby
-* [bricolage.io](http://bricolage.io?utm_source=github.com) ([source](https://github.com/KyleAMathews/blog))
-* [relaterocket.co](https://relaterocket.co?utm_source=github.com)
+* [bricolage.io](https://bricolage.io/?utm_source=github.com) ([source](https://github.com/KyleAMathews/blog))
 * [reindex.io](https://www.reindex.io)
-* [syncano.io](https://www.syncano.io)
+* [syncano.io](https://www.syncano.io) ([source](https://github.com/Syncano/syncano.com))
 * [graphene-python.org](http://graphene-python.org/) ([source](https://github.com/graphql-python/graphene/tree/master/docs))
 * [back-to-the-basics.io](http://back-to-the-basics.io/)
-* [ashk.io](http://ashk.io/) ([source](https://github.com/wpioneer/mysites-blog))
+* [ashk.io](http://ashk.io/) ([source](https://github.com/wpioneer/blog))
 * [nordnet.se/brand](https://www.nordnet.se/brand/)
-* [likescoffee.com](http://likescoffee.com/) ([source](https://github.com/pamo/pamo.github.io/tree/development))
+* [likescoffee.com](https://likescoffee.com/) ([source](https://github.com/pamo/pamo.github.io/tree/development))
 * [vii.campjs.com](http://vii.campjs.com/) ([source](https://github.com/campjs/campjs-vii))
 * [michaeljdeeb.com](http://michaeljdeeb.com) ([source](https://github.com/michaeljdeeb/michaeljdeeb-gatsby-blog))
 * [brittcrawford.com](http://brittcrawford.com) ([source](https://github.com/britt/britt.github.com/tree/gatsby))
 * [React-MDL](https://tleunen.github.io/react-mdl/) ([source](https://github.com/tleunen/react-mdl/tree/master/docs))
-* [Snapgit](https://snapgit.com) ([source](https://github.com/snapgit/snapgit.com))
+* [Snapgit](https://snapgit.com) ([source](https://github.com/glassfalcon/snapgit.com))
 * [iamdustan.com](http://iamdustan.com/) ([source](https://github.com/iamdustan/iamdustan.github.io))
-* [React Hardware](http://iamdustan.com/react-hardware) ([source](https://github.com/iamdustan/react-hardware/tree/master/docs))
+* [React Hardware](http://iamdustan.com/react-hardware/) ([source](https://github.com/iamdustan/react-hardware/tree/master/docs))
 * [peterp.me](https://www.peterp.me) ([source](https://github.com/peterpme/peterpme.github.io))
 * [k-create.com](https://k-create.com) ([source](https://github.com/kristofferh/kristoffer))
 * [kylegach.com](https://kylegach.com) ([source](https://github.com/kylegach/kylegach_com))
 * [jazlal.li](http://jazlal.li) ([source](https://github.com/jazlalli/jazlal.li))
 * [React Headroom](https://kyleamathews.github.io/react-headroom/) ([source](https://github.com/KyleAMathews/react-headroom/tree/master/website))
-* [Völlig Ohne](http://volligohne.com/) ([source](https://github.com/timurc/voellig-ohne-website/))
-* [michaelcereda.com](http://michaelcereda.com) ([source](https://github.com/MichaelCereda/michaelcereda.com))
+* [Völlig Ohne](http://volligohne.com/) ([source](https://github.com/voellig-ohne/voellig-ohne-website))
+* [michaelcereda.com](https://michaelcereda.com/) ([source](https://github.com/MichaelCereda/michaelcereda.com))
 * [openFDA](https://open.fda.gov/) ([source](https://github.com/FDA/open.fda.gov))
 * [emilyaviva.com](http://emilyaviva.com) ([source](https://github.com/emilyaviva/eakm-website-gatsby))
+* [dynamicext.com](http://www.dynamicext.com/)
+* [React Gravatar](http://kyleamathews.github.io/react-gravatar/) ([source](https://github.com/KyleAMathews/react-gravatar/tree/master/www))
+* [johnm.io](http://johnm.io) ([source](https://github.com/johnpmorris/johnpmorris.github.io/tree/react-rebuild))
+* [twnsnd.co](http://twnsnd.co/)
+* [Beau Han Xu](http://www.beauhanxu.com/)
+* [HalfAtheist](https://halfatheist.com/) ([source](https://github.com/halfatheist/halfatheist.github.io))
+* [joshuahorwitz.net](http://joshuahorwitz.net)
+* [DOSH](http://www.dosh.cash/)
+* [Outcomes.com](https://www.outcomes.com/)
+* [Codefellows.org](https://www.codefellows.org)
+* [ollieglass.com](http://ollieglass.com/)
+* [waigojs.com](https://waigojs.com/) ([source](https://github.com/waigo/waigo.github.io))
+* [The State Of JavaScript](http://stateofjs.com/)
+* [ZBT MIT Website](http://zbt.mit.edu) ([source](https://github.com/Slava/zbt-website))
+* [ethereumclassic.org](http://ethereumclassic.org/) ([source](https://github.com/ethereumclassic/ethereumclassic.github.io/tree/source))
+* [Husam Machlovi, Portfolio & Blog](http://husammachlovi.com)
+* [numenta.com](http://numenta.com) ([source](https://github.com/numenta/numenta-web/tree/master/numenta.com))
+* [chiedolabs.com](https://labs.chie.do)
+* [Yuppies](https://yuppi.es) ([source](https://github.com/f0rr0/f0rr0.github.io))
+* [Go7hic](http://blog.yongyuan.us)
+* [Video streaming devops blog](https://devops.spuul.com/) ([source](https://github.com/Spuul/devops-blog/))
+* [blog.rphl.io](https://blog.rphl.io)
+* [oliverbenns.com](http://oliverbenns.com?utm_source=github.com) ([source](https://github.com/oliverbenns/oliverbenns.com))
+* [Kapadiya.net](https://www.kapadiya.net/?utm_source=github.com) ([source](https://github.com/vikas5914/vikas5914.github.io))
+* [anvilabs.co](https://anvilabs.co/?utm_source=github.com) ([source](https://github.com/anvilabs/anvilabs.co))
+* [Cardiogram](https://cardiogr.am)
+* [Geographer](https://geographer.su) ([source](https://github.com/MenaraSolutions/geographer-docs))
+* [fuchs+wald](https://fuchsundwald.de) ([source](https://github.com/voellig-ohne/cf-website))
+* [AngularToReact.com](https://angulartoreact.com)
+* [damianmullins.com](http://www.damianmullins.com) ([source](https://github.com/DamianMullins/damianmullins.github.io))
+* [Spencer Dixon's Blog](https://www.spencerdixon.com/) ([source](https://github.com/SpencerCDixon/blog))
+* [LandlordAccountz.com](http://www.landlordaccountz.com)
+* [Timo Becker](https://timobecker.com) ([source](https://github.com/voellig-ohne/timobecker))
+* [Sacha Greif](http://sachagreif.com/) ([source](https://github.com/SachaG/sg2017))
+* [Crypto Christmas](https://crypto.christmas/) ([source](https://github.com/rileyjshaw/crypto.christmas))
+* [Perspexi Labs](https://www.perspexilabs.com/)
+* [Scaphold.io Community](https://scaphold.io/community/) ([source](https://github.com/scaphold-io/scaphold-community))
+* [Green Navigation wiki](https://greennav.github.io) ([source](https://github.com/Greennav/greennav.github.io))
 * [Edit this file to add yours!](https://github.com/gatsbyjs/gatsby/blob/master/README.md)
 
 *Note, for the sites that have made their source available, you can
 install them locally by running `gatsby new SITE_NAME SOURCE_URL`.*
 
-### Videos and blogs
+## Sponsors
+* [RelateRocket](https://relaterocket.co)
+* [Thinkmill](http://thinkmill.com.au/)
+* [Loanpal](https://loanpal.com/)
+
+## Videos and blogs
 * [Scott Nonnenberg](https://twitter.com/scottnonnenberg) presents on Gatsby to the Seattle React.js Meetup https://blog.scottnonnenberg.com/static-site-generation-with-gatsby-js/
 * [Kyle Mathews](https://twitter.com/kylemathews) gave a lightning talk @ the 2016 React.js Conference on Gatsby https://www.youtube.com/watch?v=RFkNRKL6ZoE
 * [Kyle Mathews](https://twitter.com/kylemathews) spoke on Gatsby to the San Francisco Static Web Tech meetup http://www.staticwebtech.com/presentations/developing-with-react-gatsbyjs/
@@ -72,13 +123,10 @@ install them locally by running `gatsby new SITE_NAME SOURCE_URL`.*
 * [A step-by-step guide: Gatsby on Netlify](https://www.netlify.com/blog/2016/02/24/a-step-by-step-guide-gatsby-on-netlify)
 * [Hosting GatsbyJS – A React Static Site Generator](https://www.aerobatic.com/blog/gatsbyjs)
 * [Michael Cereda's multi-part series of blog posts on building his site with Gatsby](https://medium.com/@michaelcereda/creating-an-isomorphic-universal-website-with-react-part-1-a905350acba8#.akoo25l6j)
+* [Talk on GatsbyJS @ ViennaJS](https://www.youtube.com/watch?v=f0O1nCgqA3E&feature=youtu.be&a)
 
-### Why use Gatsby instead of other Static Site Generators
-* No-refresh page transitions
-* The awesome React.js component model
-* Live editing on every part of your site. Dramatically speed development.
+## I'm already building a server-rendered React.js site, is Gatsby a good fit?
 
-### I'm already building a server-rendered React.js site, is Gatsby a good fit?
 If your site falls closer to the site end of the app<---->site spectrum
 then yes.
 
@@ -86,7 +134,8 @@ Gatsby is an excellent fit for blogs, marketing sites, docs sites, etc. Proper w
 apps should probably remain as normal web apps (though I'd love to be
 proved wrong!).
 
-### Warning!
+## Warning!
+
 Gatsby is not yet stable. APIs will break. Functionality is missing. It's
 usable but if you plan on building with it, expect a rocky road for some time.
 
@@ -122,7 +171,7 @@ the Gatsby Starter Blog by running:
 This downloads the files and initializes the site by running `npm
 install`
 
-If you don't specify a custom starter, your site will created
+If you don't specify a custom starter, your site will be created
 from the [default
 starter](https://github.com/gatsbyjs/gatsby-starter-default).
 
@@ -133,6 +182,10 @@ include yours!
 * [Simple blog](https://github.com/gatsbyjs/gatsby-starter-blog) ([Demo](http://gatsbyjs.github.io/gatsby-starter-blog/))
 * [Simple documentation site](https://github.com/gatsbyjs/gatsby-starter-documentation) ([Demo](http://gatsbyjs.github.io/gatsby-starter-documentation/))
 * [Lumen](https://github.com/wpioneer/gatsby-starter-lumen) ([Demo](http://wpioneer.github.io/gatsby-starter-lumen/))
+* [DrunkenBlog](https://github.com/konsumer/gatsby-starter-drunkenblog) ([Demo](http://konsumer.js.org/gatsby-starter-drunkenblog/))
+* [Clean start](https://github.com/brianstone/gatsby-starter-clean) ([Demo](http://gatsby-starter-clean.netlify.com/))
+* [Project AMP blog](https://github.com/chiedo/gatsby-amp-starter-blog)
+* [Gatstrap](https://github.com/jaxx2104/gatsby-starter-bootstrap) ([Demo](https://jaxx2104.github.io/gatsby-starter-bootstrap/))
 
 ### Tutorial: Building a documentation site from the Gatsby Documentation Starter
 1. Install gatsby `npm install -g gatsby`
@@ -227,6 +280,38 @@ module.exports = React.createClass({
 })
 ```
 
+#### frontmatter and metadata
+Gatsby uses frontmatter and html-frontmatter to pull metadata out of files. This data is typically used in links leading to each page. The most relevant example is a list of blog posts in which you display the title, description, tags, etc. in the form of `{post.title}` in the React.js component.
+
+As seen in our previous markdown file, the title is part of the frontmatter
+```
+---
+title: This is a title
+---
+
+# Hi friends.
+This is a markdown file.
+```
+
+An html example as follows.
+```
+<!--
+title: This is a title
+-->
+
+<h1>Hello World</h1>
+```
+In a .js|.jsx file, export a data object to set your metadata variables, like so:
+```
+import React from 'react'
+
+exports.data = {
+  title: 'This is a title',
+}
+
+export default MyComponent ...
+```
+
 ### Structure of a Gatsby site
 * `config.toml` - Core application configuration is stored here. Available via a `require`
 or `import` of 'config'. Values:
@@ -243,7 +328,7 @@ files which start with an underscore:
   production, you'll need to [set up your server host to show this page when it can't find
   the requested file](https://github.com/gatsbyjs/gatsby/pull/121#issuecomment-194715068).
 * (optional) `gatsby-browser.js` - a way to hook into key application events. Export
-`onRouteChange` of type `function(location)` to be notified whenever React-Router
+`onRouteUpdate` of type `function()` to be notified whenever React-Router
 navigates.
 * (optional) `gatsby-node.js` - a way to hook into events during build
 and development.
@@ -257,27 +342,29 @@ To modify the Webpack configuration, create a `gatsby-node.js` in the root of yo
 and export there a `modifyWebpackConfig` function.
 
 ```javascript
-exports.modifyWebpackConfig = function(config, env) {
+exports.modifyWebpackConfig = function(config, stage) {
   // edit loaders here
   return config
 }
 ```
 
 Gatsby calls this function with the webpack-configurator object and
-environment string when it creates a Webpack config. It first
+"stage" string when it creates a Webpack config. It first
 loads the defaults and then allows you to modify it.
 
-The `env` can be
+The `stage` can be:
 
-* `develop` (when running `gatsby develop`)
-* `static` (when Gatsby is building static HTML pages)
-* `production` (when Gatsby is generating the CSS/JS bundles)
+1. develop: for `gatsby develop` command, hot reload and CSS injection into page
+2. develop-html: same as develop without react-hmre in the babel config for html renderer
+3. build-css: build styles.css file
+4. build-html: build all HTML files
+5. build-javascript: Build bundle.js for Single Page App in production
 
 Consider the following example which removes the default css loader
 and replaces it with a loader that uses css-modules.
 
 ```javascript
-exports.modifyWebpackConfig = function(config, env) {
+exports.modifyWebpackConfig = function(config, stage) {
   config.removeLoader('css')
   config.loader('css', function(cfg) {
     cfg.test = /\.css$/
@@ -323,8 +410,8 @@ and add the plugin when generating the static HTML for our site.
 ```javascript
 var ExtractTextPlugin = require("extract-text-webpack-plugin")
 
-exports.modifyWebpackConfig = function(config, env) {
-  if(env === 'static') {
+exports.modifyWebpackConfig = function(config, stage) {
+  if(stage === 'build-html') {
     config.removeLoader('css')
     config.loader('css', function(cfg) {
       cfg.test = /\.css$/
@@ -354,7 +441,7 @@ Gatsby also uses `gatsby-node.js` to pass control of the final build step over
 to the user when running `gatsby build`. The post build function takes two arguments, the pages and the callback for completing the build:
 
 ```javascript
-export.postBuild = function(pages, callback) {
+exports.postBuild = function(pages, callback) {
   // perform actions on pages here
 
   callback()
@@ -366,9 +453,18 @@ export.postBuild = function(pages, callback) {
 
 ## FAQ
 
+### Pre-Requisites
+
+[Python v2](https://www.python.org/) is required to install Gatsby. Please ensure python is in your path before running `npm install -g gatsby`.
+
 ### I added a new page and it's not showing up!
 
 [Webpack doesn't currently support hot-reloading new files added to a context](https://github.com/webpack/webpack/issues/1162). When you add a new file, restart the `gatsby develop` process and your new page will show up.
+
+Make sure you also including the **trailing slash** in your URLs:
+
+- Bad: `http://localhost:8000/foo`
+- Good: `http://localhost:8000/foo/`
 
 ### Inline CSS
 
@@ -394,7 +490,17 @@ if (process.env.NODE_ENV === 'production') {
 // Then in your <head>
 {css}
 ```
+### CSS modules
 
+[CSS modules](https://github.com/css-modules/css-modules) are supported by default for all files with `.module.(css|less|scss|sass)` extension.
+
+```javascript
+// Uses CSS Modules
+import './my-component.module.css'
+
+// Doesn't use CSS Modules
+import './main.css'
+```
 
 ### Configuring Babel
 
@@ -422,13 +528,26 @@ If you need to change the loader to be something completely custom. You will
 have to define your own webpack loader by following the steps [described
 above](https://github.com/gatsbyjs/gatsby#how-to-use-your-own-webpack-loaders).
 
+### Extending Markdown Syntax with Plugins
+
+Gatsby uses [markdown-it](https://github.com/markdown-it/markdown-it) to parse
+markdown files into HTML. By default Gatsy ships with only basic markdown
+support. You can extend the syntax (e.g. for mathematical equations) by installing
+[markdown-it plugins](https://www.npmjs.org/browse/keyword/markdown-it-plugin).
+
+If you want to do this you will need to use a custom markdown loader. You can
+copy the one provided in the default starter [here](https://github.com/gatsbyjs/gatsby-starter-default/blob/master/loaders/markdown-loader/index.js).
+Add the relevant packages to your dependencies, including the markdown-it
+plugins that you want to use and enable them with `md.use(require('markdown-it-plugin-name'))`
+within the markdown loader file.
+
 ### Deploying to Github Pages (and other hosts where your site's links need prefixes)
 Gatsby supports automatically prefixing links with its `prefixLink` helper function.
 
 First set the prefix in your config file e.g. `linkPrefix = '/your-project'`
 
 Then simply import the function and run all links in your site
-thorough it e.g.
+through it e.g.
 
 ```javascript
 import { prefixLink } from 'gatsby-helpers'
@@ -453,3 +572,74 @@ Jekyll has a [comprehensive import tool](http://import.jekyllrb.com/) for these 
 Once your pages are converted to markdown, change the file extensions to
 `.md` from the `.markdown` the tool outputs and then use them in your
 site.
+
+## Backers
+
+Support us with a monthly donation and help us continue our activities. [[Become a backer](https://opencollective.com/gatsby#backer)]
+
+<a href="https://opencollective.com/gatsby/backer/0/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/0/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/1/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/1/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/2/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/2/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/3/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/3/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/4/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/4/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/5/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/5/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/6/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/6/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/7/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/7/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/8/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/8/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/9/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/9/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/10/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/10/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/11/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/11/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/12/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/12/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/13/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/13/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/14/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/14/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/15/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/15/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/16/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/16/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/17/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/17/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/18/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/18/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/19/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/19/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/20/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/20/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/21/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/21/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/22/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/22/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/23/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/23/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/24/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/24/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/25/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/25/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/26/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/26/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/27/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/27/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/28/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/28/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/backer/29/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/29/avatar.svg"></a>
+
+
+## Sponsors
+
+Become a sponsor and get your logo on our README on Github with a link to your site. [[Become a sponsor](https://opencollective.com/gatsby#sponsor)]
+
+<a href="https://opencollective.com/gatsby/sponsor/0/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/1/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/1/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/2/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/2/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/3/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/3/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/4/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/4/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/5/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/5/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/6/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/6/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/7/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/7/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/8/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/8/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/9/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/9/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/10/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/10/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/11/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/11/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/12/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/12/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/13/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/13/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/14/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/14/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/15/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/15/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/16/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/16/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/17/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/17/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/18/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/18/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/19/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/19/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/20/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/20/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/21/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/21/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/22/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/22/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/23/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/23/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/24/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/24/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/25/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/25/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/26/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/26/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/27/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/27/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/28/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/28/avatar.svg"></a>
+<a href="https://opencollective.com/gatsby/sponsor/29/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/29/avatar.svg"></a>
