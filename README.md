@@ -66,7 +66,7 @@ it'll be converted to `/docs/index.html`.
 * [Völlig Ohne](http://volligohne.com/) ([source](https://github.com/voellig-ohne/voellig-ohne-website))
 * [michaelcereda.com](https://michaelcereda.com/) ([source](https://github.com/MichaelCereda/michaelcereda.com))
 * [openFDA](https://open.fda.gov/) ([source](https://github.com/FDA/open.fda.gov))
-* [emilyaviva.com](http://emilyaviva.com) ([source](https://github.com/emilyaviva/eakm-website-gatsby))
+* [emilyaviva.com](http://emilyaviva.com) ([source](https://github.com/emilyaviva/emilyaviva.com))
 * [dynamicext.com](http://www.dynamicext.com/)
 * [React Gravatar](http://kyleamathews.github.io/react-gravatar/) ([source](https://github.com/KyleAMathews/react-gravatar/tree/master/www))
 * [johnm.io](http://johnm.io) ([source](https://github.com/johnpmorris/johnpmorris.github.io/tree/react-rebuild))
