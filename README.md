@@ -1,7 +1,7 @@
 [![Travis CI Build Status](https://travis-ci.org/gatsbyjs/gatsby.svg?branch=master)](https://travis-ci.org/gatsbyjs/gatsby)
 [![npm package](https://img.shields.io/npm/v/gatsby.svg?style=flat-square)](https://www.npmjs.org/package/gatsby)
 [![gatsby channel on discord](https://img.shields.io/badge/discord-gatsby%40reactiflux-738bd7.svg?style=flat-square)](https://discord.gg/0ZcbPKXt5bVoxkfV)
-[![OpenCollective](https://opencollective.com/gatsby/backers/badge.svg)](#backers) 
+[![OpenCollective](https://opencollective.com/gatsby/backers/badge.svg)](#backers)
 [![OpenCollective](https://opencollective.com/gatsby/sponsors/badge.svg)](#sponsors)
 [![Twitter Follow](https://img.shields.io/twitter/follow/gatsbyjs.svg?style=social)](https://twitter.com/gatsbyjs)
 
@@ -66,7 +66,7 @@ it'll be converted to `/docs/index.html`.
 * [Völlig Ohne](http://volligohne.com/) ([source](https://github.com/voellig-ohne/voellig-ohne-website))
 * [michaelcereda.com](https://michaelcereda.com/) ([source](https://github.com/MichaelCereda/michaelcereda.com))
 * [openFDA](https://open.fda.gov/) ([source](https://github.com/FDA/open.fda.gov))
-* [emilyaviva.com](http://emilyaviva.com) ([source](https://github.com/emilyaviva/eakm-website-gatsby))
+* [emilyaviva.com](http://emilyaviva.com) ([source](https://github.com/emilyaviva/emilyaviva.com))
 * [dynamicext.com](http://www.dynamicext.com/)
 * [React Gravatar](http://kyleamathews.github.io/react-gravatar/) ([source](https://github.com/KyleAMathews/react-gravatar/tree/master/www))
 * [johnm.io](http://johnm.io) ([source](https://github.com/johnpmorris/johnpmorris.github.io/tree/react-rebuild))
@@ -299,10 +299,10 @@ An html example as follows.
 <!--
 title: This is a title
 -->
- 
+
 <h1>Hello World</h1>
 ```
-In a .js|.jsx file, export a data object to set your metadata variables, like so: 
+In a .js|.jsx file, export a data object to set your metadata variables, like so:
 ```
 import React from 'react'
 
@@ -531,12 +531,12 @@ above](https://github.com/gatsbyjs/gatsby#how-to-use-your-own-webpack-loaders).
 
 ### Extending Markdown Syntax with Plugins
 
-Gatsby uses [markdown-it](https://github.com/markdown-it/markdown-it) to parse 
+Gatsby uses [markdown-it](https://github.com/markdown-it/markdown-it) to parse
 markdown files into HTML. By default Gatsy ships with only basic markdown
-support. You can extend the syntax (e.g. for mathematical equations) by installing 
+support. You can extend the syntax (e.g. for mathematical equations) by installing
 [markdown-it plugins](https://www.npmjs.org/browse/keyword/markdown-it-plugin).
 
-If you want to do this you will need to use a custom markdown loader. You can 
+If you want to do this you will need to use a custom markdown loader. You can
 copy the one provided in the default starter [here](https://github.com/gatsbyjs/gatsby-starter-default/blob/master/loaders/markdown-loader/index.js).
 Add the relevant packages to your dependencies, including the markdown-it
 plugins that you want to use and enable them with `md.use(require('markdown-it-plugin-name'))`
