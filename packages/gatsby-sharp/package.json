@@ -11,6 +11,7 @@
     "imagemin-pngquant": "^5.0.0",
     "lodash": "^4.17.3",
     "progress": "^1.1.8",
+    "qs": "^6.3.0",
     "queue": "^4.0.1",
     "sharp": "^0.17.1"
   },
