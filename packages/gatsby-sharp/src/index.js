@@ -97,7 +97,7 @@ const processFile = (file, jobs, cb) => {
 let totalCount = 0
 const toProcess = {}
 const q = queue()
-q.concurrency = 1
+q.concurrency = 2
 
 const queueJob = (job) => {
   const inputFileKey = job.file.id.replace(/\./g, `%2E`)
