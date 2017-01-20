@@ -150,7 +150,7 @@ function queueImageResizing ({ file, args = {} }) {
   // Remove non-true arguments
   filteredArgs = _.filter(pairedArgs, (arg) => arg[1])
   // Remove linkPrefix
-  filteredArgs = _.filter(pairedArgs, (arg) => arg[0] !== `linkPrefix`)
+  filteredArgs = _.filter(filteredArgs, (arg) => arg[0] !== `linkPrefix`)
   filteredArgs = _.filter(filteredArgs, (arg) => {
     if (file.extension.match(/^jp*/)) {
       return !_.includes(arg[0], `png`)
