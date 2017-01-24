@@ -82,7 +82,7 @@ module.exports = ({ files, markdownNode, markdownAST, pluginOptions, linkPrefix 
           file: imageNode,
         }).then((base64Result) => {
           // Calculate the paddingBottom %
-          const ratio = `${(1 / images[0].aspectRatio) * 100}%`
+          const ratio = `${(images[0].aspectRatio) * 100}%`
 
           // Find the image with the closest width to the maxWidth for our
           // fallback src.
