@@ -11,11 +11,11 @@ module.exports = (api, args, defaultReturn) => {
       const result = plugin.plugin[api](args, plugin.options)
       return result
     }
-    return false
+    return
   })
 
-  // Filter out undefined/falsey results.
-  results = results.filter((result) => result)
+  // Filter out undefined results.
+  results = results.filter((result) => (typeof result !== 'undefined'))
 
   if (results.length > 0) {
     return results
