@@ -86,13 +86,6 @@ async function startServer (program) {
     }))
     let htmlStr
     app.use((req, res, next) => {
-      if (req.query.fromFile) {
-        res.sendFile(decodeURIComponent(req.query.fromFile))
-      } else {
-        next()
-      }
-    })
-    app.use((req, res, next) => {
       const parsedPath = parsePath(req.originalUrl)
       if (parsedPath.extname === `` || parsedPath.extname === `.html`) {
         if (htmlStr) {
@@ -129,9 +122,12 @@ async function startServer (program) {
     // HTML files which could be there from a previous build — we want the app
     // to load our special development html file.
     app.get(`*`, (req, res) => {
-      if (!req.url.match(/.*html/)) {
-        res.sendFile(`${process.cwd()}/public/${req.url}`)
-      }
+      // Load file but ignore errors.
+      res.sendFile(`${process.cwd()}/public/${req.url}`, (err) => {
+        if (err) {
+          res.status(404).end()
+        }
+      })
     })
 
     const listener = app.listen(program.port, program.host, (e) => {
