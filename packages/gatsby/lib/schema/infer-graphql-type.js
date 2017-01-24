@@ -51,10 +51,23 @@ const inferGraphQLType = ({ value, fieldName, ...otherArgs }) => {
         formatString: {
           type: GraphQLString,
         },
+        fromNow: {
+          type: GraphQLBoolean,
+          description: `Returns a string generated with Moment.js' fromNow function`,
+        },
+        difference: {
+          type: GraphQLString,
+          description: `Returns the difference between this date and the current time. Defaults to miliseconds but you can also pass in as the measurement years, months, weeks, days, hours, minutes, and seconds.`,
+        },
       },
-      resolve ({ date }, { formatString }) {
+      resolve (object, { fromNow, difference, formatString }) {
+        const date = object[fieldName]
         if (formatString) {
           return moment.utc(date, ISO_8601_FORMAT, true).format(formatString)
+        } else if (fromNow) {
+          return moment.utc(date, ISO_8601_FORMAT, true).fromNow()
+        } else if (difference) {
+          return moment().diff(moment.utc(date, ISO_8601_FORMAT, true), difference)
         } else {
           return date
         }
