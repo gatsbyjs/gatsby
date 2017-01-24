@@ -249,12 +249,7 @@ const q = queue(({ file, graphql, directory }, callback) => {
     ast = babylon.parse(fileStr, {
       sourceType: `module`,
       sourceFilename: true,
-      plugins: [
-        `asyncFunctions`,
-        `jsx`,
-        `flow`,
-        `objectRestSpread`,
-      ],
+      plugins: [`*`],
     })
   } catch (e) {
     console.log(`Failed to parse ${file}`)
