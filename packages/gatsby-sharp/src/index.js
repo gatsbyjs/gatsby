@@ -43,7 +43,7 @@ const processFile = (file, jobs, cb) => {
       .resize(roundedWidth, roundedHeight)
       // Use a more effective cropping strategy at the expense of some additional
       // processing time (how much?).
-      .crop(sharp.strategy.entropy)
+      .crop(sharp.strategy.attention)
 
     clonedPipeline.png({
       compressionLevel: args.pngCompressionLevel,
