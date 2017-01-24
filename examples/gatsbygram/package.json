@@ -22,6 +22,7 @@
     "react-typography": "^0.14.0",
     "request": "^2.79.0",
     "slug": "^0.9.1",
+    "typeface-space-mono": "0.0.6",
     "typography": "^0.14.0"
   },
   "keywords": [

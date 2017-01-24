@@ -2,6 +2,7 @@ import React from 'react'
 import CameraIcon from 'react-icons/lib/fa/camera-retro'
 import { presets } from 'glamor'
 import Link from 'gatsby-link'
+import 'typeface-space-mono'
 
 import { rhythm, scale } from '../utils/typography'
 import Modal from '../components/modal'

@@ -21,7 +21,6 @@ module.exports = React.createClass({
           />
           <title>Image Gallery Gatsby Example Site</title>
           <TypographyStyle typography={typography} />
-          <GoogleFont typography={typography} />
           <HTMLStyles />
           {this.props.headComponents}
         </head>
