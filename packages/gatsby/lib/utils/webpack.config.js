@@ -28,6 +28,9 @@ const genBabelConfig = require(`./babel-config`)
 
 module.exports = async (program, directory, suppliedStage, webpackPort = 1500, pages = []) => {
   const babelStage = suppliedStage
+
+  // We combine develop & develop-html stages for purposes of generating the
+  // webpack config.
   const stage = (suppliedStage === `develop-html`) ? `develop` : suppliedStage
   const babelConfig = await genBabelConfig(program, babelStage)
 
@@ -518,7 +521,9 @@ module.exports = async (program, directory, suppliedStage, webpackPort = 1500, p
 
   module(config, stage)
 
-  const validatedConfig = await webpackModifyValidate(config, stage)
+  // Use the suppliedStage again to let plugins distinguish between
+  // server rendering the html.js and the frontend development config.
+  const validatedConfig = await webpackModifyValidate(config, suppliedStage)
 
   return validatedConfig
 }
