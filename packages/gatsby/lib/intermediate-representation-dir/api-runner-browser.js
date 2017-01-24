@@ -16,14 +16,17 @@ module.exports = (api, args, defaultReturn) => {
     }
     return
   })
-  console.log(`results`, results)
 
   // Filter out undefined results.
-  results = results.filter((result) => (typeof result !== `undefined`))
+  results = results.filter((result) => (typeof result !== 'undefined'))
+
+  console.log(`results`, results)
 
   if (results.length > 0) {
     return results
-  } else {
+  } else if (defaultReturn) {
     return [defaultReturn]
+  } else {
+    return []
   }
 }
