@@ -65,10 +65,15 @@ browserHistory.listen(location => {
 })
 
 function shouldUpdateScroll (prevRouterProps, { location: { pathname } }) {
+  const results = apiRunner(`shouldUpdateScroll`, { prevRouterProps, pathname })
+  if (results.length > 0) {
+    return results[0]
+  }
+
   if (prevRouterProps) {
     const { location: { pathname: oldPathname } } = prevRouterProps
     if (oldPathname === pathname) {
-     return false
+      return false
     }
   }
   return true
