@@ -17,5 +17,7 @@ exports.modifyBabelrc = ({ args }) => {
       { pragma: `Glamor.createElement` },
     ],
   )
+  babelrc.plugins.push(`glamor/babel-hoist`)
+
   return babelrc
 }
