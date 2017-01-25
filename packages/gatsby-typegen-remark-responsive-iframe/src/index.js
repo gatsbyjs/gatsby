@@ -11,20 +11,20 @@ module.exports = ({ markdownAST, pluginOptions = {} }) => (
     const options = _.defaults(pluginOptions, defaults)
     visit(markdownAST, `html`, (node) => {
       const $ = cheerio.load(node.value)
-      const iframe = $(`iframe`)
+      const iframe = $(`iframe, object`)
       if (iframe) {
         const width = iframe.attr(`width`)
         const height = iframe.attr(`height`)
         const src = iframe.attr(`src`)
         if (width && height) {
-          $(`iframe`).attr(`style`, `
+          $(`iframe, object`).attr(`style`, `
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
           `)
-          $(`iframe`).attr(`width`, null).attr(`height`, null)
+          $(`iframe, object`).attr(`width`, null).attr(`height`, null)
           const newIframe = $.html()
 
           // TODO add youtube preview image as background-image.
