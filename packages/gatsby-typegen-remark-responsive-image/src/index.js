@@ -15,7 +15,7 @@ const Promise = require(`bluebird`)
 // 5. Set the html w/ aspect ratio helper.
 module.exports = ({ files, markdownNode, markdownAST, pluginOptions, linkPrefix }) => {
   const defaults = {
-    maxWidth: 800,
+    maxWidth: 650,
     wrapperStyle: ``,
   }
   const options = _.defaults(pluginOptions, defaults)
