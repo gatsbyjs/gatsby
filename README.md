@@ -106,6 +106,7 @@ it'll be converted to `/docs/index.html`.
 * [Scaphold.io Community](https://scaphold.io/community/) ([source](https://github.com/scaphold-io/scaphold-community))
 * [Green Navigation wiki](https://greennav.github.io) ([source](https://github.com/Greennav/greennav.github.io))
 * [Fabric](https://www.meetfabric.com)
+* [Reactiflux](https://www.reactiflux.com/) ([source](https://github.com/reactiflux/reactiflux.com))
 * [Edit this file to add yours!](https://github.com/gatsbyjs/gatsby/blob/master/README.md)
 
 *Note, for the sites that have made their source available, you can
