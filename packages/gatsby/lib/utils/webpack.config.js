@@ -344,7 +344,7 @@ module.exports = async (program, directory, suppliedStage, webpackPort = 1500, p
     // "file" loader makes sure those assets end up in the `public` folder.
     // When you `import` an asset, you get its filename.
     config.loader(`file-loader`, {
-      test: /\.(ico|eot|otf|webp|ttf)(\?.*)?$/,
+      test: /\.(ico|eot|otf|webp|ttf|woff(2)?)(\?.*)?$/,
       loader: `file`,
       query: {
         name: `static/[name].[hash:8].[ext]`,
@@ -359,17 +359,6 @@ module.exports = async (program, directory, suppliedStage, webpackPort = 1500, p
         limit: 7500,
         name: `static/[name].[hash:8].[ext]`,
       },
-    })
-    // Font loader.
-    config.loader(`woff`, {
-      test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-      loader: `url`,
-      query: {
-        limit: 15000, // Set high limit for inlining fonts as they're in the
-        // critical path for rendering.
-        name: `static/[name].[hash:8].[ext]`,
-        mimetype: `application/font-woff`,
-      }
     })
 
     const cssModulesConf = `css?modules&minimize&importLoaders=1`
