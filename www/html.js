@@ -1,9 +1,9 @@
 import React from 'react'
 
 import { prefixLink } from 'gatsby-helpers'
-import { GoogleFont, TypographyStyle } from 'react-typography'
+import { TypographyStyle } from 'react-typography'
 import typography from './utils/typography'
-import HTMLStyles from 'html-styles'
+import HTMLStyles from '.intermediate-representation/html-styles'
 
 module.exports = React.createClass({
   render () {
@@ -22,7 +22,6 @@ module.exports = React.createClass({
           <link rel="icon" type="image/png" sizes="32x32" href={require("images/favicons/favicon-32x32.png")} />
           <link rel="icon" type="image/png" sizes="96x96" href={require("images/favicons/favicon-96x96.png")} />
           <link rel="icon" type="image/png" sizes="16x16" href={require("images/favicons/favicon-16x16.png")} />
-          <GoogleFont typography={typography} />
           <TypographyStyle typography={typography} />
           <HTMLStyles />
         </head>
