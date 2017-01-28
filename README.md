@@ -108,6 +108,7 @@ it'll be converted to `/docs/index.html`.
 * [Fabric](https://www.meetfabric.com)
 * [eugenyzeiri.xyz](http://eugenyzeiri.xyz)
 * [Reactiflux](https://www.reactiflux.com/) ([source](https://github.com/reactiflux/reactiflux.com))
+* [2016 JavaScript Rising Stars](https://risingstars2016.js.org/) ([source](https://github.com/michaelrambeau/risingstars2016))
 * [Edit this file to add yours!](https://github.com/gatsbyjs/gatsby/blob/master/README.md)
 
 *Note, for the sites that have made their source available, you can
