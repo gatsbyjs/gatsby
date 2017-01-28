@@ -37,8 +37,10 @@ const options = {
       background: `#eddad4`,
       fontFamily: `"Space Mono",Consolas,"Roboto Mono","Droid Sans Mono","Liberation Mono",Menlo,Courier,monospace`,
       fontSize: `80%`,
+      // Disable ligatures as they look funny w/ Space Mono as code.
       fontVariant: `none`,
-      fontFeatureSettings: `initial`,
+      WebkitFontFeatureSettings: `"clig" 0, "calt" 0`,
+      fontFeatureSettings: `"clig" 0, "calt" 0`,
       paddingTop: `0.1em`,
       paddingBottom: `0.1em`,
     },
