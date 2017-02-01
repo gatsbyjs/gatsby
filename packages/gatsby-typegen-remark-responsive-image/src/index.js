@@ -88,7 +88,7 @@ module.exports = ({ files, markdownNode, markdownAST, pluginOptions, linkPrefix 
           // fallback src.
           const originalImg = _.maxBy(images, (image) => image.width).src
           const fallbackSrc = _.minBy(images, (image) => Math.abs(options.maxWidth - image.width)).src
-          const srcSet = images.map((image) => `${image.src} ${image.width}w`).join(`,`)
+          const srcSet = images.map((image) => `${image.src} ${Math.round(image.width)}w`).join(`,`)
 
           // TODO
           // add support for sub-plugins having a gatsby-node.js so can add a
