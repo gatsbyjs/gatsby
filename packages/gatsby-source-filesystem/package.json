@@ -20,7 +20,6 @@
     "dist-exiftool": "^10.33.0",
     "exiftool.pl": "^10.33.0",
     "fs-extra": "^1.0.0",
-    "gatsby-graphql-utils": "latest",
     "glob": "^7.1.1",
     "graphql": "^0.8.2",
     "graphql-relay": "^0.4.4",
