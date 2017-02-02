@@ -204,7 +204,7 @@ module.exports = async (program, directory, suppliedStage, webpackPort = 1500, p
             // of unused code on the initial opening of the app.
             //
             // Use Math.max as there must be at least two chunks.
-            minChunks: Math.max(2, Math.floor(components.length / 3)),
+            minChunks: Math.max(3, Math.floor(components.length / 2)),
           }),
           // Add a few global variables. Set NODE_ENV to production (enables
           // optimizations for React) and whether prefixing links is enabled
