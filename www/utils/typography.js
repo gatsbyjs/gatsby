@@ -5,12 +5,12 @@ import { MOBILE_MEDIA_QUERY } from 'typography-breakpoint-constants'
 const options = {
   headerFontFamily: [`Futura PT`, `sans-serif`],
   bodyFontFamily: [`Tex Gyre Schola`, `serif`],
-  baseFontSize: `18px`,
+  baseFontSize: `17px`,
   baseLineHeight: 1.4,
   headerColor: `#44421f`,
   bodyColor: `#44421f`,
   blockMarginBottom: 0.75,
-  scaleRatio: 2.5,
+  scaleRatio: 2.15,
   plugins: [
     new CodePlugin(),
   ],
