@@ -34,7 +34,8 @@ const options = {
       marginBottom: rhythm(1/2),
     },
     'tt,code': {
-      background: `#eddad4`,
+      background: `hsla(23, 60%, 97%, 1)`,
+      border: `1px solid #eddad4`,
       fontFamily: `"Space Mono",Consolas,"Roboto Mono","Droid Sans Mono","Liberation Mono",Menlo,Courier,monospace`,
       fontSize: `80%`,
       // Disable ligatures as they look funny w/ Space Mono as code.
@@ -52,6 +53,7 @@ const options = {
     },
     'pre code': {
       lineHeight: 1.32,
+      border: `none`,
     },
     '.main-body a': {
       color: `inherit`,
