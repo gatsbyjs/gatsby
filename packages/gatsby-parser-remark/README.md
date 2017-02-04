@@ -1,6 +1,21 @@
-# Gatsby Parser Remark
+# gatsby-parser-remark
 
 Parses Markdown files using [Remark](http://remark.js.org/).
+
+## Install
+
+`npm install --save gatsby-parser-json`
+
+## How to use
+
+```javascript
+// In your gatsby-config.js
+plugins: [
+  `gatsby-parser-remark`,
+]
+```
+
+## Parsing algorithm
 
 It recongnizes files with the following extensions as Markdown.
 
@@ -21,6 +36,8 @@ docs on auto-inferring types/fields.
 `gatsby-typegen-remark` adds additional fields to the `MarkdownRemark`
 GraphQL type including `html`, `excerpt`, `headers`, etc. Other Gatsby
 plugins can also add additional fields.
+
+## How to query
 
 A sample GraphQL query to get MarkdownRemark nodes:
 
