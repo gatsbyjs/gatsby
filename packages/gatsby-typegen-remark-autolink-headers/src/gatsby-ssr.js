@@ -1,6 +1,11 @@
 import React from 'react'
 
 exports.modifyHeadComponents = (args, pluginOptions) => {
+  let offsetY = 0
+  if (pluginOptions.offsetY) {
+    offsetY = pluginOptions.offsetY
+  }
+
   const styles = `
     .anchor {
       float: left;
@@ -32,7 +37,7 @@ exports.modifyHeadComponents = (args, pluginOptions) => {
         var element = document.getElementById(hash)
         if (element) {
           var offset = element.offsetTop
-          window.scrollTo(0, offset - ${pluginOptions.offsetY})
+          window.scrollTo(0, offset - ${offsetY})
         }
       }
     })
