@@ -28,6 +28,7 @@
     "node-exiftool": "^2.1.1",
     "parse-filepath": "^1.0.1",
     "purdy": "^2.2.0",
+    "recursive-readdir": "^2.1.0",
     "slash": "^1.0.0",
     "unist-builder": "^1.0.2"
   }

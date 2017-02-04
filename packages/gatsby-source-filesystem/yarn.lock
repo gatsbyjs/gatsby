@@ -807,13 +807,6 @@ fstream@^1.0.0, fstream@^1.0.2, fstream@~1.0.10:
     mkdirp ">=0.5 0"
     rimraf "2"
 
-gatsby-graphql-utils@latest:
-  version "1.0.0-alpha11-alpha.509175e4"
-  resolved "https://registry.yarnpkg.com/gatsby-graphql-utils/-/gatsby-graphql-utils-1.0.0-alpha11-alpha.509175e4.tgz#a207c8ab036c1ae2baee6fc873f07fe3b72bd798"
-  dependencies:
-    graphql "^0.8.2"
-    graphql-relay "^0.4.4"
-
 gauge@~2.7.1:
   version "2.7.2"
   resolved "https://registry.yarnpkg.com/gauge/-/gauge-2.7.2.tgz#15cecc31b02d05345a5d6b0e171cdb3ad2307774"
@@ -1219,6 +1212,12 @@ mime-types@^2.1.12, mime-types@~2.1.7:
   dependencies:
     brace-expansion "^1.0.0"
 
+minimatch@3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.0.2.tgz#0f398a7300ea441e9c348c83d98ab8c9dbf9c40a"
+  dependencies:
+    brace-expansion "^1.0.0"
+
 minimist@0.0.8:
   version "0.0.8"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-0.0.8.tgz#857fcabfc3397d2625b8228262e86aa7a011b05d"
@@ -1454,6 +1453,12 @@ readdirp@^2.0.0:
     minimatch "^3.0.2"
     readable-stream "^2.0.2"
     set-immediate-shim "^1.0.1"
+
+recursive-readdir@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/recursive-readdir/-/recursive-readdir-2.1.0.tgz#78b7bfd79582d3d7596b8ff1bd29fbd50229f6aa"
+  dependencies:
+    minimatch "3.0.2"
 
 regenerate@^1.2.1:
   version "1.3.2"
