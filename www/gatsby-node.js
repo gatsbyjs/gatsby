@@ -9,13 +9,15 @@ exports.createPages = ({ args }) => {
   const { graphql } = args
   return new Promise((resolve, reject) => {
     const pages = []
-    const docsPage = path.resolve(`templates/template-docs-markdown.js`)
+    const docsTemplate = path.resolve(`templates/template-docs-markdown.js`)
+    const packageTemplate = path.resolve(`templates/template-docs-packages.js`)
     graphql(`
       {
         allMarkdownRemark(limit: 1000) {
           edges {
             node {
               slug
+              package
             }
           }
         }
@@ -31,7 +33,7 @@ exports.createPages = ({ args }) => {
       _.each(result.data.allMarkdownRemark.edges, (edge) => {
         pages.push({
           path: `${edge.node.slug}`, // required
-          component: docsPage,
+          component: edge.node.package ? packageTemplate : docsTemplate,
           context: {
             slug: edge.node.slug,
           },
@@ -43,22 +45,33 @@ exports.createPages = ({ args }) => {
   })
 }
 
-// Create slug for Markdown files.
+// Create slugs for files.
 exports.modifyAST = ({ args }) => {
   const { ast } = args
   const files = select(ast, 'File')
   files.forEach((file) => {
     const parsedFilePath = parseFilepath(file.relativePath)
-    let fileSlug
-    if (parsedFilePath.name !== `index`) {
-      slug = `/docs${parsedFilePath.dirname}/${parsedFilePath.name}/`
-    } else {
-      slug = `/docs${parsedFilePath.dirname}/`
+    let slug
+    if (file.sourceName === `docs`) {
+      if (parsedFilePath.name !== `index`) {
+        slug = `/docs${parsedFilePath.dirname}/${parsedFilePath.name}/`
+      } else {
+        slug = `/docs${parsedFilePath.dirname}/`
+      }
+    // Generate slugs for package READMEs.
+    } else if (file.sourceName === `packages` && parsedFilePath.name === `README`) {
+      slug = `/docs/packages/${parsedFilePath.dirname}/`
+      console.log(parsedFilePath)
+      console.log(file)
+      file.children[0].frontmatter = {}
+      file.children[0].frontmatter.title = parsedFilePath.dirname
+      file.children[0].package = true
     }
 
-    // Add to Markdown node.
-    file.children[0].slug = slug
-
+    // Add to File & child nodes.
+    if (file.children[0]) {
+      file.children[0].slug = slug
+    }
     file.slug = slug
   })
 

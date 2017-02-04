@@ -15,6 +15,7 @@
     "gatsby-source-filesystem": "1.0.0-alpha11-alpha.ee2cc7e9",
     "gatsby-typegen-filesystem": "1.0.0-alpha11-alpha.ee2cc7e9",
     "gatsby-typegen-remark": "1.0.0-alpha11-alpha.ee2cc7e9",
+    "gatsby-typegen-remark-autolink-headers": "^1.0.0-alpha11-alpha.ee2cc7e9",
     "gatsby-typegen-remark-copy-linked-files": "1.0.0-alpha11-alpha.ee2cc7e9",
     "gatsby-typegen-remark-prismjs": "1.0.0-alpha11-alpha.ee2cc7e9",
     "gatsby-typegen-remark-responsive-iframe": "1.0.0-alpha11-alpha.ee2cc7e9",

@@ -63,6 +63,15 @@ const options = {
     '.main-body a:hover': {
       background: `#d7e7ee`,
     },
+    '.main-body a.anchor': {
+      color: `inherit`,
+      textDecoration: `none`,
+      borderBottom: `none`,
+      boxShadow: `none`,
+    },
+    '.main-body a.anchor:hover': {
+      background: `none`,
+    },
     [MOBILE_MEDIA_QUERY]: {
       // Make baseFontSize on mobile 18px.
       html: {

@@ -6,7 +6,15 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
+        name: `docs`,
         path: `${__dirname}/../docs/`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `packages`,
+        path: `${__dirname}/../packages/`,
       },
     },
     `gatsby-parser-remark`,
@@ -30,6 +38,7 @@ module.exports = {
           `gatsby-typegen-remark-prismjs`,
           `gatsby-typegen-remark-copy-linked-files`,
           `gatsby-typegen-remark-smartypants`,
+          `gatsby-typegen-remark-autolink-headers`,
         ],
       },
     },
