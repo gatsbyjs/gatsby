@@ -1,7 +1,7 @@
 # gatsby-source-filesystem
 
 Plugin for creating `File` nodes from the file system. The various
-"parser" plugins extend `File` nodes into different types of child nodes.
+"parser" plugins extend `File` nodes into various types of child nodes.
 
 ## Install
 
