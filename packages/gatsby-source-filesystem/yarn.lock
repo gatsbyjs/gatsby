@@ -1460,6 +1460,12 @@ recursive-readdir@^2.1.0:
   dependencies:
     minimatch "3.0.2"
 
+"recursive-readdir@https://github.com/KyleAMathews/recursive-readdir.git":
+  version "2.1.0"
+  resolved "https://github.com/KyleAMathews/recursive-readdir.git#fbfe835d2e75a977db2d1e794214aa26ecdb0671"
+  dependencies:
+    minimatch "3.0.2"
+
 regenerate@^1.2.1:
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/regenerate/-/regenerate-1.3.2.tgz#d1941c67bad437e1be76433add5b385f95b19260"
