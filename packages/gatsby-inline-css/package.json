@@ -1,0 +1,19 @@
+{
+  "name": "gatsby-inline-css",
+  "version": "0.0.0",
+  "description": "React component to inline css in the <head> of Gatsby.js sites",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src --out-dir .",
+    "watch": "babel -w src --out-dir ."
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-component"
+  ],
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.22.2"
+  }
+}
