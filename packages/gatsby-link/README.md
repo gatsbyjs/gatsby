@@ -21,7 +21,7 @@ Edge), this component will also preload code chunks on these browsers.
 
 ## How to use
 
-```javascript
+```jsx
 const Link = require('gatsby-link')
 
 render () {

@@ -13,7 +13,7 @@ site.
 
 ## How to use
 
-```javascript
+```jsx
 // In your site's html.js
 const InlineCSS = require('gatsby-inline-css')
 
