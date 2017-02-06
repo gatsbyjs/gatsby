@@ -7,7 +7,6 @@
     "bluebird": "^3.4.6",
     "gatsby": "1.0.0-alpha11-alpha.3e341373",
     "gatsby-link": "1.0.0-alpha11-alpha.3e341373",
-    "gatsby-inline-css": "1.0.0-alpha11-alpha.3e341373",
     "gatsby-parser-remark": "1.0.0-alpha11-alpha.3e341373",
     "gatsby-parser-sharp": "1.0.0-alpha11-alpha.3e341373",
     "gatsby-plugin-glamor": "1.0.0-alpha11-alpha.3e341373",

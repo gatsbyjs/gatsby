@@ -3,10 +3,22 @@ import React from 'react'
 import { prefixLink } from 'gatsby-helpers'
 import { TypographyStyle } from 'react-typography'
 import typography from './utils/typography'
-import InlineCSS from 'gatsby-inline-css'
+
+let stylesStr
+if (process.env.NODE_ENV === `production`) {
+  try {
+    stylesStr = require(`!raw-loader!./public/styles.css`)
+  } catch (e) {
+    console.log(e)
+  }
+}
 
 module.exports = React.createClass({
   render () {
+    let css
+    if (process.env.NODE_ENV === `production`) {
+      css = <style id="gatsby-inlined-css" dangerouslySetInnerHTML={{ __html: stylesStr }} />
+    }
     return (
       <html lang="en">
         <head>
@@ -23,7 +35,7 @@ module.exports = React.createClass({
           <link rel="icon" type="image/png" sizes="96x96" href={require("images/favicons/favicon-96x96.png")} />
           <link rel="icon" type="image/png" sizes="16x16" href={require("images/favicons/favicon-16x16.png")} />
           <TypographyStyle typography={typography} />
-          <InlineCSS />
+          {css}
         </head>
         <body>
           <div id="react-mount" dangerouslySetInnerHTML={{ __html: this.props.body }} />

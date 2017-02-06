@@ -2926,10 +2926,6 @@ function-bind@^1.0.2, function-bind@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.0.tgz#16176714c801798e4e8f2cf7f7529467bb4a5771"
 
-gatsby-inline-css@1.0.0-alpha11-alpha.3e341373:
-  version "1.0.0-alpha11-alpha.3e341373"
-  resolved "https://registry.yarnpkg.com/gatsby-inline-css/-/gatsby-inline-css-1.0.0-alpha11-alpha.3e341373.tgz#e9cbbf32aff4abacff630959fba910ec59115616"
-
 gatsby-link@1.0.0-alpha11-alpha.3e341373:
   version "1.0.0-alpha11-alpha.3e341373"
   resolved "https://registry.yarnpkg.com/gatsby-link/-/gatsby-link-1.0.0-alpha11-alpha.3e341373.tgz#a21d95bc0d1f668949864484d6909eb468ffe86c"
