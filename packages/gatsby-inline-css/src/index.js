@@ -3,7 +3,7 @@ import React from 'react'
 let stylesStr
 if (process.env.NODE_ENV === `production`) {
   try {
-    stylesStr = require(`!raw!public/styles.css`)
+    stylesStr = require(`!raw!${process.env.PUBLIC_DIR}/styles.css`)
   } catch (e) {
     console.log(e)
   }

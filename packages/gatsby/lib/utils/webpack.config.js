@@ -111,6 +111,7 @@ module.exports = async (program, directory, suppliedStage, webpackPort = 1500, p
           new webpack.DefinePlugin({
             'process.env': {
               NODE_ENV: JSON.stringify(process.env.NODE_ENV ? process.env.NODE_ENV : `development`),
+              PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
             },
             __PREFIX_LINKS__: program.prefixLinks,
             __LINK_PREFIX__: JSON.stringify(siteDB().get(`config`).linkPrefix),
@@ -135,6 +136,7 @@ module.exports = async (program, directory, suppliedStage, webpackPort = 1500, p
           new webpack.DefinePlugin({
             'process.env': {
               NODE_ENV: JSON.stringify(process.env.NODE_ENV ? process.env.NODE_ENV : `production`),
+              PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
             },
             __PREFIX_LINKS__: program.prefixLinks,
             __LINK_PREFIX__: JSON.stringify(siteDB().get(`config`).linkPrefix),
@@ -156,6 +158,7 @@ module.exports = async (program, directory, suppliedStage, webpackPort = 1500, p
           new webpack.DefinePlugin({
             'process.env': {
               NODE_ENV: JSON.stringify(process.env.NODE_ENV ? process.env.NODE_ENV : `production`),
+              PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
             },
             __PREFIX_LINKS__: program.prefixLinks,
             __LINK_PREFIX__: JSON.stringify(siteDB().get(`config`).linkPrefix),
@@ -212,6 +215,7 @@ module.exports = async (program, directory, suppliedStage, webpackPort = 1500, p
           new webpack.DefinePlugin({
             'process.env': {
               NODE_ENV: JSON.stringify(process.env.NODE_ENV ? process.env.NODE_ENV : `production`),
+              PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
             },
             __PREFIX_LINKS__: program.prefixLinks,
             __LINK_PREFIX__: JSON.stringify(siteDB().get(`config`).linkPrefix),
