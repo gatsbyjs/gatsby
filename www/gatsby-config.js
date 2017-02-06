@@ -45,7 +45,7 @@ module.exports = {
     `gatsby-typegen-filesystem`,
     `gatsby-typegen-sharp`,
     `gatsby-plugin-glamor`,
-    `gatsby-sharp`,
+    `gatsby-plugin-sharp`,
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {

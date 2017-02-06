@@ -3,7 +3,7 @@ import React from 'react'
 import { prefixLink } from 'gatsby-helpers'
 import { TypographyStyle } from 'react-typography'
 import typography from './utils/typography'
-import HTMLStyles from '.intermediate-representation/html-styles'
+import InlineCSS from 'gatsby-inline-css'
 
 module.exports = React.createClass({
   render () {
@@ -23,7 +23,7 @@ module.exports = React.createClass({
           <link rel="icon" type="image/png" sizes="96x96" href={require("images/favicons/favicon-96x96.png")} />
           <link rel="icon" type="image/png" sizes="16x16" href={require("images/favicons/favicon-16x16.png")} />
           <TypographyStyle typography={typography} />
-          <HTMLStyles />
+          <InlineCSS />
         </head>
         <body>
           <div id="react-mount" dangerouslySetInnerHTML={{ __html: this.props.body }} />
