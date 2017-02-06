@@ -15,7 +15,7 @@ const apiRunner = require(`../utils/api-runner-node`)
 const { inferObjectStructureFromNodes } = require(`./infer-graphql-type`)
 const { inferInputObjectStructureFromNodes } = require(`./infer-graphql-input-fields`)
 const nodeInterface = require(`./node-interface`)
-const { siteDB } = require('../utils/globals')
+const { siteDB } = require(`../utils/globals`)
 
 module.exports = async (ast) => (
   new Promise((resolve) => {
@@ -125,7 +125,7 @@ module.exports = async (ast) => (
 
               // Then test if the field is linking to a file.
               if (_.isString(fieldValue) && mime.lookup(fieldValue) !== `application/octet-stream`) {
-                const fileLinkPath = path.resolve(sourceFileNode.dirname, fieldValue)
+                const fileLinkPath = path.resolve(sourceFileNode.dir, fieldValue)
                 const linkedFileNode = _.find(allNodes, (n) => (
                   n.type === `File` && n.id === fileLinkPath
                 ))
@@ -150,7 +150,7 @@ module.exports = async (ast) => (
                 if (linkedFileNode) {
                   return linkedFileNode
                 } else if (linkedType === `File`) {
-                  const fileLinkPath = path.resolve(sourceFileNode.dirname, node[fieldName])
+                  const fileLinkPath = path.resolve(sourceFileNode.dir, node[fieldName])
                   linkedFileNode = _.find(allNodes, (n) => (
                     n.type === `File` && n.id === fileLinkPath
                   ))

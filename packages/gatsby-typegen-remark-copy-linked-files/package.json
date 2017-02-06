@@ -7,7 +7,6 @@
     "fs-extra": "^1.0.0",
     "is-relative-url": "^2.0.0",
     "lodash": "^4.17.3",
-    "parse-filepath": "^1.0.1",
     "unist-util-visit": "^1.1.1"
   },
   "devDependencies": {

@@ -47,7 +47,7 @@ You can query file nodes like the following:
     edges {
       node {
         extension
-        dirname
+        dir
         modifyDate
       }
     }

@@ -46,7 +46,7 @@ module.exports = ({ files, markdownNode, markdownAST, pluginOptions, linkPrefix 
     new Promise((resolve, reject) => {
       // Ignore gifs as we can't process them.
       if (isRelativeUrl(node.url) && node.url.slice(-3) !== `gif`) {
-        const imagePath = path.join(markdownNode.parent.dirname, node.url)
+        const imagePath = path.join(markdownNode.parent.dir, node.url)
         const imageNode = _.find(files, (file) => {
           if (file && file.id) {
             return file.id === imagePath

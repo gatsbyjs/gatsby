@@ -3,24 +3,27 @@ const Promise = require(`bluebird`)
 const fs = require(`fs`)
 const _ = require(`lodash`)
 
-exports.modifyAST = ({ args }) => (
-  new Promise((resolve) => {
-    const { ast } = args
-    const files = select(ast, `
-      File[extension="json"]
-    `)
-    files.forEach((file) => {
-      const fileContents = fs.readFileSync(file.sourceFile, `utf-8`)
-      const JSONArray = JSON.parse(fileContents).map((obj) => ({
-        ...obj,
-        _sourceNodeId: file.id,
-        type: _.capitalize(file.name),
-        children: [],
-      }))
+const { loadNodeContents } = require(`gatsby-source-filesystem`)
 
-      file.children = file.children.concat(JSONArray)
-    })
+async function modifyAST ({ args }) {
+  const { ast } = args
+  const files = select(ast, `
+    File[extension="json"]
+  `)
+  const contents = await Promise.map(files, ((file) => loadNodeContents(file)))
+  files.forEach((file, index) => {
+    const fileContents = contents[index]
+    const JSONArray = JSON.parse(fileContents).map((obj) => ({
+      ...obj,
+      _sourceNodeId: file.id,
+      type: _.capitalize(file.name),
+      children: [],
+    }))
 
-    return resolve(ast)
+    file.children = file.children.concat(JSONArray)
   })
-)
+
+  return ast
+}
+
+exports.modifyAST = modifyAST

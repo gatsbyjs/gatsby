@@ -39,7 +39,7 @@ module.exports = async () => {
       name: `RootQueryType`,
       fields: () => ({
         // Pull off just the graphql node from each type object.
-        ..._.mapValues(typesGQL, 'node'),
+        ..._.mapValues(typesGQL, `node`),
         ...connections,
         ...siteSchema(),
       }),

@@ -5,8 +5,8 @@ import { rhythm } from 'utils/typography'
 
 const IndexRoute = React.createClass({
   render () {
-    console.log('Docs index')
-    console.log(this.props)
+    //console.log('Docs index')
+    //console.log(this.props)
     const pages = this.props.data.allMarkdownRemark.edges
     const packagePages = pages.filter((page) => page.node.package)
     const otherPages = pages.filter((page) => !page.node.package)

@@ -22,7 +22,6 @@
     "image-size": "^0.5.1",
     "is-relative-url": "^2.0.0",
     "lodash": "^4.17.3",
-    "parse-filepath": "^1.0.1",
     "unist-util-select": "^1.5.0"
   },
   "scripts": {

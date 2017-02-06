@@ -2,6 +2,7 @@ const Promise = require(`bluebird`)
 const glob = require(`glob`)
 const _ = require(`lodash`)
 const { siteDB, programDB } = require(`../utils/globals`)
+const mapSeries = require(`async/mapSeries`)
 
 const runAPI = (plugin, api, args) => {
   let linkPrefix = ``
@@ -30,16 +31,22 @@ const hasAPIFile = (plugin) => (
   glob.sync(`${plugin.resolve}/gatsby-node*`)[0]
 )
 
-module.exports = async (api, args={}) => {
-  const plugins = siteDB().get(`flattenedPlugins`)
-  // Get the list of plugins that implement gatsby-node
-  if (!filteredPlugins) {
-    filteredPlugins = plugins.filter((plugin) => hasAPIFile(plugin))
-  }
+module.exports = async (api, args={}) => (
+  new Promise((resolve) => {
+    const plugins = siteDB().get(`flattenedPlugins`)
+    // Get the list of plugins that implement gatsby-node
+    if (!filteredPlugins) {
+      filteredPlugins = plugins.filter((plugin) => hasAPIFile(plugin))
+    }
 
-  const resultPromises = filteredPlugins.map((plugin) => runAPI(plugin, api, args))
-
-  // Return promises with empty results filtered out.
-  return Promise.all(resultPromises)
-  .then((results) => results.filter((result) => !_.isEmpty(result)))
-}
+    mapSeries(filteredPlugins, (plugin, callback) => {
+      Promise.resolve(runAPI(plugin, api, args))
+      .then((result) => {
+        callback(null, result)
+      })
+    }, (err, results) => {
+      // Filter out empty responses and return
+      resolve(results.filter((result) => !_.isEmpty(result)))
+    })
+  })
+)

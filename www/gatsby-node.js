@@ -54,17 +54,15 @@ exports.modifyAST = ({ args }) => {
     let slug
     if (file.sourceName === `docs`) {
       if (parsedFilePath.name !== `index`) {
-        slug = `/docs${parsedFilePath.dirname}/${parsedFilePath.name}/`
+        slug = `/docs${parsedFilePath.dir}/${parsedFilePath.name}/`
       } else {
-        slug = `/docs${parsedFilePath.dirname}/`
+        slug = `/docs${parsedFilePath.dir}/`
       }
     // Generate slugs for package READMEs.
     } else if (file.sourceName === `packages` && parsedFilePath.name === `README`) {
-      slug = `/docs/packages/${parsedFilePath.dirname}/`
-      console.log(parsedFilePath)
-      console.log(file)
+      slug = `/docs/packages/${parsedFilePath.dir}/`
       file.children[0].frontmatter = {}
-      file.children[0].frontmatter.title = parsedFilePath.dirname
+      file.children[0].frontmatter.title = parsedFilePath.dir
       file.children[0].package = true
     }
 
