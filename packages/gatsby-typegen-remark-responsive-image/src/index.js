@@ -2,8 +2,7 @@ const select = require(`unist-util-select`)
 const path = require(`path`)
 const isRelativeUrl = require(`is-relative-url`)
 const _ = require(`lodash`)
-const { queueImageResizing, base64 } = require(`gatsby-sharp`)
-//const base64 = require(`gatsby-sharp`).base64
+const { queueImageResizing, base64 } = require(`gatsby-plugin-sharp`)
 const imageSize = require(`image-size`)
 const Promise = require(`bluebird`)
 
