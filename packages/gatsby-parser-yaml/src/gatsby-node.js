@@ -6,14 +6,17 @@ const _ = require(`lodash`)
 
 async function modifyAST ({ args }) {
   const { ast } = args
-  const files = select(ast, `
+  const files = select(
+    ast,
+    `
     File[extension="yaml"],
     File[extension="yml"]
-  `)
-  const contents = await Promise.map(files, ((file) => loadNodeContents(file)))
+  `
+  )
+  const contents = await Promise.map(files, file => loadNodeContents(file))
   files.forEach((file, index) => {
     const fileContents = contents[index]
-    const yamlArray = jsYaml.load(fileContents).map((obj) => ({
+    const yamlArray = jsYaml.load(fileContents).map(obj => ({
       ...obj,
       _sourceNodeId: file.id,
       type: _.capitalize(file.name),

@@ -10,7 +10,9 @@ async function modifyAST ({ args }) {
   const { ast } = args
   // List of markdown extensions taken from
   // https://github.com/github/markup/blob/cf74e842dfd082d8001417c1bb94edd2ae06d61b/lib/github/markup/markdown.rb#L28
-  const files = select(ast, `
+  const files = select(
+    ast,
+    `
     File[extension="md"],
     File[extension="rmd"],
     File[extension="mkd"],
@@ -19,8 +21,9 @@ async function modifyAST ({ args }) {
     File[extension="mdown"],
     File[extension="litcoffee"],
     File[extension="markdown"]
-  `)
-  const contents = await Promise.map(files, ((file) => loadNodeContents(file)))
+  `
+  )
+  const contents = await Promise.map(files, file => loadNodeContents(file))
   files.forEach((file, index) => {
     const data = grayMatter(contents[index])
     const markdownNode = {

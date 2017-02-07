@@ -1,15 +1,15 @@
-import _ from 'lodash'
-import fs from 'fs'
-import path from 'path'
-import webpack from 'webpack'
-import Config from 'webpack-configurator'
-import ExtractTextPlugin from 'extract-text-webpack-plugin'
-import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin'
-import { StatsWriterPlugin } from 'webpack-stats-plugin'
+import _ from "lodash"
+import fs from "fs"
+import path from "path"
+import webpack from "webpack"
+import Config from "webpack-configurator"
+import ExtractTextPlugin from "extract-text-webpack-plugin"
+import StaticSiteGeneratorPlugin from "static-site-generator-webpack-plugin"
+import { StatsWriterPlugin } from "webpack-stats-plugin"
 //import HardSourceWebpackPlugin from 'hard-source-webpack-plugin'
 //import WebpackStableModuleIdAndHash from 'webpack-stable-module-id-and-hash'
 
-import webpackModifyValidate from './webpack-modify-validate'
+import webpackModifyValidate from "./webpack-modify-validate"
 
 const debug = require(`debug`)(`gatsby:webpack-config`)
 const WebpackMD5Hash = require(`webpack-md5-hash`)
@@ -26,12 +26,18 @@ const genBabelConfig = require(`./babel-config`)
 //   4) build-html: build all HTML files
 //   5) build-javascript: Build js chunks for Single Page App in production
 
-module.exports = async (program, directory, suppliedStage, webpackPort = 1500, pages = []) => {
+module.exports = async (
+  program,
+  directory,
+  suppliedStage,
+  webpackPort = 1500,
+  pages = []
+) => {
   const babelStage = suppliedStage
 
   // We combine develop & develop-html stages for purposes of generating the
   // webpack config.
-  const stage = (suppliedStage === `develop-html`) ? `develop` : suppliedStage
+  const stage = suppliedStage === `develop-html` ? `develop` : suppliedStage
   const babelConfig = await genBabelConfig(program, babelStage)
 
   debug(`Loading webpack config for stage "${stage}"`)
@@ -49,7 +55,9 @@ module.exports = async (program, directory, suppliedStage, webpackPort = 1500, p
         return {
           path: `${directory}/public`,
           filename: `bundle-for-css.js`,
-          publicPath: program.prefixLinks ? `${siteDB().get(`config`).linkPrefix}/` : `/`,
+          publicPath: (
+            program.prefixLinks ? `${siteDB().get(`config`).linkPrefix}/` : `/`
+          ),
         }
       case `build-html`:
         // A temp file required by static-site-generator-plugin. See plugins() below.
@@ -58,15 +66,21 @@ module.exports = async (program, directory, suppliedStage, webpackPort = 1500, p
           path: `${directory}/public`,
           filename: `render-page.js`,
           libraryTarget: `umd`,
-          publicPath: program.prefixLinks ? `${siteDB().get(`config`).linkPrefix}/` : `/`,
+          publicPath: (
+            program.prefixLinks ? `${siteDB().get(`config`).linkPrefix}/` : `/`
+          ),
         }
       case `build-javascript`:
         return {
           //filename: '[name].js',
-          filename: `[name]-[chunkhash].js`,
+          filename: (
+            `[name]-[chunkhash].js`
+          ),
           chunkFilename: `[name]-[chunkhash].js`,
           path: `${directory}/public`,
-          publicPath: program.prefixLinks ? `${siteDB().get(`config`).linkPrefix}/` : `/`,
+          publicPath: (
+            program.prefixLinks ? `${siteDB().get(`config`).linkPrefix}/` : `/`
+          ),
         }
       default:
         throw new Error(`The state requested ${stage} doesn't exist.`)
@@ -79,7 +93,9 @@ module.exports = async (program, directory, suppliedStage, webpackPort = 1500, p
         return {
           commons: [
             require.resolve(`react-hot-loader/patch`),
-            `${require.resolve(`webpack-hot-middleware/client`)}?path=http://${program.host}:${webpackPort}/__webpack_hmr`,
+            `${require.resolve(
+              `webpack-hot-middleware/client`
+            )}?path=http://${program.host}:${webpackPort}/__webpack_hmr`,
             `${directory}/.intermediate-representation/app`,
           ],
         }
@@ -90,7 +106,9 @@ module.exports = async (program, directory, suppliedStage, webpackPort = 1500, p
       case `build-html`:
         return {
           //main: `${__dirname}/static-entry`,
-          main: `${directory}/.intermediate-representation/static-entry`,
+          main: (
+            `${directory}/.intermediate-representation/static-entry`
+          ),
         }
       case `build-javascript`:
         return {
@@ -109,8 +127,10 @@ module.exports = async (program, directory, suppliedStage, webpackPort = 1500, p
           new webpack.HotModuleReplacementPlugin(),
           new webpack.NoErrorsPlugin(),
           new webpack.DefinePlugin({
-            'process.env': {
-              NODE_ENV: JSON.stringify(process.env.NODE_ENV ? process.env.NODE_ENV : `development`),
+            "process.env": {
+              NODE_ENV: JSON.stringify(
+                process.env.NODE_ENV ? process.env.NODE_ENV : `development`
+              ),
               PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
             },
             __PREFIX_LINKS__: program.prefixLinks,
@@ -122,20 +142,22 @@ module.exports = async (program, directory, suppliedStage, webpackPort = 1500, p
           // ids to reduce filesize.
           new webpack.NamedModulesPlugin(),
           //new HardSourceWebpackPlugin({
-            //cacheDirectory: `${process.cwd()}/.cache/[confighash]`,
-            //configHash: (webpackConfig) => stage,
-            //environmentPaths: {
-              //root: process.cwd(),
-              //directories: ['node_modules'],
-              //files: ['package.json'],
-            //},
+          //cacheDirectory: `${process.cwd()}/.cache/[confighash]`,
+          //configHash: (webpackConfig) => stage,
+          //environmentPaths: {
+          //root: process.cwd(),
+          //directories: ['node_modules'],
+          //files: ['package.json'],
+          //},
           //}),
         ]
       case `build-css`:
         return [
           new webpack.DefinePlugin({
-            'process.env': {
-              NODE_ENV: JSON.stringify(process.env.NODE_ENV ? process.env.NODE_ENV : `production`),
+            "process.env": {
+              NODE_ENV: JSON.stringify(
+                process.env.NODE_ENV ? process.env.NODE_ENV : `production`
+              ),
               PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
             },
             __PREFIX_LINKS__: program.prefixLinks,
@@ -143,21 +165,23 @@ module.exports = async (program, directory, suppliedStage, webpackPort = 1500, p
           }),
           new ExtractTextPlugin(`styles.css`, { allChunks: true }),
           //new HardSourceWebpackPlugin({
-            //cacheDirectory: `${process.cwd()}/.cache/[confighash]`,
-            //configHash: (webpackConfig) => stage,
-            //environmentPaths: {
-              //root: process.cwd(),
-              //directories: ['node_modules'],
-              //files: ['package.json'],
-            //},
+          //cacheDirectory: `${process.cwd()}/.cache/[confighash]`,
+          //configHash: (webpackConfig) => stage,
+          //environmentPaths: {
+          //root: process.cwd(),
+          //directories: ['node_modules'],
+          //files: ['package.json'],
+          //},
           //}),
         ]
       case `build-html`:
         return [
           new StaticSiteGeneratorPlugin(`render-page.js`, pages),
           new webpack.DefinePlugin({
-            'process.env': {
-              NODE_ENV: JSON.stringify(process.env.NODE_ENV ? process.env.NODE_ENV : `production`),
+            "process.env": {
+              NODE_ENV: JSON.stringify(
+                process.env.NODE_ENV ? process.env.NODE_ENV : `production`
+              ),
               PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
             },
             __PREFIX_LINKS__: program.prefixLinks,
@@ -165,19 +189,22 @@ module.exports = async (program, directory, suppliedStage, webpackPort = 1500, p
           }),
           new ExtractTextPlugin(`build-html-styles.css`),
           //new HardSourceWebpackPlugin({
-            //cacheDirectory: `${process.cwd()}/.cache/[confighash]`,
-            //configHash: (webpackConfig) => stage,
-            //environmentPaths: {
-              //root: process.cwd(),
-              //directories: ['node_modules'],
-              //files: ['package.json'],
-            //},
+          //cacheDirectory: `${process.cwd()}/.cache/[confighash]`,
+          //configHash: (webpackConfig) => stage,
+          //environmentPaths: {
+          //root: process.cwd(),
+          //directories: ['node_modules'],
+          //files: ['package.json'],
+          //},
           //}),
         ]
       case `build-javascript`: {
         // Get array of page template component names.
-        let components = Array.from(pagesDB().values()).map(page => page.component)
-        components = components.map(component => layoutComponentChunkName(program.directory, component))
+        let components = Array.from(pagesDB().values()).map(
+          page => page.component
+        )
+        components = components.map(component =>
+          layoutComponentChunkName(program.directory, component))
         components = _.uniq(components)
         return [
           // Moment.js includes 100s of KBs of extra localization data
@@ -192,10 +219,7 @@ module.exports = async (program, directory, suppliedStage, webpackPort = 1500, p
           // page components.
           new webpack.optimize.CommonsChunkPlugin({
             name: `commons`,
-            chunks: [
-              `app`,
-              ...components,
-            ],
+            chunks: [`app`, ...components],
             // The more page components there are, the higher we raise the bar
             // for merging in page-specific JS libs into the commons chunk. The
             // two principles here is a) keep the TTI (time to interaction) as
@@ -213,8 +237,10 @@ module.exports = async (program, directory, suppliedStage, webpackPort = 1500, p
           // optimizations for React) and whether prefixing links is enabled
           // (__PREFIX_LINKS__) and what the link prefix is (__LINK_PREFIX__).
           new webpack.DefinePlugin({
-            'process.env': {
-              NODE_ENV: JSON.stringify(process.env.NODE_ENV ? process.env.NODE_ENV : `production`),
+            "process.env": {
+              NODE_ENV: JSON.stringify(
+                process.env.NODE_ENV ? process.env.NODE_ENV : `production`
+              ),
               PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
             },
             __PREFIX_LINKS__: program.prefixLinks,
@@ -253,7 +279,11 @@ module.exports = async (program, directory, suppliedStage, webpackPort = 1500, p
           // Enable the offline plugin to add a service worker.
           new OfflinePlugin({
             AppCache: false,
-            publicPath: program.prefixLinks ? `${siteDB().get(`config`).linkPrefix}/` : `/`,
+            publicPath: (
+              program.prefixLinks
+                ? `${siteDB().get(`config`).linkPrefix}/`
+                : `/`
+            ),
             relativePaths: false,
             // Exclude all font files other than woff2 (if a browser supports
             // service workers, they'll support woff2).
@@ -269,13 +299,13 @@ module.exports = async (program, directory, suppliedStage, webpackPort = 1500, p
             },
           }),
           //new HardSourceWebpackPlugin({
-            //cacheDirectory: `${process.cwd()}/.cache/[confighash]`,
-            //configHash: (webpackConfig) => stage,
-            //environmentPaths: {
-              //root: process.cwd(),
-              //directories: ['node_modules'],
-              //files: ['package.json'],
-            //},
+          //cacheDirectory: `${process.cwd()}/.cache/[confighash]`,
+          //configHash: (webpackConfig) => stage,
+          //environmentPaths: {
+          //root: process.cwd(),
+          //directories: ['node_modules'],
+          //files: ['package.json'],
+          //},
           //}),
         ]
       }
@@ -286,24 +316,12 @@ module.exports = async (program, directory, suppliedStage, webpackPort = 1500, p
 
   function resolve () {
     return {
-      extensions: [
-        ``,
-        `.js`,
-        `.jsx`,
-        `.cjsx`,
-        `.coffee`,
-      ],
+      extensions: [``, `.js`, `.jsx`, `.cjsx`, `.coffee`],
       // Hierarchy of directories for Webpack to look for module.
       // First is the site directory.
       // Then in the special directory of isomorphic modules Gatsby ships with.
-      root: [
-        directory,
-        path.resolve(__dirname, `..`, `isomorphic`),
-      ],
-      modulesDirectories: [
-        `${directory}/node_modules`,
-        `node_modules`,
-      ],
+      root: [directory, path.resolve(__dirname, `..`, `isomorphic`)],
+      modulesDirectories: [`${directory}/node_modules`, `node_modules`],
     }
   }
 
@@ -366,12 +384,10 @@ module.exports = async (program, directory, suppliedStage, webpackPort = 1500, p
     })
 
     const cssModulesConf = `css?modules&minimize&importLoaders=1`
-    const cssModulesConfDev =
-      `${cssModulesConf}&sourceMap&localIdentName=[name]---[local]---[hash:base64:5]`
+    const cssModulesConfDev = `${cssModulesConf}&sourceMap&localIdentName=[name]---[local]---[hash:base64:5]`
 
     switch (stage) {
       case `develop`:
-
         config.loader(`css`, {
           test: /\.css$/,
           exclude: /\.module\.css$/,
@@ -406,7 +422,10 @@ module.exports = async (program, directory, suppliedStage, webpackPort = 1500, p
         // CSS modules
         config.loader(`cssModules`, {
           test: /\.module\.css$/,
-          loader: ExtractTextPlugin.extract(`style`, [cssModulesConf, `postcss`]),
+          loader: ExtractTextPlugin.extract(`style`, [
+            cssModulesConf,
+            `postcss`,
+          ]),
         })
         config.merge({
           postcss: [
@@ -432,7 +451,10 @@ module.exports = async (program, directory, suppliedStage, webpackPort = 1500, p
         // CSS modules
         config.loader(`cssModules`, {
           test: /\.module\.css$/,
-          loader: ExtractTextPlugin.extract(`style`, [cssModulesConf, `postcss`]),
+          loader: ExtractTextPlugin.extract(`style`, [
+            cssModulesConf,
+            `postcss`,
+          ]),
         })
 
         return config
@@ -455,7 +477,10 @@ module.exports = async (program, directory, suppliedStage, webpackPort = 1500, p
         // CSS modules
         config.loader(`cssModules`, {
           test: /\.module\.css$/,
-          loader: ExtractTextPlugin.extract(`style`, [cssModulesConf, `postcss`]),
+          loader: ExtractTextPlugin.extract(`style`, [
+            cssModulesConf,
+            `postcss`,
+          ]),
         })
 
         return config
@@ -466,9 +491,7 @@ module.exports = async (program, directory, suppliedStage, webpackPort = 1500, p
   }
 
   function resolveLoader () {
-    const root = [
-      path.resolve(directory, `node_modules`),
-    ]
+    const root = [path.resolve(directory, `node_modules`)]
 
     const userLoaderDirectoryPath = path.resolve(directory, `loaders`)
 
@@ -484,9 +507,7 @@ module.exports = async (program, directory, suppliedStage, webpackPort = 1500, p
 
     return {
       root,
-      modulesDirectories: [
-        `node_modules`,
-      ],
+      modulesDirectories: [`node_modules`],
     }
   }
 
@@ -494,7 +515,9 @@ module.exports = async (program, directory, suppliedStage, webpackPort = 1500, p
 
   config.merge({
     // Context is the base directory for resolving the entry option.
-    context: `${directory}`,
+    context: (
+      `${directory}`
+    ),
     node: {
       __filename: true,
     },
@@ -503,7 +526,9 @@ module.exports = async (program, directory, suppliedStage, webpackPort = 1500, p
     // Certain "isomorphic" packages have different entry points for browser and server
     // (see https://github.com/defunctzombie/package-browser-field-spec);
     // setting the target tells webpack which file to include, ie. browser vs main.
-    target: stage === `build-html` ? `node` : `web`,
+    target: (
+      stage === `build-html` ? `node` : `web`
+    ),
     profile: stage === `production`,
     devtool: devtool(),
     output: output(),

@@ -19,14 +19,17 @@ Promise.promisifyAll(sharp.prototype, { multiArgs: true })
 // adventurous and see what happens with it on.
 sharp.simd(true)
 
-const bar = new ProgressBar(`Generating image thumbnails [:bar] :current/:total :elapsed secs :percent`, {
-  total: 0,
-  width: 30,
-})
+const bar = new ProgressBar(
+  `Generating image thumbnails [:bar] :current/:total :elapsed secs :percent`,
+  {
+    total: 0,
+    width: 30,
+  }
+)
 const processFile = (file, jobs, cb) => {
-  Promise.all(jobs.map((job) => job.finished)).then(() => cb())
+  Promise.all(jobs.map(job => job.finished)).then(() => cb())
   const pipeline = sharp(file).rotate()
-  _.each(jobs, (job) => {
+  _.each(jobs, job => {
     const args = job.args
     let clonedPipeline
     if (jobs.length > 1) {
@@ -37,7 +40,9 @@ const processFile = (file, jobs, cb) => {
     // Sharp only allows ints as height/width. Since height isn't always
     // set, check first before trying to round it.
     let roundedHeight = args.height
-    if (roundedHeight) { roundedHeight = Math.round(roundedHeight) }
+    if (roundedHeight) {
+      roundedHeight = Math.round(roundedHeight)
+    }
     const roundedWidth = Math.round(args.width)
     clonedPipeline = clonedPipeline
       .resize(roundedWidth, roundedHeight)
@@ -45,16 +50,17 @@ const processFile = (file, jobs, cb) => {
       // processing time (how much?).
       .crop(sharp.strategy.attention)
 
-    clonedPipeline.png({
-      compressionLevel: args.pngCompressionLevel,
-      adaptiveFiltering: false,
-      force: false,
-    })
-    .jpeg({
-      quality: args.quality,
-      progressive: args.jpegProgressive,
-      force: false,
-    })
+    clonedPipeline
+      .png({
+        compressionLevel: args.pngCompressionLevel,
+        adaptiveFiltering: false,
+        force: false,
+      })
+      .jpeg({
+        quality: args.quality,
+        progressive: args.jpegProgressive,
+        force: false,
+      })
 
     // grayscale
     if (args.grayscale) {
@@ -67,28 +73,29 @@ const processFile = (file, jobs, cb) => {
     }
 
     if (job.file.extension.match(/^jp/)) {
-      clonedPipeline
-      .toFile(job.outputPath, (err, info) => {
+      clonedPipeline.toFile(job.outputPath, (err, info) => {
         bar.tick()
         job.outsideResolve(info)
       })
       // Compress pngs
     } else if (job.file.extension === `png`) {
-      clonedPipeline.toBuffer()
-      .then((sharpBuffer) => {
-        imagemin.buffer(sharpBuffer, {
-          plugins: [
-            imageminPngquant({
-              quality: `${args.quality}-${args.quality + 25}`, // e.g. 40-65
-            }),
-          ],
-        })
-        .then((imageminBuffer) => {
-          fs.writeFile(job.outputPath, imageminBuffer, () => {
-            bar.tick()
-            job.outsideResolve()
+      clonedPipeline.toBuffer().then(sharpBuffer => {
+        imagemin
+          .buffer(sharpBuffer, {
+            plugins: [
+              imageminPngquant({
+                quality: (
+                  `${args.quality}-${args.quality + 25}`
+                ), // e.g. 40-65
+              }),
+            ],
           })
-        })
+          .then(imageminBuffer => {
+            fs.writeFile(job.outputPath, imageminBuffer, () => {
+              bar.tick()
+              job.outsideResolve()
+            })
+          })
       })
     }
   })
@@ -99,7 +106,7 @@ const toProcess = {}
 const q = queue()
 q.concurrency = 1
 
-const queueJob = (job) => {
+const queueJob = job => {
   const inputFileKey = job.file.id.replace(/\./g, `%2E`)
   const outputFileKey = job.outputPath.replace(/\./g, `%2E`)
 
@@ -120,9 +127,16 @@ const queueJob = (job) => {
   if (toProcess[inputFileKey]) {
     notQueued = false
   }
-  _.set(toProcess, `${job.file.id.replace(/\./g, `%2E`)}.${job.outputPath.replace(/\./g, `%2E`)}`, job)
+  _.set(
+    toProcess,
+    `${job.file.id.replace(/\./g, `%2E`)}.${job.outputPath.replace(
+      /\./g,
+      `%2E`
+    )}`,
+    job
+  )
   if (notQueued) {
-    q.push((cb) => {
+    q.push(cb => {
       // We're now processing the file's jobs.
       processFile(job.file.id, _.values(toProcess[inputFileKey]), () => {
         cb()
@@ -148,10 +162,10 @@ function queueImageResizing ({ file, args = {} }) {
   const pairedArgs = _.toPairs(args)
   let filteredArgs
   // Remove non-true arguments
-  filteredArgs = _.filter(pairedArgs, (arg) => arg[1])
+  filteredArgs = _.filter(pairedArgs, arg => arg[1])
   // Remove linkPrefix
-  filteredArgs = _.filter(filteredArgs, (arg) => arg[0] !== `linkPrefix`)
-  filteredArgs = _.filter(filteredArgs, (arg) => {
+  filteredArgs = _.filter(filteredArgs, arg => arg[0] !== `linkPrefix`)
+  filteredArgs = _.filter(filteredArgs, arg => {
     if (file.extension.match(/^jp*/)) {
       return !_.includes(arg[0], `png`)
     } else if (file.extension.match(/^png/)) {
@@ -159,12 +173,14 @@ function queueImageResizing ({ file, args = {} }) {
     }
     return true
   })
-  const sortedArgs = _.sortBy(filteredArgs, (arg) => arg[0] === `width`)
-  const imgSrc = `/${file.hash}-${qs.stringify(_.fromPairs(sortedArgs))}.${file.extension}`
+  const sortedArgs = _.sortBy(filteredArgs, arg => arg[0] === `width`)
+  const imgSrc = `/${file.hash}-${qs.stringify(
+    _.fromPairs(sortedArgs)
+  )}.${file.extension}`
   const filePath = `${process.cwd()}/public${imgSrc}`
   // Create function to call when the image is finished.
   let outsideResolve
-  const finished = new Promise((resolve) => {
+  const finished = new Promise(resolve => {
     outsideResolve = resolve
   })
 
@@ -220,17 +236,18 @@ async function notMemoizedbase64 ({ file, args = {} }) {
   }
   const options = _.defaults(args, defaultArgs)
   let pipeline = sharp(file.id).rotate()
-  pipeline.resize(options.width, options.height)
-  .png({
-    compressionLevel: options.pngCompressionLevel,
-    adaptiveFiltering: false,
-    force: false,
-  })
-  .jpeg({
-    quality: options.quality,
-    progressive: options.jpegProgressive,
-    force: false,
-  })
+  pipeline
+    .resize(options.width, options.height)
+    .png({
+      compressionLevel: options.pngCompressionLevel,
+      adaptiveFiltering: false,
+      force: false,
+    })
+    .jpeg({
+      quality: options.quality,
+      progressive: options.jpegProgressive,
+      force: false,
+    })
 
   // grayscale
   if (options.grayscale) {
@@ -252,7 +269,10 @@ async function notMemoizedbase64 ({ file, args = {} }) {
   }
 }
 
-const memoizedBase64 = _.memoize(notMemoizedbase64, ({ file, args }) => `${file.id}${JSON.stringify(args)}`)
+const memoizedBase64 = _.memoize(
+  notMemoizedbase64,
+  ({ file, args }) => `${file.id}${JSON.stringify(args)}`
+)
 
 async function base64 (args) {
   return await memoizedBase64(args)
@@ -286,7 +306,7 @@ async function responsiveSizes ({ file, args = {} }) {
   sizes.push(options.maxWidth * 2)
   sizes.push(options.maxWidth * 3)
   const dimensions = imageSize(file.id)
-  const filteredSizes = sizes.filter((size) => size < dimensions.width)
+  const filteredSizes = sizes.filter(size => size < dimensions.width)
 
   // Add the original image to ensure the largest image possible
   // is available for small images. Also so we can link to
@@ -297,7 +317,7 @@ async function responsiveSizes ({ file, args = {} }) {
   const sortedSizes = _.sortBy(filteredSizes)
 
   // Queue sizes for processing.
-  const images = sortedSizes.map((size) => {
+  const images = sortedSizes.map(size => {
     const arrrgs = {
       ...options,
       width: Math.round(size),
@@ -317,8 +337,11 @@ async function responsiveSizes ({ file, args = {} }) {
   const base64Image = await base64({ file })
 
   // Construct src and srcSet strings.
-  const fallbackSrc = _.minBy(images, (image) => Math.abs(options.maxWidth - image.width)).src
-  const srcSet = images.map((image) => `${image.src} ${Math.round(image.width)}w`).join(`,\n`)
+  const fallbackSrc = _.minBy(images, image =>
+    Math.abs(options.maxWidth - image.width)).src
+  const srcSet = images
+    .map(image => `${image.src} ${Math.round(image.width)}w`)
+    .join(`,\n`)
 
   return {
     base64: base64Image.src,
@@ -348,24 +371,26 @@ async function responsiveResolution ({ file, args = {} }) {
   sizes.push(options.width * 3)
   const dimensions = imageSize(file.id)
 
-  const filteredSizes = sizes.filter((size) => size < dimensions.width)
+  const filteredSizes = sizes.filter(size => size < dimensions.width)
 
   // If there's no sizes after filtering (e.g. image is smaller than what's
   // requested, add back the original so there's at least something)
   if (filteredSizes.length === 0) {
     filteredSizes.push(dimensions.width)
-    console.warn(`
+    console.warn(
+      `
                  The requested width "${options.width}px" for a responsiveResolution field for
                  the file ${file.id}
                  was wider than the actual image width of ${dimensions.width}px!
                  If possible, replace the current image with a larger one.
-                 `)
+                 `
+    )
   }
 
   // Sort sizes for prettiness.
   const sortedSizes = _.sortBy(filteredSizes)
 
-  const images = sortedSizes.map((size) => {
+  const images = sortedSizes.map(size => {
     const arrrgs = {
       ...options,
       width: Math.round(size),
@@ -385,25 +410,27 @@ async function responsiveResolution ({ file, args = {} }) {
   const base64Image = await base64({ file })
 
   const fallbackSrc = images[0].src
-  const srcSet = images.map((image, i) => {
-    let resolution
-    switch (i) {
-      case 0:
-        resolution = `1x`
-        break
-      case 1:
-        resolution = `1.5x`
-        break
-      case 2:
-        resolution = `2x`
-        break
-      case 3:
-        resolution = `3x`
-        break
-      default:
-    }
-    return `${image.src} ${resolution}`
-  }).join(`,`)
+  const srcSet = images
+    .map((image, i) => {
+      let resolution
+      switch (i) {
+        case 0:
+          resolution = `1x`
+          break
+        case 1:
+          resolution = `1.5x`
+          break
+        case 2:
+          resolution = `2x`
+          break
+        case 3:
+          resolution = `3x`
+          break
+        default:
+      }
+      return `${image.src} ${resolution}`
+    })
+    .join(`,`)
 
   return {
     base64: base64Image.src,

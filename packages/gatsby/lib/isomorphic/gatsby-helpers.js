@@ -1,6 +1,6 @@
 /* @flow weak */
-import invariant from 'invariant'
-import isString from 'lodash/isString'
+import invariant from "invariant"
+import isString from "lodash/isString"
 
 function isDataURL (s) {
   // Regex from https://gist.github.com/bgrins/6194623#gistcomment-1671744
@@ -10,11 +10,13 @@ function isDataURL (s) {
 }
 
 // Function to add prefix to links.
-const prefixLink = (_link) => {
+const prefixLink = _link => {
   if (
-      (typeof __PREFIX_LINKS__ !== `undefined` && __PREFIX_LINKS__ !== null)
-      && __PREFIX_LINKS__ && (__LINK_PREFIX__ !== null
-  )) {
+    typeof __PREFIX_LINKS__ !== `undefined` &&
+      __PREFIX_LINKS__ !== null &&
+      __PREFIX_LINKS__ &&
+      __LINK_PREFIX__ !== null
+  ) {
     const invariantMessage = `
     You're trying to build your site with links prefixed
     but you haven't set 'linkPrefix' in your gatsby-config.js.

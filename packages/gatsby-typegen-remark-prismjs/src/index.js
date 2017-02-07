@@ -2,7 +2,7 @@ const visit = require(`unist-util-visit`)
 const Prism = require(`prismjs`)
 
 module.exports = ({ markdownAST }) => {
-  visit(markdownAST, `code`, (node) => {
+  visit(markdownAST, `code`, node => {
     // (Try to) load languages on demand.
     if (!Prism.languages[node.lang]) {
       try {

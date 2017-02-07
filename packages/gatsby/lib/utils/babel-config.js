@@ -1,12 +1,12 @@
 /* @flow weak */
-import resolve from 'babel-core/lib/helpers/resolve'
-import fs from 'fs'
-import path from 'path'
-import json5 from 'json5'
-import _ from 'lodash'
-import objectAssign from 'object-assign'
-import invariant from 'invariant'
-import apiRunnerNode from './api-runner-node'
+import resolve from "babel-core/lib/helpers/resolve"
+import fs from "fs"
+import path from "path"
+import json5 from "json5"
+import _ from "lodash"
+import objectAssign from "object-assign"
+import invariant from "invariant"
+import apiRunnerNode from "./api-runner-node"
 
 function defaultConfig () {
   return {
@@ -32,7 +32,9 @@ function resolvePlugin (pluginName, directory, type) {
     resolve(pluginName, directory) ||
     resolve(pluginName, gatsbyPath)
 
-  const name = _.startsWith(pluginName, `babel`) ? pluginName : `babel-${type}-${pluginName}`
+  const name = _.startsWith(pluginName, `babel`)
+    ? pluginName
+    : `babel-${type}-${pluginName}`
   const pluginInvariantMessage = `
   You are trying to use a Babel plugin which Gatsby cannot find. You
   can install it using "npm install --save ${name}".
@@ -70,7 +72,10 @@ function normalizeConfig (config, directory) {
     let normalizedPlugin
 
     if (_.isArray(plugin)) {
-      normalizedPlugin = [resolvePlugin(plugin[0], directory, `plugin`), plugin[1]]
+      normalizedPlugin = [
+        resolvePlugin(plugin[0], directory, `plugin`),
+        plugin[1],
+      ]
     } else {
       normalizedPlugin = resolvePlugin(plugin, directory, `plugin`)
     }

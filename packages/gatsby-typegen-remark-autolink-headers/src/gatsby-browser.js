@@ -7,15 +7,18 @@ exports.clientEntry = (args, pluginOptions) => {
   // For production, the equivalent code is in gatsby-ssr.js.
   if (process.env.NODE_ENV !== `production`) {
     // Make sure React has had a change to flush to DOM first.
-    setTimeout(() => {
-      const hash = window.location.hash.replace(`#`, ``)
-      if (hash !== ``) {
-        const element = document.getElementById(hash)
-        if (element) {
-          const offset = element.offsetTop
-          window.scrollTo(0, offset - offsetY)
+    setTimeout(
+      () => {
+        const hash = window.location.hash.replace(`#`, ``)
+        if (hash !== ``) {
+          const element = document.getElementById(hash)
+          if (element) {
+            const offset = element.offsetTop
+            window.scrollTo(0, offset - offsetY)
+          }
         }
-      }
-    }, 10)
+      },
+      10
+    )
   }
 }

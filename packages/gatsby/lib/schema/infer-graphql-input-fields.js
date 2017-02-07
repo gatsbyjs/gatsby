@@ -14,7 +14,7 @@ const typeOf = require(`type-of`)
 
 const { extractFieldExamples, buildFieldEnumValues } = require(`./ast-utils`)
 
-const typeFields = (type) => {
+const typeFields = type => {
   switch (type) {
     case `boolean`:
       return {
@@ -41,7 +41,13 @@ const typeFields = (type) => {
   }
 }
 
-const inferGraphQLInputFields = exports.inferGraphQLInputFields = (value, key, nodes, selector="", namespace="") => {
+const inferGraphQLInputFields = exports.inferGraphQLInputFields = (
+  value,
+  key,
+  nodes,
+  selector = ``,
+  namespace = ``
+) => {
   switch (typeOf(value)) {
     case `array`:
       let headType = typeOf(value[0])
@@ -96,7 +102,7 @@ const inferGraphQLInputFields = exports.inferGraphQLInputFields = (value, key, n
           fields: {
             ...typeFields(`string`),
           },
-        })
+        }),
       }
     case `object`:
       return {
@@ -111,9 +117,9 @@ const inferGraphQLInputFields = exports.inferGraphQLInputFields = (value, key, n
           type: new GraphQLInputObjectType({
             name: _.camelCase(`${namespace} ${selector} ${key}QueryNumber`),
             fields: {
-              ...typeFields(`int`)
+              ...typeFields(`int`),
             },
-          })
+          }),
         }
       } else {
         return {
@@ -130,18 +136,26 @@ const inferGraphQLInputFields = exports.inferGraphQLInputFields = (value, key, n
   }
 }
 
-const inferInputObjectStructureFromNodes = exports.inferInputObjectStructureFromNodes = (nodes, selector, namespace) => {
-  const fieldExamples = extractFieldExamples(
-    {
-      nodes,
-      selector,
-      deleteNodeFields: true,
-    }
-  )
+const inferInputObjectStructureFromNodes = exports.inferInputObjectStructureFromNodes = (
+  nodes,
+  selector,
+  namespace
+) => {
+  const fieldExamples = extractFieldExamples({
+    nodes,
+    selector,
+    deleteNodeFields: true,
+  })
 
   const inferredFields = {}
   _.each(fieldExamples, (v, k) => {
-    inferredFields[k] = inferGraphQLInputFields(v, k, nodes, selector, namespace)
+    inferredFields[k] = inferGraphQLInputFields(
+      v,
+      k,
+      nodes,
+      selector,
+      namespace
+    )
   })
 
   // Add sorting (but only to the top level).
