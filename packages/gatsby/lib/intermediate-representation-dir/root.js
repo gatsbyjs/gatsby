@@ -1,6 +1,6 @@
-import React from 'react'
-import { applyRouterMiddleware, Router, browserHistory } from 'react-router'
-import useScroll from 'react-router-scroll/lib/useScroll'
+import React from "react"
+import { applyRouterMiddleware, Router, browserHistory } from "react-router"
+import useScroll from "react-router-scroll/lib/useScroll"
 
 const apiRunner = require(`./api-runner-browser`)
 const rootRoute = require(`./child-routes`)
@@ -12,7 +12,10 @@ browserHistory.listen(location => {
 })
 
 function shouldUpdateScroll (prevRouterProps, { location: { pathname } }) {
-  const results = apiRunner(`shouldUpdateScroll`, { prevRouterProps, pathname })
+  const results = apiRunner(`shouldUpdateScroll`, {
+    prevRouterProps,
+    pathname,
+  })
   if (results.length > 0) {
     return results[0]
   }
@@ -31,7 +34,9 @@ const Root = () => (
     history={browserHistory}
     routes={rootRoute}
     render={applyRouterMiddleware(useScroll(shouldUpdateScroll))}
-    onUpdate={() => { apiRunner(`onRouteUpdate`, currentLocation) }}
+    onUpdate={() => {
+      apiRunner(`onRouteUpdate`, currentLocation)
+    }}
   />
 )
 

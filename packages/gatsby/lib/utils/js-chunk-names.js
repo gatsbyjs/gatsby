@@ -1,7 +1,7 @@
-import _ from 'lodash'
+import _ from "lodash"
 const path = require(`path`)
 
-const pathChunkName = (path) => {
+const pathChunkName = path => {
   const name = path === `/` ? `index` : _.kebabCase(path)
   return `path---${name}`
 }

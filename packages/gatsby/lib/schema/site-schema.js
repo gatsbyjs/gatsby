@@ -1,10 +1,6 @@
-import {
-  GraphQLObjectType,
-  GraphQLString,
-  GraphQLBoolean,
-} from 'graphql'
-import moment from 'moment'
-import _ from 'lodash'
+import { GraphQLObjectType, GraphQLString, GraphQLBoolean } from "graphql"
+import moment from "moment"
+import _ from "lodash"
 
 //import pagesSchema from './pages-schema'
 const { inferObjectStructureFromNodes } = require(`./infer-graphql-type`)
@@ -14,7 +10,9 @@ module.exports = () => {
   const config = siteDB().get(`config`)
   // Create site/page types.
   const metadataFields = () => {
-    const fields = inferObjectStructureFromNodes({ nodes: [config.siteMetadata] })
+    const fields = inferObjectStructureFromNodes({
+      nodes: [config.siteMetadata],
+    })
     return fields
   }
 

@@ -4,7 +4,7 @@ const {
   connectionFromArray,
 } = require(`graphql-skip-limit`)
 
-module.exports = ({ args, nodes, connection=false }) => {
+module.exports = ({ args, nodes, connection = false }) => {
   // Clone args as for some reason graphql-js removes the constructor
   // from nested objects which breaks a check in sift.js.
   const clonedArgs = JSON.parse(JSON.stringify(args))
@@ -15,7 +15,7 @@ module.exports = ({ args, nodes, connection=false }) => {
   //delete clonedArgs.before
   //delete clonedArgs.last
 
-  const siftifyArgs = (object) => {
+  const siftifyArgs = object => {
     const newObject = {}
     _.each(object, (v, k) => {
       if (_.isObject(v) && !_.isArray(v)) {
@@ -27,7 +27,7 @@ module.exports = ({ args, nodes, connection=false }) => {
           const regex = new RegExp(exploded[1], exploded[2])
           newObject[`$regex`] = regex
         } else if (k === `glob`) {
-          const Minimatch = require("minimatch").Minimatch
+          const Minimatch = require(`minimatch`).Minimatch
           const mm = new Minimatch(v)
           newObject[`$regex`] = mm.makeRe()
         } else {
@@ -60,15 +60,13 @@ module.exports = ({ args, nodes, connection=false }) => {
 
   // Sort results.
   if (clonedArgs.sortBy) {
-    const convertedFields = clonedArgs.sortBy.fields.map((field) => field.replace(`___`, `.`))
+    const convertedFields = clonedArgs.sortBy.fields.map(field =>
+      field.replace(`___`, `.`))
     result = _.orderBy(result, convertedFields, clonedArgs.sortBy.order)
   }
 
   if (connection) {
-    const connectionArray = connectionFromArray(
-      result,
-      args,
-    )
+    const connectionArray = connectionFromArray(result, args)
     connectionArray.totalCount = result.length
     return connectionArray
   } else {

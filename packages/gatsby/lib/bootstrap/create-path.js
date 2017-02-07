@@ -1,5 +1,5 @@
-import parsePath from 'parse-filepath'
-import path from 'path'
+import parsePath from "parse-filepath"
+import path from "path"
 
 module.exports = (basePath, filePath) => {
   const relativePath = path.relative(basePath, filePath)

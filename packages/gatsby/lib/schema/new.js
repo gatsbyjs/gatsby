@@ -17,7 +17,7 @@ module.exports = async () => {
   const sourceAST = await apiRunner(`sourceNodes`)
   let root = { type: `root`, children: sourceAST }
   // Add parent reference to each source node.
-  sourceAST.forEach((sourceNode) => {
+  sourceAST.forEach(sourceNode => {
     sourceNode.parent = root
   })
   await apiRunner(`modifyAST`, { ast: root })

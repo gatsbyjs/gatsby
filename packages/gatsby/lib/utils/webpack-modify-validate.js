@@ -1,19 +1,21 @@
-import _ from 'lodash'
-import invariant from 'invariant'
-import path from 'path'
-import validate from 'webpack-validator'
-import apiRunnerNode from './api-runner-node'
+import _ from "lodash"
+import invariant from "invariant"
+import path from "path"
+import validate from "webpack-validator"
+import apiRunnerNode from "./api-runner-node"
 
-export default async function ValidateWebpackConfig (config, stage) {
+export default (async function ValidateWebpackConfig (config, stage) {
   // We don't care about the return as plugins just mutate the config directly.
   await apiRunnerNode(`modifyWebpackConfig`, { config, stage })
 
-  invariant(_.isObject(config) && _.isFunction(config.resolve),
+  invariant(
+    _.isObject(config) && _.isFunction(config.resolve),
     `
     You must return an webpack-configurator instance when modifying the Webpack config.
     Returned: ${config}
     stage: ${stage}
-    `)
+    `
+  )
 
   const validationState = validate(config.resolve(), {
     returnValidation: true,
@@ -32,4 +34,4 @@ export default async function ValidateWebpackConfig (config, stage) {
   })
 
   return process.exit(1)
-}
+});

@@ -21,41 +21,42 @@ const inspect = require(`unist-util-inspect`)
 const Promise = require(`bluebird`)
 const prune = require(`underscore.string/prune`)
 
-exports.extendNodeType = ({ args, pluginOptions }) => {
-  return new Promise((resolve, reject) => {
-    const { ast, type, linkPrefix } = args
-    if (type.name !== `MarkdownRemark`) { return resolve({}) }
+exports.extendNodeType = ({ args, pluginOptions }) => new Promise((resolve, reject) => {
+  const { ast, type, linkPrefix } = args
+  if (type.name !== `MarkdownRemark`) {
+    return resolve({})
+  }
 
-    const files = select(ast, `File`)
+  const files = select(ast, `File`)
 
     // Setup Remark.
-    const remark = new Remark({
-      commonmark: true,
-      footnotes: true,
-      pedantic: true,
-    })
+  const remark = new Remark({
+    commonmark: true,
+    footnotes: true,
+    pedantic: true,
+  })
 
-    const astPromiseCache = {}
-    async function getAST (markdownNode) {
-      if (astPromiseCache[markdownNode.id]) {
-        return astPromiseCache[markdownNode.id]
-      } else {
-        astPromiseCache[markdownNode.id] = new Promise((resolve, reject) => {
-
-          Promise.all(pluginOptions.plugins.map((plugin) => {
-            const requiredPlugin = require(plugin.resolve)
-            if (_.isFunction(requiredPlugin.mutateSource)) {
-              console.log(`running plugin to mutate markdown source`)
-              return requiredPlugin.mutateSource({
-                markdownNode,
-                files,
-                pluginOptions: plugin.pluginOptions,
-              })
-            } else {
-              return Promise.resolve()
-            }
-          }))
-          .then(() => {
+  const astPromiseCache = {}
+  async function getAST (markdownNode) {
+    if (astPromiseCache[markdownNode.id]) {
+      return astPromiseCache[markdownNode.id]
+    } else {
+      astPromiseCache[markdownNode.id] = new Promise((resolve, reject) => {
+        Promise.all(
+            pluginOptions.plugins.map(plugin => {
+              const requiredPlugin = require(plugin.resolve)
+              if (_.isFunction(requiredPlugin.mutateSource)) {
+                console.log(`running plugin to mutate markdown source`)
+                return requiredPlugin.mutateSource({
+                  markdownNode,
+                  files,
+                  pluginOptions: plugin.pluginOptions,
+                })
+              } else {
+                return Promise.resolve()
+              }
+            })
+          ).then(() => {
             const markdownAST = remark.parse(markdownNode.src)
 
             // source => parse (can order parsing for dependencies) => typegen
@@ -102,131 +103,129 @@ exports.extendNodeType = ({ args, pluginOptions }) => {
             // use...
             // explicitly mark dependecies — e.g. remark has plugins to parse its AST
             // which remark controls when these run.
-            Promise.all(pluginOptions.plugins.map((plugin) => {
-              const requiredPlugin = require(plugin.resolve)
-              if (_.isFunction(requiredPlugin)) {
-                return requiredPlugin({
-                  markdownAST,
-                  markdownNode,
-                  files,
-                  pluginOptions: plugin.pluginOptions,
-                  linkPrefix,
-                })
-              } else {
-                return Promise.resolve()
-              }
-            }))
-            .then(() => {
+            Promise.all(
+              pluginOptions.plugins.map(plugin => {
+                const requiredPlugin = require(plugin.resolve)
+                if (_.isFunction(requiredPlugin)) {
+                  return requiredPlugin({
+                    markdownAST,
+                    markdownNode,
+                    files,
+                    pluginOptions: plugin.pluginOptions,
+                    linkPrefix,
+                  })
+                } else {
+                  return Promise.resolve()
+                }
+              })
+            ).then(() => {
               markdownNode.ast = markdownAST
               resolve(markdownNode)
             })
           })
-        })
-      }
-
-      return astPromiseCache[markdownNode.id]
+      })
     }
 
-    async function getHeadings (markdownNode) {
-      if (markdownNode.headings) {
-        return markdownNode
-      } else {
-        const { ast } = await getAST(markdownNode)
-        markdownNode.headings = select(ast, `heading`).map((heading) => ({
-          value: _.first(select(heading, `text`).map((text) => text.value)),
-          depth: heading.depth,
-        }))
+    return astPromiseCache[markdownNode.id]
+  }
 
-        return markdownNode
-      }
+  async function getHeadings (markdownNode) {
+    if (markdownNode.headings) {
+      return markdownNode
+    } else {
+      const { ast } = await getAST(markdownNode)
+      markdownNode.headings = select(ast, `heading`).map(heading => ({
+        value: _.first(select(heading, `text`).map(text => text.value)),
+        depth: heading.depth,
+      }))
+
+      return markdownNode
     }
+  }
 
-    const htmlPromisesCache = {}
-    async function getHTML (markdownNode) {
-      if (htmlPromisesCache[markdownNode.id]) {
-        return htmlPromisesCache[markdownNode.id]
-      } else {
-        htmlPromisesCache[markdownNode.id] = new Promise((resolve, reject) => {
-          getAST(markdownNode)
-          .then((node) => {
-            node.html = hastToHTML(
-              toHAST(
-                node.ast, { allowDangerousHTML: true }
-              ),
+  const htmlPromisesCache = {}
+  async function getHTML (markdownNode) {
+    if (htmlPromisesCache[markdownNode.id]) {
+      return htmlPromisesCache[markdownNode.id]
+    } else {
+      htmlPromisesCache[markdownNode.id] = new Promise((resolve, reject) => {
+        getAST(markdownNode).then(node => {
+          node.html = hastToHTML(
+              toHAST(node.ast, { allowDangerousHTML: true }),
               { allowDangerousHTML: true }
             )
-            return resolve(node)
-          })
+          return resolve(node)
         })
-        return htmlPromisesCache[markdownNode.id]
-      }
+      })
+      return htmlPromisesCache[markdownNode.id]
     }
+  }
 
-    const HeadingType = new GraphQLObjectType({
-      name: `MarkdownHeading`,
-      fields: {
-        value: {
-          type: GraphQLString,
-          resolve (heading) {
-            return heading.value
-          },
-        },
-        depth: {
-          type: GraphQLInt,
-          resolve (heading) {
-            return heading.depth
-          },
-        },
-      },
-    })
-
-    return resolve({
-      html: {
+  const HeadingType = new GraphQLObjectType({
+    name: `MarkdownHeading`,
+    fields: {
+      value: {
         type: GraphQLString,
-        resolve (markdownNode) {
-          return getHTML(markdownNode).then((node) => node.html)
+        resolve (heading) {
+          return heading.value
         },
       },
-      src: {
-        type: GraphQLString,
-      },
-      excerpt: {
-        type: GraphQLString,
-        args: {
-          pruneLength: {
-            type: GraphQLInt,
-            defaultValue: 140,
-          },
-        },
-        resolve (markdownNode, { pruneLength }) {
-          return getAST(markdownNode).then((node) => {
-            const textNodes = []
-            visit(node.ast, 'text', (textNode) => textNodes.push(textNode.value))
-            return prune(textNodes.join(` `), pruneLength)
-          })
-        },
-      },
-      headings: {
-        type: new GraphQLList(HeadingType),
-        resolve (markdownNode) {
-          return getHeadings(markdownNode).then((node) => node.headings)
-        },
-      },
-      timeToRead: {
+      depth: {
         type: GraphQLInt,
-        resolve (markdownNode) {
-          return getHTML(markdownNode)
-          .then((node) => {
-            let timeToRead = 0
-            const pureText = sanitizeHTML(node.html, { allowTags: [] })
-            const avgWPM = 265
-            const wordCount = _.words(pureText).length
-            timeToRead = Math.round(wordCount / avgWPM)
-            if (timeToRead === 0) { timeToRead = 1 }
-            return timeToRead
-          })
+        resolve (heading) {
+          return heading.depth
         },
       },
-    })
+    },
   })
-}
+
+  return resolve({
+    html: {
+      type: GraphQLString,
+      resolve (markdownNode) {
+        return getHTML(markdownNode).then(node => node.html)
+      },
+    },
+    src: {
+      type: GraphQLString,
+    },
+    excerpt: {
+      type: GraphQLString,
+      args: {
+        pruneLength: {
+          type: GraphQLInt,
+          defaultValue: 140,
+        },
+      },
+      resolve (markdownNode, { pruneLength }) {
+        return getAST(markdownNode).then(node => {
+          const textNodes = []
+          visit(node.ast, `text`, textNode => textNodes.push(textNode.value))
+          return prune(textNodes.join(` `), pruneLength)
+        })
+      },
+    },
+    headings: {
+      type: new GraphQLList(HeadingType),
+      resolve (markdownNode) {
+        return getHeadings(markdownNode).then(node => node.headings)
+      },
+    },
+    timeToRead: {
+      type: GraphQLInt,
+      resolve (markdownNode) {
+        return getHTML(markdownNode).then(node => {
+          let timeToRead = 0
+          const pureText = sanitizeHTML(node.html, { allowTags: [] })
+          const avgWPM = 265
+          const wordCount = _.words(pureText).length
+          timeToRead = Math.round(wordCount / avgWPM)
+          if (timeToRead === 0) {
+            timeToRead = 1
+          }
+          return timeToRead
+        })
+      },
+    },
+  })
+})
