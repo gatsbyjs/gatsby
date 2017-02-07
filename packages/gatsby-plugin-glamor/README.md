@@ -22,7 +22,7 @@ components](https://github.com/threepointone/glamor/blob/master/docs/howto.md).
 One particularly convenient (and suggested) way is to use its `css`
 prop.
 
-```javascript
+```jsx
 render () {
   return (
     <div
