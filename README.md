@@ -323,8 +323,6 @@ or `import` of 'config'. Values:
   (containing your client-side Single Page App) during a `gatbsy build`. You'll need
   to update your top-level `html.js` file so that it doesn't pull in `bundle.js` in
   production, but you'll want to keep it for `gatsby develop` mode.
-  * `optionalTrailingSlash` - set to a truthy value to make the trailing slash optional
-  in page routes.
 * `/pages` - All pages go here. Everything is turned into a page except
 files which start with an underscore:
   * `_template` files under `/pages` are treated as parent templates for other pages in
@@ -471,8 +469,6 @@ Make sure you also including the **trailing slash** in your URLs:
 
 - Bad: `http://localhost:8000/foo`
 - Good: `http://localhost:8000/foo/`
-
-If you wish to support an optional trailing slash, use the `optionalTrailingSlash` option outlined previously.
 
 ### Inline CSS
 
