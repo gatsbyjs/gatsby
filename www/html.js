@@ -31,6 +31,7 @@ module.exports = React.createClass({
           <title>Gatsby</title>
           <meta charSet="utf-8" />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+          <meta name="theme-color" content="#a2466c" />
           <meta
             name="viewport"
             content="width=device-width, initial-scale=1.0"
