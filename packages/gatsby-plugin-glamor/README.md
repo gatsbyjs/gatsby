@@ -1,7 +1,8 @@
 # gatsby-plugin-glamor
 
 Provide drop-in support for using the css-in-js library
-[Glamor](https://github.com/threepointone/glamor).
+[Glamor](https://github.com/threepointone/glamor) including optimized
+server rendering.
 
 ## Install
 
@@ -20,7 +21,9 @@ plugins: [
 Glamor [provides many convenient ways to style your
 components](https://github.com/threepointone/glamor/blob/master/docs/howto.md).
 One particularly convenient (and suggested) way is to use its `css`
-prop.
+prop. It works exactly the same as the `style` prop except it let's you
+write all CSS — psudeo classes/elements, media queries, contextual
+selectors, etc.
 
 ```jsx
 render () {
