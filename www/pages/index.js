@@ -1,16 +1,14 @@
-import React from 'react'
-import Link from 'react-router/lib/Link'
+import React from "react"
+import Link from "react-router/lib/Link"
 
-import { rhythm } from 'utils/typography'
+import { rhythm } from "utils/typography"
 
 const IndexRoute = React.createClass({
   render () {
     return (
       <div>
         <h1>Gatsby website 0.0.0.1</h1>
-        <Link
-          to="/docs/"
-        >
+        <Link to="/docs/">
           Docs
         </Link>
       </div>
