@@ -334,6 +334,8 @@ files which start with an underscore:
 * (optional) `gatsby-browser.js` - a way to hook into key application events.
   * Export `onRouteUpdate` of type `function()` to be notified whenever React-Router navigates.
   * Export `modifyRoutes` of type `function(routes: Object) => Object` to modify the react-router routes.
+  * Export `shouldUpdateScroll` of type `function(prevRouterProps: Object, nextRouterProps: Object) => boolean`
+  to determine if a given route change should scroll.
 * (optional) `gatsby-node.js` - a way to hook into events during build
 and development.
 
