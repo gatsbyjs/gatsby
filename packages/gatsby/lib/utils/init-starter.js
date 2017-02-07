@@ -1,7 +1,7 @@
 /* @flow weak */
-import { exec } from 'child_process'
-import fs from 'fs-extra'
-import sysPath from 'path'
+import { exec } from "child_process"
+import fs from "fs-extra"
+import sysPath from "path"
 
 let logger = console
 
@@ -27,7 +27,7 @@ const install = (rootPath, callback) => {
   })
 }
 
-const ignored = (path) => !/^\.(git|hg)$/.test(sysPath.basename(path))
+const ignored = path => !/^\.(git|hg)$/.test(sysPath.basename(path))
 
 // Copy starter from file system.
 //
@@ -38,7 +38,7 @@ const ignored = (path) => !/^\.(git|hg)$/.test(sysPath.basename(path))
 // Returns nothing.
 const copy = (starterPath, rootPath, callback) => {
   const copyDirectory = () => {
-    fs.copy(starterPath, rootPath, { filter: ignored }, (error) => {
+    fs.copy(starterPath, rootPath, { filter: ignored }, error => {
       if (error !== null) return callback(new Error(error))
       logger.log(`Created starter directory layout`)
       install(rootPath, callback)
@@ -48,9 +48,9 @@ const copy = (starterPath, rootPath, callback) => {
 
   // Chmod with 755.
   // 493 = parseInt('755', 8)
-  fs.mkdirp(rootPath, { mode: 493 }, (error) => {
+  fs.mkdirp(rootPath, { mode: 493 }, error => {
     if (error !== null) callback(new Error(error))
-    return fs.exists(starterPath, (exists) => {
+    return fs.exists(starterPath, exists => {
       if (!exists) {
         const chmodError = `starter ${starterPath} doesn't exist`
         return callback(new Error(chmodError))
@@ -72,8 +72,9 @@ const copy = (starterPath, rootPath, callback) => {
 // Returns nothing.
 const clone = (address, rootPath, callback) => {
   const gitHubRe = /(gh|github):(?:\/\/)?/
-  const url = gitHubRe.test(address) ?
-    `git://github.com/${address.replace(gitHubRe, ``)}.git` : address
+  const url = gitHubRe.test(address)
+    ? `git://github.com/${address.replace(gitHubRe, ``)}.git`
+    : address
   logger.log(`Cloning git repo ${url} to ${rootPath}...`)
   const cmd = `git clone ${url} ${rootPath}`
   exec(cmd, (error, stdout, stderr) => {
@@ -81,7 +82,7 @@ const clone = (address, rootPath, callback) => {
       return callback(new Error(`Git clone error: ${stderr.toString()}`))
     }
     logger.log(`Created starter directory layout`)
-    return fs.remove(sysPath.join(rootPath, `.git`), (removeError) => {
+    return fs.remove(sysPath.join(rootPath, `.git`), removeError => {
       if (error !== null) return callback(new Error(removeError))
       install(rootPath, callback)
       return true
@@ -102,9 +103,11 @@ const initStarter = (starter, options = {}, callback) => {
   if (options.logger) logger = options.logger
 
   const uriRe = /(?:https?|git(hub)?|gh)(?::\/\/|@)?/
-  fs.exists(sysPath.join(rootPath, `package.json`), (exists) => {
+  fs.exists(sysPath.join(rootPath, `package.json`), exists => {
     if (exists) {
-      return callback(new Error(`Directory ${rootPath} is already an npm project`))
+      return callback(new Error(
+        `Directory ${rootPath} is already an npm project`
+      ))
     }
     const isGitUri = starter && uriRe.test(starter)
     const get = isGitUri ? clone : copy

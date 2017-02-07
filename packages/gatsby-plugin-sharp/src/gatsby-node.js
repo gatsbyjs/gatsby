@@ -1,8 +1,8 @@
-import { queue } from './index'
-import Promise from 'bluebird'
+import { queue } from "./index"
+import Promise from "bluebird"
 
 async function generateSideEffects () {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     queue.start(() => resolve())
   })
 }

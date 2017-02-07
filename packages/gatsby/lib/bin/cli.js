@@ -2,28 +2,28 @@ const program = require(`commander`)
 const packageJson = require(`../../package.json`)
 const path = require(`path`)
 const _ = require(`lodash`)
-console.log('bin/cli: time since started:', process.uptime())
+console.log(`bin/cli: time since started:`, process.uptime())
 
-const defaultHost = process.platform === `win32`
-  ? `localhost`
-  : `0.0.0.0`
+const defaultHost = process.platform === `win32` ? `localhost` : `0.0.0.0`
 
 const directory = path.resolve(`.`)
 
-program
-  .version(packageJson.version)
-  .usage(`[command] [options]`)
+program.version(packageJson.version).usage(`[command] [options]`)
 
 console.time(`time to load develop`)
-program.command(`develop`)
-  .description(`Start development server. Watches files and rebuilds and hot reloads if something changes`) // eslint-disable-line max-len
-  .option(`-H, --host <url>`,
-          `Set host. Defaults to ${defaultHost}`,
-          defaultHost
-         )
+program
+  .command(`develop`)
+  .description(
+    `Start development server. Watches files and rebuilds and hot reloads if something changes`
+  ) // eslint-disable-line max-len
+  .option(
+    `-H, --host <url>`,
+    `Set host. Defaults to ${defaultHost}`,
+    defaultHost
+  )
   .option(`-p, --port <port>`, `Set port. Defaults to 8000`, `8000`)
   .option(`-o, --open`, `Open the site in your browser for you.`)
-  .action((command) => {
+  .action(command => {
     const develop = require(`../utils/develop`)
     console.timeEnd(`time to load develop`)
     const p = {
@@ -33,10 +33,14 @@ program.command(`develop`)
     develop(p)
   })
 
-program.command(`build`)
+program
+  .command(`build`)
   .description(`Build a Gatsby project.`)
-  .option(`--prefix-links`, `Build site with links prefixed (set prefix in your config).`)
-  .action((command) => {
+  .option(
+    `--prefix-links`,
+    `Build site with links prefixed (set prefix in your config).`
+  )
+  .action(command => {
     // Set NODE_ENV to 'production'
     process.env.NODE_ENV = `production`
 
@@ -51,15 +55,17 @@ program.command(`build`)
     })
   })
 
-program.command(`serve-build`)
+program
+  .command(`serve-build`)
   .description(`Serve built site.`)
-  .option(`-H, --host <url>`,
-          `Set host. Defaults to ${defaultHost}`,
-          defaultHost
-         )
+  .option(
+    `-H, --host <url>`,
+    `Set host. Defaults to ${defaultHost}`,
+    defaultHost
+  )
   .option(`-p, --port <port>`, `Set port. Defaults to 8000`, `8000`)
   .option(`-o, --open`, `Open the site in your browser for you.`)
-  .action((command) => {
+  .action(command => {
     const serve = require(`../utils/serve-build`)
     const p = {
       ...command,
@@ -77,10 +83,12 @@ program
   })
 
 program.on(`--help`, () => {
-  console.log(`To show subcommand help:
+  console.log(
+    `To show subcommand help:
 
     gatsby [command] -h
-`)
+`
+  )
 })
 
 // If the user types an unknown sub-command, just display the help.

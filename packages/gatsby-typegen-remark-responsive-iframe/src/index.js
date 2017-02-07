@@ -3,13 +3,13 @@ const cheerio = require(`cheerio`)
 const Promise = require(`bluebird`)
 const _ = require(`lodash`)
 
-module.exports = ({ markdownAST, pluginOptions = {} }) => (
-  new Promise((resolve) => {
+module.exports = ({ markdownAST, pluginOptions = {} }) =>
+  new Promise(resolve => {
     const defaults = {
       wrapperStyle: ``,
     }
     const options = _.defaults(pluginOptions, defaults)
-    visit(markdownAST, `html`, (node) => {
+    visit(markdownAST, `html`, node => {
       const $ = cheerio.load(node.value)
       const iframe = $(`iframe, object`)
       if (iframe) {
@@ -17,13 +17,16 @@ module.exports = ({ markdownAST, pluginOptions = {} }) => (
         const height = iframe.attr(`height`)
         const src = iframe.attr(`src`)
         if (width && height) {
-          $(`iframe, object`).attr(`style`, `
+          $(`iframe, object`).attr(
+            `style`,
+            `
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-          `)
+          `
+          )
           $(`iframe, object`).attr(`width`, null).attr(`height`, null)
           const newIframe = $.html()
 
@@ -32,7 +35,9 @@ module.exports = ({ markdownAST, pluginOptions = {} }) => (
           const rawHTML = `
           <div
             class="gatsby-resp-iframe-wrapper"
-            style="padding-bottom: ${(height/width)*100}%; position: relative; height: 0; overflow: hidden;${options.wrapperStyle}"
+            style="padding-bottom: ${height /
+            width *
+            100}%; position: relative; height: 0; overflow: hidden;${options.wrapperStyle}"
           >
             ${newIframe}
           </div>
@@ -55,4 +60,3 @@ module.exports = ({ markdownAST, pluginOptions = {} }) => (
 
     return resolve()
   })
-)

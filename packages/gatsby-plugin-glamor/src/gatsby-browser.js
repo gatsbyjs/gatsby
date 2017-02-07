@@ -1,4 +1,4 @@
-import { rehydrate } from 'glamor'
+import { rehydrate } from "glamor"
 
 exports.clientEntry = () => {
   if (window._glamor) {

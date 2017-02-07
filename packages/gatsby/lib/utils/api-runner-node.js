@@ -18,7 +18,9 @@ const runAPI = (plugin, api, args) => {
       pluginOptions: plugin.pluginOptions,
     })
     if (!result) {
-      throw new Error(`The API "${api}" in gatsby-node.js of the plugin at ${plugin.resolve} did not return a value`)
+      throw new Error(
+        `The API "${api}" in gatsby-node.js of the plugin at ${plugin.resolve} did not return a value`
+      )
     }
     return Promise.resolve(result)
   }
@@ -27,26 +29,25 @@ const runAPI = (plugin, api, args) => {
 }
 
 let filteredPlugins
-const hasAPIFile = (plugin) => (
-  glob.sync(`${plugin.resolve}/gatsby-node*`)[0]
-)
+const hasAPIFile = plugin => glob.sync(`${plugin.resolve}/gatsby-node*`)[0]
 
-module.exports = async (api, args={}) => (
-  new Promise((resolve) => {
-    const plugins = siteDB().get(`flattenedPlugins`)
-    // Get the list of plugins that implement gatsby-node
-    if (!filteredPlugins) {
-      filteredPlugins = plugins.filter((plugin) => hasAPIFile(plugin))
-    }
+module.exports = async (api, args = {}) => new Promise(resolve => {
+  const plugins = siteDB().get(`flattenedPlugins`)
+  // Get the list of plugins that implement gatsby-node
+  if (!filteredPlugins) {
+    filteredPlugins = plugins.filter(plugin => hasAPIFile(plugin))
+  }
 
-    mapSeries(filteredPlugins, (plugin, callback) => {
-      Promise.resolve(runAPI(plugin, api, args))
-      .then((result) => {
+  mapSeries(
+    filteredPlugins,
+    (plugin, callback) => {
+      Promise.resolve(runAPI(plugin, api, args)).then(result => {
         callback(null, result)
       })
-    }, (err, results) => {
+    },
+    (err, results) => {
       // Filter out empty responses and return
-      resolve(results.filter((result) => !_.isEmpty(result)))
-    })
-  })
-)
+      resolve(results.filter(result => !_.isEmpty(result)))
+    }
+  )
+})

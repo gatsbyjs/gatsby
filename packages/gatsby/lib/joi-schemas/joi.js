@@ -7,9 +7,11 @@ export const gatsbyConfigSchema = Joi.object().keys({
   plugins: Joi.array(),
 })
 
-export const pageSchema = Joi.object().keys({
-  path: Joi.string().required(),
-  component: Joi.string().required(),
-  componentChunkName: Joi.string().required(),
-  data: Joi.object(),
-}).unknown()
+export const pageSchema = Joi.object()
+  .keys({
+    path: Joi.string().required(),
+    component: Joi.string().required(),
+    componentChunkName: Joi.string().required(),
+    data: Joi.object(),
+  })
+  .unknown()

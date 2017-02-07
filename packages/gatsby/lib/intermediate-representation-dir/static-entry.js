@@ -1,15 +1,15 @@
-import React from 'react'
-import { renderToString, renderToStaticMarkup } from 'react-dom/server'
-import { match, RouterContext } from 'react-router'
-import Html from 'html'
-import _ from 'lodash'
+import React from "react"
+import { renderToString, renderToStaticMarkup } from "react-dom/server"
+import { match, RouterContext } from "react-router"
+import Html from "html"
+import _ from "lodash"
 //import { prefixLink } from '../isomorphic/gatsby-helpers'
-import rootRoute from '.intermediate-representation/child-routes.js'
-import pages from 'public/tmp-pages.json'
+import rootRoute from ".intermediate-representation/child-routes.js"
+import pages from "public/tmp-pages.json"
 //import { pathChunkName } from './js-chunk-names'
-import apiRunner from '.intermediate-representation/api-runner-ssr'
+import apiRunner from ".intermediate-representation/api-runner-ssr"
 
-const pathChunkName = (path) => {
+const pathChunkName = path => {
   const name = path === `/` ? `index` : _.kebabCase(path)
   return `path---${name}`
 }
@@ -20,24 +20,29 @@ module.exports = (locals, callback) => {
     linkPrefix = __LINK_PREFIX__
   }
 
-  match({ routes: rootRoute, location: locals.path }, (error, redirectLocation, renderProps) => {
+  match({ routes: rootRoute, location: locals.path }, (
+    error,
+    redirectLocation,
+    renderProps
+  ) => {
     if (error) {
       console.log(`error when building page ${locals.path}`, error)
       callback(error)
     } else if (renderProps) {
-      const component = (
-        <RouterContext
-          {...renderProps}
-        />
-      )
+      const component = <RouterContext {...renderProps} />
 
       // Let the site or plugin render the page component.
       const results = apiRunner(
         `replaceServerBodyRender`,
         { component, headComponents: [] },
-        {},
+        {}
       )
-      let { body, headComponents, postBodyComponents, ...bodyRenderProps } = results[0]
+      let {
+        body,
+        headComponents,
+        postBodyComponents,
+        ...bodyRenderProps
+      } = results[0]
 
       // If no one stepped up, we'll handle it.
       if (!body) {
@@ -61,12 +66,14 @@ module.exports = (locals, callback) => {
       headComponents.push(
         <script
           id="webpack-manifest"
-          dangerouslySetInnerHTML={{ __html:
-            `
+          dangerouslySetInnerHTML={{
+            __html: (
+              `
             //<![CDATA[
             window.webpackManifest = ${chunkManifest}
             //]]>
-            `,
+            `
+            ),
           }}
         />
       )
@@ -78,23 +85,19 @@ module.exports = (locals, callback) => {
         // ignore
       }
       const dascripts = [
-        pages.find((page) => page.path === locals.path).componentChunkName,
+        pages.find(page => page.path === locals.path).componentChunkName,
         pathChunkName(locals.path),
         `app`,
         `commons`,
       ]
-      dascripts.forEach((script) => {
+      dascripts.forEach(script => {
         const fetchKey = `assetsByChunkName[${script}][0]`
         //const prefixedScript = prefixLink(`/${_.get(stats, fetchKey, ``)}`)
         const prefixedScript = `${linkPrefix}/${_.get(stats, fetchKey, ``)}`
 
         // Add preload <link>s for scripts.
         headComponents.unshift(
-          <link
-            rel="preload"
-            href={prefixedScript}
-            as="script"
-          />
+          <link rel="preload" href={prefixedScript} as="script" />
         )
 
         // Add script tags for the bottom of the page.
@@ -104,13 +107,25 @@ module.exports = (locals, callback) => {
       })
 
       // Call plugins to let them add to or modify components/props.
-      const pluginHeadComponents = apiRunner(`modifyHeadComponents`, { headComponents }, [])
+      const pluginHeadComponents = apiRunner(
+        `modifyHeadComponents`,
+        { headComponents },
+        []
+      )
       headComponents = headComponents.concat(pluginHeadComponents)
 
-      const pluginPostBodyComponents = apiRunner(`modifyPostBodyComponents`, { postBodyComponents }, [])
+      const pluginPostBodyComponents = apiRunner(
+        `modifyPostBodyComponents`,
+        { postBodyComponents },
+        []
+      )
       postBodyComponents = postBodyComponents.concat(pluginPostBodyComponents)
 
-      const pluginBodyRenderProps = apiRunner(`modifyBodyRenderProps`, { bodyRenderProps }, {})
+      const pluginBodyRenderProps = apiRunner(
+        `modifyBodyRenderProps`,
+        { bodyRenderProps },
+        {}
+      )
       bodyRenderProps = _.merge(bodyRenderProps, pluginBodyRenderProps)
 
       const html = `<!DOCTYPE html>\n ${renderToStaticMarkup(
@@ -124,8 +139,10 @@ module.exports = (locals, callback) => {
       )}`
       callback(null, html)
     } else {
-      console.log(`Couldn't match ${locals.path} against your routes. This
-      should NEVER happen.`)
+      console.log(
+        `Couldn't match ${locals.path} against your routes. This
+      should NEVER happen.`
+      )
       callback(null, `FAIL ALERT`)
     }
   })

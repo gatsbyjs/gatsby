@@ -9,7 +9,7 @@ module.exports = (api, args, defaultReturn) => {
   console.log(`running gatsby plugins for api "${api}" with args`, args)
 
   // Run each plugin in series.
-  let results = plugins.map((plugin) => {
+  let results = plugins.map(plugin => {
     if (plugin.plugin[api]) {
       const result = plugin.plugin[api](args, plugin.options)
       return result
@@ -18,7 +18,7 @@ module.exports = (api, args, defaultReturn) => {
   })
 
   // Filter out undefined results.
-  results = results.filter((result) => (typeof result !== 'undefined'))
+  results = results.filter(result => typeof result !== `undefined`)
 
   console.log(`results`, results)
 

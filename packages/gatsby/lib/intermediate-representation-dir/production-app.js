@@ -1,14 +1,14 @@
-import apiRunner from './api-runner-browser'
+import apiRunner from "./api-runner-browser"
 // Let the site/plugins run code very early.
 apiRunner(`clientEntry`)
 
-import React from 'react'
-import ReactDOM from 'react-dom'
-import applyRouterMiddleware from 'react-router/lib/applyRouterMiddleware'
-import Router from 'react-router/lib/Router'
-import match from 'react-router/lib/match'
-import browserHistory from 'react-router/lib/browserHistory'
-import useScroll from 'react-router-scroll/lib/useScroll'
+import React from "react"
+import ReactDOM from "react-dom"
+import applyRouterMiddleware from "react-router/lib/applyRouterMiddleware"
+import Router from "react-router/lib/Router"
+import match from "react-router/lib/match"
+import browserHistory from "react-router/lib/browserHistory"
+import useScroll from "react-router-scroll/lib/useScroll"
 
 // Explicitly require from Gatsby subfolder. This isn't normally required but
 // seems to be when developing using "npm link" as otherwise Webpack uses
@@ -29,21 +29,21 @@ try {
 // Install service worker.
 runtime.install({
   onInstalled: () => {
-    console.log("SW Event:", "onInstalled")
+    console.log(`SW Event:`, `onInstalled`)
   },
   onUpdating: () => {
-    console.log("SW Event:", "onUpdating")
+    console.log(`SW Event:`, `onUpdating`)
   },
   onUpdateReady: () => {
-    console.log("SW Event:", "onUpdateReady")
+    console.log(`SW Event:`, `onUpdateReady`)
     runtime.applyUpdate()
   },
   onUpdated: () => {
-    console.log("SW Event:", "onUpdated")
-    apiRunner('swOnUpdated')
+    console.log(`SW Event:`, `onUpdated`)
+    apiRunner(`swOnUpdated`)
   },
   onUninstalled: () => {
-    console.log("SW Event:", "onUninstalled")
+    console.log(`SW Event:`, `onUninstalled`)
   },
 })
 
@@ -55,7 +55,7 @@ const rootRoute = require(`./split-child-routes`)
 // you try to build the javascript for production. No idea
 // why... so for now we'll pop the routes on window. I hope no
 // one feels overly dirty from reading this ;-)
-if (typeof window !== 'undefined') {
+if (typeof window !== `undefined`) {
   window.gatsbyRootRoute = rootRoute
 }
 
@@ -65,7 +65,10 @@ browserHistory.listen(location => {
 })
 
 function shouldUpdateScroll (prevRouterProps, { location: { pathname } }) {
-  const results = apiRunner(`shouldUpdateScroll`, { prevRouterProps, pathname })
+  const results = apiRunner(`shouldUpdateScroll`, {
+    prevRouterProps,
+    pathname,
+  })
   if (results.length > 0) {
     return results[0]
   }
@@ -79,16 +82,25 @@ function shouldUpdateScroll (prevRouterProps, { location: { pathname } }) {
   return true
 }
 
-match({ history: browserHistory, routes: rootRoute }, (error, redirectLocation, renderProps) => {
+match({ history: browserHistory, routes: rootRoute }, (
+  error,
+  redirectLocation,
+  renderProps
+) => {
   const Root = () => (
     <Router
       {...renderProps}
       render={applyRouterMiddleware(useScroll(shouldUpdateScroll))}
-      onUpdate={() => {apiRunner('onRouteUpdate', currentLocation)}}
+      onUpdate={() => {
+        apiRunner(`onRouteUpdate`, currentLocation)
+      }}
     />
   )
   const NewRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
-  ReactDOM.render((
-    <NewRoot />
-  ), typeof window !== `undefined` ? document.getElementById(`react-mount`) : void 0)
+  ReactDOM.render(
+    <NewRoot />,
+    typeof window !== `undefined`
+      ? document.getElementById(`react-mount`)
+      : void 0
+  )
 })

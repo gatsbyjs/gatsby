@@ -1,17 +1,17 @@
 /* @flow weak */
-import { graphql } from 'graphql'
-import Promise from 'bluebird'
-import queryRunner from '../utils/query-runner'
-import { pagesDB, siteDB, programDB } from '../utils/globals'
-import path from 'path'
-import glob from 'glob'
-import _ from 'lodash'
-import createPath from './create-path'
-import mkdirp from 'mkdirp'
-import fs from 'fs-extra'
-import Joi from 'joi'
-import chalk from 'chalk'
-import purdy from 'purdy'
+import { graphql } from "graphql"
+import Promise from "bluebird"
+import queryRunner from "../utils/query-runner"
+import { pagesDB, siteDB, programDB } from "../utils/globals"
+import path from "path"
+import glob from "glob"
+import _ from "lodash"
+import createPath from "./create-path"
+import mkdirp from "mkdirp"
+import fs from "fs-extra"
+import Joi from "joi"
+import chalk from "chalk"
+import purdy from "purdy"
 const { layoutComponentChunkName } = require(`../utils/js-chunk-names`)
 
 const mkdirs = Promise.promisify(fs.mkdirs)
@@ -19,14 +19,14 @@ const copy = Promise.promisify(fs.copy)
 const removeDir = Promise.promisify(fs.remove)
 
 // Joi schemas
-import { gatsbyConfigSchema, pageSchema } from '../joi-schemas/joi'
+import { gatsbyConfigSchema, pageSchema } from "../joi-schemas/joi"
 
-import apiRunnerNode from '../utils/api-runner-node'
+import apiRunnerNode from "../utils/api-runner-node"
 
-Promise.onPossiblyUnhandledRejection((error) => {
+Promise.onPossiblyUnhandledRejection(error => {
   throw error
 })
-process.on(`unhandledRejection`, (error) => {
+process.on(`unhandledRejection`, error => {
   console.error(`UNHANDLED REJECTION`, error.stack)
 })
 
@@ -35,59 +35,62 @@ process.on(`unhandledRejection`, (error) => {
 // algorithm is glob /pages directory for js/jsx/cjsx files *not*
 // underscored. Then create url w/ our path algorithm *unless* user
 // takes control of that page component in gatsby-node.
-const autoPathCreator = (program) => {
-  return new Promise((resolve) => {
-    const pagesDirectory = path.join(program.directory, `pages`)
-    let autoPages = []
-    glob(`${pagesDirectory}/**/?(*.js|*.jsx|*.cjsx)`, (err, files) => {
+const autoPathCreator = program => new Promise(resolve => {
+  const pagesDirectory = path.join(program.directory, `pages`)
+  let autoPages = []
+  glob(`${pagesDirectory}/**/?(*.js|*.jsx|*.cjsx)`, (err, files) => {
       // Create initial page objects.
-      autoPages = files.map((filePath) => ({
-        component: filePath,
-        componentChunkName: layoutComponentChunkName(program.directory, filePath),
-        path: filePath,
-      }))
+    autoPages = files.map(filePath => ({
+      component: filePath,
+      componentChunkName: layoutComponentChunkName(
+          program.directory,
+          filePath
+        ),
+      path: filePath,
+    }))
 
       // Convert path to one relative to the pages directory.
-      autoPages = autoPages.map((page) => ({
-        ...page,
-        path: path.relative(pagesDirectory, page.path),
-      }))
+    autoPages = autoPages.map(page => ({
+      ...page,
+      path: path.relative(pagesDirectory, page.path),
+    }))
 
       // Remove pages starting with an underscore.
-      autoPages = _.filter(autoPages, (page) => page.path.slice(0, 1) !== `_`)
+    autoPages = _.filter(autoPages, page => page.path.slice(0, 1) !== `_`)
 
       // Remove page templates.
-      autoPages = _.filter(autoPages, (page) => page.path.slice(0, 9) !== `template-`)
+    autoPages = _.filter(
+        autoPages,
+        page => page.path.slice(0, 9) !== `template-`
+      )
 
       // Convert to our path format.
-      autoPages = autoPages.map((page) => ({
-        ...page,
-        path: createPath(pagesDirectory, page.component),
-      }))
+    autoPages = autoPages.map(page => ({
+      ...page,
+      path: createPath(pagesDirectory, page.component),
+    }))
 
       // Validate pages.
-      autoPages.forEach((page) => {
-        const { error } = Joi.validate(page, pageSchema)
-        if (error) {
-          console.log(chalk.blue.bgYellow(`A page object failed validation`))
-          console.log(page)
-          console.log(chalk.bold.red(error))
-        }
-      })
-
-      resolve(autoPages)
+    autoPages.forEach(page => {
+      const { error } = Joi.validate(page, pageSchema)
+      if (error) {
+        console.log(chalk.blue.bgYellow(`A page object failed validation`))
+        console.log(page)
+        console.log(chalk.bold.red(error))
+      }
     })
+
+    resolve(autoPages)
   })
-}
+})
 
-
-module.exports = async (program) => {
-  console.log('lib/bootstrap/index.js time since started:', process.uptime())
+module.exports = async program => {
+  console.log(`lib/bootstrap/index.js time since started:`, process.uptime())
   // Set the program to the globals programDB
   programDB(program)
 
   // Try opening the site's gatsby-config.js file.
-  console.time('open and validate gatsby-config.js')
+  console.time(`open and validate gatsby-config.js`)
   let config = {}
   try {
     config = require(`${program.directory}/gatsby-config`)
@@ -115,14 +118,16 @@ module.exports = async (program) => {
     console.log(normalizedConfig)
     process.exit()
   }
-  console.timeEnd('open and validate gatsby-config.js')
+  console.timeEnd(`open and validate gatsby-config.js`)
 
   // Instantiate plugins.
-  let plugins = []
-  const processPlugin = (plugin) => {
+  const plugins = []
+  const processPlugin = plugin => {
     if (_.isString(plugin)) {
       const resolvedPath = path.dirname(require.resolve(plugin))
-      const packageJSON = JSON.parse(fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`))
+      const packageJSON = JSON.parse(
+        fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
+      )
       return {
         resolve: resolvedPath,
         name: packageJSON.name,
@@ -135,14 +140,16 @@ module.exports = async (program) => {
       // Plugins can have plugins.
       const subplugins = []
       if (plugin.options && plugin.options.plugins) {
-        plugin.options.plugins.forEach((p) => {
+        plugin.options.plugins.forEach(p => {
           subplugins.push(processPlugin(p))
         })
       }
       plugin.options.plugins = subplugins
 
       const resolvedPath = path.dirname(require.resolve(plugin.resolve))
-      const packageJSON = JSON.parse(fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`))
+      const packageJSON = JSON.parse(
+        fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
+      )
       return {
         resolve: resolvedPath,
         name: packageJSON.name,
@@ -153,7 +160,7 @@ module.exports = async (program) => {
   }
 
   if (normalizedConfig.plugins) {
-    normalizedConfig.plugins.forEach((plugin) => {
+    normalizedConfig.plugins.forEach(plugin => {
       plugins.push(processPlugin(plugin))
     })
   }
@@ -171,14 +178,14 @@ module.exports = async (program) => {
   // Create a "flattened" array of plugins with all subplugins brought to the top-level.
   // This simplifies running gatsby-* files for subplugins.
   const flattenedPlugins = []
-  const extractPlugins = (plugin) => {
-    plugin.pluginOptions.plugins.forEach((subPlugin) => {
+  const extractPlugins = plugin => {
+    plugin.pluginOptions.plugins.forEach(subPlugin => {
       flattenedPlugins.push(subPlugin)
       extractPlugins(subPlugin)
     })
   }
 
-  plugins.forEach((plugin) => {
+  plugins.forEach(plugin => {
     flattenedPlugins.push(plugin)
     extractPlugins(plugin)
   })
@@ -190,7 +197,7 @@ module.exports = async (program) => {
   await mkdirs(`${program.directory}/public`)
 
   // Copy our site files to the root of the site.
-  console.time('copy gatsby files')
+  console.time(`copy gatsby files`)
   const srcDir = `${__dirname}/../intermediate-representation-dir`
   const siteDir = `${program.directory}/.intermediate-representation`
   try {
@@ -204,48 +211,65 @@ module.exports = async (program) => {
 
   // Find plugins which implement gatsby-browser and gatsby-ssr and write
   // out api-runners for them.
-  const hasAPIFile = (env, plugin) => (
+  const hasAPIFile = (env, plugin) =>
     glob.sync(`${plugin.resolve}/gatsby-${env}*`)[0]
+
+  const ssrPlugins = _.filter(
+    flattenedPlugins.map(plugin => ({
+      resolve: hasAPIFile(`ssr`, plugin),
+      options: plugin.pluginOptions,
+    })),
+    plugin => plugin.resolve
+  )
+  const browserPlugins = _.filter(
+    flattenedPlugins.map(plugin => ({
+      resolve: hasAPIFile(`browser`, plugin),
+      options: plugin.pluginOptions,
+    })),
+    plugin => plugin.resolve
   )
 
-  const ssrPlugins = _.filter(flattenedPlugins.map((plugin) => ({
-    resolve: hasAPIFile(`ssr`, plugin),
-    options: plugin.pluginOptions,
-  })), (plugin) => plugin.resolve)
-  const browserPlugins = _.filter(flattenedPlugins.map((plugin) => ({
-    resolve: hasAPIFile(`browser`, plugin),
-    options: plugin.pluginOptions,
-  })), (plugin) => plugin.resolve)
-
-  let browserAPIRunner = fs.readFileSync(`${siteDir}/api-runner-browser.js`, `utf-8`)
-  const browserPluginsRequires = browserPlugins.map((plugin) => (
-    `{
+  let browserAPIRunner = fs.readFileSync(
+    `${siteDir}/api-runner-browser.js`,
+    `utf-8`
+  )
+  const browserPluginsRequires = browserPlugins
+    .map(
+      plugin => `{
       plugin: require('${plugin.resolve}'),
       options: ${JSON.stringify(plugin.options)},
     }`
-  )).join(`,`)
+    )
+    .join(`,`)
   browserAPIRunner = `var plugins = [${browserPluginsRequires}]\n${browserAPIRunner}`
 
   let sSRAPIRunner = fs.readFileSync(`${siteDir}/api-runner-ssr.js`, `utf-8`)
-  const ssrPluginsRequires = ssrPlugins.map((plugin) => (
-    `{
+  const ssrPluginsRequires = ssrPlugins
+    .map(
+      plugin => `{
       plugin: require('${plugin.resolve}'),
       options: ${JSON.stringify(plugin.options)},
     }`
-  )).join(`,`)
+    )
+    .join(`,`)
   sSRAPIRunner = `var plugins = [${ssrPluginsRequires}]\n${sSRAPIRunner}`
 
-  fs.writeFileSync(`${siteDir}/api-runner-browser.js`, browserAPIRunner, `utf-8`)
+  fs.writeFileSync(
+    `${siteDir}/api-runner-browser.js`,
+    browserAPIRunner,
+    `utf-8`
+  )
   fs.writeFileSync(`${siteDir}/api-runner-ssr.js`, sSRAPIRunner, `utf-8`)
 
-  console.timeEnd('copy gatsby files')
+  console.timeEnd(`copy gatsby files`)
 
   // Create Schema.
-  console.time('create schema')
+  console.time(`create schema`)
   const schema = await require(`../schema/new`)()
   //const schema = await require(`../schema`)()
-  const graphqlRunner = (query, context) => graphql(schema, query, context, context, context)
-  console.timeEnd('create schema')
+  const graphqlRunner = (query, context) =>
+    graphql(schema, query, context, context, context)
+  console.timeEnd(`create schema`)
 
   // TODO create new folder structure for files to reflect major systems.
   // TODO validate page objects when adding them.
@@ -268,18 +292,25 @@ module.exports = async (program) => {
   // / --> html.js, gatsby-node.js, gatsby-browser.js, gatsby-config.js
 
   // Collect pages.
-  let pages = await apiRunnerNode(`createPages`, { graphql: graphqlRunner }, [])
+  let pages = await apiRunnerNode(
+    `createPages`,
+    { graphql: graphqlRunner },
+    []
+  )
   pages = _.merge(...pages)
 
   if (_.isArray(pages) && pages.length > 0) {
     // Add chunkName.
-    pages.forEach((page) => {
-      page.componentChunkName = layoutComponentChunkName(program.directory, page.component)
+    pages.forEach(page => {
+      page.componentChunkName = layoutComponentChunkName(
+        program.directory,
+        page.component
+      )
     })
 
     // Validate pages.
     if (pages) {
-      pages.forEach((page) => {
+      pages.forEach(page => {
         const { error } = Joi.validate(page, pageSchema)
         if (error) {
           console.log(chalk.blue.bgYellow(`A page object failed validation`))
@@ -296,7 +327,7 @@ module.exports = async (program) => {
 
   // Save pages to in-memory database.
   const pagesMap = new Map()
-  pages.forEach((page) => {
+  pages.forEach(page => {
     pagesMap.set(page.path, page)
   })
   pagesDB(pagesMap)
@@ -307,15 +338,19 @@ module.exports = async (program) => {
   const autoPages = await autoPathCreator(program, pages)
   if (autoPages) {
     const pagesMap = new Map()
-    autoPages.forEach((page) => pagesMap.set(page.path, page))
+    autoPages.forEach(page => pagesMap.set(page.path, page))
     pagesDB(new Map([...pagesDB(), ...pagesMap]))
   }
   console.log(`created js pages`)
 
-  const modifiedPages = await apiRunnerNode(`onPostCreatePages`, pagesDB(), pagesDB())
+  const modifiedPages = await apiRunnerNode(
+    `onPostCreatePages`,
+    pagesDB(),
+    pagesDB()
+  )
 
   // Validate pages.
-  modifiedPages.forEach((page) => {
+  modifiedPages.forEach(page => {
     const { error } = Joi.validate(page, pageSchema)
     if (error) {
       console.log(chalk.blue.bgYellow(`A page object failed validation`))

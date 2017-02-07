@@ -1,4 +1,4 @@
-import ReactGA from 'react-ga'
+import ReactGA from "react-ga"
 
 exports.clientEntry = (args, pluginOptions) => {
   // Don't track while developing.

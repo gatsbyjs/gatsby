@@ -1,8 +1,8 @@
 /* @flow weak */
-import detect from 'detect-port'
-import Hapi from 'hapi'
-import opn from 'opn'
-import rl from 'readline'
+import detect from "detect-port"
+import Hapi from "hapi"
+import opn from "opn"
+import rl from "readline"
 
 const rlInterface = rl.createInterface({
   input: process.stdin,
@@ -35,12 +35,13 @@ function startServer (program, launchPort) {
     },
   })
 
-
-  server.start((e) => {
+  server.start(e => {
     if (e) {
       if (e.code === `EADDRINUSE`) {
         // eslint-disable-next-line max-len
-        console.log(`Unable to start Gatsby on port ${serverPort} as there's already a process listing on that port.`)
+        console.log(
+          `Unable to start Gatsby on port ${serverPort} as there's already a process listing on that port.`
+        )
       } else {
         console.log(e)
       }
@@ -55,8 +56,8 @@ function startServer (program, launchPort) {
   })
 }
 
-module.exports = (program) => {
-  const port = typeof program.port === 'string'
+module.exports = program => {
+  const port = typeof program.port === `string`
     ? parseInt(program.port, 10)
     : program.port
 
@@ -70,7 +71,7 @@ module.exports = (program) => {
       // eslint-disable-next-line max-len
       const question = `Something is already running at port ${port} \nWould you like to run the app at another port instead? [Y/n] `
 
-      return rlInterface.question(question, (answer) => {
+      return rlInterface.question(question, answer => {
         if (answer.length === 0 || answer.match(/^yes|y$/i)) {
           program.port = _port
         }

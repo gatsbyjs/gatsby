@@ -1,9 +1,11 @@
 const _ = require(`lodash`)
 const flatten = require(`flat`)
 
-const extractFieldExamples = exports.extractFieldExamples = ({ nodes, selector, deleteNodeFields=false }) => {
+const extractFieldExamples = exports.extractFieldExamples = (
+  { nodes, selector, deleteNodeFields = false }
+) => {
   let examples = {}
-  _.each(nodes, (node) => {
+  _.each(nodes, node => {
     let subNode
     if (selector) {
       subNode = _.get(node, selector)
@@ -35,24 +37,22 @@ const extractFieldExamples = exports.extractFieldExamples = ({ nodes, selector, 
 
   return examples
 }
-const buildFieldEnumValues = exports.buildFieldEnumValues = (nodes) => {
+const buildFieldEnumValues = exports.buildFieldEnumValues = nodes => {
   const enumValues = {}
   const fieldExamples = _.keys(
     flatten(
-      extractFieldExamples(
-        {
-          nodes,
-          selector: ``,
-          deleteNodeFields: true,
-        }
-      ),
+      extractFieldExamples({
+        nodes,
+        selector: ``,
+        deleteNodeFields: true,
+      }),
       {
         maxDepth: 3,
         safe: true, // don't flatten arrays.
       }
     )
   )
-  fieldExamples.forEach((field) => {
+  fieldExamples.forEach(field => {
     enumValues[field.replace(`.`, `___`)] = { field }
   })
 
