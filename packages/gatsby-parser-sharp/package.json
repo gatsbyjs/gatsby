@@ -1,6 +1,6 @@
 {
   "name": "gatsby-parser-sharp",
-  "version": "0.0.0",
+  "version": "1.0.0-alpha11",
   "description": "Gatsby parser plugin for images using Sharp",
   "scripts": {
     "build": "babel src --out-dir .",

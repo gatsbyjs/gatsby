@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-preact",
-  "version": "1.0.0-alpha11-alpha.3757e4a8",
+  "version": "1.0.0-alpha11",
   "description": "A Gatsby plugin which replaces React with Preact",
   "main": "index.js",
   "scripts": {

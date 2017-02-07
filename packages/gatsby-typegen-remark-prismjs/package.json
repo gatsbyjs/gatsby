@@ -1,7 +1,7 @@
 {
   "name": "gatsby-typegen-remark-prismjs",
   "description": "Adds syntax highlighting to code blocks at build time using PrismJS",
-  "version": "0.0.0",
+  "version": "1.0.0-alpha11",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "prismjs": "^1.6.0",

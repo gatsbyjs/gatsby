@@ -1,6 +1,6 @@
 {
   "name": "gatsby-parser-json",
-  "version": "0.0.0",
+  "version": "1.0.0-alpha11",
   "description": "Gatsby parser plugin for json files",
   "scripts": {
     "build": "babel src --out-dir .",

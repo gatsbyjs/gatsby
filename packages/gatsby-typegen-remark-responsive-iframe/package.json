@@ -1,6 +1,6 @@
 {
   "name": "gatsby-typegen-remark-responsive-iframe",
-  "version": "0.0.0",
+  "version": "1.0.0-alpha11",
   "description": "Make iframes in Markdown processed by Remark responsive",
   "main": "index.js",
   "scripts": {

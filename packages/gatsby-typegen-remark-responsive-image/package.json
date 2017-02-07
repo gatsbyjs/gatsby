@@ -1,6 +1,6 @@
 {
   "name": "gatsby-typegen-remark-responsive-image",
-  "version": "0.0.0",
+  "version": "1.0.0-alpha11",
   "description": "Auto creates responsive images for your markdown files",
   "main": "index.js",
   "keywords": [
