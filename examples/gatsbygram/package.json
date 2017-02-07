@@ -1,0 +1,40 @@
+{
+  "name": "gatsby-example-image-gallery",
+  "description": "Gatsby example site: image gallery",
+  "version": "1.0.0",
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "dependencies": {
+    "gatsby": "1.0.0-alpha11-alpha.268aa2cc",
+    "gatsby-link": "^1.0.0-alpha11-alpha.68e8f9a1",
+    "gatsby-parser-sharp": "1.0.0-alpha11-alpha.268aa2cc",
+    "gatsby-plugin-glamor": "^1.0.0-alpha11-alpha.68e8f9a1",
+    "gatsby-sharp": "1.0.0-alpha11-alpha.268aa2cc",
+    "gatsby-source-filesystem": "1.0.0-alpha11-alpha.268aa2cc",
+    "gatsby-typegen-filesystem": "1.0.0-alpha11-alpha.268aa2cc",
+    "gatsby-typegen-sharp": "1.0.0-alpha11-alpha.268aa2cc",
+    "instagram-screen-scrape": "^2.0.0",
+    "lodash": "^4.16.4",
+    "mousetrap": "^1.6.0",
+    "progress": "^1.1.8",
+    "react-gravatar": "^2.6.1",
+    "react-icons": "^2.2.3",
+    "react-modal": "^1.6.5",
+    "react-typography": "^0.14.0",
+    "request": "^2.79.0",
+    "slug": "^0.9.1",
+    "typeface-space-mono": "0.0.6",
+    "typography": "^0.14.0"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "lint": "./node_modules/.bin/eslint --ext .js,.jsx --ignore-pattern public .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "develop": "gatsby develop",
+    "build": "gatsby build",
+    "deploy": "gatsby build --prefix-links && gh-pages -d public"
+  }
+}

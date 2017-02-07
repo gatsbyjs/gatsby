@@ -1,0 +1,36 @@
+{
+  "name": "gatsby-plugin-sharp",
+  "description": "Wrapper of the Sharp image manipulation library for Gatsby plugins",
+  "version": "0.0.0",
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "dependencies": {
+    "async": "^2.1.4",
+    "bluebird": "^3.4.7",
+    "image-size": "^0.5.1",
+    "imagemin": "^5.2.2",
+    "imagemin-pngquant": "^5.0.0",
+    "lodash": "^4.17.3",
+    "progress": "^1.1.8",
+    "qs": "^6.3.0",
+    "queue": "^4.0.1",
+    "sharp": "^0.17.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-plugin-transform-async-to-generator": "^6.16.0",
+    "babel-plugin-transform-object-rest-spread": "^6.20.2",
+    "babel-preset-env": "^1.1.8",
+    "babel-runtime": "^6.20.0"
+  },
+  "keywords": [
+    "gatsby",
+    "image",
+    "sharp"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src --out-dir .",
+    "watch": "babel -w src --out-dir ."
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "gatsby-plugin-preact",
+  "version": "1.0.0-alpha11-alpha.3757e4a8",
+  "description": "A Gatsby plugin which replaces React with Preact",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src --out-dir .",
+    "watch": "babel -w src --out-dir ."
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "preact"
+  ],
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "preact": "^7.1.0",
+    "preact-compat": "^3.11.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.22.2"
+  }
+}

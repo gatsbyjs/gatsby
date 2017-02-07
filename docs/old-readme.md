@@ -379,8 +379,7 @@ to the user when running `gatsby build`. The post build function takes two argum
 
 ```javascript
 export.postBuild = function(pages, callback) {
-  // perform actions on pages here
-
+  // Perform actions on pages here.
   callback()
 }
 ```

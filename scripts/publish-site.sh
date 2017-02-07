@@ -1,13 +1,13 @@
 echo "=== Building ES5 version of Gatsby"
-npm run build
+./node_modules/.bin/lerna run build
 cd www
 echo "=== Installing the website dependencies"
-npm install
+yarn
 ls ./node_modules | grep stable
 echo "=== Overwrite website node_modules with Gatsby's."
 cp -r ../node_modules/* ./node_modules/
 ls ./node_modules | grep stable
 echo "=== Copying built Gatsby to website."
-cp -r ../dist ./node_modules/gatsby/
+cp -r ../packages/gatsby/dist ./node_modules/gatsby/dist
 echo "=== Building website"
 ./node_modules/.bin/gatsby build

@@ -1,0 +1,25 @@
+{
+  "name": "gatsby-typegen-remark-smartypants",
+  "version": "0.0.0",
+  "description": "Use retext-smartypants to auto-enhance typography of Markdown",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src --out-dir .",
+    "watch": "babel -w src --out-dir ."
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "smartypants"
+  ],
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "retext": "^4.0.0",
+    "retext-smartypants": "^2.0.0",
+    "unist-util-visit": "^1.1.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0"
+  }
+}

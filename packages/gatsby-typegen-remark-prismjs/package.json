@@ -1,0 +1,27 @@
+{
+  "name": "gatsby-typegen-remark-prismjs",
+  "description": "Adds syntax highlighting to code blocks at build time using PrismJS",
+  "version": "0.0.0",
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "dependencies": {
+    "prismjs": "^1.6.0",
+    "unist-util-visit": "^1.1.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-plugin-transform-object-rest-spread": "^6.20.2",
+    "babel-preset-env": "^1.1.4"
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "prismjs",
+    "remark"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src --out-dir .",
+    "watch": "babel -w src --out-dir ."
+  }
+}

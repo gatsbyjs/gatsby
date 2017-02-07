@@ -20,11 +20,6 @@ proved unpleasant as you had to build locally and commit the outputted
 records.json which was confusing and annoying.
 [PR](https://github.com/gatsbyjs/gatsby/pull/559)
 
-### Changed
-- Removed the package `sharp` as it's not used and is preventing Gatsby
-  1.0 from being installed on Windows.
-[commit](https://github.com/gatsbyjs/gatsby/commit/34fff74e6fb3cae88010b42f74d784382ead4031)
-
 ## [1.0.0-alpha9] - 2016-11-04
 ### Added
 - Put the routes module on `window` to support experimental idea. See

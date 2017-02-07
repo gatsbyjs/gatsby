@@ -1,0 +1,23 @@
+{
+  "name": "gatsby-plugin-glamor",
+  "description": "Gatsby plugin to add support for Glamor",
+  "version": "0.0.0",
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "dependencies": {
+    "glamor": "^2.20.20"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0"
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "glamor"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src --out-dir .",
+    "watch": "babel -w src --out-dir ."
+  }
+}

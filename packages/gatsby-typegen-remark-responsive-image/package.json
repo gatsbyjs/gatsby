@@ -1,0 +1,31 @@
+{
+  "name": "gatsby-typegen-remark-responsive-image",
+  "version": "0.0.0",
+  "description": "Auto creates responsive images for your markdown files",
+  "main": "index.js",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "markdown",
+    "remark",
+    "image",
+    "responsive images"
+  ],
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-plugin-transform-object-rest-spread": "^6.20.2",
+    "babel-preset-env": "^1.1.4"
+  },
+  "dependencies": {
+    "image-size": "^0.5.1",
+    "is-relative-url": "^2.0.0",
+    "lodash": "^4.17.3",
+    "unist-util-select": "^1.5.0"
+  },
+  "scripts": {
+    "build": "babel src --out-dir .",
+    "watch": "babel -w src --out-dir ."
+  }
+}

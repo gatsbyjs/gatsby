@@ -1,18 +1,23 @@
-import _ from 'lodash'
-import Promise from 'bluebird'
-import path from 'path'
-import webpack from 'webpack'
+const _ = require('lodash')
+const Promise = require('bluebird')
+const path = require('path')
+const webpack = require('webpack')
+const select = require(`unist-util-select`)
+const parseFilepath = require('parse-filepath')
 
-exports.createPages = ({ graphql }) => (
-  new Promise((resolve, reject) => {
+exports.createPages = ({ args }) => {
+  const { graphql } = args
+  return new Promise((resolve, reject) => {
     const pages = []
-    const docsPage = path.resolve(`templates/template-docs-markdown.js`)
+    const docsTemplate = path.resolve(`templates/template-docs-markdown.js`)
+    const packageTemplate = path.resolve(`templates/template-docs-packages.js`)
     graphql(`
       {
-        allMarkdown(first: 1000) {
+        allMarkdownRemark(limit: 1000) {
           edges {
             node {
-              path
+              slug
+              package
             }
           }
         }
@@ -25,22 +30,48 @@ exports.createPages = ({ graphql }) => (
       }
 
       // Create docs pages.
-      _.each(result.data.allMarkdown.edges, (edge) => {
+      _.each(result.data.allMarkdownRemark.edges, (edge) => {
         pages.push({
-          path: `/docs${edge.node.path}`, // required
-          filePath: edge.node.path,
-          component: docsPage,
+          path: `${edge.node.slug}`, // required
+          component: edge.node.package ? packageTemplate : docsTemplate,
+          context: {
+            slug: edge.node.slug,
+          },
         })
       })
 
       resolve(pages)
     })
   })
-)
+}
 
-exports.modifyWebpackConfig = (config) => {
-  config.plugin(`Glamor`, webpack.ProvidePlugin, [{
-    Glamor: `glamor/react`,
-  }])
-  return config
+// Create slugs for files.
+exports.modifyAST = ({ args }) => {
+  const { ast } = args
+  const files = select(ast, 'File')
+  files.forEach((file) => {
+    const parsedFilePath = parseFilepath(file.relativePath)
+    let slug
+    if (file.sourceName === `docs`) {
+      if (parsedFilePath.name !== `index`) {
+        slug = `/docs${parsedFilePath.dir}/${parsedFilePath.name}/`
+      } else {
+        slug = `/docs${parsedFilePath.dir}/`
+      }
+    // Generate slugs for package READMEs.
+    } else if (file.sourceName === `packages` && parsedFilePath.name === `README`) {
+      slug = `/docs/packages/${parsedFilePath.dir}/`
+      file.children[0].frontmatter = {}
+      file.children[0].frontmatter.title = parsedFilePath.dir
+      file.children[0].package = true
+    }
+
+    // Add to File & child nodes.
+    if (file.children[0]) {
+      file.children[0].slug = slug
+    }
+    file.slug = slug
+  })
+
+  return files
 }

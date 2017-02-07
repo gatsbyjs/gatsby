@@ -1,0 +1,27 @@
+{
+  "name": "gatsby-parser-remark",
+  "description": "Gatsby parser plugin for Remark",
+  "version": "0.0.0",
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "dependencies": {
+    "bluebird": "^3.4.6",
+    "gray-matter": "^2.1.0",
+    "unist-util-select": "^1.5.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-plugin-transform-object-rest-spread": "^6.20.2",
+    "babel-preset-env": "^1.1.4"
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "markdown",
+    "remark"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "babel src --out-dir .",
+    "watch": "babel -w src --out-dir ."
+  }
+}

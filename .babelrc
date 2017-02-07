@@ -1,15 +1,16 @@
 {
-  babelrc: false,
   "presets": [
-    'stage-0',
-    'es2015',
+    ["env", {
+      "targets": {
+        "node": 4.0
+      },
+    }],
     'react',
   ],
   "plugins": [
-    'add-module-exports',
-    'transform-flow-strip-types',
-    'transform-runtime',
-    'lodash',
-    'transform-async-to-generator',
-  ],
+    "transform-runtime",
+    "transform-object-rest-spread",
+    "transform-async-to-generator",
+    "transform-flow-strip-types",
+  ]
 }

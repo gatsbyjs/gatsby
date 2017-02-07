@@ -6,8 +6,8 @@ const DocsTemplate = React.createClass({
   render () {
     return (
       <div>
-        <h1>{this.props.data.markdown.frontmatter.title}</h1>
-        <div dangerouslySetInnerHTML={{ __html: this.props.data.markdown.bodyHTML }} />
+        <h1>{this.props.data.markdownRemark.frontmatter.title}</h1>
+        <div dangerouslySetInnerHTML={{ __html: this.props.data.markdownRemark.html }} />
       </div>
     )
   },
@@ -16,10 +16,9 @@ const DocsTemplate = React.createClass({
 export default DocsTemplate
 
 export const pageQuery = `
-  query BlogPostByPath($filePath: String!) {
-    markdown(path: $filePath) {
-      id
-      bodyHTML
+  query BlogPostByPath($slug: String!) {
+    markdownRemark(slug: { eq: $slug }) {
+      html
       frontmatter {
         title
       }

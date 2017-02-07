@@ -1,0 +1,24 @@
+{
+  "name": "gatsby-parser-yaml",
+  "version": "0.0.0",
+  "description": "Gatsby parser plugin for yaml",
+  "scripts": {
+    "build": "babel src --out-dir .",
+    "watch": "babel -w src --out-dir ."
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "yaml"
+  ],
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.4.6",
+    "js-yaml": "3.7.0",
+    "unist-util-select": "^1.5.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0"
+  }
+}
