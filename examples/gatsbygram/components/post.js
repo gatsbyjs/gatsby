@@ -30,6 +30,7 @@ class Post extends React.Component {
           flex: `1 0 0%`,
           marginRight: rhythm(1/8),
           width: `100%`,
+          maxWidth: 290.1,
           position: `relative`,
           [presets.Tablet]: {
             marginRight: rhythm(1),
