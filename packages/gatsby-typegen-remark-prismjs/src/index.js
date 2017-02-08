@@ -3,6 +3,11 @@ const Prism = require(`prismjs`)
 
 module.exports = ({ markdownAST }) => {
   visit(markdownAST, `code`, node => {
+    let language = node.lang
+    if (language) {
+      language = language.toLowerCase()
+    }
+
     // (Try to) load languages on demand.
     if (!Prism.languages[node.lang]) {
       try {
