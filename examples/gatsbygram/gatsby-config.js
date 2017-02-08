@@ -1,21 +1,23 @@
 module.exports = {
   siteMetadata: {
-    title: `Image Gallery example`,
+    title: `GatsbyGram`,
   },
   plugins: [
     {
       resolve: `gatsby-source-filesystem`,
       options: {
+        name: `pages`,
         path: `${__dirname}/pages`,
       },
     },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
+        name: `data`,
         path: `${__dirname}/data`,
       },
     },
-    `gatsby-sharp`,
+    `gatsby-plugin-sharp`,
     `gatsby-parser-sharp`,
     `gatsby-parser-json`,
     `gatsby-typegen-filesystem`,

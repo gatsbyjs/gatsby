@@ -4,14 +4,15 @@
   "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "gatsby": "1.0.0-alpha11-alpha.268aa2cc",
-    "gatsby-link": "^1.0.0-alpha11-alpha.68e8f9a1",
-    "gatsby-parser-sharp": "1.0.0-alpha11-alpha.268aa2cc",
-    "gatsby-plugin-glamor": "^1.0.0-alpha11-alpha.68e8f9a1",
-    "gatsby-sharp": "1.0.0-alpha11-alpha.268aa2cc",
-    "gatsby-source-filesystem": "1.0.0-alpha11-alpha.268aa2cc",
-    "gatsby-typegen-filesystem": "1.0.0-alpha11-alpha.268aa2cc",
-    "gatsby-typegen-sharp": "1.0.0-alpha11-alpha.268aa2cc",
+    "gatsby": "1.0.0-alpha11",
+    "gatsby-link": "1.0.0-alpha11",
+    "gatsby-parser-json": "1.0.0-alpha11",
+    "gatsby-parser-sharp": "1.0.0-alpha11",
+    "gatsby-plugin-glamor": "1.0.0-alpha11",
+    "gatsby-plugin-sharp": "1.0.0-alpha11",
+    "gatsby-source-filesystem": "1.0.0-alpha11",
+    "gatsby-typegen-filesystem": "1.0.0-alpha11",
+    "gatsby-typegen-sharp": "1.0.0-alpha11",
     "instagram-screen-scrape": "^2.0.0",
     "lodash": "^4.16.4",
     "mousetrap": "^1.6.0",
@@ -19,11 +20,11 @@
     "react-gravatar": "^2.6.1",
     "react-icons": "^2.2.3",
     "react-modal": "^1.6.5",
-    "react-typography": "^0.14.0",
+    "react-typography": "^0.15.0",
     "request": "^2.79.0",
     "slug": "^0.9.1",
-    "typeface-space-mono": "0.0.6",
-    "typography": "^0.14.0"
+    "typeface-space-mono": "^0.0.22",
+    "typography": "^0.15.0"
   },
   "keywords": [
     "gatsby"
