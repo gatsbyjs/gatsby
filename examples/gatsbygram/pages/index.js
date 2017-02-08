@@ -31,7 +31,6 @@ class Index extends React.Component {
     if (this.state.showingMore && distanceToBottom < 100) {
       this.setState({ postsToShow: this.state.postsToShow + 12 })
     }
-    postsToShow += 12
     this.ticking = false
   }
 
@@ -48,6 +47,7 @@ class Index extends React.Component {
 
   componentWillUnmount () {
     window.removeEventListener(`scroll`, this.handleScroll)
+    window.postsToShow = this.state.postsToShow
   }
 
   render () {
@@ -90,7 +90,7 @@ class Index extends React.Component {
                 borderRadius: `100%`,
                 width: rhythm(2),
                 height: rhythm(2),
-                [`@media (min-width: 450px)`]: {
+                [`@media (min-width: 460px)`]: {
                   width: rhythm(3),
                   height: rhythm(3),
                 },
@@ -189,7 +189,6 @@ class Index extends React.Component {
               postsToShow: this.state.postsToShow + 12,
               showingMore: true,
             })
-            window.postsToShow += 12
           }}
         >
           Load More
