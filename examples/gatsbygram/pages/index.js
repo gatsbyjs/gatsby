@@ -64,8 +64,10 @@ class Index extends React.Component {
         {/* user profile */}
         <div
           css={{
-            marginBottom: rhythm(2),
-            marginTop: rhythm(1.5),
+            paddingBottom: rhythm(2),
+            paddingTop: rhythm(1.5),
+            paddingLeft: rhythm(1.5),
+            paddingRight: rhythm(1.5),
             display: `flex`,
             flexDirection: `row`,
             alignItems: `stretch`,
@@ -88,10 +90,18 @@ class Index extends React.Component {
                 borderRadius: `100%`,
                 width: rhythm(2),
                 height: rhythm(2),
-                [presets.Tablet]: {
+                [`@media (min-width: 450px)`]: {
+                  width: rhythm(3),
+                  height: rhythm(3),
+                },
+                [`@media (min-width: 525px)`]: {
+                  width: rhythm(4),
+                  height: rhythm(4),
+                },
+                [`@media (min-width: 600px)`]: {
                   width: `inherit`,
                   height: `inherit`,
-                }
+                },
               }}
             />
           </div>
@@ -100,10 +110,7 @@ class Index extends React.Component {
               flexGrow: 2,
               flexShrink: 0,
               textAlign: `center`,
-              [presets.Mobile]: {
-                textAlign: `left`,
-              },
-              [presets.Tablet]: {
+              [`@media (min-width: 600px)`]: {
                 paddingTop: rhythm(1/2),
                 textAlign: `left`,
               },
