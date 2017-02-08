@@ -4,6 +4,8 @@ import HeartIcon from 'react-icons/lib/fa/heart'
 import Link from 'gatsby-link'
 import { rhythm, scale } from '../utils/typography'
 
+let touched = false
+
 class Post extends React.Component {
   constructor () {
     super()
@@ -18,11 +20,16 @@ class Post extends React.Component {
     return (
       <Link
         to={`/${id}/`}
+        onTouchStart={() => touched = true}
         onMouseEnter={() => {
-          this.setState({ hovering: true })
+          if (!touched) {
+            this.setState({ hovering: true })
+          }
         }}
         onMouseLeave={() => {
-          this.setState({ hovering: false })
+          if (!touched) {
+            this.setState({ hovering: false })
+          }
         }}
         css={{
           display: `block`,
