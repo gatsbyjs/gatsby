@@ -58,3 +58,12 @@ test('throws when a plugin is not available', (t) => {
   const program = programStub('site-with-unresolvable-babelrc')
   t.throws(() => babelConfig(program))
 })
+
+test('throws when a configured preset is not availiable', (t) => {
+  const program = programStub('site-with-unresovleable-configured-preset-babelrc')
+  try {
+    babelConfig(program)
+  } catch (error) {
+    t.regex(error.message, /"npm install --save babel-preset-env"/)
+  }
+})
