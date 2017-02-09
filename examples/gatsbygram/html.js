@@ -19,7 +19,7 @@ module.exports = React.createClass({
             name="viewport"
             content="width=device-width, initial-scale=1.0"
           />
-          <title>Image Gallery Gatsby Example Site</title>
+          <title>GatsbyGram</title>
           <TypographyStyle typography={typography} />
           <HTMLStyles />
           {this.props.headComponents}
