@@ -4,11 +4,28 @@ import DocumentTitle from 'react-document-title'
 //import { prefixLink } from 'gatsby-helpers'
 import { GoogleFont, TypographyStyle } from 'react-typography'
 import typography from './utils/typography'
-import HTMLStyles from '.intermediate-representation/html-styles'
+
+let stylesStr
+if (process.env.NODE_ENV === `production`) {
+  try {
+    stylesStr = require(`!raw-loader!./public/styles.css`)
+  } catch (e) {
+    console.log(e)
+  }
+}
 
 module.exports = React.createClass({
   render () {
     const title = DocumentTitle.rewind()
+    let css
+    if (process.env.NODE_ENV === `production`) {
+      css = (
+        <style
+          id="gatsby-inlined-css"
+          dangerouslySetInnerHTML={{ __html: stylesStr }}
+        />
+      )
+    }
 
     return (
       <html lang="en">
@@ -21,7 +38,7 @@ module.exports = React.createClass({
           />
           <title>GatsbyGram</title>
           <TypographyStyle typography={typography} />
-          <HTMLStyles />
+          {css}
           {this.props.headComponents}
         </head>
         <body>
