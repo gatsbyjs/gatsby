@@ -23,5 +23,11 @@ module.exports = {
     `gatsby-typegen-filesystem`,
     `gatsby-typegen-sharp`,
     `gatsby-plugin-glamor`,
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: `UA-91652198-1`,
+      },
+    },
   ],
 }

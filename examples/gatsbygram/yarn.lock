@@ -2819,6 +2819,12 @@ gatsby-plugin-glamor@1.0.0-alpha11:
   dependencies:
     glamor "^2.20.20"
 
+gatsby-plugin-google-analytics@^1.0.0-alpha11-alpha.69d037ff:
+  version "1.0.0-alpha11-alpha.69d037ff"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-google-analytics/-/gatsby-plugin-google-analytics-1.0.0-alpha11-alpha.69d037ff.tgz#092393edd4b78d5d184a3750f2c3818752269bf8"
+  dependencies:
+    react-ga "^2.1.2"
+
 gatsby-plugin-sharp@1.0.0-alpha11:
   version "1.0.0-alpha11"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-sharp/-/gatsby-plugin-sharp-1.0.0-alpha11.tgz#31a1b092a3af6d0157cba717940003be507aa57e"
@@ -5930,6 +5936,12 @@ react-dom@^15.4.0:
     fbjs "^0.8.1"
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
+
+react-ga@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/react-ga/-/react-ga-2.1.2.tgz#7af206c5e8761d7176e15773fe826acdb70ac653"
+  dependencies:
+    object-assign "^4.0.1"
 
 react-gravatar@^2.6.1:
   version "2.6.1"

@@ -9,6 +9,7 @@
     "gatsby-parser-json": "1.0.0-alpha11",
     "gatsby-parser-sharp": "1.0.0-alpha11",
     "gatsby-plugin-glamor": "1.0.0-alpha11",
+    "gatsby-plugin-google-analytics": "^1.0.0-alpha11-alpha.69d037ff",
     "gatsby-plugin-sharp": "1.0.0-alpha11",
     "gatsby-source-filesystem": "1.0.0-alpha11",
     "gatsby-typegen-filesystem": "1.0.0-alpha11",
