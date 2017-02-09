@@ -64,6 +64,6 @@ test('throws when a configured preset is not availiable', (t) => {
   try {
     babelConfig(program)
   } catch (error) {
-    t.regex(error.message, /npm install --save babel-preset-env/)
+    t.regex(error.message, /"npm install --save babel-preset-env"/)
   }
 })
