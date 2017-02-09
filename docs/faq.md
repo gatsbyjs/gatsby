@@ -74,7 +74,7 @@ above](https://github.com/gatsbyjs/gatsby#how-to-use-your-own-webpack-loaders).
 ## Extending Markdown Syntax with Plugins
 
 Gatsby uses [markdown-it](https://github.com/markdown-it/markdown-it) to parse 
-markdown files into HTML. By default Gatsy ships with only basic markdown
+markdown files into HTML. By default Gatsby ships with only basic markdown
 support. You can extend the syntax (e.g. for mathematical equations) by installing 
 [markdown-it plugins](https://www.npmjs.org/browse/keyword/markdown-it-plugin).
 
