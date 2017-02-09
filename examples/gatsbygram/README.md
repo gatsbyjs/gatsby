@@ -1,6 +1,6 @@
-# Gatsby Example site
+# GatsbyGram
 
-Demo: https://sales-person-hare-28612.netlify.com/
+https://gatsbygram.gatsbyjs.org/
 
-This relies on not-yet released Gatsby code so you can look but it won't
-run locally yet.
+Built with Gatsby 1.0 (Alpha 11) as a demo of Gatsby's new built-in
+image processing capabilities.
