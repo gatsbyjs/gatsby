@@ -6362,6 +6362,16 @@ react-hot-loader@^3.0.0-beta.6:
     redbox-react "^1.2.5"
     source-map "^0.4.4"
 
+react-icon-base@2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/react-icon-base/-/react-icon-base-2.0.4.tgz#b6b7662e8b009b270a4f0c213c222f5d6eca3b22"
+
+react-icons@^2.2.3:
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-2.2.3.tgz#3b4847923065ecb09f8ba7f7e422112de0195196"
+  dependencies:
+    react-icon-base "2.0.4"
+
 react-proxy@^3.0.0-alpha.0:
   version "3.0.0-alpha.1"
   resolved "https://registry.yarnpkg.com/react-proxy/-/react-proxy-3.0.0-alpha.1.tgz#4400426bcfa80caa6724c7755695315209fa4b07"
@@ -6490,9 +6500,9 @@ rechoir@^0.6.2:
   dependencies:
     resolve "^1.1.6"
 
-"recursive-readdir@git+https://github.com/KyleAMathews/recursive-readdir.git":
+"recursive-readdir@https://github.com/KyleAMathews/recursive-readdir.git":
   version "2.1.0"
-  resolved "git+https://github.com/KyleAMathews/recursive-readdir.git#fbfe835d2e75a977db2d1e794214aa26ecdb0671"
+  resolved "https://github.com/KyleAMathews/recursive-readdir.git#fbfe835d2e75a977db2d1e794214aa26ecdb0671"
   dependencies:
     minimatch "3.0.2"
 

@@ -19,7 +19,7 @@ const options = {
       background: `#f7f0eb`,
     },
     'h1,h2,h4,h5,h6': {
-      lineHeight: 1,
+      lineHeight: 1.075,
       marginTop: rhythm(1.5),
       marginBottom: rhythm(3/4),
     },

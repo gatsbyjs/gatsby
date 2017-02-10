@@ -25,6 +25,7 @@
     "lodash": "^4.16.6",
     "parse-filepath": "^1.0.1",
     "react-helmet": "^3.1.0",
+    "react-icons": "^2.2.3",
     "react-typography": "^0.15.0",
     "typeface-space-mono": "^0.0.6",
     "typeface-tex-gyre-schola": "^0.0.10",

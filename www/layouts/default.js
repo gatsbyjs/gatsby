@@ -1,7 +1,10 @@
 import React from "react"
-import { rhythm, scale } from "utils/typography"
+import typography, { rhythm, scale } from "utils/typography"
 import logo from "images/gatsby-monogram.jpg"
 import Link from "react-router/lib/Link"
+import DocumentIcon from "react-icons/lib/go/file-text"
+import CodeIcon from "react-icons/lib/go/code"
+import PencilIcon from "react-icons/lib/go/pencil"
 
 import "css/prism-coy.css"
 
@@ -33,14 +36,14 @@ module.exports = React.createClass({
             css={{
               maxWidth: 700,
               margin: `0 auto`,
-              padding: `${rhythm(1 / 2)} ${rhythm(3 / 4)}`,
+              padding: `${rhythm(1 / 3)} ${rhythm(3 / 4)}`,
             }}
           >
             <Link
               to="/"
               style={{
                 color: `inherit`,
-                display: `block`,
+                display: `inline-block`,
                 textDecoration: `none`,
               }}
             >
@@ -48,7 +51,7 @@ module.exports = React.createClass({
                 src={logo}
                 css={{
                   display: `inline-block`,
-                  height: rhythm(2),
+                  height: rhythm(1.5),
                   marginBottom: 0,
                   marginRight: rhythm(1 / 4),
                   verticalAlign: `top`,
@@ -56,9 +59,9 @@ module.exports = React.createClass({
               />
               <h1
                 css={{
-                  ...scale(4 / 5),
+                  ...scale(3 / 5),
                   display: `inline-block`,
-                  lineHeight: rhythm(2),
+                  lineHeight: rhythm(1.5),
                   verticalAlign: `top`,
                   margin: 0,
                 }}
@@ -66,6 +69,20 @@ module.exports = React.createClass({
                 Gatsby
               </h1>
             </Link>
+            <a
+              href="https://github.com/gatsbyjs/gatsby"
+              css={{
+                color: typography.options.bodyColor,
+                display: `inline-block`,
+                float: `right`,
+                fontFamily: typography.options.headerFontFamily,
+                lineHeight: rhythm(1.5),
+                marginRight: rhythm(1/2),
+                textDecoration: `none`,
+              }}
+            >
+              Github
+            </a>
           </div>
         </div>
         <div
@@ -78,6 +95,77 @@ module.exports = React.createClass({
           }}
         >
           {this.props.children}
+        </div>
+        <div
+          css={{
+            ...scale(-1/5),
+            position: `fixed`,
+            display: `flex`,
+            justifyContent: `space-around`,
+            alignItems: `flex-end`,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: rhythm(2.5),
+            //padding: `0 ${rhythm(1)}`,
+            background: `#f4dfc6`,
+            fontFamily: typography.options.headerFontFamily,
+          }}
+        >
+          <Link
+            to="/docs/"
+            css={{
+              color: typography.options.bodyColor,
+              marginBottom: 2,
+              textDecoration: `none`,
+              textAlign: `center`,
+            }}
+          >
+            <DocumentIcon
+              css={{
+                fontSize: rhythm(1),
+              }}
+            />
+            <div>
+              Docs
+            </div>
+          </Link>
+          <Link
+            to="/docs/tutorial/"
+            css={{
+              color: typography.options.bodyColor,
+              marginBottom: 2,
+              textDecoration: `none`,
+              textAlign: `center`,
+            }}
+          >
+            <CodeIcon
+              css={{
+                fontSize: rhythm(1),
+              }}
+            />
+            <div>
+              Tutorial
+            </div>
+          </Link>
+          <Link
+            to="/blog/"
+            css={{
+              color: typography.options.bodyColor,
+              marginBottom: 2,
+              textDecoration: `none`,
+              textAlign: `center`,
+            }}
+          >
+            <PencilIcon
+              css={{
+                fontSize: rhythm(1),
+              }}
+            />
+            <div>
+              Blog
+            </div>
+          </Link>
         </div>
       </div>
     )

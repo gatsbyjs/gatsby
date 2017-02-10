@@ -42,7 +42,7 @@ export default IndexRoute
 
 export const pageQuery = `
 {
-  allMarkdownRemark {
+  allMarkdownRemark(sortBy: { fields: [frontmatter___title], order: ASC}) {
     edges {
       node {
         slug
