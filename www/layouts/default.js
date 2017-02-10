@@ -160,7 +160,21 @@ module.exports = React.createClass({
           >
             <PersonIcon
               css={{
-                fontSize: rhythm(1),
+                fontSize: rhythm(5/6),
+                position: `relative`,
+                right: -4,
+              }}
+            />
+            <PersonIcon
+              css={{
+                fontSize: rhythm(5/6),
+              }}
+            />
+            <PersonIcon
+              css={{
+                fontSize: rhythm(5/6),
+                position: `relative`,
+                left: -4,
               }}
             />
             <div>
