@@ -5,6 +5,7 @@ import Link from "react-router/lib/Link"
 import DocumentIcon from "react-icons/lib/go/file-text"
 import CodeIcon from "react-icons/lib/go/code"
 import PencilIcon from "react-icons/lib/go/pencil"
+import PersonIcon from "react-icons/lib/md/person"
 
 import "css/prism-coy.css"
 
@@ -146,6 +147,24 @@ module.exports = React.createClass({
             />
             <div>
               Tutorial
+            </div>
+          </Link>
+          <Link
+            to="/docs/community/"
+            css={{
+              color: typography.options.bodyColor,
+              marginBottom: 2,
+              textDecoration: `none`,
+              textAlign: `center`,
+            }}
+          >
+            <PersonIcon
+              css={{
+                fontSize: rhythm(1),
+              }}
+            />
+            <div>
+              Community
             </div>
           </Link>
           <Link
