@@ -37,7 +37,10 @@ exports.modifyHeadComponents = (args, pluginOptions) => {
         var element = document.getElementById(hash)
         if (element) {
           var offset = element.offsetTop
-          window.scrollTo(0, offset - ${offsetY})
+          // Wait for the browser to finish rendering before scrolling.
+          setTimeout((function() {
+            window.scrollTo(0, offset - ${offsetY})
+          }), 0)
         }
       }
     })
