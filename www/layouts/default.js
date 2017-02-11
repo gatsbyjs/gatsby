@@ -6,6 +6,7 @@ import DocumentIcon from "react-icons/lib/go/file-text"
 import CodeIcon from "react-icons/lib/go/code"
 import PencilIcon from "react-icons/lib/go/pencil"
 import PersonIcon from "react-icons/lib/md/person"
+import { presets } from 'glamor'
 
 import "css/prism-coy.css"
 
@@ -38,11 +39,12 @@ module.exports = React.createClass({
               maxWidth: 700,
               margin: `0 auto`,
               padding: `${rhythm(1 / 3)} ${rhythm(3 / 4)}`,
+              fontFamily: typography.options.headerFontFamily.join(`,`),
             }}
           >
             <Link
               to="/"
-              style={{
+              css={{
                 color: `inherit`,
                 display: `inline-block`,
                 textDecoration: `none`,
@@ -52,10 +54,10 @@ module.exports = React.createClass({
                 src={logo}
                 css={{
                   display: `inline-block`,
-                  height: rhythm(1.5),
+                  height: rhythm(1.4),
                   marginBottom: 0,
                   marginRight: rhythm(1 / 4),
-                  verticalAlign: `top`,
+                  verticalAlign: `middle`,
                 }}
               />
               <h1
@@ -63,23 +65,106 @@ module.exports = React.createClass({
                   ...scale(3 / 5),
                   display: `inline-block`,
                   lineHeight: rhythm(1.5),
-                  verticalAlign: `top`,
+                  verticalAlign: `middle`,
                   margin: 0,
                 }}
               >
                 Gatsby
               </h1>
             </Link>
+            <ul
+              css={{
+                display: `none`,
+                [presets.Tablet]: {
+                  display: `inline-block`,
+                  lineHeight: rhythm(1.5),
+                  margin: 0,
+                  padding: 0,
+                  listStyle: `none`,
+                  marginLeft: rhythm(1),
+                  verticalAlign: `bottom`,
+                },
+              }}
+            >
+              <li
+                css={{
+                  display: `inline-block`,
+                  margin: 0,
+                  marginRight: rhythm(1),
+                }}
+              >
+                <Link
+                  to="/docs/"
+                  css={{
+                    color: `inherit`,
+                    textDecoration: `none`,
+                  }}
+                >
+                  Docs
+                </Link>
+              </li>
+              <li
+                css={{
+                  display: `inline-block`,
+                  margin: 0,
+                  marginRight: rhythm(1),
+                }}
+              >
+                <Link
+                  to="/tutorial/"
+                  css={{
+                    color: `inherit`,
+                    textDecoration: `none`,
+                  }}
+                >
+                  Tutorial
+                </Link>
+              </li>
+              <li
+                css={{
+                  display: `inline-block`,
+                  margin: 0,
+                  marginRight: rhythm(1),
+                }}
+              >
+                <Link
+                  to="/community/"
+                  css={{
+                    color: `inherit`,
+                    textDecoration: `none`,
+                  }}
+                >
+                  Community
+                </Link>
+              </li>
+              <li
+                css={{
+                  display: `inline-block`,
+                  margin: 0,
+                  marginRight: rhythm(1),
+                }}
+              >
+                <Link
+                  to="/blog/"
+                  css={{
+                    color: `inherit`,
+                    textDecoration: `none`,
+                  }}
+                >
+                  Blog
+                </Link>
+              </li>
+            </ul>
             <a
               href="https://github.com/gatsbyjs/gatsby"
               css={{
                 color: typography.options.bodyColor,
                 display: `inline-block`,
                 float: `right`,
-                fontFamily: typography.options.headerFontFamily,
                 lineHeight: rhythm(1.5),
                 marginRight: rhythm(1/2),
                 textDecoration: `none`,
+                verticalAlign: `bottom`,
               }}
             >
               Github
@@ -88,11 +173,14 @@ module.exports = React.createClass({
         </div>
         <div
           className={`main-body`}
-          style={{
+          css={{
             maxWidth: 700,
-            margin: `0 auto`,
+            margin: `${rhythm(-1/2)} auto ${rhythm(2)} auto`,
             padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
             paddingTop: 0, //rhythm(1/2),
+            [presets.Tablet]: {
+              margin: `0 auto`,
+            },
           }}
         >
           {this.props.children}
@@ -108,9 +196,11 @@ module.exports = React.createClass({
             left: 0,
             right: 0,
             height: rhythm(2.5),
-            //padding: `0 ${rhythm(1)}`,
             background: `#f4dfc6`,
-            fontFamily: typography.options.headerFontFamily,
+            fontFamily: typography.options.headerFontFamily.join(`,`),
+            [presets.Tablet]: {
+              display: `none`,
+            },
           }}
         >
           <Link
@@ -132,7 +222,7 @@ module.exports = React.createClass({
             </div>
           </Link>
           <Link
-            to="/docs/tutorial/"
+            to="/tutorial/"
             css={{
               color: typography.options.bodyColor,
               marginBottom: 2,
@@ -150,7 +240,7 @@ module.exports = React.createClass({
             </div>
           </Link>
           <Link
-            to="/docs/community/"
+            to="/community/"
             css={{
               color: typography.options.bodyColor,
               marginBottom: 2,

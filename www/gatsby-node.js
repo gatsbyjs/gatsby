@@ -54,9 +54,9 @@ exports.modifyAST = ({ args }) => {
     let slug
     if (file.sourceName === `docs`) {
       if (parsedFilePath.name !== `index`) {
-        slug = `/docs${parsedFilePath.dir}/${parsedFilePath.name}/`
+        slug = `/${parsedFilePath.dir}/${parsedFilePath.name}/`
       } else {
-        slug = `/docs/${parsedFilePath.dir}/`
+        slug = `/${parsedFilePath.dir}/`
       }
     // Generate slugs for package READMEs.
     } else if (file.sourceName === `packages` && parsedFilePath.name === `README`) {

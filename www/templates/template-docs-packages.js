@@ -8,14 +8,6 @@ const DocsTemplate = React.createClass({
     return (
       <div>
         <div
-          css={{
-            marginTop: rhythm(-1/2),
-            marginBottom: rhythm(2),
-            [presets.Tablet]: {
-              marginTop: 0,
-              marginBottom: 0,
-            },
-          }}
           dangerouslySetInnerHTML={{
             __html: this.props.data.markdownRemark.html,
           }}
