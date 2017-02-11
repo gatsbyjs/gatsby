@@ -55,6 +55,7 @@ module.exports = React.createClass({
                 css={{
                   display: `inline-block`,
                   height: rhythm(1.4),
+                  width: rhythm(1.4),
                   marginBottom: 0,
                   marginRight: rhythm(1 / 4),
                   verticalAlign: `middle`,
@@ -76,6 +77,7 @@ module.exports = React.createClass({
               css={{
                 display: `none`,
                 [presets.Tablet]: {
+                  ...scale(-1/5),
                   display: `inline-block`,
                   lineHeight: rhythm(1.5),
                   margin: 0,
@@ -96,6 +98,7 @@ module.exports = React.createClass({
                 <Link
                   to="/docs/"
                   css={{
+                    ...scale(-1/5),
                     color: `inherit`,
                     textDecoration: `none`,
                     textTransform: `uppercase`,
@@ -183,7 +186,7 @@ module.exports = React.createClass({
           className={`main-body`}
           css={{
             maxWidth: 700,
-            margin: `${rhythm(-1/2)} auto ${rhythm(2)} auto`,
+            margin: `${rhythm(-1/2)} auto ${rhythm(1.75)} auto`,
             padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
             paddingTop: 0, //rhythm(1/2),
             [presets.Tablet]: {
