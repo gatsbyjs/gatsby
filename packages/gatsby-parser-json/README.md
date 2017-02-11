@@ -26,18 +26,9 @@ So if your project has a `letters.json` with `[{ value: 'a' }, { value:
 
 ```javascript
 [
-  {
-    value: 'a',
-    type: 'Letters',
-  },
-  {
-    value: 'b',
-    type: 'Letters',
-  },
-  {
-    value: 'c',
-    type: 'Letters',
-  },
+  { value: 'a', type: 'Letters' },
+  { value: 'b', type: 'Letters' },
+  { value: 'c', type: 'Letters' },
 ]
 ```
 
