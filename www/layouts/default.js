@@ -85,6 +85,8 @@ module.exports = React.createClass({
                   listStyle: `none`,
                   marginLeft: rhythm(1),
                   verticalAlign: `bottom`,
+                  position: `relative`,
+                  top: 1,
                 },
               }}
             >
@@ -169,6 +171,7 @@ module.exports = React.createClass({
             <a
               href="https://github.com/gatsbyjs/gatsby"
               css={{
+                ...scale(-1/5),
                 color: typography.options.bodyColor,
                 display: `inline-block`,
                 float: `right`,
@@ -176,6 +179,10 @@ module.exports = React.createClass({
                 marginRight: rhythm(1/2),
                 textDecoration: `none`,
                 verticalAlign: `bottom`,
+                textTransform: `uppercase`,
+                letterSpacing: `0.03em`,
+                position: `relative`,
+                top: 1,
               }}
             >
               Github
@@ -188,7 +195,7 @@ module.exports = React.createClass({
             maxWidth: 700,
             margin: `${rhythm(-1/2)} auto ${rhythm(1.75)} auto`,
             padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
-            paddingTop: 0, //rhythm(1/2),
+            paddingTop: 0,
             [presets.Tablet]: {
               margin: `0 auto`,
             },
