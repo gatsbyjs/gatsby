@@ -98,6 +98,8 @@ module.exports = React.createClass({
                   css={{
                     color: `inherit`,
                     textDecoration: `none`,
+                    textTransform: `uppercase`,
+                    letterSpacing: `0.03em`,
                   }}
                 >
                   Docs
@@ -115,6 +117,8 @@ module.exports = React.createClass({
                   css={{
                     color: `inherit`,
                     textDecoration: `none`,
+                    textTransform: `uppercase`,
+                    letterSpacing: `0.03em`,
                   }}
                 >
                   Tutorial
@@ -132,6 +136,8 @@ module.exports = React.createClass({
                   css={{
                     color: `inherit`,
                     textDecoration: `none`,
+                    textTransform: `uppercase`,
+                    letterSpacing: `0.03em`,
                   }}
                 >
                   Community
@@ -149,6 +155,8 @@ module.exports = React.createClass({
                   css={{
                     color: `inherit`,
                     textDecoration: `none`,
+                    textTransform: `uppercase`,
+                    letterSpacing: `0.03em`,
                   }}
                 >
                   Blog
@@ -210,6 +218,8 @@ module.exports = React.createClass({
               marginBottom: 2,
               textDecoration: `none`,
               textAlign: `center`,
+              textTransform: `uppercase`,
+              letterSpacing: `0.07em`,
             }}
           >
             <DocumentIcon
@@ -228,6 +238,8 @@ module.exports = React.createClass({
               marginBottom: 2,
               textDecoration: `none`,
               textAlign: `center`,
+              textTransform: `uppercase`,
+              letterSpacing: `0.07em`,
             }}
           >
             <CodeIcon
@@ -246,6 +258,8 @@ module.exports = React.createClass({
               marginBottom: 2,
               textDecoration: `none`,
               textAlign: `center`,
+              textTransform: `uppercase`,
+              letterSpacing: `0.07em`,
             }}
           >
             <PersonIcon
@@ -278,6 +292,8 @@ module.exports = React.createClass({
               marginBottom: 2,
               textDecoration: `none`,
               textAlign: `center`,
+              textTransform: `uppercase`,
+              letterSpacing: `0.07em`,
             }}
           >
             <PencilIcon
