@@ -36,22 +36,3 @@ If you need an answer right away, check out the [Reactiflux
 Discord](https://discord.gg/0ZcbPKXt5bZjGY5n) #gatsby channnel. There are
 usually a number of Gatsby experts there who can help out or point you to
 useful resources.
-
-
-<div><a class="twitter-timeline" data-dnt="true" data-chrome="nofooter
-noheader transparent" href="https://twitter.com/search?q=%23gatsbyjs"
-data-widget-id="342522405270470656"></a></div>
-
-## Paid Consultation & Development
-
-Help support open source development by contracting with core developers
-to improve your project.
-
-Services offered:
-
-* Code Reviews and Team Education
-* Custom plugin development
-* Large project architecure planning
-* ...and anything else that helps. Just reach out.
-
-[Email me. Let's talk.](mailto:mathews.kyle@gmail.com)
