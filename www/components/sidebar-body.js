@@ -1,20 +1,31 @@
 import React from "react"
 import Link from "gatsby-link"
 
-import typography, { rhythm } from "../utils/typography"
+import typography, { rhythm, scale } from "../utils/typography"
 import menu from "../pages/docs/doc-links.yaml"
 console.log(menu)
 
 class SidebarBody extends React.Component {
   render () {
     return (
-      <div>
+      <div
+        css={{
+          ...scale(-1/5),
+        }}
+      >
         {menu.map((section) => {
           return (
             <div
               key={section.title}
             >
-              <h3>{section.title}</h3>
+              <h3
+                css={{
+                  ...scale(1/5),
+                  lineHeight: 1.1,
+                }}
+              >
+                {section.title}
+              </h3>
               <ul
                 css={{
                   fontFamily: typography.options.headerFontFamily.join(`,`),

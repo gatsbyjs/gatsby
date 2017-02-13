@@ -38,7 +38,7 @@ module.exports = React.createClass({
         >
           <div
             css={{
-              maxWidth: rhythm(38),
+              maxWidth: rhythm(37),
               margin: `0 auto`,
               padding: `${rhythm(1 / 3)} ${rhythm(3 / 4)}`,
               fontFamily: typography.options.headerFontFamily.join(`,`),
@@ -194,7 +194,7 @@ module.exports = React.createClass({
         <div
           className={`main-body`}
           css={{
-            maxWidth: rhythm(38),
+            maxWidth: rhythm(37),
             margin: `${rhythm(-1/2)} auto ${rhythm(1.75)} auto`,
             padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
             paddingTop: 0,
@@ -209,8 +209,8 @@ module.exports = React.createClass({
           <div
             css={{
               float: `left`,
-              marginTop: rhythm(-1/2),
-              width: rhythm(10),
+              marginTop: rhythm(-3/4),
+              width: rhythm(9),
               display: `none`,
               [presets.Tablet]: {
                 display: this.props.location.pathname.slice(0,6) === `/docs/` ? `block` : `none`,
@@ -223,7 +223,7 @@ module.exports = React.createClass({
             css={{
               paddingLeft: 0,
               [presets.Tablet]: {
-                paddingLeft: this.props.location.pathname.slice(0,6) === `/docs/` ? rhythm(12) : 0,
+                paddingLeft: this.props.location.pathname.slice(0,6) === `/docs/` ? rhythm(11) : 0,
               },
             }}
           >

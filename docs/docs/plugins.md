@@ -1,0 +1,5 @@
+---
+title: Plugins
+---
+
+Coming soon.
