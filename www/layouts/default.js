@@ -8,6 +8,8 @@ import PencilIcon from "react-icons/lib/go/pencil"
 import PersonIcon from "react-icons/lib/md/person"
 import { presets } from 'glamor'
 
+import SidebarBody from "../components/sidebar-body"
+
 import "css/prism-coy.css"
 
 // Import Futura PT typeface
@@ -36,7 +38,7 @@ module.exports = React.createClass({
         >
           <div
             css={{
-              maxWidth: 700,
+              maxWidth: rhythm(38),
               margin: `0 auto`,
               padding: `${rhythm(1 / 3)} ${rhythm(3 / 4)}`,
               fontFamily: typography.options.headerFontFamily.join(`,`),
@@ -192,7 +194,7 @@ module.exports = React.createClass({
         <div
           className={`main-body`}
           css={{
-            maxWidth: 700,
+            maxWidth: rhythm(38),
             margin: `${rhythm(-1/2)} auto ${rhythm(1.75)} auto`,
             padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
             paddingTop: 0,
@@ -201,7 +203,32 @@ module.exports = React.createClass({
             },
           }}
         >
-          {this.props.children}
+          { /* TODO Move this under docs/index.js once Gatsby supports multiple levels
+               of layouts */
+          }
+          <div
+            css={{
+              float: `left`,
+              marginTop: rhythm(-1/2),
+              width: rhythm(10),
+              display: `none`,
+              [presets.Tablet]: {
+                display: this.props.location.pathname.slice(0,6) === `/docs/` ? `block` : `none`,
+              },
+            }}
+          >
+            <SidebarBody />
+          </div>
+          <div
+            css={{
+              paddingLeft: 0,
+              [presets.Tablet]: {
+                paddingLeft: this.props.location.pathname.slice(0,6) === `/docs/` ? rhythm(12) : 0,
+              },
+            }}
+          >
+            {this.props.children}
+          </div>
         </div>
         <div
           css={{

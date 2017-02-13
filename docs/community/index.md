@@ -13,7 +13,14 @@ religion, or sexual identity and orientation.
 
 [Read full code of conduct](/code-of-conduct/)
 
-## Community Support
+## Gatsby news
+
+### Twitter
+
+For the latest news about Gatsby, [follow **@gatsbyjs** on
+Twitter](https://twitter.com/gatsbyjs).
+
+## Where to get support
 
 ### Stack Overflow
 
@@ -28,12 +35,8 @@ own](http://stackoverflow.com/questions/ask?tags=gatsby)!
 If you need an answer right away, check out the [Reactiflux
 Discord](https://discord.gg/0ZcbPKXt5bZjGY5n) #gatsby channnel. There are
 usually a number of Gatsby experts there who can help out or point you to
-helpful resources.
+useful resources.
 
-### Twitter
-
-For the latest news about Gatsby, [follow **@gatsbyjs** on
-Twitter](https://twitter.com/gatsbyjs).
 
 <div><a class="twitter-timeline" data-dnt="true" data-chrome="nofooter
 noheader transparent" href="https://twitter.com/search?q=%23gatsbyjs"
@@ -47,7 +50,7 @@ to improve your project.
 Services offered:
 
 * Code Reviews and Team Education
-* Custom extension development
+* Custom plugin development
 * Large project architecure planning
 * ...and anything else that helps. Just reach out.
 
