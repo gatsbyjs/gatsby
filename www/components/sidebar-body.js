@@ -8,11 +8,7 @@ console.log(menu)
 class SidebarBody extends React.Component {
   render () {
     return (
-      <div
-        css={{
-          ...scale(-1/5),
-        }}
-      >
+      <div>
         {menu.map((section) => {
           return (
             <div
