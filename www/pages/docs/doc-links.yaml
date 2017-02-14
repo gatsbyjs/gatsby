@@ -8,10 +8,6 @@
     Themes: /docs/themes/
     PRPL Pattern: /docs/prpl-pattern/
     Thinking in Gatsby: /docs/thinking-in-gatsby/
-- title: Gatsby ecosystem
-  links:
-    Plugins: /docs/ecosystem/#official-plugins
-    Components: /docs/ecosystem/#official-components
 - title: Reference
   links:
     Node Interface: /docs/node-interface/
