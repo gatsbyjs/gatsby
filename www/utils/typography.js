@@ -5,7 +5,7 @@ import { MOBILE_MEDIA_QUERY } from 'typography-breakpoint-constants'
 const options = {
   headerFontFamily: [`Futura PT`, `sans-serif`],
   bodyFontFamily: [`Tex Gyre Schola`, `serif`],
-  baseFontSize: `17px`,
+  baseFontSize: `16px`,
   baseLineHeight: 1.4,
   headerColor: `#44421f`,
   bodyColor: `#44421f`,
@@ -19,7 +19,7 @@ const options = {
       background: `#f7f0eb`,
     },
     'h1,h2,h4,h5,h6': {
-      lineHeight: 1,
+      lineHeight: 1.075,
       marginTop: rhythm(1.5),
       marginBottom: rhythm(3/4),
     },
@@ -73,7 +73,7 @@ const options = {
       background: `none`,
     },
     [MOBILE_MEDIA_QUERY]: {
-      // Make baseFontSize on mobile 18px.
+      // Make baseFontSize on mobile 15px.
       html: {
         fontSize: `${15/16 * 100}%`,
       },

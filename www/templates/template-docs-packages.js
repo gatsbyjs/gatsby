@@ -1,6 +1,7 @@
 import React from "react"
 
 import { rhythm } from "utils/typography"
+import { presets } from "glamor"
 
 const DocsTemplate = React.createClass({
   render () {

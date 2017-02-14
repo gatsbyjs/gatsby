@@ -46,6 +46,7 @@ module.exports = {
     `gatsby-typegen-sharp`,
     `gatsby-plugin-glamor`,
     `gatsby-plugin-sharp`,
+    `gatsby-plugin-catch-links`,
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
