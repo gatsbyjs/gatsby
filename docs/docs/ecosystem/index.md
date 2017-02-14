@@ -1,5 +1,5 @@
 ---
-title: Ecosystem
+title: Gatsby Ecosystem
 ---
 
 The Gatsby ecosystem includes a growing number of plugins and
@@ -11,6 +11,7 @@ Gatsby-specific React components.
 * [gatsby-parser-remark](/docs/packages/gatsby-parser-remark/)
 * [gatsby-parser-sharp](/docs/packages/gatsby-parser-sharp/)
 * [gatsby-parser-yaml](/docs/packages/gatsby-parser-yaml/)
+* [gatsby-plugin-catch-links](/docs/packages/gatsby-plugin-catch-links/)
 * [gatsby-plugin-glamor](/docs/packages/gatsby-plugin-glamor/)
 * [gatsby-plugin-google-analytics](/docs/packages/gatsby-plugin-google-analytics/)
 * [gatsby-plugin-preact](/docs/packages/gatsby-plugin-preact/)
