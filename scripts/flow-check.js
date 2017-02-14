@@ -1,5 +1,5 @@
-import { execFileSync } from 'child_process'
-import flowBin from 'flow-bin'
+import { execFileSync } from "child_process"
+import flowBin from "flow-bin"
 
 try {
   if (process.platform !== `win32`) {

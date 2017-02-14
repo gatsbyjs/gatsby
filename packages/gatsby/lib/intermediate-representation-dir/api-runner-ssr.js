@@ -11,7 +11,6 @@ module.exports = (api, args, defaultReturn) => {
       const result = plugin.plugin[api](args, plugin.options)
       return result
     }
-    return
   })
 
   // Filter out undefined results.

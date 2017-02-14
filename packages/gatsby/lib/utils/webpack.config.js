@@ -31,7 +31,7 @@ module.exports = async (
   directory,
   suppliedStage,
   webpackPort = 1500,
-  pages = []
+  pages = [],
 ) => {
   const babelStage = suppliedStage
 
@@ -73,9 +73,7 @@ module.exports = async (
       case `build-javascript`:
         return {
           //filename: '[name].js',
-          filename: (
-            `[name]-[chunkhash].js`
-          ),
+          filename: `[name]-[chunkhash].js`,
           chunkFilename: `[name]-[chunkhash].js`,
           path: `${directory}/public`,
           publicPath: (
@@ -94,7 +92,7 @@ module.exports = async (
           commons: [
             require.resolve(`react-hot-loader/patch`),
             `${require.resolve(
-              `webpack-hot-middleware/client`
+              `webpack-hot-middleware/client`,
             )}?path=http://${program.host}:${webpackPort}/__webpack_hmr`,
             `${directory}/.intermediate-representation/app`,
           ],
@@ -106,9 +104,7 @@ module.exports = async (
       case `build-html`:
         return {
           //main: `${__dirname}/static-entry`,
-          main: (
-            `${directory}/.intermediate-representation/static-entry`
-          ),
+          main: `${directory}/.intermediate-representation/static-entry`,
         }
       case `build-javascript`:
         return {
@@ -129,7 +125,7 @@ module.exports = async (
           new webpack.DefinePlugin({
             "process.env": {
               NODE_ENV: JSON.stringify(
-                process.env.NODE_ENV ? process.env.NODE_ENV : `development`
+                process.env.NODE_ENV ? process.env.NODE_ENV : `development`,
               ),
               PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
             },
@@ -156,7 +152,7 @@ module.exports = async (
           new webpack.DefinePlugin({
             "process.env": {
               NODE_ENV: JSON.stringify(
-                process.env.NODE_ENV ? process.env.NODE_ENV : `production`
+                process.env.NODE_ENV ? process.env.NODE_ENV : `production`,
               ),
               PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
             },
@@ -180,7 +176,7 @@ module.exports = async (
           new webpack.DefinePlugin({
             "process.env": {
               NODE_ENV: JSON.stringify(
-                process.env.NODE_ENV ? process.env.NODE_ENV : `production`
+                process.env.NODE_ENV ? process.env.NODE_ENV : `production`,
               ),
               PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
             },
@@ -200,9 +196,8 @@ module.exports = async (
         ]
       case `build-javascript`: {
         // Get array of page template component names.
-        let components = Array.from(pagesDB().values()).map(
-          page => page.component
-        )
+        let components = Array.from(pagesDB().values())
+          .map(page => page.component)
         components = components.map(component =>
           layoutComponentChunkName(program.directory, component))
         components = _.uniq(components)
@@ -239,7 +234,7 @@ module.exports = async (
           new webpack.DefinePlugin({
             "process.env": {
               NODE_ENV: JSON.stringify(
-                process.env.NODE_ENV ? process.env.NODE_ENV : `production`
+                process.env.NODE_ENV ? process.env.NODE_ENV : `production`,
               ),
               PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
             },
@@ -515,9 +510,7 @@ module.exports = async (
 
   config.merge({
     // Context is the base directory for resolving the entry option.
-    context: (
-      `${directory}`
-    ),
+    context: `${directory}`,
     node: {
       __filename: true,
     },
@@ -526,9 +519,7 @@ module.exports = async (
     // Certain "isomorphic" packages have different entry points for browser and server
     // (see https://github.com/defunctzombie/package-browser-field-spec);
     // setting the target tells webpack which file to include, ie. browser vs main.
-    target: (
-      stage === `build-html` ? `node` : `web`
-    ),
+    target: stage === `build-html` ? `node` : `web`,
     profile: stage === `production`,
     devtool: devtool(),
     output: output(),

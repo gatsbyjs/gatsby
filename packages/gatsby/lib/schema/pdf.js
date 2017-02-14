@@ -26,25 +26,25 @@ module.exports = directory => new Promise((resolve, reject) => {
     glob(`${directory}/**/?(*.pdf)`, (err, files) => {
       Promise.all(files.map(file => ep.readMetadata(file))).then(results => {
         const cleanedResults = _.filter(
-            results,
-            result => result.error === null
-          )
+          results,
+          result => result.error === null,
+        )
         let mappedResults = cleanedResults.map(result => result.data[0])
         mappedResults = mappedResults.map(pdf => {
           if (pdf.Description) {
             pdf.Description = md.render(
-                pdf.Description.replace(/<br \/>/g, `\n`)
-              )
+              pdf.Description.replace(/<br \/>/g, `\n`),
+            )
           }
           return pdf
         })
         console.log(mappedResults[0])
-          //console.log(mappedResults)
-          //const mergedObject = _.merge(...mappedResults)
-          //_.each(mergedObject, (v, k) => {
-          //console.log(k, v)
-          ////console.log(inferGraphQLType(k, v).name)
-          //})
+        //console.log(mappedResults)
+        //const mergedObject = _.merge(...mappedResults)
+        //_.each(mergedObject, (v, k) => {
+        //console.log(k, v)
+        ////console.log(inferGraphQLType(k, v).name)
+        //})
         const PdfType = new GraphQLObjectType({
           name: `Pdf`,
           fields: {
@@ -58,17 +58,17 @@ module.exports = directory => new Promise((resolve, reject) => {
               type: GraphQLString,
               args: {
                 formatString: {
-                    type: GraphQLString,
-                  },
+                  type: GraphQLString,
+                },
               },
               resolve ({ Date }, { formatString }) {
                 if (formatString) {
-                    return moment(Date, `YYYY:MM:DD HH:mm:ssZ`).format(
-                      formatString
-                    )
-                  } else {
-                    return Date
-                  }
+                  return moment(Date, `YYYY:MM:DD HH:mm:ssZ`).format(
+                    formatString,
+                  )
+                } else {
+                  return Date
+                }
               },
             },
             ImgSrc: { type: GraphQLString },

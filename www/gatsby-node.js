@@ -1,9 +1,9 @@
-const _ = require('lodash')
-const Promise = require('bluebird')
-const path = require('path')
-const webpack = require('webpack')
+const _ = require(`lodash`)
+const Promise = require(`bluebird`)
+const path = require(`path`)
+const webpack = require(`webpack`)
 const select = require(`unist-util-select`)
-const parseFilepath = require('parse-filepath')
+const parseFilepath = require(`parse-filepath`)
 
 exports.createPages = ({ args }) => {
   const { graphql } = args
@@ -11,7 +11,8 @@ exports.createPages = ({ args }) => {
     const pages = []
     const docsTemplate = path.resolve(`templates/template-docs-markdown.js`)
     const packageTemplate = path.resolve(`templates/template-docs-packages.js`)
-    graphql(`
+    graphql(
+      `
       {
         allMarkdownRemark(limit: 1000) {
           edges {
@@ -22,15 +23,15 @@ exports.createPages = ({ args }) => {
           }
         }
       }
-    `)
-    .then(result => {
+    `,
+    ).then(result => {
       if (result.errors) {
         console.log(result.errors)
         reject(result.errors)
       }
 
       // Create docs pages.
-      _.each(result.data.allMarkdownRemark.edges, (edge) => {
+      _.each(result.data.allMarkdownRemark.edges, edge => {
         pages.push({
           path: `${edge.node.slug}`, // required
           component: edge.node.package ? packageTemplate : docsTemplate,
@@ -48,8 +49,8 @@ exports.createPages = ({ args }) => {
 // Create slugs for files.
 exports.modifyAST = ({ args }) => {
   const { ast } = args
-  const files = select(ast, 'File')
-  files.forEach((file) => {
+  const files = select(ast, `File`)
+  files.forEach(file => {
     const parsedFilePath = parseFilepath(file.relativePath)
     let slug
     if (file.sourceName === `docs`) {
@@ -60,8 +61,11 @@ exports.modifyAST = ({ args }) => {
       } else {
         slug = `/${parsedFilePath.dir}/`
       }
-    // Generate slugs for package READMEs.
-    } else if (file.sourceName === `packages` && parsedFilePath.name === `README`) {
+
+      // Generate slugs for package READMEs.
+    } else if (
+      file.sourceName === `packages` && parsedFilePath.name === `README`
+    ) {
       slug = `/docs/packages/${parsedFilePath.dir}/`
       file.children[0].frontmatter = {}
       file.children[0].frontmatter.title = parsedFilePath.dir

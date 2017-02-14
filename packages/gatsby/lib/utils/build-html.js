@@ -21,7 +21,7 @@ module.exports = async program => {
     directory,
     `build-html`,
     null,
-    pages
+    pages,
   )
 
   return new Promise((resolve, reject) => {

@@ -23,7 +23,7 @@ module.exports = (locals, callback) => {
   match({ routes: rootRoute, location: locals.path }, (
     error,
     redirectLocation,
-    renderProps
+    renderProps,
   ) => {
     if (error) {
       console.log(`error when building page ${locals.path}`, error)
@@ -35,7 +35,7 @@ module.exports = (locals, callback) => {
       const results = apiRunner(
         `replaceServerBodyRender`,
         { component, headComponents: [] },
-        {}
+        {},
       )
       let {
         body,
@@ -75,7 +75,7 @@ module.exports = (locals, callback) => {
             `
             ),
           }}
-        />
+        />,
       )
 
       let stats
@@ -97,12 +97,12 @@ module.exports = (locals, callback) => {
 
         // Add preload <link>s for scripts.
         headComponents.unshift(
-          <link rel="preload" href={prefixedScript} as="script" />
+          <link rel="preload" href={prefixedScript} as="script" />,
         )
 
         // Add script tags for the bottom of the page.
         postBodyComponents.unshift(
-          <script key={prefixedScript} src={prefixedScript} />
+          <script key={prefixedScript} src={prefixedScript} />,
         )
       })
 
@@ -110,21 +110,21 @@ module.exports = (locals, callback) => {
       const pluginHeadComponents = apiRunner(
         `modifyHeadComponents`,
         { headComponents },
-        []
+        [],
       )
       headComponents = headComponents.concat(pluginHeadComponents)
 
       const pluginPostBodyComponents = apiRunner(
         `modifyPostBodyComponents`,
         { postBodyComponents },
-        []
+        [],
       )
       postBodyComponents = postBodyComponents.concat(pluginPostBodyComponents)
 
       const pluginBodyRenderProps = apiRunner(
         `modifyBodyRenderProps`,
         { bodyRenderProps },
-        {}
+        {},
       )
       bodyRenderProps = _.merge(bodyRenderProps, pluginBodyRenderProps)
 
@@ -135,13 +135,13 @@ module.exports = (locals, callback) => {
           postBodyComponents={postBodyComponents}
           body={body}
           {...renderProps}
-        />
+        />,
       )}`
       callback(null, html)
     } else {
       console.log(
         `Couldn't match ${locals.path} against your routes. This
-      should NEVER happen.`
+      should NEVER happen.`,
       )
       callback(null, `FAIL ALERT`)
     }

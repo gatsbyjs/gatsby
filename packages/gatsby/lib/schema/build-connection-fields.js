@@ -79,8 +79,8 @@ module.exports = type => {
                   return vals
                 }
               },
-              []
-            )
+              [],
+            ),
           )
           values.forEach(val => {
             groups[val] = _.filter(connectionNodes, n =>

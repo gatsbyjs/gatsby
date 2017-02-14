@@ -29,15 +29,13 @@ async function html (program) {
   // file.
   fs.writeFileSync(
     `${program.directory}/public/tmp-pages.json`,
-    JSON.stringify([...pagesDB().values()])
+    JSON.stringify([...pagesDB().values()]),
   )
   await buildHTML(program).catch(err =>
     console.log(`Generating HTML failed`, err))
 
   console.log(`Running postBuild plugins`)
   await apiRunnerNode(`postBuild`, { graphql: graphqlRunner })
-
-  return
 }
 
 module.exports = html

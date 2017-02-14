@@ -19,7 +19,7 @@ const runAPI = (plugin, api, args) => {
     })
     if (!result) {
       throw new Error(
-        `The API "${api}" in gatsby-node.js of the plugin at ${plugin.resolve} did not return a value`
+        `The API "${api}" in gatsby-node.js of the plugin at ${plugin.resolve} did not return a value`,
       )
     }
     return Promise.resolve(result)
@@ -48,6 +48,6 @@ module.exports = async (api, args = {}) => new Promise(resolve => {
     (err, results) => {
       // Filter out empty responses and return
       resolve(results.filter(result => !_.isEmpty(result)))
-    }
+    },
   )
 })

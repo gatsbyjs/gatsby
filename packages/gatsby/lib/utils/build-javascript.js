@@ -9,7 +9,7 @@ module.exports = async program => {
   const compilerConfig = await webpackConfig(
     program,
     directory,
-    `build-javascript`
+    `build-javascript`,
   )
 
   return new Promise(resolve => {

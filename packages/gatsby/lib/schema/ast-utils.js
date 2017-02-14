@@ -2,7 +2,7 @@ const _ = require(`lodash`)
 const flatten = require(`flat`)
 
 const extractFieldExamples = exports.extractFieldExamples = (
-  { nodes, selector, deleteNodeFields = false }
+  { nodes, selector, deleteNodeFields = false },
 ) => {
   let examples = {}
   _.each(nodes, node => {
@@ -49,8 +49,8 @@ const buildFieldEnumValues = exports.buildFieldEnumValues = nodes => {
       {
         maxDepth: 3,
         safe: true, // don't flatten arrays.
-      }
-    )
+      },
+    ),
   )
   fieldExamples.forEach(field => {
     enumValues[field.replace(`.`, `___`)] = { field }

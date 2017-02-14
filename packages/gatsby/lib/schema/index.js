@@ -15,12 +15,13 @@ module.exports = async () => {
   const config = siteDB().get(`config`)
 
   return new Promise((resolve, reject) => {
-    Promise.all([
-      markdownSchema(path.resolve(config.sources)),
-      siteSchema(),
-      //imagesSchema(path.resolve(config.sources)),
-      //pdfSchema(path.resolve(config.sources)),
-    ])
+    Promise
+      .all([
+        markdownSchema(path.resolve(config.sources)),
+        siteSchema(),
+        //imagesSchema(path.resolve(config.sources)),
+        //pdfSchema(path.resolve(config.sources)),
+      ])
       .catch(error => {
         console.log(`error in booting schema`, error)
         reject(error)
@@ -30,7 +31,7 @@ module.exports = async () => {
         apiRunnerNode(
           `modifyGraphQLFields`,
           { types: mergedTypes },
-          mergedTypes
+          mergedTypes,
         ).then(modifiedTypes => {
           const schema = new GraphQLSchema({
             query: new GraphQLObjectType({

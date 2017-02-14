@@ -13,9 +13,9 @@ function isDataURL (s) {
 const prefixLink = _link => {
   if (
     typeof __PREFIX_LINKS__ !== `undefined` &&
-      __PREFIX_LINKS__ !== null &&
-      __PREFIX_LINKS__ &&
-      __LINK_PREFIX__ !== null
+    __PREFIX_LINKS__ !== null &&
+    __PREFIX_LINKS__ &&
+    __LINK_PREFIX__ !== null
   ) {
     const invariantMessage = `
     You're trying to build your site with links prefixed

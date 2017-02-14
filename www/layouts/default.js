@@ -6,7 +6,7 @@ import DocumentIcon from "react-icons/lib/go/file-text"
 import CodeIcon from "react-icons/lib/go/code"
 import PencilIcon from "react-icons/lib/go/pencil"
 import PersonIcon from "react-icons/lib/md/person"
-import { presets } from 'glamor'
+import { presets } from "glamor"
 
 import SidebarBody from "../components/sidebar-body"
 
@@ -79,7 +79,7 @@ module.exports = React.createClass({
               css={{
                 display: `none`,
                 [presets.Tablet]: {
-                  ...scale(-1/5),
+                  ...scale((-1) / 5),
                   display: `inline-block`,
                   lineHeight: rhythm(1.5),
                   margin: 0,
@@ -102,7 +102,7 @@ module.exports = React.createClass({
                 <Link
                   to="/docs/"
                   css={{
-                    ...scale(-1/5),
+                    ...scale((-1) / 5),
                     color: `inherit`,
                     textDecoration: `none`,
                     textTransform: `uppercase`,
@@ -173,12 +173,12 @@ module.exports = React.createClass({
             <a
               href="https://github.com/gatsbyjs/gatsby"
               css={{
-                ...scale(-1/5),
+                ...scale((-1) / 5),
                 color: typography.options.bodyColor,
                 display: `inline-block`,
                 float: `right`,
                 lineHeight: rhythm(1.5),
-                marginRight: rhythm(1/2),
+                marginRight: rhythm(1 / 2),
                 textDecoration: `none`,
                 verticalAlign: `bottom`,
                 textTransform: `uppercase`,
@@ -195,7 +195,7 @@ module.exports = React.createClass({
           className={`main-body`}
           css={{
             maxWidth: rhythm(37),
-            margin: `${rhythm(-1/2)} auto ${rhythm(1.75)} auto`,
+            margin: `${rhythm((-1) / 2)} auto ${rhythm(1.75)} auto`,
             padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
             paddingTop: 0,
             [presets.Tablet]: {
@@ -203,17 +203,21 @@ module.exports = React.createClass({
             },
           }}
         >
-          { /* TODO Move this under docs/index.js once Gatsby supports multiple levels
+          {/* TODO Move this under docs/index.js once Gatsby supports multiple levels
                of layouts */
           }
           <div
             css={{
               float: `left`,
-              marginTop: rhythm(-3/4),
+              marginTop: rhythm((-3) / 4),
               width: rhythm(9),
               display: `none`,
               [presets.Tablet]: {
-                display: this.props.location.pathname.slice(0,6) === `/docs/` ? `block` : `none`,
+                display: (
+                  this.props.location.pathname.slice(0, 6) === `/docs/`
+                    ? `block`
+                    : `none`
+                ),
               },
             }}
           >
@@ -223,7 +227,11 @@ module.exports = React.createClass({
             css={{
               paddingLeft: 0,
               [presets.Tablet]: {
-                paddingLeft: this.props.location.pathname.slice(0,6) === `/docs/` ? rhythm(11) : 0,
+                paddingLeft: (
+                  this.props.location.pathname.slice(0, 6) === `/docs/`
+                    ? rhythm(11)
+                    : 0
+                ),
               },
             }}
           >
@@ -232,7 +240,7 @@ module.exports = React.createClass({
         </div>
         <div
           css={{
-            ...scale(-1/5),
+            ...scale((-1) / 5),
             position: `fixed`,
             display: `flex`,
             justifyContent: `space-around`,
@@ -301,19 +309,19 @@ module.exports = React.createClass({
           >
             <PersonIcon
               css={{
-                fontSize: rhythm(5/6),
+                fontSize: rhythm(5 / 6),
                 position: `relative`,
                 right: -4,
               }}
             />
             <PersonIcon
               css={{
-                fontSize: rhythm(5/6),
+                fontSize: rhythm(5 / 6),
               }}
             />
             <PersonIcon
               css={{
-                fontSize: rhythm(5/6),
+                fontSize: rhythm(5 / 6),
                 position: `relative`,
                 left: -4,
               }}

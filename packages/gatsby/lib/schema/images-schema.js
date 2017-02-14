@@ -36,21 +36,21 @@ module.exports = directory => new Promise((resolve, reject) => {
     glob(`${directory}/**/?(*.png|*.jpg|*.jpeg)`, (err, files) => {
       Promise.all(files.map(file => ep.readMetadata(file))).then(results => {
         const cleanedResults = _.filter(
-            results,
-            result => result.error === null
-          )
+          results,
+          result => result.error === null,
+        )
         let mappedResults = cleanedResults.map(result => result.data[0])
         mappedResults = mappedResults.map(image => {
-            // Set path from FileName
+          // Set path from FileName
           const parsedPath = parseFilepath(image.FileName)
-          image.path = `/${
-              _.kebabCase(`${parsedPath.dir}/${parsedPath.name}`)
-              }/`
-            // Render description as markdown (if set).
+          image.path = `/${_.kebabCase(
+            `${parsedPath.dir}/${parsedPath.name}`,
+          )}/`
+          // Render description as markdown (if set).
           if (image.Description) {
             image.Description = md.render(
-                image.Description.replace(/<br \/>/g, `\n`)
-              )
+              image.Description.replace(/<br \/>/g, `\n`),
+            )
           }
           return image
         })
@@ -70,89 +70,89 @@ module.exports = directory => new Promise((resolve, reject) => {
               type: GraphQLString,
               args: {
                 formatString: {
-                    type: GraphQLString,
-                  },
+                  type: GraphQLString,
+                },
               },
               resolve ({ Date }, { formatString }) {
                 if (formatString) {
-                    return moment(Date, `YYYY:MM:DD HH:mm:ssZ`).format(
-                      formatString
-                    )
-                  } else {
-                    return Date
-                  }
+                  return moment(Date, `YYYY:MM:DD HH:mm:ssZ`).format(
+                    formatString,
+                  )
+                } else {
+                  return Date
+                }
               },
             },
             image: {
               type: new GraphQLObjectType({
                 name: `ImageSrc`,
                 fields: {
-                    src: { type: GraphQLString },
-                    width: { type: GraphQLInt },
-                    height: { type: GraphQLInt },
-                  },
+                  src: { type: GraphQLString },
+                  width: { type: GraphQLInt },
+                  height: { type: GraphQLInt },
+                },
               }),
               args: {
                 width: {
-                    type: GraphQLInt,
-                    defaultValue: 400,
-                  },
+                  type: GraphQLInt,
+                  defaultValue: 400,
+                },
                 height: {
-                    type: GraphQLInt,
-                  },
+                  type: GraphQLInt,
+                },
                 quality: {
-                    type: GraphQLInt,
-                    defaultValue: 50,
-                  },
+                  type: GraphQLInt,
+                  defaultValue: 50,
+                },
                 grayscale: {
-                    type: GraphQLBoolean,
-                    defaultValue: false,
-                  },
+                  type: GraphQLBoolean,
+                  defaultValue: false,
+                },
                 base64: {
-                    type: GraphQLBoolean,
-                    defaultValue: false,
-                  },
+                  type: GraphQLBoolean,
+                  defaultValue: false,
+                },
               },
               resolve (file, args) {
                 return new Promise(resolve => {
-                    md5File(file.SourceFile, (err, hash) => {
-                      const imgSrc = `/images/${hash}-${qs.stringify(
-                        args
-                      )}.${file.FileTypeExtension}`
-                      const filePath = `${process.cwd()}/public${imgSrc}`
-                      let transformer = sharp(file.SourceFile)
-                        .resize(args.width, args.height)
-                        .quality(args.quality)
-                        .progressive()
+                  md5File(file.SourceFile, (err, hash) => {
+                    const imgSrc = `/images/${hash}-${qs.stringify(
+                      args,
+                    )}.${file.FileTypeExtension}`
+                    const filePath = `${process.cwd()}/public${imgSrc}`
+                    let transformer = sharp(file.SourceFile)
+                      .resize(args.width, args.height)
+                      .quality(args.quality)
+                      .progressive()
 
-                      // grayscale
-                      if (args.grayscale) {
-                        transformer = transformer.grayscale()
-                      }
+                    // grayscale
+                    if (args.grayscale) {
+                      transformer = transformer.grayscale()
+                    }
 
-                      // rotate
-                      if (args.rotate) {
-                        transformer = transformer.rotate(args.rotate)
-                      } else {
-                        // Rotate according to the EXIF Orientation tag.
-                        transformer = transformer.rotate()
-                      }
+                    // rotate
+                    if (args.rotate) {
+                      transformer = transformer.rotate(args.rotate)
+                    } else {
+                      // Rotate according to the EXIF Orientation tag.
+                      transformer = transformer.rotate()
+                    }
 
-                      if (args.base64) {
-                        transformer.toBuffer((err, data) => {
-                          resolve({
-                            src: data.toString(`base64`),
-                            width: args.width,
-                          })
+                    if (args.base64) {
+                      transformer.toBuffer((err, data) => {
+                        resolve({
+                          src: data.toString(`base64`),
+                          width: args.width,
                         })
-                      } else {
-                        transformer.toFile(filePath).then(metadata => {
-                          metadata.src = imgSrc
-                          resolve(metadata)
-                        })
-                      }
-                    })
+                      })
+                    } else {
+                      transformer.toFile(filePath).then(metadata => {
+                        metadata.src = imgSrc
+                        resolve(metadata)
+                      })
+                    }
                   })
+                })
               },
             },
           },

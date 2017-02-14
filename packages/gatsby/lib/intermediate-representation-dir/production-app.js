@@ -85,7 +85,7 @@ function shouldUpdateScroll (prevRouterProps, { location: { pathname } }) {
 match({ history: browserHistory, routes: rootRoute }, (
   error,
   redirectLocation,
-  renderProps
+  renderProps,
 ) => {
   const Root = () => (
     <Router
@@ -101,6 +101,6 @@ match({ history: browserHistory, routes: rootRoute }, (
     <NewRoot />,
     typeof window !== `undefined`
       ? document.getElementById(`react-mount`)
-      : void 0
+      : void 0,
   )
 })

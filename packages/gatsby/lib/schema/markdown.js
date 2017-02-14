@@ -50,25 +50,25 @@ module.exports = directory => new Promise((resolve, reject) => {
         depth: heading.depth,
       }))
       const parsedFrontmatter = _.first(
-          select(ast, `yaml`).map(heading => yaml.load(heading.value))
-        )
+        select(ast, `yaml`).map(heading => yaml.load(heading.value)),
+      )
       const relativeDirectory = parseFilepath(
-          path.relative(`${directory}/pages/`, file)
-        ).dirname
+        path.relative(`${directory}/pages/`, file),
+      ).dirname
 
-        // Create path.
+      // Create path.
       let filePath
       if (_.includes(relativeDirectory, `---`)) {
-          // This is for my blog bricolage.io. This will be moved out soonish.
+        // This is for my blog bricolage.io. This will be moved out soonish.
         filePath = `/${relativeDirectory.split(`---`)[1]}/`
       } else {
         filePath = createPath(path.join(directory, `pages`), file)
       }
-        // TODO put linkPrefix in gatsby.config.js and somehow get certain
-        // context stuff into gatsby-helpers.js
-        // TODO post issue for why manifest paths wrong
-        // TODO post stackoverflow about how to get static values — ping Joe.
-        // Prefix stuff — just store this as another key "prefixedPath"?
+      // TODO put linkPrefix in gatsby.config.js and somehow get certain
+      // context stuff into gatsby-helpers.js
+      // TODO post issue for why manifest paths wrong
+      // TODO post stackoverflow about how to get static values — ping Joe.
+      // Prefix stuff — just store this as another key "prefixedPath"?
       pages.push({
         id: path.relative(directory, path.resolve(file)),
         path: filePath,
@@ -81,7 +81,7 @@ module.exports = directory => new Promise((resolve, reject) => {
     })
     pages = _.sortBy(pages, page => page.frontmatter.date).reverse()
 
-      // TODO add numberOfWords field
+    // TODO add numberOfWords field
     const markdownType = new GraphQLObjectType({
       name: `Markdown`,
       fields: () => ({
@@ -154,7 +154,7 @@ module.exports = directory => new Promise((resolve, reject) => {
     })
 
     const frontmatterFields = () => {
-        // Create object with the first example of every frontmatter key.
+      // Create object with the first example of every frontmatter key.
       const frontmatterFieldExamples = {}
       _.each(pages, page => {
         _.each(page.frontmatter, (v, k) => {
@@ -165,7 +165,7 @@ module.exports = directory => new Promise((resolve, reject) => {
       })
 
       const fields = {}
-        // TODO make this work with sub-objects.
+      // TODO make this work with sub-objects.
       _.each(frontmatterFieldExamples, (v, k) => {
         const type = inferGraphQLType(k, v)
         if (type === `DATE`) {
@@ -241,17 +241,17 @@ module.exports = directory => new Promise((resolve, reject) => {
         },
         resolve (markdown, args) {
           let filteredPages
-            // Specifc for my blog bricolage.io. Will be adding
-            // general filtering feature soonish.
+          // Specifc for my blog bricolage.io. Will be adding
+          // general filtering feature soonish.
           if (args.tag) {
             filteredPages = _.filter(pages, page => {
               if (!page.frontmatter.tags) {
                 return false
               } else {
                 return _.includes(
-                    page.frontmatter.tags.map(tag => tag.toLowerCase()),
-                    args.tag.toLowerCase()
-                  )
+                  page.frontmatter.tags.map(tag => tag.toLowerCase()),
+                  args.tag.toLowerCase(),
+                )
               }
             })
           } else {

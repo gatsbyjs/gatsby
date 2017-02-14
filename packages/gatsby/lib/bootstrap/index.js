@@ -39,38 +39,35 @@ const autoPathCreator = program => new Promise(resolve => {
   const pagesDirectory = path.join(program.directory, `pages`)
   let autoPages = []
   glob(`${pagesDirectory}/**/?(*.js|*.jsx|*.cjsx)`, (err, files) => {
-      // Create initial page objects.
+    // Create initial page objects.
     autoPages = files.map(filePath => ({
       component: filePath,
-      componentChunkName: layoutComponentChunkName(
-          program.directory,
-          filePath
-        ),
+      componentChunkName: layoutComponentChunkName(program.directory, filePath),
       path: filePath,
     }))
 
-      // Convert path to one relative to the pages directory.
+    // Convert path to one relative to the pages directory.
     autoPages = autoPages.map(page => ({
       ...page,
       path: path.relative(pagesDirectory, page.path),
     }))
 
-      // Remove pages starting with an underscore.
+    // Remove pages starting with an underscore.
     autoPages = _.filter(autoPages, page => page.path.slice(0, 1) !== `_`)
 
-      // Remove page templates.
+    // Remove page templates.
     autoPages = _.filter(
-        autoPages,
-        page => page.path.slice(0, 9) !== `template-`
-      )
+      autoPages,
+      page => page.path.slice(0, 9) !== `template-`,
+    )
 
-      // Convert to our path format.
+    // Convert to our path format.
     autoPages = autoPages.map(page => ({
       ...page,
       path: createPath(pagesDirectory, page.component),
     }))
 
-      // Validate pages.
+    // Validate pages.
     autoPages.forEach(page => {
       const { error } = Joi.validate(page, pageSchema)
       if (error) {
@@ -126,7 +123,7 @@ module.exports = async program => {
     if (_.isString(plugin)) {
       const resolvedPath = path.dirname(require.resolve(plugin))
       const packageJSON = JSON.parse(
-        fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
+        fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`),
       )
       return {
         resolve: resolvedPath,
@@ -148,7 +145,7 @@ module.exports = async program => {
 
       const resolvedPath = path.dirname(require.resolve(plugin.resolve))
       const packageJSON = JSON.parse(
-        fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
+        fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`),
       )
       return {
         resolve: resolvedPath,
@@ -219,26 +216,26 @@ module.exports = async program => {
       resolve: hasAPIFile(`ssr`, plugin),
       options: plugin.pluginOptions,
     })),
-    plugin => plugin.resolve
+    plugin => plugin.resolve,
   )
   const browserPlugins = _.filter(
     flattenedPlugins.map(plugin => ({
       resolve: hasAPIFile(`browser`, plugin),
       options: plugin.pluginOptions,
     })),
-    plugin => plugin.resolve
+    plugin => plugin.resolve,
   )
 
   let browserAPIRunner = fs.readFileSync(
     `${siteDir}/api-runner-browser.js`,
-    `utf-8`
+    `utf-8`,
   )
   const browserPluginsRequires = browserPlugins
     .map(
       plugin => `{
       plugin: require('${plugin.resolve}'),
       options: ${JSON.stringify(plugin.options)},
-    }`
+    }`,
     )
     .join(`,`)
   browserAPIRunner = `var plugins = [${browserPluginsRequires}]\n${browserAPIRunner}`
@@ -249,7 +246,7 @@ module.exports = async program => {
       plugin => `{
       plugin: require('${plugin.resolve}'),
       options: ${JSON.stringify(plugin.options)},
-    }`
+    }`,
     )
     .join(`,`)
   sSRAPIRunner = `var plugins = [${ssrPluginsRequires}]\n${sSRAPIRunner}`
@@ -257,7 +254,7 @@ module.exports = async program => {
   fs.writeFileSync(
     `${siteDir}/api-runner-browser.js`,
     browserAPIRunner,
-    `utf-8`
+    `utf-8`,
   )
   fs.writeFileSync(`${siteDir}/api-runner-ssr.js`, sSRAPIRunner, `utf-8`)
 
@@ -292,11 +289,8 @@ module.exports = async program => {
   // / --> html.js, gatsby-node.js, gatsby-browser.js, gatsby-config.js
 
   // Collect pages.
-  let pages = await apiRunnerNode(
-    `createPages`,
-    { graphql: graphqlRunner },
-    []
-  )
+  let pages = await apiRunnerNode(`createPages`, { graphql: graphqlRunner }, [
+  ])
   pages = _.merge(...pages)
 
   if (_.isArray(pages) && pages.length > 0) {
@@ -304,7 +298,7 @@ module.exports = async program => {
     pages.forEach(page => {
       page.componentChunkName = layoutComponentChunkName(
         program.directory,
-        page.component
+        page.component,
       )
     })
 
@@ -346,7 +340,7 @@ module.exports = async program => {
   const modifiedPages = await apiRunnerNode(
     `onPostCreatePages`,
     pagesDB(),
-    pagesDB()
+    pagesDB(),
   )
 
   // Validate pages.

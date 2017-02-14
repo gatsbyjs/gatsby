@@ -10,7 +10,8 @@ class IndexRoute extends React.Component {
     return (
       <div>
         <h1>Getting started</h1>
-        <p>Gatsby lets you transform plain text into dynamic blogs and websites using
+        <p>
+          Gatsby lets you transform plain text into dynamic blogs and websites using
           the latest web technologies. A React.js static site generator.
         </p>
         <p>
@@ -19,8 +20,10 @@ class IndexRoute extends React.Component {
         </p>
         <h2>Install</h2>
         <p><code>npm install -g gatsby</code></p>
-        <p>TBD best way to get started — official starters still (with official
-          themes underneath?</p>
+        <p>
+          TBD best way to get started — official starters still (with official
+          themes underneath?
+        </p>
         <div
           css={{
             display: `block`,
@@ -30,7 +33,7 @@ class IndexRoute extends React.Component {
           }}
         >
           <h2>Documentation</h2>
-          <SidebarBody inline={true} />
+          <SidebarBody inline />
         </div>
       </div>
     )

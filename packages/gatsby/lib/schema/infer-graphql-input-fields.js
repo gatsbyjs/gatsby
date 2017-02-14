@@ -46,7 +46,7 @@ const inferGraphQLInputFields = exports.inferGraphQLInputFields = (
   key,
   nodes,
   selector = ``,
-  namespace = ``
+  namespace = ``,
 ) => {
   switch (typeOf(value)) {
     case `array`:
@@ -139,7 +139,7 @@ const inferGraphQLInputFields = exports.inferGraphQLInputFields = (
 const inferInputObjectStructureFromNodes = exports.inferInputObjectStructureFromNodes = (
   nodes,
   selector,
-  namespace
+  namespace,
 ) => {
   const fieldExamples = extractFieldExamples({
     nodes,
@@ -154,7 +154,7 @@ const inferInputObjectStructureFromNodes = exports.inferInputObjectStructureFrom
       k,
       nodes,
       selector,
-      namespace
+      namespace,
     )
   })
 

@@ -106,7 +106,7 @@ const initStarter = (starter, options = {}, callback) => {
   fs.exists(sysPath.join(rootPath, `package.json`), exists => {
     if (exists) {
       return callback(new Error(
-        `Directory ${rootPath} is already an npm project`
+        `Directory ${rootPath} is already an npm project`,
       ))
     }
     const isGitUri = starter && uriRe.test(starter)

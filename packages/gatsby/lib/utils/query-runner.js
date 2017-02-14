@@ -54,7 +54,7 @@ const writeChildRoutes = () => {
     const pathName = pathChunkName(page.path)
     const layoutName = layoutComponentChunkName(
       programDB().directory,
-      page.component
+      page.component,
     )
     let pathStr = ``
     if (!noPath) {
@@ -62,7 +62,7 @@ const writeChildRoutes = () => {
         pathStr = `path:'${_.get(
           siteDB().get(`config`),
           `linkPrefix`,
-          ``
+          ``,
         )}${page.path}',`
       } else {
         pathStr = `path:'${page.path}',`
@@ -128,14 +128,12 @@ const writeChildRoutes = () => {
     } else {
       let indexPage
       indexPage = _.first(
-        _.filter(pages, page => parseFilepath(page.component).name === `index`)
+        _.filter(pages, page => parseFilepath(page.component).name === `index`),
       )
       // If there's not an index page, just pick the one with the shortest path.
       // Probably a bad heuristic.
       if (!indexPage) {
-        indexPage = _.first(
-          _.sortBy(pages, page => page.path.length)
-        )
+        indexPage = _.first(_.sortBy(pages, page => page.path.length))
       }
       const otherPages = _.filter(pages, page => page.path !== indexPage.path)
       let route = `
@@ -150,7 +148,7 @@ const writeChildRoutes = () => {
         pathStr = `path:'${_.get(
           siteDB().get(`config`),
           `linkPrefix`,
-          ``
+          ``,
         )}${indexPage.path}',`
       } else {
         pathStr = `path:'${indexPage.path}',`
@@ -176,7 +174,8 @@ const writeChildRoutes = () => {
   rootRoute += `]}`
   splitRootRoute += `]}`
   const componentsStr = [...pagesDB().values()]
-    .map(page => `class ${page.internalComponentName} extends React.Component {
+    .map(
+      page => `class ${page.internalComponentName} extends React.Component {
           render () {
             let Component = require('${page.component}')
             if (Component.default) {
@@ -185,7 +184,8 @@ const writeChildRoutes = () => {
             const data = require('./json/${page.jsonName}')
             return <Component {...this.props} {...data} />
           }
-        }`)
+        }`,
+    )
     .join(`\n`)
 
   childRoutes = `
@@ -220,11 +220,11 @@ const writeChildRoutes = () => {
     module.exports = rootRoute`
   fs.writeFileSync(
     `${directory}/.intermediate-representation/child-routes.js`,
-    childRoutes
+    childRoutes,
   )
   fs.writeFileSync(
     `${directory}/.intermediate-representation/split-child-routes.js`,
-    splitChildRoutes
+    splitChildRoutes,
   )
 }
 const debouncedWriteChildRoutes = _.debounce(writeChildRoutes, 250)
@@ -235,14 +235,14 @@ const babelPlugin = function ({ types: t }) {
       TemplateLiteral (path, state) {
         if (
           path.parentPath.parentPath.parentPath.type !==
-            `ExportNamedDeclaration`
+          `ExportNamedDeclaration`
         ) {
           return
         }
         const exportPath = path.parentPath.parentPath.parentPath
         const name = _.get(
           exportPath,
-          `node.declaration.declarations[0].id.name`
+          `node.declaration.declarations[0].id.name`,
         )
         if (name === `pageQuery`) {
           const quasis = _.get(path, `node.quasis`, [])
@@ -254,8 +254,8 @@ const babelPlugin = function ({ types: t }) {
             if (expr) {
               chunks.push(
                 expr.scope.bindings[expr.node.name].path.get(
-                  `value`
-                ).parentPath.node.init.quasis[0].value.cooked
+                  `value`,
+                ).parentPath.node.init.quasis[0].value.cooked,
               )
             }
           })
@@ -291,14 +291,14 @@ const q = queue(
       TemplateLiteral (path, state) {
         if (
           path.parentPath.parentPath.parentPath.type !==
-            `ExportNamedDeclaration`
+          `ExportNamedDeclaration`
         ) {
           return
         }
         const exportPath = path.parentPath.parentPath.parentPath
         const name = _.get(
           exportPath,
-          `node.declaration.declarations[0].id.name`
+          `node.declaration.declarations[0].id.name`,
         )
         if (name === `pageQuery`) {
           const quasis = _.get(path, `node.quasis`, [])
@@ -310,8 +310,8 @@ const q = queue(
             if (expr) {
               chunks.push(
                 expr.scope.bindings[expr.node.name].path.get(
-                  `value`
-                ).parentPath.node.init.quasis[0].value.cooked
+                  `value`,
+                ).parentPath.node.init.quasis[0].value.cooked,
               )
             }
           })
@@ -337,72 +337,76 @@ const q = queue(
 
     // Run queries for each page component.
     console.time(`graphql query time`)
-    Promise.all(
-      paths.map(pathInfo => {
-        let pathContext
-        // Mixin the path context to the top-level.
-        // TODO do runtime check that user not passing in key that conflicts
-        // w/ top-level keys e.g. path or component.
-        if (pathInfo.context) {
-          pathContext = { ...pathInfo, ...pathInfo.context }
-        } else {
-          pathContext = { ...pathInfo }
-        }
+    Promise
+      .all(
+        paths.map(pathInfo => {
+          let pathContext
+          // Mixin the path context to the top-level.
+          // TODO do runtime check that user not passing in key that conflicts
+          // w/ top-level keys e.g. path or component.
+          if (pathInfo.context) {
+            pathContext = { ...pathInfo, ...pathInfo.context }
+          } else {
+            pathContext = { ...pathInfo }
+          }
 
-        return graphql(query, pathContext)
-          .catch(error =>
-            console.log(`graphql error from file: ${absFile}`, error))
-          .then(result => {
-            if (result.errors) {
-              console.log(
-                `graphql errors from file: ${absFile}`,
-                result.errors
+          return graphql(query, pathContext)
+            .catch(error =>
+              console.log(`graphql error from file: ${absFile}`, error))
+            .then(result => {
+              if (result.errors) {
+                console.log(
+                  `graphql errors from file: ${absFile}`,
+                  result.errors,
+                )
+              }
+              // Combine the result with the path context.
+              result.pathContext = pathInfo.context
+              const clonedResult = { ...result }
+              result.pathContext = pathInfo
+
+              // Add result to page object.
+              const page = pagesDB().get(pathInfo.path)
+              let jsonName = `${_.kebabCase(pathInfo.path)}.json`
+              let internalComponentName = `Component${pascalCase(
+                pathInfo.path,
+              )}`
+              if (jsonName === `.json`) {
+                jsonName = `index.json`
+                internalComponentName = `ComponentIndex`
+              }
+              page.jsonName = jsonName
+              page.internalComponentName = internalComponentName
+              pagesDB(pagesDB().set(page.path, page))
+
+              // Save result to file.
+              const resultJSON = JSON.stringify(clonedResult, null, 4)
+              fs.writeFileSync(
+                `${directory}/.intermediate-representation/json/${jsonName}`,
+                resultJSON,
               )
-            }
-            // Combine the result with the path context.
-            result.pathContext = pathInfo.context
-            const clonedResult = { ...result }
-            result.pathContext = pathInfo
 
-            // Add result to page object.
-            const page = pagesDB().get(pathInfo.path)
-            let jsonName = `${_.kebabCase(pathInfo.path)}.json`
-            let internalComponentName = `Component${pascalCase(pathInfo.path)}`
-            if (jsonName === `.json`) {
-              jsonName = `index.json`
-              internalComponentName = `ComponentIndex`
-            }
-            page.jsonName = jsonName
-            page.internalComponentName = internalComponentName
-            pagesDB(pagesDB().set(page.path, page))
-
-            // Save result to file.
-            const resultJSON = JSON.stringify(clonedResult, null, 4)
-            fs.writeFileSync(
-              `${directory}/.intermediate-representation/json/${jsonName}`,
-              resultJSON
-            )
-
-            return null
-          })
+              return null
+            })
+        }),
+      )
+      .then(() => {
+        console.log(`rewrote JSON for queries for ${absFile}`)
+        console.timeEnd(`graphql query time`)
+        // Write out new child-routes.js in the .intermediate-representation directory
+        // in the root of your site.
+        debouncedWriteChildRoutes()
+        callback()
       })
-    ).then(() => {
-      console.log(`rewrote JSON for queries for ${absFile}`)
-      console.timeEnd(`graphql query time`)
-      // Write out new child-routes.js in the .intermediate-representation directory
-      // in the root of your site.
-      debouncedWriteChildRoutes()
-      callback()
-    })
   },
-  1
+  1,
 )
 
 module.exports = async (program, graphql) => {
   // Get unique array of component paths and then watch them.
   // When a component is updated, rerun queries.
   const components = _.uniq(
-    [...pagesDB().values()].map(page => page.component)
+    [...pagesDB().values()].map(page => page.component),
   )
 
   let outsideResolve
