@@ -40,7 +40,11 @@ render () {
           // Psuedo styles are supported!
           ':hover': {
             textDecoration: `underline`,
-          }
+          },
+          // As are media queries!
+          '@media (min-width: 400px)': {
+            color: `blue`,
+          },
         }}
       >
         This is the title!
