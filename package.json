@@ -50,7 +50,7 @@
     "build": "lerna run build",
     "lint": "eslint --ext .js,.jsx --ignore-path .gitignore .",
     "lint:flow": "babel-node scripts/flow-check.js",
-    "publish-canary": "lerna run build; lerna publish --canary",
+    "publish-canary": "lerna run build; lerna publish --canary --yes",
     "publish-next": "lerna run build; lerna publish --npm-tag=next",
     "test": "jest",
     "test_bkup": "npm run lint && npm run test-node && npm run test-integration",
