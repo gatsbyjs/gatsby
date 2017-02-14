@@ -28,6 +28,12 @@ class SidebarBody extends React.Component {
                 }}
               >
                 {Object.keys(section.links).map((title) => {
+                  // Don't show the main docs link on mobile as we put these
+                  // links on that main docs page so it's confusing to have
+                  // the page link to itself.
+                  if (this.props.inline && section.links[title] === `/docs/`) {
+                    return null
+                  }
                   return (
                     <li key={section.links[title]}>
                       <Link to={section.links[title]}>

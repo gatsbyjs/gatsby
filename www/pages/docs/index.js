@@ -30,7 +30,7 @@ class IndexRoute extends React.Component {
           }}
         >
           <h2>Documentation</h2>
-          <SidebarBody />
+          <SidebarBody inline={true} />
         </div>
       </div>
     )
