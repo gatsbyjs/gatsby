@@ -7,23 +7,31 @@ console.log(menu)
 
 class SidebarBody extends React.Component {
   render () {
+    // Use original sizes on mobile as the text is inline
+    // but smaller on > tablet so as not to compete with body text.
+    const fontSize = this.props.inline ? scale(0).fontSize : scale(-1/10).fontSize
+    const headerSize = this.props.inline ? scale(2/5).fontSize : scale(1/5).fontSize
     return (
       <div>
         {menu.map((section) => {
           return (
             <div
               key={section.title}
+              css={{
+                fontSize,
+              }}
             >
               <h3
                 css={{
-                  ...scale(1/5),
-                  lineHeight: 1.1,
+                  fontSize: headerSize,
                 }}
               >
                 {section.title}
               </h3>
               <ul
                 css={{
+                  listStyle: `none`,
+                  margin: 0,
                   fontFamily: typography.options.headerFontFamily.join(`,`),
                 }}
               >
