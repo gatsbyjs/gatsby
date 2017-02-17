@@ -1,7 +1,7 @@
 import React from "react"
 import typography, { rhythm, scale } from "utils/typography"
 import logo from "images/gatsby-monogram.jpg"
-import Link from "react-router/lib/Link"
+import Link from "gatsby-link"
 import DocumentIcon from "react-icons/lib/go/file-text"
 import CodeIcon from "react-icons/lib/go/code"
 import PencilIcon from "react-icons/lib/go/pencil"
