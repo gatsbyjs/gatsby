@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "bluebird": "^3.4.7",
+    "react": "^15.4.2",
     "sw-precache": "^5.0.0"
   }
 }
