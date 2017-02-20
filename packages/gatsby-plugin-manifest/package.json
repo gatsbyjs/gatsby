@@ -20,7 +20,6 @@
     "babel-cli": "^6.23.0"
   },
   "dependencies": {
-    "bluebird": "^3.4.7",
-    "react": "^15.4.2"
+    "bluebird": "^3.4.7"
   }
 }
