@@ -1,0 +1,25 @@
+{
+  "name": "gatsby-plugin-manifest",
+  "version": "0.0.0",
+  "description": "Gatsby plugin which adds a manifest.json to make sites progressive web apps",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src --out-dir .",
+    "watch": "babel -w src --out-dir ."
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "manifest.json",
+    "pwa",
+    "progressive-web-app"
+  ],
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.23.0"
+  },
+  "dependencies": {
+    "bluebird": "^3.4.7"
+  }
+}
