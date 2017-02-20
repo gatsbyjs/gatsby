@@ -18,5 +18,9 @@
   "scripts": {
     "build": "babel src --out-dir .",
     "watch": "babel -w src --out-dir ."
+  },
+  "dependencies": {
+    "bluebird": "^3.4.7",
+    "sw-precache": "^5.0.0"
   }
 }
