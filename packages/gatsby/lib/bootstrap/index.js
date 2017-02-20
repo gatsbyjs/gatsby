@@ -291,7 +291,7 @@ module.exports = async program => {
   // Collect pages.
   let pages = await apiRunnerNode(`createPages`, { graphql: graphqlRunner }, [
   ])
-  pages = _.merge(...pages)
+  pages = _.flatten(pages)
 
   if (_.isArray(pages) && pages.length > 0) {
     // Add chunkName.
