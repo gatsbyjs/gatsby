@@ -1,0 +1,22 @@
+{
+  "name": "gatsby-plugin-offline",
+  "description": "Gatsby plugin which sets up a site to be able to run offline\"",
+  "version": "0.0.0",
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "devDependencies": {
+    "babel-cli": "^6.23.0"
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "offline",
+    "precache",
+    "service-worker"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src --out-dir .",
+    "watch": "babel -w src --out-dir ."
+  }
+}
