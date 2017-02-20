@@ -5,7 +5,7 @@ const path = require(`path`)
 exports.createPages = () => [
   {
     path: `/offline-plugin-app-shell-fallback/`,
-    component: path.resolve(`./app-shell.js`),
+    component: path.resolve(`${__dirname}/app-shell.js`),
   },
 ]
 
