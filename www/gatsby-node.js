@@ -1,7 +1,6 @@
 const _ = require(`lodash`)
 const Promise = require(`bluebird`)
 const path = require(`path`)
-const webpack = require(`webpack`)
 const select = require(`unist-util-select`)
 const parseFilepath = require(`parse-filepath`)
 
@@ -23,8 +22,8 @@ exports.createPages = ({ args }) => {
           }
         }
       }
-    `,
-    ).then(result => {
+    `
+    ).then((result) => {
       if (result.errors) {
         console.log(result.errors)
         reject(result.errors)
