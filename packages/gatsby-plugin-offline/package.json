@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-offline",
-  "description": "Gatsby plugin which sets up a site to be able to run offline\"",
+  "description": "Gatsby plugin which sets up a site to be able to run offline",
   "version": "0.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "devDependencies": {
@@ -20,7 +20,6 @@
     "watch": "babel -w src --out-dir ."
   },
   "dependencies": {
-    "bluebird": "^3.4.7",
     "sw-precache": "^5.0.0"
   }
 }

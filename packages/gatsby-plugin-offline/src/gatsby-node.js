@@ -1,4 +1,3 @@
-const Promise = require(`bluebird`)
 const precache = require(`sw-precache`)
 const path = require(`path`)
 
@@ -9,7 +8,7 @@ exports.createPages = () => [
   },
 ]
 
-exports.postBuild = () => new Promise((resolve, reject) => {
+exports.postBuild = () => {
   const rootDir = `public`
 
   const options = {
@@ -22,29 +21,16 @@ exports.postBuild = () => new Promise((resolve, reject) => {
     stripPrefix: rootDir,
     navigateFallback: `/offline-plugin-app-shell-fallback/index.html`,
     cacheId: `gatsby-plugin-offline`,
-    dontCacheBustUrlsMatching: /(.*.woff2|.*.js)/,
+    dontCacheBustUrlsMatching: /(.\w{8}.woff2|-\w{20}.js)/,
     runtimeCaching: [
       {
-        urlPattern: /.*.png/,
-        handler: `fastest`,
-      },
-      {
-        urlPattern: /.*.jpg/,
-        handler: `fastest`,
-      },
-      {
-        urlPattern: /.*.jpeg/,
+        // Add runtime caching of images.
+        urlPattern: /\.(?:png|jpg|jpeg|webp|svg|gif|tiff)$/,
         handler: `fastest`,
       },
     ],
     skipWaiting: false,
   }
 
-  precache.write(`public/sw.js`, options, err => {
-    if (err) {
-      reject(err)
-    } else {
-      resolve()
-    }
-  })
-})
+  return precache.write(`public/sw.js`, options)
+}
