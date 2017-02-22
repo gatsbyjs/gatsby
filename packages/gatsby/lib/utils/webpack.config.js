@@ -6,14 +6,12 @@ import Config from "webpack-configurator"
 import ExtractTextPlugin from "extract-text-webpack-plugin"
 import StaticSiteGeneratorPlugin from "static-site-generator-webpack-plugin"
 import { StatsWriterPlugin } from "webpack-stats-plugin"
-//import HardSourceWebpackPlugin from 'hard-source-webpack-plugin'
 //import WebpackStableModuleIdAndHash from 'webpack-stable-module-id-and-hash'
 
 import webpackModifyValidate from "./webpack-modify-validate"
 
 const debug = require(`debug`)(`gatsby:webpack-config`)
 const WebpackMD5Hash = require(`webpack-md5-hash`)
-const OfflinePlugin = require(`offline-plugin`)
 const ChunkManifestPlugin = require(`chunk-manifest-webpack-plugin`)
 const { pagesDB, siteDB } = require(`../utils/globals`)
 const { layoutComponentChunkName } = require(`./js-chunk-names`)
@@ -137,15 +135,6 @@ module.exports = async (
           // the numerical IDs aren't useful. In production we use numerical module
           // ids to reduce filesize.
           new webpack.NamedModulesPlugin(),
-          //new HardSourceWebpackPlugin({
-          //cacheDirectory: `${process.cwd()}/.cache/[confighash]`,
-          //configHash: (webpackConfig) => stage,
-          //environmentPaths: {
-          //root: process.cwd(),
-          //directories: ['node_modules'],
-          //files: ['package.json'],
-          //},
-          //}),
         ]
       case `build-css`:
         return [
@@ -160,15 +149,6 @@ module.exports = async (
             __LINK_PREFIX__: JSON.stringify(siteDB().get(`config`).linkPrefix),
           }),
           new ExtractTextPlugin(`styles.css`, { allChunks: true }),
-          //new HardSourceWebpackPlugin({
-          //cacheDirectory: `${process.cwd()}/.cache/[confighash]`,
-          //configHash: (webpackConfig) => stage,
-          //environmentPaths: {
-          //root: process.cwd(),
-          //directories: ['node_modules'],
-          //files: ['package.json'],
-          //},
-          //}),
         ]
       case `build-html`:
         return [
@@ -184,15 +164,6 @@ module.exports = async (
             __LINK_PREFIX__: JSON.stringify(siteDB().get(`config`).linkPrefix),
           }),
           new ExtractTextPlugin(`build-html-styles.css`),
-          //new HardSourceWebpackPlugin({
-          //cacheDirectory: `${process.cwd()}/.cache/[confighash]`,
-          //configHash: (webpackConfig) => stage,
-          //environmentPaths: {
-          //root: process.cwd(),
-          //directories: ['node_modules'],
-          //files: ['package.json'],
-          //},
-          //}),
         ]
       case `build-javascript`: {
         // Get array of page template component names.
@@ -271,37 +242,6 @@ module.exports = async (
           new webpack.optimize.OccurenceOrderPlugin(),
           //new WebpackStableModuleIdAndHash({ seed: 9, hashSize: 47 }),
           new webpack.NamedModulesPlugin(),
-          // Enable the offline plugin to add a service worker.
-          new OfflinePlugin({
-            AppCache: false,
-            publicPath: (
-              program.prefixLinks
-                ? `${siteDB().get(`config`).linkPrefix}/`
-                : `/`
-            ),
-            relativePaths: false,
-            // Exclude all font files other than woff2 (if a browser supports
-            // service workers, they'll support woff2).
-            excludes: [
-              `**/.*`,
-              `**/*.map`,
-              `**/*.woff`,
-              `**/*.ttf`,
-              `**/*.eot`,
-            ],
-            ServiceWorker: {
-              events: true,
-            },
-          }),
-          //new HardSourceWebpackPlugin({
-          //cacheDirectory: `${process.cwd()}/.cache/[confighash]`,
-          //configHash: (webpackConfig) => stage,
-          //environmentPaths: {
-          //root: process.cwd(),
-          //directories: ['node_modules'],
-          //files: ['package.json'],
-          //},
-          //}),
         ]
       }
       default:

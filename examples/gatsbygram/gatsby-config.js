@@ -24,6 +24,18 @@ module.exports = {
     `gatsby-typegen-sharp`,
     `gatsby-plugin-glamor`,
     {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `GatsbyGram`,
+        short_name: `GatsbyGram`,
+        start_url: `/`,
+        background_color: `#f7f7f7`,
+        theme_color: `#191919`,
+        display: `minimal-ui`,
+      },
+    },
+    `gatsby-plugin-offline`,
+    {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
         trackingId: `UA-91652198-1`,

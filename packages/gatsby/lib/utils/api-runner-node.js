@@ -17,11 +17,7 @@ const runAPI = (plugin, api, args) => {
       args: { ...args, linkPrefix },
       pluginOptions: plugin.pluginOptions,
     })
-    if (!result) {
-      throw new Error(
-        `The API "${api}" in gatsby-node.js of the plugin at ${plugin.resolve} did not return a value`,
-      )
-    }
+
     return Promise.resolve(result)
   }
 
