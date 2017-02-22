@@ -67,15 +67,17 @@ const BlogPostTemplate = React.createClass({
               marginLeft: rhythm(1/2),
             }}
           >
-            <h3
+            <h4
               css={{
+                ...scale(1/5),
+                lineHeight: 1.1,
                 fontWeight: 400,
                 fontStyle: `normal`,
                 margin: 0,
               }}
             >
               {post.frontmatter.author.id}
-            </h3>
+            </h4>
             <BioLine>
               {post.frontmatter.author.bio}
             </BioLine>
