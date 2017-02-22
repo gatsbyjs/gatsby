@@ -25,6 +25,8 @@ mean converting this file into a JS component).
 * [gatsby-plugin-catch-links](/docs/packages/gatsby-plugin-catch-links/)
 * [gatsby-plugin-glamor](/docs/packages/gatsby-plugin-glamor/)
 * [gatsby-plugin-google-analytics](/docs/packages/gatsby-plugin-google-analytics/)
+* [gatsby-plugin-manifest](/docs/packages/gatsby-plugin-manifest/)
+* [gatsby-plugin-offline](/docs/packages/gatsby-plugin-offline/)
 * [gatsby-plugin-preact](/docs/packages/gatsby-plugin-preact/)
 * [gatsby-plugin-sharp](/docs/packages/gatsby-plugin-sharp/)
 * [gatsby-source-filesystem](/docs/packages/gatsby-source-filesystem/)
