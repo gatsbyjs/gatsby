@@ -2,6 +2,9 @@ module.exports = {
   siteMetadata: {
     title: `Gatsby`,
   },
+  mapping: {
+    'MarkdownRemark.frontmatter.author': `Author`,
+  },
   plugins: [
     {
       resolve: `gatsby-source-filesystem`,
@@ -19,6 +22,7 @@ module.exports = {
     },
     `gatsby-parser-remark`,
     `gatsby-parser-sharp`,
+    `gatsby-parser-yaml`,
     {
       resolve: `gatsby-typegen-remark`,
       options: {

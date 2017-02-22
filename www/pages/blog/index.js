@@ -2,7 +2,7 @@ import React from "react"
 import Link from "gatsby-link"
 import { presets } from "glamor"
 
-import { rhythm } from "utils/typography"
+import { rhythm, scale } from "utils/typography"
 
 const IndexRoute = React.createClass({
   render () {
@@ -22,28 +22,34 @@ const IndexRoute = React.createClass({
       >
         <h1>Blog</h1>
         {blogPosts.map((post) => {
+          const avatar = post.frontmatter.author.avatar.children[0].responsiveResolution
           return (
             <div>
-              <h2
-                css={{
-                  marginBottom: 0,
-                }}
+              <Link
+                to={post.slug}
               >
-                {post.frontmatter.title}
-              </h2>
-              <p
-                css={{
-                  color: `#696861`,
-                }}
-              >
-                {post.excerpt}
-              </p>
+                <h2
+                  css={{
+                    marginBottom: rhythm(1/8),
+                  }}
+                >
+                  {post.frontmatter.title}
+                </h2>
+                <p
+                  css={{
+                    color: `#696861`,
+                  }}
+                >
+                  {post.excerpt}
+                </p>
+              </Link>
               <div>
                 <img
-                  alt="Gravatar for mathews.kyle@gmail.com"
-                  src="//www.gravatar.com/avatar/e567aa8adbd2d49cd9990ea1ed19d4eb?d=retro&amp;r=g&amp;s=50"
-                  srcSet="//www.gravatar.com/avatar/e567aa8adbd2d49cd9990ea1ed19d4eb?d=retro&amp;r=g&amp;s=100 2x"
-                  height="35" width="35"
+                  alt={`Avatar for ${post.frontmatter.author.id}`}
+                  src={avatar.src}
+                  srcSet={avatar.srcSet}
+                  height={avatar.height}
+                  width={avatar.width}
                   css={{
                     borderRadius: `100%`,
                     display: `inline-block`,
@@ -63,7 +69,7 @@ const IndexRoute = React.createClass({
                       lineHeight: 1.1,
                     }}
                   >
-                    <small>Kyle Mathews</small>
+                    <small>{post.frontmatter.author.id}</small>
                   </div>
                   <div
                     css={{
@@ -87,15 +93,31 @@ export default IndexRoute
 
 export const pageQuery = `
 {
-  allFile(relativePath: { regex: "/blog-posts.*/" }) {
+  allFile(relativePath: { regex: "/^blog/" }, extension: { eq: "md" }) {
     edges {
       node {
         children {
           ... on MarkdownRemark {
             excerpt
+            slug
             frontmatter {
               title
               date(formatString: "DD MMMM, YYYY")
+              author {
+                id
+                avatar {
+                  children {
+                    ... on ImageSharp {
+                      responsiveResolution(width: 35, height: 35) {
+                        width
+                        height
+                        src
+                        srcSet
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         }

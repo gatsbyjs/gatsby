@@ -3,6 +3,7 @@ const Promise = require(`bluebird`)
 const fs = require(`fs`)
 const jsYaml = require(`js-yaml`)
 const _ = require(`lodash`)
+const { loadNodeContents } = require(`gatsby-source-filesystem`)
 
 async function modifyAST ({ args }) {
   const { ast } = args
@@ -26,7 +27,7 @@ async function modifyAST ({ args }) {
     file.children = file.children.concat(yamlArray)
   })
 
-  return resolve(ast)
+  return ast
 }
 
 exports.modifyAST = modifyAST
