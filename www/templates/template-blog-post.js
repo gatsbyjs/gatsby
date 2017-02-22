@@ -12,10 +12,14 @@ const BlogPostTemplate = React.createClass({
     const BioLine = ({ children }) => (
       <p
         css={{
-          ...scale(-1/5),
+          ...scale(-2/5),
           lineHeight: typography.options.baseLineHeight,
           margin: 0,
           color: `rgba(0,0,0,.44)`,
+          [presets.Mobile]: {
+            ...scale(-1/5),
+            lineHeight: typography.options.baseLineHeight,
+          },
         }}
       >
         {children}
@@ -36,9 +40,7 @@ const BlogPostTemplate = React.createClass({
           css={{
             display: `flex`,
             marginTop: rhythm(2),
-            [presets.Mobile]: {
-              marginBottom: rhythm(1),
-            },
+            marginBottom: rhythm(1),
           }}
         >
           <div
