@@ -335,6 +335,42 @@ const q = queue(
       graphql,
     }
 
+    const handleResult = (pathInfo, result = {}) => {
+      //if (result.errors) {
+        //console.log(
+          //`graphql errors from file: ${absFile}`,
+          //result.errors,
+        //)
+      //}
+      // Combine the result with the path context.
+      result.pathContext = pathInfo.context
+      const clonedResult = { ...result }
+      result.pathContext = pathInfo
+
+      // Add result to page object.
+      const page = pagesDB().get(pathInfo.path)
+      let jsonName = `${_.kebabCase(pathInfo.path)}.json`
+      let internalComponentName = `Component${pascalCase(
+        pathInfo.path,
+      )}`
+      if (jsonName === `.json`) {
+        jsonName = `index.json`
+        internalComponentName = `ComponentIndex`
+      }
+      page.jsonName = jsonName
+      page.internalComponentName = internalComponentName
+      pagesDB(pagesDB().set(page.path, page))
+
+      // Save result to file.
+      const resultJSON = JSON.stringify(clonedResult, null, 4)
+      fs.writeFileSync(
+        `${directory}/.intermediate-representation/json/${jsonName}`,
+        resultJSON,
+      )
+
+      return null
+    }
+
     // Run queries for each page component.
     console.time(`graphql query time`)
     Promise
@@ -350,44 +386,14 @@ const q = queue(
             pathContext = { ...pathInfo }
           }
 
+
           return graphql(query, pathContext)
-            .catch(error =>
-              console.log(`graphql error from file: ${absFile}`, error))
-            .then(result => {
-              if (result.errors) {
-                console.log(
-                  `graphql errors from file: ${absFile}`,
-                  result.errors,
-                )
-              }
-              // Combine the result with the path context.
-              result.pathContext = pathInfo.context
-              const clonedResult = { ...result }
-              result.pathContext = pathInfo
-
-              // Add result to page object.
-              const page = pagesDB().get(pathInfo.path)
-              let jsonName = `${_.kebabCase(pathInfo.path)}.json`
-              let internalComponentName = `Component${pascalCase(
-                pathInfo.path,
-              )}`
-              if (jsonName === `.json`) {
-                jsonName = `index.json`
-                internalComponentName = `ComponentIndex`
-              }
-              page.jsonName = jsonName
-              page.internalComponentName = internalComponentName
-              pagesDB(pagesDB().set(page.path, page))
-
-              // Save result to file.
-              const resultJSON = JSON.stringify(clonedResult, null, 4)
-              fs.writeFileSync(
-                `${directory}/.intermediate-representation/json/${jsonName}`,
-                resultJSON,
-              )
-
-              return null
-            })
+            .catch(() => (
+              handleResult(pathInfo)
+            ))
+            .then(result => (
+              handleResult(pathInfo, result)
+            ))
         }),
       )
       .then(() => {
