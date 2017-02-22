@@ -12,6 +12,7 @@ export function spawn (command, args = [], options = {}) {
   return new Promise((resolve, reject) => {
     let stdout = ''
     let stderr = ''
+    Object.assign(options, { shell: true })
     const child = spawnNative(command, args, options)
     child.stdout.on('data', (data) => { stdout += data })
     child.stderr.on('data', (data) => { stderr += data })
