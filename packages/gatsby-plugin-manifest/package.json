@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-manifest",
-  "version": "0.0.0",
+  "version": "1.0.0-alpha12",
   "description": "Gatsby plugin which adds a manifest.json to make sites progressive web apps",
   "main": "index.js",
   "scripts": {

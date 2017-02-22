@@ -1,6 +1,6 @@
 {
   "name": "gatsby-typegen-filesystem",
-  "version": "1.0.0-alpha11",
+  "version": "1.0.0-alpha12",
   "description": "Gatsby plugin which generates graphql types for querying files and directories",
   "main": "index.js",
   "scripts": {

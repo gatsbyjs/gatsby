@@ -1,7 +1,7 @@
 {
   "name": "gatsby-typegen-remark-autolink-headers",
   "description": "Gatsby plugin for Remark to autolink headers",
-  "version": "1.0.0-alpha11",
+  "version": "1.0.0-alpha12",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "github-slugger": "^1.1.1",

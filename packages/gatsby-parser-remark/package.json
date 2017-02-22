@@ -1,7 +1,7 @@
 {
   "name": "gatsby-parser-remark",
   "description": "Gatsby parser plugin for Remark",
-  "version": "1.0.0-alpha11",
+  "version": "1.0.0-alpha12",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "bluebird": "^3.4.6",

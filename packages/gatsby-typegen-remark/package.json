@@ -1,6 +1,6 @@
 {
   "name": "gatsby-typegen-remark",
-  "version": "1.0.0-alpha11",
+  "version": "1.0.0-alpha12",
   "description": "Gatsby plugin which generates graphql types based on Markdown files using the remark markdown ecosystem",
   "main": "index.js",
   "scripts": {
