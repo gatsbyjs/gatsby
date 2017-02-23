@@ -12,7 +12,7 @@ const options = {
   blockMarginBottom: 0.75,
   scaleRatio: 2.15,
   plugins: [new CodePlugin()],
-  overrideStyles: ({ rhythm }) => ({
+  overrideStyles: ({ rhythm, scale }) => ({
     body: {
       background: `#f7f0eb`,
     },
@@ -71,6 +71,19 @@ const options = {
     },
     ".main-body a.anchor:hover": {
       background: `none`,
+    },
+    ".main-body a.gatsby-resp-image-link": {
+      boxShadow: `none`,
+    },
+    ".main-body a.gatsby-resp-image-link:hover": {
+      background: `none`,
+      boxShadow: `none`,
+    },
+    "div + em": {
+      ...scale(-1/5),
+      lineHeight: 1.4,
+      display: `block`,
+      textAlign: `center`,
     },
     [MOBILE_MEDIA_QUERY]: {
       // Make baseFontSize on mobile 15px.
