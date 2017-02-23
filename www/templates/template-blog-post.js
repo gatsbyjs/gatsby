@@ -13,12 +13,13 @@ const BlogPostTemplate = React.createClass({
       <p
         css={{
           ...scale(-2/5),
-          lineHeight: typography.options.baseLineHeight,
+          fontFamily: typography.options.headerFontFamily.join(`,`),
+          lineHeight: 1.3,
           margin: 0,
           color: `rgba(0,0,0,.44)`,
           [presets.Mobile]: {
             ...scale(-1/5),
-            lineHeight: typography.options.baseLineHeight,
+            lineHeight: 1.3,
           },
         }}
       >

@@ -110,7 +110,7 @@ Highly unsettling for many engineers and organizations. Those most
 comfortable being mid to late adopters are forced into becoming early
 adopters.
 
-## Things aren't going to get better until they get better
+## Things don't get better until they're made better
 
 * stay away if you can. Tools are rapidly maturing and consolidating.
 * If you can't (you probably can't) — accept building for the web is
