@@ -30,13 +30,13 @@ module.exports = {
           {
             resolve: `gatsby-typegen-remark-responsive-image`,
             options: {
-              maxWidth: 590,
+              maxWidth: 610,
             },
           },
           {
             resolve: `gatsby-typegen-remark-responsive-iframe`,
             options: {
-              wrapperStyle: `margin-bottom: 1.0725rem`,
+              wrapperStyle: `margin-bottom: 1.05rem`,
             },
           },
           `gatsby-typegen-remark-prismjs`,

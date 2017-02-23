@@ -85,12 +85,16 @@ const options = {
       display: `block`,
       textAlign: `center`,
     },
-    [MOBILE_MEDIA_QUERY]: {
-      // Make baseFontSize on mobile 15px.
-      html: {
-        fontSize: `${15 / 16 * 100}%`,
-      },
+    '.gatsby-resp-image-link': {
+      marginLeft: rhythm(-3/4), // 3/4 rhythm is amount of padding on mobile.
+      marginRight: rhythm(-3/4),
     },
+    //[MOBILE_MEDIA_QUERY]: {
+      //// Make baseFontSize on mobile 15px.
+      //html: {
+        //fontSize: `${15 / 16 * 100}%`,
+      //},
+    //},
   }),
 }
 
