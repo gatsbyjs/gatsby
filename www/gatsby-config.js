@@ -30,7 +30,7 @@ module.exports = {
           {
             resolve: `gatsby-typegen-remark-responsive-image`,
             options: {
-              maxWidth: 610,
+              maxWidth: 655,
             },
           },
           {
