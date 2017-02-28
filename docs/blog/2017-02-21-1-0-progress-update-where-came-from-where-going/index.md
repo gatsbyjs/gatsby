@@ -18,9 +18,10 @@ This framework would have to be:
 complex webapps.
 * **simple**, not requiring any setup to start using and with thoughtful
 APIs to extend the framework.
-* **fast**, take advantage of HTTP/2, browser caching, service workers,
-inlined critical css, and code splitting so your site always loads
-incredibly fast—no matter what you build.
+* **fast**, doesn't lose customers to slow websites. Takes advantage of
+HTTP/2, browser caching, service workers, inlined critical css, and code
+splitting so your site always loads incredibly fast—no matter what you
+build.
 * **Javascript-driven**, the web is huge and intensely competative.
 Sites that win are fast and richly interactive. Your framework must make
 it trivial to use advanced Javascript.
@@ -37,9 +38,9 @@ I believe that Gatsby fulfills these requirements. After several years
 of working on the project and seeing it used successfully by many people
 on a wide variety of sites, I'm confident that Gatsby works.
 
-Since I open sourced Gatsby in 2015, it's collected over **8000** stars
+Since I open sourced Gatsby in 2015, it's collected over **8000 stars**
 on Github (by far the most stars on Github for a project of its type),
-been joined by 122 contributors, and downloaded **130,000** times!
+been joined by **122 contributors**, and **downloaded 130,000** times!
 
 In mid-2016, I decided to [go full-time on
 Gatsby](https://www.bricolage.io/gatsby-open-source-work/) and started
@@ -49,8 +50,12 @@ researching and prototyping ideas that are now coming together as Gatsby
 ## What is Gatsby
 
 Gatsby combines the fast performance of static websites with the
-powerful abstractions, tools, and clientside capabilities of the webapp
-world.
+powerful abstractions, excellent tools, and clientside capabilities of
+the webapp world.
+
+It is a general purpose data-centric web framework and has been
+successfully used for a wide variety of sites including blogs, marketing
+sites, documentation sites, and ecommerce.
 
 It wraps three of the most popular web app tools in a cohesive website
 framework:
@@ -92,53 +97,34 @@ things I struggled for weeks to build in ~2010-2013 that took me days or
 even hours once I'd adopted React.
 
 React has taken over the web world and for good reason. Its three big
-ideas, components, lifecycle APIs, and one-way data flow dramatically
-*simplify* web UI development. Things that are really hard to build
-within other paradigms feel almost easy with React.
+ideas, composable components, lifecycle APIs, and one-way data flow
+dramatically *simplify* web UI development. Things that are really hard
+to build within other paradigms feel almost easy with React.
 
-## App vs. site paradigms — how to choose?
+## Time for a Javascript web framework?
 
-To long-time web developers, webapp people and their new tools can seem
-arrogant. "We've been building for the web for decades with tried and
-true tools. We produce really good work using Wordpress, Drupal, Jekyll
-etc. What's the fuss?"
+The internet runs on Open Source CMSs—primarily Wordpress and Drupal.
+Which are amazing ecosystems. I spent most of college building Drupal
+websites and writing [open-source Drupal
+modules](https://www.bricolage.io/first-beta-release-drupal-native-mailinglist-module/).
+My first startup job was at [Pantheon](https://pantheon.io)—where I
+helped [build developer tools](https://www.bricolage.io/new-beginnings/)
+for teams building Drupal & Wordpress sites.
 
-My response would be... perhaps you *are* in a great position. There are
-many many sites that fit really well within the "document-centric
-world with occassional Javascript enhancements" paradigm. If that's you,
-then keep doing great work with your tools.
+These open source CMSs are extrodinary ecosystems and truly run the web.
+Wordpress alone runs more than 25% of all websites on the internet!
 
-But here's some arguments for switching to the app paradigm and Gatsby.
+But still, the time seems ripe for a clientside-centric web framework.
 
-### Can you build complex javascript apps with your current website framework?
+More and more sites are expected to become app-like layering on more and
+more Javascript. And the extrodinary advances in Javascript frameworks
+and tooling has made webapp ideas approachable to any team. Gatsby has
+the assumption that you will need a rich client baked deep into its
+core. Gatsby bakes in modern Javascript compiler and bundling tools and
+a full asset pipeline so you can just start writing your website.
 
-Do you often struggle with Javascript-heavy client requests? Are you
-tired of dealing with jQuery hairballs? Have you had to turn down work
-for Javascript-centric sites that your team couldn't handle under budget?
-
-jQuery is brilliantly designed around enhancing HTML documents. Like all
-tools stretched beyond their designs, it breaks down as you start to
-cross over into app-landia.
-
-Document-centric tools like jQuery *can* (with sufficient skill) work
-well for apps. But the really nice thing about building within the app
-paradigm is that even a really complex document site is a fairly simple
-webapp while a really complex javascript webapp isn't possible to
-express in the document paradigm.
-
-### One tool to rule them all
-
-big advantage to using one tool for everything. Save on training costs,
-etc. Perhaps you're already using React for web apps.
-
-### Follow the money
-
-Developer tools are built by companies building for the web. Every
-company from the very largest on the planet to the smallest are adopting
-React and investing heavily in making it better. Because Gatsby is built
-on top of these tools, Gatsby gets better as the React ecosystem gets
-better. My bet is React is here to stay and I think that should be your
-bet too.
+My hope is it fuses the best ideas of the first few generations of the
+web with the ideas and requirements of the next.
 
 ## Gatsby 1.0 — Growing the community and the tool
 
