@@ -94,7 +94,7 @@ class DefaultLayout extends React.Component {
                     marginLeft: rhythm(1),
                   }}
                 >
-                  GatsbyGram
+                  Gatsbygram
                 </span>
               </h1>
             </Link>
