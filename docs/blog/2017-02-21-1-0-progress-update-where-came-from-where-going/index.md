@@ -5,7 +5,7 @@ author: "Kyle Mathews"
 image: 'ui-and-code.png'
 ---
 
-![GatsbyGram](ui-and-code.png)
+![Gatsbygram](ui-and-code.png)
 
 Imagine for a moment the perfect website framework. One that produced
 really fast sites by default, that let you use the latest web tools and
@@ -42,7 +42,7 @@ Since I open sourced Gatsby in 2015, it's collected over **8000 stars**
 on Github (by far the most stars on Github for a project of its type),
 been joined by **122 contributors**, and **downloaded 130,000** times!
 
-In mid-2016, I decided to [go full-time on
+In mid-2016, I decided to [work full-time on
 Gatsby](https://www.bricolage.io/gatsby-open-source-work/) and started
 researching and prototyping ideas that are now coming together as Gatsby
 1.0.
@@ -50,37 +50,46 @@ researching and prototyping ideas that are now coming together as Gatsby
 ## What is Gatsby
 
 Gatsby combines the fast performance of static websites with the
-powerful abstractions, excellent tools, and clientside capabilities of
+powerful abstractions, excellent tools, and client capabilities of
 the webapp world.
 
-It is a general purpose data-centric web framework and has been
-successfully used for a wide variety of sites including blogs, marketing
-sites, documentation sites, and ecommerce.
+It is a general purpose data-centric web framework that is successfully
+used for a wide variety of sites including blogs, marketing sites,
+documentation sites, and ecommerce.
 
 It wraps three of the most popular web app tools in a cohesive website
 framework:
 
-* React from Facebook for building UIs
-* Webpack for bundling Javascript and CSS
-* GraphQL from Facebook for querying data
+* [React](https://facebook.github.io/react/) from Facebook for building UIs
+* [Webpack](https://webpack.js.org/) for bundling Javascript and CSS
+* [GraphQL](http://graphql.org/) from Facebook for declarative data queries
 
-When loading a Gatsby site, browsers first load an HTML file for a given
-page and then load the minimum Javascript needed to make that page
-interactive.
+While designing Gatsby, I wanted a synthesis of two of my favorite
+developer experiences. The simplicity of building sites with Markdown
+and static site generators and the powerful hot-reloading environment of
+the React world.
 
-Static files ensure a much more *carefree deployment*. There are no
-*complicated databases* to install and maintain or *webservers to scale* and
-protect against hacking.
+![Gatsby development
+experience](https://camo.githubusercontent.com/0506699aaaae2f9772cc381b92f2aa5e14eba296/687474703a2f2f7a697070792e6766796361742e636f6d2f556c74696d6174655765656b6c7942617265626972646261742e676966)
 
-Serving static files ensures consistent *super fast load times*. And
-once your site is loaded, Gatsby automatically *pre-fetches* adjacent
-pages. This means navigating around your site feels *instantaneous* as
-all the content for the next page has been loaded already. Since you're
-reading this on a Gatsby site, try clicking on a link and then back
-(note, this site is still being worked on as we approach 1.0). A bit
-faster than your current site no? 😜
+When loading a Gatsby site, browsers first load the pre-built HTML file
+for a given page and then load the minimum Javascript needed to make
+that page interactive.
+
+Because Gatsby sites are just static files, you're ensured a much more
+*carefree deployment*. There are no *complicated databases* to install
+and maintain and *webservers to scale* and protect against hacking.
+
+Serving static files ensures consistent *super fast load times*. Once
+your site is loaded, Gatsby automatically *pre-fetches* adjacent pages.
+This means navigating around your site feels *instantaneous* as all the
+content and scripts for the next page has been loaded already.  Since
+you're reading this on a Gatsby site, try clicking on a link in the
+header and then click back (note, this site is still being worked on as we
+approach 1.0).  A bit faster than your current site no? 😜
 
 ## Apps vs sites
+
 From nearly the beginning of the web, the idea of the web as an
 application platform has competed with the idea of the web as a series
 of "documents".
@@ -89,8 +98,9 @@ In recent years, the "app" paradigm has gained steam as dozens of
 Javascript frameworks and other Javascript tools have been released,
 exploring ideas and competiting for mindshare.
 
-100s of millions of dollars have been invested in these Javascript
-frameworks and the larger ecosystems of tools surrounding them.
+100s of millions of dollars have been invested by the largest companies
+in the world in these Javascript frameworks and the larger ecosystem of
+tools surrounding them.
 
 The improvement has been dramatic and excilierating. I can remember many
 things I struggled for weeks to build in ~2010-2013 that took me days or
@@ -103,70 +113,324 @@ to build within other paradigms feel almost easy with React.
 
 ## Time for a Javascript web framework?
 
-The internet runs on Open Source CMSs—primarily Wordpress and Drupal.
-Which are amazing ecosystems. I spent most of college building Drupal
-websites and writing [open-source Drupal
+The internet runs on Open Source CMSs—primarily Wordpress and Drupal.  I
+spent most of college building Drupal websites and writing [open-source
+Drupal
 modules](https://www.bricolage.io/first-beta-release-drupal-native-mailinglist-module/).
 My first startup job was at [Pantheon](https://pantheon.io)—where I
-helped [build developer tools](https://www.bricolage.io/new-beginnings/)
+helped [design and build developer tools](https://www.bricolage.io/new-beginnings/)
 for teams building Drupal & Wordpress sites.
 
-These open source CMSs are extrodinary ecosystems and truly run the web.
-Wordpress alone runs more than 25% of all websites on the internet!
+These open source CMSs are *extrodinary tools and have remarkably dynamic
+ecosystems*. They truly run the web.  Wordpress alone runs more than 25%
+of all websites on the internet!
 
-But still, the time seems ripe for a clientside-centric web framework.
+But still, the time seems ripe for a client-centric web framework.
 
-More and more sites are expected to become app-like layering on more and
-more Javascript. And the extrodinary advances in Javascript frameworks
-and tooling has made webapp ideas approachable to any team. Gatsby has
-the assumption that you will need a rich client baked deep into its
-core. Gatsby bakes in modern Javascript compiler and bundling tools and
-a full asset pipeline so you can just start writing your website.
+As more and more sites are expected to become app-like there's been a
+*rush to add more Javascript into our sites* resulting in an explosion of
+tool complexity resulting in, at times, poorly optimized sites that ship
+far too much Javascript at the wrong times bogging down the site.
 
-My hope is it fuses the best ideas of the first few generations of the
-web with the ideas and requirements of the next.
+But it doesn't need to be this way. We use web frameworks because they
+*embed smart ideas about how to organize our code* so we're guided towards
+building fast sites that are simple to build and maintain.
 
-## Gatsby 1.0 — Growing the community and the tool
+Gatsby aims to be a *modern web framework* that's designed with the
+assumption that you need a rich client. Gatsby bakes in modern
+Javascript compiler and bundling tools along with a full asset pipeline
+so you can just start writing your website and *be confident things will
+work*.
 
-Build out theme and plugin system. Launch Gatsby themes, internal and
-open source.
+## Gatsby 1.0: Setting the foundation for a modern Javascript website framework
 
-Theme with custom set of React components — all managed over NPM.
+I started working on the [1.0
+branch](https://github.com/gatsbyjs/gatsby/tree/1.0) in August and after
+months of hard work, our first beta release is in sight.
 
-Read on for an intro to what's coming in 1.0.
+The changes for 1.0 can be organized into a few areas.
 
-### Code splitting
+### Add service worker and offline support
 
-* per route
-* one js heavy page doesn't affect other pages
+Service workers are perhaps the most exciting technology that's come to
+the web in the past several years. It makes possible (finally!)
+sophisticated client caching plus true offline support. I've added
+excellent on-by-default support to Gatsby for Service Workers and a
+great offline experience. If you're using Chrome or Firefox, this site
+loads offline! *Service workers make your site much more resiliant
+against bad networks*. If someone loads your site on a train and goes
+through a tunnel, you won't lose them as they'll still be able to keep
+clicking around.
 
-### Service workers and offline support
+### Route-based code splitting
 
-* no work, no fuss, super fast.
+Many sites generate one Javascript bundle for the *entire* site. Which
+means someone loading your frontpage loads far more code than is
+necessary.
+
+Gatsby 1.0 only loads the scripts necessary for the page you're on. As you
+navigate around, Gatsby loads the Javascript needed for each route.
+
+This means that one page with heavy imports:
+
+```javascript
+import d3 from "d3"
+import threejs from "react-threejs"
+```
+
+...won't affect the performance of the rest of the site.
+
+This is particularly helpful for teams of people collaborating on a site
+with pages with very different technical and business requirements.
+Different parts of the site can develop independently of each other.
+
+One client I'm working with on Gatsby 1.0 (a stealth startup in San
+Francisco) is using Gatsby to build both their marketing site *and* SaaS
+app within the *same Gatsby codebase*.
+
+The marketing pages of their site are built using markdown and React
+components along with a modern css-in-js library
+[Glamor](https://github.com/threepointone/glamor) for styling.
+Their SaaS app uses [Redux](http://redux.js.org/) to communicate with
+their Django API.
+
+The marketing portion of the site loads quickly with minimal Javascript.
+When a potential customer goes to signup for the app, there's no
+*awkward jump from the marketing website to the web app*—just a simple
+page change which seamlessly loads in the needed Javascript. The *team
+is sharing components and styles across the site* without stepping on
+each other's shoes as they rapidly iterate on features.
+
+### Plugin and Theme systems
+
+Wordpress & Jekyll are both great examples of open source communities
+with robust theme & plugins ecosystems. Gatsby 1.0 has rich plugin
+system support with many lifecycle APIs you can hook into during the
+bootstrap and build processes and in the browser on events like a route
+change.
+
+There are a [number of official Gatsby plugins](/docs/plugins/) already
+built—all distributed as seperate NPM packages. It'll be easy to create
+your own plugins for internal projects and as open source projects
+published on NPM.
+
+Plugins can:
+
+* add support for webpack loaders such as Sass, Less
+* add drop-in support for lightweight React-compatable frameworks
+[Preact](https://preactjs.com/) and [Inferno](https://infernojs.org/)
+* add a sitemap or RSS feed
+* add [Google Analytics](/docs/packages/gatsby-plugin-google-analytics/)
+
+Plugins also drive the new GraphQL data processing layer.
+
+The final pieces for theme support are coming soon. Gatsby's theme system
+will have some unique properties. You'll be able to add multiple themes
+to a site. So you could start a site with a "blog" theme and later add
+on a "portfolio" theme. Themes will also be able to *compose* other
+themes. So a large organization could have a standard "base" theme and
+then individual departments could extend the base theme to meet their
+specific requirements.
+
+Themes (like plugins) will be published on NPM. So soon, starting a new
+Gatsby blog will be as simple as:
+
+```bash
+npm install --save gatsby-super-cool-theme
+gatsby build --theme gatsby-super-cool-theme
+```
 
 ### GraphQL data layer
 
-* intro graphql
-* avoid custom scripting, pull in exactly the data you need in client,
-crystal clear how the component works.
-* only runs at build-time.
-* Know exactly what data is needed for each page so no waiting.
-* push vs. pull
+Currently data in Gatsby (like pretty much every static site
+generator) is *pushed* into templates to be rendered into HTML. This is
+a simple pattern and works great for many use cases. But when you start
+working on more complex sites, you really start to miss the flexibility
+of building a database-driven site. With a database, all your data is
+available to query against in any fashion you'd like. Whatever bits
+of data you need to assemble a page, you can *pull* in. You want to
+create author pages showing their bio & last 5 posts? It's just a query
+away.
 
-### Programmatic routes
+I wanted this same flexibility for Gatsby. So for 1.0, I've built a new
+data processing layer which converts your static data files (or any
+other data source) into a GraphQL *schema* which you can query against
+like a database.
 
-* pagination, etc.
+Every Gatsby page or page template can have a GraphQL query which tells
+Gatsby what data is required for that page. The data layer runs the
+GraphQL queries during development and at build time and writes out a
+JSON file with the result of the query. This JSON file is then injected
+into the React component as props.
 
-Show simple component.
+Because we know at build-time what data is needed for every page, we can
+easily pre-fetch page data meaning even very complex, data-heavy pages
+load almost instantly.
 
-## GatsbyGram case study
+This pattern of *colocating* your queries next to your views is copied
+from the [Relay data framework from
+Facebook](https://facebook.github.io/relay/). Colocating your queries
+with your views makes it easy to understand what data is used in
+each view.
+
+A simple example of how this works in practice.
+
+Say we had a markdown file that looked like:
+
+```markdown
+---
+title: A sweet post
+date: "2017-02-23"
+---
+
+This is my sweet blog post. **Cool!**
+```
+
+In Gatsby we'd write a React component which acts as a template
+for the blog post.
+
+```javascript
+// A simple React component for rendering a blog page.
+import React from "react"
+
+class BlogPostTemplate extends React.Component {
+  render () {
+    <div>
+      <h1>{this.props.data.markdown.frontmatter.title}</h1>
+      <small>{this.props.data.markdown.frontmatter.date}</small>
+      <div
+        dangerouslySetInnerHTML={{
+          __html: this.props.data.markdown.html,
+        }}
+      />
+    </div>
+  }
+}
+
+export default BlogPostTemplate
+
+export const pageQuery = `
+  query BlogPost($slug: String!) {
+    markdown(slug: { eq: $slug }) {
+      // Get the markdown body compiled to HTML.
+      html
+      frontmatter {
+        title
+        // Transform the date at build time!
+        date(formatString: "MMM D, YYYY")
+      }
+    }
+  }
+`
+
+```
+
+All data parsing and processing is plugin-driven. So in time, any
+imaginable data format and source and potential way of processing its
+data will be an npm install away.
+
+So far I've focused on building out the markdown ecosystem. So there are
+plugins to [parse markdown](/docs/packages/gatsby-parser-remark/) and
+process it in a variety of ways (including [adding syntax highlighting
+with PrismJS](/docs/packages/gatsby-typegen-remark-prismjs/) and
+[resizing images referenced in markdown
+files](/docs/packages/gatsby-typegen-remark-responsive-image/) so
+they're mobile ready). I've also added parsers for
+[YAML](/docs/packages/gatsby-parser-yaml/),
+[JSON](/docs/packages/gatsby-parser-json/), and
+[images](/docs/packages/gatsby-parser-sharp/).
+
+These plugins are easy to write (somewhat similar to webpack loaders) so
+I expect to see the list of plugins grow rapidly.
+
+The GraphQL layer can also connect to external data sources like
+databases, APIs, or 3rd party services e.g. the various hosted CMSs such
+as [Contentful](https://www.contentful.com/) and
+[DataCMS](https://www.datocms.com/).
+
+## Gatsbygram
 
 <div>
 <video controls="controls" autoplay="true" loop="true">
   <source type="video/mp4" src="/gatsbygram.mp4"></source>
   <p>Your browser does not support the video element.</p>
 </video>
-</div>*GatsbyGram — our first 1.0
-example site @ https://gatsbygram.netlify.com/*
+</div>
 
-Show how video demonstrates different ideas expressed above.
+[Gatsbygram](https://gatsbygram.gatsbyjs.org) is the first Gatsby 1.0
+example site.
+
+It's a clone of Instagram built with Gatsby 1.0 to show off the power
+of the new GraphQL data processing layer and building with the React
+ecosystem.
+
+I built most of the site in one day with another day of tweaks and bug
+fixes.
+
+The entire site is built from:
+
+* two page components—one for the front page and one for each image
+page
+* three other regular React components
+* Two GraphQL queries
+* Three open-source React components
+* A handful of other JS libraries
+
+Which adds up to something like 1000 lines of code.
+
+And... that's it! It's pretty remarkable to me how concise the code is.
+
+And the site is lightning fast to use (loads almost 3x faster than the
+real instagram site) and works offline.
+
+The entire front page is generated from the following GraphQL query:
+
+```graphql
+query allImages {
+  allPosts {
+    edges {
+      node {
+        username
+        likes
+        id
+        text
+        weeksAgo: time(difference: "weeks")
+        image {
+          children {
+            ... on ImageSharp {
+              small: responsiveSizes(maxWidth: 292) {
+                src
+                srcSet
+              }
+              big: responsiveSizes(maxWidth: 640) {
+                src
+                srcSet
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+## Getting started with Gatsby 1.0
+
+Gatsby 1.0 is still in alpha so I don't yet recommend using it yet for
+casual users. If you don't mind some growth pains and diving it to fix
+bugs and add features, Gatsby 1.0 is mostly feature-complete now and can
+be used to build real sites.
+
+The first beta will be released in the coming weeks along with more
+documentation and a getting started tutorial. Subscribe to the [1.0 meta
+issue](https://github.com/gatsbyjs/gatsby/issues/419) on Github to get
+updates.
+
+This has been a really fun project to work on. I'm really interested to
+hear your reactions and what kind of problems you face that you think
+Gatsby will help with.
+
+If you're interested in contributing, please join the [#gatsby
+channel](https://discord.gg/0ZcbPKXt5bVoxkfV) on Discord and check out the
+[issues](https://github.com/gatsbyjs/gatsby/issues).

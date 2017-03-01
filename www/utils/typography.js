@@ -12,11 +12,12 @@ const options = {
   blockMarginBottom: 0.75,
   scaleRatio: 2.15,
   plugins: [new CodePlugin()],
-  overrideStyles: ({ rhythm, scale }) => ({
+  overrideStyles: ({ rhythm, scale }, options) => ({
     body: {
       background: `#f7f0eb`,
     },
     "h1,h2,h4,h5,h6": {
+      color: `#4c4b38`,
       lineHeight: 1.075,
       marginTop: rhythm(1.5),
       marginBottom: rhythm(3 / 4),
@@ -25,7 +26,7 @@ const options = {
       marginTop: rhythm(1 / 2),
     },
     h3: {
-      fontWeight: 400,
+      ...scale(2/5),
       fontStyle: `italic`,
       lineHeight: 1,
       marginTop: rhythm(1),
@@ -91,6 +92,7 @@ const options = {
     },
     video: {
       width: `100%`,
+      marginBottom: rhythm(options.blockMarginBottom),
     },
     [TABLET_MEDIA_QUERY]: {
       // Make baseFontSize on mobile 17px.

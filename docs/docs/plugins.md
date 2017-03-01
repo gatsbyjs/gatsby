@@ -19,6 +19,7 @@ mean converting this file into a JS component).
 ## Official plugins
 
 * [gatsby-parser](son: /docs/packages/gatsby-parser-json/)
+* [gatsby-parser-json](/docs/packages/gatsby-parser-json/)
 * [gatsby-parser-remark](/docs/packages/gatsby-parser-remark/)
 * [gatsby-parser-sharp](/docs/packages/gatsby-parser-sharp/)
 * [gatsby-parser-yaml](/docs/packages/gatsby-parser-yaml/)

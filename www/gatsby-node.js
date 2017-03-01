@@ -3,6 +3,7 @@ const Promise = require(`bluebird`)
 const path = require(`path`)
 const select = require(`unist-util-select`)
 const parseFilepath = require(`parse-filepath`)
+const fs = require(`fs-extra`)
 
 exports.createPages = ({ args }) => {
   const { graphql } = args
@@ -91,4 +92,9 @@ exports.modifyAST = ({ args }) => {
   })
 
   return files
+}
+
+exports.postBuild = () => {
+  fs.copySync(`../docs/blog/2017-02-21-1-0-progress-update-where-came-from-where-going/gatsbygram.mp4`,
+              `./public/gatsbygram.mp4`)
 }

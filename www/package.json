@@ -5,6 +5,7 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "bluebird": "^3.4.6",
+    "fs-extra": "^2.0.0",
     "gatsby": "1.0.0-alpha12-alpha.10a12536",
     "gatsby-link": "1.0.0-alpha12-alpha.10a12536",
     "gatsby-parser-remark": "1.0.0-alpha12-alpha.10a12536",
