@@ -21,7 +21,7 @@ const hashStr = function (str) {
     i = str.length
 
   while (i) {
-    hash = hash * 33 ^ str.charCodeAt((--i))
+    hash = hash * 33 ^ str.charCodeAt(--i)
   }
 
   /* JavaScript does bitwise operations (like XOR, above) on 32-bit signed
@@ -59,11 +59,7 @@ const writeChildRoutes = () => {
     let pathStr = ``
     if (!noPath) {
       if (programDB().prefixLinks) {
-        pathStr = `path:'${_.get(
-          siteDB().get(`config`),
-          `linkPrefix`,
-          ``,
-        )}${page.path}',`
+        pathStr = `path:'${_.get(siteDB().get(`config`), `linkPrefix`, ``)}${page.path}',`
       } else {
         pathStr = `path:'${page.path}',`
       }
@@ -145,11 +141,7 @@ const writeChildRoutes = () => {
       `
       let pathStr
       if (programDB().prefixLinks) {
-        pathStr = `path:'${_.get(
-          siteDB().get(`config`),
-          `linkPrefix`,
-          ``,
-        )}${indexPage.path}',`
+        pathStr = `path:'${_.get(siteDB().get(`config`), `linkPrefix`, ``)}${indexPage.path}',`
       } else {
         pathStr = `path:'${indexPage.path}',`
       }
@@ -337,10 +329,10 @@ const q = queue(
 
     const handleResult = (pathInfo, result = {}) => {
       //if (result.errors) {
-        //console.log(
-          //`graphql errors from file: ${absFile}`,
-          //result.errors,
-        //)
+      //console.log(
+      //`graphql errors from file: ${absFile}`,
+      //result.errors,
+      //)
       //}
       // Combine the result with the path context.
       result.pathContext = pathInfo.context
@@ -350,9 +342,7 @@ const q = queue(
       // Add result to page object.
       const page = pagesDB().get(pathInfo.path)
       let jsonName = `${_.kebabCase(pathInfo.path)}.json`
-      let internalComponentName = `Component${pascalCase(
-        pathInfo.path,
-      )}`
+      let internalComponentName = `Component${pascalCase(pathInfo.path)}`
       if (jsonName === `.json`) {
         jsonName = `index.json`
         internalComponentName = `ComponentIndex`
@@ -373,37 +363,30 @@ const q = queue(
 
     // Run queries for each page component.
     console.time(`graphql query time`)
-    Promise
-      .all(
-        paths.map(pathInfo => {
-          let pathContext
-          // Mixin the path context to the top-level.
-          // TODO do runtime check that user not passing in key that conflicts
-          // w/ top-level keys e.g. path or component.
-          if (pathInfo.context) {
-            pathContext = { ...pathInfo, ...pathInfo.context }
-          } else {
-            pathContext = { ...pathInfo }
-          }
+    Promise.all(
+      paths.map(pathInfo => {
+        let pathContext
+        // Mixin the path context to the top-level.
+        // TODO do runtime check that user not passing in key that conflicts
+        // w/ top-level keys e.g. path or component.
+        if (pathInfo.context) {
+          pathContext = { ...pathInfo, ...pathInfo.context }
+        } else {
+          pathContext = { ...pathInfo }
+        }
 
-
-          return graphql(query, pathContext)
-            .catch(() => (
-              handleResult(pathInfo)
-            ))
-            .then(result => (
-              handleResult(pathInfo, result)
-            ))
-        }),
-      )
-      .then(() => {
-        console.log(`rewrote JSON for queries for ${absFile}`)
-        console.timeEnd(`graphql query time`)
-        // Write out new child-routes.js in the .intermediate-representation directory
-        // in the root of your site.
-        debouncedWriteChildRoutes()
-        callback()
-      })
+        return graphql(query, pathContext)
+          .catch(() => handleResult(pathInfo))
+          .then(result => handleResult(pathInfo, result))
+      }),
+    ).then(() => {
+      console.log(`rewrote JSON for queries for ${absFile}`)
+      console.timeEnd(`graphql query time`)
+      // Write out new child-routes.js in the .intermediate-representation directory
+      // in the root of your site.
+      debouncedWriteChildRoutes()
+      callback()
+    })
   },
   1,
 )

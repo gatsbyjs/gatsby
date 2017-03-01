@@ -43,9 +43,7 @@ module.exports = directory => new Promise((resolve, reject) => {
         mappedResults = mappedResults.map(image => {
           // Set path from FileName
           const parsedPath = parseFilepath(image.FileName)
-          image.path = `/${_.kebabCase(
-            `${parsedPath.dir}/${parsedPath.name}`,
-          )}/`
+          image.path = `/${_.kebabCase(`${parsedPath.dir}/${parsedPath.name}`)}/`
           // Render description as markdown (if set).
           if (image.Description) {
             image.Description = md.render(
@@ -116,9 +114,7 @@ module.exports = directory => new Promise((resolve, reject) => {
               resolve (file, args) {
                 return new Promise(resolve => {
                   md5File(file.SourceFile, (err, hash) => {
-                    const imgSrc = `/images/${hash}-${qs.stringify(
-                      args,
-                    )}.${file.FileTypeExtension}`
+                    const imgSrc = `/images/${hash}-${qs.stringify(args)}.${file.FileTypeExtension}`
                     const filePath = `${process.cwd()}/public${imgSrc}`
                     let transformer = sharp(file.SourceFile)
                       .resize(args.width, args.height)

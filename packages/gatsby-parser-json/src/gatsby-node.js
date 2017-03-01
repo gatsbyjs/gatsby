@@ -11,7 +11,7 @@ async function modifyAST ({ args }) {
     ast,
     `
     File[extension="json"]
-  `
+  `,
   )
   const contents = await Promise.map(files, file => loadNodeContents(file))
   files.forEach((file, index) => {

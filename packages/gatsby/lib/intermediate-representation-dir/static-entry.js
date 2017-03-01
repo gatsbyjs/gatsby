@@ -67,13 +67,11 @@ module.exports = (locals, callback) => {
         <script
           id="webpack-manifest"
           dangerouslySetInnerHTML={{
-            __html: (
-              `
+            __html: `
             //<![CDATA[
             window.webpackManifest = ${chunkManifest}
             //]]>
-            `
-            ),
+            `,
           }}
         />,
       )
@@ -128,15 +126,7 @@ module.exports = (locals, callback) => {
       )
       bodyRenderProps = _.merge(bodyRenderProps, pluginBodyRenderProps)
 
-      const html = `<!DOCTYPE html>\n ${renderToStaticMarkup(
-        <Html
-          {...bodyRenderProps}
-          headComponents={headComponents}
-          postBodyComponents={postBodyComponents}
-          body={body}
-          {...renderProps}
-        />,
-      )}`
+      const html = `<!DOCTYPE html>\n ${renderToStaticMarkup(<Html {...bodyRenderProps} headComponents={headComponents} postBodyComponents={postBodyComponents} body={body} {...renderProps} />)}`
       callback(null, html)
     } else {
       console.log(

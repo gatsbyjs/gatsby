@@ -17,8 +17,8 @@ const GatsbyLink = React.createClass({
     // Only enable prefetching of Link resources in production and for browsers that
     // don't support service workers *cough* Safari/IE *cough*.
     if (
-      process.env.NODE_ENV === `production` &&
-        !(`serviceWorker` in navigator) ||
+      (process.env.NODE_ENV === `production` &&
+        !(`serviceWorker` in navigator)) ||
       window.location.protocol !== `https:`
     ) {
       const routes = window.gatsbyRootRoute

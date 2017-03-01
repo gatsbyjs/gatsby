@@ -115,15 +115,10 @@ async function startServer (program) {
               headComponents: _.flattenDeep(
                 apiRunner(`modifyHeadComponents`, { headComponents: [] }, []),
               ),
-              postBodyComponents: _
-                .flattenDeep(
-                  apiRunner(
-                    `modifyPostBodyComponents`,
-                    { headComponents: [] },
-                    [],
-                  ),
-                )
-                .concat([<script src="/commons.js" />]),
+              postBodyComponents: _.flattenDeep(
+                apiRunner(`modifyPostBodyComponents`, { headComponents: [] }, [
+                ]),
+              ).concat([<script src="/commons.js" />]),
             })
             htmlStr = ReactDOMServer.renderToStaticMarkup(htmlElement)
             htmlStr = `<!DOCTYPE html>\n${htmlStr}`

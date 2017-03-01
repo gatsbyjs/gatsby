@@ -7,22 +7,20 @@ exports.replaceServerBodyRender = ({ component, headComponents }) => {
     renderToString(component))
 
   headComponents.push(
-    <style id="glamor-styles" dangerouslySetInnerHTML={{ __html: css }} />
+    <style id="glamor-styles" dangerouslySetInnerHTML={{ __html: css }} />,
   )
 
   headComponents.push(
     <script
       id="glamor-ids"
       dangerouslySetInnerHTML={{
-        __html: (
-          `
+        __html: `
         // <![CDATA[
         window._glamor = ${JSON.stringify(ids)}
         // ]]>
-        `
-        ),
+        `,
       }}
-    />
+    />,
   )
 
   return { headComponents, body: html }
