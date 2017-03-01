@@ -18,7 +18,7 @@ This framework would have to be:
 complex webapps.
 * **simple**, not requiring any setup to start using and with thoughtful
 APIs to extend the framework.
-* **fast**, doesn't lose customers to slow websites. Takes advantage of
+* **fast**, doesn't lose customers to slow page loads. Takes advantage of
 HTTP/2, browser caching, service workers, inlined critical css, and code
 splitting so your site always loads incredibly fast—no matter what you
 build.
@@ -53,11 +53,12 @@ Gatsby combines the fast performance of static websites with the
 powerful abstractions, excellent tools, and client capabilities of
 the webapp world.
 
-It is a general purpose data-centric web framework that is successfully
-used for a wide variety of sites including blogs, marketing sites,
-documentation sites, and ecommerce.
+It is a general purpose data-centric web framework that is [successfully
+being used for a wide variety of
+sites](https://github.com/gatsbyjs/gatsby#sites-built-with-gatsby)
+including blogs, marketing sites, documentation sites, and ecommerce.
 
-It wraps three of the most popular web app tools in a cohesive website
+It wraps three of the most popular web app tools into a cohesive website
 framework:
 
 * [React](https://facebook.github.io/react/) from Facebook for building UIs
@@ -72,8 +73,8 @@ the React world.
 ![Gatsby development
 experience](https://camo.githubusercontent.com/0506699aaaae2f9772cc381b92f2aa5e14eba296/687474703a2f2f7a697070792e6766796361742e636f6d2f556c74696d6174655765656b6c7942617265626972646261742e676966)
 
-When loading a Gatsby site, browsers first load the pre-built HTML file
-for a given page and then load the minimum Javascript needed to make
+When loading a page in a Gatsby site, browsers first load the page's
+pre-built HTML file and then load the minimum Javascript needed to make
 that page interactive.
 
 Because Gatsby sites are just static files, you're ensured a much more
@@ -191,7 +192,7 @@ app within the *same Gatsby codebase*.
 The marketing pages of their site are built using markdown and React
 components along with a modern css-in-js library
 [Glamor](https://github.com/threepointone/glamor) for styling.
-Their SaaS app uses [Redux](http://redux.js.org/) to communicate with
+The SaaS portion uses [Redux](http://redux.js.org/) to communicate with
 their Django API.
 
 The marketing portion of the site loads quickly with minimal Javascript.
@@ -269,9 +270,9 @@ load almost instantly.
 
 This pattern of *colocating* your queries next to your views is copied
 from the [Relay data framework from
-Facebook](https://facebook.github.io/relay/). Colocating your queries
-with your views makes it easy to understand what data is used in
-each view.
+Facebook](https://facebook.github.io/relay/). Colocaton makes it easy to
+fully understand your views as everything necessary for that view
+is fully described there.
 
 A simple example of how this works in practice.
 
@@ -287,7 +288,7 @@ This is my sweet blog post. **Cool!**
 ```
 
 In Gatsby we'd write a React component which acts as a template
-for the blog post.
+for all the blog posts.
 
 ```javascript
 // A simple React component for rendering a blog page.
@@ -376,14 +377,15 @@ page
 * Three open-source React components
 * A handful of other JS libraries
 
-Which adds up to something like 1000 lines of code.
+Which adds up to something like 1000 lines of site code.
 
 And... that's it! It's pretty remarkable to me how concise the code is.
 
 And the site is lightning fast to use (loads almost 3x faster than the
 real instagram site) and works offline.
 
-The entire front page is generated from the following GraphQL query:
+The data for the entire front page is generated from the following
+GraphQL query:
 
 ```graphql
 query allImages {
@@ -418,7 +420,7 @@ query allImages {
 ## Getting started with Gatsby 1.0
 
 Gatsby 1.0 is still in alpha so I don't yet recommend using it yet for
-casual users. If you don't mind some growth pains and diving it to fix
+casual use. If you don't mind some growth pains and diving it to fix
 bugs and add features, Gatsby 1.0 is mostly feature-complete now and can
 be used to build real sites.
 
@@ -427,10 +429,11 @@ documentation and a getting started tutorial. Subscribe to the [1.0 meta
 issue](https://github.com/gatsbyjs/gatsby/issues/419) on Github to get
 updates.
 
-This has been a really fun project to work on. I'm really interested to
+This has been a super fun project to work on. I'm really interested to
 hear your reactions and what kind of problems you face that you think
 Gatsby will help with.
 
 If you're interested in contributing, please join the [#gatsby
-channel](https://discord.gg/0ZcbPKXt5bVoxkfV) on Discord and check out the
-[issues](https://github.com/gatsbyjs/gatsby/issues).
+channel](https://discord.gg/0ZcbPKXt5bVoxkfV) on Discord, check out the
+[issues](https://github.com/gatsbyjs/gatsby/issues), and help bikeshed
+on names and APIs.
