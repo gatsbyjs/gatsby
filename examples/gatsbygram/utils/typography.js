@@ -20,8 +20,11 @@ const options = {
   headerFontFamily: [`Space Mono`, `sans-serif`],
   bodyFontFamily: [`Space Mono`, `sans-serif`],
   overrideStyles: () => ({
+    html: {
+      overflowY: `scroll`,
+    },
     a: {
-      textDecoration: `none`,
+      color: `#3897f0`,
     }
   })
 }

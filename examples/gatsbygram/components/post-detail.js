@@ -89,7 +89,8 @@ class PostDetail extends React.Component {
           width: `100%`,
           [presets.Tablet]: {
             flexDirection: `row-reverse`,
-          }
+            marginTop: rhythm(1),
+          },
         }}
       >
         <div
