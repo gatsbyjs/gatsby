@@ -23,6 +23,9 @@ const options = {
     html: {
       overflowY: `scroll`,
     },
+    h1: {
+      lineHeight: 1.1,
+    },
     a: {
       color: `#3897f0`,
     }
