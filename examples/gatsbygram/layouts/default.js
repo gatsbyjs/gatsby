@@ -26,11 +26,16 @@ class DefaultLayout extends React.Component {
     // if we're changing to a non-homepage page, put things in
     // a modal (unless we're on mobile).
     if (nextProps.location.pathname !== `/` &&
+        nextProps.location.pathname !== `/about/` &&
         this.windowWidth > 750
        ) {
       // Freeze the background from scrolling.
       this.htmlElement.style.overflow = `hidden`
       this.bodyElement.style.overflow = `hidden`
+
+      // Always set overflow-y to scroll so the scrollbar stays visible avoiding
+      // weird jumping.
+      this.htmlElement.style.overflowY = `scroll`
 
       // Save the homepage if we haven't already.
       if (!this.modalBackgroundChildren) {
@@ -42,6 +47,10 @@ class DefaultLayout extends React.Component {
       delete this.modalBackgroundChildren
       this.htmlElement.style.overflow = `visible`
       this.bodyElement.style.overflow = `visible`
+
+      // Always set overflow-y to scroll so the scrollbar stays visible avoiding
+      // weird jumping.
+      this.htmlElement.style.overflowY = `scroll`
     }
   }
 
@@ -68,9 +77,17 @@ class DefaultLayout extends React.Component {
               paddingBottom: `calc(${rhythm(3/4)} - 1px)`,
               maxWidth: 960,
               margin: `0 auto`,
+              overflow: `hidden`,
             }}
           >
-            <Link to="/">
+            <Link
+              to="/"
+              css={{
+                display: `inline-block`,
+                float: `left`,
+                textDecoration: `none`,
+              }}
+            >
               <h1
                 css={{
                   ...scale(4/5),
@@ -94,9 +111,21 @@ class DefaultLayout extends React.Component {
                     marginLeft: rhythm(1),
                   }}
                 >
-                  GatsbyGram
+                  Gatsbygram
                 </span>
               </h1>
+            </Link>
+            <Link
+              to="/about/"
+              css={{
+                color: `inherit`,
+                display: `inline-block`,
+                float: `right`,
+                lineHeight: `35px`,
+                textDecoration: `none`,
+              }}
+            >
+              About
             </Link>
           </div>
         </div>
