@@ -7,7 +7,7 @@ import { rhythm, scale } from "utils/typography"
 const IndexRoute = React.createClass({
   render () {
     console.log(`blog posts`, this.props)
-    const blogPosts = this.props.data.allFile.edges.map((edge) => edge.node.children[0])
+    const blogPosts = this.props.data.allMarkdownRemark.edges.map((edge) => edge.node)
     console.log(blogPosts)
     return (
       <div
@@ -93,28 +93,27 @@ export default IndexRoute
 
 export const pageQuery = `
 {
-  allFile(relativePath: { regex: "/^blog/" }, extension: { eq: "md" }) {
+  allMarkdownRemark(
+    sortBy: { order: DESC, fields: frontmatter___date },
+    _sourceNodeId: { regex: "/blog/" },
+  ) {
     edges {
       node {
-        children {
-          ... on MarkdownRemark {
-            excerpt
-            slug
-            frontmatter {
-              title
-              date(formatString: "DD MMMM, YYYY")
-              author {
-                id
-                avatar {
-                  children {
-                    ... on ImageSharp {
-                      responsiveResolution(width: 35, height: 35) {
-                        width
-                        height
-                        src
-                        srcSet
-                      }
-                    }
+        excerpt
+        slug
+        frontmatter {
+          title
+          date(formatString: "DD MMMM, YYYY")
+          author {
+            id
+            avatar {
+              children {
+                ... on ImageSharp {
+                  responsiveResolution(width: 35, height: 35) {
+                    width
+                    height
+                    src
+                    srcSet
                   }
                 }
               }

@@ -9,7 +9,7 @@ const options = {
   baseLineHeight: 1.4,
   headerColor: `#44421f`,
   bodyColor: `#44421f`,
-  blockMarginBottom: 0.75,
+  blockMarginBottom: 0.65,
   scaleRatio: 2.15,
   plugins: [new CodePlugin()],
   overrideStyles: ({ rhythm, scale }, options) => ({
