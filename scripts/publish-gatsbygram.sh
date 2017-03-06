@@ -1,5 +1,5 @@
 echo "=== Building ES5 version of Gatsby"
-./node_modules/.bin/lerna bootstrap
+./node_modules/.bin/lerna bootstrap --npm-client=yarn
 ./node_modules/.bin/lerna run build
 cd examples/gatsbygram
 #echo "=== Installing the website dependencies"
