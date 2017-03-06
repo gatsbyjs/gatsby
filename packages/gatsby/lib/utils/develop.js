@@ -17,7 +17,7 @@ const rlInterface = rl.createInterface({
   output: process.stdout,
 })
 
-const debug = require("debug`)(`gatsby:application")
+const debug = require("debug")("gatsby:application")
 
 async function startServer (program) {
   const directory = program.directory

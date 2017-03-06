@@ -9,7 +9,7 @@ const rlInterface = rl.createInterface({
   output: process.stdout,
 })
 
-const debug = require("debug`)(`gatsby:application")
+const debug = require("debug")("gatsby:application")
 
 function startServer (program, launchPort) {
   const directory = program.directory
