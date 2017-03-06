@@ -10,7 +10,7 @@ const runAPI = (plugin, api, args) => {
     linkPrefix = siteDB().get(`config`).linkPrefix
   }
 
-  const gatsbyNode = require("${plugin.resolve}/gatsby-node")
+  const gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
   if (gatsbyNode[api]) {
     console.log(`calling api handler in ${plugin.resolve} for api ${api}`)
     const result = gatsbyNode[api]({
