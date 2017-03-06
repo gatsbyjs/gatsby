@@ -21,7 +21,9 @@ exports.postBuild = () => {
     stripPrefix: rootDir,
     navigateFallback: `/offline-plugin-app-shell-fallback/index.html`,
     cacheId: `gatsby-plugin-offline`,
-    dontCacheBustUrlsMatching: /(.\w{8}.woff2|-\w{20}.js)/,
+    // Do cache bust JS URLs until can figure out how to make Webpack's
+    // URLs truely content-addressed.
+    dontCacheBustUrlsMatching: /(.\w{8}.woff2)/, //|-\w{20}.js)/,
     runtimeCaching: [
       {
         // Add runtime caching of images.
