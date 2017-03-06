@@ -1,5 +1,6 @@
 {
   "name": "gatsby-example-image-gallery",
+  "private": true,
   "description": "Gatsby example site: image gallery",
   "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",

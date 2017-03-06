@@ -1,5 +1,6 @@
 {
   "name": "gatsby-starter-default",
+  "private": true,
   "description": "Gatsby default starter",
   "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
