@@ -1,5 +1,5 @@
-const select = require(`unist-util-select`)
-const Promise = require(`bluebird`)
+const select = require("unist-util-select")
+const Promise = require("bluebird")
 
 exports.modifyAST = ({ args }) => new Promise(resolve => {
   const { ast } = args

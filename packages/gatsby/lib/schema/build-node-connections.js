@@ -1,17 +1,17 @@
-const _ = require(`lodash`)
+const _ = require("lodash")
 const {
   GraphQLInt,
   GraphQLList,
   GraphQLString,
-} = require(`graphql`)
+} = require("graphql")
 const {
   connectionArgs,
   connectionDefinitions,
-} = require(`graphql-skip-limit`)
+} = require("graphql-skip-limit")
 const { inferInputObjectStructureFromNodes } = require(
   `./infer-graphql-input-fields`,
 )
-const buildConnectionFields = require(`./build-connection-fields`)
+const buildConnectionFields = require("./build-connection-fields")
 
 module.exports = types => {
   const connections = {}
@@ -40,7 +40,7 @@ module.exports = types => {
         ...inferredInputFields,
       },
       resolve (object, resolveArgs) {
-        const runSift = require(`./run-sift`)
+        const runSift = require("./run-sift")
         return runSift({
           args: resolveArgs,
           nodes,

@@ -61,7 +61,7 @@ module.exports = (locals, callback) => {
       }
 
       // Add the chunk-manifest as a head component.
-      const chunkManifest = require(`!raw!public/chunk-manifest.json`)
+      const chunkManifest = require("!raw!public/chunk-manifest.json")
 
       headComponents.push(
         <script
@@ -78,7 +78,7 @@ module.exports = (locals, callback) => {
 
       let stats
       try {
-        stats = require(`public/stats.json`)
+        stats = require("public/stats.json")
       } catch (e) {
         // ignore
       }

@@ -9,7 +9,7 @@ import logo from '!file-loader!./images/logo.png'
 let stylesStr
 if (process.env.NODE_ENV === `production`) {
   try {
-    stylesStr = require(`!raw-loader!./public/styles.css`)
+    stylesStr = require("!raw-loader!./public/styles.css")
   } catch (e) {
     console.log(e)
   }

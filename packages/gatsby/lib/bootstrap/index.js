@@ -12,7 +12,7 @@ import fs from "fs-extra"
 import Joi from "joi"
 import chalk from "chalk"
 import purdy from "purdy"
-const { layoutComponentChunkName } = require(`../utils/js-chunk-names`)
+const { layoutComponentChunkName } = require("../utils/js-chunk-names")
 
 const mkdirs = Promise.promisify(fs.mkdirs)
 const copy = Promise.promisify(fs.copy)
@@ -90,7 +90,7 @@ module.exports = async program => {
   console.time(`open and validate gatsby-config.js`)
   let config = {}
   try {
-    config = require(`${program.directory}/gatsby-config`)
+    config = require("${program.directory}/gatsby-config")
   } catch (e) {
     console.log(`Couldn't open your gatsby-config.js file`)
     console.log(e)

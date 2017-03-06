@@ -10,12 +10,12 @@ import { StatsWriterPlugin } from "webpack-stats-plugin"
 
 import webpackModifyValidate from "./webpack-modify-validate"
 
-const debug = require(`debug`)(`gatsby:webpack-config`)
-const WebpackMD5Hash = require(`webpack-md5-hash`)
-const ChunkManifestPlugin = require(`chunk-manifest-webpack-plugin`)
-const { pagesDB, siteDB } = require(`../utils/globals`)
-const { layoutComponentChunkName } = require(`./js-chunk-names`)
-const genBabelConfig = require(`./babel-config`)
+const debug = require("debug`)(`gatsby:webpack-config")
+const WebpackMD5Hash = require("webpack-md5-hash")
+const ChunkManifestPlugin = require("chunk-manifest-webpack-plugin")
+const { pagesDB, siteDB } = require("../utils/globals")
+const { layoutComponentChunkName } = require("./js-chunk-names")
+const genBabelConfig = require("./babel-config")
 
 // Five stages or modes:
 //   1) develop: for `gatsby develop` command, hot reload and CSS injection into page

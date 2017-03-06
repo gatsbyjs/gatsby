@@ -1,8 +1,8 @@
-const sift = require(`sift`)
-const _ = require(`lodash`)
+const sift = require("sift")
+const _ = require("lodash")
 const {
   connectionFromArray,
-} = require(`graphql-skip-limit`)
+} = require("graphql-skip-limit")
 
 module.exports = ({ args, nodes, connection = false }) => {
   // Clone args as for some reason graphql-js removes the constructor

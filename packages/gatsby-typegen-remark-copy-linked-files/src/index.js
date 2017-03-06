@@ -1,8 +1,8 @@
-const visit = require(`unist-util-visit`)
-const isRelativeUrl = require(`is-relative-url`)
-const fsExtra = require(`fs-extra`)
-const path = require(`path`)
-const _ = require(`lodash`)
+const visit = require("unist-util-visit")
+const isRelativeUrl = require("is-relative-url")
+const fsExtra = require("fs-extra")
+const path = require("path")
+const _ = require("lodash")
 
 module.exports = ({ files, markdownNode, markdownAST }) => {
   // Copy linked files to the public directory and modify the AST to point to

@@ -6,13 +6,13 @@ import traverse from "babel-traverse"
 import path from "path"
 import parseFilepath from "parse-filepath"
 import glob from "glob"
-const Promise = require(`bluebird`)
+const Promise = require("bluebird")
 
 import { pagesDB, siteDB, programDB } from "./globals"
 import { layoutComponentChunkName, pathChunkName } from "./js-chunk-names"
 
 // Babylon has to use a require... why?
-const babylon = require(`babylon`)
+const babylon = require("babylon")
 
 const pascalCase = _.flow(_.camelCase, _.upperFirst)
 

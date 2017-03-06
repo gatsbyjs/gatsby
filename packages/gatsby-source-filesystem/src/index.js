@@ -1,5 +1,5 @@
-const Promise = require(`bluebird`)
-const fs = require(`fs`)
+const Promise = require("bluebird")
+const fs = require("fs")
 
 async function loadNodeContents (fileNode) {
   return new Promise((resolve, reject) => {

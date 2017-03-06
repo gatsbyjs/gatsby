@@ -2,8 +2,8 @@ import React from "react"
 import { applyRouterMiddleware, Router, browserHistory } from "react-router"
 import useScroll from "react-router-scroll/lib/useScroll"
 
-const apiRunner = require(`./api-runner-browser`)
-const rootRoute = require(`./child-routes`)
+const apiRunner = require("./api-runner-browser")
+const rootRoute = require("./child-routes")
 
 let currentLocation
 

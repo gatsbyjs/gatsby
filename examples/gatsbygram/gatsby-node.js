@@ -1,7 +1,7 @@
-const _ = require(`lodash`)
-const Promise = require(`bluebird`)
-const path = require(`path`)
-const slug = require(`slug`)
+const _ = require("lodash")
+const Promise = require("bluebird")
+const path = require("path")
+const slug = require("slug")
 
 exports.createPages = ({ args }) => (
   new Promise((resolve, reject) => {

@@ -1,11 +1,11 @@
 test(`Infers graphql type from array of nodes`, () => {
-  const { inferObjectStructureFromNodes } = require(`../infer-graphql-type`)
+  const { inferObjectStructureFromNodes } = require("../infer-graphql-type")
   const {
     graphql,
     GraphQLObjectType,
     GraphQLList,
     GraphQLSchema,
-  } = require(`graphql`)
+  } = require("graphql")
   const nodes = [
     {
       id: `foo`,

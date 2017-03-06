@@ -1,4 +1,4 @@
-const webpack = require(`webpack`)
+const webpack = require("webpack")
 
 // Add Glamor support
 exports.modifyWebpackConfig = ({ args }) => {

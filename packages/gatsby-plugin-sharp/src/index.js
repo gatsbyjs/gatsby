@@ -1,13 +1,13 @@
-const sharp = require(`sharp`)
-const qs = require(`qs`)
-const imageSize = require(`image-size`)
-const _ = require(`lodash`)
-const Promise = require(`bluebird`)
-const fs = require(`fs`)
-const ProgressBar = require(`progress`)
-const imagemin = require(`imagemin`)
-const imageminPngquant = require(`imagemin-pngquant`)
-const queue = require(`queue`)
+const sharp = require("sharp")
+const qs = require("qs")
+const imageSize = require("image-size")
+const _ = require("lodash")
+const Promise = require("bluebird")
+const fs = require("fs")
+const ProgressBar = require("progress")
+const imagemin = require("imagemin")
+const imageminPngquant = require("imagemin-pngquant")
+const queue = require("queue")
 
 // Promisify the sharp prototype (methods) to promisify the alternative (for
 // raw) callback-accepting toBuffer(...) method

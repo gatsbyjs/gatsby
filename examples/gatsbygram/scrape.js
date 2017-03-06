@@ -1,9 +1,9 @@
-const { InstagramPosts } = require(`instagram-screen-scrape`)
-const url = require(`url`)
-const fs = require(`fs`)
-const ProgressBar = require(`progress`)
+const { InstagramPosts } = require("instagram-screen-scrape")
+const url = require("url")
+const fs = require("fs")
+const ProgressBar = require("progress")
 
-const download = require(`./utils/download-file`)
+const download = require("./utils/download-file")
 
 // Create the stream
 const streamOfPosts = new InstagramPosts({ username: `kyle__mathews` })

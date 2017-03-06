@@ -1,23 +1,23 @@
-const _ = require(`lodash`)
+const _ = require("lodash")
 const {
   GraphQLObjectType,
   GraphQLNonNull,
   GraphQLID,
   GraphQLList,
   GraphQLString,
-} = require(`graphql`)
-const select = require(`unist-util-select`)
-const path = require(`path`)
-const Promise = require(`bluebird`)
-const mime = require(`mime`)
+} = require("graphql")
+const select = require("unist-util-select")
+const path = require("path")
+const Promise = require("bluebird")
+const mime = require("mime")
 
-const apiRunner = require(`../utils/api-runner-node`)
-const { inferObjectStructureFromNodes } = require(`./infer-graphql-type`)
+const apiRunner = require("../utils/api-runner-node")
+const { inferObjectStructureFromNodes } = require("./infer-graphql-type")
 const { inferInputObjectStructureFromNodes } = require(
   `./infer-graphql-input-fields`,
 )
-const nodeInterface = require(`./node-interface`)
-const { siteDB } = require(`../utils/globals`)
+const nodeInterface = require("./node-interface")
+const { siteDB } = require("../utils/globals")
 
 module.exports = async ast => new Promise(resolve => {
   const allNodes = select(ast, `*`)
@@ -98,7 +98,7 @@ module.exports = async ast => new Promise(resolve => {
               ...inputArgs,
             },
             resolve (a, args) {
-              const runSift = require(`./run-sift`)
+              const runSift = require("./run-sift")
               return runSift({
                 args,
                 nodes,

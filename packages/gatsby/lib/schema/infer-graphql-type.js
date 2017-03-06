@@ -5,12 +5,12 @@ const {
   GraphQLFloat,
   GraphQLInt,
   GraphQLList,
-} = require(`graphql`)
-const _ = require(`lodash`)
-const moment = require(`moment`)
-const parseFilepath = require(`parse-filepath`)
-const mime = require(`mime`)
-const { siteDB } = require(`../utils/globals`)
+} = require("graphql")
+const _ = require("lodash")
+const moment = require("moment")
+const parseFilepath = require("parse-filepath")
+const mime = require("mime")
+const { siteDB } = require("../utils/globals")
 
 const inferGraphQLType = ({ value, fieldName, ...otherArgs }) => {
   if (Array.isArray(value)) {

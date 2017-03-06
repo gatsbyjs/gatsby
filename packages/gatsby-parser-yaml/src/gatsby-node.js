@@ -1,9 +1,9 @@
-const select = require(`unist-util-select`)
-const Promise = require(`bluebird`)
-const fs = require(`fs`)
-const jsYaml = require(`js-yaml`)
-const _ = require(`lodash`)
-const { loadNodeContents } = require(`gatsby-source-filesystem`)
+const select = require("unist-util-select")
+const Promise = require("bluebird")
+const fs = require("fs")
+const jsYaml = require("js-yaml")
+const _ = require("lodash")
+const { loadNodeContents } = require("gatsby-source-filesystem")
 
 async function modifyAST ({ args }) {
   const { ast } = args

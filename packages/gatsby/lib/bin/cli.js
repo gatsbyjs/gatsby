@@ -1,7 +1,7 @@
-const program = require(`commander`)
-const packageJson = require(`../../package.json`)
-const path = require(`path`)
-const _ = require(`lodash`)
+const program = require("commander")
+const packageJson = require("../../package.json")
+const path = require("path")
+const _ = require("lodash")
 console.log(`bin/cli: time since started:`, process.uptime())
 
 const defaultHost = process.platform === `win32` ? `localhost` : `0.0.0.0`
@@ -24,7 +24,7 @@ program
   .option(`-p, --port <port>`, `Set port. Defaults to 8000`, `8000`)
   .option(`-o, --open`, `Open the site in your browser for you.`)
   .action(command => {
-    const develop = require(`../utils/develop`)
+    const develop = require("../utils/develop")
     console.timeEnd(`time to load develop`)
     const p = {
       ...command,
@@ -44,7 +44,7 @@ program
     // Set NODE_ENV to 'production'
     process.env.NODE_ENV = `production`
 
-    const build = require(`../utils/build`)
+    const build = require("../utils/build")
     const p = {
       ...command,
       directory,
@@ -66,7 +66,7 @@ program
   .option(`-p, --port <port>`, `Set port. Defaults to 8000`, `8000`)
   .option(`-o, --open`, `Open the site in your browser for you.`)
   .action(command => {
-    const serve = require(`../utils/serve-build`)
+    const serve = require("../utils/serve-build")
     const p = {
       ...command,
       directory,
@@ -78,7 +78,7 @@ program
   .command(`new [rootPath] [starter]`)
   .description(`Create new Gatsby project.`)
   .action((rootPath, starter) => {
-    const newCommand = require(`../utils/new`)
+    const newCommand = require("../utils/new")
     newCommand(rootPath, starter)
   })
 

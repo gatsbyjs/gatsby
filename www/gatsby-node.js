@@ -1,9 +1,9 @@
-const _ = require(`lodash`)
-const Promise = require(`bluebird`)
-const path = require(`path`)
-const select = require(`unist-util-select`)
-const parseFilepath = require(`parse-filepath`)
-const fs = require(`fs-extra`)
+const _ = require("lodash")
+const Promise = require("bluebird")
+const path = require("path")
+const select = require("unist-util-select")
+const parseFilepath = require("parse-filepath")
+const fs = require("fs-extra")
 
 exports.createPages = ({ args }) => {
   const { graphql } = args

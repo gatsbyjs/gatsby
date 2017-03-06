@@ -1,17 +1,17 @@
-const _ = require(`lodash`)
+const _ = require("lodash")
 const {
   GraphQLInt,
   GraphQLList,
   GraphQLString,
   GraphQLEnumType,
-} = require(`graphql`)
+} = require("graphql")
 const {
   connectionArgs,
   connectionDefinitions,
   connectionFromArray,
-} = require(`graphql-skip-limit`)
+} = require("graphql-skip-limit")
 
-const { buildFieldEnumValues } = require(`./ast-utils`)
+const { buildFieldEnumValues } = require("./ast-utils")
 
 module.exports = type => {
   //nodes, nodeType) => {

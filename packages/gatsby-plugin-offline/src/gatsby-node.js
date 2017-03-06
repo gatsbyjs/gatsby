@@ -1,5 +1,5 @@
-const precache = require(`sw-precache`)
-const path = require(`path`)
+const precache = require("sw-precache")
+const path = require("path")
 
 exports.createPages = () => [
   {

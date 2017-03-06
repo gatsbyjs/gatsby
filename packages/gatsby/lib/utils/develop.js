@@ -1,23 +1,23 @@
 /* @flow weak */
-const express = require(`express`)
-const graphqlHTTP = require(`express-graphql`)
-const glob = require(`glob`)
-const webpackRequire = require(`webpack-require`)
-const bootstrap = require(`../bootstrap`)
-const webpack = require(`webpack`)
-const webpackConfig = require(`./webpack.config`)
-const React = require(`react`)
-const ReactDOMServer = require(`react-dom/server`)
-const rl = require(`readline`)
-const parsePath = require(`parse-filepath`)
-const _ = require(`lodash`)
+const express = require("express")
+const graphqlHTTP = require("express-graphql")
+const glob = require("glob")
+const webpackRequire = require("webpack-require")
+const bootstrap = require("../bootstrap")
+const webpack = require("webpack")
+const webpackConfig = require("./webpack.config")
+const React = require("react")
+const ReactDOMServer = require("react-dom/server")
+const rl = require("readline")
+const parsePath = require("parse-filepath")
+const _ = require("lodash")
 
 const rlInterface = rl.createInterface({
   input: process.stdin,
   output: process.stdout,
 })
 
-const debug = require(`debug`)(`gatsby:application`)
+const debug = require("debug`)(`gatsby:application")
 
 async function startServer (program) {
   const directory = program.directory
@@ -165,7 +165,7 @@ async function startServer (program) {
       } else {
         // TODO restore
         //if (program.open) {
-        const opn = require(`opn`)
+        const opn = require("opn")
         //opn(server.info.uri)
         //}
         console.log(
@@ -324,7 +324,7 @@ async function startServer (program) {
 //}
 
 module.exports = program => {
-  const detect = require(`detect-port`)
+  const detect = require("detect-port")
   const port = typeof program.port === `string`
     ? parseInt(program.port, 10)
     : program.port

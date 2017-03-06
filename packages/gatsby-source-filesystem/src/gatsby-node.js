@@ -1,14 +1,14 @@
 import Promise from "bluebird"
 import mapLimit from "async/mapLimit"
 
-const _ = require(`lodash`)
-const path = require(`path`)
-const md5File = require(`md5-file`)
-const recursive = require(`recursive-readdir`)
-const fs = require(`fs`)
-const prettyBytes = require(`pretty-bytes`)
-const u = require(`unist-builder`)
-const slash = require(`slash`)
+const _ = require("lodash")
+const path = require("path")
+const md5File = require("md5-file")
+const recursive = require("recursive-readdir")
+const fs = require("fs")
+const prettyBytes = require("pretty-bytes")
+const u = require("unist-builder")
+const slash = require("slash")
 
 exports.sourceNodes = ({ args, pluginOptions }) => new Promise((
   resolve,
