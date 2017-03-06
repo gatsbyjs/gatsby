@@ -90,7 +90,7 @@ module.exports = async program => {
   console.time(`open and validate gatsby-config.js`)
   let config = {}
   try {
-    config = require("${program.directory}/gatsby-config")
+    config = require(`${program.directory}/gatsby-config`)
   } catch (e) {
     console.log(`Couldn't open your gatsby-config.js file`)
     console.log(e)
