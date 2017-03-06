@@ -4,7 +4,7 @@ echo "=== Building ES5 version of Gatsby"
 cd www
 echo "=== Installing the website dependencies"
 yarn
-echo "=== Copying built Gatsby to website."
-cp -r ../packages/gatsby/dist ./node_modules/gatsby/dist
+#echo "=== Copying built Gatsby to website."
+#cp -r ../packages/gatsby/dist ./node_modules/gatsby/dist
 echo "=== Building website"
 ./node_modules/.bin/gatsby build
