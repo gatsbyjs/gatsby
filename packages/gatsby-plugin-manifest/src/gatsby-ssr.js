@@ -1,4 +1,4 @@
-const React = require(`react`)
+const React = require("react")
 
 exports.modifyHeadComponents = (args, pluginOptions) => [
   <link rel="manifest" href="/manifest.json" />,
