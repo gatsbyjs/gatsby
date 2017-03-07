@@ -16,6 +16,8 @@ Gatsby is a JavaScript web framework that combines the fast performance
 of static websites with the powerful abstractions, excellent tools, and
 client capabilities of the React.js world.
 
+Gatsby was open sourced in 2015 and we're now working on its v1.
+
 ### Gatsby is fast
 
 Gatsby automatically optimizes your site for the modern web. You
@@ -40,7 +42,8 @@ and Instagram (bottom) loading on webpagetest.org*
 
 The second view is even faster for Gatsbygram as it now loads the site
 from its service worker. It has pixels on the screen in under a second
-on a budget Android device!
+on a budget Android device! And it *finishes* loading a full 1.5 seconds
+before Instagram has a pixel on the screen.
 
 ![gatsbygram vs. instagram filmstrip repeat load](gatsbygram-instagram-repeat-load.png)*Filmstrip of a repeat view of Gatsbygram (top)
 and Instagram (bottom) loading on webpagetest.org*
@@ -321,10 +324,10 @@ code/data for subsequent pages on non-sw pages
 Gatsby has always had a rich set of lifecycle APIs to allow you to hook
 into various events during development, building, and in the client.
 
-Gatsby 1.0 extends this and adds a [new plugin
-architecture](/docs/plugins/). So generally useful code can be extracted
-from sites and made reusable. Most of the new functionality in Gatsby
-1.0 is powered by plugins.
+Gatsby 1.0 adds new APIs and also adds a [new plugin
+architecture](/docs/plugins/). So code can now be extracted from sites
+and made reusable. Most of the new functionality in Gatsby 1.0 is
+powered by plugins.
 
 Plugins are added to a site in its `gatsby-config.js`. Here's what
 Gatsbygram's config file looks like:
@@ -409,37 +412,7 @@ explain GraphQL & walk through two queries.
 
 Glamor — totally sweet css-in-js
 
-## Offline caching
+## Creating your own Gatsbygram
 
-The data for the entire front page is generated from the following
-GraphQL query:
+Instructions
 
-```graphql
-query allImages {
-  allPosts {
-    edges {
-      node {
-        username
-        likes
-        id
-        text
-        weeksAgo: time(difference: "weeks")
-        image {
-          children {
-            ... on ImageSharp {
-              small: responsiveSizes(maxWidth: 292) {
-                src
-                srcSet
-              }
-              big: responsiveSizes(maxWidth: 640) {
-                src
-                srcSet
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-```
