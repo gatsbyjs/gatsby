@@ -114,7 +114,7 @@ https://gatsbygram.gatsbyjs.org
 * [2016 JavaScript Rising Stars](https://risingstars2016.js.org/) ([source](https://github.com/michaelrambeau/risingstars2016))
 * [Daniel Reszka blog, code & gallery](http://blog.pixarea.com) ([source](https://github.com/danielres/blog))
 * [meadowlab.io](https://meadowlab.io/)
-* [xpchbill.github.io](https://xpchbill.github.io/)
+* [xpchbill.github.io](https://xpchbill.github.io/)([source](https://github.com/xpchbill/xpchbill.github.io))
 * [Edit this file to add yours!](https://github.com/gatsbyjs/gatsby/blob/master/README.md)
 
 *Note, for the sites that have made their source available, you can
