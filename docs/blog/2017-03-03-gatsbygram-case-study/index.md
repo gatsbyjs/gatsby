@@ -10,10 +10,16 @@ image: 'ui-and-code.png'
 [Gatsbygram](https://gatsbygram.gatsbyjs.org) is the first Gatsby 1.0
 example site.
 
-It's a clone of Instagram built with Gatsby 1.0 to show how 
+It's a clone of Instagram built with Gatsby 1.0 to show how
 building websites with the React ecosystem, Gatsby's new GraphQL data
 processing layer, and the principles of Progress Web App (PWA) design
 delivers great user experiences.
+
+## What is Gatsby
+
+Gatsby combines the fast performance of static websites with the
+powerful abstractions, excellent tools, and client capabilities of
+the web-app world.
 
 ### Gatsby is fast
 
@@ -36,7 +42,8 @@ slow connections don't wait for...
 ### Gatsby is simple
 
 Gatsby combines React, Webpack, and an innovative declarative data
-processing layer so you don't waste time with painful or time-consuming.
+processing layer so you don't waste time with painful or time-consuming
+configuration and data processing scripting.
 
 Stop wasting time and build something.
 
