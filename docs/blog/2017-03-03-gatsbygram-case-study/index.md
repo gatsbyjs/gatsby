@@ -7,8 +7,8 @@ image: 'ui-and-code.png'
 
 ![Gatsbygram](ui-and-code.png)
 
-[Gatsbygram](https://gatsbygram.gatsbyjs.org) is the first Gatsby 1.0
-example site.
+[Gatsbygram](https://gatsbygram.gatsbyjs.org) is a clone of Instagram
+that is the the first Gatsby 1.0 example site.
 
 It's a clone of Instagram built with Gatsby 1.0 to show how
 building websites with the React ecosystem, Gatsby's new GraphQL data
@@ -17,9 +17,9 @@ delivers great user experiences.
 
 ## What is Gatsby
 
-Gatsby combines the fast performance of static websites with the
-powerful abstractions, excellent tools, and client capabilities of
-the web-app world.
+Gatsby is a JavaScript web framework that combines the fast performance
+of static websites with the powerful abstractions, excellent tools, and
+client capabilities of the web-app world.
 
 ### Gatsby is fast
 
@@ -29,9 +29,15 @@ loads *3x faster* than the real Instagram site.
 I tested Gatsbygram vs. Instagram on webpagetest.org using a Moto G4 on
 a simulated 3G network and the median [speed
 index](https://sites.google.com/a/webpagetest.org/docs/using-webpagetest/metrics/speed-index)
-score for Gatsbygram was 2468 vs. 7301 for Instagram.
+score for the initial view for Gatsbygram was 2468 vs. 7301 for Instagram.
 
 ![gatsbygram vs. instagram filmstrip](gatsbygram-instagram.png)*Filmstrip of Gatsbygram (top)
+and Instagram (bottom) loading on webpagetest.org*
+
+The second view is even faster for Gatsbygram as it now loads the site
+from its service worker.
+
+![gatsbygram vs. instagram filmstrip repeat load](gatsbygram-instagram-repeat-load.png)*Filmstrip of a repeat view of Gatsbygram (top)
 and Instagram (bottom) loading on webpagetest.org*
 
 ### Gasby is built for the next billion users
