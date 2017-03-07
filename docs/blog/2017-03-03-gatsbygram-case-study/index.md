@@ -71,6 +71,16 @@ your user.
 
 ### Gatsby is simple
 
+convention > configuration. Preconfigured so optimized dev/production
+builds for most websites with easy hooks to customize for your needs.
+
+Declarative data fetching. Don't worry about setting up custom scripted
+image processing.
+
+For Gatsbygram, generates over *1000* thumbnails for responsive images
+without *any* custom scripting. Instead each component can specify
+exactly how it wants its data processed.
+
 Gatsby combines React, Webpack, and an innovative declarative data
 processing layer so you don't waste time with painful or time-consuming
 configuration and data processing scripting.
