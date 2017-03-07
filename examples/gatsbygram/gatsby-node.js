@@ -7,7 +7,6 @@ const slug = require("slug")
 // called after the Gatsby bootstrap is finished so you have
 // access to any information necessary to programatically
 // create pages.
-
 exports.createPages = ({ args }) => (
   new Promise((resolve, reject) => {
     // The “graphql” function allows us to run arbitrary

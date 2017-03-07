@@ -12,11 +12,11 @@ built with Gatsby v1.
 
 ## What is Gatsby
 
-Gatsby is a JavaScript web framework that combines the fast performance
-of static websites with the powerful abstractions, excellent tools, and
-client capabilities of the React.js world.
-
-Gatsby was open sourced in 2015 and we're now working on its v1.
+Gatsby is a JavaScript web framework that let's you build fast, very
+dynamic, and mobile-ready websites *without* a complicated backend. It
+combines the fast performance of static websites with the powerful
+abstractions, excellent tools, and client capabilities of the React.js
+world.
 
 ### Gatsby is fast
 
@@ -71,15 +71,21 @@ your user.
 
 ### Gatsby is simple
 
-convention > configuration. Preconfigured so optimized dev/production
-builds for most websites with easy hooks to customize for your needs.
+Modern websites are too complex to rely on people always configuring
+things correctly. Gatsby takes complexity out of your site and moves it
+into the framework and community plugins.
 
-Declarative data fetching. Don't worry about setting up custom scripted
+You give Gatsby React.js components, data, and styles and Gatsby gives you
+back an optimized website.
+
+* convention over configuration. Preconfigured so optimized dev/production
+builds for most websites with easy hooks to customize for your needs.
+* Declarative data processing. Don't worry about setting up custom scripted
 image processing.
 
-For Gatsbygram, generates over *1000* thumbnails for responsive images
-without *any* custom scripting. Instead each component can specify
-exactly how it wants its data processed.
+For Gatsbygram, Gatsby generates over *1000* image thumbnails for
+responsive images without *any* custom scripting. Instead each component
+can specify exactly how it wants its data processed.
 
 Gatsby combines React, Webpack, and an innovative declarative data
 processing layer so you don't waste time with painful or time-consuming
@@ -94,11 +100,11 @@ Gatsby uses standard React.js components for building websites.
 There are three types of components.
 
 * *general layout components* for general site structure and headers and
-footers.
-* *template components* for *types* of pages like blog posts or
+footers
+* *template components* for *page types* like blog posts or
 documentation pages
 * *React.js pages* for individual pages you build with React.js
-components.
+components
 
 ![gatsbygram component layout](gatsbygram-layout.png)*Gatsbygram's site
 structure with its three page components*
@@ -153,6 +159,10 @@ Mono](https://fonts.google.com/specimen/Space+Mono), by requiring its
 
 ### Template components
 
+![Gatsbygram detailed post page created using a template
+component](template-page-screenshot.png)*Gatsbygram post detail page
+created using a template component*
+
 Gatsby 1.0 allows you to create pages programatically with an object that
 looks like this:
 
@@ -161,14 +171,10 @@ looks like this:
   path: slugify(node.id),
   component: postTemplate, // Absolute path to the template component.
   context: {
-    id: edge.node.id,
+    id: node.id,
   },
 }
 ```
-
-![Gatsbygram detailed post page created using a template
-component](template-page-screenshot.png)*Gatsbygram post detail page
-created using a template component*
 
 These page objects are created in the site's `gatsby-node.js` using
 Gatsby's lifecycle API `createPages`.
@@ -183,12 +189,11 @@ const slug = require("slug")
 // called after the Gatsby bootstrap is finished so you have
 // access to any information necessary to programatically
 // create pages.
-
 exports.createPages = ({ args }) => (
   new Promise((resolve, reject) => {
     // The “graphql” function allows us to run arbitrary
-    // queries against this site's graphql schema. Think of
-    // it like this site has a built-in database constructed
+    // queries against this Gatsbygram's graphql schema. Think of
+    // it like Gatsbygram has a built-in database constructed
     // from static data that you can run queries against.
     const { graphql } = args
     const pages = []
