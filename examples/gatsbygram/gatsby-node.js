@@ -7,7 +7,6 @@ exports.createPages = ({ args }) => (
   new Promise((resolve, reject) => {
     const { graphql } = args
     const pages = []
-    const postPage = path.resolve(`pages/template-post-page.js`)
     graphql(`
       {
         allPosts(limit: 1000) {
@@ -25,7 +24,8 @@ exports.createPages = ({ args }) => (
         reject(result.errors)
       }
 
-      // Create blog posts pages.
+      // Create image post pages.
+      const postPage = path.resolve(`pages/template-post-page.js`)
       _.each(result.data.allPosts.edges, (edge) => {
         pages.push({
           path: slug(edge.node.id), // required

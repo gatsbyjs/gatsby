@@ -15,21 +15,10 @@ building websites with the React ecosystem, Gatsby's new GraphQL data
 processing layer, and the principles of Progress Web App (PWA) design
 delivers great user experiences.
 
-The entire site is built using:
+### Gatsby is fast
 
-* two page components—one for the front page and one template component
-for the detailed image pages
-* three none-page React components
-* Two GraphQL queries
-* Three open-source React components
-* A handful of other JS libraries
-
-Which adds up to something like 1000 lines of site code.
-
-And... that's it! It's pretty remarkable to me how concise the code is.
-
-And the site is lightning fast to use loading *3x faster*
-than the real Instagram site.
+Gatsby automatically optimizes your site for the modern web. Gatsbygram
+loads *3x faster* than the real Instagram site.
 
 I tested Gatsbygram vs. Instagram on webpagetest.org using a Moto G4 on
 a simulated 3G network and the median [speed
@@ -38,6 +27,18 @@ score for Gatsbygram was 2468 vs. 7301 for Instagram.
 
 ![gatsbygram vs. instagram filmstrip](gatsbygram-instagram.png)*Filmstrip of Gatsbygram (top)
 and Instagram (bottom) loading on webpagetest.org*
+
+### Gasby is built for the next billion users
+
+Gatsby leverages service workers to *cache* site assets so users on
+slow connections don't wait for...
+
+### Gatsby is simple
+
+Gatsby combines React, Webpack, and an innovative declarative data
+processing layer so you don't waste time with painful or time-consuming.
+
+Stop wasting time and build something.
 
 ## App structure
 
