@@ -153,9 +153,12 @@ looks like this:
 }
 ```
 
-These page objects are created in the site's `gatsby-node.js`. In
-Gatsbygram We use there the Gatsby lifecycle API `createPages` to create
-a page for each image.
+![Gatsbygram detailed post page created using a template
+component](template-page-screenshot.png)*Gatsbygram post detail page
+created using a template component*
+
+These page objects are created in the site's `gatsby-node.js` using
+Gatsby's lifecycle API `createPages`.
 
 ```javascript
 const _ = require("lodash")
