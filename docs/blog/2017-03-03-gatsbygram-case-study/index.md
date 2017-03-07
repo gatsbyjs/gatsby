@@ -39,7 +39,7 @@ vs. 8145 for
 and Instagram (bottom) loading on webpagetest.org*
 
 The second view is even faster for Gatsbygram as it now loads the site
-from its service worker. It has pixels on the screen under a second
+from its service worker. It has pixels on the screen in under a second
 on a budget Android device!
 
 ![gatsbygram vs. instagram filmstrip repeat load](gatsbygram-instagram-repeat-load.png)*Filmstrip of a repeat view of Gatsbygram (top)
@@ -55,6 +55,16 @@ slow connections don't wait for...
 
 mention Flipkart, Kongo (african ecommerce), housing.com and link to
 their case studies.
+
+Page refreshes almost instantly—regardless of the connection speed of
+your user.
+
+<div>
+<video controls="controls" autoplay="true" loop="true">
+  <source type="video/mp4" src="/gatsbygram.mp4"></source>
+  <p>Your browser does not support the video element.</p>
+</video>
+</div>
 
 ### Gatsby is simple
 
@@ -296,11 +306,9 @@ Github](https://github.com/gatsbyjs/gatsby/blob/1.0/examples/gatsbygram/pages/in
 [Read pages/about.js on
 Github](https://github.com/gatsbyjs/gatsby/blob/1.0/examples/gatsbygram/pages/about.js)
 
-## File structure
+## Client routing
 
-layouts/default — wraps all routes inside.
-
-gatsby-node.js — walkthrough
+react-router under the hood but with no setup necessary.
 
 links use gatsby-link — clientside routing + preloads necessary
 code/data for subsequent pages on non-sw pages
@@ -333,9 +341,9 @@ module.exports = {
      *
      * A site can have as many instances of
      * gatsby-source-filesystem as you need.  Each plugin
-    * instance is configured with a root path where it then
-    * recursively reads in files and adds them to the data
-    * tree.
+     * instance is configured with a root path where it then
+     * recursively reads in files and adds them to the data
+     * tree.
      */
     {
       resolve: `gatsby-source-filesystem`,
@@ -432,11 +440,3 @@ query allImages {
   }
 }
 ```
-
-<div>
-<video controls="controls" autoplay="true" loop="true">
-  <source type="video/mp4" src="/gatsbygram.mp4"></source>
-  <p>Your browser does not support the video element.</p>
-</video>
-</div>
-
