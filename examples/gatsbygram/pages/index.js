@@ -6,8 +6,7 @@ import Gravatar from 'react-gravatar'
 import { rhythm, scale } from '../utils/typography'
 import Post from '../components/post'
 
-// This would normally be in a Redux store or some other global data store
-// but... this is a quick and dirty experiment.
+// This would normally be in a Redux store or some other global data store.
 if (typeof window !== `undefined`) {
   window.postsToShow = 12
 }

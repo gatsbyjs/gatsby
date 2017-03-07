@@ -1,4 +1,4 @@
-# GatsbyGram
+# Gatsbygram
 
 https://gatsbygram.gatsbyjs.org/
 
