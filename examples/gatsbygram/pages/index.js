@@ -216,11 +216,11 @@ query allImages {
         image {
           children {
             ... on ImageSharp {
-              small: responsiveSizes(maxWidth: 292) {
+              small: responsiveSizes(maxWidth: 292, maxHeight: 292) {
                 src
                 srcSet
               }
-              big: responsiveSizes(maxWidth: 640) {
+              big: responsiveSizes(maxWidth: 640, maxHeight: 640) {
                 src
                 srcSet
               }
