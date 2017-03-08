@@ -2,10 +2,11 @@ import React from "react"
 
 import typography, { rhythm, scale } from "utils/typography"
 import { presets } from "glamor"
+import Helmet from "react-helmet"
 
 const BlogPostTemplate = React.createClass({
   render () {
-    console.log(this.props)
+    //console.log(this.props)
     const post = this.props.data.markdownRemark
     const twitterLine = post.frontmatter.author.twitter ? ` by ${post.frontmatter.author.twitter}` : ``
     const authorShareText = encodeURIComponent(`“${post.frontmatter.title}”${twitterLine} https://sourceforge.com/blog${post.fileSlug}`)
@@ -37,6 +38,70 @@ const BlogPostTemplate = React.createClass({
           },
         }}
       >
+        {/* Add long list of social meta tags */}
+        <Helmet
+          title={post.frontmatter.title}
+          link={[
+            {
+              rel: `canonical`,
+              href: `https://gatsbyjs.org${post.fileSlug}`,
+            },
+            {
+              rel: `author`,
+              href: `https://gatsbyjs.org${post.frontmatter.author.slug}`,
+            },
+          ]}
+          meta={[
+            {
+              name: `description`,
+              content: post.excerpt,
+            },
+            {
+              name: `og:description`,
+              content: post.excerpt,
+            },
+            {
+              name: `twitter:description`,
+              content: post.excerpt,
+            },
+            {
+              name: `og:title`,
+              content: post.frontmatter.title,
+            },
+            {
+              name: `og:image`,
+              content: post.frontmatter.image.children[0].resize.src,
+            },
+            {
+              name: `og:type`,
+              content: `article`,
+            },
+            {
+              name: `article:author`,
+              content: post.frontmatter.author.id,
+            },
+            {
+              name: `twitter:creator`,
+              content: post.frontmatter.author.twitter,
+            },
+            {
+              name: `author`,
+              content: post.frontmatter.author.id,
+            },
+            {
+              name: `twitter:label1`,
+              content: `Reading time`,
+            },
+            {
+              name: `twitter:data1`,
+              content: `${post.timeToRead} min read`,
+            },
+            {
+              name: `article:published_time`,
+              content: post.frontmatter.rawDate,
+            },
+          ]}
+        />
         <header
           css={{
             display: `flex`,
@@ -116,6 +181,16 @@ export const pageQuery = `
       frontmatter {
         title
         date(formatString: "MMM D, YYYY")
+        rawDate: date
+        image {
+          children {
+            ... on ImageSharp {
+              resize(width: 1500) {
+                src
+              }
+            }
+          }
+        }
         author {
           id
           bio

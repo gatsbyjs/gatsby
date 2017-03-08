@@ -7,6 +7,7 @@ import CodeIcon from "react-icons/lib/go/code"
 import PencilIcon from "react-icons/lib/go/pencil"
 import PersonIcon from "react-icons/lib/md/person"
 import { presets } from "glamor"
+import Helmet from "react-helmet"
 
 import SidebarBody from "../components/sidebar-body"
 
@@ -31,6 +32,28 @@ module.exports = React.createClass({
   render () {
     return (
       <div>
+        <Helmet
+          title={`GatsbyJS`}
+          titleTemplate={`%s | GatsbyJS`}
+          meta={[
+            {
+              name: `twitter:site`,
+              content: `@gatsbyjs`,
+            },
+            {
+              name: `og:url`,
+              content: `https://gatsbyjs.org${location.pathname}`,
+            },
+            {
+              name: `og:type`,
+              content: `website`,
+            },
+            {
+              name: `og:site_name`,
+              content: `GatsbyJS`,
+            },
+          ]}
+        />
         <div
           css={{
             background: `#f4dfc6`,
