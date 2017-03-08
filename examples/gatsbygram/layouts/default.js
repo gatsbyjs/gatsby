@@ -2,6 +2,8 @@ import React from 'react'
 import CameraIcon from 'react-icons/lib/fa/camera-retro'
 import { presets } from 'glamor'
 import Link from 'gatsby-link'
+
+// Load the css for the Space Mono font.
 import 'typeface-space-mono'
 
 import { rhythm, scale } from '../utils/typography'

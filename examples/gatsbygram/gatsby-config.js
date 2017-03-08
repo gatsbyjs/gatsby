@@ -33,6 +33,9 @@ module.exports = {
     // This plugin parses JSON file nodes.
     `gatsby-parser-json`,
     `gatsby-typegen-filesystem`,
+    // This plugin adds GraphQL fields to the ImageSharp
+    // GraphQL type. With them you can resize images and
+    // generate sets of responsive images.
     `gatsby-typegen-sharp`,
     // This plugin sets up the popular css-in-js library
     // Glamor. It handles adding a Babel plugin and webpack

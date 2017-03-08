@@ -10,8 +10,8 @@ const slug = require("slug")
 exports.createPages = ({ args }) => (
   new Promise((resolve, reject) => {
     // The “graphql” function allows us to run arbitrary
-    // queries against this site's graphql schema. Think of
-    // it like this site has a built-in database constructed
+    // queries against this Gatsbygram's graphql schema. Think of
+    // it like Gatsbygram has a built-in database constructed
     // from static data that you can run queries against.
     const { graphql } = args
     const pages = []

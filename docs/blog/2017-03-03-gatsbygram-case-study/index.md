@@ -13,7 +13,7 @@ built with Gatsby v1.
 ## What is Gatsby
 
 Gatsby is a JavaScript web framework that let's you build fast, very
-dynamic, and mobile-ready websites *without* a complicated backend. It
+dynamic, mobile-ready websites *without* a complicated backend. It
 combines the fast performance of static websites with the powerful
 abstractions, excellent tools, and client capabilities of the React.js
 world.
@@ -41,9 +41,9 @@ vs. 8145 for
 and Instagram (bottom) loading on webpagetest.org*
 
 The second view is even faster for Gatsbygram as it now loads the site
-from its service worker. It has pixels on the screen in under a second
+from its service worker. It has pixels on the screen in *under a second*
 on a budget Android device! And it *finishes* loading a full 1.5 seconds
-before Instagram has a pixel on the screen.
+before Instagram gets started.
 
 ![gatsbygram vs. instagram filmstrip repeat load](gatsbygram-instagram-repeat-load.png)*Filmstrip of a repeat view of Gatsbygram (top)
 and Instagram (bottom) loading on webpagetest.org*
@@ -71,25 +71,19 @@ your user.
 
 ### Gatsby is simple
 
-Modern websites are too complex to rely on people always configuring
-things correctly. Gatsby takes complexity out of your site and moves it
-into the framework and community plugins.
+Modern JavaScript websites are too complex to rely on developers always
+configuring things correctly. Gatsby simplifies website development by
+extracting configuration out of your site moving it into the framework
+and community plugins.
 
 You give Gatsby React.js components, data, and styles and Gatsby gives you
 back an optimized website.
 
-* convention over configuration. Preconfigured so optimized dev/production
-builds for most websites with easy hooks to customize for your needs.
-* Declarative data processing. Don't worry about setting up custom scripted
-image processing.
+Gatsby includes a full modern JavaScript toolchain with optimized
+production builds and declarative asset pipeline.
 
 For Gatsbygram, Gatsby generates over *1000* image thumbnails for
-responsive images without *any* custom scripting. Instead each component
-can specify exactly how it wants its data processed.
-
-Gatsby combines React, Webpack, and an innovative declarative data
-processing layer so you don't waste time with painful or time-consuming
-configuration and data processing scripting.
+responsive images without *any* custom scripting.
 
 Stop wasting time and build something.
 
@@ -143,6 +137,11 @@ class Layout extends React.Component {
 export default Layout
 ```
 
+The layout component is a handy place to load various global items to
+your site. Gatsbygram's layout loads the font used for the site, [Space
+Mono](https://fonts.google.com/specimen/Space+Mono), by requiring its
+[Typefaces](https://github.com/KyleAMathews/typefaces) package.
+
 Gatsbygram's layout component is somewhat more complicated than most
 sites as it has logic to switch between showing images when clicked in
 either a modal on larger screens or on their own page on smaller
@@ -150,12 +149,6 @@ screens.
 
 [Read Gatsbygram's Layout component on
 Github](https://github.com/gatsbyjs/gatsby/blob/1.0/examples/gatsbygram/layouts/default.js).
-
-The default layout component is a handy place to
-load various global items to your site. Gatsbygram's layout loads the
-font used for the site, [Space
-Mono](https://fonts.google.com/specimen/Space+Mono), by requiring its
-[Typefaces](https://github.com/KyleAMathews/typefaces) package.
 
 ### Template components
 
@@ -327,12 +320,21 @@ Github](https://github.com/gatsbyjs/gatsby/blob/1.0/examples/gatsbygram/pages/in
 [Read pages/about.js on
 Github](https://github.com/gatsbyjs/gatsby/blob/1.0/examples/gatsbygram/pages/about.js)
 
-## Client routing
+## Client routing and pre-caching
 
-react-router under the hood but with no setup necessary.
+Gatsby starts out static but it loads into a client application. Which
+means that clicking around the site doesn't require a page reload.
+Gatsby *pre-caches* code and data needed for other pages so that
+clicking on a link loads it near instantly.
 
-links use gatsby-link — clientside routing + preloads necessary
-code/data for subsequent pages on non-sw pages
+All the setup for this is handled behind the scenes. Gatsby uses [React
+Router](https://github.com/ReactTraining/react-router) under the hood
+but generates all the configuration for you.
+
+Normally page resources are loaded with a service worker. But as several
+browsers (Safari, Microsoft Edge) still don't support Service Workers,
+the Gatsby `<Link>` component (NPM package `gatsby-link`) pre-caches
+resources for pages it links to.
 
 ## Plugins
 
@@ -340,7 +342,7 @@ Gatsby has always had a rich set of lifecycle APIs to allow you to hook
 into various events during development, building, and in the client.
 
 Gatsby 1.0 adds new APIs and also adds a [new plugin
-architecture](/docs/plugins/). So code can now be extracted from sites
+architecture](/docs/plugins/). So functionality can now be extracted from sites
 and made reusable. Most of the new functionality in Gatsby 1.0 is
 powered by plugins.
 
@@ -383,6 +385,9 @@ module.exports = {
     // This plugin parses JSON file nodes.
     `gatsby-parser-json`,
     `gatsby-typegen-filesystem`,
+    // This plugin adds GraphQL fields to the ImageSharp
+    // GraphQL type. With them you can resize images and
+    // generate sets of responsive images.
     `gatsby-typegen-sharp`,
     // This plugin sets up the popular css-in-js library
     // Glamor. It handles adding a Babel plugin and webpack
@@ -419,13 +424,76 @@ module.exports = {
 }
 ```
 
-## Data
-
-explain GraphQL & walk through two queries.
-
 ## Styles
 
-Glamor — totally sweet css-in-js
+Gatsbygram uses two popular and complementary css-in-js libraries,
+[Typography.js](https://github.com/KyleAMathews/typography.js) and
+[Glamor](https://github.com/threepointone/glamor).
+
+Typography.js is a powerful toolkit for building websites with beautiful
+design.
+
+Gatsbygram uses Typography.js to generate the *global* styles for the
+site helping set the overall feel of the design.
+
+Glamor is used for *component* styles. It lets you write *real CSS* in
+Javascript inside your React.js components.
+
+Typography.js exposes two helper javascript functions, `rhythm` and
+`scale` to help keep your design in sync as you make changes.
+
+Instead of using hard-coded spacing values (which break as soon as you
+change your global theme), you use the Typography.js helper functions e.g.
+
+```jsx
+import React from "react";
+import { rhythm, scale } from "../utils/typography";
+
+class SampleComponent extends React {
+  render () {
+    return (
+      <div
+        css={{
+          // Use the css prop similar to the built-in “style” prop.
+          padding: rhythm(1),
+        }}
+      >
+        <h1
+          css={{
+            // Make this h1 slightly larger than normal. By default, h1
+            // is set to a scale value of 1.
+            ...scale(6/5),
+          }}
+        >
+          My sweet title
+        </h1>
+        <p>Hello friends</p>
+      </div>
+    )
+  }
+}
+```
+
+Together they allow you to very quickly iterate on designs.
+
+They also contribute to Gatsbygram's excellent loading speed. The holy
+grail of CSS performance is *inlined critical CSS*. Meaning a) only ship
+a page with the CSS necessary to render that page and b) inline it in
+the `<head>` instead of putting it in a seperate file. There are various
+tools to make this happen but they tend to involve extensive
+configuration and heavy post-processing.
+
+But with Typography.js and Glamor you get optimized CSS by default.
+Typography.js (by definition) generates only global styles so its styles
+are included on every page. Glamor includes some [very clever
+server-rendering
+optimizations](https://github.com/threepointone/glamor/blob/master/docs/server.md)
+which I've implemented in the [Gatsby Glamor
+plugin](/docs/packages/gatsby-plugin-glamor/) where it automatically
+extracts out the CSS used *on the page being server rendered* and
+automatically inlines those styles in the generated HTML page.
+
+Super fast CSS for free.
 
 ## Creating your own Gatsbygram
 
