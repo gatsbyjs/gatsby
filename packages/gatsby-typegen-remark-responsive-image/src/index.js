@@ -18,6 +18,7 @@ module.exports = (
   const defaults = {
     maxWidth: 650,
     wrapperStyle: ``,
+    backgroundColor: `white`,
   }
   const options = _.defaults(pluginOptions, defaults)
   options.maxWidth = parseInt(options.maxWidth, 10)
@@ -120,7 +121,7 @@ module.exports = (
               >
                 <img
                   class="gatsby-resp-image-image"
-                  style="width: 100%; margin: 0; vertical-align: middle; position: absolute; box-shadow: inset 0px 0px 0px 400px white;"
+                  style="width: 100%; margin: 0; vertical-align: middle; position: absolute; box-shadow: inset 0px 0px 0px 400px ${options.backgroundColor};"
                   alt="${node.alt ? node.alt : ``}"
                   title="${node.title ? node.title : ``}"
                   src="${fallbackSrc}"
