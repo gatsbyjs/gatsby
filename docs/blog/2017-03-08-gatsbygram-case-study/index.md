@@ -508,7 +508,7 @@ git clone -b 1.0 git@github.com:gatsbyjs/gatsby.git
 cd gatsby/examples/gatsbygram
 npm install
 
-# Remove the already scrapped Instagram data
+# Remove the committed scrapped Instagram data
 rm -r data
 
 # Scrape a new account
