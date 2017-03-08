@@ -2,11 +2,27 @@ const { InstagramPosts } = require("instagram-screen-scrape")
 const url = require("url")
 const fs = require("fs")
 const ProgressBar = require("progress")
+const mkdirp = require("mkdirp")
+
+const username = process.argv[2]
+
+if (!username) {
+  console.log(`
+You didn't supply an Instagram username!
+Run this command like:
+
+node scrape.js INSTAGRAM_USERNAME
+              `)
+  process.exit()
+}
 
 const download = require("./utils/download-file")
 
+// Create the images directory
+mkdirp.sync(`./data/images`)
+
 // Create the stream
-const streamOfPosts = new InstagramPosts({ username: `kyle__mathews` })
+const streamOfPosts = new InstagramPosts({ username, })
 
 // Create the progress bar
 const bar = new ProgressBar(`Downloading instagram posts [:bar] :current/:total :elapsed secs :percent`, {
@@ -18,6 +34,11 @@ const posts = []
 streamOfPosts.on(`data`, (post) => {
   // Ignore video files.
   if (post && post.media && post.media.slice(-3) === `mp4`) {
+    return
+  }
+
+  // Only download the first 100 posts.
+  if (posts.length >= 100) {
     return
   }
 

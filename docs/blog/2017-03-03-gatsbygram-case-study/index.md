@@ -497,5 +497,35 @@ Super fast CSS for free.
 
 ## Creating your own Gatsbygram
 
-Instructions
+It's easy to create your own "Gatsbygram" site from an Instagram
+account.
 
+### Instructions on setting up your own Gatsbygram site.
+
+```bash
+# Clone the Gatsby repo.
+git clone -b 1.0 git@github.com:gatsbyjs/gatsby.git
+cd gatsby/examples/gatsbygram
+npm install
+
+# Remove the already scrapped Instagram data
+rm -r data
+
+# Scrape a new account
+node scrape.js INSTAGRAM_USERNAME
+
+# Wait for pictures to download...
+
+# Start the Gatsby development server. The initial run will take extra
+time as it processes images the first time.
+gatsby develop
+```
+
+While writing this post I scrapped a few accounts and published their
+resulting "gatsbygram" sites:
+
+* https://iceland-gatsbygram.netlify.com
+* https://tinyhouses-gatsbygram.netlify.com
+
+**Help wanted:** scrape the user's profile picture and use that instead of my Gravitar
+image which is hard-coded atm.
