@@ -1,6 +1,6 @@
 ---
 title: Gatsbygram Case Study
-date: "2017-03-03"
+date: "2017-03-08"
 author: "Kyle Mathews"
 image: 'ui-and-code.png'
 ---
