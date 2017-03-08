@@ -41,10 +41,6 @@ module.exports = React.createClass({
               content: `@gatsbyjs`,
             },
             {
-              name: `og:url`,
-              content: `https://gatsbyjs.org${location.pathname}`,
-            },
-            {
               name: `og:type`,
               content: `website`,
             },
