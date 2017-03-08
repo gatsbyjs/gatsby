@@ -79,7 +79,7 @@ Read Google's case studies on:
 * [Konga
 (Nigeria)](https://developers.google.com/web/showcase/2016/konga)
 * [Housing.com
-(India)[https://developers.google.com/web/showcase/2016/housing]
+(India)](https://developers.google.com/web/showcase/2016/housing)
 
 <div>
 <video controls="controls" autoplay="true" loop="true">
