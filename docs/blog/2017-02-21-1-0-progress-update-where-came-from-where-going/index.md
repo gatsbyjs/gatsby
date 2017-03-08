@@ -3,6 +3,7 @@ title: What's coming in Gatsby 1.0
 date: "2017-02-23"
 author: "Kyle Mathews"
 image: 'ui-and-code.png'
+draft: true
 ---
 
 ![Gatsbygram](ui-and-code.png)

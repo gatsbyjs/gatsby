@@ -95,6 +95,7 @@ export const pageQuery = `
 {
   allMarkdownRemark(
     sortBy: { order: DESC, fields: frontmatter___date },
+    frontmatter: { draft: { ne: true } },
     _sourceNodeId: { regex: "/blog/" },
   ) {
     edges {
