@@ -20,6 +20,12 @@ exports.postBuild = () => {
     ],
     stripPrefix: rootDir,
     navigateFallback: `/offline-plugin-app-shell-fallback/index.html`,
+    // Only match URLs without extensions.
+    // So example.com/about/ will pass but
+    // example.com/cheeseburger.jpg will not.
+    // We only want the service worker to handle our "clean"
+    // URLs and not any files hosted on the site.
+    navigateFallbackWhitelist: [/^.*(?!\.\w?$)/],
     cacheId: `gatsby-plugin-offline`,
     // Do cache bust JS URLs until can figure out how to make Webpack's
     // URLs truely content-addressed.
