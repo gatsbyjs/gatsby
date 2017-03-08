@@ -15,7 +15,7 @@ built with Gatsby v1.
 Gatsby is a JavaScript web framework that let's you build fast, very
 dynamic, mobile-ready websites *without* a complicated backend. It
 combines the fast performance of static websites with the powerful
-abstractions, excellent tools, and client capabilities of the React.js
+abstractions, tools, and client capabilities of the React.js
 world.
 
 ### Gatsby is fast
@@ -28,8 +28,8 @@ As proof of this, Gatsbygram loads *2-3x faster* than the real Instagram site.
 
 I tested Gatsbygram and Instagram on
 [webpagetest.org](https://www.webpagetest.org/) using a simulated 3G
-network and a Moto G smartphone which is a budget Android released 3.5
-years ago. So typical of many lower-end phones used still today.  The
+network and a Moto G smartphone—a budget Android released 3.5
+years ago—so typical of many lower-end phones used still today.  The
 median [speed
 index](https://sites.google.com/a/webpagetest.org/docs/using-webpagetest/metrics/speed-index)
 score for
@@ -40,27 +40,46 @@ vs. 8145 for
 ![gatsbygram vs. instagram filmstrip](gatsbygram-instagram.png)*Filmstrip of Gatsbygram (top)
 and Instagram (bottom) loading on webpagetest.org*
 
-The second view is even faster for Gatsbygram as it now loads the site
-from its service worker. It has pixels on the screen in *under a second*
-on a budget Android device! And it *finishes* loading a full 1.5 seconds
+The second view is even faster for Gatsbygram as it now loads from its
+service worker. It has pixels on the screen in *under a second* on a
+budget Android device! And it *finishes* loading a full 1.5 seconds
 before Instagram gets started.
 
-![gatsbygram vs. instagram filmstrip repeat load](gatsbygram-instagram-repeat-load.png)*Filmstrip of a repeat view of Gatsbygram (top)
-and Instagram (bottom) loading on webpagetest.org*
-
-Gatsby uses modern web performance ideas developed by the Google Chrome
-Developer Relations team including Progressive Web App and PRPL.
+![gatsbygram vs. instagram filmstrip repeat
+load](gatsbygram-instagram-repeat-load.png)*Filmstrip of a repeat view
+of Gatsbygram (top) and Instagram (bottom) loading on webpagetest.org*
 
 ### Gasby is built for the next billion internet users
 
-Gatsby leverages service workers to *cache* site assets so users on
-slow connections don't wait for...
+As [Benedict Evans has
+noted](http://ben-evans.com/benedictevans/2015/5/13/the-smartphone-and-the-sun),
+the next billion people who are poised to come online will be using the
+internet almost exclusively through smartphones.
 
-mention Flipkart, Kongo (african ecommerce), housing.com and link to
-their case studies.
+Smartphones with decent specs (as good or better than the Moto G), a
+great browser, but *without* a reliable internet connection.
 
-Page refreshes almost instantly—regardless of the connection speed of
-your user.
+Gatsby uses [modern web performance
+ideas](https://developers.google.com/web/fundamentals/performance/prpl-pattern/)
+developed by the Google Chrome Developer Relations team designed to help
+websites work well on modern browers on unreliable networks.
+
+Sites built with Gatsby run as much as possible on the client so
+regardless of the network conditions—good, bad, or
+nonexistant—things will keep working.
+
+Many of the top e-commerce websites in areas where people are coming
+online for the first time are developing their websites using these
+techniques.
+
+Read Google's case studies on:
+
+* [Flipkart
+(India)](https://developers.google.com/web/showcase/2016/flipkart)
+* [Konga
+(Nigeria)](https://developers.google.com/web/showcase/2016/konga)
+* [Housing.com
+(India)[https://developers.google.com/web/showcase/2016/housing]
 
 <div>
 <video controls="controls" autoplay="true" loop="true">
@@ -79,8 +98,9 @@ and community plugins.
 You give Gatsby React.js components, data, and styles and Gatsby gives you
 back an optimized website.
 
-Gatsby includes a full modern JavaScript toolchain with optimized
-production builds and declarative asset pipeline.
+Gatsby includes a full modern JavaScript toolchain
+(Babel/webpack/uglifyjs) with optimized production builds and
+an innovative declarative asset pipeline.
 
 For Gatsbygram, Gatsby generates over *1000* image thumbnails for
 responsive images without *any* custom scripting.
@@ -93,19 +113,18 @@ Gatsby uses standard React.js components for building websites.
 
 There are three types of components.
 
-* *general layout components* for general site structure and headers and
+* *layout components* for general site structure and headers and
 footers
-* *template components* for *page types* like blog posts or
+* *template components* for page types like blog posts or
 documentation pages
-* *React.js pages* for individual pages you build with React.js
-components
+* *React.js pages* for single-file React.js pages
 
 ![gatsbygram component layout](gatsbygram-layout.png)*Gatsbygram's site
 structure with its three page components*
 
 ### Layout components
 
-Each Gatsby site is required to have a top-level layout component at
+Each Gatsby site has a top-level layout component at
 `layouts/default.js`. This layout component is used on every page of
 your site so can contain things like your header, footer, and default
 page structure. It is also used as the "[app
@@ -136,11 +155,6 @@ class Layout extends React.Component {
 
 export default Layout
 ```
-
-The layout component is a handy place to load various global items to
-your site. Gatsbygram's layout loads the font used for the site, [Space
-Mono](https://fonts.google.com/specimen/Space+Mono), by requiring its
-[Typefaces](https://github.com/KyleAMathews/typefaces) package.
 
 Gatsbygram's layout component is somewhat more complicated than most
 sites as it has logic to switch between showing images when clicked in
@@ -178,7 +192,7 @@ const Promise = require("bluebird")
 const path = require("path")
 const slug = require("slug")
 
-// Implement the Gatsby lifecycle API “createPages”. This is
+// Implement the Gatsby API “createPages”. This is
 // called after the Gatsby bootstrap is finished so you have
 // access to any information necessary to programatically
 // create pages.
@@ -190,10 +204,11 @@ exports.createPages = ({ args }) => (
     // from static data that you can run queries against.
     const { graphql } = args
     const pages = []
-    // Post is a data node type generated from
-    // data/posts.json which is generated when
-    // scrapping Instagram. “allPosts” gives us an
-    // easy way to query all Post nodes.
+    // Post is a data node type derived from data/posts.json
+    // which is created when scrapping Instagram. “allPosts”
+    // is a "connection" (a GraphQL convention for accessing
+    // a list of nodes) gives us an easy way to query all
+    // Post nodes.
     graphql(`
       {
         allPosts(limit: 1000) {
@@ -221,10 +236,8 @@ exports.createPages = ({ args }) => (
         pages.push({
           // Each page is required to have a `path` as well
           // as a template component. The `context` is
-          // optional but is often necessary as data in
-          // `context` is passed as GraphQL *variables* when
-          // running the GraphQL query for each page for a
-          // template.
+          // optional but is often necessary so the template
+          // can query data specific to each page.
           path: slug(edge.node.id),
           component: postPage,
           context: {
@@ -322,17 +335,18 @@ Github](https://github.com/gatsbyjs/gatsby/blob/1.0/examples/gatsbygram/pages/ab
 
 ## Client routing and pre-caching
 
-Gatsby starts out static but it loads into a client application. Which
-means that clicking around the site doesn't require a page reload.
-Gatsby *pre-caches* code and data needed for other pages so that
-clicking on a link loads it near instantly.
+Gatsby loads first a static server-rendered HTML page and then the
+JavasScript to convert the site into a web application. Which means that
+clicking around the site doesn't require a page reload.  Gatsby
+*pre-caches* code and data needed for other pages so that clicking on a
+link loads the next page near instantly.
 
 All the setup for this is handled behind the scenes. Gatsby uses [React
 Router](https://github.com/ReactTraining/react-router) under the hood
 but generates all the configuration for you.
 
-Normally page resources are loaded with a service worker. But as several
-browsers (Safari, Microsoft Edge) still don't support Service Workers,
+Normally page resources are pre-cached with a service worker. But as several
+browsers (Safari/Microsoft Edge) still don't support Service Workers,
 the Gatsby `<Link>` component (NPM package `gatsby-link`) pre-caches
 resources for pages it links to.
 
@@ -437,13 +451,12 @@ Gatsbygram uses Typography.js to generate the *global* styles for the
 site helping set the overall feel of the design.
 
 Glamor is used for *component* styles. It lets you write *real CSS* in
-Javascript inside your React.js components.
+JavaScript inside your React.js components.
 
 Typography.js exposes two helper javascript functions, `rhythm` and
-`scale` to help keep your design in sync as you make changes.
-
-Instead of using hard-coded spacing values (which break as soon as you
-change your global theme), you use the Typography.js helper functions e.g.
+`scale` to help keep your design in sync as you make changes. Instead of
+using hard-coded spacing values (which break as soon as you change your
+global theme), you use the Typography.js helper functions e.g.
 
 ```jsx
 import React from "react";

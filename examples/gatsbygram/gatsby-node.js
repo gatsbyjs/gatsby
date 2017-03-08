@@ -3,7 +3,7 @@ const Promise = require("bluebird")
 const path = require("path")
 const slug = require("slug")
 
-// Implement the Gatsby lifecycle API “createPages”. This is
+// Implement the Gatsby API “createPages”. This is
 // called after the Gatsby bootstrap is finished so you have
 // access to any information necessary to programatically
 // create pages.
@@ -15,10 +15,11 @@ exports.createPages = ({ args }) => (
     // from static data that you can run queries against.
     const { graphql } = args
     const pages = []
-    // Post is a data node type generated from
-    // data/posts.json which is generated when
-    // scrapping Instagram. “allPosts” gives us an
-    // easy way to query all Post nodes.
+    // Post is a data node type derived from data/posts.json
+    // which is created when scrapping Instagram. “allPosts”
+    // is a "connection" (a GraphQL convention for accessing
+    // a list of nodes) gives us an easy way to query all
+    // Post nodes.
     graphql(`
       {
         allPosts(limit: 1000) {
@@ -46,10 +47,8 @@ exports.createPages = ({ args }) => (
         pages.push({
           // Each page is required to have a `path` as well
           // as a template component. The `context` is
-          // optional but is often necessary as data in
-          // `context` is passed as GraphQL *variables* when
-          // running the GraphQL query for each page for a
-          // template.
+          // optional but is often necessary so the template
+          // can query data specific to each page.
           path: slug(edge.node.id),
           component: postPage,
           context: {
