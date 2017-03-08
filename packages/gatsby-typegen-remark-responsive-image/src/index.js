@@ -110,6 +110,7 @@ module.exports = (
             title="original image"
             href="${originalImg}"
             style="display: block"
+            target="_blank"
           >
             <div
               class="gatsby-resp-image-wrapper"
