@@ -2853,51 +2853,51 @@ function-bind@^1.0.2:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.0.tgz#16176714c801798e4e8f2cf7f7529467bb4a5771"
 
-gatsby-link@1.0.0-alpha12-alpha.3a216f9f:
-  version "1.0.0-alpha12-alpha.3a216f9f"
-  resolved "https://registry.yarnpkg.com/gatsby-link/-/gatsby-link-1.0.0-alpha12-alpha.3a216f9f.tgz#250bf873fdbecfa264b3231bacc9e837c15d8e97"
+gatsby-link@1.0.0-alpha12-alpha.3f98b323:
+  version "1.0.0-alpha12-alpha.3f98b323"
+  resolved "https://registry.yarnpkg.com/gatsby-link/-/gatsby-link-1.0.0-alpha12-alpha.3f98b323.tgz#bae40f1c066e51d14f0d7b97aac2d568aa099692"
 
-gatsby-parser-json@1.0.0-alpha12-alpha.3a216f9f:
-  version "1.0.0-alpha12-alpha.3a216f9f"
-  resolved "https://registry.yarnpkg.com/gatsby-parser-json/-/gatsby-parser-json-1.0.0-alpha12-alpha.3a216f9f.tgz#d0b7149333f6e0071a9969e391bb9a47e2b668e0"
+gatsby-parser-json@1.0.0-alpha12-alpha.3f98b323:
+  version "1.0.0-alpha12-alpha.3f98b323"
+  resolved "https://registry.yarnpkg.com/gatsby-parser-json/-/gatsby-parser-json-1.0.0-alpha12-alpha.3f98b323.tgz#e58d724b4cf4a3aa4b29b1e8a32d9b08eb3c36cf"
   dependencies:
     bluebird "^3.4.6"
     unist-util-select "^1.5.0"
 
-gatsby-parser-sharp@1.0.0-alpha12-alpha.3a216f9f:
-  version "1.0.0-alpha12-alpha.3a216f9f"
-  resolved "https://registry.yarnpkg.com/gatsby-parser-sharp/-/gatsby-parser-sharp-1.0.0-alpha12-alpha.3a216f9f.tgz#23090eeb185be586f5299179a1e1825b44921232"
+gatsby-parser-sharp@1.0.0-alpha12-alpha.3f98b323:
+  version "1.0.0-alpha12-alpha.3f98b323"
+  resolved "https://registry.yarnpkg.com/gatsby-parser-sharp/-/gatsby-parser-sharp-1.0.0-alpha12-alpha.3f98b323.tgz#34af50d5b63ed2eafb92d97a0ebc5ee7f54cbb99"
   dependencies:
     bluebird "^3.4.6"
     unist-util-select "^1.5.0"
 
-gatsby-plugin-glamor@1.0.0-alpha12-alpha.3a216f9f:
-  version "1.0.0-alpha12-alpha.3a216f9f"
-  resolved "https://registry.yarnpkg.com/gatsby-plugin-glamor/-/gatsby-plugin-glamor-1.0.0-alpha12-alpha.3a216f9f.tgz#6e0c01344a2deae96a528f49d58e60ac3a7fea8a"
+gatsby-plugin-glamor@1.0.0-alpha12-alpha.3f98b323:
+  version "1.0.0-alpha12-alpha.3f98b323"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-glamor/-/gatsby-plugin-glamor-1.0.0-alpha12-alpha.3f98b323.tgz#6da558f4c56ea8db27d5b557d0fa77a97c4539cb"
   dependencies:
     glamor "^2.20.20"
 
-gatsby-plugin-google-analytics@^1.0.0-alpha12-alpha.3a216f9f:
+gatsby-plugin-google-analytics@^1.0.0-alpha12-alpha.3f98b323:
   version "1.0.0-alpha12-alpha.faff3fa9"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-google-analytics/-/gatsby-plugin-google-analytics-1.0.0-alpha12-alpha.faff3fa9.tgz#4f78c79607bfbea146b3c6d026dcb3a2073a2588"
   dependencies:
     react-ga "^2.1.2"
 
-gatsby-plugin-manifest@1.0.0-alpha12-alpha.3a216f9f:
-  version "1.0.0-alpha12-alpha.3a216f9f"
-  resolved "https://registry.yarnpkg.com/gatsby-plugin-manifest/-/gatsby-plugin-manifest-1.0.0-alpha12-alpha.3a216f9f.tgz#2ab780ece08551290106c465723c4227443ab9a6"
+gatsby-plugin-manifest@1.0.0-alpha12-alpha.3f98b323:
+  version "1.0.0-alpha12-alpha.3f98b323"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-manifest/-/gatsby-plugin-manifest-1.0.0-alpha12-alpha.3f98b323.tgz#aa68a06632f81e476cccafb6b301d1bfd14e884c"
   dependencies:
     bluebird "^3.4.7"
 
-gatsby-plugin-offline@1.0.0-alpha12-alpha.3a216f9f:
-  version "1.0.0-alpha12-alpha.3a216f9f"
-  resolved "https://registry.yarnpkg.com/gatsby-plugin-offline/-/gatsby-plugin-offline-1.0.0-alpha12-alpha.3a216f9f.tgz#503c69429558f0c519cf035c5b4f9ee55fffd51e"
+gatsby-plugin-offline@1.0.0-alpha12-alpha.3f98b323:
+  version "1.0.0-alpha12-alpha.3f98b323"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-offline/-/gatsby-plugin-offline-1.0.0-alpha12-alpha.3f98b323.tgz#dd9ad936a125ab55ea45774ff664f8b7b9562cff"
   dependencies:
     sw-precache "^5.0.0"
 
-gatsby-plugin-sharp@1.0.0-alpha12-alpha.3a216f9f:
-  version "1.0.0-alpha12-alpha.3a216f9f"
-  resolved "https://registry.yarnpkg.com/gatsby-plugin-sharp/-/gatsby-plugin-sharp-1.0.0-alpha12-alpha.3a216f9f.tgz#9a62f30f368e1c0a026fce5c944ead5b22fbeeb6"
+gatsby-plugin-sharp@1.0.0-alpha12-alpha.3f98b323:
+  version "1.0.0-alpha12-alpha.3f98b323"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-sharp/-/gatsby-plugin-sharp-1.0.0-alpha12-alpha.3f98b323.tgz#ce631f33dbaae350870a60e3ad628dcf007787a4"
   dependencies:
     async "^2.1.4"
     bluebird "^3.4.7"
@@ -2910,9 +2910,9 @@ gatsby-plugin-sharp@1.0.0-alpha12-alpha.3a216f9f:
     queue "^4.0.1"
     sharp "^0.17.1"
 
-gatsby-source-filesystem@1.0.0-alpha12-alpha.3a216f9f:
-  version "1.0.0-alpha12-alpha.3a216f9f"
-  resolved "https://registry.yarnpkg.com/gatsby-source-filesystem/-/gatsby-source-filesystem-1.0.0-alpha12-alpha.3a216f9f.tgz#8067978b7be769b573fab8d7dc2a00828c95ec5f"
+gatsby-source-filesystem@1.0.0-alpha12-alpha.3f98b323:
+  version "1.0.0-alpha12-alpha.3f98b323"
+  resolved "https://registry.yarnpkg.com/gatsby-source-filesystem/-/gatsby-source-filesystem-1.0.0-alpha12-alpha.3f98b323.tgz#b85281d7b19cf04c41c8f38ed886510ed34aa3a0"
   dependencies:
     async "^2.1.2"
     babel-cli "^6.18.0"
@@ -2931,24 +2931,24 @@ gatsby-source-filesystem@1.0.0-alpha12-alpha.3a216f9f:
     slash "^1.0.0"
     unist-builder "^1.0.2"
 
-gatsby-typegen-filesystem@1.0.0-alpha12-alpha.3a216f9f:
-  version "1.0.0-alpha12-alpha.3a216f9f"
-  resolved "https://registry.yarnpkg.com/gatsby-typegen-filesystem/-/gatsby-typegen-filesystem-1.0.0-alpha12-alpha.3a216f9f.tgz#206297e7e3ea0fb5da0449b0be615b3401b16265"
+gatsby-typegen-filesystem@1.0.0-alpha12-alpha.3f98b323:
+  version "1.0.0-alpha12-alpha.3f98b323"
+  resolved "https://registry.yarnpkg.com/gatsby-typegen-filesystem/-/gatsby-typegen-filesystem-1.0.0-alpha12-alpha.3f98b323.tgz#1d3afcd76aea9778a41d132c063f29addaa6aa2a"
   dependencies:
     unist-util-select "^1.5.0"
 
-gatsby-typegen-sharp@1.0.0-alpha12-alpha.3a216f9f:
-  version "1.0.0-alpha12-alpha.3a216f9f"
-  resolved "https://registry.yarnpkg.com/gatsby-typegen-sharp/-/gatsby-typegen-sharp-1.0.0-alpha12-alpha.3a216f9f.tgz#c8788517469e81dc4da80ea09deb085b513834ba"
+gatsby-typegen-sharp@1.0.0-alpha12-alpha.3f98b323:
+  version "1.0.0-alpha12-alpha.3f98b323"
+  resolved "https://registry.yarnpkg.com/gatsby-typegen-sharp/-/gatsby-typegen-sharp-1.0.0-alpha12-alpha.3f98b323.tgz#5cd10bcb6dd5bc3b05cc9c2731403a5fe704c480"
   dependencies:
     graphql "^0.8.2"
     image-size "^0.5.1"
     lodash "^4.17.2"
     sharp "^0.17.0"
 
-gatsby@1.0.0-alpha12-alpha.3a216f9f:
-  version "1.0.0-alpha12-alpha.3a216f9f"
-  resolved "https://registry.yarnpkg.com/gatsby/-/gatsby-1.0.0-alpha12-alpha.3a216f9f.tgz#792f4af7231bb08ec949c8b5bbe77d18e5b30cef"
+gatsby@1.0.0-alpha12-alpha.3f98b323:
+  version "1.0.0-alpha12-alpha.3f98b323"
+  resolved "https://registry.yarnpkg.com/gatsby/-/gatsby-1.0.0-alpha12-alpha.3f98b323.tgz#bd57be062ce7756e99c8df1cf640bddaba0075c2"
   dependencies:
     async "^2.1.2"
     babel-core "^6.18.2"
@@ -2988,7 +2988,7 @@ gatsby@1.0.0-alpha12-alpha.3a216f9f:
     glob "^7.1.0"
     graphql "^0.8.2"
     graphql-relay "^0.4.3"
-    graphql-skip-limit "^1.0.0-alpha12-alpha.3a216f9f"
+    graphql-skip-limit "^1.0.0-alpha12-alpha.3f98b323"
     graphql-union-input-type "^0.2.1"
     gray-matter "^2.1.0"
     hapi "^8.5.1"
@@ -3288,7 +3288,7 @@ graphql-relay@^0.4.3, graphql-relay@^0.4.4:
   version "0.4.4"
   resolved "https://registry.yarnpkg.com/graphql-relay/-/graphql-relay-0.4.4.tgz#876a654445b6af4539f81cb9befd5cd7ead129dd"
 
-graphql-skip-limit@^1.0.0-alpha12-alpha.3a216f9f:
+graphql-skip-limit@^1.0.0-alpha12-alpha.3f98b323:
   version "1.0.0-alpha12-alpha.faff3fa9"
   resolved "https://registry.yarnpkg.com/graphql-skip-limit/-/graphql-skip-limit-1.0.0-alpha12-alpha.faff3fa9.tgz#bcc4436d70c1e61807496e4084367bcb2c5c84ea"
 
