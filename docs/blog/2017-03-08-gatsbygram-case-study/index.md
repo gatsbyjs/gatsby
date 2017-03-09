@@ -8,20 +8,34 @@ image: 'ui-and-code.png'
 ![Gatsbygram](ui-and-code.png)
 
 [Gatsbygram](https://gatsbygram.gatsbyjs.org) is a clone of Instagram
-built with Gatsby v1.
+built with Gatsby 1.0.0-alpha12 and is being continually updated as we
+make our way towards our 1.0 release.
+
+The [source code for
+Gatsbygram](https://github.com/gatsbyjs/gatsby/tree/1.0/examples/gatsbygram)
+lives in the Gatsby monorepo. See the instructions at the end for how to
+start playing with the code!
+
+<div>
+<video controls="controls" autoplay="true" loop="true">
+  <source type="video/mp4" src="/gatsbygram.mp4"></source>
+  <p>Your browser does not support the video element.</p>
+</video>
+</div>
 
 ## What is Gatsby
 
 Gatsby is a JavaScript web framework that let's you build fast, very
-dynamic, mobile-ready websites *without* a complicated backend. It
-combines the fast performance of static websites with the powerful
-abstractions, tools, and client capabilities of the React.js
-world.
+dynamic, mobile-ready websites *without* an advanced degree in
+JavaScript wizardry.
+
+It combines the fast performance of static websites with the powerful
+abstractions, tools, and client capabilities of the React.js world.
 
 ### Gatsby is fast
 
 Gatsby automatically optimizes your site for the modern web. You
-provide pages and Gatsby stiches them together so they load as fast as
+provide pages and Gatsby stitches them together so they load as fast as
 possible.
 
 As proof of this, Gatsbygram loads *2-3x faster* than the real Instagram site.
@@ -49,24 +63,24 @@ before Instagram gets started.
 load](gatsbygram-instagram-repeat-load.png)*Filmstrip of a repeat view
 of Gatsbygram (top) and Instagram (bottom) loading on webpagetest.org*
 
-### Gasby is built for the next billion internet users
+### Gatsby is built for the next billion internet users
 
 As [Benedict Evans has
 noted](http://ben-evans.com/benedictevans/2015/5/13/the-smartphone-and-the-sun),
-the next billion people who are poised to come online will be using the
-internet almost exclusively through smartphones.
+the next billion people poised to come online will be using the internet
+almost exclusively through smartphones.
 
 Smartphones with decent specs (as good or better than the Moto G), a
 great browser, but *without* a reliable internet connection.
 
 Gatsby uses [modern web performance
 ideas](https://developers.google.com/web/fundamentals/performance/prpl-pattern/)
-developed by the Google Chrome Developer Relations team designed to help
-websites work well on modern browers on unreliable networks.
+developed by the Google Chrome Developer Relations team to help
+websites work well on modern browsers with unreliable networks.
 
-Sites built with Gatsby run as much as possible on the client so
+Sites built with Gatsby run as much as possible in the client so
 regardless of the network conditions—good, bad, or
-nonexistant—things will keep working.
+nonexistent—things will keep working.
 
 Many of the top e-commerce websites in areas where people are coming
 online for the first time are developing their websites using these
@@ -81,17 +95,10 @@ Read Google's case studies on:
 * [Housing.com
 (India)](https://developers.google.com/web/showcase/2016/housing)
 
-<div>
-<video controls="controls" autoplay="true" loop="true">
-  <source type="video/mp4" src="/gatsbygram.mp4"></source>
-  <p>Your browser does not support the video element.</p>
-</video>
-</div>
-
 ### Gatsby is simple
 
-Modern JavaScript websites are too complex to rely on developers always
-configuring things correctly. Gatsby simplifies website development by
+Modern JavaScript websites are too complex to rely on developers to
+configure things correctly. Gatsby simplifies website development by
 extracting configuration out of your site moving it into the framework
 and community plugins.
 
@@ -105,7 +112,7 @@ an innovative declarative asset pipeline.
 For Gatsbygram, Gatsby generates over *1000* image thumbnails for
 responsive images without *any* custom scripting.
 
-Stop wasting time and build something.
+Stop wasting time and build something!
 
 ## App structure
 
@@ -450,8 +457,8 @@ design.
 Gatsbygram uses Typography.js to generate the *global* styles for the
 site helping set the overall feel of the design.
 
-Glamor is used for *component* styles. It lets you write *real CSS* in
-JavaScript inside your React.js components.
+Glamor lets you write *real CSS* in JavaScript inline in your React.js
+components. It is used for *component* styles.
 
 Typography.js exposes two helper javascript functions, `rhythm` and
 `scale` to help keep your design in sync as you make changes. Instead of
@@ -467,14 +474,15 @@ class SampleComponent extends React {
     return (
       <div
         css={{
-          // Use the css prop similar to the built-in “style” prop.
+          // Use the css prop similar to the
+          // built-in “style” prop.
           padding: rhythm(1),
         }}
       >
         <h1
           css={{
-            // Make this h1 slightly larger than normal. By default, h1
-            // is set to a scale value of 1.
+            // Make this h1 slightly larger than normal.
+            // By default, h1 is set to a scale value of 1.
             ...scale(6/5),
           }}
         >
@@ -492,14 +500,14 @@ Together they allow you to very quickly iterate on designs.
 They also contribute to Gatsbygram's excellent loading speed. The holy
 grail of CSS performance is *inlined critical CSS*. Meaning a) only ship
 a page with the CSS necessary to render that page and b) inline it in
-the `<head>` instead of putting it in a seperate file. There are various
+the `<head>` instead of putting it in a separate file. There are various
 tools to make this happen but they tend to involve extensive
 configuration and heavy post-processing.
 
-But with Typography.js and Glamor you get optimized CSS by default.
-Typography.js (by definition) generates only global styles so its styles
-are included on every page. Glamor includes some [very clever
-server-rendering
+But with Typography.js and Glamor you get optimized CSS for free with no
+tedious, error-prone bookkeeping. Typography.js (by definition)
+generates only global styles so its styles are included on every page.
+Glamor includes some [very clever server-rendering
 optimizations](https://github.com/threepointone/glamor/blob/master/docs/server.md)
 which I've implemented in the [Gatsby Glamor
 plugin](/docs/packages/gatsby-plugin-glamor/) where it automatically
@@ -529,8 +537,9 @@ node scrape.js INSTAGRAM_USERNAME
 
 # Wait for pictures to download...
 
-# Start the Gatsby development server. The initial run will take extra
-time as it processes images the first time.
+# Start the Gatsby development server. The initial
+# run will take extra time as it processes
+# images the first time.
 gatsby develop
 ```
 
@@ -540,5 +549,5 @@ resulting "gatsbygram" sites:
 * https://iceland-gatsbygram.netlify.com
 * https://tinyhouses-gatsbygram.netlify.com
 
-**Help wanted:** scrape the user's profile picture and use that instead of my Gravitar
-image which is hard-coded atm.
+**Help wanted:** scrape the user's profile picture and use that instead
+of my Gravatar image which is hard-coded atm.
