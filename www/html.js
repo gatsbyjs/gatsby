@@ -27,6 +27,9 @@ module.exports = React.createClass({
     return (
       <html lang="en">
         <head>
+          <link rel="preload" href="/static/ftn45-webfont.c2439033.woff2" as="font" crossOrigin />
+          <link rel="preload" href="/static/tex-gyre-schola-400.030fe0c4.woff2" as="font" crossOrigin />
+          <link rel="preload" href="/static/ftn65-webfont.0ddc10d2.woff2" as="font" crossOrigin />
           {this.props.headComponents}
           <title>Gatsby</title>
           <meta charSet="utf-8" />
