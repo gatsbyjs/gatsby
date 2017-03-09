@@ -572,3 +572,9 @@ resulting "Gatsbygram" sites:
 
 **Help wanted:** scrape the user's profile picture and use that instead
 of my Gravatar image which is hard-coded at the moment.
+
+*With thanks to Sam Bhagwatt, Sunil Pai, Nolan Lawson, Nik Graf, and
+Jeff Posnick for their reviews.*
+
+*And a special thanks to Kristo Jorgenson for his [reactor of the App
+Structure section](https://github.com/gatsbyjs/gatsby/pull/708).*
