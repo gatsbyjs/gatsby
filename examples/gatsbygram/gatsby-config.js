@@ -40,7 +40,7 @@ module.exports = {
     // This plugin sets up the popular css-in-js library
     // Glamor. It handles adding a Babel plugin and webpack
     // configuration as well as setting up optimized server
-    // rendering and client rehydration.
+    // rendering and client re-hydration.
     `gatsby-plugin-glamor`,
     // This plugin takes your configuration and generates a
     // web manifest file so Gatsbygram can be added to your
@@ -58,7 +58,7 @@ module.exports = {
     },
     // This plugin generates a service worker and AppShell
     // html file so the site works offline and is otherwise
-    // resistent to bad networks. Works with almost any
+    // resistant to bad networks. Works with almost any
     // site!
     `gatsby-plugin-offline`,
     // This plugin sets up Google Analytics for you.

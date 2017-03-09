@@ -97,17 +97,20 @@ Read Google's case studies on:
 
 ### Gatsby is simple
 
-Modern JavaScript websites are too complex to rely on developers to
-configure things correctly. Gatsby simplifies website development by
+Modern JavaScript websites are too complex to rely on developers always
+configuring things correctly. Gatsby simplifies website development by
 extracting configuration out of your site moving it into the framework
 and community plugins.
 
 You give Gatsby React.js components, data, and styles and Gatsby gives you
 back an optimized website.
 
+Gatsbygram is a completely vanilla Gatsby site. Its optimizations are
+from the framework.
+
 Gatsby includes a full modern JavaScript toolchain
 (Babel/webpack/uglifyjs) with optimized production builds and
-an innovative declarative asset pipeline.
+an innovative *declarative* asset pipeline.
 
 For Gatsbygram, Gatsby generates over *1000* image thumbnails for
 responsive images without *any* custom scripting.
@@ -116,7 +119,10 @@ Stop wasting time and build something!
 
 ## App structure
 
-All static site generators create a set of files that determine the routing in your site. Typically, you define the output file structure (and thus url structure) of your site by way of the input structure. For example the input structure
+All static site generators create a set of files that determine the
+routing in your site. Typically, you define the output file structure
+(and thus URL structure) of your site by way of the input structure. For
+example the input structure:
 
 ```
 my-site/
@@ -124,16 +130,25 @@ my-site/
   blogs/
     blog1.md
 ```
-would be transformed to
+
+...would be transformed to:
+
 ```
 my-site/
   index.html
   blogs/
     blog1.html
 ```
-This is fine at first, but can be limiting. For example, in gatsbygram, we have a json data blob scraped from the instagram api. From this we want to generate a page for each image. We couldn't do this with a typical static site generator, but Gatsby lets you define routes programatically through the `createPages` api.
 
-Here is how we build pages from our json data for gatsbygram at build time:
+This is fine at first, but can be limiting. For example, in Gatsbygram,
+we have a JSON data blob scraped from an Instagram user profile. From
+this we want to generate a page for each image. We couldn't do this with
+a typical static site generator, but Gatsby lets you define routes
+programmatically through the `createPages` api using any data you have
+available.
+
+Here is how we define pages from our JSON data for Gatsbygram at build time:
+
 ```javascript
 const _ = require("lodash")
 const Promise = require("bluebird")
@@ -142,12 +157,12 @@ const slug = require("slug")
 
 // Implement the Gatsby API “createPages”. This is
 // called after the Gatsby bootstrap is finished so you have
-// access to any information necessary to programatically
+// access to any information necessary to programmatically
 // create pages.
 exports.createPages = ({ args }) => (
   new Promise((resolve, reject) => {
     // The “graphql” function allows us to run arbitrary
-    // queries against this Gatsbygram's graphql schema. Think of
+    // queries against this Gatsbygram's GraphQL schema. Think of
     // it like Gatsbygram has a built-in database constructed
     // from static data that you can run queries against.
     const { graphql } = args
@@ -175,7 +190,7 @@ exports.createPages = ({ args }) => (
       }
 
       // Create image post pages.
-      const postPage = path.resolve(`pages/template-post-page.js`)
+      const postTemplate = path.resolve(`pages/template-post-page.js`)
       // We want to create a detailed page for each
       // Instagram post. Since the scrapped Instagram data
       // already includes an ID field, we just use that for
@@ -187,7 +202,7 @@ exports.createPages = ({ args }) => (
           // optional but is often necessary so the template
           // can query data specific to each page.
           path: slug(edge.node.id),
-          component: postPage,
+          component: postTemplate,
           context: {
             id: edge.node.id,
           },
@@ -200,13 +215,18 @@ exports.createPages = ({ args }) => (
 )
 ```
 
-This allows us to create pages from any data, we just have to have the data accessible through our graphql schema first... more on that later.
-
 ## Using templates
 
-Gatsby uses standard React.js components to render static pages. When you define a page in the `createPages` api, you also define a component to build it with. Those components, usually called templates get reused with different data to generate different pages. Usually, we will pass some simple information about what page we are on to the template component, and then the template will make a `graphql` query using that information to get the data it needs.
+Gatsby uses standard React.js components to render pages. When you
+define a page in the `createPages` api, you specify its component.
+Those components, usually called templates, get reused with
+page-specific data to generate the different pages.
 
-You can see above, we pass the `postPage` template an `id`, which is passed as a `prop` to the component, and as a [GraphQL variable](http://graphql.org/learn/queries/#variables) in our `GraphQL` query. Below we use that id to query our `GraphQL` schema and return a fully formed page:
+As you can see above, when defining a page, we can set "context" data,
+which is passed as a `prop` to the component and as a [GraphQL
+variable](http://graphql.org/learn/queries/#variables) in our `GraphQL`
+query. For the "postTemplate", we pass the id to the post. Below we use
+that id to query our `GraphQL` schema and return a fully formed page:
 
 ```jsx
 import React from 'react'
@@ -229,7 +249,7 @@ export default PostTemplate
 // context in gatsby-node.js.
 //
 // All GraphQL queries in Gatsby are run at build-time and
-// loaded as plain JSON files so have zero client cost.
+// loaded as plain JSON files so have no client cost.
 export const pageQuery = `
   query PostPage($id: String!) {
     # Select the post which equals this id.
@@ -267,19 +287,23 @@ export const pageQuery = `
 
 ## Creating one-off pages
 
-In addition to creating a page for every one of our instagram images, we also want to make an index page that shows off our insta grid. To do so, Gatsby lets us define pages using the file system, just like your standard static site generators:
+In addition to creating pages for our Instagram photos, we want to make
+an index page for browsing all photos. To build this index page, Gatsby
+lets us create pages using simple React.js components.
+
 ```
 pages/
   index.js
   about.js
 ```
 
-These react components can query our graphql schema for data, and will each be generated into their own pages at `gatsbygram.com/` and `gatsbygram.com/about`.
+These React component pages can query the Gatsbygram GraphQL schema for
+data and are automatically converted into their own pages at
+`gatsbygram.gatsbyjs.org/` and `gatsbygram.gatsbyjs.org/about/`.
 
 Gatsbygram's `about.js` is a simple React component with no query.
-`index.js` is more complex. It queries for
-thumbnails for all images and has an infinite scroll implementation to
-lazy load in image thumbnails.
+`index.js` is more complex. It queries for thumbnails for all images and
+has an infinite scroll implementation to lazy load in image thumbnails.
 
 [Read pages/index.js on
 Github](https://github.com/gatsbyjs/gatsby/blob/1.0/examples/gatsbygram/pages/index.js)  
@@ -311,6 +335,7 @@ class Layout extends React.Component {
           Home
         </Link>
         <br />
+        {/* Render children pages */}
         {this.props.children}
       </div>
     )
@@ -328,9 +353,8 @@ Every page will be rendered as children of the `Layout` component:
 ```
 
 Gatsbygram's layout component is somewhat more complicated than most
-sites as it has logic to switch between showing images when clicked in
-either a modal on larger screens or on their own page on smaller
-screens.
+sites as it has logic to show clicked images in either a modal on larger
+screens or on their own page on smaller screens.
 
 [Read Gatsbygram's Layout component on
 Github](https://github.com/gatsbyjs/gatsby/blob/1.0/examples/gatsbygram/layouts/default.js).
@@ -341,16 +365,16 @@ Gatsby loads first a static server-rendered HTML page and then the
 JavasScript to convert the site into a web application. Which means that
 clicking around the site doesn't require a page reload.  Gatsby
 *pre-caches* code and data needed for other pages so that clicking on a
-link loads the next page near instantly.
+link loads the next page instantly.
 
 All the setup for this is handled behind the scenes. Gatsby uses [React
 Router](https://github.com/ReactTraining/react-router) under the hood
 but generates all the configuration for you.
 
-Normally page resources are pre-cached with a service worker. But as several
-browsers (Safari/Microsoft Edge) still don't support Service Workers,
-the Gatsby `<Link>` component (NPM package `gatsby-link`) pre-caches
-resources for pages it links to.
+Normally page resources are pre-cached with a service worker. But as
+several browsers (Safari/Microsoft Edge) still don't support Service
+Workers, the [Gatsby `<Link>` component](/docs/packages/gatsby-link/)
+pre-caches resources for pages it links to.
 
 ## Plugins
 
@@ -408,7 +432,7 @@ module.exports = {
     // This plugin sets up the popular css-in-js library
     // Glamor. It handles adding a Babel plugin and webpack
     // configuration as well as setting up optimized server
-    // rendering and client rehydration.
+    // rendering and client re-hydration.
     `gatsby-plugin-glamor`,
     // This plugin takes your configuration and generates a
     // web manifest file so Gatsbygram can be added to your
@@ -426,7 +450,7 @@ module.exports = {
     },
     // This plugin generates a service worker and AppShell
     // html file so the site works offline and is otherwise
-    // resistent to bad networks. Works with almost any
+    // resistant to bad networks. Works with almost any
     // site!
     `gatsby-plugin-offline`,
     // This plugin sets up Google Analytics for you.
@@ -455,7 +479,7 @@ site helping set the overall feel of the design.
 Glamor lets you write *real CSS* in JavaScript inline in your React.js
 components. It is used for *component* styles.
 
-Typography.js exposes two helper javascript functions, `rhythm` and
+Typography.js exposes two helper JavaScript functions, `rhythm` and
 `scale` to help keep your design in sync as you make changes. Instead of
 using hard-coded spacing values (which break as soon as you change your
 global theme), you use the Typography.js helper functions e.g.
@@ -468,9 +492,10 @@ class SampleComponent extends React {
   render () {
     return (
       <div
+        {/* The “css” prop works the same as the built-in “style” prop */}
         css={{
-          // Use the css prop similar to the
-          // built-in “style” prop.
+          // 1 rhythm is equal to the height of the line-height of
+          // normal body text.
           padding: rhythm(1),
         }}
       >
@@ -506,10 +531,11 @@ Glamor includes some [very clever server-rendering
 optimizations](https://github.com/threepointone/glamor/blob/master/docs/server.md)
 which I've implemented in the [Gatsby Glamor
 plugin](/docs/packages/gatsby-plugin-glamor/) where it automatically
-extracts out the CSS used *on the page being server rendered* and
-automatically inlines those styles in the generated HTML page.
+extracts out the CSS used *in components on the page being server
+rendered* and automatically inlines those styles in the generated HTML
+page.
 
-Super fast CSS for free.
+Super fast CSS for free 👏👏👏
 
 ## Creating your own Gatsbygram
 
@@ -539,10 +565,10 @@ gatsby develop
 ```
 
 While writing this post I scrapped a few accounts and published their
-resulting "gatsbygram" sites:
+resulting "Gatsbygram" sites:
 
 * https://iceland-gatsbygram.netlify.com
 * https://tinyhouses-gatsbygram.netlify.com
 
 **Help wanted:** scrape the user's profile picture and use that instead
-of my Gravatar image which is hard-coded atm.
+of my Gravatar image which is hard-coded at the moment.

@@ -38,7 +38,7 @@ exports.createPages = ({ args }) => (
       }
 
       // Create image post pages.
-      const postPage = path.resolve(`pages/template-post-page.js`)
+      const postTemplate = path.resolve(`pages/template-post-page.js`)
       // We want to create a detailed page for each
       // Instagram post. Since the scrapped Instagram data
       // already includes an ID field, we just use that for
@@ -50,7 +50,7 @@ exports.createPages = ({ args }) => (
           // optional but is often necessary so the template
           // can query data specific to each page.
           path: slug(edge.node.id),
-          component: postPage,
+          component: postTemplate,
           context: {
             id: edge.node.id,
           },
