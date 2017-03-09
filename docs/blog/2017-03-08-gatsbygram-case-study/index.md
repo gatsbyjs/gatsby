@@ -109,83 +109,24 @@ Stop wasting time and build something.
 
 ## App structure
 
-Gatsby uses standard React.js components for building websites.
+All static site generators create a set of files that determine the routing in your site. Typically, you define the output file structure (and thus url structure) of your site by way of the input structure. For example the input structure
 
-There are three types of components.
-
-* *layout components* for general site structure and headers and
-footers
-* *template components* for page types like blog posts or
-documentation pages
-* *React.js pages* for single-file React.js pages
-
-![gatsbygram component layout](gatsbygram-layout.png)*Gatsbygram's site
-structure with its three page components*
-
-### Layout components
-
-Each Gatsby site has a top-level layout component at
-`layouts/default.js`. This layout component is used on every page of
-your site so can contain things like your header, footer, and default
-page structure. It is also used as the "[app
-shell](https://developers.google.com/web/updates/2015/11/app-shell)"
-when loading your site from a service worker.
-
-The simplest possible layout component would look something like this.
-
-```jsx
-import React from "react"
-import Link from "gatsby-link"
-
-class Layout extends React.Component {
-  render () {
-    return (
-      <div>
-        <Link
-          to="/"
-        >
-          Home
-        </Link>
-        <br />
-        {this.props.children}
-      </div>
-    )
-  }
-}
-
-export default Layout
 ```
-
-Gatsbygram's layout component is somewhat more complicated than most
-sites as it has logic to switch between showing images when clicked in
-either a modal on larger screens or on their own page on smaller
-screens.
-
-[Read Gatsbygram's Layout component on
-Github](https://github.com/gatsbyjs/gatsby/blob/1.0/examples/gatsbygram/layouts/default.js).
-
-### Template components
-
-![Gatsbygram detailed post page created using a template
-component](template-page-screenshot.png)*Gatsbygram post detail page
-created using a template component*
-
-Gatsby 1.0 allows you to create pages programatically with an object that
-looks like this:
-
-```javascript
-{
-  path: slugify(node.id),
-  component: postTemplate, // Absolute path to the template component.
-  context: {
-    id: node.id,
-  },
-}
+my-site/
+  index.md
+  blogs/
+    blog1.md
 ```
+would be transformed to
+```
+my-site/
+  index.html
+  blogs/
+    blog1.html
+```
+This is fine at first, but can be limiting. For example, in gatsbygram, we have a json data blob scraped from the instagram api. From this we want to generate a page for each image. We couldn't do this with a typical static site generator, but Gatsby lets you define routes programatically through the `createPages` api.
 
-These page objects are created in the site's `gatsby-node.js` using
-Gatsby's lifecycle API `createPages`.
-
+Here is how we build pages from our json data for gatsbygram at build time:
 ```javascript
 const _ = require("lodash")
 const Promise = require("bluebird")
@@ -252,13 +193,13 @@ exports.createPages = ({ args }) => (
 )
 ```
 
-Template components themselves are again just plain React.js components.
-The optional context data you specify when creating pages is
-automatically passed in as a prop to the component. They're also passed
-as [GraphQL variables](http://graphql.org/learn/queries/#variables) so
-you can easily write dynamic queries for additional information.
+This allows us to create pages from any data, we just have to have the data accessible through our graphql schema first... more on that later.
 
-This is what Gatsbygram's post template component looks like:
+## Using templates
+
+Gatsby uses standard React.js components to render static pages. When you define a page in the `createPages` api, you also define a component to build it with. Those components, usually called templates get reused with different data to generate different pages. Usually, we will pass some simple information about what page we are on to the template component, and then the template will make a `graphql` query using that information to get the data it needs.
+
+You can see above, we pass the `postPage` template an `id`, which is passed as a `prop` to the component, and as a [GraphQL variable](http://graphql.org/learn/queries/#variables) in our `GraphQL` query. Below we use that id to query our `GraphQL` schema and return a fully formed page:
 
 ```jsx
 import React from 'react'
@@ -317,14 +258,19 @@ export const pageQuery = `
 `
 ```
 
-### React.js pages
+## Creating one-off pages
 
-Gatsby lets you build pages from individual React.js components. Like
-template components, you can add GraphQL queries to query for data.
+In addition to creating a page for every one of our instagram images, we also want to make an index page that shows off our insta grid. To do so, Gatsby lets us define pages using the file system, just like your standard static site generators:
+```
+pages/
+  index.js
+  about.js
+```
 
-Gatsbygram has two React.js pages, `pages/index.js` and
-`pages/about.js`. `about.js` is a simple React component with no query.
-`index.js` is more complex as the frontpage of Gatsby queries for
+These react components can query our graphql schema for data, and will each be generated into their own pages at `gatsbygram.com/` and `gatsbygram.com/about`.
+
+Gatsbygram's `about.js` is a simple React component with no query.
+`index.js` is more complex. It queries for
 thumbnails for all images and has an infinite scroll implementation to
 lazy load in image thumbnails.
 
@@ -332,6 +278,55 @@ lazy load in image thumbnails.
 Github](https://github.com/gatsbyjs/gatsby/blob/1.0/examples/gatsbygram/pages/index.js)  
 [Read pages/about.js on
 Github](https://github.com/gatsbyjs/gatsby/blob/1.0/examples/gatsbygram/pages/about.js)
+
+## The Layout Component
+
+Each Gatsby site has a top-level layout component at
+`layouts/default.js`. This layout component is used on every page of
+your site so can contain things like your header, footer, and default
+page structure. It is also used as the "[app
+shell](https://developers.google.com/web/updates/2015/11/app-shell)"
+when loading your site from a service worker.
+
+A simple layout component might look something like this.
+
+```jsx
+import React from "react"
+import Link from "gatsby-link"
+
+class Layout extends React.Component {
+  render () {
+    return (
+      <div>
+        <Link
+          to="/"
+        >
+          Home
+        </Link>
+        <br />
+        {this.props.children}
+      </div>
+    )
+  }
+}
+
+export default Layout
+```
+
+Every page will be rendered as children of the `Layout` component:
+```jsx
+<Layout>
+  <Page />
+</Layout>
+```
+
+Gatsbygram's layout component is somewhat more complicated than most
+sites as it has logic to switch between showing images when clicked in
+either a modal on larger screens or on their own page on smaller
+screens.
+
+[Read Gatsbygram's Layout component on
+Github](https://github.com/gatsbyjs/gatsby/blob/1.0/examples/gatsbygram/layouts/default.js).
 
 ## Client routing and pre-caching
 
