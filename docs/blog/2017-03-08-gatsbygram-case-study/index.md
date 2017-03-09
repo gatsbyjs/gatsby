@@ -576,5 +576,5 @@ of my Gravatar image which is hard-coded at the moment.
 *With thanks to Sam Bhagwatt, Sunil Pai, Nolan Lawson, Nik Graf, and
 Jeff Posnick for their reviews.*
 
-*And a special thanks to Kristo Jorgenson for his [reactor of the App
-Structure section](https://github.com/gatsbyjs/gatsby/pull/708).*
+*And a special thanks to Kristo Jorgenson for his [refactor of the “App
+structure” section](https://github.com/gatsbyjs/gatsby/pull/708).*
