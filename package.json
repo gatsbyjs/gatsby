@@ -56,6 +56,7 @@
     "loader-utils": "^0.2.15",
     "lodash": "^4.15.0",
     "markdown-it": "^7.0.1",
+    "markdown-it-replace-link": "^1.0.1",
     "moment": "^2.14.1",
     "negotiator": "^0.6.1",
     "node-cjsx": "^1.0.0",
