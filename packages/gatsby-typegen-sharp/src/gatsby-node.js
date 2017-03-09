@@ -4,13 +4,13 @@ const {
   GraphQLString,
   GraphQLInt,
   GraphQLFloat,
-} = require(`graphql`)
+} = require("graphql")
 const {
   queueImageResizing,
   base64,
   responsiveSizes,
   responsiveResolution,
-} = require(`gatsby-plugin-sharp`)
+} = require("gatsby-plugin-sharp")
 
 exports.extendNodeType = ({ args }) => {
   if (args.type.name !== `ImageSharp`) {
@@ -135,14 +135,14 @@ exports.extendNodeType = ({ args }) => {
             resolve(
               base64({
                 file,
-              })
+              }),
             )
           } else {
             resolve(
               queueImageResizing({
                 file,
                 args: { ...fieldArgs, linkPrefix: args.linkPrefix },
-              })
+              }),
             )
           }
         })

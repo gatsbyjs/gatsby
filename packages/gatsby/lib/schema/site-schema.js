@@ -3,8 +3,8 @@ import moment from "moment"
 import _ from "lodash"
 
 //import pagesSchema from './pages-schema'
-const { inferObjectStructureFromNodes } = require(`./infer-graphql-type`)
-const { siteDB } = require(`../utils/globals`)
+const { inferObjectStructureFromNodes } = require("./infer-graphql-type")
+const { siteDB } = require("../utils/globals")
 
 module.exports = () => {
   const config = siteDB().get(`config`)

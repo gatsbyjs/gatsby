@@ -3,7 +3,7 @@ const {
   GraphQLID,
   GraphQLList,
   GraphQLInterfaceType,
-} = require(`graphql`)
+} = require("graphql")
 
 const nodeInterface = module.exports = new GraphQLInterfaceType({
   name: `Node`,

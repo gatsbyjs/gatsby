@@ -3,7 +3,6 @@ import Link from "gatsby-link"
 
 import typography, { rhythm, scale } from "../utils/typography"
 import menu from "../pages/docs/doc-links.yaml"
-console.log(menu)
 
 class SidebarBody extends React.Component {
   render () {

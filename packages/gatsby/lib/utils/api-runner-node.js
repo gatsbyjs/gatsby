@@ -1,8 +1,8 @@
-const Promise = require(`bluebird`)
-const glob = require(`glob`)
-const _ = require(`lodash`)
-const { siteDB, programDB } = require(`../utils/globals`)
-const mapSeries = require(`async/mapSeries`)
+const Promise = require("bluebird")
+const glob = require("glob")
+const _ = require("lodash")
+const { siteDB, programDB } = require("../utils/globals")
+const mapSeries = require("async/mapSeries")
 
 const runAPI = (plugin, api, args) => {
   let linkPrefix = ``

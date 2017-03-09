@@ -5,7 +5,7 @@ import fs from "fs-extra"
 import async from "async"
 import parsePath from "parse-filepath"
 import _ from "lodash"
-const debug = require(`debug`)(`gatsby:post-build`)
+const debug = require("debug")("gatsby:post-build")
 
 module.exports = (program, cb) => {
   const directory = program.directory

@@ -12,7 +12,7 @@ import fs from "fs-extra"
 import Joi from "joi"
 import chalk from "chalk"
 import purdy from "purdy"
-const { layoutComponentChunkName } = require(`../utils/js-chunk-names`)
+const { layoutComponentChunkName } = require("../utils/js-chunk-names")
 
 const mkdirs = Promise.promisify(fs.mkdirs)
 const copy = Promise.promisify(fs.copy)

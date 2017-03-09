@@ -1,13 +1,13 @@
-const sharp = require(`sharp`)
-const qs = require(`qs`)
-const imageSize = require(`image-size`)
-const _ = require(`lodash`)
-const Promise = require(`bluebird`)
-const fs = require(`fs`)
-const ProgressBar = require(`progress`)
-const imagemin = require(`imagemin`)
-const imageminPngquant = require(`imagemin-pngquant`)
-const queue = require(`queue`)
+const sharp = require("sharp")
+const qs = require("qs")
+const imageSize = require("image-size")
+const _ = require("lodash")
+const Promise = require("bluebird")
+const fs = require("fs")
+const ProgressBar = require("progress")
+const imagemin = require("imagemin")
+const imageminPngquant = require("imagemin-pngquant")
+const queue = require("queue")
 
 // Promisify the sharp prototype (methods) to promisify the alternative (for
 // raw) callback-accepting toBuffer(...) method
@@ -24,7 +24,7 @@ const bar = new ProgressBar(
   {
     total: 0,
     width: 30,
-  }
+  },
 )
 const processFile = (file, jobs, cb) => {
   Promise.all(jobs.map(job => job.finished)).then(() => cb())
@@ -84,9 +84,7 @@ const processFile = (file, jobs, cb) => {
           .buffer(sharpBuffer, {
             plugins: [
               imageminPngquant({
-                quality: (
-                  `${args.quality}-${args.quality + 25}`
-                ), // e.g. 40-65
+                quality: `${args.quality}-${args.quality + 25}`, // e.g. 40-65
               }),
             ],
           })
@@ -129,11 +127,8 @@ const queueJob = job => {
   }
   _.set(
     toProcess,
-    `${job.file.id.replace(/\./g, `%2E`)}.${job.outputPath.replace(
-      /\./g,
-      `%2E`
-    )}`,
-    job
+    `${job.file.id.replace(/\./g, `%2E`)}.${job.outputPath.replace(/\./g, `%2E`)}`,
+    job,
   )
   if (notQueued) {
     q.push(cb => {
@@ -174,9 +169,7 @@ function queueImageResizing ({ file, args = {} }) {
     return true
   })
   const sortedArgs = _.sortBy(filteredArgs, arg => arg[0] === `width`)
-  const imgSrc = `/${file.hash}-${qs.stringify(
-    _.fromPairs(sortedArgs)
-  )}.${file.extension}`
+  const imgSrc = `/${file.hash}-${qs.stringify(_.fromPairs(sortedArgs))}.${file.extension}`
   const filePath = `${process.cwd()}/public${imgSrc}`
   // Create function to call when the image is finished.
   let outsideResolve
@@ -271,7 +264,7 @@ async function notMemoizedbase64 ({ file, args = {} }) {
 
 const memoizedBase64 = _.memoize(
   notMemoizedbase64,
-  ({ file, args }) => `${file.id}${JSON.stringify(args)}`
+  ({ file, args }) => `${file.id}${JSON.stringify(args)}`,
 )
 
 async function base64 (args) {
@@ -383,7 +376,7 @@ async function responsiveResolution ({ file, args = {} }) {
                  the file ${file.id}
                  was wider than the actual image width of ${dimensions.width}px!
                  If possible, replace the current image with a larger one.
-                 `
+                 `,
     )
   }
 

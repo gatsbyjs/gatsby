@@ -6,7 +6,7 @@ exports.modifyWebpackConfig = ({ args }) => {
   if (stage !== `develop-html`) {
     config._config.resolve.alias = {
       react: `preact-compat`,
-      'react-dom': `preact-compat`,
+      "react-dom": `preact-compat`,
     }
   }
 

@@ -5,12 +5,12 @@ const {
   GraphQLFloat,
   GraphQLInt,
   GraphQLList,
-} = require(`graphql`)
-const _ = require(`lodash`)
-const moment = require(`moment`)
-const parseFilepath = require(`parse-filepath`)
-const mime = require(`mime`)
-const { siteDB } = require(`../utils/globals`)
+} = require("graphql")
+const _ = require("lodash")
+const moment = require("moment")
+const parseFilepath = require("parse-filepath")
+const mime = require("mime")
+const { siteDB } = require("../utils/globals")
 
 const inferGraphQLType = ({ value, fieldName, ...otherArgs }) => {
   if (Array.isArray(value)) {
@@ -53,15 +53,11 @@ const inferGraphQLType = ({ value, fieldName, ...otherArgs }) => {
         },
         fromNow: {
           type: GraphQLBoolean,
-          description: (
-            `Returns a string generated with Moment.js' fromNow function`
-          ),
+          description: `Returns a string generated with Moment.js' fromNow function`,
         },
         difference: {
           type: GraphQLString,
-          description: (
-            `Returns the difference between this date and the current time. Defaults to miliseconds but you can also pass in as the measurement years, months, weeks, days, hours, minutes, and seconds.`
-          ),
+          description: `Returns the difference between this date and the current time. Defaults to miliseconds but you can also pass in as the measurement years, months, weeks, days, hours, minutes, and seconds.`,
         },
       },
       resolve (object, { fromNow, difference, formatString }) {

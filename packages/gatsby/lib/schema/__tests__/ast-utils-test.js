@@ -1,4 +1,4 @@
-const { extractFieldExamples, buildFieldEnumValues } = require(`../ast-utils`)
+const { extractFieldExamples, buildFieldEnumValues } = require("../ast-utils")
 
 describe(`Gatsby AST utils`, () => {
   const nodes = [

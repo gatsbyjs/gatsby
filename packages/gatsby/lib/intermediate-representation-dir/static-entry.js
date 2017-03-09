@@ -61,26 +61,24 @@ module.exports = (locals, callback) => {
       }
 
       // Add the chunk-manifest as a head component.
-      const chunkManifest = require(`!raw!public/chunk-manifest.json`)
+      const chunkManifest = require("!raw!public/chunk-manifest.json")
 
       headComponents.push(
         <script
           id="webpack-manifest"
           dangerouslySetInnerHTML={{
-            __html: (
-              `
+            __html: `
             //<![CDATA[
             window.webpackManifest = ${chunkManifest}
             //]]>
-            `
-            ),
+            `,
           }}
         />,
       )
 
       let stats
       try {
-        stats = require(`public/stats.json`)
+        stats = require("public/stats.json")
       } catch (e) {
         // ignore
       }
@@ -128,15 +126,7 @@ module.exports = (locals, callback) => {
       )
       bodyRenderProps = _.merge(bodyRenderProps, pluginBodyRenderProps)
 
-      const html = `<!DOCTYPE html>\n ${renderToStaticMarkup(
-        <Html
-          {...bodyRenderProps}
-          headComponents={headComponents}
-          postBodyComponents={postBodyComponents}
-          body={body}
-          {...renderProps}
-        />,
-      )}`
+      const html = `<!DOCTYPE html>\n ${renderToStaticMarkup(<Html {...bodyRenderProps} headComponents={headComponents} postBodyComponents={postBodyComponents} body={body} {...renderProps} />)}`
       callback(null, html)
     } else {
       console.log(

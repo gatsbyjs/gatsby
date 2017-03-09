@@ -1,5 +1,5 @@
-const visit = require(`unist-util-visit`)
-const Prism = require(`prismjs`)
+const visit = require("unist-util-visit")
+const Prism = require("prismjs")
 
 module.exports = ({ markdownAST }) => {
   visit(markdownAST, `code`, node => {

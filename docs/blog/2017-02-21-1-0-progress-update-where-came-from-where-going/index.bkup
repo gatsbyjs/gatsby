@@ -1,0 +1,139 @@
+---
+title: "Gatsby 1.0 update"
+date: "2017-02-23"
+author: "Kyle Mathews"
+---
+
+*hint — the solution isn't reverting to an idealized "simpler" way of
+working on the web*
+
+*Move problem statement here — that working in JS world feels like riding runaway
+train or surfing overly aggressive wave*
+
+Advanced technologies don't emerge into the world fully grown like
+Athena leaping from Zeus' forehead. Instead like babies, they are born
+quite helpless and weak and must be slowly nurtured through their
+awkward younger years until they are finally productive technology
+adults.
+
+Software technology adoption goes through multiple stages.
+
+1. R&D / Custom built
+2. Productization
+3. Commodization
+
+## R&D and custom built solutions
+
+The first stage is the time of *R&D and custom built solutions*.
+Sophesticated technology groups with advanced needs start running into
+problems that existing solutiosn don't solve so feel compelled to build
+new technology or cobble together existing tools into novel packages.
+
+So the Googles, Facebooks, Amazon, Apples of the world are running
+applications in containers distributed across dozens of data centers
+*years or decades* before Docker and Kubernetes came on the scene.
+Similiarly tools like Google Closure Compiler and GWT pioneered advanced
+Javascript building and bundling techniquges while the rest of us were
+still *manually adding script tags to HTML pages*.
+
+## Productization
+
+As time goes on, more and more organizations start to run into the same
+problems as these early pioneers and the ideas they pioneered start to
+leak out into open source projects.
+
+These new open source *software products* see rapid adoption from early adopters
+and improve quickly. They generate widespread controversy as brash early
+adopters loudly market the new tools generating pushback from groups
+heavily invested in older tools.
+
+## Commodization
+
+As time goes on, more and more of the complexity and sharp edges of the
+early-stage product are solved until at last the software product is the
+"new normal" which begineers are taught and is taken for granted.
+
+This is a widely understood pattern and has repeated itself over and
+over the past ~60 years since computers came on the scene.
+
+Microprocessors, operating systems, compilers, databases, the internet,
+email all had long awakward adolesants periods where they were seen as
+toys or niche tools before growing up to dominate their respective
+ecosystems—to the point that we struggle to remember what it was like
+before they existed.
+
+## Adopting new technologies
+
+Long-lived organizations learn to surf the successive waves of incoming
+new technologies by picking points on the technology life cycle to adopt
+new tools and techniques. Some need the most advanced technologies and
+are vorocious adopters and inventors. Others lag years behind.
+
+Or as [Erik Meijer summarized
+it](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.72.868&rep=rep1&type=pdf)
+
+`Change Function = F(Perceived Crisis/Perceived Pain of Adoption)`
+
+Organizations in rapidly growing industries have many competitors and
+are in a constant state of competative crisis so despite high adoption
+pain, quickly adopt new technologies.
+
+Normally this works out nicely for everyone. The pain of developing new
+technologies is borne by those that with the greatest need and everyone
+else (the vast majority) can wait until things settle down and mature so
+adoption is fairly painless.
+
+## Javascript in crisis
+
+![Javascript engineering wipes out while attempting to ride the webpack
+wave](wipeout.jpg)*Javascript Engineer
+wipes out while attempting to ride the webpack wave (from
+[vaguelyartistic](https://www.flickr.com/photos/vaguelyartistic/292083492/in/photolist-rP1fh-hKfnhu-dPaHGm-dPaJj7-4Qd1rD-7RpZ8K-bpKqSf-bjWsr-5hAmkk-sfv38A-6T5D58-5KmnwF-oajBZ-8ngHVq-dK6r66-8LbLTj-4SdMxB-bmS9Yg-34wrh2-4kA7U9-dhwznJ-cSaLoq-cdkxFu-4bKzqQ-4C5dd4-FNAdm-4pchw3-pxvVkk-9viJ6k-dh6q21-dh6qiH-afqWxP-r1ftrh-9sjyvY-bz2JCe-7rfMDY-5o29iE-9YHVCe-bCEn8t-agcSdt-5K7ENr-a8aUW-qdyYC-5o27jb-bmS9V4-5nWRWg-tGgt7-hT9qL-9YLQmQ-4ZupJg))*
+
+* everyone has to build for the web
+* tools take a while to mature (the critical path for improving tools
+used by 100s of thousands of engineers often goes through surprisingly
+few people and they can only work so fast).
+* enormous competative pressure — the internet pits everyone against
+each other. Dropping one service for another is easy. Everyone has to level
+up quickly or get left behind.
+* Suggests new tools (React, Webpack, Redux, GraphQL, etc.) *are
+actually dramatically better* as sophesticated companies under enormous
+competative pressure are rapidly adopting new web tools.
+
+New tools get widely adopted within *months*(!!!). New Javascript
+projects can get 1000s of stars on Github within days. Bewilidering
+abundance of choices.
+
+## Riding the runaway Javascript train
+
+![Javascript engineering riding runaway train](runaway-train.jpg)*Terrified Javascript Engineer riding the runaway Javascript train*
+
+Highly unsettling for many engineers and organizations. Those most
+comfortable being mid to late adopters are forced into becoming early
+adopters.
+
+## Things don't get better until they're made better
+
+* stay away if you can. Tools are rapidly maturing and consolidating.
+* If you can't (you probably can't) — accept building for the web is
+much more complex than it used to be.
+* Budget more for training and hiring more senior engineers to work on
+your web products.
+* Invest in open source. They're are many engineers who'd love to work
+full-time on open source code. Identify critical tools for your
+organization and invest in them. Very high leverage investment as you
+gain access to some of the best engineers and the rest of your
+engineering organization learns from working with them.
+
+## As one layer of technology matures, they become the building blocks for the next generation of tools.
+
+New breed of web tools that take for granted new web technologies.
+
+Gatsby excemplifies this. Gensis was I wanted easy way to build
+really fast websites with all my favorite web tools. Wraps React,
+webpack, markdown to make it really easy to build websites out of these
+building blocks without any configuration.
+
+![Javascript engineering masters runaway train](mastered-runaway-train.jpg)*Our hero Javascript Engineers masters the Javascript train*
+

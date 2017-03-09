@@ -3,11 +3,12 @@ import React from "react"
 import { prefixLink } from "gatsby-helpers"
 import { TypographyStyle } from "react-typography"
 import typography from "./utils/typography"
+import Helmet from "react-helmet"
 
 let stylesStr
 if (process.env.NODE_ENV === `production`) {
   try {
-    stylesStr = require(`!raw-loader!./public/styles.css`)
+    stylesStr = require("!raw-loader!./public/styles.css")
   } catch (e) {
     console.log(e)
   }
@@ -15,6 +16,8 @@ if (process.env.NODE_ENV === `production`) {
 
 module.exports = React.createClass({
   render () {
+    const head = Helmet.rewind()
+
     let css
     if (process.env.NODE_ENV === `production`) {
       css = (
@@ -27,6 +30,9 @@ module.exports = React.createClass({
     return (
       <html lang="en">
         <head>
+          <link rel="preload" href="/static/ftn45-webfont.c2439033.woff2" as="font" crossOrigin />
+          <link rel="preload" href="/static/tex-gyre-schola-400.030fe0c4.woff2" as="font" crossOrigin />
+          <link rel="preload" href="/static/ftn65-webfont.0ddc10d2.woff2" as="font" crossOrigin />
           {this.props.headComponents}
           <title>Gatsby</title>
           <meta charSet="utf-8" />
@@ -39,26 +45,29 @@ module.exports = React.createClass({
             rel="icon"
             type="image/png"
             sizes="192x192"
-            href={require(`images/favicons/android-icon-192x192.png`)}
+            href={require(`file-loader!images/favicons/android-icon-192x192.png`)}
           />
           <link
             rel="icon"
             type="image/png"
             sizes="32x32"
-            href={require(`images/favicons/favicon-32x32.png`)}
+            href={require(`file-loader!images/favicons/favicon-32x32.png`)}
           />
           <link
             rel="icon"
             type="image/png"
             sizes="96x96"
-            href={require(`images/favicons/favicon-96x96.png`)}
+            href={require(`file-loader!images/favicons/favicon-96x96.png`)}
           />
           <link
             rel="icon"
             type="image/png"
             sizes="16x16"
-            href={require(`images/favicons/favicon-16x16.png`)}
+            href={require(`file-loader!images/favicons/favicon-16x16.png`)}
           />
+          {head.title.toComponent()}
+          {head.meta.toComponent()}
+          {head.link.toComponent()}
           <TypographyStyle typography={typography} />
           {css}
         </head>

@@ -1,4 +1,4 @@
-const scrollToHash = (offsetY) => {
+const scrollToHash = offsetY => {
   // Make sure React has had a change to flush to DOM first.
   setTimeout(
     () => {
@@ -11,7 +11,7 @@ const scrollToHash = (offsetY) => {
         }
       }
     },
-    10
+    10,
   )
 }
 

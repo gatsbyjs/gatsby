@@ -1,16 +1,16 @@
 /* @flow weak */
-const _ = require(`lodash`)
-const parents = require(`unist-util-parents`)
+const _ = require("lodash")
+const parents = require("unist-util-parents")
 const {
   GraphQLSchema,
   GraphQLObjectType,
-} = require(`graphql`)
+} = require("graphql")
 
-const { programDB } = require(`../utils/globals`)
-const siteSchema = require(`./site-schema`)
-const apiRunner = require(`../utils/api-runner-node`)
-const buildNodeTypes = require(`./build-node-types`)
-const buildNodeConnections = require(`./build-node-connections`)
+const { programDB } = require("../utils/globals")
+const siteSchema = require("./site-schema")
+const apiRunner = require("../utils/api-runner-node")
+const buildNodeTypes = require("./build-node-types")
+const buildNodeConnections = require("./build-node-connections")
 
 module.exports = async () => {
   console.time(`building ast`)

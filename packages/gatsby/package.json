@@ -120,7 +120,6 @@
     "webpack-hot-middleware": "^2.13.2",
     "webpack-md5-hash": "0.0.5",
     "webpack-require": "0.0.16",
-    "webpack-stable-module-id-and-hash": "^1.0.2",
     "webpack-stats-plugin": "^0.1.4",
     "webpack-validator": "^2.2.7",
     "yaml-js": "^0.1.4",

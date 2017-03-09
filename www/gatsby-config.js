@@ -2,6 +2,9 @@ module.exports = {
   siteMetadata: {
     title: `Gatsby`,
   },
+  mapping: {
+    'MarkdownRemark.frontmatter.author': `Author`,
+  },
   plugins: [
     {
       resolve: `gatsby-source-filesystem`,
@@ -19,6 +22,7 @@ module.exports = {
     },
     `gatsby-parser-remark`,
     `gatsby-parser-sharp`,
+    `gatsby-parser-yaml`,
     {
       resolve: `gatsby-typegen-remark`,
       options: {
@@ -26,13 +30,14 @@ module.exports = {
           {
             resolve: `gatsby-typegen-remark-responsive-image`,
             options: {
-              maxWidth: 590,
+              maxWidth: 690,
+              backgroundColor: `#f7f0eb`,
             },
           },
           {
             resolve: `gatsby-typegen-remark-responsive-iframe`,
             options: {
-              wrapperStyle: `margin-bottom: 1.0725rem`,
+              wrapperStyle: `margin-bottom: 1.05rem`,
             },
           },
           `gatsby-typegen-remark-prismjs`,
@@ -62,7 +67,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
-        //trackingId: `UA-774017-3`,
+        trackingId: `UA-93349937-1`,
       },
     },
   ],

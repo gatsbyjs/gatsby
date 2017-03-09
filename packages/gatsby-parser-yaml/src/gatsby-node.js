@@ -1,8 +1,9 @@
-const select = require(`unist-util-select`)
-const Promise = require(`bluebird`)
-const fs = require(`fs`)
-const jsYaml = require(`js-yaml`)
-const _ = require(`lodash`)
+const select = require("unist-util-select")
+const Promise = require("bluebird")
+const fs = require("fs")
+const jsYaml = require("js-yaml")
+const _ = require("lodash")
+const { loadNodeContents } = require("gatsby-source-filesystem")
 
 async function modifyAST ({ args }) {
   const { ast } = args
@@ -11,7 +12,7 @@ async function modifyAST ({ args }) {
     `
     File[extension="yaml"],
     File[extension="yml"]
-  `
+  `,
   )
   const contents = await Promise.map(files, file => loadNodeContents(file))
   files.forEach((file, index) => {
@@ -26,7 +27,7 @@ async function modifyAST ({ args }) {
     file.children = file.children.concat(yamlArray)
   })
 
-  return resolve(ast)
+  return ast
 }
 
 exports.modifyAST = modifyAST

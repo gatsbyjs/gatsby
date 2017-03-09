@@ -10,12 +10,12 @@ import { StatsWriterPlugin } from "webpack-stats-plugin"
 
 import webpackModifyValidate from "./webpack-modify-validate"
 
-const debug = require(`debug`)(`gatsby:webpack-config`)
-const WebpackMD5Hash = require(`webpack-md5-hash`)
-const ChunkManifestPlugin = require(`chunk-manifest-webpack-plugin`)
-const { pagesDB, siteDB } = require(`../utils/globals`)
-const { layoutComponentChunkName } = require(`./js-chunk-names`)
-const genBabelConfig = require(`./babel-config`)
+const debug = require("debug")("gatsby:webpack-config")
+const WebpackMD5Hash = require("webpack-md5-hash")
+const ChunkManifestPlugin = require("chunk-manifest-webpack-plugin")
+const { pagesDB, siteDB } = require("../utils/globals")
+const { layoutComponentChunkName } = require("./js-chunk-names")
+const genBabelConfig = require("./babel-config")
 
 // Five stages or modes:
 //   1) develop: for `gatsby develop` command, hot reload and CSS injection into page
@@ -53,9 +53,9 @@ module.exports = async (
         return {
           path: `${directory}/public`,
           filename: `bundle-for-css.js`,
-          publicPath: (
-            program.prefixLinks ? `${siteDB().get(`config`).linkPrefix}/` : `/`
-          ),
+          publicPath: program.prefixLinks
+            ? `${siteDB().get(`config`).linkPrefix}/`
+            : `/`,
         }
       case `build-html`:
         // A temp file required by static-site-generator-plugin. See plugins() below.
@@ -64,9 +64,9 @@ module.exports = async (
           path: `${directory}/public`,
           filename: `render-page.js`,
           libraryTarget: `umd`,
-          publicPath: (
-            program.prefixLinks ? `${siteDB().get(`config`).linkPrefix}/` : `/`
-          ),
+          publicPath: program.prefixLinks
+            ? `${siteDB().get(`config`).linkPrefix}/`
+            : `/`,
         }
       case `build-javascript`:
         return {
@@ -74,9 +74,9 @@ module.exports = async (
           filename: `[name]-[chunkhash].js`,
           chunkFilename: `[name]-[chunkhash].js`,
           path: `${directory}/public`,
-          publicPath: (
-            program.prefixLinks ? `${siteDB().get(`config`).linkPrefix}/` : `/`
-          ),
+          publicPath: program.prefixLinks
+            ? `${siteDB().get(`config`).linkPrefix}/`
+            : `/`,
         }
       default:
         throw new Error(`The state requested ${stage} doesn't exist.`)
@@ -89,9 +89,7 @@ module.exports = async (
         return {
           commons: [
             require.resolve(`react-hot-loader/patch`),
-            `${require.resolve(
-              `webpack-hot-middleware/client`,
-            )}?path=http://${program.host}:${webpackPort}/__webpack_hmr`,
+            `${require.resolve(`webpack-hot-middleware/client`)}?path=http://${program.host}:${webpackPort}/__webpack_hmr`,
             `${directory}/.intermediate-representation/app`,
           ],
         }
@@ -167,8 +165,9 @@ module.exports = async (
         ]
       case `build-javascript`: {
         // Get array of page template component names.
-        let components = Array.from(pagesDB().values())
-          .map(page => page.component)
+        let components = Array.from(pagesDB().values()).map(
+          page => page.component,
+        )
         components = components.map(component =>
           layoutComponentChunkName(program.directory, component))
         components = _.uniq(components)

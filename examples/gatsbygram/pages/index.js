@@ -6,8 +6,7 @@ import Gravatar from 'react-gravatar'
 import { rhythm, scale } from '../utils/typography'
 import Post from '../components/post'
 
-// This would normally be in a Redux store or some other global data store
-// but... this is a quick and dirty experiment.
+// This would normally be in a Redux store or some other global data store.
 if (typeof window !== `undefined`) {
   window.postsToShow = 12
 }
@@ -217,11 +216,11 @@ query allImages {
         image {
           children {
             ... on ImageSharp {
-              small: responsiveSizes(maxWidth: 292) {
+              small: responsiveSizes(maxWidth: 292, maxHeight: 292) {
                 src
                 srcSet
               }
-              big: responsiveSizes(maxWidth: 640) {
+              big: responsiveSizes(maxWidth: 640, maxHeight: 640) {
                 src
                 srcSet
               }

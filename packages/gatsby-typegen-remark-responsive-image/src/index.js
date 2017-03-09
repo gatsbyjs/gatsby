@@ -1,10 +1,10 @@
-const select = require(`unist-util-select`)
-const path = require(`path`)
-const isRelativeUrl = require(`is-relative-url`)
-const _ = require(`lodash`)
-const { queueImageResizing, base64 } = require(`gatsby-plugin-sharp`)
-const imageSize = require(`image-size`)
-const Promise = require(`bluebird`)
+const select = require("unist-util-select")
+const path = require("path")
+const isRelativeUrl = require("is-relative-url")
+const _ = require("lodash")
+const { queueImageResizing, base64 } = require("gatsby-plugin-sharp")
+const imageSize = require("image-size")
+const Promise = require("bluebird")
 
 // If the image is relative (not hosted elsewhere)
 // 1. Find the image file
@@ -13,11 +13,12 @@ const Promise = require(`bluebird`)
 // 4. Create the responsive images.
 // 5. Set the html w/ aspect ratio helper.
 module.exports = (
-  { files, markdownNode, markdownAST, pluginOptions, linkPrefix }
+  { files, markdownNode, markdownAST, pluginOptions, linkPrefix },
 ) => {
   const defaults = {
     maxWidth: 650,
     wrapperStyle: ``,
+    backgroundColor: `white`,
   }
   const options = _.defaults(pluginOptions, defaults)
   options.maxWidth = parseInt(options.maxWidth, 10)
@@ -109,6 +110,7 @@ module.exports = (
             title="original image"
             href="${originalImg}"
             style="display: block"
+            target="_blank"
           >
             <div
               class="gatsby-resp-image-wrapper"
@@ -120,7 +122,7 @@ module.exports = (
               >
                 <img
                   class="gatsby-resp-image-image"
-                  style="width: 100%; margin: 0; vertical-align: middle; position: absolute; box-shadow: inset 0px 0px 0px 400px white;"
+                  style="width: 100%; margin: 0; vertical-align: middle; position: absolute; box-shadow: inset 0px 0px 0px 400px ${options.backgroundColor};"
                   alt="${node.alt ? node.alt : ``}"
                   title="${node.title ? node.title : ``}"
                   src="${fallbackSrc}"
@@ -149,7 +151,7 @@ module.exports = (
           // Image isn't relative so there's nothing for us to do.
           return resolve()
         }
-      })
-    )
+      }),
+    ),
   )
 }

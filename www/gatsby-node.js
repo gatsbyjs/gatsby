@@ -1,14 +1,16 @@
-const _ = require(`lodash`)
-const Promise = require(`bluebird`)
-const path = require(`path`)
-const select = require(`unist-util-select`)
-const parseFilepath = require(`parse-filepath`)
+const _ = require("lodash")
+const Promise = require("bluebird")
+const path = require("path")
+const select = require("unist-util-select")
+const parseFilepath = require("parse-filepath")
+const fs = require("fs-extra")
 
 exports.createPages = ({ args }) => {
   const { graphql } = args
   return new Promise((resolve, reject) => {
     const pages = []
     const docsTemplate = path.resolve(`templates/template-docs-markdown.js`)
+    const blogPostTemplate = path.resolve(`templates/template-blog-post.js`)
     const packageTemplate = path.resolve(`templates/template-docs-packages.js`)
     graphql(
       `
@@ -31,13 +33,24 @@ exports.createPages = ({ args }) => {
 
       // Create docs pages.
       _.each(result.data.allMarkdownRemark.edges, edge => {
-        pages.push({
-          path: `${edge.node.slug}`, // required
-          component: edge.node.package ? packageTemplate : docsTemplate,
-          context: {
-            slug: edge.node.slug,
-          },
-        })
+        console.log(edge.node.slug)
+        if (_.includes(edge.node.slug, `/blog/`)) {
+          pages.push({
+            path: `${edge.node.slug}`, // required
+            component: blogPostTemplate,
+            context: {
+              slug: edge.node.slug,
+            },
+          })
+        } else {
+          pages.push({
+            path: `${edge.node.slug}`, // required
+            component: edge.node.package ? packageTemplate : docsTemplate,
+            context: {
+              slug: edge.node.slug,
+            },
+          })
+        }
       })
 
       resolve(pages)
@@ -79,4 +92,9 @@ exports.modifyAST = ({ args }) => {
   })
 
   return files
+}
+
+exports.postBuild = () => {
+  fs.copySync(`../docs/blog/2017-02-21-1-0-progress-update-where-came-from-where-going/gatsbygram.mp4`,
+              `./public/gatsbygram.mp4`)
 }

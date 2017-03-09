@@ -1,22 +1,23 @@
 import Typography from "typography"
 import CodePlugin from "typography-plugin-code"
-import { MOBILE_MEDIA_QUERY } from "typography-breakpoint-constants"
+import { MOBILE_MEDIA_QUERY, TABLET_MEDIA_QUERY } from "typography-breakpoint-constants"
 
 const options = {
   headerFontFamily: [`Futura PT`, `sans-serif`],
   bodyFontFamily: [`Tex Gyre Schola`, `serif`],
-  baseFontSize: `16px`,
+  baseFontSize: `18px`,
   baseLineHeight: 1.4,
   headerColor: `#44421f`,
   bodyColor: `#44421f`,
-  blockMarginBottom: 0.75,
+  blockMarginBottom: 0.65,
   scaleRatio: 2.15,
   plugins: [new CodePlugin()],
-  overrideStyles: ({ rhythm }) => ({
+  overrideStyles: ({ rhythm, scale }, options) => ({
     body: {
       background: `#f7f0eb`,
     },
     "h1,h2,h4,h5,h6": {
+      color: `#4c4b38`,
       lineHeight: 1.075,
       marginTop: rhythm(1.5),
       marginBottom: rhythm(3 / 4),
@@ -25,7 +26,7 @@ const options = {
       marginTop: rhythm(1 / 2),
     },
     h3: {
-      fontWeight: 400,
+      ...scale(2/5),
       fontStyle: `italic`,
       lineHeight: 1,
       marginTop: rhythm(1),
@@ -72,10 +73,37 @@ const options = {
     ".main-body a.anchor:hover": {
       background: `none`,
     },
-    [MOBILE_MEDIA_QUERY]: {
-      // Make baseFontSize on mobile 15px.
+    ".main-body a.gatsby-resp-image-link": {
+      boxShadow: `none`,
+    },
+    ".main-body a.gatsby-resp-image-link:hover": {
+      background: `none`,
+      boxShadow: `none`,
+    },
+    "div + em": {
+      ...scale(-1/5),
+      lineHeight: 1.4,
+      display: `block`,
+      textAlign: `center`,
+    },
+    '.gatsby-resp-image-link': {
+      marginLeft: rhythm(-3/4), // 3/4 rhythm is amount of padding on mobile.
+      marginRight: rhythm(-3/4),
+    },
+    video: {
+      width: `100%`,
+      marginBottom: rhythm(options.blockMarginBottom),
+    },
+    [TABLET_MEDIA_QUERY]: {
+      // Make baseFontSize on mobile 17px.
       html: {
-        fontSize: `${15 / 16 * 100}%`,
+        fontSize: `${17 / 16 * 100}%`,
+      },
+    },
+    [MOBILE_MEDIA_QUERY]: {
+      // Make baseFontSize on mobile 16px.
+      html: {
+        fontSize: `${16 / 16 * 100}%`,
       },
     },
   }),

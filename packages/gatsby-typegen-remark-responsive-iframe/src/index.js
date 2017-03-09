@@ -1,7 +1,7 @@
-const visit = require(`unist-util-visit`)
-const cheerio = require(`cheerio`)
-const Promise = require(`bluebird`)
-const _ = require(`lodash`)
+const visit = require("unist-util-visit")
+const cheerio = require("cheerio")
+const Promise = require("bluebird")
+const _ = require("lodash")
 
 module.exports = ({ markdownAST, pluginOptions = {} }) =>
   new Promise(resolve => {
@@ -25,7 +25,7 @@ module.exports = ({ markdownAST, pluginOptions = {} }) =>
             left: 0;
             width: 100%;
             height: 100%;
-          `
+          `,
           )
           $(`iframe, object`).attr(`width`, null).attr(`height`, null)
           const newIframe = $.html()
@@ -35,9 +35,7 @@ module.exports = ({ markdownAST, pluginOptions = {} }) =>
           const rawHTML = `
           <div
             class="gatsby-resp-iframe-wrapper"
-            style="padding-bottom: ${height /
-            width *
-            100}%; position: relative; height: 0; overflow: hidden;${options.wrapperStyle}"
+            style="padding-bottom: ${height / width * 100}%; position: relative; height: 0; overflow: hidden;${options.wrapperStyle}"
           >
             ${newIframe}
           </div>

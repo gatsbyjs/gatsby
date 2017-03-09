@@ -1,8 +1,8 @@
-const visit = require(`unist-util-visit`)
-const isRelativeUrl = require(`is-relative-url`)
-const fsExtra = require(`fs-extra`)
-const path = require(`path`)
-const _ = require(`lodash`)
+const visit = require("unist-util-visit")
+const isRelativeUrl = require("is-relative-url")
+const fsExtra = require("fs-extra")
+const path = require("path")
+const _ = require("lodash")
 
 module.exports = ({ files, markdownNode, markdownAST }) => {
   // Copy linked files to the public directory and modify the AST to point to
@@ -20,10 +20,10 @@ module.exports = ({ files, markdownNode, markdownAST }) => {
         const newPath = path.join(
           process.cwd(),
           `public`,
-          `${linkNode.hash}.${linkNode.extension}`
+          `${linkNode.hash}.${linkNode.extension}`,
         )
         const relativePath = path.join(
-          `/${linkNode.hash}.${linkNode.extension}`
+          `/${linkNode.hash}.${linkNode.extension}`,
         )
         link.url = `${relativePath}`
         if (!fsExtra.existsSync(newPath)) {

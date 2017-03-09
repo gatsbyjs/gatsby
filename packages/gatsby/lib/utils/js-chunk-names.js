@@ -1,5 +1,5 @@
 import _ from "lodash"
-const path = require(`path`)
+const path = require("path")
 
 const pathChunkName = path => {
   const name = path === `/` ? `index` : _.kebabCase(path)
