@@ -26,7 +26,7 @@ it'll be converted to `/docs/index.html`.
 *[We've started work on a 1.0 release of Gatsby!](https://github.com/gatsbyjs/gatsby/issues/419)* Find the code in the `1.0` branch.
 
 Checkout the first 1.0 example site GatsbyGram
-https://gatsbygram.gatsbyjs.org
+https://gatsbygram.gatsbyjs.org and the case study on how its built https://www.gatsbyjs.org/blog/gatsbygram-case-study/
 
 ![live-reloading example](http://zippy.gfycat.com/UltimateWeeklyBarebirdbat.gif)
 
