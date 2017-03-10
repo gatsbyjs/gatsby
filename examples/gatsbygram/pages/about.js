@@ -26,6 +26,9 @@ class About extends React.Component {
             https://github.com/gatsbyjs/gatsby/tree/1.0/examples/gatsbygram
           </a>
         </p>
+        <p>
+          <a href="https://www.gatsbyjs.org/blog/gatsbygram-case-study/">Read a case study on how Gatsbygram was built</a>
+        </p>
       </div>
     )
   }

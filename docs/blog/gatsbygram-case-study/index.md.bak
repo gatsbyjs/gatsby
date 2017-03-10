@@ -1,6 +1,6 @@
 ---
 title: Gatsbygram Case Study
-date: "2017-03-09"
+date: "2017-03-08"
 author: "Kyle Mathews"
 image: 'ui-and-code.png'
 ---
@@ -34,44 +34,34 @@ abstractions, tools, and client capabilities of the React.js world.
 
 ### Gatsby is fast
 
-[Gatsby automatically optimizes your site for the modern
-web](/docs/prpl-pattern/). You provide pages and Gatsby stitches them
-together so they load as fast as possible.
+Gatsby automatically optimizes your site for the modern web. You
+provide pages and Gatsby stitches them together so they load as fast as
+possible.
 
 As proof of this, Gatsbygram loads *2-3x faster* than the real Instagram site.
 
 I tested Gatsbygram and Instagram on
 [webpagetest.org](https://www.webpagetest.org/) using a simulated 3G
-network and a Moto G4 smartphone—a budget Android typical of many
-lower-end phones used today. The median [speed
+network and a Moto G smartphone—a budget Android released 3.5
+years ago—so typical of many lower-end phones used still today.  The
+median [speed
 index](https://sites.google.com/a/webpagetest.org/docs/using-webpagetest/metrics/speed-index)
 score for
-[Gatsbygram](http://www.webpagetest.org/result/170310_XP_11AS/) was 3151
-vs. 8251 for
-[Instagram](http://www.webpagetest.org/result/170310_PC_11AZ/).
+[Gatsbygram](http://www.webpagetest.org/result/170307_10_17H0/) was 3128
+vs. 8145 for
+[Instagram](http://www.webpagetest.org/result/170307_VS_16JZ/).
 
 ![gatsbygram vs. instagram filmstrip](gatsbygram-instagram.png)*Filmstrip of Gatsbygram (top)
 and Instagram (bottom) loading on webpagetest.org*
 
-The second repeat view is even faster for Gatsbygram as it now loads
-from its service worker. It has *pixels on the screen in under a 1/2
-second on a budget Android device*! And for both the initial and repeat
-view, Gatsbygram  *finishes* loading a full second before Instagram gets
-started.
+The second view is even faster for Gatsbygram as it now loads from its
+service worker. It has pixels on the screen in *under a second* on a
+budget Android device! And it *finishes* loading a full 1.5 seconds
+before Instagram gets started.
 
 ![gatsbygram vs. instagram filmstrip repeat
 load](gatsbygram-instagram-repeat-load.png)*Filmstrip of a repeat view
 of Gatsbygram (top) and Instagram (bottom) loading on webpagetest.org*
-
-The difference in Time to Interactivity (TTI) (measure of how long
-before the user can actually interact with the page e.g. click on a
-link) between the sites is just as dramatic. Gatsbygram's TTI is 6.1s vs
-14.1s for Instagram.
-
-* [Gatsbygram's webpagetest
-results](http://www.webpagetest.org/result/170310_XP_11AS/)
-* [Instagram's webpagetest
-results](http://www.webpagetest.org/result/170310_PC_11AZ/)
 
 ### Gatsby is built for the next billion internet users
 
@@ -83,10 +73,10 @@ almost exclusively through smartphones.
 Smartphones with decent specs (as good or better than the Moto G), a
 great browser, but *without* a reliable internet connection.
 
-Gatsby uses modern web performance ideas (e.g.
-[PRPL](https://developers.google.com/web/fundamentals/performance/prpl-pattern/))
-developed by the Google Chrome Developer Relations team and others to
-help websites work well on modern browsers with unreliable networks.
+Gatsby uses [modern web performance
+ideas](https://developers.google.com/web/fundamentals/performance/prpl-pattern/)
+developed by the Google Chrome Developer Relations team to help
+websites work well on modern browsers with unreliable networks.
 
 Sites built with Gatsby run as much as possible in the client so
 regardless of the network conditions—good, bad, or
@@ -123,9 +113,7 @@ Gatsby includes a full modern JavaScript toolchain
 an innovative *declarative* asset pipeline.
 
 For Gatsbygram, Gatsby generates over *1000* image thumbnails for
-responsive images without *any* custom scripting by leveraging the
-Gatsby image processing plugin
-[gatsby-typegen-sharp](/docs/packages/gatsby-typegen-sharp/).
+responsive images without *any* custom scripting.
 
 Stop wasting time and build something!
 
@@ -133,7 +121,7 @@ Stop wasting time and build something!
 
 All static site generators create a set of files that determine the
 routing in your site. Typically, you define the output file structure
-(and thus URL structure) of your site by way of the input structure. For
+(and thus url structure) of your site by way of the input structure. For
 example the input structure:
 
 ```
@@ -156,7 +144,7 @@ This is fine at first, but can be limiting. For example, in Gatsbygram,
 we have a JSON data blob scraped from an Instagram user profile. From
 this we want to generate a page for each image. We couldn't do this with
 a typical static site generator, but Gatsby lets you define routes
-programmatically through the `createPages` api using any data you have
+programatically through the `createPages` api using any data you have
 available.
 
 Here is how we define pages from our JSON data for Gatsbygram at build time:
@@ -169,7 +157,7 @@ const slug = require("slug")
 
 // Implement the Gatsby API “createPages”. This is
 // called after the Gatsby bootstrap is finished so you have
-// access to any information necessary to programmatically
+// access to any information necessary to programatically
 // create pages.
 exports.createPages = ({ args }) => (
   new Promise((resolve, reject) => {
@@ -386,7 +374,7 @@ but generates all the configuration for you.
 Normally page resources are pre-cached with a service worker. But as
 several browsers (Safari/Microsoft Edge) still don't support Service
 Workers, the [Gatsby `<Link>` component](/docs/packages/gatsby-link/)
-pre-caches resources for pages it links to by loading them into memory.
+pre-caches resources for pages it links to.
 
 ## Plugins
 
@@ -444,7 +432,7 @@ module.exports = {
     // This plugin sets up the popular css-in-js library
     // Glamor. It handles adding a Babel plugin and webpack
     // configuration as well as setting up optimized server
-    // rendering and client re-hydration.
+    // rendering and client rehydration.
     `gatsby-plugin-glamor`,
     // This plugin takes your configuration and generates a
     // web manifest file so Gatsbygram can be added to your
@@ -462,7 +450,7 @@ module.exports = {
     },
     // This plugin generates a service worker and AppShell
     // html file so the site works offline and is otherwise
-    // resistant to bad networks. Works with almost any
+    // resistent to bad networks. Works with almost any
     // site!
     `gatsby-plugin-offline`,
     // This plugin sets up Google Analytics for you.
@@ -491,7 +479,7 @@ site helping set the overall feel of the design.
 Glamor lets you write *real CSS* in JavaScript inline in your React.js
 components. It is used for *component* styles.
 
-Typography.js exposes two helper JavaScript functions, `rhythm` and
+Typography.js exposes two helper javascript functions, `rhythm` and
 `scale` to help keep your design in sync as you make changes. Instead of
 using hard-coded spacing values (which break as soon as you change your
 global theme), you use the Typography.js helper functions e.g.
@@ -583,10 +571,4 @@ resulting "Gatsbygram" sites:
 * https://tinyhouses-gatsbygram.netlify.com
 
 **Help wanted:** scrape the user's profile picture and use that instead
-of my Gravatar image which is hard-coded at the moment.
-
-*With thanks to Sam Bhagwatt, Sunil Pai, Nolan Lawson, Nik Graf,
-Jeff Posnick, and Addy Osmani for their reviews.*
-
-*And a special thanks to Kristo Jorgenson for his [refactor of the “App
-structure” section](https://github.com/gatsbyjs/gatsby/pull/708).*
+of my Gravatar image which is hard-coded atm.

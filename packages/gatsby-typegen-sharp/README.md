@@ -1,8 +1,12 @@
 # gatsby-typegen-sharp
 
-Creates GraphQL fields to images of type `ImageSharp` that make it easy
+Creates GraphQL fields for images of type `ImageSharp` that make it easy
 to resize, crop, and create responsive versions of images using the
 popular image processing library [Sharp](https://github.com/lovell/sharp).
+
+Uses the shared Gatsby library
+[gatsby-plugin-sharp](https://www.gatsbyjs.org/docs/packages/gatsby-plugin-sharp/)
+to do the actual image processing.
 
 ## Install
 

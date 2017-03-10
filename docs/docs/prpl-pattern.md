@@ -2,7 +2,7 @@
 title: PRPL Pattern
 ---
 
-I.E. why Gatsby is really fast.
+i.e. why Gatsby is really fast.
 
 https://developers.google.com/web/fundamentals/performance/prpl-pattern/
 
@@ -13,3 +13,9 @@ https://developers.google.com/web/fundamentals/performance/prpl-pattern/
 
 * H/2 push is developing technology — not available on most hosts just
 yet.
+
+TODO fill out how Gatsby implements PRPL.
+
+This issue from last fall is a good intro for now:
+
+https://github.com/gatsbyjs/gatsby/issues/431
