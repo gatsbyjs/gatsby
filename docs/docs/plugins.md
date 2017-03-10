@@ -6,7 +6,7 @@ Rough outline.
 
 Plugins are modules that implement Gatsby APIs. Easily solve common
 website build problems. Pull together open source components. For large
-complex builds, modularlize customizations into site-specific plugins.
+complex builds, modularize customizations into site-specific plugins.
 
 How to use?
 
@@ -18,7 +18,6 @@ mean converting this file into a JS component).
 
 ## Official plugins
 
-* [gatsby-parser](son: /docs/packages/gatsby-parser-json/)
 * [gatsby-parser-json](/docs/packages/gatsby-parser-json/)
 * [gatsby-parser-remark](/docs/packages/gatsby-parser-remark/)
 * [gatsby-parser-sharp](/docs/packages/gatsby-parser-sharp/)
