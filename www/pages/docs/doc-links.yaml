@@ -1,6 +1,7 @@
 - title: Quick Start
   links:
     Getting Started: /docs/
+    Static Sites: /docs/static-site/
     Building with Components: /docs/building-with-components/
     Querying with GraphQL: /docs/querying-with-graphql/
     Gatsby Lifecycle APIs: /docs/gatsby-lifecycle-apis/
