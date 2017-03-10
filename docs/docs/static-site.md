@@ -28,3 +28,16 @@ There is a massive performance benefit from making a website static. HTML is gen
 Any site or web app could be a static site, but generating HTML ahead of time is only feasible for certain types of websites. To see why, think about if Facebook tried to generate HTML for every possible route ahead of time... they would have thousands of pages to generate for every one of their billions of users - and then they would have to re-generate each page every time something changes! It's simply not feasible, so they generate HTML at the moment it is requested.
 
 Generally, content-based sites where every visitor to a page sees the same thing are the ideal use case for static sites. With Gatsby, however, not *every* route needs to be completely static. We give you the flexibility to render some pages statically ahead of time and keep others as client-rendered dynamic pages. The New York Times, for example, might make all of their articles static, but keep the "account" page dynamic, since it differs for every user.
+
+# Performance
+
+- The goal of Gatsby (I liked the next billion internet users thing)
+- PRPL
+- Inlining CSS
+- Images done right, automatically
+
+# Why Gatsby?
+
+- React web app:
+- Dynamic routes: this is unique to the way gatsby works
+- Easy to use. Just choose some plugins, write content, and create some pages.
