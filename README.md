@@ -326,7 +326,7 @@ export default MyComponent ...
 * `config.toml` - Core application configuration is stored here. Available via a `require`
 or `import` of 'config'. Values:
   * `noProductionJavascript` - set to a truthy value to prevent generation of bundle.js
-  (containing your client-side Single Page App) during a `gatbsy build`. You'll need
+  (containing your client-side Single Page App) during a `gatsby build`. You'll need
   to update your top-level `html.js` file so that it doesn't pull in `bundle.js` in
   production, but you'll want to keep it for `gatsby develop` mode.
 * `/pages` - All pages go here. Everything is turned into a page except
