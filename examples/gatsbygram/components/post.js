@@ -59,7 +59,7 @@ class Post extends React.Component {
           <img
             src={small.src}
             srcSet={small.srcSet}
-            sizes="(max-width: 960px) 33vw, 292px}"
+            sizes="(min-width: 960px) 292px, 33vw"
             css={{
               margin: 0,
               height: `100%`,

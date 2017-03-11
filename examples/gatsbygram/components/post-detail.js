@@ -138,7 +138,7 @@ class PostDetail extends React.Component {
               key={big.src}
               src={big.src}
               srcSet={big.srcSet}
-              sizes="(max-width: 640px) 100vw, 640px}"
+              sizes="(min-width: 640px) 640px, 100vw"
               css={{
                 margin: 0,
                 height: `100%`,
