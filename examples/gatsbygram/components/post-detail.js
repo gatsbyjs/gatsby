@@ -1,8 +1,9 @@
 import React from 'react'
-import { presets } from 'glamor'
 import HeartIcon from 'react-icons/lib/fa/heart'
-import typography, { rhythm, scale } from '../utils/typography'
 import Gravatar from 'react-gravatar'
+
+import presets from '../utils/presets'
+import typography, { rhythm, scale } from '../utils/typography'
 
 class PostDetail extends React.Component {
   constructor () {

@@ -492,6 +492,10 @@ babel-plugin-check-es2015-constants@^6.22.0:
   dependencies:
     babel-runtime "^6.22.0"
 
+babel-plugin-glamor@^3.0.0-1:
+  version "3.0.0-1"
+  resolved "https://registry.yarnpkg.com/babel-plugin-glamor/-/babel-plugin-glamor-3.0.0-1.tgz#a0643e9683b34c00629e923ac0d4555e5ccd0975"
+
 babel-plugin-syntax-async-functions@^6.8.0:
   version "6.13.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-syntax-async-functions/-/babel-plugin-syntax-async-functions-6.13.0.tgz#cad9cad1191b5ad634bf30ae0872391e0647be95"
@@ -3011,11 +3015,15 @@ gatsby-plugin-catch-links@1.0.0-alpha12-alpha.cfc93fc7:
   dependencies:
     catch-links "^2.0.1"
 
-gatsby-plugin-glamor@1.0.0-alpha12-alpha.cfc93fc7:
-  version "1.0.0-alpha12-alpha.cfc93fc7"
-  resolved "https://registry.yarnpkg.com/gatsby-plugin-glamor/-/gatsby-plugin-glamor-1.0.0-alpha12-alpha.cfc93fc7.tgz#96c1c94b73c5ed16d03bf55655f59a485b8a5876"
+gatsby-plugin-glamor@1.0.0-alpha12-alpha.c8cb2100:
+  version "1.0.0-alpha12-alpha.c8cb2100"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-glamor/-/gatsby-plugin-glamor-1.0.0-alpha12-alpha.c8cb2100.tgz#ddb5061813a3b1e7961f1d7dfaab9319f50f6fd1"
   dependencies:
-    glamor "^2.20.20"
+    babel-plugin-glamor "^3.0.0-1"
+    glamor next
+    glamor-inline "^1.0.5"
+    glamor-react "^3.0.0-1"
+    glamor-server next
 
 gatsby-plugin-google-analytics@1.0.0-alpha12-alpha.cfc93fc7:
   version "1.0.0-alpha12-alpha.cfc93fc7"
@@ -3346,9 +3354,27 @@ github-slugger@^1.1.1:
   dependencies:
     emoji-regex "^6.0.0"
 
-glamor@^2.20.20:
-  version "2.20.22"
-  resolved "https://registry.yarnpkg.com/glamor/-/glamor-2.20.22.tgz#86c11a143deee7d4c051de50d69387d8b4e700ba"
+glamor-inline@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/glamor-inline/-/glamor-inline-1.0.5.tgz#865d232a74e8da10d5f43d5a599ba784d2633c56"
+
+glamor-react@^3.0.0-1:
+  version "3.0.0-1"
+  resolved "https://registry.yarnpkg.com/glamor-react/-/glamor-react-3.0.0-1.tgz#79e96c9735395c0769c447147f68471f996cb37d"
+  dependencies:
+    glamor "^3.0.0-1"
+    object-assign "^4.1.0"
+    react "^15.4.1"
+
+glamor-server@next:
+  version "3.0.0-1"
+  resolved "https://registry.yarnpkg.com/glamor-server/-/glamor-server-3.0.0-1.tgz#5b4186ee3043478a5a66c5611aa0789b94532d6c"
+  dependencies:
+    glamor "^3.0.0-1"
+
+glamor@^3.0.0-1, glamor@next:
+  version "3.0.0-1"
+  resolved "https://registry.yarnpkg.com/glamor/-/glamor-3.0.0-1.tgz#60f489e96d96c12620803d3677ac26413cb76a95"
   dependencies:
     babel-runtime "^6.18.0"
     fbjs "^0.8.8"
@@ -6537,7 +6563,7 @@ react-typography@^0.15.0:
   version "0.15.0"
   resolved "https://registry.yarnpkg.com/react-typography/-/react-typography-0.15.0.tgz#0c7680bcbb12a681950c2187df66c43aa4b02034"
 
-react@^15.4.0:
+react@^15.4.0, react@^15.4.1:
   version "15.4.2"
   resolved "https://registry.yarnpkg.com/react/-/react-15.4.2.tgz#41f7991b26185392ba9bae96c8889e7e018397ef"
   dependencies:

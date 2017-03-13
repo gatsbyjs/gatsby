@@ -5,7 +5,7 @@ exports.modifyWebpackConfig = ({ args }) => {
   const { config } = args
   return config.plugin(`Glamor`, webpack.ProvidePlugin, [
     {
-      Glamor: `glamor/react`,
+      Glamor: `glamor-react`,
     },
   ])
 }
@@ -17,7 +17,7 @@ exports.modifyBabelrc = ({ args }) => {
     `transform-react-jsx`,
     { pragma: `Glamor.createElement` },
   ])
-  babelrc.plugins.push(`glamor/babel-hoist`)
+  babelrc.plugins.push(`babel-plugin-glamor`)
 
   return babelrc
 }

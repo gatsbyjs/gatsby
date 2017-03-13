@@ -1,9 +1,9 @@
 import React from "react"
 import Link from "gatsby-link"
-import { presets } from "glamor"
 
 import typography, { rhythm } from "../../utils/typography"
 import SidebarBody from "../../components/sidebar-body"
+import presets from "../../utils/presets"
 
 class IndexRoute extends React.Component {
   render () {

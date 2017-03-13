@@ -6,10 +6,10 @@ import DocumentIcon from "react-icons/lib/go/file-text"
 import CodeIcon from "react-icons/lib/go/code"
 import PencilIcon from "react-icons/lib/go/pencil"
 import PersonIcon from "react-icons/lib/md/person"
-import { presets } from "glamor"
 import Helmet from "react-helmet"
 
 import SidebarBody from "../components/sidebar-body"
+import presets from "../utils/presets"
 
 import "css/prism-coy.css"
 

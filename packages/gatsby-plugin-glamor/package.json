@@ -4,7 +4,11 @@
   "version": "1.0.0-alpha12",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "glamor": "^2.20.20"
+    "babel-plugin-glamor": "^3.0.0-1",
+    "glamor": "next",
+    "glamor-inline": "^1.0.5",
+    "glamor-react": "^3.0.0-1",
+    "glamor-server": "next"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0"

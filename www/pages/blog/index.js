@@ -1,8 +1,8 @@
 import React from "react"
 import Link from "gatsby-link"
-import { presets } from "glamor"
 
 import { rhythm, scale } from "utils/typography"
+import presets from "../../utils/presets"
 
 const IndexRoute = React.createClass({
   render () {
