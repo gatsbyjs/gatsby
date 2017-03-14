@@ -83,10 +83,10 @@ module.exports = (locals, callback) => {
         // ignore
       }
       const dascripts = [
-        pages.find(page => page.path === locals.path).componentChunkName,
-        pathChunkName(locals.path),
-        `app`,
         `commons`,
+        `app`,
+        pathChunkName(locals.path),
+        pages.find(page => page.path === locals.path).componentChunkName,
       ]
       dascripts.forEach(script => {
         const fetchKey = `assetsByChunkName[${script}][0]`
