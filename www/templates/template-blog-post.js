@@ -1,8 +1,8 @@
 import React from "react"
-
-import typography, { rhythm, scale } from "utils/typography"
-import { presets } from "glamor"
 import Helmet from "react-helmet"
+
+import presets from "../utils/presets"
+import typography, { rhythm, scale } from "../utils/typography"
 
 const BlogPostTemplate = React.createClass({
   render () {

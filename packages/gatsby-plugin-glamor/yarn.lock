@@ -160,6 +160,10 @@ babel-messages@^6.8.0:
   dependencies:
     babel-runtime "^6.0.0"
 
+babel-plugin-glamor@^3.0.0-1:
+  version "3.0.0-1"
+  resolved "https://registry.yarnpkg.com/babel-plugin-glamor/-/babel-plugin-glamor-3.0.0-1.tgz#a0643e9683b34c00629e923ac0d4555e5ccd0975"
+
 babel-polyfill@^6.16.0:
   version "6.20.0"
   resolved "https://registry.yarnpkg.com/babel-polyfill/-/babel-polyfill-6.20.0.tgz#de4a371006139e20990aac0be367d398331204e7"
@@ -426,7 +430,7 @@ extsprintf@1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.0.2.tgz#e1080e0658e300b06294990cc70e1502235fd550"
 
-fbjs@^0.8.8:
+fbjs@^0.8.4, fbjs@^0.8.8:
   version "0.8.8"
   resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.8.tgz#02f1b6e0ea0d46c24e0b51a2d24df069563a5ad6"
   dependencies:
@@ -536,9 +540,27 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-glamor@^2.20.20:
-  version "2.20.20"
-  resolved "https://registry.yarnpkg.com/glamor/-/glamor-2.20.20.tgz#546cb86bfae760b0fd5c019ba859007d08e6238f"
+glamor-inline@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/glamor-inline/-/glamor-inline-1.0.5.tgz#865d232a74e8da10d5f43d5a599ba784d2633c56"
+
+glamor-react@^3.0.0-1:
+  version "3.0.0-1"
+  resolved "https://registry.yarnpkg.com/glamor-react/-/glamor-react-3.0.0-1.tgz#79e96c9735395c0769c447147f68471f996cb37d"
+  dependencies:
+    glamor "^3.0.0-1"
+    object-assign "^4.1.0"
+    react "^15.4.1"
+
+glamor-server@next:
+  version "3.0.0-1"
+  resolved "https://registry.yarnpkg.com/glamor-server/-/glamor-server-3.0.0-1.tgz#5b4186ee3043478a5a66c5611aa0789b94532d6c"
+  dependencies:
+    glamor "^3.0.0-1"
+
+glamor@^3.0.0-1, glamor@next:
+  version "3.0.0-1"
+  resolved "https://registry.yarnpkg.com/glamor/-/glamor-3.0.0-1.tgz#60f489e96d96c12620803d3677ac26413cb76a95"
   dependencies:
     babel-runtime "^6.18.0"
     fbjs "^0.8.8"
@@ -816,7 +838,7 @@ lodash@^4.2.0:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
-loose-envify@^1.0.0:
+loose-envify@^1.0.0, loose-envify@^1.1.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/loose-envify/-/loose-envify-1.3.0.tgz#6b26248c42f6d4fa4b0d8542f78edfcde35642a8"
   dependencies:
@@ -1033,6 +1055,14 @@ rc@~1.1.6:
     ini "~1.3.0"
     minimist "^1.2.0"
     strip-json-comments "~1.0.4"
+
+react@^15.4.1:
+  version "15.4.2"
+  resolved "https://registry.yarnpkg.com/react/-/react-15.4.2.tgz#41f7991b26185392ba9bae96c8889e7e018397ef"
+  dependencies:
+    fbjs "^0.8.4"
+    loose-envify "^1.1.0"
+    object-assign "^4.1.0"
 
 "readable-stream@^2.0.0 || ^1.1.13", readable-stream@^2.0.2:
   version "2.2.2"

@@ -478,6 +478,10 @@ babel-plugin-check-es2015-constants@^6.3.13:
   dependencies:
     babel-runtime "^6.0.0"
 
+babel-plugin-glamor@^3.0.0-1:
+  version "3.0.0-1"
+  resolved "https://registry.yarnpkg.com/babel-plugin-glamor/-/babel-plugin-glamor-3.0.0-1.tgz#a0643e9683b34c00629e923ac0d4555e5ccd0975"
+
 babel-plugin-syntax-async-functions@^6.8.0:
   version "6.13.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-syntax-async-functions/-/babel-plugin-syntax-async-functions-6.13.0.tgz#cad9cad1191b5ad634bf30ae0872391e0647be95"
@@ -1542,11 +1546,11 @@ color-convert@^1.3.0, color-convert@^1.8.2:
   dependencies:
     color-name "^1.1.1"
 
-color-name@1.0.x, color-name@^1.0.0:
+color-name@1.0.x:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/color-name/-/color-name-1.0.1.tgz#6b34b2b29b7716013972b0b9d5bedcfbb6718df8"
 
-color-name@^1.1.1:
+color-name@^1.0.0, color-name@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/color-name/-/color-name-1.1.1.tgz#4b1415304cf50028ea81643643bd82ea05803689"
 
@@ -2871,11 +2875,15 @@ gatsby-parser-sharp@1.0.0-alpha12-alpha.cfc93fc7:
     bluebird "^3.4.6"
     unist-util-select "^1.5.0"
 
-gatsby-plugin-glamor@1.0.0-alpha12-alpha.cfc93fc7:
-  version "1.0.0-alpha12-alpha.cfc93fc7"
-  resolved "https://registry.yarnpkg.com/gatsby-plugin-glamor/-/gatsby-plugin-glamor-1.0.0-alpha12-alpha.cfc93fc7.tgz#96c1c94b73c5ed16d03bf55655f59a485b8a5876"
+gatsby-plugin-glamor@1.0.0-alpha12-alpha.c8cb2100:
+  version "1.0.0-alpha12-alpha.c8cb2100"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-glamor/-/gatsby-plugin-glamor-1.0.0-alpha12-alpha.c8cb2100.tgz#ddb5061813a3b1e7961f1d7dfaab9319f50f6fd1"
   dependencies:
-    glamor "^2.20.20"
+    babel-plugin-glamor "^3.0.0-1"
+    glamor next
+    glamor-inline "^1.0.5"
+    glamor-react "^3.0.0-1"
+    glamor-server next
 
 gatsby-plugin-google-analytics@^1.0.0-alpha12-alpha.cfc93fc7:
   version "1.0.0-alpha12-alpha.faff3fa9"
@@ -3120,9 +3128,27 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-glamor@^2.20.20:
-  version "2.20.22"
-  resolved "https://registry.yarnpkg.com/glamor/-/glamor-2.20.22.tgz#86c11a143deee7d4c051de50d69387d8b4e700ba"
+glamor-inline@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/glamor-inline/-/glamor-inline-1.0.5.tgz#865d232a74e8da10d5f43d5a599ba784d2633c56"
+
+glamor-react@^3.0.0-1:
+  version "3.0.0-1"
+  resolved "https://registry.yarnpkg.com/glamor-react/-/glamor-react-3.0.0-1.tgz#79e96c9735395c0769c447147f68471f996cb37d"
+  dependencies:
+    glamor "^3.0.0-1"
+    object-assign "^4.1.0"
+    react "^15.4.1"
+
+glamor-server@next:
+  version "3.0.0-1"
+  resolved "https://registry.yarnpkg.com/glamor-server/-/glamor-server-3.0.0-1.tgz#5b4186ee3043478a5a66c5611aa0789b94532d6c"
+  dependencies:
+    glamor "^3.0.0-1"
+
+glamor@^3.0.0-1, glamor@next:
+  version "3.0.0-1"
+  resolved "https://registry.yarnpkg.com/glamor/-/glamor-3.0.0-1.tgz#60f489e96d96c12620803d3677ac26413cb76a95"
   dependencies:
     babel-runtime "^6.18.0"
     fbjs "^0.8.8"
@@ -4489,11 +4515,11 @@ lodash@4.11.1:
   version "4.11.1"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.11.1.tgz#a32106eb8e2ec8e82c241611414773c9df15f8bc"
 
-lodash@^4.1.0, lodash@^4.14.0, lodash@^4.16.2, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.2.0, lodash@^4.6.1:
+lodash@^4.1.0, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.16.2, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.2.0, lodash@^4.6.1:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
-lodash@^4.13.1, lodash@^4.16.4:
+lodash@^4.16.4:
   version "4.16.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.16.4.tgz#01ce306b9bad1319f2a5528674f88297aeb70127"
 
@@ -6120,7 +6146,7 @@ react-typography@^0.15.0:
   version "0.15.0"
   resolved "https://registry.yarnpkg.com/react-typography/-/react-typography-0.15.0.tgz#0c7680bcbb12a681950c2187df66c43aa4b02034"
 
-react@^15.4.0:
+react@^15.4.0, react@^15.4.1:
   version "15.4.1"
   resolved "https://registry.yarnpkg.com/react/-/react-15.4.1.tgz#498e918602677a3983cd0fd206dfe700389a0dd6"
   dependencies:
@@ -6224,9 +6250,9 @@ rechoir@^0.6.2:
   dependencies:
     resolve "^1.1.6"
 
-"recursive-readdir@git+https://github.com/KyleAMathews/recursive-readdir.git":
+"recursive-readdir@https://github.com/KyleAMathews/recursive-readdir.git":
   version "2.1.0"
-  resolved "git+https://github.com/KyleAMathews/recursive-readdir.git#fbfe835d2e75a977db2d1e794214aa26ecdb0671"
+  resolved "https://github.com/KyleAMathews/recursive-readdir.git#fbfe835d2e75a977db2d1e794214aa26ecdb0671"
   dependencies:
     minimatch "3.0.2"
 

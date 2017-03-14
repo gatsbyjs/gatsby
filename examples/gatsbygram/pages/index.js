@@ -1,9 +1,9 @@
 import React from 'react'
 import chunk from 'lodash/chunk'
-import { presets } from 'glamor'
 import Gravatar from 'react-gravatar'
 
 import { rhythm, scale } from '../utils/typography'
+import presets from '../utils/presets'
 import Post from '../components/post'
 
 // This would normally be in a Redux store or some other global data store.
