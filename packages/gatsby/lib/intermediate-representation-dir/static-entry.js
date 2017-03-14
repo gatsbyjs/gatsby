@@ -63,7 +63,7 @@ module.exports = (locals, callback) => {
       // Add the chunk-manifest as a head component.
       const chunkManifest = require("!raw!public/chunk-manifest.json")
 
-      headComponents.push(
+      postBodyComponents.unshift(
         <script
           id="webpack-manifest"
           dangerouslySetInnerHTML={{
@@ -99,7 +99,7 @@ module.exports = (locals, callback) => {
         )
 
         // Add script tags for the bottom of the page.
-        postBodyComponents.unshift(
+        postBodyComponents.push(
           <script key={prefixedScript} src={prefixedScript} />,
         )
       })
