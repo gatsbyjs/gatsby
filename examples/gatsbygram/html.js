@@ -33,6 +33,7 @@ module.exports = React.createClass({
         <head>
           <link rel="preload" href={`/static/space-mono-latin-700.eadcd2d5.woff2`} as="font" crossOrigin />
           <link rel="preload" href={`/static/space-mono-latin-400.a8338881.woff2`} as="font" crossOrigin />
+          {this.props.headComponents}
           <meta charSet="utf-8" />
           <meta name="description" content="Gatsbygram: A clone of Instagram built with GatsbyJS" />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -48,7 +49,6 @@ module.exports = React.createClass({
           <title>Gatsbygram</title>
           <TypographyStyle typography={typography} />
           {css}
-          {this.props.headComponents}
         </head>
         <body>
           <div id="react-mount" dangerouslySetInnerHTML={{ __html: this.props.body }} />
