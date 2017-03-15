@@ -5,12 +5,12 @@ import typography, { rhythm, scale } from "../utils/typography"
 import menu from "../pages/docs/doc-links.yaml"
 
 class SidebarBody extends React.Component {
-  render () {
+  render() {
     // Use original sizes on mobile as the text is inline
     // but smaller on > tablet so as not to compete with body text.
     const fontSize = this.props.inline
       ? scale(0).fontSize
-      : scale((-1) / 10).fontSize
+      : scale(-1 / 10).fontSize
     const headerSize = this.props.inline
       ? scale(2 / 5).fontSize
       : scale(1 / 5).fontSize
@@ -38,9 +38,9 @@ class SidebarBody extends React.Component {
               }}
             >
               {Object.keys(section.links).map(title => {
-                  // Don't show the main docs link on mobile as we put these
-                  // links on that main docs page so it's confusing to have
-                  // the page link to itself.
+                // Don't show the main docs link on mobile as we put these
+                // links on that main docs page so it's confusing to have
+                // the page link to itself.
                 if (this.props.inline && section.links[title] === `/docs/`) {
                   return null
                 }
@@ -54,7 +54,7 @@ class SidebarBody extends React.Component {
               })}
             </ul>
           </div>
-          ))}
+        ))}
       </div>
     )
   }

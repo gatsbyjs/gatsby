@@ -1,14 +1,16 @@
-import React from "react"
-import Link from "gatsby-link"
+import React from "react";
+import Link from "gatsby-link";
 
-import { rhythm, scale } from "utils/typography"
-import presets from "../../utils/presets"
+import { rhythm, scale } from "utils/typography";
+import presets from "../../utils/presets";
 
 const IndexRoute = React.createClass({
-  render () {
-    console.log(`blog posts`, this.props)
-    const blogPosts = this.props.data.allMarkdownRemark.edges.map((edge) => edge.node)
-    console.log(blogPosts)
+  render() {
+    console.log(`blog posts`, this.props);
+    const blogPosts = this.props.data.allMarkdownRemark.edges.map(
+      edge => edge.node,
+    );
+    console.log(blogPosts);
     return (
       <div
         css={{
@@ -21,16 +23,16 @@ const IndexRoute = React.createClass({
         }}
       >
         <h1>Blog</h1>
-        {blogPosts.map((post) => {
-          const avatar = post.frontmatter.author.avatar.children[0].responsiveResolution
+        {blogPosts.map(post => {
+          const avatar = post.frontmatter.author.avatar.children[
+            0
+          ].responsiveResolution;
           return (
             <div>
-              <Link
-                to={post.slug}
-              >
+              <Link to={post.slug}>
                 <h2
                   css={{
-                    marginBottom: rhythm(1/8),
+                    marginBottom: rhythm(1 / 8),
                   }}
                 >
                   {post.frontmatter.title}
@@ -53,7 +55,7 @@ const IndexRoute = React.createClass({
                   css={{
                     borderRadius: `100%`,
                     display: `inline-block`,
-                    marginRight: rhythm(1/2),
+                    marginRight: rhythm(1 / 2),
                     marginBottom: 0,
                     verticalAlign: `top`,
                   }}
@@ -82,14 +84,14 @@ const IndexRoute = React.createClass({
                 </div>
               </div>
             </div>
-          )
+          );
         })}
       </div>
-    )
+    );
   },
-})
+});
 
-export default IndexRoute
+export default IndexRoute;
 
 export const pageQuery = `
 {
@@ -125,4 +127,4 @@ export const pageQuery = `
     }
   }
 }
-`
+`;

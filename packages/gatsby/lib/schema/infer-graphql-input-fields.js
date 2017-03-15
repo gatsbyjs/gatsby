@@ -41,7 +41,7 @@ const typeFields = type => {
   }
 }
 
-const inferGraphQLInputFields = exports.inferGraphQLInputFields = (
+const inferGraphQLInputFields = (exports.inferGraphQLInputFields = (
   value,
   key,
   nodes,
@@ -134,9 +134,9 @@ const inferGraphQLInputFields = exports.inferGraphQLInputFields = (
     default:
       return null
   }
-}
+})
 
-const inferInputObjectStructureFromNodes = exports.inferInputObjectStructureFromNodes = (
+const inferInputObjectStructureFromNodes = (exports.inferInputObjectStructureFromNodes = (
   nodes,
   selector,
   namespace,
@@ -192,4 +192,4 @@ const inferInputObjectStructureFromNodes = exports.inferInputObjectStructureFrom
   }
 
   return inferredFields
-}
+})

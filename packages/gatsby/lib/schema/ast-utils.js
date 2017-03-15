@@ -1,7 +1,7 @@
 const _ = require("lodash")
 const flatten = require("flat")
 
-const extractFieldExamples = exports.extractFieldExamples = (
+const extractFieldExamples = (exports.extractFieldExamples = (
   { nodes, selector, deleteNodeFields = false },
 ) => {
   let examples = {}
@@ -36,8 +36,8 @@ const extractFieldExamples = exports.extractFieldExamples = (
   }
 
   return examples
-}
-const buildFieldEnumValues = exports.buildFieldEnumValues = nodes => {
+})
+const buildFieldEnumValues = (exports.buildFieldEnumValues = nodes => {
   const enumValues = {}
   const fieldExamples = _.keys(
     flatten(
@@ -57,4 +57,4 @@ const buildFieldEnumValues = exports.buildFieldEnumValues = nodes => {
   })
 
   return enumValues
-}
+})

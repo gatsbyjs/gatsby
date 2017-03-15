@@ -12,7 +12,7 @@ import bootstrap from "../bootstrap"
 import apiRunnerNode from "./api-runner-node"
 import { pagesDB } from "./globals"
 
-async function html (program) {
+async function html(program) {
   const directory = program.directory
   const { graphqlRunner } = await bootstrap(program)
 

@@ -11,7 +11,7 @@ const rlInterface = rl.createInterface({
 
 const debug = require("debug")("gatsby:application")
 
-function startServer (program, launchPort) {
+function startServer(program, launchPort) {
   const directory = program.directory
   const serverPort = launchPort || program.port
 

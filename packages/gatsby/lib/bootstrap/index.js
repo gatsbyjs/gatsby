@@ -34,51 +34,55 @@ process.on(`unhandledRejection`, error => {
 // algorithm is glob /pages directory for js/jsx/cjsx files *not*
 // underscored. Then create url w/ our path algorithm *unless* user
 // takes control of that page component in gatsby-node.
-const autoPathCreator = program => new Promise(resolve => {
-  const pagesDirectory = path.join(program.directory, `pages`)
-  let autoPages = []
-  glob(`${pagesDirectory}/**/?(*.js|*.jsx|*.cjsx)`, (err, files) => {
-    // Create initial page objects.
-    autoPages = files.map(filePath => ({
-      component: filePath,
-      componentChunkName: layoutComponentChunkName(program.directory, filePath),
-      path: filePath,
-    }))
+const autoPathCreator = program =>
+  new Promise(resolve => {
+    const pagesDirectory = path.join(program.directory, `pages`)
+    let autoPages = []
+    glob(`${pagesDirectory}/**/?(*.js|*.jsx|*.cjsx)`, (err, files) => {
+      // Create initial page objects.
+      autoPages = files.map(filePath => ({
+        component: filePath,
+        componentChunkName: layoutComponentChunkName(
+          program.directory,
+          filePath,
+        ),
+        path: filePath,
+      }))
 
-    // Convert path to one relative to the pages directory.
-    autoPages = autoPages.map(page => ({
-      ...page,
-      path: path.relative(pagesDirectory, page.path),
-    }))
+      // Convert path to one relative to the pages directory.
+      autoPages = autoPages.map(page => ({
+        ...page,
+        path: path.relative(pagesDirectory, page.path),
+      }))
 
-    // Remove pages starting with an underscore.
-    autoPages = _.filter(autoPages, page => page.path.slice(0, 1) !== `_`)
+      // Remove pages starting with an underscore.
+      autoPages = _.filter(autoPages, page => page.path.slice(0, 1) !== `_`)
 
-    // Remove page templates.
-    autoPages = _.filter(
-      autoPages,
-      page => page.path.slice(0, 9) !== `template-`,
-    )
+      // Remove page templates.
+      autoPages = _.filter(
+        autoPages,
+        page => page.path.slice(0, 9) !== `template-`,
+      )
 
-    // Convert to our path format.
-    autoPages = autoPages.map(page => ({
-      ...page,
-      path: createPath(pagesDirectory, page.component),
-    }))
+      // Convert to our path format.
+      autoPages = autoPages.map(page => ({
+        ...page,
+        path: createPath(pagesDirectory, page.component),
+      }))
 
-    // Validate pages.
-    autoPages.forEach(page => {
-      const { error } = Joi.validate(page, pageSchema)
-      if (error) {
-        console.log(chalk.blue.bgYellow(`A page object failed validation`))
-        console.log(page)
-        console.log(chalk.bold.red(error))
-      }
+      // Validate pages.
+      autoPages.forEach(page => {
+        const { error } = Joi.validate(page, pageSchema)
+        if (error) {
+          console.log(chalk.blue.bgYellow(`A page object failed validation`))
+          console.log(page)
+          console.log(chalk.bold.red(error))
+        }
+      })
+
+      resolve(autoPages)
     })
-
-    resolve(autoPages)
   })
-})
 
 module.exports = async program => {
   console.log(`lib/bootstrap/index.js time since started:`, process.uptime())
@@ -231,7 +235,8 @@ module.exports = async program => {
   )
   const browserPluginsRequires = browserPlugins
     .map(
-      plugin => `{
+      plugin =>
+        `{
       plugin: require('${plugin.resolve}'),
       options: ${JSON.stringify(plugin.options)},
     }`,
@@ -242,7 +247,8 @@ module.exports = async program => {
   let sSRAPIRunner = fs.readFileSync(`${siteDir}/api-runner-ssr.js`, `utf-8`)
   const ssrPluginsRequires = ssrPlugins
     .map(
-      plugin => `{
+      plugin =>
+        `{
       plugin: require('${plugin.resolve}'),
       options: ${JSON.stringify(plugin.options)},
     }`,

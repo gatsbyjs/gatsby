@@ -4,14 +4,16 @@ import { rhythm, scale } from "utils/typography"
 import presets from "../utils/presets"
 
 const DocsTemplate = React.createClass({
-  render () {
+  render() {
     const packageName = this.props.data.markdownRemark.headings[0].value
     return (
       <div>
         <a
-          href={`https://github.com/gatsbyjs/gatsby/tree/1.0/packages/${packageName}`}
+          href={
+            `https://github.com/gatsbyjs/gatsby/tree/1.0/packages/${packageName}`
+          }
           css={{
-            ...scale(-1/5),
+            ...scale(-1 / 5),
             position: `absolute`,
           }}
         >

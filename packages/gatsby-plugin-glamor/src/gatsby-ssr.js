@@ -1,6 +1,6 @@
 import React from "react"
-import { renderToString } from 'react-dom/server'
-import inline from 'glamor-inline'
+import { renderToString } from "react-dom/server"
+import inline from "glamor-inline"
 
 exports.replaceServerBodyRender = ({ component }) => {
   const html = renderToString(component)

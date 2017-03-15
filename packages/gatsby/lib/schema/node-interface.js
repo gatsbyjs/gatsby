@@ -5,7 +5,7 @@ const {
   GraphQLInterfaceType,
 } = require("graphql")
 
-const nodeInterface = module.exports = new GraphQLInterfaceType({
+const nodeInterface = (module.exports = new GraphQLInterfaceType({
   name: `Node`,
   description: `An object with an id, parent, and children`,
   fields: () => ({
@@ -22,4 +22,4 @@ const nodeInterface = module.exports = new GraphQLInterfaceType({
       description: `The children of this node.`,
     },
   }),
-})
+}))

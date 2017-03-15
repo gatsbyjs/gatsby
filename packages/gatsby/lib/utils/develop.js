@@ -19,7 +19,7 @@ const rlInterface = rl.createInterface({
 
 const debug = require("debug")("gatsby:application")
 
-async function startServer (program) {
+async function startServer(program) {
   const directory = program.directory
 
   // Load pages for the site.
@@ -107,9 +107,7 @@ async function startServer (program) {
           return res.send(htmlStr)
         } else {
           try {
-            const apiRunner = require(
-              `${directory}/.intermediate-representation/api-runner-ssr`,
-            )
+            const apiRunner = require(`${directory}/.intermediate-representation/api-runner-ssr`)
             const htmlElement = React.createElement(HTML, {
               body: ``,
               headComponents: _.flattenDeep(

@@ -2,7 +2,7 @@
 import invariant from "invariant"
 import isString from "lodash/isString"
 
-function isDataURL (s) {
+function isDataURL(s) {
   // Regex from https://gist.github.com/bgrins/6194623#gistcomment-1671744
   // eslint-disable-next-line max-len
   const regex = /^\s*data:([a-z]+\/[a-z0-9\-\+]+(;[a-z\-]+=[a-z0-9\-]+)?)?(;base64)?,[a-z0-9!\$&',\(\)\*\+,;=\-\._~:@\/\?%\s]*\s*$/i

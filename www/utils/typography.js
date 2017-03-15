@@ -1,6 +1,9 @@
 import Typography from "typography"
 import CodePlugin from "typography-plugin-code"
-import { MOBILE_MEDIA_QUERY, TABLET_MEDIA_QUERY } from "typography-breakpoint-constants"
+import {
+  MOBILE_MEDIA_QUERY,
+  TABLET_MEDIA_QUERY,
+} from "typography-breakpoint-constants"
 
 const options = {
   headerFontFamily: [`Futura PT`, `sans-serif`],
@@ -26,7 +29,7 @@ const options = {
       marginTop: rhythm(1 / 2),
     },
     h3: {
-      ...scale(2/5),
+      ...scale(2 / 5),
       fontStyle: `italic`,
       lineHeight: 1,
       marginTop: rhythm(1),
@@ -34,9 +37,7 @@ const options = {
     },
     "tt,code": {
       background: `hsla(23, 60%, 97%, 1)`,
-      fontFamily: (
-        `"Space Mono",Consolas,"Roboto Mono","Droid Sans Mono","Liberation Mono",Menlo,Courier,monospace`
-      ),
+      fontFamily: `"Space Mono",Consolas,"Roboto Mono","Droid Sans Mono","Liberation Mono",Menlo,Courier,monospace`,
       fontSize: `80%`,
       // Disable ligatures as they look funny w/ Space Mono as code.
       fontVariant: `none`,
@@ -81,14 +82,14 @@ const options = {
       boxShadow: `none`,
     },
     "div + em": {
-      ...scale(-1/5),
+      ...scale(-1 / 5),
       lineHeight: 1.4,
       display: `block`,
       textAlign: `center`,
     },
-    '.gatsby-resp-image-link': {
-      marginLeft: rhythm(-3/4), // 3/4 rhythm is amount of padding on mobile.
-      marginRight: rhythm(-3/4),
+    ".gatsby-resp-image-link": {
+      marginLeft: rhythm(-3 / 4), // 3/4 rhythm is amount of padding on mobile.
+      marginRight: rhythm(-3 / 4),
     },
     video: {
       width: `100%`,

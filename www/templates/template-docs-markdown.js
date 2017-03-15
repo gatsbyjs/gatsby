@@ -3,7 +3,7 @@ import React from "react"
 import { rhythm } from "utils/typography"
 
 const DocsTemplate = React.createClass({
-  render () {
+  render() {
     return (
       <div>
         <h1>{this.props.data.markdownRemark.frontmatter.title}</h1>

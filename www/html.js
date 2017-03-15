@@ -1,38 +1,53 @@
-import React from "react"
+import React from "react";
 
-import { prefixLink } from "gatsby-helpers"
-import { TypographyStyle } from "react-typography"
-import typography from "./utils/typography"
-import Helmet from "react-helmet"
+import { prefixLink } from "gatsby-helpers";
+import { TypographyStyle } from "react-typography";
+import typography from "./utils/typography";
+import Helmet from "react-helmet";
 
-let stylesStr
+let stylesStr;
 if (process.env.NODE_ENV === `production`) {
   try {
-    stylesStr = require("!raw-loader!./public/styles.css")
+    stylesStr = require("!raw-loader!./public/styles.css");
   } catch (e) {
-    console.log(e)
+    console.log(e);
   }
 }
 
 module.exports = React.createClass({
-  render () {
-    const head = Helmet.rewind()
+  render() {
+    const head = Helmet.rewind();
 
-    let css
+    let css;
     if (process.env.NODE_ENV === `production`) {
       css = (
         <style
           id="gatsby-inlined-css"
           dangerouslySetInnerHTML={{ __html: stylesStr }}
         />
-      )
+      );
     }
     return (
       <html lang="en">
         <head>
-          <link rel="preload" href="/static/ftn45-webfont.c2439033.woff2" as="font" crossOrigin />
-          <link rel="preload" href="/static/tex-gyre-schola-400.030fe0c4.woff2" as="font" crossOrigin />
-          <link rel="preload" href="/static/ftn65-webfont.0ddc10d2.woff2" as="font" crossOrigin />
+          <link
+            rel="preload"
+            href="/static/ftn45-webfont.c2439033.woff2"
+            as="font"
+            crossOrigin
+          />
+          <link
+            rel="preload"
+            href="/static/tex-gyre-schola-400.030fe0c4.woff2"
+            as="font"
+            crossOrigin
+          />
+          <link
+            rel="preload"
+            href="/static/ftn65-webfont.0ddc10d2.woff2"
+            as="font"
+            crossOrigin
+          />
           {this.props.headComponents}
           <title>Gatsby</title>
           <meta charSet="utf-8" />
@@ -79,6 +94,6 @@ module.exports = React.createClass({
           {this.props.postBodyComponents}
         </body>
       </html>
-    )
+    );
   },
-})
+});

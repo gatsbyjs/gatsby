@@ -142,7 +142,7 @@ const queueJob = job => {
   bar.total = totalCount
 }
 
-function queueImageResizing ({ file, args = {} }) {
+function queueImageResizing({ file, args = {} }) {
   const defaultArgs = {
     width: 400,
     quality: 50,
@@ -219,7 +219,7 @@ function queueImageResizing ({ file, args = {} }) {
   }
 }
 
-async function notMemoizedbase64 ({ file, args = {} }) {
+async function notMemoizedbase64({ file, args = {} }) {
   const defaultArgs = {
     width: 20,
     quality: 50,
@@ -267,11 +267,11 @@ const memoizedBase64 = _.memoize(
   ({ file, args }) => `${file.id}${JSON.stringify(args)}`,
 )
 
-async function base64 (args) {
+async function base64(args) {
   return await memoizedBase64(args)
 }
 
-async function responsiveSizes ({ file, args = {} }) {
+async function responsiveSizes({ file, args = {} }) {
   const defaultArgs = {
     maxWidth: 800,
     quality: 50,
@@ -344,7 +344,7 @@ async function responsiveSizes ({ file, args = {} }) {
   }
 }
 
-async function responsiveResolution ({ file, args = {} }) {
+async function responsiveResolution({ file, args = {} }) {
   const defaultArgs = {
     width: 400,
     quality: 50,

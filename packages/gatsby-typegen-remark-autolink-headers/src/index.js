@@ -2,7 +2,7 @@ const toString = require("mdast-util-to-string")
 const visit = require("unist-util-visit")
 const slugs = require(`github-slugger`)()
 
-function patch (context, key, value) {
+function patch(context, key, value) {
   if (!context[key]) {
     context[key] = value
   }

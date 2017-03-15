@@ -3,7 +3,7 @@ module.exports = {
     title: `Gatsby`,
   },
   mapping: {
-    'MarkdownRemark.frontmatter.author': `Author`,
+    "MarkdownRemark.frontmatter.author": `Author`,
   },
   plugins: [
     {
@@ -71,4 +71,4 @@ module.exports = {
       },
     },
   ],
-}
+};

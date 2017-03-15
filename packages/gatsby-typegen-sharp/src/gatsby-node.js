@@ -47,7 +47,7 @@ exports.extendNodeType = ({ args }) => {
           defaultValue: 50,
         },
       },
-      resolve (image, fieldArgs) {
+      resolve(image, fieldArgs) {
         const promise = responsiveResolution({
           file: image.parent,
           args: { ...fieldArgs, linkPrefix: args.linkPrefix },
@@ -82,7 +82,7 @@ exports.extendNodeType = ({ args }) => {
           defaultValue: 50,
         },
       },
-      resolve (image, fieldArgs) {
+      resolve(image, fieldArgs) {
         return responsiveSizes({
           file: image.parent,
           args: { ...fieldArgs, linkPrefix: args.linkPrefix },
@@ -128,7 +128,7 @@ exports.extendNodeType = ({ args }) => {
           defaultValue: false,
         },
       },
-      resolve (image, fieldArgs) {
+      resolve(image, fieldArgs) {
         return new Promise(resolve => {
           const file = image.parent
           if (fieldArgs.base64) {

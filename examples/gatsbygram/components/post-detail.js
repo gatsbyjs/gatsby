@@ -1,16 +1,16 @@
-import React from 'react'
-import HeartIcon from 'react-icons/lib/fa/heart'
-import Gravatar from 'react-gravatar'
+import React from "react"
+import HeartIcon from "react-icons/lib/fa/heart"
+import Gravatar from "react-gravatar"
 
-import presets from '../utils/presets'
-import typography, { rhythm, scale } from '../utils/typography'
+import presets from "../utils/presets"
+import typography, { rhythm, scale } from "../utils/typography"
 
 class PostDetail extends React.Component {
-  constructor () {
+  constructor() {
     super()
   }
 
-  render () {
+  render() {
     const { image, likes, id, username, weeksAgo, text } = this.props.post
     const { big } = image.children[0]
 
@@ -18,9 +18,9 @@ class PostDetail extends React.Component {
       <div
         css={{
           [presets.Tablet]: {
-            marginBottom: `calc(${rhythm(3/4)} + 1px)`,
+            marginBottom: `calc(${rhythm(3 / 4)} + 1px)`,
             borderBottom: `1px solid rgba(0,0,0,0.1)`,
-          }
+          },
         }}
       >
         <Gravatar
@@ -30,13 +30,13 @@ class PostDetail extends React.Component {
             borderRadius: `100%`,
             float: `left`,
             margin: 0,
-            marginRight: rhythm(1/2),
+            marginRight: rhythm(1 / 2),
           }}
         />
         <h5
           css={{
             lineHeight: rhythm(1),
-            marginBottom: rhythm(3/4),
+            marginBottom: rhythm(3 / 4),
           }}
         >
           {username}
@@ -47,7 +47,7 @@ class PostDetail extends React.Component {
     const PostDetails = () => (
       <div
         css={{
-          ...scale(-2/5),
+          ...scale(-2 / 5),
           lineHeight: typography.options.baseLineHeight,
         }}
       >
@@ -81,7 +81,7 @@ class PostDetail extends React.Component {
 
     return (
       <div
-        onClick={(e) => e.stopPropagation()}
+        onClick={e => e.stopPropagation()}
         css={{
           background: `white`,
           display: `flex`,
@@ -96,7 +96,7 @@ class PostDetail extends React.Component {
       >
         <div
           css={{
-            padding: rhythm(3/4),
+            padding: rhythm(3 / 4),
             paddingBottom: 0,
             [presets.Tablet]: {
               width: rhythm(13),
@@ -168,7 +168,7 @@ class PostDetail extends React.Component {
         <div
           css={{
             background: `white`,
-            padding: rhythm(3/4),
+            padding: rhythm(3 / 4),
             display: `block`,
             [presets.Tablet]: {
               display: `none`,

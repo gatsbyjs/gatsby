@@ -27,23 +27,24 @@ const runAPI = (plugin, api, args) => {
 let filteredPlugins
 const hasAPIFile = plugin => glob.sync(`${plugin.resolve}/gatsby-node*`)[0]
 
-module.exports = async (api, args = {}) => new Promise(resolve => {
-  const plugins = siteDB().get(`flattenedPlugins`)
-  // Get the list of plugins that implement gatsby-node
-  if (!filteredPlugins) {
-    filteredPlugins = plugins.filter(plugin => hasAPIFile(plugin))
-  }
+module.exports = async (api, args = {}) =>
+  new Promise(resolve => {
+    const plugins = siteDB().get(`flattenedPlugins`)
+    // Get the list of plugins that implement gatsby-node
+    if (!filteredPlugins) {
+      filteredPlugins = plugins.filter(plugin => hasAPIFile(plugin))
+    }
 
-  mapSeries(
-    filteredPlugins,
-    (plugin, callback) => {
-      Promise.resolve(runAPI(plugin, api, args)).then(result => {
-        callback(null, result)
-      })
-    },
-    (err, results) => {
-      // Filter out empty responses and return
-      resolve(results.filter(result => !_.isEmpty(result)))
-    },
-  )
-})
+    mapSeries(
+      filteredPlugins,
+      (plugin, callback) => {
+        Promise.resolve(runAPI(plugin, api, args)).then(result => {
+          callback(null, result)
+        })
+      },
+      (err, results) => {
+        // Filter out empty responses and return
+        resolve(results.filter(result => !_.isEmpty(result)))
+      },
+    )
+  })

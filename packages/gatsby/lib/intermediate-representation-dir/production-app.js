@@ -27,7 +27,7 @@ browserHistory.listen(location => {
   currentLocation = location
 })
 
-function shouldUpdateScroll (prevRouterProps, { location: { pathname } }) {
+function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
   const results = apiRunner(`shouldUpdateScroll`, {
     prevRouterProps,
     pathname,
@@ -45,25 +45,24 @@ function shouldUpdateScroll (prevRouterProps, { location: { pathname } }) {
   return true
 }
 
-match({ history: browserHistory, routes: rootRoute }, (
-  error,
-  redirectLocation,
-  renderProps,
-) => {
-  const Root = () => (
-    <Router
-      {...renderProps}
-      render={applyRouterMiddleware(useScroll(shouldUpdateScroll))}
-      onUpdate={() => {
-        apiRunner(`onRouteUpdate`, currentLocation)
-      }}
-    />
-  )
-  const NewRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
-  ReactDOM.render(
-    <NewRoot />,
-    typeof window !== `undefined`
-      ? document.getElementById(`react-mount`)
-      : void 0,
-  )
-})
+match(
+  { history: browserHistory, routes: rootRoute },
+  (error, redirectLocation, renderProps) => {
+    const Root = () => (
+      <Router
+        {...renderProps}
+        render={applyRouterMiddleware(useScroll(shouldUpdateScroll))}
+        onUpdate={() => {
+          apiRunner(`onRouteUpdate`, currentLocation)
+        }}
+      />
+    )
+    const NewRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
+    ReactDOM.render(
+      <NewRoot />,
+      typeof window !== `undefined`
+        ? document.getElementById(`react-mount`)
+        : void 0,
+    )
+  },
+)

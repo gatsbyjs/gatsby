@@ -16,9 +16,8 @@ const babylon = require("babylon")
 
 const pascalCase = _.flow(_.camelCase, _.upperFirst)
 
-const hashStr = function (str) {
-  let hash = 5381,
-    i = str.length
+const hashStr = function(str) {
+  let hash = 5381, i = str.length
 
   while (i) {
     hash = hash * 33 ^ str.charCodeAt(--i)
@@ -167,7 +166,8 @@ const writeChildRoutes = () => {
   splitRootRoute += `]}`
   const componentsStr = [...pagesDB().values()]
     .map(
-      page => `class ${page.internalComponentName} extends React.Component {
+      page =>
+        `class ${page.internalComponentName} extends React.Component {
           render () {
             let Component = require('${page.component}')
             if (Component.default) {
@@ -221,10 +221,10 @@ const writeChildRoutes = () => {
 }
 const debouncedWriteChildRoutes = _.debounce(writeChildRoutes, 250)
 
-const babelPlugin = function ({ types: t }) {
+const babelPlugin = function({ types: t }) {
   return {
     visitor: {
-      TemplateLiteral (path, state) {
+      TemplateLiteral(path, state) {
         if (
           path.parentPath.parentPath.parentPath.type !==
           `ExportNamedDeclaration`
@@ -280,7 +280,7 @@ const q = queue(
     // Get query for this file.
     let query
     traverse(ast, {
-      TemplateLiteral (path, state) {
+      TemplateLiteral(path, state) {
         if (
           path.parentPath.parentPath.parentPath.type !==
           `ExportNamedDeclaration`

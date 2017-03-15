@@ -8,7 +8,7 @@ import objectAssign from "object-assign"
 import invariant from "invariant"
 import apiRunnerNode from "./api-runner-node"
 
-function defaultConfig () {
+function defaultConfig() {
   return {
     presets: [`es2015`, `stage-0`, `react`],
     plugins: [`add-module-exports`, `transform-object-assign`],
@@ -25,7 +25,7 @@ function defaultConfig () {
  * 4. Checking Gatsby's modules without prefix
  *
  */
-function resolvePlugin (pluginName, directory, type) {
+function resolvePlugin(pluginName, directory, type) {
   const gatsbyPath = path.resolve(__dirname, `..`, `..`)
   const plugin = resolve(`babel-${type}-${pluginName}`, directory) ||
     resolve(`babel-${type}-${pluginName}`, gatsbyPath) ||
@@ -56,7 +56,7 @@ function resolvePlugin (pluginName, directory, type) {
  * This way babel-loader will correctly resolve Babel plugins
  * regardless of where they are located.
  */
-function normalizeConfig (config, directory) {
+function normalizeConfig(config, directory) {
   const normalizedConfig = {
     presets: [],
     plugins: [],
@@ -91,7 +91,7 @@ function normalizeConfig (config, directory) {
  * json5 (what Babel uses). It throws an error if the users's .babelrc is
  * not parseable.
  */
-function findBabelrc (directory) {
+function findBabelrc(directory) {
   try {
     const babelrc = fs.readFileSync(path.join(directory, `.babelrc`), `utf-8`)
     return json5.parse(babelrc)
@@ -108,7 +108,7 @@ function findBabelrc (directory) {
  * Reads the user's package.json and returns the "babel" section. It will
  * return undefined when the "babel" section does not exist.
  */
-function findBabelPackage (directory) {
+function findBabelPackage(directory) {
   try {
     // $FlowIssue - https://github.com/facebook/flow/issues/1975
     const packageJson = require(path.join(directory, `package.json`))
@@ -126,7 +126,7 @@ function findBabelPackage (directory) {
  * Returns a normalized Babel config to use with babel-loader. All of
  * the paths will be absolute so that Babel behaves as expected.
  */
-module.exports = async function babelConfig (program, stage) {
+module.exports = async function babelConfig(program, stage) {
   const { directory } = program
 
   const babelrc = findBabelrc(directory) ||

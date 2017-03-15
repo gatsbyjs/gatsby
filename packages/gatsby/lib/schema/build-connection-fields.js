@@ -40,7 +40,7 @@ module.exports = type => {
           }),
         },
       },
-      resolve (connection, args) {
+      resolve(connection, args) {
         let fieldName = args.field
         if (_.includes(args.field, `___`)) {
           fieldName = args.field.replace(`___`, `.`)
@@ -61,7 +61,7 @@ module.exports = type => {
           }),
         },
       },
-      resolve (connection, args) {
+      resolve(connection, args) {
         const fieldName = args.field.replace(`___`, `.`)
         const connectionNodes = connection.edges.map(edge => edge.node)
 

@@ -1,10 +1,10 @@
-import React from 'react'
-import chunk from 'lodash/chunk'
-import Gravatar from 'react-gravatar'
+import React from "react"
+import chunk from "lodash/chunk"
+import Gravatar from "react-gravatar"
 
-import { rhythm, scale } from '../utils/typography'
-import presets from '../utils/presets'
-import Post from '../components/post'
+import { rhythm, scale } from "../utils/typography"
+import presets from "../utils/presets"
+import Post from "../components/post"
 
 // This would normally be in a Redux store or some other global data store.
 if (typeof window !== `undefined`) {
@@ -12,7 +12,7 @@ if (typeof window !== `undefined`) {
 }
 
 class Index extends React.Component {
-  constructor () {
+  constructor() {
     super()
     let postsToShow = 12
     if (typeof window !== `undefined`) {
@@ -25,8 +25,9 @@ class Index extends React.Component {
     }
   }
 
-  update () {
-    const distanceToBottom = document.documentElement.offsetHeight - (window.scrollY + window.innerHeight)
+  update() {
+    const distanceToBottom = document.documentElement.offsetHeight -
+      (window.scrollY + window.innerHeight)
     if (this.state.showingMore && distanceToBottom < 100) {
       this.setState({ postsToShow: this.state.postsToShow + 12 })
     }
@@ -38,18 +39,18 @@ class Index extends React.Component {
       this.ticking = true
       requestAnimationFrame(() => this.update())
     }
-  }
+  };
 
-  componentDidMount () {
+  componentDidMount() {
     window.addEventListener(`scroll`, this.handleScroll)
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     window.removeEventListener(`scroll`, this.handleScroll)
     window.postsToShow = this.state.postsToShow
   }
 
-  render () {
+  render() {
     this.context.setEdges(this.props.data.allPosts.edges)
     return (
       <div
@@ -110,7 +111,7 @@ class Index extends React.Component {
               flexShrink: 0,
               textAlign: `center`,
               [`@media (min-width: 600px)`]: {
-                paddingTop: rhythm(1/2),
+                paddingTop: rhythm(1 / 2),
                 textAlign: `left`,
               },
             }}
@@ -129,7 +130,10 @@ class Index extends React.Component {
           </div>
         </div>
         {/* posts */}
-        {chunk(this.props.data.allPosts.edges.slice(0, this.state.postsToShow), 3).map((chunk) => {
+        {chunk(
+          this.props.data.allPosts.edges.slice(0, this.state.postsToShow),
+          3,
+        ).map(chunk => {
           return (
             <div
               css={{
@@ -137,61 +141,62 @@ class Index extends React.Component {
                 alignItems: `stretch`,
                 flexShrink: 0,
                 flexDirection: `row`,
-                marginBottom: rhythm(1/8),
+                marginBottom: rhythm(1 / 8),
                 [presets.Tablet]: {
                   marginBottom: rhythm(1),
                 },
               }}
             >
-              {chunk.map((edge) => (
+              {chunk.map(edge => (
                 <Post
                   key={edge.node.id}
                   post={edge.node}
                   edges={this.props.data.allPosts.edges}
                   location={this.props.location}
-                  onClick={(post) => this.setState({ activePost: post })}
+                  onClick={post => this.setState({ activePost: post })}
                 />
               ))}
             </div>
           )
         })}
-        {!this.state.showingMore && <a
-          css={{
-            ...scale(-0.5),
-            border: `1px solid blue`,
-            boxShadow: 0,
-            background: `none`,
-            color: `blue`,
-            cursor: `pointer`,
-            margin: `0 auto`,
-            padding: rhythm(1/2),
-            width: `calc(100vw - ${rhythm(1)})`,
-            marginLeft: rhythm(0.5),
-            marginRight: rhythm(0.5),
-            marginBottom: rhythm(0.5),
-            marginTop: rhythm(0.5),
-            [presets.Tablet]: {
-              borderRadius: `100%`,
-              width: `default`,
+        {!this.state.showingMore &&
+          <a
+            css={{
+              ...scale(-0.5),
+              border: `1px solid blue`,
+              boxShadow: 0,
+              background: `none`,
+              color: `blue`,
+              cursor: `pointer`,
               margin: `0 auto`,
-              marginBottom: rhythm(1.5),
-              marginTop: rhythm(1.5),
-              padding: rhythm(1),
-              height: rhythm(5),
-              width: rhythm(5),
-              lineHeight: rhythm(3),
-              textAlign: `center`,
-            },
-          }}
-          onClick={() => {
-            this.setState({
-              postsToShow: this.state.postsToShow + 12,
-              showingMore: true,
-            })
-          }}
-        >
-          Load More
-        </a>}
+              padding: rhythm(1 / 2),
+              width: `calc(100vw - ${rhythm(1)})`,
+              marginLeft: rhythm(0.5),
+              marginRight: rhythm(0.5),
+              marginBottom: rhythm(0.5),
+              marginTop: rhythm(0.5),
+              [presets.Tablet]: {
+                borderRadius: `100%`,
+                width: `default`,
+                margin: `0 auto`,
+                marginBottom: rhythm(1.5),
+                marginTop: rhythm(1.5),
+                padding: rhythm(1),
+                height: rhythm(5),
+                width: rhythm(5),
+                lineHeight: rhythm(3),
+                textAlign: `center`,
+              },
+            }}
+            onClick={() => {
+              this.setState({
+                postsToShow: this.state.postsToShow + 12,
+                showingMore: true,
+              })
+            }}
+          >
+            Load More
+          </a>}
       </div>
     )
   }
