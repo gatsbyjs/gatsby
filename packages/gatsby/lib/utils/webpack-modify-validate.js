@@ -14,7 +14,7 @@ export default (async function ValidateWebpackConfig(config, stage) {
     You must return an webpack-configurator instance when modifying the Webpack config.
     Returned: ${config}
     stage: ${stage}
-    `,
+    `
   )
 
   const validationState = validate(config.resolve(), {

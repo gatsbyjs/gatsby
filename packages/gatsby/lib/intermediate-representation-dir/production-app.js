@@ -62,7 +62,7 @@ match(
       <NewRoot />,
       typeof window !== `undefined`
         ? document.getElementById(`react-mount`)
-        : void 0,
+        : void 0
     )
-  },
+  }
 )

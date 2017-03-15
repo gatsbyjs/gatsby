@@ -21,7 +21,7 @@ async function modifyAST({ args }) {
     File[extension="mdown"],
     File[extension="litcoffee"],
     File[extension="markdown"]
-  `,
+  `
   )
   const contents = await Promise.map(files, file => loadNodeContents(file))
   files.forEach((file, index) => {

@@ -51,10 +51,10 @@ module.exports = directory =>
           depth: heading.depth,
         }))
         const parsedFrontmatter = _.first(
-          select(ast, `yaml`).map(heading => yaml.load(heading.value)),
+          select(ast, `yaml`).map(heading => yaml.load(heading.value))
         )
         const relativeDirectory = parseFilepath(
-          path.relative(`${directory}/pages/`, file),
+          path.relative(`${directory}/pages/`, file)
         ).dirname
 
         // Create path.
@@ -251,7 +251,7 @@ module.exports = directory =>
                 } else {
                   return _.includes(
                     page.frontmatter.tags.map(tag => tag.toLowerCase()),
-                    args.tag.toLowerCase(),
+                    args.tag.toLowerCase()
                   )
                 }
               })

@@ -12,7 +12,7 @@ async function modifyAST({ args }) {
     `
     File[extension="yaml"],
     File[extension="yml"]
-  `,
+  `
   )
   const contents = await Promise.map(files, file => loadNodeContents(file))
   files.forEach((file, index) => {

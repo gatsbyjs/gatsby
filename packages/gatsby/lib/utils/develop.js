@@ -32,7 +32,7 @@ async function startServer(program) {
     program,
     directory,
     `develop`,
-    program.port,
+    program.port
   )
 
   const devConfig = compilerConfig.resolve()
@@ -54,7 +54,7 @@ async function startServer(program) {
     program,
     directory,
     `develop-html`,
-    program.port,
+    program.port
   )
 
   webpackRequire(htmlCompilerConfig.resolve(), HTMLPath, (error, factory) => {
@@ -90,14 +90,14 @@ async function startServer(program) {
         log: console.log,
         path: `/__webpack_hmr`,
         heartbeat: 10 * 1000,
-      }),
+      })
     )
     app.use(
       `/graphql`,
       graphqlHTTP({
         schema,
         graphiql: true,
-      }),
+      })
     )
     let htmlStr
     app.use((req, res, next) => {
@@ -111,11 +111,11 @@ async function startServer(program) {
             const htmlElement = React.createElement(HTML, {
               body: ``,
               headComponents: _.flattenDeep(
-                apiRunner(`modifyHeadComponents`, { headComponents: [] }, []),
+                apiRunner(`modifyHeadComponents`, { headComponents: [] }, [])
               ),
               postBodyComponents: _.flattenDeep(
                 apiRunner(`modifyPostBodyComponents`, { headComponents: [] }, [
-                ]),
+                ])
               ).concat([<script src="/commons.js" />]),
             })
             htmlStr = ReactDOMServer.renderToStaticMarkup(htmlElement)
@@ -134,7 +134,7 @@ async function startServer(program) {
       require(`webpack-dev-middleware`)(compiler, {
         noInfo: true,
         publicPath: devConfig.output.publicPath,
-      }),
+      })
     )
     // As last step, check if the file exists in the public folder except for
     // HTML files which could be there from a previous build — we want the app
@@ -153,7 +153,7 @@ async function startServer(program) {
         if (e.code === `EADDRINUSE`) {
           // eslint-disable-next-line max-len
           console.log(
-            `Unable to start Gatsby on port ${program.port} as there's already a process listing on that port.`,
+            `Unable to start Gatsby on port ${program.port} as there's already a process listing on that port.`
           )
         } else {
           console.log(e)
@@ -167,7 +167,7 @@ async function startServer(program) {
         //opn(server.info.uri)
         //}
         console.log(
-          `Listening at: http://${listener.address().address}:${listener.address().port}`,
+          `Listening at: http://${listener.address().address}:${listener.address().port}`
         )
       }
     })

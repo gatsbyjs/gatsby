@@ -44,7 +44,7 @@ const autoPathCreator = program =>
         component: filePath,
         componentChunkName: layoutComponentChunkName(
           program.directory,
-          filePath,
+          filePath
         ),
         path: filePath,
       }))
@@ -61,7 +61,7 @@ const autoPathCreator = program =>
       // Remove page templates.
       autoPages = _.filter(
         autoPages,
-        page => page.path.slice(0, 9) !== `template-`,
+        page => page.path.slice(0, 9) !== `template-`
       )
 
       // Convert to our path format.
@@ -126,7 +126,7 @@ module.exports = async program => {
     if (_.isString(plugin)) {
       const resolvedPath = path.dirname(require.resolve(plugin))
       const packageJSON = JSON.parse(
-        fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`),
+        fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
       )
       return {
         resolve: resolvedPath,
@@ -148,7 +148,7 @@ module.exports = async program => {
 
       const resolvedPath = path.dirname(require.resolve(plugin.resolve))
       const packageJSON = JSON.parse(
-        fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`),
+        fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
       )
       return {
         resolve: resolvedPath,
@@ -219,19 +219,19 @@ module.exports = async program => {
       resolve: hasAPIFile(`ssr`, plugin),
       options: plugin.pluginOptions,
     })),
-    plugin => plugin.resolve,
+    plugin => plugin.resolve
   )
   const browserPlugins = _.filter(
     flattenedPlugins.map(plugin => ({
       resolve: hasAPIFile(`browser`, plugin),
       options: plugin.pluginOptions,
     })),
-    plugin => plugin.resolve,
+    plugin => plugin.resolve
   )
 
   let browserAPIRunner = fs.readFileSync(
     `${siteDir}/api-runner-browser.js`,
-    `utf-8`,
+    `utf-8`
   )
   const browserPluginsRequires = browserPlugins
     .map(
@@ -239,7 +239,7 @@ module.exports = async program => {
         `{
       plugin: require('${plugin.resolve}'),
       options: ${JSON.stringify(plugin.options)},
-    }`,
+    }`
     )
     .join(`,`)
   browserAPIRunner = `var plugins = [${browserPluginsRequires}]\n${browserAPIRunner}`
@@ -251,7 +251,7 @@ module.exports = async program => {
         `{
       plugin: require('${plugin.resolve}'),
       options: ${JSON.stringify(plugin.options)},
-    }`,
+    }`
     )
     .join(`,`)
   sSRAPIRunner = `var plugins = [${ssrPluginsRequires}]\n${sSRAPIRunner}`
@@ -259,7 +259,7 @@ module.exports = async program => {
   fs.writeFileSync(
     `${siteDir}/api-runner-browser.js`,
     browserAPIRunner,
-    `utf-8`,
+    `utf-8`
   )
   fs.writeFileSync(`${siteDir}/api-runner-ssr.js`, sSRAPIRunner, `utf-8`)
 
@@ -303,7 +303,7 @@ module.exports = async program => {
     pages.forEach(page => {
       page.componentChunkName = layoutComponentChunkName(
         program.directory,
-        page.component,
+        page.component
       )
     })
 
@@ -345,7 +345,7 @@ module.exports = async program => {
   const modifiedPages = await apiRunnerNode(
     `onPostCreatePages`,
     pagesDB(),
-    pagesDB(),
+    pagesDB()
   )
 
   // Validate pages.

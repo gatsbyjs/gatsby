@@ -82,7 +82,7 @@ module.exports = async ast =>
               const inputArgs = inferInputObjectStructureFromNodes(
                 nodes,
                 ``,
-                typeName,
+                typeName
               )
 
               nodeType.nodeObjectType = new GraphQLObjectType({
@@ -117,7 +117,7 @@ module.exports = async ast =>
                   const fieldValue = node[fieldName]
                   const sourceFileNode = _.find(
                     allNodes,
-                    n => n.type === `File` && n.id === node._sourceNodeId,
+                    n => n.type === `File` && n.id === node._sourceNodeId
                   )
                   // First test if this field is mapped in gatsby-config.js.
                   if (
@@ -126,7 +126,7 @@ module.exports = async ast =>
                     const linkedType = mapping[fieldSelector]
                     const linkedNode = _.find(
                       allNodes,
-                      n => n.type === linkedType && n.id === fieldValue,
+                      n => n.type === linkedType && n.id === fieldValue
                     )
                     if (linkedNode) {
                       return linkedNode
@@ -140,11 +140,11 @@ module.exports = async ast =>
                   ) {
                     const fileLinkPath = path.resolve(
                       sourceFileNode.dir,
-                      fieldValue,
+                      fieldValue
                     )
                     const linkedFileNode = _.find(
                       allNodes,
-                      n => n.type === `File` && n.id === fileLinkPath,
+                      n => n.type === `File` && n.id === fileLinkPath
                     )
                     if (linkedFileNode) {
                       return linkedFileNode
@@ -163,32 +163,32 @@ module.exports = async ast =>
                     //linkedFileNode = select(ast, `${linkedType}[id="${node[fieldName]}"]`)[0]
                     linkedFileNode = _.find(
                       allNodes,
-                      n => n.type === linkedType && n.id === node[fieldName],
+                      n => n.type === linkedType && n.id === node[fieldName]
                     )
                     if (linkedFileNode) {
                       return linkedFileNode
                     } else if (linkedType === `File`) {
                       const fileLinkPath = path.resolve(
                         sourceFileNode.dir,
-                        node[fieldName],
+                        node[fieldName]
                       )
                       linkedFileNode = _.find(
                         allNodes,
-                        n => n.type === `File` && n.id === fileLinkPath,
+                        n => n.type === `File` && n.id === fileLinkPath
                       )
                       if (linkedFileNode) {
                         return linkedFileNode
                       } else {
                         console.error(
                           `Unable to load the linked ${linkedType} for`,
-                          node,
+                          node
                         )
                         return null
                       }
                     } else {
                       console.error(
                         `Unable to load the linked ${linkedType} for`,
-                        node,
+                        node
                       )
                       return null
                     }
@@ -201,7 +201,7 @@ module.exports = async ast =>
               processedTypes[_.camelCase(typeName)] = nodeType
               typeResolve()
             })
-          }),
-      ),
+          })
+      )
     ).then(() => resolve(processedTypes))
   })

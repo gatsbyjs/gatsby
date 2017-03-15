@@ -28,13 +28,13 @@ module.exports = directory =>
         Promise.all(files.map(file => ep.readMetadata(file))).then(results => {
           const cleanedResults = _.filter(
             results,
-            result => result.error === null,
+            result => result.error === null
           )
           let mappedResults = cleanedResults.map(result => result.data[0])
           mappedResults = mappedResults.map(pdf => {
             if (pdf.Description) {
               pdf.Description = md.render(
-                pdf.Description.replace(/<br \/>/g, `\n`),
+                pdf.Description.replace(/<br \/>/g, `\n`)
               )
             }
             return pdf
@@ -65,7 +65,7 @@ module.exports = directory =>
                 resolve({ Date }, { formatString }) {
                   if (formatString) {
                     return moment(Date, `YYYY:MM:DD HH:mm:ssZ`).format(
-                      formatString,
+                      formatString
                     )
                   } else {
                     return Date

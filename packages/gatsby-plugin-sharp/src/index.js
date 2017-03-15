@@ -24,7 +24,7 @@ const bar = new ProgressBar(
   {
     total: 0,
     width: 30,
-  },
+  }
 )
 const processFile = (file, jobs, cb) => {
   Promise.all(jobs.map(job => job.finished)).then(() => cb())
@@ -128,7 +128,7 @@ const queueJob = job => {
   _.set(
     toProcess,
     `${job.file.id.replace(/\./g, `%2E`)}.${job.outputPath.replace(/\./g, `%2E`)}`,
-    job,
+    job
   )
   if (notQueued) {
     q.push(cb => {
@@ -264,7 +264,7 @@ async function notMemoizedbase64({ file, args = {} }) {
 
 const memoizedBase64 = _.memoize(
   notMemoizedbase64,
-  ({ file, args }) => `${file.id}${JSON.stringify(args)}`,
+  ({ file, args }) => `${file.id}${JSON.stringify(args)}`
 )
 
 async function base64(args) {
@@ -376,7 +376,7 @@ async function responsiveResolution({ file, args = {} }) {
                  the file ${file.id}
                  was wider than the actual image width of ${dimensions.width}px!
                  If possible, replace the current image with a larger one.
-                 `,
+                 `
     )
   }
 

@@ -11,7 +11,7 @@ const scrollToHash = offsetY => {
         }
       }
     },
-    10,
+    10
   )
 }
 

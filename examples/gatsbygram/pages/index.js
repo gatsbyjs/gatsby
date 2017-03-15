@@ -132,7 +132,7 @@ class Index extends React.Component {
         {/* posts */}
         {chunk(
           this.props.data.allPosts.edges.slice(0, this.state.postsToShow),
-          3,
+          3
         ).map(chunk => {
           return (
             <div

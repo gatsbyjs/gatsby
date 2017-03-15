@@ -30,7 +30,7 @@ module.exports = async () => {
         apiRunnerNode(
           `modifyGraphQLFields`,
           { types: mergedTypes },
-          mergedTypes,
+          mergedTypes
         ).then(modifiedTypes => {
           const schema = new GraphQLSchema({
             query: new GraphQLObjectType({

@@ -29,7 +29,7 @@ module.exports = async (
   directory,
   suppliedStage,
   webpackPort = 1500,
-  pages = [],
+  pages = []
 ) => {
   const babelStage = suppliedStage
 
@@ -121,7 +121,7 @@ module.exports = async (
           new webpack.DefinePlugin({
             "process.env": {
               NODE_ENV: JSON.stringify(
-                process.env.NODE_ENV ? process.env.NODE_ENV : `development`,
+                process.env.NODE_ENV ? process.env.NODE_ENV : `development`
               ),
               PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
             },
@@ -139,7 +139,7 @@ module.exports = async (
           new webpack.DefinePlugin({
             "process.env": {
               NODE_ENV: JSON.stringify(
-                process.env.NODE_ENV ? process.env.NODE_ENV : `production`,
+                process.env.NODE_ENV ? process.env.NODE_ENV : `production`
               ),
               PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
             },
@@ -154,7 +154,7 @@ module.exports = async (
           new webpack.DefinePlugin({
             "process.env": {
               NODE_ENV: JSON.stringify(
-                process.env.NODE_ENV ? process.env.NODE_ENV : `production`,
+                process.env.NODE_ENV ? process.env.NODE_ENV : `production`
               ),
               PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
             },
@@ -166,7 +166,7 @@ module.exports = async (
       case `build-javascript`: {
         // Get array of page template component names.
         let components = Array.from(pagesDB().values()).map(
-          page => page.component,
+          page => page.component
         )
         components = components.map(component =>
           layoutComponentChunkName(program.directory, component))
@@ -204,7 +204,7 @@ module.exports = async (
           new webpack.DefinePlugin({
             "process.env": {
               NODE_ENV: JSON.stringify(
-                process.env.NODE_ENV ? process.env.NODE_ENV : `production`,
+                process.env.NODE_ENV ? process.env.NODE_ENV : `production`
               ),
               PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
             },

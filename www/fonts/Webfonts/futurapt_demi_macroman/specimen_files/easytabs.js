@@ -2,7 +2,7 @@
   $.fn.easyTabs = function(option) {
     const param = jQuery.extend(
       { fadeSpeed: `fast`, defaultContent: 1, activeClass: `active` },
-      option,
+      option
     );
     $(this).each(function() {
       const thisId = `#${this.id}`;
@@ -11,7 +11,7 @@
       }
       if (typeof param.defaultContent === `number`) {
         var defaultTab = $(
-          `${thisId} .tabs li:eq(${param.defaultContent - 1}) a`,
+          `${thisId} .tabs li:eq(${param.defaultContent - 1}) a`
         )
           .attr(`href`)
           .substr(1);

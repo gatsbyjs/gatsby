@@ -35,7 +35,7 @@ const GatsbyLink = React.createClass({
           (error, nextState) => {
             getComponents(nextState, () =>
               console.log(`loaded assets for ${this.props.to}`))
-          },
+          }
         )
       }
     }

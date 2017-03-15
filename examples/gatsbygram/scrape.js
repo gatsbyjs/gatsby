@@ -13,7 +13,7 @@ You didn't supply an Instagram username!
 Run this command like:
 
 node scrape.js INSTAGRAM_USERNAME
-              `,
+              `
   )
   process.exit()
 }
@@ -32,7 +32,7 @@ const bar = new ProgressBar(
   {
     total: 0,
     width: 30,
-  },
+  }
 )
 
 const posts = []
@@ -66,7 +66,7 @@ streamOfPosts.on(`data`, post => {
     () => {
       download(newUrl, `./data/images/${post.id}.jpg`, () => bar.tick())
     },
-    1000,
+    1000
   )
 
   // In our json representation of the post, link to the downloaded image.

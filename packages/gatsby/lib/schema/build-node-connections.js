@@ -26,7 +26,7 @@ module.exports = types => {
     const inferredInputFields = inferInputObjectStructureFromNodes(
       nodes,
       ``,
-      `${type.name}Connection`,
+      `${type.name}Connection`
     )
     connections[_.camelCase(`all ${type.name}`)] = {
       type: typeConnection,

@@ -38,7 +38,7 @@ module.exports = directory =>
         Promise.all(files.map(file => ep.readMetadata(file))).then(results => {
           const cleanedResults = _.filter(
             results,
-            result => result.error === null,
+            result => result.error === null
           )
           let mappedResults = cleanedResults.map(result => result.data[0])
           mappedResults = mappedResults.map(image => {
@@ -48,7 +48,7 @@ module.exports = directory =>
             // Render description as markdown (if set).
             if (image.Description) {
               image.Description = md.render(
-                image.Description.replace(/<br \/>/g, `\n`),
+                image.Description.replace(/<br \/>/g, `\n`)
               )
             }
             return image
@@ -75,7 +75,7 @@ module.exports = directory =>
                 resolve({ Date }, { formatString }) {
                   if (formatString) {
                     return moment(Date, `YYYY:MM:DD HH:mm:ssZ`).format(
-                      formatString,
+                      formatString
                     )
                   } else {
                     return Date

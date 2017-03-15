@@ -135,14 +135,14 @@ exports.extendNodeType = ({ args }) => {
             resolve(
               base64({
                 file,
-              }),
+              })
             )
           } else {
             resolve(
               queueImageResizing({
                 file,
                 args: { ...fieldArgs, linkPrefix: args.linkPrefix },
-              }),
+              })
             )
           }
         })

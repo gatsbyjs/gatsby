@@ -69,7 +69,7 @@ const inferGraphQLType = ({ value, fieldName, ...otherArgs }) => {
         } else if (difference) {
           return moment().diff(
             moment.utc(date, ISO_8601_FORMAT, true),
-            difference,
+            difference
           )
         } else {
           return date
@@ -107,7 +107,7 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
     nodes,
     selector,
     types,
-  },
+  }
 ) => {
   const type = nodes[0].type
   const fieldExamples = {}
@@ -165,7 +165,7 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
     const fieldSelector = `${nodes[0].type}.${selector}.${k}`
     if (mapping && _.includes(Object.keys(mapping), fieldSelector)) {
       const matchedTypes = types.filter(
-        type => type.name === mapping[fieldSelector],
+        type => type.name === mapping[fieldSelector]
       )
       inferredFields[k] = matchedTypes[0].field
     } else if (_.includes(k, `___`)) {

@@ -56,7 +56,7 @@ exports.extendNodeType = ({ args, pluginOptions }) =>
               } else {
                 return Promise.resolve()
               }
-            }),
+            })
           ).then(() => {
             const markdownAST = remark.parse(markdownNode.src)
 
@@ -118,7 +118,7 @@ exports.extendNodeType = ({ args, pluginOptions }) =>
                 } else {
                   return Promise.resolve()
                 }
-              }),
+              })
             ).then(() => {
               markdownNode.ast = markdownAST
               resolve(markdownNode)
@@ -153,7 +153,7 @@ exports.extendNodeType = ({ args, pluginOptions }) =>
           getAST(markdownNode).then(node => {
             node.html = hastToHTML(
               toHAST(node.ast, { allowDangerousHTML: true }),
-              { allowDangerousHTML: true },
+              { allowDangerousHTML: true }
             )
             return resolve(node)
           })

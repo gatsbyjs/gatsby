@@ -45,6 +45,6 @@ module.exports = async (api, args = {}) =>
       (err, results) => {
         // Filter out empty responses and return
         resolve(results.filter(result => !_.isEmpty(result)))
-      },
+      }
     )
   })

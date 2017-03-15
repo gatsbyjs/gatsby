@@ -6,5 +6,5 @@ module.exports = nodeDefinitions(
     const { type, id } = fromGlobalId(globalId)
     return null
   },
-  obj => obj.ships ? factionType : shipType,
+  obj => obj.ships ? factionType : shipType
 )
