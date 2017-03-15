@@ -2,7 +2,7 @@
 
 * `config.toml` - Core application configuration is stored here. Available via a `require`
 or `import` of 'config'. Values:
-  * `linkPrevix` - Defaults to `/`. If your site's root is hosted at `example.com/some-prefix/`, then you would set this to `/some-prefix/`.
+  * `linkPrefix` - Defaults to `/`. If your site's root is hosted at `example.com/some-prefix/`, then you would set this to `/some-prefix/`.
   * `noProductionJavascript` - set to a truthy value to prevent generation of bundle.js
   (containing your client-side Single Page App) during a `gatbsy build`. You'll need
   to update your top-level `html.js` file so that it doesn't pull in `bundle.js` in
