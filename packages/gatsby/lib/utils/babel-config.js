@@ -8,13 +8,6 @@ import objectAssign from "object-assign"
 import invariant from "invariant"
 import apiRunnerNode from "./api-runner-node"
 
-function defaultConfig() {
-  return {
-    presets: [`es2015`, `stage-0`, `react`],
-    plugins: [`add-module-exports`, `transform-object-assign`],
-  }
-}
-
 /**
  * Uses babel-core helpers to resolve the plugin given it's name. It
  * resolves plugins in the following order:
@@ -129,14 +122,27 @@ function findBabelPackage(directory) {
 module.exports = async function babelConfig(program, stage) {
   const { directory } = program
 
-  const babelrc = findBabelrc(directory) ||
-    findBabelPackage(directory) ||
-    defaultConfig()
+  let babelrc = findBabelrc(directory) ||
+    findBabelPackage(directory)
 
-  // If using the user's babelrc, they might not have a plugin array.
+  // If user doesn't have a custom babelrc, add defaults.
+  if (!babelrc) {
+    babelrc = {}
+  }
   if (!babelrc.plugins) {
     babelrc.plugins = []
   }
+  if (!babelrc.presets) {
+    babelrc.presets = []
+  }
+
+  // Add default plugins and presets.
+  [`es2015`, `stage-0`, `react`].forEach((preset) => {
+    babelrc.presets.push(preset)
+  });
+  [`add-module-exports`, `transform-object-assign`].forEach((plugin) => {
+    babelrc.plugins.push(plugin)
+  })
 
   if (stage === `develop`) {
     babelrc.plugins.unshift(`transform-react-jsx-source`)
@@ -160,6 +166,7 @@ module.exports = async function babelConfig(program, stage) {
   } else {
     modifiedConfig = {}
   }
+
 
   // Merge all together.
   const merged = _.defaultsDeep(modifiedConfig, normalizedConfig)
