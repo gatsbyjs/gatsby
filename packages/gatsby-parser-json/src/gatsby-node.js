@@ -5,13 +5,13 @@ const _ = require("lodash")
 
 const { loadNodeContents } = require("gatsby-source-filesystem")
 
-async function modifyAST ({ args }) {
+async function modifyAST({ args }) {
   const { ast } = args
   const files = select(
     ast,
     `
     File[extension="json"]
-  `,
+  `
   )
   const contents = await Promise.map(files, file => loadNodeContents(file))
   files.forEach((file, index) => {

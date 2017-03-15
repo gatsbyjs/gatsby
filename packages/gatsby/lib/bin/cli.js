@@ -14,12 +14,12 @@ console.time(`time to load develop`)
 program
   .command(`develop`)
   .description(
-    `Start development server. Watches files and rebuilds and hot reloads if something changes`,
+    `Start development server. Watches files and rebuilds and hot reloads if something changes`
   ) // eslint-disable-line max-len
   .option(
     `-H, --host <url>`,
     `Set host. Defaults to ${defaultHost}`,
-    defaultHost,
+    defaultHost
   )
   .option(`-p, --port <port>`, `Set port. Defaults to 8000`, `8000`)
   .option(`-o, --open`, `Open the site in your browser for you.`)
@@ -38,7 +38,7 @@ program
   .description(`Build a Gatsby project.`)
   .option(
     `--prefix-links`,
-    `Build site with links prefixed (set prefix in your config).`,
+    `Build site with links prefixed (set prefix in your config).`
   )
   .action(command => {
     // Set NODE_ENV to 'production'
@@ -61,7 +61,7 @@ program
   .option(
     `-H, --host <url>`,
     `Set host. Defaults to ${defaultHost}`,
-    defaultHost,
+    defaultHost
   )
   .option(`-p, --port <port>`, `Set port. Defaults to 8000`, `8000`)
   .option(`-o, --open`, `Open the site in your browser for you.`)
@@ -87,7 +87,7 @@ program.on(`--help`, () => {
     `To show subcommand help:
 
     gatsby [command] -h
-`,
+`
   )
 })
 

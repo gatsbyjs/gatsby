@@ -1,8 +1,8 @@
-import React from 'react'
-import PostDetail from '../components/post-detail'
+import React from "react"
+import PostDetail from "../components/post-detail"
 
 class PostTemplate extends React.Component {
-  render () {
+  render() {
     return (
       // PostDetail is used for this detail page and
       // also in the modal.

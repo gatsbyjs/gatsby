@@ -7,7 +7,7 @@ const slug = require("slug")
 // called after the Gatsby bootstrap is finished so you have
 // access to any information necessary to programatically
 // create pages.
-exports.createPages = ({ args }) => (
+exports.createPages = ({ args }) =>
   new Promise((resolve, reject) => {
     // The “graphql” function allows us to run arbitrary
     // queries against this Gatsbygram's graphql schema. Think of
@@ -20,7 +20,8 @@ exports.createPages = ({ args }) => (
     // is a "connection" (a GraphQL convention for accessing
     // a list of nodes) gives us an easy way to query all
     // Post nodes.
-    graphql(`
+    graphql(
+      `
       {
         allPosts(limit: 1000) {
           edges {
@@ -30,8 +31,8 @@ exports.createPages = ({ args }) => (
           }
         }
       }
-    `)
-    .then(result => {
+    `
+    ).then(result => {
       if (result.errors) {
         console.log(result.errors)
         reject(result.errors)
@@ -43,7 +44,7 @@ exports.createPages = ({ args }) => (
       // Instagram post. Since the scrapped Instagram data
       // already includes an ID field, we just use that for
       // each page's path.
-      _.each(result.data.allPosts.edges, (edge) => {
+      _.each(result.data.allPosts.edges, edge => {
         pages.push({
           // Each page is required to have a `path` as well
           // as a template component. The `context` is
@@ -60,4 +61,3 @@ exports.createPages = ({ args }) => (
       resolve(pages)
     })
   })
-)

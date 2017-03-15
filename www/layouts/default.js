@@ -24,12 +24,12 @@ import "typeface-tex-gyre-schola"
 import "typeface-space-mono"
 
 module.exports = React.createClass({
-  propTypes () {
+  propTypes() {
     return {
       children: React.PropTypes.any,
     }
   },
-  render () {
+  render() {
     return (
       <div>
         <Helmet
@@ -98,7 +98,7 @@ module.exports = React.createClass({
               css={{
                 display: `none`,
                 [presets.Tablet]: {
-                  ...scale((-1) / 5),
+                  ...scale(-1 / 5),
                   display: `inline-block`,
                   lineHeight: rhythm(1.5),
                   margin: 0,
@@ -121,7 +121,7 @@ module.exports = React.createClass({
                 <Link
                   to="/docs/"
                   css={{
-                    ...scale((-1) / 5),
+                    ...scale(-1 / 5),
                     color: `inherit`,
                     textDecoration: `none`,
                     textTransform: `uppercase`,
@@ -192,7 +192,7 @@ module.exports = React.createClass({
             <a
               href="https://github.com/gatsbyjs/gatsby"
               css={{
-                ...scale((-1) / 5),
+                ...scale(-1 / 5),
                 color: typography.options.bodyColor,
                 display: `inline-block`,
                 float: `right`,
@@ -214,7 +214,7 @@ module.exports = React.createClass({
           className={`main-body`}
           css={{
             maxWidth: rhythm(36),
-            margin: `${rhythm((-1) / 2)} auto ${rhythm(1.75)} auto`,
+            margin: `${rhythm(-1 / 2)} auto ${rhythm(1.75)} auto`,
             padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
             paddingTop: 0,
             [presets.Tablet]: {
@@ -223,20 +223,17 @@ module.exports = React.createClass({
           }}
         >
           {/* TODO Move this under docs/index.js once Gatsby supports multiple levels
-               of layouts */
-          }
+               of layouts */}
           <div
             css={{
               float: `left`,
-              marginTop: rhythm((-3) / 4),
+              marginTop: rhythm(-3 / 4),
               width: rhythm(8),
               display: `none`,
               [presets.Tablet]: {
-                display: (
-                  this.props.location.pathname.slice(0, 6) === `/docs/`
-                    ? `block`
-                    : `none`
-                ),
+                display: this.props.location.pathname.slice(0, 6) === `/docs/`
+                  ? `block`
+                  : `none`,
               },
             }}
           >
@@ -246,11 +243,10 @@ module.exports = React.createClass({
             css={{
               paddingLeft: 0,
               [presets.Tablet]: {
-                paddingLeft: (
-                  this.props.location.pathname.slice(0, 6) === `/docs/`
-                    ? rhythm(10)
-                    : 0
-                ),
+                paddingLeft: this.props.location.pathname.slice(0, 6) ===
+                  `/docs/`
+                  ? rhythm(10)
+                  : 0,
               },
             }}
           >
@@ -259,7 +255,7 @@ module.exports = React.createClass({
         </div>
         <div
           css={{
-            ...scale((-1) / 5),
+            ...scale(-1 / 5),
             position: `fixed`,
             display: `flex`,
             justifyContent: `space-around`,

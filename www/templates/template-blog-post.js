@@ -5,21 +5,25 @@ import presets from "../utils/presets"
 import typography, { rhythm, scale } from "../utils/typography"
 
 const BlogPostTemplate = React.createClass({
-  render () {
+  render() {
     //console.log(this.props)
     const post = this.props.data.markdownRemark
-    const twitterLine = post.frontmatter.author.twitter ? ` by ${post.frontmatter.author.twitter}` : ``
-    const authorShareText = encodeURIComponent(`“${post.frontmatter.title}”${twitterLine} https://sourceforge.com/blog${post.fileSlug}`)
+    const twitterLine = post.frontmatter.author.twitter
+      ? ` by ${post.frontmatter.author.twitter}`
+      : ``
+    const authorShareText = encodeURIComponent(
+      `“${post.frontmatter.title}”${twitterLine} https://sourceforge.com/blog${post.fileSlug}`
+    )
     const BioLine = ({ children }) => (
       <p
         css={{
-          ...scale(-2/5),
+          ...scale(-2 / 5),
           fontFamily: typography.options.headerFontFamily.join(`,`),
           lineHeight: 1.3,
           margin: 0,
           color: `rgba(0,0,0,.44)`,
           [presets.Mobile]: {
-            ...scale(-1/5),
+            ...scale(-1 / 5),
             lineHeight: 1.3,
           },
         }}
@@ -115,8 +119,16 @@ const BlogPostTemplate = React.createClass({
             }}
           >
             <img
-              src={post.frontmatter.author.avatar.children[0].responsiveResolution.src}
-              srcSet={post.frontmatter.author.avatar.children[0].responsiveResolution.srcSet}
+              src={
+                post.frontmatter.author.avatar.children[
+                  0
+                ].responsiveResolution.src
+              }
+              srcSet={
+                post.frontmatter.author.avatar.children[
+                  0
+                ].responsiveResolution.srcSet
+              }
               css={{
                 height: rhythm(2.75),
                 width: rhythm(2.75),
@@ -130,12 +142,12 @@ const BlogPostTemplate = React.createClass({
           <div
             css={{
               flex: `1 1 auto`,
-              marginLeft: rhythm(1/2),
+              marginLeft: rhythm(1 / 2),
             }}
           >
             <h4
               css={{
-                ...scale(1/5),
+                ...scale(1 / 5),
                 lineHeight: 1.1,
                 fontWeight: 400,
                 fontStyle: `normal`,

@@ -8,9 +8,9 @@ const {
   connectionArgs,
   connectionDefinitions,
 } = require("graphql-skip-limit")
-const { inferInputObjectStructureFromNodes } = require(
-  `./infer-graphql-input-fields`,
-)
+const {
+  inferInputObjectStructureFromNodes,
+} = require(`./infer-graphql-input-fields`)
 const buildConnectionFields = require("./build-connection-fields")
 
 module.exports = types => {
@@ -26,7 +26,7 @@ module.exports = types => {
     const inferredInputFields = inferInputObjectStructureFromNodes(
       nodes,
       ``,
-      `${type.name}Connection`,
+      `${type.name}Connection`
     )
     connections[_.camelCase(`all ${type.name}`)] = {
       type: typeConnection,
@@ -39,7 +39,7 @@ module.exports = types => {
         ...connectionArgs,
         ...inferredInputFields,
       },
-      resolve (object, resolveArgs) {
+      resolve(object, resolveArgs) {
         const runSift = require("./run-sift")
         return runSift({
           args: resolveArgs,

@@ -25,7 +25,7 @@ module.exports = ({ markdownAST, pluginOptions = {} }) =>
             left: 0;
             width: 100%;
             height: 100%;
-          `,
+          `
           )
           $(`iframe, object`).attr(`width`, null).attr(`height`, null)
           const newIframe = $.html()

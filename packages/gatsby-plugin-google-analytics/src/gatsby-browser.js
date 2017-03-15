@@ -7,7 +7,7 @@ exports.clientEntry = (args, pluginOptions) => {
   }
 }
 
-exports.onRouteUpdate = function (location) {
+exports.onRouteUpdate = function(location) {
   // Don't track while developing.
   if (process.env.NODE_ENV === `production`) {
     ReactGA.set({ page: location.pathname })

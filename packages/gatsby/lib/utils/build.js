@@ -12,7 +12,7 @@ import bootstrap from "../bootstrap"
 import apiRunnerNode from "./api-runner-node"
 import { pagesDB } from "./globals"
 
-async function html (program) {
+async function html(program) {
   const directory = program.directory
   const { graphqlRunner } = await bootstrap(program)
 
@@ -29,7 +29,7 @@ async function html (program) {
   // file.
   fs.writeFileSync(
     `${program.directory}/public/tmp-pages.json`,
-    JSON.stringify([...pagesDB().values()]),
+    JSON.stringify([...pagesDB().values()])
   )
   await buildHTML(program).catch(err =>
     console.log(`Generating HTML failed`, err))

@@ -58,7 +58,7 @@ module.exports = () => {
   return {
     site: {
       type: siteType,
-      resolve () {
+      resolve() {
         return siteDB().get(`config`)
       },
     },

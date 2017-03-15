@@ -1,37 +1,37 @@
-import React from 'react'
-import Modal from 'react-modal'
-import browserHistory from 'react-router/lib/browserHistory'
-import CaretRight from 'react-icons/lib/fa/caret-right'
-import CaretLeft from 'react-icons/lib/fa/caret-left'
-import Close from 'react-icons/lib/md/close'
-import findIndex from 'lodash/findIndex'
-import mousetrap from 'mousetrap'
+import React from "react"
+import Modal from "react-modal"
+import browserHistory from "react-router/lib/browserHistory"
+import CaretRight from "react-icons/lib/fa/caret-right"
+import CaretLeft from "react-icons/lib/fa/caret-left"
+import Close from "react-icons/lib/md/close"
+import findIndex from "lodash/findIndex"
+import mousetrap from "mousetrap"
 
-import { rhythm, scale } from '../utils/typography'
+import { rhythm, scale } from "../utils/typography"
 
 class GatsbyGramModal extends React.Component {
-  componentDidMount () {
-    mousetrap.bind('left', () => this.previous())
-    mousetrap.bind('right', () => this.next())
-    mousetrap.bind('spacebar', () => this.next())
+  componentDidMount() {
+    mousetrap.bind("left", () => this.previous())
+    mousetrap.bind("right", () => this.next())
+    mousetrap.bind("spacebar", () => this.next())
   }
 
-  componentWillUnmount () {
-    mousetrap.unbind('left')
-    mousetrap.unbind('right')
-    mousetrap.unbind('spacebar')
+  componentWillUnmount() {
+    mousetrap.unbind("left")
+    mousetrap.unbind("right")
+    mousetrap.unbind("spacebar")
   }
 
-  findCurrentIndex () {
+  findCurrentIndex() {
     let index
-    index = findIndex(this.props.edges, (edge) => {
+    index = findIndex(this.props.edges, edge => {
       return edge.node.id === this.props.location.pathname.split(`/`)[1]
     })
 
     return index
   }
 
-  next (e) {
+  next(e) {
     if (e) {
       e.stopPropagation()
     }
@@ -49,7 +49,7 @@ class GatsbyGramModal extends React.Component {
     }
   }
 
-  previous (e) {
+  previous(e) {
     if (e) {
       e.stopPropagation()
     }
@@ -67,22 +67,22 @@ class GatsbyGramModal extends React.Component {
     }
   }
 
-  render () {
+  render() {
     return (
       <Modal
         isOpen={this.props.isOpen}
         onRequestClose={() => browserHistory.push(`/`)}
         style={{
-          overlay : {
-            position: 'fixed',
+          overlay: {
+            position: "fixed",
             top: 0,
             left: 0,
             right: 0,
             bottom: 0,
-            backgroundColor: 'rgba(0, 0, 0, 0.75)'
+            backgroundColor: "rgba(0, 0, 0, 0.75)",
           },
-          content : {
-            position: 'absolute',
+          content: {
+            position: "absolute",
             border: `none`,
             background: `none`,
             padding: 0,
@@ -90,9 +90,9 @@ class GatsbyGramModal extends React.Component {
             bottom: 0,
             right: 0,
             left: 0,
-            overflow: 'auto',
-            WebkitOverflowScrolling: 'touch',
-          }
+            overflow: "auto",
+            WebkitOverflowScrolling: "touch",
+          },
         }}
         contentLabel="Modal"
       >
@@ -121,7 +121,7 @@ class GatsbyGramModal extends React.Component {
                 color: `rgba(255,255,255,0.7)`,
                 userSelect: `none`,
               }}
-              onClick={(e) => this.previous(e)}
+              onClick={e => this.previous(e)}
             />
             {this.props.children}
             <CaretRight
@@ -131,7 +131,7 @@ class GatsbyGramModal extends React.Component {
                 color: `rgba(255,255,255,0.7)`,
                 userSelect: `none`,
               }}
-              onClick={(e) => this.next(e)}
+              onClick={e => this.next(e)}
             />
           </div>
           <Close
@@ -141,8 +141,8 @@ class GatsbyGramModal extends React.Component {
               color: `rgba(255,255,255,0.8)`,
               fontSize: `30px`,
               position: `absolute`,
-              top: rhythm(1/4),
-              right: rhythm(1/4),
+              top: rhythm(1 / 4),
+              right: rhythm(1 / 4),
             }}
           />
         </div>

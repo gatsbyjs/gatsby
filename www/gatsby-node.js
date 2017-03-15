@@ -25,7 +25,7 @@ exports.createPages = ({ args }) => {
         }
       }
     `
-    ).then((result) => {
+    ).then(result => {
       if (result.errors) {
         console.log(result.errors)
         reject(result.errors)
@@ -95,6 +95,8 @@ exports.modifyAST = ({ args }) => {
 }
 
 exports.postBuild = () => {
-  fs.copySync(`../docs/blog/2017-02-21-1-0-progress-update-where-came-from-where-going/gatsbygram.mp4`,
-              `./public/gatsbygram.mp4`)
+  fs.copySync(
+    `../docs/blog/2017-02-21-1-0-progress-update-where-came-from-where-going/gatsbygram.mp4`,
+    `./public/gatsbygram.mp4`
+  )
 }

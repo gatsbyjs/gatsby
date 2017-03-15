@@ -1,10 +1,9 @@
 import React from "react"
 
 exports.modifyPostBodyComponents = () => [
-  (
-    <script
+  <script
     dangerouslySetInnerHTML={{
-        __html: `
+      __html: `
         if ('serviceWorker' in navigator) {
           // Delay registration until after the page has loaded, to ensure that
           // our precaching requests don't degrade the first visit experience.
@@ -14,7 +13,6 @@ exports.modifyPostBodyComponents = () => [
           })
         }
       `,
-      }}
-  />
-  ),
+    }}
+  />,
 ]

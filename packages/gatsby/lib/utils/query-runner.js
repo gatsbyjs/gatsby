@@ -16,9 +16,8 @@ const babylon = require("babylon")
 
 const pascalCase = _.flow(_.camelCase, _.upperFirst)
 
-const hashStr = function (str) {
-  let hash = 5381,
-    i = str.length
+const hashStr = function(str) {
+  let hash = 5381, i = str.length
 
   while (i) {
     hash = hash * 33 ^ str.charCodeAt(--i)
@@ -54,7 +53,7 @@ const writeChildRoutes = () => {
     const pathName = pathChunkName(page.path)
     const layoutName = layoutComponentChunkName(
       programDB().directory,
-      page.component,
+      page.component
     )
     let pathStr = ``
     if (!noPath) {
@@ -124,7 +123,7 @@ const writeChildRoutes = () => {
     } else {
       let indexPage
       indexPage = _.first(
-        _.filter(pages, page => parseFilepath(page.component).name === `index`),
+        _.filter(pages, page => parseFilepath(page.component).name === `index`)
       )
       // If there's not an index page, just pick the one with the shortest path.
       // Probably a bad heuristic.
@@ -167,7 +166,8 @@ const writeChildRoutes = () => {
   splitRootRoute += `]}`
   const componentsStr = [...pagesDB().values()]
     .map(
-      page => `class ${page.internalComponentName} extends React.Component {
+      page =>
+        `class ${page.internalComponentName} extends React.Component {
           render () {
             let Component = require('${page.component}')
             if (Component.default) {
@@ -176,7 +176,7 @@ const writeChildRoutes = () => {
             const data = require('./json/${page.jsonName}')
             return <Component {...this.props} {...data} />
           }
-        }`,
+        }`
     )
     .join(`\n`)
 
@@ -212,19 +212,19 @@ const writeChildRoutes = () => {
     module.exports = rootRoute`
   fs.writeFileSync(
     `${directory}/.intermediate-representation/child-routes.js`,
-    childRoutes,
+    childRoutes
   )
   fs.writeFileSync(
     `${directory}/.intermediate-representation/split-child-routes.js`,
-    splitChildRoutes,
+    splitChildRoutes
   )
 }
 const debouncedWriteChildRoutes = _.debounce(writeChildRoutes, 250)
 
-const babelPlugin = function ({ types: t }) {
+const babelPlugin = function({ types: t }) {
   return {
     visitor: {
-      TemplateLiteral (path, state) {
+      TemplateLiteral(path, state) {
         if (
           path.parentPath.parentPath.parentPath.type !==
           `ExportNamedDeclaration`
@@ -234,7 +234,7 @@ const babelPlugin = function ({ types: t }) {
         const exportPath = path.parentPath.parentPath.parentPath
         const name = _.get(
           exportPath,
-          `node.declaration.declarations[0].id.name`,
+          `node.declaration.declarations[0].id.name`
         )
         if (name === `pageQuery`) {
           const quasis = _.get(path, `node.quasis`, [])
@@ -246,8 +246,8 @@ const babelPlugin = function ({ types: t }) {
             if (expr) {
               chunks.push(
                 expr.scope.bindings[expr.node.name].path.get(
-                  `value`,
-                ).parentPath.node.init.quasis[0].value.cooked,
+                  `value`
+                ).parentPath.node.init.quasis[0].value.cooked
               )
             }
           })
@@ -280,7 +280,7 @@ const q = queue(
     // Get query for this file.
     let query
     traverse(ast, {
-      TemplateLiteral (path, state) {
+      TemplateLiteral(path, state) {
         if (
           path.parentPath.parentPath.parentPath.type !==
           `ExportNamedDeclaration`
@@ -290,7 +290,7 @@ const q = queue(
         const exportPath = path.parentPath.parentPath.parentPath
         const name = _.get(
           exportPath,
-          `node.declaration.declarations[0].id.name`,
+          `node.declaration.declarations[0].id.name`
         )
         if (name === `pageQuery`) {
           const quasis = _.get(path, `node.quasis`, [])
@@ -302,8 +302,8 @@ const q = queue(
             if (expr) {
               chunks.push(
                 expr.scope.bindings[expr.node.name].path.get(
-                  `value`,
-                ).parentPath.node.init.quasis[0].value.cooked,
+                  `value`
+                ).parentPath.node.init.quasis[0].value.cooked
               )
             }
           })
@@ -355,7 +355,7 @@ const q = queue(
       const resultJSON = JSON.stringify(clonedResult, null, 4)
       fs.writeFileSync(
         `${directory}/.intermediate-representation/json/${jsonName}`,
-        resultJSON,
+        resultJSON
       )
 
       return null
@@ -378,7 +378,7 @@ const q = queue(
         return graphql(query, pathContext)
           .catch(() => handleResult(pathInfo))
           .then(result => handleResult(pathInfo, result))
-      }),
+      })
     ).then(() => {
       console.log(`rewrote JSON for queries for ${absFile}`)
       console.timeEnd(`graphql query time`)
@@ -388,14 +388,14 @@ const q = queue(
       callback()
     })
   },
-  1,
+  1
 )
 
 module.exports = async (program, graphql) => {
   // Get unique array of component paths and then watch them.
   // When a component is updated, rerun queries.
   const components = _.uniq(
-    [...pagesDB().values()].map(page => page.component),
+    [...pagesDB().values()].map(page => page.component)
   )
 
   let outsideResolve

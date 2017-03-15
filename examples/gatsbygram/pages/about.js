@@ -11,7 +11,8 @@ class About extends React.Component {
       >
         <h1>About Gatsbygram</h1>
         <p>
-          Gatsbygram is an example website built with the JavaScript web framework{" "}
+          Gatsbygram is an example website built with the JavaScript web framework
+          {" "}
           <a target="_blank" href="https://github.com/gatsbyjs/gatsby">
             Gatsby
           </a>
@@ -27,7 +28,9 @@ class About extends React.Component {
           </a>
         </p>
         <p>
-          <a href="https://www.gatsbyjs.org/blog/gatsbygram-case-study/">Read a case study on how Gatsbygram was built</a>
+          <a href="https://www.gatsbyjs.org/blog/gatsbygram-case-study/">
+            Read a case study on how Gatsbygram was built
+          </a>
         </p>
       </div>
     )

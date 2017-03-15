@@ -60,7 +60,7 @@ const inferGraphQLType = ({ value, fieldName, ...otherArgs }) => {
           description: `Returns the difference between this date and the current time. Defaults to miliseconds but you can also pass in as the measurement years, months, weeks, days, hours, minutes, and seconds.`,
         },
       },
-      resolve (object, { fromNow, difference, formatString }) {
+      resolve(object, { fromNow, difference, formatString }) {
         const date = object[fieldName]
         if (formatString) {
           return moment.utc(date, ISO_8601_FORMAT, true).format(formatString)
@@ -69,7 +69,7 @@ const inferGraphQLType = ({ value, fieldName, ...otherArgs }) => {
         } else if (difference) {
           return moment().diff(
             moment.utc(date, ISO_8601_FORMAT, true),
-            difference,
+            difference
           )
         } else {
           return date
@@ -102,12 +102,12 @@ const inferGraphQLType = ({ value, fieldName, ...otherArgs }) => {
 
 // Call this for the top level node + recursively for each sub-object.
 // E.g. This gets called for Markdown and then for its frontmatter subobject.
-const inferObjectStructureFromNodes = exports.inferObjectStructureFromNodes = (
+const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
   {
     nodes,
     selector,
     types,
-  },
+  }
 ) => {
   const type = nodes[0].type
   const fieldExamples = {}
@@ -165,7 +165,7 @@ const inferObjectStructureFromNodes = exports.inferObjectStructureFromNodes = (
     const fieldSelector = `${nodes[0].type}.${selector}.${k}`
     if (mapping && _.includes(Object.keys(mapping), fieldSelector)) {
       const matchedTypes = types.filter(
-        type => type.name === mapping[fieldSelector],
+        type => type.name === mapping[fieldSelector]
       )
       inferredFields[k] = matchedTypes[0].field
     } else if (_.includes(k, `___`)) {
@@ -194,4 +194,4 @@ const inferObjectStructureFromNodes = exports.inferObjectStructureFromNodes = (
   })
 
   return inferredFields
-}
+})

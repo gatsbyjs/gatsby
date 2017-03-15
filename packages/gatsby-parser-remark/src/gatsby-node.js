@@ -5,7 +5,7 @@ const grayMatter = require("gray-matter")
 
 const { loadNodeContents } = require("gatsby-source-filesystem")
 
-async function modifyAST ({ args }) {
+async function modifyAST({ args }) {
   console.time(`parse markdown file`)
   const { ast } = args
   // List of markdown extensions taken from
@@ -21,7 +21,7 @@ async function modifyAST ({ args }) {
     File[extension="mdown"],
     File[extension="litcoffee"],
     File[extension="markdown"]
-  `,
+  `
   )
   const contents = await Promise.map(files, file => loadNodeContents(file))
   files.forEach((file, index) => {

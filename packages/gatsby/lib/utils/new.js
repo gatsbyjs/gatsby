@@ -14,6 +14,6 @@ module.exports = (rootPath, starter = `gh:gatsbyjs/gatsby-starter-default`) => {
       if (error) {
         logger.error(error)
       }
-    },
+    }
   )
 }

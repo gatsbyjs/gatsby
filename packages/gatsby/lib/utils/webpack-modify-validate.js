@@ -4,7 +4,7 @@ import path from "path"
 import validate from "webpack-validator"
 import apiRunnerNode from "./api-runner-node"
 
-export default (async function ValidateWebpackConfig (config, stage) {
+export default (async function ValidateWebpackConfig(config, stage) {
   // We don't care about the return as plugins just mutate the config directly.
   await apiRunnerNode(`modifyWebpackConfig`, { config, stage })
 
@@ -14,7 +14,7 @@ export default (async function ValidateWebpackConfig (config, stage) {
     You must return an webpack-configurator instance when modifying the Webpack config.
     Returned: ${config}
     stage: ${stage}
-    `,
+    `
   )
 
   const validationState = validate(config.resolve(), {

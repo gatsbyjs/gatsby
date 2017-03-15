@@ -1,21 +1,21 @@
-import React from 'react'
-import HeartIcon from 'react-icons/lib/fa/heart'
-import Link from 'gatsby-link'
+import React from "react"
+import HeartIcon from "react-icons/lib/fa/heart"
+import Link from "gatsby-link"
 
-import { rhythm, scale } from '../utils/typography'
-import presets from '../utils/presets'
+import { rhythm, scale } from "../utils/typography"
+import presets from "../utils/presets"
 
 let touched = false
 
 class Post extends React.Component {
-  constructor () {
+  constructor() {
     super()
     this.state = {
       hovering: false,
     }
   }
 
-  render () {
+  render() {
     const { image, likes, id } = this.props.post
     const { small } = image.children[0]
     return (
@@ -36,14 +36,14 @@ class Post extends React.Component {
           display: `block`,
           backgroundColor: `lightgray`,
           flex: `1 0 0%`,
-          marginRight: rhythm(1/8),
+          marginRight: rhythm(1 / 8),
           width: `100%`,
           maxWidth: 290.1,
           position: `relative`,
           [presets.Tablet]: {
             marginRight: rhythm(1),
           },
-          ':last-child': {
+          ":last-child": {
             marginRight: 0,
           },
         }}
@@ -99,17 +99,16 @@ class Post extends React.Component {
               justifyContent: `center`,
               alignItems: `center`,
               color: `white`,
-              ...scale(2/5),
+              ...scale(2 / 5),
             }}
           >
             <HeartIcon
               css={{
                 fontSize: `90%`,
-                marginRight: rhythm(1/4),
+                marginRight: rhythm(1 / 4),
               }}
             /> {likes}
-          </div>
-        }
+          </div>}
       </Link>
     )
   }

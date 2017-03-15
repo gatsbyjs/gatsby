@@ -11,7 +11,7 @@ const rlInterface = rl.createInterface({
 
 const debug = require("debug")("gatsby:application")
 
-function startServer (program, launchPort) {
+function startServer(program, launchPort) {
   const directory = program.directory
   const serverPort = launchPort || program.port
 
@@ -40,7 +40,7 @@ function startServer (program, launchPort) {
       if (e.code === `EADDRINUSE`) {
         // eslint-disable-next-line max-len
         console.log(
-          `Unable to start Gatsby on port ${serverPort} as there's already a process listing on that port.`,
+          `Unable to start Gatsby on port ${serverPort} as there's already a process listing on that port.`
         )
       } else {
         console.log(e)

@@ -24,7 +24,7 @@
     "no-duplicate-imports": [0],
     "spaced-comment": [0],
     "arrow-parens": [0],
-    "quotes": ["error", "backtick"],
+    /*"quotes": ["error", "backtick"],*/
     /*"flowtype/require-parameter-type": 1,*/
     /*"flowtype/require-return-type": [*/
       /*1,*/

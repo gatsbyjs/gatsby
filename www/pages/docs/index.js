@@ -1,12 +1,12 @@
-import React from "react"
-import Link from "gatsby-link"
+import React from "react";
+import Link from "gatsby-link";
 
-import typography, { rhythm } from "../../utils/typography"
-import SidebarBody from "../../components/sidebar-body"
-import presets from "../../utils/presets"
+import typography, { rhythm } from "../../utils/typography";
+import SidebarBody from "../../components/sidebar-body";
+import presets from "../../utils/presets";
 
 class IndexRoute extends React.Component {
-  render () {
+  render() {
     return (
       <div>
         <h1>Getting started</h1>
@@ -36,11 +36,11 @@ class IndexRoute extends React.Component {
           <SidebarBody inline />
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default IndexRoute
+export default IndexRoute;
 
 export const pageQuery = `
-`
+`;

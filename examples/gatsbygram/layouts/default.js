@@ -1,22 +1,24 @@
-import React from 'react'
-import CameraIcon from 'react-icons/lib/fa/camera-retro'
-import Link from 'gatsby-link'
+import React from "react"
+import CameraIcon from "react-icons/lib/fa/camera-retro"
+import Link from "gatsby-link"
 
 // Load the css for the Space Mono font.
-import 'typeface-space-mono'
+import "typeface-space-mono"
 
-import { rhythm, scale } from '../utils/typography'
-import presets from '../utils/presets'
-import Modal from '../components/modal'
+import { rhythm, scale } from "../utils/typography"
+import presets from "../utils/presets"
+import Modal from "../components/modal"
 
 class DefaultLayout extends React.Component {
-  getChildContext () {
+  getChildContext() {
     return {
-      setEdges: (edges) => { this.edges = edges },
+      setEdges: edges => {
+        this.edges = edges
+      },
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     // Create references to html/body elements
     this.htmlElement = document.querySelector(`html`)
     this.bodyElement = document.querySelector(`body`)
@@ -24,13 +26,14 @@ class DefaultLayout extends React.Component {
     // Cache the window width.
     this.windowWidth = window.innerWidth
   }
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     // if we're changing to a non-homepage page, put things in
     // a modal (unless we're on mobile).
-    if (nextProps.location.pathname !== `/` &&
-        nextProps.location.pathname !== `/about/` &&
-        this.windowWidth > 750
-       ) {
+    if (
+      nextProps.location.pathname !== `/` &&
+      nextProps.location.pathname !== `/about/` &&
+      this.windowWidth > 750
+    ) {
       // Freeze the background from scrolling.
       this.htmlElement.style.overflow = `hidden`
       this.bodyElement.style.overflow = `hidden`
@@ -56,9 +59,9 @@ class DefaultLayout extends React.Component {
     }
   }
 
-  render () {
+  render() {
     const { location } = this.props
-    const isModal = (this.modalBackgroundChildren)
+    const isModal = this.modalBackgroundChildren
 
     return (
       <div
@@ -75,8 +78,8 @@ class DefaultLayout extends React.Component {
         >
           <div
             css={{
-              padding: rhythm(3/4),
-              paddingBottom: `calc(${rhythm(3/4)} - 1px)`,
+              padding: rhythm(3 / 4),
+              paddingBottom: `calc(${rhythm(3 / 4)} - 1px)`,
               maxWidth: 960,
               margin: `0 auto`,
               overflow: `hidden`,
@@ -92,7 +95,7 @@ class DefaultLayout extends React.Component {
             >
               <h1
                 css={{
-                  ...scale(4/5),
+                  ...scale(4 / 5),
                   lineHeight: 1,
                   margin: 0,
                   overflow: `hidden`,
@@ -136,24 +139,16 @@ class DefaultLayout extends React.Component {
             maxWidth: 960,
             margin: `0 auto`,
             [presets.Tablet]: {
-              padding: rhythm(3/4),
+              padding: rhythm(3 / 4),
             },
           }}
         >
-          {isModal ?
-            this.modalBackgroundChildren :
-            this.props.children
-          }
+          {isModal ? this.modalBackgroundChildren : this.props.children}
 
-          {isModal && (
-            <Modal
-              isOpen={true}
-              edges={this.edges}
-              location={location}
-            >
+          {isModal &&
+            <Modal isOpen={true} edges={this.edges} location={location}>
               {this.props.children}
-            </Modal>
-          )}
+            </Modal>}
         </div>
       </div>
     )

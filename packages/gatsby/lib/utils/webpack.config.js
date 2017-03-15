@@ -29,7 +29,7 @@ module.exports = async (
   directory,
   suppliedStage,
   webpackPort = 1500,
-  pages = [],
+  pages = []
 ) => {
   const babelStage = suppliedStage
 
@@ -39,7 +39,7 @@ module.exports = async (
   const babelConfig = await genBabelConfig(program, babelStage)
 
   debug(`Loading webpack config for stage "${stage}"`)
-  function output () {
+  function output() {
     switch (stage) {
       case `develop`:
         return {
@@ -83,7 +83,7 @@ module.exports = async (
     }
   }
 
-  function entry () {
+  function entry() {
     switch (stage) {
       case `develop`:
         return {
@@ -111,7 +111,7 @@ module.exports = async (
     }
   }
 
-  function plugins () {
+  function plugins() {
     switch (stage) {
       case `develop`:
         return [
@@ -121,7 +121,7 @@ module.exports = async (
           new webpack.DefinePlugin({
             "process.env": {
               NODE_ENV: JSON.stringify(
-                process.env.NODE_ENV ? process.env.NODE_ENV : `development`,
+                process.env.NODE_ENV ? process.env.NODE_ENV : `development`
               ),
               PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
             },
@@ -139,7 +139,7 @@ module.exports = async (
           new webpack.DefinePlugin({
             "process.env": {
               NODE_ENV: JSON.stringify(
-                process.env.NODE_ENV ? process.env.NODE_ENV : `production`,
+                process.env.NODE_ENV ? process.env.NODE_ENV : `production`
               ),
               PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
             },
@@ -154,7 +154,7 @@ module.exports = async (
           new webpack.DefinePlugin({
             "process.env": {
               NODE_ENV: JSON.stringify(
-                process.env.NODE_ENV ? process.env.NODE_ENV : `production`,
+                process.env.NODE_ENV ? process.env.NODE_ENV : `production`
               ),
               PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
             },
@@ -166,7 +166,7 @@ module.exports = async (
       case `build-javascript`: {
         // Get array of page template component names.
         let components = Array.from(pagesDB().values()).map(
-          page => page.component,
+          page => page.component
         )
         components = components.map(component =>
           layoutComponentChunkName(program.directory, component))
@@ -204,7 +204,7 @@ module.exports = async (
           new webpack.DefinePlugin({
             "process.env": {
               NODE_ENV: JSON.stringify(
-                process.env.NODE_ENV ? process.env.NODE_ENV : `production`,
+                process.env.NODE_ENV ? process.env.NODE_ENV : `production`
               ),
               PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
             },
@@ -248,7 +248,7 @@ module.exports = async (
     }
   }
 
-  function resolve () {
+  function resolve() {
     return {
       extensions: [``, `.js`, `.jsx`, `.cjsx`, `.coffee`],
       // Hierarchy of directories for Webpack to look for module.
@@ -259,7 +259,7 @@ module.exports = async (
     }
   }
 
-  function devtool () {
+  function devtool() {
     switch (stage) {
       case `develop`:
         return `eval`
@@ -272,7 +272,7 @@ module.exports = async (
     }
   }
 
-  function module (config) {
+  function module(config) {
     // Common config for every env.
     config.loader(`cjsx`, {
       test: /\.cjsx$/,
@@ -335,7 +335,7 @@ module.exports = async (
         })
 
         config.merge({
-          postcss (wp) {
+          postcss(wp) {
             return [
               require(`postcss-import`)({ addDependencyTo: wp }),
               require(`postcss-cssnext`)({ browsers: `last 2 versions` }),
@@ -424,7 +424,7 @@ module.exports = async (
     }
   }
 
-  function resolveLoader () {
+  function resolveLoader() {
     const root = [path.resolve(directory, `node_modules`)]
 
     const userLoaderDirectoryPath = path.resolve(directory, `loaders`)

@@ -2,12 +2,12 @@ import React from "react"
 import browserHistory from "react-router/lib/browserHistory"
 
 class AppShell extends React.Component {
-  componentDidMount () {
+  componentDidMount() {
     console.log(this.props.location)
     browserHistory.replace(this.props.location.pathname)
   }
 
-  render () {
+  render() {
     return <div />
   }
 }

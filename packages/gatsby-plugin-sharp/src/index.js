@@ -24,7 +24,7 @@ const bar = new ProgressBar(
   {
     total: 0,
     width: 30,
-  },
+  }
 )
 const processFile = (file, jobs, cb) => {
   Promise.all(jobs.map(job => job.finished)).then(() => cb())
@@ -128,7 +128,7 @@ const queueJob = job => {
   _.set(
     toProcess,
     `${job.file.id.replace(/\./g, `%2E`)}.${job.outputPath.replace(/\./g, `%2E`)}`,
-    job,
+    job
   )
   if (notQueued) {
     q.push(cb => {
@@ -142,7 +142,7 @@ const queueJob = job => {
   bar.total = totalCount
 }
 
-function queueImageResizing ({ file, args = {} }) {
+function queueImageResizing({ file, args = {} }) {
   const defaultArgs = {
     width: 400,
     quality: 50,
@@ -219,7 +219,7 @@ function queueImageResizing ({ file, args = {} }) {
   }
 }
 
-async function notMemoizedbase64 ({ file, args = {} }) {
+async function notMemoizedbase64({ file, args = {} }) {
   const defaultArgs = {
     width: 20,
     quality: 50,
@@ -264,14 +264,14 @@ async function notMemoizedbase64 ({ file, args = {} }) {
 
 const memoizedBase64 = _.memoize(
   notMemoizedbase64,
-  ({ file, args }) => `${file.id}${JSON.stringify(args)}`,
+  ({ file, args }) => `${file.id}${JSON.stringify(args)}`
 )
 
-async function base64 (args) {
+async function base64(args) {
   return await memoizedBase64(args)
 }
 
-async function responsiveSizes ({ file, args = {} }) {
+async function responsiveSizes({ file, args = {} }) {
   const defaultArgs = {
     maxWidth: 800,
     quality: 50,
@@ -344,7 +344,7 @@ async function responsiveSizes ({ file, args = {} }) {
   }
 }
 
-async function responsiveResolution ({ file, args = {} }) {
+async function responsiveResolution({ file, args = {} }) {
   const defaultArgs = {
     width: 400,
     quality: 50,
@@ -376,7 +376,7 @@ async function responsiveResolution ({ file, args = {} }) {
                  the file ${file.id}
                  was wider than the actual image width of ${dimensions.width}px!
                  If possible, replace the current image with a larger one.
-                 `,
+                 `
     )
   }
 

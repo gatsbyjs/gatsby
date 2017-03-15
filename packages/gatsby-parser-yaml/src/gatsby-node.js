@@ -5,14 +5,14 @@ const jsYaml = require("js-yaml")
 const _ = require("lodash")
 const { loadNodeContents } = require("gatsby-source-filesystem")
 
-async function modifyAST ({ args }) {
+async function modifyAST({ args }) {
   const { ast } = args
   const files = select(
     ast,
     `
     File[extension="yaml"],
     File[extension="yml"]
-  `,
+  `
   )
   const contents = await Promise.map(files, file => loadNodeContents(file))
   files.forEach((file, index) => {
