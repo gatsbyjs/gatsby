@@ -80,7 +80,7 @@ noted](http://ben-evans.com/benedictevans/2015/5/13/the-smartphone-and-the-sun),
 the next billion people poised to come online will be using the internet
 almost exclusively through smartphones.
 
-Smartphones with decent specs (as good or better than the Moto G), a
+Smartphones with decent specs (as good or better than the Moto G4), a
 great browser, but *without* a reliable internet connection.
 
 Gatsby uses modern web performance ideas (e.g.
