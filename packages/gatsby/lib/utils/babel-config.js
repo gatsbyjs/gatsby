@@ -122,8 +122,7 @@ function findBabelPackage(directory) {
 module.exports = async function babelConfig(program, stage) {
   const { directory } = program
 
-  let babelrc = findBabelrc(directory) ||
-    findBabelPackage(directory)
+  let babelrc = findBabelrc(directory) || findBabelPackage(directory)
 
   // If user doesn't have a custom babelrc, add defaults.
   if (!babelrc) {
@@ -137,10 +136,10 @@ module.exports = async function babelConfig(program, stage) {
   }
 
   // Add default plugins and presets.
-  [`es2015`, `stage-0`, `react`].forEach((preset) => {
+  [`es2015`, `stage-0`, `react`].forEach(preset => {
     babelrc.presets.push(preset)
   });
-  [`add-module-exports`, `transform-object-assign`].forEach((plugin) => {
+  [`add-module-exports`, `transform-object-assign`].forEach(plugin => {
     babelrc.plugins.push(plugin)
   })
 
@@ -166,7 +165,6 @@ module.exports = async function babelConfig(program, stage) {
   } else {
     modifiedConfig = {}
   }
-
 
   // Merge all together.
   const merged = _.defaultsDeep(modifiedConfig, normalizedConfig)

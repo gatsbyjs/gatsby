@@ -1,7 +1,6 @@
 import Promise from "bluebird"
 import mapLimit from "async/mapLimit"
 
-const _ = require("lodash")
 const path = require("path")
 const md5File = require("md5-file")
 const recursive = require("recursive-readdir")

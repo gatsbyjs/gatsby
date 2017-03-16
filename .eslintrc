@@ -1,60 +1,29 @@
 {
-  "parser": "babel-eslint",
   "extends": [
-    "eslint-config-airbnb",
+    "google",
+    "plugin:flowtype/recommended",
+    "plugin:react/recommended",
+    "prettier",
+    "prettier/flowtype",
+    "prettier/react"
   ],
   "plugins": [
     "flowtype",
-    "flow-vars"
+    "react",
+    "prettier"
   ],
-  "rules": {
-    "indent": [2, 2, {"SwitchCase": 1}],
-    "no-console": [0],
-    "func-names": [0],
-    "semi": [2, "never"],
-    "no-extra-semi": [2],
-    "space-before-function-paren": [2, "always"],
-    "no-else-return": [0],
-    "space-infix-ops": [0],
-    "react/prefer-es6-class": [0],
-    "react/prefer-stateless-function": [0],
-    "no-underscore-dangle": ["error", { "allow": ["_config"] }],
-    "import/no-unresolved": [0],
-    "global-require": [0],
-    "no-duplicate-imports": [0],
-    "spaced-comment": [0],
-    "arrow-parens": [0],
-    /*"quotes": ["error", "backtick"],*/
-    /*"flowtype/require-parameter-type": 1,*/
-    /*"flowtype/require-return-type": [*/
-      /*1,*/
-      /*"always",*/
-      /*{*/
-        /*"annotateUndefined": "never"*/
-      /*}*/
-    /*],*/
-    /*"flowtype/space-after-type-colon": [*/
-      /*1,*/
-      /*"always"*/
-    /*],*/
-    /*"flowtype/space-before-type-colon": [*/
-      /*1,*/
-      /*"never"*/
-    /*],*/
-    /*"flowtype/type-id-match": [*/
-      /*0,*/
-      /*"^([A-Z][a-z0-9]+)+Type$"*/
-    /*],*/
-    /*"flow-vars/define-flow-type": 1,*/
-    /*"flow-vars/use-flow-type": 1,*/
-  },
-  "globals": {
-    "__PREFIX_LINKS__": true,
-    "__LINK_PREFIX__": true,
-  },
-  "settings": {
-    "flowtype": {
-      "onlyFilesWithFlowAnnotation": true
+  "parserOptions": {
+    "ecmaVersion": 2016,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
     }
+  },
+  "env": {
+    "es6": true,
+    "node": true
+  },
+  "rules": {
+    "prettier/prettier": ["error", {"trailingComma": true}]
   }
 }
