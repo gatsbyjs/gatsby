@@ -345,7 +345,7 @@ files which start with an underscore:
   * Export `wrapRootComponent` of type `function(Root: React.Component) => React.Component` to allow you to wrap your `<Root />` component before mounting it with `ReactDOM.render()`.
 * (optional) `gatsby-node.js` - a way to hook into events during build
 and development.
-* (optional) `gatsby-ssr.js` - a way to into events during server-side rendering
+* (optional) `gatsby-ssr.js` - a way to hook into events during server-side rendering
   * Export `wrapRootComponent` of type `function(Root: React.Component) => React.Component` to allow you to wrap your `<Root />` component before `ReactDOMServer.renderToString()`.
 
 ### How to use your own webpack loaders
