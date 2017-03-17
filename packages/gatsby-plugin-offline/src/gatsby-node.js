@@ -1,5 +1,6 @@
 const precache = require("sw-precache")
 const path = require("path")
+const _ = require("lodash")
 
 exports.createPages = () => [
   {
@@ -8,7 +9,7 @@ exports.createPages = () => [
   },
 ]
 
-exports.postBuild = () => {
+exports.postBuild = ({ pluginOptions }) => {
   const rootDir = `public`
 
   const options = {
@@ -40,5 +41,7 @@ exports.postBuild = () => {
     skipWaiting: false,
   }
 
-  return precache.write(`public/sw.js`, options)
+  const combinedOptions = _.defaults(pluginOptions, options)
+
+  return precache.write(`public/sw.js`, combinedOptions)
 }
