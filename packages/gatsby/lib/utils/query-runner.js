@@ -178,7 +178,7 @@ const writeChildRoutes = () => {
     import React from 'react'
 
     // prefer default export if available
-    const preferDefault = m => m.default || m
+    const preferDefault = m => m && m.default || m
 
     /**
      * Warning from React Router, caused by react-hot-loader.
@@ -207,7 +207,7 @@ const writeChildRoutes = () => {
     import React from 'react'
 
     // prefer default export if available
-    const preferDefault = m => m.default || m
+    const preferDefault = m => m && m.default || m
     const rootRoute = ${splitRootRoute}
     module.exports = rootRoute`
   fs.writeFileSync(
