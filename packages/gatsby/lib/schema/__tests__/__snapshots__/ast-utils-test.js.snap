@@ -1,3 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`Gatsby AST utils build enum values for fields from array on nodes 1`] = `
 Object {
   "anArray": Object {

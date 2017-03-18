@@ -143,7 +143,11 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
     delete fieldExamples.children
   }
 
-  const mapping = siteDB().get(`config`).mapping
+  const config = siteDB().get(`config`)
+  let mapping
+  if (config) {
+    mapping = config.mapping
+  }
   const inferredFields = {}
   _.each(fieldExamples, (v, k) => {
     // Create fields for children.

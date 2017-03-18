@@ -9,7 +9,9 @@ const buildConnectionFields = require("../build-connection-fields")
 
 describe(`GraphQL Input args`, () => {
   const { inferObjectStructureFromNodes } = require("../infer-graphql-type")
-  const { inferInputObjectStructureFromNodes } = require("../infer-graphql-input-fields")
+  const {
+    inferInputObjectStructureFromNodes,
+  } = require("../infer-graphql-input-fields")
   const {
     graphql,
     GraphQLObjectType,
@@ -41,23 +43,25 @@ describe(`GraphQL Input args`, () => {
     },
   ]
   const inferredFields = inferObjectStructureFromNodes({ nodes })
-  const inferredInputFields = inferInputObjectStructureFromNodes(nodes, ``, `test`)
+  const inferredInputFields = inferInputObjectStructureFromNodes(
+    nodes,
+    ``,
+    `test`
+  )
   const nodeType = new GraphQLObjectType({
     name: `Test`,
     fields: { ...inferredFields },
   })
 
-  const { connectionType: nodeConnection } =
-    connectionDefinitions(
-      {
-        nodeType,
-        connectionFields: () => (buildConnectionFields({
-          name: `Test`,
-          nodes,
-          nodeObjectType: nodeType,
-        })),
-      },
-    )
+  const { connectionType: nodeConnection } = connectionDefinitions({
+    nodeType,
+    connectionFields: () =>
+      buildConnectionFields({
+        name: `Test`,
+        nodes,
+        nodeObjectType: nodeType,
+      }),
+  })
 
   const connection = {
     name: `nodeConnection`,
@@ -66,7 +70,7 @@ describe(`GraphQL Input args`, () => {
       ...connectionArgs,
       ...inferredInputFields,
     },
-    resolve (nvi, args) {
+    resolve(nvi, args) {
       return runSift({
         args,
         nodes,
@@ -84,91 +88,118 @@ describe(`GraphQL Input args`, () => {
     }),
   })
 
-  it(`handles eq operator`, () => graphql(schema, `
+  it(`handles eq operator`, () =>
+    graphql(
+      schema,
+      `
           {
             allNode(hair: { eq: 2 }) {
               edges { node { hair }}
             }
           }
-          `)
-    .then((result) => {
-      expect(result.errors).not.toBeDefined()
-      expect(result.data.allNode.edges.length).toEqual(1)
-      expect(result.data.allNode.edges[0].node.hair).toEqual(2)
-    })
-    .catch((err) => expect(err).not.toBeDefined()))
+          `
+    )
+      .then(result => {
+        expect(result.errors).not.toBeDefined()
+        expect(result.data.allNode.edges.length).toEqual(1)
+        expect(result.data.allNode.edges[0].node.hair).toEqual(2)
+      })
+      .catch(err => expect(err).not.toBeDefined()))
 
-  it(`handles ne operator`, () => graphql(schema, `
+  it(`handles ne operator`, () =>
+    graphql(
+      schema,
+      `
           {
             allNode(hair: { ne: 2 }) {
               edges { node { hair }}
             }
           }
-          `)
-    .then((result) => {
-      expect(result.errors).not.toBeDefined()
-      expect(result.data.allNode.edges.length).toEqual(1)
-      expect(result.data.allNode.edges[0].node.hair).toEqual(1)
-    })
-    .catch((err) => expect(err).not.toBeDefined()))
+          `
+    )
+      .then(result => {
+        expect(result.errors).not.toBeDefined()
+        expect(result.data.allNode.edges.length).toEqual(1)
+        expect(result.data.allNode.edges[0].node.hair).toEqual(1)
+      })
+      .catch(err => expect(err).not.toBeDefined()))
 
-  it(`handles the regex operator`, () => graphql(schema, `
+  it(`handles the regex operator`, () =>
+    graphql(
+      schema,
+      `
           {
             allNode(name: { regex: "/^the.*wax/i/" }) {
               edges { node { name }}
             }
           }
-          `)
-    .then((result) => {
-      expect(result.errors).not.toBeDefined()
-      expect(result.data.allNode.edges.length).toEqual(1)
-      expect(result.data.allNode.edges[0].node.name).toEqual(`The Mad Wax`)
-    })
-    .catch((err) => expect(err).not.toBeDefined()))
+          `
+    )
+      .then(result => {
+        expect(result.errors).not.toBeDefined()
+        expect(result.data.allNode.edges.length).toEqual(1)
+        expect(result.data.allNode.edges[0].node.name).toEqual(`The Mad Wax`)
+      })
+      .catch(err => expect(err).not.toBeDefined()))
 
-  it(`handles the in operator`, () => graphql(schema, `
+  it(`handles the in operator`, () =>
+    graphql(
+      schema,
+      `
           {
             allNode(anArray: { in: [5] }) {
               edges { node { name }}
             }
           }
-          `)
-    .then((result) => {
-      expect(result.errors).not.toBeDefined()
-      expect(result.data.allNode.edges.length).toEqual(1)
-      expect(result.data.allNode.edges[0].node.name).toEqual(`The Mad Wax`)
-    })
-    .catch((err) => expect(err).not.toBeDefined()))
+          `
+    )
+      .then(result => {
+        expect(result.errors).not.toBeDefined()
+        expect(result.data.allNode.edges.length).toEqual(1)
+        expect(result.data.allNode.edges[0].node.name).toEqual(`The Mad Wax`)
+      })
+      .catch(err => expect(err).not.toBeDefined()))
 
-  it(`handles the glob operator`, () => graphql(schema, `
+  it(`handles the glob operator`, () =>
+    graphql(
+      schema,
+      `
           {
             allNode(limit: 10, name: { glob: "*Wax" }) {
               edges { node { name }}
             }
           }
-          `)
-    .then((result) => {
-      expect(result.errors).not.toBeDefined()
-      expect(result.data.allNode.edges.length).toEqual(1)
-      expect(result.data.allNode.edges[0].node.name).toEqual(`The Mad Wax`)
-    })
-    .catch((err) => expect(err).not.toBeDefined()))
+          `
+    )
+      .then(result => {
+        expect(result.errors).not.toBeDefined()
+        expect(result.data.allNode.edges.length).toEqual(1)
+        expect(result.data.allNode.edges[0].node.name).toEqual(`The Mad Wax`)
+      })
+      .catch(err => expect(err).not.toBeDefined()))
 
-  it(`sorts results`, () => graphql(schema, `
+  it(`sorts results`, () =>
+    graphql(
+      schema,
+      `
           {
             allNode(limit: 10, sortBy: { fields: [frontmatter___blue], order: DESC } ) {
               edges { node { name }}
             }
           }
-          `)
-    .then((result) => {
-      expect(result.errors).not.toBeDefined()
-      expect(result.data.allNode.edges.length).toEqual(2)
-      expect(result.data.allNode.edges[0].node.name).toEqual(`The Mad Wax`)
-    })
-    .catch((err) => expect(err).not.toBeDefined()))
+          `
+    )
+      .then(result => {
+        expect(result.errors).not.toBeDefined()
+        expect(result.data.allNode.edges.length).toEqual(2)
+        expect(result.data.allNode.edges[0].node.name).toEqual(`The Mad Wax`)
+      })
+      .catch(err => expect(err).not.toBeDefined()))
 
-  it(`returns list of distinct values in a field`, () => graphql(schema, `
+  it(`returns list of distinct values in a field`, () =>
+    graphql(
+      schema,
+      `
           {
             allNode {
               totalCount
@@ -178,25 +209,29 @@ describe(`GraphQL Input args`, () => {
               circle: distinct(field: frontmatter___circle) # Only one node has this field
             }
           }
-          `)
-    .then((result) => {
-      expect(result.errors).not.toBeDefined()
+          `
+    )
+      .then(result => {
+        expect(result.errors).not.toBeDefined()
 
-      expect(result.data.allNode.names.length).toEqual(2)
-      expect(result.data.allNode.names[0]).toEqual(`The Mad Max`)
+        expect(result.data.allNode.names.length).toEqual(2)
+        expect(result.data.allNode.names[0]).toEqual(`The Mad Max`)
 
-      expect(result.data.allNode.array.length).toEqual(5)
-      expect(result.data.allNode.array[0]).toEqual(`1`)
+        expect(result.data.allNode.array.length).toEqual(5)
+        expect(result.data.allNode.array[0]).toEqual(`1`)
 
-      expect(result.data.allNode.blue.length).toEqual(2)
-      expect(result.data.allNode.blue[0]).toEqual(`100`)
+        expect(result.data.allNode.blue.length).toEqual(2)
+        expect(result.data.allNode.blue[0]).toEqual(`100`)
 
-      expect(result.data.allNode.circle.length).toEqual(1)
-      expect(result.data.allNode.circle[0]).toEqual(`happy`)
-    })
-    .catch((err) => expect(err).not.toBeDefined()))
+        expect(result.data.allNode.circle.length).toEqual(1)
+        expect(result.data.allNode.circle[0]).toEqual(`happy`)
+      })
+      .catch(err => expect(err).not.toBeDefined()))
 
-  it(`handles the groupBy connection field`, () => graphql(schema, `
+  it(`handles the groupBy connection field`, () =>
+    graphql(
+      schema,
+      `
           {
             allNode {
               blue: groupBy(field: frontmatter___blue) {
@@ -211,19 +246,20 @@ describe(`GraphQL Input args`, () => {
               }
             }
           }
-          `)
-    .then((result) => {
-      expect(result.errors).not.toBeDefined()
+          `
+    )
+      .then(result => {
+        expect(result.errors).not.toBeDefined()
 
-      expect(result.data.allNode.blue).toHaveLength(2)
-      expect(result.data.allNode.blue[0].fieldValue).toEqual(`100`)
-      expect(result.data.allNode.blue[0].field).toEqual(`frontmatter.blue`)
-      expect(result.data.allNode.blue[0].totalCount).toEqual(1)
+        expect(result.data.allNode.blue).toHaveLength(2)
+        expect(result.data.allNode.blue[0].fieldValue).toEqual(`100`)
+        expect(result.data.allNode.blue[0].field).toEqual(`frontmatter.blue`)
+        expect(result.data.allNode.blue[0].totalCount).toEqual(1)
 
-      expect(result.data.allNode.anArray).toHaveLength(5)
-      expect(result.data.allNode.anArray[0].fieldValue).toEqual(`1`)
-      expect(result.data.allNode.anArray[0].field).toEqual(`anArray`)
-      expect(result.data.allNode.anArray[0].totalCount).toEqual(2)
-    })
-    .catch((err) => expect(err).not.toBeDefined()))
+        expect(result.data.allNode.anArray).toHaveLength(5)
+        expect(result.data.allNode.anArray[0].fieldValue).toEqual(`1`)
+        expect(result.data.allNode.anArray[0].field).toEqual(`anArray`)
+        expect(result.data.allNode.anArray[0].totalCount).toEqual(2)
+      })
+      .catch(err => expect(err).not.toBeDefined()))
 })
