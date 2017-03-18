@@ -69,10 +69,7 @@ const writeChildRoutes = () => {
         ${pathStr}
         getComponent (nextState, cb) {
           require.ensure([], (require) => {
-            let Component = require('${page.component}')
-            if (Component.default) {
-              Component = Component.default
-            }
+            const Component = preferDefault(require('${page.component}'))
             require.ensure([], (require) => {
               const data = require('./json/${page.jsonName}')
               cb(null, () => <Component {...nextState} {...data} />)
@@ -134,7 +131,7 @@ const writeChildRoutes = () => {
       let route = `
       {
         path: '${indexPage.path}',
-        component: require('${programDB().directory}/layouts/${layout}'),
+        component: preferDefault(require('${programDB().directory}/layouts/${layout}')),
         indexRoute: ${genChildRoute(indexPage, true)}
         childRoutes: [
       `
@@ -147,7 +144,7 @@ const writeChildRoutes = () => {
       let splitRoute = `
       {
         ${pathStr}
-        component: require('${programDB().directory}/layouts/${layout}'),
+        component: preferDefault(require('${programDB().directory}/layouts/${layout}')),
         indexRoute: ${genSplitChildRoute(indexPage, true)}
         childRoutes: [
       `
@@ -169,10 +166,7 @@ const writeChildRoutes = () => {
       page =>
         `class ${page.internalComponentName} extends React.Component {
           render () {
-            let Component = require('${page.component}')
-            if (Component.default) {
-              Component = Component.default
-            }
+            const Component = preferDefault(require('${page.component}'))
             const data = require('./json/${page.jsonName}')
             return <Component {...this.props} {...data} />
           }
@@ -182,6 +176,9 @@ const writeChildRoutes = () => {
 
   childRoutes = `
     import React from 'react'
+
+    // prefer default export if available
+    const preferDefault = m => m && m.default || m
 
     /**
      * Warning from React Router, caused by react-hot-loader.
@@ -208,6 +205,9 @@ const writeChildRoutes = () => {
     module.exports = rootRoute`
   splitChildRoutes = `
     import React from 'react'
+
+    // prefer default export if available
+    const preferDefault = m => m && m.default || m
     const rootRoute = ${splitRootRoute}
     module.exports = rootRoute`
   fs.writeFileSync(
