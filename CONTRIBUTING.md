@@ -23,12 +23,12 @@ The usual contributing steps are:
 
 * Fork the [official repository](https://github.com/gatsbyjs/gatsby).
 * Clone your fork: git clone `git@github.com:<your-username>/gatsby.git`
-* Make sure tests are passing for you: `lerna bootstrap && lerna run test`
+* Install dependencies: `yarn && lerna bootstrap`
+* Make sure tests are passing for you: `lerna run test`
 * Create a topic branch: `git checkout -b topics/new-feature-name`
-* Run `yarn watch` to watch code and compile your changes.
-* Clone one of the official repositories and "link" your fork of Gatsby
-  to it (run `yarn link gatsby`).
+* Run `yarn build && yarn watch` to watch code and compile your changes.
+* Symlink the built file from whatever plugin you're trying to modify (will be in `packages/package-name`) into your project's `node_modules/package-name` directory to avoid getting the node_modules folder coming across to your site.
 * Add tests and code for your changes.
-* Once you‘re done, make sure all tests still pass: `lerna bootstrap && yarn test`
+* Once you‘re done, make sure all tests still pass: `yarn test`
 * Commit and push to your fork.
 * Create an pull request from your branch.
