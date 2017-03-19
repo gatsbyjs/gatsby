@@ -1,4 +1,6 @@
-# Filing an issue
+# How to contribute
+
+## Filing an issue
 
 If you want your issue to be resolved quickly, please include in your
 issue:
@@ -6,7 +8,7 @@ issue:
 * Gatsby version, node.js version, OS version
 * The contents of your `gatsby-node.js`, `gatsby-browser.js`, and `package.json`.
 
-# Contributing
+## Contributing
 You can install the latest `master` version of Gatsby by following these
 simple steps:
 
