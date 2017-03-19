@@ -13,7 +13,7 @@ simple steps:
 * Clone the repo, navigate to its directory.
 * Install Lerna if you don't have it already: `yarn global add lerna@^2.0.0-beta.0`
 * Execute `lerna bootstrap` to install dependencies and cross link all the packages.
-* Execute `yarn global uninstall gatsby && yarn link` to make your dev version of gatsby the version you get when you run `gatsby`.
+* Execute `yarn global uninstall gatsby && cd packages/gatsby && yarn link` to make your dev version of gatsby the version you get when you run `gatsby`.
 * Use `git pull` to update to latest Gatsby.
 
 Test suite can be run via `yarn test`.
