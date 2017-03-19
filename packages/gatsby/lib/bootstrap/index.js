@@ -1,26 +1,23 @@
 /* @flow weak */
-import { graphql } from "graphql"
 import Promise from "bluebird"
 import queryRunner from "../utils/query-runner"
-import { pagesDB, siteDB, programDB } from "../utils/globals"
 import path from "path"
-import glob from "glob"
+import globCB from "glob"
 import _ from "lodash"
 import createPath from "./create-path"
-import mkdirp from "mkdirp"
 import fs from "fs-extra"
 import Joi from "joi"
 import chalk from "chalk"
-const { layoutComponentChunkName } = require("../utils/js-chunk-names")
+import apiRunnerNode from "../utils/api-runner-node"
+import { graphql } from "graphql"
+import { pagesDB, siteDB, programDB } from "../utils/globals"
+import { gatsbyConfigSchema, pageSchema } from "../joi-schemas/joi"
+import { layoutComponentChunkName } from "../utils/js-chunk-names"
 
 const mkdirs = Promise.promisify(fs.mkdirs)
 const copy = Promise.promisify(fs.copy)
 const removeDir = Promise.promisify(fs.remove)
-
-// Joi schemas
-import { gatsbyConfigSchema, pageSchema } from "../joi-schemas/joi"
-
-import apiRunnerNode from "../utils/api-runner-node"
+const glob = Promise.promisify(globCB)
 
 Promise.onPossiblyUnhandledRejection(error => {
   throw error
@@ -34,55 +31,52 @@ process.on(`unhandledRejection`, error => {
 // algorithm is glob /pages directory for js/jsx/cjsx files *not*
 // underscored. Then create url w/ our path algorithm *unless* user
 // takes control of that page component in gatsby-node.
-const autoPathCreator = program =>
-  new Promise(resolve => {
-    const pagesDirectory = path.join(program.directory, `pages`)
-    let autoPages = []
-    glob(`${pagesDirectory}/**/?(*.js|*.jsx|*.cjsx)`, (err, files) => {
-      // Create initial page objects.
-      autoPages = files.map(filePath => ({
-        component: filePath,
-        componentChunkName: layoutComponentChunkName(
-          program.directory,
-          filePath
-        ),
-        path: filePath,
-      }))
+const autoPathCreator = async program => {
+  const pagesDirectory = path.join(program.directory, `pages`)
+  const exts = program.extensions.map(e => `*${ e }`).join('|')
+  const files = await glob(`${pagesDirectory}/**/?(${ exts })`)
+  // Create initial page objects.
+  let autoPages = files.map(filePath => ({
+    component: filePath,
+    componentChunkName: layoutComponentChunkName(
+      program.directory,
+      filePath
+    ),
+    path: filePath,
+  }))
 
-      // Convert path to one relative to the pages directory.
-      autoPages = autoPages.map(page => ({
-        ...page,
-        path: path.relative(pagesDirectory, page.path),
-      }))
+  // Convert path to one relative to the pages directory.
+  autoPages = autoPages.map(page => ({
+    ...page,
+    path: path.relative(pagesDirectory, page.path),
+  }))
 
-      // Remove pages starting with an underscore.
-      autoPages = _.filter(autoPages, page => page.path.slice(0, 1) !== `_`)
+  // Remove pages starting with an underscore.
+  autoPages = _.filter(autoPages, page => page.path.slice(0, 1) !== `_`)
 
-      // Remove page templates.
-      autoPages = _.filter(
-        autoPages,
-        page => page.path.slice(0, 9) !== `template-`
-      )
+  // Remove page templates.
+  autoPages = _.filter(
+    autoPages,
+    page => page.path.slice(0, 9) !== `template-`
+  )
 
-      // Convert to our path format.
-      autoPages = autoPages.map(page => ({
-        ...page,
-        path: createPath(pagesDirectory, page.component),
-      }))
+  // Convert to our path format.
+  autoPages = autoPages.map(page => ({
+    ...page,
+    path: createPath(pagesDirectory, page.component),
+  }))
 
-      // Validate pages.
-      autoPages.forEach(page => {
-        const { error } = Joi.validate(page, pageSchema)
-        if (error) {
-          console.log(chalk.blue.bgYellow(`A page object failed validation`))
-          console.log(page)
-          console.log(chalk.bold.red(error))
-        }
-      })
-
-      resolve(autoPages)
-    })
-  })
+  // Validate pages.
+  autoPages.forEach(page => {
+    const { error } = Joi.validate(page, pageSchema)
+    if (error) {
+      console.log(chalk.blue.bgYellow(`A page object failed validation`))
+      console.log(page)
+      console.log(chalk.bold.red(error))
+    }
+  });
+  return autoPages;
+}
 
 module.exports = async program => {
   console.log(`lib/bootstrap/index.js time since started:`, process.uptime())
@@ -201,7 +195,7 @@ module.exports = async program => {
   const srcDir = `${__dirname}/../intermediate-representation-dir`
   const siteDir = `${program.directory}/.intermediate-representation`
   try {
-    //await removeDir(siteDir)
+    // await removeDir(siteDir)
     await copy(srcDir, siteDir, { clobber: true })
     await mkdirs(`${program.directory}/.intermediate-representation/json`)
   } catch (e) {
@@ -268,7 +262,7 @@ module.exports = async program => {
   // Create Schema.
   console.time(`create schema`)
   const schema = await require(`../schema/new`)()
-  //const schema = await require(`../schema`)()
+  // const schema = await require(`../schema`)()
   const graphqlRunner = (query, context) =>
     graphql(schema, query, context, context, context)
   console.timeEnd(`create schema`)
@@ -332,6 +326,11 @@ module.exports = async program => {
   pagesDB(pagesMap)
   console.log(`added pages to in-memory db`)
 
+  // Collect resolvable extensions and attach to program.
+  const extensions = [ `.js`, `.jsx` ]
+  const apiResults = await apiRunnerNode('resolvableExtensions')
+  program.extensions = apiResults.reduce((a, b) => a.concat(b), extensions)
+
   // TODO move this to own source plugin per component type
   // (js/cjsx/typescript, etc.)
   const autoPages = await autoPathCreator(program, pages)
@@ -360,8 +359,8 @@ module.exports = async program => {
   })
   console.log(`validated modified pages`)
 
-  //console.log(`bootstrap finished, time since started:`, process.uptime())
-  //cb(null, schema)
+  // console.log(`bootstrap finished, time since started:`, process.uptime())
+  // cb(null, schema)
 
   await queryRunner(program, graphqlRunner)
   await apiRunnerNode(`generateSideEffects`)
