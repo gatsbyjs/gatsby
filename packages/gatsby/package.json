@@ -62,6 +62,7 @@
     "highlight.js": "^9.8.0",
     "history": "^2.1.2",
     "invariant": "^2.2.2",
+    "is-relative-url": "^2.0.0",
     "joi": "^9.1.1",
     "json-loader": "^0.5.2",
     "json5": "^0.5.0",

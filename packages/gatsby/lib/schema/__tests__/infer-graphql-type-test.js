@@ -1,11 +1,11 @@
 test(`Infers graphql type from array of nodes`, () => {
-  const { inferObjectStructureFromNodes } = require("../infer-graphql-type")
+  const { inferObjectStructureFromNodes } = require("../infer-graphql-type");
   const {
     graphql,
     GraphQLObjectType,
     GraphQLList,
     GraphQLSchema,
-  } = require("graphql")
+  } = require("graphql");
   const nodes = [
     {
       id: `foo`,
@@ -14,6 +14,7 @@ test(`Infers graphql type from array of nodes`, () => {
       hair: 1,
       date: `1012-11-01`,
       anArray: [1, 2, 3, 4],
+      externalUrl: `https://example.com/awesome.jpg`,
       frontmatter: {
         date: `1012-11-01`,
         title: `The world of dash and adventure`,
@@ -33,19 +34,22 @@ test(`Infers graphql type from array of nodes`, () => {
         blue: 10010,
       },
     },
-  ]
-  const inferredFields = inferObjectStructureFromNodes({ nodes })
+  ];
+  const inferredFields = inferObjectStructureFromNodes({
+    nodes,
+    types: [{ name: `Test` }],
+  });
   const nodeType = new GraphQLObjectType({
     name: `TEST`,
     fields: { ...inferredFields },
-  })
+  });
   const listNode = {
     name: `LISTNODE`,
     type: new GraphQLList(nodeType),
-    resolve () {
-      return nodes
+    resolve() {
+      return nodes;
     },
-  }
+  };
   const schema = new GraphQLSchema({
     query: new GraphQLObjectType({
       name: `RootQueryType`,
@@ -53,12 +57,15 @@ test(`Infers graphql type from array of nodes`, () => {
         listNode,
       }),
     }),
-  })
-  graphql(schema, `
+  });
+  graphql(
+    schema,
+    `
         {
           listNode {
             hair,
             anArray,
+            externalUrl,
             date(formatString: "YYYY"),
             frontmatter {
               title,
@@ -66,29 +73,31 @@ test(`Infers graphql type from array of nodes`, () => {
             }
           }
         }
-        `)
-  .then((result) => expect(result).toEqual({
-    data: {
-      listNode: [
-        {
-          hair: 1,
-          anArray: [1, 2, 3, 4],
-          date: `1012`,
-          frontmatter: {
+        `
+  ).then(result =>
+    expect(result).toEqual({
+      data: {
+        listNode: [
+          {
+            hair: 1,
+            anArray: [1, 2, 3, 4],
+            externalUrl: `https://example.com/awesome.jpg`,
             date: `1012`,
-            title: `The world of dash and adventure`,
+            frontmatter: {
+              date: `1012`,
+              title: `The world of dash and adventure`,
+            },
           },
-        },
-        {
-          hair: 2,
-          anArray: [1, 2, 5, 4],
-          date: `1984`,
-          frontmatter: {
+          {
+            hair: 2,
+            anArray: [1, 2, 5, 4],
             date: `1984`,
-            title: `The world of slash and adventure`,
+            frontmatter: {
+              date: `1984`,
+              title: `The world of slash and adventure`,
+            },
           },
-        },
-      ],
-    },
-  }))
-})
+        ],
+      },
+    }));
+});

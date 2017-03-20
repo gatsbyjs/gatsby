@@ -11,6 +11,7 @@ const moment = require("moment")
 const parseFilepath = require("parse-filepath")
 const mime = require("mime")
 const { siteDB } = require("../utils/globals")
+const isRelative = require("is-relative-url")
 
 const inferGraphQLType = ({ value, fieldName, ...otherArgs }) => {
   if (Array.isArray(value)) {
@@ -184,9 +185,13 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
     } else if (
       nodes[0].type !== `File` &&
       _.isString(v) &&
-      mime.lookup(v) !== `application/octet-stream`
+      mime.lookup(v) !== `application/octet-stream` &&
+      isRelative(v)
     ) {
-      inferredFields[k] = types.filter(type => type.name === `File`)[0].field
+      const fileNodes = types.filter(type => type.name === `File`)
+      if (fileNodes && fileNodes.length > 0) {
+        inferredFields[k] = fileNodes[0].field
+      }
     } else {
       inferredFields[k] = inferGraphQLType({
         value: v,
