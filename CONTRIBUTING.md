@@ -28,7 +28,8 @@ The usual contributing steps are:
 * Install dependencies: `yarn && lerna bootstrap`
 * Make sure tests are passing for you: `lerna run test`
 * Create a topic branch: `git checkout -b topics/new-feature-name`
-* Run `yarn build && yarn watch` to watch code and compile your changes.
+* Run `yarn run build` to do an initial build and ensure there are no errors.
+* Run `yarn run watch` to watch code and compile your changes on the fly as you work.
 * Symlink the built file from whatever plugin you're trying to modify (will be in `packages/package-name`) into your project's `node_modules/package-name` directory to avoid getting the node_modules folder coming across to your site.
 * Add tests and code for your changes.
 * Once you‘re done, make sure all tests still pass: `yarn test`
