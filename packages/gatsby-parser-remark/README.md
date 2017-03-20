@@ -4,7 +4,7 @@ Parses Markdown files using [Remark](http://remark.js.org/).
 
 ## Install
 
-`npm install --save gatsby-parser-json`
+`npm install --save gatsby-parser-remark`
 
 ## How to use
 
