@@ -115,6 +115,7 @@ https://gatsbygram.gatsbyjs.org and the case study on how its built https://www.
 * [Daniel Reszka blog, code & gallery](http://blog.pixarea.com) ([source](https://github.com/danielres/blog))
 * [meadowlab.io](https://meadowlab.io/)
 * [xpchbill.github.io](https://xpchbill.github.io/)  ([source](https://github.com/xpchbill/xpchbill.github.io))
+* [jaredhanstra.com](http://www.jaredhanstra.com/)  ([source](https://github.com/jhanstra/jh-gatsby))
 * [Edit this file to add yours!](https://github.com/gatsbyjs/gatsby/blob/master/README.md)
 
 *Note, for the sites that have made their source available, you can
