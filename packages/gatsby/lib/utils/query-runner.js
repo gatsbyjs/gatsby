@@ -6,8 +6,8 @@ import traverse from "babel-traverse"
 import path from "path"
 import parseFilepath from "parse-filepath"
 import glob from "glob"
-import apiRunnerNode from "./api-runner-node";
-import Promise from "bluebird";
+import apiRunnerNode from "./api-runner-node"
+import Promise from "bluebird"
 import { pagesDB, siteDB, programDB } from "./globals"
 import { layoutComponentChunkName, pathChunkName } from "./js-chunk-names"
 
@@ -229,23 +229,26 @@ const q = queue(
     let ast
     // Preprocess and attempt to parse source; return an AST if we can, log an error if we can't.
     // I'm unconvinced that this is an especially good implementation...
-    const transpiled = await apiRunnerNode(`preprocessSource`, { filename: file, contents: fileStr })
+    const transpiled = await apiRunnerNode(`preprocessSource`, {
+      filename: file,
+      contents: fileStr,
+    })
     if (transpiled.length) {
       for (const item of transpiled) {
         try {
           const tmp = babylon.parse(item, {
             sourceType: `module`,
-            plugins: [`*`]
+            plugins: [`*`],
           })
-          ast = tmp;
+          ast = tmp
           break
         } catch (e) {
-          console.info(e);
+          console.info(e)
           continue
         }
       }
       if (ast === undefined) {
-        console.error(`Failed to parse preprocessed file ${ file }`)
+        console.error(`Failed to parse preprocessed file ${file}`)
       }
     } else {
       try {
@@ -269,7 +272,7 @@ const q = queue(
         // we're looking for a ES6 named export called "pageQuery"
         const name = declaration.id.name
         if (name === `pageQuery`) {
-          const type = declaration.init.type;
+          const type = declaration.init.type
           if (type === `TemplateLiteral`) {
             // most pageQueries will be template strings
             const chunks = []
@@ -282,9 +285,10 @@ const q = queue(
             query = declaration.init.extra.rawValue
           }
           console.time(`graphql query time`)
-        } else return
-      }
-    });
+        } else
+          return
+      },
+    })
     const absFile = path.resolve(file)
     // Get paths for this file.
     const paths = []

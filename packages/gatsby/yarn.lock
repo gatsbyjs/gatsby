@@ -1395,13 +1395,6 @@ circular-json@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/circular-json/-/circular-json-0.3.1.tgz#be8b36aefccde8b3ca7aa2d6afc07a37242c0d2d"
 
-cjsx-loader@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/cjsx-loader/-/cjsx-loader-3.0.0.tgz#06dca52af2af649a8c0539c17990f633adc6dd8f"
-  dependencies:
-    coffee-react-transform "^4.0.0"
-    loader-utils "0.2.x"
-
 clap@^1.0.9:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/clap/-/clap-1.1.2.tgz#316545bf22229225a2cecaa6824cd2f56a9709ed"
@@ -1459,17 +1452,11 @@ code-point-at@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
 
-coffee-loader@^0.7.2:
-  version "0.7.3"
-  resolved "https://registry.yarnpkg.com/coffee-loader/-/coffee-loader-0.7.3.tgz#fadbc6efd6fc7ecc88c5b3046a2c292066bcb54a"
-  dependencies:
-    loader-utils "^1.0.2"
-
 coffee-react-transform@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/coffee-react-transform/-/coffee-react-transform-4.0.0.tgz#731a79fd445a56e93926c72e983eff937f7c6fde"
 
-coffee-script@^1.12.4, coffee-script@^1.9.1, coffee-script@^1.9.3:
+coffee-script@^1.12.4, coffee-script@^1.9.1:
   version "1.12.4"
   resolved "https://registry.yarnpkg.com/coffee-script/-/coffee-script-1.12.4.tgz#fe1bced97fe1fb3927b998f2b45616e0658be1ff"
 
@@ -6058,7 +6045,7 @@ right-align@^0.1.1:
   dependencies:
     align-text "^0.1.1"
 
-rimraf@2, rimraf@^2.2.8, rimraf@^2.3.2, rimraf@^2.3.3, rimraf@^2.4.3, rimraf@^2.4.4, rimraf@^2.5.4:
+rimraf@2, rimraf@^2.2.8, rimraf@^2.3.2, rimraf@^2.3.3, rimraf@^2.4.3, rimraf@^2.4.4, rimraf@^2.5.4, rimraf@^2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.6.1.tgz#c2338ec643df7a1b7fe5c54fa86f57428a55f33d"
   dependencies:

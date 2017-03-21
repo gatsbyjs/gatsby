@@ -138,7 +138,8 @@
     "iflow-lodash": "^1.1.24",
     "iflow-react-router": "^1.2.1",
     "lerna": "2.0.0-beta.30",
-    "nyc": "^7.0.0"
+    "nyc": "^7.0.0",
+    "rimraf": "^2.6.1"
   },
   "engines": {
     "node": ">4.0.0"

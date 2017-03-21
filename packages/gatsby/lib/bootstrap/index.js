@@ -33,15 +33,12 @@ process.on(`unhandledRejection`, error => {
 // takes control of that page component in gatsby-node.
 const autoPathCreator = async program => {
   const pagesDirectory = path.join(program.directory, `pages`)
-  const exts = program.extensions.map(e => `*${ e }`).join('|')
-  const files = await glob(`${pagesDirectory}/**/?(${ exts })`)
+  const exts = program.extensions.map(e => `*${e}`).join("|")
+  const files = await glob(`${pagesDirectory}/**/?(${exts})`)
   // Create initial page objects.
   let autoPages = files.map(filePath => ({
     component: filePath,
-    componentChunkName: layoutComponentChunkName(
-      program.directory,
-      filePath
-    ),
+    componentChunkName: layoutComponentChunkName(program.directory, filePath),
     path: filePath,
   }))
 
@@ -74,8 +71,8 @@ const autoPathCreator = async program => {
       console.log(page)
       console.log(chalk.bold.red(error))
     }
-  });
-  return autoPages;
+  })
+  return autoPages
 }
 
 module.exports = async program => {
@@ -327,8 +324,8 @@ module.exports = async program => {
   console.log(`added pages to in-memory db`)
 
   // Collect resolvable extensions and attach to program.
-  const extensions = [ `.js`, `.jsx` ]
-  const apiResults = await apiRunnerNode('resolvableExtensions')
+  const extensions = [`.js`, `.jsx`]
+  const apiResults = await apiRunnerNode("resolvableExtensions")
   program.extensions = apiResults.reduce((a, b) => a.concat(b), extensions)
 
   // TODO move this to own source plugin per component type
