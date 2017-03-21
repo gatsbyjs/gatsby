@@ -108,6 +108,7 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
     nodes,
     selector,
     types,
+    allNodes,
   }
 ) => {
   const type = nodes[0].type
@@ -151,20 +152,6 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
   }
   const inferredFields = {}
   _.each(fieldExamples, (v, k) => {
-    // Create fields for children.
-    // TODO reconsider this?
-    //if (k === `children`) {
-    ////console.log(`children`, v)
-    //_.each(v, (node) => {
-    //const matchedTypes = _.filter(types, (type) => {
-    //return type.type === node.type
-    //})
-    ////console.log(`matchedTypes for ${node.type}`, matchedTypes)
-    //matchedTypes.forEach((matchedType) => {
-    //inferredFields[_.camelCase(matchedType.name)] = matchedType.field
-    //})
-    //})
-    //}
     // Check if field is pointing to custom type.
     // First check field => type mappings in gatsby-config.js
     const fieldSelector = `${nodes[0].type}.${selector}.${k}`
@@ -172,7 +159,43 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
       const matchedTypes = types.filter(
         type => type.name === mapping[fieldSelector]
       )
-      inferredFields[k] = matchedTypes[0].field
+      const findNode = fieldValue => {
+        const linkedType = mapping[fieldSelector]
+        const linkedNode = _.find(
+          allNodes,
+          n => n.type === linkedType && n.id === fieldValue
+        )
+        if (linkedNode) {
+          return linkedNode
+        }
+      }
+      if (_.isArray(v)) {
+        inferredFields[k] = {
+          type: new GraphQLList(matchedTypes[0].nodeObjectType),
+          resolve: (node, a, b, { fieldName }) => {
+            let fieldValue = node[fieldName]
+
+            if (fieldValue) {
+              return fieldValue.map(value => findNode(value))
+            } else {
+              return null
+            }
+          },
+        }
+      } else {
+        inferredFields[k] = {
+          type: matchedTypes[0].nodeObjectType,
+          resolve: (node, a, b, { fieldName }) => {
+            let fieldValue = node[fieldName]
+
+            if (fieldValue) {
+              return findNode(fieldValue)
+            } else {
+              return null
+            }
+          },
+        }
+      }
     } else if (_.includes(k, `___`)) {
       const fieldType = _.capitalize(k.split(`___`)[1])
       const matchedType = _.find(types, type => type.name === fieldType)
@@ -198,6 +221,7 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
         fieldName: k,
         nodes,
         types,
+        allNodes,
       })
     }
   })

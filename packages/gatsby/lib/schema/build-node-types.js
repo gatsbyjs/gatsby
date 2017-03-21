@@ -53,6 +53,7 @@ module.exports = async ast =>
       const inferredFields = inferObjectStructureFromNodes({
         nodes: type.nodes,
         types: _.values(processedTypes),
+        allNodes,
       })
 
       return {
@@ -114,24 +115,11 @@ module.exports = async ast =>
                 resolve: (node, a, b, { fieldName }) => {
                   const mapping = siteDB().get(`config`).mapping
                   const fieldSelector = `${node.___path}.${fieldName}`
-                  const fieldValue = node[fieldName]
+                  let fieldValue = node[fieldName]
                   const sourceFileNode = _.find(
                     allNodes,
                     n => n.type === `File` && n.id === node._sourceNodeId
                   )
-                  // First test if this field is mapped in gatsby-config.js.
-                  if (
-                    mapping && _.includes(Object.keys(mapping), fieldSelector)
-                  ) {
-                    const linkedType = mapping[fieldSelector]
-                    const linkedNode = _.find(
-                      allNodes,
-                      n => n.type === linkedType && n.id === fieldValue
-                    )
-                    if (linkedNode) {
-                      return linkedNode
-                    }
-                  }
 
                   // Then test if the field is linking to a file.
                   if (
