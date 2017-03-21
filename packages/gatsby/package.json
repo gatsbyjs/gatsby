@@ -163,7 +163,7 @@
     "url": "git+https://github.com/gatsbyjs/gatsby.git"
   },
   "scripts": {
-    "build": "rm -r dist/; babel lib --out-dir dist/",
+    "build": "rm -r dist/ && babel lib --out-dir dist/",
     "clean-test-bundles": "find test/ -type f -name bundle.js* -exec rm -rf {} +",
     "lint": "eslint --ext .js,.jsx --ignore-path .gitignore .",
     "lint:flow": "babel-node scripts/flow-check.js",
@@ -171,6 +171,6 @@
     "test-coverage": "node_modules/.bin/nyc --reporter=lcov --reporter=text npm test",
     "test-integration": "node_modules/.bin/ava test/integration",
     "test-node": "node_modules/.bin/ava test/utils",
-    "watch": "rm -r dist/; babel -w lib --out-dir dist/"
+    "watch": "rm -r dist/ && babel -w lib --out-dir dist/"
   }
 }
