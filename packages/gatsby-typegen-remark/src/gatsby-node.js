@@ -3,6 +3,7 @@ const {
   GraphQLList,
   GraphQLString,
   GraphQLInt,
+  GraphQLEnumType,
 } = require("graphql")
 const Remark = require("remark")
 const select = require("unist-util-select")
@@ -180,6 +181,18 @@ exports.extendNodeType = ({ args, pluginOptions }) =>
       },
     })
 
+    const HeadingLevels = new GraphQLEnumType({
+      name: 'HeadingLevels',
+      values: {
+        'h1': { value: 1 },
+        'h2': { value: 2 },
+        'h3': { value: 3 },
+        'h4': { value: 4 },
+        'h5': { value: 5 },
+        'h6': { value: 6 },
+      }
+    });
+
     return resolve({
       html: {
         type: GraphQLString,
@@ -208,8 +221,19 @@ exports.extendNodeType = ({ args, pluginOptions }) =>
       },
       headings: {
         type: new GraphQLList(HeadingType),
-        resolve(markdownNode) {
-          return getHeadings(markdownNode).then(node => node.headings)
+        args: {
+          depth: {
+            type: HeadingLevels,
+          },
+        },
+        resolve(markdownNode, { depth }) {
+          return getHeadings(markdownNode).then(node => {
+            let headings = node.headings;
+            if (typeof depth === 'number') {
+              headings = headings.filter(heading => heading.depth === depth);
+            }
+            return headings;
+          })
         },
       },
       timeToRead: {
