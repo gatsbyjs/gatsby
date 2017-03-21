@@ -1,0 +1,4 @@
+node_modules
+typescript
+/index.js
+/gatsby-node.js
