@@ -13,10 +13,7 @@ If you want your issue to be resolved quickly, please include in your issue:
 You can install the latest `master` version of Gatsby by following these steps:
 
 * Clone the repo, navigate to its directory.
-* Install Lerna if you don't have it already: `yarn global add
-  lerna@^2.0.0-beta.0`
-* Execute `yarn && lerna bootstrap` to install dependencies and cross link all
-  the packages.
+* Install dependencies using `yarn install` in the root of the repo.
 
 The usual contributing steps are:
 
@@ -25,8 +22,8 @@ The usual contributing steps are:
 * Install dependencies: `yarn && lerna bootstrap`
 * Make sure tests are passing for you: `lerna run test`
 * Create a topic branch: `git checkout -b topics/new-feature-name`
-* Run `lerna run build` to do an initial build of all packages and ensure there
-  are no errors.
+* Run `yarn build` or `npm run build` to do an initial build of all packages
+  and ensure there are no errors.
 * Now navigate to the package you want to modify and run `yarn run watch` to
   watch that package's code and compile your changes on the fly as you work.
 * Symlink the built file from the package you're modifying into your project's
@@ -41,4 +38,3 @@ The usual contributing steps are:
 Test suite can be run via `yarn test`.
 
 This project uses [FlowType](https://flowtype.org/) for static type checking.
-
