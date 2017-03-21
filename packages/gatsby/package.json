@@ -127,6 +127,7 @@
     "yaml-loader": "^0.4.0"
   },
   "devDependencies": {
+    "ava": "^0.18.2",
     "babel-cli": "^6.18.0",
     "cheerio": "^0.22.0",
     "eslint": "^3.10.1",
@@ -168,9 +169,9 @@
     "lint": "eslint --ext .js,.jsx --ignore-path .gitignore .",
     "lint:flow": "babel-node scripts/flow-check.js",
     "test": "npm run lint && npm run test-node && npm run test-integration",
-    "test-coverage": "node_modules/.bin/nyc --reporter=lcov --reporter=text npm test",
-    "test-integration": "node_modules/.bin/ava test/integration",
-    "test-node": "node_modules/.bin/ava test/utils",
+    "test-coverage": "nyc --reporter=lcov --reporter=text npm test",
+    "test-integration": "ava test/integration",
+    "test-node": "ava test/utils",
     "watch": "rm -r dist/; babel -w lib --out-dir dist/"
   }
 }
