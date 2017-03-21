@@ -30,7 +30,8 @@
     "jest": "^19.0.2",
     "lerna": "^2.0.0-beta.38",
     "prettier": "^0.22.0",
-    "purdy": "^2.2.1"
+    "purdy": "^2.2.1",
+    "rimraf": "^2.6.1"
   },
   "jest": {
     "verbose": true,
