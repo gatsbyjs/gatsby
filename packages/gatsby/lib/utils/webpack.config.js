@@ -176,7 +176,8 @@ module.exports = async (
           // by default in Webpack that most sites don't want.
           // This line disables that.
           // TODO remove this now that loading moment.js isn't common w/ new
-          // graphql data layer?
+          // graphql data layer? Or just move to its own package with other
+          // common webpack tweaks e.g. lodash?
           new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
           new WebpackMD5Hash(),
           //new webpack.optimize.DedupePlugin(),
@@ -189,14 +190,33 @@ module.exports = async (
             // for merging in page-specific JS libs into the commons chunk. The
             // two principles here is a) keep the TTI (time to interaction) as
             // low as possible so that means keeping commons.js small with
-            // critical code (e.g. React) and b) is we want to push JS
-            // parse/eval work as close as possible to when it's used.  Since
-            // most people don't navigate to most pages, take tradeoff of
-            // loading/evaling modules multiple times over loading/evaling lots
-            // of unused code on the initial opening of the app.
-            //
-            // Use Math.max as there must be at least two chunks.
-            minChunks: Math.max(3, Math.floor(components.length / 2)),
+            // critical framework code (e.g. React/react-router) and b) is we
+            // want to push JS parse/eval work as close as possible to when
+            // it's used. Since most people don't navigate to most pages, take
+            // tradeoff of loading/evaling modules multiple times over
+            // loading/evaling lots of unused code on the initial opening of
+            // the app.
+            minChunks: (module, count) => {
+              const vendorModuleList = [
+                `react`,
+                `react-dom`,
+                `react-router`,
+                `react-router-scroll`,
+                `scroll-behavior`,
+                `history`,
+              ]
+              const isFramework = _.some(
+                vendorModuleList.map(vendor => {
+                  const regex = new RegExp(`\/node_modules\/${vendor}\/`, `i`)
+                  return regex.test(module.resource)
+                })
+              )
+              if (isFramework) {
+                return isFramework
+              } else {
+                return count > 3
+              }
+            },
           }),
           // Add a few global variables. Set NODE_ENV to production (enables
           // optimizations for React) and whether prefixing links is enabled
@@ -251,7 +271,7 @@ module.exports = async (
   function resolve() {
     return {
       // use the program's extension list (generated via the 'resolvableExtensions' API hook)
-      extensions: [ ``, ...program.extensions ],
+      extensions: [``, ...program.extensions],
       // Hierarchy of directories for Webpack to look for module.
       // First is the site directory.
       // Then in the special directory of isomorphic modules Gatsby ships with.
