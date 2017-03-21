@@ -34,5 +34,4 @@ addons:
 # script needed to test, because defaults don't work on osx
 script:
   - npm install
-  - ./node_modules/.bin/lerna bootstrap
   - npm run test
