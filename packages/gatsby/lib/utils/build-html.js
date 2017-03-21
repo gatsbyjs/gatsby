@@ -6,7 +6,6 @@ import webpackConfig from "./webpack.config"
 import { pagesDB } from "./globals"
 
 const debug = require("debug")("gatsby:html")
-require(`node-cjsx`).transform()
 
 module.exports = async program => {
   const { directory } = program

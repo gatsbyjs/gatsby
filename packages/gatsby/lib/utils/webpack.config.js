@@ -250,7 +250,8 @@ module.exports = async (
 
   function resolve() {
     return {
-      extensions: [``, `.js`, `.jsx`, `.cjsx`, `.coffee`],
+      // use the program's extension list (generated via the 'resolvableExtensions' API hook)
+      extensions: [ ``, ...program.extensions ],
       // Hierarchy of directories for Webpack to look for module.
       // First is the site directory.
       // Then in the special directory of isomorphic modules Gatsby ships with.
@@ -274,19 +275,11 @@ module.exports = async (
 
   function module(config) {
     // Common config for every env.
-    config.loader(`cjsx`, {
-      test: /\.cjsx$/,
-      loaders: [`coffee`, `cjsx`],
-    })
     config.loader(`js`, {
       test: /\.jsx?$/, // Accept either .js or .jsx files.
       exclude: /(node_modules|bower_components)/,
       loader: `babel`,
       query: babelConfig,
-    })
-    config.loader(`coffee`, {
-      test: /\.coffee$/,
-      loader: `coffee`,
     })
     config.loader(`json`, {
       test: /\.json$/,

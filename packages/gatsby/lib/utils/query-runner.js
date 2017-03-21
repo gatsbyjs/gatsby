@@ -6,8 +6,8 @@ import traverse from "babel-traverse"
 import path from "path"
 import parseFilepath from "parse-filepath"
 import glob from "glob"
-const Promise = require("bluebird")
-
+import apiRunnerNode from "./api-runner-node";
+import Promise from "bluebird";
 import { pagesDB, siteDB, programDB } from "./globals"
 import { layoutComponentChunkName, pathChunkName } from "./js-chunk-names"
 
@@ -17,7 +17,8 @@ const babylon = require("babylon")
 const pascalCase = _.flow(_.camelCase, _.upperFirst)
 
 const hashStr = function(str) {
-  let hash = 5381, i = str.length
+  let hash = 5381
+  let i = str.length
 
   while (i) {
     hash = hash * 33 ^ str.charCodeAt(--i)
@@ -221,96 +222,69 @@ const writeChildRoutes = () => {
 }
 const debouncedWriteChildRoutes = _.debounce(writeChildRoutes, 250)
 
-const babelPlugin = function({ types: t }) {
-  return {
-    visitor: {
-      TemplateLiteral(path, state) {
-        if (
-          path.parentPath.parentPath.parentPath.type !==
-          `ExportNamedDeclaration`
-        ) {
-          return
-        }
-        const exportPath = path.parentPath.parentPath.parentPath
-        const name = _.get(
-          exportPath,
-          `node.declaration.declarations[0].id.name`
-        )
-        if (name === `pageQuery`) {
-          const quasis = _.get(path, `node.quasis`, [])
-          const expressions = path.get(`expressions`)
-          const chunks = []
-          quasis.forEach(quasi => {
-            chunks.push(quasi.value.cooked)
-            const expr = expressions.shift()
-            if (expr) {
-              chunks.push(
-                expr.scope.bindings[expr.node.name].path.get(
-                  `value`
-                ).parentPath.node.init.quasis[0].value.cooked
-              )
-            }
-          })
-          const query = chunks.join(``)
-          console.time(`graphql query time`)
-          const graphql = state.opts.graphql
-          //path.parentPath.replaceWithSourceString(`require('fixme.json')`);
-        }
-      },
-    },
-  }
-}
-
 // Queue for processing files
 const q = queue(
-  ({ file, graphql, directory }, callback) => {
-    const fileStr = fs.readFileSync(file, `utf-8`)
+  async ({ file, graphql, directory }, callback) => {
+    let fileStr = fs.readFileSync(file, `utf-8`)
     let ast
-    try {
-      ast = babylon.parse(fileStr, {
-        sourceType: `module`,
-        sourceFilename: true,
-        plugins: [`*`],
-      })
-    } catch (e) {
-      console.log(`Failed to parse ${file}`)
-      console.log(e)
+    // Preprocess and attempt to parse source; return an AST if we can, log an error if we can't.
+    // I'm unconvinced that this is an especially good implementation...
+    const transpiled = await apiRunnerNode(`preprocessSource`, { filename: file, contents: fileStr })
+    if (transpiled.length) {
+      for (const item of transpiled) {
+        try {
+          const tmp = babylon.parse(item, {
+            sourceType: `module`,
+            plugins: [`*`]
+          })
+          ast = tmp;
+          break
+        } catch (e) {
+          console.info(e);
+          continue
+        }
+      }
+      if (ast === undefined) {
+        console.error(`Failed to parse preprocessed file ${ file }`)
+      }
+    } else {
+      try {
+        ast = babylon.parse(fileStr, {
+          sourceType: `module`,
+          sourceFilename: true,
+          plugins: [`*`],
+        })
+      } catch (e) {
+        console.log(`Failed to parse ${file}`)
+        console.log(e)
+      }
     }
 
     // Get query for this file.
     let query
     traverse(ast, {
-      TemplateLiteral(path, state) {
-        if (
-          path.parentPath.parentPath.parentPath.type !==
-          `ExportNamedDeclaration`
-        ) {
-          return
-        }
-        const exportPath = path.parentPath.parentPath.parentPath
-        const name = _.get(
-          exportPath,
-          `node.declaration.declarations[0].id.name`
-        )
+      ExportNamedDeclaration(path, state) {
+        // cache declaration node
+        const declaration = path.node.declaration.declarations[0]
+        // we're looking for a ES6 named export called "pageQuery"
+        const name = declaration.id.name
         if (name === `pageQuery`) {
-          const quasis = _.get(path, `node.quasis`, [])
-          const expressions = path.get(`expressions`)
-          const chunks = []
-          quasis.forEach(quasi => {
-            chunks.push(quasi.value.cooked)
-            const expr = expressions.shift()
-            if (expr) {
-              chunks.push(
-                expr.scope.bindings[expr.node.name].path.get(
-                  `value`
-                ).parentPath.node.init.quasis[0].value.cooked
-              )
+          const type = declaration.init.type;
+          if (type === `TemplateLiteral`) {
+            // most pageQueries will be template strings
+            const chunks = []
+            for (const quasi of declaration.init.quasis) {
+              chunks.push(quasi.value.cooked)
             }
-          })
-          query = chunks.join(``)
-        }
-      },
-    })
+            query = chunks.join(``)
+          } else if (type === `StringLiteral`) {
+            // fun fact: CoffeeScript can only generate StringLiterals
+            query = declaration.init.extra.rawValue
+          }
+          console.time(`graphql query time`)
+        } else return
+      }
+    });
     const absFile = path.resolve(file)
     // Get paths for this file.
     const paths = []
@@ -328,12 +302,6 @@ const q = queue(
     }
 
     const handleResult = (pathInfo, result = {}) => {
-      //if (result.errors) {
-      //console.log(
-      //`graphql errors from file: ${absFile}`,
-      //result.errors,
-      //)
-      //}
       // Combine the result with the path context.
       result.pathContext = pathInfo.context
       const clonedResult = { ...result }
