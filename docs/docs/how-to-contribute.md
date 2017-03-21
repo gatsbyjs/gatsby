@@ -1,5 +1,1 @@
----
-title: How to Contribute
----
-
-Coming soon.
+../../CONTRIBUTING.md
