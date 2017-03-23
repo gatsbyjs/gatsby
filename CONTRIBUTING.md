@@ -19,6 +19,8 @@ The usual contributing steps are:
 
 * Fork the [official repository](https://github.com/gatsbyjs/gatsby).
 * Clone your fork: git clone `git@github.com:<your-username>/gatsby.git`
+* Install yarn and lerna globaly: `npm install -g yarn lerna`
+* Checkout to the 1.0 branch: `git checkout 1.0`
 * Install dependencies: `yarn && lerna bootstrap`
 * Make sure tests are passing for you: `lerna run test`
 * Create a topic branch: `git checkout -b topics/new-feature-name`
