@@ -182,16 +182,16 @@ exports.extendNodeType = ({ args, pluginOptions }) =>
     })
 
     const HeadingLevels = new GraphQLEnumType({
-      name: 'HeadingLevels',
+      name: "HeadingLevels",
       values: {
-        'h1': { value: 1 },
-        'h2': { value: 2 },
-        'h3': { value: 3 },
-        'h4': { value: 4 },
-        'h5': { value: 5 },
-        'h6': { value: 6 },
-      }
-    });
+        h1: { value: 1 },
+        h2: { value: 2 },
+        h3: { value: 3 },
+        h4: { value: 4 },
+        h5: { value: 5 },
+        h6: { value: 6 },
+      },
+    })
 
     return resolve({
       html: {
@@ -228,11 +228,11 @@ exports.extendNodeType = ({ args, pluginOptions }) =>
         },
         resolve(markdownNode, { depth }) {
           return getHeadings(markdownNode).then(node => {
-            let headings = node.headings;
-            if (typeof depth === 'number') {
-              headings = headings.filter(heading => heading.depth === depth);
+            let headings = node.headings
+            if (typeof depth === "number") {
+              headings = headings.filter(heading => heading.depth === depth)
             }
-            return headings;
+            return headings
           })
         },
       },
