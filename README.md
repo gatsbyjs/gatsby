@@ -346,6 +346,7 @@ files which start with an underscore:
   * Export `wrapRootComponent` of type `function(Root: React.Component) => React.Component` to allow you to wrap your `<Root />` component before mounting it with `ReactDOM.render()`.
 * (optional) `gatsby-node.js` - a way to hook into events during build
 and development.
+  * Export `rewritePath` of type `function(parsedFilePath: Object, metadata: Object)` to programmatically rewrite paths. This function will be called for every page and when you return a string, it is used as the new path.
 * (optional) `gatsby-ssr.js` - a way to hook into events during server-side rendering
   * Export `wrapRootComponent` of type `function(Root: React.Component) => React.Component` to allow you to wrap your `<Root />` component before `ReactDOMServer.renderToString()`.
 
