@@ -32,7 +32,8 @@ First define the prefix in your site's `gatsby-config.js`.
 
 ```javascript
 module.exports = {
-  pathPrefix: `/blog` // Note: it must *not* have a trailing slash.
+  // Note: it must *not* have a trailing slash.
+  pathPrefix: `/blog`
 }
 ```
 
