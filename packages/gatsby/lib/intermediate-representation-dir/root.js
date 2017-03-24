@@ -4,6 +4,7 @@ import useScroll from "react-router-scroll/lib/useScroll"
 
 const apiRunner = require("./api-runner-browser")
 const rootRoute = require("./child-routes")
+console.log(rootRoute)
 
 let currentLocation
 
