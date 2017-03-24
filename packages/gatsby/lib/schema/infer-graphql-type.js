@@ -154,7 +154,7 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
   _.each(fieldExamples, (v, k) => {
     // Check if field is pointing to custom type.
     // First check field => type mappings in gatsby-config.js
-    const fieldSelector = `${nodes[0].type}.${selector}.${k}`
+    const fieldSelector = _.remove([nodes[0].type, selector, k]).join(".")
     if (mapping && _.includes(Object.keys(mapping), fieldSelector)) {
       const matchedTypes = types.filter(
         type => type.name === mapping[fieldSelector]
