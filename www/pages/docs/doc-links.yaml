@@ -8,6 +8,9 @@
     Themes: /docs/themes/
     PRPL Pattern: /docs/prpl-pattern/
     Thinking in Gatsby: /docs/thinking-in-gatsby/
+- title: Guides
+  links:
+    Path Prefix: /docs/path-prefix/
 - title: Reference
   links:
     Node Interface: /docs/node-interface/
