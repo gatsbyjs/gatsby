@@ -153,12 +153,32 @@ const writeChildRoutes = () => {
         route += genChildRoute(page)
         splitRoute += genSplitChildRoute(page)
       })
+
       route += `]},`
       splitRoute += `]},`
       rootRoute += route
       splitRootRoute += splitRoute
     }
   })
+
+  // Add a fallback 404 route if one is defined.
+  const notFoundPage = _.find(
+    [...pagesDB().values()],
+    page => page.path.indexOf("/404") !== -1
+  )
+  const notFoundPageStr = `
+    {
+      path: "*",
+      component: preferDefault(require('${programDB().directory}/layouts/default')),
+      indexRoute: {
+        component: ${notFoundPage.internalComponentName},
+      },
+    },
+  `
+
+  rootRoute += notFoundPageStr
+  splitRootRoute += notFoundPageStr
+
   // Close out object.
   rootRoute += `]}`
   splitRootRoute += `]}`
