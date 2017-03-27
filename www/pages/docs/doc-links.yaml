@@ -11,6 +11,7 @@
 - title: Guides
   links:
     Path Prefix: /docs/path-prefix/
+    Add 404 Page: /docs/add-404-page/
 - title: Reference
   links:
     Node Interface: /docs/node-interface/
