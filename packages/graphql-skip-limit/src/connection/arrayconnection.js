@@ -1,6 +1,6 @@
 /* @flow */
 
-import type { Connection, ConnectionArguments, Edge } from "./connectiontypes";
+import type { Connection, ConnectionArguments, Edge } from "./connectiontypes"
 
 /**
  * A simple function that accepts an array and connection arguments, and returns
@@ -11,42 +11,42 @@ export function connectionFromArray<T>(
   data: Array<T>,
   args: ConnectionArguments
 ): Connection<T> {
-  const { skip, limit } = args;
-  let startSlice = 0;
-  let endSlice = data.length;
+  const { skip, limit } = args
+  let startSlice = 0
+  let endSlice = data.length
 
   if (typeof skip === `number`) {
     if (skip < 0) {
-      throw new Error(`Argument "skip" must be a non-negative integer`);
+      throw new Error(`Argument "skip" must be a non-negative integer`)
     }
 
-    startSlice = skip;
+    startSlice = skip
   }
   if (typeof limit === `number`) {
     if (limit < 0) {
-      throw new Error(`Argument "limit" must be a non-negative integer`);
+      throw new Error(`Argument "limit" must be a non-negative integer`)
     }
 
-    endSlice = startSlice + limit;
+    endSlice = startSlice + limit
   }
 
-  const slice = data.slice(startSlice, endSlice);
+  const slice = data.slice(startSlice, endSlice)
   const edges = slice.map((value: any, index: number) => {
-    const orgIndex = startSlice + index;
-    let next;
-    let previous;
+    const orgIndex = startSlice + index
+    let next
+    let previous
     if (orgIndex + 1 < data.length) {
-      next = data[orgIndex + 1];
+      next = data[orgIndex + 1]
     }
     if (orgIndex !== 0) {
-      previous = data[orgIndex - 1];
+      previous = data[orgIndex - 1]
     }
     return {
       node: value,
       next,
       previous,
-    };
-  });
+    }
+  })
 
   return {
     edges,
@@ -55,7 +55,7 @@ export function connectionFromArray<T>(
         ? limit + startSlice - 1 < data.length
         : false,
     },
-  };
+  }
 }
 
 /**
@@ -66,5 +66,5 @@ export function connectionFromPromisedArray<T>(
   dataPromise: Promise<Array<T>>,
   args: ConnectionArguments
 ): Promise<Connection<T>> {
-  return dataPromise.then(data => connectionFromArray(data, args));
+  return dataPromise.then(data => connectionFromArray(data, args))
 }
