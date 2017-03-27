@@ -336,6 +336,18 @@ module.exports = async program => {
     autoPages.forEach(page => pagesMap.set(page.path, page))
     pagesDB(new Map([...pagesDB(), ...pagesMap]))
   }
+
+  // Rewrite /404/ to /404.html
+  const rewrittenPages = new Map();
+  [...pagesDB()].forEach(page => {
+    if (page[0] === `/404/`) {
+      page[1].path = `/404.html`
+      rewrittenPages.set(`/404.html`, page[1])
+    } else {
+      rewrittenPages.set(page[0], page[1])
+    }
+  })
+  pagesDB(new Map([...rewrittenPages]))
   console.log(`created js pages`)
 
   const modifiedPages = await apiRunnerNode(
