@@ -27,13 +27,13 @@ exports.createPages = ({ args }) => {
     `
     ).then(result => {
       if (result.errors) {
-        console.log(result.errors)
+        // console.log(result.errors)
         reject(result.errors)
       }
 
       // Create docs pages.
       _.each(result.data.allMarkdownRemark.edges, edge => {
-        console.log(edge.node.slug)
+        // console.log(edge.node.slug)
         if (_.includes(edge.node.slug, `/blog/`)) {
           pages.push({
             path: `${edge.node.slug}`, // required

@@ -166,19 +166,42 @@ const writeChildRoutes = () => {
     [...pagesDB().values()],
     page => page.path.indexOf("/404") !== -1
   )
+
   if (notFoundPage) {
     const notFoundPageStr = `
       {
         path: "*",
         component: preferDefault(require('${programDB().directory}/layouts/default')),
         indexRoute: {
-          component: ${notFoundPage.internalComponentName},
+          component: preferDefault(require('${notFoundPage.component}')),
+        },
+      },
+    `
+    const pathName = pathChunkName(notFoundPage.path)
+    const layoutName = layoutComponentChunkName(
+      programDB().directory,
+      notFoundPage.component
+    )
+    const notFoundPageSplitStr = `
+      {
+        path: "*",
+        component: preferDefault(require('${programDB().directory}/layouts/default')),
+        indexRoute: {
+          getComponent (nextState, cb) {
+            require.ensure([], (require) => {
+              const Component = preferDefault(require('${notFoundPage.component}'))
+              require.ensure([], (require) => {
+                const data = require('./json/${notFoundPage.jsonName}')
+                cb(null, () => <Component {...nextState} {...data} />)
+              }, '${pathName}')
+            }, '${layoutName}')
+          }
         },
       },
     `
 
     rootRoute += notFoundPageStr
-    splitRootRoute += notFoundPageStr
+    splitRootRoute += notFoundPageSplitStr
   }
 
   // Close out object.
