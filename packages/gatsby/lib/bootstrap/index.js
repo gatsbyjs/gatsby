@@ -1,4 +1,4 @@
-/* @flow weak */
+/* @flow */
 import Promise from "bluebird"
 import queryRunner from "../utils/query-runner"
 import path from "path"
@@ -31,7 +31,7 @@ process.on(`unhandledRejection`, error => {
 // algorithm is glob /pages directory for js/jsx/cjsx files *not*
 // underscored. Then create url w/ our path algorithm *unless* user
 // takes control of that page component in gatsby-node.
-const autoPathCreator = async program => {
+const autoPathCreator = async (program: any) => {
   const pagesDirectory = path.join(program.directory, `pages`)
   const exts = program.extensions.map(e => `*${e}`).join("|")
   const files = await glob(`${pagesDirectory}/**/?(${exts})`)
@@ -75,7 +75,7 @@ const autoPathCreator = async program => {
   return autoPages
 }
 
-module.exports = async program => {
+module.exports = async (program: any) => {
   console.log(`lib/bootstrap/index.js time since started:`, process.uptime())
   // Set the program to the globals programDB
   programDB(program)
@@ -258,20 +258,13 @@ module.exports = async program => {
 
   // Create Schema.
   console.time(`create schema`)
-  const schema = await require(`../schema/new`)()
+  const schema = await require(`../schema`)()
   // const schema = await require(`../schema`)()
   const graphqlRunner = (query, context) =>
     graphql(schema, query, context, context, context)
   console.timeEnd(`create schema`)
 
   // TODO create new folder structure for files to reflect major systems.
-  // TODO validate page objects when adding them.
-  // TODO pass names of layout/page components into commons plugin for proper
-  // code splitting.
-  // TODO split layout components into their own files as well.
-  // TODO add plugin system plus ways to use Redux + Glamor server rendering.
-  // TODO layouts can specify parent layouts
-  // TODO js pages + markdown can specify layouts directly.
   //
   // directory structure
   // /pages --> source plugins by default turn these files into pages.

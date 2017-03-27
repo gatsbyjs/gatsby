@@ -1,3 +1,4 @@
+// @flow
 const _ = require("lodash")
 const {
   GraphQLInt,
@@ -13,7 +14,7 @@ const {
 } = require(`./infer-graphql-input-fields`)
 const buildConnectionFields = require("./build-connection-fields")
 
-module.exports = types => {
+module.exports = (types: any) => {
   const connections = {}
 
   _.each(types, (type /*, fieldName*/) => {
@@ -32,10 +33,6 @@ module.exports = types => {
       type: typeConnection,
       description: `Connection to all ${type.name} nodes`,
       args: {
-        // TODO infer (same?) args for input as for on the node.
-        // probably could use the same filtering function as for a node
-        // would just take the first one as the result and for a connection
-        // return all of them.
         ...connectionArgs,
         ...inferredInputFields,
       },

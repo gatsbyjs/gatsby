@@ -1,4 +1,4 @@
-/* @flow weak */
+/* @flow */
 import toml from "toml"
 import fs from "fs"
 import os from "os"
@@ -12,7 +12,7 @@ import bootstrap from "../bootstrap"
 import apiRunnerNode from "./api-runner-node"
 import { pagesDB } from "./globals"
 
-async function html(program) {
+async function html(program: any) {
   const directory = program.directory
   const { graphqlRunner } = await bootstrap(program)
 

@@ -1,3 +1,4 @@
+// @flow
 const _ = require("lodash")
 const flatten = require("flat")
 

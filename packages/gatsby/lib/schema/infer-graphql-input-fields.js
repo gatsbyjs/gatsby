@@ -1,3 +1,4 @@
+// @flow
 const {
   GraphQLInputObjectType,
   GraphQLBoolean,
@@ -137,9 +138,9 @@ const inferGraphQLInputFields = (exports.inferGraphQLInputFields = (
 })
 
 const inferInputObjectStructureFromNodes = (exports.inferInputObjectStructureFromNodes = (
-  nodes,
-  selector,
-  namespace
+  nodes: any,
+  selector: string,
+  namespace: string
 ) => {
   const fieldExamples = extractFieldExamples({
     nodes,

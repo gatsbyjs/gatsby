@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "babel-cli": "^6.24.0",
-    "babel-eslint": "^7.1.0",
+    "babel-eslint": "^7.2.1",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-lodash": "^3.2.11",
     "babel-plugin-transform-async-to-generator": "^6.22.0",
@@ -13,17 +13,17 @@
     "babel-preset-stage-0": "^6.22.0",
     "babel-register": "^6.24.0",
     "babel-runtime": "^6.23.0",
-    "eslint": "^3.17.1",
+    "eslint": "^3.18.0",
     "eslint-config-airbnb": "^14.1.0",
     "eslint-config-google": "^0.7.1",
     "eslint-config-prettier": "^1.5.0",
     "eslint-plugin-flow-vars": "^0.5.0",
-    "eslint-plugin-flowtype": "^2.30.3",
+    "eslint-plugin-flowtype": "^2.30.4",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-prettier": "^2.0.1",
-    "eslint-plugin-react": "^6.10.0",
-    "flow-bin": "^0.41.0",
+    "eslint-plugin-react": "^6.10.3",
+    "flow-bin": "^0.42.0",
     "iflow-debug": "^1.0.15",
     "iflow-lodash": "^1.1.24",
     "iflow-react-router": "^1.2.1",
@@ -65,5 +65,8 @@
     "test": "jest",
     "test_bkup": "npm run lint && npm run test-node && npm run test-integration",
     "watch": "lerna run watch"
+  },
+  "devDependencies": {
+    "babel-preset-flow": "^6.23.0"
   }
 }

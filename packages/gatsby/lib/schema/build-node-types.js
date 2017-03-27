@@ -1,3 +1,4 @@
+// @flow
 const _ = require("lodash")
 const {
   GraphQLObjectType,
@@ -19,7 +20,7 @@ const {
 const nodeInterface = require("./node-interface")
 const { siteDB } = require("../utils/globals")
 
-module.exports = async ast =>
+module.exports = async (ast: any) =>
   new Promise(resolve => {
     const allNodes = select(ast, `*`)
     const processedTypes = {}

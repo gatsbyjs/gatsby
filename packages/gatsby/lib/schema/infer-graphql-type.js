@@ -1,3 +1,4 @@
+// @flow
 const {
   GraphQLObjectType,
   GraphQLBoolean,
@@ -15,7 +16,7 @@ const isRelative = require("is-relative-url")
 
 const inferGraphQLType = ({ value, fieldName, ...otherArgs }) => {
   if (Array.isArray(value)) {
-    const headType = inferGraphQLType({ value: value[0] }).type
+    const headType = inferGraphQLType({ value: value[0], fieldName }).type
     return { type: new GraphQLList(headType) }
   }
 

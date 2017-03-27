@@ -1,19 +1,19 @@
+// @flow
 const sift = require("sift")
 const _ = require("lodash")
 const {
   connectionFromArray,
 } = require("graphql-skip-limit")
 
+type Node = {
+  id: String,
+  type: String,
+};
+
 module.exports = ({ args, nodes, connection = false }) => {
   // Clone args as for some reason graphql-js removes the constructor
   // from nested objects which breaks a check in sift.js.
   const clonedArgs = JSON.parse(JSON.stringify(args))
-  //console.log(`clonedArgs`, clonedArgs)
-  // Remove connections arguments.
-  //delete clonedArgs.after
-  //delete clonedArgs.first
-  //delete clonedArgs.before
-  //delete clonedArgs.last
 
   const siftifyArgs = object => {
     const newObject = {}

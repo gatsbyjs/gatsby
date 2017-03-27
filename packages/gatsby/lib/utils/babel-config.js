@@ -1,4 +1,4 @@
-/* @flow weak */
+/* @flow */
 import resolve from "babel-core/lib/helpers/resolve"
 import fs from "fs"
 import path from "path"

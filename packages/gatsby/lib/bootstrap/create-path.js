@@ -1,7 +1,8 @@
+// @flow
 import parsePath from "parse-filepath"
 import path from "path"
 
-module.exports = (basePath, filePath) => {
+module.exports = (basePath: string, filePath: string): string => {
   const relativePath = path.relative(basePath, filePath)
   const parsedPath = parsePath(relativePath)
   const { dirname } = parsedPath

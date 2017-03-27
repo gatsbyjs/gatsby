@@ -1,4 +1,4 @@
-/* @flow weak */
+/* @flow */
 import webpack from "webpack"
 import Promise from "bluebird"
 import fs from "fs"
@@ -7,7 +7,7 @@ import { pagesDB } from "./globals"
 
 const debug = require("debug")("gatsby:html")
 
-module.exports = async program => {
+module.exports = async (program: any) => {
   const { directory } = program
 
   debug(`generating static HTML`)
