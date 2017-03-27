@@ -166,18 +166,20 @@ const writeChildRoutes = () => {
     [...pagesDB().values()],
     page => page.path.indexOf("/404") !== -1
   )
-  const notFoundPageStr = `
-    {
-      path: "*",
-      component: preferDefault(require('${programDB().directory}/layouts/default')),
-      indexRoute: {
-        component: ${notFoundPage.internalComponentName},
+  if (notFoundPage) {
+    const notFoundPageStr = `
+      {
+        path: "*",
+        component: preferDefault(require('${programDB().directory}/layouts/default')),
+        indexRoute: {
+          component: ${notFoundPage.internalComponentName},
+        },
       },
-    },
-  `
+    `
 
-  rootRoute += notFoundPageStr
-  splitRootRoute += notFoundPageStr
+    rootRoute += notFoundPageStr
+    splitRootRoute += notFoundPageStr
+  }
 
   // Close out object.
   rootRoute += `]}`
