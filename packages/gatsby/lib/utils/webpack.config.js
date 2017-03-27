@@ -6,6 +6,7 @@ import Config from "webpack-configurator"
 import ExtractTextPlugin from "extract-text-webpack-plugin"
 import StaticSiteGeneratorPlugin from "static-site-generator-webpack-plugin"
 import { StatsWriterPlugin } from "webpack-stats-plugin"
+// This isn't working right it seems.
 //import WebpackStableModuleIdAndHash from 'webpack-stable-module-id-and-hash'
 
 import webpackModifyValidate from "./webpack-modify-validate"

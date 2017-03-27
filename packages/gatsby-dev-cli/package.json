@@ -1,0 +1,28 @@
+{
+  "dependencies": {
+    "chokidar": "^1.6.1",
+    "fs-extra": "^2.1.2",
+    "lodash": "^4.17.4",
+    "yargs": "^7.0.2"
+  },
+  "name": "gatsby-dev-cli",
+  "version": "0.0.0",
+  "description": "CLI helpers for contributors working on Gatsby",
+  "main": "index.js",
+  "devDependencies": {
+    "babel-cli": "^6.24.0"
+  },
+  "bin": {
+    "gatsby-dev": "./bin/gatsby-dev"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src --out-dir .",
+    "watch": "babel -w src --out-dir ."
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "license": "MIT"
+}

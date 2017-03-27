@@ -19,7 +19,7 @@ The usual contributing steps are:
 
 * Fork the [official repository](https://github.com/gatsbyjs/gatsby).
 * Clone your fork: git clone `git@github.com:<your-username>/gatsby.git`
-* Install yarn and lerna globaly: `npm install -g yarn lerna`
+* Install yarn, lerna, and gatsby-dev-cli globaly: `npm install -g yarn lerna gatsby-dev-cli`
 * Checkout to the 1.0 branch: `git checkout 1.0`
 * Install dependencies: `yarn && lerna bootstrap`
 * Make sure tests are passing for you: `lerna run test`
@@ -28,10 +28,10 @@ The usual contributing steps are:
   and ensure there are no errors.
 * Now navigate to the package you want to modify and run `yarn run watch` to
   watch that package's code and compile your changes on the fly as you work.
-* Symlink the built file from the package you're modifying into your project's
-  `node_modules/package-name` directory (this avoids [problems we've seen with
-  using `npm|yarn
-  link`](https://github.com/yarnpkg/rfcs/blob/master/text/0000-yarn-knit.md))
+* Use the `gatsby-dev` command to copy built files from package(s) you're
+  working on to a Gatsby site. In each site you want to work on, run
+  `gatsby-dev` and as arguments, pass a space-seperated list of packages e.g.
+  `gatsby-dev gatsby gatsby-typegen-remark`.
 * Add tests and code for your changes.
 * Once you‘re done, make sure all tests still pass: `yarn test`
 * Commit and push to your fork.
