@@ -1,4 +1,4 @@
-/* @flow weak */
+/* @flow */
 const express = require("express")
 const graphqlHTTP = require("express-graphql")
 const glob = require("glob")
@@ -68,22 +68,6 @@ async function startServer(program) {
     const HTML = factory()
     debug(`Configuring develop server`)
 
-    //const webpackDevServer = new WebpackDevServer(compiler, {
-    //hot: true,
-    //quiet: false,
-    //noInfo: true,
-    //host: program.host,
-    //headers: {
-    //'Access-Control-Allow-Origin': '*',
-    //},
-    //stats: {
-    //colors: true,
-    //},
-    //})
-
-    //// Start webpack-dev-server
-    //webpackDevServer.listen(webpackPort, program.host)
-
     const app = express()
     app.use(
       require(`webpack-hot-middleware`)(compiler, {
@@ -136,9 +120,7 @@ async function startServer(program) {
         publicPath: devConfig.output.publicPath,
       })
     )
-    // As last step, check if the file exists in the public folder except for
-    // HTML files which could be there from a previous build — we want the app
-    // to load our special development html file.
+    // As last step, check if the file exists in the public folder.
     app.get(`*`, (req, res) => {
       // Load file but ignore errors.
       res.sendFile(`${process.cwd()}/public/${req.url}`, err => {
@@ -161,11 +143,12 @@ async function startServer(program) {
 
         process.exit()
       } else {
-        // TODO restore
-        //if (program.open) {
-        const opn = require("opn")
-        //opn(server.info.uri)
-        //}
+        if (program.open) {
+          const opn = require("opn")
+          opn(
+            `http://${listener.address().address}:${listener.address().port}`
+          )
+        }
         console.log(
           `Listening at: http://${listener.address().address}:${listener.address().port}`
         )
@@ -173,155 +156,8 @@ async function startServer(program) {
     })
   })
 }
-//const server = new Hapi.Server()
 
-//server.connection({
-//host: program.host,
-//port: program.port,
-//})
-
-// As our two processes (Webpack-Dev-Server + this Hapi.js server) are
-// running on different ports, we proxy requests for the bundle.js to
-// Webpack.
-//server.route({
-//method: 'GET',
-//path: '/commons.js',
-//handler: {
-//proxy: {
-//uri: `http://0.0.0.0:${webpackPort}/commons.js`,
-//passThrough: true,
-//xforward: true,
-//},
-//},
-//})
-
-//server.route({
-//method: `GET`,
-//path: `/html/{path*}`,
-//handler: (request, reply) => {
-//if (request.path === `favicon.ico`) {
-//return reply(Boom.notFound())
-//}
-
-//try {
-//const htmlElement = React.createElement(
-//HTML, {
-//body: ``,
-//headComponents: [],
-//postBodyComponents: [
-//<script src="/commons.js" />
-//]
-//}
-//)
-//let html = ReactDOMServer.renderToStaticMarkup(htmlElement)
-//html = `<!DOCTYPE html>\n${html}`
-//return reply(html)
-//} catch (e) {
-//console.log(e.stack)
-//throw e
-//}
-//},
-//})
-
-//server.route({
-//method: `GET`,
-//path: `/{path*}`,
-//handler: {
-//directory: {
-//path: `${program.directory}/public`,
-//listing: false,
-//index: false,
-//},
-//},
-//})
-
-//server.ext(`onRequest`, (request, reply) => {
-//if (request.path === `/graphql`) {
-//return reply.continue()
-//}
-
-//const negotiator = new Negotiator(request.raw.req)
-
-// Try to map the url path to match an actual path of a file on disk.
-//const parsed = parsePath(request.path)
-//const page = pagesDB().get(parsed.dirname)
-
-//let absolutePath = `${program.directory}/pages`
-//let path
-//if (page) {
-//path = `/${parsePath(page.component).dirname}/${parsed.basename}`
-//absolutePath += `/${parsePath(page.component).dirname}/${parsed.basename}`
-//} else {
-//path = request.path
-//absolutePath += request.path
-//}
-//let isFile = false
-//try {
-//isFile = fs.lstatSync(absolutePath).isFile()
-//} catch (e) {
-//// Ignore.
-//}
-
-// If the path matches a file, return that.
-//if (isFile) {
-//request.setUrl(path)
-//reply.continue()
-// Let people load the bundle.js directly.
-//} else if (request.path === `/bundle.js`) {
-//if (request.path === `/bundle.js`) {
-//reply.continue()
-//} else if (negotiator.mediaType() === `text/html`) {
-//request.setUrl(`/html${request.path}`)
-//reply.continue()
-//} else {
-//reply.continue()
-//}
-//})
-
-//return server.register([
-//// Add GraphQL support
-//{
-//register: GraphQL,
-//options: {
-//query: {
-//graphiql: true,
-//pretty: true,
-//schema,
-//},
-//route: {
-//path: `/graphql`,
-//},
-//},
-//},
-//], (er) => {
-//if (er) {
-//console.log(er)
-//process.exit()
-//}
-
-//server.start((e) => {
-//if (e) {
-//if (e.code === `EADDRINUSE`) {
-//// eslint-disable-next-line max-len
-//console.log(`Unable to start Gatsby on port ${program.port} as there's already a process listing on that port.`)
-//} else {
-//console.log(e)
-//}
-
-//process.exit()
-//} else {
-//if (program.open) {
-//opn(server.info.uri)
-//}
-//console.log(`Listening at:`, server.info.uri)
-//}
-//})
-//})
-//})
-//})
-//}
-
-module.exports = program => {
+module.exports = (program: any) => {
   const detect = require("detect-port")
   const port = typeof program.port === `string`
     ? parseInt(program.port, 10)
@@ -340,6 +176,7 @@ module.exports = program => {
       return rlInterface.question(question, answer => {
         if (answer.length === 0 || answer.match(/^yes|y$/i)) {
           program.port = _port // eslint-disable-line no-param-reassign
+          console.log("changed the port")
         }
 
         return startServer(program)

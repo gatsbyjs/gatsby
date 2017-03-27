@@ -1,10 +1,10 @@
-/* @flow weak */
+/* @flow */
 import webpack from "webpack"
 import fs from "fs"
 import Promise from "bluebird"
 import webpackConfig from "./webpack.config"
 
-module.exports = async program => {
+module.exports = async (program: any) => {
   const { directory } = program
 
   const compilerConfig = await webpackConfig(program, directory, `build-css`)

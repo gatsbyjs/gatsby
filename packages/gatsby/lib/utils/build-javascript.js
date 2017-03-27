@@ -1,4 +1,4 @@
-/* @flow weak */
+/* @flow */
 import webpack from "webpack"
 import Promise from "bluebird"
 import webpackConfig from "./webpack.config"

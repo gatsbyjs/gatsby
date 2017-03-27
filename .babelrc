@@ -6,6 +6,7 @@
       },
     }],
     'react',
+    'flow',
   ],
   "plugins": [
     "transform-runtime",
