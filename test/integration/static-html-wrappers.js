@@ -4,11 +4,13 @@ import { build, dom } from '../support'
 
 const fixturePath = path.resolve('..', 'fixtures', 'static-wrappers')
 
+// eslint-disable-next-line
 test.before('build the site ', async () => {
   await build(fixturePath)
 })
 
-test('html/index.html has an h1 that states file extention', async t => {
+// eslint-disable-next-line
+test('html/index.html has an h1 that states file extention', async (t) => {
   const filePath = path.join(fixturePath, 'public', 'html', 'index.html')
   const $ = await dom(filePath)
 
@@ -18,7 +20,8 @@ test('html/index.html has an h1 that states file extention', async t => {
   t.is(headingText, 'html')
 })
 
-test('md/index.html has an h1 that states file extention', async t => {
+// eslint-disable-next-line
+test('md/index.html has an h1 that states file extention', async (t) => {
   const filePath = path.join(fixturePath, 'public', 'md', 'index.html')
   const $ = await dom(filePath)
 
