@@ -19,7 +19,7 @@ The usual contributing steps are:
 
 * Fork the [official repository](https://github.com/gatsbyjs/gatsby).
 * Clone your fork: git clone `git@github.com:<your-username>/gatsby.git`
-* Install yarn, lerna, and gatsby-dev-cli globaly: `npm install -g yarn lerna gatsby-dev-cli`
+* Install yarn, lerna, and gatsby-dev-cli globaly: `npm install -g yarn lerna gatsby-dev-cli@canary`
 * Checkout to the 1.0 branch: `git checkout 1.0`
 * Install dependencies: `yarn && lerna bootstrap`
 * Make sure tests are passing for you: `lerna run test`
