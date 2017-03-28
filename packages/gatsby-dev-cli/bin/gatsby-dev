@@ -2,9 +2,16 @@
 
 const Configstore = require("configstore");
 const pkg = require("../package.json");
-var argv = require("yargs").array("packages").argv;
+const argv = require("yargs").array("packages").argv;
+const isAbsolute = require("is-absolute");
 
 const conf = new Configstore(pkg.name);
+
+// Test that the path is absolute
+if (argv.setPathToRepo && !isAbsolute(argv.setPathToRepo)) {
+  console.log("The path to the repo has to be absolute!");
+  process.exit();
+}
 
 if (argv.setPathToRepo) {
   console.log("Saving path to your Gatsby repo");
