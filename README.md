@@ -116,6 +116,8 @@ https://gatsbygram.gatsbyjs.org and the case study on how its built https://www.
 * [meadowlab.io](https://meadowlab.io/)
 * [xpchbill.github.io](https://xpchbill.github.io/)  ([source](https://github.com/xpchbill/xpchbill.github.io))
 * [jaredhanstra.com](http://www.jaredhanstra.com/)  ([source](https://github.com/jhanstra/jh-gatsby))
+* [BBQ Agency](https://bbq.agency/) ([source](https://github.com/bbq-agency/bbq-agency.github.io))
+* [Coriolan UI - sass mixins pack](https://coriolan-ui.github.io/) ([source](https://github.com/coriolan-ui/coriolan-ui.github.io))
 * [Edit this file to add yours!](https://github.com/gatsbyjs/gatsby/blob/master/README.md)
 
 *Note, for the sites that have made their source available, you can
