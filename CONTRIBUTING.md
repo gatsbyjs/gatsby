@@ -31,7 +31,8 @@ The usual contributing steps are:
 * Use the `gatsby-dev` command to copy built files from package(s) you're
   working on to a Gatsby site. In each site you want to work on, run
   `gatsby-dev` and as arguments, pass a space-seperated list of packages e.g.
-  `gatsby-dev gatsby gatsby-typegen-remark`.
+  `gatsby-dev gatsby gatsby-typegen-remark`. The first time you run the command,
+  you'll also need to set the path to your cloned repository.
 * Add tests and code for your changes.
 * Once you‘re done, make sure all tests still pass: `yarn test`
 * Commit and push to your fork.

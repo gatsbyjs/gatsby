@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "chokidar": "^1.6.1",
+    "configstore": "^3.0.0",
     "fs-extra": "^2.1.2",
     "lodash": "^4.17.4",
     "yargs": "^7.0.2"
