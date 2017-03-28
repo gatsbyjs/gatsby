@@ -9,8 +9,9 @@ const prettyBytes = require("pretty-bytes")
 const u = require("unist-builder")
 const slash = require("slash")
 
-exports.sourceNodes = ({ args, pluginOptions }) =>
-  new Promise((resolve, reject) => {
+exports.sourceNodes = ({ args, pluginOptions }) => {
+  const { upsertNodes } = args
+  return new Promise((resolve, reject) => {
     console.time(`glob`)
     recursive(
       pluginOptions.path,
@@ -64,10 +65,9 @@ exports.sourceNodes = ({ args, pluginOptions }) =>
                 console.log(`total files`, mappedFiles.length)
                 console.time(`create filesystem ast`)
                 // Create Unist nodes
-                const ast = u(`rootDirectory`, {}, pluginOptions.path)
-                ast.children = []
+                const nodes = []
                 mappedFiles.forEach(file => {
-                  ast.children.push({
+                  nodes.push({
                     ...JSON.parse(JSON.stringify(file)), // Stringify date objects.
                     type: `File`,
                     id: file.absolutePath,
@@ -87,7 +87,7 @@ exports.sourceNodes = ({ args, pluginOptions }) =>
                   })
                 })
                 console.timeEnd(`create filesystem ast`)
-                return resolve(ast)
+                return resolve(nodes)
               }
             )
           }
@@ -95,3 +95,4 @@ exports.sourceNodes = ({ args, pluginOptions }) =>
       }
     )
   })
+}

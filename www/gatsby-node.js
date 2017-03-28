@@ -59,9 +59,9 @@ exports.createPages = ({ args }) => {
 }
 
 // Create slugs for files.
-exports.modifyAST = ({ args }) => {
-  const { ast } = args
-  const files = select(ast, `File`)
+exports.modifyDataTree = ({ args }) => {
+  const { dataTree } = args
+  const files = select(dataTree, `File`)
   files.forEach(file => {
     const parsedFilePath = parseFilepath(file.relativePath)
     let slug

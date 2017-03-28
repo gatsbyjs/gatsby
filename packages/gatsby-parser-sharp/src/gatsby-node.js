@@ -1,11 +1,11 @@
 const select = require("unist-util-select")
 const Promise = require("bluebird")
 
-exports.modifyAST = ({ args }) =>
+exports.modifyDataTree = ({ args }) =>
   new Promise(resolve => {
-    const { ast } = args
+    const { dataTree } = args
     const files = select(
-      ast,
+      dataTree,
       `
       File[extension="jpeg"],
       File[extension="jpg"],
@@ -27,5 +27,5 @@ exports.modifyAST = ({ args }) =>
       file.children.push(imageNode)
     })
 
-    return resolve(ast)
+    return resolve(dataTree)
   })

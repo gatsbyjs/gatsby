@@ -12,7 +12,7 @@ const {
   connectionFromArray,
 } = require("graphql-skip-limit")
 
-const { buildFieldEnumValues } = require("./ast-utils")
+const { buildFieldEnumValues } = require("./data-tree-utils")
 
 module.exports = type => {
   //nodes, nodeType) => {

@@ -20,12 +20,12 @@ const {
 const nodeInterface = require("./node-interface")
 const { siteDB } = require("../utils/globals")
 
-module.exports = async (ast: any) =>
+module.exports = async (dataTree: any) =>
   new Promise(resolve => {
-    const allNodes = select(ast, `*`)
+    const allNodes = select(dataTree, `*`)
     const processedTypes = {}
 
-    // Identify node types in the AST.
+    // Identify node types in the DataTree.
     const types = _.groupBy(allNodes, node => node.type)
     // Delete root and rootDirectory.
     delete types.root
@@ -76,7 +76,7 @@ module.exports = async (ast: any) =>
             }
             apiRunner(`extendNodeType`, {
               type: nodeType,
-              ast,
+              dataTree,
             }).then(fieldsFromPlugins => {
               const mergedFieldsFromPlugins = _.merge(...fieldsFromPlugins)
               nodeType.fieldsFromPlugins = mergedFieldsFromPlugins
@@ -149,7 +149,7 @@ module.exports = async (ast: any) =>
                     // plugin can define a custom resolve function which handles special
                     // logic for alternative ways of adding links between nodes.
                     let linkedFileNode
-                    //linkedFileNode = select(ast, `${linkedType}[id="${node[fieldName]}"]`)[0]
+                    //linkedFileNode = select(dataTree, `${linkedType}[id="${node[fieldName]}"]`)[0]
                     linkedFileNode = _.find(
                       allNodes,
                       n => n.type === linkedType && n.id === node[fieldName]

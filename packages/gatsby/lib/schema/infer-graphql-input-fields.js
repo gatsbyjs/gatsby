@@ -13,7 +13,10 @@ const _ = require("lodash")
 const moment = require("moment")
 const typeOf = require("type-of")
 
-const { extractFieldExamples, buildFieldEnumValues } = require("./ast-utils")
+const {
+  extractFieldExamples,
+  buildFieldEnumValues,
+} = require("./data-tree-utils")
 
 const typeFields = type => {
   switch (type) {

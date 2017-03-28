@@ -5,13 +5,13 @@ const grayMatter = require("gray-matter")
 
 const { loadNodeContents } = require("gatsby-source-filesystem")
 
-async function modifyAST({ args }) {
+async function modifyDataTree({ args }) {
   console.time(`parse markdown file`)
-  const { ast } = args
+  const { dataTree } = args
   // List of markdown extensions taken from
   // https://github.com/github/markup/blob/cf74e842dfd082d8001417c1bb94edd2ae06d61b/lib/github/markup/markdown.rb#L28
   const files = select(
-    ast,
+    dataTree,
     `
     File[extension="md"],
     File[extension="rmd"],
@@ -41,7 +41,7 @@ async function modifyAST({ args }) {
     file.children.push(markdownNode)
   })
   console.timeEnd(`parse markdown file`)
-  return ast
+  return dataTree
 }
 
-exports.modifyAST = modifyAST
+exports.modifyDataTree = modifyDataTree

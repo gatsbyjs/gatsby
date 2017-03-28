@@ -13,21 +13,25 @@ const buildNodeTypes = require("./build-node-types")
 const buildNodeConnections = require("./build-node-connections")
 
 module.exports = async () => {
-  console.time(`building ast`)
-  const sourceAST = await apiRunner(`sourceNodes`)
-  let root = { type: `root`, children: sourceAST }
+  console.time(`building DataTree`)
+  let nodes = await apiRunner(`sourceNodes`)
+  nodes = _.flatten(nodes)
+  let root = { type: `root`, children: nodes }
+
   // Add parent reference to each source node.
-  sourceAST.forEach(sourceNode => {
+  nodes.forEach(sourceNode => {
     sourceNode.parent = root
   })
-  await apiRunner(`modifyAST`, { ast: root })
+
+  await apiRunner(`modifyDataTree`, { dataTree: root })
+
   // Add parents reference to each node.
   root = parents(root)
-  console.timeEnd(`building ast`)
+  console.timeEnd(`building DataTree`)
 
   console.time(`building schema`)
-  // For each type in the AST, create a graphql field, by first infering fields
-  // from fields in AST nodes and then allowing plugins to add additional node
+  // For each type in the DataTree, create a graphql field, by first infering fields
+  // from fields in DataTree nodes and then allowing plugins to add additional node
   // fields, then create connections for each node type.
   // [ { type, nodes, name } ]
   const typesGQL = await buildNodeTypes(root)

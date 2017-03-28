@@ -5,10 +5,10 @@ const _ = require("lodash")
 
 const { loadNodeContents } = require("gatsby-source-filesystem")
 
-async function modifyAST({ args }) {
-  const { ast } = args
+async function modifyDataTree({ args }) {
+  const { dataTree } = args
   const files = select(
-    ast,
+    dataTree,
     `
     File[extension="json"]
   `
@@ -26,7 +26,7 @@ async function modifyAST({ args }) {
     file.children = file.children.concat(JSONArray)
   })
 
-  return ast
+  return dataTree
 }
 
-exports.modifyAST = modifyAST
+exports.modifyDataTree = modifyDataTree

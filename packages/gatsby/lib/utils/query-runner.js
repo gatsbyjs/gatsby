@@ -272,8 +272,8 @@ const q = queue(
   async ({ file, graphql, directory }, callback) => {
     let fileStr = fs.readFileSync(file, `utf-8`)
     let ast
-    // Preprocess and attempt to parse source; return an AST if we can, log an error if we can't.
-    // I'm unconvinced that this is an especially good implementation...
+    // Preprocess and attempt to parse source; return an AST if we can, log an
+    // error if we can't.
     const transpiled = await apiRunnerNode(`preprocessSource`, {
       filename: file,
       contents: fileStr,
