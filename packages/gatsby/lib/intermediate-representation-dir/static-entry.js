@@ -17,7 +17,7 @@ const pathChunkName = path => {
 module.exports = (locals, callback) => {
   let linkPrefix = `/`
   if (__PREFIX_LINKS__) {
-    linkPrefix = __LINK_PREFIX__
+    linkPrefix = `${__LINK_PREFIX__}/`
   }
 
   match(
