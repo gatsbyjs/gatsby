@@ -4,8 +4,21 @@ const Configstore = require("configstore");
 const pkg = require("../package.json");
 const argv = require("yargs").array("packages").argv;
 const isAbsolute = require("is-absolute");
+const _ = require("lodash");
 
 const conf = new Configstore(pkg.name);
+
+const fs = require("fs-extra");
+const havePackageJsonFile = fs.existsSync("package.json");
+
+if (!havePackageJsonFile) {
+  console.log("Current folder must have a package.json file!");
+  process.exit();
+}
+
+const localPkg = JSON.parse(fs.readFileSync("package.json"));
+const packages = Object.keys(localPkg.dependencies);
+const gatsbyPackages = packages.filter(p => p.startsWith("gatsby"));
 
 // Test that the path is absolute
 if (argv.setPathToRepo && !isAbsolute(argv.setPathToRepo)) {
@@ -33,9 +46,11 @@ gatsby-dev --set-path-to-repo /path/to/my/cloned/version/gatsby
   process.exit();
 }
 
-if (!argv.packages) {
+if (!argv.packages && _.isEmpty(gatsbyPackages)) {
   console.log(
     `
+You haven't got any gatsby dependencies into your current package.json
+
 You probably want to pass in a list of packages to start
 developing on! For example:
 
@@ -46,4 +61,4 @@ gatsby-dev --packages gatsby gatsby-typegen-remark
 }
 
 const watch = require("../");
-watch(gatsbyLocation, argv.packages);
+watch(gatsbyLocation, argv.packages || gatsbyPackages);
