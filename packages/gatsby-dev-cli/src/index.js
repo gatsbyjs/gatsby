@@ -4,9 +4,9 @@ const fs = require("fs-extra");
 const syspath = require("path");
 
 const ignoreRegs = [
-  new RegExp(`\/node_modules\/`, "i"),
-  new RegExp(`\.git`, "i"),
-  new RegExp(`\/src\/`, "i"),
+  /[\/\\]node_modules[\/\\]/i,
+  /\.git/i,
+  /[\/\\]src[\/\\]/i
 ];
 
 module.exports = (root, packages) => {
