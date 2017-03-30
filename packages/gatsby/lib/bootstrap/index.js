@@ -10,9 +10,12 @@ import Joi from "joi"
 import chalk from "chalk"
 import apiRunnerNode from "../utils/api-runner-node"
 import { graphql } from "graphql"
-import { pagesDB, siteDB, programDB } from "../utils/globals"
-import { gatsbyConfigSchema, pageSchema } from "../joi-schemas/joi"
+import { pagesDB } from "../utils/globals"
+import { pageSchema } from "../joi-schemas/joi"
 import { layoutComponentChunkName } from "../utils/js-chunk-names"
+import { store } from "../redux"
+
+const preferDefault = m => (m && m.default) || m
 
 const mkdirs = Promise.promisify(fs.mkdirs)
 const copy = Promise.promisify(fs.copy)
@@ -77,8 +80,10 @@ const autoPathCreator = async (program: any) => {
 
 module.exports = async (program: any) => {
   console.log(`lib/bootstrap/index.js time since started:`, process.uptime())
-  // Set the program to the globals programDB
-  programDB(program)
+  store.dispatch({
+    type: "SET_PROGRAM",
+    payload: program,
+  })
 
   // Try opening the site's gatsby-config.js file.
   console.time(`open and validate gatsby-config.js`)
@@ -91,28 +96,20 @@ module.exports = async (program: any) => {
     process.exit()
   }
 
-  // Add config to site object.
-  let normalizedConfig
-  if (config.default) {
-    normalizedConfig = config.default
-    siteDB(siteDB().set(`config`, config.default))
-  } else {
-    normalizedConfig = config
-    siteDB(siteDB().set(`config`, config))
-  }
+  config = preferDefault(config)
 
-  // Validate gatsby-config.js
-  const result = Joi.validate(normalizedConfig, gatsbyConfigSchema)
-  if (result.error) {
-    console.log(chalk.blue.bgYellow(`gatsby.config.js failed validation`))
-    console.log(chalk.bold.red(result.error))
-    console.log(normalizedConfig)
-    process.exit()
-  }
+  store.dispatch({
+    type: "SET_SITE_CONFIG",
+    payload: config,
+  })
+
   console.timeEnd(`open and validate gatsby-config.js`)
 
   // Instantiate plugins.
   const plugins = []
+  // Create fake little site with a plugin for testing this
+  // w/ snapshots. Move plugin processing to its own module.
+  // Also test adding to redux store.
   const processPlugin = plugin => {
     if (_.isString(plugin)) {
       const resolvedPath = path.dirname(require.resolve(plugin))
@@ -150,8 +147,8 @@ module.exports = async (program: any) => {
     }
   }
 
-  if (normalizedConfig.plugins) {
-    normalizedConfig.plugins.forEach(plugin => {
+  if (config.plugins) {
+    config.plugins.forEach(plugin => {
       plugins.push(processPlugin(plugin))
     })
   }
@@ -181,8 +178,15 @@ module.exports = async (program: any) => {
     extractPlugins(plugin)
   })
 
-  siteDB(siteDB().set(`plugins`, plugins))
-  siteDB(siteDB().set(`flattenedPlugins`, flattenedPlugins))
+  store.dispatch({
+    type: "SET_SITE_PLUGINS",
+    payload: plugins,
+  })
+
+  store.dispatch({
+    type: "SET_SITE_FLATTENED_PLUGINS",
+    payload: flattenedPlugins,
+  })
 
   // Ensure the public directory is created.
   await mkdirs(`${program.directory}/public`)

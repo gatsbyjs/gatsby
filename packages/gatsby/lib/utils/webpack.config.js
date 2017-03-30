@@ -11,10 +11,11 @@ import { StatsWriterPlugin } from "webpack-stats-plugin"
 
 import webpackModifyValidate from "./webpack-modify-validate"
 
+const { store } = require("../redux")
 const debug = require("debug")("gatsby:webpack-config")
 const WebpackMD5Hash = require("webpack-md5-hash")
 const ChunkManifestPlugin = require("chunk-manifest-webpack-plugin")
-const { pagesDB, siteDB } = require("../utils/globals")
+const { pagesDB } = require("../utils/globals")
 const { layoutComponentChunkName } = require("./js-chunk-names")
 const genBabelConfig = require("./babel-config")
 
@@ -55,7 +56,7 @@ module.exports = async (
           path: `${directory}/public`,
           filename: `bundle-for-css.js`,
           publicPath: program.prefixLinks
-            ? `${siteDB().get(`config`).linkPrefix}/`
+            ? `${store.getState().config.linkPrefix}/`
             : `/`,
         }
       case `build-html`:
@@ -66,7 +67,7 @@ module.exports = async (
           filename: `render-page.js`,
           libraryTarget: `umd`,
           publicPath: program.prefixLinks
-            ? `${siteDB().get(`config`).linkPrefix}/`
+            ? `${store.getState().config.linkPrefix}/`
             : `/`,
         }
       case `build-javascript`:
@@ -76,7 +77,7 @@ module.exports = async (
           chunkFilename: `[name]-[chunkhash].js`,
           path: `${directory}/public`,
           publicPath: program.prefixLinks
-            ? `${siteDB().get(`config`).linkPrefix}/`
+            ? `${store.getState().config.linkPrefix}/`
             : `/`,
         }
       default:
@@ -127,7 +128,7 @@ module.exports = async (
               PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
             },
             __PREFIX_LINKS__: program.prefixLinks,
-            __LINK_PREFIX__: JSON.stringify(siteDB().get(`config`).linkPrefix),
+            __LINK_PREFIX__: JSON.stringify(store.getState().config.linkPrefix),
           }),
           // Names module ids with their filepath. We use this in development
           // to make it easier to see what modules have hot reloaded, etc. as
@@ -145,7 +146,7 @@ module.exports = async (
               PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
             },
             __PREFIX_LINKS__: program.prefixLinks,
-            __LINK_PREFIX__: JSON.stringify(siteDB().get(`config`).linkPrefix),
+            __LINK_PREFIX__: JSON.stringify(store.getState().config.linkPrefix),
           }),
           new ExtractTextPlugin(`styles.css`, { allChunks: true }),
         ]
@@ -160,7 +161,7 @@ module.exports = async (
               PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
             },
             __PREFIX_LINKS__: program.prefixLinks,
-            __LINK_PREFIX__: JSON.stringify(siteDB().get(`config`).linkPrefix),
+            __LINK_PREFIX__: JSON.stringify(store.getState().config.linkPrefix),
           }),
           new ExtractTextPlugin(`build-html-styles.css`),
         ]
@@ -230,7 +231,7 @@ module.exports = async (
               PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
             },
             __PREFIX_LINKS__: program.prefixLinks,
-            __LINK_PREFIX__: JSON.stringify(siteDB().get(`config`).linkPrefix),
+            __LINK_PREFIX__: JSON.stringify(store.getState().config.linkPrefix),
           }),
           // Extract CSS so it doesn't get added to JS bundles.
           new ExtractTextPlugin(`build-js-styles.css`),

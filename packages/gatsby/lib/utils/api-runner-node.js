@@ -1,18 +1,20 @@
 const Promise = require("bluebird")
 const glob = require("glob")
 const _ = require("lodash")
-const { siteDB, programDB } = require("../utils/globals")
+const { store } = require("../redux")
 const mapSeries = require("async/mapSeries")
 
 const runAPI = (plugin, api, args) => {
   let linkPrefix = ``
-  if (programDB().prefixLinks) {
-    linkPrefix = siteDB().get(`config`).linkPrefix
+  if (store.getState().program.prefixLinks) {
+    linkPrefix = store.getState().config.linkPrefix
   }
 
   const gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
   if (gatsbyNode[api]) {
-    console.log(`calling api handler in ${plugin.resolve} for api ${api}`)
+    if (!_.includes([`mutateDataNode`], api)) {
+      console.log(`calling api handler in ${plugin.resolve} for api ${api}`)
+    }
     const result = gatsbyNode[api]({
       args: { ...args, linkPrefix },
       pluginOptions: plugin.pluginOptions,
@@ -29,7 +31,8 @@ const hasAPIFile = plugin => glob.sync(`${plugin.resolve}/gatsby-node*`)[0]
 
 module.exports = async (api, args = {}) => {
   return new Promise(resolve => {
-    const plugins = siteDB().get(`flattenedPlugins`)
+    console.log(store.getState())
+    const plugins = store.getState().flattenedPlugins
     // Get the list of plugins that implement gatsby-node
     if (!filteredPlugins) {
       filteredPlugins = plugins.filter(plugin => hasAPIFile(plugin))

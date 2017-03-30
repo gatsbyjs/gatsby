@@ -8,7 +8,8 @@ import parseFilepath from "parse-filepath"
 import glob from "glob"
 import apiRunnerNode from "./api-runner-node"
 import Promise from "bluebird"
-import { pagesDB, siteDB, programDB } from "./globals"
+import { pagesDB } from "./globals"
+const { store } = require("../redux")
 import { layoutComponentChunkName, pathChunkName } from "./js-chunk-names"
 
 // Babylon has to use a require... why?
@@ -33,7 +34,7 @@ const hashStr = function(str) {
 // Write out routes file.
 // Loop through all paths and write them out to child-routes.js
 const writeChildRoutes = () => {
-  const directory = programDB().directory
+  const directory = store.getState().program.directory
   let childRoutes = ``
   let splitChildRoutes = ``
 
@@ -53,13 +54,13 @@ const writeChildRoutes = () => {
   const genSplitChildRoute = (page, noPath = false) => {
     const pathName = pathChunkName(page.path)
     const layoutName = layoutComponentChunkName(
-      programDB().directory,
+      store.getState().program.directory,
       page.component
     )
     let pathStr = ``
     if (!noPath) {
-      if (programDB().prefixLinks) {
-        pathStr = `path:'${_.get(siteDB().get(`config`), `linkPrefix`, ``)}${page.path}',`
+      if (store.getState().program.prefixLinks) {
+        pathStr = `path:'${_.get(store.getState().config, `linkPrefix`, ``)}${page.path}',`
       } else {
         pathStr = `path:'${page.path}',`
       }
@@ -83,7 +84,11 @@ const writeChildRoutes = () => {
 
   // Group pages under their layout component (if any).
   let defaultLayoutExists = true
-  if (glob.sync(`${programDB().directory}/layouts/default.*`).length === 0) {
+  if (
+    glob.sync(
+      `${store.getState().program.directory}/layouts/default.*`
+    ).length === 0
+  ) {
     defaultLayoutExists = false
   }
   const groupedPages = _.groupBy([...pagesDB().values()], page => {
@@ -132,20 +137,20 @@ const writeChildRoutes = () => {
       let route = `
       {
         path: '${indexPage.path}',
-        component: preferDefault(require('${programDB().directory}/layouts/${layout}')),
+        component: preferDefault(require('${store.getState().program.directory}/layouts/${layout}')),
         indexRoute: ${genChildRoute(indexPage, true)}
         childRoutes: [
       `
       let pathStr
-      if (programDB().prefixLinks) {
-        pathStr = `path:'${_.get(siteDB().get(`config`), `linkPrefix`, ``)}${indexPage.path}',`
+      if (store.getState().program.prefixLinks) {
+        pathStr = `path:'${_.get(store.getState().config, `linkPrefix`, ``)}${indexPage.path}',`
       } else {
         pathStr = `path:'${indexPage.path}',`
       }
       let splitRoute = `
       {
         ${pathStr}
-        component: preferDefault(require('${programDB().directory}/layouts/${layout}')),
+        component: preferDefault(require('${store.getState().program.directory}/layouts/${layout}')),
         indexRoute: ${genSplitChildRoute(indexPage, true)}
         childRoutes: [
       `
@@ -171,7 +176,7 @@ const writeChildRoutes = () => {
     const notFoundPageStr = `
       {
         path: "*",
-        component: preferDefault(require('${programDB().directory}/layouts/default')),
+        component: preferDefault(require('${store.getState().program.directory}/layouts/default')),
         indexRoute: {
           component: preferDefault(require('${notFoundPage.component}')),
         },
@@ -179,13 +184,13 @@ const writeChildRoutes = () => {
     `
     const pathName = pathChunkName(notFoundPage.path)
     const layoutName = layoutComponentChunkName(
-      programDB().directory,
+      store.getState().program.directory,
       notFoundPage.component
     )
     const notFoundPageSplitStr = `
       {
         path: "*",
-        component: preferDefault(require('${programDB().directory}/layouts/default')),
+        component: preferDefault(require('${store.getState().program.directory}/layouts/default')),
         indexRoute: {
           getComponent (nextState, cb) {
             require.ensure([], (require) => {

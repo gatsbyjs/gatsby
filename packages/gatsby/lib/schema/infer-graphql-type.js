@@ -11,8 +11,8 @@ const _ = require("lodash")
 const moment = require("moment")
 const parseFilepath = require("parse-filepath")
 const mime = require("mime")
-const { siteDB } = require("../utils/globals")
 const isRelative = require("is-relative-url")
+const { store } = require("../redux")
 
 const inferGraphQLType = ({ value, fieldName, ...otherArgs }) => {
   if (Array.isArray(value)) {
@@ -146,7 +146,7 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
     delete fieldExamples.children
   }
 
-  const config = siteDB().get(`config`)
+  const config = store.getState().config
   let mapping
   if (config) {
     mapping = config.mapping

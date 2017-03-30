@@ -18,11 +18,20 @@ const {
   inferInputObjectStructureFromNodes,
 } = require(`./infer-graphql-input-fields`)
 const nodeInterface = require("./node-interface")
-const { siteDB } = require("../utils/globals")
+const { store } = require("../redux")
 
-module.exports = async (dataTree: any) =>
+let dataTree
+let allNodes
+// Update local root everytime it's set.
+rootDataTree(r => {
+  dataTree = r
+  if (dataTree && dataTree.children) {
+    allNodes = select(dataTree, `*`)
+  }
+})
+
+module.exports = async () =>
   new Promise(resolve => {
-    const allNodes = select(dataTree, `*`)
     const processedTypes = {}
 
     // Identify node types in the DataTree.
@@ -103,9 +112,13 @@ module.exports = async (dataTree: any) =>
                 },
                 resolve(a, args) {
                   const runSift = require("./run-sift")
+                  const latestNodes = _.filter(
+                    allNodes,
+                    n => n.type === typeName
+                  )
                   return runSift({
                     args,
-                    nodes,
+                    nodes: latestNodes,
                   })[0]
                 },
               }
@@ -114,7 +127,7 @@ module.exports = async (dataTree: any) =>
                 name: _.camelCase(`${typeName} field`),
                 type: nodeType.nodeObjectType,
                 resolve: (node, a, b, { fieldName }) => {
-                  const mapping = siteDB().get(`config`).mapping
+                  const mapping = store.getState().config.mapping
                   const fieldSelector = `${node.___path}.${fieldName}`
                   let fieldValue = node[fieldName]
                   const sourceFileNode = _.find(
