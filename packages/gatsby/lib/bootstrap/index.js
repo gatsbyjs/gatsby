@@ -10,10 +10,23 @@ import Joi from "joi"
 import chalk from "chalk"
 import apiRunnerNode from "../utils/api-runner-node"
 import { graphql } from "graphql"
-import { pagesDB } from "../utils/globals"
-import { pageSchema } from "../joi-schemas/joi"
 import { layoutComponentChunkName } from "../utils/js-chunk-names"
 import { store } from "../redux"
+const { boundActionCreators } = require("../redux/actions")
+
+// Override console.log to add the source file + line number.
+// ["log", "warn"].forEach(function(method) {
+// var old = console[method];
+// console[method] = function() {
+// var stack = new Error().stack.split(/\n/);
+// // Chrome includes a single "Error" line, FF doesn't.
+// if (stack[0].indexOf("Error") === 0) {
+// stack = stack.slice(1);
+// }
+// var args = [].slice.apply(arguments).concat([stack[1].trim()]);
+// return old.apply(console, args);
+// };
+// });
 
 const preferDefault = m => (m && m.default) || m
 
@@ -37,11 +50,12 @@ process.on(`unhandledRejection`, error => {
 const autoPathCreator = async (program: any) => {
   const pagesDirectory = path.join(program.directory, `pages`)
   const exts = program.extensions.map(e => `*${e}`).join("|")
-  const files = await glob(`${pagesDirectory}/**/?(${exts})`)
+  // The promisified version wasn't working for some reason
+  // so we'll use sync for now.
+  const files = glob.sync(`${pagesDirectory}/**/?(${exts})`)
   // Create initial page objects.
   let autoPages = files.map(filePath => ({
     component: filePath,
-    componentChunkName: layoutComponentChunkName(program.directory, filePath),
     path: filePath,
   }))
 
@@ -66,16 +80,10 @@ const autoPathCreator = async (program: any) => {
     path: createPath(pagesDirectory, page.component),
   }))
 
-  // Validate pages.
+  // Add pages
   autoPages.forEach(page => {
-    const { error } = Joi.validate(page, pageSchema)
-    if (error) {
-      console.log(chalk.blue.bgYellow(`A page object failed validation`))
-      console.log(page)
-      console.log(chalk.bold.red(error))
-    }
+    boundActionCreators.upsertPage(page)
   })
-  return autoPages
 }
 
 module.exports = async (program: any) => {
@@ -281,92 +289,39 @@ module.exports = async (program: any) => {
   // /public --> build place
   // / --> html.js, gatsby-node.js, gatsby-browser.js, gatsby-config.js
 
-  // Collect pages.
-  let pages = await apiRunnerNode(`createPages`, { graphql: graphqlRunner }, [
-  ])
-  pages = _.flatten(pages)
-
-  if (_.isArray(pages) && pages.length > 0) {
-    // Add chunkName.
-    pages.forEach(page => {
-      page.componentChunkName = layoutComponentChunkName(
-        program.directory,
-        page.component
-      )
-    })
-
-    // Validate pages.
-    if (pages) {
-      pages.forEach(page => {
-        const { error } = Joi.validate(page, pageSchema)
-        if (error) {
-          console.log(chalk.blue.bgYellow(`A page object failed validation`))
-          console.log(chalk.bold.red(error))
-          console.log(`page object`)
-          console.log(page)
-        }
-      })
-    }
-    console.log(`validated pages`)
-  } else {
-    pages = []
-  }
-
-  // Save pages to in-memory database.
-  const pagesMap = new Map()
-  pages.forEach(page => {
-    pagesMap.set(page.path, page)
-  })
-  pagesDB(pagesMap)
-  console.log(`added pages to in-memory db`)
-
   // Collect resolvable extensions and attach to program.
   const extensions = [`.js`, `.jsx`]
   const apiResults = await apiRunnerNode("resolvableExtensions")
   program.extensions = apiResults.reduce((a, b) => a.concat(b), extensions)
 
+  // Collect pages.
+  await apiRunnerNode(`createPages`, {
+    graphql: graphqlRunner,
+  })
+
   // TODO move this to own source plugin per component type
   // (js/cjsx/typescript, etc.)
-  const autoPages = await autoPathCreator(program, pages)
-  if (autoPages) {
-    const pagesMap = new Map()
-    autoPages.forEach(page => pagesMap.set(page.path, page))
-    pagesDB(new Map([...pagesDB(), ...pagesMap]))
+  autoPathCreator(program)
+
+  // Copy /404/ to /404.html as many static site hosting companies expect
+  // site 404 pages to be named this.
+  // https://www.gatsbyjs.org/docs/add-404-page/
+  const exists404html = _.some(
+    store.getState().pages,
+    p => p.path === `/404.html`
+  )
+  if (!exists404html) {
+    store.getState().pages.forEach(page => {
+      if (page.path === `/404/`) {
+        boundActionCreators.upsertPage({
+          ...page,
+          path: `/404.html`,
+        })
+      }
+    })
   }
 
-  // Rewrite /404/ to /404.html
-  const rewrittenPages = new Map();
-  [...pagesDB()].forEach(page => {
-    if (page[0] === `/404/`) {
-      page[1].path = `/404.html`
-      rewrittenPages.set(`/404.html`, page[1])
-    } else {
-      rewrittenPages.set(page[0], page[1])
-    }
-  })
-  pagesDB(new Map([...rewrittenPages]))
   console.log(`created js pages`)
-
-  const modifiedPages = await apiRunnerNode(
-    `onPostCreatePages`,
-    pagesDB(),
-    pagesDB()
-  )
-
-  // Validate pages.
-  modifiedPages.forEach(page => {
-    const { error } = Joi.validate(page, pageSchema)
-    if (error) {
-      console.log(chalk.blue.bgYellow(`A page object failed validation`))
-      console.log(chalk.bold.red(error))
-      console.log(`page object`)
-      console.log(page)
-    }
-  })
-  console.log(`validated modified pages`)
-
-  // console.log(`bootstrap finished, time since started:`, process.uptime())
-  // cb(null, schema)
 
   await queryRunner(program, graphqlRunner)
   await apiRunnerNode(`generateSideEffects`)

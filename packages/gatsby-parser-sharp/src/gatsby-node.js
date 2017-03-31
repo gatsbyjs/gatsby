@@ -1,9 +1,8 @@
 const select = require("unist-util-select")
 const Promise = require("bluebird")
 
-exports.modifyDataTree = ({ args }) =>
+exports.modifyDataTree = ({ dataTree }) =>
   new Promise(resolve => {
-    const { dataTree } = args
     const files = select(
       dataTree,
       `

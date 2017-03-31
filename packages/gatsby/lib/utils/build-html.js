@@ -3,7 +3,7 @@ import webpack from "webpack"
 import Promise from "bluebird"
 import fs from "fs"
 import webpackConfig from "./webpack.config"
-import { pagesDB } from "./globals"
+const { store } = require("../redux")
 
 const debug = require("debug")("gatsby:html")
 
@@ -12,7 +12,7 @@ module.exports = async (program: any) => {
 
   debug(`generating static HTML`)
   // Reduce pages objects to an array of paths.
-  const pages = [...pagesDB().values()].map(page => page.path)
+  const pages = store.getState().pages.map(page => page.path)
 
   // Static site generation.
   const compilerConfig = await webpackConfig(

@@ -22,14 +22,12 @@ const inspect = require("unist-util-inspect")
 const Promise = require("bluebird")
 const prune = require("underscore.string/prune")
 
-exports.extendNodeType = ({ args, pluginOptions }) => {
-  if (args.type.name !== `MarkdownRemark`) {
+exports.extendNodeType = ({ type, dataTree, linkPrefix }, pluginOptions) => {
+  if (type.name !== `MarkdownRemark`) {
     return {}
   }
 
   return new Promise((resolve, reject) => {
-    const { dataTree, type, linkPrefix } = args
-
     const files = select(dataTree, `File`)
 
     // Setup Remark.

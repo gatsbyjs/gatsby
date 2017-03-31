@@ -19,6 +19,7 @@ const {
 } = require(`./infer-graphql-input-fields`)
 const nodeInterface = require("./node-interface")
 const { store } = require("../redux")
+const { rootDataTree } = require("../utils/globals")
 
 let dataTree
 let allNodes

@@ -1,4 +1,4 @@
-import { store } from "../index.js";
+import { store, reducer } from "../index.js";
 
 describe(`add site config`, () => {
   it(`allow you to add basic site config`, () => {
@@ -8,11 +8,14 @@ describe(`add site config`, () => {
       },
       plugins: [],
     };
-    store.dispatch({
-      type: "SET_SITE_CONFIG",
-      payload: config,
-    });
-    expect(store.getState()).toMatchSnapshot();
+    const state = reducer(
+      {},
+      {
+        type: "SET_SITE_CONFIG",
+        payload: config,
+      }
+    );
+    expect(state).toMatchSnapshot();
   });
 
   it(`Validates configs with unsupported options`, () => {
@@ -20,10 +23,15 @@ describe(`add site config`, () => {
       someRandomThing: "hi people",
       plugins: [],
     };
-    store.dispatch({
-      type: "SET_SITE_CONFIG",
-      payload: config,
-    });
-    expect(store.getState()).toMatchSnapshot();
+    function runReducer() {
+      return reducer(
+        {},
+        {
+          type: "SET_SITE_CONFIG",
+          payload: config,
+        }
+      );
+    }
+    expect(runReducer).toThrowErrorMatchingSnapshot();
   });
 });

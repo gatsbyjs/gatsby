@@ -12,6 +12,6 @@ export const pageSchema = Joi.object()
     path: Joi.string().required(),
     component: Joi.string().required(),
     componentChunkName: Joi.string().required(),
-    data: Joi.object(),
+    context: Joi.object(),
   })
   .unknown()

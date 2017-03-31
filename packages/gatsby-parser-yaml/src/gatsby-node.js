@@ -5,8 +5,7 @@ const jsYaml = require("js-yaml")
 const _ = require("lodash")
 const { loadNodeContents } = require("gatsby-source-filesystem")
 
-async function modifyDataTree({ args }) {
-  const { dataTree } = args
+async function modifyDataTree({ dataTree }) {
   const files = select(
     dataTree,
     `

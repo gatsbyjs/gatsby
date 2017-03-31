@@ -8,8 +8,8 @@ import parseFilepath from "parse-filepath"
 import glob from "glob"
 import apiRunnerNode from "./api-runner-node"
 import Promise from "bluebird"
-import { pagesDB } from "./globals"
 const { store } = require("../redux")
+const { boundActionCreators } = require("../redux/actions")
 import { layoutComponentChunkName, pathChunkName } from "./js-chunk-names"
 
 // Babylon has to use a require... why?
@@ -91,7 +91,7 @@ const writeChildRoutes = () => {
   ) {
     defaultLayoutExists = false
   }
-  const groupedPages = _.groupBy([...pagesDB().values()], page => {
+  const groupedPages = _.groupBy(store.getState().pages, page => {
     // If is a string we'll assume it's a working layout component.
     if (_.isString(page.layout)) {
       return page.layout
@@ -168,7 +168,7 @@ const writeChildRoutes = () => {
 
   // Add a fallback 404 route if one is defined.
   const notFoundPage = _.find(
-    [...pagesDB().values()],
+    store.getState().pages,
     page => page.path.indexOf("/404") !== -1
   )
 
@@ -212,17 +212,17 @@ const writeChildRoutes = () => {
   // Close out object.
   rootRoute += `]}`
   splitRootRoute += `]}`
-  const componentsStr = [...pagesDB().values()]
-    .map(
-      page =>
-        `class ${page.internalComponentName} extends React.Component {
+  const componentsStr = store
+    .getState()
+    .pages.map(page => {
+      return `class ${page.internalComponentName} extends React.Component {
           render () {
             const Component = preferDefault(require('${page.component}'))
             const data = require('./json/${page.jsonName}')
             return <Component {...this.props} {...data} />
           }
         }`
-    )
+    })
     .join(`\n`)
 
   childRoutes = `
@@ -342,9 +342,9 @@ const q = queue(
     const absFile = path.resolve(file)
     // Get paths for this file.
     const paths = []
-    pagesDB().forEach((value, key) => {
-      if (value.component === absFile) {
-        paths.push(value)
+    store.getState().pages.forEach(page => {
+      if (page.component === absFile) {
+        paths.push(page)
       }
     })
     console.log(`running queries for ${paths.length} paths for ${file}`)
@@ -355,6 +355,7 @@ const q = queue(
       graphql,
     }
 
+    // Handle the result of the GraphQL query.
     const handleResult = (pathInfo, result = {}) => {
       // Combine the result with the path context.
       result.pathContext = pathInfo.context
@@ -362,7 +363,7 @@ const q = queue(
       result.pathContext = pathInfo
 
       // Add result to page object.
-      const page = pagesDB().get(pathInfo.path)
+      const page = store.getState().pages.find(p => p.path === pathInfo.path)
       let jsonName = `${_.kebabCase(pathInfo.path)}.json`
       let internalComponentName = `Component${pascalCase(pathInfo.path)}`
       if (jsonName === `.json`) {
@@ -371,7 +372,7 @@ const q = queue(
       }
       page.jsonName = jsonName
       page.internalComponentName = internalComponentName
-      pagesDB(pagesDB().set(page.path, page))
+      boundActionCreators.upsertPage(page)
 
       // Save result to file.
       const resultJSON = JSON.stringify(clonedResult, null, 4)
@@ -416,11 +417,10 @@ const q = queue(
 module.exports = async (program, graphql) => {
   // Get unique array of component paths and then watch them.
   // When a component is updated, rerun queries.
-  const components = _.uniq(
-    [...pagesDB().values()].map(page => page.component)
-  )
+  const components = _.uniq(store.getState().pages.map(page => page.component))
 
   let outsideResolve
+  const returnPromise = new Promise(resolve => outsideResolve = resolve)
 
   // If there's no components yet, call the resolve early.
   if (components.length === 0) {
@@ -455,5 +455,5 @@ module.exports = async (program, graphql) => {
         q.push({ file: path, graphql, directory: program.directory }))
   }
 
-  return new Promise(resolve => outsideResolve = resolve)
+  return returnPromise
 }

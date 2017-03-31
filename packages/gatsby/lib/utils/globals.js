@@ -2,4 +2,4 @@ const s = require(`observable`).signal
 
 const pages = s()
 pages(new Map())
-exports.pagesDB = pages
+exports.rootDataTree = s()

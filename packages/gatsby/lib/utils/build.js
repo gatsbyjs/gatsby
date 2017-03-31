@@ -10,7 +10,7 @@ import buildProductionBundle from "./build-javascript"
 import postBuild from "./post-build"
 import bootstrap from "../bootstrap"
 import apiRunnerNode from "./api-runner-node"
-import { pagesDB } from "./globals"
+const { store } = require("../redux")
 
 async function html(program: any) {
   const directory = program.directory
@@ -29,7 +29,7 @@ async function html(program: any) {
   // file.
   fs.writeFileSync(
     `${program.directory}/public/tmp-pages.json`,
-    JSON.stringify([...pagesDB().values()])
+    JSON.stringify(store.getState().pages)
   )
   await buildHTML(program).catch(err =>
     console.log(`Generating HTML failed`, err))

@@ -15,7 +15,6 @@ const { store } = require("../redux")
 const debug = require("debug")("gatsby:webpack-config")
 const WebpackMD5Hash = require("webpack-md5-hash")
 const ChunkManifestPlugin = require("chunk-manifest-webpack-plugin")
-const { pagesDB } = require("../utils/globals")
 const { layoutComponentChunkName } = require("./js-chunk-names")
 const genBabelConfig = require("./babel-config")
 
@@ -167,9 +166,7 @@ module.exports = async (
         ]
       case `build-javascript`: {
         // Get array of page template component names.
-        let components = Array.from(pagesDB().values()).map(
-          page => page.component
-        )
+        let components = store.getState().pages.map(page => page.component)
         components = components.map(component =>
           layoutComponentChunkName(program.directory, component))
         components = _.uniq(components)

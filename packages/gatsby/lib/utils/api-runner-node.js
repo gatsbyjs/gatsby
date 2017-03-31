@@ -2,6 +2,7 @@ const Promise = require("bluebird")
 const glob = require("glob")
 const _ = require("lodash")
 const { store } = require("../redux")
+const { boundActionCreators } = require("../redux/actions")
 const mapSeries = require("async/mapSeries")
 
 const runAPI = (plugin, api, args) => {
@@ -15,10 +16,10 @@ const runAPI = (plugin, api, args) => {
     if (!_.includes([`mutateDataNode`], api)) {
       console.log(`calling api handler in ${plugin.resolve} for api ${api}`)
     }
-    const result = gatsbyNode[api]({
-      args: { ...args, linkPrefix },
-      pluginOptions: plugin.pluginOptions,
-    })
+    const result = gatsbyNode[api](
+      { ...args, linkPrefix, actionCreators: boundActionCreators },
+      plugin.pluginOptions
+    )
 
     return Promise.resolve(result)
   }
@@ -31,7 +32,6 @@ const hasAPIFile = plugin => glob.sync(`${plugin.resolve}/gatsby-node*`)[0]
 
 module.exports = async (api, args = {}) => {
   return new Promise(resolve => {
-    console.log(store.getState())
     const plugins = store.getState().flattenedPlugins
     // Get the list of plugins that implement gatsby-node
     if (!filteredPlugins) {

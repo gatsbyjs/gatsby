@@ -53,3 +53,23 @@ async function buildSchema(root) {
   })
   return schema
 }
+
+async function upsertNode(node) {
+  await apiRunner(`mutateDataNode`, { node })
+  let root = rootDataTree()
+
+  // Replace source node.
+  const children = root.children
+  const index = _.findIndex(children, childNode => childNode.id === node.id)
+  children[index] = node
+  mutateDataTree(children)
+}
+
+module.exports = async () => {
+  console.time(`building DataTree`)
+  let nodes = await apiRunner(`sourceNodes`, { upsertNode })
+  nodes = _.flatten(nodes)
+  await Promise.all(nodes.map(node => apiRunner(`mutateDataNode`, { node })))
+  const root = await mutateDataTree(nodes)
+  return await buildSchema(root)
+}

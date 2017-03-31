@@ -12,8 +12,8 @@ const {
   responsiveResolution,
 } = require("gatsby-plugin-sharp")
 
-exports.extendNodeType = ({ args }) => {
-  if (args.type.name !== `ImageSharp`) {
+exports.extendNodeType = ({ type }) => {
+  if (type.name !== `ImageSharp`) {
     return {}
   }
 

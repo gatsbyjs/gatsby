@@ -1,7 +1,7 @@
 const fs = require("fs")
 const Promise = require("bluebird")
 
-exports.postBuild = ({ pluginOptions }) =>
+exports.postBuild = (args, pluginOptions) =>
   new Promise(resolve => {
     const manifest = { ...pluginOptions }
     delete manifest.plugins

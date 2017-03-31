@@ -11,8 +11,7 @@ export function resolvableExtensions(ctx) {
   return [".ts", ".tsx"]
 }
 
-export function modifyWebpackConfig(ctx) {
-  const { args: { config }, pluginOptions: { compilerOptions } } = ctx
+export function modifyWebpackConfig({ config }, { compilerOptions }) {
   // CommonJS to keep Webpack happy.
   const copts = Object.assign(compilerDefaults, compilerOptions, {
     module: "commonjs",
@@ -28,11 +27,7 @@ export function modifyWebpackConfig(ctx) {
   })
 }
 
-export function preprocessSource(ctx) {
-  const {
-    args: { contents, filename },
-    pluginOptions: { compilerOptions },
-  } = ctx
+export function preprocessSource({ contents, filename }, { compilerOptions }) {
   // overwrite defaults with custom compiler options
   const copts = Object.assign(compilerDefaults, compilerOptions, {
     target: "esnext",

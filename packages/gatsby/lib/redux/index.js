@@ -1,7 +1,8 @@
 const Redux = require("redux")
 const { isFSA } = require("flux-standard-action")
-import Joi from "joi"
-import chalk from "chalk"
+const Joi = require("joi")
+const chalk = require("chalk")
+const _ = require("lodash")
 
 import { gatsbyConfigSchema } from "../joi-schemas/joi"
 
@@ -9,8 +10,6 @@ const reducer = (state, action) => {
   if (!isFSA(action)) {
     throw new Error("Not standard action", action)
   }
-
-  console.log("action", action)
 
   switch (action.type) {
     case "SET_PROGRAM":
@@ -32,6 +31,7 @@ const reducer = (state, action) => {
         console.log(chalk.bold.red(result.error))
         console.log(action.payload)
         throw new Error(`The site's gatsby.config.js failed validation`)
+        return
       }
       return {
         ...state,
@@ -47,6 +47,26 @@ const reducer = (state, action) => {
         ...state,
         flattenedPlugins: action.payload,
       }
+    case "UPSERT_PAGE":
+      const index = _.findIndex(state.pages, p => {
+        return p.path === action.payload.path
+      })
+      // If the path already exists, overwrite it.
+      // Otherwise, add it to the end.
+      if (index !== -1) {
+        return {
+          ...state,
+          pages: state.pages
+            .slice(0, index)
+            .concat(action.payload)
+            .concat(state.pages.slice(index + 1)),
+        }
+      } else {
+        return {
+          ...state,
+          pages: state.pages.concat(action.payload),
+        }
+      }
     default:
       return state
   }
@@ -55,7 +75,7 @@ const reducer = (state, action) => {
 }
 
 const initialState = {
-  program: {},
+  program: { directory: `/` },
   pages: [],
   config: {},
   plugins: [],
@@ -67,3 +87,4 @@ const initialState = {
 const store = Redux.createStore(reducer, initialState)
 
 exports.store = store
+exports.reducer = reducer
