@@ -21,9 +21,9 @@ plugins: [
 Glamor [provides many convenient ways to style your
 components](https://github.com/threepointone/glamor/blob/master/docs/howto.md).
 One particularly convenient (and suggested) way is to use its `css`
-prop. It works exactly the same as the `style` prop except it let's you
-write all CSS — psudeo classes/elements, media queries, contextual
-selectors, etc.
+prop. It works exactly the same as the default `style` prop except it let's you
+write styles using the entire CSS language instead of the subset supported by
+inline styles — psudeo classes/elements, media queries, contextual selectors, etc.
 
 ```jsx
 render () {
