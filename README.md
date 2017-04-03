@@ -201,6 +201,7 @@ include yours!
 * [Project AMP blog](https://github.com/chiedo/gatsby-amp-starter-blog)
 * [Gatstrap](https://github.com/jaxx2104/gatsby-starter-bootstrap) ([Demo](https://jaxx2104.github.io/gatsby-starter-bootstrap/))
 * [Alchemy](https://github.com/bntzio/gatsby-starter-alchemy) ([Demo](https://alchemy.netlify.com/))
+* [Superstylin'](https://github.com/bntzio/gatsby-starter-superstylin) ([Demo](https://superstylin.netlify.com/))
 
 ### Tutorial: Building a documentation site from the Gatsby Documentation Starter
 1. Install gatsby `npm install -g gatsby`
