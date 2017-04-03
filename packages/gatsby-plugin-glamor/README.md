@@ -14,7 +14,7 @@ First add the plugin to your `gatsby-config.js`.
 
 ```javascript
 plugins: [
-  `gatsby-parser-yaml`,
+  `gatsby-plugin-glamor`,
 ]
 ```
 
