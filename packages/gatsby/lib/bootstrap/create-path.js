@@ -11,7 +11,7 @@ module.exports = (basePath: string, filePath: string): string => {
     name = ``
   }
 
-  const pagePath = path.join(`/`, dirname, name, `/`)
+  const pagePath = path.posix.join(`/`, dirname, name, `/`)
 
   return pagePath
 }
