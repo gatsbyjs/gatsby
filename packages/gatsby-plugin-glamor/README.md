@@ -14,16 +14,18 @@ First add the plugin to your `gatsby-config.js`.
 
 ```javascript
 plugins: [
-  `gatsby-parser-yaml`,
+  `gatsby-plugin-glamor`,
 ]
 ```
 
 Glamor [provides many convenient ways to style your
 components](https://github.com/threepointone/glamor/blob/master/docs/howto.md).
-One particularly convenient (and suggested) way is to use its `css`
-prop. It works exactly the same as the `style` prop except it let's you
-write all CSS — psudeo classes/elements, media queries, contextual
-selectors, etc.
+One particularly convenient (and suggested) way is to use its `css` prop. It
+works exactly the same as the [default `style`
+prop](https://facebook.github.io/react/docs/dom-elements.html#style) except it
+supports the entire CSS language. So things not supported by inline styles are
+supported with Glamor like psudeo classes/elements, `@media` queries,
+parent/child/contextual selectors, etc.
 
 ```jsx
 render () {
