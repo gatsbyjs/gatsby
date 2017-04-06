@@ -35,13 +35,6 @@ const copy = Promise.promisify(fs.copy)
 const removeDir = Promise.promisify(fs.remove)
 const glob = Promise.promisify(globCB)
 
-Promise.onPossiblyUnhandledRejection(error => {
-  throw error
-})
-process.on(`unhandledRejection`, error => {
-  console.error(`UNHANDLED REJECTION`, error.stack)
-})
-
 // Path creator.
 // Auto-create pages.
 // algorithm is glob /pages directory for js/jsx/cjsx files *not*
@@ -269,27 +262,15 @@ module.exports = async (program: any) => {
   console.timeEnd(`copy gatsby files`)
 
   // Create Schema.
-  console.time(`create schema`)
-  const schema = await require(`../schema`)()
-  // const schema = await require(`../schema`)()
-  const graphqlRunner = (query, context) =>
-    graphql(schema, query, context, context, context)
-  console.timeEnd(`create schema`)
+  await require(`../schema`)()
 
-  // TODO create new folder structure for files to reflect major systems.
-  //
-  // directory structure
-  // /pages --> source plugins by default turn these files into pages.
-  // /drafts --> source plugins can have a development option which would add
-  //   drafts but only in dev server.
-  // /layouts --> layout components e.g. blog-post.js, tag-page.js
-  // /components --> this is convention only but dumping ground for react.js components
-  // /data --> default json, yaml, csv, toml source plugins extract data from these.
-  // /assets --> anything here is copied verbatim to /public
-  // /public --> build place
-  // / --> html.js, gatsby-node.js, gatsby-browser.js, gatsby-config.js
+  const graphqlRunner = (query, context) => {
+    const schema = store.getState().schema
+    return graphql(schema, query, context, context, context)
+  }
 
   // Collect resolvable extensions and attach to program.
+  // TODO refactor this to use Redux.
   const extensions = [`.js`, `.jsx`]
   const apiResults = await apiRunnerNode("resolvableExtensions")
   program.extensions = apiResults.reduce((a, b) => a.concat(b), extensions)
@@ -323,9 +304,9 @@ module.exports = async (program: any) => {
 
   console.log(`created js pages`)
 
-  await queryRunner(program, graphqlRunner)
+  await queryRunner()
   await apiRunnerNode(`generateSideEffects`)
   console.log(`bootstrap finished, time since started: ${process.uptime()}`)
 
-  return { schema, graphqlRunner }
+  return { graphqlRunner }
 }

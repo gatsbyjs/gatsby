@@ -6,39 +6,17 @@ const {
   GraphQLObjectType,
 } = require("graphql")
 
-const { rootDataTree } = require("../utils/globals")
 const siteSchema = require("./site-schema")
 const apiRunner = require("../utils/api-runner-node")
 const buildNodeTypes = require("./build-node-types")
 const buildNodeConnections = require("./build-node-connections")
-import { store } from "../redux"
+const { store } = require("../redux")
+const queryRunner = require("../utils/query-runner")
 
-async function mutateDataTree(nodes) {
-  let root = { type: `root`, children: nodes }
-
-  // Add parent reference to each source node.
-  nodes.forEach(sourceNode => {
-    sourceNode.parent = root
-  })
-
-  await apiRunner(`mutateDataTree`, { dataTree: root })
-
-  // Add parents reference to each node.
-  root = parents(root)
-  console.timeEnd(`building DataTree`)
-  rootDataTree(root)
-  return root
-}
-
-async function buildSchema(root) {
+async function buildSchema() {
   console.time(`building schema`)
-  // For each type in the DataTree, create a graphql field, by first infering fields
-  // from fields in DataTree nodes and then allowing plugins to add additional node
-  // fields, then create connections for each node type.
-  // [ { type, nodes, name } ]
-  const typesGQL = await buildNodeTypes(root)
+  const typesGQL = await buildNodeTypes()
   const connections = buildNodeConnections(_.values(typesGQL))
-  console.timeEnd(`building schema`)
 
   const schema = new GraphQLSchema({
     query: new GraphQLObjectType({
@@ -51,25 +29,53 @@ async function buildSchema(root) {
       }),
     }),
   })
-  return schema
+
+  console.timeEnd(`building schema`)
+  store.dispatch({
+    type: `SET_SCHEMA`,
+    payload: schema,
+  })
+
+  return
 }
 
-async function upsertNode(node) {
-  await apiRunner(`mutateDataNode`, { node })
-  let root = rootDataTree()
-
-  // Replace source node.
-  const children = root.children
-  const index = _.findIndex(children, childNode => childNode.id === node.id)
-  children[index] = node
-  mutateDataTree(children)
+// This seems like the most sensible way to decide when the the initial
+// search for nodes is finished. At least for filesystem based nodes. For
+// source plugins pulling from remote systems, there'll probably need to be
+// an explicit API for them to let Gatsby core know that a sync is complete.
+const debounceNodeCreation = cb => {
+  const updateNode = _.debounce(cb, 50)
+  store.subscribe(() => {
+    const state = store.getState()
+    if (
+      state.lastAction.type === "CREATE_NODE" ||
+      state.lastAction.type === `UPDATE_NODE` ||
+      state.lastAction.type === `UPDATE_SOURCE_PLUGIN_STATUS`
+    ) {
+      updateNode()
+    }
+  })
 }
 
-module.exports = async () => {
-  console.time(`building DataTree`)
-  let nodes = await apiRunner(`sourceNodes`, { upsertNode })
-  nodes = _.flatten(nodes)
-  await Promise.all(nodes.map(node => apiRunner(`mutateDataNode`, { node })))
-  const root = await mutateDataTree(nodes)
-  return await buildSchema(root)
+module.exports = () => {
+  return new Promise(resolve => {
+    console.time(`sourcing and parsing nodes`)
+    apiRunner(`sourceNodes`)
+    let builtSchema = false
+    debounceNodeCreation(() => {
+      const state = store.getState()
+      console.log(state.status)
+      // Check if the schema has been built yet and if
+      // all source plugins have reported that they're ready.
+      if (!builtSchema && _.every(_.values(state.status))) {
+        console.timeEnd(`sourcing and parsing nodes`)
+        builtSchema = true
+        // Resolve promise once the schema is built.
+        buildSchema().then(() => resolve())
+      } else {
+        // Run the query runner now.
+        queryRunner()
+      }
+    })
+  })
 }

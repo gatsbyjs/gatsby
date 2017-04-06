@@ -12,7 +12,9 @@ const {
   responsiveResolution,
 } = require("gatsby-plugin-sharp")
 
-exports.extendNodeType = ({ type }) => {
+exports.extendNodeType = (
+  { type, linkPrefix, getNodeAndSavePathDependency }
+) => {
   if (type.name !== `ImageSharp`) {
     return {}
   }
@@ -47,10 +49,10 @@ exports.extendNodeType = ({ type }) => {
           defaultValue: 50,
         },
       },
-      resolve(image, fieldArgs) {
+      resolve(image, fieldArgs, context) {
         const promise = responsiveResolution({
-          file: image.parent,
-          args: { ...fieldArgs, linkPrefix: args.linkPrefix },
+          file: getNodeAndSavePathDependency(image.parent, context.path),
+          args: { ...fieldArgs, linkPrefix },
         })
         return promise
       },
@@ -82,10 +84,10 @@ exports.extendNodeType = ({ type }) => {
           defaultValue: 50,
         },
       },
-      resolve(image, fieldArgs) {
+      resolve(image, fieldArgs, context) {
         return responsiveSizes({
-          file: image.parent,
-          args: { ...fieldArgs, linkPrefix: args.linkPrefix },
+          file: getNodeAndSavePathDependency(image.parent, context.path),
+          args: { ...fieldArgs, linkPrefix },
         })
       },
     },
@@ -128,9 +130,9 @@ exports.extendNodeType = ({ type }) => {
           defaultValue: false,
         },
       },
-      resolve(image, fieldArgs) {
+      resolve(image, fieldArgs, context) {
         return new Promise(resolve => {
-          const file = image.parent
+          const file = getNodeAndSavePathDependency(image.parent, context.path)
           if (fieldArgs.base64) {
             resolve(
               base64({
@@ -141,7 +143,7 @@ exports.extendNodeType = ({ type }) => {
             resolve(
               queueImageResizing({
                 file,
-                args: { ...fieldArgs, linkPrefix: args.linkPrefix },
+                args: { ...fieldArgs, linkPrefix },
               })
             )
           }

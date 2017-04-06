@@ -6,7 +6,7 @@ import presets from "../../utils/presets";
 
 const IndexRoute = React.createClass({
   render() {
-    // console.log(`blog posts`, this.props);
+    console.log(`blog posts`, this.props);
     const blogPosts = this.props.data.allMarkdownRemark.edges.map(
       edge => edge.node
     );

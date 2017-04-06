@@ -13,7 +13,7 @@ const Promise = require("bluebird")
 // 4. Create the responsive images.
 // 5. Set the html w/ aspect ratio helper.
 module.exports = (
-  { files, markdownNode, markdownAST, pluginOptions, linkPrefix }
+  { files, markdownNode, markdownAST, pluginOptions, linkPrefix, getNode }
 ) => {
   const defaults = {
     maxWidth: 650,
@@ -51,7 +51,10 @@ module.exports = (
         new Promise((resolve, reject) => {
           // Ignore gifs as we can't process them.
           if (isRelativeUrl(node.url) && node.url.slice(-3) !== `gif`) {
-            const imagePath = path.join(markdownNode.parent.dir, node.url)
+            const imagePath = path.join(
+              getNode(markdownNode.parent).dir,
+              node.url
+            )
             const imageNode = _.find(files, file => {
               if (file && file.id) {
                 return file.id === imagePath

@@ -15,3 +15,10 @@ export const pageSchema = Joi.object()
     context: Joi.object(),
   })
   .unknown()
+
+export const nodeSchema = Joi.object()
+  .keys({
+    id: Joi.string().required(),
+    type: Joi.string().required(),
+  })
+  .unknown()

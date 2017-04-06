@@ -5,27 +5,24 @@ const _ = require("lodash")
 
 const { loadNodeContents } = require("gatsby-source-filesystem")
 
-async function modifyDataTree({ dataTree }) {
-  const files = select(
-    dataTree,
-    `
-    File[extension="json"]
-  `
-  )
-  const contents = await Promise.map(files, file => loadNodeContents(file))
-  files.forEach((file, index) => {
-    const fileContents = contents[index]
-    const JSONArray = JSON.parse(fileContents).map(obj => ({
+async function onNodeCreate({ node, actionCreators }) {
+  const { createNode, updateNode } = actionCreators
+  if (node.extension === `json`) {
+    const content = await loadNodeContents(node)
+    // TODO validate that the JSON object has an id field?
+    // Or just add an id if one isn't set?
+    const JSONArray = JSON.parse(content).map(obj => ({
       ...obj,
-      _sourceNodeId: file.id,
-      type: _.capitalize(file.name),
+      _sourceNodeId: node.id,
+      parent: node.id,
+      type: _.capitalize(node.name),
       children: [],
     }))
 
-    file.children = file.children.concat(JSONArray)
-  })
-
-  return dataTree
+    node.children = node.children.concat(JSONArray.map(n => n.id))
+    updateNode(node)
+    _.each(JSONArray, j => createNode(j))
+  }
 }
 
-exports.modifyDataTree = modifyDataTree
+exports.onNodeCreate = onNodeCreate

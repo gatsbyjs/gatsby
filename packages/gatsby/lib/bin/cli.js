@@ -2,7 +2,17 @@ const program = require("commander")
 const packageJson = require("../../package.json")
 const path = require("path")
 const _ = require("lodash")
+const Promise = require("bluebird")
 console.log(`bin/cli: time since started:`, process.uptime())
+
+// Improve Promise error handling. Maybe... what's the best
+// practice for this these days?
+Promise.onPossiblyUnhandledRejection(error => {
+  throw error
+})
+process.on(`unhandledRejection`, error => {
+  console.error(`UNHANDLED REJECTION`, error.stack)
+})
 
 const defaultHost = process.platform === `win32` ? `localhost` : `0.0.0.0`
 

@@ -12,7 +12,7 @@ const moment = require("moment")
 const parseFilepath = require("parse-filepath")
 const mime = require("mime")
 const isRelative = require("is-relative-url")
-const { store } = require("../redux")
+const { store, getNodes } = require("../redux")
 
 const inferGraphQLType = ({ value, fieldName, ...otherArgs }) => {
   if (Array.isArray(value)) {
@@ -160,13 +160,28 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
       const matchedTypes = types.filter(
         type => type.name === mapping[fieldSelector]
       )
-      const findNode = fieldValue => {
+      if (_.isEmpty(matchedTypes)) {
+        console.log(
+          `Couldn't find a matching node type for "${fieldSelector}"`
+        )
+        return
+      }
+      const findNode = (fieldValue, path) => {
         const linkedType = mapping[fieldSelector]
+        console.log("findNode", linkedType, fieldValue)
         const linkedNode = _.find(
-          allNodes,
+          getNodes(),
           n => n.type === linkedType && n.id === fieldValue
         )
         if (linkedNode) {
+          console.log(`ADD_PAGE_DEPENDENCY`, path, linkedNode.id)
+          store.dispatch({
+            type: `ADD_PAGE_DEPENDENCY`,
+            payload: {
+              path,
+              nodeId: linkedNode.id,
+            },
+          })
           return linkedNode
         }
       }
@@ -177,20 +192,21 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
             let fieldValue = node[fieldName]
 
             if (fieldValue) {
-              return fieldValue.map(value => findNode(value))
+              return fieldValue.map(value => findNode(value, b.path))
             } else {
               return null
             }
           },
         }
       } else {
+        console.log(matchedTypes)
         inferredFields[k] = {
           type: matchedTypes[0].nodeObjectType,
           resolve: (node, a, b, { fieldName }) => {
             let fieldValue = node[fieldName]
 
             if (fieldValue) {
-              return findNode(fieldValue)
+              return findNode(fieldValue, b.path)
             } else {
               return null
             }
@@ -222,7 +238,7 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
         fieldName: k,
         nodes,
         types,
-        allNodes,
+        allNodes: getNodes(),
       })
     }
   })

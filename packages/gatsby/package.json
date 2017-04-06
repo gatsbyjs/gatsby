@@ -97,6 +97,8 @@
     "remark": "^6.2.0",
     "remark-html": "^5.0.1",
     "remark-parse": "^2.2.0",
+    "remote-redux-devtools": "^0.5.7",
+    "remotedev-server": "^0.3.0-beta-3",
     "sanitize-html": "^1.13.0",
     "sift": "^3.2.6",
     "slash": "^1.0.0",

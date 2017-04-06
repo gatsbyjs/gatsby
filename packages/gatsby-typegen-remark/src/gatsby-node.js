@@ -22,13 +22,26 @@ const inspect = require("unist-util-inspect")
 const Promise = require("bluebird")
 const prune = require("underscore.string/prune")
 
-exports.extendNodeType = ({ type, dataTree, linkPrefix }, pluginOptions) => {
+const astPromiseCache = {}
+
+// Delete Markdown AST cache when the node is recreated
+// e.g. the user saves a change to the file.
+exports.onNodeCreate = ({ node }) => {
+  if (node.type === `MarkdownRemark`) {
+    delete astPromiseCache[node.id]
+  }
+}
+
+exports.extendNodeType = (
+  { type, allNodes, linkPrefix, getNode },
+  pluginOptions
+) => {
   if (type.name !== `MarkdownRemark`) {
     return {}
   }
 
   return new Promise((resolve, reject) => {
-    const files = select(dataTree, `File`)
+    const files = allNodes.filter(n => n.type === `File`)
 
     // Setup Remark.
     const remark = new Remark({
@@ -37,7 +50,6 @@ exports.extendNodeType = ({ type, dataTree, linkPrefix }, pluginOptions) => {
       pedantic: true,
     })
 
-    const astPromiseCache = {}
     async function getAST(markdownNode) {
       if (astPromiseCache[markdownNode.id]) {
         return astPromiseCache[markdownNode.id]
@@ -51,6 +63,7 @@ exports.extendNodeType = ({ type, dataTree, linkPrefix }, pluginOptions) => {
                 return requiredPlugin.mutateSource({
                   markdownNode,
                   files,
+                  getNode,
                   pluginOptions: plugin.pluginOptions,
                 })
               } else {
@@ -97,6 +110,7 @@ exports.extendNodeType = ({ type, dataTree, linkPrefix }, pluginOptions) => {
                   return requiredPlugin({
                     markdownAST,
                     markdownNode,
+                    getNode,
                     files,
                     pluginOptions: plugin.pluginOptions,
                     linkPrefix,

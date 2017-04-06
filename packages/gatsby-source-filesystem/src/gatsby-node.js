@@ -8,91 +8,79 @@ const fs = require("fs")
 const prettyBytes = require("pretty-bytes")
 const u = require("unist-builder")
 const slash = require("slash")
+const _ = require("lodash")
+const chokidar = require("chokidar")
 
-exports.sourceNodes = ({ args, pluginOptions }) => {
-  const { upsertNodes } = args
-  return new Promise((resolve, reject) => {
-    console.time(`glob`)
-    recursive(
-      pluginOptions.path,
-      [
-        `.*.un~`,
-        `.gitignore`,
-        `.npmignore`,
-        `.babelrc`,
-        `yarn.lock`,
-        `../**/dist/**`,
-      ],
-      (err, files) => {
-        console.timeEnd(`glob`)
-        console.log(`total files`, files.length)
-
-        // Parse files
-        const mappedFiles = files.map(file => {
-          const slashed = slash(file)
-          return {
-            ...path.parse(slashed),
-            absolutePath: slashed,
-          }
+function readFile(file, pluginOptions, cb) {
+  const slashed = slash(file)
+  const slashedFile = {
+    ...path.parse(slashed),
+    absolutePath: slashed,
+  }
+  md5File(slashedFile.absolutePath, (md5Err, hash) => {
+    fs.stat(slashedFile.absolutePath, (statErr, stats) => {
+      // Stringify date objects.
+      const newFile = JSON.parse(
+        JSON.stringify({
+          type: `File`,
+          id: slashedFile.absolutePath,
+          sourceName: pluginOptions.name,
+          children: [],
+          relativePath: slash(
+            path.posix.relative(pluginOptions.path, slashedFile.absolutePath)
+          ),
+          extension: slashedFile.ext.slice(1).toLowerCase(),
+          size: stats.size,
+          prettySize: prettyBytes(stats.size),
+          modifiedTime: stats.mtime,
+          accessTime: stats.atime,
+          changeTime: stats.ctime,
+          birthTime: stats.birthtime,
+          hash,
+          ...slashedFile,
+          ...stats,
         })
-
-        console.time(`hash files`)
-        // Get hash for each file.
-        mapLimit(
-          mappedFiles,
-          15,
-          (file, cb) => md5File(file.absolutePath, cb),
-          (e, hashes) => {
-            hashes.forEach((hash, index) => {
-              mappedFiles[index].hash = hash
-            })
-            console.timeEnd(`hash files`)
-
-            console.time(`stat files`)
-            mapLimit(
-              mappedFiles,
-              15,
-              (file, cb) => fs.stat(file.absolutePath, cb),
-              (er, stats) => {
-                stats.forEach((stat, index) => {
-                  mappedFiles[index] = {
-                    ...stat,
-                    ...mappedFiles[index],
-                  }
-                })
-                console.timeEnd(`stat files`)
-
-                console.log(`total files`, mappedFiles.length)
-                console.time(`create filesystem ast`)
-                // Create Unist nodes
-                const nodes = []
-                mappedFiles.forEach(file => {
-                  nodes.push({
-                    ...JSON.parse(JSON.stringify(file)), // Stringify date objects.
-                    type: `File`,
-                    id: file.absolutePath,
-                    sourceName: pluginOptions.name,
-                    children: [],
-                    relativePath: slash(
-                      path.posix.relative(pluginOptions.path, file.absolutePath)
-                    ),
-                    extension: file.ext.slice(1).toLowerCase(),
-                    size: file.size,
-                    prettySize: prettyBytes(file.size),
-                    modifiedTime: file.mtime.toJSON(),
-                    accessTime: file.atime.toJSON(),
-                    changeTime: file.ctime.toJSON(),
-                    birthTime: file.birthtime.toJSON(),
-                    hash: file.hash,
-                  })
-                })
-                console.timeEnd(`create filesystem ast`)
-                return resolve(nodes)
-              }
-            )
-          }
-        )
-      }
-    )
+      )
+      cb(null, newFile)
+    })
   })
+}
+
+exports.sourceNodes = ({ actionCreators }, pluginOptions) => {
+  const { createNode, updateSourcePluginStatus } = actionCreators
+  updateSourcePluginStatus({
+    plugin: `source-filesystem --- ${pluginOptions.name}`,
+    ready: false,
+  })
+  let testNode
+  const watcher = chokidar.watch(pluginOptions.path, {
+    ignored: [
+      `**/*.un~`,
+      `**/.gitignore`,
+      `**/.npmignore`,
+      `**/.babelrc`,
+      `**/yarn.lock`,
+      `**/node_modules`,
+      `../**/dist/**`,
+    ],
+  })
+
+  watcher.on(`add`, path => {
+    // console.log("Added file at", path);
+    readFile(path, pluginOptions, (err, file) => createNode(file))
+  })
+
+  watcher.on(`change`, path => {
+    console.log("changed file at", path)
+    readFile(path, pluginOptions, (err, file) => createNode(file))
+  })
+  watcher.on(`ready`, () => {
+    updateSourcePluginStatus({
+      plugin: `source-filesystem --- ${pluginOptions.name}`,
+      ready: true,
+    })
+  })
+
+  // TODO add delete support.
+  return
 }

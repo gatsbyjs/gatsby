@@ -11,6 +11,33 @@ import Promise from "bluebird"
 const { store } = require("../redux")
 const { boundActionCreators } = require("../redux/actions")
 import { layoutComponentChunkName, pathChunkName } from "./js-chunk-names"
+import { graphql as graphqlFunction } from "graphql"
+
+let initialQueriesDone = false
+let invalidPages = []
+
+store.subscribe(() => {
+  const state = store.getState()
+  if (state.lastAction.type === "CREATE_NODE") {
+    console.log(`lastAction`, state.lastAction.payload.id)
+    const node = state.nodes[state.lastAction.payload.id]
+    // Find invalid pages.
+    if (state.pageDataDependencies.nodes[node.id]) {
+      invalidPages = invalidPages.concat(
+        state.pageDataDependencies.nodes[node.id]
+      )
+    }
+    // Find invalid connections
+    if (state.pageDataDependencies.connections[node.type]) {
+      invalidPages = invalidPages.concat(
+        state.pageDataDependencies.connections[node.type]
+      )
+    }
+    if (invalidPages.length > 0) {
+      console.log(`all pages invalidated by node change`, invalidPages)
+    }
+  }
+})
 
 // Babylon has to use a require... why?
 const babylon = require("babylon")
@@ -275,6 +302,31 @@ const debouncedWriteChildRoutes = _.debounce(writeChildRoutes, 250)
 // Queue for processing files
 const q = queue(
   async ({ file, graphql, directory }, callback) => {
+    const absolutePath = path.resolve(file)
+
+    // Get paths for this file.
+    let paths = []
+    store.getState().pages.forEach(page => {
+      if (page.component === absolutePath) {
+        paths.push(page)
+      }
+    })
+
+    // If we're running queries because of a source node change,
+    // filter out pages that we're invalidated.
+    if (invalidPages && invalidPages.length > 0) {
+      paths = _.filter(paths, p => _.includes(invalidPages, p.path))
+      if (paths.length > 0) {
+        console.log("filtered paths", paths.map(p => p.path))
+      }
+    }
+
+    // If there's no paths, just return.
+    if (paths.length === 0) {
+      console.log(`no queries to run for ${absolutePath}`)
+      return callback()
+    }
+
     let fileStr = fs.readFileSync(file, `utf-8`)
     let ast
     // Preprocess and attempt to parse source; return an AST if we can, log an
@@ -339,17 +391,10 @@ const q = queue(
           return
       },
     })
-    const absFile = path.resolve(file)
-    // Get paths for this file.
-    const paths = []
-    store.getState().pages.forEach(page => {
-      if (page.component === absFile) {
-        paths.push(page)
-      }
-    })
+
     console.log(`running queries for ${paths.length} paths for ${file}`)
     const pathsInfo = {
-      componentPath: absFile,
+      componentPath: absolutePath,
       directory,
       paths,
       graphql,
@@ -403,7 +448,7 @@ const q = queue(
           .then(result => handleResult(pathInfo, result))
       })
     ).then(() => {
-      console.log(`rewrote JSON for queries for ${absFile}`)
+      console.log(`rewrote JSON for queries for ${absolutePath}`)
       console.timeEnd(`graphql query time`)
       // Write out new child-routes.js in the .intermediate-representation directory
       // in the root of your site.
@@ -414,7 +459,13 @@ const q = queue(
   1
 )
 
-module.exports = async (program, graphql) => {
+module.exports = async () => {
+  const schema = store.getState().schema
+  const graphql = (query, context) => {
+    return graphqlFunction(schema, query, context, context, context)
+  }
+  const { program } = store.getState()
+
   // Get unique array of component paths and then watch them.
   // When a component is updated, rerun queries.
   const components = _.uniq(store.getState().pages.map(page => page.component))

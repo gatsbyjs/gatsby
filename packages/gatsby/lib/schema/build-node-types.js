@@ -18,28 +18,19 @@ const {
   inferInputObjectStructureFromNodes,
 } = require(`./infer-graphql-input-fields`)
 const nodeInterface = require("./node-interface")
-const { store } = require("../redux")
-const { rootDataTree } = require("../utils/globals")
-
-let dataTree
-let allNodes
-// Update local root everytime it's set.
-rootDataTree(r => {
-  dataTree = r
-  if (dataTree && dataTree.children) {
-    allNodes = select(dataTree, `*`)
-  }
-})
+const {
+  store,
+  getNodes,
+  getNode,
+  getNodeAndSavePathDependency,
+} = require("../redux")
 
 module.exports = async () =>
   new Promise(resolve => {
     const processedTypes = {}
 
-    // Identify node types in the DataTree.
-    const types = _.groupBy(allNodes, node => node.type)
-    // Delete root and rootDirectory.
-    delete types.root
-    delete types.rootDirectory
+    // Identify node types in the data.
+    const types = _.groupBy(getNodes(), node => node.type)
 
     const createNodeFields = type => {
       const defaultNodeFields = {
@@ -54,17 +45,24 @@ module.exports = async () =>
         parent: {
           type: nodeInterface,
           description: `The parent of this node.`,
+          resolve(node, a, context) {
+            return getNodeAndSavePathDependency(node.parent, context.path)
+          },
         },
         children: {
           type: new GraphQLList(nodeInterface),
           description: `The children of this node.`,
+          resolve(node, a, context) {
+            return node.children.map(id =>
+              getNodeAndSavePathDependency(id, context.path))
+          },
         },
       }
 
       const inferredFields = inferObjectStructureFromNodes({
         nodes: type.nodes,
         types: _.values(processedTypes),
-        allNodes,
+        allNodes: getNodes(),
       })
 
       return {
@@ -86,7 +84,7 @@ module.exports = async () =>
             }
             apiRunner(`extendNodeType`, {
               type: nodeType,
-              dataTree,
+              allNodes: getNodes(),
             }).then(fieldsFromPlugins => {
               const mergedFieldsFromPlugins = _.merge(...fieldsFromPlugins)
               nodeType.fieldsFromPlugins = mergedFieldsFromPlugins
@@ -111,28 +109,29 @@ module.exports = async () =>
                 args: {
                   ...inputArgs,
                 },
-                resolve(a, args) {
+                resolve(a, args, context) {
                   const runSift = require("./run-sift")
                   const latestNodes = _.filter(
-                    allNodes,
+                    getNodes(),
                     n => n.type === typeName
                   )
                   return runSift({
                     args,
                     nodes: latestNodes,
-                  })[0]
+                    path: context.path,
+                  })
                 },
               }
 
               nodeType.field = {
                 name: _.camelCase(`${typeName} field`),
                 type: nodeType.nodeObjectType,
-                resolve: (node, a, b, { fieldName }) => {
+                resolve: (node, a, context, { fieldName }) => {
                   const mapping = store.getState().config.mapping
                   const fieldSelector = `${node.___path}.${fieldName}`
                   let fieldValue = node[fieldName]
                   const sourceFileNode = _.find(
-                    allNodes,
+                    getNodes(),
                     n => n.type === `File` && n.id === node._sourceNodeId
                   )
 
@@ -146,10 +145,18 @@ module.exports = async () =>
                       fieldValue
                     )
                     const linkedFileNode = _.find(
-                      allNodes,
+                      getNodes(),
                       n => n.type === `File` && n.id === fileLinkPath
                     )
                     if (linkedFileNode) {
+                      // TODO convert to boundActionCreator
+                      store.dispatch({
+                        type: `ADD_PAGE_DEPENDENCY`,
+                        payload: {
+                          path: context.path,
+                          nodeId: linkedFileNode.id,
+                        },
+                      })
                       return linkedFileNode
                     }
                   }
@@ -165,10 +172,18 @@ module.exports = async () =>
                     let linkedFileNode
                     //linkedFileNode = select(dataTree, `${linkedType}[id="${node[fieldName]}"]`)[0]
                     linkedFileNode = _.find(
-                      allNodes,
+                      getNodes(),
                       n => n.type === linkedType && n.id === node[fieldName]
                     )
                     if (linkedFileNode) {
+                      // TODO convert to boundActionCreator
+                      store.dispatch({
+                        type: `ADD_PAGE_DEPENDENCY`,
+                        payload: {
+                          path: context.path,
+                          nodeId: linkedFileNode.id,
+                        },
+                      })
                       return linkedFileNode
                     } else if (linkedType === `File`) {
                       const fileLinkPath = path.resolve(
@@ -176,10 +191,18 @@ module.exports = async () =>
                         node[fieldName]
                       )
                       linkedFileNode = _.find(
-                        allNodes,
+                        getNodes(),
                         n => n.type === `File` && n.id === fileLinkPath
                       )
                       if (linkedFileNode) {
+                        // TODO convert to boundActionCreator
+                        store.dispatch({
+                          type: `ADD_PAGE_DEPENDENCY`,
+                          payload: {
+                            path: context.path,
+                            nodeId: linkedFileNode.id,
+                          },
+                        })
                         return linkedFileNode
                       } else {
                         console.error(

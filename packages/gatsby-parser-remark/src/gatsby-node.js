@@ -6,7 +6,9 @@ const _ = require("lodash")
 
 const { loadNodeContents } = require("gatsby-source-filesystem")
 
-async function mutateDataNode({ node }) {
+async function onNodeCreate({ node, getNode, actionCreators }) {
+  const { createNode, updateNode, connectNodes } = actionCreators
+
   // List of markdown extensions taken from
   // https://github.com/github/markup/blob/cf74e842dfd082d8001417c1bb94edd2ae06d61b/lib/github/markup/markdown.rb#L28
   const extensions = [
@@ -27,6 +29,7 @@ async function mutateDataNode({ node }) {
   const data = grayMatter(content)
   const markdownNode = {
     _sourceNodeId: node.id,
+    parent: node.id,
     type: `MarkdownRemark`,
     id: `${node.id} >> MarkdownRemark`,
     children: [],
@@ -37,7 +40,9 @@ async function mutateDataNode({ node }) {
     ...data.data,
   }
 
-  node.children.push(markdownNode)
+  node.children = node.children.concat([markdownNode.id])
+  updateNode(node)
+  createNode(markdownNode)
 }
 
-exports.mutateDataNode = mutateDataNode
+exports.onNodeCreate = onNodeCreate

@@ -4,13 +4,14 @@ const _ = require("lodash")
 const {
   connectionFromArray,
 } = require("graphql-skip-limit")
+const { store } = require("../redux/")
 
 type Node = {
   id: String,
   type: String,
 };
 
-module.exports = ({ args, nodes, connection = false }) => {
+module.exports = ({ args, nodes, connection = false, path = "" }) => {
   // Clone args as for some reason graphql-js removes the constructor
   // from nested objects which breaks a check in sift.js.
   const clonedArgs = JSON.parse(JSON.stringify(args))
@@ -68,8 +69,22 @@ module.exports = ({ args, nodes, connection = false }) => {
   if (connection) {
     const connectionArray = connectionFromArray(result, args)
     connectionArray.totalCount = result.length
+    store.dispatch({
+      type: `ADD_PAGE_DEPENDENCY`,
+      payload: {
+        path,
+        connection: result[0].type,
+      },
+    })
     return connectionArray
   } else {
-    return result
+    store.dispatch({
+      type: `ADD_PAGE_DEPENDENCY`,
+      payload: {
+        path,
+        nodeId: result[0].id,
+      },
+    })
+    return result[0]
   }
 }
