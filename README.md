@@ -13,7 +13,7 @@ Supports Markdown, HTML, and React.js pages out of the box. Easy to add
 support for additional file types.
 
 Leverages React's [component model](https://facebook.github.io/react/blog/2013/06/05/why-react.html)
- and [React Router's "nested component hierarchy"](https://github.com/rackt/react-router/blob/master/docs/Introduction.md)
+ and [React Router's "nested component hierarchy"](https://github.com/ReactTraining/react-router/blob/v3.0.3/docs/Introduction.md)
 to make templating incredibly powerful and intuitive.
 
 All templates, css, and content are *hot reloadable* — powered by
