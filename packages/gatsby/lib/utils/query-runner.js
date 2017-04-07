@@ -410,46 +410,45 @@ const q = queue(
 )
 
 module.exports = async (program, graphql) => {
-  // Get unique array of component paths and then watch them.
-  // When a component is updated, rerun queries.
-  const components = _.uniq(
-    [...pagesDB().values()].map(page => page.component)
-  )
+  return await new Promise(resolve => {
 
-  let outsideResolve
+    // Get unique array of component paths and then watch them.
+    // When a component is updated, rerun queries.
+    const components = _.uniq(
+      [...pagesDB().values()].map(page => page.component)
+    )
 
-  // If there's no components yet, call the resolve early.
-  if (components.length === 0) {
-    outsideResolve()
-  } else {
-    q.drain = () => {
-      // Only call resolve once.
-      q.drain = _.noop
-      outsideResolve()
+    // If there's no components yet, call the resolve early.
+    if (components.length === 0) {
+      resolve()
+    } else {
+      q.drain = () => {
+        // Only call resolve once.
+        q.drain = _.noop
+        resolve()
+      }
     }
-  }
 
-  components.forEach(path => {
-    q.push({ file: path, graphql, directory: program.directory })
-  })
-
-  // When not building, also start the watcher to detect when the components
-  // change.
-  if (_.last(program.parent.rawArgs) !== `build`) {
-    const watcher = chokidar.watch(components, {
-      //var watcher = chokidar.watch('/Users/kylemathews/programs/blog/pages/*.js', {
-      ignored: /[\/\\]\./,
-      persistent: true,
+    components.forEach(path => {
+      q.push({ file: path, graphql, directory: program.directory })
     })
 
-    watcher
-      .on(`add`, path =>
-        q.push({ file: path, graphql, directory: program.directory }))
-      .on(`change`, path =>
-        q.push({ file: path, graphql, directory: program.directory }))
-      .on(`unlink`, path =>
-        q.push({ file: path, graphql, directory: program.directory }))
-  }
+    // When not building, also start the watcher to detect when the components
+    // change.
+    if (_.last(program.parent.rawArgs) !== `build`) {
+      require('fs').writeFileSync('D:/Projets/gatsby/log-queryrunner-418.json', JSON.stringify(components, "", 2));
+      const watcher = chokidar.watch(components, {
+        ignored: /[\/\\]\./,
+        persistent: true,
+      })
 
-  return new Promise(resolve => outsideResolve = resolve)
+      watcher
+        .on(`add`, path =>
+          q.push({ file: path, graphql, directory: program.directory }))
+        .on(`change`, path =>
+          q.push({ file: path, graphql, directory: program.directory }))
+        .on(`unlink`, path =>
+          q.push({ file: path, graphql, directory: program.directory }))
+    }
+  });
 }
