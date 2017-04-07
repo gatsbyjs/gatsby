@@ -17,20 +17,6 @@ const babylon = require("babylon")
 
 const pascalCase = _.flow(_.camelCase, _.upperFirst)
 
-const hashStr = function(str) {
-  let hash = 5381
-  let i = str.length
-
-  while (i) {
-    hash = hash * 33 ^ str.charCodeAt(--i)
-  }
-
-  /* JavaScript does bitwise operations (like XOR, above) on 32-bit signed
-   * integers. Since we want the results to be always positive, convert the
-   * signed int to an unsigned by doing an unsigned bitshift. */
-  return hash >>> 0
-}
-
 // Write out routes file.
 // Loop through all paths and write them out to child-routes.js
 const writeChildRoutes = () => {
@@ -129,7 +115,6 @@ const writeChildRoutes = () => {
       if (!indexPage) {
         indexPage = _.first(_.sortBy(pages, page => page.path.length))
       }
-      const otherPages = _.filter(pages, page => page.path !== indexPage.path)
       let route = `
       {
         path: '${indexPage.path}',
@@ -344,12 +329,6 @@ const q = queue(
       }
     })
     console.log(`running queries for ${paths.length} paths for ${file}`)
-    const pathsInfo = {
-      componentPath: absFile,
-      directory,
-      paths,
-      graphql,
-    }
 
     const handleResult = (pathInfo, result = {}) => {
       // Combine the result with the path context.
