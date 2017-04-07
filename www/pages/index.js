@@ -1,7 +1,7 @@
-import React from "react"
-import Link from "react-router/lib/Link"
+import React from "react";
+import Link from "react-router/lib/Link";
 
-import { rhythm } from "utils/typography"
+import { rhythm } from "utils/typography";
 
 const IndexRoute = React.createClass({
   render() {
@@ -12,11 +12,11 @@ const IndexRoute = React.createClass({
           Docs
         </Link>
       </div>
-    )
+    );
   },
-})
+});
 
-export default IndexRoute
+export default IndexRoute;
 
 export const pageQuery = `
 {
@@ -26,4 +26,4 @@ export const pageQuery = `
     }
   }
 }
-`
+`;

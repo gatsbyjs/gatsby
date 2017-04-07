@@ -1,54 +1,54 @@
-import queue from "async/queue"
-import chokidar from "chokidar"
-import fs from "fs"
-import _ from "lodash"
-import traverse from "babel-traverse"
-import path from "path"
-import parseFilepath from "parse-filepath"
-import glob from "glob"
-import apiRunnerNode from "./api-runner-node"
-import Promise from "bluebird"
-import slash from "slash"
-import { pagesDB, siteDB, programDB } from "./globals"
-import { layoutComponentChunkName, pathChunkName } from "./js-chunk-names"
+import queue from "async/queue";
+import chokidar from "chokidar";
+import fs from "fs";
+import _ from "lodash";
+import traverse from "babel-traverse";
+import path from "path";
+import parseFilepath from "parse-filepath";
+import glob from "glob";
+import apiRunnerNode from "./api-runner-node";
+import Promise from "bluebird";
+import slash from "slash";
+import { pagesDB, siteDB, programDB } from "./globals";
+import { layoutComponentChunkName, pathChunkName } from "./js-chunk-names";
 
 // Babylon has to use a require... why?
-const babylon = require("babylon")
+const babylon = require("babylon");
 
-const pascalCase = _.flow(_.camelCase, _.upperFirst)
+const pascalCase = _.flow(_.camelCase, _.upperFirst);
 
 // Write out routes file.
 // Loop through all paths and write them out to child-routes.js
 const writeChildRoutes = () => {
-  const directory = programDB().directory
-  let childRoutes = ``
-  let splitChildRoutes = ``
+  const directory = programDB().directory;
+  let childRoutes = ``;
+  let splitChildRoutes = ``;
 
   const genChildRoute = (page, noPath) => {
-    let pathStr = ``
+    let pathStr = ``;
     if (!noPath) {
-      pathStr = `path:'${page.path}',`
+      pathStr = `path:'${page.path}',`;
     }
     return `
       {
         ${pathStr}
         component: ${page.internalComponentName},
       },
-    `
-  }
+    `;
+  };
 
   const genSplitChildRoute = (page, noPath = false) => {
-    const pathName = pathChunkName(page.path)
+    const pathName = pathChunkName(page.path);
     const layoutName = layoutComponentChunkName(
       programDB().directory,
       page.component
-    )
-    let pathStr = ``
+    );
+    let pathStr = ``;
     if (!noPath) {
       if (programDB().prefixLinks) {
-        pathStr = `path:'${_.get(siteDB().get(`config`), `linkPrefix`, ``)}${page.path}',`
+        pathStr = `path:'${_.get(siteDB().get(`config`), `linkPrefix`, ``)}${page.path}',`;
       } else {
-        pathStr = `path:'${page.path}',`
+        pathStr = `path:'${page.path}',`;
       }
     }
 
@@ -65,55 +65,55 @@ const writeChildRoutes = () => {
           }, '${layoutName}')
         }
       },
-    `
-  }
+    `;
+  };
 
   // Group pages under their layout component (if any).
-  let defaultLayoutExists = true
+  let defaultLayoutExists = true;
   if (glob.sync(`${programDB().directory}/layouts/default.*`).length === 0) {
-    defaultLayoutExists = false
+    defaultLayoutExists = false;
   }
   const groupedPages = _.groupBy([...pagesDB().values()], page => {
     // If is a string we'll assume it's a working layout component.
     if (_.isString(page.layout)) {
-      return page.layout
+      return page.layout;
       // If the user explicitely turns off layout, put page in undefined bucket.
     } else if (page.layout === false) {
-      return `undefined`
+      return `undefined`;
       // Otherwise assume the default layout should handle this page.
     } else if (defaultLayoutExists) {
-      return `default`
+      return `default`;
       // We got nothing left, undefined.
     } else {
-      return `undefined`
+      return `undefined`;
     }
-  })
-  let rootRoute = `{ childRoutes: [` // We close this out at the bottom.
-  let splitRootRoute = `{ childRoutes: [` // We close this out at the bottom.
+  });
+  let rootRoute = `{ childRoutes: [`; // We close this out at the bottom.
+  let splitRootRoute = `{ childRoutes: [`; // We close this out at the bottom.
   _.forEach(groupedPages, (pages, layout) => {
-    let route = `{`
-    let splitRoute = `{`
+    let route = `{`;
+    let splitRoute = `{`;
     if (layout === `undefined`) {
       // If a layout isn't defined then don't provide an index route, etc.
-      route += `childRoutes: [`
-      splitRoute += `childRoutes: [`
+      route += `childRoutes: [`;
+      splitRoute += `childRoutes: [`;
       pages.forEach(page => {
-        route += genChildRoute(page)
-        splitRoute += genSplitChildRoute(page)
-      })
-      route += `]},`
-      splitRoute += `]},`
-      rootRoute += route
-      splitRootRoute += splitRoute
+        route += genChildRoute(page);
+        splitRoute += genSplitChildRoute(page);
+      });
+      route += `]},`;
+      splitRoute += `]},`;
+      rootRoute += route;
+      splitRootRoute += splitRoute;
     } else {
-      let indexPage
+      let indexPage;
       indexPage = _.first(
         _.filter(pages, page => parseFilepath(page.component).name === `index`)
-      )
+      );
       // If there's not an index page, just pick the one with the shortest path.
       // Probably a bad heuristic.
       if (!indexPage) {
-        indexPage = _.first(_.sortBy(pages, page => page.path.length))
+        indexPage = _.first(_.sortBy(pages, page => page.path.length));
       }
       let route = `
       {
@@ -121,12 +121,12 @@ const writeChildRoutes = () => {
         component: preferDefault(require('${programDB().directory}/layouts/${layout}')),
         indexRoute: ${genChildRoute(indexPage, true)}
         childRoutes: [
-      `
-      let pathStr
+      `;
+      let pathStr;
       if (programDB().prefixLinks) {
-        pathStr = `path:'${_.get(siteDB().get(`config`), `linkPrefix`, ``)}${indexPage.path}',`
+        pathStr = `path:'${_.get(siteDB().get(`config`), `linkPrefix`, ``)}${indexPage.path}',`;
       } else {
-        pathStr = `path:'${indexPage.path}',`
+        pathStr = `path:'${indexPage.path}',`;
       }
       let splitRoute = `
       {
@@ -134,24 +134,24 @@ const writeChildRoutes = () => {
         component: preferDefault(require('${programDB().directory}/layouts/${layout}')),
         indexRoute: ${genSplitChildRoute(indexPage, true)}
         childRoutes: [
-      `
+      `;
       pages.forEach(page => {
-        route += genChildRoute(page)
-        splitRoute += genSplitChildRoute(page)
-      })
+        route += genChildRoute(page);
+        splitRoute += genSplitChildRoute(page);
+      });
 
-      route += `]},`
-      splitRoute += `]},`
-      rootRoute += route
-      splitRootRoute += splitRoute
+      route += `]},`;
+      splitRoute += `]},`;
+      rootRoute += route;
+      splitRootRoute += splitRoute;
     }
-  })
+  });
 
   // Add a fallback 404 route if one is defined.
   const notFoundPage = _.find(
     [...pagesDB().values()],
     page => page.path.indexOf("/404") !== -1
-  )
+  );
 
   if (notFoundPage) {
     const notFoundPageStr = `
@@ -162,12 +162,12 @@ const writeChildRoutes = () => {
           component: preferDefault(require('${notFoundPage.component}')),
         },
       },
-    `
-    const pathName = pathChunkName(notFoundPage.path)
+    `;
+    const pathName = pathChunkName(notFoundPage.path);
     const layoutName = layoutComponentChunkName(
       programDB().directory,
       notFoundPage.component
-    )
+    );
     const notFoundPageSplitStr = `
       {
         path: "*",
@@ -184,15 +184,15 @@ const writeChildRoutes = () => {
           }
         },
       },
-    `
+    `;
 
-    rootRoute += notFoundPageStr
-    splitRootRoute += notFoundPageSplitStr
+    rootRoute += notFoundPageStr;
+    splitRootRoute += notFoundPageSplitStr;
   }
 
   // Close out object.
-  rootRoute += `]}`
-  splitRootRoute += `]}`
+  rootRoute += `]}`;
+  splitRootRoute += `]}`;
   const componentsStr = [...pagesDB().values()]
     .map(
       page =>
@@ -204,7 +204,7 @@ const writeChildRoutes = () => {
           }
         }`
     )
-    .join(`\n`)
+    .join(`\n`);
 
   childRoutes = `
     import React from 'react'
@@ -234,52 +234,52 @@ const writeChildRoutes = () => {
 
     ${componentsStr}
     const rootRoute = ${rootRoute}
-    module.exports = rootRoute`
+    module.exports = rootRoute`;
   splitChildRoutes = `
     import React from 'react'
 
     // prefer default export if available
     const preferDefault = m => m && m.default || m
     const rootRoute = ${splitRootRoute}
-    module.exports = rootRoute`
+    module.exports = rootRoute`;
   fs.writeFileSync(
     `${directory}/.intermediate-representation/child-routes.js`,
     childRoutes
-  )
+  );
   fs.writeFileSync(
     `${directory}/.intermediate-representation/split-child-routes.js`,
     splitChildRoutes
-  )
-}
-const debouncedWriteChildRoutes = _.debounce(writeChildRoutes, 250)
+  );
+};
+const debouncedWriteChildRoutes = _.debounce(writeChildRoutes, 250);
 
 // Queue for processing files
 const q = queue(
   async ({ file, graphql, directory }, callback) => {
-    let fileStr = fs.readFileSync(file, `utf-8`)
-    let ast
+    let fileStr = fs.readFileSync(file, `utf-8`);
+    let ast;
     // Preprocess and attempt to parse source; return an AST if we can, log an error if we can't.
     // I'm unconvinced that this is an especially good implementation...
     const transpiled = await apiRunnerNode(`preprocessSource`, {
       filename: file,
       contents: fileStr,
-    })
+    });
     if (transpiled.length) {
       for (const item of transpiled) {
         try {
           const tmp = babylon.parse(item, {
             sourceType: `module`,
             plugins: [`*`],
-          })
-          ast = tmp
-          break
+          });
+          ast = tmp;
+          break;
         } catch (e) {
-          console.info(e)
-          continue
+          console.info(e);
+          continue;
         }
       }
       if (ast === undefined) {
-        console.error(`Failed to parse preprocessed file ${file}`)
+        console.error(`Failed to parse preprocessed file ${file}`);
       }
     } else {
       try {
@@ -287,130 +287,129 @@ const q = queue(
           sourceType: `module`,
           sourceFilename: true,
           plugins: [`*`],
-        })
+        });
       } catch (e) {
-        console.log(`Failed to parse ${file}`)
-        console.log(e)
+        console.log(`Failed to parse ${file}`);
+        console.log(e);
       }
     }
 
     // Get query for this file.
-    let query
+    let query;
     traverse(ast, {
       ExportNamedDeclaration(path, state) {
         // cache declaration node
-        const declaration = path.node.declaration.declarations[0]
+        const declaration = path.node.declaration.declarations[0];
         // we're looking for a ES6 named export called "pageQuery"
-        const name = declaration.id.name
+        const name = declaration.id.name;
         if (name === `pageQuery`) {
-          const type = declaration.init.type
+          const type = declaration.init.type;
           if (type === `TemplateLiteral`) {
             // most pageQueries will be template strings
-            const chunks = []
+            const chunks = [];
             for (const quasi of declaration.init.quasis) {
-              chunks.push(quasi.value.cooked)
+              chunks.push(quasi.value.cooked);
             }
-            query = chunks.join(``)
+            query = chunks.join(``);
           } else if (type === `StringLiteral`) {
             // fun fact: CoffeeScript can only generate StringLiterals
-            query = declaration.init.extra.rawValue
+            query = declaration.init.extra.rawValue;
           }
-          console.time(`graphql query time`)
+          console.time(`graphql query time`);
         } else
-          return
+          return;
       },
-    })
+    });
     const absFile = slash(path.resolve(file));
     // Get paths for this file.
-    const paths = []
+    const paths = [];
     pagesDB().forEach((value, key) => {
       if (value.component === absFile) {
-        paths.push(value)
+        paths.push(value);
       }
-    })
-    console.log(`running queries for ${paths.length} paths for ${file}`)
+    });
+    console.log(`running queries for ${paths.length} paths for ${file}`);
 
     const handleResult = (pathInfo, result = {}) => {
       // Combine the result with the path context.
-      result.pathContext = pathInfo.context
-      const clonedResult = { ...result }
-      result.pathContext = pathInfo
+      result.pathContext = pathInfo.context;
+      const clonedResult = { ...result };
+      result.pathContext = pathInfo;
 
       // Add result to page object.
-      const page = pagesDB().get(pathInfo.path)
-      let jsonName = `${_.kebabCase(pathInfo.path)}.json`
-      let internalComponentName = `Component${pascalCase(pathInfo.path)}`
+      const page = pagesDB().get(pathInfo.path);
+      let jsonName = `${_.kebabCase(pathInfo.path)}.json`;
+      let internalComponentName = `Component${pascalCase(pathInfo.path)}`;
       if (jsonName === `.json`) {
-        jsonName = `index.json`
-        internalComponentName = `ComponentIndex`
+        jsonName = `index.json`;
+        internalComponentName = `ComponentIndex`;
       }
-      page.jsonName = jsonName
-      page.internalComponentName = internalComponentName
-      pagesDB(pagesDB().set(page.path, page))
+      page.jsonName = jsonName;
+      page.internalComponentName = internalComponentName;
+      pagesDB(pagesDB().set(page.path, page));
 
       // Save result to file.
-      const resultJSON = JSON.stringify(clonedResult, null, 4)
+      const resultJSON = JSON.stringify(clonedResult, null, 4);
       fs.writeFileSync(
         `${directory}/.intermediate-representation/json/${jsonName}`,
         resultJSON
-      )
+      );
 
-      return null
-    }
+      return null;
+    };
 
     // Run queries for each page component.
-    console.time(`graphql query time`)
+    console.time(`graphql query time`);
     Promise.all(
       paths.map(pathInfo => {
-        let pathContext
+        let pathContext;
         // Mixin the path context to the top-level.
         // TODO do runtime check that user not passing in key that conflicts
         // w/ top-level keys e.g. path or component.
         if (pathInfo.context) {
-          pathContext = { ...pathInfo, ...pathInfo.context }
+          pathContext = { ...pathInfo, ...pathInfo.context };
         } else {
-          pathContext = { ...pathInfo }
+          pathContext = { ...pathInfo };
         }
 
         return graphql(query, pathContext)
           .catch(() => handleResult(pathInfo))
-          .then(result => handleResult(pathInfo, result))
+          .then(result => handleResult(pathInfo, result));
       })
     ).then(() => {
-      console.log(`rewrote JSON for queries for ${absFile}`)
-      console.timeEnd(`graphql query time`)
+      console.log(`rewrote JSON for queries for ${absFile}`);
+      console.timeEnd(`graphql query time`);
       // Write out new child-routes.js in the .intermediate-representation directory
       // in the root of your site.
-      debouncedWriteChildRoutes()
-      callback()
-    })
+      debouncedWriteChildRoutes();
+      callback();
+    });
   },
   1
-)
+);
 
 module.exports = async (program, graphql) => {
   return await new Promise(resolve => {
-
     // Get unique array of component paths and then watch them.
     // When a component is updated, rerun queries.
     const components = _.uniq(
       [...pagesDB().values()].map(page => page.component)
-    )
+    );
 
     // If there's no components yet, call the resolve early.
     if (components.length === 0) {
-      resolve()
+      resolve();
     } else {
       q.drain = () => {
         // Only call resolve once.
-        q.drain = _.noop
-        resolve()
-      }
+        q.drain = _.noop;
+        resolve();
+      };
     }
 
     components.forEach(path => {
-      q.push({ file: path, graphql, directory: program.directory })
-    })
+      q.push({ file: path, graphql, directory: program.directory });
+    });
 
     // When not building, also start the watcher to detect when the components
     // change.
@@ -418,7 +417,7 @@ module.exports = async (program, graphql) => {
       const watcher = chokidar.watch(components, {
         ignored: /[\/\\]\./,
         persistent: true,
-      })
+      });
 
       watcher
         .on(`add`, path =>
@@ -426,7 +425,7 @@ module.exports = async (program, graphql) => {
         .on(`change`, path =>
           q.push({ file: path, graphql, directory: program.directory }))
         .on(`unlink`, path =>
-          q.push({ file: path, graphql, directory: program.directory }))
+          q.push({ file: path, graphql, directory: program.directory }));
     }
   });
-}
+};

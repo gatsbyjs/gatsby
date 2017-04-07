@@ -1,11 +1,11 @@
-import React from "react"
+import React from "react";
 
-import { rhythm, scale } from "utils/typography"
-import presets from "../utils/presets"
+import { rhythm, scale } from "utils/typography";
+import presets from "../utils/presets";
 
 const DocsTemplate = React.createClass({
   render() {
-    const packageName = this.props.data.markdownRemark.headings[0].value
+    const packageName = this.props.data.markdownRemark.headings[0].value;
     return (
       <div>
         <a
@@ -29,11 +29,11 @@ const DocsTemplate = React.createClass({
           }}
         />
       </div>
-    )
+    );
   },
-})
+});
 
-export default DocsTemplate
+export default DocsTemplate;
 
 export const pageQuery = `
   query BlogPostByPath($slug: String!) {
@@ -47,4 +47,4 @@ export const pageQuery = `
       html
     }
   }
-`
+`;

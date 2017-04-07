@@ -8,12 +8,12 @@ const {
   GraphQLList,
   GraphQLEnumType,
   GraphQLNonNull,
-} = require("graphql")
-const _ = require("lodash")
-const moment = require("moment")
-const typeOf = require("type-of")
+} = require("graphql");
+const _ = require("lodash");
+const moment = require("moment");
+const typeOf = require("type-of");
 
-const { extractFieldExamples, buildFieldEnumValues } = require("./ast-utils")
+const { extractFieldExamples, buildFieldEnumValues } = require("./ast-utils");
 
 const typeFields = type => {
   switch (type) {
@@ -21,26 +21,26 @@ const typeFields = type => {
       return {
         eq: { type: GraphQLBoolean },
         ne: { type: GraphQLBoolean },
-      }
+      };
     case `string`:
       return {
         eq: { type: GraphQLString },
         ne: { type: GraphQLString },
         regex: { type: GraphQLString },
         glob: { type: GraphQLString },
-      }
+      };
     case `int`:
       return {
         eq: { type: GraphQLInt },
         ne: { type: GraphQLInt },
-      }
+      };
     case `float`:
       return {
         eq: { type: GraphQLFloat },
         ne: { type: GraphQLFloat },
-      }
+      };
   }
-}
+};
 
 const inferGraphQLInputFields = (exports.inferGraphQLInputFields = (
   value,
@@ -51,31 +51,31 @@ const inferGraphQLInputFields = (exports.inferGraphQLInputFields = (
 ) => {
   switch (typeOf(value)) {
     case `array`:
-      let headType = typeOf(value[0])
+      let headType = typeOf(value[0]);
       // Check if headType is a number.
       if (headType === `number`) {
         if (value[0] % 1 === 0) {
-          headType = `int`
+          headType = `int`;
         } else {
-          headType = `float`
+          headType = `float`;
         }
       }
 
       // Determine type for in operator.
-      let inType
+      let inType;
       switch (headType) {
         case `int`:
-          inType = GraphQLInt
-          break
+          inType = GraphQLInt;
+          break;
         case `float`:
-          inType = GraphQLFloat
-          break
+          inType = GraphQLFloat;
+          break;
         case `string`:
-          inType = GraphQLString
-          break
+          inType = GraphQLString;
+          break;
         case `boolean`:
-          inType = GraphQLBoolean
-          break
+          inType = GraphQLBoolean;
+          break;
       }
 
       return {
@@ -86,7 +86,7 @@ const inferGraphQLInputFields = (exports.inferGraphQLInputFields = (
             in: { type: new GraphQLList(inType) },
           },
         }),
-      }
+      };
     case `boolean`:
       return {
         type: new GraphQLInputObjectType({
@@ -95,7 +95,7 @@ const inferGraphQLInputFields = (exports.inferGraphQLInputFields = (
             ...typeFields(`boolean`),
           },
         }),
-      }
+      };
     case `string`:
       return {
         type: new GraphQLInputObjectType({
@@ -104,14 +104,14 @@ const inferGraphQLInputFields = (exports.inferGraphQLInputFields = (
             ...typeFields(`string`),
           },
         }),
-      }
+      };
     case `object`:
       return {
         type: new GraphQLInputObjectType({
           name: _.camelCase(`${namespace} ${selector} ${key}InputObject`),
           fields: inferInputObjectStructureFromNodes(nodes, key, namespace),
         }),
-      }
+      };
     case `number`:
       if (value % 1 === 0) {
         return {
@@ -121,7 +121,7 @@ const inferGraphQLInputFields = (exports.inferGraphQLInputFields = (
               ...typeFields(`int`),
             },
           }),
-        }
+        };
       } else {
         return {
           type: new GraphQLInputObjectType({
@@ -130,12 +130,12 @@ const inferGraphQLInputFields = (exports.inferGraphQLInputFields = (
               ...typeFields(`float`),
             },
           }),
-        }
+        };
       }
     default:
-      return null
+      return null;
   }
-})
+});
 
 const inferInputObjectStructureFromNodes = (exports.inferInputObjectStructureFromNodes = (
   nodes: any,
@@ -146,9 +146,9 @@ const inferInputObjectStructureFromNodes = (exports.inferInputObjectStructureFro
     nodes,
     selector,
     deleteNodeFields: true,
-  })
+  });
 
-  const inferredFields = {}
+  const inferredFields = {};
   _.each(fieldExamples, (v, k) => {
     inferredFields[k] = inferGraphQLInputFields(
       v,
@@ -156,17 +156,17 @@ const inferInputObjectStructureFromNodes = (exports.inferInputObjectStructureFro
       nodes,
       selector,
       namespace
-    )
-  })
+    );
+  });
 
   // Add sorting (but only to the top level).
   if (!selector || selector === ``) {
-    const enumValues = buildFieldEnumValues(nodes)
+    const enumValues = buildFieldEnumValues(nodes);
 
     const SortByType = new GraphQLEnumType({
       name: `${namespace}SortByFieldsEnum`,
       values: enumValues,
-    })
+    });
 
     inferredFields.sortBy = {
       type: new GraphQLInputObjectType({
@@ -189,8 +189,8 @@ const inferInputObjectStructureFromNodes = (exports.inferInputObjectStructureFro
           },
         },
       }),
-    }
+    };
   }
 
-  return inferredFields
-})
+  return inferredFields;
+});

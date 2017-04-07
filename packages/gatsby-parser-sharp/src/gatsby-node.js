@@ -1,9 +1,9 @@
-const select = require("unist-util-select")
-const Promise = require("bluebird")
+const select = require("unist-util-select");
+const Promise = require("bluebird");
 
 exports.modifyAST = ({ args }) =>
   new Promise(resolve => {
-    const { ast } = args
+    const { ast } = args;
     const files = select(
       ast,
       `
@@ -15,17 +15,17 @@ exports.modifyAST = ({ args }) =>
       File[extension="tiff"],
       File[extension="svg"]
     `
-    )
+    );
     files.forEach(file => {
       const imageNode = {
         _sourceNodeId: file.id,
         type: `ImageSharp`,
         id: `${file.id} >> ImageSharp`,
         children: [],
-      }
+      };
 
-      file.children.push(imageNode)
-    })
+      file.children.push(imageNode);
+    });
 
-    return resolve(ast)
-  })
+    return resolve(ast);
+  });

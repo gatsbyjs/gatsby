@@ -4,17 +4,17 @@ const {
   GraphQLString,
   GraphQLInt,
   GraphQLFloat,
-} = require("graphql")
+} = require("graphql");
 const {
   queueImageResizing,
   base64,
   responsiveSizes,
   responsiveResolution,
-} = require("gatsby-plugin-sharp")
+} = require("gatsby-plugin-sharp");
 
 exports.extendNodeType = ({ args }) => {
   if (args.type.name !== `ImageSharp`) {
-    return {}
+    return {};
   }
 
   return {
@@ -51,8 +51,8 @@ exports.extendNodeType = ({ args }) => {
         const promise = responsiveResolution({
           file: image.parent,
           args: { ...fieldArgs, linkPrefix: args.linkPrefix },
-        })
-        return promise
+        });
+        return promise;
       },
     },
     responsiveSizes: {
@@ -86,7 +86,7 @@ exports.extendNodeType = ({ args }) => {
         return responsiveSizes({
           file: image.parent,
           args: { ...fieldArgs, linkPrefix: args.linkPrefix },
-        })
+        });
       },
     },
     resize: {
@@ -130,23 +130,23 @@ exports.extendNodeType = ({ args }) => {
       },
       resolve(image, fieldArgs) {
         return new Promise(resolve => {
-          const file = image.parent
+          const file = image.parent;
           if (fieldArgs.base64) {
             resolve(
               base64({
                 file,
               })
-            )
+            );
           } else {
             resolve(
               queueImageResizing({
                 file,
                 args: { ...fieldArgs, linkPrefix: args.linkPrefix },
               })
-            )
+            );
           }
-        })
+        });
       },
     },
-  }
-}
+  };
+};

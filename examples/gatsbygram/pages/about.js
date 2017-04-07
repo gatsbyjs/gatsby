@@ -1,5 +1,5 @@
-import React from "react"
-import { rhythm } from "../utils/typography"
+import React from "react";
+import { rhythm } from "../utils/typography";
 
 class About extends React.Component {
   render() {
@@ -33,8 +33,8 @@ class About extends React.Component {
           </a>
         </p>
       </div>
-    )
+    );
   }
 }
 
-export default About
+export default About;

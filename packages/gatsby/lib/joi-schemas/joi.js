@@ -1,11 +1,11 @@
-const Joi = require("joi")
+const Joi = require("joi");
 
 export const gatsbyConfigSchema = Joi.object().keys({
   siteMetadata: Joi.object(),
   linkPrefix: Joi.string(),
   mapping: Joi.object(),
   plugins: Joi.array(),
-})
+});
 
 export const pageSchema = Joi.object()
   .keys({
@@ -14,4 +14,4 @@ export const pageSchema = Joi.object()
     componentChunkName: Joi.string().required(),
     data: Joi.object(),
   })
-  .unknown()
+  .unknown();

@@ -1,57 +1,57 @@
-import React from "react"
-import chunk from "lodash/chunk"
-import Gravatar from "react-gravatar"
+import React from "react";
+import chunk from "lodash/chunk";
+import Gravatar from "react-gravatar";
 
-import { rhythm, scale } from "../utils/typography"
-import presets from "../utils/presets"
-import Post from "../components/post"
+import { rhythm, scale } from "../utils/typography";
+import presets from "../utils/presets";
+import Post from "../components/post";
 
 // This would normally be in a Redux store or some other global data store.
 if (typeof window !== `undefined`) {
-  window.postsToShow = 12
+  window.postsToShow = 12;
 }
 
 class Index extends React.Component {
   constructor() {
-    super()
-    let postsToShow = 12
+    super();
+    let postsToShow = 12;
     if (typeof window !== `undefined`) {
-      postsToShow = window.postsToShow
+      postsToShow = window.postsToShow;
     }
 
     this.state = {
       showingMore: postsToShow > 12,
       postsToShow,
-    }
+    };
   }
 
   update() {
     const distanceToBottom = document.documentElement.offsetHeight -
-      (window.scrollY + window.innerHeight)
+      (window.scrollY + window.innerHeight);
     if (this.state.showingMore && distanceToBottom < 100) {
-      this.setState({ postsToShow: this.state.postsToShow + 12 })
+      this.setState({ postsToShow: this.state.postsToShow + 12 });
     }
-    this.ticking = false
+    this.ticking = false;
   }
 
   handleScroll = () => {
     if (!this.ticking) {
-      this.ticking = true
-      requestAnimationFrame(() => this.update())
+      this.ticking = true;
+      requestAnimationFrame(() => this.update());
     }
   };
 
   componentDidMount() {
-    window.addEventListener(`scroll`, this.handleScroll)
+    window.addEventListener(`scroll`, this.handleScroll);
   }
 
   componentWillUnmount() {
-    window.removeEventListener(`scroll`, this.handleScroll)
-    window.postsToShow = this.state.postsToShow
+    window.removeEventListener(`scroll`, this.handleScroll);
+    window.postsToShow = this.state.postsToShow;
   }
 
   render() {
-    this.context.setEdges(this.props.data.allPosts.edges)
+    this.context.setEdges(this.props.data.allPosts.edges);
     return (
       <div
         css={{
@@ -157,7 +157,7 @@ class Index extends React.Component {
                 />
               ))}
             </div>
-          )
+          );
         })}
         {!this.state.showingMore &&
           <a
@@ -192,21 +192,21 @@ class Index extends React.Component {
               this.setState({
                 postsToShow: this.state.postsToShow + 12,
                 showingMore: true,
-              })
+              });
             }}
           >
             Load More
           </a>}
       </div>
-    )
+    );
   }
 }
 
 Index.contextTypes = {
   setEdges: React.PropTypes.func,
-}
+};
 
-export default Index
+export default Index;
 
 export const pageQuery = `
 query allImages {
@@ -236,4 +236,4 @@ query allImages {
     }
   }
 }
-`
+`;

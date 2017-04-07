@@ -1,14 +1,14 @@
 /* @flow weak */
-import path from "path"
-import glob from "glob"
-import fs from "fs-extra"
-import async from "async"
-import parsePath from "parse-filepath"
-import _ from "lodash"
-const debug = require("debug")("gatsby:post-build")
+import path from "path";
+import glob from "glob";
+import fs from "fs-extra";
+import async from "async";
+import parsePath from "parse-filepath";
+import _ from "lodash";
+const debug = require("debug")("gatsby:post-build");
 
 module.exports = (program, cb) => {
-  const directory = program.directory
+  const directory = program.directory;
   // TODO convert this over to 1.0
   //return globPages(directory, (err, pages) => {
   //debug(`copying files`)
@@ -57,4 +57,4 @@ module.exports = (program, cb) => {
   //)
   //)
   //})
-}
+};

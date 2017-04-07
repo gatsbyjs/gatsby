@@ -1,18 +1,18 @@
-import React from "react"
-import HeartIcon from "react-icons/lib/fa/heart"
-import Gravatar from "react-gravatar"
+import React from "react";
+import HeartIcon from "react-icons/lib/fa/heart";
+import Gravatar from "react-gravatar";
 
-import presets from "../utils/presets"
-import typography, { rhythm, scale } from "../utils/typography"
+import presets from "../utils/presets";
+import typography, { rhythm, scale } from "../utils/typography";
 
 class PostDetail extends React.Component {
   constructor() {
-    super()
+    super();
   }
 
   render() {
-    const { image, likes, id, username, weeksAgo, text } = this.props.post
-    const { big } = image.children[0]
+    const { image, likes, id, username, weeksAgo, text } = this.props.post;
+    const { big } = image.children[0];
 
     const UserBar = () => (
       <div
@@ -42,7 +42,7 @@ class PostDetail extends React.Component {
           {username}
         </h5>
       </div>
-    )
+    );
 
     const PostDetails = () => (
       <div
@@ -77,7 +77,7 @@ class PostDetail extends React.Component {
           <strong>{username}</strong> {text}
         </div>
       </div>
-    )
+    );
 
     return (
       <div
@@ -178,8 +178,8 @@ class PostDetail extends React.Component {
           <PostDetails />
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default PostDetail
+export default PostDetail;

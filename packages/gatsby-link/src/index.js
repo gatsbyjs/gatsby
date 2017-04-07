@@ -1,9 +1,9 @@
-import React from "react"
-import Link from "react-router/lib/Link"
+import React from "react";
+import Link from "react-router/lib/Link";
 
-let linkPrefix = ``
+let linkPrefix = ``;
 if (__PREFIX_LINKS__) {
-  linkPrefix = __LINK_PREFIX__
+  linkPrefix = __LINK_PREFIX__;
 }
 
 // Use createClass instead of ES6 class as Babel spews out a ton of code
@@ -21,12 +21,12 @@ const GatsbyLink = React.createClass({
         !(`serviceWorker` in navigator)) ||
       window.location.protocol !== `https:`
     ) {
-      const routes = window.gatsbyRootRoute
-      const { createMemoryHistory } = require("history")
-      const matchRoutes = require("react-router/lib/matchRoutes")
-      const getComponents = require("react-router/lib/getComponents")
+      const routes = window.gatsbyRootRoute;
+      const { createMemoryHistory } = require("history");
+      const matchRoutes = require("react-router/lib/matchRoutes");
+      const getComponents = require("react-router/lib/getComponents");
 
-      const createLocation = createMemoryHistory().createLocation
+      const createLocation = createMemoryHistory().createLocation;
 
       if (typeof routes !== `undefined`) {
         matchRoutes(
@@ -34,16 +34,16 @@ const GatsbyLink = React.createClass({
           createLocation(this.props.to),
           (error, nextState) => {
             getComponents(nextState, () =>
-              console.log(`loaded assets for ${this.props.to}`))
+              console.log(`loaded assets for ${this.props.to}`));
           }
-        )
+        );
       }
     }
   },
   render() {
-    const to = linkPrefix + this.props.to
-    return <Link {...this.props} to={to} />
+    const to = linkPrefix + this.props.to;
+    return <Link {...this.props} to={to} />;
   },
-})
+});
 
-module.exports = GatsbyLink
+module.exports = GatsbyLink;

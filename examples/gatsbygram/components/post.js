@@ -1,35 +1,35 @@
-import React from "react"
-import HeartIcon from "react-icons/lib/fa/heart"
-import Link from "gatsby-link"
+import React from "react";
+import HeartIcon from "react-icons/lib/fa/heart";
+import Link from "gatsby-link";
 
-import { rhythm, scale } from "../utils/typography"
-import presets from "../utils/presets"
+import { rhythm, scale } from "../utils/typography";
+import presets from "../utils/presets";
 
-let touched = false
+let touched = false;
 
 class Post extends React.Component {
   constructor() {
-    super()
+    super();
     this.state = {
       hovering: false,
-    }
+    };
   }
 
   render() {
-    const { image, likes, id } = this.props.post
-    const { small } = image.children[0]
+    const { image, likes, id } = this.props.post;
+    const { small } = image.children[0];
     return (
       <Link
         to={`/${id}/`}
         onTouchStart={() => touched = true}
         onMouseEnter={() => {
           if (!touched) {
-            this.setState({ hovering: true })
+            this.setState({ hovering: true });
           }
         }}
         onMouseLeave={() => {
           if (!touched) {
-            this.setState({ hovering: false })
+            this.setState({ hovering: false });
           }
         }}
         css={{
@@ -110,8 +110,8 @@ class Post extends React.Component {
             /> {likes}
           </div>}
       </Link>
-    )
+    );
   }
 }
 
-export default Post
+export default Post;

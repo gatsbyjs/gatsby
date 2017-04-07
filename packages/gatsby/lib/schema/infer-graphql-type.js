@@ -6,22 +6,22 @@ const {
   GraphQLFloat,
   GraphQLInt,
   GraphQLList,
-} = require("graphql")
-const _ = require("lodash")
-const moment = require("moment")
-const parseFilepath = require("parse-filepath")
-const mime = require("mime")
-const { siteDB } = require("../utils/globals")
-const isRelative = require("is-relative-url")
+} = require("graphql");
+const _ = require("lodash");
+const moment = require("moment");
+const parseFilepath = require("parse-filepath");
+const mime = require("mime");
+const { siteDB } = require("../utils/globals");
+const isRelative = require("is-relative-url");
 
 const inferGraphQLType = ({ value, fieldName, ...otherArgs }) => {
   if (Array.isArray(value)) {
-    const headType = inferGraphQLType({ value: value[0], fieldName }).type
-    return { type: new GraphQLList(headType) }
+    const headType = inferGraphQLType({ value: value[0], fieldName }).type;
+    return { type: new GraphQLList(headType) };
   }
 
   if (value === null) {
-    return null
+    return null;
   }
 
   // Check if this is a date.
@@ -44,8 +44,8 @@ const inferGraphQLType = ({ value, fieldName, ...otherArgs }) => {
     `YYYY[W]WWE`,
     `YYYY-DDDD`,
     `YYYYDDDD`,
-  ]
-  const momentDate = moment.utc(value, ISO_8601_FORMAT, true)
+  ];
+  const momentDate = moment.utc(value, ISO_8601_FORMAT, true);
   if (momentDate.isValid()) {
     return {
       type: GraphQLString,
@@ -63,28 +63,28 @@ const inferGraphQLType = ({ value, fieldName, ...otherArgs }) => {
         },
       },
       resolve(object, { fromNow, difference, formatString }) {
-        const date = object[fieldName]
+        const date = object[fieldName];
         if (formatString) {
-          return moment.utc(date, ISO_8601_FORMAT, true).format(formatString)
+          return moment.utc(date, ISO_8601_FORMAT, true).format(formatString);
         } else if (fromNow) {
-          return moment.utc(date, ISO_8601_FORMAT, true).fromNow()
+          return moment.utc(date, ISO_8601_FORMAT, true).fromNow();
         } else if (difference) {
           return moment().diff(
             moment.utc(date, ISO_8601_FORMAT, true),
             difference
-          )
+          );
         } else {
-          return date
+          return date;
         }
       },
-    }
+    };
   }
 
   switch (typeof value) {
     case `boolean`:
-      return { type: GraphQLBoolean }
+      return { type: GraphQLBoolean };
     case `string`:
-      return { type: GraphQLString }
+      return { type: GraphQLString };
     case `object`:
       return {
         type: new GraphQLObjectType({
@@ -94,13 +94,13 @@ const inferGraphQLType = ({ value, fieldName, ...otherArgs }) => {
             ...otherArgs,
           }),
         }),
-      }
+      };
     case `number`:
-      return value % 1 === 0 ? { type: GraphQLInt } : { type: GraphQLFloat }
+      return value % 1 === 0 ? { type: GraphQLInt } : { type: GraphQLFloat };
     default:
-      return null
+      return null;
   }
-}
+};
 
 // Call this for the top level node + recursively for each sub-object.
 // E.g. This gets called for Markdown and then for its frontmatter subobject.
@@ -112,96 +112,96 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
     allNodes,
   }
 ) => {
-  const type = nodes[0].type
-  const fieldExamples = {}
+  const type = nodes[0].type;
+  const fieldExamples = {};
   _.each(nodes, node => {
-    let subNode
+    let subNode;
     if (selector) {
-      subNode = _.get(node, selector)
+      subNode = _.get(node, selector);
     } else {
-      subNode = node
+      subNode = node;
     }
     _.each(subNode, (v, k) => {
       if (!fieldExamples[k]) {
-        fieldExamples[k] = v
+        fieldExamples[k] = v;
       }
-    })
-  })
+    });
+  });
 
   // Add the "path" to each subnode as we'll need this later when resolving
   // mapped fields to types in GraphQL land. We do that here (after creating
   // field examples) so our special field is not added to the GraphQL type.
   if (selector) {
     nodes.forEach(node => {
-      _.set(node, `${selector}.___path`, `${type}.${selector}`)
-    })
+      _.set(node, `${selector}.___path`, `${type}.${selector}`);
+    });
   }
 
   // Remove fields common to the top-level of all nodes.  We add these
   // elsewhere so don't need to infer there type.
   if (!selector) {
-    delete fieldExamples.type
-    delete fieldExamples.id
-    delete fieldExamples.parent
-    delete fieldExamples.children
+    delete fieldExamples.type;
+    delete fieldExamples.id;
+    delete fieldExamples.parent;
+    delete fieldExamples.children;
   }
 
-  const config = siteDB().get(`config`)
-  let mapping
+  const config = siteDB().get(`config`);
+  let mapping;
   if (config) {
-    mapping = config.mapping
+    mapping = config.mapping;
   }
-  const inferredFields = {}
+  const inferredFields = {};
   _.each(fieldExamples, (v, k) => {
     // Check if field is pointing to custom type.
     // First check field => type mappings in gatsby-config.js
-    const fieldSelector = _.remove([nodes[0].type, selector, k]).join(".")
+    const fieldSelector = _.remove([nodes[0].type, selector, k]).join(".");
     if (mapping && _.includes(Object.keys(mapping), fieldSelector)) {
       const matchedTypes = types.filter(
         type => type.name === mapping[fieldSelector]
-      )
+      );
       const findNode = fieldValue => {
-        const linkedType = mapping[fieldSelector]
+        const linkedType = mapping[fieldSelector];
         const linkedNode = _.find(
           allNodes,
           n => n.type === linkedType && n.id === fieldValue
-        )
+        );
         if (linkedNode) {
-          return linkedNode
+          return linkedNode;
         }
-      }
+      };
       if (_.isArray(v)) {
         inferredFields[k] = {
           type: new GraphQLList(matchedTypes[0].nodeObjectType),
           resolve: (node, a, b, { fieldName }) => {
-            let fieldValue = node[fieldName]
+            let fieldValue = node[fieldName];
 
             if (fieldValue) {
-              return fieldValue.map(value => findNode(value))
+              return fieldValue.map(value => findNode(value));
             } else {
-              return null
+              return null;
             }
           },
-        }
+        };
       } else {
         inferredFields[k] = {
           type: matchedTypes[0].nodeObjectType,
           resolve: (node, a, b, { fieldName }) => {
-            let fieldValue = node[fieldName]
+            let fieldValue = node[fieldName];
 
             if (fieldValue) {
-              return findNode(fieldValue)
+              return findNode(fieldValue);
             } else {
-              return null
+              return null;
             }
           },
-        }
+        };
       }
     } else if (_.includes(k, `___`)) {
-      const fieldType = _.capitalize(k.split(`___`)[1])
-      const matchedType = _.find(types, type => type.name === fieldType)
+      const fieldType = _.capitalize(k.split(`___`)[1]);
+      const matchedType = _.find(types, type => type.name === fieldType);
       if (matchedType) {
-        inferredFields[k] = matchedType.field
+        inferredFields[k] = matchedType.field;
       }
 
       // Special case fields that look like they're pointing at a file — if the
@@ -212,9 +212,9 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
       mime.lookup(v) !== `application/octet-stream` &&
       isRelative(v)
     ) {
-      const fileNodes = types.filter(type => type.name === `File`)
+      const fileNodes = types.filter(type => type.name === `File`);
       if (fileNodes && fileNodes.length > 0) {
-        inferredFields[k] = fileNodes[0].field
+        inferredFields[k] = fileNodes[0].field;
       }
     } else {
       inferredFields[k] = inferGraphQLType({
@@ -223,9 +223,9 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
         nodes,
         types,
         allNodes,
-      })
+      });
     }
-  })
+  });
 
-  return inferredFields
-})
+  return inferredFields;
+});

@@ -3,11 +3,7 @@ const _ = require("lodash");
 const fs = require("fs-extra");
 const syspath = require("path");
 
-const ignoreRegs = [
-  /[\/\\]node_modules[\/\\]/i,
-  /\.git/i,
-  /[\/\\]src[\/\\]/i
-];
+const ignoreRegs = [/[\/\\]node_modules[\/\\]/i, /\.git/i, /[\/\\]src[\/\\]/i];
 
 module.exports = (root, packages) => {
   packages.forEach(p => {

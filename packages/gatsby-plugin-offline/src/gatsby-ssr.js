@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 
 exports.modifyPostBodyComponents = () => [
   <script
@@ -15,4 +15,4 @@ exports.modifyPostBodyComponents = () => [
       `,
     }}
   />,
-]
+];
