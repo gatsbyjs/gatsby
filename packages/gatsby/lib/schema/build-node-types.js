@@ -11,6 +11,7 @@ const select = require("unist-util-select")
 const path = require("path")
 const Promise = require("bluebird")
 const mime = require("mime")
+const slash = require("slash")
 
 const apiRunner = require("../utils/api-runner-node")
 const { inferObjectStructureFromNodes } = require("./infer-graphql-type")
@@ -127,10 +128,10 @@ module.exports = async (ast: any) =>
                     _.isString(fieldValue) &&
                     mime.lookup(fieldValue) !== `application/octet-stream`
                   ) {
-                    const fileLinkPath = path.resolve(
+                    const fileLinkPath = slash(path.resolve(
                       sourceFileNode.dir,
                       fieldValue
-                    )
+                    ))
                     const linkedFileNode = _.find(
                       allNodes,
                       n => n.type === `File` && n.id === fileLinkPath
@@ -148,23 +149,19 @@ module.exports = async (ast: any) =>
                     // and try to resolve it. Probably a better way is that each typegen
                     // plugin can define a custom resolve function which handles special
                     // logic for alternative ways of adding links between nodes.
-                    let linkedFileNode
-                    //linkedFileNode = select(ast, `${linkedType}[id="${node[fieldName]}"]`)[0]
-                    linkedFileNode = _.find(
-                      allNodes,
-                      n => n.type === linkedType && n.id === node[fieldName]
-                    )
+                    let linkedFileNode = allNodes
+                      .find(n => n.type === linkedType && n.id === node[fieldName])
+
                     if (linkedFileNode) {
                       return linkedFileNode
                     } else if (linkedType === `File`) {
-                      const fileLinkPath = path.resolve(
+                      const fileLinkPath = slash(path.resolve(
                         sourceFileNode.dir,
                         node[fieldName]
-                      )
-                      linkedFileNode = _.find(
-                        allNodes,
-                        n => n.type === `File` && n.id === fileLinkPath
-                      )
+                      ))
+                      linkedFileNode = allNodes
+                        .find(n => n.type === `File` && n.id === fileLinkPath)
+
                       if (linkedFileNode) {
                         return linkedFileNode
                       } else {
