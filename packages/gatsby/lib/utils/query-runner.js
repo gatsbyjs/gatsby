@@ -8,6 +8,7 @@ import parseFilepath from "parse-filepath"
 import glob from "glob"
 import apiRunnerNode from "./api-runner-node"
 import Promise from "bluebird"
+import slash from "slash"
 import { pagesDB, siteDB, programDB } from "./globals"
 import { layoutComponentChunkName, pathChunkName } from "./js-chunk-names"
 
@@ -334,7 +335,7 @@ const q = queue(
           return
       },
     })
-    const absFile = path.resolve(file)
+    const absFile = slash(path.resolve(file));
     // Get paths for this file.
     const paths = []
     pagesDB().forEach((value, key) => {
