@@ -1,11 +1,12 @@
 const precache = require("sw-precache")
 const path = require("path")
+const slash = require("slash")
 const _ = require("lodash")
 
 exports.createPages = () => [
   {
     path: `/offline-plugin-app-shell-fallback/`,
-    component: path.resolve(`${__dirname}/app-shell.js`),
+    component: slash(path.resolve(`${__dirname}/app-shell.js`)),
   },
 ]
 
