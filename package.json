@@ -32,6 +32,7 @@
     "cjsx-loader": "^3.0.0",
     "coffee-loader": "^0.7.3",
     "coffee-script": "^1.12.4",
+    "command-exists": "^1.2.2",
     "commander": "^2.9.0",
     "css-loader": "^0.27.3",
     "debug": "^2.6.1",
