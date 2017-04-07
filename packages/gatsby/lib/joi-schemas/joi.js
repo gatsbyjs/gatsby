@@ -18,6 +18,7 @@ export const pageSchema = Joi.object()
 
 export const nodeSchema = Joi.object()
   .keys({
+    // TODO ids can be ints as well.
     id: Joi.string().required(),
     type: Joi.string().required(),
   })

@@ -78,5 +78,16 @@ actions.updateSourcePluginStatus = status => {
   }
 }
 
+actions.addPageDependency = ({ path, nodeId, connection }) => {
+  return {
+    type: `ADD_PAGE_DEPENDENCY`,
+    payload: {
+      path,
+      nodeId,
+      connection,
+    },
+  }
+}
+
 exports.actions = actions
 exports.boundActionCreators = bindActionCreators(actions, store.dispatch)

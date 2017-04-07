@@ -5,7 +5,12 @@ const mapSeries = require("async/mapSeries")
 
 const runAPI = (plugin, api, args) => {
   let linkPrefix = ``
-  const { store, getNodes, getNode } = require("../redux")
+  const {
+    store,
+    getNodes,
+    getNode,
+    getNodeAndSavePathDependency,
+  } = require("../redux")
   const { boundActionCreators } = require("../redux/actions")
   if (store.getState().program.prefixLinks) {
     linkPrefix = store.getState().config.linkPrefix

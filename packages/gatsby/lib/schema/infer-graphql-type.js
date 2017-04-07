@@ -13,6 +13,8 @@ const parseFilepath = require("parse-filepath")
 const mime = require("mime")
 const isRelative = require("is-relative-url")
 const { store, getNodes } = require("../redux")
+const { boundActionCreators } = require("../redux/actions")
+const { addPageDependency } = boundActionCreators
 
 const inferGraphQLType = ({ value, fieldName, ...otherArgs }) => {
   if (Array.isArray(value)) {
@@ -175,13 +177,7 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
         )
         if (linkedNode) {
           console.log(`ADD_PAGE_DEPENDENCY`, path, linkedNode.id)
-          store.dispatch({
-            type: `ADD_PAGE_DEPENDENCY`,
-            payload: {
-              path,
-              nodeId: linkedNode.id,
-            },
-          })
+          addPageDependency({ path, nodeId: linkedNode.id })
           return linkedNode
         }
       }

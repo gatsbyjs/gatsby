@@ -5,6 +5,8 @@ const {
   connectionFromArray,
 } = require("graphql-skip-limit")
 const { store } = require("../redux/")
+const { boundActionCreators } = require("../redux/actions")
+const { addPageDependency } = boundActionCreators
 
 type Node = {
   id: String,
@@ -69,21 +71,15 @@ module.exports = ({ args, nodes, connection = false, path = "" }) => {
   if (connection) {
     const connectionArray = connectionFromArray(result, args)
     connectionArray.totalCount = result.length
-    store.dispatch({
-      type: `ADD_PAGE_DEPENDENCY`,
-      payload: {
-        path,
-        connection: result[0].type,
-      },
+    addPageDependency({
+      path,
+      connection: result[0].type,
     })
     return connectionArray
   } else {
-    store.dispatch({
-      type: `ADD_PAGE_DEPENDENCY`,
-      payload: {
-        path,
-        nodeId: result[0].id,
-      },
+    addPageDependency({
+      path,
+      nodeId: result[0].id,
     })
     return result[0]
   }

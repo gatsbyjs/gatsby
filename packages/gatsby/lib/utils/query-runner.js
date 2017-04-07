@@ -19,7 +19,7 @@ let invalidPages = []
 store.subscribe(() => {
   const state = store.getState()
   if (state.lastAction.type === "CREATE_NODE") {
-    console.log(`lastAction`, state.lastAction.payload.id)
+    // console.log(`lastAction`, state.lastAction.payload.id)
     const node = state.nodes[state.lastAction.payload.id]
     // Find invalid pages.
     if (state.pageDataDependencies.nodes[node.id]) {

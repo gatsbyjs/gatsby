@@ -25,6 +25,9 @@ const {
   getNodeAndSavePathDependency,
 } = require("../redux")
 
+const { boundActionCreators } = require("../redux/actions")
+const { addPageDependency } = boundActionCreators
+
 module.exports = async () =>
   new Promise(resolve => {
     const processedTypes = {}
@@ -149,13 +152,9 @@ module.exports = async () =>
                       n => n.type === `File` && n.id === fileLinkPath
                     )
                     if (linkedFileNode) {
-                      // TODO convert to boundActionCreator
-                      store.dispatch({
-                        type: `ADD_PAGE_DEPENDENCY`,
-                        payload: {
-                          path: context.path,
-                          nodeId: linkedFileNode.id,
-                        },
+                      addPageDependency({
+                        path: context.path,
+                        nodeId: linkedFileNode.id,
                       })
                       return linkedFileNode
                     }
@@ -176,13 +175,9 @@ module.exports = async () =>
                       n => n.type === linkedType && n.id === node[fieldName]
                     )
                     if (linkedFileNode) {
-                      // TODO convert to boundActionCreator
-                      store.dispatch({
-                        type: `ADD_PAGE_DEPENDENCY`,
-                        payload: {
-                          path: context.path,
-                          nodeId: linkedFileNode.id,
-                        },
+                      addPageDependency({
+                        path: context.path,
+                        nodeId: linkedFileNode.id,
                       })
                       return linkedFileNode
                     } else if (linkedType === `File`) {
@@ -195,13 +190,9 @@ module.exports = async () =>
                         n => n.type === `File` && n.id === fileLinkPath
                       )
                       if (linkedFileNode) {
-                        // TODO convert to boundActionCreator
-                        store.dispatch({
-                          type: `ADD_PAGE_DEPENDENCY`,
-                          payload: {
-                            path: context.path,
-                            nodeId: linkedFileNode.id,
-                          },
+                        addPageDependency({
+                          path: context.path,
+                          nodeId: linkedFileNode.id,
                         })
                         return linkedFileNode
                       } else {
