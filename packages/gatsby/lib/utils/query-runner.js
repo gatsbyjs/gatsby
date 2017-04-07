@@ -415,7 +415,6 @@ module.exports = async (program, graphql) => {
     // When not building, also start the watcher to detect when the components
     // change.
     if (_.last(program.parent.rawArgs) !== `build`) {
-      require('fs').writeFileSync('D:/Projets/gatsby/log-queryrunner-418.json', JSON.stringify(components, "", 2));
       const watcher = chokidar.watch(components, {
         ignored: /[\/\\]\./,
         persistent: true,
