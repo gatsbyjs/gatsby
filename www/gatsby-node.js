@@ -4,6 +4,7 @@ const path = require("path");
 const select = require("unist-util-select");
 const parseFilepath = require("parse-filepath");
 const fs = require("fs-extra");
+const slash = require("slash");
 
 exports.createPages = ({ args }) => {
   const { graphql } = args;
@@ -27,17 +28,15 @@ exports.createPages = ({ args }) => {
     `
     ).then(result => {
       if (result.errors) {
-        // console.log(result.errors)
         reject(result.errors);
       }
 
       // Create docs pages.
       _.each(result.data.allMarkdownRemark.edges, edge => {
-        // console.log(edge.node.slug)
         if (_.includes(edge.node.slug, `/blog/`)) {
           pages.push({
             path: `${edge.node.slug}`, // required
-            component: blogPostTemplate,
+            component: slash(blogPostTemplate),
             context: {
               slug: edge.node.slug,
             },
@@ -45,7 +44,7 @@ exports.createPages = ({ args }) => {
         } else {
           pages.push({
             path: `${edge.node.slug}`, // required
-            component: edge.node.package ? packageTemplate : docsTemplate,
+            component: slash(edge.node.package ? packageTemplate : docsTemplate),
             context: {
               slug: edge.node.slug,
             },
@@ -62,7 +61,7 @@ exports.createPages = ({ args }) => {
 exports.modifyAST = ({ args }) => {
   const { ast } = args;
   const files = select(ast, `File`);
-  files.forEach(file => {
+    files.forEach(file => {
     const parsedFilePath = parseFilepath(file.relativePath);
     let slug;
     if (file.sourceName === `docs`) {
