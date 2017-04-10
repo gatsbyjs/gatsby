@@ -4,6 +4,7 @@ import queryRunner from "../utils/query-runner"
 import path from "path"
 import globCB from "glob"
 import _ from "lodash"
+import slash from "slash"
 import createPath from "./create-path"
 import fs from "fs-extra"
 import Joi from "joi"
@@ -32,7 +33,7 @@ process.on(`unhandledRejection`, error => {
 // underscored. Then create url w/ our path algorithm *unless* user
 // takes control of that page component in gatsby-node.
 const autoPathCreator = async (program: any) => {
-  const pagesDirectory = path.join(program.directory, `pages`)
+  const pagesDirectory = path.posix.join(program.directory, `pages`)
   const exts = program.extensions.map(e => `*${e}`).join("|")
   const files = await glob(`${pagesDirectory}/**/?(${exts})`)
   // Create initial page objects.
@@ -45,7 +46,7 @@ const autoPathCreator = async (program: any) => {
   // Convert path to one relative to the pages directory.
   autoPages = autoPages.map(page => ({
     ...page,
-    path: path.relative(pagesDirectory, page.path),
+    path: path.posix.relative(pagesDirectory, page.path),
   }))
 
   // Remove pages starting with an underscore.
@@ -77,6 +78,8 @@ const autoPathCreator = async (program: any) => {
 
 module.exports = async (program: any) => {
   console.log(`lib/bootstrap/index.js time since started:`, process.uptime())
+  // Fix program directory path for windows env
+  program.directory = slash(program.directory)
   // Set the program to the globals programDB
   programDB(program)
 

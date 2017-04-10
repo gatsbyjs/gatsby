@@ -1,15 +1,15 @@
-import React from "react";
-import Link from "gatsby-link";
+import React from "react"
+import Link from "gatsby-link"
 
-import { rhythm, scale } from "utils/typography";
-import presets from "../../utils/presets";
+import { rhythm, scale } from "utils/typography"
+import presets from "../../utils/presets"
 
 const IndexRoute = React.createClass({
   render() {
     // console.log(`blog posts`, this.props);
     const blogPosts = this.props.data.allMarkdownRemark.edges.map(
       edge => edge.node
-    );
+    )
     // console.log(blogPosts);
     return (
       <div
@@ -26,7 +26,7 @@ const IndexRoute = React.createClass({
         {blogPosts.map(post => {
           const avatar = post.frontmatter.author.avatar.children[
             0
-          ].responsiveResolution;
+          ].responsiveResolution
           return (
             <div>
               <Link to={post.slug}>
@@ -84,14 +84,14 @@ const IndexRoute = React.createClass({
                 </div>
               </div>
             </div>
-          );
+          )
         })}
       </div>
-    );
+    )
   },
-});
+})
 
-export default IndexRoute;
+export default IndexRoute
 
 export const pageQuery = `
 {
@@ -127,4 +127,4 @@ export const pageQuery = `
     }
   }
 }
-`;
+`

@@ -74,7 +74,7 @@ exports.sourceNodes = ({ args, pluginOptions }) =>
                     sourceName: pluginOptions.name,
                     children: [],
                     relativePath: slash(
-                      path.posix.relative(pluginOptions.path, file.absolutePath)
+                      path.relative(pluginOptions.path, file.absolutePath)
                     ),
                     extension: file.ext.slice(1).toLowerCase(),
                     size: file.size,

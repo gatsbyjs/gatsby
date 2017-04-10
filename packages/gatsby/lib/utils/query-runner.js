@@ -8,6 +8,7 @@ import parseFilepath from "parse-filepath"
 import glob from "glob"
 import apiRunnerNode from "./api-runner-node"
 import Promise from "bluebird"
+import slash from "slash"
 import { pagesDB, siteDB, programDB } from "./globals"
 import { layoutComponentChunkName, pathChunkName } from "./js-chunk-names"
 
@@ -15,20 +16,6 @@ import { layoutComponentChunkName, pathChunkName } from "./js-chunk-names"
 const babylon = require("babylon")
 
 const pascalCase = _.flow(_.camelCase, _.upperFirst)
-
-const hashStr = function(str) {
-  let hash = 5381
-  let i = str.length
-
-  while (i) {
-    hash = hash * 33 ^ str.charCodeAt(--i)
-  }
-
-  /* JavaScript does bitwise operations (like XOR, above) on 32-bit signed
-   * integers. Since we want the results to be always positive, convert the
-   * signed int to an unsigned by doing an unsigned bitshift. */
-  return hash >>> 0
-}
 
 // Write out routes file.
 // Loop through all paths and write them out to child-routes.js
@@ -128,7 +115,6 @@ const writeChildRoutes = () => {
       if (!indexPage) {
         indexPage = _.first(_.sortBy(pages, page => page.path.length))
       }
-      const otherPages = _.filter(pages, page => page.path !== indexPage.path)
       let route = `
       {
         path: '${indexPage.path}',
@@ -334,7 +320,7 @@ const q = queue(
           return
       },
     })
-    const absFile = path.resolve(file)
+    const absFile = slash(path.resolve(file))
     // Get paths for this file.
     const paths = []
     pagesDB().forEach((value, key) => {
@@ -343,12 +329,6 @@ const q = queue(
       }
     })
     console.log(`running queries for ${paths.length} paths for ${file}`)
-    const pathsInfo = {
-      componentPath: absFile,
-      directory,
-      paths,
-      graphql,
-    }
 
     const handleResult = (pathInfo, result = {}) => {
       // Combine the result with the path context.
@@ -409,46 +389,43 @@ const q = queue(
 )
 
 module.exports = async (program, graphql) => {
-  // Get unique array of component paths and then watch them.
-  // When a component is updated, rerun queries.
-  const components = _.uniq(
-    [...pagesDB().values()].map(page => page.component)
-  )
+  return await new Promise(resolve => {
+    // Get unique array of component paths and then watch them.
+    // When a component is updated, rerun queries.
+    const components = _.uniq(
+      [...pagesDB().values()].map(page => page.component)
+    )
 
-  let outsideResolve
-
-  // If there's no components yet, call the resolve early.
-  if (components.length === 0) {
-    outsideResolve()
-  } else {
-    q.drain = () => {
-      // Only call resolve once.
-      q.drain = _.noop
-      outsideResolve()
+    // If there's no components yet, call the resolve early.
+    if (components.length === 0) {
+      resolve()
+    } else {
+      q.drain = () => {
+        // Only call resolve once.
+        q.drain = _.noop
+        resolve()
+      }
     }
-  }
 
-  components.forEach(path => {
-    q.push({ file: path, graphql, directory: program.directory })
-  })
-
-  // When not building, also start the watcher to detect when the components
-  // change.
-  if (_.last(program.parent.rawArgs) !== `build`) {
-    const watcher = chokidar.watch(components, {
-      //var watcher = chokidar.watch('/Users/kylemathews/programs/blog/pages/*.js', {
-      ignored: /[\/\\]\./,
-      persistent: true,
+    components.forEach(path => {
+      q.push({ file: path, graphql, directory: program.directory })
     })
 
-    watcher
-      .on(`add`, path =>
-        q.push({ file: path, graphql, directory: program.directory }))
-      .on(`change`, path =>
-        q.push({ file: path, graphql, directory: program.directory }))
-      .on(`unlink`, path =>
-        q.push({ file: path, graphql, directory: program.directory }))
-  }
+    // When not building, also start the watcher to detect when the components
+    // change.
+    if (_.last(program.parent.rawArgs) !== `build`) {
+      const watcher = chokidar.watch(components, {
+        ignored: /[\/\\]\./,
+        persistent: true,
+      })
 
-  return new Promise(resolve => outsideResolve = resolve)
+      watcher
+        .on(`add`, path =>
+          q.push({ file: path, graphql, directory: program.directory }))
+        .on(`change`, path =>
+          q.push({ file: path, graphql, directory: program.directory }))
+        .on(`unlink`, path =>
+          q.push({ file: path, graphql, directory: program.directory }))
+    }
+  })
 }
