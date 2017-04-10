@@ -27,12 +27,11 @@ The usual contributing steps are:
 * Run `yarn run watch` to do an initial build of all packages and watch for
   changes to packages' source code and compile changes on the fly as you
   work.
-* Use the `gatsby-dev` command at the site you're working on to copy built
-  files from package(s) you're working on to a Gatsby site. In each site you
-  want to work on, run `gatsby-dev` and as arguments, pass a space-seperated
-  list of packages e.g.  `gatsby-dev gatsby gatsby-typegen-remark`. The
-  first time you run the command,
-  you'll also need to set the path to your cloned repository.
+* Use the `gatsby-dev` command to copy files from your cloned copy of Gatsby
+  to test Gatsby sites. To use, go to a site you want to work on and run
+  `gatsby-dev`. This will copy over the built version of every gatsby
+  package the site is using. Note: the first time you run the command,
+  you'll also need to set the path to clone of the Gatsby repository.
 * Add tests and code for your changes.
 * Once you‘re done, make sure all tests still pass: `yarn test`
 * Commit and push to your fork.
