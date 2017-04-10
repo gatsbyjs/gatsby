@@ -10,6 +10,7 @@ import apiRunnerNode from "./api-runner-node"
 import Promise from "bluebird"
 const { store } = require("../redux")
 const { boundActionCreators } = require("../redux/actions")
+import slash from "slash"
 import { layoutComponentChunkName, pathChunkName } from "./js-chunk-names"
 import { graphql as graphqlFunction } from "graphql"
 
@@ -43,20 +44,6 @@ store.subscribe(() => {
 const babylon = require("babylon")
 
 const pascalCase = _.flow(_.camelCase, _.upperFirst)
-
-const hashStr = function(str) {
-  let hash = 5381
-  let i = str.length
-
-  while (i) {
-    hash = hash * 33 ^ str.charCodeAt(--i)
-  }
-
-  /* JavaScript does bitwise operations (like XOR, above) on 32-bit signed
-   * integers. Since we want the results to be always positive, convert the
-   * signed int to an unsigned by doing an unsigned bitshift. */
-  return hash >>> 0
-}
 
 // Write out routes file.
 // Loop through all paths and write them out to child-routes.js
@@ -160,7 +147,6 @@ const writeChildRoutes = () => {
       if (!indexPage) {
         indexPage = _.first(_.sortBy(pages, page => page.path.length))
       }
-      const otherPages = _.filter(pages, page => page.path !== indexPage.path)
       let route = `
       {
         path: '${indexPage.path}',
@@ -302,7 +288,7 @@ const debouncedWriteChildRoutes = _.debounce(writeChildRoutes, 250)
 // Queue for processing files
 const q = queue(
   async ({ file, graphql, directory }, callback) => {
-    const absolutePath = path.resolve(file)
+    const absolutePath = slash(path.resolve(file))
 
     // Get paths for this file.
     let paths = []
@@ -475,12 +461,12 @@ module.exports = async () => {
 
   // If there's no components yet, call the resolve early.
   if (components.length === 0) {
-    outsideResolve()
+    resolve()
   } else {
     q.drain = () => {
       // Only call resolve once.
       q.drain = _.noop
-      outsideResolve()
+      resolve()
     }
   }
 
@@ -492,18 +478,9 @@ module.exports = async () => {
   // change.
   if (_.last(program.parent.rawArgs) !== `build`) {
     const watcher = chokidar.watch(components, {
-      //var watcher = chokidar.watch('/Users/kylemathews/programs/blog/pages/*.js', {
       ignored: /[\/\\]\./,
       persistent: true,
     })
-
-    watcher
-      .on(`add`, path =>
-        q.push({ file: path, graphql, directory: program.directory }))
-      .on(`change`, path =>
-        q.push({ file: path, graphql, directory: program.directory }))
-      .on(`unlink`, path =>
-        q.push({ file: path, graphql, directory: program.directory }))
   }
 
   return returnPromise

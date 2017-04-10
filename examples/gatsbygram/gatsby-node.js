@@ -2,6 +2,7 @@ const _ = require("lodash")
 const Promise = require("bluebird")
 const path = require("path")
 const slug = require("slug")
+const slash = require("slash")
 
 // Implement the Gatsby API “createPages”. This is
 // called after the Gatsby bootstrap is finished so you have
@@ -51,7 +52,7 @@ exports.createPages = ({ args }) =>
           // optional but is often necessary so the template
           // can query data specific to each page.
           path: slug(edge.node.id),
-          component: postTemplate,
+          component: slash(postTemplate),
           context: {
             id: edge.node.id,
           },

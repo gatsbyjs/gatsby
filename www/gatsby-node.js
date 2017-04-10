@@ -4,6 +4,7 @@ const path = require("path")
 const select = require("unist-util-select")
 const parseFilepath = require("parse-filepath")
 const fs = require("fs-extra")
+const slash = require("slash")
 
 exports.createPages = ({ graphql, actionCreators }) => {
   const { upsertPage } = actionCreators
@@ -28,7 +29,6 @@ exports.createPages = ({ graphql, actionCreators }) => {
     ).then(result => {
       if (result.errors) {
         console.log(result.errors)
-        reject(result.errors)
       }
 
       // Create docs pages.
@@ -36,7 +36,7 @@ exports.createPages = ({ graphql, actionCreators }) => {
         if (_.includes(edge.node.slug, `/blog/`)) {
           upsertPage({
             path: `${edge.node.slug}`, // required
-            component: blogPostTemplate,
+            component: slash(blogPostTemplate),
             context: {
               slug: edge.node.slug,
             },
@@ -44,7 +44,9 @@ exports.createPages = ({ graphql, actionCreators }) => {
         } else {
           upsertPage({
             path: `${edge.node.slug}`, // required
-            component: edge.node.package ? packageTemplate : docsTemplate,
+            component: slash(
+              edge.node.package ? packageTemplate : docsTemplate
+            ),
             context: {
               slug: edge.node.slug,
             },

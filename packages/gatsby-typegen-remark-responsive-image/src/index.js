@@ -51,7 +51,7 @@ module.exports = (
         new Promise((resolve, reject) => {
           // Ignore gifs as we can't process them.
           if (isRelativeUrl(node.url) && node.url.slice(-3) !== `gif`) {
-            const imagePath = path.join(
+            const imagePath = path.posix.join(
               getNode(markdownNode.parent).dir,
               node.url
             )

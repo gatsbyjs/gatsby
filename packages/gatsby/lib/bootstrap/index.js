@@ -4,6 +4,7 @@ import queryRunner from "../utils/query-runner"
 import path from "path"
 import globCB from "glob"
 import _ from "lodash"
+import slash from "slash"
 import createPath from "./create-path"
 import fs from "fs-extra"
 import Joi from "joi"
@@ -41,7 +42,7 @@ const glob = Promise.promisify(globCB)
 // underscored. Then create url w/ our path algorithm *unless* user
 // takes control of that page component in gatsby-node.
 const autoPathCreator = async (program: any) => {
-  const pagesDirectory = path.join(program.directory, `pages`)
+  const pagesDirectory = path.posix.join(program.directory, `pages`)
   const exts = program.extensions.map(e => `*${e}`).join("|")
   // The promisified version wasn't working for some reason
   // so we'll use sync for now.
@@ -55,7 +56,7 @@ const autoPathCreator = async (program: any) => {
   // Convert path to one relative to the pages directory.
   autoPages = autoPages.map(page => ({
     ...page,
-    path: path.relative(pagesDirectory, page.path),
+    path: path.posix.relative(pagesDirectory, page.path),
   }))
 
   // Remove pages starting with an underscore.
@@ -81,6 +82,10 @@ const autoPathCreator = async (program: any) => {
 
 module.exports = async (program: any) => {
   console.log(`lib/bootstrap/index.js time since started:`, process.uptime())
+
+  // Fix program directory path for windows env
+  program.directory = slash(program.directory)
+
   store.dispatch({
     type: "SET_PROGRAM",
     payload: program,

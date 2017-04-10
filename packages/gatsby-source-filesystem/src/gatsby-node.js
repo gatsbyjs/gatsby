@@ -69,7 +69,6 @@ exports.sourceNodes = ({ actionCreators }, pluginOptions) => {
     // console.log("Added file at", path);
     readFile(path, pluginOptions, (err, file) => createNode(file))
   })
-
   watcher.on(`change`, path => {
     console.log("changed file at", path)
     readFile(path, pluginOptions, (err, file) => createNode(file))

@@ -13,7 +13,7 @@
     "progress": "^1.1.8",
     "qs": "^6.3.0",
     "queue": "^4.0.1",
-    "sharp": "^0.17.1"
+    "sharp": "^0.17.3"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",

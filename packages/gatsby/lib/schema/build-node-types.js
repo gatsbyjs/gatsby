@@ -11,6 +11,7 @@ const select = require("unist-util-select")
 const path = require("path")
 const Promise = require("bluebird")
 const mime = require("mime")
+const slash = require("slash")
 
 const apiRunner = require("../utils/api-runner-node")
 const { inferObjectStructureFromNodes } = require("./infer-graphql-type")
@@ -143,9 +144,8 @@ module.exports = async () =>
                     _.isString(fieldValue) &&
                     mime.lookup(fieldValue) !== `application/octet-stream`
                   ) {
-                    const fileLinkPath = path.resolve(
-                      sourceFileNode.dir,
-                      fieldValue
+                    const fileLinkPath = slash(
+                      path.resolve(sourceFileNode.dir, fieldValue)
                     )
                     const linkedFileNode = _.find(
                       getNodes(),
@@ -174,6 +174,7 @@ module.exports = async () =>
                       getNodes(),
                       n => n.type === linkedType && n.id === node[fieldName]
                     )
+
                     if (linkedFileNode) {
                       addPageDependency({
                         path: context.path,
@@ -181,14 +182,14 @@ module.exports = async () =>
                       })
                       return linkedFileNode
                     } else if (linkedType === `File`) {
-                      const fileLinkPath = path.resolve(
-                        sourceFileNode.dir,
-                        node[fieldName]
+                      const fileLinkPath = slash(
+                        path.resolve(sourceFileNode.dir, node[fieldName])
                       )
                       linkedFileNode = _.find(
                         getNodes(),
                         n => n.type === `File` && n.id === fileLinkPath
                       )
+
                       if (linkedFileNode) {
                         addPageDependency({
                           path: context.path,

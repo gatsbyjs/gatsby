@@ -54,7 +54,7 @@
     "build": "lerna run build",
     "lint": "eslint --ext .js,.jsx --ignore-path .gitignore .",
     "lint:flow": "babel-node scripts/flow-check.js",
-    "fix-semi": "eslint --quiet --ignore-pattern node_modules --ignore-pattern public --parser babel-eslint --no-eslintrc --rule '{\"semi\": [2, \"never\"], \"no-extra-semi\": [2]}' --fix packages/**/src/**/*.js packages/**/src/*.js packages/gatsby/lib/**/*.js www/*.js www/**/*.js examples/gatsbygram/*.js examples/gatsbygram/**/*.js",
+    "fix-semi": "eslint --quiet --ignore-pattern node_modules --ignore-pattern public --parser babel-eslint --no-eslintrc --rule \"semi: [2, never]\" --rule \"no-extra-semi: [2]\" --fix packages/**/src/**/*.js packages/**/src/*.js packages/gatsby/lib/**/*.js www/*.js www/**/*.js examples/gatsbygram/*.js examples/gatsbygram/**/*.js",
     "format-packages": "prettier --trailing-comma es5 --write packages/**/src/*.js",
     "format-gatsby": "prettier --trailing-comma es5 --write packages/gatsby/lib/**/*.js",
     "format-www": "find www -iname *.js | grep -v node_modules | grep -v public | grep -v .intermediate-representation | xargs prettier --write --trailing-comma es5",

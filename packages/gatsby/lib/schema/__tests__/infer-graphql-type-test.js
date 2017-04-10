@@ -1,11 +1,11 @@
 test(`Infers graphql type from array of nodes`, () => {
-  const { inferObjectStructureFromNodes } = require("../infer-graphql-type");
+  const { inferObjectStructureFromNodes } = require("../infer-graphql-type")
   const {
     graphql,
     GraphQLObjectType,
     GraphQLList,
     GraphQLSchema,
-  } = require("graphql");
+  } = require("graphql")
   const nodes = [
     {
       id: `foo`,
@@ -34,22 +34,22 @@ test(`Infers graphql type from array of nodes`, () => {
         blue: 10010,
       },
     },
-  ];
+  ]
   const inferredFields = inferObjectStructureFromNodes({
     nodes,
     types: [{ name: `Test` }],
-  });
+  })
   const nodeType = new GraphQLObjectType({
     name: `TEST`,
     fields: { ...inferredFields },
-  });
+  })
   const listNode = {
     name: `LISTNODE`,
     type: new GraphQLList(nodeType),
     resolve() {
-      return nodes;
+      return nodes
     },
-  };
+  }
   const schema = new GraphQLSchema({
     query: new GraphQLObjectType({
       name: `RootQueryType`,
@@ -57,7 +57,7 @@ test(`Infers graphql type from array of nodes`, () => {
         listNode,
       }),
     }),
-  });
+  })
   graphql(
     schema,
     `
@@ -100,5 +100,5 @@ test(`Infers graphql type from array of nodes`, () => {
           },
         ],
       },
-    }));
-});
+    }))
+})
