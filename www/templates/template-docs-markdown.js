@@ -1,6 +1,6 @@
-import React from "react";
+import React from "react"
 
-import { rhythm } from "utils/typography";
+import { rhythm } from "utils/typography"
 
 const DocsTemplate = React.createClass({
   render() {
@@ -13,11 +13,11 @@ const DocsTemplate = React.createClass({
           }}
         />
       </div>
-    );
+    )
   },
-});
+})
 
-export default DocsTemplate;
+export default DocsTemplate
 
 export const pageQuery = `
   query BlogPostByPath($slug: String!) {
@@ -28,4 +28,4 @@ export const pageQuery = `
       }
     }
   }
-`;
+`

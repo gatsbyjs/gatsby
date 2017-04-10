@@ -1,19 +1,19 @@
-import React from "react";
-import Helmet from "react-helmet";
+import React from "react"
+import Helmet from "react-helmet"
 
-import presets from "../utils/presets";
-import typography, { rhythm, scale } from "../utils/typography";
+import presets from "../utils/presets"
+import typography, { rhythm, scale } from "../utils/typography"
 
 const BlogPostTemplate = React.createClass({
   render() {
     //console.log(this.props)
-    const post = this.props.data.markdownRemark;
+    const post = this.props.data.markdownRemark
     const twitterLine = post.frontmatter.author.twitter
       ? ` by ${post.frontmatter.author.twitter}`
-      : ``;
+      : ``
     const authorShareText = encodeURIComponent(
       `“${post.frontmatter.title}”${twitterLine} https://sourceforge.com/blog${post.fileSlug}`
-    );
+    )
     const BioLine = ({ children }) => (
       <p
         css={{
@@ -30,7 +30,7 @@ const BlogPostTemplate = React.createClass({
       >
         {children}
       </p>
-    );
+    )
     return (
       <div
         css={{
@@ -177,11 +177,11 @@ const BlogPostTemplate = React.createClass({
           }}
         />
       </div>
-    );
+    )
   },
-});
+})
 
-export default BlogPostTemplate;
+export default BlogPostTemplate
 
 export const pageQuery = `
   query TemplatePage($slug: String!) {
@@ -221,4 +221,4 @@ export const pageQuery = `
       }
     }
   }
-`;
+`

@@ -1,9 +1,9 @@
-import Typography from "typography";
-import CodePlugin from "typography-plugin-code";
+import Typography from "typography"
+import CodePlugin from "typography-plugin-code"
 import {
   MOBILE_MEDIA_QUERY,
   TABLET_MEDIA_QUERY,
-} from "typography-breakpoint-constants";
+} from "typography-breakpoint-constants"
 
 const options = {
   headerFontFamily: [`Futura PT`, `sans-serif`],
@@ -108,13 +108,13 @@ const options = {
       },
     },
   }),
-};
+}
 
-const typography = new Typography(options);
+const typography = new Typography(options)
 
 // Hot reload typography in development.
 if (process.env.NODE_ENV !== `production`) {
-  typography.injectStyles();
+  typography.injectStyles()
 }
 
-export default typography;
+export default typography

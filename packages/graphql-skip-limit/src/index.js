@@ -2,7 +2,7 @@
 export {
   connectionArgs,
   connectionDefinitions,
-} from "./connection/connection.js";
+} from "./connection/connection.js"
 
 // Helpers for creating connections from arrays
-export { connectionFromArray } from "./connection/arrayconnection.js";
+export { connectionFromArray } from "./connection/arrayconnection.js"

@@ -1,22 +1,22 @@
-import _ from "lodash";
-import fs from "fs";
-import path from "path";
-import webpack from "webpack";
-import Config from "webpack-configurator";
-import ExtractTextPlugin from "extract-text-webpack-plugin";
-import StaticSiteGeneratorPlugin from "static-site-generator-webpack-plugin";
-import { StatsWriterPlugin } from "webpack-stats-plugin";
+import _ from "lodash"
+import fs from "fs"
+import path from "path"
+import webpack from "webpack"
+import Config from "webpack-configurator"
+import ExtractTextPlugin from "extract-text-webpack-plugin"
+import StaticSiteGeneratorPlugin from "static-site-generator-webpack-plugin"
+import { StatsWriterPlugin } from "webpack-stats-plugin"
 // This isn't working right it seems.
 //import WebpackStableModuleIdAndHash from 'webpack-stable-module-id-and-hash'
 
-import webpackModifyValidate from "./webpack-modify-validate";
+import webpackModifyValidate from "./webpack-modify-validate"
 
-const debug = require("debug")("gatsby:webpack-config");
-const WebpackMD5Hash = require("webpack-md5-hash");
-const ChunkManifestPlugin = require("chunk-manifest-webpack-plugin");
-const { pagesDB, siteDB } = require("../utils/globals");
-const { layoutComponentChunkName } = require("./js-chunk-names");
-const genBabelConfig = require("./babel-config");
+const debug = require("debug")("gatsby:webpack-config")
+const WebpackMD5Hash = require("webpack-md5-hash")
+const ChunkManifestPlugin = require("chunk-manifest-webpack-plugin")
+const { pagesDB, siteDB } = require("../utils/globals")
+const { layoutComponentChunkName } = require("./js-chunk-names")
+const genBabelConfig = require("./babel-config")
 
 // Five stages or modes:
 //   1) develop: for `gatsby develop` command, hot reload and CSS injection into page
@@ -32,14 +32,14 @@ module.exports = async (
   webpackPort = 1500,
   pages = []
 ) => {
-  const babelStage = suppliedStage;
+  const babelStage = suppliedStage
 
   // We combine develop & develop-html stages for purposes of generating the
   // webpack config.
-  const stage = suppliedStage === `develop-html` ? `develop` : suppliedStage;
-  const babelConfig = await genBabelConfig(program, babelStage);
+  const stage = suppliedStage === `develop-html` ? `develop` : suppliedStage
+  const babelConfig = await genBabelConfig(program, babelStage)
 
-  debug(`Loading webpack config for stage "${stage}"`);
+  debug(`Loading webpack config for stage "${stage}"`)
   function output() {
     switch (stage) {
       case `develop`:
@@ -47,7 +47,7 @@ module.exports = async (
           path: directory,
           filename: `[name].js`,
           publicPath: `http://${program.host}:${webpackPort}/`,
-        };
+        }
       case `build-css`:
         // Webpack will always generate a resultant javascript file.
         // But we don't want it for this step. Deleted by build-css.js.
@@ -57,7 +57,7 @@ module.exports = async (
           publicPath: program.prefixLinks
             ? `${siteDB().get(`config`).linkPrefix}/`
             : `/`,
-        };
+        }
       case `build-html`:
         // A temp file required by static-site-generator-plugin. See plugins() below.
         // Deleted by build-html.js, since it's not needed for production.
@@ -68,7 +68,7 @@ module.exports = async (
           publicPath: program.prefixLinks
             ? `${siteDB().get(`config`).linkPrefix}/`
             : `/`,
-        };
+        }
       case `build-javascript`:
         return {
           //filename: '[name].js',
@@ -78,9 +78,9 @@ module.exports = async (
           publicPath: program.prefixLinks
             ? `${siteDB().get(`config`).linkPrefix}/`
             : `/`,
-        };
+        }
       default:
-        throw new Error(`The state requested ${stage} doesn't exist.`);
+        throw new Error(`The state requested ${stage} doesn't exist.`)
     }
   }
 
@@ -93,22 +93,22 @@ module.exports = async (
             `${require.resolve(`webpack-hot-middleware/client`)}?path=http://${program.host}:${webpackPort}/__webpack_hmr`,
             `${directory}/.intermediate-representation/app`,
           ],
-        };
+        }
       case `build-css`:
         return {
           main: `${directory}/.intermediate-representation/app`,
-        };
+        }
       case `build-html`:
         return {
           //main: `${__dirname}/static-entry`,
           main: `${directory}/.intermediate-representation/static-entry`,
-        };
+        }
       case `build-javascript`:
         return {
           app: `${directory}/.intermediate-representation/production-app`,
-        };
+        }
       default:
-        throw new Error(`The state requested ${stage} doesn't exist.`);
+        throw new Error(`The state requested ${stage} doesn't exist.`)
     }
   }
 
@@ -134,7 +134,7 @@ module.exports = async (
           // the numerical IDs aren't useful. In production we use numerical module
           // ids to reduce filesize.
           new webpack.NamedModulesPlugin(),
-        ];
+        ]
       case `build-css`:
         return [
           new webpack.DefinePlugin({
@@ -148,7 +148,7 @@ module.exports = async (
             __LINK_PREFIX__: JSON.stringify(siteDB().get(`config`).linkPrefix),
           }),
           new ExtractTextPlugin(`styles.css`, { allChunks: true }),
-        ];
+        ]
       case `build-html`:
         return [
           new StaticSiteGeneratorPlugin(`render-page.js`, pages),
@@ -163,15 +163,15 @@ module.exports = async (
             __LINK_PREFIX__: JSON.stringify(siteDB().get(`config`).linkPrefix),
           }),
           new ExtractTextPlugin(`build-html-styles.css`),
-        ];
+        ]
       case `build-javascript`: {
         // Get array of page template component names.
         let components = Array.from(pagesDB().values()).map(
           page => page.component
-        );
+        )
         components = components.map(component =>
-          layoutComponentChunkName(program.directory, component));
-        components = _.uniq(components);
+          layoutComponentChunkName(program.directory, component))
+        components = _.uniq(components)
         return [
           // Moment.js includes 100s of KBs of extra localization data
           // by default in Webpack that most sites don't want.
@@ -205,17 +205,17 @@ module.exports = async (
                 `react-router-scroll`,
                 `scroll-behavior`,
                 `history`,
-              ];
+              ]
               const isFramework = _.some(
                 vendorModuleList.map(vendor => {
-                  const regex = new RegExp(`\/node_modules\/${vendor}\/`, `i`);
-                  return regex.test(module.resource);
+                  const regex = new RegExp(`\/node_modules\/${vendor}\/`, `i`)
+                  return regex.test(module.resource)
                 })
-              );
+              )
               if (isFramework) {
-                return isFramework;
+                return isFramework
               } else {
-                return count > 3;
+                return count > 3
               }
             },
           }),
@@ -262,10 +262,10 @@ module.exports = async (
           new webpack.optimize.OccurenceOrderPlugin(),
           //new WebpackStableModuleIdAndHash({ seed: 9, hashSize: 47 }),
           new webpack.NamedModulesPlugin(),
-        ];
+        ]
       }
       default:
-        throw new Error(`The state requested ${stage} doesn't exist.`);
+        throw new Error(`The state requested ${stage} doesn't exist.`)
     }
   }
 
@@ -278,19 +278,19 @@ module.exports = async (
       // Then in the special directory of isomorphic modules Gatsby ships with.
       root: [directory, path.resolve(__dirname, `..`, `isomorphic`)],
       modulesDirectories: [`${directory}/node_modules`, `node_modules`],
-    };
+    }
   }
 
   function devtool() {
     switch (stage) {
       case `develop`:
-        return `eval`;
+        return `eval`
       case `build-html`:
-        return false;
+        return false
       case `build-javascript`:
-        return `source-map`;
+        return `source-map`
       default:
-        return false;
+        return false
     }
   }
 
@@ -301,15 +301,15 @@ module.exports = async (
       exclude: /(node_modules|bower_components)/,
       loader: `babel`,
       query: babelConfig,
-    });
+    })
     config.loader(`json`, {
       test: /\.json$/,
       loaders: [`json`],
-    });
+    })
     config.loader(`yaml`, {
       test: /\.ya?ml/,
       loaders: [`json`, `yaml`],
-    });
+    })
 
     // "file" loader makes sure those assets end up in the `public` folder.
     // When you `import` an asset, you get its filename.
@@ -319,7 +319,7 @@ module.exports = async (
       query: {
         name: `static/[name].[hash:8].[ext]`,
       },
-    });
+    })
     // "url" loader works just like "file" loader but it also embeds
     // assets smaller than specified size as data URLs to avoid requests.
     config.loader(`url-loader`, {
@@ -329,10 +329,10 @@ module.exports = async (
         limit: 7500,
         name: `static/[name].[hash:8].[ext]`,
       },
-    });
+    })
 
-    const cssModulesConf = `css?modules&minimize&importLoaders=1`;
-    const cssModulesConfDev = `${cssModulesConf}&sourceMap&localIdentName=[name]---[local]---[hash:base64:5]`;
+    const cssModulesConf = `css?modules&minimize&importLoaders=1`
+    const cssModulesConfDev = `${cssModulesConf}&sourceMap&localIdentName=[name]---[local]---[hash:base64:5]`
 
     switch (stage) {
       case `develop`:
@@ -340,13 +340,13 @@ module.exports = async (
           test: /\.css$/,
           exclude: /\.module\.css$/,
           loaders: [`style`, `css`, `postcss`],
-        });
+        })
 
         // CSS modules
         config.loader(`cssModules`, {
           test: /\.module\.css$/,
           loaders: [`style`, cssModulesConfDev, `postcss`],
-        });
+        })
 
         config.merge({
           postcss(wp) {
@@ -355,17 +355,17 @@ module.exports = async (
               require(`postcss-cssnext`)({ browsers: `last 2 versions` }),
               require(`postcss-browser-reporter`),
               require(`postcss-reporter`),
-            ];
+            ]
           },
-        });
-        return config;
+        })
+        return config
 
       case `build-css`:
         config.loader(`css`, {
           test: /\.css$/,
           exclude: /\.module\.css$/,
           loader: ExtractTextPlugin.extract([`css?minimize`, `postcss`]),
-        });
+        })
 
         // CSS modules
         config.loader(`cssModules`, {
@@ -374,7 +374,7 @@ module.exports = async (
             cssModulesConf,
             `postcss`,
           ]),
-        });
+        })
         config.merge({
           postcss: [
             require(`postcss-import`)(),
@@ -382,8 +382,8 @@ module.exports = async (
               browsers: `last 2 versions`,
             }),
           ],
-        });
-        return config;
+        })
+        return config
 
       case `build-html`:
         // We don't deal with CSS at all when building the HTML.
@@ -394,7 +394,7 @@ module.exports = async (
           test: /\.css$/,
           exclude: /\.module\.css$/,
           loader: `null`,
-        });
+        })
 
         // CSS modules
         config.loader(`cssModules`, {
@@ -403,9 +403,9 @@ module.exports = async (
             cssModulesConf,
             `postcss`,
           ]),
-        });
+        })
 
-        return config;
+        return config
 
       case `build-javascript`:
         // we don't deal with css at all when building the javascript.  but
@@ -420,7 +420,7 @@ module.exports = async (
           exclude: /\.module\.css$/,
           //loader: `null`,
           loader: ExtractTextPlugin.extract([`css`]),
-        });
+        })
 
         // CSS modules
         config.loader(`cssModules`, {
@@ -429,37 +429,37 @@ module.exports = async (
             cssModulesConf,
             `postcss`,
           ]),
-        });
+        })
 
-        return config;
+        return config
 
       default:
-        return config;
+        return config
     }
   }
 
   function resolveLoader() {
-    const root = [path.resolve(directory, `node_modules`)];
+    const root = [path.resolve(directory, `node_modules`)]
 
-    const userLoaderDirectoryPath = path.resolve(directory, `loaders`);
+    const userLoaderDirectoryPath = path.resolve(directory, `loaders`)
 
     try {
       if (fs.statSync(userLoaderDirectoryPath).isDirectory()) {
-        root.push(userLoaderDirectoryPath);
+        root.push(userLoaderDirectoryPath)
       }
     } catch (e) {
       if (e && e.code !== `ENOENT`) {
-        console.log(e);
+        console.log(e)
       }
     }
 
     return {
       root,
       modulesDirectories: [`node_modules`],
-    };
+    }
   }
 
-  const config = new Config();
+  const config = new Config()
 
   config.merge({
     // Context is the base directory for resolving the entry option.
@@ -479,13 +479,13 @@ module.exports = async (
     resolveLoader: resolveLoader(),
     plugins: plugins(),
     resolve: resolve(),
-  });
+  })
 
-  module(config, stage);
+  module(config, stage)
 
   // Use the suppliedStage again to let plugins distinguish between
   // server rendering the html.js and the frontend development config.
-  const validatedConfig = await webpackModifyValidate(config, suppliedStage);
+  const validatedConfig = await webpackModifyValidate(config, suppliedStage)
 
-  return validatedConfig;
-};
+  return validatedConfig
+}

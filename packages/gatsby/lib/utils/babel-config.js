@@ -1,12 +1,12 @@
 /* @flow */
-import resolve from "babel-core/lib/helpers/resolve";
-import fs from "fs";
-import path from "path";
-import json5 from "json5";
-import _ from "lodash";
-import objectAssign from "object-assign";
-import invariant from "invariant";
-import apiRunnerNode from "./api-runner-node";
+import resolve from "babel-core/lib/helpers/resolve"
+import fs from "fs"
+import path from "path"
+import json5 from "json5"
+import _ from "lodash"
+import objectAssign from "object-assign"
+import invariant from "invariant"
+import apiRunnerNode from "./api-runner-node"
 
 /**
  * Uses babel-core helpers to resolve the plugin given it's name. It
@@ -19,15 +19,15 @@ import apiRunnerNode from "./api-runner-node";
  *
  */
 function resolvePlugin(pluginName, directory, type) {
-  const gatsbyPath = path.resolve(__dirname, `..`, `..`);
+  const gatsbyPath = path.resolve(__dirname, `..`, `..`)
   const plugin = resolve(`babel-${type}-${pluginName}`, directory) ||
     resolve(`babel-${type}-${pluginName}`, gatsbyPath) ||
     resolve(pluginName, directory) ||
-    resolve(pluginName, gatsbyPath);
+    resolve(pluginName, gatsbyPath)
 
   const name = _.startsWith(pluginName, `babel`)
     ? pluginName
-    : `babel-${type}-${pluginName}`;
+    : `babel-${type}-${pluginName}`
   const pluginInvariantMessage = `
   You are trying to use a Babel plugin which Gatsby cannot find. You
   can install it using "npm install --save ${name}".
@@ -38,10 +38,10 @@ function resolvePlugin(pluginName, directory, type) {
     - babel-preset-es2015
     - babel-preset-react
     - babel-preset-stage-0
-  `;
+  `
 
-  invariant(plugin !== null, pluginInvariantMessage);
-  return plugin;
+  invariant(plugin !== null, pluginInvariantMessage)
+  return plugin
 }
 
 /**
@@ -53,30 +53,30 @@ function normalizeConfig(config, directory) {
   const normalizedConfig = {
     presets: [],
     plugins: [],
-  };
+  }
 
-  const presets = config.presets || [];
+  const presets = config.presets || []
   presets.forEach(preset => {
-    normalizedConfig.presets.push(resolvePlugin(preset, directory, `preset`));
-  });
+    normalizedConfig.presets.push(resolvePlugin(preset, directory, `preset`))
+  })
 
-  const plugins = config.plugins || [];
+  const plugins = config.plugins || []
   plugins.forEach(plugin => {
-    let normalizedPlugin;
+    let normalizedPlugin
 
     if (_.isArray(plugin)) {
       normalizedPlugin = [
         resolvePlugin(plugin[0], directory, `plugin`),
         plugin[1],
-      ];
+      ]
     } else {
-      normalizedPlugin = resolvePlugin(plugin, directory, `plugin`);
+      normalizedPlugin = resolvePlugin(plugin, directory, `plugin`)
     }
 
-    normalizedConfig.plugins.push(normalizedPlugin);
-  });
+    normalizedConfig.plugins.push(normalizedPlugin)
+  })
 
-  return objectAssign({}, config, normalizedConfig);
+  return objectAssign({}, config, normalizedConfig)
 }
 
 /**
@@ -86,13 +86,13 @@ function normalizeConfig(config, directory) {
  */
 function findBabelrc(directory) {
   try {
-    const babelrc = fs.readFileSync(path.join(directory, `.babelrc`), `utf-8`);
-    return json5.parse(babelrc);
+    const babelrc = fs.readFileSync(path.join(directory, `.babelrc`), `utf-8`)
+    return json5.parse(babelrc)
   } catch (error) {
     if (error.code === `ENOENT`) {
-      return null;
+      return null
     } else {
-      throw error;
+      throw error
     }
   }
 }
@@ -104,13 +104,13 @@ function findBabelrc(directory) {
 function findBabelPackage(directory) {
   try {
     // $FlowIssue - https://github.com/facebook/flow/issues/1975
-    const packageJson = require(path.join(directory, `package.json`));
-    return packageJson.babel;
+    const packageJson = require(path.join(directory, `package.json`))
+    return packageJson.babel
   } catch (error) {
     if (error.code === `MODULE_NOT_FOUND`) {
-      return null;
+      return null
     } else {
-      throw error;
+      throw error
     }
   }
 }
@@ -120,53 +120,53 @@ function findBabelPackage(directory) {
  * the paths will be absolute so that Babel behaves as expected.
  */
 module.exports = async function babelConfig(program, stage) {
-  const { directory } = program;
+  const { directory } = program
 
-  let babelrc = findBabelrc(directory) || findBabelPackage(directory);
+  let babelrc = findBabelrc(directory) || findBabelPackage(directory)
 
   // If user doesn't have a custom babelrc, add defaults.
   if (!babelrc) {
-    babelrc = {};
+    babelrc = {}
   }
   if (!babelrc.plugins) {
-    babelrc.plugins = [];
+    babelrc.plugins = []
   }
   if (!babelrc.presets) {
-    babelrc.presets = [];
+    babelrc.presets = []
   }
 
   // Add default plugins and presets.
   [`es2015`, `stage-0`, `react`].forEach(preset => {
-    babelrc.presets.push(preset);
+    babelrc.presets.push(preset)
   });
   [`add-module-exports`, `transform-object-assign`].forEach(plugin => {
-    babelrc.plugins.push(plugin);
-  });
+    babelrc.plugins.push(plugin)
+  })
 
   if (stage === `develop`) {
-    babelrc.plugins.unshift(`transform-react-jsx-source`);
-    babelrc.plugins.unshift(`react-hot-loader/babel`);
+    babelrc.plugins.unshift(`transform-react-jsx-source`)
+    babelrc.plugins.unshift(`react-hot-loader/babel`)
   }
 
   // Always add this plugin so our generated routes
   // will work regardless of how users export
   // their components. Yeah for multiple module standards!
-  babelrc.plugins.unshift(`add-module-exports`);
+  babelrc.plugins.unshift(`add-module-exports`)
 
   if (!babelrc.hasOwnProperty(`cacheDirectory`)) {
-    babelrc.cacheDirectory = true;
+    babelrc.cacheDirectory = true
   }
 
-  const normalizedConfig = normalizeConfig(babelrc, directory);
-  let modifiedConfig = await apiRunnerNode(`modifyBabelrc`, { babelrc });
+  const normalizedConfig = normalizeConfig(babelrc, directory)
+  let modifiedConfig = await apiRunnerNode(`modifyBabelrc`, { babelrc })
   if (modifiedConfig.length > 0) {
-    modifiedConfig = _.merge({}, ...modifiedConfig);
+    modifiedConfig = _.merge({}, ...modifiedConfig)
     // Otherwise this means no plugin changed the babel config.
   } else {
-    modifiedConfig = {};
+    modifiedConfig = {}
   }
 
   // Merge all together.
-  const merged = _.defaultsDeep(modifiedConfig, normalizedConfig);
-  return merged;
-};
+  const merged = _.defaultsDeep(modifiedConfig, normalizedConfig)
+  return merged
+}

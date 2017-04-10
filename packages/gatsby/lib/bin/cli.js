@@ -1,16 +1,16 @@
-const program = require("commander");
-const packageJson = require("../../package.json");
-const path = require("path");
-const _ = require("lodash");
-console.log(`bin/cli: time since started:`, process.uptime());
+const program = require("commander")
+const packageJson = require("../../package.json")
+const path = require("path")
+const _ = require("lodash")
+console.log(`bin/cli: time since started:`, process.uptime())
 
-const defaultHost = process.platform === `win32` ? `localhost` : `0.0.0.0`;
+const defaultHost = process.platform === `win32` ? `localhost` : `0.0.0.0`
 
-const directory = path.resolve(`.`);
+const directory = path.resolve(`.`)
 
-program.version(packageJson.version).usage(`[command] [options]`);
+program.version(packageJson.version).usage(`[command] [options]`)
 
-console.time(`time to load develop`);
+console.time(`time to load develop`)
 program
   .command(`develop`)
   .description(
@@ -24,14 +24,14 @@ program
   .option(`-p, --port <port>`, `Set port. Defaults to 8000`, `8000`)
   .option(`-o, --open`, `Open the site in your browser for you.`)
   .action(command => {
-    const develop = require("../utils/develop");
-    console.timeEnd(`time to load develop`);
+    const develop = require("../utils/develop")
+    console.timeEnd(`time to load develop`)
     const p = {
       ...command,
       directory,
-    };
-    develop(p);
-  });
+    }
+    develop(p)
+  })
 
 program
   .command(`build`)
@@ -42,18 +42,18 @@ program
   )
   .action(command => {
     // Set NODE_ENV to 'production'
-    process.env.NODE_ENV = `production`;
+    process.env.NODE_ENV = `production`
 
-    const build = require("../utils/build");
+    const build = require("../utils/build")
     const p = {
       ...command,
       directory,
-    };
+    }
     build(p).then(() => {
-      console.log(`Done`);
-      process.exit();
-    });
-  });
+      console.log(`Done`)
+      process.exit()
+    })
+  })
 
 program
   .command(`serve-build`)
@@ -66,21 +66,21 @@ program
   .option(`-p, --port <port>`, `Set port. Defaults to 8000`, `8000`)
   .option(`-o, --open`, `Open the site in your browser for you.`)
   .action(command => {
-    const serve = require("../utils/serve-build");
+    const serve = require("../utils/serve-build")
     const p = {
       ...command,
       directory,
-    };
-    serve(p);
-  });
+    }
+    serve(p)
+  })
 
 program
   .command(`new [rootPath] [starter]`)
   .description(`Create new Gatsby project.`)
   .action((rootPath, starter) => {
-    const newCommand = require("../utils/new");
-    newCommand(rootPath, starter);
-  });
+    const newCommand = require("../utils/new")
+    newCommand(rootPath, starter)
+  })
 
 program.on(`--help`, () => {
   console.log(
@@ -88,16 +88,16 @@ program.on(`--help`, () => {
 
     gatsby [command] -h
 `
-  );
-});
+  )
+})
 
 // If the user types an unknown sub-command, just display the help.
-const subCmd = process.argv.slice(2, 3)[0];
-let cmds = _.map(program.commands, `_name`);
-cmds = cmds.concat([`--version`, `-V`]);
+const subCmd = process.argv.slice(2, 3)[0]
+let cmds = _.map(program.commands, `_name`)
+cmds = cmds.concat([`--version`, `-V`])
 
 if (!_.includes(cmds, subCmd)) {
-  program.help();
+  program.help()
 } else {
-  program.parse(process.argv);
+  program.parse(process.argv)
 }

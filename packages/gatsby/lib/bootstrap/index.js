@@ -1,31 +1,31 @@
 /* @flow */
-import Promise from "bluebird";
-import queryRunner from "../utils/query-runner";
-import path from "path";
-import globCB from "glob";
-import _ from "lodash";
-import slash from "slash";
-import createPath from "./create-path";
-import fs from "fs-extra";
-import Joi from "joi";
-import chalk from "chalk";
-import apiRunnerNode from "../utils/api-runner-node";
-import { graphql } from "graphql";
-import { pagesDB, siteDB, programDB } from "../utils/globals";
-import { gatsbyConfigSchema, pageSchema } from "../joi-schemas/joi";
-import { layoutComponentChunkName } from "../utils/js-chunk-names";
+import Promise from "bluebird"
+import queryRunner from "../utils/query-runner"
+import path from "path"
+import globCB from "glob"
+import _ from "lodash"
+import slash from "slash"
+import createPath from "./create-path"
+import fs from "fs-extra"
+import Joi from "joi"
+import chalk from "chalk"
+import apiRunnerNode from "../utils/api-runner-node"
+import { graphql } from "graphql"
+import { pagesDB, siteDB, programDB } from "../utils/globals"
+import { gatsbyConfigSchema, pageSchema } from "../joi-schemas/joi"
+import { layoutComponentChunkName } from "../utils/js-chunk-names"
 
-const mkdirs = Promise.promisify(fs.mkdirs);
-const copy = Promise.promisify(fs.copy);
-const removeDir = Promise.promisify(fs.remove);
-const glob = Promise.promisify(globCB);
+const mkdirs = Promise.promisify(fs.mkdirs)
+const copy = Promise.promisify(fs.copy)
+const removeDir = Promise.promisify(fs.remove)
+const glob = Promise.promisify(globCB)
 
 Promise.onPossiblyUnhandledRejection(error => {
-  throw error;
-});
+  throw error
+})
 process.on(`unhandledRejection`, error => {
-  console.error(`UNHANDLED REJECTION`, error.stack);
-});
+  console.error(`UNHANDLED REJECTION`, error.stack)
+})
 
 // Path creator.
 // Auto-create pages.
@@ -33,95 +33,95 @@ process.on(`unhandledRejection`, error => {
 // underscored. Then create url w/ our path algorithm *unless* user
 // takes control of that page component in gatsby-node.
 const autoPathCreator = async (program: any) => {
-  const pagesDirectory = path.posix.join(program.directory, `pages`);
-  const exts = program.extensions.map(e => `*${e}`).join("|");
-  const files = await glob(`${pagesDirectory}/**/?(${exts})`);
+  const pagesDirectory = path.posix.join(program.directory, `pages`)
+  const exts = program.extensions.map(e => `*${e}`).join("|")
+  const files = await glob(`${pagesDirectory}/**/?(${exts})`)
   // Create initial page objects.
   let autoPages = files.map(filePath => ({
     component: filePath,
     componentChunkName: layoutComponentChunkName(program.directory, filePath),
     path: filePath,
-  }));
+  }))
 
   // Convert path to one relative to the pages directory.
   autoPages = autoPages.map(page => ({
     ...page,
     path: path.posix.relative(pagesDirectory, page.path),
-  }));
+  }))
 
   // Remove pages starting with an underscore.
-  autoPages = _.filter(autoPages, page => page.path.slice(0, 1) !== `_`);
+  autoPages = _.filter(autoPages, page => page.path.slice(0, 1) !== `_`)
 
   // Remove page templates.
   autoPages = _.filter(
     autoPages,
     page => page.path.slice(0, 9) !== `template-`
-  );
+  )
 
   // Convert to our path format.
   autoPages = autoPages.map(page => ({
     ...page,
     path: createPath(pagesDirectory, page.component),
-  }));
+  }))
 
   // Validate pages.
   autoPages.forEach(page => {
-    const { error } = Joi.validate(page, pageSchema);
+    const { error } = Joi.validate(page, pageSchema)
     if (error) {
-      console.log(chalk.blue.bgYellow(`A page object failed validation`));
-      console.log(page);
-      console.log(chalk.bold.red(error));
+      console.log(chalk.blue.bgYellow(`A page object failed validation`))
+      console.log(page)
+      console.log(chalk.bold.red(error))
     }
-  });
-  return autoPages;
-};
+  })
+  return autoPages
+}
 
 module.exports = async (program: any) => {
-  console.log(`lib/bootstrap/index.js time since started:`, process.uptime());
+  console.log(`lib/bootstrap/index.js time since started:`, process.uptime())
   // Fix program directory path for windows env
-  program.directory = slash(program.directory);
+  program.directory = slash(program.directory)
   // Set the program to the globals programDB
-  programDB(program);
+  programDB(program)
 
   // Try opening the site's gatsby-config.js file.
-  console.time(`open and validate gatsby-config.js`);
-  let config = {};
+  console.time(`open and validate gatsby-config.js`)
+  let config = {}
   try {
-    config = require(`${program.directory}/gatsby-config`);
+    config = require(`${program.directory}/gatsby-config`)
   } catch (e) {
-    console.log(`Couldn't open your gatsby-config.js file`);
-    console.log(e);
-    process.exit();
+    console.log(`Couldn't open your gatsby-config.js file`)
+    console.log(e)
+    process.exit()
   }
 
   // Add config to site object.
-  let normalizedConfig;
+  let normalizedConfig
   if (config.default) {
-    normalizedConfig = config.default;
-    siteDB(siteDB().set(`config`, config.default));
+    normalizedConfig = config.default
+    siteDB(siteDB().set(`config`, config.default))
   } else {
-    normalizedConfig = config;
-    siteDB(siteDB().set(`config`, config));
+    normalizedConfig = config
+    siteDB(siteDB().set(`config`, config))
   }
 
   // Validate gatsby-config.js
-  const result = Joi.validate(normalizedConfig, gatsbyConfigSchema);
+  const result = Joi.validate(normalizedConfig, gatsbyConfigSchema)
   if (result.error) {
-    console.log(chalk.blue.bgYellow(`gatsby.config.js failed validation`));
-    console.log(chalk.bold.red(result.error));
-    console.log(normalizedConfig);
-    process.exit();
+    console.log(chalk.blue.bgYellow(`gatsby.config.js failed validation`))
+    console.log(chalk.bold.red(result.error))
+    console.log(normalizedConfig)
+    process.exit()
   }
-  console.timeEnd(`open and validate gatsby-config.js`);
+  console.timeEnd(`open and validate gatsby-config.js`)
 
   // Instantiate plugins.
-  const plugins = [];
+  const plugins = []
   const processPlugin = plugin => {
     if (_.isString(plugin)) {
-      const resolvedPath = path.dirname(require.resolve(plugin));
+      const resolvedPath = path.dirname(require.resolve(plugin))
       const packageJSON = JSON.parse(
         fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
-      );
+      )
       return {
         resolve: resolvedPath,
         name: packageJSON.name,
@@ -129,34 +129,34 @@ module.exports = async (program: any) => {
         pluginOptions: {
           plugins: [],
         },
-      };
+      }
     } else {
       // Plugins can have plugins.
-      const subplugins = [];
+      const subplugins = []
       if (plugin.options && plugin.options.plugins) {
         plugin.options.plugins.forEach(p => {
-          subplugins.push(processPlugin(p));
-        });
+          subplugins.push(processPlugin(p))
+        })
       }
-      plugin.options.plugins = subplugins;
+      plugin.options.plugins = subplugins
 
-      const resolvedPath = path.dirname(require.resolve(plugin.resolve));
+      const resolvedPath = path.dirname(require.resolve(plugin.resolve))
       const packageJSON = JSON.parse(
         fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
-      );
+      )
       return {
         resolve: resolvedPath,
         name: packageJSON.name,
         version: packageJSON.version,
         pluginOptions: _.merge({ plugins: [] }, plugin.options),
-      };
+      }
     }
-  };
+  }
 
   if (normalizedConfig.plugins) {
     normalizedConfig.plugins.forEach(plugin => {
-      plugins.push(processPlugin(plugin));
-    });
+      plugins.push(processPlugin(plugin))
+    })
   }
 
   // Add the site's default "plugin" i.e. gatsby-x files in root of site.
@@ -167,46 +167,46 @@ module.exports = async (program: any) => {
     pluginOptions: {
       plugins: [],
     },
-  });
+  })
 
   // Create a "flattened" array of plugins with all subplugins brought to the top-level.
   // This simplifies running gatsby-* files for subplugins.
-  const flattenedPlugins = [];
+  const flattenedPlugins = []
   const extractPlugins = plugin => {
     plugin.pluginOptions.plugins.forEach(subPlugin => {
-      flattenedPlugins.push(subPlugin);
-      extractPlugins(subPlugin);
-    });
-  };
+      flattenedPlugins.push(subPlugin)
+      extractPlugins(subPlugin)
+    })
+  }
 
   plugins.forEach(plugin => {
-    flattenedPlugins.push(plugin);
-    extractPlugins(plugin);
-  });
+    flattenedPlugins.push(plugin)
+    extractPlugins(plugin)
+  })
 
-  siteDB(siteDB().set(`plugins`, plugins));
-  siteDB(siteDB().set(`flattenedPlugins`, flattenedPlugins));
+  siteDB(siteDB().set(`plugins`, plugins))
+  siteDB(siteDB().set(`flattenedPlugins`, flattenedPlugins))
 
   // Ensure the public directory is created.
-  await mkdirs(`${program.directory}/public`);
+  await mkdirs(`${program.directory}/public`)
 
   // Copy our site files to the root of the site.
-  console.time(`copy gatsby files`);
-  const srcDir = `${__dirname}/../intermediate-representation-dir`;
-  const siteDir = `${program.directory}/.intermediate-representation`;
+  console.time(`copy gatsby files`)
+  const srcDir = `${__dirname}/../intermediate-representation-dir`
+  const siteDir = `${program.directory}/.intermediate-representation`
   try {
     // await removeDir(siteDir)
-    await copy(srcDir, siteDir, { clobber: true });
-    await mkdirs(`${program.directory}/.intermediate-representation/json`);
+    await copy(srcDir, siteDir, { clobber: true })
+    await mkdirs(`${program.directory}/.intermediate-representation/json`)
   } catch (e) {
-    console.log(`Unable to copy site files to .intermediate-representation`);
-    console.log(e);
+    console.log(`Unable to copy site files to .intermediate-representation`)
+    console.log(e)
   }
 
   // Find plugins which implement gatsby-browser and gatsby-ssr and write
   // out api-runners for them.
   const hasAPIFile = (env, plugin) =>
-    glob.sync(`${plugin.resolve}/gatsby-${env}*`)[0];
+    glob.sync(`${plugin.resolve}/gatsby-${env}*`)[0]
 
   const ssrPlugins = _.filter(
     flattenedPlugins.map(plugin => ({
@@ -214,19 +214,19 @@ module.exports = async (program: any) => {
       options: plugin.pluginOptions,
     })),
     plugin => plugin.resolve
-  );
+  )
   const browserPlugins = _.filter(
     flattenedPlugins.map(plugin => ({
       resolve: hasAPIFile(`browser`, plugin),
       options: plugin.pluginOptions,
     })),
     plugin => plugin.resolve
-  );
+  )
 
   let browserAPIRunner = fs.readFileSync(
     `${siteDir}/api-runner-browser.js`,
     `utf-8`
-  );
+  )
   const browserPluginsRequires = browserPlugins
     .map(
       plugin =>
@@ -235,10 +235,10 @@ module.exports = async (program: any) => {
       options: ${JSON.stringify(plugin.options)},
     }`
     )
-    .join(`,`);
-  browserAPIRunner = `var plugins = [${browserPluginsRequires}]\n${browserAPIRunner}`;
+    .join(`,`)
+  browserAPIRunner = `var plugins = [${browserPluginsRequires}]\n${browserAPIRunner}`
 
-  let sSRAPIRunner = fs.readFileSync(`${siteDir}/api-runner-ssr.js`, `utf-8`);
+  let sSRAPIRunner = fs.readFileSync(`${siteDir}/api-runner-ssr.js`, `utf-8`)
   const ssrPluginsRequires = ssrPlugins
     .map(
       plugin =>
@@ -247,25 +247,25 @@ module.exports = async (program: any) => {
       options: ${JSON.stringify(plugin.options)},
     }`
     )
-    .join(`,`);
-  sSRAPIRunner = `var plugins = [${ssrPluginsRequires}]\n${sSRAPIRunner}`;
+    .join(`,`)
+  sSRAPIRunner = `var plugins = [${ssrPluginsRequires}]\n${sSRAPIRunner}`
 
   fs.writeFileSync(
     `${siteDir}/api-runner-browser.js`,
     browserAPIRunner,
     `utf-8`
-  );
-  fs.writeFileSync(`${siteDir}/api-runner-ssr.js`, sSRAPIRunner, `utf-8`);
+  )
+  fs.writeFileSync(`${siteDir}/api-runner-ssr.js`, sSRAPIRunner, `utf-8`)
 
-  console.timeEnd(`copy gatsby files`);
+  console.timeEnd(`copy gatsby files`)
 
   // Create Schema.
-  console.time(`create schema`);
-  const schema = await require(`../schema`)();
+  console.time(`create schema`)
+  const schema = await require(`../schema`)()
   // const schema = await require(`../schema`)()
   const graphqlRunner = (query, context) =>
-    graphql(schema, query, context, context, context);
-  console.timeEnd(`create schema`);
+    graphql(schema, query, context, context, context)
+  console.timeEnd(`create schema`)
 
   // TODO create new folder structure for files to reflect major systems.
   //
@@ -282,8 +282,8 @@ module.exports = async (program: any) => {
 
   // Collect pages.
   let pages = await apiRunnerNode(`createPages`, { graphql: graphqlRunner }, [
-  ]);
-  pages = _.flatten(pages);
+  ])
+  pages = _.flatten(pages)
 
   if (_.isArray(pages) && pages.length > 0) {
     // Add chunkName.
@@ -291,85 +291,85 @@ module.exports = async (program: any) => {
       page.componentChunkName = layoutComponentChunkName(
         program.directory,
         page.component
-      );
-    });
+      )
+    })
 
     // Validate pages.
     if (pages) {
       pages.forEach(page => {
-        const { error } = Joi.validate(page, pageSchema);
+        const { error } = Joi.validate(page, pageSchema)
         if (error) {
-          console.log(chalk.blue.bgYellow(`A page object failed validation`));
-          console.log(chalk.bold.red(error));
-          console.log(`page object`);
-          console.log(page);
+          console.log(chalk.blue.bgYellow(`A page object failed validation`))
+          console.log(chalk.bold.red(error))
+          console.log(`page object`)
+          console.log(page)
         }
-      });
+      })
     }
-    console.log(`validated pages`);
+    console.log(`validated pages`)
   } else {
-    pages = [];
+    pages = []
   }
 
   // Save pages to in-memory database.
-  const pagesMap = new Map();
+  const pagesMap = new Map()
   pages.forEach(page => {
-    pagesMap.set(page.path, page);
-  });
-  pagesDB(pagesMap);
-  console.log(`added pages to in-memory db`);
+    pagesMap.set(page.path, page)
+  })
+  pagesDB(pagesMap)
+  console.log(`added pages to in-memory db`)
 
   // Collect resolvable extensions and attach to program.
-  const extensions = [`.js`, `.jsx`];
-  const apiResults = await apiRunnerNode("resolvableExtensions");
-  program.extensions = apiResults.reduce((a, b) => a.concat(b), extensions);
+  const extensions = [`.js`, `.jsx`]
+  const apiResults = await apiRunnerNode("resolvableExtensions")
+  program.extensions = apiResults.reduce((a, b) => a.concat(b), extensions)
 
   // TODO move this to own source plugin per component type
   // (js/cjsx/typescript, etc.)
-  const autoPages = await autoPathCreator(program, pages);
+  const autoPages = await autoPathCreator(program, pages)
   if (autoPages) {
-    const pagesMap = new Map();
-    autoPages.forEach(page => pagesMap.set(page.path, page));
-    pagesDB(new Map([...pagesDB(), ...pagesMap]));
+    const pagesMap = new Map()
+    autoPages.forEach(page => pagesMap.set(page.path, page))
+    pagesDB(new Map([...pagesDB(), ...pagesMap]))
   }
 
   // Rewrite /404/ to /404.html
   const rewrittenPages = new Map();
   [...pagesDB()].forEach(page => {
     if (page[0] === `/404/`) {
-      page[1].path = `/404.html`;
-      rewrittenPages.set(`/404.html`, page[1]);
+      page[1].path = `/404.html`
+      rewrittenPages.set(`/404.html`, page[1])
     } else {
-      rewrittenPages.set(page[0], page[1]);
+      rewrittenPages.set(page[0], page[1])
     }
-  });
-  pagesDB(new Map([...rewrittenPages]));
-  console.log(`created js pages`);
+  })
+  pagesDB(new Map([...rewrittenPages]))
+  console.log(`created js pages`)
 
   const modifiedPages = await apiRunnerNode(
     `onPostCreatePages`,
     pagesDB(),
     pagesDB()
-  );
+  )
 
   // Validate pages.
   modifiedPages.forEach(page => {
-    const { error } = Joi.validate(page, pageSchema);
+    const { error } = Joi.validate(page, pageSchema)
     if (error) {
-      console.log(chalk.blue.bgYellow(`A page object failed validation`));
-      console.log(chalk.bold.red(error));
-      console.log(`page object`);
-      console.log(page);
+      console.log(chalk.blue.bgYellow(`A page object failed validation`))
+      console.log(chalk.bold.red(error))
+      console.log(`page object`)
+      console.log(page)
     }
-  });
-  console.log(`validated modified pages`);
+  })
+  console.log(`validated modified pages`)
 
   // console.log(`bootstrap finished, time since started:`, process.uptime())
   // cb(null, schema)
 
-  await queryRunner(program, graphqlRunner);
-  await apiRunnerNode(`generateSideEffects`);
-  console.log(`bootstrap finished, time since started: ${process.uptime()}`);
+  await queryRunner(program, graphqlRunner)
+  await apiRunnerNode(`generateSideEffects`)
+  console.log(`bootstrap finished, time since started: ${process.uptime()}`)
 
-  return { schema, graphqlRunner };
-};
+  return { schema, graphqlRunner }
+}

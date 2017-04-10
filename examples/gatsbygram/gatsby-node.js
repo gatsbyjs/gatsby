@@ -1,8 +1,8 @@
-const _ = require("lodash");
-const Promise = require("bluebird");
-const path = require("path");
-const slug = require("slug");
-const slash = require("slash");
+const _ = require("lodash")
+const Promise = require("bluebird")
+const path = require("path")
+const slug = require("slug")
+const slash = require("slash")
 
 // Implement the Gatsby API “createPages”. This is
 // called after the Gatsby bootstrap is finished so you have
@@ -14,8 +14,8 @@ exports.createPages = ({ args }) =>
     // queries against this Gatsbygram's graphql schema. Think of
     // it like Gatsbygram has a built-in database constructed
     // from static data that you can run queries against.
-    const { graphql } = args;
-    const pages = [];
+    const { graphql } = args
+    const pages = []
     // Post is a data node type derived from data/posts.json
     // which is created when scrapping Instagram. “allPosts”
     // is a "connection" (a GraphQL convention for accessing
@@ -35,12 +35,12 @@ exports.createPages = ({ args }) =>
     `
     ).then(result => {
       if (result.errors) {
-        console.log(result.errors);
-        reject(result.errors);
+        console.log(result.errors)
+        reject(result.errors)
       }
 
       // Create image post pages.
-      const postTemplate = path.resolve(`pages/template-post-page.js`);
+      const postTemplate = path.resolve(`pages/template-post-page.js`)
       // We want to create a detailed page for each
       // Instagram post. Since the scrapped Instagram data
       // already includes an ID field, we just use that for
@@ -56,9 +56,9 @@ exports.createPages = ({ args }) =>
           context: {
             id: edge.node.id,
           },
-        });
-      });
+        })
+      })
 
-      resolve(pages);
-    });
-  });
+      resolve(pages)
+    })
+  })

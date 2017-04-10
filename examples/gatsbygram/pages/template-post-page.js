@@ -1,5 +1,5 @@
-import React from "react";
-import PostDetail from "../components/post-detail";
+import React from "react"
+import PostDetail from "../components/post-detail"
 
 class PostTemplate extends React.Component {
   render() {
@@ -7,11 +7,11 @@ class PostTemplate extends React.Component {
       // PostDetail is used for this detail page and
       // also in the modal.
       <PostDetail post={this.props.data.posts} />
-    );
+    )
   }
 }
 
-export default PostTemplate;
+export default PostTemplate
 
 // The post template's GraphQL query. Notice the “id”
 // variable which is passed in. We set this on the page
@@ -51,4 +51,4 @@ export const pageQuery = `
       }
     }
   }
-`;
+`

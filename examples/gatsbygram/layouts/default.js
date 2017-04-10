@@ -1,30 +1,30 @@
-import React from "react";
-import CameraIcon from "react-icons/lib/fa/camera-retro";
-import Link from "gatsby-link";
+import React from "react"
+import CameraIcon from "react-icons/lib/fa/camera-retro"
+import Link from "gatsby-link"
 
 // Load the css for the Space Mono font.
-import "typeface-space-mono";
+import "typeface-space-mono"
 
-import { rhythm, scale } from "../utils/typography";
-import presets from "../utils/presets";
-import Modal from "../components/modal";
+import { rhythm, scale } from "../utils/typography"
+import presets from "../utils/presets"
+import Modal from "../components/modal"
 
 class DefaultLayout extends React.Component {
   getChildContext() {
     return {
       setEdges: edges => {
-        this.edges = edges;
+        this.edges = edges
       },
-    };
+    }
   }
 
   componentDidMount() {
     // Create references to html/body elements
-    this.htmlElement = document.querySelector(`html`);
-    this.bodyElement = document.querySelector(`body`);
+    this.htmlElement = document.querySelector(`html`)
+    this.bodyElement = document.querySelector(`body`)
 
     // Cache the window width.
-    this.windowWidth = window.innerWidth;
+    this.windowWidth = window.innerWidth
   }
   componentWillReceiveProps(nextProps) {
     // if we're changing to a non-homepage page, put things in
@@ -35,33 +35,33 @@ class DefaultLayout extends React.Component {
       this.windowWidth > 750
     ) {
       // Freeze the background from scrolling.
-      this.htmlElement.style.overflow = `hidden`;
-      this.bodyElement.style.overflow = `hidden`;
+      this.htmlElement.style.overflow = `hidden`
+      this.bodyElement.style.overflow = `hidden`
 
       // Always set overflow-y to scroll so the scrollbar stays visible avoiding
       // weird jumping.
-      this.htmlElement.style.overflowY = `scroll`;
+      this.htmlElement.style.overflowY = `scroll`
 
       // Save the homepage if we haven't already.
       if (!this.modalBackgroundChildren) {
-        this.modalBackgroundChildren = this.props.children;
+        this.modalBackgroundChildren = this.props.children
       }
     } else {
       // Otherwise we're navigating back home so delete old home so the
       // modal can be destroyed.
-      delete this.modalBackgroundChildren;
-      this.htmlElement.style.overflow = `visible`;
-      this.bodyElement.style.overflow = `visible`;
+      delete this.modalBackgroundChildren
+      this.htmlElement.style.overflow = `visible`
+      this.bodyElement.style.overflow = `visible`
 
       // Always set overflow-y to scroll so the scrollbar stays visible avoiding
       // weird jumping.
-      this.htmlElement.style.overflowY = `scroll`;
+      this.htmlElement.style.overflowY = `scroll`
     }
   }
 
   render() {
-    const { location } = this.props;
-    const isModal = this.modalBackgroundChildren;
+    const { location } = this.props
+    const isModal = this.modalBackgroundChildren
 
     return (
       <div
@@ -151,12 +151,12 @@ class DefaultLayout extends React.Component {
             </Modal>}
         </div>
       </div>
-    );
+    )
   }
 }
 
 DefaultLayout.childContextTypes = {
   setEdges: React.PropTypes.func,
-};
+}
 
-export default DefaultLayout;
+export default DefaultLayout

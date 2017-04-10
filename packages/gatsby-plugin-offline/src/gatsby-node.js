@@ -1,17 +1,17 @@
-const precache = require("sw-precache");
-const path = require("path");
-const slash = require("slash");
-const _ = require("lodash");
+const precache = require("sw-precache")
+const path = require("path")
+const slash = require("slash")
+const _ = require("lodash")
 
 exports.createPages = () => [
   {
     path: `/offline-plugin-app-shell-fallback/`,
     component: slash(path.resolve(`${__dirname}/app-shell.js`)),
   },
-];
+]
 
 exports.postBuild = ({ pluginOptions }) => {
-  const rootDir = `public`;
+  const rootDir = `public`
 
   const options = {
     staticFileGlobs: [
@@ -40,9 +40,9 @@ exports.postBuild = ({ pluginOptions }) => {
       },
     ],
     skipWaiting: false,
-  };
+  }
 
-  const combinedOptions = _.defaults(pluginOptions, options);
+  const combinedOptions = _.defaults(pluginOptions, options)
 
-  return precache.write(`public/sw.js`, combinedOptions);
-};
+  return precache.write(`public/sw.js`, combinedOptions)
+}

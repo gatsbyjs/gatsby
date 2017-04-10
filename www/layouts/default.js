@@ -1,33 +1,33 @@
-import React from "react";
-import typography, { rhythm, scale } from "utils/typography";
-import logo from "images/gatsby-monogram.jpg";
-import Link from "gatsby-link";
-import DocumentIcon from "react-icons/lib/go/file-text";
-import CodeIcon from "react-icons/lib/go/code";
-import PencilIcon from "react-icons/lib/go/pencil";
-import PersonIcon from "react-icons/lib/md/person";
-import Helmet from "react-helmet";
+import React from "react"
+import typography, { rhythm, scale } from "utils/typography"
+import logo from "images/gatsby-monogram.jpg"
+import Link from "gatsby-link"
+import DocumentIcon from "react-icons/lib/go/file-text"
+import CodeIcon from "react-icons/lib/go/code"
+import PencilIcon from "react-icons/lib/go/pencil"
+import PersonIcon from "react-icons/lib/md/person"
+import Helmet from "react-helmet"
 
-import SidebarBody from "../components/sidebar-body";
-import presets from "../utils/presets";
+import SidebarBody from "../components/sidebar-body"
+import presets from "../utils/presets"
 
-import "css/prism-coy.css";
+import "css/prism-coy.css"
 
 // Import Futura PT typeface
-import "fonts/Webfonts/futurapt_book_macroman/stylesheet.css";
-import "fonts/Webfonts/futurapt_bookitalic_macroman/stylesheet.css";
-import "fonts/Webfonts/futurapt_demi_macroman/stylesheet.css";
-import "fonts/Webfonts/futurapt_demiitalic_macroman/stylesheet.css";
+import "fonts/Webfonts/futurapt_book_macroman/stylesheet.css"
+import "fonts/Webfonts/futurapt_bookitalic_macroman/stylesheet.css"
+import "fonts/Webfonts/futurapt_demi_macroman/stylesheet.css"
+import "fonts/Webfonts/futurapt_demiitalic_macroman/stylesheet.css"
 
 // Other fonts
-import "typeface-tex-gyre-schola";
-import "typeface-space-mono";
+import "typeface-tex-gyre-schola"
+import "typeface-space-mono"
 
 module.exports = React.createClass({
   propTypes() {
     return {
       children: React.PropTypes.any,
-    };
+    }
   },
   render() {
     return (
@@ -367,6 +367,6 @@ module.exports = React.createClass({
           </Link>
         </div>
       </div>
-    );
+    )
   },
-});
+})

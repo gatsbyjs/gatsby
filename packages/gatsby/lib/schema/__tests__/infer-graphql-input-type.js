@@ -1,22 +1,22 @@
-const _ = require("lodash");
-const runSift = require("../run-sift");
+const _ = require("lodash")
+const runSift = require("../run-sift")
 const {
   connectionFromArray,
   connectionArgs,
   connectionDefinitions,
-} = require("graphql-skip-limit");
-const buildConnectionFields = require("../build-connection-fields");
+} = require("graphql-skip-limit")
+const buildConnectionFields = require("../build-connection-fields")
 
 describe(`GraphQL Input args`, () => {
-  const { inferObjectStructureFromNodes } = require("../infer-graphql-type");
+  const { inferObjectStructureFromNodes } = require("../infer-graphql-type")
   const {
     inferInputObjectStructureFromNodes,
-  } = require("../infer-graphql-input-fields");
+  } = require("../infer-graphql-input-fields")
   const {
     graphql,
     GraphQLObjectType,
     GraphQLSchema,
-  } = require("graphql");
+  } = require("graphql")
   const nodes = [
     {
       name: `The Mad Max`,
@@ -41,17 +41,17 @@ describe(`GraphQL Input args`, () => {
         circle: `happy`,
       },
     },
-  ];
-  const inferredFields = inferObjectStructureFromNodes({ nodes });
+  ]
+  const inferredFields = inferObjectStructureFromNodes({ nodes })
   const inferredInputFields = inferInputObjectStructureFromNodes(
     nodes,
     ``,
     `test`
-  );
+  )
   const nodeType = new GraphQLObjectType({
     name: `Test`,
     fields: { ...inferredFields },
-  });
+  })
 
   const { connectionType: nodeConnection } = connectionDefinitions({
     nodeType,
@@ -61,7 +61,7 @@ describe(`GraphQL Input args`, () => {
         nodes,
         nodeObjectType: nodeType,
       }),
-  });
+  })
 
   const connection = {
     name: `nodeConnection`,
@@ -75,9 +75,9 @@ describe(`GraphQL Input args`, () => {
         args,
         nodes,
         connection: true,
-      });
+      })
     },
-  };
+  }
 
   const schema = new GraphQLSchema({
     query: new GraphQLObjectType({
@@ -86,7 +86,7 @@ describe(`GraphQL Input args`, () => {
         allNode: connection,
       }),
     }),
-  });
+  })
 
   it(`handles eq operator`, () =>
     graphql(
@@ -100,11 +100,11 @@ describe(`GraphQL Input args`, () => {
           `
     )
       .then(result => {
-        expect(result.errors).not.toBeDefined();
-        expect(result.data.allNode.edges.length).toEqual(1);
-        expect(result.data.allNode.edges[0].node.hair).toEqual(2);
+        expect(result.errors).not.toBeDefined()
+        expect(result.data.allNode.edges.length).toEqual(1)
+        expect(result.data.allNode.edges[0].node.hair).toEqual(2)
       })
-      .catch(err => expect(err).not.toBeDefined()));
+      .catch(err => expect(err).not.toBeDefined()))
 
   it(`handles ne operator`, () =>
     graphql(
@@ -118,11 +118,11 @@ describe(`GraphQL Input args`, () => {
           `
     )
       .then(result => {
-        expect(result.errors).not.toBeDefined();
-        expect(result.data.allNode.edges.length).toEqual(1);
-        expect(result.data.allNode.edges[0].node.hair).toEqual(1);
+        expect(result.errors).not.toBeDefined()
+        expect(result.data.allNode.edges.length).toEqual(1)
+        expect(result.data.allNode.edges[0].node.hair).toEqual(1)
       })
-      .catch(err => expect(err).not.toBeDefined()));
+      .catch(err => expect(err).not.toBeDefined()))
 
   it(`handles the regex operator`, () =>
     graphql(
@@ -136,11 +136,11 @@ describe(`GraphQL Input args`, () => {
           `
     )
       .then(result => {
-        expect(result.errors).not.toBeDefined();
-        expect(result.data.allNode.edges.length).toEqual(1);
-        expect(result.data.allNode.edges[0].node.name).toEqual(`The Mad Wax`);
+        expect(result.errors).not.toBeDefined()
+        expect(result.data.allNode.edges.length).toEqual(1)
+        expect(result.data.allNode.edges[0].node.name).toEqual(`The Mad Wax`)
       })
-      .catch(err => expect(err).not.toBeDefined()));
+      .catch(err => expect(err).not.toBeDefined()))
 
   it(`handles the in operator`, () =>
     graphql(
@@ -154,11 +154,11 @@ describe(`GraphQL Input args`, () => {
           `
     )
       .then(result => {
-        expect(result.errors).not.toBeDefined();
-        expect(result.data.allNode.edges.length).toEqual(1);
-        expect(result.data.allNode.edges[0].node.name).toEqual(`The Mad Wax`);
+        expect(result.errors).not.toBeDefined()
+        expect(result.data.allNode.edges.length).toEqual(1)
+        expect(result.data.allNode.edges[0].node.name).toEqual(`The Mad Wax`)
       })
-      .catch(err => expect(err).not.toBeDefined()));
+      .catch(err => expect(err).not.toBeDefined()))
 
   it(`handles the glob operator`, () =>
     graphql(
@@ -172,11 +172,11 @@ describe(`GraphQL Input args`, () => {
           `
     )
       .then(result => {
-        expect(result.errors).not.toBeDefined();
-        expect(result.data.allNode.edges.length).toEqual(1);
-        expect(result.data.allNode.edges[0].node.name).toEqual(`The Mad Wax`);
+        expect(result.errors).not.toBeDefined()
+        expect(result.data.allNode.edges.length).toEqual(1)
+        expect(result.data.allNode.edges[0].node.name).toEqual(`The Mad Wax`)
       })
-      .catch(err => expect(err).not.toBeDefined()));
+      .catch(err => expect(err).not.toBeDefined()))
 
   it(`sorts results`, () =>
     graphql(
@@ -190,11 +190,11 @@ describe(`GraphQL Input args`, () => {
           `
     )
       .then(result => {
-        expect(result.errors).not.toBeDefined();
-        expect(result.data.allNode.edges.length).toEqual(2);
-        expect(result.data.allNode.edges[0].node.name).toEqual(`The Mad Wax`);
+        expect(result.errors).not.toBeDefined()
+        expect(result.data.allNode.edges.length).toEqual(2)
+        expect(result.data.allNode.edges[0].node.name).toEqual(`The Mad Wax`)
       })
-      .catch(err => expect(err).not.toBeDefined()));
+      .catch(err => expect(err).not.toBeDefined()))
 
   it(`returns list of distinct values in a field`, () =>
     graphql(
@@ -212,21 +212,21 @@ describe(`GraphQL Input args`, () => {
           `
     )
       .then(result => {
-        expect(result.errors).not.toBeDefined();
+        expect(result.errors).not.toBeDefined()
 
-        expect(result.data.allNode.names.length).toEqual(2);
-        expect(result.data.allNode.names[0]).toEqual(`The Mad Max`);
+        expect(result.data.allNode.names.length).toEqual(2)
+        expect(result.data.allNode.names[0]).toEqual(`The Mad Max`)
 
-        expect(result.data.allNode.array.length).toEqual(5);
-        expect(result.data.allNode.array[0]).toEqual(`1`);
+        expect(result.data.allNode.array.length).toEqual(5)
+        expect(result.data.allNode.array[0]).toEqual(`1`)
 
-        expect(result.data.allNode.blue.length).toEqual(2);
-        expect(result.data.allNode.blue[0]).toEqual(`100`);
+        expect(result.data.allNode.blue.length).toEqual(2)
+        expect(result.data.allNode.blue[0]).toEqual(`100`)
 
-        expect(result.data.allNode.circle.length).toEqual(1);
-        expect(result.data.allNode.circle[0]).toEqual(`happy`);
+        expect(result.data.allNode.circle.length).toEqual(1)
+        expect(result.data.allNode.circle[0]).toEqual(`happy`)
       })
-      .catch(err => expect(err).not.toBeDefined()));
+      .catch(err => expect(err).not.toBeDefined()))
 
   it(`handles the groupBy connection field`, () =>
     graphql(
@@ -249,17 +249,17 @@ describe(`GraphQL Input args`, () => {
           `
     )
       .then(result => {
-        expect(result.errors).not.toBeDefined();
+        expect(result.errors).not.toBeDefined()
 
-        expect(result.data.allNode.blue).toHaveLength(2);
-        expect(result.data.allNode.blue[0].fieldValue).toEqual(`100`);
-        expect(result.data.allNode.blue[0].field).toEqual(`frontmatter.blue`);
-        expect(result.data.allNode.blue[0].totalCount).toEqual(1);
+        expect(result.data.allNode.blue).toHaveLength(2)
+        expect(result.data.allNode.blue[0].fieldValue).toEqual(`100`)
+        expect(result.data.allNode.blue[0].field).toEqual(`frontmatter.blue`)
+        expect(result.data.allNode.blue[0].totalCount).toEqual(1)
 
-        expect(result.data.allNode.anArray).toHaveLength(5);
-        expect(result.data.allNode.anArray[0].fieldValue).toEqual(`1`);
-        expect(result.data.allNode.anArray[0].field).toEqual(`anArray`);
-        expect(result.data.allNode.anArray[0].totalCount).toEqual(2);
+        expect(result.data.allNode.anArray).toHaveLength(5)
+        expect(result.data.allNode.anArray[0].fieldValue).toEqual(`1`)
+        expect(result.data.allNode.anArray[0].field).toEqual(`anArray`)
+        expect(result.data.allNode.anArray[0].totalCount).toEqual(2)
       })
-      .catch(err => expect(err).not.toBeDefined()));
-});
+      .catch(err => expect(err).not.toBeDefined()))
+})

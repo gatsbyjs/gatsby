@@ -5,9 +5,9 @@ const {
   GraphQLList,
   GraphQLString,
   GraphQLInt,
-} = require("graphql");
-const select = require("unist-util-select");
-const path = require("path");
+} = require("graphql")
+const select = require("unist-util-select")
+const path = require("path")
 
 // TODO add support for exiftool fields here.
 

@@ -1,4 +1,4 @@
-const { extractFieldExamples, buildFieldEnumValues } = require("../ast-utils");
+const { extractFieldExamples, buildFieldEnumValues } = require("../ast-utils")
 
 describe(`Gatsby AST utils`, () => {
   const nodes = [
@@ -26,17 +26,17 @@ describe(`Gatsby AST utils`, () => {
         circle: `happy`,
       },
     },
-  ];
+  ]
 
   it(`builds field examples from an array of nodes`, () => {
-    expect(extractFieldExamples({ nodes })).toMatchSnapshot();
-  });
+    expect(extractFieldExamples({ nodes })).toMatchSnapshot()
+  })
 
   it(`ignores fields that have a null value`, () => {
-    expect(extractFieldExamples({ nodes }).iAmNull).not.toBeDefined();
-  });
+    expect(extractFieldExamples({ nodes }).iAmNull).not.toBeDefined()
+  })
 
   it(`build enum values for fields from array on nodes`, () => {
-    expect(buildFieldEnumValues(nodes)).toMatchSnapshot();
-  });
-});
+    expect(buildFieldEnumValues(nodes)).toMatchSnapshot()
+  })
+})

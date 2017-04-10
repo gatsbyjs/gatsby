@@ -1,9 +1,9 @@
-import React from "react";
+import React from "react"
 
 exports.modifyHeadComponents = (args, pluginOptions) => {
-  let offsetY = 0;
+  let offsetY = 0
   if (pluginOptions.offsetY) {
-    offsetY = pluginOptions.offsetY;
+    offsetY = pluginOptions.offsetY
   }
 
   const styles = `
@@ -28,7 +28,7 @@ exports.modifyHeadComponents = (args, pluginOptions) => {
     h6:hover .anchor svg {
       visibility: visible;
     }
-  `;
+  `
 
   const script = `
     document.addEventListener("DOMContentLoaded", function(event) {
@@ -44,10 +44,10 @@ exports.modifyHeadComponents = (args, pluginOptions) => {
         }
       }
     })
-  `;
+  `
 
   return [
     <style type="text/css">{styles}</style>,
     <script dangerouslySetInnerHTML={{ __html: script }} />,
-  ];
-};
+  ]
+}

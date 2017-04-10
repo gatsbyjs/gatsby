@@ -1,4 +1,4 @@
-import Typography from "typography";
+import Typography from "typography"
 
 const options = {
   googleFonts: [
@@ -25,13 +25,13 @@ const options = {
       color: `#3897f0`,
     },
   }),
-};
+}
 
-const typography = new Typography(options);
+const typography = new Typography(options)
 
 // Hot reload typography in development.
 if (process.env.NODE_ENV !== "production") {
-  typography.injectStyles();
+  typography.injectStyles()
 }
 
-module.exports = typography;
+module.exports = typography

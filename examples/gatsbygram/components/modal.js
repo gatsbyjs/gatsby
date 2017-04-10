@@ -1,69 +1,69 @@
-import React from "react";
-import Modal from "react-modal";
-import browserHistory from "react-router/lib/browserHistory";
-import CaretRight from "react-icons/lib/fa/caret-right";
-import CaretLeft from "react-icons/lib/fa/caret-left";
-import Close from "react-icons/lib/md/close";
-import findIndex from "lodash/findIndex";
-import mousetrap from "mousetrap";
+import React from "react"
+import Modal from "react-modal"
+import browserHistory from "react-router/lib/browserHistory"
+import CaretRight from "react-icons/lib/fa/caret-right"
+import CaretLeft from "react-icons/lib/fa/caret-left"
+import Close from "react-icons/lib/md/close"
+import findIndex from "lodash/findIndex"
+import mousetrap from "mousetrap"
 
-import { rhythm, scale } from "../utils/typography";
+import { rhythm, scale } from "../utils/typography"
 
 class GatsbyGramModal extends React.Component {
   componentDidMount() {
-    mousetrap.bind("left", () => this.previous());
-    mousetrap.bind("right", () => this.next());
-    mousetrap.bind("spacebar", () => this.next());
+    mousetrap.bind("left", () => this.previous())
+    mousetrap.bind("right", () => this.next())
+    mousetrap.bind("spacebar", () => this.next())
   }
 
   componentWillUnmount() {
-    mousetrap.unbind("left");
-    mousetrap.unbind("right");
-    mousetrap.unbind("spacebar");
+    mousetrap.unbind("left")
+    mousetrap.unbind("right")
+    mousetrap.unbind("spacebar")
   }
 
   findCurrentIndex() {
-    let index;
+    let index
     index = findIndex(this.props.edges, edge => {
-      return edge.node.id === this.props.location.pathname.split(`/`)[1];
-    });
+      return edge.node.id === this.props.location.pathname.split(`/`)[1]
+    })
 
-    return index;
+    return index
   }
 
   next(e) {
     if (e) {
-      e.stopPropagation();
+      e.stopPropagation()
     }
-    const currentIndex = this.findCurrentIndex();
+    const currentIndex = this.findCurrentIndex()
     if (currentIndex || currentIndex === 0) {
-      const edges = this.props.edges;
-      let nextPost;
+      const edges = this.props.edges
+      let nextPost
       // Wrap around if at end.
       if (currentIndex + 1 === edges.length) {
-        nextPost = edges[0];
+        nextPost = edges[0]
       } else {
-        nextPost = edges[currentIndex + 1];
+        nextPost = edges[currentIndex + 1]
       }
-      browserHistory.push(`/${nextPost.node.id}/`);
+      browserHistory.push(`/${nextPost.node.id}/`)
     }
   }
 
   previous(e) {
     if (e) {
-      e.stopPropagation();
+      e.stopPropagation()
     }
-    const currentIndex = this.findCurrentIndex();
+    const currentIndex = this.findCurrentIndex()
     if (currentIndex || currentIndex === 0) {
-      const edges = this.props.edges;
-      let previousPost;
+      const edges = this.props.edges
+      let previousPost
       // Wrap around if at start.
       if (currentIndex === 0) {
-        previousPost = edges.slice(-1)[0];
+        previousPost = edges.slice(-1)[0]
       } else {
-        previousPost = edges[currentIndex - 1];
+        previousPost = edges[currentIndex - 1]
       }
-      browserHistory.push(`/${previousPost.node.id}/`);
+      browserHistory.push(`/${previousPost.node.id}/`)
     }
   }
 
@@ -147,8 +147,8 @@ class GatsbyGramModal extends React.Component {
           />
         </div>
       </Modal>
-    );
+    )
   }
 }
 
-export default GatsbyGramModal;
+export default GatsbyGramModal
