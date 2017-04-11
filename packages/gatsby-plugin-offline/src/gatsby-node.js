@@ -10,7 +10,7 @@ exports.createPages = () => [
   },
 ]
 
-exports.postBuild = ({ pluginOptions }) => {
+exports.postBuild = (args, pluginOptions) => {
   const rootDir = `public`
 
   const options = {

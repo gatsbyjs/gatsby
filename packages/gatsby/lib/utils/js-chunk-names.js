@@ -1,12 +1,18 @@
 import _ from "lodash"
 const path = require("path")
+const { store } = require("../redux")
 
 const pathChunkName = path => {
   const name = path === `/` ? `index` : _.kebabCase(path)
   return `path---${name}`
 }
 
-const layoutComponentChunkName = (directory, componentPath) => {
+const layoutComponentChunkName = componentPath => {
+  const program = store.getState().program
+  let directory = `/`
+  if (program && program.directory) {
+    directory = program.directory
+  }
   const name = path.relative(directory, componentPath)
   return `page-component---${_.kebabCase(name)}`
 }

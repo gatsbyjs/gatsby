@@ -11,6 +11,11 @@ const ReactDOMServer = require("react-dom/server")
 const rl = require("readline")
 const parsePath = require("parse-filepath")
 const _ = require("lodash")
+const remotedev = require("remotedev-server")
+const { store } = require("../redux")
+
+// Start the dev server for Redux.
+remotedev({ hostname: "localhost", port: 19999 })
 
 const rlInterface = rl.createInterface({
   input: process.stdin,
@@ -22,12 +27,9 @@ const debug = require("debug")("gatsby:application")
 async function startServer(program) {
   const directory = program.directory
 
-  // Load pages for the site.
-  const { schema } = await bootstrap(program)
+  // Start bootstrap process.
+  await bootstrap(program)
 
-  // Generate random port for webpack to listen on.
-  // Perhaps should check if port is open.
-  //const webpackPort = Math.round(Math.random() * 1000 + 1000)
   const compilerConfig = await webpackConfig(
     program,
     directory,
@@ -45,11 +47,12 @@ async function startServer(program) {
   }
 
   // We use the program port not the webpack-dev-server port as if you import
-  // files in your html.js they won't be available through the webpack-dev-server.
-  // By using the program port, requesting these imported files might accidentally work
-  // as the imported files will be available in /public. TODO test how expensive
-  // it'd be to do an actual static compile of the html.js on startup to avoid
-  // this discprenecy between dev and prod.
+  // files in your html.js they won't be available through the
+  // webpack-dev-server.  By using the program port, requesting these
+  // imported files might accidentally work as the imported files will be
+  // available in /public. TODO test how expensive it'd be to do an actual
+  // static compile of the html.js on startup to avoid this discprenecy
+  // between dev and prod.
   const htmlCompilerConfig = await webpackConfig(
     program,
     directory,
@@ -79,7 +82,7 @@ async function startServer(program) {
     app.use(
       `/graphql`,
       graphqlHTTP({
-        schema,
+        schema: store.getState().schema,
         graphiql: true,
       })
     )

@@ -23,7 +23,7 @@ const extractFieldExamples = (exports.extractFieldExamples = (
           truthyExamples[k] = v
         }
       })
-      examples = _.merge(examples, truthyExamples)
+      examples = _.assign(examples, truthyExamples)
     }
   })
 

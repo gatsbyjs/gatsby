@@ -2,8 +2,17 @@
 title: Gatsby on windows
 ---
 
-## Install build environment
+## Setting up your environment for building native Node.js modules.
 
-To be able to run Gatsby and especially sharp (a dependency to have a powerful image processor), you need to have a functional build environment (Python and Visual C++ Build Tools).
+Many Gatsby plugins and themes require building native Node.js modules e.g.
+[Sharp (a common Gatsby dependency used for image
+processing)](/docs/packages/gatsby-plugin-sharp/). To do so, you need a
+functional build environment (Python and Visual C++ Build Tools).
 
-The easy way to have this build env on windows is to run `npm install --global windows-build-tools` on an admin powershell console.
+The easy way to setup your build environment on Windows is to install the
+[`windows-build-tools`](https://github.com/felixrieseberg/windows-build-tools)
+package by runnning `npm install --global windows-build-tools` on an admin
+powershell console. On installing this package, it downloads and installs the
+Visual C++ Build Tools 2015, provided free of charge by Microsoft. These tools
+are required to compile popular native modules. It will also install Python
+2.7, configuring your machine and npm appropriately.

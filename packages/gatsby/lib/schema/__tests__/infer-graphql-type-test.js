@@ -91,6 +91,7 @@ test(`Infers graphql type from array of nodes`, () => {
           {
             hair: 2,
             anArray: [1, 2, 5, 4],
+            externalUrl: null,
             date: `1984`,
             frontmatter: {
               date: `1984`,

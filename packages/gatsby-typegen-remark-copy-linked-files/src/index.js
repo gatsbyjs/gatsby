@@ -4,12 +4,12 @@ const fsExtra = require("fs-extra")
 const path = require("path")
 const _ = require("lodash")
 
-module.exports = ({ files, markdownNode, markdownAST }) => {
+module.exports = ({ files, markdownNode, markdownAST, getNode }) => {
   // Copy linked files to the public directory and modify the AST to point to
   // new location of the files.
   const visitor = link => {
     if (isRelativeUrl(link.url)) {
-      const linkPath = path.join(markdownNode.parent.dir, link.url)
+      const linkPath = path.join(getNode(markdownNode.parent).dir, link.url)
       const linkNode = _.find(files, file => {
         if (file && file.absolutePath) {
           return file.absolutePath === linkPath

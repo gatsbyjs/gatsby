@@ -5,10 +5,10 @@ import _ from "lodash"
 
 //import pagesSchema from './pages-schema'
 const { inferObjectStructureFromNodes } = require("./infer-graphql-type")
-const { siteDB } = require("../utils/globals")
+const { store } = require("../redux")
 
 module.exports = () => {
-  const config = siteDB().get(`config`)
+  const config = store.getState().config
   // Create site/page types.
   const metadataFields = () => {
     const fields = inferObjectStructureFromNodes({
@@ -60,7 +60,7 @@ module.exports = () => {
     site: {
       type: siteType,
       resolve() {
-        return siteDB().get(`config`)
+        return store.getState().config
       },
     },
   }

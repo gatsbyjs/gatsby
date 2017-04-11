@@ -22,14 +22,26 @@ const inspect = require("unist-util-inspect")
 const Promise = require("bluebird")
 const prune = require("underscore.string/prune")
 
-exports.extendNodeType = ({ args, pluginOptions }) =>
-  new Promise((resolve, reject) => {
-    const { ast, type, linkPrefix } = args
-    if (type.name !== `MarkdownRemark`) {
-      return resolve({})
-    }
+const astPromiseCache = {}
 
-    const files = select(ast, `File`)
+// Delete Markdown AST cache when the node is recreated
+// e.g. the user saves a change to the file.
+exports.onNodeCreate = ({ node }) => {
+  if (node.type === `MarkdownRemark`) {
+    delete astPromiseCache[node.id]
+  }
+}
+
+exports.extendNodeType = (
+  { type, allNodes, linkPrefix, getNode },
+  pluginOptions
+) => {
+  if (type.name !== `MarkdownRemark`) {
+    return {}
+  }
+
+  return new Promise((resolve, reject) => {
+    const files = allNodes.filter(n => n.type === `File`)
 
     // Setup Remark.
     const remark = new Remark({
@@ -38,7 +50,6 @@ exports.extendNodeType = ({ args, pluginOptions }) =>
       pedantic: true,
     })
 
-    const astPromiseCache = {}
     async function getAST(markdownNode) {
       if (astPromiseCache[markdownNode.id]) {
         return astPromiseCache[markdownNode.id]
@@ -52,6 +63,7 @@ exports.extendNodeType = ({ args, pluginOptions }) =>
                 return requiredPlugin.mutateSource({
                   markdownNode,
                   files,
+                  getNode,
                   pluginOptions: plugin.pluginOptions,
                 })
               } else {
@@ -65,7 +77,7 @@ exports.extendNodeType = ({ args, pluginOptions }) =>
             //
             // source plugins identify nodes, provide id, initial parse, know
             // when nodes are created/removed/deleted
-            // get passed cached AST and return list of clean and dirty nodes.
+            // get passed cached DataTree and return list of clean and dirty nodes.
             // Also get passed `dirtyNodes` function which they can call with an array
             // of node ids which will then get re-parsed and the inferred schema
             // recreated (if inferring schema gets too expensive, can also
@@ -74,7 +86,7 @@ exports.extendNodeType = ({ args, pluginOptions }) =>
             //
             // parse plugins take data from source nodes and extend it, never mutate
             // it. Freeze all nodes once done so typegen plugins can't change it
-            // this lets us save off the AST at that point as well as create
+            // this lets us save off the DataTree at that point as well as create
             // indexes.
             //
             // typegen plugins identify further types of data that should be lazily
@@ -88,23 +100,9 @@ exports.extendNodeType = ({ args, pluginOptions }) =>
             // queries are based on which source nodes. Also if connection of what
             // which are always rerun if their underlying nodes change..
             //
-            // every node type in AST gets a schema type automatically.
+            // every node type in DataTree gets a schema type automatically.
             // typegen plugins just modify the auto-generated types to add derived fields
             // as well as computationally expensive fields.
-
-            // Use PrismJS to add syntax highlighting to code blocks.
-            // TODO move this to its own plugin w/ peerDependency to this.
-            // this should parse ast. everything it puts on markdown nodes
-            // should be namespaced with remark_
-            // stage 0 — source nodes
-            // stage 1 — generic parse, identify types
-            // stage 2 — dive deeper — remark
-            // stage 3 — work on sub-asts e.g. markdown
-            // stage 4 — compile to graphql types.
-            // how to order work? Stages? People will get confused about what stage to
-            // use...
-            // explicitly mark dependecies — e.g. remark has plugins to parse its AST
-            // which remark controls when these run.
             Promise.all(
               pluginOptions.plugins.map(plugin => {
                 const requiredPlugin = require(plugin.resolve)
@@ -112,6 +110,7 @@ exports.extendNodeType = ({ args, pluginOptions }) =>
                   return requiredPlugin({
                     markdownAST,
                     markdownNode,
+                    getNode,
                     files,
                     pluginOptions: plugin.pluginOptions,
                     linkPrefix,
@@ -254,3 +253,4 @@ exports.extendNodeType = ({ args, pluginOptions }) =>
       },
     })
   })
+}

@@ -11,21 +11,30 @@ import Joi from "joi"
 import chalk from "chalk"
 import apiRunnerNode from "../utils/api-runner-node"
 import { graphql } from "graphql"
-import { pagesDB, siteDB, programDB } from "../utils/globals"
-import { gatsbyConfigSchema, pageSchema } from "../joi-schemas/joi"
 import { layoutComponentChunkName } from "../utils/js-chunk-names"
+import { store } from "../redux"
+const { boundActionCreators } = require("../redux/actions")
+
+// Override console.log to add the source file + line number.
+// ["log", "warn"].forEach(function(method) {
+// var old = console[method];
+// console[method] = function() {
+// var stack = new Error().stack.split(/\n/);
+// // Chrome includes a single "Error" line, FF doesn't.
+// if (stack[0].indexOf("Error") === 0) {
+// stack = stack.slice(1);
+// }
+// var args = [].slice.apply(arguments).concat([stack[1].trim()]);
+// return old.apply(console, args);
+// };
+// });
+
+const preferDefault = m => (m && m.default) || m
 
 const mkdirs = Promise.promisify(fs.mkdirs)
 const copy = Promise.promisify(fs.copy)
 const removeDir = Promise.promisify(fs.remove)
 const glob = Promise.promisify(globCB)
-
-Promise.onPossiblyUnhandledRejection(error => {
-  throw error
-})
-process.on(`unhandledRejection`, error => {
-  console.error(`UNHANDLED REJECTION`, error.stack)
-})
 
 // Path creator.
 // Auto-create pages.
@@ -35,11 +44,12 @@ process.on(`unhandledRejection`, error => {
 const autoPathCreator = async (program: any) => {
   const pagesDirectory = path.posix.join(program.directory, `pages`)
   const exts = program.extensions.map(e => `*${e}`).join("|")
-  const files = await glob(`${pagesDirectory}/**/?(${exts})`)
+  // The promisified version wasn't working for some reason
+  // so we'll use sync for now.
+  const files = glob.sync(`${pagesDirectory}/**/?(${exts})`)
   // Create initial page objects.
   let autoPages = files.map(filePath => ({
     component: filePath,
-    componentChunkName: layoutComponentChunkName(program.directory, filePath),
     path: filePath,
   }))
 
@@ -64,24 +74,22 @@ const autoPathCreator = async (program: any) => {
     path: createPath(pagesDirectory, page.component),
   }))
 
-  // Validate pages.
+  // Add pages
   autoPages.forEach(page => {
-    const { error } = Joi.validate(page, pageSchema)
-    if (error) {
-      console.log(chalk.blue.bgYellow(`A page object failed validation`))
-      console.log(page)
-      console.log(chalk.bold.red(error))
-    }
+    boundActionCreators.upsertPage(page)
   })
-  return autoPages
 }
 
 module.exports = async (program: any) => {
   console.log(`lib/bootstrap/index.js time since started:`, process.uptime())
+
   // Fix program directory path for windows env
   program.directory = slash(program.directory)
-  // Set the program to the globals programDB
-  programDB(program)
+
+  store.dispatch({
+    type: "SET_PROGRAM",
+    payload: program,
+  })
 
   // Try opening the site's gatsby-config.js file.
   console.time(`open and validate gatsby-config.js`)
@@ -94,28 +102,20 @@ module.exports = async (program: any) => {
     process.exit()
   }
 
-  // Add config to site object.
-  let normalizedConfig
-  if (config.default) {
-    normalizedConfig = config.default
-    siteDB(siteDB().set(`config`, config.default))
-  } else {
-    normalizedConfig = config
-    siteDB(siteDB().set(`config`, config))
-  }
+  config = preferDefault(config)
 
-  // Validate gatsby-config.js
-  const result = Joi.validate(normalizedConfig, gatsbyConfigSchema)
-  if (result.error) {
-    console.log(chalk.blue.bgYellow(`gatsby.config.js failed validation`))
-    console.log(chalk.bold.red(result.error))
-    console.log(normalizedConfig)
-    process.exit()
-  }
+  store.dispatch({
+    type: "SET_SITE_CONFIG",
+    payload: config,
+  })
+
   console.timeEnd(`open and validate gatsby-config.js`)
 
   // Instantiate plugins.
   const plugins = []
+  // Create fake little site with a plugin for testing this
+  // w/ snapshots. Move plugin processing to its own module.
+  // Also test adding to redux store.
   const processPlugin = plugin => {
     if (_.isString(plugin)) {
       const resolvedPath = path.dirname(require.resolve(plugin))
@@ -153,8 +153,8 @@ module.exports = async (program: any) => {
     }
   }
 
-  if (normalizedConfig.plugins) {
-    normalizedConfig.plugins.forEach(plugin => {
+  if (config.plugins) {
+    config.plugins.forEach(plugin => {
       plugins.push(processPlugin(plugin))
     })
   }
@@ -184,8 +184,15 @@ module.exports = async (program: any) => {
     extractPlugins(plugin)
   })
 
-  siteDB(siteDB().set(`plugins`, plugins))
-  siteDB(siteDB().set(`flattenedPlugins`, flattenedPlugins))
+  store.dispatch({
+    type: "SET_SITE_PLUGINS",
+    payload: plugins,
+  })
+
+  store.dispatch({
+    type: "SET_SITE_FLATTENED_PLUGINS",
+    payload: flattenedPlugins,
+  })
 
   // Ensure the public directory is created.
   await mkdirs(`${program.directory}/public`)
@@ -260,116 +267,58 @@ module.exports = async (program: any) => {
   console.timeEnd(`copy gatsby files`)
 
   // Create Schema.
-  console.time(`create schema`)
-  const schema = await require(`../schema`)()
-  // const schema = await require(`../schema`)()
-  const graphqlRunner = (query, context) =>
-    graphql(schema, query, context, context, context)
-  console.timeEnd(`create schema`)
+  await require(`../schema`)()
 
-  // TODO create new folder structure for files to reflect major systems.
-  //
-  // directory structure
-  // /pages --> source plugins by default turn these files into pages.
-  // /drafts --> source plugins can have a development option which would add
-  //   drafts but only in dev server.
-  // /layouts --> layout components e.g. blog-post.js, tag-page.js
-  // /components --> this is convention only but dumping ground for react.js components
-  // /data --> default json, yaml, csv, toml source plugins extract data from these.
-  // /assets --> anything here is copied verbatim to /public
-  // /public --> build place
-  // / --> html.js, gatsby-node.js, gatsby-browser.js, gatsby-config.js
-
-  // Collect pages.
-  let pages = await apiRunnerNode(`createPages`, { graphql: graphqlRunner }, [
-  ])
-  pages = _.flatten(pages)
-
-  if (_.isArray(pages) && pages.length > 0) {
-    // Add chunkName.
-    pages.forEach(page => {
-      page.componentChunkName = layoutComponentChunkName(
-        program.directory,
-        page.component
-      )
-    })
-
-    // Validate pages.
-    if (pages) {
-      pages.forEach(page => {
-        const { error } = Joi.validate(page, pageSchema)
-        if (error) {
-          console.log(chalk.blue.bgYellow(`A page object failed validation`))
-          console.log(chalk.bold.red(error))
-          console.log(`page object`)
-          console.log(page)
-        }
-      })
-    }
-    console.log(`validated pages`)
-  } else {
-    pages = []
+  const graphqlRunner = (query, context) => {
+    const schema = store.getState().schema
+    return graphql(schema, query, context, context, context)
   }
 
-  // Save pages to in-memory database.
-  const pagesMap = new Map()
-  pages.forEach(page => {
-    pagesMap.set(page.path, page)
-  })
-  pagesDB(pagesMap)
-  console.log(`added pages to in-memory db`)
-
   // Collect resolvable extensions and attach to program.
+  // TODO refactor this to use Redux.
   const extensions = [`.js`, `.jsx`]
   const apiResults = await apiRunnerNode("resolvableExtensions")
   program.extensions = apiResults.reduce((a, b) => a.concat(b), extensions)
 
+  // Collect pages.
+  await apiRunnerNode(`createPages`, {
+    graphql: graphqlRunner,
+  })
+
   // TODO move this to own source plugin per component type
-  // (js/cjsx/typescript, etc.)
-  const autoPages = await autoPathCreator(program, pages)
-  if (autoPages) {
-    const pagesMap = new Map()
-    autoPages.forEach(page => pagesMap.set(page.path, page))
-    pagesDB(new Map([...pagesDB(), ...pagesMap]))
+  // (js/cjsx/typescript, etc.). Only do after there's themes
+  // so can cement default /pages setup in default core theme.
+  autoPathCreator(program)
+
+  // Copy /404/ to /404.html as many static site hosting companies expect
+  // site 404 pages to be named this.
+  // https://www.gatsbyjs.org/docs/add-404-page/
+  const exists404html = _.some(
+    store.getState().pages,
+    p => p.path === `/404.html`
+  )
+  if (!exists404html) {
+    store.getState().pages.forEach(page => {
+      if (page.path === `/404/`) {
+        boundActionCreators.upsertPage({
+          ...page,
+          path: `/404.html`,
+        })
+      }
+    })
   }
 
-  // Rewrite /404/ to /404.html
-  const rewrittenPages = new Map();
-  [...pagesDB()].forEach(page => {
-    if (page[0] === `/404/`) {
-      page[1].path = `/404.html`
-      rewrittenPages.set(`/404.html`, page[1])
-    } else {
-      rewrittenPages.set(page[0], page[1])
-    }
-  })
-  pagesDB(new Map([...rewrittenPages]))
   console.log(`created js pages`)
 
-  const modifiedPages = await apiRunnerNode(
-    `onPostCreatePages`,
-    pagesDB(),
-    pagesDB()
-  )
+  return new Promise(resolve => {
+    queryRunner(thing => {
+      apiRunnerNode(`generateSideEffects`).then(() => {
+        console.log(
+          `bootstrap finished, time since started: ${process.uptime()}`
+        )
 
-  // Validate pages.
-  modifiedPages.forEach(page => {
-    const { error } = Joi.validate(page, pageSchema)
-    if (error) {
-      console.log(chalk.blue.bgYellow(`A page object failed validation`))
-      console.log(chalk.bold.red(error))
-      console.log(`page object`)
-      console.log(page)
-    }
+        resolve({ graphqlRunner })
+      })
+    })
   })
-  console.log(`validated modified pages`)
-
-  // console.log(`bootstrap finished, time since started:`, process.uptime())
-  // cb(null, schema)
-
-  await queryRunner(program, graphqlRunner)
-  await apiRunnerNode(`generateSideEffects`)
-  console.log(`bootstrap finished, time since started: ${process.uptime()}`)
-
-  return { schema, graphqlRunner }
 }

@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Create and update nodes allows creating nodes 1`] = `
+Object {
+  "payload": Object {
+    "id": "hi",
+    "pickle": true,
+    "type": "Test",
+  },
+  "type": "CREATE_NODE",
+}
+`;
+
+exports[`Create and update nodes allows creating nodes 2`] = `
+Object {
+  "hi": Object {
+    "id": "hi",
+    "pickle": true,
+    "type": "Test",
+  },
+}
+`;

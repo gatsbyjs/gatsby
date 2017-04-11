@@ -12,6 +12,14 @@ export const pageSchema = Joi.object()
     path: Joi.string().required(),
     component: Joi.string().required(),
     componentChunkName: Joi.string().required(),
-    data: Joi.object(),
+    context: Joi.object(),
+  })
+  .unknown()
+
+export const nodeSchema = Joi.object()
+  .keys({
+    // TODO ids can be ints as well.
+    id: Joi.string().required(),
+    type: Joi.string().required(),
   })
   .unknown()

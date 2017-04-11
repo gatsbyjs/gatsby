@@ -8,6 +8,8 @@ import objectAssign from "object-assign"
 import invariant from "invariant"
 import apiRunnerNode from "./api-runner-node"
 
+// TODO update this to store Babelrc config in Redux store.
+
 /**
  * Uses babel-core helpers to resolve the plugin given it's name. It
  * resolves plugins in the following order:

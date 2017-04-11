@@ -13,6 +13,7 @@ const {
   inferInputObjectStructureFromNodes,
 } = require(`./infer-graphql-input-fields`)
 const buildConnectionFields = require("./build-connection-fields")
+const { getNodes } = require("../redux")
 
 module.exports = (types: any) => {
   const connections = {}
@@ -36,12 +37,18 @@ module.exports = (types: any) => {
         ...connectionArgs,
         ...inferredInputFields,
       },
-      resolve(object, resolveArgs) {
+      resolve(object, resolveArgs, b, { rootValue }) {
+        let path
+        if (typeof rootValue !== `undefined`) {
+          path = rootValue.path
+        }
         const runSift = require("./run-sift")
+        const latestNodes = _.filter(getNodes(), n => n.type === type.name)
         return runSift({
           args: resolveArgs,
-          nodes,
+          nodes: latestNodes,
           connection: true,
+          path,
         })
       },
     }

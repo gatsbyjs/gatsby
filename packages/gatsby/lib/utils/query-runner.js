@@ -8,9 +8,36 @@ import parseFilepath from "parse-filepath"
 import glob from "glob"
 import apiRunnerNode from "./api-runner-node"
 import Promise from "bluebird"
+const { store } = require("../redux")
+const { boundActionCreators } = require("../redux/actions")
 import slash from "slash"
-import { pagesDB, siteDB, programDB } from "./globals"
 import { layoutComponentChunkName, pathChunkName } from "./js-chunk-names"
+import { graphql as graphqlFunction } from "graphql"
+
+let initialQueriesDone = false
+let invalidPages = []
+
+store.subscribe(() => {
+  const state = store.getState()
+  if (state.lastAction.type === "CREATE_NODE") {
+    const node = state.nodes[state.lastAction.payload.id]
+    // Find invalid pages.
+    if (state.pageDataDependencies.nodes[node.id]) {
+      invalidPages = invalidPages.concat(
+        state.pageDataDependencies.nodes[node.id]
+      )
+    }
+    // Find invalid connections
+    if (state.pageDataDependencies.connections[node.type]) {
+      invalidPages = invalidPages.concat(
+        state.pageDataDependencies.connections[node.type]
+      )
+    }
+    if (invalidPages.length > 0) {
+      console.log(`all pages invalidated by node change`, invalidPages)
+    }
+  }
+})
 
 // Babylon has to use a require... why?
 const babylon = require("babylon")
@@ -20,7 +47,7 @@ const pascalCase = _.flow(_.camelCase, _.upperFirst)
 // Write out routes file.
 // Loop through all paths and write them out to child-routes.js
 const writeChildRoutes = () => {
-  const directory = programDB().directory
+  const directory = store.getState().program.directory
   let childRoutes = ``
   let splitChildRoutes = ``
 
@@ -40,13 +67,13 @@ const writeChildRoutes = () => {
   const genSplitChildRoute = (page, noPath = false) => {
     const pathName = pathChunkName(page.path)
     const layoutName = layoutComponentChunkName(
-      programDB().directory,
+      store.getState().program.directory,
       page.component
     )
     let pathStr = ``
     if (!noPath) {
-      if (programDB().prefixLinks) {
-        pathStr = `path:'${_.get(siteDB().get(`config`), `linkPrefix`, ``)}${page.path}',`
+      if (store.getState().program.prefixLinks) {
+        pathStr = `path:'${_.get(store.getState().config, `linkPrefix`, ``)}${page.path}',`
       } else {
         pathStr = `path:'${page.path}',`
       }
@@ -70,10 +97,14 @@ const writeChildRoutes = () => {
 
   // Group pages under their layout component (if any).
   let defaultLayoutExists = true
-  if (glob.sync(`${programDB().directory}/layouts/default.*`).length === 0) {
+  if (
+    glob.sync(
+      `${store.getState().program.directory}/layouts/default.*`
+    ).length === 0
+  ) {
     defaultLayoutExists = false
   }
-  const groupedPages = _.groupBy([...pagesDB().values()], page => {
+  const groupedPages = _.groupBy(store.getState().pages, page => {
     // If is a string we'll assume it's a working layout component.
     if (_.isString(page.layout)) {
       return page.layout
@@ -118,20 +149,20 @@ const writeChildRoutes = () => {
       let route = `
       {
         path: '${indexPage.path}',
-        component: preferDefault(require('${programDB().directory}/layouts/${layout}')),
+        component: preferDefault(require('${store.getState().program.directory}/layouts/${layout}')),
         indexRoute: ${genChildRoute(indexPage, true)}
         childRoutes: [
       `
       let pathStr
-      if (programDB().prefixLinks) {
-        pathStr = `path:'${_.get(siteDB().get(`config`), `linkPrefix`, ``)}${indexPage.path}',`
+      if (store.getState().program.prefixLinks) {
+        pathStr = `path:'${_.get(store.getState().config, `linkPrefix`, ``)}${indexPage.path}',`
       } else {
         pathStr = `path:'${indexPage.path}',`
       }
       let splitRoute = `
       {
         ${pathStr}
-        component: preferDefault(require('${programDB().directory}/layouts/${layout}')),
+        component: preferDefault(require('${store.getState().program.directory}/layouts/${layout}')),
         indexRoute: ${genSplitChildRoute(indexPage, true)}
         childRoutes: [
       `
@@ -149,7 +180,7 @@ const writeChildRoutes = () => {
 
   // Add a fallback 404 route if one is defined.
   const notFoundPage = _.find(
-    [...pagesDB().values()],
+    store.getState().pages,
     page => page.path.indexOf("/404") !== -1
   )
 
@@ -157,7 +188,7 @@ const writeChildRoutes = () => {
     const notFoundPageStr = `
       {
         path: "*",
-        component: preferDefault(require('${programDB().directory}/layouts/default')),
+        component: preferDefault(require('${store.getState().program.directory}/layouts/default')),
         indexRoute: {
           component: preferDefault(require('${notFoundPage.component}')),
         },
@@ -165,13 +196,13 @@ const writeChildRoutes = () => {
     `
     const pathName = pathChunkName(notFoundPage.path)
     const layoutName = layoutComponentChunkName(
-      programDB().directory,
+      store.getState().program.directory,
       notFoundPage.component
     )
     const notFoundPageSplitStr = `
       {
         path: "*",
-        component: preferDefault(require('${programDB().directory}/layouts/default')),
+        component: preferDefault(require('${store.getState().program.directory}/layouts/default')),
         indexRoute: {
           getComponent (nextState, cb) {
             require.ensure([], (require) => {
@@ -193,17 +224,17 @@ const writeChildRoutes = () => {
   // Close out object.
   rootRoute += `]}`
   splitRootRoute += `]}`
-  const componentsStr = [...pagesDB().values()]
-    .map(
-      page =>
-        `class ${page.internalComponentName} extends React.Component {
+  const componentsStr = store
+    .getState()
+    .pages.map(page => {
+      return `class ${page.internalComponentName} extends React.Component {
           render () {
             const Component = preferDefault(require('${page.component}'))
             const data = require('./json/${page.jsonName}')
             return <Component {...this.props} {...data} />
           }
         }`
-    )
+    })
     .join(`\n`)
 
   childRoutes = `
@@ -256,10 +287,38 @@ const debouncedWriteChildRoutes = _.debounce(writeChildRoutes, 250)
 // Queue for processing files
 const q = queue(
   async ({ file, graphql, directory }, callback) => {
+    const absolutePath = slash(path.resolve(file))
+
+    // Get paths for this file.
+    let paths = []
+    store.getState().pages.forEach(page => {
+      if (page.component === absolutePath) {
+        paths.push(page)
+      }
+    })
+
+    // If we're running queries because of a source node change,
+    // filter out pages that we're invalidated.
+    if (invalidPages && invalidPages.length > 0) {
+      paths = _.filter(paths, p => _.includes(invalidPages, p.path))
+      // Now remove this path from invalidPages. Note, this is ugly code
+      // and will be refactored soonish.
+      invalidPages = _.filter(invalidPages, p => p === p.path)
+      if (paths.length > 0) {
+        console.log("filtered paths", paths.map(p => p.path))
+      }
+    }
+
+    // If there's no paths, just return.
+    if (paths.length === 0) {
+      console.log(`no queries to run for ${absolutePath}`)
+      return callback()
+    }
+
     let fileStr = fs.readFileSync(file, `utf-8`)
     let ast
-    // Preprocess and attempt to parse source; return an AST if we can, log an error if we can't.
-    // I'm unconvinced that this is an especially good implementation...
+    // Preprocess and attempt to parse source; return an AST if we can, log an
+    // error if we can't.
     const transpiled = await apiRunnerNode(`preprocessSource`, {
       filename: file,
       contents: fileStr,
@@ -320,16 +379,16 @@ const q = queue(
           return
       },
     })
-    const absFile = slash(path.resolve(file))
-    // Get paths for this file.
-    const paths = []
-    pagesDB().forEach((value, key) => {
-      if (value.component === absFile) {
-        paths.push(value)
-      }
-    })
-    console.log(`running queries for ${paths.length} paths for ${file}`)
 
+    console.log(`running queries for ${paths.length} paths for ${file}`)
+    const pathsInfo = {
+      componentPath: absolutePath,
+      directory,
+      paths,
+      graphql,
+    }
+
+    // Handle the result of the GraphQL query.
     const handleResult = (pathInfo, result = {}) => {
       // Combine the result with the path context.
       result.pathContext = pathInfo.context
@@ -337,7 +396,7 @@ const q = queue(
       result.pathContext = pathInfo
 
       // Add result to page object.
-      const page = pagesDB().get(pathInfo.path)
+      const page = store.getState().pages.find(p => p.path === pathInfo.path)
       let jsonName = `${_.kebabCase(pathInfo.path)}.json`
       let internalComponentName = `Component${pascalCase(pathInfo.path)}`
       if (jsonName === `.json`) {
@@ -346,7 +405,7 @@ const q = queue(
       }
       page.jsonName = jsonName
       page.internalComponentName = internalComponentName
-      pagesDB(pagesDB().set(page.path, page))
+      boundActionCreators.upsertPage(page)
 
       // Save result to file.
       const resultJSON = JSON.stringify(clonedResult, null, 4)
@@ -377,7 +436,7 @@ const q = queue(
           .then(result => handleResult(pathInfo, result))
       })
     ).then(() => {
-      console.log(`rewrote JSON for queries for ${absFile}`)
+      console.log(`rewrote JSON for queries for ${absolutePath}`)
       console.timeEnd(`graphql query time`)
       // Write out new child-routes.js in the .intermediate-representation directory
       // in the root of your site.
@@ -388,44 +447,47 @@ const q = queue(
   1
 )
 
-module.exports = async (program, graphql) => {
-  return await new Promise(resolve => {
-    // Get unique array of component paths and then watch them.
-    // When a component is updated, rerun queries.
-    const components = _.uniq(
-      [...pagesDB().values()].map(page => page.component)
-    )
+// sigh... will be gone after refactor...
+let realDrainCB
+module.exports = async drainCb => {
+  if (_.isFunction(drainCb)) {
+    realDrainCB = drainCb
+  }
+  const schema = store.getState().schema
+  const graphql = (query, context) => {
+    return graphqlFunction(schema, query, context, context, context)
+  }
+  const { program } = store.getState()
 
-    // If there's no components yet, call the resolve early.
-    if (components.length === 0) {
-      resolve()
-    } else {
-      q.drain = () => {
-        // Only call resolve once.
-        q.drain = _.noop
-        resolve()
-      }
-    }
+  // Get unique array of component paths and then watch them.
+  // When a component is updated, rerun queries.
+  const components = _.uniq(store.getState().pages.map(page => page.component))
 
-    components.forEach(path => {
-      q.push({ file: path, graphql, directory: program.directory })
-    })
+  // If there's no components yet, return
+  if (components.length === 0) {
+    return
+  }
 
-    // When not building, also start the watcher to detect when the components
-    // change.
-    if (_.last(program.parent.rawArgs) !== `build`) {
-      const watcher = chokidar.watch(components, {
-        ignored: /[\/\\]\./,
-        persistent: true,
-      })
-
-      watcher
-        .on(`add`, path =>
-          q.push({ file: path, graphql, directory: program.directory }))
-        .on(`change`, path =>
-          q.push({ file: path, graphql, directory: program.directory }))
-        .on(`unlink`, path =>
-          q.push({ file: path, graphql, directory: program.directory }))
-    }
+  components.forEach(path => {
+    q.push({ file: path, graphql, directory: program.directory })
   })
+
+  // When not building, also start the watcher to detect when the components
+  // change.
+  if (_.last(program.parent.rawArgs) !== `build`) {
+    const watcher = chokidar.watch(components, {
+      ignored: /[\/\\]\./,
+      persistent: true,
+    })
+  }
+
+  q.drain = () => {
+    if (realDrainCB) {
+      realDrainCB()
+    }
+    // Only call callback once.
+    realDrainCB = _.noop
+  }
+
+  return
 }

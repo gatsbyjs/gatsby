@@ -1,8 +1,7 @@
 const webpack = require("webpack")
 
 // Add Glamor support
-exports.modifyWebpackConfig = ({ args }) => {
-  const { config } = args
+exports.modifyWebpackConfig = ({ config }) => {
   return config.plugin(`Glamor`, webpack.ProvidePlugin, [
     {
       Glamor: `glamor-react`,
@@ -11,8 +10,7 @@ exports.modifyWebpackConfig = ({ args }) => {
 }
 
 // Add Glamor support
-exports.modifyBabelrc = ({ args }) => {
-  const { babelrc } = args
+exports.modifyBabelrc = ({ babelrc }) => {
   babelrc.plugins.push([
     `transform-react-jsx`,
     { pragma: `Glamor.createElement` },

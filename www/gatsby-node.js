@@ -6,8 +6,8 @@ const parseFilepath = require("parse-filepath")
 const fs = require("fs-extra")
 const slash = require("slash")
 
-exports.createPages = ({ args }) => {
-  const { graphql } = args
+exports.createPages = ({ graphql, actionCreators }) => {
+  const { upsertPage } = actionCreators
   return new Promise((resolve, reject) => {
     const pages = []
     const docsTemplate = path.resolve(`templates/template-docs-markdown.js`)
@@ -28,13 +28,13 @@ exports.createPages = ({ args }) => {
     `
     ).then(result => {
       if (result.errors) {
-        reject(result.errors)
+        console.log(result.errors)
       }
 
       // Create docs pages.
       _.each(result.data.allMarkdownRemark.edges, edge => {
         if (_.includes(edge.node.slug, `/blog/`)) {
-          pages.push({
+          upsertPage({
             path: `${edge.node.slug}`, // required
             component: slash(blogPostTemplate),
             context: {
@@ -42,7 +42,7 @@ exports.createPages = ({ args }) => {
             },
           })
         } else {
-          pages.push({
+          upsertPage({
             path: `${edge.node.slug}`, // required
             component: slash(
               edge.node.package ? packageTemplate : docsTemplate
@@ -54,19 +54,18 @@ exports.createPages = ({ args }) => {
         }
       })
 
-      resolve(pages)
+      resolve()
     })
   })
 }
 
 // Create slugs for files.
-exports.modifyAST = ({ args }) => {
-  const { ast } = args
-  const files = select(ast, `File`)
-  files.forEach(file => {
-    const parsedFilePath = parseFilepath(file.relativePath)
-    let slug
-    if (file.sourceName === `docs`) {
+exports.onNodeCreate = ({ node, actionCreators, getNode }) => {
+  const { updateNode } = actionCreators
+  let slug
+  if (node.type === `File` && typeof node.slug === "undefined") {
+    const parsedFilePath = parseFilepath(node.relativePath)
+    if (node.sourceName === `docs`) {
       if (parsedFilePath.name !== `index` && parsedFilePath.dir !== ``) {
         slug = `/${parsedFilePath.dir}/${parsedFilePath.name}/`
       } else if (parsedFilePath.dir === ``) {
@@ -74,25 +73,40 @@ exports.modifyAST = ({ args }) => {
       } else {
         slug = `/${parsedFilePath.dir}/`
       }
-
-      // Generate slugs for package READMEs.
-    } else if (
-      file.sourceName === `packages` && parsedFilePath.name === `README`
+    }
+    if (slug) {
+      node.slug = slug
+      updateNode(node)
+    }
+  } else if (
+    node.type === `MarkdownRemark` && typeof node.slug === "undefined"
+  ) {
+    const fileNode = getNode(node.parent)
+    const parsedFilePath = parseFilepath(fileNode.relativePath)
+    // Add slugs for docs pages
+    if (fileNode.sourceName === `docs`) {
+      if (parsedFilePath.name !== `index` && parsedFilePath.dir !== ``) {
+        slug = `/${parsedFilePath.dir}/${parsedFilePath.name}/`
+      } else if (parsedFilePath.dir === ``) {
+        slug = `/${parsedFilePath.name}/`
+      } else {
+        slug = `/${parsedFilePath.dir}/`
+      }
+    }
+    // Add slugs for package READMEs.
+    if (
+      fileNode.sourceName === `packages` && parsedFilePath.name === `README`
     ) {
       slug = `/docs/packages/${parsedFilePath.dir}/`
-      file.children[0].frontmatter = {}
-      file.children[0].frontmatter.title = parsedFilePath.dir
-      file.children[0].package = true
+      node.frontmatter = {}
+      node.frontmatter.title = parsedFilePath.dir
+      node.package = true
     }
-
-    // Add to File & child nodes.
-    if (file.children[0]) {
-      file.children[0].slug = slug
+    if (slug) {
+      node.slug = slug
+      updateNode(node)
     }
-    file.slug = slug
-  })
-
-  return files
+  }
 }
 
 exports.postBuild = () => {

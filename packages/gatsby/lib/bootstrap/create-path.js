@@ -11,6 +11,8 @@ module.exports = (basePath: string, filePath: string): string => {
     name = ``
   }
 
+  // Use path.posix to force forward slash paths. Otherwise on windows
+  // node.js will add backward slashes.
   const pagePath = path.posix.join(`/`, dirname, name, `/`)
 
   return pagePath

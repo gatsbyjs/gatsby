@@ -5,29 +5,24 @@ const jsYaml = require("js-yaml")
 const _ = require("lodash")
 const { loadNodeContents } = require("gatsby-source-filesystem")
 
-async function modifyAST({ args }) {
-  const { ast } = args
-  const files = select(
-    ast,
-    `
-    File[extension="yaml"],
-    File[extension="yml"]
-  `
-  )
-  const contents = await Promise.map(files, file => loadNodeContents(file))
-  files.forEach((file, index) => {
-    const fileContents = contents[index]
-    const yamlArray = jsYaml.load(fileContents).map(obj => ({
+async function onNodeCreate({ node, actionCreators }) {
+  const { createNode, updateNode } = actionCreators
+  if (node.extension === `yaml` || node.extension === `yml`) {
+    const content = await loadNodeContents(node)
+    // TODO validate that yaml object has an id field?
+    // Or just add an id if one isn't set?
+    const yamlArray = jsYaml.load(content).map(obj => ({
       ...obj,
-      _sourceNodeId: file.id,
-      type: _.capitalize(file.name),
+      parent: node.id,
+      _sourceNodeId: node.id,
+      type: _.capitalize(node.name),
       children: [],
     }))
 
-    file.children = file.children.concat(yamlArray)
-  })
-
-  return ast
+    node.children = node.children.concat(yamlArray)
+    updateNode(node)
+    _.each(yamlArray, y => createNode(y))
+  }
 }
 
-exports.modifyAST = modifyAST
+exports.onNodeCreate = onNodeCreate

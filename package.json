@@ -64,7 +64,7 @@
     "publish-next": "lerna run build; lerna publish --npm-tag=next",
     "test": "jest",
     "test_bkup": "npm run lint && npm run test-node && npm run test-integration",
-    "watch": "lerna run watch"
+    "watch": "lerna run watch --no-sort --stream --concurrency 999"
   },
   "devDependencies": {
     "babel-preset-flow": "^6.23.0"

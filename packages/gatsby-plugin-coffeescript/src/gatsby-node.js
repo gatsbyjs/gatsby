@@ -8,9 +8,8 @@ export function resolvableExtensions() {
   return [`.coffee`, `.cjsx`]
 }
 
-export function modifyWebpackConfig(ctx) {
-  // we need to use Babel to get around the ES6 export issue
-  const { config } = ctx.args
+export function modifyWebpackConfig({ config }) {
+  // We need to use Babel to get around the ES6 export issue.
   config.loader("coffee", {
     test: COFFEE,
     loaders: ["babel", "coffee"],
@@ -21,9 +20,8 @@ export function modifyWebpackConfig(ctx) {
   })
 }
 
-export function preprocessSource(ctx) {
-  const { args: { filename, contents }, pluginOptions } = ctx
-  // don't need to account for ES6, Babylon can parse it
+export function preprocessSource({ filename, contents }, pluginOptions) {
+  // Don't need to account for ES6, Babylon can parse it.
   if (CJSX.test(filename)) {
     return compile(transform(contents), pluginOptions)
   } else if (COFFEE.test(filename)) {
