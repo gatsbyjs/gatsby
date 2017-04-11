@@ -120,6 +120,7 @@ https://gatsbygram.gatsbyjs.org and the case study on how its built https://www.
 * [Coriolan UI - sass mixins pack](https://coriolan-ui.github.io/) ([source](https://github.com/coriolan-ui/coriolan-ui.github.io))
 * [5 minutes of React podcast](http://5minreact.ru/) ([source](https://github.com/5minreact/5minreact))
 * [@hsribei's log](https://hsribei.github.io/log) ([source](https://github.com/hsribei/log))
+* [Megan Keesee](https://megankeesee.com) ([source](https://github.com/MeganKeesee/personal-site))
 * [Edit this file to add yours!](https://github.com/gatsbyjs/gatsby/blob/master/README.md)
 
 *Note, for the sites that have made their source available, you can
