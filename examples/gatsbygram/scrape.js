@@ -49,11 +49,10 @@ const getPosts = (maxId) => {
     { encoding: `utf8` },
     (err, res, body) => {
       if (err) console.log(`error: ${err}`)
-
+      body = JSON.parse(body);
       // Parse posts
       let lastId
-      JSON.parse(body)
-        .items
+      body.items
         .filter(item => item.type === `image`)
         .map(item => {
           // Parse item to a simple object
@@ -85,7 +84,7 @@ const getPosts = (maxId) => {
           lastId = item.id
         })
 
-      if (posts.length < 100)
+      if (posts.length < 100 && get(body, `more_available`))
         getPosts(lastId)
       else
         saveJSON()
