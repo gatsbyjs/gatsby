@@ -339,6 +339,7 @@ or `import` of 'config'. Values:
   (containing your client-side Single Page App) during a `gatsby build`. You'll need
   to update your top-level `html.js` file so that it doesn't pull in `bundle.js` in
   production, but you'll want to keep it for `gatsby develop` mode.
+* `html.js` - A React.js component that provides the overall HTML structure for the site.
 * `/pages` - All pages go here. Everything is turned into a page except
 files which start with an underscore:
   * `_template` files under `/pages` are treated as parent templates for other pages in
