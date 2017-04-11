@@ -67,7 +67,7 @@
     "opn": "^4.0.2",
     "parse-filepath": "^1.0.1",
     "postcss-browser-reporter": "^0.5.0",
-    "postcss-cssnext": "^2.10.0",
+    "postcss-cssnext": "2.9.0",
     "postcss-import": "^8.1.2",
     "postcss-loader": "^0.13.0",
     "postcss-reporter": "^1.4.1",
