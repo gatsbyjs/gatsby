@@ -20,7 +20,7 @@ node scrape.js INSTAGRAM_USERNAME
 }
 
 // Convert timestamp to ISO 8601.
-const toISO8601 = (timestamp) => new Date(timestamp * 1000).toJSON()
+const toISO8601 = timestamp => new Date(timestamp * 1000).toJSON()
 
 // Create the progress bar
 const bar = new ProgressBar(
@@ -34,34 +34,38 @@ const bar = new ProgressBar(
 // Create the images directory
 mkdirp.sync(`./data/images`)
 
-request(`https://www.instagram.com/${username}/media`, { encoding: `utf8` }, (err, res, body) => {
-  if (err) console.log(`error: ${err}`)
+request(
+  `https://www.instagram.com/${username}/media`,
+  { encoding: `utf8` },
+  (err, res, body) => {
+    if (err) console.log(`error: ${err}`)
 
-  // Parse posts
-  const posts = JSON.parse(body).items
-    .filter(item => item.type === `image`)
-    .map(item => {
-      const imgUrl = get(item, `images.standard_resolution.url`, "")
+    // Parse posts
+    const posts = JSON.parse(body)
+      .items.filter(item => item.type === `image`)
+      .map(item => {
+        const imgUrl = get(item, `images.standard_resolution.url`, "")
 
-      // Download image locally
-      bar.total++
-      download(imgUrl, `./data/images/${item.code}.jpg`, () => bar.tick())
+        // Download image locally
+        bar.total++
+        download(imgUrl, `./data/images/${item.code}.jpg`, () => bar.tick())
 
-      // Return a simplify object
-      return {
-        id: item.code,
-        username: item.user.username,
-        avatar: item.user.profile_picture,
-        time: toISO8601(item[`created_time`]),
-        type: item.type,
-        likes: item.likes.count,
-        comment: item.comments.count,
-        text: item.caption.text,
-        media: imgUrl,
-        image: `images/${item.code}.jpg`
-      }
-    })
+        // Return a simplify object
+        return {
+          id: item.code,
+          username: item.user.username,
+          avatar: item.user.profile_picture,
+          time: toISO8601(item[`created_time`]),
+          type: item.type,
+          likes: item.likes.count,
+          comment: item.comments.count,
+          text: item.caption.text,
+          media: imgUrl,
+          image: `images/${item.code}.jpg`,
+        }
+      })
 
-  // Write json
-  fs.writeFileSync(`./data/posts.json`, JSON.stringify(posts, "", 2))
-})
+    // Write json
+    fs.writeFileSync(`./data/posts.json`, JSON.stringify(posts, "", 2))
+  }
+)
