@@ -1,9 +1,23 @@
 /* @flow weak */
-import { exec } from "child_process"
+import { exec, execSync } from "child_process"
 import fs from "fs-extra"
 import sysPath from "path"
 
 let logger = console
+
+// Checks the existence of yarn package
+// We use yarnpkg instead of yarn to avoid conflict with Hadoop yarn
+// Refer to https://github.com/yarnpkg/yarn/issues/673
+//
+// Returns true if yarn exists, false otherwise
+const shouldUseYarn = () => {
+  try {
+    execSync(`yarnpkg --version`, { stdio: `ignore` })
+    return true
+  } catch (e) {
+    return false
+  }
+}
 
 // Executes `npm install` and `bower install` in rootPath.
 //
@@ -15,7 +29,7 @@ const install = (rootPath, callback) => {
   const prevDir = process.cwd()
   logger.log(`Installing packages...`)
   process.chdir(rootPath)
-  const installCmd = `npm install`
+  const installCmd = shouldUseYarn ? `yarnpkg` : `npm install`
   exec(installCmd, (error, stdout, stderr) => {
     process.chdir(prevDir)
     if (stdout) console.log(stdout.toString())
