@@ -1,6 +1,5 @@
 import React from "react"
 import chunk from "lodash/chunk"
-import Gravatar from "react-gravatar"
 
 import { rhythm, scale } from "../utils/typography"
 import presets from "../utils/presets"
@@ -81,9 +80,9 @@ class Index extends React.Component {
               flexShrink: 0,
             }}
           >
-            <Gravatar
-              size={151.2}
-              email="mathews.kyle@gmail.com"
+            <img
+              src={this.props.data.allPosts.edges[0].node.avatar}
+              alt={this.props.data.allPosts.edges[0].node.username}
               css={{
                 display: `block`,
                 margin: `0 auto`,
@@ -214,6 +213,7 @@ query allImages {
     edges {
       node {
         username
+        avatar
         likes
         id
         text

@@ -583,9 +583,6 @@ resulting "Gatsbygram" sites:
 * https://iceland-gatsbygram.netlify.com
 * https://tinyhouses-gatsbygram.netlify.com
 
-**Help wanted:** scrape the user's profile picture and use that instead
-of my Gravatar image which is hard-coded at the moment.
-
 *With thanks to Sam Bhagwatt, Sunil Pai, Nolan Lawson, Nik Graf,
 Jeff Posnick, and Addy Osmani for their reviews.*
 
