@@ -19,7 +19,6 @@ if (!havePackageJsonFile) {
 const localPkg = JSON.parse(fs.readFileSync("package.json"));
 const packages = Object.keys(localPkg.dependencies);
 const gatsbyPackages = packages.filter(p => p.startsWith("gatsby"));
-console.log(gatsbyPackages)
 
 // Test that the path is absolute
 if (argv.setPathToRepo && !isAbsolute(argv.setPathToRepo)) {
