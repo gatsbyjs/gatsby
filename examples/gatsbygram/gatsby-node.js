@@ -8,14 +8,15 @@ const slash = require("slash")
 // called after the Gatsby bootstrap is finished so you have
 // access to any information necessary to programatically
 // create pages.
-exports.createPages = ({ args }) =>
-  new Promise((resolve, reject) => {
+exports.createPages = ({ graphql, actionCreators }) => {
+  const { upsertPage } = actionCreators
+
+  return new Promise((resolve, reject) => {
     // The “graphql” function allows us to run arbitrary
     // queries against this Gatsbygram's graphql schema. Think of
     // it like Gatsbygram has a built-in database constructed
     // from static data that you can run queries against.
-    const { graphql } = args
-    const pages = []
+    //
     // Post is a data node type derived from data/posts.json
     // which is created when scrapping Instagram. “allPosts”
     // is a "connection" (a GraphQL convention for accessing
@@ -46,7 +47,10 @@ exports.createPages = ({ args }) =>
       // already includes an ID field, we just use that for
       // each page's path.
       _.each(result.data.allPosts.edges, edge => {
-        pages.push({
+        // Gatsby uses Redux to manage its internal state.
+        // Plugins and sites can use functions like "upsertPage"
+        // to interact with Gatsby.
+        upsertPage({
           // Each page is required to have a `path` as well
           // as a template component. The `context` is
           // optional but is often necessary so the template
@@ -58,7 +62,7 @@ exports.createPages = ({ args }) =>
           },
         })
       })
-
-      resolve(pages)
+      resolve()
     })
   })
+}
