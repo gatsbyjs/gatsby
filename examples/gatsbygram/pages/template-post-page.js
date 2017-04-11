@@ -25,6 +25,7 @@ export const pageQuery = `
     posts(id: { eq: $id }) {
       # Specify the fields from the post we need.
       username
+      avatar
       likes
       id
       text

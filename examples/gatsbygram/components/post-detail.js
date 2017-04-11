@@ -1,6 +1,5 @@
 import React from "react"
 import HeartIcon from "react-icons/lib/fa/heart"
-import Gravatar from "react-gravatar"
 
 import presets from "../utils/presets"
 import typography, { rhythm, scale } from "../utils/typography"
@@ -11,7 +10,15 @@ class PostDetail extends React.Component {
   }
 
   render() {
-    const { image, likes, id, username, weeksAgo, text } = this.props.post
+    const {
+      image,
+      likes,
+      id,
+      username,
+      weeksAgo,
+      text,
+      avatar,
+    } = this.props.post
     const { big } = image.children[0]
 
     const UserBar = () => (
@@ -23,11 +30,12 @@ class PostDetail extends React.Component {
           },
         }}
       >
-        <Gravatar
-          size={25}
-          email="mathews.kyle@gmail.com"
+        <img
+          src={avatar}
+          alt={username}
           css={{
             borderRadius: `100%`,
+            height: 25,
             float: `left`,
             margin: 0,
             marginRight: rhythm(1 / 2),
