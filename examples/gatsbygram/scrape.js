@@ -63,7 +63,7 @@ const getPosts = maxId => {
           likes: get(item, `likes.count`),
           comment: get(item, `comments.count`),
           text: get(item, `caption.text`),
-          media: get(item, `images.standard_resolution.url`),
+          media: get(item, `images.standard_resolution.url`, ``).replace(`/s640x640`, ``),
           image: `images/${item.code}.jpg`,
         }
       })
