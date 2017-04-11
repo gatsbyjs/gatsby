@@ -44,7 +44,7 @@ async function buildSchema() {
 // source plugins pulling from remote systems, there'll probably need to be
 // an explicit API for them to let Gatsby core know that a sync is complete.
 const debounceNodeCreation = cb => {
-  const updateNode = _.debounce(cb, 50)
+  const updateNode = _.debounce(cb, 250)
   store.subscribe(() => {
     const state = store.getState()
     if (
@@ -64,7 +64,6 @@ module.exports = () => {
     let builtSchema = false
     debounceNodeCreation(() => {
       const state = store.getState()
-      console.log(state.status)
       // Check if the schema has been built yet and if
       // all source plugins have reported that they're ready.
       if (!builtSchema && _.every(_.values(state.status))) {

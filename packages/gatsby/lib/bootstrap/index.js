@@ -286,7 +286,8 @@ module.exports = async (program: any) => {
   })
 
   // TODO move this to own source plugin per component type
-  // (js/cjsx/typescript, etc.)
+  // (js/cjsx/typescript, etc.). Only do after there's themes
+  // so can cement default /pages setup in default core theme.
   autoPathCreator(program)
 
   // Copy /404/ to /404.html as many static site hosting companies expect
@@ -309,9 +310,15 @@ module.exports = async (program: any) => {
 
   console.log(`created js pages`)
 
-  await queryRunner()
-  await apiRunnerNode(`generateSideEffects`)
-  console.log(`bootstrap finished, time since started: ${process.uptime()}`)
+  return new Promise(resolve => {
+    queryRunner(thing => {
+      apiRunnerNode(`generateSideEffects`).then(() => {
+        console.log(
+          `bootstrap finished, time since started: ${process.uptime()}`
+        )
 
-  return { graphqlRunner }
+        resolve({ graphqlRunner })
+      })
+    })
+  })
 }

@@ -20,7 +20,6 @@ let invalidPages = []
 store.subscribe(() => {
   const state = store.getState()
   if (state.lastAction.type === "CREATE_NODE") {
-    // console.log(`lastAction`, state.lastAction.payload.id)
     const node = state.nodes[state.lastAction.payload.id]
     // Find invalid pages.
     if (state.pageDataDependencies.nodes[node.id]) {
@@ -302,6 +301,9 @@ const q = queue(
     // filter out pages that we're invalidated.
     if (invalidPages && invalidPages.length > 0) {
       paths = _.filter(paths, p => _.includes(invalidPages, p.path))
+      // Now remove this path from invalidPages. Note, this is ugly code
+      // and will be refactored soonish.
+      invalidPages = _.filter(invalidPages, p => p === p.path)
       if (paths.length > 0) {
         console.log("filtered paths", paths.map(p => p.path))
       }
@@ -445,7 +447,12 @@ const q = queue(
   1
 )
 
-module.exports = async () => {
+// sigh... will be gone after refactor...
+let realDrainCB
+module.exports = async drainCb => {
+  if (_.isFunction(drainCb)) {
+    realDrainCB = drainCb
+  }
   const schema = store.getState().schema
   const graphql = (query, context) => {
     return graphqlFunction(schema, query, context, context, context)
@@ -456,18 +463,9 @@ module.exports = async () => {
   // When a component is updated, rerun queries.
   const components = _.uniq(store.getState().pages.map(page => page.component))
 
-  let outsideResolve
-  const returnPromise = new Promise(resolve => outsideResolve = resolve)
-
-  // If there's no components yet, call the resolve early.
+  // If there's no components yet, return
   if (components.length === 0) {
-    resolve()
-  } else {
-    q.drain = () => {
-      // Only call resolve once.
-      q.drain = _.noop
-      resolve()
-    }
+    return
   }
 
   components.forEach(path => {
@@ -483,5 +481,13 @@ module.exports = async () => {
     })
   }
 
-  return returnPromise
+  q.drain = () => {
+    if (realDrainCB) {
+      realDrainCB()
+    }
+    // Only call callback once.
+    realDrainCB = _.noop
+  }
+
+  return
 }
