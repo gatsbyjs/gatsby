@@ -18,7 +18,7 @@ export default PostTemplate
 // context in gatsby-node.js.
 //
 // All GraphQL queries in Gatsby are run at build-time and
-// loaded as plain JSON files so have zero client cost.
+// loaded as plain JSON files so have minimal client cost.
 export const pageQuery = `
   query PostPage($id: String!) {
     # Select the post which equals this id.
@@ -32,7 +32,7 @@ export const pageQuery = `
       # Date fields have special arguments. This one computes
       # how many weeks have passed since the post was created.
       # All calculations like this (like all GraphQL query
-      # activity) happens at build-time! So has zero cost
+      # activity) happens at build-time! So has minimal cost
       # for the client.
       weeksAgo: time(difference: "weeks")
       image {

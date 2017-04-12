@@ -159,7 +159,9 @@ a typical static site generator, but Gatsby lets you define routes
 programmatically through the `createPages` API using any data you have
 available.
 
-Here is how we define pages from our JSON data for Gatsbygram at build time:
+Here is how we define pages from our JSON data for Gatsbygram at build time in
+the site's [`gatsby-node.js`
+file](https://github.com/gatsbyjs/gatsby/blob/1.0/examples/gatsbygram/gatsby-node.js):
 
 ```javascript
 const _ = require("lodash")
@@ -170,22 +172,24 @@ const slash = require("slash")
 
 // Implement the Gatsby API “createPages”. This is
 // called after the Gatsby bootstrap is finished so you have
-// access to any information necessary to programmatically
+// access to any information necessary to programatically
 // create pages.
-exports.createPages = ({ args }) => (
-  new Promise((resolve, reject) => {
+exports.createPages = ({ graphql, actionCreators }) => {
+  const { upsertPage } = actionCreators
+
+  return new Promise((resolve, reject) => {
     // The “graphql” function allows us to run arbitrary
-    // queries against this Gatsbygram's GraphQL schema. Think of
+    // queries against this Gatsbygram's graphql schema. Think of
     // it like Gatsbygram has a built-in database constructed
     // from static data that you can run queries against.
-    const { graphql } = args
-    const pages = []
+    //
     // Post is a data node type derived from data/posts.json
     // which is created when scrapping Instagram. “allPosts”
     // is a "connection" (a GraphQL convention for accessing
     // a list of nodes) gives us an easy way to query all
     // Post nodes.
-    graphql(`
+    graphql(
+      `
       {
         allPosts(limit: 1000) {
           edges {
@@ -195,21 +199,24 @@ exports.createPages = ({ args }) => (
           }
         }
       }
-    `)
-    .then(result => {
+    `
+    ).then(result => {
       if (result.errors) {
         console.log(result.errors)
         reject(result.errors)
       }
 
       // Create image post pages.
-      const postTemplate = path.resolve(`pages/template-post-page.js`)
+      const postTemplate = path.resolve(`templates/post-page.js`)
       // We want to create a detailed page for each
       // Instagram post. Since the scrapped Instagram data
       // already includes an ID field, we just use that for
       // each page's path.
-      _.each(result.data.allPosts.edges, (edge) => {
-        pages.push({
+      _.each(result.data.allPosts.edges, edge => {
+        // Gatsby uses Redux to manage its internal state.
+        // Plugins and sites can use functions like "upsertPage"
+        // to interact with Gatsby.
+        upsertPage({
           // Each page is required to have a `path` as well
           // as a template component. The `context` is
           // optional but is often necessary so the template
@@ -221,11 +228,10 @@ exports.createPages = ({ args }) => (
           },
         })
       })
-
-      resolve(pages)
+      resolve()
     })
   })
-)
+}
 ```
 
 ## Using templates
@@ -235,18 +241,20 @@ define a page in the `createPages` API, you specify its component.
 Those components, usually called templates, get reused with
 page-specific data to generate the different pages.
 
-As you can see above, when defining a page, we can set "context" data,
-which is passed as a `prop` to the component and as a [GraphQL
-variable](http://graphql.org/learn/queries/#variables) in our `GraphQL`
-query. For the "postTemplate", we pass the id to the post. Below we use
-that id to query our `GraphQL` schema and return a fully formed page:
+As you can see above, when defining a page, we can set "context" data, which is
+passed as a `prop` to the component and as a [GraphQL
+variable](http://graphql.org/learn/queries/#variables) in our `GraphQL` query.
+For the "[post
+template](https://github.com/gatsbyjs/gatsby/blob/1.0/examples/gatsbygram/templates/template-post-page.js)",
+we pass the id to the post. Below we use that id to query our `GraphQL` schema
+and return a fully formed page:
 
 ```jsx
-import React from 'react'
-import PostDetail from '../components/post-detail'
+import React from "react"
+import PostDetail from "../components/post-detail"
 
 class PostTemplate extends React.Component {
-  render () {
+  render() {
     return (
       // PostDetail is used for this detail page and
       // also in the modal.
@@ -262,20 +270,21 @@ export default PostTemplate
 // context in gatsby-node.js.
 //
 // All GraphQL queries in Gatsby are run at build-time and
-// loaded as plain JSON files so have no client cost.
+// loaded as plain JSON files so have minimal client cost.
 export const pageQuery = `
   query PostPage($id: String!) {
     # Select the post which equals this id.
     posts(id: { eq: $id }) {
       # Specify the fields from the post we need.
       username
+      avatar
       likes
       id
       text
       # Date fields have special arguments. This one computes
       # how many weeks have passed since the post was created.
       # All calculations like this (like all GraphQL query
-      # activity) happens at build-time! So has zero cost
+      # activity) happens at build-time! So has minimal cost
       # for the client.
       weeksAgo: time(difference: "weeks")
       image {

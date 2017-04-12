@@ -41,7 +41,7 @@ exports.createPages = ({ graphql, actionCreators }) => {
       }
 
       // Create image post pages.
-      const postTemplate = path.resolve(`pages/template-post-page.js`)
+      const postTemplate = path.resolve(`templates/post-page.js`)
       // We want to create a detailed page for each
       // Instagram post. Since the scrapped Instagram data
       // already includes an ID field, we just use that for
