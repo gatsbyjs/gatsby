@@ -2,7 +2,7 @@
 Provides drop-in support for TypeScript and TSX.
 
 ## Install
-`yarn add gatsby-plugin-typescript`
+`yarn add gatsby-plugin-typescript ts-loader typescript`
 
 ## How to use
 1. Include the plugin in your `gatsby-config.js` file.
