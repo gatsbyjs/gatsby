@@ -16,3 +16,10 @@ powershell console. On installing this package, it downloads and installs the
 Visual C++ Build Tools 2015, provided free of charge by Microsoft. These tools
 are required to compile popular native modules. It will also install Python
 2.7, configuring your machine and npm appropriately.
+
+## Installing dependencies without troubles.
+
+Even if you love using a pretty terminal as [hyper](https://hyper.is/) with a git bash,
+for installing packages without build troubles, it's better to use **a powershell console**
+
+After `yarn` or `npm i`, you can go back on your favorite terminal :wink: and run `yarn develop` or `npm run develop`!
