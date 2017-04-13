@@ -5,6 +5,12 @@ module.exports = (state = { directory: `/` }, action) => {
         ...action.payload,
       };
 
+    case "SET_PROGRAM_EXTENSIONS":
+      return {
+        ...state,
+        extensions: action.payload,
+      };
+
     default:
       return state;
   }

@@ -44,6 +44,7 @@ const glob = Promise.promisify(globCB)
 const autoPathCreator = async (program: any) => {
   const pagesDirectory = path.posix.join(program.directory, `pages`)
   const exts = program.extensions.map(e => `*${e}`).join("|")
+  const exts = store.getState().program.extensions.map(e => `*${e}`).join("|")
   // The promisified version wasn't working for some reason
   // so we'll use sync for now.
   const files = glob.sync(`${pagesDirectory}/**/?(${exts})`)
@@ -272,10 +273,13 @@ module.exports = async (program: any) => {
   }
 
   // Collect resolvable extensions and attach to program.
-  // TODO refactor this to use Redux.
   const extensions = [`.js`, `.jsx`]
   const apiResults = await apiRunnerNode("resolvableExtensions")
-  program.extensions = apiResults.reduce((a, b) => a.concat(b), extensions)
+
+  store.dispatch({
+    type: "SET_PROGRAM_EXTENSIONS",
+    payload: _.flattenDeep([extensions, apiResults]),
+  })
 
   // Collect pages.
   await apiRunnerNode(`createPages`, {
