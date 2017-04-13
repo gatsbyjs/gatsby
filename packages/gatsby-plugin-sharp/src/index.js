@@ -331,7 +331,8 @@ async function responsiveSizes({ file, args = {} }) {
 
   // Construct src and srcSet strings.
   const fallbackSrc = _.minBy(images, image =>
-    Math.abs(options.maxWidth - image.width)).src
+    Math.abs(options.maxWidth - image.width)
+  ).src
   const srcSet = images
     .map(image => `${image.src} ${Math.round(image.width)}w`)
     .join(`,\n`)

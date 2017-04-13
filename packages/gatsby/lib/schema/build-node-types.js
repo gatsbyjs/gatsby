@@ -58,7 +58,8 @@ module.exports = async () =>
           description: `The children of this node.`,
           resolve(node, a, context) {
             return node.children.map(id =>
-              getNodeAndSavePathDependency(id, context.path))
+              getNodeAndSavePathDependency(id, context.path)
+            )
           },
         },
       }

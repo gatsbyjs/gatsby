@@ -34,4 +34,4 @@ export default (async function ValidateWebpackConfig(config, stage) {
   })
 
   return process.exit(1)
-});
+})

@@ -18,11 +18,13 @@ async function html(program: any) {
 
   console.log(`Generating CSS`)
   await buildCSS(program).catch(err =>
-    console.log(`Generating CSS failed`, err))
+    console.log(`Generating CSS failed`, err)
+  )
 
   console.log(`Compiling production bundle.js`)
   await buildProductionBundle(program).catch(err =>
-    console.log(`Generating JS failed`, err))
+    console.log(`Generating JS failed`, err)
+  )
 
   console.log(`Generating Static HTML`)
   // Write out pages data to file so it's available to the static-entry.js
@@ -32,7 +34,8 @@ async function html(program: any) {
     JSON.stringify(store.getState().pages)
   )
   await buildHTML(program).catch(err =>
-    console.log(`Generating HTML failed`, err))
+    console.log(`Generating HTML failed`, err)
+  )
 
   console.log(`Running postBuild plugins`)
   await apiRunnerNode(`postBuild`, { graphql: graphqlRunner })

@@ -98,9 +98,8 @@ const writeChildRoutes = () => {
   // Group pages under their layout component (if any).
   let defaultLayoutExists = true
   if (
-    glob.sync(
-      `${store.getState().program.directory}/layouts/default.*`
-    ).length === 0
+    glob.sync(`${store.getState().program.directory}/layouts/default.*`)
+      .length === 0
   ) {
     defaultLayoutExists = false
   }
@@ -285,167 +284,163 @@ const writeChildRoutes = () => {
 const debouncedWriteChildRoutes = _.debounce(writeChildRoutes, 250)
 
 // Queue for processing files
-const q = queue(
-  async ({ file, graphql, directory }, callback) => {
-    const absolutePath = slash(path.resolve(file))
+const q = queue(async ({ file, graphql, directory }, callback) => {
+  const absolutePath = slash(path.resolve(file))
 
-    // Get paths for this file.
-    let paths = []
-    store.getState().pages.forEach(page => {
-      if (page.component === absolutePath) {
-        paths.push(page)
-      }
-    })
-
-    // If we're running queries because of a source node change,
-    // filter out pages that we're invalidated.
-    if (invalidPages && invalidPages.length > 0) {
-      paths = _.filter(paths, p => _.includes(invalidPages, p.path))
-      // Now remove this path from invalidPages. Note, this is ugly code
-      // and will be refactored soonish.
-      invalidPages = _.filter(invalidPages, p => p === p.path)
-      if (paths.length > 0) {
-        console.log("filtered paths", paths.map(p => p.path))
-      }
+  // Get paths for this file.
+  let paths = []
+  store.getState().pages.forEach(page => {
+    if (page.component === absolutePath) {
+      paths.push(page)
     }
+  })
 
-    // If there's no paths, just return.
-    if (paths.length === 0) {
-      console.log(`no queries to run for ${absolutePath}`)
-      return callback()
+  // If we're running queries because of a source node change,
+  // filter out pages that we're invalidated.
+  if (invalidPages && invalidPages.length > 0) {
+    paths = _.filter(paths, p => _.includes(invalidPages, p.path))
+    // Now remove this path from invalidPages. Note, this is ugly code
+    // and will be refactored soonish.
+    invalidPages = _.filter(invalidPages, p => p === p.path)
+    if (paths.length > 0) {
+      console.log("filtered paths", paths.map(p => p.path))
     }
+  }
 
-    let fileStr = fs.readFileSync(file, `utf-8`)
-    let ast
-    // Preprocess and attempt to parse source; return an AST if we can, log an
-    // error if we can't.
-    const transpiled = await apiRunnerNode(`preprocessSource`, {
-      filename: file,
-      contents: fileStr,
-    })
-    if (transpiled.length) {
-      for (const item of transpiled) {
-        try {
-          const tmp = babylon.parse(item, {
-            sourceType: `module`,
-            plugins: [`*`],
-          })
-          ast = tmp
-          break
-        } catch (e) {
-          console.info(e)
-          continue
-        }
-      }
-      if (ast === undefined) {
-        console.error(`Failed to parse preprocessed file ${file}`)
-      }
-    } else {
+  // If there's no paths, just return.
+  if (paths.length === 0) {
+    console.log(`no queries to run for ${absolutePath}`)
+    return callback()
+  }
+
+  let fileStr = fs.readFileSync(file, `utf-8`)
+  let ast
+  // Preprocess and attempt to parse source; return an AST if we can, log an
+  // error if we can't.
+  const transpiled = await apiRunnerNode(`preprocessSource`, {
+    filename: file,
+    contents: fileStr,
+  })
+  if (transpiled.length) {
+    for (const item of transpiled) {
       try {
-        ast = babylon.parse(fileStr, {
+        const tmp = babylon.parse(item, {
           sourceType: `module`,
-          sourceFilename: true,
           plugins: [`*`],
         })
+        ast = tmp
+        break
       } catch (e) {
-        console.log(`Failed to parse ${file}`)
-        console.log(e)
+        console.info(e)
+        continue
       }
     }
-
-    // Get query for this file.
-    let query
-    traverse(ast, {
-      ExportNamedDeclaration(path, state) {
-        // cache declaration node
-        const declaration = path.node.declaration.declarations[0]
-        // we're looking for a ES6 named export called "pageQuery"
-        const name = declaration.id.name
-        if (name === `pageQuery`) {
-          const type = declaration.init.type
-          if (type === `TemplateLiteral`) {
-            // most pageQueries will be template strings
-            const chunks = []
-            for (const quasi of declaration.init.quasis) {
-              chunks.push(quasi.value.cooked)
-            }
-            query = chunks.join(``)
-          } else if (type === `StringLiteral`) {
-            // fun fact: CoffeeScript can only generate StringLiterals
-            query = declaration.init.extra.rawValue
-          }
-          console.time(`graphql query time`)
-        } else
-          return
-      },
-    })
-
-    console.log(`running queries for ${paths.length} paths for ${file}`)
-    const pathsInfo = {
-      componentPath: absolutePath,
-      directory,
-      paths,
-      graphql,
+    if (ast === undefined) {
+      console.error(`Failed to parse preprocessed file ${file}`)
     }
-
-    // Handle the result of the GraphQL query.
-    const handleResult = (pathInfo, result = {}) => {
-      // Combine the result with the path context.
-      result.pathContext = pathInfo.context
-      const clonedResult = { ...result }
-      result.pathContext = pathInfo
-
-      // Add result to page object.
-      const page = store.getState().pages.find(p => p.path === pathInfo.path)
-      let jsonName = `${_.kebabCase(pathInfo.path)}.json`
-      let internalComponentName = `Component${pascalCase(pathInfo.path)}`
-      if (jsonName === `.json`) {
-        jsonName = `index.json`
-        internalComponentName = `ComponentIndex`
-      }
-      page.jsonName = jsonName
-      page.internalComponentName = internalComponentName
-      boundActionCreators.upsertPage(page)
-
-      // Save result to file.
-      const resultJSON = JSON.stringify(clonedResult, null, 4)
-      fs.writeFileSync(
-        `${directory}/.intermediate-representation/json/${jsonName}`,
-        resultJSON
-      )
-
-      return null
-    }
-
-    // Run queries for each page component.
-    console.time(`graphql query time`)
-    Promise.all(
-      paths.map(pathInfo => {
-        let pathContext
-        // Mixin the path context to the top-level.
-        // TODO do runtime check that user not passing in key that conflicts
-        // w/ top-level keys e.g. path or component.
-        if (pathInfo.context) {
-          pathContext = { ...pathInfo, ...pathInfo.context }
-        } else {
-          pathContext = { ...pathInfo }
-        }
-
-        return graphql(query, pathContext)
-          .catch(() => handleResult(pathInfo))
-          .then(result => handleResult(pathInfo, result))
+  } else {
+    try {
+      ast = babylon.parse(fileStr, {
+        sourceType: `module`,
+        sourceFilename: true,
+        plugins: [`*`],
       })
-    ).then(() => {
-      console.log(`rewrote JSON for queries for ${absolutePath}`)
-      console.timeEnd(`graphql query time`)
-      // Write out new child-routes.js in the .intermediate-representation directory
-      // in the root of your site.
-      debouncedWriteChildRoutes()
-      callback()
+    } catch (e) {
+      console.log(`Failed to parse ${file}`)
+      console.log(e)
+    }
+  }
+
+  // Get query for this file.
+  let query
+  traverse(ast, {
+    ExportNamedDeclaration(path, state) {
+      // cache declaration node
+      const declaration = path.node.declaration.declarations[0]
+      // we're looking for a ES6 named export called "pageQuery"
+      const name = declaration.id.name
+      if (name === `pageQuery`) {
+        const type = declaration.init.type
+        if (type === `TemplateLiteral`) {
+          // most pageQueries will be template strings
+          const chunks = []
+          for (const quasi of declaration.init.quasis) {
+            chunks.push(quasi.value.cooked)
+          }
+          query = chunks.join(``)
+        } else if (type === `StringLiteral`) {
+          // fun fact: CoffeeScript can only generate StringLiterals
+          query = declaration.init.extra.rawValue
+        }
+        console.time(`graphql query time`)
+      } else return
+    },
+  })
+
+  console.log(`running queries for ${paths.length} paths for ${file}`)
+  const pathsInfo = {
+    componentPath: absolutePath,
+    directory,
+    paths,
+    graphql,
+  }
+
+  // Handle the result of the GraphQL query.
+  const handleResult = (pathInfo, result = {}) => {
+    // Combine the result with the path context.
+    result.pathContext = pathInfo.context
+    const clonedResult = { ...result }
+    result.pathContext = pathInfo
+
+    // Add result to page object.
+    const page = store.getState().pages.find(p => p.path === pathInfo.path)
+    let jsonName = `${_.kebabCase(pathInfo.path)}.json`
+    let internalComponentName = `Component${pascalCase(pathInfo.path)}`
+    if (jsonName === `.json`) {
+      jsonName = `index.json`
+      internalComponentName = `ComponentIndex`
+    }
+    page.jsonName = jsonName
+    page.internalComponentName = internalComponentName
+    boundActionCreators.upsertPage(page)
+
+    // Save result to file.
+    const resultJSON = JSON.stringify(clonedResult, null, 4)
+    fs.writeFileSync(
+      `${directory}/.intermediate-representation/json/${jsonName}`,
+      resultJSON
+    )
+
+    return null
+  }
+
+  // Run queries for each page component.
+  console.time(`graphql query time`)
+  Promise.all(
+    paths.map(pathInfo => {
+      let pathContext
+      // Mixin the path context to the top-level.
+      // TODO do runtime check that user not passing in key that conflicts
+      // w/ top-level keys e.g. path or component.
+      if (pathInfo.context) {
+        pathContext = { ...pathInfo, ...pathInfo.context }
+      } else {
+        pathContext = { ...pathInfo }
+      }
+
+      return graphql(query, pathContext)
+        .catch(() => handleResult(pathInfo))
+        .then(result => handleResult(pathInfo, result))
     })
-  },
-  1
-)
+  ).then(() => {
+    console.log(`rewrote JSON for queries for ${absolutePath}`)
+    console.timeEnd(`graphql query time`)
+    // Write out new child-routes.js in the .intermediate-representation directory
+    // in the root of your site.
+    debouncedWriteChildRoutes()
+    callback()
+  })
+}, 1)
 
 // sigh... will be gone after refactor...
 let realDrainCB

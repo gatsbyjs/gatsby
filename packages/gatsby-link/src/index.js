@@ -34,7 +34,8 @@ const GatsbyLink = React.createClass({
           createLocation(this.props.to),
           (error, nextState) => {
             getComponents(nextState, () =>
-              console.log(`loaded assets for ${this.props.to}`))
+              console.log(`loaded assets for ${this.props.to}`)
+            )
           }
         )
       }

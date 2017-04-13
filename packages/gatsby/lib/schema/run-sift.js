@@ -1,9 +1,7 @@
 // @flow
 const sift = require("sift")
 const _ = require("lodash")
-const {
-  connectionFromArray,
-} = require("graphql-skip-limit")
+const { connectionFromArray } = require("graphql-skip-limit")
 const { store } = require("../redux/")
 const { boundActionCreators } = require("../redux/actions")
 const { addPageDependency } = boundActionCreators
@@ -11,7 +9,7 @@ const { addPageDependency } = boundActionCreators
 type Node = {
   id: String,
   type: String,
-};
+}
 
 module.exports = ({ args, nodes, connection = false, path = "" }) => {
   // Clone args as for some reason graphql-js removes the constructor
@@ -64,7 +62,8 @@ module.exports = ({ args, nodes, connection = false, path = "" }) => {
   // Sort results.
   if (clonedArgs.sortBy) {
     const convertedFields = clonedArgs.sortBy.fields.map(field =>
-      field.replace(`___`, `.`))
+      field.replace(`___`, `.`)
+    )
     result = _.orderBy(result, convertedFields, clonedArgs.sortBy.order)
   }
 

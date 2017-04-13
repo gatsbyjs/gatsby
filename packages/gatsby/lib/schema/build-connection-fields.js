@@ -46,8 +46,7 @@ module.exports = type => {
         if (_.includes(args.field, `___`)) {
           fieldName = args.field.replace(`___`, `.`)
         }
-        const fields = connection.edges.map(edge =>
-          _.get(edge.node, fieldName))
+        const fields = connection.edges.map(edge => _.get(edge.node, fieldName))
         return _.sortBy(_.filter(_.uniq(_.flatten(fields)), _.identity))
       },
     },
@@ -85,7 +84,8 @@ module.exports = type => {
           )
           values.forEach(val => {
             groups[val] = _.filter(connectionNodes, n =>
-              _.includes(_.get(n, fieldName), val))
+              _.includes(_.get(n, fieldName), val)
+            )
           })
         } else {
           groups = _.groupBy(connectionNodes, fieldName)

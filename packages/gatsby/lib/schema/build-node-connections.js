@@ -1,14 +1,7 @@
 // @flow
 const _ = require("lodash")
-const {
-  GraphQLInt,
-  GraphQLList,
-  GraphQLString,
-} = require("graphql")
-const {
-  connectionArgs,
-  connectionDefinitions,
-} = require("graphql-skip-limit")
+const { GraphQLInt, GraphQLList, GraphQLString } = require("graphql")
+const { connectionArgs, connectionDefinitions } = require("graphql-skip-limit")
 const {
   inferInputObjectStructureFromNodes,
 } = require(`./infer-graphql-input-fields`)

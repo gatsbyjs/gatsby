@@ -1,4 +1,4 @@
-(function($) {
+;(function($) {
   $.fn.easyTabs = function(option) {
     const param = jQuery.extend(
       { fadeSpeed: `fast`, defaultContent: 1, activeClass: `active` },

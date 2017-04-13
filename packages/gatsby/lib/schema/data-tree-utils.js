@@ -2,9 +2,11 @@
 const _ = require("lodash")
 const flatten = require("flat")
 
-const extractFieldExamples = (exports.extractFieldExamples = (
-  { nodes, selector, deleteNodeFields = false }
-) => {
+const extractFieldExamples = (exports.extractFieldExamples = ({
+  nodes,
+  selector,
+  deleteNodeFields = false,
+}) => {
   let examples = {}
   _.each(nodes, node => {
     let subNode
