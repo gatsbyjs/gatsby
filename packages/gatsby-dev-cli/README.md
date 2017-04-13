@@ -9,7 +9,7 @@ It's a simple cli tool for have easily a functionnal development environment for
 Fork gatsby repo and clone it.
 
 ```bash
-$ npm install -g gatsby-cli-tools@canary
+$ npm install -g gatsby-dev-cli@canary
 $ gatsby-dev --set-path-to-repo /path/to/my/cloned/version/gatsby
 ```
 
