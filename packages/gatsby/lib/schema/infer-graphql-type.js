@@ -106,14 +106,12 @@ const inferGraphQLType = ({ value, fieldName, ...otherArgs }) => {
 
 // Call this for the top level node + recursively for each sub-object.
 // E.g. This gets called for Markdown and then for its frontmatter subobject.
-const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
-  {
-    nodes,
-    selector,
-    types,
-    allNodes,
-  }
-) => {
+const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = ({
+  nodes,
+  selector,
+  types,
+  allNodes,
+}) => {
   const type = nodes[0].type
   const fieldExamples = {}
   _.each(nodes, node => {
@@ -163,9 +161,7 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
         type => type.name === mapping[fieldSelector]
       )
       if (_.isEmpty(matchedTypes)) {
-        console.log(
-          `Couldn't find a matching node type for "${fieldSelector}"`
-        )
+        console.log(`Couldn't find a matching node type for "${fieldSelector}"`)
         return
       }
       const findNode = (fieldValue, path) => {

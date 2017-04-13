@@ -1,10 +1,7 @@
 /* @flow */
 const _ = require("lodash")
 const parents = require("unist-util-parents")
-const {
-  GraphQLSchema,
-  GraphQLObjectType,
-} = require("graphql")
+const { GraphQLSchema, GraphQLObjectType } = require("graphql")
 
 const siteSchema = require("./site-schema")
 const apiRunner = require("../utils/api-runner-node")

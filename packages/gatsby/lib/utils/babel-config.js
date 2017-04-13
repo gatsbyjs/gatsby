@@ -22,7 +22,8 @@ import apiRunnerNode from "./api-runner-node"
  */
 function resolvePlugin(pluginName, directory, type) {
   const gatsbyPath = path.resolve(__dirname, `..`, `..`)
-  const plugin = resolve(`babel-${type}-${pluginName}`, directory) ||
+  const plugin =
+    resolve(`babel-${type}-${pluginName}`, directory) ||
     resolve(`babel-${type}-${pluginName}`, gatsbyPath) ||
     resolve(pluginName, directory) ||
     resolve(pluginName, gatsbyPath)
@@ -137,11 +138,11 @@ module.exports = async function babelConfig(program, stage) {
     babelrc.presets = []
   }
 
-  // Add default plugins and presets.
+  ;// Add default plugins and presets.
   [`es2015`, `stage-0`, `react`].forEach(preset => {
     babelrc.presets.push(preset)
-  });
-  [`add-module-exports`, `transform-object-assign`].forEach(plugin => {
+  })
+  ;[`add-module-exports`, `transform-object-assign`].forEach(plugin => {
     babelrc.plugins.push(plugin)
   })
 

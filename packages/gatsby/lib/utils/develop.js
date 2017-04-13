@@ -101,8 +101,11 @@ async function startServer(program) {
                 apiRunner(`modifyHeadComponents`, { headComponents: [] }, [])
               ),
               postBodyComponents: _.flattenDeep(
-                apiRunner(`modifyPostBodyComponents`, { headComponents: [] }, [
-                ])
+                apiRunner(
+                  `modifyPostBodyComponents`,
+                  { headComponents: [] },
+                  []
+                )
               ).concat([<script src="/commons.js" />]),
             })
             htmlStr = ReactDOMServer.renderToStaticMarkup(htmlElement)
@@ -148,9 +151,7 @@ async function startServer(program) {
       } else {
         if (program.open) {
           const opn = require("opn")
-          opn(
-            `http://${listener.address().address}:${listener.address().port}`
-          )
+          opn(`http://${listener.address().address}:${listener.address().port}`)
         }
         console.log(
           `Listening at: http://${listener.address().address}:${listener.address().port}`

@@ -25,7 +25,8 @@ class Index extends React.Component {
   }
 
   update() {
-    const distanceToBottom = document.documentElement.offsetHeight -
+    const distanceToBottom =
+      document.documentElement.offsetHeight -
       (window.scrollY + window.innerHeight)
     if (this.state.showingMore && distanceToBottom < 100) {
       this.setState({ postsToShow: this.state.postsToShow + 12 })
@@ -38,7 +39,7 @@ class Index extends React.Component {
       this.ticking = true
       requestAnimationFrame(() => this.update())
     }
-  };
+  }
 
   componentDidMount() {
     window.addEventListener(`scroll`, this.handleScroll)

@@ -13,9 +13,7 @@ actions.upsertPage = page => {
   page.componentChunkName = layoutComponentChunkName(page.component)
   const result = Joi.validate(page, joiSchemas.pageSchema)
   if (result.error) {
-    console.log(
-      chalk.blue.bgYellow(`The upserted page didn't pass validation`)
-    )
+    console.log(chalk.blue.bgYellow(`The upserted page didn't pass validation`))
     console.log(chalk.bold.red(result.error))
     console.log(page)
     return

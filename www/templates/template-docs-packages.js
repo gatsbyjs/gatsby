@@ -9,9 +9,7 @@ const DocsTemplate = React.createClass({
     return (
       <div>
         <a
-          href={
-            `https://github.com/gatsbyjs/gatsby/tree/1.0/packages/${packageName}`
-          }
+          href={`https://github.com/gatsbyjs/gatsby/tree/1.0/packages/${packageName}`}
           css={{
             ...scale(-1 / 5),
             position: `absolute`,

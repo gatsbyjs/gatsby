@@ -12,9 +12,11 @@ const {
   responsiveResolution,
 } = require("gatsby-plugin-sharp")
 
-exports.extendNodeType = (
-  { type, linkPrefix, getNodeAndSavePathDependency }
-) => {
+exports.extendNodeType = ({
+  type,
+  linkPrefix,
+  getNodeAndSavePathDependency,
+}) => {
   if (type.name !== `ImageSharp`) {
     return {}
   }

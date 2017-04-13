@@ -26,6 +26,5 @@ export function preprocessSource({ filename, contents }, pluginOptions) {
     return compile(transform(contents), pluginOptions)
   } else if (COFFEE.test(filename)) {
     return compile(contents, pluginOptions)
-  } else
-    return null
+  } else return null
 }

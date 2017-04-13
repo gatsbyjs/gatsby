@@ -6,7 +6,7 @@ import presets from "../../utils/presets"
 
 const IndexRoute = React.createClass({
   render() {
-    console.log(`blog posts`, this.props);
+    console.log(`blog posts`, this.props)
     const blogPosts = this.props.data.allMarkdownRemark.edges.map(
       edge => edge.node
     )
@@ -24,9 +24,8 @@ const IndexRoute = React.createClass({
       >
         <h1>Blog</h1>
         {blogPosts.map(post => {
-          const avatar = post.frontmatter.author.avatar.children[
-            0
-          ].responsiveResolution
+          const avatar =
+            post.frontmatter.author.avatar.children[0].responsiveResolution
           return (
             <div>
               <Link to={post.slug}>

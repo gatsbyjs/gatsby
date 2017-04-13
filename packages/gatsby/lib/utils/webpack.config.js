@@ -168,7 +168,8 @@ module.exports = async (
         // Get array of page template component names.
         let components = store.getState().pages.map(page => page.component)
         components = components.map(component =>
-          layoutComponentChunkName(program.directory, component))
+          layoutComponentChunkName(program.directory, component)
+        )
         components = _.uniq(components)
         return [
           // Moment.js includes 100s of KBs of extra localization data

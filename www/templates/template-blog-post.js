@@ -120,14 +120,12 @@ const BlogPostTemplate = React.createClass({
           >
             <img
               src={
-                post.frontmatter.author.avatar.children[
-                  0
-                ].responsiveResolution.src
+                post.frontmatter.author.avatar.children[0].responsiveResolution
+                  .src
               }
               srcSet={
-                post.frontmatter.author.avatar.children[
-                  0
-                ].responsiveResolution.srcSet
+                post.frontmatter.author.avatar.children[0].responsiveResolution
+                  .srcSet
               }
               css={{
                 height: rhythm(2.75),
