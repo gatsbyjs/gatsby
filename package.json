@@ -103,19 +103,23 @@
     "babel-register": "^6.24.1",
     "bluebird": "^3.5.0",
     "cheerio": "^0.22.0",
-    "eslint": "^3.18.0",
+    "eslint": "^3.19.0",
     "eslint-config-airbnb": "^14.1.0",
+    "eslint-config-google": "^0.7.1",
+    "eslint-config-prettier": "^1.6.0",
     "eslint-plugin-ava": "^4.2.0",
     "eslint-plugin-flow-vars": "^0.5.0",
     "eslint-plugin-flowtype": "^2.30.4",
     "eslint-plugin-import": "2.2.x",
     "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-prettier": "^2.0.1",
     "eslint-plugin-react": "^6.10.3",
     "flow-bin": "^0.42.0",
     "iflow-debug": "^1.0.15",
     "iflow-lodash": "^1.1.23",
     "iflow-react-router": "^1.1.17",
-    "nyc": "^10.1.2"
+    "nyc": "^10.1.2",
+    "prettier": "^1.1.0"
   },
   "engines": {
     "node": ">0.12.0"
@@ -139,6 +143,7 @@
   "scripts": {
     "build": "babel lib --out-dir dist/",
     "clean-test-bundles": "find test/ -type f -name bundle.js* -exec rm -rf {} +",
+    "format": "prettier --trailing-comma es5 --no-semi --single-quote --write \"lib/**/*.js\" \"test/**/*.js\"",
     "lint": "eslint --ext .js,.jsx --ignore-path .gitignore .",
     "lint:flow": "babel-node scripts/flow-check.js",
     "publish-patch": "npm run build && npm version patch && npm publish; git push; git push --tags",

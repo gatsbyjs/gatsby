@@ -6,9 +6,8 @@ import { gatsby } from '../support'
 const fs = Promise.promisifyAll(fse)
 const tmpdir = require('os').tmpdir()
 
-
 // eslint-disable-next-line
-test('calling gatsby new succesfully creates new site from default starter', async (t) => {
+test('calling gatsby new succesfully creates new site from default starter', async t => {
   const sitePath = `${tmpdir}/gatsby-default-starter`
   await fs.remove(sitePath)
   const noArgs = await gatsby(['new', sitePath])

@@ -14,7 +14,7 @@ test.before('build the site', async () => {
 })
 
 // eslint-disable-next-line
-test('the move-me file has been moved', async (t) => {
+test('the move-me file has been moved', async t => {
   const movedPath = path.resolve(fixturePath, 'public', 'moved', 'index.html')
   const file = await fs.statAsync(movedPath)
 
@@ -22,8 +22,13 @@ test('the move-me file has been moved', async (t) => {
 })
 
 // eslint-disable-next-line
-test('the dont-move-me file has not been moved', async (t) => {
-  const dontMovePath = path.resolve(fixturePath, 'public', 'dont-move-me', 'index.html')
+test('the dont-move-me file has not been moved', async t => {
+  const dontMovePath = path.resolve(
+    fixturePath,
+    'public',
+    'dont-move-me',
+    'index.html'
+  )
   const file = await fs.statAsync(dontMovePath)
 
   t.truthy(file)

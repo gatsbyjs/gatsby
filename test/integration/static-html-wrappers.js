@@ -10,7 +10,7 @@ test.before('build the site ', async () => {
 })
 
 // eslint-disable-next-line
-test('html/index.html has an h1 that states file extention', async (t) => {
+test('html/index.html has an h1 that states file extention', async t => {
   const filePath = path.join(fixturePath, 'public', 'html', 'index.html')
   const $ = await dom(filePath)
 
@@ -21,7 +21,7 @@ test('html/index.html has an h1 that states file extention', async (t) => {
 })
 
 // eslint-disable-next-line
-test('md/index.html has an h1 that states file extention', async (t) => {
+test('md/index.html has an h1 that states file extention', async t => {
   const filePath = path.join(fixturePath, 'public', 'md', 'index.html')
   const $ = await dom(filePath)
 

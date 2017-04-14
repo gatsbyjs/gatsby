@@ -8,16 +8,20 @@ const remove = Promise.promisify(fs.remove)
 const gatsbyCli = path.resolve('..', '..', 'lib', 'bin', 'cli.js')
 const babel = path.resolve('..', '..', 'node_modules', '.bin', 'babel-node')
 
-export function spawn (command, args = [], options = {}) {
+export function spawn(command, args = [], options = {}) {
   return new Promise((resolve, reject) => {
     let stdout = ''
     let stderr = ''
     Object.assign(options, { shell: true })
     const child = spawnNative(command, args, options)
-    child.stdout.on('data', (data) => { stdout += data })
-    child.stderr.on('data', (data) => { stderr += data })
+    child.stdout.on('data', data => {
+      stdout += data
+    })
+    child.stderr.on('data', data => {
+      stderr += data
+    })
     child.on('error', error => reject({ error, stderr, stdout }))
-    child.on('exit', (code) => {
+    child.on('exit', code => {
       if (code === 0) {
         resolve({ code, stdout, stderr })
       } else {
@@ -27,19 +31,17 @@ export function spawn (command, args = [], options = {}) {
   })
 }
 
-export function gatsby (args = [], options = {}) {
+export function gatsby(args = [], options = {}) {
   const spawnArguments = _.concat(['--', gatsbyCli], args)
   return spawn(babel, spawnArguments, options)
 }
 
-export function build (fixturePath) {
+export function build(fixturePath) {
   const buildPath = path.resolve(fixturePath, 'public')
-  return remove(buildPath)
-    .then(() => gatsby(['build'], { cwd: fixturePath }))
+  return remove(buildPath).then(() => gatsby(['build'], { cwd: fixturePath }))
 }
 
-export function dom (filePath) {
+export function dom(filePath) {
   const readFile = Promise.promisify(fs.readFile)
-  return readFile(filePath)
-    .then(html => cheerio.load(html))
+  return readFile(filePath).then(html => cheerio.load(html))
 }
