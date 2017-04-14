@@ -116,7 +116,7 @@ module.exports = async (program: any) => {
   // Also test adding to redux store.
   const processPlugin = plugin => {
     if (_.isString(plugin)) {
-      const resolvedPath = path.dirname(require.resolve(plugin))
+      const resolvedPath = slash(path.dirname(require.resolve(plugin)))
       const packageJSON = JSON.parse(
         fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
       )
@@ -138,7 +138,7 @@ module.exports = async (program: any) => {
       }
       plugin.options.plugins = subplugins
 
-      const resolvedPath = path.dirname(require.resolve(plugin.resolve))
+      const resolvedPath = slash(path.dirname(require.resolve(plugin.resolve)))
       const packageJSON = JSON.parse(
         fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
       )
@@ -159,7 +159,7 @@ module.exports = async (program: any) => {
 
   // Add the site's default "plugin" i.e. gatsby-x files in root of site.
   plugins.push({
-    resolve: process.cwd(),
+    resolve: slash(process.cwd()),
     name: `defaultSitePlugin`,
     version: `n/a`,
     pluginOptions: {
