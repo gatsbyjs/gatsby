@@ -271,7 +271,7 @@ module.exports = async (
   function resolve() {
     return {
       // use the program's extension list (generated via the 'resolvableExtensions' API hook)
-      extensions: [``, ...program.extensions],
+      extensions: [``, ...store.getState().program.extensions],
       // Hierarchy of directories for Webpack to look for module.
       // First is the site directory.
       // Then in the special directory of isomorphic modules Gatsby ships with.
