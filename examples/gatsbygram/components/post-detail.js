@@ -10,8 +10,15 @@ class PostDetail extends React.Component {
   }
 
   render() {
-    const { image, likes, id, username, weeksAgo, text, avatar } = this.props
-      .post
+    const {
+      image,
+      likes,
+      id,
+      username,
+      weeksAgo,
+      text,
+      avatar,
+    } = this.props.post
     const { big } = image.children[0]
 
     const UserBar = () => (

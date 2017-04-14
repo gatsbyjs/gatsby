@@ -136,10 +136,9 @@ module.exports = async function babelConfig(program, stage) {
   }
   if (!babelrc.presets) {
     babelrc.presets = []
-  }
+  } // Add default plugins and presets.
 
-  ;// Add default plugins and presets.
-  [`es2015`, `stage-0`, `react`].forEach(preset => {
+  ;[`es2015`, `stage-0`, `react`].forEach(preset => {
     babelrc.presets.push(preset)
   })
   ;[`add-module-exports`, `transform-object-assign`].forEach(plugin => {

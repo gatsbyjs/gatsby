@@ -35,8 +35,12 @@ module.exports = (locals, callback) => {
           { component, headComponents: [] },
           {}
         )
-        let { body, headComponents, postBodyComponents, ...bodyRenderProps } =
-          results[0]
+        let {
+          body,
+          headComponents,
+          postBodyComponents,
+          ...bodyRenderProps
+        } = results[0]
 
         // If no one stepped up, we'll handle it.
         if (!body) {
