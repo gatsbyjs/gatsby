@@ -33,7 +33,6 @@ const preferDefault = m => (m && m.default) || m
 
 const mkdirs = Promise.promisify(fs.mkdirs)
 const copy = Promise.promisify(fs.copy)
-const removeDir = Promise.promisify(fs.remove)
 const glob = Promise.promisify(globCB)
 
 // Path creator.
@@ -43,7 +42,6 @@ const glob = Promise.promisify(globCB)
 // takes control of that page component in gatsby-node.
 const autoPathCreator = async (program: any) => {
   const pagesDirectory = path.posix.join(program.directory, `pages`)
-  const exts = program.extensions.map(e => `*${e}`).join("|")
   const exts = store.getState().program.extensions.map(e => `*${e}`).join("|")
   // The promisified version wasn't working for some reason
   // so we'll use sync for now.
