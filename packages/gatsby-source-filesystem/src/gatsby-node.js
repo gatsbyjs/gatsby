@@ -1,14 +1,8 @@
-import Promise from "bluebird"
-import mapLimit from "async/mapLimit"
-
 const path = require("path")
 const md5File = require("md5-file")
-const recursive = require("recursive-readdir")
 const fs = require("fs")
 const prettyBytes = require("pretty-bytes")
-const u = require("unist-builder")
 const slash = require("slash")
-const _ = require("lodash")
 const chokidar = require("chokidar")
 
 function readFile(file, pluginOptions, cb) {
@@ -27,7 +21,7 @@ function readFile(file, pluginOptions, cb) {
           sourceName: pluginOptions.name,
           children: [],
           relativePath: slash(
-            path.posix.relative(pluginOptions.path, slashedFile.absolutePath)
+            path.relative(pluginOptions.path, slashedFile.absolutePath)
           ),
           extension: slashedFile.ext.slice(1).toLowerCase(),
           size: stats.size,
@@ -52,7 +46,6 @@ exports.sourceNodes = ({ actionCreators }, pluginOptions) => {
     plugin: `source-filesystem --- ${pluginOptions.name}`,
     ready: false,
   })
-  let testNode
   const watcher = chokidar.watch(pluginOptions.path, {
     ignored: [
       `**/*.un~`,
