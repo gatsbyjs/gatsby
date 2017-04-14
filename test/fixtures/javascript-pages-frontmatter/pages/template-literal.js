@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import React from 'react'
 
 exports.data = {
@@ -5,6 +6,4 @@ exports.data = {
   title: `Bar`,
 }
 
-export default () => (
-  <h1>Bar</h1>
-)
+export default () => <h1>Bar</h1>

@@ -14,16 +14,26 @@ test.before('build the site', async () => {
 })
 
 // eslint-disable-next-line
-test('the index page has been moved to the hardcoded path', async (t) => {
-  const indexPath = path.resolve(fixturePath, 'public', 'hello-world', 'index.html')
+test('the index page has been moved to the hardcoded path', async t => {
+  const indexPath = path.resolve(
+    fixturePath,
+    'public',
+    'hello-world',
+    'index.html'
+  )
   const file = await fs.statAsync(indexPath)
 
   t.truthy(file)
 })
 
 // eslint-disable-next-line
-test("the image has been moved to match the moved page's path", async (t) => {
-  const imagePath = path.resolve(fixturePath, 'public', 'hello-world', 'image.jpg')
+test("the image has been moved to match the moved page's path", async t => {
+  const imagePath = path.resolve(
+    fixturePath,
+    'public',
+    'hello-world',
+    'image.jpg'
+  )
   const file = await fs.statAsync(imagePath)
 
   t.truthy(file)
