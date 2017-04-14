@@ -7,7 +7,7 @@ import ExtractTextPlugin from "extract-text-webpack-plugin"
 import StaticSiteGeneratorPlugin from "static-site-generator-webpack-plugin"
 import { StatsWriterPlugin } from "webpack-stats-plugin"
 // This isn't working right it seems.
-//import WebpackStableModuleIdAndHash from 'webpack-stable-module-id-and-hash'
+// import WebpackStableModuleIdAndHash from 'webpack-stable-module-id-and-hash'
 
 import webpackModifyValidate from "./webpack-modify-validate"
 
@@ -100,7 +100,7 @@ module.exports = async (
         }
       case `build-html`:
         return {
-          //main: `${__dirname}/static-entry`,
+          // main: `${__dirname}/static-entry`,
           main: `${directory}/.intermediate-representation/static-entry`,
         }
       case `build-javascript`:
@@ -269,13 +269,14 @@ module.exports = async (
   }
 
   function resolve() {
+    const rootPath = _.get(store.getState(), `config.rootPath`, `/`)
     return {
       // use the program's extension list (generated via the 'resolvableExtensions' API hook)
       extensions: [``, ...store.getState().program.extensions],
       // Hierarchy of directories for Webpack to look for module.
       // First is the site directory.
       // Then in the special directory of isomorphic modules Gatsby ships with.
-      root: [directory, path.resolve(__dirname, `..`, `isomorphic`)],
+      root: [path.join(directory, rootPath), path.resolve(__dirname, `..`, `isomorphic`)],
       modulesDirectories: [`${directory}/node_modules`, `node_modules`],
     }
   }
@@ -417,7 +418,7 @@ module.exports = async (
         config.loader(`css`, {
           test: /\.css$/,
           exclude: /\.module\.css$/,
-          //loader: `null`,
+          // loader: `null`,
           loader: ExtractTextPlugin.extract([`css`]),
         })
 

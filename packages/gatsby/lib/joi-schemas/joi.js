@@ -1,7 +1,7 @@
 const Joi = require("joi")
 
 export const gatsbyConfigSchema = Joi.object().keys({
-  htmlPath: Joi.string(),
+  rootPath: Joi.string(),
   siteMetadata: Joi.object(),
   linkPrefix: Joi.string(),
   mapping: Joi.object(),
