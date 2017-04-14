@@ -276,7 +276,10 @@ module.exports = async (
       // Hierarchy of directories for Webpack to look for module.
       // First is the site directory.
       // Then in the special directory of isomorphic modules Gatsby ships with.
-      root: [path.join(directory, rootPath), path.resolve(__dirname, `..`, `isomorphic`)],
+      root: [
+        path.join(directory, rootPath),
+        path.resolve(__dirname, `..`, `isomorphic`),
+      ],
       modulesDirectories: [`${directory}/node_modules`, `node_modules`],
     }
   }

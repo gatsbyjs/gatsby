@@ -46,7 +46,7 @@ const pascalCase = _.flow(_.camelCase, _.upperFirst)
 // Write out routes file.
 // Loop through all paths and write them out to child-routes.js
 const writeChildRoutes = () => {
-  const directory = store.getState().program.directory
+  const { program, config, pages } = store.getState()
   let childRoutes = ``
   let splitChildRoutes = ``
 
@@ -66,13 +66,13 @@ const writeChildRoutes = () => {
   const genSplitChildRoute = (page, noPath = false) => {
     const pathName = pathChunkName(page.path)
     const layoutName = layoutComponentChunkName(
-      store.getState().program.directory,
+      program.directory,
       page.component
     )
     let pathStr = ``
     if (!noPath) {
-      if (store.getState().program.prefixLinks) {
-        pathStr = `path:'${_.get(store.getState().config, `linkPrefix`, ``)}${page.path}',`
+      if (program.prefixLinks) {
+        pathStr = `path:'${_.get(config, `linkPrefix`, ``)}${page.path}',`
       } else {
         pathStr = `path:'${page.path}',`
       }
@@ -97,12 +97,13 @@ const writeChildRoutes = () => {
   // Group pages under their layout component (if any).
   let defaultLayoutExists = true
   if (
-    glob.sync(`${store.getState().program.directory}/layouts/default.*`)
-      .length === 0
+    glob.sync(
+      `${program.directory}${config.rootPath || `/`}layouts/default.*`
+    ).length === 0
   ) {
     defaultLayoutExists = false
   }
-  const groupedPages = _.groupBy(store.getState().pages, page => {
+  const groupedPages = _.groupBy(pages, page => {
     // If is a string we'll assume it's a working layout component.
     if (_.isString(page.layout)) {
       return page.layout
@@ -136,9 +137,10 @@ const writeChildRoutes = () => {
       splitRootRoute += splitRoute
     } else {
       let indexPage
-      indexPage = _.first(
-        _.filter(pages, page => parseFilepath(page.component).name === `index`)
+      indexPage = pages.find(
+        page => parseFilepath(page.component).name === `index`
       )
+
       // If there's not an index page, just pick the one with the shortest path.
       // Probably a bad heuristic.
       if (!indexPage) {
@@ -147,20 +149,20 @@ const writeChildRoutes = () => {
       let route = `
       {
         path: '${indexPage.path}',
-        component: preferDefault(require('${store.getState().program.directory}/layouts/${layout}')),
+        component: preferDefault(require('${program.directory}${config.rootPath || `/`}layouts/${layout}')),
         indexRoute: ${genChildRoute(indexPage, true)}
         childRoutes: [
       `
       let pathStr
-      if (store.getState().program.prefixLinks) {
-        pathStr = `path:'${_.get(store.getState().config, `linkPrefix`, ``)}${indexPage.path}',`
+      if (program.prefixLinks) {
+        pathStr = `path:'${_.get(config, `linkPrefix`, ``)}${indexPage.path}',`
       } else {
         pathStr = `path:'${indexPage.path}',`
       }
       let splitRoute = `
       {
         ${pathStr}
-        component: preferDefault(require('${store.getState().program.directory}/layouts/${layout}')),
+        component: preferDefault(require('${program.directory}${config.rootPath || `/`}layouts/${layout}')),
         indexRoute: ${genSplitChildRoute(indexPage, true)}
         childRoutes: [
       `
@@ -177,16 +179,14 @@ const writeChildRoutes = () => {
   })
 
   // Add a fallback 404 route if one is defined.
-  const notFoundPage = _.find(
-    store.getState().pages,
-    page => page.path.indexOf("/404") !== -1
-  )
+  const notFoundPage = pages.find(page => page.path.indexOf("/404") !== -1)
 
   if (notFoundPage) {
+    const defaultLayout = `preferDefault(require('${program.directory}${config.rootPath || `/`}layouts/default'))`
     const notFoundPageStr = `
       {
         path: "*",
-        component: preferDefault(require('${store.getState().program.directory}/layouts/default')),
+        component: ${defaultLayout},
         indexRoute: {
           component: preferDefault(require('${notFoundPage.component}')),
         },
@@ -194,13 +194,13 @@ const writeChildRoutes = () => {
     `
     const pathName = pathChunkName(notFoundPage.path)
     const layoutName = layoutComponentChunkName(
-      store.getState().program.directory,
+      program.directory,
       notFoundPage.component
     )
     const notFoundPageSplitStr = `
       {
         path: "*",
-        component: preferDefault(require('${store.getState().program.directory}/layouts/default')),
+        component: ${defaultLayout},
         indexRoute: {
           getComponent (nextState, cb) {
             require.ensure([], (require) => {
@@ -222,9 +222,8 @@ const writeChildRoutes = () => {
   // Close out object.
   rootRoute += `]}`
   splitRootRoute += `]}`
-  const componentsStr = store
-    .getState()
-    .pages.map(page => {
+  const componentsStr = pages
+    .map(page => {
       return `class ${page.internalComponentName} extends React.Component {
           render () {
             const Component = preferDefault(require('${page.component}'))
@@ -272,11 +271,11 @@ const writeChildRoutes = () => {
     const rootRoute = ${splitRootRoute}
     module.exports = rootRoute`
   fs.writeFileSync(
-    `${directory}/.intermediate-representation/child-routes.js`,
+    `${program.directory}/.intermediate-representation/child-routes.js`,
     childRoutes
   )
   fs.writeFileSync(
-    `${directory}/.intermediate-representation/split-child-routes.js`,
+    `${program.directory}/.intermediate-representation/split-child-routes.js`,
     splitChildRoutes
   )
 }
