@@ -4,8 +4,8 @@ module.exports = (state = {}, action) => {
       return {
         ...state,
         [action.payload.plugin]: action.payload.ready,
-      };
+      }
     default:
-      return state;
+      return state
   }
-};
+}

@@ -4,13 +4,13 @@ module.exports = (state = {}, action) => {
       return {
         ...state,
         [action.payload.id]: action.payload,
-      };
+      }
     case "UPDATE_NODE":
       return {
         ...state,
         [action.payload.id]: action.payload,
-      };
+      }
     default:
-      return state;
+      return state
   }
-};
+}

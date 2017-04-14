@@ -1,5 +1,5 @@
-const { actions, boundActions } = require("../actions");
-const nodeReducer = require("../reducers/nodes");
+const { actions, boundActions } = require("../actions")
+const nodeReducer = require("../reducers/nodes")
 
 describe(`Create and update nodes`, () => {
   // TODO add these back when we stop directly consoleing errors.
@@ -23,24 +23,24 @@ describe(`Create and update nodes`, () => {
       id: `hi`,
       type: `Test`,
       pickle: true,
-    });
-    expect(action).toMatchSnapshot();
-    expect(nodeReducer(undefined, action)).toMatchSnapshot();
-  });
+    })
+    expect(action).toMatchSnapshot()
+    expect(nodeReducer(undefined, action)).toMatchSnapshot()
+  })
 
   it(`allows updating nodes`, () => {
     const action = actions.createNode({
       id: `hi`,
       type: `Test`,
       pickle: true,
-    });
+    })
     const updateAction = actions.createNode({
       id: `hi`,
       type: `Test`,
       pickle: false,
-    });
-    let state = nodeReducer(undefined, action);
-    state = nodeReducer(state, updateAction);
-    expect(state["hi"].pickle).toEqual(false);
-  });
-});
+    })
+    let state = nodeReducer(undefined, action)
+    state = nodeReducer(state, updateAction)
+    expect(state["hi"].pickle).toEqual(false)
+  })
+})
