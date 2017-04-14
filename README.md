@@ -194,7 +194,8 @@ starter](https://github.com/gatsbyjs/gatsby-starter-default).
 There are several starters that have been created. Create a PR to
 include yours!
 
-* [Kitchen sink default starter](https://github.com/gatsbyjs/gatsby-starter-default) ([Demo](http://gatsbyjs.github.io/gatsby-starter-default/))
+* [Default minimal starter](https://github.com/gatsbyjs/gatsby-starter-default) ([Demo](http://gatsbyjs.github.io/gatsby-starter-default/))
+* [Kitchen sink starter](https://github.com/gatsbyjs/gatsby-starter-kitchen-sink) ([Demo](http://gatsbyjs.github.io/gatsby-starter-kitchen-sink/))
 * [Simple blog](https://github.com/gatsbyjs/gatsby-starter-blog) ([Demo](http://gatsbyjs.github.io/gatsby-starter-blog/))
 * [Simple documentation site](https://github.com/gatsbyjs/gatsby-starter-documentation) ([Demo](http://gatsbyjs.github.io/gatsby-starter-documentation/))
 * [Lumen](https://github.com/wpioneer/gatsby-starter-lumen) ([Demo](http://wpioneer.github.io/gatsby-starter-lumen/))
