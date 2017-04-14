@@ -14,7 +14,6 @@ import slash from "slash"
 import { layoutComponentChunkName, pathChunkName } from "./js-chunk-names"
 import { graphql as graphqlFunction } from "graphql"
 
-let initialQueriesDone = false
 let invalidPages = []
 
 store.subscribe(() => {
@@ -378,12 +377,6 @@ const q = queue(async ({ file, graphql, directory }, callback) => {
   })
 
   console.log(`running queries for ${paths.length} paths for ${file}`)
-  const pathsInfo = {
-    componentPath: absolutePath,
-    directory,
-    paths,
-    graphql,
-  }
 
   // Handle the result of the GraphQL query.
   const handleResult = (pathInfo, result = {}) => {
@@ -448,15 +441,15 @@ module.exports = async drainCb => {
   if (_.isFunction(drainCb)) {
     realDrainCB = drainCb
   }
-  const schema = store.getState().schema
+  const { schema, program, pages } = store.getState()
+
   const graphql = (query, context) => {
     return graphqlFunction(schema, query, context, context, context)
   }
-  const { program } = store.getState()
 
   // Get unique array of component paths and then watch them.
   // When a component is updated, rerun queries.
-  const components = _.uniq(store.getState().pages.map(page => page.component))
+  const components = _.uniq(pages.map(page => page.component))
 
   // If there's no components yet, return
   if (components.length === 0) {
