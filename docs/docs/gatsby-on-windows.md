@@ -19,7 +19,4 @@ are required to compile popular native modules. It will also install Python
 
 ## Installing dependencies without troubles.
 
-Even if you love using a pretty terminal as [hyper](https://hyper.is/) with a git bash,
-for installing packages without build troubles, it's better to use **a powershell console**
-
-After `yarn` or `npm i`, you can go back on your favorite terminal :wink: and run `yarn develop` or `npm run develop`!
+Run `yarn` or `npm i` in **a powershell console** to have a correct build (some issues with sharp and sqlite3 with a bash console)
