@@ -38,21 +38,3 @@ render () {
   </div>
 }
 ```
-
-In typescript:
-```jsx
-import * as Link from "gatsby-link";
-
-render () {
-  <div>
-    <Link
-      to="/another-page/"
-      activeStyle={{
-        color: 'red'
-      }}
-    >
-    Another page
-    </Link>
-  </div>
-}
-```
