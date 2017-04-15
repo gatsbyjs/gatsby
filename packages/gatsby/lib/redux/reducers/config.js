@@ -13,11 +13,11 @@ module.exports = (state = {}, action) => {
       // more flexible how to display them.
       if (result.error) {
         console.log(
-          chalk.blue.bgYellow(`The site's gatsby.config.js failed validation`)
+          chalk.blue.bgYellow(`The site's gatsby-config.js failed validation`)
         )
         console.log(chalk.bold.red(result.error))
         console.log(action.payload)
-        throw new Error(`The site's gatsby.config.js failed validation`)
+        throw new Error(`The site's gatsby-config.js failed validation`)
         return
       }
       return {

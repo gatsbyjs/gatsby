@@ -10,7 +10,6 @@
   "plugins": [
     "flowtype",
     "react",
-    "prettier"
   ],
   "parserOptions": {
     "ecmaVersion": 2016,
@@ -24,6 +23,7 @@
     "node": true
   },
   "rules": {
-    "prettier/prettier": ["error", {"trailingComma": true}]
+    "valid-jsdoc": [0],
+    "require-jsdoc": [0],
   }
 }
