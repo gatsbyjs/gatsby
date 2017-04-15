@@ -1,0 +1,6 @@
+// Placez vos paramètres dans ce fichier pour remplacer les paramètres par défaut et les paramètres utilisateur.
+{
+  "prettier.semi": false,
+  "prettier.trailingComma": "es5",
+  "editor.formatOnSave": true
+}
