@@ -115,9 +115,11 @@
     "eslint-plugin-prettier": "^2.0.1",
     "eslint-plugin-react": "^6.10.3",
     "flow-bin": "^0.42.0",
+    "husky": "^0.13.3",
     "iflow-debug": "^1.0.15",
     "iflow-lodash": "^1.1.23",
     "iflow-react-router": "^1.1.17",
+    "lint-staged": "^3.4.0",
     "nyc": "^10.1.2",
     "prettier": "^1.1.0"
   },
@@ -146,11 +148,18 @@
     "format": "prettier --trailing-comma es5 --no-semi --single-quote --write \"lib/**/*.js\" \"test/**/*.js\"",
     "lint": "eslint --ext .js,.jsx --ignore-path .gitignore .",
     "lint:flow": "babel-node scripts/flow-check.js",
+    "precommit": "lint-staged",
     "publish-patch": "npm run build && npm version patch && npm publish; git push; git push --tags",
     "test": "npm run lint && npm run test-node && npm run test-integration",
     "test-coverage": "node_modules/.bin/nyc --reporter=lcov --reporter=text npm test",
     "test-integration": "node_modules/.bin/ava test/integration",
     "test-node": "node_modules/.bin/ava test/utils",
     "watch": "babel -w lib --out-dir dist/"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --trailing-comma es5 --no-semi --single-quote --write",
+      "git add"
+    ]
   }
 }
