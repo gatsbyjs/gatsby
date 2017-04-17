@@ -1,18 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`Add pages allows you to add multiple pages 1`] = `
-Object {
-  "pages": Array [
-    Object {
-      "component": "/whatever/index.js",
-      "componentChunkName": "page-component---whatever-index-js",
-      "path": "/hi/",
-    },
-    Object {
-      "component": "/whatever/index.js",
-      "componentChunkName": "page-component---whatever-index-js",
-      "path": "/hi/pizza/",
-    },
-  ],
-}
+Array [
+  Object {
+    "component": "/whatever/index.js",
+    "componentChunkName": "page-component---whatever-index-js",
+    "path": "/hi/",
+  },
+  Object {
+    "component": "/whatever/index.js",
+    "componentChunkName": "page-component---whatever-index-js",
+    "path": "/hi/pizza/",
+  },
+]
 `;
 
 exports[`Add pages allows you to add pages 1`] = `
@@ -27,15 +27,13 @@ Object {
 `;
 
 exports[`Add pages allows you to add pages 2`] = `
-Object {
-  "pages": Array [
-    Object {
-      "component": "/whatever/index.js",
-      "componentChunkName": "page-component---whatever-index-js",
-      "path": "/hi/",
-    },
-  ],
-}
+Array [
+  Object {
+    "component": "/whatever/index.js",
+    "componentChunkName": "page-component---whatever-index-js",
+    "path": "/hi/",
+  },
+]
 `;
 
 exports[`Add pages allows you to add pages with context 1`] = `
@@ -53,28 +51,24 @@ Object {
 `;
 
 exports[`Add pages allows you to add pages with context 2`] = `
-Object {
-  "pages": Array [
-    Object {
-      "component": "/whatever/index.js",
-      "componentChunkName": "page-component---whatever-index-js",
-      "context": Object {
-        "id": 123,
-      },
-      "path": "/hi/",
+Array [
+  Object {
+    "component": "/whatever/index.js",
+    "componentChunkName": "page-component---whatever-index-js",
+    "context": Object {
+      "id": 123,
     },
-  ],
-}
+    "path": "/hi/",
+  },
+]
 `;
 
 exports[`Add pages allows you to update existing pages (based on path) 1`] = `
-Object {
-  "pages": Array [
-    Object {
-      "component": "/whatever2/index.js",
-      "componentChunkName": "page-component---whatever-2-index-js",
-      "path": "/hi/",
-    },
-  ],
-}
+Array [
+  Object {
+    "component": "/whatever2/index.js",
+    "componentChunkName": "page-component---whatever-2-index-js",
+    "path": "/hi/",
+  },
+]
 `;
