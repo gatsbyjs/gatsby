@@ -7,11 +7,8 @@ import _ from "lodash"
 import slash from "slash"
 import createPath from "./create-path"
 import fs from "fs-extra"
-import Joi from "joi"
-import chalk from "chalk"
 import apiRunnerNode from "../utils/api-runner-node"
 import { graphql } from "graphql"
-import { layoutComponentChunkName } from "../utils/js-chunk-names"
 import { store } from "../redux"
 const { boundActionCreators } = require("../redux/actions")
 
@@ -40,9 +37,14 @@ const glob = Promise.promisify(globCB)
 // algorithm is glob /pages directory for js/jsx/cjsx files *not*
 // underscored. Then create url w/ our path algorithm *unless* user
 // takes control of that page component in gatsby-node.
-const autoPathCreator = async (program: any) => {
-  const pagesDirectory = path.posix.join(program.directory, `pages`)
-  const exts = store.getState().program.extensions.map(e => `*${e}`).join("|")
+const autoPathCreator = async () => {
+  const { config, program } = store.getState()
+  const pagesDirectory = path.posix.join(
+    program.directory,
+    config.rootPath,
+    `pages`
+  )
+  const exts = program.extensions.map(e => `*${e}`).join("|")
   // The promisified version wasn't working for some reason
   // so we'll use sync for now.
   const files = glob.sync(`${pagesDirectory}/**/?(${exts})`)
@@ -287,7 +289,7 @@ module.exports = async (program: any) => {
   // TODO move this to own source plugin per component type
   // (js/cjsx/typescript, etc.). Only do after there's themes
   // so can cement default /pages setup in default core theme.
-  autoPathCreator(program)
+  autoPathCreator()
 
   // Copy /404/ to /404.html as many static site hosting companies expect
   // site 404 pages to be named this.
