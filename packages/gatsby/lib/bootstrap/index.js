@@ -91,14 +91,9 @@ module.exports = async (program: any) => {
 
   // Try opening the site's gatsby-config.js file.
   console.time(`open and validate gatsby-config.js`)
-  let config = {
-    rootPath: `/`,
-  }
+  let config = {}
   try {
-    Object.assign(
-      config,
-      preferDefault(require(`${program.directory}/gatsby-config`))
-    )
+    config = preferDefault(require(`${program.directory}/gatsby-config`))
   } catch (e) {
     console.log(`Couldn't open your gatsby-config.js file`)
     console.log(e)
