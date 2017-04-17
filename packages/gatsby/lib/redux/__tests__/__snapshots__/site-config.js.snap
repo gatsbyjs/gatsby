@@ -5,6 +5,7 @@ exports[`add site config Validates configs with unsupported options 1`] = `"The 
 exports[`add site config allow you to add basic site config 1`] = `
 Object {
   "plugins": Array [],
+  "rootPath": "/",
   "siteMetadata": Object {
     "title": "yo testing",
   },
