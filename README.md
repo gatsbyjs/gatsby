@@ -302,7 +302,7 @@ module.exports = React.createClass({
 ```
 
 #### frontmatter and metadata
-Gatsby uses frontmatter and html-frontmatter to pull metadata out of files. This data is typically used in links leading to each page. The most relevant example is a list of blog posts in which you display the title, description, tags, etc. in the form of `{post.title}` in the React.js component.
+Gatsby uses [front-matter](https://github.com/jxson/front-matter) and [html-frontmatter](https://github.com/zeke/html-frontmatter) to pull metadata out of files. This data is typically used in links leading to each page. The most relevant example is a list of blog posts in which you display the title, description, tags, etc. in the form of `{post.title}` in the React.js component.
 
 As seen in our previous markdown file, the title is part of the frontmatter
 ```
