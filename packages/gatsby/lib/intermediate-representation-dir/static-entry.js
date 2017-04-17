@@ -2,15 +2,13 @@ import React from "react"
 import { renderToString, renderToStaticMarkup } from "react-dom/server"
 import { match, RouterContext } from "react-router"
 import Html from "html"
-import _ from "lodash"
-//import { prefixLink } from '../isomorphic/gatsby-helpers'
-import rootRoute from ".intermediate-representation/child-routes.js"
-import pages from "public/tmp-pages.json"
-//import { pathChunkName } from './js-chunk-names'
-import apiRunner from ".intermediate-representation/api-runner-ssr"
+import { kebabCase, get, merge } from "lodash"
+import rootRoute from "./child-routes"
+import apiRunner from "./api-runner-ssr"
+import pages from "../public/tmp-pages.json"
 
 const pathChunkName = path => {
-  const name = path === `/` ? `index` : _.kebabCase(path)
+  const name = path === `/` ? `index` : kebabCase(path)
   return `path---${name}`
 }
 
@@ -59,7 +57,7 @@ module.exports = (locals, callback) => {
         }
 
         // Add the chunk-manifest as a head component.
-        const chunkManifest = require("!raw!public/chunk-manifest.json")
+        const chunkManifest = require("!raw!../public/chunk-manifest.json")
 
         postBodyComponents.unshift(
           <script
@@ -76,7 +74,7 @@ module.exports = (locals, callback) => {
 
         let stats
         try {
-          stats = require("public/stats.json")
+          stats = require("../public/stats.json")
         } catch (e) {
           // ignore
         }
@@ -88,7 +86,7 @@ module.exports = (locals, callback) => {
         ]
         dascripts.forEach(script => {
           const fetchKey = `assetsByChunkName[${script}][0]`
-          const prefixedScript = `${linkPrefix}${_.get(stats, fetchKey, ``)}`
+          const prefixedScript = `${linkPrefix}${get(stats, fetchKey, ``)}`
 
           // Add preload <link>s for scripts.
           headComponents.unshift(
@@ -121,7 +119,7 @@ module.exports = (locals, callback) => {
           { bodyRenderProps },
           {}
         )
-        bodyRenderProps = _.merge(bodyRenderProps, pluginBodyRenderProps)
+        bodyRenderProps = merge(bodyRenderProps, pluginBodyRenderProps)
 
         const html = `<!DOCTYPE html>\n ${renderToStaticMarkup(<Html {...bodyRenderProps} headComponents={headComponents} postBodyComponents={postBodyComponents} body={body} {...renderProps} />)}`
         callback(null, html)
