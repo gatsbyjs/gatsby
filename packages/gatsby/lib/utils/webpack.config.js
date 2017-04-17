@@ -100,7 +100,6 @@ module.exports = async (
         }
       case `build-html`:
         return {
-          // main: `${__dirname}/static-entry`,
           main: `${directory}/.intermediate-representation/static-entry`,
         }
       case `build-javascript`:
@@ -180,7 +179,7 @@ module.exports = async (
           // common webpack tweaks e.g. lodash?
           new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
           new WebpackMD5Hash(),
-          //new webpack.optimize.DedupePlugin(),
+          // new webpack.optimize.DedupePlugin(),
           // Extract "commons" chunk from the app entry and all
           // page components.
           new webpack.optimize.CommonsChunkPlugin({
@@ -269,15 +268,16 @@ module.exports = async (
   }
 
   function resolve() {
-    const rootPath = _.get(store.getState(), `config.rootPath`, `/`)
+    const { program, config } = store.getState()
     return {
       // use the program's extension list (generated via the 'resolvableExtensions' API hook)
-      extensions: [``, ...store.getState().program.extensions],
+      extensions: [``, ...program.extensions],
       // Hierarchy of directories for Webpack to look for module.
       // First is the site directory.
       // Then in the special directory of isomorphic modules Gatsby ships with.
       root: [
-        path.join(directory, rootPath),
+        directory,
+        path.join(directory, config.rootPath),
         path.resolve(__dirname, `..`, `isomorphic`),
       ],
       modulesDirectories: [`${directory}/node_modules`, `node_modules`],

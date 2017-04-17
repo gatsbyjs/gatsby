@@ -97,9 +97,8 @@ const writeChildRoutes = () => {
   // Group pages under their layout component (if any).
   let defaultLayoutExists = true
   if (
-    glob.sync(
-      `${program.directory}${config.rootPath || `/`}layouts/default.*`
-    ).length === 0
+    glob.sync(`${program.directory}${config.rootPath}layouts/default.*`)
+      .length === 0
   ) {
     defaultLayoutExists = false
   }
@@ -149,7 +148,7 @@ const writeChildRoutes = () => {
       let route = `
       {
         path: '${indexPage.path}',
-        component: preferDefault(require('${program.directory}${config.rootPath || `/`}layouts/${layout}')),
+        component: preferDefault(require('${program.directory}${config.rootPath}layouts/${layout}')),
         indexRoute: ${genChildRoute(indexPage, true)}
         childRoutes: [
       `
@@ -162,7 +161,7 @@ const writeChildRoutes = () => {
       let splitRoute = `
       {
         ${pathStr}
-        component: preferDefault(require('${program.directory}${config.rootPath || `/`}layouts/${layout}')),
+        component: preferDefault(require('${program.directory}${config.rootPath}layouts/${layout}')),
         indexRoute: ${genSplitChildRoute(indexPage, true)}
         childRoutes: [
       `
@@ -182,7 +181,7 @@ const writeChildRoutes = () => {
   const notFoundPage = pages.find(page => page.path.indexOf("/404") !== -1)
 
   if (notFoundPage) {
-    const defaultLayout = `preferDefault(require('${program.directory}${config.rootPath || `/`}layouts/default'))`
+    const defaultLayout = `preferDefault(require('${program.directory}${config.rootPath}layouts/default'))`
     const notFoundPageStr = `
       {
         path: "*",

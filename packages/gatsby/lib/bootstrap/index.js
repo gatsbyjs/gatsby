@@ -91,16 +91,19 @@ module.exports = async (program: any) => {
 
   // Try opening the site's gatsby-config.js file.
   console.time(`open and validate gatsby-config.js`)
-  let config = {}
+  let config = {
+    rootPath: `/`,
+  }
   try {
-    config = require(`${program.directory}/gatsby-config`)
+    Object.assign(
+      config,
+      preferDefault(require(`${program.directory}/gatsby-config`))
+    )
   } catch (e) {
     console.log(`Couldn't open your gatsby-config.js file`)
     console.log(e)
     process.exit()
   }
-
-  config = preferDefault(config)
 
   store.dispatch({
     type: "SET_SITE_CONFIG",

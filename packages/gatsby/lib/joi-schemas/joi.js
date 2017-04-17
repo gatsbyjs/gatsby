@@ -2,11 +2,12 @@ const Joi = require("joi")
 
 export const gatsbyConfigSchema = Joi.object().keys({
   rootPath: Joi.string()
-    .regex(/^\/(?!\.{2}).*\/$/)
+    .regex(/(^\/$)|(^\/(?!\.{2}).*\/$)/)
     .notes([
       `should start with "/"`,
       `should finish with "/"`,
       `should not have ".." pattern`,
+      `can be "/" (default)`,
     ]),
   siteMetadata: Joi.object(),
   linkPrefix: Joi.string(),

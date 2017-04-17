@@ -40,7 +40,7 @@ async function startServer(program) {
   const devConfig = compilerConfig.resolve()
   const compiler = webpack(devConfig)
 
-  const rootPath = _.get(store.getState(), `config.rootPath`, `/`)
+  const rootPath = store.getState().config.rootPath
   const HTMLPath = glob.sync(`${directory}${rootPath}html.*`)[0]
   // Check if we can't find an html component in root of site.
   if (!HTMLPath) {
