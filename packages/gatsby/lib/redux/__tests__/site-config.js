@@ -1,4 +1,4 @@
-import { store, reducer } from "../index.js"
+import reducer from "../reducers/config"
 
 describe(`add site config`, () => {
   it(`allow you to add basic site config`, () => {
