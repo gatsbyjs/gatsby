@@ -1,19 +1,14 @@
 /* @flow */
-import toml from "toml"
 import fs from "fs"
-import os from "os"
-import _ from "lodash"
 
 import buildCSS from "./build-css"
 import buildHTML from "./build-html"
 import buildProductionBundle from "./build-javascript"
-import postBuild from "./post-build"
 import bootstrap from "../bootstrap"
 import apiRunnerNode from "./api-runner-node"
 const { store } = require("../redux")
 
 async function html(program: any) {
-  const directory = program.directory
   const { graphqlRunner } = await bootstrap(program)
 
   console.log(`Generating CSS`)
