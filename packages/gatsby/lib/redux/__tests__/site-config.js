@@ -1,4 +1,4 @@
-import { store, reducer } from "../index.js";
+import reducer from "../reducers/config"
 
 describe(`add site config`, () => {
   it(`allow you to add basic site config`, () => {
@@ -7,22 +7,22 @@ describe(`add site config`, () => {
         title: "yo testing",
       },
       plugins: [],
-    };
+    }
     const state = reducer(
       {},
       {
         type: "SET_SITE_CONFIG",
         payload: config,
       }
-    );
-    expect(state).toMatchSnapshot();
-  });
+    )
+    expect(state).toMatchSnapshot()
+  })
 
   it(`Validates configs with unsupported options`, () => {
     const config = {
       someRandomThing: "hi people",
       plugins: [],
-    };
+    }
     function runReducer() {
       return reducer(
         {},
@@ -30,8 +30,8 @@ describe(`add site config`, () => {
           type: "SET_SITE_CONFIG",
           payload: config,
         }
-      );
+      )
     }
-    expect(runReducer).toThrowErrorMatchingSnapshot();
-  });
-});
+    expect(runReducer).toThrowErrorMatchingSnapshot()
+  })
+})
