@@ -4,7 +4,7 @@ const fs = require("fs")
 const _ = require("lodash")
 const crypto = require("crypto")
 
-async function onNodeCreate({ node, boundActionCreators, loadNodeContents }) {
+async function onNodeCreate({ node, boundActionCreators, loadNodeContent }) {
   const { createNode, updateNode } = boundActionCreators
 
   // Don't reprocess our own nodes!  (note: this doesn't normally happen
@@ -20,7 +20,7 @@ async function onNodeCreate({ node, boundActionCreators, loadNodeContents }) {
     return
   }
 
-  const content = await loadNodeContents(node)
+  const content = await loadNodeContent(node)
   const JSONArray = JSON.parse(content).map(obj => {
     const objStr = JSON.stringify(obj)
     const contentDigest = crypto.createHash("md5").update(objStr).digest("hex")

@@ -13,13 +13,13 @@ describe(`Process YAML nodes correctly`, () => {
   }
 
   // Make some fake functions its expecting.
-  const loadNodeContents = node => {
-    return Promise.resolve(node.contents)
+  const loadNodeContent = node => {
+    return Promise.resolve(node.content)
   }
 
   it(`correctly creates nodes from JSON which is an array of objects`, async () => {
     const data = [{ blue: true, funny: "yup" }, { blue: false, funny: "nope" }]
-    node.contents = yaml.safeDump(data)
+    node.content = yaml.safeDump(data)
 
     const createNode = jest.fn()
     const updateNode = jest.fn()
@@ -27,7 +27,7 @@ describe(`Process YAML nodes correctly`, () => {
 
     await onNodeCreate({
       node,
-      loadNodeContents,
+      loadNodeContent,
       boundActionCreators,
     }).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
@@ -42,7 +42,7 @@ describe(`Process YAML nodes correctly`, () => {
       { id: "foo", blue: true, funny: "yup" },
       { blue: false, funny: "nope" },
     ]
-    node.contents = yaml.safeDump(data)
+    node.content = yaml.safeDump(data)
 
     const createNode = jest.fn()
     const updateNode = jest.fn()
@@ -50,7 +50,7 @@ describe(`Process YAML nodes correctly`, () => {
 
     await onNodeCreate({
       node,
-      loadNodeContents,
+      loadNodeContent,
       boundActionCreators,
     }).then(() => {
       expect(createNode.mock.calls[0][0].id).toEqual("foo")

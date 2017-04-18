@@ -50,7 +50,7 @@ const getNode = id => {
 }
 exports.getNode = getNode
 
-exports.loadNodeContents = node => {
+exports.loadNodeContent = node => {
   if (node.content) {
     return Promise.resolve(node.content)
   } else {
@@ -59,8 +59,8 @@ exports.loadNodeContents = node => {
       const plugin = store
         .getState()
         .flattenedPlugins.find(plug => plug.name === node.pluginName)
-      const { loadNodeContents } = require(plugin.resolve)
-      return loadNodeContents(node).then(content => {
+      const { loadNodeContent } = require(plugin.resolve)
+      return loadNodeContent(node).then(content => {
         // TODO update node's content field here.
         resolve(content)
       })

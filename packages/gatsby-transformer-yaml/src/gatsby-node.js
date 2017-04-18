@@ -5,13 +5,13 @@ const jsYaml = require("js-yaml")
 const _ = require("lodash")
 const crypto = require("crypto")
 
-async function onNodeCreate({ node, boundActionCreators, loadNodeContents }) {
+async function onNodeCreate({ node, boundActionCreators, loadNodeContent }) {
   const { createNode, updateNode } = boundActionCreators
   if (node.mediaType !== `text/yaml`) {
     return
   }
 
-  const content = await loadNodeContents(node)
+  const content = await loadNodeContent(node)
   const yamlArray = jsYaml.load(content).map(obj => {
     const objStr = JSON.stringify(obj)
     const contentDigest = crypto.createHash("md5").update(objStr).digest("hex")

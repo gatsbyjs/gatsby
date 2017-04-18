@@ -37,7 +37,7 @@ const runAPI = (plugin, api, args) => {
   let linkPrefix = ``
   const {
     store,
-    loadNodeContents,
+    loadNodeContent,
     getNodes,
     getNode,
     getNodeAndSavePathDependency,
@@ -62,7 +62,7 @@ const runAPI = (plugin, api, args) => {
         ...args,
         linkPrefix,
         boundActionCreators: doubleBoundActionCreators,
-        loadNodeContents,
+        loadNodeContent,
         store,
         getNodes,
         getNode,

@@ -39,12 +39,12 @@ Array [
         "73901821b17d5aa9dd6026181f73b64c",
         "f624311d932d73dcd416d2a8bea2b67d",
       ],
-      "contentDigest": "whatever",
-      "contents": "- blue: true
+      "content": "- blue: true
   funny: yup
 - blue: false
   funny: nope
 ",
+      "contentDigest": "whatever",
       "id": "whatever",
       "mediaType": "text/yaml",
       "name": "test",

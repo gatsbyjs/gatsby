@@ -8,10 +8,10 @@ const crypto = require("crypto")
 async function onNodeCreate({
   node,
   getNode,
-  loadNodeContents,
+  loadNodeContent,
   boundActionCreators,
 }) {
-  const { createNode, updateNode, connectNodes } = boundActionCreators
+  const { createNode, updateNode } = boundActionCreators
 
   // Don't reprocess our own nodes!  (note: this doesn't normally happen
   // but since this transformer creates new nodes with the same media-type
@@ -26,7 +26,7 @@ async function onNodeCreate({
     return
   }
 
-  const content = await loadNodeContents(node)
+  const content = await loadNodeContent(node)
   const data = grayMatter(content)
   const contentDigest = crypto
     .createHash("md5")
