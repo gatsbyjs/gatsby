@@ -265,19 +265,13 @@ module.exports = async (
   function resolve() {
     const { program } = store.getState()
     return {
-      // use the program's extension list (generated via the 'resolvableExtensions' API hook)
+      // Use the program's extension list (generated via the
+      // 'resolvableExtensions' API hook).
       extensions: [``, ...program.extensions],
-      // Hierarchy of directories for Webpack to look for module.
-      // First is the site root directory.
-      // Then all directories needed for building static site.
-      // Then in the special directory of isomorphic modules Gatsby ships with.
-      root: [
-        path.join(directory, `src`),
-        path.join(directory, `.cache`),
-        path.join(directory, `public`),
-        path.join(directory, `static`),
-        path.resolve(__dirname, `..`, `isomorphic`),
-      ],
+      // Default to using the site's node_modules directory to look for
+      // modules. But also make it possible to install modules within the src
+      // directory if you need to install a specific version of a module for a
+      // part of your site.
       modulesDirectories: [`${directory}/node_modules`, `node_modules`],
     }
   }
