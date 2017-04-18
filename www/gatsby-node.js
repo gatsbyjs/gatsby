@@ -6,8 +6,8 @@ const parseFilepath = require("parse-filepath")
 const fs = require("fs-extra")
 const slash = require("slash")
 
-exports.createPages = ({ graphql, actionCreators }) => {
-  const { upsertPage } = actionCreators
+exports.createPages = ({ graphql, boundActionCreators }) => {
+  const { upsertPage } = boundActionCreators
   return new Promise((resolve, reject) => {
     const pages = []
     const docsTemplate = path.resolve(`templates/template-docs-markdown.js`)
@@ -60,10 +60,10 @@ exports.createPages = ({ graphql, actionCreators }) => {
 }
 
 // Create slugs for files.
-exports.onNodeCreate = ({ node, actionCreators, getNode }) => {
-  const { updateNode } = actionCreators
+exports.onNodeCreate = ({ node, boundActionCreators, getNode }) => {
+  const { updateNode } = boundActionCreators
   let slug
-  if (node.type === `File` && typeof node.slug === "undefined") {
+  if (node.type === `File`) {
     const parsedFilePath = parseFilepath(node.relativePath)
     if (node.sourceName === `docs`) {
       if (parsedFilePath.name !== `index` && parsedFilePath.dir !== ``) {
@@ -78,9 +78,7 @@ exports.onNodeCreate = ({ node, actionCreators, getNode }) => {
       node.slug = slug
       updateNode(node)
     }
-  } else if (
-    node.type === `MarkdownRemark` && typeof node.slug === "undefined"
-  ) {
+  } else if (node.type === `MarkdownRemark`) {
     const fileNode = getNode(node.parent)
     const parsedFilePath = parseFilepath(fileNode.relativePath)
     // Add slugs for docs pages

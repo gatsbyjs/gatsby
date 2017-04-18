@@ -105,7 +105,7 @@ const q = queue()
 q.concurrency = 1
 
 const queueJob = job => {
-  const inputFileKey = job.file.id.replace(/\./g, `%2E`)
+  const inputFileKey = job.file.absolutePath.replace(/\./g, `%2E`)
   const outputFileKey = job.outputPath.replace(/\./g, `%2E`)
 
   // Check if the job has already been queued. If it has, there's nothing
@@ -127,15 +127,19 @@ const queueJob = job => {
   }
   _.set(
     toProcess,
-    `${job.file.id.replace(/\./g, `%2E`)}.${job.outputPath.replace(/\./g, `%2E`)}`,
+    `${job.file.absolutePath.replace(/\./g, `%2E`)}.${job.outputPath.replace(/\./g, `%2E`)}`,
     job
   )
   if (notQueued) {
     q.push(cb => {
       // We're now processing the file's jobs.
-      processFile(job.file.id, _.values(toProcess[inputFileKey]), () => {
-        cb()
-      })
+      processFile(
+        job.file.absolutePath,
+        _.values(toProcess[inputFileKey]),
+        () => {
+          cb()
+        }
+      )
     })
   }
 
@@ -169,7 +173,7 @@ function queueImageResizing({ file, args = {} }) {
     return true
   })
   const sortedArgs = _.sortBy(filteredArgs, arg => arg[0] === `width`)
-  const imgSrc = `/${file.hash}-${qs.stringify(_.fromPairs(sortedArgs))}.${file.extension}`
+  const imgSrc = `/${file.contentDigest}-${qs.stringify(_.fromPairs(sortedArgs))}.${file.extension}`
   const filePath = `${process.cwd()}/public${imgSrc}`
   // Create function to call when the image is finished.
   let outsideResolve
@@ -180,7 +184,7 @@ function queueImageResizing({ file, args = {} }) {
   let width
   let height
   // Calculate the eventual width/height of the image.
-  const dimensions = imageSize(file.id)
+  const dimensions = imageSize(file.absolutePath)
   const aspectRatio = dimensions.width / dimensions.height
 
   // If the width/height are both set, we're cropping so just return
@@ -201,7 +205,7 @@ function queueImageResizing({ file, args = {} }) {
     args: options,
     finished,
     outsideResolve,
-    inputPath: file.id,
+    inputPath: file.absolutePath,
     outputPath: filePath,
   }
   queueJob(job)
@@ -228,7 +232,7 @@ async function notMemoizedbase64({ file, args = {} }) {
     grayscale: false,
   }
   const options = _.defaults(args, defaultArgs)
-  let pipeline = sharp(file.id).rotate()
+  let pipeline = sharp(file.absolutePath).rotate()
   pipeline
     .resize(options.width, options.height)
     .png({
@@ -298,7 +302,7 @@ async function responsiveSizes({ file, args = {} }) {
   sizes.push(options.maxWidth * 1.5)
   sizes.push(options.maxWidth * 2)
   sizes.push(options.maxWidth * 3)
-  const dimensions = imageSize(file.id)
+  const dimensions = imageSize(file.absolutePath)
   const filteredSizes = sizes.filter(size => size < dimensions.width)
 
   // Add the original image to ensure the largest image possible
@@ -363,7 +367,7 @@ async function responsiveResolution({ file, args = {} }) {
   sizes.push(options.width * 1.5)
   sizes.push(options.width * 2)
   sizes.push(options.width * 3)
-  const dimensions = imageSize(file.id)
+  const dimensions = imageSize(file.absolutePath)
 
   const filteredSizes = sizes.filter(size => size < dimensions.width)
 
@@ -374,7 +378,7 @@ async function responsiveResolution({ file, args = {} }) {
     console.warn(
       `
                  The requested width "${options.width}px" for a responsiveResolution field for
-                 the file ${file.id}
+                 the file ${file.absolutePath}
                  was wider than the actual image width of ${dimensions.width}px!
                  If possible, replace the current image with a larger one.
                  `

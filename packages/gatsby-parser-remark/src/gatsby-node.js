@@ -3,40 +3,45 @@ const Promise = require("bluebird")
 const fs = require("fs")
 const grayMatter = require("gray-matter")
 const _ = require("lodash")
+const crypto = require("crypto")
 
-const { loadNodeContents } = require("gatsby-source-filesystem")
+async function onNodeCreate({
+  node,
+  getNode,
+  loadNodeContents,
+  boundActionCreators,
+}) {
+  const { createNode, updateNode, connectNodes } = boundActionCreators
 
-async function onNodeCreate({ node, getNode, actionCreators }) {
-  const { createNode, updateNode, connectNodes } = actionCreators
+  // Don't reprocess our own nodes!  (note: this doesn't normally happen
+  // but since this transformer creates new nodes with the same media-type
+  // as its parent node, we have to add this check that we didn't create
+  // the node).
+  if (node.type === `MarkdownRemark`) {
+    return
+  }
 
-  // List of markdown extensions taken from
-  // https://github.com/github/markup/blob/cf74e842dfd082d8001417c1bb94edd2ae06d61b/lib/github/markup/markdown.rb#L28
-  const extensions = [
-    "md",
-    "rmd",
-    "mkd",
-    "mkdn",
-    "mdwn",
-    "mdown",
-    "litcoffee",
-    "markdown",
-  ]
-  if (!_.includes(extensions, node.extension)) {
+  // We only care about markdown content.
+  if (node.mediaType !== `text/x-markdown`) {
     return
   }
 
   const content = await loadNodeContents(node)
   const data = grayMatter(content)
+  const contentDigest = crypto
+    .createHash("md5")
+    .update(JSON.stringify(data))
+    .digest("hex")
   const markdownNode = {
-    _sourceNodeId: node.id,
+    id: `${node.id} >>> MarkdownRemark`,
+    contentDigest,
     parent: node.id,
     type: `MarkdownRemark`,
-    id: `${node.id} >> MarkdownRemark`,
+    mediaType: `text/x-markdown`,
     children: [],
-    src: data.content,
+    content: data.content,
   }
   markdownNode.frontmatter = {
-    _sourceNodeId: node.id,
     ...data.data,
   }
 

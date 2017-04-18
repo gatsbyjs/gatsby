@@ -1,17 +1,19 @@
 const _ = require("lodash")
 
-async function onNodeCreate({ node, actionCreators }) {
-  const { createNode, updateNode } = actionCreators
+async function onNodeCreate({ node, boundActionCreators }) {
+  const { createNode, updateNode } = boundActionCreators
   const extensions = ["jpeg", "jpg", "png", "webp", "tif", "tiff", "svg"]
   if (!_.includes(extensions, node.extension)) {
     return
   }
 
   const imageNode = {
-    _sourceNodeId: node.id,
+    logical: true,
+    id: `${node.id} >> ImageSharp`,
+    contentDigest: `${node.id}`,
     parent: node.id,
     type: `ImageSharp`,
-    id: `${node.id} >> ImageSharp`,
+    mediaType: node.mediaType,
     children: [],
   }
 

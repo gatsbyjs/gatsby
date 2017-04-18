@@ -24,7 +24,7 @@
     "progress": "^1.1.8",
     "react-gravatar": "^2.6.1",
     "react-icons": "^2.2.3",
-    "react-modal": "^1.6.5",
+    "react-modal": "^1.7.6",
     "react-typography": "^0.15.0",
     "request": "^2.79.0",
     "slug": "^0.9.1",

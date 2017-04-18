@@ -10,6 +10,7 @@ const u = require("unist-builder")
 const slash = require("slash")
 const _ = require("lodash")
 const chokidar = require("chokidar")
+const mime = require("mime")
 
 function readFile(file, pluginOptions, cb) {
   const slashed = slash(file)
@@ -17,15 +18,19 @@ function readFile(file, pluginOptions, cb) {
     ...path.parse(slashed),
     absolutePath: slashed,
   }
-  md5File(slashedFile.absolutePath, (md5Err, hash) => {
+  md5File(slashedFile.absolutePath, (md5Err, contentDigest) => {
     fs.stat(slashedFile.absolutePath, (statErr, stats) => {
       // Stringify date objects.
       const newFile = JSON.parse(
         JSON.stringify({
-          type: `File`,
-          id: slashedFile.absolutePath,
-          sourceName: pluginOptions.name,
+          id: `${slashedFile.absolutePath} >>> ${contentDigest}`,
+          contentDigest: contentDigest,
           children: [],
+          parent: `___SOURCE___`,
+          mediaType: mime.lookup(slashedFile.ext),
+          type: `File`,
+          sourceName: pluginOptions.name,
+          absolutePath: slashedFile.absolutePath,
           relativePath: slash(
             path.posix.relative(pluginOptions.path, slashedFile.absolutePath)
           ),
@@ -36,7 +41,6 @@ function readFile(file, pluginOptions, cb) {
           accessTime: stats.atime,
           changeTime: stats.ctime,
           birthTime: stats.birthtime,
-          hash,
           ...slashedFile,
           ...stats,
         })
@@ -46,8 +50,8 @@ function readFile(file, pluginOptions, cb) {
   })
 }
 
-exports.sourceNodes = ({ actionCreators }, pluginOptions) => {
-  const { createNode, updateSourcePluginStatus } = actionCreators
+exports.sourceNodes = ({ boundActionCreators, getNode }, pluginOptions) => {
+  const { createNode, updateSourcePluginStatus } = boundActionCreators
   updateSourcePluginStatus({
     plugin: `source-filesystem --- ${pluginOptions.name}`,
     ready: false,
@@ -66,12 +70,24 @@ exports.sourceNodes = ({ actionCreators }, pluginOptions) => {
   })
 
   watcher.on(`add`, path => {
-    // console.log("Added file at", path);
-    readFile(path, pluginOptions, (err, file) => createNode(file))
+    // console.log("Added file at", path)
+    readFile(path, pluginOptions, (err, file) => {
+      // Only create node if the content digest has changed.
+      if (!getNode(file.id)) {
+        createNode(file)
+      } else {
+        // console.log("not creating node cause it already exists", file.id)
+      }
+    })
   })
   watcher.on(`change`, path => {
     console.log("changed file at", path)
-    readFile(path, pluginOptions, (err, file) => createNode(file))
+    readFile(path, pluginOptions, (err, file) => {
+      // Only create node if the content digest has changed.
+      if (!getNode(file.id)) {
+        createNode(file)
+      }
+    })
   })
   watcher.on(`ready`, () => {
     updateSourcePluginStatus({

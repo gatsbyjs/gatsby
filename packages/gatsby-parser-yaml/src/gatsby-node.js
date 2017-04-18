@@ -3,23 +3,32 @@ const Promise = require("bluebird")
 const fs = require("fs")
 const jsYaml = require("js-yaml")
 const _ = require("lodash")
-const { loadNodeContents } = require("gatsby-source-filesystem")
+const crypto = require("crypto")
 
-async function onNodeCreate({ node, actionCreators }) {
-  const { createNode, updateNode } = actionCreators
-  if (node.extension === `yaml` || node.extension === `yml`) {
+async function onNodeCreate({ node, boundActionCreators, loadNodeContents }) {
+  const { createNode, updateNode } = boundActionCreators
+  if (node.mediaType === `text/yaml`) {
     const content = await loadNodeContents(node)
-    // TODO validate that yaml object has an id field?
-    // Or just add an id if one isn't set?
-    const yamlArray = jsYaml.load(content).map(obj => ({
-      ...obj,
-      parent: node.id,
-      _sourceNodeId: node.id,
-      type: _.capitalize(node.name),
-      children: [],
-    }))
+    const yamlArray = jsYaml.load(content).map(obj => {
+      const objStr = JSON.stringify(obj)
+      const contentDigest = crypto
+        .createHash("md5")
+        .update(objStr)
+        .digest("hex")
 
-    node.children = node.children.concat(yamlArray)
+      return {
+        ...obj,
+        id: contentDigest,
+        contentDigest,
+        type: _.capitalize(node.name),
+        mediaType: `application/json`,
+        parent: node.id,
+        children: [],
+        content: objStr,
+      }
+    })
+
+    node.children = node.children.concat(yamlArray.map(y => y.id))
     updateNode(node)
     _.each(yamlArray, y => createNode(y))
   }

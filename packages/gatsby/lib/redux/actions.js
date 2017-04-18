@@ -3,6 +3,8 @@ import chalk from "chalk"
 const _ = require("lodash")
 const { bindActionCreators } = require("redux")
 
+const { getNode } = require("./index")
+
 const { store } = require("./index")
 import * as joiSchemas from "../joi-schemas/joi"
 import { layoutComponentChunkName } from "../utils/js-chunk-names"
@@ -61,6 +63,15 @@ actions.createNode = node => {
     console.log(chalk.bold.red(result.error))
     console.log(node)
     return { type: `VALIDATION_ERROR`, error: true }
+  }
+
+  // Check if the node has already been processed.
+  if (getNode(node.id)) {
+    console.log("NODE_ALREADY_CREATED", node.pluginName, node.id)
+    console.log(node)
+    console.trace()
+    // process.exit()
+    return { type: `NODE_ALREADY_CREATED`, payload: node }
   }
 
   return {

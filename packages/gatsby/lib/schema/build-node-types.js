@@ -137,7 +137,7 @@ module.exports = async () =>
                   let fieldValue = node[fieldName]
                   const sourceFileNode = _.find(
                     getNodes(),
-                    n => n.type === `File` && n.id === node._sourceNodeId
+                    n => n.type === `File` && n.id === node.parent
                   )
 
                   // Then test if the field is linking to a file.
@@ -150,7 +150,7 @@ module.exports = async () =>
                     )
                     const linkedFileNode = _.find(
                       getNodes(),
-                      n => n.type === `File` && n.id === fileLinkPath
+                      n => n.type === `File` && n.absolutePath === fileLinkPath
                     )
                     if (linkedFileNode) {
                       addPageDependency({
