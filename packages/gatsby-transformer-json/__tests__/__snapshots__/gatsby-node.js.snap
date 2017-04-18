@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Process JSON nodes correctly If the object has an id, it uses that as the id instead of the contentDigest 1`] = `
+Array [
+  Array [
+    Object {
+      "blue": true,
+      "children": Array [],
+      "content": "{\\"id\\":\\"foo\\",\\"blue\\":true,\\"funny\\":\\"yup\\"}",
+      "contentDigest": "8838e569ae02d98806532310fb2a577a",
+      "funny": "yup",
+      "id": "foo",
+      "mediaType": "application/json",
+      "parent": "whatever",
+      "type": "Test",
+    },
+  ],
+  Array [
+    Object {
+      "blue": false,
+      "children": Array [],
+      "content": "{\\"blue\\":false,\\"funny\\":\\"nope\\"}",
+      "contentDigest": "f624311d932d73dcd416d2a8bea2b67d",
+      "funny": "nope",
+      "id": "f624311d932d73dcd416d2a8bea2b67d",
+      "mediaType": "application/json",
+      "parent": "whatever",
+      "type": "Test",
+    },
+  ],
+]
+`;
+
+exports[`Process JSON nodes correctly If the object has an id, it uses that as the id instead of the contentDigest 2`] = `
+Array [
+  Array [
+    Object {
+      "children": Array [
+        "foo",
+        "f624311d932d73dcd416d2a8bea2b67d",
+        "foo",
+        "f624311d932d73dcd416d2a8bea2b67d",
+      ],
+      "contentDigest": "whatever",
+      "contents": "[{\\"id\\":\\"foo\\",\\"blue\\":true,\\"funny\\":\\"yup\\"},{\\"blue\\":false,\\"funny\\":\\"nope\\"}]",
+      "id": "whatever",
+      "mediaType": "application/json",
+      "name": "test",
+    },
+  ],
+]
+`;
+
+exports[`Process JSON nodes correctly correctly creates nodes from JSON which is an array of objects 1`] = `
+Array [
+  Array [
+    Object {
+      "blue": true,
+      "children": Array [],
+      "content": "{\\"id\\":\\"foo\\",\\"blue\\":true,\\"funny\\":\\"yup\\"}",
+      "contentDigest": "8838e569ae02d98806532310fb2a577a",
+      "funny": "yup",
+      "id": "foo",
+      "mediaType": "application/json",
+      "parent": "whatever",
+      "type": "Test",
+    },
+  ],
+  Array [
+    Object {
+      "blue": false,
+      "children": Array [],
+      "content": "{\\"blue\\":false,\\"funny\\":\\"nope\\"}",
+      "contentDigest": "f624311d932d73dcd416d2a8bea2b67d",
+      "funny": "nope",
+      "id": "f624311d932d73dcd416d2a8bea2b67d",
+      "mediaType": "application/json",
+      "parent": "whatever",
+      "type": "Test",
+    },
+  ],
+]
+`;
+
+exports[`Process JSON nodes correctly correctly creates nodes from JSON which is an array of objects 2`] = `
+Array [
+  Array [
+    Object {
+      "children": Array [
+        "foo",
+        "f624311d932d73dcd416d2a8bea2b67d",
+      ],
+      "contentDigest": "whatever",
+      "contents": "[{\\"id\\":\\"foo\\",\\"blue\\":true,\\"funny\\":\\"yup\\"},{\\"blue\\":false,\\"funny\\":\\"nope\\"}]",
+      "id": "whatever",
+      "mediaType": "application/json",
+      "name": "test",
+    },
+  ],
+]
+`;

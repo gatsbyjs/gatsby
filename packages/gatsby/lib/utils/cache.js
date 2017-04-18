@@ -3,10 +3,23 @@ const Promise = require("bluebird")
 const fs = require("fs-extra")
 
 fs.ensureDirSync(`${process.cwd()}/.cache/cache`)
-const db = levelup(`${process.cwd()}/.cache/cache`, {
-  keyEncoding: `json`,
-  valueEncoding: `json`,
-})
+
+let db
+if (process.env.NODE_ENV === `test`) {
+  db = {
+    get: () => {
+      return false
+    },
+    set: () => {
+      return false
+    },
+  }
+} else {
+  db = levelup(`${process.cwd()}/.cache/cache`, {
+    keyEncoding: `json`,
+    valueEncoding: `json`,
+  })
+}
 
 exports.get = key => {
   return new Promise((resolve, reject) => {

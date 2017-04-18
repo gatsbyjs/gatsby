@@ -27,11 +27,19 @@ const composeEnhancers = composeWithDevTools({
   name: `gatsby-redux`,
 })
 
-const store = Redux.createStore(
-  Redux.combineReducers({ ...reducers }),
-  initialState,
-  composeEnhancers(Redux.applyMiddleware())
-)
+let store
+if (process.env.NODE_ENV === `test`) {
+  store = Redux.createStore(
+    Redux.combineReducers({ ...reducers }),
+    initialState
+  )
+} else {
+  store = Redux.createStore(
+    Redux.combineReducers({ ...reducers }),
+    initialState,
+    composeEnhancers(Redux.applyMiddleware())
+  )
+}
 
 exports.store = store
 exports.getNodes = () => {
