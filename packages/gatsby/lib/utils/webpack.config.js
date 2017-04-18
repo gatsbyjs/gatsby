@@ -275,6 +275,7 @@ module.exports = async (
         path.join(directory, `src`),
         path.join(directory, `.cache`),
         path.join(directory, `public`),
+        path.join(directory, `static`),
         path.resolve(__dirname, `..`, `isomorphic`),
       ],
       modulesDirectories: [`${directory}/node_modules`, `node_modules`],
