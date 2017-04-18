@@ -1,4 +1,4 @@
-import _ from "lodash"
+import { uniq, some } from "lodash"
 import fs from "fs"
 import path from "path"
 import webpack from "webpack"
@@ -7,7 +7,7 @@ import ExtractTextPlugin from "extract-text-webpack-plugin"
 import StaticSiteGeneratorPlugin from "static-site-generator-webpack-plugin"
 import { StatsWriterPlugin } from "webpack-stats-plugin"
 // This isn't working right it seems.
-//import WebpackStableModuleIdAndHash from 'webpack-stable-module-id-and-hash'
+// import WebpackStableModuleIdAndHash from 'webpack-stable-module-id-and-hash'
 
 import webpackModifyValidate from "./webpack-modify-validate"
 
@@ -71,7 +71,6 @@ module.exports = async (
         }
       case `build-javascript`:
         return {
-          //filename: '[name].js',
           filename: `[name]-[chunkhash].js`,
           chunkFilename: `[name]-[chunkhash].js`,
           path: `${directory}/public`,
@@ -91,21 +90,20 @@ module.exports = async (
           commons: [
             require.resolve(`react-hot-loader/patch`),
             `${require.resolve(`webpack-hot-middleware/client`)}?path=http://${program.host}:${webpackPort}/__webpack_hmr`,
-            `${directory}/.intermediate-representation/app`,
+            `${directory}/.cache/app`,
           ],
         }
       case `build-css`:
         return {
-          main: `${directory}/.intermediate-representation/app`,
+          main: `${directory}/.cache/app`,
         }
       case `build-html`:
         return {
-          //main: `${__dirname}/static-entry`,
-          main: `${directory}/.intermediate-representation/static-entry`,
+          main: `${directory}/.cache/static-entry`,
         }
       case `build-javascript`:
         return {
-          app: `${directory}/.intermediate-representation/production-app`,
+          app: `${directory}/.cache/production-app`,
         }
       default:
         throw new Error(`The state requested ${stage} doesn't exist.`)
@@ -170,7 +168,7 @@ module.exports = async (
         components = components.map(component =>
           layoutComponentChunkName(program.directory, component)
         )
-        components = _.uniq(components)
+        components = uniq(components)
         return [
           // Moment.js includes 100s of KBs of extra localization data
           // by default in Webpack that most sites don't want.
@@ -180,7 +178,7 @@ module.exports = async (
           // common webpack tweaks e.g. lodash?
           new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
           new WebpackMD5Hash(),
-          //new webpack.optimize.DedupePlugin(),
+          // new webpack.optimize.DedupePlugin(),
           // Extract "commons" chunk from the app entry and all
           // page components.
           new webpack.optimize.CommonsChunkPlugin({
@@ -205,17 +203,13 @@ module.exports = async (
                 `scroll-behavior`,
                 `history`,
               ]
-              const isFramework = _.some(
+              const isFramework = some(
                 vendorModuleList.map(vendor => {
                   const regex = new RegExp(`\/node_modules\/${vendor}\/`, `i`)
                   return regex.test(module.resource)
                 })
               )
-              if (isFramework) {
-                return isFramework
-              } else {
-                return count > 3
-              }
+              return isFramework || count > 3
             },
           }),
           // Add a few global variables. Set NODE_ENV to production (enables
@@ -259,7 +253,7 @@ module.exports = async (
           }),
           // Ensure module order stays the same. Supposibly fixed in webpack 2.0.
           new webpack.optimize.OccurenceOrderPlugin(),
-          //new WebpackStableModuleIdAndHash({ seed: 9, hashSize: 47 }),
+          // new WebpackStableModuleIdAndHash({ seed: 9, hashSize: 47 }),
           new webpack.NamedModulesPlugin(),
         ]
       }
@@ -269,13 +263,21 @@ module.exports = async (
   }
 
   function resolve() {
+    const { program } = store.getState()
     return {
       // use the program's extension list (generated via the 'resolvableExtensions' API hook)
       extensions: [``, ...program.extensions],
       // Hierarchy of directories for Webpack to look for module.
-      // First is the site directory.
+      // First is the site root directory.
+      // Then all directories needed for building static site.
       // Then in the special directory of isomorphic modules Gatsby ships with.
-      root: [directory, path.resolve(__dirname, `..`, `isomorphic`)],
+      root: [
+        path.join(directory, `src`),
+        path.join(directory, `.cache`),
+        path.join(directory, `public`),
+        path.join(directory, `static`),
+        path.resolve(__dirname, `..`, `isomorphic`),
+      ],
       modulesDirectories: [`${directory}/node_modules`, `node_modules`],
     }
   }
@@ -417,7 +419,7 @@ module.exports = async (
         config.loader(`css`, {
           test: /\.css$/,
           exclude: /\.module\.css$/,
-          //loader: `null`,
+          // loader: `null`,
           loader: ExtractTextPlugin.extract([`css`]),
         })
 

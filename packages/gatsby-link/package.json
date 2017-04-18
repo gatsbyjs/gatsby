@@ -3,6 +3,7 @@
   "version": "1.0.0-alpha12",
   "description": "An enhanced Link component for Gatsby sites with support for resource prefetching",
   "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
     "build": "babel src --out-dir .",
     "watch": "babel -w src --out-dir ."
@@ -15,5 +16,8 @@
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.18.0"
+  },
+  "dependencies": {
+    "@types/react-router": "^2.0.49"
   }
 }

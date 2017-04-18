@@ -16,7 +16,7 @@ module.exports = (state = {}, action) => {
           chalk.blue.bgYellow(`The site's gatsby-config.js failed validation`)
         )
         console.log(chalk.bold.red(result.error))
-        console.log(action.payload)
+        console.log(config)
         throw new Error(`The site's gatsby-config.js failed validation`)
         return
       }
