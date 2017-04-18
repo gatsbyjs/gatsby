@@ -43,6 +43,12 @@ async function onNodeCreate({
   }
   markdownNode.frontmatter = {
     ...data.data,
+    parent: node.id,
+  }
+
+  // Add path to the markdown file path
+  if (node.type === `File`) {
+    markdownNode.fileAbsolutePath = node.absolutePath
   }
 
   node.children = node.children.concat([markdownNode.id])

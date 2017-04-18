@@ -1,18 +1,18 @@
-# gatsby-parser-json
+# gatsby-transformer-json
 
 Parses JSON files. Currently it only handles stringified arrays but the
 goal is to handle in a reasonable way many types of JSON data.
 
 ## Install
 
-`npm install --save gatsby-parser-json`
+`npm install --save gatsby-transformer-json`
 
 ## How to use
 
 ```javascript
 // In your gatsby-config.js
 plugins: [
-  `gatsby-parser-json`,
+  `gatsby-transformer-json`,
 ]
 ```
 

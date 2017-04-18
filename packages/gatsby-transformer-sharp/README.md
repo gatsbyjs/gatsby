@@ -1,18 +1,18 @@
-# gatsby-parser-sharp
+# gatsby-transformer-sharp
 
 Creates `ImageSharp` nodes from image types that are supported by the
 [Sharp](https://github.com/lovell/sharp) image processing library.
 
 ## Install
 
-`npm install --save gatsby-parser-sharp`
+`npm install --save gatsby-transformer-sharp`
 
 ## How to use
 
 ```javascript
 // In your gatsby-config.js
 plugins: [
-  `gatsby-parser-sharp`,
+  `gatsby-transformer-sharp`,
 ]
 ```
 

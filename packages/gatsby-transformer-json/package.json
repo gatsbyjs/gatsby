@@ -1,7 +1,7 @@
 {
-  "name": "gatsby-parser-json",
+  "name": "gatsby-transformer-json",
   "version": "1.0.0-alpha12",
-  "description": "Gatsby parser plugin for json files",
+  "description": "Gatsby transformer plugin for JSON files",
   "scripts": {
     "build": "babel src --out-dir .",
     "watch": "babel -w src --out-dir ."

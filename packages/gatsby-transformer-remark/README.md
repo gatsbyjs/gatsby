@@ -1,17 +1,17 @@
-# gatsby-parser-remark
+# gatsby-transformer-remark
 
 Parses Markdown files using [Remark](http://remark.js.org/).
 
 ## Install
 
-`npm install --save gatsby-parser-remark`
+`npm install --save gatsby-transformer-remark`
 
 ## How to use
 
 ```javascript
 // In your gatsby-config.js
 plugins: [
-  `gatsby-parser-remark`,
+  `gatsby-transformer-remark`,
 ]
 ```
 

@@ -1,15 +1,16 @@
 const select = require("unist-util-select")
 const Promise = require("bluebird")
 const fs = require("fs")
-const jsYaml = require("js-yaml")
 const _ = require("lodash")
 const crypto = require("crypto")
 
 async function onNodeCreate({ node, boundActionCreators, loadNodeContents }) {
   const { createNode, updateNode } = boundActionCreators
-  if (node.mediaType === `text/yaml`) {
+  if (node.extension === `json`) {
     const content = await loadNodeContents(node)
-    const yamlArray = jsYaml.load(content).map(obj => {
+    // TODO validate that the JSON object has an id field?
+    // Or just add an id if one isn't set?
+    const JSONArray = JSON.parse(content).map(obj => {
       const objStr = JSON.stringify(obj)
       const contentDigest = crypto
         .createHash("md5")
@@ -18,19 +19,19 @@ async function onNodeCreate({ node, boundActionCreators, loadNodeContents }) {
 
       return {
         ...obj,
-        id: contentDigest,
+        id: obj.id ? obj.id : contentDigest,
         contentDigest,
-        type: _.capitalize(node.name),
         mediaType: `application/json`,
         parent: node.id,
+        type: _.capitalize(node.name),
         children: [],
         content: objStr,
       }
     })
 
-    node.children = node.children.concat(yamlArray.map(y => y.id))
+    node.children = node.children.concat(JSONArray.map(n => n.id))
     updateNode(node)
-    _.each(yamlArray, y => createNode(y))
+    _.each(JSONArray, j => createNode(j))
   }
 }
 

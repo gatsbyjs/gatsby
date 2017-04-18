@@ -95,9 +95,9 @@ export default IndexRoute
 export const pageQuery = `
 {
   allMarkdownRemark(
-    sortBy: { order: DESC, fields: frontmatter___date },
+    sortBy: { order: DESC, fields: [frontmatter___date] },
     frontmatter: { draft: { ne: true } },
-    _sourceNodeId: { regex: "/blog/" },
+    fileAbsolutePath: { regex: "/blog/" },
   ) {
     edges {
       node {

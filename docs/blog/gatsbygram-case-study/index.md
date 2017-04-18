@@ -442,10 +442,10 @@ module.exports = {
     // several other plugins.
     `gatsby-plugin-sharp`,
     // This plugin identifies file nodes that are images and
-    // extends these to create new "ImageSharp" nodes.
-    `gatsby-parser-sharp`,
-    // This plugin parses JSON file nodes.
-    `gatsby-parser-json`,
+    // transforms these to create new “ImageSharp” nodes.
+    `gatsby-transformer-sharp`,
+    // This plugin transforms JSON file nodes.
+    `gatsby-transformer-json`,
     `gatsby-typegen-filesystem`,
     // This plugin adds GraphQL fields to the ImageSharp
     // GraphQL type. With them you can resize images and

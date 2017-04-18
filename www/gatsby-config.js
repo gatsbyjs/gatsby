@@ -20,9 +20,9 @@ module.exports = {
         path: `${__dirname}/../packages/`,
       },
     },
-    `gatsby-parser-remark`,
-    `gatsby-parser-sharp`,
-    `gatsby-parser-yaml`,
+    `gatsby-transformer-remark`,
+    `gatsby-transformer-sharp`,
+    `gatsby-transformer-yaml`,
     {
       resolve: `gatsby-typegen-remark`,
       options: {

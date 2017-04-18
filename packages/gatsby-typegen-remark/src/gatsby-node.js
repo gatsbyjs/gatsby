@@ -153,7 +153,6 @@ exports.extendNodeType = (
       }
     }
 
-    const htmlPromisesCache = {}
     async function getHTML(markdownNode) {
       const cachedHTML = await cache.get(htmlCacheKey(markdownNode))
       if (cachedHTML) {
@@ -209,7 +208,7 @@ exports.extendNodeType = (
       html: {
         type: GraphQLString,
         resolve(markdownNode) {
-          return getHTML(markdownNode).then(node => node.html)
+          return getHTML(markdownNode)
         },
       },
       excerpt: {
@@ -247,9 +246,9 @@ exports.extendNodeType = (
       timeToRead: {
         type: GraphQLInt,
         resolve(markdownNode) {
-          return getHTML(markdownNode).then(node => {
+          return getHTML(markdownNode).then(html => {
             let timeToRead = 0
-            const pureText = sanitizeHTML(node.html, { allowTags: [] })
+            const pureText = sanitizeHTML(html, { allowTags: [] })
             const avgWPM = 265
             const wordCount = _.words(pureText).length
             timeToRead = Math.round(wordCount / avgWPM)
