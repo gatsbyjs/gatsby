@@ -8,7 +8,7 @@ import Helmet from "react-helmet"
 let stylesStr
 if (process.env.NODE_ENV === `production`) {
   try {
-    stylesStr = require("!raw-loader!./public/styles.css")
+    stylesStr = require("!raw-loader!../public/styles.css")
   } catch (e) {
     console.log(e)
   }
@@ -60,25 +60,25 @@ module.exports = React.createClass({
             rel="icon"
             type="image/png"
             sizes="192x192"
-            href={require(`file-loader!images/favicons/android-icon-192x192.png`)}
+            href={require(`file-loader!../static/images/favicons/android-icon-192x192.png`)}
           />
           <link
             rel="icon"
             type="image/png"
             sizes="32x32"
-            href={require(`file-loader!images/favicons/favicon-32x32.png`)}
+            href={require(`file-loader!../static/images/favicons/favicon-32x32.png`)}
           />
           <link
             rel="icon"
             type="image/png"
             sizes="96x96"
-            href={require(`file-loader!images/favicons/favicon-96x96.png`)}
+            href={require(`file-loader!../static/images/favicons/favicon-96x96.png`)}
           />
           <link
             rel="icon"
             type="image/png"
             sizes="16x16"
-            href={require(`file-loader!images/favicons/favicon-16x16.png`)}
+            href={require(`file-loader!../static/images/favicons/favicon-16x16.png`)}
           />
           {head.title.toComponent()}
           {head.meta.toComponent()}

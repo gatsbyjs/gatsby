@@ -1,7 +1,6 @@
 const _ = require("lodash")
 const Promise = require("bluebird")
 const path = require("path")
-const select = require("unist-util-select")
 const parseFilepath = require("parse-filepath")
 const fs = require("fs-extra")
 const slash = require("slash")
@@ -9,10 +8,11 @@ const slash = require("slash")
 exports.createPages = ({ graphql, actionCreators }) => {
   const { upsertPage } = actionCreators
   return new Promise((resolve, reject) => {
-    const pages = []
-    const docsTemplate = path.resolve(`templates/template-docs-markdown.js`)
-    const blogPostTemplate = path.resolve(`templates/template-blog-post.js`)
-    const packageTemplate = path.resolve(`templates/template-docs-packages.js`)
+    const docsTemplate = path.resolve(`src/templates/template-docs-markdown.js`)
+    const blogPostTemplate = path.resolve(`src/templates/template-blog-post.js`)
+    const packageTemplate = path.resolve(
+      `src/templates/template-docs-packages.js`
+    )
     graphql(
       `
       {
