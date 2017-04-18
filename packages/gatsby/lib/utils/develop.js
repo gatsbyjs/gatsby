@@ -40,10 +40,10 @@ async function startServer(program) {
   const devConfig = compilerConfig.resolve()
   const compiler = webpack(devConfig)
 
-  const HTMLPath = glob.sync(`${directory}/html.*`)[0]
+  const HTMLPath = glob.sync(`${directory}/src/html.*`)[0]
   // Check if we can't find an html component in root of site.
   if (!HTMLPath) {
-    throw new Error(`Couldn't find an html.js at the root of your site`)
+    throw new Error(`Couldn't find an /src/html.* file`)
   }
 
   // We use the program port not the webpack-dev-server port as if you import
@@ -94,7 +94,7 @@ async function startServer(program) {
           return res.send(htmlStr)
         } else {
           try {
-            const apiRunner = require(`${directory}/.intermediate-representation/api-runner-ssr`)
+            const apiRunner = require(`${directory}/.cache/api-runner-ssr`)
             const htmlElement = React.createElement(HTML, {
               body: ``,
               headComponents: _.flattenDeep(

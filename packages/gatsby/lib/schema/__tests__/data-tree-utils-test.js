@@ -1,7 +1,7 @@
 const {
   extractFieldExamples,
   buildFieldEnumValues,
-} = require("../data-tree-utils");
+} = require("../data-tree-utils")
 
 describe(`Gatsby data tree utils`, () => {
   const nodes = [
@@ -29,17 +29,17 @@ describe(`Gatsby data tree utils`, () => {
         circle: `happy`,
       },
     },
-  ];
+  ]
 
   it(`builds field examples from an array of nodes`, () => {
-    expect(extractFieldExamples({ nodes })).toMatchSnapshot();
-  });
+    expect(extractFieldExamples({ nodes })).toMatchSnapshot()
+  })
 
   it(`ignores fields that have a null value`, () => {
-    expect(extractFieldExamples({ nodes }).iAmNull).not.toBeDefined();
-  });
+    expect(extractFieldExamples({ nodes }).iAmNull).not.toBeDefined()
+  })
 
   it(`build enum values for fields from array on nodes`, () => {
-    expect(buildFieldEnumValues(nodes)).toMatchSnapshot();
-  });
-});
+    expect(buildFieldEnumValues(nodes)).toMatchSnapshot()
+  })
+})

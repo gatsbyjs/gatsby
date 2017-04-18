@@ -21,8 +21,9 @@ Edge), this component will also preload code chunks on these browsers.
 
 ## How to use
 
+In javascript:
 ```jsx
-const Link = require('gatsby-link')
+import Link from "gatsby-link"
 
 render () {
   <div>
@@ -31,6 +32,9 @@ render () {
       activeStyle={{
         color: 'red'
       }}
+    >
+    Another page
+    </Link>
   </div>
 }
 ```

@@ -7,11 +7,8 @@ import _ from "lodash"
 import slash from "slash"
 import createPath from "./create-path"
 import fs from "fs-extra"
-import Joi from "joi"
-import chalk from "chalk"
 import apiRunnerNode from "../utils/api-runner-node"
 import { graphql } from "graphql"
-import { layoutComponentChunkName } from "../utils/js-chunk-names"
 import { store } from "../redux"
 const { boundActionCreators } = require("../redux/actions")
 
@@ -33,7 +30,6 @@ const preferDefault = m => (m && m.default) || m
 
 const mkdirs = Promise.promisify(fs.mkdirs)
 const copy = Promise.promisify(fs.copy)
-const removeDir = Promise.promisify(fs.remove)
 const glob = Promise.promisify(globCB)
 
 // Path creator.
@@ -41,8 +37,9 @@ const glob = Promise.promisify(globCB)
 // algorithm is glob /pages directory for js/jsx/cjsx files *not*
 // underscored. Then create url w/ our path algorithm *unless* user
 // takes control of that page component in gatsby-node.
-const autoPathCreator = async (program: any) => {
-  const pagesDirectory = path.posix.join(program.directory, `pages`)
+const autoPathCreator = async () => {
+  const { program } = store.getState()
+  const pagesDirectory = path.posix.join(program.directory, `/src/pages`)
   const exts = program.extensions.map(e => `*${e}`).join("|")
   // The promisified version wasn't working for some reason
   // so we'll use sync for now.
@@ -92,14 +89,12 @@ module.exports = async (program: any) => {
   console.time(`open and validate gatsby-config.js`)
   let config = {}
   try {
-    config = require(`${program.directory}/gatsby-config`)
+    config = preferDefault(require(`${program.directory}/gatsby-config`))
   } catch (e) {
     console.log(`Couldn't open your gatsby-config.js file`)
     console.log(e)
     process.exit()
   }
-
-  config = preferDefault(config)
 
   store.dispatch({
     type: "SET_SITE_CONFIG",
@@ -115,7 +110,7 @@ module.exports = async (program: any) => {
   // Also test adding to redux store.
   const processPlugin = plugin => {
     if (_.isString(plugin)) {
-      const resolvedPath = path.dirname(require.resolve(plugin))
+      const resolvedPath = slash(path.dirname(require.resolve(plugin)))
       const packageJSON = JSON.parse(
         fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
       )
@@ -137,7 +132,7 @@ module.exports = async (program: any) => {
       }
       plugin.options.plugins = subplugins
 
-      const resolvedPath = path.dirname(require.resolve(plugin.resolve))
+      const resolvedPath = slash(path.dirname(require.resolve(plugin.resolve)))
       const packageJSON = JSON.parse(
         fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
       )
@@ -158,7 +153,7 @@ module.exports = async (program: any) => {
 
   // Add the site's default "plugin" i.e. gatsby-x files in root of site.
   plugins.push({
-    resolve: process.cwd(),
+    resolve: slash(process.cwd()),
     name: `defaultSitePlugin`,
     version: `n/a`,
     pluginOptions: {
@@ -196,14 +191,14 @@ module.exports = async (program: any) => {
 
   // Copy our site files to the root of the site.
   console.time(`copy gatsby files`)
-  const srcDir = `${__dirname}/../intermediate-representation-dir`
-  const siteDir = `${program.directory}/.intermediate-representation`
+  const srcDir = `${__dirname}/../cache-dir`
+  const siteDir = `${program.directory}/.cache`
   try {
     // await removeDir(siteDir)
     await copy(srcDir, siteDir, { clobber: true })
-    await mkdirs(`${program.directory}/.intermediate-representation/json`)
+    await mkdirs(`${program.directory}/.cache/json`)
   } catch (e) {
-    console.log(`Unable to copy site files to .intermediate-representation`)
+    console.log(`Unable to copy site files to .cache`)
     console.log(e)
   }
 
@@ -272,10 +267,13 @@ module.exports = async (program: any) => {
   }
 
   // Collect resolvable extensions and attach to program.
-  // TODO refactor this to use Redux.
   const extensions = [`.js`, `.jsx`]
   const apiResults = await apiRunnerNode("resolvableExtensions")
-  program.extensions = apiResults.reduce((a, b) => a.concat(b), extensions)
+
+  store.dispatch({
+    type: "SET_PROGRAM_EXTENSIONS",
+    payload: _.flattenDeep([extensions, apiResults]),
+  })
 
   // Collect pages.
   await apiRunnerNode(`createPages`, {
@@ -285,7 +283,7 @@ module.exports = async (program: any) => {
   // TODO move this to own source plugin per component type
   // (js/cjsx/typescript, etc.). Only do after there's themes
   // so can cement default /pages setup in default core theme.
-  autoPathCreator(program)
+  autoPathCreator()
 
   // Copy /404/ to /404.html as many static site hosting companies expect
   // site 404 pages to be named this.

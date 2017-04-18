@@ -42,6 +42,7 @@ async function buildSchema() {
 // an explicit API for them to let Gatsby core know that a sync is complete.
 const debounceNodeCreation = cb => {
   const updateNode = _.debounce(cb, 250)
+  updateNode() // Ensure schema is created even if the project hasn't got any source plugin
   store.subscribe(() => {
     const state = store.getState()
     if (

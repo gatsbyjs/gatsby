@@ -89,13 +89,10 @@ module.exports = async (api, args = {}) => {
     if (!filteredPlugins) {
       filteredPlugins = plugins.filter(plugin => hasAPIFile(plugin))
     }
-
     mapSeries(
       filteredPlugins,
       (plugin, callback) => {
-        Promise.resolve(runAPI(plugin, api, args)).then(result => {
-          callback(null, result)
-        })
+        Promise.resolve(runAPI(plugin, api, args)).asCallback(callback)
       },
       (err, results) => {
         // Filter out empty responses and return
