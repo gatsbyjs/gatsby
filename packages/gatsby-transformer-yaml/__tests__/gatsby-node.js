@@ -1,12 +1,13 @@
 const Promise = require("bluebird")
+const yaml = require("js-yaml")
 
 const { onNodeCreate } = require("../src/gatsby-node")
 
-describe(`Process JSON nodes correctly`, () => {
+describe(`Process YAML nodes correctly`, () => {
   const node = {
     id: "whatever",
     contentDigest: "whatever",
-    mediaType: `application/json`,
+    mediaType: `text/yaml`,
     children: [],
     name: `test`,
   }
@@ -17,11 +18,8 @@ describe(`Process JSON nodes correctly`, () => {
   }
 
   it(`correctly creates nodes from JSON which is an array of objects`, async () => {
-    const data = [
-      { id: "foo", blue: true, funny: "yup" },
-      { blue: false, funny: "nope" },
-    ]
-    node.contents = JSON.stringify(data)
+    const data = [{ blue: true, funny: "yup" }, { blue: false, funny: "nope" }]
+    node.contents = yaml.safeDump(data)
 
     const createNode = jest.fn()
     const updateNode = jest.fn()
@@ -44,7 +42,7 @@ describe(`Process JSON nodes correctly`, () => {
       { id: "foo", blue: true, funny: "yup" },
       { blue: false, funny: "nope" },
     ]
-    node.contents = JSON.stringify(data)
+    node.contents = yaml.safeDump(data)
 
     const createNode = jest.fn()
     const updateNode = jest.fn()
