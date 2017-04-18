@@ -191,14 +191,14 @@ module.exports = async (program: any) => {
 
   // Copy our site files to the root of the site.
   console.time(`copy gatsby files`)
-  const srcDir = `${__dirname}/../intermediate-representation-dir`
-  const siteDir = `${program.directory}/.intermediate-representation`
+  const srcDir = `${__dirname}/../cache-dir`
+  const siteDir = `${program.directory}/.cache`
   try {
     // await removeDir(siteDir)
     await copy(srcDir, siteDir, { clobber: true })
-    await mkdirs(`${program.directory}/.intermediate-representation/json`)
+    await mkdirs(`${program.directory}/.cache/json`)
   } catch (e) {
-    console.log(`Unable to copy site files to .intermediate-representation`)
+    console.log(`Unable to copy site files to .cache`)
     console.log(e)
   }
 

@@ -90,20 +90,20 @@ module.exports = async (
           commons: [
             require.resolve(`react-hot-loader/patch`),
             `${require.resolve(`webpack-hot-middleware/client`)}?path=http://${program.host}:${webpackPort}/__webpack_hmr`,
-            `${directory}/.intermediate-representation/app`,
+            `${directory}/.cache/app`,
           ],
         }
       case `build-css`:
         return {
-          main: `${directory}/.intermediate-representation/app`,
+          main: `${directory}/.cache/app`,
         }
       case `build-html`:
         return {
-          main: `${directory}/.intermediate-representation/static-entry`,
+          main: `${directory}/.cache/static-entry`,
         }
       case `build-javascript`:
         return {
-          app: `${directory}/.intermediate-representation/production-app`,
+          app: `${directory}/.cache/production-app`,
         }
       default:
         throw new Error(`The state requested ${stage} doesn't exist.`)
@@ -273,7 +273,7 @@ module.exports = async (
       // Then in the special directory of isomorphic modules Gatsby ships with.
       root: [
         path.join(directory, `src`),
-        path.join(directory, `.intermediate-representation`),
+        path.join(directory, `.cache`),
         path.join(directory, `public`),
         path.resolve(__dirname, `..`, `isomorphic`),
       ],

@@ -94,7 +94,7 @@ async function startServer(program) {
           return res.send(htmlStr)
         } else {
           try {
-            const apiRunner = require(`${directory}/.intermediate-representation/api-runner-ssr`)
+            const apiRunner = require(`${directory}/.cache/api-runner-ssr`)
             const htmlElement = React.createElement(HTML, {
               body: ``,
               headComponents: _.flattenDeep(

@@ -266,12 +266,9 @@ const writeChildRoutes = () => {
     const preferDefault = m => m && m.default || m
     const rootRoute = ${splitRootRoute}
     module.exports = rootRoute`
+  fs.writeFileSync(`${program.directory}/.cache/child-routes.js`, childRoutes)
   fs.writeFileSync(
-    `${program.directory}/.intermediate-representation/child-routes.js`,
-    childRoutes
-  )
-  fs.writeFileSync(
-    `${program.directory}/.intermediate-representation/split-child-routes.js`,
+    `${program.directory}/.cache/split-child-routes.js`,
     splitChildRoutes
   )
 }
@@ -394,10 +391,7 @@ const q = queue(async ({ file, graphql, directory }, callback) => {
 
     // Save result to file.
     const resultJSON = JSON.stringify(clonedResult, null, 4)
-    fs.writeFileSync(
-      `${directory}/.intermediate-representation/json/${jsonName}`,
-      resultJSON
-    )
+    fs.writeFileSync(`${directory}/.cache/json/${jsonName}`, resultJSON)
 
     return null
   }
@@ -423,7 +417,7 @@ const q = queue(async ({ file, graphql, directory }, callback) => {
   ).then(() => {
     console.log(`rewrote JSON for queries for ${absolutePath}`)
     console.timeEnd(`graphql query time`)
-    // Write out new child-routes.js in the .intermediate-representation directory
+    // Write out new child-routes.js in the .cache directory
     // in the root of your site.
     debouncedWriteChildRoutes()
     callback()
