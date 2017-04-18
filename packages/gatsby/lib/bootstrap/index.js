@@ -38,12 +38,8 @@ const glob = Promise.promisify(globCB)
 // underscored. Then create url w/ our path algorithm *unless* user
 // takes control of that page component in gatsby-node.
 const autoPathCreator = async () => {
-  const { config, program } = store.getState()
-  const pagesDirectory = path.posix.join(
-    program.directory,
-    config.rootPath,
-    `pages`
-  )
+  const { program } = store.getState()
+  const pagesDirectory = path.posix.join(program.directory, `/src/pages`)
   const exts = program.extensions.map(e => `*${e}`).join("|")
   // The promisified version wasn't working for some reason
   // so we'll use sync for now.

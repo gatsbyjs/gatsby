@@ -263,7 +263,7 @@ module.exports = async (
   }
 
   function resolve() {
-    const { program, config } = store.getState()
+    const { program } = store.getState()
     return {
       // use the program's extension list (generated via the 'resolvableExtensions' API hook)
       extensions: [``, ...program.extensions],
@@ -272,7 +272,7 @@ module.exports = async (
       // Then all directories needed for building static site.
       // Then in the special directory of isomorphic modules Gatsby ships with.
       root: [
-        path.join(directory, config.rootPath),
+        path.join(directory, `src`),
         path.join(directory, `.intermediate-representation`),
         path.join(directory, `public`),
         path.resolve(__dirname, `..`, `isomorphic`),

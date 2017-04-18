@@ -2,17 +2,12 @@ const Joi = require("joi")
 const chalk = require("chalk")
 
 const { gatsbyConfigSchema } = require("../../joi-schemas/joi")
-const defaultConfig = {
-  rootPath: `/`,
-}
 
 module.exports = (state = {}, action) => {
   switch (action.type) {
     case "SET_SITE_CONFIG":
-      // Set default config.
-      const config = Object.assign({}, defaultConfig, action.payload)
       // Validate the config.
-      const result = Joi.validate(config, gatsbyConfigSchema)
+      const result = Joi.validate(action.payload, gatsbyConfigSchema)
       // TODO use Redux for capturing errors from different
       // parts of Gatsby so a) can capture richer errors and b) be
       // more flexible how to display them.
@@ -26,7 +21,7 @@ module.exports = (state = {}, action) => {
         return
       }
       return {
-        ...config,
+        ...action.payload,
       }
     default:
       return state

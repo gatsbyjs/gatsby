@@ -40,11 +40,10 @@ async function startServer(program) {
   const devConfig = compilerConfig.resolve()
   const compiler = webpack(devConfig)
 
-  const rootPath = store.getState().config.rootPath
-  const HTMLPath = glob.sync(`${directory}${rootPath}html.*`)[0]
+  const HTMLPath = glob.sync(`${directory}/src/html.*`)[0]
   // Check if we can't find an html component in root of site.
   if (!HTMLPath) {
-    throw new Error(`Couldn't find an html.* at the root of your site`)
+    throw new Error(`Couldn't find an /src/html.* file`)
   }
 
   // We use the program port not the webpack-dev-server port as if you import
