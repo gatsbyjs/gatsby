@@ -207,6 +207,8 @@ include yours!
 * [Superstylin'](https://github.com/bntzio/gatsby-starter-superstylin) ([Demo](https://superstylin.netlify.com/))
 * [Multi-Author Blog](https://github.com/emilyaviva/gatsby-starter-blog-multiple-authors
 ) ([Demo](https://emilyaviva.github.io/gatsby-starter-blog-multiple-authors/))
+* [Barebones](https://github.com/Rusta/gatsby-starter-barebones)
+* [Barebones with Preact](https://github.com/Rusta/gatsby-starter-barebones-preact)
 
 ### Tutorial: Building a documentation site from the Gatsby Documentation Starter
 1. Install gatsby `npm install -g gatsby`
