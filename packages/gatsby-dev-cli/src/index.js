@@ -5,7 +5,11 @@ const syspath = require("path")
 
 const ignoreRegs = [/[\/\\]node_modules[\/\\]/i, /\.git/i, /[\/\\]src[\/\\]/i]
 
-module.exports = (root, packages) => {
+const debouncedQuit = _.debounce(() => {
+  process.exit()
+}, 500)
+
+module.exports = (root, packages, scanOnce) => {
   packages.forEach(p => {
     const prefix = `${root}/packages/${p}`
     chokidar
@@ -27,6 +31,10 @@ module.exports = (root, packages) => {
             if (err) console.error(err)
             console.log(`copied ${path} to ${newPath}`)
           })
+
+          if (scanOnce) {
+            debouncedQuit()
+          }
         }
       })
   })
