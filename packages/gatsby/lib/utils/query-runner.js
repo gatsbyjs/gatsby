@@ -378,7 +378,8 @@ const q = queue(async ({ file, graphql, directory }, callback) => {
     result.pathContext = pathInfo
 
     // Add result to page object.
-    const page = store.getState().pages.find(p => p.path === pathInfo.path)
+    const oldPage = store.getState().pages.find(p => p.path === pathInfo.path)
+    const page = _.clone(oldPage)
     let jsonName = `${_.kebabCase(pathInfo.path)}.json`
     let internalComponentName = `Component${pascalCase(pathInfo.path)}`
     if (jsonName === `.json`) {
@@ -387,7 +388,11 @@ const q = queue(async ({ file, graphql, directory }, callback) => {
     }
     page.jsonName = jsonName
     page.internalComponentName = internalComponentName
-    boundActionCreators.upsertPage(page)
+
+    // If the page has changed, send it to the store.
+    if (!_.isEqual(oldPage, page)) {
+      boundActionCreators.upsertPage(page)
+    }
 
     // Save result to file.
     const resultJSON = JSON.stringify(clonedResult, null, 4)

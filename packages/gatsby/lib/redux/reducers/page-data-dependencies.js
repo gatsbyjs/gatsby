@@ -9,35 +9,22 @@ module.exports = (state = { nodes: {}, connections: {} }, action) => {
 
       // If this nodeId not set yet.
       if (action.payload.nodeId) {
-        if (!_.has(state, `nodes.${action.payload.nodeId}`)) {
-          state.nodes[action.payload.nodeId] = [action.payload.path]
-        } else {
-          if (
-            _.includes(state.nodes[action.payload.nodeId], action.payload.path)
-          ) {
-            state.nodes[action.payload.nodeId] = state.nodes[
-              action.payload.nodeId
-            ].concat([action.payload.path])
-          }
+        let existingPaths = []
+        if (state.nodes[action.payload.nodeId]) {
+          existingPaths = state.nodes[action.payload.nodeId]
         }
+        const newPaths = _.uniq(existingPaths.concat(action.payload.path))
+        state.nodes[action.payload.nodeId] = newPaths
       }
 
       // If this connection not set yet.
       if (action.payload.connection) {
-        if (!_.has(state, `connections.${action.payload.connection}`)) {
-          state.connections[action.payload.connection] = [action.payload.path]
-        } else {
-          if (
-            !_.includes(
-              state.connections[action.payload.connection],
-              action.payload.path
-            )
-          ) {
-            state.connections[action.payload.connection] = state.connections[
-              action.payload.connection
-            ].concat([action.payload.path])
-          }
+        let existingPaths = []
+        if (state.connections[action.payload.connection]) {
+          existingPaths = state.connections[action.payload.connection]
         }
+        const newPaths = _.uniq(existingPaths.concat(action.payload.path))
+        state.connections[action.payload.connection] = newPaths
       }
 
       return state

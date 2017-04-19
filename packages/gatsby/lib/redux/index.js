@@ -73,14 +73,9 @@ exports.loadNodeContent = node => {
 }
 
 exports.getNodeAndSavePathDependency = (id, path) => {
+  const { addPageDependency } = require("./actions/add-page-dependency")
   const node = getNode(id)
-  store.dispatch({
-    type: `ADD_PAGE_DEPENDENCY`,
-    payload: {
-      path,
-      nodeId: id,
-    },
-  })
+  addPageDependency({ path, nodeId: id })
   return node
 }
 

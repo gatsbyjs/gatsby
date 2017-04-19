@@ -26,8 +26,7 @@ const {
   getNodeAndSavePathDependency,
 } = require("../redux")
 
-const { boundActionCreators } = require("../redux/actions")
-const { addPageDependency } = boundActionCreators
+const { addPageDependency } = require("../redux/actions/add-page-dependency")
 
 module.exports = async () =>
   new Promise(resolve => {
