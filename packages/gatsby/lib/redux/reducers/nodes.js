@@ -3,7 +3,10 @@ const _ = require("lodash")
 
 const saveState = _.debounce(state => {
   console.log("===============saving node state")
-  fs.writeFile(`${process.cwd()}/.cache/node-data.json`, JSON.stringify(state))
+  fs.writeFile(
+    `${process.cwd()}/.cache/node-data.json`,
+    JSON.stringify(state, null, 2)
+  )
 }, 1000)
 
 module.exports = (state = {}, action) => {

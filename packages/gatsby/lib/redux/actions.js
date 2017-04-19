@@ -3,7 +3,7 @@ import chalk from "chalk"
 const _ = require("lodash")
 const { bindActionCreators } = require("redux")
 
-const { getNode } = require("./index")
+const { getNode, hasNodeChanged } = require("./index")
 
 const { store } = require("./index")
 import * as joiSchemas from "../joi-schemas/joi"
@@ -66,7 +66,7 @@ actions.createNode = node => {
   }
 
   // Check if the node has already been processed.
-  if (getNode(node.id)) {
+  if (getNode(node.id) && !hasNodeChanged(node.id, node.contentDigest)) {
     console.log("NODE_ALREADY_CREATED", node.pluginName, node.id)
     console.log(node)
     console.trace()
