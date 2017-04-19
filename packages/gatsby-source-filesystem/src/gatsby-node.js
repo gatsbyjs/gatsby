@@ -17,7 +17,7 @@ function readFile(file, pluginOptions, cb) {
       // Stringify date objects.
       const newFile = JSON.parse(
         JSON.stringify({
-          id: `${slashedFile.absolutePath} >>> ${contentDigest}`,
+          id: `${slashedFile.absolutePath}`,
           contentDigest: contentDigest,
           children: [],
           parent: `___SOURCE___`,
