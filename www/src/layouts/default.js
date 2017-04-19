@@ -11,13 +11,13 @@ import typography, { rhythm, scale } from "../utils/typography"
 import SidebarBody from "../components/sidebar-body"
 import presets from "../utils/presets"
 
-import "css/prism-coy.css"
+import "../css/prism-coy.css"
 
 // Import Futura PT typeface
-import "fonts/Webfonts/futurapt_book_macroman/stylesheet.css"
-import "fonts/Webfonts/futurapt_bookitalic_macroman/stylesheet.css"
-import "fonts/Webfonts/futurapt_demi_macroman/stylesheet.css"
-import "fonts/Webfonts/futurapt_demiitalic_macroman/stylesheet.css"
+import "../fonts/Webfonts/futurapt_book_macroman/stylesheet.css"
+import "../fonts/Webfonts/futurapt_bookitalic_macroman/stylesheet.css"
+import "../fonts/Webfonts/futurapt_demi_macroman/stylesheet.css"
+import "../fonts/Webfonts/futurapt_demiitalic_macroman/stylesheet.css"
 
 // Other fonts
 import "typeface-tex-gyre-schola"
