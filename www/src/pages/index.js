@@ -1,7 +1,7 @@
 import React from "react"
 import Link from "react-router/lib/Link"
 
-import { rhythm } from "utils/typography"
+import { rhythm } from "../utils/typography"
 
 const IndexRoute = React.createClass({
   render() {

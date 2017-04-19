@@ -1,6 +1,4 @@
 import React from "react"
-import typography, { rhythm, scale } from "utils/typography"
-import logo from "images/gatsby-monogram.jpg"
 import Link from "gatsby-link"
 import DocumentIcon from "react-icons/lib/go/file-text"
 import CodeIcon from "react-icons/lib/go/code"
@@ -8,6 +6,8 @@ import PencilIcon from "react-icons/lib/go/pencil"
 import PersonIcon from "react-icons/lib/md/person"
 import Helmet from "react-helmet"
 
+import logo from "../../static/images/gatsby-monogram.jpg"
+import typography, { rhythm, scale } from "../utils/typography"
 import SidebarBody from "../components/sidebar-body"
 import presets from "../utils/presets"
 

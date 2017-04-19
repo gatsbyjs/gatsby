@@ -1,6 +1,6 @@
 import React from "react"
 
-import { rhythm, scale } from "utils/typography"
+import { rhythm, scale } from "../utils/typography"
 import presets from "../utils/presets"
 
 const DocsTemplate = React.createClass({

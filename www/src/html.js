@@ -1,9 +1,8 @@
 import React from "react"
-
-import { prefixLink } from "gatsby-helpers"
 import { TypographyStyle } from "react-typography"
-import typography from "./utils/typography"
 import Helmet from "react-helmet"
+
+import typography from "./utils/typography"
 
 let stylesStr
 if (process.env.NODE_ENV === `production`) {
