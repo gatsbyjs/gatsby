@@ -11,7 +11,7 @@ import { layoutComponentChunkName } from "../utils/js-chunk-names"
 
 const actions = {}
 
-actions.upsertPage = page => {
+actions.upsertPage = (page, plugin = "") => {
   page.componentChunkName = layoutComponentChunkName(page.component)
   const result = Joi.validate(page, joiSchemas.pageSchema)
   if (result.error) {
@@ -27,7 +27,7 @@ actions.upsertPage = page => {
   }
 }
 
-actions.updateNode = node => {
+actions.updateNode = (node, plugin = "") => {
   if (!_.isObject(node)) {
     return console.log(
       chalk.bold.red(
@@ -45,11 +45,12 @@ actions.updateNode = node => {
 
   return {
     type: "UPDATE_NODE",
+    plugin,
     payload: node,
   }
 }
 
-actions.createNode = node => {
+actions.createNode = (node, plugin = "") => {
   if (!_.isObject(node)) {
     return console.log(
       chalk.bold.red(
@@ -76,20 +77,23 @@ actions.createNode = node => {
 
   return {
     type: "CREATE_NODE",
+    plugin,
     payload: node,
   }
 }
 
-actions.updateSourcePluginStatus = status => {
+actions.updateSourcePluginStatus = (status, plugin = "") => {
   return {
     type: `UPDATE_SOURCE_PLUGIN_STATUS`,
+    plugin,
     payload: status,
   }
 }
 
-actions.addPageDependency = ({ path, nodeId, connection }) => {
+actions.addPageDependency = ({ path, nodeId, connection }, plugin = "") => {
   return {
     type: `ADD_PAGE_DEPENDENCY`,
+    plugin,
     payload: {
       path,
       nodeId,
