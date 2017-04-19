@@ -44,7 +44,10 @@ function readFile(file, pluginOptions, cb) {
   })
 }
 
-exports.sourceNodes = ({ boundActionCreators, getNode }, pluginOptions) => {
+exports.sourceNodes = (
+  { boundActionCreators, getNode, hasNodeChanged },
+  pluginOptions
+) => {
   const { createNode, updateSourcePluginStatus } = boundActionCreators
   updateSourcePluginStatus({
     plugin: `source-filesystem --- ${pluginOptions.name}`,
@@ -66,7 +69,7 @@ exports.sourceNodes = ({ boundActionCreators, getNode }, pluginOptions) => {
     // console.log("Added file at", path)
     readFile(path, pluginOptions, (err, file) => {
       // Only create node if the content digest has changed.
-      if (!getNode(file.id)) {
+      if (!getNode(file.id) || hasNodeChanged(file.id, file.contentDigest)) {
         createNode(file)
       } else {
         // console.log("not creating node cause it already exists", file.id)
@@ -77,7 +80,7 @@ exports.sourceNodes = ({ boundActionCreators, getNode }, pluginOptions) => {
     console.log("changed file at", path)
     readFile(path, pluginOptions, (err, file) => {
       // Only create node if the content digest has changed.
-      if (!getNode(file.id)) {
+      if (!getNode(file.id) || hasNodeChanged(file.id, file.contentDigest)) {
         createNode(file)
       }
     })

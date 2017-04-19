@@ -2,7 +2,6 @@ const Redux = require("redux")
 const Promise = require("bluebird")
 const _ = require("lodash")
 const { composeWithDevTools } = require("remote-redux-devtools")
-const apiRunnerNode = require("../utils/api-runner-node")
 const fs = require("fs")
 
 // Reducers
@@ -49,6 +48,10 @@ const getNode = id => {
   return store.getState().nodes[id]
 }
 exports.getNode = getNode
+exports.hasNodeChanged = (id, digest) => {
+  const node = store.getState().nodes[id]
+  return node.contentDigest !== digest
+}
 
 exports.loadNodeContent = node => {
   if (node.content) {

@@ -40,6 +40,7 @@ const runAPI = (plugin, api, args) => {
     loadNodeContent,
     getNodes,
     getNode,
+    hasNodeChanged,
     getNodeAndSavePathDependency,
   } = require("../redux")
   const { boundActionCreators } = require("../redux/actions")
@@ -66,6 +67,7 @@ const runAPI = (plugin, api, args) => {
         store,
         getNodes,
         getNode,
+        hasNodeChanged,
         getNodeAndSavePathDependency,
         cache,
       },
