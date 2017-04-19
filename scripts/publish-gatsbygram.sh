@@ -7,7 +7,7 @@ yarn
 
 echo "=== Copying built Gatsby to website."
 yarn global add gatsby-dev-cli@canary
-gatsby-dev --set-path-to-repo ../
+gatsby-dev --set-path-to-repo ../../
 gatsby-dev --scan-once
 
 echo "=== Building website"
