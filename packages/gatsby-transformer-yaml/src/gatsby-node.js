@@ -12,13 +12,13 @@ async function onNodeCreate({ node, boundActionCreators, loadNodeContent }) {
   }
 
   const content = await loadNodeContent(node)
-  const yamlArray = jsYaml.load(content).map(obj => {
+  const yamlArray = jsYaml.load(content).map((obj, i) => {
     const objStr = JSON.stringify(obj)
     const contentDigest = crypto.createHash("md5").update(objStr).digest("hex")
 
     return {
       ...obj,
-      id: obj.id ? obj.id : contentDigest,
+      id: obj.id ? obj.id : `${node.id} [${i}] >>> YAML`,
       contentDigest,
       type: _.capitalize(node.name),
       mediaType: `application/json`,

@@ -9,7 +9,7 @@ Array [
       "content": "{\\"blue\\":true,\\"funny\\":\\"yup\\"}",
       "contentDigest": "73901821b17d5aa9dd6026181f73b64c",
       "funny": "yup",
-      "id": "73901821b17d5aa9dd6026181f73b64c",
+      "id": "whatever [0] >>> YAML",
       "mediaType": "application/json",
       "parent": "whatever",
       "type": "Test",
@@ -22,7 +22,7 @@ Array [
       "content": "{\\"blue\\":false,\\"funny\\":\\"nope\\"}",
       "contentDigest": "f624311d932d73dcd416d2a8bea2b67d",
       "funny": "nope",
-      "id": "f624311d932d73dcd416d2a8bea2b67d",
+      "id": "whatever [1] >>> YAML",
       "mediaType": "application/json",
       "parent": "whatever",
       "type": "Test",
@@ -36,8 +36,8 @@ Array [
   Array [
     Object {
       "children": Array [
-        "73901821b17d5aa9dd6026181f73b64c",
-        "f624311d932d73dcd416d2a8bea2b67d",
+        "whatever [0] >>> YAML",
+        "whatever [1] >>> YAML",
       ],
       "content": "- blue: true
   funny: yup
