@@ -27,7 +27,8 @@ const composeEnhancers = composeWithDevTools({
 })
 
 let store
-if (process.env.NODE_ENV === `test`) {
+// Don't try connecting to devtools server if testing or building.
+if (process.env.NODE_ENV === `test` || process.env.NODE_ENV === `production`) {
   store = Redux.createStore(
     Redux.combineReducers({ ...reducers }),
     initialState

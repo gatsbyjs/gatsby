@@ -22,7 +22,7 @@ Array [
       "content": "{\\"blue\\":false,\\"funny\\":\\"nope\\"}",
       "contentDigest": "f624311d932d73dcd416d2a8bea2b67d",
       "funny": "nope",
-      "id": "f624311d932d73dcd416d2a8bea2b67d",
+      "id": "whatever [1] >>> JSON",
       "mediaType": "application/json",
       "parent": "whatever",
       "type": "Test",
@@ -37,7 +37,7 @@ Array [
     Object {
       "children": Array [
         "foo",
-        "f624311d932d73dcd416d2a8bea2b67d",
+        "whatever [1] >>> JSON",
       ],
       "content": "[{\\"id\\":\\"foo\\",\\"blue\\":true,\\"funny\\":\\"yup\\"},{\\"blue\\":false,\\"funny\\":\\"nope\\"}]",
       "contentDigest": "whatever",

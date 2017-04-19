@@ -17,7 +17,10 @@ function readFile(file, pluginOptions, cb) {
       // Stringify date objects.
       const newFile = JSON.parse(
         JSON.stringify({
-          id: `${slashedFile.absolutePath}`,
+          // Don't actually make the File id the absolute path as otherwise
+          // people will use the id for that and ids shouldn't be treated as
+          // useful information.
+          id: `${slashedFile.absolutePath} absPath of file`,
           contentDigest: contentDigest,
           children: [],
           parent: `___SOURCE___`,

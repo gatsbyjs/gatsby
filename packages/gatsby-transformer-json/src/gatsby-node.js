@@ -21,13 +21,13 @@ async function onNodeCreate({ node, boundActionCreators, loadNodeContent }) {
   }
 
   const content = await loadNodeContent(node)
-  const JSONArray = JSON.parse(content).map(obj => {
+  const JSONArray = JSON.parse(content).map((obj, i) => {
     const objStr = JSON.stringify(obj)
     const contentDigest = crypto.createHash("md5").update(objStr).digest("hex")
 
     return {
       ...obj,
-      id: obj.id ? obj.id : contentDigest,
+      id: obj.id ? obj.id : `${node.id} [${i}] >>> JSON`,
       contentDigest,
       mediaType: `application/json`,
       parent: node.id,
