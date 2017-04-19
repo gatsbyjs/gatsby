@@ -26,6 +26,7 @@ async function onNodeCreate({
     return
   }
 
+  console.log("loadNodeContent", loadNodeContent)
   const content = await loadNodeContent(node)
   const data = grayMatter(content)
   const contentDigest = crypto
