@@ -34,3 +34,19 @@ this program running.
 
 Typically you'll also want to run `npm run watch` in the Gatsby repo to set up
 watchers to build Gatsby source code.
+
+### Other commands
+
+#### `--packages`
+
+You can prevent the automatic dependencies scan and instead specify a list of
+packages you want to link by using the `--packages` option:
+
+`gatsby-dev --packages gatsby gatsby-typegen-remark`
+
+#### `--scan-once`
+
+With this flag, the tool will do an initial scan and copy and then quit. This
+is useful for setting up automated testing/builds of Gatsby sites from the latest
+code. Gatsby's main website (and example websites) are built from HEAD using this
+flag, see https://github.com/gatsbyjs/gatsby/blob/1.0/scripts/publish-site.sh.
