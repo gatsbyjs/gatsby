@@ -1,8 +1,10 @@
 # gatsby-source-filesystem
 
 Plugin for creating `File` nodes from the file system. The various
-"parser" plugins extend `File` nodes into various types of more
-specialized nodes.
+"transformer" plugins transform `File` nodes into various other types of data
+e.g. `gatsby-transformer-json` transforms JSON files into JSON data nodes and
+`gatsby-transformer-remark` transforms markdown files into `MarkdownRemark`
+nodes from which you can query an HTML representation of the markdown.
 
 ## Install
 

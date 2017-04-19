@@ -1,18 +1,18 @@
-# gatsby-parser-yaml
+# gatsby-transformer-yaml
 
 Parses YAML files. Currently it only handles YAML arrays but the
 goal is to handle in a reasonable way many types of YAML data.
 
 ## Install
 
-`npm install --save gatsby-parser-yaml`
+`npm install --save gatsby-transformer-yaml`
 
 ## How to use
 
 ```javascript
 // In your gatsby-config.js
 plugins: [
-  `gatsby-parser-yaml`,
+  `gatsby-transformer-yaml`,
 ]
 ```
 

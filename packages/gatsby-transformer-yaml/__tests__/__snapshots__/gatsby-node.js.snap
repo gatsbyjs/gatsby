@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Process YAML nodes correctly correctly creates nodes from JSON which is an array of objects 1`] = `
+Array [
+  Array [
+    Object {
+      "blue": true,
+      "children": Array [],
+      "content": "{\\"blue\\":true,\\"funny\\":\\"yup\\"}",
+      "contentDigest": "73901821b17d5aa9dd6026181f73b64c",
+      "funny": "yup",
+      "id": "73901821b17d5aa9dd6026181f73b64c",
+      "mediaType": "application/json",
+      "parent": "whatever",
+      "type": "Test",
+    },
+  ],
+  Array [
+    Object {
+      "blue": false,
+      "children": Array [],
+      "content": "{\\"blue\\":false,\\"funny\\":\\"nope\\"}",
+      "contentDigest": "f624311d932d73dcd416d2a8bea2b67d",
+      "funny": "nope",
+      "id": "f624311d932d73dcd416d2a8bea2b67d",
+      "mediaType": "application/json",
+      "parent": "whatever",
+      "type": "Test",
+    },
+  ],
+]
+`;
+
+exports[`Process YAML nodes correctly correctly creates nodes from JSON which is an array of objects 2`] = `
+Array [
+  Array [
+    Object {
+      "children": Array [
+        "73901821b17d5aa9dd6026181f73b64c",
+        "f624311d932d73dcd416d2a8bea2b67d",
+      ],
+      "content": "- blue: true
+  funny: yup
+- blue: false
+  funny: nope
+",
+      "contentDigest": "whatever",
+      "id": "whatever",
+      "mediaType": "text/yaml",
+      "name": "test",
+    },
+  ],
+]
+`;

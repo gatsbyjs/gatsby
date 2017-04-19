@@ -22,23 +22,28 @@ const inspect = require("unist-util-inspect")
 const Promise = require("bluebird")
 const prune = require("underscore.string/prune")
 
+let pluginsCacheStr = ""
 const astPromiseCache = {}
-
-// Delete Markdown AST cache when the node is recreated
-// e.g. the user saves a change to the file.
-exports.onNodeCreate = ({ node }) => {
-  if (node.type === `MarkdownRemark`) {
-    delete astPromiseCache[node.id]
-  }
+const astCacheKey = node => {
+  return `typegen-remark-markdown-ast-${node.contentDigest}-${pluginsCacheStr}`
+}
+const htmlCacheKey = node => {
+  return `typegen-remark-markdown-html-${node.contentDigest}-${pluginsCacheStr}`
+}
+const headingsCacheKey = node => {
+  return `typegen-remark-markdown-headings-${node.contentDigest}-${pluginsCacheStr}`
 }
 
 exports.extendNodeType = (
-  { type, allNodes, linkPrefix, getNode },
+  { type, allNodes, linkPrefix, getNode, cache },
   pluginOptions
 ) => {
   if (type.name !== `MarkdownRemark`) {
     return {}
   }
+
+  pluginsCacheStr = pluginOptions.plugins.map(p => p.name).join("")
+  console.log("pluginsCacheStr", pluginsCacheStr)
 
   return new Promise((resolve, reject) => {
     const files = allNodes.filter(n => n.type === `File`)
@@ -51,10 +56,11 @@ exports.extendNodeType = (
     })
 
     async function getAST(markdownNode) {
-      if (astPromiseCache[markdownNode.id]) {
-        return astPromiseCache[markdownNode.id]
+      const cachedAST = await cache.get(astCacheKey(markdownNode))
+      if (cachedAST) {
+        return cachedAST
       } else {
-        astPromiseCache[markdownNode.id] = new Promise((resolve, reject) => {
+        const ast = await new Promise((resolve, reject) => {
           Promise.all(
             pluginOptions.plugins.map(plugin => {
               const requiredPlugin = require(plugin.resolve)
@@ -71,7 +77,7 @@ exports.extendNodeType = (
               }
             })
           ).then(() => {
-            const markdownAST = remark.parse(markdownNode.src)
+            const markdownAST = remark.parse(markdownNode.content)
 
             // source => parse (can order parsing for dependencies) => typegen
             //
@@ -120,45 +126,51 @@ exports.extendNodeType = (
                 }
               })
             ).then(() => {
-              markdownNode.ast = markdownAST
-              resolve(markdownNode)
+              resolve(markdownAST)
             })
           })
         })
-      }
 
-      return astPromiseCache[markdownNode.id]
+        // Save new AST to cache and return
+        cache.set(astCacheKey(markdownNode), ast)
+        return ast
+      }
     }
 
     async function getHeadings(markdownNode) {
-      if (markdownNode.headings) {
-        return markdownNode
+      const cachedHeadings = await cache.get(headingsCacheKey(markdownNode))
+      if (cachedHeadings) {
+        return cachedHeadings
       } else {
-        const { ast } = await getAST(markdownNode)
-        markdownNode.headings = select(ast, `heading`).map(heading => ({
+        const ast = await getAST(markdownNode)
+        const headings = select(ast, `heading`).map(heading => ({
           value: _.first(select(heading, `text`).map(text => text.value)),
           depth: heading.depth,
         }))
 
-        return markdownNode
+        cache.set(headingsCacheKey(markdownNode), headings)
+        return headings
       }
     }
 
-    const htmlPromisesCache = {}
     async function getHTML(markdownNode) {
-      if (htmlPromisesCache[markdownNode.id]) {
-        return htmlPromisesCache[markdownNode.id]
+      const cachedHTML = await cache.get(htmlCacheKey(markdownNode))
+      if (cachedHTML) {
+        return cachedHTML
       } else {
-        htmlPromisesCache[markdownNode.id] = new Promise((resolve, reject) => {
-          getAST(markdownNode).then(node => {
-            node.html = hastToHTML(
-              toHAST(node.ast, { allowDangerousHTML: true }),
-              { allowDangerousHTML: true }
+        const html = await new Promise((resolve, reject) => {
+          getAST(markdownNode).then(ast => {
+            resolve(
+              hastToHTML(toHAST(ast, { allowDangerousHTML: true }), {
+                allowDangerousHTML: true,
+              })
             )
-            return resolve(node)
           })
         })
-        return htmlPromisesCache[markdownNode.id]
+
+        // Save new HTML to cache and return
+        cache.set(htmlCacheKey(markdownNode), html)
+        return html
       }
     }
 
@@ -196,11 +208,8 @@ exports.extendNodeType = (
       html: {
         type: GraphQLString,
         resolve(markdownNode) {
-          return getHTML(markdownNode).then(node => node.html)
+          return getHTML(markdownNode)
         },
-      },
-      src: {
-        type: GraphQLString,
       },
       excerpt: {
         type: GraphQLString,
@@ -211,9 +220,9 @@ exports.extendNodeType = (
           },
         },
         resolve(markdownNode, { pruneLength }) {
-          return getAST(markdownNode).then(node => {
+          return getAST(markdownNode).then(ast => {
             const textNodes = []
-            visit(node.ast, `text`, textNode => textNodes.push(textNode.value))
+            visit(ast, `text`, textNode => textNodes.push(textNode.value))
             return prune(textNodes.join(` `), pruneLength)
           })
         },
@@ -226,8 +235,7 @@ exports.extendNodeType = (
           },
         },
         resolve(markdownNode, { depth }) {
-          return getHeadings(markdownNode).then(node => {
-            let headings = node.headings
+          return getHeadings(markdownNode).then(headings => {
             if (typeof depth === "number") {
               headings = headings.filter(heading => heading.depth === depth)
             }
@@ -238,9 +246,9 @@ exports.extendNodeType = (
       timeToRead: {
         type: GraphQLInt,
         resolve(markdownNode) {
-          return getHTML(markdownNode).then(node => {
+          return getHTML(markdownNode).then(html => {
             let timeToRead = 0
-            const pureText = sanitizeHTML(node.html, { allowTags: [] })
+            const pureText = sanitizeHTML(html, { allowTags: [] })
             const avgWPM = 265
             const wordCount = _.words(pureText).length
             timeToRead = Math.round(wordCount / avgWPM)

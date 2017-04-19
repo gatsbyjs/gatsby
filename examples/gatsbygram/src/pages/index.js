@@ -51,6 +51,7 @@ class Index extends React.Component {
   }
 
   render() {
+    console.log(this.props)
     this.context.setEdges(this.props.data.allPosts.edges)
     return (
       <div

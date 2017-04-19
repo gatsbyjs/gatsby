@@ -3,15 +3,51 @@ const glob = require("glob")
 const _ = require("lodash")
 const mapSeries = require("async/mapSeries")
 
+const cache = require("./cache")
+
+// Bind action creators per plugin so can auto-add plugin
+// meta-data to data they create.
+const boundPluginActionCreators = {}
+const doubleBind = (boundActionCreators, plugin) => {
+  if (boundPluginActionCreators[plugin.name]) {
+    return boundPluginActionCreators[plugin.name]
+  } else {
+    const keys = Object.keys(boundActionCreators)
+    const doubleBoundActionCreators = {}
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i]
+      const boundActionCreator = boundActionCreators[key]
+      if (typeof boundActionCreator === "function") {
+        doubleBoundActionCreators[key] = (...args) => {
+          // Only set the pluginName once (so node updaters don't
+          // overwrite this).
+          if (!_.has(args, "[0].pluginName")) {
+            args[0].pluginName = plugin.name
+          }
+          return boundActionCreator(...args)
+        }
+      }
+    }
+    boundPluginActionCreators[plugin.name] = doubleBoundActionCreators
+    return doubleBoundActionCreators
+  }
+}
+
 const runAPI = (plugin, api, args) => {
   let linkPrefix = ``
   const {
     store,
+    loadNodeContent,
     getNodes,
     getNode,
     getNodeAndSavePathDependency,
   } = require("../redux")
   const { boundActionCreators } = require("../redux/actions")
+
+  // Wrap "createNode" so we can autoset the package name
+  // of the plugin that creates each node.
+  const doubleBoundActionCreators = doubleBind(boundActionCreators, plugin)
+
   if (store.getState().program.prefixLinks) {
     linkPrefix = store.getState().config.linkPrefix
   }
@@ -25,11 +61,13 @@ const runAPI = (plugin, api, args) => {
       {
         ...args,
         linkPrefix,
-        actionCreators: boundActionCreators,
+        boundActionCreators: doubleBoundActionCreators,
+        loadNodeContent,
         store,
         getNodes,
         getNode,
         getNodeAndSavePathDependency,
+        cache,
       },
       plugin.pluginOptions
     )

@@ -3,8 +3,13 @@
 exports[`Create and update nodes allows creating nodes 1`] = `
 Object {
   "payload": Object {
+    "children": Array [],
+    "contentDigest": "hasdfljds",
     "id": "hi",
+    "mediaType": "test",
+    "parent": "test",
     "pickle": true,
+    "pluginName": "tests",
     "type": "Test",
   },
   "type": "CREATE_NODE",
@@ -14,8 +19,13 @@ Object {
 exports[`Create and update nodes allows creating nodes 2`] = `
 Object {
   "hi": Object {
+    "children": Array [],
+    "contentDigest": "hasdfljds",
     "id": "hi",
+    "mediaType": "test",
+    "parent": "test",
     "pickle": true,
+    "pluginName": "tests",
     "type": "Test",
   },
 }

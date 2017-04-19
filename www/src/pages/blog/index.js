@@ -1,7 +1,7 @@
 import React from "react"
 import Link from "gatsby-link"
 
-import { rhythm, scale } from "utils/typography"
+import { rhythm, scale } from "../../utils/typography"
 import presets from "../../utils/presets"
 
 const IndexRoute = React.createClass({
@@ -95,9 +95,9 @@ export default IndexRoute
 export const pageQuery = `
 {
   allMarkdownRemark(
-    sortBy: { order: DESC, fields: frontmatter___date },
+    sortBy: { order: DESC, fields: [frontmatter___date] },
     frontmatter: { draft: { ne: true } },
-    _sourceNodeId: { regex: "/blog/" },
+    fileAbsolutePath: { regex: "/blog/" },
   ) {
     edges {
       node {

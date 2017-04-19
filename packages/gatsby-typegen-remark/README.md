@@ -42,7 +42,7 @@ following:
 
 The `html`, `excerpt`, `timeToRead`, and `headings` fields are all provided by
 this plugin. The `title` field on the `frontmatter` sub-object is
-inferred from the data parsed by `gatsby-parser-remark`.
+inferred from the data parsed by `gatsby-transformer-remark`.
 
 Some fields, such as `excerpt`, can take additional arguments like
 `pruneLength`.

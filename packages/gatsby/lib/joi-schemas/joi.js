@@ -18,8 +18,13 @@ export const pageSchema = Joi.object()
 
 export const nodeSchema = Joi.object()
   .keys({
-    // TODO ids can be ints as well.
     id: Joi.string().required(),
+    contentDigest: Joi.string().required(),
+    children: Joi.array(Joi.string()).required(),
+    parent: Joi.string().required(),
+    mediaType: Joi.string().required(),
+    content: Joi.string(),
     type: Joi.string().required(),
+    pluginName: Joi.string().required(),
   })
   .unknown()

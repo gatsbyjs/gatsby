@@ -1,7 +1,7 @@
 {
-  "name": "gatsby-parser-yaml",
+  "name": "gatsby-transformer-sharp",
   "version": "1.0.0-alpha12",
-  "description": "Gatsby parser plugin for yaml",
+  "description": "Gatsby transformer plugin for images using Sharp",
   "scripts": {
     "build": "babel src --out-dir .",
     "watch": "babel -w src --out-dir ."
@@ -9,13 +9,13 @@
   "keywords": [
     "gatsby",
     "gatsby-plugin",
-    "yaml"
+    "sharp",
+    "image"
   ],
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "bluebird": "^3.4.6",
-    "js-yaml": "3.7.0",
     "unist-util-select": "^1.5.0"
   },
   "devDependencies": {

@@ -21,6 +21,11 @@ describe(`Create and update nodes`, () => {
   it(`allows creating nodes`, () => {
     const action = actions.createNode({
       id: `hi`,
+      contentDigest: `hasdfljds`,
+      children: [],
+      parent: `test`,
+      mediaType: `test`,
+      pluginName: `tests`,
       type: `Test`,
       pickle: true,
     })
@@ -31,11 +36,21 @@ describe(`Create and update nodes`, () => {
   it(`allows updating nodes`, () => {
     const action = actions.createNode({
       id: `hi`,
+      contentDigest: `hasdfljds`,
+      children: [],
+      parent: `test`,
+      mediaType: `test`,
+      pluginName: `tests`,
       type: `Test`,
       pickle: true,
     })
     const updateAction = actions.createNode({
       id: `hi`,
+      contentDigest: `hasdfljds`,
+      children: [],
+      parent: `test`,
+      mediaType: `test`,
+      pluginName: `tests`,
       type: `Test`,
       pickle: false,
     })

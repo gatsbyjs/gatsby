@@ -1,6 +1,6 @@
 {
-  "name": "gatsby-parser-remark",
-  "description": "Gatsby parser plugin for Remark",
+  "name": "gatsby-transformer-remark",
+  "description": "Gatsby transformer plugin for Remark",
   "version": "1.0.0-alpha12",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {

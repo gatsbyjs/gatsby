@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Process markdown content correctly Correctly creates a new MarkdownRemark node 1`] = `
+Array [
+  Array [
+    Object {
+      "children": Array [],
+      "content": "
+Where oh where is my little pony?
+    ",
+      "contentDigest": "54cfa2ad99756f2fa232cac585280a37",
+      "frontmatter": Object {
+        "date": "12/12/2014",
+        "parent": "whatever",
+        "title": "my little pony",
+      },
+      "id": "whatever >>> MarkdownRemark",
+      "mediaType": "text/x-markdown",
+      "parent": "whatever",
+      "type": "MarkdownRemark",
+    },
+  ],
+]
+`;
+
+exports[`Process markdown content correctly Correctly creates a new MarkdownRemark node 2`] = `
+Array [
+  Array [
+    Object {
+      "children": Array [
+        "whatever >>> MarkdownRemark",
+      ],
+      "content": "---
+title: \\"my little pony\\"
+date: \\"12/12/2014\\"
+---
+
+Where oh where is my little pony?
+    ",
+      "contentDigest": "whatever",
+      "id": "whatever",
+      "mediaType": "text/x-markdown",
+    },
+  ],
+]
+`;

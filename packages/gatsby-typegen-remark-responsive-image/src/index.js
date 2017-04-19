@@ -61,16 +61,16 @@ module.exports = ({
               node.url
             )
             const imageNode = _.find(files, file => {
-              if (file && file.id) {
-                return file.id === imagePath
+              if (file && file.absolutePath) {
+                return file.absolutePath === imagePath
               }
               return null
             })
-            if (!imageNode || !imageNode.id) {
+            if (!imageNode || !imageNode.absolutePath) {
               return resolve()
             }
 
-            const dimensions = imageSize(imageNode.id)
+            const dimensions = imageSize(imageNode.absolutePath)
             const filteredSizes = sizes.filter(size => size < dimensions.width)
 
             // Add the original image to ensure the largest image possible
