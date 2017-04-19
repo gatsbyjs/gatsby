@@ -1,7 +1,7 @@
 import React from "react"
 import { renderToString, renderToStaticMarkup } from "react-dom/server"
 import { match, RouterContext } from "react-router"
-import Html from "html"
+import Html from "../src/html"
 import { kebabCase, get, merge } from "lodash"
 import rootRoute from "./child-routes"
 import apiRunner from "./api-runner-ssr"
@@ -33,12 +33,8 @@ module.exports = (locals, callback) => {
           { component, headComponents: [] },
           {}
         )
-        let {
-          body,
-          headComponents,
-          postBodyComponents,
-          ...bodyRenderProps
-        } = results[0]
+        let { body, headComponents, postBodyComponents, ...bodyRenderProps } =
+          results[0]
 
         // If no one stepped up, we'll handle it.
         if (!body) {
