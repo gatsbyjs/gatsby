@@ -8,10 +8,6 @@ Gatsby packages to Gatsby sites that you're testing your changes on.
 
 `npm install -g gatsby-dev-cli@canary`
 
-or
-
-`yarn global add gatsby-dev-cli@canary`
-
 ## Configuration / First time setup
 
 The gatsby-dev-cli tool needs to know where your cloned Gatsby repository is
@@ -34,6 +30,9 @@ this program running.
 
 Typically you'll also want to run `npm run watch` in the Gatsby repo to set up
 watchers to build Gatsby source code.
+
+More detailed instruction for setting up your Gatsby development environment can
+be found [here](https://www.gatsbyjs.org/docs/how-to-contribute/).
 
 ### Other commands
 
