@@ -21,6 +21,10 @@ import apiRunnerNode from "./api-runner-node"
  *
  */
 function resolvePlugin(pluginName, directory, type) {
+  // When a plugin is specified with options in babelrc, the pluginName contains
+  // the array with [name, options]. In that case we extract the name.
+  pluginName = Array.isArray(pluginName) ? pluginName[0] : pluginName
+
   const gatsbyPath = path.resolve(__dirname, `..`, `..`)
   const plugin =
     resolve(`babel-${type}-${pluginName}`, directory) ||
@@ -32,8 +36,9 @@ function resolvePlugin(pluginName, directory, type) {
     ? pluginName
     : `babel-${type}-${pluginName}`
   const pluginInvariantMessage = `
-  You are trying to use a Babel plugin which Gatsby cannot find. You
-  can install it using "npm install --save ${name}".
+  You are trying to use a Babel plugin or preset which Gatsby cannot find: ${pluginName}
+
+  You can install it using "npm install --save ${name}".
 
   You can use any of the Gatsby provided plugins without installing them:
     - babel-plugin-add-module-exports
