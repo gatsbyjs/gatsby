@@ -27,6 +27,7 @@ describe(`Gatsby data tree utils`, () => {
         title: `The world of slash and adventure`,
         blue: 10010,
         circle: `happy`,
+        draft: false,
       },
     },
   ]
