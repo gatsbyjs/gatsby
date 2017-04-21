@@ -33,14 +33,16 @@ checkpointsPromise({
     // Find paths without data dependencies and run them (just in case?)
     const paths = findPathsWithoutDataDependencies()
     // Run these pages
-    paths.forEach(path => {
-      const page = state.pages.find(p => p.path === path)
-      const component = state.pageComponents[page.component]
-      queryRunner(page, component)
+    Promise.all(
+      paths.map(path => {
+        const page = state.pages.find(p => p.path === path)
+        const component = state.pageComponents[page.component]
+        return queryRunner(page, component)
+      })
+    ).then(() => {
+      // Tell everyone who cares that we're done.
+      callbacks.forEach(cb => cb())
     })
-
-    // Tell everyone who cares that we're done.
-    callbacks.forEach(cb => cb())
   })
 })
 
@@ -96,7 +98,7 @@ const findAndRunQueriesForDirtyPaths = actions => {
   })
 
   if (dirtyPaths.length > 0) {
-    console.log(`all pages invalidated by node change`, dirtyPaths)
+    console.log(`all pages invalidated by node change`, _.uniq(dirtyPaths))
 
     // Run these pages
     return Promise.all(

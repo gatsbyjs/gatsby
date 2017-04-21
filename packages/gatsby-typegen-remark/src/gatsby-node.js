@@ -43,7 +43,6 @@ exports.extendNodeType = (
   }
 
   pluginsCacheStr = pluginOptions.plugins.map(p => p.name).join("")
-  console.log("pluginsCacheStr", pluginsCacheStr)
 
   return new Promise((resolve, reject) => {
     const files = allNodes.filter(n => n.type === `File`)
