@@ -131,7 +131,6 @@ module.exports = async () =>
                 name: _.camelCase(`${typeName} field`),
                 type: nodeType.nodeObjectType,
                 resolve: (node, a, context, { fieldName }) => {
-                  const fieldSelector = `${node.___path}.${fieldName}`
                   let fieldValue = node[fieldName]
                   const sourceFileNode = _.find(
                     getNodes(),
