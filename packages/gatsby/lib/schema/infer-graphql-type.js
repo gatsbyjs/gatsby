@@ -127,15 +127,6 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
     })
   })
 
-  // Add the "path" to each subnode as we'll need this later when resolving
-  // mapped fields to types in GraphQL land. We do that here (after creating
-  // field examples) so our special field is not added to the GraphQL type.
-  if (selector) {
-    nodes.forEach(node => {
-      _.set(node, `${selector}.___path`, `${type}.${selector}`)
-    })
-  }
-
   // Remove fields common to the top-level of all nodes.  We add these
   // elsewhere so don't need to infer there type.
   if (!selector) {
