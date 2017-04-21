@@ -59,10 +59,20 @@ describe(`add page data dependency`, () => {
         connection: `Markdown.Remark`,
       },
     }
+    const action2 = {
+      type: `ADD_PAGE_DEPENDENCY`,
+      payload: {
+        path: `/hi2/`,
+        connection: `Markdown.Remark`,
+      },
+    }
 
-    expect(reducer(undefined, action)).toEqual({
+    let state = reducer(undefined, action)
+    state = reducer(state, action2)
+
+    expect(state).toEqual({
       connections: {
-        "Markdown.Remark": ["/hi/"],
+        "Markdown.Remark": ["/hi/", "/hi2/"],
       },
       nodes: {},
     })
