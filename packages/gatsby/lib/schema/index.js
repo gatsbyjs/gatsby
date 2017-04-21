@@ -8,7 +8,6 @@ const apiRunner = require("../utils/api-runner-node")
 const buildNodeTypes = require("./build-node-types")
 const buildNodeConnections = require("./build-node-connections")
 const { store } = require("../redux")
-const queryRunner = require("../utils/query-runner")
 
 async function buildSchema() {
   console.time(`building schema`)

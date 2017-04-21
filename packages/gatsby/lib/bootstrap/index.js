@@ -1,6 +1,5 @@
 /* @flow */
 import Promise from "bluebird"
-import queryRunner from "../utils/query-runner"
 import path from "path"
 import globCB from "glob"
 import _ from "lodash"
