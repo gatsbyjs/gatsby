@@ -105,7 +105,7 @@ const writeChildRoutes = () => {
       // If there's not an index page, just pick the one with the shortest path.
       // Probably a bad heuristic.
       if (!indexPage) {
-        indexPage = _.first(_.sortBy(pages, page => page.path.length))
+        indexPage = _(pages).sortBy(pages, page => page.path.length).first()
       }
       let route = `
       {

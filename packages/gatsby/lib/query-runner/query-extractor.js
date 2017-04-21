@@ -3,6 +3,7 @@ const fs = require("fs")
 import traverse from "babel-traverse"
 const babylon = require("babylon")
 const Promise = require("bluebird")
+const _ = require("lodash")
 
 const apiRunnerNode = require("../utils/api-runner-node")
 
@@ -73,12 +74,11 @@ module.exports = async filePath => {
     },
   })
 
-  // Trim whitespace
-  if (query) {
-    query = query.trim()
-  } else {
+  // Ensure query is a string and trim whitespace
+  if (!_.isString(query)) {
     query = ""
   }
+  query = _.trim(query)
 
   return query
 }

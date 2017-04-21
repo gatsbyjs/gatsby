@@ -29,17 +29,11 @@ module.exports = (state = { nodes: {}, connections: {} }, action) => {
 
       return state
     case "REMOVE_PAGES_DATA_DEPENDENCIES":
-      Object.keys(state.nodes).forEach(nodeId => {
-        state.nodes[nodeId] = _.difference(
-          state.nodes[nodeId],
-          action.payload.paths
-        )
+      state.nodes = _.mapValues(state.nodes, paths => {
+        return _.difference(paths, action.payload.paths)
       })
-      Object.keys(state.connections).forEach(connection => {
-        state.nodes[connection] = _.difference(
-          state.connections[connection],
-          action.payload.paths
-        )
+      state.connections = _.mapValues(state.connections, paths => {
+        return _.difference(paths, action.payload.paths)
       })
 
       return state

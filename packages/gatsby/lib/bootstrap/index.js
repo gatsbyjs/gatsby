@@ -308,7 +308,7 @@ module.exports = async (program: any) => {
 
   console.log(`created js pages`)
 
-  const finishPromise = new Promise(resolve => {
+  return new Promise(resolve => {
     isInitialPageQueryingDone(() => {
       apiRunnerNode(`generateSideEffects`).then(() => {
         console.log(
@@ -319,6 +319,4 @@ module.exports = async (program: any) => {
       })
     })
   })
-
-  return finishPromise
 }
