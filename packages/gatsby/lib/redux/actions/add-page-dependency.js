@@ -20,7 +20,8 @@ exports.addPageDependency = ({ path, nodeId, connection }) => {
     connectionDependencyExists = true
   }
   if (
-    connection && _.has(state, `pageDataDependencies.connections.${connection}`)
+    connection &&
+    _.has(state, `pageDataDependencies.connections.${connection}`)
   ) {
     connectionDependencyExists = true
   }
