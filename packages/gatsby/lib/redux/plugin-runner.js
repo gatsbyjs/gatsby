@@ -5,6 +5,7 @@ const apiRunnerNode = require("../utils/api-runner-node")
 
 store.subscribe(() => {
   const state = store.getState()
+  // console.log("last action", state.lastAction.type)
   if (
     state.lastAction.type === "CREATE_NODE" &&
     state.lastAction.payload.logical !== true

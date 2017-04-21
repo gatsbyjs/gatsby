@@ -1,6 +1,5 @@
 /* @flow */
 import Promise from "bluebird"
-import queryRunner from "../utils/query-runner"
 import path from "path"
 import globCB from "glob"
 import _ from "lodash"
@@ -11,6 +10,10 @@ import apiRunnerNode from "../utils/api-runner-node"
 import { graphql } from "graphql"
 import { store } from "../redux"
 const { boundActionCreators } = require("../redux/actions")
+
+// Start off the query running.
+require("../query-runner")
+const isInitialPageQueryingDone = require("../query-runner/page-query-runner")
 
 // Override console.log to add the source file + line number.
 // ["log", "warn"].forEach(function(method) {
@@ -306,7 +309,7 @@ module.exports = async (program: any) => {
   console.log(`created js pages`)
 
   return new Promise(resolve => {
-    queryRunner(thing => {
+    isInitialPageQueryingDone(() => {
       apiRunnerNode(`generateSideEffects`).then(() => {
         console.log(
           `bootstrap finished, time since started: ${process.uptime()}`

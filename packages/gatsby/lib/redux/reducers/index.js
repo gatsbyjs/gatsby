@@ -9,4 +9,5 @@ module.exports = {
   schema: require("./schema"),
   status: require("./status"),
   pageDataDependencies: require("./page-data-dependencies"),
+  pageComponents: require("./page-components"),
 }

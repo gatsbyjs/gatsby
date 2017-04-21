@@ -12,6 +12,7 @@ Object {
     "pluginName": "tests",
     "type": "Test",
   },
+  "plugin": "",
   "type": "CREATE_NODE",
 }
 `;

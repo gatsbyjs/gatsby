@@ -8,16 +8,13 @@ const fs = require("fs")
 const reducers = require("./reducers")
 
 // Read from cache the old node data.
-let nodeData = {}
+let initialState = {}
 try {
-  nodeData = JSON.parse(
-    fs.readFileSync(`${process.cwd()}/.cache/node-data.json`)
+  initialState = JSON.parse(
+    fs.readFileSync(`${process.cwd()}/.cache/redux-state.json`)
   )
 } catch (e) {
   // ignore errors.
-}
-const initialState = {
-  nodes: nodeData,
 }
 
 const composeEnhancers = composeWithDevTools({
@@ -40,6 +37,25 @@ if (process.env.NODE_ENV === `test` || process.env.NODE_ENV === `production`) {
     composeEnhancers(Redux.applyMiddleware())
   )
 }
+
+// Persist state.
+const saveState = _.debounce(state => {
+  console.log("===============saving redux state")
+  const pickedState = _.pick(state, [
+    "nodes",
+    "pages",
+    "pageDataDependencies",
+    "pageComponents",
+  ])
+  fs.writeFile(
+    `${process.cwd()}/.cache/redux-state.json`,
+    JSON.stringify(pickedState, null, 2)
+  )
+}, 1000)
+
+store.subscribe(() => {
+  saveState(store.getState())
+})
 
 exports.store = store
 exports.getNodes = () => {
@@ -73,14 +89,9 @@ exports.loadNodeContent = node => {
 }
 
 exports.getNodeAndSavePathDependency = (id, path) => {
+  const { addPageDependency } = require("./actions/add-page-dependency")
   const node = getNode(id)
-  store.dispatch({
-    type: `ADD_PAGE_DEPENDENCY`,
-    payload: {
-      path,
-      nodeId: id,
-    },
-  })
+  addPageDependency({ path, nodeId: id })
   return node
 }
 

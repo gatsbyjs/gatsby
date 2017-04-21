@@ -21,7 +21,7 @@ class Post extends React.Component {
     return (
       <Link
         to={`/${id}/`}
-        onTouchStart={() => touched = true}
+        onTouchStart={() => (touched = true)}
         onMouseEnter={() => {
           if (!touched) {
             this.setState({ hovering: true })

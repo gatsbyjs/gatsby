@@ -8,7 +8,6 @@ const apiRunner = require("../utils/api-runner-node")
 const buildNodeTypes = require("./build-node-types")
 const buildNodeConnections = require("./build-node-connections")
 const { store } = require("../redux")
-const queryRunner = require("../utils/query-runner")
 
 async function buildSchema() {
   console.time(`building schema`)
@@ -42,7 +41,8 @@ async function buildSchema() {
 // an explicit API for them to let Gatsby core know that a sync is complete.
 const debounceNodeCreation = cb => {
   const updateNode = _.debounce(cb, 250)
-  updateNode() // Ensure schema is created even if the project hasn't got any source plugin
+  // Ensure schema is created even if the project hasn't got any source plugins.
+  updateNode()
   store.subscribe(() => {
     const state = store.getState()
     if (
@@ -69,9 +69,6 @@ module.exports = () => {
         builtSchema = true
         // Resolve promise once the schema is built.
         buildSchema().then(() => resolve())
-      } else {
-        // Run the query runner now.
-        queryRunner()
       }
     })
   })

@@ -17,18 +17,52 @@ describe(`add page data dependency`, () => {
       },
     })
   })
+  it(`lets you add a node dependency to multiple paths`, () => {
+    const action = {
+      type: `ADD_PAGE_DEPENDENCY`,
+      payload: {
+        path: `/hi/`,
+        nodeId: `1.2.3`,
+      },
+    }
+    const action2 = {
+      type: `ADD_PAGE_DEPENDENCY`,
+      payload: {
+        path: `/hi2/`,
+        nodeId: `1.2.3`,
+      },
+    }
+    const action3 = {
+      type: `ADD_PAGE_DEPENDENCY`,
+      payload: {
+        path: `/blog/`,
+        nodeId: `1.2.3`,
+      },
+    }
+
+    let state = reducer(undefined, action)
+    state = reducer(state, action2)
+    state = reducer(state, action3)
+
+    expect(state).toEqual({
+      connections: {},
+      nodes: {
+        "1.2.3": [`/hi/`, `/hi2/`, `/blog/`],
+      },
+    })
+  })
   it(`lets you add a connection dependency`, () => {
     const action = {
       type: `ADD_PAGE_DEPENDENCY`,
       payload: {
         path: `/hi/`,
-        connection: `MarkdownRemark`,
+        connection: `Markdown.Remark`,
       },
     }
 
     expect(reducer(undefined, action)).toEqual({
       connections: {
-        MarkdownRemark: ["/hi/"],
+        "Markdown.Remark": ["/hi/"],
       },
       nodes: {},
     })

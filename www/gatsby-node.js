@@ -93,7 +93,8 @@ exports.onNodeCreate = ({ node, boundActionCreators, getNode }) => {
     }
     // Add slugs for package READMEs.
     if (
-      fileNode.sourceName === `packages` && parsedFilePath.name === `README`
+      fileNode.sourceName === `packages` &&
+      parsedFilePath.name === `README`
     ) {
       slug = `/docs/packages/${parsedFilePath.dir}/`
       node.frontmatter = {}

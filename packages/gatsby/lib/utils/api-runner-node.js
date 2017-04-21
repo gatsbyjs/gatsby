@@ -24,7 +24,7 @@ const doubleBind = (boundActionCreators, plugin) => {
           if (!_.has(args, "[0].pluginName")) {
             args[0].pluginName = plugin.name
           }
-          return boundActionCreator(...args)
+          return boundActionCreator(...args, plugin)
         }
       }
     }

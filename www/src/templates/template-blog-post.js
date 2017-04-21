@@ -182,7 +182,7 @@ const BlogPostTemplate = React.createClass({
 export default BlogPostTemplate
 
 export const pageQuery = `
-  query TemplatePage($slug: String!) {
+  query TemplateBlogPost($slug: String!) {
     markdownRemark(slug: { eq: $slug }) {
       html
       excerpt
