@@ -11,8 +11,25 @@ import { layoutComponentChunkName } from "../utils/js-chunk-names"
 
 const actions = {}
 
+const pascalCase = _.flow(_.camelCase, _.upperFirst)
 actions.upsertPage = (page, plugin = "") => {
   page.componentChunkName = layoutComponentChunkName(page.component)
+
+  let jsonName = `${_.kebabCase(page.path)}.json`
+  let internalComponentName = `Component${pascalCase(page.path)}`
+  if (jsonName === `.json`) {
+    jsonName = `index.json`
+    internalComponentName = `ComponentIndex`
+  }
+
+  page.jsonName = jsonName
+  page.internalComponentName = internalComponentName
+
+  // Ensure the page has a context object
+  if (!page.context) {
+    page.context = {}
+  }
+
   const result = Joi.validate(page, joiSchemas.pageSchema)
   if (result.error) {
     console.log(chalk.blue.bgYellow(`The upserted page didn't pass validation`))
@@ -98,6 +115,34 @@ actions.addPageDependency = ({ path, nodeId, connection }, plugin = "") => {
       path,
       nodeId,
       connection,
+    },
+  }
+}
+
+actions.removePagesDataDependencies = paths => {
+  return {
+    type: `REMOVE_PAGES_DATA_DEPENDENCIES`,
+    payload: {
+      paths,
+    },
+  }
+}
+
+actions.addPageComponent = componentPath => {
+  return {
+    type: `ADD_PAGE_COMPONENT`,
+    payload: {
+      componentPath,
+    },
+  }
+}
+
+actions.setPageComponentQuery = ({ query, componentPath }) => {
+  return {
+    type: `SET_PAGE_COMPONENT_QUERY`,
+    payload: {
+      query,
+      componentPath,
     },
   }
 }

@@ -45,8 +45,7 @@ const writeChildRoutes = () => {
     }
 
     return `
-      {
-        ${pathStr}
+      { ${pathStr}
         getComponent (nextState, cb) {
           require.ensure([], (require) => {
             const Component = preferDefault(require('${page.component}'))
@@ -232,7 +231,6 @@ const writeChildRoutes = () => {
     const preferDefault = m => m && m.default || m
     const rootRoute = ${splitRootRoute}
     module.exports = rootRoute`
-  console.log("writing child-routes")
   fs.writeFileSync(`${program.directory}/.cache/child-routes.js`, childRoutes)
   fs.writeFileSync(
     `${program.directory}/.cache/split-child-routes.js`,
@@ -240,17 +238,18 @@ const writeChildRoutes = () => {
   )
 }
 
-const comparePages = _.debounce((oldPages, newPages) => {
-  if (!_.isEqual(oldPages, newPages)) {
+let writtenOnce = false
+let oldPages
+const writeRoutes = _.debounce(() => {
+  if (!writtenOnce || !_.isEqual(oldPages, store.getState().pages)) {
     writeChildRoutes()
-    console.log("pages are different")
-  } else {
-    console.log("pages are the same")
+    writtenOnce = true
+    oldPages = store.getState().pages
   }
 }, 250)
 
-let oldPages
 store.subscribe(() => {
-  comparePages(oldPages, store.getState().pages)
-  oldPages = store.getState().pages
+  if (store.getState().lastAction.type === `UPSERT_PAGE`) {
+    writeRoutes()
+  }
 })

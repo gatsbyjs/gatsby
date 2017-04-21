@@ -5,11 +5,17 @@ Array [
   Object {
     "component": "/whatever/index.js",
     "componentChunkName": "page-component---whatever-index-js",
+    "context": Object {},
+    "internalComponentName": "ComponentHi",
+    "jsonName": "hi.json",
     "path": "/hi/",
   },
   Object {
     "component": "/whatever/index.js",
     "componentChunkName": "page-component---whatever-index-js",
+    "context": Object {},
+    "internalComponentName": "ComponentHiPizza",
+    "jsonName": "hi-pizza.json",
     "path": "/hi/pizza/",
   },
 ]
@@ -20,6 +26,9 @@ Object {
   "payload": Object {
     "component": "/whatever/index.js",
     "componentChunkName": "page-component---whatever-index-js",
+    "context": Object {},
+    "internalComponentName": "ComponentHi",
+    "jsonName": "hi.json",
     "path": "/hi/",
   },
   "type": "UPSERT_PAGE",
@@ -31,6 +40,9 @@ Array [
   Object {
     "component": "/whatever/index.js",
     "componentChunkName": "page-component---whatever-index-js",
+    "context": Object {},
+    "internalComponentName": "ComponentHi",
+    "jsonName": "hi.json",
     "path": "/hi/",
   },
 ]
@@ -44,6 +56,8 @@ Object {
     "context": Object {
       "id": 123,
     },
+    "internalComponentName": "ComponentHi",
+    "jsonName": "hi.json",
     "path": "/hi/",
   },
   "type": "UPSERT_PAGE",
@@ -58,6 +72,8 @@ Array [
     "context": Object {
       "id": 123,
     },
+    "internalComponentName": "ComponentHi",
+    "jsonName": "hi.json",
     "path": "/hi/",
   },
 ]
@@ -68,6 +84,9 @@ Array [
   Object {
     "component": "/whatever2/index.js",
     "componentChunkName": "page-component---whatever-2-index-js",
+    "context": Object {},
+    "internalComponentName": "ComponentHi",
+    "jsonName": "hi.json",
     "path": "/hi/",
   },
 ]

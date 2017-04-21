@@ -20,7 +20,7 @@ const DocsTemplate = React.createClass({
 export default DocsTemplate
 
 export const pageQuery = `
-  query BlogPostByPath($slug: String!) {
+  query TemplateDocsMarkdown($slug: String!) {
     markdownRemark(slug: { eq: $slug }) {
       html
       frontmatter {

@@ -75,10 +75,12 @@ module.exports = ({ args, nodes, connection = false, path = "" }) => {
     })
     return connectionArray
   } else {
-    addPageDependency({
-      path,
-      nodeId: result[0].id,
-    })
+    if (result && result.length > 0) {
+      addPageDependency({
+        path,
+        nodeId: result[0].id,
+      })
+    }
     return result[0]
   }
 }

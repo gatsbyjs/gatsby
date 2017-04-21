@@ -12,6 +12,10 @@ import { graphql } from "graphql"
 import { store } from "../redux"
 const { boundActionCreators } = require("../redux/actions")
 
+// Start off the query running.
+require("../query-runner")
+const isInitialPageQueryingDone = require("../query-runner/page-query-runner")
+
 // Override console.log to add the source file + line number.
 // ["log", "warn"].forEach(function(method) {
 // var old = console[method];
@@ -305,8 +309,8 @@ module.exports = async (program: any) => {
 
   console.log(`created js pages`)
 
-  return new Promise(resolve => {
-    queryRunner(thing => {
+  const finishPromise = new Promise(resolve => {
+    isInitialPageQueryingDone(() => {
       apiRunnerNode(`generateSideEffects`).then(() => {
         console.log(
           `bootstrap finished, time since started: ${process.uptime()}`
@@ -316,4 +320,6 @@ module.exports = async (program: any) => {
       })
     })
   })
+
+  return finishPromise
 }
