@@ -51,7 +51,7 @@
   "private": true,
   "scripts": {
     "postinstall": "lerna bootstrap --hoist",
-    "build": "lerna exec build",
+    "build": "lerna run build",
     "lint": "eslint --ext .js,.jsx --ignore-path .gitignore .",
     "lint:flow": "babel-node scripts/flow-check.js",
     "format-packages": "prettier --trailing-comma es5 --no-semi --write packages/**/src/*.js",
@@ -59,11 +59,11 @@
     "format-www": "find www -iname *.js | grep -v node_modules | grep -v public | grep -v .cache | xargs prettier --write --trailing-comma es5 --no-semi",
     "format-examples": "find examples -iname *.js | grep -v node_modules | grep -v public | grep -v .cache | xargs prettier --write --trailing-comma es5 --no-semi",
     "format": "npm run format-packages && npm run format-gatsby && npm run format-www && npm run format-examples",
-    "publish-canary": "lerna exec build; lerna publish --canary --yes",
-    "publish-next": "lerna exec build; lerna publish --npm-tag=next",
+    "publish-canary": "lerna run build; lerna publish --canary --yes",
+    "publish-next": "lerna run build; lerna publish --npm-tag=next",
     "test": "jest",
     "test_bkup": "npm run lint && npm run test-node && npm run test-integration",
-    "watch": "lerna exec watch --no-sort --stream --concurrency 999"
+    "watch": "lerna run watch --no-sort --stream --concurrency 999"
   },
   "devDependencies": {
     "babel-preset-flow": "^6.23.0"
