@@ -62,6 +62,7 @@
     "publish-canary": "lerna run build; lerna publish --canary --yes",
     "publish-next": "lerna run build; lerna publish --npm-tag=next",
     "test": "jest",
+    "test:watch": "jest --watch",
     "test_bkup": "npm run lint && npm run test-node && npm run test-integration",
     "watch": "lerna run watch --no-sort --stream --concurrency 999"
   },
