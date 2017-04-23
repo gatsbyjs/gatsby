@@ -39,3 +39,4 @@ test/**/public
 public/
 node_modules/
 .cache/
+.netlify

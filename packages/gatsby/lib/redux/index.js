@@ -67,7 +67,11 @@ const getNode = id => {
 exports.getNode = getNode
 exports.hasNodeChanged = (id, digest) => {
   const node = store.getState().nodes[id]
-  return node.contentDigest !== digest
+  if (!node) {
+    return true
+  } else {
+    return node.contentDigest !== digest
+  }
 }
 
 exports.loadNodeContent = node => {

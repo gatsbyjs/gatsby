@@ -27,6 +27,8 @@ module.exports = (root, packages, scanOnce) => {
             `./node_modules/${p}`,
             syspath.relative(prefix, path)
           )
+          // Make any directories that are needed.
+          fs.ensureFileSync(newPath)
           fs.copy(path, newPath, err => {
             if (err) console.error(err)
             console.log(`copied ${path} to ${newPath}`)

@@ -1,0 +1,27 @@
+{
+  "name": "gatsby-example-image-gallery",
+  "private": true,
+  "description": "Gatsby example site: image gallery",
+  "version": "1.0.0",
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "dependencies": {
+    "flat": "^2.0.1",
+    "gatsby": "1.0.0-alpha12-alpha.8370739a",
+    "gatsby-link": "1.0.0-alpha12-alpha.8370739a",
+    "gatsby-plugin-google-analytics": "1.0.0-alpha12-alpha.8370739a",
+    "gatsby-plugin-manifest": "1.0.0-alpha12-alpha.8370739a",
+    "gatsby-plugin-offline": "1.0.0-alpha12-alpha.8370739a",
+    "gatsby-source-hacker-news": "1.0.0-alpha12-alpha.8370739a",
+    "lodash": "^4.16.4",
+    "slash": "^1.0.0"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build"
+  }
+}
