@@ -337,6 +337,14 @@ exports.data = {
 export default MyComponent ...
 ```
 
+You can also use a named export for the data object:
+
+```javascript
+export const data = {
+  title: 'This is a title',
+}
+```
+
 ### Structure of a Gatsby site
 * `config.toml` - Core application configuration is stored here. Available via a `require`
 or `import` of 'config'. Values:

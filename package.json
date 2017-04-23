@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "React.js Static Site Generator",
-  "version": "0.12.45",
+  "version": "0.12.46",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "ava": {
     "require": [
@@ -145,7 +145,7 @@
     "build": "babel lib --out-dir dist/",
     "clean-test-bundles": "find test/ -type f -name bundle.js* -exec rm -rf {} +",
     "format": "prettier --trailing-comma es5 --no-semi --single-quote --write \"lib/**/*.js\" \"test/**/*.js\"",
-    "lint": "eslint --ext .js,.jsx --ignore-path .gitignore .",
+    "lint": "eslint --ext .js,.jsx --ignore-path .gitignore --ignore-pattern interfaces .",
     "lint:flow": "babel-node scripts/flow-check.js",
     "publish-patch": "npm run build && npm version patch && npm publish; git push; git push --tags",
     "test": "npm run lint && npm run test-node && npm run test-integration",
