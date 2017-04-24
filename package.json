@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "babel-cli": "^6.24.1",
-    "babel-eslint": "^7.2.2",
+    "babel-eslint": "^7.2.3",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-lodash": "^3.2.11",
     "babel-plugin-transform-async-to-generator": "^6.24.1",
@@ -18,7 +18,7 @@
     "eslint-config-google": "^0.7.1",
     "eslint-config-prettier": "^1.7.0",
     "eslint-plugin-flow-vars": "^0.5.0",
-    "eslint-plugin-flowtype": "^2.31.0",
+    "eslint-plugin-flowtype": "^2.32.1",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-prettier": "^2.0.1",
