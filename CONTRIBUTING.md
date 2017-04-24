@@ -35,4 +35,45 @@ The usual contributing steps are:
 * Commit and push to your fork.
 * Create an pull request from your branch.
 
-This project uses [FlowType](https://flowtype.org/) for static type checking.
+## Development tools
+
+### Redux devtools
+
+Gatsby uses Redux for managing state during development and building. It's
+often helpful to see the flow of actions and builtup state for a site you're
+working on or if adding new functionality to core. We leverage
+https://github.com/zalmoxisus/remote-redux-devtools and
+https://github.com/zalmoxisus/remotedev-server to give you use the Redux
+devtools extension for debugging Gatsby.
+
+To use this, first install
+[redux-devtools-extension](https://github.com/zalmoxisus/redux-devtools-extension)
+in your browser. Then in your Gatsby repo, run `npm run remotedev`. Then
+in your site directory run `gatsby develop`.
+
+At this point, your site will be sending Redux actions and state to the remote server.
+
+To connect to this, you need to setup the devtools extension to talk to the remote
+server.
+
+First open the remote devtools.
+
+![how to open the redux remote devtools extension](./images/open-remote-dev-tools.png)
+
+Then click settings along the bottom menu and set the host and port.
+
+![how to set the host/port for the remote devtools extension to connect to Gatsby](./images/remote-dev-settings.png)
+
+After this, the devtools extension *should* connect to the remote server and you'll
+see actions start showing up.
+
+![gatsby redux remote devtools](./images/running-redux-devtools.png)
+
+**Warning!! Lots of buginess**. While having this available is extreamly
+helpful, this setup is very buggy and fragile. There is a memory leak in the
+extension that's triggered it seems every time you restart the Gatsby
+development server. Also the extension often, for no apparent reason, just
+won't show any actions from the remote server. It'll also often freeze up. The
+best solution seems to just be turning everything off and on again.  Fixing up
+these tools would be very helpful for us and many others using these tools if
+someone wants to take this on!

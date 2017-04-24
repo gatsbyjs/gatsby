@@ -17,10 +17,11 @@ try {
   // ignore errors.
 }
 
+const sitePackageJSON = require(`${process.cwd()}/package.json`)
 const composeEnhancers = composeWithDevTools({
   realtime: true,
   port: 19999,
-  name: `gatsby-redux`,
+  name: sitePackageJSON.name,
 })
 
 let store
@@ -67,7 +68,11 @@ const getNode = id => {
 exports.getNode = getNode
 exports.hasNodeChanged = (id, digest) => {
   const node = store.getState().nodes[id]
-  return node.contentDigest !== digest
+  if (!node) {
+    return true
+  } else {
+    return node.contentDigest !== digest
+  }
 }
 
 exports.loadNodeContent = node => {
