@@ -31,6 +31,7 @@
     "lerna": "^2.0.0-rc.3",
     "prettier": "^1.2.2",
     "purdy": "^2.2.1",
+    "remotedev-server": "^0.2.2",
     "rimraf": "^2.6.1"
   },
   "jest": {
@@ -61,6 +62,7 @@
     "format": "npm run format-packages && npm run format-gatsby && npm run format-www && npm run format-examples",
     "publish-canary": "lerna run build; lerna publish --canary --yes",
     "publish-next": "lerna run build; lerna publish --npm-tag=next",
+    "remotedev": "remotedev --hostname=localhost --port=19999",
     "test": "jest",
     "test_bkup": "npm run lint && npm run test-node && npm run test-integration",
     "watch": "lerna run watch --no-sort --stream --concurrency 999"

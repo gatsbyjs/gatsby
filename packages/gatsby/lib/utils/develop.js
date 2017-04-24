@@ -11,11 +11,7 @@ const ReactDOMServer = require("react-dom/server")
 const rl = require("readline")
 const parsePath = require("parse-filepath")
 const _ = require("lodash")
-const remotedev = require("remotedev-server")
 const { store } = require("../redux")
-
-// Start the dev server for Redux.
-remotedev({ hostname: "localhost", port: 19999 })
 
 const rlInterface = rl.createInterface({
   input: process.stdin,
