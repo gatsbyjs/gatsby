@@ -7,6 +7,7 @@
     "Noah Lange <noahrlange@gmail.com>"
   ],
   "dependencies": {
+    "ts-loader": "^2.0.3",
     "typescript": "^2.2.1"
   },
   "devDependencies": {
