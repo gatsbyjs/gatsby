@@ -46,6 +46,7 @@ https://gatsbygram.gatsbyjs.org and the case study on how its built https://www.
 * Live editing on every part of your site. Dramatically speed development.
 
 ## Sites built with Gatsby
+* [SameMoment Blog](http://blog.samemoment.com/)
 * [bricolage.io](https://bricolage.io/?utm_source=github.com) ([source](https://github.com/KyleAMathews/blog))
 * [reindex.io](https://www.reindex.io)
 * [syncano.io](https://www.syncano.io) ([source](https://github.com/Syncano/syncano.com))
