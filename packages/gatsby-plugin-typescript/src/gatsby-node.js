@@ -1,4 +1,4 @@
-import { transpileModule } from "typescript"
+const { transpileModule } = require("typescript")
 
 const test = /\.tsx?$/
 const compilerDefaults = {
@@ -7,29 +7,28 @@ const compilerDefaults = {
   jsx: "react",
 }
 
-export function resolvableExtensions(ctx) {
-  return [".ts", ".tsx"]
-}
+module.exports.resolvableExtensions = () => [".ts", ".tsx"]
 
-export function modifyWebpackConfig({ config }, { compilerOptions }) {
+module.exports.modifyWebpackConfig = ({ config }, { compilerOptions }) => {
   // CommonJS to keep Webpack happy.
-  const copts = Object.assign(compilerDefaults, compilerOptions, {
+  const copts = Object.assign({}, compilerDefaults, compilerOptions, {
     module: "commonjs",
   })
   // React-land is rather undertyped; nontrivial TS projects will most likely
   // error (i.e., not build) at something or other.
   const opts = { compilerOptions: copts, transpileOnly: true }
-  // Load TypeScript files with ts-loader. This'll need to be installed (along with TypeScript)
-  // in the project directory.
   config.loader("typescript", {
     test,
     loader: "ts-loader?" + JSON.stringify(opts),
   })
 }
 
-export function preprocessSource({ contents, filename }, { compilerOptions }) {
+module.exports.preprocessSource = (
+  { contents, filename },
+  { compilerOptions }
+) => {
   // overwrite defaults with custom compiler options
-  const copts = Object.assign(compilerDefaults, compilerOptions, {
+  const copts = Object.assign({}, compilerDefaults, compilerOptions, {
     target: "esnext",
     module: "es6",
   })
