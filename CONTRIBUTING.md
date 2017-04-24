@@ -48,8 +48,10 @@ devtools extension for debugging Gatsby.
 
 To use this, first install
 [redux-devtools-extension](https://github.com/zalmoxisus/redux-devtools-extension)
-in your browser. Then in your Gatsby repo, run `npm run remotedev`. Then
-in your site directory run `gatsby develop`.
+in your browser. Then in your Gatsby repo, run `npm run remotedev`. Then in
+your site directory run `REDUX_DEVTOOLS=true gatsby develop`. Depending on
+your operating system and shell, you may need to modify how you set the
+`REDUX_DEVTOOLS` environment variable.
 
 At this point, your site will be sending Redux actions and state to the remote server.
 
