@@ -124,6 +124,7 @@ https://gatsbygram.gatsbyjs.org and the case study on how its built https://www.
 * [devtheweb.io](https://devtheweb.io)
 * [SameMoment Blog](http://blog.samemoment.com/)
 * [Kombi Labs](http://kombi.io/)
+* [harshiniraji.in](http://harshiniraji.in)
 * [Edit this file to add yours!](https://github.com/gatsbyjs/gatsby/blob/master/README.md)
 
 *Note, for the sites that have made their source available, you can
