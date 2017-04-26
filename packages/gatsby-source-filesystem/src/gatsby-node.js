@@ -59,6 +59,7 @@ exports.sourceNodes = (
   const {
     createNode,
     deleteNode,
+    touchNode,
     updateSourcePluginStatus,
   } = boundActionCreators
   updateSourcePluginStatus({
@@ -80,21 +81,13 @@ exports.sourceNodes = (
   watcher.on(`add`, path => {
     // console.log("Added file at", path)
     readFile(path, pluginOptions, (err, file) => {
-      // Only create node if the content digest has changed.
-      if (!getNode(file.id) || hasNodeChanged(file.id, file.contentDigest)) {
-        createNode(file)
-      } else {
-        // console.log("not creating node cause it already exists", file.id)
-      }
+      createNode(file)
     })
   })
   watcher.on(`change`, path => {
     console.log("changed file at", path)
     readFile(path, pluginOptions, (err, file) => {
-      // Only create node if the content digest has changed.
-      if (!getNode(file.id) || hasNodeChanged(file.id, file.contentDigest)) {
-        createNode(file)
-      }
+      createNode(file)
     })
   })
   watcher.on(`unlink`, path => {

@@ -1,13 +1,14 @@
 /* @flow */
 const _ = require("lodash")
-const parents = require("unist-util-parents")
 const { GraphQLSchema, GraphQLObjectType } = require("graphql")
 
 const siteSchema = require("./site-schema")
 const apiRunner = require("../utils/api-runner-node")
 const buildNodeTypes = require("./build-node-types")
 const buildNodeConnections = require("./build-node-connections")
-const { store } = require("../redux")
+const { store, getNode } = require("../redux")
+const { boundActionCreators } = require("../redux/actions")
+const { deleteNodes } = boundActionCreators
 
 async function buildSchema() {
   console.time(`building schema`)
@@ -69,6 +70,26 @@ module.exports = () => {
         builtSchema = true
         // Resolve promise once the schema is built.
         buildSchema().then(() => resolve())
+
+        // Garbage collect stale data nodes.
+        //
+        // This is a REALLY terrible place to put this but until we have
+        // a nice centralized way to trigger events when certain work is
+        // done, we'll just put this here.
+        const touchedNodes = Object.keys(state.nodesTouched)
+        const staleNodes = _.values(state.nodes).filter(node => {
+          // Find the root node.
+          let rootNode = node
+          while (getNode(rootNode.parent) !== undefined) {
+            rootNode = getNode(node.parent)
+          }
+
+          return !_.includes(touchedNodes, rootNode.id)
+        })
+        if (staleNodes.length > 0) {
+          console.log("deleting stale nodes", staleNodes.length)
+          deleteNodes(staleNodes.map(n => n.id))
+        }
       }
     })
   })

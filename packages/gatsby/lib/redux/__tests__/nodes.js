@@ -1,5 +1,6 @@
 const { actions, boundActions } = require("../actions")
 const nodeReducer = require("../reducers/nodes")
+const nodeTouchedReducer = require("../reducers/nodes-touched")
 
 describe(`Create and update nodes`, () => {
   // TODO add these back when we stop directly consoleing errors.
@@ -59,7 +60,7 @@ describe(`Create and update nodes`, () => {
     expect(state["hi"].pickle).toEqual(false)
   })
 
-  it(`allows deleting nodes`, () => {
+  it(`nodes that are added are also "touched"`, () => {
     const action = actions.createNode({
       id: `hi`,
       contentDigest: `hasdfljds`,
@@ -70,9 +71,7 @@ describe(`Create and update nodes`, () => {
       type: `Test`,
       pickle: true,
     })
-    const deleteAction = actions.deleteNode("hi")
-    let state = nodeReducer(undefined, action)
-    state = nodeReducer(state, deleteAction)
-    expect(state["hi"]).toBe(undefined)
+    let state = nodeTouchedReducer(undefined, action)
+    expect(state["hi"]).toBe(true)
   })
 })
