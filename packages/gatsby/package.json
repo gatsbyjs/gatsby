@@ -10,7 +10,7 @@
     "babel": "inherit"
   },
   "bin": {
-    "gatsby": "./bin/gatsby.js"
+    "gatsby": "./dist/gatsby-cli.js"
   },
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
