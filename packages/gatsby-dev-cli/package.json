@@ -5,7 +5,8 @@
     "fs-extra": "^2.1.2",
     "is-absolute": "^0.2.6",
     "lodash": "^4.17.4",
-    "yargs": "^7.0.2"
+    "yargs": "^7.0.2",
+    "yurnalist": "^0.1.6"
   },
   "name": "gatsby-dev-cli",
   "version": "1.0.0-alpha13",
@@ -15,12 +16,12 @@
     "babel-cli": "^6.24.1"
   },
   "bin": {
-    "gatsby-dev": "./bin/gatsby-dev"
+    "gatsby-dev": "./dist/index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src --out-dir .",
-    "watch": "babel -w src --out-dir ."
+    "build": "babel src --out-dir dist",
+    "watch": "babel -w src --out-dir dist"
   },
   "keywords": [
     "gatsby"
