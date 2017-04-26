@@ -214,6 +214,7 @@ include yours!
 * [Barebones](https://github.com/Rusta/gatsby-starter-barebones) ([Demo](https://rusta.github.io/gatsby-starter-barebones/))
 * [Barebones with Preact](https://github.com/Rusta/gatsby-starter-barebones-preact) ([Demo](https://rusta.github.io/gatsby-starter-barebones-preact/))
 * [Undefined](https://github.com/kentaro-m/gatsby-starter-undefined) ([Demo](https://undefined.netlify.com/))
+* [Guoliim blog starter](https://github.com/guoliim/guoliim-blog) ([Demo](https://blog.guoli.im/))
 
 ### Tutorial: Building a documentation site from the Gatsby Documentation Starter
 1. Install gatsby `npm install -g gatsby`
