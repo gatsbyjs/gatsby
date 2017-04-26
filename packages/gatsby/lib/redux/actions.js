@@ -67,6 +67,30 @@ actions.updateNode = (node, plugin = "") => {
   }
 }
 
+actions.deleteNode = (nodeId, plugin = "") => {
+  return {
+    type: "DELETE_NODE",
+    plugin,
+    payload: nodeId,
+  }
+}
+
+actions.deleteNodes = (nodes, plugin = "") => {
+  return {
+    type: "DELETE_NODES",
+    plugin,
+    payload: nodes,
+  }
+}
+
+actions.touchNode = (nodeId, plugin = "") => {
+  return {
+    type: "TOUCH_NODE",
+    plugin,
+    payload: nodeId,
+  }
+}
+
 actions.createNode = (node, plugin = "") => {
   if (!_.isObject(node)) {
     return console.log(
@@ -85,17 +109,17 @@ actions.createNode = (node, plugin = "") => {
 
   // Check if the node has already been processed.
   if (getNode(node.id) && !hasNodeChanged(node.id, node.contentDigest)) {
-    console.log("NODE_ALREADY_CREATED", node.pluginName, node.id)
-    console.log(node)
-    console.trace()
-    // process.exit()
-    return { type: `NODE_ALREADY_CREATED`, payload: node }
-  }
-
-  return {
-    type: "CREATE_NODE",
-    plugin,
-    payload: node,
+    return {
+      type: "TOUCH_NODE",
+      plugin,
+      payload: node.id,
+    }
+  } else {
+    return {
+      type: "CREATE_NODE",
+      plugin,
+      payload: node,
+    }
   }
 }
 

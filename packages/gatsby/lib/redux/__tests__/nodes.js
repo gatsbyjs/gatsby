@@ -1,5 +1,6 @@
 const { actions, boundActions } = require("../actions")
 const nodeReducer = require("../reducers/nodes")
+const nodeTouchedReducer = require("../reducers/nodes-touched")
 
 describe(`Create and update nodes`, () => {
   // TODO add these back when we stop directly consoleing errors.
@@ -57,5 +58,20 @@ describe(`Create and update nodes`, () => {
     let state = nodeReducer(undefined, action)
     state = nodeReducer(state, updateAction)
     expect(state["hi"].pickle).toEqual(false)
+  })
+
+  it(`nodes that are added are also "touched"`, () => {
+    const action = actions.createNode({
+      id: `hi`,
+      contentDigest: `hasdfljds`,
+      children: [],
+      parent: `test`,
+      mediaType: `test`,
+      pluginName: `tests`,
+      type: `Test`,
+      pickle: true,
+    })
+    let state = nodeTouchedReducer(undefined, action)
+    expect(state["hi"]).toBe(true)
   })
 })

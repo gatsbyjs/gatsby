@@ -6,6 +6,11 @@ const slash = require("slash")
 const chokidar = require("chokidar")
 const mime = require("mime")
 
+const createId = path => {
+  const slashed = slash(path)
+  return `${slashed} absPath of file`
+}
+
 function readFile(file, pluginOptions, cb) {
   const slashed = slash(file)
   const slashedFile = {
@@ -20,7 +25,7 @@ function readFile(file, pluginOptions, cb) {
           // Don't actually make the File id the absolute path as otherwise
           // people will use the id for that and ids shouldn't be treated as
           // useful information.
-          id: `${slashedFile.absolutePath} absPath of file`,
+          id: createId(file),
           contentDigest: contentDigest,
           children: [],
           parent: `___SOURCE___`,
@@ -51,7 +56,12 @@ exports.sourceNodes = (
   { boundActionCreators, getNode, hasNodeChanged },
   pluginOptions
 ) => {
-  const { createNode, updateSourcePluginStatus } = boundActionCreators
+  const {
+    createNode,
+    deleteNode,
+    touchNode,
+    updateSourcePluginStatus,
+  } = boundActionCreators
   updateSourcePluginStatus({
     plugin: `source-filesystem --- ${pluginOptions.name}`,
     ready: false,
@@ -71,22 +81,18 @@ exports.sourceNodes = (
   watcher.on(`add`, path => {
     // console.log("Added file at", path)
     readFile(path, pluginOptions, (err, file) => {
-      // Only create node if the content digest has changed.
-      if (!getNode(file.id) || hasNodeChanged(file.id, file.contentDigest)) {
-        createNode(file)
-      } else {
-        // console.log("not creating node cause it already exists", file.id)
-      }
+      createNode(file)
     })
   })
   watcher.on(`change`, path => {
     console.log("changed file at", path)
     readFile(path, pluginOptions, (err, file) => {
-      // Only create node if the content digest has changed.
-      if (!getNode(file.id) || hasNodeChanged(file.id, file.contentDigest)) {
-        createNode(file)
-      }
+      createNode(file)
     })
+  })
+  watcher.on(`unlink`, path => {
+    console.log("file deleted at", path)
+    deleteNode(createId(path))
   })
   watcher.on(`ready`, () => {
     updateSourcePluginStatus({

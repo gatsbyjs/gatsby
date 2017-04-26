@@ -21,7 +21,7 @@ const doubleBind = (boundActionCreators, plugin) => {
         doubleBoundActionCreators[key] = (...args) => {
           // Only set the pluginName once (so node updaters don't
           // overwrite this).
-          if (!_.has(args, "[0].pluginName")) {
+          if (!_.has(args, "[0].pluginName") && _.isObject(args[0])) {
             args[0].pluginName = plugin.name
           }
           return boundActionCreator(...args, plugin)
