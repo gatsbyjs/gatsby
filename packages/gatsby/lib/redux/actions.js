@@ -67,6 +67,14 @@ actions.updateNode = (node, plugin = "") => {
   }
 }
 
+actions.deleteNode = (nodeId, plugin = "") => {
+  return {
+    type: "DELETE_NODE",
+    plugin,
+    payload: nodeId,
+  }
+}
+
 actions.createNode = (node, plugin = "") => {
   if (!_.isObject(node)) {
     return console.log(

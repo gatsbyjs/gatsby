@@ -58,4 +58,21 @@ describe(`Create and update nodes`, () => {
     state = nodeReducer(state, updateAction)
     expect(state["hi"].pickle).toEqual(false)
   })
+
+  it(`allows deleting nodes`, () => {
+    const action = actions.createNode({
+      id: `hi`,
+      contentDigest: `hasdfljds`,
+      children: [],
+      parent: `test`,
+      mediaType: `test`,
+      pluginName: `tests`,
+      type: `Test`,
+      pickle: true,
+    })
+    const deleteAction = actions.deleteNode("hi")
+    let state = nodeReducer(undefined, action)
+    state = nodeReducer(state, deleteAction)
+    expect(state["hi"]).toBe(undefined)
+  })
 })
