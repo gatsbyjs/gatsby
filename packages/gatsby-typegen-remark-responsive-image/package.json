@@ -23,7 +23,7 @@
     "unist-util-select": "^1.5.0"
   },
   "scripts": {
-    "build": "babel src --out-dir .",
-    "watch": "babel -w src --out-dir ."
+    "build": "babel src --out-dir dist --source-maps",
+    "watch": "babel -w src --out-dir dist --source-maps"
   }
 }

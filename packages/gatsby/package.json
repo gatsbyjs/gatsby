@@ -140,7 +140,7 @@
     "url": "git+https://github.com/gatsbyjs/gatsby.git"
   },
   "scripts": {
-    "build": "rimraf dist && babel lib --out-dir dist/",
+    "build": "rimraf dist && babel lib --out-dir dist/ --source-maps",
     "clean-test-bundles": "find test/ -type f -name bundle.js* -exec rm -rf {} +",
     "test": "npm run lint && npm run test-node && npm run test-integration",
     "test-coverage": "node_modules/.bin/nyc --reporter=lcov --reporter=text npm test",

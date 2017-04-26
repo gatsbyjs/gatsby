@@ -14,7 +14,7 @@
   "license": "MIT",
   "main": "dist/index.js",
   "scripts": {
-    "build": "babel src --out-dir dist",
-    "watch": "babel -w src --out-dir dist"
+    "build": "babel src --out-dir dist --source-maps",
+    "watch": "babel -w src --out-dir dist --source-maps"
   }
 }

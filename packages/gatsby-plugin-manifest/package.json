@@ -4,8 +4,8 @@
   "description": "Gatsby plugin which adds a manifest.json to make sites progressive web apps",
   "main": "index.js",
   "scripts": {
-    "build": "babel src --out-dir .",
-    "watch": "babel -w src --out-dir ."
+    "build": "babel src --out-dir dist --source-maps",
+    "watch": "babel -w src --out-dir dist --source-maps"
   },
   "keywords": [
     "gatsby",

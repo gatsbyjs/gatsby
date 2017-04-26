@@ -3,8 +3,8 @@
   "version": "1.0.0-alpha13",
   "description": "Gatsby plugin which parses files within a directory for further parsing by other plugins",
   "scripts": {
-    "build": "babel src --out-dir .",
-    "watch": "babel -w src --out-dir ."
+    "build": "babel src --out-dir . --source-maps",
+    "watch": "babel -w src --out-dir . --source-maps"
   },
   "keywords": [
     "gatsby",

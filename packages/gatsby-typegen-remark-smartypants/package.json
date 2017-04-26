@@ -4,8 +4,8 @@
   "description": "Use retext-smartypants to auto-enhance typography of Markdown",
   "main": "index.js",
   "scripts": {
-    "build": "babel src --out-dir .",
-    "watch": "babel -w src --out-dir ."
+    "build": "babel src --out-dir dist --source-maps",
+    "watch": "babel -w src --out-dir dist --source-maps"
   },
   "keywords": [
     "gatsby",

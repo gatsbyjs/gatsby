@@ -4,8 +4,8 @@
   "description": "Make iframes in Markdown processed by Remark responsive",
   "main": "index.js",
   "scripts": {
-    "build": "babel src --out-dir .",
-    "watch": "babel -w src --out-dir ."
+    "build": "babel src --out-dir dist --source-maps",
+    "watch": "babel -w src --out-dir dist --source-maps"
   },
   "keywords": [
     "gatsby",
