@@ -1,59 +1,53 @@
 #!/usr/bin/env node
+const path = require("path")
+const fs = require("fs")
 
-console.log('bin/gatsby: time since started:', process.uptime())
-
-console.time(`initial loading`)
-
-global.appStartTime = Date.now()
-
-var sysPath = require('path')
-var fs = require('fs')
-var version = process.version
-var verDigit = Number(version.match(/\d+/)[0])
+const version = process.version
+const verDigit = Number(version.match(/\d+/)[0])
 
 if (verDigit < 4) {
+  // yurnalist also requires >= 4 so we use console.error here
   console.error(
-    'Error: Gatsby 1.0+ requires node.js v4 or higher (you have ' + version + ') ' +
-    'Upgrade node to the latest stable release.'
+    `Gatsby 1.0+ requires node.js v4 or higher (you have ${version}).\nUpgrade node to the latest stable release.`
   )
   process.exit()
 }
 
-var cwd = sysPath.resolve('.')
-var cliFile = sysPath.join('dist', 'bin', 'cli.js')
-var localPath = sysPath.join(cwd, 'node_modules', 'gatsby', cliFile)
+// yurnalist also requires >= node 4 so move it below the check
+const report = require("yurnalist")
+report.info(`bin/gatsby: time since started: ${process.uptime()}`)
 
-var loadGatsby = function (path) {
-  require(path)
-}
+console.time("initial loading")
+global.appStartTime = Date.now()
 
-var useGlobalGatsby = function () {
-  var commandsToIgnore = ['new', '--help']
-  if (commandsToIgnore.indexOf(process.argv[2]) === -1) {
-    console.log(
-      "A local install of Gatsby was not found.\n" +
-      "You should save Gatsby as a site dependency e.g. npm install --save gatsby"
+/*
+  Get the locally installed version of gatsby/lib/bin/cli.js from the place where
+  this program was executed.
+*/
+const cliFile = "dist/bin/cli.js"
+const localPath = path.resolve("node_modules/gatsby", cliFile)
+
+const useGlobalGatsby = function() {
+  // Never use global install for new and help commands
+  if (["new", "--help"].includes(process.argv[2])) {
+    report.error(
+      `A local install of Gatsby was not found.
+      You should save Gatsby as a site dependency e.g. npm install --save gatsby`
     )
     process.exit()
   }
-  fs.realpath(__dirname, function (err, real) {
-    if (err) throw err
-    loadGatsby(sysPath.join(real, '..', cliFile))
-  })
+
+  require("./bin/cli")
 }
 
-fs.access(localPath, fs.F_OK, function (error) {
-  if (error) {
-    useGlobalGatsby()
-  } else {
-    try {
-      loadGatsby(localPath)
-      console.timeEnd(`initial loading`)
-    } catch(error) {
-      console.log(
-        'Gatsby: Local install exists but failed to load it.'
-      )
-      console.log(error)
-    }
+if (fs.existsSync(localPath)) {
+  try {
+    require(localPath)
+    console.timeEnd("initial loading")
+  } catch (error) {
+    report.error("A local install of Gatsby exists but failed to load.")
+    report.error(error)
   }
-})
+} else {
+  useGlobalGatsby()
+}
