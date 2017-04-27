@@ -43,7 +43,7 @@ const buildFieldEnumValues = (exports.buildFieldEnumValues = nodes => {
     )
   )
   fieldExamples.forEach(field => {
-    enumValues[field.replace(`.`, `___`)] = { field }
+    enumValues[field.replace(/\./g, `___`)] = { field }
   })
 
   return enumValues
