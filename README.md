@@ -14,7 +14,7 @@ how to setup your Gatsby development environment.
 
 * [1.0 intro issue](https://github.com/gatsbyjs/gatsby/issues/419)
 * [1.0 umbrella issue](https://github.com/gatsbyjs/gatsby/issues/796)
-* [Guide to setting up your Gatsby core development environment](https://www.gatsbyjs.org/docs/how-to-contribute/)
+* [Guide to getting started with developing on Gatsby core](https://www.gatsbyjs.org/docs/how-to-contribute/)
 
 ## 1.0 sites
 
