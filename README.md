@@ -2,28 +2,33 @@
 [![npm package](https://img.shields.io/npm/v/gatsby.svg?style=flat-square)](https://www.npmjs.org/package/gatsby)
 [![gatsby channel on discord](https://img.shields.io/badge/discord-gatsby%40reactiflux-738bd7.svg?style=flat-square)](https://discord.gg/0ZcbPKXt5bVoxkfV)
 [![OpenCollective](https://opencollective.com/gatsby/backers/badge.svg)](#backers)
-[![OpenCollective](https://opencollective.com/gatsby/sponsors/badge.svg)](#sponsors)
 [![Twitter Follow](https://img.shields.io/twitter/follow/gatsbyjs.svg?style=social)](https://twitter.com/gatsbyjs)
 
 # Gatsby
-Transform plain text into dynamic blogs and websites using the latest
-web technologies. A React.js static site generator.
 
-Supports Markdown, HTML, and React.js pages out of the box. Easy to add
-support for additional file types.
+⚛️📄🚀 Blazing fast React.js static site generator
+
+Transform plain text and data into dynamic blogs and websites using the latest
+web technologies.
+
+Supports pages written in Markdown, HTML, and React.js out of the box. Easy to
+add support for additional file types.
 
 Leverages React's [component model](https://facebook.github.io/react/blog/2013/06/05/why-react.html)
  and [React Router's "nested component hierarchy"](https://github.com/ReactTraining/react-router/blob/v3.0.3/docs/Introduction.md)
 to make templating incredibly powerful and intuitive.
 
 All templates, css, and content are *hot reloadable* — powered by
-[webpack](https://github.com/webpack/webpack).
+[webpack](https://github.com/webpack/webpack). Makes for a brilliant
+development experience
 
 Build sites like it's 1995. Files are translated into HTML pages at the
 same position within the file system. Add a markdown file at `/docs/index.md` and
 it'll be converted to `/docs/index.html`.
 
-*[We've started work on a 1.0 release of Gatsby!](https://github.com/gatsbyjs/gatsby/issues/419)* Find the code in the `1.0` branch.
+*[We're working on the 1.0 release of Gatsby!](https://github.com/gatsbyjs/gatsby/issues/419)* Find the code in the `1.0` branch.
+
+Come help us finish up the release! See the list of remaining tasks on the [1.0 umbrella issue](https://github.com/gatsbyjs/gatsby/issues/796).
 
 Checkout the first 1.0 example site GatsbyGram
 https://gatsbygram.gatsbyjs.org and the case study on how its built https://www.gatsbyjs.org/blog/gatsbygram-case-study/
