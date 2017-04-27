@@ -44,6 +44,9 @@ describe(`Create and update nodes`, () => {
       pluginName: `tests`,
       type: `Test`,
       pickle: true,
+      deep: {
+        array: [0, 1, { boom: true }],
+      },
     })
     const updateAction = actions.createNode({
       id: `hi`,
@@ -54,10 +57,18 @@ describe(`Create and update nodes`, () => {
       pluginName: `tests`,
       type: `Test`,
       pickle: false,
+      deep: {
+        array: [1, 2],
+      },
+      deep2: {
+        boom: "foo",
+      },
     })
     let state = nodeReducer(undefined, action)
     state = nodeReducer(state, updateAction)
     expect(state["hi"].pickle).toEqual(false)
+    expect(state["hi"].deep).toEqual({ array: [1, 2] })
+    expect(state["hi"].deep2).toEqual({ boom: "foo" })
   })
 
   it(`nodes that are added are also "touched"`, () => {
