@@ -118,13 +118,11 @@ exports.sourceNodes = (
   watcher.on(`change`, path => {
     console.log("changed file at", path)
     readFile(path, pluginOptions, (err, file) => {
-      // TODO: this should update rather than create
       createNode(file)
     })
   })
   watcher.on(`unlink`, path => {
     console.log("file deleted at", path)
-    // TODO: deleteNode is not a function and this throws an error
     deleteNode(createId(path))
   })
   watcher.on(`ready`, () => {
@@ -141,6 +139,5 @@ exports.sourceNodes = (
     })
   })
 
-  // TODO add delete support.
   return
 }
