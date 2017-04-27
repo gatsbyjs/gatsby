@@ -100,5 +100,6 @@ test(`Infers graphql type from array of nodes`, () => {
           },
         ],
       },
-    }))
+    })
+  )
 })

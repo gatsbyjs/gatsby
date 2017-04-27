@@ -9,6 +9,7 @@ describe(`Gatsby data tree utils`, () => {
       name: `The Mad Max`,
       hair: 1,
       date: `2006-07-22T22:39:53.000Z`,
+      emptyArray: [],
       anArray: [1, 2, 3, 4],
       frontmatter: {
         date: `2006-07-22T22:39:53.000Z`,
@@ -66,6 +67,11 @@ describe(`Gatsby data tree utils`, () => {
 
   it(`ignores fields that have a null value`, () => {
     expect(extractFieldExamples({ nodes }).iAmNull).not.toBeDefined()
+  })
+
+  it(`ignores empty arrays`, () => {
+    expect(extractFieldExamples({ nodes }).emptyArray).not.toBeDefined()
+    expect(extractFieldExamples({ nodes }).hair).toBeDefined()
   })
 
   it(`build enum values for fields from array on nodes`, () => {
