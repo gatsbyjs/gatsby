@@ -15,7 +15,7 @@ store.subscribe(() => {
   }
 
   if (state.lastAction.type === "UPSERT_PAGE") {
-    const page = state.nodes[state.lastAction.payload]
+    const page = state.lastAction.payload
     apiRunnerNode(`onUpsertPage`, { page })
   }
 })
