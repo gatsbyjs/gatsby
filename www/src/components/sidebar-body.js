@@ -15,7 +15,7 @@ class SidebarBody extends React.Component {
       ? scale(2 / 5).fontSize
       : scale(1 / 5).fontSize
     return (
-      <div>
+      <div css={{ marginBottom: rhythm(1) }}>
         {menu.map(section => (
           <div
             key={section.title}
