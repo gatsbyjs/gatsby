@@ -11,12 +11,12 @@ const extractFieldExamples = (exports.extractFieldExamples = ({
     let subNode = selector ? _.get(node, selector) : node
 
     // Ignore undefined/null subnodes
-    subNode = _.omitBy(flatten(subNode || {}), _.isNil)
+    subNode = _.omitBy(flatten(subNode || {}, { safe: true }), _.isNil)
 
     return Object.assign({}, mem, subNode)
   }, {})
 
-  examples = flatten.unflatten(examples, { safe: true })
+  examples = flatten.unflatten(examples)
 
   if (deleteNodeFields) {
     // Remove fields for traversing through nodes as we want to control
