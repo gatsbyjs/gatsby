@@ -40,3 +40,6 @@ public/
 node_modules/
 .cache/
 .netlify
+
+# IDE specific
+.vscode/
