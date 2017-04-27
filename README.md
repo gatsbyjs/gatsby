@@ -28,7 +28,7 @@ it'll be converted to `/docs/index.html`.
 
 *[We're working on the 1.0 release of Gatsby!](https://github.com/gatsbyjs/gatsby/issues/419)* Find the code in the `1.0` branch.
 
-Come help us finish up the release! See the list of remaining tasks on the [1.0 umbrella issue](https://github.com/gatsbyjs/gatsby/issues/796).
+Come help us finish up the release! See the list of [remaining tasks on the 1.0 umbrella issue](https://github.com/gatsbyjs/gatsby/issues/796).
 
 Checkout the first 1.0 example site GatsbyGram
 https://gatsbygram.gatsbyjs.org and the case study on how its built https://www.gatsbyjs.org/blog/gatsbygram-case-study/
