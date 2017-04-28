@@ -3,7 +3,7 @@ module.exports = (state = {}, action) => {
     case "UPDATE_SOURCE_PLUGIN_STATUS":
       return {
         ...state,
-        [action.payload.plugin]: action.payload.ready,
+        [action.payload.plugin]: action.payload.status,
       }
     default:
       return state
