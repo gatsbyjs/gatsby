@@ -4,8 +4,8 @@
   "version": "1.0.0-alpha13",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "devDependencies": {
-    "babel-cli": "^6.18.0",
-    "graphql": "^0.8.2"
+    "babel-cli": "^6.24.1",
+    "graphql": "^0.9.4"
   },
   "keywords": [
     "gatsby",

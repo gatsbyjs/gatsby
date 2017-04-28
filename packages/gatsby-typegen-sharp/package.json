@@ -15,10 +15,12 @@
   ],
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "license": "MIT",
+  "peerDependency": {
+    "graphql": "^0.9.4"
+  },
   "dependencies": {
-    "graphql": "^0.8.2",
     "image-size": "^0.5.1",
-    "lodash": "^4.17.2",
-    "sharp": "^0.17.0"
+    "lodash": "^4.17.4",
+    "sharp": "^0.17.3"
   }
 }

@@ -1,32 +1,31 @@
 // @flow
-const _ = require("lodash")
+const _ = require('lodash')
 const {
   GraphQLObjectType,
   GraphQLNonNull,
   GraphQLID,
   GraphQLList,
   GraphQLString,
-} = require("graphql")
-const select = require("unist-util-select")
-const path = require("path")
-const Promise = require("bluebird")
-const mime = require("mime")
-const slash = require("slash")
+} = require('graphql')
+const path = require('path')
+const Promise = require('bluebird')
+const mime = require('mime')
+const slash = require('slash')
 
-const apiRunner = require("../utils/api-runner-node")
-const { inferObjectStructureFromNodes } = require("./infer-graphql-type")
+const apiRunner = require('../utils/api-runner-node')
+const { inferObjectStructureFromNodes } = require('./infer-graphql-type')
 const {
   inferInputObjectStructureFromNodes,
 } = require(`./infer-graphql-input-fields`)
-const nodeInterface = require("./node-interface")
+const nodeInterface = require('./node-interface')
 const {
   store,
   getNodes,
   getNode,
   getNodeAndSavePathDependency,
-} = require("../redux")
+} = require('../redux')
 
-const { addPageDependency } = require("../redux/actions/add-page-dependency")
+const { addPageDependency } = require('../redux/actions/add-page-dependency')
 
 module.exports = async () =>
   new Promise(resolve => {
@@ -114,7 +113,7 @@ module.exports = async () =>
                   ...inputArgs,
                 },
                 resolve(a, args, context) {
-                  const runSift = require("./run-sift")
+                  const runSift = require('./run-sift')
                   const latestNodes = _.filter(
                     getNodes(),
                     n => n.type === typeName
