@@ -80,8 +80,20 @@ module.exports = () => {
         const staleNodes = _.values(state.nodes).filter(node => {
           // Find the root node.
           let rootNode = node
-          while (getNode(rootNode.parent) !== undefined) {
-            rootNode = getNode(node.parent)
+          let whileCount = 0
+          while (
+            rootNode.parent &&
+            getNode(rootNode.parent) !== undefined &&
+            whileCount < 101
+          ) {
+            rootNode = getNode(rootNode.parent)
+            whileCount += 1
+            if (whileCount > 100) {
+              console.log(
+                "It looks like you have a node that's set its parent as itself",
+                rootNode
+              )
+            }
           }
 
           return !_.includes(touchedNodes, rootNode.id)
