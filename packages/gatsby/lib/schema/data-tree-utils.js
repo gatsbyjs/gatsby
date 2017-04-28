@@ -10,13 +10,15 @@ const extractFieldExamples = (exports.extractFieldExamples = ({
   let examples = nodes.reduce((mem, node) => {
     let subNode = selector ? _.get(node, selector) : node
 
-    // Ignore undefined/null subnodes
-    subNode = _.omitBy(flatten(subNode || {}), _.isNil)
+    // Ignore undefined/null/empty array subnodes
+    subNode = _.omitBy(flatten(subNode || {}, { safe: true }), v => {
+      return _.isNil(v) || (_.isArray(v) && _.isEmpty(v))
+    })
 
     return Object.assign({}, mem, subNode)
   }, {})
 
-  examples = flatten.unflatten(examples, { safe: true })
+  examples = flatten.unflatten(examples)
 
   if (deleteNodeFields) {
     // Remove fields for traversing through nodes as we want to control
@@ -43,7 +45,7 @@ const buildFieldEnumValues = (exports.buildFieldEnumValues = nodes => {
     )
   )
   fieldExamples.forEach(field => {
-    enumValues[field.replace(`.`, `___`)] = { field }
+    enumValues[field.replace(/\./g, `___`)] = { field }
   })
 
   return enumValues

@@ -1,6 +1,6 @@
 {
   "name": "gatsby-typegen-sharp",
-  "version": "1.0.0-alpha12",
+  "version": "1.0.0-alpha13",
   "description": "Gatsby plugin to expose graphql types to manipulate images using Sharp",
   "main": "index.js",
   "scripts": {

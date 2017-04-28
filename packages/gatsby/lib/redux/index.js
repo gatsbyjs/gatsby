@@ -17,24 +17,24 @@ try {
   // ignore errors.
 }
 
-const composeEnhancers = composeWithDevTools({
-  realtime: true,
-  port: 19999,
-  name: `gatsby-redux`,
-})
-
 let store
-// Don't try connecting to devtools server if testing or building.
-if (process.env.NODE_ENV === `test` || process.env.NODE_ENV === `production`) {
-  store = Redux.createStore(
-    Redux.combineReducers({ ...reducers }),
-    initialState
-  )
-} else {
+// Only setup the Redux devtools if explicitly enabled.
+if (process.env.REDUX_DEVTOOLS === `true`) {
+  const sitePackageJSON = require(`${process.cwd()}/package.json`)
+  const composeEnhancers = composeWithDevTools({
+    realtime: true,
+    port: 19999,
+    name: sitePackageJSON.name,
+  })
   store = Redux.createStore(
     Redux.combineReducers({ ...reducers }),
     initialState,
     composeEnhancers(Redux.applyMiddleware())
+  )
+} else {
+  store = Redux.createStore(
+    Redux.combineReducers({ ...reducers }),
+    initialState
   )
 }
 

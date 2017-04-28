@@ -14,6 +14,7 @@ const mime = require("mime")
 const isRelative = require("is-relative-url")
 const { store, getNodes } = require("../redux")
 const { addPageDependency } = require("../redux/actions/add-page-dependency")
+const { extractFieldExamples } = require("./data-tree-utils")
 
 const inferGraphQLType = ({ value, fieldName, ...otherArgs }) => {
   if (Array.isArray(value)) {
@@ -111,24 +112,10 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
   types,
   allNodes,
 }) => {
-  const type = nodes[0].type
-  const fieldExamples = {}
-  _.each(nodes, node => {
-    let subNode
-    if (selector) {
-      subNode = _.get(node, selector)
-    } else {
-      subNode = node
-    }
-    _.each(subNode, (v, k) => {
-      if (!fieldExamples[k]) {
-        fieldExamples[k] = v
-      }
-    })
-  })
+  const fieldExamples = extractFieldExamples({ nodes, selector })
 
   // Remove fields common to the top-level of all nodes.  We add these
-  // elsewhere so don't need to infer there type.
+  // elsewhere so don't need to infer their type.
   if (!selector) {
     delete fieldExamples.type
     delete fieldExamples.id

@@ -279,7 +279,7 @@ module.exports = async (
   function devtool() {
     switch (stage) {
       case `develop`:
-        return `eval`
+        return `cheap-module-source-map`
       case `build-html`:
         return false
       case `build-javascript`:

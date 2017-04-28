@@ -6,6 +6,11 @@ const slash = require("slash")
 const chokidar = require("chokidar")
 const mime = require("mime")
 
+const createId = path => {
+  const slashed = slash(path)
+  return `${slashed} absPath of file`
+}
+
 function readFile(file, pluginOptions, cb) {
   const slashed = slash(file)
   const slashedFile = {
@@ -20,7 +25,7 @@ function readFile(file, pluginOptions, cb) {
           // Don't actually make the File id the absolute path as otherwise
           // people will use the id for that and ids shouldn't be treated as
           // useful information.
-          id: `${slashedFile.absolutePath} absPath of file`,
+          id: createId(file),
           contentDigest: contentDigest,
           children: [],
           parent: `___SOURCE___`,
@@ -51,11 +56,20 @@ exports.sourceNodes = (
   { boundActionCreators, getNode, hasNodeChanged },
   pluginOptions
 ) => {
-  const { createNode, updateSourcePluginStatus } = boundActionCreators
+  const {
+    createNode,
+    deleteNode,
+    touchNode,
+    updateSourcePluginStatus,
+  } = boundActionCreators
+
+  let ready = false
+
   updateSourcePluginStatus({
     plugin: `source-filesystem --- ${pluginOptions.name}`,
-    ready: false,
+    ready,
   })
+
   const watcher = chokidar.watch(pluginOptions.path, {
     ignored: [
       `**/*.un~`,
@@ -68,33 +82,62 @@ exports.sourceNodes = (
     ],
   })
 
-  watcher.on(`add`, path => {
-    // console.log("Added file at", path)
-    readFile(path, pluginOptions, (err, file) => {
-      // Only create node if the content digest has changed.
-      if (!getNode(file.id) || hasNodeChanged(file.id, file.contentDigest)) {
+  // For every path that is reported before the 'ready' event, we throw them
+  // into a queue and then flush the queue when 'ready' event arrives.
+  // After 'ready', we handle the 'add' event without putting it into a queue.
+  let pathQueue = []
+  const flushPathQueue = onComplete => {
+    let queue = pathQueue
+    pathQueue = []
+
+    let numPathsProcessed = 0
+    let numPaths = queue.length
+
+    queue.forEach(path => {
+      readFile(path, pluginOptions, (err, file) => {
         createNode(file)
-      } else {
-        // console.log("not creating node cause it already exists", file.id)
-      }
+
+        numPathsProcessed++
+        if (numPathsProcessed === numPaths) {
+          onComplete()
+        }
+      })
     })
+  }
+
+  watcher.on(`add`, path => {
+    if (ready) {
+      console.log("added file at", path)
+      readFile(path, pluginOptions, (err, file) => {
+        createNode(file)
+      })
+    } else {
+      pathQueue.push(path)
+    }
   })
   watcher.on(`change`, path => {
     console.log("changed file at", path)
     readFile(path, pluginOptions, (err, file) => {
-      // Only create node if the content digest has changed.
-      if (!getNode(file.id) || hasNodeChanged(file.id, file.contentDigest)) {
-        createNode(file)
-      }
+      createNode(file)
     })
   })
+  watcher.on(`unlink`, path => {
+    console.log("file deleted at", path)
+    deleteNode(createId(path))
+  })
   watcher.on(`ready`, () => {
-    updateSourcePluginStatus({
-      plugin: `source-filesystem --- ${pluginOptions.name}`,
-      ready: true,
+    if (ready) {
+      return
+    }
+
+    ready = true
+    flushPathQueue(() => {
+      updateSourcePluginStatus({
+        plugin: `source-filesystem --- ${pluginOptions.name}`,
+        ready,
+      })
     })
   })
 
-  // TODO add delete support.
   return
 }

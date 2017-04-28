@@ -8,7 +8,7 @@
     "yargs": "^7.0.2"
   },
   "name": "gatsby-dev-cli",
-  "version": "0.0.0",
+  "version": "1.0.0-alpha13",
   "description": "CLI helpers for contributors working on Gatsby",
   "main": "index.js",
   "devDependencies": {

@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "babel-cli": "^6.24.1",
-    "babel-eslint": "^7.2.2",
+    "babel-eslint": "^7.2.3",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-lodash": "^3.2.11",
     "babel-plugin-transform-async-to-generator": "^6.24.1",
@@ -18,7 +18,7 @@
     "eslint-config-google": "^0.7.1",
     "eslint-config-prettier": "^1.7.0",
     "eslint-plugin-flow-vars": "^0.5.0",
-    "eslint-plugin-flowtype": "^2.31.0",
+    "eslint-plugin-flowtype": "^2.32.1",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-prettier": "^2.0.1",
@@ -31,6 +31,7 @@
     "lerna": "^2.0.0-rc.3",
     "prettier": "^1.2.2",
     "purdy": "^2.2.1",
+    "remotedev-server": "^0.2.2",
     "rimraf": "^2.6.1"
   },
   "jest": {
@@ -61,7 +62,9 @@
     "format": "npm run format-packages && npm run format-gatsby && npm run format-www && npm run format-examples",
     "publish-canary": "lerna run build; lerna publish --canary --yes",
     "publish-next": "lerna run build; lerna publish --npm-tag=next",
+    "remotedev": "remotedev --hostname=localhost --port=19999",
     "test": "jest",
+    "test:watch": "jest --watch",
     "test_bkup": "npm run lint && npm run test-node && npm run test-integration",
     "watch": "lerna run watch --no-sort --stream --concurrency 999"
   },

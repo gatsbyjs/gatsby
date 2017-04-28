@@ -18,10 +18,10 @@ mean converting this file into a JS component).
 
 ## Official plugins
 
-* [gatsby-parser-json](/docs/packages/gatsby-parser-json/)
-* [gatsby-parser-remark](/docs/packages/gatsby-parser-remark/)
-* [gatsby-parser-sharp](/docs/packages/gatsby-parser-sharp/)
-* [gatsby-parser-yaml](/docs/packages/gatsby-parser-yaml/)
+* [gatsby-transformer-json](/docs/packages/gatsby-transformer-json/)
+* [gatsby-transformer-remark](/docs/packages/gatsby-transformer-remark/)
+* [gatsby-transformer-sharp](/docs/packages/gatsby-transformer-sharp/)
+* [gatsby-transformer-yaml](/docs/packages/gatsby-transformer-yaml/)
 * [gatsby-plugin-catch-links](/docs/packages/gatsby-plugin-catch-links/)
 * [gatsby-plugin-coffeescript](/docs/packages/gatsby-plugin-coffeescript/)
 * [gatsby-plugin-glamor](/docs/packages/gatsby-plugin-glamor/)
@@ -29,6 +29,7 @@ mean converting this file into a JS component).
 * [gatsby-plugin-manifest](/docs/packages/gatsby-plugin-manifest/)
 * [gatsby-plugin-offline](/docs/packages/gatsby-plugin-offline/)
 * [gatsby-plugin-preact](/docs/packages/gatsby-plugin-preact/)
+* [gatsby-plugin-sass](/docs/packages/gatsby-plugin-sass/)
 * [gatsby-plugin-sharp](/docs/packages/gatsby-plugin-sharp/)
 * [gatsby-plugin-typescript](/docs/packages/gatsby-plugin-typescript/)
 * [gatsby-source-filesystem](/docs/packages/gatsby-source-filesystem/)

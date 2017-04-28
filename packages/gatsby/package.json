@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "React.js Static Site Generator",
-  "version": "1.0.0-alpha12",
+  "version": "1.0.0-alpha13",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "ava": {
     "require": [
@@ -52,7 +52,7 @@
     "glob": "^7.1.0",
     "graphql": "^0.8.2",
     "graphql-relay": "^0.4.3",
-    "graphql-skip-limit": "^1.0.0-alpha11-alpha.68e8f9a1",
+    "graphql-skip-limit": "^1.0.0-alpha13",
     "graphql-union-input-type": "^0.2.1",
     "gray-matter": "^2.1.0",
     "hapi": "^8.5.1",
@@ -100,7 +100,6 @@
     "remark-html": "^5.0.1",
     "remark-parse": "^2.2.0",
     "remote-redux-devtools": "^0.5.7",
-    "remotedev-server": "^0.3.0-beta-3",
     "sanitize-html": "^1.13.0",
     "sift": "^3.2.6",
     "slash": "^1.0.0",

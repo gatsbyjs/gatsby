@@ -61,7 +61,7 @@ module.exports = ({ args, nodes, connection = false, path = "" }) => {
   // Sort results.
   if (clonedArgs.sortBy) {
     const convertedFields = clonedArgs.sortBy.fields.map(field =>
-      field.replace(`___`, `.`)
+      field.replace(/___/g, `.`)
     )
     result = _.orderBy(result, convertedFields, clonedArgs.sortBy.order)
   }
