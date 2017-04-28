@@ -130,7 +130,6 @@ fragment commentsFragment on HackerNewsItem {
 
     // Recursively create comment nodes.
     const createCommentNodes = (comments, parent, depth = 0) => {
-      console.log("createCommentNodes", comments.map(c => c.id), parent, depth)
       comments.forEach((comment, i) => {
         if (!comment.kids) {
           comment.kids = []
@@ -145,7 +144,6 @@ fragment commentsFragment on HackerNewsItem {
         }
 
         commentNode.by = commentNode.by.id
-        // console.log("commentNode", commentNode)
         const nodeStr = JSON.stringify(commentNode)
 
         // Get content digest of comment node.
@@ -157,7 +155,6 @@ fragment commentsFragment on HackerNewsItem {
         commentNode.contentDigest = contentDigest
         commentNode.content = nodeStr
 
-        console.log("--creating comment ", comment.id)
         createNode(commentNode)
 
         if (comment.kids.length > 0) {

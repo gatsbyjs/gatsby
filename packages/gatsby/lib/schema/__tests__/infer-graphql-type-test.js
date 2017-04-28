@@ -15,6 +15,7 @@ test(`Infers graphql type from array of nodes`, () => {
       date: `1012-11-01`,
       anArray: [1, 2, 3, 4],
       externalUrl: `https://example.com/awesome.jpg`,
+      domain: "pizza.com",
       frontmatter: {
         date: `1012-11-01`,
         title: `The world of dash and adventure`,
@@ -66,6 +67,7 @@ test(`Infers graphql type from array of nodes`, () => {
             hair,
             anArray,
             externalUrl,
+            domain,
             date(formatString: "YYYY"),
             frontmatter {
               title,
@@ -82,6 +84,7 @@ test(`Infers graphql type from array of nodes`, () => {
             hair: 1,
             anArray: [1, 2, 3, 4],
             externalUrl: `https://example.com/awesome.jpg`,
+            domain: `pizza.com`,
             date: `1012`,
             frontmatter: {
               date: `1012`,
@@ -92,6 +95,7 @@ test(`Infers graphql type from array of nodes`, () => {
             hair: 2,
             anArray: [1, 2, 5, 4],
             externalUrl: null,
+            domain: null,
             date: `1984`,
             frontmatter: {
               date: `1984`,

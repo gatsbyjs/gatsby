@@ -9,9 +9,8 @@ const {
 } = require("graphql")
 const _ = require("lodash")
 const moment = require("moment")
-const parseFilepath = require("parse-filepath")
 const mime = require("mime")
-const isRelative = require("is-relative-url")
+const isRelative = require("is-relative")
 const { store, getNodes } = require("../redux")
 const { addPageDependency } = require("../redux/actions/add-page-dependency")
 const { extractFieldExamples } = require("./data-tree-utils")
@@ -143,7 +142,6 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
       }
       const findNode = (fieldValue, path) => {
         const linkedType = mapping[fieldSelector]
-        console.log("findNode", linkedType, fieldValue)
         const linkedNode = _.find(
           getNodes(),
           n => n.type === linkedType && n.id === fieldValue
@@ -167,7 +165,6 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
           },
         }
       } else {
-        console.log(matchedTypes)
         inferredFields[k] = {
           type: matchedTypes[0].nodeObjectType,
           resolve: (node, a, b, { fieldName }) => {
@@ -194,6 +191,7 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
       nodes[0].type !== `File` &&
       _.isString(v) &&
       mime.lookup(v) !== `application/octet-stream` &&
+      mime.lookup(v) !== `application/x-msdownload` && // domains ending with .com
       isRelative(v)
     ) {
       const fileNodes = types.filter(type => type.name === `File`)
