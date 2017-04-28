@@ -2,5 +2,6 @@
 {
   "prettier.semi": false,
   "prettier.trailingComma": "es5",
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "prettier.singleQuote": false
 }

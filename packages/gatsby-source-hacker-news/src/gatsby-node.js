@@ -1,7 +1,7 @@
-const axios = require('axios')
-const crypto = require('crypto')
-const url = require('url')
-const _ = require('lodash')
+const axios = require("axios")
+const crypto = require("crypto")
+const url = require("url")
+const _ = require("lodash")
 
 const get = query => {
   return axios.get(
@@ -21,9 +21,9 @@ exports.sourceNodes = async ({
   })
 
   // Do the initial fetch
-  console.time('fetch HN data')
+  console.time("fetch HN data")
   console.log(
-    'starting to fetch data from the Hacker News GraphQL API. Warning, this can take a long time e.g. 10-20 seconds'
+    "starting to fetch data from the Hacker News GraphQL API. Warning, this can take a long time e.g. 10-20 seconds"
   )
   const result = await get(
     `
@@ -77,7 +77,7 @@ fragment commentsFragment on HackerNewsItem {
 }
   `
   )
-  console.timeEnd('fetch HN data')
+  console.timeEnd("fetch HN data")
 
   // Create top-story nodes.
   result.data.data.hn.topStories.forEach((story, i) => {
@@ -88,20 +88,20 @@ fragment commentsFragment on HackerNewsItem {
     let domain
     if (story.url) {
       const parsedUrl = url.parse(story.url)
-      const splitHost = parsedUrl.host.split('.')
+      const splitHost = parsedUrl.host.split(".")
       if (splitHost.length > 2) {
-        domain = splitHost.slice(1).join('.')
+        domain = splitHost.slice(1).join(".")
       } else {
-        domain = splitHost.join('.')
+        domain = splitHost.join(".")
       }
     }
 
     let kids
-    kids = _.pick(story, 'kids')
+    kids = _.pick(story, "kids")
     if (!kids.kids) {
       kids.kids = []
     }
-    const kidLessStory = _.omit(story, 'kids')
+    const kidLessStory = _.omit(story, "kids")
 
     const storyNode = {
       ...kidLessStory,
@@ -119,9 +119,9 @@ fragment commentsFragment on HackerNewsItem {
 
     // Get content digest of node.
     const contentDigest = crypto
-      .createHash('md5')
+      .createHash("md5")
       .update(JSON.stringify(storyNode))
-      .digest('hex')
+      .digest("hex")
 
     storyNode.contentDigest = contentDigest
 
@@ -134,7 +134,7 @@ fragment commentsFragment on HackerNewsItem {
           comment.kids = []
         }
         let commentNode = {
-          ..._.omit(comment, 'kids'),
+          ..._.omit(comment, "kids"),
           order: i + 1,
           type: `HNComment`,
           parent,
@@ -147,9 +147,9 @@ fragment commentsFragment on HackerNewsItem {
 
         // Get content digest of comment node.
         const contentDigest = crypto
-          .createHash('md5')
+          .createHash("md5")
           .update(nodeStr)
-          .digest('hex')
+          .digest("hex")
 
         commentNode.contentDigest = contentDigest
         commentNode.content = nodeStr
