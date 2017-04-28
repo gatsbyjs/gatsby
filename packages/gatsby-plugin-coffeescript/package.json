@@ -11,7 +11,7 @@
     "coffeescript": "next"
   },
   "devDependencies": {
-    "babel-cli": "^6.22.2"
+    "babel-cli": "^6.24.1"
   },
   "keywords": [
     "gatsby",

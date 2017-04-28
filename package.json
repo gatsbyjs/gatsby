@@ -51,7 +51,8 @@
   },
   "private": true,
   "scripts": {
-    "postinstall": "lerna bootstrap --hoist",
+    "lerna": "lerna",
+    "postinstall": "lerna bootstrap",
     "build": "lerna run build",
     "lint": "eslint --ext .js,.jsx --ignore-path .gitignore .",
     "lint:flow": "babel-node scripts/flow-check.js",

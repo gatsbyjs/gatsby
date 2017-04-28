@@ -18,6 +18,6 @@
     "unist-util-select": "^1.5.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.18.0"
+    "babel-cli": "^6.24.1"
   }
 }

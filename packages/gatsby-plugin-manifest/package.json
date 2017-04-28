@@ -17,9 +17,9 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "babel-cli": "^6.23.0"
+    "babel-cli": "^6.24.1"
   },
   "dependencies": {
-    "bluebird": "^3.4.7"
+    "bluebird": "^3.5.0"
   }
 }
