@@ -6,18 +6,11 @@ Provides drop-in support for SASS/SCSS stylesheets
 
 ## How to use
 1. Include the plugin in your `gatsby-config.js` file.
-2. Write your stylesheets in SASS/SCSS and import them
+2. Write your stylesheets in SASS/SCSS and require/import them
 
 ```javascript
 // in gatsby-config.js
 plugins: [
-  // no configuration
-  `gatsby-plugin-sass`,
-  // custom configuration
-  {
-    resolve: `gatsby-plugin-sass`,
-    // options are passed directly to the compiler
-    options: {}
-  }
+  `gatsby-plugin-sass`
 ]
 ```
