@@ -1,0 +1,25 @@
+{
+  "name": "gatsby-example-image-gallery",
+  "private": true,
+  "description": "Gatsby example site: image gallery",
+  "version": "1.0.0",
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "dependencies": {
+    "gatsby": "canary",
+    "gatsby-link": "canary",
+    "gatsby-source-drupal": "canary",
+    "lodash": "^4.16.4",
+    "react-typography": "^0.15.0",
+    "slash": "^1.0.0",
+    "typography": "^0.15.8"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build"
+  }
+}
