@@ -29,6 +29,7 @@ mean converting this file into a JS component).
 * [gatsby-plugin-manifest](/docs/packages/gatsby-plugin-manifest/)
 * [gatsby-plugin-offline](/docs/packages/gatsby-plugin-offline/)
 * [gatsby-plugin-preact](/docs/packages/gatsby-plugin-preact/)
+* [gatsby-plugin-sass](/docs/packages/gatsby-plugin-sass/)
 * [gatsby-plugin-sharp](/docs/packages/gatsby-plugin-sharp/)
 * [gatsby-plugin-typescript](/docs/packages/gatsby-plugin-typescript/)
 * [gatsby-source-filesystem](/docs/packages/gatsby-source-filesystem/)
