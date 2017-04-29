@@ -40,7 +40,6 @@ if (process.env.REDUX_DEVTOOLS === `true`) {
 
 // Persist state.
 const saveState = _.debounce(state => {
-  console.log("===============saving redux state")
   const pickedState = _.pick(state, [
     "nodes",
     "status",
@@ -50,7 +49,10 @@ const saveState = _.debounce(state => {
   ])
   fs.writeFile(
     `${process.cwd()}/.cache/redux-state.json`,
-    JSON.stringify(pickedState, null, 2)
+    JSON.stringify(pickedState, null, 2),
+    () => {
+      console.log("---saved redux state")
+    }
   )
 }, 1000)
 
