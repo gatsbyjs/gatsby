@@ -1,8 +1,29 @@
 const axios = require("axios")
-const Promise = require("bluebird")
 const crypto = require("crypto")
-const url = require("url")
 const _ = require("lodash")
+
+const makeTypeName = type => {
+  return `drupal__${type.replace(/-/g, "_")}`
+}
+
+const processEntities = ents => {
+  return ents.map(ent => {
+    const newEnt = {
+      ...ent.attributes,
+      id: ent.id,
+      type: ent.type,
+      created: new Date(ent.attributes.created * 1000).toJSON(),
+      changed: new Date(ent.attributes.changed * 1000).toJSON(),
+    }
+    if (newEnt.revision_timestamp) {
+      newEnt.revision_timestamp = new Date(
+        newEnt.revision_timestamp * 1000
+      ).toJSON()
+    }
+
+    return newEnt
+  })
+}
 
 exports.sourceNodes = async ({
   boundActionCreators,
@@ -15,7 +36,6 @@ exports.sourceNodes = async ({
     updateSourcePluginStatus,
     touchNode,
   } = boundActionCreators
-  console.log("inside gatsby-source-drupal")
   updateSourcePluginStatus({
     plugin: `gatsby-source-drupal`,
     status: {
@@ -25,18 +45,18 @@ exports.sourceNodes = async ({
   })
 
   // Touch existing Drupal nodes so Gatsby doesn't garbage collect them.
-  console.log(
-    "existing drupal nodes",
-    _.values(store.getState().nodes)
-      .filter(n => n.type.slice(0, 8) === `drupal__`)
-      .map(n => n.id)
-  )
+  // console.log(
+  // "existing drupal nodes",
+  // _.values(store.getState().nodes)
+  // .filter(n => n.type.slice(0, 8) === `drupal__`)
+  // .map(n => n.id)
+  // )
 
   _.values(store.getState().nodes)
     .filter(n => n.type.slice(0, 8) === `drupal__`)
     .forEach(n => touchNode(n.id))
 
-  // Do the initial fetch
+  // Fetch articles.
   console.time("fetch Drupal data")
   console.log("Starting to fetch data from Drupal")
 
@@ -50,7 +70,12 @@ exports.sourceNodes = async ({
     url = `http://dev-gatsbyjs-d8.pantheonsite.io/jsonapi/node/article`
   }
 
-  const result = await axios.get(url)
+  let result
+  try {
+    result = await axios.get(url)
+  } catch (e) {
+    console.log("error fetching articles", e)
+  }
 
   console.log("articles fetched", result.data.data.length)
 
@@ -64,29 +89,17 @@ exports.sourceNodes = async ({
 
   console.timeEnd("fetch Drupal data")
 
-  result.data.data.forEach((node, i) => {
-    // We don't need this information locally.
-    delete node.relationships
-    // console.log(node)
-    const newNode = {
-      id: node.id,
-      type: node.type,
-      ...node.attributes,
-    }
-
-    newNode.created = new Date(newNode.created * 1000).toJSON()
-    newNode.changed = new Date(newNode.changed * 1000).toJSON()
-    newNode.revision_timestamp = new Date(
-      newNode.revision_timestamp * 1000
-    ).toJSON()
-    const nodeStr = JSON.stringify(newNode)
+  const nodes = processEntities(result.data.data)
+  nodes.forEach((node, i) => {
+    const nodeStr = JSON.stringify(node)
 
     const gatsbyNode = {
-      ...newNode,
+      ...node,
       parent: `__SOURCE__`,
-      type: `drupal__${node.type.replace(/-/g, "_")}`,
+      type: makeTypeName(node.type),
       children: [],
       content: nodeStr,
+      author: result.data.data[i].relationships.uid.data.id,
       mediaType: `application/json`,
     }
 
@@ -100,6 +113,53 @@ exports.sourceNodes = async ({
 
     createNode(gatsbyNode)
   })
+
+  // Fetch users.
+  const userUrl = `http://dev-gatsbyjs-d8.pantheonsite.io/jsonapi/user/user`
+  const userResult = await axios.get(userUrl)
+  const users = processEntities(userResult.data.data)
+  const blue = await Promise.all(
+    users.map((user, i) => {
+      return new Promise(resolve => {
+        const userStr = JSON.stringify(user)
+
+        const gatsbyUser = {
+          ...user,
+          parent: `__SOURCE__`,
+          type: makeTypeName(user.type),
+          children: [],
+          content: userStr,
+          mediaType: `application/json`,
+        }
+
+        if (gatsbyUser.uid === 1) {
+          return resolve()
+        }
+
+        axios
+          .get(
+            userResult.data.data[i].relationships.user_picture.links.related,
+            { timeout: 3000 }
+          )
+          .catch(() => console.log("fail fetch", gatsbyUser))
+          .then(pictureResult => {
+            gatsbyUser.picture = `http://dev-gatsbyjs-d8.pantheonsite.io${pictureResult.data.data.attributes.url}`
+
+            // Get content digest of node.
+            const contentDigest = crypto
+              .createHash("md5")
+              .update(JSON.stringify(gatsbyUser))
+              .digest("hex")
+
+            gatsbyUser.contentDigest = contentDigest
+
+            createNode(gatsbyUser)
+
+            resolve()
+          })
+      })
+    })
+  )
 
   updateSourcePluginStatus({
     plugin: `gatsby-source-drupal`,

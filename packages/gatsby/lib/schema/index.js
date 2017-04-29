@@ -65,7 +65,6 @@ module.exports = () => {
       const state = store.getState()
       // Check if the schema has been built yet and if
       // all source plugins have reported that they're ready.
-      console.log(state.status)
       if (!builtSchema && _.every(_.values(state.status), "ready")) {
         console.timeEnd(`sourcing and parsing nodes`)
         builtSchema = true

@@ -1,4 +1,5 @@
 import React from "react"
+import Link from "gatsby-link"
 
 class IndexPage extends React.Component {
   render() {
@@ -8,16 +9,22 @@ class IndexPage extends React.Component {
       <div>
         {articleEdges.map(edge => {
           const article = edge.node
-          let body
-          if (article.body) {
-            body = article.body.value
+          let name = "anonymous"
+          if (article.author) {
+            name = article.author.name
           }
-          console.log(article)
           return (
             <div>
-              <h1>{article.title}</h1>
-              <small>{article.created}</small>
-              <p dangerouslySetInnerHTML={{ __html: body }} />
+              <Link to={`/node/${article.nid}/`}>
+                <h4>
+                  <span style={{ color: "gray" }}>{article.created}</span>
+                  {" "}
+                  |
+                  {" "}“{article.title}” by
+                  {" "}
+                  <em>{name}</em>
+                </h4>
+              </Link>
             </div>
           )
         })}
@@ -34,9 +41,10 @@ export const pageQuery = `
     edges {
       node {
         title
+        nid
         created(formatString: "DD-MMM-YYYY")
-        body {
-          value
+        author {
+          name
         }
       }
     }

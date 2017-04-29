@@ -59,7 +59,6 @@ exports.sourceNodes = (
   const {
     createNode,
     deleteNode,
-    touchNode,
     updateSourcePluginStatus,
   } = boundActionCreators
 

@@ -1,5 +1,5 @@
 import React from "react"
-import { GoogleFont, TypographyStyle } from "react-typography"
+import { TypographyStyle } from "react-typography"
 import typography from "./utils/typography"
 
 let stylesStr

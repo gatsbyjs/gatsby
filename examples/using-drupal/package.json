@@ -11,7 +11,8 @@
     "lodash": "^4.16.4",
     "react-typography": "^0.15.0",
     "slash": "^1.0.0",
-    "typography": "^0.15.8"
+    "typography": "^0.15.8",
+    "typography-breakpoint-constants": "^0.14.0"
   },
   "keywords": [
     "gatsby"

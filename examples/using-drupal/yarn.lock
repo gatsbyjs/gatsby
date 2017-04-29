@@ -249,6 +249,12 @@ aws4@^1.2.1:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.6.0.tgz#83ef5ca860b2b32e4a0deedee8c771b9db57471e"
 
+axios@^0.16.1:
+  version "0.16.1"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.16.1.tgz#c0b6d26600842384b8f509e57111f0d2df8223ca"
+  dependencies:
+    follow-redirects "^1.2.3"
+
 b64@2.x.x:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/b64/-/b64-2.0.1.tgz#d08c10719719ff1fe1b532ae49269409ce149ce9"
@@ -1800,7 +1806,7 @@ debug@2.6.4:
   dependencies:
     ms "0.7.3"
 
-debug@^2.1.1, debug@^2.2.0, debug@^2.6.0:
+debug@^2.1.1, debug@^2.2.0, debug@^2.4.5, debug@^2.6.0:
   version "2.6.6"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.6.tgz#a9fa6fbe9ca43cf1e79f73b75c0189cbb7d6db5a"
   dependencies:
@@ -2392,6 +2398,12 @@ flux-standard-action@^1.2.0:
   dependencies:
     lodash "^4.0.0"
 
+follow-redirects@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.2.3.tgz#01abaeca85e3609837d9fcda3167a7e42fdaca21"
+  dependencies:
+    debug "^2.4.5"
+
 for-in@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/for-in/-/for-in-1.0.2.tgz#81068d295a8142ec0ac726c6e2200c30fb6d5e80"
@@ -2483,6 +2495,14 @@ gatsby-link@canary:
   resolved "https://registry.yarnpkg.com/gatsby-link/-/gatsby-link-1.0.0-alpha13-alpha.537d11c6.tgz#b5f242da31015930cb39ee131ae4fb7ea4be5f70"
   dependencies:
     "@types/react-router" "^2.0.49"
+
+gatsby-source-drupal@canary:
+  version "1.0.0-alpha13-alpha.0189ea42"
+  resolved "https://registry.yarnpkg.com/gatsby-source-drupal/-/gatsby-source-drupal-1.0.0-alpha13-alpha.0189ea42.tgz#234fd290f4490df31b0deb63b54303fecffad414"
+  dependencies:
+    axios "^0.16.1"
+    bluebird "^3.4.6"
+    lodash "^4.17.2"
 
 gatsby@canary:
   version "1.0.0-alpha13-alpha.537d11c6"
@@ -6439,6 +6459,10 @@ type-is@~1.6.14:
 type-of@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/type-of/-/type-of-2.0.1.tgz#e72a1741896568e9f628378d816d6912f7f23972"
+
+typography-breakpoint-constants@^0.14.0:
+  version "0.14.0"
+  resolved "https://registry.yarnpkg.com/typography-breakpoint-constants/-/typography-breakpoint-constants-0.14.0.tgz#dbfef844095b78cfc1d0088a2fa83e91f442aa13"
 
 typography-normalize@^0.14.0:
   version "0.14.0"
