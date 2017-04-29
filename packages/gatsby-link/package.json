@@ -15,7 +15,7 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "babel-cli": "^6.18.0"
+    "babel-cli": "^6.24.1"
   },
   "dependencies": {
     "@types/react-router": "^2.0.49"

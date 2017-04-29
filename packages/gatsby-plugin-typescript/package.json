@@ -11,7 +11,7 @@
     "typescript": "^2.2.1"
   },
   "devDependencies": {
-    "babel-cli": "^6.24.0"
+    "babel-cli": "^6.24.1"
   },
   "keywords": [
     "gatsby",

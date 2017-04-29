@@ -7,7 +7,6 @@ const {
   GraphQLList,
   GraphQLString,
 } = require("graphql")
-const select = require("unist-util-select")
 const path = require("path")
 const Promise = require("bluebird")
 const mime = require("mime")

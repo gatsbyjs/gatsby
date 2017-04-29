@@ -1,5 +1,4 @@
 const axios = require("axios")
-const Promise = require("bluebird")
 const crypto = require("crypto")
 const url = require("url")
 const _ = require("lodash")

@@ -12,7 +12,7 @@
   "description": "CLI helpers for contributors working on Gatsby",
   "main": "index.js",
   "devDependencies": {
-    "babel-cli": "^6.24.0"
+    "babel-cli": "^6.24.1"
   },
   "bin": {
     "gatsby-dev": "./bin/gatsby-dev"

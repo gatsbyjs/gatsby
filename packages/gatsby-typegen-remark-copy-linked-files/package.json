@@ -6,13 +6,11 @@
   "dependencies": {
     "fs-extra": "^1.0.0",
     "is-relative-url": "^2.0.0",
-    "lodash": "^4.17.3",
+    "lodash": "^4.17.4",
     "unist-util-visit": "^1.1.1"
   },
   "devDependencies": {
-    "babel-cli": "^6.18.0",
-    "babel-plugin-transform-object-rest-spread": "^6.20.2",
-    "babel-preset-env": "^1.1.4"
+    "babel-cli": "^6.24.1"
   },
   "keywords": [
     "gatsby",

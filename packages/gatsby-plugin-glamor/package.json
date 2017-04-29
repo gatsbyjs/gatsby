@@ -11,7 +11,7 @@
     "glamor-server": "next"
   },
   "devDependencies": {
-    "babel-cli": "^6.18.0"
+    "babel-cli": "^6.24.1"
   },
   "keywords": [
     "gatsby",
