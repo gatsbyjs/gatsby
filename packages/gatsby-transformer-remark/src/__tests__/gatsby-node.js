@@ -1,11 +1,11 @@
-const Promise = require("bluebird")
+const Promise = require(`bluebird`)
 
-const { onNodeCreate } = require("../src/gatsby-node")
+const { onNodeCreate } = require(`../gatsby-node`)
 
 describe(`Process markdown content correctly`, () => {
   const node = {
-    id: "whatever",
-    contentDigest: "whatever",
+    id: `whatever`,
+    contentDigest: `whatever`,
     mediaType: `text/x-markdown`,
     children: [],
   }
