@@ -1,4 +1,4 @@
-const reducer = require("../page-data-dependencies")
+const reducer = require(`../page-data-dependencies`)
 
 describe(`add page data dependency`, () => {
   it(`lets you add a node dependency`, () => {
@@ -72,7 +72,7 @@ describe(`add page data dependency`, () => {
 
     expect(state).toEqual({
       connections: {
-        "Markdown.Remark": ["/hi/", "/hi2/"],
+        "Markdown.Remark": [`/hi/`, `/hi2/`],
       },
       nodes: {},
     })
@@ -101,7 +101,7 @@ describe(`add page data dependency`, () => {
     // Add different action
     state = reducer(state, action2)
 
-    expect(state.connections["MarkdownRemark"].length).toEqual(2)
+    expect(state.connections[`MarkdownRemark`].length).toEqual(2)
     expect(state.nodes[1].length).toEqual(2)
   })
   it(`lets you add both a node and connection in one action`, () => {

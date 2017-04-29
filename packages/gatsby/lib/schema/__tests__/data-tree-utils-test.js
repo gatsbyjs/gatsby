@@ -1,7 +1,7 @@
 const {
   extractFieldExamples,
   buildFieldEnumValues,
-} = require("../data-tree-utils")
+} = require(`../data-tree-utils`)
 
 describe(`Gatsby data tree utils`, () => {
   const nodes = [

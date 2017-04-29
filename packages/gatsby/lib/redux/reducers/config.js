@@ -1,11 +1,11 @@
-const Joi = require("joi")
-const chalk = require("chalk")
+const Joi = require(`joi`)
+const chalk = require(`chalk`)
 
-const { gatsbyConfigSchema } = require("../../joi-schemas/joi")
+const { gatsbyConfigSchema } = require(`../../joi-schemas/joi`)
 
 module.exports = (state = {}, action) => {
   switch (action.type) {
-    case "SET_SITE_CONFIG":
+    case `SET_SITE_CONFIG`:
       // Validate the config.
       const result = Joi.validate(action.payload, gatsbyConfigSchema)
       // TODO use Redux for capturing errors from different

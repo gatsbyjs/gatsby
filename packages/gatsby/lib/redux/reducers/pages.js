@@ -1,8 +1,8 @@
-const _ = require("lodash")
+const _ = require(`lodash`)
 
 module.exports = (state = [], action) => {
   switch (action.type) {
-    case "UPSERT_PAGE":
+    case `UPSERT_PAGE`:
       const index = _.findIndex(state, p => {
         return p.path === action.payload.path
       })

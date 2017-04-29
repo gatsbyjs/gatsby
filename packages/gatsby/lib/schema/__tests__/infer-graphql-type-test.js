@@ -1,11 +1,11 @@
 test(`Infers graphql type from array of nodes`, () => {
-  const { inferObjectStructureFromNodes } = require("../infer-graphql-type")
+  const { inferObjectStructureFromNodes } = require(`../infer-graphql-type`)
   const {
     graphql,
     GraphQLObjectType,
     GraphQLList,
     GraphQLSchema,
-  } = require("graphql")
+  } = require(`graphql`)
   const nodes = [
     {
       id: `foo`,
@@ -15,7 +15,7 @@ test(`Infers graphql type from array of nodes`, () => {
       date: `1012-11-01`,
       anArray: [1, 2, 3, 4],
       externalUrl: `https://example.com/awesome.jpg`,
-      domain: "pizza.com",
+      domain: `pizza.com`,
       frontmatter: {
         date: `1012-11-01`,
         title: `The world of dash and adventure`,

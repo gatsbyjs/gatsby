@@ -1,10 +1,10 @@
 module.exports = (state = {}, action) => {
   switch (action.type) {
-    case "CREATE_NODE":
+    case `CREATE_NODE`:
       state[action.payload.id] = true
       return state
 
-    case "TOUCH_NODE":
+    case `TOUCH_NODE`:
       state[action.payload] = true
       return state
 

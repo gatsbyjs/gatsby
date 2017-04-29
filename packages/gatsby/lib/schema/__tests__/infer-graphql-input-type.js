@@ -1,22 +1,18 @@
-const _ = require("lodash")
-const runSift = require("../run-sift")
+const _ = require(`lodash`)
+const runSift = require(`../run-sift`)
 const {
   connectionFromArray,
   connectionArgs,
   connectionDefinitions,
-} = require("graphql-skip-limit")
-const buildConnectionFields = require("../build-connection-fields")
+} = require(`graphql-skip-limit`)
+const buildConnectionFields = require(`../build-connection-fields`)
 
 describe(`GraphQL Input args`, () => {
-  const { inferObjectStructureFromNodes } = require("../infer-graphql-type")
+  const { inferObjectStructureFromNodes } = require(`../infer-graphql-type`)
   const {
     inferInputObjectStructureFromNodes,
-  } = require("../infer-graphql-input-fields")
-  const {
-    graphql,
-    GraphQLObjectType,
-    GraphQLSchema,
-  } = require("graphql")
+  } = require(`../infer-graphql-input-fields`)
+  const { graphql, GraphQLObjectType, GraphQLSchema } = require(`graphql`)
   const nodes = [
     {
       name: `The Mad Max`,
