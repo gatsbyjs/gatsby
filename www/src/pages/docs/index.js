@@ -53,10 +53,11 @@ class IndexRoute extends React.Component {
         <p>Clone the Gatsby Starter Blog repo:<br/>
           <code>git clone https://github.com/gatsbyjs/gatsby-starter-blog/</code>
         </p>
-        <p>Checkout the
+        <p>Go to folder and checkout the
           <code>1.0</code>
           branch.<br/>
-          <code>git checkout 1.0</code>
+          <code>cd gastsby-starter-blog<br/>
+          git checkout 1.0</code>
         </p>
         <p>Install npm packages<br/>
           <code>npm install</code>
