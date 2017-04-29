@@ -67,7 +67,7 @@ exports.sourceNodes = (
 
   updateSourcePluginStatus({
     plugin: `source-filesystem --- ${pluginOptions.name}`,
-    ready,
+    status: { ready },
   })
 
   const watcher = chokidar.watch(pluginOptions.path, {
@@ -134,7 +134,7 @@ exports.sourceNodes = (
     flushPathQueue(() => {
       updateSourcePluginStatus({
         plugin: `source-filesystem --- ${pluginOptions.name}`,
-        ready,
+        status: { ready },
       })
     })
   })
