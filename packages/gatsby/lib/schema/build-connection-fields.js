@@ -1,21 +1,21 @@
 // @flow
-const _ = require("lodash")
+const _ = require(`lodash`)
 const {
   GraphQLInt,
   GraphQLList,
   GraphQLString,
   GraphQLEnumType,
-} = require("graphql")
+} = require(`graphql`)
 const {
   connectionArgs,
   connectionDefinitions,
   connectionFromArray,
-} = require("graphql-skip-limit")
+} = require(`graphql-skip-limit`)
 
-const { buildFieldEnumValues } = require("./data-tree-utils")
+const { buildFieldEnumValues } = require(`./data-tree-utils`)
 
 module.exports = type => {
-  //nodes, nodeType) => {
+  // nodes, nodeType) => {
   const enumValues = buildFieldEnumValues(type.nodes)
   const { connectionType: groupConnection } = connectionDefinitions({
     name: _.camelCase(`${type.name} groupConnection`),

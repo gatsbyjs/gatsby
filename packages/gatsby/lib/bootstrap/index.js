@@ -9,11 +9,11 @@ import fs from "fs-extra"
 import apiRunnerNode from "../utils/api-runner-node"
 import { graphql } from "graphql"
 import { store } from "../redux"
-const { boundActionCreators } = require("../redux/actions")
+const { boundActionCreators } = require(`../redux/actions`)
 
 // Start off the query running.
-require("../query-runner")
-const isInitialPageQueryingDone = require("../query-runner/page-query-runner")
+require(`../query-runner`)
+const isInitialPageQueryingDone = require(`../query-runner/page-query-runner`)
 
 // Override console.log to add the source file + line number.
 // ["log", "warn"].forEach(function(method) {
@@ -43,7 +43,7 @@ const glob = Promise.promisify(globCB)
 const autoPathCreator = async () => {
   const { program } = store.getState()
   const pagesDirectory = path.posix.join(program.directory, `/src/pages`)
-  const exts = program.extensions.map(e => `*${e}`).join("|")
+  const exts = program.extensions.map(e => `*${e}`).join(`|`)
   // The promisified version wasn't working for some reason
   // so we'll use sync for now.
   const files = glob.sync(`${pagesDirectory}/**/?(${exts})`)
@@ -84,7 +84,7 @@ module.exports = async (program: any) => {
   program.directory = slash(program.directory)
 
   store.dispatch({
-    type: "SET_PROGRAM",
+    type: `SET_PROGRAM`,
     payload: program,
   })
 
@@ -100,7 +100,7 @@ module.exports = async (program: any) => {
   }
 
   store.dispatch({
-    type: "SET_SITE_CONFIG",
+    type: `SET_SITE_CONFIG`,
     payload: config,
   })
 
@@ -180,12 +180,12 @@ module.exports = async (program: any) => {
   })
 
   store.dispatch({
-    type: "SET_SITE_PLUGINS",
+    type: `SET_SITE_PLUGINS`,
     payload: plugins,
   })
 
   store.dispatch({
-    type: "SET_SITE_FLATTENED_PLUGINS",
+    type: `SET_SITE_FLATTENED_PLUGINS`,
     payload: flattenedPlugins,
   })
 
@@ -271,10 +271,10 @@ module.exports = async (program: any) => {
 
   // Collect resolvable extensions and attach to program.
   const extensions = [`.js`, `.jsx`]
-  const apiResults = await apiRunnerNode("resolvableExtensions")
+  const apiResults = await apiRunnerNode(`resolvableExtensions`)
 
   store.dispatch({
-    type: "SET_PROGRAM_EXTENSIONS",
+    type: `SET_PROGRAM_EXTENSIONS`,
     payload: _.flattenDeep([extensions, apiResults]),
   })
 

@@ -1,7 +1,7 @@
-const visit = require("unist-util-visit")
-const cheerio = require("cheerio")
-const Promise = require("bluebird")
-const _ = require("lodash")
+const visit = require(`unist-util-visit`)
+const cheerio = require(`cheerio`)
+const Promise = require(`bluebird`)
+const _ = require(`lodash`)
 
 module.exports = ({ markdownAST, pluginOptions = {} }) =>
   new Promise(resolve => {

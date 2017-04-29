@@ -1,9 +1,9 @@
-const Promise = require("bluebird")
-const glob = require("glob")
-const _ = require("lodash")
-const mapSeries = require("async/mapSeries")
+const Promise = require(`bluebird`)
+const glob = require(`glob`)
+const _ = require(`lodash`)
+const mapSeries = require(`async/mapSeries`)
 
-const cache = require("./cache")
+const cache = require(`./cache`)
 
 // Bind action creators per plugin so can auto-add plugin
 // meta-data to data they create.
@@ -17,11 +17,11 @@ const doubleBind = (boundActionCreators, plugin) => {
     for (let i = 0; i < keys.length; i++) {
       const key = keys[i]
       const boundActionCreator = boundActionCreators[key]
-      if (typeof boundActionCreator === "function") {
+      if (typeof boundActionCreator === `function`) {
         doubleBoundActionCreators[key] = (...args) => {
           // Only set the pluginName once (so node updaters don't
           // overwrite this).
-          if (!_.has(args, "[0].pluginName") && _.isObject(args[0])) {
+          if (!_.has(args, `[0].pluginName`) && _.isObject(args[0])) {
             args[0].pluginName = plugin.name
           }
           return boundActionCreator(...args, plugin)
@@ -42,8 +42,8 @@ const runAPI = (plugin, api, args) => {
     getNode,
     hasNodeChanged,
     getNodeAndSavePathDependency,
-  } = require("../redux")
-  const { boundActionCreators } = require("../redux/actions")
+  } = require(`../redux`)
+  const { boundActionCreators } = require(`../redux/actions`)
 
   // Wrap "createNode" so we can autoset the package name
   // of the plugin that creates each node.
@@ -85,7 +85,7 @@ const hasAPIFile = plugin => glob.sync(`${plugin.resolve}/gatsby-node*`)[0]
 
 module.exports = async (api, args = {}) => {
   return new Promise(resolve => {
-    const { store } = require("../redux")
+    const { store } = require(`../redux`)
     const plugins = store.getState().flattenedPlugins
     // Get the list of plugins that implement gatsby-node
     if (!filteredPlugins) {

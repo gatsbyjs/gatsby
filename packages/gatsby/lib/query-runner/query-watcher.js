@@ -1,4 +1,4 @@
-/***
+/** *
  * Jobs of this module
  * - Maintain the list of components in the Redux store. So monitor new pages
  *   and add/remove components.
@@ -8,19 +8,19 @@
  * - Whenever a query changes, re-run all pages that rely on this query.
  ***/
 
-const _ = require("lodash")
-const chokidar = require("chokidar")
+const _ = require(`lodash`)
+const chokidar = require(`chokidar`)
 
-const { store } = require("../redux/")
-const { boundActionCreators } = require("../redux/actions")
-const queryExtractor = require("./query-extractor")
-const queryRunner = require("./query-runner")
+const { store } = require(`../redux/`)
+const { boundActionCreators } = require(`../redux/actions`)
+const queryExtractor = require(`./query-extractor`)
+const queryRunner = require(`./query-runner`)
 
 const pageComponents = {}
 const doneInitialQueryRun = []
 
 const watcher = chokidar.watch()
-watcher.on("change", path => {
+watcher.on(`change`, path => {
   queryExtractor(path).then(query => {
     // Check if the query has changed
     if (query !== store.getState().pageComponents[path].query) {
@@ -69,7 +69,7 @@ store.subscribe(() => {
 
 const runQueriesForComponent = componentPath => {
   const pages = getPagesForComponent(componentPath)
-  console.log("running queries for", pages.map(p => p.path))
+  console.log(`running queries for`, pages.map(p => p.path))
   // Remove page data dependencies before re-running queries because
   // the changing of the query could have changed the data dependencies.
   // Re-running the queries will add back data dependencies.

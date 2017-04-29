@@ -1,11 +1,11 @@
-const Redux = require("redux")
-const Promise = require("bluebird")
-const _ = require("lodash")
-const { composeWithDevTools } = require("remote-redux-devtools")
-const fs = require("fs")
+const Redux = require(`redux`)
+const Promise = require(`bluebird`)
+const _ = require(`lodash`)
+const { composeWithDevTools } = require(`remote-redux-devtools`)
+const fs = require(`fs`)
 
 // Reducers
-const reducers = require("./reducers")
+const reducers = require(`./reducers`)
 
 // Read from cache the old node data.
 let initialState = {}
@@ -40,12 +40,12 @@ if (process.env.REDUX_DEVTOOLS === `true`) {
 
 // Persist state.
 const saveState = _.debounce(state => {
-  console.log("===============saving redux state")
+  console.log(`===============saving redux state`)
   const pickedState = _.pick(state, [
-    "nodes",
-    "pages",
-    "pageDataDependencies",
-    "pageComponents",
+    `nodes`,
+    `pages`,
+    `pageDataDependencies`,
+    `pageComponents`,
   ])
   fs.writeFile(
     `${process.cwd()}/.cache/redux-state.json`,
@@ -93,7 +93,7 @@ exports.loadNodeContent = node => {
 }
 
 exports.getNodeAndSavePathDependency = (id, path) => {
-  const { addPageDependency } = require("./actions/add-page-dependency")
+  const { addPageDependency } = require(`./actions/add-page-dependency`)
   const node = getNode(id)
   addPageDependency({ path, nodeId: id })
   return node
@@ -101,4 +101,4 @@ exports.getNodeAndSavePathDependency = (id, path) => {
 
 // Start plugin runner which listens to the store
 // and invokes Gatsby API based on actions.
-require("./plugin-runner")
+require(`./plugin-runner`)

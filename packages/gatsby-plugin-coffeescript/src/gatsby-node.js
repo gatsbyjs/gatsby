@@ -10,13 +10,13 @@ export function resolvableExtensions() {
 
 export function modifyWebpackConfig({ config }) {
   // We need to use Babel to get around the ES6 export issue.
-  config.loader("coffee", {
+  config.loader(`coffee`, {
     test: COFFEE,
-    loaders: ["babel", "coffee"],
+    loaders: [`babel`, `coffee`],
   })
-  config.loader("cjsx", {
+  config.loader(`cjsx`, {
     test: CJSX,
-    loaders: ["babel", "coffee", "cjsx"],
+    loaders: [`babel`, `coffee`, `cjsx`],
   })
 }
 

@@ -1,10 +1,10 @@
-const path = require("path")
-const md5File = require("md5-file")
-const fs = require("fs")
-const prettyBytes = require("pretty-bytes")
-const slash = require("slash")
-const chokidar = require("chokidar")
-const mime = require("mime")
+const path = require(`path`)
+const md5File = require(`md5-file`)
+const fs = require(`fs`)
+const prettyBytes = require(`pretty-bytes`)
+const slash = require(`slash`)
+const chokidar = require(`chokidar`)
+const mime = require(`mime`)
 
 const createId = path => {
   const slashed = slash(path)
@@ -107,7 +107,7 @@ exports.sourceNodes = (
 
   watcher.on(`add`, path => {
     if (ready) {
-      console.log("added file at", path)
+      console.log(`added file at`, path)
       readFile(path, pluginOptions, (err, file) => {
         createNode(file)
       })
@@ -116,13 +116,13 @@ exports.sourceNodes = (
     }
   })
   watcher.on(`change`, path => {
-    console.log("changed file at", path)
+    console.log(`changed file at`, path)
     readFile(path, pluginOptions, (err, file) => {
       createNode(file)
     })
   })
   watcher.on(`unlink`, path => {
-    console.log("file deleted at", path)
+    console.log(`file deleted at`, path)
     deleteNode(createId(path))
   })
   watcher.on(`ready`, () => {

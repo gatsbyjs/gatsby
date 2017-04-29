@@ -1,8 +1,8 @@
-const select = require("unist-util-select")
-const Promise = require("bluebird")
-const fs = require("fs")
-const _ = require("lodash")
-const crypto = require("crypto")
+const select = require(`unist-util-select`)
+const Promise = require(`bluebird`)
+const fs = require(`fs`)
+const _ = require(`lodash`)
+const crypto = require(`crypto`)
 
 async function onNodeCreate({ node, boundActionCreators, loadNodeContent }) {
   const { createNode, updateNode } = boundActionCreators
@@ -23,7 +23,7 @@ async function onNodeCreate({ node, boundActionCreators, loadNodeContent }) {
   const content = await loadNodeContent(node)
   const JSONArray = JSON.parse(content).map((obj, i) => {
     const objStr = JSON.stringify(obj)
-    const contentDigest = crypto.createHash("md5").update(objStr).digest("hex")
+    const contentDigest = crypto.createHash(`md5`).update(objStr).digest(`hex`)
 
     return {
       ...obj,

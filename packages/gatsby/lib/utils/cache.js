@@ -1,6 +1,6 @@
-const levelup = require("level")
-const Promise = require("bluebird")
-const fs = require("fs-extra")
+const levelup = require(`level`)
+const Promise = require(`bluebird`)
+const fs = require(`fs-extra`)
 
 fs.ensureDirSync(`${process.cwd()}/.cache/cache`)
 
@@ -39,7 +39,7 @@ exports.set = (key, value) => {
       if (err) {
         reject(err)
       } else {
-        resolve("OK")
+        resolve(`OK`)
       }
     })
   })

@@ -6,7 +6,7 @@ import buildHTML from "./build-html"
 import buildProductionBundle from "./build-javascript"
 import bootstrap from "../bootstrap"
 import apiRunnerNode from "./api-runner-node"
-const { store } = require("../redux")
+const { store } = require(`../redux`)
 
 async function html(program: any) {
   const { graphqlRunner } = await bootstrap(program)

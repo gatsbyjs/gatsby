@@ -1,10 +1,10 @@
 import { graphql as graphqlFunction } from "graphql"
-const fs = require("fs")
-const Promise = require("bluebird")
+const fs = require(`fs`)
+const Promise = require(`bluebird`)
 
 const writeFileAsync = Promise.promisify(fs.writeFile)
 
-const { store } = require("../redux")
+const { store } = require(`../redux`)
 
 // Run query for a page
 module.exports = async (page, component) => {
@@ -18,7 +18,7 @@ module.exports = async (page, component) => {
   let result
 
   // Nothing to do if the query isn't correct.
-  if (!component.query || component.query === "") {
+  if (!component.query || component.query === ``) {
     result = {}
   } else {
     result = await graphql(component.query, { ...page, ...page.context })

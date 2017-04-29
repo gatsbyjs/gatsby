@@ -1,6 +1,6 @@
 // @flow
-const _ = require("lodash")
-const flatten = require("flat")
+const _ = require(`lodash`)
+const flatten = require(`flat`)
 
 const extractFieldExamples = (exports.extractFieldExamples = ({
   nodes,

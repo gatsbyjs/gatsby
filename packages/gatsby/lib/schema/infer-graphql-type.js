@@ -6,14 +6,14 @@ const {
   GraphQLFloat,
   GraphQLInt,
   GraphQLList,
-} = require("graphql")
-const _ = require("lodash")
-const moment = require("moment")
-const mime = require("mime")
-const isRelative = require("is-relative")
-const { store, getNodes } = require("../redux")
-const { addPageDependency } = require("../redux/actions/add-page-dependency")
-const { extractFieldExamples } = require("./data-tree-utils")
+} = require(`graphql`)
+const _ = require(`lodash`)
+const moment = require(`moment`)
+const mime = require(`mime`)
+const isRelative = require(`is-relative`)
+const { store, getNodes } = require(`../redux`)
+const { addPageDependency } = require(`../redux/actions/add-page-dependency`)
+const { extractFieldExamples } = require(`./data-tree-utils`)
 
 const inferGraphQLType = ({ value, fieldName, ...otherArgs }) => {
   if (Array.isArray(value)) {
@@ -131,7 +131,7 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
   _.each(fieldExamples, (v, k) => {
     // Check if field is pointing to custom type.
     // First check field => type mappings in gatsby-config.js
-    const fieldSelector = _.remove([nodes[0].type, selector, k]).join(".")
+    const fieldSelector = _.remove([nodes[0].type, selector, k]).join(`.`)
     if (mapping && _.includes(Object.keys(mapping), fieldSelector)) {
       const matchedTypes = types.filter(
         type => type.name === mapping[fieldSelector]

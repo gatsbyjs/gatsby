@@ -3,9 +3,9 @@ import { GraphQLObjectType, GraphQLString, GraphQLBoolean } from "graphql"
 import moment from "moment"
 import _ from "lodash"
 
-//import pagesSchema from './pages-schema'
-const { inferObjectStructureFromNodes } = require("./infer-graphql-type")
-const { store } = require("../redux")
+// import pagesSchema from './pages-schema'
+const { inferObjectStructureFromNodes } = require(`./infer-graphql-type`)
+const { store } = require(`../redux`)
 
 module.exports = () => {
   const config = store.getState().config

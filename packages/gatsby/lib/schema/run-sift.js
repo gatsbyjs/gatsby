@@ -1,16 +1,16 @@
 // @flow
-const sift = require("sift")
-const _ = require("lodash")
-const { connectionFromArray } = require("graphql-skip-limit")
-const { store } = require("../redux/")
-const { addPageDependency } = require("../redux/actions/add-page-dependency")
+const sift = require(`sift`)
+const _ = require(`lodash`)
+const { connectionFromArray } = require(`graphql-skip-limit`)
+const { store } = require(`../redux/`)
+const { addPageDependency } = require(`../redux/actions/add-page-dependency`)
 
 type Node = {
   id: String,
   type: String,
 }
 
-module.exports = ({ args, nodes, connection = false, path = "" }) => {
+module.exports = ({ args, nodes, connection = false, path = `` }) => {
   // Clone args as for some reason graphql-js removes the constructor
   // from nested objects which breaks a check in sift.js.
   const clonedArgs = JSON.parse(JSON.stringify(args))

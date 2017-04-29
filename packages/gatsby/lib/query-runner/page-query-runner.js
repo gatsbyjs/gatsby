@@ -1,16 +1,16 @@
-/***
+/** *
  * Jobs of this module
  * - Ensure on bootstrap that all invalid page queries are run and report
  *   when this is done
  * - Watch for when a page's query is invalidated and re-run it.
  ***/
 
-const _ = require("lodash")
-const Promise = require("bluebird")
+const _ = require(`lodash`)
+const Promise = require(`bluebird`)
 
-const { store } = require("../redux")
-const queryRunner = require("./query-runner")
-const checkpointsPromise = require("../utils/checkpoints-promise")
+const { store } = require(`../redux`)
+const queryRunner = require(`./query-runner`)
+const checkpointsPromise = require(`../utils/checkpoints-promise`)
 
 let queuedDirtyActions = []
 // Don't start running queries until we've reached the BOOTSTRAP_STAGE of
@@ -49,7 +49,7 @@ checkpointsPromise({
 store.subscribe(() => {
   const state = store.getState()
 
-  if (state.lastAction.type === "CREATE_NODE") {
+  if (state.lastAction.type === `CREATE_NODE`) {
     queuedDirtyActions.push(state.lastAction)
     debouncedProcessQueries()
   }
@@ -59,7 +59,7 @@ store.subscribe(() => {
   // PS. prediction to future selves, this method of debouncing data processing
   // will break down bigly once data processing pipelines get really complex or
   // plugins introduce very expensive steps.
-  if (state.lastAction.type === "UPDATE_NODE") {
+  if (state.lastAction.type === `UPDATE_NODE`) {
     debouncedProcessQueries()
   }
 })
