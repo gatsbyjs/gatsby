@@ -179,12 +179,6 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
           },
         }
       }
-    } else if (_.includes(k, `___`)) {
-      const fieldType = _.capitalize(k.split(`___`)[1])
-      const matchedType = _.find(types, type => type.name === fieldType)
-      if (matchedType) {
-        inferredFields[k] = matchedType.field
-      }
 
       // Special case fields that look like they're pointing at a file — if the
       // field has a known extension then assume it should be a file field.
