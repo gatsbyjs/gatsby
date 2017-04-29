@@ -3,7 +3,7 @@ import Link from "gatsby-link"
 
 class IndexPage extends React.Component {
   render() {
-    console.log(this.props)
+    // console.log(this.props)
     const articleEdges = this.props.data.allDrupalNodeArticle.edges
     return (
       <div>

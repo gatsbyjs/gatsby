@@ -5,7 +5,7 @@ import { rhythm } from "../utils/typography"
 
 class ArticleTemplate extends React.Component {
   render() {
-    console.log(this.props)
+    // console.log(this.props)
     const article = this.props.data.drupalNodeArticle
     let name = "anonymous"
     let picture
