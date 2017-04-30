@@ -62,7 +62,7 @@ https://gatsbygram.gatsbyjs.org and the case study on how its built https://www.
 * [vii.campjs.com](http://vii.campjs.com/) ([source](https://github.com/campjs/campjs-vii))
 * [michaeljdeeb.com](http://michaeljdeeb.com) ([source](https://github.com/michaeljdeeb/michaeljdeeb-gatsby-blog))
 * [brittcrawford.com](http://brittcrawford.com) ([source](https://github.com/britt/britt.github.com/tree/gatsby))
-* [React-MDL](https://tleunen.github.io/react-mdl/) ([source](https://github.com/tleunen/react-mdl/tree/master/docs))
+* [React-MDL](https://react-mdl.github.io/react-mdl/) ([source](https://github.com/tleunen/react-mdl/tree/master/docs))
 * [Snapgit](https://snapgit.com) ([source](https://github.com/glassfalcon/snapgit.com))
 * [iamdustan.com](http://iamdustan.com/) ([source](https://github.com/iamdustan/iamdustan.github.io))
 * [React Hardware](http://iamdustan.com/react-hardware/) ([source](https://github.com/iamdustan/react-hardware/tree/master/docs))
