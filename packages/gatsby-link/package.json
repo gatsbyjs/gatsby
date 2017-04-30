@@ -5,8 +5,8 @@
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
-    "build": "babel src --out-dir dist --source-maps",
-    "watch": "babel -w src --out-dir dist --source-maps"
+    "build": "babel src --out-dir .",
+    "watch": "babel -w src --out-dir ."
   },
   "keywords": [
     "gatsby",

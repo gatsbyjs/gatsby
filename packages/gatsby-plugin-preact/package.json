@@ -4,8 +4,8 @@
   "description": "A Gatsby plugin which replaces React with Preact",
   "main": "index.js",
   "scripts": {
-    "build": "babel src --out-dir dist --source-maps",
-    "watch": "babel -w src --out-dir dist --source-maps"
+    "build": "babel src --out-dir .",
+    "watch": "babel -w src --out-dir ."
   },
   "keywords": [
     "gatsby",

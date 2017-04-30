@@ -3,8 +3,8 @@
   "version": "1.0.0-alpha13",
   "description": "Gatsby transformer plugin for images using Sharp",
   "scripts": {
-    "build": "babel src --out-dir dist --source-maps",
-    "watch": "babel -w src --out-dir dist --source-maps"
+    "build": "babel src --out-dir .",
+    "watch": "babel -w src --out-dir ."
   },
   "keywords": [
     "gatsby",

@@ -16,8 +16,8 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "build": "babel src --out-dir dist --source-maps",
-    "watch": "babel -w src --out-dir dist --source-maps"
+    "build": "babel src --out-dir .",
+    "watch": "babel -w src --out-dir ."
   },
   "dependencies": {
     "sw-precache": "^5.0.0"

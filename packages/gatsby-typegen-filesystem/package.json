@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src --out-dir dist --source-maps",
-    "watch": "babel -w src --out-dir dist --source-maps"
+    "build": "babel src --out-dir .",
+    "watch": "babel -w src --out-dir ."
   },
   "keywords": [
     "gatsby",
