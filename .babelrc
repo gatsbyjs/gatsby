@@ -1,4 +1,9 @@
 {
+  "env": {
+    "development": {
+      "sourceMap": "inline"
+    }
+  },
   "presets": [
     [
       "env",
