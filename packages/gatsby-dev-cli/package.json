@@ -20,8 +20,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src --out-dir dist",
-    "watch": "babel -w src --out-dir dist"
+    "build": "babel src --out-dir dist --presets es2015",
+    "watch": "babel -w src --out-dir dist --presets es2015"
   },
   "keywords": [
     "gatsby"

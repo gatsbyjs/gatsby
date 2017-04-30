@@ -1,8 +1,7 @@
-const chokidar = require("chokidar")
-const _ = require("lodash")
-const fs = require("fs-extra")
-const syspath = require("path")
-const report = require("yurnalist")
+const chokidar = require(`chokidar`)
+const _ = require(`lodash`)
+const fs = require(`fs-extra`)
+const syspath = require(`path`)
 
 const ignoreRegs = [/[\/\\]node_modules[\/\\]/i, /\.git/i, /[\/\\]src[\/\\]/i]
 
@@ -21,13 +20,16 @@ function watch(root, packages, scanOnce) {
           },
         ],
       })
-      .on("all", (event, path) => {
-        if (event === "change" || event === "add") {
+      .on(`all`, (event, path) => {
+        if (event === `change` || event === `add`) {
           // Copy it over local version.
-          const newPath = syspath.join(`./node_modules/${p}`, syspath.relative(prefix, path))
+          const newPath = syspath.join(
+            `./node_modules/${p}`,
+            syspath.relative(prefix, path)
+          )
           fs.copy(path, newPath, err => {
-            if (err) report.error(err)
-            report.info(`copied ${path} to ${newPath}`)
+            if (err) console.error(err)
+            console.log(`copied ${path} to ${newPath}`)
           })
 
           if (scanOnce) {

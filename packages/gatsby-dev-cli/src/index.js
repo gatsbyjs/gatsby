@@ -1,43 +1,65 @@
-const chokidar = require(`chokidar`)
+#!/usr/bin/env node
+
+const Configstore = require(`configstore`)
+const pkg = require(`../package.json`)
+const argv = require(`yargs`).array(`packages`).argv
 const _ = require(`lodash`)
+const path = require(`path`)
+const report = require(`yurnalist`)
+
+const conf = new Configstore(pkg.name)
+
 const fs = require(`fs-extra`)
-const syspath = require(`path`)
+const havePackageJsonFile = fs.existsSync(`package.json`)
 
-const ignoreRegs = [/[\/\\]node_modules[\/\\]/i, /\.git/i, /[\/\\]src[\/\\]/i]
-
-const debouncedQuit = _.debounce(() => {
+if (!havePackageJsonFile) {
+  report.error(`Current folder must have a package.json file!`)
   process.exit()
-}, 500)
-
-module.exports = (root, packages, scanOnce) => {
-  packages.forEach(p => {
-    const prefix = `${root}/packages/${p}`
-    chokidar
-      .watch(prefix, {
-        ignored: [
-          (path, stats) => {
-            return _.some(ignoreRegs, reg => reg.test(path))
-          },
-        ],
-      })
-      .on(`all`, (event, path) => {
-        if (event === `change` || event === `add`) {
-          // Copy it over local version.
-          const newPath = syspath.join(
-            `./node_modules/${p}`,
-            syspath.relative(prefix, path)
-          )
-          // Make any directories that are needed.
-          fs.ensureFileSync(newPath)
-          fs.copy(path, newPath, err => {
-            if (err) console.error(err)
-            console.log(`copied ${path} to ${newPath}`)
-          })
-
-          if (scanOnce) {
-            debouncedQuit()
-          }
-        }
-      })
-  })
 }
+
+const localPkg = JSON.parse(fs.readFileSync(`package.json`))
+const packages = Object.keys({
+  ...localPkg.dependencies,
+  ...localPkg.devDependencies,
+})
+const gatsbyPackages = packages.filter(p => p.startsWith(`gatsby`))
+
+if (argv.setPathToRepo) {
+  report.info(`Saving path to your Gatsby repo`)
+  conf.set(`gatsby-location`, path.resolve(argv.setPathToRepo))
+  process.exit()
+}
+
+const gatsbyLocation = conf.get(`gatsby-location`)
+
+if (!gatsbyLocation) {
+  report.error(
+    `
+You haven't set the path yet to your cloned
+version of Gatsby. Do so now by running:
+
+gatsby-dev --set-path-to-repo /path/to/my/cloned/version/gatsby
+`
+  )
+  process.exit()
+}
+
+if (!argv.packages && _.isEmpty(gatsbyPackages)) {
+  report.error(
+    `
+You haven't got any gatsby dependencies into your current package.json
+
+You probably want to pass in a list of packages to start
+developing on! For example:
+
+gatsby-dev --packages gatsby gatsby-typegen-remark
+
+If you prefer to place them in your package.json dependencies instead,
+gatsby-dev will pick them up.
+`
+  )
+  process.exit()
+}
+
+const watch = require(`./watch`)
+watch(gatsbyLocation, argv.packages || gatsbyPackages, argv.scanOnce)
