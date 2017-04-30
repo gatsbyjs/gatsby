@@ -10,7 +10,7 @@
     "babel": "inherit"
   },
   "bin": {
-    "gatsby": "./dist/gatsby-cli.js"
+    "gatsby": "dist/gatsby-cli.js"
   },
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -140,12 +140,12 @@
     "url": "git+https://github.com/gatsbyjs/gatsby.git"
   },
   "scripts": {
-    "build": "rimraf dist && babel lib --out-dir dist/ --source-maps",
+    "build": "rimraf dist && babel lib --out-dir dist",
     "clean-test-bundles": "find test/ -type f -name bundle.js* -exec rm -rf {} +",
     "test": "npm run lint && npm run test-node && npm run test-integration",
     "test-coverage": "node_modules/.bin/nyc --reporter=lcov --reporter=text npm test",
     "test-integration": "node_modules/.bin/ava test/integration",
     "test-node": "node_modules/.bin/ava test/utils",
-    "watch": "rimraf dist && babel -w lib --out-dir dist/"
+    "watch": "rimraf dist && babel -w lib --out-dir dist"
   }
 }

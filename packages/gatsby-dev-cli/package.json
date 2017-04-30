@@ -16,7 +16,7 @@
     "babel-cli": "^6.24.1"
   },
   "bin": {
-    "gatsby-dev": "./dist/index.js"
+    "gatsby-dev": "dist/index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
