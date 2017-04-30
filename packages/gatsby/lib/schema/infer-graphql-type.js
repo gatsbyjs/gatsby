@@ -11,10 +11,11 @@ const _ = require(`lodash`)
 const moment = require(`moment`)
 const mime = require(`mime`)
 const isRelative = require(`is-relative`)
+  const isRelativeUrl = require(`is-relative-url`)
 const { store, getNodes } = require(`../redux`)
 const { addPageDependency } = require(`../redux/actions/add-page-dependency`)
 const { extractFieldExamples } = require(`./data-tree-utils`)
-
+  
 const inferGraphQLType = ({ value, fieldName, ...otherArgs }) => {
   if (Array.isArray(value)) {
     const headType = inferGraphQLType({ value: value[0], fieldName }).type
@@ -178,12 +179,6 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
           },
         }
       }
-    } else if (_.includes(k, `___`)) {
-      const fieldType = _.capitalize(k.split(`___`)[1])
-      const matchedType = _.find(types, type => type.name === fieldType)
-      if (matchedType) {
-        inferredFields[k] = matchedType.field
-      }
 
       // Special case fields that look like they're pointing at a file — if the
       // field has a known extension then assume it should be a file field.
@@ -192,8 +187,10 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
       _.isString(v) &&
       mime.lookup(v) !== `application/octet-stream` &&
       mime.lookup(v) !== `application/x-msdownload` && // domains ending with .com
-      isRelative(v)
+      isRelative(v) &&
+      isRelativeUrl(v)
     ) {
+      console.log(k, v, isRelative(v))
       const fileNodes = types.filter(type => type.name === `File`)
       if (fileNodes && fileNodes.length > 0) {
         inferredFields[k] = fileNodes[0].field
