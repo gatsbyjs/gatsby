@@ -40,7 +40,6 @@ if (process.env.REDUX_DEVTOOLS === `true`) {
 
 // Persist state.
 const saveState = _.debounce(state => {
-  console.log(`===============saving redux state`)
   const pickedState = _.pick(state, [
     `nodes`,
     `status`,

@@ -1,5 +1,5 @@
-const catchLinks = require(`catch-links`)
-const browserHistory = require(`react-router/lib/browserHistory`)
+import catchLinks from "catch-links"
+import browserHistory from "react-router/lib/browserHistory"
 
 catchLinks(window, href => {
   console.log(href)
