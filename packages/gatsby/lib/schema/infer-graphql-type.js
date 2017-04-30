@@ -11,14 +11,19 @@ const _ = require(`lodash`)
 const moment = require(`moment`)
 const mime = require(`mime`)
 const isRelative = require(`is-relative`)
-  const isRelativeUrl = require(`is-relative-url`)
+const isRelativeUrl = require(`is-relative-url`)
 const { store, getNodes } = require(`../redux`)
 const { addPageDependency } = require(`../redux/actions/add-page-dependency`)
 const { extractFieldExamples } = require(`./data-tree-utils`)
-  
+
 const inferGraphQLType = ({ value, fieldName, ...otherArgs }) => {
   if (Array.isArray(value)) {
-    const headType = inferGraphQLType({ value: value[0], fieldName }).type
+    const headValue = value[0]
+    const headType = inferGraphQLType({
+      value: headValue,
+      fieldName,
+      ...otherArgs,
+    }).type
     return { type: new GraphQLList(headType) }
   }
 
@@ -138,7 +143,9 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
         type => type.name === mapping[fieldSelector]
       )
       if (_.isEmpty(matchedTypes)) {
-        console.log(`Couldn't find a matching node type for "${fieldSelector}"`)
+        console.log(
+          `Couldn't find a matching node type for "${fieldSelector}"`
+        )
         return
       }
       const findNode = (fieldValue, path) => {
