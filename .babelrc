@@ -1,7 +1,10 @@
 {
   "env": {
     "development": {
-      "sourceMap": "inline"
+      "sourceMaps": "inline"
+    },
+    "production": {
+      "sourceMaps": false
     }
   },
   "presets": [
