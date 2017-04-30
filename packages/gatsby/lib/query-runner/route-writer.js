@@ -1,9 +1,9 @@
-const _ = require("lodash")
-const glob = require("glob")
-const parseFilepath = require("parse-filepath")
-const fs = require("fs")
+const _ = require(`lodash`)
+const glob = require(`glob`)
+const parseFilepath = require(`parse-filepath`)
+const fs = require(`fs`)
 
-const { store } = require("../redux/")
+const { store } = require(`../redux/`)
 import {
   layoutComponentChunkName,
   pathChunkName,
@@ -140,7 +140,7 @@ const writeChildRoutes = () => {
   })
 
   // Add a fallback 404 route if one is defined.
-  const notFoundPage = pages.find(page => page.path.indexOf("/404") !== -1)
+  const notFoundPage = pages.find(page => page.path.indexOf(`/404`) !== -1)
 
   if (notFoundPage) {
     const defaultLayout = `preferDefault(require('${program.directory}/src/layouts/default'))`

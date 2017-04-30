@@ -1,8 +1,8 @@
 // Wait for things to happen before continuing.
-const Promise = require("bluebird")
-const _ = require("lodash")
+const Promise = require(`bluebird`)
+const _ = require(`lodash`)
 
-const { store } = require("../redux")
+const { store } = require(`../redux`)
 
 let waiters = []
 store.subscribe(() => {

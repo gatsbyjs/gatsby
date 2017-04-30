@@ -4,25 +4,25 @@ const {
   GraphQLString,
   GraphQLInt,
   GraphQLEnumType,
-} = require("graphql")
-const Remark = require("remark")
-const select = require("unist-util-select")
-const sanitizeHTML = require("sanitize-html")
-const _ = require("lodash")
-const path = require("path")
-const fs = require("fs")
-const fsExtra = require("fs-extra")
-const querystring = require("querystring")
-const visit = require("unist-util-visit")
-const Prism = require("prismjs")
-require("prismjs/components/prism-go")
-const toHAST = require("mdast-util-to-hast")
-const hastToHTML = require("hast-util-to-html")
-const inspect = require("unist-util-inspect")
-const Promise = require("bluebird")
-const prune = require("underscore.string/prune")
+} = require(`graphql`)
+const Remark = require(`remark`)
+const select = require(`unist-util-select`)
+const sanitizeHTML = require(`sanitize-html`)
+const _ = require(`lodash`)
+const path = require(`path`)
+const fs = require(`fs`)
+const fsExtra = require(`fs-extra`)
+const querystring = require(`querystring`)
+const visit = require(`unist-util-visit`)
+const Prism = require(`prismjs`)
+require(`prismjs/components/prism-go`)
+const toHAST = require(`mdast-util-to-hast`)
+const hastToHTML = require(`hast-util-to-html`)
+const inspect = require(`unist-util-inspect`)
+const Promise = require(`bluebird`)
+const prune = require(`underscore.string/prune`)
 
-let pluginsCacheStr = ""
+let pluginsCacheStr = ``
 const astPromiseCache = {}
 const astCacheKey = node => {
   return `typegen-remark-markdown-ast-${node.contentDigest}-${pluginsCacheStr}`
@@ -42,7 +42,7 @@ exports.extendNodeType = (
     return {}
   }
 
-  pluginsCacheStr = pluginOptions.plugins.map(p => p.name).join("")
+  pluginsCacheStr = pluginOptions.plugins.map(p => p.name).join(``)
 
   return new Promise((resolve, reject) => {
     const files = allNodes.filter(n => n.type === `File`)
@@ -192,7 +192,7 @@ exports.extendNodeType = (
     })
 
     const HeadingLevels = new GraphQLEnumType({
-      name: "HeadingLevels",
+      name: `HeadingLevels`,
       values: {
         h1: { value: 1 },
         h2: { value: 2 },
@@ -235,7 +235,7 @@ exports.extendNodeType = (
         },
         resolve(markdownNode, { depth }) {
           return getHeadings(markdownNode).then(headings => {
-            if (typeof depth === "number") {
+            if (typeof depth === `number`) {
               headings = headings.filter(heading => heading.depth === depth)
             }
             return headings

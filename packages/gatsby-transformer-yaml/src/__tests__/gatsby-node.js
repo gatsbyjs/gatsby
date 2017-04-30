@@ -1,13 +1,13 @@
-const Promise = require("bluebird")
-const yaml = require("js-yaml")
-const _ = require("lodash")
+const Promise = require(`bluebird`)
+const yaml = require(`js-yaml`)
+const _ = require(`lodash`)
 
-const { onNodeCreate } = require("../src/gatsby-node")
+const { onNodeCreate } = require(`../gatsby-node`)
 
 describe(`Process YAML nodes correctly`, () => {
   const node = {
-    id: "whatever",
-    contentDigest: "whatever",
+    id: `whatever`,
+    contentDigest: `whatever`,
     mediaType: `text/yaml`,
     children: [],
     name: `test`,
@@ -19,7 +19,7 @@ describe(`Process YAML nodes correctly`, () => {
   }
 
   it(`correctly creates nodes from JSON which is an array of objects`, async () => {
-    const data = [{ blue: true, funny: "yup" }, { blue: false, funny: "nope" }]
+    const data = [{ blue: true, funny: `yup` }, { blue: false, funny: `nope` }]
     node.content = yaml.safeDump(data)
 
     const createNode = jest.fn()
@@ -40,8 +40,8 @@ describe(`Process YAML nodes correctly`, () => {
 
   it(`If the object has an id, it uses that as the id instead of the auto-generated one`, async () => {
     const data = [
-      { id: "foo", blue: true, funny: "yup" },
-      { blue: false, funny: "nope" },
+      { id: `foo`, blue: true, funny: `yup` },
+      { blue: false, funny: `nope` },
     ]
     node.content = yaml.safeDump(data)
 
@@ -54,16 +54,16 @@ describe(`Process YAML nodes correctly`, () => {
       loadNodeContent,
       boundActionCreators,
     }).then(() => {
-      expect(createNode.mock.calls[0][0].id).toEqual("foo")
+      expect(createNode.mock.calls[0][0].id).toEqual(`foo`)
     })
   })
 
   it(`the different objects shouldn't get the same ID even if they have the same content`, async () => {
     const data = [
-      { id: "foo", blue: true, funny: "yup" },
-      { blue: false, funny: "nope" },
-      { blue: false, funny: "nope" },
-      { green: false, funny: "nope" },
+      { id: `foo`, blue: true, funny: `yup` },
+      { blue: false, funny: `nope` },
+      { blue: false, funny: `nope` },
+      { green: false, funny: `nope` },
     ]
     node.content = yaml.safeDump(data)
 

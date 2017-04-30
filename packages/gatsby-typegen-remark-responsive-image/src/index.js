@@ -1,10 +1,10 @@
-const select = require("unist-util-select")
-const path = require("path")
-const isRelativeUrl = require("is-relative-url")
-const _ = require("lodash")
-const { queueImageResizing, base64 } = require("gatsby-plugin-sharp")
-const imageSize = require("image-size")
-const Promise = require("bluebird")
+const select = require(`unist-util-select`)
+const path = require(`path`)
+const isRelativeUrl = require(`is-relative-url`)
+const _ = require(`lodash`)
+const { queueImageResizing, base64 } = require(`gatsby-plugin-sharp`)
+const imageSize = require(`image-size`)
+const Promise = require(`bluebird`)
 
 // If the image is relative (not hosted elsewhere)
 // 1. Find the image file
@@ -145,9 +145,9 @@ module.exports = ({
             </div>
           </a>
           `
-              //const rawHTML = `
-              //<div style="width: ${base64Result.width}px; height: ${base64Result.height}px;  padding-bottom: ${base64Result.aspectRatio * 100}%;" class="image-loader">
-              //`
+              // const rawHTML = `
+              // <div style="width: ${base64Result.width}px; height: ${base64Result.height}px;  padding-bottom: ${base64Result.aspectRatio * 100}%;" class="image-loader">
+              // `
 
               node.data = {
                 hChildren: [{ type: `raw`, value: rawHTML }],

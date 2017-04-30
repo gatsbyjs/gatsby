@@ -1,6 +1,6 @@
 module.exports = (state = [], action) => {
   switch (action.type) {
-    case "SET_SITE_FLATTENED_PLUGINS":
+    case `SET_SITE_FLATTENED_PLUGINS`:
       return [...action.payload]
     default:
       return state

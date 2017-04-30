@@ -1,11 +1,11 @@
-const fs = require("fs")
+const fs = require(`fs`)
 // Traverse is a es6 module...
 import traverse from "babel-traverse"
-const babylon = require("babylon")
-const Promise = require("bluebird")
-const _ = require("lodash")
+const babylon = require(`babylon`)
+const Promise = require(`bluebird`)
+const _ = require(`lodash`)
 
-const apiRunnerNode = require("../utils/api-runner-node")
+const apiRunnerNode = require(`../utils/api-runner-node`)
 
 const readFileAsync = Promise.promisify(fs.readFile)
 
@@ -76,7 +76,7 @@ module.exports = async filePath => {
 
   // Ensure query is a string and trim whitespace
   if (!_.isString(query)) {
-    query = ""
+    query = ``
   }
   query = _.trim(query)
 

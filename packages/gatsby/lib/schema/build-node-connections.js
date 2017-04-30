@@ -1,17 +1,17 @@
 // @flow
-const _ = require("lodash")
-const { GraphQLInt, GraphQLList, GraphQLString } = require("graphql")
-const { connectionArgs, connectionDefinitions } = require("graphql-skip-limit")
+const _ = require(`lodash`)
+const { GraphQLInt, GraphQLList, GraphQLString } = require(`graphql`)
+const { connectionArgs, connectionDefinitions } = require(`graphql-skip-limit`)
 const {
   inferInputObjectStructureFromNodes,
 } = require(`./infer-graphql-input-fields`)
-const buildConnectionFields = require("./build-connection-fields")
-const { getNodes } = require("../redux")
+const buildConnectionFields = require(`./build-connection-fields`)
+const { getNodes } = require(`../redux`)
 
 module.exports = (types: any) => {
   const connections = {}
 
-  _.each(types, (type /*, fieldName*/) => {
+  _.each(types, (type /* , fieldName*/) => {
     const nodes = type.nodes
     const { connectionType: typeConnection } = connectionDefinitions({
       nodeType: type.nodeObjectType,
@@ -35,7 +35,7 @@ module.exports = (types: any) => {
         if (typeof rootValue !== `undefined`) {
           path = rootValue.path
         }
-        const runSift = require("./run-sift")
+        const runSift = require(`./run-sift`)
         const latestNodes = _.filter(getNodes(), n => n.type === type.name)
         return runSift({
           args: resolveArgs,

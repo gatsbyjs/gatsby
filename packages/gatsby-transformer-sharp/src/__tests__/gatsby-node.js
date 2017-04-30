@@ -1,12 +1,12 @@
-const Promise = require("bluebird")
+const Promise = require(`bluebird`)
 
-const { onNodeCreate } = require("../src/gatsby-node")
+const { onNodeCreate } = require(`../gatsby-node`)
 
 describe(`Process image nodes correctly`, () => {
   it(`correctly creates an ImageSharp node from a file image node`, async () => {
     const node = {
-      id: "whatever",
-      contentDigest: "whatever",
+      id: `whatever`,
+      contentDigest: `whatever`,
       extension: `png`,
       children: [],
     }

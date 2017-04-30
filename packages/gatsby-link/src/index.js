@@ -22,9 +22,9 @@ const GatsbyLink = React.createClass({
       window.location.protocol !== `https:`
     ) {
       const routes = window.gatsbyRootRoute
-      const { createMemoryHistory } = require("history")
-      const matchRoutes = require("react-router/lib/matchRoutes")
-      const getComponents = require("react-router/lib/getComponents")
+      const { createMemoryHistory } = require(`history`)
+      const matchRoutes = require(`react-router/lib/matchRoutes`)
+      const getComponents = require(`react-router/lib/getComponents`)
 
       const createLocation = createMemoryHistory().createLocation
 

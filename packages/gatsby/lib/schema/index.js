@@ -1,13 +1,13 @@
 /* @flow */
-const _ = require("lodash")
-const { GraphQLSchema, GraphQLObjectType } = require("graphql")
+const _ = require(`lodash`)
+const { GraphQLSchema, GraphQLObjectType } = require(`graphql`)
 
-const siteSchema = require("./site-schema")
-const apiRunner = require("../utils/api-runner-node")
-const buildNodeTypes = require("./build-node-types")
-const buildNodeConnections = require("./build-node-connections")
-const { store, getNode } = require("../redux")
-const { boundActionCreators } = require("../redux/actions")
+const siteSchema = require(`./site-schema`)
+const apiRunner = require(`../utils/api-runner-node`)
+const buildNodeTypes = require(`./build-node-types`)
+const buildNodeConnections = require(`./build-node-connections`)
+const { store, getNode } = require(`../redux`)
+const { boundActionCreators } = require(`../redux/actions`)
 const { deleteNodes } = boundActionCreators
 
 async function buildSchema() {
@@ -47,7 +47,7 @@ const debounceNodeCreation = cb => {
   store.subscribe(() => {
     const state = store.getState()
     if (
-      state.lastAction.type === "CREATE_NODE" ||
+      state.lastAction.type === `CREATE_NODE` ||
       state.lastAction.type === `UPDATE_NODE` ||
       state.lastAction.type === `UPDATE_SOURCE_PLUGIN_STATUS`
     ) {
@@ -90,7 +90,7 @@ module.exports = () => {
             whileCount += 1
             if (whileCount > 100) {
               console.log(
-                "It looks like you have a node that's set its parent as itself",
+                `It looks like you have a node that's set its parent as itself`,
                 rootNode
               )
             }
@@ -99,7 +99,7 @@ module.exports = () => {
           return !_.includes(touchedNodes, rootNode.id)
         })
         if (staleNodes.length > 0) {
-          console.log("deleting stale nodes", staleNodes.length)
+          console.log(`deleting stale nodes`, staleNodes.length)
           deleteNodes(staleNodes.map(n => n.id))
         }
       }

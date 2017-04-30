@@ -21,7 +21,7 @@ exports.modifyWebpackConfig = ({ args }) => {
       return config
     }
     case `build-css`: {
-      config.loader("sass", {
+      config.loader(`sass`, {
         test: /\.s(a|c)ss$/,
         exclude: /\.module\.s(a|c)ss$/,
         loader: ExtractTextPlugin.extract([`css?minimize`, `sass`]),
@@ -34,7 +34,7 @@ exports.modifyWebpackConfig = ({ args }) => {
       return config
     }
     case `build-html`: {
-      config.loader("sass", {
+      config.loader(`sass`, {
         test: /\.s(a|c)ss$/,
         exclude: /\.module\.s(a|c)ss$/,
         loader: `null`,
@@ -47,7 +47,7 @@ exports.modifyWebpackConfig = ({ args }) => {
       return config
     }
     case `build-javascript`: {
-      config.loader("sass", {
+      config.loader(`sass`, {
         test: /\.s(a|c)ss$/,
         exclude: /\.module\.s(a|c)ss$/,
         loader: ExtractTextPlugin.extract([`css`, `sass`]),

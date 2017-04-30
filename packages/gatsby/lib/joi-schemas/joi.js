@@ -1,4 +1,4 @@
-const Joi = require("joi")
+const Joi = require(`joi`)
 
 export const gatsbyConfigSchema = Joi.object().keys({
   siteMetadata: Joi.object(),

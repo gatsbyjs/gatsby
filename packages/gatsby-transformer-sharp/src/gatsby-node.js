@@ -1,9 +1,9 @@
-const _ = require("lodash")
+const _ = require(`lodash`)
 
 async function onNodeCreate({ node, boundActionCreators }) {
   const { createNode, updateNode } = boundActionCreators
 
-  const extensions = ["jpeg", "jpg", "png", "webp", "tif", "tiff", "svg"]
+  const extensions = [`jpeg`, `jpg`, `png`, `webp`, `tif`, `tiff`, `svg`]
   if (!_.includes(extensions, node.extension)) {
     return
   }

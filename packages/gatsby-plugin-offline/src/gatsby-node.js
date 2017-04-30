@@ -1,7 +1,7 @@
-const precache = require("sw-precache")
-const path = require("path")
-const slash = require("slash")
-const _ = require("lodash")
+const precache = require(`sw-precache`)
+const path = require(`path`)
+const slash = require(`slash`)
+const _ = require(`lodash`)
 
 exports.createPages = () => [
   {
@@ -31,7 +31,7 @@ exports.postBuild = (args, pluginOptions) => {
     cacheId: `gatsby-plugin-offline`,
     // Do cache bust JS URLs until can figure out how to make Webpack's
     // URLs truely content-addressed.
-    dontCacheBustUrlsMatching: /(.\w{8}.woff2)/, //|-\w{20}.js)/,
+    dontCacheBustUrlsMatching: /(.\w{8}.woff2)/, // |-\w{20}.js)/,
     runtimeCaching: [
       {
         // Add runtime caching of images.

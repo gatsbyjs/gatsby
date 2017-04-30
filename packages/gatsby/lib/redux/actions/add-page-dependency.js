@@ -1,7 +1,7 @@
-const _ = require("lodash")
+const _ = require(`lodash`)
 
-const { store } = require("../")
-const { actions } = require("../actions.js")
+const { store } = require(`../`)
+const { actions } = require(`../actions.js`)
 
 exports.addPageDependency = ({ path, nodeId, connection }) => {
   const state = store.getState()

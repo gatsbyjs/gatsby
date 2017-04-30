@@ -1,9 +1,9 @@
-const _ = require("lodash")
+const _ = require(`lodash`)
 
 module.exports = (state = { nodes: {}, connections: {} }, action) => {
   switch (action.type) {
-    case "ADD_PAGE_DEPENDENCY":
-      if (action.payload.path === "") {
+    case `ADD_PAGE_DEPENDENCY`:
+      if (action.payload.path === ``) {
         return state
       }
 
@@ -28,7 +28,7 @@ module.exports = (state = { nodes: {}, connections: {} }, action) => {
       }
 
       return state
-    case "REMOVE_PAGES_DATA_DEPENDENCIES":
+    case `REMOVE_PAGES_DATA_DEPENDENCIES`:
       state.nodes = _.mapValues(state.nodes, paths => {
         return _.difference(paths, action.payload.paths)
       })

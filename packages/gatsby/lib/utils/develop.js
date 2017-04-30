@@ -1,24 +1,24 @@
 /* @flow */
-const express = require("express")
-const graphqlHTTP = require("express-graphql")
-const glob = require("glob")
-const webpackRequire = require("webpack-require")
-const bootstrap = require("../bootstrap")
-const webpack = require("webpack")
-const webpackConfig = require("./webpack.config")
-const React = require("react")
-const ReactDOMServer = require("react-dom/server")
-const rl = require("readline")
-const parsePath = require("parse-filepath")
-const _ = require("lodash")
-const { store } = require("../redux")
+const express = require(`express`)
+const graphqlHTTP = require(`express-graphql`)
+const glob = require(`glob`)
+const webpackRequire = require(`webpack-require`)
+const bootstrap = require(`../bootstrap`)
+const webpack = require(`webpack`)
+const webpackConfig = require(`./webpack.config`)
+const React = require(`react`)
+const ReactDOMServer = require(`react-dom/server`)
+const rl = require(`readline`)
+const parsePath = require(`parse-filepath`)
+const _ = require(`lodash`)
+const { store } = require(`../redux`)
 
 const rlInterface = rl.createInterface({
   input: process.stdin,
   output: process.stdout,
 })
 
-const debug = require("debug")("gatsby:application")
+const debug = require(`debug`)(`gatsby:application`)
 
 async function startServer(program) {
   const directory = program.directory
@@ -146,7 +146,7 @@ async function startServer(program) {
         process.exit()
       } else {
         if (program.open) {
-          const opn = require("opn")
+          const opn = require(`opn`)
           opn(`http://${listener.address().address}:${listener.address().port}`)
         }
         console.log(
@@ -158,7 +158,7 @@ async function startServer(program) {
 }
 
 module.exports = (program: any) => {
-  const detect = require("detect-port")
+  const detect = require(`detect-port`)
   const port = typeof program.port === `string`
     ? parseInt(program.port, 10)
     : program.port
@@ -176,7 +176,7 @@ module.exports = (program: any) => {
       return rlInterface.question(question, answer => {
         if (answer.length === 0 || answer.match(/^yes|y$/i)) {
           program.port = _port // eslint-disable-line no-param-reassign
-          console.log("changed the port")
+          console.log(`changed the port`)
         }
 
         return startServer(program)

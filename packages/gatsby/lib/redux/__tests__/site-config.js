@@ -4,14 +4,14 @@ describe(`add site config`, () => {
   it(`allow you to add basic site config`, () => {
     const config = {
       siteMetadata: {
-        title: "yo testing",
+        title: `yo testing`,
       },
       plugins: [],
     }
     const state = reducer(
       {},
       {
-        type: "SET_SITE_CONFIG",
+        type: `SET_SITE_CONFIG`,
         payload: config,
       }
     )
@@ -20,14 +20,14 @@ describe(`add site config`, () => {
 
   it(`Validates configs with unsupported options`, () => {
     const config = {
-      someRandomThing: "hi people",
+      someRandomThing: `hi people`,
       plugins: [],
     }
     function runReducer() {
       return reducer(
         {},
         {
-          type: "SET_SITE_CONFIG",
+          type: `SET_SITE_CONFIG`,
           payload: config,
         }
       )

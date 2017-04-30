@@ -1,5 +1,5 @@
-const reducer = require("../reducers/pages")
-const { actions } = require("../actions")
+const reducer = require(`../reducers/pages`)
+const { actions } = require(`../actions`)
 
 describe(`Add pages`, () => {
   it(`allows you to add pages`, () => {

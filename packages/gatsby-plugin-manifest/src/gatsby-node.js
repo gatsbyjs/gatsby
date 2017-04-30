@@ -1,5 +1,5 @@
-const fs = require("fs")
-const Promise = require("bluebird")
+const fs = require(`fs`)
+const Promise = require(`bluebird`)
 
 exports.postBuild = (args, pluginOptions) =>
   new Promise(resolve => {

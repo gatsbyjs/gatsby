@@ -11,7 +11,7 @@ import browserHistory from "react-router/lib/browserHistory"
 import useScroll from "react-router-scroll/lib/useScroll"
 
 const rootElement = document.getElementById(`react-mount`)
-const rootRoute = require("./split-child-routes")
+const rootRoute = require(`./split-child-routes`)
 
 // If you try to load the split-child-routes module in other
 // modules, Webpack freezes in some sort of infinite loop when

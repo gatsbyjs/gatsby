@@ -1,6 +1,6 @@
-const { actions, boundActions } = require("../actions")
-const nodeReducer = require("../reducers/nodes")
-const nodeTouchedReducer = require("../reducers/nodes-touched")
+const { actions, boundActions } = require(`../actions`)
+const nodeReducer = require(`../reducers/nodes`)
+const nodeTouchedReducer = require(`../reducers/nodes-touched`)
 
 describe(`Create and update nodes`, () => {
   // TODO add these back when we stop directly consoleing errors.
@@ -61,14 +61,14 @@ describe(`Create and update nodes`, () => {
         array: [1, 2],
       },
       deep2: {
-        boom: "foo",
+        boom: `foo`,
       },
     })
     let state = nodeReducer(undefined, action)
     state = nodeReducer(state, updateAction)
-    expect(state["hi"].pickle).toEqual(false)
-    expect(state["hi"].deep).toEqual({ array: [1, 2] })
-    expect(state["hi"].deep2).toEqual({ boom: "foo" })
+    expect(state[`hi`].pickle).toEqual(false)
+    expect(state[`hi`].deep).toEqual({ array: [1, 2] })
+    expect(state[`hi`].deep2).toEqual({ boom: `foo` })
   })
 
   it(`nodes that are added are also "touched"`, () => {
@@ -83,6 +83,6 @@ describe(`Create and update nodes`, () => {
       pickle: true,
     })
     let state = nodeTouchedReducer(undefined, action)
-    expect(state["hi"]).toBe(true)
+    expect(state[`hi`]).toBe(true)
   })
 })
