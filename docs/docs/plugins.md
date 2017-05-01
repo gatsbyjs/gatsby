@@ -33,6 +33,7 @@ mean converting this file into a JS component).
 * [gatsby-plugin-sharp](/docs/packages/gatsby-plugin-sharp/)
 * [gatsby-plugin-typescript](/docs/packages/gatsby-plugin-typescript/)
 * [gatsby-source-filesystem](/docs/packages/gatsby-source-filesystem/)
+* [gatsby-source-drupal](/docs/packages/gatsby-source-drupal/)
 * [gatsby-typegen-remark](/docs/packages/gatsby-typegen-remark/)
 * [gatsby-typegen-remark-autolink-headers](/docs/packages/gatsby-typegen-remark-autolink-headers/)
 * [gatsby-typegen-remark-copy-linked-files](/docs/packages/gatsby-typegen-remark-copy-linked-files/)
