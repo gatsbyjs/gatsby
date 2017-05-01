@@ -1,9 +1,9 @@
-const axios = require("axios")
-const crypto = require("crypto")
-const _ = require("lodash")
+const axios = require(`axios`)
+const crypto = require(`crypto`)
+const _ = require(`lodash`)
 
 const makeTypeName = type => {
-  return `drupal__${type.replace(/-/g, "_")}`
+  return `drupal__${type.replace(/-/g, `_`)}`
 }
 
 const processEntities = ents => {
@@ -39,7 +39,7 @@ exports.sourceNodes = async ({
   updateSourcePluginStatus({
     plugin: `gatsby-source-drupal`,
     status: {
-      ...store.getState().status["gatsby-source-drupal"],
+      ...store.getState().status[`gatsby-source-drupal`],
       ready: false,
     },
   })
@@ -57,10 +57,10 @@ exports.sourceNodes = async ({
     .forEach(n => touchNode(n.id))
 
   // Fetch articles.
-  console.time("fetch Drupal data")
-  console.log("Starting to fetch data from Drupal")
+  console.time(`fetch Drupal data`)
+  console.log(`Starting to fetch data from Drupal`)
 
-  const lastFetched = store.getState().status["gatsby-source-drupal"]
+  const lastFetched = store.getState().status[`gatsby-source-drupal`]
     .lastFetched
 
   let url
@@ -74,20 +74,20 @@ exports.sourceNodes = async ({
   try {
     result = await axios.get(url)
   } catch (e) {
-    console.log("error fetching articles", e)
+    console.log(`error fetching articles`, e)
   }
 
-  console.log("articles fetched", result.data.data.length)
+  console.log(`articles fetched`, result.data.data.length)
 
   updateSourcePluginStatus({
     plugin: `gatsby-source-drupal`,
     status: {
-      ...store.getState().status["gatsby-source-drupal"],
+      ...store.getState().status[`gatsby-source-drupal`],
       lastFetched: new Date().toJSON(),
     },
   })
 
-  console.timeEnd("fetch Drupal data")
+  console.timeEnd(`fetch Drupal data`)
 
   const nodes = processEntities(result.data.data)
   nodes.forEach((node, i) => {
@@ -105,9 +105,9 @@ exports.sourceNodes = async ({
 
     // Get content digest of node.
     const contentDigest = crypto
-      .createHash("md5")
+      .createHash(`md5`)
       .update(JSON.stringify(gatsbyNode))
-      .digest("hex")
+      .digest(`hex`)
 
     gatsbyNode.contentDigest = contentDigest
 
@@ -141,15 +141,15 @@ exports.sourceNodes = async ({
             userResult.data.data[i].relationships.user_picture.links.related,
             { timeout: 3000 }
           )
-          .catch(() => console.log("fail fetch", gatsbyUser))
+          .catch(() => console.log(`fail fetch`, gatsbyUser))
           .then(pictureResult => {
             gatsbyUser.picture = `http://dev-gatsbyjs-d8.pantheonsite.io${pictureResult.data.data.attributes.url}`
 
             // Get content digest of node.
             const contentDigest = crypto
-              .createHash("md5")
+              .createHash(`md5`)
               .update(JSON.stringify(gatsbyUser))
-              .digest("hex")
+              .digest(`hex`)
 
             gatsbyUser.contentDigest = contentDigest
 
@@ -164,7 +164,7 @@ exports.sourceNodes = async ({
   updateSourcePluginStatus({
     plugin: `gatsby-source-drupal`,
     status: {
-      ...store.getState().status["gatsby-source-drupal"],
+      ...store.getState().status[`gatsby-source-drupal`],
       ready: true,
     },
   })
