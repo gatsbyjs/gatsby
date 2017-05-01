@@ -47,6 +47,10 @@
       "/dist/",
       "/node_modules/"
     ],
+    "moduleDirectories": [
+      "node_modules",
+      "<rootDir>/node_modules/"
+    ],
     "notify": true
   },
   "private": true,
