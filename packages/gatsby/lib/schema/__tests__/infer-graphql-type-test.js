@@ -71,7 +71,12 @@ test(`Infers graphql type from array of nodes`, () => {
           listNode {
             hair,
             anArray,
-            anObjectArray,
+            anObjectArray {
+              aString,
+              aNumber,
+              aBoolean,
+              anArray
+            },
             aBoolean,
             externalUrl,
             domain,
