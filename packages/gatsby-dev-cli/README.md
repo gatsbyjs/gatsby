@@ -49,3 +49,8 @@ With this flag, the tool will do an initial scan and copy and then quit. This
 is useful for setting up automated testing/builds of Gatsby sites from the latest
 code. Gatsby's main website (and example websites) are built from HEAD using this
 flag, see https://github.com/gatsbyjs/gatsby/blob/1.0/scripts/publish-site.sh.
+
+#### `--quiet`
+
+Don't output anything except for a quit message when used together with
+`--scan-one`.

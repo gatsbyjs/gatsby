@@ -56,4 +56,4 @@ gatsby-dev --packages gatsby gatsby-typegen-remark
 }
 
 const watch = require("../")
-watch(gatsbyLocation, argv.packages || gatsbyPackages, argv.scanOnce)
+watch(gatsbyLocation, argv.packages || gatsbyPackages, argv)
