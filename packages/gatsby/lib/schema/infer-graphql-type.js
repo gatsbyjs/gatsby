@@ -19,11 +19,25 @@ const { extractFieldExamples } = require(`./data-tree-utils`)
 const inferGraphQLType = ({ value, fieldName, ...otherArgs }) => {
   if (Array.isArray(value)) {
     const headValue = value[0]
-    const headType = inferGraphQLType({
-      value: headValue,
-      fieldName,
-      ...otherArgs,
-    }).type
+    let headType
+    // If the array contains objects, than treat them as "nodes"
+    // and create an object type.
+    if (_.isObject(headValue)) {
+      headType = new GraphQLObjectType({
+        name: _.camelCase(fieldName),
+        fields: inferObjectStructureFromNodes({
+          ...otherArgs,
+          nodes: value,
+        }),
+      })
+      // Else if the values are simple values, just infer their type.
+    } else {
+      headType = inferGraphQLType({
+        value: headValue,
+        fieldName,
+        ...otherArgs,
+      }).type
+    }
     return { type: new GraphQLList(headType) }
   }
 
@@ -135,17 +149,18 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
   }
   const inferredFields = {}
   _.each(fieldExamples, (v, k) => {
-    // Check if field is pointing to custom type.
-    // First check field => type mappings in gatsby-config.js
+    // Several checks to see if a field is pointing to custom type
+    // before we try automatic inference.
+    //
+    // First check for manual field => type mappings in the site's
+    // gatsby-config.js
     const fieldSelector = _.remove([nodes[0].type, selector, k]).join(`.`)
     if (mapping && _.includes(Object.keys(mapping), fieldSelector)) {
       const matchedTypes = types.filter(
         type => type.name === mapping[fieldSelector]
       )
       if (_.isEmpty(matchedTypes)) {
-        console.log(
-          `Couldn't find a matching node type for "${fieldSelector}"`
-        )
+        console.log(`Couldn't find a matching node type for "${fieldSelector}"`)
         return
       }
       const findNode = (fieldValue, path) => {
@@ -187,21 +202,22 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
         }
       }
 
-      // Special case fields that look like they're pointing at a file — if the
-      // field has a known extension then assume it should be a file field.
+      // Look for fields that are pointing at a file — if the field has a known
+      // extension then assume it should be a file field.
     } else if (
       nodes[0].type !== `File` &&
       _.isString(v) &&
       mime.lookup(v) !== `application/octet-stream` &&
-      mime.lookup(v) !== `application/x-msdownload` && // domains ending with .com
+      // domains ending with .com
+      mime.lookup(v) !== `application/x-msdownload` &&
       isRelative(v) &&
       isRelativeUrl(v)
     ) {
-      console.log(k, v, isRelative(v))
       const fileNodes = types.filter(type => type.name === `File`)
       if (fileNodes && fileNodes.length > 0) {
         inferredFields[k] = fileNodes[0].field
       }
+      // Else do our automatic inference from the data.
     } else {
       inferredFields[k] = inferGraphQLType({
         value: v,

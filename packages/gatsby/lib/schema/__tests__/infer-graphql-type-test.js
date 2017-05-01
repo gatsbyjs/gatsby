@@ -16,7 +16,7 @@ test(`Infers graphql type from array of nodes`, () => {
       anArray: [1, 2, 3, 4],
       anObjectArray: [
         { aString: `some string`, aNumber: 2, aBoolean: true },
-        { aString: `some string`, aNumber: 2, anArray: [1, 2, `some string`] },
+        { aString: `some string`, aNumber: 2, anArray: [1, 2] },
       ],
       aBoolean: true,
       externalUrl: `https://example.com/awesome.jpg`,
@@ -96,11 +96,17 @@ test(`Infers graphql type from array of nodes`, () => {
             hair: 1,
             anArray: [1, 2, 3, 4],
             anObjectArray: [
-              { aString: `some string`, aNumber: 2, aBoolean: true },
               {
                 aString: `some string`,
                 aNumber: 2,
-                anArray: [1, 2, `some string`],
+                aBoolean: true,
+                anArray: null,
+              },
+              {
+                aString: `some string`,
+                aNumber: 2,
+                aBoolean: null,
+                anArray: [1, 2],
               },
             ],
             aBoolean: true,
@@ -115,6 +121,8 @@ test(`Infers graphql type from array of nodes`, () => {
           {
             hair: 2,
             anArray: [1, 2, 5, 4],
+            anObjectArray: null,
+            aBoolean: null,
             externalUrl: null,
             domain: null,
             date: `1984`,
