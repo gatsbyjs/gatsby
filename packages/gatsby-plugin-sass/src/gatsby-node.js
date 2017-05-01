@@ -1,8 +1,6 @@
 import ExtractTextPlugin from "extract-text-webpack-plugin"
 
-exports.modifyWebpackConfig = ({ args }) => {
-  const { config, stage } = args
-
+exports.modifyWebpackConfig = ({ config, stage }) => {
   const cssModulesConf = `css?modules&minimize&importLoaders=1`
   const cssModulesConfDev = `${cssModulesConf}&sourceMap&localIdentName=[name]---[local]---[hash:base64:5]`
 
