@@ -25,12 +25,10 @@ const processEntities = ents => {
   })
 }
 
-exports.sourceNodes = async ({
-  boundActionCreators,
-  getNode,
-  hasNodeChanged,
-  store,
-}) => {
+exports.sourceNodes = async (
+  { boundActionCreators, getNode, hasNodeChanged, store },
+  { baseUrl }
+) => {
   const {
     createNode,
     updateSourcePluginStatus,
@@ -65,9 +63,9 @@ exports.sourceNodes = async ({
 
   let url
   if (lastFetched) {
-    url = `http://dev-gatsbyjs-d8.pantheonsite.io/jsonapi/node/article?filter[new-content][path]=changed&filter[new-content][value]=${parseInt(new Date(lastFetched).getTime() / 1000).toFixed(0)}&filter[new-content][operator]=%3E&page[offset]=0&page[limit]=10`
+    url = `${baseUrl}/jsonapi/node/article?filter[new-content][path]=changed&filter[new-content][value]=${parseInt(new Date(lastFetched).getTime() / 1000).toFixed(0)}&filter[new-content][operator]=%3E&page[offset]=0&page[limit]=10`
   } else {
-    url = `http://dev-gatsbyjs-d8.pantheonsite.io/jsonapi/node/article`
+    url = `${baseUrl}/jsonapi/node/article`
   }
 
   let result

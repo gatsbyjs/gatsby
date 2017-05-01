@@ -6,7 +6,12 @@ module.exports = {
   // the source plugin. Once Gatsby core has support for this,
   // remove this mapping.
   mapping: {
-    "drupal__node__article.author": "drupal__user__user",
+    "drupal__node__article.author": `drupal__user__user`,
   },
-  plugins: [`gatsby-source-drupal`],
+  plugins: [
+    {
+      resolve: `gatsby-source-drupal`,
+      options: { baseUrl: `http://dev-gatsbyjs-d8.pantheonsite.io` },
+    },
+  ],
 }
