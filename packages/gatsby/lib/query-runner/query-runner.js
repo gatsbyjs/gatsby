@@ -24,6 +24,22 @@ module.exports = async (page, component) => {
     result = await graphql(component.query, { ...page, ...page.context })
   }
 
+  // If there's an error log the error. If we're building, also quit.
+  if (result && result.errors) {
+    console.log(``)
+    console.log(`The GraphQL query from ${component.componentPath} failed`)
+    console.log(``)
+    console.log(`Query:`)
+    console.log(component.query)
+    console.log(``)
+    console.log(`GraphQL Error:`)
+    console.log(result.errors)
+    // Perhaps this isn't the best way to see if we're building?
+    if (program._name === `build`) {
+      process.exit(1)
+    }
+  }
+
   // Add the path context onto the results.
   result.pathContext = page.context
   const resultJSON = JSON.stringify(result, null, 4)
