@@ -7,7 +7,7 @@ console.log(`bin/cli: time since started:`, process.uptime())
 
 // Improve Promise error handling. Maybe... what's the best
 // practice for this these days?
-global.Promise = require("bluebird")
+global.Promise = require(`bluebird`)
 Promise.onPossiblyUnhandledRejection(error => {
   throw error
 })
