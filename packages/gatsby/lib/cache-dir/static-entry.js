@@ -78,6 +78,7 @@ module.exports = (locals, callback) => {
         } catch (e) {
           // ignore
         }
+
         const dascripts = [
           `commons`,
           `app`,

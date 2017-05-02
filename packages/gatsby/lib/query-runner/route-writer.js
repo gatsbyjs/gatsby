@@ -31,10 +31,6 @@ const writeChildRoutes = () => {
 
   const genSplitChildRoute = (page, noPath = false) => {
     const pathName = pathChunkName(page.path)
-    const layoutName = layoutComponentChunkName(
-      program.directory,
-      page.component
-    )
     let pathStr = ``
     if (!noPath) {
       if (program.prefixLinks) {
@@ -53,7 +49,7 @@ const writeChildRoutes = () => {
               const data = require('./json/${page.jsonName}')
               cb(null, () => <Component {...nextState} {...data} />)
             }, '${pathName}')
-          }, '${layoutName}')
+          }, '${page.componentChunkName}')
         }
       },
     `
