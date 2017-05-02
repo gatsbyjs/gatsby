@@ -1,5 +1,6 @@
 import React from "react"
 import Link from "react-router/lib/Link"
+const debug = require(`debug`)(`gatsby:link`)
 
 let linkPrefix = ``
 if (__PREFIX_LINKS__) {
@@ -34,7 +35,7 @@ const GatsbyLink = React.createClass({
           createLocation(this.props.to),
           (error, nextState) => {
             getComponents(nextState, () =>
-              console.log(`loaded assets for ${this.props.to}`)
+              debug(`loaded assets for ${this.props.to}`)
             )
           }
         )
