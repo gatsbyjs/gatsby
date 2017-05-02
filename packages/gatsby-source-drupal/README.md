@@ -7,8 +7,8 @@ module](https://www.drupal.org/project/jsonapi) installed.
 
 ## Status
 
-This module is probably at a prototype-level. It pulls only article nodes and
-users. TODOs include making it work with all node types.
+This module is at prototype-level. It currently only pulls from Drupal article
+nodes and users. TODOs include making it work with all node types.
 
 ## Install
 
@@ -48,4 +48,5 @@ You can query nodes created from Drupal like the following:
   }
 }
 ```
+
 
