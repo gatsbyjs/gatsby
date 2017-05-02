@@ -16,12 +16,20 @@ const { store, getNodes } = require(`../redux`)
 const { addPageDependency } = require(`../redux/actions/add-page-dependency`)
 const { extractFieldExamples } = require(`./data-tree-utils`)
 
-const inferGraphQLType = ({
-  value,
-  fieldName,
-  namePrefix = ``,
-  ...otherArgs
-}) => {
+const seenNames = {}
+const createTypeName = name => {
+  const cameledName = _.camelCase(name)
+  if (seenNames[cameledName]) {
+    seenNames[cameledName] += 1
+    return `${cameledName}_${seenNames[cameledName]}`
+  } else {
+    seenNames[cameledName] = 1
+    return cameledName
+  }
+}
+
+const inferGraphQLType = ({ value, selector, fieldName, ...otherArgs }) => {
+  const newSelector = selector ? [selector, fieldName].join(`.`) : fieldName
   if (Array.isArray(value)) {
     const headValue = value[0]
     let headType
@@ -29,10 +37,10 @@ const inferGraphQLType = ({
     // and create an object type.
     if (_.isObject(headValue)) {
       headType = new GraphQLObjectType({
-        name: _.camelCase(fieldName),
+        name: createTypeName(fieldName),
         fields: inferObjectStructureFromNodes({
           ...otherArgs,
-          nodes: value,
+          selector: newSelector,
         }),
       })
       // Else if the values are simple values, just infer their type.
@@ -114,11 +122,10 @@ const inferGraphQLType = ({
     case `object`:
       return {
         type: new GraphQLObjectType({
-          name: _.camelCase(`${namePrefix} ${fieldName}`),
+          name: createTypeName(fieldName),
           fields: inferObjectStructureFromNodes({
             ...otherArgs,
-            namePrefix: _.camelCase(`${namePrefix} ${fieldName}`),
-            nodes: [value],
+            selector: newSelector,
           }),
         }),
       }
@@ -134,7 +141,6 @@ const inferGraphQLType = ({
 const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = ({
   nodes,
   selector,
-  namePrefix = ``,
   types,
   allNodes,
 }) => {
@@ -229,7 +235,7 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
       inferredFields[k] = inferGraphQLType({
         value: v,
         fieldName: k,
-        namePrefix,
+        selector,
         nodes,
         types,
         allNodes: getNodes(),
