@@ -25,7 +25,8 @@ console.time(`time to load develop`)
 program
   .command(`develop`)
   .description(
-    `Start development server. Watches files and rebuilds and hot reloads if something changes`
+    `Start development server. Watches files and rebuilds and hot reloads ` +
+      `if something changes`
   ) // eslint-disable-line max-len
   .option(
     `-H, --host <url>`,

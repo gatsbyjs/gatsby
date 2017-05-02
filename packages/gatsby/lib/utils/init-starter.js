@@ -1,7 +1,8 @@
 /* @flow weak */
-import { exec, execSync } from "child_process"
-import fs from "fs-extra"
-import sysPath from "path"
+import { exec, execSync } from 'child_process'
+import hostedGitInfo from 'hosted-git-info'
+import fs from 'fs-extra'
+import sysPath from 'path'
 
 let logger = console
 
@@ -84,13 +85,13 @@ const copy = (starterPath, rootPath, callback) => {
 // callback    - Function.
 //
 // Returns nothing.
-const clone = (address, rootPath, callback) => {
-  const gitHubRe = /(gh|github):(?:\/\/)?/
-  const url = gitHubRe.test(address)
-    ? `git://github.com/${address.replace(gitHubRe, ``)}.git`
-    : address
+const clone = (hostInfo, rootPath, callback) => {
+  const url = hostInfo.git({ noCommittish: true })
+  const branch = hostInfo.committish ? `-b ${hostInfo.committish}` : ``
+
   logger.log(`Cloning git repo ${url} to ${rootPath}...`)
-  const cmd = `git clone ${url} ${rootPath}`
+  const cmd = `git clone ${branch} ${url} ${rootPath} --single-branch`
+
   exec(cmd, (error, stdout, stderr) => {
     if (error !== null) {
       return callback(new Error(`Git clone error: ${stderr.toString()}`))
@@ -111,23 +112,21 @@ const clone = (address, rootPath, callback) => {
 // callback    - Function.
 //
 // Returns nothing.
-const initStarter = (starter, options = {}, callback) => {
-  const cwd = process.cwd()
-  const rootPath = options.rootPath || cwd
-  if (options.logger) logger = options.logger
+const initStarter = (starter, options = {}) =>
+  new Promise((resolve, reject) => {
+    const callback = (err, value) => (err ? reject(err) : resolve(value))
 
-  const uriRe = /(?:https?|git(hub)?|gh)(?::\/\/|@)?/
-  fs.exists(sysPath.join(rootPath, `package.json`), exists => {
-    if (exists) {
-      return callback(
-        new Error(`Directory ${rootPath} is already an npm project`)
-      )
-    }
-    const isGitUri = starter && uriRe.test(starter)
-    const get = isGitUri ? clone : copy
-    get(starter, rootPath, callback)
-    return true
+    const cwd = process.cwd()
+    const rootPath = options.rootPath || cwd
+    if (options.logger) logger = options.logger
+
+    if (fs.existsSync(sysPath.join(rootPath, `package.json`)))
+      throw new Error(`Directory ${rootPath} is already an npm project`)
+
+    const hostedInfo = hostedGitInfo.fromUrl(starter)
+
+    if (hostedInfo) clone(hostedInfo, rootPath, callback)
+    else copy(starter, rootPath, callback)
   })
-}
 
 module.exports = initStarter
