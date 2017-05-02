@@ -95,12 +95,10 @@ program
   })
 
 program.on(`--help`, () => {
-  console.log(
-    `To show subcommand help:
+  console.log(`To show subcommand help:
 
     gatsby [command] -h
-`
-  )
+`)
 })
 
 // If the user types an unknown sub-command, just display the help.

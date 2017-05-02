@@ -337,8 +337,7 @@ async function responsiveSizes({ file, args = {} }) {
   const fallbackSrc = _.minBy(images, image =>
     Math.abs(options.maxWidth - image.width)
   ).src
-  const srcSet = images
-    .map(image => `${image.src} ${Math.round(image.width)}w`)
+  const srcSet = images.map(image => `${image.src} ${Math.round(image.width)}w`)
     .join(`,\n`)
 
   return {
@@ -375,14 +374,12 @@ async function responsiveResolution({ file, args = {} }) {
   // requested, add back the original so there's at least something)
   if (filteredSizes.length === 0) {
     filteredSizes.push(dimensions.width)
-    console.warn(
-      `
+    console.warn(`
                  The requested width "${options.width}px" for a responsiveResolution field for
                  the file ${file.absolutePath}
                  was wider than the actual image width of ${dimensions.width}px!
                  If possible, replace the current image with a larger one.
-                 `
-    )
+                 `)
   }
 
   // Sort sizes for prettiness.
@@ -408,27 +405,25 @@ async function responsiveResolution({ file, args = {} }) {
   const base64Image = await base64({ file })
 
   const fallbackSrc = images[0].src
-  const srcSet = images
-    .map((image, i) => {
-      let resolution
-      switch (i) {
-        case 0:
-          resolution = `1x`
-          break
-        case 1:
-          resolution = `1.5x`
-          break
-        case 2:
-          resolution = `2x`
-          break
-        case 3:
-          resolution = `3x`
-          break
-        default:
-      }
-      return `${image.src} ${resolution}`
-    })
-    .join(`,`)
+  const srcSet = images.map((image, i) => {
+    let resolution
+    switch (i) {
+      case 0:
+        resolution = `1x`
+        break
+      case 1:
+        resolution = `1.5x`
+        break
+      case 2:
+        resolution = `2x`
+        break
+      case 3:
+        resolution = `3x`
+        break
+      default:
+    }
+    return `${image.src} ${resolution}`
+  }).join(`,`)
 
   return {
     base64: base64Image.src,
