@@ -97,6 +97,13 @@ module.exports = async (api, args = {}) => {
         Promise.resolve(runAPI(plugin, api, args)).asCallback(callback)
       },
       (err, results) => {
+        if (err) {
+          console.log(``)
+          console.log(`A plugin returned an error`)
+          console.log(``)
+          console.log(err)
+          process.exit(1)
+        }
         // Filter out empty responses and return
         resolve(results.filter(result => !_.isEmpty(result)))
       }

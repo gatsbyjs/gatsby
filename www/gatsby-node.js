@@ -18,7 +18,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
       {
         allMarkdownRemark(limit: 1000) {
           edges {
-            node {
+            nodes {
               slug
               package
             }
@@ -28,7 +28,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     `
     ).then(result => {
       if (result.errors) {
-        console.log(result.errors)
+        reject(new Error(result.errors))
       }
 
       // Create docs pages.
