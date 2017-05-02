@@ -1,8 +1,4 @@
-const select = require(`unist-util-select`)
-const Promise = require(`bluebird`)
-const fs = require(`fs`)
 const grayMatter = require(`gray-matter`)
-const _ = require(`lodash`)
 const crypto = require(`crypto`)
 
 async function onNodeCreate({
