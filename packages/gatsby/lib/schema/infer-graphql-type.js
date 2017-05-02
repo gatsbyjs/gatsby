@@ -16,7 +16,12 @@ const { store, getNodes } = require(`../redux`)
 const { addPageDependency } = require(`../redux/actions/add-page-dependency`)
 const { extractFieldExamples } = require(`./data-tree-utils`)
 
-const inferGraphQLType = ({ value, fieldName, ...otherArgs }) => {
+const inferGraphQLType = ({
+  value,
+  fieldName,
+  namePrefix = ``,
+  ...otherArgs
+}) => {
   if (Array.isArray(value)) {
     const headValue = value[0]
     let headType
@@ -109,10 +114,11 @@ const inferGraphQLType = ({ value, fieldName, ...otherArgs }) => {
     case `object`:
       return {
         type: new GraphQLObjectType({
-          name: _.camelCase(fieldName),
+          name: _.camelCase(`${namePrefix} ${fieldName}`),
           fields: inferObjectStructureFromNodes({
-            selector: fieldName,
             ...otherArgs,
+            namePrefix: _.camelCase(`${namePrefix} ${fieldName}`),
+            nodes: [value],
           }),
         }),
       }
@@ -128,6 +134,7 @@ const inferGraphQLType = ({ value, fieldName, ...otherArgs }) => {
 const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = ({
   nodes,
   selector,
+  namePrefix = ``,
   types,
   allNodes,
 }) => {
@@ -222,6 +229,7 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
       inferredFields[k] = inferGraphQLType({
         value: v,
         fieldName: k,
+        namePrefix,
         nodes,
         types,
         allNodes: getNodes(),
