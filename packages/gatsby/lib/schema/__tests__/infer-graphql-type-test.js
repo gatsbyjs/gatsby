@@ -18,6 +18,15 @@ test(`Infers graphql type from array of nodes`, () => {
         { aString: `some string`, aNumber: 2, aBoolean: true },
         { aString: `some string`, aNumber: 2, anArray: [1, 2] },
       ],
+      deepObject: {
+        level: 1,
+        deepObject: {
+          level: 2,
+          deepObject: {
+            level: 3,
+          },
+        },
+      },
       aBoolean: true,
       externalUrl: `https://example.com/awesome.jpg`,
       domain: `pizza.com`,
@@ -77,6 +86,15 @@ test(`Infers graphql type from array of nodes`, () => {
               aBoolean,
               anArray
             },
+            deepObject {
+              level
+              deepObject {
+                level
+                deepObject {
+                  level
+                }
+              }
+            }
             aBoolean,
             externalUrl,
             domain,
@@ -109,6 +127,15 @@ test(`Infers graphql type from array of nodes`, () => {
                 anArray: [1, 2],
               },
             ],
+            deepObject: {
+              level: 1,
+              deepObject: {
+                level: 2,
+                deepObject: {
+                  level: 3,
+                },
+              },
+            },
             aBoolean: true,
             externalUrl: `https://example.com/awesome.jpg`,
             domain: `pizza.com`,
@@ -122,6 +149,7 @@ test(`Infers graphql type from array of nodes`, () => {
             hair: 2,
             anArray: [1, 2, 5, 4],
             anObjectArray: null,
+            deepObject: null,
             aBoolean: null,
             externalUrl: null,
             domain: null,

@@ -10,12 +10,25 @@ const extractFieldExamples = (exports.extractFieldExamples = ({
   let examples = nodes.reduce((mem, node) => {
     let subNode = selector ? _.get(node, selector) : node
 
-    // Ignore undefined/null/empty array subnodes.
-    subNode = _.omitBy(flatten(subNode || {}, { safe: true }), v => {
-      return _.isNil(v) || (_.isArray(v) && _.isEmpty(v))
-    })
+    const reduceSubNode = (m, sn) => {
+      // Ignore undefined/null/empty array subnodes.
+      sn = _.omitBy(flatten(sn || {}, { safe: true }), v => {
+        return _.isNil(v) || (_.isArray(v) && _.isEmpty(v))
+      })
 
-    return Object.assign({}, mem, subNode)
+      return Object.assign({}, m, sn)
+    }
+
+    // If the subnode is an array of things, run those individually instead
+    // of the whole array.
+    if (_.isArray(subNode) && !_.isEmpty(subNode)) {
+      const result = subNode.reduce((m, n) => {
+        return reduceSubNode(m, n)
+      })
+      return result
+    } else {
+      return reduceSubNode(mem, subNode)
+    }
   }, {})
 
   examples = flatten.unflatten(examples)
