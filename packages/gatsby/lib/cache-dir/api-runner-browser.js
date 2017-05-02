@@ -1,3 +1,4 @@
+const debug = require(`debug`)(`gatsby:api-runner-browser`)
 // During bootstrap, we write requires at top of this file which looks
 // basically like:
 // var plugins = [
@@ -6,7 +7,7 @@
 // ]
 
 module.exports = (api, args, defaultReturn) => {
-  console.log(`running gatsby plugins for api "${api}" with args`, args)
+  debug(`running gatsby plugins for api "${api}" with args`, args)
 
   // Run each plugin in series.
   let results = plugins.map(plugin => {
@@ -19,7 +20,7 @@ module.exports = (api, args, defaultReturn) => {
   // Filter out undefined results.
   results = results.filter(result => typeof result !== `undefined`)
 
-  console.log(`results`, results)
+  debug(`results`, results)
 
   if (results.length > 0) {
     return results
