@@ -3,17 +3,6 @@ const logger = require(`tracer`).colorConsole()
 
 const initStarter = require(`./init-starter`)
 
-module.exports = (rootPath, starter = `gh:gatsbyjs/gatsby-starter-default`) => {
-  initStarter(
-    starter,
-    {
-      rootPath,
-      logger,
-    },
-    error => {
-      if (error) {
-        logger.error(error)
-      }
-    }
-  )
+module.exports = (rootPath, starter = `gatsbyjs/gatsby-starter-default`) => {
+  initStarter(starter, { rootPath, logger }).catch(error => logger.error(error))
 }
