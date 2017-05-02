@@ -28,7 +28,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     `
     ).then(result => {
       if (result.errors) {
-        console.log(result.errors)
+        reject(result.errors)
       }
 
       // Create docs pages.
