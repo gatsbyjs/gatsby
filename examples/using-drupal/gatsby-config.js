@@ -19,5 +19,6 @@ module.exports = {
         trackingId: `UA-93349937-2`,
       },
     },
+    `gatsby-plugin-offline`,
   ],
 }
