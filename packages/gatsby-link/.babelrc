@@ -2,13 +2,13 @@
   "presets": [
     ["env", {
       "targets": {
-        "browsers": ["last 2 versions", "safari >= 7"],
-      },
+        "browsers": ["last 2 versions", "safari >= 7"]
+      }
     }],
-    'react',
+    "react"
   ],
   "plugins": [
     "transform-object-rest-spread",
-    "transform-flow-strip-types",
+    "transform-flow-strip-types"
   ]
 }
