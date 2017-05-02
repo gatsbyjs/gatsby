@@ -4,10 +4,7 @@
   "version": "1.0.0-alpha13",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "bluebird": "^3.5.0",
-    "gray-matter": "^2.1.0",
-    "lodash": "^4.17.4",
-    "unist-util-select": "^1.5.0"
+    "gray-matter": "^2.1.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
