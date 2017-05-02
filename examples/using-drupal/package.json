@@ -8,6 +8,7 @@
     "gatsby": "canary",
     "gatsby-link": "canary",
     "gatsby-plugin-google-analytics": "canary",
+    "gatsby-plugin-offline": "canary",
     "gatsby-source-drupal": "canary",
     "lodash": "^4.16.4",
     "react-typography": "^0.15.0",
