@@ -1597,6 +1597,13 @@ create-hmac@^1.1.0, create-hmac@^1.1.2:
     create-hash "^1.1.0"
     inherits "^2.0.1"
 
+create-react-class@^15.5.2:
+  version "15.5.2"
+  resolved "https://registry.yarnpkg.com/create-react-class/-/create-react-class-15.5.2.tgz#6a8758348df660b88326a0e764d569f274aad681"
+  dependencies:
+    fbjs "^0.8.9"
+    object-assign "^4.1.1"
+
 cross-env@^3.1.1:
   version "3.2.4"
   resolved "https://registry.yarnpkg.com/cross-env/-/cross-env-3.2.4.tgz#9e0585f277864ed421ce756f81a980ff0d698aba"
@@ -2495,6 +2502,12 @@ gatsby-link@canary:
   resolved "https://registry.yarnpkg.com/gatsby-link/-/gatsby-link-1.0.0-alpha13-alpha.537d11c6.tgz#b5f242da31015930cb39ee131ae4fb7ea4be5f70"
   dependencies:
     "@types/react-router" "^2.0.49"
+
+gatsby-plugin-google-analytics@canary:
+  version "1.0.0-alpha13-alpha.215cabc2"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-google-analytics/-/gatsby-plugin-google-analytics-1.0.0-alpha13-alpha.215cabc2.tgz#e401c4a93015af29f24c2d2f034ad29888499652"
+  dependencies:
+    react-ga "^2.1.2"
 
 gatsby-source-drupal@canary:
   version "1.0.0-alpha13-alpha.0189ea42"
@@ -4347,7 +4360,7 @@ object-assign@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-3.0.0.tgz#9bedd5ca0897949bca47e7ff408062d549f587f2"
 
-object-assign@^4.0.1, object-assign@^4.1.0:
+object-assign@^4.0.1, object-assign@^4.1.0, object-assign@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
 
@@ -5333,6 +5346,14 @@ react-dom@^15.4.0:
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
     prop-types "~15.5.7"
+
+react-ga@^2.1.2:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/react-ga/-/react-ga-2.2.0.tgz#45235de1356e4d988d9b82214d615a08489c9291"
+  dependencies:
+    create-react-class "^15.5.2"
+    object-assign "^4.0.1"
+    prop-types "^15.5.6"
 
 react-hot-loader@^3.0.0-beta.6:
   version "3.0.0-beta.6"
