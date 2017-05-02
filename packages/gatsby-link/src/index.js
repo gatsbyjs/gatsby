@@ -1,5 +1,7 @@
 import React from "react"
 import Link from "react-router/lib/Link"
+import createClass from "create-react-class"
+import PropTypes from "prop-types"
 
 let linkPrefix = ``
 if (__PREFIX_LINKS__) {
@@ -9,9 +11,9 @@ if (__PREFIX_LINKS__) {
 // Use createClass instead of ES6 class as Babel spews out a ton of code
 // for polyfilling classes which there's no reason to pay for this.
 // A function component would be ideal but we need componentDidMount.
-const GatsbyLink = React.createClass({
+const GatsbyLink = createClass({
   propTypes: {
-    to: React.PropTypes.string.isRequired,
+    to: PropTypes.string.isRequired,
   },
   componentDidMount() {
     // Only enable prefetching of Link resources in production and for browsers that
