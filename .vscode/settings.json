@@ -1,4 +1,6 @@
 // Place your settings in this file to overwrite the default settings
 {
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "prettier.semi": false,
+  "prettier.trailingComma": "all"
 }
