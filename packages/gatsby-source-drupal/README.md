@@ -2,7 +2,7 @@
 
 Source plugin for pulling data into Gatsby from Drupal sites.
 
-Pulls data from Drupal sites with the [Drupal's JSONAPI
+Pulls data from Drupal sites with the [Drupal JSONAPI
 module](https://www.drupal.org/project/jsonapi) installed.
 
 An example site for using this plugin is at
