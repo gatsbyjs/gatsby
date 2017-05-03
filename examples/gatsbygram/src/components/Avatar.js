@@ -1,6 +1,6 @@
-import * as PropTypes from 'prop-types'
-import React from 'react'
-import { rhythm } from '../utils/typography'
+import * as PropTypes from "prop-types"
+import React from "react"
+import { rhythm } from "../utils/typography"
 
 const propTypes = {
   user: PropTypes.shape({
@@ -41,7 +41,7 @@ Avatar.propTypes = propTypes
 
 export default Avatar
 export const userFragment = graphql`
-  fragment Avatar_user on Posts {
+  fragment Avatar_user on PostsJson {
     avatar
     username
   }

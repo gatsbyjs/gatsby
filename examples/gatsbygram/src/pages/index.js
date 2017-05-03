@@ -1,11 +1,11 @@
-import * as PropTypes from 'prop-types'
-import chunk from 'lodash/chunk'
-import React from 'react'
+import * as PropTypes from "prop-types"
+import chunk from "lodash/chunk"
+import React from "react"
 
-import { rhythm, scale } from '../utils/typography'
-import presets from '../utils/presets'
-import Avatar from '../components/Avatar'
-import Post from '../components/post'
+import { rhythm, scale } from "../utils/typography"
+import presets from "../utils/presets"
+import Avatar from "../components/Avatar"
+import Post from "../components/post"
 
 // This would normally be in a Redux store or some other global data store.
 if (typeof window !== `undefined`) {
@@ -17,7 +17,7 @@ class Index extends React.Component {
     location: PropTypes.object.isRequired,
     data: PropTypes.shape({
       user: PropTypes.object,
-      allPosts: PropTypes.object,
+      allPostsJson: PropTypes.object,
     }),
   }
   static contextTypes = {
@@ -64,9 +64,9 @@ class Index extends React.Component {
   }
 
   render() {
-    let { allPosts, user } = this.props.data
+    let { allPostsJson, user } = this.props.data
 
-    const posts = allPosts.edges.map(e => e.node)
+    const posts = allPostsJson.edges.map(e => e.node)
 
     this.context.setPosts(posts)
 
@@ -199,7 +199,7 @@ export default Index
 
 export const pageQuery = graphql`
   query allImages {
-    user: allPosts(limit: 1) {
+    user: allPostsJson(limit: 1) {
       edges {
         node {
           username
@@ -207,13 +207,14 @@ export const pageQuery = graphql`
         }
       }
     }
-    allPosts {
+    allPostsJson {
       edges {
         node {
           id
           text
           weeksAgo: time(difference: "weeks")
           ...Post_details
+          ...PostDetail_details
           ...Modal_posts
         }
       }

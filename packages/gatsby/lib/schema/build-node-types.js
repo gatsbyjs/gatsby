@@ -7,10 +7,7 @@ const {
   GraphQLList,
   GraphQLString,
 } = require(`graphql`)
-const path = require(`path`)
 const Promise = require(`bluebird`)
-const mime = require(`mime`)
-const slash = require(`slash`)
 
 const apiRunner = require(`../utils/api-runner-node`)
 const { inferObjectStructureFromNodes } = require(`./infer-graphql-type`)
@@ -18,13 +15,7 @@ const {
   inferInputObjectStructureFromNodes,
 } = require(`./infer-graphql-input-fields`)
 const nodeInterface = require(`./node-interface`)
-const {
-  store,
-  getNodes,
-  getNode,
-  getNodeAndSavePathDependency,
-} = require(`../redux`)
-
+const { getNodes, getNode, getNodeAndSavePathDependency } = require(`../redux`)
 const { addPageDependency } = require(`../redux/actions/add-page-dependency`)
 
 module.exports = async () =>
@@ -54,13 +45,65 @@ module.exports = async () =>
         children: {
           type: new GraphQLList(nodeInterface),
           description: `The children of this node.`,
-          resolve(node, a, context) {
+          resolve(node, a, { path }) {
             return node.children.map(id =>
-              getNodeAndSavePathDependency(id, context.path)
+              getNodeAndSavePathDependency(id, path)
             )
           },
         },
       }
+
+      // Create children fields for each type of children e.g.
+      // "childrenMarkdownRemark".
+      const typeChildrenNodes = _.flatten(
+        type.nodes.map(n => n.children)
+      ).map(id => getNode(id))
+      const groupedChildren = _.groupBy(typeChildrenNodes, child => child.type)
+      Object.keys(groupedChildren).forEach(groupChildrenKey => {
+        // Does this child type have one child per parent or multiple?
+        const maxChildCount = _.maxBy(
+          _.values(_.groupBy(groupedChildren[groupChildrenKey], c => c.parent)),
+          g => g.length
+        ).length
+        if (maxChildCount > 1) {
+          defaultNodeFields[_.camelCase(`children ${groupChildrenKey}`)] = {
+            type: new GraphQLList(
+              _.values(processedTypes).find(t => t.name === groupChildrenKey)
+                .nodeObjectType
+            ),
+            description: `The children of this node of type
+            ${groupChildrenKey}`,
+            resolve(node, a, { path }) {
+              const filteredNodes = node.children
+                .map(id => getNode(id))
+                .filter(n => n.type === groupChildrenKey)
+              // Add dependencies for the path
+              filteredNodes.forEach(n =>
+                addPageDependency({ path, nodeId: n.id })
+              )
+              return filteredNodes
+            },
+          }
+        } else {
+          defaultNodeFields[_.camelCase(`child ${groupChildrenKey}`)] = {
+            type: _.values(processedTypes).find(
+              t => t.name === groupChildrenKey
+            ).nodeObjectType,
+            description: `The child of this node of type ${groupChildrenKey}`,
+            resolve(node, a, { path }) {
+              const childNode = node.children
+                .map(id => getNode(id))
+                .find(n => n.type === groupChildrenKey)
+              if (childNode) {
+                // Add dependencies for the path
+                addPageDependency({ path, nodeId: childNode.id })
+                return childNode
+              }
+              return null
+            },
+          }
+        }
+      })
 
       const inferredFields = inferObjectStructureFromNodes({
         nodes: type.nodes,
@@ -123,93 +166,6 @@ module.exports = async () =>
                     nodes: latestNodes,
                     path: context.path,
                   })
-                },
-              }
-
-              nodeType.field = {
-                name: _.camelCase(`${typeName} field`),
-                type: nodeType.nodeObjectType,
-                resolve: (node, a, context, { fieldName }) => {
-                  let fieldValue = node[fieldName]
-                  const sourceFileNode = _.find(
-                    getNodes(),
-                    n => n.type === `File` && n.id === node.parent
-                  )
-
-                  // Then test if the field is linking to a file.
-                  if (
-                    _.isString(fieldValue) &&
-                    mime.lookup(fieldValue) !== `application/octet-stream`
-                  ) {
-                    const fileLinkPath = slash(
-                      path.resolve(sourceFileNode.dir, fieldValue)
-                    )
-                    const linkedFileNode = _.find(
-                      getNodes(),
-                      n => n.type === `File` && n.absolutePath === fileLinkPath
-                    )
-                    if (linkedFileNode) {
-                      addPageDependency({
-                        path: context.path,
-                        nodeId: linkedFileNode.id,
-                      })
-                      return linkedFileNode
-                    }
-                  }
-
-                  // Next assume the field is using the ___TYPE notation.
-                  const linkedType = _.capitalize(fieldName.split(`___`)[1])
-                  if (fieldValue) {
-                    // First assume the user is linking using the desired node's ID.
-                    // This is a temp hack but then assume the link is a relative path
-                    // and try to resolve it. Probably a better way is that each typegen
-                    // plugin can define a custom resolve function which handles special
-                    // logic for alternative ways of adding links between nodes.
-                    let linkedFileNode
-                    // linkedFileNode = select(dataTree, `${linkedType}[id="${node[fieldName]}"]`)[0]
-                    linkedFileNode = _.find(
-                      getNodes(),
-                      n => n.type === linkedType && n.id === node[fieldName]
-                    )
-
-                    if (linkedFileNode) {
-                      addPageDependency({
-                        path: context.path,
-                        nodeId: linkedFileNode.id,
-                      })
-                      return linkedFileNode
-                    } else if (linkedType === `File`) {
-                      const fileLinkPath = slash(
-                        path.resolve(sourceFileNode.dir, node[fieldName])
-                      )
-                      linkedFileNode = _.find(
-                        getNodes(),
-                        n => n.type === `File` && n.id === fileLinkPath
-                      )
-
-                      if (linkedFileNode) {
-                        addPageDependency({
-                          path: context.path,
-                          nodeId: linkedFileNode.id,
-                        })
-                        return linkedFileNode
-                      } else {
-                        console.error(
-                          `Unable to load the linked ${linkedType} for`,
-                          node
-                        )
-                        return null
-                      }
-                    } else {
-                      console.error(
-                        `Unable to load the linked ${linkedType} for`,
-                        node
-                      )
-                      return null
-                    }
-                  } else {
-                    return null
-                  }
                 },
               }
 

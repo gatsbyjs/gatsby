@@ -1,7 +1,7 @@
-import React from 'react'
+import React from "react"
 
-import presets from '../utils/presets'
-import typography, { rhythm, scale } from '../utils/typography'
+import presets from "../utils/presets"
+import typography, { rhythm, scale } from "../utils/typography"
 
 class PostDetail extends React.Component {
   constructor() {
@@ -10,7 +10,7 @@ class PostDetail extends React.Component {
 
   render() {
     const {
-      image,
+      bigImage,
       likes,
       id,
       username,
@@ -19,7 +19,7 @@ class PostDetail extends React.Component {
       avatar,
     } = this.props.post
 
-    const { big } = image.children[0]
+    const { big } = bigImage.childImageSharp
 
     const UserBar = () => (
       <div
@@ -193,7 +193,7 @@ class PostDetail extends React.Component {
 export default PostDetail
 
 export const postDetailFragment = graphql`
-  fragment PostDetail_details on Posts {
+  fragment PostDetail_details on PostsJson {
     # Specify the fields from the post we need.
     username
     avatar
@@ -206,18 +206,16 @@ export const postDetailFragment = graphql`
     # activity) happens at build-time! So has minimal cost
     # for the client.
     weeksAgo: time(difference: "weeks")
-    image {
-      children {
-        ... on ImageSharp {
-          # Here we query for *multiple* image thumbnails to be
-          # created. So with no effort on our part, 100s of
-          # thumbnails are created. This makes iterating on
-          # designs effortless as we simply change the args
-          # for the query and we get new thumbnails.
-          big: responsiveSizes(maxWidth: 640) {
-            src
-            srcSet
-          }
+    bigImage: image {
+      childImageSharp {
+        # Here we query for *multiple* image thumbnails to be
+        # created. So with no effort on our part, 100s of
+        # thumbnails are created. This makes iterating on
+        # designs effortless as we simply change the args
+        # for the query and we get new thumbnails.
+        big: responsiveSizes(maxWidth: 640) {
+          src
+          srcSet
         }
       }
     }

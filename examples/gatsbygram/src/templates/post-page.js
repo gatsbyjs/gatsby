@@ -1,18 +1,18 @@
-import * as PropTypes from 'prop-types'
-import React from 'react'
-import PostDetail from '../components/post-detail'
+import * as PropTypes from "prop-types"
+import React from "react"
+import PostDetail from "../components/post-detail"
 
 class PostTemplate extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
-      posts: PropTypes.object.isRequired,
+      postsJson: PropTypes.object.isRequired,
     }),
   }
   render() {
     return (
       // PostDetail is used for this detail page and
       // also in the modal.
-      <PostDetail post={this.props.data.posts} />
+      <PostDetail post={this.props.data.postsJson} />
     )
   }
 }
@@ -28,7 +28,7 @@ export default PostTemplate
 export const pageQuery = graphql`
   query PostPage($id: String!) {
     # Select the post which equals this id.
-    posts(id: { eq: $id }) {
+    postsJson(id: { eq: $id }) {
       ...PostDetail_details
     }
   }

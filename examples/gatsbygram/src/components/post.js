@@ -1,17 +1,17 @@
-import * as PropTypes from 'prop-types'
-import React from 'react'
-import HeartIcon from 'react-icons/lib/fa/heart'
-import Link from 'gatsby-link'
+import * as PropTypes from "prop-types"
+import React from "react"
+import HeartIcon from "react-icons/lib/fa/heart"
+import Link from "gatsby-link"
 
-import { rhythm, scale } from '../utils/typography'
-import presets from '../utils/presets'
+import { rhythm, scale } from "../utils/typography"
+import presets from "../utils/presets"
 
 let touched = false
 
 class Post extends React.Component {
   static propTypes = {
     post: PropTypes.shape({
-      image: PropTypes.object,
+      smallImage: PropTypes.object,
       likes: PropTypes.number,
       id: PropTypes.string.isRequired,
     }).isRequired,
@@ -24,8 +24,8 @@ class Post extends React.Component {
   }
 
   render() {
-    const { image, likes, id } = this.props.post
-    const { small } = image.children[0]
+    const { smallImage, likes, id } = this.props.post
+    const { small } = smallImage.childImageSharp
     return (
       <Link
         to={`/${id}/`}
@@ -51,7 +51,7 @@ class Post extends React.Component {
           [presets.Tablet]: {
             marginRight: rhythm(1),
           },
-          ':last-child': {
+          ":last-child": {
             marginRight: 0,
           },
         }}
@@ -125,20 +125,14 @@ class Post extends React.Component {
 export default Post
 
 export const postFragment = graphql`
-  fragment Post_details on Posts {
+  fragment Post_details on PostsJson {
     id
     likes
-    image {
-      children {
-        ... on ImageSharp {
-          small: responsiveSizes(maxWidth: 292, maxHeight: 292) {
-            src
-            srcSet
-          }
-          big: responsiveSizes(maxWidth: 640, maxHeight: 640) {
-            src
-            srcSet
-          }
+    smallImage: image {
+      childImageSharp {
+        small: responsiveSizes(maxWidth: 292, maxHeight: 292) {
+          src
+          srcSet
         }
       }
     }

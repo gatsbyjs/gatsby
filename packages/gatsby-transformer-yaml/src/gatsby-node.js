@@ -20,7 +20,7 @@ async function onNodeCreate({ node, boundActionCreators, loadNodeContent }) {
       ...obj,
       id: obj.id ? obj.id : `${node.id} [${i}] >>> YAML`,
       contentDigest,
-      type: _.capitalize(node.name),
+      type: _.upperFirst(_.camelCase(`${node.name} Yaml`)),
       mediaType: `application/json`,
       parent: node.id,
       children: [],

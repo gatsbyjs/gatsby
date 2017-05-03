@@ -1,13 +1,13 @@
-import React from 'react'
-import Modal from 'react-modal'
-import browserHistory from 'react-router/lib/browserHistory'
-import CaretRight from 'react-icons/lib/fa/caret-right'
-import CaretLeft from 'react-icons/lib/fa/caret-left'
-import Close from 'react-icons/lib/md/close'
-import findIndex from 'lodash/findIndex'
-import mousetrap from 'mousetrap'
+import React from "react"
+import Modal from "react-modal"
+import browserHistory from "react-router/lib/browserHistory"
+import CaretRight from "react-icons/lib/fa/caret-right"
+import CaretLeft from "react-icons/lib/fa/caret-left"
+import Close from "react-icons/lib/md/close"
+import findIndex from "lodash/findIndex"
+import mousetrap from "mousetrap"
 
-import { rhythm } from '../utils/typography'
+import { rhythm } from "../utils/typography"
 
 class GatsbyGramModal extends React.Component {
   static propTypes = {
@@ -160,7 +160,7 @@ class GatsbyGramModal extends React.Component {
 export default GatsbyGramModal
 
 export const modalFragment = graphql`
-  fragment Modal_posts on Posts {
+  fragment Modal_posts on PostsJson {
     id
   }
 
