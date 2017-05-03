@@ -9,7 +9,7 @@ if (verDigit < 4) {
   // yurnalist also requires >= 4 so we use console.error here
   console.error(
     `Gatsby 1.0+ requires node.js v4 or higher (you have ${version}).
-    Upgrade node to the latest stable release.`
+Upgrade node to the latest stable release.`
   )
   process.exit()
 }
@@ -20,8 +20,8 @@ console.time(`initial loading`)
 global.appStartTime = Date.now()
 
 /*
-  Get the locally installed version of gatsby/lib/bin/cli.js from the place where
-  this program was executed.
+  Get the locally installed version of gatsby/lib/bin/cli.js from the place
+  where this program was executed.
 */
 const cliFile = `dist/bin/cli.js`
 const localPath = path.resolve(`node_modules/gatsby`, cliFile)
@@ -31,7 +31,7 @@ const useGlobalGatsby = function() {
   if ([`new`, `--help`].includes(process.argv[2])) {
     report.error(
       `A local install of Gatsby was not found.
-      You should save Gatsby as a site dependency e.g. npm install --save gatsby`
+You should save Gatsby as a site dependency e.g. npm install --save gatsby`
     )
     process.exit()
   }
