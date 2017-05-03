@@ -1,33 +1,32 @@
 #!/usr/bin/env node
 
-const Configstore = require("configstore")
-const pkg = require("../package.json")
-const argv = require("yargs").array("packages").argv
-const isAbsolute = require("is-absolute")
-const _ = require("lodash")
-const path = require("path")
+const Configstore = require(`configstore`)
+const pkg = require(`../package.json`)
+const argv = require(`yargs`).array(`packages`).argv
+const _ = require(`lodash`)
+const path = require(`path`)
 
 const conf = new Configstore(pkg.name)
 
-const fs = require("fs-extra")
-const havePackageJsonFile = fs.existsSync("package.json")
+const fs = require(`fs-extra`)
+const havePackageJsonFile = fs.existsSync(`package.json`)
 
 if (!havePackageJsonFile) {
-  console.log("Current folder must have a package.json file!")
+  console.log(`Current folder must have a package.json file!`)
   process.exit()
 }
 
-const localPkg = JSON.parse(fs.readFileSync("package.json"))
+const localPkg = JSON.parse(fs.readFileSync(`package.json`))
 const packages = Object.keys(localPkg.dependencies)
-const gatsbyPackages = packages.filter(p => p.startsWith("gatsby"))
+const gatsbyPackages = packages.filter(p => p.startsWith(`gatsby`))
 
 if (argv.setPathToRepo) {
-  console.log("Saving path to your Gatsby repo")
-  conf.set("gatsby-location", path.resolve(argv.setPathToRepo))
+  console.log(`Saving path to your Gatsby repo`)
+  conf.set(`gatsby-location`, path.resolve(argv.setPathToRepo))
   process.exit()
 }
 
-const gatsbyLocation = conf.get("gatsby-location")
+const gatsbyLocation = conf.get(`gatsby-location`)
 
 if (!gatsbyLocation) {
   console.log(
@@ -55,5 +54,5 @@ gatsby-dev --packages gatsby gatsby-typegen-remark
   process.exit()
 }
 
-const watch = require("../")
+const watch = require(`../`)
 watch(gatsbyLocation, argv.packages || gatsbyPackages, argv)

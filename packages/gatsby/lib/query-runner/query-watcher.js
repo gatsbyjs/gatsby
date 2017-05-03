@@ -13,57 +13,53 @@ const chokidar = require(`chokidar`)
 
 const { store } = require(`../redux/`)
 const { boundActionCreators } = require(`../redux/actions`)
-const queryExtractor = require(`./query-extractor`)
+const queryCompiler = require(`./query-compiler`).default
 const queryRunner = require(`./query-runner`)
 
 const pageComponents = {}
-const doneInitialQueryRun = []
-
-const watcher = chokidar.watch()
-watcher.on(`change`, path => {
-  queryExtractor(path).then(query => {
-    // Check if the query has changed
-    if (query !== store.getState().pageComponents[path].query) {
-      boundActionCreators.setPageComponentQuery({
-        query,
-        componentPath: path,
-      })
-      runQueriesForComponent(path)
-    }
-  })
-})
+let pendingPages = []
 
 const debounceNewPages = _.debounce(() => {
-  store.dispatch({
-    type: `BOOTSTRAP_STAGE`,
-    payload: {
-      stage: `COMPONENT_QUERIES_EXTRACTION_FINISHED`,
-    },
+  let pages = pendingPages
+  pendingPages = []
+
+  queryCompiler().then(queries => {
+    pages.forEach(componentPath => {
+      const query = queries.get(componentPath)
+
+      boundActionCreators.setPageComponentQuery({
+        query: query && query.text,
+        componentPath,
+      })
+    })
+
+    store.dispatch({
+      type: `BOOTSTRAP_STAGE`,
+      payload: {
+        stage: `COMPONENT_QUERIES_EXTRACTION_FINISHED`,
+      },
+    })
   })
 }, 100)
 
 // Watch for page updates.
 store.subscribe(() => {
   const lastAction = store.getState().lastAction
+
   if (lastAction.type === `UPSERT_PAGE`) {
-    if (!pageComponents[lastAction.payload.component]) {
+    const component = lastAction.payload.component
+    if (!pageComponents[component]) {
       // We haven't seen this component before so we:
       // - Add it to Redux
       // - Extract its query and save it
       // - Setup a watcher to detect query changes
-      boundActionCreators.addPageComponent(lastAction.payload.component)
-      queryExtractor(lastAction.payload.component).then(query => {
-        boundActionCreators.setPageComponentQuery({
-          query,
-          componentPath: lastAction.payload.component,
-        })
-        debounceNewPages()
-      })
-      watcher.add(lastAction.payload.component)
+      boundActionCreators.addPageComponent(component)
+      pendingPages.push(component)
+      debounceNewPages()
     }
 
     // Mark we've seen this page component.
-    pageComponents[lastAction.payload.component] = lastAction.payload.component
+    pageComponents[component] = component
   }
 })
 
@@ -80,4 +76,32 @@ const runQueriesForComponent = componentPath => {
 
 const getPagesForComponent = componentPath => {
   return store.getState().pages.filter(p => p.component === componentPath)
+}
+
+let watcher
+exports.watch = rootDir => {
+  if (watcher) return
+
+  const debounceCompile = _.debounce(() => {
+    queryCompiler().then(queries => {
+      console.log(`recompiling page queries`)
+      const pages = store.getState().pageComponents
+
+      queries.forEach(({ text }, path) => {
+        if (text !== pages[path].query) {
+          boundActionCreators.setPageComponentQuery({
+            query: text,
+            componentPath: path,
+          })
+          runQueriesForComponent(path)
+        }
+      })
+    })
+  }, 100)
+
+  watcher = chokidar
+    .watch(`${rootDir}/src/**/*.{js,jsx}`)
+    .on(`change`, path => {
+      debounceCompile()
+    })
 }
