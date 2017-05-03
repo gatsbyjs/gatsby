@@ -16,8 +16,8 @@ const GatsbyLink = createClass({
     to: PropTypes.string.isRequired,
   },
   componentDidMount() {
-    // Only enable prefetching of Link resources in production and for browsers that
-    // don't support service workers *cough* Safari/IE *cough*.
+    // Only enable prefetching of Link resources in production and for browsers
+    // that don't support service workers *cough* Safari/IE *cough*.
     if (
       (process.env.NODE_ENV === `production` &&
         !(`serviceWorker` in navigator)) ||
@@ -35,9 +35,13 @@ const GatsbyLink = createClass({
           [routes],
           createLocation(this.props.to),
           (error, nextState) => {
-            getComponents(nextState, () =>
-              console.log(`loaded assets for ${this.props.to}`)
-            )
+            if (error) {
+              return console.error(error)
+            }
+
+            if (nextState) {
+              getComponents(nextState)
+            }
           }
         )
       }
