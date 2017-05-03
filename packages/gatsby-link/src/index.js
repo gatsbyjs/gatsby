@@ -3,8 +3,6 @@ import Link from "react-router/lib/Link"
 import createClass from "create-react-class"
 import PropTypes from "prop-types"
 
-const debug = require(`debug`)(`gatsby:link`)
-
 let linkPrefix = ``
 if (__PREFIX_LINKS__) {
   linkPrefix = __LINK_PREFIX__
@@ -42,11 +40,7 @@ const GatsbyLink = createClass({
             }
 
             if (nextState) {
-              getComponents(nextState, () =>
-                debug(`Loaded assets for route ${this.props.to}`)
-              )
-            } else {
-              debug(`No state available for route ${this.props.to}`)
+              getComponents(nextState)
             }
           }
         )
