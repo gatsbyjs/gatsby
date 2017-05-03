@@ -25,7 +25,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     graphql(
       `
       {
-        allPosts(limit: 1000) {
+        allPostsJson(limit: 1000) {
           edges {
             node {
               id
@@ -45,7 +45,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
       // Instagram post. Since the scrapped Instagram data
       // already includes an ID field, we just use that for
       // each page's path.
-      _.each(result.data.allPosts.edges, edge => {
+      _.each(result.data.allPostsJson.edges, edge => {
         // Gatsby uses Redux to manage its internal state.
         // Plugins and sites can use functions like "upsertPage"
         // to interact with Gatsby.
