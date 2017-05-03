@@ -1,5 +1,5 @@
-import React from "react"
-import Link from "gatsby-link"
+import React from 'react'
+import Link from 'gatsby-link'
 
 class StoryItem extends React.Component {
   render() {
@@ -9,8 +9,8 @@ class StoryItem extends React.Component {
         <tr className="athing" id={story.id}>
           <td
             style={{
-              textAlign: "right",
-              verticalAlign: "top",
+              textAlign: `right`,
+              verticalAlign: `top`,
               width: 30,
               paddingRight: 8,
               paddingBottom: 2,
@@ -24,7 +24,7 @@ class StoryItem extends React.Component {
               {story.title}
             </a>
             <span className="sitebit comhead">
-              {" "}(
+              {` `}(
               <span className="sitestr">{story.domain}</span>
               )
             </span>
@@ -36,29 +36,43 @@ class StoryItem extends React.Component {
             <span className="score" id={`score_${story.id}`}>
               {story.score} points
             </span>
-            {" "}
+            {` `}
             by
-            {" "}
+            {` `}
             <a href="" className="hnuser">{story.by}</a>
-            {" "}
+            {` `}
             <span className="age">
               <Link to={`/item/${story.id}/`}>{story.timeISO}</Link>
             </span>
-            {" "}
+            {` `}
             <span id={`unv_${story.id}`} />
-            {" "}
+            {` `}
             |
-            {" "}
+            {` `}
             <Link to={`/item/${story.id}/`}>
               {story.descendants ? story.descendants : 0} comments
             </Link>
-            {" "}
+            {` `}
           </td>
         </tr>
-        <tr className="spacer" style={{ height: "5px" }} />
+        <tr className="spacer" style={{ height: `5px` }} />
       </div>
     )
   }
 }
 
 export default StoryItem
+
+export const storyFragment = graphql`
+  fragment Story_item on HNStory {
+    id
+    title
+    score
+    order
+    domain
+    url
+    by
+    descendants
+    timeISO(fromNow: true)
+  }
+`
