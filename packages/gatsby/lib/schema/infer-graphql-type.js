@@ -12,6 +12,9 @@ const moment = require(`moment`)
 const mime = require(`mime`)
 const isRelative = require(`is-relative`)
 const isRelativeUrl = require(`is-relative-url`)
+const slash = require(`slash`)
+const nodePath = require(`path`)
+
 const { store, getNode, getNodes } = require(`../redux`)
 const { addPageDependency } = require(`../redux/actions/add-page-dependency`)
 const { extractFieldExamples } = require(`./data-tree-utils`)
@@ -298,7 +301,42 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
     ) {
       const fileNodes = types.filter(type => type.name === `File`)
       if (fileNodes && fileNodes.length > 0) {
-        inferredFields[k] = fileNodes[0].field
+        const fileField = types.find(type => type.name === `File`)
+        inferredFields[k] = {
+          type: fileField.nodeObjectType,
+          resolve: (node, a, { path }) => {
+            let fieldValue = node[k]
+
+            // Find File node for this node (we assume the node is something
+            // like markdown which would be a child node of a File node).
+            const parentFileNode = _.find(
+              getNodes(),
+              n => n.type === `File` && n.id === node.parent
+            )
+
+            // Use the parent File node to create the absolute path to
+            // the linked file.
+            const fileLinkPath = slash(
+              nodePath.resolve(parentFileNode.dir, fieldValue)
+            )
+
+            // Use that path to find the linked File node.
+            const linkedFileNode = _.find(
+              getNodes(),
+              n => n.type === `File` && n.absolutePath === fileLinkPath
+            )
+
+            if (linkedFileNode) {
+              addPageDependency({
+                path,
+                nodeId: linkedFileNode.id,
+              })
+              return linkedFileNode
+            } else {
+              return null
+            }
+          },
+        }
       }
       // Else do our automatic inference from the data.
     } else {

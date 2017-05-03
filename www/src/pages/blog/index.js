@@ -25,7 +25,7 @@ const IndexRoute = React.createClass({
         <h1>Blog</h1>
         {blogPosts.map(post => {
           const avatar =
-            post.frontmatter.author.avatar.children[0].responsiveResolution
+            post.frontmatter.author.avatar.childImageSharp.responsiveResolution
           return (
             <div>
               <Link to={post.slug}>
@@ -109,14 +109,12 @@ export const pageQuery = `
           author {
             id
             avatar {
-              children {
-                ... on ImageSharp {
-                  responsiveResolution(width: 35, height: 35) {
-                    width
-                    height
-                    src
-                    srcSet
-                  }
+              childImageSharp {
+                responsiveResolution(width: 35, height: 35) {
+                  width
+                  height
+                  src
+                  srcSet
                 }
               }
             }

@@ -52,7 +52,7 @@ class Index extends React.Component {
 
   render() {
     console.log(this.props)
-    this.context.setEdges(this.props.data.allPosts.edges)
+    this.context.setEdges(this.props.data.allPostsJson.edges)
     return (
       <div
         css={{
@@ -122,17 +122,17 @@ class Index extends React.Component {
                 fontWeight: `normal`,
               }}
             >
-              {this.props.data.allPosts.edges[0].node.username}
+              {this.props.data.allPostsJson.edges[0].node.username}
             </h3>
             <p>
-              <strong>{this.props.data.allPosts.edges.length}</strong> posts
+              <strong>{this.props.data.allPostsJson.edges.length}</strong> posts
               <strong css={{ marginLeft: rhythm(1) }}>192k</strong> followers
             </p>
           </div>
         </div>
         {/* posts */}
         {chunk(
-          this.props.data.allPosts.edges.slice(0, this.state.postsToShow),
+          this.props.data.allPostsJson.edges.slice(0, this.state.postsToShow),
           3
         ).map(chunk => {
           return (
@@ -152,7 +152,7 @@ class Index extends React.Component {
                 <Post
                   key={edge.node.id}
                   post={edge.node}
-                  edges={this.props.data.allPosts.edges}
+                  edges={this.props.data.allPostsJson.edges}
                   location={this.props.location}
                   onClick={post => this.setState({ activePost: post })}
                 />
@@ -211,8 +211,8 @@ export default Index
 
 export const pageQuery = `
 query allImages {
-  user: allPosts(limit: 1) { edges { node { avatar, username }}}
-  allPosts {
+  user: allPostsJson(limit: 1) { edges { node { avatar, username }}}
+  allPostsJson {
     edges {
       node {
         likes
@@ -220,16 +220,14 @@ query allImages {
         text
         weeksAgo: time(difference: "weeks")
         image {
-          children {
-            ... on ImageSharp {
-              small: responsiveSizes(maxWidth: 292, maxHeight: 292) {
-                src
-                srcSet
-              }
-              big: responsiveSizes(maxWidth: 640, maxHeight: 640) {
-                src
-                srcSet
-              }
+          childImageSharp {
+            small: responsiveSizes(maxWidth: 292, maxHeight: 292) {
+              src
+              srcSet
+            }
+            big: responsiveSizes(maxWidth: 640, maxHeight: 640) {
+              src
+              srcSet
             }
           }
         }

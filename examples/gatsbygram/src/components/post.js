@@ -17,7 +17,7 @@ class Post extends React.Component {
 
   render() {
     const { image, likes, id } = this.props.post
-    const { small } = image.children[0]
+    const { small } = image.childImageSharp
     return (
       <Link
         to={`/${id}/`}
