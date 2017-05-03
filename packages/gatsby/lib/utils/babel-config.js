@@ -160,6 +160,8 @@ module.exports = async function babelConfig(program, stage) {
   // their components. Yeah for multiple module standards!
   babelrc.plugins.unshift(`add-module-exports`)
 
+  babelrc.plugins.unshift(require.resolve(`./babel-plugin-extract-graphql`))
+
   if (!babelrc.hasOwnProperty(`cacheDirectory`)) {
     babelrc.cacheDirectory = true
   }

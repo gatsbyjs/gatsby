@@ -32,8 +32,6 @@ async function buildSchema() {
     type: `SET_SCHEMA`,
     payload: schema,
   })
-
-  return
 }
 
 // This seems like the most sensible way to decide when the the initial
