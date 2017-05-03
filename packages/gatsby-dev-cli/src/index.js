@@ -2,9 +2,28 @@
 
 const Configstore = require(`configstore`)
 const pkg = require(`../package.json`)
-const argv = require(`yargs`).array(`packages`).argv
 const _ = require(`lodash`)
 const path = require(`path`)
+const watch = require(`./watch`)
+
+const argv = require(`yargs`)
+  .usage(`Usage: gatsby-dev [options]`)
+  .alias(`q`, `quiet`)
+  .nargs(`q`, 0)
+  .describe(`q`, `Do not output copy file information`)
+  .alias(`s`, `scan-once`)
+  .nargs(`s`, 0)
+  .describe(`s`, `Scan once. Do not start file watch`)
+  .alias(`p`, `set-path-to-repo`)
+  .nargs(`p`, 0)
+  .describe(
+    `p`,
+    `Set path to Gatsby repository.
+You typically only need to configure this once.`
+  )
+  .help(`h`)
+  .alias(`h`, `help`)
+  .array(`packages`).argv
 
 const conf = new Configstore(pkg.name)
 
@@ -17,15 +36,16 @@ if (!havePackageJsonFile) {
 }
 
 const localPkg = JSON.parse(fs.readFileSync(`package.json`))
-const packages = Object.keys({
-  ...localPkg.dependencies,
-  ...localPkg.devDependencies,
-})
+const packages = Object.keys(
+  Object.assign({}, localPkg.dependencies, localPkg.devDependencies)
+)
+
 const gatsbyPackages = packages.filter(p => p.startsWith(`gatsby`))
 
-if (argv.setPathToRepo) {
+const pathToRepo = argv[`set-path-to-repo`]
+if (pathToRepo) {
   console.log(`Saving path to your Gatsby repo`)
-  conf.set(`gatsby-location`, path.resolve(argv.setPathToRepo))
+  conf.set(`gatsby-location`, path.resolve(pathToRepo))
   process.exit()
 }
 
@@ -60,5 +80,7 @@ gatsby-dev will pick them up.
   process.exit()
 }
 
-const watch = require(`./watch`)
-watch(gatsbyLocation, argv.packages || gatsbyPackages, argv)
+watch(gatsbyLocation, argv.packages || gatsbyPackages, {
+  quiet: argv.quiet,
+  scanOnce: argv[`scan-once`],
+})

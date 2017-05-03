@@ -7,7 +7,7 @@ const ignoreRegs = [/[\/\\]node_modules[\/\\]/i, /\.git/i, /[\/\\]src[\/\\]/i]
 let numCopied = 0
 
 const debouncedQuit = _.debounce(() => {
-  console.log(`gatsby-dev copied ${numCopied} files`)
+  console.log(`Copied ${numCopied} files`)
   process.exit()
 }, 500)
 
@@ -36,7 +36,7 @@ function watch(root, packages, { scanOnce, quiet }) {
 
             numCopied += 1
             if (!quiet) {
-              console.log(`copied ${path} to ${newPath}`)
+              console.log(`Copied ${path} to ${newPath}`)
             }
           })
 
