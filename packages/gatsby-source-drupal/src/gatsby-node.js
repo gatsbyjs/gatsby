@@ -97,7 +97,7 @@ exports.sourceNodes = async (
       type: makeTypeName(node.type),
       children: [],
       content: nodeStr,
-      author: result.data.data[i].relationships.uid.data.id,
+      author___NODE: result.data.data[i].relationships.uid.data.id,
       mediaType: `application/json`,
     }
 
