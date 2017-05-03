@@ -3,7 +3,6 @@ const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 const syspath = require(`path`)
 
-const ignoreRegs = [/[\/\\]node_modules[\/\\]/i, /\.git/i, /[\/\\]src[\/\\]/i]
 let numCopied = 0
 
 const debouncedQuit = _.debounce(() => {
@@ -14,6 +13,13 @@ const debouncedQuit = _.debounce(() => {
 function watch(root, packages, { scanOnce, quiet }) {
   packages.forEach(p => {
     const prefix = `${root}/packages/${p}`
+
+    const ignoreRegs = [
+      /[\/\\]node_modules[\/\\]/i,
+      /\.git/i,
+      new RegExp(`${p}[\/]src[\/]`, `i`),
+    ]
+
     chokidar
       .watch(prefix, {
         ignored: [
