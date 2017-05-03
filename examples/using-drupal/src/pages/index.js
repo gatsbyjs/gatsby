@@ -1,5 +1,5 @@
-import React from "react"
-import Link from "gatsby-link"
+import React from 'react'
+import Link from 'gatsby-link'
 
 class IndexPage extends React.Component {
   render() {
@@ -9,7 +9,7 @@ class IndexPage extends React.Component {
       <div>
         {articleEdges.map(edge => {
           const article = edge.node
-          let name = "anonymous"
+          let name = `anonymous`
           if (article.author) {
             name = article.author.name
           }
@@ -17,11 +17,11 @@ class IndexPage extends React.Component {
             <div>
               <Link to={`/node/${article.nid}/`}>
                 <h4>
-                  <span style={{ color: "gray" }}>{article.created}</span>
-                  {" "}
+                  <span style={{ color: `gray` }}>{article.created}</span>
+                  {` `}
                   |
-                  {" "}“{article.title}” by
-                  {" "}
+                  {` `}“{article.title}” by
+                  {` `}
                   <em>{name}</em>
                 </h4>
               </Link>
@@ -35,8 +35,8 @@ class IndexPage extends React.Component {
 
 export default IndexPage
 
-export const pageQuery = `
-{
+export const pageQuery = graphql`
+query PageQuery {
   allDrupalNodeArticle(sortBy: { fields: [created], order: DESC }) {
     edges {
       node {
