@@ -24,7 +24,6 @@ const {
   getNode,
   getNodeAndSavePathDependency,
 } = require(`../redux`)
-
 const { addPageDependency } = require(`../redux/actions/add-page-dependency`)
 
 module.exports = async () =>
@@ -54,13 +53,39 @@ module.exports = async () =>
         children: {
           type: new GraphQLList(nodeInterface),
           description: `The children of this node.`,
-          resolve(node, a, context) {
+          resolve(node, a, { path }) {
             return node.children.map(id =>
-              getNodeAndSavePathDependency(id, context.path)
+              getNodeAndSavePathDependency(id, path)
             )
           },
         },
       }
+
+      // Create children fields for each type of children e.g.
+      // "childrenMarkdownRemark".
+      const typeChildrenNodes = _.flatten(
+        type.nodes.map(n => n.children)
+      ).map(id => getNode(id))
+      const groupedChildren = _.groupBy(typeChildrenNodes, child => child.type)
+      Object.keys(groupedChildren).forEach(groupChildrenKey => {
+        defaultNodeFields[_.camelCase(`children ${groupChildrenKey}`)] = {
+          type: new GraphQLList(
+            _.values(processedTypes).find(t => t.name === groupChildrenKey)
+              .nodeObjectType
+          ),
+          description: `The children of this node of type ${groupChildrenKey}`,
+          resolve(node, a, { path }) {
+            const filteredNodes = node.children
+              .map(id => getNode(id))
+              .filter(n => n.type === groupChildrenKey)
+            // Add dependencies for the path
+            filteredNodes.forEach(n =>
+              addPageDependency({ path, nodeId: n.id })
+            )
+            return filteredNodes
+          },
+        }
+      })
 
       const inferredFields = inferObjectStructureFromNodes({
         nodes: type.nodes,
