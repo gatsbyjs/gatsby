@@ -1,12 +1,13 @@
 {
-  "env": {
-    "development": {
-      "sourceMaps": "inline"
-    },
-    "production": {
-      "sourceMaps": false
-    }
-  },
+  "sourceMaps": true,
+  // "env": {
+  //   "development": {
+  //     "sourceMaps": "inline"
+  //   },
+  //   "production": {
+  //     "sourceMaps": false
+  //   }
+  // },
   "presets": [
     [
       "env",
