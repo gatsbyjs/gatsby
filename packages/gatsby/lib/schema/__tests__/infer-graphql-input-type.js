@@ -24,6 +24,10 @@ describe(`GraphQL Input args`, () => {
         title: `The world of dash and adventure`,
         blue: 100,
       },
+      anObjectArray: [
+        { aString: `some string`, aNumber: 2, aBoolean: true },
+        { aString: `some string`, aNumber: 2, anArray: [1, 2] },
+      ],
     },
     {
       name: `The Mad Wax`,
@@ -256,6 +260,32 @@ describe(`GraphQL Input args`, () => {
         expect(result.data.allNode.anArray[0].fieldValue).toEqual(`1`)
         expect(result.data.allNode.anArray[0].field).toEqual(`anArray`)
         expect(result.data.allNode.anArray[0].totalCount).toEqual(2)
+      })
+      .catch(err => expect(err).not.toBeDefined()))
+
+  it(`can query object arrays`, () =>
+    graphql(
+      schema,
+      `
+      {
+        allNode {
+          edges {
+            node {
+              anObjectArray {
+                aString
+                aNumber
+                aBoolean
+              }
+            }
+          }
+        }
+      }
+      `
+    )
+      .then(result => {
+        expect(result.errors).not.toBeDefined()
+
+        expect(result).toMatchSnapshot()
       })
       .catch(err => expect(err).not.toBeDefined()))
 })
