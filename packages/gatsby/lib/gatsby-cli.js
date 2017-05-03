@@ -6,7 +6,6 @@ const version = process.version
 const verDigit = Number(version.match(/\d+/)[0])
 
 if (verDigit < 4) {
-  // yurnalist also requires >= 4 so we use console.error here
   console.error(`Gatsby 1.0+ requires node.js v4 or higher (you have ${version}).
 Upgrade node to the latest stable release.`)
   process.exit()
