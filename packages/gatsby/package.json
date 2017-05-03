@@ -95,7 +95,6 @@
     "react-router-scroll": "^0.3.3",
     "redux": "^3.6.0",
     "relay-compiler": "^1.0.0-rc.3",
-    "relay-compiler-webpack-plugin": "^0.1.0",
     "remote-redux-devtools": "^0.5.7",
     "sift": "^3.2.6",
     "slash": "^1.0.0",
