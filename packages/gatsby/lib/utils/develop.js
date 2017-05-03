@@ -136,9 +136,7 @@ async function startServer(program) {
       if (e) {
         if (e.code === `EADDRINUSE`) {
           // eslint-disable-next-line max-len
-          console.log(
-            `Unable to start Gatsby on port ${program.port} as there's already a process listing on that port.`
-          )
+          console.log(`Unable to start Gatsby on port ${program.port} as there's already a process listing on that port.`)
         } else {
           console.log(e)
         }
@@ -149,9 +147,7 @@ async function startServer(program) {
           const opn = require(`opn`)
           opn(`http://${listener.address().address}:${listener.address().port}`)
         }
-        console.log(
-          `Listening at: http://${listener.address().address}:${listener.address().port}`
-        )
+        console.log(`Listening at: http://${listener.address().address}:${listener.address().port}`)
       }
     })
   })

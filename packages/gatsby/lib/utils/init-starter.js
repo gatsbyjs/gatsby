@@ -1,8 +1,8 @@
 /* @flow weak */
-import { exec, execSync } from 'child_process'
-import hostedGitInfo from 'hosted-git-info'
-import fs from 'fs-extra'
-import sysPath from 'path'
+import { exec, execSync } from "child_process"
+import hostedGitInfo from "hosted-git-info"
+import fs from "fs-extra"
+import sysPath from "path"
 
 let logger = console
 

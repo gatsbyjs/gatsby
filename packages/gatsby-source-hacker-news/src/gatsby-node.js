@@ -4,9 +4,7 @@ const url = require(`url`)
 const _ = require(`lodash`)
 
 const get = query => {
-  return axios.get(
-    `https://www.graphqlhub.com/graphql?query=${encodeURIComponent(query)}`
-  )
+  return axios.get(`https://www.graphqlhub.com/graphql?query=${encodeURIComponent(query)}`)
 }
 
 exports.sourceNodes = async ({
@@ -22,11 +20,8 @@ exports.sourceNodes = async ({
 
   // Do the initial fetch
   console.time(`fetch HN data`)
-  console.log(
-    `starting to fetch data from the Hacker News GraphQL API. Warning, this can take a long time e.g. 10-20 seconds`
-  )
-  const result = await get(
-    `
+  console.log(`starting to fetch data from the Hacker News GraphQL API. Warning, this can take a long time e.g. 10-20 seconds`)
+  const result = await get(`
 {
   hn {
     topStories(limit: 30) {
@@ -75,8 +70,7 @@ fragment commentsFragment on HackerNewsItem {
     id
   }
 }
-  `
-  )
+  `)
   console.timeEnd(`fetch HN data`)
 
   // Create top-story nodes.
@@ -120,8 +114,7 @@ fragment commentsFragment on HackerNewsItem {
     // Get content digest of node.
     const contentDigest = crypto
       .createHash(`md5`)
-      .update(JSON.stringify(storyNode))
-      .digest(`hex`)
+      .update(JSON.stringify(storyNode)).digest(`hex`)
 
     storyNode.contentDigest = contentDigest
 
@@ -146,9 +139,7 @@ fragment commentsFragment on HackerNewsItem {
         const nodeStr = JSON.stringify(commentNode)
 
         // Get content digest of comment node.
-        const contentDigest = crypto
-          .createHash(`md5`)
-          .update(nodeStr)
+        const contentDigest = crypto.createHash(`md5`).update(nodeStr)
           .digest(`hex`)
 
         commentNode.contentDigest = contentDigest

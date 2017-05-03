@@ -12,7 +12,7 @@ const moment = require(`moment`)
 const mime = require(`mime`)
 const isRelative = require(`is-relative`)
 const isRelativeUrl = require(`is-relative-url`)
-const { store, getNodes } = require(`../redux`)
+const { store, getNode, getNodes } = require(`../redux`)
 const { addPageDependency } = require(`../redux/actions/add-page-dependency`)
 const { extractFieldExamples } = require(`./data-tree-utils`)
 
@@ -167,6 +167,13 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
     //
     // First check for manual field => type mappings in the site's
     // gatsby-config.js
+    //
+    // Second if the field has a suffix of ___node. We use then the value
+    // (a node id) to find the node and use that node's type as the field.
+    //
+    // Third if the field is pointing to a file
+    //
+    // Finally our automatic inference of field value type.
     const fieldSelector = _.remove([nodes[0].type, selector, k]).join(`.`)
     if (mapping && _.includes(Object.keys(mapping), fieldSelector)) {
       const matchedTypes = types.filter(
@@ -176,6 +183,7 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
         console.log(`Couldn't find a matching node type for "${fieldSelector}"`)
         return
       }
+
       const findNode = (fieldValue, path) => {
         const linkedType = mapping[fieldSelector]
         const linkedNode = _.find(
@@ -187,6 +195,7 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
           return linkedNode
         }
       }
+
       if (_.isArray(v)) {
         inferredFields[k] = {
           type: new GraphQLList(matchedTypes[0].nodeObjectType),
@@ -214,9 +223,70 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
           },
         }
       }
+      // Check if the key ends with ___node.
+    } else if (_.includes(k, `___NODE`)) {
+      let value = v
+      if (_.isArray(value)) {
+        value = value[0]
+      }
+
+      const [fieldName, NODE, linkedField] = k.split(`___`)
+
+      const findNode = (value, path) => {
+        let linkedNode
+        // If the field doesn't link to the id, use that for searching.
+        if (linkedField) {
+          linkedNode = getNodes().find(n => n[linkedField] === value)
+          // Else the field is linking to the node's id, the default.
+        } else {
+          linkedNode = getNode(value)
+        }
+
+        if (linkedNode) {
+          if (path) {
+            addPageDependency({ path, nodeId: linkedNode.id })
+          }
+          return linkedNode
+        }
+      }
+
+      const linkedNode = findNode(value)
+      const field = types.find(type => type.name === linkedNode.type)
+
+      if (_.isArray(v)) {
+        inferredFields[fieldName] = {
+          type: new GraphQLList(field.nodeObjectType),
+          resolve: (node, a, b) => {
+            let fieldValue = node[k]
+
+            if (fieldValue) {
+              return fieldValue.map(value => findNode(value, b.path))
+            } else {
+              return null
+            }
+          },
+        }
+      } else {
+        inferredFields[fieldName] = {
+          type: field.nodeObjectType,
+          resolve: (node, a, b) => {
+            let fieldValue = node[k]
+
+            if (fieldValue) {
+              const result = findNode(fieldValue, b.path)
+              return result
+            } else {
+              return null
+            }
+          },
+        }
+      }
 
       // Look for fields that are pointing at a file — if the field has a known
       // extension then assume it should be a file field.
+      //
+      // TODO probably should just check if the referenced file exists
+      // only then turn this into a field field.
     } else if (
       nodes[0].type !== `File` &&
       _.isString(v) &&

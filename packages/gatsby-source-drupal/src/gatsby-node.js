@@ -97,15 +97,14 @@ exports.sourceNodes = async (
       type: makeTypeName(node.type),
       children: [],
       content: nodeStr,
-      author: result.data.data[i].relationships.uid.data.id,
+      author___NODE: result.data.data[i].relationships.uid.data.id,
       mediaType: `application/json`,
     }
 
     // Get content digest of node.
     const contentDigest = crypto
       .createHash(`md5`)
-      .update(JSON.stringify(gatsbyNode))
-      .digest(`hex`)
+      .update(JSON.stringify(gatsbyNode)).digest(`hex`)
 
     gatsbyNode.contentDigest = contentDigest
 
@@ -146,8 +145,7 @@ exports.sourceNodes = async (
             // Get content digest of node.
             const contentDigest = crypto
               .createHash(`md5`)
-              .update(JSON.stringify(gatsbyUser))
-              .digest(`hex`)
+              .update(JSON.stringify(gatsbyUser)).digest(`hex`)
 
             gatsbyUser.contentDigest = contentDigest
 
