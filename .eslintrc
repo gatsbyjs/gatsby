@@ -1,6 +1,7 @@
 {
   "extends": [
     "google",
+    "eslint:recommended",
     "plugin:flowtype/recommended",
     "plugin:react/recommended",
     "prettier",
@@ -9,7 +10,7 @@
   ],
   "plugins": [
     "flowtype",
-    "react",
+    "react"
   ],
   "parserOptions": {
     "ecmaVersion": 2016,
@@ -23,19 +24,38 @@
     "node": true
   },
   "rules": {
-    "valid-jsdoc": [0],
-    "require-jsdoc": [0],
-    "quotes": ["error", "backtick"],
-    "jsx-quotes": ["error", "prefer-double"],
-    "max-len": ["error", 80],
-    "semi": ["error", "never"],
-    "object-curly-spacing": ["error", "always"],
-    "comma-dangle": ["error", {
-      "arrays": "always-multiline",
-      "objects": "always-multiline",
-      "imports": "always-multiline",
-      "exports": "always-multiline",
-      "functions": "ignore",
-    }]
+    "no-console": "off",
+    "valid-jsdoc": "off",
+    "require-jsdoc": "off",
+    "quotes": [
+      "error",
+      "backtick"
+    ],
+    "jsx-quotes": [
+      "error",
+      "prefer-double"
+    ],
+    "max-len": [
+      "error",
+      80
+    ],
+    "semi": [
+      "error",
+      "never"
+    ],
+    "object-curly-spacing": [
+      "error",
+      "always"
+    ],
+    "comma-dangle": [
+      "error",
+      {
+        "arrays": "always-multiline",
+        "objects": "always-multiline",
+        "imports": "always-multiline",
+        "exports": "always-multiline",
+        "functions": "ignore"
+      }
+    ]
   }
 }
