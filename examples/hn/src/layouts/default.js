@@ -16,63 +16,63 @@ class DefaultLayout extends React.Component {
           cellSpacing={0}
           style={{
             borderWidth: 0,
-            backgroundColor: "#f6f6ef",
+            backgroundColor: `#f6f6ef`,
           }}
         >
           <tr>
-            <td style={{ backgroundColor: "#ff6600" }}>
+            <td style={{ backgroundColor: `#ff6600` }}>
               <table
-                border={"0"}
-                cellPadding={"0"}
+                border={`0`}
+                cellPadding={`0`}
                 cellSpacing={0}
                 style={{
                   borderWidth: 0,
                   borderSpacing: 0,
-                  width: "100%",
-                  padding: "2px",
+                  width: `100%`,
+                  padding: `2px`,
                   paddingBottom: 0,
                   marginBottom: -1, // Not sure where extra bottom padding is coming from.
                 }}
               >
                 <tr>
-                  <td style={{ width: "18px", paddingRight: "4px" }}>
+                  <td style={{ width: `18px`, paddingRight: `4px` }}>
                     <a href="http://www.ycombinator.com">
                       <img
                         src={y18Gif}
                         width="18px"
                         height="18px"
-                        style={{ border: "1px white solid" }}
+                        style={{ border: `1px white solid` }}
                       />
                     </a>
                   </td>
-                  <td style={{ lineHeight: "12pt", height: "10px" }}>
+                  <td style={{ lineHeight: `12pt`, height: `10px` }}>
                     <span className="pagetop">
                       <b className="hnname"><Link to="/">Hacker News </Link></b>
                       <a href="newest">new</a>
-                      {" "}
+                      {` `}
                       |
-                      {" "}
+                      {` `}
                       <a href="newcomments">comments</a>
-                      {" "}
+                      {` `}
                       |
-                      {" "}
+                      {` `}
                       <a href="show">show</a>
-                      {" "}
+                      {` `}
                       |
-                      {" "}
+                      {` `}
                       <a href="ask">ask</a>
-                      {" "}
+                      {` `}
                       |
-                      {" "}
+                      {` `}
                       <a href="jobs">jobs</a>
-                      {" "}
+                      {` `}
                       |
-                      {" "}
+                      {` `}
                       <a href="submit">submit</a>
-                      {" "}
+                      {` `}
                     </span>
                   </td>
-                  <td style={{ textAlign: "right", paddingRight: "4px" }}>
+                  <td style={{ textAlign: `right`, paddingRight: `4px` }}>
                     <span className="pagetop">
                       <a href="login?goto=news">login</a>
                     </span>
@@ -81,7 +81,7 @@ class DefaultLayout extends React.Component {
               </table>
             </td>
           </tr>
-          <tr style={{ height: "10px" }} />
+          <tr style={{ height: `10px` }} />
           <tr>
             <td>
               {this.props.children}
@@ -92,7 +92,7 @@ class DefaultLayout extends React.Component {
               <img src={sGif} height="10" width="0" />
               <table width="100%" cellSpacing="0" cellPadding="1">
                 <tr>
-                  <td style={{ backgroundColor: "#ff6600" }} />
+                  <td style={{ backgroundColor: `#ff6600` }} />
                 </tr>
               </table>
               <br />

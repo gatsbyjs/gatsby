@@ -1,7 +1,7 @@
-import React from 'react'
-import Link from 'gatsby-link'
+import React from "react"
+import Link from "gatsby-link"
 
-import { rhythm } from '../utils/typography'
+import { rhythm } from "../utils/typography"
 
 class DefaultLayout extends React.Component {
   render() {

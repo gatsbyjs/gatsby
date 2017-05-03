@@ -464,9 +464,10 @@ module.exports = async (
     },
     entry: entry(),
     debug: true,
-    // Certain "isomorphic" packages have different entry points for browser and server
-    // (see https://github.com/defunctzombie/package-browser-field-spec);
-    // setting the target tells webpack which file to include, ie. browser vs main.
+    // Certain "isomorphic" packages have different entry points for browser
+    // and server (see
+    // https://github.com/defunctzombie/package-browser-field-spec); setting
+    // the target tells webpack which file to include, ie. browser vs main.
     target: stage === `build-html` ? `node` : `web`,
     profile: stage === `production`,
     devtool: devtool(),

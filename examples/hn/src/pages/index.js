@@ -1,6 +1,6 @@
-import React from 'react'
+import React from "react"
 
-import StoryItem from '../components/story-item'
+import StoryItem from "../components/story-item"
 
 class Index extends React.Component {
   render() {

@@ -1,7 +1,7 @@
-import React from 'react'
-import Link from 'gatsby-link'
+import React from "react"
+import Link from "gatsby-link"
 
-import StoryComment from '../components/story-comment'
+import StoryComment from "../components/story-comment"
 
 class Story extends React.Component {
   render() {

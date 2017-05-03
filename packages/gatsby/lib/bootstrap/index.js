@@ -239,8 +239,7 @@ module.exports = async (program: any) => {
     }`
   ).join(`,`)
 
-  browserAPIRunner =
-    `var plugins = [${browserPluginsRequires}]\n${browserAPIRunner}`
+  browserAPIRunner = `var plugins = [${browserPluginsRequires}]\n${browserAPIRunner}`
 
   let sSRAPIRunner = fs.readFileSync(`${siteDir}/api-runner-ssr.js`, `utf-8`)
   const ssrPluginsRequires = ssrPlugins.map(
@@ -310,9 +309,7 @@ module.exports = async (program: any) => {
   return new Promise(resolve => {
     QueryRunner.isInitialPageQueryingDone(() => {
       apiRunnerNode(`generateSideEffects`).then(() => {
-        console.log(
-          `bootstrap finished, time since started: ${process.uptime()}`
-        )
+        console.log(`bootstrap finished, time since started: ${process.uptime()}`)
         resolve({ graphqlRunner })
       })
     })

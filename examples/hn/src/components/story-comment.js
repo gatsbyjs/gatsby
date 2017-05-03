@@ -1,6 +1,6 @@
-import React from 'react'
+import React from "react"
 
-import sGif from '../images/s.gif'
+import sGif from "../images/s.gif"
 
 class StoryComment extends React.Component {
   render() {
