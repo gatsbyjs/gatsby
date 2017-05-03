@@ -5,7 +5,6 @@ const pkg = require(`../package.json`)
 const argv = require(`yargs`).array(`packages`).argv
 const _ = require(`lodash`)
 const path = require(`path`)
-const report = require(`yurnalist`)
 
 const conf = new Configstore(pkg.name)
 
@@ -13,7 +12,7 @@ const fs = require(`fs-extra`)
 const havePackageJsonFile = fs.existsSync(`package.json`)
 
 if (!havePackageJsonFile) {
-  report.error(`Current folder must have a package.json file!`)
+  console.error(`Current folder must have a package.json file!`)
   process.exit()
 }
 
@@ -25,7 +24,7 @@ const packages = Object.keys({
 const gatsbyPackages = packages.filter(p => p.startsWith(`gatsby`))
 
 if (argv.setPathToRepo) {
-  report.info(`Saving path to your Gatsby repo`)
+  console.log(`Saving path to your Gatsby repo`)
   conf.set(`gatsby-location`, path.resolve(argv.setPathToRepo))
   process.exit()
 }
@@ -33,7 +32,7 @@ if (argv.setPathToRepo) {
 const gatsbyLocation = conf.get(`gatsby-location`)
 
 if (!gatsbyLocation) {
-  report.error(
+  console.error(
     `
 You haven't set the path yet to your cloned
 version of Gatsby. Do so now by running:
@@ -45,7 +44,7 @@ gatsby-dev --set-path-to-repo /path/to/my/cloned/version/gatsby
 }
 
 if (!argv.packages && _.isEmpty(gatsbyPackages)) {
-  report.error(
+  console.error(
     `
 You haven't got any gatsby dependencies into your current package.json
 
@@ -62,4 +61,4 @@ gatsby-dev will pick them up.
 }
 
 const watch = require(`./watch`)
-watch(gatsbyLocation, argv.packages || gatsbyPackages, argv.scanOnce)
+watch(gatsbyLocation, argv.packages || gatsbyPackages, argv)

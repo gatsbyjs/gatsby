@@ -4,12 +4,14 @@ const fs = require(`fs-extra`)
 const syspath = require(`path`)
 
 const ignoreRegs = [/[\/\\]node_modules[\/\\]/i, /\.git/i, /[\/\\]src[\/\\]/i]
+let numCopied = 0
 
 const debouncedQuit = _.debounce(() => {
+  console.log(`gatsby-dev copied ${numCopied} files`)
   process.exit()
 }, 500)
 
-function watch(root, packages, scanOnce) {
+function watch(root, packages, { scanOnce, quiet }) {
   packages.forEach(p => {
     const prefix = `${root}/packages/${p}`
     chokidar
@@ -28,8 +30,14 @@ function watch(root, packages, scanOnce) {
             syspath.relative(prefix, path)
           )
           fs.copy(path, newPath, err => {
-            if (err) console.error(err)
-            console.log(`copied ${path} to ${newPath}`)
+            if (err) {
+              return console.error(err)
+            }
+
+            numCopied += 1
+            if (!quiet) {
+              console.log(`copied ${path} to ${newPath}`)
+            }
           })
 
           if (scanOnce) {
