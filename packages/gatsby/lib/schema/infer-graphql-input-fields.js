@@ -8,11 +8,10 @@ const {
   GraphQLList,
   GraphQLEnumType,
   GraphQLNonNull,
-  GraphQLObjectType,
 } = require(`graphql`)
 const _ = require(`lodash`)
-const moment = require(`moment`)
 const typeOf = require(`type-of`)
+const createTypeName = require(`./create-type-name`)
 
 const {
   extractFieldExamples,
@@ -91,7 +90,7 @@ const inferGraphQLInputFields = (exports.inferGraphQLInputFields = (
 
       return {
         type: new GraphQLInputObjectType({
-          name: _.camelCase(`${namespace} ${selector} ${key}QueryList`),
+          name: createTypeName(`${namespace} ${selector} ${key}QueryList`),
           fields: {
             ...typeFields(headType),
             in: { type: new GraphQLList(inType) },
@@ -101,7 +100,7 @@ const inferGraphQLInputFields = (exports.inferGraphQLInputFields = (
     case `boolean`:
       return {
         type: new GraphQLInputObjectType({
-          name: _.camelCase(`${namespace} ${selector} ${key}QueryBoolean`),
+          name: createTypeName(`${namespace} ${selector} ${key}QueryBoolean`),
           fields: {
             ...typeFields(`boolean`),
           },
@@ -110,7 +109,7 @@ const inferGraphQLInputFields = (exports.inferGraphQLInputFields = (
     case `string`:
       return {
         type: new GraphQLInputObjectType({
-          name: _.camelCase(`${namespace} ${selector} ${key}QueryString`),
+          name: createTypeName(`${namespace} ${selector} ${key}QueryString`),
           fields: {
             ...typeFields(`string`),
           },
@@ -119,7 +118,7 @@ const inferGraphQLInputFields = (exports.inferGraphQLInputFields = (
     case `object`:
       return {
         type: new GraphQLInputObjectType({
-          name: _.camelCase(`${namespace} ${selector} ${key}InputObject`),
+          name: createTypeName(`${namespace} ${selector} ${key}InputObject`),
           fields: inferInputObjectStructureFromNodes(nodes, key, namespace),
         }),
       }
@@ -127,7 +126,7 @@ const inferGraphQLInputFields = (exports.inferGraphQLInputFields = (
       if (value % 1 === 0) {
         return {
           type: new GraphQLInputObjectType({
-            name: _.camelCase(`${namespace} ${selector} ${key}QueryNumber`),
+            name: createTypeName(`${namespace} ${selector} ${key}QueryNumber`),
             fields: {
               ...typeFields(`int`),
             },
@@ -136,7 +135,7 @@ const inferGraphQLInputFields = (exports.inferGraphQLInputFields = (
       } else {
         return {
           type: new GraphQLInputObjectType({
-            name: _.camelCase(`${namespace} ${selector} ${key}QueryFloat`),
+            name: createTypeName(`${namespace} ${selector} ${key}QueryFloat`),
             fields: {
               ...typeFields(`float`),
             },
