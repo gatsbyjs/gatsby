@@ -12,14 +12,22 @@ async function html(program: any) {
   const { graphqlRunner } = await bootstrap(program)
 
   console.log(`Generating CSS`)
-  await buildCSS(program).catch(err =>
+  await buildCSS(program).catch(err => {
+    console.log(``)
     console.log(`Generating CSS failed`, err)
-  )
+    console.log(``)
+    console.log(err)
+    process.exit(1)
+  })
 
   console.log(`Compiling production bundle.js`)
-  await buildProductionBundle(program).catch(err =>
+  await buildProductionBundle(program).catch(err => {
+    console.log(``)
     console.log(`Generating JS failed`, err)
-  )
+    console.log(``)
+    console.log(err)
+    process.exit(1)
+  })
 
   console.log(`Generating Static HTML`)
   // Write out pages data to file so it's available to the static-entry.js
@@ -28,9 +36,13 @@ async function html(program: any) {
     `${program.directory}/public/tmp-pages.json`,
     JSON.stringify(store.getState().pages)
   )
-  await buildHTML(program).catch(err =>
-    console.log(`Generating HTML failed`, err)
-  )
+  await buildHTML(program).catch(err => {
+    console.log(``)
+    console.log(`Generating HTML failed`)
+    console.log(``)
+    console.log(err)
+    process.exit(1)
+  })
 
   console.log(`Running postBuild plugins`)
   await apiRunnerNode(`postBuild`, { graphql: graphqlRunner })

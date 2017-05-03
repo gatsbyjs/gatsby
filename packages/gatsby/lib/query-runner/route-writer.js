@@ -31,10 +31,6 @@ const writeChildRoutes = () => {
 
   const genSplitChildRoute = (page, noPath = false) => {
     const pathName = pathChunkName(page.path)
-    const layoutName = layoutComponentChunkName(
-      program.directory,
-      page.component
-    )
     let pathStr = ``
     if (!noPath) {
       if (program.prefixLinks) {
@@ -53,7 +49,7 @@ const writeChildRoutes = () => {
               const data = require('./json/${page.jsonName}')
               cb(null, () => <Component {...nextState} {...data} />)
             }, '${pathName}')
-          }, '${layoutName}')
+          }, '${page.componentChunkName}')
         }
       },
     `
@@ -183,17 +179,15 @@ const writeChildRoutes = () => {
   // Close out object.
   rootRoute += `]}`
   splitRootRoute += `]}`
-  const componentsStr = pages
-    .map(page => {
-      return `class ${page.internalComponentName} extends React.Component {
+  const componentsStr = pages.map(page => {
+    return `class ${page.internalComponentName} extends React.Component {
           render () {
             const Component = preferDefault(require('${page.component}'))
             const data = require('./json/${page.jsonName}')
             return <Component {...this.props} {...data} />
           }
         }`
-    })
-    .join(`\n`)
+  }).join(`\n`)
 
   childRoutes = `
     import React from 'react'

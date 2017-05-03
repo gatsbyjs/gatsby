@@ -7,7 +7,7 @@ console.log(`bin/cli: time since started:`, process.uptime())
 
 // Improve Promise error handling. Maybe... what's the best
 // practice for this these days?
-global.Promise = require("bluebird")
+global.Promise = require(`bluebird`)
 Promise.onPossiblyUnhandledRejection(error => {
   throw error
 })
@@ -25,7 +25,8 @@ console.time(`time to load develop`)
 program
   .command(`develop`)
   .description(
-    `Start development server. Watches files and rebuilds and hot reloads if something changes`
+    `Start development server. Watches files and rebuilds and hot reloads ` +
+      `if something changes`
   ) // eslint-disable-line max-len
   .option(
     `-H, --host <url>`,
@@ -94,12 +95,10 @@ program
   })
 
 program.on(`--help`, () => {
-  console.log(
-    `To show subcommand help:
+  console.log(`To show subcommand help:
 
     gatsby [command] -h
-`
-  )
+`)
 })
 
 // If the user types an unknown sub-command, just display the help.

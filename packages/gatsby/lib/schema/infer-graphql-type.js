@@ -11,14 +11,46 @@ const _ = require(`lodash`)
 const moment = require(`moment`)
 const mime = require(`mime`)
 const isRelative = require(`is-relative`)
-  const isRelativeUrl = require(`is-relative-url`)
-const { store, getNodes } = require(`../redux`)
+const isRelativeUrl = require(`is-relative-url`)
+const { store, getNode, getNodes } = require(`../redux`)
 const { addPageDependency } = require(`../redux/actions/add-page-dependency`)
 const { extractFieldExamples } = require(`./data-tree-utils`)
-  
-const inferGraphQLType = ({ value, fieldName, ...otherArgs }) => {
+
+const seenNames = {}
+const createTypeName = name => {
+  const cameledName = _.camelCase(name)
+  if (seenNames[cameledName]) {
+    seenNames[cameledName] += 1
+    return `${cameledName}_${seenNames[cameledName]}`
+  } else {
+    seenNames[cameledName] = 1
+    return cameledName
+  }
+}
+
+const inferGraphQLType = ({ value, selector, fieldName, ...otherArgs }) => {
+  const newSelector = selector ? [selector, fieldName].join(`.`) : fieldName
   if (Array.isArray(value)) {
-    const headType = inferGraphQLType({ value: value[0], fieldName }).type
+    const headValue = value[0]
+    let headType
+    // If the array contains objects, than treat them as "nodes"
+    // and create an object type.
+    if (_.isObject(headValue)) {
+      headType = new GraphQLObjectType({
+        name: createTypeName(fieldName),
+        fields: inferObjectStructureFromNodes({
+          ...otherArgs,
+          selector: newSelector,
+        }),
+      })
+      // Else if the values are simple values, just infer their type.
+    } else {
+      headType = inferGraphQLType({
+        value: headValue,
+        fieldName,
+        ...otherArgs,
+      }).type
+    }
     return { type: new GraphQLList(headType) }
   }
 
@@ -90,10 +122,10 @@ const inferGraphQLType = ({ value, fieldName, ...otherArgs }) => {
     case `object`:
       return {
         type: new GraphQLObjectType({
-          name: _.camelCase(fieldName),
+          name: createTypeName(fieldName),
           fields: inferObjectStructureFromNodes({
-            selector: fieldName,
             ...otherArgs,
+            selector: newSelector,
           }),
         }),
       }
@@ -130,8 +162,18 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
   }
   const inferredFields = {}
   _.each(fieldExamples, (v, k) => {
-    // Check if field is pointing to custom type.
-    // First check field => type mappings in gatsby-config.js
+    // Several checks to see if a field is pointing to custom type
+    // before we try automatic inference.
+    //
+    // First check for manual field => type mappings in the site's
+    // gatsby-config.js
+    //
+    // Second if the field has a suffix of ___node. We use then the value
+    // (a node id) to find the node and use that node's type as the field.
+    //
+    // Third if the field is pointing to a file
+    //
+    // Finally our automatic inference of field value type.
     const fieldSelector = _.remove([nodes[0].type, selector, k]).join(`.`)
     if (mapping && _.includes(Object.keys(mapping), fieldSelector)) {
       const matchedTypes = types.filter(
@@ -141,6 +183,7 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
         console.log(`Couldn't find a matching node type for "${fieldSelector}"`)
         return
       }
+
       const findNode = (fieldValue, path) => {
         const linkedType = mapping[fieldSelector]
         const linkedNode = _.find(
@@ -152,6 +195,7 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
           return linkedNode
         }
       }
+
       if (_.isArray(v)) {
         inferredFields[k] = {
           type: new GraphQLList(matchedTypes[0].nodeObjectType),
@@ -179,26 +223,89 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
           },
         }
       }
+      // Check if the key ends with ___node.
+    } else if (_.includes(k, `___NODE`)) {
+      let value = v
+      if (_.isArray(value)) {
+        value = value[0]
+      }
 
-      // Special case fields that look like they're pointing at a file — if the
-      // field has a known extension then assume it should be a file field.
+      const [fieldName, NODE, linkedField] = k.split(`___`)
+
+      const findNode = (value, path) => {
+        let linkedNode
+        // If the field doesn't link to the id, use that for searching.
+        if (linkedField) {
+          linkedNode = getNodes().find(n => n[linkedField] === value)
+          // Else the field is linking to the node's id, the default.
+        } else {
+          linkedNode = getNode(value)
+        }
+
+        if (linkedNode) {
+          if (path) {
+            addPageDependency({ path, nodeId: linkedNode.id })
+          }
+          return linkedNode
+        }
+      }
+
+      const linkedNode = findNode(value)
+      const field = types.find(type => type.name === linkedNode.type)
+
+      if (_.isArray(v)) {
+        inferredFields[fieldName] = {
+          type: new GraphQLList(field.nodeObjectType),
+          resolve: (node, a, b) => {
+            let fieldValue = node[k]
+
+            if (fieldValue) {
+              return fieldValue.map(value => findNode(value, b.path))
+            } else {
+              return null
+            }
+          },
+        }
+      } else {
+        inferredFields[fieldName] = {
+          type: field.nodeObjectType,
+          resolve: (node, a, b) => {
+            let fieldValue = node[k]
+
+            if (fieldValue) {
+              const result = findNode(fieldValue, b.path)
+              return result
+            } else {
+              return null
+            }
+          },
+        }
+      }
+
+      // Look for fields that are pointing at a file — if the field has a known
+      // extension then assume it should be a file field.
+      //
+      // TODO probably should just check if the referenced file exists
+      // only then turn this into a field field.
     } else if (
       nodes[0].type !== `File` &&
       _.isString(v) &&
       mime.lookup(v) !== `application/octet-stream` &&
-      mime.lookup(v) !== `application/x-msdownload` && // domains ending with .com
+      // domains ending with .com
+      mime.lookup(v) !== `application/x-msdownload` &&
       isRelative(v) &&
       isRelativeUrl(v)
     ) {
-      console.log(k, v, isRelative(v))
       const fileNodes = types.filter(type => type.name === `File`)
       if (fileNodes && fileNodes.length > 0) {
         inferredFields[k] = fileNodes[0].field
       }
+      // Else do our automatic inference from the data.
     } else {
       inferredFields[k] = inferGraphQLType({
         value: v,
         fieldName: k,
+        selector,
         nodes,
         types,
         allNodes: getNodes(),

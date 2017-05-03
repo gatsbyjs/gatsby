@@ -56,6 +56,7 @@
     "hapi": "^8.5.1",
     "highlight.js": "^9.8.0",
     "history": "^2.1.2",
+    "hosted-git-info": "^2.4.2",
     "invariant": "^2.2.2",
     "is-relative": "^0.2.1",
     "is-relative-url": "^2.0.0",

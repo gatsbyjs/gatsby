@@ -229,27 +229,21 @@ module.exports = async (program: any) => {
     `${siteDir}/api-runner-browser.js`,
     `utf-8`
   )
-  const browserPluginsRequires = browserPlugins
-    .map(
-      plugin =>
-        `{
+  const browserPluginsRequires = browserPlugins.map(
+    plugin => `{
       plugin: require('${plugin.resolve}'),
       options: ${JSON.stringify(plugin.options)},
     }`
-    )
-    .join(`,`)
+  ).join(`,`)
   browserAPIRunner = `var plugins = [${browserPluginsRequires}]\n${browserAPIRunner}`
 
   let sSRAPIRunner = fs.readFileSync(`${siteDir}/api-runner-ssr.js`, `utf-8`)
-  const ssrPluginsRequires = ssrPlugins
-    .map(
-      plugin =>
-        `{
+  const ssrPluginsRequires = ssrPlugins.map(
+    plugin => `{
       plugin: require('${plugin.resolve}'),
       options: ${JSON.stringify(plugin.options)},
     }`
-    )
-    .join(`,`)
+  ).join(`,`)
   sSRAPIRunner = `var plugins = [${ssrPluginsRequires}]\n${sSRAPIRunner}`
 
   fs.writeFileSync(
@@ -311,9 +305,7 @@ module.exports = async (program: any) => {
   return new Promise(resolve => {
     isInitialPageQueryingDone(() => {
       apiRunnerNode(`generateSideEffects`).then(() => {
-        console.log(
-          `bootstrap finished, time since started: ${process.uptime()}`
-        )
+        console.log(`bootstrap finished, time since started: ${process.uptime()}`)
 
         resolve({ graphqlRunner })
       })

@@ -51,7 +51,7 @@ const saveState = _.debounce(state => {
     `${process.cwd()}/.cache/redux-state.json`,
     JSON.stringify(pickedState, null, 2),
     () => {
-      console.log("---saved redux state")
+      console.log(`---saved redux state`)
     }
   )
 }, 1000)

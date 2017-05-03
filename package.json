@@ -13,6 +13,7 @@
     "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.24.1",
     "babel-runtime": "^6.23.0",
+    "create-react-class": "^15.5.2",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^14.1.0",
     "eslint-config-google": "^0.7.1",
@@ -28,8 +29,9 @@
     "iflow-lodash": "^1.1.24",
     "iflow-react-router": "^1.2.1",
     "jest": "^19.0.2",
-    "lerna": "^2.0.0-rc.3",
+    "lerna": "^2.0.0-rc.4",
     "prettier-eslint-cli": "^3.4.2",
+    "prop-types": "^15.5.8",
     "purdy": "^2.2.1",
     "remotedev-server": "^0.2.2",
     "rimraf": "^2.6.1"
@@ -47,6 +49,10 @@
       "/dist/",
       "/node_modules/"
     ],
+    "moduleDirectories": [
+      "node_modules",
+      "<rootDir>/node_modules/"
+    ],
     "notify": true
   },
   "private": true,
@@ -60,7 +66,8 @@
     "format-gatsby": "prettier-eslint --write \"packages/gatsby/lib/**/*.js\"",
     "format-www": "prettier-eslint --write \"www/src/**/*.js\"",
     "format-examples": "prettier-eslint --write \"examples/src/**/*.js\"",
-    "format": "npm run format-packages && npm run format-gatsby && npm run format-www && npm run format-examples",
+    "format-scripts": "prettier-eslint --write \"scripts/**/*.js\"",
+    "format": "npm run format-packages && npm run format-gatsby && npm run format-www && npm run format-examples && npm run format-scripts",
     "publish-canary": "lerna run build; lerna publish --canary --yes",
     "publish-next": "lerna run build; lerna publish --npm-tag=next",
     "remotedev": "remotedev --hostname=localhost --port=19999",

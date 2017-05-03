@@ -14,6 +14,20 @@ test(`Infers graphql type from array of nodes`, () => {
       hair: 1,
       date: `1012-11-01`,
       anArray: [1, 2, 3, 4],
+      anObjectArray: [
+        { aString: `some string`, aNumber: 2, aBoolean: true },
+        { aString: `some string`, aNumber: 2, anArray: [1, 2] },
+      ],
+      deepObject: {
+        level: 1,
+        deepObject: {
+          level: 2,
+          deepObject: {
+            level: 3,
+          },
+        },
+      },
+      aBoolean: true,
       externalUrl: `https://example.com/awesome.jpg`,
       domain: `pizza.com`,
       frontmatter: {
@@ -66,6 +80,22 @@ test(`Infers graphql type from array of nodes`, () => {
           listNode {
             hair,
             anArray,
+            anObjectArray {
+              aString,
+              aNumber,
+              aBoolean,
+              anArray
+            },
+            deepObject {
+              level
+              deepObject {
+                level
+                deepObject {
+                  level
+                }
+              }
+            }
+            aBoolean,
             externalUrl,
             domain,
             date(formatString: "YYYY"),
@@ -83,6 +113,30 @@ test(`Infers graphql type from array of nodes`, () => {
           {
             hair: 1,
             anArray: [1, 2, 3, 4],
+            anObjectArray: [
+              {
+                aString: `some string`,
+                aNumber: 2,
+                aBoolean: true,
+                anArray: null,
+              },
+              {
+                aString: `some string`,
+                aNumber: 2,
+                aBoolean: null,
+                anArray: [1, 2],
+              },
+            ],
+            deepObject: {
+              level: 1,
+              deepObject: {
+                level: 2,
+                deepObject: {
+                  level: 3,
+                },
+              },
+            },
+            aBoolean: true,
             externalUrl: `https://example.com/awesome.jpg`,
             domain: `pizza.com`,
             date: `1012`,
@@ -94,6 +148,9 @@ test(`Infers graphql type from array of nodes`, () => {
           {
             hair: 2,
             anArray: [1, 2, 5, 4],
+            anObjectArray: null,
+            deepObject: null,
+            aBoolean: null,
             externalUrl: null,
             domain: null,
             date: `1984`,

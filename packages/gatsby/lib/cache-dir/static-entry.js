@@ -78,6 +78,7 @@ module.exports = (locals, callback) => {
         } catch (e) {
           // ignore
         }
+
         const dascripts = [
           `commons`,
           `app`,
@@ -124,10 +125,8 @@ module.exports = (locals, callback) => {
         const html = `<!DOCTYPE html>\n ${renderToStaticMarkup(<Html {...bodyRenderProps} headComponents={headComponents} postBodyComponents={postBodyComponents} body={body} {...renderProps} />)}`
         callback(null, html)
       } else {
-        console.log(
-          `Couldn't match ${locals.path} against your routes. This
-      should NEVER happen.`
-        )
+        console.log(`Couldn't match ${locals.path} against your routes. This
+      should NEVER happen.`)
         callback(null, `FAIL ALERT`)
       }
     }

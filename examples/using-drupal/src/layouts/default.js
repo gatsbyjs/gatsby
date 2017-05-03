@@ -10,6 +10,7 @@ class DefaultLayout extends React.Component {
         style={{
           margin: `0 auto`,
           marginTop: rhythm(1.5),
+          marginBottom: rhythm(1.5),
           maxWidth: 650,
           paddingLeft: rhythm(3 / 4),
           paddingRight: rhythm(3 / 4),
@@ -22,13 +23,20 @@ class DefaultLayout extends React.Component {
         </Link>
         {this.props.children}
         <hr />
-        <h3 style={{ marginTop: rhythm(2) }}>
-          The Drupal site that the data is sourced from can be found at
+        <p>
+          The src for this website is at
+          {" "}
+          <a href="https://github.com/gatsbyjs/gatsby/tree/1.0/examples/using-drupal">
+            https://github.com/gatsbyjs/gatsby/tree/1.0/examples/using-drupal
+          </a>
+        </p>
+        <p>
+          The Drupal site that's providing the data for this site is at
           {" "}
           <a href="https://dev-gatsbyjs-d8.pantheonsite.io/">
             https://dev-gatsbyjs-d8.pantheonsite.io/
           </a>
-        </h3>
+        </p>
       </div>
     )
   }

@@ -47,9 +47,8 @@ actions.upsertPage = (page, plugin = ``) => {
 actions.updateNode = (node, plugin = ``) => {
   if (!_.isObject(node)) {
     return console.log(
-      chalk.bold.red(
-        `The node passed to the "updateNode" action creator must be an object`
-      )
+      chalk.bold
+        .red(`The node passed to the "updateNode" action creator must be an object`)
     )
   }
   const result = Joi.validate(node, joiSchemas.nodeSchema)
@@ -94,9 +93,8 @@ actions.touchNode = (nodeId, plugin = ``) => {
 actions.createNode = (node, plugin = ``) => {
   if (!_.isObject(node)) {
     return console.log(
-      chalk.bold.red(
-        `The node passed to the "createNode" action creator must be an object`
-      )
+      chalk.bold
+        .red(`The node passed to the "createNode" action creator must be an object`)
     )
   }
   const result = Joi.validate(node, joiSchemas.nodeSchema)

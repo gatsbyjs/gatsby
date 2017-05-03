@@ -83,8 +83,8 @@ class Index extends React.Component {
             }}
           >
             <img
-              src={this.props.data.allPosts.edges[0].node.avatar}
-              alt={this.props.data.allPosts.edges[0].node.username}
+              src={this.props.data.user.edges[0].node.avatar}
+              alt={this.props.data.user.edges[0].node.username}
               css={{
                 display: `block`,
                 margin: `0 auto`,
@@ -211,11 +211,10 @@ export default Index
 
 export const pageQuery = `
 query allImages {
+  user: allPosts(limit: 1) { edges { node { avatar, username }}}
   allPosts {
     edges {
       node {
-        username
-        avatar
         likes
         id
         text
