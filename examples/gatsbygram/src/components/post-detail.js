@@ -19,7 +19,7 @@ class PostDetail extends React.Component {
       text,
       avatar,
     } = this.props.post
-    const { big } = image.children[0]
+    const { big } = image.childImageSharp
 
     const UserBar = () => (
       <div

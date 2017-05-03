@@ -15,12 +15,12 @@
     "babel-cli": "^6.24.1"
   },
   "bin": {
-    "gatsby-dev": "./bin/gatsby-dev"
+    "gatsby-dev": "dist/index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src --out-dir .",
-    "watch": "babel -w src --out-dir ."
+    "build": "babel src --out-dir dist --presets es2015",
+    "watch": "babel -w src --out-dir dist --presets es2015"
   },
   "keywords": [
     "gatsby"

@@ -6,7 +6,7 @@ class PostTemplate extends React.Component {
     return (
       // PostDetail is used for this detail page and
       // also in the modal.
-      <PostDetail post={this.props.data.posts} />
+      <PostDetail post={this.props.data.postsJson} />
     )
   }
 }
@@ -20,9 +20,9 @@ export default PostTemplate
 // All GraphQL queries in Gatsby are run at build-time and
 // loaded as plain JSON files so have minimal client cost.
 export const pageQuery = `
-  query PostPage($id: String!) {
+  query PostPageJson($id: String!) {
     # Select the post which equals this id.
-    posts(id: { eq: $id }) {
+    postsJson(id: { eq: $id }) {
       # Specify the fields from the post we need.
       username
       avatar
@@ -36,17 +36,15 @@ export const pageQuery = `
       # for the client.
       weeksAgo: time(difference: "weeks")
       image {
-        children {
-          ... on ImageSharp {
-            # Here we query for *multiple* image thumbnails to be
-            # created. So with no effort on our part, 100s of
-            # thumbnails are created. This makes iterating on
-            # designs effortless as we simply change the args
-            # for the query and we get new thumbnails.
-            big: responsiveSizes(maxWidth: 640) {
-              src
-              srcSet
-            }
+        childImageSharp {
+          # Here we query for *multiple* image thumbnails to be
+          # created. So with no effort on our part, 100s of
+          # thumbnails are created. This makes iterating on
+          # designs effortless as we simply change the args
+          # for the query and we get new thumbnails.
+          big: responsiveSizes(maxWidth: 640) {
+            src
+            srcSet
           }
         }
       }

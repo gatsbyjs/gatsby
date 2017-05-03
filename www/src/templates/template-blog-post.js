@@ -72,7 +72,7 @@ const BlogPostTemplate = React.createClass({
             },
             {
               name: `og:image`,
-              content: post.frontmatter.image.children[0].resize.src,
+              content: post.frontmatter.image.childImageSharp.resize.src,
             },
             {
               name: `og:type`,
@@ -118,12 +118,12 @@ const BlogPostTemplate = React.createClass({
           >
             <img
               src={
-                post.frontmatter.author.avatar.children[0].responsiveResolution
-                  .src
+                post.frontmatter.author.avatar.childImageSharp
+                  .responsiveResolution.src
               }
               srcSet={
-                post.frontmatter.author.avatar.children[0].responsiveResolution
-                  .srcSet
+                post.frontmatter.author.avatar.childImageSharp
+                  .responsiveResolution.srcSet
               }
               css={{
                 height: rhythm(2.75),
@@ -191,11 +191,9 @@ export const pageQuery = `
         date(formatString: "MMM D, YYYY")
         rawDate: date
         image {
-          children {
-            ... on ImageSharp {
-              resize(width: 1500) {
-                src
-              }
+          childImageSharp {
+            resize(width: 1500) {
+              src
             }
           }
         }
@@ -204,12 +202,10 @@ export const pageQuery = `
           bio
           twitter
           avatar {
-            children {
-              ... on ImageSharp {
-                responsiveResolution(width: 75, height: 75, quality: 75) {
-                  src
-                  srcSet
-                }
+            childImageSharp {
+              responsiveResolution(width: 75, height: 75, quality: 75) {
+                src
+                srcSet
               }
             }
           }
