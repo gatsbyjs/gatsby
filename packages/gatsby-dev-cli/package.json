@@ -5,8 +5,7 @@
     "fs-extra": "^2.1.2",
     "is-absolute": "^0.2.6",
     "lodash": "^4.17.4",
-    "yargs": "^7.0.2",
-    "yurnalist": "^0.1.6"
+    "yargs": "^7.0.2"
   },
   "name": "gatsby-dev-cli",
   "version": "1.0.0-alpha13",
