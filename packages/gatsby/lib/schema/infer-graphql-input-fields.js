@@ -8,6 +8,7 @@ const {
   GraphQLList,
   GraphQLEnumType,
   GraphQLNonNull,
+  GraphQLObjectType,
 } = require(`graphql`)
 const _ = require(`lodash`)
 const moment = require(`moment`)
@@ -54,10 +55,11 @@ const inferGraphQLInputFields = (exports.inferGraphQLInputFields = (
 ) => {
   switch (typeOf(value)) {
     case `array`:
-      let headType = typeOf(value[0])
+      const headValue = value[0]
+      let headType = typeOf(headValue)
       // Check if headType is a number.
       if (headType === `number`) {
-        if (value[0] % 1 === 0) {
+        if (headValue % 1 === 0) {
           headType = `int`
         } else {
           headType = `float`
@@ -78,6 +80,12 @@ const inferGraphQLInputFields = (exports.inferGraphQLInputFields = (
           break
         case `boolean`:
           inType = GraphQLBoolean
+          break
+        case `object`:
+          inType = inferGraphQLInputFields(headValue, key, nodes).type
+          break
+        case `array`:
+          inType = inferGraphQLInputFields(headValue, key, nodes).type
           break
       }
 
