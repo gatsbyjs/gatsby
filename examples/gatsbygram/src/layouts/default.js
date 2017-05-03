@@ -1,19 +1,27 @@
-import React from "react"
-import CameraIcon from "react-icons/lib/fa/camera-retro"
-import Link from "gatsby-link"
+import * as PropTypes from 'prop-types'
+import React from 'react'
+import CameraIcon from 'react-icons/lib/fa/camera-retro'
+import Link from 'gatsby-link'
 
 // Load the css for the Space Mono font.
-import "typeface-space-mono"
+import 'typeface-space-mono'
 
-import { rhythm, scale } from "../utils/typography"
-import presets from "../utils/presets"
-import Modal from "../components/modal"
+import { rhythm, scale } from '../utils/typography'
+import presets from '../utils/presets'
+import Modal from '../components/modal'
 
 class DefaultLayout extends React.Component {
+  static propTypes = {
+    location: PropTypes.object.isRequired,
+    children: PropTypes.node,
+  }
+  static childContextTypes = {
+    setPosts: PropTypes.func,
+  }
   getChildContext() {
     return {
-      setEdges: edges => {
-        this.edges = edges
+      setPosts: posts => {
+        this.posts = posts
       },
     }
   }
@@ -146,17 +154,13 @@ class DefaultLayout extends React.Component {
           {isModal ? this.modalBackgroundChildren : this.props.children}
 
           {isModal &&
-            <Modal isOpen={true} edges={this.edges} location={location}>
+            <Modal isOpen={true} posts={this.posts} location={location}>
               {this.props.children}
             </Modal>}
         </div>
       </div>
     )
   }
-}
-
-DefaultLayout.childContextTypes = {
-  setEdges: React.PropTypes.func,
 }
 
 export default DefaultLayout

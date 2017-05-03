@@ -1,9 +1,11 @@
-import React from "react"
-import chunk from "lodash/chunk"
+import * as PropTypes from 'prop-types'
+import chunk from 'lodash/chunk'
+import React from 'react'
 
-import { rhythm, scale } from "../utils/typography"
-import presets from "../utils/presets"
-import Post from "../components/post"
+import { rhythm, scale } from '../utils/typography'
+import presets from '../utils/presets'
+import Avatar from '../components/Avatar'
+import Post from '../components/post'
 
 // This would normally be in a Redux store or some other global data store.
 if (typeof window !== `undefined`) {
@@ -11,6 +13,17 @@ if (typeof window !== `undefined`) {
 }
 
 class Index extends React.Component {
+  static propTypes = {
+    location: PropTypes.object.isRequired,
+    data: PropTypes.shape({
+      user: PropTypes.object,
+      allPosts: PropTypes.object,
+    }),
+  }
+  static contextTypes = {
+    setPosts: PropTypes.func,
+  }
+
   constructor() {
     super()
     let postsToShow = 12
@@ -51,8 +64,14 @@ class Index extends React.Component {
   }
 
   render() {
-    console.log(this.props)
-    this.context.setEdges(this.props.data.allPosts.edges)
+    let { allPosts, user } = this.props.data
+
+    const posts = allPosts.edges.map(e => e.node)
+
+    this.context.setPosts(posts)
+
+    user = user.edges[0].node
+
     return (
       <div
         css={{
@@ -82,29 +101,7 @@ class Index extends React.Component {
               flexShrink: 0,
             }}
           >
-            <img
-              src={this.props.data.user.edges[0].node.avatar}
-              alt={this.props.data.user.edges[0].node.username}
-              css={{
-                display: `block`,
-                margin: `0 auto`,
-                borderRadius: `100%`,
-                width: rhythm(2),
-                height: rhythm(2),
-                [`@media (min-width: 460px)`]: {
-                  width: rhythm(3),
-                  height: rhythm(3),
-                },
-                [`@media (min-width: 525px)`]: {
-                  width: rhythm(4),
-                  height: rhythm(4),
-                },
-                [`@media (min-width: 600px)`]: {
-                  width: `inherit`,
-                  height: `inherit`,
-                },
-              }}
-            />
+            <Avatar user={user} />
           </div>
           <div
             css={{
@@ -122,19 +119,16 @@ class Index extends React.Component {
                 fontWeight: `normal`,
               }}
             >
-              {this.props.data.allPosts.edges[0].node.username}
+              {user.username}
             </h3>
             <p>
-              <strong>{this.props.data.allPosts.edges.length}</strong> posts
+              <strong>{posts.length}</strong> posts
               <strong css={{ marginLeft: rhythm(1) }}>192k</strong> followers
             </p>
           </div>
         </div>
         {/* posts */}
-        {chunk(
-          this.props.data.allPosts.edges.slice(0, this.state.postsToShow),
-          3
-        ).map(chunk => {
+        {chunk(posts.slice(0, this.state.postsToShow), 3).map(chunk => {
           return (
             <div
               css={{
@@ -148,11 +142,10 @@ class Index extends React.Component {
                 },
               }}
             >
-              {chunk.map(edge => (
+              {chunk.map(node => (
                 <Post
-                  key={edge.node.id}
-                  post={edge.node}
-                  edges={this.props.data.allPosts.edges}
+                  key={node.id}
+                  post={node}
                   location={this.props.location}
                   onClick={post => this.setState({ activePost: post })}
                 />
@@ -178,7 +171,6 @@ class Index extends React.Component {
               marginTop: rhythm(0.5),
               [presets.Tablet]: {
                 borderRadius: `100%`,
-                width: `default`,
                 margin: `0 auto`,
                 marginBottom: rhythm(1.5),
                 marginTop: rhythm(1.5),
@@ -203,38 +195,28 @@ class Index extends React.Component {
   }
 }
 
-Index.contextTypes = {
-  setEdges: React.PropTypes.func,
-}
-
 export default Index
 
-export const pageQuery = `
-query allImages {
-  user: allPosts(limit: 1) { edges { node { avatar, username }}}
-  allPosts {
-    edges {
-      node {
-        likes
-        id
-        text
-        weeksAgo: time(difference: "weeks")
-        image {
-          children {
-            ... on ImageSharp {
-              small: responsiveSizes(maxWidth: 292, maxHeight: 292) {
-                src
-                srcSet
-              }
-              big: responsiveSizes(maxWidth: 640, maxHeight: 640) {
-                src
-                srcSet
-              }
-            }
-          }
+export const pageQuery = graphql`
+  query allImages {
+    user: allPosts(limit: 1) {
+      edges {
+        node {
+          username
+          ...Avatar_user
+        }
+      }
+    }
+    allPosts {
+      edges {
+        node {
+          id
+          text
+          weeksAgo: time(difference: "weeks")
+          ...Post_details
+          ...Modal_posts
         }
       }
     }
   }
-}
 `

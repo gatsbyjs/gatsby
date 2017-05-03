@@ -1,31 +1,37 @@
-import React from "react"
-import Modal from "react-modal"
-import browserHistory from "react-router/lib/browserHistory"
-import CaretRight from "react-icons/lib/fa/caret-right"
-import CaretLeft from "react-icons/lib/fa/caret-left"
-import Close from "react-icons/lib/md/close"
-import findIndex from "lodash/findIndex"
-import mousetrap from "mousetrap"
+import React from 'react'
+import Modal from 'react-modal'
+import browserHistory from 'react-router/lib/browserHistory'
+import CaretRight from 'react-icons/lib/fa/caret-right'
+import CaretLeft from 'react-icons/lib/fa/caret-left'
+import Close from 'react-icons/lib/md/close'
+import findIndex from 'lodash/findIndex'
+import mousetrap from 'mousetrap'
 
-import { rhythm, scale } from "../utils/typography"
+import { rhythm } from '../utils/typography'
 
 class GatsbyGramModal extends React.Component {
+  static propTypes = {
+    isOpen: React.PropTypes.bool,
+    location: React.PropTypes.object.isRequired,
+    posts: React.PropTypes.array.isRequired,
+  }
+
   componentDidMount() {
-    mousetrap.bind("left", () => this.previous())
-    mousetrap.bind("right", () => this.next())
-    mousetrap.bind("spacebar", () => this.next())
+    mousetrap.bind(`left`, () => this.previous())
+    mousetrap.bind(`right`, () => this.next())
+    mousetrap.bind(`spacebar`, () => this.next())
   }
 
   componentWillUnmount() {
-    mousetrap.unbind("left")
-    mousetrap.unbind("right")
-    mousetrap.unbind("spacebar")
+    mousetrap.unbind(`left`)
+    mousetrap.unbind(`right`)
+    mousetrap.unbind(`spacebar`)
   }
 
   findCurrentIndex() {
     let index
-    index = findIndex(this.props.edges, edge => {
-      return edge.node.id === this.props.location.pathname.split(`/`)[1]
+    index = findIndex(this.props.posts, post => {
+      return post.id === this.props.location.pathname.split(`/`)[1]
     })
 
     return index
@@ -37,15 +43,15 @@ class GatsbyGramModal extends React.Component {
     }
     const currentIndex = this.findCurrentIndex()
     if (currentIndex || currentIndex === 0) {
-      const edges = this.props.edges
+      const posts = this.props.posts
       let nextPost
       // Wrap around if at end.
-      if (currentIndex + 1 === edges.length) {
-        nextPost = edges[0]
+      if (currentIndex + 1 === posts.length) {
+        nextPost = posts[0]
       } else {
-        nextPost = edges[currentIndex + 1]
+        nextPost = posts[currentIndex + 1]
       }
-      browserHistory.push(`/${nextPost.node.id}/`)
+      browserHistory.push(`/${nextPost.id}/`)
     }
   }
 
@@ -55,15 +61,15 @@ class GatsbyGramModal extends React.Component {
     }
     const currentIndex = this.findCurrentIndex()
     if (currentIndex || currentIndex === 0) {
-      const edges = this.props.edges
+      const posts = this.props.posts
       let previousPost
       // Wrap around if at start.
       if (currentIndex === 0) {
-        previousPost = edges.slice(-1)[0]
+        previousPost = posts.slice(-1)[0]
       } else {
-        previousPost = edges[currentIndex - 1]
+        previousPost = posts[currentIndex - 1]
       }
-      browserHistory.push(`/${previousPost.node.id}/`)
+      browserHistory.push(`/${previousPost.id}/`)
     }
   }
 
@@ -74,15 +80,15 @@ class GatsbyGramModal extends React.Component {
         onRequestClose={() => browserHistory.push(`/`)}
         style={{
           overlay: {
-            position: "fixed",
+            position: `fixed`,
             top: 0,
             left: 0,
             right: 0,
             bottom: 0,
-            backgroundColor: "rgba(0, 0, 0, 0.75)",
+            backgroundColor: `rgba(0, 0, 0, 0.75)`,
           },
           content: {
-            position: "absolute",
+            position: `absolute`,
             border: `none`,
             background: `none`,
             padding: 0,
@@ -90,8 +96,8 @@ class GatsbyGramModal extends React.Component {
             bottom: 0,
             right: 0,
             left: 0,
-            overflow: "auto",
-            WebkitOverflowScrolling: "touch",
+            overflow: `auto`,
+            WebkitOverflowScrolling: `touch`,
           },
         }}
         contentLabel="Modal"
@@ -152,3 +158,10 @@ class GatsbyGramModal extends React.Component {
 }
 
 export default GatsbyGramModal
+
+export const modalFragment = graphql`
+  fragment Modal_posts on Posts {
+    id
+  }
+
+`

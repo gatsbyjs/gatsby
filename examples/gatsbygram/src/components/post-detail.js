@@ -1,8 +1,7 @@
-import React from "react"
-import HeartIcon from "react-icons/lib/fa/heart"
+import React from 'react'
 
-import presets from "../utils/presets"
-import typography, { rhythm, scale } from "../utils/typography"
+import presets from '../utils/presets'
+import typography, { rhythm, scale } from '../utils/typography'
 
 class PostDetail extends React.Component {
   constructor() {
@@ -19,6 +18,7 @@ class PostDetail extends React.Component {
       text,
       avatar,
     } = this.props.post
+
     const { big } = image.children[0]
 
     const UserBar = () => (
@@ -191,3 +191,35 @@ class PostDetail extends React.Component {
 }
 
 export default PostDetail
+
+export const postDetailFragment = graphql`
+  fragment PostDetail_details on Posts {
+    # Specify the fields from the post we need.
+    username
+    avatar
+    likes
+    id
+    text
+    # Date fields have special arguments. This one computes
+    # how many weeks have passed since the post was created.
+    # All calculations like this (like all GraphQL query
+    # activity) happens at build-time! So has minimal cost
+    # for the client.
+    weeksAgo: time(difference: "weeks")
+    image {
+      children {
+        ... on ImageSharp {
+          # Here we query for *multiple* image thumbnails to be
+          # created. So with no effort on our part, 100s of
+          # thumbnails are created. This makes iterating on
+          # designs effortless as we simply change the args
+          # for the query and we get new thumbnails.
+          big: responsiveSizes(maxWidth: 640) {
+            src
+            srcSet
+          }
+        }
+      }
+    }
+  }
+`
