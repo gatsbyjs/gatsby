@@ -18,18 +18,7 @@ const nodePath = require(`path`)
 const { store, getNode, getNodes } = require(`../redux`)
 const { addPageDependency } = require(`../redux/actions/add-page-dependency`)
 const { extractFieldExamples } = require(`./data-tree-utils`)
-
-const seenNames = {}
-const createTypeName = name => {
-  const cameledName = _.camelCase(name)
-  if (seenNames[cameledName]) {
-    seenNames[cameledName] += 1
-    return `${cameledName}_${seenNames[cameledName]}`
-  } else {
-    seenNames[cameledName] = 1
-    return cameledName
-  }
-}
+const createTypeName = require(`./create-type-name`)
 
 const inferGraphQLType = ({ value, selector, fieldName, ...otherArgs }) => {
   const newSelector = selector ? [selector, fieldName].join(`.`) : fieldName
