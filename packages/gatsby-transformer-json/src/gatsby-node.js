@@ -33,7 +33,8 @@ async function onNodeCreate({ node, boundActionCreators, loadNodeContent }) {
       parent: node.id,
       // TODO make choosing the "type" a lot smarter. This assumes
       // the parent node is a file.
-      type: _.capitalize(node.name),
+      // PascalCase
+      type: _.upperFirst(_.camelCase(`${node.name} Json`)),
       children: [],
       content: objStr,
     }
