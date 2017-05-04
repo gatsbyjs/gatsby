@@ -18,7 +18,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     // from static data that you can run queries against.
     //
     // Post is a data node type derived from data/posts.json
-    // which is created when scrapping Instagram. “allPosts”
+    // which is created when scrapping Instagram. “allPostsJson”
     // is a "connection" (a GraphQL convention for accessing
     // a list of nodes) gives us an easy way to query all
     // Post nodes.

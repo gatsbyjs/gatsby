@@ -156,9 +156,10 @@ fragment commentsFragment on HackerNewsItem {
     createCommentNodes(kids.kids, story.id)
   })
 
+  const ready = true
   updateSourcePluginStatus({
     plugin: `gatsby-source-hacker-news`,
-    ready: true,
+    status: { ready },
   })
 
   return

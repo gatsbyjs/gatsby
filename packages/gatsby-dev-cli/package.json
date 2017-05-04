@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "babel-runtime": "^6.23.0",
     "chokidar": "^1.6.1",
     "configstore": "^3.0.0",
     "fs-extra": "^2.1.2",
@@ -15,7 +16,7 @@
     "babel-cli": "^6.24.1"
   },
   "bin": {
-    "gatsby-dev": "dist/index.js"
+    "gatsby-dev": "./dist/index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

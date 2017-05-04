@@ -1,4 +1,8 @@
 require(`./route-writer`)
-require(`./query-watcher`)
-require(`./query-runner`)
-require(`./page-query-runner`)
+const { watch } = require(`./query-watcher`)
+const isInitialPageQueryingDone = require(`./page-query-runner`)
+
+module.exports = {
+  watch,
+  isInitialPageQueryingDone,
+}

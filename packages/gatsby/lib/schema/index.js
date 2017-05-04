@@ -32,8 +32,6 @@ async function buildSchema() {
     type: `SET_SCHEMA`,
     payload: schema,
   })
-
-  return
 }
 
 // This seems like the most sensible way to decide when the the initial
@@ -41,7 +39,9 @@ async function buildSchema() {
 // source plugins pulling from remote systems, there'll probably need to be
 // an explicit API for them to let Gatsby core know that a sync is complete.
 const debounceNodeCreation = cb => {
-  const updateNode = _.debounce(cb, 250)
+  // TODO this is terrible. Find a better way to figure
+  // out when stuff is finished.
+  const updateNode = _.debounce(cb, 1000)
   // Ensure schema is created even if the project hasn't got any source plugins.
   updateNode()
   store.subscribe(() => {

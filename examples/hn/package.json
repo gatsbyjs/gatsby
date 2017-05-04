@@ -6,12 +6,12 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "flat": "^2.0.1",
-    "gatsby": "1.0.0-alpha12-alpha.8370739a",
-    "gatsby-link": "1.0.0-alpha12-alpha.8370739a",
-    "gatsby-plugin-google-analytics": "1.0.0-alpha12-alpha.8370739a",
-    "gatsby-plugin-manifest": "1.0.0-alpha12-alpha.8370739a",
-    "gatsby-plugin-offline": "1.0.0-alpha12-alpha.8370739a",
-    "gatsby-source-hacker-news": "1.0.0-alpha12-alpha.8370739a",
+    "gatsby": "canary",
+    "gatsby-link": "canary",
+    "gatsby-plugin-google-analytics": "canary",
+    "gatsby-plugin-manifest": "canary",
+    "gatsby-plugin-offline": "canary",
+    "gatsby-source-hacker-news": "canary",
     "lodash": "^4.16.4",
     "slash": "^1.0.0"
   },

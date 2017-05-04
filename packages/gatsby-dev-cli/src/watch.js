@@ -31,6 +31,12 @@ function watch(root, packages, { scanOnce, quiet }) {
       .on(`all`, (event, path) => {
         if (event === `change` || event === `add`) {
           // Copy it over local version.
+
+          // Don't copy over the Gatsby bin file as that breaks the NPM symlink.
+          if (_.includes(path, `dist/gatsby-cli.js`)) {
+            return
+          }
+
           const newPath = syspath.join(
             `./node_modules/${p}`,
             syspath.relative(prefix, path)

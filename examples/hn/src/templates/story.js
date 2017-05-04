@@ -1,13 +1,12 @@
 import React from "react"
 import Link from "gatsby-link"
-import flat from "flat"
 
 import StoryComment from "../components/story-comment"
 
 class Story extends React.Component {
   render() {
     let width = 400
-    if (typeof window !== "undefined") {
+    if (typeof window !== `undefined`) {
       width = window.innerWidth
     }
 
@@ -38,9 +37,9 @@ class Story extends React.Component {
       return childComments
     }
 
-    console.time("recursion man")
+    console.time(`recursion man`)
     const flatComemnts = flattenComments(story.children)
-    console.timeEnd("recursion man")
+    console.timeEnd(`recursion man`)
 
     return (
       <div>
@@ -51,7 +50,7 @@ class Story extends React.Component {
                 {story.title}
               </a>
               <span className="sitebit comhead">
-                {" "}(
+                {` `}(
                 <span className="sitestr">{story.domain}</span>
                 )
               </span>
@@ -62,24 +61,24 @@ class Story extends React.Component {
               <span className="score">
                 {story.score} points
               </span>
-              {" "}
+              {` `}
               by
-              {" "}
+              {` `}
               <a href="" className="hnuser">{story.by}</a>
-              {" "}
+              {` `}
               <span className="age">
                 <Link to={`/item/${story.id}/`}>{story.timeISO}</Link>
               </span>
-              {" "}
+              {` `}
               |
-              {" "}
+              {` `}
               <Link to={`/item/${story.id}/`}>
                 {story.descendants ? story.descendants : 0} comments
               </Link>
-              {" "}
+              {` `}
             </td>
           </tr>
-          <tr style={{ height: "10px" }} />
+          <tr style={{ height: `10px` }} />
         </table>
         <table border="0" className="comment-tree">
           <tr className="athing comtr " id="14174940">
@@ -95,8 +94,8 @@ class Story extends React.Component {
 
 export default Story
 
-export const pageQuery = `
-query($id: String!)
+export const pageQuery = graphql`
+query StoryQuery($id: String!)
 {
   hnStory(id: {eq: $id}) {
     id
@@ -108,21 +107,21 @@ query($id: String!)
     descendants
     by
     children {
-      ...commentsFragment
+      ...StoryComment
       children {
-        ...commentsFragment
+        ...StoryComment
         children {
-          ...commentsFragment
+          ...StoryComment
           children {
-            ...commentsFragment
+            ...StoryComment
             children {
-              ...commentsFragment
+              ...StoryComment
               children {
-                ...commentsFragment
+                ...StoryComment
                 children {
-                  ...commentsFragment
+                  ...StoryComment
                   children {
-                    ...commentsFragment
+                    ...StoryComment
                   }
                 }
               }
@@ -134,10 +133,4 @@ query($id: String!)
   }
 }
 
-fragment commentsFragment on HNComment {
-  id
-  text
-  timeISO(fromNow: true)
-  by
-}
 `

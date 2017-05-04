@@ -12,8 +12,7 @@ import { store } from "../redux"
 const { boundActionCreators } = require(`../redux/actions`)
 
 // Start off the query running.
-require(`../query-runner`)
-const isInitialPageQueryingDone = require(`../query-runner/page-query-runner`)
+const QueryRunner = require(`../query-runner`)
 
 // Override console.log to add the source file + line number.
 // ["log", "warn"].forEach(function(method) {
@@ -88,10 +87,13 @@ module.exports = async (program: any) => {
     payload: program,
   })
 
+  QueryRunner.watch(program.directory)
+
   // Try opening the site's gatsby-config.js file.
   console.time(`open and validate gatsby-config.js`)
   let config = {}
   try {
+    // $FlowFixMe
     config = preferDefault(require(`${program.directory}/gatsby-config`))
   } catch (e) {
     console.log(`Couldn't open your gatsby-config.js file`)
@@ -164,8 +166,9 @@ module.exports = async (program: any) => {
     },
   })
 
-  // Create a "flattened" array of plugins with all subplugins brought to the top-level.
-  // This simplifies running gatsby-* files for subplugins.
+  // Create a "flattened" array of plugins with all subplugins
+  // brought to the top-level. This simplifies running gatsby-* files
+  // for subplugins.
   const flattenedPlugins = []
   const extractPlugins = plugin => {
     plugin.pluginOptions.plugins.forEach(subPlugin => {
@@ -235,6 +238,7 @@ module.exports = async (program: any) => {
       options: ${JSON.stringify(plugin.options)},
     }`
   ).join(`,`)
+
   browserAPIRunner = `var plugins = [${browserPluginsRequires}]\n${browserAPIRunner}`
 
   let sSRAPIRunner = fs.readFileSync(`${siteDir}/api-runner-ssr.js`, `utf-8`)
@@ -303,10 +307,9 @@ module.exports = async (program: any) => {
   console.log(`created js pages`)
 
   return new Promise(resolve => {
-    isInitialPageQueryingDone(() => {
+    QueryRunner.isInitialPageQueryingDone(() => {
       apiRunnerNode(`generateSideEffects`).then(() => {
         console.log(`bootstrap finished, time since started: ${process.uptime()}`)
-
         resolve({ graphqlRunner })
       })
     })

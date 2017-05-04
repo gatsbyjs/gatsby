@@ -1,8 +1,6 @@
 import React from "react"
 import Link from "react-router/lib/Link"
 
-import { rhythm } from "../utils/typography"
-
 const IndexRoute = React.createClass({
   render() {
     return (
@@ -18,8 +16,8 @@ const IndexRoute = React.createClass({
 
 export default IndexRoute
 
-export const pageQuery = `
-{
+export const pageQuery = graphql`
+query Index {
   site {
     siteMetadata {
       title

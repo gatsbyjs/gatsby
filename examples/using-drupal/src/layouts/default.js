@@ -16,8 +16,8 @@ class DefaultLayout extends React.Component {
           paddingRight: rhythm(3 / 4),
         }}
       >
-        <Link style={{ textDecoration: "none" }} to="/">
-          <h3 style={{ color: "tomato", marginBottom: rhythm(1.5) }}>
+        <Link style={{ textDecoration: `none` }} to="/">
+          <h3 style={{ color: `tomato`, marginBottom: rhythm(1.5) }}>
             Example of using Drupal as a data source for a Gatsby site
           </h3>
         </Link>
@@ -25,14 +25,14 @@ class DefaultLayout extends React.Component {
         <hr />
         <p>
           The src for this website is at
-          {" "}
+          {` `}
           <a href="https://github.com/gatsbyjs/gatsby/tree/1.0/examples/using-drupal">
             https://github.com/gatsbyjs/gatsby/tree/1.0/examples/using-drupal
           </a>
         </p>
         <p>
           The Drupal site that's providing the data for this site is at
-          {" "}
+          {` `}
           <a href="https://dev-gatsbyjs-d8.pantheonsite.io/">
             https://dev-gatsbyjs-d8.pantheonsite.io/
           </a>
