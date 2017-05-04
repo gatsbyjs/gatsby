@@ -223,13 +223,22 @@ function printValue(value: ArgumentValue, type: ?GraphQLInputType): ?string {
     return `$${value.variableName}`
   } else if (value.kind === `ObjectValue`) {
     const pairs = value.fields
-      .map(({ name, value }) => {
-        const innerValue = printValue(value)
-        return innerValue == null ? null : name + `: ` + innerValue
+      .map(field => {
+        let innerValue
+        if (field.value.kind === `Variable`) {
+          innerValue = printValue(field.value)
+        } else {
+          const typeFields = type.getFields()
+          const fieldType = typeFields[field.name].type
+          innerValue = printValue(field.value, fieldType)
+        }
+        return innerValue == null ? null : field.name + `: ` + innerValue
       })
       .filter(Boolean)
 
     return `{${pairs.join(`, `)}}`
+  } else if (value.kind === `ListValue`) {
+    return `[${value.items.map(printValue).join(`, `)}]`
   } else if (value.value != null) {
     return printLiteral(value.value, type)
   } else {
