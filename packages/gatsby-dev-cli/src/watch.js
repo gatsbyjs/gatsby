@@ -17,7 +17,7 @@ function watch(root, packages, { scanOnce, quiet }) {
     const ignoreRegs = [
       /[\/\\]node_modules[\/\\]/i,
       /\.git/i,
-      new RegExp(`${p}[\\/]src[\\/]`, `i`),
+      new RegExp(`${p}[\\/\\\\]src[\\/\\\\]`, `i`),
     ]
 
     chokidar
