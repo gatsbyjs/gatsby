@@ -222,23 +222,26 @@ function printValue(value: ArgumentValue, type: ?GraphQLInputType): ?string {
   if (value.kind === `Variable`) {
     return `$${value.variableName}`
   } else if (value.kind === `ObjectValue`) {
+    invariant(
+      type instanceof GraphQLInputObjectType,
+      `RelayPrinter: Need an InputObject type to print objects.`
+    )
     const pairs = value.fields
       .map(field => {
-        let innerValue
-        if (field.value.kind === `Variable`) {
-          innerValue = printValue(field.value)
-        } else {
-          const typeFields = type.getFields()
-          const fieldType = typeFields[field.name].type
-          innerValue = printValue(field.value, fieldType)
-        }
+        const typeFields = type.getFields()
+        const innerValue = printValue(field.value, typeFields[field.name].type)
         return innerValue == null ? null : field.name + `: ` + innerValue
       })
       .filter(Boolean)
 
     return `{${pairs.join(`, `)}}`
   } else if (value.kind === `ListValue`) {
-    return `[${value.items.map(printValue).join(`, `)}]`
+    invariant(
+      type instanceof GraphQLList,
+      `RelayPrinter: Need a type in order to print arrays.`
+    )
+    const innerType = type.ofType
+    return `[${value.items.map(i => printValue(i, innerType)).join(`, `)}]`
   } else if (value.value != null) {
     return printLiteral(value.value, type)
   } else {
