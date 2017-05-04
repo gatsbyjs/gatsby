@@ -79,11 +79,31 @@ async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
           if (gqlAst) {
             gqlAst.definitions.forEach(def => {
               if (!def.name || !def.name.value) {
-                if (gqlAst.definitions.length === 1)
-                  def.name = { value: getAssignedIdenifier(innerPath) }
-                else
-                  // FIXME: better error
-                  throw new Error(`GraphQL definitions should be named ${file}`)
+                console.log(`
+GraphQL definitions must be "named"`)
+
+                console.log(`The query with the missing name is in ${file}`)
+                console.log(`
+To fix the query, add "query MyQueryName" to the start of your query.
+
+So instead of:
+
+{
+  allMarkdownRemark {
+    totalCount
+  }
+}
+
+Do:
+
+query MyQueryName {
+  allMarkdownRemark {
+    totalCount
+  }
+}
+              `)
+                console.log(``)
+                process.exit(1)
               }
             })
 
