@@ -6,12 +6,7 @@ gatsby-dev --set-path-to-repo .
 
 echo "=== Installing the website dependencies"
 cd $1
-rm -rf node_modules
 yarn
-
-echo "=== contents of .bin"
-ls -lahL node_modules/.bin
-echo "==="
 
 echo "=== Copying built Gatsby to website."
 gatsby-dev --scan-once --quiet
