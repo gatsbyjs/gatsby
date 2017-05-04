@@ -92,8 +92,8 @@ const IndexRoute = React.createClass({
 
 export default IndexRoute
 
-export const pageQuery = `
-{
+export const pageQuery = graphql`
+query IndexRouteQuery {
   allMarkdownRemark(
     sortBy: { order: DESC, fields: [frontmatter___date] },
     frontmatter: { draft: { ne: true } },

@@ -179,7 +179,7 @@ const BlogPostTemplate = React.createClass({
 
 export default BlogPostTemplate
 
-export const pageQuery = `
+export const pageQuery = graphql`
   query TemplateBlogPost($slug: String!) {
     markdownRemark(slug: { eq: $slug }) {
       html

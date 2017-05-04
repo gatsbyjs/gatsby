@@ -18,8 +18,8 @@ const IndexRoute = React.createClass({
 
 export default IndexRoute
 
-export const pageQuery = `
-{
+export const pageQuery = graphql`
+query Index{
   site {
     siteMetadata {
       title

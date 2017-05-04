@@ -33,7 +33,7 @@ const DocsTemplate = React.createClass({
 
 export default DocsTemplate
 
-export const pageQuery = `
+export const pageQuery = graphql`
   query BlogPostByPath($slug: String!) {
     markdownRemark(slug: { eq: $slug }) {
       # Use headings to get the plugin name. A bit hacky but until
