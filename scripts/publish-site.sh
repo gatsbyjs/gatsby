@@ -10,7 +10,7 @@ rm -rf node_modules
 yarn
 
 echo "=== contents of .bin"
-ls node_modules/.bin
+ls -lah node_modules/.bin
 echo "==="
 
 echo "=== Copying built Gatsby to website."
