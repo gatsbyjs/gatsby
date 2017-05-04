@@ -11,6 +11,11 @@ yarn
 echo "=== Copying built Gatsby to website."
 gatsby-dev --scan-once --quiet
 
+echo "=== find graphql packages"
+
+find node_modules -name graphql
+echo "=== END find graphql packages"
+
 echo "=== Building website"
 # Once we get better cache invalidation, remove the following
 # line.
