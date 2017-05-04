@@ -12,7 +12,7 @@ Array [
       "id": "foo",
       "mediaType": "application/json",
       "parent": "whatever",
-      "type": "Test",
+      "type": "TestJson",
     },
   ],
   Array [
@@ -25,7 +25,7 @@ Array [
       "id": "whatever [1] >>> JSON",
       "mediaType": "application/json",
       "parent": "whatever",
-      "type": "Test",
+      "type": "TestJson",
     },
   ],
 ]
