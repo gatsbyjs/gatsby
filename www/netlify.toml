@@ -1,5 +1,0 @@
-[context.deploy-preview.environment]
-  YARN_VERSION = '0.23.4'
-
-[context.production.environment]
-  YARN_VERSION = '0.23.4'
