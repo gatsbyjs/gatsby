@@ -21,4 +21,4 @@ echo "=== Building website"
 # line.
 rm -rf .cache
 
-node ./node_modules/.bin/gatsby build
+./node_modules/.bin/gatsby build
