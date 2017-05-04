@@ -133,6 +133,7 @@ https://gatsbygram.gatsbyjs.org and the case study on how its built https://www.
 * [Psalm.Bible](http://psalm.bible/psalm-139-16/)
 * [Dimitrios Lytras](https://dimitrioslytras.com)
 * [storybooks.js.org](https://storybooks.js.org) ([source](https://github.com/storybooks/storybooks.github.io/))
+* [Nicholas Young](https://nicholaswyoung.com)
 * [Edit this file to add yours!](https://github.com/gatsbyjs/gatsby/blob/master/README.md)
 
 *Note, for the sites that have made their source available, you can
