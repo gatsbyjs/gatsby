@@ -135,6 +135,7 @@ https://gatsbygram.gatsbyjs.org and the case study on how its built https://www.
 * [Dimitrios Lytras](https://dimitrioslytras.com)
 * [storybooks.js.org](https://storybooks.js.org) ([source](https://github.com/storybooks/storybooks.github.io/))
 * [Nicholas Young](https://nicholaswyoung.com)
+* [Segment Blog](https://segment.com/blog/)
 * [Edit this file to add yours!](https://github.com/gatsbyjs/gatsby/blob/master/README.md)
 
 *Note, for the sites that have made their source available, you can
