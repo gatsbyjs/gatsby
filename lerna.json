@@ -4,6 +4,5 @@
   "npmClient": "npm",
   "packages": [
     "packages/*"
-  ],
-  "hoist": true
+  ]
 }
