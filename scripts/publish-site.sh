@@ -9,6 +9,10 @@ cd $1
 rm -rf node_modules
 yarn
 
+echo "=== contents of .bin"
+ls node_modules/.bin
+echo "==="
+
 echo "=== Copying built Gatsby to website."
 gatsby-dev --scan-once --quiet
 
