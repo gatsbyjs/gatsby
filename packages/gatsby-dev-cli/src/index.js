@@ -36,7 +36,7 @@ if (!havePackageJsonFile) {
 
 const localPkg = JSON.parse(fs.readFileSync(`package.json`))
 const packages = Object.keys(
-  Object.assign({}, localPkg.dependencies, localPkg.devDependencies)
+  _.merge({}, localPkg.dependencies, localPkg.devDependencies)
 )
 
 const gatsbyPackages = packages.filter(p => p.startsWith(`gatsby`))
