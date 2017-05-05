@@ -33,7 +33,7 @@ Each Markdown file is parsed into a node of type `MarkdownRemark`.
 All frontmatter fields are converted into GraphQL fields. TODO link to
 docs on auto-inferring types/fields.
 
-`gatsby-typegen-remark` adds additional fields to the `MarkdownRemark`
+This plugin adds additional fields to the `MarkdownRemark`
 GraphQL type including `html`, `excerpt`, `headers`, etc. Other Gatsby
 plugins can also add additional fields.
 

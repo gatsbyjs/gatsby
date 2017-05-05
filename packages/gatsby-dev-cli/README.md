@@ -41,7 +41,7 @@ be found [here](https://www.gatsbyjs.org/docs/how-to-contribute/).
 You can prevent the automatic dependencies scan and instead specify a list of
 packages you want to link by using the `--packages` option:
 
-`gatsby-dev --packages gatsby gatsby-typegen-remark`
+`gatsby-dev --packages gatsby gatsby-transformer-remark`
 
 #### `--scan-once`
 
