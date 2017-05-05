@@ -14,7 +14,7 @@ requirements of component.
 * Some basic terminology
   * Types based on file type + way data can be transformed
   * Connections
-  * Shallow intro to how data layer works e.g. parsers, typegens.
+  * Shallow intro to how data layer works e.g. source and transformer plugins.
   * Compare to Webpack loaders — like loaders except create schema that
   can then be queried.
 * Example queries showing off sorting, filtering, picking fields,

@@ -125,7 +125,7 @@ an innovative *declarative* asset pipeline.
 For Gatsbygram, Gatsby generates over *1000* image thumbnails for
 responsive images without *any* custom scripting by leveraging the
 Gatsby image processing plugin
-[gatsby-typegen-sharp](/docs/packages/gatsby-typegen-sharp/).
+[gatsby-transformer-sharp](/docs/packages/gatsby-transformer-sharp/).
 
 Stop wasting time and build something!
 
@@ -443,14 +443,11 @@ module.exports = {
     `gatsby-plugin-sharp`,
     // This plugin identifies file nodes that are images and
     // transforms these to create new “ImageSharp” nodes.
+    // With them you can resize images and
+    // generate responsive image thumbnails.
     `gatsby-transformer-sharp`,
     // This plugin transforms JSON file nodes.
     `gatsby-transformer-json`,
-    `gatsby-typegen-filesystem`,
-    // This plugin adds GraphQL fields to the ImageSharp
-    // GraphQL type. With them you can resize images and
-    // generate sets of responsive images.
-    `gatsby-typegen-sharp`,
     // This plugin sets up the popular css-in-js library
     // Glamor. It handles adding a Babel plugin and webpack
     // configuration as well as setting up optimized server

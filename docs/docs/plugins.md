@@ -13,7 +13,7 @@ How to use?
 Export function for browser/node/ssr. Link to lifecycle APIs doc.
 
 Show several examples of simple plugins (query for them directly — add a
-utf8 field to typegen-file to pull in utf8 string of file. This would
+utf8 field to File nodes to pull in utf8 string of file. This would
 mean converting this file into a JS component).
 
 ## Official plugins
@@ -34,14 +34,13 @@ mean converting this file into a JS component).
 * [gatsby-plugin-typescript](/docs/packages/gatsby-plugin-typescript/)
 * [gatsby-source-filesystem](/docs/packages/gatsby-source-filesystem/)
 * [gatsby-source-drupal](/docs/packages/gatsby-source-drupal/)
-* [gatsby-typegen-remark](/docs/packages/gatsby-typegen-remark/)
-* [gatsby-typegen-remark-autolink-headers](/docs/packages/gatsby-typegen-remark-autolink-headers/)
-* [gatsby-typegen-remark-copy-linked-files](/docs/packages/gatsby-typegen-remark-copy-linked-files/)
-* [gatsby-typegen-remark-prismjs](/docs/packages/gatsby-typegen-remark-prismjs/)
-* [gatsby-typegen-remark-responsive-iframe](/docs/packages/gatsby-typegen-remark-responsive-iframe/)
-* [gatsby-typegen-remark-responsive-image](/docs/packages/gatsby-typegen-remark-responsive-image/)
-* [gatsby-typegen-remark-smartypants](/docs/packages/gatsby-typegen-remark-smartypants/)
-* [gatsby-typegen-sharp](/docs/packages/gatsby-typegen-sharp/)
+* [gatsby-remark-autolink-headers](/docs/packages/gatsby-remark-autolink-headers/)
+* [gatsby-remark-copy-linked-files](/docs/packages/gatsby-remark-copy-linked-files/)
+* [gatsby-remark-prismjs](/docs/packages/gatsby-remark-prismjs/)
+* [gatsby-remark-responsive-iframe](/docs/packages/gatsby-remark-responsive-iframe/)
+* [gatsby-remark-responsive-image](/docs/packages/gatsby-remark-responsive-image/)
+* [gatsby-remark-smartypants](/docs/packages/gatsby-remark-smartypants/)
+* [gatsby-sharp](/docs/packages/gatsby-sharp/)
 
 ## Official components
 

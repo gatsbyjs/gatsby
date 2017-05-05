@@ -6,6 +6,10 @@ gatsby-dev --set-path-to-repo .
 
 echo "=== Installing the website dependencies"
 cd $1
+# Normally you wouldn't do this but we
+# want to test the latest versions of packages always
+# so our example site builds catch problems early.
+rm yarn.lock
 yarn
 
 echo "=== Copying built Gatsby to website."

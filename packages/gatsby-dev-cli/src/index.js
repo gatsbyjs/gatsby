@@ -67,7 +67,7 @@ You haven't got any gatsby dependencies into your current package.json
 You probably want to pass in a list of packages to start
 developing on! For example:
 
-gatsby-dev --packages gatsby gatsby-typegen-remark
+gatsby-dev --packages gatsby gatsby-transformer-remark
 
 If you prefer to place them in your package.json dependencies instead,
 gatsby-dev will pick them up.

@@ -1,1 +1,0 @@
-# gatsby-typegen-react-docgen
