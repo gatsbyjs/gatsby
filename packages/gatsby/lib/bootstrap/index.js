@@ -1,32 +1,24 @@
 /* @flow */
-import Promise from "bluebird"
-import path from "path"
-import globCB from "glob"
-import _ from "lodash"
-import slash from "slash"
-import createPath from "./create-path"
-import fs from "fs-extra"
-import apiRunnerNode from "../utils/api-runner-node"
-import { graphql } from "graphql"
-import { store } from "../redux"
+const Promise = require(`bluebird`)
+const path = require(`path`)
+const globCB = require(`glob`)
+const _ = require(`lodash`)
+const slash = require(`slash`)
+const createPath = require(`./create-path`)
+const fs = require(`fs-extra`)
+const apiRunnerNode = require(`../utils/api-runner-node`)
+const { graphql } = require(`graphql`)
+const { store } = require(`../redux`)
 const { boundActionCreators } = require(`../redux/actions`)
+const loadPlugins = require(`./load-plugins`)
 
 // Start off the query running.
 const QueryRunner = require(`../query-runner`)
 
 // Override console.log to add the source file + line number.
-// ["log", "warn"].forEach(function(method) {
-// var old = console[method];
-// console[method] = function() {
-// var stack = new Error().stack.split(/\n/);
-// // Chrome includes a single "Error" line, FF doesn't.
-// if (stack[0].indexOf("Error") === 0) {
-// stack = stack.slice(1);
-// }
-// var args = [].slice.apply(arguments).concat([stack[1].trim()]);
-// return old.apply(console, args);
-// };
-// });
+// Useful for debugging if you lose a console.log somewhere.
+// Otherwise leave commented out.
+// require(`./log-line-function`)
 
 const preferDefault = m => (m && m.default) || m
 
@@ -232,22 +224,26 @@ module.exports = async (program: any) => {
     `${siteDir}/api-runner-browser.js`,
     `utf-8`
   )
-  const browserPluginsRequires = browserPlugins.map(
-    plugin => `{
+  const browserPluginsRequires = browserPlugins
+    .map(
+      plugin => `{
       plugin: require('${plugin.resolve}'),
       options: ${JSON.stringify(plugin.options)},
     }`
-  ).join(`,`)
+    )
+    .join(`,`)
 
   browserAPIRunner = `var plugins = [${browserPluginsRequires}]\n${browserAPIRunner}`
 
   let sSRAPIRunner = fs.readFileSync(`${siteDir}/api-runner-ssr.js`, `utf-8`)
-  const ssrPluginsRequires = ssrPlugins.map(
-    plugin => `{
+  const ssrPluginsRequires = ssrPlugins
+    .map(
+      plugin => `{
       plugin: require('${plugin.resolve}'),
       options: ${JSON.stringify(plugin.options)},
     }`
-  ).join(`,`)
+    )
+    .join(`,`)
   sSRAPIRunner = `var plugins = [${ssrPluginsRequires}]\n${sSRAPIRunner}`
 
   fs.writeFileSync(
@@ -309,7 +305,9 @@ module.exports = async (program: any) => {
   return new Promise(resolve => {
     QueryRunner.isInitialPageQueryingDone(() => {
       apiRunnerNode(`generateSideEffects`).then(() => {
-        console.log(`bootstrap finished, time since started: ${process.uptime()}`)
+        console.log(
+          `bootstrap finished, time since started: ${process.uptime()}`
+        )
         resolve({ graphqlRunner })
       })
     })
