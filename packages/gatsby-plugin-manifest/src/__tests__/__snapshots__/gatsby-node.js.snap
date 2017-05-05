@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`gatsby-plugin-manifest should omit plugins key 1`] = `
+Array [
+  Array [
+    "./public/manifest.json",
+    "{\\"name\\":\\"Gatsby website\\",\\"short_name\\":\\"Gatsby website\\",\\"start_url\\":\\"/\\",\\"background_color\\":\\"#f7f7f7\\",\\"theme_color\\":\\"#191919\\",\\"display\\":\\"minimal-ui\\"}",
+  ],
+]
+`;
+
+exports[`gatsby-plugin-manifest should parse keys into snake case 1`] = `
+Array [
+  Array [
+    "./public/manifest.json",
+    "{\\"name\\":\\"Gatsby website\\",\\"short_name\\":\\"Gatsby website\\",\\"start_url\\":\\"/\\",\\"background_color\\":\\"#f7f7f7\\",\\"theme_color\\":\\"#191919\\",\\"display\\":\\"minimal-ui\\",\\"sidebar_action\\":{\\"default_icon\\":{\\"16\\":\\"button/geo-16.png\\"}}}",
+  ],
+]
+`;

@@ -37,3 +37,6 @@ plugins: [
 ]
 ```
 
+## Note for es-lint
+
+You can write keys in any case (as camel case), they will automaticly parsed into snake case to be compliant with `manifest.json` specs.

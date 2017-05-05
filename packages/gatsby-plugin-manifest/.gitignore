@@ -2,3 +2,5 @@
 /gatsby-ssr.js
 /gatsby-browser.js
 /app-shell.js
+/__mocks__/
+/__tests__/
