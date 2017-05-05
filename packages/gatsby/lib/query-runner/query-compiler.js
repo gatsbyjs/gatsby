@@ -104,7 +104,8 @@ class Runner {
 
       let text = filterContextForNode(printContext.getRoot(name), printContext)
         .documents()
-        .map(QueryPrinter.print).join(`\n`)
+        .map(QueryPrinter.print)
+        .join(`\n`)
 
       compiledNodes.set(filePath, {
         name,

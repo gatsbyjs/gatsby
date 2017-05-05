@@ -11,7 +11,9 @@ const BlogPostTemplate = React.createClass({
     const twitterLine = post.frontmatter.author.twitter
       ? ` by ${post.frontmatter.author.twitter}`
       : ``
-    const authorShareText = encodeURIComponent(`“${post.frontmatter.title}”${twitterLine} https://sourceforge.com/blog${post.fileSlug}`)
+    const authorShareText = encodeURIComponent(
+      `“${post.frontmatter.title}”${twitterLine} https://sourceforge.com/blog${post.fileSlug}`
+    )
     const BioLine = ({ children }) => (
       <p
         css={{

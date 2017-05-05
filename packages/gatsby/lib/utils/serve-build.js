@@ -39,7 +39,9 @@ function startServer(program, launchPort) {
     if (e) {
       if (e.code === `EADDRINUSE`) {
         // eslint-disable-next-line max-len
-        console.log(`Unable to start Gatsby on port ${serverPort} as there's already a process listing on that port.`)
+        console.log(
+          `Unable to start Gatsby on port ${serverPort} as there's already a process listing on that port.`
+        )
       } else {
         console.log(e)
       }

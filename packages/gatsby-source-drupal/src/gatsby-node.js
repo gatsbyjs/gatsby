@@ -104,7 +104,8 @@ exports.sourceNodes = async (
     // Get content digest of node.
     const contentDigest = crypto
       .createHash(`md5`)
-      .update(JSON.stringify(gatsbyNode)).digest(`hex`)
+      .update(JSON.stringify(gatsbyNode))
+      .digest(`hex`)
 
     gatsbyNode.contentDigest = contentDigest
 
@@ -145,7 +146,8 @@ exports.sourceNodes = async (
             // Get content digest of node.
             const contentDigest = crypto
               .createHash(`md5`)
-              .update(JSON.stringify(gatsbyUser)).digest(`hex`)
+              .update(JSON.stringify(gatsbyUser))
+              .digest(`hex`)
 
             gatsbyUser.contentDigest = contentDigest
 
