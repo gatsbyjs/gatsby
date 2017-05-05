@@ -15,8 +15,6 @@
     "gatsby-source-filesystem": "canary",
     "gatsby-transformer-json": "canary",
     "gatsby-transformer-sharp": "canary",
-    "gatsby-typegen-filesystem": "canary",
-    "gatsby-typegen-sharp": "canary",
     "instagram-screen-scrape": "^2.0.0",
     "lodash": "^4.16.4",
     "mkdirp": "^0.5.1",

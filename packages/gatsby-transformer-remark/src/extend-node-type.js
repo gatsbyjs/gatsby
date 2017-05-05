@@ -26,7 +26,7 @@ const headingsCacheKey = node => {
   return `transformer-remark-markdown-headings-${node.contentDigest}-${pluginsCacheStr}`
 }
 
-exports.extendNodeType = (
+module.exports = (
   { type, allNodes, linkPrefix, getNode, cache },
   pluginOptions
 ) => {

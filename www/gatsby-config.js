@@ -20,35 +20,32 @@ module.exports = {
         path: `${__dirname}/../packages/`,
       },
     },
-    `gatsby-transformer-remark`,
     `gatsby-transformer-sharp`,
     `gatsby-transformer-yaml`,
     {
-      resolve: `gatsby-typegen-remark`,
+      resolve: `gatsby-transformer-remark`,
       options: {
         plugins: [
           {
-            resolve: `gatsby-typegen-remark-responsive-image`,
+            resolve: `gatsby-remark-responsive-image`,
             options: {
               maxWidth: 690,
               backgroundColor: `#f7f0eb`,
             },
           },
           {
-            resolve: `gatsby-typegen-remark-responsive-iframe`,
+            resolve: `gatsby-remark-responsive-iframe`,
             options: {
               wrapperStyle: `margin-bottom: 1.05rem`,
             },
           },
-          `gatsby-typegen-remark-prismjs`,
-          `gatsby-typegen-remark-copy-linked-files`,
-          `gatsby-typegen-remark-smartypants`,
-          `gatsby-typegen-remark-autolink-headers`,
+          `gatsby-remark-prismjs`,
+          `gatsby-remark-copy-linked-files`,
+          `gatsby-remark-smartypants`,
+          `gatsby-remark-autolink-headers`,
         ],
       },
     },
-    `gatsby-typegen-filesystem`,
-    `gatsby-typegen-sharp`,
     `gatsby-plugin-glamor`,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-catch-links`,
