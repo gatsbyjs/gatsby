@@ -1,72 +1,30 @@
 /* @flow */
 const Promise = require(`bluebird`)
-const path = require(`path`)
-const globCB = require(`glob`)
+const glob = require(`glob`)
 const _ = require(`lodash`)
 const slash = require(`slash`)
-const createPath = require(`./create-path`)
 const fs = require(`fs-extra`)
+const md5File = require(`md5-file/promise`)
+const crypto = require(`crypto`)
+const path = require(`path`)
+
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const { graphql } = require(`graphql`)
 const { store } = require(`../redux`)
 const { boundActionCreators } = require(`../redux/actions`)
 const loadPlugins = require(`./load-plugins`)
-
-// Start off the query running.
-const QueryRunner = require(`../query-runner`)
+const jsPageCreator = require(`./js-page-creator`)
+const { initCache } = require(`../utils/cache`)
 
 // Override console.log to add the source file + line number.
 // Useful for debugging if you lose a console.log somewhere.
 // Otherwise leave commented out.
 // require(`./log-line-function`)
 
+// Start off the query running.
+const QueryRunner = require(`../query-runner`)
+
 const preferDefault = m => (m && m.default) || m
-
-const mkdirs = Promise.promisify(fs.mkdirs)
-const copy = Promise.promisify(fs.copy)
-const glob = Promise.promisify(globCB)
-
-// Path creator.
-// Auto-create pages.
-// algorithm is glob /pages directory for js/jsx/cjsx files *not*
-// underscored. Then create url w/ our path algorithm *unless* user
-// takes control of that page component in gatsby-node.
-const autoPathCreator = async () => {
-  const { program } = store.getState()
-  const pagesDirectory = path.posix.join(program.directory, `/src/pages`)
-  const exts = program.extensions.map(e => `*${e}`).join(`|`)
-  // The promisified version wasn't working for some reason
-  // so we'll use sync for now.
-  const files = glob.sync(`${pagesDirectory}/**/?(${exts})`)
-  // Create initial page objects.
-  let autoPages = files.map(filePath => ({
-    component: filePath,
-    path: filePath,
-  }))
-
-  // Convert path to one relative to the pages directory.
-  autoPages = autoPages.map(page => ({
-    ...page,
-    path: path.posix.relative(pagesDirectory, page.path),
-  }))
-
-  // Remove pages starting with an underscore.
-  autoPages = _.filter(autoPages, page => page.path.slice(0, 1) !== `_`)
-
-  // Remove page templates.
-  autoPages = _.filter(autoPages, page => page.path.slice(0, 9) !== `template-`)
-
-  // Convert to our path format.
-  autoPages = autoPages.map(page => ({
-    ...page,
-    path: createPath(pagesDirectory, page.component),
-  }))
-
-  // Add pages
-  autoPages.forEach(page => {
-    boundActionCreators.upsertPage(page)
-  })
-}
 
 module.exports = async (program: any) => {
   console.log(`lib/bootstrap/index.js time since started:`, process.uptime())
