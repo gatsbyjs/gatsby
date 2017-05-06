@@ -22,7 +22,8 @@ const argv = require(`yargs`)
 You typically only need to configure this once.`
   )
   .help(`h`)
-  .alias(`h`, `help`).array(`packages`).argv
+  .alias(`h`, `help`)
+  .array(`packages`).argv
 
 const conf = new Configstore(pkg.name)
 

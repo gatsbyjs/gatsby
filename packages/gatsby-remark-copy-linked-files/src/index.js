@@ -22,7 +22,9 @@ module.exports = ({ files, markdownNode, markdownAST, getNode }) => {
           `public`,
           `${linkNode.contentDigest}.${linkNode.extension}`
         )
-        const relativePath = path.join(`/${linkNode.contentDigest}.${linkNode.extension}`)
+        const relativePath = path.join(
+          `/${linkNode.contentDigest}.${linkNode.extension}`
+        )
         link.url = `${relativePath}`
         if (!fsExtra.existsSync(newPath)) {
           fsExtra.copy(linkPath, newPath, err => {

@@ -1,80 +1,30 @@
 /* @flow */
-import Promise from "bluebird"
-import path from "path"
-import globCB from "glob"
-import _ from "lodash"
-import slash from "slash"
-import createPath from "./create-path"
-import fs from "fs-extra"
-import apiRunnerNode from "../utils/api-runner-node"
-import { graphql } from "graphql"
-import { store } from "../redux"
+const Promise = require(`bluebird`)
+const glob = require(`glob`)
+const _ = require(`lodash`)
+const slash = require(`slash`)
+const fs = require(`fs-extra`)
+const md5File = require(`md5-file/promise`)
+const crypto = require(`crypto`)
+const path = require(`path`)
+
+const apiRunnerNode = require(`../utils/api-runner-node`)
+const { graphql } = require(`graphql`)
+const { store } = require(`../redux`)
 const { boundActionCreators } = require(`../redux/actions`)
+const loadPlugins = require(`./load-plugins`)
+const jsPageCreator = require(`./js-page-creator`)
+const { initCache } = require(`../utils/cache`)
+
+// Override console.log to add the source file + line number.
+// Useful for debugging if you lose a console.log somewhere.
+// Otherwise leave commented out.
+// require(`./log-line-function`)
 
 // Start off the query running.
 const QueryRunner = require(`../query-runner`)
 
-// Override console.log to add the source file + line number.
-// ["log", "warn"].forEach(function(method) {
-// var old = console[method];
-// console[method] = function() {
-// var stack = new Error().stack.split(/\n/);
-// // Chrome includes a single "Error" line, FF doesn't.
-// if (stack[0].indexOf("Error") === 0) {
-// stack = stack.slice(1);
-// }
-// var args = [].slice.apply(arguments).concat([stack[1].trim()]);
-// return old.apply(console, args);
-// };
-// });
-
 const preferDefault = m => (m && m.default) || m
-
-const mkdirs = Promise.promisify(fs.mkdirs)
-const copy = Promise.promisify(fs.copy)
-const glob = Promise.promisify(globCB)
-
-// Path creator.
-// Auto-create pages.
-// algorithm is glob /pages directory for js/jsx/cjsx files *not*
-// underscored. Then create url w/ our path algorithm *unless* user
-// takes control of that page component in gatsby-node.
-const autoPathCreator = async () => {
-  const { program } = store.getState()
-  const pagesDirectory = path.posix.join(program.directory, `/src/pages`)
-  const exts = program.extensions.map(e => `*${e}`).join(`|`)
-  // The promisified version wasn't working for some reason
-  // so we'll use sync for now.
-  const files = glob.sync(`${pagesDirectory}/**/?(${exts})`)
-  // Create initial page objects.
-  let autoPages = files.map(filePath => ({
-    component: filePath,
-    path: filePath,
-  }))
-
-  // Convert path to one relative to the pages directory.
-  autoPages = autoPages.map(page => ({
-    ...page,
-    path: path.posix.relative(pagesDirectory, page.path),
-  }))
-
-  // Remove pages starting with an underscore.
-  autoPages = _.filter(autoPages, page => page.path.slice(0, 1) !== `_`)
-
-  // Remove page templates.
-  autoPages = _.filter(autoPages, page => page.path.slice(0, 9) !== `template-`)
-
-  // Convert to our path format.
-  autoPages = autoPages.map(page => ({
-    ...page,
-    path: createPath(pagesDirectory, page.component),
-  }))
-
-  // Add pages
-  autoPages.forEach(page => {
-    boundActionCreators.upsertPage(page)
-  })
-}
 
 module.exports = async (program: any) => {
   console.log(`lib/bootstrap/index.js time since started:`, process.uptime())
@@ -108,109 +58,78 @@ module.exports = async (program: any) => {
 
   console.timeEnd(`open and validate gatsby-config.js`)
 
-  // Instantiate plugins.
-  const plugins = []
-  // Create fake little site with a plugin for testing this
-  // w/ snapshots. Move plugin processing to its own module.
-  // Also test adding to redux store.
-  const processPlugin = plugin => {
-    if (_.isString(plugin)) {
-      const resolvedPath = slash(path.dirname(require.resolve(plugin)))
-      const packageJSON = JSON.parse(
-        fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
-      )
-      return {
-        resolve: resolvedPath,
-        name: packageJSON.name,
-        version: packageJSON.version,
-        pluginOptions: {
-          plugins: [],
-        },
-      }
-    } else {
-      // Plugins can have plugins.
-      const subplugins = []
-      if (plugin.options && plugin.options.plugins) {
-        plugin.options.plugins.forEach(p => {
-          subplugins.push(processPlugin(p))
-        })
-      }
-      plugin.options.plugins = subplugins
+  const flattenedPlugins = await loadPlugins(config)
 
-      const resolvedPath = slash(path.dirname(require.resolve(plugin.resolve)))
-      const packageJSON = JSON.parse(
-        fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
-      )
-      return {
-        resolve: resolvedPath,
-        name: packageJSON.name,
-        version: packageJSON.version,
-        pluginOptions: _.merge({ plugins: [] }, plugin.options),
-      }
-    }
-  }
+  // Check if any plugins have been updated since our last run. If so
+  // we delete the cache is there's likely been changes
+  // since the previous run.
+  //
+  // We do this by creating a hash of all the version numbers of installed
+  // plugins, the site's package.json, gatsby-config.js, and gatsby-node.js.
+  // The last, gatsby-node.js, is important as many gatsby sites put important
+  // logic in there e.g. generating slugs for custom pages.
+  const pluginVersions = flattenedPlugins.map(p => p.version)
+  const hashes = await Promise.all([
+    md5File(`package.json`),
+    md5File(`gatsby-config.js`),
+    md5File(`gatsby-node.js`),
+  ])
+  const pluginsHash = crypto
+    .createHash(`md5`)
+    .update(JSON.stringify(pluginVersions.concat(hashes)))
+    .digest(`hex`)
+  const state = store.getState()
+  const oldPluginsHash = state && state.status ? state.status.PLUGINS_HASH : ``
 
-  if (config.plugins) {
-    config.plugins.forEach(plugin => {
-      plugins.push(processPlugin(plugin))
+  // Check if anything has changed. If it has, delete the site's .cache
+  // directory and tell reducers to empty themselves.
+  //
+  // Also if the hash isn't there, then delete things just in case something
+  // is weird.
+  if (!oldPluginsHash || pluginsHash !== oldPluginsHash) {
+    console.log(`
+One or more of your plugins have changed since the last time you ran Gatsby. As
+a precaution, we're deleting your site's cache to ensure there's not any stale
+data
+`)
+    await fs.remove(`${program.directory}/.cache`)
+    // Tell reducers to delete their data (the store will already have
+    // been loaded from the file system cache).
+    store.dispatch({
+      type: `DELETE_CACHE`,
     })
   }
 
-  // Add the site's default "plugin" i.e. gatsby-x files in root of site.
-  plugins.push({
-    resolve: slash(process.cwd()),
-    name: `defaultSitePlugin`,
-    version: `n/a`,
-    pluginOptions: {
-      plugins: [],
-    },
-  })
-
-  // Create a "flattened" array of plugins with all subplugins
-  // brought to the top-level. This simplifies running gatsby-* files
-  // for subplugins.
-  const flattenedPlugins = []
-  const extractPlugins = plugin => {
-    plugin.pluginOptions.plugins.forEach(subPlugin => {
-      flattenedPlugins.push(subPlugin)
-      extractPlugins(subPlugin)
-    })
-  }
-
-  plugins.forEach(plugin => {
-    flattenedPlugins.push(plugin)
-    extractPlugins(plugin)
-  })
-
+  // Update the store with the new plugins hash.
   store.dispatch({
-    type: `SET_SITE_PLUGINS`,
-    payload: plugins,
+    type: `UPDATE_PLUGINS_HASH`,
+    payload: pluginsHash,
   })
 
-  store.dispatch({
-    type: `SET_SITE_FLATTENED_PLUGINS`,
-    payload: flattenedPlugins,
-  })
+  // Now that we know the .cache directory is safe, initialize the cache
+  // directory.
+  initCache()
 
   // Ensure the public directory is created.
-  await mkdirs(`${program.directory}/public`)
+  await fs.mkdirs(`${program.directory}/public`)
 
   // Copy our site files to the root of the site.
   console.time(`copy gatsby files`)
   const srcDir = `${__dirname}/../cache-dir`
   const siteDir = `${program.directory}/.cache`
   try {
-    // await removeDir(siteDir)
-    await copy(srcDir, siteDir, { clobber: true })
-    await mkdirs(`${program.directory}/.cache/json`)
+    await fs.copy(srcDir, siteDir, { clobber: true })
+    await fs.mkdirs(`${program.directory}/.cache/json`)
   } catch (e) {
     console.log(`Unable to copy site files to .cache`)
     console.log(e)
+    process.exit(1)
   }
 
   // Find plugins which implement gatsby-browser and gatsby-ssr and write
   // out api-runners for them.
   const hasAPIFile = (env, plugin) =>
+    // TODO make this async...
     glob.sync(`${plugin.resolve}/gatsby-${env}*`)[0]
 
   const ssrPlugins = _.filter(
@@ -232,22 +151,26 @@ module.exports = async (program: any) => {
     `${siteDir}/api-runner-browser.js`,
     `utf-8`
   )
-  const browserPluginsRequires = browserPlugins.map(
-    plugin => `{
+  const browserPluginsRequires = browserPlugins
+    .map(
+      plugin => `{
       plugin: require('${plugin.resolve}'),
       options: ${JSON.stringify(plugin.options)},
     }`
-  ).join(`,`)
+    )
+    .join(`,`)
 
   browserAPIRunner = `var plugins = [${browserPluginsRequires}]\n${browserAPIRunner}`
 
   let sSRAPIRunner = fs.readFileSync(`${siteDir}/api-runner-ssr.js`, `utf-8`)
-  const ssrPluginsRequires = ssrPlugins.map(
-    plugin => `{
+  const ssrPluginsRequires = ssrPlugins
+    .map(
+      plugin => `{
       plugin: require('${plugin.resolve}'),
       options: ${JSON.stringify(plugin.options)},
     }`
-  ).join(`,`)
+    )
+    .join(`,`)
   sSRAPIRunner = `var plugins = [${ssrPluginsRequires}]\n${sSRAPIRunner}`
 
   fs.writeFileSync(
@@ -284,7 +207,7 @@ module.exports = async (program: any) => {
   // TODO move this to own source plugin per component type
   // (js/cjsx/typescript, etc.). Only do after there's themes
   // so can cement default /pages setup in default core theme.
-  autoPathCreator()
+  await jsPageCreator()
 
   // Copy /404/ to /404.html as many static site hosting companies expect
   // site 404 pages to be named this.
@@ -309,7 +232,9 @@ module.exports = async (program: any) => {
   return new Promise(resolve => {
     QueryRunner.isInitialPageQueryingDone(() => {
       apiRunnerNode(`generateSideEffects`).then(() => {
-        console.log(`bootstrap finished, time since started: ${process.uptime()}`)
+        console.log(
+          `bootstrap finished, time since started: ${process.uptime()}`
+        )
         resolve({ graphqlRunner })
       })
     })

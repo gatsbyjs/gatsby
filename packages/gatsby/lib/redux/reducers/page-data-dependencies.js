@@ -2,6 +2,8 @@ const _ = require(`lodash`)
 
 module.exports = (state = { nodes: {}, connections: {} }, action) => {
   switch (action.type) {
+    case `DELETE_CACHE`:
+      return { nodes: {}, connections: {} }
     case `ADD_PAGE_DEPENDENCY`:
       if (action.payload.path === ``) {
         return state

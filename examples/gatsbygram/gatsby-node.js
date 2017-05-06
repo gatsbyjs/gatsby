@@ -1,8 +1,8 @@
-const _ = require("lodash")
-const Promise = require("bluebird")
-const path = require("path")
-const slug = require("slug")
-const slash = require("slash")
+const _ = require(`lodash`)
+const Promise = require(`bluebird`)
+const path = require(`path`)
+const slug = require(`slug`)
+const slash = require(`slash`)
 
 // Implement the Gatsby API “createPages”. This is
 // called after the Gatsby bootstrap is finished so you have
@@ -61,6 +61,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           },
         })
       })
+
       resolve()
     })
   })

@@ -2,6 +2,8 @@ const _ = require(`lodash`)
 
 module.exports = (state = {}, action) => {
   switch (action.type) {
+    case `DELETE_CACHE`:
+      return {}
     case `ADD_PAGE_COMPONENT`:
       if (!_.has(state, `action.payload.componentPath`)) {
         state[action.payload.componentPath] = {

@@ -337,7 +337,8 @@ async function responsiveSizes({ file, args = {} }) {
   const fallbackSrc = _.minBy(images, image =>
     Math.abs(options.maxWidth - image.width)
   ).src
-  const srcSet = images.map(image => `${image.src} ${Math.round(image.width)}w`)
+  const srcSet = images
+    .map(image => `${image.src} ${Math.round(image.width)}w`)
     .join(`,\n`)
 
   return {
@@ -405,25 +406,27 @@ async function responsiveResolution({ file, args = {} }) {
   const base64Image = await base64({ file })
 
   const fallbackSrc = images[0].src
-  const srcSet = images.map((image, i) => {
-    let resolution
-    switch (i) {
-      case 0:
-        resolution = `1x`
-        break
-      case 1:
-        resolution = `1.5x`
-        break
-      case 2:
-        resolution = `2x`
-        break
-      case 3:
-        resolution = `3x`
-        break
-      default:
-    }
-    return `${image.src} ${resolution}`
-  }).join(`,`)
+  const srcSet = images
+    .map((image, i) => {
+      let resolution
+      switch (i) {
+        case 0:
+          resolution = `1x`
+          break
+        case 1:
+          resolution = `1.5x`
+          break
+        case 2:
+          resolution = `2x`
+          break
+        case 3:
+          resolution = `3x`
+          break
+        default:
+      }
+      return `${image.src} ${resolution}`
+    })
+    .join(`,`)
 
   return {
     base64: base64Image.src,

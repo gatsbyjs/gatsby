@@ -123,7 +123,10 @@ export default class FileParser {
     const text = await readFileAsync(file, `utf8`)
 
     if (text.indexOf(`graphql`) === -1) return
-    const hash = crypto.createHash(`md5`).update(file).update(text)
+    const hash = crypto
+      .createHash(`md5`)
+      .update(file)
+      .update(text)
       .digest(`hex`)
 
     let astDefinitions =

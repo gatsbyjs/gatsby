@@ -58,8 +58,9 @@ exports.sourceNodes = async (
   console.time(`fetch Drupal data`)
   console.log(`Starting to fetch data from Drupal`)
 
-  const lastFetched = store.getState().status[`gatsby-source-drupal`]
-    .lastFetched
+  const lastFetched = store.getState().status.sourcePlugins[
+    `gatsby-source-drupal`
+  ].lastFetched
 
   let url
   if (lastFetched) {
@@ -104,7 +105,8 @@ exports.sourceNodes = async (
     // Get content digest of node.
     const contentDigest = crypto
       .createHash(`md5`)
-      .update(JSON.stringify(gatsbyNode)).digest(`hex`)
+      .update(JSON.stringify(gatsbyNode))
+      .digest(`hex`)
 
     gatsbyNode.contentDigest = contentDigest
 
@@ -145,7 +147,8 @@ exports.sourceNodes = async (
             // Get content digest of node.
             const contentDigest = crypto
               .createHash(`md5`)
-              .update(JSON.stringify(gatsbyUser)).digest(`hex`)
+              .update(JSON.stringify(gatsbyUser))
+              .digest(`hex`)
 
             gatsbyUser.contentDigest = contentDigest
 
