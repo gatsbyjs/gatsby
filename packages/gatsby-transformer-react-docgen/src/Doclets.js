@@ -1,5 +1,9 @@
 const metadata = require(`react-docgen`)
 
+let cleanDocletValue = str => str.trim().replace(/^\{/, ``).replace(/\}$/, ``)
+
+let isLiteral = str => /^('|")/.test(str.trim())
+
 /**
  * Remove doclets from string
  */
@@ -13,7 +17,7 @@ const cleanDoclets = desc => {
  *
  * @param  {ComponentMetadata|PropMetadata} obj
  */
-exports.parseDoclets = (obj, propName) => {
+export const parseDoclets = (obj, propName) => {
   let desc = obj.description || ``
   obj.doclets = metadata.utils.docblock.getDoclets(desc) || {}
   obj.description = cleanDoclets(desc)
@@ -27,7 +31,7 @@ exports.parseDoclets = (obj, propName) => {
  * @param  {Object} props     Object Hash of the prop metadata
  * @param  {String} propName
  */
-exports.applyPropDoclets = prop => {
+export const applyPropDoclets = prop => {
   let doclets = prop.doclets
   let value
 

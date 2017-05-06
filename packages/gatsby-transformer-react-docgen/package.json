@@ -19,7 +19,8 @@
     "graphql": "^0.9.4"
   },
   "dependencies": {
-    "react-docgen": "^2.14.1"
+    "babel-types": "^6.24.1",
+    "react-docgen": "^2.15.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
