@@ -81,10 +81,17 @@ module.exports = async (program: any) => {
   const state = store.getState()
   const oldPluginsHash = state && state.status ? state.status.PLUGINS_HASH : ``
 
-  // If there's an plugin hash stored in the cache already, check if
-  // anything has changed. If it has, delete the site's .cache directory
-  // and tell reducers to empty themselves.
-  if (oldPluginsHash && pluginsHash !== oldPluginsHash) {
+  // Check if anything has changed. If it has, delete the site's .cache
+  // directory and tell reducers to empty themselves.
+  //
+  // Also if the hash isn't there, then delete things just in case something
+  // is weird.
+  if (!oldPluginsHash || pluginsHash !== oldPluginsHash) {
+    console.log(`
+One or more of your plugins have changed since the last time you ran Gatsby. As
+a precaution, we're deleting your site's cache to ensure there's not any stale
+data
+`)
     await fs.remove(`${program.directory}/.cache`)
     // Tell reducers to delete their data (the store will already have
     // been loaded from the file system cache).

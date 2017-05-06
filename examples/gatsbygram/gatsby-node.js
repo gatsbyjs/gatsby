@@ -61,6 +61,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           },
         })
       })
+
       resolve()
     })
   })
