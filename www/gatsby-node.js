@@ -1,16 +1,19 @@
-const _ = require("lodash")
-const Promise = require("bluebird")
-const path = require("path")
-const parseFilepath = require("parse-filepath")
-const fs = require("fs-extra")
-const slash = require("slash")
+const _ = require(`lodash`)
+const Promise = require(`bluebird`)
+const path = require(`path`)
+const parseFilepath = require(`parse-filepath`)
+const fs = require(`fs-extra`)
+const slash = require(`slash`)
 
 exports.createPages = ({ graphql, boundActionCreators }) => {
   const { upsertPage } = boundActionCreators
   return new Promise((resolve, reject) => {
     const docsTemplate = path.resolve(`src/templates/template-docs-markdown.js`)
     const blogPostTemplate = path.resolve(`src/templates/template-blog-post.js`)
-    const packageTemplate = path.resolve(`src/templates/template-docs-packages.js`)
+    const packageTemplate = path.resolve(
+      `src/templates/template-docs-packages.js`
+    )
+    // Query for markdown nodes to use in creating pages.
     graphql(
       `
       {
@@ -30,7 +33,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
       }
 
       // Create docs pages.
-      _.each(result.data.allMarkdownRemark.edges, edge => {
+      result.data.allMarkdownRemark.edges.forEach(edge => {
         if (_.includes(edge.node.slug, `/blog/`)) {
           upsertPage({
             path: `${edge.node.slug}`, // required
