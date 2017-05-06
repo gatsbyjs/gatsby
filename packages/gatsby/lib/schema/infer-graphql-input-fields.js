@@ -53,7 +53,7 @@ const inferGraphQLInputFields = (exports.inferGraphQLInputFields = (
   namespace = ``
 ) => {
   switch (typeOf(value)) {
-    case `array`:
+    case `array`: {
       const headValue = value[0]
       let headType = typeOf(headValue)
       // Check if headType is a number.
@@ -97,7 +97,8 @@ const inferGraphQLInputFields = (exports.inferGraphQLInputFields = (
           },
         }),
       }
-    case `boolean`:
+    }
+    case `boolean`: {
       return {
         type: new GraphQLInputObjectType({
           name: createTypeName(`${namespace} ${selector} ${key}QueryBoolean`),
@@ -106,23 +107,33 @@ const inferGraphQLInputFields = (exports.inferGraphQLInputFields = (
           },
         }),
       }
-    case `string`:
+    }
+    case `string`: {
+      let cleanedKey = key
+      if (_.includes(key, `___NODE`)) {
+        cleanedKey = key.split(`___`)[0]
+      }
+
       return {
         type: new GraphQLInputObjectType({
-          name: createTypeName(`${namespace} ${selector} ${key}QueryString`),
+          name: createTypeName(
+            `${namespace} ${selector} ${cleanedKey}QueryString`
+          ),
           fields: {
             ...typeFields(`string`),
           },
         }),
       }
-    case `object`:
+    }
+    case `object`: {
       return {
         type: new GraphQLInputObjectType({
           name: createTypeName(`${namespace} ${selector} ${key}InputObject`),
           fields: inferInputObjectStructureFromNodes(nodes, key, namespace),
         }),
       }
-    case `number`:
+    }
+    case `number`: {
       if (value % 1 === 0) {
         return {
           type: new GraphQLInputObjectType({
@@ -142,6 +153,7 @@ const inferGraphQLInputFields = (exports.inferGraphQLInputFields = (
           }),
         }
       }
+    }
     default:
       return null
   }
