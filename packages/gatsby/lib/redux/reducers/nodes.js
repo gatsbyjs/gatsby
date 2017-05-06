@@ -3,6 +3,8 @@ const _ = require(`lodash`)
 module.exports = (state = {}, action) => {
   let newState
   switch (action.type) {
+    case `DELETE_CACHE`:
+      return {}
     case `CREATE_NODE`:
       newState = {
         ...state,

@@ -60,25 +60,69 @@ module.exports = async (program: any) => {
 
   const flattenedPlugins = await loadPlugins(config)
 
+  // Check if any plugins have been updated since our last run. If so
+  // we delete the cache is there's likely been changes
+  // since the previous run.
+  //
+  // We do this by creating a hash of all the version numbers of installed
+  // plugins, the site's package.json, gatsby-config.js, and gatsby-node.js.
+  // The last, gatsby-node.js, is important as many gatsby sites put important
+  // logic in there e.g. generating slugs for custom pages.
+  const pluginVersions = flattenedPlugins.map(p => p.version)
+  const hashes = await Promise.all([
+    md5File(`package.json`),
+    md5File(`gatsby-config.js`),
+    md5File(`gatsby-node.js`),
+  ])
+  const pluginsHash = crypto
+    .createHash(`md5`)
+    .update(JSON.stringify(pluginVersions.concat(hashes)))
+    .digest(`hex`)
+  const state = store.getState()
+  const oldPluginsHash = state && state.status ? state.status.PLUGINS_HASH : ``
+
+  // If there's an plugin hash stored in the cache already, check if
+  // anything has changed. If it has, delete the site's .cache directory
+  // and tell reducers to empty themselves.
+  if (oldPluginsHash && pluginsHash !== oldPluginsHash) {
+    await fs.remove(`${program.directory}/.cache`)
+    // Tell reducers to delete their data (the store will already have
+    // been loaded from the file system cache).
+    store.dispatch({
+      type: `DELETE_CACHE`,
+    })
+  }
+
+  // Update the store with the new plugins hash.
+  store.dispatch({
+    type: `UPDATE_PLUGINS_HASH`,
+    payload: pluginsHash,
+  })
+
+  // Now that we know the .cache directory is safe, initialize the cache
+  // directory.
+  initCache()
+
   // Ensure the public directory is created.
-  await mkdirs(`${program.directory}/public`)
+  await fs.mkdirs(`${program.directory}/public`)
 
   // Copy our site files to the root of the site.
   console.time(`copy gatsby files`)
   const srcDir = `${__dirname}/../cache-dir`
   const siteDir = `${program.directory}/.cache`
   try {
-    // await removeDir(siteDir)
-    await copy(srcDir, siteDir, { clobber: true })
-    await mkdirs(`${program.directory}/.cache/json`)
+    await fs.copy(srcDir, siteDir, { clobber: true })
+    await fs.mkdirs(`${program.directory}/.cache/json`)
   } catch (e) {
     console.log(`Unable to copy site files to .cache`)
     console.log(e)
+    process.exit(1)
   }
 
   // Find plugins which implement gatsby-browser and gatsby-ssr and write
   // out api-runners for them.
   const hasAPIFile = (env, plugin) =>
+    // TODO make this async...
     glob.sync(`${plugin.resolve}/gatsby-${env}*`)[0]
 
   const ssrPlugins = _.filter(
@@ -156,7 +200,7 @@ module.exports = async (program: any) => {
   // TODO move this to own source plugin per component type
   // (js/cjsx/typescript, etc.). Only do after there's themes
   // so can cement default /pages setup in default core theme.
-  autoPathCreator()
+  await jsPageCreator()
 
   // Copy /404/ to /404.html as many static site hosting companies expect
   // site 404 pages to be named this.
