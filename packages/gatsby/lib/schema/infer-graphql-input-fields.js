@@ -164,11 +164,21 @@ const inferInputObjectStructureFromNodes = (exports.inferInputObjectStructureFro
   selector: string,
   namespace: string
 ) => {
-  const fieldExamples = extractFieldExamples({
-    nodes,
-    selector,
-    deleteNodeFields: true,
-  })
+  let fieldExamples
+  if (selector && selector !== ``) {
+    // Don't delete node fields if we're not at the root of the node.
+    fieldExamples = extractFieldExamples({
+      nodes,
+      selector,
+      deleteNodeFields: false,
+    })
+  } else {
+    fieldExamples = extractFieldExamples({
+      nodes,
+      selector,
+      deleteNodeFields: true,
+    })
+  }
 
   const inferredFields = {}
   _.each(fieldExamples, (v, k) => {
