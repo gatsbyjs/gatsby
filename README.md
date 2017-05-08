@@ -76,7 +76,6 @@ https://gatsbygram.gatsbyjs.org and the case study on how its built https://www.
 * [emilyaviva.com](http://emilyaviva.com) ([source](https://github.com/emilyaviva/emilyaviva.com))
 * [dynamicext.com](http://www.dynamicext.com/)
 * [React Gravatar](http://kyleamathews.github.io/react-gravatar/) ([source](https://github.com/KyleAMathews/react-gravatar/tree/master/www))
-* [johnm.io](http://johnm.io) ([source](https://github.com/johnpmorris/johnpmorris.github.io/tree/react-rebuild))
 * [twnsnd.co](http://twnsnd.co/)
 * [Beau Han Xu](http://www.beauhanxu.com/)
 * [HalfAtheist](https://halfatheist.com/) ([source](https://github.com/halfatheist/halfatheist.github.io))
