@@ -1,7 +1,7 @@
 {
-  "name": "gatsby-example-image-gallery",
+  "name": "gatsby-example-hacker-news",
   "private": true,
-  "description": "Gatsby example site: image gallery",
+  "description": "Gatsby example site: Hacker News",
   "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
