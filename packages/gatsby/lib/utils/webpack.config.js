@@ -25,13 +25,7 @@ const genBabelConfig = require(`./babel-config`)
 //   4) build-html: build all HTML files
 //   5) build-javascript: Build js chunks for Single Page App in production
 
-module.exports = async (
-  program,
-  directory,
-  suppliedStage,
-  webpackPort = 1500,
-  pages = []
-) => {
+module.exports = async (program, directory, suppliedStage, webpackPort = 1500, pages = []) => {
   const babelStage = suppliedStage
 
   // We combine develop & develop-html stages for purposes of generating the
@@ -54,9 +48,7 @@ module.exports = async (
         return {
           path: `${directory}/public`,
           filename: `bundle-for-css.js`,
-          publicPath: program.prefixLinks
-            ? `${store.getState().config.linkPrefix}/`
-            : `/`,
+          publicPath: program.prefixLinks ? `${store.getState().config.linkPrefix}/` : `/`,
         }
       case `build-html`:
         // A temp file required by static-site-generator-plugin. See plugins() below.
@@ -65,18 +57,14 @@ module.exports = async (
           path: `${directory}/public`,
           filename: `render-page.js`,
           libraryTarget: `umd`,
-          publicPath: program.prefixLinks
-            ? `${store.getState().config.linkPrefix}/`
-            : `/`,
+          publicPath: program.prefixLinks ? `${store.getState().config.linkPrefix}/` : `/`,
         }
       case `build-javascript`:
         return {
           filename: `[name]-[chunkhash].js`,
           chunkFilename: `[name]-[chunkhash].js`,
           path: `${directory}/public`,
-          publicPath: program.prefixLinks
-            ? `${store.getState().config.linkPrefix}/`
-            : `/`,
+          publicPath: program.prefixLinks ? `${store.getState().config.linkPrefix}/` : `/`,
         }
       default:
         throw new Error(`The state requested ${stage} doesn't exist.`)
@@ -119,9 +107,7 @@ module.exports = async (
           new webpack.NoErrorsPlugin(),
           new webpack.DefinePlugin({
             "process.env": {
-              NODE_ENV: JSON.stringify(
-                process.env.NODE_ENV ? process.env.NODE_ENV : `development`
-              ),
+              NODE_ENV: JSON.stringify(process.env.NODE_ENV ? process.env.NODE_ENV : `development`),
               PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
             },
             __PREFIX_LINKS__: program.prefixLinks,
@@ -137,9 +123,7 @@ module.exports = async (
         return [
           new webpack.DefinePlugin({
             "process.env": {
-              NODE_ENV: JSON.stringify(
-                process.env.NODE_ENV ? process.env.NODE_ENV : `production`
-              ),
+              NODE_ENV: JSON.stringify(process.env.NODE_ENV ? process.env.NODE_ENV : `production`),
               PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
             },
             __PREFIX_LINKS__: program.prefixLinks,
@@ -152,9 +136,7 @@ module.exports = async (
           new StaticSiteGeneratorPlugin(`render-page.js`, pages),
           new webpack.DefinePlugin({
             "process.env": {
-              NODE_ENV: JSON.stringify(
-                process.env.NODE_ENV ? process.env.NODE_ENV : `production`
-              ),
+              NODE_ENV: JSON.stringify(process.env.NODE_ENV ? process.env.NODE_ENV : `production`),
               PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
             },
             __PREFIX_LINKS__: program.prefixLinks,
@@ -165,9 +147,7 @@ module.exports = async (
       case `build-javascript`: {
         // Get array of page template component names.
         let components = store.getState().pages.map(page => page.component)
-        components = components.map(component =>
-          layoutComponentChunkName(program.directory, component)
-        )
+        components = components.map(component => layoutComponentChunkName(program.directory, component))
         components = uniq(components)
         return [
           // Moment.js includes 100s of KBs of extra localization data
@@ -217,9 +197,7 @@ module.exports = async (
           // (__PREFIX_LINKS__) and what the link prefix is (__LINK_PREFIX__).
           new webpack.DefinePlugin({
             "process.env": {
-              NODE_ENV: JSON.stringify(
-                process.env.NODE_ENV ? process.env.NODE_ENV : `production`
-              ),
+              NODE_ENV: JSON.stringify(process.env.NODE_ENV ? process.env.NODE_ENV : `production`),
               PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
             },
             __PREFIX_LINKS__: program.prefixLinks,
@@ -365,10 +343,7 @@ module.exports = async (
         // CSS modules
         config.loader(`cssModules`, {
           test: /\.module\.css$/,
-          loader: ExtractTextPlugin.extract(`style`, [
-            cssModulesConf,
-            `postcss`,
-          ]),
+          loader: ExtractTextPlugin.extract(`style`, [cssModulesConf, `postcss`]),
         })
         config.merge({
           postcss: [
@@ -394,10 +369,7 @@ module.exports = async (
         // CSS modules
         config.loader(`cssModules`, {
           test: /\.module\.css$/,
-          loader: ExtractTextPlugin.extract(`style`, [
-            cssModulesConf,
-            `postcss`,
-          ]),
+          loader: ExtractTextPlugin.extract(`style`, [cssModulesConf, `postcss`]),
         })
 
         return config
@@ -420,10 +392,7 @@ module.exports = async (
         // CSS modules
         config.loader(`cssModules`, {
           test: /\.module\.css$/,
-          loader: ExtractTextPlugin.extract(`style`, [
-            cssModulesConf,
-            `postcss`,
-          ]),
+          loader: ExtractTextPlugin.extract(`style`, [cssModulesConf, `postcss`]),
         })
 
         return config
