@@ -56,7 +56,6 @@ https://gatsbygram.gatsbyjs.org and the case study on how its built https://www.
 * [syncano.io](https://www.syncano.io) ([source](https://github.com/Syncano/syncano.com))
 * [graphene-python.org](http://graphene-python.org/) ([source](https://github.com/graphql-python/graphene/tree/master/docs))
 * [back-to-the-basics.io](http://back-to-the-basics.io/)
-* [ashk.io](http://ashk.io/) ([source](https://github.com/wpioneer/blog))
 * [nordnet.se/brand](https://www.nordnet.se/brand/)
 * [likescoffee.com](https://likescoffee.com/) ([source](https://github.com/pamo/pamo.github.io/tree/development))
 * [vii.campjs.com](http://vii.campjs.com/) ([source](https://github.com/campjs/campjs-vii))
