@@ -21,6 +21,7 @@ describe(`Gatsby data tree utils`, () => {
       name: `The Mad Wax`,
       hair: 2,
       date: `2006-07-22T22:39:53.000Z`,
+      emptyArray: [undefined, null],
       anArray: [1, 2, 5, 4],
       iAmNull: null,
       frontmatter: {
@@ -65,12 +66,12 @@ describe(`Gatsby data tree utils`, () => {
     expect(extractFieldExamples({ nodes })).toMatchSnapshot()
   })
 
-  it(`ignores fields that have a null value`, () => {
-    expect(extractFieldExamples({ nodes }).iAmNull).not.toBeDefined()
+  it(`null fields should have a null value`, () => {
+    expect(extractFieldExamples({ nodes }).iAmNull).toBeNull()
   })
 
-  it(`ignores empty arrays`, () => {
-    expect(extractFieldExamples({ nodes }).emptyArray).not.toBeDefined()
+  it(`turns empty or sparse arrays to null`, () => {
+    expect(extractFieldExamples({ nodes }).emptyArray).toBeNull()
     expect(extractFieldExamples({ nodes }).hair).toBeDefined()
   })
 

@@ -2,36 +2,31 @@
 const _ = require(`lodash`)
 const flatten = require(`flat`)
 
+const mergeNodes = (...args) => {
+  // $FlowFixMe
+  return _.mergeWith({}, ...args, (obj, next) => {
+    if (!_.isArray(obj || next)) return
+    let array = [].concat(obj, next).filter(v => v != null)
+
+    if (!array.length) return null
+
+    // primitive values don't get merged further, just take the first item
+    if (!_.isObject(array[0])) {
+      return array.slice(0, 1)
+    }
+
+    return [mergeNodes(...array)]
+  })
+}
+
 const extractFieldExamples = (exports.extractFieldExamples = ({
   nodes,
-  selector,
   deleteNodeFields = false,
+}: {
+  nodes: any[],
+  deleteNodeFields: boolean,
 }) => {
-  let examples = nodes.reduce((mem, node) => {
-    let subNode = selector ? _.get(node, selector) : node
-
-    const reduceSubNode = (m, sn) => {
-      // Ignore undefined/null/empty array subnodes.
-      sn = _.omitBy(flatten(sn || {}, { safe: true }), v => {
-        return _.isNil(v) || (_.isArray(v) && _.isEmpty(v))
-      })
-
-      return Object.assign({}, m, sn)
-    }
-
-    // If the subnode is an array of things, run those individually instead
-    // of the whole array.
-    if (_.isArray(subNode) && !_.isEmpty(subNode)) {
-      const result = subNode.reduce((m, n) => {
-        return reduceSubNode(m, n)
-      })
-      return result
-    } else {
-      return reduceSubNode(mem, subNode)
-    }
-  }, {})
-
-  examples = flatten.unflatten(examples)
+  let examples = mergeNodes({}, ...nodes)
 
   if (deleteNodeFields) {
     // Remove fields for traversing through nodes as we want to control
@@ -42,24 +37,24 @@ const extractFieldExamples = (exports.extractFieldExamples = ({
 
   return examples
 })
-const buildFieldEnumValues = (exports.buildFieldEnumValues = nodes => {
+
+exports.buildFieldEnumValues = (nodes: any[]) => {
   const enumValues = {}
-  const fieldExamples = _.keys(
-    flatten(
-      extractFieldExamples({
-        nodes,
-        selector: ``,
-        deleteNodeFields: true,
-      }),
-      {
-        maxDepth: 3,
-        safe: true, // don't flatten arrays.
-      }
-    )
+  const values = flatten(
+    extractFieldExamples({
+      nodes,
+      selector: ``,
+      deleteNodeFields: true,
+    }),
+    {
+      maxDepth: 3,
+      safe: true, // don't flatten arrays.
+    }
   )
-  fieldExamples.forEach(field => {
+  Object.keys(values).forEach(field => {
+    if (values[field] == null) return
     enumValues[field.replace(/\./g, `___`)] = { field }
   })
 
   return enumValues
-})
+}

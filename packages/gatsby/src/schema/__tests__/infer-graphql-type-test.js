@@ -17,6 +17,7 @@ test(`Infers graphql type from array of nodes`, () => {
       anObjectArray: [
         { aString: `some string`, aNumber: 2, aBoolean: true },
         { aString: `some string`, aNumber: 2, anArray: [1, 2] },
+        { anotherObjectArray: [{ bar: 10 }] },
       ],
       deepObject: {
         level: 1,
@@ -43,6 +44,7 @@ test(`Infers graphql type from array of nodes`, () => {
       hair: 2,
       date: `1984-10-12`,
       anArray: [1, 2, 5, 4],
+      anObjectArray: [{ anotherObjectArray: [{ baz: `quz` }] }],
       frontmatter: {
         date: `1984-10-12`,
         title: `The world of slash and adventure`,
@@ -85,6 +87,10 @@ test(`Infers graphql type from array of nodes`, () => {
               aNumber,
               aBoolean,
               anArray
+              anotherObjectArray {
+                bar
+                baz
+              }
             },
             deepObject {
               level
@@ -106,61 +112,5 @@ test(`Infers graphql type from array of nodes`, () => {
           }
         }
         `
-  ).then(result =>
-    expect(result).toEqual({
-      data: {
-        listNode: [
-          {
-            hair: 1,
-            anArray: [1, 2, 3, 4],
-            anObjectArray: [
-              {
-                aString: `some string`,
-                aNumber: 2,
-                aBoolean: true,
-                anArray: null,
-              },
-              {
-                aString: `some string`,
-                aNumber: 2,
-                aBoolean: null,
-                anArray: [1, 2],
-              },
-            ],
-            deepObject: {
-              level: 1,
-              deepObject: {
-                level: 2,
-                deepObject: {
-                  level: 3,
-                },
-              },
-            },
-            aBoolean: true,
-            externalUrl: `https://example.com/awesome.jpg`,
-            domain: `pizza.com`,
-            date: `1012`,
-            frontmatter: {
-              date: `1012`,
-              title: `The world of dash and adventure`,
-            },
-          },
-          {
-            hair: 2,
-            anArray: [1, 2, 5, 4],
-            anObjectArray: null,
-            deepObject: null,
-            aBoolean: null,
-            externalUrl: null,
-            domain: null,
-            date: `1984`,
-            frontmatter: {
-              date: `1984`,
-              title: `The world of slash and adventure`,
-            },
-          },
-        ],
-      },
-    })
-  )
+  ).then(result => expect(result).toMatchSnapshot())
 })
