@@ -1,7 +1,7 @@
 {
-  "name": "gatsby-example-image-gallery",
+  "name": "gatsby-example-using-drupal",
   "private": true,
-  "description": "Gatsby example site: image gallery",
+  "description": "Gatsby example site using the Drupal source plugin",
   "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
