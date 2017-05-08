@@ -35,6 +35,7 @@ function createPropNodes(node, component, boundActionCreators) {
     let content = JSON.stringify(prop)
 
     const propNode = {
+      ...prop,
       type: `ComponentProp`,
       id: propNodeId,
       parent: node.id,
@@ -42,7 +43,6 @@ function createPropNodes(node, component, boundActionCreators) {
       children: [],
       content,
       contentDigest: digest(content),
-      name: prop.name,
     }
     children[i] = propNode.id
     createNode(propNode)
@@ -54,11 +54,10 @@ function createPropNodes(node, component, boundActionCreators) {
   updateNode(node)
 }
 
-export default function onNodeCreate({
-  node,
-  loadNodeContent,
-  boundActionCreators,
-}) {
+export default function onNodeCreate(
+  { node, loadNodeContent, boundActionCreators },
+  pluginOptions
+) {
   const { createNode, updateNode } = boundActionCreators
 
   if (node.type === `ComponentMetadata`) return null
@@ -66,7 +65,11 @@ export default function onNodeCreate({
 
   return loadNodeContent(node)
     .then(content => {
-      const components = parseMetadata(content, node.absolutePath)
+      const components = parseMetadata(
+        content,
+        node.absolutePath,
+        pluginOptions
+      )
 
       components.forEach(component => {
         const strContent = JSON.stringify(component)
@@ -74,6 +77,7 @@ export default function onNodeCreate({
         const nodeId = `${node.id}--${component.id}--ComponentMetadata`
 
         const metadataNode = {
+          ...component,
           id: nodeId,
           contentDigest,
           content: strContent,
@@ -81,7 +85,6 @@ export default function onNodeCreate({
           type: `ComponentMetadata`,
           mediaType: `text/x-react-metadata`,
           children: [],
-          name: component.displayName,
         }
 
         node.children = node.children.concat([metadataNode.id])

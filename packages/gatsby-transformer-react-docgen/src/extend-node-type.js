@@ -1,14 +1,11 @@
-const {
+import {
   GraphQLBoolean,
   GraphQLObjectType,
   GraphQLList,
   GraphQLString,
-} = require(`graphql`)
-const GraphQLJSON = require(`graphql-type-json`)
-
-function resolve(field) {
-  return obj => JSON.parse(obj.content)[field]
-}
+} from 'graphql'
+import GraphQLJSON from 'graphql-type-json'
+import { stripIndent } from 'common-tags'
 
 const PropDefaultValue = new GraphQLObjectType({
   name: `PropDefaultValue`,
@@ -23,7 +20,11 @@ const Method = new GraphQLObjectType({
   fields: () => ({
     name: { type: GraphQLString },
     docblock: { type: GraphQLString },
-    modifiers: { type: new GraphQLList(GraphQLJSON) },
+    modifiers: {
+      type: new GraphQLList(GraphQLString),
+      description: `Modifiers describing the kind and sort of method e.g. "static", ` +
+        `"generator", or "async".`,
+    },
     params: {
       type: new GraphQLList(
         new GraphQLObjectType({
@@ -41,28 +42,33 @@ const Method = new GraphQLObjectType({
 
 function extendComponents() {
   return {
-    doclets: {
-      type: GraphQLJSON,
-      resolve: resolve(`doclets`),
-    },
     composes: {
       type: new GraphQLList(GraphQLString),
-      resolve: resolve(`composes`),
+      description: stripIndent`
+        A list of additional modules "spread" into this component's
+        propTypes such as:
+
+        propTypes = {
+          name: PropTypes.string,
+          ...AnotherComponent.propTypes,
+        }
+      `,
     },
     methods: {
       type: new GraphQLList(Method),
-      resolve: resolve(`methods`),
+      description: `Component methods`,
     },
   }
 }
 
 function extendProp() {
   return {
-    name: { type: GraphQLString, resolve: resolve(`name`) },
-    doclets: { type: GraphQLJSON, resolve: resolve(`doclets`) },
-    defaultValue: { type: PropDefaultValue, resolve: resolve(`defaultValue`) },
-    required: { type: GraphQLBoolean, resolve: resolve(`required`) },
-    type: { type: GraphQLJSON, resolve: resolve(`type`) },
+    defaultValue: { type: PropDefaultValue },
+    required: {
+      type: GraphQLBoolean,
+      description: `Describes whether or not the propType is required, i.e. not \`null\``,
+    },
+    //propType: { type: GraphQLJSON },
   }
 }
 

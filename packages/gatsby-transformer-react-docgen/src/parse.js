@@ -41,14 +41,15 @@ function nameHandler(filePath) {
   }
 }
 
-export default function parseMetadata(content, filePath) {
+export default function parseMetadata(content, filePath, options) {
   let components = []
-
+  options = options || {}
   try {
-    components = parse(content, findAllComponentDefinitions, [
-      ...defaultHandlers,
-      nameHandler(filePath),
-    ])
+    components = parse(
+      content,
+      options.resolver || findAllComponentDefinitions,
+      [...defaultHandlers, ...options.handlers, nameHandler(filePath)]
+    )
   } catch (err) {
     if (err.message === ERROR_MISSING_DEFINITION) return []
     throw err
