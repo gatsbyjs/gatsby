@@ -28,7 +28,7 @@
     "iflow-debug": "^1.0.15",
     "iflow-lodash": "^1.1.24",
     "iflow-react-router": "^1.2.1",
-    "jest": "^19.0.2",
+    "jest": "^20.0.0",
     "lerna": "^2.0.0-rc.4",
     "prettier-eslint-cli": "^3.4.2",
     "prop-types": "^15.5.8",
