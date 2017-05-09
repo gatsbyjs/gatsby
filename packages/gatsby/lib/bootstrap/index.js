@@ -155,7 +155,7 @@ data
   let browserAPIRunner = ``
 
   try {
-    fs.readFileSync(`${siteDir}/api-runner-browser.js`, `utf-8`)
+    browserAPIRunner = fs.readFileSync(`${siteDir}/api-runner-browser.js`, `utf-8`)
   } catch (err) {
     console.error(`Failed to read ${siteDir}/api-runner-browser.js`)
   }
