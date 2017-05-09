@@ -9,16 +9,20 @@ const {
   GraphQLEnumType,
   GraphQLNonNull,
 } = require(`graphql`)
+const { oneLine } = require(`common-tags`)
 const _ = require(`lodash`)
+const invariant = require(`invariant`)
 const typeOf = require(`type-of`)
 const createTypeName = require(`./create-type-name`)
 
-const {
-  extractFieldExamples,
-  buildFieldEnumValues,
-} = require(`./data-tree-utils`)
+import { extractFieldExamples, buildFieldEnumValues } from './data-tree-utils'
 
-const typeFields = type => {
+import type {
+  GraphQLInputFieldConfig,
+  GraphQLInputFieldConfigMap,
+} from 'graphql/type/definition'
+
+function typeFields(type): GraphQLInputFieldConfigMap {
   switch (type) {
     case `boolean`:
       return {
@@ -43,19 +47,23 @@ const typeFields = type => {
         ne: { type: GraphQLFloat },
       }
   }
+  return {}
 }
 
-const inferGraphQLInputFields = ({ value, nodes, prefix }) => {
+function inferGraphQLInputFields({
+  value,
+  nodes,
+  prefix,
+}): ?GraphQLInputFieldConfig {
   if (value == null || (Array.isArray(value) && !value.length)) return null
 
   switch (typeOf(value)) {
     case `array`: {
       const headValue = value[0]
       let headType = typeOf(headValue)
-      // Check if headType is a number.
-      if (headType === `number`) {
+
+      if (headType === `number`)
         headType = _.isInteger(headValue) ? `int` : `float`
-      }
 
       // Determine type for in operator.
       let inType
@@ -73,10 +81,27 @@ const inferGraphQLInputFields = ({ value, nodes, prefix }) => {
           inType = GraphQLBoolean
           break
         case `array`:
-        case `object`:
-          inType = inferGraphQLInputFields({ value: headValue, prefix, nodes })
-            .type
+        case `object`: {
+          let inferredField = inferGraphQLInputFields({
+            value: headValue,
+            prefix,
+            nodes,
+          })
+          invariant(
+            inferredField,
+            `Could not infer graphQL type for value: ${headValue}`
+          )
+          inType = inferredField.type
           break
+        }
+        default:
+          invariant(
+            false,
+            oneLine`
+              Could not infer an appropriate GraphQL input type
+              for value: ${headValue} of type ${headType} along path: ${prefix}
+            `
+          )
       }
 
       return {
@@ -93,9 +118,7 @@ const inferGraphQLInputFields = ({ value, nodes, prefix }) => {
       return {
         type: new GraphQLInputObjectType({
           name: createTypeName(`${prefix}QueryBoolean`),
-          fields: {
-            ...typeFields(`boolean`),
-          },
+          fields: typeFields(`boolean`),
         }),
       }
     }
@@ -103,9 +126,7 @@ const inferGraphQLInputFields = ({ value, nodes, prefix }) => {
       return {
         type: new GraphQLInputObjectType({
           name: createTypeName(`${prefix}QueryString`),
-          fields: {
-            ...typeFields(`string`),
-          },
+          fields: typeFields(`string`),
         }),
       }
     }
@@ -125,19 +146,15 @@ const inferGraphQLInputFields = ({ value, nodes, prefix }) => {
       if (value % 1 === 0) {
         return {
           type: new GraphQLInputObjectType({
-            name: createTypeName(`${prefix}QueryNumber`),
-            fields: {
-              ...typeFields(`int`),
-            },
+            name: createTypeName(`${prefix}QueryInteger`),
+            fields: typeFields(`int`),
           }),
         }
       } else {
         return {
           type: new GraphQLInputObjectType({
             name: createTypeName(`${prefix}QueryFloat`),
-            fields: {
-              ...typeFields(`float`),
-            },
+            fields: typeFields(`float`),
           }),
         }
       }
@@ -159,12 +176,12 @@ type InferInputOptions = {
   exampleValue?: Object,
 }
 
-export const inferInputObjectStructureFromNodes = ({
+export function inferInputObjectStructureFromNodes({
   nodes,
   typeName = ``,
   prefix = ``,
   exampleValue = extractFieldExamples(nodes),
-}: InferInputOptions) => {
+}: InferInputOptions): GraphQLInputFieldConfigMap {
   const inferredFields = {}
   const isRoot = !prefix
 

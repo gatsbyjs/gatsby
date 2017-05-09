@@ -22,14 +22,18 @@ const { addPageDependency } = require(`../redux/actions/add-page-dependency`)
 const { extractFieldExamples } = require(`./data-tree-utils`)
 const createTypeName = require(`./create-type-name`)
 
-import type { GraphQLType } from 'graphql'
+import type { GraphQLOutputType } from 'graphql'
+import type {
+  GraphQLFieldConfig,
+  GraphQLFieldConfigMap,
+} from 'graphql/type/definition'
 
 export type ProcessedNodeType = {
   name: string,
   node: any,
   nodes: any[],
   fieldsFromPlugins: any,
-  nodeObjectType: GraphQLType,
+  nodeObjectType: GraphQLOutputType,
 }
 
 const ISO_8601_FORMAT = [
@@ -52,7 +56,11 @@ const ISO_8601_FORMAT = [
   `YYYYDDDD`,
 ]
 
-const inferGraphQLType = ({ exampleValue, selector, ...otherArgs }) => {
+function inferGraphQLType({
+  exampleValue,
+  selector,
+  ...otherArgs
+}): ?GraphQLFieldConfig<*, *> {
   let fieldName = selector.split(`.`).pop()
 
   if (Array.isArray(exampleValue)) {
@@ -74,11 +82,17 @@ const inferGraphQLType = ({ exampleValue, selector, ...otherArgs }) => {
       })
       // Else if the values are simple values, just infer their type.
     } else {
-      headType = inferGraphQLType({
+      let inferredType = inferGraphQLType({
         ...otherArgs,
         exampleValue,
         selector,
-      }).type
+      })
+      invariant(
+        inferredType,
+        `Could not infer graphQL type for value: ${exampleValue}`
+      )
+
+      headType = inferredType.type
     }
     return { type: new GraphQLList(headType) }
   }
@@ -97,11 +111,16 @@ const inferGraphQLType = ({ exampleValue, selector, ...otherArgs }) => {
         },
         fromNow: {
           type: GraphQLBoolean,
-          description: `Returns a string generated with Moment.js' fromNow function`,
+          description: oneLine`
+            Returns a string generated with Moment.js' fromNow function`,
         },
         difference: {
           type: GraphQLString,
-          description: `Returns the difference between this date and the current time. Defaults to miliseconds but you can also pass in as the measurement years, months, weeks, days, hours, minutes, and seconds.`,
+          description: oneLine`
+            Returns the difference between this date and the current time.
+            Defaults to miliseconds but you can also pass in as the
+            measurement years, months, weeks, days, hours, minutes,
+            and seconds.`,
         },
       },
       resolve(object, { fromNow, difference, formatString }) {
@@ -147,7 +166,12 @@ const inferGraphQLType = ({ exampleValue, selector, ...otherArgs }) => {
   }
 }
 
-function inferFromMapping(value, mapping, fieldSelector, types) {
+function inferFromMapping(
+  value,
+  mapping,
+  fieldSelector,
+  types
+): ?GraphQLFieldConfig<*, *> {
   const matchedTypes = types.filter(
     type => type.name === mapping[fieldSelector]
   )
@@ -197,7 +221,7 @@ function inferFromMapping(value, mapping, fieldSelector, types) {
   }
 }
 
-const findLinkedNode = (value, linkedField, path) => {
+function findLinkedNode(value, linkedField, path) {
   let linkedNode
   // If the field doesn't link to the id, use that for searching.
   if (linkedField) {
@@ -215,7 +239,7 @@ const findLinkedNode = (value, linkedField, path) => {
   }
 }
 
-function inferFromFieldName(value, selector, types) {
+function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
   let isArray = false
   if (_.isArray(value)) {
     value = value[0]
@@ -348,12 +372,12 @@ const EXCLUDE_KEYS = {
 
 // Call this for the top level node + recursively for each sub-object.
 // E.g. This gets called for Markdown and then for its frontmatter subobject.
-export const inferObjectStructureFromNodes = ({
+export function inferObjectStructureFromNodes({
   nodes,
   types,
   selector,
   exampleValue = extractFieldExamples(nodes),
-}: inferTypeOptions) => {
+}: inferTypeOptions): GraphQLFieldConfigMap<*, *> {
   const config = store.getState().config
   const isRoot = !selector
   const mapping = config && config.mapping
