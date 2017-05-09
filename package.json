@@ -58,10 +58,9 @@
   "private": true,
   "scripts": {
     "build": "lerna run build",
-    "format": "npm run format-packages && npm run format-gatsby && npm run format-www && npm run format-examples && npm run format-scripts",
+    "format": "npm run format-packages && npm run format-www && npm run format-examples && npm run format-scripts",
     "format-examples": "prettier-eslint --write \"examples/**/gatsby-node.js\" \"examples/**/src/**/*.js\"",
-    "format-gatsby": "prettier-eslint --write \"packages/gatsby/lib/**/*.js\"",
-    "format-packages": "prettier-eslint --write \"packages/**/src/*.js\"",
+    "format-packages": "prettier-eslint --write \"packages/*/src/**/*.js\"",
     "format-scripts": "prettier-eslint --write \"scripts/**/*.js\"",
     "format-www": "prettier-eslint --write \"www/*.js\" \"www/src/**/*.js\"",
     "lerna": "lerna",
