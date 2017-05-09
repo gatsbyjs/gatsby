@@ -8,12 +8,14 @@ const {
   GraphQLList,
 } = require(`graphql`)
 const _ = require(`lodash`)
+const invariant = require(`invariant`)
 const moment = require(`moment`)
 const mime = require(`mime`)
 const isRelative = require(`is-relative`)
 const isRelativeUrl = require(`is-relative-url`)
 const slash = require(`slash`)
 const nodePath = require(`path`)
+const { oneLine } = require(`common-tags`)
 
 const { store, getNode, getNodes } = require(`../redux`)
 const { addPageDependency } = require(`../redux/actions/add-page-dependency`)
@@ -195,44 +197,62 @@ function inferFromMapping(value, mapping, fieldSelector, types) {
   }
 }
 
-function inferFromFieldName(value, key, types) {
+const findLinkedNode = (value, linkedField, path) => {
+  let linkedNode
+  // If the field doesn't link to the id, use that for searching.
+  if (linkedField) {
+    linkedNode = getNodes().find(n => n[linkedField] === value)
+    // Else the field is linking to the node's id, the default.
+  } else {
+    linkedNode = getNode(value)
+  }
+
+  if (linkedNode) {
+    if (path) {
+      addPageDependency({ path, nodeId: linkedNode.id })
+    }
+    return linkedNode
+  }
+}
+
+function inferFromFieldName(value, selector, types) {
   let isArray = false
   if (_.isArray(value)) {
     value = value[0]
     isArray = true
   }
-
+  const key = selector.split(`.`).pop()
   const [, , linkedField] = key.split(`___`)
 
-  const findNode = (value, path) => {
-    let linkedNode
-    // If the field doesn't link to the id, use that for searching.
-    if (linkedField) {
-      linkedNode = getNodes().find(n => n[linkedField] === value)
-      // Else the field is linking to the node's id, the default.
-    } else {
-      linkedNode = getNode(value)
-    }
-
-    if (linkedNode) {
-      if (path) {
-        addPageDependency({ path, nodeId: linkedNode.id })
-      }
-      return linkedNode
-    }
-  }
-
-  const linkedNode = findNode(value)
+  const linkedNode = findLinkedNode(value, linkedField)
+  invariant(
+    linkedNode,
+    oneLine`
+      Encountered an error trying to infer a GraphQL type for: "${selector}".
+      There is no corresponding node with the ${linkedField || `id`}
+      field matching: "${value}"
+    `
+  )
   const field = types.find(type => type.name === linkedNode.type)
+
+  invariant(
+    field,
+    oneLine`
+      Encountered an error trying to infer a GraphQL type for: "${selector}".
+      There is no corresponding GraphQL type "${linkedNode.type}" available
+      to link to this node.
+    `
+  )
 
   if (isArray) {
     return {
       type: new GraphQLList(field.nodeObjectType),
-      resolve: (node, a, b) => {
+      resolve: (node, a, b = {}) => {
         let fieldValue = node[key]
-
         if (fieldValue) {
-          return fieldValue.map(value => findNode(value, b.path))
+          return fieldValue.map(value =>
+            findLinkedNode(value, linkedField, b.path)
+          )
         } else {
           return null
         }
@@ -242,11 +262,10 @@ function inferFromFieldName(value, key, types) {
 
   return {
     type: field.nodeObjectType,
-    resolve: (node, a, b) => {
+    resolve: (node, a, b = {}) => {
       let fieldValue = node[key]
-
       if (fieldValue) {
-        const result = findNode(fieldValue, b.path)
+        const result = findLinkedNode(fieldValue, linkedField, b.path)
         return result
       } else {
         return null
@@ -362,7 +381,7 @@ export const inferObjectStructureFromNodes = ({
       // (a node id) to find the node and use that node's type as the field
     } else if (_.includes(key, `___NODE`)) {
       ;[fieldName] = key.split(`___`)
-      inferredField = inferFromFieldName(value, key, types)
+      inferredField = inferFromFieldName(value, nextSelector, types)
 
       // Third if the field is pointing to a file
     } else if (nodes[0].type !== `File` && shouldInferFile(value)) {

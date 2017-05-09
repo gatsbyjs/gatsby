@@ -1,4 +1,9 @@
-const { graphql, GraphQLObjectType, GraphQLSchema } = require(`graphql`)
+const {
+  graphql,
+  GraphQLString,
+  GraphQLObjectType,
+  GraphQLSchema,
+} = require(`graphql`)
 const { connectionArgs, connectionDefinitions } = require(`graphql-skip-limit`)
 
 const runSift = require(`../run-sift`)
@@ -8,10 +13,13 @@ const {
   inferInputObjectStructureFromNodes,
 } = require(`../infer-graphql-input-fields`)
 
-function queryResult(nodes, query) {
+function queryResult(nodes, query, { types = [] } = {}) {
   const nodeType = new GraphQLObjectType({
     name: `Test`,
-    fields: inferObjectStructureFromNodes({ nodes }),
+    fields: inferObjectStructureFromNodes({
+      nodes,
+      types: [{ name: `Test` }, ...types],
+    }),
   })
 
   const { connectionType: nodeConnection } = connectionDefinitions({
@@ -132,6 +140,32 @@ describe(`GraphQL Input args`, () => {
     expect(result.errors.length).toEqual(1)
     expect(result.errors[0].message).toMatch(
       `Unknown argument "foo" on field "allNode"`
+    )
+  })
+
+  it(`uses correct keys for linked fields`, async () => {
+    const { store } = require(`../../redux`)
+    let types = [{ name: `Bar`, nodeObjectType: GraphQLString }]
+
+    store.dispatch({
+      type: `CREATE_NODE`,
+      payload: { id: `baz`, type: `Bar` },
+    })
+
+    let result = await queryResult(
+      [{ linked___NODE: `baz`, foo: `bar` }],
+      `
+        {
+          allNode(linked___NODE: { eq: "baz" }) {
+            edges { node { linked } }
+          }
+        }
+      `,
+      { types }
+    )
+    expect(result.errors.length).toEqual(1)
+    expect(result.errors[0].message).toMatch(
+      `Unknown argument "linked___NODE" on field "allNode"`
     )
   })
 

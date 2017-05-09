@@ -6,7 +6,7 @@ const {
 } = require(`graphql`)
 const { inferObjectStructureFromNodes } = require(`../infer-graphql-type`)
 
-function queryResult(nodes, fragment) {
+function queryResult(nodes, fragment, { types = [] } = {}) {
   const schema = new GraphQLSchema({
     query: new GraphQLObjectType({
       name: `RootQueryType`,
@@ -18,7 +18,7 @@ function queryResult(nodes, fragment) {
               name: `Test`,
               fields: inferObjectStructureFromNodes({
                 nodes,
-                types: [{ name: `Test` }],
+                types: [{ name: `Test` }, ...types],
               }),
             })
           ),
@@ -152,6 +152,98 @@ describe(`GraphQL type inferance`, () => {
 
     expect(Object.keys(fields)).toHaveLength(1)
     expect(Object.keys(fields.foo.type.getFields())).toHaveLength(4)
+  })
+
+  xdescribe(`Linked inference from config mappings`)
+  xdescribe(`Linked inference from file URIs`)
+
+  describe(`Linked inference by __NODE convention`, () => {
+    let store, types
+
+    beforeEach(() => {
+      ;({ store } = require(`../../redux`))
+      types = [
+        {
+          name: `Child`,
+          nodeObjectType: new GraphQLObjectType({
+            name: `Child`,
+            fields: inferObjectStructureFromNodes({
+              nodes: [{ id: `child_1`, hair: `brown` }],
+              types: [{ name: `Child` }],
+            }),
+          }),
+        },
+      ]
+
+      store.dispatch({
+        type: `CREATE_NODE`,
+        payload: { id: `child_1`, type: `Child`, hair: `brown` },
+      })
+      store.dispatch({
+        type: `CREATE_NODE`,
+        payload: { id: `child_2`, type: `Child`, hair: `blonde` },
+      })
+    })
+
+    it(`Links nodes`, async () => {
+      let result = await queryResult(
+        [{ linked___NODE: `child_1` }],
+        `
+          linked {
+            hair
+          }
+        `,
+        { types }
+      )
+      expect(result.errors).not.toBeDefined()
+      expect(result.data.listNode[0].linked.hair).toEqual(`brown`)
+    })
+
+    it(`Links an array of nodes`, async () => {
+      let result = await queryResult(
+        [{ linked___NODE: [`child_1`, `child_2`] }],
+        `
+          linked {
+            hair
+          }
+        `,
+        { types }
+      )
+      expect(result.errors).not.toBeDefined()
+      expect(result.data.listNode[0].linked[0].hair).toEqual(`brown`)
+      expect(result.data.listNode[0].linked[1].hair).toEqual(`blonde`)
+    })
+
+    it(`Errors clearly when missing nodes`, async () => {
+      expect(() => {
+        inferObjectStructureFromNodes({
+          nodes: [{ linked___NODE: `baz` }],
+          types: [{ name: `Test` }],
+        })
+      }).toThrow(
+        `Encountered an error trying to infer a GraphQL type ` +
+          `for: "linked___NODE". There is no corresponding node with the id ` +
+          `field matching: "baz"`
+      )
+    })
+
+    it(`Errors clearly when missing types`, async () => {
+      store.dispatch({
+        type: `CREATE_NODE`,
+        payload: { id: `baz`, type: `Bar` },
+      })
+
+      expect(() => {
+        inferObjectStructureFromNodes({
+          nodes: [{ linked___NODE: `baz` }],
+          types: [{ name: `Test` }],
+        })
+      }).toThrow(
+        `Encountered an error trying to infer a GraphQL type ` +
+          `for: "linked___NODE". There is no corresponding GraphQL type ` +
+          `"Bar" available to link to this node.`
+      )
+    })
   })
 
   it(`Infers graphql type from array of nodes`, () => {

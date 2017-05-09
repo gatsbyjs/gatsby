@@ -152,12 +152,19 @@ const EXCLUDE_KEYS = {
   children: 1,
 }
 
+type InferInputOptions = {
+  nodes: Object[],
+  typeName?: string,
+  prefix?: string,
+  exampleValue?: Object,
+}
+
 export const inferInputObjectStructureFromNodes = ({
   nodes,
-  typeName,
-  prefix,
+  typeName = ``,
+  prefix = ``,
   exampleValue = extractFieldExamples(nodes),
-}) => {
+}: InferInputOptions) => {
   const inferredFields = {}
   const isRoot = !prefix
 
@@ -168,13 +175,13 @@ export const inferInputObjectStructureFromNodes = ({
     // setting traversing up not try to automatically infer them.
     if (isRoot && EXCLUDE_KEYS[key]) return
 
-    let cleanKey = key
-    if (_.includes(key, `___NODE`)) cleanKey = key.split(`___`)[0]
+    // Input arguments on linked fields aren't currently supported
+    if (_.includes(key, `___NODE`)) return
 
     let field = inferGraphQLInputFields({
       nodes,
       value,
-      prefix: `${prefix}${_.upperFirst(cleanKey)}`,
+      prefix: `${prefix}${_.upperFirst(key)}`,
     })
 
     if (field == null) return
