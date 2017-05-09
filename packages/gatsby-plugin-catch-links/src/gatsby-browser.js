@@ -1,7 +1,12 @@
-import catchLinks from "catch-links"
-import browserHistory from "react-router/lib/browserHistory"
+import catchLinks from "./catch-links"
+import createHistory from "history/createBrowserHistory"
+
+const history = createHistory()
+console.log(history)
+window.gatsby_history = history
 
 catchLinks(window, href => {
   console.log(href)
-  browserHistory.push(href)
+  // TODO figure out why this isn't working...
+  history.push(href)
 })

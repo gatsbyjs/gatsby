@@ -13,9 +13,6 @@
   ],
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "license": "MIT",
-  "dependencies": {
-    "catch-links": "^2.0.1"
-  },
   "devDependencies": {
     "babel-cli": "^6.24.1"
   }
