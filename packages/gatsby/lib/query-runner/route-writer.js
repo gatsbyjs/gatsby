@@ -13,6 +13,87 @@ import {
 // Loop through all paths and write them out to child-routes.js
 const writeChildRoutes = () => {
   const { program, config, pages } = store.getState()
+
+  // console.log(pages)
+  // Write out routes.json
+  const routesData = _.merge(
+    ..._.values(
+      pages.map(p => {
+        const object = {}
+        object[p.path] = _.pick(p, [`componentChunkName`, `layout`, `jsonName`])
+        return object
+      })
+    )
+  )
+
+  // Get list of components, layouts, and json files.
+  let components = []
+  let layouts = []
+  let json = []
+
+  pages.forEach(p => {
+    components.push({
+      componentChunkName: p.componentChunkName,
+      component: p.component,
+    })
+    if (p.layout) {
+      layouts.push(p.layout)
+    }
+    json.push(p.jsonName)
+  })
+
+  // Add the default layout if it exists.
+  let defaultLayoutExists = false
+  console.log(`${program.directory}/src/layouts/index.*`)
+  console.log(glob.sync(`${program.directory}/src/layouts/index.*`))
+  if (glob.sync(`${program.directory}/src/layouts/index.*`).length !== 0) {
+    layouts.push(`index`)
+    defaultLayoutExists = true
+  }
+  console.log(layouts)
+
+  layouts = _.uniq(layouts)
+  components = _.uniqBy(components, c => c.componentChunkName)
+
+  console.log(components, layouts, json)
+
+  fs.writeFile(
+    `${program.directory}/.cache/routes.json`,
+    JSON.stringify(routesData, null, 4)
+  )
+
+  // Create file with sync requires of layouts/components/json files.
+  let syncRequires = `// prefer default export if available
+const preferDefault = m => m && m.default || m
+\n\n`
+  syncRequires += `exports.components = {\n${components
+    .map(
+      c =>
+        `  "${c.componentChunkName}": preferDefault(require("${c.component}"))`
+    )
+    .join(`,\n`)}
+}\n\n`
+  syncRequires += `exports.json = {\n${json
+    .map(j => `  "${j}": require("${program.directory + "/.cache/json/" + j}")`)
+    .join(`,\n`)}
+}\n\n`
+  syncRequires += `exports.layouts = {\n${layouts
+    .map(l => {
+      console.log("layout", l)
+      let componentName = l
+      if (l !== false || typeof l !== `undefined`) {
+        componentName = `index`
+        return `  "${l}": preferDefault(require("${program.directory + `/src/layouts/` + componentName}"))`
+      } else {
+        return `  "${l}": false`
+      }
+    })
+    .join(`,\n`)}
+}`
+
+  console.log(syncRequires)
+  fs.writeFile(`${program.directory}/.cache/sync-requires.js`, syncRequires)
+
   let childRoutes = ``
   let splitChildRoutes = ``
 
@@ -56,20 +137,21 @@ const writeChildRoutes = () => {
   }
 
   // Group pages under their layout component (if any).
-  let defaultLayoutExists = true
-  if (glob.sync(`${program.directory}/src/layouts/default.*`).length === 0) {
+  // let defaultLayoutExists = true
+  if (glob.sync(`${program.directory}/src/layouts/index.*`).length === 0) {
     defaultLayoutExists = false
   }
   const groupedPages = _.groupBy(pages, page => {
     // If is a string we'll assume it's a working layout component.
     if (_.isString(page.layout)) {
+      console.log(page)
       return page.layout
       // If the user explicitely turns off layout, put page in undefined bucket.
     } else if (page.layout === false) {
       return `undefined`
       // Otherwise assume the default layout should handle this page.
     } else if (defaultLayoutExists) {
-      return `default`
+      return `index`
       // We got nothing left, undefined.
     } else {
       return `undefined`
@@ -139,7 +221,7 @@ const writeChildRoutes = () => {
   const notFoundPage = pages.find(page => page.path.indexOf(`/404`) !== -1)
 
   if (notFoundPage) {
-    const defaultLayout = `preferDefault(require('${program.directory}/src/layouts/default'))`
+    const defaultLayout = `preferDefault(require('${program.directory}/src/layouts/index'))`
     const notFoundPageStr = `
       {
         path: "*",
@@ -227,8 +309,8 @@ const writeChildRoutes = () => {
     const preferDefault = m => m && m.default || m
     const rootRoute = ${splitRootRoute}
     module.exports = rootRoute`
-  fs.writeFileSync(`${program.directory}/.cache/child-routes.js`, childRoutes)
-  fs.writeFileSync(
+  fs.writeFile(`${program.directory}/.cache/child-routes.js`, childRoutes)
+  fs.writeFile(
     `${program.directory}/.cache/split-child-routes.js`,
     splitChildRoutes
   )

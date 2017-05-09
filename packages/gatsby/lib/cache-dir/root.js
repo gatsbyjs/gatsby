@@ -1,15 +1,22 @@
 import React from "react"
-import { applyRouterMiddleware, Router, browserHistory } from "react-router"
 import useScroll from "react-router-scroll/lib/useScroll"
+import { BrowserRouter as Router, Route } from "react-router-dom"
+import createHistory from "history/createBrowserHistory"
 
-const apiRunner = require(`./api-runner-browser`)
-const rootRoute = require(`./child-routes`)
-console.log(rootRoute)
+import apiRunner from "./api-runner-browser"
+// import rootRoute from "./child-routes"
+import syncRequires from "./sync-requires"
+import routes from "./routes.json"
+
+console.log(syncRequires)
+console.log(routes)
 
 let currentLocation
 
-browserHistory.listen(location => {
-  currentLocation = location
+const history = createHistory()
+history.listen((location, action) => {
+  console.log("action", action)
+  apiRunner(`onRouteUpdate`, location, action)
 })
 
 function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
@@ -30,16 +37,43 @@ function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
   return true
 }
 
-const Root = () => (
-  <Router
-    history={browserHistory}
-    routes={rootRoute}
-    render={applyRouterMiddleware(useScroll(shouldUpdateScroll))}
-    onUpdate={() => {
-      apiRunner(`onRouteUpdate`, currentLocation)
-    }}
-  />
-)
+const DefaultLayout = () => {
+  return React.createElement(syncRequires.layouts["index"])
+}
+
+// TODO assemble component hierarchy on the fly. wrapper > ...layouts w/ data > page w/ data
+
+const Root = () =>
+  React.createElement(
+    Router,
+    null,
+    React.createElement(Route, {
+      component: location =>
+        React.createElement(syncRequires.layouts["index"], { ...location }, [
+          ...Object.keys(routes).map(path => {
+            const route = routes[path]
+            return React.createElement(Route, {
+              exact: true,
+              path,
+              component: props =>
+                React.createElement(
+                  syncRequires.components[route.componentChunkName],
+                  {
+                    ...props,
+                    ...syncRequires.json[route.jsonName],
+                  }
+                ),
+            })
+          }),
+        ]),
+    })
+  )
+// history={browserHistory}
+// routes={rootRoute}
+// render={applyRouterMiddleware(useScroll(shouldUpdateScroll))}
+// onUpdate={() => {
+// }}
+// />
 
 // Let site, plugins wrap the site e.g. for Redux.
 const WrappedRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
