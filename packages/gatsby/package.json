@@ -93,7 +93,7 @@
     "react-hot-loader": "^3.0.0-beta.6",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
-    "react-router-scroll": "https://github.com/ytase/react-router-scroll",
+    "react-router-scroll": "ytase/react-router-scroll#build",
     "redux": "^3.6.0",
     "relay-compiler": "^1.0.0-rc.3",
     "remote-redux-devtools": "^0.5.7",

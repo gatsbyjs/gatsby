@@ -16,14 +16,12 @@ const writeChildRoutes = () => {
 
   // console.log(pages)
   // Write out routes.json
-  const routesData = _.merge(
-    ..._.values(
-      pages.map(p => {
-        const object = {}
-        object[p.path] = _.pick(p, [`componentChunkName`, `layout`, `jsonName`])
-        return object
-      })
-    )
+  const routesData = pages.reduce(
+    (mem, { path, componentChunkName, layout, jsonName }) => ({
+      ...mem,
+      ...{ [path]: { componentChunkName, layout, jsonName } },
+    }),
+    {}
   )
 
   // Get list of components, layouts, and json files.
@@ -44,18 +42,13 @@ const writeChildRoutes = () => {
 
   // Add the default layout if it exists.
   let defaultLayoutExists = false
-  console.log(`${program.directory}/src/layouts/index.*`)
-  console.log(glob.sync(`${program.directory}/src/layouts/index.*`))
   if (glob.sync(`${program.directory}/src/layouts/index.*`).length !== 0) {
     layouts.push(`index`)
     defaultLayoutExists = true
   }
-  console.log(layouts)
 
   layouts = _.uniq(layouts)
   components = _.uniqBy(components, c => c.componentChunkName)
-
-  console.log(components, layouts, json)
 
   fs.writeFile(
     `${program.directory}/.cache/routes.json`,
@@ -74,12 +67,11 @@ const preferDefault = m => m && m.default || m
     .join(`,\n`)}
 }\n\n`
   syncRequires += `exports.json = {\n${json
-    .map(j => `  "${j}": require("${program.directory + "/.cache/json/" + j}")`)
+    .map(j => `  "${j}": require("${program.directory + `/.cache/json/` + j}")`)
     .join(`,\n`)}
 }\n\n`
   syncRequires += `exports.layouts = {\n${layouts
     .map(l => {
-      console.log("layout", l)
       let componentName = l
       if (l !== false || typeof l !== `undefined`) {
         componentName = `index`
@@ -91,7 +83,6 @@ const preferDefault = m => m && m.default || m
     .join(`,\n`)}
 }`
 
-  console.log(syncRequires)
   fs.writeFile(`${program.directory}/.cache/sync-requires.js`, syncRequires)
 
   let childRoutes = ``
