@@ -3,12 +3,6 @@
   "description": "React.js Static Site Generator",
   "version": "1.0.0-alpha14",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
-  "ava": {
-    "require": [
-      "babel-register"
-    ],
-    "babel": "inherit"
-  },
   "bin": {
     "gatsby": "./dist/gatsby-cli.js"
   },
@@ -148,10 +142,7 @@
     "build:src": "babel src --out-dir dist --source-maps --ignore gatsby-cli.js",
     "build:cli": "babel src/gatsby-cli.js --out-file dist/gatsby-cli.js --presets es2015",
     "clean-test-bundles": "find test/ -type f -name bundle.js* -exec rm -rf {} +",
-    "test": "npm run lint && npm run test-node && npm run test-integration",
     "test-coverage": "node_modules/.bin/nyc --reporter=lcov --reporter=text npm test",
-    "test-integration": "node_modules/.bin/ava test/integration",
-    "test-node": "node_modules/.bin/ava test/utils",
-    "watch": "rimraf dist && babel -w src --out-dir dist"
+    "watch": "rimraf dist && babel -w lib --out-dir dist  --source-maps "
   }
 }

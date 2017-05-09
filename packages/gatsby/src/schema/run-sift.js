@@ -37,32 +37,25 @@ module.exports = ({ args, nodes, connection = false, path = `` }) => {
     })
     return newObject
   }
+
   const siftArgs = []
   _.each(clonedArgs, (v, k) => {
     // Ignore connection and sorting args
-    if (_.includes([`skip`, `limit`, `sortBy`], k)) {
-      return
-    }
-    const tempObject = {}
-    tempObject[k] = v
-    siftArgs.push(siftifyArgs(tempObject))
+    if (_.includes([`skip`, `limit`, `sortBy`], k)) return
+
+    siftArgs.push(siftifyArgs({ [k]: v }))
   })
 
-  let result = []
-  if (_.isEmpty(siftArgs)) {
-    result = nodes
-  } else {
-    result = sift({ $and: siftArgs }, nodes)
-    if (!result) {
-      result = []
-    }
-  }
+  let result = _.isEmpty(siftArgs) ? nodes : sift({ $and: siftArgs }, nodes)
+
+  if (!result || !result.length) return
 
   // Sort results.
   if (clonedArgs.sortBy) {
     const convertedFields = clonedArgs.sortBy.fields.map(field =>
       field.replace(/___/g, `.`)
     )
+
     result = _.orderBy(result, convertedFields, clonedArgs.sortBy.order)
   }
 
@@ -74,13 +67,11 @@ module.exports = ({ args, nodes, connection = false, path = `` }) => {
       connection: result[0].type,
     })
     return connectionArray
-  } else {
-    if (result && result.length > 0) {
-      addPageDependency({
-        path,
-        nodeId: result[0].id,
-      })
-    }
-    return result[0]
   }
+
+  addPageDependency({
+    path,
+    nodeId: result[0].id,
+  })
+  return result[0]
 }

@@ -1,10 +1,8 @@
 // @flow
-import { GraphQLObjectType, GraphQLString, GraphQLBoolean } from "graphql"
-import moment from "moment"
-import _ from "lodash"
+import { GraphQLObjectType, GraphQLString } from 'graphql'
+import moment from 'moment'
 
-// import pagesSchema from './pages-schema'
-const { inferObjectStructureFromNodes } = require(`./infer-graphql-type`)
+import { inferObjectStructureFromNodes } from './infer-graphql-type'
 const { store } = require(`../redux`)
 
 module.exports = () => {
@@ -13,6 +11,7 @@ module.exports = () => {
   const metadataFields = () => {
     const fields = inferObjectStructureFromNodes({
       nodes: [config.siteMetadata],
+      types: [],
     })
     return fields
   }
