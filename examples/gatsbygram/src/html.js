@@ -60,7 +60,7 @@ module.exports = React.createClass({
         </head>
         <body>
           <div
-            id="react-mount"
+            id="___gatsby"
             dangerouslySetInnerHTML={{ __html: this.props.body }}
           />
           {this.props.postBodyComponents}

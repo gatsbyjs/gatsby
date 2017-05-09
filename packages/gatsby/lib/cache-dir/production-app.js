@@ -10,7 +10,6 @@ import match from "react-router/lib/match"
 import browserHistory from "react-router/lib/browserHistory"
 import useScroll from "react-router-scroll/lib/useScroll"
 
-const rootElement = document.getElementById(`react-mount`)
 const rootRoute = require(`./split-child-routes`)
 
 // If you try to load the split-child-routes module in other
@@ -61,7 +60,7 @@ match(
     ReactDOM.render(
       <NewRoot />,
       typeof window !== `undefined`
-        ? document.getElementById(`react-mount`)
+        ? document.getElementById(`___gatsby`)
         : void 0
     )
   }

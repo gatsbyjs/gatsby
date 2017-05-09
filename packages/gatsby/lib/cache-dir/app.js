@@ -6,7 +6,7 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { AppContainer as HotContainer } from "react-hot-loader"
 
-const rootElement = document.getElementById(`react-mount`)
+const rootElement = document.getElementById(`___gatsby`)
 
 let Root = require(`./root`)
 if (Root.default) {
