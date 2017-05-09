@@ -20,6 +20,16 @@ const { addPageDependency } = require(`../redux/actions/add-page-dependency`)
 const { extractFieldExamples } = require(`./data-tree-utils`)
 const createTypeName = require(`./create-type-name`)
 
+import type { GraphQLType } from 'graphql'
+
+export type ProcessedNodeType = {
+  name: string,
+  node: any,
+  nodes: any[],
+  fieldsFromPlugins: any,
+  nodeObjectType: GraphQLType,
+}
+
 const ISO_8601_FORMAT = [
   `YYYY`,
   `YYYY-MM`,
@@ -303,57 +313,62 @@ function inferFromUri(key, types) {
   }
 }
 
+type inferTypeOptions = {
+  nodes: Object[],
+  types: ProcessedNodeType[],
+  selector?: string,
+  exampleValue?: Object,
+}
+
+const EXCLUDE_KEYS = {
+  type: 1,
+  id: 1,
+  parent: 1,
+  children: 1,
+}
+
 // Call this for the top level node + recursively for each sub-object.
 // E.g. This gets called for Markdown and then for its frontmatter subobject.
-const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = ({
+export const inferObjectStructureFromNodes = ({
   nodes,
   types,
   selector,
-  exampleValue = extractFieldExamples({ nodes }),
-}) => {
-  // Remove fields common to the top-level of all nodes.  We add these
-  // elsewhere so don't need to infer their type.
-  if (!selector) {
-    delete exampleValue.type
-    delete exampleValue.id
-    delete exampleValue.parent
-    delete exampleValue.children
-  }
-
+  exampleValue = extractFieldExamples(nodes),
+}: inferTypeOptions) => {
   const config = store.getState().config
-  let mapping
-  if (config) {
-    mapping = config.mapping
-  }
+  const isRoot = !selector
+  const mapping = config && config.mapping
+
   const inferredFields = {}
   _.each(exampleValue, (value, key) => {
+    // Remove fields common to the top-level of all nodes.  We add these
+    // elsewhere so don't need to infer their type.
+    if (isRoot && EXCLUDE_KEYS[key]) return
+
     // Several checks to see if a field is pointing to custom type
     // before we try automatic inference.
-    //
-    // First check for manual field => type mappings in the site's
-    // gatsby-config.js
-    //
-    // Second if the field has a suffix of ___node. We use then the value
-    // (a node id) to find the node and use that node's type as the field.
-    //
-    // Third if the field is pointing to a file
-    //
-    // Finally our automatic inference of field value type.
     const nextSelector = selector ? `${selector}.${key}` : key
     const fieldSelector = `${nodes[0].type}.${nextSelector}`
 
     let fieldName = key
     let inferredField
 
+    // First check for manual field => type mappings in the site's
+    // gatsby-config.js
     if (mapping && _.includes(Object.keys(mapping), fieldSelector)) {
       inferredField = inferFromMapping(value, mapping, fieldSelector, types)
+
+      // Second if the field has a suffix of ___node. We use then the value
+      // (a node id) to find the node and use that node's type as the field
     } else if (_.includes(key, `___NODE`)) {
       ;[fieldName] = key.split(`___`)
       inferredField = inferFromFieldName(value, key, types)
+
+      // Third if the field is pointing to a file
     } else if (nodes[0].type !== `File` && shouldInferFile(value)) {
       inferredField = inferFromUri(key, types)
 
-      // Else do our automatic inference from the data.
+      // Finally our automatic inference of field value type.
     } else {
       inferredField = inferGraphQLType({
         nodes,
@@ -363,8 +378,9 @@ const inferObjectStructureFromNodes = (exports.inferObjectStructureFromNodes = (
       })
     }
 
-    if (inferredField) inferredFields[fieldName] = inferredField
+    if (!inferredField) return
+    inferredFields[fieldName] = inferredField
   })
 
   return inferredFields
-})
+}

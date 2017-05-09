@@ -1,6 +1,5 @@
 // @flow
 const _ = require(`lodash`)
-const { GraphQLInt, GraphQLList, GraphQLString } = require(`graphql`)
 const { connectionArgs, connectionDefinitions } = require(`graphql-skip-limit`)
 const {
   inferInputObjectStructureFromNodes,
@@ -18,11 +17,11 @@ module.exports = (types: any) => {
       connectionFields: () => buildConnectionFields(type),
     })
 
-    const inferredInputFields = inferInputObjectStructureFromNodes(
+    const inferredInputFields = inferInputObjectStructureFromNodes({
       nodes,
-      ``,
-      `${type.name}Connection`
-    )
+      typeName: `${type.name}Connection`,
+    })
+
     connections[_.camelCase(`all ${type.name}`)] = {
       type: typeConnection,
       description: `Connection to all ${type.name} nodes`,

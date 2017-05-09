@@ -113,7 +113,11 @@ const inferGraphQLInputFields = ({ value, nodes, prefix }) => {
       return {
         type: new GraphQLInputObjectType({
           name: createTypeName(`${prefix}InputObject`),
-          fields: inferInputObjectStructureFromNodes(nodes, prefix, ``, value),
+          fields: inferInputObjectStructureFromNodes({
+            nodes,
+            prefix,
+            exampleValue: value,
+          }),
         }),
       }
     }
@@ -143,20 +147,38 @@ const inferGraphQLInputFields = ({ value, nodes, prefix }) => {
   }
 }
 
-const inferInputObjectStructureFromNodes = (exports.inferInputObjectStructureFromNodes = (
-  nodes,
-  selector = typeName,
-  typeName,
-  fieldExamples = extractFieldExamples({ nodes })
-) => {
-  const inferredFields = _.mapValues(fieldExamples, (value, key) => {
-    if (_.includes(key, `___NODE`)) key = key.split(`___`)[0]
+const EXCLUDE_KEYS = {
+  parent: 1,
+  children: 1,
+}
 
-    return inferGraphQLInputFields({
+export const inferInputObjectStructureFromNodes = ({
+  nodes,
+  typeName,
+  prefix,
+  exampleValue = extractFieldExamples(nodes),
+}) => {
+  const inferredFields = {}
+  const isRoot = !prefix
+
+  prefix = isRoot ? typeName : prefix
+
+  _.each(exampleValue, (value, key) => {
+    // Remove fields for traversing through nodes as we want to control
+    // setting traversing up not try to automatically infer them.
+    if (isRoot && EXCLUDE_KEYS[key]) return
+
+    let cleanKey = key
+    if (_.includes(key, `___NODE`)) cleanKey = key.split(`___`)[0]
+
+    let field = inferGraphQLInputFields({
       nodes,
       value,
-      prefix: `${selector}${_.upperFirst(key)}`,
+      prefix: `${prefix}${_.upperFirst(cleanKey)}`,
     })
+
+    if (field == null) return
+    inferredFields[key] = field
   })
 
   // Add sorting (but only to the top level).
@@ -193,4 +215,4 @@ const inferInputObjectStructureFromNodes = (exports.inferInputObjectStructureFro
   }
 
   return inferredFields
-})
+}

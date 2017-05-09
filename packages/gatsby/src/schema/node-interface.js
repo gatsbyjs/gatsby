@@ -1,12 +1,12 @@
 // @flow
-const {
+import {
   GraphQLNonNull,
   GraphQLID,
   GraphQLList,
   GraphQLInterfaceType,
-} = require(`graphql`)
+} from 'graphql'
 
-const nodeInterface = (module.exports = new GraphQLInterfaceType({
+export const nodeInterface = new GraphQLInterfaceType({
   name: `Node`,
   description: `An object with an id, parent, and children`,
   fields: () => ({
@@ -23,4 +23,4 @@ const nodeInterface = (module.exports = new GraphQLInterfaceType({
       description: `The children of this node.`,
     },
   }),
-}))
+})

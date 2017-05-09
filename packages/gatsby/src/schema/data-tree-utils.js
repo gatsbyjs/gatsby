@@ -2,9 +2,21 @@
 const _ = require(`lodash`)
 const flatten = require(`flat`)
 
-const mergeNodes = (...args) => {
+/**
+ * Takes an array of source nodes and returns a pristine
+ * example that can be used to infer types.
+ *
+ * Arrays are flattened to either: `null` for empty or sparse arrays or a
+ * an array of a sigle merged example. e.g:
+ *
+ *  - ['red'], ['blue', 'yellow'] -> ['red']
+ *  - [{ color: 'red'}, { color: 'blue', ht: 5 }] -> [{ color: 'red', ht: 5 }]
+ *
+ * @param {*Nodes} args
+ */
+export const extractFieldExamples = (nodes: any[]) => {
   // $FlowFixMe
-  return _.mergeWith({}, ...args, (obj, next) => {
+  return _.mergeWith({}, ...nodes, (obj, next) => {
     if (!_.isArray(obj || next)) return
     let array = [].concat(obj, next).filter(v => v != null)
 
@@ -15,42 +27,16 @@ const mergeNodes = (...args) => {
       return array.slice(0, 1)
     }
 
-    return [mergeNodes(...array)]
+    return [extractFieldExamples(array)]
   })
 }
 
-const extractFieldExamples = (exports.extractFieldExamples = ({
-  nodes,
-  deleteNodeFields = false,
-}: {
-  nodes: any[],
-  deleteNodeFields: boolean,
-}) => {
-  let examples = mergeNodes({}, ...nodes)
-
-  if (deleteNodeFields) {
-    // Remove fields for traversing through nodes as we want to control
-    // setting traversing up not try to automatically infer them.
-    delete examples.children
-    delete examples.parent
-  }
-
-  return examples
-})
-
-exports.buildFieldEnumValues = (nodes: any[]) => {
+export const buildFieldEnumValues = (nodes: any[]) => {
   const enumValues = {}
-  const values = flatten(
-    extractFieldExamples({
-      nodes,
-      selector: ``,
-      deleteNodeFields: true,
-    }),
-    {
-      maxDepth: 3,
-      safe: true, // don't flatten arrays.
-    }
-  )
+  const values = flatten(extractFieldExamples(nodes), {
+    maxDepth: 3,
+    safe: true, // don't flatten arrays.
+  })
   Object.keys(values).forEach(field => {
     if (values[field] == null) return
     enumValues[field.replace(/\./g, `___`)] = { field }

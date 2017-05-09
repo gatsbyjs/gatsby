@@ -1,31 +1,35 @@
 // @flow
-const _ = require(`lodash`)
-const {
+import _ from 'lodash'
+import Promise from 'bluebird'
+import {
   GraphQLObjectType,
   GraphQLNonNull,
   GraphQLID,
   GraphQLList,
   GraphQLString,
-} = require(`graphql`)
-const Promise = require(`bluebird`)
+} from 'graphql'
 
-const apiRunner = require(`../utils/api-runner-node`)
-const { inferObjectStructureFromNodes } = require(`./infer-graphql-type`)
-const {
+import apiRunner from '../utils/api-runner-node'
+import { inferObjectStructureFromNodes } from './infer-graphql-type'
+import {
   inferInputObjectStructureFromNodes,
-} = require(`./infer-graphql-input-fields`)
-const nodeInterface = require(`./node-interface`)
-const { getNodes, getNode, getNodeAndSavePathDependency } = require(`../redux`)
-const { addPageDependency } = require(`../redux/actions/add-page-dependency`)
+} from './infer-graphql-input-fields'
+import { nodeInterface } from './node-interface'
+import { getNodes, getNode, getNodeAndSavePathDependency } from '../redux'
+import { addPageDependency } from '../redux/actions/add-page-dependency'
+
+import type { ProcessedNodeType } from './infer-graphql-type'
+
+type TypeMap = { [typeName: string]: ProcessedNodeType }
 
 module.exports = async () =>
   new Promise(resolve => {
-    const processedTypes = {}
-
     // Identify node types in the data.
     const types = _.groupBy(getNodes(), node => node.type)
 
-    const createNodeFields = type => {
+    const processedTypes: TypeMap = {}
+
+    function createNodeFields(type: ProcessedNodeType) {
       const defaultNodeFields = {
         id: {
           type: new GraphQLNonNull(GraphQLID),
@@ -55,21 +59,22 @@ module.exports = async () =>
 
       // Create children fields for each type of children e.g.
       // "childrenMarkdownRemark".
-      const typeChildrenNodes = _.flatten(
-        type.nodes.map(n => n.children)
-      ).map(id => getNode(id))
-      const groupedChildren = _.groupBy(typeChildrenNodes, child => child.type)
+      const groupedChildren = _(type.nodes)
+        .flatMap(`children`)
+        .groupBy(id => _.camelCase(getNode(id).type))
+        .value()
+
       Object.keys(groupedChildren).forEach(groupChildrenKey => {
         // Does this child type have one child per parent or multiple?
         const maxChildCount = _.maxBy(
           _.values(_.groupBy(groupedChildren[groupChildrenKey], c => c.parent)),
           g => g.length
         ).length
+
         if (maxChildCount > 1) {
           defaultNodeFields[_.camelCase(`children ${groupChildrenKey}`)] = {
             type: new GraphQLList(
-              _.values(processedTypes).find(t => t.name === groupChildrenKey)
-                .nodeObjectType
+              processedTypes[groupChildrenKey].nodeObjectType
             ),
             description: `The children of this node of type
             ${groupChildrenKey}`,
@@ -86,9 +91,7 @@ module.exports = async () =>
           }
         } else {
           defaultNodeFields[_.camelCase(`child ${groupChildrenKey}`)] = {
-            type: _.values(processedTypes).find(
-              t => t.name === groupChildrenKey
-            ).nodeObjectType,
+            type: processedTypes[groupChildrenKey].nodeObjectType,
             description: `The child of this node of type ${groupChildrenKey}`,
             resolve(node, a, { path }) {
               const childNode = node.children
@@ -124,10 +127,11 @@ module.exports = async () =>
         types,
         (nodes, typeName) =>
           new Promise(typeResolve => {
-            const nodeType = {
+            const nodeType: ProcessedNodeType = {
               name: typeName,
               nodes,
             }
+
             apiRunner(`extendNodeType`, {
               type: nodeType,
               allNodes: getNodes(),
@@ -135,11 +139,10 @@ module.exports = async () =>
               const mergedFieldsFromPlugins = _.merge(...fieldsFromPlugins)
               nodeType.fieldsFromPlugins = mergedFieldsFromPlugins
 
-              const inputArgs = inferInputObjectStructureFromNodes(
+              const inputArgs = inferInputObjectStructureFromNodes({
                 nodes,
-                ``,
-                typeName
-              )
+                typeName,
+              })
 
               nodeType.nodeObjectType = new GraphQLObjectType({
                 name: typeName,

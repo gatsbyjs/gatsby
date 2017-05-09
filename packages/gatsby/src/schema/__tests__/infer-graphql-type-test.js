@@ -15,7 +15,7 @@ function queryResult(nodes, fragment) {
           name: `LISTNODE`,
           type: new GraphQLList(
             new GraphQLObjectType({
-              name: `TEST`,
+              name: `Test`,
               fields: inferObjectStructureFromNodes({
                 nodes,
                 types: [{ name: `Test` }],
@@ -89,6 +89,71 @@ describe(`GraphQL type inferance`, () => {
     },
   ]
 
+  it(`filters out null example values`, async () => {
+    let result = await queryResult(
+      [{ foo: null, bar: `baz` }],
+      `
+        foo
+        bar
+      `
+    )
+    expect(result.errors.length).toEqual(1)
+    expect(result.errors[0].message).toMatch(
+      `Cannot query field "foo" on type "Test".`
+    )
+  })
+
+  it(`filters out empty arrays`, async () => {
+    let result = await queryResult(
+      [{ foo: [], bar: `baz` }],
+      `
+        foo
+        bar
+      `
+    )
+    expect(result.errors.length).toEqual(1)
+    expect(result.errors[0].message).toMatch(
+      `Cannot query field "foo" on type "Test".`
+    )
+  })
+
+  it(`filters out sparse arrays`, async () => {
+    let result = await queryResult(
+      [{ foo: [undefined, null, null], bar: `baz` }],
+      `
+        foo
+        bar
+      `
+    )
+    expect(result.errors.length).toEqual(1)
+    expect(result.errors[0].message).toMatch(
+      `Cannot query field "foo" on type "Test".`
+    )
+  })
+
+  it(`Removes specific root fields`, () => {
+    let fields = inferObjectStructureFromNodes({
+      nodes: [
+        {
+          type: `Test`,
+          id: `foo`,
+          parent: `parent`,
+          children: [`bar`],
+          foo: {
+            type: `Test`,
+            id: `foo`,
+            parent: `parent`,
+            children: [`bar`],
+          },
+        },
+      ],
+      types: [{ name: `Test` }],
+    })
+
+    expect(Object.keys(fields)).toHaveLength(1)
+    expect(Object.keys(fields.foo.type.getFields())).toHaveLength(4)
+  })
+
   it(`Infers graphql type from array of nodes`, () => {
     return queryResult(
       nodes,
@@ -122,40 +187,6 @@ describe(`GraphQL type inferance`, () => {
           date(formatString: "YYYY")
         }
     `
-    ).then(result => expect(result).toMatchSnapshot())
-  })
-
-  it(`removes specific fields `, () => {
-    return queryResult(
-      [
-        {
-          title: `Some test`,
-          slug: `test`,
-          summary: `_`,
-          coverImage: {
-            url: `_`,
-
-            size: 720368,
-            width: 2876,
-            height: 1792,
-          },
-          date: `2015-11-01`,
-          dateEnd: `2015-11-01`,
-        },
-      ],
-      `
-        title
-        slug
-        summary
-        coverImage {
-          url
-          size
-          width
-          height
-        }
-        date
-        dateEnd
-      `
     ).then(result => expect(result).toMatchSnapshot())
   })
 })

@@ -93,15 +93,3 @@ Object {
   },
 }
 `;
-
-exports[`GraphQL type inferance removes specific fields  1`] = `
-Object {
-  "data": Object {
-    "listNode": Array [
-      Object {
-        "title": "Some test",
-      },
-    ],
-  },
-}
-`;

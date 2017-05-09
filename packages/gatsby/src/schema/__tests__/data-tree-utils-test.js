@@ -63,16 +63,16 @@ describe(`Gatsby data tree utils`, () => {
   ]
 
   it(`builds field examples from an array of nodes`, () => {
-    expect(extractFieldExamples({ nodes })).toMatchSnapshot()
+    expect(extractFieldExamples(nodes)).toMatchSnapshot()
   })
 
   it(`null fields should have a null value`, () => {
-    expect(extractFieldExamples({ nodes }).iAmNull).toBeNull()
+    expect(extractFieldExamples(nodes).iAmNull).toBeNull()
   })
 
   it(`turns empty or sparse arrays to null`, () => {
-    expect(extractFieldExamples({ nodes }).emptyArray).toBeNull()
-    expect(extractFieldExamples({ nodes }).hair).toBeDefined()
+    expect(extractFieldExamples(nodes).emptyArray).toBeNull()
+    expect(extractFieldExamples(nodes).hair).toBeDefined()
   })
 
   it(`build enum values for fields from array on nodes`, () => {
