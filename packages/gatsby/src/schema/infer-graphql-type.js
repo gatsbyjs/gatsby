@@ -30,8 +30,8 @@ import type {
 
 export type ProcessedNodeType = {
   name: string,
-  node: any,
   nodes: any[],
+  node: GraphQLFieldConfig<*, *>,
   fieldsFromPlugins: any,
   nodeObjectType: GraphQLOutputType,
 }

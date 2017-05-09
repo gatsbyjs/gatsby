@@ -1,21 +1,21 @@
 // @flow
-import _ from 'lodash'
-import {
+const _ = require(`lodash`)
+const {
   GraphQLObjectType,
   GraphQLNonNull,
   GraphQLID,
   GraphQLList,
   GraphQLString,
-} from 'graphql'
+} = require(`graphql`)
 
-import apiRunner from '../utils/api-runner-node'
-import { inferObjectStructureFromNodes } from './infer-graphql-type'
-import {
+const apiRunner = require(`../utils/api-runner-node`)
+const { inferObjectStructureFromNodes } = require(`./infer-graphql-type`)
+const {
   inferInputObjectStructureFromNodes,
-} from './infer-graphql-input-fields'
-import { nodeInterface } from './node-interface'
-import { getNodes, getNode, getNodeAndSavePathDependency } from '../redux'
-import { addPageDependency } from '../redux/actions/add-page-dependency'
+} = require(`./infer-graphql-input-fields`)
+const { nodeInterface } = require(`./node-interface`)
+const { getNodes, getNode, getNodeAndSavePathDependency } = require(`../redux`)
+const { addPageDependency } = require(`../redux/actions/add-page-dependency`)
 
 import type { ProcessedNodeType } from './infer-graphql-type'
 
@@ -53,28 +53,27 @@ module.exports = async () => {
 
     // Create children fields for each type of children e.g.
     // "childrenMarkdownRemark".
-    const groupedChildren = _(type.nodes)
-      .flatMap(`children`)
-      .groupBy(id => _.camelCase(getNode(id).type))
+    const childNodesByType = _(type.nodes)
+      .flatMap(({ children }) => children.map(getNode))
+      .groupBy(node => _.camelCase(node.type))
       .value()
 
-    Object.keys(groupedChildren).forEach(groupChildrenKey => {
+    Object.keys(childNodesByType).forEach(childNodeType => {
       // Does this child type have one child per parent or multiple?
       const maxChildCount = _.maxBy(
-        _.values(_.groupBy(groupedChildren[groupChildrenKey], c => c.parent)),
+        _.values(_.groupBy(childNodesByType[childNodeType], c => c.parent)),
         g => g.length
       ).length
 
       if (maxChildCount > 1) {
-        defaultNodeFields[_.camelCase(`children ${groupChildrenKey}`)] = {
-          type: new GraphQLList(
-            processedTypes[groupChildrenKey].nodeObjectType
-          ),
-          description: `The children of this node of type ${groupChildrenKey}`,
+        defaultNodeFields[_.camelCase(`children ${childNodeType}`)] = {
+          type: new GraphQLList(processedTypes[childNodeType].nodeObjectType),
+          description: `The children of this node of type ${childNodeType}`,
           resolve(node, a, { path }) {
             const filteredNodes = node.children
               .map(id => getNode(id))
-              .filter(n => n.type === groupChildrenKey)
+              .filter(({ type }) => _.camelCase(type) === childNodeType)
+
             // Add dependencies for the path
             filteredNodes.forEach(n =>
               addPageDependency({ path, nodeId: n.id })
@@ -83,13 +82,14 @@ module.exports = async () => {
           },
         }
       } else {
-        defaultNodeFields[_.camelCase(`child ${groupChildrenKey}`)] = {
-          type: processedTypes[groupChildrenKey].nodeObjectType,
-          description: `The child of this node of type ${groupChildrenKey}`,
+        defaultNodeFields[_.camelCase(`child ${childNodeType}`)] = {
+          type: processedTypes[childNodeType].nodeObjectType,
+          description: `The child of this node of type ${childNodeType}`,
           resolve(node, a, { path }) {
             const childNode = node.children
               .map(id => getNode(id))
-              .find(n => n.type === groupChildrenKey)
+              .find(({ type }) => _.camelCase(type) === childNodeType)
+
             if (childNode) {
               // Add dependencies for the path
               addPageDependency({ path, nodeId: childNode.id })
@@ -129,8 +129,8 @@ module.exports = async () => {
     const gqlType = new GraphQLObjectType({
       name: typeName,
       description: `Node of type ${typeName}`,
-      fields: () => createNodeFields(proccesedType),
       interfaces: [nodeInterface],
+      fields: () => createNodeFields(proccesedType),
       isTypeOf: value => value.type === typeName,
     })
 
