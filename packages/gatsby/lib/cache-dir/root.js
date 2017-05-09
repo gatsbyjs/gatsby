@@ -1,5 +1,5 @@
 import React from "react"
-import { BrowserRouter as Router, Route } from "react-router-dom"
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import { ScrollContext } from "react-router-scroll"
 import createHistory from "history/createBrowserHistory"
 
@@ -36,6 +36,9 @@ function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
 
 const $ = React.createElement
 
+const filteredRoutes = routes.filter(r => r.path !== `/404.html`)
+const noMatch = routes.find(r => r.path === `/404.html`)
+
 const Root = () =>
   $(
     Router,
@@ -47,20 +50,30 @@ const Root = () =>
         component: location =>
           // TODO add support for multiple nested layouts
           // and for layouts to be able to have their own queries.
-          $(syncRequires.layouts[`index`], { ...location }, [
-            ...Object.keys(routes).map(path => {
-              const route = routes[path]
-              return $(Route, {
-                exact: true,
-                path,
+          $(
+            syncRequires.layouts[`index`],
+            { ...location },
+            $(Switch, null, [
+              ...filteredRoutes.map(route => {
+                return $(Route, {
+                  exact: true,
+                  path: route.path,
+                  component: props =>
+                    $(syncRequires.components[route.componentChunkName], {
+                      ...props,
+                      ...syncRequires.json[route.jsonName],
+                    }),
+                })
+              }),
+              $(Route, {
                 component: props =>
-                  $(syncRequires.components[route.componentChunkName], {
+                  $(syncRequires.components[noMatch.componentChunkName], {
                     ...props,
-                    ...syncRequires.json[route.jsonName],
+                    ...syncRequires.json[noMatch.jsonName],
                   }),
-              })
-            }),
-          ]),
+              }),
+            ])
+          ),
       })
     )
   )

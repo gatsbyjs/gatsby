@@ -14,14 +14,13 @@ import {
 const writeChildRoutes = () => {
   const { program, config, pages } = store.getState()
 
-  // console.log(pages)
   // Write out routes.json
   const routesData = pages.reduce(
-    (mem, { path, componentChunkName, layout, jsonName }) => ({
+    (mem, { path, componentChunkName, layout, jsonName }) => [
       ...mem,
-      ...{ [path]: { componentChunkName, layout, jsonName } },
-    }),
-    {}
+      { componentChunkName, layout, jsonName, path },
+    ],
+    []
   )
 
   // Get list of components, layouts, and json files.
