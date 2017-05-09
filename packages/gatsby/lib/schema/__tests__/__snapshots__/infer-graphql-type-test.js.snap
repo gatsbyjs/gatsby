@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Infers graphql type from array of nodes 1`] = `
+exports[`GraphQL type inferance Infers graphql type from array of nodes 1`] = `
 Object {
   "data": Object {
     "listNode": Array [
@@ -16,14 +16,12 @@ Object {
           Object {
             "aBoolean": true,
             "aNumber": 2,
-            "aString": "some string",
             "anArray": null,
             "anotherObjectArray": null,
           },
           Object {
             "aBoolean": null,
             "aNumber": 2,
-            "aString": "some string",
             "anArray": Array [
               1,
               2,
@@ -33,7 +31,6 @@ Object {
           Object {
             "aBoolean": null,
             "aNumber": null,
-            "aString": null,
             "anArray": null,
             "anotherObjectArray": Array [
               Object {
@@ -73,7 +70,6 @@ Object {
           Object {
             "aBoolean": null,
             "aNumber": null,
-            "aString": null,
             "anArray": null,
             "anotherObjectArray": Array [
               Object {
@@ -92,6 +88,18 @@ Object {
           "title": "The world of slash and adventure",
         },
         "hair": 2,
+      },
+    ],
+  },
+}
+`;
+
+exports[`GraphQL type inferance removes specific fields  1`] = `
+Object {
+  "data": Object {
+    "listNode": Array [
+      Object {
+        "title": "Some test",
       },
     ],
   },

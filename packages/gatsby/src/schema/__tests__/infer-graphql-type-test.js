@@ -1,11 +1,47 @@
-test(`Infers graphql type from array of nodes`, () => {
-  const { inferObjectStructureFromNodes } = require(`../infer-graphql-type`)
-  const {
-    graphql,
-    GraphQLObjectType,
-    GraphQLList,
-    GraphQLSchema,
-  } = require(`graphql`)
+const {
+  graphql,
+  GraphQLObjectType,
+  GraphQLList,
+  GraphQLSchema,
+} = require(`graphql`)
+const { inferObjectStructureFromNodes } = require(`../infer-graphql-type`)
+
+function queryResult(nodes, fragment) {
+  const schema = new GraphQLSchema({
+    query: new GraphQLObjectType({
+      name: `RootQueryType`,
+      fields: () => ({
+        listNode: {
+          name: `LISTNODE`,
+          type: new GraphQLList(
+            new GraphQLObjectType({
+              name: `TEST`,
+              fields: inferObjectStructureFromNodes({
+                nodes,
+                types: [{ name: `Test` }],
+              }),
+            })
+          ),
+          resolve() {
+            return nodes
+          },
+        },
+      }),
+    }),
+  })
+
+  return graphql(
+    schema,
+    `query {
+      listNode {
+        ${fragment}
+      }
+    }
+    `
+  )
+}
+
+describe(`GraphQL type inferance`, () => {
   const nodes = [
     {
       id: `foo`,
@@ -52,65 +88,74 @@ test(`Infers graphql type from array of nodes`, () => {
       },
     },
   ]
-  const inferredFields = inferObjectStructureFromNodes({
-    nodes,
-    types: [{ name: `Test` }],
-  })
-  const nodeType = new GraphQLObjectType({
-    name: `TEST`,
-    fields: { ...inferredFields },
-  })
-  const listNode = {
-    name: `LISTNODE`,
-    type: new GraphQLList(nodeType),
-    resolve() {
-      return nodes
-    },
-  }
-  const schema = new GraphQLSchema({
-    query: new GraphQLObjectType({
-      name: `RootQueryType`,
-      fields: () => ({
-        listNode,
-      }),
-    }),
-  })
-  graphql(
-    schema,
-    `
-        {
-          listNode {
-            hair,
-            anArray,
-            anObjectArray {
-              aString,
-              aNumber,
-              aBoolean,
-              anArray
-              anotherObjectArray {
-                bar
-                baz
-              }
-            },
+
+  it(`Infers graphql type from array of nodes`, () => {
+    return queryResult(
+      nodes,
+      `
+        hair,
+        anArray,
+        anObjectArray {
+          aNumber,
+          aBoolean,
+          anArray
+          anotherObjectArray {
+            bar
+            baz
+          }
+        },
+        deepObject {
+          level
+          deepObject {
+            level
             deepObject {
               level
-              deepObject {
-                level
-                deepObject {
-                  level
-                }
-              }
-            }
-            aBoolean,
-            externalUrl,
-            domain,
-            date(formatString: "YYYY"),
-            frontmatter {
-              title,
-              date(formatString: "YYYY")
             }
           }
         }
-        `
-  ).then(result => expect(result).toMatchSnapshot())
+        aBoolean,
+        externalUrl,
+        domain,
+        date(formatString: "YYYY"),
+        frontmatter {
+          title,
+          date(formatString: "YYYY")
+        }
+    `
+    ).then(result => expect(result).toMatchSnapshot())
+  })
+
+  it(`removes specific fields `, () => {
+    return queryResult(
+      [
+        {
+          title: `Some test`,
+          slug: `test`,
+          summary: `_`,
+          coverImage: {
+            url: `_`,
+
+            size: 720368,
+            width: 2876,
+            height: 1792,
+          },
+          date: `2015-11-01`,
+          dateEnd: `2015-11-01`,
+        },
+      ],
+      `
+        title
+        slug
+        summary
+        coverImage {
+          url
+          size
+          width
+          height
+        }
+        date
+        dateEnd
+      `
+    ).then(result => expect(result).toMatchSnapshot())
+  })
 })
