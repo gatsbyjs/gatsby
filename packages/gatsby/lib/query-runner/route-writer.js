@@ -36,7 +36,7 @@ const writeChildRoutes = () => {
     if (p.layout) {
       layouts.push(p.layout)
     }
-    json.push(p.jsonName)
+    json.push({ path: p.path, jsonName: p.jsonName })
   })
 
   // Add the default layout if it exists.
@@ -66,7 +66,10 @@ const preferDefault = m => m && m.default || m
     .join(`,\n`)}
 }\n\n`
   syncRequires += `exports.json = {\n${json
-    .map(j => `  "${j}": require("${program.directory + `/.cache/json/` + j}")`)
+    .map(
+      j =>
+        `  "${j.jsonName}": require("${program.directory + `/.cache/json/` + j.jsonName}")`
+    )
     .join(`,\n`)}
 }\n\n`
   syncRequires += `exports.layouts = {\n${layouts
@@ -83,6 +86,39 @@ const preferDefault = m => m && m.default || m
 }`
 
   fs.writeFile(`${program.directory}/.cache/sync-requires.js`, syncRequires)
+
+  // Create file with async requires of layouts/components/json files.
+  let asyncRequires = `// prefer default export if available
+const preferDefault = m => m && m.default || m
+\n`
+  asyncRequires += `exports.components = {\n${components
+    .map(
+      c =>
+        `  "${c.componentChunkName}": require("bundle-loader?lazy&name=${c.componentChunkName}!${c.component}")`
+    )
+    .join(`,\n`)}
+}\n\n`
+  asyncRequires += `exports.json = {\n${json
+    .map(
+      j =>
+        `  "${j.jsonName}": require("bundle-loader?lazy&name=${pathChunkName(j.path)}!${program.directory + `/.cache/json/` + j.jsonName}")`
+    )
+    .join(`,\n`)}
+}\n\n`
+  asyncRequires += `exports.layouts = {\n${layouts
+    .map(layout => {
+      let componentName = layout
+      if (layout !== false || typeof layout !== `undefined`) {
+        componentName = `index`
+        return `  "${layout}": require("bundle-loader?lazy&name=${`layout-component---${layout}`}!${program.directory + `/src/layouts/` + componentName}")`
+      } else {
+        return `  "${layout}": false`
+      }
+    })
+    .join(`,\n`)}
+}`
+
+  fs.writeFile(`${program.directory}/.cache/async-requires.js`, asyncRequires)
 
   let childRoutes = ``
   let splitChildRoutes = ``

@@ -15,7 +15,6 @@ const { store } = require(`../redux`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
 const WebpackMD5Hash = require(`webpack-md5-hash`)
 const ChunkManifestPlugin = require(`chunk-manifest-webpack-plugin`)
-const { layoutComponentChunkName } = require(`./js-chunk-names`)
 const genBabelConfig = require(`./babel-config`)
 
 // Five stages or modes:
@@ -164,11 +163,12 @@ module.exports = async (
         ]
       case `build-javascript`: {
         // Get array of page template component names.
-        let components = store.getState().pages.map(page => page.component)
-        components = components.map(component =>
-          layoutComponentChunkName(program.directory, component)
-        )
+        let components = store
+          .getState()
+          .pages.map(page => page.componentChunkName)
         components = uniq(components)
+        components.push(`layout-component---index`)
+        console.log("components", components)
         return [
           // Moment.js includes 100s of KBs of extra localization data
           // by default in Webpack that most sites don't want.
@@ -199,6 +199,7 @@ module.exports = async (
                 `react`,
                 `react-dom`,
                 `react-router`,
+                `react-router-dom`,
                 `react-router-scroll`,
                 `scroll-behavior`,
                 `history`,

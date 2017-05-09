@@ -4,26 +4,15 @@ apiRunner(`clientEntry`)
 
 import React from "react"
 import ReactDOM from "react-dom"
-import applyRouterMiddleware from "react-router/lib/applyRouterMiddleware"
-import Router from "react-router/lib/Router"
-import match from "react-router/lib/match"
-import browserHistory from "react-router/lib/browserHistory"
-import useScroll from "react-router-scroll/lib/useScroll"
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
+import { ScrollContext } from "react-router-scroll"
+import createHistory from "history/createBrowserHistory"
 
-const rootRoute = require(`./split-child-routes`)
+const requires = require(`./async-requires`)
 
-// If you try to load the split-child-routes module in other
-// modules, Webpack freezes in some sort of infinite loop when
-// you try to build the javascript for production. No idea
-// why... so for now we'll pop the routes on window. I hope no
-// one feels overly dirty from reading this ;-)
-if (typeof window !== `undefined`) {
-  window.gatsbyRootRoute = rootRoute
-}
-
-let currentLocation
-browserHistory.listen(location => {
-  currentLocation = location
+const history = createHistory()
+history.listen((location, action) => {
+  apiRunner(`onRouteUpdate`, location, action)
 })
 
 function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
@@ -44,24 +33,25 @@ function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
   return true
 }
 
-match(
-  { history: browserHistory, routes: rootRoute },
-  (error, redirectLocation, renderProps) => {
-    const Root = () => (
-      <Router
-        {...renderProps}
-        render={applyRouterMiddleware(useScroll(shouldUpdateScroll))}
-        onUpdate={() => {
-          apiRunner(`onRouteUpdate`, currentLocation)
-        }}
-      />
-    )
-    const NewRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
-    ReactDOM.render(
-      <NewRoot />,
-      typeof window !== `undefined`
-        ? document.getElementById(`___gatsby`)
-        : void 0
-    )
-  }
-)
+// Match, ensure all necessary bundles are loaded, then runder.
+// match(
+// { history: browserHistory, routes: rootRoute },
+// (error, redirectLocation, renderProps) => {
+// const Root = () => (
+// <Router
+// {...renderProps}
+// render={applyRouterMiddleware(useScroll(shouldUpdateScroll))}
+// onUpdate={() => {
+// apiRunner(`onRouteUpdate`, currentLocation)
+// }}
+// />
+// )
+// const NewRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
+// ReactDOM.render(
+// <NewRoot />,
+// typeof window !== `undefined`
+// ? document.getElementById(`___gatsby`)
+// : void 0
+// )
+// }
+// )
