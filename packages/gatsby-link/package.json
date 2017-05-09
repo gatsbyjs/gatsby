@@ -19,7 +19,6 @@
   },
   "dependencies": {
     "@types/react-router": "^2.0.49",
-    "create-react-class": "^15.5.2",
     "prop-types": "^15.5.8"
   }
 }
