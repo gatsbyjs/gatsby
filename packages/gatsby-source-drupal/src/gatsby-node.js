@@ -20,7 +20,7 @@ const processEntities = ents => {
         newEnt.revision_timestamp * 1000
       ).toJSON()
     }
-    // fss
+
     return newEnt
   })
 }
