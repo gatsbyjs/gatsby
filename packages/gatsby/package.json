@@ -139,10 +139,10 @@
   },
   "scripts": {
     "build": "rimraf dist && npm run build:src && npm run build:cli",
-    "build:src": "babel src --out-dir dist --source-maps --ignore gatsby-cli.js",
+    "build:src": "babel src --out-dir dist --source-maps --ignore gatsby-cli.js,__tests__",
     "build:cli": "babel src/gatsby-cli.js --out-file dist/gatsby-cli.js --presets es2015",
     "clean-test-bundles": "find test/ -type f -name bundle.js* -exec rm -rf {} +",
     "test-coverage": "node_modules/.bin/nyc --reporter=lcov --reporter=text npm test",
-    "watch": "rimraf dist && babel -w lib --out-dir dist  --source-maps "
+    "watch": "rimraf dist && npm run build:src -- --watch"
   }
 }

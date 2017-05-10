@@ -25,6 +25,7 @@
     "eslint-plugin-prettier": "^2.0.1",
     "eslint-plugin-react": "^7.0.0",
     "flow-bin": "^0.42.0",
+    "glob": "^7.1.1",
     "iflow-debug": "^1.0.15",
     "iflow-lodash": "^1.1.24",
     "iflow-react-router": "^1.2.1",
@@ -35,25 +36,6 @@
     "purdy": "^2.2.1",
     "remotedev-server": "^0.2.2",
     "rimraf": "^2.6.1"
-  },
-  "jest": {
-    "verbose": true,
-    "modulePathIgnorePatterns": [
-      "<rootDir>/dist/",
-      "<rootDir>/node_modules/"
-    ],
-    "coveragePathIgnorePatterns": [
-      "<rootDir>/dist/"
-    ],
-    "testPathIgnorePatterns": [
-      "/dist/",
-      "/node_modules/"
-    ],
-    "moduleDirectories": [
-      "node_modules",
-      "<rootDir>/node_modules/"
-    ],
-    "notify": true
   },
   "private": true,
   "scripts": {
