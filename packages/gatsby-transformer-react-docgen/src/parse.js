@@ -16,9 +16,10 @@ function getAssignedIdenifier(path) {
   }
 }
 
-function nameHandler(filePath) {
-  let count = 0
+let fileCount = 0
+function nameHandler(filePath = `/AnonymousComponent_${++fileCount}`) {
   let defaultName = path.basename(filePath, path.extname(filePath))
+  let componentCount = 0
 
   return (docs, nodePath) => {
     let displayName = docs.get(displayName)
@@ -37,7 +38,7 @@ function nameHandler(filePath) {
       displayName = nodePath.node.id.name
     }
 
-    docs.set(`displayName`, displayName || `${defaultName}_${++count}`)
+    docs.set(`displayName`, displayName || `${defaultName}_${++componentCount}`)
   }
 }
 
@@ -48,14 +49,14 @@ export default function parseMetadata(content, filePath, options) {
     components = parse(
       content,
       options.resolver || findAllComponentDefinitions,
-      [...defaultHandlers, ...options.handlers, nameHandler(filePath)]
+      [...defaultHandlers, ...(options.handlers || []), nameHandler(filePath)]
     )
   } catch (err) {
     if (err.message === ERROR_MISSING_DEFINITION) return []
     throw err
   }
 
-  if (components.length === 0) {
+  if (components.length === 1) {
     components[0].displayName = components[0].displayName.replace(/_\d+$/, ``)
   }
 

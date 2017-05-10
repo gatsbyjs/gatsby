@@ -6,7 +6,7 @@ const digest = str => crypto.createHash(`md5`).update(str).digest(`hex`)
 const propsId = (parentId, name) => `${parentId}--ComponentProp-${name}`
 const descId = parentId => `${parentId}--ComponentDescription`
 
-function createMarkdownNode(node, entry, boundActionCreators) {
+function createDescriptionNode(node, entry, boundActionCreators) {
   if (!entry.description) return
   const { createNode, updateNode } = boundActionCreators
 
@@ -36,6 +36,8 @@ function createPropNodes(node, component, boundActionCreators) {
 
     const propNode = {
       ...prop,
+      // FIXME: when/if the default node fields are namespaced
+      _propType: prop.type,
       type: `ComponentProp`,
       id: propNodeId,
       parent: node.id,
@@ -46,7 +48,7 @@ function createPropNodes(node, component, boundActionCreators) {
     }
     children[i] = propNode.id
     createNode(propNode)
-    createMarkdownNode(propNode, prop, boundActionCreators)
+    createDescriptionNode(propNode, prop, boundActionCreators)
   })
 
   node.props___NODE = children
@@ -60,7 +62,6 @@ export default function onNodeCreate(
 ) {
   const { createNode, updateNode } = boundActionCreators
 
-  if (node.type === `ComponentMetadata`) return null
   if (node.mediaType !== `application/javascript`) return null
 
   return loadNodeContent(node)
@@ -74,10 +75,11 @@ export default function onNodeCreate(
       components.forEach(component => {
         const strContent = JSON.stringify(component)
         const contentDigest = digest(strContent)
-        const nodeId = `${node.id}--${component.id}--ComponentMetadata`
+        const nodeId = `${node.id}--${component.displayName}--ComponentMetadata`
 
         const metadataNode = {
           ...component,
+          props: null, // handled by the prop node creation
           id: nodeId,
           contentDigest,
           content: strContent,
@@ -91,7 +93,7 @@ export default function onNodeCreate(
         updateNode(node)
         createNode(metadataNode)
         createPropNodes(metadataNode, component, boundActionCreators)
-        createMarkdownNode(metadataNode, component, boundActionCreators)
+        createDescriptionNode(metadataNode, component, boundActionCreators)
       })
     })
     .catch(err => console.log(err))
