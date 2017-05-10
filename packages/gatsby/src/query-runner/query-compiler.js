@@ -50,9 +50,9 @@ class Runner {
   }
 
   async parseEverything() {
-    let files = await globp(`${this.baseDir}/**/*.js`)
+    let files = await globp(`${this.baseDir}/**/*.+(t|j)s?(x)`)
     let parser = new FileParser()
-
+    
     return await parser.parseFiles(files)
   }
 
