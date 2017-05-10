@@ -103,6 +103,20 @@ describe(`GraphQL type inferance`, () => {
     )
   })
 
+  it(`filters out empty objects`, async () => {
+    let result = await queryResult(
+      [{ foo: {}, bar: `baz` }],
+      `
+        foo
+        bar
+      `
+    )
+    expect(result.errors.length).toEqual(1)
+    expect(result.errors[0].message).toMatch(
+      `Cannot query field "foo" on type "Test".`
+    )
+  })
+
   it(`filters out empty arrays`, async () => {
     let result = await queryResult(
       [{ foo: [], bar: `baz` }],

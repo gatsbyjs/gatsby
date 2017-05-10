@@ -78,4 +78,13 @@ describe(`Gatsby data tree utils`, () => {
   it(`build enum values for fields from array on nodes`, () => {
     expect(buildFieldEnumValues(nodes)).toMatchSnapshot()
   })
+
+  it(`turns polymorphic fields null`, () => {
+    let example = extractFieldExamples([
+      { foo: 1 },
+      { foo: [1] },
+      { foo: { field: 1 } },
+    ])
+    expect(example.foo).toBeNull()
+  })
 })
