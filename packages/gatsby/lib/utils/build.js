@@ -30,12 +30,6 @@ async function html(program: any) {
   })
 
   console.log(`Generating Static HTML`)
-  // Write out pages data to file so it's available to the static-entry.js
-  // file.
-  fs.writeFileSync(
-    `${program.directory}/public/tmp-pages.json`,
-    JSON.stringify(store.getState().pages)
-  )
   await buildHTML(program).catch(err => {
     console.log(``)
     console.log(`Generating HTML failed`)

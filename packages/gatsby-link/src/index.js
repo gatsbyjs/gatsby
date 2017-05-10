@@ -2,6 +2,10 @@ import React from "react"
 import { Link } from "react-router-dom"
 import PropTypes from "prop-types"
 
+if (typeof window !== `undefined`) {
+  require(`ric`)
+}
+
 let linkPrefix = ``
 if (__PREFIX_LINKS__) {
   linkPrefix = __LINK_PREFIX__
@@ -11,42 +15,45 @@ class GatsbyLink extends React.Component {
   propTypes: {
     to: PropTypes.string.isRequired,
   }
-  // componentDidMount() {
-  // // Only enable prefetching of Link resources in production and for browsers
-  // // that don't support service workers *cough* Safari/IE *cough*.
-  // if (
-  // (process.env.NODE_ENV === `production` &&
-  // !(`serviceWorker` in navigator)) ||
-  // window.location.protocol !== `https:`
-  // ) {
-  // const routes = window.gatsbyRootRoute
-  // const { createMemoryHistory } = require(`history`)
-  // const matchRoutes = require(`react-router/lib/matchRoutes`)
-  // const getComponents = require(`react-router/lib/getComponents`)
+  componentDidMount() {
+    // Only enable prefetching of Link resources in production and for browsers
+    // that don't support service workers *cough* Safari/IE *cough*.
+    // TODO also add check if user is using SW, e.g. window.caches
+    if (
+      (process.env.NODE_ENV === `production` &&
+        !(`serviceWorker` in navigator)) ||
+      window.location.protocol !== `https:`
+    ) {
+      requestUserIdle(() => {
+        console.log(`the user is idle`)
+        ___loadScriptsForPath(this.props.to)
+      })
+    }
+  }
 
-  // const createLocation = createMemoryHistory().createLocation
-
-  // if (typeof routes !== `undefined`) {
-  // matchRoutes(
-  // [routes],
-  // createLocation(this.props.to),
-  // (error, nextState) => {
-  // if (error) {
-  // return console.error(error)
-  // }
-
-  // if (nextState) {
-  // getComponents(nextState)
-  // }
-  // }
-  // )
-  // }
-  // }
-  // },
   render() {
     const to = linkPrefix + this.props.to
-    return <Link {...this.props} to={to} />
+    return (
+      <Link
+        onClick={e => {
+          // In production, make sure the necessary scripts are
+          // loaded before continuing.
+          if (process.env.NODE_ENV === `production`) {
+            e.preventDefault()
+            window.___loadScriptsForPath(this.props.to, () => {
+              this.context.router.history.push(this.props.to)
+            })
+          }
+        }}
+        {...this.props}
+        to={to}
+      />
+    )
   }
+}
+
+GatsbyLink.contextTypes = {
+  router: PropTypes.object,
 }
 
 module.exports = GatsbyLink

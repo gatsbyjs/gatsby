@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@types/react-router": "^2.0.49",
-    "prop-types": "^15.5.8"
+    "prop-types": "^15.5.8",
+    "ric": "^1.3.0"
   }
 }

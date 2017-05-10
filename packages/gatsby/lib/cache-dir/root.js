@@ -8,9 +8,6 @@ import apiRunner from "./api-runner-browser"
 import syncRequires from "./sync-requires"
 import routes from "./routes.json"
 
-console.log(syncRequires)
-console.log(routes)
-
 const history = createHistory()
 history.listen((location, action) => {
   apiRunner(`onRouteUpdate`, location, action)
@@ -47,12 +44,13 @@ const Root = () =>
       ScrollContext,
       { shouldUpdateScroll },
       $(Route, {
-        component: location =>
+        component: props => {
+          window.__history = props.history
           // TODO add support for multiple nested layouts
           // and for layouts to be able to have their own queries.
-          $(
+          return $(
             syncRequires.layouts[`index`],
-            { ...location },
+            { ...props },
             $(Switch, null, [
               ...filteredRoutes.map(route => {
                 return $(Route, {
@@ -73,7 +71,8 @@ const Root = () =>
                   }),
               }),
             ])
-          ),
+          )
+        },
       })
     )
   )
