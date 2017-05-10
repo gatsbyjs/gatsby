@@ -10,8 +10,8 @@ function getGraphQLTag(path) {
   if (quasis.length !== 1) {
     throw new Error(
       `BabelPluginGraphQL: Substitutions are not allowed in graphql. ` +
-      `fragments. Included fragments should be referenced ` +
-      `as \`...MyModule_foo\`.`
+        `fragments. Included fragments should be referenced ` +
+        `as \`...MyModule_foo\`.`
     )
   }
 

@@ -22,7 +22,7 @@ module.exports.modifyWebpackConfig = ({ config }, { compilerOptions }) => {
     loaders: [
       `babel?${JSON.stringify(config._loaders.js.config.query)}`,
       `ts-loader?${JSON.stringify(opts)}`,
-      ],
+    ],
   })
 }
 

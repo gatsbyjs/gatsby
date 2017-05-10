@@ -112,7 +112,7 @@ const cache = {}
 export default class FileParser {
   async parseFile(file: string): Promise<?DocumentNode> {
     const text = await readFileAsync(file, `utf8`)
-    
+
     if (text.indexOf(`graphql`) === -1) return
     const hash = crypto
       .createHash(`md5`)
