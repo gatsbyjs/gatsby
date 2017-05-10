@@ -1,6 +1,7 @@
 const {
   extractFieldExamples,
   buildFieldEnumValues,
+  INVALID_VALUE,
 } = require(`../data-tree-utils`)
 
 describe(`Gatsby data tree utils`, () => {
@@ -81,10 +82,26 @@ describe(`Gatsby data tree utils`, () => {
 
   it(`turns polymorphic fields null`, () => {
     let example = extractFieldExamples([
-      { foo: 1 },
+      { foo: null },
       { foo: [1] },
       { foo: { field: 1 } },
     ])
-    expect(example.foo).toBeNull()
+    expect(example.foo).toBe(INVALID_VALUE)
+  })
+
+  it(`doesn't confuse empty fields for polymorhpic ones`, () => {
+    let example = extractFieldExamples([
+      { foo: { bar: 1 } },
+      { foo: null },
+      { foo: { field: 1 } },
+    ])
+    expect(example.foo).toEqual({ field: 1, bar: 1 })
+
+    example = extractFieldExamples([
+      { foo: [{ bar: 1 }] },
+      { foo: null },
+      { foo: [{ field: 1 }, { baz: 1 }] },
+    ])
+    expect(example.foo).toEqual([{ field: 1, bar: 1, baz: 1 }])
   })
 })

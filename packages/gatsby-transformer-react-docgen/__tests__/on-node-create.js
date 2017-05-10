@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import { groupBy, countBy } from 'lodash'
+import { groupBy } from 'lodash'
 import onNodeCreate from '../src/on-node-create'
 
 const readFile = file =>
@@ -63,7 +63,7 @@ describe(`transformer-react-doc-gen: onNodeCreate`, () => {
     expect(types.ComponentMetadata.every(c => c.displayName)).toBe(true)
   })
 
-  it.only(`should infer a name`, async () => {
+  it(`should infer a name`, async () => {
     node.__fixture = `unnamed.js`
     node.absolutePath = path.join(__dirname, `UnnamedExport`)
     await run(node)

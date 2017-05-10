@@ -3,9 +3,13 @@ const _ = require(`lodash`)
 const flatten = require(`flat`)
 const typeOf = require(`type-of`)
 
+const INVALID_VALUE = Symbol(`INVALID_VALUE`)
 const isDefined = v => v != null
-const isSameType = (a, b) => a === undefined || typeOf(a) === typeOf(b)
-const isEmptyObjectOrArray = (obj: any) => _.isObject(obj) && _.isEmpty(obj)
+
+const isSameType = (a, b) => a == null || b == null || typeOf(a) === typeOf(b)
+
+const isEmptyObjectOrArray = (obj: any) =>
+  obj === INVALID_VALUE || (_.isObject(obj) && _.isEmpty(obj))
 
 /**
  * Takes an array of source nodes and returns a pristine
@@ -21,13 +25,20 @@ const isEmptyObjectOrArray = (obj: any) => _.isObject(obj) && _.isEmpty(obj)
  */
 const extractFieldExamples = (nodes: any[]) => {
   // $FlowFixMe
-  return _.mergeWith({}, ...nodes, (obj, next) => {
+  return _.mergeWith({}, ...nodes, (obj, next, key, o, s, stack) => {
+    if (obj === INVALID_VALUE) return obj
+
     // TODO: if you want to support infering Union types this should be handled
     // differently. Maybe merge all like types into examples for each type?
     // e.g. union: [1, { foo: true }, ['brown']] -> Union Int|Object|List
-    if (!isSameType(obj, next)) return null
+    if (!isSameType(obj, next)) return INVALID_VALUE
 
-    if (!_.isArray(obj || next)) return
+    if (!_.isArray(obj || next)) {
+      if (obj === null) return next
+      if (next === null) return obj
+      return
+    }
+
     let array = [].concat(obj, next).filter(isDefined)
 
     if (!array.length) return null
@@ -56,6 +67,7 @@ const buildFieldEnumValues = (nodes: any[]) => {
 }
 
 module.exports = {
+  INVALID_VALUE,
   extractFieldExamples,
   buildFieldEnumValues,
   isEmptyObjectOrArray,
