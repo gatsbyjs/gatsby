@@ -19,7 +19,10 @@ module.exports.modifyWebpackConfig = ({ config }, { compilerOptions }) => {
   const opts = { compilerOptions: copts, transpileOnly: true }
   config.loader(`typescript`, {
     test,
-    loader: `ts-loader?` + JSON.stringify(opts),
+    loaders: [
+      `babel?${JSON.stringify(config._loaders.js.config.query)}`,
+      `ts-loader?${JSON.stringify(opts)}`,
+      ],
   })
 }
 
