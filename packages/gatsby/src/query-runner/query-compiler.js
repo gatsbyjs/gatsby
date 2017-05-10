@@ -51,7 +51,7 @@ class Runner {
 
   async parseEverything() {
     let files = await globp(`${this.baseDir}/**/*.+(t|j)s?(x)`)
-    files = files.filter(d => !d.match(/(\.stories\.|\.test\.|\.d\.)/))
+    files = files.filter(d => !d.match(/\.d\.ts$/))
     let parser = new FileParser()
 
     return await parser.parseFiles(files)
