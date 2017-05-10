@@ -4,7 +4,6 @@ const crypto = require(`crypto`)
 
 // Traverse is a es6 module...
 import traverse from "babel-traverse"
-import * as types from "babel-types"
 const babylon = require(`babylon`)
 const Bluebird = require(`bluebird`)
 
@@ -14,14 +13,6 @@ const { getGraphQLTag } = require(`../utils/babel-plugin-extract-graphql`)
 import type { DocumentNode, DefinitionNode } from "graphql"
 
 const readFileAsync = Bluebird.promisify(fs.readFile)
-
-function getAssignedIdenifier(path) {
-  let property = path.parentPath
-  while (property) {
-    if (types.isVariableDeclarator(property)) return property.node.id.name
-    property = property.parentPath
-  }
-}
 
 async function parseToAst(filePath, fileStr) {
   let ast
@@ -121,7 +112,7 @@ const cache = {}
 export default class FileParser {
   async parseFile(file: string): Promise<?DocumentNode> {
     const text = await readFileAsync(file, `utf8`)
-
+    
     if (text.indexOf(`graphql`) === -1) return
     const hash = crypto
       .createHash(`md5`)
