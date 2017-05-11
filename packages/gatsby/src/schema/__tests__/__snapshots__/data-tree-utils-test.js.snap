@@ -35,11 +35,10 @@ Object {
 exports[`Gatsby data tree utils builds field examples from an array of nodes 1`] = `
 Object {
   "anArray": Array [
-    4,
-    6,
-    2,
+    1,
   ],
   "date": "2006-07-22T22:39:53.000Z",
+  "emptyArray": null,
   "frontmatter": Object {
     "blue": 10010,
     "circle": "happy",
@@ -48,6 +47,7 @@ Object {
     "title": "The world of slash and adventure",
   },
   "hair": 4,
+  "iAmNull": null,
   "name": "The Mad Wax",
 }
 `;

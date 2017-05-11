@@ -9,16 +9,23 @@ const {
   GraphQLEnumType,
   GraphQLNonNull,
 } = require(`graphql`)
+const { oneLine } = require(`common-tags`)
 const _ = require(`lodash`)
+const invariant = require(`invariant`)
 const typeOf = require(`type-of`)
 const createTypeName = require(`./create-type-name`)
-
 const {
   extractFieldExamples,
   buildFieldEnumValues,
+  isEmptyObjectOrArray,
 } = require(`./data-tree-utils`)
 
-const typeFields = type => {
+import type {
+  GraphQLInputFieldConfig,
+  GraphQLInputFieldConfigMap,
+} from 'graphql/type/definition'
+
+function typeFields(type): GraphQLInputFieldConfigMap {
   switch (type) {
     case `boolean`:
       return {
@@ -43,27 +50,23 @@ const typeFields = type => {
         ne: { type: GraphQLFloat },
       }
   }
+  return {}
 }
 
-const inferGraphQLInputFields = (exports.inferGraphQLInputFields = (
+function inferGraphQLInputFields({
   value,
-  key,
   nodes,
-  selector = ``,
-  namespace = ``
-) => {
+  prefix,
+}): ?GraphQLInputFieldConfig {
+  if (value == null || isEmptyObjectOrArray(value)) return null
+
   switch (typeOf(value)) {
     case `array`: {
       const headValue = value[0]
       let headType = typeOf(headValue)
-      // Check if headType is a number.
-      if (headType === `number`) {
-        if (headValue % 1 === 0) {
-          headType = `int`
-        } else {
-          headType = `float`
-        }
-      }
+
+      if (headType === `number`)
+        headType = _.isInteger(headValue) ? `int` : `float`
 
       // Determine type for in operator.
       let inType
@@ -80,17 +83,33 @@ const inferGraphQLInputFields = (exports.inferGraphQLInputFields = (
         case `boolean`:
           inType = GraphQLBoolean
           break
-        case `object`:
-          inType = inferGraphQLInputFields(headValue, key, nodes).type
-          break
         case `array`:
-          inType = inferGraphQLInputFields(headValue, key, nodes).type
+        case `object`: {
+          let inferredField = inferGraphQLInputFields({
+            value: headValue,
+            prefix,
+            nodes,
+          })
+          invariant(
+            inferredField,
+            `Could not infer graphQL type for value: ${headValue}`
+          )
+          inType = inferredField.type
           break
+        }
+        default:
+          invariant(
+            false,
+            oneLine`
+              Could not infer an appropriate GraphQL input type
+              for value: ${headValue} of type ${headType} along path: ${prefix}
+            `
+          )
       }
 
       return {
         type: new GraphQLInputObjectType({
-          name: createTypeName(`${namespace} ${selector} ${key}QueryList`),
+          name: createTypeName(`${prefix}QueryList`),
           fields: {
             ...typeFields(headType),
             in: { type: new GraphQLList(inType) },
@@ -101,35 +120,28 @@ const inferGraphQLInputFields = (exports.inferGraphQLInputFields = (
     case `boolean`: {
       return {
         type: new GraphQLInputObjectType({
-          name: createTypeName(`${namespace} ${selector} ${key}QueryBoolean`),
-          fields: {
-            ...typeFields(`boolean`),
-          },
+          name: createTypeName(`${prefix}QueryBoolean`),
+          fields: typeFields(`boolean`),
         }),
       }
     }
     case `string`: {
-      let cleanedKey = key
-      if (_.includes(key, `___NODE`)) {
-        cleanedKey = key.split(`___`)[0]
-      }
-
       return {
         type: new GraphQLInputObjectType({
-          name: createTypeName(
-            `${namespace} ${selector} ${cleanedKey}QueryString`
-          ),
-          fields: {
-            ...typeFields(`string`),
-          },
+          name: createTypeName(`${prefix}QueryString`),
+          fields: typeFields(`string`),
         }),
       }
     }
     case `object`: {
       return {
         type: new GraphQLInputObjectType({
-          name: createTypeName(`${namespace} ${selector} ${key}InputObject`),
-          fields: inferInputObjectStructureFromNodes(nodes, key, namespace),
+          name: createTypeName(`${prefix}InputObject`),
+          fields: inferInputObjectStructureFromNodes({
+            nodes,
+            prefix,
+            exampleValue: value,
+          }),
         }),
       }
     }
@@ -137,19 +149,15 @@ const inferGraphQLInputFields = (exports.inferGraphQLInputFields = (
       if (value % 1 === 0) {
         return {
           type: new GraphQLInputObjectType({
-            name: createTypeName(`${namespace} ${selector} ${key}QueryNumber`),
-            fields: {
-              ...typeFields(`int`),
-            },
+            name: createTypeName(`${prefix}QueryInteger`),
+            fields: typeFields(`int`),
           }),
         }
       } else {
         return {
           type: new GraphQLInputObjectType({
-            name: createTypeName(`${namespace} ${selector} ${key}QueryFloat`),
-            fields: {
-              ...typeFields(`float`),
-            },
+            name: createTypeName(`${prefix}QueryFloat`),
+            fields: typeFields(`float`),
           }),
         }
       }
@@ -157,62 +165,71 @@ const inferGraphQLInputFields = (exports.inferGraphQLInputFields = (
     default:
       return null
   }
-})
+}
 
-const inferInputObjectStructureFromNodes = (exports.inferInputObjectStructureFromNodes = (
-  nodes: any,
-  selector: string,
-  namespace: string
-) => {
-  let fieldExamples
-  if (selector && selector !== ``) {
-    // Don't delete node fields if we're not at the root of the node.
-    fieldExamples = extractFieldExamples({
-      nodes,
-      selector,
-      deleteNodeFields: false,
-    })
-  } else {
-    fieldExamples = extractFieldExamples({
-      nodes,
-      selector,
-      deleteNodeFields: true,
-    })
-  }
+const EXCLUDE_KEYS = {
+  parent: 1,
+  children: 1,
+}
 
+type InferInputOptions = {
+  nodes: Object[],
+  typeName?: string,
+  prefix?: string,
+  exampleValue?: Object,
+}
+
+export function inferInputObjectStructureFromNodes({
+  nodes,
+  typeName = ``,
+  prefix = ``,
+  exampleValue = extractFieldExamples(nodes),
+}: InferInputOptions): GraphQLInputFieldConfigMap {
   const inferredFields = {}
-  _.each(fieldExamples, (v, k) => {
-    inferredFields[k] = inferGraphQLInputFields(
-      v,
-      k,
+  const isRoot = !prefix
+
+  prefix = isRoot ? typeName : prefix
+
+  _.each(exampleValue, (value, key) => {
+    // Remove fields for traversing through nodes as we want to control
+    // setting traversing up not try to automatically infer them.
+    if (isRoot && EXCLUDE_KEYS[key]) return
+
+    // Input arguments on linked fields aren't currently supported
+    if (_.includes(key, `___NODE`)) return
+
+    let field = inferGraphQLInputFields({
       nodes,
-      selector,
-      namespace
-    )
+      value,
+      prefix: `${prefix}${_.upperFirst(key)}`,
+    })
+
+    if (field == null) return
+    inferredFields[key] = field
   })
 
   // Add sorting (but only to the top level).
-  if (!selector || selector === ``) {
+  if (typeName) {
     const enumValues = buildFieldEnumValues(nodes)
 
     const SortByType = new GraphQLEnumType({
-      name: `${namespace}SortByFieldsEnum`,
+      name: `${typeName}SortByFieldsEnum`,
       values: enumValues,
     })
 
     inferredFields.sortBy = {
       type: new GraphQLInputObjectType({
-        name: _.camelCase(`${namespace} sortBy`),
+        name: _.camelCase(`${typeName} sortBy`),
         fields: {
           fields: {
-            name: _.camelCase(`${namespace} sortByFields`),
+            name: _.camelCase(`${typeName} sortByFields`),
             type: new GraphQLNonNull(new GraphQLList(SortByType)),
           },
           order: {
-            name: _.camelCase(`${namespace} sortOrder`),
+            name: _.camelCase(`${typeName} sortOrder`),
             defaultValue: `asc`,
             type: new GraphQLEnumType({
-              name: _.camelCase(`${namespace} sortOrderValues`),
+              name: _.camelCase(`${typeName} sortOrderValues`),
               values: {
                 ASC: { value: `asc` },
                 DESC: { value: `desc` },
@@ -225,4 +242,4 @@ const inferInputObjectStructureFromNodes = (exports.inferInputObjectStructureFro
   }
 
   return inferredFields
-})
+}

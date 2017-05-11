@@ -25,6 +25,7 @@
     "eslint-plugin-prettier": "^2.0.1",
     "eslint-plugin-react": "^7.0.0",
     "flow-bin": "^0.42.0",
+    "glob": "^7.1.1",
     "iflow-debug": "^1.0.15",
     "iflow-lodash": "^1.1.24",
     "iflow-react-router": "^1.2.1",
@@ -36,32 +37,12 @@
     "remotedev-server": "^0.2.2",
     "rimraf": "^2.6.1"
   },
-  "jest": {
-    "verbose": true,
-    "modulePathIgnorePatterns": [
-      "<rootDir>/dist/",
-      "<rootDir>/node_modules/"
-    ],
-    "coveragePathIgnorePatterns": [
-      "<rootDir>/dist/"
-    ],
-    "testPathIgnorePatterns": [
-      "/dist/",
-      "/node_modules/"
-    ],
-    "moduleDirectories": [
-      "node_modules",
-      "<rootDir>/node_modules/"
-    ],
-    "notify": true
-  },
   "private": true,
   "scripts": {
     "build": "lerna run build",
-    "format": "npm run format-packages && npm run format-gatsby && npm run format-www && npm run format-examples && npm run format-scripts",
+    "format": "npm run format-packages && npm run format-www && npm run format-examples && npm run format-scripts",
     "format-examples": "prettier-eslint --write \"examples/**/gatsby-node.js\" \"examples/**/src/**/*.js\"",
-    "format-gatsby": "prettier-eslint --write \"packages/gatsby/lib/**/*.js\"",
-    "format-packages": "prettier-eslint --write \"packages/**/src/*.js\"",
+    "format-packages": "prettier-eslint --write \"packages/*/src/**/*.js\"",
     "format-scripts": "prettier-eslint --write \"scripts/**/*.js\"",
     "format-www": "prettier-eslint --write \"www/*.js\" \"www/src/**/*.js\"",
     "lerna": "lerna",

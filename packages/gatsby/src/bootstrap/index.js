@@ -92,7 +92,12 @@ One or more of your plugins have changed since the last time you ran Gatsby. As
 a precaution, we're deleting your site's cache to ensure there's not any stale
 data
 `)
-    await fs.remove(`${program.directory}/.cache`)
+
+    try {
+      await fs.remove(`${program.directory}/.cache`)
+    } catch (e) {
+      console.error(`Failed to remove .cache files. ${e.message}`)
+    }
     // Tell reducers to delete their data (the store will already have
     // been loaded from the file system cache).
     store.dispatch({
@@ -147,10 +152,14 @@ data
     plugin => plugin.resolve
   )
 
-  let browserAPIRunner = fs.readFileSync(
-    `${siteDir}/api-runner-browser.js`,
-    `utf-8`
-  )
+  let browserAPIRunner = ``
+
+  try {
+    browserAPIRunner = fs.readFileSync(`${siteDir}/api-runner-browser.js`, `utf-8`)
+  } catch (err) {
+    console.error(`Failed to read ${siteDir}/api-runner-browser.js`)
+  }
+
   const browserPluginsRequires = browserPlugins
     .map(
       plugin => `{
@@ -162,7 +171,14 @@ data
 
   browserAPIRunner = `var plugins = [${browserPluginsRequires}]\n${browserAPIRunner}`
 
-  let sSRAPIRunner = fs.readFileSync(`${siteDir}/api-runner-ssr.js`, `utf-8`)
+  let sSRAPIRunner = ``
+
+  try {
+    sSRAPIRunner = fs.readFileSync(`${siteDir}/api-runner-ssr.js`, `utf-8`)
+  } catch (err) {
+    console.error(`Failed to read ${siteDir}/api-runner-ssr.js`)
+  }
+
   const ssrPluginsRequires = ssrPlugins
     .map(
       plugin => `{
