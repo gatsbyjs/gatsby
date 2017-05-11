@@ -57,7 +57,6 @@ const addNotFoundRoute = () => {
   }
 }
 
-console.log("withRouter", withRouter)
 const Root = () =>
   $(
     Router,

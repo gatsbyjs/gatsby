@@ -200,6 +200,7 @@ module.exports = async (
                 `react-router`,
                 `react-router-dom`,
                 `react-router-scroll`,
+                `path-to-regexp`,
                 `scroll-behavior`,
                 `history`,
               ]
