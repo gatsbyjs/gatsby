@@ -53,8 +53,8 @@ GatsbyLink.contextTypes = {
   router: PropTypes.object,
 }
 
-module.exports = GatsbyLink
+export default GatsbyLink
 
-exports.navigateTo = pathname => {
+export const navigateTo = pathname => {
   window.___navigateTo(pathname)
 }
