@@ -15,6 +15,7 @@ import pages from "./pages.json"
 console.log(`pages`, pages)
 
 const history = createHistory()
+window.___history = history
 history.listen((location, action) => {
   apiRunner(`onRouteUpdate`, location, action)
 })
@@ -62,9 +63,14 @@ const navigateTo = pathname => {
 
 window.___navigateTo = navigateTo
 
+const AltRouter = apiRunner(`replaceRouterComponent`, { history })[0]
+const DefaultRouter = ({ children }) => (
+  <Router history={history}>{children}</Router>
+)
+
 const Root = () =>
   $(
-    Router,
+    AltRouter ? AltRouter : DefaultRouter,
     null,
     $(
       ScrollContext,
@@ -73,7 +79,6 @@ const Root = () =>
         children: layoutProps => {
           return $(Route, {
             render: routeProps => {
-              window.___history = routeProps.history
               const props = layoutProps ? layoutProps : routeProps
               const page = pages.find(page => {
                 if (page.matchPath) {
