@@ -1,9 +1,8 @@
 import React from "react"
 import { renderToString, renderToStaticMarkup } from "react-dom/server"
-import { StaticRouter, Switch, Route } from "react-router-dom"
+import { StaticRouter, Route, withRouter } from "react-router-dom"
 import Html from "../src/html"
 import { kebabCase, get, merge } from "lodash"
-import rootRoute from "./child-routes"
 import apiRunner from "./api-runner-ssr"
 import pages from "./routes.json"
 import syncRequires from "./sync-requires"
@@ -31,34 +30,21 @@ module.exports = (locals, callback) => {
         pathname: locals.path,
       },
     },
-    // For some reason we can't pass a component prop
-    // to StaticRouter like we do for BrowserRouter.
-    $(Route, {
-      component: location =>
-        $(
-          syncRequires.layouts[`index`],
-          { ...location },
-          $(Switch, null, [
-            ...filteredPages.map(route => {
-              return $(Route, {
-                exact: true,
-                path: route.path,
-                component: props =>
-                  $(syncRequires.components[route.componentChunkName], {
-                    ...props,
-                    ...syncRequires.json[route.jsonName],
-                  }),
-              })
-            }),
-            $(Route, {
-              component: props =>
-                $(syncRequires.components[noMatch.componentChunkName], {
-                  ...props,
-                  ...syncRequires.json[noMatch.jsonName],
-                }),
-            }),
-          ])
-        ),
+    $(withRouter(syncRequires.layouts[`index`]), {
+      children: layoutProps => {
+        $(Route, {
+          component: routeProps => {
+            const props = layoutProps ? layoutProps : routeProps
+            const page = pages.find(
+              page => page.path === props.location.pathname
+            )
+            return $(syncRequires.components[page.componentChunkName], {
+              ...props,
+              ...syncRequires.json[page.jsonName],
+            })
+          },
+        })
+      },
     })
   )
 

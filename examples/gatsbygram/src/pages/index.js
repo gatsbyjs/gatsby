@@ -64,6 +64,7 @@ class Index extends React.Component {
   }
 
   render() {
+    console.log(this.props)
     let { allPostsJson, user } = this.props.data
 
     const posts = allPostsJson.edges.map(e => e.node)
@@ -128,9 +129,10 @@ class Index extends React.Component {
           </div>
         </div>
         {/* posts */}
-        {chunk(posts.slice(0, this.state.postsToShow), 3).map(chunk => {
+        {chunk(posts.slice(0, this.state.postsToShow), 3).map((chunk, i) => {
           return (
             <div
+              key={`chunk-${i}`}
               css={{
                 display: `flex`,
                 alignItems: `stretch`,

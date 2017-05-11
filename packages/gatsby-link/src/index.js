@@ -20,9 +20,9 @@ class GatsbyLink extends React.Component {
     // that don't support service workers *cough* Safari/IE *cough*.
     // TODO also add check if user is using SW, e.g. window.caches
     if (
-      (process.env.NODE_ENV === `production` &&
-        !(`serviceWorker` in navigator)) ||
-      window.location.protocol !== `https:`
+      process.env.NODE_ENV === `production` &&
+      (!(`serviceWorker` in window.navigator) ||
+        window.location.protocol !== `https:`)
     ) {
       requestUserIdle(() => {
         console.log(`the user is idle`)

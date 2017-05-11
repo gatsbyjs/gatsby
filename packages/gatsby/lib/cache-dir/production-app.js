@@ -4,7 +4,7 @@ apiRunner(`clientEntry`)
 
 import React from "react"
 import ReactDOM from "react-dom"
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
+import { BrowserRouter as Router, Route, withRouter } from "react-router-dom"
 import { ScrollContext } from "react-router-scroll"
 import createHistory from "history/createBrowserHistory"
 import routes from "./routes.json"
@@ -29,6 +29,11 @@ const loadScriptsForPath = (path, cb = () => {}) => {
   }
 
   const page = routes.find(r => r.path === path)
+
+  if (!page) {
+    return cb()
+  }
+
   console.time(`load scripts`)
   let scripts = {
     layout: false,
@@ -94,11 +99,13 @@ const renderPage = props => {
       ...props,
       ...scriptsCache[props.location.pathname].pageData,
     })
-  } else {
-    $(notFoundScripts.component, {
+  } else if (notFoundScripts) {
+    return $(notFoundScripts.component, {
       ...props,
       ...notFoundScripts.pageData,
     })
+  } else {
+    return null
   }
 }
 
@@ -108,7 +115,7 @@ const renderSite = ({ scripts, props }) => {
 
 const $ = React.createElement
 
-loadScriptsForPath(window.location.pathname, () => {
+loadScriptsForPath(window.location.pathname, scripts => {
   const Root = () =>
     $(
       Router,
@@ -116,12 +123,14 @@ loadScriptsForPath(window.location.pathname, () => {
       $(
         ScrollContext,
         { shouldUpdateScroll },
-        $(Route, {
-          component: props => {
-            window.___history = props.history
-            return renderSite({
-              scripts: scriptsCache[props.location.pathname],
-              props,
+        $(withRouter(scripts.layout), {
+          children: layoutProps => {
+            return $(Route, {
+              component: routeProps => {
+                const props = layoutProps ? layoutProps : routeProps
+                window.___history = props.history
+                return renderPage(props)
+              },
             })
           },
         })

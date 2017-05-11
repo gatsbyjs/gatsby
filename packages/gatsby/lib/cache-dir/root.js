@@ -1,5 +1,10 @@
 import React from "react"
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  withRouter,
+} from "react-router-dom"
 import { ScrollContext } from "react-router-scroll"
 import createHistory from "history/createBrowserHistory"
 
@@ -7,6 +12,7 @@ import apiRunner from "./api-runner-browser"
 // import rootRoute from "./child-routes"
 import syncRequires from "./sync-requires"
 import routes from "./routes.json"
+console.log(routes)
 
 const history = createHistory()
 history.listen((location, action) => {
@@ -36,6 +42,22 @@ const $ = React.createElement
 const filteredRoutes = routes.filter(r => r.path !== `/404.html`)
 const noMatch = routes.find(r => r.path === `/404.html`)
 
+const addNotFoundRoute = () => {
+  if (noMatch) {
+    return $(Route, {
+      key: `404-page`,
+      component: props =>
+        $(syncRequires.components[noMatch.componentChunkName], {
+          ...props,
+          ...syncRequires.json[noMatch.jsonName],
+        }),
+    })
+  } else {
+    return null
+  }
+}
+
+console.log("withRouter", withRouter)
 const Root = () =>
   $(
     Router,
@@ -43,35 +65,34 @@ const Root = () =>
     $(
       ScrollContext,
       { shouldUpdateScroll },
-      $(Route, {
-        component: props => {
-          window.__history = props.history
-          // TODO add support for multiple nested layouts
-          // and for layouts to be able to have their own queries.
-          return $(
-            syncRequires.layouts[`index`],
-            { ...props },
-            $(Switch, null, [
-              ...filteredRoutes.map(route => {
-                return $(Route, {
-                  exact: true,
-                  path: route.path,
-                  component: props =>
-                    $(syncRequires.components[route.componentChunkName], {
-                      ...props,
-                      ...syncRequires.json[route.jsonName],
-                    }),
+      $(withRouter(syncRequires.layouts[`index`]), {
+        children: layoutProps => {
+          return $(Route, {
+            component: routeProps => {
+              window.___history = routeProps.history
+              if (layoutProps) {
+                console.log("layoutProps", layoutProps.location.pathname)
+              }
+              console.log("routeProps", routeProps.location.pathname)
+              const props = layoutProps ? layoutProps : routeProps
+              console.log(
+                "child function props",
+                props,
+                props.location.pathname
+              )
+              const page = routes.find(
+                route => route.path === props.location.pathname
+              )
+              if (page) {
+                return $(syncRequires.components[page.componentChunkName], {
+                  ...props,
+                  ...syncRequires.json[page.jsonName],
                 })
-              }),
-              $(Route, {
-                component: props =>
-                  $(syncRequires.components[noMatch.componentChunkName], {
-                    ...props,
-                    ...syncRequires.json[noMatch.jsonName],
-                  }),
-              }),
-            ])
-          )
+              } else {
+                return addNotFoundRoute()
+              }
+            },
+          })
         },
       })
     )
