@@ -6,7 +6,6 @@ const nodePath = require("path")
 module.exports = () => {
   const rootDir = store.getState()
 
-  console.log("====rootDir", process.cwd())
   chokidar
     .watch(`${process.cwd()}/static`)
     .on(`add`, path => {
