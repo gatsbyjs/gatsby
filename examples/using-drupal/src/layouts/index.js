@@ -21,7 +21,7 @@ class DefaultLayout extends React.Component {
             Example of using Drupal as a data source for a Gatsby site
           </h3>
         </Link>
-        {this.props.children}
+        {this.props.children()}
         <hr />
         <p>
           The src for this website is at

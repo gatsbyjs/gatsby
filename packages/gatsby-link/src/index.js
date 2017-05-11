@@ -40,9 +40,7 @@ class GatsbyLink extends React.Component {
           // loaded before continuing.
           if (process.env.NODE_ENV === `production`) {
             e.preventDefault()
-            window.___loadScriptsForPath(this.props.to, () => {
-              this.context.router.history.push(this.props.to)
-            })
+            window.___navigateTo(this.props.to)
           }
         }}
         {...this.props}
@@ -57,3 +55,7 @@ GatsbyLink.contextTypes = {
 }
 
 module.exports = GatsbyLink
+
+exports.navigateTo = pathname => {
+  window.___navigateTo(pathname)
+}

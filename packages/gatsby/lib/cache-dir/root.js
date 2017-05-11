@@ -57,6 +57,12 @@ const addNotFoundRoute = () => {
   }
 }
 
+const navigateTo = pathname => {
+  window.___history.push(pathname)
+}
+
+window.___navigateTo = navigateTo
+
 const Root = () =>
   $(
     Router,
@@ -69,16 +75,7 @@ const Root = () =>
           return $(Route, {
             component: routeProps => {
               window.___history = routeProps.history
-              if (layoutProps) {
-                console.log("layoutProps", layoutProps.location.pathname)
-              }
-              console.log("routeProps", routeProps.location.pathname)
               const props = layoutProps ? layoutProps : routeProps
-              console.log(
-                "child function props",
-                props,
-                props.location.pathname
-              )
               const page = routes.find(
                 route => route.path === props.location.pathname
               )

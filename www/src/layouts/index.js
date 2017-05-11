@@ -250,7 +250,7 @@ module.exports = React.createClass({
               },
             }}
           >
-            {this.props.children}
+            {this.props.children()}
           </div>
         </div>
         <div

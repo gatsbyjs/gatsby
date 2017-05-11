@@ -33,11 +33,8 @@ class DefaultLayout extends React.Component {
 
     // Cache the window width.
     this.windowWidth = window.innerWidth
-    console.log("componentDidMount", this.windowWidth)
   }
   componentWillReceiveProps(nextProps) {
-    console.log(this.props.children === nextProps.children)
-    console.log("nextProps", nextProps)
     // if we're changing to a non-homepage page, put things in
     // a modal (unless we're on mobile).
     if (
@@ -45,7 +42,6 @@ class DefaultLayout extends React.Component {
       nextProps.location.pathname !== `/about/` &&
       this.windowWidth > 750
     ) {
-      console.log("put things in a modal")
       // Freeze the background from scrolling.
       this.htmlElement.style.overflow = `hidden`
       this.bodyElement.style.overflow = `hidden`
@@ -53,20 +49,6 @@ class DefaultLayout extends React.Component {
       // Always set overflow-y to scroll so the scrollbar stays visible avoiding
       // weird jumping.
       this.htmlElement.style.overflowY = `scroll`
-
-      this.isModal = true
-      // Save the homepage if we haven't already.
-      // console.log("this.modalBackgroundChildren", this.modalBackgroundChildren)
-      // console.log("this.props.children", this.props.children)
-      // if (!this.modalBackgroundChildren) {
-      // this.modalBackgroundChildren = nextProps.children
-      // this.modalBackgroundChildren = React.createElement(
-      // this.props.children.type.WrappedComponent,
-      // {
-      // location: { pathname: `/` },
-      // }
-      // )
-      // }
     } else {
       // Otherwise we're navigating back home so delete old home so the
       // modal can be destroyed.
@@ -81,11 +63,8 @@ class DefaultLayout extends React.Component {
   }
 
   render() {
-    console.log(this.props.children)
     const { location } = this.props
     let isModal = false
-    console.log(this.props.location.pathname)
-    console.log(this.windowWidth)
     if (
       this.props.location.pathname !== `/` &&
       this.props.location.pathname !== `/about/` &&
@@ -93,13 +72,6 @@ class DefaultLayout extends React.Component {
     ) {
       isModal = true
     }
-    // const isModal = this.isModal
-    console.log("isModal", isModal)
-    // console.log("------render---------")
-    // console.log("render props", this.props)
-    console.log(location.pathname)
-    // console.log("modalBackgroundChildren", isModal)
-    // console.log("layout props", this.props)
 
     return (
       <div

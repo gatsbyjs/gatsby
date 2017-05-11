@@ -61,7 +61,14 @@ const loadScriptsForPath = (path, cb = () => {}) => {
   })
 }
 
+const navigateTo = pathname => {
+  loadScriptsForPath(pathname, () => {
+    window.___history.push(pathname)
+  })
+}
+
 window.___loadScriptsForPath = loadScriptsForPath
+window.___navigateTo = navigateTo
 
 const history = createHistory()
 history.listen((location, action) => {
@@ -127,8 +134,8 @@ loadScriptsForPath(window.location.pathname, scripts => {
           children: layoutProps => {
             return $(Route, {
               component: routeProps => {
+                window.___history = routeProps.history
                 const props = layoutProps ? layoutProps : routeProps
-                window.___history = props.history
                 return renderPage(props)
               },
             })

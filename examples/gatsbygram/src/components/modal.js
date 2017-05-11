@@ -6,6 +6,7 @@ import Close from "react-icons/lib/md/close"
 import findIndex from "lodash/findIndex"
 import mousetrap from "mousetrap"
 import * as PropTypes from "prop-types"
+import { navigateTo } from "gatsby-link"
 
 import { rhythm } from "../utils/typography"
 
@@ -14,10 +15,6 @@ class GatsbyGramModal extends React.Component {
     isOpen: React.PropTypes.bool,
     location: React.PropTypes.object.isRequired,
     posts: React.PropTypes.array.isRequired,
-  }
-
-  static contextTypes = {
-    router: PropTypes.Object,
   }
 
   componentDidMount() {
@@ -55,7 +52,7 @@ class GatsbyGramModal extends React.Component {
       } else {
         nextPost = posts[currentIndex + 1]
       }
-      this.context.router.history.push(`/${nextPost.id}/`)
+      navigateTo(`/${nextPost.id}/`)
     }
   }
 
@@ -73,17 +70,17 @@ class GatsbyGramModal extends React.Component {
       } else {
         previousPost = posts[currentIndex - 1]
       }
-      this.context.router.history.push(`/${previousPost.id}/`)
+      navigateTo(`/${previousPost.id}/`)
     }
   }
 
   render() {
     console.log(this.props)
-    console.log("context", this.context)
+    console.log(`context`, this.context)
     return (
       <Modal
         isOpen={this.props.isOpen}
-        onRequestClose={() => this.context.router.history.push(`/`)}
+        onRequestClose={() => navigateTo(`/`)}
         style={{
           overlay: {
             position: `fixed`,
@@ -109,7 +106,7 @@ class GatsbyGramModal extends React.Component {
         contentLabel="Modal"
       >
         <div
-          onClick={() => this.context.router.history.push(`/`)}
+          onClick={() => navigateTo(`/`)}
           css={{
             display: `flex`,
             position: `relative`,
@@ -135,7 +132,7 @@ class GatsbyGramModal extends React.Component {
               }}
               onClick={e => this.previous(e)}
             />
-            {console.log("rendering modal")}
+            {console.log(`rendering modal`)}
             {console.log(this.props.children)}
             {this.props.children({
               location: { pathname: this.props.location.pathname },
@@ -151,7 +148,7 @@ class GatsbyGramModal extends React.Component {
             />
           </div>
           <Close
-            onClick={() => this.context.router.history.push(`/`)}
+            onClick={() => navigateTo(`/`)}
             css={{
               cursor: `pointer`,
               color: `rgba(255,255,255,0.8)`,

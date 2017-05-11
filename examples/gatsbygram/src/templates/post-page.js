@@ -9,7 +9,7 @@ class PostTemplate extends React.Component {
     }),
   }
   render() {
-    console.log("template-post-page", this.props)
+    console.log(`template-post-page`, this.props)
     return (
       // PostDetail is used for this detail page and
       // also in the modal.
