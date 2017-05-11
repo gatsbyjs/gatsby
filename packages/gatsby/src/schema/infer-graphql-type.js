@@ -198,7 +198,7 @@ function inferFromMapping(
     return {
       type: new GraphQLList(matchedTypes[0].nodeObjectType),
       resolve: (node, a, b, { fieldName }) => {
-        let fieldValue = node[fieldName]
+        const fieldValue = node[fieldName]
 
         if (fieldValue) {
           return fieldValue.map(value => findNode(value, b.path))
@@ -212,7 +212,7 @@ function inferFromMapping(
   return {
     type: matchedTypes[0].nodeObjectType,
     resolve: (node, a, b, { fieldName }) => {
-      let fieldValue = node[fieldName]
+      const fieldValue = node[fieldName]
 
       if (fieldValue) {
         return findNode(fieldValue, b.path)
@@ -324,7 +324,12 @@ function inferFromUri(key, types) {
   return {
     type: fileField.nodeObjectType,
     resolve: (node, a, { path }) => {
-      let fieldValue = node[key]
+      const fieldValue = node[key]
+
+      if (!fieldValue) {
+        return null
+      }
+
 
       // Find File node for this node (we assume the node is something
       // like markdown which would be a child node of a File node).
