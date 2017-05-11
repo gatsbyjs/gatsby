@@ -15,9 +15,9 @@ const writePages = () => {
 
   // Write out pages.json
   const pagesData = pages.reduce(
-    (mem, { path, componentChunkName, layout, jsonName }) => [
+    (mem, { path, matchPath, componentChunkName, layout, jsonName }) => [
       ...mem,
-      { componentChunkName, layout, jsonName, path },
+      { componentChunkName, layout, jsonName, path, matchPath },
     ],
     []
   )

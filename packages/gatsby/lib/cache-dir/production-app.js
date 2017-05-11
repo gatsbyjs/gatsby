@@ -4,10 +4,16 @@ apiRunner(`clientEntry`)
 
 import React from "react"
 import ReactDOM from "react-dom"
-import { BrowserRouter as Router, Route, withRouter } from "react-router-dom"
+import {
+  BrowserRouter as Router,
+  Route,
+  withRouter,
+  matchPath,
+} from "react-router-dom"
 import { ScrollContext } from "react-router-scroll"
 import createHistory from "history/createBrowserHistory"
 import pages from "./pages.json"
+window.matchPath = matchPath
 
 import requires from "./async-requires"
 
@@ -100,11 +106,26 @@ loadScriptsForPath(`/404.html`, scripts => {
 })
 
 const renderPage = props => {
-  const page = pages.find(r => r.path === props.location.pathname)
+  const page = pages.find(page => {
+    if (page.matchPath) {
+      // Try both the path and matchPath
+      return (
+        matchPath(props.location.pathname, { path: page.path }) ||
+        matchPath(props.location.pathname, {
+          path: page.matchPath,
+        })
+      )
+    } else {
+      return matchPath(props.location.pathname, {
+        path: page.path,
+        exact: true,
+      })
+    }
+  })
   if (page) {
-    return $(scriptsCache[props.location.pathname].component, {
+    return $(scriptsCache[page.path].component, {
       ...props,
-      ...scriptsCache[props.location.pathname].pageData,
+      ...scriptsCache[page.path].pageData,
     })
   } else if (notFoundScripts) {
     return $(notFoundScripts.component, {
@@ -133,7 +154,7 @@ loadScriptsForPath(window.location.pathname, scripts => {
         $(withRouter(scripts.layout), {
           children: layoutProps => {
             return $(Route, {
-              component: routeProps => {
+              render: routeProps => {
                 window.___history = routeProps.history
                 const props = layoutProps ? layoutProps : routeProps
                 return renderPage(props)

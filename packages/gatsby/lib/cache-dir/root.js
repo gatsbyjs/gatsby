@@ -2,7 +2,7 @@ import React from "react"
 import {
   BrowserRouter as Router,
   Route,
-  Switch,
+  matchPath,
   withRouter,
 } from "react-router-dom"
 import { ScrollContext } from "react-router-scroll"
@@ -12,7 +12,7 @@ import apiRunner from "./api-runner-browser"
 import syncRequires from "./sync-requires"
 import pages from "./pages.json"
 
-console.log(pages)
+console.log("pages", pages)
 
 const history = createHistory()
 history.listen((location, action) => {
@@ -72,12 +72,25 @@ const Root = () =>
       $(withRouter(syncRequires.layouts[`index`]), {
         children: layoutProps => {
           return $(Route, {
-            component: routeProps => {
+            render: routeProps => {
               window.___history = routeProps.history
               const props = layoutProps ? layoutProps : routeProps
-              const page = pages.find(
-                route => route.path === props.location.pathname
-              )
+              const page = pages.find(page => {
+                if (page.matchPath) {
+                  // Try both the path and matchPath
+                  return (
+                    matchPath(props.location.pathname, { path: page.path }) ||
+                    matchPath(props.location.pathname, {
+                      path: page.matchPath,
+                    })
+                  )
+                } else {
+                  return matchPath(props.location.pathname, {
+                    path: page.path,
+                    exact: true,
+                  })
+                }
+              })
               if (page) {
                 return $(syncRequires.components[page.componentChunkName], {
                   ...props,

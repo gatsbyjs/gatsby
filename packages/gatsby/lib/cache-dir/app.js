@@ -13,8 +13,6 @@ if (Root.default) {
   Root = Root.default
 }
 
-console.log(Root)
-
 ReactDOM.render(
   <HotContainer>
     <Root />

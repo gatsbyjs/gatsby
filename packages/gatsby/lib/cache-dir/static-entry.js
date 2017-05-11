@@ -33,7 +33,7 @@ module.exports = (locals, callback) => {
     $(withRouter(syncRequires.layouts[`index`]), {
       children: layoutProps => {
         $(Route, {
-          component: routeProps => {
+          render: routeProps => {
             const props = layoutProps ? layoutProps : routeProps
             const page = pages.find(
               page => page.path === props.location.pathname
