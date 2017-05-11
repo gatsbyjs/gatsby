@@ -15,7 +15,6 @@ import pages from "./pages.json"
 console.log(`pages`, pages)
 
 const history = createHistory()
-window.___history = history
 history.listen((location, action) => {
   apiRunner(`onRouteUpdate`, location, action)
 })
@@ -79,6 +78,7 @@ const Root = () =>
         children: layoutProps => {
           return $(Route, {
             render: routeProps => {
+              window.___history = routeProps.history
               const props = layoutProps ? layoutProps : routeProps
               const page = pages.find(page => {
                 if (page.matchPath) {

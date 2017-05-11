@@ -77,7 +77,6 @@ window.___loadScriptsForPath = loadScriptsForPath
 window.___navigateTo = navigateTo
 
 const history = createHistory()
-window.___history = history
 history.listen((location, action) => {
   apiRunner(`onRouteUpdate`, location, action)
 })
@@ -161,6 +160,7 @@ loadScriptsForPath(window.location.pathname, scripts => {
           children: layoutProps => {
             return $(Route, {
               render: routeProps => {
+                window.___history = routeProps.history
                 const props = layoutProps ? layoutProps : routeProps
                 return renderPage(props)
               },

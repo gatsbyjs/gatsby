@@ -7,9 +7,13 @@ import buildProductionBundle from "./build-javascript"
 import bootstrap from "../bootstrap"
 import apiRunnerNode from "./api-runner-node"
 const { store } = require(`../redux`)
+const copyStaticDirectory = require(`./copy-static-directory`)
 
 async function html(program: any) {
   const { graphqlRunner } = await bootstrap(program)
+  // Copy files from the static directory to
+  // an equivalent static directory within public.
+  copyStaticDirectory()
 
   console.log(`Generating CSS`)
   await buildCSS(program).catch(err => {
