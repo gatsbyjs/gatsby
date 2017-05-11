@@ -25,7 +25,6 @@ class GatsbyLink extends React.Component {
         window.location.protocol !== `https:`)
     ) {
       requestUserIdle(() => {
-        console.log(`the user is idle`)
         ___loadScriptsForPath(this.props.to)
       })
     }

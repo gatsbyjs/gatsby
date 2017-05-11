@@ -3,7 +3,7 @@
 import {
   connectionFromArray,
   connectionFromPromisedArray,
-} from '../arrayconnection'
+} from "../arrayconnection"
 
 describe(`connectionFromArray()`, () => {
   const letters = [`A`, `B`, `C`, `D`, `E`]
@@ -105,10 +105,7 @@ describe(`connectionFromArray()`, () => {
 
   describe(`pagination`, () => {
     it(`respects limit and skip`, () => {
-      const c = connectionFromArray(
-        letters,
-        { limit: 2, skip: 2 }
-      )
+      const c = connectionFromArray(letters, { limit: 2, skip: 2 })
       return expect(c).toEqual({
         edges: [
           {
@@ -129,10 +126,7 @@ describe(`connectionFromArray()`, () => {
     })
 
     it(`respects limit and skip with large skip`, () => {
-      const c = connectionFromArray(
-        letters,
-        { limit: 10, skip: 2 }
-      )
+      const c = connectionFromArray(letters, { limit: 10, skip: 2 })
       return expect(c).toEqual({
         edges: [
           {

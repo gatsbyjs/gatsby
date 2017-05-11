@@ -4,16 +4,11 @@ import {
   GraphQLSchema,
   GraphQLString,
   graphql,
-} from 'graphql'
+} from "graphql"
 
-import {
-  connectionFromArray,
-} from '../arrayconnection.js'
+import { connectionFromArray } from "../arrayconnection.js"
 
-import {
-  connectionArgs,
-  connectionDefinitions,
-} from '../connection.js'
+import { connectionArgs, connectionDefinitions } from "../connection.js"
 
 const allUsers = [
   { name: `Dan`, friends: [1, 2, 3, 4] },

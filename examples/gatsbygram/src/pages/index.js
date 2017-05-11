@@ -64,7 +64,6 @@ class Index extends React.Component {
   }
 
   render() {
-    console.log(this.props)
     let { allPostsJson, user } = this.props.data
 
     const posts = allPostsJson.edges.map(e => e.node)

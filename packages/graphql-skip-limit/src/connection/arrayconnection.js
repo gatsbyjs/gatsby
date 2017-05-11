@@ -1,16 +1,13 @@
 /* @flow */
 
-import type {
-  Connection,
-  ConnectionArguments,
-} from './connectiontypes'
+import type { Connection, ConnectionArguments } from "./connectiontypes"
 
 /**
  * A simple function that accepts an array and connection arguments, and returns
  * a connection object for use in GraphQL. It uses array offsets as pagination,
  * so pagination will only work if the array is static.
  */
-export function connectionFromArray<T> (
+export function connectionFromArray<T>(
   data: Array<T>,
   args: ConnectionArguments
 ): Connection<T> {
@@ -30,7 +27,7 @@ export function connectionFromArray<T> (
       throw new Error(`Argument "limit" must be a non-negative integer`)
     }
 
-    endSlice = (startSlice + limit)
+    endSlice = startSlice + limit
   }
 
   const slice = data.slice(startSlice, endSlice)
@@ -51,12 +48,12 @@ export function connectionFromArray<T> (
     }
   })
 
-
   return {
     edges,
     pageInfo: {
-      hasNextPage:
-        typeof limit === `number` ? (limit + startSlice) - 1 < data.length : false,
+      hasNextPage: typeof limit === `number`
+        ? limit + startSlice - 1 < data.length
+        : false,
     },
   }
 }
@@ -65,7 +62,7 @@ export function connectionFromArray<T> (
  * A version of `connectionFromArray` that takes a promised array, and returns a
  * promised connection.
  */
-export function connectionFromPromisedArray<T> (
+export function connectionFromPromisedArray<T>(
   dataPromise: Promise<Array<T>>,
   args: ConnectionArguments
 ): Promise<Connection<T>> {

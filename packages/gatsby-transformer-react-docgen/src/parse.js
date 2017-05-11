@@ -1,12 +1,12 @@
-import path from 'path'
+import path from "path"
 
-import * as types from 'babel-types'
-import { parse, defaultHandlers } from 'react-docgen'
-import { ERROR_MISSING_DEFINITION } from 'react-docgen/dist/parse'
+import * as types from "babel-types"
+import { parse, defaultHandlers } from "react-docgen"
+import { ERROR_MISSING_DEFINITION } from "react-docgen/dist/parse"
 import findAllComponentDefinitions
-  from 'react-docgen/dist/resolver/findAllComponentDefinitions'
+  from "react-docgen/dist/resolver/findAllComponentDefinitions"
 
-import { parseDoclets, applyPropDoclets } from './Doclets'
+import { parseDoclets, applyPropDoclets } from "./Doclets"
 
 function getAssignedIdenifier(path) {
   let property = path.parentPath

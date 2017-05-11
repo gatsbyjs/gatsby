@@ -75,8 +75,6 @@ class GatsbyGramModal extends React.Component {
   }
 
   render() {
-    console.log(this.props)
-    console.log(`context`, this.context)
     return (
       <Modal
         isOpen={this.props.isOpen}
@@ -132,8 +130,6 @@ class GatsbyGramModal extends React.Component {
               }}
               onClick={e => this.previous(e)}
             />
-            {console.log(`rendering modal`)}
-            {console.log(this.props.children)}
             {this.props.children({
               location: { pathname: this.props.location.pathname },
             })}

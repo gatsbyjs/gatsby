@@ -25,11 +25,11 @@ const {
   isEmptyObjectOrArray,
 } = require(`./data-tree-utils`)
 
-import type { GraphQLOutputType } from 'graphql'
+import type { GraphQLOutputType } from "graphql"
 import type {
   GraphQLFieldConfig,
   GraphQLFieldConfigMap,
-} from 'graphql/type/definition'
+} from "graphql/type/definition"
 
 export type ProcessedNodeType = {
   name: string,

@@ -17,7 +17,7 @@ const { nodeInterface } = require(`./node-interface`)
 const { getNodes, getNode, getNodeAndSavePathDependency } = require(`../redux`)
 const { addPageDependency } = require(`../redux/actions/add-page-dependency`)
 
-import type { ProcessedNodeType } from './infer-graphql-type'
+import type { ProcessedNodeType } from "./infer-graphql-type"
 
 type TypeMap = { [typeName: string]: ProcessedNodeType }
 
