@@ -4,7 +4,7 @@ import {
   GraphQLID,
   GraphQLList,
   GraphQLInterfaceType,
-} from 'graphql'
+} from "graphql"
 
 export const nodeInterface = new GraphQLInterfaceType({
   name: `Node`,

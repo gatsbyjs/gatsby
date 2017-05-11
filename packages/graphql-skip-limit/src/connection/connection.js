@@ -6,14 +6,14 @@ import {
   GraphQLNonNull,
   GraphQLList,
   GraphQLObjectType,
-} from 'graphql'
+} from "graphql"
 
 import type {
   GraphQLFieldConfigArgumentMap,
   GraphQLFieldConfigMap,
   GraphQLFieldResolver,
   Thunk,
-} from 'graphql'
+} from "graphql"
 
 /**
  * Returns a GraphQLFieldConfigArgumentMap appropriate to include on a field
@@ -34,12 +34,12 @@ type ConnectionConfig = {
   resolveNode?: ?GraphQLFieldResolver<*, *>,
   edgeFields?: ?Thunk<GraphQLFieldConfigMap<*, *>>,
   connectionFields?: ?Thunk<GraphQLFieldConfigMap<*, *>>,
-};
+}
 
 type GraphQLConnectionDefinitions = {
   edgeType: GraphQLObjectType,
-  connectionType: GraphQLObjectType
-};
+  connectionType: GraphQLObjectType,
+}
 
 /**
  * The common page info type used by all connections.
@@ -55,7 +55,7 @@ const pageInfoType = new GraphQLObjectType({
   }),
 })
 
-function resolveMaybeThunk<T> (thingOrThunk: Thunk<T>): T {
+function resolveMaybeThunk<T>(thingOrThunk: Thunk<T>): T {
   return typeof thingOrThunk === `function` ? thingOrThunk() : thingOrThunk
 }
 
@@ -63,7 +63,7 @@ function resolveMaybeThunk<T> (thingOrThunk: Thunk<T>): T {
  * Returns a GraphQLObjectType for a connection with the given name,
  * and whose nodes are of the specified type.
  */
-export function connectionDefinitions (
+export function connectionDefinitions(
   config: ConnectionConfig
 ): GraphQLConnectionDefinitions {
   const { nodeType } = config

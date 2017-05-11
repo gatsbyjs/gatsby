@@ -4,27 +4,81 @@ apiRunner(`clientEntry`)
 
 import React from "react"
 import ReactDOM from "react-dom"
-import applyRouterMiddleware from "react-router/lib/applyRouterMiddleware"
-import Router from "react-router/lib/Router"
-import match from "react-router/lib/match"
-import browserHistory from "react-router/lib/browserHistory"
-import useScroll from "react-router-scroll/lib/useScroll"
+import {
+  BrowserRouter as Router,
+  Route,
+  withRouter,
+  matchPath,
+} from "react-router-dom"
+import { ScrollContext } from "react-router-scroll"
+import createHistory from "history/createBrowserHistory"
+import pages from "./pages.json"
+window.matchPath = matchPath
 
-const rootElement = document.getElementById(`react-mount`)
-const rootRoute = require(`./split-child-routes`)
+import requires from "./async-requires"
 
-// If you try to load the split-child-routes module in other
-// modules, Webpack freezes in some sort of infinite loop when
-// you try to build the javascript for production. No idea
-// why... so for now we'll pop the routes on window. I hope no
-// one feels overly dirty from reading this ;-)
-if (typeof window !== `undefined`) {
-  window.gatsbyRootRoute = rootRoute
+console.log(pages)
+console.log(requires)
+
+// Load scripts
+const preferDefault = m => (m && m.default) || m
+const scriptsCache = {}
+const loadScriptsForPath = (path, cb = () => {}) => {
+  console.log(`loading scripts for`, path)
+
+  if (!path) {
+    return cb()
+  }
+
+  if (scriptsCache[path]) {
+    return cb(scriptsCache[path])
+  }
+
+  const page = pages.find(r => r.path === path)
+
+  if (!page) {
+    return cb()
+  }
+
+  console.time(`load scripts`)
+  let scripts = {
+    layout: false,
+    component: false,
+    pageData: false,
+  }
+  const loaded = () => {
+    if (scripts.layout && scripts.component && scripts.pageData) {
+      console.timeEnd(`load scripts`)
+      scriptsCache[path] = scripts
+      cb(scripts)
+    }
+  }
+  requires.layouts.index(layout => {
+    scripts.layout = preferDefault(layout)
+    loaded()
+  })
+  requires.components[page.componentChunkName](component => {
+    scripts.component = preferDefault(component)
+    loaded()
+  })
+  requires.json[page.jsonName](pageData => {
+    scripts.pageData = pageData
+    loaded()
+  })
 }
 
-let currentLocation
-browserHistory.listen(location => {
-  currentLocation = location
+const navigateTo = pathname => {
+  loadScriptsForPath(pathname, () => {
+    window.___history.push(pathname)
+  })
+}
+
+window.___loadScriptsForPath = loadScriptsForPath
+window.___navigateTo = navigateTo
+
+const history = createHistory()
+history.listen((location, action) => {
+  apiRunner(`onRouteUpdate`, location, action)
 })
 
 function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
@@ -45,24 +99,77 @@ function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
   return true
 }
 
-match(
-  { history: browserHistory, routes: rootRoute },
-  (error, redirectLocation, renderProps) => {
-    const Root = () => (
-      <Router
-        {...renderProps}
-        render={applyRouterMiddleware(useScroll(shouldUpdateScroll))}
-        onUpdate={() => {
-          apiRunner(`onRouteUpdate`, currentLocation)
-        }}
-      />
-    )
-    const NewRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
-    ReactDOM.render(
-      <NewRoot />,
-      typeof window !== `undefined`
-        ? document.getElementById(`react-mount`)
-        : void 0
-    )
+// Load 404 page component and scripts
+let notFoundScripts
+loadScriptsForPath(`/404.html`, scripts => {
+  notFoundScripts = scripts
+})
+
+const renderPage = props => {
+  const page = pages.find(page => {
+    if (page.matchPath) {
+      // Try both the path and matchPath
+      return (
+        matchPath(props.location.pathname, { path: page.path }) ||
+        matchPath(props.location.pathname, {
+          path: page.matchPath,
+        })
+      )
+    } else {
+      return matchPath(props.location.pathname, {
+        path: page.path,
+        exact: true,
+      })
+    }
+  })
+  if (page) {
+    return $(scriptsCache[page.path].component, {
+      ...props,
+      ...scriptsCache[page.path].pageData,
+    })
+  } else if (notFoundScripts) {
+    return $(notFoundScripts.component, {
+      ...props,
+      ...notFoundScripts.pageData,
+    })
+  } else {
+    return null
   }
-)
+}
+
+const renderSite = ({ scripts, props }) => {
+  return $(scripts.layout, { ...props }, renderPage(props))
+}
+
+const $ = React.createElement
+
+loadScriptsForPath(window.location.pathname, scripts => {
+  const Root = () =>
+    $(
+      Router,
+      null,
+      $(
+        ScrollContext,
+        { shouldUpdateScroll },
+        $(withRouter(scripts.layout), {
+          children: layoutProps => {
+            return $(Route, {
+              render: routeProps => {
+                window.___history = routeProps.history
+                const props = layoutProps ? layoutProps : routeProps
+                return renderPage(props)
+              },
+            })
+          },
+        })
+      )
+    )
+
+  const NewRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
+  ReactDOM.render(
+    <NewRoot />,
+    typeof window !== `undefined`
+      ? document.getElementById(`___gatsby`)
+      : void 0
+  )
+})

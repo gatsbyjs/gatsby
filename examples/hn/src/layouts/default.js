@@ -84,7 +84,7 @@ class DefaultLayout extends React.Component {
           <tr style={{ height: `10px` }} />
           <tr>
             <td>
-              {this.props.children}
+              {this.props.children()}
             </td>
           </tr>
           <tr>

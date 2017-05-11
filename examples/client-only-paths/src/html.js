@@ -1,6 +1,6 @@
 import React from "react"
-
-import favicon from "./images/favicon.ico"
+import { TypographyStyle } from "react-typography"
+import typography from "./utils/typography"
 
 let stylesStr
 if (process.env.NODE_ENV === `production`) {
@@ -29,18 +29,18 @@ module.exports = React.createClass({
           {this.props.headComponents}
 
           <meta name="referrer" content="origin" />
-          <link rel="shortcut icon" href={favicon} />
           <meta charSet="utf-8" />
           <meta
             name="description"
-            content="Gatsby Hacker News: A clone of Hacker News written in Gatsby"
+            content="Gatsby example site demoing client only paths"
           />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
           <meta
             name="viewport"
             content="width=device-width, initial-scale=1.0"
           />
-          <title>Gatsby Hacker News</title>
+          <title>Gatsby Client Only Paths</title>
+          <TypographyStyle typography={typography} />
           {css}
         </head>
         <body>

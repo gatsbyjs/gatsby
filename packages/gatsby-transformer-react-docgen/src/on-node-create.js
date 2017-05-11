@@ -1,5 +1,5 @@
-import crypto from 'crypto'
-import parseMetadata from './parse'
+import crypto from "crypto"
+import parseMetadata from "./parse"
 
 const digest = str => crypto.createHash(`md5`).update(str).digest(`hex`)
 

@@ -1,11 +1,12 @@
 import React from "react"
 import Modal from "react-modal"
-import browserHistory from "react-router/lib/browserHistory"
 import CaretRight from "react-icons/lib/fa/caret-right"
 import CaretLeft from "react-icons/lib/fa/caret-left"
 import Close from "react-icons/lib/md/close"
 import findIndex from "lodash/findIndex"
 import mousetrap from "mousetrap"
+import * as PropTypes from "prop-types"
+import { navigateTo } from "gatsby-link"
 
 import { rhythm } from "../utils/typography"
 
@@ -51,7 +52,7 @@ class GatsbyGramModal extends React.Component {
       } else {
         nextPost = posts[currentIndex + 1]
       }
-      browserHistory.push(`/${nextPost.id}/`)
+      navigateTo(`/${nextPost.id}/`)
     }
   }
 
@@ -69,7 +70,7 @@ class GatsbyGramModal extends React.Component {
       } else {
         previousPost = posts[currentIndex - 1]
       }
-      browserHistory.push(`/${previousPost.id}/`)
+      navigateTo(`/${previousPost.id}/`)
     }
   }
 
@@ -77,7 +78,7 @@ class GatsbyGramModal extends React.Component {
     return (
       <Modal
         isOpen={this.props.isOpen}
-        onRequestClose={() => browserHistory.push(`/`)}
+        onRequestClose={() => navigateTo(`/`)}
         style={{
           overlay: {
             position: `fixed`,
@@ -103,7 +104,7 @@ class GatsbyGramModal extends React.Component {
         contentLabel="Modal"
       >
         <div
-          onClick={() => browserHistory.push(`/`)}
+          onClick={() => navigateTo(`/`)}
           css={{
             display: `flex`,
             position: `relative`,
@@ -129,7 +130,9 @@ class GatsbyGramModal extends React.Component {
               }}
               onClick={e => this.previous(e)}
             />
-            {this.props.children}
+            {this.props.children({
+              location: { pathname: this.props.location.pathname },
+            })}
             <CaretRight
               css={{
                 cursor: `pointer`,
@@ -141,7 +144,7 @@ class GatsbyGramModal extends React.Component {
             />
           </div>
           <Close
-            onClick={() => browserHistory.push(`/`)}
+            onClick={() => navigateTo(`/`)}
             css={{
               cursor: `pointer`,
               color: `rgba(255,255,255,0.8)`,

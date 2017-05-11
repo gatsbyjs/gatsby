@@ -1,15 +1,22 @@
 import React from "react"
-import { applyRouterMiddleware, Router, browserHistory } from "react-router"
-import useScroll from "react-router-scroll/lib/useScroll"
+import {
+  BrowserRouter as Router,
+  Route,
+  matchPath,
+  withRouter,
+} from "react-router-dom"
+import { ScrollContext } from "react-router-scroll"
+import createHistory from "history/createBrowserHistory"
 
-const apiRunner = require(`./api-runner-browser`)
-const rootRoute = require(`./child-routes`)
-console.log(rootRoute)
+import apiRunner from "./api-runner-browser"
+import syncRequires from "./sync-requires"
+import pages from "./pages.json"
 
-let currentLocation
+console.log(`pages`, pages)
 
-browserHistory.listen(location => {
-  currentLocation = location
+const history = createHistory()
+history.listen((location, action) => {
+  apiRunner(`onRouteUpdate`, location, action)
 })
 
 function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
@@ -30,16 +37,74 @@ function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
   return true
 }
 
-const Root = () => (
-  <Router
-    history={browserHistory}
-    routes={rootRoute}
-    render={applyRouterMiddleware(useScroll(shouldUpdateScroll))}
-    onUpdate={() => {
-      apiRunner(`onRouteUpdate`, currentLocation)
-    }}
-  />
-)
+const $ = React.createElement
+
+const noMatch = pages.find(r => r.path === `/404.html`)
+
+const addNotFoundRoute = () => {
+  if (noMatch) {
+    return $(Route, {
+      key: `404-page`,
+      component: props =>
+        $(syncRequires.components[noMatch.componentChunkName], {
+          ...props,
+          ...syncRequires.json[noMatch.jsonName],
+        }),
+    })
+  } else {
+    return null
+  }
+}
+
+const navigateTo = pathname => {
+  window.___history.push(pathname)
+}
+
+window.___navigateTo = navigateTo
+
+const Root = () =>
+  $(
+    Router,
+    null,
+    $(
+      ScrollContext,
+      { shouldUpdateScroll },
+      $(withRouter(syncRequires.layouts[`index`]), {
+        children: layoutProps => {
+          return $(Route, {
+            render: routeProps => {
+              window.___history = routeProps.history
+              const props = layoutProps ? layoutProps : routeProps
+              const page = pages.find(page => {
+                if (page.matchPath) {
+                  // Try both the path and matchPath
+                  return (
+                    matchPath(props.location.pathname, { path: page.path }) ||
+                    matchPath(props.location.pathname, {
+                      path: page.matchPath,
+                    })
+                  )
+                } else {
+                  return matchPath(props.location.pathname, {
+                    path: page.path,
+                    exact: true,
+                  })
+                }
+              })
+              if (page) {
+                return $(syncRequires.components[page.componentChunkName], {
+                  ...props,
+                  ...syncRequires.json[page.jsonName],
+                })
+              } else {
+                return addNotFoundRoute()
+              }
+            },
+          })
+        },
+      })
+    )
+  )
 
 // Let site, plugins wrap the site e.g. for Redux.
 const WrappedRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]

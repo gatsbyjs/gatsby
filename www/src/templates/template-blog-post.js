@@ -6,7 +6,6 @@ import typography, { rhythm, scale } from "../utils/typography"
 
 const BlogPostTemplate = React.createClass({
   render() {
-    console.log(this.props)
     const post = this.props.data.markdownRemark
     const twitterLine = post.frontmatter.author.twitter
       ? ` by ${post.frontmatter.author.twitter}`

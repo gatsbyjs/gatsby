@@ -49,11 +49,6 @@ class DefaultLayout extends React.Component {
       // Always set overflow-y to scroll so the scrollbar stays visible avoiding
       // weird jumping.
       this.htmlElement.style.overflowY = `scroll`
-
-      // Save the homepage if we haven't already.
-      if (!this.modalBackgroundChildren) {
-        this.modalBackgroundChildren = this.props.children
-      }
     } else {
       // Otherwise we're navigating back home so delete old home so the
       // modal can be destroyed.
@@ -69,7 +64,14 @@ class DefaultLayout extends React.Component {
 
   render() {
     const { location } = this.props
-    const isModal = this.modalBackgroundChildren
+    let isModal = false
+    if (
+      this.props.location.pathname !== `/` &&
+      this.props.location.pathname !== `/about/` &&
+      this.windowWidth > 750
+    ) {
+      isModal = true
+    }
 
     return (
       <div
@@ -151,12 +153,21 @@ class DefaultLayout extends React.Component {
             },
           }}
         >
-          {isModal ? this.modalBackgroundChildren : this.props.children}
+          <div>
+            {isModal
+              ? this.props.children({
+                  ...this.props,
+                  location: { pathname: `/` },
+                })
+              : this.props.children()}
+          </div>
 
-          {isModal &&
-            <Modal isOpen={true} posts={this.posts} location={location}>
-              {this.props.children}
-            </Modal>}
+          <div>
+            {isModal &&
+              <Modal isOpen={true} posts={this.posts} location={location}>
+                {this.props.children}
+              </Modal>}
+          </div>
         </div>
       </div>
     )

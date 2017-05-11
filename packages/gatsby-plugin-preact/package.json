@@ -15,8 +15,8 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "preact": "^7.1.0",
-    "preact-compat": "^3.11.0"
+    "preact": "^8.1.0",
+    "preact-compat": "^3.16.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1"

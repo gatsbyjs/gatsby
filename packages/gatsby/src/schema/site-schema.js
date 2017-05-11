@@ -1,8 +1,8 @@
 // @flow
-import { GraphQLObjectType, GraphQLString } from 'graphql'
-import moment from 'moment'
+import { GraphQLObjectType, GraphQLString } from "graphql"
+import moment from "moment"
 
-import { inferObjectStructureFromNodes } from './infer-graphql-type'
+import { inferObjectStructureFromNodes } from "./infer-graphql-type"
 const { store } = require(`../redux`)
 
 module.exports = () => {

@@ -1,56 +1,60 @@
 import React from "react"
-import Link from "react-router/lib/Link"
-import createClass from "create-react-class"
+import { Link } from "react-router-dom"
 import PropTypes from "prop-types"
+
+if (typeof window !== `undefined`) {
+  require(`ric`)
+}
 
 let linkPrefix = ``
 if (__PREFIX_LINKS__) {
   linkPrefix = __LINK_PREFIX__
 }
 
-// Use createClass instead of ES6 class as Babel spews out a ton of code
-// for polyfilling classes which there's no reason to pay for this.
-// A function component would be ideal but we need componentDidMount.
-const GatsbyLink = createClass({
+class GatsbyLink extends React.Component {
   propTypes: {
     to: PropTypes.string.isRequired,
-  },
+  }
   componentDidMount() {
     // Only enable prefetching of Link resources in production and for browsers
     // that don't support service workers *cough* Safari/IE *cough*.
+    // TODO also add check if user is using SW, e.g. window.caches
     if (
-      (process.env.NODE_ENV === `production` &&
-        !(`serviceWorker` in navigator)) ||
-      window.location.protocol !== `https:`
+      process.env.NODE_ENV === `production` &&
+      (!(`serviceWorker` in window.navigator) ||
+        window.location.protocol !== `https:`)
     ) {
-      const routes = window.gatsbyRootRoute
-      const { createMemoryHistory } = require(`history`)
-      const matchRoutes = require(`react-router/lib/matchRoutes`)
-      const getComponents = require(`react-router/lib/getComponents`)
-
-      const createLocation = createMemoryHistory().createLocation
-
-      if (typeof routes !== `undefined`) {
-        matchRoutes(
-          [routes],
-          createLocation(this.props.to),
-          (error, nextState) => {
-            if (error) {
-              return console.error(error)
-            }
-
-            if (nextState) {
-              getComponents(nextState)
-            }
-          }
-        )
-      }
+      requestUserIdle(() => {
+        ___loadScriptsForPath(this.props.to)
+      })
     }
-  },
+  }
+
   render() {
     const to = linkPrefix + this.props.to
-    return <Link {...this.props} to={to} />
-  },
-})
+    return (
+      <Link
+        onClick={e => {
+          // In production, make sure the necessary scripts are
+          // loaded before continuing.
+          if (process.env.NODE_ENV === `production`) {
+            e.preventDefault()
+            window.___navigateTo(this.props.to)
+          }
+        }}
+        {...this.props}
+        to={to}
+      />
+    )
+  }
+}
+
+GatsbyLink.contextTypes = {
+  router: PropTypes.object,
+}
 
 module.exports = GatsbyLink
+
+exports.navigateTo = pathname => {
+  window.___navigateTo(pathname)
+}

@@ -23,7 +23,7 @@ const {
 import type {
   GraphQLInputFieldConfig,
   GraphQLInputFieldConfigMap,
-} from 'graphql/type/definition'
+} from "graphql/type/definition"
 
 function typeFields(type): GraphQLInputFieldConfigMap {
   switch (type) {
