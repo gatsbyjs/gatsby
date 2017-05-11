@@ -12,6 +12,14 @@ const rl = require(`readline`)
 const parsePath = require(`parse-filepath`)
 const _ = require(`lodash`)
 const { store } = require(`../redux`)
+const copyStaticDirectory = require(`./copy-static-directory`)
+
+// Watch the static directory and copy files to public as they're added or
+// changed. Wait 10 seconds so copying doesn't interfer with the regular
+// bootstrap.
+setTimeout(() => {
+  copyStaticDirectory()
+}, 10000)
 
 const rlInterface = rl.createInterface({
   input: process.stdin,
