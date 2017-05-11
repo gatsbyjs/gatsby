@@ -9,10 +9,10 @@ import { ScrollContext } from "react-router-scroll"
 import createHistory from "history/createBrowserHistory"
 
 import apiRunner from "./api-runner-browser"
-// import rootRoute from "./child-routes"
 import syncRequires from "./sync-requires"
-import routes from "./routes.json"
-console.log(routes)
+import pages from "./pages.json"
+
+console.log(pages)
 
 const history = createHistory()
 history.listen((location, action) => {
@@ -39,8 +39,7 @@ function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
 
 const $ = React.createElement
 
-const filteredRoutes = routes.filter(r => r.path !== `/404.html`)
-const noMatch = routes.find(r => r.path === `/404.html`)
+const noMatch = pages.find(r => r.path === `/404.html`)
 
 const addNotFoundRoute = () => {
   if (noMatch) {
@@ -76,7 +75,7 @@ const Root = () =>
             component: routeProps => {
               window.___history = routeProps.history
               const props = layoutProps ? layoutProps : routeProps
-              const page = routes.find(
+              const page = pages.find(
                 route => route.path === props.location.pathname
               )
               if (page) {

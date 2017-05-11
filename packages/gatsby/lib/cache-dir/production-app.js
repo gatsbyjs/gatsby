@@ -7,11 +7,11 @@ import ReactDOM from "react-dom"
 import { BrowserRouter as Router, Route, withRouter } from "react-router-dom"
 import { ScrollContext } from "react-router-scroll"
 import createHistory from "history/createBrowserHistory"
-import routes from "./routes.json"
+import pages from "./pages.json"
 
 import requires from "./async-requires"
 
-console.log(routes)
+console.log(pages)
 console.log(requires)
 
 // Load scripts
@@ -28,7 +28,7 @@ const loadScriptsForPath = (path, cb = () => {}) => {
     return cb(scriptsCache[path])
   }
 
-  const page = routes.find(r => r.path === path)
+  const page = pages.find(r => r.path === path)
 
   if (!page) {
     return cb()
@@ -100,7 +100,7 @@ loadScriptsForPath(`/404.html`, scripts => {
 })
 
 const renderPage = props => {
-  const page = routes.find(r => r.path === props.location.pathname)
+  const page = pages.find(r => r.path === props.location.pathname)
   if (page) {
     return $(scriptsCache[props.location.pathname].component, {
       ...props,

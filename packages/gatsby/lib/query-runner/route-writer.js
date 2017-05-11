@@ -9,13 +9,13 @@ import {
   pathChunkName,
 } from "../utils/js-chunk-names"
 
-// Write out routes file.
+// Write out pages file.
 // Loop through all paths and write them out to child-routes.js
 const writeChildRoutes = () => {
   const { program, config, pages } = store.getState()
 
-  // Write out routes.json
-  const routesData = pages.reduce(
+  // Write out pages.json
+  const pagesData = pages.reduce(
     (mem, { path, componentChunkName, layout, jsonName }) => [
       ...mem,
       { componentChunkName, layout, jsonName, path },
@@ -50,8 +50,8 @@ const writeChildRoutes = () => {
   components = _.uniqBy(components, c => c.componentChunkName)
 
   fs.writeFile(
-    `${program.directory}/.cache/routes.json`,
-    JSON.stringify(routesData, null, 4)
+    `${program.directory}/.cache/pages.json`,
+    JSON.stringify(pagesData, null, 4)
   )
 
   // Create file with sync requires of layouts/components/json files.

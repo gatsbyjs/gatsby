@@ -4,7 +4,7 @@ import { StaticRouter, Route, withRouter } from "react-router-dom"
 import Html from "../src/html"
 import { kebabCase, get, merge } from "lodash"
 import apiRunner from "./api-runner-ssr"
-import pages from "./routes.json"
+import pages from "./pages.json"
 import syncRequires from "./sync-requires"
 
 const pathChunkName = path => {
