@@ -77,6 +77,7 @@ window.___loadScriptsForPath = loadScriptsForPath
 window.___navigateTo = navigateTo
 
 const history = createHistory()
+window.___history = history
 history.listen((location, action) => {
   apiRunner(`onRouteUpdate`, location, action)
 })
@@ -143,10 +144,15 @@ const renderSite = ({ scripts, props }) => {
 
 const $ = React.createElement
 
+const AltRouter = apiRunner(`replaceRouterComponent`, { history })[0]
+const DefaultRouter = ({ children }) => (
+  <Router history={history}>{children}</Router>
+)
+
 loadScriptsForPath(window.location.pathname, scripts => {
   const Root = () =>
     $(
-      Router,
+      AltRouter ? AltRouter : DefaultRouter,
       null,
       $(
         ScrollContext,
@@ -155,7 +161,6 @@ loadScriptsForPath(window.location.pathname, scripts => {
           children: layoutProps => {
             return $(Route, {
               render: routeProps => {
-                window.___history = routeProps.history
                 const props = layoutProps ? layoutProps : routeProps
                 return renderPage(props)
               },
