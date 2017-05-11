@@ -19,8 +19,11 @@ const { oneLine } = require(`common-tags`)
 
 const { store, getNode, getNodes } = require(`../redux`)
 const { addPageDependency } = require(`../redux/actions/add-page-dependency`)
-const { extractFieldExamples } = require(`./data-tree-utils`)
 const createTypeName = require(`./create-type-name`)
+const {
+  extractFieldExamples,
+  isEmptyObjectOrArray,
+} = require(`./data-tree-utils`)
 
 import type { GraphQLOutputType } from 'graphql'
 import type {
@@ -61,6 +64,7 @@ function inferGraphQLType({
   selector,
   ...otherArgs
 }): ?GraphQLFieldConfig<*, *> {
+  if (exampleValue == null || isEmptyObjectOrArray(exampleValue)) return
   let fieldName = selector.split(`.`).pop()
 
   if (Array.isArray(exampleValue)) {
@@ -96,8 +100,6 @@ function inferGraphQLType({
     }
     return { type: new GraphQLList(headType) }
   }
-
-  if (exampleValue == null) return
 
   // Check if this is a date.
   // All the allowed ISO 8601 date-time formats used.

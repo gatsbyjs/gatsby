@@ -14,8 +14,11 @@ const _ = require(`lodash`)
 const invariant = require(`invariant`)
 const typeOf = require(`type-of`)
 const createTypeName = require(`./create-type-name`)
-
-import { extractFieldExamples, buildFieldEnumValues } from './data-tree-utils'
+const {
+  extractFieldExamples,
+  buildFieldEnumValues,
+  isEmptyObjectOrArray,
+} = require(`./data-tree-utils`)
 
 import type {
   GraphQLInputFieldConfig,
@@ -55,7 +58,7 @@ function inferGraphQLInputFields({
   nodes,
   prefix,
 }): ?GraphQLInputFieldConfig {
-  if (value == null || (Array.isArray(value) && !value.length)) return null
+  if (value == null || isEmptyObjectOrArray(value)) return null
 
   switch (typeOf(value)) {
     case `array`: {

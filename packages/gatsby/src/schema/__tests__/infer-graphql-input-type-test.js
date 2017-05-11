@@ -109,6 +109,23 @@ describe(`GraphQL Input args`, () => {
     )
   })
 
+  it(`filters out empty objects`, async () => {
+    let result = await queryResult(
+      [{ foo: {}, bar: `baz` }],
+      `
+        {
+          allNode(foo: { eq: "bar" }) {
+            edges { node { bar } }
+          }
+        }
+      `
+    )
+    expect(result.errors.length).toEqual(1)
+    expect(result.errors[0].message).toMatch(
+      `Unknown argument "foo" on field "allNode"`
+    )
+  })
+
   it(`filters out empty arrays`, async () => {
     let result = await queryResult(
       [{ foo: [], bar: `baz` }],

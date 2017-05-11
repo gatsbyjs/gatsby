@@ -1,6 +1,15 @@
 // @flow
 const _ = require(`lodash`)
 const flatten = require(`flat`)
+const typeOf = require(`type-of`)
+
+const INVALID_VALUE = Symbol(`INVALID_VALUE`)
+const isDefined = v => v != null
+
+const isSameType = (a, b) => a == null || b == null || typeOf(a) === typeOf(b)
+
+const isEmptyObjectOrArray = (obj: any) =>
+  obj === INVALID_VALUE || (_.isObject(obj) && _.isEmpty(obj))
 
 /**
  * Takes an array of source nodes and returns a pristine
@@ -14,11 +23,23 @@ const flatten = require(`flat`)
  *
  * @param {*Nodes} args
  */
-export const extractFieldExamples = (nodes: any[]) => {
+const extractFieldExamples = (nodes: any[]) => {
   // $FlowFixMe
-  return _.mergeWith({}, ...nodes, (obj, next) => {
-    if (!_.isArray(obj || next)) return
-    let array = [].concat(obj, next).filter(v => v != null)
+  return _.mergeWith({}, ...nodes, (obj, next, key, o, s, stack) => {
+    if (obj === INVALID_VALUE) return obj
+
+    // TODO: if you want to support infering Union types this should be handled
+    // differently. Maybe merge all like types into examples for each type?
+    // e.g. union: [1, { foo: true }, ['brown']] -> Union Int|Object|List
+    if (!isSameType(obj, next)) return INVALID_VALUE
+
+    if (!_.isArray(obj || next)) {
+      if (obj === null) return next
+      if (next === null) return obj
+      return
+    }
+
+    let array = [].concat(obj, next).filter(isDefined)
 
     if (!array.length) return null
 
@@ -26,12 +47,12 @@ export const extractFieldExamples = (nodes: any[]) => {
     if (!_.isObject(array[0])) {
       return array.slice(0, 1)
     }
-
-    return [extractFieldExamples(array)]
+    let merged = extractFieldExamples(array)
+    return isDefined(merged) ? [merged] : null
   })
 }
 
-export const buildFieldEnumValues = (nodes: any[]) => {
+const buildFieldEnumValues = (nodes: any[]) => {
   const enumValues = {}
   const values = flatten(extractFieldExamples(nodes), {
     maxDepth: 3,
@@ -43,4 +64,11 @@ export const buildFieldEnumValues = (nodes: any[]) => {
   })
 
   return enumValues
+}
+
+module.exports = {
+  INVALID_VALUE,
+  extractFieldExamples,
+  buildFieldEnumValues,
+  isEmptyObjectOrArray,
 }
