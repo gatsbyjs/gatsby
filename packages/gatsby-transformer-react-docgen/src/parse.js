@@ -42,14 +42,22 @@ function nameHandler(filePath = `/AnonymousComponent_${++fileCount}`) {
   }
 }
 
-export default function parseMetadata(content, filePath, options) {
+/**
+ * Wrap handlers to pass in additional arguments such as the File node
+ */
+function makeHandlers(node, handlers) {
+  handlers = (handlers || []).map(h => (...args) => h(...args, node))
+  return [nameHandler(node.absolutePath), ...handlers]
+}
+
+export default function parseMetadata(content, node, options) {
   let components = []
   options = options || {}
   try {
     components = parse(
       content,
       options.resolver || findAllComponentDefinitions,
-      [...defaultHandlers, ...(options.handlers || []), nameHandler(filePath)]
+      defaultHandlers.concat(makeHandlers(node, options.handlers))
     )
   } catch (err) {
     if (err.message === ERROR_MISSING_DEFINITION) return []
