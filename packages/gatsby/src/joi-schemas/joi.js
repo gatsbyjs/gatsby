@@ -5,6 +5,10 @@ export const gatsbyConfigSchema = Joi.object().keys({
   linkPrefix: Joi.string(),
   mapping: Joi.object(),
   plugins: Joi.array(),
+  proxy: Joi.object().keys({
+    prefix: Joi.string().required(),
+    url: Joi.string().required(),
+  }),
 })
 
 export const pageSchema = Joi.object()
