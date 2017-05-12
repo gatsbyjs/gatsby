@@ -79,11 +79,14 @@ async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
           if (gqlAst) {
             gqlAst.definitions.forEach(def => {
               if (!def.name || !def.name.value) {
-                console.log(`
-GraphQL definitions must be "named"`)
+                console.log(
+                  `
+GraphQL definitions must be "named"`
+                )
 
                 console.log(`The query with the missing name is in ${file}`)
-                console.log(`
+                console.log(
+                  `
 To fix the query, add "query MyQueryName" to the start of your query.
 
 So instead of:
@@ -101,7 +104,8 @@ query MyQueryName {
     totalCount
   }
 }
-              `)
+              `
+                )
                 console.log(``)
                 process.exit(1)
               }

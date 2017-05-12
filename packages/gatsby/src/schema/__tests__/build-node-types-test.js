@@ -35,7 +35,8 @@ describe(`build-node-types`, () => {
   })
 
   it(`should result in a valid queryable schema`, async () => {
-    let { parent, child, relative } = await runQuery(`
+    let { parent, child, relative } = await runQuery(
+      `
       {
         parent(id: { eq: "p1" }) {
           hair
@@ -47,14 +48,16 @@ describe(`build-node-types`, () => {
           hair
         }
       }
-    `)
+    `
+    )
     expect(parent.hair).toEqual(`red`)
     expect(child.hair).toEqual(`brown`)
     expect(relative.hair).toEqual(`black`)
   })
 
   it(`should link children automatically`, async () => {
-    let { parent } = await runQuery(`
+    let { parent } = await runQuery(
+      `
       {
         parent(id: { eq: "p1" }) {
           children {
@@ -62,13 +65,15 @@ describe(`build-node-types`, () => {
           }
         }
       }
-    `)
+    `
+    )
     expect(parent.children).toBeDefined()
     expect(parent.children.map(c => c.id)).toEqual([`c1`, `c2`, `r1`])
   })
 
   it(`should create typed children fields`, async () => {
-    let { parent } = await runQuery(`
+    let { parent } = await runQuery(
+      `
       {
         parent(id: { eq: "p1" }) {
           childrenChild { # lol
@@ -76,13 +81,15 @@ describe(`build-node-types`, () => {
           }
         }
       }
-    `)
+    `
+    )
     expect(parent.childrenChild).toBeDefined()
     expect(parent.childrenChild.map(c => c.id)).toEqual([`c1`, `c2`])
   })
 
   it(`should create typed child field for singular children`, async () => {
-    let { parent } = await runQuery(`
+    let { parent } = await runQuery(
+      `
       {
         parent(id: { eq: "p1" }) {
           childRelative { # lol
@@ -90,7 +97,8 @@ describe(`build-node-types`, () => {
           }
         }
       }
-    `)
+    `
+    )
 
     expect(parent.childRelative).toBeDefined()
     expect(parent.childRelative.id).toEqual(`r1`)

@@ -8,8 +8,8 @@ exports.modifyWebpackConfig = ({ config, stage }, { postCssPlugins }) => {
   // If none specified, fallback to Gatsby default postcss plugins.
   if (postCssPlugins) {
     config.merge(current => {
-        current.postcss = postCssPlugins
-        return current
+      current.postcss = postCssPlugins
+      return current
     })
   }
 
@@ -36,7 +36,11 @@ exports.modifyWebpackConfig = ({ config, stage }, { postCssPlugins }) => {
 
       config.loader(`sassModules`, {
         test: /\.module\.s(a|c)ss$/,
-        loader: ExtractTextPlugin.extract(`style`, [cssModulesConf, `postcss`, `sass`]),
+        loader: ExtractTextPlugin.extract(`style`, [
+          cssModulesConf,
+          `postcss`,
+          `sass`,
+        ]),
       })
       return config
     }
@@ -49,7 +53,11 @@ exports.modifyWebpackConfig = ({ config, stage }, { postCssPlugins }) => {
 
       config.loader(`sassModules`, {
         test: /\.module\.s(a|c)ss$/,
-        loader: ExtractTextPlugin.extract(`style`, [cssModulesConf, `postcss`, `sass`]),
+        loader: ExtractTextPlugin.extract(`style`, [
+          cssModulesConf,
+          `postcss`,
+          `sass`,
+        ]),
       })
       return config
     }
@@ -57,12 +65,15 @@ exports.modifyWebpackConfig = ({ config, stage }, { postCssPlugins }) => {
       config.loader(`sass`, {
         test: /\.s(a|c)ss$/,
         exclude: /\.module\.s(a|c)ss$/,
-        loader: ExtractTextPlugin.extract([`css`, `postcss`, `sass`]),
+        loader: null,
       })
 
       config.loader(`sassModules`, {
         test: /\.module\.s(a|c)ss$/,
-        loader: ExtractTextPlugin.extract(`style`, [cssModulesConf, `postcss`, `sass`]),
+        loader: ExtractTextPlugin.extract(`style`, [
+          cssModulesConf,
+          `sass`,
+        ]),
       })
       return config
     }

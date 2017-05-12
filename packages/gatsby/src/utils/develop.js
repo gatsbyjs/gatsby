@@ -136,7 +136,7 @@ async function startServer(program) {
     const { proxy } = store.getState().config
     if (proxy) {
       const { prefix, url } = proxy
-      app.use(`${ prefix }/*`, (req, res) => {
+      app.use(`${prefix}/*`, (req, res) => {
         const proxiedUrl = url + req.originalUrl
         req.pipe(request(proxiedUrl)).pipe(res)
       })

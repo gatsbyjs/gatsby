@@ -375,12 +375,14 @@ async function responsiveResolution({ file, args = {} }) {
   // requested, add back the original so there's at least something)
   if (filteredSizes.length === 0) {
     filteredSizes.push(dimensions.width)
-    console.warn(`
+    console.warn(
+      `
                  The requested width "${options.width}px" for a responsiveResolution field for
                  the file ${file.absolutePath}
                  was wider than the actual image width of ${dimensions.width}px!
                  If possible, replace the current image with a larger one.
-                 `)
+                 `
+    )
   }
 
   // Sort sizes for prettiness.

@@ -330,7 +330,6 @@ function inferFromUri(key, types) {
         return null
       }
 
-
       // Find File node for this node (we assume the node is something
       // like markdown which would be a child node of a File node).
       const parentFileNode = _.find(
