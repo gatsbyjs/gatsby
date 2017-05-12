@@ -2,6 +2,7 @@
 const express = require(`express`)
 const graphqlHTTP = require(`express-graphql`)
 const glob = require(`glob`)
+const request = require(`request`)
 const webpackRequire = require(`webpack-require`)
 const bootstrap = require(`../bootstrap`)
 const webpack = require(`webpack`)
@@ -130,6 +131,17 @@ async function startServer(program) {
         publicPath: devConfig.output.publicPath,
       })
     )
+
+    // Set up API proxy.
+    const { proxy } = store.getState().config
+    if (proxy) {
+      const { prefix, url } = proxy
+      app.use(`${ prefix }/*`, (req, res) => {
+        const proxiedUrl = url + req.originalUrl
+        req.pipe(request(proxiedUrl)).pipe(res)
+      })
+    }
+
     // As last step, check if the file exists in the public folder.
     app.get(`*`, (req, res) => {
       // Load file but ignore errors.
