@@ -13,6 +13,7 @@
   links:
     Path Prefix: /docs/path-prefix/
     Add 404 Page: /docs/add-404-page/
+    Proxying API Requests: /docs/api-proxy/
 - title: Reference
   links:
     Node Interface: /docs/node-interface/
