@@ -35,7 +35,10 @@ module.exports = (types: any) => {
           path = rootValue.path
         }
         const runSift = require(`./run-sift`)
-        const latestNodes = _.filter(getNodes(), n => n.type === type.name)
+        const latestNodes = _.filter(
+          getNodes(),
+          n => n.internal.type === type.name
+        )
         return runSift({
           args: resolveArgs,
           nodes: latestNodes,

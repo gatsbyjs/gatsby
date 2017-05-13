@@ -85,7 +85,7 @@ exports.loadNodeContent = node => {
       // Load plugin's loader function
       const plugin = store
         .getState()
-        .flattenedPlugins.find(plug => plug.name === node.pluginName)
+        .flattenedPlugins.find(plug => plug.name === node.internal.pluginName)
       const { loadNodeContent } = require(plugin.resolve)
       return loadNodeContent(node).then(content => {
         // TODO update node's content field here.

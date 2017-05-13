@@ -90,9 +90,9 @@ const findAndRunQueriesForDirtyPaths = actions => {
       dirtyPaths = dirtyPaths.concat(state.pageDataDependencies.nodes[node.id])
     }
     // Find invalid connections
-    if (state.pageDataDependencies.connections[node.type]) {
+    if (state.pageDataDependencies.connections[node.internal.type]) {
       dirtyPaths = dirtyPaths.concat(
-        state.pageDataDependencies.connections[node.type]
+        state.pageDataDependencies.connections[node.internal.type]
       )
     }
   })

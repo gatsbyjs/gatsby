@@ -96,7 +96,7 @@ function inferGraphQLType({
         `Could not infer graphQL type for value: ${exampleValue}`
       )
 
-      headType = inferredType.type
+      headType = inferredType.internal.type
     }
     return { type: new GraphQLList(headType) }
   }
@@ -186,7 +186,7 @@ function inferFromMapping(
     const linkedType = mapping[fieldSelector]
     const linkedNode = _.find(
       getNodes(),
-      n => n.type === linkedType && n.id === fieldValue
+      n => n.internal.type === linkedType && n.id === fieldValue
     )
     if (linkedNode) {
       addPageDependency({ path, nodeId: linkedNode.id })
@@ -259,13 +259,13 @@ function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
       field matching: "${value}"
     `
   )
-  const field = types.find(type => type.name === linkedNode.type)
+  const field = types.find(type => type.name === linkedNode.internal.type)
 
   invariant(
     field,
     oneLine`
       Encountered an error trying to infer a GraphQL type for: "${selector}".
-      There is no corresponding GraphQL type "${linkedNode.type}" available
+      There is no corresponding GraphQL type "${linkedNode.internal.type}" available
       to link to this node.
     `
   )
@@ -330,12 +330,11 @@ function inferFromUri(key, types) {
         return null
       }
 
-
       // Find File node for this node (we assume the node is something
       // like markdown which would be a child node of a File node).
       const parentFileNode = _.find(
         getNodes(),
-        n => n.type === `File` && n.id === node.parent
+        n => n.internal.type === `File` && n.id === node.parent
       )
 
       // Use the parent File node to create the absolute path to
@@ -347,7 +346,7 @@ function inferFromUri(key, types) {
       // Use that path to find the linked File node.
       const linkedFileNode = _.find(
         getNodes(),
-        n => n.type === `File` && n.absolutePath === fileLinkPath
+        n => n.internal.type === `File` && n.absolutePath === fileLinkPath
       )
 
       if (linkedFileNode) {
@@ -398,7 +397,7 @@ export function inferObjectStructureFromNodes({
     // Several checks to see if a field is pointing to custom type
     // before we try automatic inference.
     const nextSelector = selector ? `${selector}.${key}` : key
-    const fieldSelector = `${nodes[0].type}.${nextSelector}`
+    const fieldSelector = `${nodes[0].internal.type}.${nextSelector}`
 
     let fieldName = key
     let inferredField
@@ -415,7 +414,7 @@ export function inferObjectStructureFromNodes({
       inferredField = inferFromFieldName(value, nextSelector, types)
 
       // Third if the field is pointing to a file
-    } else if (nodes[0].type !== `File` && shouldInferFile(value)) {
+    } else if (nodes[0].internal.type !== `File` && shouldInferFile(value)) {
       inferredField = inferFromUri(key, types)
 
       // Finally our automatic inference of field value type.

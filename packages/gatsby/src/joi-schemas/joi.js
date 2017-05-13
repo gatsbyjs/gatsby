@@ -24,12 +24,14 @@ export const pageSchema = Joi.object()
 export const nodeSchema = Joi.object()
   .keys({
     id: Joi.string().required(),
-    contentDigest: Joi.string().required(),
     children: Joi.array(Joi.string()).required(),
     parent: Joi.string().required(),
-    mediaType: Joi.string().required(),
-    content: Joi.string(),
-    type: Joi.string().required(),
-    pluginName: Joi.string().required(),
+    internal: Joi.object().keys({
+      contentDigest: Joi.string().required(),
+      mediaType: Joi.string().required(),
+      type: Joi.string().required(),
+      pluginName: Joi.string().required(),
+      content: Joi.string(),
+    }),
   })
   .unknown()

@@ -10,7 +10,18 @@ module.exports = () => {
   // Create site/page types.
   const metadataFields = () => {
     const fields = inferObjectStructureFromNodes({
-      nodes: [config.siteMetadata],
+      nodes: [
+        {
+          ...config.siteMetadata,
+          id: `siteMetadata`,
+          children: [],
+          parent: `NOPE`,
+          internal: {
+            type: `SiteMetadata`,
+            pluginName: `internal`,
+          },
+        },
+      ],
       types: [],
     })
     return fields
