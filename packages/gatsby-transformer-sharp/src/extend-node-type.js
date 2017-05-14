@@ -46,6 +46,10 @@ module.exports = ({ type, linkPrefix, getNodeAndSavePathDependency }) => {
           type: GraphQLInt,
           defaultValue: 50,
         },
+        toFormat: {
+          type: GraphQLString,
+          defaultValue: ``,
+        },
       },
       resolve(image, fieldArgs, context) {
         const promise = responsiveResolution({
@@ -80,6 +84,10 @@ module.exports = ({ type, linkPrefix, getNodeAndSavePathDependency }) => {
         quality: {
           type: GraphQLInt,
           defaultValue: 50,
+        },
+        toFormat: {
+          type: GraphQLString,
+          defaultValue: ``,
         },
       },
       resolve(image, fieldArgs, context) {
@@ -126,6 +134,10 @@ module.exports = ({ type, linkPrefix, getNodeAndSavePathDependency }) => {
         base64: {
           type: GraphQLBoolean,
           defaultValue: false,
+        },
+        toFormat: {
+          type: GraphQLString,
+          defaultValue: ``,
         },
       },
       resolve(image, fieldArgs, context) {
