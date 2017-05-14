@@ -12,8 +12,6 @@ import apiRunner from "./api-runner-browser"
 import syncRequires from "./sync-requires"
 import pages from "./pages.json"
 
-console.log(`pages`, pages)
-
 const history = createHistory()
 history.listen((location, action) => {
   apiRunner(`onRouteUpdate`, location, action)
