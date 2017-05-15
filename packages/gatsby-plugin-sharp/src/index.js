@@ -154,6 +154,7 @@ function queueImageResizing({ file, args = {} }) {
     pngCompressionLevel: 9,
     grayscale: false,
     linkPrefix: ``,
+    toFormat: ``,
   }
   const options = _.defaults(args, defaultArgs)
   // Filter out false args, and args not for this extension and put width at
@@ -173,7 +174,8 @@ function queueImageResizing({ file, args = {} }) {
     return true
   })
   const sortedArgs = _.sortBy(filteredArgs, arg => arg[0] === `width`)
-  const imgSrc = `/${file.internal.contentDigest}-${qs.stringify(_.fromPairs(sortedArgs))}.${file.extension}`
+  const fileExtension = options.toFormat ? options.toFormat : file.extension
+  const imgSrc = `/${file.internal.contentDigest}-${qs.stringify(_.fromPairs(sortedArgs))}.${fileExtension}`
   const filePath = `${process.cwd()}/public${imgSrc}`
   // Create function to call when the image is finished.
   let outsideResolve
@@ -208,6 +210,7 @@ function queueImageResizing({ file, args = {} }) {
     inputPath: file.absolutePath,
     outputPath: filePath,
   }
+
   queueJob(job)
 
   // Prefix the image src.
@@ -230,6 +233,7 @@ async function notMemoizedbase64({ file, args = {} }) {
     jpegProgressive: true,
     pngCompressionLevel: 9,
     grayscale: false,
+    toFormat: ``,
   }
   const options = _.defaults(args, defaultArgs)
   let pipeline = sharp(file.absolutePath).rotate()
@@ -283,6 +287,7 @@ async function responsiveSizes({ file, args = {} }) {
     pngCompressionLevel: 9,
     grayscale: false,
     linkPrefix: ``,
+    toFormat: ``,
   }
   const options = _.defaults(args, defaultArgs)
   options.maxWidth = parseInt(options.maxWidth, 10)
@@ -357,6 +362,7 @@ async function responsiveResolution({ file, args = {} }) {
     pngCompressionLevel: 9,
     grayscale: false,
     linkPrefix: ``,
+    toFormat: ``,
   }
   const options = _.defaults(args, defaultArgs)
   options.width = parseInt(options.width, 10)

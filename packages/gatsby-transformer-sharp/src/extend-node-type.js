@@ -5,6 +5,7 @@ const {
   GraphQLString,
   GraphQLInt,
   GraphQLFloat,
+  GraphQLEnumType,
 } = require(`graphql`)
 const {
   queueImageResizing,
@@ -12,6 +13,16 @@ const {
   responsiveSizes,
   responsiveResolution,
 } = require(`gatsby-plugin-sharp`)
+
+const ImageFormatType = new GraphQLEnumType({
+  name: `ImageFormat`,
+  values: {
+    NO_CHANGE: { value: `` },
+    JPG: { value: `jpg` },
+    PNG: { value: `png` },
+    WEBP: { value: `webp` },
+  },
+})
 
 module.exports = ({ type, linkPrefix, getNodeAndSavePathDependency }) => {
   if (type.name !== `ImageSharp`) {
@@ -47,6 +58,10 @@ module.exports = ({ type, linkPrefix, getNodeAndSavePathDependency }) => {
           type: GraphQLInt,
           defaultValue: 50,
         },
+        toFormat: {
+          type: ImageFormatType,
+          defaultValue: ``,
+        },
       },
       resolve(image, fieldArgs, context) {
         const promise = responsiveResolution({
@@ -81,6 +96,10 @@ module.exports = ({ type, linkPrefix, getNodeAndSavePathDependency }) => {
         quality: {
           type: GraphQLInt,
           defaultValue: 50,
+        },
+        toFormat: {
+          type: ImageFormatType,
+          defaultValue: ``,
         },
       },
       resolve(image, fieldArgs, context) {
@@ -127,6 +146,10 @@ module.exports = ({ type, linkPrefix, getNodeAndSavePathDependency }) => {
         base64: {
           type: GraphQLBoolean,
           defaultValue: false,
+        },
+        toFormat: {
+          type: ImageFormatType,
+          defaultValue: ``,
         },
       },
       resolve(image, fieldArgs, context) {
