@@ -96,7 +96,7 @@ function inferGraphQLType({
         `Could not infer graphQL type for value: ${exampleValue}`
       )
 
-      headType = inferredType.internal.type
+      headType = inferredType.type
     }
     return { type: new GraphQLList(headType) }
   }
