@@ -37,7 +37,7 @@ module.exports = (
   pluginsCacheStr = pluginOptions.plugins.map(p => p.name).join(``)
 
   return new Promise((resolve, reject) => {
-    const files = allNodes.filter(n => n.type === `File`)
+    const files = allNodes.filter(n => n.internal.type === `File`)
 
     // Setup Remark.
     const remark = new Remark({
