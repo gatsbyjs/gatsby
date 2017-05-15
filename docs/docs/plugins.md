@@ -34,6 +34,7 @@ mean converting this file into a JS component).
 * [gatsby-plugin-typescript](/docs/packages/gatsby-plugin-typescript/)
 * [gatsby-source-filesystem](/docs/packages/gatsby-source-filesystem/)
 * [gatsby-source-drupal](/docs/packages/gatsby-source-drupal/)
+* [gatsby-source-hacker-news](/docs/packages/gatsby-source-hacker-news/)
 * [gatsby-remark-autolink-headers](/docs/packages/gatsby-remark-autolink-headers/)
 * [gatsby-remark-copy-linked-files](/docs/packages/gatsby-remark-copy-linked-files/)
 * [gatsby-remark-prismjs](/docs/packages/gatsby-remark-prismjs/)

@@ -9,9 +9,11 @@ const makeTypeName = type => {
 const processEntities = ents => {
   return ents.map(ent => {
     const newEnt = {
-      ...ent.attributes,
       id: ent.id,
-      type: ent.type,
+      internal: {
+        type: ent.type,
+      },
+      ...ent.attributes,
       created: new Date(ent.attributes.created * 1000).toJSON(),
       changed: new Date(ent.attributes.changed * 1000).toJSON(),
     }
@@ -43,15 +45,8 @@ exports.sourceNodes = async (
   })
 
   // Touch existing Drupal nodes so Gatsby doesn't garbage collect them.
-  // console.log(
-  // "existing drupal nodes",
-  // _.values(store.getState().nodes)
-  // .filter(n => n.type.slice(0, 8) === `drupal__`)
-  // .map(n => n.id)
-  // )
-
   _.values(store.getState().nodes)
-    .filter(n => n.type.slice(0, 8) === `drupal__`)
+    .filter(n => n.internal.type.slice(0, 8) === `drupal__`)
     .forEach(n => touchNode(n.id))
 
   // Fetch articles.
@@ -94,12 +89,15 @@ exports.sourceNodes = async (
 
     const gatsbyNode = {
       ...node,
-      parent: `__SOURCE__`,
-      type: makeTypeName(node.type),
       children: [],
-      content: nodeStr,
+      parent: `__SOURCE__`,
+      internal: {
+        ...node.internal,
+        type: makeTypeName(node.internal.type),
+        content: nodeStr,
+        mediaType: `application/json`,
+      },
       author___NODE: result.data.data[i].relationships.uid.data.id,
-      mediaType: `application/json`,
     }
 
     // Get content digest of node.
@@ -108,7 +106,7 @@ exports.sourceNodes = async (
       .update(JSON.stringify(gatsbyNode))
       .digest(`hex`)
 
-    gatsbyNode.contentDigest = contentDigest
+    gatsbyNode.internal.contentDigest = contentDigest
 
     createNode(gatsbyNode)
   })
@@ -124,11 +122,13 @@ exports.sourceNodes = async (
 
         const gatsbyUser = {
           ...user,
-          parent: `__SOURCE__`,
-          type: makeTypeName(user.type),
           children: [],
-          content: userStr,
-          mediaType: `application/json`,
+          parent: `__SOURCE__`,
+          internal: {
+            type: makeTypeName(user.internal.type),
+            content: userStr,
+            mediaType: `application/json`,
+          },
         }
 
         if (gatsbyUser.uid === 1) {
@@ -138,7 +138,7 @@ exports.sourceNodes = async (
         axios
           .get(
             userResult.data.data[i].relationships.user_picture.links.related,
-            { timeout: 3000 }
+            { timeout: 20000 }
           )
           .catch(() => console.log(`fail fetch`, gatsbyUser))
           .then(pictureResult => {
@@ -150,7 +150,7 @@ exports.sourceNodes = async (
               .update(JSON.stringify(gatsbyUser))
               .digest(`hex`)
 
-            gatsbyUser.contentDigest = contentDigest
+            gatsbyUser.internal.contentDigest = contentDigest
 
             createNode(gatsbyUser)
 

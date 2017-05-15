@@ -19,10 +19,10 @@ const doubleBind = (boundActionCreators, plugin) => {
       const boundActionCreator = boundActionCreators[key]
       if (typeof boundActionCreator === `function`) {
         doubleBoundActionCreators[key] = (...args) => {
-          // Only set the pluginName once (so node updaters don't
-          // overwrite this).
-          if (!_.has(args, `[0].pluginName`) && _.isObject(args[0])) {
-            args[0].pluginName = plugin.name
+          // Automatically add to newly created nodes
+          // the plugin's name
+          if (key === `createNode`) {
+            args[0].internal.pluginName = plugin.name
           }
           return boundActionCreator(...args, plugin)
         }

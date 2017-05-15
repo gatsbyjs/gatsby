@@ -11,12 +11,12 @@ async function onNodeCreate({ node, boundActionCreators, loadNodeContent }) {
   // but since this transformer creates new nodes with the same media-type
   // as its parent node, we have to add this check that we didn't create
   // the node).
-  if (node.pluginName === `gatsby-transformer-json`) {
+  if (node.internal.pluginName === `gatsby-transformer-json`) {
     return
   }
 
   // We only care about JSON content.
-  if (node.mediaType !== `application/json`) {
+  if (node.internal.mediaType !== `application/json`) {
     return
   }
 
@@ -28,15 +28,17 @@ async function onNodeCreate({ node, boundActionCreators, loadNodeContent }) {
     return {
       ...obj,
       id: obj.id ? obj.id : `${node.id} [${i}] >>> JSON`,
-      contentDigest,
-      mediaType: `application/json`,
-      parent: node.id,
-      // TODO make choosing the "type" a lot smarter. This assumes
-      // the parent node is a file.
-      // PascalCase
-      type: _.upperFirst(_.camelCase(`${node.name} Json`)),
       children: [],
-      content: objStr,
+      parent: node.id,
+      internal: {
+        contentDigest,
+        mediaType: `application/json`,
+        // TODO make choosing the "type" a lot smarter. This assumes
+        // the parent node is a file.
+        // PascalCase
+        type: _.upperFirst(_.camelCase(`${node.name} Json`)),
+        content: objStr,
+      },
     }
   })
 

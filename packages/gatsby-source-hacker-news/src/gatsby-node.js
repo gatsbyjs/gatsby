@@ -103,13 +103,15 @@ fragment commentsFragment on HackerNewsItem {
 
     const storyNode = {
       ...kidLessStory,
+      children: kids.kids.map(k => k.id),
+      parent: `__SOURCE__`,
+      content: storyStr,
+      internal: {
+        type: `HNStory`,
+        mediaType: `application/json`,
+      },
       domain,
       order: i + 1,
-      parent: `__SOURCE__`,
-      type: `HNStory`,
-      children: [...kids.kids.map(k => k.id)],
-      content: storyStr,
-      mediaType: `application/json`,
     }
 
     // Just store the user id
@@ -121,7 +123,7 @@ fragment commentsFragment on HackerNewsItem {
       .update(JSON.stringify(storyNode))
       .digest(`hex`)
 
-    storyNode.contentDigest = contentDigest
+    storyNode.internal.contentDigest = contentDigest
 
     createNode(storyNode)
 
@@ -133,11 +135,13 @@ fragment commentsFragment on HackerNewsItem {
         }
         let commentNode = {
           ..._.omit(comment, `kids`),
-          order: i + 1,
-          type: `HNComment`,
+          children: comment.kids.map(k => k.id),
           parent,
-          children: [...comment.kids.map(k => k.id)],
-          mediaType: `application/json`,
+          internal: {
+            type: `HNComment`,
+            mediaType: `application/json`,
+          },
+          order: i + 1,
         }
 
         commentNode.by = commentNode.by.id
@@ -149,8 +153,8 @@ fragment commentsFragment on HackerNewsItem {
           .update(nodeStr)
           .digest(`hex`)
 
-        commentNode.contentDigest = contentDigest
-        commentNode.content = nodeStr
+        commentNode.internal.contentDigest = contentDigest
+        commentNode.internal.content = nodeStr
 
         createNode(commentNode)
 

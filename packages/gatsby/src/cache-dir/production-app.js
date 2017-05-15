@@ -17,15 +17,10 @@ window.matchPath = matchPath
 
 import requires from "./async-requires"
 
-console.log(pages)
-console.log(requires)
-
 // Load scripts
 const preferDefault = m => (m && m.default) || m
 const scriptsCache = {}
 const loadScriptsForPath = (path, cb = () => {}) => {
-  console.log(`loading scripts for`, path)
-
   if (!path) {
     return cb()
   }
@@ -40,7 +35,6 @@ const loadScriptsForPath = (path, cb = () => {}) => {
     return cb()
   }
 
-  console.time(`load scripts`)
   let scripts = {
     layout: false,
     component: false,
@@ -48,7 +42,6 @@ const loadScriptsForPath = (path, cb = () => {}) => {
   }
   const loaded = () => {
     if (scripts.layout && scripts.component && scripts.pageData) {
-      console.timeEnd(`load scripts`)
       scriptsCache[path] = scripts
       cb(scripts)
     }
