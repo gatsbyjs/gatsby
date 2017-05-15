@@ -9,13 +9,14 @@ module.exports = async function onNodeCreate({ node, boundActionCreators }) {
   }
 
   const imageNode = {
-    logical: true,
     id: `${node.id} >> ImageSharp`,
-    contentDigest: `${node.id}`,
-    parent: node.id,
-    type: `ImageSharp`,
-    mediaType: node.mediaType,
     children: [],
+    parent: node.id,
+    internal: {
+      contentDigest: `${node.contentDigest}`,
+      type: `ImageSharp`,
+      mediaType: node.internal.mediaType,
+    },
   }
 
   node.children = node.children.concat([imageNode.id])

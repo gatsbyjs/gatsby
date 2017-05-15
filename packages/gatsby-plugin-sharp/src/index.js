@@ -173,7 +173,7 @@ function queueImageResizing({ file, args = {} }) {
     return true
   })
   const sortedArgs = _.sortBy(filteredArgs, arg => arg[0] === `width`)
-  const imgSrc = `/${file.contentDigest}-${qs.stringify(_.fromPairs(sortedArgs))}.${file.extension}`
+  const imgSrc = `/${file.internal.contentDigest}-${qs.stringify(_.fromPairs(sortedArgs))}.${file.extension}`
   const filePath = `${process.cwd()}/public${imgSrc}`
   // Create function to call when the image is finished.
   let outsideResolve

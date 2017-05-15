@@ -7,7 +7,7 @@ const crypto = require(`crypto`)
 
 async function onNodeCreate({ node, boundActionCreators, loadNodeContent }) {
   const { createNode, updateNode } = boundActionCreators
-  if (node.mediaType !== `text/yaml`) {
+  if (node.internal.mediaType !== `text/yaml`) {
     return
   }
 
@@ -19,12 +19,17 @@ async function onNodeCreate({ node, boundActionCreators, loadNodeContent }) {
     return {
       ...obj,
       id: obj.id ? obj.id : `${node.id} [${i}] >>> YAML`,
-      contentDigest,
-      type: _.upperFirst(_.camelCase(`${node.name} Yaml`)),
-      mediaType: `application/json`,
-      parent: node.id,
       children: [],
-      content: objStr,
+      parent: node.id,
+      internal: {
+        contentDigest,
+        // TODO make choosing the "type" a lot smarter. This assumes
+        // the parent node is a file.
+        // PascalCase
+        type: _.upperFirst(_.camelCase(`${node.name} Yaml`)),
+        mediaType: `application/json`,
+        content: objStr,
+      },
     }
   })
 

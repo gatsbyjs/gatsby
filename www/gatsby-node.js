@@ -14,8 +14,9 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
       `src/templates/template-docs-packages.js`
     )
     // Query for markdown nodes to use in creating pages.
-    graphql(
-      `
+    resolve(
+      graphql(
+        `
       {
         allMarkdownRemark(limit: 1000) {
           edges {
@@ -27,36 +28,37 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         }
       }
     `
-    ).then(result => {
-      if (result.errors) {
-        reject(result.errors)
-      }
-
-      // Create docs pages.
-      result.data.allMarkdownRemark.edges.forEach(edge => {
-        if (_.includes(edge.node.slug, `/blog/`)) {
-          upsertPage({
-            path: `${edge.node.slug}`, // required
-            component: slash(blogPostTemplate),
-            context: {
-              slug: edge.node.slug,
-            },
-          })
-        } else {
-          upsertPage({
-            path: `${edge.node.slug}`, // required
-            component: slash(
-              edge.node.package ? packageTemplate : docsTemplate
-            ),
-            context: {
-              slug: edge.node.slug,
-            },
-          })
+      ).then(result => {
+        if (result.errors) {
+          reject(result.errors)
         }
-      })
 
-      resolve()
-    })
+        // Create docs pages.
+        result.data.allMarkdownRemark.edges.forEach(edge => {
+          if (_.includes(edge.node.slug, `/blog/`)) {
+            upsertPage({
+              path: `${edge.node.slug}`, // required
+              component: slash(blogPostTemplate),
+              context: {
+                slug: edge.node.slug,
+              },
+            })
+          } else {
+            upsertPage({
+              path: `${edge.node.slug}`, // required
+              component: slash(
+                edge.node.package ? packageTemplate : docsTemplate
+              ),
+              context: {
+                slug: edge.node.slug,
+              },
+            })
+          }
+        })
+
+        return
+      })
+    )
   })
 }
 
@@ -64,9 +66,9 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 exports.onNodeCreate = ({ node, boundActionCreators, getNode }) => {
   const { updateNode } = boundActionCreators
   let slug
-  if (node.type === `File`) {
+  if (node.internal.type === `File`) {
     const parsedFilePath = parseFilepath(node.relativePath)
-    if (node.sourceName === `docs`) {
+    if (node.sourceInstanceName === `docs`) {
       if (parsedFilePath.name !== `index` && parsedFilePath.dir !== ``) {
         slug = `/${parsedFilePath.dir}/${parsedFilePath.name}/`
       } else if (parsedFilePath.dir === ``) {
@@ -79,11 +81,11 @@ exports.onNodeCreate = ({ node, boundActionCreators, getNode }) => {
       node.slug = slug
       updateNode(node)
     }
-  } else if (node.type === `MarkdownRemark`) {
+  } else if (node.internal.type === `MarkdownRemark`) {
     const fileNode = getNode(node.parent)
     const parsedFilePath = parseFilepath(fileNode.relativePath)
     // Add slugs for docs pages
-    if (fileNode.sourceName === `docs`) {
+    if (fileNode.sourceInstanceName === `docs`) {
       if (parsedFilePath.name !== `index` && parsedFilePath.dir !== ``) {
         slug = `/${parsedFilePath.dir}/${parsedFilePath.name}/`
       } else if (parsedFilePath.dir === ``) {
@@ -94,7 +96,7 @@ exports.onNodeCreate = ({ node, boundActionCreators, getNode }) => {
     }
     // Add slugs for package READMEs.
     if (
-      fileNode.sourceName === `packages` &&
+      fileNode.sourceInstanceName === `packages` &&
       parsedFilePath.name === `README`
     ) {
       slug = `/docs/packages/${parsedFilePath.dir}/`

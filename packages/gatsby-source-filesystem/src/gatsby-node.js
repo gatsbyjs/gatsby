@@ -26,12 +26,14 @@ function readFile(file, pluginOptions, cb) {
           // people will use the id for that and ids shouldn't be treated as
           // useful information.
           id: createId(file),
-          contentDigest: contentDigest,
           children: [],
           parent: `___SOURCE___`,
-          mediaType: mime.lookup(slashedFile.ext),
-          type: `File`,
-          sourceName: pluginOptions.name,
+          internal: {
+            contentDigest: contentDigest,
+            mediaType: mime.lookup(slashedFile.ext),
+            type: `File`,
+          },
+          sourceInstanceName: pluginOptions.name,
           absolutePath: slashedFile.absolutePath,
           relativePath: slash(
             path.relative(pluginOptions.path, slashedFile.absolutePath)

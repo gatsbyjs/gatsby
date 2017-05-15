@@ -10,7 +10,7 @@ If you want your issue to be resolved quickly, please include in your issue:
   changes you've made there.
 
 ## Contributing
-You can install the latest `master` version of Gatsby by following these steps:
+You can install the latest version of Gatsby by following these steps:
 
 * Clone the repo, navigate to its directory.
 * Install dependencies using `npm install` in the root of the repo.
@@ -20,7 +20,7 @@ The usual contributing steps are:
 * Fork the [official repository](https://github.com/gatsbyjs/gatsby).
 * Clone your fork: git clone `git@github.com:<your-username>/gatsby.git`
 * Install lerna, and gatsby-dev-cli globally: `npm install -g lerna gatsby-dev-cli@canary`
-* Checkout to the 1.0 branch: `git checkout 1.0`
+* Checkout the 1.0 branch: `git checkout 1.0`
 * Install dependencies: `npm install && lerna bootstrap`
 * Make sure tests are passing for you: `npm test`
 * Create a topic branch: `git checkout -b topics/new-feature-name`
