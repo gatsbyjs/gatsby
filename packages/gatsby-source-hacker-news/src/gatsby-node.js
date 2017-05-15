@@ -103,7 +103,7 @@ fragment commentsFragment on HackerNewsItem {
 
     const storyNode = {
       ...kidLessStory,
-      children: [...kids.kids.map(k => k.id)],
+      children: kids.kids.map(k => k.id),
       parent: `__SOURCE__`,
       content: storyStr,
       internal: {
@@ -135,7 +135,7 @@ fragment commentsFragment on HackerNewsItem {
         }
         let commentNode = {
           ..._.omit(comment, `kids`),
-          children: [...comment.kids.map(k => k.id)],
+          children: comment.kids.map(k => k.id),
           parent,
           internal: {
             type: `HNComment`,

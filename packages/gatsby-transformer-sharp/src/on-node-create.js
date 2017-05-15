@@ -13,7 +13,7 @@ module.exports = async function onNodeCreate({ node, boundActionCreators }) {
     children: [],
     parent: node.id,
     internal: {
-      contentDigest: `${node.id}`,
+      contentDigest: `${node.contentDigest}`,
       type: `ImageSharp`,
       mediaType: node.internal.mediaType,
     },

@@ -12,12 +12,14 @@ function createDescriptionNode(node, entry, boundActionCreators) {
 
   const markdownNode = {
     id: descId(node.id),
-    type: `ComponentDescription`,
-    mediaType: `text/x-markdown`,
-    parent: node.id,
-    content: entry.description,
-    contentDigest: digest(entry.description),
     children: [],
+    parent: node.id,
+    internal: {
+      type: `ComponentDescription`,
+      mediaType: `text/x-markdown`,
+      content: entry.description,
+      contentDigest: digest(entry.description),
+    },
   }
 
   node.description___NODE = markdownNode.id
@@ -36,15 +38,16 @@ function createPropNodes(node, component, boundActionCreators) {
 
     const propNode = {
       ...prop,
-      // FIXME: when/if the default node fields are namespaced
-      _propType: prop.type,
-      type: `ComponentProp`,
       id: propNodeId,
-      parent: node.id,
-      mediaType: `text/x-react-metadata`,
       children: [],
-      content,
-      contentDigest: digest(content),
+      parent: node.id,
+      parentType: prop.type,
+      internal: {
+        type: `ComponentProp`,
+        mediaType: `text/x-react-metadata`,
+        content,
+        contentDigest: digest(content),
+      },
     }
     children[i] = propNode.id
     createNode(propNode)
@@ -81,12 +84,14 @@ export default function onNodeCreate(
           ...component,
           props: null, // handled by the prop node creation
           id: nodeId,
-          contentDigest,
-          content: strContent,
-          parent: node.id,
-          type: `ComponentMetadata`,
-          mediaType: `text/x-react-metadata`,
           children: [],
+          parent: node.id,
+          internal: {
+            contentDigest,
+            content: strContent,
+            type: `ComponentMetadata`,
+            mediaType: `text/x-react-metadata`,
+          },
         }
 
         node.children = node.children.concat([metadataNode.id])
