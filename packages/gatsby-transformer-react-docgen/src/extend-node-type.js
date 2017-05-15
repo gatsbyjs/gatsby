@@ -81,6 +81,7 @@ function extendComponents() {
 
 function extendProp() {
   return {
+    type: { type: PropTypeValue },
     defaultValue: { type: PropDefaultValue },
     docblock: {
       type: GraphQLString,
@@ -94,10 +95,6 @@ function extendProp() {
       description: oneLine`
         Describes whether or not the propType is required, i.e. not \`null\`
       `,
-    },
-    type: {
-      type: PropTypeValue,
-      resolve: s => s._propType || null,
     },
   }
 }
