@@ -15,7 +15,13 @@ components #928
 ### Changed
 
 - Change node format to hide most node-specific fields under an "internal"
-key #960
+key. Any code referencing `node.type` and others will need changed to
+`node.internal.type` #960
+- Changed the id for the root `<div>` used by Gatsby to mount React to `___gatsby`
+- The default layout component should be at `layouts/index.js` not `layouts/default.js` https://github.com/gatsbyjs/gatsby/pull/940#issuecomment-300537162
+- `this.props.children` in layout components is now a *function* https://github.com/gatsbyjs/gatsby/pull/940#issuecomment-300878300
+
+### Chore
 - Upgrade Jest to v20 #935
 
 ## [1.0.0-alpha14] - 2017-05-05
