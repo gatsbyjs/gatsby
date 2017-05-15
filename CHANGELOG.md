@@ -1,5 +1,77 @@
 # Change Log
 
+## [1.0.0-alpha15] - 2017-05-15
+### Added
+
+- Update version of React Router to v4 #940
+- API proxy for use during development #957
+- "static" directory for files to be copied directly into the "public"
+directory #956
+- Add `toFormat` argument to the ImageSharp GraphQL type so can change
+format of image e.g. from `png` to `jpg`.
+- React Docgen transformer plugin for parsing propType info from React
+components #928
+
+### Changed
+
+- Change node format to hide most node-specific fields under an "internal"
+key #960
+- Upgrade Jest to v20 #935
+
+## [1.0.0-alpha14] - 2017-05-05
+### Added
+
+- Use the Relay Modern compiler for extracting GraphQL queries from components.
+This allows us to now support components being added to *all* components. This
+means you can now write queries next to the views that use them. #912
+- Hook for modifying pages #863
+- New Drupal source plugin and example site #890
+- Detect if a site's plugins have changed and when they do, delete the site
+cache as it might now be invalid #927
+- New way to make connections between nodes e.g. article --> author #902
+
+### Changed
+
+- Combine transformer and typegen plugins. The distinction between the two
+types of plugins has proved somewhat artificial so they were combined. Any
+typegen plugins in your `package.json` and `gatsby-config.js` need to be
+removed. #918
+- Gatsby now garbage collects old nodes. Source plugins should now "touch"
+- nodes that haven't changed #861
+- Due to adopting the Relay compiler, GraphQL query template strings need
+named "graphql" plus must be named. So if previously you wrote:
+
+```js
+export const pageQuery = `
+{
+  allMarkdownMark {
+    edges {
+      node {
+        id
+      }
+    }
+  }
+}
+`
+```
+
+You must now write:
+
+```js
+export const pageQuery = graphql`
+query IndexQuery {
+  allMarkdownMark {
+    edges {
+      node {
+        id
+      }
+    }
+  }
+}
+`
+```
+
+
 ## [1.0.0-alpha10] - 2016-11-17
 ### Added
 - Did the intitial build of the new gatsbyjs.org! It's in the `www`
