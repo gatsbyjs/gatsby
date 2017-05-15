@@ -16,10 +16,10 @@ const {
 const ImageFormatType = new GraphQLEnumType({
   name: `ImageFormat`,
   values: {
-    default: { value: `` },
-    jpg: { value: `jpg` },
-    png: { value: `png` },
-    webp: { value: `webp` },
+    NO_CHANGE: { value: `` },
+    JPG: { value: `jpg` },
+    PNG: { value: `png` },
+    WEBP: { value: `webp` },
   },
 })
 
