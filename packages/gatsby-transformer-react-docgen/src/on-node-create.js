@@ -1,5 +1,5 @@
-import crypto from "crypto"
-import parseMetadata from "./parse"
+import crypto from 'crypto'
+import parseMetadata from './parse'
 
 const digest = str => crypto.createHash(`md5`).update(str).digest(`hex`)
 
@@ -10,10 +10,11 @@ function createDescriptionNode(node, entry, boundActionCreators) {
   if (!entry.description) return
   const { createNode, updateNode } = boundActionCreators
 
-  const markdownNode = {
+  const descriptionNode = {
     id: descId(node.id),
-    children: [],
     parent: node.id,
+    children: [],
+    text: entry.description,
     internal: {
       type: `ComponentDescription`,
       mediaType: `text/x-markdown`,
@@ -22,10 +23,10 @@ function createDescriptionNode(node, entry, boundActionCreators) {
     },
   }
 
-  node.description___NODE = markdownNode.id
-  node.children = node.children.concat([markdownNode.id])
+  node.description___NODE = descriptionNode.id
+  node.children = node.children.concat([descriptionNode.id])
   updateNode(node)
-  createNode(markdownNode)
+  createNode(descriptionNode)
 }
 
 function createPropNodes(node, component, boundActionCreators) {

@@ -6,7 +6,7 @@ import { ERROR_MISSING_DEFINITION } from "react-docgen/dist/parse"
 import findAllComponentDefinitions
   from "react-docgen/dist/resolver/findAllComponentDefinitions"
 
-import { parseDoclets, applyPropDoclets } from "./Doclets"
+import { cleanDoclets, parseDoclets, applyPropDoclets } from './Doclets'
 
 function getAssignedIdenifier(path) {
   let property = path.parentPath
@@ -69,11 +69,17 @@ export default function parseMetadata(content, node, options) {
   }
 
   components.forEach(component => {
-    parseDoclets(component)
+    component.docblock = component.description || ``
+    component.doclets = parseDoclets(component)
+    component.description = cleanDoclets(component.description)
+
     component.props = Object.keys(component.props || {}).map(propName => {
       const prop = component.props[propName]
       prop.name = propName
-      parseDoclets(prop, propName)
+      prop.docblock = prop.description || ``
+      prop.doclets = parseDoclets(prop, propName)
+      prop.description = cleanDoclets(prop.description)
+
       applyPropDoclets(prop)
       return prop
     })

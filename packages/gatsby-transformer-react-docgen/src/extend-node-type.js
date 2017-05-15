@@ -29,7 +29,12 @@ const Method = new GraphQLObjectType({
   name: `ComponentMethod`,
   fields: () => ({
     name: { type: new GraphQLNonNull(GraphQLString) },
-    docblock: { type: GraphQLString },
+    docblock: {
+      type: GraphQLString,
+      description: oneLine`
+        The raw comment block leading a method declaration
+      `,
+    },
     modifiers: {
       type: new GraphQLList(GraphQLString),
       description: oneLine`
@@ -77,15 +82,22 @@ function extendComponents() {
 function extendProp() {
   return {
     defaultValue: { type: PropDefaultValue },
+    docblock: {
+      type: GraphQLString,
+      description: oneLine`
+        The raw comment block leading a propType declaration
+      `,
+    },
     required: {
       type: new GraphQLNonNull(GraphQLBoolean),
+      resolve: ({ required }) => required || false,
       description: oneLine`
         Describes whether or not the propType is required, i.e. not \`null\`
       `,
     },
     type: {
-      type: new GraphQLNonNull(PropTypeValue),
-      resolve: s => s._propType,
+      type: PropTypeValue,
+      resolve: s => s._propType || null,
     },
   }
 }
