@@ -73,13 +73,13 @@ exports.hasNodeChanged = (id, digest) => {
   if (!node) {
     return true
   } else {
-    return node.contentDigest !== digest
+    return node.internal.contentDigest !== digest
   }
 }
 
 exports.loadNodeContent = node => {
-  if (node.content) {
-    return Promise.resolve(node.content)
+  if (node.internal.content) {
+    return Promise.resolve(node.internal.content)
   } else {
     return new Promise(resolve => {
       // Load plugin's loader function

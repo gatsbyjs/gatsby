@@ -108,7 +108,10 @@ actions.createNode = (node, plugin = ``) => {
   }
 
   // Check if the node has already been processed.
-  if (getNode(node.id) && !hasNodeChanged(node.id, node.contentDigest)) {
+  if (
+    getNode(node.id) &&
+    !hasNodeChanged(node.id, node.internal.contentDigest)
+  ) {
     return {
       type: `TOUCH_NODE`,
       plugin,
