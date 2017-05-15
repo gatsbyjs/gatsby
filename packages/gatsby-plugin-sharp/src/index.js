@@ -8,6 +8,7 @@ const ProgressBar = require(`progress`)
 const imagemin = require(`imagemin`)
 const imageminPngquant = require(`imagemin-pngquant`)
 const queue = require(`queue`)
+const duotone = require(`./duotone`)
 
 // Promisify the sharp prototype (methods) to promisify the alternative (for
 // raw) callback-accepting toBuffer(...) method
@@ -44,19 +45,7 @@ const processFile = (file, jobs, cb) => {
       roundedHeight = Math.round(roundedHeight)
     }
     const roundedWidth = Math.round(args.width)
-    clonedPipeline = clonedPipeline
-      .resize(roundedWidth, roundedHeight)
-      .crop(args.cropFocus)
-      .png({
-        compressionLevel: args.pngCompressionLevel,
-        adaptiveFiltering: false,
-        force: args.toFormat === `png`,
-      })
-      .jpeg({
-        quality: args.quality,
-        progressive: args.jpegProgressive,
-        force: args.toFormat === `jpg`,
-      })
+    clonedPipeline.resize(roundedWidth, roundedHeight).crop(args.cropFocus)
 
     // grayscale
     if (args.grayscale) {
@@ -68,30 +57,49 @@ const processFile = (file, jobs, cb) => {
       clonedPipeline = clonedPipeline.rotate(args.rotate)
     }
 
-    if (job.file.extension.match(/^jp/)) {
-      clonedPipeline.toFile(job.outputPath, (err, info) => {
-        bar.tick()
-        job.outsideResolve(info)
-      })
-      // Compress pngs
-    } else if (job.file.extension === `png`) {
-      clonedPipeline.toBuffer().then(sharpBuffer => {
-        imagemin
-          .buffer(sharpBuffer, {
-            plugins: [
-              imageminPngquant({
-                quality: `${args.quality}-${Math.min(args.quality + 25, 100)}`, // e.g. 40-65
-              }),
-            ],
-          })
-          .then(imageminBuffer => {
-            fs.writeFile(job.outputPath, imageminBuffer, () => {
-              bar.tick()
-              job.outsideResolve()
+    // duotone and write to file
+    duotone(
+      args.duotone,
+      job.file.extension,
+      clonedPipeline
+    ).then(clonedPipeline => {
+      clonedPipeline
+        .png({
+          compressionLevel: args.pngCompressionLevel,
+          adaptiveFiltering: false,
+          force: args.toFormat === `png`,
+        })
+        .jpeg({
+          quality: args.quality,
+          progressive: args.jpegProgressive,
+          force: args.toFormat === `jpg`,
+        })
+
+      if (job.file.extension.match(/^jp/)) {
+        clonedPipeline.toFile(job.outputPath, (err, info) => {
+          bar.tick()
+          job.outsideResolve(info)
+        })
+        // Compress pngs
+      } else if (job.file.extension === `png`) {
+        clonedPipeline.toBuffer().then(sharpBuffer => {
+          imagemin
+            .buffer(sharpBuffer, {
+              plugins: [
+                imageminPngquant({
+                  quality: `${args.quality}-${Math.min(args.quality + 25, 100)}`, // e.g. 40-65
+                }),
+              ],
             })
-          })
-      })
-    }
+            .then(imageminBuffer => {
+              fs.writeFile(job.outputPath, imageminBuffer, () => {
+                bar.tick()
+                job.outsideResolve()
+              })
+            })
+        })
+      }
+    })
   })
 }
 
@@ -149,6 +157,7 @@ function queueImageResizing({ file, args = {} }) {
     jpegProgressive: true,
     pngCompressionLevel: 9,
     grayscale: false,
+    duotone: false,
     linkPrefix: ``,
     toFormat: ``,
   }
@@ -237,10 +246,12 @@ async function notMemoizedbase64({ file, args = {} }) {
     jpegProgressive: true,
     pngCompressionLevel: 9,
     grayscale: false,
+    duotone: false,
     toFormat: ``,
   }
   const options = _.defaults(args, defaultArgs)
   let pipeline = sharp(file.absolutePath).rotate()
+
   pipeline
     .resize(options.width, options.height)
     .crop(options.cropFocus)
@@ -263,6 +274,11 @@ async function notMemoizedbase64({ file, args = {} }) {
   // rotate
   if (options.rotate) {
     pipeline = pipeline.rotate(options.rotate)
+  }
+
+  // duotone
+  if (options.duotone) {
+    pipeline = await duotone(options.duotone, file.extension, pipeline)
   }
 
   const [buffer, info] = await pipeline.toBufferAsync()
@@ -291,11 +307,17 @@ async function responsiveSizes({ file, args = {} }) {
     jpegProgressive: true,
     pngCompressionLevel: 9,
     grayscale: false,
+    duotone: false,
     linkPrefix: ``,
     toFormat: ``,
   }
   const options = _.defaults(args, defaultArgs)
   options.maxWidth = parseInt(options.maxWidth, 10)
+
+  // If the users didn't set a default sizes, we'll make one.
+  if (!options.sizes) {
+    options.sizes = `(max-width: ${options.maxWidth}px) 100vw, ${options.maxWidth}px`
+  }
 
   // Create sizes (in width) for the image. If the max width of the container
   // for the rendered markdown file is 800px, the sizes would then be: 200,
@@ -340,10 +362,16 @@ async function responsiveSizes({ file, args = {} }) {
     })
   })
 
+  const base64Args = {
+    duotone: options.duotone,
+    grayscale: options.grayscale,
+  }
+
   // Get base64 version
-  const base64Image = await base64({ file })
+  const base64Image = await base64({ file, args: base64Args })
 
   // Construct src and srcSet strings.
+  const originalImg = _.maxBy(images, image => image.width).src
   const fallbackSrc = _.minBy(images, image =>
     Math.abs(options.maxWidth - image.width)
   ).src
@@ -356,6 +384,8 @@ async function responsiveSizes({ file, args = {} }) {
     aspectRatio: images[0].aspectRatio,
     src: fallbackSrc,
     srcSet,
+    sizes: options.sizes,
+    originalImage: originalImg,
   }
 }
 
@@ -366,6 +396,7 @@ async function responsiveResolution({ file, args = {} }) {
     jpegProgressive: true,
     pngCompressionLevel: 9,
     grayscale: false,
+    duotone: false,
     linkPrefix: ``,
     toFormat: ``,
   }
@@ -415,8 +446,13 @@ async function responsiveResolution({ file, args = {} }) {
     })
   })
 
+  const base64Args = {
+    duotone: options.duotone,
+    grayscale: options.grayscale,
+  }
+
   // Get base64 version
-  const base64Image = await base64({ file })
+  const base64Image = await base64({ file, args: base64Args })
 
   const fallbackSrc = images[0].src
   const srcSet = images
