@@ -6,7 +6,7 @@ import { ERROR_MISSING_DEFINITION } from "react-docgen/dist/parse"
 import findAllComponentDefinitions
   from "react-docgen/dist/resolver/findAllComponentDefinitions"
 
-import { parseDoclets, applyPropDoclets } from "./Doclets"
+import { cleanDoclets, parseDoclets, applyPropDoclets } from './Doclets'
 
 function getAssignedIdenifier(path) {
   let property = path.parentPath
@@ -42,14 +42,22 @@ function nameHandler(filePath = `/AnonymousComponent_${++fileCount}`) {
   }
 }
 
-export default function parseMetadata(content, filePath, options) {
+/**
+ * Wrap handlers to pass in additional arguments such as the File node
+ */
+function makeHandlers(node, handlers) {
+  handlers = (handlers || []).map(h => (...args) => h(...args, node))
+  return [nameHandler(node.absolutePath), ...handlers]
+}
+
+export default function parseMetadata(content, node, options) {
   let components = []
   options = options || {}
   try {
     components = parse(
       content,
       options.resolver || findAllComponentDefinitions,
-      [...defaultHandlers, ...(options.handlers || []), nameHandler(filePath)]
+      defaultHandlers.concat(makeHandlers(node, options.handlers))
     )
   } catch (err) {
     if (err.message === ERROR_MISSING_DEFINITION) return []
@@ -61,11 +69,17 @@ export default function parseMetadata(content, filePath, options) {
   }
 
   components.forEach(component => {
-    parseDoclets(component)
+    component.docblock = component.description || ``
+    component.doclets = parseDoclets(component)
+    component.description = cleanDoclets(component.description)
+
     component.props = Object.keys(component.props || {}).map(propName => {
       const prop = component.props[propName]
       prop.name = propName
-      parseDoclets(prop, propName)
+      prop.docblock = prop.description || ``
+      prop.doclets = parseDoclets(prop, propName)
+      prop.description = cleanDoclets(prop.description)
+
       applyPropDoclets(prop)
       return prop
     })
