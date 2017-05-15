@@ -46,7 +46,7 @@ exports.sourceNodes = async (
 
   // Touch existing Drupal nodes so Gatsby doesn't garbage collect them.
   _.values(store.getState().nodes)
-    .filter(n => n.type.slice(0, 8) === `drupal__`)
+    .filter(n => n.internal.type.slice(0, 8) === `drupal__`)
     .forEach(n => touchNode(n.id))
 
   // Fetch articles.
@@ -125,7 +125,7 @@ exports.sourceNodes = async (
           children: [],
           parent: `__SOURCE__`,
           internal: {
-            type: makeTypeName(user.type),
+            type: makeTypeName(user.internal.type),
             content: userStr,
             mediaType: `application/json`,
           },
@@ -138,7 +138,7 @@ exports.sourceNodes = async (
         axios
           .get(
             userResult.data.data[i].relationships.user_picture.links.related,
-            { timeout: 3000 }
+            { timeout: 20000 }
           )
           .catch(() => console.log(`fail fetch`, gatsbyUser))
           .then(pictureResult => {
