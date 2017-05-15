@@ -6,7 +6,7 @@ import { ERROR_MISSING_DEFINITION } from "react-docgen/dist/parse"
 import findAllComponentDefinitions
   from "react-docgen/dist/resolver/findAllComponentDefinitions"
 
-import { cleanDoclets, parseDoclets, applyPropDoclets } from './Doclets'
+import { cleanDoclets, parseDoclets, applyPropDoclets } from "./Doclets"
 
 function getAssignedIdenifier(path) {
   let property = path.parentPath
