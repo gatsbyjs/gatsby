@@ -66,7 +66,7 @@ export default function onNodeCreate(
 ) {
   const { createNode, updateNode } = boundActionCreators
 
-  if (node.mediaType !== `application/javascript`) return null
+  if (node.internal.mediaType !== `application/javascript`) return null
 
   return loadNodeContent(node)
     .then(content => {

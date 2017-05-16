@@ -6,26 +6,30 @@ Array [
     Object {
       "blue": true,
       "children": Array [],
-      "content": "{\\"blue\\":true,\\"funny\\":\\"yup\\"}",
-      "contentDigest": "73901821b17d5aa9dd6026181f73b64c",
       "funny": "yup",
       "id": "whatever [0] >>> YAML",
-      "mediaType": "application/json",
+      "internal": Object {
+        "content": "{\\"blue\\":true,\\"funny\\":\\"yup\\"}",
+        "contentDigest": "73901821b17d5aa9dd6026181f73b64c",
+        "mediaType": "application/json",
+        "type": "TestYaml",
+      },
       "parent": "whatever",
-      "type": "TestYaml",
     },
   ],
   Array [
     Object {
       "blue": false,
       "children": Array [],
-      "content": "{\\"blue\\":false,\\"funny\\":\\"nope\\"}",
-      "contentDigest": "f624311d932d73dcd416d2a8bea2b67d",
       "funny": "nope",
       "id": "whatever [1] >>> YAML",
-      "mediaType": "application/json",
+      "internal": Object {
+        "content": "{\\"blue\\":false,\\"funny\\":\\"nope\\"}",
+        "contentDigest": "f624311d932d73dcd416d2a8bea2b67d",
+        "mediaType": "application/json",
+        "type": "TestYaml",
+      },
       "parent": "whatever",
-      "type": "TestYaml",
     },
   ],
 ]
@@ -44,10 +48,13 @@ Array [
 - blue: false
   funny: nope
 ",
-      "contentDigest": "whatever",
       "id": "whatever",
-      "mediaType": "text/yaml",
+      "internal": Object {
+        "contentDigest": "whatever",
+        "mediaType": "text/yaml",
+      },
       "name": "test",
+      "parent": "SOURCE",
     },
   ],
 ]

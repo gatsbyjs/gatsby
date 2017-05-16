@@ -191,11 +191,11 @@ describe(`GraphQL type inferance`, () => {
 
       store.dispatch({
         type: `CREATE_NODE`,
-        payload: { id: `child_1`, type: `Child`, hair: `brown` },
+        payload: { id: `child_1`, internal: { type: `Child` }, hair: `brown` },
       })
       store.dispatch({
         type: `CREATE_NODE`,
-        payload: { id: `child_2`, type: `Child`, hair: `blonde` },
+        payload: { id: `child_2`, internal: { type: `Child` }, hair: `blonde` },
       })
     })
 
@@ -244,7 +244,7 @@ describe(`GraphQL type inferance`, () => {
     it(`Errors clearly when missing types`, async () => {
       store.dispatch({
         type: `CREATE_NODE`,
-        payload: { id: `baz`, type: `Bar` },
+        payload: { id: `baz`, internal: { type: `Bar` } },
       })
 
       expect(() => {

@@ -55,7 +55,9 @@ module.exports = async () => {
     // "childrenMarkdownRemark".
     const childNodesByType = _(type.nodes)
       .flatMap(({ children }) => children.map(getNode))
-      .groupBy(node => _.camelCase(node.internal.type))
+      .groupBy(
+        node => (node.internal ? _.camelCase(node.internal.type) : undefined)
+      )
       .value()
 
     Object.keys(childNodesByType).forEach(childNodeType => {
