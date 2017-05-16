@@ -85,7 +85,7 @@ async function startServer(program) {
       })
     )
     app.use(
-      `/graphql`,
+      `/___graphql`,
       graphqlHTTP({
         schema: store.getState().schema,
         graphiql: true,
@@ -170,7 +170,10 @@ async function startServer(program) {
           opn(`http://${listener.address().address}:${listener.address().port}`)
         }
         console.log(
-          `Listening at: http://${listener.address().address}:${listener.address().port}`
+          `
+The development server is listening at: http://${listener.address().address}:${listener.address().port}
+GraphiQL can be accessed at: http://${listener.address().address}:${listener.address().port}/___graphql
+          `
         )
       }
     })
