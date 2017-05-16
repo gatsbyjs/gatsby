@@ -25,7 +25,8 @@ exports.sourceNodes = async ({
   console.log(
     `starting to fetch data from the Hacker News GraphQL API. Warning, this can take a long time e.g. 10-20 seconds`
   )
-  const result = await get(`
+  const result = await get(
+    `
 {
   hn {
     topStories(limit: 30) {
@@ -74,7 +75,8 @@ fragment commentsFragment on HackerNewsItem {
     id
   }
 }
-  `)
+  `
+  )
   console.timeEnd(`fetch HN data`)
 
   // Create top-story nodes.
