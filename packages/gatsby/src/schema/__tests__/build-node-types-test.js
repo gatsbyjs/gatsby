@@ -15,10 +15,33 @@ describe(`build-node-types`, () => {
   beforeEach(async () => {
     ;({ store } = require(`../../redux`))
     ;[
-      { id: `p1`, type: `Parent`, hair: `red`, children: [`c1`, `c2`, `r1`] },
-      { id: `r1`, type: `Relative`, hair: `black`, children: [], parent: `p1` },
-      { id: `c1`, type: `Child`, hair: `brown`, children: [], parent: `p1` },
-      { id: `c2`, type: `Child`, hair: `blonde`, children: [], parent: `p1` },
+      {
+        id: `p1`,
+        internal: { type: `Parent` },
+        hair: `red`,
+        children: [`c1`, `c2`, `r1`],
+      },
+      {
+        id: `r1`,
+        internal: { type: `Relative` },
+        hair: `black`,
+        children: [],
+        parent: `p1`,
+      },
+      {
+        id: `c1`,
+        internal: { type: `Child` },
+        hair: `brown`,
+        children: [],
+        parent: `p1`,
+      },
+      {
+        id: `c2`,
+        internal: { type: `Child` },
+        hair: `blonde`,
+        children: [],
+        parent: `p1`,
+      },
     ].forEach(n => store.dispatch({ type: `CREATE_NODE`, payload: n }))
 
     types = await buildNodeTypes()

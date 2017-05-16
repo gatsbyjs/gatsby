@@ -6,10 +6,13 @@ const { onNodeCreate } = require(`../gatsby-node`)
 describe(`Process JSON nodes correctly`, () => {
   const node = {
     id: `whatever`,
-    contentDigest: `whatever`,
-    mediaType: `application/json`,
+    parent: `SOURCE`,
     children: [],
-    name: `test`,
+    internal: {
+      contentDigest: `whatever`,
+      mediaType: `application/json`,
+      name: `test`,
+    },
   }
 
   // Make some fake functions its expecting.

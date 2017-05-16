@@ -7,9 +7,12 @@ const { onNodeCreate } = require(`../gatsby-node`)
 describe(`Process YAML nodes correctly`, () => {
   const node = {
     id: `whatever`,
-    contentDigest: `whatever`,
-    mediaType: `text/yaml`,
+    parent: `SOURCE`,
     children: [],
+    internal: {
+      contentDigest: `whatever`,
+      mediaType: `text/yaml`,
+    },
     name: `test`,
   }
 

@@ -1,7 +1,7 @@
-import fs from 'fs'
-import path from 'path'
-import { groupBy } from 'lodash'
-import onNodeCreate from '../src/on-node-create'
+import fs from "fs"
+import path from "path"
+import { groupBy } from "lodash"
+import onNodeCreate from "../on-node-create"
 
 const readFile = file =>
   new Promise((y, n) => {
@@ -28,9 +28,11 @@ describe(`transformer-react-doc-gen: onNodeCreate`, () => {
     createdNodes = []
     updatedNodes = []
     node = {
-      mediaType: `application/javascript`,
-      children: [],
       id: `node_1`,
+      children: [],
+      internal: {
+        mediaType: `application/javascript`,
+      },
       __fixture: `classes.js`,
     }
     loadNodeContent = jest.fn(node => readFile(node.__fixture))
@@ -43,8 +45,10 @@ describe(`transformer-react-doc-gen: onNodeCreate`, () => {
   it(`should only process javascript nodes`, () => {
     loadNodeContent = jest.fn(() => new Promise(() => {}))
 
-    expect(run({ mediaType: `text/x-foo` })).toBeNull()
-    expect(run({ mediaType: `application/javascript` })).toBeDefined()
+    expect(run({ internal: { mediaType: `text/x-foo` } })).toBeNull()
+    expect(
+      run({ internal: { mediaType: `application/javascript` } })
+    ).toBeDefined()
 
     expect(loadNodeContent.mock.calls).toHaveLength(1)
   })
@@ -52,14 +56,14 @@ describe(`transformer-react-doc-gen: onNodeCreate`, () => {
   it(`should extract all components in a file`, async () => {
     await run(node)
 
-    let types = groupBy(createdNodes, `type`)
+    let types = groupBy(createdNodes, n => n.internal.type)
     expect(types.ComponentMetadata).toHaveLength(5)
   })
 
   it(`should give all components a name`, async () => {
     await run(node)
 
-    let types = groupBy(createdNodes, `type`)
+    let types = groupBy(createdNodes, `internal.type`)
     expect(types.ComponentMetadata.every(c => c.displayName)).toBe(true)
   })
 
@@ -74,15 +78,17 @@ describe(`transformer-react-doc-gen: onNodeCreate`, () => {
   it(`should extract all propTypes`, async () => {
     await run(node)
 
-    let types = groupBy(createdNodes, `type`)
+    let types = groupBy(createdNodes, `internal.type`)
     expect(types.ComponentProp).toHaveLength(14)
   })
 
   it(`should extract create description nodes with markdown types`, async () => {
     await run(node)
-    let types = groupBy(createdNodes, `type`)
+    let types = groupBy(createdNodes, `internal.type`)
     expect(
-      types.ComponentDescription.every(d => d.mediaType === `text/x-markdown`)
+      types.ComponentDescription.every(
+        d => d.internal.mediaType === `text/x-markdown`
+      )
     ).toBe(true)
   })
 

@@ -166,7 +166,7 @@ describe(`GraphQL Input args`, () => {
 
     store.dispatch({
       type: `CREATE_NODE`,
-      payload: { id: `baz`, type: `Bar` },
+      payload: { id: `baz`, internal: { type: `Bar` } },
     })
 
     let result = await queryResult(

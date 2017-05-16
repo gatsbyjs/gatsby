@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React from 'react'
+import React from "react"
 
 const Baz = () => <div />
 
@@ -29,9 +29,9 @@ class Bar extends React.Component {
 
     boolProp: React.PropTypes.bool,
 
-    'aria-property': React.PropTypes.string,
+    "aria-property": React.PropTypes.string,
 
-    enumProp: React.PropTypes.oneOf([true, 'john', 5, null, Infinity]),
+    enumProp: React.PropTypes.oneOf([true, "john", 5, null, Infinity]),
 
     otherProp: React.PropTypes.instanceOf(Message),
 

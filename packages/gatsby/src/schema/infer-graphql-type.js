@@ -388,6 +388,9 @@ export function inferObjectStructureFromNodes({
   const isRoot = !selector
   const mapping = config && config.mapping
 
+  // Ensure nodes have internal key with object.
+  nodes = nodes.map(n => (n.internal ? n : { ...n, internal: {} }))
+
   const inferredFields = {}
   _.each(exampleValue, (value, key) => {
     // Remove fields common to the top-level of all nodes.  We add these
