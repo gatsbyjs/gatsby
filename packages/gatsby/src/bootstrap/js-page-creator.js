@@ -34,7 +34,10 @@ module.exports = async () => {
   }))
 
   // Remove pages starting with an underscore.
-  autoPages = _.filter(autoPages, page => page.path.slice(0, 1) !== `_`)
+  autoPages = _.filter(autoPages, page => {
+    const parsedPath = path.parse(page.path)
+    return parsedPath.name.slice(0, 1) !== `_`
+  })
 
   // Remove page templates.
   autoPages = _.filter(autoPages, page => page.path.slice(0, 9) !== `template-`)
