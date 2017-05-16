@@ -36,10 +36,6 @@
       "error",
       "prefer-double"
     ],
-    "max-len": [
-      "error",
-      80
-    ],
     "semi": [
       "error",
       "never"
