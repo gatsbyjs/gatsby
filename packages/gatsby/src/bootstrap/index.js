@@ -87,11 +87,13 @@ module.exports = async (program: any) => {
   // Also if the hash isn't there, then delete things just in case something
   // is weird.
   if (!oldPluginsHash || pluginsHash !== oldPluginsHash) {
-    console.log(`
+    console.log(
+      `
 One or more of your plugins have changed since the last time you ran Gatsby. As
 a precaution, we're deleting your site's cache to ensure there's not any stale
 data
-`)
+`
+    )
 
     try {
       await fs.remove(`${program.directory}/.cache`)
@@ -165,7 +167,8 @@ data
 
   const browserPluginsRequires = browserPlugins
     .map(
-      plugin => `{
+      plugin =>
+        `{
       plugin: require('${plugin.resolve}'),
       options: ${JSON.stringify(plugin.options)},
     }`
@@ -184,7 +187,8 @@ data
 
   const ssrPluginsRequires = ssrPlugins
     .map(
-      plugin => `{
+      plugin =>
+        `{
       plugin: require('${plugin.resolve}'),
       options: ${JSON.stringify(plugin.options)},
     }`

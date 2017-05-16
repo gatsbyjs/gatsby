@@ -194,6 +194,7 @@ module.exports = async (
             // loading/evaling lots of unused code on the initial opening of
             // the app.
             minChunks: (module, count) => {
+              console.log(module.resource)
               const vendorModuleList = [
                 `react`,
                 `react-dom`,
