@@ -5,9 +5,11 @@ const { onNodeCreate } = require(`../gatsby-node`)
 describe(`Process markdown content correctly`, () => {
   const node = {
     id: `whatever`,
-    contentDigest: `whatever`,
-    mediaType: `text/x-markdown`,
     children: [],
+    internal: {
+      contentDigest: `whatever`,
+      mediaType: `text/x-markdown`,
+    },
   }
 
   // Make some fake functions its expecting.

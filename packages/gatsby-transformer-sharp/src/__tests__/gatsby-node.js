@@ -6,9 +6,11 @@ describe(`Process image nodes correctly`, () => {
   it(`correctly creates an ImageSharp node from a file image node`, async () => {
     const node = {
       id: `whatever`,
-      contentDigest: `whatever`,
-      extension: `png`,
       children: [],
+      internal: {
+        contentDigest: `whatever`,
+        extension: `png`,
+      },
     }
     const createNode = jest.fn()
     const updateNode = jest.fn()
