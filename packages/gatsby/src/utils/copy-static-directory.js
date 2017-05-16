@@ -6,11 +6,11 @@ module.exports = () => {
   chokidar
     .watch(`${process.cwd()}/static`)
     .on(`add`, path => {
-      const relativePath = nodePath.relative(process.cwd(), path)
+      const relativePath = nodePath.relative(`${process.cwd()}/static`, path)
       fs.copy(path, `${process.cwd()}/public/${relativePath}`)
     })
     .on(`change`, path => {
-      const relativePath = nodePath.relative(process.cwd(), path)
+      const relativePath = nodePath.relative(`${process.cwd()}/static`, path)
       fs.copy(path, `${process.cwd()}/public/${relativePath}`)
     })
 }

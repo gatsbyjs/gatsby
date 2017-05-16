@@ -14,6 +14,7 @@
     Path Prefix: /docs/path-prefix/
     Add 404 Page: /docs/add-404-page/
     Proxying API Requests: /docs/api-proxy/
+    Adding Images, Fonts, and Files: /docs/adding-images-fonts-files/
 - title: Reference
   links:
     Node Interface: /docs/node-interface/

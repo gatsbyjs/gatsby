@@ -322,7 +322,7 @@ module.exports = async (
       test: /\.(svg|jpg|jpeg|png|gif|mp4|webm|wav|mp3|m4a|aac|oga)(\?.*)?$/,
       loader: `url`,
       query: {
-        limit: 7500,
+        limit: 10000,
         name: `static/[name].[hash:8].[ext]`,
       },
     })
