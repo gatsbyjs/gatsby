@@ -46,10 +46,15 @@ const loadScriptsForPath = (path, cb = () => {}) => {
       cb(scripts)
     }
   }
-  requires.layouts.index(layout => {
-    scripts.layout = preferDefault(layout)
+  if (requires.layouts.index) {
+    requires.layouts.index(layout => {
+      scripts.layout = preferDefault(layout)
+      loaded()
+    })
+  } else {
+    scripts.layout = ``
     loaded()
-  })
+  }
   requires.components[page.componentChunkName](component => {
     scripts.component = preferDefault(component)
     loaded()
@@ -142,6 +147,15 @@ const DefaultRouter = ({ children }) => (
 )
 
 loadScriptsForPath(window.location.pathname, scripts => {
+  // Use default layout if one isn't set.
+  let layout
+  console.log(scripts)
+  if (scripts.layout) {
+    layout = scripts.layout
+  } else {
+    layout = ({ children }) => <div>{children()}</div>
+  }
+
   const Root = () =>
     $(
       AltRouter ? AltRouter : DefaultRouter,
@@ -149,7 +163,7 @@ loadScriptsForPath(window.location.pathname, scripts => {
       $(
         ScrollContext,
         { shouldUpdateScroll },
-        $(withRouter(scripts.layout), {
+        $(withRouter(layout), {
           children: layoutProps => {
             return $(Route, {
               render: routeProps => {
