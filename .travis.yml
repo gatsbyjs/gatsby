@@ -2,3 +2,11 @@ language: node_js
 node_js:
   - "6"
   - "7"
+env:
+  - CXX=g++-4.8
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
