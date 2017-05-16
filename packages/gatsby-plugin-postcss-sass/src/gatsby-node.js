@@ -70,10 +70,7 @@ exports.modifyWebpackConfig = ({ config, stage }, { postCssPlugins }) => {
 
       config.loader(`sassModules`, {
         test: /\.module\.s(a|c)ss$/,
-        loader: ExtractTextPlugin.extract(`style`, [
-          cssModulesConf,
-          `sass`,
-        ]),
+        loader: ExtractTextPlugin.extract(`style`, [cssModulesConf, `sass`]),
       })
       return config
     }

@@ -12,10 +12,10 @@ Provides drop-in support for SASS/SCSS stylesheets chained with _postcss_ plugin
 // in gatsby-config.js
 plugins: [
   {
-    resolve: `gatsby-plugin-sass`,
+    resolve: `gatsby-plugin-postcss-sass`,
     options: {
       postCssPlugins: [
-        somePostCssPlugin()        
+        somePostCssPlugin()
       ]
     }
   }
