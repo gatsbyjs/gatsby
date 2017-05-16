@@ -17,6 +17,14 @@ const $ = React.createElement
 const filteredPages = pages.filter(r => r.path !== `/404.html`)
 const noMatch = pages.find(r => r.path === `/404.html`)
 
+// Use default layout if one isn't set.
+let layout
+if (syncRequires.layouts.index) {
+  layout = syncRequires.layouts.index
+} else {
+  layout = ({ children }) => <div>{children()}</div>
+}
+
 module.exports = (locals, callback) => {
   let linkPrefix = `/`
   if (__PREFIX_LINKS__) {
@@ -30,7 +38,7 @@ module.exports = (locals, callback) => {
         pathname: locals.path,
       },
     },
-    $(withRouter(syncRequires.layouts[`index`]), {
+    $(withRouter(layout), {
       children: layoutProps => {
         $(Route, {
           render: routeProps => {
@@ -110,6 +118,11 @@ module.exports = (locals, callback) => {
   dascripts.forEach(script => {
     const fetchKey = `assetsByChunkName[${script}][0]`
     const prefixedScript = `${linkPrefix}${get(stats, fetchKey, ``)}`
+
+    // Make sure we found a component.
+    if (prefixedScript === `/`) {
+      return
+    }
 
     // Add preload <link>s for scripts.
     headComponents.unshift(

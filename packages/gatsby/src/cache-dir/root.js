@@ -65,6 +65,14 @@ const DefaultRouter = ({ children }) => (
   <Router history={history}>{children}</Router>
 )
 
+// Use default layout if one isn't set.
+let layout
+if (syncRequires.layouts[`index`]) {
+  layout = syncRequires.layouts[`index`]
+} else {
+  layout = ({ children }) => <div>{children()}</div>
+}
+
 const Root = () =>
   $(
     AltRouter ? AltRouter : DefaultRouter,
@@ -72,7 +80,7 @@ const Root = () =>
     $(
       ScrollContext,
       { shouldUpdateScroll },
-      $(withRouter(syncRequires.layouts[`index`]), {
+      $(withRouter(layout), {
         children: layoutProps => {
           return $(Route, {
             render: routeProps => {
