@@ -72,7 +72,7 @@ module.exports = async (program: any) => {
   const hashes = await Promise.all([
     md5File(`package.json`),
     md5File(`gatsby-config.js`),
-    md5File(`gatsby-node.js`),
+    Promise.resolve(md5File(`gatsby-node.js`).catch(() => {})), // ignore as this file isn't required),
   ])
   const pluginsHash = crypto
     .createHash(`md5`)
