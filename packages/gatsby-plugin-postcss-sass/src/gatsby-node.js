@@ -65,7 +65,7 @@ exports.modifyWebpackConfig = ({ config, stage }, { postCssPlugins }) => {
       config.loader(`sass`, {
         test: /\.s(a|c)ss$/,
         exclude: /\.module\.s(a|c)ss$/,
-        loader: null,
+        loader: `null`,
       })
 
       config.loader(`sassModules`, {
