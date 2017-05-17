@@ -26,15 +26,23 @@ similar to the following:
 ```javascript
 // Implement the Gatsby API “onUpsertPage”. This is
 // called after every page is created.
-exports.onUpsertPage = async ({ page, boundActionCreators }) => {
+exports.onUpsertPage = ({ page, boundActionCreators }) => {
   const { upsertPage, deletePageByPath } = boundActionCreators
 
-  // Remove trailing slash
-  const oldPath = page.path
-  page.path = page.path.replace(/\/$/, "")
-  if (page.path !== oldPath) {
-    // Remove the old page
-    deletePageByPath(oldPath)
+  return new Promise((resolve, reject) => {
+    // Remove trailing slash
+    const oldPath = page.path
+    page.path = page.path.replace(/\/$/, "")
+    if (page.path !== oldPath) {
+
+      // Remove the old page
+      deletePageByPath(oldPath)
+
+      // Add the new page
+      upsertPage(page)
+    }
+
+    resolve()
   }
 }
 ```
@@ -52,13 +60,18 @@ like the following:
 exports.onUpsertPage = async ({ page, boundActionCreators }) => {
   const { upsertPage, deletePageByPath } = boundActionCreators
 
+  return new Promise((resolve, reject) => {
     // page.matchPath is a special key that's used for matching pages
     // only on the client.
-    if (page.path.match(/^\/app/) && !page.matchPath) {
+    if (page.path.match(/^\/app/)) {
       page.matchPath = "/app/:path"
+
       // Update the page.
       upsertPage(page)
     }
+
+    resolve()
+  }
 }
 ```
 
