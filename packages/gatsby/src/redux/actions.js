@@ -11,6 +11,13 @@ import { layoutComponentChunkName } from "../utils/js-chunk-names"
 
 const actions = {}
 
+actions.deletePageByPath = (path, plugin = ``) => {
+  return {
+    type: `DELETE_PAGE_BY_PATH`,
+    payload: path,
+  }
+}
+
 const pascalCase = _.flow(_.camelCase, _.upperFirst)
 actions.upsertPage = (page, plugin = ``) => {
   page.componentChunkName = layoutComponentChunkName(page.component)

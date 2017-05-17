@@ -57,4 +57,17 @@ describe(`Add pages`, () => {
     expect(state).toMatchSnapshot()
     expect(state.length).toEqual(1)
   })
+
+  it(`allows you to delete paths`, () => {
+    const action = actions.upsertPage({
+      path: `/hi/`,
+      component: `/whatever/index.js`,
+    })
+    const action2 = actions.deletePageByPath(`/hi/`)
+
+    let state = reducer(undefined, action)
+    state = reducer(state, action2)
+    expect(state).toMatchSnapshot()
+    expect(state.length).toEqual(0)
+  })
 })
