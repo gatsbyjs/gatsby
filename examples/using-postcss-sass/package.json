@@ -10,6 +10,8 @@
   "license": "MIT",
   "dependencies": {
     "gatsby": "canary",
+    "gatsby-plugin-google-analytics": "canary",
+    "gatsby-plugin-offline": "canary",
     "gatsby-plugin-postcss-sass": "file:../../packages/gatsby-plugin-postcss-sass",
     "lost": "^8.0.0",
     "react-typography": "^0.15.10",
