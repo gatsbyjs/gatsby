@@ -1,32 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Process image nodes correctly correctly creates an ImageSharp node from a file image node 1`] = `
-Array [
-  Array [
-    Object {
-      "children": Array [],
-      "contentDigest": "whatever",
-      "id": "whatever >> ImageSharp",
-      "logical": true,
-      "mediaType": undefined,
-      "parent": "whatever",
-      "type": "ImageSharp",
-    },
-  ],
-]
-`;
+exports[`Process image nodes correctly correctly creates an ImageSharp node from a file image node 1`] = `Array []`;
 
-exports[`Process image nodes correctly correctly creates an ImageSharp node from a file image node 2`] = `
-Array [
-  Array [
-    Object {
-      "children": Array [
-        "whatever >> ImageSharp",
-      ],
-      "contentDigest": "whatever",
-      "extension": "png",
-      "id": "whatever",
-    },
-  ],
-]
-`;
+exports[`Process image nodes correctly correctly creates an ImageSharp node from a file image node 2`] = `Array []`;
