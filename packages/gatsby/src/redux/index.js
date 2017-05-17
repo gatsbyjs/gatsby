@@ -43,7 +43,6 @@ const saveState = _.debounce(state => {
   const pickedState = _.pick(state, [
     `nodes`,
     `status`,
-    `pages`,
     `pageDataDependencies`,
     `pageComponents`,
   ])
