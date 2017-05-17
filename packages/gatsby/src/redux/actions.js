@@ -47,6 +47,7 @@ actions.upsertPage = (page, plugin = ``) => {
 
   return {
     type: `UPSERT_PAGE`,
+    plugin,
     payload: page,
   }
 }
