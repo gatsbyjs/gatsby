@@ -83,7 +83,7 @@ const runAPI = (plugin, api, args) => {
 let filteredPlugins
 const hasAPIFile = plugin => glob.sync(`${plugin.resolve}/gatsby-node*`)[0]
 
-module.exports = async (api, args = {}) => {
+module.exports = async (api, args = {}, pluginSource) => {
   return new Promise(resolve => {
     const { store } = require(`../redux`)
     const plugins = store.getState().flattenedPlugins
@@ -91,8 +91,22 @@ module.exports = async (api, args = {}) => {
     if (!filteredPlugins) {
       filteredPlugins = plugins.filter(plugin => hasAPIFile(plugin))
     }
+
+    // Break infinite loops.
+    // Sometimes a plugin will implement an API and call an
+    // action which will trigger the same API being called.
+    // "onUpsertPage" is the only example right now.
+    // In these cases, we should avoid calling the originating plugin
+    // again.
+    let noSourcePluginPlugins = filteredPlugins
+    if (pluginSource) {
+      noSourcePluginPlugins = filteredPlugins.filter(
+        p => p.name !== pluginSource
+      )
+    }
+
     mapSeries(
-      filteredPlugins,
+      noSourcePluginPlugins,
       (plugin, callback) => {
         Promise.resolve(runAPI(plugin, api, args)).asCallback(callback)
       },
