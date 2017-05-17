@@ -41,11 +41,17 @@ const loadScriptsForPath = (path, cb = () => {}) => {
     pageData: false,
   }
   const loaded = () => {
-    if (scripts.layout && scripts.component && scripts.pageData) {
+    if (
+      scripts.layout !== false &&
+      scripts.component !== false &&
+      scripts.pageData !== false
+    ) {
       scriptsCache[path] = scripts
       cb(scripts)
     }
   }
+
+  // Load layout file.
   if (requires.layouts.index) {
     requires.layouts.index(layout => {
       scripts.layout = preferDefault(layout)
@@ -55,10 +61,12 @@ const loadScriptsForPath = (path, cb = () => {}) => {
     scripts.layout = ``
     loaded()
   }
+
   requires.components[page.componentChunkName](component => {
     scripts.component = preferDefault(component)
     loaded()
   })
+
   requires.json[page.jsonName](pageData => {
     scripts.pageData = pageData
     loaded()
@@ -149,11 +157,12 @@ const DefaultRouter = ({ children }) => (
 loadScriptsForPath(window.location.pathname, scripts => {
   // Use default layout if one isn't set.
   let layout
-  console.log(scripts)
   if (scripts.layout) {
     layout = scripts.layout
   } else {
-    layout = ({ children }) => <div>{children()}</div>
+    layout = props => {
+      return <div>{props.children()}</div>
+    }
   }
 
   const Root = () =>

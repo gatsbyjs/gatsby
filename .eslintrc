@@ -32,6 +32,14 @@
       "error",
       "backtick"
     ],
+    "consistent-return": [
+      "error",
+    ],
+    "arrow-body-style": [
+      "error",
+      "as-needed",
+      { "requireReturnForObjectLiteral": true }
+    ],
     "jsx-quotes": [
       "error",
       "prefer-double"

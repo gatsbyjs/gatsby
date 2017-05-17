@@ -14,15 +14,14 @@ const pathChunkName = path => {
 
 const $ = React.createElement
 
-const filteredPages = pages.filter(r => r.path !== `/404.html`)
-const noMatch = pages.find(r => r.path === `/404.html`)
-
 // Use default layout if one isn't set.
 let layout
 if (syncRequires.layouts.index) {
   layout = syncRequires.layouts.index
 } else {
-  layout = ({ children }) => <div>{children()}</div>
+  layout = props => {
+    return <div>{props.children()}</div>
+  }
 }
 
 module.exports = (locals, callback) => {
@@ -31,17 +30,18 @@ module.exports = (locals, callback) => {
     linkPrefix = `${__LINK_PREFIX__}/`
   }
 
-  const component = $(
+  const bodyComponent = $(
     StaticRouter,
     {
       location: {
         pathname: locals.path,
       },
+      context: {},
     },
     $(withRouter(layout), {
-      children: layoutProps => {
+      children: layoutProps =>
         $(Route, {
-          render: routeProps => {
+          children: routeProps => {
             const props = layoutProps ? layoutProps : routeProps
             const page = pages.find(
               page => page.path === props.location.pathname
@@ -51,15 +51,14 @@ module.exports = (locals, callback) => {
               ...syncRequires.json[page.jsonName],
             })
           },
-        })
-      },
+        }),
     })
   )
 
   // Let the site or plugin render the page component.
   const results = apiRunner(
     `replaceServerBodyRender`,
-    { component, headComponents: [] },
+    { component: bodyComponent, headComponents: [] },
     {}
   )
   let {
@@ -71,7 +70,7 @@ module.exports = (locals, callback) => {
 
   // If no one stepped up, we'll handle it.
   if (!body) {
-    body = renderToString(component)
+    body = renderToString(bodyComponent)
   }
 
   // Check if vars were created.
