@@ -14,7 +14,7 @@ const createPath = require(`./create-path`)
 // algorithm is glob /pages directory for js/jsx/cjsx files *not*
 // underscored. Then create url w/ our path algorithm *unless* user
 // takes control of that page component in gatsby-node.
-module.exports = async () => {
+exports.jsPageCreator = async () => {
   const { program } = store.getState()
   const pagesDirectory = path.posix.join(program.directory, `/src/pages`)
   const exts = program.extensions.map(e => `*${e}`).join(`|`)
@@ -33,14 +33,9 @@ module.exports = async () => {
     path: path.posix.relative(pagesDirectory, page.path),
   }))
 
-  // Remove pages starting with an underscore.
-  autoPages = _.filter(autoPages, page => {
-    const parsedPath = path.parse(page.path)
-    return parsedPath.name.slice(0, 1) !== `_`
-  })
-
-  // Remove page templates.
-  autoPages = _.filter(autoPages, page => page.path.slice(0, 9) !== `template-`)
+  // Filter out special components that shouldn't be made into
+  // pages.
+  autoPages = filterPages(autoPages)
 
   // Convert to our path format.
   autoPages = autoPages.map(page => ({
@@ -53,3 +48,21 @@ module.exports = async () => {
     boundActionCreators.upsertPage(page)
   })
 }
+
+const filterPages = autoPages => {
+  // Remove pages starting with an underscore.
+  autoPages = _.filter(autoPages, page => {
+    const parsedPath = path.parse(page.path)
+    return parsedPath.name.slice(0, 1) !== `_`
+  })
+
+  // Remove page templates.
+  autoPages = _.filter(autoPages, page => {
+    const parsedPath = path.parse(page.path)
+    return parsedPath.name.slice(0, 9) !== `template-`
+  })
+
+  return autoPages
+}
+
+exports.filterPages = filterPages

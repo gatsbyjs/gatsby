@@ -13,7 +13,7 @@ const { graphql } = require(`graphql`)
 const { store } = require(`../redux`)
 const { boundActionCreators } = require(`../redux/actions`)
 const loadPlugins = require(`./load-plugins`)
-const jsPageCreator = require(`./js-page-creator`)
+const { jsPageCreator } = require(`./js-page-creator`)
 const { initCache } = require(`../utils/cache`)
 
 // Override console.log to add the source file + line number.
