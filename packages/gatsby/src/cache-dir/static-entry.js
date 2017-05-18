@@ -115,7 +115,7 @@ module.exports = (locals, callback) => {
     pages.find(page => page.path === locals.path).componentChunkName,
   ]
   dascripts.forEach(script => {
-    const fetchKey = `assetsByChunkName[${script}][0]`
+    const fetchKey = `assetsByChunkName[${script}]`
     const prefixedScript = `${linkPrefix}${get(stats, fetchKey, ``)}`
 
     // Make sure we found a component.
