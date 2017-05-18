@@ -144,11 +144,12 @@ module.exports = (locals, callback) => {
   ]
   dascripts.forEach(script => {
     const fetchKey = `assetsByChunkName[${script}]`
-    let prefixedScript = `${linkPrefix}${get(stats, fetchKey, ``)}`
 
+    let fetchedScript = get(stats, fetchKey)
     // If sourcemaps are enabled, then the entry will be an array with
     // the script name as the first entry.
-    prefixedScript = isArray(prefixedScript) ? prefixedScript[0] : prefixedScript
+    fetchedScript = isArray(fetchedScript) ? fetchedScript[0] : fetchedScript
+    const prefixedScript = `${linkPrefix}${fetchedScript}`
 
       // If sourcemaps are enabled, then the entry will be an array with
       // the script name as the first entry.
