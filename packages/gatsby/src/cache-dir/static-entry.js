@@ -2,7 +2,7 @@ import React from "react"
 import { renderToString, renderToStaticMarkup } from "react-dom/server"
 import { StaticRouter, Route, withRouter } from "react-router-dom"
 import Html from "../src/html"
-import { kebabCase, get, merge } from "lodash"
+import { kebabCase, get, merge, isArray } from "lodash"
 import apiRunner from "./api-runner-ssr"
 import pages from "./pages.json"
 import syncRequires from "./sync-requires"
@@ -115,8 +115,13 @@ module.exports = (locals, callback) => {
     pages.find(page => page.path === locals.path).componentChunkName,
   ]
   dascripts.forEach(script => {
-    const fetchKey = `assetsByChunkName[${script}][0]`
-    const prefixedScript = `${linkPrefix}${get(stats, fetchKey, ``)}`
+    const fetchKey = `assetsByChunkName[${script}]`
+
+    let fetchedScript = get(stats, fetchKey)
+    // If sourcemaps are enabled, then the entry will be an array with
+    // the script name as the first entry.
+    fetchedScript = isArray(fetchedScript) ? fetchedScript[0] : fetchedScript
+    const prefixedScript = `${linkPrefix}${fetchedScript}`
 
     // Make sure we found a component.
     if (prefixedScript === `/`) {
