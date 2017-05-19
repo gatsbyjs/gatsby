@@ -32,6 +32,8 @@ exports.onUpsertPage = ({ page, boundActionCreators }) => {
   return new Promise((resolve, reject) => {
     // Remove trailing slash
     const oldPath = page.path
+    // Removing '/' would result in a path that's
+    // an empty string which is invalid
     page.path = (page.path === `/`) ? page.path : page.path.replace(/\/$/, ``)
     if (page.path !== oldPath) {
 
