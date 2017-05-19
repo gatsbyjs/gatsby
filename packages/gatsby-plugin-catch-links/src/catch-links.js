@@ -19,6 +19,10 @@ module.exports = function(root, cb) {
     }
     if (!anchor) return true
 
+    // Don't catch links where a target (other than self) is set
+    // e.g. _blank.
+    if (anchor.target && anchor.target.toLowerCase() !== `_self`) return true
+
     // IE clears the host value if the anchor href changed after creation, e.g.
     // in React. Creating a new anchor element to ensure host value is present
     var a1 = document.createElement(`a`)
