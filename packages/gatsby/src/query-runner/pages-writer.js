@@ -2,24 +2,14 @@ const _ = require(`lodash`)
 const glob = require(`glob`)
 const parseFilepath = require(`parse-filepath`)
 const fs = require(`fs`)
-const path = require('path')
-const os = require('os');
-
-function joinPath(...paths) {
-  const joinedPath = path.join(...paths)
-  if(os.platform() === 'win32') {
-    return joinedPath.replace(/\\/g, '\\\\');
-  }
-  else {
-    return joinedPath;
-  }
-}
 
 const { store } = require(`../redux/`)
 import {
   layoutComponentChunkName,
   pathChunkName,
 } from "../utils/js-chunk-names"
+
+import {joinPath} from '../utils/path';
 
 // Write out pages information.
 const writePages = () => {
@@ -97,7 +87,6 @@ const preferDefault = m => m && m.default || m
 }`
 
   fs.writeFile(`${program.directory}/.cache/sync-requires.js`, syncRequires)
-console.log('josch debug', program.directory)
   // Create file with async requires of layouts/components/json files.
   let asyncRequires = `// prefer default export if available
 const preferDefault = m => m && m.default || m
