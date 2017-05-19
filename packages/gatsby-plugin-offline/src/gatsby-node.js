@@ -27,7 +27,9 @@ exports.postBuild = (args, pluginOptions) => {
     // example.com/cheeseburger.jpg will not.
     // We only want the service worker to handle our "clean"
     // URLs and not any files hosted on the site.
-    navigateFallbackWhitelist: [/^.*(?!\.\w?$)/],
+    //
+    // Regex from http://stackoverflow.com/a/18017805
+    navigateFallbackWhitelist: [/^.*[^.]{5}$/],
     cacheId: `gatsby-plugin-offline`,
     // Do cache bust JS URLs until can figure out how to make Webpack's
     // URLs truely content-addressed.
