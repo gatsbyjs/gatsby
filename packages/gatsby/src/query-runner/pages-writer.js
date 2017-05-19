@@ -2,6 +2,18 @@ const _ = require(`lodash`)
 const glob = require(`glob`)
 const parseFilepath = require(`parse-filepath`)
 const fs = require(`fs`)
+const path = require('path')
+const os = require('os');
+
+function joinPath(...paths) {
+  const joinedPath = path.join(...paths)
+  if(os.platform() === 'win32') {
+    return joinedPath.replace(/\\/g, '\\\\');
+  }
+  else {
+    return joinedPath;
+  }
+}
 
 const { store } = require(`../redux/`)
 import {
@@ -60,14 +72,14 @@ const preferDefault = m => m && m.default || m
   syncRequires += `exports.components = {\n${components
     .map(
       c =>
-        `  "${c.componentChunkName}": preferDefault(require("${c.component}"))`
+        `  "${c.componentChunkName}": preferDefault(require("${joinPath(c.component)}"))`
     )
     .join(`,\n`)}
 }\n\n`
   syncRequires += `exports.json = {\n${json
     .map(
       j =>
-        `  "${j.jsonName}": require("${program.directory + `/.cache/json/` + j.jsonName}")`
+        `  "${j.jsonName}": require("${joinPath(program.directory, `/.cache/json/`, j.jsonName)}")`
     )
     .join(`,\n`)}
 }\n\n`
@@ -76,7 +88,7 @@ const preferDefault = m => m && m.default || m
       let componentName = l
       if (l !== false || typeof l !== `undefined`) {
         componentName = `index`
-        return `  "${l}": preferDefault(require("${program.directory + `/src/layouts/` + componentName}"))`
+        return `  "${l}": preferDefault(require("${joinPath(program.directory, `/src/layouts/`, componentName)}"))`
       } else {
         return `  "${l}": false`
       }
@@ -85,7 +97,7 @@ const preferDefault = m => m && m.default || m
 }`
 
   fs.writeFile(`${program.directory}/.cache/sync-requires.js`, syncRequires)
-
+console.log('josch debug', program.directory)
   // Create file with async requires of layouts/components/json files.
   let asyncRequires = `// prefer default export if available
 const preferDefault = m => m && m.default || m
@@ -93,14 +105,14 @@ const preferDefault = m => m && m.default || m
   asyncRequires += `exports.components = {\n${components
     .map(
       c =>
-        `  "${c.componentChunkName}": require("bundle-loader?lazy&name=${c.componentChunkName}!${c.component}")`
+        `  "${c.componentChunkName}": require("bundle-loader?lazy&name=${c.componentChunkName}!${joinPath(c.component)}")`
     )
     .join(`,\n`)}
 }\n\n`
   asyncRequires += `exports.json = {\n${json
     .map(
       j =>
-        `  "${j.jsonName}": require("bundle-loader?lazy&name=${pathChunkName(j.path)}!${program.directory + `/.cache/json/` + j.jsonName}")`
+        `  "${j.jsonName}": require("bundle-loader?lazy&name=${pathChunkName(j.path)}!${joinPath(program.directory, `/.cache/json/`, j.jsonName)}")`
     )
     .join(`,\n`)}
 }\n\n`
@@ -109,7 +121,7 @@ const preferDefault = m => m && m.default || m
       let componentName = layout
       if (layout !== false || typeof layout !== `undefined`) {
         componentName = `index`
-        return `  "${layout}": require("bundle-loader?lazy&name=${`layout-component---${layout}`}!${program.directory + `/src/layouts/` + componentName}")`
+        return `  "${layout}": require("bundle-loader?lazy&name=${`layout-component---${layout}`}!${joinPath(program.directory, `/src/layouts/`, componentName)}")`
       } else {
         return `  "${layout}": false`
       }
