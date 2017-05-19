@@ -1,6 +1,5 @@
-# Client-only paths
+# No trailing slashes
 
-https://client-only-paths.gatsbyjs.org
+https://no-trailing-slashes.gatsbyjs.org
 
-Example site that demostrates how to build Gatsby sites
-with paths that are client-only.
+Gatsby example site that shows how to remove trailing slashes from urls.
