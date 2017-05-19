@@ -197,16 +197,26 @@ module.exports = async (
               const vendorModuleList = [
                 `react`,
                 `react-dom`,
+                `fbjs`,
                 `react-router`,
                 `react-router-dom`,
                 `react-router-scroll`,
+                `dom-helpers`, // Used in react-router-scroll
                 `path-to-regexp`,
+                `isarray`, // Used by path-to-regexp.
                 `scroll-behavior`,
                 `history`,
+                `resolve-pathname`, // Used by history.
+                `value-equal`, // Used by history.
+                `invariant`, // Used by history.
+                `warning`, // Used by history.
+                `babel-runtime`, // Used by history.
+                `core-js`, // Used by history.
+                `loose-envify`, // Used by history.
               ]
               const isFramework = some(
                 vendorModuleList.map(vendor => {
-                  const regex = new RegExp(`\/node_modules\/${vendor}\/`, `i`)
+                  const regex = new RegExp(`\/node_modules\/${vendor}\/.*`, `i`)
                   return regex.test(module.resource)
                 })
               )
