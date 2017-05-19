@@ -140,17 +140,21 @@ data
     glob.sync(`${plugin.resolve}/gatsby-${env}*`)[0]
 
   const ssrPlugins = _.filter(
-    flattenedPlugins.map(plugin => ({
-      resolve: hasAPIFile(`ssr`, plugin),
-      options: plugin.pluginOptions,
-    })),
+    flattenedPlugins.map(plugin => {
+      return {
+        resolve: hasAPIFile(`ssr`, plugin),
+        options: plugin.pluginOptions,
+      }
+    }),
     plugin => plugin.resolve
   )
   const browserPlugins = _.filter(
-    flattenedPlugins.map(plugin => ({
-      resolve: hasAPIFile(`browser`, plugin),
-      options: plugin.pluginOptions,
-    })),
+    flattenedPlugins.map(plugin => {
+      return {
+        resolve: hasAPIFile(`browser`, plugin),
+        options: plugin.pluginOptions,
+      }
+    }),
     plugin => plugin.resolve
   )
 

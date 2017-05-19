@@ -143,10 +143,6 @@ const renderPage = props => {
   }
 }
 
-const renderSite = ({ scripts, props }) => {
-  return $(scripts.layout, { ...props }, renderPage(props))
-}
-
 const $ = React.createElement
 
 const AltRouter = apiRunner(`replaceRouterComponent`, { history })[0]
@@ -160,9 +156,7 @@ loadScriptsForPath(window.location.pathname, scripts => {
   if (scripts.layout) {
     layout = scripts.layout
   } else {
-    layout = props => {
-      return <div>{props.children()}</div>
-    }
+    layout = props => <div>{props.children()}</div>
   }
 
   const Root = () =>
@@ -173,15 +167,14 @@ loadScriptsForPath(window.location.pathname, scripts => {
         ScrollContext,
         { shouldUpdateScroll },
         $(withRouter(layout), {
-          children: layoutProps => {
-            return $(Route, {
+          children: layoutProps =>
+            $(Route, {
               render: routeProps => {
                 window.___history = routeProps.history
                 const props = layoutProps ? layoutProps : routeProps
                 return renderPage(props)
               },
-            })
-          },
+            }),
         })
       )
     )

@@ -5,9 +5,7 @@ module.exports = (state = [], action) => {
     case `DELETE_CACHE`:
       return []
     case `UPSERT_PAGE`:
-      const index = _.findIndex(state, p => {
-        return p.path === action.payload.path
-      })
+      const index = _.findIndex(state, p => p.path === action.payload.path)
       // If the path already exists, overwrite it.
       // Otherwise, add it to the end.
       if (index !== -1) {

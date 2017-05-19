@@ -19,9 +19,7 @@ let layout
 if (syncRequires.layouts.index) {
   layout = syncRequires.layouts.index
 } else {
-  layout = props => {
-    return <div>{props.children()}</div>
-  }
+  layout = props => <div>{props.children()}</div>
 }
 
 module.exports = (locals, callback) => {

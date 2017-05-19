@@ -47,12 +47,14 @@ type GraphQLConnectionDefinitions = {
 const pageInfoType = new GraphQLObjectType({
   name: `PageInfo`,
   description: `Information about pagination in a connection.`,
-  fields: () => ({
-    hasNextPage: {
-      type: new GraphQLNonNull(GraphQLBoolean),
-      description: `When paginating, are there more items?`,
-    },
-  }),
+  fields: () => {
+    return {
+      hasNextPage: {
+        type: new GraphQLNonNull(GraphQLBoolean),
+        description: `When paginating, are there more items?`,
+      },
+    }
+  },
 })
 
 function resolveMaybeThunk<T>(thingOrThunk: Thunk<T>): T {
@@ -74,40 +76,44 @@ export function connectionDefinitions(
   const edgeType = new GraphQLObjectType({
     name: `${name}Edge`,
     description: `An edge in a connection.`,
-    fields: () => ({
-      node: {
-        type: nodeType,
-        resolve: resolveNode,
-        description: `The item at the end of the edge`,
-      },
-      next: {
-        type: nodeType,
-        resolve: resolveNode,
-        description: `The next edge in the connection`,
-      },
-      previous: {
-        type: nodeType,
-        resolve: resolveNode,
-        description: `The previous edge in the connection`,
-      },
-      ...(resolveMaybeThunk(edgeFields): any),
-    }),
+    fields: () => {
+      return {
+        node: {
+          type: nodeType,
+          resolve: resolveNode,
+          description: `The item at the end of the edge`,
+        },
+        next: {
+          type: nodeType,
+          resolve: resolveNode,
+          description: `The next edge in the connection`,
+        },
+        previous: {
+          type: nodeType,
+          resolve: resolveNode,
+          description: `The previous edge in the connection`,
+        },
+        ...(resolveMaybeThunk(edgeFields): any),
+      }
+    },
   })
 
   const connectionType = new GraphQLObjectType({
     name: `${name}Connection`,
     description: `A connection to a list of items.`,
-    fields: () => ({
-      pageInfo: {
-        type: new GraphQLNonNull(pageInfoType),
-        description: `Information to aid in pagination.`,
-      },
-      edges: {
-        type: new GraphQLList(edgeType),
-        description: `A list of edges.`,
-      },
-      ...(resolveMaybeThunk(connectionFields): any),
-    }),
+    fields: () => {
+      return {
+        pageInfo: {
+          type: new GraphQLNonNull(pageInfoType),
+          description: `Information to aid in pagination.`,
+        },
+        edges: {
+          type: new GraphQLList(edgeType),
+          description: `A list of edges.`,
+        },
+        ...(resolveMaybeThunk(connectionFields): any),
+      }
+    },
   })
 
   return { edgeType, connectionType }

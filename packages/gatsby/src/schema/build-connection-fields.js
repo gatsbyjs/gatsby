@@ -19,11 +19,13 @@ module.exports = type => {
   const { connectionType: groupConnection } = connectionDefinitions({
     name: _.camelCase(`${type.name} groupConnection`),
     nodeType: type.nodeObjectType,
-    connectionFields: () => ({
-      field: { type: GraphQLString },
-      fieldValue: { type: GraphQLString },
-      totalCount: { type: GraphQLInt },
-    }),
+    connectionFields: () => {
+      return {
+        field: { type: GraphQLString },
+        fieldValue: { type: GraphQLString },
+        totalCount: { type: GraphQLInt },
+      }
+    },
   })
 
   return {

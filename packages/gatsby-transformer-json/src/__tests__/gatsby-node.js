@@ -16,9 +16,7 @@ describe(`Process JSON nodes correctly`, () => {
   }
 
   // Make some fake functions its expecting.
-  const loadNodeContent = node => {
-    return Promise.resolve(node.content)
-  }
+  const loadNodeContent = node => Promise.resolve(node.content)
 
   it(`correctly creates nodes from JSON which is an array of objects`, async () => {
     const data = [

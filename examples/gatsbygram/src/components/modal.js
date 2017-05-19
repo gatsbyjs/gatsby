@@ -31,9 +31,10 @@ class GatsbyGramModal extends React.Component {
 
   findCurrentIndex() {
     let index
-    index = findIndex(this.props.posts, post => {
-      return post.id === this.props.location.pathname.split(`/`)[1]
-    })
+    index = findIndex(
+      this.props.posts,
+      post => post.id === this.props.location.pathname.split(`/`)[1]
+    )
 
     return index
   }

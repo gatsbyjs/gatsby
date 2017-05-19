@@ -18,12 +18,14 @@ async function buildSchema() {
   const schema = new GraphQLSchema({
     query: new GraphQLObjectType({
       name: `RootQueryType`,
-      fields: () => ({
-        // Pull off just the graphql node from each type object.
-        ..._.mapValues(typesGQL, `node`),
-        ...connections,
-        ...siteSchema(),
-      }),
+      fields: () => {
+        return {
+          // Pull off just the graphql node from each type object.
+          ..._.mapValues(typesGQL, `node`),
+          ...connections,
+          ...siteSchema(),
+        }
+      },
     }),
   })
 
@@ -56,8 +58,8 @@ const debounceNodeCreation = cb => {
   })
 }
 
-module.exports = () => {
-  return new Promise(resolve => {
+module.exports = () =>
+  new Promise(resolve => {
     console.time(`sourcing and parsing nodes`)
     apiRunner(`sourceNodes`)
     let builtSchema = false
@@ -108,4 +110,3 @@ module.exports = () => {
       }
     })
   })
-}

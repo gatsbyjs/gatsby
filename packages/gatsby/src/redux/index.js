@@ -60,12 +60,8 @@ store.subscribe(() => {
 })
 
 exports.store = store
-exports.getNodes = () => {
-  return _.values(store.getState().nodes)
-}
-const getNode = id => {
-  return store.getState().nodes[id]
-}
+exports.getNodes = () => _.values(store.getState().nodes)
+const getNode = id => store.getState().nodes[id]
 exports.getNode = getNode
 exports.hasNodeChanged = (id, digest) => {
   const node = store.getState().nodes[id]

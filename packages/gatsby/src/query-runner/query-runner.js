@@ -10,9 +10,8 @@ const { store } = require(`../redux`)
 module.exports = async (page, component) => {
   const { schema, program } = store.getState()
 
-  const graphql = (query, context) => {
-    return graphqlFunction(schema, query, context, context, context)
-  }
+  const graphql = (query, context) =>
+    graphqlFunction(schema, query, context, context, context)
 
   // Run query
   let result

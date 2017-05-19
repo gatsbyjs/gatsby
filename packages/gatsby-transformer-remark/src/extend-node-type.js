@@ -16,15 +16,12 @@ const Promise = require(`bluebird`)
 const prune = require(`underscore.string/prune`)
 
 let pluginsCacheStr = ``
-const astCacheKey = node => {
-  return `transformer-remark-markdown-ast-${node.internal.contentDigest}-${pluginsCacheStr}`
-}
-const htmlCacheKey = node => {
-  return `transformer-remark-markdown-html-${node.internal.contentDigest}-${pluginsCacheStr}`
-}
-const headingsCacheKey = node => {
-  return `transformer-remark-markdown-headings-${node.internal.contentDigest}-${pluginsCacheStr}`
-}
+const astCacheKey = node =>
+  `transformer-remark-markdown-ast-${node.internal.contentDigest}-${pluginsCacheStr}`
+const htmlCacheKey = node =>
+  `transformer-remark-markdown-html-${node.internal.contentDigest}-${pluginsCacheStr}`
+const headingsCacheKey = node =>
+  `transformer-remark-markdown-headings-${node.internal.contentDigest}-${pluginsCacheStr}`
 
 module.exports = (
   { type, allNodes, linkPrefix, getNode, cache },
@@ -134,10 +131,12 @@ module.exports = (
         return cachedHeadings
       } else {
         const ast = await getAST(markdownNode)
-        const headings = select(ast, `heading`).map(heading => ({
-          value: _.first(select(heading, `text`).map(text => text.value)),
-          depth: heading.depth,
-        }))
+        const headings = select(ast, `heading`).map(heading => {
+          return {
+            value: _.first(select(heading, `text`).map(text => text.value)),
+            depth: heading.depth,
+          }
+        })
 
         cache.set(headingsCacheKey(markdownNode), headings)
         return headings

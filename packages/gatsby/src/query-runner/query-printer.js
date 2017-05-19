@@ -193,9 +193,9 @@ function printHandles(field: Field): string {
 }
 
 function printDirectives(directives: Array<Directive>): string {
-  const printed = directives.map(directive => {
-    return `@` + directive.name + printArguments(directive.args)
-  })
+  const printed = directives.map(
+    directive => `@` + directive.name + printArguments(directive.args)
+  )
   return printed.length ? ` ` + printed.join(` `) : ``
 }
 

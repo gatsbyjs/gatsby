@@ -22,26 +22,32 @@ exports.jsPageCreator = async () => {
   // so we'll use sync for now.
   const files = await glob(`${pagesDirectory}/**/?(${exts})`)
   // Create initial page objects.
-  let autoPages = files.map(filePath => ({
-    component: filePath,
-    path: filePath,
-  }))
+  let autoPages = files.map(filePath => {
+    return {
+      component: filePath,
+      path: filePath,
+    }
+  })
 
   // Convert path to one relative to the pages directory.
-  autoPages = autoPages.map(page => ({
-    ...page,
-    path: path.posix.relative(pagesDirectory, page.path),
-  }))
+  autoPages = autoPages.map(page => {
+    return {
+      ...page,
+      path: path.posix.relative(pagesDirectory, page.path),
+    }
+  })
 
   // Filter out special components that shouldn't be made into
   // pages.
   autoPages = filterPages(autoPages)
 
   // Convert to our path format.
-  autoPages = autoPages.map(page => ({
-    ...page,
-    path: createPath(pagesDirectory, page.component),
-  }))
+  autoPages = autoPages.map(page => {
+    return {
+      ...page,
+      path: createPath(pagesDirectory, page.component),
+    }
+  })
 
   // Add pages
   autoPages.forEach(page => {

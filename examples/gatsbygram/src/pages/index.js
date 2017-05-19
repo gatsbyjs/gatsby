@@ -128,32 +128,30 @@ class Index extends React.Component {
           </div>
         </div>
         {/* posts */}
-        {chunk(posts.slice(0, this.state.postsToShow), 3).map((chunk, i) => {
-          return (
-            <div
-              key={`chunk-${i}`}
-              css={{
-                display: `flex`,
-                alignItems: `stretch`,
-                flexShrink: 0,
-                flexDirection: `row`,
-                marginBottom: rhythm(1 / 8),
-                [presets.Tablet]: {
-                  marginBottom: rhythm(1),
-                },
-              }}
-            >
-              {chunk.map(node => (
-                <Post
-                  key={node.id}
-                  post={node}
-                  location={this.props.location}
-                  onClick={post => this.setState({ activePost: post })}
-                />
-              ))}
-            </div>
-          )
-        })}
+        {chunk(posts.slice(0, this.state.postsToShow), 3).map((chunk, i) => (
+          <div
+            key={`chunk-${i}`}
+            css={{
+              display: `flex`,
+              alignItems: `stretch`,
+              flexShrink: 0,
+              flexDirection: `row`,
+              marginBottom: rhythm(1 / 8),
+              [presets.Tablet]: {
+                marginBottom: rhythm(1),
+              },
+            }}
+          >
+            {chunk.map(node => (
+              <Post
+                key={node.id}
+                post={node}
+                location={this.props.location}
+                onClick={post => this.setState({ activePost: post })}
+              />
+            ))}
+          </div>
+        ))}
         {!this.state.showingMore &&
           <a
             css={{

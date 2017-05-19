@@ -82,9 +82,9 @@ class Story extends React.Component {
         </table>
         <table border="0" className="comment-tree">
           <tr className="athing comtr " id="14174940">
-            {flatComemnts.map(comment => {
-              return <StoryComment comment={comment} width={width} />
-            })}
+            {flatComemnts.map(comment => (
+              <StoryComment comment={comment} width={width} />
+            ))}
           </tr>
         </table>
       </div>

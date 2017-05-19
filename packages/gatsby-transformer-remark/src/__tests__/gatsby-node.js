@@ -13,9 +13,7 @@ describe(`Process markdown content correctly`, () => {
   }
 
   // Make some fake functions its expecting.
-  const loadNodeContent = node => {
-    return Promise.resolve(node.content)
-  }
+  const loadNodeContent = node => Promise.resolve(node.content)
 
   it(`Correctly creates a new MarkdownRemark node`, async () => {
     const content = `---

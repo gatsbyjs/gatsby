@@ -3,11 +3,10 @@ const crypto = require(`crypto`)
 const url = require(`url`)
 const _ = require(`lodash`)
 
-const get = query => {
-  return axios.get(
+const get = query =>
+  axios.get(
     `https://www.graphqlhub.com/graphql?query=${encodeURIComponent(query)}`
   )
-}
 
 exports.sourceNodes = async ({
   boundActionCreators,

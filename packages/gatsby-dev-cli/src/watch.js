@@ -22,11 +22,7 @@ function watch(root, packages, { scanOnce, quiet }) {
 
     chokidar
       .watch(prefix, {
-        ignored: [
-          (path, stats) => {
-            return _.some(ignoreRegs, reg => reg.test(path))
-          },
-        ],
+        ignored: [(path, stats) => _.some(ignoreRegs, reg => reg.test(path))],
       })
       .on(`all`, (event, path) => {
         if (event === `change` || event === `add`) {

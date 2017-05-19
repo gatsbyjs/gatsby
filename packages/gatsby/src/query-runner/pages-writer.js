@@ -9,7 +9,7 @@ import {
   pathChunkName,
 } from "../utils/js-chunk-names"
 
-import {joinPath} from '../utils/path';
+import { joinPath } from "../utils/path"
 
 // Write out pages information.
 const writePages = () => {
