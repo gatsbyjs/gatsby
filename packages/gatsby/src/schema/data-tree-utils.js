@@ -23,9 +23,9 @@ const isEmptyObjectOrArray = (obj: any) =>
  *
  * @param {*Nodes} args
  */
-const extractFieldExamples = (nodes: any[]) => {
+const extractFieldExamples = (nodes: any[]) =>
   // $FlowFixMe
-  return _.mergeWith({}, ...nodes, (obj, next, key, o, s, stack) => {
+  _.mergeWith({}, ...nodes, (obj, next, key, o, s, stack) => {
     if (obj === INVALID_VALUE) return obj
 
     // TODO: if you want to support infering Union types this should be handled
@@ -50,7 +50,6 @@ const extractFieldExamples = (nodes: any[]) => {
     let merged = extractFieldExamples(array)
     return isDefined(merged) ? [merged] : null
   })
-}
 
 const buildFieldEnumValues = (nodes: any[]) => {
   const enumValues = {}

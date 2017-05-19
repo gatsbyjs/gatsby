@@ -10,23 +10,25 @@ function queryResult(nodes, fragment, { types = [] } = {}) {
   const schema = new GraphQLSchema({
     query: new GraphQLObjectType({
       name: `RootQueryType`,
-      fields: () => ({
-        listNode: {
-          name: `LISTNODE`,
-          type: new GraphQLList(
-            new GraphQLObjectType({
-              name: `Test`,
-              fields: inferObjectStructureFromNodes({
-                nodes,
-                types: [{ name: `Test` }, ...types],
-              }),
-            })
-          ),
-          resolve() {
-            return nodes
+      fields: () => {
+        return {
+          listNode: {
+            name: `LISTNODE`,
+            type: new GraphQLList(
+              new GraphQLObjectType({
+                name: `Test`,
+                fields: inferObjectStructureFromNodes({
+                  nodes,
+                  types: [{ name: `Test` }, ...types],
+                }),
+              })
+            ),
+            resolve() {
+              return nodes
+            },
           },
-        },
-      }),
+        }
+      },
     }),
   })
 
@@ -260,8 +262,8 @@ describe(`GraphQL type inferance`, () => {
     })
   })
 
-  it(`Infers graphql type from array of nodes`, () => {
-    return queryResult(
+  it(`Infers graphql type from array of nodes`, () =>
+    queryResult(
       nodes,
       `
         hair,
@@ -293,6 +295,5 @@ describe(`GraphQL type inferance`, () => {
           date(formatString: "YYYY")
         }
     `
-    ).then(result => expect(result).toMatchSnapshot())
-  })
+    ).then(result => expect(result).toMatchSnapshot()))
 })

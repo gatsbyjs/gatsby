@@ -81,8 +81,8 @@ const Root = () =>
       ScrollContext,
       { shouldUpdateScroll },
       $(withRouter(layout), {
-        children: layoutProps => {
-          return $(Route, {
+        children: layoutProps =>
+          $(Route, {
             render: routeProps => {
               window.___history = routeProps.history
               const props = layoutProps ? layoutProps : routeProps
@@ -111,8 +111,7 @@ const Root = () =>
                 return addNotFoundRoute()
               }
             },
-          })
-        },
+          }),
       })
     )
   )

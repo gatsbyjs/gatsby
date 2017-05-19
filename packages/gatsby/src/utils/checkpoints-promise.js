@@ -29,11 +29,10 @@ store.subscribe(() => {
   }
 })
 
-module.exports = ({ events }) => {
-  return new Promise(resolve => {
+module.exports = ({ events }) =>
+  new Promise(resolve => {
     waiters.push({
       resolve,
       events,
     })
   })
-}

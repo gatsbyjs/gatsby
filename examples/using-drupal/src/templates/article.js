@@ -20,9 +20,7 @@ class ArticleTemplate extends React.Component {
       // Split text on new lnes and put into paragraph elements.
       paragraphedBody = body
         .split(`\n`)
-        .map(split => {
-          return `<p>${split}</p>`
-        })
+        .map(split => `<p>${split}</p>`)
         .join(``)
     }
     return (

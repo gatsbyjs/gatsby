@@ -2,12 +2,10 @@ const axios = require(`axios`)
 const crypto = require(`crypto`)
 const _ = require(`lodash`)
 
-const makeTypeName = type => {
-  return `drupal__${type.replace(/-/g, `_`)}`
-}
+const makeTypeName = type => `drupal__${type.replace(/-/g, `_`)}`
 
-const processEntities = ents => {
-  return ents.map(ent => {
+const processEntities = ents =>
+  ents.map(ent => {
     const newEnt = {
       id: ent.id,
       internal: {
@@ -25,7 +23,6 @@ const processEntities = ents => {
 
     return newEnt
   })
-}
 
 exports.sourceNodes = async (
   { boundActionCreators, getNode, hasNodeChanged, store },
@@ -116,48 +113,49 @@ exports.sourceNodes = async (
   const userResult = await axios.get(userUrl)
   const users = processEntities(userResult.data.data)
   const blue = await Promise.all(
-    users.map((user, i) => {
-      return new Promise(resolve => {
-        const userStr = JSON.stringify(user)
+    users.map(
+      (user, i) =>
+        new Promise(resolve => {
+          const userStr = JSON.stringify(user)
 
-        const gatsbyUser = {
-          ...user,
-          children: [],
-          parent: `__SOURCE__`,
-          internal: {
-            type: makeTypeName(user.internal.type),
-            content: userStr,
-            mediaType: `application/json`,
-          },
-        }
+          const gatsbyUser = {
+            ...user,
+            children: [],
+            parent: `__SOURCE__`,
+            internal: {
+              type: makeTypeName(user.internal.type),
+              content: userStr,
+              mediaType: `application/json`,
+            },
+          }
 
-        if (gatsbyUser.uid === 1) {
-          return resolve()
-        }
+          if (gatsbyUser.uid === 1) {
+            return resolve()
+          }
 
-        axios
-          .get(
-            userResult.data.data[i].relationships.user_picture.links.related,
-            { timeout: 20000 }
-          )
-          .catch(() => console.log(`fail fetch`, gatsbyUser))
-          .then(pictureResult => {
-            gatsbyUser.picture = `http://dev-gatsbyjs-d8.pantheonsite.io${pictureResult.data.data.attributes.url}`
+          axios
+            .get(
+              userResult.data.data[i].relationships.user_picture.links.related,
+              { timeout: 20000 }
+            )
+            .catch(() => console.log(`fail fetch`, gatsbyUser))
+            .then(pictureResult => {
+              gatsbyUser.picture = `http://dev-gatsbyjs-d8.pantheonsite.io${pictureResult.data.data.attributes.url}`
 
-            // Get content digest of node.
-            const contentDigest = crypto
-              .createHash(`md5`)
-              .update(JSON.stringify(gatsbyUser))
-              .digest(`hex`)
+              // Get content digest of node.
+              const contentDigest = crypto
+                .createHash(`md5`)
+                .update(JSON.stringify(gatsbyUser))
+                .digest(`hex`)
 
-            gatsbyUser.internal.contentDigest = contentDigest
+              gatsbyUser.internal.contentDigest = contentDigest
 
-            createNode(gatsbyUser)
+              createNode(gatsbyUser)
 
-            resolve()
-          })
-      })
-    })
+              resolve()
+            })
+        })
+    )
   )
 
   updateSourcePluginStatus({

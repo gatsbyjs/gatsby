@@ -31,12 +31,12 @@ module.exports = (state = { nodes: {}, connections: {} }, action) => {
 
       return state
     case `REMOVE_PAGES_DATA_DEPENDENCIES`:
-      state.nodes = _.mapValues(state.nodes, paths => {
-        return _.difference(paths, action.payload.paths)
-      })
-      state.connections = _.mapValues(state.connections, paths => {
-        return _.difference(paths, action.payload.paths)
-      })
+      state.nodes = _.mapValues(state.nodes, paths =>
+        _.difference(paths, action.payload.paths)
+      )
+      state.connections = _.mapValues(state.connections, paths =>
+        _.difference(paths, action.payload.paths)
+      )
 
       return state
     default:

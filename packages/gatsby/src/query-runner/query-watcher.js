@@ -74,9 +74,8 @@ const runQueriesForComponent = componentPath => {
   return Promise.all(pages.map(p => queryRunner(p, component)))
 }
 
-const getPagesForComponent = componentPath => {
-  return store.getState().pages.filter(p => p.component === componentPath)
-}
+const getPagesForComponent = componentPath =>
+  store.getState().pages.filter(p => p.component === componentPath)
 
 let watcher
 exports.watch = rootDir => {

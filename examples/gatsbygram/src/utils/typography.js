@@ -14,17 +14,19 @@ const options = {
   blockMarginBottom: 0.75,
   headerFontFamily: [`Space Mono`, `sans-serif`],
   bodyFontFamily: [`Space Mono`, `sans-serif`],
-  overrideStyles: () => ({
-    html: {
-      overflowY: `scroll`,
-    },
-    h1: {
-      lineHeight: 1.1,
-    },
-    a: {
-      color: `#3897f0`,
-    },
-  }),
+  overrideStyles: () => {
+    return {
+      html: {
+        overflowY: `scroll`,
+      },
+      h1: {
+        lineHeight: 1.1,
+      },
+      a: {
+        color: `#3897f0`,
+      },
+    }
+  },
 }
 
 const typography = new Typography(options)

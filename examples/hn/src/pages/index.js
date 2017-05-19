@@ -9,9 +9,7 @@ class Index extends React.Component {
     console.log(this.props)
     return (
       <table border="0" className="itemlist" cellPadding={0} cellSpacing={0}>
-        {allHnStory.edges.map(({ node }) => {
-          return <StoryItem story={node} />
-        })}
+        {allHnStory.edges.map(({ node }) => <StoryItem story={node} />)}
         <tr className="morespace" style={{ height: `10px` }} />
         <tr>
           <td style={{ paddingLeft: 36 }} className="title">

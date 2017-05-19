@@ -83,8 +83,8 @@ const runAPI = (plugin, api, args) => {
 let filteredPlugins
 const hasAPIFile = plugin => glob.sync(`${plugin.resolve}/gatsby-node*`)[0]
 
-module.exports = async (api, args = {}, pluginSource) => {
-  return new Promise(resolve => {
+module.exports = async (api, args = {}, pluginSource) =>
+  new Promise(resolve => {
     const { store } = require(`../redux`)
     const plugins = store.getState().flattenedPlugins
     // Get the list of plugins that implement gatsby-node
@@ -123,4 +123,3 @@ module.exports = async (api, args = {}, pluginSource) => {
       }
     )
   })
-}

@@ -14,13 +14,12 @@ import { AppContainer as HotContainer } from "react-hot-loader"
  *
  * Let's unregister the service workers in development, and tidy up a few errors.
  */
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.getRegistrations()
-    .then(registrations => {
-      for (let registration of registrations) {
-        registration.unregister()
-      }
-    })
+if (`serviceWorker` in navigator) {
+  navigator.serviceWorker.getRegistrations().then(registrations => {
+    for (let registration of registrations) {
+      registration.unregister()
+    }
+  })
 }
 
 const rootElement = document.getElementById(`___gatsby`)

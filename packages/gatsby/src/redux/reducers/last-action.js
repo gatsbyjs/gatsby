@@ -1,3 +1,1 @@
-module.exports = (state = null, action) => {
-  return action
-}
+module.exports = (state = null, action) => action

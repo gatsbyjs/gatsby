@@ -35,26 +35,28 @@ function queryResult(nodes, query, { types = [] } = {}) {
   const schema = new GraphQLSchema({
     query: new GraphQLObjectType({
       name: `RootQueryType`,
-      fields: () => ({
-        allNode: {
-          name: `nodeConnection`,
-          type: nodeConnection,
-          args: {
-            ...connectionArgs,
-            ...inferInputObjectStructureFromNodes({
-              nodes,
-              typeName: `test`,
-            }),
+      fields: () => {
+        return {
+          allNode: {
+            name: `nodeConnection`,
+            type: nodeConnection,
+            args: {
+              ...connectionArgs,
+              ...inferInputObjectStructureFromNodes({
+                nodes,
+                typeName: `test`,
+              }),
+            },
+            resolve(nvi, args) {
+              return runSift({
+                args,
+                nodes,
+                connection: true,
+              })
+            },
           },
-          resolve(nvi, args) {
-            return runSift({
-              args,
-              nodes,
-              connection: true,
-            })
-          },
-        },
-      }),
+        }
+      },
     }),
   })
 

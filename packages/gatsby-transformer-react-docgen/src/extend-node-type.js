@@ -10,51 +10,59 @@ const { stripIndent, oneLine } = require(`common-tags`)
 
 const PropDefaultValue = new GraphQLObjectType({
   name: `PropDefaultValue`,
-  fields: () => ({
-    value: { type: GraphQLString },
-    computed: { type: GraphQLBoolean },
-  }),
+  fields: () => {
+    return {
+      value: { type: GraphQLString },
+      computed: { type: GraphQLBoolean },
+    }
+  },
 })
 
 const PropTypeValue = new GraphQLObjectType({
   name: `PropTypeValue`,
-  fields: () => ({
-    name: { type: new GraphQLNonNull(GraphQLString) },
-    value: { type: GraphQLJSON },
-    raw: { type: GraphQLString },
-  }),
+  fields: () => {
+    return {
+      name: { type: new GraphQLNonNull(GraphQLString) },
+      value: { type: GraphQLJSON },
+      raw: { type: GraphQLString },
+    }
+  },
 })
 
 const Method = new GraphQLObjectType({
   name: `ComponentMethod`,
-  fields: () => ({
-    name: { type: new GraphQLNonNull(GraphQLString) },
-    docblock: {
-      type: GraphQLString,
-      description: oneLine`
+  fields: () => {
+    return {
+      name: { type: new GraphQLNonNull(GraphQLString) },
+      docblock: {
+        type: GraphQLString,
+        description: oneLine`
         The raw comment block leading a method declaration
       `,
-    },
-    modifiers: {
-      type: new GraphQLList(GraphQLString),
-      description: oneLine`
+      },
+      modifiers: {
+        type: new GraphQLList(GraphQLString),
+        description: oneLine`
         Modifiers describing the kind and sort of method e.g. "static",
         "generator", or "async".
       `,
-    },
-    params: {
-      type: new GraphQLList(
-        new GraphQLObjectType({
-          name: `ComponentMethodParams`,
-          fields: () => ({
-            name: { type: GraphQLString },
-            type: { type: GraphQLJSON },
-          }),
-        })
-      ),
-    },
-    returns: { type: new GraphQLList(GraphQLJSON) },
-  }),
+      },
+      params: {
+        type: new GraphQLList(
+          new GraphQLObjectType({
+            name: `ComponentMethodParams`,
+            fields: () => {
+              return {
+                name: { type: GraphQLString },
+                type: { type: GraphQLJSON },
+              }
+            },
+          })
+        ),
+      },
+      returns: { type: new GraphQLList(GraphQLJSON) },
+    }
+  },
 })
 
 function extendComponents() {
