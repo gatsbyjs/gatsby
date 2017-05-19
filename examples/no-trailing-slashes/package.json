@@ -1,0 +1,22 @@
+{
+  "name": "gatsby-example-removing-trailing-slashes",
+  "private": true,
+  "description": "Gatsby example site that removes trailing slashes from internal urls",
+  "version": "1.0.0",
+  "author": "Scotty Eckenthal <scott.eckenthal@gmail.com>",
+  "dependencies": {
+    "gatsby": "canary",
+    "gatsby-link": "canary",
+    "lodash": "^4.16.4",
+    "slash": "^1.0.0"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build"
+  }
+}
