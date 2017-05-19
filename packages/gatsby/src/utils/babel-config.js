@@ -155,11 +155,6 @@ module.exports = async function babelConfig(program, stage) {
     babelrc.plugins.unshift(`react-hot-loader/babel`)
   }
 
-  if (stage !== `develop`) {
-    // Remove prop-types in production.
-    babelrc.plugins.unshift(`transform-react-remove-prop-types`)
-  }
-
   // Always add this plugin so our generated routes
   // will work regardless of how users export
   // their components. Yeah for multiple module standards!
