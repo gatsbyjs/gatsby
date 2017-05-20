@@ -79,6 +79,15 @@ describe(`GraphQL Input args`, () => {
         { aString: `some string`, aNumber: 2, aBoolean: true },
         { aString: `some string`, aNumber: 2, anArray: [1, 2] },
       ],
+      deepObject: {
+        level1: 1,
+        deepObject: {
+          level2: 2,
+          deepObject: {
+            level3: 3,
+          },
+        },
+      },
     },
     {
       name: `The Mad Wax`,
