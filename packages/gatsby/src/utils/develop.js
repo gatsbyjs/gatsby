@@ -92,6 +92,7 @@ async function startServer(program) {
       })
     )
     let htmlStr
+    // Render an HTML page and serve it.
     app.use((req, res, next) => {
       const parsedPath = parsePath(req.originalUrl)
       if (parsedPath.extname === `` || parsedPath.extname === `.html`) {
