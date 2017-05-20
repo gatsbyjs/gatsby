@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Load plugins load plugins for a site 1`] = `
+Array [
+  Object {
+    "name": "component-page-creator",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "/Users/kylemathews/programs/gatsby/packages/gatsby/src/bootstrap/internal-plugins/component-page-creator",
+    "version": "1.0.0",
+  },
+  Object {
+    "name": "defaultSitePlugin",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "/Users/kylemathews/programs/gatsby/packages/gatsby/src/bootstrap",
+    "version": "n/a",
+  },
+]
+`;

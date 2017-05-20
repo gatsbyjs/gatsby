@@ -1,0 +1,15 @@
+{
+  "name": "component-page-creator",
+  "version": "1.0.0",
+  "description": "An internal Gatsby plugin that creates pages from component files in src/pages",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin"
+  ],
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "license": "MIT"
+}

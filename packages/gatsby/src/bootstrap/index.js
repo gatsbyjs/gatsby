@@ -13,7 +13,6 @@ const { graphql } = require(`graphql`)
 const { store } = require(`../redux`)
 const { boundActionCreators } = require(`../redux/actions`)
 const loadPlugins = require(`./load-plugins`)
-const { jsPageCreator } = require(`./js-page-creator`)
 const { initCache } = require(`../utils/cache`)
 
 // Override console.log to add the source file + line number.
@@ -230,11 +229,6 @@ data
   await apiRunnerNode(`createPages`, {
     graphql: graphqlRunner,
   })
-
-  // TODO move this to own source plugin per component type
-  // (js/cjsx/typescript, etc.). Only do after there's themes
-  // so can cement default /pages setup in default core theme.
-  await jsPageCreator()
 
   // Copy /404/ to /404.html as many static site hosting companies expect
   // site 404 pages to be named this.
