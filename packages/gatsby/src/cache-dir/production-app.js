@@ -17,22 +17,35 @@ window.matchPath = matchPath
 
 import requires from "./async-requires"
 
+// Find page
+const findPage = pathname => pages.find(page => {
+    if (page.matchPath) {
+      // Try both the path and matchPath
+      return (
+        matchPath(pathname, { path: page.path }) ||
+        matchPath(pathname, {
+          path: page.matchPath,
+        })
+      )
+    } else {
+      return matchPath(pathname, {
+        path: page.path,
+        exact: true,
+      })
+    }
+  })
+
 // Load scripts
 const preferDefault = m => (m && m.default) || m
 const scriptsCache = {}
 const loadScriptsForPath = (path, cb = () => {}) => {
-  if (!path) {
-    return cb()
-  }
-
-  if (scriptsCache[path]) {
-    return cb(scriptsCache[path])
-  }
-
-  const page = pages.find(r => r.path === path)
-
+  const page = findPage(path)
   if (!page) {
     return cb()
+  }
+
+  if (scriptsCache[page.path]) {
+    return cb(scriptsCache[page.path])
   }
 
   let scripts = {
@@ -46,7 +59,7 @@ const loadScriptsForPath = (path, cb = () => {}) => {
       scripts.component !== false &&
       scripts.pageData !== false
     ) {
-      scriptsCache[path] = scripts
+      scriptsCache[page.path] = scripts
       cb(scripts)
     }
   }
@@ -112,22 +125,7 @@ loadScriptsForPath(`/404.html`, scripts => {
 })
 
 const renderPage = props => {
-  const page = pages.find(page => {
-    if (page.matchPath) {
-      // Try both the path and matchPath
-      return (
-        matchPath(props.location.pathname, { path: page.path }) ||
-        matchPath(props.location.pathname, {
-          path: page.matchPath,
-        })
-      )
-    } else {
-      return matchPath(props.location.pathname, {
-        path: page.path,
-        exact: true,
-      })
-    }
-  })
+  const page = findPage(props.location.pathname)
   if (page) {
     return $(scriptsCache[page.path].component, {
       ...props,
