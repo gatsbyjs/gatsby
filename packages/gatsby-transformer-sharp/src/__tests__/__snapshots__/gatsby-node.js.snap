@@ -7,7 +7,7 @@ Array [
       "children": Array [],
       "id": "whatever >> ImageSharp",
       "internal": Object {
-        "contentDigest": "undefined",
+        "contentDigest": "whatever",
         "mediaType": undefined,
         "type": "ImageSharp",
       },

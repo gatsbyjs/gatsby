@@ -3,6 +3,8 @@ const _ = require(`lodash`)
 const flatten = require(`flat`)
 const typeOf = require(`type-of`)
 
+const createKey = require(`./create-key`)
+
 const INVALID_VALUE = Symbol(`INVALID_VALUE`)
 const isDefined = v => v != null
 
@@ -59,7 +61,7 @@ const buildFieldEnumValues = (nodes: any[]) => {
   })
   Object.keys(values).forEach(field => {
     if (values[field] == null) return
-    enumValues[field.replace(/\./g, `___`)] = { field }
+    enumValues[createKey(field)] = { field }
   })
 
   return enumValues

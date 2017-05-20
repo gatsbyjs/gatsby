@@ -49,6 +49,7 @@ describe(`GraphQL type inferance`, () => {
       id: `foo`,
       name: `The Mad Max`,
       type: `Test`,
+      "key-with..unsupported-values": true,
       hair: 1,
       date: `1012-11-01`,
       anArray: [1, 2, 3, 4],
