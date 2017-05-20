@@ -248,8 +248,6 @@ data
     })
   }
 
-  console.log(`created js pages`)
-
   return new Promise(resolve => {
     QueryRunner.isInitialPageQueryingDone(() => {
       apiRunnerNode(`generateSideEffects`).then(() => {
