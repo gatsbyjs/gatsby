@@ -8,6 +8,7 @@ import { store } from "../redux"
 module.exports = async config => {
   // Instantiate plugins.
   const plugins = []
+
   // Create fake little site with a plugin for testing this
   // w/ snapshots. Move plugin processing to its own module.
   // Also test adding to redux store.
@@ -48,6 +49,14 @@ module.exports = async config => {
     }
   }
 
+  // Add internal plugins
+  plugins.push(
+    processPlugin(
+      path.join(__dirname, `./internal-plugins/component-page-creator`)
+    )
+  )
+
+  // Add plugins from the site config.
   if (config.plugins) {
     config.plugins.forEach(plugin => {
       plugins.push(processPlugin(plugin))

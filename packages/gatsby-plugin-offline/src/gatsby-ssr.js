@@ -1,7 +1,6 @@
 import React from "react"
 
 exports.modifyPostBodyComponents = () => {
-  console.log("modifying your stuff")
   if (process.env.NODE_ENV === `production`) {
     return [
       <script

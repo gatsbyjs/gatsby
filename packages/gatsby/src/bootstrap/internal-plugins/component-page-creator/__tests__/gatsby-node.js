@@ -1,4 +1,4 @@
-const { filterPages } = require(`../js-page-creator`)
+const { filterPages } = require(`../gatsby-node`)
 
 describe(`JavaScript page creator`, () => {
   it(`filters out files that start with underscores`, () => {

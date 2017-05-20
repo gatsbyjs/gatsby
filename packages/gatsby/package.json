@@ -31,6 +31,7 @@
     "chokidar": "^1.6.1",
     "chunk-manifest-webpack-plugin": "0.1.0",
     "commander": "^2.9.0",
+    "copyfiles": "^1.2.0",
     "css-loader": "^0.26.1",
     "debug": "^2.6.0",
     "detect-port": "^1.1.1",
@@ -139,11 +140,12 @@
     "url": "git+https://github.com/gatsbyjs/gatsby.git"
   },
   "scripts": {
-    "build": "rimraf dist && npm run build:src && npm run build:cli",
+    "build": "rimraf dist && npm run build:src && npm run build:cli && npm run build:internal-plugins",
     "build:src": "babel src --out-dir dist --source-maps --ignore gatsby-cli.js,__tests__",
+    "build:internal-plugins": "copyfiles -u 1 src/bootstrap/internal-plugins/**/package.json dist",
     "build:cli": "babel src/gatsby-cli.js --out-file dist/gatsby-cli.js --presets es2015",
     "clean-test-bundles": "find test/ -type f -name bundle.js* -exec rm -rf {} +",
     "test-coverage": "node_modules/.bin/nyc --reporter=lcov --reporter=text npm test",
-    "watch": "rimraf dist && npm run build:src -- --watch"
+    "watch": "rimraf dist && npm run build:src -- --watch && npm run build:internal-plugins"
   }
 }
