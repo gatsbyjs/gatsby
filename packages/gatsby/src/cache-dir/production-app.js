@@ -18,7 +18,8 @@ window.matchPath = matchPath
 import requires from "./async-requires"
 
 // Find page
-const findPage = pathname => pages.find(page => {
+const findPage = pathname =>
+  pages.find(page => {
     if (page.matchPath) {
       // Try both the path and matchPath
       return (

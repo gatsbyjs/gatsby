@@ -13,12 +13,11 @@ const createPath = require(`./create-path`)
 // underscored. Then create url w/ our path algorithm *unless* user
 // takes control of that page component in gatsby-node.
 exports.createPages = async ({ store, boundActionCreators }) => {
+  const { upsertPage } = boundActionCreators
   const program = store.getState().program
   const pagesDirectory = path.posix.join(program.directory, `/src/pages`)
   const exts = program.extensions.map(e => `*${e}`).join(`|`)
 
-  // The promisified version wasn't working for some reason
-  // so we'll use sync for now.
   const files = await glob(`${pagesDirectory}/**/?(${exts})`)
 
   // Create initial page objects.
@@ -51,7 +50,7 @@ exports.createPages = async ({ store, boundActionCreators }) => {
 
   // Add pages
   autoPages.forEach(page => {
-    boundActionCreators.upsertPage(page)
+    upsertPage(page)
   })
 }
 

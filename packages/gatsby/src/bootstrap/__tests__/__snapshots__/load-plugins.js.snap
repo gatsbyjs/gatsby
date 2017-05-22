@@ -11,11 +11,19 @@ Array [
     "version": "1.0.0",
   },
   Object {
+    "name": "internal-data-bridge",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "/Users/kylemathews/programs/gatsby/packages/gatsby/src/bootstrap/internal-plugins/internal-data-bridge",
+    "version": "1.0.0",
+  },
+  Object {
     "name": "defaultSitePlugin",
     "pluginOptions": Object {
       "plugins": Array [],
     },
-    "resolve": "/Users/kylemathews/programs/gatsby/packages/gatsby/src/bootstrap",
+    "resolve": "/Users/kylemathews/programs/gatsby",
     "version": "n/a",
   },
 ]

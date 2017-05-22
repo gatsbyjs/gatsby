@@ -15,7 +15,7 @@ process.on(`unhandledRejection`, error => {
   console.error(`UNHANDLED REJECTION`, error.stack)
 })
 
-const defaultHost = process.platform === `win32` ? `localhost` : `0.0.0.0`
+const defaultHost = `localhost`
 
 const directory = path.resolve(`.`)
 

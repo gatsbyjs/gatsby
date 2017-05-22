@@ -8,7 +8,7 @@
 const _ = require(`lodash`)
 const Promise = require(`bluebird`)
 
-const { store } = require(`../redux`)
+const { store, emitter } = require(`../redux`)
 const queryRunner = require(`./query-runner`)
 const checkpointsPromise = require(`../utils/checkpoints-promise`)
 
@@ -46,22 +46,19 @@ checkpointsPromise({
   })
 })
 
-store.subscribe(() => {
-  const state = store.getState()
+emitter.on(`CREATE_NODE`, action => {
+  queuedDirtyActions.push(action)
+  debouncedProcessQueries()
+})
 
-  if (state.lastAction.type === `CREATE_NODE`) {
-    queuedDirtyActions.push(state.lastAction)
-    debouncedProcessQueries()
-  }
+emitter.on(`UPDATE_NODE`, () => {
   // Also debounce on UPDATE_NODE so we're sure all node processing is done
   // before re-running a query.
   //
   // PS. prediction to future selves, this method of debouncing data processing
   // will break down bigly once data processing pipelines get really complex or
   // plugins introduce very expensive steps.
-  if (state.lastAction.type === `UPDATE_NODE`) {
-    debouncedProcessQueries()
-  }
+  debouncedProcessQueries()
 })
 
 const findPathsWithoutDataDependencies = () => {

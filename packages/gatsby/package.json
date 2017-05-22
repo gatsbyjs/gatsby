@@ -35,6 +35,7 @@
     "css-loader": "^0.26.1",
     "debug": "^2.6.0",
     "detect-port": "^1.1.1",
+    "eventemitter2": "^4.1.0",
     "express": "^4.14.0",
     "express-graphql": "^0.6.1",
     "extract-text-webpack-plugin": "^1.0.1",

@@ -11,7 +11,7 @@
 const _ = require(`lodash`)
 const chokidar = require(`chokidar`)
 
-const { store } = require(`../redux/`)
+const { store, emitter } = require(`../redux/`)
 const { boundActionCreators } = require(`../redux/actions`)
 const queryCompiler = require(`./query-compiler`).default
 const queryRunner = require(`./query-runner`)
@@ -43,24 +43,20 @@ const debounceNewPages = _.debounce(() => {
 }, 100)
 
 // Watch for page updates.
-store.subscribe(() => {
-  const lastAction = store.getState().lastAction
-
-  if (lastAction.type === `UPSERT_PAGE`) {
-    const component = lastAction.payload.component
-    if (!pageComponents[component]) {
-      // We haven't seen this component before so we:
-      // - Add it to Redux
-      // - Extract its query and save it
-      // - Setup a watcher to detect query changes
-      boundActionCreators.addPageComponent(component)
-      pendingPages.push(component)
-      debounceNewPages()
-    }
-
-    // Mark we've seen this page component.
-    pageComponents[component] = component
+emitter.on(`UPSERT_PAGE`, action => {
+  const component = action.payload.component
+  if (!pageComponents[component]) {
+    // We haven't seen this component before so we:
+    // - Add it to Redux
+    // - Extract its query and save it
+    // - Setup a watcher to detect query changes
+    boundActionCreators.addPageComponent(component)
+    pendingPages.push(component)
+    debounceNewPages()
   }
+
+  // Mark we've seen this page component.
+  pageComponents[component] = component
 })
 
 const runQueriesForComponent = componentPath => {

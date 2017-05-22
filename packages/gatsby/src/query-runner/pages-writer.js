@@ -3,7 +3,7 @@ const glob = require(`glob`)
 const parseFilepath = require(`parse-filepath`)
 const fs = require(`fs`)
 
-const { store } = require(`../redux/`)
+const { store, emitter } = require(`../redux/`)
 import {
   layoutComponentChunkName,
   pathChunkName,
@@ -131,8 +131,6 @@ const debouncedWritePages = _.debounce(() => {
   }
 }, 250)
 
-store.subscribe(() => {
-  if (store.getState().lastAction.type === `UPSERT_PAGE`) {
-    debouncedWritePages()
-  }
+emitter.on(`UPSERT_PAGE`, () => {
+  debouncedWritePages()
 })

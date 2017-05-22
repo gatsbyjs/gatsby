@@ -55,6 +55,11 @@ module.exports = async config => {
       path.join(__dirname, `./internal-plugins/component-page-creator`)
     )
   )
+  plugins.push(
+    processPlugin(
+      path.join(__dirname, `./internal-plugins/internal-data-bridge`)
+    )
+  )
 
   // Add plugins from the site config.
   if (config.plugins) {
