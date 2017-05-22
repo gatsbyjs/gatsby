@@ -63,20 +63,18 @@ exports.onUpsertPage = ({ page, boundActionCreators }) => {
   const { createNode } = boundActionCreators
 
   // Add page.
-  process.nextTick(() =>
-    createNode({
-      ...page,
-      id: `SitePage ${page.path}`,
-      parent: `SOURCE`,
-      children: [],
-      internal: {
-        mediaType: `application/json`,
-        type: `SitePage`,
-        contentDigest: crypto
-          .createHash(`md5`)
-          .update(JSON.stringify(page))
-          .digest(`hex`),
-      },
-    })
-  )
+  createNode({
+    ...page,
+    id: `SitePage ${page.path}`,
+    parent: `SOURCE`,
+    children: [],
+    internal: {
+      mediaType: `application/json`,
+      type: `SitePage`,
+      contentDigest: crypto
+        .createHash(`md5`)
+        .update(JSON.stringify(page))
+        .digest(`hex`),
+    },
+  })
 }

@@ -5,7 +5,7 @@ const { GraphQLSchema, GraphQLObjectType } = require(`graphql`)
 const apiRunner = require(`../utils/api-runner-node`)
 const buildNodeTypes = require(`./build-node-types`)
 const buildNodeConnections = require(`./build-node-connections`)
-const { store, getNode } = require(`../redux`)
+const { store, emitter, getNode } = require(`../redux`)
 const { boundActionCreators } = require(`../redux/actions`)
 const { deleteNodes } = boundActionCreators
 
@@ -32,6 +32,8 @@ async function buildSchema() {
     type: `SET_SCHEMA`,
     payload: schema,
   })
+
+  return
 }
 
 // This seems like the most sensible way to decide when the the initial
@@ -44,7 +46,7 @@ const debounceNodeCreation = cb => {
   const updateNode = _.debounce(cb, 1000)
   // Ensure schema is created even if the project hasn't got any source plugins.
   updateNode()
-  store.subscribe(() => {
+  emitter.onAny(() => {
     const state = store.getState()
     if (
       state.lastAction.type === `CREATE_NODE` ||

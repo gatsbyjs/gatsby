@@ -3,6 +3,10 @@ const Promise = require(`bluebird`)
 const _ = require(`lodash`)
 const { composeWithDevTools } = require(`remote-redux-devtools`)
 const fs = require(`fs`)
+const EventEmitter = require("eventemitter2")
+
+// Create event emitter for actions
+const emitter = new EventEmitter()
 
 // Reducers
 const reducers = require(`./reducers`)
@@ -51,9 +55,15 @@ const saveState = _.debounce(state => {
 }, 1000)
 
 store.subscribe(() => {
+  const lastAction = store.getState().lastAction
+  emitter.emit(lastAction.type, lastAction)
+})
+
+emitter.onAny(() => {
   saveState(store.getState())
 })
 
+exports.emitter = emitter
 exports.store = store
 exports.getNodes = () => _.values(store.getState().nodes)
 const getNode = id => store.getState().nodes[id]
