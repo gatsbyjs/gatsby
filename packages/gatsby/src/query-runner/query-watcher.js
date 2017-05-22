@@ -44,10 +44,10 @@ const debounceNewPages = _.debounce(() => {
 
 // Watch for page updates.
 store.subscribe(() => {
-  const lastAction = store.getState().lastAction
+  const state = store.getState()
 
-  if (lastAction.type === `UPSERT_PAGE`) {
-    const component = lastAction.payload.component
+  if (state.lastAction.type === `UPSERT_PAGE`) {
+    const component = state.lastAction.payload.component
     if (!pageComponents[component]) {
       // We haven't seen this component before so we:
       // - Add it to Redux

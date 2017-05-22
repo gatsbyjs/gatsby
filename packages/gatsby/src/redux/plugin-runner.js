@@ -5,7 +5,11 @@ const apiRunnerNode = require(`../utils/api-runner-node`)
 
 store.subscribe(() => {
   const state = store.getState()
-  // console.log("last action", state.lastAction.type)
+  // console.log(
+  // "plugin-runner last action",
+  // state.lastAction.type,
+  // state.lastAction.payload.component
+  // )
   if (state.lastAction.type === `CREATE_NODE`) {
     const node = state.nodes[state.lastAction.payload.id]
     apiRunnerNode(`onNodeCreate`, { node })
