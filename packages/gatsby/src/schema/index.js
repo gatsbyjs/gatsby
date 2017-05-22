@@ -61,6 +61,7 @@ module.exports = () =>
     console.time(`sourcing and parsing nodes`)
     apiRunner(`sourceNodes`)
     let builtSchema = false
+    let typesBuilt = {}
     debounceNodeCreation(() => {
       const state = store.getState()
       // Check if the schema has been built yet and if
@@ -73,6 +74,13 @@ module.exports = () =>
         builtSchema = true
         // Resolve promise once the schema is built.
         buildSchema().then(() => resolve())
+
+        // Store types that we're building so can check
+        // later if need to rebuild the schema.
+        typesBuilt = _.map(
+          _.uniqBy(_.values(state.nodes), n => n.internal.type),
+          t => t.internal.type
+        )
 
         // Garbage collect stale data nodes.
         //
@@ -105,6 +113,20 @@ module.exports = () =>
           console.log(`deleting stale nodes`, staleNodes.length)
           deleteNodes(staleNodes.map(n => n.id))
         }
+      } else {
+        // If we've already built the schema before already, check if
+        // there's been any new node types added.
+        const newTypesBuilt = _.map(
+          _.uniqBy(_.values(state.nodes), n => n.internal.type),
+          t => t.internal.type
+        )
+
+        if (typesBuilt !== newTypesBuilt) {
+          console.log(`building schema again`)
+          buildSchema()
+        }
+
+        typesBuilt = newTypesBuilt
       }
     })
   })
