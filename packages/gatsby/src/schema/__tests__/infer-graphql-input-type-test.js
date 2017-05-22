@@ -188,6 +188,25 @@ describe(`GraphQL Input args`, () => {
     )
   })
 
+  it(`Replaces unsupported values in keys`, () => {
+    // Add a key with unsupported values to test
+    // if they're replaced.
+    let fields = inferInputObjectStructureFromNodes({
+      nodes: [
+        {
+          parent: `parent`,
+          children: [`bar`],
+          foo: {
+            parent: `parent`,
+            children: [`bar`],
+            "foo-moo": `tasty`,
+          },
+        },
+      ],
+    })
+
+    expect(Object.keys(fields.foo.type.getFields())[2]).toEqual(`foo_moo`)
+  })
   it(`Removes specific root fields`, () => {
     let fields = inferInputObjectStructureFromNodes({
       nodes: [

@@ -20,6 +20,7 @@ const { oneLine } = require(`common-tags`)
 const { store, getNode, getNodes } = require(`../redux`)
 const { addPageDependency } = require(`../redux/actions/add-page-dependency`)
 const createTypeName = require(`./create-type-name`)
+const createKey = require(`./create-key`)
 const {
   extractFieldExamples,
   isEmptyObjectOrArray,
@@ -431,7 +432,9 @@ export function inferObjectStructureFromNodes({
     }
 
     if (!inferredField) return
-    inferredFields[fieldName] = inferredField
+
+    // Replace unsupported values
+    inferredFields[createKey(fieldName)] = inferredField
   })
 
   return inferredFields

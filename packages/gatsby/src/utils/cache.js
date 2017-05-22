@@ -1,4 +1,7 @@
-const levelup = require(`level`)
+let levelup
+if (process.env.NODE_ENV !== `test`) {
+  levelup = require(`level`)
+}
 const Promise = require(`bluebird`)
 const fs = require(`fs-extra`)
 

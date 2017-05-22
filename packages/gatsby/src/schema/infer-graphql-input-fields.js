@@ -14,6 +14,7 @@ const _ = require(`lodash`)
 const invariant = require(`invariant`)
 const typeOf = require(`type-of`)
 const createTypeName = require(`./create-type-name`)
+const createKey = require(`./create-key`)
 const {
   extractFieldExamples,
   buildFieldEnumValues,
@@ -205,7 +206,7 @@ export function inferInputObjectStructureFromNodes({
     })
 
     if (field == null) return
-    inferredFields[key] = field
+    inferredFields[createKey(key)] = field
   })
 
   // Add sorting (but only to the top level).
