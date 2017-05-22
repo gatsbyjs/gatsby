@@ -3,7 +3,7 @@ const Promise = require(`bluebird`)
 const _ = require(`lodash`)
 const { composeWithDevTools } = require(`remote-redux-devtools`)
 const fs = require(`fs`)
-const EventEmitter = require("eventemitter2")
+const EventEmitter = require(`eventemitter2`)
 
 // Create event emitter for actions
 const emitter = new EventEmitter()
