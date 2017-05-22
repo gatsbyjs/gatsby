@@ -87,6 +87,12 @@ exports.loadNodeContent = node => {
         .getState()
         .flattenedPlugins.find(plug => plug.name === node.internal.pluginName)
       const { loadNodeContent } = require(plugin.resolve)
+      if (!loadNodeContent) {
+        throw new Error(
+          `Could not find function loadNodeContent for plugin ${plugin.name}`
+        )
+      }
+
       return loadNodeContent(node).then(content => {
         // TODO update node's content field here.
         resolve(content)
