@@ -2,7 +2,6 @@
 const _ = require(`lodash`)
 const { GraphQLSchema, GraphQLObjectType } = require(`graphql`)
 
-const siteSchema = require(`./site-schema`)
 const apiRunner = require(`../utils/api-runner-node`)
 const buildNodeTypes = require(`./build-node-types`)
 const buildNodeConnections = require(`./build-node-connections`)
@@ -23,7 +22,6 @@ async function buildSchema() {
           // Pull off just the graphql node from each type object.
           ..._.mapValues(typesGQL, `node`),
           ...connections,
-          ...siteSchema(),
         }
       },
     }),

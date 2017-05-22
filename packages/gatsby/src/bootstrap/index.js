@@ -6,7 +6,6 @@ const slash = require(`slash`)
 const fs = require(`fs-extra`)
 const md5File = require(`md5-file/promise`)
 const crypto = require(`crypto`)
-const path = require(`path`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const { graphql } = require(`graphql`)
@@ -230,7 +229,7 @@ data
     graphql: graphqlRunner,
   })
 
-  // Copy /404/ to /404.html as many static site hosting companies expect
+  // Copy /404/ to /404.html as many static site hosts expect
   // site 404 pages to be named this.
   // https://www.gatsbyjs.org/docs/add-404-page/
   const exists404html = _.some(

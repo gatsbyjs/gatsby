@@ -31,10 +31,6 @@ module.exports = async () => {
         type: new GraphQLNonNull(GraphQLID),
         description: `The id of this node.`,
       },
-      type: {
-        type: GraphQLString,
-        description: `The type of this node`,
-      },
       parent: {
         type: nodeInterface,
         description: `The parent of this node.`,
