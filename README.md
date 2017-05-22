@@ -1,4 +1,4 @@
-[![Travis CI Build Status](https://travis-ci.org/gatsbyjs/gatsby.svg?branch=master)](https://travis-ci.org/gatsbyjs/gatsby)
+[![Travis CI Build Status](https://img.shields.io/travis/gatsbyjs/gatsby/master.svg?style=flat-square)](https://travis-ci.org/gatsbyjs/gatsby)
 [![npm package](https://img.shields.io/npm/v/gatsby.svg?style=flat-square)](https://www.npmjs.org/package/gatsby)
 [![gatsby channel on discord](https://img.shields.io/badge/discord-gatsby%40reactiflux-738bd7.svg?style=flat-square)](https://discord.gg/0ZcbPKXt5bVoxkfV)
 [![OpenCollective](https://opencollective.com/gatsby/backers/badge.svg)](#backers)
