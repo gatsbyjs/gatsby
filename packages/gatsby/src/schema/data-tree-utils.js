@@ -18,15 +18,16 @@ const isEmptyObjectOrArray = (obj: any) => {
     // Simple "is object empty" check.
   } else if (_.isObject(obj) && _.isEmpty(obj)) {
     return true
-  } else if (_.isObject(obj) && Object.keys(obj).length === 1) {
-    const childValue = _.values(obj)[0]
-    // Check if there's a single child value and if it's null.
-    if (!isDefined(childValue)) {
-      return true
-      // If the single child value is an object, check it.
-    } else if (_.isObject(childValue)) {
-      return isEmptyObjectOrArray(childValue)
-    }
+  } else if (_.isObject(obj)) {
+    return _.every(obj, (value, key) => {
+      if (!isDefined(value)) {
+        return true
+      } else if (_.isObject(value)) {
+        return isEmptyObjectOrArray(value)
+      } else {
+        return false
+      }
+    })
   }
 }
 

@@ -76,6 +76,7 @@ describe(`GraphQL Input args`, () => {
       anotherKey: {
         withANested: {
           emptyArray: [],
+          anotherEmptyArray: [],
         },
       },
       frontmatter: {

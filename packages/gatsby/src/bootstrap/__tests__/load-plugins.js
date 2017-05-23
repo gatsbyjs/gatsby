@@ -6,10 +6,10 @@ describe(`Load plugins`, () => {
 
     // Delete the resolve path as that varies depending
     // on platform so will cause snapshots to differ.
-    plugins = plugins.map(plugin => ({
+    plugins = plugins.map(plugin => {return ({
       ...plugin,
       resolve: ``,
-    }))
+    })})
 
     expect(plugins).toMatchSnapshot()
   })
