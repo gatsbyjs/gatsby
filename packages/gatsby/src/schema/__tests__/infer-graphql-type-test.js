@@ -167,7 +167,7 @@ describe(`GraphQL type inferance`, () => {
       types: [{ name: `Test` }],
     })
 
-    expect(Object.keys(fields)).toHaveLength(1)
+    expect(Object.keys(fields)).toHaveLength(2)
     expect(Object.keys(fields.foo.type.getFields())).toHaveLength(4)
   })
 
