@@ -12,11 +12,11 @@ async function onNodeCreate({ node, boundActionCreators, loadNodeContent }) {
   }
 
   const content = await loadNodeContent(node)
-  const parsedContent = JSON.parse(content)
+  const parsedContent = jsYaml.load(content)
 
   // TODO handle non-array data.
   if (_.isArray(parsedContent)) {
-    const yamlArray = jsYaml.load(content).map((obj, i) => {
+    const yamlArray = parsedContent.map((obj, i) => {
       const objStr = JSON.stringify(obj)
       const contentDigest = crypto
         .createHash(`md5`)
