@@ -20,6 +20,6 @@ module.exports = {
   ],
   moduleNameMapper: {
     "^graphql-skip-limit$": `<rootDir>/packages/graphql-skip-limit/src/index.js`,
-    "^gatsby-plugin-sharp$": `<rootDir>/packages/gatsby-plugin-sharp/index.js`,
+    "^gatsby-plugin-sharp$": `<rootDir>/packages/gatsby-plugin-sharp/src/index.js`,
   },
 }
