@@ -14,6 +14,7 @@ if (__PREFIX_LINKS__) {
 class GatsbyLink extends React.Component {
   propTypes: {
     to: PropTypes.string.isRequired,
+    onClick: PropTypes.func,
   }
   componentDidMount() {
     // Only enable prefetching of Link resources in production and for browsers
@@ -34,9 +35,11 @@ class GatsbyLink extends React.Component {
 
   render() {
     const to = linkPrefix + this.props.to
+    const { onClick, ...rest } = this.props
     return (
       <Link
         onClick={e => {
+          onClick && onClick()
           // In production, make sure the necessary scripts are
           // loaded before continuing.
           if (process.env.NODE_ENV === `production`) {
@@ -44,7 +47,7 @@ class GatsbyLink extends React.Component {
             window.___navigateTo(this.props.to)
           }
         }}
-        {...this.props}
+        {...rest}
         to={to}
       />
     )
