@@ -20,8 +20,8 @@ import requires from "./async-requires"
 // Find page
 const findPage = pathname => {
   let foundPage
-  // Array.prototype.find is supported in IE so we use this
-  // weird work around.
+  // Array.prototype.find is not supported in IE so we use this somewhat odd
+  // work around.
   pages.some(page => {
     if (page.matchPath) {
       // Try both the path and matchPath
