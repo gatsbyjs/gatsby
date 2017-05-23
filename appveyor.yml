@@ -6,6 +6,7 @@ environment:
 install:
   # Get the latest stable version of Node.js or io.js
   - ps: Install-Product node $env:nodejs_version
+  - npm install --global windows-build-tools
   # install modules
   - npm install
 
