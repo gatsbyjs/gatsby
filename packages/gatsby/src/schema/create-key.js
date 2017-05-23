@@ -1,5 +1,3 @@
-module.exports = key => {
-  key = key.replace(/\./g, `___`)
-  key = key.replace(/-/g, `_`)
-  return key
-}
+const regex = new RegExp(`[^a-zA-Z0-9_]`, `g`)
+
+module.exports = key => key.replace(regex, `_`)
