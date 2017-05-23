@@ -39,7 +39,7 @@ class GatsbyLink extends React.Component {
     return (
       <Link
         onClick={e => {
-          onClick && onClick()
+          onClick && onClick(e)
           // In production, make sure the necessary scripts are
           // loaded before continuing.
           if (process.env.NODE_ENV === `production`) {
