@@ -7,7 +7,7 @@ class DefaultLayout extends React.Component {
       <div>
         <Link to="/">
           <h3>
-            Example removing trailing slashes
+            Example with no plugins
           </h3>
         </Link>
         <ul>

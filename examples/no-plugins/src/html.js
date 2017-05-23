@@ -11,14 +11,14 @@ module.exports = React.createClass({
           <meta charSet="utf-8" />
           <meta
             name="description"
-            content="Gatsby example site demoing the removal of trailing slashes"
+            content="Gatsby example site showing use with no plugins"
           />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
           <meta
             name="viewport"
             content="width=device-width, initial-scale=1.0"
           />
-          <title>Gatsby Client Only Paths</title>
+          <title>Gatsby - No Plugins</title>
         </head>
         <body>
           <div
