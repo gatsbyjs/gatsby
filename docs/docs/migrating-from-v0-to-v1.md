@@ -48,7 +48,7 @@ component at `wrappers/md.js` and JSON files `wrappers/json.js`, etc. Data
 would be parsed from the files and automatically injected into the wrapper
 components as props.
 
-If you're *not* using wrappers in your site, feel free to skip this section.
+**If you're *not* using wrappers in your site, feel free to skip this section.**
 
 While this proved often intuitive and workable, it was overly prescriptive
 and restricted the types of pages that could be created due to the required
@@ -56,6 +56,9 @@ and restricted the types of pages that could be created due to the required
 
 So for v1, we're moving to a mode where sites must explicitly create pages
 and create mappings between template components and data.
+
+Gatsby's new data system turns your data into a queryable database. You can
+query data in any way to create pages and to pull in data into these pages.
 
 These mappings can range between straightforward and complex. E.g. a markdown blog
 would want to create a post page for every markdown file. But it also might want to
