@@ -25,7 +25,7 @@ async function onNodeCreate({ node, boundActionCreators, loadNodeContent }) {
 
   // TODO handle non-array data.
   if (_.isArray(parsedContent)) {
-    const JSONArray = JSON.parse(content).map((obj, i) => {
+    const JSONArray = parsedContent.map((obj, i) => {
       const objStr = JSON.stringify(obj)
       const contentDigest = crypto
         .createHash(`md5`)
