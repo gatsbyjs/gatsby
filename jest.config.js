@@ -12,4 +12,7 @@ module.exports = {
   modulePathIgnorePatterns: distDirs,
   coveragePathIgnorePatterns: distDirs,
   testPathIgnorePatterns: [`/dist/`, `/node_modules/`, `__tests__/fixtures`],
+  moduleNameMapper: {
+    "^graphql-skip-limit$": "<rootDir>/packages/graphql-skip-limit",
+  },
 }
