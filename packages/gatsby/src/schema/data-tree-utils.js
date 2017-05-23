@@ -10,8 +10,26 @@ const isDefined = v => v != null
 
 const isSameType = (a, b) => a == null || b == null || typeOf(a) === typeOf(b)
 
-const isEmptyObjectOrArray = (obj: any) =>
-  obj === INVALID_VALUE || (_.isObject(obj) && _.isEmpty(obj))
+const isEmptyObjectOrArray = (obj: any) => {
+  let isEmpty = false
+
+  if (obj === INVALID_VALUE) {
+    return true
+    // Simple "is object empty" check.
+  } else if (_.isObject(obj) && _.isEmpty(obj)) {
+    return true
+  } else if (_.isObject(obj)) {
+    return _.every(obj, (value, key) => {
+      if (!isDefined(value)) {
+        return true
+      } else if (_.isObject(value)) {
+        return isEmptyObjectOrArray(value)
+      } else {
+        return false
+      }
+    })
+  }
+}
 
 /**
  * Takes an array of source nodes and returns a pristine

@@ -70,6 +70,15 @@ describe(`GraphQL Input args`, () => {
       hair: 1,
       date: `2006-07-22T22:39:53.000Z`,
       anArray: [1, 2, 3, 4],
+      key: {
+        withEmptyArray: [],
+      },
+      anotherKey: {
+        withANested: {
+          emptyArray: [],
+          anotherEmptyArray: [],
+        },
+      },
       frontmatter: {
         date: `2006-07-22T22:39:53.000Z`,
         title: `The world of dash and adventure`,
