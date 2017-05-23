@@ -18,23 +18,39 @@ window.matchPath = matchPath
 import requires from "./async-requires"
 
 // Find page
-const findPage = pathname =>
-  pages.find(page => {
+const findPage = pathname => {
+  let foundPage
+  // Array.prototype.find is not supported in IE so we use this somewhat odd
+  // work around.
+  pages.some(page => {
     if (page.matchPath) {
       // Try both the path and matchPath
-      return (
+      if (
         matchPath(pathname, { path: page.path }) ||
         matchPath(pathname, {
           path: page.matchPath,
         })
-      )
+      ) {
+        foundPage = page
+        return true
+      }
     } else {
-      return matchPath(pathname, {
-        path: page.path,
-        exact: true,
-      })
+      if (
+        matchPath(pathname, {
+          path: page.path,
+          exact: true,
+        })
+      ) {
+        foundPage = page
+        return true
+      }
     }
+
+    return false
   })
+
+  return foundPage
+}
 
 // Load scripts
 const preferDefault = m => (m && m.default) || m
