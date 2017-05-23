@@ -371,7 +371,6 @@ type inferTypeOptions = {
 }
 
 const EXCLUDE_KEYS = {
-  type: 1,
   id: 1,
   parent: 1,
   children: 1,
