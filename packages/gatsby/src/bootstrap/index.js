@@ -84,7 +84,7 @@ module.exports = async (program: any) => {
   //
   // Also if the hash isn't there, then delete things just in case something
   // is weird.
-  if (!oldPluginsHash || pluginsHash !== oldPluginsHash) {
+  if (oldPluginsHash && pluginsHash !== oldPluginsHash) {
     console.log(
       `
 One or more of your plugins have changed since the last time you ran Gatsby. As
@@ -92,7 +92,9 @@ a precaution, we're deleting your site's cache to ensure there's not any stale
 data
 `
     )
+  }
 
+  if (!oldPluginsHash || pluginsHash !== oldPluginsHash) {
     try {
       await fs.remove(`${program.directory}/.cache`)
     } catch (e) {

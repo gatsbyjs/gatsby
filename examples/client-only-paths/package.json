@@ -1,7 +1,7 @@
 {
-  "name": "gatsby-example-using-drupal",
+  "name": "gatsby-example-client-only-paths",
   "private": true,
-  "description": "Gatsby example site using the Drupal source plugin",
+  "description": "Gatsby example site demoing client only paths",
   "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {

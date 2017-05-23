@@ -7,7 +7,7 @@ Array [
     "pluginOptions": Object {
       "plugins": Array [],
     },
-    "resolve": "/Users/kylemathews/programs/gatsby/packages/gatsby/src/bootstrap/internal-plugins/component-page-creator",
+    "resolve": "",
     "version": "1.0.0",
   },
   Object {
@@ -15,7 +15,7 @@ Array [
     "pluginOptions": Object {
       "plugins": Array [],
     },
-    "resolve": "/Users/kylemathews/programs/gatsby/packages/gatsby/src/bootstrap/internal-plugins/internal-data-bridge",
+    "resolve": "",
     "version": "1.0.0",
   },
   Object {
@@ -23,7 +23,7 @@ Array [
     "pluginOptions": Object {
       "plugins": Array [],
     },
-    "resolve": "/Users/kylemathews/programs/gatsby",
+    "resolve": "",
     "version": "n/a",
   },
 ]

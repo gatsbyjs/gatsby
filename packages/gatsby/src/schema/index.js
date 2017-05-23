@@ -115,7 +115,7 @@ module.exports = () =>
           console.log(`deleting stale nodes`, staleNodes.length)
           deleteNodes(staleNodes.map(n => n.id))
         }
-      } else {
+      } else if (builtSchema) {
         // If we've already built the schema before already, check if
         // there's been any new node types added.
         const newTypesBuilt = _.map(

@@ -8,25 +8,25 @@ Object {
   "date": Object {
     "field": "date",
   },
-  "frontmatter_blue": Object {
+  "frontmatter___blue": Object {
     "field": "frontmatter.blue",
   },
-  "frontmatter_circle": Object {
+  "frontmatter___circle": Object {
     "field": "frontmatter.circle",
   },
-  "frontmatter_date": Object {
+  "frontmatter___date": Object {
     "field": "frontmatter.date",
   },
-  "frontmatter_draft": Object {
+  "frontmatter___draft": Object {
     "field": "frontmatter.draft",
   },
-  "frontmatter_title": Object {
+  "frontmatter___title": Object {
     "field": "frontmatter.title",
   },
   "hair": Object {
     "field": "hair",
   },
-  "key_with__unsupported_values": Object {
+  "key___with______unsupported___values": Object {
     "field": "key-with..unsupported-values",
   },
   "name": Object {
