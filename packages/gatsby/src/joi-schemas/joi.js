@@ -26,6 +26,7 @@ export const nodeSchema = Joi.object()
     id: Joi.string().required(),
     children: Joi.array(Joi.string()).required(),
     parent: Joi.string().required(),
+    pluginFields: Joi.object(),
     internal: Joi.object().keys({
       contentDigest: Joi.string().required(),
       mediaType: Joi.string().required(),

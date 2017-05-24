@@ -102,6 +102,22 @@ actions.createNode = (node, plugin) => {
     node.internal.pluginOwner = plugin.name
   }
 
+  // Ensure node isn't directly setting pluginFields.
+  if (node.pluginFields) {
+    throw new Error(
+      `Plugins creating nodes can not set data on the reserved field "pluginFields"
+as this is reserved for plugins which wish to extend other nodes.
+
+Node:
+
+${JSON.stringify(node, null, 4)}
+
+Plugin that created the node:
+
+${JSON.stringify(plugin, null, 4)}
+`
+}
+
   const oldNode = getNode(node.id)
 
   // If the node has been created in the past, check that
@@ -117,6 +133,7 @@ Node:
 ${JSON.stringify(node, null, 4)}
 
 Plugin that tried to update the node:
+
 ${JSON.stringify(plugin, null, 4)}
 `
     )
