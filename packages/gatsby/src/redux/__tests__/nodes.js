@@ -198,4 +198,29 @@ describe(`Create and update nodes`, () => {
 
     expect(callActionCreator).toThrowErrorMatchingSnapshot()
   })
+
+  it(`throws error if a node sets a value on "pluginFields"`, () => {
+    function callActionCreator() {
+      actions.createNode(
+        {
+          id: `hi`,
+          children: [],
+          parent: `test`,
+          pluginFields: {
+            test: `I can't do this but I like to test boundaries`,
+          },
+          internal: {
+            contentDigest: `hasdfljds`,
+            mediaType: `test`,
+            pluginOwner: `pluginA`,
+            type: `mineOnly`,
+          },
+          pickle: true,
+        },
+        { name: `pluginA` }
+      )
+    }
+
+    expect(callActionCreator).toThrowErrorMatchingSnapshot()
+  })
 })

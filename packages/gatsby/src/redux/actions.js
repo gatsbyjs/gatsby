@@ -108,9 +108,9 @@ actions.createNode = (node, plugin) => {
   if (node.pluginFields) {
     throw new Error(
       `Plugins creating nodes can not set data on the reserved field "pluginFields"
-as this is reserved for plugins which wish to extend other nodes.
+as this is reserved for plugins which wish to extend your nodes.
 
-If you're plugin didn't add "pluginFields" you're probably seeing this
+If your plugin didn't add "pluginFields" you're probably seeing this
 error because you're reusing an old node object.
 
 Node:
