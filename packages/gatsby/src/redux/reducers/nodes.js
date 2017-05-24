@@ -12,13 +12,6 @@ module.exports = (state = {}, action) => {
       }
       return newState
 
-    case `UPDATE_NODE`:
-      newState = {
-        ...state,
-        [action.payload.id]: action.payload,
-      }
-      return newState
-
     case `DELETE_NODE`:
       newState = _.omit(state, action.payload)
       return newState

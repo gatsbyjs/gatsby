@@ -52,29 +52,6 @@ actions.upsertPage = (page, plugin = ``) => {
   }
 }
 
-actions.updateNode = (node, plugin = ``) => {
-  if (!_.isObject(node)) {
-    return console.log(
-      chalk.bold.red(
-        `The node passed to the "updateNode" action creator must be an object`
-      )
-    )
-  }
-  const result = Joi.validate(node, joiSchemas.nodeSchema)
-  if (result.error) {
-    console.log(chalk.bold.red(`The updated node didn't pass validation`))
-    console.log(chalk.bold.red(result.error))
-    console.log(node)
-    return { type: `VALIDATION_ERROR`, error: true }
-  }
-
-  return {
-    type: `UPDATE_NODE`,
-    plugin,
-    payload: node,
-  }
-}
-
 actions.deleteNode = (nodeId, plugin = ``) => {
   return {
     type: `DELETE_NODE`,
@@ -99,7 +76,7 @@ actions.touchNode = (nodeId, plugin = ``) => {
   }
 }
 
-actions.createNode = (node, plugin = ``) => {
+actions.createNode = (node, plugin) => {
   if (!_.isObject(node)) {
     return console.log(
       chalk.bold.red(
@@ -115,11 +92,38 @@ actions.createNode = (node, plugin = ``) => {
     return { type: `VALIDATION_ERROR`, error: true }
   }
 
+  // Ensure the new node has an internals object.
+  if (!node.internal) {
+    node.internal = {}
+  }
+
+  // Add the plugin name to the internal object.
+  if (plugin) {
+    node.internal.pluginOwner = plugin.name
+  }
+
+  const oldNode = getNode(node.id)
+
+  // If the node has been created in the past, check that
+  // the current plugin is the same as the previous.
+  if (oldNode && oldNode.internal.pluginOwner !== plugin.name) {
+    throw new Error(
+      `Nodes can only be updated by their owner. Node ${node.id} is
+owned by ${oldNode.internal.pluginOwner} and another plugin ${plugin.name}
+tried to update it.
+
+Node:
+
+${JSON.stringify(node, null, 4)}
+
+Plugin that tried to update the node:
+${JSON.stringify(plugin, null, 4)}
+`
+    )
+  }
+
   // Check if the node has already been processed.
-  if (
-    getNode(node.id) &&
-    !hasNodeChanged(node.id, node.internal.contentDigest)
-  ) {
+  if (oldNode && !hasNodeChanged(node.id, node.internal.contentDigest)) {
     return {
       type: `TOUCH_NODE`,
       plugin,

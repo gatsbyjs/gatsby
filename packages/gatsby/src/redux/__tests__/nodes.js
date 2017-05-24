@@ -3,31 +3,17 @@ const nodeReducer = require(`../reducers/nodes`)
 const nodeTouchedReducer = require(`../reducers/nodes-touched`)
 
 describe(`Create and update nodes`, () => {
-  // TODO add these back when we stop directly consoleing errors.
-  // Right now makes tests noisy.
-  //
-  // it(`validates created nodes`, () => {
-  // const action = actions.createNode({
-  // type: `Test`,
-  // });
-  // expect(action.type).toEqual(`VALIDATION_ERROR`);
-  // });
-  // it(`validates updated nodes`, () => {
-  // const action = actions.updateNode({
-  // type: `Test`,
-  // });
-  // expect(action.type).toEqual(`VALIDATION_ERROR`);
-  // });
-
   it(`allows creating nodes`, () => {
     const action = actions.createNode({
       id: `hi`,
-      contentDigest: `hasdfljds`,
       children: [],
       parent: `test`,
-      mediaType: `test`,
-      pluginName: `tests`,
-      type: `Test`,
+      internal: {
+        contentDigest: `hasdfljds`,
+        mediaType: `test`,
+        pluginOwner: `tests`,
+        type: `Test`,
+      },
       pickle: true,
     })
     expect(action).toMatchSnapshot()
@@ -37,12 +23,14 @@ describe(`Create and update nodes`, () => {
   it(`allows updating nodes`, () => {
     const action = actions.createNode({
       id: `hi`,
-      contentDigest: `hasdfljds`,
       children: [],
       parent: `test`,
-      mediaType: `test`,
-      pluginName: `tests`,
-      type: `Test`,
+      internal: {
+        contentDigest: `hasdfljds`,
+        mediaType: `test`,
+        pluginOwner: `tests`,
+        type: `Test`,
+      },
       pickle: true,
       deep: {
         array: [0, 1, { boom: true }],
@@ -50,12 +38,14 @@ describe(`Create and update nodes`, () => {
     })
     const updateAction = actions.createNode({
       id: `hi`,
-      contentDigest: `hasdfljds`,
       children: [],
       parent: `test`,
-      mediaType: `test`,
-      pluginName: `tests`,
-      type: `Test`,
+      internal: {
+        contentDigest: `hasdfljds`,
+        mediaType: `test`,
+        pluginOwner: `tests`,
+        type: `Test`,
+      },
       pickle: false,
       deep: {
         array: [1, 2],
@@ -74,12 +64,14 @@ describe(`Create and update nodes`, () => {
   it(`nodes that are added are also "touched"`, () => {
     const action = actions.createNode({
       id: `hi`,
-      contentDigest: `hasdfljds`,
       children: [],
       parent: `test`,
-      mediaType: `test`,
-      pluginName: `tests`,
-      type: `Test`,
+      internal: {
+        contentDigest: `hasdfljds`,
+        mediaType: `test`,
+        pluginOwner: `tests`,
+        type: `Test`,
+      },
       pickle: true,
     })
     let state = nodeTouchedReducer(undefined, action)

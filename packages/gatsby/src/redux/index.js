@@ -85,7 +85,7 @@ exports.loadNodeContent = node => {
       // Load plugin's loader function
       const plugin = store
         .getState()
-        .flattenedPlugins.find(plug => plug.name === node.internal.pluginName)
+        .flattenedPlugins.find(plug => plug.name === node.internal.pluginOwner)
       const { loadNodeContent } = require(plugin.resolve)
       if (!loadNodeContent) {
         throw new Error(

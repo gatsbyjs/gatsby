@@ -15,7 +15,7 @@ internal: {
   contentDigest: String,
   mediaType: String,
   type: String,
-  pluginName: String,
+  pluginOwner: String,
   content: String,
 }
 ...other node type specific fields
