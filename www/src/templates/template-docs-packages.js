@@ -5,7 +5,7 @@ import presets from "../utils/presets"
 
 const DocsTemplate = React.createClass({
   render() {
-    const packageName = this.props.data.markdownRemark.headings[0].value
+    const packageName = this.props.data.markdownRemark.pluginFields.title
     return (
       <div>
         <a
@@ -34,13 +34,10 @@ const DocsTemplate = React.createClass({
 export default DocsTemplate
 
 export const pageQuery = graphql`
-  query BlogPostByPath($slug: String!) {
-    markdownRemark(slug: { eq: $slug }) {
-      # Use headings to get the plugin name. A bit hacky but until
-      # we can do sibling file queries to get to the package.json, this
-      # is the easiest solution.
-      headings {
-        value
+  query TemplateDocsQuery($slug: String!) {
+    markdownRemark(pluginFields: { slug: { eq: $slug }}) {
+      pluginFields {
+        title
       }
       html
     }

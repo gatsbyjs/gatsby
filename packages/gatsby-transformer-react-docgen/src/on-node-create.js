@@ -7,8 +7,8 @@ const propsId = (parentId, name) => `${parentId}--ComponentProp-${name}`
 const descId = parentId => `${parentId}--ComponentDescription`
 
 function createDescriptionNode(node, entry, boundActionCreators) {
-  if (!entry.description) return
-  const { createNode, updateNode } = boundActionCreators
+  if (!entry.description) return node
+  const { createNode } = boundActionCreators
 
   const descriptionNode = {
     id: descId(node.id),
@@ -25,8 +25,9 @@ function createDescriptionNode(node, entry, boundActionCreators) {
 
   node.description___NODE = descriptionNode.id
   node.children = node.children.concat([descriptionNode.id])
-  updateNode(node)
   createNode(descriptionNode)
+
+  return node
 }
 
 function createPropNodes(node, component, boundActionCreators) {
@@ -37,7 +38,7 @@ function createPropNodes(node, component, boundActionCreators) {
     let propNodeId = propsId(node.id, prop.name)
     let content = JSON.stringify(prop)
 
-    const propNode = {
+    let propNode = {
       ...prop,
       id: propNodeId,
       children: [],
@@ -51,20 +52,20 @@ function createPropNodes(node, component, boundActionCreators) {
       },
     }
     children[i] = propNode.id
+    propNode = createDescriptionNode(propNode, prop, boundActionCreators)
     createNode(propNode)
-    createDescriptionNode(propNode, prop, boundActionCreators)
   })
 
   node.props___NODE = children
   node.children = node.children.concat(children)
-  updateNode(node)
+  return node
 }
 
 export default function onNodeCreate(
   { node, loadNodeContent, boundActionCreators },
   pluginOptions
 ) {
-  const { createNode, updateNode } = boundActionCreators
+  const { createNode, addChildNodeToParentNode } = boundActionCreators
 
   if (node.internal.mediaType !== `application/javascript`) return null
 
@@ -77,7 +78,7 @@ export default function onNodeCreate(
         const contentDigest = digest(strContent)
         const nodeId = `${node.id}--${component.displayName}--ComponentMetadata`
 
-        const metadataNode = {
+        let metadataNode = {
           ...component,
           props: null, // handled by the prop node creation
           id: nodeId,
@@ -91,11 +92,18 @@ export default function onNodeCreate(
           },
         }
 
-        node.children = node.children.concat([metadataNode.id])
-        updateNode(node)
+        addChildNodeToParentNode({ parent: node, child: metadataNode })
+        metadataNode = createPropNodes(
+          metadataNode,
+          component,
+          boundActionCreators
+        )
+        metadataNode = createDescriptionNode(
+          metadataNode,
+          component,
+          boundActionCreators
+        )
         createNode(metadataNode)
-        createPropNodes(metadataNode, component, boundActionCreators)
-        createDescriptionNode(metadataNode, component, boundActionCreators)
       })
     })
     .catch(err => console.log(err))

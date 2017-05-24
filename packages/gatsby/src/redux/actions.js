@@ -76,6 +76,7 @@ actions.touchNode = (nodeId, plugin = ``) => {
   }
 }
 
+const typeOwners = {}
 actions.createNode = (node, plugin) => {
   if (!_.isObject(node)) {
     return console.log(
@@ -83,13 +84,6 @@ actions.createNode = (node, plugin) => {
         `The node passed to the "createNode" action creator must be an object`
       )
     )
-  }
-  const result = Joi.validate(node, joiSchemas.nodeSchema)
-  if (result.error) {
-    console.log(chalk.bold.red(`The new node didn't pass validation`))
-    console.log(chalk.bold.red(result.error))
-    console.log(node)
-    return { type: `VALIDATION_ERROR`, error: true }
   }
 
   // Ensure the new node has an internals object.
@@ -102,11 +96,22 @@ actions.createNode = (node, plugin) => {
     node.internal.pluginOwner = plugin.name
   }
 
+  const result = Joi.validate(node, joiSchemas.nodeSchema)
+  if (result.error) {
+    console.log(chalk.bold.red(`The new node didn't pass validation`))
+    console.log(chalk.bold.red(result.error))
+    console.log(node)
+    return { type: `VALIDATION_ERROR`, error: true }
+  }
+
   // Ensure node isn't directly setting pluginFields.
   if (node.pluginFields) {
     throw new Error(
       `Plugins creating nodes can not set data on the reserved field "pluginFields"
 as this is reserved for plugins which wish to extend other nodes.
+
+If you're plugin didn't add "pluginFields" you're probably seeing this
+error because you're reusing an old node object.
 
 Node:
 
@@ -116,7 +121,34 @@ Plugin that created the node:
 
 ${JSON.stringify(plugin, null, 4)}
 `
-}
+    )
+  }
+
+  // Ensure the plugin isn't creating a node type owned by another
+  // plugin. Type "ownership" is first come first served.
+  if (!typeOwners[node.internal.type] && plugin) {
+    typeOwners[node.internal.type] = plugin.name
+  } else {
+    if (typeOwners[node.internal.type] !== plugin.name) {
+      throw new Error(
+        `The plugin "${plugin.name}" created a node of a type owned by another plugin.
+
+The node type "${node.internal.type}" is owned by "${typeOwners[node.internal.type]}".
+
+If you copy and pasted code from elsewhere, you'll need to pick a new type name
+for your new node(s).
+
+The node object passed to "createNode":
+
+${JSON.stringify(node, null, 4)}
+
+The plugin creating the node:
+
+${JSON.stringify(plugin, null, 4)}
+`
+      )
+    }
+  }
 
   const oldNode = getNode(node.id)
 
@@ -152,6 +184,53 @@ ${JSON.stringify(plugin, null, 4)}
       plugin,
       payload: node,
     }
+  }
+}
+
+actions.addFieldToNode = ({ node, fieldName, fieldValue }, plugin) => {
+  // Ensure required fields are set.
+  if (!node.internal.fieldPluginOwners) {
+    node.internal.fieldPluginOwners = {}
+  }
+  if (!node.pluginFields) {
+    node.pluginFields = {}
+  }
+
+  // Check that this field isn't owned by another plugin.
+  const fieldOwner = node.internal.fieldPluginOwners[fieldName]
+  if (fieldOwner && fieldOwner !== plugin.name) {
+    throw new Error(
+      `
+A plugin tried to update a node field that it doesn't own:
+
+Node id: ${node.id}
+Plugin: ${plugin.name}
+fieldName: ${fieldName}
+fieldValue: ${fieldValue}
+`
+    )
+  }
+
+  // Update node
+  node.pluginFields[fieldName] = fieldValue
+  node.internal.fieldPluginOwners[fieldName] = plugin.name
+
+  return {
+    type: `ADD_FIELD_TO_NODE`,
+    plugin,
+    payload: node,
+  }
+}
+
+actions.addChildNodeToParentNode = ({ parent, child }, plugin) => {
+  // Update parent
+  parent.children.push(child.id)
+  parent.children = _.uniq(parent.children)
+
+  return {
+    type: `ADD_CHILD_NODE_TO_PARENT_NODE`,
+    plugin,
+    payload: parent,
   }
 }
 

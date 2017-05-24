@@ -16,8 +16,13 @@ pluginFields: Object,
 internal: {
   contentDigest: String,
   mediaType: String,
+  // A globally unique node type choosen by the plugin owner.
   type: String,
+  // The plugin which created this node.
   pluginOwner: String,
+  // Stores which plugins created which fields.
+  fieldPluginOwners: Object,
+  // Raw content for this node.
   content: String,
 }
 ...other node type specific fields

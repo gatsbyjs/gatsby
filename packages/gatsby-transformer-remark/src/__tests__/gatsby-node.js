@@ -26,8 +26,8 @@ Where oh where is my little pony?
     node.content = content
 
     const createNode = jest.fn()
-    const updateNode = jest.fn()
-    const boundActionCreators = { createNode, updateNode }
+    const addChildNodeToParentNode = jest.fn()
+    const boundActionCreators = { createNode, addChildNodeToParentNode }
 
     await onNodeCreate({
       node,
@@ -35,9 +35,9 @@ Where oh where is my little pony?
       boundActionCreators,
     }).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
-      expect(updateNode.mock.calls).toMatchSnapshot()
+      expect(addChildNodeToParentNode.mock.calls).toMatchSnapshot()
       expect(createNode).toHaveBeenCalledTimes(1)
-      expect(updateNode).toHaveBeenCalledTimes(1)
+      expect(addChildNodeToParentNode).toHaveBeenCalledTimes(1)
     })
   })
 })

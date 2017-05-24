@@ -6,6 +6,8 @@ module.exports = (state = {}, action) => {
     case `DELETE_CACHE`:
       return {}
     case `CREATE_NODE`:
+    case `ADD_FIELD_TO_NODE`:
+    case `ADD_CHILD_NODE_TO_PARENT_NODE`:
       newState = {
         ...state,
         [action.payload.id]: action.payload,

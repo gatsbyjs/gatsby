@@ -38,7 +38,7 @@ describe(`transformer-react-doc-gen: onNodeCreate`, () => {
     loadNodeContent = jest.fn(node => readFile(node.__fixture))
     boundActionCreators = {
       createNode: jest.fn(n => createdNodes.push(n)),
-      updateNode: jest.fn(n => updatedNodes.push(n)),
+      addChildNodeToParentNode: jest.fn(n => updatedNodes.push(n)),
     }
   })
 

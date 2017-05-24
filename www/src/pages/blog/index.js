@@ -28,7 +28,7 @@ const IndexRoute = React.createClass({
             post.frontmatter.author.avatar.childImageSharp.responsiveResolution
           return (
             <div>
-              <Link to={post.slug}>
+              <Link to={post.pluginFields.slug}>
                 <h2
                   css={{
                     marginBottom: rhythm(1 / 8),
@@ -102,7 +102,7 @@ query IndexRouteQuery {
     edges {
       node {
         excerpt
-        slug
+        pluginFields { slug }
         frontmatter {
           title
           date(formatString: "DD MMMM, YYYY")

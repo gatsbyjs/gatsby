@@ -7,7 +7,7 @@ module.exports = async function onNodeCreate({
   loadNodeContent,
   boundActionCreators,
 }) {
-  const { createNode, updateNode } = boundActionCreators
+  const { createNode, addChildNodeToParentNode } = boundActionCreators
 
   // Don't reprocess our own nodes!  (note: this doesn't normally happen
   // but since this transformer creates new nodes with the same media-type
@@ -50,7 +50,6 @@ module.exports = async function onNodeCreate({
     markdownNode.fileAbsolutePath = node.absolutePath
   }
 
-  node.children = node.children.concat([markdownNode.id])
-  updateNode(node)
   createNode(markdownNode)
+  addChildNodeToParentNode({ parent: node, child: markdownNode })
 }
