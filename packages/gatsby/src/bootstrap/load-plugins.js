@@ -33,13 +33,20 @@ module.exports = async config => {
         plugin.options.plugins.forEach(p => {
           subplugins.push(processPlugin(p))
         })
-      }
-      plugin.options.plugins = subplugins
 
-      const resolvedPath = slash(path.dirname(require.resolve(plugin.resolve)))
-      const packageJSON = JSON.parse(
-        fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
-      )
+        plugin.options.plugins = subplugins
+      }
+
+      // Add some default values for tests as we don't actually
+      // want to try to load anything during tests.
+      let resolvedPath
+      let packageJSON = { name: `TEST` }
+      if (plugin.resolve !== `___TEST___`) {
+        resolvedPath = slash(path.dirname(require.resolve(plugin.resolve)))
+        packageJSON = JSON.parse(
+          fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
+        )
+      }
       return {
         resolve: resolvedPath,
         name: packageJSON.name,
