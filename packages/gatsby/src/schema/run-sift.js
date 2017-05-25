@@ -62,10 +62,12 @@ module.exports = ({ args, nodes, connection = false, path = `` }) => {
   if (connection) {
     const connectionArray = connectionFromArray(result, args)
     connectionArray.totalCount = result.length
-    addPageDependency({
-      path,
-      connection: result[0].internal.type,
-    })
+    if (result.length > 0) {
+      addPageDependency({
+        path,
+        connection: result[0].internal.type,
+      })
+    }
     return connectionArray
   }
 
