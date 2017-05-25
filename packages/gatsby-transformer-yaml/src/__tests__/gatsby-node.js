@@ -35,7 +35,7 @@ describe(`Process YAML nodes correctly`, () => {
       expect(createNode.mock.calls).toMatchSnapshot()
       expect(addNodeToParent.mock.calls).toMatchSnapshot()
       expect(createNode).toHaveBeenCalledTimes(2)
-      expect(addNodeToParent).toHaveBeenCalledTimes(1)
+      expect(addNodeToParent).toHaveBeenCalledTimes(2)
     })
   })
 

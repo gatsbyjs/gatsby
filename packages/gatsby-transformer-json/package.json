@@ -14,8 +14,7 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "bluebird": "^3.5.0",
-    "unist-util-select": "^1.5.0"
+    "bluebird": "^3.5.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1"

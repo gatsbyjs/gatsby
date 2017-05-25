@@ -39,18 +39,58 @@ exports[`Process JSON nodes correctly correctly creates nodes from JSON which is
 Array [
   Array [
     Object {
-      "children": Array [
-        "foo",
-        "whatever [1] >>> JSON",
-      ],
-      "content": "[{\\"id\\":\\"foo\\",\\"blue\\":true,\\"funny\\":\\"yup\\"},{\\"blue\\":false,\\"funny\\":\\"nope\\"}]",
-      "id": "whatever",
-      "internal": Object {
-        "contentDigest": "whatever",
-        "mediaType": "application/json",
-        "name": "test",
+      "child": Object {
+        "blue": true,
+        "children": Array [],
+        "funny": "yup",
+        "id": "foo",
+        "internal": Object {
+          "content": "{\\"id\\":\\"foo\\",\\"blue\\":true,\\"funny\\":\\"yup\\"}",
+          "contentDigest": "8838e569ae02d98806532310fb2a577a",
+          "mediaType": "application/json",
+          "type": "UndefinedJson",
+        },
+        "parent": "whatever",
       },
-      "parent": "SOURCE",
+      "parent": Object {
+        "children": Array [],
+        "content": "[{\\"id\\":\\"foo\\",\\"blue\\":true,\\"funny\\":\\"yup\\"},{\\"blue\\":false,\\"funny\\":\\"nope\\"}]",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "application/json",
+          "name": "test",
+        },
+        "parent": "SOURCE",
+      },
+    },
+  ],
+  Array [
+    Object {
+      "child": Object {
+        "blue": false,
+        "children": Array [],
+        "funny": "nope",
+        "id": "whatever [1] >>> JSON",
+        "internal": Object {
+          "content": "{\\"blue\\":false,\\"funny\\":\\"nope\\"}",
+          "contentDigest": "f624311d932d73dcd416d2a8bea2b67d",
+          "mediaType": "application/json",
+          "type": "UndefinedJson",
+        },
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "[{\\"id\\":\\"foo\\",\\"blue\\":true,\\"funny\\":\\"yup\\"},{\\"blue\\":false,\\"funny\\":\\"nope\\"}]",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "application/json",
+          "name": "test",
+        },
+        "parent": "SOURCE",
+      },
     },
   ],
 ]
