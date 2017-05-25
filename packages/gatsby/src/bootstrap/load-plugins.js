@@ -33,8 +33,9 @@ module.exports = async config => {
         plugin.options.plugins.forEach(p => {
           subplugins.push(processPlugin(p))
         })
+
+        plugin.options.plugins = subplugins
       }
-      plugin.options.plugins = subplugins
 
       const resolvedPath = slash(path.dirname(require.resolve(plugin.resolve)))
       const packageJSON = JSON.parse(
