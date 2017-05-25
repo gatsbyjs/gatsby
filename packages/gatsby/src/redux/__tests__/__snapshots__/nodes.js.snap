@@ -62,27 +62,25 @@ Object {
 `;
 
 exports[`Create and update nodes throws error if a field is updated by a plugin not its owner 1`] = `
-"
-A plugin tried to update a node field that it doesn't own:
+"A plugin tried to update a node field that it doesn't own:
 
 Node id: hi
 Plugin: test2
 fieldName: joy
-fieldValue: soul's delight
-"
+fieldValue: soul's delight"
 `;
 
 exports[`Create and update nodes throws error if a node is created by a plugin not its owner 1`] = `
 "The plugin \\"pluginB\\" created a node of a type owned by another plugin.
 
-The node type \\"mineOnly\\" is owned by \\"pluginA\\".
+        The node type \\"mineOnly\\" is owned by \\"pluginA\\".
 
-If you copy and pasted code from elsewhere, you'll need to pick a new type name
-for your new node(s).
+        If you copy and pasted code from elsewhere, you'll need to pick a new type name
+        for your new node(s).
 
-The node object passed to \\"createNode\\":
+        The node object passed to \\"createNode\\":
 
-{
+        {
     \\"id\\": \\"hi2\\",
     \\"children\\": [],
     \\"parent\\": \\"test\\",
@@ -95,24 +93,23 @@ The node object passed to \\"createNode\\":
     \\"pickle\\": true
 }
 
-The plugin creating the node:
+        The plugin creating the node:
 
-{
+        {
     \\"name\\": \\"pluginB\\"
-}
-"
+}"
 `;
 
 exports[`Create and update nodes throws error if a node sets a value on "pluginFields" 1`] = `
 "Plugins creating nodes can not set data on the reserved field \\"pluginFields\\"
-as this is reserved for plugins which wish to extend your nodes.
+      as this is reserved for plugins which wish to extend your nodes.
 
-If your plugin didn't add \\"pluginFields\\" you're probably seeing this
-error because you're reusing an old node object.
+      If your plugin didn't add \\"pluginFields\\" you're probably seeing this
+      error because you're reusing an old node object.
 
-Node:
+      Node:
 
-{
+      {
     \\"id\\": \\"hi\\",
     \\"children\\": [],
     \\"parent\\": \\"test\\",
@@ -128,10 +125,9 @@ Node:
     \\"pickle\\": true
 }
 
-Plugin that created the node:
+      Plugin that created the node:
 
-{
+      {
     \\"name\\": \\"pluginA\\"
-}
-"
+}"
 `;

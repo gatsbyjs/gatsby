@@ -2,6 +2,7 @@ import Joi from "joi"
 import chalk from "chalk"
 const _ = require(`lodash`)
 const { bindActionCreators } = require(`redux`)
+const { stripIndent } = require(`common-tags`)
 
 const { getNode, hasNodeChanged } = require(`./index`)
 
@@ -107,20 +108,21 @@ actions.createNode = (node, plugin) => {
   // Ensure node isn't directly setting pluginFields.
   if (node.pluginFields) {
     throw new Error(
-      `Plugins creating nodes can not set data on the reserved field "pluginFields"
-as this is reserved for plugins which wish to extend your nodes.
+      stripIndent`
+      Plugins creating nodes can not set data on the reserved field "pluginFields"
+      as this is reserved for plugins which wish to extend your nodes.
 
-If your plugin didn't add "pluginFields" you're probably seeing this
-error because you're reusing an old node object.
+      If your plugin didn't add "pluginFields" you're probably seeing this
+      error because you're reusing an old node object.
 
-Node:
+      Node:
 
-${JSON.stringify(node, null, 4)}
+      ${JSON.stringify(node, null, 4)}
 
-Plugin that created the node:
+      Plugin that created the node:
 
-${JSON.stringify(plugin, null, 4)}
-`
+      ${JSON.stringify(plugin, null, 4)}
+    `
     )
   }
 
@@ -131,21 +133,22 @@ ${JSON.stringify(plugin, null, 4)}
   } else {
     if (typeOwners[node.internal.type] !== plugin.name) {
       throw new Error(
-        `The plugin "${plugin.name}" created a node of a type owned by another plugin.
+        stripIndent`
+        The plugin "${plugin.name}" created a node of a type owned by another plugin.
 
-The node type "${node.internal.type}" is owned by "${typeOwners[node.internal.type]}".
+        The node type "${node.internal.type}" is owned by "${typeOwners[node.internal.type]}".
 
-If you copy and pasted code from elsewhere, you'll need to pick a new type name
-for your new node(s).
+        If you copy and pasted code from elsewhere, you'll need to pick a new type name
+        for your new node(s).
 
-The node object passed to "createNode":
+        The node object passed to "createNode":
 
-${JSON.stringify(node, null, 4)}
+        ${JSON.stringify(node, null, 4)}
 
-The plugin creating the node:
+        The plugin creating the node:
 
-${JSON.stringify(plugin, null, 4)}
-`
+        ${JSON.stringify(plugin, null, 4)}
+      `
       )
     }
   }
@@ -156,18 +159,19 @@ ${JSON.stringify(plugin, null, 4)}
   // the current plugin is the same as the previous.
   if (oldNode && oldNode.internal.pluginOwner !== plugin.name) {
     throw new Error(
-      `Nodes can only be updated by their owner. Node ${node.id} is
-owned by ${oldNode.internal.pluginOwner} and another plugin ${plugin.name}
-tried to update it.
+      stripIndent`
+      Nodes can only be updated by their owner. Node ${node.id} is
+      owned by ${oldNode.internal.pluginOwner} and another plugin ${plugin.name}
+      tried to update it.
 
-Node:
+      Node:
 
-${JSON.stringify(node, null, 4)}
+      ${JSON.stringify(node, null, 4)}
 
-Plugin that tried to update the node:
+      Plugin that tried to update the node:
 
-${JSON.stringify(plugin, null, 4)}
-`
+      ${JSON.stringify(plugin, null, 4)}
+      `
     )
   }
 
@@ -200,14 +204,14 @@ actions.addFieldToNode = ({ node, fieldName, fieldValue }, plugin) => {
   const fieldOwner = node.internal.fieldPluginOwners[fieldName]
   if (fieldOwner && fieldOwner !== plugin.name) {
     throw new Error(
-      `
-A plugin tried to update a node field that it doesn't own:
+      stripIndent`
+      A plugin tried to update a node field that it doesn't own:
 
-Node id: ${node.id}
-Plugin: ${plugin.name}
-fieldName: ${fieldName}
-fieldValue: ${fieldValue}
-`
+      Node id: ${node.id}
+      Plugin: ${plugin.name}
+      fieldName: ${fieldName}
+      fieldValue: ${fieldValue}
+      `
     )
   }
 
