@@ -1,5 +1,42 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Load plugins Loads plugins defined with an object but without an option key 1`] = `
+Array [
+  Object {
+    "name": "component-page-creator",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "version": "1.0.0",
+  },
+  Object {
+    "name": "internal-data-bridge",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "version": "1.0.0",
+  },
+  Object {
+    "name": "TEST",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "version": undefined,
+  },
+  Object {
+    "name": "defaultSitePlugin",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "version": "n/a",
+  },
+]
+`;
+
 exports[`Load plugins load plugins for a site 1`] = `
 Array [
   Object {
@@ -17,180 +54,6 @@ Array [
     },
     "resolve": "",
     "version": "1.0.0",
-  },
-  Object {
-    "name": "defaultSitePlugin",
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "version": "n/a",
-  },
-]
-`;
-
-exports[`Load plugins loads more complex plugins configuration 1`] = `
-Array [
-  Object {
-    "name": "component-page-creator",
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "version": "1.0.0",
-  },
-  Object {
-    "name": "internal-data-bridge",
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "version": "1.0.0",
-  },
-  Object {
-    "name": "gatsby-source-filesystem",
-    "pluginOptions": Object {
-      "name": "pages",
-      "path": "/Users/kylemathews/programs/gatsby/packages/gatsby/src/bootstrap/__tests__/src/pages/",
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "version": "1.0.0-alpha15",
-  },
-  Object {
-    "name": "gatsby-transformer-remark",
-    "pluginOptions": Object {
-      "plugins": Array [
-        Object {
-          "name": "gatsby-remark-responsive-image",
-          "pluginOptions": Object {
-            "maxWidth": 690,
-            "plugins": Array [],
-          },
-          "resolve": "/Users/kylemathews/programs/gatsby/packages/gatsby-remark-responsive-image",
-          "version": "1.0.0-alpha14",
-        },
-        Object {
-          "name": "gatsby-remark-responsive-iframe",
-          "pluginOptions": Object {
-            "plugins": Array [],
-          },
-          "resolve": "/Users/kylemathews/programs/gatsby/packages/gatsby-remark-responsive-iframe",
-          "version": "1.0.0-alpha14",
-        },
-        Object {
-          "name": "gatsby-remark-prismjs",
-          "pluginOptions": Object {
-            "plugins": Array [],
-          },
-          "resolve": "/Users/kylemathews/programs/gatsby/packages/gatsby-remark-prismjs",
-          "version": "1.0.0-alpha14",
-        },
-        Object {
-          "name": "gatsby-remark-copy-linked-files",
-          "pluginOptions": Object {
-            "plugins": Array [],
-          },
-          "resolve": "/Users/kylemathews/programs/gatsby/packages/gatsby-remark-copy-linked-files",
-          "version": "1.0.0-alpha15",
-        },
-        Object {
-          "name": "gatsby-remark-smartypants",
-          "pluginOptions": Object {
-            "plugins": Array [],
-          },
-          "resolve": "/Users/kylemathews/programs/gatsby/packages/gatsby-remark-smartypants",
-          "version": "1.0.0-alpha14",
-        },
-        Object {
-          "name": "gatsby-remark-autolink-headers",
-          "pluginOptions": Object {
-            "plugins": Array [],
-          },
-          "resolve": "/Users/kylemathews/programs/gatsby/packages/gatsby-remark-autolink-headers",
-          "version": "1.0.0-alpha14",
-        },
-      ],
-    },
-    "resolve": "",
-    "version": "1.0.0-alpha15",
-  },
-  Object {
-    "name": "gatsby-remark-responsive-image",
-    "pluginOptions": Object {
-      "maxWidth": 690,
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "version": "1.0.0-alpha14",
-  },
-  Object {
-    "name": "gatsby-remark-responsive-iframe",
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "version": "1.0.0-alpha14",
-  },
-  Object {
-    "name": "gatsby-remark-prismjs",
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "version": "1.0.0-alpha14",
-  },
-  Object {
-    "name": "gatsby-remark-copy-linked-files",
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "version": "1.0.0-alpha15",
-  },
-  Object {
-    "name": "gatsby-remark-smartypants",
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "version": "1.0.0-alpha14",
-  },
-  Object {
-    "name": "gatsby-remark-autolink-headers",
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "version": "1.0.0-alpha14",
-  },
-  Object {
-    "name": "gatsby-plugin-sharp",
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "version": "1.0.0-alpha15",
-  },
-  Object {
-    "name": "gatsby-plugin-manifest",
-    "pluginOptions": Object {
-      "background_color": "#f7f7f7",
-      "display": "minimal-ui",
-      "plugins": Array [],
-      "start_url": "/",
-      "theme_color": "#191919",
-    },
-    "resolve": "",
-    "version": "1.0.0-alpha14",
-  },
-  Object {
-    "name": "gatsby-plugin-offline",
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "version": "1.0.0-alpha14",
   },
   Object {
     "name": "defaultSitePlugin",

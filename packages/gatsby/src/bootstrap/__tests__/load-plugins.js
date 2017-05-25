@@ -16,47 +16,12 @@ describe(`Load plugins`, () => {
     expect(plugins).toMatchSnapshot()
   })
 
-  it(`loads more complex plugins configuration`, async () => {
+  it(`Loads plugins defined with an object but without an option key`, async () => {
     const config = {
       plugins: [
         {
-          resolve: `gatsby-source-filesystem`,
-          options: {
-            name: `pages`,
-            path: `${__dirname}/src/pages/`,
-          },
+          resolve: `___TEST___`,
         },
-        {
-          resolve: `gatsby-transformer-remark`,
-          options: {
-            plugins: [
-              {
-                resolve: `gatsby-remark-responsive-image`,
-                options: {
-                  maxWidth: 690,
-                },
-              },
-              {
-                resolve: `gatsby-remark-responsive-iframe`,
-              },
-              `gatsby-remark-prismjs`,
-              `gatsby-remark-copy-linked-files`,
-              `gatsby-remark-smartypants`,
-              `gatsby-remark-autolink-headers`,
-            ],
-          },
-        },
-        `gatsby-plugin-sharp`,
-        {
-          resolve: `gatsby-plugin-manifest`,
-          options: {
-            start_url: `/`,
-            background_color: `#f7f7f7`,
-            theme_color: `#191919`,
-            display: `minimal-ui`,
-          },
-        },
-        `gatsby-plugin-offline`,
       ],
     }
 
