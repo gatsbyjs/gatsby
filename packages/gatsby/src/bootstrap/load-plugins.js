@@ -42,10 +42,8 @@ module.exports = async config => {
       let resolvedPath
       let packageJSON = { name: `TEST` }
       if (plugin.resolve !== `___TEST___`) {
-        const resolvedPath = slash(
-          path.dirname(require.resolve(plugin.resolve))
-        )
-        const packageJSON = JSON.parse(
+        resolvedPath = slash(path.dirname(require.resolve(plugin.resolve)))
+        packageJSON = JSON.parse(
           fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
         )
       }
