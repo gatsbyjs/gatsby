@@ -160,17 +160,10 @@ actions.createNode = (node, plugin) => {
   if (oldNode && oldNode.internal.pluginOwner !== plugin.name) {
     throw new Error(
       stripIndent`
-      Nodes can only be updated by their owner. Node ${node.id} is
-      owned by ${oldNode.internal.pluginOwner} and another plugin ${plugin.name}
+      Nodes can only be updated by their owner. Node "${node.id}" is
+      owned by "${oldNode.internal.pluginOwner}" and another plugin "${plugin.name}"
       tried to update it.
 
-      Node:
-
-      ${JSON.stringify(node, null, 4)}
-
-      Plugin that tried to update the node:
-
-      ${JSON.stringify(plugin, null, 4)}
       `
     )
   }
