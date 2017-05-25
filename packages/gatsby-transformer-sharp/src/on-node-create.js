@@ -1,7 +1,7 @@
 const _ = require(`lodash`)
 
 module.exports = async function onNodeCreate({ node, boundActionCreators }) {
-  const { createNode, addChildNodeToParentNode } = boundActionCreators
+  const { createNode, addNodeToParent } = boundActionCreators
 
   const extensions = [`jpeg`, `jpg`, `png`, `webp`, `tif`, `tiff`, `svg`]
   if (!_.includes(extensions, node.extension)) {
@@ -20,7 +20,7 @@ module.exports = async function onNodeCreate({ node, boundActionCreators }) {
   }
 
   createNode(imageNode)
-  addChildNodeToParentNode({ parent: node, child: imageNode })
+  addNodeToParent({ parent: node, child: imageNode })
 
   return
 }

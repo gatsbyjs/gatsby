@@ -226,7 +226,7 @@ actions.addFieldToNode = ({ node, fieldName, fieldValue }, plugin) => {
   }
 }
 
-actions.addChildNodeToParentNode = ({ parent, child }, plugin) => {
+actions.addNodeToParent = ({ parent, child }, plugin) => {
   // Update parent
   parent.children.push(child.id)
   parent.children = _.uniq(parent.children)

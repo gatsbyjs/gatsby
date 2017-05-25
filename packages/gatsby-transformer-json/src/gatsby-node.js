@@ -5,7 +5,7 @@ const _ = require(`lodash`)
 const crypto = require(`crypto`)
 
 async function onNodeCreate({ node, boundActionCreators, loadNodeContent }) {
-  const { createNode, addChildNodeToParentNode } = boundActionCreators
+  const { createNode, addNodeToParent } = boundActionCreators
 
   // Don't reprocess our own nodes!  (note: this doesn't normally happen
   // but since this transformer creates new nodes with the same media-type
@@ -51,7 +51,7 @@ async function onNodeCreate({ node, boundActionCreators, loadNodeContent }) {
 
     _.each(JSONArray, j => {
       createNode(j)
-      addChildNodeToParentNode({ parent: node, child: j })
+      addNodeToParent({ parent: node, child: j })
     })
   }
 

@@ -7,7 +7,7 @@ module.exports = async function onNodeCreate({
   loadNodeContent,
   boundActionCreators,
 }) {
-  const { createNode, addChildNodeToParentNode } = boundActionCreators
+  const { createNode, addNodeToParent } = boundActionCreators
 
   // Don't reprocess our own nodes!  (note: this doesn't normally happen
   // but since this transformer creates new nodes with the same media-type
@@ -51,5 +51,5 @@ module.exports = async function onNodeCreate({
   }
 
   createNode(markdownNode)
-  addChildNodeToParentNode({ parent: node, child: markdownNode })
+  addNodeToParent({ parent: node, child: markdownNode })
 }
