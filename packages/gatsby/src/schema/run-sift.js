@@ -64,7 +64,7 @@ module.exports = ({ args, nodes, connection = false, path = `` }) => {
     connectionArray.totalCount = result.length
     addPageDependency({
       path,
-      connection: result[0].type,
+      connection: result[0].internal.type,
     })
     return connectionArray
   }
