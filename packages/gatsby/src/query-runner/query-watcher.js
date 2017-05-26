@@ -42,7 +42,7 @@ const debounceNewPages = _.debounce(() => {
       },
     })
   })
-}, 100)
+}, 300)
 
 // Watch for page updates.
 emitter.on(`UPSERT_PAGE`, action => {
@@ -53,15 +53,15 @@ emitter.on(`UPSERT_PAGE`, action => {
     // - Add it to Redux
     // - Extract its query and save it
     // - Setup a watcher to detect query changes
-    fs.writeFile(
-      path.join(
-        store.getState().program.directory,
-        `.cache`,
-        `json`,
-        action.payload.jsonName
-      ),
-      `{}`
+    const pathToJSONFile = path.join(
+      store.getState().program.directory,
+      `.cache`,
+      `json`,
+      action.payload.jsonName
     )
+    if (!fs.existsSync(pathToJSONFile)) {
+      fs.writeFile(pathToJSONFile, `{}`)
+    }
     boundActionCreators.addPageComponent(component)
     pendingPages.push(component)
     // Make sure we're watching this component.

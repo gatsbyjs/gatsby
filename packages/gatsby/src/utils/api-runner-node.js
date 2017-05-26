@@ -50,9 +50,9 @@ const runAPI = (plugin, api, args) => {
 
   const gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
   if (gatsbyNode[api]) {
-    if (!_.includes([`onNodeCreate`, `onUpsertPage`], api)) {
-      console.log(`calling api handler in ${plugin.resolve} for api ${api}`)
-    }
+    // if (!_.includes([`onNodeCreate`, `onUpsertPage`], api)) {
+    // console.log(`calling api handler in ${plugin.resolve} for api ${api}`)
+    // }
     const result = gatsbyNode[api](
       {
         ...args,

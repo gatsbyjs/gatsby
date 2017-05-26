@@ -112,7 +112,6 @@ module.exports = () =>
           return !_.includes(touchedNodes, rootNode.id)
         })
         if (staleNodes.length > 0) {
-          console.log(`deleting stale nodes`, staleNodes.length)
           deleteNodes(staleNodes.map(n => n.id))
         }
       } else if (builtSchema) {
