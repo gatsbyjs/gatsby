@@ -10,7 +10,7 @@ async function onNodeCreate({ node, boundActionCreators, loadNodeContent }) {
   // but since this transformer creates new nodes with the same media-type
   // as its parent node, we have to add this check that we didn't create
   // the node).
-  if (node.internal.pluginOwner === `gatsby-transformer-json`) {
+  if (node.internal.owner === `gatsby-transformer-json`) {
     return
   }
 

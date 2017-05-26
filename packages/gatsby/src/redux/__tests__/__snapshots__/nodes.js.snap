@@ -7,11 +7,11 @@ Object {
     "id": "hi",
     "internal": Object {
       "contentDigest": "hasdfljds",
-      "fieldPluginOwners": Object {
+      "fieldOwners": Object {
         "joy": "test",
       },
       "mediaType": "test",
-      "pluginOwner": "tests",
+      "owner": "tests",
       "type": "Test",
     },
     "parent": "test",
@@ -31,7 +31,7 @@ Object {
     "internal": Object {
       "contentDigest": "hasdfljds",
       "mediaType": "test",
-      "pluginOwner": "tests",
+      "owner": "tests",
       "type": "Test",
     },
     "parent": "test",
@@ -52,7 +52,7 @@ Object {
     "internal": Object {
       "contentDigest": "hasdfljds",
       "mediaType": "test",
-      "pluginOwner": "tests",
+      "owner": "tests",
       "type": "Test",
     },
     "parent": "test",
@@ -87,7 +87,7 @@ exports[`Create and update nodes throws error if a node is created by a plugin n
     \\"internal\\": {
         \\"contentDigest\\": \\"hasdfljds\\",
         \\"mediaType\\": \\"test\\",
-        \\"pluginOwner\\": \\"pluginB\\",
+        \\"owner\\": \\"pluginB\\",
         \\"type\\": \\"mineOnly\\"
     },
     \\"pickle\\": true
@@ -119,7 +119,7 @@ exports[`Create and update nodes throws error if a node sets a value on "fields"
     \\"internal\\": {
         \\"contentDigest\\": \\"hasdfljds\\",
         \\"mediaType\\": \\"test\\",
-        \\"pluginOwner\\": \\"pluginA\\",
+        \\"owner\\": \\"pluginA\\",
         \\"type\\": \\"mineOnly\\"
     },
     \\"pickle\\": true

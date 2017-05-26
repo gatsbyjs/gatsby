@@ -94,7 +94,7 @@ actions.createNode = (node, plugin) => {
 
   // Add the plugin name to the internal object.
   if (plugin) {
-    node.internal.pluginOwner = plugin.name
+    node.internal.owner = plugin.name
   }
 
   const result = Joi.validate(node, joiSchemas.nodeSchema)
@@ -157,11 +157,11 @@ actions.createNode = (node, plugin) => {
 
   // If the node has been created in the past, check that
   // the current plugin is the same as the previous.
-  if (oldNode && oldNode.internal.pluginOwner !== plugin.name) {
+  if (oldNode && oldNode.internal.owner !== plugin.name) {
     throw new Error(
       stripIndent`
       Nodes can only be updated by their owner. Node "${node.id}" is
-      owned by "${oldNode.internal.pluginOwner}" and another plugin "${plugin.name}"
+      owned by "${oldNode.internal.owner}" and another plugin "${plugin.name}"
       tried to update it.
 
       `
@@ -186,15 +186,15 @@ actions.createNode = (node, plugin) => {
 
 actions.addFieldToNode = ({ node, fieldName, fieldValue }, plugin) => {
   // Ensure required fields are set.
-  if (!node.internal.fieldPluginOwners) {
-    node.internal.fieldPluginOwners = {}
+  if (!node.internal.fieldOwners) {
+    node.internal.fieldOwners = {}
   }
   if (!node.fields) {
     node.fields = {}
   }
 
   // Check that this field isn't owned by another plugin.
-  const fieldOwner = node.internal.fieldPluginOwners[fieldName]
+  const fieldOwner = node.internal.fieldOwners[fieldName]
   if (fieldOwner && fieldOwner !== plugin.name) {
     throw new Error(
       stripIndent`
@@ -210,7 +210,7 @@ actions.addFieldToNode = ({ node, fieldName, fieldValue }, plugin) => {
 
   // Update node
   node.fields[fieldName] = fieldValue
-  node.internal.fieldPluginOwners[fieldName] = plugin.name
+  node.internal.fieldOwners[fieldName] = plugin.name
 
   return {
     type: `ADD_FIELD_TO_NODE`,

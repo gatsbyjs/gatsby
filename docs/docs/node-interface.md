@@ -19,9 +19,9 @@ internal: {
   // A globally unique node type choosen by the plugin owner.
   type: String,
   // The plugin which created this node.
-  pluginOwner: String,
+  owner: String,
   // Stores which plugins created which fields.
-  fieldPluginOwners: Object,
+  fieldOwners: Object,
   // Raw content for this node.
   content: String,
 }
