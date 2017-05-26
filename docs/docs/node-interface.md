@@ -12,7 +12,7 @@ id: String,
 children: Array[String],
 parent: String,
 // Reserved for plugins who wish to extend other nodes.
-pluginFields: Object,
+fields: Object,
 internal: {
   contentDigest: String,
   mediaType: String,

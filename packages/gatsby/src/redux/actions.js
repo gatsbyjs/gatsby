@@ -105,14 +105,14 @@ actions.createNode = (node, plugin) => {
     return { type: `VALIDATION_ERROR`, error: true }
   }
 
-  // Ensure node isn't directly setting pluginFields.
-  if (node.pluginFields) {
+  // Ensure node isn't directly setting fields.
+  if (node.fields) {
     throw new Error(
       stripIndent`
-      Plugins creating nodes can not set data on the reserved field "pluginFields"
+      Plugins creating nodes can not set data on the reserved field "fields"
       as this is reserved for plugins which wish to extend your nodes.
 
-      If your plugin didn't add "pluginFields" you're probably seeing this
+      If your plugin didn't add "fields" you're probably seeing this
       error because you're reusing an old node object.
 
       Node:
@@ -189,8 +189,8 @@ actions.addFieldToNode = ({ node, fieldName, fieldValue }, plugin) => {
   if (!node.internal.fieldPluginOwners) {
     node.internal.fieldPluginOwners = {}
   }
-  if (!node.pluginFields) {
-    node.pluginFields = {}
+  if (!node.fields) {
+    node.fields = {}
   }
 
   // Check that this field isn't owned by another plugin.
@@ -209,7 +209,7 @@ actions.addFieldToNode = ({ node, fieldName, fieldValue }, plugin) => {
   }
 
   // Update node
-  node.pluginFields[fieldName] = fieldValue
+  node.fields[fieldName] = fieldValue
   node.internal.fieldPluginOwners[fieldName] = plugin.name
 
   return {

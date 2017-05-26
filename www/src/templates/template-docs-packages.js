@@ -5,7 +5,7 @@ import presets from "../utils/presets"
 
 const DocsTemplate = React.createClass({
   render() {
-    const packageName = this.props.data.markdownRemark.pluginFields.title
+    const packageName = this.props.data.markdownRemark.fields.title
     return (
       <div>
         <a
@@ -35,8 +35,8 @@ export default DocsTemplate
 
 export const pageQuery = graphql`
   query TemplateDocsQuery($slug: String!) {
-    markdownRemark(pluginFields: { slug: { eq: $slug }}) {
-      pluginFields {
+    markdownRemark(fields: { slug: { eq: $slug }}) {
+      fields {
         title
       }
       html

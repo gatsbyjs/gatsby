@@ -16,7 +16,7 @@ Object {
     },
     "parent": "test",
     "pickle": true,
-    "pluginFields": Object {
+    "fields": Object {
       "joy": "soul's delight",
     },
   },
@@ -100,11 +100,11 @@ exports[`Create and update nodes throws error if a node is created by a plugin n
 }"
 `;
 
-exports[`Create and update nodes throws error if a node sets a value on "pluginFields" 1`] = `
-"Plugins creating nodes can not set data on the reserved field \\"pluginFields\\"
+exports[`Create and update nodes throws error if a node sets a value on "fields" 1`] = `
+"Plugins creating nodes can not set data on the reserved field \\"fields\\"
       as this is reserved for plugins which wish to extend your nodes.
 
-      If your plugin didn't add \\"pluginFields\\" you're probably seeing this
+      If your plugin didn't add \\"fields\\" you're probably seeing this
       error because you're reusing an old node object.
 
       Node:
@@ -113,7 +113,7 @@ exports[`Create and update nodes throws error if a node sets a value on "pluginF
     \\"id\\": \\"hi\\",
     \\"children\\": [],
     \\"parent\\": \\"test\\",
-    \\"pluginFields\\": {
+    \\"fields\\": {
         \\"test\\": \\"I can't do this but I like to test boundaries\\"
     },
     \\"internal\\": {

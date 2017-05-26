@@ -21,7 +21,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         allMarkdownRemark(limit: 1000) {
           edges {
             node {
-              pluginFields {
+              fields {
                 slug
                 package
               }
@@ -37,22 +37,22 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 
         // Create docs pages.
         result.data.allMarkdownRemark.edges.forEach(edge => {
-          if (_.includes(edge.node.pluginFields.slug, `/blog/`)) {
+          if (_.includes(edge.node.fields.slug, `/blog/`)) {
             upsertPage({
-              path: `${edge.node.pluginFields.slug}`, // required
+              path: `${edge.node.fields.slug}`, // required
               component: slash(blogPostTemplate),
               context: {
-                slug: edge.node.pluginFields.slug,
+                slug: edge.node.fields.slug,
               },
             })
           } else {
             upsertPage({
-              path: `${edge.node.pluginFields.slug}`, // required
+              path: `${edge.node.fields.slug}`, // required
               component: slash(
-                edge.node.pluginFields.package ? packageTemplate : docsTemplate
+                edge.node.fields.package ? packageTemplate : docsTemplate
               ),
               context: {
-                slug: edge.node.pluginFields.slug,
+                slug: edge.node.fields.slug,
               },
             })
           }

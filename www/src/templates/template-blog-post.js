@@ -41,7 +41,7 @@ const BlogPostTemplate = React.createClass({
           link={[
             {
               rel: `canonical`,
-              href: `https://gatsbyjs.org${post.pluginFields.slug}`,
+              href: `https://gatsbyjs.org${post.fields.slug}`,
             },
             {
               rel: `author`,
@@ -176,11 +176,11 @@ export default BlogPostTemplate
 
 export const pageQuery = graphql`
   query TemplateBlogPost($slug: String!) {
-    markdownRemark(pluginFields: { slug: { eq: $slug }}) {
+    markdownRemark(fields: { slug: { eq: $slug }}) {
       html
       excerpt
       timeToRead
-      pluginFields { slug }
+      fields { slug }
       frontmatter {
         title
         date(formatString: "MMM D, YYYY")
