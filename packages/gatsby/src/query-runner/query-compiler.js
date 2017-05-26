@@ -60,7 +60,6 @@ class Runner {
     // an error in the browser of "graphql is not defined".
     files = files.concat(store.getState().pages.map(p => p.component))
     files = _.uniq(files)
-    console.log("files for graphql parsing", files)
 
     let parser = new FileParser()
 

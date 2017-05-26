@@ -1,5 +1,7 @@
 const crypto = require(`crypto`)
-import moment from "moment"
+const moment = require(`moment`)
+const chokidar = require(`chokidar`)
+const systemPath = require(`path`)
 
 const { emitter } = require(`../../../redux`)
 const { boundActionCreators } = require(`../../../redux/actions`)
@@ -7,7 +9,27 @@ const { boundActionCreators } = require(`../../../redux/actions`)
 exports.sourceNodes = ({ boundActionCreators, store }) => {
   const { createNode } = boundActionCreators
   const state = store.getState()
+  const { program } = state
   const { flattenedPlugins } = state
+
+  // Add our default development page since we know it's going to
+  // exist and we need a node to exist so it's query works :-)
+  const page = { path: `/dev-404-page/` }
+  createNode({
+    ...page,
+    id: createPageId(page.path),
+    parent: `SOURCE`,
+    children: [],
+    internal: {
+      mediaType: `application/json`,
+      type: `SitePage`,
+      content: JSON.stringify(page),
+      contentDigest: crypto
+        .createHash(`md5`)
+        .update(JSON.stringify(page))
+        .digest(`hex`),
+    },
+  })
 
   flattenedPlugins.forEach(plugin =>
     createNode({
@@ -46,6 +68,13 @@ exports.sourceNodes = ({ boundActionCreators, store }) => {
     ...configCopy,
     buildTime,
   }
+
+  chokidar
+    .watch(systemPath.join(program.directory, "gatsby-config.js"))
+    .on("change", () => {
+      // TODO figure out how to re-eval gatsby-config to get
+      // values.
+    })
 
   createNode({
     ...node,

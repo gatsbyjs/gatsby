@@ -102,8 +102,6 @@ const findAndRunQueriesForDirtyPaths = actions => {
   })
 
   if (dirtyPaths.length > 0) {
-    console.log(`all pages invalidated by node change`, _.uniq(dirtyPaths))
-
     // Run these pages
     return Promise.all(
       _.uniq(dirtyPaths).map(path => {
