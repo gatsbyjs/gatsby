@@ -1,10 +1,10 @@
 import React from "react"
-import browserHistory from "react-router/lib/browserHistory"
+import { navigateTo } from "gatsby-link"
 
 class AppShell extends React.Component {
   componentDidMount() {
     console.log(this.props.location)
-    browserHistory.replace(this.props.location.pathname)
+    navigateTo(this.props.location.pathname)
   }
 
   render() {
