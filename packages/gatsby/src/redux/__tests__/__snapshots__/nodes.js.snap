@@ -4,6 +4,9 @@ exports[`Create and update nodes allows adding fields to nodes 1`] = `
 Object {
   "hi": Object {
     "children": Array [],
+    "fields": Object {
+      "joy": "soul's delight",
+    },
     "id": "hi",
     "internal": Object {
       "contentDigest": "hasdfljds",
@@ -16,9 +19,6 @@ Object {
     },
     "parent": "test",
     "pickle": true,
-    "fields": Object {
-      "joy": "soul's delight",
-    },
   },
 }
 `;
