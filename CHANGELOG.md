@@ -1,5 +1,24 @@
 # Change Log
 
+## [1.0.0-alpha16] - 2017-05-26
+### Added
+
+- Migration guide @kyleamathews #1032
+- Made nodes fully immutable @kyleamathews #1035
+- Add no-plugins example @scottyeck #1028
+- Add support for "internal" plugins #1010
+- Expose internal Gatsby data through GraphQL @kyleamathews #1014
+
+### Changed
+
+- Removed `updateNode` action creator as part of making nodes immutable in #1035.
+Now sites/plugins should use `addFieldToNode` for adding fields to nodes created
+by other plugins and `addNodeToParent` for adding a new node as a child to
+an existing node.
+
+### Fixed
+- Don't override the default onClick handler in gatsby-link @scottyeck #1019
+
 ## [1.0.0-alpha15] - 2017-05-15
 ### Added
 
