@@ -231,6 +231,14 @@ data
     graphql: graphqlRunner,
   })
 
+  // A variant on createPages for plugins that want to
+  // have full control over adding/removing pages. The normal
+  // "createPages" API is called every time (during development)
+  // that data changes.
+  await apiRunnerNode(`createPagesStateful`, {
+    graphql: graphqlRunner,
+  })
+
   // Copy /404/ to /404.html as many static site hosts expect
   // site 404 pages to be named this.
   // https://www.gatsbyjs.org/docs/add-404-page/

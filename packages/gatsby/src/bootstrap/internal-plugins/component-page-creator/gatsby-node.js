@@ -13,7 +13,7 @@ const createPath = require(`./create-path`)
 // algorithm is glob /pages directory for js/jsx/cjsx files *not*
 // underscored. Then create url w/ our path algorithm *unless* user
 // takes control of that page component in gatsby-node.
-exports.createPages = async ({ store, boundActionCreators }) => {
+exports.createPagesStateful = async ({ store, boundActionCreators }) => {
   const { upsertPage, deletePageByPath } = boundActionCreators
   const program = store.getState().program
   const pagesDirectory = systemPath.posix.join(program.directory, `/src/pages`)
@@ -22,6 +22,7 @@ exports.createPages = async ({ store, boundActionCreators }) => {
   // Get initial list of files.
   let files = await glob(`${pagesDirectory}/**/?(${exts})`)
   files.forEach(file => createPage(file, pagesDirectory, upsertPage))
+
   // Listen for new component pages to be added or removed.
   chokidar
     .watch(`${pagesDirectory}/**/*.{${exts}}`)
