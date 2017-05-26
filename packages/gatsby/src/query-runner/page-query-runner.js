@@ -82,10 +82,17 @@ const findAndRunQueriesForDirtyPaths = actions => {
   let dirtyPaths = []
   actions.forEach(action => {
     const node = state.nodes[action.payload.id]
+
+    // Check if the node was deleted
+    if (!node) {
+      return
+    }
+
     // Find invalid pages.
     if (state.pageDataDependencies.nodes[node.id]) {
       dirtyPaths = dirtyPaths.concat(state.pageDataDependencies.nodes[node.id])
     }
+
     // Find invalid connections
     if (state.pageDataDependencies.connections[node.internal.type]) {
       dirtyPaths = dirtyPaths.concat(

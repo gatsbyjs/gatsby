@@ -1,6 +1,9 @@
 const crypto = require(`crypto`)
 import moment from "moment"
 
+const { emitter } = require(`../../../redux`)
+const { boundActionCreators } = require(`../../../redux/actions`)
+
 exports.sourceNodes = ({ boundActionCreators, store }) => {
   const { createNode } = boundActionCreators
   const state = store.getState()
@@ -61,13 +64,15 @@ exports.sourceNodes = ({ boundActionCreators, store }) => {
   })
 }
 
+const createPageId = path => `SitePage ${path}`
+
 exports.onUpsertPage = ({ page, boundActionCreators }) => {
   const { createNode } = boundActionCreators
 
   // Add page.
   createNode({
     ...page,
-    id: `SitePage ${page.path}`,
+    id: createPageId(page.path),
     parent: `SOURCE`,
     children: [],
     internal: {
@@ -81,3 +86,8 @@ exports.onUpsertPage = ({ page, boundActionCreators }) => {
     },
   })
 }
+
+// Listen for DELETE_PAGE_BY_PATH and delete page nodes.
+emitter.on(`DELETE_PAGE_BY_PATH`, action => {
+  boundActionCreators.deleteNode(createPageId(action.payload))
+})
