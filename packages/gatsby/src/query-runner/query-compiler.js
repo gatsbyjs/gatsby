@@ -7,6 +7,7 @@ import { IRTransforms } from "relay-compiler"
 import ASTConvert from "relay-compiler/lib/ASTConvert"
 import RelayCompilerContext from "relay-compiler/lib/RelayCompilerContext"
 import filterContextForNode from "relay-compiler/lib/filterContextForNode"
+const _ = require(`lodash`)
 
 import { store } from "../redux"
 import FileParser from "./file-parser"
@@ -51,6 +52,16 @@ class Runner {
 
   async parseEverything() {
     let files = await globp(`${this.baseDir}/**/*.js`)
+    // Ensure all page components added as they're not necessarily in the
+    // pages directory e.g. a plugin could add a page component.  Plugins
+    // *should* copy their components (if they add a query) to .cache so that
+    // our babel plugin to remove the query on building is active (we don't
+    // run babel on code in node_modules). Otherwise the component will throw
+    // an error in the browser of "graphql is not defined".
+    files = files.concat(store.getState().pages.map(p => p.component))
+    files = _.uniq(files)
+    console.log("files for graphql parsing", files)
+
     let parser = new FileParser()
 
     return await parser.parseFiles(files)

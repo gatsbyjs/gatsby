@@ -10,6 +10,8 @@
 
 const _ = require(`lodash`)
 const chokidar = require(`chokidar`)
+const fs = require(`fs`)
+const path = require(`path`)
 
 const { store, emitter } = require(`../redux/`)
 const { boundActionCreators } = require(`../redux/actions`)
@@ -47,11 +49,23 @@ emitter.on(`UPSERT_PAGE`, action => {
   const component = action.payload.component
   if (!pageComponents[component]) {
     // We haven't seen this component before so we:
+    // - Ensure it has a JSON file.
     // - Add it to Redux
     // - Extract its query and save it
     // - Setup a watcher to detect query changes
+    fs.writeFile(
+      path.join(
+        store.getState().program.directory,
+        `.cache`,
+        `json`,
+        action.payload.jsonName
+      ),
+      `{}`
+    )
     boundActionCreators.addPageComponent(component)
     pendingPages.push(component)
+    // Make sure we're watching this component.
+    watcher.add(component)
     debounceNewPages()
   }
 
@@ -61,7 +75,6 @@ emitter.on(`UPSERT_PAGE`, action => {
 
 const runQueriesForComponent = componentPath => {
   const pages = getPagesForComponent(componentPath)
-  console.log(`running queries for`, pages.map(p => p.path))
   // Remove page data dependencies before re-running queries because
   // the changing of the query could have changed the data dependencies.
   // Re-running the queries will add back data dependencies.
@@ -79,9 +92,7 @@ exports.watch = rootDir => {
 
   const debounceCompile = _.debounce(() => {
     queryCompiler().then(queries => {
-      console.log(`recompiling page queries`)
       const pages = store.getState().pageComponents
-
       queries.forEach(({ text }, path) => {
         if (text !== pages[path].query) {
           boundActionCreators.setPageComponentQuery({
