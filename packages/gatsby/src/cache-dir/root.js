@@ -13,8 +13,10 @@ import syncRequires from "./sync-requires"
 import pages from "./pages.json"
 
 const history = createHistory()
+const browserApiGlobals = apiRunner(`constructBrowserApiGlobals`, { history })[0]
+
 history.listen((location, action) => {
-  apiRunner(`onRouteUpdate`, location, action)
+  apiRunner(`onRouteUpdate`, { location, browserApiGlobals }, action)
 })
 
 function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
@@ -60,7 +62,7 @@ const navigateTo = pathname => {
 
 window.___navigateTo = navigateTo
 
-const AltRouter = apiRunner(`replaceRouterComponent`, { history })[0]
+const AltRouter = apiRunner(`replaceRouterComponent`, browserApiGlobals)[0]
 const DefaultRouter = ({ children }) => (
   <Router history={history}>{children}</Router>
 )
