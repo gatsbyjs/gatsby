@@ -148,7 +148,7 @@ exports.onNodeCreate = ({ node, boundActionCreators, getNode }) => {
     }
 
     // Add slug as a field on the node.
-    addFieldToNode({ node: node.id, fieldName: `slug`, fieldValue: slug })
+    addFieldToNode({ node, fieldName: `slug`, fieldValue: slug })
   }
 }
 ```
