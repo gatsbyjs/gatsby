@@ -11,11 +11,18 @@ The basic node data structure is as follows:
 id: String,
 children: Array[String],
 parent: String,
+// Reserved for plugins who wish to extend other nodes.
+fields: Object,
 internal: {
   contentDigest: String,
   mediaType: String,
+  // A globally unique node type choosen by the plugin owner.
   type: String,
-  pluginName: String,
+  // The plugin which created this node.
+  owner: String,
+  // Stores which plugins created which fields.
+  fieldOwners: Object,
+  // Raw content for this node.
   content: String,
 }
 ...other node type specific fields

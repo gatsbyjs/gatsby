@@ -6,7 +6,7 @@ const _ = require(`lodash`)
 const crypto = require(`crypto`)
 
 async function onNodeCreate({ node, boundActionCreators, loadNodeContent }) {
-  const { createNode, updateNode } = boundActionCreators
+  const { createNode, addNodeToParent } = boundActionCreators
   if (node.internal.mediaType !== `text/yaml`) {
     return
   }
@@ -40,9 +40,10 @@ async function onNodeCreate({ node, boundActionCreators, loadNodeContent }) {
       }
     })
 
-    node.children = node.children.concat(yamlArray.map(y => y.id))
-    updateNode(node)
-    _.each(yamlArray, y => createNode(y))
+    _.each(yamlArray, y => {
+      createNode(y)
+      addNodeToParent({ parent: node, child: y })
+    })
   }
 
   return

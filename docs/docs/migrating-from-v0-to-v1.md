@@ -120,15 +120,14 @@ module.exports = {
 It's handy to store the pathname of "slug" for each markdown page with the
 markdown data. This let's you easily query the slug from multiple places.
 
-Here's how you do that (note, these APIs will be changing slightly soon but the
-logic of your code will remain the same).
+Here's how you do that.
 
 ```javascript
 // In your gatsby-node.js
 const path = require('path')
 
 exports.onNodeCreate = ({ node, boundActionCreators, getNode }) => {
-  const { updateNode } = boundActionCreators
+  const { addFieldToNode } = boundActionCreators
   let slug
   if (node.internal.type === `MarkdownRemark`) {
     const fileNode = getNode(node.parent)
@@ -141,9 +140,8 @@ exports.onNodeCreate = ({ node, boundActionCreators, getNode }) => {
       slug = `/${parsedFilePath.dir}/`
     }
 
-    // Set the slug on the node and save the change.
-    node.slug = slug
-    updateNode(node)
+    // Add slug as a field on the node.
+    addFieldToNode({ node: node.id, fieldName: `slug`, fieldValue: slug })
   }
 }
 ```
@@ -166,7 +164,9 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           allMarkdownRemark {
             edges {
               node {
-                slug
+                fields {
+                  slug
+                }
               }
             }
           }
@@ -181,10 +181,10 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         // Create blog posts pages.
         result.data.allMarkdownRemark.edges.forEach(edge => {
           upsertPage({
-            path: edge.node.slug, // required
+            path: edge.node.fields.slug, // required
             component: blogPost,
             context: {
-              slug: edge.node.slug,
+              slug: edge.node.fields.slug,
             },
           })
         })
@@ -227,7 +227,7 @@ export default BlogPostTemplate
 
 export const pageQuery = graphql`
 query BlogPostBySlug($slug: String!) {
-  markdownRemark(slug: { eq: $slug }) {
+  markdownRemark(fields: { slug: { eq: $slug }}) {
     html
     frontmatter {
       title

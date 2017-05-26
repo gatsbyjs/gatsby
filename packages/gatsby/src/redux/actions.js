@@ -2,6 +2,7 @@ import Joi from "joi"
 import chalk from "chalk"
 const _ = require(`lodash`)
 const { bindActionCreators } = require(`redux`)
+const { stripIndent } = require(`common-tags`)
 
 const { getNode, hasNodeChanged } = require(`./index`)
 
@@ -52,29 +53,6 @@ actions.upsertPage = (page, plugin = ``) => {
   }
 }
 
-actions.updateNode = (node, plugin = ``) => {
-  if (!_.isObject(node)) {
-    return console.log(
-      chalk.bold.red(
-        `The node passed to the "updateNode" action creator must be an object`
-      )
-    )
-  }
-  const result = Joi.validate(node, joiSchemas.nodeSchema)
-  if (result.error) {
-    console.log(chalk.bold.red(`The updated node didn't pass validation`))
-    console.log(chalk.bold.red(result.error))
-    console.log(node)
-    return { type: `VALIDATION_ERROR`, error: true }
-  }
-
-  return {
-    type: `UPDATE_NODE`,
-    plugin,
-    payload: node,
-  }
-}
-
 actions.deleteNode = (nodeId, plugin = ``) => {
   return {
     type: `DELETE_NODE`,
@@ -99,7 +77,8 @@ actions.touchNode = (nodeId, plugin = ``) => {
   }
 }
 
-actions.createNode = (node, plugin = ``) => {
+const typeOwners = {}
+actions.createNode = (node, plugin) => {
   if (!_.isObject(node)) {
     return console.log(
       chalk.bold.red(
@@ -107,6 +86,17 @@ actions.createNode = (node, plugin = ``) => {
       )
     )
   }
+
+  // Ensure the new node has an internals object.
+  if (!node.internal) {
+    node.internal = {}
+  }
+
+  // Add the plugin name to the internal object.
+  if (plugin) {
+    node.internal.owner = plugin.name
+  }
+
   const result = Joi.validate(node, joiSchemas.nodeSchema)
   if (result.error) {
     console.log(chalk.bold.red(`The new node didn't pass validation`))
@@ -115,11 +105,71 @@ actions.createNode = (node, plugin = ``) => {
     return { type: `VALIDATION_ERROR`, error: true }
   }
 
+  // Ensure node isn't directly setting fields.
+  if (node.fields) {
+    throw new Error(
+      stripIndent`
+      Plugins creating nodes can not set data on the reserved field "fields"
+      as this is reserved for plugins which wish to extend your nodes.
+
+      If your plugin didn't add "fields" you're probably seeing this
+      error because you're reusing an old node object.
+
+      Node:
+
+      ${JSON.stringify(node, null, 4)}
+
+      Plugin that created the node:
+
+      ${JSON.stringify(plugin, null, 4)}
+    `
+    )
+  }
+
+  // Ensure the plugin isn't creating a node type owned by another
+  // plugin. Type "ownership" is first come first served.
+  if (!typeOwners[node.internal.type] && plugin) {
+    typeOwners[node.internal.type] = plugin.name
+  } else {
+    if (typeOwners[node.internal.type] !== plugin.name) {
+      throw new Error(
+        stripIndent`
+        The plugin "${plugin.name}" created a node of a type owned by another plugin.
+
+        The node type "${node.internal.type}" is owned by "${typeOwners[node.internal.type]}".
+
+        If you copy and pasted code from elsewhere, you'll need to pick a new type name
+        for your new node(s).
+
+        The node object passed to "createNode":
+
+        ${JSON.stringify(node, null, 4)}
+
+        The plugin creating the node:
+
+        ${JSON.stringify(plugin, null, 4)}
+      `
+      )
+    }
+  }
+
+  const oldNode = getNode(node.id)
+
+  // If the node has been created in the past, check that
+  // the current plugin is the same as the previous.
+  if (oldNode && oldNode.internal.owner !== plugin.name) {
+    throw new Error(
+      stripIndent`
+      Nodes can only be updated by their owner. Node "${node.id}" is
+      owned by "${oldNode.internal.owner}" and another plugin "${plugin.name}"
+      tried to update it.
+
+      `
+    )
+  }
+
   // Check if the node has already been processed.
-  if (
-    getNode(node.id) &&
-    !hasNodeChanged(node.id, node.internal.contentDigest)
-  ) {
+  if (oldNode && !hasNodeChanged(node.id, node.internal.contentDigest)) {
     return {
       type: `TOUCH_NODE`,
       plugin,
@@ -131,6 +181,53 @@ actions.createNode = (node, plugin = ``) => {
       plugin,
       payload: node,
     }
+  }
+}
+
+actions.addFieldToNode = ({ node, fieldName, fieldValue }, plugin) => {
+  // Ensure required fields are set.
+  if (!node.internal.fieldOwners) {
+    node.internal.fieldOwners = {}
+  }
+  if (!node.fields) {
+    node.fields = {}
+  }
+
+  // Check that this field isn't owned by another plugin.
+  const fieldOwner = node.internal.fieldOwners[fieldName]
+  if (fieldOwner && fieldOwner !== plugin.name) {
+    throw new Error(
+      stripIndent`
+      A plugin tried to update a node field that it doesn't own:
+
+      Node id: ${node.id}
+      Plugin: ${plugin.name}
+      fieldName: ${fieldName}
+      fieldValue: ${fieldValue}
+      `
+    )
+  }
+
+  // Update node
+  node.fields[fieldName] = fieldValue
+  node.internal.fieldOwners[fieldName] = plugin.name
+
+  return {
+    type: `ADD_FIELD_TO_NODE`,
+    plugin,
+    payload: node,
+  }
+}
+
+actions.addNodeToParent = ({ parent, child }, plugin) => {
+  // Update parent
+  parent.children.push(child.id)
+  parent.children = _.uniq(parent.children)
+
+  return {
+    type: `ADD_CHILD_NODE_TO_PARENT_NODE`,
+    plugin,
+    payload: parent,
   }
 }
 

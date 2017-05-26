@@ -39,22 +39,66 @@ exports[`Process YAML nodes correctly correctly creates nodes from JSON which is
 Array [
   Array [
     Object {
-      "children": Array [
-        "whatever [0] >>> YAML",
-        "whatever [1] >>> YAML",
-      ],
-      "content": "- blue: true
+      "child": Object {
+        "blue": true,
+        "children": Array [],
+        "funny": "yup",
+        "id": "whatever [0] >>> YAML",
+        "internal": Object {
+          "content": "{\\"blue\\":true,\\"funny\\":\\"yup\\"}",
+          "contentDigest": "73901821b17d5aa9dd6026181f73b64c",
+          "mediaType": "application/json",
+          "type": "TestYaml",
+        },
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "- blue: true
   funny: yup
 - blue: false
   funny: nope
 ",
-      "id": "whatever",
-      "internal": Object {
-        "contentDigest": "whatever",
-        "mediaType": "text/yaml",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/yaml",
+        },
+        "name": "test",
+        "parent": "SOURCE",
       },
-      "name": "test",
-      "parent": "SOURCE",
+    },
+  ],
+  Array [
+    Object {
+      "child": Object {
+        "blue": false,
+        "children": Array [],
+        "funny": "nope",
+        "id": "whatever [1] >>> YAML",
+        "internal": Object {
+          "content": "{\\"blue\\":false,\\"funny\\":\\"nope\\"}",
+          "contentDigest": "f624311d932d73dcd416d2a8bea2b67d",
+          "mediaType": "application/json",
+          "type": "TestYaml",
+        },
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "- blue: true
+  funny: yup
+- blue: false
+  funny: nope
+",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/yaml",
+        },
+        "name": "test",
+        "parent": "SOURCE",
+      },
     },
   ],
 ]

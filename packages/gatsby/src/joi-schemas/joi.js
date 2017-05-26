@@ -26,11 +26,13 @@ export const nodeSchema = Joi.object()
     id: Joi.string().required(),
     children: Joi.array(Joi.string()).required(),
     parent: Joi.string().required(),
+    fields: Joi.object(),
     internal: Joi.object().keys({
       contentDigest: Joi.string().required(),
       mediaType: Joi.string().required(),
       type: Joi.string().required(),
-      pluginName: Joi.string().required(),
+      owner: Joi.string().required(),
+      fieldOwners: Joi.array(),
       content: Joi.string(),
     }),
   })

@@ -19,11 +19,6 @@ const doubleBind = (boundActionCreators, plugin) => {
       const boundActionCreator = boundActionCreators[key]
       if (typeof boundActionCreator === `function`) {
         doubleBoundActionCreators[key] = (...args) => {
-          // Automatically add to newly created nodes
-          // the plugin's name
-          if (key === `createNode`) {
-            args[0].internal.pluginName = plugin.name
-          }
           return boundActionCreator(...args, plugin)
         }
       }
