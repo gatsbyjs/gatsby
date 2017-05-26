@@ -307,18 +307,18 @@ When loaded and required, the resulting javascript object looks like the followi
 Now Gatsby wraps the markdown file in this very simple React.js component.
 
 ```javascript
-module.exports = React.createClass({
-  displayName: "MarkdownWrapper",
+export default MarkdownWrapper extends React.Component {
+  render() {
+    const post = this.props.route.page.data
 
-  render: function() {
-    var post = this.props.route.page.data
-
-    return <div className="markdown">
-      <h1>{post.title}</h1>
-      <div dangerouslySetInnerHTML={{__html: post.body}}/>
-    </div>
+    return (
+      <div className="markdown">
+        <h1>{post.title}</h1>
+        <div dangerouslySetInnerHTML={{__html: post.body}}/>
+      </div>
+    );
   }
-})
+}
 ```
 
 #### frontmatter and metadata
