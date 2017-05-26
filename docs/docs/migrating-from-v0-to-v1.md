@@ -22,6 +22,13 @@ git mv utils src
 ...
 ```
 
+## `import { prefixLink } from 'gatsby-helpers'` is no more
+
+Prefixing links is now handled automatically by the new `<Link>` component
+provided by the `gatsby-link` package.
+
+So just use `gatsby-link` everywhere and things will Just Work™.
+
 ## config.toml is now gatsby-config.js
 
 If you previously added site metadata to `config.toml`, move that into
