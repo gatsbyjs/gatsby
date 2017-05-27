@@ -10,6 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "gatsby": "canary",
+    "gatsby-link": "canary",
     "gatsby-plugin-google-analytics": "canary",
     "gatsby-plugin-offline": "canary",
     "gatsby-plugin-postcss-sass": "canary",

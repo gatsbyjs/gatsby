@@ -1,4 +1,4 @@
-const { filterPages } = require(`../gatsby-node`)
+const { validatePath } = require(`../gatsby-node`)
 
 describe(`JavaScript page creator`, () => {
   it(`filters out files that start with underscores`, () => {
@@ -14,7 +14,7 @@ describe(`JavaScript page creator`, () => {
       },
     ]
 
-    expect(filterPages(files).length).toEqual(1)
+    expect(files.filter(file => validatePath(file.path)).length).toEqual(1)
   })
 
   it(`filters out files that start with template-*`, () => {
@@ -30,6 +30,6 @@ describe(`JavaScript page creator`, () => {
       },
     ]
 
-    expect(filterPages(files).length).toEqual(1)
+    expect(files.filter(file => validatePath(file.path)).length).toEqual(1)
   })
 })

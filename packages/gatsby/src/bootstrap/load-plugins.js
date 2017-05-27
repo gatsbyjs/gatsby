@@ -67,6 +67,9 @@ module.exports = async config => {
       path.join(__dirname, `./internal-plugins/internal-data-bridge`)
     )
   )
+  plugins.push(
+    processPlugin(path.join(__dirname, `./internal-plugins/dev-404-page`))
+  )
 
   // Add plugins from the site config.
   if (config.plugins) {

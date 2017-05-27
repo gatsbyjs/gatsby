@@ -1,10 +1,35 @@
 const crypto = require(`crypto`)
-import moment from "moment"
+const moment = require(`moment`)
+const chokidar = require(`chokidar`)
+const systemPath = require(`path`)
+
+const { emitter } = require(`../../../redux`)
+const { boundActionCreators } = require(`../../../redux/actions`)
 
 exports.sourceNodes = ({ boundActionCreators, store }) => {
   const { createNode } = boundActionCreators
   const state = store.getState()
+  const { program } = state
   const { flattenedPlugins } = state
+
+  // Add our default development page since we know it's going to
+  // exist and we need a node to exist so it's query works :-)
+  const page = { path: `/dev-404-page/` }
+  createNode({
+    ...page,
+    id: createPageId(page.path),
+    parent: `SOURCE`,
+    children: [],
+    internal: {
+      mediaType: `application/json`,
+      type: `SitePage`,
+      content: JSON.stringify(page),
+      contentDigest: crypto
+        .createHash(`md5`)
+        .update(JSON.stringify(page))
+        .digest(`hex`),
+    },
+  })
 
   flattenedPlugins.forEach(plugin =>
     createNode({
@@ -30,36 +55,51 @@ exports.sourceNodes = ({ boundActionCreators, store }) => {
   // Add site node.
   const buildTime = moment().subtract(process.uptime(), `seconds`).toJSON()
 
-  // Delete plugins from the config as we add plugins above.
-  const configCopy = { ...state.config }
-  delete configCopy.plugins
-
-  const node = {
-    siteMetadata: {
-      ...state.config.siteMetadata,
-    },
-    port: state.program.port,
-    host: state.program.host,
-    ...configCopy,
-    buildTime,
+  const createGatsbyConfigNode = config => {
+    // Delete plugins from the config as we add plugins above.
+    const configCopy = { ...config }
+    delete configCopy.plugins
+    const node = {
+      siteMetadata: {
+        ...configCopy.siteMetadata,
+      },
+      port: state.program.port,
+      host: state.program.host,
+      ...configCopy,
+      buildTime,
+    }
+    createNode({
+      ...node,
+      id: `Site`,
+      parent: `SOURCE`,
+      children: [],
+      internal: {
+        contentDigest: crypto
+          .createHash(`md5`)
+          .update(JSON.stringify(node))
+          .digest(`hex`),
+        content: JSON.stringify(node),
+        mediaType: `application/json`,
+        type: `Site`,
+      },
+    })
   }
 
-  createNode({
-    ...node,
-    id: `Site`,
-    parent: `SOURCE`,
-    children: [],
-    internal: {
-      contentDigest: crypto
-        .createHash(`md5`)
-        .update(JSON.stringify(node))
-        .digest(`hex`),
-      content: JSON.stringify(node),
-      mediaType: `application/json`,
-      type: `Site`,
-    },
+  createGatsbyConfigNode(state.config)
+
+  const pathToGatsbyConfig = systemPath.join(
+    program.directory,
+    `gatsby-config.js`
+  )
+  chokidar.watch(pathToGatsbyConfig).on(`change`, () => {
+    // Delete require cache so we can reload the module.
+    delete require.cache[require.resolve(pathToGatsbyConfig)]
+    const config = require(pathToGatsbyConfig)
+    createGatsbyConfigNode(config)
   })
 }
+
+const createPageId = path => `SitePage ${path}`
 
 exports.onUpsertPage = ({ page, boundActionCreators }) => {
   const { createNode } = boundActionCreators
@@ -67,7 +107,7 @@ exports.onUpsertPage = ({ page, boundActionCreators }) => {
   // Add page.
   createNode({
     ...page,
-    id: `SitePage ${page.path}`,
+    id: createPageId(page.path),
     parent: `SOURCE`,
     children: [],
     internal: {
@@ -81,3 +121,8 @@ exports.onUpsertPage = ({ page, boundActionCreators }) => {
     },
   })
 }
+
+// Listen for DELETE_PAGE_BY_PATH and delete page nodes.
+emitter.on(`DELETE_PAGE_BY_PATH`, action => {
+  boundActionCreators.deleteNode(createPageId(action.payload))
+})

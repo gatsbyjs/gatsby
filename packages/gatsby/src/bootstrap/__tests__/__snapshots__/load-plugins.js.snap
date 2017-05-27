@@ -19,6 +19,14 @@ Array [
     "version": "1.0.0",
   },
   Object {
+    "name": "dev-404-page",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "version": "1.0.0",
+  },
+  Object {
     "name": "TEST",
     "pluginOptions": Object {
       "plugins": Array [],
@@ -49,6 +57,14 @@ Array [
   },
   Object {
     "name": "internal-data-bridge",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "version": "1.0.0",
+  },
+  Object {
+    "name": "dev-404-page",
     "pluginOptions": Object {
       "plugins": Array [],
     },

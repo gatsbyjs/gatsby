@@ -8,7 +8,6 @@ module.exports = (state = {}, action) => {
       if (!_.has(state, `action.payload.componentPath`)) {
         state[action.payload.componentPath] = {
           componentPath: action.payload.componentPath,
-          initialQueryRunComplete: false,
         }
       }
       return state
