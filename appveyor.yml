@@ -9,6 +9,8 @@ platform:
   - Any CPU
 
 environment:
+  nodejs_version: "6"
+
   matrix:
   - example: client-only-paths
 
@@ -25,9 +27,6 @@ environment:
   - example: using-postcss-sass
 
 
-# Test against the latest version of this Node.js version
-environment:
-  nodejs_version: "6"
 
 # Install scripts. (runs after repo cloning)
 install:
