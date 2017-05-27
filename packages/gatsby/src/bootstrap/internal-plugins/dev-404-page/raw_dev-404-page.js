@@ -22,15 +22,18 @@ class Dev404Page extends React.Component {
           and this page will automatically refresh to show the new page component
           you created.
         </p>
-        <p>
-          If you were trying to reach another page, perhaps you can find it below.
-        </p>
-        <h2>Pages ({this.props.data.allSitePage.totalCount})</h2>
-        <ul>
-          {this.props.data.allSitePage.edges.map(({ node }) => (
-            <li><Link to={node.path}>{node.path}</Link></li>
-          ))}
-        </ul>
+        {this.props.data.allSitePage.totalCount > 1 &&
+          <div>
+            <p>
+              If you were trying to reach another page, perhaps you can find it below.
+            </p>
+            <h2>Pages ({this.props.data.allSitePage.totalCount})</h2>
+            <ul>
+              {this.props.data.allSitePage.edges.map(({ node }) => (
+                <li><Link to={node.path}>{node.path}</Link></li>
+              ))}
+            </ul>
+          </div>}
       </div>
     )
   }
@@ -40,7 +43,7 @@ export default Dev404Page
 
 export const pageQuery = graphql`
 query Dev404Page {
-  allSitePage {
+  allSitePage(path: { ne: "/dev-404-page/"}) {
     totalCount
     edges {
       node {
