@@ -18,6 +18,7 @@ class Dev404Page extends React.Component {
           Create a React.js component in your site directory at
           {" "}
           <code>{newFilePath}</code>
+          {" "}
           and this page will automatically refresh to show the new page component
           you created.
         </p>
