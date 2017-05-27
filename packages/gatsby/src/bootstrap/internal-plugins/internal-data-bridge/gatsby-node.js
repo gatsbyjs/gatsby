@@ -55,41 +55,47 @@ exports.sourceNodes = ({ boundActionCreators, store }) => {
   // Add site node.
   const buildTime = moment().subtract(process.uptime(), `seconds`).toJSON()
 
-  // Delete plugins from the config as we add plugins above.
-  const configCopy = { ...state.config }
-  delete configCopy.plugins
-
-  const node = {
-    siteMetadata: {
-      ...state.config.siteMetadata,
-    },
-    port: state.program.port,
-    host: state.program.host,
-    ...configCopy,
-    buildTime,
+  const createGatsbyConfigNode = config => {
+    // Delete plugins from the config as we add plugins above.
+    const configCopy = { ...config }
+    delete configCopy.plugins
+    const node = {
+      siteMetadata: {
+        ...configCopy.siteMetadata,
+      },
+      port: state.program.port,
+      host: state.program.host,
+      ...configCopy,
+      buildTime,
+    }
+    createNode({
+      ...node,
+      id: `Site`,
+      parent: `SOURCE`,
+      children: [],
+      internal: {
+        contentDigest: crypto
+          .createHash(`md5`)
+          .update(JSON.stringify(node))
+          .digest(`hex`),
+        content: JSON.stringify(node),
+        mediaType: `application/json`,
+        type: `Site`,
+      },
+    })
   }
 
-  chokidar
-    .watch(systemPath.join(program.directory, "gatsby-config.js"))
-    .on("change", () => {
-      // TODO figure out how to re-eval gatsby-config to get
-      // values.
-    })
+  createGatsbyConfigNode(state.config)
 
-  createNode({
-    ...node,
-    id: `Site`,
-    parent: `SOURCE`,
-    children: [],
-    internal: {
-      contentDigest: crypto
-        .createHash(`md5`)
-        .update(JSON.stringify(node))
-        .digest(`hex`),
-      content: JSON.stringify(node),
-      mediaType: `application/json`,
-      type: `Site`,
-    },
+  const pathToGatsbyConfig = systemPath.join(
+    program.directory,
+    `gatsby-config.js`
+  )
+  chokidar.watch(pathToGatsbyConfig).on("change", () => {
+    // Delete require cache so we can reload the module.
+    delete require.cache[require.resolve(pathToGatsbyConfig)]
+    const config = require(pathToGatsbyConfig)
+    createGatsbyConfigNode(config)
   })
 }
 
