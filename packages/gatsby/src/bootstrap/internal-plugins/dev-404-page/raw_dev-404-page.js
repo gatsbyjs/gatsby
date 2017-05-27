@@ -24,7 +24,7 @@ class Dev404Page extends React.Component {
         <p>
           If you were trying to reach another page, perhaps you can find it below.
         </p>
-        <h2>Pages</h2>
+        <h2>Pages ({this.props.data.allSitePage.totalCount})</h2>
         <ul>
           {this.props.data.allSitePage.edges.map(({ node }) => (
             <li><Link to={node.path}>{node.path}</Link></li>
