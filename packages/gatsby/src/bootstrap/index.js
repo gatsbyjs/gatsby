@@ -212,11 +212,6 @@ data
   // Create Schema.
   await require(`../schema`)()
 
-  const graphqlRunner = (query, context) => {
-    const schema = store.getState().schema
-    return graphql(schema, query, context, context, context)
-  }
-
   // Collect resolvable extensions and attach to program.
   const extensions = [`.js`, `.jsx`]
   const apiResults = await apiRunnerNode(`resolvableExtensions`)
@@ -225,6 +220,11 @@ data
     type: `SET_PROGRAM_EXTENSIONS`,
     payload: _.flattenDeep([extensions, apiResults]),
   })
+
+  const graphqlRunner = (query, context = {}) => {
+    const schema = store.getState().schema
+    return graphql(schema, query, context, context, context)
+  }
 
   // Collect pages.
   await apiRunnerNode(`createPages`, {
