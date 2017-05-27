@@ -18,9 +18,8 @@ const doubleBind = (boundActionCreators, plugin) => {
       const key = keys[i]
       const boundActionCreator = boundActionCreators[key]
       if (typeof boundActionCreator === `function`) {
-        doubleBoundActionCreators[key] = (...args) => {
-          return boundActionCreator(...args, plugin)
-        }
+        doubleBoundActionCreators[key] = (...args) =>
+          boundActionCreator(...args, plugin)
       }
     }
     boundPluginActionCreators[plugin.name] = doubleBoundActionCreators

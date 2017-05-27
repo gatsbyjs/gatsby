@@ -91,7 +91,7 @@ exports.sourceNodes = ({ boundActionCreators, store }) => {
     program.directory,
     `gatsby-config.js`
   )
-  chokidar.watch(pathToGatsbyConfig).on("change", () => {
+  chokidar.watch(pathToGatsbyConfig).on(`change`, () => {
     // Delete require cache so we can reload the module.
     delete require.cache[require.resolve(pathToGatsbyConfig)]
     const config = require(pathToGatsbyConfig)
