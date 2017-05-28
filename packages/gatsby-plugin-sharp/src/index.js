@@ -1,5 +1,5 @@
 const sharp = require(`sharp`)
-const qs = require(`qs`)
+const crypto = require(`crypto`)
 const imageSize = require(`image-size`)
 const _ = require(`lodash`)
 const Promise = require(`bluebird`)
@@ -175,7 +175,15 @@ function queueImageResizing({ file, args = {} }) {
   })
   const sortedArgs = _.sortBy(filteredArgs, arg => arg[0] === `width`)
   const fileExtension = options.toFormat ? options.toFormat : file.extension
-  const imgSrc = `/${file.internal.contentDigest}-${qs.stringify(_.fromPairs(sortedArgs))}.${fileExtension}`
+
+  const argsDigest = crypto
+    .createHash(`md5`)
+    .update(JSON.stringify(sortedArgs))
+    .digest(`hex`)
+
+  const argsDigestShort = argsDigest.substr(argsDigest.length - 5)
+
+  const imgSrc = `/${file.internal.contentDigest}-${argsDigestShort}.${fileExtension}`
   const filePath = `${process.cwd()}/public${imgSrc}`
   // Create function to call when the image is finished.
   let outsideResolve
