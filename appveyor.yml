@@ -34,9 +34,9 @@ install:
   - ps: Install-Product node $env:nodejs_version
   - ps: npm install -g windows-build-tools
   - ps: npm install -g node-gyp
-  - ps: npm install -g gatsby-dev-cli@canary
-  - ps: git checkout 1.0
-  - ps: npm install
+  - npm install -g gatsby-dev-cli@canary
+  - git checkout 1.0
+  - npm install
 
 # Post-install test scripts.
 test_script:
