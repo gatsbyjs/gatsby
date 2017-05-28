@@ -46,11 +46,7 @@ const processFile = (file, jobs, cb) => {
     const roundedWidth = Math.round(args.width)
     clonedPipeline = clonedPipeline
       .resize(roundedWidth, roundedHeight)
-      // Use a more effective cropping strategy at the expense of some additional
-      // processing time (how much?).
-      .crop(sharp.strategy.attention)
-
-    clonedPipeline
+      .crop(args.cropFocus)
       .png({
         compressionLevel: args.pngCompressionLevel,
         adaptiveFiltering: false,
@@ -239,15 +235,16 @@ async function notMemoizedbase64({ file, args = {} }) {
   let pipeline = sharp(file.absolutePath).rotate()
   pipeline
     .resize(options.width, options.height)
+    .crop(options.cropFocus)
     .png({
       compressionLevel: options.pngCompressionLevel,
       adaptiveFiltering: false,
-      force: false,
+      force: args.toFormat === `png`,
     })
     .jpeg({
       quality: options.quality,
       progressive: options.jpegProgressive,
-      force: false,
+      force: args.toFormat === `jpg`,
     })
 
   // grayscale
