@@ -54,12 +54,12 @@ const processFile = (file, jobs, cb) => {
       .png({
         compressionLevel: args.pngCompressionLevel,
         adaptiveFiltering: false,
-        force: false,
+        force: args.toFormat === `png`,
       })
       .jpeg({
         quality: args.quality,
         progressive: args.jpegProgressive,
-        force: false,
+        force: args.toFormat === `jpg`,
       })
 
     // grayscale
@@ -84,7 +84,7 @@ const processFile = (file, jobs, cb) => {
           .buffer(sharpBuffer, {
             plugins: [
               imageminPngquant({
-                quality: `${args.quality}-${args.quality + 25}`, // e.g. 40-65
+                quality: `${args.quality}-${Math.min(args.quality + 25, 100)}`, // e.g. 40-65
               }),
             ],
           })
