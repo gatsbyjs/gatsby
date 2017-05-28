@@ -6,7 +6,7 @@ branches:
     - master
 
 platform:
-  - Any CPU
+  - x64
 
 environment:
   nodejs_version: "6"
