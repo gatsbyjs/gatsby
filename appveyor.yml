@@ -12,19 +12,19 @@ environment:
   nodejs_version: "6"
 
   matrix:
-  - example: client-only-paths
+#  - example: client-only-paths
 
-  - example: gatsbygram
+#  - example: gatsbygram
 
   - example: hn
 
-  - example: no-plugins
+#  - example: no-plugins
 
-  - example: no-trailing-slashes
+#  - example: no-trailing-slashes
 
-  - example: using-drupal
+#  - example: using-drupal
 
-  - example: using-postcss-sass
+#  - example: using-postcss-sass
 
 
 
@@ -32,10 +32,11 @@ environment:
 install:
   # Get the latest stable version of Node.js or io.js
   - ps: Install-Product node $env:nodejs_version
-  - ps: npm install --global windows-build-tools
-  - npm install -g gatsby-dev-cli@canary
-  - git checkout 1.0
-  - npm install
+  - ps: npm install -g windows-build-tools
+  - ps: npm install -g node-gyp
+  - ps: npm install -g gatsby-dev-cli@canary
+  - ps: git checkout 1.0
+  - ps: npm install
 
 # Post-install test scripts.
 test_script:
