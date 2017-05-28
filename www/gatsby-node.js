@@ -37,7 +37,10 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 
         // Create docs pages.
         result.data.allMarkdownRemark.edges.forEach(edge => {
-          if (_.includes(edge.node.fields.slug, `/blog/`)) {
+          const slug = _.get(edge, `node.fields.slug`)
+          if (!slug) return
+
+          if (_.includes(slug, `/blog/`)) {
             upsertPage({
               path: `${edge.node.fields.slug}`, // required
               component: slash(blogPostTemplate),
@@ -82,7 +85,10 @@ exports.onNodeCreate = ({ node, boundActionCreators, getNode }) => {
     if (slug) {
       addFieldToNode({ node, fieldName: `slug`, fieldValue: slug })
     }
-  } else if (node.internal.type === `MarkdownRemark`) {
+  } else if (
+    node.internal.type === `MarkdownRemark` &&
+    getNode(node.parent).internal.type === `File`
+  ) {
     const fileNode = getNode(node.parent)
     const parsedFilePath = parseFilepath(fileNode.relativePath)
     // Add slugs for docs pages

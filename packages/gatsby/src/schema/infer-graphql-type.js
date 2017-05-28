@@ -14,7 +14,7 @@ const mime = require(`mime`)
 const isRelative = require(`is-relative`)
 const isRelativeUrl = require(`is-relative-url`)
 const slash = require(`slash`)
-const nodePath = require(`path`)
+const systemPath = require(`path`)
 const { oneLine } = require(`common-tags`)
 
 const { store, getNode, getNodes } = require(`../redux`)
@@ -301,15 +301,61 @@ function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
   }
 }
 
-function shouldInferFile(value) {
-  return (
+function findRootNode(node) {
+  // Find the root node.
+  let rootNode = node
+  let whileCount = 0
+  while (
+    rootNode.parent &&
+    getNode(rootNode.parent) !== undefined &&
+    whileCount < 101
+  ) {
+    rootNode = getNode(rootNode.parent)
+    whileCount += 1
+    if (whileCount > 100) {
+      console.log(
+        `It looks like you have a node that's set its parent as itself`,
+        rootNode
+      )
+    }
+  }
+
+  return rootNode
+}
+
+function shouldInferFile(nodes, key, value) {
+  // Find the node used for this example.
+  const node = nodes.find(n => _.get(n, key) === value)
+
+  if (!node) {
+    return false
+  }
+
+  const looksLikeFile =
     _.isString(value) &&
     mime.lookup(value) !== `application/octet-stream` &&
     // domains ending with .com
     mime.lookup(value) !== `application/x-msdownload` &&
     isRelative(value) &&
     isRelativeUrl(value)
+
+  if (!looksLikeFile) {
+    return false
+  }
+
+  const rootNode = findRootNode(node)
+
+  // Only nodes transformed (ultimately) from a File
+  // can link to another File.
+  if (rootNode.internal.type !== `File`) {
+    return false
+  }
+
+  const pathToOtherNode = systemPath.posix.join(rootNode.dir, value)
+  const otherFileExists = getNodes().some(
+    n => n.absolutePath === pathToOtherNode
   )
+  return otherFileExists
 }
 
 // Look for fields that are pointing at a file — if the field has a known
@@ -341,7 +387,7 @@ function inferFromUri(key, types) {
       // Use the parent File node to create the absolute path to
       // the linked file.
       const fileLinkPath = slash(
-        nodePath.resolve(parentFileNode.dir, fieldValue)
+        systemPath.resolve(parentFileNode.dir, fieldValue)
       )
 
       // Use that path to find the linked File node.
@@ -416,8 +462,11 @@ export function inferObjectStructureFromNodes({
       ;[fieldName] = key.split(`___`)
       inferredField = inferFromFieldName(value, nextSelector, types)
 
-      // Third if the field is pointing to a file
-    } else if (nodes[0].internal.type !== `File` && shouldInferFile(value)) {
+      // Third if the field is pointing to a file (from another file).
+    } else if (
+      nodes[0].internal.type !== `File` &&
+      shouldInferFile(nodes, nextSelector, value)
+    ) {
       inferredField = inferFromUri(key, types)
 
       // Finally our automatic inference of field value type.
