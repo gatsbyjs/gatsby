@@ -30,7 +30,7 @@ const bar = new ProgressBar(
 const processFile = (file, jobs, cb) => {
   Promise.all(jobs.map(job => job.finished)).then(() => cb())
   const pipeline = sharp(file).rotate()
-  _.each(jobs, job => {
+  jobs.forEach(async job => {
     const args = job.args
     let clonedPipeline
     if (jobs.length > 1) {
@@ -57,49 +57,47 @@ const processFile = (file, jobs, cb) => {
       clonedPipeline = clonedPipeline.rotate(args.rotate)
     }
 
-    // duotone and write to file
-    duotone(
-      args.duotone,
-      job.file.extension,
-      clonedPipeline
-    ).then(clonedPipeline => {
-      clonedPipeline
-        .png({
-          compressionLevel: args.pngCompressionLevel,
-          adaptiveFiltering: false,
-          force: args.toFormat === `png`,
-        })
-        .jpeg({
-          quality: args.quality,
-          progressive: args.jpegProgressive,
-          force: args.toFormat === `jpg`,
-        })
+    // duotone
+    if (args.duotone) {
+      clonedPipeline = await duotone(args.duotone, job.file.extension, pipeline)
+    }
 
-      if (job.file.extension.match(/^jp/)) {
-        clonedPipeline.toFile(job.outputPath, (err, info) => {
-          bar.tick()
-          job.outsideResolve(info)
-        })
-        // Compress pngs
-      } else if (job.file.extension === `png`) {
-        clonedPipeline.toBuffer().then(sharpBuffer => {
-          imagemin
-            .buffer(sharpBuffer, {
-              plugins: [
-                imageminPngquant({
-                  quality: `${args.quality}-${Math.min(args.quality + 25, 100)}`, // e.g. 40-65
-                }),
-              ],
+    clonedPipeline
+      .png({
+        compressionLevel: args.pngCompressionLevel,
+        adaptiveFiltering: false,
+        force: args.toFormat === `png`,
+      })
+      .jpeg({
+        quality: args.quality,
+        progressive: args.jpegProgressive,
+        force: args.toFormat === `jpg`,
+      })
+
+    if (job.file.extension.match(/^jp/)) {
+      clonedPipeline.toFile(job.outputPath, (err, info) => {
+        bar.tick()
+        job.outsideResolve(info)
+      })
+      // Compress pngs
+    } else if (job.file.extension === `png`) {
+      clonedPipeline.toBuffer().then(sharpBuffer => {
+        imagemin
+          .buffer(sharpBuffer, {
+            plugins: [
+              imageminPngquant({
+                quality: `${args.quality}-${Math.min(args.quality + 25, 100)}`, // e.g. 40-65
+              }),
+            ],
+          })
+          .then(imageminBuffer => {
+            fs.writeFile(job.outputPath, imageminBuffer, () => {
+              bar.tick()
+              job.outsideResolve()
             })
-            .then(imageminBuffer => {
-              fs.writeFile(job.outputPath, imageminBuffer, () => {
-                bar.tick()
-                job.outsideResolve()
-              })
-            })
-        })
-      }
-    })
+          })
+      })
+    }
   })
 }
 
