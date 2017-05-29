@@ -83,4 +83,4 @@ Often you will need to programmatically create pages. For example, you have
 markdown files that each should be a page.
 
 TODO finish this once it's more settled how to modify nodes to add slugs and
-other special fields that we want to associate with a node. Perhaps `addFieldToNode`.
+other special fields that we want to associate with a node. Perhaps `createNodeField`.

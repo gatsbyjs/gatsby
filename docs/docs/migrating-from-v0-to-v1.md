@@ -134,7 +134,7 @@ Here's how you do that.
 const path = require('path')
 
 exports.onNodeCreate = ({ node, boundActionCreators, getNode }) => {
-  const { addFieldToNode } = boundActionCreators
+  const { createNodeField } = boundActionCreators
   let slug
   if (node.internal.type === `MarkdownRemark`) {
     const fileNode = getNode(node.parent)
@@ -148,7 +148,7 @@ exports.onNodeCreate = ({ node, boundActionCreators, getNode }) => {
     }
 
     // Add slug as a field on the node.
-    addFieldToNode({ node, fieldName: `slug`, fieldValue: slug })
+    createNodeField({ node, fieldName: `slug`, fieldValue: slug })
   }
 }
 ```

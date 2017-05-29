@@ -69,7 +69,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 
 // Create slugs for files.
 exports.onNodeCreate = ({ node, boundActionCreators, getNode }) => {
-  const { addFieldToNode } = boundActionCreators
+  const { createNodeField } = boundActionCreators
   let slug
   if (node.internal.type === `File`) {
     const parsedFilePath = parseFilepath(node.relativePath)
@@ -83,7 +83,7 @@ exports.onNodeCreate = ({ node, boundActionCreators, getNode }) => {
       }
     }
     if (slug) {
-      addFieldToNode({ node, fieldName: `slug`, fieldValue: slug })
+      createNodeField({ node, fieldName: `slug`, fieldValue: slug })
     }
   } else if (
     node.internal.type === `MarkdownRemark` &&
@@ -107,15 +107,15 @@ exports.onNodeCreate = ({ node, boundActionCreators, getNode }) => {
       parsedFilePath.name === `README`
     ) {
       slug = `/docs/packages/${parsedFilePath.dir}/`
-      addFieldToNode({
+      createNodeField({
         node,
         fieldName: `title`,
         fieldValue: parsedFilePath.dir,
       })
-      addFieldToNode({ node, fieldName: `package`, fieldValue: true })
+      createNodeField({ node, fieldName: `package`, fieldValue: true })
     }
     if (slug) {
-      addFieldToNode({ node, fieldName: `slug`, fieldValue: slug })
+      createNodeField({ node, fieldName: `slug`, fieldValue: slug })
     }
   }
 }

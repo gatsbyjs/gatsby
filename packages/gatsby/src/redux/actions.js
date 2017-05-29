@@ -1,3 +1,4 @@
+// @flow
 import Joi from "joi"
 import chalk from "chalk"
 const _ = require(`lodash`)
@@ -184,7 +185,21 @@ actions.createNode = (node, plugin) => {
   }
 }
 
-actions.addFieldToNode = ({ node, fieldName, fieldValue }, plugin) => {
+/**
+ * Create field on a node a plugin don't own. Once a plugin has claimed a field name
+ * the field name can't be used by other plugins.
+ * @param {Object} _ref
+ * @param {Object} _ref.node the target node object
+ * @param {String} _ref.fieldName the name for the field
+ * @param {String} _ref.fieldValue the value for the field
+ * @example
+ * createNodeField({
+ *   node,
+ *   fieldName: `happiness`,
+ *   fieldValue: `is sweet graphql queries`
+ * })
+ */
+actions.createNodeField = ({ node, fieldName, fieldValue }, plugin) => {
   // Ensure required fields are set.
   if (!node.internal.fieldOwners) {
     node.internal.fieldOwners = {}

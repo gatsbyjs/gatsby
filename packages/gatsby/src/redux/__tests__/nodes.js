@@ -108,7 +108,7 @@ describe(`Create and update nodes`, () => {
     )
     let state = nodeReducer(undefined, action)
 
-    const addFieldAction = actions.addFieldToNode(
+    const addFieldAction = actions.createNodeField(
       {
         node: state[`hi`],
         fieldName: `joy`,
@@ -138,7 +138,7 @@ describe(`Create and update nodes`, () => {
     )
     let state = nodeReducer(undefined, action)
 
-    const addFieldAction = actions.addFieldToNode(
+    const addFieldAction = actions.createNodeField(
       {
         node: state[`hi`],
         fieldName: `joy`,
@@ -149,7 +149,7 @@ describe(`Create and update nodes`, () => {
     state = nodeReducer(state, addFieldAction)
 
     function callActionCreator() {
-      actions.addFieldToNode(
+      actions.createNodeField(
         {
           node: state[`hi`],
           fieldName: `joy`,
