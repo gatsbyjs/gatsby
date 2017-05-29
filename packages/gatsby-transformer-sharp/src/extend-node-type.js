@@ -14,6 +14,8 @@ const {
   responsiveResolution,
 } = require(`gatsby-plugin-sharp`)
 
+const sharp = require(`sharp`)
+
 const ImageFormatType = new GraphQLEnumType({
   name: `ImageFormat`,
   values: {
@@ -21,6 +23,23 @@ const ImageFormatType = new GraphQLEnumType({
     JPG: { value: `jpg` },
     PNG: { value: `png` },
     WEBP: { value: `webp` },
+  },
+})
+
+const ImageCropFocusType = new GraphQLEnumType({
+  name: `ImageCropFocus`,
+  values: {
+    CENTER: { value: sharp.gravity.center },
+    NORTH: { value: sharp.gravity.north },
+    NORTHEAST: { value: sharp.gravity.northeast },
+    EAST: { value: sharp.gravity.east },
+    SOUTHEAST: { value: sharp.gravity.southeast },
+    SOUTH: { value: sharp.gravity.south },
+    SOUTHWEST: { value: sharp.gravity.southwest },
+    WEST: { value: sharp.gravity.west },
+    NORTHWEST: { value: sharp.gravity.northwest },
+    ENTROPY: { value: sharp.strategy.entropy },
+    ATTENTION: { value: sharp.strategy.attention },
   },
 })
 
@@ -62,6 +81,10 @@ module.exports = ({ type, linkPrefix, getNodeAndSavePathDependency }) => {
           type: ImageFormatType,
           defaultValue: ``,
         },
+        cropFocus: {
+          type: ImageCropFocusType,
+          defaultValue: sharp.strategy.attention,
+        },
       },
       resolve(image, fieldArgs, context) {
         const promise = responsiveResolution({
@@ -100,6 +123,10 @@ module.exports = ({ type, linkPrefix, getNodeAndSavePathDependency }) => {
         toFormat: {
           type: ImageFormatType,
           defaultValue: ``,
+        },
+        cropFocus: {
+          type: ImageCropFocusType,
+          defaultValue: sharp.strategy.attention,
         },
       },
       resolve(image, fieldArgs, context) {
@@ -150,6 +177,10 @@ module.exports = ({ type, linkPrefix, getNodeAndSavePathDependency }) => {
         toFormat: {
           type: ImageFormatType,
           defaultValue: ``,
+        },
+        cropFocus: {
+          type: ImageCropFocusType,
+          defaultValue: sharp.strategy.attention,
         },
       },
       resolve(image, fieldArgs, context) {
