@@ -59,7 +59,11 @@ const processFile = (file, jobs, cb) => {
 
     // duotone
     if (args.duotone) {
-      clonedPipeline = await duotone(args.duotone, job.file.extension, pipeline)
+      clonedPipeline = await duotone(
+        args.duotone,
+        job.file.extension,
+        clonedPipeline
+      )
     }
 
     clonedPipeline
