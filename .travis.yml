@@ -2,7 +2,6 @@ language: node_js
 node_js:
   - "4"
   - "6"
-  - "7"
   - "8"
 
 os: [linux, osx]
@@ -17,7 +16,7 @@ cache:
     - $(npm config get cache)
 
 before_install:
-  - npm i -g npm@5
+  - npm i -g npm@latest
 
 install:
   - npm install
