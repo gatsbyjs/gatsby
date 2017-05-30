@@ -54,6 +54,12 @@ actions.upsertPage = (page, plugin = ``) => {
   }
 }
 
+/**
+ * Delete a node
+ * @param {string} nodeId a node id
+ * @example
+ * deleteNode(node.id)
+ */
 actions.deleteNode = (nodeId, plugin = ``) => {
   return {
     type: `DELETE_NODE`,
@@ -62,6 +68,12 @@ actions.deleteNode = (nodeId, plugin = ``) => {
   }
 }
 
+/**
+ * Batch delete multiple nodes
+ * @param {array} nodes an array of node ids
+ * @example
+ * deleteNodes([`node1`, `node2`])
+ */
 actions.deleteNodes = (nodes, plugin = ``) => {
   return {
     type: `DELETE_NODES`,
