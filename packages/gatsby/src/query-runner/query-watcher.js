@@ -45,7 +45,7 @@ const debounceNewPages = _.debounce(() => {
 }, 300)
 
 // Watch for page updates.
-emitter.on(`UPSERT_PAGE`, action => {
+emitter.on(`CREATE_PAGE`, action => {
   const component = action.payload.component
   if (!pageComponents[component]) {
     // We haven't seen this component before so we:

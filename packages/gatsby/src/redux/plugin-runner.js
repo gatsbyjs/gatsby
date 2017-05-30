@@ -8,7 +8,7 @@ emitter.on(`CREATE_NODE`, action => {
   apiRunnerNode(`onNodeCreate`, { node })
 })
 
-emitter.on(`UPSERT_PAGE`, action => {
+emitter.on(`CREATE_PAGE`, action => {
   const page = action.payload
   apiRunnerNode(`onCreatePage`, { page }, action.plugin.name)
 })

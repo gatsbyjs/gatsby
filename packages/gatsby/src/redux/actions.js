@@ -79,7 +79,7 @@ actions.createPage = (page, plugin = ``) => {
   }
 
   return {
-    type: `UPSERT_PAGE`,
+    type: `CREATE_PAGE`,
     plugin,
     payload: page,
   }

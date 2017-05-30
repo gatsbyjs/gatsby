@@ -32,7 +32,7 @@ Object {
     "path": "/hi/",
   },
   "plugin": "",
-  "type": "UPSERT_PAGE",
+  "type": "CREATE_PAGE",
 }
 `;
 
@@ -62,7 +62,7 @@ Object {
     "path": "/hi/",
   },
   "plugin": "",
-  "type": "UPSERT_PAGE",
+  "type": "CREATE_PAGE",
 }
 `;
 

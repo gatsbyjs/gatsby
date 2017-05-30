@@ -131,7 +131,7 @@ const debouncedWritePages = _.debounce(() => {
   }
 }, 250)
 
-emitter.on(`UPSERT_PAGE`, () => {
+emitter.on(`CREATE_PAGE`, () => {
   debouncedWritePages()
 })
 emitter.on(`DELETE_PAGE_BY_PATH`, () => {
