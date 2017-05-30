@@ -27,7 +27,7 @@ describe(`transformer-react-doc-gen: onNodeCreate`, () => {
     }
     boundActionCreators = {
       createNode: jest.fn(n => createdNodes.push(n)),
-      addNodeToParent: jest.fn(n => updatedNodes.push(n)),
+      createParentChildLink: jest.fn(n => updatedNodes.push(n)),
     }
   })
 

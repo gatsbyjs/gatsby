@@ -13,7 +13,7 @@
 
 - Removed `updateNode` action creator as part of making nodes immutable in #1035.
 Now sites/plugins should use `addFieldToNode` for adding fields to nodes created
-by other plugins and `addNodeToParent` for adding a new node as a child to
+by other plugins and `createParentChildLink` for adding a new node as a child to
 an existing node.
 
 ### Fixed

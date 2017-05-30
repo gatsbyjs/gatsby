@@ -26,8 +26,8 @@ describe(`Process JSON nodes correctly`, () => {
     node.content = JSON.stringify(data)
 
     const createNode = jest.fn()
-    const addNodeToParent = jest.fn()
-    const boundActionCreators = { createNode, addNodeToParent }
+    const createParentChildLink = jest.fn()
+    const boundActionCreators = { createNode, createParentChildLink }
 
     await onNodeCreate({
       node,
@@ -35,9 +35,9 @@ describe(`Process JSON nodes correctly`, () => {
       boundActionCreators,
     }).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
-      expect(addNodeToParent.mock.calls).toMatchSnapshot()
+      expect(createParentChildLink.mock.calls).toMatchSnapshot()
       expect(createNode).toHaveBeenCalledTimes(2)
-      expect(addNodeToParent).toHaveBeenCalledTimes(2)
+      expect(createParentChildLink).toHaveBeenCalledTimes(2)
     })
   })
 
@@ -49,8 +49,8 @@ describe(`Process JSON nodes correctly`, () => {
     node.content = JSON.stringify(data)
 
     const createNode = jest.fn()
-    const addNodeToParent = jest.fn()
-    const boundActionCreators = { createNode, addNodeToParent }
+    const createParentChildLink = jest.fn()
+    const boundActionCreators = { createNode, createParentChildLink }
 
     await onNodeCreate({
       node,
@@ -71,8 +71,8 @@ describe(`Process JSON nodes correctly`, () => {
     node.content = JSON.stringify(data)
 
     const createNode = jest.fn()
-    const addNodeToParent = jest.fn()
-    const boundActionCreators = { createNode, addNodeToParent }
+    const createParentChildLink = jest.fn()
+    const boundActionCreators = { createNode, createParentChildLink }
 
     await onNodeCreate({
       node,

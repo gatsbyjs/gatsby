@@ -25,6 +25,7 @@ const Param = (param, depth = 0) => {
         {param.name === `$0` ? `destructured object` : param.name}
         {" "}
         {param.type &&
+          param.name !== `$0` &&
           <span css={{ color: `#73725f` }}>{`{${param.type.name}}`}</span>}
       </h4>
       {param.description &&

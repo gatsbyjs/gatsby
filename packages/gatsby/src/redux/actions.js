@@ -125,7 +125,7 @@ const typeOwners = {}
  * creating the children nodes while creating the parent node, add the
  * children node IDs here directly. If you're adding a child node to a
  * parent node created by a plugin, you can't mutate this value directly
- * to add your node id, instead use the action creator `addNodeToParent`.
+ * to add your node id, instead use the action creator `createParentChildLink`.
  * @param {object} node.internal node fields that aren't generally
  * interesting to consumers of node data but are very useful for plugin writers
  * and Gatsby core.
@@ -319,7 +319,15 @@ actions.createNodeField = ({ node, fieldName, fieldValue }, plugin) => {
   }
 }
 
-actions.addNodeToParent = ({ parent, child }, plugin) => {
+/**
+ * Creates a link between a parent and child node
+ * @param {object} $0
+ * @param {object} $0.parent the parent node object
+ * @param {object} $0.child the child node object
+ * @example
+ * createParentChildLink({ parent: parentNode, child: childNode })
+ */
+actions.createParentChildLink = ({ parent, child }, plugin) => {
   // Update parent
   parent.children.push(child.id)
   parent.children = _.uniq(parent.children)

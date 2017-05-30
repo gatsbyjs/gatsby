@@ -54,7 +54,7 @@ exports.onNodeCreate = async ({
   loadNodeContent,
   boundActionCreators,
 }) => {
-  const { createNode, addNodeToParent } = boundActionCreators
+  const { createNode, createParentChildLink } = boundActionCreators
 
   if (
     node.internal.mediaType !== `application/javascript` ||
@@ -173,7 +173,7 @@ exports.onNodeCreate = async ({
         },
       }
 
-      addNodeToParent({ parent: node, child: docNode })
+      createParentChildLink({ parent: node, child: docNode })
       createNode(docNode)
       // TODO clean things up, make each description a subnode that's markdown
       // so we handle it.
