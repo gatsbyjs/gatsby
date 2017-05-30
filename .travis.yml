@@ -8,6 +8,10 @@ os: [linux, osx]
 dist: trusty
 sudo: false
 
+cache:
+  directories:
+    - ~/.npm
+
 before_install:
   - npm i -g npm@5
 
