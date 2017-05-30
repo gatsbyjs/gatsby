@@ -13,17 +13,26 @@ const stringifyMarkdownAST = (node = ``) => {
   }
 }
 
-const descId = parentId => `${parentId}--ComponentDescription`
+const commentId = (parentId, commentNumber) =>
+  `documentationJS ${parentId} comment #${commentNumber}`
+const descriptionId = (parentId, name) =>
+  `${parentId}--DocumentationJSComponentDescription--${name}`
 
-function createDescriptionNode(node, markdownStr, boundActionCreators) {
+function createDescriptionNode(
+  node,
+  docNodeId,
+  markdownStr,
+  name,
+  boundActionCreators
+) {
   const { createNode } = boundActionCreators
 
   const descriptionNode = {
-    id: descId(node.id),
+    id: descriptionId(docNodeId, name),
     parent: node.id,
     children: [],
     internal: {
-      type: `ComponentDescription`,
+      type: `DocumentationJSComponentDescription`,
       mediaType: `text/x-markdown`,
       content: markdownStr,
       contentDigest: digest(markdownStr),
@@ -54,11 +63,17 @@ exports.onNodeCreate = async ({
     return null
   }
 
-  const documentationJson = await documentation.build(node.absolutePath, {
-    shallow: true,
-  })
+  let documentationJson
+  try {
+    documentationJson = await documentation.build(node.absolutePath, {
+      shallow: true,
+    })
+  } catch (e) {
+    // Ignore as there'll probably be other tooling already checking for errors
+    // and an error here kills Gatsby.
+  }
 
-  if (documentationJson.length > 0) {
+  if (documentationJson && documentationJson.length > 0) {
     documentationJson.forEach((docsJson, i) => {
       const picked = _.pick(docsJson, [`kind`, `memberof`, `name`, `scope`])
 
@@ -71,23 +86,41 @@ exports.onNodeCreate = async ({
       if (docsJson.description) {
         picked.description___NODE = createDescriptionNode(
           node,
+          commentId(node.id, i),
           stringifyMarkdownAST(docsJson.description),
+          `comment.description`,
           boundActionCreators
         )
       }
 
+      const transformParam = param => {
+        if (param.description) {
+          param.description___NODE = createDescriptionNode(
+            node,
+            commentId(node.id, i),
+            stringifyMarkdownAST(param.description),
+            param.name,
+            boundActionCreators
+          )
+          delete param.description
+        }
+        delete param.lineNumber
+
+        // When documenting destructured parameters, the name
+        // is parent.child where we just want the child.
+        if (param.name.split(`.`).length > 1) {
+          param.name = param.name.split(`.`).slice(1).join(`.`)
+        }
+
+        if (param.properties) {
+          param.properties = param.properties.map(transformParam)
+        }
+
+        return param
+      }
+
       if (docsJson.params) {
-        picked.params = docsJson.params.map(param => {
-          if (param.description) {
-            param.description___NODE = createDescriptionNode(
-              node,
-              stringifyMarkdownAST(param.description),
-              boundActionCreators
-            )
-            delete param.description
-          }
-          return param
-        })
+        picked.params = docsJson.params.map(transformParam)
       }
 
       if (docsJson.returns) {
@@ -95,7 +128,9 @@ exports.onNodeCreate = async ({
           if (ret.description) {
             ret.description___NODE = createDescriptionNode(
               node,
+              commentId(node.id, i),
               stringifyMarkdownAST(ret.description),
+              ret.title,
               boundActionCreators
             )
           }
@@ -127,7 +162,7 @@ exports.onNodeCreate = async ({
       const docNode = {
         ...picked,
         commentNumber: i,
-        id: `documentationJS ${node.id} comment #${i}`,
+        id: commentId(node.id, i),
         parent: node.id,
         children: [],
         internal: {
@@ -148,5 +183,9 @@ exports.onNodeCreate = async ({
       // throw away all the other data and have people add them back
       // if they want to
     })
+
+    return true
+  } else {
+    return null
   }
 }
