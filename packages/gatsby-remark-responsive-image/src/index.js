@@ -2,7 +2,7 @@ const select = require(`unist-util-select`)
 const path = require(`path`)
 const isRelativeUrl = require(`is-relative-url`)
 const _ = require(`lodash`)
-const { queueImageResizing, base64 } = require(`gatsby-plugin-sharp`)
+const { queueImageResizing, responsiveSizes } = require(`gatsby-plugin-sharp`)
 const imageSize = require(`image-size`)
 const Promise = require(`bluebird`)
 
@@ -26,28 +26,6 @@ module.exports = ({
     backgroundColor: `white`,
   }
   const options = _.defaults(pluginOptions, defaults)
-  options.maxWidth = parseInt(options.maxWidth, 10)
-
-  // If the users didn't set a default sizes, we'll make one.
-  if (!options.sizes) {
-    options.sizes = `(max-width: ${options.maxWidth}px) 100vw, ${options.maxWidth}px`
-  }
-
-  // Create sizes (in width) for the image. If the max width of the container
-  // for the rendered markdown file is 800px, the sizes would then be: 200,
-  // 400, 800, 1200, 1600, 2400.
-  //
-  // This is enough sizes to provide close to the optimal image size for every
-  // device size / screen resolution while (hopefully) not requiring too much
-  // image processing time (Sharp has optimizations thankfully for creating
-  // multiple sizes of the same input file)
-  const sizes = []
-  sizes.push(options.maxWidth / 4)
-  sizes.push(options.maxWidth / 2)
-  sizes.push(options.maxWidth)
-  sizes.push(options.maxWidth * 1.5)
-  sizes.push(options.maxWidth * 2)
-  sizes.push(options.maxWidth * 3)
 
   const imageNodes = select(markdownAST, `image`)
   return Promise.all(
@@ -70,43 +48,16 @@ module.exports = ({
               return resolve()
             }
 
-            const dimensions = imageSize(imageNode.absolutePath)
-            const filteredSizes = sizes.filter(size => size < dimensions.width)
-
-            // Add the original image to ensure the largest image possible
-            // is available for odd-shaped images. Also so we can link to
-            // the original image.
-            filteredSizes.push(dimensions.width)
-
-            // Sort sizes for prettiness.
-            const sortedSizes = _.sortBy(filteredSizes)
-
-            // Queue sizes for processing.
-            const images = sortedSizes.map(size =>
-              queueImageResizing({
-                file: imageNode,
-                args: {
-                  width: size,
-                  linkPrefix,
-                },
-              })
-            )
-
-            base64({
+            responsiveSizes({
               file: imageNode,
-            }).then(base64Result => {
+              args: options,
+            }).then(responsiveSizesResult => {
               // Calculate the paddingBottom %
-              const ratio = `${1 / images[0].aspectRatio * 100}%`
+              const ratio = `${1 / responsiveSizesResult.aspectRatio * 100}%`
 
-              // Find the image with the closest width to the maxWidth for our
-              // fallback src.
-              const originalImg = _.maxBy(images, image => image.width).src
-              const fallbackSrc = _.minBy(images, image =>
-                Math.abs(options.maxWidth - image.width)
-              ).src
-              const srcSet = images
-                .map(image => `${image.src} ${Math.round(image.width)}w`)
-                .join(`,`)
+              const originalImg = responsiveSizesResult.originalImage
+              const fallbackSrc = responsiveSizesResult.src
+              const srcSet = responsiveSizesResult.srcSet
 
               // TODO
               // add support for sub-plugins having a gatsby-node.js so can add a
@@ -130,7 +81,7 @@ module.exports = ({
             >
               <div
                 class="gatsby-resp-image-background-image"
-                style="padding-bottom: ${ratio};position: relative; width: 100%; bottom: 0; left: 0; background-image: url('${base64Result.src}'); background-size: cover;"
+                style="padding-bottom: ${ratio};position: relative; width: 100%; bottom: 0; left: 0; background-image: url('${responsiveSizesResult.src}'); background-size: cover;"
               >
                 <img
                   class="gatsby-resp-image-image"
@@ -139,14 +90,14 @@ module.exports = ({
                   title="${node.title ? node.title : ``}"
                   src="${fallbackSrc}"
                   srcset="${srcSet}"
-                  sizes="${options.sizes}"
+                  sizes="${responsiveSizesResult.sizes}"
                 />
               </div>
             </div>
           </a>
           `
               // const rawHTML = `
-              // <div style="width: ${base64Result.width}px; height: ${base64Result.height}px;  padding-bottom: ${base64Result.aspectRatio * 100}%;" class="image-loader">
+              // <div style="width: ${responsiveSizesResult.width}px; height: ${responsiveSizesResult.height}px;  padding-bottom: ${responsiveSizesResult.aspectRatio * 100}%;" class="image-loader">
               // `
 
               node.data = {

@@ -1,6 +1,7 @@
 const Promise = require(`bluebird`)
 const {
   GraphQLObjectType,
+  GraphQLInputObjectType,
   GraphQLBoolean,
   GraphQLString,
   GraphQLInt,
@@ -43,6 +44,16 @@ const ImageCropFocusType = new GraphQLEnumType({
   },
 })
 
+const DuotoneGradientType = new GraphQLInputObjectType({
+  name: `DuotoneGradient`,
+  fields: () => {
+    return {
+      highlight: { type: GraphQLString },
+      shadow: { type: GraphQLString },
+    }
+  },
+})
+
 module.exports = ({ type, linkPrefix, getNodeAndSavePathDependency }) => {
   if (type.name !== `ImageSharp`) {
     return {}
@@ -73,6 +84,10 @@ module.exports = ({ type, linkPrefix, getNodeAndSavePathDependency }) => {
           type: GraphQLBoolean,
           defaultValue: false,
         },
+        duotone: {
+          type: DuotoneGradientType,
+          defaultValue: false,
+        },
         quality: {
           type: GraphQLInt,
           defaultValue: 50,
@@ -84,6 +99,10 @@ module.exports = ({ type, linkPrefix, getNodeAndSavePathDependency }) => {
         cropFocus: {
           type: ImageCropFocusType,
           defaultValue: sharp.strategy.attention,
+        },
+        rotate: {
+          type: GraphQLInt,
+          defaultValue: ``,
         },
       },
       resolve(image, fieldArgs, context) {
@@ -102,6 +121,8 @@ module.exports = ({ type, linkPrefix, getNodeAndSavePathDependency }) => {
           aspectRatio: { type: GraphQLFloat },
           src: { type: GraphQLString },
           srcSet: { type: GraphQLString },
+          sizes: { type: GraphQLString },
+          originalImg: { type: GraphQLString },
         },
       }),
       args: {
@@ -116,6 +137,10 @@ module.exports = ({ type, linkPrefix, getNodeAndSavePathDependency }) => {
           type: GraphQLBoolean,
           defaultValue: false,
         },
+        duotone: {
+          type: DuotoneGradientType,
+          defaultValue: false,
+        },
         quality: {
           type: GraphQLInt,
           defaultValue: 50,
@@ -127,6 +152,10 @@ module.exports = ({ type, linkPrefix, getNodeAndSavePathDependency }) => {
         cropFocus: {
           type: ImageCropFocusType,
           defaultValue: sharp.strategy.attention,
+        },
+        rotate: {
+          type: GraphQLInt,
+          defaultValue: ``,
         },
       },
       resolve(image, fieldArgs, context) {
@@ -170,6 +199,10 @@ module.exports = ({ type, linkPrefix, getNodeAndSavePathDependency }) => {
           type: GraphQLBoolean,
           defaultValue: false,
         },
+        duotone: {
+          type: DuotoneGradientType,
+          defaultValue: false,
+        },
         base64: {
           type: GraphQLBoolean,
           defaultValue: false,
@@ -181,6 +214,10 @@ module.exports = ({ type, linkPrefix, getNodeAndSavePathDependency }) => {
         cropFocus: {
           type: ImageCropFocusType,
           defaultValue: sharp.strategy.attention,
+        },
+        rotate: {
+          type: GraphQLInt,
+          defaultValue: ``,
         },
       },
       resolve(image, fieldArgs, context) {
