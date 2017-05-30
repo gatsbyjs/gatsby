@@ -29,7 +29,7 @@ const debounceNewPages = _.debounce(() => {
     pages.forEach(componentPath => {
       const query = queries.get(componentPath)
 
-      boundActionCreators.setPageComponentQuery({
+      boundActionCreators.replacePageComponentQuery({
         query: query && query.text,
         componentPath,
       })
@@ -62,7 +62,7 @@ emitter.on(`CREATE_PAGE`, action => {
     if (!fs.existsSync(pathToJSONFile)) {
       fs.writeFile(pathToJSONFile, `{}`)
     }
-    boundActionCreators.addPageComponent(component)
+    boundActionCreators.createPageComponent(component)
     pendingPages.push(component)
     // Make sure we're watching this component.
     watcher.add(component)
@@ -78,7 +78,7 @@ const runQueriesForComponent = componentPath => {
   // Remove page data dependencies before re-running queries because
   // the changing of the query could have changed the data dependencies.
   // Re-running the queries will add back data dependencies.
-  boundActionCreators.removePagesDataDependencies(pages.map(p => p.path))
+  boundActionCreators.deletePagesDependencies(pages.map(p => p.path))
   const component = store.getState().pageComponents[componentPath]
   return Promise.all(pages.map(p => queryRunner(p, component)))
 }
@@ -95,7 +95,7 @@ exports.watch = rootDir => {
       const pages = store.getState().pageComponents
       queries.forEach(({ text }, path) => {
         if (text !== pages[path].query) {
-          boundActionCreators.setPageComponentQuery({
+          boundActionCreators.replacePageComponentQuery({
             query: text,
             componentPath: path,
           })

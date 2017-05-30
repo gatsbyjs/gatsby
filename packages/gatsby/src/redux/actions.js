@@ -273,10 +273,10 @@ actions.createNode = (node, plugin) => {
 /**
  * Create field on a node a plugin don't own. Once a plugin has claimed a field name
  * the field name can't be used by other plugins.
- * @param {Object} $0
- * @param {Object} $0.node the target node object
- * @param {String} $0.fieldName the name for the field
- * @param {String} $0.fieldValue the value for the field
+ * @param {object} $0
+ * @param {object} $0.node the target node object
+ * @param {string} $0.fieldName the name for the field
+ * @param {string} $0.fieldValue the value for the field
  * @example
  * createNodeField({
  *   node,
@@ -339,6 +339,7 @@ actions.createParentChildLink = ({ parent, child }, plugin) => {
   }
 }
 
+// Change to "setPluginStatus".
 actions.updateSourcePluginStatus = (status, plugin = ``) => {
   return {
     type: `UPDATE_SOURCE_PLUGIN_STATUS`,
@@ -350,14 +351,15 @@ actions.updateSourcePluginStatus = (status, plugin = ``) => {
 /**
  * Create a dependency between a page and data. Probably for
  * internal use only.
- * @param {Object} $0
- * @param {Object} $0.path the path to the page
- * @param {String} $0.nodeId A node ID
- * @param {String} $0.connection A connection type
+ * @param {object} $0
+ * @param {string} $0.path the path to the page
+ * @param {string} $0.nodeId A node ID
+ * @param {string} $0.connection A connection type
+ * @private
  */
 actions.createPageDependency = ({ path, nodeId, connection }, plugin = ``) => {
   return {
-    type: `ADD_PAGE_DEPENDENCY`,
+    type: `CREATE_PAGE_DEPENDENCY`,
     plugin,
     payload: {
       path,
@@ -367,27 +369,45 @@ actions.createPageDependency = ({ path, nodeId, connection }, plugin = ``) => {
   }
 }
 
-actions.removePagesDataDependencies = paths => {
+/**
+ * Delete dependencies between an array of pages and data. Probably for
+ * internal use only. Used when deleting pages.
+ * @param {object} $0
+ * @param {array} $0.paths the paths to delete.
+ * @private
+ */
+actions.deletePagesDependencies = paths => {
   return {
-    type: `REMOVE_PAGES_DATA_DEPENDENCIES`,
+    type: `DELETE_PAGES_DEPENDENCIES`,
     payload: {
       paths,
     },
   }
 }
 
-actions.addPageComponent = componentPath => {
+/**
+ * Used by the query watcher when it identifies a new component
+ * which is probably a page. TODO perhaps the query watcher
+ * just listens for new pages?
+ * @private
+ */
+actions.createPageComponent = componentPath => {
   return {
-    type: `ADD_PAGE_COMPONENT`,
+    type: `CREATE_PAGE_COMPONENT`,
     payload: {
       componentPath,
     },
   }
 }
 
-actions.setPageComponentQuery = ({ query, componentPath }) => {
+/**
+ * When the query watcher extracts a graphq query, it calls
+ * this to store the query with its component.
+ * @private
+ */
+actions.replacePageComponentQuery = ({ query, componentPath }) => {
   return {
-    type: `SET_PAGE_COMPONENT_QUERY`,
+    type: `REPLACE_PAGE_COMPONENT_QUERY`,
     payload: {
       query,
       componentPath,

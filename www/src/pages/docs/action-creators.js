@@ -8,7 +8,6 @@ const Param = (param, depth = 0) => {
     return null
   }
 
-  console.log(param)
   return (
     <div
       css={{
