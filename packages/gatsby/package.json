@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "React.js Static Site Generator",
-  "version": "1.0.0-alpha15",
+  "version": "1.0.0-alpha16",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./dist/gatsby-cli.js"
@@ -46,7 +46,7 @@
     "fs-extra": "^3.0.1",
     "glob": "^7.1.1",
     "graphql-relay": "^0.5.1",
-    "graphql-skip-limit": "^1.0.0-alpha15",
+    "graphql-skip-limit": "^1.0.0-alpha16",
     "graphql-union-input-type": "^0.2.1",
     "gray-matter": "^2.1.0",
     "hapi": "^8.5.1",
@@ -141,12 +141,13 @@
     "url": "git+https://github.com/gatsbyjs/gatsby.git"
   },
   "scripts": {
-    "build": "rimraf dist && npm run build:src && npm run build:cli && npm run build:internal-plugins",
-    "build:src": "babel src --out-dir dist --source-maps --ignore gatsby-cli.js,__tests__",
+    "build": "rimraf dist && npm run build:src && npm run build:cli && npm run build:internal-plugins && npm run build:rawfiles",
+    "build:src": "babel src --out-dir dist --source-maps --ignore gatsby-cli.js,raw_*,__tests__",
     "build:internal-plugins": "copyfiles -u 1 src/bootstrap/internal-plugins/**/package.json dist",
+    "build:rawfiles": "copyfiles -u 1 src/bootstrap/internal-plugins/**/raw_* dist",
     "build:cli": "babel src/gatsby-cli.js --out-file dist/gatsby-cli.js --presets es2015",
     "clean-test-bundles": "find test/ -type f -name bundle.js* -exec rm -rf {} +",
     "test-coverage": "node_modules/.bin/nyc --reporter=lcov --reporter=text npm test",
-    "watch": "rimraf dist && npm run build:src -- --watch && npm run build:internal-plugins"
+    "watch": "rimraf dist && npm run build:src -- --watch && npm run build:internal-plugins && npm run build:rawfiles"
   }
 }

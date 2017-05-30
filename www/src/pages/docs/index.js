@@ -33,7 +33,7 @@ class IndexRoute extends React.Component {
         <p>
           The best way to get started is by installing Gatsby Starters. There are four
           sites that currently works with
-          <code>gatsby@1.0.0-alpha13</code>:
+          <code>gatsby@1.0.0-alpha16</code>:
         </p>
         <ul>
           <li>

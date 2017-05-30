@@ -1,0 +1,18 @@
+{
+  "name": "gatsby-plugin-less",
+  "version": "",
+  "description": "Stub description for gatsby-plugin-less",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src --out-dir . --ignore __tests__",
+    "watch": "babel -w src --out-dir . --ignore __tests__"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "author": "Kyle Mathews &lt;mathews.kyle@gmail.com&gt;",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.24.1"
+  }
+}

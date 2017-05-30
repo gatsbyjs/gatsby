@@ -1,17 +1,16 @@
-const select = require(`unist-util-select`)
 const Promise = require(`bluebird`)
 const fs = require(`fs`)
 const _ = require(`lodash`)
 const crypto = require(`crypto`)
 
 async function onNodeCreate({ node, boundActionCreators, loadNodeContent }) {
-  const { createNode, updateNode } = boundActionCreators
+  const { createNode, addNodeToParent } = boundActionCreators
 
   // Don't reprocess our own nodes!  (note: this doesn't normally happen
   // but since this transformer creates new nodes with the same media-type
   // as its parent node, we have to add this check that we didn't create
   // the node).
-  if (node.internal.pluginName === `gatsby-transformer-json`) {
+  if (node.internal.owner === `gatsby-transformer-json`) {
     return
   }
 
@@ -49,9 +48,10 @@ async function onNodeCreate({ node, boundActionCreators, loadNodeContent }) {
       }
     })
 
-    node.children = node.children.concat(JSONArray.map(n => n.id))
-    updateNode(node)
-    _.each(JSONArray, j => createNode(j))
+    _.each(JSONArray, j => {
+      createNode(j)
+      addNodeToParent({ parent: node, child: j })
+    })
   }
 
   return

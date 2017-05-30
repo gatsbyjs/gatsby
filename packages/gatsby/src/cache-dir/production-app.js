@@ -57,19 +57,21 @@ const preferDefault = m => (m && m.default) || m
 const scriptsCache = {}
 const loadScriptsForPath = (path, cb = () => {}) => {
   const page = findPage(path)
-  if (!page) {
-    return cb()
-  }
-
-  if (scriptsCache[page.path]) {
-    return cb(scriptsCache[page.path])
-  }
 
   let scripts = {
     layout: false,
     component: false,
     pageData: false,
   }
+
+  if (!page) {
+    return cb(scripts)
+  }
+
+  if (scriptsCache[page.path]) {
+    return cb(scriptsCache[page.path])
+  }
+
   const loaded = () => {
     if (
       scripts.layout !== false &&

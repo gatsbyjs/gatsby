@@ -4,7 +4,7 @@ import Link from "gatsby-link"
 import { rhythm, scale } from "../../utils/typography"
 import presets from "../../utils/presets"
 
-const IndexRoute = React.createClass({
+class BlogPostsIndex extends React.Component {
   render() {
     console.log(`blog posts`, this.props)
     const blogPosts = this.props.data.allMarkdownRemark.edges.map(
@@ -27,8 +27,8 @@ const IndexRoute = React.createClass({
           const avatar =
             post.frontmatter.author.avatar.childImageSharp.responsiveResolution
           return (
-            <div>
-              <Link to={post.slug}>
+            <div key={post.fields.slug}>
+              <Link to={post.fields.slug}>
                 <h2
                   css={{
                     marginBottom: rhythm(1 / 8),
@@ -87,13 +87,13 @@ const IndexRoute = React.createClass({
         })}
       </div>
     )
-  },
-})
+  }
+}
 
-export default IndexRoute
+export default BlogPostsIndex
 
 export const pageQuery = graphql`
-query IndexRouteQuery {
+query BlogPostsIndexQuery {
   allMarkdownRemark(
     sortBy: { order: DESC, fields: [frontmatter___date] },
     frontmatter: { draft: { ne: true } },
@@ -102,7 +102,7 @@ query IndexRouteQuery {
     edges {
       node {
         excerpt
-        slug
+        fields { slug }
         frontmatter {
           title
           date(formatString: "DD MMMM, YYYY")

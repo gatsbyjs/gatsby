@@ -3,12 +3,15 @@ const path = require(`path`)
 const slash = require(`slash`)
 const _ = require(`lodash`)
 
-exports.createPages = () => [
-  {
-    path: `/offline-plugin-app-shell-fallback/`,
-    component: slash(path.resolve(`${__dirname}/app-shell.js`)),
-  },
-]
+exports.createPages = ({ boundActionCreators }) => {
+  if (process.env.NODE_ENV === `production`) {
+    const { upsertPage } = boundActionCreators
+    upsertPage({
+      path: `/offline-plugin-app-shell-fallback/`,
+      component: slash(path.resolve(`${__dirname}/app-shell.js`)),
+    })
+  }
+}
 
 exports.postBuild = (args, pluginOptions) => {
   const rootDir = `public`

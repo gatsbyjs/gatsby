@@ -18,14 +18,8 @@ const doubleBind = (boundActionCreators, plugin) => {
       const key = keys[i]
       const boundActionCreator = boundActionCreators[key]
       if (typeof boundActionCreator === `function`) {
-        doubleBoundActionCreators[key] = (...args) => {
-          // Automatically add to newly created nodes
-          // the plugin's name
-          if (key === `createNode`) {
-            args[0].internal.pluginName = plugin.name
-          }
-          return boundActionCreator(...args, plugin)
-        }
+        doubleBoundActionCreators[key] = (...args) =>
+          boundActionCreator(...args, plugin)
       }
     }
     boundPluginActionCreators[plugin.name] = doubleBoundActionCreators
@@ -55,9 +49,9 @@ const runAPI = (plugin, api, args) => {
 
   const gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
   if (gatsbyNode[api]) {
-    if (!_.includes([`onNodeCreate`], api)) {
-      console.log(`calling api handler in ${plugin.resolve} for api ${api}`)
-    }
+    // if (!_.includes([`onNodeCreate`, `onUpsertPage`], api)) {
+    // console.log(`calling api handler in ${plugin.resolve} for api ${api}`)
+    // }
     const result = gatsbyNode[api](
       {
         ...args,

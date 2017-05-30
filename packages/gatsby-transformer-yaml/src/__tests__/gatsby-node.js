@@ -24,8 +24,8 @@ describe(`Process YAML nodes correctly`, () => {
     node.content = yaml.safeDump(data)
 
     const createNode = jest.fn()
-    const updateNode = jest.fn()
-    const boundActionCreators = { createNode, updateNode }
+    const addNodeToParent = jest.fn()
+    const boundActionCreators = { createNode, addNodeToParent }
 
     await onNodeCreate({
       node,
@@ -33,9 +33,9 @@ describe(`Process YAML nodes correctly`, () => {
       boundActionCreators,
     }).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
-      expect(updateNode.mock.calls).toMatchSnapshot()
+      expect(addNodeToParent.mock.calls).toMatchSnapshot()
       expect(createNode).toHaveBeenCalledTimes(2)
-      expect(updateNode).toHaveBeenCalledTimes(1)
+      expect(addNodeToParent).toHaveBeenCalledTimes(2)
     })
   })
 
@@ -47,8 +47,8 @@ describe(`Process YAML nodes correctly`, () => {
     node.content = yaml.safeDump(data)
 
     const createNode = jest.fn()
-    const updateNode = jest.fn()
-    const boundActionCreators = { createNode, updateNode }
+    const addNodeToParent = jest.fn()
+    const boundActionCreators = { createNode, addNodeToParent }
 
     await onNodeCreate({
       node,
@@ -69,8 +69,8 @@ describe(`Process YAML nodes correctly`, () => {
     node.content = yaml.safeDump(data)
 
     const createNode = jest.fn()
-    const updateNode = jest.fn()
-    const boundActionCreators = { createNode, updateNode }
+    const addNodeToParent = jest.fn()
+    const boundActionCreators = { createNode, addNodeToParent }
 
     await onNodeCreate({
       node,

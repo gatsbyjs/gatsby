@@ -37,7 +37,7 @@ function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
 
 const $ = React.createElement
 
-const noMatch = pages.find(r => r.path === `/404.html`)
+const noMatch = pages.find(r => r.path === `/dev-404-page/`)
 
 const addNotFoundRoute = () => {
   if (noMatch) {
