@@ -1,36 +1,32 @@
 import React from "react"
-import { rhythm } from "../../utils/typography"
+import { rhythm, scale } from "../../utils/typography"
 
-const Param = param => {
+const Param = (param, depth = 0) => {
   // the plugin parameter is used internally but not
   // something a user should use.
   if (param.name == `plugin`) {
     return null
   }
 
-  if (!param.properties) {
-    return (
-      <div>
-        <h5 css={{ margin: 0 }}>{param.name}</h5>
-        {param.description &&
-          <span
-            dangerouslySetInnerHTML={{
-              __html: param.description.childMarkdownRemark.html,
-            }}
-          />}
-      </div>
-    )
-    // This is a destructured object.
-  } else {
-    return (
-      <div>
-        <h4 css={{ margin: 0, marginBottom: rhythm(1 / 4) }}>
-          destructured object
-        </h4>
-        {param.properties.map(Param)}
-      </div>
-    )
-  }
+  return (
+    <div
+      css={{ marginLeft: `${depth * 1.4}rem`, ...(depth > 0 && scale(-1 / 5)) }}
+    >
+      <h4 css={{ margin: 0 }}>
+        {param.name === `$0` ? `destructured object` : param.name}
+      </h4>
+      {param.description &&
+        <span
+          dangerouslySetInnerHTML={{
+            __html: param.description.childMarkdownRemark.html,
+          }}
+        />}
+      {param.properties &&
+        <div css={{ marginTop: rhythm(1 / 2) }}>
+          {param.properties.map(param => Param(param, depth + 1))}
+        </div>}
+    </div>
+  )
 }
 
 class ActionCreatorsDocs extends React.Component {
