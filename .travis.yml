@@ -1,12 +1,18 @@
 language: node_js
 node_js:
+  - "4"
   - "6"
   - "7"
-env:
-  - CXX=g++-4.8
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - g++-4.8
+
+os: [linux, osx]
+dist: trusty
+sudo: false
+
+before_install:
+  - npm i -g npm@5
+
+install:
+  - npm install
+
+script:
+  - npm test
