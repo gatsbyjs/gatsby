@@ -40,6 +40,10 @@ module.exports = function(plop) {
         path: `packages/{{kebabCase name}}/.npmignore`,
         templateFile: `plop-templates/.npmignore.hbs`,
       },
+      {
+        type: `add`,
+        path: `packages/{{kebabCase name}}/src/.gitkeep`,
+      },
     ],
   })
 }
