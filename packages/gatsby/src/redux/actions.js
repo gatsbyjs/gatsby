@@ -27,8 +27,27 @@ actions.deletePage = (page, plugin = ``) => {
 }
 
 const pascalCase = _.flow(_.camelCase, _.upperFirst)
-// "createPage"
-actions.upsertPage = (page, plugin = ``) => {
+/**
+ * Create a page. See https://gatsbyjs.org/docs/creating-and-modifying-pages/
+ * for detailed documenation about creating pages.
+ * @param {object} page a page object
+ * @param {string} page.path Any valid URL. Must start with a forward slash
+ * @param {string} page.component The absolute path to the component for this page
+ * @param {object} page.context Context data for this page. Passed as props
+ * to the component `this.props.pathContext` as well as to the graphql query
+ * as graphql arguments.
+ * @example
+ * createPage({
+ *   path: `/my-sweet-new-page/`,
+ *   component: path.resolve('./src/templates/my-sweet-new-page.js`),
+ *   // context gets passed in as props to the page as well
+ *   // as into the page/template's GraphQL query.
+ *   context: {
+ *     id: `123456`,
+ *   },
+ * })
+ */
+actions.createPage = (page, plugin = ``) => {
   page.componentChunkName = layoutComponentChunkName(page.component)
 
   let jsonName = `${_.kebabCase(page.path)}.json`
@@ -52,6 +71,11 @@ actions.upsertPage = (page, plugin = ``) => {
     console.log(chalk.bold.red(result.error))
     console.log(page)
     return
+  }
+
+  // If the path doesn't have an initial forward slash, add it.
+  if (page.path[0] !== `/`) {
+    page.path = `/` + page.path
   }
 
   return {

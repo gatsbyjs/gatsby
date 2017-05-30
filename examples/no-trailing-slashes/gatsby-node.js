@@ -1,7 +1,7 @@
 const Promise = require(`bluebird`)
 
-exports.onUpsertPage = ({ page, boundActionCreators }) => {
-  const { upsertPage, deletePage } = boundActionCreators
+exports.onCreatePage = ({ page, boundActionCreators }) => {
+  const { createPage, deletePage } = boundActionCreators
 
   return new Promise((resolve, reject) => {
     // Remove trailing slash
@@ -12,7 +12,7 @@ exports.onUpsertPage = ({ page, boundActionCreators }) => {
       deletePage({ path: oldPath })
 
       // Add the new page
-      upsertPage(page)
+      createPage(page)
     }
 
     resolve()

@@ -158,7 +158,7 @@ Now we can create pages for each markdown file using our slug. In the same
 
 ```javascript
 exports.createPages = ({ graphql, boundActionCreators }) => {
-  const { upsertPage } = boundActionCreators
+  const { createPage } = boundActionCreators
 
   return new Promise((resolve, reject) => {
     const pages = []
@@ -187,7 +187,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 
         // Create blog posts pages.
         result.data.allMarkdownRemark.edges.forEach(edge => {
-          upsertPage({
+          createPage({
             path: edge.node.fields.slug, // required
             component: blogPost,
             context: {

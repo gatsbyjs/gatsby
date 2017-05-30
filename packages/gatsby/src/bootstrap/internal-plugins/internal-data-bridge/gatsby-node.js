@@ -101,7 +101,7 @@ exports.sourceNodes = ({ boundActionCreators, store }) => {
 
 const createPageId = path => `SitePage ${path}`
 
-exports.onUpsertPage = ({ page, boundActionCreators }) => {
+exports.onCreatePage = ({ page, boundActionCreators }) => {
   const { createNode } = boundActionCreators
 
   // Add page.

@@ -10,5 +10,5 @@ emitter.on(`CREATE_NODE`, action => {
 
 emitter.on(`UPSERT_PAGE`, action => {
   const page = action.payload
-  apiRunnerNode(`onUpsertPage`, { page }, action.plugin.name)
+  apiRunnerNode(`onCreatePage`, { page }, action.plugin.name)
 })

@@ -249,7 +249,7 @@ data
   if (!exists404html) {
     store.getState().pages.forEach(page => {
       if (page.path === `/404/`) {
-        boundActionCreators.upsertPage({
+        boundActionCreators.createPage({
           ...page,
           path: `/404.html`,
         })

@@ -6,7 +6,7 @@ const fs = require(`fs-extra`)
 const slash = require(`slash`)
 
 exports.createPages = ({ graphql, boundActionCreators }) => {
-  const { upsertPage } = boundActionCreators
+  const { createPage } = boundActionCreators
   return new Promise((resolve, reject) => {
     const docsTemplate = path.resolve(`src/templates/template-docs-markdown.js`)
     const blogPostTemplate = path.resolve(`src/templates/template-blog-post.js`)
@@ -41,7 +41,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           if (!slug) return
 
           if (_.includes(slug, `/blog/`)) {
-            upsertPage({
+            createPage({
               path: `${edge.node.fields.slug}`, // required
               component: slash(blogPostTemplate),
               context: {
@@ -49,7 +49,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
               },
             })
           } else {
-            upsertPage({
+            createPage({
               path: `${edge.node.fields.slug}`, // required
               component: slash(
                 edge.node.fields.package ? packageTemplate : docsTemplate
