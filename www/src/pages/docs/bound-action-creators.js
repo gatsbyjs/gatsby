@@ -10,15 +10,16 @@ const Param = (param, depth = 0) => {
 
   return (
     <div
+      key={`param ${JSON.stringify(param)}`}
       css={{
-        marginLeft: `${depth * 0.7}rem`,
-        ...(depth > 0 && scale(-1 / 5)),
+        marginLeft: `${depth * 1.05}rem`,
+        ...(depth > 0 && scale((depth === 1 ? -1 : -1.5) / 5)),
       }}
     >
-      <h4
+      <h5
         css={{
           margin: 0,
-          ...(depth > 0 && scale((depth === 1 ? 0.5 : 0) / 5)),
+          ...(depth > 0 && scale((depth === 1 ? 0 : -0.5) / 5)),
         }}
       >
         {param.name === `$0` ? `destructured object` : param.name}
@@ -26,7 +27,7 @@ const Param = (param, depth = 0) => {
         {param.type &&
           param.name !== `$0` &&
           <span css={{ color: `#73725f` }}>{`{${param.type.name}}`}</span>}
-      </h4>
+      </h5>
       {param.description &&
         <div
           css={{ marginBottom: rhythm(-1 / 4) }}
@@ -47,18 +48,37 @@ class ActionCreatorsDocs extends React.Component {
     console.log(this.props)
     return (
       <div>
-        <h1>Action Creators</h1>
-        <p>Action creators are used by plugins to perform various tasks</p>
-        <ul>
+        <h1>Bound Action Creators</h1>
+        <p>
+          Gatsby uses
+          {" "}
+          <a href="http://redux.js.org">Redux</a>
+          {" "}
+          internally to manage state. When you implement a Gatsby API, you're
+          passed a collection of "Bound Action Creators" (functions which create and dispatch Redux actions when called)
+          which you can use to manipulate state on your site.
+        </p>
+        <h2>Functions</h2>
+        <ul css={{ ...scale(-1 / 5) }}>
           {this.props.data.allDocumentationJs.edges.map(({ node }, i) => {
-            return <li>{node.name}</li>
+            return (
+              <li key={`function list ${node.name}`}>
+                <a href={`#${node.name}`}>{node.name}</a>
+              </li>
+            )
           })}
         </ul>
+        <hr />
+        <h2>Reference</h2>
         {this.props.data.allDocumentationJs.edges.map(({ node }, i) => {
           return (
-            <div css={{ marginBottom: rhythm(1) }}>
+            <div
+              id={node.name}
+              key={`reference list ${node.name}`}
+              css={{ marginBottom: rhythm(1) }}
+            >
               {i !== 0 && <hr />}
-              <h2><code>{node.name}</code></h2>
+              <h3><a href={`#${node.name}`}><code>{node.name}</code></a></h3>
               <div
                 dangerouslySetInnerHTML={{
                   __html: node.description.childMarkdownRemark.html,
@@ -66,7 +86,7 @@ class ActionCreatorsDocs extends React.Component {
               />
               {node.params.length > 0 &&
                 <div>
-                  <h3>Parameters</h3>
+                  <h4>Parameters</h4>
                   {node.params.map(Param)}
                 </div>}
 
@@ -74,8 +94,8 @@ class ActionCreatorsDocs extends React.Component {
                 <div>
                   <h4 css={{ marginTop: rhythm(1) }}>Example</h4>
                   {" "}
-                  {node.examples.map(example => (
-                    <pre>
+                  {node.examples.map((example, i) => (
+                    <pre key={`${node.name} example ${i}`}>
                       <code
                         className="language-javascript"
                         dangerouslySetInnerHTML={{

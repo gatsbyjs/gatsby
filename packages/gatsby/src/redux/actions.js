@@ -28,7 +28,7 @@ actions.deletePage = (page, plugin = ``) => {
 
 const pascalCase = _.flow(_.camelCase, _.upperFirst)
 /**
- * Create a page. See https://gatsbyjs.org/docs/creating-and-modifying-pages/
+ * Create a page. See https://www.gatsbyjs.org/docs/creating-and-modifying-pages/
  * for detailed documenation about creating pages.
  * @param {object} page a page object
  * @param {string} page.path Any valid URL. Must start with a forward slash
@@ -271,8 +271,12 @@ actions.createNode = (node, plugin) => {
 }
 
 /**
- * Create field on a node a plugin don't own. Once a plugin has claimed a field name
- * the field name can't be used by other plugins.
+ * Extend another node. The added node field is placed under the `fields`
+ * key.
+ *
+ * Once a plugin has claimed a field name the field name can't be used by
+ * other plugins.  Also since node's are immutable, you can't mutate the node
+ * directly.  So to extend
  * @param {object} $0
  * @param {object} $0.node the target node object
  * @param {string} $0.fieldName the name for the field

@@ -20,7 +20,7 @@
 - title: Reference
   links:
     Node Interface: /docs/node-interface/
-    Action Creators: /docs/action-creators/
+    Bound Action Creators: /docs/bound-action-creators/
 - title: Contributing
   links:
     How to Contribute: /docs/how-to-contribute/

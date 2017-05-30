@@ -23,6 +23,14 @@ module.exports = function(root, cb) {
     // e.g. _blank.
     if (anchor.target && anchor.target.toLowerCase() !== `_self`) return true
 
+    // Don't catch links pointed to the same page but with a hash.
+    if (
+      anchor.pathname === window.location.pathname &&
+      anchor.target.hash !== ``
+    ) {
+      return true
+    }
+
     // IE clears the host value if the anchor href changed after creation, e.g.
     // in React. Creating a new anchor element to ensure host value is present
     var a1 = document.createElement(`a`)
