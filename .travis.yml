@@ -8,9 +8,12 @@ os: [linux, osx]
 dist: trusty
 sudo: required
 
+# by caching the npm local cache, instead of ./node_modules,
+# we theoretically avoid accidentally having npm keep around
+# old modules in the tree
 cache:
   directories:
-    - ~/.npm
+    - $(npm config get cache)
 
 before_install:
   - npm i -g npm@5
