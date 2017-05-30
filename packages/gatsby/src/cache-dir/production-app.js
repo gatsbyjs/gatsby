@@ -72,7 +72,6 @@ const loadScriptsForPath = (path, cb = () => {}) => {
     return cb(scriptsCache[page.path])
   }
 
-
   const loaded = () => {
     if (
       scripts.layout !== false &&
