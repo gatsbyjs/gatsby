@@ -100,7 +100,7 @@ actions.deleteNode = (nodeId, plugin = ``) => {
 }
 
 /**
- * Batch delete multiple nodes
+ * Batch delete nodes
  * @param {array} nodes an array of node ids
  * @example
  * deleteNodes([`node1`, `node2`])
@@ -113,15 +113,57 @@ actions.deleteNodes = (nodes, plugin = ``) => {
   }
 }
 
-actions.touchNode = (nodeId, plugin = ``) => {
-  return {
-    type: `TOUCH_NODE`,
-    plugin,
-    payload: nodeId,
-  }
-}
-
 const typeOwners = {}
+/**
+ * Create a new node
+ * @param {object} node a node object
+ * @param {string} node.id The node's ID. Must be globally unique.
+ * @param {string} node.parent The ID of the parent's node. If the node is
+ * derived from another node, set that node as the parent. Otherwise it can
+ * just be an empty string.
+ * @param {array} node.children An array of children node IDs. If you're
+ * creating the children nodes while creating the parent node, add the
+ * children node IDs here directly. If you're adding a child node to a
+ * parent node created by a plugin, you can't mutate this value directly
+ * to add your node id, instead use the action creator `addNodeToParent`.
+ * @param {object} node.internal node fields that aren't generally
+ * interesting to consumers of node data but are very useful for plugin writers
+ * and Gatsby core.
+ * @param {string} node.internal.mediaType Either an official media type (we use
+ * mime-db as our source (https://www.npmjs.com/package/mime-db) or a made-up
+ * one if your data doesn't fit in any existing bucket. Transformer plugins
+ * frequently use node media types for deciding if they should transform a
+ * node into a new one. E.g. markdown transformers look for media types of
+ * text/x-markdown.
+ * @param {string} node.internal.type An arbitrary globally unique type
+ * choosen by the plugin creating the node. Should be descriptive of the
+ * node as the type is used in forming GraphQL types so users will query
+ * for nodes based on the type choosen here. Nodes of a given type can
+ * only be created by one plugin.
+ * @param {string} node.internal.content raw content of the node. Can be
+ * excluded if it'd be memory intensive to load in which case you must
+ * define a `loadNodeContent` function for this node.
+ * @param {string} node.internal.contentDigest the digest for the content
+ * of this node. Helps Gatsby avoid doing extra work on data that hasn't
+ * changed.
+ * @example
+ * createNode({
+ *   // Data for the node.
+ *   ...fieldData,
+ *   id: `a-node-id`,
+ *   parent: `the-id-of-the-parent-node`,
+ *   children: [],
+ *   internal: {
+ *     mediaType: `text/x-markdown`,
+ *     type: `CoolServiceMarkdownField`,
+ *     content: JSON.stringify(fieldData),
+ *     contentDigest: crypto
+ *       .createHash(`md5`)
+ *       .update(JSON.stringify(fieldData))
+ *       .digest(`hex`),
+ *   }
+ * })
+ */
 actions.createNode = (node, plugin) => {
   if (!_.isObject(node)) {
     return console.log(
