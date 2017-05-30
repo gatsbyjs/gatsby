@@ -9,8 +9,8 @@ class DefaultLayout extends React.Component {
           <h3>
             Example showing redirects
           </h3>
-          <p>Navigate to <Link to="/redirect/">/redirect</Link>. It should redirect you :).</p>
         </Link>
+        <p>Navigate to <Link to="/redirect/">/redirect</Link>. It should redirect you :).</p>
         <ul>
           <li><Link to="/a/">a</Link></li>
           <li><Link to="/b/">b</Link></li>
