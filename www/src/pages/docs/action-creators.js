@@ -8,15 +8,28 @@ const Param = (param, depth = 0) => {
     return null
   }
 
+  console.log(param)
   return (
     <div
-      css={{ marginLeft: `${depth * 1.4}rem`, ...(depth > 0 && scale(-1 / 5)) }}
+      css={{
+        marginLeft: `${depth * 0.7}rem`,
+        ...(depth > 0 && scale(-1 / 5)),
+      }}
     >
-      <h4 css={{ margin: 0 }}>
+      <h4
+        css={{
+          margin: 0,
+          ...(depth > 0 && scale((depth === 1 ? 0.5 : 0) / 5)),
+        }}
+      >
         {param.name === `$0` ? `destructured object` : param.name}
+        {" "}
+        {param.type &&
+          <span css={{ color: `#73725f` }}>{`{${param.type.name}}`}</span>}
       </h4>
       {param.description &&
-        <span
+        <div
+          css={{ marginBottom: rhythm(-1 / 4) }}
           dangerouslySetInnerHTML={{
             __html: param.description.childMarkdownRemark.html,
           }}
@@ -53,7 +66,7 @@ class ActionCreatorsDocs extends React.Component {
               />
               {node.params.length > 0 &&
                 <div>
-                  <h3>Params</h3>
+                  <h3>Parameters</h3>
                   {node.params.map(Param)}
                 </div>}
 
@@ -106,27 +119,34 @@ query ActionCreatorDocsQuery {
         }
         params {
           name
+          type {
+            name
+          }
           description {
-            internal {
-              content
+            childMarkdownRemark {
+              html
             }
           }
-          type {
-            type
-            name
-          }
           properties {
-            title
             name
+            type {
+              name
+            }
             description {
               childMarkdownRemark {
                 html
               }
             }
-          }
-          description {
-            childMarkdownRemark {
-              html
+            properties {
+              name
+              type {
+                name
+              }
+              description {
+                childMarkdownRemark {
+                  html
+                }
+              }
             }
           }
         }

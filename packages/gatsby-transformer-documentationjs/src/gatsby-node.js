@@ -109,7 +109,7 @@ exports.onNodeCreate = async ({
         // When documenting destructured parameters, the name
         // is parent.child where we just want the child.
         if (param.name.split(`.`).length > 1) {
-          param.name = param.name.split(`.`).slice(1).join(`.`)
+          param.name = param.name.split(`.`).slice(-1).join(`.`)
         }
 
         if (param.properties) {
