@@ -347,7 +347,15 @@ actions.updateSourcePluginStatus = (status, plugin = ``) => {
   }
 }
 
-actions.addPageDependency = ({ path, nodeId, connection }, plugin = ``) => {
+/**
+ * Create a dependency between a page and data. Probably for
+ * internal use only.
+ * @param {Object} $0
+ * @param {Object} $0.path the path to the page
+ * @param {String} $0.nodeId A node ID
+ * @param {String} $0.connection A connection type
+ */
+actions.createPageDependency = ({ path, nodeId, connection }, plugin = ``) => {
   return {
     type: `ADD_PAGE_DEPENDENCY`,
     plugin,

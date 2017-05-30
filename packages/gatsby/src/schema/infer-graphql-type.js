@@ -18,7 +18,7 @@ const systemPath = require(`path`)
 const { oneLine } = require(`common-tags`)
 
 const { store, getNode, getNodes } = require(`../redux`)
-const { addPageDependency } = require(`../redux/actions/add-page-dependency`)
+const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 const createTypeName = require(`./create-type-name`)
 const createKey = require(`./create-key`)
 const {
@@ -190,7 +190,7 @@ function inferFromMapping(
       n => n.internal.type === linkedType && n.id === fieldValue
     )
     if (linkedNode) {
-      addPageDependency({ path, nodeId: linkedNode.id })
+      createPageDependency({ path, nodeId: linkedNode.id })
       return linkedNode
     }
   }
@@ -236,7 +236,7 @@ function findLinkedNode(value, linkedField, path) {
 
   if (linkedNode) {
     if (path) {
-      addPageDependency({ path, nodeId: linkedNode.id })
+      createPageDependency({ path, nodeId: linkedNode.id })
     }
     return linkedNode
   }
@@ -397,7 +397,7 @@ function inferFromUri(key, types) {
       )
 
       if (linkedFileNode) {
-        addPageDependency({
+        createPageDependency({
           path,
           nodeId: linkedFileNode.id,
         })

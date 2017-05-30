@@ -3,7 +3,7 @@ const sift = require(`sift`)
 const _ = require(`lodash`)
 const { connectionFromArray } = require(`graphql-skip-limit`)
 const { store } = require(`../redux/`)
-const { addPageDependency } = require(`../redux/actions/add-page-dependency`)
+const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 
 type Node = {
   id: String,
@@ -63,7 +63,7 @@ module.exports = ({ args, nodes, connection = false, path = `` }) => {
     const connectionArray = connectionFromArray(result, args)
     connectionArray.totalCount = result.length
     if (result.length > 0 && result[0].internal) {
-      addPageDependency({
+      createPageDependency({
         path,
         connection: result[0].internal.type,
       })
@@ -71,7 +71,7 @@ module.exports = ({ args, nodes, connection = false, path = `` }) => {
     return connectionArray
   }
 
-  addPageDependency({
+  createPageDependency({
     path,
     nodeId: result[0].id,
   })
