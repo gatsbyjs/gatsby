@@ -63,7 +63,7 @@ describe(`Add pages`, () => {
       path: `/hi/`,
       component: `/whatever/index.js`,
     })
-    const action2 = actions.deletePageByPath(`/hi/`)
+    const action2 = actions.deletePage({ path: `/hi/` })
 
     let state = reducer(undefined, action)
     state = reducer(state, action2)

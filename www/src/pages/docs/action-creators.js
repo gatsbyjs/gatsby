@@ -40,27 +40,32 @@ class ActionCreatorsDocs extends React.Component {
       <div>
         <h1>Action Creators</h1>
         <p>Action creators are used by plugins to perform various tasks</p>
-        {this.props.data.file.childrenDocumentationJs.map((c, i) => {
+        <ul>
+          {this.props.data.allDocumentationJs.edges.map(({ node }, i) => {
+            return <li>{node.name}</li>
+          })}
+        </ul>
+        {this.props.data.allDocumentationJs.edges.map(({ node }, i) => {
           return (
             <div css={{ marginBottom: rhythm(1) }}>
               {i !== 0 && <hr />}
-              <h2><code>{c.name}</code></h2>
+              <h2><code>{node.name}</code></h2>
               <div
                 dangerouslySetInnerHTML={{
-                  __html: c.description.childMarkdownRemark.html,
+                  __html: node.description.childMarkdownRemark.html,
                 }}
               />
-              {c.params.length > 0 &&
+              {node.params.length > 0 &&
                 <div>
                   <h3>Params</h3>
-                  {c.params.map(Param)}
+                  {node.params.map(Param)}
                 </div>}
 
-              {c.examples.length > 0 &&
+              {node.examples.length > 0 &&
                 <div>
-                  <h4>Example</h4>
+                  <h4 css={{ marginTop: rhythm(1) }}>Example</h4>
                   {" "}
-                  {c.examples.map(example => (
+                  {node.examples.map(example => (
                     <pre>
                       <code
                         className="language-javascript"
@@ -83,43 +88,50 @@ export default ActionCreatorsDocs
 
 export const pageQuery = graphql`
 query ActionCreatorDocsQuery {
-  file(absolutePath: {regex: "/actions.js/"}) {
-    childrenDocumentationJs {
-      name
-      description {
-        childMarkdownRemark {
-          html
-        }
-      }
-      returns {
-        title
-      }
-      examples {
-        highlighted
-      }
-      params {
+  allDocumentationJs(id: {regex: "/src.*actions.js/"}, sortBy: {fields: [name]}) {
+    edges {
+      node {
+        id
+        memberof
         name
+        id
+        scope
         description {
           childMarkdownRemark {
             html
           }
         }
-        type {
-          type
-          name
-        }
-        properties {
+        returns {
           title
+        }
+        examples {
+          raw
+          highlighted
+        }
+        params {
           name
+          description {
+            internal {
+              content
+            }
+          }
+          type {
+            type
+            name
+          }
+          properties {
+            title
+            name
+            description {
+              childMarkdownRemark {
+                html
+              }
+            }
+          }
           description {
             childMarkdownRemark {
               html
             }
-          }
-        }
-        description {
-          childMarkdownRemark {
-           html
           }
         }
       }

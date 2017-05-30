@@ -13,14 +13,21 @@ import { layoutComponentChunkName } from "../utils/js-chunk-names"
 
 const actions = {}
 
-actions.deletePageByPath = (path, plugin = ``) => {
+/**
+ * Delete a page
+ * @param {string} page a page object with at least the path set
+ * @example
+ * deletePage(page)
+ */
+actions.deletePage = (page, plugin = ``) => {
   return {
-    type: `DELETE_PAGE_BY_PATH`,
-    payload: path,
+    type: `DELETE_PAGE`,
+    payload: page,
   }
 }
 
 const pascalCase = _.flow(_.camelCase, _.upperFirst)
+// "createPage"
 actions.upsertPage = (page, plugin = ``) => {
   page.componentChunkName = layoutComponentChunkName(page.component)
 
@@ -200,10 +207,10 @@ actions.createNode = (node, plugin) => {
 /**
  * Create field on a node a plugin don't own. Once a plugin has claimed a field name
  * the field name can't be used by other plugins.
- * @param {Object} _ref
- * @param {Object} _ref.node the target node object
- * @param {String} _ref.fieldName the name for the field
- * @param {String} _ref.fieldValue the value for the field
+ * @param {Object} $0
+ * @param {Object} $0.node the target node object
+ * @param {String} $0.fieldName the name for the field
+ * @param {String} $0.fieldValue the value for the field
  * @example
  * createNodeField({
  *   node,

@@ -14,7 +14,7 @@ const createPath = require(`./create-path`)
 // underscored. Then create url w/ our path algorithm *unless* user
 // takes control of that page component in gatsby-node.
 exports.createPagesStateful = async ({ store, boundActionCreators }) => {
-  const { upsertPage, deletePageByPath } = boundActionCreators
+  const { upsertPage, deletePage } = boundActionCreators
   const program = store.getState().program
   const pagesDirectory = systemPath.posix.join(program.directory, `/src/pages`)
   const exts = program.extensions.map(e => `${e.slice(1)}`).join(`,`)
@@ -35,7 +35,7 @@ exports.createPagesStateful = async ({ store, boundActionCreators }) => {
     .on(`unlink`, path => {
       // Delete the page for the now deleted component.
       store.getState().pages.filter(p => p.component === path).forEach(page => {
-        deletePageByPath(page.path)
+        deletePage({ path: page.path })
         files = files.filter(f => f !== path)
       })
     })

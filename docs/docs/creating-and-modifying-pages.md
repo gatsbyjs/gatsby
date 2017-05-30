@@ -27,7 +27,7 @@ similar to the following:
 // Implement the Gatsby API “onUpsertPage”. This is
 // called after every page is created.
 exports.onUpsertPage = ({ page, boundActionCreators }) => {
-  const { upsertPage, deletePageByPath } = boundActionCreators
+  const { upsertPage, deletePage } = boundActionCreators
 
   return new Promise((resolve, reject) => {
     // Remove trailing slash
@@ -38,7 +38,7 @@ exports.onUpsertPage = ({ page, boundActionCreators }) => {
     if (page.path !== oldPath) {
 
       // Remove the old page
-      deletePageByPath(oldPath)
+      deletePage({ path: oldPath })
 
       // Add the new page
       upsertPage(page)
@@ -60,7 +60,7 @@ like the following:
 // Implement the Gatsby API “onUpsertPage”. This is
 // called after every page is created.
 exports.onUpsertPage = async ({ page, boundActionCreators }) => {
-  const { upsertPage, deletePageByPath } = boundActionCreators
+  const { upsertPage } = boundActionCreators
 
   return new Promise((resolve, reject) => {
     // page.matchPath is a special key that's used for matching pages
