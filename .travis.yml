@@ -16,7 +16,7 @@ cache:
     - $(npm config get cache)
 
 before_install:
-  - npm i -g npm@latest
+  - npm i -g npm@5
 
 install:
   - npm install
