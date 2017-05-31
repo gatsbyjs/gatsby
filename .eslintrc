@@ -62,6 +62,12 @@
         "exports": "always-multiline",
         "functions": "ignore"
       }
+    ],
+    "react/prop-types": [
+      "error",
+      {
+        "ignore": ["children"]
+      }
     ]
   }
 }
