@@ -104,11 +104,11 @@ async function startServer(program) {
             const htmlElement = React.createElement(HTML, {
               body: ``,
               headComponents: _.flattenDeep(
-                apiRunner(`modifyHeadComponents`, { headComponents: [] }, [])
+                apiRunner(`createHeadComponents`, { headComponents: [] }, [])
               ),
               postBodyComponents: _.flattenDeep(
                 apiRunner(
-                  `modifyPostBodyComponents`,
+                  `createPostBodyComponents`,
                   { headComponents: [] },
                   []
                 )

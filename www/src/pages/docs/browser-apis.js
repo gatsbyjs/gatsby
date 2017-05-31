@@ -3,15 +3,11 @@ import React from "react"
 import Functions from "../../components/function-list"
 import { rhythm, scale } from "../../utils/typography"
 
-class NodeAPIDocs extends React.Component {
+class BrowserAPIDocs extends React.Component {
   render() {
     return (
       <div>
-        <h1>Gatsby Node APIs</h1>
-        <p>
-          Gatsby gives plugins and site builders many APIs
-          for controlling your site.
-        </p>
+        <h1>Gatsby Browser APIs</h1>
         <h2 css={{ marginBottom: rhythm(1 / 2) }}>APIs</h2>
         <ul css={{ ...scale(-1 / 5) }}>
           {this.props.data.allDocumentationJs.edges.map(({ node }, i) => (
@@ -29,11 +25,11 @@ class NodeAPIDocs extends React.Component {
   }
 }
 
-export default NodeAPIDocs
+export default BrowserAPIDocs
 
 export const pageQuery = graphql`
-query APINodeDocsQuery {
-  allDocumentationJs(id: {regex: "/src.*api-node-docs.js/"}, sortBy: {fields: [name]}) {
+query BrowserAPIDocsQuery {
+  allDocumentationJs(id: {regex: "/src.*api-browser-docs.js/"}, sortBy: {fields: [name]}) {
     edges {
       node {
         name

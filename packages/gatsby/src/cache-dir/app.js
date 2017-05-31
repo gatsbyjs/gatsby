@@ -1,6 +1,6 @@
 const apiRunner = require(`./api-runner-browser`)
 // Let the site/plugins run code very early.
-apiRunner(`clientEntry`)
+apiRunner(`onClientEntry`)
 
 import React from "react"
 import ReactDOM from "react-dom"
