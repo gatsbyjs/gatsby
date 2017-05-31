@@ -2,13 +2,13 @@
   links:
     Getting Started: /docs/
     Migrating from v0 to v1: /docs/migrating-from-v0-to-v1/
-    Building with Components: /docs/building-with-components/
-    Querying with GraphQL: /docs/querying-with-graphql/
-    Gatsby Lifecycle APIs: /docs/gatsby-lifecycle-apis/
+    Building with Components*: /docs/building-with-components/
+    Querying with GraphQL*: /docs/querying-with-graphql/
+    Gatsby Lifecycle APIs*: /docs/gatsby-lifecycle-apis/
     Plugins: /docs/plugins/
-    Themes: /docs/themes/
-    PRPL Pattern: /docs/prpl-pattern/
-    Thinking in Gatsby: /docs/thinking-in-gatsby/
+    Themes*: /docs/themes/
+    PRPL Pattern*: /docs/prpl-pattern/
+    Thinking in Gatsby*: /docs/thinking-in-gatsby/
     Gatsby on Windows: /docs/gatsby-on-windows/
 - title: Guides
   links:
@@ -28,4 +28,4 @@
 - title: Contributing
   links:
     How to Contribute: /docs/how-to-contribute/
-    Design Principles: /docs/design-principles/
+    Design Principles*: /docs/design-principles/
