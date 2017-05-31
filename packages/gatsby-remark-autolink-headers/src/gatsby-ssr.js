@@ -1,6 +1,6 @@
 import React from "react"
 
-exports.modifyHeadComponents = (args, pluginOptions) => {
+exports.createHeadComponents = (args, pluginOptions) => {
   let offsetY = 0
   if (pluginOptions.offsetY) {
     offsetY = pluginOptions.offsetY

@@ -1,4 +1,5 @@
 {
+  "parser": "babel-eslint",
   "extends": [
     "google",
     "eslint:recommended",

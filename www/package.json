@@ -11,6 +11,7 @@
     "gatsby-transformer-remark": "canary",
     "gatsby-transformer-sharp": "canary",
     "gatsby-transformer-yaml": "canary",
+    "gatsby-transformer-documentationjs": "canary",
     "gatsby-plugin-catch-links": "canary",
     "gatsby-plugin-glamor": "canary",
     "gatsby-plugin-google-analytics": "canary",

@@ -5,10 +5,10 @@ const apiRunnerNode = require(`../utils/api-runner-node`)
 
 emitter.on(`CREATE_NODE`, action => {
   const node = store.getState().nodes[action.payload.id]
-  apiRunnerNode(`onNodeCreate`, { node })
+  apiRunnerNode(`onCreateNode`, { node })
 })
 
-emitter.on(`UPSERT_PAGE`, action => {
+emitter.on(`CREATE_PAGE`, action => {
   const page = action.payload
-  apiRunnerNode(`onUpsertPage`, { page }, action.plugin.name)
+  apiRunnerNode(`onCreatePage`, { page }, action.plugin.name)
 })

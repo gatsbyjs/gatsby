@@ -4,7 +4,7 @@ module.exports = (state = { nodes: {}, connections: {} }, action) => {
   switch (action.type) {
     case `DELETE_CACHE`:
       return { nodes: {}, connections: {} }
-    case `ADD_PAGE_DEPENDENCY`:
+    case `CREATE_PAGE_DEPENDENCY`:
       if (action.payload.path === ``) {
         return state
       }
@@ -30,7 +30,7 @@ module.exports = (state = { nodes: {}, connections: {} }, action) => {
       }
 
       return state
-    case `REMOVE_PAGES_DATA_DEPENDENCIES`:
+    case `DELETE_PAGES_DEPENDENCIES`:
       state.nodes = _.mapValues(state.nodes, paths =>
         _.difference(paths, action.payload.paths)
       )

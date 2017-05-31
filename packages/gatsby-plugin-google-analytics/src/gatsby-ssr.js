@@ -1,6 +1,6 @@
 import React from "react"
 
-exports.modifyPostBodyComponents = (args, pluginOptions) => {
+exports.createPostBodyComponents = (args, pluginOptions) => {
   if (process.env.NODE_ENV === `production`) {
     return [
       <script

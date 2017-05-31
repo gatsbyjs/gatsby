@@ -13,34 +13,34 @@ const createPath = require(`./create-path`)
 // algorithm is glob /pages directory for js/jsx/cjsx files *not*
 // underscored. Then create url w/ our path algorithm *unless* user
 // takes control of that page component in gatsby-node.
-exports.createPagesStateful = async ({ store, boundActionCreators }) => {
-  const { upsertPage, deletePageByPath } = boundActionCreators
+exports.createPagesStatefully = async ({ store, boundActionCreators }) => {
+  const { createPage, deletePage } = boundActionCreators
   const program = store.getState().program
   const pagesDirectory = systemPath.posix.join(program.directory, `/src/pages`)
   const exts = program.extensions.map(e => `${e.slice(1)}`).join(`,`)
 
   // Get initial list of files.
   let files = await glob(`${pagesDirectory}/**/?(${exts})`)
-  files.forEach(file => createPage(file, pagesDirectory, upsertPage))
+  files.forEach(file => _createPage(file, pagesDirectory, createPage))
 
   // Listen for new component pages to be added or removed.
   chokidar
     .watch(`${pagesDirectory}/**/*.{${exts}}`)
     .on(`add`, path => {
       if (!_.includes(files, path)) {
-        createPage(path, pagesDirectory, upsertPage)
+        _createPage(path, pagesDirectory, createPage)
         files.push(path)
       }
     })
     .on(`unlink`, path => {
       // Delete the page for the now deleted component.
       store.getState().pages.filter(p => p.component === path).forEach(page => {
-        deletePageByPath(page.path)
+        deletePage({ path: page.path })
         files = files.filter(f => f !== path)
       })
     })
 }
-const createPage = (filePath, pagesDirectory, upsertPage) => {
+const _createPage = (filePath, pagesDirectory, createPage) => {
   // Filter out special components that shouldn't be made into
   // pages.
   if (!validatePath(systemPath.posix.relative(pagesDirectory, filePath))) {
@@ -54,7 +54,7 @@ const createPage = (filePath, pagesDirectory, upsertPage) => {
   }
 
   // Add page
-  upsertPage(page)
+  createPage(page)
 }
 
 const validatePath = path => {

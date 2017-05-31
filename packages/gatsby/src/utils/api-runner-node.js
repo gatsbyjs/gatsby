@@ -5,6 +5,8 @@ const mapSeries = require(`async/mapSeries`)
 
 const cache = require(`./cache`)
 
+const apiList = require(`./api-node-docs`)
+
 // Bind action creators per plugin so can auto-add plugin
 // meta-data to data they create.
 const boundPluginActionCreators = {}
@@ -49,7 +51,7 @@ const runAPI = (plugin, api, args) => {
 
   const gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
   if (gatsbyNode[api]) {
-    // if (!_.includes([`onNodeCreate`, `onUpsertPage`], api)) {
+    // if (!_.includes([`onCreateNode`, `onCreatePage`], api)) {
     // console.log(`calling api handler in ${plugin.resolve} for api ${api}`)
     // }
     const result = gatsbyNode[api](
@@ -79,6 +81,13 @@ const hasAPIFile = plugin => glob.sync(`${plugin.resolve}/gatsby-node*`)[0]
 
 module.exports = async (api, args = {}, pluginSource) =>
   new Promise(resolve => {
+    // Check that the API is documented.
+    if (!apiList[api]) {
+      console.log(`api`, api, `is not yet documented`)
+      // process.exit()
+      return resolve()
+    }
+
     const { store } = require(`../redux`)
     const plugins = store.getState().flattenedPlugins
     // Get the list of plugins that implement gatsby-node
@@ -89,7 +98,7 @@ module.exports = async (api, args = {}, pluginSource) =>
     // Break infinite loops.
     // Sometimes a plugin will implement an API and call an
     // action which will trigger the same API being called.
-    // "onUpsertPage" is the only example right now.
+    // "onCreatePage" is the only example right now.
     // In these cases, we should avoid calling the originating plugin
     // again.
     let noSourcePluginPlugins = filteredPlugins

@@ -139,25 +139,18 @@ module.exports = (locals, callback) => {
 
   // Call plugins to let them add to or modify components/props.
   const pluginHeadComponents = apiRunner(
-    `modifyHeadComponents`,
+    `createHeadComponents`,
     { headComponents },
     []
   )
   headComponents = headComponents.concat(pluginHeadComponents)
 
   const pluginPostBodyComponents = apiRunner(
-    `modifyPostBodyComponents`,
+    `createPostBodyComponents`,
     { postBodyComponents },
     []
   )
   postBodyComponents = postBodyComponents.concat(pluginPostBodyComponents)
-
-  const pluginBodyRenderProps = apiRunner(
-    `modifyBodyRenderProps`,
-    { bodyRenderProps },
-    {}
-  )
-  bodyRenderProps = merge(bodyRenderProps, pluginBodyRenderProps)
 
   const html = `<!DOCTYPE html>\n ${renderToStaticMarkup(<Html {...bodyRenderProps} headComponents={headComponents} postBodyComponents={postBodyComponents} body={body} path={locals.path} />)}`
   callback(null, html)

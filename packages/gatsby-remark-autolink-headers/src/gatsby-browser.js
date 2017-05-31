@@ -12,7 +12,7 @@ const scrollToHash = offsetY => {
   }, 10)
 }
 
-exports.clientEntry = (args, pluginOptions) => {
+exports.onClientEntry = (args, pluginOptions) => {
   let offsetY = 0
   if (pluginOptions.offsetY) {
     offsetY = pluginOptions.offsetY

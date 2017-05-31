@@ -21,7 +21,6 @@ const options = {
         background: `#f7f0eb`,
       },
       "h1,h2,h4,h5,h6": {
-        color: `#4c4b38`,
         lineHeight: 1.075,
         marginTop: rhythm(1.5),
         marginBottom: rhythm(3 / 4),
@@ -35,6 +34,12 @@ const options = {
         lineHeight: 1,
         marginTop: rhythm(1),
         marginBottom: rhythm(1 / 2),
+      },
+      h4: {
+        ...scale(1 / 5),
+      },
+      h5: {
+        ...scale(0),
       },
       "tt,code": {
         background: `hsla(23, 60%, 97%, 1)`,

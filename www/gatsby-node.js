@@ -6,7 +6,7 @@ const fs = require(`fs-extra`)
 const slash = require(`slash`)
 
 exports.createPages = ({ graphql, boundActionCreators }) => {
-  const { upsertPage } = boundActionCreators
+  const { createPage } = boundActionCreators
   return new Promise((resolve, reject) => {
     const docsTemplate = path.resolve(`src/templates/template-docs-markdown.js`)
     const blogPostTemplate = path.resolve(`src/templates/template-blog-post.js`)
@@ -37,8 +37,11 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 
         // Create docs pages.
         result.data.allMarkdownRemark.edges.forEach(edge => {
-          if (_.includes(edge.node.fields.slug, `/blog/`)) {
-            upsertPage({
+          const slug = _.get(edge, `node.fields.slug`)
+          if (!slug) return
+
+          if (_.includes(slug, `/blog/`)) {
+            createPage({
               path: `${edge.node.fields.slug}`, // required
               component: slash(blogPostTemplate),
               context: {
@@ -46,7 +49,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
               },
             })
           } else {
-            upsertPage({
+            createPage({
               path: `${edge.node.fields.slug}`, // required
               component: slash(
                 edge.node.fields.package ? packageTemplate : docsTemplate
@@ -65,8 +68,8 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 }
 
 // Create slugs for files.
-exports.onNodeCreate = ({ node, boundActionCreators, getNode }) => {
-  const { addFieldToNode } = boundActionCreators
+exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
+  const { createNodeField } = boundActionCreators
   let slug
   if (node.internal.type === `File`) {
     const parsedFilePath = parseFilepath(node.relativePath)
@@ -80,9 +83,12 @@ exports.onNodeCreate = ({ node, boundActionCreators, getNode }) => {
       }
     }
     if (slug) {
-      addFieldToNode({ node, fieldName: `slug`, fieldValue: slug })
+      createNodeField({ node, fieldName: `slug`, fieldValue: slug })
     }
-  } else if (node.internal.type === `MarkdownRemark`) {
+  } else if (
+    node.internal.type === `MarkdownRemark` &&
+    getNode(node.parent).internal.type === `File`
+  ) {
     const fileNode = getNode(node.parent)
     const parsedFilePath = parseFilepath(fileNode.relativePath)
     // Add slugs for docs pages
@@ -101,15 +107,15 @@ exports.onNodeCreate = ({ node, boundActionCreators, getNode }) => {
       parsedFilePath.name === `README`
     ) {
       slug = `/docs/packages/${parsedFilePath.dir}/`
-      addFieldToNode({
+      createNodeField({
         node,
         fieldName: `title`,
         fieldValue: parsedFilePath.dir,
       })
-      addFieldToNode({ node, fieldName: `package`, fieldValue: true })
+      createNodeField({ node, fieldName: `package`, fieldValue: true })
     }
     if (slug) {
-      addFieldToNode({ node, fieldName: `slug`, fieldValue: slug })
+      createNodeField({ node, fieldName: `slug`, fieldValue: slug })
     }
   }
 }
