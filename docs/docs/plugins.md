@@ -18,6 +18,7 @@ mean converting this file into a JS component).
 
 ## Official plugins
 
+* [gatsby-transformer-documentationjs](/docs/packages/gatsby-transformer-documentationjs/)
 * [gatsby-transformer-json](/docs/packages/gatsby-transformer-json/)
 * [gatsby-transformer-remark](/docs/packages/gatsby-transformer-remark/)
 * [gatsby-transformer-sharp](/docs/packages/gatsby-transformer-sharp/)
