@@ -61,7 +61,7 @@ function createPropNodes(node, component, boundActionCreators) {
   return node
 }
 
-export default function onNodeCreate(
+export default function onCreateNode(
   { node, loadNodeContent, boundActionCreators },
   pluginOptions
 ) {

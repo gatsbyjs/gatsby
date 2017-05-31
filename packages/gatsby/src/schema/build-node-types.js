@@ -122,7 +122,7 @@ module.exports = async () => {
     intermediateType.name = typeName
     intermediateType.nodes = nodes
 
-    const fieldsFromPlugins = await apiRunner(`extendNodeType`, {
+    const fieldsFromPlugins = await apiRunner(`setFieldsOnGraphQLNodeType`, {
       type: intermediateType,
       allNodes: getNodes(),
     })

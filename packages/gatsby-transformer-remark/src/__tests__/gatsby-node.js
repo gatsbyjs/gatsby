@@ -1,6 +1,6 @@
 const Promise = require(`bluebird`)
 
-const { onNodeCreate } = require(`../gatsby-node`)
+const { onCreateNode } = require(`../gatsby-node`)
 
 describe(`Process markdown content correctly`, () => {
   const node = {
@@ -29,7 +29,7 @@ Where oh where is my little pony?
     const createParentChildLink = jest.fn()
     const boundActionCreators = { createNode, createParentChildLink }
 
-    await onNodeCreate({
+    await onCreateNode({
       node,
       loadNodeContent,
       boundActionCreators,

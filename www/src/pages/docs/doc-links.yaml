@@ -20,6 +20,7 @@
 - title: Reference
   links:
     Node Interface: /docs/node-interface/
+    Gatsby Node APIs: /docs/node-apis/
     Bound Action Creators: /docs/bound-action-creators/
 - title: Contributing
   links:

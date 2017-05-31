@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`transformer-react-doc-gen: onNodeCreate should extract out a description, params, and examples 1`] = `
+exports[`transformer-react-doc-gen: onCreateNode should extract out a description, params, and examples 1`] = `
 Array [
   Object {
     "children": Array [],

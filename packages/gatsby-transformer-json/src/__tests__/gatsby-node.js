@@ -1,7 +1,7 @@
 const Promise = require(`bluebird`)
 const _ = require(`lodash`)
 
-const { onNodeCreate } = require(`../gatsby-node`)
+const { onCreateNode } = require(`../gatsby-node`)
 
 describe(`Process JSON nodes correctly`, () => {
   const node = {
@@ -29,7 +29,7 @@ describe(`Process JSON nodes correctly`, () => {
     const createParentChildLink = jest.fn()
     const boundActionCreators = { createNode, createParentChildLink }
 
-    await onNodeCreate({
+    await onCreateNode({
       node,
       loadNodeContent,
       boundActionCreators,
@@ -52,7 +52,7 @@ describe(`Process JSON nodes correctly`, () => {
     const createParentChildLink = jest.fn()
     const boundActionCreators = { createNode, createParentChildLink }
 
-    await onNodeCreate({
+    await onCreateNode({
       node,
       loadNodeContent,
       boundActionCreators,
@@ -74,7 +74,7 @@ describe(`Process JSON nodes correctly`, () => {
     const createParentChildLink = jest.fn()
     const boundActionCreators = { createNode, createParentChildLink }
 
-    await onNodeCreate({
+    await onCreateNode({
       node,
       loadNodeContent,
       boundActionCreators,

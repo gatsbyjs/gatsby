@@ -1,2 +1,2 @@
-exports.onNodeCreate = require(`./on-node-create`).default
-exports.extendNodeType = require(`./extend-node-type`).default
+exports.onCreateNode = require(`./on-node-create`).default
+exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).default

@@ -13,7 +13,7 @@ const createPath = require(`./create-path`)
 // algorithm is glob /pages directory for js/jsx/cjsx files *not*
 // underscored. Then create url w/ our path algorithm *unless* user
 // takes control of that page component in gatsby-node.
-exports.createPagesStateful = async ({ store, boundActionCreators }) => {
+exports.createPagesStatefully = async ({ store, boundActionCreators }) => {
   const { createPage, deletePage } = boundActionCreators
   const program = store.getState().program
   const pagesDirectory = systemPath.posix.join(program.directory, `/src/pages`)

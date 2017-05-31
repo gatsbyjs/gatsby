@@ -5,7 +5,7 @@ const jsYaml = require(`js-yaml`)
 const _ = require(`lodash`)
 const crypto = require(`crypto`)
 
-async function onNodeCreate({ node, boundActionCreators, loadNodeContent }) {
+async function onCreateNode({ node, boundActionCreators, loadNodeContent }) {
   const { createNode, createParentChildLink } = boundActionCreators
   if (node.internal.mediaType !== `text/yaml`) {
     return
@@ -49,4 +49,4 @@ async function onNodeCreate({ node, boundActionCreators, loadNodeContent }) {
   return
 }
 
-exports.onNodeCreate = onNodeCreate
+exports.onCreateNode = onCreateNode

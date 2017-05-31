@@ -1,6 +1,6 @@
 const _ = require(`lodash`)
 
-module.exports = async function onNodeCreate({ node, boundActionCreators }) {
+module.exports = async function onCreateNode({ node, boundActionCreators }) {
   const { createNode, createParentChildLink } = boundActionCreators
 
   const extensions = [`jpeg`, `jpg`, `png`, `webp`, `tif`, `tiff`, `svg`]

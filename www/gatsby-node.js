@@ -68,7 +68,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 }
 
 // Create slugs for files.
-exports.onNodeCreate = ({ node, boundActionCreators, getNode }) => {
+exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
   const { createNodeField } = boundActionCreators
   let slug
   if (node.internal.type === `File`) {

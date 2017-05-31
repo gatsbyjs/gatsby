@@ -6,5 +6,5 @@
  * apple()
  */
 const apple = apple => {
-  console.log("hi")
+  console.log(`hi`)
 }

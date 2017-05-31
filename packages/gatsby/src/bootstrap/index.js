@@ -237,7 +237,7 @@ data
   // have full control over adding/removing pages. The normal
   // "createPages" API is called every time (during development)
   // that data changes.
-  await apiRunnerNode(`createPagesStateful`, {
+  await apiRunnerNode(`createPagesStatefully`, {
     graphql: graphqlRunner,
   })
 

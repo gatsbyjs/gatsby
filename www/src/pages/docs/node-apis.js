@@ -48,7 +48,7 @@ class ActionCreatorsDocs extends React.Component {
     console.log(this.props)
     return (
       <div>
-        <h1>Bound Action Creators</h1>
+        <h1>Gatsby Node APIs</h1>
         <p>
           Gatsby uses
           {` `}
@@ -58,7 +58,7 @@ class ActionCreatorsDocs extends React.Component {
           passed a collection of "Bound Action Creators" (functions which create and dispatch Redux actions when called)
           which you can use to manipulate state on your site.
         </p>
-        <h2>Functions</h2>
+        <h2 css={{ marginBottom: rhythm(1 / 2) }}>APIs</h2>
         <ul css={{ ...scale(-1 / 5) }}>
           {this.props.data.allDocumentationJs.edges.map(({ node }, i) => (
               <li key={`function list ${node.name}`}>
@@ -112,8 +112,8 @@ class ActionCreatorsDocs extends React.Component {
 export default ActionCreatorsDocs
 
 export const pageQuery = graphql`
-query ActionCreatorDocsQuery {
-  allDocumentationJs(id: {regex: "/src.*actions.js/"}, sortBy: {fields: [name]}) {
+query APINodeDocsQuery {
+  allDocumentationJs(id: {regex: "/src.*api-node-docs.js/"}, sortBy: {fields: [name]}) {
     edges {
       node {
         id

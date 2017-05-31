@@ -8,7 +8,10 @@ module.exports = ({ files, markdownNode, markdownAST, getNode }) => {
   // Copy linked files to the public directory and modify the AST to point to
   // new location of the files.
   const visitor = link => {
-    if (isRelativeUrl(link.url)) {
+    if (
+      isRelativeUrl(link.url) &&
+      getNode(markdownNode.parent).internal.type === `File`
+    ) {
       const linkPath = path.join(getNode(markdownNode.parent).dir, link.url)
       const linkNode = _.find(files, file => {
         if (file && file.absolutePath) {

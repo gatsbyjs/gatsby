@@ -1,7 +1,7 @@
 import fs from "fs"
 import path from "path"
 import { groupBy } from "lodash"
-import onNodeCreate from "../on-node-create"
+import onCreateNode from "../on-node-create"
 
 const readFile = file =>
   new Promise((y, n) => {
@@ -12,10 +12,10 @@ const readFile = file =>
     )
   })
 
-describe(`transformer-react-doc-gen: onNodeCreate`, () => {
+describe(`transformer-react-doc-gen: onCreateNode`, () => {
   let loadNodeContent, boundActionCreators, node, createdNodes, updatedNodes
   let run = (node, opts = {}) =>
-    onNodeCreate(
+    onCreateNode(
       {
         node,
         loadNodeContent,

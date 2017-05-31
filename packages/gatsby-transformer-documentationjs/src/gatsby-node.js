@@ -1,8 +1,8 @@
-const documentation = require("documentation")
-const crypto = require("crypto")
+const documentation = require(`documentation`)
+const crypto = require(`crypto`)
 const digest = str => crypto.createHash(`md5`).update(str).digest(`hex`)
 const remark = require(`remark`)
-const _ = require("lodash")
+const _ = require(`lodash`)
 const Prism = require(`prismjs`)
 
 const stringifyMarkdownAST = (node = ``) => {
@@ -46,10 +46,10 @@ function createDescriptionNode(
 }
 
 /**
- * Implement the onNodeCreate API to create documentation.js nodes
+ * Implement the onCreateNode API to create documentation.js nodes
  * @param {Object} super this is a super param
  */
-exports.onNodeCreate = async ({
+exports.onCreateNode = async ({
   node,
   loadNodeContent,
   boundActionCreators,

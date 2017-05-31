@@ -2,10 +2,10 @@ import groupBy from "lodash/groupBy"
 import path from "path"
 import gatsbyNode from "../gatsby-node"
 
-describe(`transformer-react-doc-gen: onNodeCreate`, () => {
+describe(`transformer-react-doc-gen: onCreateNode`, () => {
   let boundActionCreators, node, createdNodes, updatedNodes
   let run = (node = node, opts = {}) =>
-    gatsbyNode.onNodeCreate(
+    gatsbyNode.onCreateNode(
       {
         node,
         boundActionCreators,

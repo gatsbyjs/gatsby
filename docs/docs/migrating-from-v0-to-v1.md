@@ -133,7 +133,7 @@ Here's how you do that.
 // In your gatsby-node.js
 const path = require('path')
 
-exports.onNodeCreate = ({ node, boundActionCreators, getNode }) => {
+exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
   const { createNodeField } = boundActionCreators
   let slug
   if (node.internal.type === `MarkdownRemark`) {

@@ -1,7 +1,7 @@
 const grayMatter = require(`gray-matter`)
 const crypto = require(`crypto`)
 
-module.exports = async function onNodeCreate({
+module.exports = async function onCreateNode({
   node,
   getNode,
   loadNodeContent,

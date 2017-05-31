@@ -2,7 +2,7 @@ const Promise = require(`bluebird`)
 const yaml = require(`js-yaml`)
 const _ = require(`lodash`)
 
-const { onNodeCreate } = require(`../gatsby-node`)
+const { onCreateNode } = require(`../gatsby-node`)
 
 describe(`Process YAML nodes correctly`, () => {
   const node = {
@@ -27,7 +27,7 @@ describe(`Process YAML nodes correctly`, () => {
     const createParentChildLink = jest.fn()
     const boundActionCreators = { createNode, createParentChildLink }
 
-    await onNodeCreate({
+    await onCreateNode({
       node,
       loadNodeContent,
       boundActionCreators,
@@ -50,7 +50,7 @@ describe(`Process YAML nodes correctly`, () => {
     const createParentChildLink = jest.fn()
     const boundActionCreators = { createNode, createParentChildLink }
 
-    await onNodeCreate({
+    await onCreateNode({
       node,
       loadNodeContent,
       boundActionCreators,
@@ -72,7 +72,7 @@ describe(`Process YAML nodes correctly`, () => {
     const createParentChildLink = jest.fn()
     const boundActionCreators = { createNode, createParentChildLink }
 
-    await onNodeCreate({
+    await onCreateNode({
       node,
       loadNodeContent,
       boundActionCreators,
