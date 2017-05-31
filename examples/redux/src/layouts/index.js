@@ -31,7 +31,7 @@ class DefaultLayout extends React.Component {
       <div>
         <Link to="/">
           <h3>
-            Example with no plugins
+            Redux example
           </h3>
         </Link>
         <ConnectedCounter/>

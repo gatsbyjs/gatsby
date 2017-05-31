@@ -1,5 +1,5 @@
-# No plugins
+# Redux
 
-https://no-plugins.gatsbyjs.org
+https://redux.gatsbyjs.org
 
-Gatsby example site that proves functionality without the use of plugins.
+Gatsby example site that shows use of redux.
