@@ -1,12 +1,5 @@
 # API specification
 
-The three main inspirations for this API and spec are React.js' API
-specifically @leebyron's email on the React API
-(https://gist.github.com/vjeux/f2b015d230cc1ab18ed1df30550495ed), this talk
-"How to Design a Good API and Why it Matters" by Joshua Bloch who designed
-many parts of Java. https://www.youtube.com/watch?v=heh4OeB9A-c&app=desktop,
-and [Hapi.js](https://hapijs.com/api)' plugin design.
-
 Gatsby's APIs are tailored conceptually to some extent after React.js which
 makes sense as users of Gatsby will necessarily also be users of React.js. I
 think there's a lot of wins to making Gatsby feel as familiar as possible as
@@ -113,3 +106,11 @@ API and calls them in serial following their order in the site's
 In addition to extension APIs in node, plugins can also implement extension
 APIs in the server rendering process and the browser e.g. `onClientEntry` or
 `onRouteUpdate`
+
+The three main inspirations for this API and spec are React.js' API
+specifically @leebyron's email on the React API
+(https://gist.github.com/vjeux/f2b015d230cc1ab18ed1df30550495ed), this talk
+"How to Design a Good API and Why it Matters" by Joshua Bloch who designed
+many parts of Java. https://www.youtube.com/watch?v=heh4OeB9A-c&app=desktop,
+and [Hapi.js](https://hapijs.com/api)' plugin design.
+
