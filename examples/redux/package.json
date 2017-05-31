@@ -5,8 +5,8 @@
   "version": "1.0.0",
   "author": "Scotty Eckenthal <scott.eckenthal@gmail.com>",
   "dependencies": {
-    "gatsby": "canary",
-    "gatsby-link": "canary",
+    "gatsby": "1.0.0-alpha15-alpha.330d917d",
+    "gatsby-link": "1.0.0-alpha15-alpha.330d917d",
     "lodash": "^4.16.4",
     "react-redux": "5.0.5",
     "react-router-redux": "4.0.8",
