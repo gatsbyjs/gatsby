@@ -24,10 +24,10 @@ To do this, in your site's `gatsby-node.js` add code
 similar to the following:
 
 ```javascript
-// Implement the Gatsby API “onUpsertPage”. This is
+// Implement the Gatsby API “onCreatePage”. This is
 // called after every page is created.
-exports.onUpsertPage = ({ page, boundActionCreators }) => {
-  const { upsertPage, deletePageByPath } = boundActionCreators
+exports.onCreatePage = ({ page, boundActionCreators }) => {
+  const { createPage, deletePage } = boundActionCreators
 
   return new Promise((resolve, reject) => {
     // Remove trailing slash
@@ -38,10 +38,10 @@ exports.onUpsertPage = ({ page, boundActionCreators }) => {
     if (page.path !== oldPath) {
 
       // Remove the old page
-      deletePageByPath(oldPath)
+      deletePage({ path: oldPath })
 
       // Add the new page
-      upsertPage(page)
+      createPage(page)
     }
 
     resolve()
@@ -57,10 +57,10 @@ your app that lives under `/app/*`, you want to add code to your `gatsby-node.js
 like the following:
 
 ```javascript
-// Implement the Gatsby API “onUpsertPage”. This is
+// Implement the Gatsby API “onCreatePage”. This is
 // called after every page is created.
-exports.onUpsertPage = async ({ page, boundActionCreators }) => {
-  const { upsertPage, deletePageByPath } = boundActionCreators
+exports.onCreatePage = async ({ page, boundActionCreators }) => {
+  const { createPage } = boundActionCreators
 
   return new Promise((resolve, reject) => {
     // page.matchPath is a special key that's used for matching pages
@@ -69,7 +69,7 @@ exports.onUpsertPage = async ({ page, boundActionCreators }) => {
       page.matchPath = "/app/:path"
 
       // Update the page.
-      upsertPage(page)
+      createPage(page)
     }
 
     resolve()
@@ -83,4 +83,4 @@ Often you will need to programmatically create pages. For example, you have
 markdown files that each should be a page.
 
 TODO finish this once it's more settled how to modify nodes to add slugs and
-other special fields that we want to associate with a node. Perhaps `addFieldToNode`.
+other special fields that we want to associate with a node. Perhaps `createNodeField`.

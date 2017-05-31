@@ -101,7 +101,7 @@ exports.sourceNodes = ({ boundActionCreators, store }) => {
 
 const createPageId = path => `SitePage ${path}`
 
-exports.onUpsertPage = ({ page, boundActionCreators }) => {
+exports.onCreatePage = ({ page, boundActionCreators }) => {
   const { createNode } = boundActionCreators
 
   // Add page.
@@ -122,7 +122,7 @@ exports.onUpsertPage = ({ page, boundActionCreators }) => {
   })
 }
 
-// Listen for DELETE_PAGE_BY_PATH and delete page nodes.
-emitter.on(`DELETE_PAGE_BY_PATH`, action => {
-  boundActionCreators.deleteNode(createPageId(action.payload))
+// Listen for DELETE_PAGE and delete page nodes.
+emitter.on(`DELETE_PAGE`, action => {
+  boundActionCreators.deleteNode(createPageId(action.payload.path))
 })

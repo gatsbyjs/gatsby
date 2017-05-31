@@ -50,7 +50,6 @@
     "graphql-union-input-type": "^0.2.1",
     "gray-matter": "^2.1.0",
     "hapi": "^8.5.1",
-    "highlight.js": "^9.8.0",
     "history": "^4.6.1",
     "hosted-git-info": "^2.4.2",
     "invariant": "^2.2.2",

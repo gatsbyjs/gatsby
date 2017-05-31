@@ -133,8 +133,8 @@ Here's how you do that.
 // In your gatsby-node.js
 const path = require('path')
 
-exports.onNodeCreate = ({ node, boundActionCreators, getNode }) => {
-  const { addFieldToNode } = boundActionCreators
+exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
+  const { createNodeField } = boundActionCreators
   let slug
   if (node.internal.type === `MarkdownRemark`) {
     const fileNode = getNode(node.parent)
@@ -148,7 +148,7 @@ exports.onNodeCreate = ({ node, boundActionCreators, getNode }) => {
     }
 
     // Add slug as a field on the node.
-    addFieldToNode({ node, fieldName: `slug`, fieldValue: slug })
+    createNodeField({ node, fieldName: `slug`, fieldValue: slug })
   }
 }
 ```
@@ -158,7 +158,7 @@ Now we can create pages for each markdown file using our slug. In the same
 
 ```javascript
 exports.createPages = ({ graphql, boundActionCreators }) => {
-  const { upsertPage } = boundActionCreators
+  const { createPage } = boundActionCreators
 
   return new Promise((resolve, reject) => {
     const pages = []
@@ -187,7 +187,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 
         // Create blog posts pages.
         result.data.allMarkdownRemark.edges.forEach(edge => {
-          upsertPage({
+          createPage({
             path: edge.node.fields.slug, // required
             component: blogPost,
             context: {

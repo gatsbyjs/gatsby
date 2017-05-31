@@ -214,6 +214,8 @@ data
 
   // Collect resolvable extensions and attach to program.
   const extensions = [`.js`, `.jsx`]
+  // Change to this being an action and plugins implement `onPreBootstrap`
+  // for adding extensions.
   const apiResults = await apiRunnerNode(`resolvableExtensions`)
 
   store.dispatch({
@@ -235,7 +237,7 @@ data
   // have full control over adding/removing pages. The normal
   // "createPages" API is called every time (during development)
   // that data changes.
-  await apiRunnerNode(`createPagesStateful`, {
+  await apiRunnerNode(`createPagesStatefully`, {
     graphql: graphqlRunner,
   })
 
@@ -249,7 +251,7 @@ data
   if (!exists404html) {
     store.getState().pages.forEach(page => {
       if (page.path === `/404/`) {
-        boundActionCreators.upsertPage({
+        boundActionCreators.createPage({
           ...page,
           path: `/404.html`,
         })

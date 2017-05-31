@@ -1,3 +1,4 @@
+// @flow
 import Joi from "joi"
 import chalk from "chalk"
 const _ = require(`lodash`)
@@ -12,15 +13,41 @@ import { layoutComponentChunkName } from "../utils/js-chunk-names"
 
 const actions = {}
 
-actions.deletePageByPath = (path, plugin = ``) => {
+/**
+ * Delete a page
+ * @param {string} page a page object with at least the path set
+ * @example
+ * deletePage(page)
+ */
+actions.deletePage = (page, plugin = ``) => {
   return {
-    type: `DELETE_PAGE_BY_PATH`,
-    payload: path,
+    type: `DELETE_PAGE`,
+    payload: page,
   }
 }
 
 const pascalCase = _.flow(_.camelCase, _.upperFirst)
-actions.upsertPage = (page, plugin = ``) => {
+/**
+ * Create a page. See https://www.gatsbyjs.org/docs/creating-and-modifying-pages/
+ * for detailed documenation about creating pages.
+ * @param {object} page a page object
+ * @param {string} page.path Any valid URL. Must start with a forward slash
+ * @param {string} page.component The absolute path to the component for this page
+ * @param {object} page.context Context data for this page. Passed as props
+ * to the component `this.props.pathContext` as well as to the graphql query
+ * as graphql arguments.
+ * @example
+ * createPage({
+ *   path: `/my-sweet-new-page/`,
+ *   component: path.resolve('./src/templates/my-sweet-new-page.js`),
+ *   // context gets passed in as props to the page as well
+ *   // as into the page/template's GraphQL query.
+ *   context: {
+ *     id: `123456`,
+ *   },
+ * })
+ */
+actions.createPage = (page, plugin = ``) => {
   page.componentChunkName = layoutComponentChunkName(page.component)
 
   let jsonName = `${_.kebabCase(page.path)}.json`
@@ -46,13 +73,24 @@ actions.upsertPage = (page, plugin = ``) => {
     return
   }
 
+  // If the path doesn't have an initial forward slash, add it.
+  if (page.path[0] !== `/`) {
+    page.path = `/` + page.path
+  }
+
   return {
-    type: `UPSERT_PAGE`,
+    type: `CREATE_PAGE`,
     plugin,
     payload: page,
   }
 }
 
+/**
+ * Delete a node
+ * @param {string} nodeId a node id
+ * @example
+ * deleteNode(node.id)
+ */
 actions.deleteNode = (nodeId, plugin = ``) => {
   return {
     type: `DELETE_NODE`,
@@ -61,6 +99,12 @@ actions.deleteNode = (nodeId, plugin = ``) => {
   }
 }
 
+/**
+ * Batch delete nodes
+ * @param {array} nodes an array of node ids
+ * @example
+ * deleteNodes([`node1`, `node2`])
+ */
 actions.deleteNodes = (nodes, plugin = ``) => {
   return {
     type: `DELETE_NODES`,
@@ -69,15 +113,57 @@ actions.deleteNodes = (nodes, plugin = ``) => {
   }
 }
 
-actions.touchNode = (nodeId, plugin = ``) => {
-  return {
-    type: `TOUCH_NODE`,
-    plugin,
-    payload: nodeId,
-  }
-}
-
 const typeOwners = {}
+/**
+ * Create a new node
+ * @param {object} node a node object
+ * @param {string} node.id The node's ID. Must be globally unique.
+ * @param {string} node.parent The ID of the parent's node. If the node is
+ * derived from another node, set that node as the parent. Otherwise it can
+ * just be an empty string.
+ * @param {array} node.children An array of children node IDs. If you're
+ * creating the children nodes while creating the parent node, add the
+ * children node IDs here directly. If you're adding a child node to a
+ * parent node created by a plugin, you can't mutate this value directly
+ * to add your node id, instead use the action creator `createParentChildLink`.
+ * @param {object} node.internal node fields that aren't generally
+ * interesting to consumers of node data but are very useful for plugin writers
+ * and Gatsby core.
+ * @param {string} node.internal.mediaType Either an official media type (we use
+ * mime-db as our source (https://www.npmjs.com/package/mime-db) or a made-up
+ * one if your data doesn't fit in any existing bucket. Transformer plugins
+ * frequently use node media types for deciding if they should transform a
+ * node into a new one. E.g. markdown transformers look for media types of
+ * text/x-markdown.
+ * @param {string} node.internal.type An arbitrary globally unique type
+ * choosen by the plugin creating the node. Should be descriptive of the
+ * node as the type is used in forming GraphQL types so users will query
+ * for nodes based on the type choosen here. Nodes of a given type can
+ * only be created by one plugin.
+ * @param {string} node.internal.content raw content of the node. Can be
+ * excluded if it'd be memory intensive to load in which case you must
+ * define a `loadNodeContent` function for this node.
+ * @param {string} node.internal.contentDigest the digest for the content
+ * of this node. Helps Gatsby avoid doing extra work on data that hasn't
+ * changed.
+ * @example
+ * createNode({
+ *   // Data for the node.
+ *   ...fieldData,
+ *   id: `a-node-id`,
+ *   parent: `the-id-of-the-parent-node`,
+ *   children: [],
+ *   internal: {
+ *     mediaType: `text/x-markdown`,
+ *     type: `CoolServiceMarkdownField`,
+ *     content: JSON.stringify(fieldData),
+ *     contentDigest: crypto
+ *       .createHash(`md5`)
+ *       .update(JSON.stringify(fieldData))
+ *       .digest(`hex`),
+ *   }
+ * })
+ */
 actions.createNode = (node, plugin) => {
   if (!_.isObject(node)) {
     return console.log(
@@ -184,7 +270,25 @@ actions.createNode = (node, plugin) => {
   }
 }
 
-actions.addFieldToNode = ({ node, fieldName, fieldValue }, plugin) => {
+/**
+ * Extend another node. The added node field is placed under the `fields`
+ * key.
+ *
+ * Once a plugin has claimed a field name the field name can't be used by
+ * other plugins.  Also since node's are immutable, you can't mutate the node
+ * directly.  So to extend
+ * @param {object} $0
+ * @param {object} $0.node the target node object
+ * @param {string} $0.fieldName the name for the field
+ * @param {string} $0.fieldValue the value for the field
+ * @example
+ * createNodeField({
+ *   node,
+ *   fieldName: `happiness`,
+ *   fieldValue: `is sweet graphql queries`
+ * })
+ */
+actions.createNodeField = ({ node, fieldName, fieldValue }, plugin) => {
   // Ensure required fields are set.
   if (!node.internal.fieldOwners) {
     node.internal.fieldOwners = {}
@@ -219,7 +323,15 @@ actions.addFieldToNode = ({ node, fieldName, fieldValue }, plugin) => {
   }
 }
 
-actions.addNodeToParent = ({ parent, child }, plugin) => {
+/**
+ * Creates a link between a parent and child node
+ * @param {object} $0
+ * @param {object} $0.parent the parent node object
+ * @param {object} $0.child the child node object
+ * @example
+ * createParentChildLink({ parent: parentNode, child: childNode })
+ */
+actions.createParentChildLink = ({ parent, child }, plugin) => {
   // Update parent
   parent.children.push(child.id)
   parent.children = _.uniq(parent.children)
@@ -231,6 +343,7 @@ actions.addNodeToParent = ({ parent, child }, plugin) => {
   }
 }
 
+// Change to "setPluginStatus".
 actions.updateSourcePluginStatus = (status, plugin = ``) => {
   return {
     type: `UPDATE_SOURCE_PLUGIN_STATUS`,
@@ -239,9 +352,18 @@ actions.updateSourcePluginStatus = (status, plugin = ``) => {
   }
 }
 
-actions.addPageDependency = ({ path, nodeId, connection }, plugin = ``) => {
+/**
+ * Create a dependency between a page and data. Probably for
+ * internal use only.
+ * @param {object} $0
+ * @param {string} $0.path the path to the page
+ * @param {string} $0.nodeId A node ID
+ * @param {string} $0.connection A connection type
+ * @private
+ */
+actions.createPageDependency = ({ path, nodeId, connection }, plugin = ``) => {
   return {
-    type: `ADD_PAGE_DEPENDENCY`,
+    type: `CREATE_PAGE_DEPENDENCY`,
     plugin,
     payload: {
       path,
@@ -251,27 +373,45 @@ actions.addPageDependency = ({ path, nodeId, connection }, plugin = ``) => {
   }
 }
 
-actions.removePagesDataDependencies = paths => {
+/**
+ * Delete dependencies between an array of pages and data. Probably for
+ * internal use only. Used when deleting pages.
+ * @param {object} $0
+ * @param {array} $0.paths the paths to delete.
+ * @private
+ */
+actions.deletePagesDependencies = paths => {
   return {
-    type: `REMOVE_PAGES_DATA_DEPENDENCIES`,
+    type: `DELETE_PAGES_DEPENDENCIES`,
     payload: {
       paths,
     },
   }
 }
 
-actions.addPageComponent = componentPath => {
+/**
+ * Used by the query watcher when it identifies a new component
+ * which is probably a page. TODO perhaps the query watcher
+ * just listens for new pages?
+ * @private
+ */
+actions.createPageComponent = componentPath => {
   return {
-    type: `ADD_PAGE_COMPONENT`,
+    type: `CREATE_PAGE_COMPONENT`,
     payload: {
       componentPath,
     },
   }
 }
 
-actions.setPageComponentQuery = ({ query, componentPath }) => {
+/**
+ * When the query watcher extracts a graphq query, it calls
+ * this to store the query with its component.
+ * @private
+ */
+actions.replacePageComponentQuery = ({ query, componentPath }) => {
   return {
-    type: `SET_PAGE_COMPONENT_QUERY`,
+    type: `REPLACE_PAGE_COMPONENT_QUERY`,
     payload: {
       query,
       componentPath,

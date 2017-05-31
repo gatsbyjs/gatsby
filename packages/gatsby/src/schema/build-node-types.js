@@ -15,7 +15,7 @@ const {
 } = require(`./infer-graphql-input-fields`)
 const { nodeInterface } = require(`./node-interface`)
 const { getNodes, getNode, getNodeAndSavePathDependency } = require(`../redux`)
-const { addPageDependency } = require(`../redux/actions/add-page-dependency`)
+const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 
 import type { ProcessedNodeType } from "./infer-graphql-type"
 
@@ -76,7 +76,7 @@ module.exports = async () => {
 
             // Add dependencies for the path
             filteredNodes.forEach(n =>
-              addPageDependency({ path, nodeId: n.id })
+              createPageDependency({ path, nodeId: n.id })
             )
             return filteredNodes
           },
@@ -94,7 +94,7 @@ module.exports = async () => {
 
             if (childNode) {
               // Add dependencies for the path
-              addPageDependency({ path, nodeId: childNode.id })
+              createPageDependency({ path, nodeId: childNode.id })
               return childNode
             }
             return null
@@ -122,7 +122,7 @@ module.exports = async () => {
     intermediateType.name = typeName
     intermediateType.nodes = nodes
 
-    const fieldsFromPlugins = await apiRunner(`extendNodeType`, {
+    const fieldsFromPlugins = await apiRunner(`setFieldsOnGraphQLNodeType`, {
       type: intermediateType,
       allNodes: getNodes(),
     })

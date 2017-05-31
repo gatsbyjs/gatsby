@@ -8,7 +8,7 @@ const slash = require(`slash`)
 // access to any information necessary to programatically
 // create pages.
 exports.createPages = ({ graphql, boundActionCreators }) => {
-  const { upsertPage } = boundActionCreators
+  const { createPage } = boundActionCreators
   return new Promise((resolve, reject) => {
     // The “graphql” function allows us to run arbitrary
     // queries against local Hacker News graphql schema. Think of
@@ -41,9 +41,9 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
       // story page. We'll just use the HN story ID for the slug.
       _.each(result.data.allHnStory.edges, edge => {
         // Gatsby uses Redux to manage its internal state.
-        // Plugins and sites can use functions like "upsertPage"
+        // Plugins and sites can use functions like "createPage"
         // to interact with Gatsby.
-        upsertPage({
+        createPage({
           // Each page is required to have a `path` as well
           // as a template component. The `context` is
           // optional but is often necessary so the template

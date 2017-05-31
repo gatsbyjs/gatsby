@@ -20,6 +20,11 @@
 - title: Reference
   links:
     Node Interface: /docs/node-interface/
+    API Specification: /docs/api-specification/
+    Bound Action Creators: /docs/bound-action-creators/
+    Gatsby Browser APIs: /docs/browser-apis/
+    Gatsby Node APIs: /docs/node-apis/
+    Gatsby SSR APIs: /docs/ssr-apis/
 - title: Contributing
   links:
     How to Contribute: /docs/how-to-contribute/

@@ -61,11 +61,11 @@ function createPropNodes(node, component, boundActionCreators) {
   return node
 }
 
-export default function onNodeCreate(
+export default function onCreateNode(
   { node, loadNodeContent, boundActionCreators },
   pluginOptions
 ) {
-  const { createNode, addNodeToParent } = boundActionCreators
+  const { createNode, createParentChildLink } = boundActionCreators
 
   if (node.internal.mediaType !== `application/javascript`) return null
 
@@ -92,7 +92,7 @@ export default function onNodeCreate(
           },
         }
 
-        addNodeToParent({ parent: node, child: metadataNode })
+        createParentChildLink({ parent: node, child: metadataNode })
         metadataNode = createPropNodes(
           metadataNode,
           component,
