@@ -271,8 +271,8 @@ actions.createNode = (node, plugin) => {
 }
 
 /**
- * Extend another node. The added node field is placed under the `fields`
- * key.
+ * Extend another node. The new node field is placed under the `fields`
+ * key on the extended node object.
  *
  * Once a plugin has claimed a field name the field name can't be used by
  * other plugins.  Also since node's are immutable, you can't mutate the node
