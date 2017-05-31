@@ -135,12 +135,6 @@ exports.onCreateNode = async ({
             )
           }
 
-          // TODO add tests for ___node and linking to files
-          // and figure out why this isn't working, ughh, why doing this not
-          // on critical path ugh.
-          //
-          // Then make all plugins respond when done so fix timing bugs ugh.
-
           return ret
         })
       }
@@ -175,13 +169,6 @@ exports.onCreateNode = async ({
 
       createParentChildLink({ parent: node, child: docNode })
       createNode(docNode)
-      // TODO clean things up, make each description a subnode that's markdown
-      // so we handle it.
-      //
-      // examples should have highlighted version of code w/ prismjs
-      //
-      // throw away all the other data and have people add them back
-      // if they want to
     })
 
     return true

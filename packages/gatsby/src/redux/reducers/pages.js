@@ -1,14 +1,5 @@
 const _ = require(`lodash`)
 
-// TODO to get page hot reloading working
-// need to be able to get list of plugins that implement
-// createPages and then get list of their pages, call "createPages"
-// again, do diff on what wasn't added this time, and then delete
-// those.
-//
-// This would be relatively easy with the API refactor suggested
-// by 0x80 as exact implementors known ahead of time.
-
 module.exports = (state = [], action) => {
   switch (action.type) {
     case `DELETE_CACHE`:
