@@ -16,26 +16,3 @@ plugins: [
   `gatsby-plugin-styled-components`,
 ]
 ```
-
-edit `src/html.js`
-
-```html
-module.exports = class extends React.Component {
-  render() {
-    return (
-      <html lang="en">
-        <head>
-          {this.props.styles}
-        </head>
-        <body>
-          <div id="___gatsby" dangerouslySetInnerHTML={{ __html: this.props.body }} />
-        </body>
-      </html>
-    )
-  }
-}
-```
-
-## Copyright
-
-MIT
