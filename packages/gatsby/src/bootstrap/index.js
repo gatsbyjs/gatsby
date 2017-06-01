@@ -296,13 +296,13 @@ data
   await writePages()
   console.timeEnd(`write out pages modules`)
 
-  const checkJobsDone = _.debounce(() => {
+  const checkJobsDone = _.debounce(resolve => {
     const state = store.getState()
     if (state.jobs.active.length === 0) {
-      console.log("bootstrap is done")
       console.log(
         `bootstrap finished, time since started: ${process.uptime()}sec`
       )
+      resolve()
     }
   }, 100)
 
@@ -314,7 +314,7 @@ data
   } else {
     return new Promise(resolve => {
       // Wait until all side effect jobs are finished.
-      emitter.on("END_JOB", checkJobsDone)
+      emitter.on("END_JOB", () => checkJobsDone(resolve))
     })
   }
 }
