@@ -9,7 +9,7 @@ platform:
   - x64
 
 environment:
-  nodejs_version: "6"
+  nodejs_version: "8"
 
   matrix:
 #  - example: client-only-paths
