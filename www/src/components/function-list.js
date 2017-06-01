@@ -59,13 +59,15 @@ export default ({ functions }) => (
             __html: node.description.childMarkdownRemark.html,
           }}
         />
-        {node.params.length > 0 &&
+        {node.parms &&
+          node.params.length > 0 &&
           <div>
             <h4>Parameters</h4>
             {node.params.map(Param)}
           </div>}
 
-        {node.examples.length > 0 &&
+        {node.examples &&
+          node.examples.length > 0 &&
           <div>
             <h4 css={{ marginTop: rhythm(1) }}>Example</h4>
             {` `}

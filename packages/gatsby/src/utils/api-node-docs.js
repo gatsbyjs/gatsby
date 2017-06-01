@@ -149,3 +149,9 @@ exports.modifyBabelrc = true
  * Redux actions.
  */
 exports.modifyWebpackConfig = true
+
+/**
+ * The last extension point called after all other parts of the build process
+ * are complete.
+ */
+exports.onPostBuild = true

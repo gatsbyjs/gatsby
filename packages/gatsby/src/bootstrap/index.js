@@ -302,7 +302,7 @@ data
       console.log(
         `bootstrap finished, time since started: ${process.uptime()}sec`
       )
-      resolve()
+      resolve({ graphqlRunner })
     }
   }, 100)
 
@@ -310,7 +310,7 @@ data
     console.log(
       `bootstrap finished, time since started: ${process.uptime()}sec`
     )
-    return
+    return { graphqlRunner }
   } else {
     return new Promise(resolve => {
       // Wait until all side effect jobs are finished.

@@ -42,8 +42,7 @@ async function html(program: any) {
     process.exit(1)
   })
 
-  console.log(`Running postBuild plugins`)
-  await apiRunnerNode(`postBuild`, { graphql: graphqlRunner })
+  await apiRunnerNode(`onPostBuild`, { graphql: graphqlRunner })
 }
 
 module.exports = html
