@@ -99,7 +99,6 @@ fragment FunctionList on DocumentationJs {
     title
   }
   examples {
-    raw
     highlighted
   }
   params {
