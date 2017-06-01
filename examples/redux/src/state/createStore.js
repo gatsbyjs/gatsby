@@ -1,4 +1,4 @@
-import { createStore as reduxCreateStore } from 'redux'
+const reduxCreateStore = require(`redux`).createStore
 
 const reducer = (state, action) => {
     console.log(action)
@@ -14,4 +14,4 @@ const initialState = { count: 0 }
 
 const createStore = () => reduxCreateStore(reducer, initialState)
 
-export default createStore
+module.exports = createStore
