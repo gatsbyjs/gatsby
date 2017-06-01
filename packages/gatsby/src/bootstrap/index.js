@@ -36,7 +36,7 @@ module.exports = async (program: any) => {
   console.log(
     `lib/bootstrap/index.js time since started:`,
     process.uptime(),
-    "sec"
+    `sec`
   )
 
   // Fix program directory path for windows env
@@ -243,25 +243,25 @@ data
   }
 
   // Collect pages.
-  console.time("createPages")
+  console.time(`createPages`)
   await apiRunnerNode(`createPages`, {
     graphql: graphqlRunner,
     traceId: `initial-createPages`,
     waitForCascadingActions: true,
   })
-  console.timeEnd("createPages")
+  console.timeEnd(`createPages`)
 
   // A variant on createPages for plugins that want to
   // have full control over adding/removing pages. The normal
   // "createPages" API is called every time (during development)
   // that data changes.
-  console.time("createPagesStatefully")
+  console.time(`createPagesStatefully`)
   await apiRunnerNode(`createPagesStatefully`, {
     graphql: graphqlRunner,
     traceId: `initial-createPagesStatefully`,
     waitForCascadingActions: true,
   })
-  console.timeEnd("createPagesStatefully")
+  console.timeEnd(`createPagesStatefully`)
 
   // Copy /404/ to /404.html as many static site hosts expect
   // site 404 pages to be named this.
@@ -314,7 +314,7 @@ data
   } else {
     return new Promise(resolve => {
       // Wait until all side effect jobs are finished.
-      emitter.on("END_JOB", () => checkJobsDone(resolve))
+      emitter.on(`END_JOB`, () => checkJobsDone(resolve))
     })
   }
 }
