@@ -47,7 +47,7 @@ const pascalCase = _.flow(_.camelCase, _.upperFirst)
  *   },
  * })
  */
-actions.createPage = (page, plugin = ``) => {
+actions.createPage = (page, plugin = ``, traceId) => {
   page.componentChunkName = layoutComponentChunkName(page.component)
 
   let jsonName = `${_.kebabCase(page.path)}.json`
@@ -81,6 +81,7 @@ actions.createPage = (page, plugin = ``) => {
   return {
     type: `CREATE_PAGE`,
     plugin,
+    traceId,
     payload: page,
   }
 }
@@ -164,7 +165,7 @@ const typeOwners = {}
  *   }
  * })
  */
-actions.createNode = (node, plugin) => {
+actions.createNode = (node, plugin, traceId) => {
   if (!_.isObject(node)) {
     return console.log(
       chalk.bold.red(
@@ -259,12 +260,14 @@ actions.createNode = (node, plugin) => {
     return {
       type: `TOUCH_NODE`,
       plugin,
+      traceId,
       payload: node.id,
     }
   } else {
     return {
       type: `CREATE_NODE`,
       plugin,
+      traceId,
       payload: node,
     }
   }
@@ -288,7 +291,11 @@ actions.createNode = (node, plugin) => {
  *   fieldValue: `is sweet graphql queries`
  * })
  */
-actions.createNodeField = ({ node, fieldName, fieldValue }, plugin) => {
+actions.createNodeField = (
+  { node, fieldName, fieldValue },
+  plugin,
+  traceId
+) => {
   // Ensure required fields are set.
   if (!node.internal.fieldOwners) {
     node.internal.fieldOwners = {}
@@ -319,6 +326,7 @@ actions.createNodeField = ({ node, fieldName, fieldValue }, plugin) => {
   return {
     type: `ADD_FIELD_TO_NODE`,
     plugin,
+    traceId,
     payload: node,
   }
 }
@@ -340,15 +348,6 @@ actions.createParentChildLink = ({ parent, child }, plugin) => {
     type: `ADD_CHILD_NODE_TO_PARENT_NODE`,
     plugin,
     payload: parent,
-  }
-}
-
-// Change to "setPluginStatus".
-actions.updateSourcePluginStatus = (status, plugin = ``) => {
-  return {
-    type: `UPDATE_SOURCE_PLUGIN_STATUS`,
-    plugin,
-    payload: status,
   }
 }
 

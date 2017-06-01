@@ -5,7 +5,7 @@ import { rhythm, scale } from "../utils/typography"
 const Param = (param, depth = 0) => {
   // the plugin parameter is used internally but not
   // something a user should use.
-  if (param.name == `plugin`) {
+  if (param.name === `plugin` || param.name === `traceId`) {
     return null
   }
 

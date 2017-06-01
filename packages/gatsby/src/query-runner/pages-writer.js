@@ -52,7 +52,8 @@ const writePages = () => {
 
   fs.writeFile(
     `${program.directory}/.cache/pages.json`,
-    JSON.stringify(pagesData, null, 4)
+    JSON.stringify(pagesData, null, 4),
+    () => {}
   )
 
   // Create file with sync requires of layouts/components/json files.
@@ -86,7 +87,11 @@ const preferDefault = m => m && m.default || m
     .join(`,\n`)}
 }`
 
-  fs.writeFile(`${program.directory}/.cache/sync-requires.js`, syncRequires)
+  fs.writeFile(
+    `${program.directory}/.cache/sync-requires.js`,
+    syncRequires,
+    () => {}
+  )
   // Create file with async requires of layouts/components/json files.
   let asyncRequires = `// prefer default export if available
 const preferDefault = m => m && m.default || m
@@ -118,7 +123,11 @@ const preferDefault = m => m && m.default || m
     .join(`,\n`)}
 }`
 
-  fs.writeFile(`${program.directory}/.cache/async-requires.js`, asyncRequires)
+  fs.writeFile(
+    `${program.directory}/.cache/async-requires.js`,
+    asyncRequires,
+    () => {}
+  )
 }
 
 let writtenOnce = false

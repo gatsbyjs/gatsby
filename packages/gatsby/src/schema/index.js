@@ -36,98 +36,81 @@ async function buildSchema() {
   return
 }
 
-// This seems like the most sensible way to decide when the the initial
-// search for nodes is finished. At least for filesystem based nodes. For
-// source plugins pulling from remote systems, there'll probably need to be
-// an explicit API for them to let Gatsby core know that a sync is complete.
-const debounceNodeCreation = cb => {
-  // TODO this is terrible. Find a better way to figure
-  // out when stuff is finished.
-  const updateNode = _.debounce(cb, 1000)
-  // Ensure schema is created even if the project hasn't got any source plugins.
-  updateNode()
-  emitter.onAny(() => {
-    const state = store.getState()
-    if (
-      state.lastAction.type === `CREATE_NODE` ||
-      state.lastAction.type === `UPDATE_NODE` ||
-      state.lastAction.type === `UPDATE_SOURCE_PLUGIN_STATUS`
-    ) {
-      updateNode()
-    }
-  })
-}
+// Store types that we're building so can check
+// later if need to rebuild the schema.
+let typesBuilt
+let builtSchemaOnce = false
+const rebuildSchema = _.debounce(() => {
+  if (!builtSchemaOnce) return
+
+  const state = store.getState()
+
+  if (!typesBuilt) {
+    typesBuilt = _.map(
+      _.uniqBy(_.values(state.nodes), n => n.internal.type),
+      t => t.internal.type
+    )
+  }
+
+  // If we've already built the schema before already, check if
+  // there's been any new node types added.
+  const newTypesBuilt = _.map(
+    _.uniqBy(_.values(state.nodes), n => n.internal.type),
+    t => t.internal.type
+  )
+
+  if (typesBuilt !== newTypesBuilt) {
+    buildSchema()
+  }
+}, 4000)
+
+emitter.on("CREATE_NODE", () => {
+  rebuildSchema()
+})
 
 module.exports = () =>
   new Promise(resolve => {
-    console.time(`sourcing and parsing nodes`)
-    apiRunner(`sourceNodes`)
-    let builtSchema = false
-    let typesBuilt = {}
-    debounceNodeCreation(() => {
+    console.time(`initial sourcing and transforming nodes`)
+    apiRunner(`sourceNodes`, {
+      traceId: `initial-sourceNodes`,
+      waitForCascadingActions: true,
+    }).then(() => {
+      console.timeEnd(`initial sourcing and transforming nodes`)
       const state = store.getState()
-      // Check if the schema has been built yet and if
-      // all source plugins have reported that they're ready.
-      if (
-        !builtSchema &&
-        _.every(_.values(state.status.sourcePlugins), `ready`)
-      ) {
-        console.timeEnd(`sourcing and parsing nodes`)
-        builtSchema = true
-        // Resolve promise once the schema is built.
-        buildSchema().then(() => resolve())
 
-        // Store types that we're building so can check
-        // later if need to rebuild the schema.
-        typesBuilt = _.map(
-          _.uniqBy(_.values(state.nodes), n => n.internal.type),
-          t => t.internal.type
-        )
-
-        // Garbage collect stale data nodes.
-        //
-        // This is a REALLY terrible place to put this but until we have
-        // a nice centralized way to trigger events when certain work is
-        // done, we'll just put this here.
-        const touchedNodes = Object.keys(state.nodesTouched)
-        const staleNodes = _.values(state.nodes).filter(node => {
-          // Find the root node.
-          let rootNode = node
-          let whileCount = 0
-          while (
-            rootNode.parent &&
-            getNode(rootNode.parent) !== undefined &&
-            whileCount < 101
-          ) {
-            rootNode = getNode(rootNode.parent)
-            whileCount += 1
-            if (whileCount > 100) {
-              console.log(
-                `It looks like you have a node that's set its parent as itself`,
-                rootNode
-              )
-            }
+      // Garbage collect stale data nodes before creating the
+      // schema.
+      const touchedNodes = Object.keys(state.nodesTouched)
+      const staleNodes = _.values(state.nodes).filter(node => {
+        // Find the root node.
+        let rootNode = node
+        let whileCount = 0
+        while (
+          rootNode.parent &&
+          getNode(rootNode.parent) !== undefined &&
+          whileCount < 101
+        ) {
+          rootNode = getNode(rootNode.parent)
+          whileCount += 1
+          if (whileCount > 100) {
+            console.log(
+              `It looks like you have a node that's set its parent as itself`,
+              rootNode
+            )
           }
-
-          return !_.includes(touchedNodes, rootNode.id)
-        })
-        if (staleNodes.length > 0) {
-          deleteNodes(staleNodes.map(n => n.id))
-        }
-      } else if (builtSchema) {
-        // If we've already built the schema before already, check if
-        // there's been any new node types added.
-        const newTypesBuilt = _.map(
-          _.uniqBy(_.values(state.nodes), n => n.internal.type),
-          t => t.internal.type
-        )
-
-        if (typesBuilt !== newTypesBuilt) {
-          console.log(`building schema again`)
-          buildSchema()
         }
 
-        typesBuilt = newTypesBuilt
+        return !_.includes(touchedNodes, rootNode.id)
+      })
+
+      if (staleNodes.length > 0) {
+        deleteNodes(staleNodes.map(n => n.id))
       }
+
+      // Resolve promise once the schema is built.
+      buildSchema().then(() => {
+        builtSchemaOnce = true
+        resolve()
+      })
     })
   })

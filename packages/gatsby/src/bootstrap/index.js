@@ -216,7 +216,9 @@ data
   const extensions = [`.js`, `.jsx`]
   // Change to this being an action and plugins implement `onPreBootstrap`
   // for adding extensions.
-  const apiResults = await apiRunnerNode(`resolvableExtensions`)
+  const apiResults = await apiRunnerNode(`resolvableExtensions`, {
+    traceId: `initial-resolvableExtensions`,
+  })
 
   store.dispatch({
     type: `SET_PROGRAM_EXTENSIONS`,
@@ -229,17 +231,25 @@ data
   }
 
   // Collect pages.
+  console.time("createPages")
   await apiRunnerNode(`createPages`, {
     graphql: graphqlRunner,
+    traceId: `initial-createPages`,
+    waitForCascadingActions: true,
   })
+  console.timeEnd("createPages")
 
   // A variant on createPages for plugins that want to
   // have full control over adding/removing pages. The normal
   // "createPages" API is called every time (during development)
   // that data changes.
+  console.time("createPagesStatefully")
   await apiRunnerNode(`createPagesStatefully`, {
     graphql: graphqlRunner,
+    traceId: `initial-createPagesStatefully`,
+    waitForCascadingActions: true,
   })
+  console.timeEnd("createPagesStatefully")
 
   // Copy /404/ to /404.html as many static site hosts expect
   // site 404 pages to be named this.

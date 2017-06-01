@@ -27,12 +27,20 @@ const debounceNewPages = _.debounce(() => {
 
   queryCompiler().then(queries => {
     pages.forEach(componentPath => {
+      boundActionCreators.startJob(
+        { id: `compilePageQuery: ${componentPath}` },
+        { name: `query-watcher.js` }
+      )
       const query = queries.get(componentPath)
 
       boundActionCreators.replacePageComponentQuery({
         query: query && query.text,
         componentPath,
       })
+      boundActionCreators.endJob(
+        { id: `compilePageQuery: ${componentPath}` },
+        { name: `query-watcher.js` }
+      )
     })
 
     store.dispatch({
@@ -60,7 +68,7 @@ emitter.on(`CREATE_PAGE`, action => {
       action.payload.jsonName
     )
     if (!fs.existsSync(pathToJSONFile)) {
-      fs.writeFile(pathToJSONFile, `{}`)
+      fs.writeFile(pathToJSONFile, `{}`, () => {})
     }
     boundActionCreators.createPageComponent(component)
     pendingPages.push(component)
