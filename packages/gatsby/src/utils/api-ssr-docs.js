@@ -8,14 +8,14 @@
  * import { renderToString } from "react-dom/server"
  * import inline from "glamor-inline"
  *
- * exports.replaceServerBodyRender = ({ component }) => {
+ * exports.replaceServerPageRender = ({ component }) => {
  *   const html = renderToString(component)
  *   const inlinedHtml = inline(html)
  *
  *   return { body: inlinedHtml }
  * }
  */
-exports.replaceServerBodyRender = true
+exports.replaceServerPageRender = true
 
 /**
  * Let a plugin add components to the "headComponents" array.
@@ -70,3 +70,34 @@ exports.createHeadComponents = true
  * }
  */
 exports.createPostBodyComponents = true
+
+/**
+ * Called after every page HTML render. It's a very common pattern for
+ * React.js libraries that support server rendering to after each server
+ * render, pull out data of various sorts generated during the render to add
+ * to your HTML.
+ *
+ * This API is preferable to [`replaceServerBodyRender`](#replaceServerBodyRender]
+ * as multiple plugins can implement this API where only one plugin
+ * can take over server rendering. However, if your library requires taking over server rendering then
+ * that's the one to use
+ *
+ * @example
+ * // From gatsby-plugin-react-helmet.
+ * import helmet from "react-helmet"
+ *
+ * exports.onRenderBody = (
+ *   { headComponents, ...otherProps },
+ *   pluginOptions
+ * ) => {
+ *   return {
+ *     ...otherProps,
+ *     headComponents: headComponents.concat([
+ *       helmet.title.toComponent(),
+ *       helmet.meta.toComponent(),
+ *       helmet.link.toComponent(),
+ *     ]),
+ *   }
+ * }
+ */
+exports.onRenderBody = true

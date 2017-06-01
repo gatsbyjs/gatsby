@@ -81,6 +81,21 @@ module.exports = (locals, callback) => {
   if (!postBodyComponents) {
     postBodyComponents = []
   }
+  if (!bodyRenderProps) {
+    bodyRenderProps = {}
+  }
+
+  const onRenderBodyResults = apiRunner(`onRenderBody`, {
+    body,
+    headComponents,
+    postBodyComponents,
+    bodyRenderProps,
+  })
+
+  body = onRenderBodyResults.body
+  headComponents = onRenderBodyResults.headComponents
+  postBodyComponents = onRenderBodyResults.postBodyComponents
+  bodyRenderProps = onRenderBodyResults.bodyRenderProps
 
   // Add the chunk-manifest as a head component.
   const chunkManifest = require(`!raw!../public/chunk-manifest.json`)
