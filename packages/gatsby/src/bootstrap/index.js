@@ -9,10 +9,18 @@ const crypto = require(`crypto`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const { graphql } = require(`graphql`)
-const { store } = require(`../redux`)
+const { store, emitter } = require(`../redux`)
 const { boundActionCreators } = require(`../redux/actions`)
 const loadPlugins = require(`./load-plugins`)
 const { initCache } = require(`../utils/cache`)
+
+const {
+  extractQueries,
+} = require(`../internal-plugins/query-runner/query-watcher`)
+const {
+  runQueries,
+} = require(`../internal-plugins/query-runner/page-query-runner`)
+const { writePages } = require(`../internal-plugins/query-runner/pages-writer`)
 
 // Override console.log to add the source file + line number.
 // Useful for debugging if you lose a console.log somewhere.
@@ -20,12 +28,16 @@ const { initCache } = require(`../utils/cache`)
 // require(`./log-line-function`)
 
 // Start off the query running.
-const QueryRunner = require(`../query-runner`)
+const QueryRunner = require(`../internal-plugins/query-runner`)
 
 const preferDefault = m => (m && m.default) || m
 
 module.exports = async (program: any) => {
-  console.log(`lib/bootstrap/index.js time since started:`, process.uptime())
+  console.log(
+    `lib/bootstrap/index.js time since started:`,
+    process.uptime(),
+    "sec"
+  )
 
   // Fix program directory path for windows env
   program.directory = slash(program.directory)
@@ -76,7 +88,7 @@ module.exports = async (program: any) => {
     .createHash(`md5`)
     .update(JSON.stringify(pluginVersions.concat(hashes)))
     .digest(`hex`)
-  const state = store.getState()
+  let state = store.getState()
   const oldPluginsHash = state && state.status ? state.status.PLUGINS_HASH : ``
 
   // Check if anything has changed. If it has, delete the site's .cache
@@ -216,7 +228,9 @@ data
   const extensions = [`.js`, `.jsx`]
   // Change to this being an action and plugins implement `onPreBootstrap`
   // for adding extensions.
-  const apiResults = await apiRunnerNode(`resolvableExtensions`)
+  const apiResults = await apiRunnerNode(`resolvableExtensions`, {
+    traceId: `initial-resolvableExtensions`,
+  })
 
   store.dispatch({
     type: `SET_PROGRAM_EXTENSIONS`,
@@ -229,17 +243,25 @@ data
   }
 
   // Collect pages.
+  console.time("createPages")
   await apiRunnerNode(`createPages`, {
     graphql: graphqlRunner,
+    traceId: `initial-createPages`,
+    waitForCascadingActions: true,
   })
+  console.timeEnd("createPages")
 
   // A variant on createPages for plugins that want to
   // have full control over adding/removing pages. The normal
   // "createPages" API is called every time (during development)
   // that data changes.
+  console.time("createPagesStatefully")
   await apiRunnerNode(`createPagesStatefully`, {
     graphql: graphqlRunner,
+    traceId: `initial-createPagesStatefully`,
+    waitForCascadingActions: true,
   })
+  console.timeEnd("createPagesStatefully")
 
   // Copy /404/ to /404.html as many static site hosts expect
   // site 404 pages to be named this.
@@ -259,14 +281,40 @@ data
     })
   }
 
-  return new Promise(resolve => {
-    QueryRunner.isInitialPageQueryingDone(() => {
-      apiRunnerNode(`generateSideEffects`).then(() => {
-        console.log(
-          `bootstrap finished, time since started: ${process.uptime()}`
-        )
-        resolve({ graphqlRunner })
-      })
+  // Extract queries
+  console.time(`extract queries`)
+  await extractQueries()
+  console.timeEnd(`extract queries`)
+
+  // Run queries
+  console.time(`Run queries`)
+  await runQueries()
+  console.timeEnd(`Run queries`)
+
+  // Write out files.
+  console.time(`write out pages modules`)
+  await writePages()
+  console.timeEnd(`write out pages modules`)
+
+  const checkJobsDone = _.debounce(resolve => {
+    const state = store.getState()
+    if (state.jobs.active.length === 0) {
+      console.log(
+        `bootstrap finished, time since started: ${process.uptime()}sec`
+      )
+      resolve({ graphqlRunner })
+    }
+  }, 100)
+
+  if (store.getState().jobs.active.length === 0) {
+    console.log(
+      `bootstrap finished, time since started: ${process.uptime()}sec`
+    )
+    return { graphqlRunner }
+  } else {
+    return new Promise(resolve => {
+      // Wait until all side effect jobs are finished.
+      emitter.on("END_JOB", () => checkJobsDone(resolve))
     })
-  })
+  }
 }

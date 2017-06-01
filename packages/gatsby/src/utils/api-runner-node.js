@@ -7,12 +7,12 @@ const cache = require(`./cache`)
 
 const apiList = require(`./api-node-docs`)
 
-// Bind action creators per plugin so can auto-add plugin
-// meta-data to data they create.
+// Bind action creators per plugin so we can auto-add
+// metadata to actions they create.
 const boundPluginActionCreators = {}
-const doubleBind = (boundActionCreators, plugin) => {
-  if (boundPluginActionCreators[plugin.name]) {
-    return boundPluginActionCreators[plugin.name]
+const doubleBind = (boundActionCreators, api, plugin, { traceId }) => {
+  if (boundPluginActionCreators[plugin.name + api + traceId]) {
+    return boundPluginActionCreators[plugin.name + api + traceId]
   } else {
     const keys = Object.keys(boundActionCreators)
     const doubleBoundActionCreators = {}
@@ -20,11 +20,14 @@ const doubleBind = (boundActionCreators, plugin) => {
       const key = keys[i]
       const boundActionCreator = boundActionCreators[key]
       if (typeof boundActionCreator === `function`) {
-        doubleBoundActionCreators[key] = (...args) =>
-          boundActionCreator(...args, plugin)
+        doubleBoundActionCreators[key] = (...args) => {
+          return boundActionCreator(...args, plugin, traceId)
+        }
       }
     }
-    boundPluginActionCreators[plugin.name] = doubleBoundActionCreators
+    boundPluginActionCreators[
+      plugin.name + api + traceId
+    ] = doubleBoundActionCreators
     return doubleBoundActionCreators
   }
 }
@@ -41,9 +44,12 @@ const runAPI = (plugin, api, args) => {
   } = require(`../redux`)
   const { boundActionCreators } = require(`../redux/actions`)
 
-  // Wrap "createNode" so we can autoset the package name
-  // of the plugin that creates each node.
-  const doubleBoundActionCreators = doubleBind(boundActionCreators, plugin)
+  const doubleBoundActionCreators = doubleBind(
+    boundActionCreators,
+    api,
+    plugin,
+    args
+  )
 
   if (store.getState().program.prefixLinks) {
     linkPrefix = store.getState().config.linkPrefix
@@ -51,10 +57,7 @@ const runAPI = (plugin, api, args) => {
 
   const gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
   if (gatsbyNode[api]) {
-    // if (!_.includes([`onCreateNode`, `onCreatePage`], api)) {
-    // console.log(`calling api handler in ${plugin.resolve} for api ${api}`)
-    // }
-    const result = gatsbyNode[api](
+    const apiCallArgs = [
       {
         ...args,
         linkPrefix,
@@ -67,10 +70,19 @@ const runAPI = (plugin, api, args) => {
         getNodeAndSavePathDependency,
         cache,
       },
-      plugin.pluginOptions
-    )
+      plugin.pluginOptions,
+    ]
 
-    return Promise.resolve(result)
+    // If the plugin is using a callback use that otherwise
+    // expect a Promise to be returned.
+    if (gatsbyNode[api].length === 3) {
+      return Promise.fromCallback(callback =>
+        gatsbyNode[api](...apiCallArgs, callback)
+      )
+    } else {
+      const result = gatsbyNode[api](...apiCallArgs)
+      return Promise.resolve(result)
+    }
   }
 
   return null
@@ -79,13 +91,15 @@ const runAPI = (plugin, api, args) => {
 let filteredPlugins
 const hasAPIFile = plugin => glob.sync(`${plugin.resolve}/gatsby-node*`)[0]
 
+let apisRunning = []
+let waitingForCasacadeToFinish = []
+
 module.exports = async (api, args = {}, pluginSource) =>
   new Promise(resolve => {
     // Check that the API is documented.
     if (!apiList[api]) {
       console.log(`api`, api, `is not yet documented`)
-      // process.exit()
-      return resolve()
+      process.exit()
     }
 
     const { store } = require(`../redux`)
@@ -108,6 +122,43 @@ module.exports = async (api, args = {}, pluginSource) =>
       )
     }
 
+    const apiRunInstance = {
+      api,
+      args,
+      pluginSource,
+      resolve,
+      startTime: new Date().toJSON(),
+      traceId: args.traceId,
+    }
+
+    if (args.waitForCascadingActions) {
+      waitingForCasacadeToFinish.push(apiRunInstance)
+    }
+
+    apisRunning.push(apiRunInstance)
+
+    // if (api !== `onCreatePage`) {
+    // console.log(
+    // api,
+    // "apisRunning",
+    // apisRunning.length,
+    // _.uniq(apisRunning.map(a => a.traceId)),
+    // _.uniq(apisRunning.map(a => a.api)),
+    // _.uniq(
+    // _.flatten(
+    // apisRunning.map(a =>
+    // noSourcePluginPlugins
+    // .filter(plugin => {
+    // const gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
+    // return gatsbyNode[a.api]
+    // })
+    // .map(plugin => plugin.name)
+    // )
+    // )
+    // )
+    // )
+    // }
+
     mapSeries(
       noSourcePluginPlugins,
       (plugin, callback) => {
@@ -121,8 +172,30 @@ module.exports = async (api, args = {}, pluginSource) =>
           console.log(err)
           process.exit(1)
         }
-        // Filter out empty responses and return
-        resolve(results.filter(result => !_.isEmpty(result)))
+        // Remove runner instance
+        apisRunning = apisRunning.filter(runner => runner !== apiRunInstance)
+
+        // Filter empty results
+        apiRunInstance.results = results.filter(result => !_.isEmpty(result))
+
+        // Filter out empty responses and return if the
+        // api caller isn't waiting for cascading actions to finish.
+        if (!args.waitForCascadingActions) {
+          resolve(apiRunInstance.results)
+        }
+
+        // Check if any of our waiters are done.
+        waitingForCasacadeToFinish = waitingForCasacadeToFinish.filter(
+          instance => {
+            // If none of its trace IDs are running, it's done.
+            if (!_.some(apisRunning, a => a.traceId === instance.traceId)) {
+              instance.resolve(instance.results)
+              return false
+            } else {
+              return true
+            }
+          }
+        )
       }
     )
   })

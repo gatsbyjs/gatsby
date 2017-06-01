@@ -3,8 +3,9 @@ const fs = require(`fs`)
 const Promise = require(`bluebird`)
 
 const writeFileAsync = Promise.promisify(fs.writeFile)
+const { boundActionCreators } = require(`../../redux/actions`)
 
-const { store } = require(`../redux`)
+const { store } = require(`../../redux`)
 
 // Run query for a page
 module.exports = async (page, component) => {
@@ -20,7 +21,16 @@ module.exports = async (page, component) => {
   if (!component.query || component.query === ``) {
     result = {}
   } else {
+    boundActionCreators.createJob(
+      { id: `runPathQuery: ${page.path}` },
+      { name: `query-runner.js` }
+    )
     result = await graphql(component.query, { ...page, ...page.context })
+
+    boundActionCreators.endJob(
+      { id: `runPathQuery: ${page.path}` },
+      { name: `query-runner.js` }
+    )
   }
 
   // If there's a graphql errort then log the error. If we're building, also
@@ -43,7 +53,7 @@ module.exports = async (page, component) => {
   // Add the path context onto the results.
   result.pathContext = page.context
   const resultJSON = JSON.stringify(result, null, 4)
-  return await writeFileAsync(
+  return writeFileAsync(
     `${program.directory}/.cache/json/${page.jsonName}`,
     resultJSON
   )

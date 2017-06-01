@@ -14,10 +14,6 @@ exports.sourceNodes = async ({
   hasNodeChanged,
 }) => {
   const { createNode, updateSourcePluginStatus } = boundActionCreators
-  updateSourcePluginStatus({
-    plugin: `gatsby-source-hacker-news`,
-    ready: false,
-  })
 
   // Do the initial fetch
   console.time(`fetch HN data`)
@@ -169,10 +165,6 @@ fragment commentsFragment on HackerNewsItem {
   })
 
   const ready = true
-  updateSourcePluginStatus({
-    plugin: `gatsby-source-hacker-news`,
-    status: { ready },
-  })
 
   return
 }

@@ -6,7 +6,7 @@
 exports.resolvableExtensions = true
 
 /**
- * Let plugins add pages. This extension point is called only after the initial
+ * Tell plugins to add pages. This extension point is called only after the initial
  * sourcing and transformation of nodes plus creation of the GraphQL schema are
  * complete so you can query your data in order to create pages.
  *
@@ -149,3 +149,9 @@ exports.modifyBabelrc = true
  * Redux actions.
  */
 exports.modifyWebpackConfig = true
+
+/**
+ * The last extension point called after all other parts of the build process
+ * are complete.
+ */
+exports.onPostBuild = true

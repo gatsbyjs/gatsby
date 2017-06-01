@@ -56,20 +56,12 @@ function readFile(file, pluginOptions, cb) {
 
 exports.sourceNodes = (
   { boundActionCreators, getNode, hasNodeChanged },
-  pluginOptions
+  pluginOptions,
+  done
 ) => {
-  const {
-    createNode,
-    deleteNode,
-    updateSourcePluginStatus,
-  } = boundActionCreators
+  const { createNode, deleteNode } = boundActionCreators
 
   let ready = false
-
-  updateSourcePluginStatus({
-    plugin: `source-filesystem --- ${pluginOptions.name}`,
-    status: { ready },
-  })
 
   const watcher = chokidar.watch(pluginOptions.path, {
     ignored: [
@@ -133,10 +125,7 @@ exports.sourceNodes = (
 
     ready = true
     flushPathQueue(() => {
-      updateSourcePluginStatus({
-        plugin: `source-filesystem --- ${pluginOptions.name}`,
-        status: { ready },
-      })
+      done()
     })
   })
 

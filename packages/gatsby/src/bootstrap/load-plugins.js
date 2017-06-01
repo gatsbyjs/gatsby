@@ -59,16 +59,19 @@ module.exports = async config => {
   // Add internal plugins
   plugins.push(
     processPlugin(
-      path.join(__dirname, `./internal-plugins/component-page-creator`)
+      path.join(__dirname, `../internal-plugins/component-page-creator`)
     )
   )
   plugins.push(
     processPlugin(
-      path.join(__dirname, `./internal-plugins/internal-data-bridge`)
+      path.join(__dirname, `../internal-plugins/internal-data-bridge`)
     )
   )
   plugins.push(
-    processPlugin(path.join(__dirname, `./internal-plugins/dev-404-page`))
+    processPlugin(path.join(__dirname, `../internal-plugins/dev-404-page`))
+  )
+  plugins.push(
+    processPlugin(path.join(__dirname, `../internal-plugins/query-runner`))
   )
 
   // Add plugins from the site config.

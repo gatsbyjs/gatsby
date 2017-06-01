@@ -7,8 +7,10 @@ const fs = require(`fs`)
 const ProgressBar = require(`progress`)
 const imagemin = require(`imagemin`)
 const imageminPngquant = require(`imagemin-pngquant`)
-const queue = require(`queue`)
+const queue = require(`async/queue`)
 const duotone = require(`./duotone`)
+
+const { boundActionCreators } = require(`gatsby/dist/redux/actions`)
 
 // Promisify the sharp prototype (methods) to promisify the alternative (for
 // raw) callback-accepting toBuffer(...) method
@@ -27,8 +29,18 @@ const bar = new ProgressBar(
     width: 30,
   }
 )
+
 const processFile = (file, jobs, cb) => {
-  Promise.all(jobs.map(job => job.finished)).then(() => cb())
+  totalJobs += jobs.length
+  bar.total = _.sumBy(
+    Object.keys(toProcess),
+    key => _.values(toProcess[key]).length
+  )
+
+  let imagesFinished = 0
+
+  // Wait for each job promise to resolve.
+  Promise.all(jobs.map(job => job.finishedPromise)).then(() => cb())
   const pipeline = sharp(file).rotate()
   jobs.forEach(async job => {
     const args = job.args
@@ -80,7 +92,15 @@ const processFile = (file, jobs, cb) => {
 
     if (job.file.extension.match(/^jp/)) {
       clonedPipeline.toFile(job.outputPath, (err, info) => {
+        imagesFinished += 1
         bar.tick()
+        boundActionCreators.setJob(
+          {
+            id: `processing image ${job.file.absolutePath}`,
+            imagesFinished,
+          },
+          { name: `gatsby-plugin-sharp` }
+        )
         job.outsideResolve(info)
       })
       // Compress pngs
@@ -96,7 +116,15 @@ const processFile = (file, jobs, cb) => {
           })
           .then(imageminBuffer => {
             fs.writeFile(job.outputPath, imageminBuffer, () => {
+              imagesFinished += 1
               bar.tick()
+              boundActionCreators.setJob(
+                {
+                  id: `processing image ${job.file.absolutePath}`,
+                  imagesFinished,
+                },
+                { name: `gatsby-plugin-sharp` }
+              )
               job.outsideResolve()
             })
           })
@@ -105,10 +133,11 @@ const processFile = (file, jobs, cb) => {
   })
 }
 
-let totalCount = 0
+let totalJobs = 0
 const toProcess = {}
-const q = queue()
-q.concurrency = 1
+const q = queue((task, callback) => {
+  task(callback)
+}, 1)
 
 const queueJob = job => {
   const inputFileKey = job.file.absolutePath.replace(/\./g, `%2E`)
@@ -125,8 +154,6 @@ const queueJob = job => {
     return
   }
 
-  totalCount += 1
-
   let notQueued = true
   if (toProcess[inputFileKey]) {
     notQueued = false
@@ -136,20 +163,34 @@ const queueJob = job => {
     `${job.file.absolutePath.replace(/\./g, `%2E`)}.${job.outputPath.replace(/\./g, `%2E`)}`,
     job
   )
+
+  // totalJobs += 1
   if (notQueued) {
     q.push(cb => {
+      // console.log("processing image", job.file.absolutePath)
+      boundActionCreators.createJob(
+        {
+          id: `processing image ${job.file.absolutePath}`,
+          imagesCount: _.values(toProcess[inputFileKey]).length,
+        },
+        { name: `gatsby-plugin-sharp` }
+      )
       // We're now processing the file's jobs.
       processFile(
         job.file.absolutePath,
         _.values(toProcess[inputFileKey]),
         () => {
+          boundActionCreators.endJob(
+            {
+              id: `processing image ${job.file.absolutePath}`,
+            },
+            { name: `gatsby-plugin-sharp` }
+          )
           cb()
         }
       )
     })
   }
-
-  bar.total = totalCount
 }
 
 function queueImageResizing({ file, args = {} }) {
@@ -194,7 +235,7 @@ function queueImageResizing({ file, args = {} }) {
   const filePath = `${process.cwd()}/public${imgSrc}`
   // Create function to call when the image is finished.
   let outsideResolve
-  const finished = new Promise(resolve => {
+  const finishedPromise = new Promise(resolve => {
     outsideResolve = resolve
   })
 
@@ -220,7 +261,7 @@ function queueImageResizing({ file, args = {} }) {
   const job = {
     file,
     args: options,
-    finished,
+    finishedPromise,
     outsideResolve,
     inputPath: file.absolutePath,
     outputPath: filePath,
@@ -237,7 +278,7 @@ function queueImageResizing({ file, args = {} }) {
     width,
     height,
     aspectRatio,
-    finished,
+    finishedPromise,
   }
 }
 
@@ -491,7 +532,6 @@ async function responsiveResolution({ file, args = {} }) {
   }
 }
 
-exports.queue = q
 exports.queueImageResizing = queueImageResizing
 exports.base64 = base64
 exports.responsiveSizes = responsiveSizes

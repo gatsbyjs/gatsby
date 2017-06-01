@@ -125,6 +125,7 @@ module.exports = async () => {
     const fieldsFromPlugins = await apiRunner(`setFieldsOnGraphQLNodeType`, {
       type: intermediateType,
       allNodes: getNodes(),
+      traceId: `initial-setFieldsOnGraphQLNodeType`,
     })
 
     const mergedFieldsFromPlugins = _.merge(...fieldsFromPlugins)

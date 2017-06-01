@@ -11,4 +11,5 @@ module.exports = {
   status: require(`./status`),
   pageDataDependencies: require(`./page-data-dependencies`),
   pageComponents: require(`./page-components`),
+  jobs: require(`./jobs`),
 }

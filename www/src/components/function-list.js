@@ -5,7 +5,7 @@ import { rhythm, scale } from "../utils/typography"
 const Param = (param, depth = 0) => {
   // the plugin parameter is used internally but not
   // something a user should use.
-  if (param.name == `plugin`) {
+  if (param.name === `plugin` || param.name === `traceId`) {
     return null
   }
 
@@ -59,13 +59,15 @@ export default ({ functions }) => (
             __html: node.description.childMarkdownRemark.html,
           }}
         />
-        {node.params.length > 0 &&
+        {node.parms &&
+          node.params.length > 0 &&
           <div>
             <h4>Parameters</h4>
             {node.params.map(Param)}
           </div>}
 
-        {node.examples.length > 0 &&
+        {node.examples &&
+          node.examples.length > 0 &&
           <div>
             <h4 css={{ marginTop: rhythm(1) }}>Example</h4>
             {` `}
@@ -97,7 +99,6 @@ fragment FunctionList on DocumentationJs {
     title
   }
   examples {
-    raw
     highlighted
   }
   params {

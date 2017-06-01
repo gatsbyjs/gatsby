@@ -10,68 +10,28 @@
 
 const _ = require(`lodash`)
 const chokidar = require(`chokidar`)
-const fs = require(`fs`)
-const path = require(`path`)
 
-const { store, emitter } = require(`../redux/`)
-const { boundActionCreators } = require(`../redux/actions`)
+const { store } = require(`../../redux/`)
+const { boundActionCreators } = require(`../../redux/actions`)
 const queryCompiler = require(`./query-compiler`).default
 const queryRunner = require(`./query-runner`)
 
-const pageComponents = {}
-let pendingPages = []
-
-const debounceNewPages = _.debounce(() => {
-  let pages = pendingPages
-  pendingPages = []
-
-  queryCompiler().then(queries => {
-    pages.forEach(componentPath => {
-      const query = queries.get(componentPath)
+exports.extractQueries = () => {
+  const pages = store.getState().pages
+  const components = _.uniq(pages.map(p => p.component))
+  return queryCompiler().then(queries => {
+    components.forEach(component => {
+      const query = queries.get(component)
 
       boundActionCreators.replacePageComponentQuery({
         query: query && query.text,
-        componentPath,
+        componentPath: component,
       })
     })
 
-    store.dispatch({
-      type: `BOOTSTRAP_STAGE`,
-      payload: {
-        stage: `COMPONENT_QUERIES_EXTRACTION_FINISHED`,
-      },
-    })
+    return
   })
-}, 300)
-
-// Watch for page updates.
-emitter.on(`CREATE_PAGE`, action => {
-  const component = action.payload.component
-  if (!pageComponents[component]) {
-    // We haven't seen this component before so we:
-    // - Ensure it has a JSON file.
-    // - Add it to Redux
-    // - Extract its query and save it
-    // - Setup a watcher to detect query changes
-    const pathToJSONFile = path.join(
-      store.getState().program.directory,
-      `.cache`,
-      `json`,
-      action.payload.jsonName
-    )
-    if (!fs.existsSync(pathToJSONFile)) {
-      fs.writeFile(pathToJSONFile, `{}`)
-    }
-    boundActionCreators.createPageComponent(component)
-    pendingPages.push(component)
-    // Make sure we're watching this component.
-    watcher.add(component)
-    debounceNewPages()
-  }
-
-  // Mark we've seen this page component.
-  pageComponents[component] = component
-})
+}
 
 const runQueriesForComponent = componentPath => {
   const pages = getPagesForComponent(componentPath)
@@ -87,6 +47,9 @@ const getPagesForComponent = componentPath =>
   store.getState().pages.filter(p => p.component === componentPath)
 
 let watcher
+exports.watchComponent = componentPath => {
+  watcher.add(componentPath)
+}
 exports.watch = rootDir => {
   if (watcher) return
 

@@ -3,8 +3,8 @@ const moment = require(`moment`)
 const chokidar = require(`chokidar`)
 const systemPath = require(`path`)
 
-const { emitter } = require(`../../../redux`)
-const { boundActionCreators } = require(`../../../redux/actions`)
+const { emitter } = require(`../../redux`)
+const { boundActionCreators } = require(`../../redux/actions`)
 
 exports.sourceNodes = ({ boundActionCreators, store }) => {
   const { createNode } = boundActionCreators

@@ -1,63 +1,43 @@
-/** *
+/**
  * Jobs of this module
  * - Ensure on bootstrap that all invalid page queries are run and report
  *   when this is done
  * - Watch for when a page's query is invalidated and re-run it.
- ***/
+ */
 
 const _ = require(`lodash`)
 const Promise = require(`bluebird`)
 
-const { store, emitter } = require(`../redux`)
+const { store, emitter } = require(`../../redux`)
 const queryRunner = require(`./query-runner`)
-const checkpointsPromise = require(`../utils/checkpoints-promise`)
 
 let queuedDirtyActions = []
-// Don't start running queries until we've reached the BOOTSTRAP_STAGE of
-// QUERY_RUNNER.
-let active = false
-const callbacks = []
-module.exports = cb => {
-  callbacks.push(cb)
-}
 
-checkpointsPromise({
-  events: [`COMPONENT_QUERIES_EXTRACTION_FINISHED`],
-}).then(() => {
+let active = false
+
+exports.runQueries = async () => {
   active = true
   const state = store.getState()
 
   // Run queued dirty nodes now that we're active.
   queuedDirtyActions = _.uniq(queuedDirtyActions, a => a.payload.id)
-  findAndRunQueriesForDirtyPaths(queuedDirtyActions).then(() => {
-    // Find paths without data dependencies and run them (just in case?)
-    const paths = findPathsWithoutDataDependencies()
-    // Run these pages
-    Promise.all(
-      paths.map(path => {
-        const page = state.pages.find(p => p.path === path)
-        const component = state.pageComponents[page.component]
-        return queryRunner(page, component)
-      })
-    ).then(() => {
-      // Tell everyone who cares that we're done.
-      callbacks.forEach(cb => cb())
+  await findAndRunQueriesForDirtyPaths(queuedDirtyActions)
+
+  // Find paths without data dependencies and run them (just in case?)
+  const paths = findPathsWithoutDataDependencies()
+  // Run these pages
+  await Promise.all(
+    paths.map(path => {
+      const page = state.pages.find(p => p.path === path)
+      const component = state.pageComponents[page.component]
+      return queryRunner(page, component)
     })
-  })
-})
+  )
+  return
+}
 
 emitter.on(`CREATE_NODE`, action => {
   queuedDirtyActions.push(action)
-  debouncedProcessQueries()
-})
-
-emitter.on(`UPDATE_NODE`, () => {
-  // Also debounce on UPDATE_NODE so we're sure all node processing is done
-  // before re-running a query.
-  //
-  // PS. prediction to future selves, this method of debouncing data processing
-  // will break down bigly once data processing pipelines get really complex or
-  // plugins introduce very expensive steps.
   debouncedProcessQueries()
 })
 
@@ -106,8 +86,10 @@ const findAndRunQueriesForDirtyPaths = actions => {
     return Promise.all(
       _.uniq(dirtyPaths).map(path => {
         const page = state.pages.find(p => p.path === path)
-        const component = state.pageComponents[page.component]
-        return queryRunner(page, component)
+        if (page) {
+          const component = state.pageComponents[page.component]
+          return queryRunner(page, component)
+        }
       })
     )
   } else {

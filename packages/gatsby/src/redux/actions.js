@@ -30,10 +30,10 @@ const pascalCase = _.flow(_.camelCase, _.upperFirst)
 /**
  * Create a page. See https://www.gatsbyjs.org/docs/creating-and-modifying-pages/
  * for detailed documenation about creating pages.
- * @param {object} page a page object
+ * @param {Object} page a page object
  * @param {string} page.path Any valid URL. Must start with a forward slash
  * @param {string} page.component The absolute path to the component for this page
- * @param {object} page.context Context data for this page. Passed as props
+ * @param {Object} page.context Context data for this page. Passed as props
  * to the component `this.props.pathContext` as well as to the graphql query
  * as graphql arguments.
  * @example
@@ -47,7 +47,7 @@ const pascalCase = _.flow(_.camelCase, _.upperFirst)
  *   },
  * })
  */
-actions.createPage = (page, plugin = ``) => {
+actions.createPage = (page, plugin = ``, traceId) => {
   page.componentChunkName = layoutComponentChunkName(page.component)
 
   let jsonName = `${_.kebabCase(page.path)}.json`
@@ -81,6 +81,7 @@ actions.createPage = (page, plugin = ``) => {
   return {
     type: `CREATE_PAGE`,
     plugin,
+    traceId,
     payload: page,
   }
 }
@@ -101,7 +102,7 @@ actions.deleteNode = (nodeId, plugin = ``) => {
 
 /**
  * Batch delete nodes
- * @param {array} nodes an array of node ids
+ * @param {Array} nodes an array of node ids
  * @example
  * deleteNodes([`node1`, `node2`])
  */
@@ -116,17 +117,17 @@ actions.deleteNodes = (nodes, plugin = ``) => {
 const typeOwners = {}
 /**
  * Create a new node
- * @param {object} node a node object
+ * @param {Object} node a node object
  * @param {string} node.id The node's ID. Must be globally unique.
  * @param {string} node.parent The ID of the parent's node. If the node is
  * derived from another node, set that node as the parent. Otherwise it can
  * just be an empty string.
- * @param {array} node.children An array of children node IDs. If you're
+ * @param {Array} node.children An array of children node IDs. If you're
  * creating the children nodes while creating the parent node, add the
  * children node IDs here directly. If you're adding a child node to a
  * parent node created by a plugin, you can't mutate this value directly
  * to add your node id, instead use the action creator `createParentChildLink`.
- * @param {object} node.internal node fields that aren't generally
+ * @param {Object} node.internal node fields that aren't generally
  * interesting to consumers of node data but are very useful for plugin writers
  * and Gatsby core.
  * @param {string} node.internal.mediaType Either an official media type (we use
@@ -164,7 +165,7 @@ const typeOwners = {}
  *   }
  * })
  */
-actions.createNode = (node, plugin) => {
+actions.createNode = (node, plugin, traceId) => {
   if (!_.isObject(node)) {
     return console.log(
       chalk.bold.red(
@@ -259,14 +260,34 @@ actions.createNode = (node, plugin) => {
     return {
       type: `TOUCH_NODE`,
       plugin,
+      traceId,
       payload: node.id,
     }
   } else {
     return {
       type: `CREATE_NODE`,
       plugin,
+      traceId,
       payload: node,
     }
+  }
+}
+
+/**
+ * "Touch" a node. Tells Gatsby a node still exists and shouldn't
+ * be garbage collected. Primarily useful for source plugins fetching
+ * nodes from a remote system that can return only nodes that have
+ * updated. The source plugin then touches all the nodes that haven't
+ * updated but still exist so Gatsby knows to keep them.
+ * @param {string} nodeId The id of a node.
+ * @example
+ * touchNode(`a-node-id`)
+ */
+actions.touchNode = (nodeId, plugin = ``) => {
+  return {
+    type: `TOUCH_NODE`,
+    plugin,
+    payload: nodeId,
   }
 }
 
@@ -277,8 +298,8 @@ actions.createNode = (node, plugin) => {
  * Once a plugin has claimed a field name the field name can't be used by
  * other plugins.  Also since node's are immutable, you can't mutate the node
  * directly.  So to extend
- * @param {object} $0
- * @param {object} $0.node the target node object
+ * @param {Object} $0
+ * @param {Object} $0.node the target node object
  * @param {string} $0.fieldName the name for the field
  * @param {string} $0.fieldValue the value for the field
  * @example
@@ -288,7 +309,11 @@ actions.createNode = (node, plugin) => {
  *   fieldValue: `is sweet graphql queries`
  * })
  */
-actions.createNodeField = ({ node, fieldName, fieldValue }, plugin) => {
+actions.createNodeField = (
+  { node, fieldName, fieldValue },
+  plugin,
+  traceId
+) => {
   // Ensure required fields are set.
   if (!node.internal.fieldOwners) {
     node.internal.fieldOwners = {}
@@ -319,15 +344,16 @@ actions.createNodeField = ({ node, fieldName, fieldValue }, plugin) => {
   return {
     type: `ADD_FIELD_TO_NODE`,
     plugin,
+    traceId,
     payload: node,
   }
 }
 
 /**
  * Creates a link between a parent and child node
- * @param {object} $0
- * @param {object} $0.parent the parent node object
- * @param {object} $0.child the child node object
+ * @param {Object} $0
+ * @param {Object} $0.parent the parent node object
+ * @param {Object} $0.child the child node object
  * @example
  * createParentChildLink({ parent: parentNode, child: childNode })
  */
@@ -343,19 +369,10 @@ actions.createParentChildLink = ({ parent, child }, plugin) => {
   }
 }
 
-// Change to "setPluginStatus".
-actions.updateSourcePluginStatus = (status, plugin = ``) => {
-  return {
-    type: `UPDATE_SOURCE_PLUGIN_STATUS`,
-    plugin,
-    payload: status,
-  }
-}
-
 /**
  * Create a dependency between a page and data. Probably for
  * internal use only.
- * @param {object} $0
+ * @param {Object} $0
  * @param {string} $0.path the path to the page
  * @param {string} $0.nodeId A node ID
  * @param {string} $0.connection A connection type
@@ -376,8 +393,7 @@ actions.createPageDependency = ({ path, nodeId, connection }, plugin = ``) => {
 /**
  * Delete dependencies between an array of pages and data. Probably for
  * internal use only. Used when deleting pages.
- * @param {object} $0
- * @param {array} $0.paths the paths to delete.
+ * @param {Array} paths the paths to delete.
  * @private
  */
 actions.deletePagesDependencies = paths => {
@@ -416,6 +432,76 @@ actions.replacePageComponentQuery = ({ query, componentPath }) => {
       query,
       componentPath,
     },
+  }
+}
+
+/**
+ * Create a "job". This is a long-running process that are generally
+ * started as side-effects to GraphQL queries.
+ * [`gatsby-plugin-sharp`](/docs/packages/gatsby-plugin-sharp/) uses this for
+ * example.
+ *
+ * Gatsby doesn't finish its bootstrap until all jobs are ended.
+ * @param {Object} job A job object with at least an id set
+ * @param {id} job.id The id of the job
+ * @example
+ * createJob({ id: `write file id: 123`, fileName: `something.jpeg` })
+ */
+actions.createJob = (job, plugin = {}) => {
+  return {
+    type: `CREATE_JOB`,
+    plugin,
+    payload: job,
+  }
+}
+
+/**
+ * Set (update) a "job". Sometimes on really long running jobs you want
+ * to update the job as it continues.
+ *
+ * @param {Object} job A job object with at least an id set
+ * @param {id} job.id The id of the job
+ * @example
+ * setJob({ id: `write file id: 123`, progress: 50 })
+ */
+actions.setJob = (job, plugin = {}) => {
+  return {
+    type: `SET_JOB`,
+    plugin,
+    payload: job,
+  }
+}
+
+/**
+ * End a "job".
+ *
+ * Gatsby doesn't finish its bootstrap until all jobs are ended.
+ * @param {Object} job  A job object with at least an id set
+ * @param {id} job.id The id of the job
+ * @example
+ * endJob({ id: `write file id: 123` })
+ */
+actions.endJob = (job, plugin = {}) => {
+  return {
+    type: `END_JOB`,
+    plugin,
+    payload: job,
+  }
+}
+
+/**
+ * Set plugin status. A plugin can use this to save status keys e.g. the last
+ * it fetched something. These values are persisted between runs of Gatsby.
+ *
+ * @param {Object} status  An object with arbitrary values set
+ * @example
+ * setPluginStatus({ lastFetched: Date.now() })
+ */
+actions.setPluginStatus = (status, plugin) => {
+  return {
+    type: `SET_PLUGIN_STATUS`,
+    plugin,
+    payload: status,
   }
 }
 
