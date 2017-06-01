@@ -10,15 +10,7 @@ const imageminPngquant = require(`imagemin-pngquant`)
 const queue = require(`async/queue`)
 const duotone = require(`./duotone`)
 
-// This fails in tests.
-let actions
-try {
-  actions = require(`gatsby/dist/redux/actions`)
-} catch (e) {
-  // ignore failures
-}
-
-const { boundActionCreators } = actions
+const { boundActionCreators } = require(`gatsby/dist/redux/actions`)
 
 // Promisify the sharp prototype (methods) to promisify the alternative (for
 // raw) callback-accepting toBuffer(...) method
