@@ -1,8 +1,8 @@
-import React from 'react'
-import { ServerStyleSheet, StyleSheetManager } from 'styled-components'
-import { renderToString } from 'react-dom/server'
+import React from "react"
+import { ServerStyleSheet, StyleSheetManager } from "styled-components"
+import { renderToString } from "react-dom/server"
 
-exports.replaceServerBodyRender = ({ component }) => {
+exports.replaceServerBodyRender = ({ component, headComponents }) => {
   const sheet = new ServerStyleSheet()
 
   const app = (
@@ -11,8 +11,10 @@ exports.replaceServerBodyRender = ({ component }) => {
     </StyleSheetManager>
   )
 
-  const html = renderToString(app)
-  const styles = sheet.getStyleElement()
+  const body = renderToString(app)
 
-  return { body: html, styles }
+  return {
+    body,
+    headComponents: headComponents.concat([sheet.getStyleElement()]),
+  }
 }
