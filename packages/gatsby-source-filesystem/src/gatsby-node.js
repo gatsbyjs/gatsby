@@ -125,7 +125,6 @@ exports.sourceNodes = (
 
     ready = true
     flushPathQueue(() => {
-      console.log("source-filesystem is done")
       done()
     })
   })

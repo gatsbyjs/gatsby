@@ -33,7 +33,11 @@ const QueryRunner = require(`../internal-plugins/query-runner`)
 const preferDefault = m => (m && m.default) || m
 
 module.exports = async (program: any) => {
-  console.log(`lib/bootstrap/index.js time since started:`, process.uptime())
+  console.log(
+    `lib/bootstrap/index.js time since started:`,
+    process.uptime(),
+    "sec"
+  )
 
   // Fix program directory path for windows env
   program.directory = slash(program.directory)
@@ -294,32 +298,36 @@ data
   console.timeEnd(`write out pages modules`)
 
   state = store.getState()
-  console.log(
-    "jobs left",
-    state.jobs.active.length,
-    _.uniq(state.jobs.active.map(j => j.plugin.name))
-  )
+  // console.log(
+  // "jobs left",
+  // state.jobs.active.length,
+  // _.uniq(state.jobs.active.map(j => j.plugin.name))
+  // )
+
+  const checkJobsDone = _.debounce(() => {
+    const state = store.getState()
+    // console.log(
+    // "jobs left",
+    // state.jobs.active.length,
+    // _.uniq(state.jobs.active.map(j => j.plugin.name))
+    // )
+    if (state.jobs.active.length === 0) {
+      console.log("bootstrap is done")
+      console.log(
+        `bootstrap finished, time since started: ${process.uptime()}sec`
+      )
+    }
+  }, 100)
 
   if (state.jobs.active.length === 0) {
-    console.log(`bootstrap finished, time since started: ${process.uptime()}`)
+    console.log(
+      `bootstrap finished, time since started: ${process.uptime()}sec`
+    )
     return
   } else {
     return new Promise(resolve => {
-      // Wait until all jobs (queries, writing out page files) are finished.
-      emitter.on("END_JOB", () => {
-        const state = store.getState()
-        console.log(
-          "jobs left",
-          state.jobs.active.length,
-          _.uniq(state.jobs.active.map(j => j.plugin.name))
-        )
-        if (state.jobs.active.length === 0) {
-          console.log("bootstrap is done")
-          console.log(
-            `bootstrap finished, time since started: ${process.uptime()}`
-          )
-        }
-      })
+      // Wait until all side effect jobs are finished.
+      emitter.on("END_JOB", checkJobsDone)
     })
   }
 

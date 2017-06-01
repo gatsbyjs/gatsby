@@ -19,11 +19,9 @@ exports.runQueries = async () => {
   active = true
   const state = store.getState()
 
-  console.log(`running queries`)
   // Run queued dirty nodes now that we're active.
   queuedDirtyActions = _.uniq(queuedDirtyActions, a => a.payload.id)
   await findAndRunQueriesForDirtyPaths(queuedDirtyActions)
-  console.log(`running queries2`)
 
   // Find paths without data dependencies and run them (just in case?)
   const paths = findPathsWithoutDataDependencies()
@@ -35,7 +33,6 @@ exports.runQueries = async () => {
       return queryRunner(page, component)
     })
   )
-  console.log(`running queries3`)
   return
 }
 

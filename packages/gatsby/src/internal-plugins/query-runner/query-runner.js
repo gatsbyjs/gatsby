@@ -25,7 +25,6 @@ module.exports = async (page, component) => {
       { id: `runPathQuery: ${page.path}` },
       { name: `query-runner.js` }
     )
-    console.log("running query for ", page.component)
     result = await graphql(component.query, { ...page, ...page.context })
 
     boundActionCreators.endJob(
@@ -33,7 +32,6 @@ module.exports = async (page, component) => {
       { name: `query-runner.js` }
     )
   }
-  console.log("still here in query runner", result)
 
   // If there's a graphql errort then log the error. If we're building, also
   // quit.

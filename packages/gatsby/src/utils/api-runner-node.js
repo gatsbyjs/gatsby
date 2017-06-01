@@ -189,8 +189,6 @@ module.exports = async (api, args = {}, pluginSource) =>
           instance => {
             // If none of its trace IDs are running, it's done.
             if (!_.some(apisRunning, a => a.traceId === instance.traceId)) {
-              console.log("an instance is done!", instance)
-              console.log(apisRunning)
               instance.resolve(instance.results)
               return false
             } else {

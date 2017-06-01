@@ -132,7 +132,6 @@ const processFile = (file, jobs, cb) => {
 let totalCount = 0
 const toProcess = {}
 const q = queue((task, callback) => {
-  console.log("running image processing job")
   task(callback)
 }, 1)
 
@@ -164,8 +163,7 @@ const queueJob = job => {
   )
   if (notQueued) {
     q.push(cb => {
-      console.log("processing image", job.file.absolutePath)
-      console.log("images count", _.values(toProcess[inputFileKey]).length)
+      // console.log("processing image", job.file.absolutePath)
       boundActionCreators.createJob(
         {
           id: `processing image ${job.file.absolutePath}`,
