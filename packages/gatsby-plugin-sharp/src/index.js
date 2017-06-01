@@ -30,13 +30,17 @@ const bar = new ProgressBar(
   }
 )
 
-let total = 0
 const processFile = (file, jobs, cb) => {
-  total += jobs.length
-  bar.total = total
+  totalJobs += jobs.length
+  bar.total = _.sumBy(
+    Object.keys(toProcess),
+    key => _.values(toProcess[key]).length
+  )
 
-  let finished = 0
-  Promise.all(jobs.map(job => job.finished)).then(() => cb())
+  let imagesFinished = 0
+
+  // Wait for each job promise to resolve.
+  Promise.all(jobs.map(job => job.finishedPromise)).then(() => cb())
   const pipeline = sharp(file).rotate()
   jobs.forEach(async job => {
     const args = job.args
@@ -88,12 +92,12 @@ const processFile = (file, jobs, cb) => {
 
     if (job.file.extension.match(/^jp/)) {
       clonedPipeline.toFile(job.outputPath, (err, info) => {
-        finished += 1
+        imagesFinished += 1
         bar.tick()
         boundActionCreators.setJob(
           {
             id: `processing image ${job.file.absolutePath}`,
-            finished,
+            imagesFinished,
           },
           { name: `gatsby-plugin-sharp` }
         )
@@ -112,12 +116,12 @@ const processFile = (file, jobs, cb) => {
           })
           .then(imageminBuffer => {
             fs.writeFile(job.outputPath, imageminBuffer, () => {
-              finished += 1
+              imagesFinished += 1
               bar.tick()
               boundActionCreators.setJob(
                 {
                   id: `processing image ${job.file.absolutePath}`,
-                  finished,
+                  imagesFinished,
                 },
                 { name: `gatsby-plugin-sharp` }
               )
@@ -129,7 +133,7 @@ const processFile = (file, jobs, cb) => {
   })
 }
 
-let totalCount = 0
+let totalJobs = 0
 const toProcess = {}
 const q = queue((task, callback) => {
   task(callback)
@@ -150,8 +154,6 @@ const queueJob = job => {
     return
   }
 
-  totalCount += 1
-
   let notQueued = true
   if (toProcess[inputFileKey]) {
     notQueued = false
@@ -161,6 +163,8 @@ const queueJob = job => {
     `${job.file.absolutePath.replace(/\./g, `%2E`)}.${job.outputPath.replace(/\./g, `%2E`)}`,
     job
   )
+
+  // totalJobs += 1
   if (notQueued) {
     q.push(cb => {
       // console.log("processing image", job.file.absolutePath)
@@ -231,7 +235,7 @@ function queueImageResizing({ file, args = {} }) {
   const filePath = `${process.cwd()}/public${imgSrc}`
   // Create function to call when the image is finished.
   let outsideResolve
-  const finished = new Promise(resolve => {
+  const finishedPromise = new Promise(resolve => {
     outsideResolve = resolve
   })
 
@@ -257,7 +261,7 @@ function queueImageResizing({ file, args = {} }) {
   const job = {
     file,
     args: options,
-    finished,
+    finishedPromise,
     outsideResolve,
     inputPath: file.absolutePath,
     outputPath: filePath,
@@ -274,7 +278,7 @@ function queueImageResizing({ file, args = {} }) {
     width,
     height,
     aspectRatio,
-    finished,
+    finishedPromise,
   }
 }
 
