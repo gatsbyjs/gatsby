@@ -7,8 +7,10 @@ const fs = require(`fs`)
 const ProgressBar = require(`progress`)
 const imagemin = require(`imagemin`)
 const imageminPngquant = require(`imagemin-pngquant`)
-const queue = require(`queue`)
+const queue = require(`async/queue`)
 const duotone = require(`./duotone`)
+
+const { boundActionCreators } = require(`gatsby/dist/redux/actions`)
 
 // Promisify the sharp prototype (methods) to promisify the alternative (for
 // raw) callback-accepting toBuffer(...) method
@@ -27,7 +29,13 @@ const bar = new ProgressBar(
     width: 30,
   }
 )
+
+let total = 0
 const processFile = (file, jobs, cb) => {
+  total += jobs.length
+  bar.total = total
+
+  let finished = 0
   Promise.all(jobs.map(job => job.finished)).then(() => cb())
   const pipeline = sharp(file).rotate()
   jobs.forEach(async job => {
@@ -80,7 +88,15 @@ const processFile = (file, jobs, cb) => {
 
     if (job.file.extension.match(/^jp/)) {
       clonedPipeline.toFile(job.outputPath, (err, info) => {
+        finished += 1
         bar.tick()
+        boundActionCreators.setJob(
+          {
+            id: `processing image ${job.file.absolutePath}`,
+            finished,
+          },
+          { name: `gatsby-plugin-sharp` }
+        )
         job.outsideResolve(info)
       })
       // Compress pngs
@@ -96,7 +112,15 @@ const processFile = (file, jobs, cb) => {
           })
           .then(imageminBuffer => {
             fs.writeFile(job.outputPath, imageminBuffer, () => {
+              finished += 1
               bar.tick()
+              boundActionCreators.setJob(
+                {
+                  id: `processing image ${job.file.absolutePath}`,
+                  finished,
+                },
+                { name: `gatsby-plugin-sharp` }
+              )
               job.outsideResolve()
             })
           })
@@ -107,8 +131,10 @@ const processFile = (file, jobs, cb) => {
 
 let totalCount = 0
 const toProcess = {}
-const q = queue()
-q.concurrency = 1
+const q = queue((task, callback) => {
+  console.log("running image processing job")
+  task(callback)
+}, 1)
 
 const queueJob = job => {
   const inputFileKey = job.file.absolutePath.replace(/\./g, `%2E`)
@@ -138,18 +164,31 @@ const queueJob = job => {
   )
   if (notQueued) {
     q.push(cb => {
+      console.log("processing image", job.file.absolutePath)
+      console.log("images count", _.values(toProcess[inputFileKey]).length)
+      boundActionCreators.createJob(
+        {
+          id: `processing image ${job.file.absolutePath}`,
+          imagesCount: _.values(toProcess[inputFileKey]).length,
+        },
+        { name: `gatsby-plugin-sharp` }
+      )
       // We're now processing the file's jobs.
       processFile(
         job.file.absolutePath,
         _.values(toProcess[inputFileKey]),
         () => {
+          boundActionCreators.endJob(
+            {
+              id: `processing image ${job.file.absolutePath}`,
+            },
+            { name: `gatsby-plugin-sharp` }
+          )
           cb()
         }
       )
     })
   }
-
-  bar.total = totalCount
 }
 
 function queueImageResizing({ file, args = {} }) {
@@ -491,7 +530,6 @@ async function responsiveResolution({ file, args = {} }) {
   }
 }
 
-exports.queue = q
 exports.queueImageResizing = queueImageResizing
 exports.base64 = base64
 exports.responsiveSizes = responsiveSizes

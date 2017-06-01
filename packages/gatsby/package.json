@@ -81,6 +81,7 @@
     "postcss-import": "^8.2.0",
     "postcss-loader": "^0.13.0",
     "postcss-reporter": "^1.4.1",
+    "raf": "^3.3.2",
     "raw-loader": "^0.5.1",
     "react": "^15.4.0",
     "react-document-title": "^2.0.1",

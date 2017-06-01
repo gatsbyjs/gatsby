@@ -9,10 +9,18 @@ const crypto = require(`crypto`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const { graphql } = require(`graphql`)
-const { store } = require(`../redux`)
+const { store, emitter } = require(`../redux`)
 const { boundActionCreators } = require(`../redux/actions`)
 const loadPlugins = require(`./load-plugins`)
 const { initCache } = require(`../utils/cache`)
+
+const {
+  extractQueries,
+} = require(`../internal-plugins/query-runner/query-watcher`)
+const {
+  runQueries,
+} = require(`../internal-plugins/query-runner/page-query-runner`)
+const { writePages } = require(`../internal-plugins/query-runner/pages-writer`)
 
 // Override console.log to add the source file + line number.
 // Useful for debugging if you lose a console.log somewhere.
@@ -20,7 +28,7 @@ const { initCache } = require(`../utils/cache`)
 // require(`./log-line-function`)
 
 // Start off the query running.
-const QueryRunner = require(`../query-runner`)
+const QueryRunner = require(`../internal-plugins/query-runner`)
 
 const preferDefault = m => (m && m.default) || m
 
@@ -76,7 +84,7 @@ module.exports = async (program: any) => {
     .createHash(`md5`)
     .update(JSON.stringify(pluginVersions.concat(hashes)))
     .digest(`hex`)
-  const state = store.getState()
+  let state = store.getState()
   const oldPluginsHash = state && state.status ? state.status.PLUGINS_HASH : ``
 
   // Check if anything has changed. If it has, delete the site's .cache
@@ -269,14 +277,56 @@ data
     })
   }
 
-  return new Promise(resolve => {
-    QueryRunner.isInitialPageQueryingDone(() => {
-      apiRunnerNode(`generateSideEffects`).then(() => {
+  // Extract queries
+  console.time(`extract queries`)
+  await extractQueries()
+  console.timeEnd(`extract queries`)
+
+  // Run queries
+  console.time(`Run queries`)
+  await runQueries()
+  console.timeEnd(`Run queries`)
+
+  // Write out files.
+
+  console.time(`write out pages modules`)
+  await writePages()
+  console.timeEnd(`write out pages modules`)
+
+  state = store.getState()
+  console.log(
+    "jobs left",
+    state.jobs.active.length,
+    _.uniq(state.jobs.active.map(j => j.plugin.name))
+  )
+
+  if (state.jobs.active.length === 0) {
+    console.log(`bootstrap finished, time since started: ${process.uptime()}`)
+    return
+  } else {
+    return new Promise(resolve => {
+      // Wait until all jobs (queries, writing out page files) are finished.
+      emitter.on("END_JOB", () => {
+        const state = store.getState()
         console.log(
-          `bootstrap finished, time since started: ${process.uptime()}`
+          "jobs left",
+          state.jobs.active.length,
+          _.uniq(state.jobs.active.map(j => j.plugin.name))
         )
-        resolve({ graphqlRunner })
+        if (state.jobs.active.length === 0) {
+          console.log("bootstrap is done")
+          console.log(
+            `bootstrap finished, time since started: ${process.uptime()}`
+          )
+        }
       })
     })
-  })
+  }
+
+  // QueryRunner.isInitialPageQueryingDone(() => {
+  // apiRunnerNode(`generateSideEffects`).then(() => {
+  // resolve({ graphqlRunner })
+  // })
+  // })
+  // })
 }

@@ -9,7 +9,7 @@ import RelayCompilerContext from "relay-compiler/lib/RelayCompilerContext"
 import filterContextForNode from "relay-compiler/lib/filterContextForNode"
 const _ = require(`lodash`)
 
-import { store } from "../redux"
+import { store } from "../../redux"
 import FileParser from "./file-parser"
 import QueryPrinter from "./query-printer"
 

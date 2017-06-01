@@ -418,5 +418,59 @@ actions.replacePageComponentQuery = ({ query, componentPath }) => {
   }
 }
 
+/**
+ * Create a "job". This is a long-running process that are generally
+ * started as side-effects to GraphQL queries.
+ * [`gatsby-plugin-sharp`](/docs/packages/gatsby-plugin-sharp/) uses this for
+ * example.
+ *
+ * Gatsby doesn't finish its bootstrap until all jobs are ended.
+ * @param {object} job A job object with at least an id set
+ * @param {id} job.id The id of the job
+ * @example
+ * createJob({ id: `write file id: 123`, fileName: `something.jpeg` })
+ */
+actions.createJob = (job, plugin = {}) => {
+  return {
+    type: `CREATE_JOB`,
+    plugin,
+    payload: job,
+  }
+}
+
+/**
+ * Set (update) a "job". Sometimes on really long running jobs you want
+ * to update the job as it continues.
+ *
+ * @param {object} job A job object with at least an id set
+ * @param {id} job.id The id of the job
+ * @example
+ * setJob({ id: `write file id: 123`, progress: 50 })
+ */
+actions.setJob = (job, plugin = {}) => {
+  return {
+    type: `SET_JOB`,
+    plugin,
+    payload: job,
+  }
+}
+
+/**
+ * End a "job".
+ *
+ * Gatsby doesn't finish its bootstrap until all jobs are ended.
+ * @param {object} job  A job object with at least an id set
+ * @param {id} job.id The id of the job
+ * @example
+ * endJob({ id: `write file id: 123` })
+ */
+actions.endJob = (job, plugin = {}) => {
+  return {
+    type: `END_JOB`,
+    plugin,
+    payload: job,
+  }
+}
+
 exports.actions = actions
 exports.boundActionCreators = bindActionCreators(actions, store.dispatch)

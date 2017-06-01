@@ -8,8 +8,8 @@ import * as types from "babel-types"
 const babylon = require(`babylon`)
 const Bluebird = require(`bluebird`)
 
-const apiRunnerNode = require(`../utils/api-runner-node`)
-const { getGraphQLTag } = require(`../utils/babel-plugin-extract-graphql`)
+const apiRunnerNode = require(`../../utils/api-runner-node`)
+const { getGraphQLTag } = require(`../../utils/babel-plugin-extract-graphql`)
 
 import type { DocumentNode, DefinitionNode } from "graphql"
 

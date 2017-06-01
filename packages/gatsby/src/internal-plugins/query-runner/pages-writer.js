@@ -1,18 +1,18 @@
 const _ = require(`lodash`)
 const glob = require(`glob`)
-const parseFilepath = require(`parse-filepath`)
-const fs = require(`fs`)
+const fs = require(`fs-extra`)
 
-const { store, emitter } = require(`../redux/`)
+const { store, emitter } = require(`../../redux/`)
 import {
   layoutComponentChunkName,
   pathChunkName,
-} from "../utils/js-chunk-names"
+} from "../../utils/js-chunk-names"
 
-import { joinPath } from "../utils/path"
+import { joinPath } from "../../utils/path"
 
 // Write out pages information.
-const writePages = () => {
+const writePages = async () => {
+  writtenOnce = true
   const { program, config, pages } = store.getState()
 
   // Write out pages.json
@@ -50,10 +50,9 @@ const writePages = () => {
   layouts = _.uniq(layouts)
   components = _.uniqBy(components, c => c.componentChunkName)
 
-  fs.writeFile(
+  await fs.writeFile(
     `${program.directory}/.cache/pages.json`,
-    JSON.stringify(pagesData, null, 4),
-    () => {}
+    JSON.stringify(pagesData, null, 4)
   )
 
   // Create file with sync requires of layouts/components/json files.
@@ -87,10 +86,9 @@ const preferDefault = m => m && m.default || m
     .join(`,\n`)}
 }`
 
-  fs.writeFile(
+  await fs.writeFile(
     `${program.directory}/.cache/sync-requires.js`,
-    syncRequires,
-    () => {}
+    syncRequires
   )
   // Create file with async requires of layouts/components/json files.
   let asyncRequires = `// prefer default export if available
@@ -123,19 +121,21 @@ const preferDefault = m => m && m.default || m
     .join(`,\n`)}
 }`
 
-  fs.writeFile(
+  await fs.writeFile(
     `${program.directory}/.cache/async-requires.js`,
-    asyncRequires,
-    () => {}
+    asyncRequires
   )
+
+  return
 }
+
+exports.writePages = writePages
 
 let writtenOnce = false
 let oldPages
 const debouncedWritePages = _.debounce(() => {
   if (!writtenOnce || !_.isEqual(oldPages, store.getState().pages)) {
     writePages()
-    writtenOnce = true
     oldPages = store.getState().pages
   }
 }, 250)
