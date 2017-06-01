@@ -1,7 +1,6 @@
-gatsby-plugin-styled-components
------------------------
+# gatsby-plugin-styled-components
 
-A [gatsby](https://github.com/gatsbyjs/gatsby) plugin for [styled-components](https://github.com/styled-components/styled-components) with server-sider rendering support.
+A [Gatsby](https://github.com/gatsbyjs/gatsby) plugin for [styled-components](https://github.com/styled-components/styled-components) with built-in server-side rendering support.
 
 ## Install
 
@@ -9,7 +8,7 @@ A [gatsby](https://github.com/gatsbyjs/gatsby) plugin for [styled-components](ht
 
 ## How to use
 
-edit `gatsby-config.js`
+Edit `gatsby-config.js`
 
 ```javascript
 plugins: [

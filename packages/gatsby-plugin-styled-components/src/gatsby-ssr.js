@@ -1,6 +1,6 @@
-import React from 'react'
-import { ServerStyleSheet, StyleSheetManager } from 'styled-components'
-import { renderToString } from 'react-dom/server'
+import React from "react"
+import { ServerStyleSheet, StyleSheetManager } from "styled-components"
+import { renderToString } from "react-dom/server"
 
 exports.replaceServerBodyRender = ({ component, headComponents }) => {
   const sheet = new ServerStyleSheet()
@@ -12,7 +12,9 @@ exports.replaceServerBodyRender = ({ component, headComponents }) => {
   )
 
   const body = renderToString(app)
-  const headComponents = sheet.getStyleElement()
 
-  return { body, headComponents }
+  return {
+    body,
+    headComponents: headComponents.concat([sheet.getStyleElement()]),
+  }
 }
