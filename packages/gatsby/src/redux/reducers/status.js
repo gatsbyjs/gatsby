@@ -5,13 +5,11 @@ module.exports = (state = { plugins: {} }, action) => {
     case `DELETE_CACHE`:
       return { plugins: {} }
     case `UPDATE_PLUGINS_HASH`:
-      console.log(state)
       return {
         ...state,
         PLUGINS_HASH: action.payload,
       }
     case `SET_PLUGIN_STATUS`:
-      console.log(state)
       if (!action.plugin && !action.plugin.name) {
         throw new Error(`You can't set plugin status without a plugin`)
       }
