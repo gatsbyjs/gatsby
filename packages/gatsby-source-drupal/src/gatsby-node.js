@@ -28,18 +28,7 @@ exports.sourceNodes = async (
   { boundActionCreators, getNode, hasNodeChanged, store },
   { baseUrl }
 ) => {
-  const {
-    createNode,
-    updateSourcePluginStatus,
-    touchNode,
-  } = boundActionCreators
-  updateSourcePluginStatus({
-    plugin: `gatsby-source-drupal`,
-    status: {
-      ...store.getState().status[`gatsby-source-drupal`],
-      ready: false,
-    },
-  })
+  const { createNode, setPluginStatus, touchNode } = boundActionCreators
 
   // Touch existing Drupal nodes so Gatsby doesn't garbage collect them.
   _.values(store.getState().nodes)
@@ -50,9 +39,14 @@ exports.sourceNodes = async (
   console.time(`fetch Drupal data`)
   console.log(`Starting to fetch data from Drupal`)
 
-  const lastFetched = store.getState().status.sourcePlugins[
-    `gatsby-source-drupal`
-  ].lastFetched
+  let lastFetched
+  if (
+    store.getState().status.plugins &&
+    store.getState().status.plugins[`gatsby-source-drupal`]
+  ) {
+    lastFetched = store.getState().status.plugins[`gatsby-source-drupal`]
+      .lastFetched
+  }
 
   let url
   if (lastFetched) {
@@ -70,10 +64,8 @@ exports.sourceNodes = async (
 
   console.log(`articles fetched`, result.data.data.length)
 
-  updateSourcePluginStatus({
-    plugin: `gatsby-source-drupal`,
+  setPluginStatus({
     status: {
-      ...store.getState().status[`gatsby-source-drupal`],
       lastFetched: new Date().toJSON(),
     },
   })
@@ -157,14 +149,6 @@ exports.sourceNodes = async (
         })
     )
   )
-
-  updateSourcePluginStatus({
-    plugin: `gatsby-source-drupal`,
-    status: {
-      ...store.getState().status[`gatsby-source-drupal`],
-      ready: true,
-    },
-  })
 
   return
 }

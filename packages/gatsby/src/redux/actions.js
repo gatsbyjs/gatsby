@@ -274,6 +274,24 @@ actions.createNode = (node, plugin, traceId) => {
 }
 
 /**
+ * "Touch" a node. Tells Gatsby a node still exists and shouldn't
+ * be garbage collected. Primarily useful for source plugins fetching
+ * nodes from a remote system that can return only nodes that have
+ * updated. The source plugin then touches all the nodes that haven't
+ * updated but still exist so Gatsby knows to keep them.
+ * @param {string} nodeId The id of a node.
+ * @example
+ * touchNode(`a-node-id`)
+ */
+actions.touchNode = (nodeId, plugin = ``) => {
+  return {
+    type: `TOUCH_NODE`,
+    plugin,
+    payload: nodeId,
+  }
+}
+
+/**
  * Extend another node. The new node field is placed under the `fields`
  * key on the extended node object.
  *
@@ -469,6 +487,22 @@ actions.endJob = (job, plugin = {}) => {
     type: `END_JOB`,
     plugin,
     payload: job,
+  }
+}
+
+/**
+ * Set plugin status. A plugin can use this to save status keys e.g. the last
+ * it fetched something. These values are persisted between runs of Gatsby.
+ *
+ * @param {object} status  An object with arbitrary values set
+ * @example
+ * setPluginStatus({ lastFetched: Date.now() })
+ */
+actions.setPluginStatus = (status, plugin) => {
+  return {
+    type: `SET_PLUGIN_STATUS`,
+    plugin,
+    payload: status,
   }
 }
 
