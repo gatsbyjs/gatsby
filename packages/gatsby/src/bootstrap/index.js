@@ -292,25 +292,12 @@ data
   console.timeEnd(`Run queries`)
 
   // Write out files.
-
   console.time(`write out pages modules`)
   await writePages()
   console.timeEnd(`write out pages modules`)
 
-  state = store.getState()
-  // console.log(
-  // "jobs left",
-  // state.jobs.active.length,
-  // _.uniq(state.jobs.active.map(j => j.plugin.name))
-  // )
-
   const checkJobsDone = _.debounce(() => {
     const state = store.getState()
-    // console.log(
-    // "jobs left",
-    // state.jobs.active.length,
-    // _.uniq(state.jobs.active.map(j => j.plugin.name))
-    // )
     if (state.jobs.active.length === 0) {
       console.log("bootstrap is done")
       console.log(
@@ -319,7 +306,7 @@ data
     }
   }, 100)
 
-  if (state.jobs.active.length === 0) {
+  if (store.getState().jobs.active.length === 0) {
     console.log(
       `bootstrap finished, time since started: ${process.uptime()}sec`
     )
@@ -330,11 +317,4 @@ data
       emitter.on("END_JOB", checkJobsDone)
     })
   }
-
-  // QueryRunner.isInitialPageQueryingDone(() => {
-  // apiRunnerNode(`generateSideEffects`).then(() => {
-  // resolve({ graphqlRunner })
-  // })
-  // })
-  // })
 }
