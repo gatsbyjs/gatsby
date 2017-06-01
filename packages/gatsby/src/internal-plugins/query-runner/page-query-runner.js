@@ -86,8 +86,10 @@ const findAndRunQueriesForDirtyPaths = actions => {
     return Promise.all(
       _.uniq(dirtyPaths).map(path => {
         const page = state.pages.find(p => p.path === path)
-        const component = state.pageComponents[page.component]
-        return queryRunner(page, component)
+        if (page) {
+          const component = state.pageComponents[page.component]
+          return queryRunner(page, component)
+        }
       })
     )
   } else {

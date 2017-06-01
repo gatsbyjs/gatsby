@@ -5,6 +5,7 @@ import { rhythm, scale } from "../../utils/typography"
 
 class ActionCreatorsDocs extends React.Component {
   render() {
+    console.log(this.props)
     return (
       <div>
         <h1>Bound Action Creators</h1>
