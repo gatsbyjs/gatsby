@@ -33,7 +33,6 @@ install:
   # Get the latest stable version of Node.js or io.js
   - ps: Install-Product node $env:nodejs_version
   - ps: npm install -g windows-build-tools
-  - ps: npm install -g node-gyp
   - npm install -g gatsby-dev-cli@canary
   - git checkout 1.0
   - npm install
