@@ -41,11 +41,6 @@ on using each plugin.
 
 ## Official plugins
 
-* [gatsby-transformer-documentationjs](/docs/packages/gatsby-transformer-documentationjs/)
-* [gatsby-transformer-json](/docs/packages/gatsby-transformer-json/)
-* [gatsby-transformer-remark](/docs/packages/gatsby-transformer-remark/)
-* [gatsby-transformer-sharp](/docs/packages/gatsby-transformer-sharp/)
-* [gatsby-transformer-yaml](/docs/packages/gatsby-transformer-yaml/)
 * [gatsby-plugin-catch-links](/docs/packages/gatsby-plugin-catch-links/)
 * [gatsby-plugin-coffeescript](/docs/packages/gatsby-plugin-coffeescript/)
 * [gatsby-plugin-glamor](/docs/packages/gatsby-plugin-glamor/)
@@ -55,10 +50,8 @@ on using each plugin.
 * [gatsby-plugin-preact](/docs/packages/gatsby-plugin-preact/)
 * [gatsby-plugin-sass](/docs/packages/gatsby-plugin-sass/)
 * [gatsby-plugin-sharp](/docs/packages/gatsby-plugin-sharp/)
+* [gatsby-plugin-styled-components](/docs/packages/gatsby-plugin-styled-components/)
 * [gatsby-plugin-typescript](/docs/packages/gatsby-plugin-typescript/)
-* [gatsby-source-filesystem](/docs/packages/gatsby-source-filesystem/)
-* [gatsby-source-drupal](/docs/packages/gatsby-source-drupal/)
-* [gatsby-source-hacker-news](/docs/packages/gatsby-source-hacker-news/)
 * [gatsby-remark-autolink-headers](/docs/packages/gatsby-remark-autolink-headers/)
 * [gatsby-remark-copy-linked-files](/docs/packages/gatsby-remark-copy-linked-files/)
 * [gatsby-remark-prismjs](/docs/packages/gatsby-remark-prismjs/)
@@ -66,6 +59,14 @@ on using each plugin.
 * [gatsby-remark-responsive-image](/docs/packages/gatsby-remark-responsive-image/)
 * [gatsby-remark-smartypants](/docs/packages/gatsby-remark-smartypants/)
 * [gatsby-sharp](/docs/packages/gatsby-sharp/)
+* [gatsby-source-drupal](/docs/packages/gatsby-source-drupal/)
+* [gatsby-source-filesystem](/docs/packages/gatsby-source-filesystem/)
+* [gatsby-source-hacker-news](/docs/packages/gatsby-source-hacker-news/)
+* [gatsby-transformer-documentationjs](/docs/packages/gatsby-transformer-documentationjs/)
+* [gatsby-transformer-json](/docs/packages/gatsby-transformer-json/)
+* [gatsby-transformer-remark](/docs/packages/gatsby-transformer-remark/)
+* [gatsby-transformer-sharp](/docs/packages/gatsby-transformer-sharp/)
+* [gatsby-transformer-yaml](/docs/packages/gatsby-transformer-yaml/)
 
 ## Official components
 
