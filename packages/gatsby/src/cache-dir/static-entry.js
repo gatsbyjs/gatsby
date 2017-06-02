@@ -149,6 +149,6 @@ module.exports = (locals, callback) => {
     )
   })
 
-  const html = `<!DOCTYPE html>\n ${renderToStaticMarkup(<Html {...bodyProps} headComponents={headComponents} bodyComponent={bodyComponent} body={bodyHTML} path={locals.path} />)}`
+  const html = `<!DOCTYPE html>\n ${renderToStaticMarkup(<Html {...bodyProps} headComponents={headComponents} postBodyComponents={bodyComponent} body={bodyHTML} path={locals.path} />)}`
   callback(null, html)
 }
