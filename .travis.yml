@@ -1,10 +1,9 @@
 language: node_js
 node_js:
-  - "4"
   - "6"
   - "8"
 
-os: [linux, osx]
+os: [linux]
 dist: trusty
 sudo: required
 
