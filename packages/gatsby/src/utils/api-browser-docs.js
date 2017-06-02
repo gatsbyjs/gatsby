@@ -30,14 +30,14 @@ exports.onRouteUpdate = true
 exports.shouldUpdateScroll = true
 
 /**
- * Allow a plugin to replace the router component.
+ * Allow a plugin to replace the router component e.g. to use a custom history version.
  * @param {object} $0
  * @param {object} $0.history The history instance to use in the replacement router instance
  */
 exports.replaceRouterComponent = true
 
 /**
- * Allow a plugin to wrap the root component. This perhaps should be removed in favor of `replaceRouterComponent`.
+ * Allow a plugin to wrap the root component.
  * @param {object} $0
  * @param {object} $0.Root The "Root" component built by Gatsby.
  */
