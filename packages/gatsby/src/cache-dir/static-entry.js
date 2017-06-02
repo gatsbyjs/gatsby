@@ -30,7 +30,7 @@ module.exports = (locals, callback) => {
 
   let bodyHTML = ``
   let headComponents = []
-  let bodyComponents = []
+  let postBodyComponents = []
   let bodyProps = {}
 
   const replaceBodyHTMLString = body => {
@@ -42,7 +42,7 @@ module.exports = (locals, callback) => {
   }
 
   const setBodyComponents = components => {
-    bodyComponents = bodyComponents.concat(components)
+    postBodyComponents = postBodyComponents.concat(components)
   }
 
   const setBodyProps = props => {
@@ -97,7 +97,7 @@ module.exports = (locals, callback) => {
   // Add the chunk-manifest as a head component.
   const chunkManifest = require(`!raw!../public/chunk-manifest.json`)
 
-  bodyComponents.unshift(
+  postBodyComponents.unshift(
     <script
       id="webpack-manifest"
       dangerouslySetInnerHTML={{
@@ -144,7 +144,9 @@ module.exports = (locals, callback) => {
     )
 
     // Add script tags for the bottom of the page.
-    bodyComponent.push(<script key={prefixedScript} src={prefixedScript} />)
+    postBodyComponents.push(
+      <script key={prefixedScript} src={prefixedScript} />
+    )
   })
 
   const html = `<!DOCTYPE html>\n ${renderToStaticMarkup(<Html {...bodyProps} headComponents={headComponents} bodyComponent={bodyComponent} body={bodyHTML} path={locals.path} />)}`

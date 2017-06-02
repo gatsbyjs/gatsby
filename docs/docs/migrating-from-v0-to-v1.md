@@ -266,7 +266,7 @@ Repeat this process for other wrapper components you were using.
 This should generally work the same as in v0 except there are two additional
 props that must be added to your HTML component. Somewhere in your `<head>` add
 `{this.props.headComponents}` and somewhere at the end of your body, remove
-loading `bundle.js` and add `{this.props.bodyComponents}`.
+loading `bundle.js` and add `{this.props.postBodyComponents}`.
 
 ## _template.js is now src/layouts/index.js
 

@@ -103,7 +103,7 @@ async function startServer(program) {
             const apiRunner = require(`${directory}/.cache/api-runner-ssr`)
 
             let headComponents = []
-            let bodyComponents = []
+            let postBodyComponents = []
             let bodyProps = {}
 
             const setHeadComponents = components => {
@@ -111,7 +111,7 @@ async function startServer(program) {
             }
 
             const setBodyComponents = components => {
-              bodyComponents = bodyComponents.concat(components)
+              postBodyComponents = postBodyComponents.concat(components)
             }
 
             const setBodyProps = props => {
@@ -127,7 +127,7 @@ async function startServer(program) {
               ...bodyProps,
               body: ``,
               headComponents,
-              bodyComponents: bodyComponents.concat([
+              postBodyComponents: postBodyComponents.concat([
                 <script src="/commons.js" />,
               ]),
             })

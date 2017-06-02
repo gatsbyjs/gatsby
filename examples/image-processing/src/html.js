@@ -29,7 +29,7 @@ module.exports = React.createClass({
             id="___gatsby"
             dangerouslySetInnerHTML={{ __html: this.props.body }}
           />
-          {this.props.bodyComponents}
+          {this.props.postBodyComponents}
         </body>
       </html>
     )
