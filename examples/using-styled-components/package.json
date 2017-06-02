@@ -1,7 +1,7 @@
 {
-  "name": "gatsby-example-using-glamor",
+  "name": "gatsby-example-using-styled-components",
   "private": true,
-  "description": "Gatsby example site using the Glamor plugin",
+  "description": "Gatsby example site using the styled components plugin",
   "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
@@ -9,7 +9,7 @@
     "gatsby-link": "canary",
     "gatsby-plugin-google-analytics": "canary",
     "gatsby-plugin-offline": "canary",
-    "gatsby-plugin-glamor": "canary",
+    "gatsby-plugin-styled-components": "canary",
     "lodash": "^4.16.4",
     "react-typography": "^0.15.0",
     "slash": "^1.0.0",
