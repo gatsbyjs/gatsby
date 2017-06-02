@@ -1,6 +1,5 @@
 const contentful = require(`contentful`)
 const crypto = require(`crypto`)
-const _ = require(`lodash`)
 
 const typePrefix = `contentful__`
 const conflictFieldPrefix = `contentful`
@@ -15,7 +14,6 @@ exports.sourceNodes = async (
   const {
     createNode,
     updateSourcePluginStatus,
-    deleteNode,
   } = boundActionCreators
   updateSourcePluginStatus({
     plugin: `gatsby-source-contentful`,
@@ -24,13 +22,6 @@ exports.sourceNodes = async (
       ready: false,
     },
   })
-
-  // Delete existing Contentful nodes since we are doing a bulk re-add
-  // Once we are sync'ing Contentful nodes to get the diff, this would
-  // need to be changed.
-  _.values(store.getState().nodes)
-    .filter(n => n.internal.type.indexOf(typePrefix) === 0)
-    .forEach(n => deleteNode(n.id))
 
   // Fetch articles.
   console.time(`fetch Contentful data`)
