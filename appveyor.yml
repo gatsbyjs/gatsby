@@ -12,19 +12,19 @@ environment:
   nodejs_version: "8"
 
   matrix:
-#  - example: client-only-paths
+  - example: client-only-paths
 
-#  - example: gatsbygram
+  - example: gatsbygram
 
   - example: hn
 
-#  - example: no-plugins
+  - example: no-plugins
 
-#  - example: no-trailing-slashes
+  - example: no-trailing-slashes
 
-#  - example: using-drupal
+  - example: using-drupal
 
-#  - example: using-postcss-sass
+  - example: using-postcss-sass
 
 
 
@@ -38,6 +38,8 @@ install:
   - rmdir packages\gatsby-plugin-sharp /s /q
   - rmdir packages\gatsby-transformer-sharp /s /q
   - rmdir packages\gatsby-remark-responsive-image /s /q
+  - echo "we are running on"
+  - echo %PLATFORM%
   - npm install
 
 # Post-install test scripts.
