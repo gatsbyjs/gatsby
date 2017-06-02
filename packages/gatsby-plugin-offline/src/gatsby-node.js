@@ -13,7 +13,7 @@ exports.createPages = ({ boundActionCreators }) => {
   }
 }
 
-exports.postBuild = (args, pluginOptions) => {
+exports.onPostBuild = (args, pluginOptions) => {
   const rootDir = `public`
 
   const options = {
