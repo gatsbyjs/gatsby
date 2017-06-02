@@ -12,7 +12,7 @@ exports.sourceNodes = async (
   const {
     createNode,
     updateSourcePluginStatus,
-    touchNode,
+    deleteNode,
   } = boundActionCreators
   updateSourcePluginStatus({
     plugin: `gatsby-source-contentful`,
@@ -22,10 +22,12 @@ exports.sourceNodes = async (
     },
   })
 
-  // Touch existing Contentful nodes so Gatsby doesn't garbage collect them.
+  // Delete existing Contentful nodes since we are doing a bulk re-add
+  // Once we are sync'ing Contentful nodes to get the diff, this would
+  // need to be changed.
   _.values(store.getState().nodes)
-    .filter(n => n.internal.type.slice(0, 8) === typePrefix)
-    .forEach(n => touchNode(n.id))
+    .filter(n => n.internal.type.indexOf(typePrefix) === 0)
+    .forEach(n => deleteNode(n.id))
 
   // Fetch articles.
   console.time(`fetch Contentful data`)
