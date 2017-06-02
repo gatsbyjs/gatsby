@@ -221,6 +221,11 @@ data
 
   console.timeEnd(`copy gatsby files`)
 
+  // Source nodes
+  console.time(`initial sourcing and transforming nodes`)
+  await require(`../utils/source-nodes`)()
+  console.timeEnd(`initial sourcing and transforming nodes`)
+
   // Create Schema.
   await require(`../schema`)()
 
