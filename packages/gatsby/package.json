@@ -71,7 +71,7 @@
     "null-loader": "^0.1.1",
     "object-assign": "^4.1.0",
     "observable": "^2.1.4",
-    "opn": "^4.0.2",
+    "opn": "^5.0.0",
     "parse-filepath": "^1.0.1",
     "path-exists": "^3.0.0",
     "postcss-browser-reporter": "^0.5.0",
