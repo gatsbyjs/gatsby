@@ -37,7 +37,7 @@ install:
   - git checkout 1.0
   - rmdir packages\gatsby-plugin-sharp /s /q
   - rmdir packages\gatsby-transformer-sharp /s /q
-  - rmdir packages\gatsby-remark-responsive-images /s /q
+  - rmdir packages\gatsby-remark-responsive-image /s /q
   - npm install
 
 # Post-install test scripts.
