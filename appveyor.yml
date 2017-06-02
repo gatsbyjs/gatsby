@@ -8,29 +8,42 @@ branches:
 platform:
   - x64
 
+configuration:
+  - Head
+  - Release
+
 environment:
   nodejs_version: "8"
 
   matrix:
   - example: client-only-paths
+  - buildon: tag
 
   - example: gatsbygram
+  - buildon: commit
 
   - example: hn
+  - buildon: tag
 
   - example: no-plugins
+  - buildon: tag
 
   - example: no-trailing-slashes
+  - buildon: tag
 
   - example: using-drupal
+  - buildon: tag
 
   - example: using-postcss-sass
-
-
+  - buildon: tag
 
 # Install scripts. (runs after repo cloning)
 install:
-  # Get the latest stable version of Node.js or io.js
+  - ps: |
+      if (($env:buildon -eq "tag") -and ($env:APPVEYOR_REPO_TAG -eq "FALSE"))
+      {
+        Exit-AppVeyorBuild
+      }
   - ps: Install-Product node $env:nodejs_version $env:platform
   - ps: npm install -g windows-build-tools
   - npm install -g gatsby-dev-cli@canary
@@ -40,12 +53,15 @@ install:
 
 # Post-install test scripts.
 test_script:
-  # Output useful info for debugging.
   - node --version
   - npm --version
-  # run tests
   - npm test
+
+# Build gatsby head
+before_build:
   - npm run build
+
+build_script:
   - cd examples/%example%
   - npm install
   - gatsby-dev --set-path-to-repo ../..
@@ -54,6 +70,4 @@ test_script:
   - npm run build
 
 
-# Don't actually build.
-build: off
 deploy: off
