@@ -34,7 +34,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
       // Create Product pages
       const productTemplate = path.resolve(`./src/templates/product.js`)
       // We want to create a detailed page for each
-      // product node. We'll just use the Contentful sys id for the slug.
+      // product node. We'll just use the Contentful id for the slug.
       _.each(result.data.allContentfulProduct.edges, edge => {
         // Gatsby uses Redux to manage its internal state.
         // Plugins and sites can use functions like "createPage"
@@ -44,15 +44,54 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           // as a template component. The `context` is
           // optional but is often necessary so the template
           // can query data specific to each page.
-          path: `/node/${edge.node.id}/`,
+          path: `/products/${edge.node.id}/`,
           component: slash(productTemplate),
           context: {
             id: edge.node.id,
           },
         })
       })
+    }).then(() => {
+      graphql(
+        `
+        {
+          allContentfulCategory(limit: 1000) {
+            edges {
+              node {
+                id
+              }
+            }
+          }
+        }
+        `
+      ).then(result => {
+        if (result.errors) {
+          reject(result.errors)
+        }
 
-      resolve()
+        // Create Category pages
+        const categoryTemplate = path.resolve(`./src/templates/category.js`)
+        // We want to create a detailed page for each
+        // category node. We'll just use the Contentful id for the slug.
+        _.each(result.data.allContentfulCategory.edges, edge => {
+          // Gatsby uses Redux to manage its internal state.
+          // Plugins and sites can use functions like "createPage"
+          // to interact with Gatsby.
+          createPage({
+            // Each page is required to have a `path` as well
+            // as a template component. The `context` is
+            // optional but is often necessary so the template
+            // can query data specific to each page.
+            path: `/categories/${edge.node.id}/`,
+            component: slash(categoryTemplate),
+            context: {
+              id: edge.node.id,
+            },
+          })
+        })
+
+        resolve()
+      })
     })
   })
 }

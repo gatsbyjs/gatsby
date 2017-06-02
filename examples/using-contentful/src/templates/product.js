@@ -1,4 +1,5 @@
 import React from "react"
+import Link from "gatsby-link"
 import * as PropTypes from "prop-types"
 
 import { rhythm } from "../utils/typography"
@@ -14,11 +15,10 @@ class ProductTemplate extends React.Component {
       productName,
       productDescription,
       price,
+      image,
+      brand,
+      categories,
     } = product
-    const assetEdges = this.props.data.allContentfulAsset.edges
-    // Not ideal, but brute force method works..
-    const assetEdge = assetEdges.find(assetEdge => product.image && product.image.length > 0 && product.image[0].sys.id === assetEdge.node.id)
-    const imageUrl = assetEdge && assetEdge.node.file.url
     return (
       <div>
         <div style={{ display: `flex`, marginBottom: rhythm(1 / 2) }}>
@@ -31,7 +31,7 @@ class ProductTemplate extends React.Component {
                 maxHeight: rhythm(2),
                 marginRight: rhythm(1 / 2),
               }}
-              src={imageUrl}
+              src={image[0].file.url}
             />
           </div>
           <div style={{ display: `flex`, flexDirection: `column` }}>
@@ -39,9 +39,20 @@ class ProductTemplate extends React.Component {
           </div>
         </div>
         <h1>{productName}</h1>
+        <h4>Made by {brand.companyName}</h4>
         <div>
           <span>Price: ${price}</span>
           <div dangerouslySetInnerHTML={{ __html: productDescription }} />
+          <div>
+            <span>See other: </span>
+            <ul>
+              { categories.map((category, i) =>
+                  <li key={i}>
+                    <Link key={i} to={`/categories/${category.id}`}>{category.title}</Link>
+                  </li>
+              )}
+            </ul>
+          </div>
         </div>
       </div>
     )
@@ -59,19 +70,16 @@ export const pageQuery = graphql`
       productDescription
       price
       image {
-        sys {
-          id
+        file {
+          url
         }
       }
-    }
-    allContentfulAsset {
-      edges {
-        node {
-          id
-          file {
-            url
-          }
-        }
+      brand {
+        companyName
+      }
+      categories {
+        id
+        title
       }
     }
   }

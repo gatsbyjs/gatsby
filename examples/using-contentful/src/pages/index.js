@@ -9,25 +9,16 @@ const propTypes = {
 class IndexPage extends React.Component {
   render() {
     const productEdges = this.props.data.allContentfulProduct.edges
-    const assetEdges = this.props.data.allContentfulAsset.edges
-    // Not ideal, but brute force method works..
-    const imageUrls = productEdges.map(productEdge => {
-      const images = productEdge.node.image
-      if (images && images.length > 0) {
-        return assetEdges.find(assetEdge => assetEdge.node.id === productEdge.node.image[0].sys.id).node.file.url
-      }
-      return null
-    })
     return (
       <div>
         {productEdges.map((productEdge, i) => {
           const product = productEdge.node
           return (
             <div key={product.id}>
-              <Link to={`/node/${product.id}/`}>
+              <Link to={`/products/${product.id}/`}>
                 <h4>{product.productName}</h4>
-                { imageUrls && imageUrls.length > 0 && imageUrls[i] &&
-                  <img src={imageUrls[i]}/>
+                { product.image[0].file.url &&
+                  <img src={product.image[0].file.url}/>
                 }
               </Link>
             </div>
@@ -50,19 +41,9 @@ query PageQuery {
         id
         productName
         image {
-          sys {
-            id
+          file {
+            url
           }
-        }
-      }
-    }
-  }
-  allContentfulAsset {
-    edges {
-      node {
-        id
-        file {
-          url
         }
       }
     }

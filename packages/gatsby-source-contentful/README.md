@@ -10,12 +10,11 @@ https://gatsby-using-contentful.netlify.com/
 ## Status
 
 This module is at prototype-level.
-It pulls Contentful ContentTypes, all entry types, and Assets.
+It pulls Contentful ContentTypes, all entry types, and Assets. Then, it finds and links entry types with any other entry type or asset so they can be referenced together inside Gatsby via GraphQL.
 
 Future improvements can include:
 
 - Using Contentful's [sync functionality](https://www.contentful.com/developers/docs/concepts/sync/) to only get and update in Gatsby the delta of its CMS changes
-- Linking Contentful nodes in Gatsby e.g. when creating a Product node in Gatsby setting `{ brand___NODE: ID_OF_THE_PRODUCT }`
 
 ## Install
 
@@ -61,13 +60,14 @@ Non-standard data types e.g. entry types you create in Contentful will also be a
 
 ```graphql
 allContentfulProduct {
-  edges {
-    node {
-      id
-      productName
-      image {
-        sys {
-          id
+    edges {
+      node {
+        id
+        productName
+        image {
+          file {
+            url
+          }
         }
       }
     }

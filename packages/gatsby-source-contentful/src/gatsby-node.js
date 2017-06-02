@@ -73,6 +73,40 @@ exports.sourceNodes = async (
   console.timeEnd(`fetch Contentful data`)
 
   const contentTypeItems = contentTypes.items
+
+  // Build foreign reference map before starting to insert any nodes
+  const foreignReferenceMap = {}
+  contentTypeItems.forEach((contentTypeItem, i) => {
+    const contentTypeItemId = contentTypeItem.sys.id
+    entryList[i].items.forEach((entryItem) => {
+      const entryItemFields = entryItem.fields
+      Object.keys(entryItemFields).forEach(entryItemFieldKey => {
+        const entryItemFieldValue = entryItemFields[entryItemFieldKey]
+        if (Array.isArray(entryItemFieldValue)) {
+          if (entryItemFieldValue[0].sys && entryItemFieldValue[0].sys.type && entryItemFieldValue[0].sys.id) {
+            entryItemFieldValue.forEach(v => {
+              if (!foreignReferenceMap[v.sys.id]) {
+                foreignReferenceMap[v.sys.id] = []
+              }
+              foreignReferenceMap[v.sys.id].push({
+                name: `${contentTypeItemId}___NODE`,
+                id: entryItem.sys.id,
+              })
+            })
+          }
+        } else if (entryItemFieldValue.sys && entryItemFieldValue.sys.type && entryItemFieldValue.sys.id) {
+          if (!foreignReferenceMap[entryItemFieldValue.sys.id]) {
+            foreignReferenceMap[entryItemFieldValue.sys.id] = []
+          }
+          foreignReferenceMap[entryItemFieldValue.sys.id].push({
+            name: `${contentTypeItemId}___NODE`,
+            id: entryItem.sys.id,
+          })
+        }
+      })
+    })
+  })
+
   contentTypeItems.forEach((contentTypeItem, i) => {
     const contentTypeItemId = contentTypeItem.sys.id
 
@@ -97,11 +131,39 @@ exports.sourceNodes = async (
         delete entryItemFields[conflictField]
       })
 
+      // Add linkages to other nodes based on foreign references
+      Object.keys(entryItemFields).forEach(entryItemFieldKey => {
+        const entryItemFieldValue = entryItemFields[entryItemFieldKey]
+        if (Array.isArray(entryItemFieldValue)) {
+          if (entryItemFieldValue[0].sys && entryItemFieldValue[0].sys.type && entryItemFieldValue[0].sys.id) {
+            entryItemFields[`${entryItemFieldKey}___NODE`] = entryItemFieldValue.map(v => v.sys.id)
+            delete entryItemFields[entryItemFieldKey]
+          }
+        } else if (entryItemFieldValue.sys && entryItemFieldValue.sys.type && entryItemFieldValue.sys.id) {
+          entryItemFields[`${entryItemFieldKey}___NODE`] = entryItemFieldValue.sys.id
+          delete entryItemFields[entryItemFieldKey]
+        }
+      })
+
+      // Add reverse linkages if there are any for this node
+      const foreignReferences = foreignReferenceMap[entryItem.sys.id]
+      if (foreignReferences) {
+        foreignReferences.forEach(foreignReference => {
+          const existingReference = entryItemFields[foreignReference.name]
+          if (existingReference) {
+            entryItemFields[foreignReference.name].push(foreignReference.id)
+          } else {
+            // If is one foreign reference, there can always be many.
+            // Best to be safe and put it in an array to start with.
+            entryItemFields[foreignReference.name] = [foreignReference.id]
+          }
+        })
+      }
+
       const entryNode = {
         id: entryItem.sys.id,
         parent: contentTypeItemId,
         children: [],
-        name: entryItem.name,
         ...entryItemFields,
         internal: {
           type: `${makeTypeName(contentTypeItemId)}`,
@@ -150,7 +212,7 @@ exports.sourceNodes = async (
   })
 
   assets.items.forEach(assetItem => {
-    // Create a node for each asset
+    // Create a node for each asset. They may be referenced by Entries
     const assetItemStr = JSON.stringify(assetItem)
 
     const assetNode = {
