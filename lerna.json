@@ -4,5 +4,6 @@
   "packages": [
     "packages/*"
   ],
-  "hoist": true
+  "hoist": true,
+  "version": "1.0.0-alpha18"
 }
