@@ -17,7 +17,7 @@ class ProductTemplate extends React.Component {
     } = product
     const assetEdges = this.props.data.allContentfulAsset.edges
     // Not ideal, but brute force method works..
-    const assetEdge = assetEdges.find(assetEdge => assetEdge.node.id === product.image[0].sys.id)
+    const assetEdge = assetEdges.find(assetEdge => product.image && product.image.length > 0 && product.image[0].sys.id === assetEdge.node.id)
     const imageUrl = assetEdge && assetEdge.node.file.url
     return (
       <div>

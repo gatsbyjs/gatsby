@@ -12,8 +12,11 @@ class IndexPage extends React.Component {
     const assetEdges = this.props.data.allContentfulAsset.edges
     // Not ideal, but brute force method works..
     const imageUrls = productEdges.map(productEdge => {
-      const assetEdge = assetEdges.find(assetEdge => assetEdge.node.id === productEdge.node.image[0].sys.id)
-      return assetEdge && assetEdge.node.file.url
+      const images = productEdge.node.image
+      if (images && images.length > 0) {
+        return assetEdges.find(assetEdge => assetEdge.node.id === productEdge.node.image[0].sys.id).node.file.url
+      }
+      return null
     })
     return (
       <div>
@@ -23,7 +26,9 @@ class IndexPage extends React.Component {
             <div key={product.id}>
               <Link to={`/node/${product.id}/`}>
                 <h4>{product.productName}</h4>
-                <img src={imageUrls[i]}/>
+                { imageUrls && imageUrls.length > 0 && imageUrls[i] &&
+                  <img src={imageUrls[i]}/>
+                }
               </Link>
             </div>
           )
