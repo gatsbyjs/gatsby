@@ -35,6 +35,9 @@ install:
   - ps: npm install -g windows-build-tools
   - npm install -g gatsby-dev-cli@canary
   - git checkout 1.0
+  - rmdir packages\gatsby-plugin-sharp /s /q
+  - rmdir packages\gatsby-transformer-sharp /s /q
+  - rmdir packages\gatsby-remark-responsive-images /s /q
   - npm install
 
 # Post-install test scripts.
