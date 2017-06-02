@@ -44,49 +44,46 @@ const Param = (param, depth = 0) => {
   )
 }
 
-export default ({ functions }) => (
+export default ({ functions }) =>
   <div>
-    {functions.map(({ node }, i) => {
-      return (
+    {functions.map(({ node }, i) =>
+      <div
+        id={node.name}
+        key={`reference list ${node.name}`}
+        css={{ marginBottom: rhythm(1) }}
+      >
+        {i !== 0 && <hr />}
+        <h3><a href={`#${node.name}`}><code>{node.name}</code></a></h3>
         <div
-          id={node.name}
-          key={`reference list ${node.name}`}
-          css={{ marginBottom: rhythm(1) }}
-        >
-          {i !== 0 && <hr />}
-          <h3><a href={`#${node.name}`}><code>{node.name}</code></a></h3>
-          <div
-            dangerouslySetInnerHTML={{
-              __html: node.description.childMarkdownRemark.html,
-            }}
-          />
-          {(node.params && node.params.length) > 0 &&
-            <div>
-              <h4>Parameters</h4>
-              {node.params.map(param => Param(param, 0))}
-            </div>}
+          dangerouslySetInnerHTML={{
+            __html: node.description.childMarkdownRemark.html,
+          }}
+        />
+        {(node.params && node.params.length) > 0 &&
+          <div>
+            <h4>Parameters</h4>
+            {node.params.map(param => Param(param, 0))}
+          </div>}
 
-          {node.examples &&
-            node.examples.length > 0 &&
-            <div>
-              <h4 css={{ marginTop: rhythm(1) }}>Example</h4>
-              {` `}
-              {node.examples.map((example, i) => (
-                <pre key={`${node.name} example ${i}`}>
-                  <code
-                    className="language-javascript"
-                    dangerouslySetInnerHTML={{
-                      __html: example.highlighted,
-                    }}
-                  />
-                </pre>
-              ))}
-            </div>}
-        </div>
-      )
-    })}
+        {node.examples &&
+          node.examples.length > 0 &&
+          <div>
+            <h4 css={{ marginTop: rhythm(1) }}>Example</h4>
+            {` `}
+            {node.examples.map((example, i) =>
+              <pre key={`${node.name} example ${i}`}>
+                <code
+                  className="language-javascript"
+                  dangerouslySetInnerHTML={{
+                    __html: example.highlighted,
+                  }}
+                />
+              </pre>
+            )}
+          </div>}
+      </div>
+    )}
   </div>
-)
 
 export const pageQuery = graphql`
 fragment FunctionList on DocumentationJs {

@@ -50,7 +50,11 @@ exports.sourceNodes = async (
 
   let url
   if (lastFetched) {
-    url = `${baseUrl}/jsonapi/node/article?filter[new-content][path]=changed&filter[new-content][value]=${parseInt(new Date(lastFetched).getTime() / 1000).toFixed(0)}&filter[new-content][operator]=%3E&page[offset]=0&page[limit]=10`
+    url = `${baseUrl}/jsonapi/node/article?filter[new-content][path]=changed&filter[new-content][value]=${parseInt(
+      new Date(lastFetched).getTime() / 1000
+    ).toFixed(
+      0
+    )}&filter[new-content][operator]=%3E&page[offset]=0&page[limit]=10`
   } else {
     url = `${baseUrl}/jsonapi/node/article`
   }
@@ -132,7 +136,8 @@ exports.sourceNodes = async (
             )
             .catch(() => console.log(`fail fetch`, gatsbyUser))
             .then(pictureResult => {
-              gatsbyUser.picture = `http://dev-gatsbyjs-d8.pantheonsite.io${pictureResult.data.data.attributes.url}`
+              gatsbyUser.picture = `http://dev-gatsbyjs-d8.pantheonsite.io${pictureResult
+                .data.data.attributes.url}`
 
               // Get content digest of node.
               const contentDigest = crypto

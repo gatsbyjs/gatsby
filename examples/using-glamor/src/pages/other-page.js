@@ -1,6 +1,6 @@
 import React from "react"
 
-export default () => (
+export default () =>
   <div
     css={{
       display: `flex`,
@@ -13,4 +13,3 @@ export default () => (
     <h1>Weeee...</h1>
     <img src="https://media1.giphy.com/media/urVO9yrQhKwDK/200.webp#1-grid1" />
   </div>
-)

@@ -88,7 +88,9 @@ module.exports = async (
         return {
           commons: [
             require.resolve(`react-hot-loader/patch`),
-            `${require.resolve(`webpack-hot-middleware/client`)}?path=http://${program.host}:${webpackPort}/__webpack_hmr&reload=true`,
+            `${require.resolve(
+              `webpack-hot-middleware/client`
+            )}?path=http://${program.host}:${webpackPort}/__webpack_hmr&reload=true`,
             `${directory}/.cache/app`,
           ],
         }

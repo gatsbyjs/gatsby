@@ -20,7 +20,9 @@ class Index extends React.Component {
           </a>
           {` `}
           exposes several image processing
-          functions built on the <a href="https://github.com/lovell/sharp">
+          functions built on the
+          {` `}
+          <a href="https://github.com/lovell/sharp">
             Sharp image processing library
           </a>. It is a low-level helper plugin
           generally used by other Gatsby plugins – but you can easily use it
@@ -82,11 +84,11 @@ class Index extends React.Component {
         </h3>
 
         <ul style={styles.ul}>
-          {images.map(image => (
+          {images.map(image =>
             <li style={styles.thumbnail} key={image.node.resize.src}>
               <img src={image.node.resize.src} />
             </li>
-          ))}
+          )}
         </ul>
 
         <p
@@ -157,7 +159,8 @@ class Index extends React.Component {
           </a>
         </h2>
         <p>
-          Create sizes (in width) for the image. If the max width of the container
+          Create sizes (in width) for the image. If the max width of the
+          container
           for the rendered markdown file is 800px, the sizes would then be: 200,
           400, 800, 1200, 1600, 2400 – enough to provide close to the optimal
           image size for every device size / screen resolution.
@@ -184,7 +187,9 @@ class Index extends React.Component {
           {` `}
           <a href="https://code.facebook.com/posts/991252547593574/the-technology-behind-preview-photos/">
             Facebook
-          </a> (and also available as a Gatsby plugin for Markdown content as
+          </a>
+          {` `}
+          (and also available as a Gatsby plugin for Markdown content as
           {` `}
           <a href="https://www.gatsbyjs.org/docs/packages/gatsby-remark-responsive-image/">
             gatsby-remark-responsive-image
@@ -266,7 +271,8 @@ class Index extends React.Component {
           </a>
         </h2>
         <p>
-          Automatically create sizes for different resolutions — we do 1x, 1.5x, 2x, and 3x.
+          Automatically create sizes for different resolutions — we do 1x, 1.5x,
+          2x, and 3x.
           {` `}
         </p>
 

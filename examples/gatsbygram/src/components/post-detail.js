@@ -21,7 +21,7 @@ class PostDetail extends React.Component {
 
     const { big } = bigImage.childImageSharp
 
-    const UserBar = () => (
+    const UserBar = () =>
       <div
         css={{
           [presets.Tablet]: {
@@ -50,9 +50,8 @@ class PostDetail extends React.Component {
           {username}
         </h5>
       </div>
-    )
 
-    const PostDetails = () => (
+    const PostDetails = () =>
       <div
         css={{
           ...scale(-2 / 5),
@@ -85,7 +84,6 @@ class PostDetail extends React.Component {
           <strong>{username}</strong> {text}
         </div>
       </div>
-    )
 
     return (
       <div
