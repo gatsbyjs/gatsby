@@ -3,7 +3,10 @@ const crypto = require(`crypto`)
 const _ = require(`lodash`)
 
 const typePrefix = `contentful__`
-const makeTypeName = type => `${typePrefix}${type.replace(/-/g, `_`)}`
+const conflictFieldPrefix = `contentful`
+const makeTypeName = type => `${typePrefix}${type}`
+// restrictedNodeFields from here https://www.gatsbyjs.org/docs/node-interface/
+const restrictedNodeFields = [`id`, `children`, `parent`, `fields`, `internal`]
 
 exports.sourceNodes = async (
   { boundActionCreators, getNode, hasNodeChanged, store },
@@ -82,17 +85,35 @@ exports.sourceNodes = async (
   contentTypeItems.forEach((contentTypeItem, i) => {
     const contentTypeItemId = contentTypeItem.sys.id
 
+    // Warn about any field conflicts
+    const conflictFields = []
+    contentTypeItem.fields.forEach(contentTypeItemField => {
+      const fieldName = contentTypeItemField.id
+      if (restrictedNodeFields.includes(fieldName)) {
+        console.log(`Restricted field found for ContentType ${contentTypeItemId} and field ${fieldName}. Prefixing with ${conflictFieldPrefix}.`)
+        conflictFields.push(fieldName)
+      }
+    })
+
     // First create nodes for each of the entries of that content type
     const entryNodes = entryList[i].items.map((entryItem) => {
+
+      // Prefix any conflicting fields
+      // https://github.com/gatsbyjs/gatsby/pull/1084#pullrequestreview-41662888
+      const entryItemFields = Object.assign({}, entryItem.fields)
+      conflictFields.forEach(conflictField => {
+        entryItemFields[`${conflictFieldPrefix}${conflictField}`] = entryItemFields[conflictField]
+        delete entryItemFields[conflictField]
+      })
 
       const entryNode = {
         id: entryItem.sys.id,
         parent: contentTypeItemId,
         children: [],
         name: entryItem.name,
-        ...entryItem.fields,
+        ...entryItemFields,
         internal: {
-          type: `${makeTypeName(contentTypeItem.name)}`,
+          type: `${makeTypeName(contentTypeItemId)}`,
           content: JSON.stringify(entryItem),
           mediaType: `application/json`,
         },
