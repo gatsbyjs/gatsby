@@ -9,10 +9,13 @@ const INVALID_VALUE = Symbol(`INVALID_VALUE`)
 const isDefined = v => v != null
 
 const isSameType = (a, b) => a == null || b == null || typeOf(a) === typeOf(b)
+const areAllSameType = list =>
+  list.every((current, i) => {
+    let prev = i ? list[i - 1] : undefined
+    return isSameType(prev, current)
+  })
 
-const isEmptyObjectOrArray = (obj: any) => {
-  let isEmpty = false
-
+const isEmptyObjectOrArray = (obj: any): boolean => {
   if (obj === INVALID_VALUE) {
     return true
     // Simple "is object empty" check.
@@ -29,6 +32,7 @@ const isEmptyObjectOrArray = (obj: any) => {
       }
     })
   }
+  return false
 }
 
 /**
@@ -45,31 +49,34 @@ const isEmptyObjectOrArray = (obj: any) => {
  */
 const extractFieldExamples = (nodes: any[]) =>
   // $FlowFixMe
-  _.mergeWith({}, ...nodes, (obj, next, key, o, s, stack) => {
-    if (obj === INVALID_VALUE) return obj
+  _.mergeWith(
+    _.isArray(nodes[0]) ? [] : {},
+    ...nodes,
+    (obj, next, key, po, pn, stack) => {
+      if (obj === INVALID_VALUE) return obj
 
-    // TODO: if you want to support infering Union types this should be handled
-    // differently. Maybe merge all like types into examples for each type?
-    // e.g. union: [1, { foo: true }, ['brown']] -> Union Int|Object|List
-    if (!isSameType(obj, next)) return INVALID_VALUE
+      // TODO: if you want to support infering Union types this should be handled
+      // differently. Maybe merge all like types into examples for each type?
+      // e.g. union: [1, { foo: true }, ['brown']] -> Union Int|Object|List
+      if (!isSameType(obj, next)) return INVALID_VALUE
 
-    if (!_.isArray(obj || next)) {
-      if (obj === null) return next
-      if (next === null) return obj
-      return
+      if (!_.isArray(obj || next)) {
+        if (obj === null) return next
+        if (next === null) return obj
+        return undefined
+      }
+
+      let array = [].concat(obj, next).filter(isDefined)
+
+      if (!array.length) return null
+      if (!areAllSameType(array)) return INVALID_VALUE
+
+      // primitive values don't get merged further, just take the first item
+      if (!_.isObject(array[0])) return array.slice(0, 1)
+      let merged = extractFieldExamples(array)
+      return isDefined(merged) ? [merged] : null
     }
-
-    let array = [].concat(obj, next).filter(isDefined)
-
-    if (!array.length) return null
-
-    // primitive values don't get merged further, just take the first item
-    if (!_.isObject(array[0])) {
-      return array.slice(0, 1)
-    }
-    let merged = extractFieldExamples(array)
-    return isDefined(merged) ? [merged] : null
-  })
+  )
 
 const buildFieldEnumValues = (nodes: any[]) => {
   const enumValues = {}
