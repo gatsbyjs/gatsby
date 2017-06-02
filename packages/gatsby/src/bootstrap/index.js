@@ -36,7 +36,7 @@ module.exports = async (program: any) => {
   console.log(
     `lib/bootstrap/index.js time since started:`,
     process.uptime(),
-    "sec"
+    `sec`
   )
 
   // Fix program directory path for windows env
@@ -220,6 +220,11 @@ data
   fs.writeFileSync(`${siteDir}/api-runner-ssr.js`, sSRAPIRunner, `utf-8`)
 
   console.timeEnd(`copy gatsby files`)
+
+  // Source nodes
+  console.time(`initial sourcing and transforming nodes`)
+  await require(`../utils/source-nodes`)()
+  console.timeEnd(`initial sourcing and transforming nodes`)
 
   // Create Schema.
   await require(`../schema`)()
