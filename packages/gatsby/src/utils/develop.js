@@ -110,7 +110,7 @@ async function startServer(program) {
               headComponents = headComponents.concat(components)
             }
 
-            const setBodyComponents = components => {
+            const setPostBodyComponents = components => {
               postBodyComponents = postBodyComponents.concat(components)
             }
 
@@ -119,7 +119,7 @@ async function startServer(program) {
             }
             apiRunner(`onRenderBody`, {
               setHeadComponents,
-              setBodyComponents,
+              setPostBodyComponents,
               setBodyProps,
             })
 

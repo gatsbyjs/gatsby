@@ -9,7 +9,7 @@
  * @param {function} $0.setHeadComponents Takes an array of components as its
  * first argument which are added to the `headComponents` array which is passed
  * to the `html.js` component.
- * @param {function} $0.setBodyComponents Takes an array of components as its
+ * @param {function} $0.setPostBodyComponents Takes an array of components as its
  * first argument which are added to the `postBodyComponents` array which is passed
  * to the `html.js` component.
  * @param {function} $0.setBodyProps Takes an object of data which
@@ -51,7 +51,7 @@ exports.replaceRenderer = true
  * @param {function} $0.setHeadComponents Takes an array of components as its
  * first argument which are added to the `headComponents` array which is passed
  * to the `html.js` component.
- * @param {function} $0.setBodyComponents Takes an array of components as its
+ * @param {function} $0.setPostBodyComponents Takes an array of components as its
  * first argument which are added to the `postBodyComponents` array which is passed
  * to the `html.js` component.
  * @param {function} $0.setBodyProps Takes an object of data which

@@ -41,7 +41,7 @@ module.exports = (locals, callback) => {
     headComponents = headComponents.concat(components)
   }
 
-  const setBodyComponents = components => {
+  const setPostBodyComponents = components => {
     postBodyComponents = postBodyComponents.concat(components)
   }
 
@@ -79,7 +79,7 @@ module.exports = (locals, callback) => {
     bodyComponent,
     replaceBodyHTMLString,
     setHeadComponents,
-    setBodyComponents,
+    setPostBodyComponents,
     setBodyProps,
   })
 
@@ -90,7 +90,7 @@ module.exports = (locals, callback) => {
 
   apiRunner(`onRenderBody`, {
     setHeadComponents,
-    setBodyComponents,
+    setPostBodyComponents,
     setBodyProps,
   })
 
@@ -149,6 +149,14 @@ module.exports = (locals, callback) => {
     )
   })
 
-  const html = `<!DOCTYPE html>\n ${renderToStaticMarkup(<Html {...bodyProps} headComponents={headComponents} postBodyComponents={postBodyComponents} body={bodyHTML} path={locals.path} />)}`
+  const html = `<!DOCTYPE html>\n ${renderToStaticMarkup(
+    <Html
+      {...bodyProps}
+      headComponents={headComponents}
+      postBodyComponents={postBodyComponents}
+      body={bodyHTML}
+      path={locals.path}
+    />
+  )}`
   callback(null, html)
 }
