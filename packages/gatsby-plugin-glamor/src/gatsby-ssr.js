@@ -1,10 +1,9 @@
-import React from "react"
 import { renderToString } from "react-dom/server"
 import inline from "glamor-inline"
 
-exports.replaceServerBodyRender = ({ component }) => {
-  const html = renderToString(component)
-  const inlinedHtml = inline(html)
+exports.replaceRenderer = ({ bodyComponent, replaceBodyHTMLString }) => {
+  const bodyHTML = renderToString(bodyComponent)
+  const inlinedHTML = inline(bodyHTML)
 
-  return { body: inlinedHtml }
+  replaceBodyHTMLString(inlinedHTML)
 }

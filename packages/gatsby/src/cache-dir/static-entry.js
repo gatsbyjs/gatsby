@@ -28,6 +28,27 @@ module.exports = (locals, callback) => {
     linkPrefix = `${__LINK_PREFIX__}/`
   }
 
+  let bodyHTML = ``
+  let headComponents = []
+  let bodyComponents = []
+  let bodyProps = {}
+
+  const replaceBodyHTMLString = body => {
+    bodyHTML = body
+  }
+
+  const setHeadComponents = components => {
+    headComponents = headComponents.concat(components)
+  }
+
+  const setBodyComponents = components => {
+    bodyComponents = bodyComponents.concat(components)
+  }
+
+  const setBodyProps = props => {
+    bodyProps = merge({}, bodyProps, props)
+  }
+
   const bodyComponent = $(
     StaticRouter,
     {
@@ -54,53 +75,29 @@ module.exports = (locals, callback) => {
   )
 
   // Let the site or plugin render the page component.
-  const results = apiRunner(
-    `replaceServerBodyRender`,
-    { component: bodyComponent, headComponents: [] },
-    {}
-  )
-  let {
-    body,
-    headComponents,
-    postBodyComponents,
-    ...bodyRenderProps
-  } = results[0]
-
-  // If no one stepped up, we'll handle it.
-  if (!body) {
-    body = renderToString(bodyComponent)
-  }
-
-  // Check if vars were created.
-  if (!bodyRenderProps) {
-    bodyRenderProps = {}
-  }
-  if (!headComponents) {
-    headComponents = []
-  }
-  if (!postBodyComponents) {
-    postBodyComponents = []
-  }
-  if (!bodyRenderProps) {
-    bodyRenderProps = {}
-  }
-
-  const onRenderBodyResults = apiRunner(`onRenderBody`, {
-    body,
-    headComponents,
-    postBodyComponents,
-    bodyRenderProps,
+  apiRunner(`replaceRenderer`, {
+    bodyComponent,
+    replaceBodyHTMLString,
+    setHeadComponents,
+    setBodyComponents,
+    setBodyProps,
   })
 
-  body = onRenderBodyResults.body
-  headComponents = onRenderBodyResults.headComponents
-  postBodyComponents = onRenderBodyResults.postBodyComponents
-  bodyRenderProps = onRenderBodyResults.bodyRenderProps
+  // If no one stepped up, we'll handle it.
+  if (!bodyHTML) {
+    bodyHTML = renderToString(bodyComponent)
+  }
+
+  apiRunner(`onRenderBody`, {
+    setHeadComponents,
+    setBodyComponents,
+    setBodyProps,
+  })
 
   // Add the chunk-manifest as a head component.
   const chunkManifest = require(`!raw!../public/chunk-manifest.json`)
 
-  postBodyComponents.unshift(
+  bodyComponents.unshift(
     <script
       id="webpack-manifest"
       dangerouslySetInnerHTML={{
@@ -147,26 +144,9 @@ module.exports = (locals, callback) => {
     )
 
     // Add script tags for the bottom of the page.
-    postBodyComponents.push(
-      <script key={prefixedScript} src={prefixedScript} />
-    )
+    bodyComponent.push(<script key={prefixedScript} src={prefixedScript} />)
   })
 
-  // Call plugins to let them add to or modify components/props.
-  const pluginHeadComponents = apiRunner(
-    `createHeadComponents`,
-    { headComponents },
-    []
-  )
-  headComponents = headComponents.concat(pluginHeadComponents)
-
-  const pluginPostBodyComponents = apiRunner(
-    `createPostBodyComponents`,
-    { postBodyComponents },
-    []
-  )
-  postBodyComponents = postBodyComponents.concat(pluginPostBodyComponents)
-
-  const html = `<!DOCTYPE html>\n ${renderToStaticMarkup(<Html {...bodyRenderProps} headComponents={headComponents} postBodyComponents={postBodyComponents} body={body} path={locals.path} />)}`
+  const html = `<!DOCTYPE html>\n ${renderToStaticMarkup(<Html {...bodyProps} headComponents={headComponents} bodyComponent={bodyComponent} body={bodyHTML} path={locals.path} />)}`
   callback(null, html)
 }

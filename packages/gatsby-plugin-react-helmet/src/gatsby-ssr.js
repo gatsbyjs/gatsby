@@ -1,12 +1,9 @@
 import helmet from "react-helmet"
 
-exports.onRenderBody = ({ headComponents, ...otherProps }, pluginOptions) => {
-  return {
-    ...otherProps,
-    headComponents: headComponents.concat([
-      helmet.title.toComponent(),
-      helmet.meta.toComponent(),
-      helmet.link.toComponent(),
-    ]),
-  }
+exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
+  setHeadComponents([
+    helmet.title.toComponent(),
+    helmet.meta.toComponent(),
+    helmet.link.toComponent(),
+  ])
 }

@@ -101,18 +101,35 @@ async function startServer(program) {
         } else {
           try {
             const apiRunner = require(`${directory}/.cache/api-runner-ssr`)
+
+            let headComponents = []
+            let bodyComponents = []
+            let bodyProps = {}
+
+            const setHeadComponents = components => {
+              headComponents = headComponents.concat(components)
+            }
+
+            const setBodyComponents = components => {
+              bodyComponents = bodyComponents.concat(components)
+            }
+
+            const setBodyProps = props => {
+              bodyProps = _.merge({}, bodyProps, props)
+            }
+            apiRunner(`onRenderBody`, {
+              setHeadComponents,
+              setBodyComponents,
+              setBodyProps,
+            })
+
             const htmlElement = React.createElement(HTML, {
+              ...bodyProps,
               body: ``,
-              headComponents: _.flattenDeep(
-                apiRunner(`createHeadComponents`, { headComponents: [] }, [])
-              ),
-              postBodyComponents: _.flattenDeep(
-                apiRunner(
-                  `createPostBodyComponents`,
-                  { headComponents: [] },
-                  []
-                )
-              ).concat([<script src="/commons.js" />]),
+              headComponents,
+              bodyComponents: bodyComponents.concat([
+                <script src="/commons.js" />,
+              ]),
             })
             htmlStr = ReactDOMServer.renderToStaticMarkup(htmlElement)
             htmlStr = `<!DOCTYPE html>\n${htmlStr}`
