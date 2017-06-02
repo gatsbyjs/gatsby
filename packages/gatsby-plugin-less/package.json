@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-less",
-  "version": "",
+  "version": "1.0.0-alpha17",
   "description": "Stub description for gatsby-plugin-less",
   "main": "index.js",
   "scripts": {

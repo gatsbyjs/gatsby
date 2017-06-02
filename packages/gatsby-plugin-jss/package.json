@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-jss",
-  "version": "",
+  "version": "1.0.0-alpha17",
   "description": "Stub description for gatsby-plugin-jss",
   "main": "index.js",
   "scripts": {

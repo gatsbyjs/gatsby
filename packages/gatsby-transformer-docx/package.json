@@ -1,6 +1,6 @@
 {
   "name": "gatsby-transformer-docx",
-  "version": "",
+  "version": "1.0.0-alpha17",
   "description": "Stub description for gatsby-transformer-docx",
   "main": "index.js",
   "scripts": {
