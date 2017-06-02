@@ -31,15 +31,11 @@ environment:
 # Install scripts. (runs after repo cloning)
 install:
   # Get the latest stable version of Node.js or io.js
-  - ps: Install-Product node $env:nodejs_version
+  - ps: Install-Product node $env:nodejs_version $env:platform
   - ps: npm install -g windows-build-tools
   - npm install -g gatsby-dev-cli@canary
   - git checkout 1.0
-  - rmdir packages\gatsby-plugin-sharp /s /q
-  - rmdir packages\gatsby-transformer-sharp /s /q
-  - rmdir packages\gatsby-remark-responsive-image /s /q
-  - echo "we are running on"
-  - echo %PLATFORM%
+  - echo we are running on %PLATFORM%
   - npm install
 
 # Post-install test scripts.
