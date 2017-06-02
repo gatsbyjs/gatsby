@@ -48,6 +48,7 @@ on using each plugin.
 * [gatsby-plugin-manifest](/docs/packages/gatsby-plugin-manifest/)
 * [gatsby-plugin-offline](/docs/packages/gatsby-plugin-offline/)
 * [gatsby-plugin-preact](/docs/packages/gatsby-plugin-preact/)
+* [gatsby-plugin-react-helmet](/docs/packages/gatsby-plugin-react-helmet/)
 * [gatsby-plugin-sass](/docs/packages/gatsby-plugin-sass/)
 * [gatsby-plugin-sharp](/docs/packages/gatsby-plugin-sharp/)
 * [gatsby-plugin-styled-components](/docs/packages/gatsby-plugin-styled-components/)

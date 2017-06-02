@@ -1,8 +1,8 @@
 import React from "react"
 
-exports.createPostBodyComponents = () => {
+exports.onRenderBody = ({ setBodyComponents }) => {
   if (process.env.NODE_ENV === `production`) {
-    return [
+    return setBodyComponents([
       <script
         dangerouslySetInnerHTML={{
           __html: `
@@ -17,6 +17,6 @@ exports.createPostBodyComponents = () => {
       `,
         }}
       />,
-    ]
+    ])
   }
 }

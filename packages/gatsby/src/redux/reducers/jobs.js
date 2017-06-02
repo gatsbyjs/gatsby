@@ -3,10 +3,10 @@ const moment = require(`moment`)
 
 module.exports = (state = { active: [], done: [] }, action) => {
   switch (action.type) {
-    case "CREATE_JOB":
-    case "SET_JOB":
+    case `CREATE_JOB`:
+    case `SET_JOB`:
       if (!action.payload.id) {
-        throw new Error("An ID must be provided when creating or setting job")
+        throw new Error(`An ID must be provided when creating or setting job`)
       }
       const index = _.findIndex(state.active, j => j.id === action.payload.id)
       const mergedJob = _.merge(state.active[index], {
@@ -37,9 +37,9 @@ module.exports = (state = { active: [], done: [] }, action) => {
         }
       }
 
-    case "END_JOB":
+    case `END_JOB`:
       if (!action.payload.id) {
-        throw new Error("An ID must be provided when ending a job")
+        throw new Error(`An ID must be provided when ending a job`)
       }
       const completedAt = Date.now()
       const job = state.active.find(j => j.id === action.payload.id)
