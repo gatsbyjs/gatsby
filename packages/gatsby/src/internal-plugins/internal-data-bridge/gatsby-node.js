@@ -2,6 +2,7 @@ const crypto = require(`crypto`)
 const moment = require(`moment`)
 const chokidar = require(`chokidar`)
 const systemPath = require(`path`)
+const _ = require(`lodash`)
 
 const { emitter } = require(`../../redux`)
 const { boundActionCreators } = require(`../../redux/actions`)
@@ -35,7 +36,17 @@ exports.sourceNodes = ({ boundActionCreators, store }) => {
     createNode({
       ...plugin,
       packageJson: {
-        ...require(`${plugin.resolve}/package.json`),
+        ..._.pick(require(`${plugin.resolve}/package.json`), [
+          `name`,
+          `description`,
+          `version`,
+          `main`,
+          `keywords`,
+          `author`,
+          `license`,
+          `dependencies`,
+          `devDependencies`,
+        ]),
       },
       id: `Plugin ${plugin.name}`,
       parent: `SOURCE`,
