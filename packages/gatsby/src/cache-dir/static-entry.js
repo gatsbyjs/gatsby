@@ -1,11 +1,17 @@
 import React from "react"
 import { renderToString, renderToStaticMarkup } from "react-dom/server"
 import { StaticRouter, Route, withRouter } from "react-router-dom"
-import Html from "../src/html"
 import { kebabCase, get, merge, isArray } from "lodash"
 import apiRunner from "./api-runner-ssr"
 import pages from "./pages.json"
 import syncRequires from "./sync-requires"
+
+let Html
+try {
+  Html = require("../src/html")
+} catch (e) {
+  Html = require("./default-html")
+}
 
 const pathChunkName = path => {
   const name = path === `/` ? `index` : kebabCase(path)
