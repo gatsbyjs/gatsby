@@ -55,6 +55,7 @@ new API [`onRenderBody`](https://www.gatsbyjs.org/docs/ssr-apis/#onRenderBody).
 - Fix inference bug #1087 @jquense
 - Provide default context for GraphQL #1052 @kyleamathews
 - Make determining when a given stage is finished much more reliable #1080 @kyleamathews
+- Pick values off plugin's package.json to avoid weird metadata from NPM #1090 @kyleamathews
 
 ### New 1.0 sites launched
 
