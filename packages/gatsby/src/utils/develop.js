@@ -187,12 +187,15 @@ async function startServer(program) {
           const opn = require(`opn`)
           opn(`http://${listener.address().address}:${listener.address().port}`)
         }
+        const host = listener.address().address === `127.0.0.1`
+          ? `localhost`
+          : listener.address().address
         console.log(
           `
-The development server is listening at: http://${listener.address()
-            .address}:${listener.address().port}
-GraphiQL can be accessed at: http://${listener.address()
-            .address}:${listener.address().port}/___graphql
+The development server is listening at: http://${host}:${listener.address()
+            .port}
+GraphiQL can be accessed at: http://${host}:${listener.address()
+            .port}/___graphql
           `
         )
       }
