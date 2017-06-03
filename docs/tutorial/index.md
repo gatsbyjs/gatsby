@@ -17,7 +17,7 @@ Open a terminal window and type `node --version` then `npm --version`.
 
 You should see something like:
 
-![Check if node.js/npm is installed](images/Screen Shot 2017-06-03 at 11.20.52 AM.png)
+![Check if node.js/npm is installed](images/check-versions.png)
 
 
 
@@ -31,14 +31,14 @@ Go to a directory on your computer for coding projects and create a new director
 
 Once inside the directory. Type `npm init`. This is a command to start a new Node.js project. You can just press enter through most of the questions.
 
-![Init new project](images/Screen Shot 2017-06-03 at 11.37.53 AM.png)
+![Init new project](images/npm-init.png)
 
 Now type `ls` to see the list of files in your folder. You should see `package.json`.
 
 Now we'll add the two dependencies required for a Gatsby site—`gatsby` and `gatsby-link`.
 
 ```shell
-npm install --save gatsby@next gatsby-link@next
+npm install --save gatsby@canary gatsby-link@canary
 ```
 
 Installation should take a minute or two.
@@ -74,7 +74,7 @@ You should see shortly some text that says `The development server is listening 
 
 Run from your terminal `./node_modules/.bin/gatsby develop`
 
-![Gatsby.js development 404 page](images/Screen Shot 2017-06-03 at 11.12.15 AM.png)
+![Gatsby.js development 404 page](images/index-404.png)
 
 Yeah! It's working!!!
 
@@ -98,7 +98,7 @@ export default () => <div>Hello world!</div>
 
 Save that and… 😮😮😮
 
-![It's alive!](images/Screen Shot 2017-06-03 at 11.45.54 AM.png)
+![It's alive!](images/hello-world.png)
 
 Too cool 😎
 
@@ -153,7 +153,7 @@ Try some other tricks.
 
 Now you're screen should look something like this (other than the image which can vary).
 
-![Screen Shot 2017-06-03 at 11.57.10 AM](images/Screen Shot 2017-06-03 at 11.57.10 AM.png)
+![Screen Shot 2017-06-03 at 11.57.10 AM](images/moving-along.png)
 
 ## Linking between pages
 
