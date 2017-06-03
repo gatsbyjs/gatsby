@@ -17,9 +17,8 @@ class IndexPage extends React.Component {
             <div key={product.id}>
               <Link to={`/products/${product.id}/`}>
                 <h4>{product.productName}</h4>
-                { product.image[0].file.url &&
-                  <img src={product.image[0].file.url}/>
-                }
+                {product.image[0].file.url &&
+                  <img src={product.image[0].file.url} />}
               </Link>
             </div>
           )
