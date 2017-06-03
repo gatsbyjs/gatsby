@@ -1,5 +1,66 @@
 # Change Log
 
+## [1.0.0-alpha19] - 2017-06-02
+(Skipping over the previous two releases as they had bugs).
+
+### Added
+
+- Add a helpful 404 page during development that lists the page you might have wanted @kyleamathews
+to link to or how to create a new page at that link #1051 @kyleamathews
+- Add "Plop" script for quickly creating new packages #1059 @kyleamathews
+- Add new plugin supporting server rendering of Styled Components #1060 @gutenye
+- Add new plugin supporting server rendering of react-helmet #1085 @kyleamathews
+- Add new plugin for extracting JSDocs information from JavaScript files using documentation.js #1053 @kyleamathews
+- Add new API spec (rough draft) @kyleamathews https://www.gatsbyjs.org/docs/api-specification/
+- Add new API reference pages @kyleamathews e.g. https://www.gatsbyjs.org/docs/node-apis/
+- Add "duotone" image processing option to gatsby-plugin-sharp #1047 @fk
+- Add example site for image processing @fk https://image-processing.gatsbyjs.org/
+- Add example site for css-in-js library Glamor @kyleamathews https://using-glamor.gatsbyjs.org/
+- Add example site for css-in-js library Styled Components @kyleamathews https://using-styled-components.gatsbyjs.org/
+
+### Changed
+
+#### Grand big API renaming based on our new API spec https://www.gatsbyjs.org/docs/api-specification/
+
+API changes:
+
+[Action creators](https://www.gatsbyjs.org/docs/bound-action-creators/):
+
+* `upsertPage` is now `createPage`
+* `addFieldToNode` is now `createNodeField`
+* `deletePageByPath` is now `deletePage`
+* `addNodeToParent` is now `createParentChildLink`
+
+[gatsby-browser.js APIs](https://www.gatsbyjs.org/docs/browser-apis/):
+
+* `clientEntry` is now `onClientEntry`
+
+[gatsby-node.js APIs](https://www.gatsbyjs.org/docs/node-apis/):
+
+* `onNodeCreate` is now `onCreateNode`
+* `onUpsertPage` is now `onCreatePage`
+* `extendNodeType` is now `setFieldsOnGraphQLNodeType`
+
+[gatsby-ssr.js APIs](https://www.gatsbyjs.org/docs/ssr-apis/):
+
+* `modifyHeadComponents` and `modifyPostBodyComponents` were removed in favor of a
+new API [`onRenderBody`](https://www.gatsbyjs.org/docs/ssr-apis/#onRenderBody).
+* `replaceServerBodyRender` is now `replaceRenderer`
+
+### Fixed
+
+- Fix sharp image quality and force file format (#1054) @0x80
+- Expose crop focus parameter and make consistent with base64 #1055 @0x80
+- Clean up TravisCI config #1066 @hawkrives
+- Fix inference bug #1087 @jquense
+- Provide default context for GraphQL #1052 @kyleamathews
+- Make determining when a given stage is finished much more reliable #1080 @kyleamathews
+
+### New 1.0 sites launched
+
+- https://www.vauxlab.com
+- https://meetfabric.com
+
 ## [1.0.0-alpha16] - 2017-05-26
 ### Added
 
