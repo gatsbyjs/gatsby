@@ -13,6 +13,8 @@ import {
 import { ScrollContext } from "react-router-scroll"
 import createHistory from "history/createBrowserHistory"
 import pages from "./pages.json"
+import invariant from "invariant"
+
 window.matchPath = matchPath
 
 import requires from "./async-requires"
@@ -146,9 +148,16 @@ loadScriptsForPath(`/404.html`, scripts => {
 const renderPage = props => {
   const page = findPage(props.location.pathname)
   if (page) {
-    return $(scriptsCache[page.path].component, {
+    const pageCache = scriptsCache[page.path]
+
+    invariant(
+      pageCache,
+      `Page cache miss at ${props.location.pathname} for key ${page.path}. Available keys: ${Object.keys(scriptsCache)}`
+    )
+
+    return $(pageCache.component, {
       ...props,
-      ...scriptsCache[page.path].pageData,
+      ...pageCache.pageData,
     })
   } else if (notFoundScripts) {
     return $(notFoundScripts.component, {
