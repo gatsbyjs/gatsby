@@ -68,7 +68,7 @@ program
   })
 
 program
-  .command(`serve-build`)
+  .command(`serve`)
   .description(`Serve built site.`)
   .option(
     `-H, --host <url>`,
@@ -78,7 +78,7 @@ program
   .option(`-p, --port <port>`, `Set port. Defaults to 9000`, `9000`)
   .option(`-o, --open`, `Open the site in your browser for you.`)
   .action(command => {
-    const serve = require(`../utils/serve-build`)
+    const serve = require(`../utils/serve`)
     const p = {
       ...command,
       directory,
