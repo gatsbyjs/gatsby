@@ -3,11 +3,12 @@ title: Tutorial
 typora-copy-images-to: ../tutorial/images
 ---
 
-Hi! We're so happy you decided to try using Gatsby. This tutorial has (or rather will have once all parts are written) three parts:
+Hi! We're so happy you decided to try using Gatsby. This tutorial has (or rather will have once all parts are written) four parts:
 
 1. Introduction to basics of Gatsby — Starting new projects, developing, and deploying sites.
-2. How to work with different data sources, Markdown, JSON, Remote data sources, etc. As well as an introduction to Gatsby's data layer and writing queries with GraphQL.
-3. Finishing and deploying a website. We walk through how to put the finishing touches on a website project.
+2. Introduction to styling options, plugins, Styled Components/Glamor, layout component
+3. How to work with GraphQL & different data sources: Markdown, JSON, Remote data sources, etc. As well as an introduction to Gatsby's data layer and writing queries with GraphQL.
+4. Finishing and deploying a website. React Helmet. We walk through how to put the finishing touches on a website project.
 
 ## Environment
 
@@ -102,7 +103,7 @@ Save that and… 😮😮😮
 
 Too cool 😎
 
-Gatsby's development server is a "hot reloading" server meaning any change you make to your React.js components (and later we'll learn, you're data files) will hot reload in the browser.
+Gatsby's development server is a "hot reloading" server meaning any change you make to your React.js components (and later we'll learn, your data files) will hot reload in the browser.
 
 This is huge because it makes development so much faster and fun.
 
@@ -151,15 +152,15 @@ Try some other tricks.
 
 
 
-Now you're screen should look something like this (other than the image which can vary).
+Now your screen should look something like this.
 
 ![Screen Shot 2017-06-03 at 11.57.10 AM](images/moving-along.png)
 
 ## Linking between pages
 
-Websites are pages and links between pages. While we've now got a pretty sweet first page, let's create a new one.
+Websites are pages and links between pages. While we've now got a pretty sweet first page—one page and no links doesn't feel very webby. So let's create a new page.
 
-So let's first create the link to the new page.
+First create the link to the new page.
 
 To do that, import the `<Link>` component from the `gatsby-link` package we installed earlier.
 
@@ -190,3 +191,121 @@ Now you should be able to click back and forth between the two pages!
 <p>Your browser does not support the video element.</p>
 
 </video>
+
+
+
+## Interactive page
+
+One nice thing about using Gatsby for building websites vs other tools is it's so easy to add interactivity to your pages. React.js was designed for Facebook.com and is used on 1000s of other high-quality web applications.
+
+Let's see how easy it is to add interactive elements to our pages.
+
+We'll start by creating a new link to a page at `/counter`/.
+
+Add that link to your original `index.js` page, click on it, and then create a "Hello World" component for `/counter/` as before. But instead of using what's called the "functional component" form for React we'll create a "class" component.
+
+```jsx
+import React from "react"
+
+class Counter extends React.Component {
+  render() {
+    return <div>Hello Class Component</div>
+  }
+}
+
+export default Counter
+```
+
+The class form of React allows us to add component state. We'll need that for our counter.
+
+Let's continue to flesh out our counter. Let's add two buttons. One to increment and one to decrement the count of the counter.
+
+```jsx
+import React from "react"
+
+class Counter extends React.Component {
+  render() {
+    return (
+      <div>
+        <h1>Counter</h1>
+        <p>current count: 0</p>
+        <button>plus</button>
+        <button>minus</button>
+      </div>
+    )
+  }
+}
+
+export default Counter
+```
+
+So now we have everything we need to make a nice counter. Let's make it live.
+
+First we'll setup the component state.
+
+```jsx
+import React from "react"
+
+class Counter extends React.Component {
+  constructor() {
+    this.state = { count: 0 }
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>Counter</h1>
+        <p>current count: {this.state.count}</p>
+        <button>plus</button>
+        <button>minus</button>
+      </div>
+    )
+  }
+}
+
+export default Counter
+```
+
+We're now rendering the current count from the component state.
+
+Let's now change the state when we click on our buttons.
+
+```jsx
+import React from "react"
+
+class Counter extends React.Component {
+  constructor() {
+    super()
+    this.state = { count: 0 }
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>Counter</h1>
+        <p>current count: {this.state.count}</p>
+        <button onClick={() => this.setState({ count: this.state.count + 1 })}>
+          plus
+        </button>
+        <button onClick={() => this.setState({ count: this.state.count - 1 })}>
+          minus
+        </button>
+      </div>
+    )
+  }
+}
+
+export default Counter
+```
+
+There you go! A working React.js counter inside your static website 👌
+
+One fun thing too is that hot reloading isn't just for content and styles but it works on code as well. Try changing the amount by which clicking on the buttons changes the count.
+
+## Deploying Gatsby.js websites on the web
+
+What is static site. Gatsby is a "static PWA".
+
+Run `./node_modules/.bin/gatsby build`
+
+Install Netlify and deploy with them?
