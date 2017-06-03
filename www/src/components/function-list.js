@@ -1,6 +1,6 @@
 import React from "react"
 
-import { rhythm, scale } from "../utils/typography"
+import { rhythm, scale, options } from "../utils/typography"
 
 const Param = (param, depth = 0) => {
   // The "plugin" parameter is used internally but not
@@ -15,6 +15,7 @@ const Param = (param, depth = 0) => {
       css={{
         marginLeft: `${depth * 1.05}rem`,
         ...(depth > 0 && scale((depth === 1 ? -1 : -1.5) / 5)),
+        lineHeight: options.baseLineHeight,
       }}
     >
       <h5
