@@ -10,7 +10,7 @@ class AnimationExample extends React.Component {
     return (
       <div style={{ position: `relative`, minHeight: `80vh` }}>
         <Route
-          render={({ location }) => (
+          render={({ location }) =>
             <div style={styles.fill}>
               <Route
                 exact
@@ -45,21 +45,19 @@ class AnimationExample extends React.Component {
                   />
                 </ReactCSSTransitionGroup>
               </div>
-            </div>
-          )}
+            </div>}
         />
       </div>
     )
   }
 }
 
-const NavLink = props => (
+const NavLink = props =>
   <li style={styles.navItem}>
     <Link {...props} style={{ color: `inherit` }} />
   </li>
-)
 
-const HSL = ({ match: { params } }) => (
+const HSL = ({ match: { params } }) =>
   <div
     style={{
       ...styles.fill,
@@ -69,7 +67,6 @@ const HSL = ({ match: { params } }) => (
   >
     hsl({params.h}, {params.s}%, {params.l}%)
   </div>
-)
 
 const styles = {}
 

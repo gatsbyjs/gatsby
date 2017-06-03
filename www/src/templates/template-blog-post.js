@@ -7,7 +7,7 @@ import typography, { rhythm, scale } from "../utils/typography"
 const BlogPostTemplate = React.createClass({
   render() {
     const post = this.props.data.markdownRemark
-    const BioLine = ({ children }) => (
+    const BioLine = ({ children }) =>
       <p
         css={{
           ...scale(-2 / 5),
@@ -23,7 +23,6 @@ const BlogPostTemplate = React.createClass({
       >
         {children}
       </p>
-    )
     return (
       <div
         css={{

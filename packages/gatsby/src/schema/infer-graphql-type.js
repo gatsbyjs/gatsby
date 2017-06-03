@@ -266,7 +266,8 @@ function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
     field,
     oneLine`
       Encountered an error trying to infer a GraphQL type for: "${selector}".
-      There is no corresponding GraphQL type "${linkedNode.internal.type}" available
+      There is no corresponding GraphQL type "${linkedNode.internal
+        .type}" available
       to link to this node.
     `
   )

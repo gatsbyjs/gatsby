@@ -20,7 +20,8 @@ const doubleBind = (boundActionCreators, api, plugin, { traceId }) => {
       const key = keys[i]
       const boundActionCreator = boundActionCreators[key]
       if (typeof boundActionCreator === `function`) {
-        doubleBoundActionCreators[key] = (...args) => boundActionCreator(...args, plugin, traceId)
+        doubleBoundActionCreators[key] = (...args) =>
+          boundActionCreator(...args, plugin, traceId)
       }
     }
     boundPluginActionCreators[

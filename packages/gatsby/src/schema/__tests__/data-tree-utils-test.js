@@ -10,7 +10,7 @@ describe(`Gatsby data tree utils`, () => {
       name: `The Mad Max`,
       hair: 1,
       date: `2006-07-22T22:39:53.000Z`,
-      'key-with..unsupported-values': true,
+      "key-with..unsupported-values": true,
       emptyArray: [],
       anArray: [1, 2, 3, 4],
       frontmatter: {

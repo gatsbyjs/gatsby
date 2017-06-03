@@ -160,7 +160,10 @@ const queueJob = job => {
   }
   _.set(
     toProcess,
-    `${job.file.absolutePath.replace(/\./g, `%2E`)}.${job.outputPath.replace(/\./g, `%2E`)}`,
+    `${job.file.absolutePath.replace(/\./g, `%2E`)}.${job.outputPath.replace(
+      /\./g,
+      `%2E`
+    )}`,
     job
   )
 
@@ -231,7 +234,8 @@ function queueImageResizing({ file, args = {} }) {
 
   const argsDigestShort = argsDigest.substr(argsDigest.length - 5)
 
-  const imgSrc = `/${file.internal.contentDigest}-${argsDigestShort}.${fileExtension}`
+  const imgSrc = `/${file.internal
+    .contentDigest}-${argsDigestShort}.${fileExtension}`
   const filePath = `${process.cwd()}/public${imgSrc}`
   // Create function to call when the image is finished.
   let outsideResolve

@@ -163,9 +163,8 @@ const renderPage = props => {
 const $ = React.createElement
 
 const AltRouter = apiRunner(`replaceRouterComponent`, { history })[0]
-const DefaultRouter = ({ children }) => (
+const DefaultRouter = ({ children }) =>
   <Router history={history}>{children}</Router>
-)
 
 loadScriptsForPath(window.location.pathname, scripts => {
   // Use default layout if one isn't set.

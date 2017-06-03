@@ -19,19 +19,21 @@ class Dev404Page extends React.Component {
           {` `}
           <code>{newFilePath}</code>
           {` `}
-          and this page will automatically refresh to show the new page component
+          and this page will automatically refresh to show the new page
+          component
           you created.
         </p>
         {this.props.data.allSitePage.totalCount > 1 &&
           <div>
             <p>
-              If you were trying to reach another page, perhaps you can find it below.
+              If you were trying to reach another page, perhaps you can find it
+              below.
             </p>
             <h2>Pages ({this.props.data.allSitePage.totalCount})</h2>
             <ul>
-              {this.props.data.allSitePage.edges.map(({ node }) => (
+              {this.props.data.allSitePage.edges.map(({ node }) =>
                 <li><Link to={node.path}>{node.path}</Link></li>
-              ))}
+              )}
             </ul>
           </div>}
       </div>

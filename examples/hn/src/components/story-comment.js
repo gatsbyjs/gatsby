@@ -25,7 +25,8 @@ class StoryComment extends React.Component {
                   {comment.timeISO}
                 </span>
               </span>
-            </div><br />
+            </div>
+            <br />
             <div className="comment">
               <span
                 className="c00"

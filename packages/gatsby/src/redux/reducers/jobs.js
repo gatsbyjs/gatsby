@@ -45,7 +45,9 @@ module.exports = (state = { active: [], done: [] }, action) => {
       const job = state.active.find(j => j.id === action.payload.id)
       if (!job) {
         throw new Error(
-          `The plugin "${action.plugin.name}" tried to end a job with the id "${action.payload.id}" that either hasn't yet been created or has already been ended`
+          `The plugin "${action.plugin
+            .name}" tried to end a job with the id "${action.payload
+            .id}" that either hasn't yet been created or has already been ended`
         )
       }
 

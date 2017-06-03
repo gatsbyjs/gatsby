@@ -189,8 +189,10 @@ async function startServer(program) {
         }
         console.log(
           `
-The development server is listening at: http://${listener.address().address}:${listener.address().port}
-GraphiQL can be accessed at: http://${listener.address().address}:${listener.address().port}/___graphql
+The development server is listening at: http://${listener.address()
+            .address}:${listener.address().port}
+GraphiQL can be accessed at: http://${listener.address()
+            .address}:${listener.address().port}/___graphql
           `
         )
       }

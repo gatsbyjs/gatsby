@@ -35,7 +35,9 @@ module.exports = ({ markdownAST, pluginOptions = {} }) =>
           const rawHTML = `
           <div
             class="gatsby-resp-iframe-wrapper"
-            style="padding-bottom: ${height / width * 100}%; position: relative; height: 0; overflow: hidden;${options.wrapperStyle}"
+            style="padding-bottom: ${height /
+              width *
+              100}%; position: relative; height: 0; overflow: hidden;${options.wrapperStyle}"
           >
             ${newIframe}
           </div>

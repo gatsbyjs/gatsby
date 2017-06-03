@@ -3,8 +3,7 @@ import path from "path"
 import * as types from "babel-types"
 import { parse, defaultHandlers } from "react-docgen"
 import { ERROR_MISSING_DEFINITION } from "react-docgen/dist/parse"
-import findAllComponentDefinitions
-  from "react-docgen/dist/resolver/findAllComponentDefinitions"
+import findAllComponentDefinitions from "react-docgen/dist/resolver/findAllComponentDefinitions"
 
 import { cleanDoclets, parseDoclets, applyPropDoclets } from "./Doclets"
 

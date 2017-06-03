@@ -15,7 +15,11 @@ module.exports = (state = { plugins: {} }, action) => {
       }
       if (!_.isObject(action.payload)) {
         throw new Error(
-          `You must pass an object into setPluginStatus. What was passed in was ${JSON.stringify(action.payload, null, 4)}`
+          `You must pass an object into setPluginStatus. What was passed in was ${JSON.stringify(
+            action.payload,
+            null,
+            4
+          )}`
         )
       }
       return {

@@ -17,11 +17,14 @@ const prune = require(`underscore.string/prune`)
 
 let pluginsCacheStr = ``
 const astCacheKey = node =>
-  `transformer-remark-markdown-ast-${node.internal.contentDigest}-${pluginsCacheStr}`
+  `transformer-remark-markdown-ast-${node.internal
+    .contentDigest}-${pluginsCacheStr}`
 const htmlCacheKey = node =>
-  `transformer-remark-markdown-html-${node.internal.contentDigest}-${pluginsCacheStr}`
+  `transformer-remark-markdown-html-${node.internal
+    .contentDigest}-${pluginsCacheStr}`
 const headingsCacheKey = node =>
-  `transformer-remark-markdown-headings-${node.internal.contentDigest}-${pluginsCacheStr}`
+  `transformer-remark-markdown-headings-${node.internal
+    .contentDigest}-${pluginsCacheStr}`
 
 module.exports = (
   { type, allNodes, linkPrefix, getNode, cache },
