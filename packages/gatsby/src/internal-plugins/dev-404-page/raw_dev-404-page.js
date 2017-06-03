@@ -5,14 +5,16 @@ class Dev404Page extends React.Component {
   render() {
     const pathname = this.props.location.pathname
     let newFilePath
-    if (this.props.location.pathname.slice(-1) === `/`) {
+    if (pathname === `/`) {
+      newFilePath = `src/pages/index.js`
+    } else if (pathname.slice(-1) === `/`) {
       newFilePath = `src/pages${pathname.slice(0, -1)}.js`
     } else {
       newFilePath = `src/pages${pathname}.js`
     }
     return (
       <div>
-        <h1>Development 404 page</h1>
+        <h1>Gatsby.js development 404 page</h1>
         <p>There's not a page yet at <code>{pathname}</code></p>
         <p>
           Create a React.js component in your site directory at
@@ -23,7 +25,8 @@ class Dev404Page extends React.Component {
           component
           you created.
         </p>
-        {this.props.data.allSitePage.totalCount > 1 &&
+        {this.props.data.allSitePage &&
+          this.props.data.allSitePage.totalCount > 1 &&
           <div>
             <p>
               If you were trying to reach another page, perhaps you can find it
