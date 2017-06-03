@@ -27,7 +27,7 @@ const headingsCacheKey = node =>
     .contentDigest}-${pluginsCacheStr}`
 
 module.exports = (
-  { type, allNodes, linkPrefix, getNode, cache },
+  { type, store, linkPrefix, getNode, cache },
   pluginOptions
 ) => {
   if (type.name !== `MarkdownRemark`) {
@@ -37,8 +37,6 @@ module.exports = (
   pluginsCacheStr = pluginOptions.plugins.map(p => p.name).join(``)
 
   return new Promise((resolve, reject) => {
-    const files = allNodes.filter(n => n.internal.type === `File`)
-
     // Setup Remark.
     const remark = new Remark({
       commonmark: true,
@@ -51,6 +49,9 @@ module.exports = (
       if (cachedAST) {
         return cachedAST
       } else {
+        const files = _.values(store.getState().nodes).filter(
+          n => n.internal.type === `File`
+        )
         const ast = await new Promise((resolve, reject) => {
           Promise.all(
             pluginOptions.plugins.map(plugin => {
@@ -100,6 +101,9 @@ module.exports = (
             // every node type in DataTree gets a schema type automatically.
             // typegen plugins just modify the auto-generated types to add derived fields
             // as well as computationally expensive fields.
+            const files = _.values(store.getState().nodes).filter(
+              n => n.internal.type === `File`
+            )
             Promise.all(
               pluginOptions.plugins.map(plugin => {
                 const requiredPlugin = require(plugin.resolve)
