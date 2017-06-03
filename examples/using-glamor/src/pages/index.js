@@ -13,7 +13,12 @@ class IndexPage extends React.Component {
           color: `red`,
         }}
       >
-        <h1>hello world</h1>
+        <h1>Using Glamor + Gatsby</h1>
+        <p>
+          <a href="https://www.gatsbyjs.org/docs/packages/gatsby-plugin-glamor/">
+            gatsby-plugin-glamor docs
+          </a>
+        </p>
         <p css={{ color: `blue` }}>This is some cool stuff</p>
         <p
           css={{
