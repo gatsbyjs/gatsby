@@ -69,7 +69,6 @@ module.exports = ({
               const rawHTML = `
           <a
             class="gatsby-resp-image-link"
-            title="original image"
             href="${originalImg}"
             style="display: block"
             target="_blank"
