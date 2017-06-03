@@ -1,4 +1,5 @@
-const { validatePath } = require(`../gatsby-node`)
+const validatePath = require(`../validate-path`)
+const createPath = require(`../create-path`)
 
 describe(`JavaScript page creator`, () => {
   it(`filters out files that start with underscores`, () => {
@@ -31,5 +32,12 @@ describe(`JavaScript page creator`, () => {
     ]
 
     expect(files.filter(file => validatePath(file.path)).length).toEqual(1)
+  })
+
+  it(`Creates paths`, () => {
+    const basePath = `/a/`
+    const paths = [`/a/b/c/de`, `/a/bee`, `/a/b/d/c/`]
+
+    expect(paths.map(p => createPath(basePath, p))).toMatchSnapshot()
   })
 })

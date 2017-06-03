@@ -7,6 +7,7 @@ const systemPath = require(`path`)
 const glob = Promise.promisify(globCB)
 
 const createPath = require(`./create-path`)
+const validatePath = require(`./validate-path`)
 
 // Path creator.
 // Auto-create pages.
@@ -61,15 +62,3 @@ const _createPage = (filePath, pagesDirectory, createPage) => {
   // Add page
   createPage(page)
 }
-
-const validatePath = path => {
-  // Disallow paths starting with an underscore
-  // and template-.
-  const parsedPath = systemPath.parse(path)
-  return (
-    parsedPath.name.slice(0, 1) !== `_` &&
-    parsedPath.name.slice(0, 9) !== `template-`
-  )
-}
-
-exports.validatePath = validatePath
