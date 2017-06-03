@@ -1,0 +1,29 @@
+{
+  "name": "gatsby-example-using-contentful",
+  "private": true,
+  "description": "Gatsby example site using the Contentful source plugin",
+  "version": "1.0.0",
+  "author": "Marcus Ericsson <mericsson@gmail.com> (mericsson.com)",
+  "dependencies": {
+    "gatsby": "canary",
+    "gatsby-link": "canary",
+    "gatsby-plugin-google-analytics": "canary",
+    "gatsby-plugin-offline": "canary",
+    "gatsby-source-contentful": "canary",
+    "lodash": "^4.16.4",
+    "react-typography": "^0.15.0",
+    "slash": "^1.0.0",
+    "typography": "^0.15.8",
+    "typography-breakpoint-constants": "^0.14.0"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "dev": "gatsby develop",
+    "build": "gatsby build",
+    "start": "gatsby serve-build"
+  }
+}
