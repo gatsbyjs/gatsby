@@ -134,6 +134,7 @@ module.exports = async config => {
   if (badExports.length > 0) {
     const stringSimiliarity = require(`string-similarity`)
     const { stripIndent } = require(`common-tags`)
+    console.log(`\n`)
     console.log(
       stripIndent`
       Your plugins must export known APIs from their gatsby-node.js.
