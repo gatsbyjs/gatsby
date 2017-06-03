@@ -18,6 +18,6 @@ how to setup your Gatsby development environment.
 
 ## 1.0 sites
 
-* https://gatsbyjs.org — (not oficially launched yet but has WIP documentation for 1.0)
+* http://gatsbyjs.org — (not oficially launched yet but has WIP documentation for 1.0)
 * https://gatsbygram.gatsbyjs.org — clone of Instagram built with Gatsby v1!
 * https://bricolage.io
