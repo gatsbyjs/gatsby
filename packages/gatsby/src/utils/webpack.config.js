@@ -285,7 +285,11 @@ module.exports = async (
       // modules. But also make it possible to install modules within the src
       // directory if you need to install a specific version of a module for a
       // part of your site.
-      modulesDirectories: [`${directory}/node_modules`, `node_modules`],
+      modulesDirectories: [
+        `${directory}/node_modules`,
+        `node_modules`,
+        `node_modules/gatsby/node_modules`,
+      ],
     }
   }
 
