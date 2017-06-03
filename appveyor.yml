@@ -35,7 +35,7 @@ environment:
 
 # Install scripts. (runs after repo cloning)
 install:
-  - echo This example is built on %buildon%. Commit is a tag: %APPVEYOR_REPO_TAG%
+  - echo This example is built on %buildon% and commit is tag = %APPVEYOR_REPO_TAG%
   - ps: |
       if (($env:buildon -eq "tag") -and ($env:APPVEYOR_REPO_TAG -eq "FALSE"))
       {
