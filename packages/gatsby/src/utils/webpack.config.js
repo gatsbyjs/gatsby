@@ -215,6 +215,8 @@ module.exports = async (
                 `babel-runtime`, // Used by history.
                 `core-js`, // Used by history.
                 `loose-envify`, // Used by history.
+                `prop-types`,
+                `gatsby-link`,
               ]
               const isFramework = some(
                 vendorModuleList.map(vendor => {
