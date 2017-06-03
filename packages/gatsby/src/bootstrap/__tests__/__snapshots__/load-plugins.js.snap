@@ -43,7 +43,7 @@ Array [
     "version": undefined,
   },
   Object {
-    "name": "defaultSitePlugin",
+    "name": "default-site-plugin",
     "pluginOptions": Object {
       "plugins": Array [],
     },
@@ -88,7 +88,7 @@ Array [
     "version": "1.0.0",
   },
   Object {
-    "name": "defaultSitePlugin",
+    "name": "default-site-plugin",
     "pluginOptions": Object {
       "plugins": Array [],
     },
