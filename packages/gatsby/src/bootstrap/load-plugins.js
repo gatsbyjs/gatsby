@@ -3,8 +3,8 @@ const slash = require(`slash`)
 const fs = require(`fs`)
 const path = require(`path`)
 
-const { store } = require("../redux")
-const nodeAPIs = require("../utils/api-node-docs")
+const { store } = require(`../redux`)
+const nodeAPIs = require(`../utils/api-node-docs`)
 
 module.exports = async config => {
   // Instantiate plugins.
@@ -122,11 +122,11 @@ module.exports = async config => {
 
     if (gatsbyNode) {
       badExports = badExports.concat(
-        _.without(_.keys(gatsbyNode), ...apis).map(e => ({
+        _.without(_.keys(gatsbyNode), ...apis).map(e => {return ({
           exportName: e,
           pluginName: plugin.name,
           pluginVersion: plugin.version,
-        }))
+        })})
       )
     }
   })

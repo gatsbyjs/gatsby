@@ -11,11 +11,7 @@ const propTypes = {
 class CategoryTemplate extends React.Component {
   render() {
     const category = this.props.data.contentfulCategory
-    const {
-      title,
-      product,
-      icon,
-    } = category
+    const { title, product, icon } = category
     const imageUrl = icon.file.url
     return (
       <div>
@@ -40,9 +36,12 @@ class CategoryTemplate extends React.Component {
         <div>
           <span>Products</span>
           <ul>
-            { product && product.map((p, i) =>
-              <li key={i}><Link to={`/products/${p.id}`}>{p.productName}</Link></li>
-            )}
+            {product &&
+              product.map((p, i) =>
+                <li key={i}>
+                  <Link to={`/products/${p.id}`}>{p.productName}</Link>
+                </li>
+              )}
           </ul>
         </div>
       </div>

@@ -20,11 +20,7 @@ const propTypes = {
 
 class Html extends React.Component {
   render() {
-    const {
-      headComponents,
-      body,
-      postBodyComponents,
-    } = this.props
+    const { headComponents, body, postBodyComponents } = this.props
     let css
     if (process.env.NODE_ENV === `production`) {
       css = (
@@ -42,7 +38,10 @@ class Html extends React.Component {
 
           <meta name="referrer" content="origin" />
           <meta charSet="utf-8" />
-          <meta name="description" content="Gatsby example site using Contentful" />
+          <meta
+            name="description"
+            content="Gatsby example site using Contentful"
+          />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
           <meta
             name="viewport"
@@ -53,10 +52,7 @@ class Html extends React.Component {
           {css}
         </head>
         <body>
-          <div
-            id="___gatsby"
-            dangerouslySetInnerHTML={{ __html: body }}
-          />
+          <div id="___gatsby" dangerouslySetInnerHTML={{ __html: body }} />
           {postBodyComponents}
         </body>
       </html>

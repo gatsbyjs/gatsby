@@ -11,17 +11,7 @@ exports.sourceNodes = async (
   { boundActionCreators, getNode, hasNodeChanged, store },
   { spaceId, accessToken }
 ) => {
-  const {
-    createNode,
-    updateSourcePluginStatus,
-  } = boundActionCreators
-  updateSourcePluginStatus({
-    plugin: `gatsby-source-contentful`,
-    status: {
-      ...store.getState().status[`gatsby-source-contentful`],
-      ready: false,
-    },
-  })
+  const { createNode } = boundActionCreators
 
   // Fetch articles.
   console.time(`fetch Contentful data`)
@@ -40,19 +30,24 @@ exports.sourceNodes = async (
   }
   console.log(`contentTypes fetched`, contentTypes.items.length)
 
-  const entryList = await Promise.all(contentTypes.items.map(async (contentType) => {
-    const contentTypeId = contentType.sys.id
-    let entries
-    try {
-      entries = await client.getEntries({
-        content_type: contentTypeId,
-      })
-    } catch (e) {
-      console.log(`error fetching entries`, e)
-    }
-    console.log(`entries fetched for content type ${contentType.name} (${contentTypeId})`, entries.items.length)
-    return entries
-  }))
+  const entryList = await Promise.all(
+    contentTypes.items.map(async contentType => {
+      const contentTypeId = contentType.sys.id
+      let entries
+      try {
+        entries = await client.getEntries({
+          content_type: contentTypeId,
+        })
+      } catch (e) {
+        console.log(`error fetching entries`, e)
+      }
+      console.log(
+        `entries fetched for content type ${contentType.name} (${contentTypeId})`,
+        entries.items.length
+      )
+      return entries
+    })
+  )
 
   let assets
   try {
@@ -61,15 +56,6 @@ exports.sourceNodes = async (
     console.log(`error fetching assets`, e)
   }
   console.log(`assets fetched`, assets.items.length)
-
-  updateSourcePluginStatus({
-    plugin: `gatsby-source-contentful`,
-    status: {
-      ...store.getState().status[`gatsby-source-contentful`],
-      lastFetched: new Date().toJSON(),
-    },
-  })
-
   console.timeEnd(`fetch Contentful data`)
 
   const contentTypeItems = contentTypes.items
@@ -78,12 +64,16 @@ exports.sourceNodes = async (
   const foreignReferenceMap = {}
   contentTypeItems.forEach((contentTypeItem, i) => {
     const contentTypeItemId = contentTypeItem.sys.id
-    entryList[i].items.forEach((entryItem) => {
+    entryList[i].items.forEach(entryItem => {
       const entryItemFields = entryItem.fields
       Object.keys(entryItemFields).forEach(entryItemFieldKey => {
         const entryItemFieldValue = entryItemFields[entryItemFieldKey]
         if (Array.isArray(entryItemFieldValue)) {
-          if (entryItemFieldValue[0].sys && entryItemFieldValue[0].sys.type && entryItemFieldValue[0].sys.id) {
+          if (
+            entryItemFieldValue[0].sys &&
+            entryItemFieldValue[0].sys.type &&
+            entryItemFieldValue[0].sys.id
+          ) {
             entryItemFieldValue.forEach(v => {
               if (!foreignReferenceMap[v.sys.id]) {
                 foreignReferenceMap[v.sys.id] = []
@@ -94,7 +84,11 @@ exports.sourceNodes = async (
               })
             })
           }
-        } else if (entryItemFieldValue.sys && entryItemFieldValue.sys.type && entryItemFieldValue.sys.id) {
+        } else if (
+          entryItemFieldValue.sys &&
+          entryItemFieldValue.sys.type &&
+          entryItemFieldValue.sys.id
+        ) {
           if (!foreignReferenceMap[entryItemFieldValue.sys.id]) {
             foreignReferenceMap[entryItemFieldValue.sys.id] = []
           }
@@ -115,19 +109,21 @@ exports.sourceNodes = async (
     contentTypeItem.fields.forEach(contentTypeItemField => {
       const fieldName = contentTypeItemField.id
       if (restrictedNodeFields.includes(fieldName)) {
-        console.log(`Restricted field found for ContentType ${contentTypeItemId} and field ${fieldName}. Prefixing with ${conflictFieldPrefix}.`)
+        console.log(
+          `Restricted field found for ContentType ${contentTypeItemId} and field ${fieldName}. Prefixing with ${conflictFieldPrefix}.`
+        )
         conflictFields.push(fieldName)
       }
     })
 
     // First create nodes for each of the entries of that content type
-    const entryNodes = entryList[i].items.map((entryItem) => {
-
+    const entryNodes = entryList[i].items.map(entryItem => {
       // Prefix any conflicting fields
       // https://github.com/gatsbyjs/gatsby/pull/1084#pullrequestreview-41662888
       const entryItemFields = Object.assign({}, entryItem.fields)
       conflictFields.forEach(conflictField => {
-        entryItemFields[`${conflictFieldPrefix}${conflictField}`] = entryItemFields[conflictField]
+        entryItemFields[`${conflictFieldPrefix}${conflictField}`] =
+          entryItemFields[conflictField]
         delete entryItemFields[conflictField]
       })
 
@@ -135,12 +131,23 @@ exports.sourceNodes = async (
       Object.keys(entryItemFields).forEach(entryItemFieldKey => {
         const entryItemFieldValue = entryItemFields[entryItemFieldKey]
         if (Array.isArray(entryItemFieldValue)) {
-          if (entryItemFieldValue[0].sys && entryItemFieldValue[0].sys.type && entryItemFieldValue[0].sys.id) {
-            entryItemFields[`${entryItemFieldKey}___NODE`] = entryItemFieldValue.map(v => v.sys.id)
+          if (
+            entryItemFieldValue[0].sys &&
+            entryItemFieldValue[0].sys.type &&
+            entryItemFieldValue[0].sys.id
+          ) {
+            entryItemFields[
+              `${entryItemFieldKey}___NODE`
+            ] = entryItemFieldValue.map(v => v.sys.id)
             delete entryItemFields[entryItemFieldKey]
           }
-        } else if (entryItemFieldValue.sys && entryItemFieldValue.sys.type && entryItemFieldValue.sys.id) {
-          entryItemFields[`${entryItemFieldKey}___NODE`] = entryItemFieldValue.sys.id
+        } else if (
+          entryItemFieldValue.sys &&
+          entryItemFieldValue.sys.type &&
+          entryItemFieldValue.sys.id
+        ) {
+          entryItemFields[`${entryItemFieldKey}___NODE`] =
+            entryItemFieldValue.sys.id
           delete entryItemFields[entryItemFieldKey]
         }
       })
@@ -208,7 +215,9 @@ exports.sourceNodes = async (
     contentTypeNode.internal.contentDigest = contentDigest
 
     createNode(contentTypeNode)
-    entryNodes.forEach(entryNode => { createNode(entryNode) })
+    entryNodes.forEach(entryNode => {
+      createNode(entryNode)
+    })
   })
 
   assets.items.forEach(assetItem => {
@@ -236,14 +245,6 @@ exports.sourceNodes = async (
     assetNode.internal.contentDigest = contentDigest
 
     createNode(assetNode)
-  })
-
-  updateSourcePluginStatus({
-    plugin: `gatsby-source-contentful`,
-    status: {
-      ...store.getState().status[`gatsby-source-contentful`],
-      ready: true,
-    },
   })
 
   return

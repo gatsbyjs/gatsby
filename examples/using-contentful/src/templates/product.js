@@ -46,10 +46,12 @@ class ProductTemplate extends React.Component {
           <div>
             <span>See other: </span>
             <ul>
-              { categories.map((category, i) =>
-                  <li key={i}>
-                    <Link key={i} to={`/categories/${category.id}`}>{category.title}</Link>
-                  </li>
+              {categories.map((category, i) =>
+                <li key={i}>
+                  <Link key={i} to={`/categories/${category.id}`}>
+                    {category.title}
+                  </Link>
+                </li>
               )}
             </ul>
           </div>
