@@ -8,37 +8,34 @@ branches:
 platform:
   - x64
 
-configuration:
-  - Head
-  - Release
-
 environment:
   nodejs_version: "8"
 
   matrix:
   - example: client-only-paths
-  - buildon: tag
+    buildon: tag
 
   - example: gatsbygram
-  - buildon: commit
+    buildon: commit
 
   - example: hn
-  - buildon: tag
+    buildon: tag
 
   - example: no-plugins
-  - buildon: tag
+    buildon: tag
 
   - example: no-trailing-slashes
-  - buildon: tag
+    buildon: tag
 
   - example: using-drupal
-  - buildon: tag
+    buildon: tag
 
   - example: using-postcss-sass
-  - buildon: tag
+    buildon: tag
 
 # Install scripts. (runs after repo cloning)
 install:
+  - echo This example is built on %buildon%. Commit is a tag: %APPVEYOR_REPO_TAG%
   - ps: |
       if (($env:buildon -eq "tag") -and ($env:APPVEYOR_REPO_TAG -eq "FALSE"))
       {
