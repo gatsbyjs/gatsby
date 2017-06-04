@@ -46,7 +46,22 @@ plugins: [
         {
           query: `
             {
-              allMarkdownRemark(limit: 1000) {
+              allMarkdownRemark(
+                limit: 1000,
+                sortBy: { order: DESC, fields: [frontmatter___date] },
+                frontmatter: { draft: { ne: true } }
+              ) {
+                edges {
+                  node {
+                    excerpt
+                    html
+                    fields { slug }
+                    frontmatter {
+                      title
+                      date
+                    }
+                  }
+                }
               }
             }
           `,
