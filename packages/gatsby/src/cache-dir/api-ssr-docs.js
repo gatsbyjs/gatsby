@@ -9,6 +9,9 @@
  * @param {function} $0.setHeadComponents Takes an array of components as its
  * first argument which are added to the `headComponents` array which is passed
  * to the `html.js` component.
+ * @param {function} $0.setPreBodyComponents Takes an array of components as its
+ * first argument which are added to the `preBodyComponents` array which is passed
+ * to the `html.js` component.
  * @param {function} $0.setPostBodyComponents Takes an array of components as its
  * first argument which are added to the `postBodyComponents` array which is passed
  * to the `html.js` component.

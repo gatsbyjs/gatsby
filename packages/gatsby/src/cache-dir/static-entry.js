@@ -36,6 +36,7 @@ module.exports = (locals, callback) => {
 
   let bodyHTML = ``
   let headComponents = []
+  let preBodyComponents = []
   let postBodyComponents = []
   let bodyProps = {}
 
@@ -45,6 +46,10 @@ module.exports = (locals, callback) => {
 
   const setHeadComponents = components => {
     headComponents = headComponents.concat(components)
+  }
+
+  const setPreBodyComponents = components => {
+    preBodyComponents = preBodyComponents.concat(components)
   }
 
   const setPostBodyComponents = components => {
@@ -85,6 +90,7 @@ module.exports = (locals, callback) => {
     bodyComponent,
     replaceBodyHTMLString,
     setHeadComponents,
+    setPreBodyComponents,
     setPostBodyComponents,
     setBodyProps,
   })
@@ -96,6 +102,7 @@ module.exports = (locals, callback) => {
 
   apiRunner(`onRenderBody`, {
     setHeadComponents,
+    setPreBodyComponents,
     setPostBodyComponents,
     setBodyProps,
   })
@@ -123,14 +130,14 @@ module.exports = (locals, callback) => {
     // ignore
   }
 
-  const dascripts = [
+  const scripts = [
     `commons`,
     `app`,
     `layout-component---index`,
     pathChunkName(locals.path),
     pages.find(page => page.path === locals.path).componentChunkName,
   ]
-  dascripts.forEach(script => {
+  scripts.forEach(script => {
     const fetchKey = `assetsByChunkName[${script}]`
 
     let fetchedScript = get(stats, fetchKey)
@@ -164,10 +171,12 @@ module.exports = (locals, callback) => {
     <Html
       {...bodyProps}
       headComponents={headComponents}
+      preBodyComponents={preBodyComponents}
       postBodyComponents={postBodyComponents}
       body={bodyHTML}
       path={locals.path}
     />
   )}`
+
   callback(null, html)
 }
