@@ -2,7 +2,7 @@ import apiRunner from "./api-runner-browser"
 // Let the site/plugins run code very early.
 apiRunner(`onClientEntry`)
 
-import React from "react"
+import React, { createElement } from "react"
 import ReactDOM from "react-dom"
 import {
   BrowserRouter as Router,
@@ -117,9 +117,14 @@ window.___loadScriptsForPath = loadScriptsForPath
 window.___navigateTo = navigateTo
 
 const history = createHistory()
-history.listen((location, action) => {
-  apiRunner(`onRouteUpdate`, { location, action })
-})
+
+function attachToHistory(history) {
+  window.___history = history
+
+  history.listen((location, action) => {
+    apiRunner(`onRouteUpdate`, { location, action })
+  })
+}
 
 function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
   const results = apiRunner(`shouldUpdateScroll`, {
@@ -155,12 +160,12 @@ const renderPage = props => {
       `Page cache miss at ${props.location.pathname} for key ${page.path}. Available keys: ${Object.keys(scriptsCache)}`
     )
 
-    return $(pageCache.component, {
+    return createElement(pageCache.component, {
       ...props,
       ...pageCache.pageData,
     })
   } else if (notFoundScripts) {
-    return $(notFoundScripts.component, {
+    return createElement(notFoundScripts.component, {
       ...props,
       ...notFoundScripts.pageData,
     })
@@ -169,11 +174,10 @@ const renderPage = props => {
   }
 }
 
-const $ = React.createElement
-
 const AltRouter = apiRunner(`replaceRouterComponent`, { history })[0]
-const DefaultRouter = ({ children }) =>
+const DefaultRouter = ({ children }) => (
   <Router history={history}>{children}</Router>
+)
 
 loadScriptsForPath(window.location.pathname, scripts => {
   // Use default layout if one isn't set.
@@ -185,17 +189,17 @@ loadScriptsForPath(window.location.pathname, scripts => {
   }
 
   const Root = () =>
-    $(
+    createElement(
       AltRouter ? AltRouter : DefaultRouter,
       null,
-      $(
+      createElement(
         ScrollContext,
         { shouldUpdateScroll },
-        $(withRouter(layout), {
+        createElement(withRouter(layout), {
           children: layoutProps =>
-            $(Route, {
+            createElement(Route, {
               render: routeProps => {
-                window.___history = routeProps.history
+                attachToHistory(routeProps.history)
                 const props = layoutProps ? layoutProps : routeProps
                 return renderPage(props)
               },

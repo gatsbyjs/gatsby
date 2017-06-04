@@ -1,4 +1,4 @@
-import React from "react"
+import React, { createElement } from "react"
 import {
   BrowserRouter as Router,
   Route,
@@ -13,9 +13,14 @@ import syncRequires from "./sync-requires"
 import pages from "./pages.json"
 
 const history = createHistory()
-history.listen((location, action) => {
-  apiRunner(`onRouteUpdate`, location, action)
-})
+
+function attachToHistory(history) {
+  window.___history = history
+
+  history.listen((location, action) => {
+    apiRunner(`onRouteUpdate`, { location, action })
+  })
+}
 
 function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
   const results = apiRunner(`shouldUpdateScroll`, {
@@ -41,10 +46,10 @@ const noMatch = pages.find(r => r.path === `/dev-404-page/`)
 
 const addNotFoundRoute = () => {
   if (noMatch) {
-    return $(Route, {
+    return createElement(Route, {
       key: `404-page`,
       component: props =>
-        $(syncRequires.components[noMatch.componentChunkName], {
+        createElement(syncRequires.components[noMatch.componentChunkName], {
           ...props,
           ...syncRequires.json[noMatch.jsonName],
         }),
@@ -61,8 +66,9 @@ const navigateTo = pathname => {
 window.___navigateTo = navigateTo
 
 const AltRouter = apiRunner(`replaceRouterComponent`, { history })[0]
-const DefaultRouter = ({ children }) =>
+const DefaultRouter = ({ children }) => (
   <Router history={history}>{children}</Router>
+)
 
 // Use default layout if one isn't set.
 let layout
@@ -73,17 +79,18 @@ if (syncRequires.layouts[`index`]) {
 }
 
 const Root = () =>
-  $(
+  createElement(
     AltRouter ? AltRouter : DefaultRouter,
     null,
-    $(
+    createElement(
       ScrollContext,
       { shouldUpdateScroll },
-      $(withRouter(layout), {
+      createElement(withRouter(layout), {
         children: layoutProps =>
-          $(Route, {
+          createElement(Route, {
             render: routeProps => {
-              window.___history = routeProps.history
+              attachToHistory(routeProps.history)
+
               const props = layoutProps ? layoutProps : routeProps
               const page = pages.find(page => {
                 if (page.matchPath) {
@@ -102,10 +109,13 @@ const Root = () =>
                 }
               })
               if (page) {
-                return $(syncRequires.components[page.componentChunkName], {
-                  ...props,
-                  ...syncRequires.json[page.jsonName],
-                })
+                return createElement(
+                  syncRequires.components[page.componentChunkName],
+                  {
+                    ...props,
+                    ...syncRequires.json[page.jsonName],
+                  }
+                )
               } else {
                 return addNotFoundRoute()
               }
