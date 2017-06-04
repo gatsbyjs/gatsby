@@ -7,7 +7,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
     ...pluginOptions,
   }
 
-  const feeds = options.feeds.map(({ output }) => {
+  const links = feeds.map(({ output }) => {
     if (output.charAt(0) !== '/') {
       output = '/' + output
     }
@@ -21,6 +21,6 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
     )
   })
 
-  setHeadComponents(feeds)
+  setHeadComponents(links)
 }
 
