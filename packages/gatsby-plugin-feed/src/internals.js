@@ -57,6 +57,7 @@ export const defaultOptions = {
                 slug
               }
               excerpt
+              html
             }
           }
         }

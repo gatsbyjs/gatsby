@@ -9,7 +9,10 @@ const serialize = ({ site, allMarkdownRemark }) => (
     ...edge.node.frontmatter,
     description: edge.node.excerpt,
     url: site.siteMetadata.site_url + edge.node.fields.slug,
-    guid: site.siteMetadata.site_url + edge.node.fields.slug
+    guid: site.siteMetadata.site_url + edge.node.fields.slug,
+    custom_elements: [
+      { 'content:encoded': edge.node.html }
+    ]
   }))
 )
 
