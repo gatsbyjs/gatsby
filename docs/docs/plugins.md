@@ -43,6 +43,7 @@ on using each plugin.
 
 * [gatsby-plugin-catch-links](/docs/packages/gatsby-plugin-catch-links/)
 * [gatsby-plugin-coffeescript](/docs/packages/gatsby-plugin-coffeescript/)
+* [gatsby-plugin-feed](/docs/packages/gatsby-plugin-feed/)
 * [gatsby-plugin-glamor](/docs/packages/gatsby-plugin-glamor/)
 * [gatsby-plugin-google-analytics](/docs/packages/gatsby-plugin-google-analytics/)
 * [gatsby-plugin-manifest](/docs/packages/gatsby-plugin-manifest/)
