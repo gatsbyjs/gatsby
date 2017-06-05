@@ -1,6 +1,6 @@
-# Using Drupal
+# Using Glamor
 
-https://using-drupal.gatsbyjs.org
+https://using-glamor.gatsbyjs.org
 
 Example site that demostrates how to build Gatsby sites
-that pull data from the [Drupal CMS](https://www.drupal.org/).
+using the [Glamor](https://github.com/threepointone/glamor) css-in-js library.
