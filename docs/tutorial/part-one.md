@@ -3,6 +3,12 @@ title: Gatsby.js Tutorial Part One
 typora-copy-images-to: ../tutorial/images
 ---
 
+Hello fellow Gatsby-er! Welcome to part one of our community Gatsby.js tutorial.
+
+In this tutorial you'll be gently introduced to the Gatsby development environment, how to create component pages, and how to build and deploy Gatsby sites.
+
+Sit down, buckle up, and let's get going!
+
 ## Check Environment
 
 Let's check first that you have everything setup to start working with Gatsby. You will need a recent version of [Node.js](nodejs.org) installed.
@@ -62,9 +68,9 @@ Let's now try running Gatsby!
 
 Gatsby has a built-in development server. Let's start it up. (TODO tell people to use the `gatsby-cli` package once that's built).
 
-You should see shortly some text that says `The development server is listening at: http://localhost:8000`. Open that address in your browser.
-
 Run from your terminal `./node_modules/.bin/gatsby develop`
+
+You should see shortly some text that says `The development server is listening at: http://localhost:8000`. Open that address in your browser.
 
 ![Gatsby.js development 404 page](images/index-404.png)
 
@@ -174,7 +180,7 @@ Let's do what it says again and create a new component at `src/pages/my-second-g
 Now you should be able to click back and forth between the two pages!
 
 <video controls="controls" autoplay="true" loop="true">
-<source type="video/mp4" src="/images/clicking-small.mp4"></source>
+<source type="video/mp4" src="/images/clicking-2.mp4"></source>
 <p>Your browser does not support the video element.</p>
 
 </video>
@@ -323,3 +329,10 @@ Then finally deploy your site by pushing the generated files to surge.sh:
 ```bash
 surge public/
 ```
+
+## Good work!
+
+In this tutorial, you've installed Gatsby, played in the development
+environment, and deployed your first site! Awesome! We hope you're enjoying
+yourself so far. Feel free to continue now on to the second part of the tutorial
+or go exploring around the rest of the site.
