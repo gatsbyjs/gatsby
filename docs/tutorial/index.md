@@ -20,8 +20,6 @@ You should see something like:
 
 ![Check if node.js/npm is installed](images/check-versions.png)
 
-
-
 Gatsby supports versions of Node back to v4 and NPM to v3.
 
 If you don't have Node.js installed, go to https://nodejs.org/ and install the recommended version for your operating system.
@@ -38,7 +36,7 @@ Now type `ls` to see the list of files in your folder. You should see `package.j
 
 Now we'll add the two dependencies required for a Gatsby site—`gatsby` and `gatsby-link`.
 
-```shell
+```bash
 npm install --save gatsby@canary gatsby-link@canary
 ```
 
@@ -46,7 +44,7 @@ Installation should take a minute or two.
 
 Now type `cat package.json` and you should see that `gatsby` and `gatsby-link` are now added to the `package.json` as `dependencies`.
 
-```shell
+```bash
 ~/p/my-first-gatsby-site: cat package.json
 {
   "name": "my-first-gatsby-site",
@@ -83,9 +81,7 @@ What you're seeing is the Gatsby.js development 404 page. Let's do what it says 
 
 First create the `src/pages` directory.
 
-
-
-```shell
+```bash
 mkdir -p src/pages
 ```
 
@@ -117,40 +113,38 @@ Try some other tricks.
 
    Try making your component look like this:
 
-   ```jsx
-   import React from "react"
+```jsx
+import React from "react"
 
-   export default () => <div style={{ color: `blue` }}>Hello Gatsby!</div>
-   ```
+export default () => <div style={{ color: `blue` }}>Hello Gatsby!</div>
+```
 
    Change the color to "pink". Then "tomato".
 
 2. Add some paragraph text.
 
-   ```jsx
-   import React from "react"
+```jsx{5-6}
+import React from "react"
 
-   export default () =>
-     <div style={{ color: `tomato` }}>
-       <h1>Hello Gatsby!</h1>
-       <p>What a world.</p>
-     </div>
-   ```
+export default () =>
+ <div style={{ color: `tomato` }}>
+   <h1>Hello Gatsby!</h1>
+   <p>What a world.</p>
+ </div>
+```
 
 3. Add an image
 
-   ```jsx
-   import React from "react"
+```jsx{7}
+import React from "react"
 
-   export default () =>
-     <div style={{ color: `tomato` }}>
-       <h1>Hello Gatsby!</h1>
-       <p>What a world.</p>
-       <img src="http://lorempixel.com/400/200/" />
-     </div>
-   ```
-
-
+export default () =>
+ <div style={{ color: `tomato` }}>
+   <h1>Hello Gatsby!</h1>
+   <p>What a world.</p>
+   <img src="http://lorempixel.com/400/200/" />
+ </div>
+```
 
 Now your screen should look something like this.
 
@@ -166,7 +160,7 @@ To do that, import the `<Link>` component from the `gatsby-link` package we inst
 
 Unlike the normal HTML `<a>` element, our `Link` component uses `to` for specifying where you'd like to link to. Let's link to a page with the pathname of `/my-second-gatsby-page/`. Try adding that. Once you're done, the component should look like:
 
-```jsx
+```jsx{2,9-10}
 import React from "react"
 import Link from "gatsby-link"
 
@@ -220,7 +214,7 @@ The class form of React allows us to add component state. We'll need that for ou
 
 Let's continue to flesh out our counter. Let's add two buttons. One to increment and one to decrement the count of the counter.
 
-```jsx
+```jsx{6-11}
 import React from "react"
 
 class Counter extends React.Component {
@@ -243,7 +237,7 @@ So now we have everything we need to make a nice counter. Let's make it live.
 
 First we'll setup the component state.
 
-```jsx
+```jsx{4-6,12}
 import React from "react"
 
 class Counter extends React.Component {
@@ -270,7 +264,7 @@ We're now rendering the current count from the component state.
 
 Let's now change the state when we click on our buttons.
 
-```jsx
+```jsx{14-19}
 import React from "react"
 
 class Counter extends React.Component {
