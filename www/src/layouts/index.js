@@ -253,8 +253,6 @@ module.exports = React.createClass({
               display: `none`,
               [presets.Tablet]: {
                 position: `fixed`,
-                overflowY: `scroll`,
-                height: `calc(100vh - 73px)`,
                 display: this.props.location.pathname.slice(0, 10) ===
                   `/tutorial/`
                   ? `block`

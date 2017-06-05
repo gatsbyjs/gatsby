@@ -95,6 +95,7 @@ const options = {
       },
       ".main-body a.gatsby-resp-image-link": {
         boxShadow: `none`,
+        borderBottom: `transparent`,
       },
       ".main-body a.gatsby-resp-image-link:hover": {
         background: `none`,
