@@ -1,6 +1,6 @@
-# Using Drupal
+# Using Styled Components
 
-https://using-drupal.gatsbyjs.org
+https://using-styled-components.gatsbyjs.org
 
 Example site that demostrates how to build Gatsby sites
-that pull data from the [Drupal CMS](https://www.drupal.org/).
+with [Styled Components](https://www.styled-components.com/).
