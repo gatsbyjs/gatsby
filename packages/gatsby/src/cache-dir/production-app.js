@@ -152,7 +152,10 @@ const renderPage = props => {
 
     invariant(
       pageCache,
-      `Page cache miss at ${props.location.pathname} for key ${page.path}. Available keys: ${Object.keys(scriptsCache)}`
+      `Page cache miss at ${props.location
+        .pathname} for key ${page.path}. Available keys: ${Object.keys(
+        scriptsCache
+      )}`
     )
 
     return $(pageCache.component, {

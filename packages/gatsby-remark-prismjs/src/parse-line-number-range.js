@@ -1,4 +1,4 @@
-var rangeParser = require("parse-numeric-range")
+const rangeParser = require(`parse-numeric-range`)
 
 module.exports = language => {
   if (!language) {

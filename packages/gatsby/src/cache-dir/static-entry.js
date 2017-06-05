@@ -8,9 +8,9 @@ import syncRequires from "./sync-requires"
 
 let Html
 try {
-  Html = require("../src/html")
+  Html = require(`../src/html`)
 } catch (e) {
-  Html = require("./default-html")
+  Html = require(`./default-html`)
 }
 
 const pathChunkName = path => {

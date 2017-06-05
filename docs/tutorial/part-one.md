@@ -1,16 +1,9 @@
 ---
-title: Tutorial
+title: Gatsby.js Tutorial Part One
 typora-copy-images-to: ../tutorial/images
 ---
 
-Hi! We're so happy you decided to try using Gatsby. This tutorial has (or rather will have once all parts are written) four parts:
-
-1. Introduction to basics of Gatsby — Starting new projects, developing, and deploying sites.
-2. Introduction to styling options, plugins, Styled Components/Glamor, layout component
-3. How to work with GraphQL & different data sources: Markdown, JSON, Remote data sources, etc. As well as an introduction to Gatsby's data layer and writing queries with GraphQL.
-4. Finishing and deploying a website. React Helmet. We walk through how to put the finishing touches on a website project.
-
-## Environment
+## Check Environment
 
 Let's check first that you have everything setup to start working with Gatsby. You will need a recent version of [Node.js](nodejs.org) installed.
 
@@ -298,8 +291,35 @@ One fun thing too is that hot reloading isn't just for content and styles but it
 
 ## Deploying Gatsby.js websites on the web
 
-What is static site. Gatsby is a "static PWA".
+Gatsby.js is a *static site generator* which makes deploying Gatsby sites to
+the web really easy. There are no servers to setup or complicated databases to
+deploy.  Instead, the Gatsby `build` command produces a directory of static
+HTML and JavaScript files which you can deploy to a static site hosting
+service. (TODO link to deployment docs)
 
-Run `./node_modules/.bin/gatsby build`
+Let's try using [Surge](http://surge.sh/) for deploying our first Gatsby website.
 
-Install Netlify and deploy with them?
+First install their terminal tool:
+
+```bash
+npm install --global surge
+```
+
+Then build your site by running:
+
+```bash
+gatsby build
+```
+
+Building should take 15-30 seconds. Take a look at the generated files by looking
+at the `public` directory:
+
+```bash
+ls public
+```
+
+Then finally deploy your site by pushing the generated files to surge.sh:
+
+```bash
+surge public/
+```

@@ -55,24 +55,24 @@ const options = {
       pre: {
         background: `hsla(23, 60%, 97%, 1)`,
         border: `1px solid #eddad4`,
-        fontSize: `100%`,
         lineHeight: 1,
+        minWidth: `100%`,
       },
       "pre code": {
         display: `block`,
+        fontSize: `90%`,
         lineHeight: 1.32,
       },
       "pre code span.highlight-code-line": {
         background: `pink`,
-        display: `inline-block`,
         marginLeft: rhythm(-options.blockMarginBottom),
-        marginRight: rhythm(-options.blockMarginBottom),
+        paddingRight: rhythm(options.blockMarginBottom),
         borderLeft: `${rhythm(
           options.blockMarginBottom / 2
         )} solid darkslategray`,
         paddingLeft: rhythm(options.blockMarginBottom / 2),
-        width: `103%`, // If we could use `display: block` without gaps between lines this wouldn't be necessary...
-        lineHeight: 1.33, // For some reason w/o this there's gaps between lines.
+        float: `left`,
+        minWidth: `100%`,
       },
       ".main-body a": {
         color: `inherit`,
