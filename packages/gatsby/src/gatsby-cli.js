@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 const path = require(`path`)
 const fs = require(`fs`)
+const _ = require(`lodash`)
 
 const version = process.version
 const verDigit = Number(version.match(/\d+/)[0])
@@ -27,7 +28,7 @@ const localPath = path.resolve(`node_modules/gatsby`, cliFile)
 
 const useGlobalGatsby = function() {
   // Never use global install for new and help commands
-  if ([`new`, `--help`].includes(process.argv[2])) {
+  if (_.includes([`new`, `--help`], process.argv[2])) {
     console.error(
       `A local install of Gatsby was not found.
 You should save Gatsby as a site dependency e.g. npm install --save gatsby`
