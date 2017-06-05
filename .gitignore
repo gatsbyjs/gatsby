@@ -43,3 +43,4 @@ node_modules/
 
 # IDE specific
 .vscode/
+yarn.lock

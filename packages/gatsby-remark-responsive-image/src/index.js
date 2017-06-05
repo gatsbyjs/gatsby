@@ -2,8 +2,7 @@ const select = require(`unist-util-select`)
 const path = require(`path`)
 const isRelativeUrl = require(`is-relative-url`)
 const _ = require(`lodash`)
-const { queueImageResizing, responsiveSizes } = require(`gatsby-plugin-sharp`)
-const imageSize = require(`image-size`)
+const { responsiveSizes } = require(`gatsby-plugin-sharp`)
 const Promise = require(`bluebird`)
 
 // If the image is relative (not hosted elsewhere)
@@ -70,7 +69,6 @@ module.exports = ({
               const rawHTML = `
           <a
             class="gatsby-resp-image-link"
-            title="original image"
             href="${originalImg}"
             style="display: block"
             target="_blank"

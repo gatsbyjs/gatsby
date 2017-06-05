@@ -55,11 +55,24 @@ const options = {
       pre: {
         background: `hsla(23, 60%, 97%, 1)`,
         border: `1px solid #eddad4`,
-        fontSize: `100%`,
         lineHeight: 1,
+        minWidth: `100%`,
       },
       "pre code": {
+        display: `block`,
+        fontSize: `90%`,
         lineHeight: 1.32,
+      },
+      "pre code span.highlight-code-line": {
+        background: `pink`,
+        marginLeft: rhythm(-options.blockMarginBottom),
+        paddingRight: rhythm(options.blockMarginBottom),
+        borderLeft: `${rhythm(
+          options.blockMarginBottom / 2
+        )} solid darkslategray`,
+        paddingLeft: rhythm(options.blockMarginBottom / 2),
+        float: `left`,
+        minWidth: `100%`,
       },
       ".main-body a": {
         color: `inherit`,
@@ -82,6 +95,7 @@ const options = {
       },
       ".main-body a.gatsby-resp-image-link": {
         boxShadow: `none`,
+        borderBottom: `transparent`,
       },
       ".main-body a.gatsby-resp-image-link:hover": {
         background: `none`,

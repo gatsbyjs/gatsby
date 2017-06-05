@@ -4,6 +4,7 @@
   "version": "1.0.0-alpha14",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
+    "parse-numeric-range": "^0.0.2",
     "prismjs": "^1.6.0",
     "unist-util-visit": "^1.1.1"
   },
@@ -19,7 +20,7 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "build": "babel src --out-dir .",
-    "watch": "babel -w src --out-dir ."
+    "build": "babel src --out-dir . --ignore __tests__",
+    "watch": "babel -w src --out-dir . --ignore __tests__"
   }
 }

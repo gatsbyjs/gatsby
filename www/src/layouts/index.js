@@ -9,6 +9,7 @@ import Helmet from "react-helmet"
 import logo from "../../static/images/gatsby-monogram.jpg"
 import typography, { rhythm, scale } from "../utils/typography"
 import SidebarBody from "../components/sidebar-body"
+import TutorialSidebarBody from "../components/tutorial-sidebar"
 import presets from "../utils/presets"
 
 import "../css/prism-coy.css"
@@ -231,6 +232,9 @@ module.exports = React.createClass({
               width: rhythm(8),
               display: `none`,
               [presets.Tablet]: {
+                position: `fixed`,
+                overflowY: `scroll`,
+                height: `calc(100vh - 73px)`,
                 display: this.props.location.pathname.slice(0, 6) === `/docs/`
                   ? `block`
                   : `none`,
@@ -239,12 +243,32 @@ module.exports = React.createClass({
           >
             <SidebarBody />
           </div>
+          {/* TODO Move this under docs/tutorial/index.js once Gatsby supports multiple levels
+               of layouts */}
+          <div
+            css={{
+              float: `left`,
+              marginTop: rhythm(-3 / 4),
+              width: rhythm(8),
+              display: `none`,
+              [presets.Tablet]: {
+                position: `fixed`,
+                display: this.props.location.pathname.slice(0, 10) ===
+                  `/tutorial/`
+                  ? `block`
+                  : `none`,
+              },
+            }}
+          >
+            <TutorialSidebarBody />
+          </div>
           <div
             css={{
               paddingLeft: 0,
               [presets.Tablet]: {
                 paddingLeft: this.props.location.pathname.slice(0, 6) ===
-                  `/docs/`
+                  `/docs/` ||
+                  this.props.location.pathname.slice(0, 10) === `/tutorial/`
                   ? rhythm(10)
                   : 0,
               },

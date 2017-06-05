@@ -51,14 +51,12 @@ module.exports = async (program: any) => {
 
   // Try opening the site's gatsby-config.js file.
   console.time(`open and validate gatsby-config.js`)
-  let config = {}
+  let config
   try {
     // $FlowFixMe
     config = preferDefault(require(`${program.directory}/gatsby-config`))
   } catch (e) {
-    console.log(`Couldn't open your gatsby-config.js file`)
-    console.log(e)
-    process.exit()
+    // Ignore. Having a config isn't required.
   }
 
   store.dispatch({
@@ -81,7 +79,7 @@ module.exports = async (program: any) => {
   const pluginVersions = flattenedPlugins.map(p => p.version)
   const hashes = await Promise.all([
     md5File(`package.json`),
-    md5File(`gatsby-config.js`),
+    Promise.resolve(md5File(`gatsby-config.js`).catch(() => {})), // ignore as this file isn't required),
     Promise.resolve(md5File(`gatsby-node.js`).catch(() => {})), // ignore as this file isn't required),
   ])
   const pluginsHash = crypto
