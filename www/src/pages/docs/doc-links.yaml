@@ -17,6 +17,7 @@
     Proxying API Requests: /docs/api-proxy/
     Adding Images, Fonts, and Files: /docs/adding-images-fonts-files/
     Creating and Modifying Pages: /docs/creating-and-modifying-pages/
+    Debugging HTML Builds: /docs/debugging-html-builds/
 - title: Reference
   links:
     Node Interface: /docs/node-interface/
