@@ -12,11 +12,11 @@ environment:
   nodejs_version: "8"
 
   matrix:
-  - example: client-only-paths
-    buildon: tag
-
   - example: gatsbygram
     buildon: commit
+
+  - example: client-only-paths
+    buildon: tag
 
   - example: hn
     buildon: tag
@@ -44,12 +44,9 @@ install:
   - ps: Install-Product node $env:nodejs_version $env:platform
   - ps: npm install -g windows-build-tools
   - npm install -g gatsby-dev-cli@canary
-  - git checkout 1.0
+  #- git checkout 1.0
   - echo we are running on %PLATFORM%
   - npm install
-
-# Post-install test scripts.
-test_script:
   - node --version
   - npm --version
   - npm test
