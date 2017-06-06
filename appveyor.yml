@@ -12,11 +12,11 @@ environment:
   nodejs_version: "8"
 
   matrix:
-  - example: client-only-paths
-    buildon: tag
-
   - example: gatsbygram
     buildon: commit
+
+  - example: client-only-paths
+    buildon: tag
 
   - example: hn
     buildon: tag
