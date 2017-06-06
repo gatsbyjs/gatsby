@@ -74,6 +74,8 @@ class Runner {
     const namePathMap = new Map()
     const documents = []
 
+    console.log(`in "write"`)
+    console.log(`nodes`, nodes)
     nodes.forEach((doc, filePath) => {
       console.log(`filepath`, filePath)
       documents.push(doc)
