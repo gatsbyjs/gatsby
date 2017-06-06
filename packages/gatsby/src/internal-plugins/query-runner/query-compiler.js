@@ -75,7 +75,7 @@ class Runner {
     const documents = []
 
     nodes.forEach((doc, filePath) => {
-      console.log(`filepath`, filepath)
+      console.log(`filepath`, filePath)
       documents.push(doc)
       doc.definitions.forEach((def: any) => {
         const name: string = def.name.value
