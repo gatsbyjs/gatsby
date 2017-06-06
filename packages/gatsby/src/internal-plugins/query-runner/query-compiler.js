@@ -63,6 +63,7 @@ class Runner {
       store.getState().pages.map(p => path.normalize(p.component))
     )
     files = _.uniq(files)
+    console.log("file paths for compiling", files)
 
     let parser = new FileParser()
 
