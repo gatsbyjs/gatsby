@@ -1,5 +1,25 @@
 # Change Log
 
+## [1.0.0-alpha20] - 2017-06-05
+
+### Added
+
+- RSS Feed plugin #1073 @nicholaswyoung
+- Contentful source plugin #1084 @mericsson
+- MVP part 1 of new community Gatsby tutorial #1107 @kyleamathews
+- Debuggin help when building HTML fails #1109 @kyleamathews
+- Default `html.js` component #1107 @kyleamathews
+- Can now highlight specific line numbers in markdown code blocks #1107 @kyleamathews
+
+## Changed
+
+- `gatsby-config.js` is no longer required #1107 @kyleamathews
+- The Gatsby `serve-build` command is now just `serve` #1107 @kyleamathews
+
+## Fixed
+
+- Windows builds on Appveyor #1049 @jbolda
+
 ## [1.0.0-alpha19] - 2017-06-02
 (Skipping over the previous two releases as they had bugs).
 
