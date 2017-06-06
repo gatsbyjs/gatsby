@@ -47,9 +47,6 @@ install:
   - git checkout 1.0
   - echo we are running on %PLATFORM%
   - npm install
-
-# Post-install test scripts.
-test_script:
   - node --version
   - npm --version
   - npm test
