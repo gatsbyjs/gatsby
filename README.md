@@ -138,6 +138,7 @@ https://gatsbygram.gatsbyjs.org and the case study on how its built https://www.
 * [Adarsh Pyarelal](https://adarsh.netlify.com)
 * [Yisela Alvarez Trentini](https://www.yisela.com)
 * [Thijs Koerselman](https://www.vauxlab.com)
+* [Programming Is Easy](http://programming-is-easy.com)
 * [Edit this file to add yours!](https://github.com/gatsbyjs/gatsby/blob/master/README.md)
 
 *Note, for the sites that have made their source available, you can
