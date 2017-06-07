@@ -21,16 +21,7 @@ module.exports = async (page, component) => {
   if (!component.query || component.query === ``) {
     result = {}
   } else {
-    boundActionCreators.createJob(
-      { id: `runPathQuery: ${page.path}` },
-      { name: `query-runner.js` }
-    )
     result = await graphql(component.query, { ...page, ...page.context })
-
-    boundActionCreators.endJob(
-      { id: `runPathQuery: ${page.path}` },
-      { name: `query-runner.js` }
-    )
   }
 
   // If there's a graphql errort then log the error. If we're building, also
