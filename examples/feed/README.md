@@ -1,5 +1,5 @@
-# No plugins
+# RSS Feed Example
 
-https://no-plugins.gatsbyjs.org
+https://feed.gatsbyjs.org
 
-Gatsby example site that proves functionality without the use of plugins.
+Gatsby example site demonstrating how to use the RSS Feed generator plugin.
