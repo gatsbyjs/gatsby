@@ -63,7 +63,6 @@ class Runner {
       store.getState().pages.map(p => path.normalize(p.component))
     )
     files = _.uniq(files)
-    console.log("file paths for compiling", files)
 
     let parser = new FileParser()
 
@@ -74,10 +73,7 @@ class Runner {
     const namePathMap = new Map()
     const documents = []
 
-    console.log(`in "write"`)
-    console.log(`nodes`, nodes)
     nodes.forEach((doc, filePath) => {
-      console.log(`filepath`, filePath)
       documents.push(doc)
       doc.definitions.forEach((def: any) => {
         const name: string = def.name.value
