@@ -37,6 +37,16 @@ environment:
 install:
   - echo This example is built on %buildon% and commit is tag = %APPVEYOR_REPO_TAG%
   - ps: |
+      if ($env:APPVEYOR_REPO_TAG -eq "false")
+      {
+        echo "we are testing tag false"
+      }
+  - ps: |
+      if ($env:APPVEYOR_FORCED_BUILD -eq "True")
+      {
+        echo "we tested forced builds"
+      }
+  - ps: |
       if (($env:buildon -eq "tag") -and ($env:APPVEYOR_REPO_TAG -eq "FALSE"))
       {
         Exit-AppVeyorBuild
