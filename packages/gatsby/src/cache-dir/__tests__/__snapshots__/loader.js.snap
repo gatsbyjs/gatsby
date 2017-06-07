@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Loader Resources are ordered correctly by count 1`] = `
+Object {
+  "resourcesArray": Array [
+    "about.json",
+    "about-me.json",
+    "page-component---src-pages-test-js",
+  ],
+  "resourcesCount": Object {
+    "about-me.json": 2,
+    "about.json": 1,
+    "page-component---src-pages-test-js": 3,
+  },
+}
+`;

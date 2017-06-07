@@ -17,6 +17,8 @@ class GatsbyLink extends React.Component {
     onClick: PropTypes.func,
   }
   componentDidMount() {
+    ___loader.enqueue(this.props.to)
+    console.log(`mounted ${this.props.to}`)
     // Only enable prefetching of Link resources in production and for browsers
     // that don't support service workers *cough* Safari/IE *cough*.
     //

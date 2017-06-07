@@ -12,47 +12,14 @@ import {
 } from "react-router-dom"
 import { ScrollContext } from "react-router-scroll"
 import createHistory from "history/createBrowserHistory"
-import pages from "./pages.json"
 import invariant from "invariant"
+
+import pages from "./pages.json"
+import findPage from "./find-page"
 
 window.matchPath = matchPath
 
 import requires from "./async-requires"
-
-// Find page
-const findPage = pathname => {
-  let foundPage
-  // Array.prototype.find is not supported in IE so we use this somewhat odd
-  // work around.
-  pages.some(page => {
-    if (page.matchPath) {
-      // Try both the path and matchPath
-      if (
-        matchPath(pathname, { path: page.path }) ||
-        matchPath(pathname, {
-          path: page.matchPath,
-        })
-      ) {
-        foundPage = page
-        return true
-      }
-    } else {
-      if (
-        matchPath(pathname, {
-          path: page.path,
-          exact: true,
-        })
-      ) {
-        foundPage = page
-        return true
-      }
-    }
-
-    return false
-  })
-
-  return foundPage
-}
 
 // Load scripts
 const preferDefault = m => (m && m.default) || m
@@ -177,10 +144,12 @@ const renderPage = props => {
   }
 }
 
+// TODO component renderer — new file
+// set as props pages + loader
+
 const AltRouter = apiRunner(`replaceRouterComponent`, { history })[0]
-const DefaultRouter = ({ children }) => (
+const DefaultRouter = ({ children }) =>
   <Router history={history}>{children}</Router>
-)
 
 loadScriptsForPath(window.location.pathname, scripts => {
   // Use default layout if one isn't set.
