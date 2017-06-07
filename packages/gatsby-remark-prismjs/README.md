@@ -67,8 +67,7 @@ You'll also need to add a PrismJS theme. Prism ships with a number of
 themes you can try or you can build your own by copying and modifying an
 example (what we've done on [gatsbyjs.org](https://gatsbyjs.org)).
 
-To load a theme, simply require its CSS file in your
-`layouts/default.js` file.
+To load a theme, simply require its CSS file in your `layouts/default.js` file.
 
 E.g.
 
