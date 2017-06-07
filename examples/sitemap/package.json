@@ -1,0 +1,22 @@
+{
+  "name": "gatsby-example-sitemap",
+  "private": true,
+  "description": "Gatsby example demonstrating the sitemap plugin.",
+  "version": "1.0.0",
+  "author": "Nicholas Young <nicholas@nicholaswyoung.com>",
+  "dependencies": {
+    "gatsby": "canary",
+    "gatsby-source-filesystem": "canary",
+    "gatsby-transformer-remark": "canary",
+    "gatsby-plugin-sitemap": "canary"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build"
+  }
+}
