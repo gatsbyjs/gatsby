@@ -27,6 +27,7 @@
     "gatsby-transformer-sharp": "canary",
     "gatsby-transformer-yaml": "canary",
     "lodash": "^4.16.6",
+    "mitt": "^1.1.2",
     "parse-filepath": "^1.0.1",
     "react-icons": "^2.2.3",
     "react-typography": "^0.15.0",

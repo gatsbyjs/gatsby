@@ -18,7 +18,7 @@ exports.onPostBuild = (args, pluginOptions) => {
 
   const options = {
     staticFileGlobs: [
-      `${rootDir}/**/*.{js,woff2}`,
+      // `${rootDir}/**/*.{js,woff2}`,
       `${rootDir}/index.html`,
       `${rootDir}/manifest.json`,
       `${rootDir}/offline-plugin-app-shell-fallback/index.html`,
@@ -40,7 +40,7 @@ exports.onPostBuild = (args, pluginOptions) => {
     runtimeCaching: [
       {
         // Add runtime caching of images.
-        urlPattern: /\.(?:png|jpg|jpeg|webp|svg|gif|tiff)$/,
+        urlPattern: /\.(?:png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2)$/,
         handler: `fastest`,
       },
     ],

@@ -24,17 +24,23 @@ class ComponentRenderer extends React.Component {
 
   componentDidMount() {
     // listen to events.
+    ___emitter.on(`onPostLoadPageResources`, e => {
+      if (e.page.path === this.props.location.pathname) {
+        this.setState({ pageResources: e.pageResources })
+      }
+    })
   }
 
   render() {
     console.log("rendering ComponentRenderer")
+    console.log(this)
     if (this.state.pageResources) {
       return createElement(this.state.pageResources.component, {
         ...this.props,
         ...this.state.pageResources.json,
       })
     } else {
-      return "...loading"
+      return <div>...loading</div>
     }
   }
 }

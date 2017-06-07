@@ -7,6 +7,9 @@ import {
 } from "react-router-dom"
 import { ScrollContext } from "react-router-scroll"
 import createHistory from "history/createBrowserHistory"
+import mitt from "mitt"
+
+window.___emitter = mitt()
 
 import apiRunner from "./api-runner-browser"
 import syncRequires from "./sync-requires"
@@ -16,6 +19,7 @@ import loader from "./loader"
 loader.addPagesArray(pages)
 loader.addDevRequires(syncRequires)
 
+console.log(loader)
 window.___loader = loader
 
 const history = createHistory()

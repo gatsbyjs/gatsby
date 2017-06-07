@@ -1,7 +1,13 @@
+if (typeof window !== `undefined`) {
+  require(`ric`)
+}
+
 import pageFinderFactor from "./find-page"
 let findPage
 
 let syncRequires = {}
+let asyncRequires = {}
+let pathScriptsCache = {}
 let pages = []
 // Note we're not actively using the path data atm. There
 // could be future optimizations however around trying to ensure
@@ -10,6 +16,7 @@ let pathArray = []
 let pathCount = {}
 let resourcesArray = []
 let resourcesCount = {}
+const preferDefault = m => (m && m.default) || m
 
 const sortResourcesByCount = (a, b) => {
   if (resourcesCount[a] > resourcesCount[b]) {
@@ -46,6 +53,9 @@ const queue = {
   },
   addDevRequires: devRequires => {
     syncRequires = devRequires
+  },
+  addProdRequires: prodRequires => {
+    asyncRequires = prodRequires
   },
   dequeue: path => pathArray.pop(),
   enqueue: path => {
@@ -111,17 +121,49 @@ const queue = {
       pathCount,
     }
   },
+  hasPage: pathname => findPage(pathname),
   has: path => pathArray.some(p => p === path),
   getResourcesForPathname: path => {
+    ___emitter.emit(`onPreLoadPageResources`, { path })
     // In development we know the code is loaded already
     // so we just return with it immediately.
     if (process.env.NODE_ENV !== `production`) {
       const page = findPage(path)
-      return {
+      const pageResources = {
         component: syncRequires.components[page.componentChunkName],
         json: syncRequires.json[page.jsonName],
       }
-    } // TODO check if thingy is queued yet for production.
+      ___emitter.emit(`onPostLoadPageResources`, { page, pageResources })
+      return pageResources
+    } else {
+      // Check if it's in the cache already.
+      if (pathScriptsCache[path]) {
+        return pathScriptsCache[path]
+      }
+
+      console.log("need to load scripts")
+      const page = findPage(path)
+      console.log("for page", page)
+      let component
+      let json
+      const done = () => {
+        if (component && json) {
+          pathScriptsCache[path] = { component, json }
+          ___emitter.emit(`onPostLoadPageResources`, {
+            page,
+            pageResources: { component, json },
+          })
+        }
+      }
+      asyncRequires.components[page.componentChunkName](c => {
+        component = preferDefault(c)
+        done()
+      })
+      asyncRequires.json[page.jsonName](j => {
+        json = preferDefault(j)
+        done()
+      })
+    }
   },
   peek: path => pathArray.slice(-1)[0],
   length: () => pathArray.length,
