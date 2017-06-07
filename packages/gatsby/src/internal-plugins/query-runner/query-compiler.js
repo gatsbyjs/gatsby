@@ -52,13 +52,16 @@ class Runner {
 
   async parseEverything() {
     let files = await globp(`${this.baseDir}/**/*.js`)
+    files = files.map(path.normalize)
     // Ensure all page components added as they're not necessarily in the
     // pages directory e.g. a plugin could add a page component.  Plugins
     // *should* copy their components (if they add a query) to .cache so that
     // our babel plugin to remove the query on building is active (we don't
     // run babel on code in node_modules). Otherwise the component will throw
     // an error in the browser of "graphql is not defined".
-    files = files.concat(store.getState().pages.map(p => p.component))
+    files = files.concat(
+      store.getState().pages.map(p => path.normalize(p.component))
+    )
     files = _.uniq(files)
 
     let parser = new FileParser()

@@ -12,11 +12,11 @@ environment:
   nodejs_version: "8"
 
   matrix:
-  - example: client-only-paths
-    buildon: tag
-
   - example: gatsbygram
     buildon: commit
+
+  - example: client-only-paths
+    buildon: tag
 
   - example: hn
     buildon: tag
@@ -36,20 +36,17 @@ environment:
 # Install scripts. (runs after repo cloning)
 install:
   - echo This example is built on %buildon% and commit is tag = %APPVEYOR_REPO_TAG%
+    # we kill the build for most examples unless it is a release or a forced build
   - ps: |
-      if (($env:buildon -eq "tag") -and ($env:APPVEYOR_REPO_TAG -eq "FALSE"))
+      if (($env:buildon -eq "tag") -and ($env:APPVEYOR_REPO_TAG -eq "false") -and ($env:APPVEYOR_FORCED_BUILD -ne "True"))
       {
         Exit-AppVeyorBuild
       }
   - ps: Install-Product node $env:nodejs_version $env:platform
   - ps: npm install -g windows-build-tools
   - npm install -g gatsby-dev-cli@canary
-  - git checkout 1.0
   - echo we are running on %PLATFORM%
   - npm install
-
-# Post-install test scripts.
-test_script:
   - node --version
   - npm --version
   - npm test
