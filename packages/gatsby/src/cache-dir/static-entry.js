@@ -103,7 +103,7 @@ module.exports = (locals, callback) => {
   // Add the chunk-manifest as a head component.
   const chunkManifest = require(`!raw!../public/chunk-manifest.json`)
 
-  postBodyComponents.unshift(
+  headComponents.unshift(
     <script
       id="webpack-manifest"
       dangerouslySetInnerHTML={{
@@ -123,42 +123,56 @@ module.exports = (locals, callback) => {
     // ignore
   }
 
-  const dascripts = [
+  // Create paths to scripts
+  const scripts = [
     `commons`,
     `app`,
     `layout-component---index`,
     pathChunkName(locals.path),
     pages.find(page => page.path === locals.path).componentChunkName,
   ]
-  dascripts.forEach(script => {
-    const fetchKey = `assetsByChunkName[${script}]`
+    .map(s => {
+      const fetchKey = `assetsByChunkName[${s}]`
 
-    let fetchedScript = get(stats, fetchKey)
+      let fetchedScript = get(stats, fetchKey)
 
-    if (!fetchedScript) {
-      return
-    }
+      if (!fetchedScript) {
+        return
+      }
 
-    // If sourcemaps are enabled, then the entry will be an array with
-    // the script name as the first entry.
-    fetchedScript = isArray(fetchedScript) ? fetchedScript[0] : fetchedScript
-    const prefixedScript = `${linkPrefix}${fetchedScript}`
+      // If sourcemaps are enabled, then the entry will be an array with
+      // the script name as the first entry.
+      fetchedScript = isArray(fetchedScript) ? fetchedScript[0] : fetchedScript
+      const prefixedScript = `${linkPrefix}${fetchedScript}`
 
-    // Make sure we found a component.
-    if (prefixedScript === `/`) {
-      return
-    }
+      // Make sure we found a component.
+      if (prefixedScript === `/`) {
+        return
+      }
+    })
+    .filter(s => s)
 
+  scripts.forEach(script => {
     // Add preload <link>s for scripts.
     headComponents.unshift(
       <link rel="preload" href={prefixedScript} as="script" />
     )
-
-    // Add script tags for the bottom of the page.
-    postBodyComponents.push(
-      <script key={prefixedScript} src={prefixedScript} />
-    )
   })
+
+  // Add script loader for page scripts to the head.
+  // Taken from https://www.html5rocks.com/en/tutorials/speed/script-loading/
+  const scriptsString = scripts.map(s => `"${prefixedScript}"`).join(`,`)
+  headComponents.push(
+    <script
+      dangerouslySetInnerHTML={{
+        __html: `
+  !function(e,t,r){function n(){for(;d[0]&&"loaded"==d[0][f];)c=d.shift(),c[o]=!i.parentNode.insertBefore(c,i)}for(var s,a,c,d=[],i=e.scripts[0],o="onreadystatechange",f="readyState";s=r.shift();)a=e.createElement(t),"async"in i?(a.async=!1,e.head.appendChild(a)):i[f]?(d.push(a),a[o]=n):e.write("<"+t+' src="'+s+'" defer></'+t+">"),a.src=s}(document,"script",[
+  ${scriptsString}
+])
+  `,
+      }}
+    />
+  )
 
   const html = `<!DOCTYPE html>\n ${renderToStaticMarkup(
     <Html
