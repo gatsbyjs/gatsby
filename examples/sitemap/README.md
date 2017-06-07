@@ -1,5 +1,5 @@
-# No plugins
+# Sitemap
 
-https://no-plugins.gatsbyjs.org
+https://sitemap.gatsbyjs.org
 
-Gatsby example site that proves functionality without the use of plugins.
+Gatsby example site explaining how to use the sitemap generator plugin.
