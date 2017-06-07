@@ -10,9 +10,22 @@ const debouncedQuit = _.debounce(() => {
   process.exit()
 }, 500)
 
+const copyPath = (oldPath, newPath, quiet) => {
+  fs.copy(oldPath, newPath, err => {
+    if (err) {
+      return console.error(err)
+    }
+
+    numCopied += 1
+    if (!quiet) {
+      console.log(`Copied ${oldPath} to ${newPath}`)
+    }
+  })
+}
+
 function watch(root, packages, { scanOnce, quiet }) {
   packages.forEach(p => {
-    const prefix = `${root}/packages/${p}`
+    const prefix = syspath.join(root, `/packages/`, p)
 
     const ignoreRegs = [
       /[\/\\]node_modules[\/\\]/i,
@@ -37,16 +50,17 @@ function watch(root, packages, { scanOnce, quiet }) {
             `./node_modules/${p}`,
             syspath.relative(prefix, path)
           )
-          fs.copy(path, newPath, err => {
-            if (err) {
-              return console.error(err)
-            }
 
-            numCopied += 1
-            if (!quiet) {
-              console.log(`Copied ${path} to ${newPath}`)
-            }
-          })
+          copyPath(path, newPath, quiet)
+
+          // If this is from "cache-dir" also copy it into the site's .cache
+          if (_.includes(path, `dist/cache-dir`)) {
+            const newCachePath = syspath.join(
+              `.cache/`,
+              syspath.relative(syspath.join(prefix, `dist`, `cache-dir`), path)
+            )
+            copyPath(path, newCachePath, quiet)
+          }
 
           if (scanOnce) {
             debouncedQuit()
