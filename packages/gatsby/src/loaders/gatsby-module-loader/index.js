@@ -6,15 +6,12 @@
 */
 const loaderUtils = require(`loader-utils`)
 const path = require(`path`)
-console.log("in gatsby-module-loader")
 
 module.exports = function() {}
 module.exports.pitch = function(remainingRequest) {
   this.cacheable && this.cacheable()
 
-  console.log("this.query", this.query)
   const query = loaderUtils.parseQuery(this.query)
-  console.log("query", query)
   let chunkName = ``
 
   if (query.name) {
@@ -25,22 +22,19 @@ module.exports.pitch = function(remainingRequest) {
     chunkName = `, ${JSON.stringify(chunkName)}`
   }
 
-  console.log(`chunkName`, chunkName)
-
   const request = loaderUtils.stringifyRequest(this, `!!` + remainingRequest)
 
-  const callback = "callback(function() { return require(" + request + ") })"
+  const callback = "function() { return require(" + request + ") }"
 
   const executor = `
-    return function(callback, errback) {
-      require.ensure([], function(_, error) {
+     return require.ensure([], function(_, error) {
         if (error) {
-          errback()
+          cb(true)
         } else {
-          ${callback}
+          cb(null, ${callback})
         }
       }${chunkName});
-    }`
+    `
 
   const result = `
     require(
@@ -49,10 +43,8 @@ module.exports.pitch = function(remainingRequest) {
         `!${path.join(__dirname, `patch.js`)}`
       )}
     );
-    module.exports = function() { ${executor} }
+    module.exports = function(cb) { ${executor} }
     `
-
-  console.log(`result`, result)
 
   return result
 }

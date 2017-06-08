@@ -76,5 +76,5 @@ function patch() {
       script.onload = script.onerror = null
       setTimeout(callback, 0)
     }
-  };
-};
+  }
+}

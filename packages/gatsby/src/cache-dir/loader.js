@@ -8,6 +8,8 @@ let findPage
 let syncRequires = {}
 let asyncRequires = {}
 let pathScriptsCache = {}
+let resourceStrCache = {}
+let resourceCache = {}
 let pages = []
 // Note we're not actively using the path data atm. There
 // could be future optimizations however around trying to ensure
@@ -38,7 +40,75 @@ const sortPagesByCount = (a, b) => {
   }
 }
 
-const prefetcher = () => {}
+const fetchResource = (resourceName, cb = () => {}) => {
+  if (resourceStrCache[resourceName]) {
+    return resourceStrCache[resourceName]
+  } else {
+    // Find resource
+    const resourceFunction = resourceName.slice(0, 6) === `page-c`
+      ? asyncRequires.components[resourceName]
+      : asyncRequires.json[resourceName]
+
+    // Download the resource
+    console.time(`download resource ${resourceName}`)
+    resourceFunction((err, executeChunk) => {
+      console.timeEnd(`download resource ${resourceName}`)
+      resourceStrCache[resourceName] = executeChunk
+      cb(err, executeChunk)
+    })
+  }
+}
+
+const getResourceModule = (resourceName, cb) => {
+  if (resourceCache[resourceName]) {
+    return cb(null, resourceCache[resourceName])
+  } else {
+    fetchResource(resourceName, (err, executeChunk) => {
+      if (err) {
+        cb(err)
+      } else {
+        console.time(`execute chunk ${resourceName}`)
+        const module = preferDefault(executeChunk())
+        console.timeEnd(`execute chunk ${resourceName}`)
+        resourceCache[resourceName] = module
+        return cb(err, module)
+      }
+    })
+  }
+}
+
+// TODO split this into two functions, one for fetching
+// resource and the other for executing it.
+// This prefetcher just sits around waiting for
+// new resources to be added. When hears onPreLoadPageResources
+// it stops until it hears onPostLoadPageResources
+// actually, make it a state machine like thing that's listening
+// to events and flipping it's state around.
+//
+// This is stupid complex. Need tests somehow.
+// const prefetcher = () => {
+// // Get top resource and start downloading it.
+// const nextResource = resourcesArray.slice(-1)[0]
+// if (nextResource) {
+// console.log("prefetching next resource", nextResource)
+// fetchResource(nextResource, (err, executeChunk) => {
+// console.log("executeChunk", executeChunk)
+// resourcesArray = resourcesArray.filter(r => r !== nextResource)
+// setTimeout(() => {
+// console.time(`execute resource`)
+// const module = getResourceModule(nextResource)
+// console.timeEnd(`execute resource`)
+// console.log("module", module)
+// prefetcher()
+// }, 500)
+// })
+// } else {
+// // Wait a second and try again
+// setTimeout(() => prefetcher(), 1000)
+// }
+// }
+
+// setTimeout(() => prefetcher(), 2500)
 
 const queue = {
   empty: () => {
@@ -141,11 +211,9 @@ const queue = {
       if (pathScriptsCache[path]) {
         return pathScriptsCache[path]
       }
-
       console.log("need to load scripts")
       const page = findPage(path)
       console.log("for page", page)
-      console.log(`async requires`, asyncRequires)
       let component
       let json
       const done = () => {
@@ -157,19 +225,18 @@ const queue = {
           })
         }
       }
-      console.log(asyncRequires.components[page.componentChunkName])
-      console.log(asyncRequires.json[page.jsonName])
-      asyncRequires.components[page.componentChunkName]()(
-        callback => {
-          component = preferDefault(callback())
-          console.log(`page component`, component)
-          done()
-        },
-        () => console.log("error loading page component")
-      )
-      asyncRequires.json[page.jsonName]()(callback => {
-        json = preferDefault(callback())
-        console.log(`json`, json)
+      getResourceModule(page.componentChunkName, (err, c) => {
+        if (err) {
+          return console.log("we failed folks")
+        }
+        component = c
+        done()
+      })
+      getResourceModule(page.jsonName, (err, j) => {
+        if (err) {
+          return console.log("we failed folks")
+        }
+        json = j
         done()
       })
     }
