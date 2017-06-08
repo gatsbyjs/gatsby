@@ -1,20 +1,16 @@
 import React from 'react'
-import { renderToString } from 'react-dom/server'
 import { Provider } from 'react-redux'
 
 import createStore from './src/state/createStore'
 
-exports.replaceServerBodyRender = ({ component: body }) => {
+exports.replaceRenderer = ({ bodyComponent, replaceBodyHTMLString }) => {
 
     const store = createStore()
 
     const ConnectedBody = () => (
         <Provider store={store}>
-            {body}
+            {bodyComponent}
         </Provider>
     )
-
-    return {
-        body: renderToString(<ConnectedBody/>),
-    }
+    replaceBodyHTMLString(<ConnectedBody/>)
 }
