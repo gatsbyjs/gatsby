@@ -6,6 +6,32 @@ const path = require(`path`)
 const { store } = require(`../redux`)
 const nodeAPIs = require(`../utils/api-node-docs`)
 
+function resolvePluginPath(pluginNameOrPath) {
+  try {
+    // Find the plugin in the node_modules folder
+    return slash(path.dirname(require.resolve(pluginNameOrPath)))
+  } catch (e) {
+    // Find the plugin relative to the current working directory
+    const resolvedPath = slash(path.resolve(pluginNameOrPath))
+
+    /**
+     * The path.resolve call defaults to the current working directory.
+     * Avoid picking up gatsby-* files and package.json from the project root
+     * when the plugin can't be found.
+     */
+    if(resolvedPath === slash(process.cwd())) {
+      throw new Error(`Local plugin "${pluginNameOrPath}" was not found`)
+    }
+
+    // Check if path looks like a plugin package
+    if (!fs.existsSync(`${resolvedPath}/package.json`)) {
+      throw new Error(`Local plugin "${pluginNameOrPath}" requires a package.json file`)
+    }
+
+    return resolvedPath
+  }
+}
+
 module.exports = async (config = {}) => {
   // Instantiate plugins.
   const plugins = []
@@ -15,7 +41,8 @@ module.exports = async (config = {}) => {
   // Also test adding to redux store.
   const processPlugin = plugin => {
     if (_.isString(plugin)) {
-      const resolvedPath = slash(path.dirname(require.resolve(plugin)))
+      const resolvedPath = resolvePluginPath(plugin)
+
       const packageJSON = JSON.parse(
         fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
       )
@@ -40,14 +67,15 @@ module.exports = async (config = {}) => {
 
       // Add some default values for tests as we don't actually
       // want to try to load anything during tests.
-      let resolvedPath
-      let packageJSON = { name: `TEST` }
-      if (plugin.resolve !== `___TEST___`) {
-        resolvedPath = slash(path.dirname(require.resolve(plugin.resolve)))
-        packageJSON = JSON.parse(
-          fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
-        )
+      if (plugin.resolve === `___TEST___`) {
+        return { name: `TEST` }
       }
+
+      const resolvedPath = resolvePluginPath(plugin.resolve)
+      const packageJSON = JSON.parse(
+        fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
+      )
+
       return {
         resolve: resolvedPath,
         name: packageJSON.name,
