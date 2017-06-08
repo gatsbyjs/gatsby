@@ -14,13 +14,17 @@ const _ = require(`lodash`)
 const invariant = require(`invariant`)
 const typeOf = require(`type-of`)
 const createTypeName = require(`./create-type-name`)
-
-import { extractFieldExamples, buildFieldEnumValues } from './data-tree-utils'
+const createKey = require(`./create-key`)
+const {
+  extractFieldExamples,
+  buildFieldEnumValues,
+  isEmptyObjectOrArray,
+} = require(`./data-tree-utils`)
 
 import type {
   GraphQLInputFieldConfig,
   GraphQLInputFieldConfigMap,
-} from 'graphql/type/definition'
+} from "graphql/type/definition"
 
 function typeFields(type): GraphQLInputFieldConfigMap {
   switch (type) {
@@ -55,7 +59,7 @@ function inferGraphQLInputFields({
   nodes,
   prefix,
 }): ?GraphQLInputFieldConfig {
-  if (value == null || (Array.isArray(value) && !value.length)) return null
+  if (value == null || isEmptyObjectOrArray(value)) return null
 
   switch (typeOf(value)) {
     case `array`: {
@@ -202,7 +206,7 @@ export function inferInputObjectStructureFromNodes({
     })
 
     if (field == null) return
-    inferredFields[key] = field
+    inferredFields[createKey(key)] = field
   })
 
   // Add sorting (but only to the top level).

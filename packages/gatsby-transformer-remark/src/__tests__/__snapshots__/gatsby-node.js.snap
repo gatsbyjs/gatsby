@@ -5,19 +5,21 @@ Array [
   Array [
     Object {
       "children": Array [],
-      "content": "
-Where oh where is my little pony?
-    ",
-      "contentDigest": "54cfa2ad99756f2fa232cac585280a37",
       "frontmatter": Object {
         "date": "12/12/2014",
         "parent": "whatever",
         "title": "my little pony",
       },
       "id": "whatever >>> MarkdownRemark",
-      "mediaType": "text/x-markdown",
+      "internal": Object {
+        "content": "
+Where oh where is my little pony?
+    ",
+        "contentDigest": "54cfa2ad99756f2fa232cac585280a37",
+        "mediaType": "text/x-markdown",
+        "type": "MarkdownRemark",
+      },
       "parent": "whatever",
-      "type": "MarkdownRemark",
     },
   ],
 ]
@@ -27,19 +29,39 @@ exports[`Process markdown content correctly Correctly creates a new MarkdownRema
 Array [
   Array [
     Object {
-      "children": Array [
-        "whatever >>> MarkdownRemark",
-      ],
-      "content": "---
+      "child": Object {
+        "children": Array [],
+        "frontmatter": Object {
+          "date": "12/12/2014",
+          "parent": "whatever",
+          "title": "my little pony",
+        },
+        "id": "whatever >>> MarkdownRemark",
+        "internal": Object {
+          "content": "
+Where oh where is my little pony?
+    ",
+          "contentDigest": "54cfa2ad99756f2fa232cac585280a37",
+          "mediaType": "text/x-markdown",
+          "type": "MarkdownRemark",
+        },
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "---
 title: \\"my little pony\\"
 date: \\"12/12/2014\\"
 ---
 
 Where oh where is my little pony?
     ",
-      "contentDigest": "whatever",
-      "id": "whatever",
-      "mediaType": "text/x-markdown",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "text/x-markdown",
+        },
+      },
     },
   ],
 ]

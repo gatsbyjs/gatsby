@@ -14,19 +14,23 @@ const mime = require(`mime`)
 const isRelative = require(`is-relative`)
 const isRelativeUrl = require(`is-relative-url`)
 const slash = require(`slash`)
-const nodePath = require(`path`)
+const systemPath = require(`path`)
 const { oneLine } = require(`common-tags`)
 
 const { store, getNode, getNodes } = require(`../redux`)
-const { addPageDependency } = require(`../redux/actions/add-page-dependency`)
-const { extractFieldExamples } = require(`./data-tree-utils`)
+const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 const createTypeName = require(`./create-type-name`)
+const createKey = require(`./create-key`)
+const {
+  extractFieldExamples,
+  isEmptyObjectOrArray,
+} = require(`./data-tree-utils`)
 
-import type { GraphQLOutputType } from 'graphql'
+import type { GraphQLOutputType } from "graphql"
 import type {
   GraphQLFieldConfig,
   GraphQLFieldConfigMap,
-} from 'graphql/type/definition'
+} from "graphql/type/definition"
 
 export type ProcessedNodeType = {
   name: string,
@@ -61,6 +65,7 @@ function inferGraphQLType({
   selector,
   ...otherArgs
 }): ?GraphQLFieldConfig<*, *> {
+  if (exampleValue == null || isEmptyObjectOrArray(exampleValue)) return
   let fieldName = selector.split(`.`).pop()
 
   if (Array.isArray(exampleValue)) {
@@ -96,8 +101,6 @@ function inferGraphQLType({
     }
     return { type: new GraphQLList(headType) }
   }
-
-  if (exampleValue == null) return
 
   // Check if this is a date.
   // All the allowed ISO 8601 date-time formats used.
@@ -184,10 +187,10 @@ function inferFromMapping(
     const linkedType = mapping[fieldSelector]
     const linkedNode = _.find(
       getNodes(),
-      n => n.type === linkedType && n.id === fieldValue
+      n => n.internal.type === linkedType && n.id === fieldValue
     )
     if (linkedNode) {
-      addPageDependency({ path, nodeId: linkedNode.id })
+      createPageDependency({ path, nodeId: linkedNode.id })
       return linkedNode
     }
   }
@@ -196,7 +199,7 @@ function inferFromMapping(
     return {
       type: new GraphQLList(matchedTypes[0].nodeObjectType),
       resolve: (node, a, b, { fieldName }) => {
-        let fieldValue = node[fieldName]
+        const fieldValue = node[fieldName]
 
         if (fieldValue) {
           return fieldValue.map(value => findNode(value, b.path))
@@ -210,7 +213,7 @@ function inferFromMapping(
   return {
     type: matchedTypes[0].nodeObjectType,
     resolve: (node, a, b, { fieldName }) => {
-      let fieldValue = node[fieldName]
+      const fieldValue = node[fieldName]
 
       if (fieldValue) {
         return findNode(fieldValue, b.path)
@@ -233,7 +236,7 @@ function findLinkedNode(value, linkedField, path) {
 
   if (linkedNode) {
     if (path) {
-      addPageDependency({ path, nodeId: linkedNode.id })
+      createPageDependency({ path, nodeId: linkedNode.id })
     }
     return linkedNode
   }
@@ -257,13 +260,14 @@ function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
       field matching: "${value}"
     `
   )
-  const field = types.find(type => type.name === linkedNode.type)
+  const field = types.find(type => type.name === linkedNode.internal.type)
 
   invariant(
     field,
     oneLine`
       Encountered an error trying to infer a GraphQL type for: "${selector}".
-      There is no corresponding GraphQL type "${linkedNode.type}" available
+      There is no corresponding GraphQL type "${linkedNode.internal
+        .type}" available
       to link to this node.
     `
   )
@@ -298,15 +302,61 @@ function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
   }
 }
 
-function shouldInferFile(value) {
-  return (
+function findRootNode(node) {
+  // Find the root node.
+  let rootNode = node
+  let whileCount = 0
+  while (
+    rootNode.parent &&
+    getNode(rootNode.parent) !== undefined &&
+    whileCount < 101
+  ) {
+    rootNode = getNode(rootNode.parent)
+    whileCount += 1
+    if (whileCount > 100) {
+      console.log(
+        `It looks like you have a node that's set its parent as itself`,
+        rootNode
+      )
+    }
+  }
+
+  return rootNode
+}
+
+function shouldInferFile(nodes, key, value) {
+  // Find the node used for this example.
+  const node = nodes.find(n => _.get(n, key) === value)
+
+  if (!node) {
+    return false
+  }
+
+  const looksLikeFile =
     _.isString(value) &&
     mime.lookup(value) !== `application/octet-stream` &&
     // domains ending with .com
     mime.lookup(value) !== `application/x-msdownload` &&
     isRelative(value) &&
     isRelativeUrl(value)
+
+  if (!looksLikeFile) {
+    return false
+  }
+
+  const rootNode = findRootNode(node)
+
+  // Only nodes transformed (ultimately) from a File
+  // can link to another File.
+  if (rootNode.internal.type !== `File`) {
+    return false
+  }
+
+  const pathToOtherNode = systemPath.posix.join(rootNode.dir, value)
+  const otherFileExists = getNodes().some(
+    n => n.absolutePath === pathToOtherNode
   )
+  return otherFileExists
 }
 
 // Look for fields that are pointing at a file — if the field has a known
@@ -322,29 +372,33 @@ function inferFromUri(key, types) {
   return {
     type: fileField.nodeObjectType,
     resolve: (node, a, { path }) => {
-      let fieldValue = node[key]
+      const fieldValue = node[key]
+
+      if (!fieldValue) {
+        return null
+      }
 
       // Find File node for this node (we assume the node is something
       // like markdown which would be a child node of a File node).
       const parentFileNode = _.find(
         getNodes(),
-        n => n.type === `File` && n.id === node.parent
+        n => n.internal.type === `File` && n.id === node.parent
       )
 
       // Use the parent File node to create the absolute path to
       // the linked file.
       const fileLinkPath = slash(
-        nodePath.resolve(parentFileNode.dir, fieldValue)
+        systemPath.resolve(parentFileNode.dir, fieldValue)
       )
 
       // Use that path to find the linked File node.
       const linkedFileNode = _.find(
         getNodes(),
-        n => n.type === `File` && n.absolutePath === fileLinkPath
+        n => n.internal.type === `File` && n.absolutePath === fileLinkPath
       )
 
       if (linkedFileNode) {
-        addPageDependency({
+        createPageDependency({
           path,
           nodeId: linkedFileNode.id,
         })
@@ -364,7 +418,6 @@ type inferTypeOptions = {
 }
 
 const EXCLUDE_KEYS = {
-  type: 1,
   id: 1,
   parent: 1,
   children: 1,
@@ -382,6 +435,9 @@ export function inferObjectStructureFromNodes({
   const isRoot = !selector
   const mapping = config && config.mapping
 
+  // Ensure nodes have internal key with object.
+  nodes = nodes.map(n => (n.internal ? n : { ...n, internal: {} }))
+
   const inferredFields = {}
   _.each(exampleValue, (value, key) => {
     // Remove fields common to the top-level of all nodes.  We add these
@@ -391,7 +447,7 @@ export function inferObjectStructureFromNodes({
     // Several checks to see if a field is pointing to custom type
     // before we try automatic inference.
     const nextSelector = selector ? `${selector}.${key}` : key
-    const fieldSelector = `${nodes[0].type}.${nextSelector}`
+    const fieldSelector = `${nodes[0].internal.type}.${nextSelector}`
 
     let fieldName = key
     let inferredField
@@ -407,8 +463,11 @@ export function inferObjectStructureFromNodes({
       ;[fieldName] = key.split(`___`)
       inferredField = inferFromFieldName(value, nextSelector, types)
 
-      // Third if the field is pointing to a file
-    } else if (nodes[0].type !== `File` && shouldInferFile(value)) {
+      // Third if the field is pointing to a file (from another file).
+    } else if (
+      nodes[0].internal.type !== `File` &&
+      shouldInferFile(nodes, nextSelector, value)
+    ) {
       inferredField = inferFromUri(key, types)
 
       // Finally our automatic inference of field value type.
@@ -422,7 +481,9 @@ export function inferObjectStructureFromNodes({
     }
 
     if (!inferredField) return
-    inferredFields[fieldName] = inferredField
+
+    // Replace unsupported values
+    inferredFields[createKey(fieldName)] = inferredField
   })
 
   return inferredFields

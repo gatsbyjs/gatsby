@@ -1,22 +1,32 @@
 - title: Quick Start
   links:
     Getting Started: /docs/
-    Building with Components: /docs/building-with-components/
-    Querying with GraphQL: /docs/querying-with-graphql/
-    Gatsby Lifecycle APIs: /docs/gatsby-lifecycle-apis/
+    Migrating from v0 to v1: /docs/migrating-from-v0-to-v1/
+    Building with Components*: /docs/building-with-components/
+    Querying with GraphQL*: /docs/querying-with-graphql/
+    Gatsby Lifecycle APIs*: /docs/gatsby-lifecycle-apis/
     Plugins: /docs/plugins/
-    Themes: /docs/themes/
-    PRPL Pattern: /docs/prpl-pattern/
-    Thinking in Gatsby: /docs/thinking-in-gatsby/
+    Themes*: /docs/themes/
+    PRPL Pattern*: /docs/prpl-pattern/
+    Thinking in Gatsby*: /docs/thinking-in-gatsby/
     Gatsby on Windows: /docs/gatsby-on-windows/
 - title: Guides
   links:
     Path Prefix: /docs/path-prefix/
     Add 404 Page: /docs/add-404-page/
+    Proxying API Requests: /docs/api-proxy/
+    Adding Images, Fonts, and Files: /docs/adding-images-fonts-files/
+    Creating and Modifying Pages: /docs/creating-and-modifying-pages/
+    Debugging HTML Builds: /docs/debugging-html-builds/
 - title: Reference
   links:
     Node Interface: /docs/node-interface/
+    API Specification: /docs/api-specification/
+    Bound Action Creators: /docs/bound-action-creators/
+    Gatsby Browser APIs: /docs/browser-apis/
+    Gatsby Node APIs: /docs/node-apis/
+    Gatsby SSR APIs: /docs/ssr-apis/
 - title: Contributing
   links:
     How to Contribute: /docs/how-to-contribute/
-    Design Principles: /docs/design-principles/
+    Design Principles*: /docs/design-principles/

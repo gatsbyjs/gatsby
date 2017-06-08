@@ -1,7 +1,7 @@
-import catchLinks from "catch-links"
-import browserHistory from "react-router/lib/browserHistory"
+import { navigateTo } from "gatsby-link"
+
+import catchLinks from "./catch-links"
 
 catchLinks(window, href => {
-  console.log(href)
-  browserHistory.push(href)
+  navigateTo(href)
 })

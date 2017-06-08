@@ -4,7 +4,6 @@ import { rhythm } from "../utils/typography"
 
 const DocsTemplate = React.createClass({
   render() {
-    console.log(this.props)
     return (
       <div>
         <h1>{this.props.data.markdownRemark.frontmatter.title}</h1>
@@ -22,7 +21,7 @@ export default DocsTemplate
 
 export const pageQuery = graphql`
   query TemplateDocsMarkdown($slug: String!) {
-    markdownRemark(slug: { eq: $slug }) {
+    markdownRemark(fields: { slug: { eq: $slug }}) {
       html
       frontmatter {
         title

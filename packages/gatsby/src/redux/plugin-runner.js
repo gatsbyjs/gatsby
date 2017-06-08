@@ -1,21 +1,18 @@
 // Invoke plugins for certain actions.
 
-const { store } = require(`./index`)
+const { store, emitter } = require(`./index`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
 
-store.subscribe(() => {
-  const state = store.getState()
-  // console.log("last action", state.lastAction.type)
-  if (
-    state.lastAction.type === `CREATE_NODE` &&
-    state.lastAction.payload.logical !== true
-  ) {
-    const node = state.nodes[state.lastAction.payload.id]
-    apiRunnerNode(`onNodeCreate`, { node })
-  }
+emitter.on(`CREATE_NODE`, action => {
+  const node = store.getState().nodes[action.payload.id]
+  apiRunnerNode(`onCreateNode`, { node, traceId: action.traceId })
+})
 
-  if (state.lastAction.type === `UPSERT_PAGE`) {
-    const page = state.lastAction.payload
-    apiRunnerNode(`onUpsertPage`, { page })
-  }
+emitter.on(`CREATE_PAGE`, action => {
+  const page = action.payload
+  apiRunnerNode(
+    `onCreatePage`,
+    { page, traceId: action.traceId },
+    action.plugin.name
+  )
 })

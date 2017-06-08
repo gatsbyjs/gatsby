@@ -4,10 +4,8 @@ module.exports = (state = [], action) => {
   switch (action.type) {
     case `DELETE_CACHE`:
       return []
-    case `UPSERT_PAGE`:
-      const index = _.findIndex(state, p => {
-        return p.path === action.payload.path
-      })
+    case `CREATE_PAGE`:
+      const index = _.findIndex(state, p => p.path === action.payload.path)
       // If the path already exists, overwrite it.
       // Otherwise, add it to the end.
       if (index !== -1) {
@@ -20,6 +18,8 @@ module.exports = (state = [], action) => {
       } else {
         return [...state.concat(action.payload)]
       }
+    case `DELETE_PAGE`:
+      return state.filter(p => p.path !== action.payload.path)
     default:
       return state
   }

@@ -2,16 +2,16 @@ const axios = require(`axios`)
 const crypto = require(`crypto`)
 const _ = require(`lodash`)
 
-const makeTypeName = type => {
-  return `drupal__${type.replace(/-/g, `_`)}`
-}
+const makeTypeName = type => `drupal__${type.replace(/-/g, `_`)}`
 
-const processEntities = ents => {
-  return ents.map(ent => {
+const processEntities = ents =>
+  ents.map(ent => {
     const newEnt = {
-      ...ent.attributes,
       id: ent.id,
-      type: ent.type,
+      internal: {
+        type: ent.type,
+      },
+      ...ent.attributes,
       created: new Date(ent.attributes.created * 1000).toJSON(),
       changed: new Date(ent.attributes.changed * 1000).toJSON(),
     }
@@ -23,48 +23,38 @@ const processEntities = ents => {
 
     return newEnt
   })
-}
 
 exports.sourceNodes = async (
   { boundActionCreators, getNode, hasNodeChanged, store },
   { baseUrl }
 ) => {
-  const {
-    createNode,
-    updateSourcePluginStatus,
-    touchNode,
-  } = boundActionCreators
-  updateSourcePluginStatus({
-    plugin: `gatsby-source-drupal`,
-    status: {
-      ...store.getState().status[`gatsby-source-drupal`],
-      ready: false,
-    },
-  })
+  const { createNode, setPluginStatus, touchNode } = boundActionCreators
 
   // Touch existing Drupal nodes so Gatsby doesn't garbage collect them.
-  // console.log(
-  // "existing drupal nodes",
-  // _.values(store.getState().nodes)
-  // .filter(n => n.type.slice(0, 8) === `drupal__`)
-  // .map(n => n.id)
-  // )
-
   _.values(store.getState().nodes)
-    .filter(n => n.type.slice(0, 8) === `drupal__`)
+    .filter(n => n.internal.type.slice(0, 8) === `drupal__`)
     .forEach(n => touchNode(n.id))
 
   // Fetch articles.
   console.time(`fetch Drupal data`)
   console.log(`Starting to fetch data from Drupal`)
 
-  const lastFetched = store.getState().status.sourcePlugins[
-    `gatsby-source-drupal`
-  ].lastFetched
+  let lastFetched
+  if (
+    store.getState().status.plugins &&
+    store.getState().status.plugins[`gatsby-source-drupal`]
+  ) {
+    lastFetched = store.getState().status.plugins[`gatsby-source-drupal`]
+      .lastFetched
+  }
 
   let url
   if (lastFetched) {
-    url = `${baseUrl}/jsonapi/node/article?filter[new-content][path]=changed&filter[new-content][value]=${parseInt(new Date(lastFetched).getTime() / 1000).toFixed(0)}&filter[new-content][operator]=%3E&page[offset]=0&page[limit]=10`
+    url = `${baseUrl}/jsonapi/node/article?filter[new-content][path]=changed&filter[new-content][value]=${parseInt(
+      new Date(lastFetched).getTime() / 1000
+    ).toFixed(
+      0
+    )}&filter[new-content][operator]=%3E&page[offset]=0&page[limit]=10`
   } else {
     url = `${baseUrl}/jsonapi/node/article`
   }
@@ -78,10 +68,8 @@ exports.sourceNodes = async (
 
   console.log(`articles fetched`, result.data.data.length)
 
-  updateSourcePluginStatus({
-    plugin: `gatsby-source-drupal`,
+  setPluginStatus({
     status: {
-      ...store.getState().status[`gatsby-source-drupal`],
       lastFetched: new Date().toJSON(),
     },
   })
@@ -94,12 +82,15 @@ exports.sourceNodes = async (
 
     const gatsbyNode = {
       ...node,
-      parent: `__SOURCE__`,
-      type: makeTypeName(node.type),
       children: [],
-      content: nodeStr,
+      parent: `__SOURCE__`,
+      internal: {
+        ...node.internal,
+        type: makeTypeName(node.internal.type),
+        content: nodeStr,
+        mediaType: `application/json`,
+      },
       author___NODE: result.data.data[i].relationships.uid.data.id,
-      mediaType: `application/json`,
     }
 
     // Get content digest of node.
@@ -108,7 +99,7 @@ exports.sourceNodes = async (
       .update(JSON.stringify(gatsbyNode))
       .digest(`hex`)
 
-    gatsbyNode.contentDigest = contentDigest
+    gatsbyNode.internal.contentDigest = contentDigest
 
     createNode(gatsbyNode)
   })
@@ -118,55 +109,51 @@ exports.sourceNodes = async (
   const userResult = await axios.get(userUrl)
   const users = processEntities(userResult.data.data)
   const blue = await Promise.all(
-    users.map((user, i) => {
-      return new Promise(resolve => {
-        const userStr = JSON.stringify(user)
+    users.map(
+      (user, i) =>
+        new Promise(resolve => {
+          const userStr = JSON.stringify(user)
 
-        const gatsbyUser = {
-          ...user,
-          parent: `__SOURCE__`,
-          type: makeTypeName(user.type),
-          children: [],
-          content: userStr,
-          mediaType: `application/json`,
-        }
+          const gatsbyUser = {
+            ...user,
+            children: [],
+            parent: `__SOURCE__`,
+            internal: {
+              type: makeTypeName(user.internal.type),
+              content: userStr,
+              mediaType: `application/json`,
+            },
+          }
 
-        if (gatsbyUser.uid === 1) {
-          return resolve()
-        }
+          if (gatsbyUser.uid === 1) {
+            return resolve()
+          }
 
-        axios
-          .get(
-            userResult.data.data[i].relationships.user_picture.links.related,
-            { timeout: 3000 }
-          )
-          .catch(() => console.log(`fail fetch`, gatsbyUser))
-          .then(pictureResult => {
-            gatsbyUser.picture = `http://dev-gatsbyjs-d8.pantheonsite.io${pictureResult.data.data.attributes.url}`
+          axios
+            .get(
+              userResult.data.data[i].relationships.user_picture.links.related,
+              { timeout: 20000 }
+            )
+            .catch(() => console.log(`fail fetch`, gatsbyUser))
+            .then(pictureResult => {
+              gatsbyUser.picture = `http://dev-gatsbyjs-d8.pantheonsite.io${pictureResult
+                .data.data.attributes.url}`
 
-            // Get content digest of node.
-            const contentDigest = crypto
-              .createHash(`md5`)
-              .update(JSON.stringify(gatsbyUser))
-              .digest(`hex`)
+              // Get content digest of node.
+              const contentDigest = crypto
+                .createHash(`md5`)
+                .update(JSON.stringify(gatsbyUser))
+                .digest(`hex`)
 
-            gatsbyUser.contentDigest = contentDigest
+              gatsbyUser.internal.contentDigest = contentDigest
 
-            createNode(gatsbyUser)
+              createNode(gatsbyUser)
 
-            resolve()
-          })
-      })
-    })
+              resolve()
+            })
+        })
+    )
   )
-
-  updateSourcePluginStatus({
-    plugin: `gatsby-source-drupal`,
-    status: {
-      ...store.getState().status[`gatsby-source-drupal`],
-      ready: true,
-    },
-  })
 
   return
 }

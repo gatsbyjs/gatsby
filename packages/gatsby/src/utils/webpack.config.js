@@ -15,7 +15,6 @@ const { store } = require(`../redux`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
 const WebpackMD5Hash = require(`webpack-md5-hash`)
 const ChunkManifestPlugin = require(`chunk-manifest-webpack-plugin`)
-const { layoutComponentChunkName } = require(`./js-chunk-names`)
 const genBabelConfig = require(`./babel-config`)
 
 // Five stages or modes:
@@ -89,7 +88,9 @@ module.exports = async (
         return {
           commons: [
             require.resolve(`react-hot-loader/patch`),
-            `${require.resolve(`webpack-hot-middleware/client`)}?path=http://${program.host}:${webpackPort}/__webpack_hmr`,
+            `${require.resolve(
+              `webpack-hot-middleware/client`
+            )}?path=http://${program.host}:${webpackPort}/__webpack_hmr&reload=true`,
             `${directory}/.cache/app`,
           ],
         }
@@ -164,11 +165,11 @@ module.exports = async (
         ]
       case `build-javascript`: {
         // Get array of page template component names.
-        let components = store.getState().pages.map(page => page.component)
-        components = components.map(component =>
-          layoutComponentChunkName(program.directory, component)
-        )
+        let components = store
+          .getState()
+          .pages.map(page => page.componentChunkName)
         components = uniq(components)
+        components.push(`layout-component---index`)
         return [
           // Moment.js includes 100s of KBs of extra localization data
           // by default in Webpack that most sites don't want.
@@ -198,14 +199,28 @@ module.exports = async (
               const vendorModuleList = [
                 `react`,
                 `react-dom`,
+                `fbjs`,
                 `react-router`,
+                `react-router-dom`,
                 `react-router-scroll`,
+                `dom-helpers`, // Used in react-router-scroll
+                `path-to-regexp`,
+                `isarray`, // Used by path-to-regexp.
                 `scroll-behavior`,
                 `history`,
+                `resolve-pathname`, // Used by history.
+                `value-equal`, // Used by history.
+                `invariant`, // Used by history.
+                `warning`, // Used by history.
+                `babel-runtime`, // Used by history.
+                `core-js`, // Used by history.
+                `loose-envify`, // Used by history.
+                `prop-types`,
+                `gatsby-link`,
               ]
               const isFramework = some(
                 vendorModuleList.map(vendor => {
-                  const regex = new RegExp(`\/node_modules\/${vendor}\/`, `i`)
+                  const regex = new RegExp(`\/node_modules\/${vendor}\/.*`, `i`)
                   return regex.test(module.resource)
                 })
               )
@@ -272,7 +287,11 @@ module.exports = async (
       // modules. But also make it possible to install modules within the src
       // directory if you need to install a specific version of a module for a
       // part of your site.
-      modulesDirectories: [`${directory}/node_modules`, `node_modules`],
+      modulesDirectories: [
+        `${directory}/node_modules`,
+        `node_modules`,
+        `node_modules/gatsby/node_modules`,
+      ],
     }
   }
 
@@ -321,7 +340,7 @@ module.exports = async (
       test: /\.(svg|jpg|jpeg|png|gif|mp4|webm|wav|mp3|m4a|aac|oga)(\?.*)?$/,
       loader: `url`,
       query: {
-        limit: 7500,
+        limit: 10000,
         name: `static/[name].[hash:8].[ext]`,
       },
     })

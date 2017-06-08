@@ -1,0 +1,24 @@
+{
+  "name": "gatsby-example-removing-trailing-slashes",
+  "private": true,
+  "description": "Gatsby example site that shows how to remove trailing slashes from urls",
+  "version": "1.0.0",
+  "author": "Scotty Eckenthal <scott.eckenthal@gmail.com>",
+  "dependencies": {
+    "gatsby": "canary",
+    "gatsby-link": "canary",
+    "gatsby-plugin-google-analytics": "canary",
+    "gatsby-plugin-offline": "canary",
+    "lodash": "^4.16.4",
+    "slash": "^1.0.0"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build"
+  }
+}

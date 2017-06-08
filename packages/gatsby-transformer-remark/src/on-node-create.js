@@ -1,24 +1,24 @@
 const grayMatter = require(`gray-matter`)
 const crypto = require(`crypto`)
 
-module.exports = async function onNodeCreate({
+module.exports = async function onCreateNode({
   node,
   getNode,
   loadNodeContent,
   boundActionCreators,
 }) {
-  const { createNode, updateNode } = boundActionCreators
+  const { createNode, createParentChildLink } = boundActionCreators
 
   // Don't reprocess our own nodes!  (note: this doesn't normally happen
   // but since this transformer creates new nodes with the same media-type
   // as its parent node, we have to add this check that we didn't create
   // the node).
-  if (node.type === `MarkdownRemark`) {
+  if (node.internal.type === `MarkdownRemark`) {
     return
   }
 
   // We only care about markdown content.
-  if (node.mediaType !== `text/x-markdown`) {
+  if (node.internal.mediaType !== `text/x-markdown`) {
     return
   }
 
@@ -30,24 +30,26 @@ module.exports = async function onNodeCreate({
     .digest(`hex`)
   const markdownNode = {
     id: `${node.id} >>> MarkdownRemark`,
-    contentDigest,
-    parent: node.id,
-    type: `MarkdownRemark`,
-    mediaType: `text/x-markdown`,
     children: [],
-    content: data.content,
+    parent: node.id,
+    internal: {
+      contentDigest,
+      type: `MarkdownRemark`,
+      mediaType: `text/x-markdown`,
+      content: data.content,
+    },
   }
   markdownNode.frontmatter = {
+    title: ``, // always include a title
     ...data.data,
     parent: node.id,
   }
 
   // Add path to the markdown file path
-  if (node.type === `File`) {
+  if (node.internal.type === `File`) {
     markdownNode.fileAbsolutePath = node.absolutePath
   }
 
-  node.children = node.children.concat([markdownNode.id])
-  updateNode(node)
   createNode(markdownNode)
+  createParentChildLink({ parent: node, child: markdownNode })
 }

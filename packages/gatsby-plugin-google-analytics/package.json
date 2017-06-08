@@ -1,11 +1,8 @@
 {
   "name": "gatsby-plugin-google-analytics",
   "description": "Gatsby plugin to add google analytics onto a site",
-  "version": "1.0.0-alpha14",
+  "version": "1.0.0-alpha.22",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
-  "dependencies": {
-    "react-ga": "^2.1.2"
-  },
   "devDependencies": {
     "babel-cli": "^6.24.1"
   },

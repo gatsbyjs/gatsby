@@ -1,9 +1,11 @@
 import React from "react"
 
-exports.modifyPostBodyComponents = () => [
-  <script
-    dangerouslySetInnerHTML={{
-      __html: `
+exports.onRenderBody = ({ setPostBodyComponents }) => {
+  if (process.env.NODE_ENV === `production`) {
+    return setPostBodyComponents([
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
         if ('serviceWorker' in navigator) {
           // Delay registration until after the page has loaded, to ensure that
           // our precaching requests don't degrade the first visit experience.
@@ -13,6 +15,8 @@ exports.modifyPostBodyComponents = () => [
           })
         }
       `,
-    }}
-  />,
-]
+        }}
+      />,
+    ])
+  }
+}

@@ -6,15 +6,8 @@ import typography, { rhythm, scale } from "../utils/typography"
 
 const BlogPostTemplate = React.createClass({
   render() {
-    console.log(this.props)
     const post = this.props.data.markdownRemark
-    const twitterLine = post.frontmatter.author.twitter
-      ? ` by ${post.frontmatter.author.twitter}`
-      : ``
-    const authorShareText = encodeURIComponent(
-      `“${post.frontmatter.title}”${twitterLine} https://sourceforge.com/blog${post.fileSlug}`
-    )
-    const BioLine = ({ children }) => (
+    const BioLine = ({ children }) =>
       <p
         css={{
           ...scale(-2 / 5),
@@ -30,7 +23,6 @@ const BlogPostTemplate = React.createClass({
       >
         {children}
       </p>
-    )
     return (
       <div
         css={{
@@ -48,7 +40,7 @@ const BlogPostTemplate = React.createClass({
           link={[
             {
               rel: `canonical`,
-              href: `https://gatsbyjs.org${post.fileSlug}`,
+              href: `https://gatsbyjs.org${post.fields.slug}`,
             },
             {
               rel: `author`,
@@ -183,11 +175,11 @@ export default BlogPostTemplate
 
 export const pageQuery = graphql`
   query TemplateBlogPost($slug: String!) {
-    markdownRemark(slug: { eq: $slug }) {
+    markdownRemark(fields: { slug: { eq: $slug }}) {
       html
       excerpt
       timeToRead
-      slug
+      fields { slug }
       frontmatter {
         title
         date(formatString: "MMM D, YYYY")

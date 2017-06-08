@@ -6,7 +6,7 @@ const fs = require(`fs-extra`)
 const slash = require(`slash`)
 
 exports.createPages = ({ graphql, boundActionCreators }) => {
-  const { upsertPage } = boundActionCreators
+  const { createPage } = boundActionCreators
   return new Promise((resolve, reject) => {
     const docsTemplate = path.resolve(`src/templates/template-docs-markdown.js`)
     const blogPostTemplate = path.resolve(`src/templates/template-blog-post.js`)
@@ -14,59 +14,66 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
       `src/templates/template-docs-packages.js`
     )
     // Query for markdown nodes to use in creating pages.
-    graphql(
-      `
+    resolve(
+      graphql(
+        `
       {
         allMarkdownRemark(limit: 1000) {
           edges {
             node {
-              slug
-              package
+              fields {
+                slug
+                package
+              }
             }
           }
         }
       }
     `
-    ).then(result => {
-      if (result.errors) {
-        reject(result.errors)
-      }
-
-      // Create docs pages.
-      result.data.allMarkdownRemark.edges.forEach(edge => {
-        if (_.includes(edge.node.slug, `/blog/`)) {
-          upsertPage({
-            path: `${edge.node.slug}`, // required
-            component: slash(blogPostTemplate),
-            context: {
-              slug: edge.node.slug,
-            },
-          })
-        } else {
-          upsertPage({
-            path: `${edge.node.slug}`, // required
-            component: slash(
-              edge.node.package ? packageTemplate : docsTemplate
-            ),
-            context: {
-              slug: edge.node.slug,
-            },
-          })
+      ).then(result => {
+        if (result.errors) {
+          reject(result.errors)
         }
-      })
 
-      resolve()
-    })
+        // Create docs pages.
+        result.data.allMarkdownRemark.edges.forEach(edge => {
+          const slug = _.get(edge, `node.fields.slug`)
+          if (!slug) return
+
+          if (_.includes(slug, `/blog/`)) {
+            createPage({
+              path: `${edge.node.fields.slug}`, // required
+              component: slash(blogPostTemplate),
+              context: {
+                slug: edge.node.fields.slug,
+              },
+            })
+          } else {
+            createPage({
+              path: `${edge.node.fields.slug}`, // required
+              component: slash(
+                edge.node.fields.package ? packageTemplate : docsTemplate
+              ),
+              context: {
+                slug: edge.node.fields.slug,
+              },
+            })
+          }
+        })
+
+        return
+      })
+    )
   })
 }
 
 // Create slugs for files.
-exports.onNodeCreate = ({ node, boundActionCreators, getNode }) => {
-  const { updateNode } = boundActionCreators
+exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
+  const { createNodeField } = boundActionCreators
   let slug
-  if (node.type === `File`) {
+  if (node.internal.type === `File`) {
     const parsedFilePath = parseFilepath(node.relativePath)
-    if (node.sourceName === `docs`) {
+    if (node.sourceInstanceName === `docs`) {
       if (parsedFilePath.name !== `index` && parsedFilePath.dir !== ``) {
         slug = `/${parsedFilePath.dir}/${parsedFilePath.name}/`
       } else if (parsedFilePath.dir === ``) {
@@ -76,14 +83,16 @@ exports.onNodeCreate = ({ node, boundActionCreators, getNode }) => {
       }
     }
     if (slug) {
-      node.slug = slug
-      updateNode(node)
+      createNodeField({ node, fieldName: `slug`, fieldValue: slug })
     }
-  } else if (node.type === `MarkdownRemark`) {
+  } else if (
+    node.internal.type === `MarkdownRemark` &&
+    getNode(node.parent).internal.type === `File`
+  ) {
     const fileNode = getNode(node.parent)
     const parsedFilePath = parseFilepath(fileNode.relativePath)
     // Add slugs for docs pages
-    if (fileNode.sourceName === `docs`) {
+    if (fileNode.sourceInstanceName === `docs`) {
       if (parsedFilePath.name !== `index` && parsedFilePath.dir !== ``) {
         slug = `/${parsedFilePath.dir}/${parsedFilePath.name}/`
       } else if (parsedFilePath.dir === ``) {
@@ -94,22 +103,24 @@ exports.onNodeCreate = ({ node, boundActionCreators, getNode }) => {
     }
     // Add slugs for package READMEs.
     if (
-      fileNode.sourceName === `packages` &&
+      fileNode.sourceInstanceName === `packages` &&
       parsedFilePath.name === `README`
     ) {
       slug = `/docs/packages/${parsedFilePath.dir}/`
-      node.frontmatter = {}
-      node.frontmatter.title = parsedFilePath.dir
-      node.package = true
+      createNodeField({
+        node,
+        fieldName: `title`,
+        fieldValue: parsedFilePath.dir,
+      })
+      createNodeField({ node, fieldName: `package`, fieldValue: true })
     }
     if (slug) {
-      node.slug = slug
-      updateNode(node)
+      createNodeField({ node, fieldName: `slug`, fieldValue: slug })
     }
   }
 }
 
-exports.postBuild = () => {
+exports.onPostBuild = () => {
   fs.copySync(
     `../docs/blog/2017-02-21-1-0-progress-update-where-came-from-where-going/gatsbygram.mp4`,
     `./public/gatsbygram.mp4`

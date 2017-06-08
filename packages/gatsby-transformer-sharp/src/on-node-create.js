@@ -1,7 +1,7 @@
 const _ = require(`lodash`)
 
-module.exports = async function onNodeCreate({ node, boundActionCreators }) {
-  const { createNode, updateNode } = boundActionCreators
+module.exports = async function onCreateNode({ node, boundActionCreators }) {
+  const { createNode, createParentChildLink } = boundActionCreators
 
   const extensions = [`jpeg`, `jpg`, `png`, `webp`, `tif`, `tiff`, `svg`]
   if (!_.includes(extensions, node.extension)) {
@@ -9,18 +9,18 @@ module.exports = async function onNodeCreate({ node, boundActionCreators }) {
   }
 
   const imageNode = {
-    logical: true,
     id: `${node.id} >> ImageSharp`,
-    contentDigest: `${node.id}`,
-    parent: node.id,
-    type: `ImageSharp`,
-    mediaType: node.mediaType,
     children: [],
+    parent: node.id,
+    internal: {
+      contentDigest: `${node.internal.contentDigest}`,
+      type: `ImageSharp`,
+      mediaType: node.internal.mediaType,
+    },
   }
 
-  node.children = node.children.concat([imageNode.id])
-  updateNode(node)
   createNode(imageNode)
+  createParentChildLink({ parent: node, child: imageNode })
 
   return
 }

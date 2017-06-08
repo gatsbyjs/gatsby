@@ -1,4 +1,7 @@
-const levelup = require(`level`)
+let levelup
+if (process.env.NODE_ENV !== `test`) {
+  levelup = require(`level`)
+}
 const Promise = require(`bluebird`)
 const fs = require(`fs-extra`)
 
@@ -7,12 +10,8 @@ exports.initCache = () => {
   fs.ensureDirSync(`${process.cwd()}/.cache/cache`)
   if (process.env.NODE_ENV === `test`) {
     db = {
-      get: () => {
-        return false
-      },
-      set: () => {
-        return false
-      },
+      get: () => false,
+      set: () => false,
     }
   } else {
     db = levelup(`${process.cwd()}/.cache/cache`, {
@@ -22,8 +21,8 @@ exports.initCache = () => {
   }
 }
 
-exports.get = key => {
-  return new Promise((resolve, reject) => {
+exports.get = key =>
+  new Promise((resolve, reject) => {
     db.get(key, (err, value) => {
       if (err && !err.notFound) {
         reject(err)
@@ -32,10 +31,9 @@ exports.get = key => {
       }
     })
   })
-}
 
-exports.set = (key, value) => {
-  return new Promise((resolve, reject) => {
+exports.set = (key, value) =>
+  new Promise((resolve, reject) => {
     db.put(key, value, err => {
       if (err) {
         reject(err)
@@ -44,4 +42,3 @@ exports.set = (key, value) => {
       }
     })
   })
-}

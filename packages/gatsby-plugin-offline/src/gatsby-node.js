@@ -3,14 +3,17 @@ const path = require(`path`)
 const slash = require(`slash`)
 const _ = require(`lodash`)
 
-exports.createPages = () => [
-  {
-    path: `/offline-plugin-app-shell-fallback/`,
-    component: slash(path.resolve(`${__dirname}/app-shell.js`)),
-  },
-]
+exports.createPages = ({ boundActionCreators }) => {
+  if (process.env.NODE_ENV === `production`) {
+    const { createPage } = boundActionCreators
+    createPage({
+      path: `/offline-plugin-app-shell-fallback/`,
+      component: slash(path.resolve(`${__dirname}/app-shell.js`)),
+    })
+  }
+}
 
-exports.postBuild = (args, pluginOptions) => {
+exports.onPostBuild = (args, pluginOptions) => {
   const rootDir = `public`
 
   const options = {
@@ -27,7 +30,9 @@ exports.postBuild = (args, pluginOptions) => {
     // example.com/cheeseburger.jpg will not.
     // We only want the service worker to handle our "clean"
     // URLs and not any files hosted on the site.
-    navigateFallbackWhitelist: [/^.*(?!\.\w?$)/],
+    //
+    // Regex from http://stackoverflow.com/a/18017805
+    navigateFallbackWhitelist: [/^.*[^.]{5}$/],
     cacheId: `gatsby-plugin-offline`,
     // Do cache bust JS URLs until can figure out how to make Webpack's
     // URLs truely content-addressed.

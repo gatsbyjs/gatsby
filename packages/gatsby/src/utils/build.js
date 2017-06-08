@@ -7,9 +7,14 @@ import buildProductionBundle from "./build-javascript"
 import bootstrap from "../bootstrap"
 import apiRunnerNode from "./api-runner-node"
 const { store } = require(`../redux`)
+const copyStaticDirectory = require(`./copy-static-directory`)
+const { stripIndent } = require(`common-tags`)
 
 async function html(program: any) {
   const { graphqlRunner } = await bootstrap(program)
+  // Copy files from the static directory to
+  // an equivalent static directory within public.
+  copyStaticDirectory()
 
   console.log(`Generating CSS`)
   await buildCSS(program).catch(err => {
@@ -29,23 +34,20 @@ async function html(program: any) {
     process.exit(1)
   })
 
-  console.log(`Generating Static HTML`)
-  // Write out pages data to file so it's available to the static-entry.js
-  // file.
-  fs.writeFileSync(
-    `${program.directory}/public/tmp-pages.json`,
-    JSON.stringify(store.getState().pages)
-  )
+  console.log(`Generating static HTML for pages`)
   await buildHTML(program).catch(err => {
     console.log(``)
-    console.log(`Generating HTML failed`)
-    console.log(``)
     console.log(err)
+    console.log(``)
+    console.log(`Generating static HTML for pages failed`)
+    console.log(
+      `See our docs page on debugging HTML builds for help https://goo.gl/yL9lND`
+    )
+
     process.exit(1)
   })
 
-  console.log(`Running postBuild plugins`)
-  await apiRunnerNode(`postBuild`, { graphql: graphqlRunner })
+  await apiRunnerNode(`onPostBuild`, { graphql: graphqlRunner })
 }
 
 module.exports = html

@@ -4,7 +4,12 @@
 //   require('/path/to/plugin2/gatsby-ssr.js'),
 // ]
 
+const apis = require(`./api-ssr-docs`)
+
 module.exports = (api, args, defaultReturn) => {
+  if (!apis[api]) {
+    console.log(`This API doesn't exist`, api)
+  }
   // Run each plugin in series.
   let results = plugins.map(plugin => {
     if (plugin.plugin[api]) {

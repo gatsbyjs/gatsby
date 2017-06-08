@@ -1,6 +1,5 @@
 import React from "react"
 import { TypographyStyle } from "react-typography"
-import Helmet from "react-helmet"
 
 import typography from "./utils/typography"
 
@@ -15,8 +14,6 @@ if (process.env.NODE_ENV === `production`) {
 
 module.exports = React.createClass({
   render() {
-    const head = Helmet.rewind()
-
     let css
     if (process.env.NODE_ENV === `production`) {
       css = (
@@ -48,7 +45,6 @@ module.exports = React.createClass({
             crossOrigin
           />
           {this.props.headComponents}
-          <title>Gatsby</title>
           <meta charSet="utf-8" />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
           <meta
@@ -79,15 +75,12 @@ module.exports = React.createClass({
             sizes="16x16"
             href={require(`file-loader!../static/images/favicons/favicon-16x16.png`)}
           />
-          {head.title.toComponent()}
-          {head.meta.toComponent()}
-          {head.link.toComponent()}
           <TypographyStyle typography={typography} />
           {css}
         </head>
         <body>
           <div
-            id="react-mount"
+            id="___gatsby"
             dangerouslySetInnerHTML={{ __html: this.props.body }}
           />
           {this.props.postBodyComponents}

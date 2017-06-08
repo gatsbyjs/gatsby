@@ -1,10 +1,7 @@
-import { queue } from "./index"
-import Promise from "bluebird"
-
-async function generateSideEffects() {
-  return new Promise(resolve => {
-    queue.start(() => resolve())
-  })
-}
-
-exports.generateSideEffects = generateSideEffects
+// TODO
+// exports.formatJobMessage = jobs => {
+// return {
+// progress: 40,
+// message: `3/4`,
+// }
+// }

@@ -1,5 +1,186 @@
 # Change Log
 
+## [1.0.0-alpha20] - 2017-06-05
+
+### Added
+
+- RSS Feed plugin #1073 @nicholaswyoung
+- Contentful source plugin #1084 @mericsson
+- MVP part 1 of new community Gatsby tutorial #1107 @kyleamathews
+- Debuggin help when building HTML fails #1109 @kyleamathews
+- Default `html.js` component #1107 @kyleamathews
+- Can now highlight specific line numbers in markdown code blocks #1107 @kyleamathews
+
+## Changed
+
+- `gatsby-config.js` is no longer required #1107 @kyleamathews
+- The Gatsby `serve-build` command is now just `serve` #1107 @kyleamathews
+
+## Fixed
+
+- Windows builds on Appveyor #1049 @jbolda
+
+## [1.0.0-alpha19] - 2017-06-02
+(Skipping over the previous two releases as they had bugs).
+
+### Added
+
+- Add a helpful 404 page during development that lists the page you might have wanted @kyleamathews
+to link to or how to create a new page at that link #1051 @kyleamathews
+- Add "Plop" script for quickly creating new packages #1059 @kyleamathews
+- Add new plugin supporting server rendering of Styled Components #1060 @gutenye
+- Add new plugin supporting server rendering of react-helmet #1085 @kyleamathews
+- Add new plugin for extracting JSDocs information from JavaScript files using documentation.js #1053 @kyleamathews
+- Add new API spec (rough draft) @kyleamathews https://www.gatsbyjs.org/docs/api-specification/
+- Add new API reference pages @kyleamathews e.g. https://www.gatsbyjs.org/docs/node-apis/
+- Add "duotone" image processing option to gatsby-plugin-sharp #1047 @fk
+- Add example site for image processing @fk https://image-processing.gatsbyjs.org/
+- Add example site for css-in-js library Glamor @kyleamathews https://using-glamor.gatsbyjs.org/
+- Add example site for css-in-js library Styled Components @kyleamathews https://using-styled-components.gatsbyjs.org/
+
+### Changed
+
+#### Grand big API renaming based on our new API spec https://www.gatsbyjs.org/docs/api-specification/
+
+API changes:
+
+[Action creators](https://www.gatsbyjs.org/docs/bound-action-creators/):
+
+* `upsertPage` is now `createPage`
+* `addFieldToNode` is now `createNodeField`
+* `deletePageByPath` is now `deletePage`
+* `addNodeToParent` is now `createParentChildLink`
+
+[gatsby-browser.js APIs](https://www.gatsbyjs.org/docs/browser-apis/):
+
+* `clientEntry` is now `onClientEntry`
+
+[gatsby-node.js APIs](https://www.gatsbyjs.org/docs/node-apis/):
+
+* `onNodeCreate` is now `onCreateNode`
+* `onUpsertPage` is now `onCreatePage`
+* `extendNodeType` is now `setFieldsOnGraphQLNodeType`
+
+[gatsby-ssr.js APIs](https://www.gatsbyjs.org/docs/ssr-apis/):
+
+* `modifyHeadComponents` and `modifyPostBodyComponents` were removed in favor of a
+new API [`onRenderBody`](https://www.gatsbyjs.org/docs/ssr-apis/#onRenderBody).
+* `replaceServerBodyRender` is now `replaceRenderer`
+
+### Fixed
+
+- Fix sharp image quality and force file format (#1054) @0x80
+- Expose crop focus parameter and make consistent with base64 #1055 @0x80
+- Clean up TravisCI config #1066 @hawkrives
+- Fix inference bug #1087 @jquense
+- Provide default context for GraphQL #1052 @kyleamathews
+- Make determining when a given stage is finished much more reliable #1080 @kyleamathews
+- Pick values off plugin's package.json to avoid weird metadata from NPM #1090 @kyleamathews
+
+### New 1.0 sites launched
+
+- https://www.vauxlab.com
+- https://meetfabric.com
+
+## [1.0.0-alpha16] - 2017-05-26
+### Added
+
+- Migration guide @kyleamathews #1032
+- Made nodes fully immutable @kyleamathews #1035
+- Add no-plugins example @scottyeck #1028
+- Add support for "internal" plugins #1010
+- Expose internal Gatsby data through GraphQL @kyleamathews #1014
+
+### Changed
+
+- Removed `updateNode` action creator as part of making nodes immutable in #1035.
+Now sites/plugins should use `addFieldToNode` for adding fields to nodes created
+by other plugins and `addNodeToParent` for adding a new node as a child to
+an existing node.
+
+### Fixed
+- Don't override the default onClick handler in gatsby-link @scottyeck #1019
+
+## [1.0.0-alpha15] - 2017-05-15
+### Added
+
+- Update version of React Router to v4 #940
+- API proxy for use during development #957
+- "static" directory for files to be copied directly into the "public"
+directory #956
+- Add `toFormat` argument to the ImageSharp GraphQL type so can change
+format of image e.g. from `png` to `jpg`.
+- React Docgen transformer plugin for parsing propType info from React
+components #928
+
+### Changed
+
+- Change node format to hide most node-specific fields under an "internal"
+key. Any code referencing `node.type` and others will need changed to
+`node.internal.type` #960
+- Changed the id for the root `<div>` used by Gatsby to mount React to `___gatsby`
+- The default layout component should be at `layouts/index.js` not `layouts/default.js` https://github.com/gatsbyjs/gatsby/pull/940#issuecomment-300537162
+- `this.props.children` in layout components is now a *function* https://github.com/gatsbyjs/gatsby/pull/940#issuecomment-300878300
+- Change the default port for serve-build to 9000
+- Change the path to GraphiQL to `/___graphql`
+
+### Chore
+- Upgrade Jest to v20 #935
+
+## [1.0.0-alpha14] - 2017-05-05
+### Added
+
+- Use the Relay Modern compiler for extracting GraphQL queries from components.
+This allows us to now support components being added to *all* components. This
+means you can now write queries next to the views that use them. #912
+- Hook for modifying pages #863
+- New Drupal source plugin and example site #890
+- Detect if a site's plugins have changed and when they do, delete the site
+cache as it might now be invalid #927
+- New way to make connections between nodes e.g. article --> author #902
+
+### Changed
+
+- Combine transformer and typegen plugins. The distinction between the two
+types of plugins has proved somewhat artificial so they were combined. Any
+typegen plugins in your `package.json` and `gatsby-config.js` need to be
+removed. #918
+- Gatsby now garbage collects old nodes. Source plugins should now "touch"
+- nodes that haven't changed #861
+- Due to adopting the Relay compiler, GraphQL query template strings need
+named "graphql" plus must be named. So if previously you wrote:
+
+```js
+export const pageQuery = `
+{
+  allMarkdownMark {
+    edges {
+      node {
+        id
+      }
+    }
+  }
+}
+`
+```
+
+You must now write:
+
+```js
+export const pageQuery = graphql`
+query IndexQuery {
+  allMarkdownMark {
+    edges {
+      node {
+        id
+      }
+    }
+  }
+}
+`
+```
+
+
 ## [1.0.0-alpha10] - 2016-11-17
 ### Added
 - Did the intitial build of the new gatsbyjs.org! It's in the `www`

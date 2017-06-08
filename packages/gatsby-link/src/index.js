@@ -1,56 +1,77 @@
 import React from "react"
-import Link from "react-router/lib/Link"
-import createClass from "create-react-class"
+import { Link } from "react-router-dom"
 import PropTypes from "prop-types"
+
+if (typeof window !== `undefined`) {
+  require(`ric`)
+}
 
 let linkPrefix = ``
 if (__PREFIX_LINKS__) {
   linkPrefix = __LINK_PREFIX__
 }
 
-// Use createClass instead of ES6 class as Babel spews out a ton of code
-// for polyfilling classes which there's no reason to pay for this.
-// A function component would be ideal but we need componentDidMount.
-const GatsbyLink = createClass({
+class GatsbyLink extends React.Component {
   propTypes: {
     to: PropTypes.string.isRequired,
-  },
+    onClick: PropTypes.func,
+  }
   componentDidMount() {
     // Only enable prefetching of Link resources in production and for browsers
     // that don't support service workers *cough* Safari/IE *cough*.
+    //
+    // TODO also add check if user is using SW, e.g. window.caches as if
+    // not we should preload here too.
     if (
-      (process.env.NODE_ENV === `production` &&
-        !(`serviceWorker` in navigator)) ||
-      window.location.protocol !== `https:`
+      process.env.NODE_ENV === `production` &&
+      (!(`serviceWorker` in window.navigator) ||
+        window.location.protocol !== `https:`)
     ) {
-      const routes = window.gatsbyRootRoute
-      const { createMemoryHistory } = require(`history`)
-      const matchRoutes = require(`react-router/lib/matchRoutes`)
-      const getComponents = require(`react-router/lib/getComponents`)
-
-      const createLocation = createMemoryHistory().createLocation
-
-      if (typeof routes !== `undefined`) {
-        matchRoutes(
-          [routes],
-          createLocation(this.props.to),
-          (error, nextState) => {
-            if (error) {
-              return console.error(error)
-            }
-
-            if (nextState) {
-              getComponents(nextState)
-            }
-          }
-        )
-      }
+      requestUserIdle(() => {
+        ___loadScriptsForPath(this.props.to)
+      })
     }
-  },
+  }
+
   render() {
     const to = linkPrefix + this.props.to
-    return <Link {...this.props} to={to} />
-  },
-})
+    const { onClick, ...rest } = this.props
+    return (
+      <Link
+        onClick={e => {
+          onClick && onClick(e)
+          // Is this link pointing to a hash on the same page? If so,
+          // just scroll there.
+          const pathname = this.props.to.split(`#`).slice(0, -1).join(``)
+          if (pathname === window.location.pathname) {
+            const hashFragment = this.props.to.split(`#`).slice(1).join(`#`)
+            const element = document.getElementById(hashFragment)
+            if (element !== null) {
+              element.scrollIntoView()
+              return true
+            }
+          }
 
-module.exports = GatsbyLink
+          // In production, make sure the necessary scripts are
+          // loaded before continuing.
+          if (process.env.NODE_ENV === `production`) {
+            e.preventDefault()
+            window.___navigateTo(this.props.to)
+          }
+        }}
+        {...rest}
+        to={to}
+      />
+    )
+  }
+}
+
+GatsbyLink.contextTypes = {
+  router: PropTypes.object,
+}
+
+export default GatsbyLink
+
+export const navigateTo = pathname => {
+  window.___navigateTo(pathname)
+}

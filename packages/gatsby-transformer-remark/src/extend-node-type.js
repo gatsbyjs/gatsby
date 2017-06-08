@@ -16,18 +16,18 @@ const Promise = require(`bluebird`)
 const prune = require(`underscore.string/prune`)
 
 let pluginsCacheStr = ``
-const astCacheKey = node => {
-  return `transformer-remark-markdown-ast-${node.contentDigest}-${pluginsCacheStr}`
-}
-const htmlCacheKey = node => {
-  return `transformer-remark-markdown-html-${node.contentDigest}-${pluginsCacheStr}`
-}
-const headingsCacheKey = node => {
-  return `transformer-remark-markdown-headings-${node.contentDigest}-${pluginsCacheStr}`
-}
+const astCacheKey = node =>
+  `transformer-remark-markdown-ast-${node.internal
+    .contentDigest}-${pluginsCacheStr}`
+const htmlCacheKey = node =>
+  `transformer-remark-markdown-html-${node.internal
+    .contentDigest}-${pluginsCacheStr}`
+const headingsCacheKey = node =>
+  `transformer-remark-markdown-headings-${node.internal
+    .contentDigest}-${pluginsCacheStr}`
 
 module.exports = (
-  { type, allNodes, linkPrefix, getNode, cache },
+  { type, store, linkPrefix, getNode, cache },
   pluginOptions
 ) => {
   if (type.name !== `MarkdownRemark`) {
@@ -37,8 +37,6 @@ module.exports = (
   pluginsCacheStr = pluginOptions.plugins.map(p => p.name).join(``)
 
   return new Promise((resolve, reject) => {
-    const files = allNodes.filter(n => n.type === `File`)
-
     // Setup Remark.
     const remark = new Remark({
       commonmark: true,
@@ -51,6 +49,9 @@ module.exports = (
       if (cachedAST) {
         return cachedAST
       } else {
+        const files = _.values(store.getState().nodes).filter(
+          n => n.internal.type === `File`
+        )
         const ast = await new Promise((resolve, reject) => {
           Promise.all(
             pluginOptions.plugins.map(plugin => {
@@ -68,7 +69,7 @@ module.exports = (
               }
             })
           ).then(() => {
-            const markdownAST = remark.parse(markdownNode.content)
+            const markdownAST = remark.parse(markdownNode.internal.content)
 
             // source => parse (can order parsing for dependencies) => typegen
             //
@@ -100,6 +101,9 @@ module.exports = (
             // every node type in DataTree gets a schema type automatically.
             // typegen plugins just modify the auto-generated types to add derived fields
             // as well as computationally expensive fields.
+            const files = _.values(store.getState().nodes).filter(
+              n => n.internal.type === `File`
+            )
             Promise.all(
               pluginOptions.plugins.map(plugin => {
                 const requiredPlugin = require(plugin.resolve)
@@ -134,10 +138,12 @@ module.exports = (
         return cachedHeadings
       } else {
         const ast = await getAST(markdownNode)
-        const headings = select(ast, `heading`).map(heading => ({
-          value: _.first(select(heading, `text`).map(text => text.value)),
-          depth: heading.depth,
-        }))
+        const headings = select(ast, `heading`).map(heading => {
+          return {
+            value: _.first(select(heading, `text`).map(text => text.value)),
+            depth: heading.depth,
+          }
+        })
 
         cache.set(headingsCacheKey(markdownNode), headings)
         return headings

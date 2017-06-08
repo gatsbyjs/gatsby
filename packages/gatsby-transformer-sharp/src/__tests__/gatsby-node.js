@@ -1,27 +1,29 @@
 const Promise = require(`bluebird`)
 
-const { onNodeCreate } = require(`../gatsby-node`)
+const { onCreateNode } = require(`../gatsby-node`)
 
 describe(`Process image nodes correctly`, () => {
   it(`correctly creates an ImageSharp node from a file image node`, async () => {
     const node = {
-      id: `whatever`,
-      contentDigest: `whatever`,
       extension: `png`,
+      id: `whatever`,
       children: [],
+      internal: {
+        contentDigest: `whatever`,
+      },
     }
     const createNode = jest.fn()
-    const updateNode = jest.fn()
-    const boundActionCreators = { createNode, updateNode }
+    const createParentChildLink = jest.fn()
+    const boundActionCreators = { createNode, createParentChildLink }
 
-    await onNodeCreate({
+    await onCreateNode({
       node,
       boundActionCreators,
     }).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
-      expect(updateNode.mock.calls).toMatchSnapshot()
+      expect(createParentChildLink.mock.calls).toMatchSnapshot()
       expect(createNode).toHaveBeenCalledTimes(1)
-      expect(updateNode).toHaveBeenCalledTimes(1)
+      expect(createParentChildLink).toHaveBeenCalledTimes(1)
     })
   })
 })

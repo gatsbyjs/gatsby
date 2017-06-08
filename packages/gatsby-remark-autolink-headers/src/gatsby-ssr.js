@@ -1,6 +1,6 @@
 import React from "react"
 
-exports.modifyHeadComponents = (args, pluginOptions) => {
+exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   let offsetY = 0
   if (pluginOptions.offsetY) {
     offsetY = pluginOptions.offsetY
@@ -46,8 +46,8 @@ exports.modifyHeadComponents = (args, pluginOptions) => {
     })
   `
 
-  return [
+  return setHeadComponents([
     <style type="text/css">{styles}</style>,
     <script dangerouslySetInnerHTML={{ __html: script }} />,
-  ]
+  ])
 }

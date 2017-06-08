@@ -3,6 +3,10 @@ const Promise = require(`bluebird`)
 const _ = require(`lodash`)
 const { composeWithDevTools } = require(`remote-redux-devtools`)
 const fs = require(`fs`)
+const EventEmitter = require(`eventemitter2`)
+
+// Create event emitter for actions
+const emitter = new EventEmitter()
 
 // Reducers
 const reducers = require(`./reducers`)
@@ -40,53 +44,53 @@ if (process.env.REDUX_DEVTOOLS === `true`) {
 
 // Persist state.
 const saveState = _.debounce(state => {
-  const pickedState = _.pick(state, [
-    `nodes`,
-    `status`,
-    `pages`,
-    `pageDataDependencies`,
-    `pageComponents`,
-  ])
+  const pickedState = _.pick(state, [`nodes`, `status`, `pageDataDependencies`])
   fs.writeFile(
     `${process.cwd()}/.cache/redux-state.json`,
     JSON.stringify(pickedState, null, 2),
-    () => {
-      console.log(`---saved redux state`)
-    }
+    () => {}
   )
 }, 1000)
 
 store.subscribe(() => {
+  const lastAction = store.getState().lastAction
+  emitter.emit(lastAction.type, lastAction)
+})
+
+emitter.onAny(() => {
   saveState(store.getState())
 })
 
+exports.emitter = emitter
 exports.store = store
-exports.getNodes = () => {
-  return _.values(store.getState().nodes)
-}
-const getNode = id => {
-  return store.getState().nodes[id]
-}
+exports.getNodes = () => _.values(store.getState().nodes)
+const getNode = id => store.getState().nodes[id]
 exports.getNode = getNode
 exports.hasNodeChanged = (id, digest) => {
   const node = store.getState().nodes[id]
   if (!node) {
     return true
   } else {
-    return node.contentDigest !== digest
+    return node.internal.contentDigest !== digest
   }
 }
 
 exports.loadNodeContent = node => {
-  if (node.content) {
-    return Promise.resolve(node.content)
+  if (node.internal.content) {
+    return Promise.resolve(node.internal.content)
   } else {
     return new Promise(resolve => {
       // Load plugin's loader function
       const plugin = store
         .getState()
-        .flattenedPlugins.find(plug => plug.name === node.pluginName)
+        .flattenedPlugins.find(plug => plug.name === node.internal.owner)
       const { loadNodeContent } = require(plugin.resolve)
+      if (!loadNodeContent) {
+        throw new Error(
+          `Could not find function loadNodeContent for plugin ${plugin.name}`
+        )
+      }
+
       return loadNodeContent(node).then(content => {
         // TODO update node's content field here.
         resolve(content)
@@ -96,9 +100,9 @@ exports.loadNodeContent = node => {
 }
 
 exports.getNodeAndSavePathDependency = (id, path) => {
-  const { addPageDependency } = require(`./actions/add-page-dependency`)
+  const { createPageDependency } = require(`./actions/add-page-dependency`)
   const node = getNode(id)
-  addPageDependency({ path, nodeId: id })
+  createPageDependency({ path, nodeId: id })
   return node
 }
 

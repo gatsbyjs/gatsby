@@ -15,14 +15,14 @@ const {
 } = require(`./infer-graphql-input-fields`)
 const { nodeInterface } = require(`./node-interface`)
 const { getNodes, getNode, getNodeAndSavePathDependency } = require(`../redux`)
-const { addPageDependency } = require(`../redux/actions/add-page-dependency`)
+const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 
-import type { ProcessedNodeType } from './infer-graphql-type'
+import type { ProcessedNodeType } from "./infer-graphql-type"
 
 type TypeMap = { [typeName: string]: ProcessedNodeType }
 
 module.exports = async () => {
-  const types = _.groupBy(getNodes(), node => node.type)
+  const types = _.groupBy(getNodes(), node => node.internal.type)
   const processedTypes: TypeMap = {}
 
   function createNodeFields(type: ProcessedNodeType) {
@@ -30,10 +30,6 @@ module.exports = async () => {
       id: {
         type: new GraphQLNonNull(GraphQLID),
         description: `The id of this node.`,
-      },
-      type: {
-        type: GraphQLString,
-        description: `The type of this node`,
       },
       parent: {
         type: nodeInterface,
@@ -55,7 +51,9 @@ module.exports = async () => {
     // "childrenMarkdownRemark".
     const childNodesByType = _(type.nodes)
       .flatMap(({ children }) => children.map(getNode))
-      .groupBy(node => _.camelCase(node.type))
+      .groupBy(
+        node => (node.internal ? _.camelCase(node.internal.type) : undefined)
+      )
       .value()
 
     Object.keys(childNodesByType).forEach(childNodeType => {
@@ -72,11 +70,13 @@ module.exports = async () => {
           resolve(node, a, { path }) {
             const filteredNodes = node.children
               .map(id => getNode(id))
-              .filter(({ type }) => _.camelCase(type) === childNodeType)
+              .filter(
+                ({ internal }) => _.camelCase(internal.type) === childNodeType
+              )
 
             // Add dependencies for the path
             filteredNodes.forEach(n =>
-              addPageDependency({ path, nodeId: n.id })
+              createPageDependency({ path, nodeId: n.id })
             )
             return filteredNodes
           },
@@ -88,11 +88,13 @@ module.exports = async () => {
           resolve(node, a, { path }) {
             const childNode = node.children
               .map(id => getNode(id))
-              .find(({ type }) => _.camelCase(type) === childNodeType)
+              .find(
+                ({ internal }) => _.camelCase(internal.type) === childNodeType
+              )
 
             if (childNode) {
               // Add dependencies for the path
-              addPageDependency({ path, nodeId: childNode.id })
+              createPageDependency({ path, nodeId: childNode.id })
               return childNode
             }
             return null
@@ -120,9 +122,10 @@ module.exports = async () => {
     intermediateType.name = typeName
     intermediateType.nodes = nodes
 
-    const fieldsFromPlugins = await apiRunner(`extendNodeType`, {
+    const fieldsFromPlugins = await apiRunner(`setFieldsOnGraphQLNodeType`, {
       type: intermediateType,
       allNodes: getNodes(),
+      traceId: `initial-setFieldsOnGraphQLNodeType`,
     })
 
     const mergedFieldsFromPlugins = _.merge(...fieldsFromPlugins)
@@ -131,7 +134,7 @@ module.exports = async () => {
       description: `Node of type ${typeName}`,
       interfaces: [nodeInterface],
       fields: () => createNodeFields(proccesedType),
-      isTypeOf: value => value.type === typeName,
+      isTypeOf: value => value.internal.type === typeName,
     })
 
     const proccesedType: ProcessedNodeType = {
@@ -147,7 +150,10 @@ module.exports = async () => {
         }),
         resolve(a, args, context) {
           const runSift = require(`./run-sift`)
-          const latestNodes = _.filter(getNodes(), n => n.type === typeName)
+          const latestNodes = _.filter(
+            getNodes(),
+            n => n.internal.type === typeName
+          )
           return runSift({
             args,
             nodes: latestNodes,

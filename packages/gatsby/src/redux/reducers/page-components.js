@@ -4,15 +4,16 @@ module.exports = (state = {}, action) => {
   switch (action.type) {
     case `DELETE_CACHE`:
       return {}
-    case `ADD_PAGE_COMPONENT`:
-      if (!_.has(state, `action.payload.componentPath`)) {
-        state[action.payload.componentPath] = {
+    case `CREATE_PAGE_COMPONENT`:
+      state[action.payload.componentPath] = _.merge(
+        {},
+        state[action.payload.componentPath],
+        {
           componentPath: action.payload.componentPath,
-          initialQueryRunComplete: false,
         }
-      }
+      )
       return state
-    case `SET_PAGE_COMPONENT_QUERY`:
+    case `REPLACE_PAGE_COMPONENT_QUERY`:
       state[action.payload.componentPath] = {
         ...state[action.payload.componentPath],
         query: action.payload.query,

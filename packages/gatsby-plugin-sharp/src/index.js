@@ -1,5 +1,5 @@
 const sharp = require(`sharp`)
-const qs = require(`qs`)
+const crypto = require(`crypto`)
 const imageSize = require(`image-size`)
 const _ = require(`lodash`)
 const Promise = require(`bluebird`)
@@ -7,7 +7,10 @@ const fs = require(`fs`)
 const ProgressBar = require(`progress`)
 const imagemin = require(`imagemin`)
 const imageminPngquant = require(`imagemin-pngquant`)
-const queue = require(`queue`)
+const queue = require(`async/queue`)
+const duotone = require(`./duotone`)
+
+const { boundActionCreators } = require(`gatsby/dist/redux/actions`)
 
 // Promisify the sharp prototype (methods) to promisify the alternative (for
 // raw) callback-accepting toBuffer(...) method
@@ -26,10 +29,20 @@ const bar = new ProgressBar(
     width: 30,
   }
 )
+
 const processFile = (file, jobs, cb) => {
-  Promise.all(jobs.map(job => job.finished)).then(() => cb())
+  totalJobs += jobs.length
+  bar.total = _.sumBy(
+    Object.keys(toProcess),
+    key => _.values(toProcess[key]).length
+  )
+
+  let imagesFinished = 0
+
+  // Wait for each job promise to resolve.
+  Promise.all(jobs.map(job => job.finishedPromise)).then(() => cb())
   const pipeline = sharp(file).rotate()
-  _.each(jobs, job => {
+  jobs.forEach(async job => {
     const args = job.args
     let clonedPipeline
     if (jobs.length > 1) {
@@ -44,23 +57,7 @@ const processFile = (file, jobs, cb) => {
       roundedHeight = Math.round(roundedHeight)
     }
     const roundedWidth = Math.round(args.width)
-    clonedPipeline = clonedPipeline
-      .resize(roundedWidth, roundedHeight)
-      // Use a more effective cropping strategy at the expense of some additional
-      // processing time (how much?).
-      .crop(sharp.strategy.attention)
-
-    clonedPipeline
-      .png({
-        compressionLevel: args.pngCompressionLevel,
-        adaptiveFiltering: false,
-        force: false,
-      })
-      .jpeg({
-        quality: args.quality,
-        progressive: args.jpegProgressive,
-        force: false,
-      })
+    clonedPipeline.resize(roundedWidth, roundedHeight).crop(args.cropFocus)
 
     // grayscale
     if (args.grayscale) {
@@ -72,9 +69,38 @@ const processFile = (file, jobs, cb) => {
       clonedPipeline = clonedPipeline.rotate(args.rotate)
     }
 
+    // duotone
+    if (args.duotone) {
+      clonedPipeline = await duotone(
+        args.duotone,
+        job.file.extension,
+        clonedPipeline
+      )
+    }
+
+    clonedPipeline
+      .png({
+        compressionLevel: args.pngCompressionLevel,
+        adaptiveFiltering: false,
+        force: args.toFormat === `png`,
+      })
+      .jpeg({
+        quality: args.quality,
+        progressive: args.jpegProgressive,
+        force: args.toFormat === `jpg`,
+      })
+
     if (job.file.extension.match(/^jp/)) {
       clonedPipeline.toFile(job.outputPath, (err, info) => {
+        imagesFinished += 1
         bar.tick()
+        boundActionCreators.setJob(
+          {
+            id: `processing image ${job.file.absolutePath}`,
+            imagesFinished,
+          },
+          { name: `gatsby-plugin-sharp` }
+        )
         job.outsideResolve(info)
       })
       // Compress pngs
@@ -84,13 +110,21 @@ const processFile = (file, jobs, cb) => {
           .buffer(sharpBuffer, {
             plugins: [
               imageminPngquant({
-                quality: `${args.quality}-${args.quality + 25}`, // e.g. 40-65
+                quality: `${args.quality}-${Math.min(args.quality + 25, 100)}`, // e.g. 40-65
               }),
             ],
           })
           .then(imageminBuffer => {
             fs.writeFile(job.outputPath, imageminBuffer, () => {
+              imagesFinished += 1
               bar.tick()
+              boundActionCreators.setJob(
+                {
+                  id: `processing image ${job.file.absolutePath}`,
+                  imagesFinished,
+                },
+                { name: `gatsby-plugin-sharp` }
+              )
               job.outsideResolve()
             })
           })
@@ -99,10 +133,11 @@ const processFile = (file, jobs, cb) => {
   })
 }
 
-let totalCount = 0
+let totalJobs = 0
 const toProcess = {}
-const q = queue()
-q.concurrency = 1
+const q = queue((task, callback) => {
+  task(callback)
+}, 1)
 
 const queueJob = job => {
   const inputFileKey = job.file.absolutePath.replace(/\./g, `%2E`)
@@ -119,31 +154,46 @@ const queueJob = job => {
     return
   }
 
-  totalCount += 1
-
   let notQueued = true
   if (toProcess[inputFileKey]) {
     notQueued = false
   }
   _.set(
     toProcess,
-    `${job.file.absolutePath.replace(/\./g, `%2E`)}.${job.outputPath.replace(/\./g, `%2E`)}`,
+    `${job.file.absolutePath.replace(/\./g, `%2E`)}.${job.outputPath.replace(
+      /\./g,
+      `%2E`
+    )}`,
     job
   )
+
+  // totalJobs += 1
   if (notQueued) {
     q.push(cb => {
+      // console.log("processing image", job.file.absolutePath)
+      boundActionCreators.createJob(
+        {
+          id: `processing image ${job.file.absolutePath}`,
+          imagesCount: _.values(toProcess[inputFileKey]).length,
+        },
+        { name: `gatsby-plugin-sharp` }
+      )
       // We're now processing the file's jobs.
       processFile(
         job.file.absolutePath,
         _.values(toProcess[inputFileKey]),
         () => {
+          boundActionCreators.endJob(
+            {
+              id: `processing image ${job.file.absolutePath}`,
+            },
+            { name: `gatsby-plugin-sharp` }
+          )
           cb()
         }
       )
     })
   }
-
-  bar.total = totalCount
 }
 
 function queueImageResizing({ file, args = {} }) {
@@ -153,7 +203,9 @@ function queueImageResizing({ file, args = {} }) {
     jpegProgressive: true,
     pngCompressionLevel: 9,
     grayscale: false,
+    duotone: false,
     linkPrefix: ``,
+    toFormat: ``,
   }
   const options = _.defaults(args, defaultArgs)
   // Filter out false args, and args not for this extension and put width at
@@ -173,11 +225,21 @@ function queueImageResizing({ file, args = {} }) {
     return true
   })
   const sortedArgs = _.sortBy(filteredArgs, arg => arg[0] === `width`)
-  const imgSrc = `/${file.contentDigest}-${qs.stringify(_.fromPairs(sortedArgs))}.${file.extension}`
+  const fileExtension = options.toFormat ? options.toFormat : file.extension
+
+  const argsDigest = crypto
+    .createHash(`md5`)
+    .update(JSON.stringify(sortedArgs))
+    .digest(`hex`)
+
+  const argsDigestShort = argsDigest.substr(argsDigest.length - 5)
+
+  const imgSrc = `/${file.internal
+    .contentDigest}-${argsDigestShort}.${fileExtension}`
   const filePath = `${process.cwd()}/public${imgSrc}`
   // Create function to call when the image is finished.
   let outsideResolve
-  const finished = new Promise(resolve => {
+  const finishedPromise = new Promise(resolve => {
     outsideResolve = resolve
   })
 
@@ -203,11 +265,12 @@ function queueImageResizing({ file, args = {} }) {
   const job = {
     file,
     args: options,
-    finished,
+    finishedPromise,
     outsideResolve,
     inputPath: file.absolutePath,
     outputPath: filePath,
   }
+
   queueJob(job)
 
   // Prefix the image src.
@@ -219,7 +282,7 @@ function queueImageResizing({ file, args = {} }) {
     width,
     height,
     aspectRatio,
-    finished,
+    finishedPromise,
   }
 }
 
@@ -230,20 +293,24 @@ async function notMemoizedbase64({ file, args = {} }) {
     jpegProgressive: true,
     pngCompressionLevel: 9,
     grayscale: false,
+    duotone: false,
+    toFormat: ``,
   }
   const options = _.defaults(args, defaultArgs)
   let pipeline = sharp(file.absolutePath).rotate()
+
   pipeline
     .resize(options.width, options.height)
+    .crop(options.cropFocus)
     .png({
       compressionLevel: options.pngCompressionLevel,
       adaptiveFiltering: false,
-      force: false,
+      force: args.toFormat === `png`,
     })
     .jpeg({
       quality: options.quality,
       progressive: options.jpegProgressive,
-      force: false,
+      force: args.toFormat === `jpg`,
     })
 
   // grayscale
@@ -254,6 +321,11 @@ async function notMemoizedbase64({ file, args = {} }) {
   // rotate
   if (options.rotate) {
     pipeline = pipeline.rotate(options.rotate)
+  }
+
+  // duotone
+  if (options.duotone) {
+    pipeline = await duotone(options.duotone, file.extension, pipeline)
   }
 
   const [buffer, info] = await pipeline.toBufferAsync()
@@ -282,10 +354,17 @@ async function responsiveSizes({ file, args = {} }) {
     jpegProgressive: true,
     pngCompressionLevel: 9,
     grayscale: false,
+    duotone: false,
     linkPrefix: ``,
+    toFormat: ``,
   }
   const options = _.defaults(args, defaultArgs)
   options.maxWidth = parseInt(options.maxWidth, 10)
+
+  // If the users didn't set a default sizes, we'll make one.
+  if (!options.sizes) {
+    options.sizes = `(max-width: ${options.maxWidth}px) 100vw, ${options.maxWidth}px`
+  }
 
   // Create sizes (in width) for the image. If the max width of the container
   // for the rendered markdown file is 800px, the sizes would then be: 200,
@@ -330,10 +409,17 @@ async function responsiveSizes({ file, args = {} }) {
     })
   })
 
+  const base64Args = {
+    duotone: options.duotone,
+    grayscale: options.grayscale,
+    rotate: options.rotate,
+  }
+
   // Get base64 version
-  const base64Image = await base64({ file })
+  const base64Image = await base64({ file, args: base64Args })
 
   // Construct src and srcSet strings.
+  const originalImg = _.maxBy(images, image => image.width).src
   const fallbackSrc = _.minBy(images, image =>
     Math.abs(options.maxWidth - image.width)
   ).src
@@ -346,6 +432,8 @@ async function responsiveSizes({ file, args = {} }) {
     aspectRatio: images[0].aspectRatio,
     src: fallbackSrc,
     srcSet,
+    sizes: options.sizes,
+    originalImage: originalImg,
   }
 }
 
@@ -356,7 +444,9 @@ async function responsiveResolution({ file, args = {} }) {
     jpegProgressive: true,
     pngCompressionLevel: 9,
     grayscale: false,
+    duotone: false,
     linkPrefix: ``,
+    toFormat: ``,
   }
   const options = _.defaults(args, defaultArgs)
   options.width = parseInt(options.width, 10)
@@ -375,12 +465,14 @@ async function responsiveResolution({ file, args = {} }) {
   // requested, add back the original so there's at least something)
   if (filteredSizes.length === 0) {
     filteredSizes.push(dimensions.width)
-    console.warn(`
+    console.warn(
+      `
                  The requested width "${options.width}px" for a responsiveResolution field for
                  the file ${file.absolutePath}
                  was wider than the actual image width of ${dimensions.width}px!
                  If possible, replace the current image with a larger one.
-                 `)
+                 `
+    )
   }
 
   // Sort sizes for prettiness.
@@ -402,8 +494,14 @@ async function responsiveResolution({ file, args = {} }) {
     })
   })
 
+  const base64Args = {
+    duotone: options.duotone,
+    grayscale: options.grayscale,
+    rotate: options.rotate,
+  }
+
   // Get base64 version
-  const base64Image = await base64({ file })
+  const base64Image = await base64({ file, args: base64Args })
 
   const fallbackSrc = images[0].src
   const srcSet = images
@@ -438,7 +536,6 @@ async function responsiveResolution({ file, args = {} }) {
   }
 }
 
-exports.queue = q
 exports.queueImageResizing = queueImageResizing
 exports.base64 = base64
 exports.responsiveSizes = responsiveSizes

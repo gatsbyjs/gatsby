@@ -31,7 +31,9 @@ Object {
     "jsonName": "hi.json",
     "path": "/hi/",
   },
-  "type": "UPSERT_PAGE",
+  "plugin": "",
+  "traceId": undefined,
+  "type": "CREATE_PAGE",
 }
 `;
 
@@ -60,7 +62,9 @@ Object {
     "jsonName": "hi.json",
     "path": "/hi/",
   },
-  "type": "UPSERT_PAGE",
+  "plugin": "",
+  "traceId": undefined,
+  "type": "CREATE_PAGE",
 }
 `;
 
@@ -78,6 +82,8 @@ Array [
   },
 ]
 `;
+
+exports[`Add pages allows you to delete paths 1`] = `Array []`;
 
 exports[`Add pages allows you to update existing pages (based on path) 1`] = `
 Array [

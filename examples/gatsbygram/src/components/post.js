@@ -115,7 +115,9 @@ class Post extends React.Component {
                 fontSize: `90%`,
                 marginRight: rhythm(1 / 4),
               }}
-            /> {likes}
+            />
+            {` `}
+            {likes}
           </div>}
       </Link>
     )

@@ -1,6 +1,39 @@
 // @flow
 const _ = require(`lodash`)
 const flatten = require(`flat`)
+const typeOf = require(`type-of`)
+
+const createKey = require(`./create-key`)
+
+const INVALID_VALUE = Symbol(`INVALID_VALUE`)
+const isDefined = v => v != null
+
+const isSameType = (a, b) => a == null || b == null || typeOf(a) === typeOf(b)
+const areAllSameType = list =>
+  list.every((current, i) => {
+    let prev = i ? list[i - 1] : undefined
+    return isSameType(prev, current)
+  })
+
+const isEmptyObjectOrArray = (obj: any): boolean => {
+  if (obj === INVALID_VALUE) {
+    return true
+    // Simple "is object empty" check.
+  } else if (_.isObject(obj) && _.isEmpty(obj)) {
+    return true
+  } else if (_.isObject(obj)) {
+    return _.every(obj, (value, key) => {
+      if (!isDefined(value)) {
+        return true
+      } else if (_.isObject(value)) {
+        return isEmptyObjectOrArray(value)
+      } else {
+        return false
+      }
+    })
+  }
+  return false
+}
 
 /**
  * Takes an array of source nodes and returns a pristine
@@ -14,24 +47,38 @@ const flatten = require(`flat`)
  *
  * @param {*Nodes} args
  */
-export const extractFieldExamples = (nodes: any[]) => {
+const extractFieldExamples = (nodes: any[]) =>
   // $FlowFixMe
-  return _.mergeWith({}, ...nodes, (obj, next) => {
-    if (!_.isArray(obj || next)) return
-    let array = [].concat(obj, next).filter(v => v != null)
+  _.mergeWith(
+    _.isArray(nodes[0]) ? [] : {},
+    ...nodes,
+    (obj, next, key, po, pn, stack) => {
+      if (obj === INVALID_VALUE) return obj
 
-    if (!array.length) return null
+      // TODO: if you want to support infering Union types this should be handled
+      // differently. Maybe merge all like types into examples for each type?
+      // e.g. union: [1, { foo: true }, ['brown']] -> Union Int|Object|List
+      if (!isSameType(obj, next)) return INVALID_VALUE
 
-    // primitive values don't get merged further, just take the first item
-    if (!_.isObject(array[0])) {
-      return array.slice(0, 1)
+      if (!_.isArray(obj || next)) {
+        if (obj === null) return next
+        if (next === null) return obj
+        return undefined
+      }
+
+      let array = [].concat(obj, next).filter(isDefined)
+
+      if (!array.length) return null
+      if (!areAllSameType(array)) return INVALID_VALUE
+
+      // primitive values don't get merged further, just take the first item
+      if (!_.isObject(array[0])) return array.slice(0, 1)
+      let merged = extractFieldExamples(array)
+      return isDefined(merged) ? [merged] : null
     }
+  )
 
-    return [extractFieldExamples(array)]
-  })
-}
-
-export const buildFieldEnumValues = (nodes: any[]) => {
+const buildFieldEnumValues = (nodes: any[]) => {
   const enumValues = {}
   const values = flatten(extractFieldExamples(nodes), {
     maxDepth: 3,
@@ -39,8 +86,15 @@ export const buildFieldEnumValues = (nodes: any[]) => {
   })
   Object.keys(values).forEach(field => {
     if (values[field] == null) return
-    enumValues[field.replace(/\./g, `___`)] = { field }
+    enumValues[createKey(field)] = { field }
   })
 
   return enumValues
+}
+
+module.exports = {
+  INVALID_VALUE,
+  extractFieldExamples,
+  buildFieldEnumValues,
+  isEmptyObjectOrArray,
 }

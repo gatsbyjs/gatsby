@@ -1,5 +1,4 @@
 import React from "react"
-import DocumentTitle from "react-document-title"
 import { GoogleFont, TypographyStyle } from "react-typography"
 
 import typography from "./utils/typography"
@@ -16,7 +15,6 @@ if (process.env.NODE_ENV === `production`) {
 
 module.exports = React.createClass({
   render() {
-    const title = DocumentTitle.rewind()
     let css
     if (process.env.NODE_ENV === `production`) {
       css = (
@@ -60,7 +58,7 @@ module.exports = React.createClass({
         </head>
         <body>
           <div
-            id="react-mount"
+            id="___gatsby"
             dangerouslySetInnerHTML={{ __html: this.props.body }}
           />
           {this.props.postBodyComponents}

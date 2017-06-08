@@ -10,23 +10,25 @@ function queryResult(nodes, fragment, { types = [] } = {}) {
   const schema = new GraphQLSchema({
     query: new GraphQLObjectType({
       name: `RootQueryType`,
-      fields: () => ({
-        listNode: {
-          name: `LISTNODE`,
-          type: new GraphQLList(
-            new GraphQLObjectType({
-              name: `Test`,
-              fields: inferObjectStructureFromNodes({
-                nodes,
-                types: [{ name: `Test` }, ...types],
-              }),
-            })
-          ),
-          resolve() {
-            return nodes
+      fields: () => {
+        return {
+          listNode: {
+            name: `LISTNODE`,
+            type: new GraphQLList(
+              new GraphQLObjectType({
+                name: `Test`,
+                fields: inferObjectStructureFromNodes({
+                  nodes,
+                  types: [{ name: `Test` }, ...types],
+                }),
+              })
+            ),
+            resolve() {
+              return nodes
+            },
           },
-        },
-      }),
+        }
+      },
     }),
   })
 
@@ -47,6 +49,7 @@ describe(`GraphQL type inferance`, () => {
       id: `foo`,
       name: `The Mad Max`,
       type: `Test`,
+      "key-with..unsupported-values": true,
       hair: 1,
       date: `1012-11-01`,
       anArray: [1, 2, 3, 4],
@@ -92,6 +95,20 @@ describe(`GraphQL type inferance`, () => {
   it(`filters out null example values`, async () => {
     let result = await queryResult(
       [{ foo: null, bar: `baz` }],
+      `
+        foo
+        bar
+      `
+    )
+    expect(result.errors.length).toEqual(1)
+    expect(result.errors[0].message).toMatch(
+      `Cannot query field "foo" on type "Test".`
+    )
+  })
+
+  it(`filters out empty objects`, async () => {
+    let result = await queryResult(
+      [{ foo: {}, bar: `baz` }],
       `
         foo
         bar
@@ -150,7 +167,7 @@ describe(`GraphQL type inferance`, () => {
       types: [{ name: `Test` }],
     })
 
-    expect(Object.keys(fields)).toHaveLength(1)
+    expect(Object.keys(fields)).toHaveLength(2)
     expect(Object.keys(fields.foo.type.getFields())).toHaveLength(4)
   })
 
@@ -177,11 +194,11 @@ describe(`GraphQL type inferance`, () => {
 
       store.dispatch({
         type: `CREATE_NODE`,
-        payload: { id: `child_1`, type: `Child`, hair: `brown` },
+        payload: { id: `child_1`, internal: { type: `Child` }, hair: `brown` },
       })
       store.dispatch({
         type: `CREATE_NODE`,
-        payload: { id: `child_2`, type: `Child`, hair: `blonde` },
+        payload: { id: `child_2`, internal: { type: `Child` }, hair: `blonde` },
       })
     })
 
@@ -230,7 +247,7 @@ describe(`GraphQL type inferance`, () => {
     it(`Errors clearly when missing types`, async () => {
       store.dispatch({
         type: `CREATE_NODE`,
-        payload: { id: `baz`, type: `Bar` },
+        payload: { id: `baz`, internal: { type: `Bar` } },
       })
 
       expect(() => {
@@ -246,8 +263,8 @@ describe(`GraphQL type inferance`, () => {
     })
   })
 
-  it(`Infers graphql type from array of nodes`, () => {
-    return queryResult(
+  it(`Infers graphql type from array of nodes`, () =>
+    queryResult(
       nodes,
       `
         hair,
@@ -279,6 +296,5 @@ describe(`GraphQL type inferance`, () => {
           date(formatString: "YYYY")
         }
     `
-    ).then(result => expect(result).toMatchSnapshot())
-  })
+    ).then(result => expect(result).toMatchSnapshot()))
 })

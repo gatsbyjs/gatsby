@@ -1,26 +1,25 @@
 const visit = require(`unist-util-visit`)
-const Prism = require(`prismjs`)
+
+const parseLineNumberRange = require(`./parse-line-number-range`)
+const highlightCode = require(`./highlight-code`)
 
 module.exports = ({ markdownAST }) => {
   visit(markdownAST, `code`, node => {
     let language = node.lang
+    let { splitLanguage, highlightLines } = parseLineNumberRange(language)
+    language = splitLanguage
+
     if (language) {
       language = language.toLowerCase()
     }
 
-    // (Try to) load languages on demand.
-    if (!Prism.languages[node.lang]) {
-      try {
-        require(`prismjs/components/prism-${node.lang}.js`)
-      } catch (e) {
-        // Language wasn't loaded so let's bail.
-        return
-      }
-    }
-
-    const lang = Prism.languages[node.lang]
     node.data = {
-      hChildren: [{ type: `raw`, value: Prism.highlight(node.value, lang) }],
+      hChildren: [
+        {
+          type: `raw`,
+          value: highlightCode(language, node.value, highlightLines),
+        },
+      ],
     }
   })
 }

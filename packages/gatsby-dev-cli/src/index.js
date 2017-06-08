@@ -52,17 +52,20 @@ if (pathToRepo) {
 const gatsbyLocation = conf.get(`gatsby-location`)
 
 if (!gatsbyLocation) {
-  console.error(`
+  console.error(
+    `
 You haven't set the path yet to your cloned
 version of Gatsby. Do so now by running:
 
 gatsby-dev --set-path-to-repo /path/to/my/cloned/version/gatsby
-`)
+`
+  )
   process.exit()
 }
 
 if (!argv.packages && _.isEmpty(gatsbyPackages)) {
-  console.error(`
+  console.error(
+    `
 You haven't got any gatsby dependencies into your current package.json
 
 You probably want to pass in a list of packages to start
@@ -72,7 +75,8 @@ gatsby-dev --packages gatsby gatsby-transformer-remark
 
 If you prefer to place them in your package.json dependencies instead,
 gatsby-dev will pick them up.
-`)
+`
+  )
   process.exit()
 }
 

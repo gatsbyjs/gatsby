@@ -15,7 +15,7 @@ process.on(`unhandledRejection`, error => {
   console.error(`UNHANDLED REJECTION`, error.stack)
 })
 
-const defaultHost = process.platform === `win32` ? `localhost` : `0.0.0.0`
+const defaultHost = `localhost`
 
 const directory = path.resolve(`.`)
 
@@ -68,17 +68,17 @@ program
   })
 
 program
-  .command(`serve-build`)
+  .command(`serve`)
   .description(`Serve built site.`)
   .option(
     `-H, --host <url>`,
     `Set host. Defaults to ${defaultHost}`,
     defaultHost
   )
-  .option(`-p, --port <port>`, `Set port. Defaults to 8000`, `8000`)
+  .option(`-p, --port <port>`, `Set port. Defaults to 9000`, `9000`)
   .option(`-o, --open`, `Open the site in your browser for you.`)
   .action(command => {
-    const serve = require(`../utils/serve-build`)
+    const serve = require(`../utils/serve`)
     const p = {
       ...command,
       directory,
@@ -95,10 +95,12 @@ program
   })
 
 program.on(`--help`, () => {
-  console.log(`To show subcommand help:
+  console.log(
+    `To show subcommand help:
 
     gatsby [command] -h
-`)
+`
+  )
 })
 
 // If the user types an unknown sub-command, just display the help.

@@ -2,6 +2,7 @@
 const express = require(`express`)
 const graphqlHTTP = require(`express-graphql`)
 const glob = require(`glob`)
+const request = require(`request`)
 const webpackRequire = require(`webpack-require`)
 const bootstrap = require(`../bootstrap`)
 const webpack = require(`webpack`)
@@ -12,6 +13,14 @@ const rl = require(`readline`)
 const parsePath = require(`parse-filepath`)
 const _ = require(`lodash`)
 const { store } = require(`../redux`)
+const copyStaticDirectory = require(`./copy-static-directory`)
+
+// Watch the static directory and copy files to public as they're added or
+// changed. Wait 10 seconds so copying doesn't interfer with the regular
+// bootstrap.
+setTimeout(() => {
+  copyStaticDirectory()
+}, 10000)
 
 const rlInterface = rl.createInterface({
   input: process.stdin,
@@ -36,10 +45,10 @@ async function startServer(program) {
   const devConfig = compilerConfig.resolve()
   const compiler = webpack(devConfig)
 
-  const HTMLPath = glob.sync(`${directory}/src/html.*`)[0]
+  let HTMLPath = glob.sync(`${directory}/src/html.*`)[0]
   // Check if we can't find an html component in root of site.
   if (!HTMLPath) {
-    throw new Error(`Couldn't find an /src/html.* file`)
+    HTMLPath = `${directory}/.cache/default-html.js`
   }
 
   // We use the program port not the webpack-dev-server port as if you import
@@ -76,13 +85,14 @@ async function startServer(program) {
       })
     )
     app.use(
-      `/graphql`,
+      `/___graphql`,
       graphqlHTTP({
         schema: store.getState().schema,
         graphiql: true,
       })
     )
     let htmlStr
+    // Render an HTML page and serve it.
     app.use((req, res, next) => {
       const parsedPath = parsePath(req.originalUrl)
       if (parsedPath.extname === `` || parsedPath.extname === `.html`) {
@@ -91,18 +101,35 @@ async function startServer(program) {
         } else {
           try {
             const apiRunner = require(`${directory}/.cache/api-runner-ssr`)
+
+            let headComponents = []
+            let postBodyComponents = []
+            let bodyProps = {}
+
+            const setHeadComponents = components => {
+              headComponents = headComponents.concat(components)
+            }
+
+            const setPostBodyComponents = components => {
+              postBodyComponents = postBodyComponents.concat(components)
+            }
+
+            const setBodyProps = props => {
+              bodyProps = _.merge({}, bodyProps, props)
+            }
+            apiRunner(`onRenderBody`, {
+              setHeadComponents,
+              setPostBodyComponents,
+              setBodyProps,
+            })
+
             const htmlElement = React.createElement(HTML, {
+              ...bodyProps,
               body: ``,
-              headComponents: _.flattenDeep(
-                apiRunner(`modifyHeadComponents`, { headComponents: [] }, [])
-              ),
-              postBodyComponents: _.flattenDeep(
-                apiRunner(
-                  `modifyPostBodyComponents`,
-                  { headComponents: [] },
-                  []
-                )
-              ).concat([<script src="/commons.js" />]),
+              headComponents,
+              postBodyComponents: postBodyComponents.concat([
+                <script src="/commons.js" />,
+              ]),
             })
             htmlStr = ReactDOMServer.renderToStaticMarkup(htmlElement)
             htmlStr = `<!DOCTYPE html>\n${htmlStr}`
@@ -122,6 +149,17 @@ async function startServer(program) {
         publicPath: devConfig.output.publicPath,
       })
     )
+
+    // Set up API proxy.
+    const { proxy } = store.getState().config
+    if (proxy) {
+      const { prefix, url } = proxy
+      app.use(`${prefix}/*`, (req, res) => {
+        const proxiedUrl = url + req.originalUrl
+        req.pipe(request(proxiedUrl)).pipe(res)
+      })
+    }
+
     // As last step, check if the file exists in the public folder.
     app.get(`*`, (req, res) => {
       // Load file but ignore errors.
@@ -149,8 +187,16 @@ async function startServer(program) {
           const opn = require(`opn`)
           opn(`http://${listener.address().address}:${listener.address().port}`)
         }
+        const host = listener.address().address === `127.0.0.1`
+          ? `localhost`
+          : listener.address().address
         console.log(
-          `Listening at: http://${listener.address().address}:${listener.address().port}`
+          `
+The development server is listening at: http://${host}:${listener.address()
+            .port}
+GraphiQL can be accessed at: http://${host}:${listener.address()
+            .port}/___graphql
+          `
         )
       }
     })

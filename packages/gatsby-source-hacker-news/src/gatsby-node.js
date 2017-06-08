@@ -3,11 +3,10 @@ const crypto = require(`crypto`)
 const url = require(`url`)
 const _ = require(`lodash`)
 
-const get = query => {
-  return axios.get(
+const get = query =>
+  axios.get(
     `https://www.graphqlhub.com/graphql?query=${encodeURIComponent(query)}`
   )
-}
 
 exports.sourceNodes = async ({
   boundActionCreators,
@@ -15,17 +14,14 @@ exports.sourceNodes = async ({
   hasNodeChanged,
 }) => {
   const { createNode, updateSourcePluginStatus } = boundActionCreators
-  updateSourcePluginStatus({
-    plugin: `gatsby-source-hacker-news`,
-    ready: false,
-  })
 
   // Do the initial fetch
   console.time(`fetch HN data`)
   console.log(
     `starting to fetch data from the Hacker News GraphQL API. Warning, this can take a long time e.g. 10-20 seconds`
   )
-  const result = await get(`
+  const result = await get(
+    `
 {
   hn {
     topStories(limit: 30) {
@@ -74,7 +70,8 @@ fragment commentsFragment on HackerNewsItem {
     id
   }
 }
-  `)
+  `
+  )
   console.timeEnd(`fetch HN data`)
 
   // Create top-story nodes.
@@ -103,13 +100,15 @@ fragment commentsFragment on HackerNewsItem {
 
     const storyNode = {
       ...kidLessStory,
+      children: kids.kids.map(k => k.id),
+      parent: `__SOURCE__`,
+      content: storyStr,
+      internal: {
+        type: `HNStory`,
+        mediaType: `application/json`,
+      },
       domain,
       order: i + 1,
-      parent: `__SOURCE__`,
-      type: `HNStory`,
-      children: [...kids.kids.map(k => k.id)],
-      content: storyStr,
-      mediaType: `application/json`,
     }
 
     // Just store the user id
@@ -121,7 +120,7 @@ fragment commentsFragment on HackerNewsItem {
       .update(JSON.stringify(storyNode))
       .digest(`hex`)
 
-    storyNode.contentDigest = contentDigest
+    storyNode.internal.contentDigest = contentDigest
 
     createNode(storyNode)
 
@@ -133,11 +132,13 @@ fragment commentsFragment on HackerNewsItem {
         }
         let commentNode = {
           ..._.omit(comment, `kids`),
-          order: i + 1,
-          type: `HNComment`,
+          children: comment.kids.map(k => k.id),
           parent,
-          children: [...comment.kids.map(k => k.id)],
-          mediaType: `application/json`,
+          internal: {
+            type: `HNComment`,
+            mediaType: `application/json`,
+          },
+          order: i + 1,
         }
 
         commentNode.by = commentNode.by.id
@@ -149,8 +150,8 @@ fragment commentsFragment on HackerNewsItem {
           .update(nodeStr)
           .digest(`hex`)
 
-        commentNode.contentDigest = contentDigest
-        commentNode.content = nodeStr
+        commentNode.internal.contentDigest = contentDigest
+        commentNode.internal.content = nodeStr
 
         createNode(commentNode)
 
@@ -164,10 +165,6 @@ fragment commentsFragment on HackerNewsItem {
   })
 
   const ready = true
-  updateSourcePluginStatus({
-    plugin: `gatsby-source-hacker-news`,
-    status: { ready },
-  })
 
   return
 }

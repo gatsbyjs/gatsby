@@ -1,4 +1,5 @@
 {
+  "parser": "babel-eslint",
   "extends": [
     "google",
     "eslint:recommended",
@@ -32,13 +33,17 @@
       "error",
       "backtick"
     ],
+    "consistent-return": [
+      "error",
+    ],
+    "arrow-body-style": [
+      "error",
+      "as-needed",
+      { "requireReturnForObjectLiteral": true }
+    ],
     "jsx-quotes": [
       "error",
       "prefer-double"
-    ],
-    "max-len": [
-      "error",
-      80
     ],
     "semi": [
       "error",
@@ -56,6 +61,12 @@
         "imports": "always-multiline",
         "exports": "always-multiline",
         "functions": "ignore"
+      }
+    ],
+    "react/prop-types": [
+      "error",
+      {
+        "ignore": ["children"]
       }
     ]
   }

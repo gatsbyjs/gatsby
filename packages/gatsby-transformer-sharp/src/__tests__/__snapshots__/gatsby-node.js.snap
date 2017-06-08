@@ -5,12 +5,13 @@ Array [
   Array [
     Object {
       "children": Array [],
-      "contentDigest": "whatever",
       "id": "whatever >> ImageSharp",
-      "logical": true,
-      "mediaType": undefined,
+      "internal": Object {
+        "contentDigest": "whatever",
+        "mediaType": undefined,
+        "type": "ImageSharp",
+      },
       "parent": "whatever",
-      "type": "ImageSharp",
     },
   ],
 ]
@@ -20,12 +21,24 @@ exports[`Process image nodes correctly correctly creates an ImageSharp node from
 Array [
   Array [
     Object {
-      "children": Array [
-        "whatever >> ImageSharp",
-      ],
-      "contentDigest": "whatever",
-      "extension": "png",
-      "id": "whatever",
+      "child": Object {
+        "children": Array [],
+        "id": "whatever >> ImageSharp",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": undefined,
+          "type": "ImageSharp",
+        },
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "extension": "png",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+        },
+      },
     },
   ],
 ]

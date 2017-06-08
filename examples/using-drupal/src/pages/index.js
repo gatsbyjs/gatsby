@@ -14,7 +14,7 @@ class IndexPage extends React.Component {
             name = article.author.name
           }
           return (
-            <div>
+            <div key={article.nid}>
               <Link to={`/node/${article.nid}/`}>
                 <h4>
                   <span style={{ color: `gray` }}>{article.created}</span>

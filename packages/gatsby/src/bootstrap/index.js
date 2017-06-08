@@ -6,15 +6,21 @@ const slash = require(`slash`)
 const fs = require(`fs-extra`)
 const md5File = require(`md5-file/promise`)
 const crypto = require(`crypto`)
-const path = require(`path`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const { graphql } = require(`graphql`)
-const { store } = require(`../redux`)
+const { store, emitter } = require(`../redux`)
 const { boundActionCreators } = require(`../redux/actions`)
 const loadPlugins = require(`./load-plugins`)
-const jsPageCreator = require(`./js-page-creator`)
 const { initCache } = require(`../utils/cache`)
+
+const {
+  extractQueries,
+} = require(`../internal-plugins/query-runner/query-watcher`)
+const {
+  runQueries,
+} = require(`../internal-plugins/query-runner/page-query-runner`)
+const { writePages } = require(`../internal-plugins/query-runner/pages-writer`)
 
 // Override console.log to add the source file + line number.
 // Useful for debugging if you lose a console.log somewhere.
@@ -22,12 +28,16 @@ const { initCache } = require(`../utils/cache`)
 // require(`./log-line-function`)
 
 // Start off the query running.
-const QueryRunner = require(`../query-runner`)
+const QueryRunner = require(`../internal-plugins/query-runner`)
 
 const preferDefault = m => (m && m.default) || m
 
 module.exports = async (program: any) => {
-  console.log(`lib/bootstrap/index.js time since started:`, process.uptime())
+  console.log(
+    `lib/bootstrap/index.js time since started:`,
+    process.uptime(),
+    `sec`
+  )
 
   // Fix program directory path for windows env
   program.directory = slash(program.directory)
@@ -41,14 +51,12 @@ module.exports = async (program: any) => {
 
   // Try opening the site's gatsby-config.js file.
   console.time(`open and validate gatsby-config.js`)
-  let config = {}
+  let config
   try {
     // $FlowFixMe
     config = preferDefault(require(`${program.directory}/gatsby-config`))
   } catch (e) {
-    console.log(`Couldn't open your gatsby-config.js file`)
-    console.log(e)
-    process.exit()
+    // Ignore. Having a config isn't required.
   }
 
   store.dispatch({
@@ -71,14 +79,14 @@ module.exports = async (program: any) => {
   const pluginVersions = flattenedPlugins.map(p => p.version)
   const hashes = await Promise.all([
     md5File(`package.json`),
-    md5File(`gatsby-config.js`),
-    md5File(`gatsby-node.js`),
+    Promise.resolve(md5File(`gatsby-config.js`).catch(() => {})), // ignore as this file isn't required),
+    Promise.resolve(md5File(`gatsby-node.js`).catch(() => {})), // ignore as this file isn't required),
   ])
   const pluginsHash = crypto
     .createHash(`md5`)
     .update(JSON.stringify(pluginVersions.concat(hashes)))
     .digest(`hex`)
-  const state = store.getState()
+  let state = store.getState()
   const oldPluginsHash = state && state.status ? state.status.PLUGINS_HASH : ``
 
   // Check if anything has changed. If it has, delete the site's .cache
@@ -86,13 +94,17 @@ module.exports = async (program: any) => {
   //
   // Also if the hash isn't there, then delete things just in case something
   // is weird.
-  if (!oldPluginsHash || pluginsHash !== oldPluginsHash) {
-    console.log(`
+  if (oldPluginsHash && pluginsHash !== oldPluginsHash) {
+    console.log(
+      `
 One or more of your plugins have changed since the last time you ran Gatsby. As
 a precaution, we're deleting your site's cache to ensure there's not any stale
 data
-`)
+`
+    )
+  }
 
+  if (!oldPluginsHash || pluginsHash !== oldPluginsHash) {
     try {
       await fs.remove(`${program.directory}/.cache`)
     } catch (e) {
@@ -138,31 +150,39 @@ data
     glob.sync(`${plugin.resolve}/gatsby-${env}*`)[0]
 
   const ssrPlugins = _.filter(
-    flattenedPlugins.map(plugin => ({
-      resolve: hasAPIFile(`ssr`, plugin),
-      options: plugin.pluginOptions,
-    })),
+    flattenedPlugins.map(plugin => {
+      return {
+        resolve: hasAPIFile(`ssr`, plugin),
+        options: plugin.pluginOptions,
+      }
+    }),
     plugin => plugin.resolve
   )
   const browserPlugins = _.filter(
-    flattenedPlugins.map(plugin => ({
-      resolve: hasAPIFile(`browser`, plugin),
-      options: plugin.pluginOptions,
-    })),
+    flattenedPlugins.map(plugin => {
+      return {
+        resolve: hasAPIFile(`browser`, plugin),
+        options: plugin.pluginOptions,
+      }
+    }),
     plugin => plugin.resolve
   )
 
   let browserAPIRunner = ``
 
   try {
-    browserAPIRunner = fs.readFileSync(`${siteDir}/api-runner-browser.js`, `utf-8`)
+    browserAPIRunner = fs.readFileSync(
+      `${siteDir}/api-runner-browser.js`,
+      `utf-8`
+    )
   } catch (err) {
     console.error(`Failed to read ${siteDir}/api-runner-browser.js`)
   }
 
   const browserPluginsRequires = browserPlugins
     .map(
-      plugin => `{
+      plugin =>
+        `{
       plugin: require('${plugin.resolve}'),
       options: ${JSON.stringify(plugin.options)},
     }`
@@ -181,7 +201,8 @@ data
 
   const ssrPluginsRequires = ssrPlugins
     .map(
-      plugin => `{
+      plugin =>
+        `{
       plugin: require('${plugin.resolve}'),
       options: ${JSON.stringify(plugin.options)},
     }`
@@ -198,34 +219,54 @@ data
 
   console.timeEnd(`copy gatsby files`)
 
+  // Source nodes
+  console.time(`initial sourcing and transforming nodes`)
+  await require(`../utils/source-nodes`)()
+  console.timeEnd(`initial sourcing and transforming nodes`)
+
   // Create Schema.
   await require(`../schema`)()
 
-  const graphqlRunner = (query, context) => {
-    const schema = store.getState().schema
-    return graphql(schema, query, context, context, context)
-  }
-
   // Collect resolvable extensions and attach to program.
   const extensions = [`.js`, `.jsx`]
-  const apiResults = await apiRunnerNode(`resolvableExtensions`)
+  // Change to this being an action and plugins implement `onPreBootstrap`
+  // for adding extensions.
+  const apiResults = await apiRunnerNode(`resolvableExtensions`, {
+    traceId: `initial-resolvableExtensions`,
+  })
 
   store.dispatch({
     type: `SET_PROGRAM_EXTENSIONS`,
     payload: _.flattenDeep([extensions, apiResults]),
   })
 
+  const graphqlRunner = (query, context = {}) => {
+    const schema = store.getState().schema
+    return graphql(schema, query, context, context, context)
+  }
+
   // Collect pages.
+  console.time(`createPages`)
   await apiRunnerNode(`createPages`, {
     graphql: graphqlRunner,
+    traceId: `initial-createPages`,
+    waitForCascadingActions: true,
   })
+  console.timeEnd(`createPages`)
 
-  // TODO move this to own source plugin per component type
-  // (js/cjsx/typescript, etc.). Only do after there's themes
-  // so can cement default /pages setup in default core theme.
-  await jsPageCreator()
+  // A variant on createPages for plugins that want to
+  // have full control over adding/removing pages. The normal
+  // "createPages" API is called every time (during development)
+  // that data changes.
+  console.time(`createPagesStatefully`)
+  await apiRunnerNode(`createPagesStatefully`, {
+    graphql: graphqlRunner,
+    traceId: `initial-createPagesStatefully`,
+    waitForCascadingActions: true,
+  })
+  console.timeEnd(`createPagesStatefully`)
 
-  // Copy /404/ to /404.html as many static site hosting companies expect
+  // Copy /404/ to /404.html as many static site hosts expect
   // site 404 pages to be named this.
   // https://www.gatsbyjs.org/docs/add-404-page/
   const exists404html = _.some(
@@ -235,7 +276,7 @@ data
   if (!exists404html) {
     store.getState().pages.forEach(page => {
       if (page.path === `/404/`) {
-        boundActionCreators.upsertPage({
+        boundActionCreators.createPage({
           ...page,
           path: `/404.html`,
         })
@@ -243,16 +284,40 @@ data
     })
   }
 
-  console.log(`created js pages`)
+  // Extract queries
+  console.time(`extract queries`)
+  await extractQueries()
+  console.timeEnd(`extract queries`)
 
-  return new Promise(resolve => {
-    QueryRunner.isInitialPageQueryingDone(() => {
-      apiRunnerNode(`generateSideEffects`).then(() => {
-        console.log(
-          `bootstrap finished, time since started: ${process.uptime()}`
-        )
-        resolve({ graphqlRunner })
-      })
+  // Run queries
+  console.time(`Run queries`)
+  await runQueries()
+  console.timeEnd(`Run queries`)
+
+  // Write out files.
+  console.time(`write out pages modules`)
+  await writePages()
+  console.timeEnd(`write out pages modules`)
+
+  const checkJobsDone = _.debounce(resolve => {
+    const state = store.getState()
+    if (state.jobs.active.length === 0) {
+      console.log(
+        `bootstrap finished, time since started: ${process.uptime()}sec`
+      )
+      resolve({ graphqlRunner })
+    }
+  }, 100)
+
+  if (store.getState().jobs.active.length === 0) {
+    console.log(
+      `bootstrap finished, time since started: ${process.uptime()}sec`
+    )
+    return { graphqlRunner }
+  } else {
+    return new Promise(resolve => {
+      // Wait until all side effect jobs are finished.
+      emitter.on(`END_JOB`, () => checkJobsDone(resolve))
     })
-  })
+  }
 }

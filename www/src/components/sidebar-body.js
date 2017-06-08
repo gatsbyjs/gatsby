@@ -16,7 +16,7 @@ class SidebarBody extends React.Component {
       : scale(1 / 5).fontSize
     return (
       <div css={{ marginBottom: rhythm(1) }}>
-        {menu.map(section => (
+        {menu.map(section =>
           <div
             key={section.title}
             css={{
@@ -44,17 +44,31 @@ class SidebarBody extends React.Component {
                 if (this.props.inline && section.links[title] === `/docs/`) {
                   return null
                 }
+
+                // If the last character is a * then the doc page is still in draft
+                let draft = false
+                let changedTitle = title
+                if (title.slice(-1) === `*`) {
+                  draft = true
+                  changedTitle = title.slice(0, -1)
+                }
                 return (
-                  <li key={section.links[title]}>
+                  <li
+                    css={{
+                      fontStyle: draft ? `italic` : `inherit`,
+                      color: draft ? `#ccc` : `inherit`,
+                    }}
+                    key={section.links[title]}
+                  >
                     <Link to={section.links[title]}>
-                      {title}
+                      {changedTitle}
                     </Link>
                   </li>
                 )
               })}
             </ul>
           </div>
-        ))}
+        )}
       </div>
     )
   }

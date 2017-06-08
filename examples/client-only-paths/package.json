@@ -1,0 +1,29 @@
+{
+  "name": "gatsby-example-client-only-paths",
+  "private": true,
+  "description": "Gatsby example site demoing client only paths",
+  "version": "1.0.0",
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "dependencies": {
+    "gatsby": "canary",
+    "gatsby-link": "canary",
+    "gatsby-plugin-google-analytics": "canary",
+    "gatsby-plugin-offline": "canary",
+    "gatsby-source-drupal": "canary",
+    "lodash": "^4.16.4",
+    "react-addons-css-transition-group": "^15.5.2",
+    "react-typography": "^0.15.0",
+    "slash": "^1.0.0",
+    "typography": "^0.15.8",
+    "typography-breakpoint-constants": "^0.14.0"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build"
+  }
+}

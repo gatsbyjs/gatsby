@@ -26,6 +26,9 @@ Object {
   "hair": Object {
     "field": "hair",
   },
+  "key___with______unsupported___values": Object {
+    "field": "key-with..unsupported-values",
+  },
   "name": Object {
     "field": "name",
   },
@@ -48,6 +51,7 @@ Object {
   },
   "hair": 4,
   "iAmNull": null,
+  "key-with..unsupported-values": true,
   "name": "The Mad Wax",
 }
 `;

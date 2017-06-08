@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Job actions/reducer allows completing jobs 1`] = `
+Object {
+  "active": Array [],
+  "done": Array [
+    Object {
+      "completedAt": 1482363367071,
+      "createdAt": 1482363367071,
+      "id": "test job",
+      "plugin": Object {},
+      "runTime": 0,
+    },
+  ],
+}
+`;
+
+exports[`Job actions/reducer allows creating jobs 1`] = `
+Object {
+  "payload": Object {
+    "id": "test job",
+  },
+  "plugin": Object {},
+  "type": "CREATE_JOB",
+}
+`;
+
+exports[`Job actions/reducer throws an error if an ID isn't provided 1`] = `"An ID must be provided when creating or setting job"`;
+
+exports[`Job actions/reducer throws an error if endJob is called for a job that's already ended 1`] = `"The plugin \\"test-plugin\\" tried to end a job with the id \\"test job\\" that either hasn't yet been created or has already been ended"`;

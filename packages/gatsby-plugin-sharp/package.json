@@ -1,9 +1,10 @@
 {
   "name": "gatsby-plugin-sharp",
   "description": "Wrapper of the Sharp image manipulation library for Gatsby plugins",
-  "version": "1.0.0-alpha14",
+  "version": "1.0.0-alpha.22",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
+    "async": "^2.4.1",
     "bluebird": "^3.5.0",
     "image-size": "^0.5.1",
     "imagemin": "^5.2.2",
@@ -11,7 +12,6 @@
     "lodash": "^4.17.4",
     "progress": "^1.1.8",
     "qs": "^6.3.0",
-    "queue": "^4.0.1",
     "sharp": "^0.17.3"
   },
   "devDependencies": {

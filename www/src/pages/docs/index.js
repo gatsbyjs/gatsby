@@ -11,11 +11,13 @@ class IndexRoute extends React.Component {
       <div>
         <h1>Getting started</h1>
         <p>
-          Gatsby lets you transform plain text into dynamic blogs and websites using the
+          Gatsby lets you transform plain text into dynamic blogs and websites
+          using the
           latest web technologies. A React.js static site generator.
         </p>
         <p>
-          It supports Markdown, HTML, and React.js pages out of the box. Easy to add
+          It supports Markdown, HTML, and React.js pages out of the box. Easy to
+          add
           support for additional file types.
         </p>
         <h2>Install Gatsby</h2>
@@ -31,9 +33,10 @@ class IndexRoute extends React.Component {
         </p>
         <h2>Install Starters</h2>
         <p>
-          The best way to get started is by installing Gatsby Starters. There are four
+          The best way to get started is by installing Gatsby Starters. There
+          are four
           sites that currently works with
-          <code>gatsby@1.0.0-alpha13</code>:
+          <code>gatsby@1.0.0-alpha16</code>:
         </p>
         <ul>
           <li>

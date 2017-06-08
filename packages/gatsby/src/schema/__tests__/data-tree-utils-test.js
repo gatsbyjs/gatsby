@@ -1,6 +1,7 @@
 const {
   extractFieldExamples,
   buildFieldEnumValues,
+  INVALID_VALUE,
 } = require(`../data-tree-utils`)
 
 describe(`Gatsby data tree utils`, () => {
@@ -9,6 +10,7 @@ describe(`Gatsby data tree utils`, () => {
       name: `The Mad Max`,
       hair: 1,
       date: `2006-07-22T22:39:53.000Z`,
+      "key-with..unsupported-values": true,
       emptyArray: [],
       anArray: [1, 2, 3, 4],
       frontmatter: {
@@ -77,5 +79,38 @@ describe(`Gatsby data tree utils`, () => {
 
   it(`build enum values for fields from array on nodes`, () => {
     expect(buildFieldEnumValues(nodes)).toMatchSnapshot()
+  })
+
+  it(`turns polymorphic fields null`, () => {
+    let example = extractFieldExamples([
+      { foo: null },
+      { foo: [1] },
+      { foo: { field: 1 } },
+    ])
+    expect(example.foo).toBe(INVALID_VALUE)
+  })
+
+  it(`handles polymorphic arrays`, () => {
+    let example = extractFieldExamples([
+      { foo: [[`foo`, `bar`]] },
+      { foo: [{ field: 1 }] },
+    ])
+    expect(example.foo).toBe(INVALID_VALUE)
+  })
+
+  it(`doesn't confuse empty fields for polymorhpic ones`, () => {
+    let example = extractFieldExamples([
+      { foo: { bar: 1 } },
+      { foo: null },
+      { foo: { field: 1 } },
+    ])
+    expect(example.foo).toEqual({ field: 1, bar: 1 })
+
+    example = extractFieldExamples([
+      { foo: [{ bar: 1 }] },
+      { foo: null },
+      { foo: [{ field: 1 }, { baz: 1 }] },
+    ])
+    expect(example.foo).toEqual([{ field: 1, bar: 1, baz: 1 }])
   })
 })

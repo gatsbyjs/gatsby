@@ -1,21 +1,22 @@
 const Promise = require(`bluebird`)
 const _ = require(`lodash`)
 
-const { onNodeCreate } = require(`../gatsby-node`)
+const { onCreateNode } = require(`../gatsby-node`)
 
 describe(`Process JSON nodes correctly`, () => {
   const node = {
     id: `whatever`,
-    contentDigest: `whatever`,
-    mediaType: `application/json`,
+    parent: `SOURCE`,
     children: [],
-    name: `test`,
+    internal: {
+      contentDigest: `whatever`,
+      mediaType: `application/json`,
+      name: `test`,
+    },
   }
 
   // Make some fake functions its expecting.
-  const loadNodeContent = node => {
-    return Promise.resolve(node.content)
-  }
+  const loadNodeContent = node => Promise.resolve(node.content)
 
   it(`correctly creates nodes from JSON which is an array of objects`, async () => {
     const data = [
@@ -25,18 +26,18 @@ describe(`Process JSON nodes correctly`, () => {
     node.content = JSON.stringify(data)
 
     const createNode = jest.fn()
-    const updateNode = jest.fn()
-    const boundActionCreators = { createNode, updateNode }
+    const createParentChildLink = jest.fn()
+    const boundActionCreators = { createNode, createParentChildLink }
 
-    await onNodeCreate({
+    await onCreateNode({
       node,
       loadNodeContent,
       boundActionCreators,
     }).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
-      expect(updateNode.mock.calls).toMatchSnapshot()
+      expect(createParentChildLink.mock.calls).toMatchSnapshot()
       expect(createNode).toHaveBeenCalledTimes(2)
-      expect(updateNode).toHaveBeenCalledTimes(1)
+      expect(createParentChildLink).toHaveBeenCalledTimes(2)
     })
   })
 
@@ -48,10 +49,10 @@ describe(`Process JSON nodes correctly`, () => {
     node.content = JSON.stringify(data)
 
     const createNode = jest.fn()
-    const updateNode = jest.fn()
-    const boundActionCreators = { createNode, updateNode }
+    const createParentChildLink = jest.fn()
+    const boundActionCreators = { createNode, createParentChildLink }
 
-    await onNodeCreate({
+    await onCreateNode({
       node,
       loadNodeContent,
       boundActionCreators,
@@ -70,10 +71,10 @@ describe(`Process JSON nodes correctly`, () => {
     node.content = JSON.stringify(data)
 
     const createNode = jest.fn()
-    const updateNode = jest.fn()
-    const boundActionCreators = { createNode, updateNode }
+    const createParentChildLink = jest.fn()
+    const boundActionCreators = { createNode, createParentChildLink }
 
-    await onNodeCreate({
+    await onCreateNode({
       node,
       loadNodeContent,
       boundActionCreators,

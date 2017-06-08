@@ -1,0 +1,22 @@
+{
+  "name": "gatsby-source-contentful",
+  "version": "1.0.0-alpha.22",
+  "description": "Gatsby source plugin for building websites using the Contentful CMS as a data source",
+  "scripts": {
+    "build": "babel src --out-dir .",
+    "watch": "babel -w src --out-dir ."
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "gatsby-source-plugin"
+  ],
+  "author": "Marcus Ericsson <mericsson@gmail.com> (mericsson.com)",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.16.1",
+    "bluebird": "^3.4.6",
+    "contentful": "^4.3.0",
+    "lodash": "^4.17.2"
+  }
+}

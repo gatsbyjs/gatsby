@@ -35,26 +35,28 @@ function queryResult(nodes, query, { types = [] } = {}) {
   const schema = new GraphQLSchema({
     query: new GraphQLObjectType({
       name: `RootQueryType`,
-      fields: () => ({
-        allNode: {
-          name: `nodeConnection`,
-          type: nodeConnection,
-          args: {
-            ...connectionArgs,
-            ...inferInputObjectStructureFromNodes({
-              nodes,
-              typeName: `test`,
-            }),
+      fields: () => {
+        return {
+          allNode: {
+            name: `nodeConnection`,
+            type: nodeConnection,
+            args: {
+              ...connectionArgs,
+              ...inferInputObjectStructureFromNodes({
+                nodes,
+                typeName: `test`,
+              }),
+            },
+            resolve(nvi, args) {
+              return runSift({
+                args,
+                nodes,
+                connection: true,
+              })
+            },
           },
-          resolve(nvi, args) {
-            return runSift({
-              args,
-              nodes,
-              connection: true,
-            })
-          },
-        },
-      }),
+        }
+      },
     }),
   })
 
@@ -68,6 +70,15 @@ describe(`GraphQL Input args`, () => {
       hair: 1,
       date: `2006-07-22T22:39:53.000Z`,
       anArray: [1, 2, 3, 4],
+      key: {
+        withEmptyArray: [],
+      },
+      anotherKey: {
+        withANested: {
+          emptyArray: [],
+          anotherEmptyArray: [],
+        },
+      },
       frontmatter: {
         date: `2006-07-22T22:39:53.000Z`,
         title: `The world of dash and adventure`,
@@ -95,6 +106,23 @@ describe(`GraphQL Input args`, () => {
   it(`filters out null example values`, async () => {
     let result = await queryResult(
       [{ foo: null, bar: `baz` }],
+      `
+        {
+          allNode(foo: { eq: "bar" }) {
+            edges { node { bar } }
+          }
+        }
+      `
+    )
+    expect(result.errors.length).toEqual(1)
+    expect(result.errors[0].message).toMatch(
+      `Unknown argument "foo" on field "allNode"`
+    )
+  })
+
+  it(`filters out empty objects`, async () => {
+    let result = await queryResult(
+      [{ foo: {}, bar: `baz` }],
       `
         {
           allNode(foo: { eq: "bar" }) {
@@ -149,7 +177,7 @@ describe(`GraphQL Input args`, () => {
 
     store.dispatch({
       type: `CREATE_NODE`,
-      payload: { id: `baz`, type: `Bar` },
+      payload: { id: `baz`, internal: { type: `Bar` } },
     })
 
     let result = await queryResult(
@@ -169,6 +197,25 @@ describe(`GraphQL Input args`, () => {
     )
   })
 
+  it(`Replaces unsupported values in keys`, () => {
+    // Add a key with unsupported values to test
+    // if they're replaced.
+    let fields = inferInputObjectStructureFromNodes({
+      nodes: [
+        {
+          parent: `parent`,
+          children: [`bar`],
+          foo: {
+            parent: `parent`,
+            children: [`bar`],
+            "foo-moo": `tasty`,
+          },
+        },
+      ],
+    })
+
+    expect(Object.keys(fields.foo.type.getFields())[2]).toEqual(`foo___moo`)
+  })
   it(`Removes specific root fields`, () => {
     let fields = inferInputObjectStructureFromNodes({
       nodes: [

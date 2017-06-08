@@ -1,9 +1,9 @@
 {
-  "lerna": "2.0.0-rc.4",
-  "version": "1.0.0-alpha14",
+  "lerna": "2.0.0-rc.5",
   "npmClient": "npm",
   "packages": [
     "packages/*"
   ],
-  "hoist": true
+  "hoist": true,
+  "version": "1.0.0-alpha.22"
 }

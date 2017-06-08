@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`transformer-react-doc-gen: onCreateNode should extract out a description, params, and examples 1`] = `
+Array [
+  Object {
+    "children": Array [],
+    "id": "documentationJS node_1 comment #0--DocumentationJSComponentDescription--comment.description",
+    "internal": Object {
+      "content": "A pretty cool jsdoc example
+",
+      "contentDigest": "1effd106a9028bac69276a250a0f96f5",
+      "mediaType": "text/x-markdown",
+      "type": "DocumentationJSComponentDescription",
+    },
+    "parent": "node_1",
+  },
+  Object {
+    "children": Array [],
+    "id": "documentationJS node_1 comment #0--DocumentationJSComponentDescription--apple",
+    "internal": Object {
+      "content": "A nice crispy apple
+",
+      "contentDigest": "bdc56b714e173673c86ecf5f556c5fd1",
+      "mediaType": "text/x-markdown",
+      "type": "DocumentationJSComponentDescription",
+    },
+    "parent": "node_1",
+  },
+  Object {
+    "children": Array [],
+    "commentNumber": 0,
+    "description___NODE": "documentationJS node_1 comment #0--DocumentationJSComponentDescription--comment.description",
+    "examples": Array [
+      Object {
+        "highlighted": "<span class=\\"token keyword\\">const</span> apple <span class=\\"token operator\\">=</span> <span class=\\"token function\\">require</span><span class=\\"token punctuation\\">(</span><span class=\\"token string\\">'apple'</span><span class=\\"token punctuation\\">)</span>
+<span class=\\"token function\\">apple</span><span class=\\"token punctuation\\">(</span><span class=\\"token punctuation\\">)</span>",
+        "raw": "const apple = require('apple')
+apple()",
+      },
+    ],
+    "id": "documentationJS node_1 comment #0",
+    "internal": Object {
+      "content": "{
+    \\"kind\\": \\"constant\\",
+    \\"name\\": \\"apple\\",
+    \\"params\\": [
+        {
+            \\"title\\": \\"param\\",
+            \\"name\\": \\"apple\\",
+            \\"type\\": {
+                \\"type\\": \\"NameExpression\\",
+                \\"name\\": \\"string\\"
+            },
+            \\"description___NODE\\": \\"documentationJS node_1 comment #0--DocumentationJSComponentDescription--apple\\"
+        }
+    ],
+    \\"returns\\": [],
+    \\"examples\\": [
+        {
+            \\"raw\\": \\"const apple = require('apple')\\\\napple()\\",
+            \\"highlighted\\": \\"<span class=\\\\\\"token keyword\\\\\\">const</span> apple <span class=\\\\\\"token operator\\\\\\">=</span> <span class=\\\\\\"token function\\\\\\">require</span><span class=\\\\\\"token punctuation\\\\\\">(</span><span class=\\\\\\"token string\\\\\\">'apple'</span><span class=\\\\\\"token punctuation\\\\\\">)</span>\\\\n<span class=\\\\\\"token function\\\\\\">apple</span><span class=\\\\\\"token punctuation\\\\\\">(</span><span class=\\\\\\"token punctuation\\\\\\">)</span>\\"
+        }
+    ],
+    \\"description___NODE\\": \\"documentationJS node_1 comment #0--DocumentationJSComponentDescription--comment.description\\"
+}",
+      "contentDigest": "b635e85506044a6cdcebbcd7fda00b7d",
+      "mediaType": "text/x-javascript-metadata",
+      "type": "DocumentationJs",
+    },
+    "kind": "constant",
+    "name": "apple",
+    "params": Array [
+      Object {
+        "description___NODE": "documentationJS node_1 comment #0--DocumentationJSComponentDescription--apple",
+        "name": "apple",
+        "title": "param",
+        "type": Object {
+          "name": "string",
+          "type": "NameExpression",
+        },
+      },
+    ],
+    "parent": "node_1",
+    "returns": Array [],
+  },
+]
+`;
