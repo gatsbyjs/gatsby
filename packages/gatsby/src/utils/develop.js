@@ -100,28 +100,9 @@ async function startServer(program) {
           return res.send(htmlStr)
         } else {
           try {
-            const apiRunner = require(`${directory}/.cache/api-runner-ssr`)
-
             let headComponents = []
             let postBodyComponents = []
             let bodyProps = {}
-
-            const setHeadComponents = components => {
-              headComponents = headComponents.concat(components)
-            }
-
-            const setPostBodyComponents = components => {
-              postBodyComponents = postBodyComponents.concat(components)
-            }
-
-            const setBodyProps = props => {
-              bodyProps = _.merge({}, bodyProps, props)
-            }
-            apiRunner(`onRenderBody`, {
-              setHeadComponents,
-              setPostBodyComponents,
-              setBodyProps,
-            })
 
             const htmlElement = React.createElement(HTML, {
               ...bodyProps,
