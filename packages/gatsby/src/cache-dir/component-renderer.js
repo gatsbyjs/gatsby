@@ -1,5 +1,6 @@
 import React, { createElement } from "react"
 import loader from "./loader"
+import emitter from "./emitter"
 
 // Pass pathname in as prop.
 // component will try fetching resources. If they exist,
@@ -24,8 +25,7 @@ class ComponentRenderer extends React.Component {
 
   componentDidMount() {
     // listen to events.
-    ___emitter.on(`onPostLoadPageResources`, e => {
-      console.log("onPostLoadPageResources", e)
+    emitter.on(`onPostLoadPageResources`, e => {
       if (e.page.path === this.props.location.pathname) {
         this.setState({ pageResources: e.pageResources })
       }
@@ -33,8 +33,6 @@ class ComponentRenderer extends React.Component {
   }
 
   render() {
-    console.log("rendering ComponentRenderer")
-    console.log(this)
     if (this.state.pageResources) {
       return createElement(this.state.pageResources.component, {
         ...this.props,

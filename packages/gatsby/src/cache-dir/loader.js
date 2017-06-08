@@ -3,6 +3,7 @@ if (typeof window !== `undefined`) {
 }
 
 import pageFinderFactor from "./find-page"
+import emitter from "./emitter"
 let findPage
 
 let syncRequires = {}
@@ -19,6 +20,30 @@ let pathCount = {}
 let resourcesArray = []
 let resourcesCount = {}
 const preferDefault = m => (m && m.default) || m
+
+// Prefetcher logic
+const prefetcher = require(`./prefetcher`)({
+  getNextQueuedResources: () => resourcesArray.slice(-1)[0],
+  createResourceDownload: resourceName => {
+    console.log("fetching resource:", resourceName)
+    console.log(`resourcesArray length`, resourcesArray.length)
+    fetchResource(resourceName, () => {
+      resourcesArray = resourcesArray.filter(r => r !== resourceName)
+      console.log(`resourcesArray length`, resourcesArray.length)
+      prefetcher.onResourcedFinished(resourceName)
+      console.log(`resourceStrCache`, resourceStrCache)
+      console.log(`resourceCache`, resourceCache)
+    })
+  },
+})
+emitter.on(`ON_PRE_LOAD_PAGE_RESOURCES`, e => {
+  console.log(`ON_PRE_LOAD_PAGE_RESOURCES`, e)
+  prefetcher.onPreLoadPageResources(e)
+})
+emitter.on(`ON_POST_LOAD_PAGE_RESOURCES`, e => {
+  console.log(`ON_POST_LOAD_PAGE_RESOURCES`, e)
+  prefetcher.onPostLoadPageResources(e)
+})
 
 const sortResourcesByCount = (a, b) => {
   if (resourcesCount[a] > resourcesCount[b]) {
@@ -42,7 +67,7 @@ const sortPagesByCount = (a, b) => {
 
 const fetchResource = (resourceName, cb = () => {}) => {
   if (resourceStrCache[resourceName]) {
-    return resourceStrCache[resourceName]
+    return cb(null, resourceStrCache[resourceName])
   } else {
     // Find resource
     const resourceFunction = resourceName.slice(0, 6) === `page-c`
@@ -60,6 +85,7 @@ const fetchResource = (resourceName, cb = () => {}) => {
 }
 
 const getResourceModule = (resourceName, cb) => {
+  console.log(`getting resourceName`, resourceName)
   if (resourceCache[resourceName]) {
     return cb(null, resourceCache[resourceName])
   } else {
@@ -76,39 +102,6 @@ const getResourceModule = (resourceName, cb) => {
     })
   }
 }
-
-// TODO split this into two functions, one for fetching
-// resource and the other for executing it.
-// This prefetcher just sits around waiting for
-// new resources to be added. When hears onPreLoadPageResources
-// it stops until it hears onPostLoadPageResources
-// actually, make it a state machine like thing that's listening
-// to events and flipping it's state around.
-//
-// This is stupid complex. Need tests somehow.
-// const prefetcher = () => {
-// // Get top resource and start downloading it.
-// const nextResource = resourcesArray.slice(-1)[0]
-// if (nextResource) {
-// console.log("prefetching next resource", nextResource)
-// fetchResource(nextResource, (err, executeChunk) => {
-// console.log("executeChunk", executeChunk)
-// resourcesArray = resourcesArray.filter(r => r !== nextResource)
-// setTimeout(() => {
-// console.time(`execute resource`)
-// const module = getResourceModule(nextResource)
-// console.timeEnd(`execute resource`)
-// console.log("module", module)
-// prefetcher()
-// }, 500)
-// })
-// } else {
-// // Wait a second and try again
-// setTimeout(() => prefetcher(), 1000)
-// }
-// }
-
-// setTimeout(() => prefetcher(), 2500)
 
 const queue = {
   empty: () => {
@@ -159,7 +152,12 @@ const queue = {
         resourcesCount[page.jsonName] += 1
       }
 
-      if (resourcesArray.indexOf(page.jsonName) === -1) {
+      // Before adding checking that the JSON resource isn't either
+      // already queued or been downloading.
+      if (
+        resourcesArray.indexOf(page.jsonName) === -1 &&
+        !resourceStrCache[page.jsonName]
+      ) {
         resourcesArray.unshift(page.jsonName)
       }
     }
@@ -170,13 +168,19 @@ const queue = {
         resourcesCount[page.componentChunkName] += 1
       }
 
-      if (resourcesArray.indexOf(page.componentChunkName) === -1) {
+      // Before adding checking that the component resource isn't either
+      // already queued or been downloading.
+      if (
+        resourcesArray.indexOf(page.componentChunkName) === -1 &&
+        !resourceStrCache[page.jsonName]
+      ) {
         resourcesArray.unshift(page.componentChunkName)
       }
     }
 
-    // Sort resources by resourcesCount
+    // Sort resources by resourcesCount.
     resourcesArray.sort(sortResourcesByCount)
+    prefetcher.onNewResourcesAdded()
 
     return true
   },
@@ -195,7 +199,7 @@ const queue = {
   hasPage: pathname => findPage(pathname),
   has: path => pathArray.some(p => p === path),
   getResourcesForPathname: path => {
-    ___emitter.emit(`onPreLoadPageResources`, { path })
+    emitter.emit(`onPreLoadPageResources`, { path })
     // In development we know the code is loaded already
     // so we just return with it immediately.
     if (process.env.NODE_ENV !== `production`) {
@@ -204,7 +208,8 @@ const queue = {
         component: syncRequires.components[page.componentChunkName],
         json: syncRequires.json[page.jsonName],
       }
-      ___emitter.emit(`onPostLoadPageResources`, { page, pageResources })
+      console.log(`EMITTING onPostLoadPageResources`, page, pageResources)
+      emitter.emit(`onPostLoadPageResources`, { page, pageResources })
       return pageResources
     } else {
       // Check if it's in the cache already.
@@ -218,10 +223,13 @@ const queue = {
       let json
       const done = () => {
         if (component && json) {
+          console.log("done loading")
           pathScriptsCache[path] = { component, json }
-          ___emitter.emit(`onPostLoadPageResources`, {
+          const pageResources = { component, json }
+          console.log(`EMITTING onPostLoadPageResources`, page, pageResources)
+          emitter.emit(`onPostLoadPageResources`, {
             page,
-            pageResources: { component, json },
+            pageResources,
           })
         }
       }
@@ -229,6 +237,7 @@ const queue = {
         if (err) {
           return console.log("we failed folks")
         }
+        console.log("done getting component")
         component = c
         done()
       })
@@ -236,6 +245,7 @@ const queue = {
         if (err) {
           return console.log("we failed folks")
         }
+        console.log("done getting json")
         json = j
         done()
       })

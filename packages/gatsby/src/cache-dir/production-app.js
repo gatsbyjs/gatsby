@@ -13,9 +13,7 @@ import {
 import { ScrollContext } from "react-router-scroll"
 import createHistory from "history/createBrowserHistory"
 // import invariant from "invariant"
-import mitt from "mitt"
-
-window.___emitter = mitt()
+import emitter from "./emitter"
 
 import pages from "./pages.json"
 import ComponentRenderer from "./component-renderer"
@@ -29,79 +27,33 @@ window.___loader = loader
 
 window.matchPath = matchPath
 
-// Load scripts
-const preferDefault = m => (m && m.default) || m
-// const scriptsCache = {}
-// const loadScriptsForPath = (path, cb = () => {}) => {
-// const page = findPage(path)
-
-// let scripts = {
-// layout: false,
-// component: false,
-// pageData: false,
-// }
-
-// if (!page) {
-// return cb(scripts)
-// }
-
-// if (scriptsCache[page.path]) {
-// return cb(scriptsCache[page.path])
-// }
-
-// const loaded = () => {
-// if (
-// scripts.layout !== false &&
-// scripts.component !== false &&
-// scripts.pageData !== false
-// ) {
-// scriptsCache[page.path] = scripts
-// cb(scripts)
-// }
-// }
-
-// // Load layout file.
-// if (requires.layouts.index) {
-// requires.layouts.index(layout => {
-// scripts.layout = preferDefault(layout)
-// loaded()
-// })
-// } else {
-// scripts.layout = ``
-// loaded()
-// }
-
-// requires.components[page.componentChunkName](component => {
-// scripts.component = preferDefault(component)
-// loaded()
-// })
-
-// requires.json[page.jsonName](pageData => {
-// scripts.pageData = pageData
-// loaded()
-// })
-// }
-
 const navigateTo = pathname => {
+  console.log(`navigateTo`, pathname)
+  // Listen to loading events. If page resources load before
+  // a second, navigate immediately.
+  const eventHandler = e => {
+    console.log(`onPostLoadPageResources in ___navigate`, e, pathname)
+    if (e.page.path === pathname) {
+      console.log("woot! page resources have arrived")
+      clearTimeout(timeoutId)
+      window.___history.push(pathname)
+    }
+  }
+
+  // Start a timer to wait for a second before transitioning and showing a
+  // loader in case resources aren't around yet.
+  const timeoutId = setTimeout(() => {
+    console.log("waited for resources but NOTHING, gosh slow")
+    window.___history.push(pathname)
+    emitter.off(`onPostLoadPageResources`, eventHandler)
+  }, 1000)
+
+  emitter.on(`onPostLoadPageResources`, eventHandler)
   if (loader.getResourcesForPathname(pathname)) {
     console.log("already have resources, navigating")
     window.___history.push(pathname)
-  } else {
-    // Wait for a second before transitioning and showing
-    // a loader.
-    const timeoutId = setTimeout(() => {
-      console.log("waited for resources but NOTHING, gosh slow")
-      window.___history.push(pathname)
-    }, 1000)
-    // listen to loading events. If page resources load before
-    // a second, navigate immediately.
-    ___emitter.on(`onPostLoadPageResources`, e => {
-      if (e.page.path === pathname) {
-        console.log("woot! page resources have arrived")
-        clearTimeout(timeoutId)
-        window.___history.push(pathname)
-      }
-    })
+    clearTimeout(timeoutId)
+    emitter.off(`onPostLoadPageResources`, eventHandler)
   }
 }
 
@@ -136,59 +88,20 @@ function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
   return true
 }
 
-// Load 404 page component and scripts
-// let notFoundScripts
-// loadScriptsForPath(`/404.html`, scripts => {
-// notFoundScripts = scripts
-// })
-
-// const renderPage = props => {
-// const page = findPage(props.location.pathname)
-// if (page) {
-// const pageCache = scriptsCache[page.path]
-
-// invariant(
-// pageCache,
-// `Page cache miss at ${props.location
-// .pathname} for key ${page.path}. Available keys: ${Object.keys(
-// scriptsCache
-// )}`
-// )
-
-// return createElement(pageCache.component, {
-// ...props,
-// ...pageCache.pageData,
-// })
-// } else if (notFoundScripts) {
-// return createElement(notFoundScripts.component, {
-// ...props,
-// ...notFoundScripts.pageData,
-// })
-// } else {
-// return null
-// }
-// }
-
-// TODO component renderer — new file
-// set as props pages + loader
-
 const AltRouter = apiRunner(`replaceRouterComponent`, { history })[0]
 const DefaultRouter = ({ children }) =>
   <Router history={history}>{children}</Router>
 
-// loadScriptsForPath(window.location.pathname, scripts => {
-// Use default layout if one isn't set.
-let layout
-// if (scripts.layout) {
-// layout = scripts.layout
-// } else {
-// layout = props => <div>{props.children()}</div>
-// }
-
 const loadLayout = cb => {
-  console.log(asyncRequires)
+  console.log(asyncRequires.layouts)
   if (asyncRequires.layouts[`index`]) {
-    asyncRequires.layouts[`index`](cb)
+    console.log(asyncRequires.layouts)
+    asyncRequires.layouts[`index`]((err, executeChunk) => {
+      console.log("executeChunk", executeChunk)
+      const module = executeChunk()
+      console.log("module", module)
+      cb(module)
+    })
   } else {
     cb(props => <div>{props.children()}</div>)
   }
