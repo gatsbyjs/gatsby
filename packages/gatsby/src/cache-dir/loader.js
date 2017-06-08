@@ -38,6 +38,8 @@ const sortPagesByCount = (a, b) => {
   }
 }
 
+const prefetcher = () => {}
+
 const queue = {
   empty: () => {
     pathArray = []
@@ -46,7 +48,6 @@ const queue = {
     resourcesArray = []
     pages = []
   },
-  // Make pages injectable cause testing.
   addPagesArray: newPages => {
     pages = newPages
     findPage = pageFinderFactor(newPages)
@@ -144,6 +145,7 @@ const queue = {
       console.log("need to load scripts")
       const page = findPage(path)
       console.log("for page", page)
+      console.log(`async requires`, asyncRequires)
       let component
       let json
       const done = () => {
@@ -155,12 +157,19 @@ const queue = {
           })
         }
       }
-      asyncRequires.components[page.componentChunkName](c => {
-        component = preferDefault(c)
-        done()
-      })
-      asyncRequires.json[page.jsonName](j => {
-        json = preferDefault(j)
+      console.log(asyncRequires.components[page.componentChunkName])
+      console.log(asyncRequires.json[page.jsonName])
+      asyncRequires.components[page.componentChunkName]()(
+        callback => {
+          component = preferDefault(callback())
+          console.log(`page component`, component)
+          done()
+        },
+        () => console.log("error loading page component")
+      )
+      asyncRequires.json[page.jsonName]()(callback => {
+        json = preferDefault(callback())
+        console.log(`json`, json)
         done()
       })
     }

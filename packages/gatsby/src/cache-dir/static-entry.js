@@ -1,7 +1,7 @@
 import React from "react"
 import { renderToString, renderToStaticMarkup } from "react-dom/server"
 import { StaticRouter, Route, withRouter } from "react-router-dom"
-import { kebabCase, get, merge, isArray } from "lodash"
+import { kebabCase, get, merge, isArray, isString } from "lodash"
 import apiRunner from "./api-runner-ssr"
 import pages from "./pages.json"
 import syncRequires from "./sync-requires"
@@ -149,19 +149,19 @@ module.exports = (locals, callback) => {
       if (prefixedScript === `/`) {
         return
       }
+
+      return prefixedScript
     })
-    .filter(s => s)
+    .filter(s => isString(s))
 
   scripts.forEach(script => {
     // Add preload <link>s for scripts.
-    headComponents.unshift(
-      <link rel="preload" href={prefixedScript} as="script" />
-    )
+    headComponents.unshift(<link rel="preload" href={script} as="script" />)
   })
 
   // Add script loader for page scripts to the head.
   // Taken from https://www.html5rocks.com/en/tutorials/speed/script-loading/
-  const scriptsString = scripts.map(s => `"${prefixedScript}"`).join(`,`)
+  const scriptsString = scripts.map(s => `"${s}"`).join(`,`)
   headComponents.push(
     <script
       dangerouslySetInnerHTML={{

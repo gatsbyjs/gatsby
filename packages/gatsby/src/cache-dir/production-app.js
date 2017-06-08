@@ -19,10 +19,11 @@ window.___emitter = mitt()
 
 import pages from "./pages.json"
 import ComponentRenderer from "./component-renderer"
-import requires from "./async-requires"
+import asyncRequires from "./async-requires"
 import loader from "./loader"
 loader.addPagesArray(pages)
-loader.addProdRequires(requires)
+loader.addProdRequires(asyncRequires)
+window.asyncRequires = asyncRequires
 
 window.___loader = loader
 
@@ -185,9 +186,9 @@ let layout
 // }
 
 const loadLayout = cb => {
-  console.log(requires)
-  if (requires.layouts[`index`]) {
-    requires.layouts[`index`](cb)
+  console.log(asyncRequires)
+  if (asyncRequires.layouts[`index`]) {
+    asyncRequires.layouts[`index`](cb)
   } else {
     cb(props => <div>{props.children()}</div>)
   }

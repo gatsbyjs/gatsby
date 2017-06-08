@@ -107,7 +107,7 @@ const preferDefault = m => m && m.default || m
   asyncRequires += `exports.components = {\n${components
     .map(
       c =>
-        `  "${c.componentChunkName}": require("bundle-loader?lazy&name=${c.componentChunkName}!${joinPath(
+        `  "${c.componentChunkName}": require("gatsby-module-loader?name=${c.componentChunkName}!${joinPath(
           c.component
         )}")`
     )
@@ -116,7 +116,7 @@ const preferDefault = m => m && m.default || m
   asyncRequires += `exports.json = {\n${json
     .map(
       j =>
-        `  "${j.jsonName}": require("bundle-loader?lazy&name=${pathChunkName(
+        `  "${j.jsonName}": require("gatsby-module-loader?name=${pathChunkName(
           j.path
         )}!${joinPath(program.directory, `/.cache/json/`, j.jsonName)}")`
     )
@@ -127,7 +127,7 @@ const preferDefault = m => m && m.default || m
       let componentName = layout
       if (layout !== false || typeof layout !== `undefined`) {
         componentName = `index`
-        return `  "${layout}": require("bundle-loader?lazy&name=${`layout-component---${layout}`}!${joinPath(
+        return `  "${layout}": require("gatsby-module-loader?name=${`layout-component---${layout}`}!${joinPath(
           program.directory,
           `/src/layouts/`,
           componentName
