@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-styled-jsx",
-  "version": "1.0.0-alpha17",
+  "version": "1.0.0-alpha.22",
   "description": "Stub description for gatsby-plugin-styled-jsx",
   "main": "index.js",
   "scripts": {

@@ -1,7 +1,7 @@
 {
   "name": "gatsby-remark-copy-linked-files",
   "description": "Find files which are linked to from markdown and copy them to the public directory",
-  "version": "1.0.0-alpha17",
+  "version": "1.0.0-alpha.22",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "fs-extra": "^3.0.1",

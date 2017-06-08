@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-sitemap",
-  "version": "",
+  "version": "1.0.0-alpha.22",
   "description": "Stub description for gatsby-plugin-sitemap",
   "main": "index.js",
   "scripts": {
