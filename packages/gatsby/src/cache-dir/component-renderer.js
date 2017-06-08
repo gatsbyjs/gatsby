@@ -39,7 +39,7 @@ class ComponentRenderer extends React.Component {
         ...this.state.pageResources.json,
       })
     } else {
-      return <div>...loading</div>
+      return null
     }
   }
 }
