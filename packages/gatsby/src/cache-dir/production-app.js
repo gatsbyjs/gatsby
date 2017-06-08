@@ -44,16 +44,16 @@ const navigateTo = pathname => {
   // loader in case resources aren't around yet.
   const timeoutId = setTimeout(() => {
     console.log("waited for resources but NOTHING, gosh slow")
-    window.___history.push(pathname)
     emitter.off(`onPostLoadPageResources`, eventHandler)
+    window.___history.push(pathname)
   }, 1000)
 
   emitter.on(`onPostLoadPageResources`, eventHandler)
   if (loader.getResourcesForPathname(pathname)) {
     console.log("already have resources, navigating")
-    window.___history.push(pathname)
-    clearTimeout(timeoutId)
     emitter.off(`onPostLoadPageResources`, eventHandler)
+    clearTimeout(timeoutId)
+    window.___history.push(pathname)
   }
 }
 
