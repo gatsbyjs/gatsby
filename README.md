@@ -216,7 +216,7 @@ include yours!
 * [Kitchen sink starter](https://github.com/gatsbyjs/gatsby-starter-kitchen-sink) ([Demo](http://gatsbyjs.github.io/gatsby-starter-kitchen-sink/))
 * [Simple blog](https://github.com/gatsbyjs/gatsby-starter-blog) ([Demo](http://gatsbyjs.github.io/gatsby-starter-blog/))
 * [Simple documentation site](https://github.com/gatsbyjs/gatsby-starter-documentation) ([Demo](http://gatsbyjs.github.io/gatsby-starter-documentation/))
-* [Lumen](https://github.com/wpioneer/gatsby-starter-lumen) ([Demo](http://wpioneer.github.io/gatsby-starter-lumen/))
+* [Lumen](https://github.com/wpioneer/gatsby-starter-lumen) ([Demo](https://alxshelepenok.github.io/gatsby-starter-lumen/))
 * [DrunkenBlog](https://github.com/konsumer/gatsby-starter-drunkenblog) ([Demo](http://konsumer.js.org/gatsby-starter-drunkenblog/))
 * [Clean start](https://github.com/brianstone/gatsby-starter-clean) ([Demo](http://gatsby-starter-clean.netlify.com/))
 * [Project AMP blog](https://github.com/chiedo/gatsby-amp-starter-blog)
