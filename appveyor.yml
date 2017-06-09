@@ -5,6 +5,9 @@ branches:
     - 1.0
     - master
 
+init:
+  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+
 platform:
   - x64
 
@@ -66,3 +69,6 @@ artifacts:
   - path: examples/$(example)
 
 deploy: off
+
+on_finish:
+  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
