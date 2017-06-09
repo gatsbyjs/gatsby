@@ -43,8 +43,8 @@ install:
   - ps: |
       if (($env:buildon -eq "tag") -and ($env:APPVEYOR_REPO_TAG -eq "false") -and ($env:APPVEYOR_FORCED_BUILD -ne "True"))
       {
-        rm 'Delete me to continue build.txt'
         Exit-AppVeyorBuild
+        rm 'Delete me to continue build.txt'
       }
   - ps: Install-Product node $env:nodejs_version $env:platform
   - ps: npm install -g windows-build-tools
