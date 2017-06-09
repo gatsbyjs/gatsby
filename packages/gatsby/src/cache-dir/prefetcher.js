@@ -31,10 +31,13 @@ module.exports = ({ getNextQueuedResources, createResourceDownload }) => {
     }
 
     // Take actions.
-    if (resourcesDownloading.length === 0 && pagesLoading === 0) {
-      // Start another resource downloading.
-      startResourceDownloading()
-    }
+    // Wait for event loop queue to finish.
+    setTimeout(() => {
+      if (resourcesDownloading.length === 0 && pagesLoading === 0) {
+        // Start another resource downloading.
+        startResourceDownloading()
+      }
+    }, 0)
   }
 
   return {
