@@ -7,6 +7,38 @@ const _ = require(`lodash`)
 const { emitter } = require(`../../redux`)
 const { boundActionCreators } = require(`../../redux/actions`)
 
+function transformPackageJson(json) {
+  const transformDeps = deps =>
+    _.entries(deps).map(([name, version]) => {
+      return {
+        name,
+        version,
+      }
+    })
+
+  json = _.pick(json, [
+    `name`,
+    `description`,
+    `version`,
+    `main`,
+    `keywords`,
+    `author`,
+    `license`,
+    `dependencies`,
+    `devDependencies`,
+    `peerDependencies`,
+    `optionalDependecies`,
+    `bundledDependecies`,
+  ])
+  json.dependencies = transformDeps(json.dependencies)
+  json.devDependencies = transformDeps(json.devDependencies)
+  json.peerDependencies = transformDeps(json.peerDependencies)
+  json.optionalDependecies = transformDeps(json.optionalDependecies)
+  json.bundledDependecies = transformDeps(json.bundledDependecies)
+
+  return json
+}
+
 exports.sourceNodes = ({ boundActionCreators, store }) => {
   const { createNode } = boundActionCreators
   const state = store.getState()
@@ -35,19 +67,9 @@ exports.sourceNodes = ({ boundActionCreators, store }) => {
   flattenedPlugins.forEach(plugin =>
     createNode({
       ...plugin,
-      packageJson: {
-        ..._.pick(require(`${plugin.resolve}/package.json`), [
-          `name`,
-          `description`,
-          `version`,
-          `main`,
-          `keywords`,
-          `author`,
-          `license`,
-          `dependencies`,
-          `devDependencies`,
-        ]),
-      },
+      packageJson: transformPackageJson(
+        require(`${plugin.resolve}/package.json`)
+      ),
       id: `Plugin ${plugin.name}`,
       parent: `SOURCE`,
       children: [],
