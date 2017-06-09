@@ -225,7 +225,9 @@ data
   console.timeEnd(`initial sourcing and transforming nodes`)
 
   // Create Schema.
+  console.time(`building schema`)
   await require(`../schema`)()
+  console.timeEnd(`building schema`)
 
   // Collect resolvable extensions and attach to program.
   const extensions = [`.js`, `.jsx`]
