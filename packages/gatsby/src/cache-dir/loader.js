@@ -2,7 +2,7 @@ if (typeof window !== `undefined`) {
   require(`ric`)
 }
 
-import pageFinderFactor from "./find-page"
+import pageFinderFactory from "./find-page"
 import emitter from "./emitter"
 let findPage
 
@@ -113,7 +113,11 @@ const queue = {
   },
   addPagesArray: newPages => {
     pages = newPages
-    findPage = pageFinderFactor(newPages)
+    let linkPrefix = ``
+    if (__PREFIX_LINKS__) {
+      linkPrefix = __LINK_PREFIX__
+    }
+    findPage = pageFinderFactory(newPages, linkPrefix)
   },
   addDevRequires: devRequires => {
     syncRequires = devRequires
