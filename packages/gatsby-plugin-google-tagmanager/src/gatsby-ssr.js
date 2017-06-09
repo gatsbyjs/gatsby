@@ -20,7 +20,7 @@ exports.onRenderBody = (
     ])
 
     return setPreBodyComponents([
-      <div>
+      <div> { /* TODO make noscript */ }
         <iframe
           src={`https://www.googletagmanager.com/ns.html?id=${pluginOptions.id}`}
           height="0"
