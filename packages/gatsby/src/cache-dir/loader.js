@@ -103,6 +103,7 @@ const getResourceModule = (resourceName, cb) => {
   }
 }
 
+let mountOrder = 1
 const queue = {
   empty: () => {
     pathArray = []
@@ -132,6 +133,9 @@ const queue = {
       return false
     }
 
+    const mountOrderBoost = 1 / mountOrder
+    mountOrder += 1
+
     // Add to path counts.
     if (!pathCount[path]) {
       pathCount[path] = 1
@@ -151,9 +155,9 @@ const queue = {
     const page = findPage(path)
     if (page.jsonName) {
       if (!resourcesCount[page.jsonName]) {
-        resourcesCount[page.jsonName] = 1
+        resourcesCount[page.jsonName] = 1 + mountOrderBoost
       } else {
-        resourcesCount[page.jsonName] += 1
+        resourcesCount[page.jsonName] += 1 + mountOrderBoost
       }
 
       // Before adding checking that the JSON resource isn't either
@@ -167,9 +171,9 @@ const queue = {
     }
     if (page.componentChunkName) {
       if (!resourcesCount[page.componentChunkName]) {
-        resourcesCount[page.componentChunkName] = 1
+        resourcesCount[page.componentChunkName] = 1 + mountOrderBoost
       } else {
-        resourcesCount[page.componentChunkName] += 1
+        resourcesCount[page.componentChunkName] += 1 + mountOrderBoost
       }
 
       // Before adding checking that the component resource isn't either
