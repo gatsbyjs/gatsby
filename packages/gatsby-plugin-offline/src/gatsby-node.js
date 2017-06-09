@@ -18,7 +18,9 @@ exports.onPostBuild = (args, pluginOptions) => {
 
   const options = {
     staticFileGlobs: [
-      // `${rootDir}/**/*.{js,woff2}`,
+      `${rootDir}/**/*.{woff2}`,
+      `${rootDir}/commons-*js`,
+      `${rootDir}/app-*js`,
       `${rootDir}/index.html`,
       `${rootDir}/manifest.json`,
       `${rootDir}/offline-plugin-app-shell-fallback/index.html`,

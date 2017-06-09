@@ -121,10 +121,15 @@ loadLayout(layout => {
               render: routeProps => {
                 attachToHistory(routeProps.history)
                 const props = layoutProps ? layoutProps : routeProps
-                // return renderPage(props)
                 if (loader.hasPage(props.location.pathname)) {
                   return createElement(ComponentRenderer, { ...props })
                 } else {
+                  // TODO check (somehow) if we loaded the page
+                  // from a service worker (app shell) as if this
+                  // is the case and we get a 404 we want to kill
+                  // the sw and reload as probably the user is
+                  // trying to visit a page that was created after
+                  // the first time they visited.
                   return createElement(ComponentRenderer, {
                     location: { pathname: `/404.html` },
                   })
