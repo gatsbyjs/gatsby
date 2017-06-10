@@ -48,6 +48,7 @@ module.exports = {
       },
     },
     `gatsby-plugin-glamor`,
+    `gatsby-plugin-nprogress`,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-catch-links`,
     {

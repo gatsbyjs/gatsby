@@ -11,6 +11,7 @@
     "gatsby-plugin-glamor": "canary",
     "gatsby-plugin-google-analytics": "canary",
     "gatsby-plugin-manifest": "canary",
+    "gatsby-plugin-nprogress": "canary",
     "gatsby-plugin-offline": "canary",
     "gatsby-plugin-react-helmet": "canary",
     "gatsby-plugin-sharp": "canary",
