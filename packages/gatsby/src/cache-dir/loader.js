@@ -27,10 +27,10 @@ const prefetcher = require(`./prefetcher`)({
     })
   },
 })
-emitter.on(`ON_PRE_LOAD_PAGE_RESOURCES`, e => {
+emitter.on(`onPreLoadPageResources`, e => {
   prefetcher.onPreLoadPageResources(e)
 })
-emitter.on(`ON_POST_LOAD_PAGE_RESOURCES`, e => {
+emitter.on(`onPostLoadPageResources`, e => {
   prefetcher.onPostLoadPageResources(e)
 })
 
@@ -64,9 +64,7 @@ const fetchResource = (resourceName, cb = () => {}) => {
       : asyncRequires.json[resourceName]
 
     // Download the resource
-    console.time(`download resource ${resourceName}`)
     resourceFunction((err, executeChunk) => {
-      console.timeEnd(`download resource ${resourceName}`)
       resourceStrCache[resourceName] = executeChunk
       cb(err, executeChunk)
     })
@@ -81,9 +79,7 @@ const getResourceModule = (resourceName, cb) => {
       if (err) {
         cb(err)
       } else {
-        console.time(`execute chunk ${resourceName}`)
         const module = preferDefault(executeChunk())
-        console.timeEnd(`execute chunk ${resourceName}`)
         resourceCache[resourceName] = module
         return cb(err, module)
       }

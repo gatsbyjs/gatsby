@@ -34,6 +34,7 @@ const navigateTo = pathname => {
   // a second, navigate immediately.
   function eventHandler(e) {
     if (e.page.path === pathname) {
+      emitter.off(`onPostLoadPageResources`, eventHandler)
       clearTimeout(timeoutId)
       window.___history.push(pathname)
     }
