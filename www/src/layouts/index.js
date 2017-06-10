@@ -54,6 +54,7 @@ module.exports = React.createClass({
         <div
           css={{
             background: `#f4dfc6`,
+            marginBottom: rhythm(1.5),
           }}
         >
           <div

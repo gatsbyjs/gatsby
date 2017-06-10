@@ -2,10 +2,6 @@ import React from "react"
 import { Link } from "react-router-dom"
 import PropTypes from "prop-types"
 
-if (typeof window !== `undefined`) {
-  require(`ric`)
-}
-
 let linkPrefix = ``
 if (__PREFIX_LINKS__) {
   linkPrefix = __LINK_PREFIX__
@@ -17,20 +13,7 @@ class GatsbyLink extends React.Component {
     onClick: PropTypes.func,
   }
   componentDidMount() {
-    // Only enable prefetching of Link resources in production and for browsers
-    // that don't support service workers *cough* Safari/IE *cough*.
-    //
-    // TODO also add check if user is using SW, e.g. window.caches as if
-    // not we should preload here too.
-    if (
-      process.env.NODE_ENV === `production` &&
-      (!(`serviceWorker` in window.navigator) ||
-        window.location.protocol !== `https:`)
-    ) {
-      requestUserIdle(() => {
-        ___loadScriptsForPath(this.props.to)
-      })
-    }
+    ___loader.enqueue(this.props.to)
   }
 
   render() {

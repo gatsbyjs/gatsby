@@ -62,7 +62,7 @@ program
       directory,
     }
     build(p).then(() => {
-      console.log(`Done`)
+      console.log(`Done building in`, process.uptime(), `seconds`)
       process.exit()
     })
   })

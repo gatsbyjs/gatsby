@@ -1,5 +1,5 @@
-import React from 'react'
-import { defaultOptions } from './internals'
+import React from "react"
+import { defaultOptions } from "./internals"
 
 exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   const { feeds } = {
@@ -8,19 +8,12 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   }
 
   const links = feeds.map(({ output }) => {
-    if (output.charAt(0) !== '/') {
-      output = '/' + output
+    if (output.charAt(0) !== `/`) {
+      output = `/` + output
     }
 
-    return (
-      <link
-        rel="alternate"
-        type="application/rss+xml"
-        href={output}
-      />
-    )
+    return <link rel="alternate" type="application/rss+xml" href={output} />
   })
 
   setHeadComponents(links)
 }
-

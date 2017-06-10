@@ -1,6 +1,4 @@
 import apiRunner from "./api-runner-browser"
-// Let the site/plugins run code very early.
-apiRunner(`onClientEntry`)
 
 import React, { createElement } from "react"
 import ReactDOM from "react-dom"
@@ -12,108 +10,53 @@ import {
 } from "react-router-dom"
 import { ScrollContext } from "react-router-scroll"
 import createHistory from "history/createBrowserHistory"
+// import invariant from "invariant"
+import emitter from "./emitter"
+window.___emitter = emitter
+
 import pages from "./pages.json"
-import invariant from "invariant"
+import ComponentRenderer from "./component-renderer"
+import asyncRequires from "./async-requires"
+import loader from "./loader"
+loader.addPagesArray(pages)
+loader.addProdRequires(asyncRequires)
+window.asyncRequires = asyncRequires
+
+window.___loader = loader
 
 window.matchPath = matchPath
 
-import requires from "./async-requires"
-
-// Find page
-const findPage = pathname => {
-  let foundPage
-  // Array.prototype.find is not supported in IE so we use this somewhat odd
-  // work around.
-  pages.some(page => {
-    if (page.matchPath) {
-      // Try both the path and matchPath
-      if (
-        matchPath(pathname, { path: page.path }) ||
-        matchPath(pathname, {
-          path: page.matchPath,
-        })
-      ) {
-        foundPage = page
-        return true
-      }
-    } else {
-      if (
-        matchPath(pathname, {
-          path: page.path,
-          exact: true,
-        })
-      ) {
-        foundPage = page
-        return true
-      }
-    }
-
-    return false
-  })
-
-  return foundPage
-}
-
-// Load scripts
-const preferDefault = m => (m && m.default) || m
-const scriptsCache = {}
-const loadScriptsForPath = (path, cb = () => {}) => {
-  const page = findPage(path)
-
-  let scripts = {
-    layout: false,
-    component: false,
-    pageData: false,
-  }
-
-  if (!page) {
-    return cb(scripts)
-  }
-
-  if (scriptsCache[page.path]) {
-    return cb(scriptsCache[page.path])
-  }
-
-  const loaded = () => {
-    if (
-      scripts.layout !== false &&
-      scripts.component !== false &&
-      scripts.pageData !== false
-    ) {
-      scriptsCache[page.path] = scripts
-      cb(scripts)
-    }
-  }
-
-  // Load layout file.
-  if (requires.layouts.index) {
-    requires.layouts.index(layout => {
-      scripts.layout = preferDefault(layout)
-      loaded()
-    })
-  } else {
-    scripts.layout = ``
-    loaded()
-  }
-
-  requires.components[page.componentChunkName](component => {
-    scripts.component = preferDefault(component)
-    loaded()
-  })
-
-  requires.json[page.jsonName](pageData => {
-    scripts.pageData = pageData
-    loaded()
-  })
-}
+// Let the site/plugins run code very early.
+apiRunner(`onClientEntry`)
 
 const navigateTo = pathname => {
-  loadScriptsForPath(pathname, () => {
+  // Listen to loading events. If page resources load before
+  // a second, navigate immediately.
+  function eventHandler(e) {
+    if (e.page.path === pathname) {
+      emitter.off(`onPostLoadPageResources`, eventHandler)
+      clearTimeout(timeoutId)
+      window.___history.push(pathname)
+    }
+  }
+
+  // Start a timer to wait for a second before transitioning and showing a
+  // loader in case resources aren't around yet.
+  const timeoutId = setTimeout(() => {
+    emitter.off(`onPostLoadPageResources`, eventHandler)
+    emitter.emit(`onDelayedLoadPageResources`, { pathname })
     window.___history.push(pathname)
-  })
+  }, 1000)
+
+  emitter.on(`onPostLoadPageResources`, eventHandler)
+  if (loader.getResourcesForPathname(pathname)) {
+    emitter.off(`onPostLoadPageResources`, eventHandler)
+    clearTimeout(timeoutId)
+    window.___history.push(pathname)
+  }
 }
 
-window.___loadScriptsForPath = loadScriptsForPath
+// window.___loadScriptsForPath = loadScriptsForPath
 window.___navigateTo = navigateTo
 
 const history = createHistory()
@@ -144,53 +87,22 @@ function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
   return true
 }
 
-// Load 404 page component and scripts
-let notFoundScripts
-loadScriptsForPath(`/404.html`, scripts => {
-  notFoundScripts = scripts
-})
+const AltRouter = apiRunner(`replaceRouterComponent`, { history })[0]
+const DefaultRouter = ({ children }) =>
+  <Router history={history}>{children}</Router>
 
-const renderPage = props => {
-  const page = findPage(props.location.pathname)
-  if (page) {
-    const pageCache = scriptsCache[page.path]
-
-    invariant(
-      pageCache,
-      `Page cache miss at ${props.location
-        .pathname} for key ${page.path}. Available keys: ${Object.keys(
-        scriptsCache
-      )}`
-    )
-
-    return createElement(pageCache.component, {
-      ...props,
-      ...pageCache.pageData,
-    })
-  } else if (notFoundScripts) {
-    return createElement(notFoundScripts.component, {
-      ...props,
-      ...notFoundScripts.pageData,
+const loadLayout = cb => {
+  if (asyncRequires.layouts[`index`]) {
+    asyncRequires.layouts[`index`]((err, executeChunk) => {
+      const module = executeChunk()
+      cb(module)
     })
   } else {
-    return null
+    cb(props => <div>{props.children()}</div>)
   }
 }
 
-const AltRouter = apiRunner(`replaceRouterComponent`, { history })[0]
-const DefaultRouter = ({ children }) => (
-  <Router history={history}>{children}</Router>
-)
-
-loadScriptsForPath(window.location.pathname, scripts => {
-  // Use default layout if one isn't set.
-  let layout
-  if (scripts.layout) {
-    layout = scripts.layout
-  } else {
-    layout = props => <div>{props.children()}</div>
-  }
-
+loadLayout(layout => {
   const Root = () =>
     createElement(
       AltRouter ? AltRouter : DefaultRouter,
@@ -204,7 +116,19 @@ loadScriptsForPath(window.location.pathname, scripts => {
               render: routeProps => {
                 attachToHistory(routeProps.history)
                 const props = layoutProps ? layoutProps : routeProps
-                return renderPage(props)
+                if (loader.hasPage(props.location.pathname)) {
+                  return createElement(ComponentRenderer, { ...props })
+                } else {
+                  // TODO check (somehow) if we loaded the page
+                  // from a service worker (app shell) as if this
+                  // is the case and we get a 404 we want to kill
+                  // the sw and reload as probably the user is
+                  // trying to visit a page that was created after
+                  // the first time they visited.
+                  return createElement(ComponentRenderer, {
+                    location: { pathname: `/404.html` },
+                  })
+                }
               },
             }),
         })

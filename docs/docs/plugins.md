@@ -47,6 +47,7 @@ on using each plugin.
 * [gatsby-plugin-glamor](/docs/packages/gatsby-plugin-glamor/)
 * [gatsby-plugin-google-analytics](/docs/packages/gatsby-plugin-google-analytics/)
 * [gatsby-plugin-manifest](/docs/packages/gatsby-plugin-manifest/)
+* [gatsby-plugin-nprogress](/docs/packages/gatsby-plugin-nprogress/)
 * [gatsby-plugin-offline](/docs/packages/gatsby-plugin-offline/)
 * [gatsby-plugin-preact](/docs/packages/gatsby-plugin-preact/)
 * [gatsby-plugin-react-helmet](/docs/packages/gatsby-plugin-react-helmet/)

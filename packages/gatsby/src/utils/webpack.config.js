@@ -15,6 +15,7 @@ const { store } = require(`../redux`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
 const WebpackMD5Hash = require(`webpack-md5-hash`)
 const ChunkManifestPlugin = require(`chunk-manifest-webpack-plugin`)
+const GatsbyModulePlugin = require(`../loaders/gatsby-module-loader/plugin`)
 const genBabelConfig = require(`./babel-config`)
 
 // Five stages or modes:
@@ -268,6 +269,7 @@ module.exports = async (
           }),
           // Ensure module order stays the same. Supposibly fixed in webpack 2.0.
           new webpack.optimize.OccurenceOrderPlugin(),
+          new GatsbyModulePlugin(),
           // new WebpackStableModuleIdAndHash({ seed: 9, hashSize: 47 }),
           new webpack.NamedModulesPlugin(),
         ]
@@ -469,7 +471,7 @@ module.exports = async (
 
     return {
       root,
-      modulesDirectories: [`node_modules`],
+      modulesDirectories: [path.join(__dirname, `../loaders`), `node_modules`],
     }
   }
 
