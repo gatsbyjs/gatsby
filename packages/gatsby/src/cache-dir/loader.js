@@ -99,7 +99,7 @@ const queue = {
   addPagesArray: newPages => {
     pages = newPages
     let linkPrefix = ``
-    if (__PREFIX_LINKS__) {
+    if (typeof __PREFIX_LINKS__ !== `undefined`) {
       linkPrefix = __LINK_PREFIX__
     }
     findPage = pageFinderFactory(newPages, linkPrefix)
@@ -195,6 +195,7 @@ const queue = {
   has: path => pathArray.some(p => p === path),
   getResourcesForPathname: path => {
     emitter.emit(`onPreLoadPageResources`, { path })
+
     // In development we know the code is loaded already
     // so we just return with it immediately.
     if (process.env.NODE_ENV !== `production`) {
