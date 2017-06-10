@@ -1,7 +1,3 @@
-if (typeof window !== `undefined`) {
-  require(`ric`)
-}
-
 import pageFinderFactory from "./find-page"
 import emitter from "./emitter"
 let findPage
