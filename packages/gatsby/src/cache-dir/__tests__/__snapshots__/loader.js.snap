@@ -8,9 +8,9 @@ Object {
     "page-component---src-pages-test-js",
   ],
   "resourcesCount": Object {
-    "about-me.json": 2,
-    "about.json": 1,
-    "page-component---src-pages-test-js": 3,
+    "about-me.json": 2.1180555555555554,
+    "about.json": 1.0588235294117647,
+    "page-component---src-pages-test-js": 3.17687908496732,
   },
 }
 `;

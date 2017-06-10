@@ -65,6 +65,6 @@ describe(`Loader`, () => {
     loader.enqueue(`/about/me/`)
     loader.enqueue(`/about/`)
     loader.enqueue(`/about/me/`)
-    expect(loader.resources()).toMatchSnapshot()
+    expect(loader.getResources()).toMatchSnapshot()
   })
 })
