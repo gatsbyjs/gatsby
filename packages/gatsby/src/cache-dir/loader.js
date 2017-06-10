@@ -212,6 +212,7 @@ const queue = {
     } else {
       // Check if it's in the cache already.
       if (pathScriptsCache[path]) {
+        emitter.emit(`onPostLoadPageResources`, { page: { path } })
         return pathScriptsCache[path]
       }
       // Nope, we need to load resource(s)

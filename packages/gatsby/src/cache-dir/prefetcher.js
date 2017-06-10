@@ -1,5 +1,5 @@
 module.exports = ({ getNextQueuedResources, createResourceDownload }) => {
-  let pagesLoading = 0
+  let pagesLoading = []
   let resourcesDownloading = []
 
   // Do things
@@ -19,10 +19,10 @@ module.exports = ({ getNextQueuedResources, createResourceDownload }) => {
         )
         break
       case `ON_PRE_LOAD_PAGE_RESOURCES`:
-        pagesLoading += 1
+        pagesLoading.push(action.payload.path)
         break
       case `ON_POST_LOAD_PAGE_RESOURCES`:
-        pagesLoading -= 1
+        pagesLoading = pagesLoading.filter(p => p !== action.payload.page.path)
         break
       case `ON_NEW_RESOURCES_ADDED`:
         break
@@ -31,7 +31,7 @@ module.exports = ({ getNextQueuedResources, createResourceDownload }) => {
     // Take actions.
     // Wait for event loop queue to finish.
     setTimeout(() => {
-      if (resourcesDownloading.length === 0 && pagesLoading === 0) {
+      if (resourcesDownloading.length === 0 && pagesLoading.length === 0) {
         // Start another resource downloading.
         startResourceDownloading()
       }
@@ -63,7 +63,7 @@ module.exports = ({ getNextQueuedResources, createResourceDownload }) => {
       return { pagesLoading, resourcesDownloading }
     },
     empty: () => {
-      pagesLoading = 0
+      pagesLoading = []
       resourcesDownloading = []
     },
   }
