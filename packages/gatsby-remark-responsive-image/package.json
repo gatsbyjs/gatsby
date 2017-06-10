@@ -1,6 +1,6 @@
 {
   "name": "gatsby-remark-responsive-image",
-  "version": "1.0.0-alpha20",
+  "version": "1.0.0-alpha.22",
   "description": "Create responsive image thumbnails for your images used in your markdown",
   "main": "index.js",
   "keywords": [
