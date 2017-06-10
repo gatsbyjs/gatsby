@@ -1,4 +1,4 @@
-const pageFinderFactory = require("../find-page")
+const pageFinderFactory = require(`../find-page`)
 
 let findPage
 
@@ -7,19 +7,19 @@ describe(`find-page`, () => {
     const newPages = [
       {
         path: `/about/`,
-        componentChunkName: "page-component---src-pages-test-js",
-        jsonName: "about.json",
+        componentChunkName: `page-component---src-pages-test-js`,
+        jsonName: `about.json`,
       },
       {
         path: `/about/me/`,
-        componentChunkName: "page-component---src-pages-test-js",
-        jsonName: "about-me.json",
+        componentChunkName: `page-component---src-pages-test-js`,
+        jsonName: `about-me.json`,
       },
       {
         path: `/app/`,
         matchPath: `/app/*`,
-        componentChunkName: "page-component---src-pages-app-js",
-        jsonName: "app.json",
+        componentChunkName: `page-component---src-pages-app-js`,
+        jsonName: `app.json`,
       },
     ]
     findPage = pageFinderFactory(newPages)
@@ -39,8 +39,8 @@ describe(`find-page`, () => {
     const newPages = [
       {
         path: `/about/`,
-        componentChunkName: "page-component---src-pages-test-js",
-        jsonName: "about.json",
+        componentChunkName: `page-component---src-pages-test-js`,
+        jsonName: `about.json`,
       },
     ]
     const findPage2 = pageFinderFactory(newPages, `/my-test-prefix`)

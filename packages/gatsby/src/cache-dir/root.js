@@ -16,7 +16,6 @@ import loader from "./loader"
 loader.addPagesArray(pages)
 loader.addDevRequires(syncRequires)
 
-console.log(loader)
 window.___loader = loader
 
 const history = createHistory()

@@ -1,20 +1,19 @@
-import path from 'path'
-import { defaultOptions, runQuery, writeFile } from './internals'
+import path from "path"
+import { defaultOptions, runQuery, writeFile } from "./internals"
 
-const publicPath = './public'
+const publicPath = `./public`
 
 // A default function to transform query data into feed entries.
-const serialize = ({ site, allMarkdownRemark }) => (
-  allMarkdownRemark.edges.map(edge => ({
-    ...edge.node.frontmatter,
-    description: edge.node.excerpt,
-    url: site.siteMetadata.site_url + edge.node.fields.slug,
-    guid: site.siteMetadata.site_url + edge.node.fields.slug,
-    custom_elements: [
-      { 'content:encoded': edge.node.html }
-    ]
-  }))
-)
+const serialize = ({ site, allMarkdownRemark }) =>
+  allMarkdownRemark.edges.map(edge => {
+    return {
+      ...edge.node.frontmatter,
+      description: edge.node.excerpt,
+      url: site.siteMetadata.site_url + edge.node.fields.slug,
+      guid: site.siteMetadata.site_url + edge.node.fields.slug,
+      custom_elements: [{ "content:encoded": edge.node.html }],
+    }
+  })
 
 exports.onPostBuild = async ({ graphql }, pluginOptions) => {
   delete pluginOptions.plugins

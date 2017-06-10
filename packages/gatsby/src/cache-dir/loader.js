@@ -21,23 +21,16 @@ const preferDefault = m => (m && m.default) || m
 const prefetcher = require(`./prefetcher`)({
   getNextQueuedResources: () => resourcesArray.slice(-1)[0],
   createResourceDownload: resourceName => {
-    console.log("fetching resource:", resourceName)
-    console.log(`resourcesArray length`, resourcesArray.length)
     fetchResource(resourceName, () => {
       resourcesArray = resourcesArray.filter(r => r !== resourceName)
-      console.log(`resourcesArray length`, resourcesArray.length)
       prefetcher.onResourcedFinished(resourceName)
-      console.log(`resourceStrCache`, resourceStrCache)
-      console.log(`resourceCache`, resourceCache)
     })
   },
 })
 emitter.on(`ON_PRE_LOAD_PAGE_RESOURCES`, e => {
-  console.log(`ON_PRE_LOAD_PAGE_RESOURCES`, e)
   prefetcher.onPreLoadPageResources(e)
 })
 emitter.on(`ON_POST_LOAD_PAGE_RESOURCES`, e => {
-  console.log(`ON_POST_LOAD_PAGE_RESOURCES`, e)
   prefetcher.onPostLoadPageResources(e)
 })
 
@@ -81,7 +74,6 @@ const fetchResource = (resourceName, cb = () => {}) => {
 }
 
 const getResourceModule = (resourceName, cb) => {
-  console.log(`getting resourceName`, resourceName)
   if (resourceCache[resourceName]) {
     return cb(null, resourceCache[resourceName])
   } else {
@@ -131,6 +123,9 @@ const queue = {
 
     const mountOrderBoost = 1 / mountOrder
     mountOrder += 1
+    // console.log(
+    // `enqueue "${path}", mountOrder: "${mountOrder}, mountOrderBoost: ${mountOrderBoost}`
+    // )
 
     // Add to path counts.
     if (!pathCount[path]) {
@@ -147,7 +142,7 @@ const queue = {
     // Sort pages by pathCount
     pathArray.sort(sortPagesByCount)
 
-    // Add resources.
+    // Add resources to queue.
     const page = findPage(path)
     if (page.jsonName) {
       if (!resourcesCount[page.jsonName]) {
@@ -156,7 +151,7 @@ const queue = {
         resourcesCount[page.jsonName] += 1 + mountOrderBoost
       }
 
-      // Before adding checking that the JSON resource isn't either
+      // Before adding, checking that the JSON resource isn't either
       // already queued or been downloading.
       if (
         resourcesArray.indexOf(page.jsonName) === -1 &&
@@ -172,7 +167,7 @@ const queue = {
         resourcesCount[page.componentChunkName] += 1 + mountOrderBoost
       }
 
-      // Before adding checking that the component resource isn't either
+      // Before adding, checking that the component resource isn't either
       // already queued or been downloading.
       if (
         resourcesArray.indexOf(page.componentChunkName) === -1 &&
@@ -208,29 +203,31 @@ const queue = {
     // so we just return with it immediately.
     if (process.env.NODE_ENV !== `production`) {
       const page = findPage(path)
+      if (!page) return
+
       const pageResources = {
         component: syncRequires.components[page.componentChunkName],
         json: syncRequires.json[page.jsonName],
       }
-      console.log(`EMITTING onPostLoadPageResources`, page, pageResources)
       emitter.emit(`onPostLoadPageResources`, { page, pageResources })
       return pageResources
+      // Production code path
     } else {
       // Check if it's in the cache already.
       if (pathScriptsCache[path]) {
         return pathScriptsCache[path]
       }
-      console.log("need to load scripts")
+      // Nope, we need to load resource(s)
       const page = findPage(path)
-      console.log("for page", page)
       let component
       let json
+      // Load the component/json and parallal and call this
+      // function when they're done loading. When both are loaded,
+      // we move on.
       const done = () => {
         if (component && json) {
-          console.log("done loading")
           pathScriptsCache[path] = { component, json }
           const pageResources = { component, json }
-          console.log(`EMITTING onPostLoadPageResources`, page, pageResources)
           emitter.emit(`onPostLoadPageResources`, {
             page,
             pageResources,
@@ -239,20 +236,20 @@ const queue = {
       }
       getResourceModule(page.componentChunkName, (err, c) => {
         if (err) {
-          return console.log("we failed folks")
+          console.log(`Loading the component for ${page.path} failed`)
         }
-        console.log("done getting component")
         component = c
         done()
       })
       getResourceModule(page.jsonName, (err, j) => {
         if (err) {
-          return console.log("we failed folks")
+          console.log(`Loading the JSON for ${page.path} failed`)
         }
-        console.log("done getting json")
         json = j
         done()
       })
+
+      return undefined
     }
   },
   peek: path => pathArray.slice(-1)[0],

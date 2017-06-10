@@ -8,14 +8,12 @@ module.exports = ({ getNextQueuedResources, createResourceDownload }) => {
     if (nextResource) {
       resourcesDownloading.push(nextResource)
       createResourceDownload(nextResource)
-      console.log({ pagesLoading, resourcesDownloading })
     }
   }
 
   const reducer = action => {
     switch (action.type) {
       case `RESOURCE_FINISHED`:
-        console.log(`reducer RESOURCE_FINISHED`, action, resourcesDownloading)
         resourcesDownloading = resourcesDownloading.filter(
           r => r !== action.payload
         )

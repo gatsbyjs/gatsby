@@ -30,13 +30,10 @@ window.matchPath = matchPath
 apiRunner(`onClientEntry`)
 
 const navigateTo = pathname => {
-  console.log(`navigateTo`, pathname)
   // Listen to loading events. If page resources load before
   // a second, navigate immediately.
   function eventHandler(e) {
-    console.log(`onPostLoadPageResources in ___navigate`, e, pathname)
     if (e.page.path === pathname) {
-      console.log("woot! page resources have arrived")
       clearTimeout(timeoutId)
       window.___history.push(pathname)
     }
@@ -45,14 +42,13 @@ const navigateTo = pathname => {
   // Start a timer to wait for a second before transitioning and showing a
   // loader in case resources aren't around yet.
   const timeoutId = setTimeout(() => {
-    console.log("waited for resources but NOTHING, gosh slow")
     emitter.off(`onPostLoadPageResources`, eventHandler)
+    emitter.emit(`onDelayedLoadPageResources`, { pathname })
     window.___history.push(pathname)
   }, 1000)
 
   emitter.on(`onPostLoadPageResources`, eventHandler)
   if (loader.getResourcesForPathname(pathname)) {
-    console.log("already have resources, navigating")
     emitter.off(`onPostLoadPageResources`, eventHandler)
     clearTimeout(timeoutId)
     window.___history.push(pathname)
@@ -95,13 +91,9 @@ const DefaultRouter = ({ children }) =>
   <Router history={history}>{children}</Router>
 
 const loadLayout = cb => {
-  console.log(asyncRequires.layouts)
   if (asyncRequires.layouts[`index`]) {
-    console.log(asyncRequires.layouts)
     asyncRequires.layouts[`index`]((err, executeChunk) => {
-      console.log("executeChunk", executeChunk)
       const module = executeChunk()
-      console.log("module", module)
       cb(module)
     })
   } else {

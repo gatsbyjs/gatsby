@@ -24,7 +24,7 @@ module.exports.pitch = function(remainingRequest) {
 
   const request = loaderUtils.stringifyRequest(this, `!!` + remainingRequest)
 
-  const callback = "function() { return require(" + request + ") }"
+  const callback = `function() { return require(` + request + `) }`
 
   const executor = `
      return require.ensure([], function(_, error) {

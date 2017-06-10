@@ -6,13 +6,13 @@ describe(`Loader`, () => {
     loader.addPagesArray([
       {
         path: `/about/`,
-        componentChunkName: "page-component---src-pages-test-js",
-        jsonName: "about.json",
+        componentChunkName: `page-component---src-pages-test-js`,
+        jsonName: `about.json`,
       },
       {
         path: `/about/me/`,
-        componentChunkName: "page-component---src-pages-test-js",
-        jsonName: "about-me.json",
+        componentChunkName: `page-component---src-pages-test-js`,
+        jsonName: `about-me.json`,
       },
     ])
   })
