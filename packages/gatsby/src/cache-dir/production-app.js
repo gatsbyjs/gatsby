@@ -1,6 +1,4 @@
 import apiRunner from "./api-runner-browser"
-// Let the site/plugins run code very early.
-apiRunner(`onClientEntry`)
 
 import React, { createElement } from "react"
 import ReactDOM from "react-dom"
@@ -14,6 +12,7 @@ import { ScrollContext } from "react-router-scroll"
 import createHistory from "history/createBrowserHistory"
 // import invariant from "invariant"
 import emitter from "./emitter"
+window.___emitter = emitter
 
 import pages from "./pages.json"
 import ComponentRenderer from "./component-renderer"
@@ -27,11 +26,14 @@ window.___loader = loader
 
 window.matchPath = matchPath
 
+// Let the site/plugins run code very early.
+apiRunner(`onClientEntry`)
+
 const navigateTo = pathname => {
   console.log(`navigateTo`, pathname)
   // Listen to loading events. If page resources load before
   // a second, navigate immediately.
-  const eventHandler = e => {
+  function eventHandler(e) {
     console.log(`onPostLoadPageResources in ___navigate`, e, pathname)
     if (e.page.path === pathname) {
       console.log("woot! page resources have arrived")
