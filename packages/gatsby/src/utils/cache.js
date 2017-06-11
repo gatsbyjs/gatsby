@@ -9,7 +9,7 @@ exports.initCache = () => {
   if (process.env.NODE_ENV === `test`) {
     directory = require(`os`).tmpdir()
   } else {
-    directory = process.cwd() + `.cache/cache`
+    directory = process.cwd() + `/.cache/cache`
   }
   db = low(`${directory}/site-cache.json`, {
     storage: require("lowdb/lib/storages/file-async"),
