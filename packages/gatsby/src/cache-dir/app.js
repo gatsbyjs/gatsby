@@ -1,10 +1,12 @@
 const apiRunner = require(`./api-runner-browser`)
-// Let the site/plugins run code very early.
-apiRunner(`onClientEntry`)
 
 import React from "react"
 import ReactDOM from "react-dom"
 import { AppContainer as HotContainer } from "react-hot-loader"
+window.___emitter = require(`./emitter`)
+
+// Let the site/plugins run code very early.
+apiRunner(`onClientEntry`)
 
 /**
  * Service Workers are persistent by nature. They stick around,
