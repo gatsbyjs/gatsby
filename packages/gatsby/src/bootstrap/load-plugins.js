@@ -6,29 +6,42 @@ const path = require(`path`)
 const { store } = require(`../redux`)
 const nodeAPIs = require(`../utils/api-node-docs`)
 
-function resolvePluginPath(pluginNameOrPath) {
+function isAbsolutePath(path) {
+  return fs.existsSync(path)
+}
+
+/**
+ * resolvePluginPath
+ * @param {string} pluginName This can be a name of a local plugin, the name of
+ * a plugin located in node_modules, or a Gatsby internal plugin. In the last
+ * case the pluginName will be an absolute path.
+ */
+function resolvePluginPath(pluginName) {
+
+  if (!isAbsolutePath(pluginName)) {
+
+    // Find the plugin in the local plugins folder
+    const resolvedPath = slash(path.resolve(`./plugins/${pluginName}`))
+
+    if(fs.existsSync(resolvedPath)) {
+
+      // Validate the plugin structure
+      if(!fs.existsSync(`${path}/package.json`)) {
+        throw new Error(`Local plugin "${pluginName}" requires a package.json file.`)
+      }
+
+      return resolvedPath
+    }
+  }
+
+  /**
+   * Here we have an absolute path to an internal plugin, or a name of a module
+   * which should be found in node_modules.
+   */
   try {
-    // Find the plugin in the node_modules folder
-    return slash(path.dirname(require.resolve(pluginNameOrPath)))
-  } catch (e) {
-    // Find the plugin relative to the current working directory
-    const resolvedPath = slash(path.resolve(pluginNameOrPath))
-
-    /**
-     * The path.resolve call defaults to the current working directory.
-     * Avoid picking up gatsby-* files and package.json from the project root
-     * when the plugin can't be found.
-     */
-    if(resolvedPath === slash(process.cwd())) {
-      throw new Error(`Local plugin "${pluginNameOrPath}" was not found`)
-    }
-
-    // Check if path looks like a plugin package
-    if (!fs.existsSync(`${resolvedPath}/package.json`)) {
-      throw new Error(`Local plugin "${pluginNameOrPath}" requires a package.json file`)
-    }
-
-    return resolvedPath
+    return slash(path.dirname(require.resolve(pluginName)))
+  } catch (err) {
+    throw new Error(`Unable to find plugin "${pluginName}"`)
   }
 }
 
