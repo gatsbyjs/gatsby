@@ -69,7 +69,7 @@ exports.watch = rootDir => {
   }, 100)
 
   watcher = chokidar
-    .watch(`${rootDir}/src/**/*.{js,jsx}`)
+    .watch(`${rootDir}/src/**/*.{js,jsx,ts,tsx}`)
     .on(`change`, path => {
       debounceCompile()
     })
