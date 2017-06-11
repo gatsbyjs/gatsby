@@ -15,7 +15,6 @@ import ComponentRenderer from "./component-renderer"
 import loader from "./loader"
 loader.addPagesArray(pages)
 loader.addDevRequires(syncRequires)
-
 window.___loader = loader
 
 const history = createHistory()
