@@ -52,10 +52,16 @@ async function resolvePlugin(pluginName) {
           fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
         )
 
+        console.log('resolve plugin', {
+          resolve: resolvedPath,
+          name: packageJSON.name || pluginName,
+          version: packageJSON.version || await createFileContentHash(resolvedPath, `**`),
+        })
+
         return {
           resolve: resolvedPath,
           name: packageJSON.name || pluginName,
-          version: packageJSON.version || await createFileContentHash(resolvedPath, `**/*`),
+          version: packageJSON.version || await createFileContentHash(resolvedPath, `**`),
         }
 
       } else {
