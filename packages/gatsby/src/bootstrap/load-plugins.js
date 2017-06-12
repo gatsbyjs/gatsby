@@ -34,26 +34,23 @@ function createFileContentHash(root, globPattern) {
  * @return {PluginInfo}
  */
 function resolvePlugin(pluginName) {
-
   // Only find plugins when we're not given an absolute path
   if (!fs.existsSync(pluginName)) {
-
     // Find the plugin in the local plugins folder
     const resolvedPath = slash(path.resolve(`./plugins/${pluginName}`))
 
-    if(fs.existsSync(resolvedPath)) {
-
-      if(fs.existsSync(`${resolvedPath}/package.json`)) {
-          const packageJSON = JSON.parse(
+    if (fs.existsSync(resolvedPath)) {
+      if (fs.existsSync(`${resolvedPath}/package.json`)) {
+        const packageJSON = JSON.parse(
           fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
         )
 
         return {
           resolve: resolvedPath,
           name: packageJSON.name || pluginName,
-          version: packageJSON.version || createFileContentHash(resolvedPath, `**`),
+          version:
+            packageJSON.version || createFileContentHash(resolvedPath, `**`),
         }
-
       } else {
         // Make package.json a requirement for local plugins too
         throw new Error(`Plugin ${pluginName} requires a package.json file`)
@@ -66,7 +63,7 @@ function resolvePlugin(pluginName) {
    * which should be located in node_modules.
    */
   try {
-    const resolvedPath =  slash(path.dirname(require.resolve(pluginName)))
+    const resolvedPath = slash(path.dirname(require.resolve(pluginName)))
 
     const packageJSON = JSON.parse(
       fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
@@ -77,7 +74,6 @@ function resolvePlugin(pluginName) {
       name: packageJSON.name,
       version: packageJSON.version,
     }
-
   } catch (err) {
     throw new Error(`Unable to find plugin "${pluginName}"`)
   }

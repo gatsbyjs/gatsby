@@ -58,7 +58,10 @@ exports.watch = rootDir => {
     queryCompiler().then(queries => {
       const pages = store.getState().pageComponents
       queries.forEach(({ text }, path) => {
-        invariant(pages[path], `Path ${path} not found in the store pages: ${JSON.stringify(pages)}`)
+        invariant(
+          pages[path],
+          `Path ${path} not found in the store pages: ${JSON.stringify(pages)}`
+        )
 
         if (text !== pages[path].query) {
           boundActionCreators.replacePageComponentQuery({
