@@ -22,7 +22,7 @@ function createFileContentHash(root, globPattern) {
  * @typedef {Object} PluginInfo
  * @property {string} resolve The absolute path to the plugin
  * @property {string} name The plugin name
- * @property {string|number} version The plugin version (can be content hash)
+ * @property {string} version The plugin version (can be content hash)
  */
 
 /**
