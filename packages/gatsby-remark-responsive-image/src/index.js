@@ -79,7 +79,7 @@ module.exports = ({
             >
               <div
                 class="gatsby-resp-image-background-image"
-                style="padding-bottom: ${ratio};position: relative; width: 100%; bottom: 0; left: 0; background-image: url('${responsiveSizesResult.src}'); background-size: cover;"
+                style="padding-bottom: ${ratio};position: relative; width: 100%; bottom: 0; left: 0; background-image: url('${responsiveSizesResult.base64}'); background-size: cover;"
               >
                 <img
                   class="gatsby-resp-image-image"
