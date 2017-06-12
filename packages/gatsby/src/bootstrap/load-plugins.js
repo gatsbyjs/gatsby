@@ -48,12 +48,6 @@ function resolvePlugin(pluginName) {
           fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
         )
 
-        console.log(`resolve plugin`, {
-          resolve: resolvedPath,
-          name: packageJSON.name || pluginName,
-          version: packageJSON.version || createFileContentHash(resolvedPath, `**`),
-        })
-
         return {
           resolve: resolvedPath,
           name: packageJSON.name || pluginName,
