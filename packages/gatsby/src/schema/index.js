@@ -8,6 +8,8 @@ const { store } = require(`../redux`)
 const invariant = require(`invariant`)
 
 module.exports = async () => {
+  console.time(`building schema`)
+
   const typesGQL = await buildNodeTypes()
   const connections = buildNodeConnections(_.values(typesGQL))
 
