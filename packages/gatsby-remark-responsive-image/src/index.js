@@ -16,7 +16,7 @@ module.exports = ({
   markdownNode,
   markdownAST,
   pluginOptions,
-  linkPrefix,
+  pathPrefix,
   getNode,
 }) => {
   const defaults = {

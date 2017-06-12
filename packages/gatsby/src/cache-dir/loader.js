@@ -98,11 +98,11 @@ const queue = {
   },
   addPagesArray: newPages => {
     pages = newPages
-    let linkPrefix = ``
-    if (typeof __PREFIX_LINKS__ !== `undefined`) {
-      linkPrefix = __LINK_PREFIX__
+    let pathPrefix = ``
+    if (typeof __PREFIX_PATHS__ !== `undefined`) {
+      pathPrefix = __PATH_PREFIX__
     }
-    findPage = pageFinderFactory(newPages, linkPrefix)
+    findPage = pageFinderFactory(newPages, pathPrefix)
   },
   addDevRequires: devRequires => {
     syncRequires = devRequires
@@ -191,7 +191,7 @@ const queue = {
       pathCount,
     }
   },
-  hasPage: pathname => findPage(pathname),
+  getPage: pathname => findPage(pathname),
   has: path => pathArray.some(p => p === path),
   getResourcesForPathname: path => {
     emitter.emit(`onPreLoadPageResources`, { path })
@@ -210,13 +210,23 @@ const queue = {
       return pageResources
       // Production code path
     } else {
+      const page = findPage(path)
+
+      if (!page) {
+        console.log(`A page wasn't found for "${path}"`)
+        return
+      }
+
+      // Use the path from the page so the pathScriptsCache uses
+      // the normalized path.
+      path = page.path
+
       // Check if it's in the cache already.
       if (pathScriptsCache[path]) {
         emitter.emit(`onPostLoadPageResources`, { page: { path } })
         return pathScriptsCache[path]
       }
       // Nope, we need to load resource(s)
-      const page = findPage(path)
       let component
       let json
       // Load the component/json and parallal and call this

@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`config reducer handles empty configs 1`] = `Object {}`;
+
+exports[`config reducer let's you add a config 1`] = `
+Object {
+  "siteMetadata": Object {
+    "hi": true,
+  },
+}
+`;

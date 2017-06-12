@@ -13,6 +13,7 @@ import createHistory from "history/createBrowserHistory"
 // import invariant from "invariant"
 import emitter from "./emitter"
 window.___emitter = emitter
+// emitter.on(`*`, (type, e) => console.log(`emitter`, type, e))
 
 import pages from "./pages.json"
 import ComponentRenderer from "./component-renderer"
@@ -33,7 +34,7 @@ const navigateTo = pathname => {
   // Listen to loading events. If page resources load before
   // a second, navigate immediately.
   function eventHandler(e) {
-    if (e.page.path === pathname) {
+    if (e.page.path === loader.getPage(pathname).path) {
       emitter.off(`onPostLoadPageResources`, eventHandler)
       clearTimeout(timeoutId)
       window.___history.push(pathname)
@@ -48,11 +49,12 @@ const navigateTo = pathname => {
     window.___history.push(pathname)
   }, 1000)
 
-  emitter.on(`onPostLoadPageResources`, eventHandler)
   if (loader.getResourcesForPathname(pathname)) {
     emitter.off(`onPostLoadPageResources`, eventHandler)
     clearTimeout(timeoutId)
     window.___history.push(pathname)
+  } else {
+    emitter.on(`onPostLoadPageResources`, eventHandler)
   }
 }
 
@@ -116,7 +118,7 @@ loadLayout(layout => {
               render: routeProps => {
                 attachToHistory(routeProps.history)
                 const props = layoutProps ? layoutProps : routeProps
-                if (loader.hasPage(props.location.pathname)) {
+                if (loader.getPage(props.location.pathname)) {
                   return createElement(ComponentRenderer, { ...props })
                 } else {
                   // TODO check (somehow) if we loaded the page

@@ -26,7 +26,7 @@ class ComponentRenderer extends React.Component {
   componentDidMount() {
     // listen to events.
     emitter.on(`onPostLoadPageResources`, e => {
-      if (e.page.path === this.props.location.pathname) {
+      if (e.page.path === loader.getPage(this.props.location.pathname).path) {
         this.setState({ pageResources: e.pageResources })
       }
     })

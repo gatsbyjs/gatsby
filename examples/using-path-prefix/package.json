@@ -1,0 +1,16 @@
+{
+  "name": "using-path-prefix",
+  "private": true,
+  "description": "Gatsby example site using using-path-prefix",
+  "author": "Kyle Mathews &lt;mathews.kyle@gmail.com&gt;",
+  "dependencies": {
+    "gatsby": "canary",
+    "gatsby-link": "canary"
+  },
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build"
+  }
+}
