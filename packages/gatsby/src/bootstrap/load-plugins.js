@@ -5,17 +5,13 @@ const path = require(`path`)
 const crypto = require(`crypto`)
 const { store } = require(`../redux`)
 const nodeAPIs = require(`../utils/api-node-docs`)
-const Promise = require(`bluebird`)
-const globCB = require(`glob`)
-const glob = Promise.promisify(globCB)
+const glob = require(`glob`)
 
-async function createFileContentHash(root, pattern) {
+function createFileContentHash(root, globPattern) {
   const hash = crypto.createHash(`md5`)
-
-  const files = await glob(`${root}/${pattern}`, { nodir: true })
+  const files = glob.sync(`${root}/${globPattern}`, { nodir: true })
 
   files.forEach(filepath => {
-    console.log(`+++ glob filepath`, filepath)
     hash.update(fs.readFileSync(filepath))
   })
 
@@ -37,7 +33,7 @@ async function createFileContentHash(root, pattern) {
  * will be an absolute path.
  * @return {PluginInfo}
  */
-async function resolvePlugin(pluginName) {
+function resolvePlugin(pluginName) {
 
   // Only find plugins when we're not given an absolute path
   if (!fs.existsSync(pluginName)) {
@@ -52,16 +48,16 @@ async function resolvePlugin(pluginName) {
           fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
         )
 
-        console.log('resolve plugin', {
+        console.log(`resolve plugin`, {
           resolve: resolvedPath,
           name: packageJSON.name || pluginName,
-          version: packageJSON.version || await createFileContentHash(resolvedPath, `**`),
+          version: packageJSON.version || createFileContentHash(resolvedPath, `**`),
         })
 
         return {
           resolve: resolvedPath,
           name: packageJSON.name || pluginName,
-          version: packageJSON.version || await createFileContentHash(resolvedPath, `**`),
+          version: packageJSON.version || createFileContentHash(resolvedPath, `**`),
         }
 
       } else {
@@ -165,7 +161,7 @@ module.exports = async (config = {}) => {
   plugins.push({
     resolve: slash(process.cwd()),
     name: `default-site-plugin`,
-    version: await createFileContentHash(process.cwd(), `gatsby-*`),
+    version: createFileContentHash(process.cwd(), `gatsby-*`),
     pluginOptions: {
       plugins: [],
     },
