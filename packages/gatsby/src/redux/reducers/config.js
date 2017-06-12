@@ -17,7 +17,6 @@ module.exports = (state = {}, action) => {
           chalk.blue.bgYellow(`The site's gatsby-config.js failed validation`)
         )
         console.log(chalk.bold.red(result.error))
-        console.log(action.payload)
         if (action.payload.linkPrefix) {
           console.log(`"linkPrefix" should be changed to "pathPrefix"`)
         }
@@ -34,8 +33,6 @@ module.exports = (state = {}, action) => {
           action.payload.pathPrefix = action.payload.pathPrefix.slice(0, -1)
         }
       }
-
-      console.log(`config`, action.payload)
 
       return {
         ...action.payload,
