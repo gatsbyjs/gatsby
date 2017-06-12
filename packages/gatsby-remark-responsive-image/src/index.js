@@ -31,8 +31,15 @@ module.exports = ({
     imageNodes.map(
       node =>
         new Promise((resolve, reject) => {
-          // Ignore gifs as we can't process them.
-          if (isRelativeUrl(node.url) && node.url.slice(-3) !== `gif`) {
+          const fileType = node.url.slice(-3)
+
+          // Ignore gifs as we can't process them,
+          // svgs as they are already responsive by definition
+          if (
+            isRelativeUrl(node.url) &&
+            fileType !== `gif` &&
+            fileType !== `svg`
+          ) {
             const imagePath = path.posix.join(
               getNode(markdownNode.parent).dir,
               node.url

@@ -44,9 +44,12 @@ module.exports = ({ files, markdownNode, markdownAST, getNode }) => {
     visitor(link)
   })
 
-  // Also copy gifs since Sharp can't process them.
+  // Also copy gifs since Sharp can't process them,
+  // and svgs since we exclude them from the image processing pipeline in
+  // gatsby-remark-responsive-image
   visit(markdownAST, `image`, image => {
-    if (image.url.slice(-3) === `gif`) {
+    const fileType = image.url.slice(-3)
+    if (fileType === `gif` || fileType === `svg`) {
       visitor(image)
     }
   })
