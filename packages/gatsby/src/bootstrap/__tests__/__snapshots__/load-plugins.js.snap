@@ -40,7 +40,6 @@ Array [
       "plugins": Array [],
     },
     "resolve": "",
-    "version": undefined,
   },
   Object {
     "name": "default-site-plugin",
@@ -48,7 +47,7 @@ Array [
       "plugins": Array [],
     },
     "resolve": "",
-    "version": "n/a",
+    "version": "d41d8cd98f00b204e9800998ecf8427e",
   },
 ]
 `;

@@ -110,7 +110,12 @@ module.exports = async (config = {}) => {
       // Add some default values for tests as we don't actually
       // want to try to load anything during tests.
       if (plugin.resolve === `___TEST___`) {
-        return { name: `TEST` }
+        return {
+          name: `TEST`,
+          pluginOptions: {
+            plugins: [],
+          },
+        }
       }
 
       const info = resolvePlugin(plugin.resolve)
