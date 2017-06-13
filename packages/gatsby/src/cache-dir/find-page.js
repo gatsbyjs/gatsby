@@ -1,9 +1,15 @@
 // TODO add tests especially for handling prefixed links.
 import { matchPath } from "react-router-dom"
 
+const pageCache = {}
+
 module.exports = (pages, pathPrefix = ``) => pathname => {
   // Remove the pathPrefix from the pathname.
   const trimmedPathname = pathname.slice(pathPrefix.length)
+
+  if (pageCache[trimmedPathname]) {
+    return pageCache[trimmedPathname]
+  }
 
   let foundPage
   // Array.prototype.find is not supported in IE so we use this somewhat odd
@@ -18,6 +24,7 @@ module.exports = (pages, pathPrefix = ``) => pathname => {
         })
       ) {
         foundPage = page
+        pageCache[trimmedPathname] = page
         return true
       }
     } else {
@@ -28,6 +35,7 @@ module.exports = (pages, pathPrefix = ``) => pathname => {
         })
       ) {
         foundPage = page
+        pageCache[trimmedPathname] = page
         return true
       }
     }

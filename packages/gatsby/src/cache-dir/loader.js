@@ -193,9 +193,7 @@ const queue = {
   },
   getPage: pathname => findPage(pathname),
   has: path => pathArray.some(p => p === path),
-  getResourcesForPathname: path => {
-    emitter.emit(`onPreLoadPageResources`, { path })
-
+  getResourcesForPathname: (path, cb = () => {}) => {
     // In development we know the code is loaded already
     // so we just return with it immediately.
     if (process.env.NODE_ENV !== `production`) {
@@ -206,7 +204,6 @@ const queue = {
         component: syncRequires.components[page.componentChunkName],
         json: syncRequires.json[page.jsonName],
       }
-      emitter.emit(`onPostLoadPageResources`, { page, pageResources })
       return pageResources
       // Production code path
     } else {
@@ -223,9 +220,12 @@ const queue = {
 
       // Check if it's in the cache already.
       if (pathScriptsCache[path]) {
-        emitter.emit(`onPostLoadPageResources`, { page: { path } })
+        console.log("returning page resources from cache")
+        cb(pathScriptsCache[path])
         return pathScriptsCache[path]
       }
+
+      emitter.emit(`onPreLoadPageResources`, { path })
       // Nope, we need to load resource(s)
       let component
       let json
@@ -236,6 +236,7 @@ const queue = {
         if (component && json) {
           pathScriptsCache[path] = { component, json }
           const pageResources = { component, json }
+          cb(pageResources)
           emitter.emit(`onPostLoadPageResources`, {
             page,
             pageResources,

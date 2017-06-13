@@ -31,6 +31,11 @@ window.matchPath = matchPath
 apiRunner(`onClientEntry`)
 
 const navigateTo = pathname => {
+  // If we're already at this path, do nothing.
+  if (window.location.pathname === pathname) {
+    return
+  }
+
   // Listen to loading events. If page resources load before
   // a second, navigate immediately.
   function eventHandler(e) {
