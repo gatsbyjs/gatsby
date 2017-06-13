@@ -1,4 +1,5 @@
 import path from "path"
+import RSS from "RSS"
 import { defaultOptions, runQuery, writeFile } from "./internals"
 
 const publicPath = `./public`
@@ -37,7 +38,7 @@ exports.onPostBuild = async ({ graphql }, pluginOptions) => {
 
     const output = path.join(publicPath, f.output)
     const ctx = { ...globals, ...locals }
-    const feed = setup({ ...rest, ...ctx })
+    const feed = new RSS(setup({ ...rest, ...ctx }))
     const items = f.serialize ? f.serialize(ctx) : serialize(ctx)
 
     items.forEach(i => feed.item(i))
