@@ -1,5 +1,6 @@
 // @flow
 import path from "path"
+const normalize = require(`normalize-path`)
 import glob from "glob"
 import Bluebird from "bluebird"
 import invariant from "invariant"
@@ -52,7 +53,7 @@ class Runner {
 
   async parseEverything() {
     let files = await globp(`${this.baseDir}/**/*.js`)
-    files = files.map(path.normalize)
+    files = files.map(normalize)
     // Ensure all page components added as they're not necessarily in the
     // pages directory e.g. a plugin could add a page component.  Plugins
     // *should* copy their components (if they add a query) to .cache so that
@@ -60,7 +61,7 @@ class Runner {
     // run babel on code in node_modules). Otherwise the component will throw
     // an error in the browser of "graphql is not defined".
     files = files.concat(
-      store.getState().pages.map(p => path.normalize(p.component))
+      store.getState().pages.map(p => normalize(p.component))
     )
     files = _.uniq(files)
 

@@ -17,6 +17,7 @@ const WebpackMD5Hash = require(`webpack-md5-hash`)
 const ChunkManifestPlugin = require(`chunk-manifest-webpack-plugin`)
 const GatsbyModulePlugin = require(`../loaders/gatsby-module-loader/plugin`)
 const genBabelConfig = require(`./babel-config`)
+const { joinPath } = require(`./path`)
 
 // Five stages or modes:
 //   1) develop: for `gatsby develop` command, hot reload and CSS injection into page
@@ -52,7 +53,7 @@ module.exports = async (
         // Webpack will always generate a resultant javascript file.
         // But we don't want it for this step. Deleted by build-css.js.
         return {
-          path: `${directory}/public`,
+          path: joinPath(directory, `public`),
           filename: `bundle-for-css.js`,
           publicPath: program.prefixPaths
             ? `${store.getState().config.pathPrefix}/`
@@ -62,7 +63,7 @@ module.exports = async (
         // A temp file required by static-site-generator-plugin. See plugins() below.
         // Deleted by build-html.js, since it's not needed for production.
         return {
-          path: `${directory}/public`,
+          path: joinPath(directory, `public`),
           filename: `render-page.js`,
           libraryTarget: `umd`,
           publicPath: program.prefixPaths
@@ -73,7 +74,7 @@ module.exports = async (
         return {
           filename: `[name]-[chunkhash].js`,
           chunkFilename: `[name]-[chunkhash].js`,
-          path: `${directory}/public`,
+          path: joinPath(directory, `public`),
           publicPath: program.prefixPaths
             ? `${store.getState().config.pathPrefix}/`
             : `/`,
@@ -92,20 +93,20 @@ module.exports = async (
             `${require.resolve(
               `webpack-hot-middleware/client`
             )}?path=http://${program.host}:${webpackPort}/__webpack_hmr&reload=true`,
-            `${directory}/.cache/app`,
+            joinPath(directory, `.cache/app`),
           ],
         }
       case `build-css`:
         return {
-          main: `${directory}/.cache/app`,
+          main: joinPath(directory, `.cache/app`),
         }
       case `build-html`:
         return {
-          main: `${directory}/.cache/static-entry`,
+          main: joinPath(directory, `.cache/static-entry`),
         }
       case `build-javascript`:
         return {
-          app: `${directory}/.cache/production-app`,
+          app: joinPath(directory, `.cache/production-app`),
         }
       default:
         throw new Error(`The state requested ${stage} doesn't exist.`)
@@ -290,7 +291,7 @@ module.exports = async (
       // directory if you need to install a specific version of a module for a
       // part of your site.
       modulesDirectories: [
-        `${directory}/node_modules`,
+        joinPath(directory, `node_modules`),
         `node_modules`,
         `node_modules/gatsby/node_modules`,
       ],
@@ -479,7 +480,7 @@ module.exports = async (
 
   config.merge({
     // Context is the base directory for resolving the entry option.
-    context: `${directory}`,
+    context: directory,
     node: {
       __filename: true,
     },

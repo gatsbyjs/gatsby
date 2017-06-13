@@ -4,6 +4,7 @@ const Promise = require(`bluebird`)
 
 const writeFileAsync = Promise.promisify(fs.writeFile)
 const { boundActionCreators } = require(`../../redux/actions`)
+const { joinPath } = require(`../../utils/path`)
 
 const { store } = require(`../../redux`)
 
@@ -45,7 +46,7 @@ module.exports = async (page, component) => {
   result.pathContext = page.context
   const resultJSON = JSON.stringify(result, null, 4)
   return writeFileAsync(
-    `${program.directory}/.cache/json/${page.jsonName}`,
+    joinPath(program.directory, `.cache`, `json`, page.jsonName),
     resultJSON
   )
 }

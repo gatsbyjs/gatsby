@@ -42,7 +42,9 @@ const writePages = async () => {
 
   // Add the default layout if it exists.
   let defaultLayoutExists = false
-  if (glob.sync(`${program.directory}/src/layouts/index.*`).length !== 0) {
+  if (
+    glob.sync(joinPath(program.directory, `src/layouts/index.*`)).length !== 0
+  ) {
     layouts.push(`index`)
     defaultLayoutExists = true
   }
@@ -51,7 +53,7 @@ const writePages = async () => {
   components = _.uniqBy(components, c => c.componentChunkName)
 
   await fs.writeFile(
-    `${program.directory}/.cache/pages.json`,
+    joinPath(program.directory, `.cache/pages.json`),
     JSON.stringify(pagesData, null, 4)
   )
 
@@ -140,7 +142,7 @@ const preferDefault = m => m && m.default || m
 }`
 
   await fs.writeFile(
-    `${program.directory}/.cache/async-requires.js`,
+    joinPath(program.directory, `.cache/async-requires.js`),
     asyncRequires
   )
 

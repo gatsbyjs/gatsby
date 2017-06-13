@@ -16,13 +16,14 @@ const { boundActionCreators } = require(`../../redux/actions`)
 const queryCompiler = require(`./query-compiler`).default
 const queryRunner = require(`./query-runner`)
 const invariant = require(`invariant`)
+const normalize = require(`normalize-path`)
 
 exports.extractQueries = () => {
   const pages = store.getState().pages
   const components = _.uniq(pages.map(p => p.component))
   return queryCompiler().then(queries => {
     components.forEach(component => {
-      const query = queries.get(component)
+      const query = queries.get(normalize(component))
 
       boundActionCreators.replacePageComponentQuery({
         query: query && query.text,
