@@ -27,7 +27,7 @@ const headingsCacheKey = node =>
     .contentDigest}-${pluginsCacheStr}`
 
 module.exports = (
-  { type, store, linkPrefix, getNode, cache },
+  { type, store, pathPrefix, getNode, cache },
   pluginOptions
 ) => {
   if (type.name !== `MarkdownRemark`) {
@@ -114,7 +114,7 @@ module.exports = (
                     getNode,
                     files,
                     pluginOptions: plugin.pluginOptions,
-                    linkPrefix,
+                    pathPrefix,
                   })
                 } else {
                   return Promise.resolve()

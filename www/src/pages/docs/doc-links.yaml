@@ -12,12 +12,13 @@
     Gatsby on Windows: /docs/gatsby-on-windows/
 - title: Guides
   links:
-    Path Prefix: /docs/path-prefix/
     Add 404 Page: /docs/add-404-page/
-    Proxying API Requests: /docs/api-proxy/
     Adding Images, Fonts, and Files: /docs/adding-images-fonts-files/
     Creating and Modifying Pages: /docs/creating-and-modifying-pages/
+    Create a source plugin: /docs/create-source-plugin/
     Debugging HTML Builds: /docs/debugging-html-builds/
+    Path Prefix: /docs/path-prefix/
+    Proxying API Requests: /docs/api-proxy/
 - title: Reference
   links:
     Node Interface: /docs/node-interface/

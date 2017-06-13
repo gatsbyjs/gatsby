@@ -56,7 +56,9 @@ const sortPagesByCount = (a, b) => {
 
 const fetchResource = (resourceName, cb = () => {}) => {
   if (resourceStrCache[resourceName]) {
-    return cb(null, resourceStrCache[resourceName])
+    process.nextTick(() => {
+      cb(null, resourceStrCache[resourceName])
+    })
   } else {
     // Find resource
     const resourceFunction = resourceName.slice(0, 6) === `page-c`
@@ -73,7 +75,9 @@ const fetchResource = (resourceName, cb = () => {}) => {
 
 const getResourceModule = (resourceName, cb) => {
   if (resourceCache[resourceName]) {
-    return cb(null, resourceCache[resourceName])
+    process.nextTick(() => {
+      cb(null, resourceCache[resourceName])
+    })
   } else {
     fetchResource(resourceName, (err, executeChunk) => {
       if (err) {
@@ -81,7 +85,7 @@ const getResourceModule = (resourceName, cb) => {
       } else {
         const module = preferDefault(executeChunk())
         resourceCache[resourceName] = module
-        return cb(err, module)
+        cb(err, module)
       }
     })
   }
@@ -98,11 +102,11 @@ const queue = {
   },
   addPagesArray: newPages => {
     pages = newPages
-    let linkPrefix = ``
-    if (typeof __PREFIX_LINKS__ !== `undefined`) {
-      linkPrefix = __LINK_PREFIX__
+    let pathPrefix = ``
+    if (typeof __PREFIX_PATHS__ !== `undefined`) {
+      pathPrefix = __PATH_PREFIX__
     }
-    findPage = pageFinderFactory(newPages, linkPrefix)
+    findPage = pageFinderFactory(newPages, pathPrefix)
   },
   addDevRequires: devRequires => {
     syncRequires = devRequires
@@ -191,11 +195,9 @@ const queue = {
       pathCount,
     }
   },
-  hasPage: pathname => findPage(pathname),
+  getPage: pathname => findPage(pathname),
   has: path => pathArray.some(p => p === path),
-  getResourcesForPathname: path => {
-    emitter.emit(`onPreLoadPageResources`, { path })
-
+  getResourcesForPathname: (path, cb = () => {}) => {
     // In development we know the code is loaded already
     // so we just return with it immediately.
     if (process.env.NODE_ENV !== `production`) {
@@ -206,17 +208,34 @@ const queue = {
         component: syncRequires.components[page.componentChunkName],
         json: syncRequires.json[page.jsonName],
       }
-      emitter.emit(`onPostLoadPageResources`, { page, pageResources })
       return pageResources
       // Production code path
     } else {
+      const page = findPage(path)
+
+      if (!page) {
+        console.log(`A page wasn't found for "${path}"`)
+        return
+      }
+
+      // Use the path from the page so the pathScriptsCache uses
+      // the normalized path.
+      path = page.path
+
       // Check if it's in the cache already.
       if (pathScriptsCache[path]) {
-        emitter.emit(`onPostLoadPageResources`, { page: { path } })
+        process.nextTick(() => {
+          cb(pathScriptsCache[path])
+          emitter.emit(`onPostLoadPageResources`, {
+            page,
+            pageResources: pathScriptsCache[path],
+          })
+        })
         return pathScriptsCache[path]
       }
+
+      emitter.emit(`onPreLoadPageResources`, { path })
       // Nope, we need to load resource(s)
-      const page = findPage(path)
       let component
       let json
       // Load the component/json and parallal and call this
@@ -226,6 +245,7 @@ const queue = {
         if (component && json) {
           pathScriptsCache[path] = { component, json }
           const pageResources = { component, json }
+          cb(pageResources)
           emitter.emit(`onPostLoadPageResources`, {
             page,
             pageResources,

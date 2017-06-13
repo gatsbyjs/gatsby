@@ -12,13 +12,13 @@ exports.initCache = () => {
     directory = process.cwd() + `/.cache/cache`
   }
   db = low(`${directory}/site-cache.json`, {
-    storage: require("lowdb/lib/storages/file-async"),
+    storage: require(`lowdb/lib/storages/file-async`),
     format: {
       serialize: obj => JSON.stringify(obj),
       deserialize: str => JSON.parse(str),
     },
   })
-  db._.mixin(require("lodash-id"))
+  db._.mixin(require(`lodash-id`))
 
   db.defaults({ keys: [] }).write()
 }

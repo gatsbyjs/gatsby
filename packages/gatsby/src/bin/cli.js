@@ -49,8 +49,8 @@ program
   .command(`build`)
   .description(`Build a Gatsby project.`)
   .option(
-    `--prefix-links`,
-    `Build site with links prefixed (set prefix in your config).`
+    `--prefix-paths`,
+    `Build site with link paths prefixed (set prefix in your config).`
   )
   .action(command => {
     // Set NODE_ENV to 'production'

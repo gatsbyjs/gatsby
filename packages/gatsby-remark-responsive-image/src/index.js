@@ -16,7 +16,7 @@ module.exports = ({
   markdownNode,
   markdownAST,
   pluginOptions,
-  linkPrefix,
+  pathPrefix,
   getNode,
 }) => {
   const defaults = {
@@ -31,8 +31,15 @@ module.exports = ({
     imageNodes.map(
       node =>
         new Promise((resolve, reject) => {
-          // Ignore gifs as we can't process them.
-          if (isRelativeUrl(node.url) && node.url.slice(-3) !== `gif`) {
+          const fileType = node.url.slice(-3)
+
+          // Ignore gifs as we can't process them,
+          // svgs as they are already responsive by definition
+          if (
+            isRelativeUrl(node.url) &&
+            fileType !== `gif` &&
+            fileType !== `svg`
+          ) {
             const imagePath = path.posix.join(
               getNode(markdownNode.parent).dir,
               node.url
@@ -79,7 +86,7 @@ module.exports = ({
             >
               <span
                 class="gatsby-resp-image-background-image"
-                style="padding-bottom: ${ratio};position: relative; width: 100%; bottom: 0; left: 0; background-image: url('${responsiveSizesResult.src}'); background-size: cover; display: block;"
+                style="padding-bottom: ${ratio};position: relative; width: 100%; bottom: 0; left: 0; background-image: url('${responsiveSizesResult.base64}'); background-size: cover; display: block;"
               >
                 <img
                   class="gatsby-resp-image-image"

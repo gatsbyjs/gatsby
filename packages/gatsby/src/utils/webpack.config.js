@@ -54,8 +54,8 @@ module.exports = async (
         return {
           path: `${directory}/public`,
           filename: `bundle-for-css.js`,
-          publicPath: program.prefixLinks
-            ? `${store.getState().config.linkPrefix}/`
+          publicPath: program.prefixPaths
+            ? `${store.getState().config.pathPrefix}/`
             : `/`,
         }
       case `build-html`:
@@ -65,8 +65,8 @@ module.exports = async (
           path: `${directory}/public`,
           filename: `render-page.js`,
           libraryTarget: `umd`,
-          publicPath: program.prefixLinks
-            ? `${store.getState().config.linkPrefix}/`
+          publicPath: program.prefixPaths
+            ? `${store.getState().config.pathPrefix}/`
             : `/`,
         }
       case `build-javascript`:
@@ -74,8 +74,8 @@ module.exports = async (
           filename: `[name]-[chunkhash].js`,
           chunkFilename: `[name]-[chunkhash].js`,
           path: `${directory}/public`,
-          publicPath: program.prefixLinks
-            ? `${store.getState().config.linkPrefix}/`
+          publicPath: program.prefixPaths
+            ? `${store.getState().config.pathPrefix}/`
             : `/`,
         }
       default:
@@ -126,8 +126,8 @@ module.exports = async (
               ),
               PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
             },
-            __PREFIX_LINKS__: program.prefixLinks,
-            __LINK_PREFIX__: JSON.stringify(store.getState().config.linkPrefix),
+            __PREFIX_PATHS__: program.prefixPaths,
+            __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
           }),
           // Names module ids with their filepath. We use this in development
           // to make it easier to see what modules have hot reloaded, etc. as
@@ -144,8 +144,8 @@ module.exports = async (
               ),
               PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
             },
-            __PREFIX_LINKS__: program.prefixLinks,
-            __LINK_PREFIX__: JSON.stringify(store.getState().config.linkPrefix),
+            __PREFIX_PATHS__: program.prefixPaths,
+            __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
           }),
           new ExtractTextPlugin(`styles.css`, { allChunks: true }),
         ]
@@ -159,8 +159,8 @@ module.exports = async (
               ),
               PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
             },
-            __PREFIX_LINKS__: program.prefixLinks,
-            __LINK_PREFIX__: JSON.stringify(store.getState().config.linkPrefix),
+            __PREFIX_PATHS__: program.prefixPaths,
+            __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
           }),
           new ExtractTextPlugin(`build-html-styles.css`),
         ]
@@ -230,7 +230,7 @@ module.exports = async (
           }),
           // Add a few global variables. Set NODE_ENV to production (enables
           // optimizations for React) and whether prefixing links is enabled
-          // (__PREFIX_LINKS__) and what the link prefix is (__LINK_PREFIX__).
+          // (__PREFIX_PATHS__) and what the link prefix is (__PATH_PREFIX__).
           new webpack.DefinePlugin({
             "process.env": {
               NODE_ENV: JSON.stringify(
@@ -238,8 +238,8 @@ module.exports = async (
               ),
               PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
             },
-            __PREFIX_LINKS__: program.prefixLinks,
-            __LINK_PREFIX__: JSON.stringify(store.getState().config.linkPrefix),
+            __PREFIX_PATHS__: program.prefixPaths,
+            __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
           }),
           // Extract CSS so it doesn't get added to JS bundles.
           new ExtractTextPlugin(`build-js-styles.css`),
