@@ -15,6 +15,7 @@ const { store } = require(`../../redux/`)
 const { boundActionCreators } = require(`../../redux/actions`)
 const queryCompiler = require(`./query-compiler`).default
 const queryRunner = require(`./query-runner`)
+const invariant = require(`invariant`)
 
 exports.extractQueries = () => {
   const pages = store.getState().pages
@@ -57,6 +58,11 @@ exports.watch = rootDir => {
     queryCompiler().then(queries => {
       const pages = store.getState().pageComponents
       queries.forEach(({ text }, path) => {
+        invariant(
+          pages[path],
+          `Path ${path} not found in the store pages: ${JSON.stringify(pages)}`
+        )
+
         if (text !== pages[path].query) {
           boundActionCreators.replacePageComponentQuery({
             query: text,
