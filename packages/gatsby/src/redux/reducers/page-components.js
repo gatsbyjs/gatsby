@@ -7,6 +7,7 @@ module.exports = (state = {}, action) => {
       return {}
     case `CREATE_PAGE_COMPONENT`:
       action.payload.componentPath = normalize(action.payload.componentPath)
+      console.log(`CREATE_PAGE_COMPONENT action`, action)
       state[action.payload.componentPath] = _.merge(
         {},
         state[action.payload.componentPath],
