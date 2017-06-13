@@ -48,9 +48,9 @@ describe(`JavaScript page creator`, () => {
         `D:\\Projets\\gatsby-starter\\src\\pages\\404.tsx`,
         `D:\\Projets\\gatsby-starter\\src\\pages\\index.tsx`,
         `D:\\Projets\\gatsby-starter\\src\\pages\\blog.tsx`,
-        ]
+      ]
 
-      expect(paths.map(p => createPath(basePath, p))).toMatchSnapshot() 
+      expect(paths.map(p => createPath(basePath, p))).toMatchSnapshot()
     })
   })
 })

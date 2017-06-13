@@ -101,7 +101,7 @@ module.exports = ({
             </span>
           </a>
           `
-              
+
               // Replace the image node with an inline HTML node.
               node.type = `html`
               node.value = rawHTML
