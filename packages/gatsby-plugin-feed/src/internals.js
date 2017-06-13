@@ -1,5 +1,4 @@
 import fs from "fs"
-import RSS from "rss"
 import pify from "pify"
 
 export const writeFile = pify(fs.writeFile)
@@ -31,8 +30,9 @@ export const defaultOptions = {
   `,
 
   // Setup a few RSS object, merging on various feed-speciupfic options.
-  setup: ({ site: { siteMetadata }, ...rest }) =>
-    new RSS({ ...siteMetadata, ...rest }),
+  setup: ({ site: { siteMetadata }, ...rest }) => ({
+    ...siteMetadata, ...rest
+  }),
 
   // Create a default RSS feed. Others may be added by using the format below.
   feeds: [

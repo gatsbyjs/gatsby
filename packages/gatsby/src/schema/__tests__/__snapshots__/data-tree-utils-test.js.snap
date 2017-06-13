@@ -9,24 +9,24 @@ Object {
     "field": "date",
   },
   "frontmatter___blue": Object {
-    "field": "frontmatter.blue",
+    "field": "frontmatter___blue",
   },
   "frontmatter___circle": Object {
-    "field": "frontmatter.circle",
+    "field": "frontmatter___circle",
   },
   "frontmatter___date": Object {
-    "field": "frontmatter.date",
+    "field": "frontmatter___date",
   },
   "frontmatter___draft": Object {
-    "field": "frontmatter.draft",
+    "field": "frontmatter___draft",
   },
   "frontmatter___title": Object {
-    "field": "frontmatter.title",
+    "field": "frontmatter___title",
   },
   "hair": Object {
     "field": "hair",
   },
-  "key___with______unsupported___values": Object {
+  "key_with__unsupported_values": Object {
     "field": "key-with..unsupported-values",
   },
   "name": Object {
