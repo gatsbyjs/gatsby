@@ -73,6 +73,7 @@ module.exports = (locals, callback) => {
             const page = pages.find(
               page => page.path === props.location.pathname
             )
+            console.log("found page", page)
             return $(syncRequires.components[page.componentChunkName], {
               ...props,
               ...syncRequires.json[page.jsonName],
