@@ -143,7 +143,7 @@ const preferDefault = m => m && m.default || m
 }`
 
   await fs.writeFile(
-    joinPath(program.directory, `.cache/async-requires.js`,
+    joinPath(program.directory, `.cache/async-requires.js`),
     asyncRequires
   )
 
