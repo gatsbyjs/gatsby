@@ -47,7 +47,7 @@ module.exports = async (page, component) => {
   const resultJSON = JSON.stringify(result, null, 4)
   console.log(`query`, component.query, page.context)
   console.log(
-    `resultJSON`,
+    `resultJSON2`,
     resultJSON,
     joinPath(program.directory, `.cache`, `json`, page.jsonName)
   )
