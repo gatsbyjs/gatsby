@@ -56,7 +56,9 @@ const sortPagesByCount = (a, b) => {
 
 const fetchResource = (resourceName, cb = () => {}) => {
   if (resourceStrCache[resourceName]) {
-    return cb(null, resourceStrCache[resourceName])
+    process.nextTick(() => {
+      cb(null, resourceStrCache[resourceName])
+    })
   } else {
     // Find resource
     const resourceFunction = resourceName.slice(0, 6) === `page-c`
@@ -73,7 +75,9 @@ const fetchResource = (resourceName, cb = () => {}) => {
 
 const getResourceModule = (resourceName, cb) => {
   if (resourceCache[resourceName]) {
-    return cb(null, resourceCache[resourceName])
+    process.nextTick(() => {
+      cb(null, resourceCache[resourceName])
+    })
   } else {
     fetchResource(resourceName, (err, executeChunk) => {
       if (err) {
@@ -81,7 +85,7 @@ const getResourceModule = (resourceName, cb) => {
       } else {
         const module = preferDefault(executeChunk())
         resourceCache[resourceName] = module
-        return cb(err, module)
+        cb(err, module)
       }
     })
   }
@@ -220,7 +224,13 @@ const queue = {
 
       // Check if it's in the cache already.
       if (pathScriptsCache[path]) {
-        cb(pathScriptsCache[path])
+        process.nextTick(() => {
+          cb(pathScriptsCache[path])
+          emitter.emit(`onPostLoadPageResources`, {
+            page,
+            pageResources: pathScriptsCache[path],
+          })
+        })
         return pathScriptsCache[path]
       }
 

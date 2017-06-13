@@ -55,10 +55,12 @@ const navigateTo = pathname => {
   }, 1000)
 
   if (loader.getResourcesForPathname(pathname)) {
-    emitter.off(`onPostLoadPageResources`, eventHandler)
+    // The resources are already loaded so off we go.
     clearTimeout(timeoutId)
     window.___history.push(pathname)
   } else {
+    // They're not loaded yet so let's add a listener for when
+    // they finish loading.
     emitter.on(`onPostLoadPageResources`, eventHandler)
   }
 }
