@@ -42,7 +42,7 @@ on using each plugin.
 ## Locally defined plugins
 
 When you want to work on a new plugin, or maybe write one that is only relevant
-to your specific use-case, a locally defined plugin is more convinient than
+to your specific use-case, a locally defined plugin is more convenient than
 having to create an NPM package for it.
 
 You can place the code in the `plugins` folder in the root of your project like
