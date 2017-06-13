@@ -220,7 +220,6 @@ const queue = {
 
       // Check if it's in the cache already.
       if (pathScriptsCache[path]) {
-        console.log("returning page resources from cache")
         cb(pathScriptsCache[path])
         return pathScriptsCache[path]
       }
