@@ -395,17 +395,27 @@ function inferFromUri(key, types) {
         systemPath.resolve(parentFileNode.dir, fieldValue)
       )
 
+      console.log(``)
+      console.log(`path`, path)
+      console.log(`fieldValue`, fieldValue)
       console.log(`fileLinkPath`, fileLinkPath)
-      console.log(
-        _.filter(getNodes(), node => node.internal.type === `File`).map(
-          n => n.absolutePath
-        )
-      )
+      // console.log(
+      // _.filter(getNodes(), node => node.internal.type === `File`).map(
+      // n => n.absolutePath
+      // )
+      // )
 
       // Use that path to find the linked File node.
       const linkedFileNode = _.find(
         getNodes(),
         n => n.internal.type === `File` && n.absolutePath === fileLinkPath
+      )
+
+      console.log(
+        `linkedFileNode`,
+        linkedFileNode
+          ? { id: linkedFileNode.id, type: linkedFileNode.internal.type }
+          : `no linkedFileNode`
       )
 
       if (linkedFileNode) {
