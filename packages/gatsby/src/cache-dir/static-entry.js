@@ -71,7 +71,6 @@ module.exports = (locals, callback) => {
             const page = pages.find(
               page => page.path === props.location.pathname
             )
-            console.log("found page", page)
             return $(syncRequires.components[page.componentChunkName], {
               ...props,
               ...syncRequires.json[page.jsonName],
@@ -94,8 +93,6 @@ module.exports = (locals, callback) => {
   if (!bodyHTML) {
     bodyHTML = renderToString(bodyComponent)
   }
-
-  console.log("bodyHTML", bodyHTML.slice(0, 50))
 
   apiRunner(`onRenderBody`, {
     setHeadComponents,
@@ -157,8 +154,6 @@ module.exports = (locals, callback) => {
     })
     .filter(s => isString(s))
 
-  console.log("scripts", locals.path, scripts)
-
   scripts.forEach(script => {
     // Add preload <link>s for scripts.
     headComponents.unshift(<link rel="preload" href={script} as="script" />)
@@ -179,7 +174,6 @@ module.exports = (locals, callback) => {
     />
   )
 
-  console.log("near end:", locals.path)
   const html = `<!DOCTYPE html>\n ${renderToStaticMarkup(
     <Html
       {...bodyProps}
@@ -189,6 +183,5 @@ module.exports = (locals, callback) => {
       path={locals.path}
     />
   )}`
-  console.log("at end:", locals.path)
   callback(null, html)
 }

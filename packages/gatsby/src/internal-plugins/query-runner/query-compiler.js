@@ -64,7 +64,6 @@ class Runner {
       store.getState().pages.map(p => normalize(p.component))
     )
     files = _.uniq(files)
-    console.log(`component files`, files)
 
     let parser = new FileParser()
 
@@ -122,7 +121,6 @@ class Runner {
         .map(QueryPrinter.print)
         .join(`\n`)
 
-      console.log(`filePath`, filePath)
       compiledNodes.set(filePath, {
         name,
         text,

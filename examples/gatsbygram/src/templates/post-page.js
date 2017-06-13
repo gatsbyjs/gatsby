@@ -9,7 +9,6 @@ class PostTemplate extends React.Component {
     }),
   }
   render() {
-    console.log(this.props.pathContext)
     return (
       // PostDetail is used for this detail page and
       // also in the modal.

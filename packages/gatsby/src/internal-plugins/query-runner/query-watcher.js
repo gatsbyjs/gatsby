@@ -22,11 +22,8 @@ exports.extractQueries = () => {
   const pages = store.getState().pages
   const components = _.uniq(pages.map(p => p.component))
   return queryCompiler().then(queries => {
-    console.log(`queries in query-watcher`, JSON.stringify(queries, null, 4))
     components.forEach(component => {
-      console.log(`get component`, component)
-      component = normalize(component)
-      const query = queries.get(component)
+      const query = queries.get(normalize(component))
 
       boundActionCreators.replacePageComponentQuery({
         query: query && query.text,

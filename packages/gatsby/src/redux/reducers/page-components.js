@@ -7,7 +7,6 @@ module.exports = (state = {}, action) => {
       return {}
     case `CREATE_PAGE_COMPONENT`:
       action.payload.componentPath = normalize(action.payload.componentPath)
-      console.log(`CREATE_PAGE_COMPONENT action`, action)
       state[action.payload.componentPath] = _.merge(
         {},
         state[action.payload.componentPath],
@@ -18,7 +17,6 @@ module.exports = (state = {}, action) => {
       return state
     case `REPLACE_PAGE_COMPONENT_QUERY`:
       action.payload.componentPath = normalize(action.payload.componentPath)
-      console.log(`REPLACE_PAGE_COMPONENT_QUERY action`, action)
       state[action.payload.componentPath] = {
         ...state[action.payload.componentPath],
         query: action.payload.query,

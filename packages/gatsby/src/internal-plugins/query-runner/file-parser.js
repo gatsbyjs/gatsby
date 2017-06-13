@@ -124,9 +124,7 @@ const cache = {}
 
 export default class FileParser {
   async parseFile(file: string): Promise<?DocumentNode> {
-    console.log(`reading file:`, file)
     const text = await readFileAsync(file, `utf8`)
-    console.log(text.slice(-50))
 
     if (text.indexOf(`graphql`) === -1) return
     const hash = crypto
@@ -137,8 +135,6 @@ export default class FileParser {
 
     let astDefinitions =
       cache[hash] || (cache[hash] = await findGraphQLTags(file, text))
-
-    console.log(`astDefinitions`, astDefinitions)
 
     return astDefinitions.length
       ? {
