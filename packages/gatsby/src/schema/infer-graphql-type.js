@@ -353,7 +353,7 @@ function shouldInferFile(nodes, key, value) {
     return false
   }
 
-  const pathToOtherNode = slash(joinPath(rootNode.dir, value))
+  const pathToOtherNode = path.normalize(slash(joinPath(rootNode.dir, value)))
   console.log(`pathToOtherNode`, pathToOtherNode)
   if (_.endsWith(pathToOtherNode, `jpg`)) {
     console.log(
