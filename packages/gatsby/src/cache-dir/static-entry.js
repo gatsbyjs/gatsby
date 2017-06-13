@@ -6,7 +6,7 @@ import apiRunner from "./api-runner-ssr"
 import pages from "./pages.json"
 import syncRequires from "./sync-requires"
 
-console.log("pages", pages)
+console.log("pages", pages.map(p => p.path))
 
 let Html
 try {
@@ -96,6 +96,8 @@ module.exports = (locals, callback) => {
     bodyHTML = renderToString(bodyComponent)
   }
 
+  console.log("bodyHTML", bodyHTML.slice(0, 50))
+
   apiRunner(`onRenderBody`, {
     setHeadComponents,
     setPostBodyComponents,
@@ -156,6 +158,8 @@ module.exports = (locals, callback) => {
     })
     .filter(s => isString(s))
 
+  console.log("scripts", locals.path, scripts)
+
   scripts.forEach(script => {
     // Add preload <link>s for scripts.
     headComponents.unshift(<link rel="preload" href={script} as="script" />)
@@ -176,6 +180,7 @@ module.exports = (locals, callback) => {
     />
   )
 
+  console.log("near end:", locals.path)
   const html = `<!DOCTYPE html>\n ${renderToStaticMarkup(
     <Html
       {...bodyProps}
@@ -185,5 +190,6 @@ module.exports = (locals, callback) => {
       path={locals.path}
     />
   )}`
+  console.log("at end:", locals.path)
   callback(null, html)
 }
