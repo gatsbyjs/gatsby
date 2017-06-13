@@ -214,7 +214,7 @@ describe(`GraphQL Input args`, () => {
       ],
     })
 
-    expect(Object.keys(fields.foo.type.getFields())[2]).toEqual(`foo___moo`)
+    expect(Object.keys(fields.foo.type.getFields())[2]).toEqual(`foo_moo`)
   })
   it(`Removes specific root fields`, () => {
     let fields = inferInputObjectStructureFromNodes({
