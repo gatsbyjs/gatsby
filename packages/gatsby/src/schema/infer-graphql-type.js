@@ -353,18 +353,17 @@ function shouldInferFile(nodes, key, value) {
     return false
   }
 
-  const pathToOtherNode = joinPath(rootNode.dir, value)
+  const pathToOtherNode = slash(joinPath(rootNode.dir, value))
+  console.log(`pathToOtherNode`, pathToOtherNode)
   const otherFileExists = getNodes().some(
     n => n.absolutePath === pathToOtherNode
   )
+  console.log(`otherFileExists`, otherFileExists)
   return otherFileExists
 }
 
 // Look for fields that are pointing at a file — if the field has a known
 // extension then assume it should be a file field.
-//
-// TODO probably should just check if the referenced file exists
-// only then turn this into a field field.
 function inferFromUri(key, types) {
   const fileField = types.find(type => type.name === `File`)
 
@@ -381,15 +380,19 @@ function inferFromUri(key, types) {
 
       // Find File node for this node (we assume the node is something
       // like markdown which would be a child node of a File node).
-      const parentFileNode = _.find(
-        getNodes(),
-        n => n.internal.type === `File` && n.id === node.parent
-      )
+      const parentFileNode = findRootNode(node)
 
       // Use the parent File node to create the absolute path to
       // the linked file.
       const fileLinkPath = slash(
         systemPath.resolve(parentFileNode.dir, fieldValue)
+      )
+
+      console.log(`fileLinkPath`, fileLinkPath)
+      console.log(
+        _.filter(getNodes(), node => node.internal.type === `File`).map(
+          n => n.absolutePath
+        )
       )
 
       // Use that path to find the linked File node.

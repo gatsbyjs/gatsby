@@ -98,7 +98,6 @@ const preferDefault = m => m && m.default || m
     .join(`,\n`)}
 }`
 
-  console.log(`syncRequires`, syncRequires)
   await fs.writeFile(
     `${program.directory}/.cache/sync-requires.js`,
     syncRequires
