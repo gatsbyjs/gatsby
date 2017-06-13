@@ -6,6 +6,8 @@ import apiRunner from "./api-runner-ssr"
 import pages from "./pages.json"
 import syncRequires from "./sync-requires"
 
+console.log("pages", pages)
+
 let Html
 try {
   Html = require(`../src/html`)
