@@ -121,6 +121,7 @@ class Runner {
         .map(QueryPrinter.print)
         .join(`\n`)
 
+      console.log(`filePath`, filePath)
       compiledNodes.set(filePath, {
         name,
         text,

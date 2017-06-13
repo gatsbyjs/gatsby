@@ -392,13 +392,6 @@ function inferFromUri(key, types) {
         n => n.internal.type === `File` && n.absolutePath === fileLinkPath
       )
 
-      // console.log(
-      // `linkedFileNode`,
-      // linkedFileNode
-      // ? { id: linkedFileNode.id, type: linkedFileNode.internal.type }
-      // : `no linkedFileNode`
-      // )
-
       if (linkedFileNode) {
         createPageDependency({
           path,

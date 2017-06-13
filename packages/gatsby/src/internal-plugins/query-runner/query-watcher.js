@@ -21,6 +21,7 @@ exports.extractQueries = () => {
   const pages = store.getState().pages
   const components = _.uniq(pages.map(p => p.component))
   return queryCompiler().then(queries => {
+    console.log(`queries in query-watcher`, JSON.stringify(queries, null, 4))
     components.forEach(component => {
       const query = queries.get(component)
 
