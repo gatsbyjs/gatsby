@@ -18,6 +18,7 @@ const systemPath = require(`path`)
 const { oneLine } = require(`common-tags`)
 
 const { store, getNode, getNodes } = require(`../redux`)
+const { joinPath } = require(`../utils/path`)
 const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 const createTypeName = require(`./create-type-name`)
 const createKey = require(`./create-key`)
@@ -352,7 +353,7 @@ function shouldInferFile(nodes, key, value) {
     return false
   }
 
-  const pathToOtherNode = systemPath.posix.join(rootNode.dir, value)
+  const pathToOtherNode = joinPath(rootNode.dir, value)
   const otherFileExists = getNodes().some(
     n => n.absolutePath === pathToOtherNode
   )
