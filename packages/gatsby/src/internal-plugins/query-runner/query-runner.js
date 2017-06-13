@@ -45,6 +45,12 @@ module.exports = async (page, component) => {
   // Add the path context onto the results.
   result.pathContext = page.context
   const resultJSON = JSON.stringify(result, null, 4)
+  console.log(`query`, component.query, page.context)
+  console.log(
+    `resultJSON`,
+    resultJSON,
+    joinPath(program.directory, `.cache`, `json`, page.jsonName)
+  )
   return writeFileAsync(
     joinPath(program.directory, `.cache`, `json`, page.jsonName),
     resultJSON

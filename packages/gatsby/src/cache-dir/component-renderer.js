@@ -8,6 +8,7 @@ import emitter from "./emitter"
 class ComponentRenderer extends React.Component {
   constructor(props) {
     super()
+    console.log(`ComponentRenderer constructor`, props)
     this.state = {
       location: props.location,
       pageResources: loader.getResourcesForPathname(props.location.pathname),
@@ -15,6 +16,7 @@ class ComponentRenderer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log(`componentWillReceiveProps`, nextProps)
     if (this.state.location.pathname !== nextProps.location.pathname) {
       // Ensure that pageResources are loaded before setting.
       // This is necessary in cases where the browser back button or forward

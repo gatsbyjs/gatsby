@@ -354,18 +354,9 @@ function shouldInferFile(nodes, key, value) {
   }
 
   const pathToOtherNode = normalize(joinPath(rootNode.dir, value))
-  console.log(`pathToOtherNode`, pathToOtherNode)
-  if (_.endsWith(pathToOtherNode, `jpg`)) {
-    console.log(
-      _.filter(getNodes(), node => node.internal.type === `File`).map(
-        n => n.absolutePath
-      )
-    )
-  }
   const otherFileExists = getNodes().some(
     n => n.absolutePath === pathToOtherNode
   )
-  console.log(`otherFileExists`, otherFileExists)
   return otherFileExists
 }
 
@@ -401,12 +392,12 @@ function inferFromUri(key, types) {
         n => n.internal.type === `File` && n.absolutePath === fileLinkPath
       )
 
-      console.log(
-        `linkedFileNode`,
-        linkedFileNode
-          ? { id: linkedFileNode.id, type: linkedFileNode.internal.type }
-          : `no linkedFileNode`
-      )
+      // console.log(
+      // `linkedFileNode`,
+      // linkedFileNode
+      // ? { id: linkedFileNode.id, type: linkedFileNode.internal.type }
+      // : `no linkedFileNode`
+      // )
 
       if (linkedFileNode) {
         createPageDependency({
