@@ -38,7 +38,9 @@ export const defaultOptions = {
   `,
   output: `/sitemap.xml`,
   serialize: ({ site, allMarkdownRemark }) =>
-    allMarkdownRemark.edges.map(edge => {return ({
-      url: site.siteMetadata.site_url + edge.node.fields.slug,
-    })}),
+    allMarkdownRemark.edges.map(edge => {
+      return {
+        url: site.siteMetadata.site_url + edge.node.fields.slug,
+      }
+    }),
 }

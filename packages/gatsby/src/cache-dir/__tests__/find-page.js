@@ -35,6 +35,10 @@ describe(`find-page`, () => {
     expect(findPage(`/app/client/only/path`).path).toBe(`/app/`)
   })
 
+  it(`can find links with hashes`, () => {
+    expect(findPage(`/about/me/#hashtagawesome`).path).toBe(`/about/me/`)
+  })
+
   it(`handles finding prefixed links`, () => {
     const newPages = [
       {

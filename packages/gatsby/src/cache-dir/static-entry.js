@@ -29,9 +29,9 @@ if (syncRequires.layouts.index) {
 }
 
 module.exports = (locals, callback) => {
-  let linkPrefix = `/`
-  if (__PREFIX_LINKS__) {
-    linkPrefix = `${__LINK_PREFIX__}/`
+  let pathPrefix = `/`
+  if (__PREFIX_PATHS__) {
+    pathPrefix = `${__PATH_PREFIX__}/`
   }
 
   let bodyHTML = ``
@@ -143,7 +143,7 @@ module.exports = (locals, callback) => {
       // If sourcemaps are enabled, then the entry will be an array with
       // the script name as the first entry.
       fetchedScript = isArray(fetchedScript) ? fetchedScript[0] : fetchedScript
-      const prefixedScript = `${linkPrefix}${fetchedScript}`
+      const prefixedScript = `${pathPrefix}${fetchedScript}`
 
       // Make sure we found a component.
       if (prefixedScript === `/`) {

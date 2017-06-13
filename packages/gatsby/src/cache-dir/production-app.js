@@ -13,6 +13,7 @@ import createHistory from "history/createBrowserHistory"
 // import invariant from "invariant"
 import emitter from "./emitter"
 window.___emitter = emitter
+// emitter.on(`*`, (type, e) => console.log(`emitter`, type, e))
 
 import pages from "./pages.json"
 import ComponentRenderer from "./component-renderer"
@@ -30,10 +31,15 @@ window.matchPath = matchPath
 apiRunner(`onClientEntry`)
 
 const navigateTo = pathname => {
+  // If we're already at this path, do nothing.
+  if (window.location.pathname === pathname) {
+    return
+  }
+
   // Listen to loading events. If page resources load before
   // a second, navigate immediately.
   function eventHandler(e) {
-    if (e.page.path === pathname) {
+    if (e.page.path === loader.getPage(pathname).path) {
       emitter.off(`onPostLoadPageResources`, eventHandler)
       clearTimeout(timeoutId)
       window.___history.push(pathname)
@@ -48,11 +54,14 @@ const navigateTo = pathname => {
     window.___history.push(pathname)
   }, 1000)
 
-  emitter.on(`onPostLoadPageResources`, eventHandler)
   if (loader.getResourcesForPathname(pathname)) {
-    emitter.off(`onPostLoadPageResources`, eventHandler)
+    // The resources are already loaded so off we go.
     clearTimeout(timeoutId)
     window.___history.push(pathname)
+  } else {
+    // They're not loaded yet so let's add a listener for when
+    // they finish loading.
+    emitter.on(`onPostLoadPageResources`, eventHandler)
   }
 }
 
@@ -116,7 +125,7 @@ loadLayout(layout => {
               render: routeProps => {
                 attachToHistory(routeProps.history)
                 const props = layoutProps ? layoutProps : routeProps
-                if (loader.hasPage(props.location.pathname)) {
+                if (loader.getPage(props.location.pathname)) {
                   return createElement(ComponentRenderer, { ...props })
                 } else {
                   // TODO check (somehow) if we loaded the page
