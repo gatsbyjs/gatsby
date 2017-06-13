@@ -355,6 +355,13 @@ function shouldInferFile(nodes, key, value) {
 
   const pathToOtherNode = slash(joinPath(rootNode.dir, value))
   console.log(`pathToOtherNode`, pathToOtherNode)
+  if (_.endsWith(pathToOtherNode, `jpg`)) {
+    console.log(
+      _.filter(getNodes(), node => node.internal.type === `File`).map(
+        n => n.absolutePath
+      )
+    )
+  }
   const otherFileExists = getNodes().some(
     n => n.absolutePath === pathToOtherNode
   )
