@@ -5,7 +5,12 @@ const pageCache = {}
 
 module.exports = (pages, pathPrefix = ``) => pathname => {
   // Remove the pathPrefix from the pathname.
-  const trimmedPathname = pathname.slice(pathPrefix.length)
+  let trimmedPathname = pathname.slice(pathPrefix.length)
+
+  // Remove any hashfragment
+  if (trimmedPathname.split(`#`).length > 1) {
+    trimmedPathname = trimmedPathname.split(`#`).slice(0, -1).join(``)
+  }
 
   if (pageCache[trimmedPathname]) {
     return pageCache[trimmedPathname]

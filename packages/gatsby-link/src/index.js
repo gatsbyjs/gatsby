@@ -40,7 +40,10 @@ class GatsbyLink extends React.Component {
           onClick && onClick(e)
           // Is this link pointing to a hash on the same page? If so,
           // just scroll there.
-          const pathname = this.state.to.split(`#`).slice(0, -1).join(``)
+          let pathname = this.state.to
+          if (pathname.split(`#`).length > 1) {
+            pathname = pathname.split(`#`).slice(0, -1).join(``)
+          }
           if (pathname === window.location.pathname) {
             const hashFragment = this.state.to.split(`#`).slice(1).join(`#`)
             const element = document.getElementById(hashFragment)
