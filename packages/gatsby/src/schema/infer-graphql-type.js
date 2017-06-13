@@ -13,7 +13,7 @@ const moment = require(`moment`)
 const mime = require(`mime`)
 const isRelative = require(`is-relative`)
 const isRelativeUrl = require(`is-relative-url`)
-const slash = require(`slash`)
+const normalize = require(`normalize-path`)
 const systemPath = require(`path`)
 const { oneLine } = require(`common-tags`)
 
@@ -353,9 +353,7 @@ function shouldInferFile(nodes, key, value) {
     return false
   }
 
-  const pathToOtherNode = systemPath.normalize(
-    slash(joinPath(rootNode.dir, value))
-  )
+  const pathToOtherNode = normalize(joinPath(rootNode.dir, value))
   console.log(`pathToOtherNode`, pathToOtherNode)
   if (_.endsWith(pathToOtherNode, `jpg`)) {
     console.log(
@@ -393,7 +391,7 @@ function inferFromUri(key, types) {
 
       // Use the parent File node to create the absolute path to
       // the linked file.
-      const fileLinkPath = slash(
+      const fileLinkPath = normalize(
         systemPath.resolve(parentFileNode.dir, fieldValue)
       )
 

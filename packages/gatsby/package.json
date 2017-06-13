@@ -70,6 +70,7 @@
     "negotiator": "^0.6.1",
     "node-cjsx": "^2.0.0",
     "node-libs-browser": "^2.0.0",
+    "normalize-path": "^2.1.1",
     "null-loader": "^0.1.1",
     "object-assign": "^4.1.0",
     "observable": "^2.1.4",
