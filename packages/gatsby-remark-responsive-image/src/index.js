@@ -75,11 +75,11 @@ module.exports = ({
           >
             <span
               class="gatsby-resp-image-wrapper"
-              style="position: relative; z-index: -1; ${options.wrapperStyle}"
+              style="position: relative; z-index: -1; display: block; ${options.wrapperStyle}"
             >
               <span
                 class="gatsby-resp-image-background-image"
-                style="padding-bottom: ${ratio};position: relative; width: 100%; bottom: 0; left: 0; background-image: url('${responsiveSizesResult.src}'); background-size: cover;"
+                style="padding-bottom: ${ratio};position: relative; width: 100%; bottom: 0; left: 0; background-image: url('${responsiveSizesResult.src}'); background-size: cover; display: block;"
               >
                 <img
                   class="gatsby-resp-image-image"
