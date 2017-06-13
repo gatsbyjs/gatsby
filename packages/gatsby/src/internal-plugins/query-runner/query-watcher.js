@@ -16,6 +16,7 @@ const { boundActionCreators } = require(`../../redux/actions`)
 const queryCompiler = require(`./query-compiler`).default
 const queryRunner = require(`./query-runner`)
 const invariant = require(`invariant`)
+const normalize = require(`normalize-path`)
 
 exports.extractQueries = () => {
   const pages = store.getState().pages
@@ -23,6 +24,8 @@ exports.extractQueries = () => {
   return queryCompiler().then(queries => {
     console.log(`queries in query-watcher`, JSON.stringify(queries, null, 4))
     components.forEach(component => {
+      console.log(`get component`, component)
+      component = normalize(component)
       const query = queries.get(component)
 
       boundActionCreators.replacePageComponentQuery({
