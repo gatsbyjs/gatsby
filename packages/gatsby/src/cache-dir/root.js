@@ -103,7 +103,10 @@ const Root = () =>
                 props.location.pathname
               )
               if (pageResources) {
-                return createElement(ComponentRenderer, { ...props })
+                return createElement(ComponentRenderer, {
+                  ...props,
+                  pageResources,
+                })
               } else {
                 return addNotFoundRoute()
               }

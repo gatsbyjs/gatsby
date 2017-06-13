@@ -16,23 +16,26 @@ let pathCount = {}
 let resourcesArray = []
 let resourcesCount = {}
 const preferDefault = m => (m && m.default) || m
+let prefetcher
 
 // Prefetcher logic
-const prefetcher = require(`./prefetcher`)({
-  getNextQueuedResources: () => resourcesArray.slice(-1)[0],
-  createResourceDownload: resourceName => {
-    fetchResource(resourceName, () => {
-      resourcesArray = resourcesArray.filter(r => r !== resourceName)
-      prefetcher.onResourcedFinished(resourceName)
-    })
-  },
-})
-emitter.on(`onPreLoadPageResources`, e => {
-  prefetcher.onPreLoadPageResources(e)
-})
-emitter.on(`onPostLoadPageResources`, e => {
-  prefetcher.onPostLoadPageResources(e)
-})
+if (process.env.NODE_ENV === `production`) {
+  prefetcher = require(`./prefetcher`)({
+    getNextQueuedResources: () => resourcesArray.slice(-1)[0],
+    createResourceDownload: resourceName => {
+      fetchResource(resourceName, () => {
+        resourcesArray = resourcesArray.filter(r => r !== resourceName)
+        prefetcher.onResourcedFinished(resourceName)
+      })
+    },
+  })
+  emitter.on(`onPreLoadPageResources`, e => {
+    prefetcher.onPreLoadPageResources(e)
+  })
+  emitter.on(`onPostLoadPageResources`, e => {
+    prefetcher.onPostLoadPageResources(e)
+  })
+}
 
 const sortResourcesByCount = (a, b) => {
   if (resourcesCount[a] > resourcesCount[b]) {
@@ -179,7 +182,9 @@ const queue = {
 
     // Sort resources by resourcesCount.
     resourcesArray.sort(sortResourcesByCount)
-    prefetcher.onNewResourcesAdded()
+    if (process.env.NODE_ENV === `production`) {
+      prefetcher.onNewResourcesAdded()
+    }
 
     return true
   },
@@ -208,6 +213,7 @@ const queue = {
         component: syncRequires.components[page.componentChunkName],
         json: syncRequires.json[page.jsonName],
       }
+      cb(pageResources)
       return pageResources
       // Production code path
     } else {
