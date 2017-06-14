@@ -24,3 +24,26 @@ plugins: [
 ]
 ```
 
+### Options
+Valid `remark-smartypants` options may passed to the plugin. For more on vaild options refer to the [remark-smartypants API](https://github.com/wooorm/retext-smartypants#api) .
+
+```javascript
+// In your gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-transformer-remark`,
+    options: {
+      plugins: [
+        {
+          resolve: "gatsby-remark-smartypants",
+          options: {
+            dashes: 'oldschool',
+          }
+        }
+      ]
+    }
+  }
+]
+```
+
+
