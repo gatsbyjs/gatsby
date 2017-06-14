@@ -83,6 +83,7 @@ const buildFieldEnumValues = (nodes: any[]) => {
   const values = flatten(extractFieldExamples(nodes), {
     maxDepth: 3,
     safe: true, // don't flatten arrays.
+    delimiter: `___`,
   })
   Object.keys(values).forEach(field => {
     if (values[field] == null) return

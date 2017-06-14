@@ -13,11 +13,12 @@ const moment = require(`moment`)
 const mime = require(`mime`)
 const isRelative = require(`is-relative`)
 const isRelativeUrl = require(`is-relative-url`)
-const slash = require(`slash`)
+const normalize = require(`normalize-path`)
 const systemPath = require(`path`)
 const { oneLine } = require(`common-tags`)
 
 const { store, getNode, getNodes } = require(`../redux`)
+const { joinPath } = require(`../utils/path`)
 const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 const createTypeName = require(`./create-type-name`)
 const createKey = require(`./create-key`)
@@ -352,7 +353,7 @@ function shouldInferFile(nodes, key, value) {
     return false
   }
 
-  const pathToOtherNode = systemPath.posix.join(rootNode.dir, value)
+  const pathToOtherNode = normalize(joinPath(rootNode.dir, value))
   const otherFileExists = getNodes().some(
     n => n.absolutePath === pathToOtherNode
   )
@@ -361,9 +362,6 @@ function shouldInferFile(nodes, key, value) {
 
 // Look for fields that are pointing at a file — if the field has a known
 // extension then assume it should be a file field.
-//
-// TODO probably should just check if the referenced file exists
-// only then turn this into a field field.
 function inferFromUri(key, types) {
   const fileField = types.find(type => type.name === `File`)
 
@@ -380,14 +378,11 @@ function inferFromUri(key, types) {
 
       // Find File node for this node (we assume the node is something
       // like markdown which would be a child node of a File node).
-      const parentFileNode = _.find(
-        getNodes(),
-        n => n.internal.type === `File` && n.id === node.parent
-      )
+      const parentFileNode = findRootNode(node)
 
       // Use the parent File node to create the absolute path to
       // the linked file.
-      const fileLinkPath = slash(
+      const fileLinkPath = normalize(
         systemPath.resolve(parentFileNode.dir, fieldValue)
       )
 

@@ -1,7 +1,7 @@
 {
   "name": "gatsby-transformer-remark",
   "description": "Gatsby transformer plugin for Markdown using the Remark library and ecosystem",
-  "version": "1.0.0-alpha.22",
+  "version": "1.0.0-alpha.23",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "bluebird": "^3.5.0",
@@ -17,8 +17,7 @@
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
-    "babel-plugin-transform-object-rest-spread": "^6.20.2",
-    "babel-preset-env": "^1.4.0"
+    "babel-plugin-transform-object-rest-spread": "^6.20.2"
   },
   "keywords": [
     "gatsby",

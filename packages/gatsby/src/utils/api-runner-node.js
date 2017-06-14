@@ -32,7 +32,7 @@ const doubleBind = (boundActionCreators, api, plugin, { traceId }) => {
 }
 
 const runAPI = (plugin, api, args) => {
-  let linkPrefix = ``
+  let pathPrefix = ``
   const {
     store,
     loadNodeContent,
@@ -50,8 +50,8 @@ const runAPI = (plugin, api, args) => {
     args
   )
 
-  if (store.getState().program.prefixLinks) {
-    linkPrefix = store.getState().config.linkPrefix
+  if (store.getState().program.prefixPaths) {
+    pathPrefix = store.getState().config.pathPrefix
   }
 
   const gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
@@ -59,7 +59,7 @@ const runAPI = (plugin, api, args) => {
     const apiCallArgs = [
       {
         ...args,
-        linkPrefix,
+        pathPrefix,
         boundActionCreators: doubleBoundActionCreators,
         loadNodeContent,
         store,

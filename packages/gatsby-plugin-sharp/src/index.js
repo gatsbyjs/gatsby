@@ -204,7 +204,7 @@ function queueImageResizing({ file, args = {} }) {
     pngCompressionLevel: 9,
     grayscale: false,
     duotone: false,
-    linkPrefix: ``,
+    pathPrefix: ``,
     toFormat: ``,
   }
   const options = _.defaults(args, defaultArgs)
@@ -214,8 +214,8 @@ function queueImageResizing({ file, args = {} }) {
   let filteredArgs
   // Remove non-true arguments
   filteredArgs = _.filter(pairedArgs, arg => arg[1])
-  // Remove linkPrefix
-  filteredArgs = _.filter(filteredArgs, arg => arg[0] !== `linkPrefix`)
+  // Remove pathPrefix
+  filteredArgs = _.filter(filteredArgs, arg => arg[0] !== `pathPrefix`)
   filteredArgs = _.filter(filteredArgs, arg => {
     if (file.extension.match(/^jp*/)) {
       return !_.includes(arg[0], `png`)
@@ -274,7 +274,7 @@ function queueImageResizing({ file, args = {} }) {
   queueJob(job)
 
   // Prefix the image src.
-  const prefixedSrc = options.linkPrefix + imgSrc
+  const prefixedSrc = options.pathPrefix + imgSrc
 
   return {
     src: prefixedSrc,
@@ -355,7 +355,7 @@ async function responsiveSizes({ file, args = {} }) {
     pngCompressionLevel: 9,
     grayscale: false,
     duotone: false,
-    linkPrefix: ``,
+    pathPrefix: ``,
     toFormat: ``,
   }
   const options = _.defaults(args, defaultArgs)
@@ -445,7 +445,7 @@ async function responsiveResolution({ file, args = {} }) {
     pngCompressionLevel: 9,
     grayscale: false,
     duotone: false,
-    linkPrefix: ``,
+    pathPrefix: ``,
     toFormat: ``,
   }
   const options = _.defaults(args, defaultArgs)

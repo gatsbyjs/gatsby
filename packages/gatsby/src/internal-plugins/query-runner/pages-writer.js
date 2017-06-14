@@ -42,7 +42,9 @@ const writePages = async () => {
 
   // Add the default layout if it exists.
   let defaultLayoutExists = false
-  if (glob.sync(`${program.directory}/src/layouts/index.*`).length !== 0) {
+  if (
+    glob.sync(joinPath(program.directory, `src/layouts/index.*`)).length !== 0
+  ) {
     layouts.push(`index`)
     defaultLayoutExists = true
   }
@@ -51,7 +53,7 @@ const writePages = async () => {
   components = _.uniqBy(components, c => c.componentChunkName)
 
   await fs.writeFile(
-    `${program.directory}/.cache/pages.json`,
+    joinPath(program.directory, `.cache/pages.json`),
     JSON.stringify(pagesData, null, 4)
   )
 
@@ -107,7 +109,7 @@ const preferDefault = m => m && m.default || m
   asyncRequires += `exports.components = {\n${components
     .map(
       c =>
-        `  "${c.componentChunkName}": require("bundle-loader?lazy&name=${c.componentChunkName}!${joinPath(
+        `  "${c.componentChunkName}": require("gatsby-module-loader?name=${c.componentChunkName}!${joinPath(
           c.component
         )}")`
     )
@@ -116,7 +118,7 @@ const preferDefault = m => m && m.default || m
   asyncRequires += `exports.json = {\n${json
     .map(
       j =>
-        `  "${j.jsonName}": require("bundle-loader?lazy&name=${pathChunkName(
+        `  "${j.jsonName}": require("gatsby-module-loader?name=${pathChunkName(
           j.path
         )}!${joinPath(program.directory, `/.cache/json/`, j.jsonName)}")`
     )
@@ -127,7 +129,7 @@ const preferDefault = m => m && m.default || m
       let componentName = layout
       if (layout !== false || typeof layout !== `undefined`) {
         componentName = `index`
-        return `  "${layout}": require("bundle-loader?lazy&name=${`layout-component---${layout}`}!${joinPath(
+        return `  "${layout}": require("gatsby-module-loader?name=${`layout-component---${layout}`}!${joinPath(
           program.directory,
           `/src/layouts/`,
           componentName
@@ -140,7 +142,7 @@ const preferDefault = m => m && m.default || m
 }`
 
   await fs.writeFile(
-    `${program.directory}/.cache/async-requires.js`,
+    joinPath(program.directory, `.cache/async-requires.js`),
     asyncRequires
   )
 

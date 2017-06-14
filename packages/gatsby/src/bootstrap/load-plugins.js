@@ -2,9 +2,82 @@ const _ = require(`lodash`)
 const slash = require(`slash`)
 const fs = require(`fs`)
 const path = require(`path`)
-
+const crypto = require(`crypto`)
 const { store } = require(`../redux`)
 const nodeAPIs = require(`../utils/api-node-docs`)
+const glob = require(`glob`)
+
+function createFileContentHash(root, globPattern) {
+  const hash = crypto.createHash(`md5`)
+  const files = glob.sync(`${root}/${globPattern}`, { nodir: true })
+
+  files.forEach(filepath => {
+    hash.update(fs.readFileSync(filepath))
+  })
+
+  return hash.digest(`hex`)
+}
+
+/**
+ * @typedef {Object} PluginInfo
+ * @property {string} resolve The absolute path to the plugin
+ * @property {string} name The plugin name
+ * @property {string} version The plugin version (can be content hash)
+ */
+
+/**
+ * resolvePlugin
+ * @param {string} pluginName
+ * This can be a name of a local plugin, the name of a plugin located in
+ * node_modules, or a Gatsby internal plugin. In the last case the pluginName
+ * will be an absolute path.
+ * @return {PluginInfo}
+ */
+function resolvePlugin(pluginName) {
+  // Only find plugins when we're not given an absolute path
+  if (!fs.existsSync(pluginName)) {
+    // Find the plugin in the local plugins folder
+    const resolvedPath = slash(path.resolve(`./plugins/${pluginName}`))
+
+    if (fs.existsSync(resolvedPath)) {
+      if (fs.existsSync(`${resolvedPath}/package.json`)) {
+        const packageJSON = JSON.parse(
+          fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
+        )
+
+        return {
+          resolve: resolvedPath,
+          name: packageJSON.name || pluginName,
+          version:
+            packageJSON.version || createFileContentHash(resolvedPath, `**`),
+        }
+      } else {
+        // Make package.json a requirement for local plugins too
+        throw new Error(`Plugin ${pluginName} requires a package.json file`)
+      }
+    }
+  }
+
+  /**
+   * Here we have an absolute path to an internal plugin, or a name of a module
+   * which should be located in node_modules.
+   */
+  try {
+    const resolvedPath = slash(path.dirname(require.resolve(pluginName)))
+
+    const packageJSON = JSON.parse(
+      fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
+    )
+
+    return {
+      resolve: resolvedPath,
+      name: packageJSON.name,
+      version: packageJSON.version,
+    }
+  } catch (err) {
+    throw new Error(`Unable to find plugin "${pluginName}"`)
+  }
+}
 
 module.exports = async (config = {}) => {
   // Instantiate plugins.
@@ -15,14 +88,10 @@ module.exports = async (config = {}) => {
   // Also test adding to redux store.
   const processPlugin = plugin => {
     if (_.isString(plugin)) {
-      const resolvedPath = slash(path.dirname(require.resolve(plugin)))
-      const packageJSON = JSON.parse(
-        fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
-      )
+      const info = resolvePlugin(plugin)
+
       return {
-        resolve: resolvedPath,
-        name: packageJSON.name,
-        version: packageJSON.version,
+        ...info,
         pluginOptions: {
           plugins: [],
         },
@@ -40,18 +109,19 @@ module.exports = async (config = {}) => {
 
       // Add some default values for tests as we don't actually
       // want to try to load anything during tests.
-      let resolvedPath
-      let packageJSON = { name: `TEST` }
-      if (plugin.resolve !== `___TEST___`) {
-        resolvedPath = slash(path.dirname(require.resolve(plugin.resolve)))
-        packageJSON = JSON.parse(
-          fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
-        )
+      if (plugin.resolve === `___TEST___`) {
+        return {
+          name: `TEST`,
+          pluginOptions: {
+            plugins: [],
+          },
+        }
       }
+
+      const info = resolvePlugin(plugin.resolve)
+
       return {
-        resolve: resolvedPath,
-        name: packageJSON.name,
-        version: packageJSON.version,
+        ...info,
         pluginOptions: _.merge({ plugins: [] }, plugin.options),
       }
     }
@@ -86,7 +156,7 @@ module.exports = async (config = {}) => {
   plugins.push({
     resolve: slash(process.cwd()),
     name: `default-site-plugin`,
-    version: `n/a`,
+    version: createFileContentHash(process.cwd(), `gatsby-*`),
     pluginOptions: {
       plugins: [],
     },

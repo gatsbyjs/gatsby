@@ -1,8 +1,8 @@
-import React from "react"
-import { GoogleFont, TypographyStyle } from "react-typography"
-
-import typography from "./utils/typography"
+import React, { Component } from "react"
+import { TypographyStyle } from "react-typography"
 import logo from "!file-loader!../static/images/logo.png"
+import * as PropTypes from "prop-types"
+import typography from "./utils/typography"
 
 let stylesStr
 if (process.env.NODE_ENV === `production`) {
@@ -13,7 +13,13 @@ if (process.env.NODE_ENV === `production`) {
   }
 }
 
-module.exports = React.createClass({
+const propTypes = {
+  headComponents: PropTypes.node.isRequired,
+  body: PropTypes.node.isRequired,
+  postBodyComponents: PropTypes.node.isRequired,
+}
+
+class Html extends Component {
   render() {
     let css
     if (process.env.NODE_ENV === `production`) {
@@ -65,5 +71,9 @@ module.exports = React.createClass({
         </body>
       </html>
     )
-  },
-})
+  }
+}
+
+Html.propTypes = propTypes
+
+module.exports = Html

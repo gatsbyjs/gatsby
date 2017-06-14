@@ -1,6 +1,13 @@
-import React from "react"
+import React, { Component } from "react"
+import * as PropTypes from "prop-types"
 
-module.exports = React.createClass({
+const propTypes = {
+  headComponents: PropTypes.node.isRequired,
+  body: PropTypes.node.isRequired,
+  postBodyComponents: PropTypes.node.isRequired,
+}
+
+class Html extends Component {
   render() {
     return (
       <html op="news" lang="en">
@@ -29,5 +36,9 @@ module.exports = React.createClass({
         </body>
       </html>
     )
-  },
-})
+  }
+}
+
+Html.propTypes = propTypes
+
+module.exports = Html
