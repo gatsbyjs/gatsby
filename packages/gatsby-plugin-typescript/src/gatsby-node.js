@@ -1,4 +1,5 @@
 const { transpileModule } = require(`typescript`)
+const path = require(`path`)
 
 const test = /\.tsx?$/
 const compilerDefaults = {
@@ -14,13 +15,18 @@ module.exports.modifyWebpackConfig = ({ config }, { compilerOptions }) => {
   const copts = Object.assign({}, compilerDefaults, compilerOptions, {
     module: `commonjs`,
   })
+
   // React-land is rather undertyped; nontrivial TS projects will most likely
   // error (i.e., not build) at something or other.
   const opts = { compilerOptions: copts, transpileOnly: true }
+
+  // Load gatsby babel plugin to extract graphql query
+  const extractQueryPlugin =  path.resolve(__dirname, `../gatsby/dist/utils/babel-plugin-extract-graphql.js`)
+
   config.loader(`typescript`, {
     test,
     loaders: [
-      `babel?${JSON.stringify(config._loaders.js.config.query)}`,
+      `babel?${JSON.stringify({ plugins:[extractQueryPlugin] })}`,
       `ts-loader?${JSON.stringify(opts)}`,
     ],
   })
