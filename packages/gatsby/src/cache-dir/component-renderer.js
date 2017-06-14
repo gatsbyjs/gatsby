@@ -16,18 +16,28 @@ class ComponentRenderer extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.state.location.pathname !== nextProps.location.pathname) {
-      // Ensure that pageResources are loaded before setting.
-      // This is necessary in cases where the browser back button or forward
-      // button is pushed as we can't be sure if resources are loaded yet.
-      loader.getResourcesForPathname(
-        nextProps.location.pathname,
-        pageResources => {
-          this.setState({
-            location: nextProps.location,
-            pageResources,
-          })
-        }
+      const pageResources = loader.getResourcesForPathname(
+        nextProps.location.pathname
       )
+      if (!pageResources) {
+        // Page resources won't be set in cases where the browser back button
+        // or forward button is pushed as we can't wait as normal for resources
+        // to load before changing the page.
+        loader.getResourcesForPathname(
+          nextProps.location.pathname,
+          pageResources => {
+            this.setState({
+              location: nextProps.location,
+              pageResources,
+            })
+          }
+        )
+      } else {
+        this.setState({
+          location: nextProps.location,
+          pageResources,
+        })
+      }
     }
   }
 
