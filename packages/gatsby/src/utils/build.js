@@ -1,14 +1,10 @@
 /* @flow */
-import fs from "fs"
-
-import buildCSS from "./build-css"
-import buildHTML from "./build-html"
-import buildProductionBundle from "./build-javascript"
-import bootstrap from "../bootstrap"
-import apiRunnerNode from "./api-runner-node"
-const { store } = require(`../redux`)
+const buildCSS = require(`./build-css`)
+const buildHTML = require(`./build-html`)
+const buildProductionBundle = require(`./build-javascript`)
+const bootstrap = require(`../bootstrap`)
+const apiRunnerNode = require(`./api-runner-node`)
 const copyStaticDirectory = require(`./copy-static-directory`)
-const { stripIndent } = require(`common-tags`)
 
 async function html(program: any) {
   const { graphqlRunner } = await bootstrap(program)
