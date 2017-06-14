@@ -11,14 +11,10 @@ const Promise = require(`bluebird`)
 // 3. Filter out any responsive image sizes that are greater than the image's width
 // 4. Create the responsive images.
 // 5. Set the html w/ aspect ratio helper.
-module.exports = ({
-  files,
-  markdownNode,
-  markdownAST,
-  pluginOptions,
-  pathPrefix,
-  getNode,
-}) => {
+module.exports = (
+  { files, markdownNode, markdownAST, pathPrefix, getNode },
+  pluginOptions
+) => {
   const defaults = {
     maxWidth: 650,
     wrapperStyle: ``,

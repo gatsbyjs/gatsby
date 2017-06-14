@@ -3,7 +3,7 @@ const cheerio = require(`cheerio`)
 const Promise = require(`bluebird`)
 const _ = require(`lodash`)
 
-module.exports = ({ markdownAST, pluginOptions = {} }) =>
+module.exports = ({ markdownAST }, pluginOptions = {}) =>
   new Promise(resolve => {
     const defaults = {
       wrapperStyle: ``,
