@@ -288,7 +288,7 @@ module.exports = React.createClass({
             right: 0,
             height: rhythm(2.5),
             // borderTop: `1px solid ${presets.purple}`,
-            background: presets.lightPurple,
+            background: presets.veryLightPurple,
             fontFamily: typography.options.headerFontFamily.join(`,`),
             [presets.Tablet]: {
               display: `none`,

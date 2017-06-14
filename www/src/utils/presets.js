@@ -13,4 +13,5 @@ module.exports = {
   maxWidthWithSidebar: 26,
   purple: `#744c9e`,
   lightPurple: `#ede2fe`,
+  veryLightPurple: `#f5eefe`,
 }
