@@ -1,4 +1,5 @@
-import React from "react"
+import React, { Component } from "react"
+import * as PropTypes from "prop-types"
 import Typography from "typography"
 import { TypographyStyle } from "react-typography"
 
@@ -13,7 +14,13 @@ if (process.env.NODE_ENV === `production`) {
   }
 }
 
-module.exports = React.createClass({
+const propTypes = {
+  headComponents: PropTypes.node.isRequired,
+  body: PropTypes.node.isRequired,
+  postBodyComponents: PropTypes.node.isRequired,
+}
+
+class Html extends Component {
   render() {
     let css
     if (process.env.NODE_ENV === `production`) {
@@ -54,5 +61,9 @@ module.exports = React.createClass({
         </body>
       </html>
     )
-  },
-})
+  }
+}
+
+Html.propTypes = propTypes
+
+module.exports = Html
