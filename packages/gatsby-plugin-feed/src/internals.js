@@ -30,10 +30,12 @@ export const defaultOptions = {
   `,
 
   // Setup a few RSS object, merging on various feed-speciupfic options.
-  setup: ({ site: { siteMetadata }, ...rest }) => {return ({
-    ...siteMetadata,
-    ...rest,
-  })},
+  setup: ({ site: { siteMetadata }, ...rest }) => {
+    return {
+      ...siteMetadata,
+      ...rest,
+    }
+  },
 
   // Create a default RSS feed. Others may be added by using the format below.
   feeds: [
