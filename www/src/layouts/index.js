@@ -6,7 +6,7 @@ import PencilIcon from "react-icons/lib/go/pencil"
 import PersonIcon from "react-icons/lib/md/person"
 import Helmet from "react-helmet"
 
-import logo from "../../static/images/gatsby-monogram.jpg"
+import logo from "../gatsby-negative.svg"
 import typography, { rhythm, scale } from "../utils/typography"
 import SidebarBody from "../components/sidebar-body"
 import TutorialSidebarBody from "../components/tutorial-sidebar"
@@ -53,13 +53,14 @@ module.exports = React.createClass({
         />
         <div
           css={{
-            background: `#f4dfc6`,
-            marginBottom: rhythm(1.5),
+            borderBottom: this.props.location.pathname !== `/`
+              ? `1px solid #744c9e`
+              : ``,
           }}
         >
           <div
             css={{
-              maxWidth: rhythm(36),
+              maxWidth: rhythm(presets.maxWidth),
               margin: `0 auto`,
               padding: `${rhythm(1 / 3)} ${rhythm(3 / 4)}`,
               fontFamily: typography.options.headerFontFamily.join(`,`),
@@ -215,9 +216,6 @@ module.exports = React.createClass({
         <div
           className={`main-body`}
           css={{
-            maxWidth: rhythm(36),
-            margin: `${rhythm(-1 / 2)} auto ${rhythm(1.75)} auto`,
-            padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
             paddingTop: 0,
             [presets.Tablet]: {
               margin: `0 auto`,
@@ -229,13 +227,13 @@ module.exports = React.createClass({
           <div
             css={{
               float: `left`,
-              marginTop: rhythm(-3 / 4),
-              width: rhythm(8),
+              width: rhythm(10),
               display: `none`,
               [presets.Tablet]: {
+                borderRight: `1px solid ${presets.purple}`,
                 position: `fixed`,
                 overflowY: `scroll`,
-                height: `calc(100vh - 73px)`,
+                height: `calc(100vh - 55px)`,
                 display: this.props.location.pathname.slice(0, 6) === `/docs/`
                   ? `block`
                   : `none`,
@@ -249,10 +247,10 @@ module.exports = React.createClass({
           <div
             css={{
               float: `left`,
-              marginTop: rhythm(-3 / 4),
-              width: rhythm(8),
+              width: rhythm(10),
               display: `none`,
               [presets.Tablet]: {
+                borderRight: `1px solid ${presets.purple}`,
                 position: `fixed`,
                 display: this.props.location.pathname.slice(0, 10) ===
                   `/tutorial/`
@@ -289,7 +287,8 @@ module.exports = React.createClass({
             left: 0,
             right: 0,
             height: rhythm(2.5),
-            background: `#f4dfc6`,
+            // borderTop: `1px solid ${presets.purple}`,
+            background: presets.lightPurple,
             fontFamily: typography.options.headerFontFamily.join(`,`),
             [presets.Tablet]: {
               display: `none`,
@@ -299,7 +298,7 @@ module.exports = React.createClass({
           <Link
             to="/docs/"
             css={{
-              color: typography.options.bodyColor,
+              color: presets.purple,
               marginBottom: 2,
               textDecoration: `none`,
               textAlign: `center`,
@@ -319,7 +318,7 @@ module.exports = React.createClass({
           <Link
             to="/tutorial/"
             css={{
-              color: typography.options.bodyColor,
+              color: presets.purple,
               marginBottom: 2,
               textDecoration: `none`,
               textAlign: `center`,
@@ -339,7 +338,7 @@ module.exports = React.createClass({
           <Link
             to="/community/"
             css={{
-              color: typography.options.bodyColor,
+              color: presets.purple,
               marginBottom: 2,
               textDecoration: `none`,
               textAlign: `center`,
@@ -373,7 +372,7 @@ module.exports = React.createClass({
           <Link
             to="/blog/"
             css={{
-              color: typography.options.bodyColor,
+              color: presets.purple,
               marginBottom: 2,
               textDecoration: `none`,
               textAlign: `center`,

@@ -15,7 +15,7 @@ class TutorialSidebarBody extends React.Component {
       ? scale(2 / 5).fontSize
       : scale(1 / 5).fontSize
     return (
-      <div css={{ marginBottom: rhythm(1) }}>
+      <div css={{ marginBottom: rhythm(1), padding: rhythm(3 / 4) }}>
         {menu.map(section =>
           <div
             key={section.title}

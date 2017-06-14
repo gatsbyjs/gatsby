@@ -1,9 +1,10 @@
 import React from "react"
 import Link from "gatsby-link"
+import Container from "../components/container"
 
 export default () =>
-  <div>
-    <h1>Gatsby.js Tutorial</h1>
+  <Container>
+    <h1 css={{ marginTop: 0 }}>Gatsby.js Tutorial</h1>
     <p>
       Hi! We’re so happy you decided to try using Gatsby. This tutorial has
       (or
@@ -34,4 +35,4 @@ export default () =>
         put the finishing touches on a website project.
       </li>
     </ol>
-  </div>
+  </Container>

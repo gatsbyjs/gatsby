@@ -1,5 +1,6 @@
 import Typography from "typography"
 import CodePlugin from "typography-plugin-code"
+import presets from "./presets"
 import {
   MOBILE_MEDIA_QUERY,
   TABLET_MEDIA_QUERY,
@@ -17,9 +18,6 @@ const options = {
   plugins: [new CodePlugin()],
   overrideStyles: ({ rhythm, scale }, options) => {
     return {
-      body: {
-        background: `#f7f0eb`,
-      },
       "h1,h2,h4,h5,h6": {
         lineHeight: 1.075,
         marginTop: rhythm(1.5),
@@ -64,7 +62,7 @@ const options = {
         lineHeight: 1.32,
       },
       "pre code span.highlight-code-line": {
-        background: `pink`,
+        background: `#f3cbbe`,
         marginLeft: rhythm(-options.blockMarginBottom),
         paddingRight: rhythm(options.blockMarginBottom),
         borderLeft: `${rhythm(
@@ -78,11 +76,13 @@ const options = {
         color: `inherit`,
         textDecoration: `none`,
         transition: `background 0.4s ease-out`,
-        borderBottom: `1px solid #d7e7ee`,
-        boxShadow: `inset 0 -5px 0px 0px #d7e7ee`,
+        borderBottom: `1px solid ${presets.lightPurple}`,
+        boxShadow: `inset 0 -5px 0px 0px ${presets.lightPurple}`,
+        // borderBottom: `1px solid #d7e7ee`,
+        // boxShadow: `inset 0 -5px 0px 0px #d7e7ee`,
       },
       ".main-body a:hover": {
-        background: `#d7e7ee`,
+        background: presets.lightPurple,
       },
       ".main-body a.anchor": {
         color: `inherit`,

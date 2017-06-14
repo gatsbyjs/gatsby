@@ -3,6 +3,7 @@ import Link from "gatsby-link"
 
 import { rhythm, scale } from "../../utils/typography"
 import presets from "../../utils/presets"
+import Container from "../../components/container"
 
 class BlogPostsIndex extends React.Component {
   render() {
@@ -10,17 +11,8 @@ class BlogPostsIndex extends React.Component {
       edge => edge.node
     )
     return (
-      <div
-        css={{
-          margin: 0,
-          maxWidth: `100%`,
-          [presets.Tablet]: {
-            margin: `0 auto`,
-            maxWidth: rhythm(26),
-          },
-        }}
-      >
-        <h1>Blog</h1>
+      <Container>
+        <h1 css={{ marginTop: 0 }}>Blog</h1>
         {blogPosts.map(post => {
           const avatar =
             post.frontmatter.author.avatar.childImageSharp.responsiveResolution
@@ -83,7 +75,7 @@ class BlogPostsIndex extends React.Component {
             </div>
           )
         })}
-      </div>
+      </Container>
     )
   }
 }

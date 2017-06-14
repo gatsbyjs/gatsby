@@ -2,12 +2,15 @@ import React from "react"
 
 import Functions from "../../components/function-list"
 import { rhythm, scale } from "../../utils/typography"
+import Container from "../../components/container"
 
 class SSRAPIs extends React.Component {
   render() {
     return (
-      <div>
-        <h1>Gatsby Server Rendering APIs</h1>
+      <Container>
+        <h1 css={{ marginTop: 0 }}>
+          Gatsby Server Rendering APIs
+        </h1>
         <h2 css={{ marginBottom: rhythm(1 / 2) }}>APIs</h2>
         <ul css={{ ...scale(-1 / 5) }}>
           {this.props.data.allDocumentationJs.edges.map(({ node }, i) =>
@@ -20,7 +23,7 @@ class SSRAPIs extends React.Component {
         <hr />
         <h2>Reference</h2>
         <Functions functions={this.props.data.allDocumentationJs.edges} />
-      </div>
+      </Container>
     )
   }
 }

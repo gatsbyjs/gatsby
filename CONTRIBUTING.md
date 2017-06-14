@@ -1,4 +1,6 @@
-# How to contribute
+---
+title: How to contribute
+---
 
 ## Filing an issue
 
