@@ -315,7 +315,7 @@ describe(`GraphQL Input args`, () => {
       nodes,
       `
         {
-          allNode(filter: {limit: 10, name: { glob: "*Wax" }}) {
+          allNode(limit: 10, filter: {name: { glob: "*Wax" }}) {
             edges { node { name }}
           }
         }
