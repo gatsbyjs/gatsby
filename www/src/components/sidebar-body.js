@@ -21,7 +21,7 @@ class SidebarBody extends React.Component {
           padding: this.props.inline ? 0 : rhythm(3 / 4),
         }}
       >
-        {menu.map(section =>
+        {menu.map((section, index) =>
           <div
             key={section.title}
             css={{
@@ -31,6 +31,7 @@ class SidebarBody extends React.Component {
             <h3
               css={{
                 fontSize: headerSize,
+                marginTop: index === 0 ? 0 : false,
               }}
             >
               {section.title}

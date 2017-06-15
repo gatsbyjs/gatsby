@@ -16,7 +16,7 @@ class TutorialSidebarBody extends React.Component {
       : scale(1 / 5).fontSize
     return (
       <div css={{ marginBottom: rhythm(1), padding: rhythm(3 / 4) }}>
-        {menu.map(section =>
+        {menu.map((section, index) =>
           <div
             key={section.title}
             css={{
@@ -26,6 +26,7 @@ class TutorialSidebarBody extends React.Component {
             <h3
               css={{
                 fontSize: headerSize,
+                marginTop: index === 0 ? 0 : false,
               }}
             >
               {section.title}
