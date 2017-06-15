@@ -5,10 +5,10 @@
   "version": "1.0.0",
   "author": "Scotty Eckenthal <scott.eckenthal@gmail.com>",
   "dependencies": {
-    "gatsby": "canary",
-    "gatsby-link": "canary",
-    "gatsby-plugin-google-analytics": "canary",
-    "gatsby-plugin-offline": "canary",
+    "gatsby": "next",
+    "gatsby-link": "next",
+    "gatsby-plugin-google-analytics": "next",
+    "gatsby-plugin-offline": "next",
     "lodash": "^4.16.4",
     "slash": "^1.0.0"
   },
