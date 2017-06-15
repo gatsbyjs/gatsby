@@ -1,5 +1,6 @@
 import React from "react"
 import Link from "gatsby-link"
+import colors from "../../utils/colors"
 
 import { rhythm, scale } from "../../utils/typography"
 import presets from "../../utils/presets"
@@ -28,7 +29,7 @@ class BlogPostsIndex extends React.Component {
                 </h2>
                 <p
                   css={{
-                    color: `#696861`,
+                    color: colors.c[13],
                   }}
                 >
                   {post.excerpt}
@@ -56,7 +57,7 @@ class BlogPostsIndex extends React.Component {
                 >
                   <div
                     css={{
-                      color: `#696861`,
+                      color: colors.c[11],
                       lineHeight: 1.1,
                     }}
                   >
@@ -64,7 +65,7 @@ class BlogPostsIndex extends React.Component {
                   </div>
                   <div
                     css={{
-                      color: `#696861`,
+                      color: colors.c[11],
                       lineHeight: 1.1,
                     }}
                   >
