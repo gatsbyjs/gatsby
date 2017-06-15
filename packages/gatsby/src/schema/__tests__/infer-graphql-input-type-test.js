@@ -45,7 +45,7 @@ function queryResult(nodes, query, { types = [] } = {}) {
               ...inferInputObjectStructureFromNodes({
                 nodes,
                 typeName: `test`,
-              }),
+              }).inferredFields,
             },
             resolve(nvi, args) {
               return runSift({
@@ -212,7 +212,7 @@ describe(`GraphQL Input args`, () => {
           },
         },
       ],
-    })
+    }).inferredFields
 
     expect(Object.keys(fields.foo.type.getFields())[2]).toEqual(`foo_moo`)
   })
@@ -228,7 +228,7 @@ describe(`GraphQL Input args`, () => {
           },
         },
       ],
-    })
+    }).inferredFields
 
     expect(Object.keys(fields)).toHaveLength(1)
     expect(Object.keys(fields.foo.type.getFields())).toHaveLength(2)

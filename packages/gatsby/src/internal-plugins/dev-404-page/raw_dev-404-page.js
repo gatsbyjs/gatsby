@@ -48,7 +48,7 @@ export default Dev404Page
 
 export const pageQuery = graphql`
 query Dev404Page {
-  allSitePage(path: { ne: "/dev-404-page/"}) {
+  allSitePage(filter: { path: { ne: "/dev-404-page/"}}) {
     totalCount
     edges {
       node {

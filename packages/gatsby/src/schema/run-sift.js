@@ -39,12 +39,14 @@ module.exports = ({ args, nodes, connection = false, path = `` }) => {
   }
 
   const siftArgs = []
-  _.each(clonedArgs, (v, k) => {
-    // Ignore connection and sorting args
-    if (_.includes([`skip`, `limit`, `sort`], k)) return
+  if (clonedArgs.filter) {
+    _.each(clonedArgs.filter, (v, k) => {
+      // Ignore connection and sorting args
+      if (_.includes([`skip`, `limit`, `sort`], k)) return
 
-    siftArgs.push(siftifyArgs({ [k]: v }))
-  })
+      siftArgs.push(siftifyArgs({ [k]: v }))
+    })
+  }
 
   let result = _.isEmpty(siftArgs) ? nodes : sift({ $and: siftArgs }, nodes)
 

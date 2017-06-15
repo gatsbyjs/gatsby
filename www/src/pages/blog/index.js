@@ -87,8 +87,10 @@ export const pageQuery = graphql`
 query BlogPostsIndexQuery {
   allMarkdownRemark(
     sort: { order: DESC, fields: [frontmatter___date] },
-    frontmatter: { draft: { ne: true } },
-    fileAbsolutePath: { regex: "/blog/" },
+    filter: {
+      frontmatter: { draft: { ne: true } },
+      fileAbsolutePath: { regex: "/blog/" }
+    }
   ) {
     edges {
       node {

@@ -137,6 +137,11 @@ module.exports = async () => {
       isTypeOf: value => value.internal.type === typeName,
     })
 
+    const inferedInputFields = inferInputObjectStructureFromNodes({
+      nodes,
+      typeName,
+    })
+
     const proccesedType: ProcessedNodeType = {
       ...intermediateType,
       fieldsFromPlugins: mergedFieldsFromPlugins,
@@ -144,10 +149,7 @@ module.exports = async () => {
       node: {
         name: typeName,
         type: gqlType,
-        args: inferInputObjectStructureFromNodes({
-          nodes,
-          typeName,
-        }),
+        args: inferedInputFields.inferredFields,
         resolve(a, args, context) {
           const runSift = require(`./run-sift`)
           const latestNodes = _.filter(

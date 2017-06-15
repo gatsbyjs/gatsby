@@ -142,7 +142,7 @@ function inferGraphQLInputFields({
             nodes,
             prefix,
             exampleValue: value,
-          }),
+          }).inferredFields,
         }),
       }
     }
@@ -210,6 +210,7 @@ export function inferInputObjectStructureFromNodes({
   })
 
   // Add sorting (but only to the top level).
+  let sort
   if (typeName) {
     const enumValues = buildFieldEnumValues(nodes)
 
@@ -218,7 +219,7 @@ export function inferInputObjectStructureFromNodes({
       values: enumValues,
     })
 
-    inferredFields.sort = {
+    sort = {
       type: new GraphQLInputObjectType({
         name: _.camelCase(`${typeName} sort`),
         fields: {
@@ -242,5 +243,5 @@ export function inferInputObjectStructureFromNodes({
     }
   }
 
-  return inferredFields
+  return { inferredFields, sort }
 }
