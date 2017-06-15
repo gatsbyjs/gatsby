@@ -293,7 +293,7 @@ module.exports = async (
       modulesDirectories: [
         joinPath(directory, `node_modules`),
         `node_modules`,
-        `node_modules/gatsby/node_modules`,
+        joinPath(directory, `node_modules`, `gatsby`, `node_modules`),
       ],
     }
   }
