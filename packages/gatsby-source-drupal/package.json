@@ -1,6 +1,6 @@
 {
   "name": "gatsby-source-drupal",
-  "version": "1.0.0-alpha.22",
+  "version": "1.0.0-beta.1",
   "description": "Gatsby source plugin for building websites using the Drupal CMS as a data source",
   "scripts": {
     "build": "babel src --out-dir .",

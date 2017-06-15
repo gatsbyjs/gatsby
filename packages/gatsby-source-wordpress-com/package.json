@@ -1,6 +1,6 @@
 {
   "name": "gatsby-source-wordpress-com",
-  "version": "1.0.0-alpha.22",
+  "version": "1.0.0-beta.1",
   "description": "Stub description for gatsby-source-wordpress-com",
   "main": "index.js",
   "scripts": {

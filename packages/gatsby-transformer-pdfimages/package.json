@@ -1,0 +1,17 @@
+{
+  "name": "gatsby-transformer-pdfimages",
+  "version": "1.0.0-beta.1",
+  "description": "Gatsby transformer plugin for extracting images from PDFs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "gatsby-transformer",
+    "pdfimage"
+  ],
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "license": "MIT"
+}
