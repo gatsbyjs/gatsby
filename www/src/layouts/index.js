@@ -55,7 +55,7 @@ module.exports = React.createClass({
         <div
           css={{
             borderBottom: this.props.location.pathname !== `/`
-              ? `1px solid ${presets.purple}`
+              ? `1px solid ${presets.veryLightPurple}`
               : ``,
           }}
         >
@@ -231,10 +231,7 @@ module.exports = React.createClass({
               width: rhythm(10),
               display: `none`,
               [presets.Tablet]: {
-                borderRight: `1px solid ${presets.purple}`,
-                position: `fixed`,
-                overflowY: `scroll`,
-                height: `calc(100vh - 55px)`,
+                ...presets.sidebarStyles,
                 display: this.props.location.pathname.slice(0, 6) === `/docs/`
                   ? `block`
                   : `none`,
@@ -251,8 +248,7 @@ module.exports = React.createClass({
               width: rhythm(10),
               display: `none`,
               [presets.Tablet]: {
-                borderRight: `1px solid ${presets.purple}`,
-                position: `fixed`,
+                ...presets.sidebarStyles,
                 display: this.props.location.pathname.slice(0, 10) ===
                   `/tutorial/`
                   ? `block`

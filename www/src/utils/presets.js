@@ -16,4 +16,11 @@ module.exports = {
   purple: colors.a[13],
   lightPurple: colors.b[2],
   veryLightPurple: colors.b[0],
+  sidebarStyles: {
+    borderRight: `1px solid ${colors.b[0]}`,
+    backgroundColor: `#fcfaff`,
+    position: `fixed`,
+    overflowY: `auto`,
+    height: `calc(100vh - 55px)`,
+  },
 }
