@@ -5,10 +5,10 @@
   "version": "1.0.0",
   "author": "Nicholas Young <nicholas@nicholaswyoung.com>",
   "dependencies": {
-    "gatsby": "canary",
-    "gatsby-source-filesystem": "canary",
-    "gatsby-transformer-remark": "canary",
-    "gatsby-plugin-feed": "canary"
+    "gatsby": "next",
+    "gatsby-source-filesystem": "next",
+    "gatsby-transformer-remark": "next",
+    "gatsby-plugin-feed": "next"
   },
   "keywords": [
     "gatsby"
