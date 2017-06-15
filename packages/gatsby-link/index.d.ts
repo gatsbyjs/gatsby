@@ -1,7 +1,8 @@
-import { ClassicComponentClass } from "react";
-import { LinkProps } from "react-router";
+import * as React from "react";
 
-type GatsbyLink = ClassicComponentClass<LinkProps>;
-declare const GatsbyLink: GatsbyLink;
+export interface GatsbyLinkProps {
+  to: string;
+  onClick?: (event: any) => void
+}
 
-export = GatsbyLink;
+export default class GatbyLink extends React.Component<GatsbyLinkProps, void>;

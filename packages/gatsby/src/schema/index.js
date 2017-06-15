@@ -26,7 +26,6 @@ module.exports = async () => {
     }),
   })
 
-  console.timeEnd(`building schema`)
   store.dispatch({
     type: `SET_SCHEMA`,
     payload: schema,

@@ -52,7 +52,8 @@ class Runner {
   }
 
   async parseEverything() {
-    let files = await globp(`${this.baseDir}/**/*.js`)
+    let files = await globp(`${this.baseDir}/**/*.+(t|j)s?(x)`)
+    files = files.filter(d => !d.match(/\.d\.ts$/))
     files = files.map(normalize)
     // Ensure all page components added as they're not necessarily in the
     // pages directory e.g. a plugin could add a page component.  Plugins

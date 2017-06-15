@@ -2,21 +2,6 @@
 # yarn lockfile v1
 
 
-"@types/history@^2":
-  version "2.0.48"
-  resolved "https://registry.yarnpkg.com/@types/history/-/history-2.0.48.tgz#7e2868c3ad73d83c482f1d68f148c4fdc79c8a79"
-
-"@types/react-router@^2.0.49":
-  version "2.0.49"
-  resolved "https://registry.yarnpkg.com/@types/react-router/-/react-router-2.0.49.tgz#96f8ad51f07a5890ab35fd55f05170efd132552a"
-  dependencies:
-    "@types/history" "^2"
-    "@types/react" "*"
-
-"@types/react@*":
-  version "15.0.23"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-15.0.23.tgz#f3facbef5290610f54242f00308759d3a3c27346"
-
 abbrev@1:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.0.tgz#d0554c2256636e2f56e7c2e5ad183f859428d81f"
