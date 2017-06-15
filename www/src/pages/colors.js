@@ -6,7 +6,7 @@ import range from "lodash/range"
 
 export default () =>
   <Container>
-    <h1 css={{ margin: 0 }}>Colors</h1>
+    <h1 css={{ margin: 0, marginLeft: rhythm(1 / 4) }}>Colors</h1>
     <div css={{ overflow: `hidden` }}>
       <div css={{ float: `left`, marginRight: 3, textAlign: `center` }}>
         <br />
