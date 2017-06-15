@@ -1,18 +1,21 @@
 import React from "react"
 
 import { rhythm } from "../utils/typography"
+import Container from "../components/container"
 
 const DocsTemplate = React.createClass({
   render() {
     return (
-      <div>
-        <h1>{this.props.data.markdownRemark.frontmatter.title}</h1>
+      <Container>
+        <h1 css={{ marginTop: 0 }}>
+          {this.props.data.markdownRemark.frontmatter.title}
+        </h1>
         <div
           dangerouslySetInnerHTML={{
             __html: this.props.data.markdownRemark.html,
           }}
         />
-      </div>
+      </Container>
     )
   },
 })

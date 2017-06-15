@@ -4,46 +4,46 @@
  * @author Tim  Shedor
  */
 
-.token.comment,
-.token.block-comment,
-.token.prolog,
-.token.doctype,
-.token.cdata {
-  color: #52ad9f;
-}
+/* .token.comment, */
+/* .token.block-comment, */
+/* .token.prolog, */
+/* .token.doctype, */
+/* .token.cdata { */
+  /* color: #52ad9f; */
+/* } */
 
-.token.punctuation {
-  color: #5F6364;
-}
+/* .token.punctuation { */
+  /* color: #5F6364; */
+/* } */
 
-.token.property,
-.token.tag,
-.token.boolean,
-.token.number,
-.token.function-name,
-.token.constant,
-.token.symbol,
-.token.deleted {
-  color: #a285d8;
-}
+/* .token.property, */
+/* .token.tag, */
+/* .token.boolean, */
+/* .token.number, */
+/* .token.function-name, */
+/* .token.constant, */
+/* .token.symbol, */
+/* .token.deleted { */
+  /* color: #a285d8; */
+/* } */
 
-.token.selector,
-.token.attr-name,
-.token.string,
-.token.char,
-.token.function,
-.token.builtin,
-.token.inserted {
-  color: #a2466c;
-}
+/* .token.selector, */
+/* .token.attr-name, */
+/* .token.string, */
+/* .token.char, */
+/* .token.function, */
+/* .token.builtin, */
+/* .token.inserted { */
+  /* color: #a2466c; */
+/* } */
 
-.token.operator, .token.entity, .token.url, .token.variable {
-  color: #c18b99;
-}
+/* .token.operator, .token.entity, .token.url, .token.variable { */
+  /* color: #c18b99; */
+/* } */
 
-.token.atrule, .token.attr-value, .token.keyword, .token.class-name {
-  color: #a285d8;
-}
+/* .token.atrule, .token.attr-value, .token.keyword, .token.class-name { */
+  /* color: #a285d8; */
+/* } */
 
 .token.regex, .token.important {
   color: #d88489;

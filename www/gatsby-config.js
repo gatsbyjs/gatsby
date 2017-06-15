@@ -31,7 +31,7 @@ module.exports = {
             resolve: `gatsby-remark-responsive-image`,
             options: {
               maxWidth: 690,
-              backgroundColor: `#f7f0eb`,
+              backgroundColor: `#ffffff`,
             },
           },
           {
@@ -63,7 +63,7 @@ module.exports = {
         short_name: `GatsbyJS`,
         start_url: `/`,
         background_color: `#f7f0eb`,
-        theme_color: `#a2466c`,
+        theme_color: `#5c2965`,
         display: `minimal-ui`,
       },
     },

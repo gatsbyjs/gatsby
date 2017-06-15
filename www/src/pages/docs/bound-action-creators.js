@@ -2,13 +2,15 @@ import React from "react"
 
 import Functions from "../../components/function-list"
 import { rhythm, scale } from "../../utils/typography"
+import Container from "../../components/container"
 
 class ActionCreatorsDocs extends React.Component {
   render() {
-    console.log(this.props)
     return (
-      <div>
-        <h1>Bound Action Creators</h1>
+      <Container>
+        <h1 css={{ marginTop: 0 }}>
+          Bound Action Creators
+        </h1>
         <p>
           Gatsby uses
           {` `}
@@ -30,7 +32,7 @@ class ActionCreatorsDocs extends React.Component {
         <hr />
         <h2>Reference</h2>
         <Functions functions={this.props.data.allDocumentationJs.edges} />
-      </div>
+      </Container>
     )
   }
 }
