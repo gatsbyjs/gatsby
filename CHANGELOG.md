@@ -1,5 +1,37 @@
 # Change Log
 
+## [1.0.0-beta.1] - 2017-06-15
+
+Our first beta!!! 🎉
+
+### Added
+* Allow for gatsby-remark-smartypants options #1166 @mitchejj
+* New design (for gatsbyjs.org) + new home page #1170 @kyleamathews
+* Add ability to locally define plugins #1126 @0x80
+* Add rough draft for docs for creating source plugins #1159 @kyleamathews
+* Optimizations around prefetching page resources #1133 @kyleamathews
+* Redux example site #1081 @scottyeck
+* Sitemap Generator Plugin #1115 @nicholaswyoung
+* Add documentation to gatsby-remark-prism @kyleamathews
+
+### Changed
+* Move all filter operators for connections under a top-level "filter" field #1177 @kyleamathews
+* Change `linkPrefix` to `pathPrefix` and add an example site #1155 @kyleamathews
+* Make the plugin options for remark plugins the second argument (like everywhere else) #1167 @kyleamathews
+* Start using next instead of canary in example sites for package versions @kyleamathews
+
+### Fixed
+* Fix graphql compiler on typescript #949 @fabien0102
+* Replace react.createClass with ES6 classes in exmaples html.js, add PropTypes #1169 @abachuk
+* Fix windows build issue #1158 @kyleamathews
+* Use custom delimiter when flattening example values for enum fields so easy to convert back @kyleamathews
+* gatsby-remark-responsive-images: use span instead of div #1151 @rstacruz
+* Add check that we can actually find a linked image file node @kyleamathews
+* Ignore SVGs in gatsby-remark-responsive-image #1157 @fk
+* Replace using levelup for caching with lowdb to avoid native dependency #1142 @kyleamathews
+* Fix Appveyor bug regarding build all examples on release #1118 @jbolda
+
+
 ## [1.0.0-alpha20] - 2017-06-05
 
 ### Added
