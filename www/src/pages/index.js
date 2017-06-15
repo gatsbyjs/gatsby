@@ -74,7 +74,12 @@ const IndexRoute = React.createClass({
                 building.
               </p>
             </div>
-            <div css={{ flex: 1 }}>
+            <div
+              css={{
+                flex: `0 0 100%`,
+                [presets.Tablet]: { flex: 1, paddingRight: rhythm(2) },
+              }}
+            >
               <h3>Bring your own data</h3>
               <p>
                 Gatsby’s rich data plugin ecosystem lets you build sites
@@ -101,7 +106,12 @@ const IndexRoute = React.createClass({
                 of services.
               </p>
             </div>
-            <div css={{ flex: 1 }}>
+            <div
+              css={{
+                flex: `0 0 100%`,
+                [presets.Tablet]: { flex: 1, paddingRight: rhythm(2) },
+              }}
+            >
               <h3>Future-proof your website</h3>
               <p>
                 Don't build a website with last decade's tech. The future of
@@ -129,7 +139,12 @@ const IndexRoute = React.createClass({
                 incredibly fast.
               </p>
             </div>
-            <div css={{ flex: 1 }}>
+            <div
+              css={{
+                flex: `0 0 100%`,
+                [presets.Tablet]: { flex: 1, paddingRight: rhythm(2) },
+              }}
+            >
               <h3>Speed past the competition</h3>
               <p>
                 Gatsby.js builds the fastest possible website. Instead of slow
