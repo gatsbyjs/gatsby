@@ -25,7 +25,7 @@ export default Index
 
 export const pageQuery = graphql`
   query PageQuery {
-    allHnStory(sortBy: {fields: [order]}) {
+    allHnStory(sort: {fields: [order]}) {
       edges {
         node {
           ...Story_item

@@ -218,12 +218,12 @@ export function inferInputObjectStructureFromNodes({
       values: enumValues,
     })
 
-    inferredFields.sortBy = {
+    inferredFields.sort = {
       type: new GraphQLInputObjectType({
-        name: _.camelCase(`${typeName} sortBy`),
+        name: _.camelCase(`${typeName} sort`),
         fields: {
           fields: {
-            name: _.camelCase(`${typeName} sortByFields`),
+            name: _.camelCase(`${typeName} sortFields`),
             type: new GraphQLNonNull(new GraphQLList(SortByType)),
           },
           order: {

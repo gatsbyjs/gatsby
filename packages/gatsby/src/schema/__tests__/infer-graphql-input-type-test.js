@@ -323,7 +323,7 @@ describe(`GraphQL Input args`, () => {
         {
           allNode(
             limit: 10,
-            sortBy: {
+            sort: {
               fields: [frontmatter___blue],
               order: DESC
             }

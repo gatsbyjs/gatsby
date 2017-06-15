@@ -44,7 +44,7 @@ export const defaultOptions = {
       {
         allMarkdownRemark(
           limit: 1000,
-          sortBy: {
+          sort: {
             order: DESC,
             fields: [frontmatter___date]
           },
