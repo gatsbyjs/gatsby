@@ -369,17 +369,17 @@ describe(`GraphQL Input args`, () => {
     expect(result.data.allNode.circle[0]).toEqual(`happy`)
   })
 
-  it(`handles the groupBy connection field`, async () => {
+  it(`handles the group connection field`, async () => {
     let result = await queryResult(
       nodes,
       ` {
         allNode {
-          blue: groupBy(field: frontmatter___blue) {
+          blue: group(field: frontmatter___blue) {
             field
             fieldValue
             totalCount
           }
-          anArray: groupBy(field: anArray) {
+          anArray: group(field: anArray) {
             field
             fieldValue
             totalCount
