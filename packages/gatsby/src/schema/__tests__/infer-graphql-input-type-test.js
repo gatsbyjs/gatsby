@@ -1,8 +1,10 @@
+const _ = require(`lodash`)
 const {
   graphql,
   GraphQLString,
   GraphQLObjectType,
   GraphQLSchema,
+  GraphQLInputObjectType,
 } = require(`graphql`)
 const { connectionArgs, connectionDefinitions } = require(`graphql-skip-limit`)
 
@@ -32,6 +34,10 @@ function queryResult(nodes, query, { types = [] } = {}) {
       }),
   })
 
+  const { sort, inferredFields } = inferInputObjectStructureFromNodes({
+    nodes,
+    typeName: `test`,
+  })
   const schema = new GraphQLSchema({
     query: new GraphQLObjectType({
       name: `RootQueryType`,
@@ -42,10 +48,14 @@ function queryResult(nodes, query, { types = [] } = {}) {
             type: nodeConnection,
             args: {
               ...connectionArgs,
-              ...inferInputObjectStructureFromNodes({
-                nodes,
-                typeName: `test`,
-              }).inferredFields,
+              sort,
+              filter: {
+                type: new GraphQLInputObjectType({
+                  name: _.camelCase(`filter test`),
+                  description: `Filter connection on its fields`,
+                  fields: () => inferredFields,
+                }),
+              },
             },
             resolve(nvi, args) {
               return runSift({
@@ -239,7 +249,7 @@ describe(`GraphQL Input args`, () => {
       nodes,
       `
         {
-          allNode(hair: { eq: 2 }) {
+          allNode(filter: {hair: { eq: 2 }}) {
             edges { node { hair }}
           }
         }
@@ -256,7 +266,7 @@ describe(`GraphQL Input args`, () => {
       nodes,
       `
         {
-          allNode(hair: { ne: 2 }) {
+          allNode(filter: {hair: { ne: 2 }}) {
             edges { node { hair }}
           }
         }
@@ -273,7 +283,7 @@ describe(`GraphQL Input args`, () => {
       nodes,
       `
       {
-            allNode(name: { regex: "/^the.*wax/i/" }) {
+            allNode(filter: {name: { regex: "/^the.*wax/i/" }}) {
               edges { node { name }}
             }
           }
@@ -289,7 +299,7 @@ describe(`GraphQL Input args`, () => {
       nodes,
       `
         {
-          allNode(anArray: { in: [5] }) {
+          allNode(filter: {anArray: { in: [5] }}) {
             edges { node { name }}
           }
         }
@@ -305,7 +315,7 @@ describe(`GraphQL Input args`, () => {
       nodes,
       `
         {
-          allNode(limit: 10, name: { glob: "*Wax" }) {
+          allNode(filter: {limit: 10, name: { glob: "*Wax" }}) {
             edges { node { name }}
           }
         }
