@@ -11,6 +11,7 @@ import typography, { rhythm, scale } from "../utils/typography"
 import SidebarBody from "../components/sidebar-body"
 import TutorialSidebarBody from "../components/tutorial-sidebar"
 import presets from "../utils/presets"
+import colors from "../utils/colors"
 
 import "../css/prism-coy.css"
 
@@ -54,7 +55,7 @@ module.exports = React.createClass({
         <div
           css={{
             borderBottom: this.props.location.pathname !== `/`
-              ? `1px solid #744c9e`
+              ? `1px solid ${presets.purple}`
               : ``,
           }}
         >

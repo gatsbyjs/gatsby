@@ -3,11 +3,20 @@ import Link from "gatsby-link"
 import { rhythm, scale, options } from "../utils/typography"
 import Container from "../components/container"
 import presets from "../utils/presets"
+import colors from "../utils/colors"
 
 const IndexRoute = React.createClass({
   render() {
     return (
-      <div css={{ background: `#744c9e`, paddingBottom: rhythm(1) }}>
+      <div
+        css={{
+          // background: `#744c9e`,
+          background: presets.purple,
+          // backgroundImage: `linear-gradient(135deg,${colors.b[14]},${colors
+          // .b[13]},${colors.b[12]})`,
+          paddingBottom: rhythm(1),
+        }}
+      >
         <Container hasSideBar={false}>
           <h1
             css={{

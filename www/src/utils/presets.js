@@ -1,3 +1,5 @@
+import colors from "./colors"
+
 module.exports = {
   mobile: `(min-width: 400px)`,
   Mobile: `@media (min-width: 400px)`,
@@ -11,7 +13,7 @@ module.exports = {
   Hd: `@media (min-width: 1200px)`,
   maxWidth: 36,
   maxWidthWithSidebar: 26,
-  purple: `#744c9e`,
-  lightPurple: `#ede2fe`,
-  veryLightPurple: `#f5eefe`,
+  purple: colors.a[13],
+  lightPurple: colors.b[2],
+  veryLightPurple: colors.b[0],
 }

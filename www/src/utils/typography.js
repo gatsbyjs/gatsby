@@ -1,6 +1,7 @@
 import Typography from "typography"
 import CodePlugin from "typography-plugin-code"
 import presets from "./presets"
+import colors from "./colors"
 import {
   MOBILE_MEDIA_QUERY,
   TABLET_MEDIA_QUERY,
@@ -40,7 +41,8 @@ const options = {
         ...scale(0),
       },
       "tt,code": {
-        background: `hsla(23, 60%, 97%, 1)`,
+        // background: `hsla(23, 60%, 97%, 1)`,
+        background: colors.a[0],
         fontFamily: `"Space Mono",Consolas,"Roboto Mono","Droid Sans Mono","Liberation Mono",Menlo,Courier,monospace`,
         fontSize: `80%`,
         // Disable ligatures as they look funny w/ Space Mono as code.
@@ -51,8 +53,10 @@ const options = {
         paddingBottom: `0.1em`,
       },
       pre: {
-        background: `hsla(23, 60%, 97%, 1)`,
-        border: `1px solid #eddad4`,
+        // background: `hsla(23, 60%, 97%, 1)`,
+        background: colors.a[0],
+        // border: `1px solid #eddad4`,
+        border: `1px solid ${colors.a[2]}`,
         lineHeight: 1,
         minWidth: `100%`,
       },
@@ -62,12 +66,11 @@ const options = {
         lineHeight: 1.32,
       },
       "pre code span.highlight-code-line": {
-        background: `#f3cbbe`,
+        background: colors.a[3],
         marginLeft: rhythm(-options.blockMarginBottom),
         paddingRight: rhythm(options.blockMarginBottom),
-        borderLeft: `${rhythm(
-          options.blockMarginBottom / 2
-        )} solid darkslategray`,
+        borderLeft: `${rhythm(options.blockMarginBottom / 2)} solid ${colors
+          .a[14]}`,
         paddingLeft: rhythm(options.blockMarginBottom / 2),
         float: `left`,
         minWidth: `100%`,
@@ -126,6 +129,32 @@ const options = {
         html: {
           fontSize: `${16 / 16 * 100}%`,
         },
+      },
+      ".token.comment,.token.block-comment,.token.prolog,.token.doctype,.token.cdata": {
+        // color: `#52ad9f`,
+        color: colors.c[8],
+      },
+      ".token.punctuation": {
+        // color: `#5F6364`,
+        // color: `blue`,
+        color: colors.c[12],
+      },
+      ".token.property,.token.tag,.token.boolean,.token.number,.token.function-name,.token.constant,.token.symbol,.token.deleted": {
+        // color: `#a285d8`,
+        color: colors.b[9],
+      },
+      ".token.selector,.token.attr-name,.token.string,.token.char,.token.function,.token.builtin,.token.inserted": {
+        // color: `#a2466c`,
+        color: colors.a[9],
+      },
+      ".token.operator, .token.entity, .token.url, .token.variable": {
+        // color: `#c18b99`,
+        // color: `blue`,
+      },
+      ".token.atrule, .token.attr-value, .token.keyword, .token.class-name": {
+        // color: `#a285d8`,
+        // color: `blue`,
+        color: colors.b[8],
       },
     }
   },
