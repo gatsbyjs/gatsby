@@ -156,8 +156,11 @@ module.exports = async () => {
             getNodes(),
             n => n.internal.type === typeName
           )
+          if (!_.isObject(args)) {
+            args = {}
+          }
           return runSift({
-            args,
+            args: { filter: { ...args } },
             nodes: latestNodes,
             path: context.path,
           })
