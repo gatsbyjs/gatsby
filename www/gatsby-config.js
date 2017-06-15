@@ -1,5 +1,3 @@
-import presets from "./src/utils/presets"
-
 module.exports = {
   siteMetadata: {
     title: `Gatsby`,
@@ -65,7 +63,7 @@ module.exports = {
         short_name: `GatsbyJS`,
         start_url: `/`,
         background_color: `#f7f0eb`,
-        theme_color: presets.purple,
+        theme_color: `#5c2965`,
         display: `minimal-ui`,
       },
     },

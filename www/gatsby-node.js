@@ -31,7 +31,6 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
       }
     `
       ).then(result => {
-        console.log(JSON.stringify(result, null, 4))
         if (result.errors) {
           reject(result.errors)
         }
