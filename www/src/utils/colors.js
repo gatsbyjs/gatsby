@@ -54,7 +54,6 @@ const colors = { a: [], b: [], c: [] }
 let pointer = `a`
 colorStr.split(`\n`).reverse().forEach(c => {
   if (c === ``) return
-  console.log(c, `pointer`, pointer)
   colors[pointer].push(c)
   switch (pointer) {
     case `a`:
@@ -69,5 +68,4 @@ colorStr.split(`\n`).reverse().forEach(c => {
   }
 })
 
-console.log(colors)
 module.exports = colors

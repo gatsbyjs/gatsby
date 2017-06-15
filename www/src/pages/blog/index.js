@@ -29,7 +29,7 @@ class BlogPostsIndex extends React.Component {
                 </h2>
                 <p
                   css={{
-                    color: colors.c[13],
+                    color: colors.b[13],
                   }}
                 >
                   {post.excerpt}
@@ -57,7 +57,7 @@ class BlogPostsIndex extends React.Component {
                 >
                   <div
                     css={{
-                      color: colors.c[11],
+                      color: colors.b[12],
                       lineHeight: 1.1,
                     }}
                   >
@@ -65,7 +65,7 @@ class BlogPostsIndex extends React.Component {
                   </div>
                   <div
                     css={{
-                      color: colors.c[11],
+                      color: colors.b[12],
                       lineHeight: 1.1,
                     }}
                   >
@@ -86,9 +86,11 @@ export default BlogPostsIndex
 export const pageQuery = graphql`
 query BlogPostsIndexQuery {
   allMarkdownRemark(
-    sortBy: { order: DESC, fields: [frontmatter___date] },
-    frontmatter: { draft: { ne: true } },
-    fileAbsolutePath: { regex: "/blog/" },
+    sort: { order: DESC, fields: [frontmatter___date] },
+    filter: {
+      frontmatter: { draft: { ne: true } },
+      fileAbsolutePath: { regex: "/blog/" }
+    }
   ) {
     edges {
       node {
