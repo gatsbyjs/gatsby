@@ -4,6 +4,7 @@ import { rhythm, scale, options } from "../utils/typography"
 import Container from "../components/container"
 import presets from "../utils/presets"
 import colors from "../utils/colors"
+import fabricPattern from "../argyle.png"
 
 const IndexRoute = React.createClass({
   render() {
@@ -12,6 +13,8 @@ const IndexRoute = React.createClass({
         css={{
           // background: `#744c9e`,
           background: presets.purple,
+          backgroundImage: `url("${fabricPattern}")`,
+          // backgroundImage: `url("http://www.transparenttextures.com/patterns/argyle.png")`,
           // backgroundImage: `linear-gradient(135deg,${colors.b[14]},${colors
           // .b[13]},${colors.b[12]})`,
           paddingBottom: rhythm(1),
