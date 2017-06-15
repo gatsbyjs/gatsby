@@ -22,10 +22,17 @@ git mv utils src
 ...
 ```
 
-## `import { prefixLink } from 'gatsby-helpers'` is no more
+## Replace react-router's Link component with gatsby-link
 
-Prefixing links is now handled automatically by the new `<Link>` component
-provided by the `gatsby-link` package.
+```jsx
+import Link from 'gastsby-link'
+
+// Works identically to react-router's <Link>
+<Link to="/another-page/">Another page</Link>
+```
+
+Prefixing links is also now handled automatically by our new `<Link>` component so
+you'll need to remove `prefixLink` function calls.
 
 So just use `gatsby-link` everywhere and things will Just Work™.
 

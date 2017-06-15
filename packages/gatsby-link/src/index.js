@@ -22,7 +22,7 @@ class GatsbyLink extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.to !== nextProps.to) {
       this.setState({
-        to: pathPrefix + props.to,
+        to: pathPrefix + nextProps.to,
       })
       ___loader.enqueue(this.state.to)
     }
