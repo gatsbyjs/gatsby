@@ -29,7 +29,7 @@ class BlogPostsIndex extends React.Component {
                 </h2>
                 <p
                   css={{
-                    color: colors.c[13],
+                    color: colors.b[13],
                   }}
                 >
                   {post.excerpt}
@@ -57,7 +57,7 @@ class BlogPostsIndex extends React.Component {
                 >
                   <div
                     css={{
-                      color: colors.c[11],
+                      color: colors.b[12],
                       lineHeight: 1.1,
                     }}
                   >
@@ -65,7 +65,7 @@ class BlogPostsIndex extends React.Component {
                   </div>
                   <div
                     css={{
-                      color: colors.c[11],
+                      color: colors.b[12],
                       lineHeight: 1.1,
                     }}
                   >
