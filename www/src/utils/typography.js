@@ -70,13 +70,13 @@ const options = {
       },
       "pre code span.highlight-code-line": {
         background: colors.a[3],
+        marginRight: rhythm(-options.blockMarginBottom),
         marginLeft: rhythm(-options.blockMarginBottom),
         paddingRight: rhythm(options.blockMarginBottom),
+        paddingLeft: rhythm(options.blockMarginBottom / 2),
         borderLeft: `${rhythm(options.blockMarginBottom / 2)} solid ${colors
           .a[14]}`,
-        paddingLeft: rhythm(options.blockMarginBottom / 2),
-        float: `left`,
-        minWidth: `100%`,
+        display: `block`,
       },
       "pre::-webkit-scrollbar": {
         width: `6px`,
