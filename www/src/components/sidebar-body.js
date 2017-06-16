@@ -2,10 +2,11 @@ import React from "react"
 import Link from "gatsby-link"
 
 import typography, { rhythm, scale } from "../utils/typography"
-import menu from "../pages/docs/doc-links.yaml"
 
 class SidebarBody extends React.Component {
   render() {
+    const menu = this.props.yaml
+
     // Use original sizes on mobile as the text is inline
     // but smaller on > tablet so as not to compete with body text.
     const fontSize = this.props.inline

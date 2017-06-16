@@ -9,7 +9,8 @@ import Helmet from "react-helmet"
 import logo from "../gatsby-negative.svg"
 import typography, { rhythm, scale } from "../utils/typography"
 import SidebarBody from "../components/sidebar-body"
-import TutorialSidebarBody from "../components/tutorial-sidebar"
+import tutorialSidebar from "../pages/docs/tutorial-links.yml"
+import docsSidebar from "../pages/docs/doc-links.yaml"
 import presets from "../utils/presets"
 import colors from "../utils/colors"
 
@@ -239,7 +240,7 @@ module.exports = React.createClass({
             }}
             className={`sidebar`}
           >
-            <SidebarBody />
+            <SidebarBody yaml={docsSidebar} />
           </div>
           {/* TODO Move this under docs/tutorial/index.js once Gatsby supports multiple levels
                of layouts */}
@@ -258,7 +259,7 @@ module.exports = React.createClass({
             }}
             className={`sidebar`}
           >
-            <TutorialSidebarBody />
+            <SidebarBody yaml={tutorialSidebar} />
           </div>
           <div
             css={{

@@ -2,6 +2,7 @@ import React from "react"
 import Link from "gatsby-link"
 
 import SidebarBody from "../../components/sidebar-body"
+import docsSidebar from "./doc-links.yaml"
 import Container from "../../components/container"
 import presets from "../../utils/presets"
 
@@ -25,7 +26,7 @@ class IndexRoute extends React.Component {
         <ol>
           <li>
             Create a new site (with the blog starter)
-            {" "}
+            {` `}
             <code>
               gatsby new beta-test-gatsby-site
               new test gatsbyjs/gatsby-starter-blog#1.0
@@ -46,7 +47,7 @@ class IndexRoute extends React.Component {
           Part one of what will be a 4-part tutorial is finished. It walks you
           through building a Gatsby site from scratch to a finished polished
           site.
-          {" "}<Link to="/tutorial">Go to the tutorial</Link>.
+          {` `}<Link to="/tutorial">Go to the tutorial</Link>.
         </p>
         <div
           css={{
@@ -57,7 +58,7 @@ class IndexRoute extends React.Component {
           }}
         >
           <h2>Documentation</h2>
-          <SidebarBody inline />
+          <SidebarBody inline yaml={docsSidebar} />
         </div>
       </Container>
     )
