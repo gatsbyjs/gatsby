@@ -77,6 +77,14 @@ const options = {
         float: `left`,
         minWidth: `100%`,
       },
+      // Target image captions. This is kind of a fragile selector...
+      "a + em": {
+        ...scale(-2 / 5),
+        display: `block`,
+        textAlign: `center`,
+        fontStyle: `normal`,
+        color: `rgb(62, 87, 121)`,
+      },
       ".main-body a": {
         color: `inherit`,
         textDecoration: `none`,
