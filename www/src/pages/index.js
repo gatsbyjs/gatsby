@@ -68,10 +68,9 @@ const IndexRoute = React.createClass({
             >
               <h3>Modern web tech without the headache</h3>
               <p>
-                Enjoy all the power of the latest web technologies without
-                the headache. React.js, webpack, modern JavaScript and
-                CSS and more are all setup and waiting for you to start
-                building.
+                Enjoy all the power of the latest web technologies. React.js,
+                webpack, modern JavaScript and CSS and more are all setup and
+                waiting for you to install and start building.
               </p>
             </div>
             <div
