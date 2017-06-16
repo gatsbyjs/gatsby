@@ -9,7 +9,7 @@
     "gatsby-link": "next",
     "gatsby-plugin-google-analytics": "next",
     "gatsby-plugin-offline": "next",
-    "gatsby-source-drupal": "next",
+    "gatsby-source-drupal": "canary",
     "lodash": "^4.16.4",
     "react-typography": "^0.15.0",
     "slash": "^1.0.0",
