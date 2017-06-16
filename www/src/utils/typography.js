@@ -89,6 +89,17 @@ const options = {
       ".main-body a:hover": {
         background: presets.lightPurple,
       },
+      ".main-body a.draft": {
+        color: presets.lightPurple,
+        borderBottomColor: presets.veryLightPurple,
+        boxShadow: `inset 0 -5px 0px 0px ${presets.veryLightPurple}`,
+        fontStyle: `italic`,
+      },
+      ".main-body a.draft:hover": {
+        color: `inherit`,
+        borderBottomColor: presets.lightPurple,
+        boxShadow: `inset 0 -5px 0px 0px ${presets.lightPurple}`,
+      },
       ".main-body a.anchor": {
         color: `inherit`,
         textDecoration: `none`,

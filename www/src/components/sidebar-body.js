@@ -59,14 +59,11 @@ class SidebarBody extends React.Component {
                   changedTitle = title.slice(0, -1)
                 }
                 return (
-                  <li
-                    css={{
-                      fontStyle: draft ? `italic` : `inherit`,
-                      color: draft ? `#ccc` : `inherit`,
-                    }}
-                    key={section.links[title]}
-                  >
-                    <Link to={section.links[title]}>
+                  <li key={section.links[title]}>
+                    <Link
+                      to={section.links[title]}
+                      className={draft ? `draft` : false}
+                    >
                       {changedTitle}
                     </Link>
                   </li>
