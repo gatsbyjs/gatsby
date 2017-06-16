@@ -13,7 +13,9 @@ class SidebarBody extends React.Component {
       : scale(-1 / 10).fontSize
     const headerSize = this.props.inline
       ? scale(2 / 5).fontSize
-      : scale(1 / 5).fontSize
+      : scale(-1 / 5).fontSize
+    const headerStyle = this.props.inline ? false : `normal`
+    const headerTextTransform = this.props.inline ? false : `uppercase`
     return (
       <div
         css={{
@@ -31,6 +33,8 @@ class SidebarBody extends React.Component {
             <h3
               css={{
                 fontSize: headerSize,
+                fontStyle: headerStyle,
+                textTransform: headerTextTransform,
                 marginTop: index === 0 ? 0 : false,
               }}
             >
