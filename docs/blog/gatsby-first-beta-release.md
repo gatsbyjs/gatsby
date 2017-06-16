@@ -30,7 +30,7 @@ Building on this strong foundation, v1 adds:
 
 * New plugin architecture (to date 45+ plugins have been written)
 * New data layer which lets you integrate data from both remote (CMSs, APIs, etc.) and local sources
-* Progress web app features such as automatic code and data splitting (by route), prefetching, and wervice worker and offline-first support
+* Progress web app features such as automatic code and data splitting (by route), prefetching, and service worker and offline-first support
 
 ## Special thanks to
 
