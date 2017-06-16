@@ -58,7 +58,7 @@ const options = {
         // background: `hsla(23, 60%, 97%, 1)`,
         background: colors.a[0],
         // border: `1px solid #eddad4`,
-        border: `1px solid ${colors.a[2]}`,
+        border: `1px solid ${colors.a[1]}`,
         lineHeight: 1,
         minWidth: `100%`,
         WebkitOverflowScrolling: `touch`,
