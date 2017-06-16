@@ -42,7 +42,9 @@ const BlogPostTemplate = React.createClass({
           meta={[
             {
               name: `description`,
-              content: post.excerpt,
+              content: post.frontmatter.excerpt
+                ? post.frontmatter.excerpt
+                : post.excerpt,
             },
             {
               name: `og:description`,
@@ -174,6 +176,7 @@ export const pageQuery = graphql`
       fields { slug }
       frontmatter {
         title
+        excerpt
         date(formatString: "MMM D, YYYY")
         rawDate: date
         image {
