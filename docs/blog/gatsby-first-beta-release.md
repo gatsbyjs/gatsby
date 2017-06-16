@@ -3,7 +3,7 @@ title: Gatsby v1.0.0-beta.1 Release
 date: "2017-06-15"
 author: "Kyle Mathews"
 image: 'images/cargo-ship.png'
-excerpt: "We shipped today Gatsby's first beta for 1.0! Gatsby is a modern blazing-fast static site generator for React.js."
+excerpt: "We shipped today Gatsby's first beta for 1.0! Gatsby is a modern blazing-fast static site generator for React.js..."
 ---
 
 ![Container ship loading containers](images/cargo-ship.png)*Image by Pedro Corrêa http://bit.ly/2sfX4TG*

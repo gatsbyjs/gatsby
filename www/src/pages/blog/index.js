@@ -32,7 +32,9 @@ class BlogPostsIndex extends React.Component {
                     color: colors.b[13],
                   }}
                 >
-                  {post.excerpt}
+                  {post.frontmatter.excerpt
+                    ? post.frontmatter.excerpt
+                    : post.excerpt}
                 </p>
               </Link>
               <div>
@@ -97,6 +99,7 @@ query BlogPostsIndexQuery {
         excerpt
         fields { slug }
         frontmatter {
+          excerpt
           title
           date(formatString: "DD MMMM, YYYY")
           author {
