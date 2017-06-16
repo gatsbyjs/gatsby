@@ -1,5 +1,18 @@
 # Change Log
 
+## [1.0.0-beta.2] - 2017-06-16
+
+### Added
+* Add beta 1 blog post #1183 @kyleamathews
+
+### Fixed
+* Fix prism line highlighting #1187 @kyleamathews
+* Add .npmignore to source-drupal plugin so it'll publish @kyleamathews
+* Fix building thumbnails when an image is processed multiple times #1185 @kyleamathews
+* Add event when all plugins are finished running so know when to start running queries #1182 @kyleamathews
+| Fix a typo on gatby-link updating #1181 @danielfarrell
+
+
 ## [1.0.0-beta.1] - 2017-06-15
 
 Our first beta!!! 🎉

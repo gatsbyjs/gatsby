@@ -56,8 +56,8 @@ Now type `cat package.json` and you should see that `gatsby` and `gatsby-link` a
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "gatsby": "^1.0.0-beta.1",
-    "gatsby-link": "^1.0.0-beta.1"
+    "gatsby": "^1.0.0-beta.2",
+    "gatsby-link": "^1.0.0-beta.2"
   }
 }
 ```
