@@ -54,6 +54,7 @@ module.exports = (
               file: imageNode,
               args: options,
             }).then(responsiveSizesResult => {
+              // console.log("responsiveSizesResult", responsiveSizesResult)
               // Calculate the paddingBottom %
               const ratio = `${1 / responsiveSizesResult.aspectRatio * 100}%`
 

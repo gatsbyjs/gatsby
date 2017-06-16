@@ -22,7 +22,7 @@ Gatsby v1 take form and helping shape that and the growing community around it.
 
 ### What's part of v1
 
-Froom Gatsby's initial release just over two years ago, Gatsby has let you build
+From Gatsby's initial release just over two years ago, Gatsby has let you build
 static websites using React.js components as well as markdown, JSON,
 and YAML.
 
@@ -30,7 +30,7 @@ Building on this strong foundation, v1 adds:
 
 * New plugin architecture (to date 45+ plugins have been written)
 * New data layer which lets you integrate data from both remote (CMSs, APIs, etc.) and local sources
-* Progress web app features such as automatic code and data splitting (by route), prefetching, and service worker and offline-first support
+* Progressive web app features such as automatic code and data splitting (by route), prefetching, and service worker and offline-first support
 
 ## Special thanks to
 
@@ -80,7 +80,7 @@ and companies.
 
 ### Fixed
 * Fix graphql compiler on typescript [#949](https://github.com/gatsbyjs/pull/949) @fabien0102
-* Replace react.createClass with ES6 classes in exmaples html.js, add PropTypes [#1169](https://github.com/gatsbyjs/pull/1169) @abachuk
+* Replace react.createClass with ES6 classes in examples html.js, add PropTypes [#1169](https://github.com/gatsbyjs/pull/1169) @abachuk
 * Fix windows build pull [#1158](https://github.com/gatsbyjs/pull/1158) @kyleamathews
 * Use custom delimiter when flattening example values for enum fields so easy to convert back @kyleamathews
 * gatsby-remark-responsive-images: use span instead of div [#1151](https://github.com/gatsbyjs/pull/1151) @rstacruz

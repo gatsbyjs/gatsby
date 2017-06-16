@@ -30,17 +30,16 @@ const bar = new ProgressBar(
   }
 )
 
+let totalJobs = 0
 const processFile = (file, jobs, cb) => {
-  totalJobs += jobs.length
-  bar.total = _.sumBy(
-    Object.keys(toProcess),
-    key => _.values(toProcess[key]).length
-  )
+  // console.log("totalJobs", totalJobs)
+  bar.total = totalJobs
 
   let imagesFinished = 0
 
   // Wait for each job promise to resolve.
   Promise.all(jobs.map(job => job.finishedPromise)).then(() => cb())
+
   const pipeline = sharp(file).rotate()
   jobs.forEach(async job => {
     const args = job.args
@@ -133,7 +132,6 @@ const processFile = (file, jobs, cb) => {
   })
 }
 
-let totalJobs = 0
 const toProcess = {}
 const q = queue((task, callback) => {
   task(callback)
@@ -142,10 +140,11 @@ const q = queue((task, callback) => {
 const queueJob = job => {
   const inputFileKey = job.file.absolutePath.replace(/\./g, `%2E`)
   const outputFileKey = job.outputPath.replace(/\./g, `%2E`)
+  const jobPath = `${inputFileKey}.${outputFileKey}`
 
   // Check if the job has already been queued. If it has, there's nothing
   // to do, return.
-  if (_.has(toProcess, `${inputFileKey}.${outputFileKey}`)) {
+  if (_.has(toProcess, jobPath)) {
     return
   }
 
@@ -158,19 +157,17 @@ const queueJob = job => {
   if (toProcess[inputFileKey]) {
     notQueued = false
   }
-  _.set(
-    toProcess,
-    `${job.file.absolutePath.replace(/\./g, `%2E`)}.${job.outputPath.replace(
-      /\./g,
-      `%2E`
-    )}`,
-    job
-  )
+  _.set(toProcess, jobPath, job)
 
-  // totalJobs += 1
+  // console.log(`queueJob ${inputFileKey}.${outputFileKey}`)
+  totalJobs += 1
+
   if (notQueued) {
     q.push(cb => {
       // console.log("processing image", job.file.absolutePath)
+      const jobs = _.values(toProcess[inputFileKey])
+      // Delete the input key from the toProcess list so more jobs can be queued.
+      delete toProcess[inputFileKey]
       boundActionCreators.createJob(
         {
           id: `processing image ${job.file.absolutePath}`,
@@ -179,19 +176,15 @@ const queueJob = job => {
         { name: `gatsby-plugin-sharp` }
       )
       // We're now processing the file's jobs.
-      processFile(
-        job.file.absolutePath,
-        _.values(toProcess[inputFileKey]),
-        () => {
-          boundActionCreators.endJob(
-            {
-              id: `processing image ${job.file.absolutePath}`,
-            },
-            { name: `gatsby-plugin-sharp` }
-          )
-          cb()
-        }
-      )
+      processFile(job.file.absolutePath, jobs, () => {
+        boundActionCreators.endJob(
+          {
+            id: `processing image ${job.file.absolutePath}`,
+          },
+          { name: `gatsby-plugin-sharp` }
+        )
+        cb()
+      })
     })
   }
 }

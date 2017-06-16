@@ -22,7 +22,7 @@ Our first beta!!! 🎉
 
 ### Fixed
 * Fix graphql compiler on typescript #949 @fabien0102
-* Replace react.createClass with ES6 classes in exmaples html.js, add PropTypes #1169 @abachuk
+* Replace react.createClass with ES6 classes in examples html.js, add PropTypes #1169 @abachuk
 * Fix windows build issue #1158 @kyleamathews
 * Use custom delimiter when flattening example values for enum fields so easy to convert back @kyleamathews
 * gatsby-remark-responsive-images: use span instead of div #1151 @rstacruz
