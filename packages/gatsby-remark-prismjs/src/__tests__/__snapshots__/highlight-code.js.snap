@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`highlight code and lines with PrismJS highlights code 1`] = `
+"
+<span class=\\"token keyword\\">import</span> React <span class=\\"token keyword\\">from</span> <span class=\\"token string\\">\\"react\\"</span>
+
+<span class=\\"token keyword\\">class</span> <span class=\\"token class-name\\">Counter</span> <span class=\\"token keyword\\">extends</span> <span class=\\"token class-name\\">React<span class=\\"token punctuation\\">.</span>Component</span> <span class=\\"token punctuation\\">{</span>
+  <span class=\\"token function\\">constructor</span><span class=\\"token punctuation\\">(</span><span class=\\"token punctuation\\">)</span> <span class=\\"token punctuation\\">{</span>
+    <span class=\\"token keyword\\">super</span><span class=\\"token punctuation\\">(</span><span class=\\"token punctuation\\">)</span>
+    <span class=\\"token keyword\\">this</span><span class=\\"token punctuation\\">.</span>state <span class=\\"token operator\\">=</span> <span class=\\"token punctuation\\">{</span> count<span class=\\"token punctuation\\">:</span> <span class=\\"token number\\">0</span> <span class=\\"token punctuation\\">}</span>
+  <span class=\\"token punctuation\\">}</span>
+
+  <span class=\\"token function\\">render</span><span class=\\"token punctuation\\">(</span><span class=\\"token punctuation\\">)</span> <span class=\\"token punctuation\\">{</span>
+    <span class=\\"token keyword\\">return</span> <span class=\\"token punctuation\\">(</span>
+<span class=\\"highlight-code-line\\">      <span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;</span>div</span><span class=\\"token punctuation\\">></span></span></span><span class=\\"highlight-code-line\\">        <span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;</span>h1</span><span class=\\"token punctuation\\">></span></span>Counter<span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>h1</span><span class=\\"token punctuation\\">></span></span></span>        <span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;</span>p</span><span class=\\"token punctuation\\">></span></span>current count<span class=\\"token punctuation\\">:</span> <span class=\\"token punctuation\\">{</span><span class=\\"token keyword\\">this</span><span class=\\"token punctuation\\">.</span>state<span class=\\"token punctuation\\">.</span>count<span class=\\"token punctuation\\">}</span><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>p</span><span class=\\"token punctuation\\">></span></span>
+<span class=\\"highlight-code-line\\">        <span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;</span>button</span> <span class=\\"token attr-name\\">onClick</span><span class=\\"token script language-javascript\\"><span class=\\"token punctuation\\">=</span><span class=\\"token punctuation\\">{</span><span class=\\"token punctuation\\">(</span><span class=\\"token punctuation\\">)</span> <span class=\\"token operator\\">=</span><span class=\\"token operator\\">></span> <span class=\\"token keyword\\">this</span><span class=\\"token punctuation\\">.</span><span class=\\"token function\\">setState</span><span class=\\"token punctuation\\">(</span><span class=\\"token punctuation\\">{</span> count<span class=\\"token punctuation\\">:</span> <span class=\\"token keyword\\">this</span><span class=\\"token punctuation\\">.</span>state<span class=\\"token punctuation\\">.</span>count <span class=\\"token operator\\">+</span> <span class=\\"token number\\">1</span> <span class=\\"token punctuation\\">}</span><span class=\\"token punctuation\\">)</span><span class=\\"token punctuation\\">}</span></span><span class=\\"token punctuation\\">></span></span></span>          plus
+        <span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>button</span><span class=\\"token punctuation\\">></span></span>
+        <span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;</span>button</span> <span class=\\"token attr-name\\">onClick</span><span class=\\"token script language-javascript\\"><span class=\\"token punctuation\\">=</span><span class=\\"token punctuation\\">{</span><span class=\\"token punctuation\\">(</span><span class=\\"token punctuation\\">)</span> <span class=\\"token operator\\">=</span><span class=\\"token operator\\">></span> <span class=\\"token keyword\\">this</span><span class=\\"token punctuation\\">.</span><span class=\\"token function\\">setState</span><span class=\\"token punctuation\\">(</span><span class=\\"token punctuation\\">{</span> count<span class=\\"token punctuation\\">:</span> <span class=\\"token keyword\\">this</span><span class=\\"token punctuation\\">.</span>state<span class=\\"token punctuation\\">.</span>count <span class=\\"token operator\\">-</span> <span class=\\"token number\\">1</span> <span class=\\"token punctuation\\">}</span><span class=\\"token punctuation\\">)</span><span class=\\"token punctuation\\">}</span></span><span class=\\"token punctuation\\">></span></span>
+          minus
+        <span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>button</span><span class=\\"token punctuation\\">></span></span>
+      <span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>div</span><span class=\\"token punctuation\\">></span></span>
+    <span class=\\"token punctuation\\">)</span>
+  <span class=\\"token punctuation\\">}</span>
+<span class=\\"token punctuation\\">}</span>
+
+<span class=\\"token keyword\\">export</span> <span class=\\"token keyword\\">default</span> Counter
+
+"
+`;
