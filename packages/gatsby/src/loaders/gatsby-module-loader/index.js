@@ -29,6 +29,7 @@ module.exports.pitch = function(remainingRequest) {
   const executor = `
      return require.ensure([], function(_, error) {
         if (error) {
+          console.log('bundle loading error', error)
           cb(true)
         } else {
           cb(null, ${callback})
