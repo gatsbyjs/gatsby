@@ -136,28 +136,6 @@ module.exports = async (api, args = {}, pluginSource) =>
 
     apisRunning.push(apiRunInstance)
 
-    // if (api !== `onCreatePage`) {
-    // console.log(
-    // api,
-    // "apisRunning",
-    // apisRunning.length,
-    // _.uniq(apisRunning.map(a => a.traceId)),
-    // _.uniq(apisRunning.map(a => a.api)),
-    // _.uniq(
-    // _.flatten(
-    // apisRunning.map(a =>
-    // noSourcePluginPlugins
-    // .filter(plugin => {
-    // const gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
-    // return gatsbyNode[a.api]
-    // })
-    // .map(plugin => plugin.name)
-    // )
-    // )
-    // )
-    // )
-    // }
-
     mapSeries(
       noSourcePluginPlugins,
       (plugin, callback) => {
@@ -173,6 +151,11 @@ module.exports = async (api, args = {}, pluginSource) =>
         }
         // Remove runner instance
         apisRunning = apisRunning.filter(runner => runner !== apiRunInstance)
+
+        if (apisRunning.length === 0) {
+          const { emitter } = require(`../redux`)
+          emitter.emit(`API_RUNNING_QUEUE_EMPTY`)
+        }
 
         // Filter empty results
         apiRunInstance.results = results.filter(result => !_.isEmpty(result))
