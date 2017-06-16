@@ -101,7 +101,7 @@ const options = {
         background: presets.lightPurple,
       },
       ".main-body a.draft": {
-        color: presets.lightPurple,
+        color: `rgba(0, 0, 0, 0.4)`,
         borderBottomColor: presets.veryLightPurple,
         boxShadow: `inset 0 -5px 0px 0px ${presets.veryLightPurple}`,
         fontStyle: `italic`,
