@@ -78,6 +78,16 @@ const options = {
         float: `left`,
         minWidth: `100%`,
       },
+      "pre::-webkit-scrollbar": {
+        width: `6px`,
+        height: `6px`,
+      },
+      "pre::-webkit-scrollbar-thumb": {
+        background: colors.a[2],
+      },
+      "pre::-webkit-scrollbar-track": {
+        background: colors.a[1],
+      },
       ".main-body a": {
         color: `inherit`,
         textDecoration: `none`,
@@ -134,6 +144,16 @@ const options = {
       },
       ".sidebar": {
         WebkitOverflowScrolling: `touch`,
+      },
+      ".sidebar::-webkit-scrollbar": {
+        width: `6px`,
+        height: `6px`,
+      },
+      ".sidebar::-webkit-scrollbar-thumb": {
+        background: presets.lightPurple,
+      },
+      ".sidebar::-webkit-scrollbar-track": {
+        background: presets.veryLightPurple,
       },
       [TABLET_MEDIA_QUERY]: {
         // Make baseFontSize on mobile 17px.
