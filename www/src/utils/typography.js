@@ -61,6 +61,7 @@ const options = {
         border: `1px solid ${colors.a[2]}`,
         lineHeight: 1,
         minWidth: `100%`,
+        WebkitOverflowScrolling: `touch`,
       },
       "pre code": {
         display: `block`,
@@ -130,6 +131,9 @@ const options = {
       video: {
         width: `100%`,
         marginBottom: rhythm(options.blockMarginBottom),
+      },
+      ".sidebar": {
+        WebkitOverflowScrolling: `touch`,
       },
       [TABLET_MEDIA_QUERY]: {
         // Make baseFontSize on mobile 17px.

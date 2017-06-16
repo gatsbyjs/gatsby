@@ -237,6 +237,7 @@ module.exports = React.createClass({
                   : `none`,
               },
             }}
+            className={`sidebar`}
           >
             <SidebarBody />
           </div>
@@ -255,6 +256,7 @@ module.exports = React.createClass({
                   : `none`,
               },
             }}
+            className={`sidebar`}
           >
             <TutorialSidebarBody />
           </div>
