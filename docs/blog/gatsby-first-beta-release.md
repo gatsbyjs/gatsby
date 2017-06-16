@@ -1,5 +1,5 @@
 ---
-title: Gatsby v1.0.0-beta.1 Release
+title: Gatsby's first beta release
 date: "2017-06-15"
 author: "Kyle Mathews"
 image: 'images/cargo-ship.jpg'
