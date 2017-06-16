@@ -59,6 +59,17 @@ and companies.
 * [Sourcegraph](https://about.sourcegraph.com/)
 * [Segment](https://segment.com)
 * [Meetfabric](https://meetfabric.com/)
+* [X-Team](https://x-team.com/)
+* [Contentful](https://www.contentful.com/)
+
+### Our open source hosting/testing infastructure providers
+
+It'd be impossible to write open source code without the generous support
+of these infrastructure providers.
+
+* [Netlify](https://www.netlify.com/) *Awesome static site continuous delivery & hosting*
+* [Travis CI](travis-ci.org) *Test runner in the cloud*
+* [Appveyor](https://www.appveyor.com/) *Windows test runner in the cloud*
 
 ## Changelog since 1.0.0-alpha.20
 

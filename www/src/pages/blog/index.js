@@ -18,7 +18,7 @@ class BlogPostsIndex extends React.Component {
           const avatar =
             post.frontmatter.author.avatar.childImageSharp.responsiveResolution
           return (
-            <div key={post.fields.slug}>
+            <div key={post.fields.slug} css={{ marginBottom: rhythm(2) }}>
               <Link to={post.fields.slug}>
                 <h2
                   css={{

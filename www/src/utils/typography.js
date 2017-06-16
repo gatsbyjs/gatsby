@@ -78,7 +78,7 @@ const options = {
         minWidth: `100%`,
       },
       // Target image captions. This is kind of a fragile selector...
-      "a + em": {
+      "a.gatsby-resp-image-link + em": {
         ...scale(-2 / 5),
         display: `block`,
         textAlign: `center`,
