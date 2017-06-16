@@ -38,8 +38,20 @@ exports.runQueries = async () => {
 
 emitter.on(`CREATE_NODE`, action => {
   queuedDirtyActions.push(action)
-  debouncedProcessQueries()
 })
+
+const runQueuedActions = () => {
+  if (active) {
+    queuedDirtyActions = _.uniq(queuedDirtyActions, a => a.payload.id)
+    findAndRunQueriesForDirtyPaths(queuedDirtyActions)
+    queuedDirtyActions = []
+  }
+}
+
+// Wait until all plugins have finished running (e.g. various
+// transformer plugins) before running queries so we don't
+// query things in a 1/2 finished state.
+emitter.on(`API_RUNNING_QUEUE_EMPTY`, runQueuedActions)
 
 const findPathsWithoutDataDependencies = () => {
   const state = store.getState()
@@ -96,11 +108,3 @@ const findAndRunQueriesForDirtyPaths = actions => {
     return Promise.resolve()
   }
 }
-
-const debouncedProcessQueries = _.debounce(() => {
-  if (active) {
-    queuedDirtyActions = _.uniq(queuedDirtyActions, a => a.payload.id)
-    findAndRunQueriesForDirtyPaths(queuedDirtyActions)
-    queuedDirtyActions = []
-  }
-}, 25)
