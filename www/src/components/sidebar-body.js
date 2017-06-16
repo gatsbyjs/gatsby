@@ -13,7 +13,9 @@ class SidebarBody extends React.Component {
       : scale(-1 / 10).fontSize
     const headerSize = this.props.inline
       ? scale(2 / 5).fontSize
-      : scale(1 / 5).fontSize
+      : scale(-1 / 5).fontSize
+    const headerStyle = this.props.inline ? false : `normal`
+    const headerTextTransform = this.props.inline ? false : `uppercase`
     return (
       <div
         css={{
@@ -21,7 +23,7 @@ class SidebarBody extends React.Component {
           padding: this.props.inline ? 0 : rhythm(3 / 4),
         }}
       >
-        {menu.map(section =>
+        {menu.map((section, index) =>
           <div
             key={section.title}
             css={{
@@ -31,6 +33,9 @@ class SidebarBody extends React.Component {
             <h3
               css={{
                 fontSize: headerSize,
+                fontStyle: headerStyle,
+                textTransform: headerTextTransform,
+                marginTop: index === 0 ? 0 : false,
               }}
             >
               {section.title}
@@ -58,14 +63,11 @@ class SidebarBody extends React.Component {
                   changedTitle = title.slice(0, -1)
                 }
                 return (
-                  <li
-                    css={{
-                      fontStyle: draft ? `italic` : `inherit`,
-                      color: draft ? `#ccc` : `inherit`,
-                    }}
-                    key={section.links[title]}
-                  >
-                    <Link to={section.links[title]}>
+                  <li key={section.links[title]}>
+                    <Link
+                      to={section.links[title]}
+                      className={draft ? `draft` : false}
+                    >
                       {changedTitle}
                     </Link>
                   </li>

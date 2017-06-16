@@ -61,7 +61,7 @@ module.exports = React.createClass({
         >
           <div
             css={{
-              maxWidth: rhythm(presets.maxWidth),
+              // maxWidth: rhythm(presets.maxWidth),
               margin: `0 auto`,
               padding: `${rhythm(1 / 3)} ${rhythm(3 / 4)}`,
               fontFamily: typography.options.headerFontFamily.join(`,`),
@@ -82,13 +82,13 @@ module.exports = React.createClass({
                   height: rhythm(1.4),
                   width: rhythm(1.4),
                   marginBottom: 0,
-                  marginRight: rhythm(1 / 4),
+                  marginRight: rhythm(3 / 8),
                   verticalAlign: `middle`,
                 }}
               />
               <h1
                 css={{
-                  ...scale(3 / 5),
+                  ...scale(2 / 5),
                   display: `inline-block`,
                   lineHeight: rhythm(1.5),
                   verticalAlign: `middle`,
@@ -237,6 +237,7 @@ module.exports = React.createClass({
                   : `none`,
               },
             }}
+            className={`sidebar`}
           >
             <SidebarBody />
           </div>
@@ -255,6 +256,7 @@ module.exports = React.createClass({
                   : `none`,
               },
             }}
+            className={`sidebar`}
           >
             <TutorialSidebarBody />
           </div>

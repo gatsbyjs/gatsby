@@ -13,10 +13,12 @@ class TutorialSidebarBody extends React.Component {
       : scale(-1 / 10).fontSize
     const headerSize = this.props.inline
       ? scale(2 / 5).fontSize
-      : scale(1 / 5).fontSize
+      : scale(-1 / 5).fontSize
+    const headerStyle = this.props.inline ? false : `normal`
+    const headerTextTransform = this.props.inline ? false : `uppercase`
     return (
       <div css={{ marginBottom: rhythm(1), padding: rhythm(3 / 4) }}>
-        {menu.map(section =>
+        {menu.map((section, index) =>
           <div
             key={section.title}
             css={{
@@ -26,6 +28,9 @@ class TutorialSidebarBody extends React.Component {
             <h3
               css={{
                 fontSize: headerSize,
+                fontStyle: headerStyle,
+                textTransform: headerTextTransform,
+                marginTop: index === 0 ? 0 : false,
               }}
             >
               {section.title}
