@@ -8,7 +8,7 @@ image: 'ui-and-code.png'
 ![Gatsbygram](ui-and-code.png)
 
 [Gatsbygram](https://gatsbygram.gatsbyjs.org) is a clone of Instagram
-built with Gatsby 1.0.0-alpha16 and is being continually updated as we
+built with Gatsby 1.0.0-beta.2 and is being continually updated as we
 make our way towards our 1.0 release.
 
 The [source code for
