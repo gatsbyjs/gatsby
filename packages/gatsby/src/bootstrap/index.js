@@ -79,8 +79,8 @@ module.exports = async (program: any) => {
   const pluginVersions = flattenedPlugins.map(p => p.version)
   const hashes = await Promise.all([
     md5File(`package.json`),
-    Promise.resolve(md5File(`gatsby-config.js`).catch(() => {})), // ignore as this file isn't required),
-    Promise.resolve(md5File(`gatsby-node.js`).catch(() => {})), // ignore as this file isn't required),
+    Promise.resolve(md5File(`${program.directory}/gatsby-config.js`).catch(() => {})), // ignore as this file isn't required),
+    Promise.resolve(md5File(`${program.directory}/gatsby-node.js`).catch(() => {})), // ignore as this file isn't required),
   ])
   const pluginsHash = crypto
     .createHash(`md5`)
