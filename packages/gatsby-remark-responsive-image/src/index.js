@@ -87,7 +87,7 @@ module.exports = (
               >
                 <img
                   class="gatsby-resp-image-image"
-                  style="width: 100%; margin: 0; vertical-align: middle; position: absolute; box-shadow: inset 0px 0px 0px 400px ${options.backgroundColor};"
+                  style="width: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px ${options.backgroundColor};"
                   alt="${node.alt ? node.alt : ``}"
                   title="${node.title ? node.title : ``}"
                   src="${fallbackSrc}"
