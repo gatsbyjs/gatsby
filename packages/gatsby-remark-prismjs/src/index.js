@@ -13,13 +13,13 @@ module.exports = ({ markdownAST }) => {
       language = language.toLowerCase()
     }
 
-    node.data = {
-      hChildren: [
-        {
-          type: `raw`,
-          value: highlightCode(language, node.value, highlightLines),
-        },
-      ],
-    }
+    // Replace the node with the markup we need to make
+    // 100% width highlighted code lines work
+    node.type = `html`
+    node.value = `<div class="gatsby-highlight"><pre><code>${highlightCode(
+      language,
+      node.value,
+      highlightLines
+    )}</code></pre></div>`
   })
 }

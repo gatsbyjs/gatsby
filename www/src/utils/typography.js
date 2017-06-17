@@ -54,38 +54,49 @@ const options = {
         paddingTop: `0.1em`,
         paddingBottom: `0.1em`,
       },
-      pre: {
+      ".gatsby-highlight": {
         // background: `hsla(23, 60%, 97%, 1)`,
         background: colors.a[0],
-        // border: `1px solid #eddad4`,
         border: `1px solid ${colors.a[1]}`,
-        lineHeight: 1,
-        minWidth: `100%`,
+        borderRadius: `3px`,
+        padding: rhythm(options.blockMarginBottom),
+        marginBottom: rhythm(options.blockMarginBottom),
+        overflow: `auto`,
         WebkitOverflowScrolling: `touch`,
+        position: `relative`,
       },
-      "pre code": {
+      ".gatsby-highlight pre": {
+        padding: 0,
+        marginTop: 0,
+        marginBottom: 0,
+        backgroundColor: `transparent`,
+        border: 0,
+        float: `left`,
+        minWidth: `100%`,
+        overflow: `initial`,
+      },
+      ".gatsby-highlight pre code": {
         display: `block`,
         fontSize: `90%`,
-        lineHeight: 1.32,
       },
-      "pre code span.highlight-code-line": {
-        background: colors.a[3],
+      ".gatsby-highlight-code-line": {
+        background: colors.a[1],
         marginRight: rhythm(-options.blockMarginBottom),
         marginLeft: rhythm(-options.blockMarginBottom),
         paddingRight: rhythm(options.blockMarginBottom),
-        paddingLeft: rhythm(options.blockMarginBottom / 2),
-        borderLeft: `${rhythm(options.blockMarginBottom / 2)} solid ${colors
-          .a[14]}`,
+        paddingLeft: rhythm(options.blockMarginBottom / 4 * 3),
+        borderLeft: `${rhythm(options.blockMarginBottom / 4 * 1)} solid ${colors
+          .a[6]}`,
         display: `block`,
       },
-      "pre::-webkit-scrollbar": {
+      ".gatsby-highlight::-webkit-scrollbar": {
         width: `6px`,
         height: `6px`,
       },
-      "pre::-webkit-scrollbar-thumb": {
+      ".gatsby-highlight::-webkit-scrollbar-thumb": {
         background: colors.a[2],
       },
-      "pre::-webkit-scrollbar-track": {
+      ".gatsby-highlight::-webkit-scrollbar-track": {
         background: colors.a[1],
       },
       // Target image captions. This is kind of a fragile selector...
