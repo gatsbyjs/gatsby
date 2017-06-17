@@ -25,7 +25,7 @@ class IndexRoute extends React.Component {
         <ol>
           <li>
             Create a new site (with the blog starter)
-            {" "}
+            {` `}
             <code>
               gatsby new beta-test-gatsby-site
               new test gatsbyjs/gatsby-starter-blog#1.0
@@ -46,7 +46,7 @@ class IndexRoute extends React.Component {
           Part one of what will be a 4-part tutorial is finished. It walks you
           through building a Gatsby site from scratch to a finished polished
           site.
-          {" "}<Link to="/tutorial">Go to the tutorial</Link>.
+          {` `}<Link to="/tutorial">Go to the tutorial</Link>.
         </p>
         <div
           css={{
