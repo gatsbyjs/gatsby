@@ -4,6 +4,7 @@ const _ = require(`lodash`)
 const { composeWithDevTools } = require(`remote-redux-devtools`)
 const fs = require(`fs`)
 const EventEmitter = require(`eventemitter2`)
+const stringify = require(`json-stringify-safe`)
 
 // Create event emitter for actions
 const emitter = new EventEmitter()
@@ -47,7 +48,7 @@ const saveState = _.debounce(state => {
   const pickedState = _.pick(state, [`nodes`, `status`, `pageDataDependencies`])
   fs.writeFile(
     `${process.cwd()}/.cache/redux-state.json`,
-    JSON.stringify(pickedState, null, 2),
+    stringify(pickedState, null, 2),
     () => {}
   )
 }, 1000)
