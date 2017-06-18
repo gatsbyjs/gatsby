@@ -63,7 +63,8 @@ class SidebarBody extends React.Component {
                 if (title.slice(-1) === `*`) {
                   changedTitle = title.slice(0, -1)
                   linkStyle = {
-                    // Increase specifity to override .main-body a
+                    // Increase specifity to override `.main-body a` styles
+                    // defined in src/utils/typography.js.
                     "&&": {
                       color: `rgba(0, 0, 0, 0.4)`,
                       borderBottomColor: presets.veryLightPurple,
