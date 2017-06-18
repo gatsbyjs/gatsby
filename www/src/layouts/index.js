@@ -277,7 +277,7 @@ module.exports = React.createClass({
         </div>
         <div
           css={{
-            ...scale(-1 / 5),
+            ...scale(-2 / 5),
             position: `fixed`,
             display: `flex`,
             justifyContent: `space-around`,
@@ -307,7 +307,7 @@ module.exports = React.createClass({
           >
             <DocumentIcon
               css={{
-                fontSize: rhythm(1),
+                fontSize: rhythm(0.9),
               }}
             />
             <div>
@@ -381,7 +381,7 @@ module.exports = React.createClass({
           >
             <PencilIcon
               css={{
-                fontSize: rhythm(1),
+                fontSize: rhythm(0.9),
               }}
             />
             <div>
