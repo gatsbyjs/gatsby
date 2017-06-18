@@ -55,6 +55,7 @@
     "is-relative-url": "^2.0.0",
     "joi": "^9.1.1",
     "json-loader": "^0.5.2",
+    "json-stringify-safe": "^5.0.1",
     "json5": "^0.5.0",
     "loader-utils": "^0.2.16",
     "lodash": "^4.17.4",

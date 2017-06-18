@@ -253,6 +253,7 @@ function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
   const [, , linkedField] = key.split(`___`)
 
   const linkedNode = findLinkedNode(value, linkedField)
+
   invariant(
     linkedNode,
     oneLine`
@@ -464,9 +465,10 @@ export function inferObjectStructureFromNodes({
       shouldInferFile(nodes, nextSelector, value)
     ) {
       inferredField = inferFromUri(key, types)
+    }
 
-      // Finally our automatic inference of field value type.
-    } else {
+    // Finally our automatic inference of field value type.
+    if (!inferredField) {
       inferredField = inferGraphQLType({
         nodes,
         types,

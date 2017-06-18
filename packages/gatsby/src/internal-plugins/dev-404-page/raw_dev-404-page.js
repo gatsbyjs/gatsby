@@ -35,7 +35,7 @@ class Dev404Page extends React.Component {
             <h2>Pages ({this.props.data.allSitePage.totalCount})</h2>
             <ul>
               {this.props.data.allSitePage.edges.map(({ node }) =>
-                <li><Link to={node.path}>{node.path}</Link></li>
+                <li key={node.path}><Link to={node.path}>{node.path}</Link></li>
               )}
             </ul>
           </div>}
