@@ -22,8 +22,10 @@ export const defaultOptions = {
       }
       allMarkdownRemark(
         limit: 1000,
-        frontmatter: {
-          draft: { ne: true }
+        filter: {
+          frontmatter: {
+            draft: { ne: true }
+          }
         }
       ) {
         edges {
