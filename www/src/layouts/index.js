@@ -33,6 +33,28 @@ module.exports = React.createClass({
     }
   },
   render() {
+    const sidebarStyles = {
+      borderRight: `1px solid ${colors.b[0]}`,
+      backgroundColor: `#fcfaff`,
+      float: `left`,
+      width: rhythm(10),
+      display: `none`,
+      position: `fixed`,
+      overflowY: `auto`,
+      height: `calc(100vh - 55px)`,
+      WebkitOverflowScrolling: `touch`,
+      "::-webkit-scrollbar": {
+        width: `6px`,
+        height: `6px`,
+      },
+      "::-webkit-scrollbar-thumb": {
+        background: presets.lightPurple,
+      },
+      "::-webkit-scrollbar-track": {
+        background: presets.veryLightPurple,
+      },
+    }
+
     return (
       <div>
         <Helmet
@@ -228,17 +250,13 @@ module.exports = React.createClass({
                of layouts */}
           <div
             css={{
-              float: `left`,
-              width: rhythm(10),
-              display: `none`,
+              ...sidebarStyles,
               [presets.Tablet]: {
-                ...presets.sidebarStyles,
                 display: this.props.location.pathname.slice(0, 6) === `/docs/`
                   ? `block`
                   : `none`,
               },
             }}
-            className={`sidebar`}
           >
             <SidebarBody yaml={docsSidebar} />
           </div>
@@ -246,18 +264,14 @@ module.exports = React.createClass({
                of layouts */}
           <div
             css={{
-              float: `left`,
-              width: rhythm(10),
-              display: `none`,
+              ...sidebarStyles,
               [presets.Tablet]: {
-                ...presets.sidebarStyles,
                 display: this.props.location.pathname.slice(0, 10) ===
                   `/tutorial/`
                   ? `block`
                   : `none`,
               },
             }}
-            className={`sidebar`}
           >
             <SidebarBody yaml={tutorialSidebar} />
           </div>

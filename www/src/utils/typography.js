@@ -139,19 +139,6 @@ const options = {
         width: `100%`,
         marginBottom: rhythm(options.blockMarginBottom),
       },
-      ".sidebar": {
-        WebkitOverflowScrolling: `touch`,
-      },
-      ".sidebar::-webkit-scrollbar": {
-        width: `6px`,
-        height: `6px`,
-      },
-      ".sidebar::-webkit-scrollbar-thumb": {
-        background: presets.lightPurple,
-      },
-      ".sidebar::-webkit-scrollbar-track": {
-        background: presets.veryLightPurple,
-      },
       [TABLET_MEDIA_QUERY]: {
         // Make baseFontSize on mobile 17px.
         html: {
