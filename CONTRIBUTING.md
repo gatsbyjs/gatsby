@@ -32,7 +32,7 @@ The usual contributing steps are:
 * For each of your Gatsby test sites, run the `gatsby-dev` command there to copy
   the built files from your cloned copy of Gatsby. It'll watch for your changes
   to Gatsby packages and copy them into the site. For more detailed
-  instructions see the [gatsby-dev-cli README](/packages/gatsby-dev-cli/)
+  instructions see the [gatsby-dev-cli README](/docs/packages/gatsby-dev-cli/)
 * Add tests and code for your changes.
 * Once you're done, make sure all tests still pass: `npm test`
 * Commit and push to your fork.
