@@ -9,7 +9,8 @@ import Helmet from "react-helmet"
 import logo from "../gatsby-negative.svg"
 import typography, { rhythm, scale } from "../utils/typography"
 import SidebarBody from "../components/sidebar-body"
-import TutorialSidebarBody from "../components/tutorial-sidebar"
+import tutorialSidebar from "../pages/docs/tutorial-links.yml"
+import docsSidebar from "../pages/docs/doc-links.yaml"
 import presets from "../utils/presets"
 import colors from "../utils/colors"
 
@@ -32,6 +33,28 @@ module.exports = React.createClass({
     }
   },
   render() {
+    const sidebarStyles = {
+      borderRight: `1px solid ${colors.b[0]}`,
+      backgroundColor: `#fcfaff`,
+      float: `left`,
+      width: rhythm(10),
+      display: `none`,
+      position: `fixed`,
+      overflowY: `auto`,
+      height: `calc(100vh - 55px)`,
+      WebkitOverflowScrolling: `touch`,
+      "::-webkit-scrollbar": {
+        width: `6px`,
+        height: `6px`,
+      },
+      "::-webkit-scrollbar-thumb": {
+        background: presets.lightPurple,
+      },
+      "::-webkit-scrollbar-track": {
+        background: presets.veryLightPurple,
+      },
+    }
+
     return (
       <div>
         <Helmet
@@ -227,38 +250,30 @@ module.exports = React.createClass({
                of layouts */}
           <div
             css={{
-              float: `left`,
-              width: rhythm(10),
-              display: `none`,
+              ...sidebarStyles,
               [presets.Tablet]: {
-                ...presets.sidebarStyles,
                 display: this.props.location.pathname.slice(0, 6) === `/docs/`
                   ? `block`
                   : `none`,
               },
             }}
-            className={`sidebar`}
           >
-            <SidebarBody />
+            <SidebarBody yaml={docsSidebar} />
           </div>
           {/* TODO Move this under docs/tutorial/index.js once Gatsby supports multiple levels
                of layouts */}
           <div
             css={{
-              float: `left`,
-              width: rhythm(10),
-              display: `none`,
+              ...sidebarStyles,
               [presets.Tablet]: {
-                ...presets.sidebarStyles,
                 display: this.props.location.pathname.slice(0, 10) ===
                   `/tutorial/`
                   ? `block`
                   : `none`,
               },
             }}
-            className={`sidebar`}
           >
-            <TutorialSidebarBody />
+            <SidebarBody yaml={tutorialSidebar} />
           </div>
           <div
             css={{

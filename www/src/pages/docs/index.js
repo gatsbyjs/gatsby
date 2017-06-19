@@ -2,6 +2,7 @@ import React from "react"
 import Link from "gatsby-link"
 
 import SidebarBody from "../../components/sidebar-body"
+import docsSidebar from "./doc-links.yaml"
 import Container from "../../components/container"
 import presets from "../../utils/presets"
 
@@ -57,7 +58,7 @@ class IndexRoute extends React.Component {
           }}
         >
           <h2>Documentation</h2>
-          <SidebarBody inline />
+          <SidebarBody inline yaml={docsSidebar} />
         </div>
       </Container>
     )

@@ -119,17 +119,6 @@ const options = {
       ".main-body a:hover": {
         background: presets.lightPurple,
       },
-      ".main-body a.draft": {
-        color: `rgba(0, 0, 0, 0.4)`,
-        borderBottomColor: presets.veryLightPurple,
-        boxShadow: `inset 0 -5px 0px 0px ${presets.veryLightPurple}`,
-        fontStyle: `italic`,
-      },
-      ".main-body a.draft:hover": {
-        color: `inherit`,
-        borderBottomColor: presets.lightPurple,
-        boxShadow: `inset 0 -5px 0px 0px ${presets.lightPurple}`,
-      },
       ".main-body a.anchor": {
         color: `inherit`,
         textDecoration: `none`,
@@ -160,19 +149,6 @@ const options = {
       video: {
         width: `100%`,
         marginBottom: rhythm(options.blockMarginBottom),
-      },
-      ".sidebar": {
-        WebkitOverflowScrolling: `touch`,
-      },
-      ".sidebar::-webkit-scrollbar": {
-        width: `6px`,
-        height: `6px`,
-      },
-      ".sidebar::-webkit-scrollbar-thumb": {
-        background: presets.lightPurple,
-      },
-      ".sidebar::-webkit-scrollbar-track": {
-        background: presets.veryLightPurple,
       },
       [TABLET_MEDIA_QUERY]: {
         // Make baseFontSize on mobile 17px.

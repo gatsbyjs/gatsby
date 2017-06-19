@@ -2,10 +2,12 @@ import React from "react"
 import Link from "gatsby-link"
 
 import typography, { rhythm, scale } from "../utils/typography"
-import menu from "../pages/docs/doc-links.yaml"
+import presets from "../utils/presets"
 
 class SidebarBody extends React.Component {
   render() {
+    const menu = this.props.yaml
+
     // Use original sizes on mobile as the text is inline
     // but smaller on > tablet so as not to compete with body text.
     const fontSize = this.props.inline
@@ -56,18 +58,29 @@ class SidebarBody extends React.Component {
                 }
 
                 // If the last character is a * then the doc page is still in draft
-                let draft = false
                 let changedTitle = title
+                let linkStyle = {}
                 if (title.slice(-1) === `*`) {
-                  draft = true
                   changedTitle = title.slice(0, -1)
+                  linkStyle = {
+                    // Increase specifity to override `.main-body a` styles
+                    // defined in src/utils/typography.js.
+                    "&&": {
+                      color: `rgba(0, 0, 0, 0.4)`,
+                      borderBottomColor: presets.veryLightPurple,
+                      boxShadow: `inset 0 -5px 0px 0px ${presets.veryLightPurple}`,
+                      fontStyle: `italic`,
+                      ":hover": {
+                        color: `inherit`,
+                        borderBottomColor: presets.lightPurple,
+                        boxShadow: `inset 0 -5px 0px 0px ${presets.lightPurple}`,
+                      },
+                    },
+                  }
                 }
                 return (
                   <li key={section.links[title]}>
-                    <Link
-                      to={section.links[title]}
-                      className={draft ? `draft` : false}
-                    >
+                    <Link to={section.links[title]} css={linkStyle}>
                       {changedTitle}
                     </Link>
                   </li>
