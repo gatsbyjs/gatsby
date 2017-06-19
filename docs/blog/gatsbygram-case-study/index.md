@@ -337,7 +337,7 @@ Github](https://github.com/gatsbyjs/gatsby/blob/1.0/examples/gatsbygram/src/page
 ## The Layout Component
 
 Each Gatsby site has a top-level layout component at
-`layouts/default.js`. This layout component is used on every page of
+`layouts/index.js`. This layout component is used on every page of
 your site so can contain things like your header, footer, and default
 page structure. It is also used as the "[app
 shell](https://developers.google.com/web/updates/2015/11/app-shell)"
