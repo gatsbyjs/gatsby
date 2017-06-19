@@ -93,7 +93,6 @@ you can place the files in a `src` subfolder and build them to the plugin folder
 * [gatsby-remark-responsive-iframe](/docs/packages/gatsby-remark-responsive-iframe/)
 * [gatsby-remark-responsive-image](/docs/packages/gatsby-remark-responsive-image/)
 * [gatsby-remark-smartypants](/docs/packages/gatsby-remark-smartypants/)
-* [gatsby-sharp](/docs/packages/gatsby-sharp/)
 * [gatsby-source-contentful](/docs/packages/gatsby-source-contentful/)
 * [gatsby-source-drupal](/docs/packages/gatsby-source-drupal/)
 * [gatsby-source-filesystem](/docs/packages/gatsby-source-filesystem/)
