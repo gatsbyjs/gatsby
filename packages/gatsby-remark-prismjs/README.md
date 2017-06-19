@@ -42,7 +42,7 @@ plugins: [
     ```
 
     You can also add line highlighting. It adds a span around lines of
-    code with a special class (.highlight-code-line) that you can
+    code with a special class (.gatsby-highlight-code-line) that you can
     target with styles.
 
     In the following code snippit, lines 1 and 4 through 6 will get
