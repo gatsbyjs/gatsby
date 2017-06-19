@@ -1,6 +1,6 @@
 const contentful = require(`contentful`)
 const crypto = require(`crypto`)
-const stringify = require("json-stringify-safe")
+const stringify = require(`json-stringify-safe`)
 
 const digest = str => crypto.createHash(`md5`).update(str).digest(`hex`)
 
@@ -27,11 +27,16 @@ exports.sourceNodes = async (
 
   let contentTypes
   try {
-    contentTypes = await client.getContentTypes()
+    contentTypes = await client.getContentTypes({ limit: 1000 })
   } catch (e) {
     console.log(`error fetching content types`, e)
   }
   console.log(`contentTypes fetched`, contentTypes.items.length)
+  if (contentTypes.total > 1000) {
+    console.log(
+      `HI! gatsby-source-plugin isn't setup yet to paginate over 1000 content types (the max we can fetch in one go). Please help out the project and contribute a PR fixing this.`
+    )
+  }
 
   const entryList = await Promise.all(
     contentTypes.items.map(async contentType => {
@@ -40,6 +45,7 @@ exports.sourceNodes = async (
       try {
         entries = await client.getEntries({
           content_type: contentTypeId,
+          limit: 1000,
         })
       } catch (e) {
         console.log(`error fetching entries`, e)
@@ -48,15 +54,26 @@ exports.sourceNodes = async (
         `entries fetched for content type ${contentType.name} (${contentTypeId})`,
         entries.items.length
       )
+      if (entries.total > 1000) {
+        console.log(
+          `HI! gatsby-source-plugin isn't setup yet to paginate over 1000 entries (the max we can fetch in one go). Please help out the project and contribute a PR fixing this.`
+        )
+      }
+
       return entries
     })
   )
 
   let assets
   try {
-    assets = await client.getAssets()
+    assets = await client.getAssets({ limit: 1000 })
   } catch (e) {
     console.log(`error fetching assets`, e)
+  }
+  if (assets.total > 1000) {
+    console.log(
+      `HI! gatsby-source-plugin isn't setup yet to paginate over 1000 assets (the max we can fetch in one go). Please help out the project and contribute a PR fixing this.`
+    )
   }
   console.log(`assets fetched`, assets.items.length)
   console.timeEnd(`fetch Contentful data`)
