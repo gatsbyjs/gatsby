@@ -77,5 +77,6 @@ module.exports = ({ args, nodes, connection = false, path = `` }) => {
     path,
     nodeId: result[0].id,
   })
+
   return result[0]
 }
