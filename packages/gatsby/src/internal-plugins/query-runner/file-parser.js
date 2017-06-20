@@ -117,22 +117,28 @@ export default class FileParser {
   async parseFile(file: string): Promise<?DocumentNode> {
     const text = await readFileAsync(file, `utf8`)
 
-    if (text.indexOf(`graphql`) === -1) return
+    if (text.indexOf(`graphql`) === -1) return null
     const hash = crypto
       .createHash(`md5`)
       .update(file)
       .update(text)
       .digest(`hex`)
 
-    let astDefinitions =
-      cache[hash] || (cache[hash] = await findGraphQLTags(file, text))
+    try {
+      let astDefinitions =
+        cache[hash] || (cache[hash] = await findGraphQLTags(file, text))
 
-    return astDefinitions.length
-      ? {
-          kind: `Document`,
-          definitions: astDefinitions,
-        }
-      : null
+      return astDefinitions.length
+        ? {
+            kind: `Document`,
+            definitions: astDefinitions,
+          }
+        : null
+    } catch (err) {
+      console.error(`Failed to parse GQL query from file: ${file}`)
+      console.error(err.message)
+      return null
+    }
   }
 
   async parseFiles(files: Array<string>): Promise<Map<string, DocumentNode>> {
