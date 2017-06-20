@@ -1,1 +1,1 @@
-exports.registerServiceWorker = () => return true
+exports.registerServiceWorker = () => true
