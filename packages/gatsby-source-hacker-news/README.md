@@ -22,7 +22,7 @@ You can query nodes created from Hacker News like the following:
 
 ```graphql
 query StoriesQuery {
-  allHnStory(sortBy: {fields: [order]}) {
+  allHnStory(sort: {fields: [order]}) {
     edges {
       node {
         id

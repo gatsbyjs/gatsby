@@ -27,7 +27,7 @@ const headingsCacheKey = node =>
     .contentDigest}-${pluginsCacheStr}`
 
 module.exports = (
-  { type, store, linkPrefix, getNode, cache },
+  { type, store, pathPrefix, getNode, cache },
   pluginOptions
 ) => {
   if (type.name !== `MarkdownRemark`) {
@@ -58,12 +58,14 @@ module.exports = (
               const requiredPlugin = require(plugin.resolve)
               if (_.isFunction(requiredPlugin.mutateSource)) {
                 console.log(`running plugin to mutate markdown source`)
-                return requiredPlugin.mutateSource({
-                  markdownNode,
-                  files,
-                  getNode,
-                  pluginOptions: plugin.pluginOptions,
-                })
+                return requiredPlugin.mutateSource(
+                  {
+                    markdownNode,
+                    files,
+                    getNode,
+                  },
+                  plugin.pluginOptions
+                )
               } else {
                 return Promise.resolve()
               }
@@ -108,14 +110,16 @@ module.exports = (
               pluginOptions.plugins.map(plugin => {
                 const requiredPlugin = require(plugin.resolve)
                 if (_.isFunction(requiredPlugin)) {
-                  return requiredPlugin({
-                    markdownAST,
-                    markdownNode,
-                    getNode,
-                    files,
-                    pluginOptions: plugin.pluginOptions,
-                    linkPrefix,
-                  })
+                  return requiredPlugin(
+                    {
+                      markdownAST,
+                      markdownNode,
+                      getNode,
+                      files,
+                      pathPrefix,
+                    },
+                    plugin.pluginOptions
+                  )
                 } else {
                   return Promise.resolve()
                 }

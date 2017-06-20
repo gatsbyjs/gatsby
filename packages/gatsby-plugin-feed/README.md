@@ -48,7 +48,7 @@ plugins: [
             {
               allMarkdownRemark(
                 limit: 1000,
-                sortBy: { order: DESC, fields: [frontmatter___date] },
+                sort: { order: DESC, fields: [frontmatter___date] },
                 frontmatter: { draft: { ne: true } }
               ) {
                 edges {

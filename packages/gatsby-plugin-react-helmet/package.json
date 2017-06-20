@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-react-helmet",
-  "version": "1.0.0-alpha19",
+  "version": "1.0.0-beta.1",
   "description": "Stub description for gatsby-plugin-react-helmet",
   "main": "index.js",
   "scripts": {

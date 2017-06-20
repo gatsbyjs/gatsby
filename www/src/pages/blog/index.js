@@ -1,8 +1,10 @@
 import React from "react"
 import Link from "gatsby-link"
+import colors from "../../utils/colors"
 
 import { rhythm, scale } from "../../utils/typography"
 import presets from "../../utils/presets"
+import Container from "../../components/container"
 
 class BlogPostsIndex extends React.Component {
   render() {
@@ -10,22 +12,13 @@ class BlogPostsIndex extends React.Component {
       edge => edge.node
     )
     return (
-      <div
-        css={{
-          margin: 0,
-          maxWidth: `100%`,
-          [presets.Tablet]: {
-            margin: `0 auto`,
-            maxWidth: rhythm(26),
-          },
-        }}
-      >
-        <h1>Blog</h1>
+      <Container>
+        <h1 css={{ marginTop: 0 }}>Blog</h1>
         {blogPosts.map(post => {
           const avatar =
             post.frontmatter.author.avatar.childImageSharp.responsiveResolution
           return (
-            <div key={post.fields.slug}>
+            <div key={post.fields.slug} css={{ marginBottom: rhythm(2) }}>
               <Link to={post.fields.slug}>
                 <h2
                   css={{
@@ -36,10 +29,12 @@ class BlogPostsIndex extends React.Component {
                 </h2>
                 <p
                   css={{
-                    color: `#696861`,
+                    color: colors.b[13],
                   }}
                 >
-                  {post.excerpt}
+                  {post.frontmatter.excerpt
+                    ? post.frontmatter.excerpt
+                    : post.excerpt}
                 </p>
               </Link>
               <div>
@@ -64,7 +59,7 @@ class BlogPostsIndex extends React.Component {
                 >
                   <div
                     css={{
-                      color: `#696861`,
+                      color: colors.b[12],
                       lineHeight: 1.1,
                     }}
                   >
@@ -72,7 +67,7 @@ class BlogPostsIndex extends React.Component {
                   </div>
                   <div
                     css={{
-                      color: `#696861`,
+                      color: colors.b[12],
                       lineHeight: 1.1,
                     }}
                   >
@@ -83,7 +78,7 @@ class BlogPostsIndex extends React.Component {
             </div>
           )
         })}
-      </div>
+      </Container>
     )
   }
 }
@@ -93,15 +88,18 @@ export default BlogPostsIndex
 export const pageQuery = graphql`
 query BlogPostsIndexQuery {
   allMarkdownRemark(
-    sortBy: { order: DESC, fields: [frontmatter___date] },
-    frontmatter: { draft: { ne: true } },
-    fileAbsolutePath: { regex: "/blog/" },
+    sort: { order: DESC, fields: [frontmatter___date] },
+    filter: {
+      frontmatter: { draft: { ne: true } },
+      fileAbsolutePath: { regex: "/blog/" }
+    }
   ) {
     edges {
       node {
         excerpt
         fields { slug }
         frontmatter {
+          excerpt
           title
           date(formatString: "DD MMMM, YYYY")
           author {

@@ -11,7 +11,7 @@ Sit down, buckle up, and let's get going!
 
 ## Check Environment
 
-Let's check first that you have everything setup to start working with Gatsby. You will need a recent version of [Node.js](nodejs.org) installed.
+Let's check first that you have everything setup to start working with Gatsby. You will need a recent version of [Node.js](https://nodejs.org) installed.
 
 Open a terminal window and type `node --version` then `npm --version`.
 
@@ -56,8 +56,8 @@ Now type `cat package.json` and you should see that `gatsby` and `gatsby-link` a
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "gatsby": "^1.0.0-alpha19",
-    "gatsby-link": "^1.0.0-alpha16"
+    "gatsby": "^1.0.0-beta.2",
+    "gatsby-link": "^1.0.0-beta.2"
   }
 }
 ```

@@ -39,24 +39,26 @@ module.exports = ({ args, nodes, connection = false, path = `` }) => {
   }
 
   const siftArgs = []
-  _.each(clonedArgs, (v, k) => {
-    // Ignore connection and sorting args
-    if (_.includes([`skip`, `limit`, `sortBy`], k)) return
+  if (clonedArgs.filter) {
+    _.each(clonedArgs.filter, (v, k) => {
+      // Ignore connection and sorting args
+      if (_.includes([`skip`, `limit`, `sort`], k)) return
 
-    siftArgs.push(siftifyArgs({ [k]: v }))
-  })
+      siftArgs.push(siftifyArgs({ [k]: v }))
+    })
+  }
 
   let result = _.isEmpty(siftArgs) ? nodes : sift({ $and: siftArgs }, nodes)
 
   if (!result || !result.length) return
 
   // Sort results.
-  if (clonedArgs.sortBy) {
-    const convertedFields = clonedArgs.sortBy.fields.map(field =>
+  if (clonedArgs.sort) {
+    const convertedFields = clonedArgs.sort.fields.map(field =>
       field.replace(/___/g, `.`)
     )
 
-    result = _.orderBy(result, convertedFields, clonedArgs.sortBy.order)
+    result = _.orderBy(result, convertedFields, clonedArgs.sort.order)
   }
 
   if (connection) {
@@ -75,5 +77,6 @@ module.exports = ({ args, nodes, connection = false, path = `` }) => {
     path,
     nodeId: result[0].id,
   })
+
   return result[0]
 }

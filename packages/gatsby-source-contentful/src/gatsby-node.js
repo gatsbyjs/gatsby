@@ -1,5 +1,9 @@
 const contentful = require(`contentful`)
 const crypto = require(`crypto`)
+const stringify = require(`json-stringify-safe`)
+const _ = require(`lodash`)
+
+const digest = str => crypto.createHash(`md5`).update(str).digest(`hex`)
 
 const typePrefix = `contentful__`
 const conflictFieldPrefix = `contentful`
@@ -24,11 +28,16 @@ exports.sourceNodes = async (
 
   let contentTypes
   try {
-    contentTypes = await client.getContentTypes()
+    contentTypes = await client.getContentTypes({ limit: 1000 })
   } catch (e) {
     console.log(`error fetching content types`, e)
   }
   console.log(`contentTypes fetched`, contentTypes.items.length)
+  if (contentTypes.total > 1000) {
+    console.log(
+      `HI! gatsby-source-plugin isn't setup yet to paginate over 1000 content types (the max we can fetch in one go). Please help out the project and contribute a PR fixing this.`
+    )
+  }
 
   const entryList = await Promise.all(
     contentTypes.items.map(async contentType => {
@@ -37,6 +46,7 @@ exports.sourceNodes = async (
       try {
         entries = await client.getEntries({
           content_type: contentTypeId,
+          limit: 1000,
         })
       } catch (e) {
         console.log(`error fetching entries`, e)
@@ -45,18 +55,42 @@ exports.sourceNodes = async (
         `entries fetched for content type ${contentType.name} (${contentTypeId})`,
         entries.items.length
       )
+      if (entries.total > 1000) {
+        console.log(
+          `HI! gatsby-source-plugin isn't setup yet to paginate over 1000 entries (the max we can fetch in one go). Please help out the project and contribute a PR fixing this.`
+        )
+      }
+
       return entries
     })
   )
 
   let assets
   try {
-    assets = await client.getAssets()
+    assets = await client.getAssets({ limit: 1000 })
   } catch (e) {
     console.log(`error fetching assets`, e)
   }
+  if (assets.total > 1000) {
+    console.log(
+      `HI! gatsby-source-plugin isn't setup yet to paginate over 1000 assets (the max we can fetch in one go). Please help out the project and contribute a PR fixing this.`
+    )
+  }
   console.log(`assets fetched`, assets.items.length)
   console.timeEnd(`fetch Contentful data`)
+
+  // Create map of not resolvable ids so we can filter them out while creating
+  // links.
+  const notResolvable = new Map()
+  entryList.forEach(ents => {
+    if (ents.errors) {
+      ents.errors.forEach(error => {
+        if (error.sys.id === `notResolvable`) {
+          notResolvable.set(error.details.id, error.details)
+        }
+      })
+    }
+  })
 
   const contentTypeItems = contentTypes.items
 
@@ -75,6 +109,11 @@ exports.sourceNodes = async (
             entryItemFieldValue[0].sys.id
           ) {
             entryItemFieldValue.forEach(v => {
+              // Don't create link to an unresolvable field.
+              if (notResolvable.has(v.sys.id)) {
+                return
+              }
+
               if (!foreignReferenceMap[v.sys.id]) {
                 foreignReferenceMap[v.sys.id] = []
               }
@@ -87,7 +126,8 @@ exports.sourceNodes = async (
         } else if (
           entryItemFieldValue.sys &&
           entryItemFieldValue.sys.type &&
-          entryItemFieldValue.sys.id
+          entryItemFieldValue.sys.id &&
+          !notResolvable.has(entryItemFieldValue.sys.id)
         ) {
           if (!foreignReferenceMap[entryItemFieldValue.sys.id]) {
             foreignReferenceMap[entryItemFieldValue.sys.id] = []
@@ -100,6 +140,26 @@ exports.sourceNodes = async (
       })
     })
   })
+
+  function createTextNode(node, key, text, createNode) {
+    const textNode = {
+      id: `${node.id}${key}TextNode`,
+      parent: node.id,
+      children: [],
+      [key]: text,
+      internal: {
+        type: _.camelCase(`${node.internal.type} ${key} TextNode`),
+        mediaType: `text/x-markdown`,
+        content: text,
+        contentDigest: digest(text),
+      },
+    }
+
+    node.children = node.children.concat([textNode.id])
+    createNode(textNode)
+
+    return textNode.id
+  }
 
   contentTypeItems.forEach((contentTypeItem, i) => {
     const contentTypeItemId = contentTypeItem.sys.id
@@ -138,13 +198,17 @@ exports.sourceNodes = async (
           ) {
             entryItemFields[
               `${entryItemFieldKey}___NODE`
-            ] = entryItemFieldValue.map(v => v.sys.id)
+            ] = entryItemFieldValue
+              .filter(v => !notResolvable.has(v.sys.id))
+              .map(v => v.sys.id)
+
             delete entryItemFields[entryItemFieldKey]
           }
         } else if (
           entryItemFieldValue.sys &&
           entryItemFieldValue.sys.type &&
-          entryItemFieldValue.sys.id
+          entryItemFieldValue.sys.id &&
+          !notResolvable.has(entryItemFieldValue.sys.id)
         ) {
           entryItemFields[`${entryItemFieldKey}___NODE`] =
             entryItemFieldValue.sys.id
@@ -167,30 +231,52 @@ exports.sourceNodes = async (
         })
       }
 
-      const entryNode = {
+      let entryNode = {
         id: entryItem.sys.id,
         parent: contentTypeItemId,
         children: [],
-        ...entryItemFields,
         internal: {
           type: `${makeTypeName(contentTypeItemId)}`,
-          content: JSON.stringify(entryItem),
           mediaType: `application/json`,
         },
       }
 
+      // Replace text fields with text nodes so we can process their markdown
+      // into HTML.
+      Object.keys(entryItemFields).forEach(entryItemFieldKey => {
+        // Ignore fields with "___node" as they're already handled
+        // and won't be a text field.
+        if (entryItemFieldKey.split(`___`).length > 1) {
+          return
+        }
+
+        const fieldType = contentTypeItem.fields.find(
+          f => f.id === entryItemFieldKey
+        ).type
+        if (fieldType === `Text`) {
+          entryItemFields[`${entryItemFieldKey}___NODE`] = createTextNode(
+            entryNode,
+            entryItemFieldKey,
+            entryItemFields[entryItemFieldKey],
+            createNode
+          )
+
+          delete entryItemFields[entryItemFieldKey]
+        }
+      })
+
+      entryNode = { ...entryItemFields, ...entryNode }
+
       // Get content digest of node.
-      const contentDigest = crypto
-        .createHash(`md5`)
-        .update(JSON.stringify(entryNode))
-        .digest(`hex`)
+      const contentDigest = digest(stringify(entryNode))
 
       entryNode.internal.contentDigest = contentDigest
 
       return entryNode
     })
+
     // Create a node for each content type
-    const contentTypeItemStr = JSON.stringify(contentTypeItem)
+    const contentTypeItemStr = stringify(contentTypeItem)
 
     const contentTypeNode = {
       id: contentTypeItemId,
@@ -201,16 +287,12 @@ exports.sourceNodes = async (
       description: contentTypeItem.description,
       internal: {
         type: `${makeTypeName(`ContentType`)}`,
-        content: contentTypeItemStr,
-        mediaType: `application/json`,
+        mediaType: `text/x-contentful`,
       },
     }
 
     // Get content digest of node.
-    const contentDigest = crypto
-      .createHash(`md5`)
-      .update(JSON.stringify(contentTypeNode))
-      .digest(`hex`)
+    const contentDigest = digest(stringify(contentTypeNode))
 
     contentTypeNode.internal.contentDigest = contentDigest
 
@@ -222,7 +304,7 @@ exports.sourceNodes = async (
 
   assets.items.forEach(assetItem => {
     // Create a node for each asset. They may be referenced by Entries
-    const assetItemStr = JSON.stringify(assetItem)
+    const assetItemStr = stringify(assetItem)
 
     const assetNode = {
       id: assetItem.sys.id,
@@ -231,16 +313,12 @@ exports.sourceNodes = async (
       ...assetItem.fields,
       internal: {
         type: `${makeTypeName(`Asset`)}`,
-        content: assetItemStr,
-        mediaType: `application/json`,
+        mediaType: `text/x-contentful`,
       },
     }
 
     // Get content digest of node.
-    const contentDigest = crypto
-      .createHash(`md5`)
-      .update(JSON.stringify(assetNode))
-      .digest(`hex`)
+    const contentDigest = digest(stringify(assetNode))
 
     assetNode.internal.contentDigest = contentDigest
 

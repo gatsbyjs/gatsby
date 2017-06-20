@@ -190,6 +190,16 @@ describe(`GraphQL type inferance`, () => {
             }),
           }),
         },
+        {
+          name: `Pet`,
+          nodeObjectType: new GraphQLObjectType({
+            name: `Pet`,
+            fields: inferObjectStructureFromNodes({
+              nodes: [{ id: `pet_1`, species: `dog` }],
+              types: [{ name: `Pet` }],
+            }),
+          }),
+        },
       ]
 
       store.dispatch({
@@ -199,6 +209,10 @@ describe(`GraphQL type inferance`, () => {
       store.dispatch({
         type: `CREATE_NODE`,
         payload: { id: `child_2`, internal: { type: `Child` }, hair: `blonde` },
+      })
+      store.dispatch({
+        type: `CREATE_NODE`,
+        payload: { id: `pet_1`, internal: { type: `Pet` }, species: `dog` },
       })
     })
 
@@ -260,6 +274,33 @@ describe(`GraphQL type inferance`, () => {
           `for: "linked___NODE". There is no corresponding GraphQL type ` +
           `"Bar" available to link to this node.`
       )
+    })
+
+    it(`Creates union types when an array field is linking to multiple node types`, async () => {
+      let result = await queryResult(
+        [{ linked___NODE: [`child_1`, `pet_1`] }],
+        `
+          linked {
+            __typename
+            ... on Child {
+              hair
+            }
+            ... on Pet {
+              species
+            }
+          }
+        `,
+        { types }
+      )
+      expect(result.errors).not.toBeDefined()
+      expect(result.data.listNode[0].linked[0].hair).toEqual(`brown`)
+      expect(result.data.listNode[0].linked[0].__typename).toEqual(`Child`)
+      expect(result.data.listNode[0].linked[1].species).toEqual(`dog`)
+      expect(result.data.listNode[0].linked[1].__typename).toEqual(`Pet`)
+      store.dispatch({
+        type: `CREATE_NODE`,
+        payload: { id: `baz`, internal: { type: `Bar` } },
+      })
     })
   })
 

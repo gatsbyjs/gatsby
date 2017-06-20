@@ -1,92 +1,53 @@
 import React from "react"
 import Link from "gatsby-link"
 
-import typography, { rhythm } from "../../utils/typography"
 import SidebarBody from "../../components/sidebar-body"
+import docsSidebar from "./doc-links.yaml"
+import Container from "../../components/container"
 import presets from "../../utils/presets"
 
 class IndexRoute extends React.Component {
   render() {
     return (
-      <div>
-        <h1>Getting started</h1>
+      <Container>
+        <h1 css={{ marginTop: 0 }}>
+          Get started
+        </h1>
         <p>
-          Gatsby lets you transform plain text into dynamic blogs and websites
-          using the
-          latest web technologies. A React.js static site generator.
+          Gatsby is a blazing fast static site generator for React.
         </p>
+        <h2>Install Gatsby's command line tool</h2>
         <p>
-          It supports Markdown, HTML, and React.js pages out of the box. Easy to
-          add
-          support for additional file types.
-        </p>
-        <h2>Install Gatsby</h2>
-        <p>
-          Stable version:<br />
-          <code>npm install -g gatsby</code>
-        </p>
-        <p>
-          Pre-stable version:<br />
           <code>
-            npm install -g gatsby@[version number]
+            npm install -g gatsby@next
           </code>
         </p>
-        <h2>Install Starters</h2>
-        <p>
-          The best way to get started is by installing Gatsby Starters. There
-          are four
-          sites that currently works with
-          <code>gatsby@1.0.0-alpha16</code>:
-        </p>
-        <ul>
+        <h2>Using the Gatsby CLI</h2>
+        <ol>
           <li>
-            Gatsby Starter Blog —
-            <a href="https://github.com/gatsbyjs/gatsby-starter-blog/tree/1.0">
-              https://github.com/gatsbyjs/gatsby-starter-blog/tree/1.0
-            </a>
+            Create a new site (with the blog starter)
+            {` `}
+            <code>
+              gatsby new beta-test-gatsby-site
+              new test gatsbyjs/gatsby-starter-blog#1.0
+            </code>
+          </li>
+          <li><code>cd beta-test-gatsby-site</code></li>
+          <li>
+            <code>gatsby develop</code> — Gatsby will start a hot-reloading
+            development environment accessible at <code>localhost:8000</code>
           </li>
           <li>
-            Kyle's blog —
-            <a href="https://github.com/kyleamathews/blog/tree/master">
-              https://github.com/kyleamathews/blog/tree/master
-            </a>
+            Try editing markdown and javascript files. Saved changes will live
+            reload in the browser.
           </li>
-          <li>
-            Gatsbygram —
-            <a href="https://github.com/gatsbyjs/gatsby/tree/1.0/examples/gatsbygram">
-              https://github.com/gatsbyjs/gatsby/tree/1.0/examples/gatsbygram
-            </a>
-          </li>
-          <li>
-            gatsbyjs.org —
-            <a href="https://github.com/gatsbyjs/gatsby/tree/1.0/www">
-              https://github.com/gatsbyjs/gatsby/tree/1.0/www
-            </a>
-          </li>
-        </ul>
-        <h2>Starter Installation Example</h2>
+        </ol>
+        <h2>Work through the tutorial</h2>
         <p>
-          Clone the Gatsby Starter Blog repo:<br />
-          <code>
-            git clone https://github.com/gatsbyjs/gatsby-starter-blog/
-          </code>
-        </p>
-        <p>
-          Go to folder and checkout the
-          <code>1.0</code>
-          branch.<br />
-          <code>
-            cd gastsby-starter-blog<br />
-            git checkout 1.0
-          </code>
-        </p>
-        <p>
-          Install npm packages<br />
-          <code>npm install</code>
-        </p>
-        <p>
-          Run on local server<br />
-          <code>gatsby develop</code>
+          Part one of what will be a 4-part tutorial is finished. It walks you
+          through building a Gatsby site from scratch to a finished polished
+          site.
+          {` `}<Link to="/tutorial">Go to the tutorial</Link>.
         </p>
         <div
           css={{
@@ -97,9 +58,9 @@ class IndexRoute extends React.Component {
           }}
         >
           <h2>Documentation</h2>
-          <SidebarBody inline />
+          <SidebarBody inline yaml={docsSidebar} />
         </div>
-      </div>
+      </Container>
     )
   }
 }

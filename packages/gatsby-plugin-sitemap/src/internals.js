@@ -1,12 +1,12 @@
-import fs from 'fs'
-import pify from 'pify'
+import fs from "fs"
+import pify from "pify"
 
 export const writeFile = pify(fs.writeFile)
 
-export const runQuery = (handler, query) => handler(query)
-  .then(r => {
+export const runQuery = (handler, query) =>
+  handler(query).then(r => {
     if (r.errors) {
-      throw new Error(r.errors.join(', '))
+      throw new Error(r.errors.join(`, `))
     }
 
     return r.data
@@ -22,8 +22,10 @@ export const defaultOptions = {
       }
       allMarkdownRemark(
         limit: 1000,
-        frontmatter: {
-          draft: { ne: true }
+        filter: {
+          frontmatter: {
+            draft: { ne: true }
+          }
         }
       ) {
         edges {
@@ -36,10 +38,11 @@ export const defaultOptions = {
       }
     }
   `,
-  output: '/sitemap.xml',
-  serialize: ({ site, allMarkdownRemark }) => (
-    allMarkdownRemark.edges.map(edge => ({
-      url: site.siteMetadata.site_url + edge.node.fields.slug
-    }))
-  )
+  output: `/sitemap.xml`,
+  serialize: ({ site, allMarkdownRemark }) =>
+    allMarkdownRemark.edges.map(edge => {
+      return {
+        url: site.siteMetadata.site_url + edge.node.fields.slug,
+      }
+    }),
 }

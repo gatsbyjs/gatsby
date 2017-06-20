@@ -1,10 +1,12 @@
 const _ = require(`lodash`)
+const normalize = require(`normalize-path`)
 
 module.exports = (state = [], action) => {
   switch (action.type) {
     case `DELETE_CACHE`:
       return []
     case `CREATE_PAGE`:
+      action.payload.component = normalize(action.payload.component)
       const index = _.findIndex(state, p => p.path === action.payload.path)
       // If the path already exists, overwrite it.
       // Otherwise, add it to the end.

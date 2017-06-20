@@ -6,6 +6,7 @@ const {
   GraphQLFloat,
   GraphQLInt,
   GraphQLList,
+  GraphQLUnionType,
 } = require(`graphql`)
 const _ = require(`lodash`)
 const invariant = require(`invariant`)
@@ -13,11 +14,12 @@ const moment = require(`moment`)
 const mime = require(`mime`)
 const isRelative = require(`is-relative`)
 const isRelativeUrl = require(`is-relative-url`)
-const slash = require(`slash`)
+const normalize = require(`normalize-path`)
 const systemPath = require(`path`)
 const { oneLine } = require(`common-tags`)
 
 const { store, getNode, getNodes } = require(`../redux`)
+const { joinPath } = require(`../utils/path`)
 const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 const createTypeName = require(`./create-type-name`)
 const createKey = require(`./create-key`)
@@ -245,36 +247,63 @@ function findLinkedNode(value, linkedField, path) {
 function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
   let isArray = false
   if (_.isArray(value)) {
-    value = value[0]
     isArray = true
+    // Reduce values to nodes with unique types.
+    value = _.uniqBy(value, v => getNode(v).internal.type)
   }
+
   const key = selector.split(`.`).pop()
   const [, , linkedField] = key.split(`___`)
 
-  const linkedNode = findLinkedNode(value, linkedField)
-  invariant(
-    linkedNode,
-    oneLine`
-      Encountered an error trying to infer a GraphQL type for: "${selector}".
-      There is no corresponding node with the ${linkedField || `id`}
-      field matching: "${value}"
-    `
-  )
-  const field = types.find(type => type.name === linkedNode.internal.type)
+  const validateLinkedNode = linkedNode => {
+    invariant(
+      linkedNode,
+      oneLine`
+        Encountered an error trying to infer a GraphQL type for: "${selector}".
+        There is no corresponding node with the ${linkedField || `id`}
+        field matching: "${value}"
+      `
+    )
+  }
+  const validateField = (linkedNode, field) => {
+    invariant(
+      field,
+      oneLine`
+        Encountered an error trying to infer a GraphQL type for: "${selector}".
+        There is no corresponding GraphQL type "${linkedNode.internal
+          .type}" available
+        to link to this node.
+      `
+    )
+  }
 
-  invariant(
-    field,
-    oneLine`
-      Encountered an error trying to infer a GraphQL type for: "${selector}".
-      There is no corresponding GraphQL type "${linkedNode.internal
-        .type}" available
-      to link to this node.
-    `
-  )
+  const findNodeType = node =>
+    types.find(type => type.name === node.internal.type)
 
   if (isArray) {
+    const linkedNodes = value.map(v => findLinkedNode(v))
+    linkedNodes.forEach(node => validateLinkedNode(node))
+    const fields = linkedNodes.map(node => findNodeType(node))
+    fields.forEach((field, i) => validateField(linkedNodes[i], field))
+
+    let type
+    // If there's more than one type, we'll create a union type.
+    if (fields.length > 1) {
+      type = new GraphQLUnionType({
+        name: `Union_${key}_${fields.map(f => f.name).join(`__`)}`,
+        description: `Union interface for the field "${key}" for types [${fields
+          .map(f => f.name)
+          .join(`, `)}]`,
+        types: fields.map(f => f.nodeObjectType),
+        resolveType: data =>
+          fields.find(f => f.name == data.internal.type).nodeObjectType,
+      })
+    } else {
+      type = fields[0].nodeObjectType
+    }
+
     return {
-      type: new GraphQLList(field.nodeObjectType),
+      type: new GraphQLList(type),
       resolve: (node, a, b = {}) => {
         let fieldValue = node[key]
         if (fieldValue) {
@@ -288,6 +317,10 @@ function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
     }
   }
 
+  const linkedNode = findLinkedNode(value, linkedField)
+  validateLinkedNode(linkedNode)
+  const field = findNodeType(linkedNode)
+  validateField(linkedNode, field)
   return {
     type: field.nodeObjectType,
     resolve: (node, a, b = {}) => {
@@ -352,7 +385,7 @@ function shouldInferFile(nodes, key, value) {
     return false
   }
 
-  const pathToOtherNode = systemPath.posix.join(rootNode.dir, value)
+  const pathToOtherNode = normalize(joinPath(rootNode.dir, value))
   const otherFileExists = getNodes().some(
     n => n.absolutePath === pathToOtherNode
   )
@@ -361,9 +394,6 @@ function shouldInferFile(nodes, key, value) {
 
 // Look for fields that are pointing at a file — if the field has a known
 // extension then assume it should be a file field.
-//
-// TODO probably should just check if the referenced file exists
-// only then turn this into a field field.
 function inferFromUri(key, types) {
   const fileField = types.find(type => type.name === `File`)
 
@@ -380,14 +410,11 @@ function inferFromUri(key, types) {
 
       // Find File node for this node (we assume the node is something
       // like markdown which would be a child node of a File node).
-      const parentFileNode = _.find(
-        getNodes(),
-        n => n.internal.type === `File` && n.id === node.parent
-      )
+      const parentFileNode = findRootNode(node)
 
       // Use the parent File node to create the absolute path to
       // the linked file.
-      const fileLinkPath = slash(
+      const fileLinkPath = normalize(
         systemPath.resolve(parentFileNode.dir, fieldValue)
       )
 
@@ -469,9 +496,10 @@ export function inferObjectStructureFromNodes({
       shouldInferFile(nodes, nextSelector, value)
     ) {
       inferredField = inferFromUri(key, types)
+    }
 
-      // Finally our automatic inference of field value type.
-    } else {
+    // Finally our automatic inference of field value type.
+    if (!inferredField) {
       inferredField = inferGraphQLType({
         nodes,
         types,

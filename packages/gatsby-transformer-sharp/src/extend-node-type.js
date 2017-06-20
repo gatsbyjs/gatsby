@@ -54,7 +54,7 @@ const DuotoneGradientType = new GraphQLInputObjectType({
   },
 })
 
-module.exports = ({ type, linkPrefix, getNodeAndSavePathDependency }) => {
+module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
   if (type.name !== `ImageSharp`) {
     return {}
   }
@@ -108,7 +108,7 @@ module.exports = ({ type, linkPrefix, getNodeAndSavePathDependency }) => {
       resolve(image, fieldArgs, context) {
         const promise = responsiveResolution({
           file: getNodeAndSavePathDependency(image.parent, context.path),
-          args: { ...fieldArgs, linkPrefix },
+          args: { ...fieldArgs, pathPrefix },
         })
         return promise
       },
@@ -161,7 +161,7 @@ module.exports = ({ type, linkPrefix, getNodeAndSavePathDependency }) => {
       resolve(image, fieldArgs, context) {
         return responsiveSizes({
           file: getNodeAndSavePathDependency(image.parent, context.path),
-          args: { ...fieldArgs, linkPrefix },
+          args: { ...fieldArgs, pathPrefix },
         })
       },
     },
@@ -233,7 +233,7 @@ module.exports = ({ type, linkPrefix, getNodeAndSavePathDependency }) => {
             resolve(
               queueImageResizing({
                 file,
-                args: { ...fieldArgs, linkPrefix },
+                args: { ...fieldArgs, pathPrefix },
               })
             )
           }

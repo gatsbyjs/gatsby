@@ -37,7 +37,7 @@ export default IndexPage
 
 export const pageQuery = graphql`
 query PageQuery {
-  allDrupalNodeArticle(sortBy: { fields: [created], order: DESC }) {
+  allDrupalNodeArticle(sort: { fields: [created], order: DESC }) {
     edges {
       node {
         title

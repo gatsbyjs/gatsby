@@ -16,16 +16,25 @@ module.exports = (language, code, lineNumbersHighlight = []) => {
 
   let highlightedCode = Prism.highlight(code, lang)
   if (lineNumbersHighlight) {
-    highlightedCode = highlightedCode
-      .split(`\n`)
-      .map((split, i) => {
-        if (_.includes(lineNumbersHighlight, i + 1)) {
-          return `<span class="highlight-code-line">${split}</span>`
-        } else {
-          return split
+    const codeSplits = highlightedCode.split(`\n`).map((split, i) => {
+      if (_.includes(lineNumbersHighlight, i + 1)) {
+        return {
+          highlighted: true,
+          code: `<span class="gatsby-highlight-code-line">${split}\n</span>`,
         }
-      })
-      .join(`\n`)
+      } else {
+        return { code: split }
+      }
+    })
+
+    highlightedCode = ``
+    // Don't add a new line character after highlighted lines as they
+    // need to be display: block and full-width.
+    codeSplits.forEach(split => {
+      split.highlighted
+        ? (highlightedCode += split.code)
+        : (highlightedCode += `${split.code}\n`)
+    })
   }
 
   return highlightedCode

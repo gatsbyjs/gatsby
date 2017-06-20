@@ -8,7 +8,7 @@ image: 'ui-and-code.png'
 ![Gatsbygram](ui-and-code.png)
 
 [Gatsbygram](https://gatsbygram.gatsbyjs.org) is a clone of Instagram
-built with Gatsby 1.0.0-alpha16 and is being continually updated as we
+built with Gatsby 1.0.0-beta.2 and is being continually updated as we
 make our way towards our 1.0 release.
 
 The [source code for
@@ -337,7 +337,7 @@ Github](https://github.com/gatsbyjs/gatsby/blob/1.0/examples/gatsbygram/src/page
 ## The Layout Component
 
 Each Gatsby site has a top-level layout component at
-`layouts/default.js`. This layout component is used on every page of
+`layouts/index.js`. This layout component is used on every page of
 your site so can contain things like your header, footer, and default
 page structure. It is also used as the "[app
 shell](https://developers.google.com/web/updates/2015/11/app-shell)"

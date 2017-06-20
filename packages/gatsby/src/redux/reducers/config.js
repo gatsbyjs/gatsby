@@ -1,5 +1,6 @@
 const Joi = require(`joi`)
 const chalk = require(`chalk`)
+const _ = require(`lodash`)
 
 const { gatsbyConfigSchema } = require(`../../joi-schemas/joi`)
 
@@ -16,10 +17,23 @@ module.exports = (state = {}, action) => {
           chalk.blue.bgYellow(`The site's gatsby-config.js failed validation`)
         )
         console.log(chalk.bold.red(result.error))
-        console.log(config)
+        if (action.payload.linkPrefix) {
+          console.log(`"linkPrefix" should be changed to "pathPrefix"`)
+        }
         throw new Error(`The site's gatsby-config.js failed validation`)
-        return
       }
+
+      // Ensure that the pathPrefix (if set) starts with a forward slash
+      // and doesn't end with a slash.
+      if (action.payload && action.payload.pathPrefix) {
+        if (!_.startsWith(action.payload.pathPrefix, `/`)) {
+          action.payload.pathPrefix = `/${action.payload.pathPrefix}`
+        }
+        if (_.endsWith(action.payload.pathPrefix, `/`)) {
+          action.payload.pathPrefix = action.payload.pathPrefix.slice(0, -1)
+        }
+      }
+
       return {
         ...action.payload,
       }

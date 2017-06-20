@@ -71,6 +71,12 @@ const extractFieldExamples = (nodes: any[]) =>
       if (!array.length) return null
       if (!areAllSameType(array)) return INVALID_VALUE
 
+      // Linked node arrays don't get reduced further as we
+      // want to preserve all the linked node types.
+      if (_.includes(key, `___NODE`)) {
+        return array
+      }
+
       // primitive values don't get merged further, just take the first item
       if (!_.isObject(array[0])) return array.slice(0, 1)
       let merged = extractFieldExamples(array)
@@ -83,6 +89,7 @@ const buildFieldEnumValues = (nodes: any[]) => {
   const values = flatten(extractFieldExamples(nodes), {
     maxDepth: 3,
     safe: true, // don't flatten arrays.
+    delimiter: `___`,
   })
   Object.keys(values).forEach(field => {
     if (values[field] == null) return

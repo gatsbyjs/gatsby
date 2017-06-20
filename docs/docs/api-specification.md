@@ -1,4 +1,6 @@
-# API specification
+---
+title: API specification
+---
 
 Gatsby's APIs are tailored conceptually to some extent after React.js which
 makes sense as users of Gatsby will necessarily also be users of React.js. I

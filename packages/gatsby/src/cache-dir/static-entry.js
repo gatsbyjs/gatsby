@@ -1,7 +1,7 @@
 import React from "react"
 import { renderToString, renderToStaticMarkup } from "react-dom/server"
 import { StaticRouter, Route, withRouter } from "react-router-dom"
-import { kebabCase, get, merge, isArray } from "lodash"
+import { kebabCase, get, merge, isArray, isString } from "lodash"
 import apiRunner from "./api-runner-ssr"
 import pages from "./pages.json"
 import syncRequires from "./sync-requires"
@@ -29,9 +29,9 @@ if (syncRequires.layouts.index) {
 }
 
 module.exports = (locals, callback) => {
-  let linkPrefix = `/`
-  if (__PREFIX_LINKS__) {
-    linkPrefix = `${__LINK_PREFIX__}/`
+  let pathPrefix = `/`
+  if (__PREFIX_PATHS__) {
+    pathPrefix = `${__PATH_PREFIX__}/`
   }
 
   let bodyHTML = ``
@@ -110,7 +110,7 @@ module.exports = (locals, callback) => {
   // Add the chunk-manifest as a head component.
   const chunkManifest = require(`!raw!../public/chunk-manifest.json`)
 
-  postBodyComponents.unshift(
+  headComponents.unshift(
     <script
       id="webpack-manifest"
       dangerouslySetInnerHTML={{
@@ -130,6 +130,7 @@ module.exports = (locals, callback) => {
     // ignore
   }
 
+  // Create paths to scripts
   const scripts = [
     `commons`,
     `app`,
@@ -137,35 +138,48 @@ module.exports = (locals, callback) => {
     pathChunkName(locals.path),
     pages.find(page => page.path === locals.path).componentChunkName,
   ]
+    .map(s => {
+      const fetchKey = `assetsByChunkName[${s}]`
+
+      let fetchedScript = get(stats, fetchKey)
+
+      if (!fetchedScript) {
+        return
+      }
+
+      // If sourcemaps are enabled, then the entry will be an array with
+      // the script name as the first entry.
+      fetchedScript = isArray(fetchedScript) ? fetchedScript[0] : fetchedScript
+      const prefixedScript = `${pathPrefix}${fetchedScript}`
+
+      // Make sure we found a component.
+      if (prefixedScript === `/`) {
+        return
+      }
+
+      return prefixedScript
+    })
+    .filter(s => isString(s))
+
   scripts.forEach(script => {
-    const fetchKey = `assetsByChunkName[${script}]`
-
-    let fetchedScript = get(stats, fetchKey)
-
-    if (!fetchedScript) {
-      return
-    }
-
-    // If sourcemaps are enabled, then the entry will be an array with
-    // the script name as the first entry.
-    fetchedScript = isArray(fetchedScript) ? fetchedScript[0] : fetchedScript
-    const prefixedScript = `${linkPrefix}${fetchedScript}`
-
-    // Make sure we found a component.
-    if (prefixedScript === `/`) {
-      return
-    }
-
     // Add preload <link>s for scripts.
-    headComponents.unshift(
-      <link rel="preload" href={prefixedScript} as="script" />
-    )
-
-    // Add script tags for the bottom of the page.
-    postBodyComponents.push(
-      <script key={prefixedScript} src={prefixedScript} />
-    )
+    headComponents.unshift(<link rel="preload" href={script} as="script" />)
   })
+
+  // Add script loader for page scripts to the head.
+  // Taken from https://www.html5rocks.com/en/tutorials/speed/script-loading/
+  const scriptsString = scripts.map(s => `"${s}"`).join(`,`)
+  headComponents.push(
+    <script
+      dangerouslySetInnerHTML={{
+        __html: `
+  !function(e,t,r){function n(){for(;d[0]&&"loaded"==d[0][f];)c=d.shift(),c[o]=!i.parentNode.insertBefore(c,i)}for(var s,a,c,d=[],i=e.scripts[0],o="onreadystatechange",f="readyState";s=r.shift();)a=e.createElement(t),"async"in i?(a.async=!1,e.head.appendChild(a)):i[f]?(d.push(a),a[o]=n):e.write("<"+t+' src="'+s+'" defer></'+t+">"),a.src=s}(document,"script",[
+  ${scriptsString}
+])
+  `,
+      }}
+    />
+  )
 
   const html = `<!DOCTYPE html>\n ${renderToStaticMarkup(
     <Html

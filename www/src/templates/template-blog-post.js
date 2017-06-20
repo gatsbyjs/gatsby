@@ -3,6 +3,7 @@ import Helmet from "react-helmet"
 
 import presets from "../utils/presets"
 import typography, { rhythm, scale } from "../utils/typography"
+import Container from "../components/container"
 
 const BlogPostTemplate = React.createClass({
   render() {
@@ -24,16 +25,7 @@ const BlogPostTemplate = React.createClass({
         {children}
       </p>
     return (
-      <div
-        css={{
-          margin: 0,
-          maxWidth: `100%`,
-          [presets.Tablet]: {
-            margin: `0 auto`,
-            maxWidth: rhythm(26),
-          },
-        }}
-      >
+      <Container>
         {/* Add long list of social meta tags */}
         <Helmet
           title={post.frontmatter.title}
@@ -50,7 +42,9 @@ const BlogPostTemplate = React.createClass({
           meta={[
             {
               name: `description`,
-              content: post.excerpt,
+              content: post.frontmatter.excerpt
+                ? post.frontmatter.excerpt
+                : post.excerpt,
             },
             {
               name: `og:description`,
@@ -101,7 +95,7 @@ const BlogPostTemplate = React.createClass({
         <header
           css={{
             display: `flex`,
-            marginTop: rhythm(2),
+            marginTop: rhythm(-1 / 4),
             marginBottom: rhythm(1),
           }}
         >
@@ -166,7 +160,7 @@ const BlogPostTemplate = React.createClass({
             __html: this.props.data.markdownRemark.html,
           }}
         />
-      </div>
+      </Container>
     )
   },
 })
@@ -182,6 +176,7 @@ export const pageQuery = graphql`
       fields { slug }
       frontmatter {
         title
+        excerpt
         date(formatString: "MMM D, YYYY")
         rawDate: date
         image {

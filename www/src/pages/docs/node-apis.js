@@ -2,12 +2,15 @@ import React from "react"
 
 import Functions from "../../components/function-list"
 import { rhythm, scale } from "../../utils/typography"
+import Container from "../../components/container"
 
 class NodeAPIDocs extends React.Component {
   render() {
     return (
-      <div>
-        <h1>Gatsby Node APIs</h1>
+      <Container>
+        <h1 css={{ marginTop: 0 }}>
+          Gatsby Node APIs
+        </h1>
         <p>
           Gatsby gives plugins and site builders many APIs
           for controlling your site.
@@ -24,7 +27,7 @@ class NodeAPIDocs extends React.Component {
         <hr />
         <h2>Reference</h2>
         <Functions functions={this.props.data.allDocumentationJs.edges} />
-      </div>
+      </Container>
     )
   }
 }
@@ -33,7 +36,7 @@ export default NodeAPIDocs
 
 export const pageQuery = graphql`
 query APINodeDocsQuery {
-  allDocumentationJs(id: {regex: "/src.*api-node-docs.js/"}, sortBy: {fields: [name]}) {
+  allDocumentationJs(filter: {id: {regex: "/src.*api-node-docs.js/"}}, sort: {fields: [name]}) {
     edges {
       node {
         name

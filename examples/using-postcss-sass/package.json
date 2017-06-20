@@ -9,11 +9,11 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "gatsby": "canary",
-    "gatsby-link": "canary",
-    "gatsby-plugin-google-analytics": "canary",
-    "gatsby-plugin-offline": "canary",
-    "gatsby-plugin-postcss-sass": "canary",
+    "gatsby": "next",
+    "gatsby-link": "next",
+    "gatsby-plugin-google-analytics": "next",
+    "gatsby-plugin-offline": "next",
+    "gatsby-plugin-postcss-sass": "next",
     "lost": "^8.0.0",
     "react-typography": "^0.15.10",
     "typography": "^0.15.10"

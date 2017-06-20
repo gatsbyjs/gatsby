@@ -11,6 +11,11 @@ import createHistory from "history/createBrowserHistory"
 import apiRunner from "./api-runner-browser"
 import syncRequires from "./sync-requires"
 import pages from "./pages.json"
+import ComponentRenderer from "./component-renderer"
+import loader from "./loader"
+loader.addPagesArray(pages)
+loader.addDevRequires(syncRequires)
+window.___loader = loader
 
 const history = createHistory()
 
@@ -40,8 +45,6 @@ function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
   return true
 }
 
-const $ = React.createElement
-
 const noMatch = pages.find(r => r.path === `/dev-404-page/`)
 
 const addNotFoundRoute = () => {
@@ -66,9 +69,8 @@ const navigateTo = pathname => {
 window.___navigateTo = navigateTo
 
 const AltRouter = apiRunner(`replaceRouterComponent`, { history })[0]
-const DefaultRouter = ({ children }) => (
+const DefaultRouter = ({ children }) =>
   <Router history={history}>{children}</Router>
-)
 
 // Use default layout if one isn't set.
 let layout
@@ -77,6 +79,11 @@ if (syncRequires.layouts[`index`]) {
 } else {
   layout = ({ children }) => <div>{children()}</div>
 }
+
+// Always have to have one top-level layout
+// can have ones below that. Find page, if has different
+// parent layout(s), loop through those until finally the
+// page. Tricky part is avoiding re-mounting I think...
 
 const Root = () =>
   createElement(
@@ -92,30 +99,14 @@ const Root = () =>
               attachToHistory(routeProps.history)
 
               const props = layoutProps ? layoutProps : routeProps
-              const page = pages.find(page => {
-                if (page.matchPath) {
-                  // Try both the path and matchPath
-                  return (
-                    matchPath(props.location.pathname, { path: page.path }) ||
-                    matchPath(props.location.pathname, {
-                      path: page.matchPath,
-                    })
-                  )
-                } else {
-                  return matchPath(props.location.pathname, {
-                    path: page.path,
-                    exact: true,
-                  })
-                }
-              })
-              if (page) {
-                return createElement(
-                  syncRequires.components[page.componentChunkName],
-                  {
-                    ...props,
-                    ...syncRequires.json[page.jsonName],
-                  }
-                )
+              const pageResources = loader.getResourcesForPathname(
+                props.location.pathname
+              )
+              if (pageResources) {
+                return createElement(ComponentRenderer, {
+                  ...props,
+                  pageResources,
+                })
               } else {
                 return addNotFoundRoute()
               }

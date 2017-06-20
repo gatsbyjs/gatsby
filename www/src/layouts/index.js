@@ -6,11 +6,13 @@ import PencilIcon from "react-icons/lib/go/pencil"
 import PersonIcon from "react-icons/lib/md/person"
 import Helmet from "react-helmet"
 
-import logo from "../../static/images/gatsby-monogram.jpg"
+import logo from "../gatsby-negative.svg"
 import typography, { rhythm, scale } from "../utils/typography"
 import SidebarBody from "../components/sidebar-body"
-import TutorialSidebarBody from "../components/tutorial-sidebar"
+import tutorialSidebar from "../pages/docs/tutorial-links.yml"
+import docsSidebar from "../pages/docs/doc-links.yaml"
 import presets from "../utils/presets"
+import colors from "../utils/colors"
 
 import "../css/prism-coy.css"
 
@@ -31,6 +33,28 @@ module.exports = React.createClass({
     }
   },
   render() {
+    const sidebarStyles = {
+      borderRight: `1px solid ${colors.b[0]}`,
+      backgroundColor: `#fcfaff`,
+      float: `left`,
+      width: rhythm(10),
+      display: `none`,
+      position: `fixed`,
+      overflowY: `auto`,
+      height: `calc(100vh - 55px)`,
+      WebkitOverflowScrolling: `touch`,
+      "::-webkit-scrollbar": {
+        width: `6px`,
+        height: `6px`,
+      },
+      "::-webkit-scrollbar-thumb": {
+        background: presets.lightPurple,
+      },
+      "::-webkit-scrollbar-track": {
+        background: presets.veryLightPurple,
+      },
+    }
+
     return (
       <div>
         <Helmet
@@ -53,12 +77,14 @@ module.exports = React.createClass({
         />
         <div
           css={{
-            background: `#f4dfc6`,
+            borderBottom: this.props.location.pathname !== `/`
+              ? `1px solid ${presets.veryLightPurple}`
+              : ``,
           }}
         >
           <div
             css={{
-              maxWidth: rhythm(36),
+              // maxWidth: rhythm(presets.maxWidth),
               margin: `0 auto`,
               padding: `${rhythm(1 / 3)} ${rhythm(3 / 4)}`,
               fontFamily: typography.options.headerFontFamily.join(`,`),
@@ -79,13 +105,13 @@ module.exports = React.createClass({
                   height: rhythm(1.4),
                   width: rhythm(1.4),
                   marginBottom: 0,
-                  marginRight: rhythm(1 / 4),
+                  marginRight: rhythm(3 / 8),
                   verticalAlign: `middle`,
                 }}
               />
               <h1
                 css={{
-                  ...scale(3 / 5),
+                  ...scale(2 / 5),
                   display: `inline-block`,
                   lineHeight: rhythm(1.5),
                   verticalAlign: `middle`,
@@ -214,9 +240,6 @@ module.exports = React.createClass({
         <div
           className={`main-body`}
           css={{
-            maxWidth: rhythm(36),
-            margin: `${rhythm(-1 / 2)} auto ${rhythm(1.75)} auto`,
-            padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
             paddingTop: 0,
             [presets.Tablet]: {
               margin: `0 auto`,
@@ -227,32 +250,22 @@ module.exports = React.createClass({
                of layouts */}
           <div
             css={{
-              float: `left`,
-              marginTop: rhythm(-3 / 4),
-              width: rhythm(8),
-              display: `none`,
+              ...sidebarStyles,
               [presets.Tablet]: {
-                position: `fixed`,
-                overflowY: `scroll`,
-                height: `calc(100vh - 73px)`,
                 display: this.props.location.pathname.slice(0, 6) === `/docs/`
                   ? `block`
                   : `none`,
               },
             }}
           >
-            <SidebarBody />
+            <SidebarBody yaml={docsSidebar} />
           </div>
           {/* TODO Move this under docs/tutorial/index.js once Gatsby supports multiple levels
                of layouts */}
           <div
             css={{
-              float: `left`,
-              marginTop: rhythm(-3 / 4),
-              width: rhythm(8),
-              display: `none`,
+              ...sidebarStyles,
               [presets.Tablet]: {
-                position: `fixed`,
                 display: this.props.location.pathname.slice(0, 10) ===
                   `/tutorial/`
                   ? `block`
@@ -260,7 +273,7 @@ module.exports = React.createClass({
               },
             }}
           >
-            <TutorialSidebarBody />
+            <SidebarBody yaml={tutorialSidebar} />
           </div>
           <div
             css={{
@@ -279,7 +292,7 @@ module.exports = React.createClass({
         </div>
         <div
           css={{
-            ...scale(-1 / 5),
+            ...scale(-2 / 5),
             position: `fixed`,
             display: `flex`,
             justifyContent: `space-around`,
@@ -288,7 +301,8 @@ module.exports = React.createClass({
             left: 0,
             right: 0,
             height: rhythm(2.5),
-            background: `#f4dfc6`,
+            // borderTop: `1px solid ${presets.purple}`,
+            background: presets.veryLightPurple,
             fontFamily: typography.options.headerFontFamily.join(`,`),
             [presets.Tablet]: {
               display: `none`,
@@ -298,7 +312,7 @@ module.exports = React.createClass({
           <Link
             to="/docs/"
             css={{
-              color: typography.options.bodyColor,
+              color: presets.purple,
               marginBottom: 2,
               textDecoration: `none`,
               textAlign: `center`,
@@ -308,7 +322,7 @@ module.exports = React.createClass({
           >
             <DocumentIcon
               css={{
-                fontSize: rhythm(1),
+                fontSize: rhythm(0.9),
               }}
             />
             <div>
@@ -318,7 +332,7 @@ module.exports = React.createClass({
           <Link
             to="/tutorial/"
             css={{
-              color: typography.options.bodyColor,
+              color: presets.purple,
               marginBottom: 2,
               textDecoration: `none`,
               textAlign: `center`,
@@ -338,7 +352,7 @@ module.exports = React.createClass({
           <Link
             to="/community/"
             css={{
-              color: typography.options.bodyColor,
+              color: presets.purple,
               marginBottom: 2,
               textDecoration: `none`,
               textAlign: `center`,
@@ -372,7 +386,7 @@ module.exports = React.createClass({
           <Link
             to="/blog/"
             css={{
-              color: typography.options.bodyColor,
+              color: presets.purple,
               marginBottom: 2,
               textDecoration: `none`,
               textAlign: `center`,
@@ -382,7 +396,7 @@ module.exports = React.createClass({
           >
             <PencilIcon
               css={{
-                fontSize: rhythm(1),
+                fontSize: rhythm(0.9),
               }}
             />
             <div>

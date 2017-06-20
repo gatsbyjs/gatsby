@@ -31,7 +31,7 @@ module.exports = {
             resolve: `gatsby-remark-responsive-image`,
             options: {
               maxWidth: 690,
-              backgroundColor: `#f7f0eb`,
+              backgroundColor: `#ffffff`,
             },
           },
           {
@@ -47,6 +47,12 @@ module.exports = {
         ],
       },
     },
+    {
+      resolve: `gatsby-plugin-nprogress`,
+      options: {
+        color: `#a2466c`,
+      },
+    },
     `gatsby-plugin-glamor`,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-catch-links`,
@@ -57,7 +63,7 @@ module.exports = {
         short_name: `GatsbyJS`,
         start_url: `/`,
         background_color: `#f7f0eb`,
-        theme_color: `#a2466c`,
+        theme_color: `#5c2965`,
         display: `minimal-ui`,
       },
     },

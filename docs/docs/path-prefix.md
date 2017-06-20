@@ -36,10 +36,3 @@ module.exports = {
   pathPrefix: `/blog`
 }
 ```
-
-### TODOs
-
-* currently we call this `linkPrefix` as that's what's used in Gatsby 0.x. A breaking change seems
-in order as we're using `path` everywhere else. 
-* Add runtime check that there's a slash at the start and no trailing slash.
-* Add tests around this.

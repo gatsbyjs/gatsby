@@ -1,0 +1,17 @@
+{
+  "name": "using-page-loading-indicator",
+  "private": true,
+  "description": "Gatsby example site using using-page-loading-indicator",
+  "author": "Kyle Mathews<mathews.kyle@gmail.com>",
+  "dependencies": {
+    "gatsby": "next",
+    "gatsby-link": "next",
+    "gatsby-plugin-nprogress": "^0.2.0"
+  },
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build"
+  }
+}

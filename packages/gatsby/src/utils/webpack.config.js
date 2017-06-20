@@ -15,7 +15,9 @@ const { store } = require(`../redux`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
 const WebpackMD5Hash = require(`webpack-md5-hash`)
 const ChunkManifestPlugin = require(`chunk-manifest-webpack-plugin`)
+const GatsbyModulePlugin = require(`../loaders/gatsby-module-loader/plugin`)
 const genBabelConfig = require(`./babel-config`)
+const { joinPath } = require(`./path`)
 
 // Five stages or modes:
 //   1) develop: for `gatsby develop` command, hot reload and CSS injection into page
@@ -51,30 +53,30 @@ module.exports = async (
         // Webpack will always generate a resultant javascript file.
         // But we don't want it for this step. Deleted by build-css.js.
         return {
-          path: `${directory}/public`,
+          path: joinPath(directory, `public`),
           filename: `bundle-for-css.js`,
-          publicPath: program.prefixLinks
-            ? `${store.getState().config.linkPrefix}/`
+          publicPath: program.prefixPaths
+            ? `${store.getState().config.pathPrefix}/`
             : `/`,
         }
       case `build-html`:
         // A temp file required by static-site-generator-plugin. See plugins() below.
         // Deleted by build-html.js, since it's not needed for production.
         return {
-          path: `${directory}/public`,
+          path: joinPath(directory, `public`),
           filename: `render-page.js`,
           libraryTarget: `umd`,
-          publicPath: program.prefixLinks
-            ? `${store.getState().config.linkPrefix}/`
+          publicPath: program.prefixPaths
+            ? `${store.getState().config.pathPrefix}/`
             : `/`,
         }
       case `build-javascript`:
         return {
           filename: `[name]-[chunkhash].js`,
           chunkFilename: `[name]-[chunkhash].js`,
-          path: `${directory}/public`,
-          publicPath: program.prefixLinks
-            ? `${store.getState().config.linkPrefix}/`
+          path: joinPath(directory, `public`),
+          publicPath: program.prefixPaths
+            ? `${store.getState().config.pathPrefix}/`
             : `/`,
         }
       default:
@@ -91,20 +93,20 @@ module.exports = async (
             `${require.resolve(
               `webpack-hot-middleware/client`
             )}?path=http://${program.host}:${webpackPort}/__webpack_hmr&reload=true`,
-            `${directory}/.cache/app`,
+            joinPath(directory, `.cache/app`),
           ],
         }
       case `build-css`:
         return {
-          main: `${directory}/.cache/app`,
+          main: joinPath(directory, `.cache/app`),
         }
       case `build-html`:
         return {
-          main: `${directory}/.cache/static-entry`,
+          main: joinPath(directory, `.cache/static-entry`),
         }
       case `build-javascript`:
         return {
-          app: `${directory}/.cache/production-app`,
+          app: joinPath(directory, `.cache/production-app`),
         }
       default:
         throw new Error(`The state requested ${stage} doesn't exist.`)
@@ -125,8 +127,8 @@ module.exports = async (
               ),
               PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
             },
-            __PREFIX_LINKS__: program.prefixLinks,
-            __LINK_PREFIX__: JSON.stringify(store.getState().config.linkPrefix),
+            __PREFIX_PATHS__: program.prefixPaths,
+            __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
           }),
           // Names module ids with their filepath. We use this in development
           // to make it easier to see what modules have hot reloaded, etc. as
@@ -143,8 +145,8 @@ module.exports = async (
               ),
               PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
             },
-            __PREFIX_LINKS__: program.prefixLinks,
-            __LINK_PREFIX__: JSON.stringify(store.getState().config.linkPrefix),
+            __PREFIX_PATHS__: program.prefixPaths,
+            __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
           }),
           new ExtractTextPlugin(`styles.css`, { allChunks: true }),
         ]
@@ -158,8 +160,8 @@ module.exports = async (
               ),
               PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
             },
-            __PREFIX_LINKS__: program.prefixLinks,
-            __LINK_PREFIX__: JSON.stringify(store.getState().config.linkPrefix),
+            __PREFIX_PATHS__: program.prefixPaths,
+            __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
           }),
           new ExtractTextPlugin(`build-html-styles.css`),
         ]
@@ -229,7 +231,7 @@ module.exports = async (
           }),
           // Add a few global variables. Set NODE_ENV to production (enables
           // optimizations for React) and whether prefixing links is enabled
-          // (__PREFIX_LINKS__) and what the link prefix is (__LINK_PREFIX__).
+          // (__PREFIX_PATHS__) and what the link prefix is (__PATH_PREFIX__).
           new webpack.DefinePlugin({
             "process.env": {
               NODE_ENV: JSON.stringify(
@@ -237,8 +239,8 @@ module.exports = async (
               ),
               PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
             },
-            __PREFIX_LINKS__: program.prefixLinks,
-            __LINK_PREFIX__: JSON.stringify(store.getState().config.linkPrefix),
+            __PREFIX_PATHS__: program.prefixPaths,
+            __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
           }),
           // Extract CSS so it doesn't get added to JS bundles.
           new ExtractTextPlugin(`build-js-styles.css`),
@@ -268,6 +270,7 @@ module.exports = async (
           }),
           // Ensure module order stays the same. Supposibly fixed in webpack 2.0.
           new webpack.optimize.OccurenceOrderPlugin(),
+          new GatsbyModulePlugin(),
           // new WebpackStableModuleIdAndHash({ seed: 9, hashSize: 47 }),
           new webpack.NamedModulesPlugin(),
         ]
@@ -288,9 +291,9 @@ module.exports = async (
       // directory if you need to install a specific version of a module for a
       // part of your site.
       modulesDirectories: [
-        `${directory}/node_modules`,
+        joinPath(directory, `node_modules`),
         `node_modules`,
-        `node_modules/gatsby/node_modules`,
+        joinPath(directory, `node_modules`, `gatsby`, `node_modules`),
       ],
     }
   }
@@ -469,7 +472,7 @@ module.exports = async (
 
     return {
       root,
-      modulesDirectories: [`node_modules`],
+      modulesDirectories: [path.join(__dirname, `../loaders`), `node_modules`],
     }
   }
 
@@ -477,7 +480,7 @@ module.exports = async (
 
   config.merge({
     // Context is the base directory for resolving the entry option.
-    context: `${directory}`,
+    context: directory,
     node: {
       __filename: true,
     },

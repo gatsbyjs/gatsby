@@ -1,6 +1,6 @@
 {
   "name": "gatsby-transformer-pdf",
-  "version": "1.0.0-alpha17",
+  "version": "1.0.0-beta.1",
   "description": "Stub description for gatsby-transformer-pdf",
   "main": "index.js",
   "scripts": {

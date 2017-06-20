@@ -51,13 +51,13 @@ module.exports = type => {
         return _.sortBy(_.filter(_.uniq(_.flatten(fields)), _.identity))
       },
     },
-    groupBy: {
+    group: {
       type: new GraphQLList(groupConnection),
       args: {
         ...connectionArgs,
         field: {
           type: new GraphQLEnumType({
-            name: _.camelCase(`${type.name} groupBy enum`),
+            name: _.camelCase(`${type.name} group enum`),
             values: enumValues,
           }),
         },
@@ -67,7 +67,7 @@ module.exports = type => {
         const connectionNodes = connection.edges.map(edge => edge.node)
 
         let groups = {}
-        // Do a custom groupBy for arrays (w/ a group per array value)
+        // Do a custom grouping for arrays (w/ a group per array value)
         // Find the first node with this field and check if it's an array.
         if (_.isArray(_.get(_.find(connectionNodes, fieldName), fieldName))) {
           const values = _.uniq(
