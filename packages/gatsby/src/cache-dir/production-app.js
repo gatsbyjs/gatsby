@@ -30,6 +30,12 @@ window.matchPath = matchPath
 // Let the site/plugins run code very early.
 apiRunner(`onClientEntry`)
 
+// Let plugins register a service worker. The plugin just needs
+// to return true.
+if (apiRunner(`registerServiceWorker`)) {
+  require(`./register-service-worker`)
+}
+
 const navigateTo = pathname => {
   // If we're already at this path, do nothing.
   if (window.location.pathname === pathname) {

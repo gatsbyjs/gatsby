@@ -46,10 +46,10 @@ exports.onPostBuild = (args, pluginOptions) => {
         handler: `fastest`,
       },
     ],
-    skipWaiting: false,
+    skipWaiting: true,
   }
 
   const combinedOptions = _.defaults(pluginOptions, options)
 
-  return precache.write(`public/sw.js`, combinedOptions)
+  return precache.write(`public/service-worker.js`, combinedOptions)
 }
