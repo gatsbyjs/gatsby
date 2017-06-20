@@ -1,6 +1,7 @@
 const contentful = require(`contentful`)
 const crypto = require(`crypto`)
 const stringify = require(`json-stringify-safe`)
+const _ = require(`lodash`)
 
 const digest = str => crypto.createHash(`md5`).update(str).digest(`hex`)
 
@@ -140,14 +141,14 @@ exports.sourceNodes = async (
     })
   })
 
-  function createTextNode(node, text, createNode) {
+  function createTextNode(node, key, text, createNode) {
     const textNode = {
-      id: `${node.id}TextNode`,
+      id: `${node.id}${key}TextNode`,
       parent: node.id,
       children: [],
-      text,
+      [key]: text,
       internal: {
-        type: `ComponentDescription`,
+        type: _.camelCase(`${node.internal.type} ${key} TextNode`),
         mediaType: `text/x-markdown`,
         content: text,
         contentDigest: digest(text),
@@ -243,9 +244,19 @@ exports.sourceNodes = async (
       // Replace text fields with text nodes so we can process their markdown
       // into HTML.
       Object.keys(entryItemFields).forEach(entryItemFieldKey => {
-        if (entryItemFieldKey === `text`) {
+        // Ignore fields with "___node" as they're already handled
+        // and won't be a text field.
+        if (entryItemFieldKey.split(`___`).length > 1) {
+          return
+        }
+
+        const fieldType = contentTypeItem.fields.find(
+          f => f.id === entryItemFieldKey
+        ).type
+        if (fieldType === `Text`) {
           entryItemFields[`${entryItemFieldKey}___NODE`] = createTextNode(
             entryNode,
+            entryItemFieldKey,
             entryItemFields[entryItemFieldKey],
             createNode
           )
