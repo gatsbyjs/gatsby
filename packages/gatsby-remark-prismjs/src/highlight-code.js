@@ -20,7 +20,7 @@ module.exports = (language, code, lineNumbersHighlight = []) => {
       if (_.includes(lineNumbersHighlight, i + 1)) {
         return {
           highlighted: true,
-          code: `<span class="gatsby-highlight-code-line">${split}</span>`,
+          code: `<span class="gatsby-highlight-code-line">${split}\n</span>`,
         }
       } else {
         return { code: split }
