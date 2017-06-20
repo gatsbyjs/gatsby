@@ -1,2 +1,3 @@
-/gatsby-browser.js
-/gatsby-ssr.js
+/*.js
+!index.js
+yarn.lock

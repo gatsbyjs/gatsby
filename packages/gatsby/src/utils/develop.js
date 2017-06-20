@@ -112,12 +112,10 @@ async function startServer(program) {
             }
 
             const setPreBodyComponents = components => {
-              console.log('+++ setPreBodyComponents', components)
               preBodyComponents = preBodyComponents.concat(components)
             }
 
             const setPostBodyComponents = components => {
-              console.log('+++ setPostBodyComponents', components)
               postBodyComponents = postBodyComponents.concat(components)
             }
 
@@ -195,7 +193,9 @@ async function startServer(program) {
       } else {
         if (program.open) {
           const opn = require(`opn`)
-          opn(`http://${listener.address().address}:${listener.address().port}`)
+          opn(
+            `http://${listener.address().address}:${listener.address().port}`
+          )
         }
         const host = listener.address().address === `127.0.0.1`
           ? `localhost`
