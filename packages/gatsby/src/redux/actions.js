@@ -28,7 +28,7 @@ actions.deletePage = (page, plugin = ``) => {
 
 const pascalCase = _.flow(_.camelCase, _.upperFirst)
 /**
- * Create a page. See https://www.gatsbyjs.org/docs/creating-and-modifying-pages/
+ * Create a page. See /docs/creating-and-modifying-pages/
  * for detailed documenation about creating pages.
  * @param {Object} page a page object
  * @param {string} page.path Any valid URL. Must start with a forward slash

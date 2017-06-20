@@ -17,6 +17,7 @@ let resourcesArray = []
 let resourcesCount = {}
 const preferDefault = m => (m && m.default) || m
 let prefetcher
+let inInitialRender = true
 
 // Prefetcher logic
 if (process.env.NODE_ENV === `production`) {
@@ -203,6 +204,29 @@ const queue = {
   getPage: pathname => findPage(pathname),
   has: path => pathArray.some(p => p === path),
   getResourcesForPathname: (path, cb = () => {}) => {
+    if (
+      inInitialRender &&
+      navigator &&
+      navigator.serviceWorker &&
+      navigator.serviceWorker.controller &&
+      navigator.serviceWorker.controller.state === `activated`
+    ) {
+      // If we're loading from a service worker (it's already activated on
+      // this initial render) and we can't find a page, there's a good chance
+      // we're on a new page that this (now old) service worker doesn't know
+      // about so we'll unregister it and reload.
+      if (!findPage(path)) {
+        navigator.serviceWorker
+          .getRegistrations()
+          .then(function(registrations) {
+            for (let registration of registrations) {
+              registration.unregister()
+            }
+            window.location.reload()
+          })
+      }
+    }
+    inInitialRender = false
     // In development we know the code is loaded already
     // so we just return with it immediately.
     if (process.env.NODE_ENV !== `production`) {

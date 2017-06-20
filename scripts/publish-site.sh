@@ -20,4 +20,7 @@ echo "=== Building website"
 # line.
 rm -rf .cache
 
+echo "temp delete offline-plugin gatsby-ssr.js"
+rm ./node_modules/gatsby-plugin-offline/gatsby-ssr.js
+
 ./node_modules/.bin/gatsby build

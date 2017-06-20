@@ -34,7 +34,7 @@ exports.onPostBuild = (args, pluginOptions) => {
     // URLs and not any files hosted on the site.
     //
     // Regex from http://stackoverflow.com/a/18017805
-    navigateFallbackWhitelist: [/^.*[^.]{5}$/],
+    navigateFallbackWhitelist: [/^.*([^.]{5}|.html)$/],
     cacheId: `gatsby-plugin-offline`,
     // Do cache bust JS URLs until can figure out how to make Webpack's
     // URLs truely content-addressed.
@@ -46,10 +46,10 @@ exports.onPostBuild = (args, pluginOptions) => {
         handler: `fastest`,
       },
     ],
-    skipWaiting: false,
+    skipWaiting: true,
   }
 
   const combinedOptions = _.defaults(pluginOptions, options)
 
-  return precache.write(`public/sw.js`, combinedOptions)
+  return precache.write(`public/service-worker.js`, combinedOptions)
 }
