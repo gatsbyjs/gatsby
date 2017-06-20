@@ -144,7 +144,7 @@ module.exports = (locals, callback) => {
       let fetchedScript = get(stats, fetchKey)
 
       if (!fetchedScript) {
-        return
+        return null
       }
 
       // If sourcemaps are enabled, then the entry will be an array with
@@ -154,7 +154,7 @@ module.exports = (locals, callback) => {
 
       // Make sure we found a component.
       if (prefixedScript === `/`) {
-        return
+        return null
       }
 
       return prefixedScript
