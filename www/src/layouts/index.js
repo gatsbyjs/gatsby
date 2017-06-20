@@ -33,6 +33,7 @@ module.exports = React.createClass({
     }
   },
   render() {
+    const headerHeight = `55px`
     const sidebarStyles = {
       borderRight: `1px solid ${colors.b[0]}`,
       backgroundColor: `#fcfaff`,
@@ -41,7 +42,7 @@ module.exports = React.createClass({
       display: `none`,
       position: `fixed`,
       overflowY: `auto`,
-      height: `calc(100vh - 55px)`,
+      height: `calc(100vh - ${headerHeight})`,
       WebkitOverflowScrolling: `touch`,
       "::-webkit-scrollbar": {
         width: `6px`,
@@ -80,6 +81,14 @@ module.exports = React.createClass({
             borderBottom: this.props.location.pathname !== `/`
               ? `1px solid ${presets.veryLightPurple}`
               : ``,
+            [presets.Tablet]: {
+              position: `fixed`,
+              zIndex: `1`,
+              height: headerHeight,
+              left: 0,
+              right: 0,
+              backgroundColor: `rgba(255,255,255,0.975)`,
+            },
           }}
         >
           <div
@@ -243,6 +252,7 @@ module.exports = React.createClass({
             paddingTop: 0,
             [presets.Tablet]: {
               margin: `0 auto`,
+              paddingTop: headerHeight,
             },
           }}
         >
