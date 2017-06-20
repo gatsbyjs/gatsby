@@ -21,12 +21,15 @@ module.exports.modifyWebpackConfig = ({ config }, { compilerOptions }) => {
   const opts = { compilerOptions: copts, transpileOnly: true }
 
   // Load gatsby babel plugin to extract graphql query
-  const extractQueryPlugin =  path.resolve(__dirname, `../gatsby/dist/utils/babel-plugin-extract-graphql.js`)
+  const extractQueryPlugin = path.resolve(
+    __dirname,
+    `../gatsby/dist/utils/babel-plugin-extract-graphql.js`
+  )
 
   config.loader(`typescript`, {
     test,
     loaders: [
-      `babel?${JSON.stringify({ plugins:[extractQueryPlugin] })}`,
+      `babel?${JSON.stringify({ plugins: [extractQueryPlugin] })}`,
       `ts-loader?${JSON.stringify(opts)}`,
     ],
   })
