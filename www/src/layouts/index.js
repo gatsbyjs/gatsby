@@ -80,6 +80,14 @@ module.exports = React.createClass({
             borderBottom: this.props.location.pathname !== `/`
               ? `1px solid ${presets.veryLightPurple}`
               : ``,
+            [presets.Tablet]: {
+              position: `fixed`,
+              zIndex: `1`,
+              height: `54px`,
+              left: 0,
+              right: 0,
+              backgroundColor: `rgba(255,255,255,0.975)`,
+            },
           }}
         >
           <div
@@ -243,6 +251,7 @@ module.exports = React.createClass({
             paddingTop: 0,
             [presets.Tablet]: {
               margin: `0 auto`,
+              paddingTop: `54px`,
             },
           }}
         >
