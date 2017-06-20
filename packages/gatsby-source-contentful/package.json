@@ -18,6 +18,6 @@
     "bluebird": "^3.4.6",
     "contentful": "^4.3.0",
     "json-stringify-safe": "^5.0.1",
-    "lodash": "^4.17.2"
+    "lodash": "^4.17.4"
   }
 }
