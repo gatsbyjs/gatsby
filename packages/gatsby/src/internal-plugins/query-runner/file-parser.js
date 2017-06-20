@@ -6,6 +6,7 @@ const crypto = require(`crypto`)
 import traverse from "babel-traverse"
 const babylon = require(`babylon`)
 const Bluebird = require(`bluebird`)
+const { stripIndent } = require(`common-tags`)
 
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { getGraphQLTag } = require(`../../utils/babel-plugin-extract-graphql`)
@@ -70,34 +71,25 @@ async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
           if (gqlAst) {
             gqlAst.definitions.forEach(def => {
               if (!def.name || !def.name.value) {
-                console.log(
-                  `
-GraphQL definitions must be "named"`
-                )
+                console.log(stripIndent`
+                  GraphQL definitions must be "named".
+                  The query with the missing name is in ${file}.
+                  To fix the query, add "query MyQueryName" to the start of your query.
+                  So instead of:
+                  {
+                    allMarkdownRemark {
+                      totalCount
+                    }
+                  }
 
-                console.log(`The query with the missing name is in ${file}`)
-                console.log(
-                  `
-To fix the query, add "query MyQueryName" to the start of your query.
+                  Do:
 
-So instead of:
-
-{
-  allMarkdownRemark {
-    totalCount
-  }
-}
-
-Do:
-
-query MyQueryName {
-  allMarkdownRemark {
-    totalCount
-  }
-}
-              `
-                )
-                console.log(``)
+                  query MyQueryName {
+                    allMarkdownRemark {
+                      totalCount
+                    }
+                  }
+                `)
                 process.exit(1)
               }
             })
@@ -117,22 +109,28 @@ export default class FileParser {
   async parseFile(file: string): Promise<?DocumentNode> {
     const text = await readFileAsync(file, `utf8`)
 
-    if (text.indexOf(`graphql`) === -1) return
+    if (text.indexOf(`graphql`) === -1) return null
     const hash = crypto
       .createHash(`md5`)
       .update(file)
       .update(text)
       .digest(`hex`)
 
-    let astDefinitions =
-      cache[hash] || (cache[hash] = await findGraphQLTags(file, text))
+    try {
+      let astDefinitions =
+        cache[hash] || (cache[hash] = await findGraphQLTags(file, text))
 
-    return astDefinitions.length
-      ? {
-          kind: `Document`,
-          definitions: astDefinitions,
-        }
-      : null
+      return astDefinitions.length
+        ? {
+            kind: `Document`,
+            definitions: astDefinitions,
+          }
+        : null
+    } catch (err) {
+      console.error(`Failed to parse GQL query from file: ${file}`)
+      console.error(err.message)
+      return null
+    }
   }
 
   async parseFiles(files: Array<string>): Promise<Map<string, DocumentNode>> {

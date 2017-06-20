@@ -3,7 +3,7 @@ const graphql = require(`graphql`)
 
 function getGraphQLTag(path) {
   const tag = path.get(`tag`)
-  if (!tag.isIdentifier({ name: `graphql` })) return
+  if (!tag.isIdentifier({ name: `graphql` })) return null
 
   const quasis = path.node.quasi.quasis
 
@@ -16,13 +16,19 @@ function getGraphQLTag(path) {
   }
 
   const text = quasis[0].value.raw
-  const ast = graphql.parse(text)
 
-  if (ast.definitions.length === 0) {
-    throw new Error(`BabelPluginGraphQL: Unexpected empty graphql tag.`)
+  try {
+    const ast = graphql.parse(text)
+
+    if (ast.definitions.length === 0) {
+      throw new Error(`BabelPluginGraphQL: Unexpected empty graphql tag.`)
+    }
+    return ast
+  } catch (err) {
+    throw new Error(
+      `BabelPluginGraphQL: GraphQL syntax error in query:\n\n${text}\n\nmessage:\n\n${err.message}`
+    )
   }
-
-  return ast
 }
 
 function BabelPluginGraphQL({ types: t }) {
@@ -31,7 +37,7 @@ function BabelPluginGraphQL({ types: t }) {
       TaggedTemplateExpression(path, state) {
         const ast = getGraphQLTag(path)
 
-        if (!ast) return
+        if (!ast) return null
 
         return path.replaceWith(
           t.StringLiteral(`** extracted graphql fragment **`)
