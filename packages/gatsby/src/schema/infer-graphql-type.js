@@ -6,6 +6,7 @@ const {
   GraphQLFloat,
   GraphQLInt,
   GraphQLList,
+  GraphQLUnionType,
 } = require(`graphql`)
 const _ = require(`lodash`)
 const invariant = require(`invariant`)
@@ -246,37 +247,63 @@ function findLinkedNode(value, linkedField, path) {
 function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
   let isArray = false
   if (_.isArray(value)) {
-    value = value[0]
     isArray = true
+    // Reduce values to nodes with unique types.
+    value = _.uniqBy(value, v => getNode(v).internal.type)
   }
+
   const key = selector.split(`.`).pop()
   const [, , linkedField] = key.split(`___`)
 
-  const linkedNode = findLinkedNode(value, linkedField)
+  const validateLinkedNode = linkedNode => {
+    invariant(
+      linkedNode,
+      oneLine`
+        Encountered an error trying to infer a GraphQL type for: "${selector}".
+        There is no corresponding node with the ${linkedField || `id`}
+        field matching: "${value}"
+      `
+    )
+  }
+  const validateField = (linkedNode, field) => {
+    invariant(
+      field,
+      oneLine`
+        Encountered an error trying to infer a GraphQL type for: "${selector}".
+        There is no corresponding GraphQL type "${linkedNode.internal
+          .type}" available
+        to link to this node.
+      `
+    )
+  }
 
-  invariant(
-    linkedNode,
-    oneLine`
-      Encountered an error trying to infer a GraphQL type for: "${selector}".
-      There is no corresponding node with the ${linkedField || `id`}
-      field matching: "${value}"
-    `
-  )
-  const field = types.find(type => type.name === linkedNode.internal.type)
-
-  invariant(
-    field,
-    oneLine`
-      Encountered an error trying to infer a GraphQL type for: "${selector}".
-      There is no corresponding GraphQL type "${linkedNode.internal
-        .type}" available
-      to link to this node.
-    `
-  )
+  const findNodeType = node =>
+    types.find(type => type.name === node.internal.type)
 
   if (isArray) {
+    const linkedNodes = value.map(v => findLinkedNode(v))
+    linkedNodes.forEach(node => validateLinkedNode(node))
+    const fields = linkedNodes.map(node => findNodeType(node))
+    fields.forEach((field, i) => validateField(linkedNodes[i], field))
+
+    let type
+    // If there's more than one type, we'll create a union type.
+    if (fields.length > 1) {
+      type = new GraphQLUnionType({
+        name: `Union_${key}_${fields.map(f => f.name).join(`__`)}`,
+        description: `Union interface for the field "${key}" for types [${fields
+          .map(f => f.name)
+          .join(`, `)}]`,
+        types: fields.map(f => f.nodeObjectType),
+        resolveType: data =>
+          fields.find(f => f.name == data.internal.type).nodeObjectType,
+      })
+    } else {
+      type = fields[0].nodeObjectType
+    }
+
     return {
-      type: new GraphQLList(field.nodeObjectType),
+      type: new GraphQLList(type),
       resolve: (node, a, b = {}) => {
         let fieldValue = node[key]
         if (fieldValue) {
@@ -290,6 +317,10 @@ function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
     }
   }
 
+  const linkedNode = findLinkedNode(value, linkedField)
+  validateLinkedNode(linkedNode)
+  const field = findNodeType(linkedNode)
+  validateField(linkedNode, field)
   return {
     type: field.nodeObjectType,
     resolve: (node, a, b = {}) => {
