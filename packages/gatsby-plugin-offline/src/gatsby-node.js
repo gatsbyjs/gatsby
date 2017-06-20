@@ -51,5 +51,5 @@ exports.onPostBuild = (args, pluginOptions) => {
 
   const combinedOptions = _.defaults(pluginOptions, options)
 
-  return precache.write(`public/sw.js`, combinedOptions)
+  return precache.write(`public/service-worker.js`, combinedOptions)
 }
