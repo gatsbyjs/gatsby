@@ -9,19 +9,19 @@ const DocsTemplate = React.createClass({
     const packageName = this.props.data.markdownRemark.fields.title
     return (
       <Container>
-        <a
-          href={`https://github.com/gatsbyjs/gatsby/tree/1.0/packages/${packageName}`}
-          css={{
-            ...scale(-1 / 5),
-            position: `absolute`,
-          }}
-        >
-          Github
-        </a>
+        <strong>
+          <a
+            href={`https://github.com/gatsbyjs/gatsby/tree/1.0/packages/${packageName}`}
+            css={{
+              position: `absolute`,
+            }}
+          >
+            Browse source code for package on Github
+          </a>
+        </strong>
         <div
           css={{
             position: `relative`,
-            top: rhythm(-1 / 2),
           }}
           dangerouslySetInnerHTML={{
             __html: this.props.data.markdownRemark.html,
