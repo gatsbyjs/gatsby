@@ -2,7 +2,7 @@ import emitter from "./emitter"
 
 if (`serviceWorker` in navigator) {
   navigator.serviceWorker
-    .register(`service-worker.js`)
+    .register(`sw.js`)
     .then(function(reg) {
       reg.addEventListener(`updatefound`, () => {
         // The updatefound event implies that reg.installing is set; see
