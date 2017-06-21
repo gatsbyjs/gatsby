@@ -17,7 +17,7 @@ Visual C++ Build Tools 2015, provided free of charge by Microsoft. These tools
 are required to compile popular native modules. It will also install Python
 2.7, configuring your machine and npm appropriately.
 
-### If `gatsby build` or `npm install` fails you might want to try this
+### If `npm install` still fails...
 
 Sometimes the `windows-build-tools` won't properly install required libraries. This is true if you already have a regular .NET development environment setup. This has been reported on Windows 10 x64 (and possibly other architectures or Windows versions).
 
