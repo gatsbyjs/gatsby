@@ -47,7 +47,7 @@ class IndexRoute extends React.Component {
           Part one of what will be a 4-part tutorial is finished. It walks you
           through building a Gatsby site from scratch to a finished polished
           site.
-          {` `}<Link to="/tutorial">Go to the tutorial</Link>.
+          {` `}<Link to="/tutorial/">Go to the tutorial</Link>.
         </p>
         <div
           css={{
