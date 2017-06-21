@@ -1,4 +1,4 @@
-# gatsby-plugin-google-analytics
+# gatsby-plugin-google-tagmanager
 
 Easily add Google Tagmanager to your Gatsby site.
 
