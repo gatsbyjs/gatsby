@@ -10,6 +10,7 @@
     "gatsby-plugin-google-analytics": "next",
     "gatsby-plugin-offline": "next",
     "gatsby-source-contentful": "next",
+    "gatsby-transformer-remark": "next",
     "lodash": "^4.16.4",
     "react-typography": "^0.15.0",
     "slash": "^1.0.0",
@@ -22,8 +23,8 @@
   "license": "MIT",
   "main": "n/a",
   "scripts": {
-    "dev": "gatsby develop",
+    "develop": "gatsby develop",
     "build": "gatsby build",
-    "start": "gatsby serve-build"
+    "start": "gatsby serve"
   }
 }

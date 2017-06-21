@@ -251,7 +251,10 @@ exports.sourceNodes = async (
         }
 
         const fieldType = contentTypeItem.fields.find(
-          f => f.id === entryItemFieldKey
+          f =>
+            (restrictedNodeFields.includes(f.id)
+              ? `${conflictFieldPrefix}${f.id}`
+              : f.id) === entryItemFieldKey
         ).type
         if (fieldType === `Text`) {
           entryItemFields[`${entryItemFieldKey}___NODE`] = createTextNode(
@@ -276,8 +279,6 @@ exports.sourceNodes = async (
     })
 
     // Create a node for each content type
-    const contentTypeItemStr = stringify(contentTypeItem)
-
     const contentTypeNode = {
       id: contentTypeItemId,
       parent: `__SOURCE__`,
@@ -304,8 +305,6 @@ exports.sourceNodes = async (
 
   assets.items.forEach(assetItem => {
     // Create a node for each asset. They may be referenced by Entries
-    const assetItemStr = stringify(assetItem)
-
     const assetNode = {
       id: assetItem.sys.id,
       parent: `__SOURCE__`,
