@@ -251,7 +251,10 @@ exports.sourceNodes = async (
         }
 
         const fieldType = contentTypeItem.fields.find(
-          f => f.id === entryItemFieldKey
+          f =>
+            (restrictedNodeFields.includes(f.id)
+              ? `${conflictFieldPrefix}${f.id}`
+              : f.id) === entryItemFieldKey
         ).type
         if (fieldType === `Text`) {
           entryItemFields[`${entryItemFieldKey}___NODE`] = createTextNode(
