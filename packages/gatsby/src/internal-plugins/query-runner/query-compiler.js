@@ -84,19 +84,66 @@ class Runner {
     })
 
     let compilerContext = new RelayCompilerContext(this.schema)
-    compilerContext = compilerContext.addAll(
-      ASTConvert.convertASTDocuments(this.schema, documents, [
-        ArgumentsOfCorrectTypeRule,
-        DefaultValuesOfCorrectTypeRule,
-        FragmentsOnCompositeTypesRule,
-        KnownTypeNamesRule,
-        LoneAnonymousOperationRule,
-        PossibleFragmentSpreadsRule,
-        ScalarLeafsRule,
-        VariablesAreInputTypesRule,
-        VariablesInAllowedPositionRule,
-      ])
-    )
+    try {
+      compilerContext = compilerContext.addAll(
+        ASTConvert.convertASTDocuments(this.schema, documents, [
+          ArgumentsOfCorrectTypeRule,
+          DefaultValuesOfCorrectTypeRule,
+          FragmentsOnCompositeTypesRule,
+          KnownTypeNamesRule,
+          LoneAnonymousOperationRule,
+          PossibleFragmentSpreadsRule,
+          ScalarLeafsRule,
+          VariablesAreInputTypesRule,
+          VariablesInAllowedPositionRule,
+        ])
+      )
+    } catch (e) {
+      // Find the name of file
+      const regex = /Invariant Violation: RelayParser: (.*). Source: document `(.*)` file:/g
+      let m
+      let error
+      let docName
+      let filePath
+      while ((m = regex.exec(e.toString())) !== null) {
+        // This is necessary to avoid infinite loops with zero-width matches
+        if (m.index === regex.lastIndex) {
+          regex.lastIndex++
+        }
+
+        // The result can be accessed through the `m`-variable.
+        m.forEach((match, groupIndex) => {
+          if (groupIndex === 1) {
+            error = match
+          } else if (groupIndex === 2) {
+            docName = match
+          }
+          // console.log(`Found match, group ${groupIndex}: ${match}`)
+        })
+      }
+      const docWithError = documents.find(doc =>
+        doc.definitions.find((node: { name: string }) => {
+          const { name: { value } } = node
+          if (value === docName) {
+            filePath = namePathMap.get(value) || ``
+            return true
+          }
+          return false
+        })
+      )
+      if (docName && filePath && error) {
+        console.log(
+          `\nThere was an error while compiling your site's GraphQL queries in document "${docName}" in file "${filePath}". Copy the failing query into GraphiQL to debug\n`
+        )
+        console.log(`    `, error)
+        console.log(``)
+      } else {
+        console.log(
+          `\nThere was an error while compiling your site's GraphQL queries\n${e.toString()}`
+        )
+        console.log(`Copy the failing query into GraphiQL to debug\n`)
+      }
+    }
 
     const printContext = printTransforms.reduce(
       (ctx, transform) => transform(ctx, this.schema),
