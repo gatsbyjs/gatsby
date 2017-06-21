@@ -8,6 +8,7 @@ exports.onRenderBody = (
   if (process.env.NODE_ENV === `production`) {
     setHeadComponents([
       <script
+        key="plugin-google-tagmanager"
         dangerouslySetInnerHTML={{
           __html: stripIndent`
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -21,6 +22,7 @@ exports.onRenderBody = (
 
     setPreBodyComponents([
       <noscript
+        key="plugin-google-tagmanager"
         dangerouslySetInnerHTML={{
           __html: stripIndent`
             <iframe
