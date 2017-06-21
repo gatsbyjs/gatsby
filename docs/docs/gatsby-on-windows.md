@@ -27,15 +27,13 @@ If you suspect this is your problem, download the [Visual Studio Express 2015 Pa
 
 Then run the commands on Gatsby:
 
-`npm uninstall node-gyp -g`
-
-`npm config set python python2.7`
-
-`npm config set msvs_version 2015`
-
-`npm cache clean -f`
-
-`npm install`
+```powershell
+npm uninstall node-gyp -g
+npm config set python python2.7
+npm config set msvs_version 2015
+npm cache clean -f
+npm install
+```
 
 You should then be all set.
 
