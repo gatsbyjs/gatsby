@@ -16,7 +16,12 @@ class IndexPage extends React.Component {
           return (
             <div key={product.id}>
               <Link to={`/products/${product.id}/`}>
-                <h4>{product.productName}</h4>
+                <h4>
+                  {
+                    product.childContentfulProductProductNameTextNode
+                      .productName
+                  }
+                </h4>
                 {product.image[0].file.url &&
                   <img src={product.image[0].file.url} />}
               </Link>
@@ -38,7 +43,7 @@ query PageQuery {
     edges {
       node {
         id
-        productName
+        childContentfulProductProductNameTextNode { productName }
         image {
           file {
             url

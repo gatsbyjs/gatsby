@@ -12,13 +12,17 @@ class ProductTemplate extends React.Component {
   render() {
     const product = this.props.data.contentfulProduct
     const {
-      productName,
-      productDescription,
+      childContentfulProductProductNameTextNode,
+      childContentfulProductProductDescriptionTextNode,
       price,
       image,
       brand,
       categories,
     } = product
+    const { productName } = childContentfulProductProductNameTextNode
+    const {
+      productDescription,
+    } = childContentfulProductProductDescriptionTextNode
     return (
       <div>
         <div style={{ display: `flex`, marginBottom: rhythm(1 / 2) }}>
@@ -39,7 +43,9 @@ class ProductTemplate extends React.Component {
           </div>
         </div>
         <h1>{productName}</h1>
-        <h4>Made by {brand.companyName}</h4>
+        <h4>
+          Made by {brand.childContentfulBrandCompanyNameTextNode.companyName}
+        </h4>
         <div>
           <span>Price: ${price}</span>
           <div dangerouslySetInnerHTML={{ __html: productDescription }} />
@@ -49,7 +55,7 @@ class ProductTemplate extends React.Component {
               {categories.map((category, i) =>
                 <li key={i}>
                   <Link key={i} to={`/categories/${category.id}`}>
-                    {category.title}
+                    {category.childContentfulCategoryTitleTextNode.title}
                   </Link>
                 </li>
               )}
@@ -68,8 +74,8 @@ export default ProductTemplate
 export const pageQuery = graphql`
   query productQuery($id: String!) {
     contentfulProduct(id: { eq: $id }) {
-      productName
-      productDescription
+      childContentfulProductProductNameTextNode { productName }
+      childContentfulProductProductDescriptionTextNode { productDescription }
       price
       image {
         file {
@@ -77,11 +83,11 @@ export const pageQuery = graphql`
         }
       }
       brand {
-        companyName
+        childContentfulBrandCompanyNameTextNode { companyName }
       }
       categories {
         id
-        title
+        childContentfulCategoryTitleTextNode { title }
       }
     }
   }

@@ -11,7 +11,8 @@ const propTypes = {
 class CategoryTemplate extends React.Component {
   render() {
     const category = this.props.data.contentfulCategory
-    const { title, product, icon } = category
+    const { childContentfulCategoryTitleTextNode, product, icon } = category
+    const { title } = childContentfulCategoryTitleTextNode
     const imageUrl = icon.file.url
     return (
       <div>
@@ -39,7 +40,9 @@ class CategoryTemplate extends React.Component {
             {product &&
               product.map((p, i) =>
                 <li key={i}>
-                  <Link to={`/products/${p.id}`}>{p.productName}</Link>
+                  <Link to={`/products/${p.id}`}>
+                    {p.childContentfulProductProductNameTextNode.productName}
+                  </Link>
                 </li>
               )}
           </ul>
@@ -56,7 +59,7 @@ export default CategoryTemplate
 export const pageQuery = graphql`
   query categoryQuery($id: String!) {
     contentfulCategory(id: { eq: $id }) {
-      title
+      childContentfulCategoryTitleTextNode { title }
       icon {
         file {
           url
@@ -64,7 +67,7 @@ export const pageQuery = graphql`
       }
       product {
         id
-        productName
+        childContentfulProductProductNameTextNode { productName }
       }
     }
   }
