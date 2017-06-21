@@ -121,7 +121,7 @@ class Runner {
           // console.log(`Found match, group ${groupIndex}: ${match}`)
         })
       }
-      documents.forEach(doc =>
+      const docWithError = documents.find(doc =>
         doc.definitions.find((node: { name: string }) => {
           const { name: { value } } = node
           if (value === docName) {
@@ -133,15 +133,15 @@ class Runner {
       )
       if (docName && filePath && error) {
         console.log(
-          `\nThere was an error while compiling your site's GraphQL queries in document "${docName}" in file "${filePath}"`
+          `\nThere was an error while compiling your site's GraphQL queries in document "${docName}" in file "${filePath}". Copy the failing query into GraphiQL to debug\n`
         )
-        console.log(``)
         console.log(`    `, error)
         console.log(``)
       } else {
         console.log(
-          `\nThere was an error while compiling your site's GraphQL queries\n${e.toString()}\n`
+          `\nThere was an error while compiling your site's GraphQL queries\n${e.toString()}`
         )
+        console.log(`Copy the failing query into GraphiQL to debug\n`)
       }
     }
 
