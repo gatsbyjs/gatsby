@@ -20,9 +20,6 @@ class ProductTemplate extends React.Component {
       categories,
     } = product
     const { productName } = childContentfulProductProductNameTextNode
-    const {
-      productDescription,
-    } = childContentfulProductProductDescriptionTextNode
     return (
       <div>
         <div style={{ display: `flex`, marginBottom: rhythm(1 / 2) }}>
@@ -48,7 +45,13 @@ class ProductTemplate extends React.Component {
         </h4>
         <div>
           <span>Price: ${price}</span>
-          <div dangerouslySetInnerHTML={{ __html: productDescription }} />
+          <div
+            dangerouslySetInnerHTML={{
+              __html:
+                childContentfulProductProductDescriptionTextNode
+                  .childMarkdownRemark.html,
+            }}
+          />
           <div>
             <span>See other: </span>
             <ul>
@@ -75,7 +78,11 @@ export const pageQuery = graphql`
   query productQuery($id: String!) {
     contentfulProduct(id: { eq: $id }) {
       childContentfulProductProductNameTextNode { productName }
-      childContentfulProductProductDescriptionTextNode { productDescription }
+      childContentfulProductProductDescriptionTextNode {
+        childMarkdownRemark {
+          html
+        }
+      }
       price
       image {
         file {

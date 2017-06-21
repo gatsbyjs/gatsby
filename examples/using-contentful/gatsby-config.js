@@ -10,5 +10,6 @@ module.exports = {
         accessToken: `e481b0f7c5572374474b29f81a91e8ac487bb27d70a6f14dd12142837d8e980a`,
       },
     },
+    `gatsby-transformer-remark`,
   ],
 }
