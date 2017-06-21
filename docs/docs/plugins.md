@@ -78,6 +78,7 @@ you can place the files in a `src` subfolder and build them to the plugin folder
 * [gatsby-plugin-feed](/docs/packages/gatsby-plugin-feed/)
 * [gatsby-plugin-glamor](/docs/packages/gatsby-plugin-glamor/)
 * [gatsby-plugin-google-analytics](/docs/packages/gatsby-plugin-google-analytics/)
+* [gatsby-plugin-google-tagmanager](/docs/packages/gatsby-plugin-google-tagmanager/)
 * [gatsby-plugin-manifest](/docs/packages/gatsby-plugin-manifest/)
 * [gatsby-plugin-nprogress](/docs/packages/gatsby-plugin-nprogress/)
 * [gatsby-plugin-offline](/docs/packages/gatsby-plugin-offline/)
