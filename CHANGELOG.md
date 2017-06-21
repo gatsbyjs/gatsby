@@ -1,5 +1,30 @@
 # Change Log
 
+## [1.0.0-beta.3] - 2017-06-21
+
+### Added
+
+* Show better errors when there's a graphql compilation problem #1222 @kyleamathews
+* Add google tagmanager plugin #1123 @0x80
+* Support path prefixes for service workers @kyleamathews
+* When a new service worker is loaded, force reload #1217 @kyleamathews
+* www: Make the header fixed for tablets and up #1215 @fk
+* Update on Gatsby Windows instructions #1216 @sebastienfi
+* Improve GQL query error handling #1214 @0x80
+* An array of linked nodes linking to heterogeneous node types is now converted to a union type #1211 @kyleamathews
+
+### Fixed
+* Final fixes to highlight code line whitespace, doc #1207 @fk
+* Increase contentful fetch limit to max of 1000 #1209 @kyleamathews
+* Fix broken links on website #1205 @kyleamathews
+* Merge sidebar components #1191 @fk
+* absolute resolves for gatsby config files #1195 @craig-mulligan
+* Update the default sitemap query #1204 @nicholaswyoung
+* For Contentful, filter out unresolvable entries and create markdown text nodes #1202 @kyleamathews
+* Reduce font-size of the mobile menu labels #1201 @fk
+* gatsby-remark-responsive-image: fix misaligned images #1196 @rstacruz
+* Fix 100% width code highlight background only being drawn for the vis… #1192 @fk
+
 ## [1.0.0-beta.2] - 2017-06-16
 
 ### Added
@@ -114,7 +139,7 @@ new API [`onRenderBody`](https://www.gatsbyjs.org/docs/ssr-apis/#onRenderBody).
 
 ### Fixed
 
-- Fix sharp image quality and force file format (#1054) @0x80
+- Fix sharp image quality and force file format #1054 @0x80
 - Expose crop focus parameter and make consistent with base64 #1055 @0x80
 - Clean up TravisCI config #1066 @hawkrives
 - Fix inference bug #1087 @jquense
