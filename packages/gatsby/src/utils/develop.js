@@ -103,11 +103,16 @@ async function startServer(program) {
             const apiRunner = require(`${directory}/.cache/api-runner-ssr`)
 
             let headComponents = []
+            let preBodyComponents = []
             let postBodyComponents = []
             let bodyProps = {}
 
             const setHeadComponents = components => {
               headComponents = headComponents.concat(components)
+            }
+
+            const setPreBodyComponents = components => {
+              preBodyComponents = preBodyComponents.concat(components)
             }
 
             const setPostBodyComponents = components => {
@@ -117,8 +122,10 @@ async function startServer(program) {
             const setBodyProps = props => {
               bodyProps = _.merge({}, bodyProps, props)
             }
+
             apiRunner(`onRenderBody`, {
               setHeadComponents,
+              setPreBodyComponents,
               setPostBodyComponents,
               setBodyProps,
             })
@@ -127,6 +134,7 @@ async function startServer(program) {
               ...bodyProps,
               body: ``,
               headComponents,
+              preBodyComponents,
               postBodyComponents: postBodyComponents.concat([
                 <script src="/commons.js" />,
               ]),
@@ -185,7 +193,9 @@ async function startServer(program) {
       } else {
         if (program.open) {
           const opn = require(`opn`)
-          opn(`http://${listener.address().address}:${listener.address().port}`)
+          opn(
+            `http://${listener.address().address}:${listener.address().port}`
+          )
         }
         const host = listener.address().address === `127.0.0.1`
           ? `localhost`

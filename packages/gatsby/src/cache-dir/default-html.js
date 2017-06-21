@@ -34,6 +34,7 @@ module.exports = React.createClass({
           {css}
         </head>
         <body>
+          {this.props.preBodyComponents}
           <div
             id="___gatsby"
             dangerouslySetInnerHTML={{ __html: this.props.body }}
