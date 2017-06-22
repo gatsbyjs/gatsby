@@ -18,7 +18,6 @@
     "base64-img": "^1.0.3",
     "bluebird": "^3.4.6",
     "contentful": "^4.3.0",
-    "graphql": "^0.10.3",
     "json-stringify-safe": "^5.0.1",
     "lodash": "^4.17.4",
     "qs": "^6.4.0"
