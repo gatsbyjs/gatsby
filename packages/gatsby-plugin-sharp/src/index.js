@@ -517,7 +517,7 @@ async function responsiveResolution({ file, args = {} }) {
       }
       return `${image.src} ${resolution}`
     })
-    .join(`,`)
+    .join(`,\n`)
 
   return {
     base64: base64Image.src,

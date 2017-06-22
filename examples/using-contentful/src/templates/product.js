@@ -12,44 +12,40 @@ class ProductTemplate extends React.Component {
   render() {
     const product = this.props.data.contentfulProduct
     const {
-      childContentfulProductProductNameTextNode,
-      childContentfulProductProductDescriptionTextNode,
+      productName: { productName },
+      productDescription,
       price,
       image,
       brand,
       categories,
     } = product
-    const { productName } = childContentfulProductProductNameTextNode
     return (
       <div>
-        <div style={{ display: `flex`, marginBottom: rhythm(1 / 2) }}>
-          <div style={{ height: rhythm(2), width: rhythm(2) }}>
-            <img
-              style={{
-                height: `auto`,
-                width: `auto`,
-                maxWidth: rhythm(2),
-                maxHeight: rhythm(2),
-                marginRight: rhythm(1 / 2),
-              }}
-              src={image[0].file.url}
-            />
-          </div>
-          <div style={{ display: `flex`, flexDirection: `column` }}>
-            <h4 style={{ marginBottom: 0 }}>{productName}</h4>
-          </div>
+        <div
+          style={{
+            display: `flex`,
+            alignItems: `center`,
+          }}
+        >
+          <img
+            style={{
+              height: image[0].responsiveResolution.height,
+              width: image[0].responsiveResolution.width,
+            }}
+            src={image[0].responsiveResolution.src}
+            srcSet={image[0].responsiveResolution.srcSet}
+          />
+          <h4>{productName}</h4>
         </div>
         <h1>{productName}</h1>
         <h4>
-          Made by {brand.childContentfulBrandCompanyNameTextNode.companyName}
+          Made by {brand.companyName.companyName}
         </h4>
         <div>
           <span>Price: ${price}</span>
           <div
             dangerouslySetInnerHTML={{
-              __html:
-                childContentfulProductProductDescriptionTextNode
-                  .childMarkdownRemark.html,
+              __html: productDescription.childMarkdownRemark.html,
             }}
           />
           <div>
@@ -58,7 +54,7 @@ class ProductTemplate extends React.Component {
               {categories.map((category, i) =>
                 <li key={i}>
                   <Link key={i} to={`/categories/${category.id}`}>
-                    {category.childContentfulCategoryTitleTextNode.title}
+                    {category.title.title}
                   </Link>
                 </li>
               )}
@@ -77,24 +73,27 @@ export default ProductTemplate
 export const pageQuery = graphql`
   query productQuery($id: String!) {
     contentfulProduct(id: { eq: $id }) {
-      childContentfulProductProductNameTextNode { productName }
-      childContentfulProductProductDescriptionTextNode {
+      productName { productName }
+      productDescription {
         childMarkdownRemark {
           html
         }
       }
       price
       image {
-        file {
-          url
+        responsiveResolution(width: 50, height: 50) {
+          src
+          srcSet
+          height
+          width
         }
       }
       brand {
-        childContentfulBrandCompanyNameTextNode { companyName }
+        companyName { companyName }
       }
       categories {
         id
-        childContentfulCategoryTitleTextNode { title }
+        title { title }
       }
     }
   }

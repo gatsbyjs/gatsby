@@ -27,7 +27,7 @@ class DefaultLayout extends React.Component {
           </h3>
         </Link>
         {this.props.children()}
-        <hr />
+        <hr style={{ marginTop: rhythm(3) }} />
         <p>
           The src for this website is at
           {` `}
