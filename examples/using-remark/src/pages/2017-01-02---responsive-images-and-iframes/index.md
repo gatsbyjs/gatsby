@@ -39,7 +39,7 @@ And here's an awesome SVG tiger by [author](http://example.com/)
 
 Let's add a YouTube video to show off responsive iFrames real quick:
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/ftYJQSwbbEo" frameborder="0" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/hbjR5N6IhDU" frameborder="0" allowfullscreen></iframe>
 
 Yay, nice!
 
