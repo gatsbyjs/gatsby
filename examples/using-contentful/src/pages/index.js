@@ -12,6 +12,11 @@ class IndexPage extends React.Component {
     const productEdges = this.props.data.allContentfulProduct.edges
     return (
       <div style={{ marginBottom: rhythm(2) }}>
+        <h1>Gatsby's integration with the Contentful Image API</h1>
+        <Link to="/image-api/">See examples</Link>
+        <br />
+        <br />
+        <br />
         <h1>Products</h1>
         {productEdges.map((productEdge, i) => {
           const product = productEdge.node
