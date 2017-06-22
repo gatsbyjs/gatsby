@@ -1,6 +1,7 @@
 import React from "react"
 import Link from "gatsby-link"
 import * as PropTypes from "prop-types"
+import { rhythm } from "../utils/typography"
 
 const propTypes = {
   data: PropTypes.object.isRequired,
@@ -10,20 +11,39 @@ class IndexPage extends React.Component {
   render() {
     const productEdges = this.props.data.allContentfulProduct.edges
     return (
-      <div>
+      <div style={{ marginBottom: rhythm(2) }}>
+        <h1>Products</h1>
         {productEdges.map((productEdge, i) => {
           const product = productEdge.node
           return (
             <div key={product.id}>
-              <Link to={`/products/${product.id}/`}>
-                <h4>
-                  {
-                    product.childContentfulProductProductNameTextNode
-                      .productName
-                  }
-                </h4>
-                {product.image[0].file.url &&
-                  <img src={product.image[0].file.url} />}
+              <Link
+                style={{ color: `inherit`, textDecoration: `none` }}
+                to={`/products/${product.id}/`}
+              >
+                <div
+                  style={{
+                    display: `flex`,
+                    alignItems: `center`,
+                    borderBottom: `1px solid lightgray`,
+                    paddingBottom: rhythm(1 / 2),
+                    marginBottom: rhythm(1 / 2),
+                  }}
+                >
+                  <div style={{ marginRight: rhythm(1 / 2) }}>
+                    {product.image[0].responsiveResolution.src &&
+                      <img
+                        style={{ margin: 0 }}
+                        width={product.image[0].responsiveResolution.width}
+                        height={product.image[0].responsiveResolution.height}
+                        src={product.image[0].responsiveResolution.src}
+                        srcSet={product.image[0].responsiveResolution.srcSet}
+                      />}
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    {product.productName.productName}
+                  </div>
+                </div>
               </Link>
             </div>
           )
@@ -43,10 +63,13 @@ query PageQuery {
     edges {
       node {
         id
-        childContentfulProductProductNameTextNode { productName }
+        productName { productName }
         image {
-          file {
-            url
+          responsiveResolution(width: 75) {
+            src
+            srcSet
+            height
+            width
           }
         }
       }

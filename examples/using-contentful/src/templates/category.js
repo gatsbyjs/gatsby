@@ -11,27 +11,27 @@ const propTypes = {
 class CategoryTemplate extends React.Component {
   render() {
     const category = this.props.data.contentfulCategory
-    const { childContentfulCategoryTitleTextNode, product, icon } = category
-    const { title } = childContentfulCategoryTitleTextNode
-    const imageUrl = icon.file.url
+    const { title: { title }, product, icon } = category
+    const iconImg = icon.responsiveResolution
     return (
       <div>
-        <div style={{ display: `flex`, marginBottom: rhythm(1 / 2) }}>
-          <div style={{ height: rhythm(2), width: rhythm(2) }}>
-            <img
-              style={{
-                height: `auto`,
-                width: `auto`,
-                maxWidth: rhythm(2),
-                maxHeight: rhythm(2),
-                marginRight: rhythm(1 / 2),
-              }}
-              src={imageUrl}
-            />
-          </div>
-          <div style={{ display: `flex`, flexDirection: `column` }}>
-            <h4 style={{ marginBottom: 0 }}>{title}</h4>
-          </div>
+        <div
+          style={{
+            display: `flex`,
+            alignItems: `center`,
+            marginBottom: rhythm(1 / 2),
+          }}
+        >
+          <img
+            style={{
+              height: iconImg.height,
+              width: iconImg.width,
+              marginRight: rhythm(1 / 2),
+            }}
+            src={iconImg.src}
+            srcSet={iconImg.srcSet}
+          />
+          <h4 style={{ marginBottom: 0 }}>{title}</h4>
         </div>
         <h1>{title}</h1>
         <div>
@@ -41,7 +41,7 @@ class CategoryTemplate extends React.Component {
               product.map((p, i) =>
                 <li key={i}>
                   <Link to={`/products/${p.id}`}>
-                    {p.childContentfulProductProductNameTextNode.productName}
+                    {p.productName.productName}
                   </Link>
                 </li>
               )}
@@ -59,15 +59,18 @@ export default CategoryTemplate
 export const pageQuery = graphql`
   query categoryQuery($id: String!) {
     contentfulCategory(id: { eq: $id }) {
-      childContentfulCategoryTitleTextNode { title }
+      title { title }
       icon {
-        file {
-          url
+        responsiveResolution(width: 75) {
+          src
+          srcSet
+          height
+          width
         }
       }
       product {
         id
-        childContentfulProductProductNameTextNode { productName }
+        productName { productName }
       }
     }
   }

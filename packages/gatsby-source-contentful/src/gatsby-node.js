@@ -11,6 +11,8 @@ const makeTypeName = type => `${typePrefix}${type}`
 // restrictedNodeFields from here https://www.gatsbyjs.org/docs/node-interface/
 const restrictedNodeFields = [`id`, `children`, `parent`, `fields`, `internal`]
 
+exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeType
+
 exports.sourceNodes = async (
   { boundActionCreators, getNode, hasNodeChanged, store },
   { spaceId, accessToken }
