@@ -80,7 +80,54 @@ exports.onCreatePage = async ({ page, boundActionCreators }) => {
 ## Creating pages
 
 Often you will need to programmatically create pages. For example, you have
-markdown files that each should be a page.
+markdown files where each should be a page.
 
-TODO finish this once it's more settled how to modify nodes to add slugs and
-other special fields that we want to associate with a node. Perhaps `createNodeField`.
+This example assumes that each markdown page has a "path" set in the frontmatter
+of the markdown file.
+
+```javascript
+// Implement the Gatsby API “createPages”. This is called once the
+// data layer is bootstrapped to let plugins create pages from data.
+exports.createPages = ({ boundActionCreators }) => {
+  const { createPage } = boundActionCreators
+
+  return new Promise((resolve, reject) => {
+    const blogPostTemplate = path.resolve(`src/templates/blog-post.js`)
+    // Query for markdown nodes to use in creating pages.
+    resolve(
+      graphql(
+        `
+      {
+        allMarkdownRemark(limit: 1000) {
+          edges {
+            node {
+              frontmatter {
+                path
+              }
+            }
+          }
+        }
+      }
+    `
+      ).then(result => {
+        if (result.errors) {
+          reject(result.errors)
+        }
+
+        // Create pages for each markdown file.
+        result.data.allMarkdownRemark.edges.forEach(({ node }) => {
+          createPage({
+            path: node.path,
+            component: blogPostTemplate,
+            // In your blog post template's graphql query, you can use path
+            // as a GraphQL variable to query for data from the markdown file.
+            context: {
+              path,
+            }
+          })
+        })
+      })
+    )
+  })
+}
+```
