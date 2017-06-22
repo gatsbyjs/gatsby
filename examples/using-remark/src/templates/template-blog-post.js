@@ -127,7 +127,6 @@ export const pageQuery = graphql`
 query BlogPostBySlug($slug: String!) {
   markdownRemark(fields: { slug: { eq: $slug }}) {
     html
-    excerpt
     timeToRead
     fields {
       tagSlugs
