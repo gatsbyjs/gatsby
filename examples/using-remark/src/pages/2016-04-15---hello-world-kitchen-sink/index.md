@@ -11,14 +11,19 @@ tags:
 ![](joshua-earle-234740.jpg)
 *Photo by [Joshua Earle](https://unsplash.com/@joshuaearle) via [Unsplash](https://unsplash.com/@joshuaearle?photo=-87JyMb9ZfU)*
 
+**_Note how all headlines below show an anchor link when you hover them?_**  
+That's [gatsby-remark-autolink-headers][5] hooking up all `MarkdownRemark`
+headers with anchor links for us.
+
 ## Markdown in Gatsby
 
-Markdown parsing in Gatsby is done with [`gatsby-transformer-remark`](https://www.gatsbyjs.org/docs/packages/gatsby-transformer-remark/), which uses the excellent [remark](http://remark.js.org/) under the hood.
+Markdown parsing in Gatsby is done with [gatsby-transformer-remark][1],
+which uses the excellent [remark][2] under the hood.  
+Alongside remark we also use [gatsby-remark-smartypants][6], which provides
+smart punctuation through [retext-smartypants][7].
 
-The examples on this page are partially taken from  [Markdown Here's Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) ([CC-BY](https://creativecommons.org/licenses/by/3.0/)) and
-should cover the basic syntax.
-
-@todo gatsby-remark-autolink-headers
+The examples on this page cover the basic Markdown syntax and are adapted from
+[Markdown Here's Cheatsheet][3] ([CC-BY][4]).
 
 ---
 
@@ -352,3 +357,11 @@ This line is separated from the one above by two newlines, so it will be a *sepa
 
 This line is also begins a separate paragraph, but...  
 This line is only separated by a single newline, so it's a separate line in the *same paragraph*.
+
+[1]: https://www.gatsbyjs.org/docs/packages/gatsby-transformer-remark/
+[2]: http://remark.js.org/
+[3]: https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
+[4]: https://creativecommons.org/licenses/by/3.0/
+[5]: https://www.gatsbyjs.org/docs/packages/gatsby-remark-autolink-headers/
+[6]: https://www.gatsbyjs.org/docs/packages/gatsby-remark-smartypants/
+[7]: https://github.com/wooorm/retext-smartypants

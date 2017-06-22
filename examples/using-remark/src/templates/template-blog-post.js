@@ -24,15 +24,14 @@ class BlogPostRoute extends React.Component {
         )
       })
       tagsSection = (
-        <small
+        <span
           css={{
-            ...scale(-1 / 5),
             fontStyle: `normal`,
             textAlign: `left`,
           }}
         >
           tagged {tags}
-        </small>
+        </span>
       )
     }
 
@@ -53,12 +52,9 @@ class BlogPostRoute extends React.Component {
           </h1>
           <p
             css={{
-              ...scale(-3 / 10),
+              ...scale(-1 / 5),
               display: `block`,
               color: `${styles.colors.light}`,
-              [presets.Hd]: {
-                ...scale(-2 / 5),
-              },
             }}
           >
             {post.timeToRead} min read &middot; {tagsSection}

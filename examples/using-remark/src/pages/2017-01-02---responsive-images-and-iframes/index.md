@@ -14,19 +14,25 @@ tags:
 *Photo by [Mikael Cho](https://unsplash.com/@mikael) via [Unsplash](https://unsplash.com/@mikael?photo=_3TDkAttcaM)*
 
 [gatsby-remark-responsive-image][1] and [gatsby-remark-responsive-iframe][2]
-are here to take care of all your basic Markdown image and embed issues.
+are here to take care of all your basic Markdown image and iframe issues.
 
-Let's see some more photos ([I](https://unsplash.com/photos/T7Lnl3PFISM), [II](https://unsplash.com/@maxboettinger?photo=SUFS6CPjB5Q)) by [Max Boettinger](https://unsplash.com/@maxboettinger):
+## Images
+
+[gatsby-remark-responsive-image][1] provides _out-of-the-box progressive image
+loading_ for all local JPGs and PNGs in your Markdown documents as popularized
+by [Medium][3] and [Facebook][4].
+
+Let's see some more photos by [Max Boettinger](https://unsplash.com/@maxboettinger) ([I](https://unsplash.com/photos/T7Lnl3PFISM), [II](https://unsplash.com/@maxboettinger?photo=SUFS6CPjB5Q)):
 
 ![](max-boettinger-109436.jpg)
 
 ![](max-boettinger-288448.jpg)
 
-Okay, nice!
+Okay, nice! But what about GIFs?
+Sadly, [Sharp](https://github.com/lovell/sharp) – the library that does the
+actual image processing for us – is not able to write out the GIF file format.
+We will just copy them over for you, instead:
 
-## JPEG and PNG vs SVG and GIF
-
-**@todo Sharp does not process SVG and GIF**  
 An animated GIF of the Select2 Logo: ![Select2 Logo animation](select2-logo.gif)
 
 An inline ![example](squiggly.svg) example SVG. Tremendous!
@@ -41,7 +47,7 @@ Let's add a YouTube video to show off responsive iFrames real quick:
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/hbjR5N6IhDU" frameborder="0" allowfullscreen></iframe>
 
-Yay, nice!
-
 [1]: https://www.gatsbyjs.org/docs/packages/gatsby-remark-responsive-image/
 [2]: https://www.gatsbyjs.org/docs/packages/gatsby-remark-responsive-iframe/
+[3]: https://jmperezperez.com/medium-image-progressive-loading-placeholder/
+[4]: https://code.facebook.com/posts/991252547593574/the-technology-behind-preview-photos/

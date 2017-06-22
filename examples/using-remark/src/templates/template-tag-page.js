@@ -3,6 +3,8 @@ import Link from "gatsby-link"
 
 class TagRoute extends React.Component {
   render() {
+    console.log(`HERE`)
+    console.log(this.props.data.allMarkdownRemark.edges)
     const posts = this.props.data.allMarkdownRemark.edges
     const postLinks = posts.map(post =>
       <li key={post.node.fields.slug}>
@@ -31,11 +33,6 @@ export default TagRoute
 
 export const pageQuery = graphql`
   query TagPage($tag: String) {
-    site {
-      siteMetadata {
-        title
-      }
-    }
     allMarkdownRemark (
       limit: 1000,
       sort: {
