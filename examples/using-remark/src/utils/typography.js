@@ -95,7 +95,7 @@ const options = {
         color: `${colors.light}`,
       },
       // code highlighting
-      "tt,code": {
+      "tt, code": {
         fontFamily: `"Space Mono",Consolas,"Roboto Mono","Droid Sans Mono","Liberation Mono",Menlo,Courier,monospace`,
         // Disable ligatures as they look funny w/ Space Mono as code.
         fontVariant: `none`,
