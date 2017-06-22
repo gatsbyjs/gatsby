@@ -22,14 +22,14 @@ describe(`contentful extend node type`, () => {
   const image = {
     file: {
       url:
-        "//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg",
-      fileName: "ryugj83mqwa1asojwtwb.jpg",
-      contentType: "image/jpeg",
+        `//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg`,
+      fileName: `ryugj83mqwa1asojwtwb.jpg`,
+      contentType: `image/jpeg`,
       details: {
         size: 28435,
         image: {
-          width: "450",
-          height: "600",
+          width: `450`,
+          height: `600`,
         },
       },
     },

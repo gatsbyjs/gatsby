@@ -9,7 +9,7 @@ const {
 } = require(`graphql`)
 const qs = require(`qs`)
 const base64Img = require(`base64-img`)
-const _ = require("lodash")
+const _ = require(`lodash`)
 
 const ImageFormatType = new GraphQLEnumType({
   name: `ImageFormat`,
@@ -53,8 +53,7 @@ const getBase64Image = (imgUrl, args = {}) => {
   })
 }
 
-const getBase64ImageAndBasicMeasurements = (image, args) => {
-  return new Promise(resolve => {
+const getBase64ImageAndBasicMeasurements = (image, args) => new Promise(resolve => {
     getBase64Image(image.file.url, args).then(base64Str => {
       let aspectRatio
       if (args.width && args.height) {
@@ -72,7 +71,6 @@ const getBase64ImageAndBasicMeasurements = (image, args) => {
       })
     })
   })
-}
 const createUrl = (imgUrl, options = {}) => {
   // Convert to Contentful names and filter out undefined/null values.
   const args = _.pickBy(
@@ -222,8 +220,7 @@ const resolveResponsiveSizes = (image, options) => {
 }
 exports.resolveResponsiveSizes = resolveResponsiveSizes
 
-const resolveResize = (image, options) => {
-  return new Promise(resolve => {
+const resolveResize = (image, options) => new Promise(resolve => {
     if (isImage(image)) {
       getBase64ImageAndBasicMeasurements(
         image,
@@ -252,7 +249,6 @@ const resolveResize = (image, options) => {
       resolve()
     }
   })
-}
 
 exports.resolveResize = resolveResize
 
