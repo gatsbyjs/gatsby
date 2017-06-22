@@ -5,4 +5,4 @@ export interface GatsbyLinkProps {
   onClick?: (event: any) => void
 }
 
-export default class GatbyLink extends React.Component<GatsbyLinkProps, void>;
+export default class GatsbyLink extends React.Component<GatsbyLinkProps, void> { }
