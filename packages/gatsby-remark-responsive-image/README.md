@@ -4,15 +4,12 @@ Make images in markdown responsive by:
 
 * Adding an elastic container to hold the size of the image while it
   loads to avoid layout jumps.
-* Generating multiple versions of images at different widths and sets the `srcset` and `sizes`
-  of the `img` element so regardless of the width of the device, the correct
-  image is downloaded.
-* Useing the "blur up" technique popularized by
-  [Medium](https://jmperezperez.com/medium-image-progressive-loading-placeholder/)
-and
-[Facebook](https://code.facebook.com/posts/991252547593574/the-technology-behind-preview-photos/)
-where a small 20px wide version of the image is shown as a placeholder
-until the actual image is downloaded.
+* Generating multiple versions of images at different widths and sets the
+  `srcset` and `sizes` of the `img` element so regardless of the width of the
+  device, the correct image is downloaded.
+* Useing the "blur up" technique popularized by [Medium][1] and [Facebook][2]
+  where a small 20px wide version of the image is shown as a placeholder
+  until the actual image is downloaded.
 
 ## Install
 
@@ -41,3 +38,6 @@ plugins: [
   }
 ]
 ```
+
+[1]: https://jmperezperez.com/medium-image-progressive-loading-placeholder/
+[2]: https://code.facebook.com/posts/991252547593574/the-technology-behind-preview-photos/
