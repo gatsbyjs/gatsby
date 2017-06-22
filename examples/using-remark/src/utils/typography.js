@@ -134,7 +134,7 @@ const options = {
         borderLeft: `${rhythm(1 / 4)} solid #ffd9b3`,
       },
       // fancy links
-      ".post a:not(.gatsby-resp-image-link), .link-underline": {
+      ".post a:not(.gatsby-resp-image-link):not(.anchor), .link-underline": {
         position: `relative`,
         backgroundImage: `linear-gradient(${colors.link},${colors.link})`,
         textShadow: `0.03em 0 ${colors.white}, -0.03em 0 ${colors.white}, 0 0.03em ${colors.white}, 0 -0.03em ${colors.white}, 0.06em 0 ${colors.white}, -0.06em 0 ${colors.white}, 0.09em 0 ${colors.white}, -0.09em 0 ${colors.white}, 0.12em 0 ${colors.white}, -0.12em 0 ${colors.white}, 0.15em 0 ${colors.white}, -0.15em 0 ${colors.white}`,
@@ -143,7 +143,7 @@ const options = {
         backgroundRepeat: `repeat-x`,
         backgroundSize: `1px 1px`,
       },
-      ".post a:not(.gatsby-resp-image-link):hover, .link-underline:hover": {
+      ".post a:not(.gatsby-resp-image-link):not(.anchor):hover, .link-underline:hover": {
         color: `${colors.linkHover}`,
         backgroundImage: `linear-gradient(${colors.linkHover},${colors.linkHover})`,
       },
