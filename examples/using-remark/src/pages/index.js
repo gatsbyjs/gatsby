@@ -18,15 +18,26 @@ class Index extends React.Component {
             css={{
               ...scale(4 / 5),
               fontWeight: `800`,
-              //fontStyle: `italic`,
               marginBottom: rhythm(2),
             }}
           >
             This example site demonstrates{` `}
-            <a href="#">gatsby-transformer-remark</a> and its various plugins.
-            It uses <a href="#">Typography.js</a> and self-hosted fonts via
+            <a href="https://www.gatsbyjs.org/docs/packages/gatsby-transformer-remark/">
+              gatsby-transformer-remark
+            </a>
+            {` `}
+            and its various plugins.
+            It uses{` `}
+            <a href="https://github.com/KyleAMathews/typography.js">
+              Typography.js
+            </a>
+            {` `}
+            and self-hosted fonts via
             the{` `}
-            <a href="#">typefaces</a> project.
+            <a href="https://github.com/KyleAMathews/typefaces">
+              Typefaces
+            </a>{` `}
+            project.
           </p>
           <p>
             <strong>
