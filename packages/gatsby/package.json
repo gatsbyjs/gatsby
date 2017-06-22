@@ -41,7 +41,7 @@
     "front-matter": "^2.1.0",
     "fs-extra": "^3.0.1",
     "glob": "^7.1.1",
-    "graphql": "^0.9.0",
+    "graphql": "^0.9.3",
     "graphql-relay": "^0.5.1",
     "graphql-skip-limit": "^1.0.0-beta.1",
     "gray-matter": "^2.1.0",
