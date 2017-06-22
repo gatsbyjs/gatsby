@@ -106,6 +106,16 @@ describe(`GraphQL type inferance`, () => {
     )
   })
 
+  it(`prefers float when multiple number types`, async () => {
+    let result = await queryResult(
+      [{ number: 1.1 }, { number: 1 }],
+      `
+        number
+      `
+    )
+    expect(result.data.listNode[0].number).toEqual(1.1)
+  })
+
   it(`filters out empty objects`, async () => {
     let result = await queryResult(
       [{ foo: {}, bar: `baz` }],
