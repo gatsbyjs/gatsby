@@ -61,6 +61,8 @@ const extractFieldExamples = (nodes: any[]) =>
       if (!isSameType(obj, next)) return INVALID_VALUE
 
       if (!_.isArray(obj || next)) {
+        // Prefer floats over ints as they're more specific.
+        if (obj && _.isNumber(obj) && !_.isInteger(obj)) return obj
         if (obj === null) return next
         if (next === null) return obj
         return undefined
