@@ -7,6 +7,16 @@ export default props => {
   return (
     <div>
       <h1>Image API examples</h1>
+      <p>
+        Gatsby offers rich integration with{" "}
+        <a href="https://www.contentful.com/developers/docs/references/images-api/">
+          Contentful's Image API
+        </a>
+      </p>
+      <p>
+        Open Graph<em>i</em>QL on your own site to experiment with the following
+        options
+      </p>
       <h2>Resize</h2>
       {assets.map(({ node: { title, resize } }) => {
         console.log(title, resize)
