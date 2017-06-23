@@ -21,6 +21,36 @@ const ImageFormatType = new GraphQLEnumType({
   },
 })
 
+const ImageResizingBehavior = new GraphQLEnumType({
+  name: `ImageResizingBehavior`,
+  values: {
+    NO_CHANGE: {
+      value: ``,
+    },
+    PAD: {
+      value: `pad`,
+      description: `Same as the default resizing, but adds padding so that the generated image has the specified dimensions.`,
+    },
+
+    CROP: {
+      value: `crop`,
+      description: `Crop a part of the original image to match the specified size.`,
+    },
+    FILL: {
+      value: `fill`,
+      description: `Crop the image to the specified dimensions, if the original image is smaller than these dimensions, then the image will be upscaled.`,
+    },
+    THUMB: {
+      value: `thumb`,
+      description: `When used in association with the f parameter below, creates a thumbnail from the image based on a focus area.`,
+    },
+    SCALE: {
+      value: `scale`,
+      description: `Scale the image regardless of the original aspect ratio.`,
+    },
+  },
+})
+
 const ImageCropFocusType = new GraphQLEnumType({
   name: `ImageCropFocus`,
   values: {
@@ -53,7 +83,8 @@ const getBase64Image = (imgUrl, args = {}) => {
   })
 }
 
-const getBase64ImageAndBasicMeasurements = (image, args) => new Promise(resolve => {
+const getBase64ImageAndBasicMeasurements = (image, args) =>
+  new Promise(resolve => {
     getBase64Image(image.file.url, args).then(base64Str => {
       let aspectRatio
       if (args.width && args.height) {
@@ -80,6 +111,8 @@ const createUrl = (imgUrl, options = {}) => {
       fl: options.jpegProgressive ? `progressive` : null,
       q: options.quality,
       fm: options.toFormat ? options.toFormat : ``,
+      fit: options.resizingBehavior ? options.resizingBehavior : ``,
+      f: options.cropFocus ? options.cropFocus : ``,
     },
     _.identity
   )
@@ -94,6 +127,13 @@ const resolveResponsiveResolution = (image, options) => {
         image,
         options
       ).then(({ base64Str, width, height, aspectRatio }) => {
+        let desiredAspectRatio = aspectRatio
+
+        // If we're cropping, calculate the specified aspect ratio.
+        if (options.height) {
+          desiredAspectRatio = options.width / options.height
+        }
+
         // Create sizes (in width) for the image. If the width of the
         // image is 800px, the sizes would then be: 800, 1200, 1600,
         // 2400.
@@ -132,26 +172,31 @@ const resolveResponsiveResolution = (image, options) => {
                 break
               default:
             }
+            const h = Math.round(size / desiredAspectRatio)
             return `${createUrl(image.file.url, {
+              ...options,
               width: size,
+              height: h,
             })} ${resolution}`
           })
           .join(`,\n`)
 
-        const pickedWidth = options.width
         let pickedHeight
         if (options.height) {
           pickedHeight = options.height
         } else {
-          pickedHeight = pickedWidth / aspectRatio
+          pickedHeight = Math.round(options.width / desiredAspectRatio)
         }
 
         return resolve({
           base64: base64Str,
           aspectRatio: aspectRatio,
-          width: pickedWidth,
+          width: options.width,
           height: pickedHeight,
-          src: createUrl(image.file.url, { width: options.width }),
+          src: createUrl(image.file.url, {
+            ...options,
+            width: options.width,
+          }),
           srcSet,
         })
       })
@@ -168,6 +213,13 @@ const resolveResponsiveSizes = (image, options) => {
         image,
         options
       ).then(({ base64Str, width, height, aspectRatio }) => {
+        let desiredAspectRatio = aspectRatio
+
+        // If we're cropping, calculate the specified aspect ratio.
+        if (options.maxHeight) {
+          desiredAspectRatio = options.maxWidth / options.maxHeight
+        }
+
         // If the users didn't set a default sizes, we'll make one.
         if (!options.sizes) {
           options.sizes = `(max-width: ${options.maxWidth}px) 100vw, ${options.maxWidth}px`
@@ -200,16 +252,24 @@ const resolveResponsiveSizes = (image, options) => {
 
         // Create the srcSet.
         const srcSet = sortedSizes
-          .map(
-            width =>
-              `${createUrl(image.file.url, { width })} ${Math.round(width)}w`
-          )
+          .map(width => {
+            const h = Math.round(width * desiredAspectRatio)
+            return `${createUrl(image.file.url, {
+              ...options,
+              width,
+              height: h,
+            })} ${Math.round(width)}w`
+          })
           .join(`,\n`)
 
         return resolve({
           base64: base64Str,
           aspectRatio: aspectRatio,
-          src: createUrl(image.file.url, { width: options.maxWidth }),
+          src: createUrl(image.file.url, {
+            ...options,
+            width: options.maxWidth,
+            height: options.maxHeight,
+          }),
           srcSet,
           sizes: options.sizes,
         })
@@ -220,7 +280,8 @@ const resolveResponsiveSizes = (image, options) => {
 }
 exports.resolveResponsiveSizes = resolveResponsiveSizes
 
-const resolveResize = (image, options) => new Promise(resolve => {
+const resolveResize = (image, options) =>
+  new Promise(resolve => {
     if (isImage(image)) {
       getBase64ImageAndBasicMeasurements(
         image,
@@ -286,6 +347,9 @@ exports.extendNodeType = ({ type }) => {
           type: ImageFormatType,
           defaultValue: ``,
         },
+        resizingBehavior: {
+          type: ImageResizingBehavior,
+        },
         cropFocus: {
           type: ImageCropFocusType,
           defaultValue: null,
@@ -321,6 +385,9 @@ exports.extendNodeType = ({ type }) => {
         toFormat: {
           type: ImageFormatType,
           defaultValue: ``,
+        },
+        resizingBehavior: {
+          type: ImageResizingBehavior,
         },
         cropFocus: {
           type: ImageCropFocusType,
@@ -360,9 +427,8 @@ exports.extendNodeType = ({ type }) => {
           type: GraphQLBoolean,
           defaultValue: true,
         },
-        pngCompressionLevel: {
-          type: GraphQLInt,
-          defaultValue: 9,
+        resizingBehavior: {
+          type: ImageResizingBehavior,
         },
         base64: {
           type: GraphQLBoolean,
