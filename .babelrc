@@ -13,7 +13,8 @@
       "env",
       {
         "targets": {
-          "node": 4.0
+          "node": 4.0,
+          "uglify": true,
         }
       }
     ],
