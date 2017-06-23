@@ -6,6 +6,7 @@ author: Daisy Buchanan
 tags:
   - remark
   - linked files
+  - local links
 ---
 ![](denys-nevozhai-184452.jpg)
 *Photo by [Denys Nevozhai](https://unsplash.com/@dnevozhai) via [Unsplash](https://unsplash.com/@dnevozhai?photo=DlnK1KOREds)*
