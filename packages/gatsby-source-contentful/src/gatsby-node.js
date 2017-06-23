@@ -6,6 +6,15 @@ const conflictFieldPrefix = `contentful`
 // restrictedNodeFields from here https://www.gatsbyjs.org/docs/node-interface/
 const restrictedNodeFields = [`id`, `children`, `parent`, `fields`, `internal`]
 
+const fs = require(`fs`)
+const stringifySafe = require(`json-stringify-safe`)
+const _ = require(`lodash`)
+const path = require(`path`)
+const homedir = require(`os`).homedir
+
+const TMP_DIR = path.resolve(homedir(), `.gatsby`, `contentful-source-plugin`)
+const OLD_SYNC_DATA_PATH = path.resolve(TMP_DIR, `old_sync_data.json`)
+
 exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeType
 
 exports.sourceNodes = async (
@@ -22,7 +31,18 @@ exports.sourceNodes = async (
     space: spaceId,
     accessToken,
   })
-
+  // Get sync token if it exists
+  let syncToken
+  let oldSyncData = { entries: [], assets: [], deletedEntries: [], deletedAssets: [] }
+  if (fs.existsSync(OLD_SYNC_DATA_PATH)) {
+    try {
+      oldSyncData = stringifySafe(fs.readFileSync(OLD_SYNC_DATA_PATH))
+      syncToken = oldSyncData.nextSyncToken
+    } catch (e) {
+      console.log(`Error parsing cached sync data: ${e}`) 
+      syncToken = null // we sync from the beginning 
+    }
+  }
   // The SDK will map the entities to the following object
   // {
   //  entries,
@@ -32,11 +52,10 @@ exports.sourceNodes = async (
   // }
   let syncData
   try {
-    // TODO get syncToken if it exists
-    // TODO store the data somewhere ?
-    syncData = await client.sync() 
+    let query = syncToken ? { nextSyncToken: syncToken } : { initial: true }
+    syncData = await client.sync(query) 
   } catch (e) {
-    // TODO maybe fail here
+    syncData = { entries: [], assets: [], deletedEntries: [], deletedAssets:[] }
     console.log(`error fetching contentful data`, e)
   }
 
@@ -49,20 +68,49 @@ exports.sourceNodes = async (
   }
   console.log(`contentTypes fetched`, contentTypes.items.length)
 
-  // TODO pull the old sync data, remove deletedEntries and concat entries
-  const entryList = syncData.entries
+  // remove outdated entries 
+  oldSyncData.entries.filter(entry => {
+    return _.find(
+      syncData.entries, (newEntry) => newEntry.sys.id === entry.sys.id
+      ||
+        _.find(
+          syncData.deletedEntries, (deletedEntry) => deletedEntry.sys.id === entry.sys.id
+        )
+    )
+  })
+
+  // merge entries
+  oldSyncData.entries = oldSyncData.entries.concat(syncData.entries)
+  const entryList = oldSyncData.entries
   console.log(`Total entries `, entryList.length)
   console.log(`Updated entries `, syncData.entries.length)
   console.log(`Deleted entries `, syncData.deletedEntries.length)
 
-  // TODO same as entriess
-  let assets = syncData.assets
+  oldSyncData.assets.filter(asset => {
+    return ( 
+      _.find(
+        syncData.assets, (newAsset) => newAsset.sys.id === asset.sys.id
+      )
+      ||
+        _.find(
+          syncData.deletedAssets, (deletedAsset) => deletedAsset.sys.id === asset.sys.id
+        )
+    )
+  })
 
+  oldSyncData.assets = oldSyncData.assets.concat(syncData.assets)
+  let assets = syncData.assets
+  
   console.log(`Total assets `, assets.length)
   console.log(`Updated assets `, syncData.assets.length)
   console.log(`Deleted assets `, syncData.deletedAssets.length)
   console.timeEnd(`fetch Contentful data`)
-
+  
+  try {
+    fs.writeFileSync(stringifySafe(syncData), OLD_SYNC_DATA_PATH)
+  } catch(e) {
+    console.log(`error while trying to cache the new synced data`)
+  }
   // Create map of not resolvable ids so we can filter them out while creating
   // links.
   const notResolvable = new Map()
