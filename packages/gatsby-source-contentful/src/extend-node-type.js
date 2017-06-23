@@ -314,7 +314,7 @@ const resolveResize = (image, options) =>
 exports.resolveResize = resolveResize
 
 exports.extendNodeType = ({ type }) => {
-  if (type.name !== `contentful__Asset`) {
+  if (type.name !== `ContentfulAsset`) {
     return {}
   }
 

@@ -1,4 +1,5 @@
 /gatsby-node.js
 /extend-node-type.js
+/process-api-data.js
 /__tests__
 /yarn.lock
