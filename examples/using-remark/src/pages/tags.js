@@ -4,7 +4,7 @@ import kebabCase from "lodash/kebabCase"
 
 class TagsPageRoute extends React.Component {
   render() {
-    const allTags = this.props.data.allMarkdownRemark.groupBy
+    const allTags = this.props.data.allMarkdownRemark.group
 
     return (
       <div>
