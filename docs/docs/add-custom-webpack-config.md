@@ -8,11 +8,11 @@ This function will receive a parameter Object that you need to destructure to re
 
 The `stage` will tell you at which step in the build process you are. The following stages exist:
 
-1 develop: for `gatsby develop` command, hot reload and CSS injection into page
-2 develop-html: same as develop without react-hmre in the babel config for html renderer
-3 build-css: build styles.css file
-4 build-html: build all HTML files
-5 build-javascript: Build js chunks for Single Page App in production
+1. develop: for `gatsby develop` command, hot reload and CSS injection into page
+2. develop-html: same as develop without react-hmre in the babel config for html renderer
+3. build-css: build styles.css file
+4. build-html: build all HTML files
+5. build-javascript: Build js chunks for Single Page App in production
 
 Check [https://github.com/gatsbyjs/gatsby/blob/1.0/packages/gatsby/src/utils/webpack.config.js](https://github.com/gatsbyjs/gatsby/blob/1.0/packages/gatsby/src/utils/webpack.config.js) for the source.
 
