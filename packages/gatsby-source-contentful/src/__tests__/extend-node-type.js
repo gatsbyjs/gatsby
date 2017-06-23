@@ -28,7 +28,7 @@ describe(`contentful extend node type`, () => {
         size: 28435,
         image: {
           width: `4500`,
-          height: `6000`,
+          height: `6000.3`,
         },
       },
     },
@@ -59,6 +59,14 @@ describe(`contentful extend node type`, () => {
       const resp = await resolveResponsiveResolution(image, {
         width: 450,
         height: 399,
+      })
+      expect(resp.width).toBe(450)
+      expect(resp.height).toBe(399)
+    })
+    it(`Always outputs ints`, async () => {
+      const resp = await resolveResponsiveResolution(image, {
+        width: 450.1,
+        height: 399.1,
       })
       expect(resp.width).toBe(450)
       expect(resp.height).toBe(399)

@@ -8,7 +8,7 @@ export default props => {
     <div>
       <h1>Image API examples</h1>
       <p>
-        Gatsby offers rich integration with{" "}
+        Gatsby offers rich integration with{` `}
         <a href="https://www.contentful.com/developers/docs/references/images-api/">
           Contentful's Image API
         </a>
@@ -113,16 +113,16 @@ export default props => {
 
       <h2>Resizing</h2>
       <p>
-        On both resize and responsiveResolution you can also add a{" "}
-        <code>height</code>{" "}
+        On both resize and responsiveResolution you can also add a{` `}
+        <code>height</code>{` `}
         argument to the GraphQL argument to crop the image to a certain size.
       </p>
       <p>
-        You can also set the{" "}
+        You can also set the{` `}
         <a href="https://www.contentful.com/developers/docs/references/images-api/#/reference/resizing-&-cropping/change-the-resizing-behavior">
           resizing behavior
-        </a>{" "}
-        and{" "}
+        </a>{` `}
+        and{` `}
         <a href="https://www.contentful.com/developers/docs/references/images-api/#/reference/resizing-&-cropping/specify-focus-area-for-resizing">
           resizing focus area
         </a>
@@ -180,8 +180,7 @@ export default props => {
         a <code>maxWidth</code>, the max width the container of the images
         reaches.
       </p>
-      {assets.map(({ node: { title, responsiveSizes } }) => {
-        return (
+      {assets.map(({ node: { title, responsiveSizes } }) => (
           <img
             alt={title}
             src={responsiveSizes.src}
@@ -193,8 +192,7 @@ export default props => {
               border: `1px solid tomato`,
             }}
           />
-        )
-      })}
+        ))}
       <h4>GraphQL query</h4>
       <pre style={{ background: `#efeded`, padding: rhythm(3 / 4) }}>
         <code
