@@ -35,9 +35,9 @@ We will just copy them over for you, instead:
 
 An animated GIF of the Select2 Logo: ![Select2 Logo animation](select2-logo.gif)
 
-An inline ![example](squiggly.svg) example SVG. Tremendous!
+An inline example ![example](squiggly.svg) SVG. Tremendous!
 
-And here's an awesome SVG tiger by [author](http://example.com/)
+And here's an awesome SVG tiger:
 
 ![awesome tiger](awesome_tiger.svg)
 
