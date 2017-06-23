@@ -111,7 +111,6 @@ class BlogPostRoute extends React.Component {
             {post.frontmatter.author.bio}
           </span>
         </p>
-        <p>@todo Link to next/previous article(s)</p>
       </div>
     )
   }
