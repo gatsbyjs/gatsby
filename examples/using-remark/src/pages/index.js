@@ -14,20 +14,19 @@ class Index extends React.Component {
     return (
       <div>
         <div>
-          <p
+          <h1
             css={{
               ...scale(4 / 5),
               fontWeight: `800`,
               marginBottom: rhythm(2),
             }}
           >
-            This example site demonstrates{` `}
+            This example demonstrates{` `}
             <a href="https://www.gatsbyjs.org/docs/packages/gatsby-transformer-remark/">
               gatsby-transformer-remark
             </a>
             {` `}
-            and its various plugins.
-            It uses{` `}
+            and its plugins. It uses{` `}
             <a href="https://github.com/KyleAMathews/typography.js">
               Typography.js
             </a>
@@ -36,23 +35,11 @@ class Index extends React.Component {
             the{` `}
             <a href="https://github.com/KyleAMathews/typefaces">
               Typefaces
-            </a>{` `}
-            project.
-          </p>
-          <p>
-            <strong>
-              Before you click any of the following internal links:
-            </strong>
-            {` `}
-            <a href="https://www.gatsbyjs.org/docs/packages/gatsby-plugin-catch-links/">
-              gatsby-plugin-catch-links
             </a>
             {` `}
-            intercepts local links from Markdown and other non-react pages and
-            does a
-            client-side pushState to avoid the browser having to refresh the
-            page.
-          </p>
+            project.
+
+          </h1>
           <ul
             css={{
               marginBottom: rhythm(2),
