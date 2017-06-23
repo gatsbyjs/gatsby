@@ -6,6 +6,8 @@ import Config from "webpack-configurator"
 import ExtractTextPlugin from "extract-text-webpack-plugin"
 import StaticSiteGeneratorPlugin from "static-site-generator-webpack-plugin"
 import { StatsWriterPlugin } from "webpack-stats-plugin"
+import FriendlyErrorsWebpackPlugin from 'friendly-errors-webpack-plugin'
+
 // This isn't working right it seems.
 // import WebpackStableModuleIdAndHash from 'webpack-stable-module-id-and-hash'
 
@@ -135,6 +137,14 @@ module.exports = async (
           // the numerical IDs aren't useful. In production we use numerical module
           // ids to reduce filesize.
           new webpack.NamedModulesPlugin(),
+          new FriendlyErrorsWebpackPlugin({
+            compilationSuccessInfo: {
+              messages: [
+                `Your site is running at http://localhost:${program.port}`,
+                `Your graphql debugger is running at http://localhost:${program.port}/___graphql`
+              ]
+            }
+          })
         ]
       case `build-css`:
         return [
