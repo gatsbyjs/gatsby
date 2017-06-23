@@ -36,7 +36,7 @@ exports.sourceNodes = async (
       const contentTypeId = contentType.sys.id
       let entries
       try {
-        entries = await pagedGet(client, { content_type: contentTypeId }, `getEntries`)
+        entries = await pagedGet(client, `getEntries`, { content_type: contentTypeId })
       } catch (e) {
         console.log(`error fetching entries`, e)
       }
