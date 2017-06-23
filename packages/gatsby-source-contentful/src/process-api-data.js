@@ -14,7 +14,7 @@ exports.buildForeignReferenceMap = ({
   const foreignReferenceMap = {}
   contentTypeItems.forEach((contentTypeItem, i) => {
     const contentTypeItemId = contentTypeItem.sys.id
-    entryList[i].items.forEach(entryItem => {
+    entryList[i].forEach(entryItem => {
       const entryItemFields = entryItem.fields
       Object.keys(entryItemFields).forEach(entryItemFieldKey => {
         const entryItemFieldValue = entryItemFields[entryItemFieldKey]
@@ -90,8 +90,8 @@ exports.createContentTypeNodes = ({
   notResolvable,
   foreignReferenceMap,
 }) => {
+  console.log(contentTypeItem)
   const contentTypeItemId = contentTypeItem.sys.id
-
   // Warn about any field conflicts
   const conflictFields = []
   contentTypeItem.fields.forEach(contentTypeItemField => {
@@ -105,7 +105,7 @@ exports.createContentTypeNodes = ({
   })
 
   // First create nodes for each of the entries of that content type
-  const entryNodes = entries.items.map(entryItem => {
+  const entryNodes = entries.map(entryItem => {
     // Prefix any conflicting fields
     // https://github.com/gatsbyjs/gatsby/pull/1084#pullrequestreview-41662888
     const entryItemFields = Object.assign({}, entryItem.fields)

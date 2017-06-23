@@ -12,7 +12,8 @@ const _ = require(`lodash`)
 const path = require(`path`)
 const homedir = require(`os`).homedir
 
-const TMP_DIR = path.resolve(homedir(), `.gatsby`, `contentful-source-plugin`)
+const HOME_DIR = path.resolve(homedir(), `.gatsby`)
+const TMP_DIR = path.resolve(HOME_DIR, `contentful-source-plugin`)
 const OLD_SYNC_DATA_PATH = path.resolve(TMP_DIR, `old_sync_data.json`)
 
 exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeType
@@ -22,7 +23,10 @@ exports.sourceNodes = async (
   { spaceId, accessToken }
 ) => {
   const { createNode } = boundActionCreators
-
+  if(!fs.existsSync(HOME_DIR)) {
+    fs.mkdirSync(HOME_DIR)
+    fs.mkdirSync(TMP_DIR)
+  }
   // Fetch articles.
   console.time(`fetch Contentful data`)
   console.log(`Starting to fetch data from Contentful`)
@@ -36,7 +40,7 @@ exports.sourceNodes = async (
   let oldSyncData = { entries: [], assets: [], deletedEntries: [], deletedAssets: [] }
   if (fs.existsSync(OLD_SYNC_DATA_PATH)) {
     try {
-      oldSyncData = stringifySafe(fs.readFileSync(OLD_SYNC_DATA_PATH))
+      oldSyncData = JSON.parse(fs.readFileSync(OLD_SYNC_DATA_PATH, `utf8`))
       syncToken = oldSyncData.nextSyncToken
     } catch (e) {
       console.log(`Error parsing cached sync data: ${e}`) 
@@ -68,7 +72,9 @@ exports.sourceNodes = async (
   }
   console.log(`contentTypes fetched`, contentTypes.items.length)
 
+  const contentTypeItems = contentTypes.items
   // remove outdated entries 
+  console.log(oldSyncData.etnries)
   oldSyncData.entries.filter(entry => {
     return _.find(
       syncData.entries, (newEntry) => newEntry.sys.id === entry.sys.id
@@ -81,25 +87,22 @@ exports.sourceNodes = async (
 
   // merge entries
   oldSyncData.entries = oldSyncData.entries.concat(syncData.entries)
-  const entryList = oldSyncData.entries
-  console.log(`Total entries `, entryList.length)
-  console.log(`Updated entries `, syncData.entries.length)
-  console.log(`Deleted entries `, syncData.deletedEntries.length)
+  const entryList = contentTypeItems.map(contentType => {
+    return oldSyncData.entries.filter(entry => entry.sys.contentType.sys.id !== contentType.sys.id )
+  })
 
   oldSyncData.assets.filter(asset => {
-    return ( 
-      _.find(
+    return _.find(
         syncData.assets, (newAsset) => newAsset.sys.id === asset.sys.id
       )
       ||
         _.find(
           syncData.deletedAssets, (deletedAsset) => deletedAsset.sys.id === asset.sys.id
         )
-    )
   })
 
   oldSyncData.assets = oldSyncData.assets.concat(syncData.assets)
-  let assets = syncData.assets
+  let assets = oldSyncData.assets
   
   console.log(`Total assets `, assets.length)
   console.log(`Updated assets `, syncData.assets.length)
@@ -107,24 +110,13 @@ exports.sourceNodes = async (
   console.timeEnd(`fetch Contentful data`)
   
   try {
-    fs.writeFileSync(stringifySafe(syncData), OLD_SYNC_DATA_PATH)
+    fs.writeFileSync(OLD_SYNC_DATA_PATH, stringifySafe(syncData))
   } catch(e) {
-    console.log(`error while trying to cache the new synced data`)
+    console.log(`error while trying to cache the new synced data`, e)
   }
   // Create map of not resolvable ids so we can filter them out while creating
   // links.
   const notResolvable = new Map()
-  entryList.forEach(ents => {
-    if (ents.errors) {
-      ents.errors.forEach(error => {
-        if (error.sys.id === `notResolvable`) {
-          notResolvable.set(error.details.id, error.details)
-        }
-      })
-    }
-  })
-
-  const contentTypeItems = contentTypes.items
 
   // Build foreign reference map before starting to insert any nodes
   const foreignReferenceMap = processAPIData.buildForeignReferenceMap({
@@ -134,6 +126,8 @@ exports.sourceNodes = async (
   })
 
   contentTypeItems.forEach((contentTypeItem, i) => {
+    console.log(contentTypeItem)
+    console.log(entryList[i])
     processAPIData.createContentTypeNodes({
       contentTypeItem,
       restrictedNodeFields,
@@ -145,7 +139,7 @@ exports.sourceNodes = async (
     })
   })
 
-  assets.items.forEach(assetItem => {
+  assets.forEach(assetItem => {
     processAPIData.createAssetNodes({ assetItem, createNode })
   })
 
