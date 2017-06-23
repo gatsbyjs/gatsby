@@ -79,7 +79,7 @@ async function startServer(program) {
     const app = express()
     app.use(
       require(`webpack-hot-middleware`)(compiler, {
-        log: console.log,
+        log: () => {},
         path: `/__webpack_hmr`,
         heartbeat: 10 * 1000,
       })
@@ -143,9 +143,11 @@ async function startServer(program) {
         return next()
       }
     })
+
     app.use(
       require(`webpack-dev-middleware`)(compiler, {
         noInfo: true,
+        quiet: true,
         publicPath: devConfig.output.publicPath,
       })
     )
@@ -190,14 +192,6 @@ async function startServer(program) {
         const host = listener.address().address === `127.0.0.1`
           ? `localhost`
           : listener.address().address
-        console.log(
-          `
-The development server is listening at: http://${host}:${listener.address()
-            .port}
-GraphiQL can be accessed at: http://${host}:${listener.address()
-            .port}/___graphql
-          `
-        )
       }
     })
   })
