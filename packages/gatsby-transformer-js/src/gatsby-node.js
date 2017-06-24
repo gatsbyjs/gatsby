@@ -99,14 +99,14 @@ async function onCreateNode({ node, getNode, boundActionCreators, loadNodeConten
       // We may eventually add other data besides just
       // from exports.data
       data: {...data},
-      FrontmatterJS: `filled`
+      JSFrontmatter: `filled`
     }
 
   } catch (e) {
     // Ignore errors — we print out parse errors for user elsewhere.
     exportsData = {
       data: {...data},
-      FrontmatterJS: `error`
+      JSFrontmatter: `error`
     }
   } finally {
 
@@ -117,13 +117,13 @@ async function onCreateNode({ node, getNode, boundActionCreators, loadNodeConten
       .digest(`hex`)
 
     const nodeData = {
-          id: `${node.id} >>> JS`,
+          id: `${node.id} >>> JSFrontmatter`,
           children: [],
           parent: node.id,
           node: {...node},
           internal: {
             contentDigest,
-            type: `FrontmatterJS`,
+            type: `JSFrontmatter`,
             owner: `gatsby-transformer-js`,
             mediaType: `application/javascript`,
           },

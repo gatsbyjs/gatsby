@@ -44,11 +44,11 @@ You'd be able to query your letters like:
 
 ```graphql
 {
-  allFrontmatterJs {
+  allJsFrontmatter {
     edges {
       node {
         exportsData {
-          FrontmatterJS
+          JSFrontmatter
           data {
             path
             title
@@ -69,12 +69,12 @@ Which would return something like:
 ```javascript
 {
   "data": {
-    "allFrontmatterJs": {
+    "allJsFrontmatter": {
       "edges": [
         {
           "node": {
             "exportsData": {
-              "FrontmatterJS": "filled",
+              "JSFrontmatter": "filled",
               "data": {
                 "path": "choropleth-on-d3v4",
                 "title": "Choropleth on d3v4",
