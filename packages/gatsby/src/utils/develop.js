@@ -41,8 +41,8 @@ async function startServer(program) {
     `develop`,
     program.port
   )
-
-  const devConfig = compilerConfig.resolve()
+  console.log(compilerConfig)
+  const devConfig = compilerConfig
   const compiler = webpack(devConfig)
 
   let HTMLPath = glob.sync(`${directory}/src/html.*`)[0]
@@ -65,7 +65,8 @@ async function startServer(program) {
     program.port
   )
 
-  webpackRequire(htmlCompilerConfig.resolve(), HTMLPath, (error, factory) => {
+  htmlCompilerConfig.resolve.extensions.unshift('')
+  webpackRequire(htmlCompilerConfig, HTMLPath, (error, factory) => {
     if (error) {
       console.log(`Failed to require ${directory}/html.js`)
       error.forEach(e => {

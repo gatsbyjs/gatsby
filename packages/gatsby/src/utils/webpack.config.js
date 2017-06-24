@@ -3,6 +3,7 @@ import fs from "fs"
 import path from "path"
 import webpack from "webpack"
 import Config from "webpack-configurator"
+import webpackMerge from "webpack-merge"
 import ExtractTextPlugin from "extract-text-webpack-plugin"
 import StaticSiteGeneratorPlugin from "static-site-generator-webpack-plugin"
 import { StatsWriterPlugin } from "webpack-stats-plugin"
@@ -119,7 +120,9 @@ module.exports = async (
     switch (stage) {
       case `develop`:
         return [
-          new webpack.optimize.OccurenceOrderPlugin(),
+          new webpack.LoaderOptionsPlugin({
+            debug: true
+          }),
           new webpack.HotModuleReplacementPlugin(),
           new webpack.NoErrorsPlugin(),
           new webpack.DefinePlugin({
@@ -295,12 +298,12 @@ module.exports = async (
     return {
       // Use the program's extension list (generated via the
       // 'resolvableExtensions' API hook).
-      extensions: [``, ...program.extensions],
+      extensions: [...program.extensions],
       // Default to using the site's node_modules directory to look for
       // modules. But also make it possible to install modules within the src
       // directory if you need to install a specific version of a module for a
       // part of your site.
-      modulesDirectories: [
+      modules: [
         joinPath(directory, `node_modules`),
         `node_modules`,
         joinPath(directory, `node_modules`, `gatsby`, `node_modules`),
@@ -321,88 +324,65 @@ module.exports = async (
     }
   }
 
-  function module(config) {
-    // Common config for every env.
-    config.loader(`js`, {
-      test: /\.jsx?$/, // Accept either .js or .jsx files.
-      exclude: /(node_modules|bower_components)/,
-      loader: `babel`,
-      query: babelConfig,
-    })
-    config.loader(`json`, {
-      test: /\.json$/,
-      loaders: [`json`],
-    })
-    config.loader(`yaml`, {
-      test: /\.ya?ml/,
-      loaders: [`json`, `yaml`],
-    })
-
-    // "file" loader makes sure those assets end up in the `public` folder.
-    // When you `import` an asset, you get its filename.
-    config.loader(`file-loader`, {
-      test: /\.(ico|eot|otf|webp|ttf|woff(2)?)(\?.*)?$/,
-      loader: `file`,
-      query: {
-        name: `static/[name].[hash:8].[ext]`,
-      },
-    })
-    // "url" loader works just like "file" loader but it also embeds
-    // assets smaller than specified size as data URLs to avoid requests.
-    config.loader(`url-loader`, {
-      test: /\.(svg|jpg|jpeg|png|gif|mp4|webm|wav|mp3|m4a|aac|oga)(\?.*)?$/,
-      loader: `url`,
-      query: {
-        limit: 10000,
-        name: `static/[name].[hash:8].[ext]`,
-      },
-    })
-
+  function module(baseConfig, stage) {
     const cssModulesConf = `css?modules&minimize&importLoaders=1`
     const cssModulesConfDev = `${cssModulesConf}&sourceMap&localIdentName=[name]---[local]---[hash:base64:5]`
 
     switch (stage) {
       case `develop`:
-        config.loader(`css`, {
-          test: /\.css$/,
-          exclude: /\.module\.css$/,
-          loaders: [`style`, `css`, `postcss`],
-        })
+        const styleLoaders = [
+          'style-loader',
+          { loader: 'css-loader', options: { importLoaders: 1 } },
+          { loader: 'postcss-loader',
+            options: {
+              plugins: (loader) => [
+                require(`postcss-import`)({ addDependencyTo: loader }),
+                require(`postcss-cssnext`)({ browsers: `last 2 versions` }),
+                require(`postcss-browser-reporter`),
+                require(`postcss-reporter`),
+              ]
+            },
+          }
+        ]
 
-        // CSS modules
-        config.loader(`cssModules`, {
-          test: /\.module\.css$/,
-          loaders: [`style`, cssModulesConfDev, `postcss`],
-        })
-
-        config.merge({
-          postcss(wp) {
-            return [
-              require(`postcss-import`)({ addDependencyTo: wp }),
-              require(`postcss-cssnext`)({ browsers: `last 2 versions` }),
-              require(`postcss-browser-reporter`),
-              require(`postcss-reporter`),
+        const developConfig = {
+          module: {
+            rules: [
+              {
+                test: /\.css$/,
+                exclude: /\.module\.css$/,
+                use: styleLoaders
+              },
+              {
+                test: /\.module\.css$/,
+                use: styleLoaders,
+              },
+              {
+                test: /\.module\.css$/,
+                use: styleLoaders,
+              }
             ]
-          },
-        })
-        return config
+          }
+        }
+
+        return developConfig
 
       case `build-css`:
-        config.loader(`css`, {
+        baseConfig.loader(`css`, {
           test: /\.css$/,
           exclude: /\.module\.css$/,
           loader: ExtractTextPlugin.extract([`css?minimize`, `postcss`]),
         })
 
         // CSS modules
-        config.loader(`cssModules`, {
+        baseConfig.loader(`cssModules`, {
           test: /\.module\.css$/,
           loader: ExtractTextPlugin.extract(`style`, [
             cssModulesConf,
             `postcss`,
           ]),
         })
-        config.merge({
+        baseConfig.merge({
           postcss: [
             require(`postcss-import`)(),
             require(`postcss-cssnext`)({
@@ -410,21 +390,21 @@ module.exports = async (
             }),
           ],
         })
-        return config
+        return baseConfig
 
       case `build-html`:
         // We don't deal with CSS at all when building the HTML.
         // The 'null' loader is used to prevent 'module not found' errors.
         // On the other hand CSS modules loaders are necessary.
 
-        config.loader(`css`, {
+        baseConfig.loader(`css`, {
           test: /\.css$/,
           exclude: /\.module\.css$/,
           loader: `null`,
         })
 
         // CSS modules
-        config.loader(`cssModules`, {
+        baseConfig.loader(`cssModules`, {
           test: /\.module\.css$/,
           loader: ExtractTextPlugin.extract(`style`, [
             cssModulesConf,
@@ -432,7 +412,7 @@ module.exports = async (
           ]),
         })
 
-        return config
+        return baseConfig
 
       case `build-javascript`:
         // we don't deal with css at all when building the javascript.  but
@@ -442,7 +422,7 @@ module.exports = async (
         // It's also necessary to process CSS Modules so your JS knows the
         // classNames to use.
 
-        config.loader(`css`, {
+        baseConfig.loader(`css`, {
           test: /\.css$/,
           exclude: /\.module\.css$/,
           // loader: `null`,
@@ -450,7 +430,7 @@ module.exports = async (
         })
 
         // CSS modules
-        config.loader(`cssModules`, {
+        baseConfig.loader(`cssModules`, {
           test: /\.module\.css$/,
           loader: ExtractTextPlugin.extract(`style`, [
             cssModulesConf,
@@ -458,15 +438,15 @@ module.exports = async (
           ]),
         })
 
-        return config
+        return baseConfig
 
       default:
-        return config
+        return baseConfig
     }
   }
 
   function resolveLoader() {
-    const root = [path.resolve(directory, `node_modules`)]
+    const root = []
 
     const userLoaderDirectoryPath = path.resolve(directory, `loaders`)
 
@@ -481,21 +461,50 @@ module.exports = async (
     }
 
     return {
-      root,
-      modulesDirectories: [path.join(__dirname, `../loaders`), `node_modules`],
+      modules: [path.resolve(directory, `node_modules`), path.join(__dirname, `../loaders`), `node_modules`],
     }
   }
 
-  const config = new Config()
-
-  config.merge({
+  const baseConfig = {
     // Context is the base directory for resolving the entry option.
     context: directory,
     node: {
       __filename: true,
     },
     entry: entry(),
-    debug: true,
+    module: {
+      rules: [
+        {
+          test: /\.jsx?$/, // Accept either .js or .jsx files.
+          exclude: /(node_modules|bower_components)/,
+          use: `babel-loader`,
+          query: babelConfig,
+        },
+        {
+          test: /\.json$/,
+          use: [`json-loader`],
+        },
+        {
+          test: /\.ya?ml/,
+          use: [`json-loader`, `yaml-loader`],
+        },
+        {
+          test: /\.(ico|eot|otf|webp|ttf|woff(2)?)(\?.*)?$/,
+          use: `file-loader`,
+          query: {
+            name: `static/[name].[hash:8].[ext]`,
+          }
+        },
+        {
+          test: /\.(svg|jpg|jpeg|png|gif|mp4|webm|wav|mp3|m4a|aac|oga)(\?.*)?$/,
+          use: `url-loader`,
+          query: {
+            limit: 10000,
+            name: `static/[name].[hash:8].[ext]`,
+          }
+        }
+      ],
+    },
     // Certain "isomorphic" packages have different entry points for browser
     // and server (see
     // https://github.com/defunctzombie/package-browser-field-spec); setting
@@ -507,13 +516,12 @@ module.exports = async (
     resolveLoader: resolveLoader(),
     plugins: plugins(),
     resolve: resolve(),
-  })
+  }
 
-  module(config, stage)
-
+  const stagedConfig = module(baseConfig, stage)
   // Use the suppliedStage again to let plugins distinguish between
   // server rendering the html.js and the frontend development config.
-  const validatedConfig = await webpackModifyValidate(config, suppliedStage)
+  // const validatedConfig = await webpackModifyValidate(config, suppliedStage)
 
-  return validatedConfig
+  return webpackMerge(baseConfig, stagedConfig)
 }

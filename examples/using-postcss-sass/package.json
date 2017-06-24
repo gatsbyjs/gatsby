@@ -4,18 +4,20 @@
   "description": "Example Gatsby website using the Gatsby plugin gatsby-plugin-postcss-sass",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "develop": "gatsby develop"
   },
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "gatsby": "next",
+    "gatsby": "file:../../packages/gatsby",
     "gatsby-link": "next",
     "gatsby-plugin-google-analytics": "next",
     "gatsby-plugin-offline": "next",
-    "gatsby-plugin-postcss-sass": "next",
+    "gatsby-plugin-postcss-sass": "file:../../packages/gatsby-plugin-postcss-sass",
     "lost": "^8.0.0",
     "react-typography": "^0.15.10",
-    "typography": "^0.15.10"
+    "typography": "^0.15.10",
+    "webpack": "3.0.0"
   }
 }

@@ -5,7 +5,7 @@
   "version": "1.0.0",
   "author": "Scotty Eckenthal <scott.eckenthal@gmail.com>",
   "dependencies": {
-    "gatsby": "next",
+    "gatsby": "file:../../packages/gatsby",
     "gatsby-link": "next",
     "lodash": "^4.16.4",
     "slash": "^1.0.0"

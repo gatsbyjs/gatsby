@@ -6,15 +6,18 @@ exports.modifyWebpackConfig = ({ config, stage }, { postCssPlugins }) => {
 
   // Pass in plugins regardless of stage.
   // If none specified, fallback to Gatsby default postcss plugins.
-  if (postCssPlugins) {
-    config.merge(current => {
-      current.postcss = postCssPlugins
-      return current
-    })
-  }
 
   switch (stage) {
     case `develop`: {
+
+      if (postCssPlugins) {
+        config.loader(`postcss-loader`, {
+          plugins: (loader) => [
+            postCssPlugins
+          ]
+        })
+      }
+
       config.loader(`sass`, {
         test: /\.s(a|c)ss$/,
         exclude: /\.module\.s(a|c)ss$/,

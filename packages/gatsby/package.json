@@ -100,12 +100,13 @@
     "type-of": "^2.0.1",
     "underscore.string": "^3.3.4",
     "url-loader": "^0.5.7",
-    "webpack": "^1.13.3",
+    "webpack": "^3.0.0",
     "webpack-configurator": "^0.3.0",
     "webpack-dev-middleware": "^1.8.4",
     "webpack-dev-server": "^1.16.1",
     "webpack-hot-middleware": "^2.13.2",
     "webpack-md5-hash": "0.0.5",
+    "webpack-merge": "4.1.0",
     "webpack-require": "0.0.16",
     "webpack-stats-plugin": "^0.1.4",
     "webpack-validator": "^2.2.7",
@@ -146,6 +147,6 @@
     "build:cli": "babel src/gatsby-cli.js --out-file dist/gatsby-cli.js --presets es2015",
     "clean-test-bundles": "find test/ -type f -name bundle.js* -exec rm -rf {} +",
     "test-coverage": "node_modules/.bin/nyc --reporter=lcov --reporter=text npm test",
-    "watch": "rimraf dist && mkdir dist && npm run build:cli && npm run build:src -- --watch && npm run build:internal-plugins && npm run build:rawfiles"
+    "watch": "rimraf dist && mkdir dist && npm run build:internal-plugins && npm run build:rawfiles && npm run build:cli && npm run build:src -- --watch"
   }
 }
