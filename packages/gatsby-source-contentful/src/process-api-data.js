@@ -61,6 +61,7 @@ exports.buildForeignReferenceMap = ({
 }
 
 function createTextNode(node, key, text, createNode) {
+  if (!text) throw new Error('text empty')
   const textNode = {
     id: `${node.id}${key}TextNode`,
     parent: node.id,
@@ -89,9 +90,10 @@ exports.createContentTypeNodes = ({
   createNode,
   notResolvable,
   foreignReferenceMap,
+  defaultLocal,
 }) => {
-  console.log(contentTypeItem)
   const contentTypeItemId = contentTypeItem.sys.id
+
   // Warn about any field conflicts
   const conflictFields = []
   contentTypeItem.fields.forEach(contentTypeItemField => {
@@ -185,10 +187,11 @@ exports.createContentTypeNodes = ({
             : f.id) === entryItemFieldKey
       ).type
       if (fieldType === `Text`) {
+        console.log(`TEXT: `, entryItemFields[entryItemFieldKey])
         entryItemFields[`${entryItemFieldKey}___NODE`] = createTextNode(
           entryNode,
           entryItemFieldKey,
-          entryItemFields[entryItemFieldKey],
+          entryItemFields[entryItemFieldKey][defaultLocal],
           createNode
         )
 
@@ -231,8 +234,15 @@ exports.createContentTypeNodes = ({
   })
 }
 
-exports.createAssetNodes = ({ assetItem, createNode }) => {
+exports.createAssetNodes = ({ assetItem, createNode, defaultLocal }) => {
   // Create a node for each asset. They may be referenced by Entries
+  // default locale workaround for now
+  assetItem.fields.file = assetItem.fields.file[defaultLocal]
+  assetItem.fields.title = assetItem.fields.title[defaultLocal]
+  assetItem.fields.description = assetItem.fields.description[defaultLocal]
+
+  console.log(defaultLocal)
+  console.log(assetItem.fields)
   const assetNode = {
     id: assetItem.sys.id,
     parent: `__SOURCE__`,

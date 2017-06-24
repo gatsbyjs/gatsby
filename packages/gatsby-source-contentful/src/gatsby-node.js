@@ -6,15 +6,7 @@ const conflictFieldPrefix = `contentful`
 // restrictedNodeFields from here https://www.gatsbyjs.org/docs/node-interface/
 const restrictedNodeFields = [`id`, `children`, `parent`, `fields`, `internal`]
 
-const fs = require(`fs`)
-const stringifySafe = require(`json-stringify-safe`)
 const _ = require(`lodash`)
-const path = require(`path`)
-const homedir = require(`os`).homedir
-
-const HOME_DIR = path.resolve(homedir(), `.gatsby`)
-const TMP_DIR = path.resolve(HOME_DIR, `contentful-source-plugin`)
-const OLD_SYNC_DATA_PATH = path.resolve(TMP_DIR, `old_sync_data.json`)
 
 exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeType
 
@@ -22,11 +14,8 @@ exports.sourceNodes = async (
   { boundActionCreators, getNode, hasNodeChanged, store },
   { spaceId, accessToken }
 ) => {
-  const { createNode } = boundActionCreators
-  if(!fs.existsSync(HOME_DIR)) {
-    fs.mkdirSync(HOME_DIR)
-    fs.mkdirSync(TMP_DIR)
-  }
+  const { createNode, setPluginStatus } = boundActionCreators
+  
   // Fetch articles.
   console.time(`fetch Contentful data`)
   console.log(`Starting to fetch data from Contentful`)
@@ -35,18 +24,33 @@ exports.sourceNodes = async (
     space: spaceId,
     accessToken,
   })
+  // the structure of the sync payload is a bit different
+  // all field will be in this format { fieldName: {'locale': value} } so we need to get the space and its default local
+  // this can be extended later to support multiple locals
+  let space
+  let defaultLocal = `en-US`
+  try {
+    console.log(`Fetching default locale`)
+    space = await client.getSpace()
+    defaultLocal = _.find(space.locales, {'default': true}).code
+    console.log(`default local is : ${defaultLocal}`)
+  } catch (e) {
+    console.log(`can't get space`)
+    // TODO maybe return here
+  }
+
   // Get sync token if it exists
   let syncToken
-  let oldSyncData = { entries: [], assets: [], deletedEntries: [], deletedAssets: [] }
-  if (fs.existsSync(OLD_SYNC_DATA_PATH)) {
-    try {
-      oldSyncData = JSON.parse(fs.readFileSync(OLD_SYNC_DATA_PATH, `utf8`))
-      syncToken = oldSyncData.nextSyncToken
-    } catch (e) {
-      console.log(`Error parsing cached sync data: ${e}`) 
-      syncToken = null // we sync from the beginning 
-    }
+  let lastSyncedData = { entries: [], assets: [], deletedEntries: [], deletedAssets: [], nextSyncToken: null }
+  if (
+    store.getState().status.plugins &&
+    store.getState().status.plugins[`gatsby-source-contentful`]
+  ) {
+    lastSyncedData = store.getState().status.plugins[`gatsby-source-contentful`].status
+      .lastSyncedData
+    syncToken = lastSyncedData.nextSyncToken
   }
+
   // The SDK will map the entities to the following object
   // {
   //  entries,
@@ -54,12 +58,12 @@ exports.sourceNodes = async (
   //  deletedEntries,
   //  deletedAssets
   // }
-  let syncData
+  let currentSyncData
   try {
     let query = syncToken ? { nextSyncToken: syncToken } : { initial: true }
-    syncData = await client.sync(query) 
+    currentSyncData = await client.sync(query) 
   } catch (e) {
-    syncData = { entries: [], assets: [], deletedEntries: [], deletedAssets:[] }
+    currentSyncData = { entries: [], assets: [], deletedEntries: [], deletedAssets:[] }
     console.log(`error fetching contentful data`, e)
   }
 
@@ -74,60 +78,72 @@ exports.sourceNodes = async (
 
   const contentTypeItems = contentTypes.items
   // remove outdated entries 
-  console.log(oldSyncData.etnries)
-  oldSyncData.entries.filter(entry => {
+  lastSyncedData.entries.filter(entry => {
     return _.find(
-      syncData.entries, (newEntry) => newEntry.sys.id === entry.sys.id
+      currentSyncData.entries, (newEntry) => newEntry.sys.id === entry.sys.id
       ||
         _.find(
-          syncData.deletedEntries, (deletedEntry) => deletedEntry.sys.id === entry.sys.id
+          currentSyncData.deletedEntries, (deletedEntry) => deletedEntry.sys.id === entry.sys.id
         )
     )
   })
 
   // merge entries
-  oldSyncData.entries = oldSyncData.entries.concat(syncData.entries)
+  lastSyncedData.entries = lastSyncedData.entries.concat(currentSyncData.entries)
   const entryList = contentTypeItems.map(contentType => {
-    return oldSyncData.entries.filter(entry => entry.sys.contentType.sys.id !== contentType.sys.id )
+    return lastSyncedData.entries.filter(entry => entry.sys.contentType.sys.id === contentType.sys.id )
   })
 
-  oldSyncData.assets.filter(asset => {
+  lastSyncedData.assets.filter(asset => {
     return _.find(
-        syncData.assets, (newAsset) => newAsset.sys.id === asset.sys.id
+        currentSyncData.assets, (newAsset) => newAsset.sys.id === asset.sys.id
       )
       ||
         _.find(
-          syncData.deletedAssets, (deletedAsset) => deletedAsset.sys.id === asset.sys.id
+          currentSyncData.deletedAssets, (deletedAsset) => deletedAsset.sys.id === asset.sys.id
         )
   })
 
-  oldSyncData.assets = oldSyncData.assets.concat(syncData.assets)
-  let assets = oldSyncData.assets
+  lastSyncedData.assets = lastSyncedData.assets.concat(currentSyncData.assets)
+  let assets = lastSyncedData.assets
   
   console.log(`Total assets `, assets.length)
-  console.log(`Updated assets `, syncData.assets.length)
-  console.log(`Deleted assets `, syncData.deletedAssets.length)
+  console.log(`Updated assets `, currentSyncData.assets.length)
+  console.log(`Deleted assets `, currentSyncData.deletedAssets.length)
   console.timeEnd(`fetch Contentful data`)
-  
-  try {
-    fs.writeFileSync(OLD_SYNC_DATA_PATH, stringifySafe(syncData))
-  } catch(e) {
-    console.log(`error while trying to cache the new synced data`, e)
-  }
+ 
+  // update syncToken
+  lastSyncedData.nextSyncToken = currentSyncData.nextSyncToken
+  // cache the data
+  setPluginStatus({
+    status: {
+      lastSyncedData: lastSyncedData,
+    },
+  })
+
   // Create map of not resolvable ids so we can filter them out while creating
   // links.
   const notResolvable = new Map()
+  entryList.forEach(ents => {
+    if (ents.errors) {
+      ents.errors.forEach(error => {
+        if (error.sys.id === `notResolvable`) {
+          notResolvable.set(error.details.id, error.details)
+        }
+      })
+    }
+  })
 
-  // Build foreign reference map before starting to insert any nodes
+// Build foreign reference map before starting to insert any nodes
+  console.log(`contentTypeItems ${contentTypeItems !== undefined}`)
+  console.log(`entryList ${entryList !== undefined}`)
+
   const foreignReferenceMap = processAPIData.buildForeignReferenceMap({
     contentTypeItems,
     entryList,
     notResolvable,
   })
-
   contentTypeItems.forEach((contentTypeItem, i) => {
-    console.log(contentTypeItem)
-    console.log(entryList[i])
     processAPIData.createContentTypeNodes({
       contentTypeItem,
       restrictedNodeFields,
@@ -136,11 +152,12 @@ exports.sourceNodes = async (
       createNode,
       notResolvable,
       foreignReferenceMap,
+      defaultLocal
     })
   })
 
   assets.forEach(assetItem => {
-    processAPIData.createAssetNodes({ assetItem, createNode })
+    processAPIData.createAssetNodes({ assetItem, createNode, defaultLocal})
   })
 
   return

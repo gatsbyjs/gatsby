@@ -85,6 +85,7 @@ const getBase64Image = (imgUrl, args = {}) => {
 
 const getBase64ImageAndBasicMeasurements = (image, args) =>
   new Promise(resolve => {
+    // TODO image.file.url should be image.file['locale'].url
     getBase64Image(image.file.url, args).then(base64Str => {
       let aspectRatio
       if (args.width && args.height) {
