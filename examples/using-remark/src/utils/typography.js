@@ -106,6 +106,16 @@ const options = {
         backgroundColor: `#fef9ec`,
         borderRadius: `2px`,
       },
+      // Add space before and after code/tt elements.
+      // @see https://github.com/KyleAMathews/typography.js/blob/66f78f0f4b8d2c5abf0262bcc1118610139c3b5f/packages/typography-plugin-code/src/index.js#L38-L46
+      "code:before,code:after,tt:before,tt:after": {
+        letterSpacing: `-0.2em`,
+        content: `"\u00A0"`,
+      },
+      // But don't add spaces if the code is inside a pre.
+      "pre code:before,pre code:after,pre tt:before,pre tt:after": {
+        content: `""`,
+      },
       ".gatsby-highlight": {
         backgroundColor: `#fef9ec`,
         borderRadius: `.15rem`,
