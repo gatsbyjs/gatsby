@@ -5,7 +5,7 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "devDependencies": {
     "babel-cli": "^6.24.1",
-    "graphql": "^0.9.3"
+    "graphql": "^0.10.3"
   },
   "keywords": [
     "gatsby",
