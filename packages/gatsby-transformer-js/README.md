@@ -17,34 +17,25 @@ plugins: [
 
 ## Parsing algorithm
 
-The algorithm for YAML arrays is to convert each item in the array into
-a node.
+The algorithm for uses babylon and traverse (from the babel family of code) to statically read the data exports.
 
-So if your project has a `letters.yaml` which looks like:
+In a .js|.jsx file, export a data object to set your metadata variables, like so:
+```javascript
+import React from 'react'
 
-```yaml
-- value: a
-- value: b
-- value: c
+exports.data = {
+  title: 'This is a title',
+}
+
+export default MyComponent ...
 ```
 
-Then the following three nodes would be created.
+You can also use a named export for the data object:
 
 ```javascript
-[
-  {
-    value: 'a',
-    type: 'Letters',
-  },
-  {
-    value: 'b',
-    type: 'Letters',
-  },
-  {
-    value: 'c',
-    type: 'Letters',
-  },
-]
+export const data = {
+  title: 'This is a title',
+}
 ```
 
 ## How to query
@@ -53,39 +44,52 @@ You'd be able to query your letters like:
 
 ```graphql
 {
-  allLetters {
+  allFrontmatterJs {
     edges {
       node {
-        value
+        exportsData {
+          FrontmatterJS
+          data {
+            path
+            title
+            written
+            category
+            description
+            updated
+          }
+        }
       }
     }
   }
 }
 ```
 
-Which would return:
+Which would return something like:
 
 ```javascript
 {
-  allLetters: {
-    edges: [
-      {
-        node: {
-          value: 'a'
+  "data": {
+    "allFrontmatterJs": {
+      "edges": [
+        {
+          "node": {
+            "exportsData": {
+              "FrontmatterJS": "filled",
+              "data": {
+                "path": "choropleth-on-d3v4",
+                "title": "Choropleth on d3v4",
+                "written": "2017-03-09",
+                "category": "data science",
+                "description": "Things about the choropleth.",
+                "updated": null
+              }
+            }
+          }
         }
-      },
-      {
-        node: {
-          value: 'b'
-        }
-      },
-      {
-        node: {
-          value: 'c'
-        }
-      }
-    ]
+      ]
+    }
   }
 }
 ```
 
+The FrontMatterJS will contain "filled" or "error" just to give a surface level view of what the query is pulling out. Any attribute on "data" across your js files will be exported. If a file is missing it, the value will be null.
