@@ -64,11 +64,13 @@ const options = {
         background: `${colors.smoke}`,
         height: `2px`,
       },
-      // style gatsby-remark-responsive-image images
+      // Style gatsby-remark-responsive-image elements.
       ".gatsby-resp-image-link": {
         boxShadow: `none`,
-        marginLeft: rhythm(-3 / 4), // 3/4 rhythm is amount of padding on mobile.
-        marginRight: rhythm(-3 / 4),
+      },
+      ".gatsby-resp-image-link:hover": {
+        background: `none`,
+        boxShadow: `none`,
       },
       "@media only screen and (min-width:38rem)": {
         ".gatsby-resp-image-link": {
@@ -76,15 +78,15 @@ const options = {
           overflow: `hidden`,
         },
       },
-      ".post > .gatsby-highlight, .gatsby-resp-iframe-wrapper": {
+      // Pull highlighted code blocks and iframes into the horizontal
+      // padding of their container.
+      // Note that we only do this for code blocks that are direct children of
+      // .post so that code blocks are correctly indented e. g. in lists.
+      ".post > .gatsby-highlight, .gatsby-resp-iframe-wrapper, .gatsby-resp-image-link": {
         marginLeft: rhythm(-3 / 4), // 3/4 rhythm is amount of padding on mobile.
         marginRight: rhythm(-3 / 4),
       },
-      ".gatsby-resp-image-link:hover": {
-        background: `none`,
-        boxShadow: `none`,
-      },
-      // fake image captions
+      // Fake image captions.
       ".post .gatsby-resp-image-link + em": {
         ...scale(0 / 5),
         fontFamily: `Spectral, serif`,
@@ -95,7 +97,7 @@ const options = {
         marginBottom: rhythm(1),
         color: `${colors.light}`,
       },
-      // code highlighting
+      // Code highlighting.
       "tt, code": {
         fontFamily: `"Space Mono",Consolas,"Roboto Mono","Droid Sans Mono","Liberation Mono",Menlo,Courier,monospace`,
         // Disable ligatures as they look funny w/ Space Mono as code.
@@ -117,6 +119,7 @@ const options = {
       "pre code:before,pre code:after,pre tt:before,pre tt:after": {
         content: `""`,
       },
+      // Highlighted code blocks in Markdown via gatsby-remark-prismjs.
       ".gatsby-highlight": {
         backgroundColor: `#fef9ec`,
         borderRadius: `.15rem`,
@@ -144,7 +147,7 @@ const options = {
         paddingLeft: rhythm(2 / 4),
         borderLeft: `${rhythm(1 / 4)} solid #ffd9b3`,
       },
-      // fancy links
+      // Fancy underline links in .post.
       ".post a:not(.gatsby-resp-image-link):not(.anchor), .link-underline": {
         position: `relative`,
         backgroundImage: `linear-gradient(${colors.link},${colors.link})`,
@@ -162,14 +165,16 @@ const options = {
         textShadow: `0 !important`,
         backgroundImage: `0 !important`,
       },
-      // fancy external links
+      // Fancy external links in posts, borrowed from
+      // https://github.com/comfusion/after-dark/
+      // @see https://github.com/comfusion/after-dark/blob/8fdbe2f480ac40315cf0e01cece785d2b5c4b0c3/layouts/partials/critical-theme.css#L36-L39
       ".post a[href*='//']:after": {
         content: `" " url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20class='i-external'%20viewBox='0%200%2032%2032'%20width='14'%20height='14'%20fill='none'%20stroke='%23${linkRaw}'%20stroke-linecap='round'%20stroke-linejoin='round'%20stroke-width='9.38%'%3E%3Cpath%20d='M14%209%20L3%209%203%2029%2023%2029%2023%2018%20M18%204%20L28%204%2028%2014%20M28%204%20L14%2018'/%3E%3C/svg%3E")`,
       },
       ".post a[href*='//']:hover:after": {
         content: `" " url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20class='i-external'%20viewBox='0%200%2032%2032'%20width='14'%20height='14'%20fill='none'%20stroke='%23${linkHoverRaw}'%20stroke-linecap='round'%20stroke-linejoin='round'%20stroke-width='9.38%'%3E%3Cpath%20d='M14%209%20L3%209%203%2029%2023%2029%2023%2018%20M18%204%20L28%204%2028%2014%20M28%204%20L14%2018'/%3E%3C/svg%3E")`,
       },
-      // increase base font-size for phablet and desktop
+      // Increase base font-size for phablet and desktop.
       [presets.Phablet]: {
         html: {
           fontSize: `${18 / 16 * 100}%`,
