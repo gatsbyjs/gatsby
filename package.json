@@ -14,6 +14,7 @@
     "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.24.1",
     "babel-runtime": "^6.23.0",
+    "copyfiles": "^1.2.0",
     "create-react-class": "^15.6.0",
     "eslint": "^4.0.0",
     "eslint-config-google": "^0.8.0",
