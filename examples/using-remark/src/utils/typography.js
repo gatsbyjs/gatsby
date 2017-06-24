@@ -92,6 +92,7 @@ const options = {
         display: `block`,
         textAlign: `right`,
         marginTop: rhythm(2 / 4),
+        marginBottom: rhythm(1),
         color: `${colors.light}`,
       },
       // code highlighting
