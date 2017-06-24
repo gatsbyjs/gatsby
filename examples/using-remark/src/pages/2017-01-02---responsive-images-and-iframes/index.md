@@ -19,8 +19,8 @@ are here to take care of all your basic Markdown image and iframe issues.
 ## Images
 
 [gatsby-remark-responsive-image][1] provides _out-of-the-box progressive image
-loading_ for all local JPGs and PNGs in your Markdown documents as popularized
-by [Medium][3] and [Facebook][4].
+loading_ (as popularized by [Medium][3] and [Facebook][4]) for all local JPGs
+and PNGs in your Markdown documents.
 
 Let's see some more photos by [Max Boettinger](https://unsplash.com/@maxboettinger) ([I](https://unsplash.com/photos/T7Lnl3PFISM), [II](https://unsplash.com/@maxboettinger?photo=SUFS6CPjB5Q)):
 
@@ -28,10 +28,12 @@ Let's see some more photos by [Max Boettinger](https://unsplash.com/@maxboetting
 
 ![](max-boettinger-288448.jpg)
 
-Okay, nice! But what about GIFs?
+### Okay, nice! But what about GIFs?
+
 Sadly, [Sharp](https://github.com/lovell/sharp) – the library that does the
-actual image processing for us – is not able to write out the GIF file format.
-We will just copy them over for you, instead:
+actual image processing for us in [gatsby-plugin-sharp][5] – is not able to
+write out the GIF file format. We will just copy them over for you, instead,
+and also do that with SVGs.
 
 An animated GIF of the Select2 Logo: ![Select2 Logo animation](select2-logo.gif)
 
@@ -51,3 +53,4 @@ Let's add a YouTube video to show off responsive iFrames real quick:
 [2]: https://www.gatsbyjs.org/docs/packages/gatsby-remark-responsive-iframe/
 [3]: https://jmperezperez.com/medium-image-progressive-loading-placeholder/
 [4]: https://code.facebook.com/posts/991252547593574/the-technology-behind-preview-photos/
+[5]: https://www.gatsbyjs.org/docs/packages/gatsby-plugin-sharp/
