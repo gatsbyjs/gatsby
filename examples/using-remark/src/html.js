@@ -27,6 +27,18 @@ class HTML extends React.Component {
     return (
       <html lang="en">
         <head>
+          <link
+            rel="preload"
+            href={`/static/spectral-latin-400.bc2de9de.woff2`}
+            as="font"
+            crossOrigin
+          />
+          <link
+            rel="preload"
+            href={`/static/spectral-latin-800.53eca5bf.woff2`}
+            as="font"
+            crossOrigin
+          />
           {this.props.headComponents}
           <meta charSet="utf-8" />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
