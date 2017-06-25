@@ -39,7 +39,7 @@ module.exports = async (
 
   // We combine develop & develop-html stages for purposes of generating the
   // webpack config.
-  const stage = suppliedStage === `develop-html` ? `develop` : suppliedStage
+  const stage = suppliedStage
   const babelConfig = await genBabelConfig(program, babelStage)
 
   debug(`Loading webpack config for stage "${stage}"`)
@@ -62,6 +62,7 @@ module.exports = async (
             : `/`,
         }
       case `build-html`:
+      case `develop-html`:
         // A temp file required by static-site-generator-plugin. See plugins() below.
         // Deleted by build-html.js, since it's not needed for production.
         return {
@@ -97,6 +98,10 @@ module.exports = async (
             )}?path=http://${program.host}:${webpackPort}/__webpack_hmr&reload=true`,
             joinPath(directory, `.cache/app`),
           ],
+        }
+      case `develop-html`:
+        return {
+          main: joinPath(directory, `.cache/static-entry`),
         }
       case `build-css`:
         return {
@@ -161,6 +166,7 @@ module.exports = async (
           new ExtractTextPlugin(`styles.css`, { allChunks: true }),
         ]
       case `build-html`:
+      case `develop-html`:
         return [
           new StaticSiteGeneratorPlugin(`render-page.js`, pages),
           new webpack.DefinePlugin({
@@ -313,6 +319,7 @@ module.exports = async (
       case `develop`:
         return `cheap-module-source-map`
       case `build-html`:
+      case `develop-html`:
         return false
       case `build-javascript`:
         return `source-map`
@@ -413,6 +420,7 @@ module.exports = async (
         return config
 
       case `build-html`:
+      case `develop-html`:
         // We don't deal with CSS at all when building the HTML.
         // The 'null' loader is used to prevent 'module not found' errors.
         // On the other hand CSS modules loaders are necessary.
@@ -500,7 +508,7 @@ module.exports = async (
     // and server (see
     // https://github.com/defunctzombie/package-browser-field-spec); setting
     // the target tells webpack which file to include, ie. browser vs main.
-    target: stage === `build-html` ? `node` : `web`,
+    target: stage === (`build-html` || `develop-html`) ? `node` : `web`,
     profile: stage === `production`,
     devtool: devtool(),
     output: output(),
