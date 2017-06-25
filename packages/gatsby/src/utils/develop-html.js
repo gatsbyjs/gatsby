@@ -3,6 +3,7 @@ import webpack from "webpack"
 import Promise from "bluebird"
 import fs from "fs"
 import webpackConfig from "./webpack.config"
+import _ from "lodash"
 const { store } = require(`../redux`)
 
 const debug = require(`debug`)(`gatsby:html`)
@@ -20,13 +21,11 @@ module.exports = async (program: any) => {
     directory,
     `develop-html`,
     null,
-    ['/']
+    pages
   )
 
   return new Promise((resolve, reject) => {
-    // console.log(compilerConfig._config)
     webpack(compilerConfig.resolve()).run((e, stats) => {
-      console.log(e)
       if (e) {
         return reject(e)
       }

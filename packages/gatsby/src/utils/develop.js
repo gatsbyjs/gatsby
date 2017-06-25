@@ -3,7 +3,6 @@ const express = require(`express`)
 const graphqlHTTP = require(`express-graphql`)
 const glob = require(`glob`)
 const request = require(`request`)
-const webpackRequire = require(`webpack-require`)
 const bootstrap = require(`../bootstrap`)
 const webpack = require(`webpack`)
 const webpackConfig = require(`./webpack.config`)
@@ -35,7 +34,10 @@ async function startServer(program) {
 
   // Start bootstrap process.
   await bootstrap(program)
-  await developHtml(program)
+  await developHtml(program).catch(err => {
+    console.log(err);
+    process.exit(1)
+  })
 
   const compilerConfig = await webpackConfig(
     program,

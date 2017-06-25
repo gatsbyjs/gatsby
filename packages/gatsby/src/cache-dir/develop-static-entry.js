@@ -1,10 +1,8 @@
 import React from "react"
-import { renderToString, renderToStaticMarkup } from "react-dom/server"
-import { StaticRouter, Route, withRouter } from "react-router-dom"
-import { kebabCase, get, merge, isArray, isString } from "lodash"
+import { renderToStaticMarkup } from "react-dom/server"
+import { merge } from "lodash"
 import apiRunner from "./api-runner-ssr"
 import pages from "./pages.json"
-import syncRequires from "./sync-requires"
 import ReactDOMServer from "react-dom/server"
 
 let HTML
@@ -36,7 +34,7 @@ module.exports = (locals, callback) => {
   }
 
   const setBodyProps = props => {
-    bodyProps = _.merge({}, bodyProps, props)
+    bodyProps = merge({}, bodyProps, props)
   }
 
   apiRunner(`onRenderBody`, {
@@ -55,7 +53,7 @@ module.exports = (locals, callback) => {
       <script src="/commons.js" />,
     ]),
   })
-  htmlStr = ReactDOMServer.renderToStaticMarkup(htmlElement)
+  htmlStr = renderToStaticMarkup(htmlElement)
   htmlStr = `<!DOCTYPE html>\n${htmlStr}`
 
   callback(null, htmlStr)

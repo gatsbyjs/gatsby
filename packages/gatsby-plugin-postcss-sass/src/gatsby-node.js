@@ -44,6 +44,7 @@ exports.modifyWebpackConfig = ({ config, stage }, { postCssPlugins }) => {
       })
       return config
     }
+    case `develop-html`:
     case `build-html`: {
       config.loader(`sass`, {
         test: /\.s(a|c)ss$/,

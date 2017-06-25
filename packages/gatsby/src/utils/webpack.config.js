@@ -101,7 +101,7 @@ module.exports = async (
         }
       case `develop-html`:
         return {
-          main: joinPath(directory, `.cache/static-entry`),
+          main: joinPath(directory, `.cache/develop-static-entry`),
         }
       case `build-css`:
         return {
@@ -151,6 +151,21 @@ module.exports = async (
             }
           })
         ]
+      case `develop-html`:
+        return [
+          new StaticSiteGeneratorPlugin(`render-page.js`, pages),
+          new webpack.DefinePlugin({
+            "process.env": {
+              NODE_ENV: JSON.stringify(
+                process.env.NODE_ENV ? process.env.NODE_ENV : `development`
+              ),
+              PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
+            },
+            __PREFIX_PATHS__: program.prefixPaths,
+            __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
+          }),
+          new ExtractTextPlugin(`build-html-styles.css`),
+        ]
       case `build-css`:
         return [
           new webpack.DefinePlugin({
@@ -166,7 +181,6 @@ module.exports = async (
           new ExtractTextPlugin(`styles.css`, { allChunks: true }),
         ]
       case `build-html`:
-      case `develop-html`:
         return [
           new StaticSiteGeneratorPlugin(`render-page.js`, pages),
           new webpack.DefinePlugin({
