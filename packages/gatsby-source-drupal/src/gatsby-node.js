@@ -44,7 +44,7 @@ exports.sourceNodes = async (
     store.getState().status.plugins &&
     store.getState().status.plugins[`gatsby-source-drupal`]
   ) {
-    lastFetched = store.getState().status.plugins[`gatsby-source-drupal`]
+    lastFetched = store.getState().status.plugins[`gatsby-source-drupal`].status
       .lastFetched
   }
 

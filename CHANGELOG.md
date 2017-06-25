@@ -1,5 +1,25 @@
 # Change Log
 
+## [1.0.0-beta.4] - 2017-06-23
+
+### Added
+
+* Add using-remark example site #1230 @fk
+* Add friendly webpack ouput #1240 @craig-mulligan
+* Add documentation on how to use custom webpack-config #1242 @bananenmannfrau
+* Add graphql fields for creating responsive images using Contentful image API #1228 @kyleamathews
+
+### Changed
+
+* Refactor Contentful data processing into own module + use more standard GraphQL type names @kyleamathews
+* Prefer floats over integers when inferring a GraphQL field #1229 @kyleamathews
+
+### Fixed
+
+* Fix babel compilation so targets uglify #1244 @kyleamathews
+* Open external image link with rel='noopener' #1227 @wangsongiam
+* Update index.d.ts for gatsby-link #1232 @timsuchanek
+
 ## [1.0.0-beta.3] - 2017-06-21
 
 ### Added
