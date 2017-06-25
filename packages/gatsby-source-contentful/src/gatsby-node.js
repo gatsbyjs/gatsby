@@ -17,7 +17,7 @@ exports.sourceNodes = async (
   const { createNode, setPluginStatus } = boundActionCreators
   
   // Fetch articles.
-  console.time(`fetch Contentful data`)
+  console.time(`Fetch Contentful data`)
   console.log(`Starting to fetch data from Contentful`)
 
   const client = contentful.createClient({
@@ -135,9 +135,6 @@ exports.sourceNodes = async (
   })
 
 // Build foreign reference map before starting to insert any nodes
-  console.log(`contentTypeItems ${contentTypeItems !== undefined}`)
-  console.log(`entryList ${entryList !== undefined}`)
-
   const foreignReferenceMap = processAPIData.buildForeignReferenceMap({
     contentTypeItems,
     entryList,

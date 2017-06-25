@@ -119,7 +119,8 @@ exports.createContentTypeNodes = ({
 
     // Add linkages to other nodes based on foreign references
     Object.keys(entryItemFields).forEach(entryItemFieldKey => {
-      const entryItemFieldValue = entryItemFields[entryItemFieldKey]
+      const entryItemFieldValue = entryItemFields[entryItemFieldKey][defaultLocal]
+      console.log(entryItemFieldValue)
       if (Array.isArray(entryItemFieldValue)) {
         if (
           entryItemFieldValue[0].sys &&
@@ -187,7 +188,6 @@ exports.createContentTypeNodes = ({
             : f.id) === entryItemFieldKey
       ).type
       if (fieldType === `Text`) {
-        console.log(`TEXT: `, entryItemFields[entryItemFieldKey])
         entryItemFields[`${entryItemFieldKey}___NODE`] = createTextNode(
           entryNode,
           entryItemFieldKey,
@@ -200,7 +200,6 @@ exports.createContentTypeNodes = ({
     })
 
     entryNode = { ...entryItemFields, ...entryNode }
-
     // Get content digest of node.
     const contentDigest = digest(stringify(entryNode))
 
@@ -237,14 +236,9 @@ exports.createContentTypeNodes = ({
 exports.createAssetNodes = ({ assetItem, createNode, defaultLocal }) => {
   // Create a node for each asset. They may be referenced by Entries
   // default locale workaround for now
-  assetItem.fields.file = assetItem.fields.file[defaultLocal]
-  assetItem.fields.title = assetItem.fields.title[defaultLocal]
-  assetItem.fields.description = assetItem.fields.description[defaultLocal]
-
-  console.log(defaultLocal)
-  console.log(assetItem.fields)
   const assetNode = {
     id: assetItem.sys.id,
+    defaultLocal,
     parent: `__SOURCE__`,
     children: [],
     ...assetItem.fields,
@@ -258,6 +252,5 @@ exports.createAssetNodes = ({ assetItem, createNode, defaultLocal }) => {
   const contentDigest = digest(stringify(assetNode))
 
   assetNode.internal.contentDigest = contentDigest
-
   createNode(assetNode)
 }

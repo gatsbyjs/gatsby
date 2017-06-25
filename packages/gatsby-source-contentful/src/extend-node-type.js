@@ -69,7 +69,7 @@ const ImageCropFocusType = new GraphQLEnumType({
 const isImage = image =>
   _.includes(
     [`image/jpeg`, `image/jpg`, `image/png`, `image/webp`],
-    image.file.contentType
+    image.file[image.defaultLocale].contentType
   )
 
 const getBase64Image = (imgUrl, args = {}) => {
@@ -85,21 +85,21 @@ const getBase64Image = (imgUrl, args = {}) => {
 
 const getBase64ImageAndBasicMeasurements = (image, args) =>
   new Promise(resolve => {
-    // TODO image.file.url should be image.file['locale'].url
-    getBase64Image(image.file.url, args).then(base64Str => {
+    // TODO image.file[image.defaultLocale].url should be image.file['locale'].url
+    getBase64Image(image.file[image.defaultLocale].url, args).then(base64Str => {
       let aspectRatio
       if (args.width && args.height) {
         aspectRatio = args.width / args.height
       } else {
         aspectRatio =
-          image.file.details.image.width / image.file.details.image.height
+          image.file[image.defaultLocale].details.image.width / image.file[image.defaultLocale].details.image.height
       }
 
       resolve({
         base64Str,
         aspectRatio,
-        width: image.file.details.image.width,
-        height: image.file.details.image.height,
+        width: image.file[image.defaultLocale].details.image.width,
+        height: image.file[image.defaultLocale].details.image.height,
       })
     })
   })
@@ -174,7 +174,7 @@ const resolveResponsiveResolution = (image, options) => {
               default:
             }
             const h = Math.round(size / desiredAspectRatio)
-            return `${createUrl(image.file.url, {
+            return `${createUrl(image.file[image.defaultLocale].url, {
               ...options,
               width: size,
               height: h,
@@ -194,7 +194,7 @@ const resolveResponsiveResolution = (image, options) => {
           aspectRatio: aspectRatio,
           width: options.width,
           height: pickedHeight,
-          src: createUrl(image.file.url, {
+          src: createUrl(image.file[image.defaultLocale].url, {
             ...options,
             width: options.width,
           }),
@@ -255,7 +255,7 @@ const resolveResponsiveSizes = (image, options) => {
         const srcSet = sortedSizes
           .map(width => {
             const h = Math.round(width * desiredAspectRatio)
-            return `${createUrl(image.file.url, {
+            return `${createUrl(image.file[image.defaultLocale].url, {
               ...options,
               width,
               height: h,
@@ -266,7 +266,7 @@ const resolveResponsiveSizes = (image, options) => {
         return resolve({
           base64: base64Str,
           aspectRatio: aspectRatio,
-          src: createUrl(image.file.url, {
+          src: createUrl(image.file[image.defaultLocale].url, {
             ...options,
             width: options.maxWidth,
             height: options.maxHeight,
@@ -299,7 +299,7 @@ const resolveResize = (image, options) =>
             pickedHeight = pickedWidth / aspectRatio
           }
           resolve({
-            src: createUrl(image.file.url, options),
+            src: createUrl(image.file[image.defaultLocale].url, options),
             width: pickedWidth,
             height: pickedHeight,
             aspectRatio,
