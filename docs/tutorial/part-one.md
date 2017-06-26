@@ -3,15 +3,17 @@ title: Gatsby.js Tutorial Part One
 typora-copy-images-to: ../tutorial/images
 ---
 
-Hello fellow Gatsby-er! Welcome to part one of our community Gatsby.js tutorial.
+Hello fellow Gatsby-er! Welcome to *part one* of our community Gatsby.js tutorial.
 
 In this tutorial you'll be gently introduced to the Gatsby development environment, how to create component pages, and how to build and deploy Gatsby sites.
 
 Sit down, buckle up, and let's get going!
 
-## Check Environment
+## Check your development environment
 
 Let's check first that you have everything setup to start working with Gatsby. You will need a recent version of [Node.js](https://nodejs.org) installed.
+
+Node.js is a programming tool for running JavaScript on servers and in your computer's terminal. Gatsby is built using Node.js.
 
 Open a terminal window and type `node --version` then `npm --version`.
 
@@ -76,15 +78,15 @@ You should see shortly some text that says `The development server is listening 
 
 Yeah! It's working!!!
 
-What you're seeing is the Gatsby.js development 404 page. Let's do what it says and create a React.js component at `src/pages/index.js`.
+What you're seeing is the Gatsby.js development 404 page. Let's do what it says and create a React.js page component at `src/pages/index.js`.
 
-First create the `src/pages` directory.
+In a new terminal window (leave the `gatsby develop` process running), first create the `src/pages` directory.
 
 ```bash
 mkdir -p src/pages
 ```
 
-Then open up `src/pages/index.js` in your editor of choice and type in the "hello world" of components.
+Then open up `src/pages/index.js` in your editor of choice and type in the "hello world" of page components.
 
 ```jsx
 import React from 'react'
@@ -98,19 +100,19 @@ Save that and… 😮😮😮
 
 Too cool 😎
 
-Gatsby's development server is a "hot reloading" server meaning any change you make to your React.js components (and later we'll learn, your data files) will hot reload in the browser.
+Gatsby's development server is a "hot reloading" server meaning any change you make to your React.js page components (and later we'll learn, your data files) will hot reload in the browser.
 
 This is huge because it makes development so much faster and fun.
 
 Let's try it.
 
-Try changing "Hello world!" in the component to "Hello Gatsby!". The text in your browser should change within a second.
+Try changing "Hello world!" in the page component to "Hello Gatsby!". The text in your browser should change within a second.
 
 Try some other tricks.
 
 1. Gatsby let's you add "inline styles" via a JavaScript style "prop" (we'll learn about other styling options later).
 
-   Try making your component look like this:
+   Try making your page component look like this:
 
 ```jsx
 import React from "react"
@@ -157,7 +159,7 @@ First create the link to the new page.
 
 To do that, import the `<Link>` component from the `gatsby-link` package we installed earlier.
 
-Unlike the normal HTML `<a>` element, our `Link` component uses `to` for specifying where you'd like to link to. Let's link to a page with the pathname of `/my-second-gatsby-page/`. Try adding that. Once you're done, the component should look like:
+Unlike the normal HTML `<a>` element, our `Link` component uses `to` for specifying the page you want to link to. Let's link to a page with the pathname of `/my-second-gatsby-page/`. Try adding that. Once you're done, the page component should look like:
 
 ```jsx{2,9-10}
 import React from "react"
@@ -175,9 +177,22 @@ export default () =>
 
 Click on that link and again we see the development 404 page.
 
-Let's do what it says again and create a new component at `src/pages/my-second-gatsby-page.js` and save it. Make sure to link back to the home page.
+Let's do what it says again and create a new page component at `src/pages/my-second-gatsby-page.js`.
 
-Now you should be able to click back and forth between the two pages!
+Make the second page component look something like:
+
+```jsx
+import React from 'react'
+import Link from 'gatsby-link'
+
+export default () =>
+  <div>
+    <p>Hello world from my second Gatsby page</p>
+    <Link to="/">back home</Link>
+  </div>
+```
+
+Save that and now you should be able to click back and forth between the two pages!
 
 <video controls="controls" autoplay="true" loop="true">
 <source type="video/mp4" src="/images/clicking-2.mp4"></source>
@@ -189,13 +204,13 @@ Now you should be able to click back and forth between the two pages!
 
 ## Interactive page
 
-One nice thing about using Gatsby for building websites vs other tools is it's so easy to add interactivity to your pages. React.js was designed for Facebook.com and is used on 1000s of other high-quality web applications.
+One nice thing about using Gatsby for building websites vs other tools is it's so easy to add interactivity to your pages. React.js was designed for Facebook.com and is used on many other world-class web applications.
 
 Let's see how easy it is to add interactive elements to our pages.
 
-We'll start by creating a new link to a page at `/counter`/.
+We'll start by creating a new link to a page at `/counter`/ from our original `index.js` page component.
 
-Add that link to your original `index.js` page, click on it, and then create a "Hello World" component for `/counter/` as before. But instead of using what's called the "functional component" form for React we'll create a "class" component.
+Add that link, click on it, and then create a "Hello World" page component for `/counter/` as before. But instead of using what's called the "functional component" form for React we'll create a "class" component.
 
 ```jsx
 import React from "react"
@@ -241,6 +256,7 @@ import React from "react"
 
 class Counter extends React.Component {
   constructor() {
+    super()
     this.state = { count: 0 }
   }
 
@@ -311,7 +327,7 @@ First install their terminal tool:
 npm install --global surge
 ```
 
-Then build your site by running:
+Then build your site by running in the terminal at the root of your site:
 
 ```bash
 gatsby build

@@ -13,6 +13,10 @@ export default () =>
       deploying
       a finished and polished high performance static PWA.
     </p>
+    <p>
+      This tutorial is for <em>everyone</em>! You do not need to be
+      a programmer or React.js expert. We'll walk you through things.
+    </p>
 
     <ol>
       <li>
