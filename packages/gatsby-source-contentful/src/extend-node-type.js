@@ -204,8 +204,9 @@ const resolveResponsiveResolution = (image, options) => {
       })
     })
     return null
-  }
+  })
 }
+
 exports.resolveResponsiveResolution = resolveResponsiveResolution
 
 const resolveResponsiveSizes = (image, options) => {
