@@ -10,6 +10,7 @@ exports.buildForeignReferenceMap = ({
   contentTypeItems,
   entryList,
   notResolvable,
+  defaultLocale,
 }) => {
   const foreignReferenceMap = {}
   contentTypeItems.forEach((contentTypeItem, i) => {
@@ -17,7 +18,8 @@ exports.buildForeignReferenceMap = ({
     entryList[i].forEach(entryItem => {
       const entryItemFields = entryItem.fields
       Object.keys(entryItemFields).forEach(entryItemFieldKey => {
-        const entryItemFieldValue = entryItemFields[entryItemFieldKey]
+        let entryItemFieldValue = entryItemFields[entryItemFieldKey][defaultLocale]
+        console.log(`${entryItemFieldKey} => ${String(entryItemFieldValue)}`)
         if (Array.isArray(entryItemFieldValue)) {
           if (
             entryItemFieldValue[0].sys &&
@@ -61,7 +63,6 @@ exports.buildForeignReferenceMap = ({
 }
 
 function createTextNode(node, key, text, createNode) {
-  if (!text) throw new Error('text empty')
   const textNode = {
     id: `${node.id}${key}TextNode`,
     parent: node.id,
@@ -90,7 +91,7 @@ exports.createContentTypeNodes = ({
   createNode,
   notResolvable,
   foreignReferenceMap,
-  defaultLocal,
+  defaultLocale,
 }) => {
   const contentTypeItemId = contentTypeItem.sys.id
 
@@ -110,7 +111,7 @@ exports.createContentTypeNodes = ({
   const entryNodes = entries.map(entryItem => {
     // Prefix any conflicting fields
     // https://github.com/gatsbyjs/gatsby/pull/1084#pullrequestreview-41662888
-    const entryItemFields = Object.assign({}, entryItem.fields)
+    const entryItemFields = entryItem.fields
     conflictFields.forEach(conflictField => {
       entryItemFields[`${conflictFieldPrefix}${conflictField}`] =
         entryItemFields[conflictField]
@@ -119,8 +120,7 @@ exports.createContentTypeNodes = ({
 
     // Add linkages to other nodes based on foreign references
     Object.keys(entryItemFields).forEach(entryItemFieldKey => {
-      const entryItemFieldValue = entryItemFields[entryItemFieldKey][defaultLocal]
-      console.log(entryItemFieldValue)
+      const entryItemFieldValue = entryItemFields[entryItemFieldKey]
       if (Array.isArray(entryItemFieldValue)) {
         if (
           entryItemFieldValue[0].sys &&
@@ -188,10 +188,11 @@ exports.createContentTypeNodes = ({
             : f.id) === entryItemFieldKey
       ).type
       if (fieldType === `Text`) {
+        console.log(entryItemFields[entryItemFieldKey])
         entryItemFields[`${entryItemFieldKey}___NODE`] = createTextNode(
           entryNode,
           entryItemFieldKey,
-          entryItemFields[entryItemFieldKey][defaultLocal],
+          entryItemFields[entryItemFieldKey][defaultLocale],
           createNode
         )
 
@@ -200,6 +201,7 @@ exports.createContentTypeNodes = ({
     })
 
     entryNode = { ...entryItemFields, ...entryNode }
+
     // Get content digest of node.
     const contentDigest = digest(stringify(entryNode))
 
@@ -233,12 +235,16 @@ exports.createContentTypeNodes = ({
   })
 }
 
-exports.createAssetNodes = ({ assetItem, createNode, defaultLocal }) => {
+exports.createAssetNodes = ({ assetItem, createNode, defaultLocale }) => {
   // Create a node for each asset. They may be referenced by Entries
-  // default locale workaround for now
+  assetItem.fields = {
+    file: assetItem.fields.file[defaultLocale],
+    title: assetItem.fields.title[defaultLocale],
+    description: assetItem.fields.description[defaultLocale],
+  }
+  console.log(assetItem)
   const assetNode = {
     id: assetItem.sys.id,
-    defaultLocal,
     parent: `__SOURCE__`,
     children: [],
     ...assetItem.fields,
@@ -252,5 +258,6 @@ exports.createAssetNodes = ({ assetItem, createNode, defaultLocal }) => {
   const contentDigest = digest(stringify(assetNode))
 
   assetNode.internal.contentDigest = contentDigest
+
   createNode(assetNode)
 }

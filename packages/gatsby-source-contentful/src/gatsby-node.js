@@ -3,6 +3,7 @@ const contentful = require(`contentful`)
 const processAPIData = require(`./process-api-data`)
 
 const conflictFieldPrefix = `contentful`
+
 // restrictedNodeFields from here https://www.gatsbyjs.org/docs/node-interface/
 const restrictedNodeFields = [`id`, `children`, `parent`, `fields`, `internal`]
 
@@ -28,12 +29,12 @@ exports.sourceNodes = async (
   // all field will be in this format { fieldName: {'locale': value} } so we need to get the space and its default local
   // this can be extended later to support multiple locals
   let space
-  let defaultLocal = `en-US`
+  let defaultLocale = `en-US`
   try {
     console.log(`Fetching default locale`)
     space = await client.getSpace()
-    defaultLocal = _.find(space.locales, {'default': true}).code
-    console.log(`default local is : ${defaultLocal}`)
+    defaultLocale = _.find(space.locales, { 'default': true }).code
+    console.log(`default local is : ${defaultLocale}`)
   } catch (e) {
     console.log(`can't get space`)
     // TODO maybe return here
@@ -90,7 +91,7 @@ exports.sourceNodes = async (
 
   // merge entries
   lastSyncedData.entries = lastSyncedData.entries.concat(currentSyncData.entries)
-  const entryList = contentTypeItems.map(contentType => {
+  let entryList = contentTypeItems.map(contentType => {
     return lastSyncedData.entries.filter(entry => entry.sys.contentType.sys.id === contentType.sys.id )
   })
 
@@ -134,11 +135,16 @@ exports.sourceNodes = async (
     }
   })
 
+ // entryList = entryList.map(entries => entries.map(entryItem => {
+   // entryItem.defaultLocale = defaultLocale
+   // return new Proxy(entryItem, localeProxyHandler)
+ // }))
 // Build foreign reference map before starting to insert any nodes
   const foreignReferenceMap = processAPIData.buildForeignReferenceMap({
     contentTypeItems,
     entryList,
     notResolvable,
+    defaultLocale,
   })
   contentTypeItems.forEach((contentTypeItem, i) => {
     processAPIData.createContentTypeNodes({
@@ -149,12 +155,12 @@ exports.sourceNodes = async (
       createNode,
       notResolvable,
       foreignReferenceMap,
-      defaultLocal
+      defaultLocale,
     })
   })
 
   assets.forEach(assetItem => {
-    processAPIData.createAssetNodes({ assetItem, createNode, defaultLocal})
+    processAPIData.createAssetNodes({ assetItem, createNode, defaultLocale })
   })
 
   return
