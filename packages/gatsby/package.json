@@ -106,7 +106,6 @@
     "webpack-dev-server": "^1.16.1",
     "webpack-hot-middleware": "^2.13.2",
     "webpack-md5-hash": "0.0.5",
-    "webpack-require": "0.0.16",
     "webpack-stats-plugin": "^0.1.4",
     "webpack-validator": "^2.2.7",
     "yaml-loader": "^0.4.0"
