@@ -31,6 +31,12 @@ module.exports = function(root, cb) {
       return true
     }
 
+    // Don't catch links pointed at what look like file extensions (other than
+    // .htm/html extensions).
+    if (anchor.pathname.search(/^.*\.((?!htm)[a-z0-9]{1,5})$/i) !== -1) {
+      return true
+    }
+
     // IE clears the host value if the anchor href changed after creation, e.g.
     // in React. Creating a new anchor element to ensure host value is present
     var a1 = document.createElement(`a`)
