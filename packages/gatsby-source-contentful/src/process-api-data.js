@@ -10,14 +10,16 @@ exports.buildForeignReferenceMap = ({
   contentTypeItems,
   entryList,
   notResolvable,
+  defaultLocale,
 }) => {
   const foreignReferenceMap = {}
   contentTypeItems.forEach((contentTypeItem, i) => {
     const contentTypeItemId = contentTypeItem.sys.id
-    entryList[i].items.forEach(entryItem => {
+    entryList[i].forEach(entryItem => {
       const entryItemFields = entryItem.fields
       Object.keys(entryItemFields).forEach(entryItemFieldKey => {
-        const entryItemFieldValue = entryItemFields[entryItemFieldKey]
+        let entryItemFieldValue = entryItemFields[entryItemFieldKey][defaultLocale]
+        console.log(`${entryItemFieldKey} => ${String(entryItemFieldValue)}`)
         if (Array.isArray(entryItemFieldValue)) {
           if (
             entryItemFieldValue[0].sys &&
@@ -89,6 +91,7 @@ exports.createContentTypeNodes = ({
   createNode,
   notResolvable,
   foreignReferenceMap,
+  defaultLocale,
 }) => {
   const contentTypeItemId = contentTypeItem.sys.id
 
@@ -105,10 +108,10 @@ exports.createContentTypeNodes = ({
   })
 
   // First create nodes for each of the entries of that content type
-  const entryNodes = entries.items.map(entryItem => {
+  const entryNodes = entries.map(entryItem => {
     // Prefix any conflicting fields
     // https://github.com/gatsbyjs/gatsby/pull/1084#pullrequestreview-41662888
-    const entryItemFields = Object.assign({}, entryItem.fields)
+    const entryItemFields = entryItem.fields
     conflictFields.forEach(conflictField => {
       entryItemFields[`${conflictFieldPrefix}${conflictField}`] =
         entryItemFields[conflictField]
@@ -185,10 +188,11 @@ exports.createContentTypeNodes = ({
             : f.id) === entryItemFieldKey
       ).type
       if (fieldType === `Text`) {
+        console.log(entryItemFields[entryItemFieldKey])
         entryItemFields[`${entryItemFieldKey}___NODE`] = createTextNode(
           entryNode,
           entryItemFieldKey,
-          entryItemFields[entryItemFieldKey],
+          entryItemFields[entryItemFieldKey][defaultLocale],
           createNode
         )
 
@@ -231,8 +235,14 @@ exports.createContentTypeNodes = ({
   })
 }
 
-exports.createAssetNodes = ({ assetItem, createNode }) => {
+exports.createAssetNodes = ({ assetItem, createNode, defaultLocale }) => {
   // Create a node for each asset. They may be referenced by Entries
+  assetItem.fields = {
+    file: assetItem.fields.file[defaultLocale],
+    title: assetItem.fields.title[defaultLocale],
+    description: assetItem.fields.description[defaultLocale],
+  }
+  console.log(assetItem)
   const assetNode = {
     id: assetItem.sys.id,
     parent: `__SOURCE__`,
