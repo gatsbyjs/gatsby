@@ -1,8 +1,4 @@
 const contentful = require(`contentful`)
-const crypto = require(`crypto`)
-const _ = require(`lodash`)
-
-const digest = str => crypto.createHash(`md5`).update(str).digest(`hex`)
 
 const processAPIData = require(`./process-api-data`)
 
@@ -29,26 +25,18 @@ exports.sourceNodes = async (
 
   let contentTypes
   try {
-    contentTypes = await client.getContentTypes({ limit: 1000 })
+    contentTypes = await pagedGet(client, `getContentTypes`)
   } catch (e) {
     console.log(`error fetching content types`, e)
   }
   console.log(`contentTypes fetched`, contentTypes.items.length)
-  if (contentTypes.total > 1000) {
-    console.log(
-      `HI! gatsby-source-plugin isn't setup yet to paginate over 1000 content types (the max we can fetch in one go). Please help out the project and contribute a PR fixing this.`
-    )
-  }
 
   const entryList = await Promise.all(
     contentTypes.items.map(async contentType => {
       const contentTypeId = contentType.sys.id
       let entries
       try {
-        entries = await client.getEntries({
-          content_type: contentTypeId,
-          limit: 1000,
-        })
+        entries = await pagedGet(client, `getEntries`, { content_type: contentTypeId })
       } catch (e) {
         console.log(`error fetching entries`, e)
       }
@@ -56,27 +44,17 @@ exports.sourceNodes = async (
         `entries fetched for content type ${contentType.name} (${contentTypeId})`,
         entries.items.length
       )
-      if (entries.total > 1000) {
-        console.log(
-          `HI! gatsby-source-plugin isn't setup yet to paginate over 1000 entries (the max we can fetch in one go). Please help out the project and contribute a PR fixing this.`
-        )
-      }
-
       return entries
     })
   )
 
   let assets
   try {
-    assets = await client.getAssets({ limit: 1000 })
+    assets = await  pagedGet(client, `getAssets`)
   } catch (e) {
     console.log(`error fetching assets`, e)
   }
-  if (assets.total > 1000) {
-    console.log(
-      `HI! gatsby-source-plugin isn't setup yet to paginate over 1000 assets (the max we can fetch in one go). Please help out the project and contribute a PR fixing this.`
-    )
-  }
+
   console.log(`assets fetched`, assets.items.length)
   console.timeEnd(`fetch Contentful data`)
 
@@ -119,4 +97,28 @@ exports.sourceNodes = async (
   })
 
   return
+}
+/**
+ * Gets all the existing entities based on pagination parameters.
+ * The first call will have no aggregated response. Subsequent calls will
+ * concatenate the new responses to the original one.
+ */
+function pagedGet (client, method, query = {}, skip = 0, pageLimit = 1000, aggregatedResponse = null) {
+  return client[method]({
+    ...query,
+    skip: skip,
+    limit: pageLimit,
+    order: `sys.createdAt`,
+  })
+  .then((response) => {
+    if (!aggregatedResponse) {
+      aggregatedResponse = response
+    } else {
+      aggregatedResponse.items = aggregatedResponse.items.concat(response.items)
+    }
+    if (skip + pageLimit <= response.total) {
+      return pagedGet(client, method, skip + pageLimit, aggregatedResponse)
+    }
+    return aggregatedResponse
+  })
 }
