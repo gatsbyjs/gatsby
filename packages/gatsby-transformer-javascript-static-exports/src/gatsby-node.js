@@ -1,6 +1,3 @@
-const select = require(`unist-util-select`)
-const Promise = require(`bluebird`)
-const fs = require(`fs`)
 const _ = require(`lodash`)
 const crypto = require(`crypto`)
 const babylon = require('babylon')
@@ -13,7 +10,7 @@ async function onCreateNode({ node, getNode, boundActionCreators, loadNodeConten
   // but since this transformer creates new nodes with the same media-type
   // as its parent node, we have to add this check that we didn't create
   // the node).
-  if (node.internal.owner === `gatsby-transformer-js`) {
+  if (node.internal.owner === `gatsby-transformer-javascript-static-exports`) {
     return
   }
 
@@ -98,14 +95,14 @@ async function onCreateNode({ node, getNode, boundActionCreators, loadNodeConten
     exportsData = {
       // We may eventually add other data besides just
       // from exports.data
-      data: {...data},
+      ...data,
       JSFrontmatter: `filled`
     }
 
   } catch (e) {
     // Ignore errors — we print out parse errors for user elsewhere.
     exportsData = {
-      data: {...data},
+      ...data,
       JSFrontmatter: `error`
     }
   } finally {
@@ -124,12 +121,12 @@ async function onCreateNode({ node, getNode, boundActionCreators, loadNodeConten
           internal: {
             contentDigest,
             type: `JSFrontmatter`,
-            owner: `gatsby-transformer-js`,
+            owner: `gatsby-transformer-javascript-static-exports`,
             mediaType: `application/javascript`,
           },
         }
 
-    nodeData.exportsData = {...exportsData}
+    nodeData.data = {...exportsData}
 
     if (node.internal.type === `File`) {
       nodeData.fileAbsolutePath = node.absolutePath
