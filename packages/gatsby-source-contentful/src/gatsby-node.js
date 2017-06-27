@@ -87,6 +87,13 @@ exports.sourceNodes = async (
     defaultLocale,
   })
 
+  const newOrUpdatedEntries = []
+  entryList.forEach(entries => {
+    entries.forEach(entry => {
+      newOrUpdatedEntries.push(entry.sys.id)
+    })
+  })
+
   // Update existing entry nodes that weren't updated but that need reverse
   // links added.
   Object.keys(foreignReferenceMap)

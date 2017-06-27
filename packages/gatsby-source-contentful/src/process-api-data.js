@@ -21,10 +21,8 @@ exports.buildResolvableSet = ({
   const resolvable = new Set()
   existingNodes.forEach(n => resolvable.add(n.id))
 
-  const newOrUpdatedEntries = []
   entryList.forEach(entries => {
     entries.forEach(entry => {
-      newOrUpdatedEntries.push(entry.sys.id)
       resolvable.add(entry.sys.id)
     })
   })
