@@ -283,7 +283,7 @@ describe(`GraphQL Input args`, () => {
       nodes,
       `
       {
-            allNode(filter: {name: { regex: "/^the.*wax/i/" }}) {
+            allNode(filter: {name: { regex: "/^the.*wax/i" }}) {
               edges { node { name }}
             }
           }
