@@ -61,25 +61,13 @@ exports.sourceNodes = async (
       .status.syncToken
   }
 
-  // The SDK will map the entities to the following object:
-  // {
-  //  entries,
-  //  assets,
-  //  deletedEntries,
-  //  deletedAssets
-  // }
   let currentSyncData
   try {
     let query = syncToken ? { nextSyncToken: syncToken } : { initial: true }
     currentSyncData = await client.sync(query)
   } catch (e) {
-    currentSyncData = {
-      entries: [],
-      assets: [],
-      deletedEntries: [],
-      deletedAssets: [],
-    }
     console.log(`error fetching contentful data`, e)
+    process.exit(1)
   }
 
   // We need to fetch content types with the non-sync API as the sync API
@@ -94,11 +82,6 @@ exports.sourceNodes = async (
 
   const contentTypeItems = contentTypes.items
 
-  // TODO don't store data twice, load old nodes owned by this plugin
-  // and then delete nodes that don't exist anymore.
-  //
-  // Process nodes to remove field stuff
-
   // Remove deleted entries & assets.
   // TODO figure out if entries referencing now deleted entries/assets
   // are "updated" so will get updated here.
@@ -110,9 +93,11 @@ exports.sourceNodes = async (
   )
   existingNodes.forEach(n => touchNode(n.id))
 
-  let entryList = contentTypeItems.map(contentType => currentSyncData.entries.filter(
+  let entryList = contentTypeItems.map(contentType =>
+    currentSyncData.entries.filter(
       entry => entry.sys.contentType.sys.id === contentType.sys.id
-    ))
+    )
+  )
 
   const assets = currentSyncData.assets
 
