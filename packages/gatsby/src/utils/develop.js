@@ -35,7 +35,7 @@ async function startServer(program) {
   // Start bootstrap process.
   await bootstrap(program)
   await developHtml(program).catch(err => {
-    console.log(err);
+    console.log(err)
     process.exit(1)
   })
 
@@ -65,7 +65,7 @@ async function startServer(program) {
     })
   )
 
-  app.use(express.static(__dirname + '/public'));
+  app.use(express.static(__dirname + `/public`))
 
   app.use(
     require(`webpack-dev-middleware`)(compiler, {

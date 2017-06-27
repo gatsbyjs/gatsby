@@ -18,8 +18,8 @@ exports.buildForeignReferenceMap = ({
     entryList[i].forEach(entryItem => {
       const entryItemFields = entryItem.fields
       Object.keys(entryItemFields).forEach(entryItemFieldKey => {
-        let entryItemFieldValue = entryItemFields[entryItemFieldKey][defaultLocale]
-        console.log(`${entryItemFieldKey} => ${String(entryItemFieldValue)}`)
+        let entryItemFieldValue =
+          entryItemFields[entryItemFieldKey][defaultLocale]
         if (Array.isArray(entryItemFieldValue)) {
           if (
             entryItemFieldValue[0].sys &&
@@ -120,7 +120,8 @@ exports.createContentTypeNodes = ({
 
     // Add linkages to other nodes based on foreign references
     Object.keys(entryItemFields).forEach(entryItemFieldKey => {
-      const entryItemFieldValue = entryItemFields[entryItemFieldKey]
+      const entryItemFieldValue =
+        entryItemFields[entryItemFieldKey][defaultLocale]
       if (Array.isArray(entryItemFieldValue)) {
         if (
           entryItemFieldValue[0].sys &&
@@ -168,9 +169,21 @@ exports.createContentTypeNodes = ({
       children: [],
       internal: {
         type: `${makeTypeName(contentTypeItemId)}`,
-        mediaType: `application/json`,
+        mediaType: `application/x-contentful`,
       },
     }
+
+    // Use default locale field.
+    Object.keys(entryItemFields).forEach(entryItemFieldKey => {
+      // Ignore fields with "___node" as they're already handled
+      // and won't be a text field.
+      if (entryItemFieldKey.split(`___`).length > 1) {
+        return
+      }
+
+      entryItemFields[entryItemFieldKey] =
+        entryItemFields[entryItemFieldKey][defaultLocale]
+    })
 
     // Replace text fields with text nodes so we can process their markdown
     // into HTML.
@@ -188,11 +201,10 @@ exports.createContentTypeNodes = ({
             : f.id) === entryItemFieldKey
       ).type
       if (fieldType === `Text`) {
-        console.log(entryItemFields[entryItemFieldKey])
         entryItemFields[`${entryItemFieldKey}___NODE`] = createTextNode(
           entryNode,
           entryItemFieldKey,
-          entryItemFields[entryItemFieldKey][defaultLocale],
+          entryItemFields[entryItemFieldKey],
           createNode
         )
 
@@ -242,7 +254,6 @@ exports.createAssetNodes = ({ assetItem, createNode, defaultLocale }) => {
     title: assetItem.fields.title[defaultLocale],
     description: assetItem.fields.description[defaultLocale],
   }
-  console.log(assetItem)
   const assetNode = {
     id: assetItem.sys.id,
     parent: `__SOURCE__`,

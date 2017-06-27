@@ -13,7 +13,6 @@ try {
 }
 
 module.exports = (locals, callback) => {
-
   // const apiRunner = require(`${directory}/.cache/api-runner-ssr`)
   let headComponents = []
   let preBodyComponents = []

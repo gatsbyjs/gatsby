@@ -7,7 +7,4 @@ const localeProxyHandler = {
   },
 }
 
-
 exports.localeProxyHandler = localeProxyHandler
-
-
