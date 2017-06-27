@@ -12,11 +12,16 @@ const _ = require(`lodash`)
 exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeType
 
 exports.sourceNodes = async (
-  { boundActionCreators, getNode, hasNodeChanged, store },
+  { boundActionCreators, getNodes, hasNodeChanged, store },
   { spaceId, accessToken }
 ) => {
-  const { createNode, setPluginStatus } = boundActionCreators
-  
+  const {
+    createNode,
+    deleteNodes,
+    touchNode,
+    setPluginStatus,
+  } = boundActionCreators
+
   // Fetch articles.
   console.time(`Fetch Contentful data`)
   console.log(`Starting to fetch data from Contentful`)
@@ -25,34 +30,38 @@ exports.sourceNodes = async (
     space: spaceId,
     accessToken,
   })
-  // the structure of the sync payload is a bit different
-  // all field will be in this format { fieldName: {'locale': value} } so we need to get the space and its default local
-  // this can be extended later to support multiple locals
+  // The sync API puts the locale in all fields in this format { fieldName:
+  // {'locale': value} } so we need to get the space and its default local.
+  //
+  // We'll extend this soon to support multiple locales.
   let space
   let defaultLocale = `en-US`
   try {
     console.log(`Fetching default locale`)
     space = await client.getSpace()
-    defaultLocale = _.find(space.locales, { 'default': true }).code
+    defaultLocale = _.find(space.locales, { default: true }).code
     console.log(`default local is : ${defaultLocale}`)
   } catch (e) {
-    console.log(`can't get space`)
-    // TODO maybe return here
+    console.log(
+      `Accessing your Contentful space failed. Perhaps you're offline or the spaceId/accessToken is incorrect.`
+    )
+    // TODO perhaps continue if there's cached data? That would let
+    // someone develop a contentful site even if not connected to the internet.
+    // For prod builds though always fail if we can't get the latest data.
+    process.exit(1)
   }
 
-  // Get sync token if it exists
+  // Get sync token if it exists.
   let syncToken
-  let lastSyncedData = { entries: [], assets: [], deletedEntries: [], deletedAssets: [], nextSyncToken: null }
   if (
     store.getState().status.plugins &&
     store.getState().status.plugins[`gatsby-source-contentful`]
   ) {
-    lastSyncedData = store.getState().status.plugins[`gatsby-source-contentful`].status
-      .lastSyncedData
-    syncToken = lastSyncedData.nextSyncToken
+    syncToken = store.getState().status.plugins[`gatsby-source-contentful`]
+      .status.syncToken
   }
 
-  // The SDK will map the entities to the following object
+  // The SDK will map the entities to the following object:
   // {
   //  entries,
   //  assets,
@@ -62,13 +71,19 @@ exports.sourceNodes = async (
   let currentSyncData
   try {
     let query = syncToken ? { nextSyncToken: syncToken } : { initial: true }
-    currentSyncData = await client.sync(query) 
+    currentSyncData = await client.sync(query)
   } catch (e) {
-    currentSyncData = { entries: [], assets: [], deletedEntries: [], deletedAssets:[] }
+    currentSyncData = {
+      entries: [],
+      assets: [],
+      deletedEntries: [],
+      deletedAssets: [],
+    }
     console.log(`error fetching contentful data`, e)
   }
 
-  // We fetch content types normaly since we don't receive it in the sync data
+  // We need to fetch content types with the non-sync API as the sync API
+  // doesn't support this.
   let contentTypes
   try {
     contentTypes = await pagedGet(client, `getContentTypes`)
@@ -78,47 +93,42 @@ exports.sourceNodes = async (
   console.log(`contentTypes fetched`, contentTypes.items.length)
 
   const contentTypeItems = contentTypes.items
-  // remove outdated entries 
-  lastSyncedData.entries.filter(entry => {
-    return _.find(
-      currentSyncData.entries, (newEntry) => newEntry.sys.id === entry.sys.id
-      ||
-        _.find(
-          currentSyncData.deletedEntries, (deletedEntry) => deletedEntry.sys.id === entry.sys.id
-        )
-    )
-  })
 
-  // merge entries
-  lastSyncedData.entries = lastSyncedData.entries.concat(currentSyncData.entries)
-  let entryList = contentTypeItems.map(contentType => {
-    return lastSyncedData.entries.filter(entry => entry.sys.contentType.sys.id === contentType.sys.id )
-  })
+  // TODO don't store data twice, load old nodes owned by this plugin
+  // and then delete nodes that don't exist anymore.
+  //
+  // Process nodes to remove field stuff
 
-  lastSyncedData.assets.filter(asset => {
-    return _.find(
-        currentSyncData.assets, (newAsset) => newAsset.sys.id === asset.sys.id
-      )
-      ||
-        _.find(
-          currentSyncData.deletedAssets, (deletedAsset) => deletedAsset.sys.id === asset.sys.id
-        )
-  })
+  // Remove deleted entries & assets.
+  // TODO figure out if entries referencing now deleted entries/assets
+  // are "updated" so will get updated here.
+  deleteNodes(currentSyncData.deletedEntries.map(e => e.sys.id))
+  deleteNodes(currentSyncData.deletedAssets.map(e => e.sys.id))
 
-  lastSyncedData.assets = lastSyncedData.assets.concat(currentSyncData.assets)
-  let assets = lastSyncedData.assets
-  
-  console.log(`Total assets `, assets.length)
+  const existingNodes = getNodes().filter(
+    n => n.internal.owner === `gatsby-source-contentful`
+  )
+  existingNodes.forEach(n => touchNode(n.id))
+
+  let entryList = contentTypeItems.map(contentType => currentSyncData.entries.filter(
+      entry => entry.sys.contentType.sys.id === contentType.sys.id
+    ))
+
+  const assets = currentSyncData.assets
+
+  console.log(`Updated entries `, currentSyncData.entries.length)
+  console.log(`Deleted entries `, currentSyncData.deletedEntries.length)
   console.log(`Updated assets `, currentSyncData.assets.length)
   console.log(`Deleted assets `, currentSyncData.deletedAssets.length)
   console.timeEnd(`fetch Contentful data`)
- 
-  // update syncToken
-  lastSyncedData.nextSyncToken = currentSyncData.nextSyncToken
-  // cache the data
+
+  // Update syncToken
+  const nextSyncToken = currentSyncData.nextSyncToken
+
+  // Store our sync state for the next sync.
   setPluginStatus({
     status: {
-      lastSyncedData: lastSyncedData,
+      syncToken: nextSyncToken,
     },
   })
 
@@ -135,17 +145,40 @@ exports.sourceNodes = async (
     }
   })
 
- // entryList = entryList.map(entries => entries.map(entryItem => {
-   // entryItem.defaultLocale = defaultLocale
-   // return new Proxy(entryItem, localeProxyHandler)
- // }))
-// Build foreign reference map before starting to insert any nodes
+  // Build foreign reference map before starting to insert any nodes
   const foreignReferenceMap = processAPIData.buildForeignReferenceMap({
     contentTypeItems,
     entryList,
     notResolvable,
     defaultLocale,
   })
+
+  // Update existing entry nodes that weren't updated but that need reverse
+  // links added.
+  const newOrUpdatedEntries = []
+  entryList.forEach(entries =>
+    entries.forEach(entry => newOrUpdatedEntries.push(entry.sys.id))
+  )
+  Object.keys(foreignReferenceMap)
+  existingNodes
+    .filter(n => _.includes(newOrUpdatedEntries, n.id))
+    .forEach(n => {
+      if (foreignReferenceMap[n.id]) {
+        foreignReferenceMap[n.id].forEach(foreignReference => {
+          // Add reverse links
+          if (n[foreignReference.name]) {
+            n[foreignReference.name].push(foreignReference.id)
+            // It might already be there so we'll uniquify after pushing.
+            n[foreignReference.name] = _.uniq(n[foreignReference.name])
+          } else {
+            // If is one foreign reference, there can always be many.
+            // Best to be safe and put it in an array to start with.
+            n[foreignReference.name] = [foreignReference.id]
+          }
+        })
+      }
+    })
+
   contentTypeItems.forEach((contentTypeItem, i) => {
     processAPIData.createContentTypeNodes({
       contentTypeItem,
@@ -170,22 +203,32 @@ exports.sourceNodes = async (
  * The first call will have no aggregated response. Subsequent calls will
  * concatenate the new responses to the original one.
  */
-function pagedGet (client, method, query = {}, skip = 0, pageLimit = 1000, aggregatedResponse = null) {
-  return client[method]({
-    ...query,
-    skip: skip,
-    limit: pageLimit,
-    order: `sys.createdAt`,
-  })
-  .then((response) => {
-    if (!aggregatedResponse) {
-      aggregatedResponse = response
-    } else {
-      aggregatedResponse.items = aggregatedResponse.items.concat(response.items)
-    }
-    if (skip + pageLimit <= response.total) {
-      return pagedGet(client, method, skip + pageLimit, aggregatedResponse)
-    }
-    return aggregatedResponse
-  })
+function pagedGet(
+  client,
+  method,
+  query = {},
+  skip = 0,
+  pageLimit = 1000,
+  aggregatedResponse = null
+) {
+  return client
+    [method]({
+      ...query,
+      skip: skip,
+      limit: pageLimit,
+      order: `sys.createdAt`,
+    })
+    .then(response => {
+      if (!aggregatedResponse) {
+        aggregatedResponse = response
+      } else {
+        aggregatedResponse.items = aggregatedResponse.items.concat(
+          response.items
+        )
+      }
+      if (skip + pageLimit <= response.total) {
+        return pagedGet(client, method, skip + pageLimit, aggregatedResponse)
+      }
+      return aggregatedResponse
+    })
 }

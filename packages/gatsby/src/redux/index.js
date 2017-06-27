@@ -64,7 +64,10 @@ emitter.onAny(() => {
 
 exports.emitter = emitter
 exports.store = store
-exports.getNodes = () => _.values(store.getState().nodes)
+exports.getNodes = () => {
+  let nodes = _.values(store.getState().nodes)
+  return nodes ? nodes : []
+}
 const getNode = id => store.getState().nodes[id]
 exports.getNode = getNode
 exports.hasNodeChanged = (id, digest) => {

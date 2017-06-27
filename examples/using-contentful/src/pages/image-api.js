@@ -121,7 +121,8 @@ export default props => {
         You can also set the{` `}
         <a href="https://www.contentful.com/developers/docs/references/images-api/#/reference/resizing-&-cropping/change-the-resizing-behavior">
           resizing behavior
-        </a>{` `}
+        </a>
+        {` `}
         and{` `}
         <a href="https://www.contentful.com/developers/docs/references/images-api/#/reference/resizing-&-cropping/specify-focus-area-for-resizing">
           resizing focus area
@@ -180,19 +181,19 @@ export default props => {
         a <code>maxWidth</code>, the max width the container of the images
         reaches.
       </p>
-      {assets.map(({ node: { title, responsiveSizes } }) => (
-          <img
-            alt={title}
-            src={responsiveSizes.src}
-            srcSet={responsiveSizes.srcSet}
-            sizes={responsiveSizes.sizes}
-            style={{
-              marginRight: rhythm(1 / 2),
-              marginBottom: rhythm(1 / 2),
-              border: `1px solid tomato`,
-            }}
-          />
-        ))}
+      {assets.map(({ node: { title, responsiveSizes } }) =>
+        <img
+          alt={title}
+          src={responsiveSizes.src}
+          srcSet={responsiveSizes.srcSet}
+          sizes={responsiveSizes.sizes}
+          style={{
+            marginRight: rhythm(1 / 2),
+            marginBottom: rhythm(1 / 2),
+            border: `1px solid tomato`,
+          }}
+        />
+      )}
       <h4>GraphQL query</h4>
       <pre style={{ background: `#efeded`, padding: rhythm(3 / 4) }}>
         <code
