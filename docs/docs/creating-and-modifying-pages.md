@@ -13,6 +13,27 @@ Pages can be created in three ways:
 You can also implement the API [`onCreatePage`](/docs/node-apis/#onCreatePage) to
 modify pages created in core or plugins or to create client-only pages.
 
+## Debugging help
+
+To see what pages are being created by your code or plugins, you can query
+for page information while developing in Graph*i*QL. Paste the following
+query in the Graph*i*QL IDE for your site.
+
+```graphql
+{
+  allSitePage {
+    edges {
+      node {
+        path
+        component
+      }
+    }
+  }
+}
+```
+
+You can also query for any `context` data you or plugins added to pages.
+
 ## Creating pages in gatsby-node.js
 
 Often you will need to programmatically create pages. For example, you have
