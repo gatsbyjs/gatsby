@@ -13,9 +13,7 @@
     "redux": "3.6.0",
     "slash": "^1.0.0"
   },
-  "keywords": [
-    "gatsby"
-  ],
+  "keywords": ["gatsby"],
   "license": "MIT",
   "main": "n/a",
   "scripts": {

@@ -7,12 +7,7 @@
     "build": "babel src --out-dir . --ignore __tests__",
     "watch": "babel -w src --out-dir . --ignore __tests__"
   },
-  "keywords": [
-    "gatsby",
-    "gatsby-plugin",
-    "react",
-    "react-docgen"
-  ],
+  "keywords": ["gatsby", "gatsby-plugin", "react", "react-docgen"],
   "author": "Jason Quense <monastic.panic@gmail.com>",
   "license": "MIT",
   "dependencies": {

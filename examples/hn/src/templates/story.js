@@ -58,16 +58,18 @@ class Story extends React.Component {
           </tr>
           <tr>
             <td className="subtext">
-              <span className="score">
-                {story.score} points
-              </span>
+              <span className="score">{story.score} points</span>
               {` `}
               by
               {` `}
-              <a href="" className="hnuser">{story.by}</a>
+              <a href="" className="hnuser">
+                {story.by}
+              </a>
               {` `}
               <span className="age">
-                <Link to={`/item/${story.id}/`}>{story.timeISO}</Link>
+                <Link to={`/item/${story.id}/`}>
+                  {story.timeISO}
+                </Link>
               </span>
               {` `}
               |
@@ -95,19 +97,16 @@ class Story extends React.Component {
 export default Story
 
 export const pageQuery = graphql`
-query StoryQuery($id: String!)
-{
-  hnStory(id: {eq: $id}) {
-    id
-    title
-    url
-    domain
-    score
-    timeISO(fromNow: true)
-    descendants
-    by
-    children {
-      ...StoryComment
+  query StoryQuery($id: String!) {
+    hnStory(id: { eq: $id }) {
+      id
+      title
+      url
+      domain
+      score
+      timeISO(fromNow: true)
+      descendants
+      by
       children {
         ...StoryComment
         children {
@@ -122,6 +121,9 @@ query StoryQuery($id: String!)
                   ...StoryComment
                   children {
                     ...StoryComment
+                    children {
+                      ...StoryComment
+                    }
                   }
                 }
               }
@@ -131,6 +133,4 @@ query StoryQuery($id: String!)
       }
     }
   }
-}
-
 `

@@ -19,14 +19,12 @@ class Index extends React.Component {
             <code>gatsby-plugin-sharp</code>
           </a>
           {` `}
-          exposes several image processing
-          functions built on the
+          exposes several image processing functions built on the
           {` `}
           <a href="https://github.com/lovell/sharp">
             Sharp image processing library
-          </a>. It is a low-level helper plugin
-          generally used by other Gatsby plugins – but you can easily use it
-          in your own GraphQL queries!
+          </a>. It is a low-level helper plugin generally used by other Gatsby
+          plugins – but you can easily use it in your own GraphQL queries!
         </p>
         <p>
           <strong>
@@ -58,8 +56,7 @@ class Index extends React.Component {
           {` `}
           <code>width</code>
           {` `}
-          and
-          optionally a <code>height</code>.
+          and optionally a <code>height</code>.
         </p>
 
         <p>
@@ -77,9 +74,7 @@ class Index extends React.Component {
 
         <h3>
           <code>
-            <small>
-              resize(width: 125, height: 125, rotate: 180)
-            </small>
+            <small>resize(width: 125, height: 125, rotate: 180)</small>
           </code>
         </h3>
 
@@ -122,9 +117,7 @@ class Index extends React.Component {
             <img src={cropBottomLeft.src} />
             <p>
               <small>
-                <code>
-                  cropFocus: SOUTHWEST
-                </code>
+                <code>cropFocus: SOUTHWEST</code>
               </small>
             </p>
           </li>
@@ -160,10 +153,9 @@ class Index extends React.Component {
         </h2>
         <p>
           Create sizes (in width) for the image. If the max width of the
-          container
-          for the rendered markdown file is 800px, the sizes would then be: 200,
-          400, 800, 1200, 1600, 2400 – enough to provide close to the optimal
-          image size for every device size / screen resolution.
+          container for the rendered markdown file is 800px, the sizes would
+          then be: 200, 400, 800, 1200, 1600, 2400 – enough to provide close to
+          the optimal image size for every device size / screen resolution.
         </p>
         <p>
           On top of that, <code>responsiveSizes</code>
@@ -176,8 +168,8 @@ class Index extends React.Component {
           {` `}
           <code>base64</code>
           {` `}
-          image to use as a placeholder) you need to implement
-          the "blur up" technique popularized by
+          image to use as a placeholder) you need to implement the "blur up"
+          technique popularized by
           {` `}
           <a href="https://jmperezperez.com/medium-image-progressive-loading-placeholder/">
             Medium
@@ -209,9 +201,9 @@ class Index extends React.Component {
           {` `}
           <code>shadow</code>
           {` `}
-          and <code>highlight</code> defining start and end color of
-          the duotone gradient, converts the source image colors to match a
-          gradient color chosen based on each pixels relative luminance.
+          and <code>highlight</code> defining start and end color of the duotone
+          gradient, converts the source image colors to match a gradient color
+          chosen based on each pixels relative luminance.
         </p>
 
         <p>
@@ -287,15 +279,13 @@ class Index extends React.Component {
             <code>greyscale</code>
           </a>
           {` `}
-          to convert the source image to 8-bit greyscale,
-          256 shades of grey.
+          to convert the source image to 8-bit greyscale, 256 shades of grey.
         </p>
 
         <img
           src={responsiveResolution.src}
           srcSet={responsiveResolution.srcSet}
         />
-
       </div>
     )
   }
@@ -321,61 +311,56 @@ styles.thumbnail = {
 export default Index
 
 export const pageQuery = graphql`
-query IndexQuery {
-  allImageSharp {
-    edges {
-      node {
-        ... on ImageSharp {
-          resize(width: 125, height: 125, rotate: 180) {
-            src
+  query IndexQuery {
+    allImageSharp {
+      edges {
+        node {
+          ... on ImageSharp {
+            resize(width: 125, height: 125, rotate: 180) {
+              src
+            }
           }
         }
       }
     }
-  }
-  sizes: imageSharp(id: {regex: "/fecolormatrix-kanye-west.jpg/"}) {
-    responsiveSizes(
-      duotone: {
-        highlight: "#f00e2e",
-        shadow: "#192550"
-      },
-      toFormat: PNG,
-    ) {
-      base64
-      aspectRatio
-      src
-      srcSet
-      sizes
-      originalImg
+    sizes: imageSharp(id: { regex: "/fecolormatrix-kanye-west.jpg/" }) {
+      responsiveSizes(
+        duotone: { highlight: "#f00e2e", shadow: "#192550" },
+        toFormat: PNG,
+      ) {
+        base64
+        aspectRatio
+        src
+        srcSet
+        sizes
+        originalImg
+      }
+    }
+    resolution: imageSharp(id: { regex: "/lol.jpg/" }) {
+      responsiveResolution(grayscale: true, width: 614) {
+        src
+        srcSet
+      }
+    }
+    cropDefault: imageSharp(id: { regex: "/gatsby.jpg/" }) {
+      resize(width: 180, height: 180) {
+        src
+      }
+    }
+    cropBottomLeft: imageSharp(id: { regex: "/nyancat/" }) {
+      resize(width: 180, height: 180, cropFocus: SOUTHWEST) {
+        src
+      }
+    }
+    cropEntropy: imageSharp(id: { regex: "/gatsby.jpg/" }) {
+      resize(width: 180, height: 180, cropFocus: ENTROPY) {
+        src
+      }
+    }
+    cropCenter: imageSharp(id: { regex: "/gatsby.jpg/" }) {
+      resize(width: 180, height: 180, cropFocus: CENTER) {
+        src
+      }
     }
   }
-  resolution: imageSharp(id: {regex: "/lol.jpg/"}) {
-    responsiveResolution(
-      grayscale: true,
-      width: 614
-    ) {
-      src
-      srcSet
-    }
-  }
-  cropDefault: imageSharp(id: {regex: "/gatsby.jpg/"}) {
-    resize(width: 180, height: 180) {
-      src
-    }
-  }
-  cropBottomLeft: imageSharp(id: {regex: "/nyancat/"}) {
-    resize(width: 180, height: 180, cropFocus: SOUTHWEST) {
-      src
-    }
-  }
-  cropEntropy: imageSharp(id: {regex: "/gatsby.jpg/"}) {
-    resize(width: 180, height: 180, cropFocus: ENTROPY) {
-      src
-    }
-  }
-  cropCenter: imageSharp(id: {regex: "/gatsby.jpg/"}) {
-    resize(width: 180, height: 180, cropFocus: CENTER) {
-      src
-    }
-  }
-}`
+`

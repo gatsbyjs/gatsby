@@ -81,11 +81,10 @@ const IndexRoute = React.createClass({
             >
               <h3>Bring your own data</h3>
               <p>
-                Gatsby’s rich data plugin ecosystem lets you build sites
-                with the data you want. Integrate data from one or many
-                sources: headless CMSs, SaaS services, APIs, databases, your
-                file system, and more. Pull data directly into your pages using
-                GraphQL.
+                Gatsby’s rich data plugin ecosystem lets you build sites with
+                the data you want. Integrate data from one or many sources:
+                headless CMSs, SaaS services, APIs, databases, your file system,
+                and more. Pull data directly into your pages using GraphQL.
               </p>
             </div>
           </div>
@@ -101,8 +100,8 @@ const IndexRoute = React.createClass({
                 Gatsby.js is Internet Scale. Forget complicated deploys with
                 databases and servers and their expensive, time-consuming setup
                 costs, maintenance, and scaling fears. Gatsby.js builds your
-                site as “static” files which can be deployed easily on dozens
-                of services.
+                site as “static” files which can be deployed easily on dozens of
+                services.
               </p>
             </div>
             <div
@@ -113,8 +112,8 @@ const IndexRoute = React.createClass({
             >
               <h3>Future-proof your website</h3>
               <p>
-                Don't build a website with last decade's tech. The future of
-                the web is mobile, JavaScript and APIs—the {` `}
+                Don't build a website with last decade's tech. The future of the
+                web is mobile, JavaScript and APIs—the {` `}
                 <a href="https://jamstack.org/">JAMstack</a>. Every website is a
                 web app and every web app is a website. Gatsby.js is the
                 universal JavaScript framework you’ve been waiting for.
@@ -128,14 +127,15 @@ const IndexRoute = React.createClass({
                 [presets.Tablet]: { flex: 1, paddingRight: rhythm(2) },
               }}
             >
-              <h3><em>Static</em> Progessive Web Apps</h3>
+              <h3>
+                <em>Static</em> Progessive Web Apps
+              </h3>
               <p>
                 Gatsby.js is a static PWA (Progressive Web App) generator. You
-                get code and data splitting out-of-the-box. Gatsby loads an
-                HTML file that’s a server rendered version of your React.js
-                page then makes it live with JavaScript. Code and data for
-                other pages get preloaded so clicking around the site feels
-                incredibly fast.
+                get code and data splitting out-of-the-box. Gatsby loads an HTML
+                file that’s a server rendered version of your React.js page then
+                makes it live with JavaScript. Code and data for other pages get
+                preloaded so clicking around the site feels incredibly fast.
               </p>
             </div>
             <div
@@ -147,8 +147,8 @@ const IndexRoute = React.createClass({
               <h3>Speed past the competition</h3>
               <p>
                 Gatsby.js builds the fastest possible website. Instead of slow
-                geography-bound servers, your site is lifted into a global
-                cloud of servers ready to be delivered instantly to your users
+                geography-bound servers, your site is lifted into a global cloud
+                of servers ready to be delivered instantly to your users
                 wherever they are.
               </p>
             </div>
@@ -162,11 +162,11 @@ const IndexRoute = React.createClass({
 export default IndexRoute
 
 export const pageQuery = graphql`
-query Index {
-  site {
-    siteMetadata {
-      title
+  query Index {
+    site {
+      siteMetadata {
+        title
+      }
     }
   }
-}
 `

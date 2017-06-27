@@ -36,7 +36,7 @@ export default DocsTemplate
 
 export const pageQuery = graphql`
   query TemplateDocsQuery($slug: String!) {
-    markdownRemark(fields: { slug: { eq: $slug }}) {
+    markdownRemark(fields: { slug: { eq: $slug } }) {
       fields {
         title
       }

@@ -6,11 +6,7 @@
     "build": "babel src --out-dir . --ignore __tests__",
     "watch": "babel -w src --out-dir . --ignore __tests__"
   },
-  "keywords": [
-    "gatsby",
-    "gatsby-plugin",
-    "json"
-  ],
+  "keywords": ["gatsby", "gatsby-plugin", "json"],
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "license": "MIT",
   "dependencies": {

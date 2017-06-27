@@ -36,18 +36,18 @@ class IndexPage extends React.Component {
 export default IndexPage
 
 export const pageQuery = graphql`
-query PageQuery {
-  allDrupalNodeArticle(sort: { fields: [created], order: DESC }) {
-    edges {
-      node {
-        title
-        nid
-        created(formatString: "DD-MMM-YYYY")
-        author {
-          name
+  query PageQuery {
+    allDrupalNodeArticle(sort: { fields: [created], order: DESC }) {
+      edges {
+        node {
+          title
+          nid
+          created(formatString: "DD-MMM-YYYY")
+          author {
+            name
+          }
         }
       }
     }
   }
-}
 `

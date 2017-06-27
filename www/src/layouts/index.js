@@ -78,9 +78,10 @@ module.exports = React.createClass({
         />
         <div
           css={{
-            borderBottom: this.props.location.pathname !== `/`
-              ? `1px solid ${presets.veryLightPurple}`
-              : ``,
+            borderBottom:
+              this.props.location.pathname !== `/`
+                ? `1px solid ${presets.veryLightPurple}`
+                : ``,
             [presets.Tablet]: {
               position: `fixed`,
               zIndex: `1`,
@@ -262,9 +263,10 @@ module.exports = React.createClass({
             css={{
               ...sidebarStyles,
               [presets.Tablet]: {
-                display: this.props.location.pathname.slice(0, 6) === `/docs/`
-                  ? `block`
-                  : `none`,
+                display:
+                  this.props.location.pathname.slice(0, 6) === `/docs/`
+                    ? `block`
+                    : `none`,
               },
             }}
           >
@@ -276,10 +278,10 @@ module.exports = React.createClass({
             css={{
               ...sidebarStyles,
               [presets.Tablet]: {
-                display: this.props.location.pathname.slice(0, 10) ===
-                  `/tutorial/`
-                  ? `block`
-                  : `none`,
+                display:
+                  this.props.location.pathname.slice(0, 10) === `/tutorial/`
+                    ? `block`
+                    : `none`,
               },
             }}
           >
@@ -289,11 +291,11 @@ module.exports = React.createClass({
             css={{
               paddingLeft: 0,
               [presets.Tablet]: {
-                paddingLeft: this.props.location.pathname.slice(0, 6) ===
-                  `/docs/` ||
+                paddingLeft:
+                  this.props.location.pathname.slice(0, 6) === `/docs/` ||
                   this.props.location.pathname.slice(0, 10) === `/tutorial/`
-                  ? rhythm(10)
-                  : 0,
+                    ? rhythm(10)
+                    : 0,
               },
             }}
           >
@@ -335,9 +337,7 @@ module.exports = React.createClass({
                 fontSize: rhythm(0.9),
               }}
             />
-            <div>
-              Docs
-            </div>
+            <div>Docs</div>
           </Link>
           <Link
             to="/tutorial/"
@@ -355,9 +355,7 @@ module.exports = React.createClass({
                 fontSize: rhythm(1),
               }}
             />
-            <div>
-              Tutorial
-            </div>
+            <div>Tutorial</div>
           </Link>
           <Link
             to="/community/"
@@ -389,9 +387,7 @@ module.exports = React.createClass({
                 left: -4,
               }}
             />
-            <div>
-              Community
-            </div>
+            <div>Community</div>
           </Link>
           <Link
             to="/blog/"
@@ -409,9 +405,7 @@ module.exports = React.createClass({
                 fontSize: rhythm(0.9),
               }}
             />
-            <div>
-              Blog
-            </div>
+            <div>Blog</div>
           </Link>
         </div>
       </div>

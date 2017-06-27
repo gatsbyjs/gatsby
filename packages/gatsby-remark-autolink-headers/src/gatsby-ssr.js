@@ -47,7 +47,9 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   `
 
   return setHeadComponents([
-    <style type="text/css">{styles}</style>,
+    <style type="text/css">
+      {styles}
+    </style>,
     <script dangerouslySetInnerHTML={{ __html: script }} />,
   ])
 }

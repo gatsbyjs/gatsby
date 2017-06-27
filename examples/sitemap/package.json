@@ -10,9 +10,7 @@
     "gatsby-transformer-remark": "next",
     "gatsby-plugin-sitemap": "next"
   },
-  "keywords": [
-    "gatsby"
-  ],
+  "keywords": ["gatsby"],
   "license": "MIT",
   "main": "index.js",
   "scripts": {

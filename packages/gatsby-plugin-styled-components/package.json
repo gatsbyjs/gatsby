@@ -9,11 +9,7 @@
   "devDependencies": {
     "babel-cli": "^6.24.1"
   },
-  "keywords": [
-    "gatsby",
-    "gatsby-plugin",
-    "styled-components"
-  ],
+  "keywords": ["gatsby", "gatsby-plugin", "styled-components"],
   "license": "MIT",
   "main": "index.js",
   "scripts": {

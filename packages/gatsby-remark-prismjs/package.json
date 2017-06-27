@@ -11,12 +11,7 @@
   "devDependencies": {
     "babel-cli": "^6.24.1"
   },
-  "keywords": [
-    "gatsby",
-    "gatsby-plugin",
-    "prismjs",
-    "remark"
-  ],
+  "keywords": ["gatsby", "gatsby-plugin", "prismjs", "remark"],
   "license": "MIT",
   "main": "index.js",
   "scripts": {

@@ -47,7 +47,9 @@ class DefaultLayout extends React.Component {
                   </td>
                   <td style={{ lineHeight: `12pt`, height: `10px` }}>
                     <span className="pagetop">
-                      <b className="hnname"><Link to="/">Hacker News </Link></b>
+                      <b className="hnname">
+                        <Link to="/">Hacker News </Link>
+                      </b>
                       <a href="newest">new</a>
                       {` `}
                       |

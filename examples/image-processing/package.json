@@ -17,10 +17,7 @@
     "typography": "^0.15.8",
     "typography-theme-bootstrap": "^0.15.10"
   },
-  "keywords": [
-    "gatsby",
-    "sharp"
-  ],
+  "keywords": ["gatsby", "sharp"],
   "license": "MIT",
   "main": "n/a",
   "scripts": {

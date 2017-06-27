@@ -13,7 +13,9 @@ class Index extends React.Component {
         <tr className="morespace" style={{ height: `10px` }} />
         <tr>
           <td style={{ paddingLeft: 36 }} className="title">
-            <a href="/page/2/" className="morelink" rel="nofollow">More</a>
+            <a href="/page/2/" className="morelink" rel="nofollow">
+              More
+            </a>
           </td>
         </tr>
       </table>
@@ -25,7 +27,7 @@ export default Index
 
 export const pageQuery = graphql`
   query PageQuery {
-    allHnStory(sort: {fields: [order]}) {
+    allHnStory(sort: { fields: [order] }) {
       edges {
         node {
           ...Story_item

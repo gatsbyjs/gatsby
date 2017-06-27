@@ -31,14 +31,10 @@ class Index extends React.Component {
               Typography.js
             </a>
             {` `}
-            and self-hosted fonts via
-            the{` `}
-            <a href="https://github.com/KyleAMathews/typefaces">
-              Typefaces
-            </a>
+            and self-hosted fonts via the{` `}
+            <a href="https://github.com/KyleAMathews/typefaces">Typefaces</a>
             {` `}
             project.
-
           </h1>
           <ul
             css={{
@@ -77,7 +73,7 @@ class Index extends React.Component {
 export default Index
 
 export const pageQuery = graphql`
-query IndexQuery {
+  query IndexQuery {
     site {
       siteMetadata {
         title
@@ -87,17 +83,8 @@ query IndexQuery {
     }
     allMarkdownRemark(
       limit: 2000,
-      sort: {
-        fields: [frontmatter___date]
-        order: DESC
-      },
-      filter: {
-        frontmatter: {
-          draft: {
-            ne: true
-          }
-        }
-      }
+      sort: { fields: [frontmatter___date], order: DESC },
+      filter: { frontmatter: { draft: { ne: true } } },
     ) {
       edges {
         node {

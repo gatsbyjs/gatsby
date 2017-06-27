@@ -63,22 +63,24 @@ IndexPage.propTypes = propTypes
 export default IndexPage
 
 export const pageQuery = graphql`
-query PageQuery {
-  allContentfulProduct {
-    edges {
-      node {
-        id
-        productName { productName }
-        image {
-          responsiveResolution(width: 75) {
-            src
-            srcSet
-            height
-            width
+  query PageQuery {
+    allContentfulProduct {
+      edges {
+        node {
+          id
+          productName {
+            productName
+          }
+          image {
+            responsiveResolution(width: 75) {
+              src
+              srcSet
+              height
+              width
+            }
           }
         }
       }
     }
   }
-}
 `

@@ -7,10 +7,7 @@
     "babel-cli": "^6.24.1",
     "graphql": "^0.10.3"
   },
-  "keywords": [
-    "gatsby",
-    "graphql"
-  ],
+  "keywords": ["gatsby", "graphql"],
   "license": "MIT",
   "main": "dist/index.js",
   "scripts": {

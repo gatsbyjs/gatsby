@@ -104,7 +104,9 @@ function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
 
 const AltRouter = apiRunner(`replaceRouterComponent`, { history })[0]
 const DefaultRouter = ({ children }) =>
-  <Router history={history}>{children}</Router>
+  <Router history={history}>
+    {children}
+  </Router>
 
 const loadLayout = cb => {
   if (asyncRequires.layouts[`index`]) {
@@ -113,7 +115,11 @@ const loadLayout = cb => {
       cb(module)
     })
   } else {
-    cb(props => <div>{props.children()}</div>)
+    cb(props =>
+      <div>
+        {props.children()}
+      </div>
+    )
   }
 }
 

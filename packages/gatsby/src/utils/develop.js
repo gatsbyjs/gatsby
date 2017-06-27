@@ -112,18 +112,18 @@ async function startServer(program) {
         const opn = require(`opn`)
         opn(`http://${listener.address().address}:${listener.address().port}`)
       }
-      const host = listener.address().address === `127.0.0.1`
-        ? `localhost`
-        : listener.address().address
+      const host =
+        listener.address().address === `127.0.0.1`
+          ? `localhost`
+          : listener.address().address
     }
   })
 }
 
 module.exports = (program: any) => {
   const detect = require(`detect-port`)
-  const port = typeof program.port === `string`
-    ? parseInt(program.port, 10)
-    : program.port
+  const port =
+    typeof program.port === `string` ? parseInt(program.port, 10) : program.port
 
   detect(port, (err, _port) => {
     if (err) {

@@ -58,7 +58,6 @@ class BlogPostRoute extends React.Component {
             }}
           >
             {post.timeToRead} min read &middot; {tagsSection}
-
           </p>
         </header>
         <div dangerouslySetInnerHTML={{ __html: post.html }} className="post" />
@@ -119,26 +118,32 @@ class BlogPostRoute extends React.Component {
 export default BlogPostRoute
 
 export const pageQuery = graphql`
-query BlogPostBySlug($slug: String!) {
-  markdownRemark(fields: { slug: { eq: $slug }}) {
-    html
-    timeToRead
-    fields {
-      tagSlugs
-    }
-    frontmatter {
-      title
-      tags
-      date(formatString: "MMMM DD, YYYY")
-      author {
-        id
-        bio
-        avatar {
-          children {
-            ... on ImageSharp {
-              responsiveResolution(width: 50, height: 50, quality: 75, grayscale:true) {
-                src
-                srcSet
+  query BlogPostBySlug($slug: String!) {
+    markdownRemark(fields: { slug: { eq: $slug } }) {
+      html
+      timeToRead
+      fields {
+        tagSlugs
+      }
+      frontmatter {
+        title
+        tags
+        date(formatString: "MMMM DD, YYYY")
+        author {
+          id
+          bio
+          avatar {
+            children {
+              ... on ImageSharp {
+                responsiveResolution(
+                  width: 50,
+                  height: 50,
+                  quality: 75,
+                  grayscale: true,
+                ) {
+                  src
+                  srcSet
+                }
               }
             }
           }
@@ -146,5 +151,4 @@ query BlogPostBySlug($slug: String!) {
       }
     }
   }
-}
 `
