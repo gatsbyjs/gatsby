@@ -4,6 +4,7 @@ const _ = require(`lodash`)
 const { connectionFromArray } = require(`graphql-skip-limit`)
 const { store } = require(`../redux/`)
 const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
+const prepareRegex = require(`./prepare-regex`)
 
 type Node = {
   id: String,
@@ -23,9 +24,7 @@ module.exports = ({ args, nodes, connection = false, path = `` }) => {
       } else {
         // Compile regex first.
         if (k === `regex`) {
-          const exploded = v.split(`/`)
-          const regex = new RegExp(exploded[1], exploded[2])
-          newObject[`$regex`] = regex
+          newObject[`$regex`] = prepareRegex(v)
         } else if (k === `glob`) {
           const Minimatch = require(`minimatch`).Minimatch
           const mm = new Minimatch(v)
