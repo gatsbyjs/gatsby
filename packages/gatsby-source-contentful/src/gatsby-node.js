@@ -105,7 +105,7 @@ exports.sourceNodes = async (
   console.log(`Deleted entries `, currentSyncData.deletedEntries.length)
   console.log(`Updated assets `, currentSyncData.assets.length)
   console.log(`Deleted assets `, currentSyncData.deletedAssets.length)
-  console.timeEnd(`fetch Contentful data`)
+  console.timeEnd(`Fetch Contentful data`)
 
   // Update syncToken
   const nextSyncToken = currentSyncData.nextSyncToken
