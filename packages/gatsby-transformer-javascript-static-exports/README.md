@@ -47,16 +47,14 @@ You'd be able to query your letters like:
   allJsFrontmatter {
     edges {
       node {
-        exportsData {
+        data {
           JSFrontmatter
-          data {
-            path
-            title
-            written
-            category
-            description
-            updated
-          }
+          path
+          title
+          written
+          category
+          description
+          updated
         }
       }
     }
@@ -73,16 +71,14 @@ Which would return something like:
       "edges": [
         {
           "node": {
-            "exportsData": {
+            "data": {
               "JSFrontmatter": "filled",
-              "data": {
-                "path": "choropleth-on-d3v4",
-                "title": "Choropleth on d3v4",
-                "written": "2017-03-09",
-                "category": "data science",
-                "description": "Things about the choropleth.",
-                "updated": null
-              }
+              "path": "choropleth-on-d3v4",
+              "title": "Choropleth on d3v4",
+              "written": "2017-03-09",
+              "category": "data science",
+              "description": "Things about the choropleth.",
+              "updated": null
             }
           }
         }
