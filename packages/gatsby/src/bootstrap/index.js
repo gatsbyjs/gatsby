@@ -305,6 +305,11 @@ data
   await writePages()
   console.timeEnd(`write out pages modules`)
 
+  // Update Schema for SitePage.
+  console.time(`Updating schema`)
+  await require(`../schema`)()
+  console.timeEnd(`Updating schema`)
+
   const checkJobsDone = _.debounce(resolve => {
     const state = store.getState()
     if (state.jobs.active.length === 0) {
