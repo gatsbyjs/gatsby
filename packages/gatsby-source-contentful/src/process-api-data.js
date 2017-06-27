@@ -9,7 +9,7 @@ const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 exports.buildForeignReferenceMap = ({
   contentTypeItems,
   entryList,
-  notResolvable,
+  resolvable,
   defaultLocale,
 }) => {
   const foreignReferenceMap = {}
@@ -18,42 +18,44 @@ exports.buildForeignReferenceMap = ({
     entryList[i].forEach(entryItem => {
       const entryItemFields = entryItem.fields
       Object.keys(entryItemFields).forEach(entryItemFieldKey => {
-        let entryItemFieldValue =
-          entryItemFields[entryItemFieldKey][defaultLocale]
-        if (Array.isArray(entryItemFieldValue)) {
-          if (
-            entryItemFieldValue[0].sys &&
-            entryItemFieldValue[0].sys.type &&
-            entryItemFieldValue[0].sys.id
-          ) {
-            entryItemFieldValue.forEach(v => {
-              // Don't create link to an unresolvable field.
-              if (notResolvable.has(v.sys.id)) {
-                return
-              }
+        if (entryItemFields[entryItemFieldKey][defaultLocale]) {
+          let entryItemFieldValue =
+            entryItemFields[entryItemFieldKey][defaultLocale]
+          if (Array.isArray(entryItemFieldValue)) {
+            if (
+              entryItemFieldValue[0].sys &&
+              entryItemFieldValue[0].sys.type &&
+              entryItemFieldValue[0].sys.id
+            ) {
+              entryItemFieldValue.forEach(v => {
+                // Don't create link to an unresolvable field.
+                if (!resolvable.has(v.sys.id)) {
+                  return
+                }
 
-              if (!foreignReferenceMap[v.sys.id]) {
-                foreignReferenceMap[v.sys.id] = []
-              }
-              foreignReferenceMap[v.sys.id].push({
-                name: `${contentTypeItemId}___NODE`,
-                id: entryItem.sys.id,
+                if (!foreignReferenceMap[v.sys.id]) {
+                  foreignReferenceMap[v.sys.id] = []
+                }
+                foreignReferenceMap[v.sys.id].push({
+                  name: `${contentTypeItemId}___NODE`,
+                  id: entryItem.sys.id,
+                })
               })
+            }
+          } else if (
+            entryItemFieldValue.sys &&
+            entryItemFieldValue.sys.type &&
+            entryItemFieldValue.sys.id &&
+            resolvable.has(entryItemFieldValue.sys.id)
+          ) {
+            if (!foreignReferenceMap[entryItemFieldValue.sys.id]) {
+              foreignReferenceMap[entryItemFieldValue.sys.id] = []
+            }
+            foreignReferenceMap[entryItemFieldValue.sys.id].push({
+              name: `${contentTypeItemId}___NODE`,
+              id: entryItem.sys.id,
             })
           }
-        } else if (
-          entryItemFieldValue.sys &&
-          entryItemFieldValue.sys.type &&
-          entryItemFieldValue.sys.id &&
-          !notResolvable.has(entryItemFieldValue.sys.id)
-        ) {
-          if (!foreignReferenceMap[entryItemFieldValue.sys.id]) {
-            foreignReferenceMap[entryItemFieldValue.sys.id] = []
-          }
-          foreignReferenceMap[entryItemFieldValue.sys.id].push({
-            name: `${contentTypeItemId}___NODE`,
-            id: entryItem.sys.id,
-          })
         }
       })
     })
@@ -63,16 +65,17 @@ exports.buildForeignReferenceMap = ({
 }
 
 function createTextNode(node, key, text, createNode) {
+  const str = _.isString(text) ? text : ` `
   const textNode = {
     id: `${node.id}${key}TextNode`,
     parent: node.id,
     children: [],
-    [key]: text,
+    [key]: str,
     internal: {
       type: _.camelCase(`${node.internal.type} ${key} TextNode`),
       mediaType: `text/x-markdown`,
-      content: text,
-      contentDigest: digest(text),
+      content: str,
+      contentDigest: digest(str),
     },
   }
 
@@ -89,7 +92,7 @@ exports.createContentTypeNodes = ({
   conflictFieldPrefix,
   entries,
   createNode,
-  notResolvable,
+  resolvable,
   foreignReferenceMap,
   defaultLocale,
 }) => {
@@ -120,31 +123,33 @@ exports.createContentTypeNodes = ({
 
     // Add linkages to other nodes based on foreign references
     Object.keys(entryItemFields).forEach(entryItemFieldKey => {
-      const entryItemFieldValue =
-        entryItemFields[entryItemFieldKey][defaultLocale]
-      if (Array.isArray(entryItemFieldValue)) {
-        if (
-          entryItemFieldValue[0].sys &&
-          entryItemFieldValue[0].sys.type &&
-          entryItemFieldValue[0].sys.id
-        ) {
-          entryItemFields[
-            `${entryItemFieldKey}___NODE`
-          ] = entryItemFieldValue
-            .filter(v => !notResolvable.has(v.sys.id))
-            .map(v => v.sys.id)
+      if (entryItemFields[entryItemFieldKey][defaultLocale]) {
+        const entryItemFieldValue =
+          entryItemFields[entryItemFieldKey][defaultLocale]
+        if (Array.isArray(entryItemFieldValue)) {
+          if (
+            entryItemFieldValue[0].sys &&
+            entryItemFieldValue[0].sys.type &&
+            entryItemFieldValue[0].sys.id
+          ) {
+            entryItemFields[
+              `${entryItemFieldKey}___NODE`
+            ] = entryItemFieldValue
+              .filter(v => resolvable.has(v.sys.id))
+              .map(v => v.sys.id)
 
+            delete entryItemFields[entryItemFieldKey]
+          }
+        } else if (
+          entryItemFieldValue.sys &&
+          entryItemFieldValue.sys.type &&
+          entryItemFieldValue.sys.id &&
+          resolvable.has(entryItemFieldValue.sys.id)
+        ) {
+          entryItemFields[`${entryItemFieldKey}___NODE`] =
+            entryItemFieldValue.sys.id
           delete entryItemFields[entryItemFieldKey]
         }
-      } else if (
-        entryItemFieldValue.sys &&
-        entryItemFieldValue.sys.type &&
-        entryItemFieldValue.sys.id &&
-        !notResolvable.has(entryItemFieldValue.sys.id)
-      ) {
-        entryItemFields[`${entryItemFieldKey}___NODE`] =
-          entryItemFieldValue.sys.id
-        delete entryItemFields[entryItemFieldKey]
       }
     })
 
@@ -251,8 +256,10 @@ exports.createAssetNodes = ({ assetItem, createNode, defaultLocale }) => {
   // Create a node for each asset. They may be referenced by Entries
   assetItem.fields = {
     file: assetItem.fields.file[defaultLocale],
-    title: assetItem.fields.title[defaultLocale],
-    description: assetItem.fields.description[defaultLocale],
+    title: assetItem.fields.title ? assetItem.fields.title[defaultLocale] : ``,
+    description: assetItem.fields.description
+      ? assetItem.fields.description[defaultLocale]
+      : ``,
   }
   const assetNode = {
     id: assetItem.sys.id,
