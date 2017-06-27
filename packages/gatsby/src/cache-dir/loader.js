@@ -65,9 +65,10 @@ const fetchResource = (resourceName, cb = () => {}) => {
     })
   } else {
     // Find resource
-    const resourceFunction = resourceName.slice(0, 6) === `page-c`
-      ? asyncRequires.components[resourceName]
-      : asyncRequires.json[resourceName]
+    const resourceFunction =
+      resourceName.slice(0, 6) === `page-c`
+        ? asyncRequires.components[resourceName]
+        : asyncRequires.json[resourceName]
 
     // Download the resource
     resourceFunction((err, executeChunk) => {

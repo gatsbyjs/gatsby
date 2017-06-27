@@ -63,7 +63,9 @@ class BlogPostsIndex extends React.Component {
                       lineHeight: 1.1,
                     }}
                   >
-                    <small>{post.frontmatter.author.id}</small>
+                    <small>
+                      {post.frontmatter.author.id}
+                    </small>
                   </div>
                   <div
                     css={{
@@ -71,7 +73,11 @@ class BlogPostsIndex extends React.Component {
                       lineHeight: 1.1,
                     }}
                   >
-                    <small><em>{post.frontmatter.date}</em></small>
+                    <small>
+                      <em>
+                        {post.frontmatter.date}
+                      </em>
+                    </small>
                   </div>
                 </div>
               </div>
@@ -86,31 +92,34 @@ class BlogPostsIndex extends React.Component {
 export default BlogPostsIndex
 
 export const pageQuery = graphql`
-query BlogPostsIndexQuery {
-  allMarkdownRemark(
-    sort: { order: DESC, fields: [frontmatter___date] },
-    filter: {
-      frontmatter: { draft: { ne: true } },
-      fileAbsolutePath: { regex: "/blog/" }
-    }
-  ) {
-    edges {
-      node {
-        excerpt
-        fields { slug }
-        frontmatter {
+  query BlogPostsIndexQuery {
+    allMarkdownRemark(
+      sort: { order: DESC, fields: [frontmatter___date] },
+      filter: {
+        frontmatter: { draft: { ne: true } },
+        fileAbsolutePath: { regex: "/blog/" },
+      },
+    ) {
+      edges {
+        node {
           excerpt
-          title
-          date(formatString: "DD MMMM, YYYY")
-          author {
-            id
-            avatar {
-              childImageSharp {
-                responsiveResolution(width: 35, height: 35) {
-                  width
-                  height
-                  src
-                  srcSet
+          fields {
+            slug
+          }
+          frontmatter {
+            excerpt
+            title
+            date(formatString: "DD MMMM, YYYY")
+            author {
+              id
+              avatar {
+                childImageSharp {
+                  responsiveResolution(width: 35, height: 35) {
+                    width
+                    height
+                    src
+                    srcSet
+                  }
                 }
               }
             }
@@ -119,5 +128,4 @@ query BlogPostsIndexQuery {
       }
     }
   }
-}
 `

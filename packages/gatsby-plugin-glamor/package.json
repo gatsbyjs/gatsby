@@ -13,11 +13,7 @@
   "devDependencies": {
     "babel-cli": "^6.24.1"
   },
-  "keywords": [
-    "gatsby",
-    "gatsby-plugin",
-    "glamor"
-  ],
+  "keywords": ["gatsby", "gatsby-plugin", "glamor"],
   "license": "MIT",
   "main": "index.js",
   "scripts": {

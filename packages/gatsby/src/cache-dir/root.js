@@ -70,14 +70,19 @@ window.___navigateTo = navigateTo
 
 const AltRouter = apiRunner(`replaceRouterComponent`, { history })[0]
 const DefaultRouter = ({ children }) =>
-  <Router history={history}>{children}</Router>
+  <Router history={history}>
+    {children}
+  </Router>
 
 // Use default layout if one isn't set.
 let layout
 if (syncRequires.layouts[`index`]) {
   layout = syncRequires.layouts[`index`]
 } else {
-  layout = ({ children }) => <div>{children()}</div>
+  layout = ({ children }) =>
+    <div>
+      {children()}
+    </div>
 }
 
 // Always have to have one top-level layout

@@ -16,9 +16,7 @@
     "typography": "^0.15.8",
     "typography-breakpoint-constants": "^0.14.0"
   },
-  "keywords": [
-    "gatsby"
-  ],
+  "keywords": ["gatsby"],
   "license": "MIT",
   "main": "n/a",
   "scripts": {

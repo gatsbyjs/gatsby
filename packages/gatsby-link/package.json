@@ -8,10 +8,7 @@
     "build": "babel src --out-dir .",
     "watch": "babel -w src --out-dir ."
   },
-  "keywords": [
-    "gatsby",
-    "gatsby-component"
-  ],
+  "keywords": ["gatsby", "gatsby-component"],
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "license": "MIT",
   "devDependencies": {

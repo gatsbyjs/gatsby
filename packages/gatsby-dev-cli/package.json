@@ -23,9 +23,7 @@
     "build": "babel src --out-dir dist --presets es2015",
     "watch": "babel -w src --out-dir dist --presets es2015"
   },
-  "keywords": [
-    "gatsby"
-  ],
+  "keywords": ["gatsby"],
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "license": "MIT"
 }

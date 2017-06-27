@@ -10,28 +10,22 @@ class IndexRoute extends React.Component {
   render() {
     return (
       <Container>
-        <h1 css={{ marginTop: 0 }}>
-          Get started
-        </h1>
-        <p>
-          Gatsby is a blazing fast static site generator for React.
-        </p>
+        <h1 css={{ marginTop: 0 }}>Get started</h1>
+        <p>Gatsby is a blazing fast static site generator for React.</p>
         <h2>Install Gatsby's command line tool</h2>
         <p>
-          <code>
-            npm install -g gatsby@next
-          </code>
+          <code>npm install -g gatsby@next</code>
         </p>
         <h2>Using the Gatsby CLI</h2>
         <ol>
           <li>
             Create a new site (with the blog starter).
             {` `}
-            <code>
-              gatsby new test gatsbyjs/gatsby-starter-blog#1.0
-            </code>
+            <code>gatsby new test gatsbyjs/gatsby-starter-blog#1.0</code>
           </li>
-          <li><code>cd beta-test-gatsby-site</code></li>
+          <li>
+            <code>cd beta-test-gatsby-site</code>
+          </li>
           <li>
             <code>gatsby develop</code> — Gatsby will start a hot-reloading
             development environment accessible at <code>localhost:8000</code>
@@ -46,7 +40,8 @@ class IndexRoute extends React.Component {
           Part one of what will be a 4-part tutorial is finished. It walks you
           through building a Gatsby site from scratch to a finished polished
           site.
-          {` `}<Link to="/tutorial/">Go to the tutorial</Link>.
+          {` `}
+          <Link to="/tutorial/">Go to the tutorial</Link>.
         </p>
         <div
           css={{

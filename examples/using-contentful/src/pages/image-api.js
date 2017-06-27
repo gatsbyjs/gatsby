@@ -59,10 +59,10 @@ export default props => {
 
       <h2>Responsive Resolution</h2>
       <p>
-        If you make queries with <code>responsiveResolution</code> then
-        Gatsby automatically generates images with 1x, 1.5x, 2x, and 3x versions
-        so your images look great on whatever screen resolution of device
-        they're on.
+        If you make queries with <code>responsiveResolution</code> then Gatsby
+        automatically generates images with 1x, 1.5x, 2x, and 3x versions so
+        your images look great on whatever screen resolution of device they're
+        on.
       </p>
       <p>
         If you're on a retina class screen, notice how much sharper these images
@@ -114,7 +114,8 @@ export default props => {
       <h2>Resizing</h2>
       <p>
         On both resize and responsiveResolution you can also add a{` `}
-        <code>height</code>{` `}
+        <code>height</code>
+        {` `}
         argument to the GraphQL argument to crop the image to a certain size.
       </p>
       <p>
@@ -172,14 +173,13 @@ export default props => {
       <p>
         This GraphQL option allows you to generate responsive images that
         automatically respond to different device screen resolution and widths.
-        E.g. a smartphone
-        browser will download a much smaller image than a desktop device.
+        E.g. a smartphone browser will download a much smaller image than a
+        desktop device.
       </p>
       <p>
         Instead of specifying a width and height, with responsiveSizes you
-        specify
-        a <code>maxWidth</code>, the max width the container of the images
-        reaches.
+        specify a <code>maxWidth</code>, the max width the container of the
+        images reaches.
       </p>
       {assets.map(({ node: { title, responsiveSizes } }) =>
         <img
@@ -220,36 +220,36 @@ export default props => {
 }
 
 export const pageQuery = graphql`
-query ImageAPIExamples {
-  allContentfulAsset {
-    edges {
-      node {
-        title
-        resize(width: 100) {
-          src
-          width
-          height
-          aspectRatio
-        }
-        responsiveResolution(width: 100) {
-          width
-          height
-          src
-          srcSet
-        }
-        resizing: responsiveResolution(width: 100, height: 100) {
-          width
-          height
-          src
-          srcSet
-        }
-        responsiveSizes(maxWidth: 613) {
-          sizes
-          src
-          srcSet
+  query ImageAPIExamples {
+    allContentfulAsset {
+      edges {
+        node {
+          title
+          resize(width: 100) {
+            src
+            width
+            height
+            aspectRatio
+          }
+          responsiveResolution(width: 100) {
+            width
+            height
+            src
+            srcSet
+          }
+          resizing: responsiveResolution(width: 100, height: 100) {
+            width
+            height
+            src
+            srcSet
+          }
+          responsiveSizes(maxWidth: 613) {
+            sizes
+            src
+            srcSet
+          }
         }
       }
     }
   }
-}
 `

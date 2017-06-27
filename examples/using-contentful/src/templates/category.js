@@ -31,9 +31,13 @@ class CategoryTemplate extends React.Component {
             src={iconImg.src}
             srcSet={iconImg.srcSet}
           />
-          <h4 style={{ marginBottom: 0 }}>{title}</h4>
+          <h4 style={{ marginBottom: 0 }}>
+            {title}
+          </h4>
         </div>
-        <h1>{title}</h1>
+        <h1>
+          {title}
+        </h1>
         <div>
           <span>Products</span>
           <ul>
@@ -59,7 +63,9 @@ export default CategoryTemplate
 export const pageQuery = graphql`
   query categoryQuery($id: String!) {
     contentfulCategory(id: { eq: $id }) {
-      title { title }
+      title {
+        title
+      }
       icon {
         responsiveResolution(width: 75) {
           src
@@ -70,7 +76,9 @@ export const pageQuery = graphql`
       }
       product {
         id
-        productName { productName }
+        productName {
+          productName
+        }
       }
     }
   }
