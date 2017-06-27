@@ -105,7 +105,7 @@ exports.sourceNodes = async (
   console.log(`Deleted entries `, currentSyncData.deletedEntries.length)
   console.log(`Updated assets `, currentSyncData.assets.length)
   console.log(`Deleted assets `, currentSyncData.deletedAssets.length)
-  console.timeEnd(`fetch Contentful data`)
+  console.timeEnd(`Fetch Contentful data`)
 
   // Update syncToken
   const nextSyncToken = currentSyncData.nextSyncToken
@@ -117,33 +117,30 @@ exports.sourceNodes = async (
     },
   })
 
-  // Create map of not resolvable ids so we can filter them out while creating
+  // Create map of resolvable ids so we can check links against them while creating
   // links.
-  const notResolvable = new Map()
-  entryList.forEach(ents => {
-    if (ents.errors) {
-      ents.errors.forEach(error => {
-        if (error.sys.id === `notResolvable`) {
-          notResolvable.set(error.details.id, error.details)
-        }
-      })
-    }
+  const resolvable = new Set()
+  existingNodes.forEach(n => resolvable.add(n.id))
+
+  const newOrUpdatedEntries = []
+  entryList.forEach(entries => {
+    entries.forEach(entry => {
+      newOrUpdatedEntries.push(entry.sys.id)
+      resolvable.add(entry.sys.id)
+    })
   })
+  assets.forEach(assetItem => resolvable.add(assetItem.sys.id))
 
   // Build foreign reference map before starting to insert any nodes
   const foreignReferenceMap = processAPIData.buildForeignReferenceMap({
     contentTypeItems,
     entryList,
-    notResolvable,
+    resolvable,
     defaultLocale,
   })
 
   // Update existing entry nodes that weren't updated but that need reverse
   // links added.
-  const newOrUpdatedEntries = []
-  entryList.forEach(entries =>
-    entries.forEach(entry => newOrUpdatedEntries.push(entry.sys.id))
-  )
   Object.keys(foreignReferenceMap)
   existingNodes
     .filter(n => _.includes(newOrUpdatedEntries, n.id))
@@ -171,7 +168,7 @@ exports.sourceNodes = async (
       conflictFieldPrefix,
       entries: entryList[i],
       createNode,
-      notResolvable,
+      resolvable,
       foreignReferenceMap,
       defaultLocale,
     })
