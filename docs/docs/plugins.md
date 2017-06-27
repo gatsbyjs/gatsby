@@ -86,6 +86,7 @@ you can place the files in a `src` subfolder and build them to the plugin folder
 * [gatsby-plugin-react-helmet](/docs/packages/gatsby-plugin-react-helmet/)
 * [gatsby-plugin-sass](/docs/packages/gatsby-plugin-sass/)
 * [gatsby-plugin-sharp](/docs/packages/gatsby-plugin-sharp/)
+* [gatsby-plugin-sitemap](/docs/packages/gatsby-plugin-sitemap/)
 * [gatsby-plugin-styled-components](/docs/packages/gatsby-plugin-styled-components/)
 * [gatsby-plugin-typescript](/docs/packages/gatsby-plugin-typescript/)
 * [gatsby-remark-autolink-headers](/docs/packages/gatsby-remark-autolink-headers/)
