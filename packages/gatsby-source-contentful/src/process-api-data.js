@@ -229,12 +229,9 @@ exports.createContentTypeNodes = ({
             entryItemFieldValue.sys.id &&
             resolvable.has(entryItemFieldValue.sys.id)
           ) {
-            // Check if there's a localized linked field otherwise just use
-            // default.
-            const linkedId = resolvable.has(mId(entryItemFieldValue.sys.id))
-              ? mId(entryItemFieldValue.sys.id)
-              : entryItemFieldValue.sys.id
-            entryItemFields[`${entryItemFieldKey}___NODE`] = linkedId
+            entryItemFields[`${entryItemFieldKey}___NODE`] = mId(
+              entryItemFieldValue.sys.id
+            )
             delete entryItemFields[entryItemFieldKey]
           }
         }
