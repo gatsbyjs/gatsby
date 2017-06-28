@@ -19,7 +19,7 @@
     "gatsby-remark-copy-linked-files": "next",
     "gatsby-remark-prismjs": "next",
     "gatsby-remark-responsive-iframe": "next",
-    "gatsby-remark-responsive-image": "next",
+    "gatsby-remark-build-images": "next",
     "gatsby-remark-smartypants": "next",
     "gatsby-source-filesystem": "next",
     "gatsby-transformer-documentationjs": "next",

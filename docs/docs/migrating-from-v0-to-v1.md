@@ -87,7 +87,7 @@ Here's an example of migrating a markdown wrapper to Gatsby v1.
 
 Install Gatsby plugins for handling markdown files.
 
-`npm install --save gatsby-source-filesystem@next gatsby-transformer-remark@next gatsby-remark-copy-linked-files@next gatsby-remark-prismjs@next gatsby-remark-responsive-iframe@next gatsby-remark-responsive-image@next gatsby-remark-smartypants@next gatsby-plugin-sharp@next`
+`npm install --save gatsby-source-filesystem@next gatsby-transformer-remark@next gatsby-remark-copy-linked-files@next gatsby-remark-prismjs@next gatsby-remark-responsive-iframe@next gatsby-remark-build-images@next gatsby-remark-smartypants@next gatsby-plugin-sharp@next`
 
 Next add them to your `gatsby-config.js` file. Make your config file look something
 like the following:
@@ -110,7 +110,7 @@ module.exports = {
       options: {
         plugins: [
           {
-            resolve: `gatsby-remark-responsive-image`,
+            resolve: `gatsby-remark-build-images`,
             options: {
               maxWidth: 690,
             },

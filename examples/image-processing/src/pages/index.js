@@ -183,8 +183,8 @@ class Index extends React.Component {
           {` `}
           (and also available as a Gatsby plugin for Markdown content as
           {` `}
-          <a href="https://www.gatsbyjs.org/docs/packages/gatsby-remark-responsive-image/">
-            gatsby-remark-responsive-image
+          <a href="https://www.gatsbyjs.org/docs/packages/gatsby-remark-build-images/">
+            gatsby-remark-build-images
           </a>).
         </p>
         <p>

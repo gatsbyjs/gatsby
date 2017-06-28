@@ -1,6 +1,8 @@
-# gatsby-remark-responsive-image
+# gatsby-remark-build-images
 
-Make images in markdown responsive by:
+Processes images in markdown so they can be used in the production build.
+
+In the processing, it make images responsive by:
 
 * Adding an elastic container to hold the size of the image while it
   loads to avoid layout jumps.
@@ -13,7 +15,7 @@ Make images in markdown responsive by:
 
 ## Install
 
-`npm install --save gatsby-remark-responsive-image`
+`npm install --save gatsby-remark-build-images`
 
 ## How to use
 
@@ -25,7 +27,7 @@ plugins: [
     options: {
       plugins: [
         {
-          resolve: `gatsby-remark-responsive-image`,
+          resolve: `gatsby-remark-build-images`,
           options: {
             // It's important to specify the maxWidth (in pixels) of
             // the content container as this plugin uses this as the

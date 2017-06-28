@@ -64,7 +64,7 @@ const options = {
         background: `${colors.smoke}`,
         height: `2px`,
       },
-      // Style gatsby-remark-responsive-image elements.
+      // Style gatsby-remark-build-images elements.
       ".gatsby-resp-image-link": {
         boxShadow: `none`,
       },
