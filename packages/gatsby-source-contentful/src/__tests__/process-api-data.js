@@ -24,6 +24,8 @@ describe(`Process contentful data`, () => {
   it(`builds list of resolvable data`, () => {
     resolvable = processAPIData.buildResolvableSet({
       entryList,
+      defaultLocale,
+      currentLocale: defaultLocale,
     })
     expect(resolvable).toMatchSnapshot()
   })
@@ -34,6 +36,7 @@ describe(`Process contentful data`, () => {
       entryList,
       resolvable,
       defaultLocale,
+      currentLocale: defaultLocale,
     })
     expect(foreignReferenceMap).toMatchSnapshot()
   })
@@ -50,6 +53,7 @@ describe(`Process contentful data`, () => {
         resolvable,
         foreignReferenceMap,
         defaultLocale,
+        currentLocale: defaultLocale,
       })
     })
     expect(createNode.mock.calls).toMatchSnapshot()
@@ -59,7 +63,12 @@ describe(`Process contentful data`, () => {
     const createNode = jest.fn()
     const assets = currentSyncData.assets
     assets.forEach(assetItem => {
-      processAPIData.createAssetNodes({ assetItem, createNode, defaultLocale })
+      processAPIData.createAssetNodes({
+        assetItem,
+        createNode,
+        defaultLocale,
+        currentLocale: defaultLocale,
+      })
     })
     expect(createNode.mock.calls).toMatchSnapshot()
   })
@@ -71,5 +80,58 @@ describe(`Fix contentful IDs`, () => {
   })
   it(`left pads ids that start with a number of a "c"`, () => {
     expect(processAPIData.fixId(`123`)).toEqual(`c123`)
+  })
+})
+
+describe(`Gets field value based on current locale`, () => {
+  const field = {
+    de: "Playsam Streamliner Klassisches Auto, Espresso",
+    "en-US": "Playsam Streamliner Classic Car, Espresso",
+  }
+  it(`Gets the specified locale`, () => {
+    expect(
+      processAPIData.getLocalizedField({
+        field,
+        defaultLocale: `en-US`,
+        currentLocale: `en-US`,
+      })
+    ).toBe(field[`en-US`])
+    expect(
+      processAPIData.getLocalizedField({
+        field,
+        defaultLocale: `en-US`,
+        currentLocale: `de`,
+      })
+    ).toBe(field[`de`])
+  })
+  it(`falls back to the default locale if passed a locale that doesn't exist`, () => {
+    expect(
+      processAPIData.getLocalizedField({
+        field,
+        defaultLocale: `en-US`,
+        currentLocale: `en_GB`,
+      })
+    ).toBe(field[`en-US`])
+  })
+})
+
+describe(`Make IDs`, () => {
+  it(`It doesn't postfix the id if its the default locale`, () => {
+    expect(
+      processAPIData.makeId({
+        id: `id`,
+        defaultLocale: `en-US`,
+        currentLocale: `en-US`,
+      })
+    ).toBe(`id`)
+  })
+  it(`It does postfix the id if its not the default locale`, () => {
+    expect(
+      processAPIData.makeId({
+        id: `id`,
+        defaultLocale: `en-US`,
+        currentLocale: `en-GB`,
+      })
+    ).toBe(`id en-GB`)
   })
 })

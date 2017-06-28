@@ -77,6 +77,8 @@ exports.sourceNodes = async (
     existingNodes,
     entryList,
     assets,
+    currentLocale,
+    defaultLocale: currentLocale,
   })
 
   // Build foreign reference map before starting to insert any nodes
@@ -85,6 +87,7 @@ exports.sourceNodes = async (
     entryList,
     resolvable,
     defaultLocale,
+    currentLocale: defaultLocale,
   })
 
   const newOrUpdatedEntries = []
@@ -126,11 +129,17 @@ exports.sourceNodes = async (
       resolvable,
       foreignReferenceMap,
       defaultLocale,
+      currentLocale: defaultLocale,
     })
   })
 
   assets.forEach(assetItem => {
-    processAPIData.createAssetNodes({ assetItem, createNode, defaultLocale })
+    processAPIData.createAssetNodes({
+      assetItem,
+      createNode,
+      defaultLocale,
+      currentLocale: defaultLocale,
+    })
   })
 
   return

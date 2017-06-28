@@ -6,6 +6,19 @@ const digest = str => crypto.createHash(`md5`).update(str).digest(`hex`)
 const typePrefix = `Contentful`
 const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 
+const getLocalizedField = ({ field, defaultLocale, currentLocale }) => {
+  if (field[currentLocale]) {
+    return field[currentLocale]
+  } else {
+    return field[defaultLocale]
+  }
+}
+
+const makeGetLocalizedField = ({ currentLocale, defaultLocale }) => field =>
+  getLocalizedField({ field, currentLocale, defaultLocale })
+
+exports.getLocalizedField = getLocalizedField
+
 // If the id starts with a number, left-pad it with a c (for Contentful of
 // course :-))
 const fixId = id => {
@@ -27,11 +40,16 @@ const mapValuesDeep = (v, k, callback) => {
   }
 }
 
-exports.fixIds = object => {
-  return mapValuesDeep(object, null, (v, k) => {
-    return k === `id` ? fixId(v) : v
-  })
-}
+exports.fixIds = object =>
+  mapValuesDeep(object, null, (v, k) => (k === `id` ? fixId(v) : v))
+
+const makeId = ({ id, currentLocale, defaultLocale }) =>
+  currentLocale === defaultLocale ? id : `${id} ${currentLocale}`
+
+exports.makeId = makeId
+
+const makeMakeId = ({ currentLocale, defaultLocale }) => id =>
+  makeId({ id, currentLocale, defaultLocale })
 
 exports.buildEntryList = ({ contentTypeItems, currentSyncData }) =>
   contentTypeItems.map(contentType =>
@@ -44,16 +62,19 @@ exports.buildResolvableSet = ({
   entryList,
   existingNodes = [],
   assets = [],
+  currentLocale,
+  defaultLocale,
 }) => {
+  const mId = makeMakeId({ currentLocale, defaultLocale })
   const resolvable = new Set()
   existingNodes.forEach(n => resolvable.add(n.id))
 
   entryList.forEach(entries => {
     entries.forEach(entry => {
-      resolvable.add(entry.sys.id)
+      resolvable.add(mId(entry.sys.id))
     })
   })
-  assets.forEach(assetItem => resolvable.add(assetItem.sys.id))
+  assets.forEach(assetItem => resolvable.add(mId(assetItem.sys.id)))
 
   return resolvable
 }
@@ -63,16 +84,18 @@ exports.buildForeignReferenceMap = ({
   entryList,
   resolvable,
   defaultLocale,
+  currentLocale,
 }) => {
+  const mId = makeMakeId({ currentLocale, defaultLocale })
+  const getField = makeGetLocalizedField({ currentLocale, defaultLocale })
   const foreignReferenceMap = {}
   contentTypeItems.forEach((contentTypeItem, i) => {
     const contentTypeItemId = contentTypeItem.name.toLowerCase()
     entryList[i].forEach(entryItem => {
       const entryItemFields = entryItem.fields
       Object.keys(entryItemFields).forEach(entryItemFieldKey => {
-        if (entryItemFields[entryItemFieldKey][defaultLocale]) {
-          let entryItemFieldValue =
-            entryItemFields[entryItemFieldKey][defaultLocale]
+        if (getField(entryItemFields[entryItemFieldKey])) {
+          let entryItemFieldValue = getField(entryItemFields[entryItemFieldKey])
           if (Array.isArray(entryItemFieldValue)) {
             if (
               entryItemFieldValue[0].sys &&
@@ -81,16 +104,16 @@ exports.buildForeignReferenceMap = ({
             ) {
               entryItemFieldValue.forEach(v => {
                 // Don't create link to an unresolvable field.
-                if (!resolvable.has(v.sys.id)) {
+                if (!resolvable.has(mId(v.sys.id))) {
                   return
                 }
 
-                if (!foreignReferenceMap[v.sys.id]) {
-                  foreignReferenceMap[v.sys.id] = []
+                if (!foreignReferenceMap[mId(v.sys.id)]) {
+                  foreignReferenceMap[mId(v.sys.id)] = []
                 }
-                foreignReferenceMap[v.sys.id].push({
+                foreignReferenceMap[mId(v.sys.id)].push({
                   name: `${contentTypeItemId}___NODE`,
-                  id: entryItem.sys.id,
+                  id: mId(entryItem.sys.id),
                 })
               })
             }
@@ -98,14 +121,14 @@ exports.buildForeignReferenceMap = ({
             entryItemFieldValue.sys &&
             entryItemFieldValue.sys.type &&
             entryItemFieldValue.sys.id &&
-            resolvable.has(entryItemFieldValue.sys.id)
+            resolvable.has(mId(entryItemFieldValue.sys.id))
           ) {
-            if (!foreignReferenceMap[entryItemFieldValue.sys.id]) {
-              foreignReferenceMap[entryItemFieldValue.sys.id] = []
+            if (!foreignReferenceMap[mId(entryItemFieldValue.sys.id)]) {
+              foreignReferenceMap[mId(entryItemFieldValue.sys.id)] = []
             }
-            foreignReferenceMap[entryItemFieldValue.sys.id].push({
+            foreignReferenceMap[mId(entryItemFieldValue.sys.id)].push({
               name: `${contentTypeItemId}___NODE`,
-              id: entryItem.sys.id,
+              id: mId(entryItem.sys.id),
             })
           }
         }
@@ -147,8 +170,11 @@ exports.createContentTypeNodes = ({
   resolvable,
   foreignReferenceMap,
   defaultLocale,
+  currentLocale,
 }) => {
   const contentTypeItemId = contentTypeItem.name
+  const mId = makeMakeId({ currentLocale, defaultLocale })
+  const getField = makeGetLocalizedField({ currentLocale, defaultLocale })
 
   // Warn about any field conflicts
   const conflictFields = []
@@ -175,9 +201,8 @@ exports.createContentTypeNodes = ({
 
     // Add linkages to other nodes based on foreign references
     Object.keys(entryItemFields).forEach(entryItemFieldKey => {
-      if (entryItemFields[entryItemFieldKey][defaultLocale]) {
-        const entryItemFieldValue =
-          entryItemFields[entryItemFieldKey][defaultLocale]
+      if (getField(entryItemFields[entryItemFieldKey])) {
+        const entryItemFieldValue = getField(entryItemFields[entryItemFieldKey])
         if (Array.isArray(entryItemFieldValue)) {
           if (
             entryItemFieldValue[0].sys &&
@@ -187,8 +212,8 @@ exports.createContentTypeNodes = ({
             entryItemFields[
               `${entryItemFieldKey}___NODE`
             ] = entryItemFieldValue
-              .filter(v => resolvable.has(v.sys.id))
-              .map(v => v.sys.id)
+              .filter(v => resolvable.has(mId(v.sys.id)))
+              .map(v => mId(v.sys.id))
 
             delete entryItemFields[entryItemFieldKey]
           }
@@ -196,17 +221,18 @@ exports.createContentTypeNodes = ({
           entryItemFieldValue.sys &&
           entryItemFieldValue.sys.type &&
           entryItemFieldValue.sys.id &&
-          resolvable.has(entryItemFieldValue.sys.id)
+          resolvable.has(mId(entryItemFieldValue.sys.id))
         ) {
-          entryItemFields[`${entryItemFieldKey}___NODE`] =
+          entryItemFields[`${entryItemFieldKey}___NODE`] = mId(
             entryItemFieldValue.sys.id
+          )
           delete entryItemFields[entryItemFieldKey]
         }
       }
     })
 
     // Add reverse linkages if there are any for this node
-    const foreignReferences = foreignReferenceMap[entryItem.sys.id]
+    const foreignReferences = foreignReferenceMap[mId(entryItem.sys.id)]
     if (foreignReferences) {
       foreignReferences.forEach(foreignReference => {
         const existingReference = entryItemFields[foreignReference.name]
@@ -221,7 +247,7 @@ exports.createContentTypeNodes = ({
     }
 
     let entryNode = {
-      id: entryItem.sys.id,
+      id: mId(entryItem.sys.id),
       parent: contentTypeItemId,
       children: [],
       internal: {
@@ -238,8 +264,9 @@ exports.createContentTypeNodes = ({
         return
       }
 
-      entryItemFields[entryItemFieldKey] =
-        entryItemFields[entryItemFieldKey][defaultLocale]
+      entryItemFields[entryItemFieldKey] = getField(
+        entryItemFields[entryItemFieldKey]
+      )
     })
 
     // Replace text fields with text nodes so we can process their markdown
@@ -304,17 +331,25 @@ exports.createContentTypeNodes = ({
   })
 }
 
-exports.createAssetNodes = ({ assetItem, createNode, defaultLocale }) => {
+exports.createAssetNodes = ({
+  assetItem,
+  createNode,
+  defaultLocale,
+  currentLocale,
+}) => {
+  const mId = makeMakeId({ currentLocale, defaultLocale })
+  const getField = makeGetLocalizedField({ currentLocale, defaultLocale })
+
   // Create a node for each asset. They may be referenced by Entries
   assetItem.fields = {
-    file: assetItem.fields.file[defaultLocale],
-    title: assetItem.fields.title ? assetItem.fields.title[defaultLocale] : ``,
+    file: getField(assetItem.fields.file),
+    title: assetItem.fields.title ? getField(assetItem.fields.title) : ``,
     description: assetItem.fields.description
-      ? assetItem.fields.description[defaultLocale]
+      ? getField(assetItem.fields.description)
       : ``,
   }
   const assetNode = {
-    id: assetItem.sys.id,
+    id: mId(assetItem.sys.id),
     parent: `__SOURCE__`,
     children: [],
     ...assetItem.fields,
