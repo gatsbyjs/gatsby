@@ -4,10 +4,10 @@ const Promise = require(`bluebird`)
 const RedirectPage = path.resolve(`src/components/RedirectPage.js`)
 
 exports.createPages = ({ boundActionCreators }) => {
-    const { upsertPage } = boundActionCreators
+    const { createPage } = boundActionCreators
 
     return new Promise((resolve, reject) => {
-        upsertPage({
+        createPage({
             path: `/redirect/`,
             component: RedirectPage,
             context: {
