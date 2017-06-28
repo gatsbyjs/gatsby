@@ -1,6 +1,8 @@
 const contentful = require(`contentful`)
 const _ = require(`lodash`)
 
+const processAPIData = require(`./process-api-data`)
+
 module.exports = async ({ spaceId, accessToken, syncToken }) => {
   // Fetch articles.
   console.time(`Fetch Contentful data`)
@@ -51,7 +53,31 @@ module.exports = async ({ spaceId, accessToken, syncToken }) => {
   }
   console.log(`contentTypes fetched`, contentTypes.items.length)
 
-  const contentTypeItems = contentTypes.items
+  let contentTypeItems = contentTypes.items
+
+  // Fix IDs on entries and assets, created/updated and deleted.
+  contentTypeItems = contentTypeItems.map(c => processAPIData.fixIds(c))
+
+  currentSyncData.entries = currentSyncData.entries.map(e => {
+    if (e) {
+      return processAPIData.fixIds(e)
+    }
+  })
+  currentSyncData.assets = currentSyncData.assets.map(a => {
+    if (a) {
+      return processAPIData.fixIds(a)
+    }
+  })
+  currentSyncData.deletedEntries = currentSyncData.deletedEntries.map(e => {
+    if (e) {
+      return processAPIData.fixIds(e)
+    }
+  })
+  currentSyncData.deletedAssets = currentSyncData.deletedAssets.map(a => {
+    if (a) {
+      return processAPIData.fixIds(a)
+    }
+  })
 
   return { currentSyncData, contentTypeItems, defaultLocale }
 }
