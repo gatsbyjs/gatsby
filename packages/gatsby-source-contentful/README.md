@@ -1,20 +1,9 @@
 # gatsby-source-contentful
 
-Source plugin for pulling data into Gatsby from Contentful spaces.
-
-Pulls data from Contentful spaces with the [Contentful API](https://www.contentful.com/developers/docs/).
+Source plugin for pulling content types, entries, and assets into Gatsby from Contentful spaces. It creates links between entry types and asset so they can be queried in Gatsby using GraphQL.
 
 An example site for using this plugin is at
 https://gatsby-using-contentful.netlify.com/
-
-## Status
-
-This module is at prototype-level.
-It pulls Contentful ContentTypes, all entry types, and Assets. Then, it finds and links entry types with any other entry type or asset so they can be referenced together inside Gatsby via GraphQL.
-
-Future improvements can include:
-
-- Using Contentful's [sync functionality](https://www.contentful.com/developers/docs/concepts/sync/) to only get and update in Gatsby the delta of its CMS changes
 
 ## Install
 
@@ -37,7 +26,7 @@ plugins: [
 
 ## How to query
 
-Two standard data types will be available pulled from Contentful: ContentType and Asset.
+Two standard data types will be available from Contentful: `ContentType` and `Asset`.
 
 You can query Asset nodes created from Contentful like the following:
 
@@ -56,7 +45,11 @@ You can query Asset nodes created from Contentful like the following:
 }
 ```
 
-Non-standard data types e.g. entry types you create in Contentful will also be available as Gatsby nodes. You should find them in GraphQL schema under `contentful${entryTypeName}` and `allContentful${entryTypeName}`. For example, if you have a Product as one of your types, you may be able to query it like the following:
+Non-standard data types, i.e. entry types you define in Contentful, will also
+be available in Gatsby. They'll be created in your site's GraphQL schema under
+`contentful${entryTypeName}` and `allContentful${entryTypeName}`. For example,
+if you have `Product` as one of your content types, you will be able to query
+it like the following:
 
 ```graphql
 allContentfulProduct {
@@ -65,8 +58,11 @@ allContentfulProduct {
         id
         productName
         image {
-          file {
-            url
+          responsiveResolution(width: 100) {
+            width
+            height
+            src
+            srcSet
           }
         }
       }

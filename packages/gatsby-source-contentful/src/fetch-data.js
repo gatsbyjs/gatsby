@@ -79,7 +79,12 @@ module.exports = async ({ spaceId, accessToken, syncToken }) => {
     }
   })
 
-  return { currentSyncData, contentTypeItems, defaultLocale }
+  return {
+    currentSyncData,
+    contentTypeItems,
+    defaultLocale,
+    locales: space.locales,
+  }
 }
 
 /**

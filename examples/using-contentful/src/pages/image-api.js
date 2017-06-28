@@ -2,7 +2,6 @@ import React from "react"
 import { rhythm } from "../utils/typography"
 
 export default props => {
-  console.log(props)
   const assets = props.data.allContentfulAsset.edges
   return (
     <div>
@@ -221,7 +220,7 @@ export default props => {
 
 export const pageQuery = graphql`
   query ImageAPIExamples {
-    allContentfulAsset {
+    allContentfulAsset(filter: { node_locale: { eq: "en-US" } }) {
       edges {
         node {
           title

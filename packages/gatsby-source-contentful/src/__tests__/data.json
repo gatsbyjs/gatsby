@@ -2162,5 +2162,19 @@
             ]
         }
     ],
-    "defaultLocale": "en-US"
+    "defaultLocale": "en-US",
+    "locales": [
+        {
+            "code": "en-US",
+            "default": true,
+            "name": "U.S. English",
+            "fallbackCode": null
+        },
+        {
+            "code": "de",
+            "default": false,
+            "name": "German",
+            "fallbackCode": "en-US"
+        }
+    ]
 }

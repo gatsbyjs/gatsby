@@ -10,6 +10,17 @@ const restrictedNodeFields = [`id`, `children`, `parent`, `fields`, `internal`]
 
 exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeType
 
+/***
+ * Localization algorithm
+ *
+ * 1. Make list of all resolvable IDs worrying just about the default ids not
+ * localized ids
+ * 2. Make mapping between ids, again not worrying about localization.
+ * 3. When creating entries and assets, make the most localized version
+ * possible for each localized node i.e. get the localized field if it exists
+ * or the fallback field or the default field.
+ */
+
 exports.sourceNodes = async (
   { boundActionCreators, getNodes, hasNodeChanged, store },
   { spaceId, accessToken }
@@ -31,7 +42,12 @@ exports.sourceNodes = async (
       .status.syncToken
   }
 
-  const { currentSyncData, contentTypeItems, defaultLocale } = await fetchData({
+  const {
+    currentSyncData,
+    contentTypeItems,
+    defaultLocale,
+    locales,
+  } = await fetchData({
     syncToken,
     spaceId,
     accessToken,
@@ -77,6 +93,8 @@ exports.sourceNodes = async (
     existingNodes,
     entryList,
     assets,
+    defaultLocale,
+    locales,
   })
 
   // Build foreign reference map before starting to insert any nodes
@@ -85,6 +103,7 @@ exports.sourceNodes = async (
     entryList,
     resolvable,
     defaultLocale,
+    locales,
   })
 
   const newOrUpdatedEntries = []
@@ -126,11 +145,17 @@ exports.sourceNodes = async (
       resolvable,
       foreignReferenceMap,
       defaultLocale,
+      locales,
     })
   })
 
   assets.forEach(assetItem => {
-    processAPIData.createAssetNodes({ assetItem, createNode, defaultLocale })
+    processAPIData.createAssetNodes({
+      assetItem,
+      createNode,
+      defaultLocale,
+      locales,
+    })
   })
 
   return
