@@ -1,3 +1,4 @@
-/*.js
+*.js
+!src/**/*.js
 !index.js
 yarn.lock
