@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: `gatsby-example-markdown`,
+    title: `gatsby-example-using-remark`,
     author: `@gatsbyjs`,
     description: `Blazing-fast React.js static site generator`,
   },

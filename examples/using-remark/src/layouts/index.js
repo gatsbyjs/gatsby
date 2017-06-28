@@ -1,7 +1,6 @@
 import React from "react"
 import Link from "gatsby-link"
 import { rhythm, scale } from "../utils/typography"
-import { siteMetadata } from "../../gatsby-config"
 import styles from "../styles"
 import presets from "../utils/presets"
 
@@ -31,7 +30,7 @@ class DefaultLayout extends React.Component {
                 margin: 0,
               }}
             >
-              {siteMetadata.title}
+              gatsby-example-using-remark
             </h1>
           </Link>
         </div>
