@@ -3,6 +3,7 @@ const {
   currentSyncData,
   contentTypeItems,
   defaultLocale,
+  locales,
 } = require(`./data.json`)
 
 let entryList
@@ -23,9 +24,10 @@ describe(`Process contentful data`, () => {
 
   it(`builds list of resolvable data`, () => {
     resolvable = processAPIData.buildResolvableSet({
+      assets: currentSyncData.assets,
       entryList,
       defaultLocale,
-      currentLocale: defaultLocale,
+      locales,
     })
     expect(resolvable).toMatchSnapshot()
   })
@@ -36,7 +38,7 @@ describe(`Process contentful data`, () => {
       entryList,
       resolvable,
       defaultLocale,
-      currentLocale: defaultLocale,
+      locales,
     })
     expect(foreignReferenceMap).toMatchSnapshot()
   })
@@ -53,7 +55,7 @@ describe(`Process contentful data`, () => {
         resolvable,
         foreignReferenceMap,
         defaultLocale,
-        currentLocale: defaultLocale,
+        locales,
       })
     })
     expect(createNode.mock.calls).toMatchSnapshot()
@@ -67,7 +69,7 @@ describe(`Process contentful data`, () => {
         assetItem,
         createNode,
         defaultLocale,
-        currentLocale: defaultLocale,
+        locales,
       })
     })
     expect(createNode.mock.calls).toMatchSnapshot()
@@ -93,23 +95,42 @@ describe(`Gets field value based on current locale`, () => {
       processAPIData.getLocalizedField({
         field,
         defaultLocale: `en-US`,
-        currentLocale: `en-US`,
+        locale: {
+          code: `en-US`,
+        },
       })
     ).toBe(field[`en-US`])
     expect(
       processAPIData.getLocalizedField({
         field,
         defaultLocale: `en-US`,
-        currentLocale: `de`,
+        locale: {
+          code: `de`,
+        },
       })
     ).toBe(field[`de`])
   })
-  it(`falls back to the default locale if passed a locale that doesn't exist`, () => {
+  it(`falls back to the locale's fallback locale if passed a locale that doesn't have a localized field`, () => {
     expect(
       processAPIData.getLocalizedField({
         field,
         defaultLocale: `en-US`,
-        currentLocale: `en_GB`,
+        locale: {
+          code: `gsw_CH`,
+          fallbackCode: `de`,
+        },
+      })
+    ).toBe(field[`de`])
+  })
+  it(`falls back to the default locale if passed a locale that doesn't have a field nor a fallbackCode`, () => {
+    expect(
+      processAPIData.getLocalizedField({
+        field,
+        defaultLocale: `en-US`,
+        locale: {
+          code: `es-US`,
+          fallbackCode: `null`,
+        },
       })
     ).toBe(field[`en-US`])
   })
@@ -132,6 +153,6 @@ describe(`Make IDs`, () => {
         defaultLocale: `en-US`,
         currentLocale: `en-GB`,
       })
-    ).toBe(`id en-GB`)
+    ).toBe(`id___en-GB`)
   })
 })

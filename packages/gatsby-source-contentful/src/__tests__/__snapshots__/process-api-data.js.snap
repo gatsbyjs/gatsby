@@ -1505,16 +1505,52 @@ Object {
       "name": "product___NODE",
     },
   ],
+  "KTRF62Q4gg60q6WCsWKw8": Array [
+    Object {
+      "id": "c4BqrajvA8E6qwgkieoqmqO",
+      "name": "product___NODE",
+    },
+  ],
+  "Xc0ny7GWsMEMCeASWO2um": Array [
+    Object {
+      "id": "c3DVqIYj4dOwwcKu6sgqOgg",
+      "name": "product___NODE",
+    },
+  ],
+  "c10TkaLheGeQG6qQGqWYqUI": Array [
+    Object {
+      "id": "c6dbjWqNd9SqccegcqYq224",
+      "name": "product___NODE",
+    },
+  ],
   "c24DPGBDeGEaYy8ms4Y8QMQ": Array [
     Object {
       "id": "c5KsDBWseXY6QegucYAoacS",
       "name": "product___NODE",
     },
   ],
+  "c2Y8LhXLnYAYqKCGEWG4EKI": Array [
+    Object {
+      "id": "c4LgMotpNF6W20YKmuemW0a",
+      "name": "brand___NODE",
+    },
+  ],
+  "c3wtvPBbBjiMKqKKga8I2Cu": Array [
+    Object {
+      "id": "c651CQ8rLoIYCeY6G0QG22q",
+      "name": "brand___NODE",
+    },
+  ],
   "c4LgMotpNF6W20YKmuemW0a": Array [
     Object {
       "id": "c4BqrajvA8E6qwgkieoqmqO",
       "name": "product___NODE",
+    },
+  ],
+  "c4zj1ZOfHgQ8oqgaSKm4Qo2": Array [
+    Object {
+      "id": "JrePkDVYomE8AwcuCUyMi",
+      "name": "brand___NODE",
     },
   ],
   "c651CQ8rLoIYCeY6G0QG22q": Array [
@@ -1525,6 +1561,18 @@ Object {
     Object {
       "id": "c6dbjWqNd9SqccegcqYq224",
       "name": "product___NODE",
+    },
+  ],
+  "c6m5AJ9vMPKc8OUoQeoCS4o": Array [
+    Object {
+      "id": "c7LAnCobuuWYSqks6wAwY2a",
+      "name": "category___NODE",
+    },
+  ],
+  "c6t4HKjytPi0mYgs240wkG": Array [
+    Object {
+      "id": "c24DPGBDeGEaYy8ms4Y8QMQ",
+      "name": "category___NODE",
     },
   ],
   "c7LAnCobuuWYSqks6wAwY2a": Array [
@@ -1538,6 +1586,12 @@ Object {
     },
     Object {
       "id": "c4BqrajvA8E6qwgkieoqmqO",
+      "name": "product___NODE",
+    },
+  ],
+  "wtrHxeu3zEoEce2MokCSi": Array [
+    Object {
+      "id": "c5KsDBWseXY6QegucYAoacS",
       "name": "product___NODE",
     },
   ],
@@ -1555,6 +1609,17 @@ Array [
   "c3DVqIYj4dOwwcKu6sgqOgg",
   "c6dbjWqNd9SqccegcqYq224",
   "c4BqrajvA8E6qwgkieoqmqO",
+  "c3wtvPBbBjiMKqKKga8I2Cu",
+  "KTRF62Q4gg60q6WCsWKw8",
+  "Xc0ny7GWsMEMCeASWO2um",
+  "c2Y8LhXLnYAYqKCGEWG4EKI",
+  "c6t4HKjytPi0mYgs240wkG",
+  "c1MgbdJNTsMWKI0W68oYqkU",
+  "c6m5AJ9vMPKc8OUoQeoCS4o",
+  "c4zj1ZOfHgQ8oqgaSKm4Qo2",
+  "wtrHxeu3zEoEce2MokCSi",
+  "c10TkaLheGeQG6qQGqWYqUI",
+  "c6s3iG2OVmoUcosmA8ocqsG",
 ]
 `;
 
@@ -1578,10 +1643,38 @@ Array [
       },
       "id": "c3wtvPBbBjiMKqKKga8I2Cu",
       "internal": Object {
-        "contentDigest": "4c2de7c4095eb526f311ea070a05250a",
+        "contentDigest": "e6055b51f252aa3e074bb20bdbd41cb7",
         "mediaType": "text/x-contentful",
         "type": "ContentfulAsset",
       },
+      "node_locale": "en-US",
+      "parent": "__SOURCE__",
+      "title": "Normann Copenhagen",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "description": "Brand logo",
+      "file": Object {
+        "contentType": "image/jpeg",
+        "details": Object {
+          "image": Object {
+            "height": 353,
+            "width": 353,
+          },
+          "size": 12302,
+        },
+        "fileName": "zJYzDlGk.jpeg",
+        "url": "//images.contentful.com/rocybtov1ozk/3wtvPBbBjiMKqKKga8I2Cu/c65cb9cce1107c2e7e63c17072fe7932/zJYzDlGk.jpeg",
+      },
+      "id": "c3wtvPBbBjiMKqKKga8I2Cu___de",
+      "internal": Object {
+        "contentDigest": "4866eca667e03e17daa4db338cd1d73c",
+        "mediaType": "text/x-contentful",
+        "type": "ContentfulAsset",
+      },
+      "node_locale": "de",
       "parent": "__SOURCE__",
       "title": "Normann Copenhagen",
     },
@@ -1604,10 +1697,38 @@ Array [
       },
       "id": "KTRF62Q4gg60q6WCsWKw8",
       "internal": Object {
-        "contentDigest": "28fd8ac8be2f8aadfede8bb2e60f735c",
+        "contentDigest": "e56f6c1a0c09f7d335a5fb3231fa0835",
         "mediaType": "text/x-contentful",
         "type": "ContentfulAsset",
       },
+      "node_locale": "en-US",
+      "parent": "__SOURCE__",
+      "title": "SoSo Wall Clock",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "description": "by Lemnos",
+      "file": Object {
+        "contentType": "image/jpeg",
+        "details": Object {
+          "image": Object {
+            "height": 1000,
+            "width": 1000,
+          },
+          "size": 66927,
+        },
+        "fileName": "soso.clock.jpg",
+        "url": "//images.contentful.com/rocybtov1ozk/KTRF62Q4gg60q6WCsWKw8/a8b2e93ac83fbbbb7bf9fba9f92b018e/soso.clock.jpg",
+      },
+      "id": "KTRF62Q4gg60q6WCsWKw8___de",
+      "internal": Object {
+        "contentDigest": "9f3e99634d12ba0c56568c2374c26361",
+        "mediaType": "text/x-contentful",
+        "type": "ContentfulAsset",
+      },
+      "node_locale": "de",
       "parent": "__SOURCE__",
       "title": "SoSo Wall Clock",
     },
@@ -1630,10 +1751,38 @@ Array [
       },
       "id": "Xc0ny7GWsMEMCeASWO2um",
       "internal": Object {
-        "contentDigest": "74795fa341f90141db7513daafcc91a6",
+        "contentDigest": "01b3bb588fa70c34e8dcc5c8248e4c44",
         "mediaType": "text/x-contentful",
         "type": "ContentfulAsset",
       },
+      "node_locale": "en-US",
+      "parent": "__SOURCE__",
+      "title": "Hudson Wall Cup ",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "description": "Merchandise image",
+      "file": Object {
+        "contentType": "image/jpeg",
+        "details": Object {
+          "image": Object {
+            "height": 600,
+            "width": 600,
+          },
+          "size": 48751,
+        },
+        "fileName": "jqvtazcyfwseah9fmysz.jpg",
+        "url": "//images.contentful.com/rocybtov1ozk/Xc0ny7GWsMEMCeASWO2um/af8e29320c04af689798afe96e2345c7/jqvtazcyfwseah9fmysz.jpg",
+      },
+      "id": "Xc0ny7GWsMEMCeASWO2um___de",
+      "internal": Object {
+        "contentDigest": "4416c700c1f8e1c28423a27f639dc33e",
+        "mediaType": "text/x-contentful",
+        "type": "ContentfulAsset",
+      },
+      "node_locale": "de",
       "parent": "__SOURCE__",
       "title": "Hudson Wall Cup ",
     },
@@ -1656,10 +1805,38 @@ Array [
       },
       "id": "c2Y8LhXLnYAYqKCGEWG4EKI",
       "internal": Object {
-        "contentDigest": "b49bc037779bee0c05a98231c4c46be8",
+        "contentDigest": "032d7e2159afcce429661709b10f9eee",
         "mediaType": "text/x-contentful",
         "type": "ContentfulAsset",
       },
+      "node_locale": "en-US",
+      "parent": "__SOURCE__",
+      "title": "Lemnos",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "description": "company logo",
+      "file": Object {
+        "contentType": "image/jpeg",
+        "details": Object {
+          "image": Object {
+            "height": 32,
+            "width": 175,
+          },
+          "size": 7149,
+        },
+        "fileName": "lemnos-logo.jpg",
+        "url": "//images.contentful.com/rocybtov1ozk/2Y8LhXLnYAYqKCGEWG4EKI/eb29ab3c817906993f65e221523ef252/lemnos-logo.jpg",
+      },
+      "id": "c2Y8LhXLnYAYqKCGEWG4EKI___de",
+      "internal": Object {
+        "contentDigest": "0fe651ccf83729b64e30f64c52e5ee5c",
+        "mediaType": "text/x-contentful",
+        "type": "ContentfulAsset",
+      },
+      "node_locale": "de",
       "parent": "__SOURCE__",
       "title": "Lemnos",
     },
@@ -1682,10 +1859,38 @@ Array [
       },
       "id": "c6t4HKjytPi0mYgs240wkG",
       "internal": Object {
-        "contentDigest": "57b990a3dc76049b6f69da62cb2ccf1d",
+        "contentDigest": "2d6be7f9657a60bf6c467ecbdb2e2005",
         "mediaType": "text/x-contentful",
         "type": "ContentfulAsset",
       },
+      "node_locale": "en-US",
+      "parent": "__SOURCE__",
+      "title": "Toys",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "description": "Category icon set",
+      "file": Object {
+        "contentType": "image/png",
+        "details": Object {
+          "image": Object {
+            "height": 128,
+            "width": 128,
+          },
+          "size": 6744,
+        },
+        "fileName": "toys_512pxGREY.png",
+        "url": "//images.contentful.com/rocybtov1ozk/6t4HKjytPi0mYgs240wkG/6e730b1e6c2a46929239019240c037e6/toys_512pxGREY.png",
+      },
+      "id": "c6t4HKjytPi0mYgs240wkG___de",
+      "internal": Object {
+        "contentDigest": "0ff921d4041f8792f07925cc91d9335c",
+        "mediaType": "text/x-contentful",
+        "type": "ContentfulAsset",
+      },
+      "node_locale": "de",
       "parent": "__SOURCE__",
       "title": "Toys",
     },
@@ -1708,10 +1913,38 @@ Array [
       },
       "id": "c1MgbdJNTsMWKI0W68oYqkU",
       "internal": Object {
-        "contentDigest": "a1ef384f5383af9777b4c5effb88d176",
+        "contentDigest": "227deaa500d7ffc635096e6f61ff5f43",
         "mediaType": "text/x-contentful",
         "type": "ContentfulAsset",
       },
+      "node_locale": "en-US",
+      "parent": "__SOURCE__",
+      "title": "Chive logo",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "description": "Brand logo",
+      "file": Object {
+        "contentType": "image/jpeg",
+        "details": Object {
+          "image": Object {
+            "height": 500,
+            "width": 500,
+          },
+          "size": 44089,
+        },
+        "fileName": "9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
+        "url": "//images.contentful.com/rocybtov1ozk/1MgbdJNTsMWKI0W68oYqkU/ad0200fe320b85ecdd823c711161c2f6/9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
+      },
+      "id": "c1MgbdJNTsMWKI0W68oYqkU___de",
+      "internal": Object {
+        "contentDigest": "9cbd453b4bd1c259d07ec1ce54b8c4d1",
+        "mediaType": "text/x-contentful",
+        "type": "ContentfulAsset",
+      },
+      "node_locale": "de",
       "parent": "__SOURCE__",
       "title": "Chive logo",
     },
@@ -1734,10 +1967,38 @@ Array [
       },
       "id": "c6m5AJ9vMPKc8OUoQeoCS4o",
       "internal": Object {
-        "contentDigest": "332226bbb4da7c181ff9095ad2e1aef8",
+        "contentDigest": "3ba07b3d786dc349e1438cb6b08c4c9f",
         "mediaType": "text/x-contentful",
         "type": "ContentfulAsset",
       },
+      "node_locale": "en-US",
+      "parent": "__SOURCE__",
+      "title": "Home and Kitchen",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "description": "category icon",
+      "file": Object {
+        "contentType": "image/png",
+        "details": Object {
+          "image": Object {
+            "height": 256,
+            "width": 256,
+          },
+          "size": 2977,
+        },
+        "fileName": "1418244847_Streamline-18-256.png",
+        "url": "//images.contentful.com/rocybtov1ozk/6m5AJ9vMPKc8OUoQeoCS4o/e782e3b291ff2b0287546a563af4683c/1418244847_Streamline-18-256.png",
+      },
+      "id": "c6m5AJ9vMPKc8OUoQeoCS4o___de",
+      "internal": Object {
+        "contentDigest": "42bf983b56cf0cdc19566dc57611ac8f",
+        "mediaType": "text/x-contentful",
+        "type": "ContentfulAsset",
+      },
+      "node_locale": "de",
       "parent": "__SOURCE__",
       "title": "Home and Kitchen",
     },
@@ -1760,10 +2021,38 @@ Array [
       },
       "id": "c4zj1ZOfHgQ8oqgaSKm4Qo2",
       "internal": Object {
-        "contentDigest": "f7b9fa92722022f4ee598e24cd6dbcd4",
+        "contentDigest": "fc73ffe6349440d23de331ad9daf0e1d",
         "mediaType": "text/x-contentful",
         "type": "ContentfulAsset",
       },
+      "node_locale": "en-US",
+      "parent": "__SOURCE__",
+      "title": "Playsam",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "description": "Brand logo",
+      "file": Object {
+        "contentType": "image/jpeg",
+        "details": Object {
+          "image": Object {
+            "height": 100,
+            "width": 100,
+          },
+          "size": 7003,
+        },
+        "fileName": "playsam.jpg",
+        "url": "//images.contentful.com/rocybtov1ozk/4zj1ZOfHgQ8oqgaSKm4Qo2/5d967c9c48d67eabff71a9a0232d4378/playsam.jpg",
+      },
+      "id": "c4zj1ZOfHgQ8oqgaSKm4Qo2___de",
+      "internal": Object {
+        "contentDigest": "c08f3ff2a13145873fbd6d0d56fb7bdb",
+        "mediaType": "text/x-contentful",
+        "type": "ContentfulAsset",
+      },
+      "node_locale": "de",
       "parent": "__SOURCE__",
       "title": "Playsam",
     },
@@ -1786,10 +2075,38 @@ Array [
       },
       "id": "wtrHxeu3zEoEce2MokCSi",
       "internal": Object {
-        "contentDigest": "4bbc54bc68d20a744684edff23536141",
+        "contentDigest": "e5b4eb3846e78d3eb83c7c344ff25985",
         "mediaType": "text/x-contentful",
         "type": "ContentfulAsset",
       },
+      "node_locale": "en-US",
+      "parent": "__SOURCE__",
+      "title": "Playsam Streamliner",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "description": "Merchandise photo",
+      "file": Object {
+        "contentType": "image/jpeg",
+        "details": Object {
+          "image": Object {
+            "height": 446,
+            "width": 600,
+          },
+          "size": 27187,
+        },
+        "fileName": "quwowooybuqbl6ntboz3.jpg",
+        "url": "//images.contentful.com/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg",
+      },
+      "id": "wtrHxeu3zEoEce2MokCSi___de",
+      "internal": Object {
+        "contentDigest": "2bbe52d619eae4c5cb8f87ee406ef232",
+        "mediaType": "text/x-contentful",
+        "type": "ContentfulAsset",
+      },
+      "node_locale": "de",
       "parent": "__SOURCE__",
       "title": "Playsam Streamliner",
     },
@@ -1812,10 +2129,38 @@ Array [
       },
       "id": "c10TkaLheGeQG6qQGqWYqUI",
       "internal": Object {
-        "contentDigest": "14a8311d7eb6da4fa752795ab3f356ad",
+        "contentDigest": "60bbe485bc171caeafd119a08b21ebb2",
         "mediaType": "text/x-contentful",
         "type": "ContentfulAsset",
       },
+      "node_locale": "en-US",
+      "parent": "__SOURCE__",
+      "title": "Whisk beaters",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "description": "Merchandise photo",
+      "file": Object {
+        "contentType": "image/jpeg",
+        "details": Object {
+          "image": Object {
+            "height": 600,
+            "width": 450,
+          },
+          "size": 28435,
+        },
+        "fileName": "ryugj83mqwa1asojwtwb.jpg",
+        "url": "//images.contentful.com/rocybtov1ozk/10TkaLheGeQG6qQGqWYqUI/f997e8e13c8c83c145e976d0905e64b7/ryugj83mqwa1asojwtwb.jpg",
+      },
+      "id": "c10TkaLheGeQG6qQGqWYqUI___de",
+      "internal": Object {
+        "contentDigest": "a2f5ccb33a8fa1249ed70123757320a4",
+        "mediaType": "text/x-contentful",
+        "type": "ContentfulAsset",
+      },
+      "node_locale": "de",
       "parent": "__SOURCE__",
       "title": "Whisk beaters",
     },
@@ -1838,10 +2183,38 @@ Array [
       },
       "id": "c6s3iG2OVmoUcosmA8ocqsG",
       "internal": Object {
-        "contentDigest": "f6754230717f2d958b74dd4a208d72f1",
+        "contentDigest": "5df5f3dbaf854d908057cf6f873d2b74",
         "mediaType": "text/x-contentful",
         "type": "ContentfulAsset",
       },
+      "node_locale": "en-US",
+      "parent": "__SOURCE__",
+      "title": "House icon",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "description": "Category icon set",
+      "file": Object {
+        "contentType": "image/png",
+        "details": Object {
+          "image": Object {
+            "height": 250,
+            "width": 250,
+          },
+          "size": 4244,
+        },
+        "fileName": "1418244847_Streamline-18-256 (1).png",
+        "url": "//images.contentful.com/rocybtov1ozk/6s3iG2OVmoUcosmA8ocqsG/286ac4c1be74e05d2e7e11bc5a55bc83/1418244847_Streamline-18-256__1_.png",
+      },
+      "id": "c6s3iG2OVmoUcosmA8ocqsG___de",
+      "internal": Object {
+        "contentDigest": "be8889140e19b69654de80ad25fbdab0",
+        "mediaType": "text/x-contentful",
+        "type": "ContentfulAsset",
+      },
+      "node_locale": "de",
       "parent": "__SOURCE__",
       "title": "House icon",
     },
@@ -1929,50 +2302,14 @@ Array [
         "c7LAnCobuuWYSqks6wAwY2atitleTextNode",
         "c7LAnCobuuWYSqks6wAwY2acategoryDescriptionTextNode",
       ],
-      "icon": Object {
-        "fields": Object {
-          "description": Object {
-            "en-US": "category icon",
-          },
-          "file": Object {
-            "en-US": Object {
-              "contentType": "image/png",
-              "details": Object {
-                "image": Object {
-                  "height": 256,
-                  "width": 256,
-                },
-                "size": 2977,
-              },
-              "fileName": "1418244847_Streamline-18-256.png",
-              "url": "//images.contentful.com/rocybtov1ozk/6m5AJ9vMPKc8OUoQeoCS4o/e782e3b291ff2b0287546a563af4683c/1418244847_Streamline-18-256.png",
-            },
-          },
-          "title": Object {
-            "en-US": "Home and Kitchen",
-          },
-        },
-        "sys": Object {
-          "createdAt": "2017-06-27T09:35:36.172Z",
-          "id": "c6m5AJ9vMPKc8OUoQeoCS4o",
-          "revision": 1,
-          "space": Object {
-            "sys": Object {
-              "id": "rocybtov1ozk",
-              "linkType": "Space",
-              "type": "Link",
-            },
-          },
-          "type": "Asset",
-          "updatedAt": "2017-06-27T09:35:36.172Z",
-        },
-      },
+      "icon___NODE": "c6m5AJ9vMPKc8OUoQeoCS4o",
       "id": "c7LAnCobuuWYSqks6wAwY2a",
       "internal": Object {
-        "contentDigest": "4a306b349da7745c863bfae307e01da3",
+        "contentDigest": "fd0cc67cb09ef934e3093fc6e94dd764",
         "mediaType": "application/x-contentful",
         "type": "ContentfulCategory",
       },
+      "node_locale": "en-US",
       "parent": "Category",
       "product___NODE": Array [
         "c3DVqIYj4dOwwcKu6sgqOgg",
@@ -1989,55 +2326,128 @@ Array [
         "c24DPGBDeGEaYy8ms4Y8QMQtitleTextNode",
         "c24DPGBDeGEaYy8ms4Y8QMQcategoryDescriptionTextNode",
       ],
-      "icon": Object {
-        "fields": Object {
-          "description": Object {
-            "en-US": "Category icon set",
-          },
-          "file": Object {
-            "en-US": Object {
-              "contentType": "image/png",
-              "details": Object {
-                "image": Object {
-                  "height": 128,
-                  "width": 128,
-                },
-                "size": 6744,
-              },
-              "fileName": "toys_512pxGREY.png",
-              "url": "//images.contentful.com/rocybtov1ozk/6t4HKjytPi0mYgs240wkG/6e730b1e6c2a46929239019240c037e6/toys_512pxGREY.png",
-            },
-          },
-          "title": Object {
-            "en-US": "Toys",
-          },
-        },
-        "sys": Object {
-          "createdAt": "2017-06-27T09:35:36.633Z",
-          "id": "c6t4HKjytPi0mYgs240wkG",
-          "revision": 1,
-          "space": Object {
-            "sys": Object {
-              "id": "rocybtov1ozk",
-              "linkType": "Space",
-              "type": "Link",
-            },
-          },
-          "type": "Asset",
-          "updatedAt": "2017-06-27T09:35:36.633Z",
-        },
-      },
+      "icon___NODE": "c6t4HKjytPi0mYgs240wkG",
       "id": "c24DPGBDeGEaYy8ms4Y8QMQ",
       "internal": Object {
-        "contentDigest": "48d58f267600534f8b345403a06608a7",
+        "contentDigest": "a65a57f88293fe9f73e3678fb2d9ce54",
         "mediaType": "application/x-contentful",
         "type": "ContentfulCategory",
       },
+      "node_locale": "en-US",
       "parent": "Category",
       "product___NODE": Array [
         "c5KsDBWseXY6QegucYAoacS",
       ],
       "title___NODE": "c24DPGBDeGEaYy8ms4Y8QMQtitleTextNode",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "c7LAnCobuuWYSqks6wAwY2a___detitleTextNode",
+      "internal": Object {
+        "content": "Haus & Küche",
+        "contentDigest": "21786d8d63d043d9cc0f639450bd5b70",
+        "mediaType": "text/x-markdown",
+        "type": "contentfulCategoryTitleTextNode",
+      },
+      "parent": "c7LAnCobuuWYSqks6wAwY2a___de",
+      "title": "Haus & Küche",
+    },
+  ],
+  Array [
+    Object {
+      "categoryDescription": "Shop für Möbel, Bettwäsche, Bad, Staubsauger, Küchenprodukte und vieles mehr",
+      "children": Array [],
+      "id": "c7LAnCobuuWYSqks6wAwY2a___decategoryDescriptionTextNode",
+      "internal": Object {
+        "content": "Shop für Möbel, Bettwäsche, Bad, Staubsauger, Küchenprodukte und vieles mehr",
+        "contentDigest": "7d7b0c68e20954c3f092bae55ccbdd9f",
+        "mediaType": "text/x-markdown",
+        "type": "contentfulCategoryCategoryDescriptionTextNode",
+      },
+      "parent": "c7LAnCobuuWYSqks6wAwY2a___de",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "c24DPGBDeGEaYy8ms4Y8QMQ___detitleTextNode",
+      "internal": Object {
+        "content": "Spielzeug",
+        "contentDigest": "22658c0cbfd038b32380aa036bff1cfe",
+        "mediaType": "text/x-markdown",
+        "type": "contentfulCategoryTitleTextNode",
+      },
+      "parent": "c24DPGBDeGEaYy8ms4Y8QMQ___de",
+      "title": "Spielzeug",
+    },
+  ],
+  Array [
+    Object {
+      "categoryDescription": "Spielzeugladen, Spiele, Lernhilfen",
+      "children": Array [],
+      "id": "c24DPGBDeGEaYy8ms4Y8QMQ___decategoryDescriptionTextNode",
+      "internal": Object {
+        "content": "Spielzeugladen, Spiele, Lernhilfen",
+        "contentDigest": "93335f47e41d44163239227427760695",
+        "mediaType": "text/x-markdown",
+        "type": "contentfulCategoryCategoryDescriptionTextNode",
+      },
+      "parent": "c24DPGBDeGEaYy8ms4Y8QMQ___de",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "description": null,
+      "displayField": "title",
+      "id": "Category",
+      "internal": Object {
+        "contentDigest": "d02aa7b2f06395cfee461388f47de493",
+        "mediaType": "text/x-contentful",
+        "type": "ContentfulContentType",
+      },
+      "name": "Category",
+      "parent": "__SOURCE__",
+    },
+  ],
+  Array [
+    Object {
+      "categoryDescription___NODE": "c7LAnCobuuWYSqks6wAwY2a___decategoryDescriptionTextNode",
+      "children": Array [
+        "c7LAnCobuuWYSqks6wAwY2a___detitleTextNode",
+        "c7LAnCobuuWYSqks6wAwY2a___decategoryDescriptionTextNode",
+      ],
+      "icon___NODE": "c6m5AJ9vMPKc8OUoQeoCS4o",
+      "id": "c7LAnCobuuWYSqks6wAwY2a___de",
+      "internal": Object {
+        "contentDigest": "bfe33a97db3088b45236dd2dac324eb9",
+        "mediaType": "application/x-contentful",
+        "type": "ContentfulCategory",
+      },
+      "node_locale": "de",
+      "parent": "Category",
+      "title___NODE": "c7LAnCobuuWYSqks6wAwY2a___detitleTextNode",
+    },
+  ],
+  Array [
+    Object {
+      "categoryDescription___NODE": "c24DPGBDeGEaYy8ms4Y8QMQ___decategoryDescriptionTextNode",
+      "children": Array [
+        "c24DPGBDeGEaYy8ms4Y8QMQ___detitleTextNode",
+        "c24DPGBDeGEaYy8ms4Y8QMQ___decategoryDescriptionTextNode",
+      ],
+      "icon___NODE": "c6t4HKjytPi0mYgs240wkG",
+      "id": "c24DPGBDeGEaYy8ms4Y8QMQ___de",
+      "internal": Object {
+        "contentDigest": "2902d7c50792ca645252246c88eff0e4",
+        "mediaType": "application/x-contentful",
+        "type": "ContentfulCategory",
+      },
+      "node_locale": "de",
+      "parent": "Category",
+      "title___NODE": "c24DPGBDeGEaYy8ms4Y8QMQ___detitleTextNode",
     },
   ],
   Array [
@@ -2170,48 +2580,12 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       "email": "normann@normann-copenhagen.com",
       "id": "c651CQ8rLoIYCeY6G0QG22q",
       "internal": Object {
-        "contentDigest": "6bec3657c58f06fa036036a398fc7497",
+        "contentDigest": "34d5206cc4db942e73f6e44ced222c0c",
         "mediaType": "application/x-contentful",
         "type": "ContentfulBrand",
       },
-      "logo": Object {
-        "fields": Object {
-          "description": Object {
-            "en-US": "Brand logo",
-          },
-          "file": Object {
-            "en-US": Object {
-              "contentType": "image/jpeg",
-              "details": Object {
-                "image": Object {
-                  "height": 353,
-                  "width": 353,
-                },
-                "size": 12302,
-              },
-              "fileName": "zJYzDlGk.jpeg",
-              "url": "//images.contentful.com/rocybtov1ozk/3wtvPBbBjiMKqKKga8I2Cu/c65cb9cce1107c2e7e63c17072fe7932/zJYzDlGk.jpeg",
-            },
-          },
-          "title": Object {
-            "en-US": "Normann Copenhagen",
-          },
-        },
-        "sys": Object {
-          "createdAt": "2017-06-27T09:35:37.178Z",
-          "id": "c3wtvPBbBjiMKqKKga8I2Cu",
-          "revision": 1,
-          "space": Object {
-            "sys": Object {
-              "id": "rocybtov1ozk",
-              "linkType": "Space",
-              "type": "Link",
-            },
-          },
-          "type": "Asset",
-          "updatedAt": "2017-06-27T09:35:37.178Z",
-        },
-      },
+      "logo___NODE": "c3wtvPBbBjiMKqKKga8I2Cu",
+      "node_locale": "en-US",
       "parent": "Brand",
       "phone": Array [
         "+45 35 55 44 59",
@@ -2235,48 +2609,12 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       "email": "info@acgears.com",
       "id": "c4LgMotpNF6W20YKmuemW0a",
       "internal": Object {
-        "contentDigest": "01823b9ce677d1c3455b70312bc5009e",
+        "contentDigest": "0f1a6855d2364c7134786ef7de92f520",
         "mediaType": "application/x-contentful",
         "type": "ContentfulBrand",
       },
-      "logo": Object {
-        "fields": Object {
-          "description": Object {
-            "en-US": "company logo",
-          },
-          "file": Object {
-            "en-US": Object {
-              "contentType": "image/jpeg",
-              "details": Object {
-                "image": Object {
-                  "height": 32,
-                  "width": 175,
-                },
-                "size": 7149,
-              },
-              "fileName": "lemnos-logo.jpg",
-              "url": "//images.contentful.com/rocybtov1ozk/2Y8LhXLnYAYqKCGEWG4EKI/eb29ab3c817906993f65e221523ef252/lemnos-logo.jpg",
-            },
-          },
-          "title": Object {
-            "en-US": "Lemnos",
-          },
-        },
-        "sys": Object {
-          "createdAt": "2017-06-27T09:35:37.012Z",
-          "id": "c2Y8LhXLnYAYqKCGEWG4EKI",
-          "revision": 1,
-          "space": Object {
-            "sys": Object {
-              "id": "rocybtov1ozk",
-              "linkType": "Space",
-              "type": "Link",
-            },
-          },
-          "type": "Asset",
-          "updatedAt": "2017-06-27T09:35:37.012Z",
-        },
-      },
+      "logo___NODE": "c2Y8LhXLnYAYqKCGEWG4EKI",
+      "node_locale": "en-US",
       "parent": "Brand",
       "phone": Array [
         "+1 212 260 2269",
@@ -2297,52 +2635,204 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       "companyName___NODE": "JrePkDVYomE8AwcuCUyMicompanyNameTextNode",
       "id": "JrePkDVYomE8AwcuCUyMi",
       "internal": Object {
-        "contentDigest": "ac8a6f7549c92eccbd7e347a2f2a5493",
+        "contentDigest": "e5202ad597ae508b4f82840c38a5a6ab",
         "mediaType": "application/x-contentful",
         "type": "ContentfulBrand",
       },
-      "logo": Object {
-        "fields": Object {
-          "description": Object {
-            "en-US": "Brand logo",
-          },
-          "file": Object {
-            "en-US": Object {
-              "contentType": "image/jpeg",
-              "details": Object {
-                "image": Object {
-                  "height": 100,
-                  "width": 100,
-                },
-                "size": 7003,
-              },
-              "fileName": "playsam.jpg",
-              "url": "//images.contentful.com/rocybtov1ozk/4zj1ZOfHgQ8oqgaSKm4Qo2/5d967c9c48d67eabff71a9a0232d4378/playsam.jpg",
-            },
-          },
-          "title": Object {
-            "en-US": "Playsam",
-          },
-        },
-        "sys": Object {
-          "createdAt": "2017-06-27T09:35:36.168Z",
-          "id": "c4zj1ZOfHgQ8oqgaSKm4Qo2",
-          "revision": 1,
-          "space": Object {
-            "sys": Object {
-              "id": "rocybtov1ozk",
-              "linkType": "Space",
-              "type": "Link",
-            },
-          },
-          "type": "Asset",
-          "updatedAt": "2017-06-27T09:35:36.168Z",
-        },
-      },
+      "logo___NODE": "c4zj1ZOfHgQ8oqgaSKm4Qo2",
+      "node_locale": "en-US",
       "parent": "Brand",
       "product___NODE": Array [
         "c5KsDBWseXY6QegucYAoacS",
       ],
+      "website": "http://playsam.com/",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "companyName": "Normann Copenhagen",
+      "id": "c651CQ8rLoIYCeY6G0QG22q___decompanyNameTextNode",
+      "internal": Object {
+        "content": "Normann Copenhagen",
+        "contentDigest": "5fb9d019c3646f6fee84172952337463",
+        "mediaType": "text/x-markdown",
+        "type": "contentfulBrandCompanyNameTextNode",
+      },
+      "parent": "c651CQ8rLoIYCeY6G0QG22q___de",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "companyDescription": "Normann Kopenhagen ist eine Art zu leben - eine Denkweise. Wir lieben es, die konventionellen Designregeln herauszufordern. Aus diesem Grund finden Sie traditionelle Materialien, die in untraditionelle Verwendung wie ein Steinhaken aus isländischen Steinen, eine Vase aus Silizium und last but not least ein Hund aus Kunststoff.",
+      "id": "c651CQ8rLoIYCeY6G0QG22q___decompanyDescriptionTextNode",
+      "internal": Object {
+        "content": "Normann Kopenhagen ist eine Art zu leben - eine Denkweise. Wir lieben es, die konventionellen Designregeln herauszufordern. Aus diesem Grund finden Sie traditionelle Materialien, die in untraditionelle Verwendung wie ein Steinhaken aus isländischen Steinen, eine Vase aus Silizium und last but not least ein Hund aus Kunststoff.",
+        "contentDigest": "0a7c7553a38bb0a62a22c20deb99a93f",
+        "mediaType": "text/x-markdown",
+        "type": "contentfulBrandCompanyDescriptionTextNode",
+      },
+      "parent": "c651CQ8rLoIYCeY6G0QG22q___de",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "companyName": "Lemnos",
+      "id": "c4LgMotpNF6W20YKmuemW0a___decompanyNameTextNode",
+      "internal": Object {
+        "content": "Lemnos",
+        "contentDigest": "7b0e3f7cc613d34aafa689516e96056e",
+        "mediaType": "text/x-markdown",
+        "type": "contentfulBrandCompanyNameTextNode",
+      },
+      "parent": "c4LgMotpNF6W20YKmuemW0a___de",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "companyDescription": "TAKATA Lemnos Inc. wurde im Jahre 1947 als Messing-Casting-Fertigungsindustrie in Takaoka-Stadt, Toyama Prefecture, Japan gegründet und wir starteten seit 1966 mit der Seiko Clock Co., Ltd.
+
+Wir haben die Entwicklung für die ursprüngliche Planung ab Ende 1980 eingegangen und \\"Lemnos Brand\\" wurde als globale Designuhr von einem Meisterwerk \\"HOLA\\" von Kazuo KAWASAKI entworfen, das 1989 erschien.
+
+Danach machten wir viele Projekte mit namhaften Designern, die in Japan und Übersee tätig waren, wie zB Riki WATANABE, Kazuo KAWASAKI, Shin AZUMI, Tomoko AZUMI, Kanae TSUKAMOTO etc. und wir kündigten ihre Werke in der Kunst an Und prominenten Designs. Darüber hinaus haben wir durch die Zusammenarbeit mit Andrea Branzi, einem bekannten Architekten der Welt, ein besonderes Projekt gemacht.
+
+Lemnos Markenprodukte werden nun von den Designläden und den Innenhandelsgeschäften auf der ganzen Welt hoch gelobt.
+
+In den vergangenen Jahren haben wir auch eine hohe Priorität für die Entwicklung von Innenausstattung, die den traditionellen Techniken des Gründungsherstellers voll ausnutzt, und wir konzentrieren uns immer auf die Entwicklung der neuen Lemnos-Produkte im neuen Markt.
+
+Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliffen geschickten Techniken in Japan gemacht. Sie bringen sicherlich die Attraktivität der Materialien auf das Maximum und schaffen feine Produkte nicht beeinflusst auf die Mode-Trend entsprechend. TAKATA Lemnos Inc. möchte definitiv innovativ sein und ständig vorschlagen, die Schönheit dauert ewig.",
+      "id": "c4LgMotpNF6W20YKmuemW0a___decompanyDescriptionTextNode",
+      "internal": Object {
+        "content": "TAKATA Lemnos Inc. wurde im Jahre 1947 als Messing-Casting-Fertigungsindustrie in Takaoka-Stadt, Toyama Prefecture, Japan gegründet und wir starteten seit 1966 mit der Seiko Clock Co., Ltd.
+
+Wir haben die Entwicklung für die ursprüngliche Planung ab Ende 1980 eingegangen und \\"Lemnos Brand\\" wurde als globale Designuhr von einem Meisterwerk \\"HOLA\\" von Kazuo KAWASAKI entworfen, das 1989 erschien.
+
+Danach machten wir viele Projekte mit namhaften Designern, die in Japan und Übersee tätig waren, wie zB Riki WATANABE, Kazuo KAWASAKI, Shin AZUMI, Tomoko AZUMI, Kanae TSUKAMOTO etc. und wir kündigten ihre Werke in der Kunst an Und prominenten Designs. Darüber hinaus haben wir durch die Zusammenarbeit mit Andrea Branzi, einem bekannten Architekten der Welt, ein besonderes Projekt gemacht.
+
+Lemnos Markenprodukte werden nun von den Designläden und den Innenhandelsgeschäften auf der ganzen Welt hoch gelobt.
+
+In den vergangenen Jahren haben wir auch eine hohe Priorität für die Entwicklung von Innenausstattung, die den traditionellen Techniken des Gründungsherstellers voll ausnutzt, und wir konzentrieren uns immer auf die Entwicklung der neuen Lemnos-Produkte im neuen Markt.
+
+Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliffen geschickten Techniken in Japan gemacht. Sie bringen sicherlich die Attraktivität der Materialien auf das Maximum und schaffen feine Produkte nicht beeinflusst auf die Mode-Trend entsprechend. TAKATA Lemnos Inc. möchte definitiv innovativ sein und ständig vorschlagen, die Schönheit dauert ewig.",
+        "contentDigest": "b8d1cb0f951b10e0f84f32a8c28ee503",
+        "mediaType": "text/x-markdown",
+        "type": "contentfulBrandCompanyDescriptionTextNode",
+      },
+      "parent": "c4LgMotpNF6W20YKmuemW0a___de",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "companyName": "Playsam",
+      "id": "JrePkDVYomE8AwcuCUyMi___decompanyNameTextNode",
+      "internal": Object {
+        "content": "Playsam",
+        "contentDigest": "1d2de5c3096635ca01f6ab4131252039",
+        "mediaType": "text/x-markdown",
+        "type": "contentfulBrandCompanyNameTextNode",
+      },
+      "parent": "JrePkDVYomE8AwcuCUyMi___de",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "companyDescription": "Playsam ist die führende skandinavische Designfirma für Executive Holzspielzeug Geschenk. Skandinavisches Design spielerische Kreativität, Integrität und Raffinesse sind Playsam. Skandinavisches Design und hölzernes Spielzeug macht Playsam Geschenk schön in die Welt des Designs seit 1984.",
+      "id": "JrePkDVYomE8AwcuCUyMi___decompanyDescriptionTextNode",
+      "internal": Object {
+        "content": "Playsam ist die führende skandinavische Designfirma für Executive Holzspielzeug Geschenk. Skandinavisches Design spielerische Kreativität, Integrität und Raffinesse sind Playsam. Skandinavisches Design und hölzernes Spielzeug macht Playsam Geschenk schön in die Welt des Designs seit 1984.",
+        "contentDigest": "7b0a48d4861111805b6c614bf2373eb6",
+        "mediaType": "text/x-markdown",
+        "type": "contentfulBrandCompanyDescriptionTextNode",
+      },
+      "parent": "JrePkDVYomE8AwcuCUyMi___de",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "description": null,
+      "displayField": "companyName",
+      "id": "Brand",
+      "internal": Object {
+        "contentDigest": "1e38edb6da67d8b16b80d0d44f692e31",
+        "mediaType": "text/x-contentful",
+        "type": "ContentfulContentType",
+      },
+      "name": "Brand",
+      "parent": "__SOURCE__",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [
+        "c651CQ8rLoIYCeY6G0QG22q___decompanyNameTextNode",
+        "c651CQ8rLoIYCeY6G0QG22q___decompanyDescriptionTextNode",
+      ],
+      "companyDescription___NODE": "c651CQ8rLoIYCeY6G0QG22q___decompanyDescriptionTextNode",
+      "companyName___NODE": "c651CQ8rLoIYCeY6G0QG22q___decompanyNameTextNode",
+      "email": "normann@normann-copenhagen.com",
+      "id": "c651CQ8rLoIYCeY6G0QG22q___de",
+      "internal": Object {
+        "contentDigest": "addc15022108d0081916d9251ac42b9c",
+        "mediaType": "application/x-contentful",
+        "type": "ContentfulBrand",
+      },
+      "logo___NODE": "c3wtvPBbBjiMKqKKga8I2Cu",
+      "node_locale": "de",
+      "parent": "Brand",
+      "phone": Array [
+        "+45 35 55 44 59",
+      ],
+      "twitter": "https://twitter.com/NormannCPH",
+      "website": "http://www.normann-copenhagen.com/",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [
+        "c4LgMotpNF6W20YKmuemW0a___decompanyNameTextNode",
+        "c4LgMotpNF6W20YKmuemW0a___decompanyDescriptionTextNode",
+      ],
+      "companyDescription___NODE": "c4LgMotpNF6W20YKmuemW0a___decompanyDescriptionTextNode",
+      "companyName___NODE": "c4LgMotpNF6W20YKmuemW0a___decompanyNameTextNode",
+      "email": "info@acgears.com",
+      "id": "c4LgMotpNF6W20YKmuemW0a___de",
+      "internal": Object {
+        "contentDigest": "fbd87143d41fb6b8732cb4fb3cb838d8",
+        "mediaType": "application/x-contentful",
+        "type": "ContentfulBrand",
+      },
+      "logo___NODE": "c2Y8LhXLnYAYqKCGEWG4EKI",
+      "node_locale": "de",
+      "parent": "Brand",
+      "phone": Array [
+        "+1 212 260 2269",
+      ],
+      "website": "http://www.lemnos.jp/en/",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [
+        "JrePkDVYomE8AwcuCUyMi___decompanyNameTextNode",
+        "JrePkDVYomE8AwcuCUyMi___decompanyDescriptionTextNode",
+      ],
+      "companyDescription___NODE": "JrePkDVYomE8AwcuCUyMi___decompanyDescriptionTextNode",
+      "companyName___NODE": "JrePkDVYomE8AwcuCUyMi___decompanyNameTextNode",
+      "id": "JrePkDVYomE8AwcuCUyMi___de",
+      "internal": Object {
+        "contentDigest": "45471d20d327c2201b8c0d61cc4f0056",
+        "mediaType": "application/x-contentful",
+        "type": "ContentfulBrand",
+      },
+      "logo___NODE": "c4zj1ZOfHgQ8oqgaSKm4Qo2",
+      "node_locale": "de",
+      "parent": "Brand",
       "website": "http://playsam.com/",
     },
   ],
@@ -2484,12 +2974,15 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "c5KsDBWseXY6QegucYAoacSproductDescriptionTextNode",
       ],
       "id": "c5KsDBWseXY6QegucYAoacS",
-      "image___NODE": Array [],
+      "image___NODE": Array [
+        "wtrHxeu3zEoEce2MokCSi",
+      ],
       "internal": Object {
-        "contentDigest": "cbe19cd1d06d1d0a22be4b09706a8d13",
+        "contentDigest": "7a0a2a1512617d54c44d73bef7a218e0",
         "mediaType": "application/x-contentful",
         "type": "ContentfulProduct",
       },
+      "node_locale": "en-US",
       "parent": "Product",
       "price": 44,
       "productDescription___NODE": "c5KsDBWseXY6QegucYAoacSproductDescriptionTextNode",
@@ -2519,12 +3012,15 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "c3DVqIYj4dOwwcKu6sgqOggproductDescriptionTextNode",
       ],
       "id": "c3DVqIYj4dOwwcKu6sgqOgg",
-      "image___NODE": Array [],
+      "image___NODE": Array [
+        "Xc0ny7GWsMEMCeASWO2um",
+      ],
       "internal": Object {
-        "contentDigest": "a79c04d9fffa20043cbebf17503284c1",
+        "contentDigest": "d81b107967209c8eea62b432065be9a7",
         "mediaType": "application/x-contentful",
         "type": "ContentfulProduct",
       },
+      "node_locale": "en-US",
       "parent": "Product",
       "price": 11,
       "productDescription___NODE": "c3DVqIYj4dOwwcKu6sgqOggproductDescriptionTextNode",
@@ -2552,12 +3048,15 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "c6dbjWqNd9SqccegcqYq224productDescriptionTextNode",
       ],
       "id": "c6dbjWqNd9SqccegcqYq224",
-      "image___NODE": Array [],
+      "image___NODE": Array [
+        "c10TkaLheGeQG6qQGqWYqUI",
+      ],
       "internal": Object {
-        "contentDigest": "ecd607b5f00730df49b9d28c305cf09c",
+        "contentDigest": "bb93389f537453c3d4aee3cd362a8813",
         "mediaType": "application/x-contentful",
         "type": "ContentfulProduct",
       },
+      "node_locale": "en-US",
       "parent": "Product",
       "price": 22,
       "productDescription___NODE": "c6dbjWqNd9SqccegcqYq224productDescriptionTextNode",
@@ -2587,16 +3086,296 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
         "c4BqrajvA8E6qwgkieoqmqOproductDescriptionTextNode",
       ],
       "id": "c4BqrajvA8E6qwgkieoqmqO",
-      "image___NODE": Array [],
+      "image___NODE": Array [
+        "KTRF62Q4gg60q6WCsWKw8",
+      ],
       "internal": Object {
-        "contentDigest": "b39e8bcce1a25dc92279b6f3b9e5db37",
+        "contentDigest": "34b8bbee9ea18c220c98f9ed6a6505db",
         "mediaType": "application/x-contentful",
         "type": "ContentfulProduct",
       },
+      "node_locale": "en-US",
       "parent": "Product",
       "price": 120,
       "productDescription___NODE": "c4BqrajvA8E6qwgkieoqmqOproductDescriptionTextNode",
       "productName___NODE": "c4BqrajvA8E6qwgkieoqmqOproductNameTextNode",
+      "quantity": 3,
+      "sizetypecolor": "10\\" x 2.2\\"",
+      "sku": "B00MG4ULK2",
+      "slug": "soso-wall-clock",
+      "tags": Array [
+        "home décor",
+        "clocks",
+        "interior design",
+        "yellow",
+        "gifts",
+      ],
+      "website": "http://store.dwell.com/soso-wall-clock.html",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "c5KsDBWseXY6QegucYAoacS___deproductNameTextNode",
+      "internal": Object {
+        "content": "Playsam Streamliner Klassisches Auto, Espresso",
+        "contentDigest": "7f76178eaaeb38fc20570d0c6eb49c3e",
+        "mediaType": "text/x-markdown",
+        "type": "contentfulProductProductNameTextNode",
+      },
+      "parent": "c5KsDBWseXY6QegucYAoacS___de",
+      "productName": "Playsam Streamliner Klassisches Auto, Espresso",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "c5KsDBWseXY6QegucYAoacS___deproductDescriptionTextNode",
+      "internal": Object {
+        "content": "Ein klassisches Playsam-Design, das Streamliner Classic Car wurde als Swedish Design Classic vom Schwedischen Nationalmuseum für seinen erfinderischen Stil und seine schlanke Oberfläche ausgewählt. Es ist kein Wunder, dass dieses hölzerne Auto auch ein langjähriger Liebling für Kinder gewesen ist, die groß und klein sind!",
+        "contentDigest": "85779a170b2fe2458d707b34459d4085",
+        "mediaType": "text/x-markdown",
+        "type": "contentfulProductProductDescriptionTextNode",
+      },
+      "parent": "c5KsDBWseXY6QegucYAoacS___de",
+      "productDescription": "Ein klassisches Playsam-Design, das Streamliner Classic Car wurde als Swedish Design Classic vom Schwedischen Nationalmuseum für seinen erfinderischen Stil und seine schlanke Oberfläche ausgewählt. Es ist kein Wunder, dass dieses hölzerne Auto auch ein langjähriger Liebling für Kinder gewesen ist, die groß und klein sind!",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "c3DVqIYj4dOwwcKu6sgqOgg___deproductNameTextNode",
+      "internal": Object {
+        "content": "Becher",
+        "contentDigest": "aac31ab0dcf429f1be1d2764db549f43",
+        "mediaType": "text/x-markdown",
+        "type": "contentfulProductProductNameTextNode",
+      },
+      "parent": "c3DVqIYj4dOwwcKu6sgqOgg___de",
+      "productName": "Becher",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "c3DVqIYj4dOwwcKu6sgqOgg___deproductDescriptionTextNode",
+      "internal": Object {
+        "content": "Wand-hängende Glas-Blumen-Vase und Terrarium",
+        "contentDigest": "41d1166dbe8f8af2f8f2bad50fe42f03",
+        "mediaType": "text/x-markdown",
+        "type": "contentfulProductProductDescriptionTextNode",
+      },
+      "parent": "c3DVqIYj4dOwwcKu6sgqOgg___de",
+      "productDescription": "Wand-hängende Glas-Blumen-Vase und Terrarium",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "c6dbjWqNd9SqccegcqYq224___deproductNameTextNode",
+      "internal": Object {
+        "content": "Schneebesen",
+        "contentDigest": "811253206ba751ed27cf3ceb68e334dc",
+        "mediaType": "text/x-markdown",
+        "type": "contentfulProductProductNameTextNode",
+      },
+      "parent": "c6dbjWqNd9SqccegcqYq224___de",
+      "productName": "Schneebesen",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "c6dbjWqNd9SqccegcqYq224___deproductDescriptionTextNode",
+      "internal": Object {
+        "content": "Ein kreativer kleiner Schneebesen, der in 8 verschiedenen Farben kommt. Praktisch und nach dem Gebrauch leicht zu reinigen. Eine tolle Geschenkidee.",
+        "contentDigest": "d0793a3c142dc3f7377edd6625091cb7",
+        "mediaType": "text/x-markdown",
+        "type": "contentfulProductProductDescriptionTextNode",
+      },
+      "parent": "c6dbjWqNd9SqccegcqYq224___de",
+      "productDescription": "Ein kreativer kleiner Schneebesen, der in 8 verschiedenen Farben kommt. Praktisch und nach dem Gebrauch leicht zu reinigen. Eine tolle Geschenkidee.",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "c4BqrajvA8E6qwgkieoqmqO___deproductNameTextNode",
+      "internal": Object {
+        "content": "SoSo wanduhr",
+        "contentDigest": "8b38ff25d8ab847042efc8d525aaf7a0",
+        "mediaType": "text/x-markdown",
+        "type": "contentfulProductProductNameTextNode",
+      },
+      "parent": "c4BqrajvA8E6qwgkieoqmqO___de",
+      "productName": "SoSo wanduhr",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "c4BqrajvA8E6qwgkieoqmqO___deproductDescriptionTextNode",
+      "internal": Object {
+        "content": "Die neu veröffentlichte SoSo Clock von Lemnos heiratet einfaches, sauberes Design und fette, auffällige Features. Sein gesättigtes Ringelblumengesicht ist ein lebhafter Pop der Farbe zu den weißen oder grauen Wänden, aber würde auch gut mit Marine und kastanienbraun paaren. Wo die meisten Uhren am Rande der Uhr Nummern sind, bringt der SoSo sie in die Mitte und lässt einen weiten Raum zwischen den Zahlen und dem leichten Rahmen. Der Stundenzeiger bietet eine schöne Unterbrechung der schwarzen und gelben der Uhr - es ist in einem brillanten Weiß vorgestellt. Trotz seiner kräftigen Farbe und des Kontrastes behält der SoSo eine saubere, reine Ästhetik, die für eine Vielzahl von zeitgenössischen Interieurs geeignet ist.",
+        "contentDigest": "038ff737ccc03e4525691d265d5a92b7",
+        "mediaType": "text/x-markdown",
+        "type": "contentfulProductProductDescriptionTextNode",
+      },
+      "parent": "c4BqrajvA8E6qwgkieoqmqO___de",
+      "productDescription": "Die neu veröffentlichte SoSo Clock von Lemnos heiratet einfaches, sauberes Design und fette, auffällige Features. Sein gesättigtes Ringelblumengesicht ist ein lebhafter Pop der Farbe zu den weißen oder grauen Wänden, aber würde auch gut mit Marine und kastanienbraun paaren. Wo die meisten Uhren am Rande der Uhr Nummern sind, bringt der SoSo sie in die Mitte und lässt einen weiten Raum zwischen den Zahlen und dem leichten Rahmen. Der Stundenzeiger bietet eine schöne Unterbrechung der schwarzen und gelben der Uhr - es ist in einem brillanten Weiß vorgestellt. Trotz seiner kräftigen Farbe und des Kontrastes behält der SoSo eine saubere, reine Ästhetik, die für eine Vielzahl von zeitgenössischen Interieurs geeignet ist.",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "description": null,
+      "displayField": "productName",
+      "id": "Product",
+      "internal": Object {
+        "contentDigest": "c69f340cf628e5616c7f3deb12e1491b",
+        "mediaType": "text/x-contentful",
+        "type": "ContentfulContentType",
+      },
+      "name": "Product",
+      "parent": "__SOURCE__",
+    },
+  ],
+  Array [
+    Object {
+      "brand___NODE": "JrePkDVYomE8AwcuCUyMi",
+      "categories___NODE": Array [
+        "c24DPGBDeGEaYy8ms4Y8QMQ___de",
+      ],
+      "children": Array [
+        "c5KsDBWseXY6QegucYAoacS___deproductNameTextNode",
+        "c5KsDBWseXY6QegucYAoacS___deproductDescriptionTextNode",
+      ],
+      "id": "c5KsDBWseXY6QegucYAoacS___de",
+      "image___NODE": Array [
+        "wtrHxeu3zEoEce2MokCSi___de",
+      ],
+      "internal": Object {
+        "contentDigest": "48128901c3ad0d17866f9ade1539e443",
+        "mediaType": "application/x-contentful",
+        "type": "ContentfulProduct",
+      },
+      "node_locale": "de",
+      "parent": "Product",
+      "price": 44,
+      "productDescription___NODE": "c5KsDBWseXY6QegucYAoacS___deproductDescriptionTextNode",
+      "productName___NODE": "c5KsDBWseXY6QegucYAoacS___deproductNameTextNode",
+      "quantity": 56,
+      "sizetypecolor": "Length: 135 mm | color: espresso, green, or icar (white)",
+      "sku": "B001R6JUZ2",
+      "slug": "playsam-streamliner-classic-car-espresso",
+      "tags": Array [
+        "wood",
+        "toy",
+        "car",
+        "sweden",
+        "design",
+      ],
+      "website": "http://www.amazon.com/dp/B001R6JUZ2/",
+    },
+  ],
+  Array [
+    Object {
+      "brand___NODE": "c651CQ8rLoIYCeY6G0QG22q",
+      "categories___NODE": Array [
+        "c7LAnCobuuWYSqks6wAwY2a___de",
+      ],
+      "children": Array [
+        "c3DVqIYj4dOwwcKu6sgqOgg___deproductNameTextNode",
+        "c3DVqIYj4dOwwcKu6sgqOgg___deproductDescriptionTextNode",
+      ],
+      "id": "c3DVqIYj4dOwwcKu6sgqOgg___de",
+      "image___NODE": Array [
+        "Xc0ny7GWsMEMCeASWO2um___de",
+      ],
+      "internal": Object {
+        "contentDigest": "121147a7f18cfb3e9e721930fc5549ad",
+        "mediaType": "application/x-contentful",
+        "type": "ContentfulProduct",
+      },
+      "node_locale": "de",
+      "parent": "Product",
+      "price": 11,
+      "productDescription___NODE": "c3DVqIYj4dOwwcKu6sgqOgg___deproductDescriptionTextNode",
+      "productName___NODE": "c3DVqIYj4dOwwcKu6sgqOgg___deproductNameTextNode",
+      "quantity": 101,
+      "sizetypecolor": "3 x 3 x 5 inches; 5.3 ounces",
+      "sku": "B00E82D7I8",
+      "slug": "hudson-wall-cup",
+      "tags": Array [
+        "vase",
+        "flowers",
+        "accessories",
+      ],
+      "website": "http://www.amazon.com/dp/B00E82D7I8/",
+    },
+  ],
+  Array [
+    Object {
+      "brand___NODE": "c651CQ8rLoIYCeY6G0QG22q",
+      "categories___NODE": Array [
+        "c7LAnCobuuWYSqks6wAwY2a___de",
+      ],
+      "children": Array [
+        "c6dbjWqNd9SqccegcqYq224___deproductNameTextNode",
+        "c6dbjWqNd9SqccegcqYq224___deproductDescriptionTextNode",
+      ],
+      "id": "c6dbjWqNd9SqccegcqYq224___de",
+      "image___NODE": Array [
+        "c10TkaLheGeQG6qQGqWYqUI___de",
+      ],
+      "internal": Object {
+        "contentDigest": "6f327775250ec839fd8caa48b4fe1873",
+        "mediaType": "application/x-contentful",
+        "type": "ContentfulProduct",
+      },
+      "node_locale": "de",
+      "parent": "Product",
+      "price": 22,
+      "productDescription___NODE": "c6dbjWqNd9SqccegcqYq224___deproductDescriptionTextNode",
+      "productName___NODE": "c6dbjWqNd9SqccegcqYq224___deproductNameTextNode",
+      "quantity": 89,
+      "sizetypecolor": "0.8 x 0.8 x 11.2 inches; 1.6 ounces",
+      "sku": "B0081F2CCK",
+      "slug": "whisk-beater",
+      "tags": Array [
+        "kitchen",
+        "accessories",
+        "whisk",
+        "scandinavia",
+        "design",
+      ],
+      "website": "http://www.amazon.com/dp/B0081F2CCK/",
+    },
+  ],
+  Array [
+    Object {
+      "brand___NODE": "c4LgMotpNF6W20YKmuemW0a",
+      "categories___NODE": Array [
+        "c7LAnCobuuWYSqks6wAwY2a___de",
+      ],
+      "children": Array [
+        "c4BqrajvA8E6qwgkieoqmqO___deproductNameTextNode",
+        "c4BqrajvA8E6qwgkieoqmqO___deproductDescriptionTextNode",
+      ],
+      "id": "c4BqrajvA8E6qwgkieoqmqO___de",
+      "image___NODE": Array [
+        "KTRF62Q4gg60q6WCsWKw8___de",
+      ],
+      "internal": Object {
+        "contentDigest": "00324b7dbc67e61f126b0f06e6a2a536",
+        "mediaType": "application/x-contentful",
+        "type": "ContentfulProduct",
+      },
+      "node_locale": "de",
+      "parent": "Product",
+      "price": 120,
+      "productDescription___NODE": "c4BqrajvA8E6qwgkieoqmqO___deproductDescriptionTextNode",
+      "productName___NODE": "c4BqrajvA8E6qwgkieoqmqO___deproductNameTextNode",
       "quantity": 3,
       "sizetypecolor": "10\\" x 2.2\\"",
       "sku": "B00MG4ULK2",
