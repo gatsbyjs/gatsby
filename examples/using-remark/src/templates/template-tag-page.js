@@ -3,8 +3,6 @@ import Link from "gatsby-link"
 
 class TagRoute extends React.Component {
   render() {
-    console.log(`HERE`)
-    console.log(this.props.data.allMarkdownRemark.edges)
     const posts = this.props.data.allMarkdownRemark.edges
     const postLinks = posts.map(post =>
       <li key={post.node.fields.slug}>
