@@ -10,7 +10,6 @@ const restrictedNodeFields = [`id`, `children`, `parent`, `fields`, `internal`]
 
 exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeType
 
-
 /***
  * Localization algorithm
  *
@@ -20,6 +19,7 @@ exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeTyp
  * 3. When creating entries and assets, make the most localized version
  * possible for each localized node i.e. get the localized field if it exists
  * or the fallback field or the default field.
+ */
 
 exports.sourceNodes = async (
   { boundActionCreators, getNodes, hasNodeChanged, store },
