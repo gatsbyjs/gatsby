@@ -6,6 +6,33 @@ const digest = str => crypto.createHash(`md5`).update(str).digest(`hex`)
 const typePrefix = `Contentful`
 const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 
+// If the id starts with a number, left-pad it with a c (for Contentful of
+// course :-))
+const fixId = id => {
+  if (!isNaN(id.slice(0, 1))) {
+    return `c${id}`
+  }
+
+  return id
+}
+exports.fixId = fixId
+
+const mapValuesDeep = (v, k, callback) => {
+  if (_.isArray(v)) {
+    return v.map(n => mapValuesDeep(n, null, callback))
+  } else {
+    return _.isObject(v)
+      ? _.mapValues(v, (v, k) => mapValuesDeep(v, k, callback))
+      : callback(v, k)
+  }
+}
+
+exports.fixIds = object => {
+  return mapValuesDeep(object, null, (v, k) => {
+    return k === `id` ? fixId(v) : v
+  })
+}
+
 exports.buildEntryList = ({ contentTypeItems, currentSyncData }) =>
   contentTypeItems.map(contentType =>
     currentSyncData.entries.filter(
@@ -39,7 +66,7 @@ exports.buildForeignReferenceMap = ({
 }) => {
   const foreignReferenceMap = {}
   contentTypeItems.forEach((contentTypeItem, i) => {
-    const contentTypeItemId = contentTypeItem.sys.id
+    const contentTypeItemId = contentTypeItem.name.toLowerCase()
     entryList[i].forEach(entryItem => {
       const entryItemFields = entryItem.fields
       Object.keys(entryItemFields).forEach(entryItemFieldKey => {
@@ -121,7 +148,7 @@ exports.createContentTypeNodes = ({
   foreignReferenceMap,
   defaultLocale,
 }) => {
-  const contentTypeItemId = contentTypeItem.sys.id
+  const contentTypeItemId = contentTypeItem.name
 
   // Warn about any field conflicts
   const conflictFields = []

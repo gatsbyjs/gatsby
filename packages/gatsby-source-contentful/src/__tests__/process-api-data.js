@@ -64,3 +64,12 @@ describe(`Process contentful data`, () => {
     expect(createNode.mock.calls).toMatchSnapshot()
   })
 })
+
+describe(`Fix contentful IDs`, () => {
+  it(`leaves ids that start with a string the same`, () => {
+    expect(processAPIData.fixId(`a123`)).toEqual(`a123`)
+  })
+  it(`left pads ids that start with a number of a "c"`, () => {
+    expect(processAPIData.fixId(`123`)).toEqual(`c123`)
+  })
+})
