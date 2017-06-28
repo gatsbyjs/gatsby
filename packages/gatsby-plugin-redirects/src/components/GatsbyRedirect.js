@@ -6,12 +6,6 @@ import { Route, Redirect } from 'react-router'
 
 class GatsbyRedirect extends React.Component {
 
-    static propTypes = {
-        pathContext: PropTypes.shape({
-            to: PropTypes.string.isRequired,
-        }),
-    }
-
     componentDidMount() {
         if (process.env.NODE_ENV === `production`) {
             window.___navigateTo(this.props.pathContext.to)
@@ -26,6 +20,12 @@ class GatsbyRedirect extends React.Component {
             />
         )
     }
+}
+
+GatsbyRedirect.propTypes = {
+    pathContext: PropTypes.shape({
+        to: PropTypes.string.isRequired,
+    }),
 }
 
 export default GatsbyRedirect
