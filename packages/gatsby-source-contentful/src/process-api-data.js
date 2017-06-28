@@ -66,7 +66,7 @@ exports.buildForeignReferenceMap = ({
 }) => {
   const foreignReferenceMap = {}
   contentTypeItems.forEach((contentTypeItem, i) => {
-    const contentTypeItemId = contentTypeItem.sys.id
+    const contentTypeItemId = contentTypeItem.name.toLowerCase()
     entryList[i].forEach(entryItem => {
       const entryItemFields = entryItem.fields
       Object.keys(entryItemFields).forEach(entryItemFieldKey => {
@@ -148,7 +148,7 @@ exports.createContentTypeNodes = ({
   foreignReferenceMap,
   defaultLocale,
 }) => {
-  const contentTypeItemId = contentTypeItem.sys.id
+  const contentTypeItemId = contentTypeItem.name
 
   // Warn about any field conflicts
   const conflictFields = []
