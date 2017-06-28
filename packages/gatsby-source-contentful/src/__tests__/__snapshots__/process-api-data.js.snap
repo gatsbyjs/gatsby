@@ -2422,12 +2422,17 @@ Array [
       "icon___NODE": "c6m5AJ9vMPKc8OUoQeoCS4o___de",
       "id": "c7LAnCobuuWYSqks6wAwY2a___de",
       "internal": Object {
-        "contentDigest": "9133d773e65b9f8bbabbe6500422b55f",
+        "contentDigest": "8f3d527ab04bd97259dcb7d46edfa5f6",
         "mediaType": "application/x-contentful",
         "type": "ContentfulCategory",
       },
       "node_locale": "de",
       "parent": "Category",
+      "product___NODE": Array [
+        "c3DVqIYj4dOwwcKu6sgqOgg___de",
+        "c6dbjWqNd9SqccegcqYq224___de",
+        "c4BqrajvA8E6qwgkieoqmqO___de",
+      ],
       "title___NODE": "c7LAnCobuuWYSqks6wAwY2a___detitleTextNode",
     },
   ],
@@ -2441,12 +2446,15 @@ Array [
       "icon___NODE": "c6t4HKjytPi0mYgs240wkG___de",
       "id": "c24DPGBDeGEaYy8ms4Y8QMQ___de",
       "internal": Object {
-        "contentDigest": "d6942e8626a347c469464a07a3680947",
+        "contentDigest": "b6bb3b1d0a7574c652a76e32b61d0a94",
         "mediaType": "application/x-contentful",
         "type": "ContentfulCategory",
       },
       "node_locale": "de",
       "parent": "Category",
+      "product___NODE": Array [
+        "c5KsDBWseXY6QegucYAoacS___de",
+      ],
       "title___NODE": "c24DPGBDeGEaYy8ms4Y8QMQ___detitleTextNode",
     },
   ],
@@ -2778,7 +2786,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "email": "normann@normann-copenhagen.com",
       "id": "c651CQ8rLoIYCeY6G0QG22q___de",
       "internal": Object {
-        "contentDigest": "f6492b71f79f840121d84808130c45e3",
+        "contentDigest": "5426a323c0c82f27d9da95d2616a69b8",
         "mediaType": "application/x-contentful",
         "type": "ContentfulBrand",
       },
@@ -2787,6 +2795,10 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "parent": "Brand",
       "phone": Array [
         "+45 35 55 44 59",
+      ],
+      "product___NODE": Array [
+        "c3DVqIYj4dOwwcKu6sgqOgg___de",
+        "c6dbjWqNd9SqccegcqYq224___de",
       ],
       "twitter": "https://twitter.com/NormannCPH",
       "website": "http://www.normann-copenhagen.com/",
@@ -2803,7 +2815,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "email": "info@acgears.com",
       "id": "c4LgMotpNF6W20YKmuemW0a___de",
       "internal": Object {
-        "contentDigest": "15bb4ef6adf1f2df3fdee0e5e7f0e984",
+        "contentDigest": "d8c0805a035d9d583d0cc1756c44b822",
         "mediaType": "application/x-contentful",
         "type": "ContentfulBrand",
       },
@@ -2812,6 +2824,9 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "parent": "Brand",
       "phone": Array [
         "+1 212 260 2269",
+      ],
+      "product___NODE": Array [
+        "c4BqrajvA8E6qwgkieoqmqO___de",
       ],
       "website": "http://www.lemnos.jp/en/",
     },
@@ -2826,13 +2841,16 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "companyName___NODE": "JrePkDVYomE8AwcuCUyMi___decompanyNameTextNode",
       "id": "JrePkDVYomE8AwcuCUyMi___de",
       "internal": Object {
-        "contentDigest": "5803b1602659aa419b1714770936c614",
+        "contentDigest": "4544b86dd8c900f6a6ab0cf93bdd2cde",
         "mediaType": "application/x-contentful",
         "type": "ContentfulBrand",
       },
       "logo___NODE": "c4zj1ZOfHgQ8oqgaSKm4Qo2___de",
       "node_locale": "de",
       "parent": "Brand",
+      "product___NODE": Array [
+        "c5KsDBWseXY6QegucYAoacS___de",
+      ],
       "website": "http://playsam.com/",
     },
   ],

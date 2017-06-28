@@ -238,16 +238,18 @@ exports.createContentTypeNodes = ({
       })
 
       // Add reverse linkages if there are any for this node
-      const foreignReferences = foreignReferenceMap[mId(entryItem.sys.id)]
+      const foreignReferences = foreignReferenceMap[entryItem.sys.id]
       if (foreignReferences) {
         foreignReferences.forEach(foreignReference => {
           const existingReference = entryItemFields[foreignReference.name]
           if (existingReference) {
-            entryItemFields[foreignReference.name].push(foreignReference.id)
+            entryItemFields[foreignReference.name].push(
+              mId(foreignReference.id)
+            )
           } else {
-            // If is one foreign reference, there can always be many.
+            // If there is one foreign reference, there can be many.
             // Best to be safe and put it in an array to start with.
-            entryItemFields[foreignReference.name] = [foreignReference.id]
+            entryItemFields[foreignReference.name] = [mId(foreignReference.id)]
           }
         })
       }
