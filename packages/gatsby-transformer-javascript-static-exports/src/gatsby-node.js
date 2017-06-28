@@ -92,19 +92,27 @@ async function onCreateNode({ node, getNode, boundActionCreators, loadNodeConten
       },
     })
 
+    // We may eventually add other data besides just
+    // from exports.data. Each set of exports should have its
+    // own object to track errors separately. Add below as noted. 
     exportsData = {
-      // We may eventually add other data besides just
-      // from exports.data
       ...data,
-      JSFrontmatter: `filled`
+      error: false
     }
 
   } catch (e) {
-    // Ignore errors — we print out parse errors for user elsewhere.
+    // stick the error on the query so the user can
+    // react to an error as they see fit
     exportsData = {
       ...data,
-      JSFrontmatter: `error`
+      error: {
+        err: true,
+        code: e.code,
+        message: e.message,
+        stack: e.stack
+      }
     }
+
   } finally {
 
     const objStr = JSON.stringify(node)
@@ -127,6 +135,7 @@ async function onCreateNode({ node, getNode, boundActionCreators, loadNodeConten
         }
 
     nodeData.data = {...exportsData}
+    // eventually add additional exports here
 
     if (node.internal.type === `File`) {
       nodeData.fileAbsolutePath = node.absolutePath
