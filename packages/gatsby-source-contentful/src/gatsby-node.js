@@ -1,13 +1,12 @@
-const contentful = require(`contentful`)
+const _ = require(`lodash`)
 
 const processAPIData = require(`./process-api-data`)
+const fetchData = require(`./fetch-data`)
 
 const conflictFieldPrefix = `contentful`
 
 // restrictedNodeFields from here https://www.gatsbyjs.org/docs/node-interface/
 const restrictedNodeFields = [`id`, `children`, `parent`, `fields`, `internal`]
-
-const _ = require(`lodash`)
 
 exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeType
 
@@ -22,35 +21,6 @@ exports.sourceNodes = async (
     setPluginStatus,
   } = boundActionCreators
 
-  // Fetch articles.
-  console.time(`Fetch Contentful data`)
-  console.log(`Starting to fetch data from Contentful`)
-
-  const client = contentful.createClient({
-    space: spaceId,
-    accessToken,
-  })
-  // The sync API puts the locale in all fields in this format { fieldName:
-  // {'locale': value} } so we need to get the space and its default local.
-  //
-  // We'll extend this soon to support multiple locales.
-  let space
-  let defaultLocale = `en-US`
-  try {
-    console.log(`Fetching default locale`)
-    space = await client.getSpace()
-    defaultLocale = _.find(space.locales, { default: true }).code
-    console.log(`default local is : ${defaultLocale}`)
-  } catch (e) {
-    console.log(
-      `Accessing your Contentful space failed. Perhaps you're offline or the spaceId/accessToken is incorrect.`
-    )
-    // TODO perhaps continue if there's cached data? That would let
-    // someone develop a contentful site even if not connected to the internet.
-    // For prod builds though always fail if we can't get the latest data.
-    process.exit(1)
-  }
-
   // Get sync token if it exists.
   let syncToken
   if (
@@ -61,30 +31,20 @@ exports.sourceNodes = async (
       .status.syncToken
   }
 
-  let currentSyncData
-  try {
-    let query = syncToken ? { nextSyncToken: syncToken } : { initial: true }
-    currentSyncData = await client.sync(query)
-  } catch (e) {
-    console.log(`error fetching contentful data`, e)
-    process.exit(1)
-  }
+  const { currentSyncData, contentTypeItems, defaultLocale } = await fetchData({
+    syncToken,
+    spaceId,
+    accessToken,
+  })
 
-  // We need to fetch content types with the non-sync API as the sync API
-  // doesn't support this.
-  let contentTypes
-  try {
-    contentTypes = await pagedGet(client, `getContentTypes`)
-  } catch (e) {
-    console.log(`error fetching content types`, e)
-  }
-  console.log(`contentTypes fetched`, contentTypes.items.length)
-
-  const contentTypeItems = contentTypes.items
+  const entryList = processAPIData.buildEntryList({
+    currentSyncData,
+    contentTypeItems,
+  })
 
   // Remove deleted entries & assets.
   // TODO figure out if entries referencing now deleted entries/assets
-  // are "updated" so will get updated here.
+  // are "updated" so will get the now deleted reference removed.
   deleteNodes(currentSyncData.deletedEntries.map(e => e.sys.id))
   deleteNodes(currentSyncData.deletedAssets.map(e => e.sys.id))
 
@@ -92,12 +52,6 @@ exports.sourceNodes = async (
     n => n.internal.owner === `gatsby-source-contentful`
   )
   existingNodes.forEach(n => touchNode(n.id))
-
-  let entryList = contentTypeItems.map(contentType =>
-    currentSyncData.entries.filter(
-      entry => entry.sys.contentType.sys.id === contentType.sys.id
-    )
-  )
 
   const assets = currentSyncData.assets
 
@@ -119,17 +73,11 @@ exports.sourceNodes = async (
 
   // Create map of resolvable ids so we can check links against them while creating
   // links.
-  const resolvable = new Set()
-  existingNodes.forEach(n => resolvable.add(n.id))
-
-  const newOrUpdatedEntries = []
-  entryList.forEach(entries => {
-    entries.forEach(entry => {
-      newOrUpdatedEntries.push(entry.sys.id)
-      resolvable.add(entry.sys.id)
-    })
+  const resolvable = processAPIData.buildResolvableSet({
+    existingNodes,
+    entryList,
+    assets,
   })
-  assets.forEach(assetItem => resolvable.add(assetItem.sys.id))
 
   // Build foreign reference map before starting to insert any nodes
   const foreignReferenceMap = processAPIData.buildForeignReferenceMap({
@@ -137,6 +85,13 @@ exports.sourceNodes = async (
     entryList,
     resolvable,
     defaultLocale,
+  })
+
+  const newOrUpdatedEntries = []
+  entryList.forEach(entries => {
+    entries.forEach(entry => {
+      newOrUpdatedEntries.push(entry.sys.id)
+    })
   })
 
   // Update existing entry nodes that weren't updated but that need reverse
@@ -179,38 +134,4 @@ exports.sourceNodes = async (
   })
 
   return
-}
-/**
- * Gets all the existing entities based on pagination parameters.
- * The first call will have no aggregated response. Subsequent calls will
- * concatenate the new responses to the original one.
- */
-function pagedGet(
-  client,
-  method,
-  query = {},
-  skip = 0,
-  pageLimit = 1000,
-  aggregatedResponse = null
-) {
-  return client
-    [method]({
-      ...query,
-      skip: skip,
-      limit: pageLimit,
-      order: `sys.createdAt`,
-    })
-    .then(response => {
-      if (!aggregatedResponse) {
-        aggregatedResponse = response
-      } else {
-        aggregatedResponse.items = aggregatedResponse.items.concat(
-          response.items
-        )
-      }
-      if (skip + pageLimit <= response.total) {
-        return pagedGet(client, method, skip + pageLimit, aggregatedResponse)
-      }
-      return aggregatedResponse
-    })
 }

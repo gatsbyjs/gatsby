@@ -6,6 +6,31 @@ const digest = str => crypto.createHash(`md5`).update(str).digest(`hex`)
 const typePrefix = `Contentful`
 const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 
+exports.buildEntryList = ({ contentTypeItems, currentSyncData }) =>
+  contentTypeItems.map(contentType =>
+    currentSyncData.entries.filter(
+      entry => entry.sys.contentType.sys.id === contentType.sys.id
+    )
+  )
+
+exports.buildResolvableSet = ({
+  entryList,
+  existingNodes = [],
+  assets = [],
+}) => {
+  const resolvable = new Set()
+  existingNodes.forEach(n => resolvable.add(n.id))
+
+  entryList.forEach(entries => {
+    entries.forEach(entry => {
+      resolvable.add(entry.sys.id)
+    })
+  })
+  assets.forEach(assetItem => resolvable.add(assetItem.sys.id))
+
+  return resolvable
+}
+
 exports.buildForeignReferenceMap = ({
   contentTypeItems,
   entryList,
