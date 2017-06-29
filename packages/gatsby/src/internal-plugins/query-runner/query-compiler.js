@@ -133,7 +133,7 @@ class Runner {
       )
       if (docName && filePath && error) {
         console.log(
-          `\nThere was an error while compiling your site's GraphQL queries in document "${docName}" in file "${filePath}". Copy the failing query into GraphiQL to debug\n`
+          `\nThere was an error while compiling your site's GraphQL queries in document "${docName}" in file "${filePath}".\n`
         )
         console.log(`    `, error)
         console.log(``)
@@ -141,7 +141,6 @@ class Runner {
         console.log(
           `\nThere was an error while compiling your site's GraphQL queries\n${e.toString()}`
         )
-        console.log(`Copy the failing query into GraphiQL to debug\n`)
       }
     }
 
