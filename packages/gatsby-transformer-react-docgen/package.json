@@ -1,18 +1,13 @@
 {
   "name": "gatsby-transformer-react-docgen",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.4",
   "description": "Expose React component metadata and prop information as GraphQL types",
   "main": "index.js",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
     "watch": "babel -w src --out-dir . --ignore __tests__"
   },
-  "keywords": [
-    "gatsby",
-    "gatsby-plugin",
-    "react",
-    "react-docgen"
-  ],
+  "keywords": ["gatsby", "gatsby-plugin", "react", "react-docgen"],
   "author": "Jason Quense <monastic.panic@gmail.com>",
   "license": "MIT",
   "dependencies": {

@@ -7,13 +7,7 @@
     "build": "babel src --out-dir .",
     "watch": "babel -w src --out-dir ."
   },
-  "keywords": [
-    "gatsby",
-    "gatsby-plugin",
-    "rss",
-    "atom",
-    "feed"
-  ],
+  "keywords": ["gatsby", "gatsby-plugin", "rss", "atom", "feed"],
   "author": "Nicholas Young <nicholas@nicholaswyoung.com>",
   "license": "MIT",
   "devDependencies": {

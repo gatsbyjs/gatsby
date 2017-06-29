@@ -1,106 +1,139 @@
-const contentful = require(`contentful`)
-const crypto = require(`crypto`)
 const _ = require(`lodash`)
 
-const digest = str => crypto.createHash(`md5`).update(str).digest(`hex`)
-
 const processAPIData = require(`./process-api-data`)
+const fetchData = require(`./fetch-data`)
 
 const conflictFieldPrefix = `contentful`
+
 // restrictedNodeFields from here https://www.gatsbyjs.org/docs/node-interface/
 const restrictedNodeFields = [`id`, `children`, `parent`, `fields`, `internal`]
 
 exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeType
 
+/***
+ * Localization algorithm
+ *
+ * 1. Make list of all resolvable IDs worrying just about the default ids not
+ * localized ids
+ * 2. Make mapping between ids, again not worrying about localization.
+ * 3. When creating entries and assets, make the most localized version
+ * possible for each localized node i.e. get the localized field if it exists
+ * or the fallback field or the default field.
+ */
+
 exports.sourceNodes = async (
-  { boundActionCreators, getNode, hasNodeChanged, store },
+  { boundActionCreators, getNodes, hasNodeChanged, store },
   { spaceId, accessToken }
 ) => {
-  const { createNode } = boundActionCreators
+  const {
+    createNode,
+    deleteNodes,
+    touchNode,
+    setPluginStatus,
+  } = boundActionCreators
 
-  // Fetch articles.
-  console.time(`fetch Contentful data`)
-  console.log(`Starting to fetch data from Contentful`)
+  // Get sync token if it exists.
+  let syncToken
+  if (
+    store.getState().status.plugins &&
+    store.getState().status.plugins[`gatsby-source-contentful`]
+  ) {
+    syncToken = store.getState().status.plugins[`gatsby-source-contentful`]
+      .status.syncToken
+  }
 
-  const client = contentful.createClient({
-    space: spaceId,
+  const {
+    currentSyncData,
+    contentTypeItems,
+    defaultLocale,
+    locales,
+  } = await fetchData({
+    syncToken,
+    spaceId,
     accessToken,
   })
 
-  let contentTypes
-  try {
-    contentTypes = await client.getContentTypes({ limit: 1000 })
-  } catch (e) {
-    console.log(`error fetching content types`, e)
-  }
-  console.log(`contentTypes fetched`, contentTypes.items.length)
-  if (contentTypes.total > 1000) {
-    console.log(
-      `HI! gatsby-source-plugin isn't setup yet to paginate over 1000 content types (the max we can fetch in one go). Please help out the project and contribute a PR fixing this.`
-    )
-  }
-
-  const entryList = await Promise.all(
-    contentTypes.items.map(async contentType => {
-      const contentTypeId = contentType.sys.id
-      let entries
-      try {
-        entries = await client.getEntries({
-          content_type: contentTypeId,
-          limit: 1000,
-        })
-      } catch (e) {
-        console.log(`error fetching entries`, e)
-      }
-      console.log(
-        `entries fetched for content type ${contentType.name} (${contentTypeId})`,
-        entries.items.length
-      )
-      if (entries.total > 1000) {
-        console.log(
-          `HI! gatsby-source-plugin isn't setup yet to paginate over 1000 entries (the max we can fetch in one go). Please help out the project and contribute a PR fixing this.`
-        )
-      }
-
-      return entries
-    })
-  )
-
-  let assets
-  try {
-    assets = await client.getAssets({ limit: 1000 })
-  } catch (e) {
-    console.log(`error fetching assets`, e)
-  }
-  if (assets.total > 1000) {
-    console.log(
-      `HI! gatsby-source-plugin isn't setup yet to paginate over 1000 assets (the max we can fetch in one go). Please help out the project and contribute a PR fixing this.`
-    )
-  }
-  console.log(`assets fetched`, assets.items.length)
-  console.timeEnd(`fetch Contentful data`)
-
-  // Create map of not resolvable ids so we can filter them out while creating
-  // links.
-  const notResolvable = new Map()
-  entryList.forEach(ents => {
-    if (ents.errors) {
-      ents.errors.forEach(error => {
-        if (error.sys.id === `notResolvable`) {
-          notResolvable.set(error.details.id, error.details)
-        }
-      })
-    }
+  const entryList = processAPIData.buildEntryList({
+    currentSyncData,
+    contentTypeItems,
   })
 
-  const contentTypeItems = contentTypes.items
+  // Remove deleted entries & assets.
+  // TODO figure out if entries referencing now deleted entries/assets
+  // are "updated" so will get the now deleted reference removed.
+  deleteNodes(currentSyncData.deletedEntries.map(e => e.sys.id))
+  deleteNodes(currentSyncData.deletedAssets.map(e => e.sys.id))
+
+  const existingNodes = getNodes().filter(
+    n => n.internal.owner === `gatsby-source-contentful`
+  )
+  existingNodes.forEach(n => touchNode(n.id))
+
+  const assets = currentSyncData.assets
+
+  console.log(`Updated entries `, currentSyncData.entries.length)
+  console.log(`Deleted entries `, currentSyncData.deletedEntries.length)
+  console.log(`Updated assets `, currentSyncData.assets.length)
+  console.log(`Deleted assets `, currentSyncData.deletedAssets.length)
+  console.timeEnd(`Fetch Contentful data`)
+
+  // Update syncToken
+  const nextSyncToken = currentSyncData.nextSyncToken
+
+  // Store our sync state for the next sync.
+  setPluginStatus({
+    status: {
+      syncToken: nextSyncToken,
+    },
+  })
+
+  // Create map of resolvable ids so we can check links against them while creating
+  // links.
+  const resolvable = processAPIData.buildResolvableSet({
+    existingNodes,
+    entryList,
+    assets,
+    defaultLocale,
+    locales,
+  })
 
   // Build foreign reference map before starting to insert any nodes
   const foreignReferenceMap = processAPIData.buildForeignReferenceMap({
     contentTypeItems,
     entryList,
-    notResolvable,
+    resolvable,
+    defaultLocale,
+    locales,
   })
+
+  const newOrUpdatedEntries = []
+  entryList.forEach(entries => {
+    entries.forEach(entry => {
+      newOrUpdatedEntries.push(entry.sys.id)
+    })
+  })
+
+  // Update existing entry nodes that weren't updated but that need reverse
+  // links added.
+  Object.keys(foreignReferenceMap)
+  existingNodes
+    .filter(n => _.includes(newOrUpdatedEntries, n.id))
+    .forEach(n => {
+      if (foreignReferenceMap[n.id]) {
+        foreignReferenceMap[n.id].forEach(foreignReference => {
+          // Add reverse links
+          if (n[foreignReference.name]) {
+            n[foreignReference.name].push(foreignReference.id)
+            // It might already be there so we'll uniquify after pushing.
+            n[foreignReference.name] = _.uniq(n[foreignReference.name])
+          } else {
+            // If is one foreign reference, there can always be many.
+            // Best to be safe and put it in an array to start with.
+            n[foreignReference.name] = [foreignReference.id]
+          }
+        })
+      }
+    })
 
   contentTypeItems.forEach((contentTypeItem, i) => {
     processAPIData.createContentTypeNodes({
@@ -109,13 +142,20 @@ exports.sourceNodes = async (
       conflictFieldPrefix,
       entries: entryList[i],
       createNode,
-      notResolvable,
+      resolvable,
       foreignReferenceMap,
+      defaultLocale,
+      locales,
     })
   })
 
-  assets.items.forEach(assetItem => {
-    processAPIData.createAssetNodes({ assetItem, createNode })
+  assets.forEach(assetItem => {
+    processAPIData.createAssetNodes({
+      assetItem,
+      createNode,
+      defaultLocale,
+      locales,
+    })
   })
 
   return

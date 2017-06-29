@@ -18,7 +18,8 @@ Check [https://github.com/gatsbyjs/gatsby/blob/1.0/packages/gatsby/src/utils/web
 
 
 ## Example
-Here is an example adding a **grid** when processing css files.
+
+Here is an example adding **flexboxgrid** when processing css files.
 
 ```js
 exports.modifyWebpackConfig = ({ config, stage }) => {

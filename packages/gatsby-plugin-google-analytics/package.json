@@ -6,11 +6,7 @@
   "devDependencies": {
     "babel-cli": "^6.24.1"
   },
-  "keywords": [
-    "gatsby",
-    "gatsby-plugin",
-    "google analytics"
-  ],
+  "keywords": ["gatsby", "gatsby-plugin", "google analytics"],
   "license": "MIT",
   "main": "index.js",
   "scripts": {

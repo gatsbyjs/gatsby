@@ -24,7 +24,7 @@ export default DocsTemplate
 
 export const pageQuery = graphql`
   query TemplateDocsMarkdown($slug: String!) {
-    markdownRemark(fields: { slug: { eq: $slug }}) {
+    markdownRemark(fields: { slug: { eq: $slug } }) {
       html
       frontmatter {
         title

@@ -19,7 +19,7 @@
     Debugging HTML Builds: /docs/debugging-html-builds/
     Path Prefix: /docs/path-prefix/
     Proxying API Requests: /docs/api-proxy/
-    Add custom Webpack config: /docs/add-custom-webpack-config.md
+    Add custom webpack config: /docs/add-custom-webpack-config/
 - title: Reference
   links:
     Node Interface: /docs/node-interface/

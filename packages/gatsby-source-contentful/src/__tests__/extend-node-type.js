@@ -20,6 +20,7 @@ describe(`contentful extend node type`, () => {
   })
 
   const image = {
+    defaultLocale: `en-US`,
     file: {
       url: `//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg`,
       fileName: `ryugj83mqwa1asojwtwb.jpg`,
@@ -59,6 +60,14 @@ describe(`contentful extend node type`, () => {
       const resp = await resolveResponsiveResolution(image, {
         width: 450,
         height: 399,
+      })
+      expect(resp.width).toBe(450)
+      expect(resp.height).toBe(399)
+    })
+    it(`Always outputs ints`, async () => {
+      const resp = await resolveResponsiveResolution(image, {
+        width: 450.1,
+        height: 399.1,
       })
       expect(resp.width).toBe(450)
       expect(resp.height).toBe(399)

@@ -6,14 +6,18 @@ class DefaultLayout extends React.Component {
     return (
       <div>
         <Link to="/">
-          <h3>
-            Example removing trailing slashes
-          </h3>
+          <h3>Example removing trailing slashes</h3>
         </Link>
         <ul>
-          <li><Link to="/a">a</Link></li>
-          <li><Link to="/b">b</Link></li>
-          <li><Link to="/c">c</Link></li>
+          <li>
+            <Link to="/a">a</Link>
+          </li>
+          <li>
+            <Link to="/b">b</Link>
+          </li>
+          <li>
+            <Link to="/c">c</Link>
+          </li>
         </ul>
         {this.props.children()}
       </div>

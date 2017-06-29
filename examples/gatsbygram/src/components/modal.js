@@ -167,5 +167,4 @@ export const modalFragment = graphql`
   fragment Modal_posts on PostsJson {
     id
   }
-
 `

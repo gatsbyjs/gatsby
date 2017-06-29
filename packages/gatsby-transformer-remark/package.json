@@ -19,12 +19,7 @@
     "babel-cli": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.20.2"
   },
-  "keywords": [
-    "gatsby",
-    "gatsby-plugin",
-    "markdown",
-    "remark"
-  ],
+  "keywords": ["gatsby", "gatsby-plugin", "markdown", "remark"],
   "license": "MIT",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",

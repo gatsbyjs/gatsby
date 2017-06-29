@@ -185,14 +185,14 @@ const resolveResponsiveResolution = (image, options) => {
         if (options.height) {
           pickedHeight = options.height
         } else {
-          pickedHeight = Math.round(options.width / desiredAspectRatio)
+          pickedHeight = options.width / desiredAspectRatio
         }
 
         return resolve({
           base64: base64Str,
           aspectRatio: aspectRatio,
-          width: options.width,
-          height: pickedHeight,
+          width: Math.round(options.width),
+          height: Math.round(pickedHeight),
           src: createUrl(image.file.url, {
             ...options,
             width: options.width,
@@ -299,8 +299,8 @@ const resolveResize = (image, options) =>
           }
           resolve({
             src: createUrl(image.file.url, options),
-            width: pickedWidth,
-            height: pickedHeight,
+            width: Math.round(pickedWidth),
+            height: Math.round(pickedHeight),
             aspectRatio,
             base64: base64Str,
           })

@@ -169,11 +169,13 @@ export default BlogPostTemplate
 
 export const pageQuery = graphql`
   query TemplateBlogPost($slug: String!) {
-    markdownRemark(fields: { slug: { eq: $slug }}) {
+    markdownRemark(fields: { slug: { eq: $slug } }) {
       html
       excerpt
       timeToRead
-      fields { slug }
+      fields {
+        slug
+      }
       frontmatter {
         title
         excerpt

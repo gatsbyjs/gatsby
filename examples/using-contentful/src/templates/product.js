@@ -35,14 +35,20 @@ class ProductTemplate extends React.Component {
             src={image[0].responsiveResolution.src}
             srcSet={image[0].responsiveResolution.srcSet}
           />
-          <h4>{productName}</h4>
+          <h4>
+            {productName}
+          </h4>
         </div>
-        <h1>{productName}</h1>
+        <h1>
+          {productName}
+        </h1>
         <h4>
           Made by {brand.companyName.companyName}
         </h4>
         <div>
-          <span>Price: ${price}</span>
+          <span>
+            Price: ${price}
+          </span>
           <div
             dangerouslySetInnerHTML={{
               __html: productDescription.childMarkdownRemark.html,
@@ -73,7 +79,9 @@ export default ProductTemplate
 export const pageQuery = graphql`
   query productQuery($id: String!) {
     contentfulProduct(id: { eq: $id }) {
-      productName { productName }
+      productName {
+        productName
+      }
       productDescription {
         childMarkdownRemark {
           html
@@ -89,11 +97,15 @@ export const pageQuery = graphql`
         }
       }
       brand {
-        companyName { companyName }
+        companyName {
+          companyName
+        }
       }
       categories {
         id
-        title { title }
+        title {
+          title
+        }
       }
     }
   }

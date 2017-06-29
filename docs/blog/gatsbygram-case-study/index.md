@@ -360,7 +360,7 @@ class Layout extends React.Component {
         </Link>
         <br />
         {/* Render children pages */}
-        {this.props.children}
+        {this.props.children()}
       </div>
     )
   }

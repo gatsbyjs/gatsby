@@ -39,11 +39,19 @@ class ArticleTemplate extends React.Component {
             />
           </div>
           <div style={{ display: `flex`, flexDirection: `column` }}>
-            <h4 style={{ marginBottom: 0 }}>{name}</h4>
-            <strong><em>Posted {article.created}</em></strong>
+            <h4 style={{ marginBottom: 0 }}>
+              {name}
+            </h4>
+            <strong>
+              <em>
+                Posted {article.created}
+              </em>
+            </strong>
           </div>
         </div>
-        <h1>{article.title}</h1>
+        <h1>
+          {article.title}
+        </h1>
         <div dangerouslySetInnerHTML={{ __html: paragraphedBody }} />
       </div>
     )

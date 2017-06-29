@@ -56,7 +56,10 @@ module.exports = async (program: any) => {
     // $FlowFixMe
     config = preferDefault(require(`${program.directory}/gatsby-config`))
   } catch (e) {
-    // Ignore. Having a config isn't required.
+    if (!_.includes(e.toString(), `Error: Cannot find module`)) {
+      console.log(e)
+      process.exit(1)
+    }
   }
 
   store.dispatch({
@@ -304,6 +307,11 @@ data
   console.time(`write out pages modules`)
   await writePages()
   console.timeEnd(`write out pages modules`)
+
+  // Update Schema for SitePage.
+  console.time(`Updating schema`)
+  await require(`../schema`)()
+  console.timeEnd(`Updating schema`)
 
   const checkJobsDone = _.debounce(resolve => {
     const state = store.getState()

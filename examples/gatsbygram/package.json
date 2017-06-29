@@ -30,9 +30,7 @@
     "typeface-space-mono": "^0.0.22",
     "typography": "^0.15.0"
   },
-  "keywords": [
-    "gatsby"
-  ],
+  "keywords": ["gatsby"],
   "license": "MIT",
   "main": "n/a",
   "scripts": {

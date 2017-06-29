@@ -5,7 +5,9 @@ import { connect } from "react-redux"
 
 const Counter = ({ count, increment }) =>
   <div>
-    <p>Count: {count}</p>
+    <p>
+      Count: {count}
+    </p>
     <button onClick={increment}>Increment</button>
   </div>
 
@@ -29,15 +31,19 @@ class DefaultLayout extends React.Component {
     return (
       <div>
         <Link to="/">
-          <h3>
-            Redux example
-          </h3>
+          <h3>Redux example</h3>
         </Link>
         <ConnectedCounter />
         <ul>
-          <li><Link to="/a/">a</Link></li>
-          <li><Link to="/b/">b</Link></li>
-          <li><Link to="/c/">c</Link></li>
+          <li>
+            <Link to="/a/">a</Link>
+          </li>
+          <li>
+            <Link to="/b/">b</Link>
+          </li>
+          <li>
+            <Link to="/c/">c</Link>
+          </li>
         </ul>
         {this.props.children()}
       </div>

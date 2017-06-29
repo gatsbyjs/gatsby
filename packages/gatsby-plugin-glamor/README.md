@@ -24,7 +24,7 @@ One particularly convenient (and suggested) way is to use its `css` prop. It
 works exactly the same as the [default `style`
 prop](https://facebook.github.io/react/docs/dom-elements.html#style) except it
 supports the entire CSS language. So things not supported by inline styles are
-supported with Glamor like psudeo classes/elements, `@media` queries,
+supported with Glamor like pseudo-classes/-elements, `@media` queries,
 parent/child/contextual selectors, etc.
 
 ```jsx

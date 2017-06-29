@@ -54,7 +54,13 @@ export default ({ functions }) =>
         css={{ marginBottom: rhythm(1) }}
       >
         {i !== 0 && <hr />}
-        <h3><a href={`#${node.name}`}><code>{node.name}</code></a></h3>
+        <h3>
+          <a href={`#${node.name}`}>
+            <code>
+              {node.name}
+            </code>
+          </a>
+        </h3>
         <div
           dangerouslySetInnerHTML={{
             __html: node.description.childMarkdownRemark.html,
@@ -87,30 +93,20 @@ export default ({ functions }) =>
   </div>
 
 export const pageQuery = graphql`
-fragment FunctionList on DocumentationJs {
-  name
-  description {
-    childMarkdownRemark {
-      html
-    }
-  }
-  returns {
-    title
-  }
-  examples {
-    highlighted
-  }
-  params {
+  fragment FunctionList on DocumentationJs {
     name
-    type {
-      name
-    }
     description {
       childMarkdownRemark {
         html
       }
     }
-    properties {
+    returns {
+      title
+    }
+    examples {
+      highlighted
+    }
+    params {
       name
       type {
         name
@@ -130,8 +126,18 @@ fragment FunctionList on DocumentationJs {
             html
           }
         }
+        properties {
+          name
+          type {
+            name
+          }
+          description {
+            childMarkdownRemark {
+              html
+            }
+          }
+        }
       }
     }
   }
-}
 `
