@@ -87,8 +87,6 @@ exports.sourceNodes = async (
       internal: {
         ...node.internal,
         type: makeTypeName(node.internal.type),
-        content: nodeStr,
-        mediaType: `application/json`,
       },
       author___NODE: result.data.data[i].relationships.uid.data.id,
     }
@@ -120,8 +118,6 @@ exports.sourceNodes = async (
             parent: `__SOURCE__`,
             internal: {
               type: makeTypeName(user.internal.type),
-              content: userStr,
-              mediaType: `application/json`,
             },
           }
 

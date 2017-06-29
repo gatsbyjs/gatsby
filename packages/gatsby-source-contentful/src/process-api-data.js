@@ -253,7 +253,6 @@ exports.createContentTypeNodes = ({
         children: [],
         internal: {
           type: `${makeTypeName(contentTypeItemId)}`,
-          mediaType: `application/x-contentful`,
         },
       }
 
@@ -315,7 +314,6 @@ exports.createContentTypeNodes = ({
       description: contentTypeItem.description,
       internal: {
         type: `${makeTypeName(`ContentType`)}`,
-        mediaType: `text/x-contentful`,
       },
     }
 
@@ -362,7 +360,6 @@ exports.createAssetNodes = ({
       node_locale: locale.code,
       internal: {
         type: `${makeTypeName(`Asset`)}`,
-        mediaType: `text/x-contentful`,
       },
     }
 

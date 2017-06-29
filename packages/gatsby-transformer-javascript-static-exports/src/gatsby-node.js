@@ -1,18 +1,15 @@
 const _ = require(`lodash`)
 const crypto = require(`crypto`)
-const babylon = require('babylon')
-const traverse = require('babel-traverse').default
+const babylon = require(`babylon`)
+const traverse = require(`babel-traverse`).default
 
-async function onCreateNode({ node, getNode, boundActionCreators, loadNodeContent }) {
+async function onCreateNode({
+  node,
+  getNode,
+  boundActionCreators,
+  loadNodeContent,
+}) {
   const { createNode, createParentChildLink } = boundActionCreators
-
-  // Don't reprocess our own nodes!  (note: this doesn't normally happen
-  // but since this transformer creates new nodes with the same media-type
-  // as its parent node, we have to add this check that we didn't create
-  // the node).
-  if (node.internal.owner === `gatsby-transformer-javascript-static-exports`) {
-    return
-  }
 
   // This only processes javascript files.
   if (node.internal.mediaType !== `application/javascript`) {
@@ -21,20 +18,20 @@ async function onCreateNode({ node, getNode, boundActionCreators, loadNodeConten
 
   const code = await loadNodeContent(node)
   const options = {
-    sourceType: 'module',
+    sourceType: `module`,
     allowImportExportEverywhere: true,
     plugins: [
-      'jsx',
-      'doExpressions',
-      'objectRestSpread',
-      'decorators',
-      'classProperties',
-      'exportExtensions',
-      'asyncGenerators',
-      'functionBind',
-      'functionSent',
-      'dynamicImport',
-      'flow',
+      `jsx`,
+      `doExpressions`,
+      `objectRestSpread`,
+      `decorators`,
+      `classProperties`,
+      `exportExtensions`,
+      `asyncGenerators`,
+      `functionBind`,
+      `functionSent`,
+      `dynamicImport`,
+      `flow`,
     ],
   }
 
@@ -45,16 +42,16 @@ async function onCreateNode({ node, getNode, boundActionCreators, loadNodeConten
     const parseData = function parseData(node) {
       let value
 
-      if (node.type === 'TemplateLiteral') {
+      if (node.type === `TemplateLiteral`) {
         // Experimental basic support for template literals:
         // Extract and join any text content; ignore interpolations
-        value = node.quasis.map(quasi => quasi.value.cooked).join('')
-      } else if (node.type === 'ObjectExpression') {
+        value = node.quasis.map(quasi => quasi.value.cooked).join(``)
+      } else if (node.type === `ObjectExpression`) {
         value = {}
         node.properties.forEach(elem => {
           value[elem.key.name] = parseData(elem.value)
         })
-      } else if (node.type === 'ArrayExpression') {
+      } else if (node.type === `ArrayExpression`) {
         value = node.elements.map(elem => parseData(elem))
       } else {
         value = node.value
@@ -67,8 +64,8 @@ async function onCreateNode({ node, getNode, boundActionCreators, loadNodeConten
     traverse(ast, {
       AssignmentExpression: function AssignmentExpression(astPath) {
         if (
-          astPath.node.left.type === 'MemberExpression' &&
-          astPath.node.left.property.name === 'data'
+          astPath.node.left.type === `MemberExpression` &&
+          astPath.node.left.property.name === `data`
         ) {
           astPath.node.right.properties.forEach(node => {
             data[node.key.name] = parseData(node.value)
@@ -77,10 +74,10 @@ async function onCreateNode({ node, getNode, boundActionCreators, loadNodeConten
       },
       ExportNamedDeclaration: function ExportNamedDeclaration(astPath) {
         const { declaration } = astPath.node
-        if (declaration && declaration.type === 'VariableDeclaration') {
+        if (declaration && declaration.type === `VariableDeclaration`) {
           const dataVariableDeclarator = _.find(
             declaration.declarations,
-            d => d.id.name === 'data'
+            d => d.id.name === `data`
           )
 
           if (dataVariableDeclarator && dataVariableDeclarator.init) {
@@ -94,12 +91,11 @@ async function onCreateNode({ node, getNode, boundActionCreators, loadNodeConten
 
     // We may eventually add other data besides just
     // from exports.data. Each set of exports should have its
-    // own object to track errors separately. Add below as noted. 
+    // own object to track errors separately. Add below as noted.
     exportsData = {
       ...data,
-      error: false
+      error: false,
     }
-
   } catch (e) {
     // stick the error on the query so the user can
     // react to an error as they see fit
@@ -109,32 +105,25 @@ async function onCreateNode({ node, getNode, boundActionCreators, loadNodeConten
         err: true,
         code: e.code,
         message: e.message,
-        stack: e.stack
-      }
+        stack: e.stack,
+      },
     }
-
   } finally {
-
     const objStr = JSON.stringify(node)
-    const contentDigest = crypto
-      .createHash(`md5`)
-      .update(objStr)
-      .digest(`hex`)
+    const contentDigest = crypto.createHash(`md5`).update(objStr).digest(`hex`)
 
     const nodeData = {
-          id: `${node.id} >>> JSFrontmatter`,
-          children: [],
-          parent: node.id,
-          node: {...node},
-          internal: {
-            contentDigest,
-            type: `JSFrontmatter`,
-            owner: `gatsby-transformer-javascript-static-exports`,
-            mediaType: `application/javascript`,
-          },
-        }
+      id: `${node.id} >>> JSFrontmatter`,
+      children: [],
+      parent: node.id,
+      node: { ...node },
+      internal: {
+        contentDigest,
+        type: `JSFrontmatter`,
+      },
+    }
 
-    nodeData.data = {...exportsData}
+    nodeData.data = { ...exportsData }
     // eventually add additional exports here
 
     if (node.internal.type === `File`) {

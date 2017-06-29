@@ -161,9 +161,7 @@ exports.onCreateNode = async ({
         children: [],
         internal: {
           contentDigest: digest(strContent),
-          content: strContent,
           type: `DocumentationJs`,
-          mediaType: `text/x-javascript-metadata`,
         },
       }
 

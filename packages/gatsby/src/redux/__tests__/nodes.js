@@ -11,8 +11,6 @@ describe(`Create and update nodes`, () => {
         parent: `test`,
         internal: {
           contentDigest: `hasdfljds`,
-          mediaType: `test`,
-          owner: `tests`,
           type: `Test`,
         },
         pickle: true,
@@ -31,8 +29,6 @@ describe(`Create and update nodes`, () => {
         parent: `test`,
         internal: {
           contentDigest: `hasdfljds`,
-          mediaType: `test`,
-          owner: `tests`,
           type: `Test`,
         },
         pickle: true,
@@ -49,8 +45,6 @@ describe(`Create and update nodes`, () => {
         parent: `test`,
         internal: {
           contentDigest: `hasdfljds`,
-          mediaType: `test`,
-          owner: `tests`,
           type: `Test`,
         },
         pickle: false,
@@ -78,8 +72,6 @@ describe(`Create and update nodes`, () => {
         parent: `test`,
         internal: {
           contentDigest: `hasdfljds`,
-          mediaType: `test`,
-          owner: `tests`,
           type: `Test`,
         },
         pickle: true,
@@ -98,8 +90,6 @@ describe(`Create and update nodes`, () => {
         parent: `test`,
         internal: {
           contentDigest: `hasdfljds`,
-          mediaType: `test`,
-          owner: `tests`,
           type: `Test`,
         },
         pickle: true,
@@ -128,8 +118,6 @@ describe(`Create and update nodes`, () => {
         parent: `test`,
         internal: {
           contentDigest: `hasdfljds`,
-          mediaType: `test`,
-          owner: `tests`,
           type: `Test`,
         },
         pickle: true,
@@ -169,8 +157,6 @@ describe(`Create and update nodes`, () => {
         parent: `test`,
         internal: {
           contentDigest: `hasdfljds`,
-          mediaType: `test`,
-          owner: `pluginA`,
           type: `mineOnly`,
         },
         pickle: true,
@@ -186,8 +172,6 @@ describe(`Create and update nodes`, () => {
           parent: `test`,
           internal: {
             contentDigest: `hasdfljds`,
-            mediaType: `test`,
-            owner: `pluginB`,
             type: `mineOnly`,
           },
           pickle: true,
@@ -211,8 +195,6 @@ describe(`Create and update nodes`, () => {
           },
           internal: {
             contentDigest: `hasdfljds`,
-            mediaType: `test`,
-            owner: `pluginA`,
             type: `mineOnly`,
           },
           pickle: true,

@@ -105,7 +105,6 @@ fragment commentsFragment on HackerNewsItem {
       content: storyStr,
       internal: {
         type: `HNStory`,
-        mediaType: `application/json`,
       },
       domain,
       order: i + 1,
@@ -136,7 +135,6 @@ fragment commentsFragment on HackerNewsItem {
           parent,
           internal: {
             type: `HNComment`,
-            mediaType: `application/json`,
           },
           order: i + 1,
         }

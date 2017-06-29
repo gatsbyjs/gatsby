@@ -12,11 +12,7 @@ Array [
       },
       "id": "whatever >>> MarkdownRemark",
       "internal": Object {
-        "content": "
-Where oh where is my little pony?
-    ",
         "contentDigest": "54cfa2ad99756f2fa232cac585280a37",
-        "mediaType": "text/x-markdown",
         "type": "MarkdownRemark",
       },
       "parent": "whatever",
@@ -38,11 +34,7 @@ Array [
         },
         "id": "whatever >>> MarkdownRemark",
         "internal": Object {
-          "content": "
-Where oh where is my little pony?
-    ",
           "contentDigest": "54cfa2ad99756f2fa232cac585280a37",
-          "mediaType": "text/x-markdown",
           "type": "MarkdownRemark",
         },
         "parent": "whatever",

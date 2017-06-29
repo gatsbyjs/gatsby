@@ -87,8 +87,8 @@ describe(`Fix contentful IDs`, () => {
 
 describe(`Gets field value based on current locale`, () => {
   const field = {
-    de: "Playsam Streamliner Klassisches Auto, Espresso",
-    "en-US": "Playsam Streamliner Classic Car, Espresso",
+    de: `Playsam Streamliner Klassisches Auto, Espresso`,
+    "en-US": `Playsam Streamliner Classic Car, Espresso`,
   }
   it(`Gets the specified locale`, () => {
     expect(

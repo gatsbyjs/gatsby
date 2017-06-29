@@ -42,8 +42,8 @@ export default ActionCreatorsDocs
 export const pageQuery = graphql`
   query ActionCreatorDocsQuery {
     allDocumentationJs(
-      filter: { id: { regex: "/src.*actions.js/" } },
-      sort: { fields: [name] },
+      filter: { id: { regex: "/src.*actions.js/" } }
+      sort: { fields: [name] }
     ) {
       edges {
         node {

@@ -6,14 +6,6 @@ const crypto = require(`crypto`)
 async function onCreateNode({ node, boundActionCreators, loadNodeContent }) {
   const { createNode, createParentChildLink } = boundActionCreators
 
-  // Don't reprocess our own nodes!  (note: this doesn't normally happen
-  // but since this transformer creates new nodes with the same media-type
-  // as its parent node, we have to add this check that we didn't create
-  // the node).
-  if (node.internal.owner === `gatsby-transformer-json`) {
-    return
-  }
-
   // We only care about JSON content.
   if (node.internal.mediaType !== `application/json`) {
     return
@@ -38,12 +30,10 @@ async function onCreateNode({ node, boundActionCreators, loadNodeContent }) {
         parent: node.id,
         internal: {
           contentDigest,
-          mediaType: `application/json`,
           // TODO make choosing the "type" a lot smarter. This assumes
           // the parent node is a file.
           // PascalCase
           type: _.upperFirst(_.camelCase(`${node.name} Json`)),
-          content: objStr,
         },
       }
     })

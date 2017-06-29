@@ -33,8 +33,8 @@ export default SSRAPIs
 export const pageQuery = graphql`
   query SSRAPIsQuery {
     allDocumentationJs(
-      filter: { id: { regex: "/src.*api-ssr-docs.js/" } },
-      sort: { fields: [name] },
+      filter: { id: { regex: "/src.*api-ssr-docs.js/" } }
+      sort: { fields: [name] }
     ) {
       edges {
         node {
