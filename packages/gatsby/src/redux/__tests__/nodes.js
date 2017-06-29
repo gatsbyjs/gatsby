@@ -11,7 +11,6 @@ describe(`Create and update nodes`, () => {
         parent: `test`,
         internal: {
           contentDigest: `hasdfljds`,
-          mediaType: `test`,
           owner: `tests`,
           type: `Test`,
         },
@@ -31,7 +30,6 @@ describe(`Create and update nodes`, () => {
         parent: `test`,
         internal: {
           contentDigest: `hasdfljds`,
-          mediaType: `test`,
           owner: `tests`,
           type: `Test`,
         },
@@ -49,7 +47,6 @@ describe(`Create and update nodes`, () => {
         parent: `test`,
         internal: {
           contentDigest: `hasdfljds`,
-          mediaType: `test`,
           owner: `tests`,
           type: `Test`,
         },
@@ -78,7 +75,6 @@ describe(`Create and update nodes`, () => {
         parent: `test`,
         internal: {
           contentDigest: `hasdfljds`,
-          mediaType: `test`,
           owner: `tests`,
           type: `Test`,
         },
@@ -98,7 +94,6 @@ describe(`Create and update nodes`, () => {
         parent: `test`,
         internal: {
           contentDigest: `hasdfljds`,
-          mediaType: `test`,
           owner: `tests`,
           type: `Test`,
         },
@@ -128,7 +123,6 @@ describe(`Create and update nodes`, () => {
         parent: `test`,
         internal: {
           contentDigest: `hasdfljds`,
-          mediaType: `test`,
           owner: `tests`,
           type: `Test`,
         },
@@ -169,7 +163,6 @@ describe(`Create and update nodes`, () => {
         parent: `test`,
         internal: {
           contentDigest: `hasdfljds`,
-          mediaType: `test`,
           owner: `pluginA`,
           type: `mineOnly`,
         },
@@ -186,7 +179,6 @@ describe(`Create and update nodes`, () => {
           parent: `test`,
           internal: {
             contentDigest: `hasdfljds`,
-            mediaType: `test`,
             owner: `pluginB`,
             type: `mineOnly`,
           },
@@ -211,7 +203,6 @@ describe(`Create and update nodes`, () => {
           },
           internal: {
             contentDigest: `hasdfljds`,
-            mediaType: `test`,
             owner: `pluginA`,
             type: `mineOnly`,
           },

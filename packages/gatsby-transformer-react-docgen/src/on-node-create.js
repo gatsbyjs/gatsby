@@ -46,8 +46,6 @@ function createPropNodes(node, component, boundActionCreators) {
       parentType: prop.type,
       internal: {
         type: `ComponentProp`,
-        mediaType: `text/x-react-metadata`,
-        content,
         contentDigest: digest(content),
       },
     }
@@ -86,9 +84,7 @@ export default function onCreateNode(
           parent: node.id,
           internal: {
             contentDigest,
-            content: strContent,
             type: `ComponentMetadata`,
-            mediaType: `text/x-react-metadata`,
           },
         }
 

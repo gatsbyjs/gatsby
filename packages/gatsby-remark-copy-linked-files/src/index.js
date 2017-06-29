@@ -3,7 +3,7 @@ const isRelativeUrl = require(`is-relative-url`)
 const fsExtra = require(`fs-extra`)
 const path = require(`path`)
 const _ = require(`lodash`)
-const $ = require('cheerio');
+const $ = require(`cheerio`)
 
 module.exports = ({ files, markdownNode, markdownAST, getNode }) => {
   // Copy linked files to the public directory and modify the AST to point to
@@ -63,14 +63,14 @@ module.exports = ({ files, markdownNode, markdownAST, getNode }) => {
       visitor(image)
     }
   })
-  
+
   // Same as the above except it only works for html img tags
   visit(markdownAST, `html`, node => {
-    if(node.value.startsWith('<img')){
-      let image = Object.assign(node, $.parseHTML(node.value)[0].attribs);
-      image.url = image.src;
-      image.type = 'image';
-      image.position =  node.position;
+    if (node.value.startsWith(`<img`)) {
+      let image = Object.assign(node, $.parseHTML(node.value)[0].attribs)
+      image.url = image.src
+      image.type = `image`
+      image.position = node.position
 
       const imagePath = path.join(getNode(markdownNode.parent).dir, image.url)
       const imageNode = _.find(files, file => {

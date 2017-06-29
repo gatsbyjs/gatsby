@@ -325,8 +325,8 @@ export const pageQuery = graphql`
     }
     sizes: imageSharp(id: { regex: "/fecolormatrix-kanye-west.jpg/" }) {
       responsiveSizes(
-        duotone: { highlight: "#f00e2e", shadow: "#192550" },
-        toFormat: PNG,
+        duotone: { highlight: "#f00e2e", shadow: "#192550" }
+        toFormat: PNG
       ) {
         base64
         aspectRatio

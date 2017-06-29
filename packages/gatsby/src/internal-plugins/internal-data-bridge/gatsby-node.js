@@ -54,9 +54,7 @@ exports.sourceNodes = ({ boundActionCreators, store }) => {
     parent: `SOURCE`,
     children: [],
     internal: {
-      mediaType: `application/json`,
       type: `SitePage`,
-      content: JSON.stringify(page),
       contentDigest: crypto
         .createHash(`md5`)
         .update(JSON.stringify(page))
@@ -79,8 +77,6 @@ exports.sourceNodes = ({ boundActionCreators, store }) => {
           .createHash(`md5`)
           .update(JSON.stringify(plugin))
           .digest(`hex`),
-        mediaType: `application/json`,
-        content: JSON.stringify(plugin),
         type: `SitePlugin`,
       },
     })
@@ -112,8 +108,6 @@ exports.sourceNodes = ({ boundActionCreators, store }) => {
           .createHash(`md5`)
           .update(JSON.stringify(node))
           .digest(`hex`),
-        content: JSON.stringify(node),
-        mediaType: `application/json`,
         type: `Site`,
       },
     })
@@ -145,9 +139,7 @@ exports.onCreatePage = ({ page, boundActionCreators }) => {
     parent: `SOURCE`,
     children: [],
     internal: {
-      mediaType: `application/json`,
       type: `SitePage`,
-      content: JSON.stringify(page),
       contentDigest: crypto
         .createHash(`md5`)
         .update(JSON.stringify(page))

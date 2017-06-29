@@ -179,6 +179,17 @@ actions.createNode = (node, plugin, traceId) => {
     node.internal = {}
   }
 
+  // Tell user not to set the owner name themself.
+  if (node.internal.owner) {
+    console.log(JSON.stringify(node, null, 4))
+    console.log(
+      chalk.bold.red(
+        `The node internal.owner field is set automatically by Gatsby and not by plugin`
+      )
+    )
+    process.exit(1)
+  }
+
   // Add the plugin name to the internal object.
   if (plugin) {
     node.internal.owner = plugin.name
