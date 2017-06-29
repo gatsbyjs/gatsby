@@ -13,14 +13,27 @@ tags:
 ![](mikael-cho-214358.jpg)
 *Photo by [Mikael Cho](https://unsplash.com/@mikael) via [Unsplash](https://unsplash.com/@mikael?photo=_3TDkAttcaM)*
 
-[gatsby-remark-responsive-image][1] and [gatsby-remark-responsive-iframe][2]
+[gatsby-remark-build-images][1] and [gatsby-remark-responsive-iframe][2]
 are here to take care of all your basic Markdown image and iframe issues.
 
 ## Images
 
-[gatsby-remark-responsive-image][1] provides _out-of-the-box progressive image
+[gatsby-remark-build-images][1] provides _out-of-the-box progressive image
 loading_ (as popularized by [Medium][3] and [Facebook][4]) for all local JPGs
 and PNGs in your Markdown documents.
+
+You aren't just limited to markdown image tags either. You can either use markdown image tags:
+
+```
+![](image.png)
+```
+
+Or HTML image tags:
+
+```
+<img src='image.png' />
+```
+
 
 Let's see some more photos by [Max Boettinger](https://unsplash.com/@maxboettinger) ([I](https://unsplash.com/photos/T7Lnl3PFISM), [II](https://unsplash.com/@maxboettinger?photo=SUFS6CPjB5Q)):
 
@@ -43,13 +56,14 @@ And here's an awesome SVG tiger:
 
 ![awesome tiger](awesome_tiger.svg)
 
+
 ## iFrames and video embeds
 
 Let's add a YouTube video to show off responsive iFrames real quick:
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/hbjR5N6IhDU" frameborder="0" allowfullscreen></iframe>
 
-[1]: https://www.gatsbyjs.org/docs/packages/gatsby-remark-responsive-image/
+[1]: https://www.gatsbyjs.org/docs/packages/gatsby-remark-build-images/
 [2]: https://www.gatsbyjs.org/docs/packages/gatsby-remark-responsive-iframe/
 [3]: https://jmperezperez.com/medium-image-progressive-loading-placeholder/
 [4]: https://code.facebook.com/posts/991252547593574/the-technology-behind-preview-photos/
