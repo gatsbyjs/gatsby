@@ -9,9 +9,7 @@ Array [
       "funny": "yup",
       "id": "whatever [0] >>> YAML",
       "internal": Object {
-        "content": "{\\"blue\\":true,\\"funny\\":\\"yup\\"}",
         "contentDigest": "73901821b17d5aa9dd6026181f73b64c",
-        "mediaType": "application/json",
         "type": "TestYaml",
       },
       "parent": "whatever",
@@ -24,9 +22,7 @@ Array [
       "funny": "nope",
       "id": "whatever [1] >>> YAML",
       "internal": Object {
-        "content": "{\\"blue\\":false,\\"funny\\":\\"nope\\"}",
         "contentDigest": "f624311d932d73dcd416d2a8bea2b67d",
-        "mediaType": "application/json",
         "type": "TestYaml",
       },
       "parent": "whatever",
@@ -45,9 +41,7 @@ Array [
         "funny": "yup",
         "id": "whatever [0] >>> YAML",
         "internal": Object {
-          "content": "{\\"blue\\":true,\\"funny\\":\\"yup\\"}",
           "contentDigest": "73901821b17d5aa9dd6026181f73b64c",
-          "mediaType": "application/json",
           "type": "TestYaml",
         },
         "parent": "whatever",
@@ -77,9 +71,7 @@ Array [
         "funny": "nope",
         "id": "whatever [1] >>> YAML",
         "internal": Object {
-          "content": "{\\"blue\\":false,\\"funny\\":\\"nope\\"}",
           "contentDigest": "f624311d932d73dcd416d2a8bea2b67d",
-          "mediaType": "application/json",
           "type": "TestYaml",
         },
         "parent": "whatever",

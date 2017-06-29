@@ -84,8 +84,8 @@ exports[`Create and update nodes throws error if a node is created by a plugin n
     \\"parent\\": \\"test\\",
     \\"internal\\": {
         \\"contentDigest\\": \\"hasdfljds\\",
-        \\"owner\\": \\"pluginB\\",
-        \\"type\\": \\"mineOnly\\"
+        \\"type\\": \\"mineOnly\\",
+        \\"owner\\": \\"pluginB\\"
     },
     \\"pickle\\": true
 }
@@ -115,8 +115,8 @@ exports[`Create and update nodes throws error if a node sets a value on "fields"
     },
     \\"internal\\": {
         \\"contentDigest\\": \\"hasdfljds\\",
-        \\"owner\\": \\"pluginA\\",
-        \\"type\\": \\"mineOnly\\"
+        \\"type\\": \\"mineOnly\\",
+        \\"owner\\": \\"pluginA\\"
     },
     \\"pickle\\": true
 }
