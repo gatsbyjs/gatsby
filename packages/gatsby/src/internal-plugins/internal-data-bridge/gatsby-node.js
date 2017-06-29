@@ -64,6 +64,8 @@ exports.sourceNodes = ({ boundActionCreators, store }) => {
     },
   })
 
+  plugin.pluginFilepath = plugin.resolve
+
   flattenedPlugins.forEach(plugin =>
     createNode({
       ...plugin,
