@@ -56,7 +56,10 @@ module.exports = async (program: any) => {
     // $FlowFixMe
     config = preferDefault(require(`${program.directory}/gatsby-config`))
   } catch (e) {
-    // Ignore. Having a config isn't required.
+    if (!_.includes(e.toString(), `Error: Cannot find module`)) {
+      console.log(e)
+      process.exit(1)
+    }
   }
 
   store.dispatch({

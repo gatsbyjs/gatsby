@@ -46,9 +46,9 @@ const makeMakeId = ({ currentLocale, defaultLocale }) => id =>
 
 exports.buildEntryList = ({ contentTypeItems, currentSyncData }) =>
   contentTypeItems.map(contentType =>
-    currentSyncData.entries.filter(entry => {
-      return entry.sys.contentType.sys.id === contentType.sys.id
-    })
+    currentSyncData.entries.filter(
+      entry => entry.sys.contentType.sys.id === contentType.sys.id
+    )
   )
 
 exports.buildResolvableSet = ({
