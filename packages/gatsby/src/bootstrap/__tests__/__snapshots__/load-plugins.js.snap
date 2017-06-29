@@ -27,6 +27,14 @@ Array [
     "version": "1.0.0",
   },
   Object {
+    "name": "prod-404",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "version": "1.0.0",
+  },
+  Object {
     "name": "query-runner",
     "pluginOptions": Object {
       "plugins": Array [],
@@ -72,6 +80,14 @@ Array [
   },
   Object {
     "name": "dev-404-page",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "version": "1.0.0",
+  },
+  Object {
+    "name": "prod-404",
     "pluginOptions": Object {
       "plugins": Array [],
     },
