@@ -27,9 +27,6 @@ const { writePages } = require(`../internal-plugins/query-runner/pages-writer`)
 // Otherwise leave commented out.
 // require(`./log-line-function`)
 
-// Start off the query running.
-const QueryRunner = require(`../internal-plugins/query-runner`)
-
 const preferDefault = m => (m && m.default) || m
 
 module.exports = async (program: any) => {
@@ -46,8 +43,6 @@ module.exports = async (program: any) => {
     type: `SET_PROGRAM`,
     payload: program,
   })
-
-  QueryRunner.watch(program.directory)
 
   // Try opening the site's gatsby-config.js file.
   console.time(`open and validate gatsby-config.js`)
