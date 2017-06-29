@@ -64,7 +64,8 @@ exports.sourceNodes = ({ boundActionCreators, store }) => {
     },
   })
 
-  flattenedPlugins.forEach(plugin =>
+  flattenedPlugins.forEach(plugin => {
+    plugin.pluginFilepath = plugin.resolve
     createNode({
       ...plugin,
       packageJson: transformPackageJson(
@@ -83,7 +84,7 @@ exports.sourceNodes = ({ boundActionCreators, store }) => {
         type: `SitePlugin`,
       },
     })
-  )
+  })
 
   // Add site node.
   const buildTime = moment().subtract(process.uptime(), `seconds`).toJSON()

@@ -26,6 +26,10 @@ query in the Graph*i*QL IDE for your site.
       node {
         path
         component
+        pluginCreator {
+          name
+          pluginFilepath
+        }
       }
     }
   }

@@ -9,6 +9,7 @@ Array [
     "internalComponentName": "ComponentHi",
     "jsonName": "hi.json",
     "path": "/hi/",
+    "pluginCreator___NODE": "Plugin undefined",
   },
   Object {
     "component": "/whatever/index.js",
@@ -17,6 +18,7 @@ Array [
     "internalComponentName": "ComponentHiPizza",
     "jsonName": "hi-pizza.json",
     "path": "/hi/pizza/",
+    "pluginCreator___NODE": "Plugin undefined",
   },
 ]
 `;
@@ -30,6 +32,7 @@ Object {
     "internalComponentName": "ComponentHi",
     "jsonName": "hi.json",
     "path": "/hi/",
+    "pluginCreator___NODE": "Plugin undefined",
   },
   "plugin": "",
   "traceId": undefined,
@@ -46,6 +49,7 @@ Array [
     "internalComponentName": "ComponentHi",
     "jsonName": "hi.json",
     "path": "/hi/",
+    "pluginCreator___NODE": "Plugin undefined",
   },
 ]
 `;
@@ -61,6 +65,7 @@ Object {
     "internalComponentName": "ComponentHi",
     "jsonName": "hi.json",
     "path": "/hi/",
+    "pluginCreator___NODE": "Plugin undefined",
   },
   "plugin": "",
   "traceId": undefined,
@@ -79,6 +84,7 @@ Array [
     "internalComponentName": "ComponentHi",
     "jsonName": "hi.json",
     "path": "/hi/",
+    "pluginCreator___NODE": "Plugin undefined",
   },
 ]
 `;
@@ -94,6 +100,7 @@ Array [
     "internalComponentName": "ComponentHi",
     "jsonName": "hi.json",
     "path": "/hi/",
+    "pluginCreator___NODE": "Plugin undefined",
   },
 ]
 `;

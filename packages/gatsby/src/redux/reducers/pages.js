@@ -7,6 +7,7 @@ module.exports = (state = [], action) => {
       return []
     case `CREATE_PAGE`:
       action.payload.component = normalize(action.payload.component)
+      action.payload.pluginCreator___NODE = `Plugin ${action.plugin.name}`
       const index = _.findIndex(state, p => p.path === action.payload.path)
       // If the path already exists, overwrite it.
       // Otherwise, add it to the end.
