@@ -275,24 +275,6 @@ data
   })
   console.timeEnd(`createPagesStatefully`)
 
-  // Copy /404/ to /404.html as many static site hosts expect
-  // site 404 pages to be named this.
-  // https://www.gatsbyjs.org/docs/add-404-page/
-  const exists404html = _.some(
-    store.getState().pages,
-    p => p.path === `/404.html`
-  )
-  if (!exists404html) {
-    store.getState().pages.forEach(page => {
-      if (page.path === `/404/`) {
-        boundActionCreators.createPage({
-          ...page,
-          path: `/404.html`,
-        })
-      }
-    })
-  }
-
   // Extract queries
   console.time(`extract queries`)
   await extractQueries()

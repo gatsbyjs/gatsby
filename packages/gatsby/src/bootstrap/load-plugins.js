@@ -142,6 +142,9 @@ module.exports = async (config = {}) => {
     processPlugin(path.join(__dirname, `../internal-plugins/dev-404-page`))
   )
   plugins.push(
+    processPlugin(path.join(__dirname, `../internal-plugins/prod-404`))
+  )
+  plugins.push(
     processPlugin(path.join(__dirname, `../internal-plugins/query-runner`))
   )
 
