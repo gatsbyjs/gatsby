@@ -49,7 +49,7 @@ exports.modifyWebpackConfig = ({ config, stage }) => {
       config.loader(`sass`, {
         test: /\.s(a|c)ss$/,
         exclude: /\.module\.s(a|c)ss$/,
-        loader: ExtractTextPlugin.extract([`css`, `sass`]),
+        loader: `null`,
       })
 
       config.loader(`sassModules`, {
