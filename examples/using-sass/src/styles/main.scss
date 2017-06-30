@@ -26,17 +26,4 @@
   padding: 0.5rem;
   margin-bottom: 1rem;
   background: tomato;
-  lost-column: 1/1;
-}
-
-@media (min-width: 400px) {
-  .ColumnSection__grid div {
-    lost-column: 1/3;
-  }
-}
-
-@media (min-width: 900px) {
-  .ColumnSection__grid div {
-    lost-column: 1/6;
-  }
 }

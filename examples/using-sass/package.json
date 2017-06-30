@@ -7,7 +7,7 @@
     "develop": "gatsby develop",
     "build": "gatsby build"
   },
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "author": "Daniel Farrell <daniel.farrell@mobelux.com>",
   "license": "MIT",
   "dependencies": {
     "gatsby": "next",
