@@ -8,6 +8,8 @@ export default (async function ValidateWebpackConfig(config, stage) {
   // We don't care about the return as plugins just mutate the config directly.
   await apiRunnerNode(`modifyWebpackConfig`, { config, stage })
 
+  // console.log(JSON.stringify(config, null, 4))
+
   invariant(
     _.isObject(config) && _.isFunction(config.resolve),
     `

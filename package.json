@@ -32,6 +32,7 @@
     "jest": "^20.0.4",
     "lerna": "^2.0.0-rc.5",
     "plop": "^1.7.4",
+    "prettier": "^1.5.2",
     "prettier-eslint-cli": "^4.1.1",
     "prop-types": "^15.5.8",
     "purdy": "^2.2.1",

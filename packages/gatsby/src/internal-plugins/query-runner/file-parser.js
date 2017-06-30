@@ -1,5 +1,5 @@
 // @flow
-const fs = require(`fs`)
+const fs = require(`fs-extra`)
 const crypto = require(`crypto`)
 
 // Traverse is a es6 module...
@@ -13,19 +13,21 @@ const { getGraphQLTag } = require(`../../utils/babel-plugin-extract-graphql`)
 
 import type { DocumentNode, DefinitionNode } from "graphql"
 
-const readFileAsync = Bluebird.promisify(fs.readFile)
-
 async function parseToAst(filePath, fileStr) {
   let ast
 
+  let transpiled
+  // TODO figure out why awaiting apiRunnerNode doesn't work
+  // Currently if I try that it just returns immediately.
+  //
   // Preprocess and attempt to parse source; return an AST if we can, log an
   // error if we can't.
-  const transpiled = await apiRunnerNode(`preprocessSource`, {
-    filename: filePath,
-    contents: fileStr,
-  })
+  // const transpiled = await apiRunnerNode(`preprocessSource`, {
+  // filename: filePath,
+  // contents: fileStr,
+  // })
 
-  if (transpiled.length) {
+  if (transpiled && transpiled.length) {
     for (const item of transpiled) {
       try {
         const tmp = babylon.parse(item, {
@@ -59,19 +61,20 @@ async function parseToAst(filePath, fileStr) {
 }
 
 async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
-  let ast = await parseToAst(file, text)
-  if (!ast) return []
+  return new Promise(resolve => {
+    parseToAst(file, text).then(ast => {
+      if (!ast) return []
 
-  let queries = []
-  traverse(ast, {
-    ExportNamedDeclaration(path, state) {
-      path.traverse({
-        TaggedTemplateExpression(innerPath) {
-          const gqlAst = getGraphQLTag(innerPath)
-          if (gqlAst) {
-            gqlAst.definitions.forEach(def => {
-              if (!def.name || !def.name.value) {
-                console.log(stripIndent`
+      let queries = []
+      traverse(ast, {
+        ExportNamedDeclaration(path, state) {
+          path.traverse({
+            TaggedTemplateExpression(innerPath) {
+              const gqlAst = getGraphQLTag(innerPath)
+              if (gqlAst) {
+                gqlAst.definitions.forEach(def => {
+                  if (!def.name || !def.name.value) {
+                    console.log(stripIndent`
                   GraphQL definitions must be "named".
                   The query with the missing name is in ${file}.
                   To fix the query, add "query MyQueryName" to the start of your query.
@@ -90,24 +93,27 @@ async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
                     }
                   }
                 `)
-                process.exit(1)
-              }
-            })
+                    process.exit(1)
+                  }
+                })
 
-            queries.push(...gqlAst.definitions)
-          }
+                queries.push(...gqlAst.definitions)
+              }
+            },
+          })
         },
       })
-    },
+      resolve(queries)
+    })
   })
-  return queries
 }
 
 const cache = {}
 
 export default class FileParser {
   async parseFile(file: string): Promise<?DocumentNode> {
-    const text = await readFileAsync(file, `utf8`)
+    // TODO figure out why fs-extra isn't returning a promise
+    const text = fs.readFileSync(file, `utf8`)
 
     if (text.indexOf(`graphql`) === -1) return null
     const hash = crypto
@@ -135,12 +141,24 @@ export default class FileParser {
 
   async parseFiles(files: Array<string>): Promise<Map<string, DocumentNode>> {
     const documents = new Map()
-    for (let file of files) {
-      const doc = await this.parseFile(file)
-
-      if (doc) documents.set(file, doc)
-    }
-
-    return documents
+    return Promise.all(
+      files.map(
+        file =>
+          new Promise(resolve => {
+            this.parseFile(file)
+              .then(doc => {
+                if (doc) documents.set(file, doc)
+                resolve()
+              })
+              .catch(e => {
+                console.log(`parsing file failed`, file, e)
+              })
+          })
+      )
+    )
+      .then(() => documents)
+      .catch(e => {
+        console.log(`parsing files failed`, e)
+      })
   }
 }

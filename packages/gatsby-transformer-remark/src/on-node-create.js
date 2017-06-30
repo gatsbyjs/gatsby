@@ -25,6 +25,7 @@ module.exports = async function onCreateNode({
     children: [],
     parent: node.id,
     internal: {
+      content,
       contentDigest,
       type: `MarkdownRemark`,
     },
