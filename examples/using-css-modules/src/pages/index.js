@@ -8,11 +8,18 @@ class IndexComponent extends React.Component {
     return (
       <div className={indexStyles.index}>
         <h1>Hello world</h1>
+        <h2 className={indexStyles.subheader}>
+          You've arrived at the world renowned css modules & gatsby example site
+        </h2>
         <p>
-          <Link to="/another-page/">Travel through the cyber linkspace</Link>
+          <Link className={indexStyles.link} to="/another-page/">
+            Travel through the cyber linkspace
+          </Link>
         </p>
         <p>
-          <Link to="/sassy-page/">Partake of sassy goodness</Link>
+          <Link className={indexStyles.link} to="/sassy-page/">
+            Partake of sassy goodness
+          </Link>
         </p>
       </div>
     )
