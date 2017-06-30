@@ -1,0 +1,19 @@
+.page {
+  color: purple;
+}
+
+.link {
+  border-bottom: 3rem red dotted;
+  font-size: 10rem;
+  line-height: 1.5;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.header {
+  font-size: 4rem;
+  line-height: 1;
+}
+

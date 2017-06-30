@@ -1,0 +1,16 @@
+$pageBackground: yellow;
+
+.page {
+  background: $pageBackground;
+  padding: 4rem;
+}
+.header {
+  font-size: 4rem;
+  line-height: 1;
+  margin: 0;
+  margin-bottom: 1rem;
+}
+.link {
+  background: red;
+  font-size: 2rem;
+}
