@@ -18,8 +18,8 @@ class GatsbyLink extends React.Component {
     to: PropTypes.string.isRequired,
     activeClassName: PropTypes.string,
     activeStyle: PropTypes.object,
-    onClick: PropTypes.func
-  };
+    onClick: PropTypes.func,
+  }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.to !== nextProps.to) {
