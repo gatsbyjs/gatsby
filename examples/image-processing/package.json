@@ -3,7 +3,7 @@
   "private": true,
   "description": "Gatsby example site demoing image processing",
   "version": "1.0.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "author": "Florian Kissling <sechskilo@gmail.com>",
   "dependencies": {
     "gatsby": "next",
     "gatsby-link": "next",
