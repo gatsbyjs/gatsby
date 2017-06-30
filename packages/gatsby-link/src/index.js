@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "react-router-dom"
+import { Link, NavLink } from "react-router-dom"
 import PropTypes from "prop-types"
 
 let pathPrefix = ``
@@ -16,8 +16,10 @@ class GatsbyLink extends React.Component {
   }
   propTypes: {
     to: PropTypes.string.isRequired,
-    onClick: PropTypes.func,
-  }
+    activeClassName: PropTypes.string,
+    activeStyle: PropTypes.object,
+    onClick: PropTypes.func
+  };
 
   componentWillReceiveProps(nextProps) {
     if (this.props.to !== nextProps.to) {
@@ -34,8 +36,14 @@ class GatsbyLink extends React.Component {
 
   render() {
     const { onClick, ...rest } = this.props
+    if (this.props.activeStyle || this.props.activeClassName) {
+      var El = NavLink
+    } else {
+      var El = Link
+    }
+
     return (
-      <Link
+      <El
         onClick={e => {
           onClick && onClick(e)
           // Is this link pointing to a hash on the same page? If so,
