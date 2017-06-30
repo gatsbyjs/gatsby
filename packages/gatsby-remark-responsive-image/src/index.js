@@ -28,7 +28,9 @@ module.exports = (
   const imageNodes = select(markdownAST, `image`)
 
   // This will also allow the use of html image tags
-  const rawHtmlImageNodes = select(markdownAST, `html`).filter(node => node.value.startsWith(`<img`))
+  const rawHtmlImageNodes = select(markdownAST, `html`).filter(node =>
+    node.value.startsWith(`<img`)
+  )
 
   for (let node of rawHtmlImageNodes) {
     let formattedImgTag = Object.assign(

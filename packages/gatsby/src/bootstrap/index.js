@@ -10,7 +10,6 @@ const crypto = require(`crypto`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const { graphql } = require(`graphql`)
 const { store, emitter } = require(`../redux`)
-const { boundActionCreators } = require(`../redux/actions`)
 const loadPlugins = require(`./load-plugins`)
 const { initCache } = require(`../utils/cache`)
 
@@ -51,7 +50,15 @@ module.exports = async (program: any) => {
     // $FlowFixMe
     config = preferDefault(require(`${program.directory}/gatsby-config`))
   } catch (e) {
-    if (!_.includes(e.toString(), `Error: Cannot find module`)) {
+    const firstLine = e.toString().split(`\n`)[0]
+    if (
+      !_.includes(
+        firstLine,
+        `Error: Cannot find module` && !_.includes(firstLine, `gatsby-config`)
+      )
+    ) {
+      console.log(``)
+      console.log(``)
       console.log(e)
       process.exit(1)
     }

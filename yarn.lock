@@ -4464,9 +4464,9 @@ prettier-eslint@^6.0.0:
     pretty-format "^20.0.3"
     require-relative "^0.8.7"
 
-prettier@^1.4.2:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.5.0.tgz#f3476164f9a532a218a1337b1032638275d82614"
+prettier@^1.4.2, prettier@^1.5.2:
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.5.2.tgz#7ea0751da27b93bfb6cecfcec509994f52d83bb3"
 
 pretty-format@^20.0.3:
   version "20.0.3"
