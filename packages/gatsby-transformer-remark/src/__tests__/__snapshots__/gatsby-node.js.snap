@@ -12,6 +12,13 @@ Array [
       },
       "id": "whatever >>> MarkdownRemark",
       "internal": Object {
+        "content": "---
+title: \\"my little pony\\"
+date: \\"12/12/2014\\"
+---
+
+Where oh where is my little pony?
+    ",
         "contentDigest": "54cfa2ad99756f2fa232cac585280a37",
         "type": "MarkdownRemark",
       },
@@ -34,6 +41,13 @@ Array [
         },
         "id": "whatever >>> MarkdownRemark",
         "internal": Object {
+          "content": "---
+title: \\"my little pony\\"
+date: \\"12/12/2014\\"
+---
+
+Where oh where is my little pony?
+    ",
           "contentDigest": "54cfa2ad99756f2fa232cac585280a37",
           "type": "MarkdownRemark",
         },
