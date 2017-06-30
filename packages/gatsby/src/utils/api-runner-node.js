@@ -136,18 +136,20 @@ module.exports = async (api, args = {}, pluginSource) =>
 
     apisRunning.push(apiRunInstance)
 
+    let currentPluginName = null
+
     mapSeries(
       noSourcePluginPlugins,
       (plugin, callback) => {
+        currentPluginName = plugin.name
         Promise.resolve(runAPI(plugin, api, args)).asCallback(callback)
       },
       (err, results) => {
         if (err) {
           console.log(``)
-          console.log(`A plugin returned an error`)
+          console.log(`Plugin ${currentPluginName} returned an error:`)
           console.log(``)
           console.log(err)
-          process.exit(1)
         }
         // Remove runner instance
         apisRunning = apisRunning.filter(runner => runner !== apiRunInstance)
