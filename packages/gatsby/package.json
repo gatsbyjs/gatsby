@@ -145,6 +145,6 @@
     "build:cli": "babel src/gatsby-cli.js --out-file dist/gatsby-cli.js --presets es2015",
     "clean-test-bundles": "find test/ -type f -name bundle.js* -exec rm -rf {} +",
     "test-coverage": "node_modules/.bin/nyc --reporter=lcov --reporter=text npm test",
-    "watch": "npm run build -- --watch"
+    "watch": "rimraf dist && npm run build:src && npm run build:cli && npm run build:internal-plugins && npm run build:rawfiles && npm run build:src -- --watch"
   }
 }
