@@ -31,5 +31,3 @@ This plugin requires a `width` and `height` attribute on the iframe for setting 
     This is a beautiful iframe:
     
     <iframe url="http://www.example.com/" width="600" height="400"></iframe>
-
-    
