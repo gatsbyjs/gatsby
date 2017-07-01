@@ -47,7 +47,7 @@ module.exports = ({ files, markdownNode, markdownAST, getNode }) => {
 
   // Also copy gifs since Sharp can't process them as well as svgs since we
   // exclude them from the image processing pipeline in
-  // gatsby-remark-responsive-image. This will only work for markdown img tags
+  // gatsby-remark-images. This will only work for markdown img tags
   visit(markdownAST, `image`, image => {
     const imagePath = path.join(getNode(markdownNode.parent).dir, image.url)
     const imageNode = _.find(files, file => {
