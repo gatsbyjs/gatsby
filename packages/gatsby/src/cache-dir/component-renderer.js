@@ -52,6 +52,19 @@ class ComponentRenderer extends React.Component {
     })
   }
 
+  // Check if the component or json have changed
+  shouldComponentUpdate(nextProps, nextState) {
+    if (
+      this.state.pageResources.component !== nextState.pageResources.component
+    ) {
+      return true
+    }
+    if (this.state.pageResources.json !== nextState.pageResources.json) {
+      return true
+    }
+    return false
+  }
+
   render() {
     if (this.state.pageResources) {
       return createElement(this.state.pageResources.component, {
