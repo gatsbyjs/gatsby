@@ -19,8 +19,14 @@ window.___loader = loader
 
 const history = createHistory()
 
+// Call onRouteUpdate on the initial page load.
+apiRunner(`onRouteUpdate`, {
+  location: history.location,
+  action: history.action,
+})
+
 function attachToHistory(history) {
-  if(!window.___history) {
+  if (!window.___history) {
     window.___history = history
 
     history.listen((location, action) => {
