@@ -3,8 +3,6 @@ import webpack from "webpack"
 import Promise from "bluebird"
 import fs from "fs"
 import webpackConfig from "./webpack.config"
-import _ from "lodash"
-const { store } = require(`../redux`)
 
 const debug = require(`debug`)(`gatsby:html`)
 
@@ -12,8 +10,6 @@ module.exports = async (program: any) => {
   const { directory } = program
 
   debug(`generating static HTML`)
-  // Reduce pages objects to an array of paths.
-  const pages = store.getState().pages.map(page => page.path)
 
   // Static site generation.
   const compilerConfig = await webpackConfig(
@@ -21,7 +17,7 @@ module.exports = async (program: any) => {
     directory,
     `develop-html`,
     null,
-    pages
+    [`/`]
   )
 
   return new Promise((resolve, reject) => {
