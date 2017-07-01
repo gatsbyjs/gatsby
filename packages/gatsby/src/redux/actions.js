@@ -310,7 +310,7 @@ actions.touchNode = (nodeId, plugin = ``) => {
  *
  * Once a plugin has claimed a field name the field name can't be used by
  * other plugins.  Also since node's are immutable, you can't mutate the node
- * directly.  So to extend
+ * directly. So to extend another node, use this.
  * @param {Object} $0
  * @param {Object} $0.node the target node object
  * @param {string} $0.name the name for the field
@@ -321,6 +321,8 @@ actions.touchNode = (nodeId, plugin = ``) => {
  *   name: `happiness`,
  *   value: `is sweet graphql queries`
  * })
+ *
+ * // The field value is now accessible at node.fields.happiness
  */
 actions.createNodeField = (
   { node, name, value, fieldName, fieldValue },
