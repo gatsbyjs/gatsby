@@ -32,7 +32,7 @@ apiRunner(`onClientEntry`)
 
 // Let plugins register a service worker. The plugin just needs
 // to return true.
-if (apiRunner(`registerServiceWorker`)) {
+if (apiRunner(`registerServiceWorker`).length > 0) {
   require(`./register-service-worker`)
 }
 
