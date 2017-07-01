@@ -34,7 +34,6 @@ Or HTML image tags:
 <img src='image.png' />
 ```
 
-
 Let's see some more photos by [Max Boettinger](https://unsplash.com/@maxboettinger) ([I](https://unsplash.com/photos/T7Lnl3PFISM), [II](https://unsplash.com/@maxboettinger?photo=SUFS6CPjB5Q)):
 
 ![](max-boettinger-109436.jpg)
@@ -55,7 +54,6 @@ An inline example ![example](squiggly.svg) SVG. Tremendous!
 And here's an awesome SVG tiger:
 
 ![awesome tiger](awesome_tiger.svg)
-
 
 ## iFrames and video embeds
 
