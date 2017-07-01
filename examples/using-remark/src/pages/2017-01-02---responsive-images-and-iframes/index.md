@@ -22,6 +22,18 @@ are here to take care of all your basic Markdown image and iframe issues.
 loading_ (as popularized by [Medium][3] and [Facebook][4]) for all local JPGs
 and PNGs in your Markdown documents.
 
+You aren't just limited to markdown image tags either. You can either use markdown image tags:
+
+```
+![](image.png)
+```
+
+Or HTML image tags:
+
+```
+<img src='image.png' />
+```
+
 Let's see some more photos by [Max Boettinger](https://unsplash.com/@maxboettinger) ([I](https://unsplash.com/photos/T7Lnl3PFISM), [II](https://unsplash.com/@maxboettinger?photo=SUFS6CPjB5Q)):
 
 ![](max-boettinger-109436.jpg)
