@@ -313,20 +313,36 @@ actions.touchNode = (nodeId, plugin = ``) => {
  * directly.  So to extend
  * @param {Object} $0
  * @param {Object} $0.node the target node object
- * @param {string} $0.fieldName the name for the field
- * @param {string} $0.fieldValue the value for the field
+ * @param {string} $0.name the name for the field
+ * @param {string} $0.value the value for the field
  * @example
  * createNodeField({
  *   node,
- *   fieldName: `happiness`,
- *   fieldValue: `is sweet graphql queries`
+ *   name: `happiness`,
+ *   value: `is sweet graphql queries`
  * })
  */
 actions.createNodeField = (
-  { node, fieldName, fieldValue },
+  { node, name, value, fieldName, fieldValue },
   plugin,
   traceId
 ) => {
+  if (fieldName) {
+    console.warn(
+      `Calling "createNodeField" with "fieldName" is deprecated. Use "name" instead`
+    )
+    if (!name) {
+      name = fieldName
+    }
+  }
+  if (fieldValue) {
+    console.warn(
+      `Calling "createNodeField" with "fieldValue" is deprecated. Use "value" instead`
+    )
+    if (!value) {
+      value = fieldValue
+    }
+  }
   // Ensure required fields are set.
   if (!node.internal.fieldOwners) {
     node.internal.fieldOwners = {}
@@ -336,7 +352,7 @@ actions.createNodeField = (
   }
 
   // Check that this field isn't owned by another plugin.
-  const fieldOwner = node.internal.fieldOwners[fieldName]
+  const fieldOwner = node.internal.fieldOwners[name]
   if (fieldOwner && fieldOwner !== plugin.name) {
     throw new Error(
       stripIndent`
@@ -344,15 +360,15 @@ actions.createNodeField = (
 
       Node id: ${node.id}
       Plugin: ${plugin.name}
-      fieldName: ${fieldName}
-      fieldValue: ${fieldValue}
+      name: ${name}
+      value: ${value}
       `
     )
   }
 
   // Update node
-  node.fields[fieldName] = fieldValue
-  node.internal.fieldOwners[fieldName] = plugin.name
+  node.fields[name] = value
+  node.internal.fieldOwners[name] = plugin.name
 
   return {
     type: `ADD_FIELD_TO_NODE`,
