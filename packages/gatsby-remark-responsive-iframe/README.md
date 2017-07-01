@@ -29,5 +29,5 @@ plugins: [
 This plugin requires a `width` and `height` attribute on the iframe for setting the aspect ratio. Example usage: 
 
     This is a beautiful iframe:
-    
-    <iframe url="http://www.example.com/" width="600" height="400"></iframe>
+
+    &lt;iframe url=&quot;http://www.example.com/&quot; width=&quot;600&quot; height=&quot;400&quot;&gt;&lt;/iframe&gt;
