@@ -39,57 +39,5 @@ module.exports = {
       },
     },
 
-    // Will crates nodes of type "type": "File", and "owner": "gatsby-source-filesystem"
-    // {
-    //   resolve: 'gatsby-source-filesystem',
-    //   options: {
-    //     name: 'cache',
-    //     path: `${__dirname}/.cache/source-wordpress`,
-    //   },
-    // },
-
-    // v TODOS below  v
-
-    // This plugin exposes helper functions for processing
-    // images with the NPM package “sharp”. It's used by
-    // several other plugins.
-    // 'gatsby-plugin-sharp',
-
-    // This plugin identifies file nodes that are images and
-    // transforms these to create new “ImageSharp” nodes.
-    // With them you can resize images and
-    // generate responsive image thumbnails.
-    // 'gatsby-transformer-sharp',
-
-    // This plugin takes your configuration and generates a
-    // web manifest file so Gatsbygram can be added to your
-    // homescreen on Android.
-    // If this is before the Offline, then the Manifest will 
-    // also be put in the Offline app.
-    // {
-    //   resolve: 'gatsby-plugin-manifest',
-    //   options: {
-    //     name: 'BCG-DV',
-    //     short_name: 'BCGDV',
-    //     start_url: '/',
-    //     background_color: '#f7f7f7',
-    //     theme_color: '#191919',
-    //     display: 'minimal-ui',
-    //   },
-    // },
-
-    // This plugin generates a service worker and AppShell
-    // html file so the site works offline and is otherwise
-    // resistant to bad networks. Works with almost any
-    // site!
-    // 'gatsby-plugin-offline',
-
-    // This plugin sets up Google Analytics for you.
-    // {
-    //   resolve: 'gatsby-plugin-google-analytics',
-    //   options: {
-    //     trackingId: 'UA-93349937-2',
-    //   },
-    // },
   ],
 }
