@@ -1,0 +1,25 @@
+{
+  "author": "Sebastien Fichot <fichot.sebastien@gmail.com>",
+  "bundleDependencies": false,
+  "dependencies": {
+    "axios": "^0.16.1",
+    "bluebird": "^3.4.6",
+    "json-stringify-safe": "^5.0.1",
+    "lodash": "^4.17.2",
+    "qs": "^6.4.0"
+  },
+  "deprecated": false,
+  "description": "Gatsby source plugin for building websites using the Wordpress CMS as a data source.",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "gatsby-source-plugin"
+  ],
+  "license": "MIT",
+  "name": "gatsby-source-wordpress",
+  "scripts": {
+    "build": "babel src --out-dir .",
+    "watch": "babel -w src --out-dir ."
+  },
+  "version": "1.0.0-beta.6"
+}

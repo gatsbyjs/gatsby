@@ -1,0 +1,27 @@
+{
+  "parser": "babel-eslint",
+  "plugins": [
+    "react"
+  ],
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": 6
+  },
+  "env": {
+    "es6": true,
+    "browser": true,
+    "commonjs": true,
+    "node": true
+  },
+  "rules": {
+    "quotes": ["error", "single"],
+    "jsx-quotes": ["error", "prefer-double"],
+    "object-curly-spacing": ["error", "always"],
+    "no-console": "off",
+    "strict": ["error", "global"],
+    "curly": "warn"
+  },
+    "globals": {
+    "graphql": false
+  }
+}
