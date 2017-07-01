@@ -17,9 +17,17 @@ plugins: [
     resolve: `gatsby-transformer-remark`,
     options: {
       plugins: [
-        `gatsby-remark-iframe`,
+        `gatsby-remark-responsive-iframe`,
       ]
     }
   }
 ]
 ```
+
+### Usage in Markdown
+
+This plugin requires a `width` and `height` attribute on the iframe for setting the aspect ratio. Example usage: 
+
+    This is a beautiful iframe:
+    
+    <iframe url="http://www.example.com/" width="600" height="400"></iframe>
