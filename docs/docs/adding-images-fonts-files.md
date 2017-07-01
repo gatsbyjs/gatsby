@@ -53,7 +53,7 @@ This mechanism provides a number of benefits:
 
 However there is an **escape hatch** that you can use to add an asset outside of the module system.
 
-If you put a file into the `static` folder, it will **not** be processed by Webpack. Instead it will be copied into the public folder untouched.   To reference assets in the `static` folder, you need to use a special variable called `__PATH_PREFIX__`.
+If you put a file into the `static` folder, it will **not** be processed by Webpack. Instead it will be copied into the public folder untouched. E.g. if you add a file named `sun.jpg` to the static folder, it'll be copied to `public/sun.jpg`. To reference assets in the `static` folder, you need to use a special variable called `__PATH_PREFIX__`.
 
 In JavaScript code, you can use `process.env.__PATH_PREFIX__` for similar purposes:
 
