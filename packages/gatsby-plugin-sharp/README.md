@@ -78,7 +78,7 @@ size / screen resolution.
 On top of that, responsiveSizes returns everything else (namely aspectRatio and
 a base64 image to use as a placeholder) you need to implement the "blur up"
 technique popularized by Medium and Facebook (and also available as a Gatsby
-plugin for Markdown content as gatsby-remark-build-images).
+plugin for Markdown content as gatsby-remark-images).
 
 #### Parameters
 

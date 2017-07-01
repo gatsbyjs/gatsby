@@ -1,4 +1,4 @@
-# gatsby-remark-build-images
+# gatsby-remark-images
 
 Processes images in markdown so they can be used in the production build.
 
@@ -15,7 +15,7 @@ In the processing, it make images responsive by:
 
 ## Install
 
-`npm install --save gatsby-remark-build-images`
+`npm install --save gatsby-remark-images`
 
 ## How to use
 
@@ -27,7 +27,7 @@ plugins: [
     options: {
       plugins: [
         {
-          resolve: `gatsby-remark-build-images`,
+          resolve: `gatsby-remark-images`,
           options: {
             // It's important to specify the maxWidth (in pixels) of
             // the content container as this plugin uses this as the

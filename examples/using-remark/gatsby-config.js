@@ -21,7 +21,7 @@ module.exports = {
       options: {
         plugins: [
           {
-            resolve: `gatsby-remark-build-images`,
+            resolve: `gatsby-remark-images`,
             options: {
               maxWidth: 740,
             },

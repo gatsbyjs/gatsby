@@ -344,7 +344,7 @@ plugins to [parse markdown](/docs/packages/gatsby-parser-remark/) and
 process it in a variety of ways (including [adding syntax highlighting
 with PrismJS](/docs/packages/gatsby-typegen-remark-prismjs/) and
 [resizing images referenced in markdown
-files](/docs/packages/gatsby-typegen-remark-build-images/) so
+files](/docs/packages/gatsby-typegen-remark-images/) so
 they're mobile ready). I've also added parsers for
 [YAML](/docs/packages/gatsby-parser-yaml/),
 [JSON](/docs/packages/gatsby-parser-json/), and
