@@ -3,7 +3,6 @@ const packageJson = require(`../../package.json`)
 const path = require(`path`)
 const _ = require(`lodash`)
 const Promise = require(`bluebird`)
-console.log(`bin/cli: time since started:`, process.uptime())
 
 // Improve Promise error handling. Maybe... what's the best
 // practice for this these days?
@@ -21,7 +20,7 @@ const directory = path.resolve(`.`)
 
 program.version(packageJson.version).usage(`[command] [options]`)
 
-console.time(`time to load develop`)
+// console.time(`time to load develop`)
 program
   .command(`develop`)
   .description(
@@ -37,7 +36,7 @@ program
   .option(`-o, --open`, `Open the site in your browser for you.`)
   .action(command => {
     const develop = require(`../utils/develop`)
-    console.timeEnd(`time to load develop`)
+    // console.timeEnd(`time to load develop`)
     const p = {
       ...command,
       directory,

@@ -28,6 +28,7 @@
     "chokidar": "^1.7.0",
     "chunk-manifest-webpack-plugin": "0.1.0",
     "commander": "^2.9.0",
+    "convert-hrtime": "^2.0.0",
     "copyfiles": "^1.2.0",
     "css-loader": "^0.26.1",
     "debug": "^2.6.0",
@@ -108,7 +109,8 @@
     "webpack-md5-hash": "0.0.5",
     "webpack-stats-plugin": "^0.1.4",
     "webpack-validator": "^2.2.7",
-    "yaml-loader": "^0.4.0"
+    "yaml-loader": "^0.4.0",
+    "yurnalist": "^0.1.10"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
