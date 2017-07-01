@@ -28,7 +28,6 @@ exports.initCache = () => {
   }
 
   if (previousState) {
-    console.log("there is previous state")
     db.defaults(previousState).write()
   } else {
     db.defaults({ keys: [] }).write()
@@ -61,7 +60,6 @@ exports.set = (key, value) =>
 let save
 
 if (process.env.NODE_ENV !== `test`) {
-  console.log("writing out cache")
   save = _.debounce(() => {
     fs.writeFile(`${directory}/db.json`, JSON.stringify(db.getState()))
   }, 250)
