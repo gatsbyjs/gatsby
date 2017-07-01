@@ -37,8 +37,8 @@ export default NodeAPIDocs
 export const pageQuery = graphql`
   query APINodeDocsQuery {
     allDocumentationJs(
-      filter: { id: { regex: "/src.*api-node-docs.js/" } },
-      sort: { fields: [name] },
+      filter: { id: { regex: "/src.*api-node-docs.js/" } }
+      sort: { fields: [name] }
     ) {
       edges {
         node {

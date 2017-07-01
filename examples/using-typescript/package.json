@@ -1,0 +1,14 @@
+{
+  "name": "using-typescript",
+  "version": "1.0.0",
+  "description": "Gatsby example site demonstrating how to use Typescript with Gatsby",
+  "author": "fabien0102 <fabien0102@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@types/react": "15.0.21",
+    "@types/react-dom": "0.14.23",
+    "gatsby": "next",
+    "gatsby-link": "next",
+    "gatsby-plugin-typescript": "next"
+  }
+}

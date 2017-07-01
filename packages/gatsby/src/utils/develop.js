@@ -84,6 +84,17 @@ async function startServer(program) {
       req.pipe(request(proxiedUrl)).pipe(res)
     })
   }
+  // Render an HTML page and serve it.
+  app.use((req, res, next) => {
+    const parsedPath = parsePath(req.originalUrl)
+    if (parsedPath.extname === `` || parsedPath.extname === `.html`) {
+      res.sendFile(`${process.cwd()}/public/index.html`, err => {
+        if (err) {
+          res.status(500).end()
+        }
+      })
+    }
+  })
 
   // As last step, check if the file exists in the public folder.
   app.get(`*`, (req, res) => {
@@ -109,13 +120,13 @@ async function startServer(program) {
       process.exit()
     } else {
       if (program.open) {
+        const host =
+          listener.address().address === `127.0.0.1`
+            ? `localhost`
+            : listener.address().address
         const opn = require(`opn`)
-        opn(`http://${listener.address().address}:${listener.address().port}`)
+        opn(`http://${host}:${listener.address().port}`)
       }
-      const host =
-        listener.address().address === `127.0.0.1`
-          ? `localhost`
-          : listener.address().address
     }
   })
 }

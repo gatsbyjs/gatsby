@@ -11,8 +11,6 @@ describe(`Create and update nodes`, () => {
         parent: `test`,
         internal: {
           contentDigest: `hasdfljds`,
-          mediaType: `test`,
-          owner: `tests`,
           type: `Test`,
         },
         pickle: true,
@@ -31,8 +29,6 @@ describe(`Create and update nodes`, () => {
         parent: `test`,
         internal: {
           contentDigest: `hasdfljds`,
-          mediaType: `test`,
-          owner: `tests`,
           type: `Test`,
         },
         pickle: true,
@@ -49,8 +45,6 @@ describe(`Create and update nodes`, () => {
         parent: `test`,
         internal: {
           contentDigest: `hasdfljds`,
-          mediaType: `test`,
-          owner: `tests`,
           type: `Test`,
         },
         pickle: false,
@@ -78,8 +72,6 @@ describe(`Create and update nodes`, () => {
         parent: `test`,
         internal: {
           contentDigest: `hasdfljds`,
-          mediaType: `test`,
-          owner: `tests`,
           type: `Test`,
         },
         pickle: true,
@@ -98,8 +90,6 @@ describe(`Create and update nodes`, () => {
         parent: `test`,
         internal: {
           contentDigest: `hasdfljds`,
-          mediaType: `test`,
-          owner: `tests`,
           type: `Test`,
         },
         pickle: true,
@@ -111,8 +101,8 @@ describe(`Create and update nodes`, () => {
     const addFieldAction = actions.createNodeField(
       {
         node: state[`hi`],
-        fieldName: `joy`,
-        fieldValue: `soul's delight`,
+        name: `joy`,
+        value: `soul's delight`,
       },
       { name: `test` }
     )
@@ -128,8 +118,6 @@ describe(`Create and update nodes`, () => {
         parent: `test`,
         internal: {
           contentDigest: `hasdfljds`,
-          mediaType: `test`,
-          owner: `tests`,
           type: `Test`,
         },
         pickle: true,
@@ -141,8 +129,8 @@ describe(`Create and update nodes`, () => {
     const addFieldAction = actions.createNodeField(
       {
         node: state[`hi`],
-        fieldName: `joy`,
-        fieldValue: `soul's delight`,
+        name: `joy`,
+        value: `soul's delight`,
       },
       { name: `test` }
     )
@@ -152,8 +140,8 @@ describe(`Create and update nodes`, () => {
       actions.createNodeField(
         {
           node: state[`hi`],
-          fieldName: `joy`,
-          fieldValue: `soul's delight`,
+          name: `joy`,
+          value: `soul's delight`,
         },
         { name: `test2` }
       )
@@ -169,8 +157,6 @@ describe(`Create and update nodes`, () => {
         parent: `test`,
         internal: {
           contentDigest: `hasdfljds`,
-          mediaType: `test`,
-          owner: `pluginA`,
           type: `mineOnly`,
         },
         pickle: true,
@@ -186,8 +172,6 @@ describe(`Create and update nodes`, () => {
           parent: `test`,
           internal: {
             contentDigest: `hasdfljds`,
-            mediaType: `test`,
-            owner: `pluginB`,
             type: `mineOnly`,
           },
           pickle: true,
@@ -211,8 +195,6 @@ describe(`Create and update nodes`, () => {
           },
           internal: {
             contentDigest: `hasdfljds`,
-            mediaType: `test`,
-            owner: `pluginA`,
             type: `mineOnly`,
           },
           pickle: true,

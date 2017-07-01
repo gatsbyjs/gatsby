@@ -1,6 +1,7 @@
 const _ = require(`lodash`)
 const crypto = require(`crypto`)
 const stringify = require(`json-stringify-safe`)
+const deepMap = require(`deep-map`)
 
 const digest = str => crypto.createHash(`md5`).update(str).digest(`hex`)
 const typePrefix = `Contentful`
@@ -32,18 +33,8 @@ const fixId = id => {
 }
 exports.fixId = fixId
 
-const mapValuesDeep = (v, k, callback) => {
-  if (_.isArray(v)) {
-    return v.map(n => mapValuesDeep(n, null, callback))
-  } else {
-    return _.isObject(v)
-      ? _.mapValues(v, (v, k) => mapValuesDeep(v, k, callback))
-      : callback(v, k)
-  }
-}
-
 exports.fixIds = object =>
-  mapValuesDeep(object, null, (v, k) => (k === `id` ? fixId(v) : v))
+  deepMap(object, (v, k) => (k === `id` ? fixId(v) : v))
 
 const makeId = ({ id, currentLocale, defaultLocale }) =>
   currentLocale === defaultLocale ? id : `${id}___${currentLocale}`
@@ -100,6 +91,7 @@ exports.buildForeignReferenceMap = ({
           // add to the reference map, otherwise ignore.
           if (Array.isArray(entryItemFieldValue)) {
             if (
+              entryItemFieldValue[0] &&
               entryItemFieldValue[0].sys &&
               entryItemFieldValue[0].sys.type &&
               entryItemFieldValue[0].sys.id
@@ -120,6 +112,7 @@ exports.buildForeignReferenceMap = ({
               })
             }
           } else if (
+            entryItemFieldValue &&
             entryItemFieldValue.sys &&
             entryItemFieldValue.sys.type &&
             entryItemFieldValue.sys.id &&
@@ -260,7 +253,6 @@ exports.createContentTypeNodes = ({
         children: [],
         internal: {
           type: `${makeTypeName(contentTypeItemId)}`,
-          mediaType: `application/x-contentful`,
         },
       }
 
@@ -322,7 +314,6 @@ exports.createContentTypeNodes = ({
       description: contentTypeItem.description,
       internal: {
         type: `${makeTypeName(`ContentType`)}`,
-        mediaType: `text/x-contentful`,
       },
     }
 
@@ -369,7 +360,6 @@ exports.createAssetNodes = ({
       node_locale: locale.code,
       internal: {
         type: `${makeTypeName(`Asset`)}`,
-        mediaType: `text/x-contentful`,
       },
     }
 

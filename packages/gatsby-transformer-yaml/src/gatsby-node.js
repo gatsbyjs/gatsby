@@ -34,8 +34,6 @@ async function onCreateNode({ node, boundActionCreators, loadNodeContent }) {
           // the parent node is a file.
           // PascalCase
           type: _.upperFirst(_.camelCase(`${node.name} Yaml`)),
-          mediaType: `application/json`,
-          content: objStr,
         },
       }
     })

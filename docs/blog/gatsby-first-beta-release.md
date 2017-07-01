@@ -94,7 +94,7 @@ of these infrastructure providers.
 * Replace react.createClass with ES6 classes in examples html.js, add PropTypes [#1169](https://github.com/gatsbyjs/gatsby/pull/1169) @abachuk
 * Fix windows build pull [#1158](https://github.com/gatsbyjs/gatsby/pull/1158) @kyleamathews
 * Use custom delimiter when flattening example values for enum fields so easy to convert back @kyleamathews
-* gatsby-remark-responsive-images: use span instead of div [#1151](https://github.com/gatsbyjs/gatsby/pull/1151) @rstacruz
+* gatsby-remark-responsive-image: use span instead of div [#1151](https://github.com/gatsbyjs/gatsby/pull/1151) @rstacruz
 * Add check that we can actually find a linked image file node @kyleamathews
 * Ignore SVGs in gatsby-remark-responsive-image [#1157](https://github.com/gatsbyjs/gatsby/pull/1157) @fk
 * Replace using levelup for caching with lowdb to avoid native dependency [#1142](https://github.com/gatsbyjs/gatsby/pull/1142) @kyleamathews

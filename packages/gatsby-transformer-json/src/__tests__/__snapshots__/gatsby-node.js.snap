@@ -9,9 +9,7 @@ Array [
       "funny": "yup",
       "id": "foo",
       "internal": Object {
-        "content": "{\\"id\\":\\"foo\\",\\"blue\\":true,\\"funny\\":\\"yup\\"}",
         "contentDigest": "8838e569ae02d98806532310fb2a577a",
-        "mediaType": "application/json",
         "type": "UndefinedJson",
       },
       "parent": "whatever",
@@ -24,9 +22,7 @@ Array [
       "funny": "nope",
       "id": "whatever [1] >>> JSON",
       "internal": Object {
-        "content": "{\\"blue\\":false,\\"funny\\":\\"nope\\"}",
         "contentDigest": "f624311d932d73dcd416d2a8bea2b67d",
-        "mediaType": "application/json",
         "type": "UndefinedJson",
       },
       "parent": "whatever",
@@ -45,9 +41,7 @@ Array [
         "funny": "yup",
         "id": "foo",
         "internal": Object {
-          "content": "{\\"id\\":\\"foo\\",\\"blue\\":true,\\"funny\\":\\"yup\\"}",
           "contentDigest": "8838e569ae02d98806532310fb2a577a",
-          "mediaType": "application/json",
           "type": "UndefinedJson",
         },
         "parent": "whatever",
@@ -73,9 +67,7 @@ Array [
         "funny": "nope",
         "id": "whatever [1] >>> JSON",
         "internal": Object {
-          "content": "{\\"blue\\":false,\\"funny\\":\\"nope\\"}",
           "contentDigest": "f624311d932d73dcd416d2a8bea2b67d",
-          "mediaType": "application/json",
           "type": "UndefinedJson",
         },
         "parent": "whatever",
