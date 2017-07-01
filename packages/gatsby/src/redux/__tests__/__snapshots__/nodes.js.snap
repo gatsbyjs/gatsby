@@ -64,8 +64,8 @@ exports[`Create and update nodes throws error if a field is updated by a plugin 
 
 Node id: hi
 Plugin: test2
-fieldName: joy
-fieldValue: soul's delight"
+name: joy
+value: soul's delight"
 `;
 
 exports[`Create and update nodes throws error if a node is created by a plugin not its owner 1`] = `

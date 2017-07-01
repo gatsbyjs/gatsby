@@ -101,8 +101,8 @@ describe(`Create and update nodes`, () => {
     const addFieldAction = actions.createNodeField(
       {
         node: state[`hi`],
-        fieldName: `joy`,
-        fieldValue: `soul's delight`,
+        name: `joy`,
+        value: `soul's delight`,
       },
       { name: `test` }
     )
@@ -129,8 +129,8 @@ describe(`Create and update nodes`, () => {
     const addFieldAction = actions.createNodeField(
       {
         node: state[`hi`],
-        fieldName: `joy`,
-        fieldValue: `soul's delight`,
+        name: `joy`,
+        value: `soul's delight`,
       },
       { name: `test` }
     )
@@ -140,8 +140,8 @@ describe(`Create and update nodes`, () => {
       actions.createNodeField(
         {
           node: state[`hi`],
-          fieldName: `joy`,
-          fieldValue: `soul's delight`,
+          name: `joy`,
+          value: `soul's delight`,
         },
         { name: `test2` }
       )
