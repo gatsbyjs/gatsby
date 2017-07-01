@@ -77,11 +77,13 @@ window.___navigateTo = navigateTo
 const history = createHistory()
 
 function attachToHistory(history) {
-  window.___history = history
+  if(!window.___history) {
+    window.___history = history
 
-  history.listen((location, action) => {
-    apiRunner(`onRouteUpdate`, { location, action })
-  })
+    history.listen((location, action) => {
+      apiRunner(`onRouteUpdate`, { location, action })
+    })
+  }
 }
 
 function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
