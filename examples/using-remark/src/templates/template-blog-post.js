@@ -136,10 +136,10 @@ export const pageQuery = graphql`
             children {
               ... on ImageSharp {
                 responsiveResolution(
-                  width: 50,
-                  height: 50,
-                  quality: 75,
-                  grayscale: true,
+                  width: 50
+                  height: 50
+                  quality: 75
+                  grayscale: true
                 ) {
                   src
                   srcSet

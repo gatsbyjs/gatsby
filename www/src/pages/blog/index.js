@@ -94,11 +94,11 @@ export default BlogPostsIndex
 export const pageQuery = graphql`
   query BlogPostsIndexQuery {
     allMarkdownRemark(
-      sort: { order: DESC, fields: [frontmatter___date] },
+      sort: { order: DESC, fields: [frontmatter___date] }
       filter: {
-        frontmatter: { draft: { ne: true } },
-        fileAbsolutePath: { regex: "/blog/" },
-      },
+        frontmatter: { draft: { ne: true } }
+        fileAbsolutePath: { regex: "/blog/" }
+      }
     ) {
       edges {
         node {

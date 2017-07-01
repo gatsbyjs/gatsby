@@ -40,31 +40,7 @@ apple()",
     ],
     "id": "documentationJS node_1 comment #0",
     "internal": Object {
-      "content": "{
-    \\"kind\\": \\"constant\\",
-    \\"name\\": \\"apple\\",
-    \\"params\\": [
-        {
-            \\"title\\": \\"param\\",
-            \\"name\\": \\"apple\\",
-            \\"type\\": {
-                \\"type\\": \\"NameExpression\\",
-                \\"name\\": \\"string\\"
-            },
-            \\"description___NODE\\": \\"documentationJS node_1 comment #0--DocumentationJSComponentDescription--apple\\"
-        }
-    ],
-    \\"returns\\": [],
-    \\"examples\\": [
-        {
-            \\"raw\\": \\"const apple = require('apple')\\\\napple()\\",
-            \\"highlighted\\": \\"<span class=\\\\\\"token keyword\\\\\\">const</span> apple <span class=\\\\\\"token operator\\\\\\">=</span> <span class=\\\\\\"token function\\\\\\">require</span><span class=\\\\\\"token punctuation\\\\\\">(</span><span class=\\\\\\"token string\\\\\\">'apple'</span><span class=\\\\\\"token punctuation\\\\\\">)</span>\\\\n<span class=\\\\\\"token function\\\\\\">apple</span><span class=\\\\\\"token punctuation\\\\\\">(</span><span class=\\\\\\"token punctuation\\\\\\">)</span>\\"
-        }
-    ],
-    \\"description___NODE\\": \\"documentationJS node_1 comment #0--DocumentationJSComponentDescription--comment.description\\"
-}",
       "contentDigest": "b635e85506044a6cdcebbcd7fda00b7d",
-      "mediaType": "text/x-javascript-metadata",
       "type": "DocumentationJs",
     },
     "kind": "constant",

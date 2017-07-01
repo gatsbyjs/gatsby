@@ -183,8 +183,8 @@ class Index extends React.Component {
           {` `}
           (and also available as a Gatsby plugin for Markdown content as
           {` `}
-          <a href="https://www.gatsbyjs.org/docs/packages/gatsby-remark-responsive-image/">
-            gatsby-remark-responsive-image
+          <a href="https://www.gatsbyjs.org/docs/packages/gatsby-remark-images/">
+            gatsby-remark-images
           </a>).
         </p>
         <p>
@@ -325,8 +325,8 @@ export const pageQuery = graphql`
     }
     sizes: imageSharp(id: { regex: "/fecolormatrix-kanye-west.jpg/" }) {
       responsiveSizes(
-        duotone: { highlight: "#f00e2e", shadow: "#192550" },
-        toFormat: PNG,
+        duotone: { highlight: "#f00e2e", shadow: "#192550" }
+        toFormat: PNG
       ) {
         base64
         aspectRatio

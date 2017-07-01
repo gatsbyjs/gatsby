@@ -77,7 +77,7 @@ differs a bit from PrismJS's own. You can find out everything about it in the
         options: {
           plugins: [
             {
-              resolve: `gatsby-remark-responsive-image`,
+              resolve: `gatsby-remark-images`,
               options: {
                 maxWidth: 756,
               },
@@ -106,7 +106,7 @@ plugins: [
     options: {
       plugins: [
         {
-          resolve: `gatsby-remark-responsive-image`,
+          resolve: `gatsby-remark-images`,
           options: {
             maxWidth: 756,
           },

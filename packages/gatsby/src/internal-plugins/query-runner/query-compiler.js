@@ -48,11 +48,11 @@ class Runner {
 
   async compileAll() {
     let nodes = await this.parseEverything()
-    return this.write(nodes)
+    return await this.write(nodes)
   }
 
   async parseEverything() {
-    let files = await globp(`${this.baseDir}/**/*.+(t|j)s?(x)`)
+    let files = glob.sync(`${this.baseDir}/**/*.+(t|j)s?(x)`)
     files = files.filter(d => !d.match(/\.d\.ts$/))
     files = files.map(normalize)
     // Ensure all page components added as they're not necessarily in the
@@ -118,7 +118,6 @@ class Runner {
           } else if (groupIndex === 2) {
             docName = match
           }
-          // console.log(`Found match, group ${groupIndex}: ${match}`)
         })
       }
       const docWithError = documents.find(doc =>
@@ -133,7 +132,7 @@ class Runner {
       )
       if (docName && filePath && error) {
         console.log(
-          `\nThere was an error while compiling your site's GraphQL queries in document "${docName}" in file "${filePath}". Copy the failing query into GraphiQL to debug\n`
+          `\nThere was an error while compiling your site's GraphQL queries in document "${docName}" in file "${filePath}".\n`
         )
         console.log(`    `, error)
         console.log(``)
@@ -141,7 +140,6 @@ class Runner {
         console.log(
           `\nThere was an error while compiling your site's GraphQL queries\n${e.toString()}`
         )
-        console.log(`Copy the failing query into GraphiQL to debug\n`)
       }
     }
 
@@ -180,10 +178,12 @@ class Runner {
   }
 }
 
-export default function compile(): Promise<Map<string, RootQuery>> {
+export default async function compile(): Promise<Map<string, RootQuery>> {
   const { program, schema } = store.getState()
 
   const runner = new Runner(`${program.directory}/src`, schema)
 
-  return runner.compileAll()
+  const queries = await runner.compileAll()
+
+  return queries
 }

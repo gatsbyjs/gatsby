@@ -32,7 +32,7 @@ apiRunner(`onClientEntry`)
 
 // Let plugins register a service worker. The plugin just needs
 // to return true.
-if (apiRunner(`registerServiceWorker`)) {
+if (apiRunner(`registerServiceWorker`).length > 0) {
   require(`./register-service-worker`)
 }
 
@@ -76,12 +76,20 @@ window.___navigateTo = navigateTo
 
 const history = createHistory()
 
-function attachToHistory(history) {
-  window.___history = history
+// Call onRouteUpdate on the initial page load.
+apiRunner(`onRouteUpdate`, {
+  location: history.location,
+  action: history.action,
+})
 
-  history.listen((location, action) => {
-    apiRunner(`onRouteUpdate`, { location, action })
-  })
+function attachToHistory(history) {
+  if (!window.___history) {
+    window.___history = history
+
+    history.listen((location, action) => {
+      apiRunner(`onRouteUpdate`, { location, action })
+    })
+  }
 }
 
 function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
@@ -124,43 +132,39 @@ const loadLayout = cb => {
 }
 
 loadLayout(layout => {
-  const Root = () =>
-    createElement(
-      AltRouter ? AltRouter : DefaultRouter,
-      null,
+  loader.getResourcesForPathname(window.location.pathname, () => {
+    const Root = () =>
       createElement(
-        ScrollContext,
-        { shouldUpdateScroll },
-        createElement(withRouter(layout), {
-          children: layoutProps =>
-            createElement(Route, {
-              render: routeProps => {
-                attachToHistory(routeProps.history)
-                const props = layoutProps ? layoutProps : routeProps
-                if (loader.getPage(props.location.pathname)) {
-                  return createElement(ComponentRenderer, { ...props })
-                } else {
-                  // TODO check (somehow) if we loaded the page
-                  // from a service worker (app shell) as if this
-                  // is the case and we get a 404 we want to kill
-                  // the sw and reload as probably the user is
-                  // trying to visit a page that was created after
-                  // the first time they visited.
-                  return createElement(ComponentRenderer, {
-                    location: { pathname: `/404.html` },
-                  })
-                }
-              },
-            }),
-        })
+        AltRouter ? AltRouter : DefaultRouter,
+        null,
+        createElement(
+          ScrollContext,
+          { shouldUpdateScroll },
+          createElement(withRouter(layout), {
+            children: layoutProps =>
+              createElement(Route, {
+                render: routeProps => {
+                  attachToHistory(routeProps.history)
+                  const props = layoutProps ? layoutProps : routeProps
+                  if (loader.getPage(props.location.pathname)) {
+                    return createElement(ComponentRenderer, { ...props })
+                  } else {
+                    return createElement(ComponentRenderer, {
+                      location: { pathname: `/404.html` },
+                    })
+                  }
+                },
+              }),
+          })
+        )
       )
-    )
 
-  const NewRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
-  ReactDOM.render(
-    <NewRoot />,
-    typeof window !== `undefined`
-      ? document.getElementById(`___gatsby`)
-      : void 0
-  )
+    const NewRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
+    ReactDOM.render(
+      <NewRoot />,
+      typeof window !== `undefined`
+        ? document.getElementById(`___gatsby`)
+        : void 0
+    )
+  })
 })

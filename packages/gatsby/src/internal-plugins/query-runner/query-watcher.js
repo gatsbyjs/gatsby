@@ -21,7 +21,7 @@ const normalize = require(`normalize-path`)
 exports.extractQueries = () => {
   const pages = store.getState().pages
   const components = _.uniq(pages.map(p => p.component))
-  return queryCompiler().then(queries => {
+  queryCompiler().then(queries => {
     components.forEach(component => {
       const query = queries.get(normalize(component))
 
@@ -33,6 +33,17 @@ exports.extractQueries = () => {
 
     return
   })
+
+  // During development start watching files to recompile & run
+  // queries on the fly.
+  if (process.env.NODE_ENV !== `production`) {
+    watch()
+
+    // Ensure every component is being watched.
+    components.forEach(component => {
+      watcher.add(component)
+    })
+  }
 }
 
 const runQueriesForComponent = componentPath => {
@@ -50,9 +61,15 @@ const getPagesForComponent = componentPath =>
 
 let watcher
 exports.watchComponent = componentPath => {
-  watcher.add(componentPath)
+  // We don't start watching until mid-way through the bootstrap so ignore
+  // new components being added until then. This doesn't affect anything as
+  // when extractQueries is called from bootstrap, we make sure that all
+  // components are being watched.
+  if (watcher) {
+    watcher.add(componentPath)
+  }
 }
-exports.watch = rootDir => {
+const watch = rootDir => {
   if (watcher) return
 
   const debounceCompile = _.debounce(() => {

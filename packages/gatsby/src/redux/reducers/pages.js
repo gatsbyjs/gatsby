@@ -7,6 +7,14 @@ module.exports = (state = [], action) => {
       return []
     case `CREATE_PAGE`:
       action.payload.component = normalize(action.payload.component)
+      if (!action.plugin && !action.plugin.name) {
+        console.log(``)
+        console.error(JSON.stringify(action, null, 4))
+        console.log(``)
+        throw new Error(`Pages can only be created by plugins. There wasn't a plugin set
+        when creating this page.`)
+      }
+      action.payload.pluginCreator___NODE = `Plugin ${action.plugin.name}`
       const index = _.findIndex(state, p => p.path === action.payload.path)
       // If the path already exists, overwrite it.
       // Otherwise, add it to the end.

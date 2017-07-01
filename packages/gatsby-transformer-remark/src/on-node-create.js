@@ -9,14 +9,6 @@ module.exports = async function onCreateNode({
 }) {
   const { createNode, createParentChildLink } = boundActionCreators
 
-  // Don't reprocess our own nodes!  (note: this doesn't normally happen
-  // but since this transformer creates new nodes with the same media-type
-  // as its parent node, we have to add this check that we didn't create
-  // the node).
-  if (node.internal.type === `MarkdownRemark`) {
-    return
-  }
-
   // We only care about markdown content.
   if (node.internal.mediaType !== `text/x-markdown`) {
     return
@@ -33,10 +25,9 @@ module.exports = async function onCreateNode({
     children: [],
     parent: node.id,
     internal: {
+      content,
       contentDigest,
       type: `MarkdownRemark`,
-      mediaType: `text/x-markdown`,
-      content: data.content,
     },
   }
   markdownNode.frontmatter = {

@@ -10,7 +10,6 @@ const crypto = require(`crypto`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const { graphql } = require(`graphql`)
 const { store, emitter } = require(`../redux`)
-const { boundActionCreators } = require(`../redux/actions`)
 const loadPlugins = require(`./load-plugins`)
 const { initCache } = require(`../utils/cache`)
 
@@ -26,9 +25,6 @@ const { writePages } = require(`../internal-plugins/query-runner/pages-writer`)
 // Useful for debugging if you lose a console.log somewhere.
 // Otherwise leave commented out.
 // require(`./log-line-function`)
-
-// Start off the query running.
-const QueryRunner = require(`../internal-plugins/query-runner`)
 
 const preferDefault = m => (m && m.default) || m
 
@@ -47,8 +43,6 @@ module.exports = async (program: any) => {
     payload: program,
   })
 
-  QueryRunner.watch(program.directory)
-
   // Try opening the site's gatsby-config.js file.
   console.time(`open and validate gatsby-config.js`)
   let config
@@ -56,7 +50,18 @@ module.exports = async (program: any) => {
     // $FlowFixMe
     config = preferDefault(require(`${program.directory}/gatsby-config`))
   } catch (e) {
-    // Ignore. Having a config isn't required.
+    const firstLine = e.toString().split(`\n`)[0]
+    if (
+      !_.includes(
+        firstLine,
+        `Error: Cannot find module` && !_.includes(firstLine, `gatsby-config`)
+      )
+    ) {
+      console.log(``)
+      console.log(``)
+      console.log(e)
+      process.exit(1)
+    }
   }
 
   store.dispatch({
@@ -271,24 +276,6 @@ data
     waitForCascadingActions: true,
   })
   console.timeEnd(`createPagesStatefully`)
-
-  // Copy /404/ to /404.html as many static site hosts expect
-  // site 404 pages to be named this.
-  // https://www.gatsbyjs.org/docs/add-404-page/
-  const exists404html = _.some(
-    store.getState().pages,
-    p => p.path === `/404.html`
-  )
-  if (!exists404html) {
-    store.getState().pages.forEach(page => {
-      if (page.path === `/404/`) {
-        boundActionCreators.createPage({
-          ...page,
-          path: `/404.html`,
-        })
-      }
-    })
-  }
 
   // Extract queries
   console.time(`extract queries`)

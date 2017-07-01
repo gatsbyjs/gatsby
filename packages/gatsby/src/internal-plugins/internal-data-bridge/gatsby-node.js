@@ -54,9 +54,7 @@ exports.sourceNodes = ({ boundActionCreators, store }) => {
     parent: `SOURCE`,
     children: [],
     internal: {
-      mediaType: `application/json`,
       type: `SitePage`,
-      content: JSON.stringify(page),
       contentDigest: crypto
         .createHash(`md5`)
         .update(JSON.stringify(page))
@@ -64,7 +62,8 @@ exports.sourceNodes = ({ boundActionCreators, store }) => {
     },
   })
 
-  flattenedPlugins.forEach(plugin =>
+  flattenedPlugins.forEach(plugin => {
+    plugin.pluginFilepath = plugin.resolve
     createNode({
       ...plugin,
       packageJson: transformPackageJson(
@@ -78,12 +77,10 @@ exports.sourceNodes = ({ boundActionCreators, store }) => {
           .createHash(`md5`)
           .update(JSON.stringify(plugin))
           .digest(`hex`),
-        mediaType: `application/json`,
-        content: JSON.stringify(plugin),
         type: `SitePlugin`,
       },
     })
-  )
+  })
 
   // Add site node.
   const buildTime = moment().subtract(process.uptime(), `seconds`).toJSON()
@@ -111,8 +108,6 @@ exports.sourceNodes = ({ boundActionCreators, store }) => {
           .createHash(`md5`)
           .update(JSON.stringify(node))
           .digest(`hex`),
-        content: JSON.stringify(node),
-        mediaType: `application/json`,
         type: `Site`,
       },
     })
@@ -144,9 +139,7 @@ exports.onCreatePage = ({ page, boundActionCreators }) => {
     parent: `SOURCE`,
     children: [],
     internal: {
-      mediaType: `application/json`,
       type: `SitePage`,
-      content: JSON.stringify(page),
       contentDigest: crypto
         .createHash(`md5`)
         .update(JSON.stringify(page))

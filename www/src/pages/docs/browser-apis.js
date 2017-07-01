@@ -33,8 +33,8 @@ export default BrowserAPIDocs
 export const pageQuery = graphql`
   query BrowserAPIDocsQuery {
     allDocumentationJs(
-      filter: { id: { regex: "/src.*api-browser-docs.js/" } },
-      sort: { fields: [name] },
+      filter: { id: { regex: "/src.*api-browser-docs.js/" } }
+      sort: { fields: [name] }
     ) {
       edges {
         node {

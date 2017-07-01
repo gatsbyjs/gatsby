@@ -1643,8 +1643,7 @@ Array [
       },
       "id": "c3wtvPBbBjiMKqKKga8I2Cu",
       "internal": Object {
-        "contentDigest": "e6055b51f252aa3e074bb20bdbd41cb7",
-        "mediaType": "text/x-contentful",
+        "contentDigest": "43e3a9f67eded60f2c1634c6ce7f39e8",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -1670,8 +1669,7 @@ Array [
       },
       "id": "c3wtvPBbBjiMKqKKga8I2Cu___de",
       "internal": Object {
-        "contentDigest": "4866eca667e03e17daa4db338cd1d73c",
-        "mediaType": "text/x-contentful",
+        "contentDigest": "6eb0098e14334397dc09d59a6261620f",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -1697,8 +1695,7 @@ Array [
       },
       "id": "KTRF62Q4gg60q6WCsWKw8",
       "internal": Object {
-        "contentDigest": "e56f6c1a0c09f7d335a5fb3231fa0835",
-        "mediaType": "text/x-contentful",
+        "contentDigest": "bf9a0d0de62f282e697a0ef0f3ed72c4",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -1724,8 +1721,7 @@ Array [
       },
       "id": "KTRF62Q4gg60q6WCsWKw8___de",
       "internal": Object {
-        "contentDigest": "9f3e99634d12ba0c56568c2374c26361",
-        "mediaType": "text/x-contentful",
+        "contentDigest": "e670d625738719f465fcc9b26598dc24",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -1751,8 +1747,7 @@ Array [
       },
       "id": "Xc0ny7GWsMEMCeASWO2um",
       "internal": Object {
-        "contentDigest": "01b3bb588fa70c34e8dcc5c8248e4c44",
-        "mediaType": "text/x-contentful",
+        "contentDigest": "f225dd9133ae1bde1951d8eeddf680d0",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -1778,8 +1773,7 @@ Array [
       },
       "id": "Xc0ny7GWsMEMCeASWO2um___de",
       "internal": Object {
-        "contentDigest": "4416c700c1f8e1c28423a27f639dc33e",
-        "mediaType": "text/x-contentful",
+        "contentDigest": "6918579454142f54a263c1fac87e91c7",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -1805,8 +1799,7 @@ Array [
       },
       "id": "c2Y8LhXLnYAYqKCGEWG4EKI",
       "internal": Object {
-        "contentDigest": "032d7e2159afcce429661709b10f9eee",
-        "mediaType": "text/x-contentful",
+        "contentDigest": "2f0f28be19bf3cfbe3d938b87da588f9",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -1832,8 +1825,7 @@ Array [
       },
       "id": "c2Y8LhXLnYAYqKCGEWG4EKI___de",
       "internal": Object {
-        "contentDigest": "0fe651ccf83729b64e30f64c52e5ee5c",
-        "mediaType": "text/x-contentful",
+        "contentDigest": "a3c3e4f02948569528decf59ec9ab5c4",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -1859,8 +1851,7 @@ Array [
       },
       "id": "c6t4HKjytPi0mYgs240wkG",
       "internal": Object {
-        "contentDigest": "2d6be7f9657a60bf6c467ecbdb2e2005",
-        "mediaType": "text/x-contentful",
+        "contentDigest": "a1607d653dfd3089e839e4ba19595d78",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -1886,8 +1877,7 @@ Array [
       },
       "id": "c6t4HKjytPi0mYgs240wkG___de",
       "internal": Object {
-        "contentDigest": "0ff921d4041f8792f07925cc91d9335c",
-        "mediaType": "text/x-contentful",
+        "contentDigest": "42fbabbcbbbff9f1e32b2f89a9a3d756",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -1913,8 +1903,7 @@ Array [
       },
       "id": "c1MgbdJNTsMWKI0W68oYqkU",
       "internal": Object {
-        "contentDigest": "227deaa500d7ffc635096e6f61ff5f43",
-        "mediaType": "text/x-contentful",
+        "contentDigest": "ddd6b1dceea3ab8a65677cc8e3650e3a",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -1940,8 +1929,7 @@ Array [
       },
       "id": "c1MgbdJNTsMWKI0W68oYqkU___de",
       "internal": Object {
-        "contentDigest": "9cbd453b4bd1c259d07ec1ce54b8c4d1",
-        "mediaType": "text/x-contentful",
+        "contentDigest": "66bde7bf64462aa73aab9774fe90e808",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -1967,8 +1955,7 @@ Array [
       },
       "id": "c6m5AJ9vMPKc8OUoQeoCS4o",
       "internal": Object {
-        "contentDigest": "3ba07b3d786dc349e1438cb6b08c4c9f",
-        "mediaType": "text/x-contentful",
+        "contentDigest": "80435eafd174b15f162c9cbb558f066b",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -1994,8 +1981,7 @@ Array [
       },
       "id": "c6m5AJ9vMPKc8OUoQeoCS4o___de",
       "internal": Object {
-        "contentDigest": "42bf983b56cf0cdc19566dc57611ac8f",
-        "mediaType": "text/x-contentful",
+        "contentDigest": "d70afd1dcd2f7b4a8fac37f3bd3afcfd",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -2021,8 +2007,7 @@ Array [
       },
       "id": "c4zj1ZOfHgQ8oqgaSKm4Qo2",
       "internal": Object {
-        "contentDigest": "fc73ffe6349440d23de331ad9daf0e1d",
-        "mediaType": "text/x-contentful",
+        "contentDigest": "9b296971a74d8965c5a18f3f79c7aaa0",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -2048,8 +2033,7 @@ Array [
       },
       "id": "c4zj1ZOfHgQ8oqgaSKm4Qo2___de",
       "internal": Object {
-        "contentDigest": "c08f3ff2a13145873fbd6d0d56fb7bdb",
-        "mediaType": "text/x-contentful",
+        "contentDigest": "708a1765ea2f3de4b854123a21559465",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -2075,8 +2059,7 @@ Array [
       },
       "id": "wtrHxeu3zEoEce2MokCSi",
       "internal": Object {
-        "contentDigest": "e5b4eb3846e78d3eb83c7c344ff25985",
-        "mediaType": "text/x-contentful",
+        "contentDigest": "fe0db6af559185a8d46a71e30abc6ca5",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -2102,8 +2085,7 @@ Array [
       },
       "id": "wtrHxeu3zEoEce2MokCSi___de",
       "internal": Object {
-        "contentDigest": "2bbe52d619eae4c5cb8f87ee406ef232",
-        "mediaType": "text/x-contentful",
+        "contentDigest": "1c7ad806677dc5b76225fbac243ee5e8",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -2129,8 +2111,7 @@ Array [
       },
       "id": "c10TkaLheGeQG6qQGqWYqUI",
       "internal": Object {
-        "contentDigest": "60bbe485bc171caeafd119a08b21ebb2",
-        "mediaType": "text/x-contentful",
+        "contentDigest": "80e5d70dc47a66bf3488f8fbd277c502",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -2156,8 +2137,7 @@ Array [
       },
       "id": "c10TkaLheGeQG6qQGqWYqUI___de",
       "internal": Object {
-        "contentDigest": "a2f5ccb33a8fa1249ed70123757320a4",
-        "mediaType": "text/x-contentful",
+        "contentDigest": "762fabadc314d4f1c73ba7dbd17b2f89",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -2183,8 +2163,7 @@ Array [
       },
       "id": "c6s3iG2OVmoUcosmA8ocqsG",
       "internal": Object {
-        "contentDigest": "5df5f3dbaf854d908057cf6f873d2b74",
-        "mediaType": "text/x-contentful",
+        "contentDigest": "a4417ce2f7fbdc6e4c6ca14139ef2829",
         "type": "ContentfulAsset",
       },
       "node_locale": "en-US",
@@ -2210,8 +2189,7 @@ Array [
       },
       "id": "c6s3iG2OVmoUcosmA8ocqsG___de",
       "internal": Object {
-        "contentDigest": "be8889140e19b69654de80ad25fbdab0",
-        "mediaType": "text/x-contentful",
+        "contentDigest": "b9170371fcb773b0bae452bbeb8e768f",
         "type": "ContentfulAsset",
       },
       "node_locale": "de",
@@ -2287,8 +2265,7 @@ Array [
       "displayField": "title",
       "id": "Category",
       "internal": Object {
-        "contentDigest": "d02aa7b2f06395cfee461388f47de493",
-        "mediaType": "text/x-contentful",
+        "contentDigest": "9e51d4bbdb873453a2039464c41c160a",
         "type": "ContentfulContentType",
       },
       "name": "Category",
@@ -2305,8 +2282,7 @@ Array [
       "icon___NODE": "c6m5AJ9vMPKc8OUoQeoCS4o",
       "id": "c7LAnCobuuWYSqks6wAwY2a",
       "internal": Object {
-        "contentDigest": "fd0cc67cb09ef934e3093fc6e94dd764",
-        "mediaType": "application/x-contentful",
+        "contentDigest": "d710fa5401174d699db2695d2d6dbe1b",
         "type": "ContentfulCategory",
       },
       "node_locale": "en-US",
@@ -2329,8 +2305,7 @@ Array [
       "icon___NODE": "c6t4HKjytPi0mYgs240wkG",
       "id": "c24DPGBDeGEaYy8ms4Y8QMQ",
       "internal": Object {
-        "contentDigest": "a65a57f88293fe9f73e3678fb2d9ce54",
-        "mediaType": "application/x-contentful",
+        "contentDigest": "133ccb0a4a27a92c8c5219e428379100",
         "type": "ContentfulCategory",
       },
       "node_locale": "en-US",
@@ -2404,8 +2379,7 @@ Array [
       "displayField": "title",
       "id": "Category",
       "internal": Object {
-        "contentDigest": "d02aa7b2f06395cfee461388f47de493",
-        "mediaType": "text/x-contentful",
+        "contentDigest": "9e51d4bbdb873453a2039464c41c160a",
         "type": "ContentfulContentType",
       },
       "name": "Category",
@@ -2422,8 +2396,7 @@ Array [
       "icon___NODE": "c6m5AJ9vMPKc8OUoQeoCS4o___de",
       "id": "c7LAnCobuuWYSqks6wAwY2a___de",
       "internal": Object {
-        "contentDigest": "8f3d527ab04bd97259dcb7d46edfa5f6",
-        "mediaType": "application/x-contentful",
+        "contentDigest": "782c5003ad12305b2e4c4e47403fed0c",
         "type": "ContentfulCategory",
       },
       "node_locale": "de",
@@ -2446,8 +2419,7 @@ Array [
       "icon___NODE": "c6t4HKjytPi0mYgs240wkG___de",
       "id": "c24DPGBDeGEaYy8ms4Y8QMQ___de",
       "internal": Object {
-        "contentDigest": "b6bb3b1d0a7574c652a76e32b61d0a94",
-        "mediaType": "application/x-contentful",
+        "contentDigest": "361860c2867f9ae83419aac277aec067",
         "type": "ContentfulCategory",
       },
       "node_locale": "de",
@@ -2569,8 +2541,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       "displayField": "companyName",
       "id": "Brand",
       "internal": Object {
-        "contentDigest": "1e38edb6da67d8b16b80d0d44f692e31",
-        "mediaType": "text/x-contentful",
+        "contentDigest": "cce9b42a3ad6123072ef35684990d2e1",
         "type": "ContentfulContentType",
       },
       "name": "Brand",
@@ -2588,8 +2559,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       "email": "normann@normann-copenhagen.com",
       "id": "c651CQ8rLoIYCeY6G0QG22q",
       "internal": Object {
-        "contentDigest": "34d5206cc4db942e73f6e44ced222c0c",
-        "mediaType": "application/x-contentful",
+        "contentDigest": "8e98ed0688bc63cb90cdc1eaad4ea28a",
         "type": "ContentfulBrand",
       },
       "logo___NODE": "c3wtvPBbBjiMKqKKga8I2Cu",
@@ -2617,8 +2587,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       "email": "info@acgears.com",
       "id": "c4LgMotpNF6W20YKmuemW0a",
       "internal": Object {
-        "contentDigest": "0f1a6855d2364c7134786ef7de92f520",
-        "mediaType": "application/x-contentful",
+        "contentDigest": "179698e2d0fdeafe064c16dc552905e0",
         "type": "ContentfulBrand",
       },
       "logo___NODE": "c2Y8LhXLnYAYqKCGEWG4EKI",
@@ -2643,8 +2612,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       "companyName___NODE": "JrePkDVYomE8AwcuCUyMicompanyNameTextNode",
       "id": "JrePkDVYomE8AwcuCUyMi",
       "internal": Object {
-        "contentDigest": "e5202ad597ae508b4f82840c38a5a6ab",
-        "mediaType": "application/x-contentful",
+        "contentDigest": "60153e88a39483fa024d4bf41ab95b6a",
         "type": "ContentfulBrand",
       },
       "logo___NODE": "c4zj1ZOfHgQ8oqgaSKm4Qo2",
@@ -2767,8 +2735,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "displayField": "companyName",
       "id": "Brand",
       "internal": Object {
-        "contentDigest": "1e38edb6da67d8b16b80d0d44f692e31",
-        "mediaType": "text/x-contentful",
+        "contentDigest": "cce9b42a3ad6123072ef35684990d2e1",
         "type": "ContentfulContentType",
       },
       "name": "Brand",
@@ -2786,8 +2753,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "email": "normann@normann-copenhagen.com",
       "id": "c651CQ8rLoIYCeY6G0QG22q___de",
       "internal": Object {
-        "contentDigest": "5426a323c0c82f27d9da95d2616a69b8",
-        "mediaType": "application/x-contentful",
+        "contentDigest": "c6e5adb15bcb9067b7ad56bbeea5fd98",
         "type": "ContentfulBrand",
       },
       "logo___NODE": "c3wtvPBbBjiMKqKKga8I2Cu___de",
@@ -2815,8 +2781,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "email": "info@acgears.com",
       "id": "c4LgMotpNF6W20YKmuemW0a___de",
       "internal": Object {
-        "contentDigest": "d8c0805a035d9d583d0cc1756c44b822",
-        "mediaType": "application/x-contentful",
+        "contentDigest": "6e4e76e159aef9a4c09d87404ffb6009",
         "type": "ContentfulBrand",
       },
       "logo___NODE": "c2Y8LhXLnYAYqKCGEWG4EKI___de",
@@ -2841,8 +2806,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "companyName___NODE": "JrePkDVYomE8AwcuCUyMi___decompanyNameTextNode",
       "id": "JrePkDVYomE8AwcuCUyMi___de",
       "internal": Object {
-        "contentDigest": "4544b86dd8c900f6a6ab0cf93bdd2cde",
-        "mediaType": "application/x-contentful",
+        "contentDigest": "51ead6a16ac5a54cc51e571eb8a0923d",
         "type": "ContentfulBrand",
       },
       "logo___NODE": "c4zj1ZOfHgQ8oqgaSKm4Qo2___de",
@@ -2973,8 +2937,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "displayField": "productName",
       "id": "Product",
       "internal": Object {
-        "contentDigest": "c69f340cf628e5616c7f3deb12e1491b",
-        "mediaType": "text/x-contentful",
+        "contentDigest": "e887987a927829ca888bcd801fa07a8b",
         "type": "ContentfulContentType",
       },
       "name": "Product",
@@ -2996,8 +2959,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "wtrHxeu3zEoEce2MokCSi",
       ],
       "internal": Object {
-        "contentDigest": "7a0a2a1512617d54c44d73bef7a218e0",
-        "mediaType": "application/x-contentful",
+        "contentDigest": "b0a4e6d7a09a2487247f8175ada55df3",
         "type": "ContentfulProduct",
       },
       "node_locale": "en-US",
@@ -3034,8 +2996,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "Xc0ny7GWsMEMCeASWO2um",
       ],
       "internal": Object {
-        "contentDigest": "d81b107967209c8eea62b432065be9a7",
-        "mediaType": "application/x-contentful",
+        "contentDigest": "31da8eac993220daceef2fc26fe11c69",
         "type": "ContentfulProduct",
       },
       "node_locale": "en-US",
@@ -3070,8 +3031,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "c10TkaLheGeQG6qQGqWYqUI",
       ],
       "internal": Object {
-        "contentDigest": "bb93389f537453c3d4aee3cd362a8813",
-        "mediaType": "application/x-contentful",
+        "contentDigest": "89d75668c3b4761bb9e61b076aedb71f",
         "type": "ContentfulProduct",
       },
       "node_locale": "en-US",
@@ -3108,8 +3068,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "KTRF62Q4gg60q6WCsWKw8",
       ],
       "internal": Object {
-        "contentDigest": "34b8bbee9ea18c220c98f9ed6a6505db",
-        "mediaType": "application/x-contentful",
+        "contentDigest": "ace91d1cdb5e4ac5a6d56900b1778793",
         "type": "ContentfulProduct",
       },
       "node_locale": "en-US",
@@ -3250,8 +3209,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "displayField": "productName",
       "id": "Product",
       "internal": Object {
-        "contentDigest": "c69f340cf628e5616c7f3deb12e1491b",
-        "mediaType": "text/x-contentful",
+        "contentDigest": "e887987a927829ca888bcd801fa07a8b",
         "type": "ContentfulContentType",
       },
       "name": "Product",
@@ -3273,8 +3231,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "wtrHxeu3zEoEce2MokCSi___de",
       ],
       "internal": Object {
-        "contentDigest": "67df4ece73c096cfce54896487daac86",
-        "mediaType": "application/x-contentful",
+        "contentDigest": "ee75439b6d259c421ef1ed52af438c56",
         "type": "ContentfulProduct",
       },
       "node_locale": "de",
@@ -3311,8 +3268,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "Xc0ny7GWsMEMCeASWO2um___de",
       ],
       "internal": Object {
-        "contentDigest": "f907328aef31dd0664a78801f38d8895",
-        "mediaType": "application/x-contentful",
+        "contentDigest": "ce088f3b00992d17d7f42a9a4f5c9fcc",
         "type": "ContentfulProduct",
       },
       "node_locale": "de",
@@ -3347,8 +3303,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "c10TkaLheGeQG6qQGqWYqUI___de",
       ],
       "internal": Object {
-        "contentDigest": "aace11e6dae6499754cb506f5c6274e2",
-        "mediaType": "application/x-contentful",
+        "contentDigest": "baa15cb2eef6c764ac6a60f4952aa79b",
         "type": "ContentfulProduct",
       },
       "node_locale": "de",
@@ -3385,8 +3340,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
         "KTRF62Q4gg60q6WCsWKw8___de",
       ],
       "internal": Object {
-        "contentDigest": "c771bcf98e87eaf8ae195bc1c9674a41",
-        "mediaType": "application/x-contentful",
+        "contentDigest": "06956db9289919569c860ed366ec0512",
         "type": "ContentfulProduct",
       },
       "node_locale": "de",

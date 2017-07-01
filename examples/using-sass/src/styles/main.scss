@@ -1,0 +1,29 @@
+@import '~tachyons-sass/tachyons.scss';
+@import 'variables';
+
+@mixin borderRadius ($radius: 5px) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  border-radius: $radius;
+}
+
+.sass-nav-example {
+  li { display: inline-block; }
+
+  a {
+    @include borderRadius(3px);
+
+    background: $color;
+    display: block;
+    margin-right: 6px;
+    padding: 3px 9px;
+    text-decoration: none;
+  }
+}
+
+.ColumnSection__grid div {
+  border: 1px solid black;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  background: tomato;
+}

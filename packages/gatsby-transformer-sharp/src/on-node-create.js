@@ -15,7 +15,6 @@ module.exports = async function onCreateNode({ node, boundActionCreators }) {
     internal: {
       contentDigest: `${node.internal.contentDigest}`,
       type: `ImageSharp`,
-      mediaType: node.internal.mediaType,
     },
   }
 

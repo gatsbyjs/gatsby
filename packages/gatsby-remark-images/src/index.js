@@ -4,7 +4,7 @@ const isRelativeUrl = require(`is-relative-url`)
 const _ = require(`lodash`)
 const { responsiveSizes } = require(`gatsby-plugin-sharp`)
 const Promise = require(`bluebird`)
-const $ = require('cheerio');
+const $ = require(`cheerio`)
 
 // If the image is relative (not hosted elsewhere)
 // 1. Find the image file
@@ -23,22 +23,25 @@ module.exports = (
   }
 
   const options = _.defaults(pluginOptions, defaults)
-  
+
   // This will only work for markdown syntax image tags
-  const imageNodes = select(markdownAST, 'image');
+  const imageNodes = select(markdownAST, `image`)
 
   // This will also allow the use of html image tags
-  const rawHtmlImageNodes = select(markdownAST, 'html').filter((node) => {
-    return node.value.startsWith('<img');
-  });
+  const rawHtmlImageNodes = select(markdownAST, `html`).filter(node =>
+    node.value.startsWith(`<img`)
+  )
 
-  for(let node of rawHtmlImageNodes) {
-    let formattedImgTag = Object.assign(node, $.parseHTML(node.value)[0].attribs);
-    formattedImgTag.url = formattedImgTag.src;
-    formattedImgTag.type = 'image';
-    formattedImgTag.position =  node.position;
+  for (let node of rawHtmlImageNodes) {
+    let formattedImgTag = Object.assign(
+      node,
+      $.parseHTML(node.value)[0].attribs
+    )
+    formattedImgTag.url = formattedImgTag.src
+    formattedImgTag.type = `image`
+    formattedImgTag.position = node.position
 
-    imageNodes.push(formattedImgTag);
+    imageNodes.push(formattedImgTag)
   }
 
   return Promise.all(

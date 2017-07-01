@@ -15,6 +15,8 @@ parent: String,
 fields: Object,
 internal: {
   contentDigest: String,
+  // Optional media type (https://en.wikipedia.org/wiki/Media_type) to indicate
+  // to transformer plugins this node has data they can futher process.
   mediaType: String,
   // A globally unique node type choosen by the plugin owner.
   type: String,
@@ -22,7 +24,8 @@ internal: {
   owner: String,
   // Stores which plugins created which fields.
   fieldOwners: Object,
-  // Raw content for this node.
+  // Optional field exposing the raw content for this node
+  // that transformer plugins can take and further process.
   content: String,
 }
 ...other node type specific fields
