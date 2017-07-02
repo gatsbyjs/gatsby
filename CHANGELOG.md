@@ -1,5 +1,60 @@
 # Change Log
 
+## [1.0.0-beta.6] - 2017-07-01
+
+### Added
+
+* Use the sync endpoint to pull data from Contentful  #1241 @Khaledgarbaya
+* Use localized space #1266 @Khaledgarbaya
+* gatsby-transformer-javascript-static-exports #1253 @jbolda
+* Added support for HTML img tags #1285 @chiedo
+* [gatsby-source-contentful] support creating localized nodes #1279 @kyleamathews
+* Link pages to their plugin creators for easier understanding/debugging fixes #1281 #1297 @kyleamathews
+* Support NavLink in gatsby-link #1302 @abi
+* Add an example for using the sass plugin #1312 @danielfarrell
+* Add CSS Modules example site #1314 @kyleamathews
+* Add Typescript example #1319 @kyleamathews
+* Support using browserslist for setting per-site browser targeting for JS/CSS transformations #1336 @kyleamathews
+* Add gatsby-plugin-canonical-url #1337 @kyleamathews
+* [source-contentful] Allow for querying gifs & when user queries for image height, actually crop #1339 @kyleamathews
+
+### Changed
+
+* Replace build-images with just images @kyleamathews
+* Make mediaType optional #1299 @kyleamathews
+* Just use name/value for createNodeField #1325 @kyleamathews
+* Renamed remark-responsive-image-plugin @chiedo
+* Write images processed by sharp to public/static along with other assets #1332 @kyleamathews
+
+### Fixed
+
+* using-remark fixes #1250 @fk
+* Broken example commands in DOCS / Getting Started page #1252 @sebastienfi
+* Don't catch links to files #1260 @kyleamathews
+* Improve develop-html stage #1254 @craig-mulligan
+* Make various tweaks to the tutorial #1262 @kyleamathews
+* Add tests for parsing regex args + fix bug #1267 @kyleamathews
+* Fixes for feed plugin README #1273 @kyleamathews
+* [gatsby-source-contentful] Add testing for existing API processing #1274 @kyleamathews
+* Throw error and quit if there's a JS parse error for gatsby-config.js #1296 @kyleamathews
+* Add missing npmignore files #1298 @kyleamathews
+* Move creating 404.html page into plugin so can enforce pages only created by plugins #1300 @kyleamathews
+* Fix occassionally out-of-order query watching which would throw errors #1301 @kyleamathews
+* Waiting for query extraction wasn't actually waiting #1303 @kyleamathews
+* Improved plugin error without exit #1309 @0x80
+* Fixed a small typo in gatsby-plugin-postcss-sass that prevented CSS modules from working #1307 @levibuzolic
+* Don't use the sass loader on build-javascript #1278 @danielfarrell
+* Fixes 1317 Google Analytics plugin; updates attachHistory listener logic #1318 @camsjams
+* Call onRouteUpdate on initial page load #1320 @kyleamathews
+* Fix check if there's a sw plugin added #1323 @kyleamathews
+* Only build 1 html page in development and always serve it #1324 @kyleamathews
+* Fix server/client rendering mismatch #1326 @kyleamathews
+* update gatsby-remark-responsive-iframe readme #1328 @eddywashere
+* Use memory lowdb as it is significantly faster. Also snuck in yurnalist for better console output #1329 @kyleamathews
+* Quit on ctrl-c #1334 @kyleamathews
+* Set keys on head/body components #1335 @kyleamathews
+
+
 ## [1.0.0-beta.4] - 2017-06-23
 
 ### Added
