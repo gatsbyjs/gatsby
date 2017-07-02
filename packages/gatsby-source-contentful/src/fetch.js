@@ -1,7 +1,7 @@
 const contentful = require(`contentful`)
 const _ = require(`lodash`)
 
-const processAPIData = require(`./process-api-data`)
+const normalize = require(`./normalize`)
 
 module.exports = async ({ spaceId, accessToken, syncToken }) => {
   // Fetch articles.
@@ -56,26 +56,26 @@ module.exports = async ({ spaceId, accessToken, syncToken }) => {
   let contentTypeItems = contentTypes.items
 
   // Fix IDs on entries and assets, created/updated and deleted.
-  contentTypeItems = contentTypeItems.map(c => processAPIData.fixIds(c))
+  contentTypeItems = contentTypeItems.map(c => normalize.fixIds(c))
 
   currentSyncData.entries = currentSyncData.entries.map(e => {
     if (e) {
-      return processAPIData.fixIds(e)
+      return normalize.fixIds(e)
     }
   })
   currentSyncData.assets = currentSyncData.assets.map(a => {
     if (a) {
-      return processAPIData.fixIds(a)
+      return normalize.fixIds(a)
     }
   })
   currentSyncData.deletedEntries = currentSyncData.deletedEntries.map(e => {
     if (e) {
-      return processAPIData.fixIds(e)
+      return normalize.fixIds(e)
     }
   })
   currentSyncData.deletedAssets = currentSyncData.deletedAssets.map(a => {
     if (a) {
-      return processAPIData.fixIds(a)
+      return normalize.fixIds(a)
     }
   })
 

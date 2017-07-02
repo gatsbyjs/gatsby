@@ -1,4 +1,4 @@
-const processAPIData = require(`../process-api-data`)
+const normalize = require(`../normalize`)
 const {
   currentSyncData,
   contentTypeItems,
@@ -15,7 +15,7 @@ const restrictedNodeFields = [`id`, `children`, `parent`, `fields`, `internal`]
 
 describe(`Process contentful data`, () => {
   it(`builds entry list`, () => {
-    entryList = processAPIData.buildEntryList({
+    entryList = normalize.buildEntryList({
       currentSyncData,
       contentTypeItems,
     })
@@ -23,7 +23,7 @@ describe(`Process contentful data`, () => {
   })
 
   it(`builds list of resolvable data`, () => {
-    resolvable = processAPIData.buildResolvableSet({
+    resolvable = normalize.buildResolvableSet({
       assets: currentSyncData.assets,
       entryList,
       defaultLocale,
@@ -33,7 +33,7 @@ describe(`Process contentful data`, () => {
   })
 
   it(`builds foreignReferenceMap`, () => {
-    foreignReferenceMap = processAPIData.buildForeignReferenceMap({
+    foreignReferenceMap = normalize.buildForeignReferenceMap({
       contentTypeItems,
       entryList,
       resolvable,
@@ -46,7 +46,7 @@ describe(`Process contentful data`, () => {
   it(`creates nodes for each entry`, () => {
     const createNode = jest.fn()
     contentTypeItems.forEach((contentTypeItem, i) => {
-      processAPIData.createContentTypeNodes({
+      normalize.createContentTypeNodes({
         contentTypeItem,
         restrictedNodeFields,
         conflictFieldPrefix,
@@ -65,7 +65,7 @@ describe(`Process contentful data`, () => {
     const createNode = jest.fn()
     const assets = currentSyncData.assets
     assets.forEach(assetItem => {
-      processAPIData.createAssetNodes({
+      normalize.createAssetNodes({
         assetItem,
         createNode,
         defaultLocale,
@@ -78,10 +78,10 @@ describe(`Process contentful data`, () => {
 
 describe(`Fix contentful IDs`, () => {
   it(`leaves ids that start with a string the same`, () => {
-    expect(processAPIData.fixId(`a123`)).toEqual(`a123`)
+    expect(normalize.fixId(`a123`)).toEqual(`a123`)
   })
   it(`left pads ids that start with a number of a "c"`, () => {
-    expect(processAPIData.fixId(`123`)).toEqual(`c123`)
+    expect(normalize.fixId(`123`)).toEqual(`c123`)
   })
 })
 
@@ -92,7 +92,7 @@ describe(`Gets field value based on current locale`, () => {
   }
   it(`Gets the specified locale`, () => {
     expect(
-      processAPIData.getLocalizedField({
+      normalize.getLocalizedField({
         field,
         defaultLocale: `en-US`,
         locale: {
@@ -101,7 +101,7 @@ describe(`Gets field value based on current locale`, () => {
       })
     ).toBe(field[`en-US`])
     expect(
-      processAPIData.getLocalizedField({
+      normalize.getLocalizedField({
         field,
         defaultLocale: `en-US`,
         locale: {
@@ -112,7 +112,7 @@ describe(`Gets field value based on current locale`, () => {
   })
   it(`falls back to the locale's fallback locale if passed a locale that doesn't have a localized field`, () => {
     expect(
-      processAPIData.getLocalizedField({
+      normalize.getLocalizedField({
         field,
         defaultLocale: `en-US`,
         locale: {
@@ -124,7 +124,7 @@ describe(`Gets field value based on current locale`, () => {
   })
   it(`falls back to the default locale if passed a locale that doesn't have a field nor a fallbackCode`, () => {
     expect(
-      processAPIData.getLocalizedField({
+      normalize.getLocalizedField({
         field,
         defaultLocale: `en-US`,
         locale: {
@@ -139,7 +139,7 @@ describe(`Gets field value based on current locale`, () => {
 describe(`Make IDs`, () => {
   it(`It doesn't postfix the id if its the default locale`, () => {
     expect(
-      processAPIData.makeId({
+      normalize.makeId({
         id: `id`,
         defaultLocale: `en-US`,
         currentLocale: `en-US`,
@@ -148,7 +148,7 @@ describe(`Make IDs`, () => {
   })
   it(`It does postfix the id if its not the default locale`, () => {
     expect(
-      processAPIData.makeId({
+      normalize.makeId({
         id: `id`,
         defaultLocale: `en-US`,
         currentLocale: `en-GB`,

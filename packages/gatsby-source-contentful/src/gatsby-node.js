@@ -1,7 +1,7 @@
 const _ = require(`lodash`)
 
-const processAPIData = require(`./process-api-data`)
-const fetchData = require(`./fetch-data`)
+const normalize = require(`./normalize`)
+const fetchData = require(`./fetch`)
 
 const conflictFieldPrefix = `contentful`
 
@@ -53,7 +53,7 @@ exports.sourceNodes = async (
     accessToken,
   })
 
-  const entryList = processAPIData.buildEntryList({
+  const entryList = normalize.buildEntryList({
     currentSyncData,
     contentTypeItems,
   })
@@ -89,7 +89,7 @@ exports.sourceNodes = async (
 
   // Create map of resolvable ids so we can check links against them while creating
   // links.
-  const resolvable = processAPIData.buildResolvableSet({
+  const resolvable = normalize.buildResolvableSet({
     existingNodes,
     entryList,
     assets,
@@ -98,7 +98,7 @@ exports.sourceNodes = async (
   })
 
   // Build foreign reference map before starting to insert any nodes
-  const foreignReferenceMap = processAPIData.buildForeignReferenceMap({
+  const foreignReferenceMap = normalize.buildForeignReferenceMap({
     contentTypeItems,
     entryList,
     resolvable,
@@ -136,7 +136,7 @@ exports.sourceNodes = async (
     })
 
   contentTypeItems.forEach((contentTypeItem, i) => {
-    processAPIData.createContentTypeNodes({
+    normalize.createContentTypeNodes({
       contentTypeItem,
       restrictedNodeFields,
       conflictFieldPrefix,
@@ -150,7 +150,7 @@ exports.sourceNodes = async (
   })
 
   assets.forEach(assetItem => {
-    processAPIData.createAssetNodes({
+    normalize.createAssetNodes({
       assetItem,
       createNode,
       defaultLocale,
