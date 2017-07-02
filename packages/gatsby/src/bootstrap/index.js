@@ -153,8 +153,8 @@ data
   // directory.
   initCache()
 
-  // Ensure the public directory is created.
-  await fs.mkdirs(`${program.directory}/public`)
+  // Ensure the public/static directory is created.
+  await fs.mkdirp(`${program.directory}/public/static`)
 
   // Copy our site files to the root of the site.
   activity = activityTimer(`copy gatsby files`)
