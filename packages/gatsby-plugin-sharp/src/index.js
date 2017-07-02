@@ -159,12 +159,10 @@ const queueJob = job => {
   }
   _.set(toProcess, jobPath, job)
 
-  // console.log(`queueJob ${inputFileKey}.${outputFileKey}`)
   totalJobs += 1
 
   if (notQueued) {
     q.push(cb => {
-      // console.log("processing image", job.file.absolutePath)
       const jobs = _.values(toProcess[inputFileKey])
       // Delete the input key from the toProcess list so more jobs can be queued.
       delete toProcess[inputFileKey]
@@ -229,7 +227,7 @@ function queueImageResizing({ file, args = {} }) {
 
   const imgSrc = `/${file.internal
     .contentDigest}-${argsDigestShort}.${fileExtension}`
-  const filePath = `${process.cwd()}/public${imgSrc}`
+  const filePath = `${process.cwd()}/public/static${imgSrc}`
   // Create function to call when the image is finished.
   let outsideResolve
   const finishedPromise = new Promise(resolve => {
