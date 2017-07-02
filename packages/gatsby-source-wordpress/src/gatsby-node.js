@@ -1,18 +1,22 @@
-// Source code for gatsby-source-wordpress plugin.
-// 
-// Place this in your site`s gatsby-config.js
-// ...   
+/**
+ *  
+ * Source code for gatsby-source-wordpress plugin.
+ * 
+*/
 
 const axios = require(`axios`)
 const crypto = require(`crypto`)
 const _ = require(`lodash`)
 const stringify = require(`json-stringify-safe`)
-
 const colorized = require(`./output-color`)
 
+/* The GraphQL Nodes prefix. */
 const wpNS = `wordpress__`
 
+/* If true, will output many console logs. */
 let verbose
+
+/* The complete site URL. */
 let siteURL
 
 
@@ -172,6 +176,13 @@ exports.sourceNodes = async (
   return
 }
 
+/**
+ * Fetch the data fril specifiend endpoint url, using the auth provided.
+ * 
+ * @param {any} endpoint 
+ * @param {any} auth 
+ * @param {any} createNode 
+ */
 const fetchData = async (endpoint, auth, createNode) => {
 
   const type = endpoint.type
@@ -238,10 +249,14 @@ const fetchData = async (endpoint, auth, createNode) => {
   }
 }
 
-// const makeTypeName = type => `${wpNS}${type.replace(/-/g, `_`)}`
 const digest = str => crypto.createHash(`md5`).update(str).digest(`hex`)
 
-// Create the Graph QL Node
+/**
+ * Create the Graph QL Node
+ * 
+ * @param {any} node 
+ * @param {any} createNode 
+ */
 const createGraphQLNode = (node, createNode) => {
   if (node.id != undefined) {
     const gatsbyNode = {
@@ -352,7 +367,12 @@ const processPostsEntities = ({ type, data }) => {
   return toReturn
 }
 
-// Process a default array of entities
+/**
+ * Process a default array of entities
+ * 
+ * @param {any} { type, data } 
+ * @returns 
+ */
 const processDefaultEntities = ({ type, data }) => {
   try {
     let toReturn = []
@@ -400,8 +420,12 @@ const processDefaultEntities = ({ type, data }) => {
   }
 }
 
-// Process a single entity
-
+/**
+ * Process a single entity
+ * 
+ * @param {any} { type, data } 
+ * @returns 
+ */
 const processACFSiteOptionsEntity = ({ type, data }) => {
   const newEnt = {
     id: type.toString().toUpperCase(), // Todo : Allow one or a collection of nodes. Yet : only one node.
@@ -412,13 +436,24 @@ const processACFSiteOptionsEntity = ({ type, data }) => {
   return loopOtherFields(data, newEnt, true, false)
 }
 
-// Will loop to add any other field of the JSON API to the Node object.
-// If includeACFField == true, will also add the ACF Fields as a JSON string if present, 
-// or add an empty ACF field.
-// If stringifyACFContents == true, the ACF Fields will be stringifyd. 
-// You`ll then have to call JSON.parse(acf) in your site`s code in order to get the content.
-// In most cases, this makes using ACF easier because GrahQL queries can then be written 
-// without knowing the data structure of ACF.
+/**
+ * Will loop to add any other field of the JSON API to the Node object.
+ * 
+ * If includeACFField == true, will also add the ACF Fields as a JSON string if present, 
+ * or add an empty ACF field.
+ * 
+ * If stringifyACFContents == true, the ACF Fields will be stringifyd. 
+ * 
+ * You'll then have to call `JSON.parse(acf)` in your site's code in order to get the content.
+ * In most cases, this makes using ACF easier because GrahQL queries can then be written 
+ * without knowing the data structure of ACF.
+ * 
+ * @param {any} ent
+ * @param {any} newEnt 
+ * @param {any} includeACFField 
+ * @param {any} stringifyACFContents 
+ * @returns 
+ */
 function loopOtherFields(ent, newEnt, includeACFField, stringifyACFContents) {
   newEnt = validateObjectTree(ent, newEnt, includeACFField, stringifyACFContents)
   // Because some solution will rely on the use of ACF fields and implement a component check on values of this field,
@@ -429,6 +464,15 @@ function loopOtherFields(ent, newEnt, includeACFField, stringifyACFContents) {
   return newEnt
 }
 
+/**
+ * validate Object Tree
+ * 
+ * @param {any} ent 
+ * @param {any} newEnt 
+ * @param {any} includeACFField 
+ * @param {any} stringifyACFContents 
+ * @returns 
+ */
 function validateObjectTree(ent, newEnt, includeACFField, stringifyACFContents) {
   Object.keys(ent).map((k) => {
     if (!newEnt.hasOwnProperty(k)) {

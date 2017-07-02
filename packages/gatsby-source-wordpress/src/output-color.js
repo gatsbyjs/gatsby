@@ -1,4 +1,9 @@
-// Colorize the output
+/**
+ * Colorize the output
+ * 
+ * @param {any} msg 
+ * @param {any} c 
+ */
 const out = (msg, c) => `${c}${msg}${color.Reset}`
 const color = {
   Reset: `\x1b[0m`,
