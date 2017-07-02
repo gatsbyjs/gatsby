@@ -8,8 +8,9 @@ const ProgressBar = require(`progress`)
 const imagemin = require(`imagemin`)
 const imageminPngquant = require(`imagemin-pngquant`)
 const queue = require(`async/queue`)
-const duotone = require(`./duotone`)
+const path = require(`path`)
 
+const duotone = require(`./duotone`)
 const { boundActionCreators } = require(`gatsby/dist/redux/actions`)
 
 // Promisify the sharp prototype (methods) to promisify the alternative (for
@@ -227,7 +228,7 @@ function queueImageResizing({ file, args = {} }) {
 
   const imgSrc = `/${file.internal
     .contentDigest}-${argsDigestShort}.${fileExtension}`
-  const filePath = `${process.cwd()}/public/static${imgSrc}`
+  const filePath = path.join(process.cwd(), `public`, `static`, imgSrc)
   // Create function to call when the image is finished.
   let outsideResolve
   const finishedPromise = new Promise(resolve => {
