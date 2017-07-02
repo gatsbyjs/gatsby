@@ -148,6 +148,17 @@ const resolveResponsiveResolution = (image, options) => {
           desiredAspectRatio = options.width / options.height
         }
 
+        // If the user selected a height (so cropping) and options for focus
+        // and fit aren't set, we'll set our defaults
+        if (options.height) {
+          if (!options.resizingBehavior) {
+            options.resizingBehavior = `fill`
+          }
+          if (!options.cropFocus) {
+            options.cropFocus = `faces`
+          }
+        }
+
         // Create sizes (in width) for the image. If the width of the
         // image is 800px, the sizes would then be: 800, 1200, 1600,
         // 2400.
@@ -325,6 +336,17 @@ const resolveResize = (image, options) =>
             height: Math.round(pickedHeight),
             src: image.file.url,
           })
+        }
+
+        // If the user selected a height (so cropping) and options for focus
+        // and fit aren't set, we'll set our defaults
+        if (options.height) {
+          if (!options.resizingBehavior) {
+            options.resizingBehavior = `fill`
+          }
+          if (!options.cropFocus) {
+            options.cropFocus = `faces`
+          }
         }
 
         if (options.base64) {
