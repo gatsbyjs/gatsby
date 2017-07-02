@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import * as PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
+import React, { Component } from 'react'
+import * as PropTypes from 'prop-types'
+import Helmet from 'react-helmet'
 
 let stylesStr
 if (process.env.NODE_ENV === `production`) {
@@ -31,9 +31,6 @@ class Html extends Component {
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           {this.props.headComponents}
           {css}
-          {head.title.toComponent()}
-          {head.meta.toComponent()}
-          {head.link.toComponent()}
         </head>
         <body>
           <div

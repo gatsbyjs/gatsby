@@ -26,21 +26,25 @@ var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// Source code for gatsby-source-wordpress plugin.
-// 
-// Place this in your site`s gatsby-config.js
-// ...   
+/**
+ *  
+ * Source code for gatsby-source-wordpress plugin.
+ * 
+*/
 
 var axios = require(`axios`);
 var crypto = require(`crypto`);
 var _ = require(`lodash`);
 var stringify = require(`json-stringify-safe`);
-
 var colorized = require(`./output-color`);
 
+/* The GraphQL Nodes prefix. */
 var wpNS = `wordpress__`;
 
+/* If true, will output many console logs. */
 var verbose = void 0;
+
+/* The complete site URL. */
 var siteURL = void 0;
 
 // ======== Main Void ==========
@@ -302,6 +306,13 @@ exports.sourceNodes = function () {
   };
 }();
 
+/**
+ * Fetch the data fril specifiend endpoint url, using the auth provided.
+ * 
+ * @param {any} endpoint 
+ * @param {any} auth 
+ * @param {any} createNode 
+ */
 var fetchData = function () {
   var _ref4 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(endpoint, auth, createNode) {
     var type, url, processEntityFunc, result, options, length, nodes;
@@ -396,12 +407,16 @@ var fetchData = function () {
   };
 }();
 
-// const makeTypeName = type => `${wpNS}${type.replace(/-/g, `_`)}`
 var digest = function digest(str) {
   return crypto.createHash(`md5`).update(str).digest(`hex`);
 };
 
-// Create the Graph QL Node
+/**
+ * Create the Graph QL Node
+ * 
+ * @param {any} node 
+ * @param {any} createNode 
+ */
 var createGraphQLNode = function createGraphQLNode(node, createNode) {
   if (node.id != undefined) {
     var gatsbyNode = (0, _extends3.default)({}, node, {
@@ -513,7 +528,12 @@ var processPostsEntities = function processPostsEntities(_ref8) {
   return toReturn;
 };
 
-// Process a default array of entities
+/**
+ * Process a default array of entities
+ * 
+ * @param {any} { type, data } 
+ * @returns 
+ */
 var processDefaultEntities = function processDefaultEntities(_ref9) {
   var type = _ref9.type,
       data = _ref9.data;
@@ -560,8 +580,12 @@ var processDefaultEntities = function processDefaultEntities(_ref9) {
   }
 };
 
-// Process a single entity
-
+/**
+ * Process a single entity
+ * 
+ * @param {any} { type, data } 
+ * @returns 
+ */
 var processACFSiteOptionsEntity = function processACFSiteOptionsEntity(_ref10) {
   var type = _ref10.type,
       data = _ref10.data;
@@ -575,13 +599,24 @@ var processACFSiteOptionsEntity = function processACFSiteOptionsEntity(_ref10) {
   return loopOtherFields(data, newEnt, true, false);
 };
 
-// Will loop to add any other field of the JSON API to the Node object.
-// If includeACFField == true, will also add the ACF Fields as a JSON string if present, 
-// or add an empty ACF field.
-// If stringifyACFContents == true, the ACF Fields will be stringifyd. 
-// You`ll then have to call JSON.parse(acf) in your site`s code in order to get the content.
-// In most cases, this makes using ACF easier because GrahQL queries can then be written 
-// without knowing the data structure of ACF.
+/**
+ * Will loop to add any other field of the JSON API to the Node object.
+ * 
+ * If includeACFField == true, will also add the ACF Fields as a JSON string if present, 
+ * or add an empty ACF field.
+ * 
+ * If stringifyACFContents == true, the ACF Fields will be stringifyd. 
+ * 
+ * You'll then have to call `JSON.parse(acf)` in your site's code in order to get the content.
+ * In most cases, this makes using ACF easier because GrahQL queries can then be written 
+ * without knowing the data structure of ACF.
+ * 
+ * @param {any} ent
+ * @param {any} newEnt 
+ * @param {any} includeACFField 
+ * @param {any} stringifyACFContents 
+ * @returns 
+ */
 function loopOtherFields(ent, newEnt, includeACFField, stringifyACFContents) {
   newEnt = validateObjectTree(ent, newEnt, includeACFField, stringifyACFContents);
   // Because some solution will rely on the use of ACF fields and implement a component check on values of this field,
@@ -592,6 +627,15 @@ function loopOtherFields(ent, newEnt, includeACFField, stringifyACFContents) {
   return newEnt;
 }
 
+/**
+ * validate Object Tree
+ * 
+ * @param {any} ent 
+ * @param {any} newEnt 
+ * @param {any} includeACFField 
+ * @param {any} stringifyACFContents 
+ * @returns 
+ */
 function validateObjectTree(ent, newEnt, includeACFField, stringifyACFContents) {
   (0, _keys2.default)(ent).map(function (k) {
     if (!newEnt.hasOwnProperty(k)) {

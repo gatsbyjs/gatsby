@@ -1,6 +1,11 @@
 "use strict";
 
-// Colorize the output
+/**
+ * Colorize the output
+ * 
+ * @param {any} msg 
+ * @param {any} c 
+ */
 var out = function out(msg, c) {
   return `${c}${msg}${color.Reset}`;
 };
