@@ -1,13 +1,10 @@
 /* @flow */
 const express = require(`express`)
 const graphqlHTTP = require(`express-graphql`)
-const glob = require(`glob`)
 const request = require(`request`)
 const bootstrap = require(`../bootstrap`)
 const webpack = require(`webpack`)
 const webpackConfig = require(`./webpack.config`)
-const React = require(`react`)
-const ReactDOMServer = require(`react-dom/server`)
 const rl = require(`readline`)
 const parsePath = require(`parse-filepath`)
 const _ = require(`lodash`)
@@ -27,7 +24,10 @@ const rlInterface = rl.createInterface({
   output: process.stdout,
 })
 
-const debug = require(`debug`)(`gatsby:application`)
+// Quit immediately on hearing ctrl-c
+rlInterface.on(`SIGINT`, () => {
+  process.exit()
+})
 
 async function startServer(program) {
   const directory = program.directory
