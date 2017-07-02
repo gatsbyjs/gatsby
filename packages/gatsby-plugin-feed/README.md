@@ -4,7 +4,7 @@ Create an RSS feed (or multiple feeds) for your Gatsby site.
 
 ## Install
 
-```npm install --save gatsby-plugin-feed```
+`npm install --save gatsby-plugin-feed`
 
 ## How to Use
 
@@ -13,7 +13,7 @@ Create an RSS feed (or multiple feeds) for your Gatsby site.
 siteMetadata {
   title: `GatsbyJS`,
   description: `A fantastic new static site generator.`,
-  site_url: `https://www.gatsbyjs.org`
+  siteUrl: `https://www.gatsbyjs.org`
 },
 plugins: [
   {
@@ -37,7 +37,7 @@ plugins: [
             siteMetadata {
               title
               description
-              site_url
+              siteUrl
             }
           }
         }

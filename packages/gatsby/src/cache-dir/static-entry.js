@@ -108,6 +108,7 @@ module.exports = (locals, callback) => {
     setPreBodyComponents,
     setPostBodyComponents,
     setBodyProps,
+    pathname: locals.path,
   })
 
   // Add the chunk-manifest as a head component.

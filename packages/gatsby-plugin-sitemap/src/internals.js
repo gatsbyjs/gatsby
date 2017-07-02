@@ -17,7 +17,7 @@ export const defaultOptions = {
     {
       site {
         siteMetadata {
-          site_url
+          siteUrl
         }
       }
       allMarkdownRemark(
@@ -42,7 +42,7 @@ export const defaultOptions = {
   serialize: ({ site, allMarkdownRemark }) =>
     allMarkdownRemark.edges.map(edge => {
       return {
-        url: site.siteMetadata.site_url + edge.node.fields.slug,
+        url: site.siteMetadata.siteUrl + edge.node.fields.slug,
       }
     }),
 }

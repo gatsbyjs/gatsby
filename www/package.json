@@ -7,6 +7,7 @@
     "bluebird": "^3.4.6",
     "gatsby": "next",
     "gatsby-link": "next",
+    "gatsby-plugin-canonical-urls": "next",
     "gatsby-plugin-catch-links": "next",
     "gatsby-plugin-glamor": "next",
     "gatsby-plugin-google-analytics": "next",
@@ -17,9 +18,9 @@
     "gatsby-plugin-sharp": "next",
     "gatsby-remark-autolink-headers": "next",
     "gatsby-remark-copy-linked-files": "next",
+    "gatsby-remark-images": "next",
     "gatsby-remark-prismjs": "next",
     "gatsby-remark-responsive-iframe": "next",
-    "gatsby-remark-images": "next",
     "gatsby-remark-smartypants": "next",
     "gatsby-source-filesystem": "next",
     "gatsby-transformer-documentationjs": "next",
@@ -41,7 +42,9 @@
   "devDependencies": {
     "gh-pages": "^0.11.0"
   },
-  "keywords": ["gatsby"],
+  "keywords": [
+    "gatsby"
+  ],
   "license": "MIT",
   "main": "n/a",
   "private": true,
