@@ -31,7 +31,7 @@ module.exports = {
         auth: {
           user: 'your-htaccess-username',
           pass: 'your-htaccess-password',
-          sendImmediately: false
+          sendImmediately: false,
         },
         // Set verboseOutput to true to display a verbose output on `npm run develop` or `npm run build` 
         // It can help you debug specific API Endpoints problems 
