@@ -33,11 +33,15 @@ It will pulls any endpoint provided by Wordpress Plugins as long as it appears i
 
 Currently only these plugins were tested but it should work with any.
 - [x] [ACF](https://www.advancedcustomfields.com/) As this is a special plugin, this must be activated with `useACF: true` in your site's `gatsby-config.js`.
-    *  Will pull the `acf: { ... }` fields's contents from any entity which has it attached (pages, posts, medias, ...). Every node below `acf` is [Stringify'd](https://www.w3schools.com/js/js_json_stringify.asp), which means that you will have to call `JSON.parse(acf)` to get an `Object`. (ex. ```const fields = JSON.parse(acf)```)
+    *  Will pull the `acf: { ... }` fields's contents from any entity which has it attached (pages, posts, medias, ... you choose from in Wordpress back-end while creating a Group of Fields). Every node below `acf` is [Stringify'd](https://www.w3schools.com/js/js_json_stringify.asp), then put in a childNode, which means that you will have to call `JSON.parse()` to get an `Object`. (ex. ```const fields = JSON.parse(childWordpressAcfField.internal.content)```)
+    *  You will also have to include the children ACF Field Node in your GraphQL query. (See `Query posts with the child ACF Fields Node` below)
+
 - [x] [ACF Pro](https://www.advancedcustomfields.com/pro/)
     *  Will work with [Flexible content]() and premium stuff like that (repeater, gallery, ...).  
     *  Will pull the content attached to the [options page](https://www.advancedcustomfields.com/add-ons/options-page/).
+
 - [x] [WP-API-MENUS](https://wordpress.org/plugins/wp-api-menus/) which gives you the menus and menu locations endpoint.
+
 - [ ] We encourage you to report plugin that works but not listed here.
 
 The plugin support Basic HTTP Authentication, so if your Wordpress site is in dev and still behind a [HTAccess](http://www.htaccesstools.com/htaccess-authentication/) it will work.
@@ -106,7 +110,6 @@ You can query nodes created from Wordpress using GraphQL like the following:
         id
         slug
         title
-        order
         content
         excerpt
         date
@@ -134,9 +137,6 @@ You can query nodes created from Wordpress using GraphQL like the following:
     edges {
       node {
         id
-        order
-        created
-        changed
         title
         content
         excerpt
@@ -164,7 +164,6 @@ You can query nodes created from Wordpress using GraphQL like the following:
       node {
         id
         slug
-        order
         description
         name
         taxonomy
@@ -179,7 +178,6 @@ You can query nodes created from Wordpress using GraphQL like the following:
     edges {
       node {
         id
-        order
         description
         name
         slug
@@ -195,7 +193,6 @@ You can query nodes created from Wordpress using GraphQL like the following:
     edges {
       node {
         id
-        order
         date
         date_gmt
         modified
@@ -234,7 +231,6 @@ Note : If you add a new type (like with custom post types plugins) then you will
     edges {
       node {
         id
-        order
         post {
           description
           hierarchical
@@ -267,7 +263,6 @@ Note : If you add a new type (like with custom post types plugins) then you will
     edges {
       node {
         id
-        order
         name
         description
         slug
@@ -287,7 +282,6 @@ Note : If you add a new type (like with custom post types plugins) then you will
     edges {
       node {
         id
-        order
         publish {
           name
           public
@@ -305,7 +299,6 @@ Note : If you add a new type (like with custom post types plugins) then you will
     edges {
       node {
         id
-        order
         category {
           name
           slug
@@ -344,7 +337,6 @@ Note : you will have to populate the acf node with your config. Put this in the 
     edges {
       node {
         id
-        order
         term_id
         name
         name
@@ -369,15 +361,14 @@ Note : you will have to populate the acf node with your config. Put this in the 
     edges {
       node {
         id
-        order
         // Put your menus locations names here
       }
     }
   }
 ```
 ### Query any other plugin
-
 In the following example, `${Manufacturer}` will be replaced by the endpoint prefix and `${Endpoint}` by the name of the endpoint.
+
 To know what's what, check the URL of the endpoint. 
 
 For example the following URL: `http://my-blog.wordpress.com/wp-json/acf/v2/options`
@@ -397,6 +388,73 @@ For example the following URL: `http://my-blog.wordpress.com/wp-api-menus/v2/men
         id
        type
         // Put your fields here
+      }
+    }
+  }
+```
+
+### Query posts with the child ACF Fields Node
+Mention the apparition of `childWordpressAcfField` in the query below :
+```    graphql
+  allWordpressPost {
+    edges {
+      node {
+        id
+        slug
+        title
+        content
+        excerpt
+        date
+        date_gmt
+        modified
+        modified_gmt
+        status
+        author
+        featured_media
+        comment_status
+        ping_status
+        sticky
+        template
+        format
+        categories
+        tags
+        childWordpressAcfField {
+          internal {
+            content
+          }
+        }
+      }
+    }
+  }
+```
+
+### Query pages with the child ACF Fields Node
+Mention the apparition of `childWordpressAcfField` in the query below :
+```    graphql
+  allWordpressPage {
+    edges {
+      node {
+        id
+        title
+        content
+        excerpt
+        date
+        date_gmt
+        modified
+        modified_gmt
+        slug
+        status
+        author
+        featured_media
+        menu_order
+        comment_status
+        ping_status
+        template
+        childWordpressAcfField {
+          internal {
+            content
+          }
+        }
       }
     }
   }
