@@ -602,9 +602,20 @@ plugins that you want to use and enable them with
 `md.use(require('markdown-it-plugin-name'))` within the markdown loader file.
 
 ### Deploying to Github Pages (and other hosts where your site's links need prefixes)
+Deploying to Github Pages can either be done as a **User/Organization Page** or as a **Project Page**.
+
+#### Deploy a User/Organization Page
+To Deploy a **User/Organization Page** you would simply run `gatsby build`. This will create a `/public` folder. You will then need to copy the contents of the `/public` folder into the root directory of your `master` branch.
+
+#### Deploy a Project Page
+Deploying a **Project Page** depends on whether you will be using a custom domain or not.
+
+##### Without a Custom Domain
+To deploy without using a custom domain you'll need to prefix your links.
+
 Gatsby supports automatically prefixing links with its `prefixLink` helper function.
 
-First set the prefix in your config file e.g. `linkPrefix = '/your-project'`
+First set the prefix in your `config` file e.g. `linkPrefix = '/your-project'`
 
 Then simply import the function and run all links in your site
 through it e.g.
@@ -619,13 +630,20 @@ prefixLink('/')
 
 Then finally, when building your site, run `gatsby build --prefix-links`
 
-The built site is now in `/public`. These files need copied to your
+The built site is now in `/public`. These files need to be copied to your
 `gh-pages` branch and committed and pushed. You can do this manually or
 use the handy [`gh-pages`](https://www.npmjs.com/package/gh-pages) CLI tool.
 
 Both the sample sites are deployed to github pages and use link
 prefixing. Read their source for more help:
 [documentation](https://github.com/gatsbyjs/gatsby-starter-documentation)/[blog](https://github.com/gatsbyjs/gatsby-starter-blog).
+
+##### Using a Custom Domain
+If you're deploying and using a custom domain you should **NOT** prefix your links.
+
+You just need to run `gatsby build` and then follow the steps above to copy the `/public` folder conents to your `gh-pages` branch.
+
+*Note: make sure your CNAME file isn't removed from your `gh-pages` branch.*
 
 ### I have an existing site in (Wordpress|Drupal|Blogger|Tumblr|*), how do I convert it to Gatsby?
 Jekyll has a [comprehensive import tool](http://import.jekyllrb.com/) for these and many other website tools.
