@@ -1,6 +1,6 @@
 const fs = require(`fs`)
 const stringify = require(`json-stringify-safe`)
-const fetchData = require(`../src/fetch-data`)
+const fetchData = require(`../src/fetch`)
 
 // Fetch data from our sample site and save it to disk.
 const spaceId = `rocybtov1ozk`

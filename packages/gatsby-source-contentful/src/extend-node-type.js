@@ -68,7 +68,7 @@ const ImageCropFocusType = new GraphQLEnumType({
 
 const isImage = image =>
   _.includes(
-    [`image/jpeg`, `image/jpg`, `image/png`, `image/webp`],
+    [`image/jpeg`, `image/jpg`, `image/png`, `image/webp`, `image/gif`],
     image.file.contentType
   )
 
@@ -95,6 +95,7 @@ const getBase64ImageAndBasicMeasurements = (image, args) =>
       }
 
       resolve({
+        contentType: image.file.contentType,
         base64Str,
         aspectRatio,
         width: image.file.details.image.width,
@@ -126,12 +127,36 @@ const resolveResponsiveResolution = (image, options) => {
       getBase64ImageAndBasicMeasurements(
         image,
         options
-      ).then(({ base64Str, width, height, aspectRatio }) => {
+      ).then(({ contentType, base64Str, width, height, aspectRatio }) => {
+        // Special case handling gifs. Contentful's image api can't handle
+        // them so we just return them as is.
+        if (contentType === `image/gif`) {
+          return resolve({
+            base64: ``,
+            aspectRatio: aspectRatio,
+            width: Math.round(options.width),
+            height: Math.round(pickedHeight),
+            src: image.file.url,
+            srcSet: ``,
+          })
+        }
+
         let desiredAspectRatio = aspectRatio
 
         // If we're cropping, calculate the specified aspect ratio.
         if (options.height) {
           desiredAspectRatio = options.width / options.height
+        }
+
+        // If the user selected a height (so cropping) and options for focus
+        // and fit aren't set, we'll set our defaults
+        if (options.height) {
+          if (!options.resizingBehavior) {
+            options.resizingBehavior = `fill`
+          }
+          if (!options.cropFocus) {
+            options.cropFocus = `faces`
+          }
         }
 
         // Create sizes (in width) for the image. If the width of the
@@ -212,7 +237,21 @@ const resolveResponsiveSizes = (image, options) => {
       getBase64ImageAndBasicMeasurements(
         image,
         options
-      ).then(({ base64Str, width, height, aspectRatio }) => {
+      ).then(({ contentType, base64Str, width, height, aspectRatio }) => {
+        // Special case handling gifs. Contentful's image api can't handle
+        // them so we just return them as is.
+        if (contentType === `image/gif`) {
+          return resolve({
+            base64: ``,
+            srcSet: ``,
+            sizes: ``,
+            aspectRatio: aspectRatio,
+            width: Math.round(options.width),
+            height: Math.round(pickedHeight),
+            src: image.file.url,
+          })
+        }
+
         let desiredAspectRatio = aspectRatio
 
         // If we're cropping, calculate the specified aspect ratio.
@@ -286,7 +325,30 @@ const resolveResize = (image, options) =>
       getBase64ImageAndBasicMeasurements(
         image,
         options
-      ).then(({ base64Str, width, height, aspectRatio }) => {
+      ).then(({ contentType, base64Str, width, height, aspectRatio }) => {
+        // Special case handling gifs. Contentful's image api can't handle
+        // them so we just return them as is.
+        if (contentType === `image/gif`) {
+          return resolve({
+            base64: ``,
+            aspectRatio: aspectRatio,
+            width: Math.round(options.width),
+            height: Math.round(pickedHeight),
+            src: image.file.url,
+          })
+        }
+
+        // If the user selected a height (so cropping) and options for focus
+        // and fit aren't set, we'll set our defaults
+        if (options.height) {
+          if (!options.resizingBehavior) {
+            options.resizingBehavior = `fill`
+          }
+          if (!options.cropFocus) {
+            options.cropFocus = `faces`
+          }
+        }
+
         if (options.base64) {
           return resolve(base64Str)
         } else {
