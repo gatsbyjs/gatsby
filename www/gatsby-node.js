@@ -83,7 +83,7 @@ exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
       }
     }
     if (slug) {
-      createNodeField({ node, fieldName: `slug`, fieldValue: slug })
+      createNodeField({ node, name: `slug`, value: slug })
     }
   } else if (
     node.internal.type === `MarkdownRemark` &&
@@ -109,13 +109,13 @@ exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
       slug = `/docs/packages/${parsedFilePath.dir}/`
       createNodeField({
         node,
-        fieldName: `title`,
-        fieldValue: parsedFilePath.dir,
+        name: `title`,
+        value: parsedFilePath.dir,
       })
-      createNodeField({ node, fieldName: `package`, fieldValue: true })
+      createNodeField({ node, name: `package`, value: true })
     }
     if (slug) {
-      createNodeField({ node, fieldName: `slug`, fieldValue: slug })
+      createNodeField({ node, name: `slug`, value: slug })
     }
   }
 }

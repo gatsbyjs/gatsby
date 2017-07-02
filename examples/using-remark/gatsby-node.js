@@ -77,7 +77,7 @@ exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
   if (node.internal.type === `File`) {
     const parsedFilePath = path.parse(node.absolutePath)
     const slug = `/${parsedFilePath.dir.split(`---`)[1]}/`
-    createNodeField({ node, fieldName: `slug`, fieldValue: slug })
+    createNodeField({ node, name: `slug`, value: slug })
   } else if (
     node.internal.type === `MarkdownRemark` &&
     typeof node.slug === `undefined`
@@ -85,15 +85,15 @@ exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
     const fileNode = getNode(node.parent)
     createNodeField({
       node,
-      fieldName: `slug`,
-      fieldValue: fileNode.fields.slug,
+      name: `slug`,
+      value: fileNode.fields.slug,
     })
 
     if (node.frontmatter.tags) {
       const tagSlugs = node.frontmatter.tags.map(
         tag => `/tags/${_.kebabCase(tag)}/`
       )
-      createNodeField({ node, fieldName: `tagSlugs`, fieldValue: tagSlugs })
+      createNodeField({ node, name: `tagSlugs`, value: tagSlugs })
     }
   }
 }

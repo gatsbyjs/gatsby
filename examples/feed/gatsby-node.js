@@ -10,7 +10,7 @@ exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
       path.basename(fileNode.relativePath, path.extname(fileNode.relativePath))
     )
     if (nodeSlug) {
-      createNodeField({ node, fieldName: `slug`, fieldValue: nodeSlug })
+      createNodeField({ node, name: `slug`, value: nodeSlug })
     }
   }
 }
