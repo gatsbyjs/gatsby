@@ -23,7 +23,7 @@ export const defaultOptions = {
         siteMetadata {
           title
           description
-          site_url
+          siteUrl
         }
       }
     }
