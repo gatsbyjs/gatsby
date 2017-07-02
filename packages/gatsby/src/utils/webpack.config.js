@@ -202,12 +202,11 @@ module.exports = async (
         components = uniq(components)
         components.push(`layout-component---index`)
         return [
-          // Moment.js includes 100s of KBs of extra localization data
-          // by default in Webpack that most sites don't want.
-          // This line disables that.
-          // TODO remove this now that loading moment.js isn't common w/ new
-          // graphql data layer? Or just move to its own package with other
-          // common webpack tweaks e.g. lodash?
+          // Moment.js includes 100s of KBs of extra localization data by
+          // default in Webpack that most sites don't want. This line disables
+          // loading locale modules. This is a practical solution that requires
+          // the user to opt into importing specific locales.
+          // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
           new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
           new WebpackMD5Hash(),
           // new webpack.optimize.DedupePlugin(),
@@ -399,7 +398,7 @@ module.exports = async (
           postcss(wp) {
             return [
               require(`postcss-import`)({ addDependencyTo: wp }),
-              require(`postcss-cssnext`)({ browsers: `last 2 versions` }),
+              require(`postcss-cssnext`)({ browsers: program.browserslist }),
               require(`postcss-browser-reporter`),
               require(`postcss-reporter`),
             ]
@@ -426,7 +425,7 @@ module.exports = async (
           postcss: [
             require(`postcss-import`)(),
             require(`postcss-cssnext`)({
-              browsers: `last 2 versions`,
+              browsers: program.browserslist,
             }),
           ],
         })
