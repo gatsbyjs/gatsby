@@ -23,7 +23,7 @@
 * Replace build-images with just images @kyleamathews
 * Make mediaType optional #1299 @kyleamathews
 * Just use name/value for createNodeField #1325 @kyleamathews
-* Renamed remark-responsive-image-plugin @chiedo
+* Renamed remark-responsive-image-plugin to gatsby-remark-images @chiedo
 * Write images processed by sharp to public/static along with other assets #1332 @kyleamathews
 
 ### Fixed
