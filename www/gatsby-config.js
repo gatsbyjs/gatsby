@@ -20,6 +20,12 @@ module.exports = {
         path: `${__dirname}/../packages/`,
       },
     },
+    {
+      resolve: `gatsby-plugin-canonical-urls`,
+      options: {
+        siteUrl: `https://www.gatsbyjs.org`,
+      },
+    },
     `gatsby-transformer-sharp`,
     `gatsby-transformer-documentationjs`,
     `gatsby-transformer-yaml`,

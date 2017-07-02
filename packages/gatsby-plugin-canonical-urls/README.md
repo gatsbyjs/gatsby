@@ -16,7 +16,7 @@ when sites add multiple paths to the same page.
 // In your gatsby-config.js
 plugins: [
   {
-    resolve: `gatsby-plugin-canonical-urls`
+    resolve: `gatsby-plugin-canonical-urls`,
     options: {
       siteUrl: `https://www.example.com`,
     }
@@ -28,5 +28,5 @@ With the above configuration, the plugin will add to the head of every HTML page
 a `rel=canonical` e.g.
 
 ```html
-<link rel="canonical" href="http://www.example.com/about-us/">
+<link rel="canonical" href="http://www.example.com/about-us/" />
 ```
