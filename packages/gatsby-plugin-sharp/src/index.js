@@ -265,7 +265,7 @@ function queueImageResizing({ file, args = {} }) {
   queueJob(job)
 
   // Prefix the image src.
-  const prefixedSrc = options.pathPrefix + imgSrc
+  const prefixedSrc = options.pathPrefix + `/static` + imgSrc
 
   return {
     src: prefixedSrc,
