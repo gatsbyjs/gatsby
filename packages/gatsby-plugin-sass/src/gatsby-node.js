@@ -4,7 +4,6 @@ exports.modifyWebpackConfig = ({ config, stage }) => {
   const cssModulesConf = `css?modules&minimize&importLoaders=1`
   const cssModulesConfDev = `${cssModulesConf}&sourceMap&localIdentName=[name]---[local]---[hash:base64:5]`
 
-  console.log(`stage`, stage)
   switch (stage) {
     case `develop`: {
       config.loader(`sass`, {
