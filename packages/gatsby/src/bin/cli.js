@@ -17,6 +17,12 @@ process.on(`unhandledRejection`, error => {
 const defaultHost = `localhost`
 
 const directory = path.resolve(`.`)
+const sitePackageJson = require(path.join(directory, `package.json`))
+const browserslist = sitePackageJson.browserslist || [
+  "> 1%",
+  "last 2 versions",
+  "IE >= 9",
+]
 
 program.version(packageJson.version).usage(`[command] [options]`)
 
@@ -40,6 +46,8 @@ program
     const p = {
       ...command,
       directory,
+      sitePackageJson,
+      browserslist,
     }
     develop(p)
   })
@@ -59,6 +67,8 @@ program
     const p = {
       ...command,
       directory,
+      sitePackageJson,
+      browserslist,
     }
     build(p).then(() => {
       console.log(`Done building in`, process.uptime(), `seconds`)
@@ -81,6 +91,8 @@ program
     const p = {
       ...command,
       directory,
+      sitePackageJson,
+      browserslist,
     }
     serve(p)
   })

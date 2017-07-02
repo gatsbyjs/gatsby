@@ -141,9 +141,25 @@ module.exports = async function babelConfig(program, stage) {
   }
   if (!babelrc.presets) {
     babelrc.presets = []
-  } // Add default plugins and presets.
+  }
 
-  ;[`es2015`, `stage-0`, `react`].forEach(preset => {
+  // Add default plugins and presets.
+  ;[
+    [
+      require.resolve("babel-preset-env"),
+      {
+        loose: true,
+        uglify: true,
+        modules: false,
+        targets: {
+          browsers: program.browserslist,
+        },
+        exclude: ["transform-regenerator", "transform-es2015-typeof-symbol"],
+      },
+    ],
+    `stage-0`,
+    `react`,
+  ].forEach(preset => {
     babelrc.presets.push(preset)
   })
   ;[`add-module-exports`, `transform-object-assign`].forEach(plugin => {
