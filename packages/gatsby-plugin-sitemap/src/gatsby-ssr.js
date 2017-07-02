@@ -8,6 +8,11 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   }
 
   setHeadComponents([
-    <link rel="sitemap" type="application/xml" href={output} />,
+    <link
+      key={`gatsby-plugin-sitemap`}
+      rel="sitemap"
+      type="application/xml"
+      href={output}
+    />,
   ])
 }

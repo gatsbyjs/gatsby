@@ -12,17 +12,19 @@ if (process.env.NODE_ENV === `production`) {
   }
 }
 
-module.exports = React.createClass({
+export default class HTML extends React.Component {
   render() {
     let css
     if (process.env.NODE_ENV === `production`) {
       css = (
         <style
           id="gatsby-inlined-css"
+          key="gatsby-inlined-css"
           dangerouslySetInnerHTML={{ __html: stylesStr }}
         />
       )
     }
+
     return (
       <html lang="en">
         <head>
@@ -75,7 +77,7 @@ module.exports = React.createClass({
             sizes="16x16"
             href={require(`file-loader!../static/images/favicons/favicon-16x16.png`)}
           />
-          <TypographyStyle typography={typography} />
+          <TypographyStyle key={`typography`} typography={typography} />
           {css}
         </head>
         <body>
@@ -87,5 +89,5 @@ module.exports = React.createClass({
         </body>
       </html>
     )
-  },
-})
+  }
+}

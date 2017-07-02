@@ -116,6 +116,7 @@ module.exports = (locals, callback) => {
   headComponents.unshift(
     <script
       id="webpack-manifest"
+      key="webpack-manifest"
       dangerouslySetInnerHTML={{
         __html: `
             //<![CDATA[
@@ -166,7 +167,9 @@ module.exports = (locals, callback) => {
 
   scripts.forEach(script => {
     // Add preload <link>s for scripts.
-    headComponents.unshift(<link rel="preload" href={script} as="script" />)
+    headComponents.unshift(
+      <link rel="preload" key={script} href={script} as="script" />
+    )
   })
 
   // Add script loader for page scripts to the head.
@@ -174,6 +177,7 @@ module.exports = (locals, callback) => {
   const scriptsString = scripts.map(s => `"${s}"`).join(`,`)
   headComponents.push(
     <script
+      key={`script-loader`}
       dangerouslySetInnerHTML={{
         __html: `
   !function(e,t,r){function n(){for(;d[0]&&"loaded"==d[0][f];)c=d.shift(),c[o]=!i.parentNode.insertBefore(c,i)}for(var s,a,c,d=[],i=e.scripts[0],o="onreadystatechange",f="readyState";s=r.shift();)a=e.createElement(t),"async"in i?(a.async=!1,e.head.appendChild(a)):i[f]?(d.push(a),a[o]=n):e.write("<"+t+' src="'+s+'" defer></'+t+">"),a.src=s}(document,"script",[
