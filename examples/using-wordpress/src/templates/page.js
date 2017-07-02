@@ -48,9 +48,6 @@ export const pageQuery = graphql`
   query currentPageQuery($id: String!) {
     wordpressPage(id: {eq: $id}) {
        id
-        order
-        created
-        changed
         title
         content
         excerpt
@@ -73,9 +70,6 @@ export const pageQuery = graphql`
     edges {
       node {
         id
-        order
-        created
-        changed
         title
         content
         excerpt
@@ -101,7 +95,6 @@ allWordpressPost {
         id
         slug
         title
-        order
         content
         excerpt
         date
@@ -127,7 +120,6 @@ allWordpressPost {
       node {
         id
         slug
-        order
         description
         name
         taxonomy
@@ -140,7 +132,6 @@ allWordpressPost {
     edges {
       node {
         id
-        order
         description
         name
         slug

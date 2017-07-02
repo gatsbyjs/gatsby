@@ -52,9 +52,6 @@ query homePageQuery {
 
   wordpressPage(id: {eq: "PAGE_5"}) {
         id
-        order
-        created
-        changed
         title
         content
         excerpt
@@ -76,9 +73,6 @@ query homePageQuery {
     edges {
       node {
         id
-        order
-        created
-        changed
         title
         content
         excerpt
@@ -104,7 +98,6 @@ allWordpressPost {
         id
         slug
         title
-        order
         content
         excerpt
         date
@@ -130,7 +123,6 @@ allWordpressPost {
       node {
         id
         slug
-        order
         description
         name
         taxonomy
@@ -143,7 +135,6 @@ allWordpressPost {
     edges {
       node {
         id
-        order
         description
         name
         slug
