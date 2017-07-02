@@ -54,28 +54,26 @@ export default class HTML extends React.Component {
             content="width=device-width, initial-scale=1.0"
           />
           <link
-            rel="icon"
-            type="image/png"
-            sizes="192x192"
-            href={require(`file-loader!../static/images/favicons/android-icon-192x192.png`)}
+            rel="app-touch-icon"
+            sizes="180x180"
+            href={require(`file-loader!../static/apple-touch-icon.png`)}
           />
           <link
             rel="icon"
             type="image/png"
             sizes="32x32"
-            href={require(`file-loader!../static/images/favicons/favicon-32x32.png`)}
-          />
-          <link
-            rel="icon"
-            type="image/png"
-            sizes="96x96"
-            href={require(`file-loader!../static/images/favicons/favicon-96x96.png`)}
+            href={require(`file-loader!../static/favicon-32x32.png`)}
           />
           <link
             rel="icon"
             type="image/png"
             sizes="16x16"
-            href={require(`file-loader!../static/images/favicons/favicon-16x16.png`)}
+            href={require(`file-loader!../static/favicon-16x16.png`)}
+          />
+          <link
+            rel="mask-icon"
+            href={require(`file-loader!../static/safari-pinned-tab.svg`)}
+            color="#5bbad5"
           />
           <TypographyStyle key={`typography`} typography={typography} />
           {css}

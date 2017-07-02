@@ -110,6 +110,7 @@ module.exports = React.createClass({
             >
               <img
                 src={logo}
+                alt={`Gatsby logo`}
                 css={{
                   display: `inline-block`,
                   height: rhythm(1.4),
