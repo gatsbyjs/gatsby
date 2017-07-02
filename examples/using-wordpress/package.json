@@ -5,25 +5,13 @@
   "version": "1.0.0-beta.5",
   "author": "Sebastien Fichot <fichot.sebastien@gmail.com>",
   "dependencies": {
-    "babel-eslint": "^7.2.3",
     "gatsby": "next",
     "gatsby-link": "next",
-    "gatsby-plugin-google-analytics": "next",
-    "gatsby-plugin-manifest": "next",
-    "gatsby-plugin-offline": "next",
-    "gatsby-plugin-sharp": "next",
     "gatsby-plugin-react-helmet": "next",
     "gatsby-plugin-styled-components": "next",
     "gatsby-source-wordpress": "next",
     "hedron": "^0.7.1",
-    "json-stringify-safe": "^5.0.1",
-    "lodash": "^4.16.4",
-    "qs": "^6.4.0",
-    "react-typography": "^0.15.0",
-    "slash": "^1.0.0",
-    "striptags": "^3.0.1",
-    "typography": "^0.15.8",
-    "typography-breakpoint-constants": "^0.14.0"
+    "lodash": "^4.16.4"
   },
   "keywords": [
     "gatsby"
@@ -40,9 +28,6 @@
     "predeploy": "gatsby build --prefix-links"
   },
   "devDependencies": {
-    "babel-eslint": "^7.2.3",
-    "eslint": "^4.1.1",
-    "eslint-plugin-react": "^7.1.0",
-    "uuid": "^3.1.0"
+    "eslint": "^4.1.1"
   }
 }
