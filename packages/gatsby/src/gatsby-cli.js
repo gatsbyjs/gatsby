@@ -14,11 +14,6 @@ Upgrade node to the latest stable release.`
   process.exit()
 }
 
-console.log(`bin/gatsby: time since started: ${process.uptime()}`)
-
-console.time(`initial loading`)
-global.appStartTime = Date.now()
-
 /*
   Get the locally installed version of gatsby/lib/bin/cli.js from the place
   where this program was executed.
@@ -42,7 +37,6 @@ You should save Gatsby as a site dependency e.g. npm install --save gatsby`
 if (fs.existsSync(localPath)) {
   try {
     require(localPath)
-    console.timeEnd(`initial loading`)
   } catch (error) {
     console.error(`A local install of Gatsby exists but failed to load.`)
     console.error(error)

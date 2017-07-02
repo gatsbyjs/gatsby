@@ -6,6 +6,8 @@ const slash = require(`slash`)
 const fs = require(`fs-extra`)
 const md5File = require(`md5-file/promise`)
 const crypto = require(`crypto`)
+const report = require(`yurnalist`)
+const convertHrtime = require(`convert-hrtime`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const { graphql } = require(`graphql`)
@@ -21,6 +23,26 @@ const {
 } = require(`../internal-plugins/query-runner/page-query-runner`)
 const { writePages } = require(`../internal-plugins/query-runner/pages-writer`)
 
+const activityTimer = name => {
+  const spinner = report.activity()
+  const start = process.hrtime()
+
+  const elapsedTime = function() {
+    var precision = 3 // 3 decimal places
+    var elapsed = process.hrtime(start)
+    return `${convertHrtime(elapsed)[`seconds`].toFixed(precision)} s`
+  }
+  return {
+    start: () => {
+      spinner.tick(name)
+    },
+    end: () => {
+      report.success(`${name} — ${elapsedTime()}`)
+      spinner.end()
+    },
+  }
+}
+
 // Override console.log to add the source file + line number.
 // Useful for debugging if you lose a console.log somewhere.
 // Otherwise leave commented out.
@@ -29,12 +51,6 @@ const { writePages } = require(`../internal-plugins/query-runner/pages-writer`)
 const preferDefault = m => (m && m.default) || m
 
 module.exports = async (program: any) => {
-  console.log(
-    `lib/bootstrap/index.js time since started:`,
-    process.uptime(),
-    `sec`
-  )
-
   // Fix program directory path for windows env
   program.directory = slash(program.directory)
 
@@ -44,7 +60,8 @@ module.exports = async (program: any) => {
   })
 
   // Try opening the site's gatsby-config.js file.
-  console.time(`open and validate gatsby-config.js`)
+  let activity = activityTimer(`open and validate gatsby-config.js`)
+  activity.start()
   let config
   try {
     // $FlowFixMe
@@ -69,7 +86,7 @@ module.exports = async (program: any) => {
     payload: config,
   })
 
-  console.timeEnd(`open and validate gatsby-config.js`)
+  activity.end()
 
   const flattenedPlugins = await loadPlugins(config)
 
@@ -140,7 +157,8 @@ data
   await fs.mkdirs(`${program.directory}/public`)
 
   // Copy our site files to the root of the site.
-  console.time(`copy gatsby files`)
+  activity = activityTimer(`copy gatsby files`)
+  activity.start()
   const srcDir = `${__dirname}/../cache-dir`
   const siteDir = `${program.directory}/.cache`
   try {
@@ -226,17 +244,19 @@ data
   )
   fs.writeFileSync(`${siteDir}/api-runner-ssr.js`, sSRAPIRunner, `utf-8`)
 
-  console.timeEnd(`copy gatsby files`)
+  activity.end()
 
   // Source nodes
-  console.time(`initial sourcing and transforming nodes`)
+  activity = activityTimer(`source and transform nodes`)
+  activity.start()
   await require(`../utils/source-nodes`)()
-  console.timeEnd(`initial sourcing and transforming nodes`)
+  activity.end()
 
   // Create Schema.
-  console.time(`building schema`)
+  activity = activityTimer(`building schema`)
+  activity.start()
   await require(`../schema`)()
-  console.timeEnd(`building schema`)
+  activity.end()
 
   // Collect resolvable extensions and attach to program.
   const extensions = [`.js`, `.jsx`]
@@ -257,60 +277,68 @@ data
   }
 
   // Collect pages.
-  console.time(`createPages`)
+  activity = activityTimer(`createPages`)
+  activity.start()
   await apiRunnerNode(`createPages`, {
     graphql: graphqlRunner,
     traceId: `initial-createPages`,
     waitForCascadingActions: true,
   })
-  console.timeEnd(`createPages`)
+  activity.end()
 
   // A variant on createPages for plugins that want to
   // have full control over adding/removing pages. The normal
   // "createPages" API is called every time (during development)
   // that data changes.
-  console.time(`createPagesStatefully`)
+  activity = activityTimer(`createPagesStatefully`)
+  activity.start()
   await apiRunnerNode(`createPagesStatefully`, {
     graphql: graphqlRunner,
     traceId: `initial-createPagesStatefully`,
     waitForCascadingActions: true,
   })
-  console.timeEnd(`createPagesStatefully`)
+  activity.end()
 
   // Extract queries
-  console.time(`extract queries`)
+  activity = activityTimer(`extract queries from components`)
+  activity.start()
   await extractQueries()
-  console.timeEnd(`extract queries`)
+  activity.end()
 
   // Run queries
-  console.time(`Run queries`)
+  activity = activityTimer(`run graphql queries`)
+  activity.start()
   await runQueries()
-  console.timeEnd(`Run queries`)
+  activity.end()
 
   // Write out files.
-  console.time(`write out pages modules`)
+  activity = activityTimer(`write out page data`)
+  activity.start()
   await writePages()
-  console.timeEnd(`write out pages modules`)
+  activity.end()
 
   // Update Schema for SitePage.
-  console.time(`Updating schema`)
+  activity = activityTimer(`update schema`)
+  activity.start()
   await require(`../schema`)()
-  console.timeEnd(`Updating schema`)
+  activity.end()
 
   const checkJobsDone = _.debounce(resolve => {
     const state = store.getState()
     if (state.jobs.active.length === 0) {
+      console.log(``)
       console.log(
         `bootstrap finished, time since started: ${process.uptime()}sec`
       )
+      console.log(``)
       resolve({ graphqlRunner })
     }
   }, 100)
 
   if (store.getState().jobs.active.length === 0) {
-    console.log(
-      `bootstrap finished, time since started: ${process.uptime()}sec`
-    )
+    console.log(``)
+    console.log(`bootstrap finished, time since started: ${process.uptime()} s`)
+    console.log(``)
     return { graphqlRunner }
   } else {
     return new Promise(resolve => {
