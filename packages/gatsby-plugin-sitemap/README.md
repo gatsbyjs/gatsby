@@ -11,7 +11,7 @@ Create a sitemap for your Gatsby site.
 ```javascript
 // In your gatsby-config.js
 siteMetadata: {
-  siteUrl
+  siteUrl: `https://www.example.com`,
 },
 plugins: [
   {

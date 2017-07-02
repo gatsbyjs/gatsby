@@ -51,6 +51,7 @@ exports.replaceRenderer = true
  * rendering then that's the one to
  * use
  * @param {Object} $0
+ * @param {string} $0.pathname The pathname of the page currently being rendered.
  * @param {function} $0.setHeadComponents Takes an array of components as its
  * first argument which are added to the `headComponents` array which is passed
  * to the `html.js` component.
