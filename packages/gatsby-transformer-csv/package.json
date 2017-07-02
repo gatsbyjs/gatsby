@@ -1,13 +1,15 @@
 {
   "name": "gatsby-transformer-csv",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.6",
   "description": "Stub description for gatsby-transformer-csv",
   "main": "index.js",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
     "watch": "babel -w src --out-dir . --ignore __tests__"
   },
-  "keywords": ["gatsby"],
+  "keywords": [
+    "gatsby"
+  ],
   "author": "Kyle Mathews &lt;mathews.kyle@gmail.com&gt;",
   "license": "MIT",
   "devDependencies": {

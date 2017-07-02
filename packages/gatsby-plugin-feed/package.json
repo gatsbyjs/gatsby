@@ -1,13 +1,19 @@
 {
   "name": "gatsby-plugin-feed",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.6",
   "description": "Creates an RSS feed for your Gatsby site.",
   "main": "index.js",
   "scripts": {
     "build": "babel src --out-dir .",
     "watch": "babel -w src --out-dir ."
   },
-  "keywords": ["gatsby", "gatsby-plugin", "rss", "atom", "feed"],
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "rss",
+    "atom",
+    "feed"
+  ],
   "author": "Nicholas Young <nicholas@nicholaswyoung.com>",
   "license": "MIT",
   "devDependencies": {

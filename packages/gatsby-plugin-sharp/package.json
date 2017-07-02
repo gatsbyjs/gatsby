@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-sharp",
   "description": "Wrapper of the Sharp image manipulation library for Gatsby plugins",
-  "version": "1.0.0-beta.4",
+  "version": "1.0.0-beta.6",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "async": "^2.4.1",
@@ -16,7 +16,11 @@
   "devDependencies": {
     "babel-cli": "^6.24.1"
   },
-  "keywords": ["gatsby", "image", "sharp"],
+  "keywords": [
+    "gatsby",
+    "image",
+    "sharp"
+  ],
   "license": "MIT",
   "main": "index.js",
   "scripts": {

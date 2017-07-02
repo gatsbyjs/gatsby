@@ -1,12 +1,15 @@
 {
   "name": "gatsby-source-filesystem",
-  "version": "1.0.0-beta.4",
+  "version": "1.0.0-beta.6",
   "description": "Gatsby plugin which parses files within a directory for further parsing by other plugins",
   "scripts": {
     "build": "babel src --out-dir .",
     "watch": "babel -w src --out-dir ."
   },
-  "keywords": ["gatsby", "gatsby-plugin"],
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin"
+  ],
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "license": "MIT",
   "dependencies": {

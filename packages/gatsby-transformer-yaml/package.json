@@ -1,12 +1,16 @@
 {
   "name": "gatsby-transformer-yaml",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.6",
   "description": "Gatsby transformer plugin for yaml",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
     "watch": "babel -w src --out-dir . --ignore __tests__"
   },
-  "keywords": ["gatsby", "gatsby-plugin", "yaml"],
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "yaml"
+  ],
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "license": "MIT",
   "dependencies": {
