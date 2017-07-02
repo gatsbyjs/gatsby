@@ -49,7 +49,7 @@ module.exports = (locals, callback) => {
     headComponents,
     preBodyComponents,
     postBodyComponents: postBodyComponents.concat([
-      <script src="/commons.js" />,
+      <script key={`commons`} src="/commons.js" />,
     ]),
   })
   htmlStr = renderToStaticMarkup(htmlElement)

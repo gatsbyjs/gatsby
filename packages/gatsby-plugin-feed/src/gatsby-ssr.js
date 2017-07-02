@@ -12,7 +12,14 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
       output = `/` + output
     }
 
-    return <link rel="alternate" type="application/rss+xml" href={output} />
+    return (
+      <link
+        key={`gatsby-plugin-feed`}
+        rel="alternate"
+        type="application/rss+xml"
+        href={output}
+      />
+    )
   })
 
   setHeadComponents(links)

@@ -4,6 +4,7 @@ exports.onRenderBody = ({ setPostBodyComponents }, pluginOptions) => {
   if (process.env.NODE_ENV === `production`) {
     return setPostBodyComponents([
       <script
+        key={`gatsby-plugin-google-analytics`}
         dangerouslySetInnerHTML={{
           __html: `
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
