@@ -102,7 +102,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
         },
         rotate: {
           type: GraphQLInt,
-          defaultValue: ``,
+          defaultValue: 0,
         },
       },
       resolve(image, fieldArgs, context) {
@@ -155,7 +155,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
         },
         rotate: {
           type: GraphQLInt,
-          defaultValue: ``,
+          defaultValue: 0,
         },
       },
       resolve(image, fieldArgs, context) {
@@ -217,7 +217,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
         },
         rotate: {
           type: GraphQLInt,
-          defaultValue: ``,
+          defaultValue: 0,
         },
       },
       resolve(image, fieldArgs, context) {

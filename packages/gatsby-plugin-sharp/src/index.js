@@ -65,7 +65,7 @@ const processFile = (file, jobs, cb) => {
     }
 
     // rotate
-    if (args.rotate) {
+    if (args.rotate && args.rotate !== 0) {
       clonedPipeline = clonedPipeline.rotate(args.rotate)
     }
 
@@ -229,7 +229,7 @@ function queueImageResizing({ file, args = {} }) {
   const imgSrc = `/${file.internal
     .contentDigest}-${argsDigestShort}.${fileExtension}`
   const filePath = path.join(process.cwd(), `public`, `static`, imgSrc)
-  
+
   // Create function to call when the image is finished.
   let outsideResolve
   const finishedPromise = new Promise(resolve => {
@@ -312,7 +312,7 @@ async function notMemoizedbase64({ file, args = {} }) {
   }
 
   // rotate
-  if (options.rotate) {
+  if (options.rotate && options.rotate !== 0) {
     pipeline = pipeline.rotate(options.rotate)
   }
 
