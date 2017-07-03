@@ -20,29 +20,27 @@ export const defaultOptions = {
           siteUrl
         }
       }
-      allMarkdownRemark(
-        limit: 1000,
+      
+      allSitePage(
+        limit: 1000000000,
         filter: {
-          frontmatter: {
-            draft: { ne: true }
-          }
+          path: {ne: "/dev-404-page/"}
         }
       ) {
         edges {
           node {
-            fields {
-              slug
-            }
+            path
           }
         }
       }
-    }
-  `,
+  }`,
   output: `/sitemap.xml`,
-  serialize: ({ site, allMarkdownRemark }) =>
-    allMarkdownRemark.edges.map(edge => {
+  serialize: ({ site, allSitePage }) =>
+    allSitePage.edges.map(edge => {
       return {
-        url: site.siteMetadata.siteUrl + edge.node.fields.slug,
+        url: site.siteMetadata.siteUrl + edge.node.path,
+        changefreq: 'daily',
+        priority: 0.7,
       }
-    }),
+  }),
 }
