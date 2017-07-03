@@ -32,6 +32,9 @@ const ctaButtonStyles = {
 const IndexRoute = React.createClass({
   render() {
     console.log(this.props.data)
+    const blogPosts = this.props.data.allMarkdownRemark.edges.map(
+      edge => edge.node
+    )
     return (
       <div>
         <div
@@ -198,14 +201,109 @@ const IndexRoute = React.createClass({
               sizes={this.props.data.file.childImageSharp.responsiveSizes.sizes}
             />
           </div>
-          <div css={{ textAlign: `center`, padding: `4rem 0` }}>
-            <h2>Curious yet?</h2>
+          <div css={{ textAlign: `center`, padding: `${rhythm(2)} 0` }}>
+            <h1 css={{ marginTop: 0 }}>Curious yet?</h1>
             <p>It only takes a few minutes to get up and running!</p>
             <Link css={ctaButtonStyles} to="/docs/">
               Get Started
             </Link>
           </div>
         </Container>
+        <div
+          css={{
+            backgroundColor: `#f5f3f7`,
+            padding: `${rhythm(0.25)} 0`,
+            [presets.Tablet]: {
+              padding: `${rhythm(2)} 0`,
+            },
+          }}
+        >
+          <Container>
+            <h2
+              css={{
+                textAlign: `left`,
+                marginTop: 0,
+                color: `#9d7cbf`,
+                [presets.Tablet]: {
+                  paddingBottom: rhythm(1),
+                },
+              }}
+            >
+              Latest from the Gatsby blog
+            </h2>
+            {blogPosts.map(post => {
+              const avatar =
+                post.frontmatter.author.avatar.childImageSharp
+                  .responsiveResolution
+              return (
+                <div key={post.fields.slug} css={{ paddingBottom: rhythm(2) }}>
+                  <Link to={post.fields.slug}>
+                    <h2
+                      css={{
+                        marginBottom: rhythm(1 / 8),
+                      }}
+                    >
+                      {post.frontmatter.title}
+                    </h2>
+                    <p
+                      css={{
+                        color: colors.b[13],
+                      }}
+                    >
+                      {post.frontmatter.excerpt
+                        ? post.frontmatter.excerpt
+                        : post.excerpt}
+                    </p>
+                  </Link>
+                  <div>
+                    <img
+                      alt={`Avatar for ${post.frontmatter.author.id}`}
+                      src={avatar.src}
+                      srcSet={avatar.srcSet}
+                      height={avatar.height}
+                      width={avatar.width}
+                      css={{
+                        borderRadius: `100%`,
+                        display: `inline-block`,
+                        marginRight: rhythm(1 / 2),
+                        marginBottom: 0,
+                        verticalAlign: `top`,
+                      }}
+                    />
+                    <div
+                      css={{
+                        display: `inline-block`,
+                      }}
+                    >
+                      <div
+                        css={{
+                          color: colors.b[12],
+                          lineHeight: 1.1,
+                        }}
+                      >
+                        <small>
+                          {post.frontmatter.author.id}
+                        </small>
+                      </div>
+                      <div
+                        css={{
+                          color: colors.b[12],
+                          lineHeight: 1.1,
+                        }}
+                      >
+                        <small>
+                          <em>
+                            {post.frontmatter.date}
+                          </em>
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
+          </Container>
+        </div>
       </div>
     )
   },
@@ -226,6 +324,41 @@ export const pageQuery = graphql`
           src
           srcSet
           sizes
+        }
+      }
+    }
+    allMarkdownRemark(
+      sort: { order: DESC, fields: [frontmatter___date] }
+      limit: 2
+      filter: {
+        frontmatter: { draft: { ne: true } }
+        fileAbsolutePath: { regex: "/blog/" }
+      }
+    ) {
+      edges {
+        node {
+          excerpt
+          fields {
+            slug
+          }
+          frontmatter {
+            excerpt
+            title
+            date(formatString: "DD MMMM, YYYY")
+            author {
+              id
+              avatar {
+                childImageSharp {
+                  responsiveResolution(width: 35, height: 35) {
+                    width
+                    height
+                    src
+                    srcSet
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }
