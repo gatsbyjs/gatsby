@@ -17,12 +17,15 @@ process.on(`unhandledRejection`, error => {
 const defaultHost = `localhost`
 
 const directory = path.resolve(`.`)
-const sitePackageJson = require(path.join(directory, `package.json`))
-const browserslist = sitePackageJson.browserslist || [
-  "> 1%",
-  "last 2 versions",
-  "IE >= 9",
-]
+const getSiteInfo = () => {
+  const sitePackageJson = require(path.join(directory, `package.json`))
+  const browserslist = sitePackageJson.browserslist || [
+    `> 1%`,
+    `last 2 versions`,
+    `IE >= 9`,
+  ]
+  return { sitePackageJson, browserslist }
+}
 
 program.version(packageJson.version).usage(`[command] [options]`)
 
@@ -43,6 +46,7 @@ program
   .action(command => {
     const develop = require(`../utils/develop`)
     // console.timeEnd(`time to load develop`)
+    const { sitePackageJson, browserslist } = getSiteInfo()
     const p = {
       ...command,
       directory,
@@ -64,6 +68,7 @@ program
     process.env.NODE_ENV = `production`
 
     const build = require(`../utils/build`)
+    const { sitePackageJson, browserslist } = getSiteInfo()
     const p = {
       ...command,
       directory,
@@ -88,6 +93,7 @@ program
   .option(`-o, --open`, `Open the site in your browser for you.`)
   .action(command => {
     const serve = require(`../utils/serve`)
+    const { sitePackageJson, browserslist } = getSiteInfo()
     const p = {
       ...command,
       directory,

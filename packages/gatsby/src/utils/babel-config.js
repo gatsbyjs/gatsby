@@ -146,7 +146,7 @@ module.exports = async function babelConfig(program, stage) {
   // Add default plugins and presets.
   ;[
     [
-      require.resolve("babel-preset-env"),
+      require.resolve(`babel-preset-env`),
       {
         loose: true,
         uglify: true,
@@ -154,7 +154,7 @@ module.exports = async function babelConfig(program, stage) {
         targets: {
           browsers: program.browserslist,
         },
-        exclude: ["transform-regenerator", "transform-es2015-typeof-symbol"],
+        exclude: [`transform-regenerator`, `transform-es2015-typeof-symbol`],
       },
     ],
     `stage-0`,
