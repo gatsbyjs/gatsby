@@ -81,14 +81,18 @@ module.exports = React.createClass({
             borderBottom:
               this.props.location.pathname !== `/`
                 ? `1px solid ${presets.veryLightPurple}`
-                : ``,
+                : `none`,
+            backgroundColor:
+              this.props.location.pathname !== `/`
+                ? `rgba(255,255,255,0.975)`
+                : `rgba(0,0,0,0)`,
             [presets.Tablet]: {
-              position: `fixed`,
+              position:
+                this.props.location.pathname !== `/` ? `fixed` : `absolute`,
               zIndex: `1`,
               height: headerHeight,
               left: 0,
               right: 0,
-              backgroundColor: `rgba(255,255,255,0.975)`,
             },
           }}
         >
@@ -110,7 +114,6 @@ module.exports = React.createClass({
             >
               <img
                 src={logo}
-                alt={`Gatsby logo`}
                 css={{
                   display: `inline-block`,
                   height: rhythm(1.4),
@@ -231,7 +234,8 @@ module.exports = React.createClass({
               href="https://github.com/gatsbyjs/gatsby"
               css={{
                 ...scale(-1 / 5),
-                color: typography.options.bodyColor,
+                // color: typography.options.bodyColor,
+                color: `white`,
                 display: `inline-block`,
                 float: `right`,
                 lineHeight: rhythm(1.5),
@@ -254,7 +258,8 @@ module.exports = React.createClass({
             paddingTop: 0,
             [presets.Tablet]: {
               margin: `0 auto`,
-              paddingTop: headerHeight,
+              paddingTop:
+                this.props.location.pathname !== `/` ? headerHeight : 0,
             },
           }}
         >
