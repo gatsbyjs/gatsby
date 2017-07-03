@@ -10,6 +10,7 @@
     "build": "gatsby build"
   },
   "dependencies": {
+    "@types/node": "^8.0.7",
     "@types/react": "15.0.21",
     "@types/react-dom": "0.14.23",
     "gatsby": "latest",
