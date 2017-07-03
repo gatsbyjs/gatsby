@@ -93,6 +93,8 @@ async function startServer(program) {
           res.status(500).end()
         }
       })
+    } else {
+      next()
     }
   })
 
