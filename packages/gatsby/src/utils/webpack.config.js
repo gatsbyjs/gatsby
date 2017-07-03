@@ -1,16 +1,18 @@
-import { uniq, some } from "lodash"
-import fs from "fs"
-import path from "path"
-import webpack from "webpack"
-import Config from "webpack-configurator"
-import ExtractTextPlugin from "extract-text-webpack-plugin"
-import StaticSiteGeneratorPlugin from "static-site-generator-webpack-plugin"
-import { StatsWriterPlugin } from "webpack-stats-plugin"
-import FriendlyErrorsWebpackPlugin from "friendly-errors-webpack-plugin"
+// @flow
+
+import { uniq, some } from 'lodash'
+import fs from 'fs'
+import path from 'path'
+import webpack from 'webpack'
+import Config from 'webpack-configurator'
+import ExtractTextPlugin from 'extract-text-webpack-plugin'
+import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin'
+import { StatsWriterPlugin } from 'webpack-stats-plugin'
+import FriendlyErrorsWebpackPlugin from 'friendly-errors-webpack-plugin'
 
 // This isn't working right it seems.
 // import WebpackStableModuleIdAndHash from 'webpack-stable-module-id-and-hash'
-import webpackModifyValidate from "./webpack-modify-validate"
+import webpackModifyValidate from './webpack-modify-validate'
 
 const { store } = require(`../redux`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
@@ -20,6 +22,13 @@ const GatsbyModulePlugin = require(`../loaders/gatsby-module-loader/plugin`)
 const genBabelConfig = require(`./babel-config`)
 const { joinPath } = require(`./path`)
 
+type Stage =
+  | 'develop'
+  | 'develop-html'
+  | 'build-css'
+  | 'build-html'
+  | 'build-javascript'
+
 // Five stages or modes:
 //   1) develop: for `gatsby develop` command, hot reload and CSS injection into page
 //   2) develop-html: same as develop without react-hmre in the babel config for html renderer
@@ -27,15 +36,9 @@ const { joinPath } = require(`./path`)
 //   4) build-html: build all HTML files
 //   5) build-javascript: Build js chunks for Single Page App in production
 
-module.exports = async (
-  program,
-  directory,
-  suppliedStage,
-  webpackPort = 1500,
-  pages = []
-) => {
+module.exports = async (suppliedStage: Stage, { program, pages }: any) => {
+  const { directory, port = 1500 } = program
   const babelStage = suppliedStage
-
   // We combine develop & develop-html stages for purposes of generating the
   // webpack config.
   const stage = suppliedStage
@@ -48,7 +51,7 @@ module.exports = async (
         return {
           path: directory,
           filename: `[name].js`,
-          publicPath: `http://${program.host}:${webpackPort}/`,
+          publicPath: `http://${program.host}:${port}/`,
         }
       case `build-css`:
         // Webpack will always generate a resultant javascript file.
@@ -94,7 +97,7 @@ module.exports = async (
             require.resolve(`react-hot-loader/patch`),
             `${require.resolve(
               `webpack-hot-middleware/client`
-            )}?path=http://${program.host}:${webpackPort}/__webpack_hmr&reload=true`,
+            )}?path=http://${program.host}:${port}/__webpack_hmr&reload=true`,
             joinPath(directory, `.cache/app`),
           ],
         }
@@ -127,7 +130,7 @@ module.exports = async (
           new webpack.HotModuleReplacementPlugin(),
           new webpack.NoErrorsPlugin(),
           new webpack.DefinePlugin({
-            "process.env": {
+            'process.env': {
               NODE_ENV: JSON.stringify(
                 process.env.NODE_ENV ? process.env.NODE_ENV : `development`
               ),
@@ -144,17 +147,20 @@ module.exports = async (
           new FriendlyErrorsWebpackPlugin({
             compilationSuccessInfo: {
               messages: [
-                `Your site is running at http://localhost:${program.port}`,
-                `Your graphql debugger is running at http://localhost:${program.port}/___graphql`,
+                `Your site is running at http://localhost:${port}`,
+                `Your graphql debugger is running at http://localhost:${port}/___graphql`,
               ],
             },
           }),
         ]
       case `develop-html`:
         return [
-          new StaticSiteGeneratorPlugin(`render-page.js`, pages),
+          new StaticSiteGeneratorPlugin(
+            `render-page.js`,
+            pages.map(p => p.path)
+          ),
           new webpack.DefinePlugin({
-            "process.env": {
+            'process.env': {
               NODE_ENV: JSON.stringify(
                 process.env.NODE_ENV ? process.env.NODE_ENV : `development`
               ),
@@ -168,7 +174,7 @@ module.exports = async (
       case `build-css`:
         return [
           new webpack.DefinePlugin({
-            "process.env": {
+            'process.env': {
               NODE_ENV: JSON.stringify(
                 process.env.NODE_ENV ? process.env.NODE_ENV : `production`
               ),
@@ -181,9 +187,12 @@ module.exports = async (
         ]
       case `build-html`:
         return [
-          new StaticSiteGeneratorPlugin(`render-page.js`, pages),
+          new StaticSiteGeneratorPlugin(
+            `render-page.js`,
+            pages.map(page => page.path)
+          ),
           new webpack.DefinePlugin({
-            "process.env": {
+            'process.env': {
               NODE_ENV: JSON.stringify(
                 process.env.NODE_ENV ? process.env.NODE_ENV : `production`
               ),
@@ -196,9 +205,8 @@ module.exports = async (
         ]
       case `build-javascript`: {
         // Get array of page template component names.
-        let components = store
-          .getState()
-          .pages.map(page => page.componentChunkName)
+        let components = pages.map(page => page.componentChunkName)
+
         components = uniq(components)
         components.push(`layout-component---index`)
         return [
@@ -261,7 +269,7 @@ module.exports = async (
           // optimizations for React) and whether prefixing links is enabled
           // (__PREFIX_PATHS__) and what the link prefix is (__PATH_PREFIX__).
           new webpack.DefinePlugin({
-            "process.env": {
+            'process.env': {
               NODE_ENV: JSON.stringify(
                 process.env.NODE_ENV ? process.env.NODE_ENV : `production`
               ),
@@ -355,6 +363,14 @@ module.exports = async (
     config.loader(`yaml`, {
       test: /\.ya?ml/,
       loaders: [`json`, `yaml`],
+    })
+
+    pages.forEach(({ path, loader }, idx) => {
+      if (!loader) return
+      config.loader(`page_loader_${idx}`, {
+        test: path,
+        ...loader,
+      })
     })
 
     // "file" loader makes sure those assets end up in the `public` folder.

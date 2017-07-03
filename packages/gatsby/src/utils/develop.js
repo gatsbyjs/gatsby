@@ -30,8 +30,6 @@ rlInterface.on(`SIGINT`, () => {
 })
 
 async function startServer(program) {
-  const directory = program.directory
-
   // Start bootstrap process.
   await bootstrap(program)
   await developHtml(program).catch(err => {
@@ -39,12 +37,12 @@ async function startServer(program) {
     process.exit(1)
   })
 
-  const compilerConfig = await webpackConfig(
+  const pages = store.getState().pages
+
+  const compilerConfig = await webpackConfig(`develop`, {
     program,
-    directory,
-    `develop`,
-    program.port
-  )
+    pages,
+  })
 
   const devConfig = compilerConfig.resolve()
   const compiler = webpack(devConfig)

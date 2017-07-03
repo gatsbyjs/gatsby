@@ -1,8 +1,8 @@
 /* @flow */
-import webpack from "webpack"
-import Promise from "bluebird"
-import fs from "fs"
-import webpackConfig from "./webpack.config"
+import webpack from 'webpack'
+import Promise from 'bluebird'
+import fs from 'fs'
+import webpackConfig from './webpack.config'
 const { store } = require(`../redux`)
 
 const debug = require(`debug`)(`gatsby:html`)
@@ -12,16 +12,13 @@ module.exports = async (program: any) => {
 
   debug(`generating static HTML`)
   // Reduce pages objects to an array of paths.
-  const pages = store.getState().pages.map(page => page.path)
+  const pages = store.getState().pages
 
   // Static site generation.
-  const compilerConfig = await webpackConfig(
+  const compilerConfig = await webpackConfig(`build-html`, {
     program,
-    directory,
-    `build-html`,
-    null,
-    pages
-  )
+    pages,
+  })
 
   return new Promise((resolve, reject) => {
     webpack(compilerConfig.resolve()).run((e, stats) => {

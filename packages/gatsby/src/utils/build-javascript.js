@@ -1,16 +1,17 @@
 /* @flow */
-import webpack from "webpack"
-import Promise from "bluebird"
-import webpackConfig from "./webpack.config"
+import webpack from 'webpack'
+import Promise from 'bluebird'
+import webpackConfig from './webpack.config'
+
+const { store } = require(`../redux`)
 
 module.exports = async program => {
-  const { directory } = program
+  const pages = store.getState().pages
 
-  const compilerConfig = await webpackConfig(
+  const compilerConfig = await webpackConfig(`build-javascript`, {
     program,
-    directory,
-    `build-javascript`
-  )
+    pages,
+  })
 
   return new Promise(resolve => {
     webpack(compilerConfig.resolve()).run(() => resolve())
