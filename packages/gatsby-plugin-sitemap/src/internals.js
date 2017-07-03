@@ -22,7 +22,6 @@ export const defaultOptions = {
       }
       
       allSitePage(
-        limit: 1000000000,
         filter: {
           path: {ne: "/dev-404-page/"}
         }
