@@ -16,6 +16,19 @@ const desktopBackgroundImage = {
             linear-gradient(45deg, #f5f3f7 33%, white 33%)`,
 }
 const headerHeight = `55px`
+const ctaButtonStyles = {
+  ...scale(2 / 5),
+  display: `inline-block`,
+  fontFamily: options.headerFontFamily.join(`,`),
+  padding: `${rhythm(1 / 2)} ${rhythm(1)}`,
+  // Increase specificity
+  "&&": {
+    border: `1px solid #744c9e`,
+    boxShadow: `none`,
+    color: `#744c9e`,
+    ":hover": { background: `#744c9e`, color: `white` },
+  },
+}
 const IndexRoute = React.createClass({
   render() {
     console.log(this.props.data)
@@ -74,22 +87,7 @@ const IndexRoute = React.createClass({
               Blazing-fast static site generator for React
             </h1>
             <div>
-              <Link
-                css={{
-                  ...scale(2 / 5),
-                  display: `inline-block`,
-                  fontFamily: options.headerFontFamily.join(`,`),
-                  padding: `${rhythm(1 / 2)} ${rhythm(1)}`,
-                  // Increase specificity
-                  "&&": {
-                    border: `1px solid #744c9e`,
-                    boxShadow: `none`,
-                    color: `#744c9e`,
-                    ":hover": { background: `#744c9e`, color: `white` },
-                  },
-                }}
-                to="/docs/"
-              >
+              <Link css={ctaButtonStyles} to="/docs/">
                 Get Started
               </Link>
             </div>
@@ -199,6 +197,13 @@ const IndexRoute = React.createClass({
               }
               sizes={this.props.data.file.childImageSharp.responsiveSizes.sizes}
             />
+          </div>
+          <div css={{ textAlign: `center`, padding: `4rem 0` }}>
+            <h2>Curious yet?</h2>
+            <p>It only takes a few minutes to get up and running!</p>
+            <Link css={ctaButtonStyles} to="/docs/">
+              Get Started
+            </Link>
           </div>
         </Container>
       </div>
