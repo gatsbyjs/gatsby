@@ -132,99 +132,103 @@ const IndexRoute = React.createClass({
             </div>
           </div>
         </div>
-        <Container hasSideBar={false} css={{}}>
-          <div css={{ display: `flex`, flexWrap: `wrap` }}>
-            <div
-              css={{
-                flex: `0 0 100%`,
-                [presets.Tablet]: { flex: 1, paddingRight: rhythm(2) },
-              }}
-            >
-              <h2>Modern web tech without the headache</h2>
-              <FuturaParagraph>
-                Enjoy all the power of the latest web technologies. React.js,
-                webpack, modern JavaScript and CSS and more are all setup and
-                waiting for you to install and start building.
-              </FuturaParagraph>
+        <Container hasSideBar={false}>
+          <div css={{ marginLeft: rhythm(-1), marginRight: rhythm(-1) }}>
+            <div css={{ display: `flex`, flexWrap: `wrap` }}>
+              <div
+                css={{
+                  flex: `0 0 100%`,
+                  [presets.Tablet]: { flex: 1, padding: `0 ${rhythm(1)}` },
+                }}
+              >
+                <h2>Modern web tech without the headache</h2>
+                <FuturaParagraph>
+                  Enjoy all the power of the latest web technologies. React.js,
+                  webpack, modern JavaScript and CSS and more are all setup and
+                  waiting for you to install and start building.
+                </FuturaParagraph>
+              </div>
+              <div
+                css={{
+                  flex: `0 0 100%`,
+                  [presets.Tablet]: { flex: 1, padding: `0 ${rhythm(1)}` },
+                }}
+              >
+                <h2>Bring your own data</h2>
+                <FuturaParagraph>
+                  Gatsby’s rich data plugin ecosystem lets you build sites with
+                  the data you want. Integrate data from one or many sources:
+                  headless CMSs, SaaS services, APIs, databases, your file
+                  system, and more. Pull data directly into your pages using
+                  GraphQL.
+                </FuturaParagraph>
+              </div>
             </div>
-            <div
-              css={{
-                flex: `0 0 100%`,
-                [presets.Tablet]: { flex: 1, paddingRight: rhythm(2) },
-              }}
-            >
-              <h2>Bring your own data</h2>
-              <FuturaParagraph>
-                Gatsby’s rich data plugin ecosystem lets you build sites with
-                the data you want. Integrate data from one or many sources:
-                headless CMSs, SaaS services, APIs, databases, your file system,
-                and more. Pull data directly into your pages using GraphQL.
-              </FuturaParagraph>
+            <div css={{ display: `flex`, flexWrap: `wrap` }}>
+              <div
+                css={{
+                  flex: `0 0 100%`,
+                  [presets.Tablet]: { flex: 1, padding: `0 ${rhythm(1)}` },
+                }}
+              >
+                <h2>Scale to the entire internet</h2>
+                <FuturaParagraph>
+                  Gatsby.js is Internet Scale. Forget complicated deploys with
+                  databases and servers and their expensive, time-consuming
+                  setup costs, maintenance, and scaling fears. Gatsby.js builds
+                  your site as “static” files which can be deployed easily on
+                  dozens of services.
+                </FuturaParagraph>
+              </div>
+              <div
+                css={{
+                  flex: `0 0 100%`,
+                  [presets.Tablet]: { flex: 1, padding: `0 ${rhythm(1)}` },
+                }}
+              >
+                <h2>Future-proof your website</h2>
+                <FuturaParagraph>
+                  Don't build a website with last decade's tech. The future of
+                  the web is mobile, JavaScript and APIs—the {` `}
+                  <a href="https://jamstack.org/">JAMstack</a>. Every website is
+                  a web app and every web app is a website. Gatsby.js is the
+                  universal JavaScript framework you’ve been waiting for.
+                </FuturaParagraph>
+              </div>
             </div>
-          </div>
-          <div css={{ display: `flex`, flexWrap: `wrap` }}>
-            <div
-              css={{
-                flex: `0 0 100%`,
-                [presets.Tablet]: { flex: 1, paddingRight: rhythm(2) },
-              }}
-            >
-              <h2>Scale to the entire internet</h2>
-              <FuturaParagraph>
-                Gatsby.js is Internet Scale. Forget complicated deploys with
-                databases and servers and their expensive, time-consuming setup
-                costs, maintenance, and scaling fears. Gatsby.js builds your
-                site as “static” files which can be deployed easily on dozens of
-                services.
-              </FuturaParagraph>
-            </div>
-            <div
-              css={{
-                flex: `0 0 100%`,
-                [presets.Tablet]: { flex: 1, paddingRight: rhythm(2) },
-              }}
-            >
-              <h2>Future-proof your website</h2>
-              <FuturaParagraph>
-                Don't build a website with last decade's tech. The future of the
-                web is mobile, JavaScript and APIs—the {` `}
-                <a href="https://jamstack.org/">JAMstack</a>. Every website is a
-                web app and every web app is a website. Gatsby.js is the
-                universal JavaScript framework you’ve been waiting for.
-              </FuturaParagraph>
-            </div>
-          </div>
-          <div css={{ display: `flex`, flexWrap: `wrap` }}>
-            <div
-              css={{
-                flex: `0 0 100%`,
-                [presets.Tablet]: { flex: 1, paddingRight: rhythm(2) },
-              }}
-            >
-              <h2>
-                <em>Static</em> Progessive Web Apps
-              </h2>
-              <FuturaParagraph>
-                Gatsby.js is a static PWA (Progressive Web App) generator. You
-                get code and data splitting out-of-the-box. Gatsby loads an HTML
-                file that’s a server rendered version of your React.js page then
-                makes it live with JavaScript. Code and data for other pages get
-                preloaded so clicking around the site feels incredibly fast.
-              </FuturaParagraph>
-            </div>
-            <div
-              css={{
-                flex: `0 0 100%`,
-                [presets.Tablet]: { flex: 1, paddingRight: rhythm(2) },
-              }}
-            >
-              <h2>Speed past the competition</h2>
-              <FuturaParagraph>
-                Gatsby.js builds the fastest possible website. Instead of slow
-                geography-bound servers, your site is lifted into a global cloud
-                of servers ready to be delivered instantly to your users
-                wherever they are.
-              </FuturaParagraph>
+            <div css={{ display: `flex`, flexWrap: `wrap` }}>
+              <div
+                css={{
+                  flex: `0 0 100%`,
+                  [presets.Tablet]: { flex: 1, padding: `0 ${rhythm(1)}` },
+                }}
+              >
+                <h2>
+                  <em>Static</em> Progessive Web Apps
+                </h2>
+                <FuturaParagraph>
+                  Gatsby.js is a static PWA (Progressive Web App) generator. You
+                  get code and data splitting out-of-the-box. Gatsby loads an
+                  HTML file that’s a server rendered version of your React.js
+                  page then makes it live with JavaScript. Code and data for
+                  other pages get preloaded so clicking around the site feels
+                  incredibly fast.
+                </FuturaParagraph>
+              </div>
+              <div
+                css={{
+                  flex: `0 0 100%`,
+                  [presets.Tablet]: { flex: 1, padding: `0 ${rhythm(1)}` },
+                }}
+              >
+                <h2>Speed past the competition</h2>
+                <FuturaParagraph>
+                  Gatsby.js builds the fastest possible website. Instead of slow
+                  geography-bound servers, your site is lifted into a global
+                  cloud of servers ready to be delivered instantly to your users
+                  wherever they are.
+                </FuturaParagraph>
+              </div>
             </div>
           </div>
           <div>
