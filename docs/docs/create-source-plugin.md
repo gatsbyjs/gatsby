@@ -4,15 +4,15 @@ title: "Create a source plugin"
 
 There are two types of plugins that work within Gatsby's data system, "source" and "transformer" plugins.
 
-* **Source** plugins "source" data into what Gatsby calls [nodes](/docs/node-interface/).
+* **Source** plugins "source" data from remote or local locations into what Gatsby calls [nodes](/docs/node-interface/).
 * **Transformer** plugins "transform" data provided by source plugins into new nodes and/or node fields.
 
 For example:
 
 The [`gatsby-source-filesystem`](/docs/packages/gatsby-source-filesystem/)
 plugin "sources" data about files from the file system. It creates nodes with
-a type `File`. On each node are fields like the `absolutePath`, `extension`,
-`modifyDate`, etc.
+a type `File`, each File node corresponding to a file on the filesystem. On
+each node are fields like the `absolutePath`, `extension`, `modifyDate`, etc.
 
 And importantly, each node created by the filesystem source plugin includes the
 raw content of the file and its *media type*.
@@ -26,6 +26,12 @@ email. You're probably familiar with many media types such as `application/javas
 Each source plugin is responsible for setting the media type for the nodes they
 create. This way, source and transformer plugins can work together easily.
 
+This is not a required field but it's the way for source plugins to indicate to
+transformers that there is "raw" data that can still be further processed. It
+allows plugins to remain small and focused. Source plugins don't have to have
+opinions on how to transform their data. They can just set the `mediaType` and
+push that responsibility to transformer plugins.
+
 For example, it's quite common for services to allow you to add content as markdown.
 If you pull that markdown into Gatsby and create a new node, what then? How would
 a user of your source plugin convert that markdown into HTML they can use in
@@ -35,15 +41,16 @@ plugins will see your node and transform it into HTML.
 
 This loose coupling between data source and transformer plugins allow Gatsby site
 builders to quickly assemble complex data transformation pipelines with little
-work on their (and your) part.
+work on their (and your (the source plugin author)) part.
 
 What does the code look like?
 
-A source plugin is a normal NPM package. It has a package.json with optional dependencies.
-Then it has a `gatsby-node.js` where you implement Gatsby's Node.js APIs. Gatsby supports
-back to Node 4 and as it's common to want to use more modern node.js and JavaScript syntax,
-many plugins write code in a `src` directory and compile the code. All plugins
-maintained in the Gatsby repo follow this pattern.
+A source plugin is a normal NPM package. It has a package.json with optional
+dependencies as well as a `gatsby-node.js` where you implement Gatsby's Node.js
+APIs. Gatsby supports back node versions back to Node 4 and as it's common to
+want to use more modern node.js and JavaScript syntax, many plugins write code
+in a `src` directory and compile the code. All plugins maintained in the Gatsby
+repo follow this pattern.
 
 Your `gatsby-node.js` should look something like:
 
@@ -75,4 +82,5 @@ can store the last time you fetched data using [`setPluginStatus`](/docs/bound-a
 * "Link" nodes types you create as appropriate (see [*Node
 Link*](/docs/api-specification/) in the API specification concepts section.
 * Return either a promise or use the callback (3rd parameter) to report
-back to Gatsby when you're done sourcing nodes.
+back to Gatsby when you're done sourcing nodes. Otherwise either Gatsby will continue on before
+you're done sourcing or hang while waiting for you to indicate you're finished.

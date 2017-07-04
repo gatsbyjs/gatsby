@@ -29,22 +29,21 @@ use it to help debug why your build failed.
 
 So let's open the file and dive in.
 
-The `render-page.js` file is in the "public" directory in your site
-directory. Open it up and then navigate to the line number listed in the
-first stack trace.  So if that line says something like:
+The `render-page.js` file is in the "public" directory in your site directory
+at `public/render-page.js`. Open it up and then navigate to the line number
+listed in the first stack trace.  So if that line says something like:
 
 ```shell
 ReferenceError: window is not defined at Object.render
 (render-page.js:53450:6)
 ```
 
-Then go to line #53450
+Then go to line number 53450
 
-Here it gets a bit tricky. Once at that line, you'll need to figure out
-where in your codebase the code is from. Sometimes it's your own code and
-that's easy. But other times, the offending code is from a module that
-you or worse 😱, a module many requires away from your code in some
-obscure module.
+Here it gets a bit tricky. Once at that line, you'll need to figure out where
+in your codebase the code is from. Sometimes it's your own code and that's
+easy. But other times, the offending code is from a module that you require or
+worse 😱, a module many requires away from your code in some obscure module.
 
 In this worst case scenario, you can either grep node_modules for the
 code or you can start back tracking up the stack trace (i.e. go to line
