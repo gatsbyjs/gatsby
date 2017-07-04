@@ -133,7 +133,14 @@ const IndexRoute = React.createClass({
           </div>
         </div>
         <Container hasSideBar={false}>
-          <div css={{ marginLeft: rhythm(-1), marginRight: rhythm(-1) }}>
+          <div
+            css={{
+              [presets.Tablet]: {
+                marginLeft: rhythm(-1),
+                marginRight: rhythm(-1),
+              },
+            }}
+          >
             <div css={{ display: `flex`, flexWrap: `wrap` }}>
               <div
                 css={{
