@@ -28,7 +28,7 @@ internal: {
   // that transformer plugins can take and further process.
   content: String,
 }
-...other node type specific fields
+...other fields specific to this type of node
 ```
 
 ## Source plugins
@@ -43,9 +43,9 @@ Other source plugins pull data from external APIs such as the [Drupal](/docs/pac
 
 ## Transformer plugins
 
-Transformer plugins transform source nodes into new types of nodes. It is very
-common when building Gatsby sites to install both source plugin(s) and transformer
-plugins.
+Transformer plugins can also create nodes by transforming source nodes into new
+types of nodes. It is very common when building Gatsby sites to install both
+source plugin(s) and transformer plugins.
 
 Nodes created by transformer plugins are set as "children" of their "parent"
 nodes.

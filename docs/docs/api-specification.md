@@ -2,10 +2,8 @@
 title: API specification
 ---
 
-Gatsby's APIs are tailored conceptually to some extent after React.js which
-makes sense as users of Gatsby will necessarily also be users of React.js. I
-think there's a lot of wins to making Gatsby feel as familiar as possible as
-that'll ease adoption.
+Gatsby's APIs are tailored conceptually to some extent after React.js to improve
+the coherence between the two systems.
 
 The two top priorities of the API are a) enable a broad and robust plugin
 ecosystem and b) on top of that a broad and robust theme ecosystem (themes
@@ -17,12 +15,10 @@ Plugins can extend Gatsby in many ways:
 
 * Sourcing data (e.g from the filesystem or an API or a database)
 * Transforming data from one type to another (e.g. a markdown file to HTML)
-* Creating pages (e.g. a directory of markdown files all gets turned into
-* pages with URLs derived from their file names).  Modifying webpack config
-* (e.g. for styling options, adding support for other compile-to-js
-* languages) Adding things to the rendered HTML (e.g. meta tags, analytics JS
-* snippits like Google Analytics) Writing out things to build directory based
-* on site data (e.g. service worker, sitemap, RSS feed)
+* Creating pages (e.g. a directory of markdown files all gets turned into pages with URLs derived from their file names).
+* Modifying webpack config (e.g. for styling options, adding support for other compile-to-js languages)
+* Adding things to the rendered HTML (e.g. meta tags, analytics JS snippits like Google Analytics)
+* Writing out things to build directory based on site data (e.g. service worker, sitemap, RSS feed)
 
 A single plugin can use multiple APIs to accomplish its purpose. E.g. the
 plugin for the css-in-js library [Glamor
