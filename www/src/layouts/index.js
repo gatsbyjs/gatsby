@@ -59,7 +59,7 @@ module.exports = React.createClass({
     return (
       <div>
         <Helmet
-          title={`GatsbyJS`}
+          defaultTitle={`GatsbyJS`}
           titleTemplate={`%s | GatsbyJS`}
           meta={[
             {

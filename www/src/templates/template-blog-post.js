@@ -31,10 +31,6 @@ const BlogPostTemplate = React.createClass({
           title={post.frontmatter.title}
           link={[
             {
-              rel: `canonical`,
-              href: `https://gatsbyjs.org${post.fields.slug}`,
-            },
-            {
               rel: `author`,
               href: `https://gatsbyjs.org${post.frontmatter.author.slug}`,
             },
@@ -60,6 +56,10 @@ const BlogPostTemplate = React.createClass({
             },
             {
               name: `og:image`,
+              content: post.frontmatter.image.childImageSharp.resize.src,
+            },
+            {
+              name: `twitter:image`,
               content: post.frontmatter.image.childImageSharp.resize.src,
             },
             {
@@ -183,7 +183,7 @@ export const pageQuery = graphql`
         rawDate: date
         image {
           childImageSharp {
-            resize(width: 1500) {
+            resize(width: 1500, height: 1500) {
               src
             }
           }
