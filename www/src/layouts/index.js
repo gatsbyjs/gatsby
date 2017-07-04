@@ -86,6 +86,7 @@ module.exports = React.createClass({
               this.props.location.pathname !== `/`
                 ? `rgba(255,255,255,0.975)`
                 : `rgba(0,0,0,0)`,
+            position: this.props.location.pathname !== `/` ? false : `absolute`,
             [presets.Tablet]: {
               position:
                 this.props.location.pathname !== `/` ? `fixed` : `absolute`,
@@ -234,11 +235,11 @@ module.exports = React.createClass({
               href="https://github.com/gatsbyjs/gatsby"
               css={{
                 ...scale(-1 / 5),
-                // color: typography.options.bodyColor,
-                color: `white`,
+                color: typography.options.bodyColor,
                 display: `inline-block`,
                 float: `right`,
                 lineHeight: rhythm(1.5),
+                marginLeft: rhythm(1 / 2),
                 marginRight: rhythm(1 / 2),
                 textDecoration: `none`,
                 verticalAlign: `bottom`,
@@ -246,6 +247,9 @@ module.exports = React.createClass({
                 letterSpacing: `0.03em`,
                 position: `relative`,
                 top: 1,
+                [presets.Tablet]: {
+                  color: this.props.location.pathname !== `/` ? false : `white`,
+                },
               }}
             >
               Github

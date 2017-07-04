@@ -7,7 +7,15 @@ import colors from "../utils/colors"
 
 const mobileBackgroundImage = {
   backgroundImage: `
-            linear-gradient(45deg, #f5f3f7 60%, white 60%)`,
+            linear-gradient(-45deg, #744c9e 30%, transparent 30%),
+            linear-gradient(-45deg, #9d7cbf 40%, transparent 40%),
+            linear-gradient(45deg, #f5f3f7 33%, white 33%)`,
+}
+const phabletBackgroundImage = {
+  backgroundImage: `
+            linear-gradient(-45deg, #744c9e 32.5%, transparent 32.5%),
+            linear-gradient(-45deg, #9d7cbf 47.5%, transparent 47.5%),
+            linear-gradient(45deg, #f5f3f7 37.5%, white 37.5%)`,
 }
 const desktopBackgroundImage = {
   backgroundImage: `
@@ -45,9 +53,12 @@ const IndexRoute = React.createClass({
             // backgroundImage: `linear-gradient(135deg,${colors.b[14]},${colors
             // .b[13]},${colors.b[12]})`,
             paddingBottom: rhythm(1),
+            paddingTop: headerHeight,
+            minHeight: rhythm(20),
+            [presets.Phablet]: {
+              ...phabletBackgroundImage,
+            },
             [presets.Desktop]: {
-              paddingTop: headerHeight,
-              height: rhythm(20),
               ...desktopBackgroundImage,
             },
           }}
@@ -56,6 +67,16 @@ const IndexRoute = React.createClass({
             css={{
               padding: rhythm(1),
               paddingLeft: rhythm(1.5),
+              width: rhythm(16),
+              [presets.Mobile]: {
+                width: rhythm(17),
+              },
+              [presets.Phablet]: {
+                width: rhythm(18),
+              },
+              [presets.Tablet]: {
+                width: rhythm(20),
+              },
               [presets.Desktop]: {
                 width: rhythm(23),
               },
@@ -73,16 +94,19 @@ const IndexRoute = React.createClass({
                 color: `#744c9e`,
                 ...scale(1),
                 lineHeight: 1,
-                [presets.Tablet]: {
-                  lineHeight: 0.9,
+                [presets.Mobile]: {
+                  fontSize: scale(1.1).fontSize,
                 },
-                lineHeight: 1,
+                [presets.Phablet]: {
+                  fontSize: scale(1.2).fontSize,
+                },
+                [presets.Tablet]: {
+                  fontSize: scale(1.3).fontSize,
+                },
                 [presets.Desktop]: {
                   fontSize: scale(1.5).fontSize,
                 },
                 [presets.Hd]: {
-                  marginTop: rhythm(1),
-                  marginBottom: rhythm(1.5),
                   fontSize: scale(1.75).fontSize,
                 },
               }}
