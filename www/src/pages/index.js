@@ -67,7 +67,6 @@ const IndexRoute = React.createClass({
             css={{
               padding: rhythm(1),
               paddingLeft: rhythm(1.5),
-              width: rhythm(16),
               [presets.Mobile]: {
                 width: rhythm(17),
               },
@@ -92,7 +91,7 @@ const IndexRoute = React.createClass({
                 marginTop: rhythm(1),
                 marginBottom: rhythm(1.5),
                 color: `#744c9e`,
-                ...scale(1),
+                ...scale(0.9),
                 lineHeight: 1,
                 [presets.Mobile]: {
                   fontSize: scale(1.1).fontSize,
