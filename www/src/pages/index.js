@@ -23,6 +23,11 @@ const desktopBackgroundImage = {
             linear-gradient(-45deg, #9d7cbf 50%, transparent 50%),
             linear-gradient(45deg, #f5f3f7 33%, white 33%)`,
 }
+const FuturaParagraph = ({ children }) =>
+  <p css={{ fontFamily: options.headerFontFamily.join(`,`), ...scale(1 / 10) }}>
+    {children}
+  </p>
+
 const headerHeight = `55px`
 const ctaButtonStyles = {
   ...scale(2 / 5),
@@ -119,12 +124,7 @@ const IndexRoute = React.createClass({
             </div>
           </div>
         </div>
-        <Container
-          hasSideBar={false}
-          css={{
-            fontFamily: options.headerFontFamily.join(`,`),
-          }}
-        >
+        <Container hasSideBar={false} css={{}}>
           <div css={{ display: `flex`, flexWrap: `wrap` }}>
             <div
               css={{
@@ -133,11 +133,11 @@ const IndexRoute = React.createClass({
               }}
             >
               <h2>Modern web tech without the headache</h2>
-              <p>
+              <FuturaParagraph>
                 Enjoy all the power of the latest web technologies. React.js,
                 webpack, modern JavaScript and CSS and more are all setup and
                 waiting for you to install and start building.
-              </p>
+              </FuturaParagraph>
             </div>
             <div
               css={{
@@ -146,12 +146,12 @@ const IndexRoute = React.createClass({
               }}
             >
               <h2>Bring your own data</h2>
-              <p>
+              <FuturaParagraph>
                 Gatsby’s rich data plugin ecosystem lets you build sites with
                 the data you want. Integrate data from one or many sources:
                 headless CMSs, SaaS services, APIs, databases, your file system,
                 and more. Pull data directly into your pages using GraphQL.
-              </p>
+              </FuturaParagraph>
             </div>
           </div>
           <div css={{ display: `flex`, flexWrap: `wrap` }}>
@@ -162,13 +162,13 @@ const IndexRoute = React.createClass({
               }}
             >
               <h2>Scale to the entire internet</h2>
-              <p>
+              <FuturaParagraph>
                 Gatsby.js is Internet Scale. Forget complicated deploys with
                 databases and servers and their expensive, time-consuming setup
                 costs, maintenance, and scaling fears. Gatsby.js builds your
                 site as “static” files which can be deployed easily on dozens of
                 services.
-              </p>
+              </FuturaParagraph>
             </div>
             <div
               css={{
@@ -177,13 +177,13 @@ const IndexRoute = React.createClass({
               }}
             >
               <h2>Future-proof your website</h2>
-              <p>
+              <FuturaParagraph>
                 Don't build a website with last decade's tech. The future of the
                 web is mobile, JavaScript and APIs—the {` `}
                 <a href="https://jamstack.org/">JAMstack</a>. Every website is a
                 web app and every web app is a website. Gatsby.js is the
                 universal JavaScript framework you’ve been waiting for.
-              </p>
+              </FuturaParagraph>
             </div>
           </div>
           <div css={{ display: `flex`, flexWrap: `wrap` }}>
@@ -196,13 +196,13 @@ const IndexRoute = React.createClass({
               <h2>
                 <em>Static</em> Progessive Web Apps
               </h2>
-              <p>
+              <FuturaParagraph>
                 Gatsby.js is a static PWA (Progressive Web App) generator. You
                 get code and data splitting out-of-the-box. Gatsby loads an HTML
                 file that’s a server rendered version of your React.js page then
                 makes it live with JavaScript. Code and data for other pages get
                 preloaded so clicking around the site feels incredibly fast.
-              </p>
+              </FuturaParagraph>
             </div>
             <div
               css={{
@@ -211,12 +211,12 @@ const IndexRoute = React.createClass({
               }}
             >
               <h2>Speed past the competition</h2>
-              <p>
+              <FuturaParagraph>
                 Gatsby.js builds the fastest possible website. Instead of slow
                 geography-bound servers, your site is lifted into a global cloud
                 of servers ready to be delivered instantly to your users
                 wherever they are.
-              </p>
+              </FuturaParagraph>
             </div>
           </div>
           <div>
@@ -231,7 +231,9 @@ const IndexRoute = React.createClass({
           </div>
           <div css={{ textAlign: `center`, padding: `${rhythm(2)} 0` }}>
             <h1 css={{ marginTop: 0 }}>Curious yet?</h1>
-            <p>It only takes a few minutes to get up and running!</p>
+            <FuturaParagraph>
+              It only takes a few minutes to get up and running!
+            </FuturaParagraph>
             <Link css={ctaButtonStyles} to="/docs/">
               Get Started
             </Link>
@@ -356,12 +358,12 @@ export const pageQuery = graphql`
       }
     }
     allMarkdownRemark(
-      sort: { order: DESC, fields: [frontmatter___date] }
-      limit: 2
+      sort: { order: DESC, fields: [frontmatter___date] },
+      limit: 2,
       filter: {
-        frontmatter: { draft: { ne: true } }
-        fileAbsolutePath: { regex: "/blog/" }
-      }
+        frontmatter: { draft: { ne: true } },
+        fileAbsolutePath: { regex: "/blog/" },
+      },
     ) {
       edges {
         node {
