@@ -31,10 +31,6 @@ const BlogPostTemplate = React.createClass({
           title={post.frontmatter.title}
           link={[
             {
-              rel: `canonical`,
-              href: `https://gatsbyjs.org${post.fields.slug}`,
-            },
-            {
               rel: `author`,
               href: `https://gatsbyjs.org${post.frontmatter.author.slug}`,
             },
