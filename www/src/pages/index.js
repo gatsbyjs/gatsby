@@ -19,7 +19,7 @@ const phabletBackgroundImage = {
 }
 const desktopBackgroundImage = {
   backgroundImage: `
-            linear-gradient(-45deg, #744c9e 37.5%, transparent 37.5%),
+            linear-gradient(-45deg, #744c9e 40%, transparent 40%),
             linear-gradient(-45deg, #9d7cbf 50%, transparent 50%),
             linear-gradient(45deg, #f5f3f7 33%, white 33%)`,
 }
