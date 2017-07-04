@@ -24,6 +24,12 @@ git mv utils src
 
 ## Replace react-router's Link component with gatsby-link
 
+Add new package to project.
+
+`npm install --save gatsby-link`
+
+Use in place of react-router's Link
+
 ```jsx
 import Link from 'gastsby-link'
 
@@ -31,18 +37,20 @@ import Link from 'gastsby-link'
 <Link to="/another-page/">Another page</Link>
 ```
 
-Prefixing links is also now handled automatically by our new `<Link>` component so
-you'll need to remove `prefixLink` function calls.
+Prefixing links is also now handled automatically by our new `<Link>` component
+so remove usages of `prefixLink` in links.
 
-So just use `gatsby-link` everywhere and things will Just Work™.
+Use `gatsby-link` everywhere and things will Just Work™.
+
 
 ## config.toml is now gatsby-config.js
 
 If you previously added site metadata to `config.toml`, move that into
 the new `gatsby-config.js`.
 
-You need to remove all requires/imports of `config` in your code. Site-wide
-metadata should now be "queried" using GraphQL.
+You need to remove all requires/imports of `config` in your code.
+
+Site-wide metadata should now be "queried" using GraphQL.
 
 A minimal config module would look like:
 
@@ -275,6 +283,19 @@ props that must be added to your HTML component. Somewhere in your `<head>` add
 `{this.props.headComponents}` and somewhere at the end of your body, remove
 loading `bundle.js` and add `{this.props.postBodyComponents}`.
 
+Also the target div now must have an id of `___gatsby`. So the body section
+of your `html.js` should look like:
+
+```jsx
+<body>
+  <div
+    id="___gatsby"
+    dangerouslySetInnerHTML={{ __html: this.props.body }}
+  />
+  {this.props.postBodyComponents}
+</body>
+```
+
 ## _template.js is now src/layouts/index.js
 
 You should be able to copy your `_template.js` file directly making only one
@@ -282,4 +303,5 @@ change making `this.props.children` a function call so `this.props.children()`.
 The rational for this change is described [in this PR
 comment](https://github.com/gatsbyjs/gatsby/pull/940#issuecomment-300878300).
 
-Nested layouts are *not* supported yet but are on the roadmap for v1.
+Nested layouts (similar to the nested _template feature) are *not* supported
+yet but are on the roadmap for v1.

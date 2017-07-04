@@ -151,7 +151,6 @@ module.exports = (program: any) => {
       return rlInterface.question(question, answer => {
         if (answer.length === 0 || answer.match(/^yes|y$/i)) {
           program.port = _port // eslint-disable-line no-param-reassign
-          console.log(`changed the port`)
         }
 
         return startServer(program)
