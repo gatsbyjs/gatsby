@@ -119,7 +119,12 @@ const IndexRoute = React.createClass({
             </div>
           </div>
         </div>
-        <Container hasSideBar={false}>
+        <Container
+          hasSideBar={false}
+          css={{
+            fontFamily: options.headerFontFamily.join(`,`),
+          }}
+        >
           <div css={{ display: `flex`, flexWrap: `wrap` }}>
             <div
               css={{
@@ -246,7 +251,7 @@ const IndexRoute = React.createClass({
               css={{
                 textAlign: `left`,
                 marginTop: 0,
-                color: `#9d7cbf`,
+                color: `#744c9e`,
                 [presets.Tablet]: {
                   paddingBottom: rhythm(1),
                 },
