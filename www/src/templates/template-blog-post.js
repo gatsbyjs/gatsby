@@ -59,6 +59,10 @@ const BlogPostTemplate = React.createClass({
               content: post.frontmatter.image.childImageSharp.resize.src,
             },
             {
+              name: `twitter:image`,
+              content: post.frontmatter.image.childImageSharp.resize.src,
+            },
+            {
               name: `og:type`,
               content: `article`,
             },
