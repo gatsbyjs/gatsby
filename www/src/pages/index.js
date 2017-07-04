@@ -86,8 +86,16 @@ const IndexRoute = React.createClass({
               },
               [presets.Hd]: {
                 padding: rhythm(1),
-                paddingLeft: rhythm(1.5),
-                width: rhythm(27),
+                paddingLeft: rhythm(2.5),
+                width: rhythm(28),
+              },
+              [presets.VHd]: {
+                paddingLeft: rhythm(3.5),
+                width: rhythm(29),
+              },
+              [presets.VVHd]: {
+                paddingLeft: rhythm(4.5),
+                width: rhythm(30),
               },
             }}
           >
@@ -358,12 +366,12 @@ export const pageQuery = graphql`
       }
     }
     allMarkdownRemark(
-      sort: { order: DESC, fields: [frontmatter___date] },
-      limit: 2,
+      sort: { order: DESC, fields: [frontmatter___date] }
+      limit: 2
       filter: {
-        frontmatter: { draft: { ne: true } },
-        fileAbsolutePath: { regex: "/blog/" },
-      },
+        frontmatter: { draft: { ne: true } }
+        fileAbsolutePath: { regex: "/blog/" }
+      }
     ) {
       edges {
         node {

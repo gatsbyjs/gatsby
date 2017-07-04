@@ -38,8 +38,8 @@ export const defaultOptions = {
     allSitePage.edges.map(edge => {
       return {
         url: site.siteMetadata.siteUrl + edge.node.path,
-        changefreq: 'daily',
+        changefreq: `daily`,
         priority: 0.7,
       }
-  }),
+    }),
 }

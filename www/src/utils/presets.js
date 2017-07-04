@@ -11,6 +11,8 @@ module.exports = {
   Desktop: `@media (min-width: 1000px)`,
   hd: `(min-width: 1200px)`,
   Hd: `@media (min-width: 1200px)`,
+  VHd: `@media (min-width: 1450px)`,
+  VVHd: `@media (min-width: 1650px)`,
   maxWidth: 36,
   maxWidthWithSidebar: 26,
   purple: colors.a[13],
