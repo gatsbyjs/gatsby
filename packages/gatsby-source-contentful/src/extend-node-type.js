@@ -12,7 +12,7 @@ const base64Img = require(`base64-img`)
 const _ = require(`lodash`)
 
 const ImageFormatType = new GraphQLEnumType({
-  name: `ImageFormat`,
+  name: `ContentfulImageFormat`,
   values: {
     NO_CHANGE: { value: `` },
     JPG: { value: `jpg` },
@@ -52,7 +52,7 @@ const ImageResizingBehavior = new GraphQLEnumType({
 })
 
 const ImageCropFocusType = new GraphQLEnumType({
-  name: `ImageCropFocus`,
+  name: `ContentfulImageCropFocus`,
   values: {
     TOP: { value: `top` },
     TOP_LEFT: { value: `top_left` },
