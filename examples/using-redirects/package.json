@@ -9,7 +9,7 @@
     "gatsby-link": "next",
     "gatsby-plugin-google-analytics": "next",
     "gatsby-plugin-offline": "next",
-    "gatsby-plugin-redirects": "file:../../packages/gatsby-plugin-redirects/",
+    "gatsby-plugin-redirects": "file:../../packages/gatsby-plugin-redirects",
     "lodash": "^4.16.4",
     "slash": "^1.0.0"
   },
