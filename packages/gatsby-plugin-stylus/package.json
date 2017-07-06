@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-stylus",
-  "version": "1.0.0-beta.6",
+  "version": "1.0.0",
   "description": "Stub description for gatsby-plugin-stylus",
   "main": "index.js",
   "scripts": {

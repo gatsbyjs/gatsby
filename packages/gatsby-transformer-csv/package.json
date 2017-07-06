@@ -1,6 +1,6 @@
 {
   "name": "gatsby-transformer-csv",
-  "version": "1.0.0-beta.6",
+  "version": "1.0.0",
   "description": "Stub description for gatsby-transformer-csv",
   "main": "index.js",
   "scripts": {
