@@ -271,4 +271,4 @@ each others shoes as they rapidly iterate on features.
 
 ## Ending note
 
-Gatsby is just getting started. We're really looking forward to working with you! See you on Github! 👋
+Gatsby is just getting started. We're really looking forward to working with you! [See you on Github!](https://github.com/gatsbyjs/gatsby) 👋
