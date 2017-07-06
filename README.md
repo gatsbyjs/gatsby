@@ -3,7 +3,7 @@
 [![gatsby channel on discord](https://img.shields.io/badge/discord-gatsby%40reactiflux-738bd7.svg?style=flat-square)](https://discord.gg/0ZcbPKXt5bVoxkfV)
 [![Twitter Follow](https://img.shields.io/twitter/follow/gatsbyjs.svg?style=social)](https://twitter.com/gatsbyjs)
 
-<img alt="Gatsby" src="https://www.gatsbyjs.org/gatsby-negative.svg" width="200">
+<img alt="Gatsby" src="https://www.gatsbyjs.org/gatsby-negative.svg" width="100">
 
 # Gatsby
 
