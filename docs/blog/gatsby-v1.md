@@ -2,7 +2,7 @@
 title: "Announcing Gatsby 1.0.0 🎉🎉🎉"
 date: "2017-07-06"
 author: "Kyle Mathews"
-image: 'images/cargo-ship.jpg'
+image: 'images/container-ship-leaving'
 ---
 
 Gatsby is your friendly, blazing fast static site generator for React. And after nearly a year of research, prototyping, and testing, Gatsby v1 is ready for action.
