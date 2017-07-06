@@ -273,3 +273,7 @@ When a potential customer goes to sign-up for the app, there's no
 page change which seamlessly loads in the needed JavaScript. The *team
 is sharing components and styles across the site* without stepping on
 each others shoes as they rapidly iterate on features.
+
+## Ending note
+
+Gatsby is just getting started. We're really looking forward to working with you! See you on Github! 👋
