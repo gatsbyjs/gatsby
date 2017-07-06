@@ -1,6 +1,6 @@
 import path from 'path'
 
-const component = path.resolve(`./src/components/GatsbyRedirect.js`)
+const component = path.resolve(__dirname, `components/GatsbyRedirect.js`)
 
 const createPageOps = ({ from: path, to }) => ({
     path,

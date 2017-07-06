@@ -1,0 +1,26 @@
+{
+  "name": "gatsby-example-using-redirects",
+  "private": true,
+  "description": "Gatsby example site that shows use of gatsby-plugin-redirects.",
+  "version": "1.0.0",
+  "author": "Scotty Eckenthal <scott.eckenthal@gmail.com>",
+  "dependencies": {
+    "gatsby": "next",
+    "gatsby-link": "next",
+    "gatsby-plugin-google-analytics": "next",
+    "gatsby-plugin-offline": "next",
+    "gatsby-plugin-redirects": "file:../../packages/gatsby-plugin-redirects/",
+    "lodash": "^4.16.4",
+    "slash": "^1.0.0"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve"
+  }
+}
