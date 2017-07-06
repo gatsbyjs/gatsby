@@ -128,7 +128,7 @@ exports.onCreatePage = ({ page, boundActionCreators }) => {
     }
 
     resolve()
-  }
+  })
 }
 ```
 
@@ -156,6 +156,6 @@ exports.onCreatePage = async ({ page, boundActionCreators }) => {
     }
 
     resolve()
-  }
+  })
 }
 ```
