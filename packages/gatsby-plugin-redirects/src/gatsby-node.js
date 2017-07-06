@@ -11,8 +11,6 @@ const createPageOps = ({ from: path, to }) => ({
 export const createPages = ({ boundActionCreators }, { redirects }) => {
     const { createPage } = boundActionCreators
 
-    console.log('REGISTERED REDIRECTS PLUGIN')
-
     return new Promise((resolve, reject) => {
         redirects.forEach(entry => {
             createPage(createPageOps(entry))
