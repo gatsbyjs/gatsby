@@ -16,6 +16,7 @@
     "gatsby-plugin-offline": "next",
     "gatsby-plugin-react-helmet": "next",
     "gatsby-plugin-sharp": "next",
+    "gatsby-plugin-twitter": "^1.0.0-beta.7-alpha.594d939c",
     "gatsby-remark-autolink-headers": "next",
     "gatsby-remark-copy-linked-files": "next",
     "gatsby-remark-images": "next",

@@ -7,45 +7,38 @@ image: 'images/cargo-ship.jpg'
 
 Gatsby is your friendly, blazing fast static site generator for React. And after nearly a year of research, prototyping, and testing, Gatsby v1 is ready for action.
 
-But Gatsby isn't your typical static site generator.
+Static site generators offer many benefits over traditional dynamic website frameworks — *better performance, higher security, lower cost of scaling, and a better developer experience.*
 
-Like all static site generators, Gatsby offers *better performance, higher security, lower cost of scaling, and a better developer experience* than traditional dynamic website frameworks. But Gatsby goes far far beyond the typical markdown content setup.
+As part of v1, Gatsby blazes new ground for static site generators by supporting rich integrations with CMSs like Contentful, Wordpress, and Drupal, and a suite of features, on by default, that make your sites startlingly fast — route-based code splitting, service workers, offline support, and more.
 
-I'm especially excited to launch as part of v1, Gatsby's *innovative plugin-driven data layer* which for the first time makes possible *rich integrations between a static site generator and CMSs like Contentful, Wordpress, and Drupal* (and many other data sources).
+Gatsby means no more compromising between developers, designers, and authors.
 
-Developers get no build configuration support for modern data tools, JavaScript, and CSS while content creators and editors get a delightful content creation experience. No more compromising between developers and authors.
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">😲Gatsby now integrates multiple data sources, splits code, supports offline, lots new plugins... amazing!!  <a href="https://twitter.com/hashtag/reactjs?src=hash">#reactjs</a> <a href="https://twitter.com/hashtag/staticsitegenerator?src=hash">#staticsitegenerator</a> <a href="https://t.co/i80wYgnwhb">https://t.co/i80wYgnwhb</a></p>&mdash; Christian Mund (@krist) <a href="https://twitter.com/krist/status/882953204119556097">July 6, 2017</a></blockquote>
 
-![container ship leaving port symbolizing of course GATSBY 1.0 HAS SHIPPED!!!](./images/container-ship-leaving.jpg)*Gatsby v1 heads out to sea delivering components to ports far and wide*
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">I made this website with <a href="https://twitter.com/gatsbyjs">@gatsbyjs</a> and I&#39;m totally in love with it <a href="https://t.co/TZA064O3s0">https://t.co/TZA064O3s0</a> React SSGs are the future</p>&mdash; Charlotte Dann (@charlotte_dann) <a href="https://twitter.com/charlotte_dann/status/882596284116480000">July 5, 2017</a></blockquote>
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Super excited about the next version of <a href="https://twitter.com/gatsbyjs">@gatsbyjs</a>. The first GraphQL-powered static site generator as far as I know! <a href="https://t.co/poh4S9RSJH">https://t.co/poh4S9RSJH</a></p>&mdash; Sacha Greif (@SachaGreif) <a href="https://twitter.com/SachaGreif/status/841058065856192512">March 12, 2017</a></blockquote>
 
 ## Gatsby is growing like crazy
 
-Some recent milestones we've reached:
+ In the last year, Gatsby community and usage have exploded. Milestones reached:
 
-* 160 code contributors on Github (with many more helping in our chat room on Discord).
+* 160 code contributors on Github (with many more helping in [our chat room on Discord](https://discord.gg/0ZcbPKXt5bVoxkfV)).
 * 10,000 stars on Github
 * 1000 followers on Twitter
 * 500,000 NPM downloads (100,000 in the last month!!)
 
 ![Gatsby npm downloads year over year](./images/gatsby-npm-downloads.png)
 
-It's been really exciting and fulfilling to see the many new faces contributing on Github.
+## Cool sites built with Gatsby
 
-## Sites built with Gatsby v1
+* Segment [relaunched their blog on Gatsby](https://segment.com/blog/)
+* The life insurance startup Fabric built their [marketing site *and* web app using Gatsby](https://meetfabric.com/)
+* JavaScript consultancy [Formidable built their website on Gatsby](https://formidable.com/)
 
-I've been really pleased to see some really fantastic sites launch already on Gatsby v1.
+![screenshots of above sites](images/site-screenshots.png)
 
-### [Segment relaunched their blog on Gatsby](https://segment.com/blog/)
-
-![Screenshot of segment.com's blog](images/segment-blog-screenshot.png)
-
-### [The life insurance startup Fabric built their marketing site *and* web app using Gatsby](https://meetfabric.com/)
-![screenshot of meetfabric's website](images/meetfabric-screenshot.png)
-
-### [Thijs Koerselman contributing to Gatsby v1 while rebuilding his portfolio site](https://www.vauxlab.com/)
-
-![Screenshot of Thijs' website](images/thijs-screenshot.png)
-
-And you're on of course a Gatsby 1.0 website 😛
+And you're on of course a Gatsby website 😛
 
 ## The three questions that spawned Gatsby
 
@@ -57,14 +50,16 @@ In a week of intense coding, I prototyped the first version of Gatsby ([see my t
 
 1000s of sites and 10,000 stars later, it seems clear that tools for building static React sites are useful.
 
-But while building sites with React v0 and helping/watching others do the same, two more questions kept coming to mind.
+But in many conversations among community members building Gatsby sites, two more questions kept coming up.
 
-1. How could I *query* data from *anywhere* and have that data show up in my pages **without** any custom scripting?
+1. How could we *query* data from *anywhere* and have that data show up in our pages **without** any custom scripting?
 2. How should a website framework work for an *internet dominated by smartphones on unreliable networks* — an internet vastly different and larger than the one frameworks were designed for a decade ago?
 
 ## Plugin system
 
-The first block for building answers to these questions was a plugin system.
+![container ship leaving port symbolizing of course GATSBY 1.0 HAS SHIPPED!!!](./images/container-ship-leaving.jpg)*Gatsby v1 heads out to sea delivering components to ports far and wide*
+
+The first building block for answering to these questions was a [plugin system](/docs/plugins/).
 
 Wordpress & Jekyll are both great examples of open source communities
 with robust plugins ecosystems.
@@ -73,10 +68,10 @@ Plugins help accelerate developing websites as you can build on what
 others have done and help collaborate with others on basic building
 blocks
 
-Gatsby's plugin system lets you hook into Gatsby's lifecycle APIs everywhere from
+Gatsby's plugin system lets you hook into [Gatsby's lifecycle APIs](/docs/gatsby-lifecycle-apis/) everywhere from
 events during the bootstrap and build processes and in the browser.
 
-There are already many [official Gatsby plugins](/docs/plugins/)
+There are already many [official Gatsby plugins](/docs/plugins/#official-plugins)
 built—all distributed as individual NPM packages. It is easy to create
 your own plugins for internal projects and for contributing back to Gatsby.
 
@@ -91,7 +86,7 @@ Plugins can:
 
 ## GraphQL-based data processing layer
 
-Plugins also drive the new GraphQL data processing layer.
+Plugins also drive the new GraphQL data processing layer. This new system enables rich integrations with CMSs like Contentful, Wordpress, and Drupal along with other remote and local sources.
 
 In Gatsby v0, (like pretty much every static site generator) data
 was processed then *pushed* into templates to be rendered into HTML. This
@@ -103,7 +98,7 @@ Whatever bits of data you need to assemble a page, you can *pull* in.
 You want to create author pages showing their bio and last 5 posts? It's
 just a query away.
 
-I wanted this same flexibility for Gatsby. So for 1.0, the Gatsby data team has built a new data
+We wanted this same flexibility for Gatsby. So for 1.0, the Gatsby data team has built a new data
 processing layer which converts your data (whether from local files or remote
 sources) into a *GraphQL schema* which you can query against like a database.
 
@@ -119,9 +114,9 @@ load almost instantly.
 
 This pattern of *colocating* your queries next to your views is copied
 from the [Relay data framework from
-Facebook](https://facebook.github.io/relay/). Colocaton makes it easy to
+Facebook](https://facebook.github.io/relay/). Colocation makes it easy to
 fully understand your views as everything necessary for that view
-is fully described there.
+is fully defined there.
 
 A simple example of how this works in practice.
 
@@ -184,14 +179,14 @@ For the markdown ecosystem there's already a robust set of plugins including [ad
 with PrismJS](/docs/packages/gatsby-remark-prismjs/) and
 [resizing images referenced in markdown
 files](/docs/packages/gatsby-remark-images/) so
-they're mobile ready).
+they're mobile ready.
 
 There's also source plugins written for Contentful, Wordpress, Drupal, Hacker News (really 😛), and more as well as transformer plugins for markdown, JSON, YAML, JSDoc, React prop-types, Flow types, and images. We're collecting a list of additional source/transformer plugins that'd be useful to have over at https://github.com/gatsbyjs/gatsby/issues/1199
 
 These plugins are easy to write (somewhat similar to webpack loaders) so
 we expect to see the list of plugins grow rapidly.
 
-## Gatsby is built for the next billion internet users
+## Building for the next billion internet users
 
 As [Benedict Evans has
 noted](http://ben-evans.com/benedictevans/2015/5/13/the-smartphone-and-the-sun),
@@ -223,7 +218,7 @@ Read Google's case studies on:
 * [Housing.com
 (India)](https://developers.google.com/web/showcase/2016/housing)
 
-## Add service worker and offline support
+## Service worker and offline support
 
 Service workers are perhaps the most exciting technology that's come to
 the web in the past several years. It makes possible (finally!)
