@@ -103,7 +103,7 @@ Whatever bits of data you need to assemble a page, you can *pull* in.
 You want to create author pages showing their bio and last 5 posts? It's
 just a query away.
 
-I wanted this same flexibility for Gatsby. So for 1.0, I've built a new data
+I wanted this same flexibility for Gatsby. So for 1.0, the Gatsby data team has built a new data
 processing layer which converts your data (whether from local files or remote
 sources) into a *GraphQL schema* which you can query against like a database.
 
@@ -189,7 +189,7 @@ they're mobile ready).
 There's also source plugins written for Contentful, Wordpress, Drupal, Hacker News (really 😛), and more as well as transformer plugins for markdown, JSON, YAML, JSDoc, React prop-types, Flow types, and images. We're collecting a list of additional source/transformer plugins that'd be useful to have over at https://github.com/gatsbyjs/gatsby/issues/1199
 
 These plugins are easy to write (somewhat similar to webpack loaders) so
-I expect to see the list of plugins grow rapidly.
+we expect to see the list of plugins grow rapidly.
 
 ## Gatsby is built for the next billion internet users
 
@@ -227,7 +227,7 @@ Read Google's case studies on:
 
 Service workers are perhaps the most exciting technology that's come to
 the web in the past several years. It makes possible (finally!)
-sophisticated client caching plus true offline support. I've added
+sophisticated client caching plus true offline support. We've added
 excellent support to Gatsby for Service Workers and a
 great offline experience. If you're using Chrome or Firefox, this site
 loads and works offline! *Service workers make your site much more resilient
