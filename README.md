@@ -23,7 +23,7 @@ This repository is a monorepo managed using [Lerna](https://github.com/lerna/ler
 
 ## Thanks
 
-Thanks to our many contributors and sponsors as well as the companies sponsering our testing and hosting infrastructure, Travis CI, Appveyor, and Netlify.
+Thanks to our many contributors and sponsors as well as the companies sponsoring our testing and hosting infrastructure, Travis CI, Appveyor, and Netlify.
 
 ## Backers
 
