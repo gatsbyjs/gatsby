@@ -1,0 +1,4 @@
+node_modules
+/yarn.lock
+/gatsby-node.js
+/output-color.js
