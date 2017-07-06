@@ -102,6 +102,8 @@ const options = {
       // Target image captions. This is kind of a fragile selector...
       "a.gatsby-resp-image-link + em": {
         ...scale(-2 / 5),
+        paddingTop: rhythm(3 / 16),
+        lineHeight: 1.5,
         display: `block`,
         textAlign: `center`,
         fontStyle: `normal`,
