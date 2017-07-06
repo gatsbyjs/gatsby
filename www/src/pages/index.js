@@ -44,7 +44,7 @@ const ctaButtonStyles = {
 }
 const IndexRoute = React.createClass({
   render() {
-    console.log(this.props.data)
+    console.log(this.props)
     const blogPosts = this.props.data.allMarkdownRemark.edges.map(
       edge => edge.node
     )
