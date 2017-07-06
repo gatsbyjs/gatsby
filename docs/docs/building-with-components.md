@@ -10,7 +10,7 @@ The [official tutorial](https://facebook.github.io/react/tutorial/tutorial.html)
 
 ## Why React components?
 
-React allows building big complicated webapps while preserving modularity, reusabilty, and clear abstraction. React also has great devtools available for debugging the applicattion.
+React's component architecture simplifies building large websites by encouraging modularity, reusabilty, and clear abstraction. React has a large ecosystem of open source components, tutorials, and tooling that can be used seamlessly while building sites with Gatsby. Gatsby is built to behave almost exactly like a normal React application.
 
 Here you can read more about [Thinking in React](https://facebook.github.io/react/docs/thinking-in-react.html).
 
@@ -44,7 +44,7 @@ A basic directory structure of a project might look like this:
 
 ### Base HTML generation
 
-`src/html.jsx` is responsible for generating the base HTML document, where the react component tree is going to be mounted.
+`src/html.jsx` is responsible for generating the base HTML document where the React component tree will be mounted.
 
 Example:
 
@@ -100,9 +100,9 @@ export default class HTML extends React.Component {
 
 In this file you can modify the `<head>` metadata, general structure of the document and add external links.
 
-### UI Layouts
+### Layout components
 
-`src/layouts/index.jsx` (optional) wraps page components. You can use use it for site-wide parts of the site like headers and footers.
+`src/layouts/index.jsx` (optional) wraps page components. You can use use it for portions of pages that are shared across pages like headers and footers.
 
 Example:
 
@@ -113,10 +113,9 @@ import Navigation from '../components/Navigation/Navigation.jsx';
 export default class Template extends React.Component {
 
   render() {
-    const { children } = this.props;
     return (
       <Navigation>
-        {children()}
+        {this.props.children()}
       </Navigation>
     );
   }
@@ -125,7 +124,7 @@ export default class Template extends React.Component {
 
 ### Page generation
 
-Components under `src/pages` are automatically mapped to pages with paths based on their file name. For example `src/pages/index.jsx` is mapped to `yoursite.com` meanwhile `src/pages/about.jsx` is `yoursite.com/about/`.
+Components under `src/pages` become pages automatically with paths based on their file name. For example `src/pages/index.jsx` is mapped to `yoursite.com` and `src/pages/about.jsx` becomes `yoursite.com/about/`.
 
 Example:
 
@@ -148,7 +147,7 @@ class AboutPage extends Component {
 export default AboutPage;
 ```
 
-You may have noticed that `src/pages/posts` also contains markdown files. You can transform any file into HTML pages using [Gatsby plugins](https://www.gatsbyjs.org/docs/plugins/).
+You may have noticed that `src/pages/posts` also contains markdown files. You can transform any file into pages using [Gatsby plugins](https://www.gatsbyjs.org/docs/plugins/).
 
 ### Page templates
 

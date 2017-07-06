@@ -54,6 +54,7 @@
     "postinstall": "lerna bootstrap",
     "publish-canary": "lerna run build && lerna publish --canary --yes",
     "publish-next": "lerna run build && lerna publish --npm-tag=next",
+    "publish": "lerna run build && lerna publish",
     "remotedev": "remotedev --hostname=localhost --port=19999",
     "test": "jest",
     "test:watch": "jest --watch",
