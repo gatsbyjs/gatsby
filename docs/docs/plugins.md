@@ -107,6 +107,7 @@ you can place the files in a `src` subfolder and build them to the plugin folder
 * [gatsby-transformer-remark](/docs/packages/gatsby-transformer-remark/)
 * [gatsby-transformer-sharp](/docs/packages/gatsby-transformer-sharp/)
 * [gatsby-transformer-yaml](/docs/packages/gatsby-transformer-yaml/)
+* [gatsby-transformer-toml](/docs/packages/gatsby-transformer-toml/)
 
 ## Official components
 

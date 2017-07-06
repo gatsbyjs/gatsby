@@ -40,7 +40,7 @@ Gatsby means no more compromising between developers, designers, and authors.
 
 And you're on of course a Gatsby website 😛
 
-## The three questions that spawned Gatsby
+## The three questions that have guided Gatsby's design
 
 Gatsby started, like all the best projects do, as a spark of curiosity — "I wonder if I could create a tool for building static websites with React?".
 
