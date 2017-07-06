@@ -99,6 +99,7 @@ you can place the files in a `src` subfolder and build them to the plugin folder
 * [gatsby-source-drupal](/docs/packages/gatsby-source-drupal/)
 * [gatsby-source-filesystem](/docs/packages/gatsby-source-filesystem/)
 * [gatsby-source-hacker-news](/docs/packages/gatsby-source-hacker-news/)
+* [gatsby-source-wordpress](/docs/packages/gatsby-source-wordpress/)
 * [gatsby-transformer-documentationjs](/docs/packages/gatsby-transformer-documentationjs/)
 * [gatsby-transformer-javascript-static-exports](/docs/packages/gatsby-transformer-javascript-static-exports/)
 * [gatsby-transformer-json](/docs/packages/gatsby-transformer-json/)
