@@ -22,7 +22,6 @@ The usual contributing steps are:
 * Fork the [official repository](https://github.com/gatsbyjs/gatsby).
 * Clone your fork: git clone `git@github.com:<your-username>/gatsby.git`
 * Install gatsby-dev-cli globally: `npm install -g gatsby-dev-cli@canary`
-* Checkout the 1.0 branch: `git checkout 1.0`
 * Install dependencies: `npm install`
 * Make sure tests are passing for you: `npm test`
 * Create a topic branch: `git checkout -b topics/new-feature-name`
