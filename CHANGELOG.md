@@ -1,5 +1,24 @@
 # Change Log
 
+## [1.0.0] - 2017-07-06
+
+### Added
+* Adds Material Blog starter to the list of starters. #1344 @Vagr9K committed with KyleAMathews 4 days ago 
+* Continuation: WIP update home page with new design #1355 @fk
+* Wordpress source plugin and example site #1321 @sebastienfi
+* [v1.0] Documentation improvements. #1370 @Vagr9K
+* 1.0.0 announcement blog post #1379 @KyleAMathews
+
+### Fixed
+* Update README to make it clearer about deploying to gh pages #1343 @jsfeb26
+* Call next() after serving HTML #1349 @levibuzolic
+* Use int for defaultValue of int field #1352 @KyleAMathews
+* Make default sitemap meet expectations #1351 @chiedo
+* Guard against calling ga function if it doesn't (yet) exist #1361 @KyleAMathews
+* Namespace type names for Contentful #1374 @KyleAMathews
+* Add missing parens in code examples #1376 @okcoker
+* Fix gatsby-transformer-react-docgen dependencies #1377 @jquense
+
 ## [1.0.0-beta.6] - 2017-07-01
 
 ### Added
