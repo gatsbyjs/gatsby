@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Process TOML nodes correctly Correctly creates nodes from TOML test file 1`] = `
+Array [
+  Array [
+    Object {
+      "children": Array [],
+      "id": "whatever >>> TOML",
+      "internal": Object {
+        "contentDigest": "9ce7919cb3f607a0542bac4aa46136b6",
+        "type": "",
+      },
+      "parent": "whatever",
+      "the": Object {
+        "hard": Object {
+          "another_test_string": " Same thing, but with a string #",
+          "bit#": Object {
+            "multi_line_array": Array [
+              "]",
+            ],
+            "what?": "You don't think some user won't do that?",
+          },
+          "harder_test_string": " And when \\"'s are in the string, along with # \\"",
+          "test_array": Array [
+            "] ",
+            " # ",
+          ],
+          "test_array2": Array [
+            "Test #11 ]proved that",
+            "Experiment #9 was a success",
+          ],
+        },
+        "test_string": "You'll hate me after this - #",
+      },
+    },
+  ],
+]
+`;
+
+exports[`Process TOML nodes correctly Correctly creates nodes from TOML test file 2`] = `
+Array [
+  Array [
+    Object {
+      "child": Object {
+        "children": Array [],
+        "id": "whatever >>> TOML",
+        "internal": Object {
+          "contentDigest": "9ce7919cb3f607a0542bac4aa46136b6",
+          "type": "",
+        },
+        "parent": "whatever",
+        "the": Object {
+          "hard": Object {
+            "another_test_string": " Same thing, but with a string #",
+            "bit#": Object {
+              "multi_line_array": Array [
+                "]",
+              ],
+              "what?": "You don't think some user won't do that?",
+            },
+            "harder_test_string": " And when \\"'s are in the string, along with # \\"",
+            "test_array": Array [
+              "] ",
+              " # ",
+            ],
+            "test_array2": Array [
+              "Test #11 ]proved that",
+              "Experiment #9 was a success",
+            ],
+          },
+          "test_string": "You'll hate me after this - #",
+        },
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "
+    [the]
+    test_string = \\"You'll hate me after this - #\\"
+
+    [the.hard]
+    test_array = [ \\"] \\", \\" # \\"]      # ]
+    test_array2 = [ \\"Test #11 ]proved that\\", \\"Experiment #9 was a success\\" ]
+    another_test_string = \\" Same thing, but with a string #\\"
+    harder_test_string = \\" And when \\\\\\"'s are in the string, along with # \\\\\\"\\"
+    # Things will get harder
+
+        [the.hard.\\"bit#\\"]
+        \\"what?\\" = \\"You don't think some user won't do that?\\"
+        multi_line_array = [
+            \\"]\\",
+            # ] Oh yes I did
+            ]
+    ",
+        "extension": "toml",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+        },
+        "name": "test",
+        "parent": "SOURCE",
+      },
+    },
+  ],
+]
+`;
