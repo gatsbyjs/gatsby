@@ -38,21 +38,18 @@ Then you'll be able to query your data using:
 
 ```graphql
 query MyQuery {
-  allUserToml {
-    edges {
-      node {
-        userName
-        userAvatar
-        userDescription
-        userLink {
-          label
-          url
-          icon
-        }
-      }
+  userToml {
+    userName
+    userAvatar
+    userDescription
+    userLink {
+      label
+      url
+      icon
     }
   }
 }
+
 ```
 
 And the result will be:
@@ -60,21 +57,15 @@ And the result will be:
 ```javascript
 {
   "data": {
-    "allUserToml": {
-      "edges": [
-        {
-          "node": {
-            "userName": "Random User",
-            "userAvatar": "https://api.adorable.io/avatars/150/test.png",
-            "userDescription": "Lorem...",
-            "userLink": {
-              "label": "Website",
-              "url": "//mywebsite.example.local",
-              "icon": "fa fa-link"
-            }
-          }
-        }
-      ]
+    "userToml": {
+      "userName": "Random User",
+      "userAvatar": "https://api.adorable.io/avatars/150/test.png",
+      "userDescription": "Lorem...",
+      "userLink": {
+        "label": "Website",
+        "url": "//mywebsite.example.local",
+        "icon": "fa fa-link"
+      }
     }
   }
 }
