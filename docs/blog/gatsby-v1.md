@@ -110,7 +110,7 @@ sources) into a *GraphQL schema* which you can query against like a database.
 Every Gatsby page can have a GraphQL query which tells
 Gatsby what data is required for that page. The data layer runs the
 GraphQL queries during development and at build time and writes out a
-JSON file with the result of the query. This JSON file is then injected
+JSON file with the result of the query. This JSON file is then loaded alongside React code and injected
 into the React component as props.
 
 Because we know at build-time what data is needed for every page, we can
@@ -186,7 +186,7 @@ with PrismJS](/docs/packages/gatsby-remark-prismjs/) and
 files](/docs/packages/gatsby-remark-images/) so
 they're mobile ready).
 
-There's also source plugins written for Contentful, Wordpress, Drupal, Hacker News (really 😛), and more as well as transformer plugins for markdown, JSON, YAML, JSDoc, and images. We're collecting a list of additional source/transformer plugins that'd be useful to have over at https://github.com/gatsbyjs/gatsby/issues/1199
+There's also source plugins written for Contentful, Wordpress, Drupal, Hacker News (really 😛), and more as well as transformer plugins for markdown, JSON, YAML, JSDoc, React prop-types, Flow types, and images. We're collecting a list of additional source/transformer plugins that'd be useful to have over at https://github.com/gatsbyjs/gatsby/issues/1199
 
 These plugins are easy to write (somewhat similar to webpack loaders) so
 I expect to see the list of plugins grow rapidly.
@@ -228,7 +228,7 @@ Read Google's case studies on:
 Service workers are perhaps the most exciting technology that's come to
 the web in the past several years. It makes possible (finally!)
 sophisticated client caching plus true offline support. I've added
-excellent on-by-default support to Gatsby for Service Workers and a
+excellent support to Gatsby for Service Workers and a
 great offline experience. If you're using Chrome or Firefox, this site
 loads and works offline! *Service workers make your site much more resilient
 against bad networks*. If someone loads your site on a train and goes
@@ -239,10 +239,10 @@ clicking around.
 
 Many sites generate one JavaScript bundle for the *entire* site. Which
 means someone loading your frontpage loads far more code than is
-necessary.
+necessary which is bad then users get frustrated when site isn't responsive to their clicks and touches while the code loads.
 
-Gatsby 1.0 only loads the scripts necessary for the page you're on. As you
-navigate around, Gatsby loads the JavaScript needed for each route.
+Gatsby 1.0 initially only loads the code necessary for the page you're on. As you
+navigate around, Gatsby loads in the code needed for each route.
 
 This means that one page with heavy imports:
 
