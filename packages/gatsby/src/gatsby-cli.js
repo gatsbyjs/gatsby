@@ -22,8 +22,8 @@ const cliFile = `dist/bin/cli.js`
 const localPath = path.resolve(`node_modules/gatsby`, cliFile)
 
 const useGlobalGatsby = function() {
-  // Never use global install for new and help commands
-  if (_.includes([`new`, `--help`], process.argv[2])) {
+  // Never use global install *except* for new and help commands
+  if (!_.includes([`new`, `--help`], process.argv[2])) {
     console.error(
       `A local install of Gatsby was not found.
 You should save Gatsby as a site dependency e.g. npm install --save gatsby`
