@@ -88,6 +88,7 @@ you can place the files in a `src` subfolder and build them to the plugin folder
 * [gatsby-plugin-sharp](/docs/packages/gatsby-plugin-sharp/)
 * [gatsby-plugin-sitemap](/docs/packages/gatsby-plugin-sitemap/)
 * [gatsby-plugin-styled-components](/docs/packages/gatsby-plugin-styled-components/)
+* [gatsby-plugin-twitter](/docs/packages/gatsby-plugin-twitter/)
 * [gatsby-plugin-typescript](/docs/packages/gatsby-plugin-typescript/)
 * [gatsby-remark-autolink-headers](/docs/packages/gatsby-remark-autolink-headers/)
 * [gatsby-remark-copy-linked-files](/docs/packages/gatsby-remark-copy-linked-files/)

@@ -181,7 +181,7 @@ with PrismJS](/docs/packages/gatsby-remark-prismjs/) and
 files](/docs/packages/gatsby-remark-images/) so
 they're mobile ready.
 
-There's also source plugins written for Contentful, Wordpress, Drupal, Hacker News (really 😛), and more as well as transformer plugins for markdown, JSON, YAML, JSDoc, React prop-types, Flow types, and images. We're collecting a list of additional source/transformer plugins that'd be useful to have over at https://github.com/gatsbyjs/gatsby/issues/1199
+There's also source plugins written for [Contentful](/docs/packages/gatsby-source-contentful/), [Wordpress](/docs/packages/gatsby-source-wordpress/), [Drupal](/docs/packages/gatsby-source-drupal/), [Hacker News](/docs/packages/gatsby-source-hacker-news/) (really 😛), and more as well as transformer plugins for [markdown](/docs/packages/gatsby-transformer-remark/), [JSON](/docs/packages/gatsby-transformer-json/), [YAML](/docs/packages/gatsby-transformer-yaml/), [JSDoc](/docs/packages/gatsby-transformer-documentationjs/), React prop-types, and [images](/docs/packages/gatsby-plugin-sharp/). We're collecting a list of additional source/transformer plugins that'd be useful to have over at https://github.com/gatsbyjs/gatsby/issues/1199
 
 These plugins are easy to write (somewhat similar to webpack loaders) so
 we expect to see the list of plugins grow rapidly.
