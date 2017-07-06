@@ -3,11 +3,12 @@
 ## [1.0.0] - 2017-07-06
 
 ### Added
-* Adds Material Blog starter to the list of starters. #1344 @Vagr9K committed with KyleAMathews 4 days ago 
+* Adds Material Blog starter to the list of starters. #1344 @Vagr9K committed with KyleAMathews 4 days ago
 * Continuation: WIP update home page with new design #1355 @fk
 * Wordpress source plugin and example site #1321 @sebastienfi
 * [v1.0] Documentation improvements. #1370 @Vagr9K
 * 1.0.0 announcement blog post #1379 @KyleAMathews
+* Adds gatsby-transformer-toml to the core. ##1382 @Vagr9K
 
 ### Fixed
 * Update README to make it clearer about deploying to gh pages #1343 @jsfeb26
