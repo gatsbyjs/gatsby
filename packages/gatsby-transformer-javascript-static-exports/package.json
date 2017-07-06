@@ -1,6 +1,6 @@
 {
   "name": "gatsby-transformer-javascript-static-exports",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Gatsby transformer plugin for JavaScript to extract exports.data statically.",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",

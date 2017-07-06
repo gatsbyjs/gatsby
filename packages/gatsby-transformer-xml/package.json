@@ -1,6 +1,6 @@
 {
   "name": "gatsby-transformer-xml",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Stub description for gatsby-transformer-xml",
   "main": "index.js",
   "scripts": {

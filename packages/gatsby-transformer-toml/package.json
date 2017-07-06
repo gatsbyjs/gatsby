@@ -1,6 +1,6 @@
 {
   "name": "gatsby-transformer-toml",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Gatsby transformer plugin for toml",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
