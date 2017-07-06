@@ -68,12 +68,7 @@ module.exports = async (program: any) => {
     config = preferDefault(require(`${program.directory}/gatsby-config`))
   } catch (e) {
     const firstLine = e.toString().split(`\n`)[0]
-    if (
-      !_.includes(
-        firstLine,
-        `Error: Cannot find module` && !_.includes(firstLine, `gatsby-config`)
-      )
-    ) {
+    if (!/Error: Cannot find module.*gatsby-config/.test(firstLine)) {
       console.log(``)
       console.log(``)
       console.log(e)
