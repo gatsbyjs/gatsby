@@ -211,7 +211,7 @@ const IndexRoute = React.createClass({
                 }}
               >
                 <h2>
-                  <em>Static</em> Progessive Web Apps
+                  <em>Static</em> Progressive Web Apps
                 </h2>
                 <FuturaParagraph>
                   Gatsby.js is a static PWA (Progressive Web App) generator. You
@@ -230,10 +230,10 @@ const IndexRoute = React.createClass({
               >
                 <h2>Speed past the competition</h2>
                 <FuturaParagraph>
-                  Gatsby.js builds the fastest possible website. Instead of slow
-                  geography-bound servers, your site is lifted into a global
-                  cloud of servers ready to be delivered instantly to your users
-                  wherever they are.
+                  Gatsby.js builds the fastest possible website. Instead of
+                  waiting to generate pages when requested, pre-build pages and
+                  lift them into a global cloud of servers—ready to be delivered
+                  instantly to your users wherever they are.
                 </FuturaParagraph>
               </div>
             </div>
