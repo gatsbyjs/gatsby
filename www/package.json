@@ -35,7 +35,7 @@
     "react-typography": "^0.15.0",
     "slash": "^1.0.0",
     "typeface-space-mono": "^0.0.22",
-    "typeface-tex-gyre-schola": "^0.0.20",
+    "typeface-tex-gyre-schola": "^0.0.30",
     "typography": "^0.15.12",
     "typography-breakpoint-constants": "^0.15.10",
     "typography-plugin-code": "0.15.x"
