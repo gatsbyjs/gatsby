@@ -5,7 +5,7 @@ const defaultComponent = path.resolve(__dirname, `components/GatsbyRedirect.js`)
 const createPageOps = ({
     from: path,
     to,
-    component = defaultComponent,
+    component,
 }) => ({
     path,
     component,
@@ -17,7 +17,7 @@ export const createPages = ({ boundActionCreators }, { redirects, component }) =
 
     return new Promise((resolve, reject) => {
         redirects.forEach(entry => {
-            entry.component = entry.component || component
+            entry.component = entry.component || component || defaultComponent
             createPage(createPageOps(entry))
         })
         return resolve()

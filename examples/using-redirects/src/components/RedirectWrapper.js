@@ -1,11 +1,15 @@
 import React from 'react';
-import { Redirect } from 'gatsby-plugin-redirects';
+import { GatsbyRedirect as Redirect } from 'gatsby-plugin-redirects';
 
-const RedirectWrapper = props => (
-    <div>
-        <p>Some custom content</p>
-        <Redirect {...props}/>
-    </div>
-)
+class RedirectWrapper extends React.Component {
+    render() {
+        return (
+            <div>
+                <p>Some custom content</p>
+                <Redirect {...this.props}/>
+            </div>
+        )
+    }
+}
 
-export default RedirectWrapper;
+export default RedirectWrapper
