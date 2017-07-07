@@ -5,10 +5,10 @@
   "version": "1.0.0",
   "author": "Nicholas Young <nicholas@nicholaswyoung.com>",
   "dependencies": {
-    "gatsby": "next",
-    "gatsby-source-filesystem": "next",
-    "gatsby-transformer-remark": "next",
-    "gatsby-plugin-feed": "next"
+    "gatsby": "latest",
+    "gatsby-source-filesystem": "latest",
+    "gatsby-transformer-remark": "latest",
+    "gatsby-plugin-feed": "latest"
   },
   "keywords": ["gatsby"],
   "license": "MIT",

@@ -10,11 +10,11 @@
   "author": "Daniel Farrell <daniel.farrell@mobelux.com>",
   "license": "MIT",
   "dependencies": {
-    "gatsby": "next",
-    "gatsby-link": "next",
-    "gatsby-plugin-google-analytics": "next",
-    "gatsby-plugin-offline": "next",
-    "gatsby-plugin-sass": "next",
+    "gatsby": "latest",
+    "gatsby-link": "latest",
+    "gatsby-plugin-google-analytics": "latest",
+    "gatsby-plugin-offline": "latest",
+    "gatsby-plugin-sass": "latest",
     "react-typography": "^0.15.10",
     "tachyons-sass": "^4.7.1",
     "typography": "^0.15.10"
