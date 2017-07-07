@@ -1,5 +1,5 @@
-# No trailing slashes
+# Using redirects
 
-https://no-trailing-slashes.gatsbyjs.org
+https://using-redirects.gatsbyjs.org
 
-Gatsby example site that shows how to remove trailing slashes from urls.
+Gatsby example site that shows use of `gatsby-plugin-redirects`.

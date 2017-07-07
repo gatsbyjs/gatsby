@@ -10,13 +10,13 @@ class DefaultLayout extends React.Component {
         </Link>
         <ul>
           <li>
-            <Link to="/a">a</Link>
+            <Link to="/a/">a</Link>
           </li>
           <li>
-            <Link to="/b">b</Link>
+            <Link to="/b/">b</Link>
           </li>
           <li>
-            <Link to="/c">c</Link>
+            <Link to="/c/">c</Link>
           </li>
         </ul>
         {this.props.children()}

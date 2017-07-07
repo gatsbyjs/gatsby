@@ -17,8 +17,8 @@ module.exports = {
       options: {
         redirects: [{
           component: path.resolve(__dirname, `src/components/RedirectWrapper.js`),
-          from: `/d`,
-          to: `/a`,
+          from: `/d/`,
+          to: `/a/`,
         }],
       },
     },
