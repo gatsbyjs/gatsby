@@ -23,7 +23,7 @@ plugins: [{
 }]
 ```
 
-## Custom rendering
+### Custom Redirect component
 
 If a user's first visit to your site is through a redirect page, there may be a small amount of latency during which the user will simply see your page's layout (via `src/layouts/index.js`) with no content. In cases where this is undesired, you can specify a custom component to render at this time.
 
@@ -49,14 +49,14 @@ Then, configure via `gatsby-config.js` by specifying the path to your component.
 plugins: [{
     resolve: 'gatsby-plugin-redirects',
     options: {
-        component: 'path/to/RedirectWrapper',
+        component: path.resolve('path/to/RedirectWrapper'),
         redirects: [{
             from: '/c',
             to: '/d'
         }, {
             from: '/e',
             to: '/f',
-            component: 'path/to/CustomRedirectWrapper'
+            component: path.resolve('path/to/CustomRedirectWrapper')
         }]
     }
 }]
