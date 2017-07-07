@@ -7,8 +7,8 @@
   "dependencies": {
     "@types/react": "15.0.21",
     "@types/react-dom": "0.14.23",
-    "gatsby": "next",
-    "gatsby-link": "next",
-    "gatsby-plugin-typescript": "next"
+    "gatsby": "latest",
+    "gatsby-link": "latest",
+    "gatsby-plugin-typescript": "latest"
   }
 }

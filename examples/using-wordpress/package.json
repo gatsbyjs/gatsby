@@ -5,11 +5,11 @@
   "version": "1.0.0-beta.6",
   "author": "Sebastien Fichot <fichot.sebastien@gmail.com>",
   "dependencies": {
-    "gatsby": "next",
-    "gatsby-link": "next",
-    "gatsby-plugin-react-helmet": "next",
-    "gatsby-plugin-styled-components": "next",
-    "gatsby-source-wordpress": "next",
+    "gatsby": "latest",
+    "gatsby-link": "latest",
+    "gatsby-plugin-react-helmet": "latest",
+    "gatsby-plugin-styled-components": "latest",
+    "gatsby-source-wordpress": "latest",
     "hedron": "^0.7.1",
     "lodash": "^4.16.4"
   },
