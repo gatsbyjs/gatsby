@@ -35,7 +35,7 @@ class IndexRoute extends React.Component {
             reload in the browser.
           </li>
           <li>
-            <code>gatsby build</code> — Gatsby will performan an optimized
+            <code>gatsby build</code> — Gatsby will perform an optimized
             production build for your site generating static HTML and per-route
             JavaScript code bundles.
           </li>
