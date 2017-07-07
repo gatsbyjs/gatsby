@@ -46,7 +46,7 @@ const DocsTemplate = React.createClass({
         />
         <strong>
           <a
-            href={`https://github.com/gatsbyjs/gatsby/tree/1.0/packages/${packageName}`}
+            href={`https://github.com/gatsbyjs/gatsby/tree/master/packages/${packageName}`}
             css={{
               position: `absolute`,
             }}
