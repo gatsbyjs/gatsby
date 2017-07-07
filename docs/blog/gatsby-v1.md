@@ -9,7 +9,7 @@ Gatsby is your friendly, blazing fast static site generator for React. And after
 
 Static site generators offer many benefits over traditional dynamic website frameworks — *better performance, higher security, lower cost of scaling, and a better developer experience.*
 
-As part of v1, Gatsby blazes new ground for static site generators by supporting rich integrations with CMSs like Contentful, Wordpress, and Drupal, and a suite of features, on by default, that make your sites startlingly fast — route-based code splitting, service workers, offline support, and more.
+In v1, Gatsby blazes new ground for static site generators by enabling rich integrations with CMSs like Contentful, Wordpress, and Drupal, and a suite of features, on by default, that make your sites startlingly fast — route-based code splitting, service workers, offline support, and more.
 
 Gatsby means no more compromising between developers, designers, and authors.
 
@@ -40,7 +40,7 @@ Gatsby means no more compromising between developers, designers, and authors.
 
 And you're on of course a Gatsby website 😛
 
-## The three questions that have guided Gatsby's design
+## The three questions that guide Gatsby's design
 
 Gatsby started, like all the best projects do, as a spark of curiosity — "I wonder if I could create a tool for building static websites with React?".
 
