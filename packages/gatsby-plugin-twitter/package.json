@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-twitter",
-  "version": "1.0.1",
+  "version": "1.0.5",
   "description": "Stub description for gatsby-plugin-twitter",
   "main": "index.js",
   "scripts": {
