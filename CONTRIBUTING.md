@@ -21,12 +21,12 @@ The usual contributing steps are:
 
 * Fork the [official repository](https://github.com/gatsbyjs/gatsby).
 * Clone your fork: git clone `git@github.com:<your-username>/gatsby.git`
-* Install gatsby-dev-cli globally: `npm install -g gatsby-dev-cli@canary`
+* Install [gatsby-dev-cli](/docs/packages/gatsby-dev-cli/) globally: `npm install -g gatsby-dev-cli`
 * Install dependencies: `npm install`
 * Make sure tests are passing for you: `npm test`
 * Create a topic branch: `git checkout -b topics/new-feature-name`
-* Run `npm run watch` to do an initial Babel build of all packages and watch for
-  changes to packages' source code and compile changes on the fly as you
+* Run `npm run watch` from the root of the repo to first do an initial Babel build of all packages and then watch for
+  changes to packages' source code and compile these changes on-the-fly as you
   work.
 * For each of your Gatsby test sites, run the `gatsby-dev` command there to copy
   the built files from your cloned copy of Gatsby. It'll watch for your changes
