@@ -10,7 +10,7 @@ https://developers.google.com/web/fundamentals/performance/prpl-pattern/
 
 PRPL stands for:
 
-* **Push** critical resources for the initial URL route using <link preload> and http/2.
+* **Push** critical resources for the initial URL route using `<link preload>` and http/2.
 * **Render** initial route.
 * **Pre-cache** remaining routes.
 * **Lazy-load** and create remaining routes on demand.
@@ -18,7 +18,7 @@ PRPL stands for:
 _**Note** http/2 push is a developing server technology and not available on most hosts just
 yet._
 
-Gatsby follows this architectural pattern. Gatsby sites *render* a static HTML version of the initial route and then load the code bundle for the page. Then immediately starts *pre-caching* resources for pages
+Gatsby follows the PRPL architectural pattern. Gatsby sites *render* a static HTML version of the initial route and then load the code bundle for the page. Then immediately starts *pre-caching* resources for pages
 linked to from the initial route. When a user clicks on a link, Gatsby creates the new page *on demand* on
 the client.
 
