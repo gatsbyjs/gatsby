@@ -53,16 +53,16 @@ This mechanism provides a number of benefits:
 
 However there is an **escape hatch** that you can use to add an asset outside of the module system.
 
-If you put a file into the `static` folder, it will **not** be processed by Webpack. Instead it will be copied into the public folder untouched. E.g. if you add a file named `sun.jpg` to the static folder, it'll be copied to `public/sun.jpg`. To reference assets in the `static` folder, you need to use a special variable called `__PATH_PREFIX__`.
+If you put a file into the `static` folder, it will **not** be processed by Webpack. Instead it will be copied into the public folder untouched. E.g. if you add a file named `sun.jpg` to the static folder, it'll be copied to `public/sun.jpg`. To reference assets in the `static` folder, you need to use a special variable called `__PATH_PREFIX__`. You will need to make sure you set `pathPrefix` in your gatsby-config.js for this to work (set it to `/` if you don't have a path prefix).
 
-In JavaScript code, you can use `process.env.__PATH_PREFIX__` for similar purposes:
+In JavaScript code, you can use `__PATH_PREFIX__` for similar purposes:
 
 ```js
 render() {
   // Note: this is an escape hatch and should be used sparingly!
   // Normally we recommend using `import` for getting asset URLs
   // as described in “Adding Images and Fonts” above this section.
-  return <img src={process.env.__PATH_PREFIX__ + '/img/logo.png'} />;
+  return <img src={__PATH_PREFIX__ + '/img/logo.png'} />;
 }
 ```
 
