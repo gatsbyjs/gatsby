@@ -92,7 +92,7 @@ In Gatsby v0, (like pretty much every static site generator) data
 was processed then *pushed* into templates to be rendered into HTML. This
 is a simple pattern and works great for many use cases. But when you
 start working on more complex sites, you really start to miss the
-flexibility of building a database-driven site. With a database, all
+flexibility of a database-driven site. With a database, all
 your data is available to query against in any fashion you'd like.
 Whatever bits of data you need to assemble a page, you can *pull* in.
 You want to create author pages showing their bio and last 5 posts? It's
