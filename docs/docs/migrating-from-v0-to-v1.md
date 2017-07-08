@@ -62,6 +62,22 @@ module.exports = {
 }
 ```
 
+and a minimal query would look like 
+
+```
+export const pageQuery = graphql`
+  query SiteMetadataLookup($slug: String!) {
+    site {
+      siteMetadata {
+        title
+      }
+    }
+}
+`
+```
+
+exporting that from the same file as a React component will make the config information available to the component as a `data` prop on the component.  For instance, the title attribute could be referenced as  `props.data.site.siteMetadata.title`.  
+
 ## Migrate wrapper components to template components
 
 In v0, there was the concept of "wrapper" components that would render each
