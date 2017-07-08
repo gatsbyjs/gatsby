@@ -185,4 +185,4 @@ query BlogPostBySlug($slug: String!) {
 `
 ```
 
-These are examples of the different ways React components are used in Gatsby sites. To see full working examples, check out the [examples directory](https://github.com/gatsbyjs/gatsby/tree/1.0/examples) in the Gatsby repo.
+These are examples of the different ways React components are used in Gatsby sites. To see full working examples, check out the [examples directory](https://github.com/gatsbyjs/gatsby/tree/master/examples) in the Gatsby repo.
