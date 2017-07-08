@@ -141,15 +141,17 @@ import React from "react"
 
 class BlogPostTemplate extends React.Component {
   render () {
-    <div>
-      <h1>{this.props.data.markdownRemark.frontmatter.title}</h1>
-      <small>{this.props.data.markdownRemark.frontmatter.date}</small>
-      <div
-        dangerouslySetInnerHTML={{
-          __html: this.props.data.markdownRemark.html,
-        }}
-      />
-    </div>
+    return (
+      <div>
+        <h1>{this.props.data.markdownRemark.frontmatter.title}</h1>
+        <small>{this.props.data.markdownRemark.frontmatter.date}</small>
+        <div
+          dangerouslySetInnerHTML={{
+            __html: this.props.data.markdownRemark.html,
+          }}
+        />
+      </div>
+    )
   }
 }
 
