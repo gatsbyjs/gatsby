@@ -38,7 +38,7 @@ Now type `ls` to see the list of files in your folder. You should see `package.j
 Now we'll add the two dependencies required for a Gatsby site—`gatsby` and `gatsby-link`.
 
 ```bash
-npm install --save gatsby@next gatsby-link@next
+npm install --save gatsby gatsby-link
 ```
 
 Installation should take a minute or two.
