@@ -25,7 +25,7 @@
     "develop": "gatsby develop",
     "build": "gatsby build",
     "start": "gatsby serve",
-    "predeploy": "gatsby build --prefix-links"
+    "predeploy": "gatsby build --prefix-paths"
   },
   "devDependencies": {
     "eslint": "^4.1.1"
