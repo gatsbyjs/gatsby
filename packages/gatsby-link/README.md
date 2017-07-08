@@ -22,6 +22,7 @@ Edge), this component will also preload code chunks on these browsers.
 ## How to use
 
 In javascript:
+
 ```jsx
 import Link from "gatsby-link"
 
@@ -35,6 +36,20 @@ render () {
     >
     Another page
     </Link>
+  </div>
+}
+```
+
+## Forcing internal redirect
+
+For cases when you can only use event handlers for navigation, you can use `navigateTo`:
+
+```jsx
+import { navigateTo } from "gatsby-link"
+
+render () {
+  <div onClick={navigateTo('/example')}>
+    <p>Example</p>
   </div>
 }
 ```
