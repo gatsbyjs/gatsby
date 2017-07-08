@@ -25,7 +25,7 @@ call each build type a "stage". The following stages exist:
 4. build-html: production build static HTML pages
 5. build-javascript: production JavaScript build. Creates route bundles as well as a `commons` and `app bundle`.
 
-Check [webpack.config.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js) for the source.
+Check [webpack.config.js](/packages/gatsby/src/utils/webpack.config.js) for the source.
 
 There are many plugins in the Gatsby repo using this API to look to for examples e.g. [Sass](https://www.gatsbyjs.org/docs/packages/gatsby-plugin-sass/), [Typescript](https://www.gatsbyjs.org/docs/packages/gatsby-plugin-typescript/), [Glamor](https://www.gatsbyjs.org/docs/packages/gatsby-plugin-glamor/), and many more!
 
