@@ -36,3 +36,11 @@ module.exports = {
   pathPrefix: `/blog`
 }
 ```
+
+Then pass `--prefix-paths` cmd option to Gatsby.
+
+```sh
+gatsby build --prefix-paths
+```
+
+NOTE: When running the command without the `--prefix-paths` flag, Gatsby ignores your `pathPrefix`.
