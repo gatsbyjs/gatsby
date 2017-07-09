@@ -48,7 +48,7 @@ For cases when you can only use event handlers for navigation, you can use `navi
 import { navigateTo } from "gatsby-link"
 
 render () {
-  <div onClick={navigateTo('/example')}>
+  <div onClick={ () => navigateTo('/example')}>
     <p>Example</p>
   </div>
 }
