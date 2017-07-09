@@ -31,7 +31,7 @@ Add new package to project.
 Use in place of react-router's Link
 
 ```jsx
-import Link from 'gastsby-link'
+import Link from 'gatsby-link'
 
 // Works identically to react-router's <Link>
 <Link to="/another-page/">Another page</Link>
