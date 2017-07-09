@@ -77,8 +77,9 @@ exports.createPages = ({ boundActionCreators }) => {
 
         // Create pages for each markdown file.
         result.data.allMarkdownRemark.edges.forEach(({ node }) => {
+          const path = node.frontmatter.path;
           createPage({
-            path: node.path,
+            path,
             component: blogPostTemplate,
             // In your blog post template's graphql query, you can use path
             // as a GraphQL variable to query for data from the markdown file.
