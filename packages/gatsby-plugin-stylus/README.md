@@ -33,3 +33,24 @@ plugins: [
   },
 ],
 ```
+
+### With Stylus plugins
+
+This plugin has the same API as [stylus-loader](https://github.com/shama/stylus-loader#stylus-plugins), which means you can add stylus plugins with `use`:
+
+```javascript
+// in gatsby-config.js
+const rupture = require('rupture');
+
+module.exports = {
+  plugins: [
+    {
+      resolve: 'gatsby-plugin-stylus',
+      options: {
+        modules: true,
+        use: [rupture()],
+      },
+    },
+  ],
+};
+```
