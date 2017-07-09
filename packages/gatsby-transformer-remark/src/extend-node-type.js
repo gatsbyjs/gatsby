@@ -38,11 +38,11 @@ module.exports = (
 
   return new Promise((resolve, reject) => {
     // Setup Remark.
-    const remark = new Remark({
+    const remark = new Remark().data('settings', {
       commonmark: true,
       footnotes: true,
       pedantic: true,
-    })
+    });
 
     async function getAST(markdownNode) {
       const cachedAST = await cache.get(astCacheKey(markdownNode))
