@@ -11,9 +11,7 @@ import apiRunnerNode from "./api-runner-node"
 // For info on whitelisting with webpack-validator see:
 // https://github.com/js-dxtools/webpack-validator#customizing
 const validationWhitelist = Joi.object({
-  stylus: Joi.object({
-    use: Joi.any(),
-  }),
+  stylus: Joi.any(),
 })
 
 export default (async function ValidateWebpackConfig(config, stage) {
