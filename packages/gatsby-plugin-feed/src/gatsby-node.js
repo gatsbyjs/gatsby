@@ -1,5 +1,5 @@
 import path from "path"
-import RSS from "RSS"
+import RSS from "rss"
 import { defaultOptions, runQuery, writeFile } from "./internals"
 
 const publicPath = `./public`
