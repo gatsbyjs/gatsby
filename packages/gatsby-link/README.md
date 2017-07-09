@@ -40,7 +40,7 @@ render () {
 }
 ```
 
-## Forcing internal redirect
+## Programmatic navigation
 
 For cases when you can only use event handlers for navigation, you can use `navigateTo`:
 

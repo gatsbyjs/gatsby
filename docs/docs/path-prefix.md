@@ -43,4 +43,4 @@ Then pass `--prefix-paths` cmd option to Gatsby.
 gatsby build --prefix-paths
 ```
 
-NOTE: When using only `build`, Gatsby ignores `pathPrefix`.
+NOTE: When running the command without the `--prefix-paths` flag, Gatsby ignores your `pathPrefix`.
