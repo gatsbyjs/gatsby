@@ -36,6 +36,7 @@ This is intended as a quick reference and showcase. For more complete info, see 
 [Links](#links)  
 [Images](#images)  
 [Tables](#tables)  
+[Footnotes](#footnotes)  
 [Blockquotes](#blockquotes)  
 [Inline HTML](#html)  
 [Horizontal Rule](#hr)  
@@ -262,6 +263,21 @@ Markdown | Less | Pretty
 *Still* | `renders` | **nicely**
 1 | 2 | 3
 
+<a name="footnotes"></a>
+
+## Footnotes
+
+Footnotes are also not a core feature of markdown, but they're a common extension feature.  The footnote syntax looks like this:
+
+```markdown
+This line has a footnote [^1].  Scroll down or click the link to see it.
+```
+
+That renders like this:
+
+This line has a footnote [^1].  Scroll down or click the link to see it.
+
+
 <a name="blockquotes"></a>
 
 ## Blockquotes
@@ -361,6 +377,11 @@ This line is separated from the one above by two newlines, so it will be a *sepa
 
 This line is also begins a separate paragraph, but...  
 This line is only separated by a single newline, so it's a separate line in the *same paragraph*.
+
+
+
+
+[^1]: The footnote appears at the bottom of the page
 
 [1]: https://www.gatsbyjs.org/docs/packages/gatsby-transformer-remark/
 [2]: http://remark.js.org/
