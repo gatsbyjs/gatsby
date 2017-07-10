@@ -57,7 +57,8 @@ class ComponentRenderer extends React.Component {
   // Check if the component or json have changed
   shouldComponentUpdate(nextProps, nextState) {
     if (
-      this.state.pageResources.component !== nextState.pageResources.component ||
+      this.state.pageResources.component !==
+        nextState.pageResources.component ||
       this.state.pageResources.json !== nextState.pageResources.json
     ) {
       this.previousProps = this.props
@@ -69,23 +70,20 @@ class ComponentRenderer extends React.Component {
 
   render() {
     if (this.state.pageResources) {
-      const pluginResponses = apiRunner('componentRenderer', {
+      const pluginResponses = apiRunner(`replacePageComponentRenderer`, {
         previousPage: {
-          ...this.props,
-          component: this.previousPageResources.component,
-          json: this.previousPageResources.json,
+          props: this.previousProps,
+          pageResources: this.previousPageResources,
         },
-        currentPage: {
-          ...this.props,
-          component: this.state.pageResources.component,
-          json: this.state.pageResources.json,
+        nextPage: {
+          props: this.props,
+          pageResources: this.state.pageResources,
         },
       })
 
-      const resolvedComponent =
-        pluginResponses.length ?
-          pluginResponses[pluginResponses.length - 1] :
-          createElement(this.state.pageResources.component, {
+      const resolvedComponent = pluginResponses.length
+        ? pluginResponses[pluginResponses.length - 1]
+        : createElement(this.state.pageResources.component, {
             ...this.props,
             ...this.state.pageResources.json,
           })
