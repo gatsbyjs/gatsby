@@ -20,6 +20,7 @@ module.exports = (
     maxWidth: 650,
     wrapperStyle: ``,
     backgroundColor: `white`,
+    linkImages: true,
   }
 
   const options = _.defaults(pluginOptions, defaults)
@@ -83,6 +84,12 @@ module.exports = (
               const fallbackSrc = responsiveSizesResult.src
               const srcSet = responsiveSizesResult.srcSet
 
+              // Generate default alt tag
+              const srcSplit = node.url.split("/");
+              const fileName = srcSplit[srcSplit.length - 1];
+              const fileNameNoExt = fileName.replace(/\.[^/.]+$/, "")
+              const defaultAlt = fileNameNoExt.replace(/[^A-Z0-9]/ig, " ");
+
               // TODO
               // add support for sub-plugins having a gatsby-node.js so can add a
               // bit of js/css to add blurry fade-in.
@@ -110,7 +117,7 @@ module.exports = (
                 <img
                   class="gatsby-resp-image-image"
                   style="width: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px ${options.backgroundColor};"
-                  alt="${node.alt ? node.alt : ``}"
+                  alt="${node.alt ? node.alt : ${defaultAlt}}"
                   title="${node.title ? node.title : ``}"
                   src="${fallbackSrc}"
                   srcset="${srcSet}"
