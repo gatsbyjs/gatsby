@@ -68,6 +68,7 @@ class ComponentRenderer extends React.Component {
   render() {
     if (this.state.pageResources) {
       return createElement(this.state.pageResources.component, {
+        key: this.props.location.pathname,
         ...this.props,
         ...this.state.pageResources.json,
       })
