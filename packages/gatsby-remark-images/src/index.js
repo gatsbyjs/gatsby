@@ -96,7 +96,7 @@ module.exports = (
               // https://www.perpetual-beta.org/weblog/silky-smooth-image-loading.html
               
               // Construct new image node w/ aspect ratio placeholder
-              const rawHTML = `
+              let rawHTML = `
           <span
             class="gatsby-resp-image-wrapper"
             style="position: relative; z-index: -1; display: block; ${options.wrapperStyle}"
@@ -108,7 +108,7 @@ module.exports = (
               <img
                 class="gatsby-resp-image-image"
                 style="width: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px ${options.backgroundColor};"
-                alt="${node.alt ? node.alt : ${defaultAlt}}"
+                alt="${node.alt ? node.alt : defaultAlt}"
                 title="${node.title ? node.title : ``}"
                 src="${fallbackSrc}"
                 srcset="${srcSet}"
