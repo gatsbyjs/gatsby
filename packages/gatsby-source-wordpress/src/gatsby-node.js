@@ -306,25 +306,25 @@ function createGraphQLNode(ent, type, createNode) {
 
   if (type == refactoredEntityTypes.post) {
     node.id = `POST_${ent.id.toString()}`
-    node.internal.type = `${typePrefix}POST`
+    node.internal.type = refactoredEntityTypes.post
   } else if (type == refactoredEntityTypes.page) {
     node.id = `PAGE_${ent.id.toString()}`
-    node.internal.type = `${typePrefix}PAGE`
+    node.internal.type = refactoredEntityTypes.page
+  } else if (type == refactoredEntityTypes.tag) {
+    node.id = `TAG_${ent.id.toString()}`
+    node.internal.type = refactoredEntityTypes.tag
+  } else if (type == refactoredEntityTypes.category) {
+    node.id = `CATEGORY_${ent.id.toString()}`
+    node.internal.type = refactoredEntityTypes.category
   }
 
   node = addFields(ent, node, createNode)
 
   if (type == refactoredEntityTypes.post || type == refactoredEntityTypes.page) {
-    // TODO : Move this to field recursive and add other fields that have rendered field
+    // TODO : Move this to field recursive and add other fields that have rendered child field
     node.title = ent.title.rendered
     node.content = ent.content.rendered
     node.excerpt = ent.excerpt.rendered
-  } else if (type == refactoredEntityTypes.tag) {
-    node.id = `TAG_${ent.id.toString()}`
-    node.internal.type = `${typePrefix}TAG`
-  } else if (type == refactoredEntityTypes.category) {
-    node.id = `CATEGORY_${ent.id.toString()}`
-    node.internal.type = `${typePrefix}CATEGORY`
   }
   node.internal.contentDigest = digest(stringify(node))
   createNode(node)
