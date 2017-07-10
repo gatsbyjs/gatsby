@@ -94,11 +94,33 @@ module.exports = (
               // add support for sub-plugins having a gatsby-node.js so can add a
               // bit of js/css to add blurry fade-in.
               // https://www.perpetual-beta.org/weblog/silky-smooth-image-loading.html
-              //
-              // TODO make linking to original image optional.
-
+              
               // Construct new image node w/ aspect ratio placeholder
               const rawHTML = `
+          <span
+            class="gatsby-resp-image-wrapper"
+            style="position: relative; z-index: -1; display: block; ${options.wrapperStyle}"
+          >
+            <span
+              class="gatsby-resp-image-background-image"
+              style="padding-bottom: ${ratio};position: relative; width: 100%; bottom: 0; left: 0; background-image: url('${responsiveSizesResult.base64}'); background-size: cover; display: block;"
+            >
+              <img
+                class="gatsby-resp-image-image"
+                style="width: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px ${options.backgroundColor};"
+                alt="${node.alt ? node.alt : ${defaultAlt}}"
+                title="${node.title ? node.title : ``}"
+                src="${fallbackSrc}"
+                srcset="${srcSet}"
+                sizes="${responsiveSizesResult.sizes}"
+              />
+            </span>
+          </span>
+          `
+
+          // Make linking to original image optional.
+          if(options.linkImages) {
+            rawHTML = `
           <a
             class="gatsby-resp-image-link"
             href="${originalImg}"
@@ -106,27 +128,10 @@ module.exports = (
             target="_blank"
             rel="noopener"
           >
-            <span
-              class="gatsby-resp-image-wrapper"
-              style="position: relative; z-index: -1; display: block; ${options.wrapperStyle}"
-            >
-              <span
-                class="gatsby-resp-image-background-image"
-                style="padding-bottom: ${ratio};position: relative; width: 100%; bottom: 0; left: 0; background-image: url('${responsiveSizesResult.base64}'); background-size: cover; display: block;"
-              >
-                <img
-                  class="gatsby-resp-image-image"
-                  style="width: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px ${options.backgroundColor};"
-                  alt="${node.alt ? node.alt : ${defaultAlt}}"
-                  title="${node.title ? node.title : ``}"
-                  src="${fallbackSrc}"
-                  srcset="${srcSet}"
-                  sizes="${responsiveSizesResult.sizes}"
-                />
-              </span>
-            </span>
+          ${rawHTML}
           </a>
-          `
+            `;
+          }
 
               // Replace the image node with an inline HTML node.
               node.type = `html`
