@@ -1,6 +1,7 @@
 import React, { createElement } from "react"
 import loader from "./loader"
 import emitter from "./emitter"
+import apiRunner from "./api-runner-browser"
 
 // Pass pathname in as prop.
 // component will try fetching resources. If they exist,
@@ -12,6 +13,7 @@ class ComponentRenderer extends React.Component {
       location: props.location,
       pageResources: loader.getResourcesForPathname(props.location.pathname),
     }
+    this.previousPageResources = {}
   }
 
   componentWillReceiveProps(nextProps) {
@@ -55,11 +57,12 @@ class ComponentRenderer extends React.Component {
   // Check if the component or json have changed
   shouldComponentUpdate(nextProps, nextState) {
     if (
-      this.state.pageResources.component !== nextState.pageResources.component
+      this.state.pageResources.component !==
+        nextState.pageResources.component ||
+      this.state.pageResources.json !== nextState.pageResources.json
     ) {
-      return true
-    }
-    if (this.state.pageResources.json !== nextState.pageResources.json) {
+      this.previousProps = this.props
+      this.previousPageResources = this.state.pageResources
       return true
     }
     return false
@@ -67,10 +70,25 @@ class ComponentRenderer extends React.Component {
 
   render() {
     if (this.state.pageResources) {
-      return createElement(this.state.pageResources.component, {
-        ...this.props,
-        ...this.state.pageResources.json,
+      const pluginResponses = apiRunner(`replacePageComponentRenderer`, {
+        previousPage: {
+          props: this.previousProps,
+          pageResources: this.previousPageResources,
+        },
+        nextPage: {
+          props: this.props,
+          pageResources: this.state.pageResources,
+        },
       })
+
+      const resolvedComponent = pluginResponses.length
+        ? pluginResponses[pluginResponses.length - 1]
+        : createElement(this.state.pageResources.component, {
+            ...this.props,
+            ...this.state.pageResources.json,
+          })
+
+      return resolvedComponent
     } else {
       return null
     }
