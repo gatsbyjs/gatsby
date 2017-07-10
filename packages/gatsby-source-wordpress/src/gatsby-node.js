@@ -300,7 +300,6 @@ function createGraphQLNode(ent, type, createNode) {
       type: type.toUpperCase(),
       content: JSON.stringify(node),
       mediaType: `text/html`,
-      owner: `gatsby-source-wordpress`,
     },
   }
 
@@ -352,7 +351,6 @@ function addFields(ent, newEnt, createNode) {
         type: `${typePrefix}ACF_Field`,
         content: JSON.stringify(ent.acf),
         mediaType: `application/json`,
-        owner: `gatsby-source-wordpress`,
       },
     }
     acfNode.internal.contentDigest = digest(stringify(acfNode))
