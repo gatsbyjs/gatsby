@@ -300,7 +300,6 @@ module.exports = async (
           new webpack.optimize.OccurenceOrderPlugin(),
           new GatsbyModulePlugin(),
           // new WebpackStableModuleIdAndHash({ seed: 9, hashSize: 47 }),
-          new webpack.NamedModulesPlugin(),
         ]
       }
       default:
