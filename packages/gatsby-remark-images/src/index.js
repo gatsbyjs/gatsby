@@ -20,7 +20,7 @@ module.exports = (
     maxWidth: 650,
     wrapperStyle: ``,
     backgroundColor: `white`,
-    linkImages: true,
+    linkImagesToOriginal: true,
   }
 
   const options = _.defaults(pluginOptions, defaults)
@@ -119,7 +119,7 @@ module.exports = (
           `
 
           // Make linking to original image optional.
-          if(options.linkImages) {
+          if(options.linkImagesToOriginal) {
             rawHTML = `
           <a
             class="gatsby-resp-image-link"

@@ -35,7 +35,7 @@ plugins: [
             maxWidth: 590,
             // Remove the default behavior of adding a link to each
             // image.
-            linkImages: false,
+            linkImagesToOriginal: false,
           },
         },
       ]
