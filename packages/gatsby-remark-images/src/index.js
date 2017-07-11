@@ -85,16 +85,16 @@ module.exports = (
               const srcSet = responsiveSizesResult.srcSet
 
               // Generate default alt tag
-              const srcSplit = node.url.split("/");
-              const fileName = srcSplit[srcSplit.length - 1];
-              const fileNameNoExt = fileName.replace(/\.[^/.]+$/, "")
-              const defaultAlt = fileNameNoExt.replace(/[^A-Z0-9]/ig, " ");
+              const srcSplit = node.url.split(`/`)
+              const fileName = srcSplit[srcSplit.length - 1]
+              const fileNameNoExt = fileName.replace(/\.[^/.]+$/, ``)
+              const defaultAlt = fileNameNoExt.replace(/[^A-Z0-9]/gi, ` `)
 
               // TODO
               // add support for sub-plugins having a gatsby-node.js so can add a
               // bit of js/css to add blurry fade-in.
               // https://www.perpetual-beta.org/weblog/silky-smooth-image-loading.html
-              
+
               // Construct new image node w/ aspect ratio placeholder
               let rawHTML = `
           <span
@@ -118,9 +118,9 @@ module.exports = (
           </span>
           `
 
-          // Make linking to original image optional.
-          if(options.linkImagesToOriginal) {
-            rawHTML = `
+              // Make linking to original image optional.
+              if (options.linkImagesToOriginal) {
+                rawHTML = `
           <a
             class="gatsby-resp-image-link"
             href="${originalImg}"
@@ -130,8 +130,8 @@ module.exports = (
           >
           ${rawHTML}
           </a>
-            `;
-          }
+            `
+              }
 
               // Replace the image node with an inline HTML node.
               node.type = `html`

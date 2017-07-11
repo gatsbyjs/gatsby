@@ -23,7 +23,7 @@ class NodeAPIDocs extends React.Component {
         </p>
         <pre>
           <code
-            class="language-javascript"
+            className="language-javascript"
             dangerouslySetInnerHTML={{
               __html: `// Promise API
 exports.createPages = () => {
