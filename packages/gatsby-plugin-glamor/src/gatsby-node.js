@@ -10,11 +10,10 @@ exports.modifyWebpackConfig = ({ config }) =>
 
 // Add Glamor support
 exports.modifyBabelrc = ({ babelrc }) => {
-  return {plugins: babelrc.plugins.concat([
-    [
-      `transform-react-jsx`,
-      { pragma: `Glamor.createElement` },
-    ],
-    `babel-plugin-glamor`,
-  ])}
+  return {
+    plugins: babelrc.plugins.concat([
+      [`transform-react-jsx`, { pragma: `Glamor.createElement` }],
+      `babel-plugin-glamor`,
+    ]),
+  }
 }
