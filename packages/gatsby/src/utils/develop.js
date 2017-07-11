@@ -3,6 +3,7 @@ const express = require(`express`)
 const graphqlHTTP = require(`express-graphql`)
 const request = require(`request`)
 const bootstrap = require(`../bootstrap`)
+const chokidar = require(`chokidar`)
 const webpack = require(`webpack`)
 const webpackConfig = require(`./webpack.config`)
 const rl = require(`readline`)
@@ -10,6 +11,7 @@ const parsePath = require(`parse-filepath`)
 const { store } = require(`../redux`)
 const copyStaticDirectory = require(`./copy-static-directory`)
 const developHtml = require(`./develop-html`)
+const { joinPath } = require(`./path`)
 
 // Watch the static directory and copy files to public as they're added or
 // changed. Wait 10 seconds so copying doesn't interfer with the regular
@@ -30,13 +32,19 @@ rlInterface.on(`SIGINT`, () => {
 
 async function startServer(program) {
   const directory = program.directory
+  const createIndexHtml = () => developHtml(program).catch(err => {
+    console.error(err)
+    process.exit(1)
+  })
 
   // Start bootstrap process.
   await bootstrap(program)
-  await developHtml(program).catch(err => {
-    console.log(err)
-    process.exit(1)
-  })
+
+  await createIndexHtml()
+
+  // Register watcher that rebuilds index.html every time html.js changes.
+  const pathToHtmlJs = joinPath(directory, `src/html.js`)
+  chokidar.watch(pathToHtmlJs).on(`change`, createIndexHtml)
 
   const compilerConfig = await webpackConfig(
     program,
