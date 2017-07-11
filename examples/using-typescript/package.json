@@ -4,7 +4,13 @@
   "description": "Gatsby example site demonstrating how to use Typescript with Gatsby",
   "author": "fabien0102 <fabien0102@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "start": "gatsby develop",
+    "develop": "gatsby develop",
+    "build": "gatsby build"
+  },
   "dependencies": {
+    "@types/node": "^8.0.7",
     "@types/react": "15.0.21",
     "@types/react-dom": "0.14.23",
     "gatsby": "latest",
