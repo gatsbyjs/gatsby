@@ -9,8 +9,7 @@ async function onCreateNode({ node, boundActionCreators, loadNodeContent }) {
   if (![`application/xml`, `text/xml`].includes(node.internal.mediaType)) {
     return
   }
-
-  const rawXml = loadNodeContent(node)
+  const rawXml = await loadNodeContent(node)
   const parsedXml = parseXml(rawXml)
   const nodeArray = parsedXml.root.children.map((obj, i) => {
     const objStr = JSON.stringify(obj)
@@ -20,7 +19,7 @@ async function onCreateNode({ node, boundActionCreators, loadNodeContent }) {
       .digest(`hex`)
     return {
         ...obj,
-        id: `${node.id} [${i}] >>> XML`,
+        id: obj.attributes.id ? obj.attributes.id : `${node.id} [${i}] >>> XML`,
         parent: node.id,
         internal: {
           contentDigest,
