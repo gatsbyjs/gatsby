@@ -1,7 +1,7 @@
 import _ from "lodash"
 import invariant from "invariant"
 import validate, { Joi } from "webpack-validator"
-import stripIndent from 'common-tags/lib/stripIndent'
+import stripIndent from "common-tags/lib/stripIndent"
 import apiRunnerNode from "./api-runner-node"
 
 // We whitelist special config keys that are not part of a standard Webpack v1

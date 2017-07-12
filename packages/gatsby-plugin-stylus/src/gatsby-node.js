@@ -22,8 +22,7 @@ const ExtractTextPlugin = require(`extract-text-webpack-plugin`)
 
 exports.modifyWebpackConfig = ({ config, stage }, options = {}) => {
   const cssModulesConfProd = `css?modules&minimize&importLoaders=1`
-  const cssModulesConfDev =
-    `css?modules&importLoaders=1&localIdentName=[name]---[local]---[hash:base64:5]`
+  const cssModulesConfDev = `css?modules&importLoaders=1&localIdentName=[name]---[local]---[hash:base64:5]`
 
   // Pass in stylus plugins regardless of stage.
   if (Array.isArray(options.use)) {
@@ -34,7 +33,9 @@ exports.modifyWebpackConfig = ({ config, stage }, options = {}) => {
       return current
     })
   } else if (options.use) {
-    throw new Error(`gatsby-plugin-stylus "use" option passed with ${options.use}. Pass an array of stylus plugins instead`)
+    throw new Error(
+      `gatsby-plugin-stylus "use" option passed with ${options.use}. Pass an array of stylus plugins instead`
+    )
   }
 
   const stylusFiles = /\.styl$/
