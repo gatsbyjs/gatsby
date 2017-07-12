@@ -3,21 +3,21 @@
 ## Best Practice
 
 
-Though you can deploy from the same location multiple times it is recommended that you clear your public directory before each build
+Though you can deploy from the same location multiple times it is recommended that you clear your public directory of any `.html` files before each build
 e.g. using surge
 
 ```bash
-rm -rf public/ && gatsby build && surge public/
+rm -rf public/*.html && gatsby build && surge public/
 ```
 
-because this is going to be executed on every deploy it is suggested that you use an `package.json` script to simplify this process
-
+because this is going to be executed on every deploy it is suggested that you use a `package.json` script to simplify this process
 
 ## Providers
-_surge.sh_
-* `npm install -g surge`
-* `gatsby build`
-* `surge public/`
+
+[Surge.sh](http://surge.sh/)
+[Forge](https://getforge.com/)
+[Netlify](https://www.netlify.com/)
+[GitHub-Pages](https://pages.github.com/)
 
 ## Debugging
 
