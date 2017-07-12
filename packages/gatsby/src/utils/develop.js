@@ -43,13 +43,6 @@ async function startServer(program) {
 
   await createIndexHtml()
 
-  // Register watcher that rebuilds index.html every time html.js changes.
-  const watchGlobs = [
-    `src/html.js`,
-    `**/gatsby-ssr.js`,
-  ].map(directoryPath)
-  chokidar.watch(watchGlobs).on(`change`, createIndexHtml)
-
   const compilerConfig = await webpackConfig(
     program,
     directory,
@@ -60,6 +53,9 @@ async function startServer(program) {
   const devConfig = compilerConfig.resolve()
   const compiler = webpack(devConfig)
 
+  /**
+   * Set up the express app.
+   **/
   const app = express()
   app.use(
     require(`webpack-hot-middleware`)(compiler, {
@@ -112,14 +108,25 @@ async function startServer(program) {
   // As last step, check if the file exists in the public folder.
   app.get(`*`, (req, res) => {
     // Load file but ignore errors.
-    res.sendFile(`${program.directory}/public/${req.url}`, err => {
+    res.sendFile(directoryPath(`/public/${req.url}`), err => {
       if (err) {
         res.status(404).end()
       }
     })
   })
 
-  const listener = app.listen(program.port, program.host, e => {
+  /**
+   * Set up the HTTP server and socket.io.
+   **/
+
+  const server = require(`http`).Server(app)
+  const io = require(`socket.io`)(server)
+
+  io.on(`connection`, socket => {
+    socket.join(`clients`)
+  })
+
+  const listener = server.listen(program.port, program.host, e => {
     if (e) {
       if (e.code === `EADDRINUSE`) {
         // eslint-disable-next-line max-len
@@ -142,6 +149,17 @@ async function startServer(program) {
       }
     }
   })
+
+  // Register watcher that rebuilds index.html every time html.js changes.
+  const watchGlobs = [
+    `src/html.js`,
+    `**/gatsby-ssr.js`,
+  ].map(directoryPath)
+  chokidar.watch(watchGlobs).on(`change`, async () => {
+    await createIndexHtml()
+    io.to(`clients`).emit(`reload`)
+  })
+
 }
 
 module.exports = (program: any) => {
