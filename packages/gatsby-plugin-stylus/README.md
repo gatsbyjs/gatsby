@@ -22,17 +22,7 @@ plugins: [
 
 ### With CSS Modules
 
-```javascript
-// in gatsby-config.js
-plugins: [
-  {
-    resolve: 'gatsby-plugin-stylus',
-    options: {
-      modules: true,
-    },
-  },
-],
-```
+Using CSS modules requires no additional configuration. Simply prepend `.module` to the extension. For example: `App.styl` -> `App.module.styl`. Any file with the `module` extension will use CSS modules.
 
 ### With Stylus plugins
 
@@ -47,7 +37,6 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-stylus',
       options: {
-        modules: true,
         use: [rupture()],
       },
     },
