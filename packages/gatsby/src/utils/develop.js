@@ -11,7 +11,7 @@ const parsePath = require(`parse-filepath`)
 const { store } = require(`../redux`)
 const copyStaticDirectory = require(`./copy-static-directory`)
 const developHtml = require(`./develop-html`)
-const { joinPath } = require(`./path`)
+const { withBasePath } = require(`./path`)
 
 // Watch the static directory and copy files to public as they're added or
 // changed. Wait 10 seconds so copying doesn't interfer with the regular
@@ -43,8 +43,11 @@ async function startServer(program) {
   await createIndexHtml()
 
   // Register watcher that rebuilds index.html every time html.js changes.
-  const pathToHtmlJs = joinPath(directory, `src/html.js`)
-  chokidar.watch(pathToHtmlJs).on(`change`, createIndexHtml)
+  const watchGlobs = [
+    `src/html.js`,
+    `**/gatsby-ssr.js`,
+  ].map(withBasePath(directory))
+  chokidar.watch(watchGlobs).on(`change`, createIndexHtml)
 
   const compilerConfig = await webpackConfig(
     program,
