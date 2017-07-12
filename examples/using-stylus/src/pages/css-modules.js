@@ -1,20 +1,21 @@
 import React from "react"
 import Link from 'gatsby-link'
-import "./index.styl"
+import s from "./css-modules.module.styl"
 
 class CssModules extends React.Component {
   render() {
     return (
       <div>
-        <header className="header">
-          <h1 className="the-stylus-class">Hi stylish friends</h1>
+        <header className={s.header}>
+          <h1 className={s["the-stylus-class"]}>Hi stylish friends</h1>
           <p>
-            All the styles for this page are written using <a href="https://github.com/stylus/stylus">Stylus</a>.
+            All the styles for this page are written using <a href="https://github.com/stylus/stylus">Stylus</a>
           </p>
-          <Link to="/css-modules/" className="cta">View the CSS Modules example</Link>
+          <p>Open the inspector and inspect the class names of these elements.</p>
+          <Link to="/" className={s.cta}>View the plain example</Link>
         </header>
-        <section className="main">
-          <div className="stylus-nav-example">
+        <section className={s.main}>
+          <div className={s["stylus-nav-example"]}>
             <h2>Nav example</h2>
             <ul>
               <li>
@@ -28,6 +29,8 @@ class CssModules extends React.Component {
               </li>
             </ul>
           </div>
+
+          {/* This is intentionally global. See the stylus file */}
           <div className="grid">
             <div>1</div>
             <div>2</div>
