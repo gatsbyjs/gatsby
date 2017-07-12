@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-stylus",
   "description": "Gatsby support for Stylus",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "author": "Ian Sinnott <ian@iansinnott.com>",
   "dependencies": {
     "babel-cli": "^6.24.1",
@@ -9,7 +9,6 @@
     "stylus": "^0.54.5",
     "stylus-loader": "webpack1"
   },
-  "devDependencies": {},
   "keywords": [
     "gatsby",
     "gatsby-plugin",
