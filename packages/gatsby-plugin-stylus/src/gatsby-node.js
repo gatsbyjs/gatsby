@@ -27,7 +27,6 @@ exports.modifyWebpackConfig = ({ config, stage }, options = {}) => {
 
   // Pass in stylus plugins regardless of stage.
   if (Array.isArray(options.use)) {
-    config.veryINvalid = true
     config.merge(current => {
       current.stylus = {
         use: options.use,
