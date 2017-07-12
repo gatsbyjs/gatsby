@@ -11,6 +11,8 @@ https://gatsby-using-contentful.netlify.com/
 
 ## How to use
 
+### Using Delivery API
+
 ```javascript
 // In your gatsby-config.js
 plugins: [
@@ -19,6 +21,21 @@ plugins: [
     options: {
       spaceId: `your_space_id`,
       accessToken: `your_acces_token`,
+    },
+  },
+]
+```
+### Using Preview API
+
+```javascript
+// In your gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-source-contentful`,
+    options: {
+      spaceId: `your_space_id`,
+      accessToken: `your_acces_token`,
+      host: `preview.contentful.com`,
     },
   },
 ]
