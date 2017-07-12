@@ -23,9 +23,14 @@ module.exports = ({ markdownAST }) => {
 
     // Replace the node with the markup we need to make
     // 100% width highlighted code lines work
+    // We use `data-language=*` rather than class="language-*" to avoid
+    // breaking line highlights if Prism is required by any other code.
+    // The language attribute enables custom user-styling without
+    // causing Prism to re-process our already-highlighted markup.
+    // @see https://github.com/gatsbyjs/gatsby/issues/1486
     node.type = `html`
     node.value = `<div class="gatsby-highlight">
-      <pre class="language-${preCssClassLanguage}"><code>${highlightCode(
+      <pre data-language="${preCssClassLanguage}"><code>${highlightCode(
       language,
       node.value,
       highlightLines
