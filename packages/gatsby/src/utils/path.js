@@ -9,3 +9,7 @@ export function joinPath(...paths) {
     return joinedPath
   }
 }
+
+export function withBasePath(basePath) {
+  return paths => joinPath(basePath, paths)
+}
