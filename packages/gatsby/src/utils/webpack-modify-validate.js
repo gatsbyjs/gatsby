@@ -1,7 +1,7 @@
 import _ from "lodash"
 import invariant from "invariant"
-import path from "path"
 import validate, { Joi } from "webpack-validator"
+import stripIndent from 'common-tags/lib/stripIndent'
 import apiRunnerNode from "./api-runner-node"
 
 // We whitelist special config keys that are not part of a standard Webpack v1
@@ -46,12 +46,11 @@ export default (async function ValidateWebpackConfig(config, stage) {
     console.log(`\n`)
   })
 
-  console.log(
-    `Your Webpack config does not appear to be valid. This could be because of
-something you added or a plugin. If you don't recognize the invalid keys listed
-above try removing plugins and rebuilding to identify the culprit.
-`
-  )
+  console.log(stripIndent`
+    Your Webpack config does not appear to be valid. This could be because of
+    something you added or a plugin. If you don't recognize the invalid keys listed
+    above try removing plugins and rebuilding to identify the culprit.
+  `)
 
   return process.exit(1)
 })
