@@ -3,17 +3,15 @@ const apiRunner = require(`./api-runner-browser`)
 import React from "react"
 import ReactDOM from "react-dom"
 import { AppContainer as HotContainer } from "react-hot-loader"
+import socketIo from "./socketIo"
+
 window.___emitter = require(`./emitter`)
 
 // Let the site/plugins run code very early.
 apiRunner(`onClientEntry`)
 
-if (process.env.NODE_ENV === `development`) {
-  const socket = io()
-  socket.on(`reload`, () => {
-    location.reload()
-  })
-}
+// Hook up the client to socket.io on server
+socketIo()
 
 /**
  * Service Workers are persistent by nature. They stick around,
