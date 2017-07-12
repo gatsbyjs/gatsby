@@ -13,7 +13,6 @@
  *   {
  *     resolve: `gatsby-plugin-stylus`,
  *     options: {
- *       modules: true,
  *       use: [],
  *     },
  *   },
@@ -22,13 +21,13 @@
 const ExtractTextPlugin = require(`extract-text-webpack-plugin`)
 
 exports.modifyWebpackConfig = ({ config, stage }, options = {}) => {
-  const modules = Boolean(options.modules)
   const cssModulesConfProd = `css?modules&minimize&importLoaders=1`
   const cssModulesConfDev =
     `css?modules&importLoaders=1&localIdentName=[name]---[local]---[hash:base64:5]`
 
   // Pass in stylus plugins regardless of stage.
   if (Array.isArray(options.use)) {
+    config.veryINvalid = true
     config.merge(current => {
       current.stylus = {
         use: options.use,
@@ -39,20 +38,37 @@ exports.modifyWebpackConfig = ({ config, stage }, options = {}) => {
     throw new Error(`gatsby-plugin-stylus "use" option passed with ${options.use}. Pass an array of stylus plugins instead`)
   }
 
+  const stylusFiles = /\.styl$/
+  const stylusModulesFiles = /\.module\.styl$/
+
   switch (stage) {
     case `develop`: {
       config.loader(`stylus`, {
-        test: /\.styl$/,
-        loaders: [`style`, modules ? cssModulesConfDev : `css`, `postcss`, `stylus`],
+        test: stylusFiles,
+        exclude: stylusModulesFiles,
+        loaders: [`style`, `css`, `postcss`, `stylus`],
+      })
+      config.loader(`stylusModules`, {
+        test: stylusModulesFiles,
+        loaders: [`style`, cssModulesConfDev, `postcss`, `stylus`],
       })
       return config
     }
 
     case `build-css`: {
       config.loader(`stylus`, {
-        test: /\.styl$/,
+        test: stylusFiles,
+        exclude: stylusModulesFiles,
         loader: ExtractTextPlugin.extract(`style`, [
-          modules ? cssModulesConfProd : `css?minimize`,
+          `css?minimize`,
+          `postcss`,
+          `stylus`,
+        ]),
+      })
+      config.loader(`stylusModules`, {
+        test: stylusModulesFiles,
+        loader: ExtractTextPlugin.extract(`style`, [
+          cssModulesConfProd,
           `postcss`,
           `stylus`,
         ]),
@@ -69,8 +85,13 @@ exports.modifyWebpackConfig = ({ config, stage }, options = {}) => {
       ])
 
       config.loader(`stylus`, {
-        test: /\.styl$/,
-        loader: modules ? moduleLoader : `null`,
+        test: stylusFiles,
+        exclude: stylusModulesFiles,
+        loader: `null`,
+      })
+      config.loader(`stylusModules`, {
+        test: stylusModulesFiles,
+        loader: moduleLoader,
       })
       return config
     }
@@ -81,8 +102,13 @@ exports.modifyWebpackConfig = ({ config, stage }, options = {}) => {
         `stylus`,
       ])
       config.loader(`stylus`, {
-        test: /\.styl$/,
-        loader: modules ? moduleLoader : `null`,
+        test: stylusFiles,
+        exclude: stylusModulesFiles,
+        loader: `null`,
+      })
+      config.loader(`stylusModules`, {
+        test: stylusModulesFiles,
+        loader: moduleLoader,
       })
 
       return config
