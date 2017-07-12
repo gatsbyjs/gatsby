@@ -14,7 +14,9 @@ class PostsListSearchable extends Component {
 
   handleFilter = id => {
     this.setState({
-      data: this.props.propsData.allWordpressPost.edges.filter(p => p.node.categories.includes(id.replace(`CATEGORY_`, ``))),
+      data: this.props.propsData.allWordpressPost.edges.filter(p =>
+        p.node.categories.includes(id.replace(`CATEGORY_`, ``))
+      ),
     })
   }
 
@@ -29,15 +31,15 @@ class PostsListSearchable extends Component {
           <Column fluid xs={1} sm={10} md={10} lg={10}>
             <span>Filter by category: </span>
             <span onClick={() => this.resetFilter()}>All - </span>
-            {this.props.propsData.allWordpressCategory.edges.map((cat, i) => (
-                <span
-                  key={cat.node.id}
-                  onClick={() => this.handleFilter(cat.node.id)}
-                >
-                  {i !== 0 ? ` - ` : ``}
-                  {cat.node.name}
-                </span>
-              ))}
+            {this.props.propsData.allWordpressCategory.edges.map((cat, i) =>
+              <span
+                key={cat.node.id}
+                onClick={() => this.handleFilter(cat.node.id)}
+              >
+                {i !== 0 ? ` - ` : ``}
+                {cat.node.name}
+              </span>
+            )}
             <span onClick={() => this.resetFilter()}> - Reset filter</span>
           </Column>
         </Row>

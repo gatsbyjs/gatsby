@@ -3,7 +3,7 @@ const _ = require(`lodash`)
 
 const normalize = require(`./normalize`)
 
-module.exports = async ({ spaceId, accessToken, syncToken }) => {
+module.exports = async ({ spaceId, accessToken, host, syncToken }) => {
   // Fetch articles.
   console.time(`Fetch Contentful data`)
   console.log(`Starting to fetch data from Contentful`)

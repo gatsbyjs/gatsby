@@ -1,5 +1,49 @@
 # Change Log
 
+## [1.1.0] - 2017-07-11
+
+### Added
+
+* Add gatsby-plugin-twitter for embedding Tweets #1389 @KyleAMathews
+* Document promise/callback interface for async plugins #1409 @KyleAMathews
+* Add an example of a config query to migration docs #1429 @benmccormick
+* Adds more information to documentation pages. #1428 @Vagr9K
+* Add new plugin `gatsby-plugin-emotion` #1447 @rawrmonstar
+* Gatsby remark images default alt tags and optional linking #1451 @chiedo
+* Add stylus support #1437 @iansinnott
+* [gatsby-source-contentful] Add Support for preview api #1464 @Khaledgarbaya
+
+### Fixed
+
+* Update init-starter.js #1393 @kimown
+* fix URL for packages, using the master branch #1399 @bmackinney
+* Use latest instead of next for versions in examples #1404 @KyleAMathews
+* Update www dependencies #1402 @KyleAMathews
+* Fix frontpage copy issues #1401 @KyleAMathews
+* Add missing return statement #1405 @ahmedlhanafy
+* Fixed documentation #1406 @chiedo
+* fix: Update examples directory URL due to 404 with current link #1410 @bencodezen
+* Add link to gatsby-dev-cli + we're stable + copy editing @KyleAMathews
+* fix glamor + babel modification #1416 @jaredly
+* Typo, grammar and standardising flags #1426 @IrregularShed
+* Fix bug where the target is incorrectly set #1427 @samzhao
+* Fix "gastsby" to "gatsby" on line 34 #1433 @trautlein
+* Fix "Creating Pages" example's variable reference #1430 @benmccormick
+* Fixes the example for navigateTo. #1440 @Vagr9K
+* Properly load options for Remark #1441 @benmccormick
+* Use lowercase require for "rss" #1444 @nicholaswyoung
+* fix issue with ssr for redux example #1445 lemuelbarango
+* Update .nvmrc, Node 8 #1446 @nicholaswyoung
+* Set a key on pages so when switching between pages, the same component instance isn't reusued #1460 @KyleAMathews
+* Removed `owner` assignation to prevent error #1454 @sebastienfi
+* Update gatsby-node.js #1452 @sebastienfi
+* Update README.md #1453 @sebastienfi
+* Improve typescript example #1466 @fabien0102
+* Remove react-helmet from src/html.js fixes #1443 #1474 @KyleAMathews
+* Updates add-custom-webpack-config.md to fix broken links #1420 @marcustisater
+* Fix source-wordpress npmignore #1476 @KyleAMathews
+
+
 ## [1.0.0] - 2017-07-06
 
 ### Added

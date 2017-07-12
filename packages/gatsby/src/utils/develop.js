@@ -88,7 +88,7 @@ async function startServer(program) {
   app.use((req, res, next) => {
     const parsedPath = parsePath(req.originalUrl)
     if (parsedPath.extname === `` || parsedPath.extname === `.html`) {
-      res.sendFile(`${process.cwd()}/public/index.html`, err => {
+      res.sendFile(`${program.directory()}/public/index.html`, err => {
         if (err) {
           res.status(500).end()
         }
@@ -101,7 +101,7 @@ async function startServer(program) {
   // As last step, check if the file exists in the public folder.
   app.get(`*`, (req, res) => {
     // Load file but ignore errors.
-    res.sendFile(`${process.cwd()}/public/${req.url}`, err => {
+    res.sendFile(`${program.directory}/public/${req.url}`, err => {
       if (err) {
         res.status(404).end()
       }

@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-emotion",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Gatsby plugin to add support for Emotion",
   "main": "index.js",
   "scripts": {

@@ -30,6 +30,7 @@
     "iflow-lodash": "^1.1.24",
     "iflow-react-router": "^1.2.1",
     "jest": "^20.0.4",
+    "jest-cli": "^20.0.4",
     "lerna": "^2.0.0-rc.5",
     "plop": "^1.7.4",
     "prettier": "^1.5.2",
