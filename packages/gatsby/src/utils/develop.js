@@ -32,6 +32,7 @@ rlInterface.on(`SIGINT`, () => {
 
 async function startServer(program) {
   const directory = program.directory
+  const directoryPath = withBasePath(directory)
   const createIndexHtml = () => developHtml(program).catch(err => {
     console.error(err)
     process.exit(1)
@@ -46,7 +47,7 @@ async function startServer(program) {
   const watchGlobs = [
     `src/html.js`,
     `**/gatsby-ssr.js`,
-  ].map(withBasePath(directory))
+  ].map(directoryPath)
   chokidar.watch(watchGlobs).on(`change`, createIndexHtml)
 
   const compilerConfig = await webpackConfig(
@@ -98,7 +99,7 @@ async function startServer(program) {
   app.use((req, res, next) => {
     const parsedPath = parsePath(req.originalUrl)
     if (parsedPath.extname === `` || parsedPath.extname === `.html`) {
-      res.sendFile(`${program.directory()}/public/index.html`, err => {
+      res.sendFile(directoryPath(`public/index.html`), err => {
         if (err) {
           res.status(500).end()
         }
