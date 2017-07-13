@@ -189,7 +189,7 @@ let mergeData = (d1, d1key, d2, d2key) => {
 //  any markdown based node.
 export const pageQuery = graphql`
 query choroplethOnD3v4Alt($slug: String!) {
-  markdownRemark(fields: { slug: { eq: "/2017-03-09-choropleth-on-d3v4/_choropleth/" }}) {
+  markdownRemark(fields: { slug: { eq: "/2017-05-30-choropleth-on-d3v4-alternate/_choropleth/" }}) {
     html
   }
 	jsFrontmatter(fields: {slug: {eq: $slug}}) {
