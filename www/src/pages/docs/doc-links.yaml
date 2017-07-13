@@ -18,6 +18,7 @@
     Create a source plugin: /docs/create-source-plugin/
     Custom webpack config: /docs/add-custom-webpack-config/
     Debugging HTML Builds: /docs/debugging-html-builds/
+    Environment Variables: /docs/environment-variables/
     Path Prefix: /docs/path-prefix/
     Proxying API Requests: /docs/api-proxy/
 - title: Reference
