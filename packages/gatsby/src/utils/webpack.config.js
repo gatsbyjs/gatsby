@@ -19,7 +19,7 @@ const WebpackMD5Hash = require(`webpack-md5-hash`)
 const ChunkManifestPlugin = require(`chunk-manifest-webpack-plugin`)
 const GatsbyModulePlugin = require(`../loaders/gatsby-module-loader/plugin`)
 const genBabelConfig = require(`./babel-config`)
-const { joinPath } = require(`./path`)
+const { withBasePath } = require(`./path`)
 
 // Five stages or modes:
 //   1) develop: for `gatsby develop` command, hot reload and CSS injection into page
@@ -36,6 +36,7 @@ module.exports = async (
   pages = []
 ) => {
   const babelStage = suppliedStage
+  const directoryPath = withBasePath(directory)
 
   // We combine develop & develop-html stages for purposes of generating the
   // webpack config.
@@ -79,7 +80,7 @@ module.exports = async (
         // Webpack will always generate a resultant javascript file.
         // But we don't want it for this step. Deleted by build-css.js.
         return {
-          path: joinPath(directory, `public`),
+          path: directoryPath(`public`),
           filename: `bundle-for-css.js`,
           publicPath: program.prefixPaths
             ? `${store.getState().config.pathPrefix}/`
@@ -90,7 +91,7 @@ module.exports = async (
         // A temp file required by static-site-generator-plugin. See plugins() below.
         // Deleted by build-html.js, since it's not needed for production.
         return {
-          path: joinPath(directory, `public`),
+          path: directoryPath(`public`),
           filename: `render-page.js`,
           libraryTarget: `umd`,
           publicPath: program.prefixPaths
@@ -101,7 +102,7 @@ module.exports = async (
         return {
           filename: `[name]-[chunkhash].js`,
           chunkFilename: `[name]-[chunkhash].js`,
-          path: joinPath(directory, `public`),
+          path: directoryPath(`public`),
           publicPath: program.prefixPaths
             ? `${store.getState().config.pathPrefix}/`
             : `/`,
@@ -120,24 +121,24 @@ module.exports = async (
             `${require.resolve(
               `webpack-hot-middleware/client`
             )}?path=http://${program.host}:${webpackPort}/__webpack_hmr&reload=true`,
-            joinPath(directory, `.cache/app`),
+            directoryPath(`.cache/app`),
           ],
         }
       case `develop-html`:
         return {
-          main: joinPath(directory, `.cache/develop-static-entry`),
+          main: directoryPath(`.cache/develop-static-entry`),
         }
       case `build-css`:
         return {
-          main: joinPath(directory, `.cache/app`),
+          main: directoryPath(`.cache/app`),
         }
       case `build-html`:
         return {
-          main: joinPath(directory, `.cache/static-entry`),
+          main: directoryPath(`.cache/static-entry`),
         }
       case `build-javascript`:
         return {
-          app: joinPath(directory, `.cache/production-app`),
+          app: directoryPath(`.cache/production-app`),
         }
       default:
         throw new Error(`The state requested ${stage} doesn't exist.`)
@@ -319,9 +320,9 @@ module.exports = async (
       // directory if you need to install a specific version of a module for a
       // part of your site.
       modulesDirectories: [
-        joinPath(directory, `node_modules`),
+        directoryPath(`node_modules`),
         `node_modules`,
-        joinPath(directory, `node_modules`, `gatsby`, `node_modules`),
+        directoryPath(`node_modules`, `gatsby`, `node_modules`),
       ],
     }
   }
