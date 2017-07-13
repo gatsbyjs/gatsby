@@ -3,7 +3,7 @@
 Source plugin for pulling content types, entries, and assets into Gatsby from Contentful spaces. It creates links between entry types and asset so they can be queried in Gatsby using GraphQL.
 
 An example site for using this plugin is at
-https://gatsby-using-contentful.netlify.com/
+https://using-contentful.netlify.com/
 
 ## Install
 
