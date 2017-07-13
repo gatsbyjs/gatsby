@@ -16,7 +16,16 @@ plugins: [
     resolve: `gatsby-transformer-remark`,
     options: {
       plugins: [
-        `gatsby-remark-prismjs`,
+        {
+          resolve: `gatsby-remark-prismjs`,
+          options: {
+            // Class prefix for <pre> tags containing syntax highlighting;
+            // Defaults to 'language-'.
+            // If you use Prism directly within your site,
+            // you may use this to prevent Prism from re-processing syntax.
+            classPrefix: 'language-',
+          },
+        },
       ]
     }
   }
