@@ -55,6 +55,7 @@ const saveState = _.debounce(state => {
 
 store.subscribe(() => {
   const lastAction = store.getState().lastAction
+  // console.log(lastAction.type)
   emitter.emit(lastAction.type, lastAction)
 })
 

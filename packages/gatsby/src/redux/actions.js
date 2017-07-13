@@ -1,10 +1,12 @@
 // @flow
 import Joi from "joi"
 import chalk from "chalk"
-const _ = require(`lodash`)
+const _ = require(`lodash`
+)
 const { bindActionCreators } = require(`redux`)
 const { stripIndent } = require(`common-tags`)
-
+const glob = require(`glob`)
+const { joinPath } = require(`../utils/path`)
 const { getNode, hasNodeChanged } = require(`./index`)
 
 const { store } = require(`./index`)
@@ -57,6 +59,13 @@ actions.createPage = (page, plugin = ``, traceId) => {
     internalComponentName = `ComponentIndex`
   }
 
+  if (
+    !page.layout &&
+    !glob.sync(joinPath(store.getState().program.directory, `src/layouts/index.*`)).length == 0
+  ) {
+    page.layout = `index`
+  }
+
   page.jsonName = jsonName
   page.internalComponentName = internalComponentName
 
@@ -80,6 +89,74 @@ actions.createPage = (page, plugin = ``, traceId) => {
 
   return {
     type: `CREATE_PAGE`,
+    plugin,
+    traceId,
+    payload: page,
+  }
+}
+
+/**
+ * Delete a page
+ * @param {string} page a page object with at least the path set
+ * @example
+ * deletePage(page)
+ */
+actions.deleteLayout = (page, plugin = ``) => {
+  return {
+    type: `DELETE_LAYOUT`,
+    payload: page,
+  }
+}
+
+/**
+ * Create a page. See [the guide on creating and modifying pages](/docs/creating-and-modifying-pages/)
+ * for detailed documenation about creating pages.
+ * @param {Object} page a page object
+ * @param {string} page.path Any valid URL. Must start with a forward slash
+ * @param {string} page.component The absolute path to the component for this page
+ * @param {Object} page.context Context data for this page. Passed as props
+ * to the component `this.props.pathContext` as well as to the graphql query
+ * as graphql arguments.
+ * @example
+ * createPage({
+ *   path: `/my-sweet-new-page/`,
+ *   component: path.resolve('./src/templates/my-sweet-new-page.js`),
+ *   // context gets passed in as props to the page as well
+ *   // as into the page/template's GraphQL query.
+ *   context: {
+ *     id: `123456`,
+ *   },
+ * })
+ */
+actions.createLayout = (page, plugin = ``, traceId) => {
+  page.componentChunkName = layoutComponentChunkName(page.component)
+
+  let jsonName = `${_.kebabCase(page.path)}.json`
+  let internalComponentName = `Component${pascalCase(page.path)}`
+  if (jsonName === `.json`) {
+    jsonName = `index.json`
+    internalComponentName = `ComponentIndex`
+  }
+
+  page.jsonName = jsonName
+  page.internalComponentName = internalComponentName
+
+  // Ensure the page has a context object
+  if (!page.context) {
+    page.context = {}
+  }
+
+  const result = Joi.validate(page, joiSchemas.pageSchema)
+  if (result.error) {
+    console.log(chalk.blue.bgYellow(`The upserted page didn't pass validation`))
+    console.log(chalk.bold.red(result.error))
+    console.log(page)
+    return
+  }
+
+
+  return {
+    type: `CREATE_LAYOUT`,
     plugin,
     traceId,
     payload: page,

@@ -13,7 +13,7 @@ import { joinPath } from "../../utils/path"
 // Write out pages information.
 const writePages = async () => {
   writtenOnce = true
-  const { program, config, pages } = store.getState()
+  let { program, config, pages, layouts } = store.getState()
 
   // Write out pages.json
   const pagesData = pages.reduce(
@@ -26,8 +26,8 @@ const writePages = async () => {
 
   // Get list of components, layouts, and json files.
   let components = []
-  let layouts = []
   let json = []
+  let pageLayouts = []
 
   pages.forEach(p => {
     components.push({
@@ -35,21 +35,19 @@ const writePages = async () => {
       component: p.component,
     })
     if (p.layout) {
-      layouts.push(p.layout)
+      let layout = _.find(layouts, ['path', p.layout])
+      pageLayouts.push(layout)
+    } else {
+      let layout = _.find(layouts, ['path', 'index'])
+      layout && pageLayouts.push(layout)
     }
     json.push({ path: p.path, jsonName: p.jsonName })
   })
 
   // Add the default layout if it exists.
   let defaultLayoutExists = false
-  if (
-    glob.sync(joinPath(program.directory, `src/layouts/index.*`)).length !== 0
-  ) {
-    layouts.push(`index`)
-    defaultLayoutExists = true
-  }
 
-  layouts = _.uniq(layouts)
+  pageLayouts = _.uniq(pageLayouts)
   components = _.uniqBy(components, c => c.componentChunkName)
 
   await fs.writeFile(
@@ -81,16 +79,15 @@ const preferDefault = m => m && m.default || m
     )
     .join(`,\n`)}
 }\n\n`
-  syncRequires += `exports.layouts = {\n${layouts
+  syncRequires += `exports.layouts = {\n${pageLayouts
     .map(l => {
-      let componentName = l
-      if (l !== false || typeof l !== `undefined`) {
-        componentName = `index`
-        return `  "${l}": preferDefault(require("${joinPath(
-          program.directory,
-          `/src/layouts/`,
-          componentName
-        )}"))`
+      if (l) {
+        console.log(l)
+        return (
+          `  "${l.path}": preferDefault(require("${joinPath(
+            l.component
+          )}"))`
+        )
       } else {
         return `  "${l}": false`
       }
@@ -124,18 +121,16 @@ const preferDefault = m => m && m.default || m
     )
     .join(`,\n`)}
 }\n\n`
-  asyncRequires += `exports.layouts = {\n${layouts
-    .map(layout => {
-      let componentName = layout
-      if (layout !== false || typeof layout !== `undefined`) {
+  asyncRequires += `exports.layouts = {\n${pageLayouts
+    .map(l => {
+      let componentName = l
+      if (l) {
         componentName = `index`
-        return `  "${layout}": require("gatsby-module-loader?name=${`layout-component---${layout}`}!${joinPath(
-          program.directory,
-          `/src/layouts/`,
-          componentName
+        return `  "${l.path}": require("gatsby-module-loader?name=${l.componentChunkName}!${joinPath(
+          l.component
         )}")`
       } else {
-        return `  "${layout}": false`
+        return `  "${l.path}": false`
       }
     })
     .join(`,\n`)}

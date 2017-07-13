@@ -16,3 +16,12 @@ emitter.on(`CREATE_PAGE`, action => {
     action.plugin.name
   )
 })
+
+emitter.on(`CREATE_LAYOUT`, action => {
+  const page = action.payload
+  apiRunnerNode(
+    `onCreateLayout`,
+    { page, traceId: action.traceId },
+    action.plugin.name
+  )
+})

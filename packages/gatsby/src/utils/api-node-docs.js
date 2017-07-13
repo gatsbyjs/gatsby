@@ -36,7 +36,7 @@ exports.resolvableExtensions = true
  *         if (result.errors) {
  *           reject(result.errors)
  *         }
- * 
+ *
  *         // Create blog post pages.
  *         result.data.allMarkdownRemark.edges.forEach(edge => {
  *             createPage({
@@ -47,7 +47,7 @@ exports.resolvableExtensions = true
  *               },
  *             })
  *         })
- * 
+ *
  *         return
  *       })
  *     )
@@ -55,6 +55,8 @@ exports.resolvableExtensions = true
  * }
  * @returns {Array} array of extensions
  */
+exports.createLayouts = true
+
 exports.createPages = true
 
 /**
@@ -109,6 +111,16 @@ exports.onCreateNode = true
  * for more on this API.
  */
 exports.onCreatePage = true
+
+/**
+ * Called when a new page is created. This extension API is useful
+ * for programmatically manipulating pages created by other plugins e.g.
+ * if you want paths without trailing slashes.
+ *
+ * See the guide [Creating and Modifying Pages](/docs/creating-and-modifying-pages/)
+ * for more on this API.
+ */
+exports.onCreateLayout = true
 
 /**
  * Called during the creation of the GraphQL schema. Allows plugins

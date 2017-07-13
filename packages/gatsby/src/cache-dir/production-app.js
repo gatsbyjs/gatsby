@@ -18,7 +18,9 @@ window.___emitter = emitter
 import pages from "./pages.json"
 import ComponentRenderer from "./component-renderer"
 import asyncRequires from "./async-requires"
+import syncRequires from "./sync-requires"
 import loader from "./loader"
+import pageFinderFactory from "./find-page"
 loader.addPagesArray(pages)
 loader.addProdRequires(asyncRequires)
 window.asyncRequires = asyncRequires
@@ -117,8 +119,13 @@ const DefaultRouter = ({ children }) =>
   </Router>
 
 const loadLayout = cb => {
-  if (asyncRequires.layouts[`index`]) {
-    asyncRequires.layouts[`index`]((err, executeChunk) => {
+  let pathPrefix = ``
+  if (typeof __PREFIX_PATHS__ !== `undefined`) {
+    pathPrefix = __PATH_PREFIX__
+  }
+  const routeLayout = pageFinderFactory(pages, pathPrefix)(location.pathname).layout
+  if (asyncRequires.layouts[routeLayout]) {
+    asyncRequires.layouts[routeLayout]((err, executeChunk) => {
       const module = executeChunk()
       cb(module)
     })
@@ -131,6 +138,28 @@ const loadLayout = cb => {
   }
 }
 
+const syncLayout = ({ children, location, ...props }) => {
+  let pathPrefix = ``
+  if (typeof __PREFIX_PATHS__ !== `undefined`) {
+    pathPrefix = __PATH_PREFIX__
+  }
+
+  const routeLayout = pageFinderFactory(pages, pathPrefix)(location.pathname).layout
+  if (syncRequires.layouts[routeLayout]) {
+    return React.createElement(
+      syncRequires.layouts[routeLayout],
+      props,
+      children
+    )
+  }
+  return(
+    <div>
+      {children()}
+    </div>
+  )
+}
+
+
 loadLayout(layout => {
   loader.getResourcesForPathname(window.location.pathname, () => {
     const Root = () =>
@@ -140,7 +169,7 @@ loadLayout(layout => {
         createElement(
           ScrollContext,
           { shouldUpdateScroll },
-          createElement(withRouter(layout), {
+          createElement(withRouter(syncLayout), {
             children: layoutProps =>
               createElement(Route, {
                 render: routeProps => {

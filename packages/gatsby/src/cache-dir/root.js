@@ -1,4 +1,5 @@
 import React, { createElement } from "react"
+import _ from "lodash"
 import {
   BrowserRouter as Router,
   Route,
@@ -13,6 +14,7 @@ import syncRequires from "./sync-requires"
 import pages from "./pages.json"
 import ComponentRenderer from "./component-renderer"
 import loader from "./loader"
+import pageFinderFactory from "./find-page"
 loader.addPagesArray(pages)
 loader.addDevRequires(syncRequires)
 window.___loader = loader
@@ -89,14 +91,25 @@ const DefaultRouter = ({ children }) =>
   </Router>
 
 // Use default layout if one isn't set.
-let layout
-if (syncRequires.layouts[`index`]) {
-  layout = syncRequires.layouts[`index`]
-} else {
-  layout = ({ children }) =>
+const layout = ({ children, location, ...props }) => {
+  let pathPrefix = ``
+  if (typeof __PREFIX_PATHS__ !== `undefined`) {
+    pathPrefix = __PATH_PREFIX__
+  }
+
+  const routeLayout = pageFinderFactory(pages, pathPrefix)(location.pathname).layout
+  if (syncRequires.layouts[routeLayout]) {
+    return React.createElement(
+      syncRequires.layouts[routeLayout],
+      props,
+      children
+    )
+  }
+  return(
     <div>
       {children()}
     </div>
+  )
 }
 
 // Always have to have one top-level layout

@@ -271,6 +271,16 @@ data
     return graphql(schema, query, context, context, context)
   }
 
+  // Collect layouts.
+  activity = activityTimer(`createLayouts`)
+  activity.start()
+  await apiRunnerNode(`createLayouts`, {
+    graphql: graphqlRunner,
+    traceId: `initial-createLayouts`,
+    waitForCascadingActions: true,
+  })
+  activity.end()
+
   // Collect pages.
   activity = activityTimer(`createPages`)
   activity.start()

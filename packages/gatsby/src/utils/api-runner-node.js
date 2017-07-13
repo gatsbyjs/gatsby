@@ -94,6 +94,7 @@ let apisRunning = []
 let waitingForCasacadeToFinish = []
 
 module.exports = async (api, args = {}, pluginSource) =>
+
   new Promise(resolve => {
     // Check that the API is documented.
     if (!apiList[api]) {
