@@ -1,0 +1,89 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`remark prism plugin generates a <pre> tag with a data attribute if configured to do so 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "lang": "js",
+      "position": Position {
+        "end": Object {
+          "column": 4,
+          "line": 3,
+          "offset": 17,
+        },
+        "indent": Array [
+          1,
+          1,
+        ],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "html",
+      "value": "<div class=\\"gatsby-highlight\\">
+      <pre data-language=\\"js\\"><code><span class=\\"token comment\\" spellcheck=\\"true\\">// Fake</span>
+</code></pre>
+      </div>",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 4,
+      "line": 3,
+      "offset": 17,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`remark prism plugin generates a <pre> tag with a language class by default 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "lang": "js",
+      "position": Position {
+        "end": Object {
+          "column": 4,
+          "line": 3,
+          "offset": 17,
+        },
+        "indent": Array [
+          1,
+          1,
+        ],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "html",
+      "value": "<div class=\\"gatsby-highlight\\">
+      <pre class=\\"language-js\\"><code><span class=\\"token comment\\" spellcheck=\\"true\\">// Fake</span>
+</code></pre>
+      </div>",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 4,
+      "line": 3,
+      "offset": 17,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
