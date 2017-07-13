@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`remark prism plugin generates a <pre> tag with a data attribute if configured to do so 1`] = `
+exports[`remark prism plugin generates a <pre> tag with a custom class prefix if configured 1`] = `
 Object {
   "children": Array [
     Object {
@@ -23,7 +23,7 @@ Object {
       },
       "type": "html",
       "value": "<div class=\\"gatsby-highlight\\">
-      <pre data-language=\\"js\\"><code><span class=\\"token comment\\" spellcheck=\\"true\\">// Fake</span>
+      <pre class=\\"custom-js\\"><code><span class=\\"token comment\\" spellcheck=\\"true\\">// Fake</span>
 </code></pre>
       </div>",
     },
@@ -44,7 +44,7 @@ Object {
 }
 `;
 
-exports[`remark prism plugin generates a <pre> tag with a language class by default 1`] = `
+exports[`remark prism plugin generates a <pre> tag with class="language-*" prefix by default 1`] = `
 Object {
   "children": Array [
     Object {

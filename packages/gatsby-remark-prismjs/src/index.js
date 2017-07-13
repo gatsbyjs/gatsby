@@ -3,7 +3,7 @@ const visit = require(`unist-util-visit`)
 const parseLineNumberRange = require(`./parse-line-number-range`)
 const highlightCode = require(`./highlight-code`)
 
-module.exports = ({ markdownAST }, { useDataAttribute = false } = {}) => {
+module.exports = ({ markdownAST }, { classPrefix = 'language-' } = {}) => {
   visit(markdownAST, `code`, node => {
     let language = node.lang
     let { splitLanguage, highlightLines } = parseLineNumberRange(language)
@@ -21,20 +21,18 @@ module.exports = ({ markdownAST }, { useDataAttribute = false } = {}) => {
       languageName = language
     }
 
-    // Use a data attribute rather than a class name to avoid breaking
+    // Allow users to specify a custom class prefix to avoid breaking
     // line highlights if Prism is required by any other code.
-    // The language attribute enables custom user-styling without
-    // causing Prism to re-process our already-highlighted markup.
+    // This supports custom user styling without causing Prism to
+    // re-process our already-highlighted markup.
     // @see https://github.com/gatsbyjs/gatsby/issues/1486
-    const languageFlag = useDataAttribute
-      ? `data-language="${languageName}"`
-      : `class="language-${languageName}"`
+    const className = `${classPrefix}${languageName}`
 
     // Replace the node with the markup we need to make
     // 100% width highlighted code lines work
     node.type = `html`
     node.value = `<div class="gatsby-highlight">
-      <pre ${languageFlag}><code>${highlightCode(
+      <pre class="${className}"><code>${highlightCode(
       language,
       node.value,
       highlightLines
