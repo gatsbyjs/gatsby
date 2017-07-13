@@ -2,6 +2,7 @@ import { uniq, some } from "lodash"
 import fs from "fs"
 import path from "path"
 import webpack from "webpack"
+import dotenv from "dotenv"
 import Config from "webpack-configurator"
 import ExtractTextPlugin from "extract-text-webpack-plugin"
 import StaticSiteGeneratorPlugin from "static-site-generator-webpack-plugin"
@@ -41,6 +42,30 @@ module.exports = async (
   // webpack config.
   const stage = suppliedStage
   const babelConfig = await genBabelConfig(program, babelStage)
+
+  function processEnv(stage, defaultNodeEnv) {
+    debug(`Building env for "${stage}"`)
+    const env = process.env.NODE_ENV ? process.env.NODE_ENV : `${defaultNodeEnv}`
+    const envFile = path.join(process.cwd(), `./.env.${env}`)
+    let parsed = {}
+    try {
+      parsed = dotenv.parse(fs.readFileSync(envFile, { encoding: `utf8` }))
+    } catch(e) {
+      if (e && e.code !== `ENOENT`) {
+        console.log(e)
+      }
+    }
+    const envObject = Object.keys(parsed).reduce((acc, key) => {
+      acc[key] = JSON.stringify(parsed[key])
+      return acc
+    }, {})
+
+    // Don't allow overwriting of NODE_ENV, PUBLIC_DIR as to not break gatsby things
+    envObject.NODE_ENV = JSON.stringify(env)
+    envObject.PUBLIC_DIR = JSON.stringify(`${process.cwd()}/public`)
+
+    return envObject
+  }
 
   debug(`Loading webpack config for stage "${stage}"`)
   function output() {
@@ -128,12 +153,7 @@ module.exports = async (
           new webpack.HotModuleReplacementPlugin(),
           new webpack.NoErrorsPlugin(),
           new webpack.DefinePlugin({
-            "process.env": {
-              NODE_ENV: JSON.stringify(
-                process.env.NODE_ENV ? process.env.NODE_ENV : `development`
-              ),
-              PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
-            },
+            "process.env": processEnv(stage, `development`),
             __PREFIX_PATHS__: program.prefixPaths,
             __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
           }),
@@ -155,12 +175,7 @@ module.exports = async (
         return [
           new StaticSiteGeneratorPlugin(`render-page.js`, pages),
           new webpack.DefinePlugin({
-            "process.env": {
-              NODE_ENV: JSON.stringify(
-                process.env.NODE_ENV ? process.env.NODE_ENV : `development`
-              ),
-              PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
-            },
+            "process.env": processEnv(stage, `development`),
             __PREFIX_PATHS__: program.prefixPaths,
             __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
           }),
@@ -169,12 +184,7 @@ module.exports = async (
       case `build-css`:
         return [
           new webpack.DefinePlugin({
-            "process.env": {
-              NODE_ENV: JSON.stringify(
-                process.env.NODE_ENV ? process.env.NODE_ENV : `production`
-              ),
-              PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
-            },
+            "process.env": processEnv(stage, `production`),
             __PREFIX_PATHS__: program.prefixPaths,
             __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
           }),
@@ -184,12 +194,7 @@ module.exports = async (
         return [
           new StaticSiteGeneratorPlugin(`render-page.js`, pages),
           new webpack.DefinePlugin({
-            "process.env": {
-              NODE_ENV: JSON.stringify(
-                process.env.NODE_ENV ? process.env.NODE_ENV : `production`
-              ),
-              PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
-            },
+            "process.env": processEnv(stage, `production`),
             __PREFIX_PATHS__: program.prefixPaths,
             __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
           }),
@@ -262,12 +267,7 @@ module.exports = async (
           // optimizations for React) and whether prefixing links is enabled
           // (__PREFIX_PATHS__) and what the link prefix is (__PATH_PREFIX__).
           new webpack.DefinePlugin({
-            "process.env": {
-              NODE_ENV: JSON.stringify(
-                process.env.NODE_ENV ? process.env.NODE_ENV : `production`
-              ),
-              PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
-            },
+            "process.env": processEnv(stage, `production`),
             __PREFIX_PATHS__: program.prefixPaths,
             __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
           }),

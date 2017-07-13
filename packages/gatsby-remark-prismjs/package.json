@@ -9,7 +9,8 @@
     "unist-util-visit": "^1.1.1"
   },
   "devDependencies": {
-    "babel-cli": "^6.24.1"
+    "babel-cli": "^6.24.1",
+    "remark": "^7.0.1"
   },
   "keywords": [
     "gatsby",

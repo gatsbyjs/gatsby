@@ -1,0 +1,21 @@
+{
+  "name": "using-stylus",
+  "version": "1.0.0",
+  "description": "Example Gatsby website using the Gatsby plugin gatsby-plugin-stylus",
+  "main": "index.js",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build"
+  },
+  "author": "Ian Sinnott <ian@iansinnott.com>",
+  "license": "MIT",
+  "dependencies": {
+    "gatsby": "latest",
+    "gatsby-link": "latest",
+    "gatsby-plugin-google-analytics": "latest",
+    "gatsby-plugin-offline": "latest",
+    "gatsby-plugin-stylus": "latest",
+    "react-typography": "^0.15.10",
+    "typography": "^0.15.10"
+  }
+}
