@@ -88,7 +88,7 @@ async function startServer(program) {
   app.use((req, res, next) => {
     const parsedPath = parsePath(req.originalUrl)
     if (parsedPath.extname === `` || parsedPath.extname === `.html`) {
-      res.sendFile(`${program.directory()}/public/index.html`, err => {
+      res.sendFile(`${program.directory}/public/index.html`, err => {
         if (err) {
           res.status(500).end()
         }
