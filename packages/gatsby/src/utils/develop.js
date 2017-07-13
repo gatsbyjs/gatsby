@@ -33,10 +33,11 @@ rlInterface.on(`SIGINT`, () => {
 async function startServer(program) {
   const directory = program.directory
   const directoryPath = withBasePath(directory)
-  const createIndexHtml = () => developHtml(program).catch(err => {
-    console.error(err)
-    process.exit(1)
-  })
+  const createIndexHtml = () =>
+    developHtml(program).catch(err => {
+      console.error(err)
+      process.exit(1)
+    })
 
   // Start bootstrap process.
   await bootstrap(program)
@@ -151,15 +152,11 @@ async function startServer(program) {
   })
 
   // Register watcher that rebuilds index.html every time html.js changes.
-  const watchGlobs = [
-    `src/html.js`,
-    `**/gatsby-ssr.js`,
-  ].map(directoryPath)
+  const watchGlobs = [`src/html.js`, `**/gatsby-ssr.js`].map(directoryPath)
   chokidar.watch(watchGlobs).on(`change`, async () => {
     await createIndexHtml()
     io.to(`clients`).emit(`reload`)
   })
-
 }
 
 module.exports = (program: any) => {

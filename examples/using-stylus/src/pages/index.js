@@ -1,5 +1,5 @@
 import React from "react"
-import Link from 'gatsby-link'
+import Link from "gatsby-link"
 import "./index.styl"
 
 class CssModules extends React.Component {
@@ -9,9 +9,12 @@ class CssModules extends React.Component {
         <header className="header">
           <h1 className="the-stylus-class">Hi stylish friends</h1>
           <p>
-            All the styles for this page are written using <a href="https://github.com/stylus/stylus">Stylus</a>.
+            All the styles for this page are written using{` `}
+            <a href="https://github.com/stylus/stylus">Stylus</a>.
           </p>
-          <Link to="/css-modules/" className="cta">View the CSS Modules example</Link>
+          <Link to="/css-modules/" className="cta">
+            View the CSS Modules example
+          </Link>
         </header>
         <section className="main">
           <div className="stylus-nav-example">

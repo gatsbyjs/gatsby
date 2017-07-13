@@ -5,7 +5,7 @@ export default function socketIo() {
     socket.on(`reload`, () => {
       window.location.reload()
     })
-  } catch(err) {
+  } catch (err) {
     console.error(`Could not connect to socket.io on dev server.`)
   }
 }

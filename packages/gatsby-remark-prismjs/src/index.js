@@ -3,7 +3,7 @@ const visit = require(`unist-util-visit`)
 const parseLineNumberRange = require(`./parse-line-number-range`)
 const highlightCode = require(`./highlight-code`)
 
-module.exports = ({ markdownAST }, { classPrefix = 'language-' } = {}) => {
+module.exports = ({ markdownAST }, { classPrefix = `language-` } = {}) => {
   visit(markdownAST, `code`, node => {
     let language = node.lang
     let { splitLanguage, highlightLines } = parseLineNumberRange(language)

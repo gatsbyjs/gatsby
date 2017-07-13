@@ -67,13 +67,13 @@ module.exports = (
     const fileNameNoExt = fileName.replace(/\.[^/.]+$/, ``)
     const defaultAlt = fileNameNoExt.replace(/[^A-Z0-9]/gi, ` `)
 
-      // TODO
-      // add support for sub-plugins having a gatsby-node.js so can add a
-      // bit of js/css to add blurry fade-in.
-      // https://www.perpetual-beta.org/weblog/silky-smooth-image-loading.html
+    // TODO
+    // add support for sub-plugins having a gatsby-node.js so can add a
+    // bit of js/css to add blurry fade-in.
+    // https://www.perpetual-beta.org/weblog/silky-smooth-image-loading.html
 
-      // Construct new image node w/ aspect ratio placeholder
-      let rawHTML = `
+    // Construct new image node w/ aspect ratio placeholder
+    let rawHTML = `
   <span
     class="gatsby-resp-image-wrapper"
     style="position: relative; z-index: -1; display: block; ${options.wrapperStyle}"
@@ -95,9 +95,9 @@ module.exports = (
   </span>
   `
 
-      // Make linking to original image optional.
-      if (options.linkImagesToOriginal) {
-        rawHTML = `
+    // Make linking to original image optional.
+    if (options.linkImagesToOriginal) {
+      rawHTML = `
   <a
     class="gatsby-resp-image-link"
     href="${originalImg}"
@@ -108,9 +108,9 @@ module.exports = (
   ${rawHTML}
   </a>
     `
-      }
+    }
 
-    return rawHTML;
+    return rawHTML
   }
 
   return Promise.all(
@@ -138,31 +138,31 @@ module.exports = (
           }
         })
     )
-  ).then(() =>{
+  ).then(() => 
     // HTML image node stuff
-     
-    return Promise.all(
+
+     Promise.all(
       // Complex because HTML nodes can contain multiple images
       rawHtmlNodes.map(
         node =>
           new Promise(async (resolve, reject) => {
-            const $ = cheerio.load(node.value);
-            if($('img').length === 0) {
+            const $ = cheerio.load(node.value)
+            if ($(`img`).length === 0) {
               // No img tags
-              return resolve();
+              return resolve()
             }
-            
-            let imageRefs = [];
-            $('img').each(function() {
-              imageRefs.push($(this));
-            });
+
+            let imageRefs = []
+            $(`img`).each(function() {
+              imageRefs.push($(this))
+            })
 
             for (let thisImg of imageRefs) {
               //Get the details we need
-              let formattedImgTag = {};
-              formattedImgTag.url = thisImg.attr('src');
-              formattedImgTag.title = thisImg.attr('title');
-              formattedImgTag.alt = thisImg.attr('alt');
+              let formattedImgTag = {}
+              formattedImgTag.url = thisImg.attr(`src`)
+              formattedImgTag.title = thisImg.attr(`title`)
+              formattedImgTag.alt = thisImg.attr(`alt`)
 
               const fileType = formattedImgTag.url.slice(-3)
 
@@ -173,21 +173,22 @@ module.exports = (
                 fileType !== `gif` &&
                 fileType !== `svg`
               ) {
-                const rawHTML = await generateImagesAndUpdateNode(formattedImgTag, resolve); 
+                const rawHTML = await generateImagesAndUpdateNode(
+                  formattedImgTag,
+                  resolve
+                )
                 // Replace the image string
-                thisImg.replaceWith(rawHTML);
-
+                thisImg.replaceWith(rawHTML)
               }
-              
-            };
+            }
 
             // Replace the image node with an inline HTML node.
-            node.type = `html`;
-            node.value = $.html();
+            node.type = `html`
+            node.value = $.html()
 
             return resolve()
           })
       )
     )
-  });
+  )
 }

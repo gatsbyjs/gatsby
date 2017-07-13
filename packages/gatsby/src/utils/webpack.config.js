@@ -45,12 +45,14 @@ module.exports = async (
 
   function processEnv(stage, defaultNodeEnv) {
     debug(`Building env for "${stage}"`)
-    const env = process.env.NODE_ENV ? process.env.NODE_ENV : `${defaultNodeEnv}`
+    const env = process.env.NODE_ENV
+      ? process.env.NODE_ENV
+      : `${defaultNodeEnv}`
     const envFile = path.join(process.cwd(), `./.env.${env}`)
     let parsed = {}
     try {
       parsed = dotenv.parse(fs.readFileSync(envFile, { encoding: `utf8` }))
-    } catch(e) {
+    } catch (e) {
       if (e && e.code !== `ENOENT`) {
         console.log(e)
       }

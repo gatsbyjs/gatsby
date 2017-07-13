@@ -63,6 +63,15 @@ ajv@^4.7.0, ajv@^4.9.1:
     co "^4.6.0"
     json-stable-stringify "^1.0.1"
 
+ajv@^5.2.0:
+  version "5.2.2"
+  resolved "https://registry.yarnpkg.com/ajv/-/ajv-5.2.2.tgz#47c68d69e86f5d953103b0074a9430dc63da5e39"
+  dependencies:
+    co "^4.6.0"
+    fast-deep-equal "^1.0.0"
+    json-schema-traverse "^0.3.0"
+    json-stable-stringify "^1.0.1"
+
 align-text@^0.1.1, align-text@^0.1.3:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/align-text/-/align-text-0.1.4.tgz#0cd90a561093f35d0a99256c22b7069433fad117"
@@ -135,9 +144,9 @@ argparse@^1.0.7:
   dependencies:
     sprintf-js "~1.0.2"
 
-aria-query@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/aria-query/-/aria-query-0.5.0.tgz#85e3152cd8cc5bab18dbed61cd9c4fce54fa79c3"
+aria-query@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/aria-query/-/aria-query-0.7.0.tgz#4af10a1e61573ddea0cf3b99b51c52c05b424d24"
   dependencies:
     ast-types-flow "0.0.7"
 
@@ -867,9 +876,9 @@ babel-polyfill@^6.23.0:
     core-js "^2.4.0"
     regenerator-runtime "^0.10.0"
 
-babel-preset-env@^1.5.2:
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/babel-preset-env/-/babel-preset-env-1.5.2.tgz#cd4ae90a6e94b709f97374b33e5f8b983556adef"
+babel-preset-env@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/babel-preset-env/-/babel-preset-env-1.6.0.tgz#2de1c782a780a0a5d605d199c957596da43c44e4"
   dependencies:
     babel-plugin-check-es2015-constants "^6.22.0"
     babel-plugin-syntax-trailing-function-commas "^6.22.0"
@@ -1955,25 +1964,24 @@ escope@^3.6.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-eslint-config-google@^0.8.0:
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-google/-/eslint-config-google-0.8.0.tgz#288532c2b7834d25def63d51fa5e18e6b9ac3a4d"
+eslint-config-google@^0.9.1:
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/eslint-config-google/-/eslint-config-google-0.9.1.tgz#83353c3dba05f72bb123169a4094f4ff120391eb"
 
-eslint-config-prettier@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-2.2.0.tgz#ca47663852789a75c10feba673e802cc1eff085f"
+eslint-config-prettier@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-2.3.0.tgz#b75b1eabea0c8b97b34403647ee25db349b9d8a0"
   dependencies:
     get-stdin "^5.0.1"
 
-eslint-import-resolver-node@^0.2.0:
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/eslint-import-resolver-node/-/eslint-import-resolver-node-0.2.3.tgz#5add8106e8c928db2cba232bcd9efa846e3da16c"
+eslint-import-resolver-node@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/eslint-import-resolver-node/-/eslint-import-resolver-node-0.3.1.tgz#4422574cde66a9a7b099938ee4d508a199e0e3cc"
   dependencies:
-    debug "^2.2.0"
-    object-assign "^4.0.1"
-    resolve "^1.1.6"
+    debug "^2.6.8"
+    resolve "^1.2.0"
 
-eslint-module-utils@^2.0.0:
+eslint-module-utils@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/eslint-module-utils/-/eslint-module-utils-2.1.1.tgz#abaec824177613b8a95b299639e1b6facf473449"
   dependencies:
@@ -1984,32 +1992,32 @@ eslint-plugin-flow-vars@^0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-flow-vars/-/eslint-plugin-flow-vars-0.5.0.tgz#a7fb78fd873c86e0e5839df3b3c90d47bc68c6d2"
 
-eslint-plugin-flowtype@^2.32.1:
-  version "2.34.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-flowtype/-/eslint-plugin-flowtype-2.34.0.tgz#b9875f314652e5081623c9d2b18a346bbb759c09"
+eslint-plugin-flowtype@^2.35.0:
+  version "2.35.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-flowtype/-/eslint-plugin-flowtype-2.35.0.tgz#d17494f0ae8b727c632d8b9d4b4a848e7e0c04af"
   dependencies:
     lodash "^4.15.0"
 
-eslint-plugin-import@^2.3.0:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-import/-/eslint-plugin-import-2.6.0.tgz#2a4bbad36a078e052a3c830ce3dfbd6b8a12c6e5"
+eslint-plugin-import@^2.7.0:
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-import/-/eslint-plugin-import-2.7.0.tgz#21de33380b9efb55f5ef6d2e210ec0e07e7fa69f"
   dependencies:
     builtin-modules "^1.1.1"
     contains-path "^0.1.0"
     debug "^2.6.8"
     doctrine "1.5.0"
-    eslint-import-resolver-node "^0.2.0"
-    eslint-module-utils "^2.0.0"
+    eslint-import-resolver-node "^0.3.1"
+    eslint-module-utils "^2.1.1"
     has "^1.0.1"
     lodash.cond "^4.3.0"
     minimatch "^3.0.3"
     read-pkg-up "^2.0.0"
 
-eslint-plugin-jsx-a11y@^5.0.3:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-jsx-a11y/-/eslint-plugin-jsx-a11y-5.1.0.tgz#4a829634344e7a90391a9fb0fbd19810737d79c5"
+eslint-plugin-jsx-a11y@^6.0.2:
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jsx-a11y/-/eslint-plugin-jsx-a11y-6.0.2.tgz#659277a758b036c305a7e4a13057c301cd3be73f"
   dependencies:
-    aria-query "^0.5.0"
+    aria-query "^0.7.0"
     array-includes "^3.0.3"
     ast-types-flow "0.0.7"
     axobject-query "^0.1.0"
@@ -2079,10 +2087,11 @@ eslint@^3.19.0:
     text-table "~0.2.0"
     user-home "^2.0.0"
 
-eslint@^4.0.0:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-4.1.1.tgz#facbdfcfe3e0facd3a8b80dc98c4e6c13ae582df"
+eslint@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-4.2.0.tgz#a2b3184111b198e02e9c7f3cca625a5e01c56b3d"
   dependencies:
+    ajv "^5.2.0"
     babel-code-frame "^6.22.0"
     chalk "^1.1.3"
     concat-stream "^1.6.0"
@@ -2099,7 +2108,6 @@ eslint@^4.0.0:
     ignore "^3.3.3"
     imurmurhash "^0.1.4"
     inquirer "^3.0.6"
-    is-my-json-valid "^2.16.0"
     is-resolvable "^1.0.0"
     js-yaml "^3.8.4"
     json-stable-stringify "^1.0.1"
@@ -2292,6 +2300,10 @@ extglob@^0.3.1:
 extsprintf@1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.0.2.tgz#e1080e0658e300b06294990cc70e1502235fd550"
+
+fast-deep-equal@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-1.0.0.tgz#96256a3bc975595eb36d82e9929d060d893439ff"
 
 fast-diff@^1.1.1:
   version "1.1.1"
@@ -3053,7 +3065,7 @@ is-lower-case@^1.1.0:
   dependencies:
     lower-case "^1.1.0"
 
-is-my-json-valid@^2.10.0, is-my-json-valid@^2.16.0:
+is-my-json-valid@^2.10.0:
   version "2.16.0"
   resolved "https://registry.yarnpkg.com/is-my-json-valid/-/is-my-json-valid-2.16.0.tgz#f079dd9bfdae65ee2038aae8acbc86ab109e3693"
   dependencies:
@@ -3550,6 +3562,10 @@ jsesc@^1.3.0:
 jsesc@~0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/jsesc/-/jsesc-0.5.0.tgz#e7dee66e35d6fc16f710fe91d5cf69f70f08911d"
+
+json-schema-traverse@^0.3.0:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/json-schema-traverse/-/json-schema-traverse-0.3.1.tgz#349a6d44c53a51de89b40805c5d5e59b417d3340"
 
 json-schema@0.2.3:
   version "0.2.3"
@@ -4690,9 +4706,9 @@ regjsparser@^0.1.4:
   dependencies:
     jsesc "~0.5.0"
 
-remotedev-server@^0.2.2:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/remotedev-server/-/remotedev-server-0.2.2.tgz#92494ef0e558389e12e2a8f0007ce92fc5279799"
+remotedev-server@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/remotedev-server/-/remotedev-server-0.2.3.tgz#dcaaf64987557b5d06a44e4e18c36308d88ea980"
   dependencies:
     body-parser "^1.15.0"
     chalk "^1.1.3"
