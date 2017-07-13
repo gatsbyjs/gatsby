@@ -16,7 +16,16 @@ plugins: [
     resolve: `gatsby-transformer-remark`,
     options: {
       plugins: [
-        `gatsby-remark-prismjs`,
+        {
+          resolve: `gatsby-remark-prismjs`,
+          options: {
+            // Use a data attribute for language instead of a class for
+            // <pre> tags containing syntax highlighting; defaults to false.
+            // If you use Prism directly within your site,
+            // you may use this to prevent Prism from re-processing syntax.
+            useDataAttribute: false,
+          },
+        },
       ]
     }
   }
