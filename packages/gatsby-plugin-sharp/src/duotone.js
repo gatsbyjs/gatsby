@@ -6,6 +6,9 @@ module.exports = async function duotone(duotone, format, clonedPipeline) {
     hexToRgb(duotone.shadow)
   )
 
+  // @todo remove once we upgrade to sharp v0.18 which
+  // adds an alias for "jpg" to toFormat
+  // @see http://sharp.dimens.io/en/stable/changelog/#v0180-30th-may-2017
   if (format === `jpg`) {
     format = `jpeg`
   }
