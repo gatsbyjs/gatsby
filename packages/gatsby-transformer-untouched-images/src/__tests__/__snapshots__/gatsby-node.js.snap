@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Process image nodes correctly correctly creates an ImageSharp node from a file image node 1`] = `
+Array [
+  Array [
+    Object {
+      "children": Array [],
+      "id": "whatever >> ImageSharp",
+      "internal": Object {
+        "contentDigest": "whatever",
+        "type": "ImageSharp",
+      },
+      "parent": "whatever",
+    },
+  ],
+]
+`;
+
+exports[`Process image nodes correctly correctly creates an ImageSharp node from a file image node 2`] = `
+Array [
+  Array [
+    Object {
+      "child": Object {
+        "children": Array [],
+        "id": "whatever >> ImageSharp",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "type": "ImageSharp",
+        },
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "extension": "png",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+        },
+      },
+    },
+  ],
+]
+`;
