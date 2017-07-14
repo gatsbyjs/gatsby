@@ -66,9 +66,12 @@ class GatsbyLink extends React.Component {
           if (
             process.env.NODE_ENV === `production` &&
             e.button === 0 && // ignore right clicks
-            !e.defaultPrevented && // onClick prevented default
             !this.props.target && // let browser handle "target=_blank"
-            !(e.metaKey || e.altKey || e.ctrlKey || e.shiftKey) // ignore clicks with modifier keys
+            !e.defaultPrevented && // onClick prevented default
+            !e.metaKey && // ignore clicks with modifier keys...
+            !e.altKey &&
+            !e.ctrlKey &&
+            !e.shiftKey
           ) {
             e.preventDefault()
             window.___navigateTo(this.state.to)
