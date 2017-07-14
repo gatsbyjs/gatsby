@@ -7,9 +7,6 @@ if (__PREFIX_PATHS__) {
   pathPrefix = __PATH_PREFIX__
 }
 
-const isModifiedEvent = (event) =>
-  !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey)
-
 class GatsbyLink extends React.Component {
   constructor(props) {
     super()
@@ -64,7 +61,15 @@ class GatsbyLink extends React.Component {
             }
           }
 
-          if (this.shouldControlNavigation(e)) {
+          // In production, make sure the necessary scripts are
+          // loaded before continuing.
+          if (
+            process.env.NODE_ENV === `production` &&
+            e.button === 0 && // ignore right clicks
+            !e.defaultPrevented && // onClick prevented default
+            !this.props.target && // let browser handle "target=_blank"
+            !(e.metaKey || e.altKey || e.ctrlKey || e.shiftKey) // ignore clicks with modifier keys
+          ) {
             e.preventDefault()
             window.___navigateTo(this.state.to)
           }
@@ -73,16 +78,6 @@ class GatsbyLink extends React.Component {
         to={this.state.to}
       />
     )
-  }
-
-  shouldControlNavigation(event) {
-    // In production, make sure the necessary scripts are
-    // loaded before continuing.
-    return process.env.NODE_ENV === `production` &&
-      !event.defaultPrevented &&    // onClick prevented default
-      event.button === 0 &&         // ignore right clicks
-      !this.props.target &&         // let browser handle "target=_blank"
-      !isModifiedEvent(event)       // ignore clicks with modifier keys
   }
 }
 
