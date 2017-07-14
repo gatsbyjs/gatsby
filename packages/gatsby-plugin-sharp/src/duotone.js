@@ -30,7 +30,7 @@ module.exports = async function duotone(duotone, format, clonedPipeline) {
         data[i + 2] = duotoneGradient[avg][2]
       }
 
-      return sharp(new Buffer(data), {
+      return sharp(data, {
         raw: info,
       }).toFormat(format)
     })
