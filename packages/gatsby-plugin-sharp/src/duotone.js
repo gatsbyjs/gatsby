@@ -2,7 +2,7 @@ const sharp = require(`sharp`)
 
 module.exports = async function duotone(duotone, format, clonedPipeline) {
   if (duotone) {
-    var duotoneGradient = createDuotoneGradient(
+    const duotoneGradient = createDuotoneGradient(
       hexToRgb(duotone.highlight),
       hexToRgb(duotone.shadow)
     )
@@ -16,9 +16,9 @@ module.exports = async function duotone(duotone, format, clonedPipeline) {
       .toBuffer({ resolveWithObject: true })
       .then(({ data, info }) => {
         for (let i = 0; i < data.length; i = i + info.channels) {
-          var r = data[i + 0]
-          var g = data[i + 1]
-          var b = data[i + 2]
+          const r = data[i + 0]
+          const g = data[i + 1]
+          const b = data[i + 2]
 
           // @see https://en.wikipedia.org/wiki/Relative_luminance
           const avg = Math.round(0.2126 * r + 0.7152 * g + 0.0722 * b)
@@ -39,7 +39,7 @@ module.exports = async function duotone(duotone, format, clonedPipeline) {
 
 // @see https://github.com/nagelflorian/react-duotone/blob/master/src/hex-to-rgb.js
 function hexToRgb(hex) {
-  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
   return result
     ? [
         parseInt(result[1], 16),
@@ -51,10 +51,10 @@ function hexToRgb(hex) {
 
 // @see https://github.com/nagelflorian/react-duotone/blob/master/src/create-duotone-gradient.js
 function createDuotoneGradient(primaryColorRGB, secondaryColorRGB) {
-  var duotoneGradient = []
+  const duotoneGradient = []
 
-  for (var i = 0; i < 256; i++) {
-    var ratio = i / 255
+  for (let i = 0; i < 256; i++) {
+    const ratio = i / 255
     duotoneGradient.push([
       Math.round(
         primaryColorRGB[0] * ratio + secondaryColorRGB[0] * (1 - ratio)
