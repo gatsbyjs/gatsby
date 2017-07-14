@@ -1,40 +1,36 @@
 const sharp = require(`sharp`)
 
 module.exports = async function duotone(duotone, format, clonedPipeline) {
-  if (duotone) {
-    const duotoneGradient = createDuotoneGradient(
-      hexToRgb(duotone.highlight),
-      hexToRgb(duotone.shadow)
-    )
+  const duotoneGradient = createDuotoneGradient(
+    hexToRgb(duotone.highlight),
+    hexToRgb(duotone.shadow)
+  )
 
-    if (format === `jpg`) {
-      format = `jpeg`
-    }
-
-    return await clonedPipeline
-      .raw()
-      .toBuffer({ resolveWithObject: true })
-      .then(({ data, info }) => {
-        for (let i = 0; i < data.length; i = i + info.channels) {
-          const r = data[i + 0]
-          const g = data[i + 1]
-          const b = data[i + 2]
-
-          // @see https://en.wikipedia.org/wiki/Relative_luminance
-          const avg = Math.round(0.2126 * r + 0.7152 * g + 0.0722 * b)
-
-          data[i + 0] = duotoneGradient[avg][0]
-          data[i + 1] = duotoneGradient[avg][1]
-          data[i + 2] = duotoneGradient[avg][2]
-        }
-
-        return sharp(new Buffer(data), {
-          raw: info,
-        }).toFormat(format)
-      })
-  } else {
-    return clonedPipeline
+  if (format === `jpg`) {
+    format = `jpeg`
   }
+
+  return await clonedPipeline
+    .raw()
+    .toBuffer({ resolveWithObject: true })
+    .then(({ data, info }) => {
+      for (let i = 0; i < data.length; i = i + info.channels) {
+        const r = data[i + 0]
+        const g = data[i + 1]
+        const b = data[i + 2]
+
+        // @see https://en.wikipedia.org/wiki/Relative_luminance
+        const avg = Math.round(0.2126 * r + 0.7152 * g + 0.0722 * b)
+
+        data[i + 0] = duotoneGradient[avg][0]
+        data[i + 1] = duotoneGradient[avg][1]
+        data[i + 2] = duotoneGradient[avg][2]
+      }
+
+      return sharp(new Buffer(data), {
+        raw: info,
+      }).toFormat(format)
+    })
 }
 
 // @see https://github.com/nagelflorian/react-duotone/blob/master/src/hex-to-rgb.js
