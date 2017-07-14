@@ -21,6 +21,7 @@ module.exports = (
     wrapperStyle: ``,
     backgroundColor: `white`,
     linkImagesToOriginal: true,
+    pathPrefix
   }
 
   const options = _.defaults(pluginOptions, defaults)
