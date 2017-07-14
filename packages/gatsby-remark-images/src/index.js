@@ -51,6 +51,7 @@ module.exports = (
     let responsiveSizesResult = await responsiveSizes({
       file: imageNode,
       args: options,
+      pathPrefix
     })
 
     // console.log("responsiveSizesResult", responsiveSizesResult)
