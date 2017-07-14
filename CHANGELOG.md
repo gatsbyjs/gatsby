@@ -1,5 +1,25 @@
 # Change Log
 
+## [1.2.0] - 2017-07-13
+
+### Added
+
+* Watch for changes to html.js #1473 @felixjung
+* Add stylus example #1479 @iansinnott
+* Added support for nested img tags in html nodes #1485 @chiedo
+* Prism plugin bugfix alt #1491 @bvaughn
+* Allow for env files #1462 @okcoker
+* Create deploy-gatsby.md #1480 @couturecraigj
+
+### Fixed
+
+* Fix Contentful example URL #1483 @oscar-b
+* Fix reference to program.directory #1490 @jakedeichert
+* Fixes docs referencing removed "1.0" branch source code instead of master. #1495 @Vagr9K
+* fix(gatsby-source-contentful): missing host param in createClient #1487 @Smiter
+* use program directory over cwd #1478 @craig-mulligan
+
+
 ## [1.1.0] - 2017-07-11
 
 ### Added
