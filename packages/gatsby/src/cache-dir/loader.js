@@ -1,3 +1,4 @@
+import React, { createElement } from "react"
 import pageFinderFactory from "./find-page"
 import emitter from "./emitter"
 let findPage
@@ -200,6 +201,28 @@ const queue = {
     return {
       pathArray,
       pathCount,
+    }
+  },
+  getLayoutComponent: (syncRequires) => ({ children, ...props }) => {
+    let pathPrefix = ``
+    if (typeof __PREFIX_PATHS__ !== `undefined`) {
+      pathPrefix = __PATH_PREFIX__
+    }
+
+    const routeLayout = pageFinderFactory(pages, pathPrefix)(props.location.pathname).layout
+    if (syncRequires.layouts[routeLayout]) {
+      // return syncRequires.layouts['index']
+      return React.createElement(
+        syncRequires.layouts[routeLayout],
+        props,
+        children
+      )
+    } else {
+      return(
+        <div>
+          {children()}
+        </div>
+      )
     }
   },
   getPage: pathname => findPage(pathname),

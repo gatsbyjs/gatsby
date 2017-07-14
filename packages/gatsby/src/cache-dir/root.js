@@ -90,27 +90,7 @@ const DefaultRouter = ({ children }) =>
     {children}
   </Router>
 
-// Use default layout if one isn't set.
-const layout = ({ children, location, ...props }) => {
-  let pathPrefix = ``
-  if (typeof __PREFIX_PATHS__ !== `undefined`) {
-    pathPrefix = __PATH_PREFIX__
-  }
-
-  const routeLayout = pageFinderFactory(pages, pathPrefix)(location.pathname).layout
-  if (syncRequires.layouts[routeLayout]) {
-    return React.createElement(
-      syncRequires.layouts[routeLayout],
-      props,
-      children
-    )
-  }
-  return(
-    <div>
-      {children()}
-    </div>
-  )
-}
+const Layout = loader.getLayoutComponent(syncRequires)
 
 // Always have to have one top-level layout
 // can have ones below that. Find page, if has different
@@ -124,7 +104,7 @@ const Root = () =>
     createElement(
       ScrollContext,
       { shouldUpdateScroll },
-      createElement(withRouter(layout), {
+      createElement(withRouter(Layout), {
         children: layoutProps =>
           createElement(Route, {
             render: routeProps => {
