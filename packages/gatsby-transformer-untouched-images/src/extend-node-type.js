@@ -37,7 +37,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
       async resolve(image, fieldArgs, context) {
         const details = getNodeAndSavePathDependency(image.parent, context.path);
         const dimensions = sizeOf(details.absolutePath);
-        const imageName = `${image.internal.contentDigest}.${details.ext}`;
+        const imageName = `${image.internal.contentDigest}${details.ext}`;
         const publicPath = path.join(
           process.cwd(),
           `public`,
