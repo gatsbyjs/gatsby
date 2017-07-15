@@ -15,6 +15,7 @@ const {
 const {promisify} = require('util');
 const ncp = require('ncp');
 const ncpAsync = promisify(ncp);
+const sizeOf = require('image-size');
 
 module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
   if (type.name !== `ImageUntouched`) {
@@ -26,6 +27,8 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
       type: new GraphQLObjectType({
         name: `ImageUntouchedOriginal`,
         fields: {
+          width: { type: GraphQLFloat },
+          height: { type: GraphQLFloat },
           src: { type: GraphQLString },
         },
       }),
@@ -33,7 +36,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
       },
       async resolve(image, fieldArgs, context) {
         const details = getNodeAndSavePathDependency(image.parent, context.path);
-
+        const dimensions = sizeOf(details.absolutePath);
         const imageName = `${image.internal.contentDigest}.${details.ext}`;
         const publicPath = path.join(
           process.cwd(),
@@ -44,6 +47,8 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
         await ncpAsync(details.absolutePath, publicPath);
 
         return {
+          width: dimensions.width,
+          height: dimensions.height,
           src: '/static/' + imageName,
         }
       },

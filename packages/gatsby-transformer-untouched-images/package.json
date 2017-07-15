@@ -15,7 +15,8 @@
   "author": "Chiedo <chiedo@chiedo.com>",
   "license": "MIT",
   "dependencies": {
-    "bluebird": "^3.5.0"
+    "bluebird": "^3.5.0",
+    "image-size": "^0.6.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1"
