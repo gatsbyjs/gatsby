@@ -111,4 +111,4 @@ you can place the files in a `src` subfolder and build them to the plugin folder
 
 ## Official components
 
-* [gatsby-link](/docs/packages/gatsby-link/)
+* [gatsby-link](/packages/gatsby-link/)
