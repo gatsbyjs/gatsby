@@ -68,7 +68,7 @@ const fetchResource = (resourceName, cb = () => {}) => {
     // Find resource
     const resourceFunction =
       resourceName.slice(0, 6) === `page-c`
-        ? asyncRequires.components[resourceName]
+        ? asyncRequires.components[resourceName] || asyncRequires.layouts[resourceName]
         : asyncRequires.json[resourceName]
 
     // Download the resource
@@ -203,28 +203,6 @@ const queue = {
       pathCount,
     }
   },
-  getLayoutComponent: (syncRequires) => ({ children, ...props }) => {
-    let pathPrefix = ``
-    if (typeof __PREFIX_PATHS__ !== `undefined`) {
-      pathPrefix = __PATH_PREFIX__
-    }
-
-    const routeLayout = pageFinderFactory(pages, pathPrefix)(props.location.pathname).layout
-    if (syncRequires.layouts[routeLayout]) {
-      // return syncRequires.layouts['index']
-      return React.createElement(
-        syncRequires.layouts[routeLayout],
-        props,
-        children
-      )
-    } else {
-      return(
-        <div>
-          {children()}
-        </div>
-      )
-    }
-  },
   getPage: pathname => findPage(pathname),
   has: path => pathArray.some(p => p === path),
   getResourcesForPathname: (path, cb = () => {}) => {
@@ -256,11 +234,10 @@ const queue = {
     if (process.env.NODE_ENV !== `production`) {
       const page = findPage(path)
       if (!page) return
-
       const pageResources = {
         component: syncRequires.components[page.componentChunkName],
         json: syncRequires.json[page.jsonName],
-        page,
+        layout: syncRequires.layouts[page.layoutComponentChunkName]
       }
       cb(pageResources)
       return pageResources
@@ -293,13 +270,14 @@ const queue = {
       // Nope, we need to load resource(s)
       let component
       let json
-      // Load the component/json and parallal and call this
+      let layout
+      // Load the component/json/layout and parallel and call this
       // function when they're done loading. When both are loaded,
       // we move on.
       const done = () => {
-        if (component && json) {
-          pathScriptsCache[path] = { component, json, page }
-          const pageResources = { component, json, page }
+        if (component && json && layout) {
+          pathScriptsCache[path] = { component, json, layout }
+          const pageResources = { component, json, layout }
           cb(pageResources)
           emitter.emit(`onPostLoadPageResources`, {
             page,
@@ -319,6 +297,14 @@ const queue = {
           console.log(`Loading the JSON for ${page.path} failed`)
         }
         json = j
+        done()
+      })
+
+      getResourceModule(page.layoutComponentChunkName, (err, l) => {
+        if (err) {
+          console.log(`Loading the Layout for ${page.path} failed`)
+        }
+        layout = l
         done()
       })
 

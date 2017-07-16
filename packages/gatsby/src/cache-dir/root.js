@@ -90,8 +90,6 @@ const DefaultRouter = ({ children }) =>
     {children}
   </Router>
 
-const Layout = loader.getLayoutComponent(syncRequires)
-
 // Always have to have one top-level layout
 // can have ones below that. Find page, if has different
 // parent layout(s), loop through those until finally the
@@ -104,26 +102,21 @@ const Root = () =>
     createElement(
       ScrollContext,
       { shouldUpdateScroll },
-      createElement(withRouter(Layout), {
-        children: layoutProps =>
-          createElement(Route, {
-            render: routeProps => {
-              attachToHistory(routeProps.history)
-
-              const props = layoutProps ? layoutProps : routeProps
-              const pageResources = loader.getResourcesForPathname(
-                props.location.pathname
-              )
-              if (pageResources) {
-                return createElement(ComponentRenderer, {
-                  ...props,
-                  pageResources,
-                })
-              } else {
-                return addNotFoundRoute()
-              }
-            },
-          }),
+      createElement(Route, {
+        render: props => {
+          attachToHistory(props.history)
+          const pageResources = loader.getResourcesForPathname(
+            props.location.pathname
+          )
+          if (pageResources) {
+            return createElement(ComponentRenderer, {
+              ...props,
+              pageResources,
+            })
+          } else {
+            return addNotFoundRoute()
+          }
+        },
       })
     )
   )

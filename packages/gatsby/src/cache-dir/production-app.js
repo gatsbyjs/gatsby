@@ -18,7 +18,6 @@ window.___emitter = emitter
 import pages from "./pages.json"
 import ComponentRenderer from "./component-renderer"
 import asyncRequires from "./async-requires"
-import syncRequires from "./sync-requires"
 import loader from "./loader"
 import pageFinderFactory from "./find-page"
 loader.addPagesArray(pages)
@@ -28,7 +27,6 @@ window.asyncRequires = asyncRequires
 window.___loader = loader
 
 window.matchPath = matchPath
-
 // Let the site/plugins run code very early.
 apiRunner(`onClientEntry`)
 
@@ -118,29 +116,7 @@ const DefaultRouter = ({ children }) =>
     {children}
   </Router>
 
-const loadLayout = cb => {
-  let pathPrefix = ``
-  if (typeof __PREFIX_PATHS__ !== `undefined`) {
-    pathPrefix = __PATH_PREFIX__
-  }
-  const routeLayout = pageFinderFactory(pages, pathPrefix)(location.pathname).layout
-  if (asyncRequires.layouts[routeLayout]) {
-    asyncRequires.layouts[routeLayout]((err, executeChunk) => {
-      const module = executeChunk()
-      cb(module)
-    })
-  } else {
-    cb(props =>
-      <div>
-        {props.children()}
-      </div>
-    )
-  }
-}
 
-const syncLayout = loader.getLayoutComponent(syncRequires)
-
-loadLayout(layout => {
   loader.getResourcesForPathname(window.location.pathname, () => {
     const Root = () =>
       createElement(
@@ -149,21 +125,17 @@ loadLayout(layout => {
         createElement(
           ScrollContext,
           { shouldUpdateScroll },
-          createElement(withRouter(syncLayout), {
-            children: layoutProps =>
-              createElement(Route, {
-                render: routeProps => {
-                  attachToHistory(routeProps.history)
-                  const props = layoutProps ? layoutProps : routeProps
-                  if (loader.getPage(props.location.pathname)) {
-                    return createElement(ComponentRenderer, { ...props })
-                  } else {
-                    return createElement(ComponentRenderer, {
-                      location: { pathname: `/404.html` },
-                    })
-                  }
-                },
-              }),
+          createElement(Route, {
+            render: props => {
+              attachToHistory(props.history)
+              if (loader.getPage(props.location.pathname)) {
+                return createElement(ComponentRenderer, { ...props })
+              } else {
+                return createElement(ComponentRenderer, {
+                  location: { pathname: `/404.html` },
+                })
+              }
+            },
           })
         )
       )
@@ -177,4 +149,3 @@ loadLayout(layout => {
       () => { apiRunner(`onInitialClientRender`) }
     )
   })
-})

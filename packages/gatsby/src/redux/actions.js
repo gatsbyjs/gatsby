@@ -1,8 +1,7 @@
 // @flow
 import Joi from "joi"
 import chalk from "chalk"
-const _ = require(`lodash`
-)
+const _ = require(`lodash`)
 const { bindActionCreators } = require(`redux`)
 const { stripIndent } = require(`common-tags`)
 const glob = require(`glob`)

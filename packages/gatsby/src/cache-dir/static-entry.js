@@ -136,12 +136,13 @@ module.exports = (locals, callback) => {
   }
 
   // Create paths to scripts
+  const page = pages.find(page => page.path === locals.path)
   const scripts = [
     `commons`,
     `app`,
-    `layout-component---index`,
     pathChunkName(locals.path),
-    pages.find(page => page.path === locals.path).componentChunkName,
+    page.componentChunkName,
+    page.layoutComponentChunkName
   ]
     .map(s => {
       const fetchKey = `assetsByChunkName[${s}]`

@@ -19,7 +19,7 @@ const writePages = async () => {
   const pagesData = pages.reduce(
     (mem, { path, matchPath, componentChunkName, layout, jsonName }) => [
       ...mem,
-      { componentChunkName, layout, jsonName, path, matchPath },
+      { componentChunkName, layout, layoutComponentChunkName: layouts.find((l) => l.path === layout).componentChunkName, jsonName, path, matchPath },
     ],
     []
   )
@@ -81,16 +81,9 @@ const preferDefault = m => m && m.default || m
 }\n\n`
   syncRequires += `exports.layouts = {\n${pageLayouts
     .map(l => {
-      if (l) {
-        console.log(l)
-        return (
-          `  "${l.path}": preferDefault(require("${joinPath(
-            l.component
-          )}"))`
-        )
-      } else {
-        return `  "${l}": false`
-      }
+        return `  "${l.componentChunkName}": preferDefault(require("${joinPath(
+          l.component
+        )}"))`
     })
     .join(`,\n`)}
 }`
@@ -123,15 +116,9 @@ const preferDefault = m => m && m.default || m
 }\n\n`
   asyncRequires += `exports.layouts = {\n${pageLayouts
     .map(l => {
-      let componentName = l
-      if (l) {
-        componentName = `index`
-        return `  "${l.path}": require("gatsby-module-loader?name=${l.componentChunkName}!${joinPath(
-          l.component
-        )}")`
-      } else {
-        return `  "${l.path}": false`
-      }
+      return `  "${l.componentChunkName}": require("gatsby-module-loader?name=${l.componentChunkName}!${joinPath(
+        l.component
+      )}")`
     })
     .join(`,\n`)}
 }`

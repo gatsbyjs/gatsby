@@ -65,7 +65,7 @@ program
   )
   .action(command => {
     // Set NODE_ENV to 'production'
-    // process.env.NODE_ENV = `production`
+    process.env.NODE_ENV = `production`
 
     const build = require(`../utils/build`)
     const { sitePackageJson, browserslist } = getSiteInfo()
