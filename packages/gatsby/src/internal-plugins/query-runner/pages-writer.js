@@ -10,16 +10,28 @@ import {
 
 import { joinPath } from "../../utils/path"
 
+const getLayoutByName = (layouts) => {
+  // console.log(layouts)
+  return (layoutName) => {
+    return layouts.find((l) => l.name === layoutName)
+  }
+}
+
 // Write out pages information.
 const writePages = async () => {
   writtenOnce = true
   let { program, config, pages, layouts } = store.getState()
-
   // Write out pages.json
   const pagesData = pages.reduce(
     (mem, { path, matchPath, componentChunkName, layout, jsonName }) => [
       ...mem,
-      { componentChunkName, layout, layoutComponentChunkName: layouts.find((l) => l.path === layout).componentChunkName, jsonName, path, matchPath },
+      {
+        componentChunkName,
+        layout,
+        layoutComponentChunkName: getLayoutByName(layouts)(layout).componentChunkName, jsonName,
+        path,
+        matchPath
+      },
     ],
     []
   )
@@ -35,20 +47,17 @@ const writePages = async () => {
       component: p.component,
     })
     if (p.layout) {
-      let layout = _.find(layouts, ['path', p.layout])
+      let layout = getLayoutByName(layouts)(p.layout)
       pageLayouts.push(layout)
-    } else {
-      let layout = _.find(layouts, ['path', 'index'])
-      layout && pageLayouts.push(layout)
     }
     json.push({ path: p.path, jsonName: p.jsonName })
   })
 
   // Add the default layout if it exists.
   let defaultLayoutExists = false
-
   pageLayouts = _.uniq(pageLayouts)
   components = _.uniqBy(components, c => c.componentChunkName)
+  // console.log(pageLayouts)
 
   await fs.writeFile(
     joinPath(program.directory, `.cache/pages.json`),

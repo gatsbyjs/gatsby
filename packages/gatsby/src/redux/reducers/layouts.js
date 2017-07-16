@@ -15,7 +15,7 @@ module.exports = (state = [], action) => {
         when creating this page.`)
       }
       action.payload.pluginCreator___NODE = `Plugin ${action.plugin.name}`
-      const index = _.findIndex(state, p => p.path === action.payload.path)
+      const index = _.findIndex(state, l => l.name === action.payload.name)
       // If the path already exists, overwrite it.
       // Otherwise, add it to the end.
       if (index !== -1) {
@@ -29,7 +29,7 @@ module.exports = (state = [], action) => {
         return [...state.concat(action.payload)]
       }
     case `DELETE_LAYOUT`:
-      return state.filter(p => p.path !== action.payload.path)
+      return state.filter(l => l.name !== action.payload.name)
     default:
       return state
   }

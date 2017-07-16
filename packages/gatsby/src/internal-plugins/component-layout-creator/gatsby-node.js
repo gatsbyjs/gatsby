@@ -55,7 +55,7 @@ const _createPage = (filePath, pagesDirectory, createLayout) => {
 
   // Create page object
   const page = {
-    path: createPath(pagesDirectory, filePath),
+    name: createPath(pagesDirectory, filePath),
     component: filePath,
   }
 

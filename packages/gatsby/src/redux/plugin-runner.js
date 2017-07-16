@@ -19,6 +19,7 @@ emitter.on(`CREATE_PAGE`, action => {
 
 emitter.on(`CREATE_LAYOUT`, action => {
   const page = action.payload
+  console.log(page)
   apiRunnerNode(
     `onCreateLayout`,
     { page, traceId: action.traceId },

@@ -58,6 +58,8 @@ actions.createPage = (page, plugin = ``, traceId) => {
     internalComponentName = `ComponentIndex`
   }
 
+  // if no layout is set we check if `/src/layouts/index`
+  // if it exists we set it as default
   if (
     !page.layout &&
     !glob.sync(joinPath(store.getState().program.directory, `src/layouts/index.*`)).length == 0
@@ -130,8 +132,8 @@ actions.deleteLayout = (page, plugin = ``) => {
 actions.createLayout = (page, plugin = ``, traceId) => {
   page.componentChunkName = layoutComponentChunkName(page.component)
 
-  let jsonName = `${_.kebabCase(page.path)}.json`
-  let internalComponentName = `Component${pascalCase(page.path)}`
+  let jsonName = `${_.kebabCase(page.name)}.json`
+  let internalComponentName = `Component${pascalCase(page.name)}`
   if (jsonName === `.json`) {
     jsonName = `index.json`
     internalComponentName = `ComponentIndex`
@@ -145,7 +147,7 @@ actions.createLayout = (page, plugin = ``, traceId) => {
     page.context = {}
   }
 
-  const result = Joi.validate(page, joiSchemas.pageSchema)
+  const result = Joi.validate(page, joiSchemas.layoutSchema)
   if (result.error) {
     console.log(chalk.blue.bgYellow(`The upserted page didn't pass validation`))
     console.log(chalk.bold.red(result.error))
