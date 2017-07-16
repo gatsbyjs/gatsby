@@ -18,18 +18,23 @@ const pathChunkName = path => {
   return `path---${name}`
 }
 
-const $ = React.createElement
-
-// Use default layout if one isn't set.
-let layout
-if (syncRequires.layouts.index) {
-  layout = syncRequires.layouts.index
-} else {
-  layout = props =>
-    <div>
-      {props.children()}
-    </div>
+const getLayout = (path) => {
+  const page = pages.find(
+    page => page.path === path
+  )
+  let layout
+  if (syncRequires.layouts[page.layoutComponentChunkName]) {
+    layout = syncRequires.layouts[page.layoutComponentChunkName]
+  } else {
+    layout = () =>
+      <div>
+        {props.children()}
+      </div>
+  }
+  return layout
 }
+
+const $ = React.createElement
 
 module.exports = (locals, callback) => {
   let pathPrefix = `/`
@@ -71,7 +76,7 @@ module.exports = (locals, callback) => {
       },
       context: {},
     },
-    $(withRouter(layout), {
+    $(withRouter(getLayout(locals.path)), {
       children: layoutProps =>
         $(Route, {
           children: routeProps => {
