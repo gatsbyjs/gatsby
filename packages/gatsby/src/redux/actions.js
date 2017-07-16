@@ -97,70 +97,64 @@ actions.createPage = (page, plugin = ``, traceId) => {
 }
 
 /**
- * Delete a page
- * @param {string} page a page object with at least the path set
+ * Delete a layout
+ * @param {string} layout a layout object with at least the name set
  * @example
- * deletePage(page)
+ * deleteLayout(layout)
  */
-actions.deleteLayout = (page, plugin = ``) => {
+actions.deleteLayout = (layout, plugin = ``) => {
   return {
     type: `DELETE_LAYOUT`,
-    payload: page,
+    payload: layout,
   }
 }
 
 /**
- * Create a page. See [the guide on creating and modifying pages](/docs/creating-and-modifying-pages/)
- * for detailed documenation about creating pages.
- * @param {Object} page a page object
- * @param {string} page.path Any valid URL. Must start with a forward slash
- * @param {string} page.component The absolute path to the component for this page
- * @param {Object} page.context Context data for this page. Passed as props
- * to the component `this.props.pathContext` as well as to the graphql query
- * as graphql arguments.
+ * Create a layout.
+ * @param {Object} layout a layout object
+ * @param {string} page.name Unique id for layout
+ * @param {string} page.component The absolute path to the component for this layout
  * @example
- * createPage({
- *   path: `/my-sweet-new-page/`,
- *   component: path.resolve('./src/templates/my-sweet-new-page.js`),
+ * createLayout({
+ *   path: `myNewLayout`,
+ *   component: path.resolve('./src/templates/myNewLayout.js`),
  *   // context gets passed in as props to the page as well
- *   // as into the page/template's GraphQL query.
- *   context: {
- *     id: `123456`,
- *   },
+ *   // as into the page/template's GraphQL query
  * })
  */
-actions.createLayout = (page, plugin = ``, traceId) => {
-  page.componentChunkName = layoutComponentChunkName(page.component)
+actions.createLayout = (layout, plugin = ``, traceId) => {
+  layout.componentChunkName = layoutComponentChunkName(layout.component)
 
-  let jsonName = `${_.kebabCase(page.name)}.json`
-  let internalComponentName = `Component${pascalCase(page.name)}`
+  let jsonName = `${_.kebabCase(layout.name)}.json`
+  let internalComponentName = `Component${pascalCase(layout.name)}`
   if (jsonName === `.json`) {
     jsonName = `index.json`
     internalComponentName = `ComponentIndex`
   }
 
-  page.jsonName = jsonName
-  page.internalComponentName = internalComponentName
+  layout.jsonName = jsonName
+  layout.internalComponentName = internalComponentName
 
-  // Ensure the page has a context object
-  if (!page.context) {
-    page.context = {}
+  // TODO: We currently don't support context for layouts but left here
+  // as will implement soon.
+  // Ensure the layout has a context object
+  if (!layout.context) {
+    layout.context = {}
   }
 
-  const result = Joi.validate(page, joiSchemas.layoutSchema)
+  const result = Joi.validate(layout, joiSchemas.layoutSchema)
   if (result.error) {
-    console.log(chalk.blue.bgYellow(`The upserted page didn't pass validation`))
+    console.log(chalk.blue.bgYellow(`The upserted layout didn't pass validation`))
     console.log(chalk.bold.red(result.error))
-    console.log(page)
+    console.log(layout)
     return
   }
-
 
   return {
     type: `CREATE_LAYOUT`,
     plugin,
     traceId,
-    payload: page,
+    payload: layout,
   }
 }
 

@@ -18,11 +18,10 @@ emitter.on(`CREATE_PAGE`, action => {
 })
 
 emitter.on(`CREATE_LAYOUT`, action => {
-  const page = action.payload
-  console.log(page)
+  const layout = action.payload
   apiRunnerNode(
     `onCreateLayout`,
-    { page, traceId: action.traceId },
+    { layout, traceId: action.traceId },
     action.plugin.name
   )
 })

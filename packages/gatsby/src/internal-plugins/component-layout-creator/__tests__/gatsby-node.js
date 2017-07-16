@@ -1,7 +1,7 @@
 const validatePath = require(`../validate-path`)
 const createPath = require(`../create-path`)
 
-describe(`JavaScript page creator`, () => {
+describe(`JavaScript layout creator`, () => {
   it(`filters out files that start with underscores`, () => {
     const files = [
       {

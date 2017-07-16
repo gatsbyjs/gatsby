@@ -3,7 +3,7 @@ import loader from "./loader"
 import emitter from "./emitter"
 import { withRouter } from "react-router-dom"
 
-const DefaultLayout = ({ children, ...props }) => (
+const DefaultLayout = ({ children }) => (
   <div>
     {children()}
   </div>
@@ -85,13 +85,13 @@ class ComponentRenderer extends React.Component {
   }
 
   render() {
-    console.log(this.state.pageResources.layout)
     if (this.state.pageResources) {
       return createElement(
         withRouter(this.state.pageResources.layout || DefaultLayout), {
-        children: () =>
+        children: (layoutProps) =>
           createElement(this.state.pageResources.component, {
             key: this.props.location.pathname,
+            ...layoutProps,
             ...this.props,
             ...this.state.pageResources.json,
           })

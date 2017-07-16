@@ -10,8 +10,8 @@ const createPath = require(`./create-path`)
 const validatePath = require(`./validate-path`)
 
 // Path creator.
-// Auto-create pages.
-// algorithm is glob /pages directory for js/jsx/cjsx files *not*
+// Auto-create layouts.
+// algorithm is glob /layouts directory for js/jsx/cjsx files *not*
 // underscored. Then create url w/ our path algorithm *unless* user
 // takes control of that page component in gatsby-node.
 exports.createPagesStatefully = async (
@@ -21,44 +21,44 @@ exports.createPagesStatefully = async (
 ) => {
   const { createLayout, deleteLayout } = boundActionCreators
   const program = store.getState().program
-  const pagesDirectory = systemPath.posix.join(program.directory, `/src/layouts`)
+  const layoutDirectory = systemPath.posix.join(program.directory, `/src/layouts`)
   const exts = program.extensions.map(e => `${e.slice(1)}`).join(`,`)
 
   // Get initial list of files.
-  let files = await glob(`${pagesDirectory}/**/?(${exts})`)
-  files.forEach(file => _createPage(file, pagesDirectory, createLayout))
+  let files = await glob(`${layoutDirectory}/**/?(${exts})`)
+  files.forEach(file => _createLayout(file, layoutDirectory, createLayout))
 
   // Listen for new component pages to be added or removed.
   chokidar
-    .watch(`${pagesDirectory}/**/*.{${exts}}`)
+    .watch(`${layoutDirectory}/**/*.{${exts}}`)
     .on(`add`, path => {
       if (!_.includes(files, path)) {
-        _createPage(path, pagesDirectory, createLayout)
+        _createLayout(path, layoutDirectory, createLayout)
         files.push(path)
       }
     })
     .on(`unlink`, path => {
       // Delete the page for the now deleted component.
-      store.getState().pages.filter(p => p.component === path).forEach(page => {
-        deletePage({ path: page.path })
-        files = files.filter(f => f !== path)
+      store.getState().layouts.filter(p => p.component === path).forEach(layout => {
+        deletePage({ name: layout.name })
+        files = files.filter(f => f !== name)
       })
     })
     .on(`ready`, () => doneCb())
 }
-const _createPage = (filePath, pagesDirectory, createLayout) => {
+const _createLayout = (filePath, layoutDirectory, createLayout) => {
   // Filter out special components that shouldn't be made into
   // pages.
-  if (!validatePath(systemPath.posix.relative(pagesDirectory, filePath))) {
+  if (!validatePath(systemPath.posix.relative(layoutDirectory, filePath))) {
     return
   }
 
   // Create page object
-  const page = {
-    name: createPath(pagesDirectory, filePath),
+  const layout = {
+    name: createPath(layoutDirectory, filePath),
     component: filePath,
   }
 
   // Add page
-  createLayout(page)
+  createLayout(layout)
 }
