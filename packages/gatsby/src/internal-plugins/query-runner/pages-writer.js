@@ -11,7 +11,6 @@ import {
 import { joinPath } from "../../utils/path"
 
 const getLayoutByName = (layouts) => {
-  // console.log(layouts)
   return (layoutName) => {
     return layouts.find((l) => l.name === layoutName)
   }
@@ -57,7 +56,6 @@ const writePages = async () => {
   let defaultLayoutExists = false
   pageLayouts = _.uniq(pageLayouts)
   components = _.uniqBy(components, c => c.componentChunkName)
-  // console.log(pageLayouts)
 
   await fs.writeFile(
     joinPath(program.directory, `.cache/pages.json`),

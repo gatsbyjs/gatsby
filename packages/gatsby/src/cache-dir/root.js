@@ -1,5 +1,4 @@
 import React, { createElement } from "react"
-import _ from "lodash"
 import {
   BrowserRouter as Router,
   Route,
@@ -14,7 +13,6 @@ import syncRequires from "./sync-requires"
 import pages from "./pages.json"
 import ComponentRenderer from "./component-renderer"
 import loader from "./loader"
-import pageFinderFactory from "./find-page"
 loader.addPagesArray(pages)
 loader.addDevRequires(syncRequires)
 window.___loader = loader

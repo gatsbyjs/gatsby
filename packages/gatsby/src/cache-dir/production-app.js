@@ -19,7 +19,6 @@ import pages from "./pages.json"
 import ComponentRenderer from "./component-renderer"
 import asyncRequires from "./async-requires"
 import loader from "./loader"
-import pageFinderFactory from "./find-page"
 loader.addPagesArray(pages)
 loader.addProdRequires(asyncRequires)
 window.asyncRequires = asyncRequires
