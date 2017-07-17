@@ -39,6 +39,13 @@ GatsbyJS starters you can use for building your website:
   * Storybook
   * Markdown linting
 
+* [gatsby-starter-bootstrap](https://github.com/jaxx2104/gatsby-starter-bootstrap) [(demo)](https://jaxx2104.github.io/gatsby-starter-bootstrap/)
+
+  Features:
+  * Bootstrap CSS framework
+  * Single column layout
+  * Simple components: SiteNavi, SitePost, SitePage
+
 Websites build with Gatbsy:
 
 * [Bricolage.io](https://www.bricolage.io/) [(source)](https://github.com/KyleAMathews/blog)
