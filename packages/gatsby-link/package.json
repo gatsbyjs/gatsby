@@ -1,0 +1,24 @@
+{
+  "name": "gatsby-link",
+  "version": "1.0.9",
+  "description": "An enhanced Link component for Gatsby sites with support for resource prefetching",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "build": "babel src --out-dir .",
+    "watch": "babel -w src --out-dir ."
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-component"
+  ],
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.24.1"
+  },
+  "dependencies": {
+    "prop-types": "^15.5.8",
+    "ric": "^1.3.0"
+  }
+}

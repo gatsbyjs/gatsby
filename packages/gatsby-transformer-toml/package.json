@@ -1,0 +1,23 @@
+{
+  "name": "gatsby-transformer-toml",
+  "version": "1.1.0",
+  "description": "Gatsby transformer plugin for toml",
+  "scripts": {
+    "build": "babel src --out-dir . --ignore __tests__",
+    "watch": "babel -w src --out-dir . --ignore __tests__"
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "toml"
+  ],
+  "author": "Ruben Harutyunyan <vagr9k@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "toml": "^2.3.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1"
+  }
+}

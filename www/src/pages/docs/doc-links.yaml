@@ -1,0 +1,35 @@
+- title: Quick Start
+  links:
+    Getting Started: /docs/
+    Migrating from v0 to v1: /docs/migrating-from-v0-to-v1/
+    Building with Components: /docs/building-with-components/
+    Querying with GraphQL*: /docs/querying-with-graphql/
+    Gatsby Lifecycle APIs: /docs/gatsby-lifecycle-apis/
+    Deploying: /docs/deploy-gatsby/
+    Plugins: /docs/plugins/
+    PRPL Pattern: /docs/prpl-pattern/
+    Gatsby on Windows: /docs/gatsby-on-windows/
+- title: Guides
+  links:
+    404 Pages: /docs/add-404-page/
+    Adding Images, Fonts, and Files: /docs/adding-images-fonts-files/
+    Browserslist: /docs/browserslist/
+    Creating and Modifying Pages: /docs/creating-and-modifying-pages/
+    Create a source plugin: /docs/create-source-plugin/
+    Custom webpack config: /docs/add-custom-webpack-config/
+    Debugging HTML Builds: /docs/debugging-html-builds/
+    Environment Variables: /docs/environment-variables/
+    Path Prefix: /docs/path-prefix/
+    Proxying API Requests: /docs/api-proxy/
+- title: Reference
+  links:
+    Node Interface: /docs/node-interface/
+    API Specification: /docs/api-specification/
+    Bound Action Creators: /docs/bound-action-creators/
+    Gatsby Browser APIs: /docs/browser-apis/
+    Gatsby Node APIs: /docs/node-apis/
+    Gatsby SSR APIs: /docs/ssr-apis/
+- title: Contributing
+  links:
+    How to Contribute: /docs/how-to-contribute/
+    Design Principles*: /docs/design-principles/

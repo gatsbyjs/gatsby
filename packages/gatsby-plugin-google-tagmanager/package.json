@@ -1,0 +1,21 @@
+{
+  "name": "gatsby-plugin-google-tagmanager",
+  "description": "Gatsby plugin to add google tagmanager onto a site",
+  "version": "1.0.1",
+  "author": "Thijs Koerselman <thijs@vauxlab.com>",
+  "devDependencies": {
+    "babel-cli": "^6.24.1"
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "google analytics",
+    "google tagmanager"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src --out-dir .",
+    "watch": "babel -w src --out-dir ."
+  }
+}

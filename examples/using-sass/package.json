@@ -1,0 +1,22 @@
+{
+  "name": "using-sass",
+  "version": "1.0.0",
+  "description": "Example Gatsby website using the Gatsby plugin gatsby-plugin-sass",
+  "main": "index.js",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build"
+  },
+  "author": "Daniel Farrell <daniel.farrell@mobelux.com>",
+  "license": "MIT",
+  "dependencies": {
+    "gatsby": "latest",
+    "gatsby-link": "latest",
+    "gatsby-plugin-google-analytics": "latest",
+    "gatsby-plugin-offline": "latest",
+    "gatsby-plugin-sass": "latest",
+    "react-typography": "^0.15.10",
+    "tachyons-sass": "^4.7.1",
+    "typography": "^0.15.10"
+  }
+}

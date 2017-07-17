@@ -1,0 +1,114 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Load plugins Loads plugins defined with an object but without an option key 1`] = `
+Array [
+  Object {
+    "name": "component-page-creator",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "version": "1.0.0",
+  },
+  Object {
+    "name": "internal-data-bridge",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "version": "1.0.0",
+  },
+  Object {
+    "name": "dev-404-page",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "version": "1.0.0",
+  },
+  Object {
+    "name": "prod-404",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "version": "1.0.0",
+  },
+  Object {
+    "name": "query-runner",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "version": "1.0.0",
+  },
+  Object {
+    "name": "TEST",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+  },
+  Object {
+    "name": "default-site-plugin",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "version": "d41d8cd98f00b204e9800998ecf8427e",
+  },
+]
+`;
+
+exports[`Load plugins load plugins for a site 1`] = `
+Array [
+  Object {
+    "name": "component-page-creator",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "version": "1.0.0",
+  },
+  Object {
+    "name": "internal-data-bridge",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "version": "1.0.0",
+  },
+  Object {
+    "name": "dev-404-page",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "version": "1.0.0",
+  },
+  Object {
+    "name": "prod-404",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "version": "1.0.0",
+  },
+  Object {
+    "name": "query-runner",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "version": "1.0.0",
+  },
+  Object {
+    "name": "default-site-plugin",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "version": "d41d8cd98f00b204e9800998ecf8427e",
+  },
+]
+`;

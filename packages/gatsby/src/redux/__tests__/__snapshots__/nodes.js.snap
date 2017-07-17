@@ -1,0 +1,129 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Create and update nodes allows adding fields to nodes 1`] = `
+Object {
+  "hi": Object {
+    "children": Array [],
+    "fields": Object {
+      "joy": "soul's delight",
+    },
+    "id": "hi",
+    "internal": Object {
+      "contentDigest": "hasdfljds",
+      "fieldOwners": Object {
+        "joy": "test",
+      },
+      "owner": "tests",
+      "type": "Test",
+    },
+    "parent": "test",
+    "pickle": true,
+  },
+}
+`;
+
+exports[`Create and update nodes allows creating nodes 1`] = `
+Object {
+  "payload": Object {
+    "children": Array [],
+    "id": "hi",
+    "internal": Object {
+      "contentDigest": "hasdfljds",
+      "owner": "tests",
+      "type": "Test",
+    },
+    "parent": "test",
+    "pickle": true,
+  },
+  "plugin": Object {
+    "name": "tests",
+  },
+  "traceId": undefined,
+  "type": "CREATE_NODE",
+}
+`;
+
+exports[`Create and update nodes allows creating nodes 2`] = `
+Object {
+  "hi": Object {
+    "children": Array [],
+    "id": "hi",
+    "internal": Object {
+      "contentDigest": "hasdfljds",
+      "owner": "tests",
+      "type": "Test",
+    },
+    "parent": "test",
+    "pickle": true,
+  },
+}
+`;
+
+exports[`Create and update nodes throws error if a field is updated by a plugin not its owner 1`] = `
+"A plugin tried to update a node field that it doesn't own:
+
+Node id: hi
+Plugin: test2
+name: joy
+value: soul's delight"
+`;
+
+exports[`Create and update nodes throws error if a node is created by a plugin not its owner 1`] = `
+"The plugin \\"pluginB\\" created a node of a type owned by another plugin.
+
+        The node type \\"mineOnly\\" is owned by \\"pluginA\\".
+
+        If you copy and pasted code from elsewhere, you'll need to pick a new type name
+        for your new node(s).
+
+        The node object passed to \\"createNode\\":
+
+        {
+    \\"id\\": \\"hi2\\",
+    \\"children\\": [],
+    \\"parent\\": \\"test\\",
+    \\"internal\\": {
+        \\"contentDigest\\": \\"hasdfljds\\",
+        \\"type\\": \\"mineOnly\\",
+        \\"owner\\": \\"pluginB\\"
+    },
+    \\"pickle\\": true
+}
+
+        The plugin creating the node:
+
+        {
+    \\"name\\": \\"pluginB\\"
+}"
+`;
+
+exports[`Create and update nodes throws error if a node sets a value on "fields" 1`] = `
+"Plugins creating nodes can not set data on the reserved field \\"fields\\"
+      as this is reserved for plugins which wish to extend your nodes.
+
+      If your plugin didn't add \\"fields\\" you're probably seeing this
+      error because you're reusing an old node object.
+
+      Node:
+
+      {
+    \\"id\\": \\"hi\\",
+    \\"children\\": [],
+    \\"parent\\": \\"test\\",
+    \\"fields\\": {
+        \\"test\\": \\"I can't do this but I like to test boundaries\\"
+    },
+    \\"internal\\": {
+        \\"contentDigest\\": \\"hasdfljds\\",
+        \\"type\\": \\"mineOnly\\",
+        \\"owner\\": \\"pluginA\\"
+    },
+    \\"pickle\\": true
+}
+
+      Plugin that created the node:
+
+      {
+    \\"name\\": \\"pluginA\\"
+}"
+`;

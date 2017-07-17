@@ -1,0 +1,20 @@
+{
+  "name": "gatsby-example-no-plugins",
+  "private": true,
+  "description": "Gatsby example demonstrating the RSS feed plugin.",
+  "version": "1.0.0",
+  "author": "Nicholas Young <nicholas@nicholaswyoung.com>",
+  "dependencies": {
+    "gatsby": "latest",
+    "gatsby-source-filesystem": "latest",
+    "gatsby-transformer-remark": "latest",
+    "gatsby-plugin-feed": "latest"
+  },
+  "keywords": ["gatsby"],
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build"
+  }
+}

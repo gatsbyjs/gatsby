@@ -1,0 +1,17 @@
+# Dependency directory
+node_modules
+
+# Build Path of Test Fixtures
+test/**/public
+.DS_Store
+
+# IDE specific
+.vscode/
+
+# Package managers
+yarn.lock
+package-lock.json
+
+# Package specific 
+/gatsby-node.js
+/output-color.js

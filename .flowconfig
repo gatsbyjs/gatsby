@@ -1,24 +1,10 @@
 [version]
-0.27.0
+0.42.0
 
 [ignore]
-.*/node_modules/.*
 .*/test/.*
-
-[include]
-node_modules
-
-[libs]
-./interfaces/
-node_modules/iflow-debug/index.js.flow
-node_modules/iflow-lodash/index.js.flow
-node_modules/iflow-react-router/index.js.flow
-
-[options]
-esproposal.class_instance_fields=enable
-esproposal.class_static_fields=enable
-
-strip_root=true
-
-suppress_comment= \\(.\\|\n\\)*\\$FlowFixMe
-suppress_comment= \\(.\\|\n\\)*\\$FlowIssue
+.*/node_modules/typography/.*
+.*/node_modules/fbjs/.*
+.*/node_modules/react-side-effect/.*
+.*/www/.*
+.*/examples/.*

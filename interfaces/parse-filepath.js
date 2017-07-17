@@ -1,4 +1,4 @@
-declare module 'parse-filepath' {
+declare module `parse-filepath` {
   declare type FileData = {
     root: string,
     dir: string,

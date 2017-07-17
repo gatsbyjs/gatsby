@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Gatsby data tree utils build enum values for fields from array on nodes 1`] = `
+Object {
+  "anArray": Object {
+    "field": "anArray",
+  },
+  "date": Object {
+    "field": "date",
+  },
+  "frontmatter___blue": Object {
+    "field": "frontmatter___blue",
+  },
+  "frontmatter___circle": Object {
+    "field": "frontmatter___circle",
+  },
+  "frontmatter___date": Object {
+    "field": "frontmatter___date",
+  },
+  "frontmatter___draft": Object {
+    "field": "frontmatter___draft",
+  },
+  "frontmatter___title": Object {
+    "field": "frontmatter___title",
+  },
+  "hair": Object {
+    "field": "hair",
+  },
+  "key_with__unsupported_values": Object {
+    "field": "key-with..unsupported-values",
+  },
+  "name": Object {
+    "field": "name",
+  },
+}
+`;
+
+exports[`Gatsby data tree utils builds field examples from an array of nodes 1`] = `
+Object {
+  "anArray": Array [
+    1,
+  ],
+  "date": "2006-07-22T22:39:53.000Z",
+  "emptyArray": null,
+  "frontmatter": Object {
+    "blue": 10010,
+    "circle": "happy",
+    "date": "2006-07-22T22:39:53.000Z",
+    "draft": false,
+    "title": "The world of slash and adventure",
+  },
+  "hair": 4,
+  "iAmNull": null,
+  "key-with..unsupported-values": true,
+  "name": "The Mad Wax",
+}
+`;

@@ -1,0 +1,21 @@
+{
+  "name": "gatsby-plugin-nprogress",
+  "version": "1.0.1",
+  "description": "Shows page loading indicator when loading page resources is delayed",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src --out-dir . --ignore __tests__",
+    "watch": "babel -w src --out-dir . --ignore __tests__"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "author": "Kyle Mathews<mathews.kyle@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.24.1"
+  },
+  "dependencies": {
+    "nprogress": "^0.2.0"
+  }
+}

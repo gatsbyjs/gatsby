@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GraphQL Input args can query object arrays 1`] = `
+Object {
+  "data": Object {
+    "allNode": Object {
+      "edges": Array [
+        Object {
+          "node": Object {
+            "anObjectArray": Array [
+              Object {
+                "aBoolean": true,
+                "aNumber": 2,
+                "aString": "some string",
+              },
+              Object {
+                "aBoolean": null,
+                "aNumber": 2,
+                "aString": "some string",
+              },
+            ],
+          },
+        },
+        Object {
+          "node": Object {
+            "anObjectArray": null,
+          },
+        },
+      ],
+    },
+  },
+}
+`;

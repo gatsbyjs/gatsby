@@ -36,3 +36,12 @@ bin/published.js
 test/**/public
 .gatsby-context.js
 .DS_Store
+public/
+node_modules/
+.cache/
+.netlify
+
+# IDE specific
+.vscode/
+yarn.lock
+package-lock.json

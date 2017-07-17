@@ -1,0 +1,25 @@
+{
+  "name": "gatsby-example-hacker-news",
+  "private": true,
+  "description": "Gatsby example site: Hacker News",
+  "version": "1.0.0",
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "dependencies": {
+    "flat": "^2.0.1",
+    "gatsby": "latest",
+    "gatsby-link": "latest",
+    "gatsby-plugin-google-analytics": "latest",
+    "gatsby-plugin-manifest": "latest",
+    "gatsby-plugin-offline": "latest",
+    "gatsby-source-hacker-news": "latest",
+    "lodash": "^4.16.4",
+    "slash": "^1.0.0"
+  },
+  "keywords": ["gatsby"],
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build"
+  }
+}

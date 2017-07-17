@@ -1,0 +1,33 @@
+{
+  "name": "gatsby-transformer-remark",
+  "description": "Gatsby transformer plugin for Markdown using the Remark library and ecosystem",
+  "version": "1.1.0",
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "gray-matter": "^2.1.0",
+    "hast-util-to-html": "^3.0.0",
+    "lodash": "^4.17.4",
+    "mdast-util-to-hast": "^2.4.0",
+    "remark": "^7.0.1",
+    "sanitize-html": "^1.14.1",
+    "underscore.string": "^3.3.4",
+    "unist-util-select": "^1.5.0",
+    "unist-util-visit": "^1.1.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.20.2"
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "markdown",
+    "remark"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "babel src --out-dir . --ignore __tests__",
+    "watch": "babel -w src --out-dir . --ignore __tests__"
+  }
+}

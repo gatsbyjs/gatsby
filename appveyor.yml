@@ -1,0 +1,68 @@
+# branches to build
+branches:
+  # whitelist
+  only:
+    - 1.0
+    - master
+
+platform:
+  - x64
+
+environment:
+  nodejs_version: "8"
+
+  matrix:
+  - example: gatsbygram
+    buildon: commit
+
+  - example: client-only-paths
+    buildon: tag
+
+  - example: hn
+    buildon: tag
+
+  - example: no-plugins
+    buildon: tag
+
+  - example: no-trailing-slashes
+    buildon: tag
+
+  - example: using-drupal
+    buildon: tag
+
+  - example: using-postcss-sass
+    buildon: tag
+
+# Install scripts. (runs after repo cloning)
+install:
+  - echo This example is built on %buildon% and the commit tag is %APPVEYOR_REPO_TAG% and the tag is %APPVEYOR_REPO_TAG_NAME%
+    # we kill the build for most examples unless it is a release or a forced build
+  - ps: |
+      if (($env:buildon -eq "tag") -and ($env:APPVEYOR_REPO_TAG -eq "false") -and ($env:APPVEYOR_FORCED_BUILD -ne "True"))
+      {
+        Exit-AppVeyorBuild
+      }
+  - ps: Install-Product node $env:nodejs_version $env:platform
+  - ps: npm install -g windows-build-tools
+  - npm install -g gatsby-dev-cli@canary
+  - echo we are running on %PLATFORM%
+  - npm install
+  - node --version
+  - npm --version
+  - npm test
+
+# Build gatsby head
+before_build:
+  - npm run build
+
+build_script:
+  - cd examples/%example%
+  - npm install
+  - gatsby-dev --set-path-to-repo ../..
+  - gatsby-dev --scan-once
+  - npm run build
+
+artifacts:
+  - path: examples/$(example)
+
+deploy: off

@@ -1,0 +1,43 @@
+{
+  "name": "gatsby-example-image-gallery",
+  "private": true,
+  "description": "Gatsby example site: image gallery",
+  "version": "1.0.0",
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "dependencies": {
+    "gatsby": "latest",
+    "gatsby-link": "latest",
+    "gatsby-plugin-glamor": "latest",
+    "gatsby-plugin-google-analytics": "latest",
+    "gatsby-plugin-manifest": "latest",
+    "gatsby-plugin-offline": "latest",
+    "gatsby-plugin-sharp": "latest",
+    "gatsby-source-filesystem": "latest",
+    "gatsby-transformer-json": "latest",
+    "gatsby-transformer-sharp": "latest",
+    "instagram-screen-scrape": "^2.0.0",
+    "lodash": "^4.16.4",
+    "mkdirp": "^0.5.1",
+    "mousetrap": "^1.6.0",
+    "progress": "^1.1.8",
+    "prop-types": "^15.5.8",
+    "react-gravatar": "^2.6.1",
+    "react-icons": "^2.2.3",
+    "react-modal": "^1.7.6",
+    "react-typography": "^0.15.0",
+    "request": "^2.79.0",
+    "slug": "^0.9.1",
+    "typeface-space-mono": "^0.0.22",
+    "typography": "^0.15.0"
+  },
+  "keywords": ["gatsby"],
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "lint": "./node_modules/.bin/eslint --ext .js,.jsx --ignore-pattern public .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "develop": "gatsby develop",
+    "build": "gatsby build",
+    "deploy": "gatsby build --prefix-paths && gh-pages -d public"
+  }
+}

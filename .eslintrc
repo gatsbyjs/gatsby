@@ -1,66 +1,73 @@
 {
   "parser": "babel-eslint",
   "extends": [
-    "eslint-config-airbnb",
-    "plugin:ava/recommended"
+    "google",
+    "eslint:recommended",
+    "plugin:flowtype/recommended",
+    "plugin:react/recommended",
+    "prettier",
+    "prettier/flowtype",
+    "prettier/react"
   ],
   "plugins": [
-    "ava",
     "flowtype",
-    "flow-vars"
+    "react"
   ],
-  "rules": {
-    "indent": [2, 2, {"SwitchCase": 1}],
-    "no-console": [0],
-    "func-names": [0],
-    "semi": [2, "never"],
-    "no-extra-semi": [2],
-    "space-before-function-paren": [2, "always"],
-    "no-else-return": [0],
-    "space-infix-ops": [0],
-    "react/prefer-es6-class": [0],
-    "react/prefer-stateless-function": [0],
-    "no-underscore-dangle": ["error", { "allow": ["_config"] }],
-    "import/no-unresolved": [0],
-    "global-require": [0],
-    "no-duplicate-imports": [0],
-    "import/no-extraneous-dependencies": [0],
-    "import/extensions": [0],
-    "import/first": [0],
-    "import/no-dynamic-require": [0],
-    "import/newline-after-import": [0],
-    "react/jsx-filename-extension": [0],
-    "react/no-danger": [0],
-    /*"flowtype/require-parameter-type": 1,*/
-    /*"flowtype/require-return-type": [*/
-      /*1,*/
-      /*"always",*/
-      /*{*/
-        /*"annotateUndefined": "never"*/
-      /*}*/
-    /*],*/
-    /*"flowtype/space-after-type-colon": [*/
-      /*1,*/
-      /*"always"*/
-    /*],*/
-    /*"flowtype/space-before-type-colon": [*/
-      /*1,*/
-      /*"never"*/
-    /*],*/
-    /*"flowtype/type-id-match": [*/
-      /*0,*/
-      /*"^([A-Z][a-z0-9]+)+Type$"*/
-    /*],*/
-    /*"flow-vars/define-flow-type": 1,*/
-    /*"flow-vars/use-flow-type": 1,*/
-  },
-  "globals": {
-    "__PREFIX_LINKS__": true,
-    "document": true,
-  },
-  "settings": {
-    "flowtype": {
-      "onlyFilesWithFlowAnnotation": true
+  "parserOptions": {
+    "ecmaVersion": 2016,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
     }
+  },
+  "env": {
+    "es6": true,
+    "node": true,
+    "jest": true
+  },
+  "rules": {
+    "no-console": "off",
+    "valid-jsdoc": "off",
+    "require-jsdoc": "off",
+    "quotes": [
+      "error",
+      "backtick"
+    ],
+    "consistent-return": [
+      "error",
+    ],
+    "arrow-body-style": [
+      "error",
+      "as-needed",
+      { "requireReturnForObjectLiteral": true }
+    ],
+    "jsx-quotes": [
+      "error",
+      "prefer-double"
+    ],
+    "semi": [
+      "error",
+      "never"
+    ],
+    "object-curly-spacing": [
+      "error",
+      "always"
+    ],
+    "comma-dangle": [
+      "error",
+      {
+        "arrays": "always-multiline",
+        "objects": "always-multiline",
+        "imports": "always-multiline",
+        "exports": "always-multiline",
+        "functions": "ignore"
+      }
+    ],
+    "react/prop-types": [
+      "error",
+      {
+        "ignore": ["children"]
+      }
+    ]
   }
 }

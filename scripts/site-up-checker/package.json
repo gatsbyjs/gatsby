@@ -1,0 +1,20 @@
+{
+  "name": "site-up-checker",
+  "version": "1.0.0",
+  "description": "Checks if our Gatsby example sites are up and pings Discord when one goes down",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index"
+  },
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "discord.js": "^11.1.0",
+    "lodash": "^4.17.4",
+    "request": "^2.81.0",
+    "request-promise": "^4.2.0",
+    "webhook-discord": "^2.0.6"
+  }
+}

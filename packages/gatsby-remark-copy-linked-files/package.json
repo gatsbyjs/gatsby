@@ -1,0 +1,28 @@
+{
+  "name": "gatsby-remark-copy-linked-files",
+  "description": "Find files which are linked to from markdown and copy them to the public directory",
+  "version": "1.0.1",
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.1",
+    "fs-extra": "^3.0.1",
+    "is-relative-url": "^2.0.0",
+    "lodash": "^4.17.4",
+    "unist-util-visit": "^1.1.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1"
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "prismjs",
+    "remark"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src --out-dir .",
+    "watch": "babel -w src --out-dir ."
+  }
+}

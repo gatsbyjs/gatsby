@@ -1,0 +1,1 @@
+require(`./pages-writer`)

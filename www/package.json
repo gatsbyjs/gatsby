@@ -1,0 +1,58 @@
+{
+  "name": "gatsby-starter-default",
+  "description": "Gatsby default starter",
+  "version": "1.0.0",
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "dependencies": {
+    "bluebird": "^3.4.6",
+    "gatsby": "^1.0.5",
+    "gatsby-link": "^1.0.1",
+    "gatsby-plugin-canonical-urls": "^1.0.1",
+    "gatsby-plugin-catch-links": "^1.0.1",
+    "gatsby-plugin-glamor": "^1.0.1",
+    "gatsby-plugin-google-analytics": "^1.0.1",
+    "gatsby-plugin-manifest": "^1.0.1",
+    "gatsby-plugin-nprogress": "^1.0.1",
+    "gatsby-plugin-offline": "^1.0.1",
+    "gatsby-plugin-react-helmet": "^1.0.1",
+    "gatsby-plugin-sharp": "^1.0.1",
+    "gatsby-plugin-twitter": "^1.0.5",
+    "gatsby-remark-autolink-headers": "^1.0.1",
+    "gatsby-remark-copy-linked-files": "^1.0.1",
+    "gatsby-remark-images": "^1.0.1",
+    "gatsby-remark-prismjs": "^1.0.1",
+    "gatsby-remark-responsive-iframe": "^1.0.1",
+    "gatsby-remark-smartypants": "^1.0.1",
+    "gatsby-source-filesystem": "^1.0.1",
+    "gatsby-transformer-documentationjs": "^1.0.1",
+    "gatsby-transformer-remark": "^1.0.1",
+    "gatsby-transformer-sharp": "^1.0.1",
+    "gatsby-transformer-yaml": "^1.0.1",
+    "lodash": "^4.16.6",
+    "mitt": "^1.1.2",
+    "parse-filepath": "^1.0.1",
+    "react-icons": "^2.2.3",
+    "react-typography": "^0.15.0",
+    "slash": "^1.0.0",
+    "typeface-space-mono": "^0.0.22",
+    "typeface-tex-gyre-schola": "^0.0.30",
+    "typography": "^0.15.12",
+    "typography-breakpoint-constants": "^0.15.10",
+    "typography-plugin-code": "0.15.x"
+  },
+  "devDependencies": {
+    "gh-pages": "^0.11.0"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "main": "n/a",
+  "private": true,
+  "scripts": {
+    "build": "gatsby build",
+    "deploy": "gatsby build --prefix-paths && gh-pages -d public",
+    "develop": "gatsby develop",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

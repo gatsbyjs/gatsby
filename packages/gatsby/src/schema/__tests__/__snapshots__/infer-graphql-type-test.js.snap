@@ -1,0 +1,95 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GraphQL type inferance Infers graphql type from array of nodes 1`] = `
+Object {
+  "data": Object {
+    "listNode": Array [
+      Object {
+        "aBoolean": true,
+        "anArray": Array [
+          1,
+          2,
+          3,
+          4,
+        ],
+        "anObjectArray": Array [
+          Object {
+            "aBoolean": true,
+            "aNumber": 2,
+            "anArray": null,
+            "anotherObjectArray": null,
+          },
+          Object {
+            "aBoolean": null,
+            "aNumber": 2,
+            "anArray": Array [
+              1,
+              2,
+            ],
+            "anotherObjectArray": null,
+          },
+          Object {
+            "aBoolean": null,
+            "aNumber": null,
+            "anArray": null,
+            "anotherObjectArray": Array [
+              Object {
+                "bar": 10,
+                "baz": null,
+              },
+            ],
+          },
+        ],
+        "date": "1012",
+        "deepObject": Object {
+          "deepObject": Object {
+            "deepObject": Object {
+              "level": 3,
+            },
+            "level": 2,
+          },
+          "level": 1,
+        },
+        "domain": "pizza.com",
+        "externalUrl": "https://example.com/awesome.jpg",
+        "frontmatter": Object {
+          "date": "1012",
+          "title": "The world of dash and adventure",
+        },
+        "hair": 1,
+      },
+      Object {
+        "aBoolean": null,
+        "anArray": Array [
+          1,
+          2,
+          5,
+          4,
+        ],
+        "anObjectArray": Array [
+          Object {
+            "aBoolean": null,
+            "aNumber": null,
+            "anArray": null,
+            "anotherObjectArray": Array [
+              Object {
+                "bar": null,
+                "baz": "quz",
+              },
+            ],
+          },
+        ],
+        "date": "1984",
+        "deepObject": null,
+        "domain": null,
+        "externalUrl": null,
+        "frontmatter": Object {
+          "date": "1984",
+          "title": "The world of slash and adventure",
+        },
+        "hair": 2,
+      },
+    ],
+  },
+}
+`;

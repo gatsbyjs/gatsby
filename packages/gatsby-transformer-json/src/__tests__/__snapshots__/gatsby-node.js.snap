@@ -1,0 +1,89 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Process JSON nodes correctly correctly creates nodes from JSON which is an array of objects 1`] = `
+Array [
+  Array [
+    Object {
+      "blue": true,
+      "children": Array [],
+      "funny": "yup",
+      "id": "foo",
+      "internal": Object {
+        "contentDigest": "8838e569ae02d98806532310fb2a577a",
+        "type": "UndefinedJson",
+      },
+      "parent": "whatever",
+    },
+  ],
+  Array [
+    Object {
+      "blue": false,
+      "children": Array [],
+      "funny": "nope",
+      "id": "whatever [1] >>> JSON",
+      "internal": Object {
+        "contentDigest": "f624311d932d73dcd416d2a8bea2b67d",
+        "type": "UndefinedJson",
+      },
+      "parent": "whatever",
+    },
+  ],
+]
+`;
+
+exports[`Process JSON nodes correctly correctly creates nodes from JSON which is an array of objects 2`] = `
+Array [
+  Array [
+    Object {
+      "child": Object {
+        "blue": true,
+        "children": Array [],
+        "funny": "yup",
+        "id": "foo",
+        "internal": Object {
+          "contentDigest": "8838e569ae02d98806532310fb2a577a",
+          "type": "UndefinedJson",
+        },
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "[{\\"id\\":\\"foo\\",\\"blue\\":true,\\"funny\\":\\"yup\\"},{\\"blue\\":false,\\"funny\\":\\"nope\\"}]",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "application/json",
+          "name": "test",
+        },
+        "parent": "SOURCE",
+      },
+    },
+  ],
+  Array [
+    Object {
+      "child": Object {
+        "blue": false,
+        "children": Array [],
+        "funny": "nope",
+        "id": "whatever [1] >>> JSON",
+        "internal": Object {
+          "contentDigest": "f624311d932d73dcd416d2a8bea2b67d",
+          "type": "UndefinedJson",
+        },
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "[{\\"id\\":\\"foo\\",\\"blue\\":true,\\"funny\\":\\"yup\\"},{\\"blue\\":false,\\"funny\\":\\"nope\\"}]",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "application/json",
+          "name": "test",
+        },
+        "parent": "SOURCE",
+      },
+    },
+  ],
+]
+`;

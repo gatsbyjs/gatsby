@@ -1,0 +1,33 @@
+{
+  "name": "gatsby-example-using-wordpress",
+  "private": true,
+  "description": "Gatsby example site using the Wordpress source plugin",
+  "version": "1.0.0-beta.6",
+  "author": "Sebastien Fichot <fichot.sebastien@gmail.com>",
+  "dependencies": {
+    "gatsby": "latest",
+    "gatsby-link": "latest",
+    "gatsby-plugin-react-helmet": "latest",
+    "gatsby-plugin-styled-components": "latest",
+    "gatsby-source-wordpress": "latest",
+    "hedron": "^0.7.1",
+    "lodash": "^4.16.4"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "dev": "gatsby develop",
+    "lint": "./node_modules/.bin/eslint --ext .js,.jsx --ignore-pattern public .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "develop": "gatsby develop",
+    "build": "gatsby build",
+    "start": "gatsby serve",
+    "predeploy": "gatsby build --prefix-paths"
+  },
+  "devDependencies": {
+    "eslint": "^4.1.1"
+  }
+}

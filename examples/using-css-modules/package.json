@@ -1,0 +1,17 @@
+{
+  "name": "using-css-modules",
+  "private": true,
+  "description": "Gatsby example site demonstrating using css modules in Gatsby with normal (Postcss) css and sass/scss.",
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "dependencies": {
+    "gatsby": "latest",
+    "gatsby-link": "latest",
+    "gatsby-plugin-sass": "latest"
+  },
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build"
+  }
+}

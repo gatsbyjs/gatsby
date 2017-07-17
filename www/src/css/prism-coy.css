@@ -1,0 +1,78 @@
+/**
+ * prism.js Coy theme for JavaScript, CoffeeScript, CSS and HTML
+ * Based on https://github.com/tshedor/workshop-wp-theme (Example: http://workshop.kansan.com/category/sessions/basics or http://workshop.timshedor.com/category/sessions/basics);
+ * @author Tim  Shedor
+ */
+
+/* .token.comment, */
+/* .token.block-comment, */
+/* .token.prolog, */
+/* .token.doctype, */
+/* .token.cdata { */
+  /* color: #52ad9f; */
+/* } */
+
+/* .token.punctuation { */
+  /* color: #5F6364; */
+/* } */
+
+/* .token.property, */
+/* .token.tag, */
+/* .token.boolean, */
+/* .token.number, */
+/* .token.function-name, */
+/* .token.constant, */
+/* .token.symbol, */
+/* .token.deleted { */
+  /* color: #a285d8; */
+/* } */
+
+/* .token.selector, */
+/* .token.attr-name, */
+/* .token.string, */
+/* .token.char, */
+/* .token.function, */
+/* .token.builtin, */
+/* .token.inserted { */
+  /* color: #a2466c; */
+/* } */
+
+/* .token.operator, .token.entity, .token.url, .token.variable { */
+  /* color: #c18b99; */
+/* } */
+
+/* .token.atrule, .token.attr-value, .token.keyword, .token.class-name { */
+  /* color: #a285d8; */
+/* } */
+
+.token.regex, .token.important {
+  color: #d88489;
+}
+
+.language-css .token.string, .style .token.string {
+  color: #a2466c;
+}
+
+.token.important {
+  font-weight: normal;
+}
+
+.token.bold {
+  font-weight: bold;
+}
+.token.italic {
+  font-style: italic;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.namespace {
+  opacity: .7;
+}
+
+/* Plugin styles */
+.token.tab:not(:empty):before, .token.cr:before, .token.lf:before {
+  color: #e0d7d1;
+}

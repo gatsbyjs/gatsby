@@ -1,0 +1,37 @@
+/*
+ * Web Fonts from fontspring.com
+ *
+ * All OpenType features and all extended glyphs have been removed.
+ * Fully installable fonts can be purchased at http://www.fontspring.com
+ *
+ * The fonts included in this stylesheet are subject to the End User License you purchased
+ * from Fontspring. The fonts are protected under domestic and international trademark and 
+ * copyright law. You are prohibited from modifying, reverse engineering, duplicating, or
+ * distributing this font software.
+ *
+ * (c) 2010-2016 Fontspring
+ *
+ *
+ *
+ *
+ * The fonts included are copyrighted by the vendor listed below.
+ *
+ * Vendor:      ParaType
+ * License URL: https://www.fontspring.com/licenses/paratype/webfont
+ *
+ *
+ */
+
+@font-face {
+    font-family: 'Futura PT';
+    src: url('ftn66-webfont.eot');
+    src: url('ftn66-webfont.eot?#iefix') format('embedded-opentype'),
+         url('ftn66-webfont.woff2') format('woff2'),
+         url('ftn66-webfont.woff') format('woff'),
+         url('ftn66-webfont.ttf') format('truetype'),
+         url('ftn66-webfont.svg#futura_ptdemi_oblique') format('svg');
+    font-weight: bold;
+    font-style: italic;
+
+}
+

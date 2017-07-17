@@ -1,0 +1,1 @@
+# gatsby-transformer-react-docgen
