@@ -77,13 +77,13 @@ exports.createPagesStatefully = true
 /**
  * Tell plugins to add layouts. This extension point is called only after the initial
  * sourcing and transformation of nodes plus creation of the GraphQL schema are
- * complete so you can query your data in order to create pages.
+ * complete so you can query your data in order to create layouts.
  *
  * See also the documentation for [`createLayout`](/docs/bound-action-creators/#createLayout).
  * @example
  * exports.createLayouts = ({ graphql, boundActionCreators }) => {
  *  boundActionCreators.createLayout({
- *    name: 'custom',
+ *    id: 'custom',
  *    component: path.resolve(`src/templates/custom-layout.js`),
  *   })
  *  }

@@ -10,9 +10,9 @@ import {
 
 import { joinPath } from "../../utils/path"
 
-const getLayoutByName = (layouts) => {
-  return (layoutName) => {
-    return layouts.find((l) => l.name === layoutName)
+const getLayoutById = (layouts) => {
+  return (id) => {
+    return layouts.find((l) => l.id === id)
   }
 }
 
@@ -27,7 +27,8 @@ const writePages = async () => {
       {
         componentChunkName,
         layout,
-        layoutComponentChunkName: getLayoutByName(layouts)(layout).componentChunkName, jsonName,
+        layoutComponentChunkName: getLayoutById(layouts)(layout).componentChunkName,
+        jsonName,
         path,
         matchPath
       },
@@ -46,7 +47,7 @@ const writePages = async () => {
       component: p.component,
     })
     if (p.layout) {
-      let layout = getLayoutByName(layouts)(p.layout)
+      let layout = getLayoutById(layouts)(p.layout)
       pageLayouts.push(layout)
     }
     json.push({ path: p.path, jsonName: p.jsonName })

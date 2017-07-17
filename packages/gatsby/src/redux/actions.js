@@ -112,35 +112,16 @@ actions.deleteLayout = (layout, plugin = ``) => {
 /**
  * Create a layout.
  * @param {Object} layout a layout object
- * @param {string} page.name Unique id for layout
+ * @param {string} page.id Unique id for layout
  * @param {string} page.component The absolute path to the component for this layout
  * @example
  * createLayout({
- *   path: `myNewLayout`,
- *   component: path.resolve('./src/templates/myNewLayout.js`),
- *   // context gets passed in as props to the page as well
- *   // as into the page/template's GraphQL query
+ *   id: `myNewLayout`,
+ *   component: path.resolve('./src/templates/myNewLayout.js`)
  * })
  */
 actions.createLayout = (layout, plugin = ``, traceId) => {
   layout.componentChunkName = layoutComponentChunkName(layout.component)
-
-  let jsonName = `${_.kebabCase(layout.name)}.json`
-  let internalComponentName = `Component${pascalCase(layout.name)}`
-  if (jsonName === `.json`) {
-    jsonName = `index.json`
-    internalComponentName = `ComponentIndex`
-  }
-
-  layout.jsonName = jsonName
-  layout.internalComponentName = internalComponentName
-
-  // TODO: We currently don't support context for layouts but left here
-  // as will implement soon.
-  // Ensure the layout has a context object
-  if (!layout.context) {
-    layout.context = {}
-  }
 
   const result = Joi.validate(layout, joiSchemas.layoutSchema)
   if (result.error) {

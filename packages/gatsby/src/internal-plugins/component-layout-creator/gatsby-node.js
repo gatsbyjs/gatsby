@@ -40,7 +40,7 @@ exports.createPagesStatefully = async (
     .on(`unlink`, path => {
       // Delete the page for the now deleted component.
       store.getState().layouts.filter(p => p.component === path).forEach(layout => {
-        deletePage({ name: layout.name })
+        deleteLayout({ name: layout.name })
         files = files.filter(f => f !== name)
       })
     })
@@ -55,7 +55,7 @@ const _createLayout = (filePath, layoutDirectory, createLayout) => {
 
   // Create page object
   const layout = {
-    name: createPath(layoutDirectory, filePath),
+    id: createPath(layoutDirectory, filePath),
     component: filePath,
   }
 

@@ -2,7 +2,7 @@ const path = require('path')
 // Example if you need to programmatically create a layout
 // exports.createLayouts = ({ boundActionCreators }) => {
 //   boundActionCreators.createLayout({
-//     name: 'custom',
+//     id: 'custom',
 //     component: path.resolve(`src/templates/custom-layout.js`),
 //   })
 // }
