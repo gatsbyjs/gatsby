@@ -9,6 +9,20 @@
 
 ⚛️📄🚀 Blazing-fast static site generator for React
 
+## Showcase
+
+GatsbyJS starters you can use for building your website:
+
+* [gatsby-starter-default (official)](https://github.com/gatsbyjs/gatsby-starter-default) [(demo)](http://gatsbyjs.github.io/gatsby-starter-default/)
+* [gatsby-starter-blog (official)](https://github.com/gatsbyjs/gatsby-starter-blog) [(demo)](http://gatsbyjs.github.io/gatsby-starter-blog/)
+* [gatsby-material-starter](https://github.com/Vagr9K/gatsby-material-starter) [(demo)](https://vagr9k.github.io/gatsby-material-starter/)
+* [gatsby-typescript-starter](https://github.com/fabien0102/gatsby-starter) [(demo)](https://github.com/fabien0102/gatsby-starter)
+
+Websites build with Gatbsy:
+
+* [Bricolage.io](https://www.bricolage.io/) [(source)](https://github.com/KyleAMathews/blog)
+* //TODO
+
 ## Docs
 
 **[View the docs on gatsbyjs.org](https://www.gatsbyjs.org/docs/)**
