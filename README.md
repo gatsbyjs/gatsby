@@ -16,7 +16,28 @@ GatsbyJS starters you can use for building your website:
 * [gatsby-starter-default (official)](https://github.com/gatsbyjs/gatsby-starter-default) [(demo)](http://gatsbyjs.github.io/gatsby-starter-default/)
 * [gatsby-starter-blog (official)](https://github.com/gatsbyjs/gatsby-starter-blog) [(demo)](http://gatsbyjs.github.io/gatsby-starter-blog/)
 * [gatsby-material-starter](https://github.com/Vagr9K/gatsby-material-starter) [(demo)](https://vagr9k.github.io/gatsby-material-starter/)
+
+  Features:
+  * React-MD for Material design
+  * SASS/SCSS
+  * Tags
+  * Categories
+  * Google Analytics
+  * Disqus
+  * Offline support
+  * Web App Manifest
+  * SEO
+
 * [gatsby-typescript-starter](https://github.com/fabien0102/gatsby-starter) [(demo)](https://github.com/fabien0102/gatsby-starter)
+
+  Features:
+  * Semantic-ui for styling
+  * TypeScript
+  * Offline support
+  * Web App Manifest
+  * Jest/Enzyme testing
+  * Storybook
+  * Markdown linting
 
 Websites build with Gatbsy:
 
