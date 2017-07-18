@@ -2,7 +2,7 @@ import emitter from "./emitter"
 
 let pathPrefix = `/`
 if (__PREFIX_PATHS__) {
-  pathPrefix = __PATH_PREFIX__ + '/'
+  pathPrefix = __PATH_PREFIX__ + `/`
 }
 
 if (`serviceWorker` in navigator) {
