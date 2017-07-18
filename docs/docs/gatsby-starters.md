@@ -2,7 +2,7 @@
 title: 'Gatsby Starters'
 ---
 
-GatsbyJS starters are premade projects which can be used for accelerating develoent speed of projects. They are also a great source for learning about implementations of different features.
+GatsbyJS starters are premade projects which can be used for accelerating development speed of projects. They are also a great source for learning about implementations of different features.
 
 Using a starter:
 
@@ -13,6 +13,8 @@ gatsby new STARTER_URL YOUR_PROJECT
 # Example
 gatsby new https://github.com/gatsbyjs/gatsby-starter-blog my-log
 ```
+
+Currently available starters:
 
 * [gatsby-starter-default (official)](https://github.com/gatsbyjs/gatsby-starter-default) [(demo)](http://gatsbyjs.github.io/gatsby-starter-default/)
 * [gatsby-starter-blog (official)](https://github.com/gatsbyjs/gatsby-starter-blog) [(demo)](http://gatsbyjs.github.io/gatsby-starter-blog/)
@@ -28,6 +30,7 @@ gatsby new https://github.com/gatsbyjs/gatsby-starter-blog my-log
   * Offline support
   * Web App Manifest
   * SEO
+  * [Full list here!](https://github.com/Vagr9K/gatsby-material-starter#features)
 
 * [gatsby-typescript-starter](https://github.com/fabien0102/gatsby-starter) [(demo)](https://github.com/fabien0102/gatsby-starter)
 
@@ -39,6 +42,7 @@ gatsby new https://github.com/gatsbyjs/gatsby-starter-blog my-log
   * Jest/Enzyme testing
   * Storybook
   * Markdown linting
+  * [Full list here!](https://github.com/fabien0102/gatsby-starter#whats-inside)
 
 * [gatsby-starter-bootstrap](https://github.com/jaxx2104/gatsby-starter-bootstrap) [(demo)](https://jaxx2104.github.io/gatsby-starter-bootstrap/)
 
