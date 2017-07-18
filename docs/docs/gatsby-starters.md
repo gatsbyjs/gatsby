@@ -71,3 +71,18 @@ Community:
   * Blog post listing with previews for each blog post
   * Navigation between posts with a previous/next post button
   * Tags and tag navigation
+
+* [gatsby-advanced-starter](https://github.com/Vagr9K/gatsby-advanced-starter) [(demo)](https://vagr9k.github.io/gatsby-advanced-starter/)
+
+  Features:
+  * Great for learning about advanced features and their implementations
+  * Does not contain any UI frameworks
+  * Provides only a skeleton
+  * Tags
+  * Categories
+  * Google Analytics
+  * Disqus
+  * Offline support
+  * Web App Manifest
+  * SEO
+  * [Full list here!](https://github.com/Vagr9K/gatsby-advanced-starter#features)
