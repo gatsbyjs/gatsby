@@ -19,11 +19,17 @@ const invariant = require(`invariant`)
 const normalize = require(`normalize-path`)
 
 exports.extractQueries = () => {
-  const pages = store.getState().pages
+  const state = store.getState()
+  const pages = [
+    ...state.pages,
+    ...state.layouts
+  ]
   const components = _.uniq(pages.map(p => p.component))
   queryCompiler().then(queries => {
     components.forEach(component => {
       const query = queries.get(normalize(component))
+
+      // console.log(query)
 
       boundActionCreators.replacePageComponentQuery({
         query: query && query.text,

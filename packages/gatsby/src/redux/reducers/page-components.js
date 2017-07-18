@@ -17,6 +17,7 @@ module.exports = (state = {}, action) => {
       return state
     case `REPLACE_PAGE_COMPONENT_QUERY`:
       action.payload.componentPath = normalize(action.payload.componentPath)
+      // console.log(state)
       state[action.payload.componentPath] = {
         ...state[action.payload.componentPath],
         query: action.payload.query,

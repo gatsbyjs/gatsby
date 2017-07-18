@@ -19,6 +19,11 @@ exports.runQueries = async () => {
   active = true
   const state = store.getState()
 
+  const items = [
+    ...state.pages,
+    ...state.layouts
+  ]
+
   // Run queued dirty nodes now that we're active.
   queuedDirtyActions = _.uniq(queuedDirtyActions, a => a.payload.id)
   await findAndRunQueriesForDirtyPaths(queuedDirtyActions)
@@ -27,10 +32,10 @@ exports.runQueries = async () => {
   const paths = findPathsWithoutDataDependencies()
   // Run these pages
   await Promise.all(
-    paths.map(path => {
-      const page = state.pages.find(p => p.path === path)
-      const component = state.pageComponents[page.component]
-      return queryRunner(page, component)
+    paths.map(id => {
+      const item = items.find(item => item.path === id || item.id === id)
+      const component = state.pageComponents[item.component]
+      return queryRunner(item, component)
     })
   )
   return
@@ -66,7 +71,10 @@ const findPathsWithoutDataDependencies = () => {
 
   // Get list of paths not already tracked and run the queries for these
   // paths.
-  return _.difference(state.pages.map(p => p.path), allTrackedPaths)
+  return _.difference([
+    ...state.pages.map(p => p.path),
+    ...state.layouts.map(l => l.id)
+  ], allTrackedPaths)
 }
 
 const findAndRunQueriesForDirtyPaths = actions => {
@@ -96,11 +104,15 @@ const findAndRunQueriesForDirtyPaths = actions => {
   if (dirtyPaths.length > 0) {
     // Run these pages
     return Promise.all(
-      _.uniq(dirtyPaths).map(path => {
-        const page = state.pages.find(p => p.path === path)
-        if (page) {
-          const component = state.pageComponents[page.component]
-          return queryRunner(page, component)
+      _.uniq(dirtyPaths).map(id => {
+        const items = [
+          ...state.pages,
+          ...state.layouts
+        ]
+        const item = items.find(p => p.path === id || p.id === id)
+        if (item) {
+          const component = state.pageComponents[item.component]
+          return queryRunner(item, item)
         }
       })
     )

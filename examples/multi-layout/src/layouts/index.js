@@ -8,7 +8,7 @@ class DefaultLayout extends React.Component {
         <div>
           <h3>This is the standard layout</h3>
           <div>
-            <h2>Nav example</h2>
+            <h2>{this.props.data.site.siteMetadata.dummy}</h2>
             <ul>
               <li>
                 <Link to="/">home</Link>
@@ -29,3 +29,13 @@ class DefaultLayout extends React.Component {
 }
 
 export default DefaultLayout
+
+export const query = graphql`
+query	layoutQuery {
+	site {
+    siteMetadata {
+      dummy
+    }
+  }
+}
+`

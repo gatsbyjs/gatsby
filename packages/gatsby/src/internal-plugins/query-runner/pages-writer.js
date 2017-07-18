@@ -28,6 +28,7 @@ const writePages = async () => {
         componentChunkName,
         layout,
         layoutComponentChunkName: getLayoutById(layouts)(layout).componentChunkName,
+        layoutJsonName: getLayoutById(layouts)(layout).jsonName,
         jsonName,
         path,
         matchPath

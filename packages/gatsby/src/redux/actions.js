@@ -123,6 +123,9 @@ actions.deleteLayout = (layout, plugin = ``) => {
 actions.createLayout = (layout, plugin = ``, traceId) => {
   layout.componentChunkName = layoutComponentChunkName(layout.component)
 
+  layout.jsonName = `layout-${_.kebabCase(layout.id)}.json`
+  layout.internalComponentName = `Component-layout-${pascalCase(layout.id)}`
+
   const result = Joi.validate(layout, joiSchemas.layoutSchema)
   if (result.error) {
     console.log(chalk.blue.bgYellow(`The upserted layout didn't pass validation`))
