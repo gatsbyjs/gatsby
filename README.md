@@ -46,6 +46,13 @@ GatsbyJS starters you can use for building your website:
   * Single column layout
   * Simple components: SiteNavi, SitePost, SitePage
 
+* [gatsby-blog-starter-kit](https://github.com/dschau/gatsby-blog-starter-kit)
+
+  Features:
+  * Blog post listing with previews for each blog post
+  * Navigation between posts with a previous/next post button
+  * Tags and tag navigation
+
 Websites built with Gatbsy:
 
 * [Bricolage.io](https://www.bricolage.io/) [(source)](https://github.com/KyleAMathews/blog)
@@ -54,6 +61,7 @@ Websites built with Gatbsy:
 * [Formidable](https://formidable.com/)
 * [ResonML Docs](https://reasonml.github.io/) [(source)](https://github.com/reasonml/reasonml.github.io)
 * [Jamie Henson's Blog](http://jamiehenson.com/) [(source)](https://github.com/jamiehenson/jh47-gatsby)
+* [Sean Coker's Blog](https://sean.is/)
 
 ## Docs
 
