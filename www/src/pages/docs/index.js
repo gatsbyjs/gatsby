@@ -45,7 +45,7 @@ class IndexRoute extends React.Component {
           </li>
         </ol>
         <h2>Using a GatbsyJS starter</h2>
-        <p>You can also use one of the premade <a href="https://github.com/gatsbyjs/gatsby#showcase">Gatsby starters</a> to save time, or learn about the possible usages of Gatsby in production. Starters are also great examples of feature implementations!</p>
+        <p>You can also use one of the premade <Link to="/docs/gatsby-starters/">Gatsby starters</Link> to save time, or learn about the possible usages of Gatsby in production. Starters are also great examples of feature implementations!</p>
         <h2>Work through the tutorial</h2>
         <p>
           Part one of what will be a 4-part tutorial is finished. It walks you
