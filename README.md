@@ -20,6 +20,7 @@ Websites built with Gatbsy:
 * [ResonML Docs](https://reasonml.github.io/) [(source)](https://github.com/reasonml/reasonml.github.io)
 * [Jamie Henson's Blog](http://jamiehenson.com/) [(source)](https://github.com/jamiehenson/jh47-gatsby)
 * [Sean Coker's Blog](https://sean.is/)
+* [Dustin Schau's Blog](https://dustinschau.com/blog/) [(source)](https://github.com/dschau/blog)
 
 ## Docs
 
