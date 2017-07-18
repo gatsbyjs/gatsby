@@ -2,19 +2,28 @@
 title: 'Gatsby Starters'
 ---
 
-GatsbyJS starters are premade projects packed with features which can be used for accelerating development speed. They are also a great source for learning about implementations of different features.
+The Gatsby CLI tool lets you install "starters". These are
+partially built sites preconfigured to help you get moving faster on
+creating a certain type of site.
 
-Using a starter:
+When creating a new site, you can optionally specify a starter to
+base your new site on e.g.
 
-```sh
-# Install gatsby-cli before beginning
-gatsby new STARTER_URL YOUR_PROJECT
+`gatsby new [SITE_DIRECTORY] [URL_OF_STARTER]`
 
-# Example
-gatsby new https://github.com/gatsbyjs/gatsby-starter-blog my-log
-```
+For example, to quickly create a blog using Gatsby, you could install
+the Gatsby Starter Blog by running:
 
-Currently available starters:
+`gatsby new blog https://github.com/gatsbyjs/gatsby-starter-blog`
+
+This downloads the files and initializes the site by running `npm
+install`
+
+If you don't specify a custom starter, your site will be created
+from the [default starter](https://github.com/gatsbyjs/gatsby-starter-default).
+
+There are several starters that have been created. Create a PR to
+include yours!
 
 Official:
 
