@@ -16,8 +16,13 @@ gatsby new https://github.com/gatsbyjs/gatsby-starter-blog my-log
 
 Currently available starters:
 
-* [gatsby-starter-default (official)](https://github.com/gatsbyjs/gatsby-starter-default) [(demo)](http://gatsbyjs.github.io/gatsby-starter-default/)
-* [gatsby-starter-blog (official)](https://github.com/gatsbyjs/gatsby-starter-blog) [(demo)](http://gatsbyjs.github.io/gatsby-starter-blog/)
+Official:
+
+* [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default) [(demo)](http://gatsbyjs.github.io/gatsby-starter-default/)
+* [gatsby-starter-blog](https://github.com/gatsbyjs/gatsby-starter-blog) [(demo)](http://gatsbyjs.github.io/gatsby-starter-blog/)
+
+Community:
+
 * [gatsby-material-starter](https://github.com/Vagr9K/gatsby-material-starter) [(demo)](https://vagr9k.github.io/gatsby-material-starter/)
 
   Features:
