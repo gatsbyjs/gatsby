@@ -46,10 +46,14 @@ GatsbyJS starters you can use for building your website:
   * Single column layout
   * Simple components: SiteNavi, SitePost, SitePage
 
-Websites build with Gatbsy:
+Websites built with Gatbsy:
 
 * [Bricolage.io](https://www.bricolage.io/) [(source)](https://github.com/KyleAMathews/blog)
-* //TODO
+* [Segment's Blog](https://segment.com/blog/)
+* [Fabric](https://meetfabric.com/)
+* [Formidable](https://formidable.com/)
+* [ResonML Docs](https://reasonml.github.io/) [(source)](https://github.com/reasonml/reasonml.github.io)
+* [Jamie Henson's Blog](http://jamiehenson.com/) [(source)](https://github.com/jamiehenson/jh47-gatsby)
 
 ## Docs
 
