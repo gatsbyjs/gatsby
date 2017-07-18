@@ -16,6 +16,7 @@
     "gatsby-plugin-offline": "^1.0.1",
     "gatsby-plugin-react-helmet": "^1.0.1",
     "gatsby-plugin-sharp": "^1.0.1",
+    "gatsby-plugin-sitemap": "^1.2.0",
     "gatsby-plugin-twitter": "^1.0.5",
     "gatsby-remark-autolink-headers": "^1.0.1",
     "gatsby-remark-copy-linked-files": "^1.0.1",
