@@ -2,7 +2,7 @@
 title: 'Gatsby Starters'
 ---
 
-GatsbyJS starters are premade projects which can be used for accelerating development speed of projects. They are also a great source for learning about implementations of different features.
+GatsbyJS starters are premade projects packed with features which can be used for accelerating development speed. They are also a great source for learning about implementations of different features.
 
 Using a starter:
 
