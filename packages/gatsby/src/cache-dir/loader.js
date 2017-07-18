@@ -237,7 +237,8 @@ const queue = {
       const pageResources = {
         component: syncRequires.components[page.componentChunkName],
         json: syncRequires.json[page.jsonName],
-        layout: syncRequires.layouts[page.layoutComponentChunkName]
+        layout: syncRequires.layouts[page.layoutComponentChunkName],
+        layoutJson: syncRequires.json[page.layoutJsonName]
       }
       cb(pageResources)
       return pageResources
@@ -271,11 +272,12 @@ const queue = {
       let component
       let json
       let layout
+      let layoutJson
       // Load the component/json/layout and parallel and call this
       // function when they're done loading. When both are loaded,
       // we move on.
       const done = () => {
-        if (component && json && layout) {
+        if (component && json && layout && layoutJson) {
           pathScriptsCache[path] = { component, json, layout }
           const pageResources = { component, json, layout }
           cb(pageResources)
@@ -305,6 +307,14 @@ const queue = {
           console.log(`Loading the Layout for ${page.path} failed`)
         }
         layout = l
+        done()
+      })
+
+      getResourceModule(page.layoutJsonName, (err, lj) => {
+        if (err) {
+          console.log(`Loading the Layout JSON for ${page.path} failed`)
+        }
+        layoutJson = lj
         done()
       })
 

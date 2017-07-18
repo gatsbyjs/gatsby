@@ -28,9 +28,6 @@ exports.extractQueries = () => {
   queryCompiler().then(queries => {
     components.forEach(component => {
       const query = queries.get(normalize(component))
-
-      // console.log(query)
-
       boundActionCreators.replacePageComponentQuery({
         query: query && query.text,
         componentPath: component,

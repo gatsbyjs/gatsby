@@ -50,6 +50,9 @@ const writePages = async () => {
     if (p.layout) {
       let layout = getLayoutById(layouts)(p.layout)
       pageLayouts.push(layout)
+      json.push({
+        jsonName: layout.jsonName
+      })
     }
     json.push({ path: p.path, jsonName: p.jsonName })
   })

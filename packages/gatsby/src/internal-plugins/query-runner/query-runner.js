@@ -10,6 +10,7 @@ const { store } = require(`../../redux`)
 
 // Run query for a page
 module.exports = async (page, component) => {
+  // console.log(page)
   const { schema, program } = store.getState()
 
   const graphql = (query, context) =>
@@ -22,7 +23,9 @@ module.exports = async (page, component) => {
   if (!component.query || component.query === ``) {
     result = {}
   } else {
+    // console.log(component.query)
     result = await graphql(component.query, { ...page, ...page.context })
+    // console.log(page.id || page.path, result)
   }
 
   // If there's a graphql errort then log the error. If we're building, also
