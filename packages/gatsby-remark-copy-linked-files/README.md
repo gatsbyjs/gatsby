@@ -8,6 +8,8 @@ Copies files linked to from markdown to your `public` folder.
 
 ## How to use
 
+#### Basic usage
+
 ```javascript
 // In your gatsby-config.js
 plugins: [
@@ -15,7 +17,31 @@ plugins: [
     resolve: `gatsby-transformer-remark`,
     options: {
       plugins: [
-        `gatsby-remark-copy-linked-files`,
+        { 
+          resolve: 'gatsby-remark-copy-linked-files',
+        }
+      ]
+    }
+  }
+]
+```
+
+#### How to override which file types are ignored
+
+```javascript
+// In your gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-transformer-remark`,
+    options: {
+      plugins: [
+        { 
+          resolve: 'gatsby-remark-copy-linked-files',
+          options: {
+            // This example ignores png and jpg files but if you don't want to ignore any file types, just specify an empty array
+            ignoreFileExtensions: ['png', 'jpg'],
+          },
+        }
       ]
     }
   }
@@ -42,3 +68,14 @@ it.
 `my-awesome-pdf.pdf` should be in the same directory as the markdown
 file. When you build your site, the file will be copied to the `public`
 folder and the markdown HTML will be modified to point to it.
+
+### Supported Markdown tags
+
+- img
+- link
+
+### Supported HTML tags
+
+- <img />
+- <video />
+- <a />
