@@ -1,0 +1,19 @@
+{
+  "name": "using-csv",
+  "private": true,
+  "description": "Gatsby example site using using-csv",
+  "author": "Sonal Saldanha <sonal.saldanha@gmail.com>",
+  "dependencies": {
+    "gatsby": "latest",
+    "gatsby-link": "latest",
+    "gatsby-plugin-google-analytics": "latest",
+    "gatsby-source-filesystem": "latest",
+    "gatsby-transformer-csv": "latest"
+  },
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build"
+  }
+}
