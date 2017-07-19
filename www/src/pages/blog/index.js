@@ -52,10 +52,19 @@ class BlogPostsIndex extends React.Component {
                     display: `inline-block`,
                     fontFamily: typography.options.headerFontFamily.join(`,`),
                     color: `rgba(0,0,0,.44)`,
+                    ...scale(-2 / 5),
+                    lineHeight: 1.3,
+                    [presets.Mobile]: {
+                      ...scale(-1 / 5),
+                      lineHeight: 1.3,
+                    },
                   }}
                 >
                   <div>
-                    {post.frontmatter.author.id} on {post.frontmatter.date}
+                    {post.frontmatter.author.id}
+                  </div>
+                  <div>
+                    {post.frontmatter.date}
                   </div>
                 </div>
               </div>
@@ -92,7 +101,7 @@ export const pageQuery = graphql`
               id
               avatar {
                 childImageSharp {
-                  responsiveResolution(width: 24, height: 24) {
+                  responsiveResolution(width: 36, height: 36) {
                     width
                     height
                     src
