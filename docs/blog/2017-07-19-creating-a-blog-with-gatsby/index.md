@@ -262,7 +262,7 @@ Nothing super complex yet! We're using the `createPages` API (which Gatsby will 
 
 ### Querying for posts
 
-```javascript{8-28}
+```javascript{8-31}
 const path = require('path');
 
 exports.createPages = ({ boundActionCreators, graphql }) => {
@@ -305,7 +305,7 @@ We now have our query written, but we haven't yet programatically created the pa
 
 ### Creating the pages
 
-```javascript{29-49}
+```javascript{32-39}
 const path = require('path');
 
 exports.createPages = ({ boundActionCreators, graphql }) => {
