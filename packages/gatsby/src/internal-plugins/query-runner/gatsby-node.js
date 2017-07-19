@@ -1,53 +1,40 @@
 const fs = require(`fs`)
 const path = require(`path`)
-
 const { watchComponent } = require(`./query-watcher`)
 
 let components = {}
 
 exports.onCreateComponent = ({ component, store, boundActionCreators }) => {
-  // Make sure we're watching this component.
-  components[component.componentPath] = component.componentPath
-  watchComponent(component.componentPath)
-}
-
-exports.onCreatePage = ({ page, store, boundActionCreators }) => {
-  const component = page.component
-  if (!components[component]) {
-    // We haven't seen this component before so we:
-    // - Ensure it has a JSON file.
-    // - Add it to Redux
-    // - Watch the component to detect query changes
-    const pathToJSONFile = path.join(
+  // if we haven't seen component before
+  // - get corresponding pages + layouts
+  // - ensure they have a json files
+  // - watch component
+  // - mark component
+  const writeJsonFile = ({ jsonName }) => {
+    // console.log(jsonName)
+    const dest = path.join(
       store.getState().program.directory,
       `.cache`,
       `json`,
-      page.jsonName
+      jsonName
     )
-    if (!fs.existsSync(pathToJSONFile)) {
-      fs.writeFile(pathToJSONFile, `{}`, () => {})
+    if (!fs.existsSync(dest)) {
+      fs.writeFile(dest, `{}`, () => {})
     }
-    // boundActionCreators.createComponent(component)
   }
 
-  // Mark we've seen this page component.
-  components[component] = component
-}
+  if (!components[component.componentPath]) {
+    const state = store.getState()
+    const pagesAndLayouts = [
+      ...state.pages,
+      ...state.layouts
+    ]
 
-exports.onCreateLayout = ({ layout, store, boundActionCreators }) => {
-  const component = layout.component
-  if (!components[component]) {
-    // We haven't seen this component before so we:
-    // - Ensure it has a JSON file.
-    // - Watch the component to detect query changes
-    const pathToJSONFile = path.join(
-      store.getState().program.directory,
-      `.cache`,
-      `json`,
-      layout.jsonName
-    )
-    if (!fs.existsSync(pathToJSONFile)) {
-      fs.writeFile(pathToJSONFile, `{}`, () => {})
-    }
+    pagesAndLayouts
+    .filter(pl => pl.componentPath === component.componentPath)
+    .map(writeJsonFile)
+
+    watchComponent(component.componentPath)
+    components[component.componentPath] = component.componentPath
   }
 }

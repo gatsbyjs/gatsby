@@ -9,8 +9,7 @@ const { joinPath } = require(`../../utils/path`)
 const { store } = require(`../../redux`)
 
 // Run query for a page
-module.exports = async (page, component) => {
-  // console.log(page)
+module.exports = async (pageOrLayout, component) => {
   const { schema, program } = store.getState()
 
   const graphql = (query, context) =>
@@ -21,13 +20,9 @@ module.exports = async (page, component) => {
 
   // Nothing to do if the query doesn't exist.
   if (!component.query || component.query === ``) {
-    // console.log(page.id || page.path)
     result = {}
   } else {
-    result = await graphql(component.query, { ...page, ...page.context })
-    // if (result) {
-    //   console.log(page.id || page.path)
-    // }
+    result = await graphql(component.query, { ...pageOrLayout, ...pageOrLayout.context })
   }
 
   // If there's a graphql errort then log the error. If we're building, also
@@ -48,10 +43,10 @@ module.exports = async (page, component) => {
   }
 
   // Add the path context onto the results.
-  result.pathContext = page.context
+  result.pathContext = pageOrLayout.context
   const resultJSON = JSON.stringify(result, null, 4)
   return writeFileAsync(
-    joinPath(program.directory, `.cache`, `json`, page.jsonName),
+    joinPath(program.directory, `.cache`, `json`, pageOrLayout.jsonName),
     resultJSON
   )
 }

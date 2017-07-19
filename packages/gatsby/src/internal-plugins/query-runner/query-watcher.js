@@ -1,6 +1,6 @@
 /** *
  * Jobs of this module
- * - Maintain the list of components in the Redux store. So monitor new pages
+ * - Maintain the list of components in the Redux store. So monitor new components
  *   and add/remove components.
  * - Watch components for query changes and extract these and update the store.
  * - Ensure all page queries are run as part of bootstrap and report back when
@@ -21,11 +21,11 @@ const normalize = require(`normalize-path`)
 exports.extractQueries = () => {
   // TODO We can just grab the components straight from store here?
   const state = store.getState()
-  const pages = [
+  const pagesAndLayouts = [
     ...state.pages,
     ...state.layouts
   ]
-  const components = _.uniq(pages.map(p => p.component))
+  const components = _.uniq(pagesAndLayouts.map(p => p.component))
   queryCompiler().then(queries => {
     components.forEach(component => {
       const query = queries.get(normalize(component))
@@ -78,14 +78,14 @@ const watch = rootDir => {
 
   const debounceCompile = _.debounce(() => {
     queryCompiler().then(queries => {
-      const pages = store.getState().components
+      const components = store.getState().components
       queries.forEach(({ text }, path) => {
         invariant(
-          pages[path],
-          `Path ${path} not found in the store pages: ${JSON.stringify(pages)}`
+          components[path],
+          `Path ${path} not found in the store components: ${JSON.stringify(components)}`
         )
 
-        if (text !== pages[path].query) {
+        if (text !== components[path].query) {
           boundActionCreators.replaceComponentQuery({
             query: text,
             componentPath: path,

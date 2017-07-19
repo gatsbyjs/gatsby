@@ -12,7 +12,6 @@ const { store, emitter } = require(`../../redux`)
 const queryRunner = require(`./query-runner`)
 
 let queuedDirtyActions = []
-
 let active = false
 
 exports.runQueries = async () => {
@@ -21,24 +20,13 @@ exports.runQueries = async () => {
 
   // Run queued dirty nodes now that we're active.
   queuedDirtyActions = _.uniq(queuedDirtyActions, a => a.payload.id)
+  const dirtyIds = findDirtyIds(queuedDirtyActions)
+  await runQueriesForIds(dirtyIds)
 
-  // console.log(queuedDirtyActions)
-  await findAndRunQueriesForDirtyPaths(queuedDirtyActions)
-
-  // Find paths without data dependencies and run them (just in case?)
-  const paths = findPathsWithoutDataDependencies()
+  // Find ids without data dependencies and run them (just in case?)
+  const cleanIds = findIdsWithoutDataDependencies()
   // Run these pages
-  await Promise.all(
-    paths.map(id => {
-      const items = [
-        ...state.pages,
-        ...state.layouts
-      ]
-      const item = items.find(item => item.path === id || item.id === id)
-      const component = state.components[item.component]
-      return queryRunner(item, component)
-    })
-  )
+  await runQueriesForIds(cleanIds)
   return
 }
 
@@ -46,10 +34,10 @@ emitter.on(`CREATE_NODE`, action => {
   queuedDirtyActions.push(action)
 })
 
-const runQueuedActions = () => {
+const runQueuedActions = async () => {
   if (active) {
     queuedDirtyActions = _.uniq(queuedDirtyActions, a => a.payload.id)
-    findAndRunQueriesForDirtyPaths(queuedDirtyActions)
+    await runQueriesForIds(findDirtyIds(queuedDirtyActions))
     queuedDirtyActions = []
   }
 }
@@ -59,9 +47,9 @@ const runQueuedActions = () => {
 // query things in a 1/2 finished state.
 emitter.on(`API_RUNNING_QUEUE_EMPTY`, runQueuedActions)
 
-const findPathsWithoutDataDependencies = () => {
+const findIdsWithoutDataDependencies = () => {
   const state = store.getState()
-  const allTrackedPaths = _.uniq(
+  const allTrackedIds = _.uniq(
     _.flatten(
       _.concat(
         _.values(state.componentDataDependencies.nodes),
@@ -75,50 +63,43 @@ const findPathsWithoutDataDependencies = () => {
   return _.difference([
     ...state.pages.map(p => p.path),
     ...state.layouts.map(l => l.id)
-  ], allTrackedPaths)
+  ], allTrackedIds)
 }
 
-const findAndRunQueriesForDirtyPaths = actions => {
+const runQueriesForIds = ids => {
+  if (ids.length < 1) {
+    return Promise.resolve()
+  }
   const state = store.getState()
-  let dirtyPaths = []
-  actions.forEach(action => {
-    const node = state.nodes[action.payload.id]
+  return Promise.all(
+    ids.map(id => {
+      const pagesAndLayouts = [
+        ...state.pages,
+        ...state.layouts
+      ]
+      const pl = pagesAndLayouts.find(pl => pl.path === id || pl.id === id)
+      return queryRunner(pl, state.components[pl.component])
+    })
+  )
+}
 
+const findDirtyIds = actions => {
+  const state = store.getState()
+  return actions.reduce((dirtyIds, action) => {
+    const node = state.nodes[action.payload.id]
     // Check if the node was deleted
     if (!node) {
       return
     }
 
-    // Find invalid pages.
-    if (state.componentDataDependencies.nodes[node.id]) {
-      dirtyPaths = dirtyPaths.concat(state.componentDataDependencies.nodes[node.id])
-    }
+    // find invalid pagesAndLayouts
+    dirtyIds.concat(state.componentDataDependencies.nodes[node.id])
 
     // Find invalid connections
-    if (state.componentDataDependencies.connections[node.internal.type]) {
-      dirtyPaths = dirtyPaths.concat(
-        state.componentDataDependencies.connections[node.internal.type]
-      )
-    }
-  })
-
-  if (dirtyPaths.length > 0) {
-    console.log(dirtyPaths)
-    // Run these pages
-    return Promise.all(
-      _.uniq(dirtyPaths).map(id => {
-        const items = [
-          ...state.pages,
-          ...state.layouts
-        ]
-        const item = items.find(p => p.path === id || p.id === id)
-        if (item) {
-          const component = state.components[item.component]
-          return queryRunner(item, component)
-        }
-      })
+    dirtyIds.concat(
+      state.componentDataDependencies.connections[node.internal.type]
     )
-  } else {
-    return Promise.resolve()
-  }
+
+    return _.compact(dirtyIds)
+  }, [])
 }

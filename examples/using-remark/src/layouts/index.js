@@ -31,11 +31,12 @@ class DefaultLayout extends React.Component {
                 margin: 0,
               }}
             >
-              gatsby-example-using-remark
+              {this.props.data.site.siteMetadata.title} by {this.props.data.site.siteMetadata.author}
             </h1>
           </Link>
         </div>
         <div {...styles.container} {...styles.verticalPadding}>
+          test - {this.props.data.site.siteMetadata.description}
           {this.props.children()}
         </div>
       </div>
@@ -50,8 +51,6 @@ export const pageQuery = graphql`
     site {
       siteMetadata {
         title
-        author
-        description
       }
     }
   }
