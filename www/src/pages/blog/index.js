@@ -2,7 +2,7 @@ import React from "react"
 import Link from "gatsby-link"
 import colors from "../../utils/colors"
 
-import { rhythm, scale } from "../../utils/typography"
+import typography, { rhythm, scale } from "../../utils/typography"
 import presets from "../../utils/presets"
 import Container from "../../components/container"
 
@@ -55,24 +55,17 @@ class BlogPostsIndex extends React.Component {
                 <div
                   css={{
                     display: `inline-block`,
+                    fontFamily: typography.options.headerFontFamily.join(`,`),
+                    color: `rgba(0,0,0,.44)`,
+                    lineHeight: 1.1,
                   }}
                 >
-                  <div
-                    css={{
-                      color: colors.b[12],
-                      lineHeight: 1.1,
-                    }}
-                  >
+                  <div>
                     <small>
                       {post.frontmatter.author.id}
                     </small>
                   </div>
-                  <div
-                    css={{
-                      color: colors.b[12],
-                      lineHeight: 1.1,
-                    }}
-                  >
+                  <div>
                     <small>
                       <em>
                         {post.frontmatter.date}
