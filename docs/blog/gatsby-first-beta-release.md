@@ -2,11 +2,11 @@
 title: Gatsby's first beta release
 date: "2017-06-15"
 author: "Kyle Mathews"
-image: 'images/cargo-ship.jpg'
+image: 'images/13382568193_31cfce63be_o-edited.jpg'
 excerpt: "We shipped today Gatsby's first beta for 1.0! Gatsby is a modern blazing-fast static site generator for React.js…"
 ---
 
-![Container ship loading containers](images/cargo-ship.jpg)*Image by Pedro Corrêa http://bit.ly/2sfX4TG*
+![Container ship loading containers](images/13382568193_31cfce63be_o-edited.jpg)*Image by Kees Torn https://flic.kr/p/mozahn*
 
 We shipped today Gatsby's first beta for 1.0! Gatsby is a modern blazing-fast static
 site generator for React.js.
@@ -99,5 +99,3 @@ of these infrastructure providers.
 * Ignore SVGs in gatsby-remark-responsive-image [#1157](https://github.com/gatsbyjs/gatsby/pull/1157) @fk
 * Replace using levelup for caching with lowdb to avoid native dependency [#1142](https://github.com/gatsbyjs/gatsby/pull/1142) @kyleamathews
 * Fix Appveyor bug regarding build all examples on release [#1118](https://github.com/gatsbyjs/gatsby/pull/1118) @jbolda
-
-

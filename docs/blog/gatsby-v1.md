@@ -2,8 +2,10 @@
 title: "Announcing Gatsby 1.0.0 🎉🎉🎉"
 date: "2017-07-06"
 author: "Kyle Mathews"
-image: 'images/container-ship-leaving.jpg'
+image: 'images/Schiffstaufe_Hamburg_Express-edited.jpg'
 ---
+
+![Container ship christening](images/Schiffstaufe_Hamburg_Express-edited.jpg)*Image by [Monster4711](https://commons.wikimedia.org/wiki/File:Schiffstaufe_Hamburg_Express.jpg)*
 
 Gatsby is your friendly, blazing fast static site generator for React. And after nearly a year of research, prototyping, and testing, Gatsby v1 is ready for action.
 

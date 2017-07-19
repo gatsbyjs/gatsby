@@ -18,12 +18,21 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
       graphql(
         `
       {
-        allMarkdownRemark(limit: 1000) {
+        allMarkdownRemark(
+          sort: { order: DESC, fields: [frontmatter___date] }
+          limit: 1000
+        ) {
           edges {
             node {
               fields {
                 slug
                 package
+              }
+              frontmatter {
+                title
+                draft
+                canonicalLink
+                publishedAt
               }
             }
           }
@@ -35,20 +44,42 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           reject(result.errors)
         }
 
+        const blogPosts = _.filter(
+          result.data.allMarkdownRemark.edges,
+          edge => {
+            const slug = _.get(edge, `node.fields.slug`)
+            const draft = _.get(edge, `node.frontmatter.draft`)
+            if (!slug) return
+
+            if (_.includes(slug, `/blog/`) && !draft) {
+              return edge
+            }
+          }
+        )
+
+        // Create blog pages.
+        blogPosts.forEach((edge, index) => {
+          const next = index === 0 ? false : blogPosts[index - 1].node
+          const prev =
+            index === blogPosts.length - 1 ? false : blogPosts[index + 1].node
+
+          createPage({
+            path: `${edge.node.fields.slug}`, // required
+            component: slash(blogPostTemplate),
+            context: {
+              slug: edge.node.fields.slug,
+              prev,
+              next,
+            },
+          })
+        })
+
         // Create docs pages.
         result.data.allMarkdownRemark.edges.forEach(edge => {
           const slug = _.get(edge, `node.fields.slug`)
           if (!slug) return
 
-          if (_.includes(slug, `/blog/`)) {
-            createPage({
-              path: `${edge.node.fields.slug}`, // required
-              component: slash(blogPostTemplate),
-              context: {
-                slug: edge.node.fields.slug,
-              },
-            })
-          } else {
+          if (!_.includes(slug, `/blog/`)) {
             createPage({
               path: `${edge.node.fields.slug}`, // required
               component: slash(

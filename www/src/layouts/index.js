@@ -28,6 +28,7 @@ import "../fonts/Webfonts/futurapt_demiitalic_macroman/stylesheet.css"
 
 // Other fonts
 import "typeface-tex-gyre-schola"
+import "typeface-spectral"
 import "typeface-space-mono"
 
 module.exports = React.createClass({
@@ -81,14 +82,16 @@ module.exports = React.createClass({
     }
     const navItemStyles = {
       ...scale(-1 / 5),
+      boxSizing: `border-box`,
       display: `inline-block`,
       color: `inherit`,
       textDecoration: `none`,
       textTransform: `uppercase`,
       letterSpacing: `0.03em`,
-      padding: `0 ${rhythm(0.5)}`,
+      lineHeight: `calc(${headerHeight} - 4px)`,
+      padding: `4px ${rhythm(0.5)} 0`,
       position: `relative`,
-      top: 2,
+      top: 0,
       transition: `color .15s ease-out`,
       "&:hover": {
         opacity: 0.8,
@@ -109,16 +112,16 @@ module.exports = React.createClass({
       <Link
         to={linkTo}
         css={{
-          color: presets.brand,
-          marginBottom: 2,
+          //color: presets.brand,
           textDecoration: `none`,
           textAlign: `center`,
           textTransform: `uppercase`,
           letterSpacing: `0.07em`,
+          fontSize: scale(-1 / 2).fontSize,
         }}
       >
         {children}
-        <div css={{ opacity: 0.8 }}>
+        <div css={{ opacity: 0.8, lineHeight: 1, marginTop: rhythm(1 / 8) }}>
           {title}
         </div>
       </Link>
@@ -126,9 +129,6 @@ module.exports = React.createClass({
       color: presets.brandLight,
       [presets.Phablet]: {
         color: isHomepage ? presets.brandLighter : false,
-      },
-      [presets.Desktop]: {
-        fontSize: scale(0).fontSize,
       },
     }
 
@@ -199,8 +199,8 @@ module.exports = React.createClass({
                 src={logo}
                 css={{
                   display: `inline-block`,
-                  height: rhythm(1.3),
-                  width: rhythm(1.3),
+                  height: rhythm(1.2),
+                  width: rhythm(1.2),
                   margin: 0,
                   marginRight: rhythm(2 / 4),
                   verticalAlign: `middle`,
@@ -334,15 +334,15 @@ module.exports = React.createClass({
         </div>
         <div
           css={{
-            ...scale(-2 / 5),
+            lineHeight: 2,
             position: `fixed`,
             display: `flex`,
             justifyContent: `space-around`,
-            alignItems: `flex-end`,
+            alignItems: `center`,
             bottom: 0,
             left: 0,
             right: 0,
-            height: rhythm(2.5),
+            height: rhythm(2.3),
             background: presets.veryLightPurple,
             borderTop: `1px solid ${colors.b[0]}`,
             background: `#fcfaff`,
@@ -352,37 +352,36 @@ module.exports = React.createClass({
             },
           }}
         >
-          <MobileNavItem linkTo="/docs/">
+          <MobileNavItem linkTo="/docs/" title="Docs">
             <DocumentIcon
               css={{
-                fontSize: rhythm(0.9),
+                fontSize: rhythm(0.7),
               }}
             />
-            <div>Docs</div>
           </MobileNavItem>
           <MobileNavItem linkTo="/tutorial/" title="Tutorial">
             <CodeIcon
               css={{
-                fontSize: rhythm(1),
+                fontSize: rhythm(0.8),
               }}
             />
           </MobileNavItem>
           <MobileNavItem linkTo="/community/" title="Community">
             <PersonIcon
               css={{
-                fontSize: rhythm(5 / 6),
+                fontSize: rhythm(5 / 8),
                 position: `relative`,
                 right: -4,
               }}
             />
             <PersonIcon
               css={{
-                fontSize: rhythm(5 / 6),
+                fontSize: rhythm(5 / 8),
               }}
             />
             <PersonIcon
               css={{
-                fontSize: rhythm(5 / 6),
+                fontSize: rhythm(5 / 8),
                 position: `relative`,
                 left: -4,
               }}
@@ -391,7 +390,7 @@ module.exports = React.createClass({
           <MobileNavItem linkTo="/blog/" title="Blog">
             <PencilIcon
               css={{
-                fontSize: rhythm(0.9),
+                fontSize: rhythm(0.7),
               }}
             />
           </MobileNavItem>

@@ -14,9 +14,10 @@ module.exports = {
   VHd: `@media (min-width: 1450px)`,
   VVHd: `@media (min-width: 1650px)`,
   maxWidth: 36,
-  maxWidthWithSidebar: 26,
+  maxWidthWithSidebar: 24,
   lightPurple: colors.b[2],
   veryLightPurple: colors.b[0],
+  veryLightPurple: `#f6f2f8`,
   sidebar: `#fcfaff`,
   // palette by @SachaG
   // @see https://www.figma.com/file/J6IYJEtdRmwJQOrcZ2DfvxDD/Gatsby
@@ -29,9 +30,9 @@ module.exports = {
   radius: 2,
   radiusLg: 4,
   gutters: {
-    default: 1.5,
+    default: 1.25,
     HdR: 2.5,
-    VHdR: 3.5,
+    VHdR: 3,
     VVHdR: 4.5,
   },
   animation: {

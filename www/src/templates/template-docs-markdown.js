@@ -1,5 +1,6 @@
 import React from "react"
 import Helmet from "react-helmet"
+import GithubIcon from "react-icons/lib/go/mark-github"
 
 import { rhythm } from "../utils/typography"
 import Container from "../components/container"

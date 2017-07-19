@@ -94,7 +94,7 @@ class SidebarBody extends React.Component {
                   }
                 }
                 return (
-                  <li key={section.links[title]}>
+                  <li key={section.links[title]} css={{ marginBottom: 0 }}>
                     <Link to={section.links[title]} css={linkStyle}>
                       {changedTitle}
                     </Link>

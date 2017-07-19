@@ -28,6 +28,9 @@ const MastheadContent = () =>
       [presets.Phablet]: {
         paddingRight: 0,
       },
+      [presets.Tablet]: {
+        paddingTop: rhythm(4),
+      },
       [presets.Desktop]: {
         paddingTop: rhythm(5),
       },
@@ -61,27 +64,27 @@ const MastheadContent = () =>
           width: rhythm(10),
           //fontSize: `calc(12px + 2vh + 2vw)`,
           [presets.Mobile]: {
-            width: rhythm(10),
+            width: rhythm(8),
           },
           "@media (min-width: 650px)": {
             fontSize: scale(1).fontSize,
-            width: rhythm(13),
+            width: rhythm(11),
           },
           [presets.Tablet]: {
             fontSize: scale(1.1).fontSize,
-            width: rhythm(14),
+            width: rhythm(12),
           },
           [presets.Hd]: {
             fontSize: scale(1.4).fontSize,
-            width: rhythm(18),
+            width: rhythm(14),
           },
           [presets.VHd]: {
             fontSize: scale(1.5).fontSize,
-            width: rhythm(20),
+            width: rhythm(16),
           },
           [presets.VVHd]: {
             fontSize: scale(1.6).fontSize,
-            width: rhythm(22),
+            width: rhythm(18),
           },
         }}
       >

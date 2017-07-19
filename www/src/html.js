@@ -33,7 +33,7 @@ export default class HTML extends React.Component {
           />
           <link
             rel="preload"
-            href="/static/tex-gyre-schola-400.030fe0c4.woff2"
+            href="/static/spectral-latin-400.bc2de9de.woff2"
             as="font"
             crossOrigin
           />
@@ -71,6 +71,12 @@ export default class HTML extends React.Component {
             rel="mask-icon"
             href={`/safari-pinned-tab.svg`}
             color="#5bbad5"
+          />
+          <script src="https://use.typekit.net/vol0sfl.js" />
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `try{Typekit.load({ async: true })}catch(e){}`,
+            }}
           />
           {css}
         </head>
