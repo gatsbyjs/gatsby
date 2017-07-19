@@ -114,8 +114,8 @@ const BlogPostTemplate = React.createClass({
                   .responsiveResolution.srcSet
               }
               css={{
-                height: rhythm(2.75),
-                width: rhythm(2.75),
+                height: rhythm(2.5),
+                width: rhythm(2.5),
                 margin: 0,
                 borderRadius: `100%`,
                 display: `inline-block`,
@@ -194,7 +194,7 @@ export const pageQuery = graphql`
           twitter
           avatar {
             childImageSharp {
-              responsiveResolution(width: 75, height: 75, quality: 75) {
+              responsiveResolution(width: 63, height: 63, quality: 75) {
                 src
                 srcSet
               }
