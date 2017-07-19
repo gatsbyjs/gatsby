@@ -1,8 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react"
+import PropTypes from "prop-types"
 
 class DefaultLayout extends React.Component {
-
   render() {
     return (
       <div>
@@ -16,4 +15,4 @@ DefaultLayout.propTypes = {
   location: PropTypes.object.isRequired,
 }
 
-export default DefaultLayout;
+export default DefaultLayout

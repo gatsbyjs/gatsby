@@ -1,10 +1,17 @@
 // this function is used to import custom fonts
-export function fontFaceHelper(name, src, fontWeight = 'normal', fontStyle = 'normal') {
+export function fontFaceHelper(
+  name,
+  src,
+  fontWeight = `normal`,
+  fontStyle = `normal`
+) {
   return `
     @font-face{
       font-family: "${name}";
-      src: url(${require('../assets/fonts/' + src + '.woff')}) format("woff"),
-           url(${require('../assets/fonts/' + src + '.woff2')}#${name}) format("woff2");
+      src: url(${require(`../assets/fonts/` + src + `.woff`)}) format("woff"),
+           url(${require(`../assets/fonts/` +
+             src +
+             `.woff2`)}#${name}) format("woff2");
 
       font-style: ${fontStyle};
       font-weight: ${fontWeight};
@@ -13,7 +20,7 @@ export function fontFaceHelper(name, src, fontWeight = 'normal', fontStyle = 'no
 }
 
 //mapping with font-files:
-// Ultra 		    900	
+// Ultra 		    900
 // Black 		    800
 // Heavy 	      700
 // Bold 		    600
@@ -22,11 +29,11 @@ export function fontFaceHelper(name, src, fontWeight = 'normal', fontStyle = 'no
 // Light 		    300
 // ExtraLight 	200
 // Thin     	  100
-// Hairline 	  0 ? 
+// Hairline 	  0 ?
 
 //OR
 
-// Ultra 		    1000	
+// Ultra 		    1000
 // Black 		    900
 // Heavy 	      800
 // Bold 		    700
@@ -35,4 +42,4 @@ export function fontFaceHelper(name, src, fontWeight = 'normal', fontStyle = 'no
 // Light 		    400
 // ExtraLight 	300
 // Thin     	  200
-// Hairline 	  100 ? 
+// Hairline 	  100 ?

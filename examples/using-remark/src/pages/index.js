@@ -22,7 +22,7 @@ class Index extends React.Component {
             }}
           >
             This example demonstrates{` `}
-            <a href="https://www.gatsbyjs.org/docs/packages/gatsby-transformer-remark/">
+            <a href="https://www.gatsbyjs.org/packages/gatsby-transformer-remark/">
               gatsby-transformer-remark
             </a>
             {` `}

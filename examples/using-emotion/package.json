@@ -1,0 +1,19 @@
+{
+  "name": "using-emotion",
+  "private": true,
+  "description": "Gatsby example site using using-emotion",
+  "author": "Tegan Churchill <churchill.tegan@gmail.com>",
+  "dependencies": {
+    "gatsby": "^1.0.11",
+    "gatsby-link": "^1.0.9",
+    "gatsby-plugin-emotion": "latest",
+    "gatsby-plugin-google-analytics": "^1.0.1",
+    "gatsby-plugin-offline": "^1.0.1"
+  },
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build"
+  }
+}

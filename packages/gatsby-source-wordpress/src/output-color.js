@@ -37,11 +37,9 @@ const color = {
   },
 }
 
-const colorized =
-  {
-    out,
-    color,
-  }
-
+const colorized = {
+  out,
+  color,
+}
 
 module.exports = colorized

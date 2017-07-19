@@ -3,13 +3,15 @@
 Source plugin for pulling content types, entries, and assets into Gatsby from Contentful spaces. It creates links between entry types and asset so they can be queried in Gatsby using GraphQL.
 
 An example site for using this plugin is at
-https://gatsby-using-contentful.netlify.com/
+https://using-contentful.netlify.com/
 
 ## Install
 
 `npm install --save gatsby-source-contentful`
 
 ## How to use
+
+### Using Delivery API
 
 ```javascript
 // In your gatsby-config.js
@@ -19,6 +21,21 @@ plugins: [
     options: {
       spaceId: `your_space_id`,
       accessToken: `your_acces_token`,
+    },
+  },
+]
+```
+### Using Preview API
+
+```javascript
+// In your gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-source-contentful`,
+    options: {
+      spaceId: `your_space_id`,
+      accessToken: `your_acces_token`,
+      host: `preview.contentful.com`,
     },
   },
 ]

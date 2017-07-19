@@ -31,8 +31,12 @@ exports.sourceNodes = async (
   { boundActionCreators, getNode, hasNodeChanged, store },
   { baseUrl, protocol, hostingWPCOM, useACF, auth, verboseOutput }
 ) => {
-
-  const { createNode, touchNode, setPluginStatus, createParentChildLink } = boundActionCreators
+  const {
+    createNode,
+    touchNode,
+    setPluginStatus,
+    createParentChildLink,
+  } = boundActionCreators
   _verbose = verboseOutput
   _siteURL = `${protocol}://${baseUrl}`
   _getNode = getNode
@@ -50,16 +54,42 @@ exports.sourceNodes = async (
   }
 
   console.log()
-  console.log(colorized.out(`=START PLUGIN=====================================`, colorized.color.Font.FgBlue))
+  console.log(
+    colorized.out(
+      `=START PLUGIN=====================================`,
+      colorized.color.Font.FgBlue
+    )
+  )
   console.time(`=END PLUGIN=====================================`)
   console.log(``)
-  console.log(colorized.out(`Site URL: ${_siteURL}`, colorized.color.Font.FgBlue))
-  console.log(colorized.out(`Site hosted on Wordpress.com: ${hostingWPCOM}`, colorized.color.Font.FgBlue))
-  console.log(colorized.out(`Using ACF: ${useACF}`, colorized.color.Font.FgBlue))
-  console.log(colorized.out(`Using Auth: ${auth.user} ${auth.pass}`, colorized.color.Font.FgBlue))
-  console.log(colorized.out(`Verbose output: ${verboseOutput}`, colorized.color.Font.FgBlue))
+  console.log(
+    colorized.out(`Site URL: ${_siteURL}`, colorized.color.Font.FgBlue)
+  )
+  console.log(
+    colorized.out(
+      `Site hosted on Wordpress.com: ${hostingWPCOM}`,
+      colorized.color.Font.FgBlue
+    )
+  )
+  console.log(
+    colorized.out(`Using ACF: ${useACF}`, colorized.color.Font.FgBlue)
+  )
+  console.log(
+    colorized.out(
+      `Using Auth: ${auth.user} ${auth.pass}`,
+      colorized.color.Font.FgBlue
+    )
+  )
+  console.log(
+    colorized.out(
+      `Verbose output: ${verboseOutput}`,
+      colorized.color.Font.FgBlue
+    )
+  )
   console.log(``)
-  console.log(colorized.out(`Mama Route URL: ${url}`, colorized.color.Font.FgBlue))
+  console.log(
+    colorized.out(`Mama Route URL: ${url}`, colorized.color.Font.FgBlue)
+  )
   console.log(``)
 
   // Touch existing Wordpress nodes so Gatsby doesn`t garbage collect them.
@@ -71,11 +101,15 @@ exports.sourceNodes = async (
   let allRoutes = await axiosHelper(url, auth)
 
   if (allRoutes != undefined) {
-
     let validRoutes = getValidRoutes(allRoutes, url, baseUrl)
 
     console.log(``)
-    console.log(colorized.out(`Fetching the JSON data from ${validRoutes.length} valid API Routes...`, colorized.color.Font.FgBlue))
+    console.log(
+      colorized.out(
+        `Fetching the JSON data from ${validRoutes.length} valid API Routes...`,
+        colorized.color.Font.FgBlue
+      )
+    )
     console.log(``)
 
     for (let route of validRoutes) {
@@ -84,7 +118,10 @@ exports.sourceNodes = async (
     }
 
     for (let item of _parentChildNodes) {
-      createParentChildLink({ parent: _getNode(item.parentId), child: _getNode(item.childNodeId) })
+      createParentChildLink({
+        parent: _getNode(item.parentId),
+        child: _getNode(item.childNodeId),
+      })
     }
 
     setPluginStatus({
@@ -94,9 +131,10 @@ exports.sourceNodes = async (
     })
 
     console.timeEnd(`=END PLUGIN=====================================`)
-
   } else {
-    console.log(colorized.out(`No routes to fetch. Ending.`, colorized.color.Font.FgRed))
+    console.log(
+      colorized.out(`No routes to fetch. Ending.`, colorized.color.Font.FgRed)
+    )
   }
   return
 }
@@ -134,9 +172,31 @@ async function axiosHelper(url, auth) {
  * @param {any} e 
  */
 function httpExceptionHandler(e) {
-  console.log(colorized.out(`The server response was "${e.response.status} ${e.response.statusText}"`, colorized.color.Font.FgRed))
-  if (e.response.data.message != undefined) console.log(colorized.out(`Inner exception message : "${e.response.data.message}"`, colorized.color.Font.FgRed))
-  if (e.response.status == 400 || e.response.status == 401 || e.response.status == 402 || e.response.status == 403) console.log(colorized.out(`Auth on endpoint is not implemented on this gatsby-source plugin.`, colorized.color.Font.FgRed))
+  console.log(
+    colorized.out(
+      `The server response was "${e.response.status} ${e.response.statusText}"`,
+      colorized.color.Font.FgRed
+    )
+  )
+  if (e.response.data.message != undefined)
+    console.log(
+      colorized.out(
+        `Inner exception message : "${e.response.data.message}"`,
+        colorized.color.Font.FgRed
+      )
+    )
+  if (
+    e.response.status == 400 ||
+    e.response.status == 401 ||
+    e.response.status == 402 ||
+    e.response.status == 403
+  )
+    console.log(
+      colorized.out(
+        `Auth on endpoint is not implemented on this gatsby-source plugin.`,
+        colorized.color.Font.FgRed
+      )
+    )
 }
 
 /**
@@ -148,24 +208,36 @@ function httpExceptionHandler(e) {
  * @returns 
  */
 function getValidRoutes(allRoutes, url, baseUrl) {
-
   let validRoutes = []
 
   for (let key of Object.keys(allRoutes.data.routes)) {
-
     if (_verbose) console.log(`Route discovered :`, key)
     let route = allRoutes.data.routes[key]
 
     // A valid route exposes its _links (for now)
     if (route._links) {
-
       const entityType = getRawEntityType(route)
 
-      // Excluding the "technical" API Routes        
-      const excludedTypes = [undefined, `v2`, `v3`, `1.0`, `2.0`, `embed`, `proxy`, ``, baseUrl]
+      // Excluding the "technical" API Routes
+      const excludedTypes = [
+        undefined,
+        `v2`,
+        `v3`,
+        `1.0`,
+        `2.0`,
+        `embed`,
+        `proxy`,
+        ``,
+        baseUrl,
+      ]
       if (!excludedTypes.includes(entityType)) {
-
-        if (_verbose) console.log(colorized.out(`Valid route found. Will try to fetch.`, colorized.color.Font.FgGreen))
+        if (_verbose)
+          console.log(
+            colorized.out(
+              `Valid route found. Will try to fetch.`,
+              colorized.color.Font.FgGreen
+            )
+          )
 
         const manufacturer = getManufacturer(route)
 
@@ -189,52 +261,67 @@ function getValidRoutes(allRoutes, url, baseUrl) {
             validType = refactoredEntityTypes.category
             break
           default:
-            validType = `${typePrefix}${manufacturer.replace(/-/g, `_`)}_${entityType.replace(/-/g, `_`)}`
+            validType = `${typePrefix}${manufacturer.replace(
+              /-/g,
+              `_`
+            )}_${entityType.replace(/-/g, `_`)}`
             break
         }
-        validRoutes.push({ 'url': route._links.self, 'type': validType })
+        validRoutes.push({ url: route._links.self, type: validType })
       } else {
-        if (_verbose) console.log(colorized.out(`Invalid route.`, colorized.color.Font.FgRed))
+        if (_verbose)
+          console.log(
+            colorized.out(`Invalid route.`, colorized.color.Font.FgRed)
+          )
       }
     } else {
-      if (_verbose) console.log(colorized.out(`Invalid route.`, colorized.color.Font.FgRed))
+      if (_verbose)
+        console.log(colorized.out(`Invalid route.`, colorized.color.Font.FgRed))
     }
-
   }
 
-
-
   if (_useACF) {
-    // The OPTIONS ACF API Route is not giving a valid _link so let`s add it manually.     
+    // The OPTIONS ACF API Route is not giving a valid _link so let`s add it manually.
     validRoutes.push({
-      'url': `${url}/acf/v2/options`,
-      'type': `${typePrefix}acf_options`,
+      url: `${url}/acf/v2/options`,
+      type: `${typePrefix}acf_options`,
     })
-    if (_verbose) console.log(colorized.out(`Added ACF Options route.`, colorized.color.Font.FgGreen))
+    if (_verbose)
+      console.log(
+        colorized.out(`Added ACF Options route.`, colorized.color.Font.FgGreen)
+      )
     if (_hostingWPCOM) {
       // TODO : Need to test that out with ACF on Wordpress.com hosted site. Need a premium account on wp.com to install extensions.
-      console.log(colorized.out(`The ACF options pages is untested under wordpress.com hosting. Please let me know if it works.`, colorized.color.Effect.Blink))
+      console.log(
+        colorized.out(
+          `The ACF options pages is untested under wordpress.com hosting. Please let me know if it works.`,
+          colorized.color.Effect.Blink
+        )
+      )
     }
   }
 
   return validRoutes
-
 }
-
 
 /**
  * Extract the raw entity type from route
  * 
  * @param {any} route 
  */
-const getRawEntityType = route => route._links.self.substring(route._links.self.lastIndexOf(`/`) + 1, route._links.self.length)
+const getRawEntityType = route =>
+  route._links.self.substring(
+    route._links.self.lastIndexOf(`/`) + 1,
+    route._links.self.length
+  )
 
 /**
  * Extract the route manufacturer
  * 
  * @param {any} route 
  */
-const getManufacturer = route => route.namespace.substring(0, route.namespace.lastIndexOf(`/`))
+const getManufacturer = route =>
+  route.namespace.substring(0, route.namespace.lastIndexOf(`/`))
 
 /**
  * Fetch the data from specified route url, using the auth provided.
@@ -243,17 +330,18 @@ const getManufacturer = route => route.namespace.substring(0, route.namespace.la
  * @param {any} auth 
  */
 async function fetchData(route, auth, createNode) {
-
   const type = route.type
   const url = route.url
 
-  console.log(colorized.out(`=== [ Fetching ${type} ] ===`, colorized.color.Font.FgBlue), url)
+  console.log(
+    colorized.out(`=== [ Fetching ${type} ] ===`, colorized.color.Font.FgBlue),
+    url
+  )
   if (_verbose) console.time(`Fetching the ${type} took`)
 
   let routeResponse = await axiosHelper(url, auth)
 
   if (routeResponse) {
-
     // Process entities to creating GraphQL Nodes.
     if (Array.isArray(routeResponse.data)) {
       for (let ent of routeResponse.data) {
@@ -265,17 +353,24 @@ async function fetchData(route, auth, createNode) {
 
     // TODO : Get the number of created nodes using the nodes in state.
     let length
-    if (routeResponse != undefined && routeResponse.data != undefined && Array.isArray(routeResponse.data)) {
+    if (
+      routeResponse != undefined &&
+      routeResponse.data != undefined &&
+      Array.isArray(routeResponse.data)
+    ) {
       length = routeResponse.data.length
-    } else if (routeResponse.data != undefined && !Array.isArray(routeResponse.data)) {
+    } else if (
+      routeResponse.data != undefined &&
+      !Array.isArray(routeResponse.data)
+    ) {
       length = Object.keys(routeResponse.data).length
     }
-    console.log(colorized.out(`${type} fetched : ${length}`, colorized.color.Font.FgGreen))
-
+    console.log(
+      colorized.out(`${type} fetched : ${length}`, colorized.color.Font.FgGreen)
+    )
   }
 
   if (_verbose) console.timeEnd(`Fetching the ${type} took`)
-
 }
 
 /**
@@ -319,7 +414,10 @@ function createGraphQLNode(ent, type, createNode) {
 
   node = addFields(ent, node, createNode)
 
-  if (type == refactoredEntityTypes.post || type == refactoredEntityTypes.page) {
+  if (
+    type == refactoredEntityTypes.post ||
+    type == refactoredEntityTypes.page
+  ) {
     // TODO : Move this to field recursive and add other fields that have rendered child field
     node.title = ent.title.rendered
     node.content = ent.content.rendered
@@ -337,7 +435,6 @@ function createGraphQLNode(ent, type, createNode) {
  * @returns the new entity with fields
  */
 function addFields(ent, newEnt, createNode) {
-
   newEnt = recursiveAddFields(ent, newEnt)
 
   // TODO : add other types of child nodes
@@ -379,7 +476,9 @@ function recursiveAddFields(ent, newEnt) {
             newEnt[key] = recursiveAddFields(ent[key], {})
           } else if (Array.isArray(ent[key])) {
             if (ent[key].length > 0 && typeof ent[key][0] == `object`) {
-              ent[k].map((el, i) => { newEnt[key][i] = recursiveAddFields(el, {}) })
+              ent[k].map((el, i) => {
+                newEnt[key][i] = recursiveAddFields(el, {})
+              })
             }
           }
         }
@@ -400,22 +499,30 @@ function getValidName(key) {
   const NAME_RX = /^[_a-zA-Z][_a-zA-Z0-9]*$/
   if (!NAME_RX.test(nkey)) {
     nkey = `_${nkey}`.replace(/-/g, `_`).replace(/:/g, `_`)
-    if (_verbose) console.log(colorized.out(`Object with key "${key}" breaks GraphQL naming convention. Renamed to "${nkey}"`, colorized.color.Font.FgRed))
+    if (_verbose)
+      console.log(
+        colorized.out(
+          `Object with key "${key}" breaks GraphQL naming convention. Renamed to "${nkey}"`,
+          colorized.color.Font.FgRed
+        )
+      )
   }
   if (restrictedNodeFields.includes(nkey)) {
-    if (_verbose) console.log(`Restricted field found for ${nkey}. Prefixing with ${conflictFieldPrefix}.`)
+    if (_verbose)
+      console.log(
+        `Restricted field found for ${nkey}. Prefixing with ${conflictFieldPrefix}.`
+      )
     nkey = `${conflictFieldPrefix}${nkey}`
   }
   return nkey
 }
 
-
 // const mkdirp = require(`mkdirp`)
-    // const cacheSitePath = `${store.getState().program.directory}/.cache/source-wordpress`
-    // mkdirp(cacheSitePath, function (err) {
-    //   if (err) console.error(err)
-    // })
-    // "get-urls": "^7.x",
+// const cacheSitePath = `${store.getState().program.directory}/.cache/source-wordpress`
+// mkdirp(cacheSitePath, function (err) {
+//   if (err) console.error(err)
+// })
+// "get-urls": "^7.x",
 // const getUrls = require(`get-urls`)
 // const downloader = require(`./image-downloader.js`)
 // const getImagesAndGraphQLNode = (node, auth, createNode, cacheSitePath) => {
@@ -439,6 +546,5 @@ function getValidName(key) {
 //     }
 
 //   })
-
 
 // }

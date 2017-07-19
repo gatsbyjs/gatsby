@@ -57,7 +57,19 @@ const processFile = (file, jobs, cb) => {
       roundedHeight = Math.round(roundedHeight)
     }
     const roundedWidth = Math.round(args.width)
-    clonedPipeline.resize(roundedWidth, roundedHeight).crop(args.cropFocus)
+    clonedPipeline
+      .resize(roundedWidth, roundedHeight)
+      .crop(args.cropFocus)
+      .png({
+        compressionLevel: args.pngCompressionLevel,
+        adaptiveFiltering: false,
+        force: args.toFormat === `png`,
+      })
+      .jpeg({
+        quality: args.quality,
+        progressive: args.jpegProgressive,
+        force: args.toFormat === `jpg`,
+      })
 
     // grayscale
     if (args.grayscale) {
@@ -77,18 +89,6 @@ const processFile = (file, jobs, cb) => {
         clonedPipeline
       )
     }
-
-    clonedPipeline
-      .png({
-        compressionLevel: args.pngCompressionLevel,
-        adaptiveFiltering: false,
-        force: args.toFormat === `png`,
-      })
-      .jpeg({
-        quality: args.quality,
-        progressive: args.jpegProgressive,
-        force: args.toFormat === `jpg`,
-      })
 
     if (job.file.extension.match(/^jp/)) {
       clonedPipeline.toFile(job.outputPath, (err, info) => {

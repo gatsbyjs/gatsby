@@ -21,7 +21,7 @@ The usual contributing steps are:
 
 * Fork the [official repository](https://github.com/gatsbyjs/gatsby).
 * Clone your fork: git clone `git@github.com:<your-username>/gatsby.git`
-* Install [gatsby-dev-cli](/docs/packages/gatsby-dev-cli/) globally: `npm install -g gatsby-dev-cli`
+* Install [gatsby-dev-cli](/packages/gatsby-dev-cli/) globally: `npm install -g gatsby-dev-cli`
 * Install dependencies: `npm install`
 * Make sure tests are passing for you: `npm test`
 * Create a topic branch: `git checkout -b topics/new-feature-name`
@@ -31,7 +31,7 @@ The usual contributing steps are:
 * For each of your Gatsby test sites, run the `gatsby-dev` command there to copy
   the built files from your cloned copy of Gatsby. It'll watch for your changes
   to Gatsby packages and copy them into the site. For more detailed
-  instructions see the [gatsby-dev-cli README](/docs/packages/gatsby-dev-cli/)
+  instructions see the [gatsby-dev-cli README](/packages/gatsby-dev-cli/)
 * Add tests and code for your changes.
 * Once you're done, make sure all tests still pass: `npm test`
 * Commit and push to your fork.

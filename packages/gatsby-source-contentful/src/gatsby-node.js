@@ -23,7 +23,7 @@ exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeTyp
 
 exports.sourceNodes = async (
   { boundActionCreators, getNodes, hasNodeChanged, store },
-  { spaceId, accessToken }
+  { spaceId, accessToken, host }
 ) => {
   const {
     createNode,
@@ -32,6 +32,7 @@ exports.sourceNodes = async (
     setPluginStatus,
   } = boundActionCreators
 
+  host = host || `cdn.contentful.com`
   // Get sync token if it exists.
   let syncToken
   if (
@@ -51,6 +52,7 @@ exports.sourceNodes = async (
     syncToken,
     spaceId,
     accessToken,
+    host,
   })
 
   const entryList = normalize.buildEntryList({
@@ -81,11 +83,16 @@ exports.sourceNodes = async (
   const nextSyncToken = currentSyncData.nextSyncToken
 
   // Store our sync state for the next sync.
-  setPluginStatus({
-    status: {
-      syncToken: nextSyncToken,
-    },
-  })
+  // TODO: we do not store the token if we are using preview, since only initial sync is possible there
+  // This might change though
+  // TODO: Also we should think about not overriding tokens between host
+  if (host !== `preview.contentful.com`) {
+    setPluginStatus({
+      status: {
+        syncToken: nextSyncToken,
+      },
+    })
+  }
 
   // Create map of resolvable ids so we can check links against them while creating
   // links.

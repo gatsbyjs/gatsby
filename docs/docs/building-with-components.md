@@ -102,7 +102,7 @@ export default class HTML extends React.Component {
 
 ### Layout components
 
-`src/layouts/index.jsx` (optional) wraps page components. You can use use it for portions of pages that are shared across pages like headers and footers.
+`src/layouts/index.jsx` (optional) wraps page components. You can use it for portions of pages that are shared across pages like headers and footers.
 
 Example:
 

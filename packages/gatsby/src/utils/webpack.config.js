@@ -2,6 +2,7 @@ import { uniq, some } from "lodash"
 import fs from "fs"
 import path from "path"
 import webpack from "webpack"
+import dotenv from "dotenv"
 import Config from "webpack-configurator"
 import ExtractTextPlugin from "extract-text-webpack-plugin"
 import StaticSiteGeneratorPlugin from "static-site-generator-webpack-plugin"
@@ -18,7 +19,8 @@ const WebpackMD5Hash = require(`webpack-md5-hash`)
 const ChunkManifestPlugin = require(`chunk-manifest-webpack-plugin`)
 const GatsbyModulePlugin = require(`../loaders/gatsby-module-loader/plugin`)
 const genBabelConfig = require(`./babel-config`)
-const { joinPath } = require(`./path`)
+const { withBasePath } = require(`./path`)
+const HashedChunkIdsPlugin = require(`./hashed-chunk-ids-plugin`)
 
 // Five stages or modes:
 //   1) develop: for `gatsby develop` command, hot reload and CSS injection into page
@@ -35,11 +37,38 @@ module.exports = async (
   pages = []
 ) => {
   const babelStage = suppliedStage
+  const directoryPath = withBasePath(directory)
 
   // We combine develop & develop-html stages for purposes of generating the
   // webpack config.
   const stage = suppliedStage
   const babelConfig = await genBabelConfig(program, babelStage)
+
+  function processEnv(stage, defaultNodeEnv) {
+    debug(`Building env for "${stage}"`)
+    const env = process.env.NODE_ENV
+      ? process.env.NODE_ENV
+      : `${defaultNodeEnv}`
+    const envFile = path.join(process.cwd(), `./.env.${env}`)
+    let parsed = {}
+    try {
+      parsed = dotenv.parse(fs.readFileSync(envFile, { encoding: `utf8` }))
+    } catch (e) {
+      if (e && e.code !== `ENOENT`) {
+        console.log(e)
+      }
+    }
+    const envObject = Object.keys(parsed).reduce((acc, key) => {
+      acc[key] = JSON.stringify(parsed[key])
+      return acc
+    }, {})
+
+    // Don't allow overwriting of NODE_ENV, PUBLIC_DIR as to not break gatsby things
+    envObject.NODE_ENV = JSON.stringify(env)
+    envObject.PUBLIC_DIR = JSON.stringify(`${process.cwd()}/public`)
+
+    return envObject
+  }
 
   debug(`Loading webpack config for stage "${stage}"`)
   function output() {
@@ -54,7 +83,7 @@ module.exports = async (
         // Webpack will always generate a resultant javascript file.
         // But we don't want it for this step. Deleted by build-css.js.
         return {
-          path: joinPath(directory, `public`),
+          path: directoryPath(`public`),
           filename: `bundle-for-css.js`,
           publicPath: program.prefixPaths
             ? `${store.getState().config.pathPrefix}/`
@@ -65,7 +94,7 @@ module.exports = async (
         // A temp file required by static-site-generator-plugin. See plugins() below.
         // Deleted by build-html.js, since it's not needed for production.
         return {
-          path: joinPath(directory, `public`),
+          path: directoryPath(`public`),
           filename: `render-page.js`,
           libraryTarget: `umd`,
           publicPath: program.prefixPaths
@@ -76,7 +105,7 @@ module.exports = async (
         return {
           filename: `[name]-[chunkhash].js`,
           chunkFilename: `[name]-[chunkhash].js`,
-          path: joinPath(directory, `public`),
+          path: directoryPath(`public`),
           publicPath: program.prefixPaths
             ? `${store.getState().config.pathPrefix}/`
             : `/`,
@@ -95,24 +124,24 @@ module.exports = async (
             `${require.resolve(
               `webpack-hot-middleware/client`
             )}?path=http://${program.host}:${webpackPort}/__webpack_hmr&reload=true`,
-            joinPath(directory, `.cache/app`),
+            directoryPath(`.cache/app`),
           ],
         }
       case `develop-html`:
         return {
-          main: joinPath(directory, `.cache/develop-static-entry`),
+          main: directoryPath(`.cache/develop-static-entry`),
         }
       case `build-css`:
         return {
-          main: joinPath(directory, `.cache/app`),
+          main: directoryPath(`.cache/app`),
         }
       case `build-html`:
         return {
-          main: joinPath(directory, `.cache/static-entry`),
+          main: directoryPath(`.cache/static-entry`),
         }
       case `build-javascript`:
         return {
-          app: joinPath(directory, `.cache/production-app`),
+          app: directoryPath(`.cache/production-app`),
         }
       default:
         throw new Error(`The state requested ${stage} doesn't exist.`)
@@ -127,12 +156,7 @@ module.exports = async (
           new webpack.HotModuleReplacementPlugin(),
           new webpack.NoErrorsPlugin(),
           new webpack.DefinePlugin({
-            "process.env": {
-              NODE_ENV: JSON.stringify(
-                process.env.NODE_ENV ? process.env.NODE_ENV : `development`
-              ),
-              PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
-            },
+            "process.env": processEnv(stage, `development`),
             __PREFIX_PATHS__: program.prefixPaths,
             __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
           }),
@@ -154,12 +178,7 @@ module.exports = async (
         return [
           new StaticSiteGeneratorPlugin(`render-page.js`, pages),
           new webpack.DefinePlugin({
-            "process.env": {
-              NODE_ENV: JSON.stringify(
-                process.env.NODE_ENV ? process.env.NODE_ENV : `development`
-              ),
-              PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
-            },
+            "process.env": processEnv(stage, `development`),
             __PREFIX_PATHS__: program.prefixPaths,
             __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
           }),
@@ -168,12 +187,7 @@ module.exports = async (
       case `build-css`:
         return [
           new webpack.DefinePlugin({
-            "process.env": {
-              NODE_ENV: JSON.stringify(
-                process.env.NODE_ENV ? process.env.NODE_ENV : `production`
-              ),
-              PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
-            },
+            "process.env": processEnv(stage, `production`),
             __PREFIX_PATHS__: program.prefixPaths,
             __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
           }),
@@ -183,12 +197,7 @@ module.exports = async (
         return [
           new StaticSiteGeneratorPlugin(`render-page.js`, pages),
           new webpack.DefinePlugin({
-            "process.env": {
-              NODE_ENV: JSON.stringify(
-                process.env.NODE_ENV ? process.env.NODE_ENV : `production`
-              ),
-              PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
-            },
+            "process.env": processEnv(stage, `production`),
             __PREFIX_PATHS__: program.prefixPaths,
             __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
           }),
@@ -261,12 +270,7 @@ module.exports = async (
           // optimizations for React) and whether prefixing links is enabled
           // (__PREFIX_PATHS__) and what the link prefix is (__PATH_PREFIX__).
           new webpack.DefinePlugin({
-            "process.env": {
-              NODE_ENV: JSON.stringify(
-                process.env.NODE_ENV ? process.env.NODE_ENV : `production`
-              ),
-              PUBLIC_DIR: JSON.stringify(`${process.cwd()}/public`),
-            },
+            "process.env": processEnv(stage, `production`),
             __PREFIX_PATHS__: program.prefixPaths,
             __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
           }),
@@ -301,6 +305,7 @@ module.exports = async (
           new GatsbyModulePlugin(),
           // new WebpackStableModuleIdAndHash({ seed: 9, hashSize: 47 }),
           new webpack.NamedModulesPlugin(),
+          new HashedChunkIdsPlugin(),
         ]
       }
       default:
@@ -319,9 +324,9 @@ module.exports = async (
       // directory if you need to install a specific version of a module for a
       // part of your site.
       modulesDirectories: [
-        joinPath(directory, `node_modules`),
+        directoryPath(`node_modules`),
         `node_modules`,
-        joinPath(directory, `node_modules`, `gatsby`, `node_modules`),
+        directoryPath(`node_modules`, `gatsby`, `node_modules`),
       ],
     }
   }
@@ -520,7 +525,7 @@ module.exports = async (
     // and server (see
     // https://github.com/defunctzombie/package-browser-field-spec); setting
     // the target tells webpack which file to include, ie. browser vs main.
-    target: (stage === `build-html` || stage === `develop-html`) ? `node` : `web`,
+    target: stage === `build-html` || stage === `develop-html` ? `node` : `web`,
     profile: stage === `production`,
     devtool: devtool(),
     output: output(),
