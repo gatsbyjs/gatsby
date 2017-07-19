@@ -18,11 +18,14 @@ const CtaButton = ({ to, overrideCSS, children }) =>
       fontFamily: options.headerFontFamily.join(`,`),
       padding: `${rhythm(1 / 3)} ${rhythm(1 / 2)}`,
       borderRadius: presets.radius,
-      // Increase specificity
-      [presets.Phablet]: {
+      [presets.Tablet]: {
         ...scale(2 / 5),
+        padding: `${rhythm(1 / 3)} ${rhythm(3 / 5)}`,
+      },
+      [presets.VHd]: {
         padding: `${rhythm(1 / 2)} ${rhythm(1)}`,
       },
+      // Increase specificity
       "&&": {
         border: `1px solid ${presets.brand}`,
         boxShadow: `none`,

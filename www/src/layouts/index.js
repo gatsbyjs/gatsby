@@ -125,7 +125,7 @@ module.exports = React.createClass({
     const socialIconsStyles = {
       color: presets.brandLight,
       [presets.Tablet]: {
-        color: isHomepage ? `white` : false,
+        color: isHomepage ? presets.brandLighter : false,
       },
       [presets.Desktop]: {
         fontSize: scale(0).fontSize,
@@ -265,6 +265,7 @@ module.exports = React.createClass({
                 css={{
                   ...navItemStyles,
                   ...socialIconsStyles,
+                  paddingRight: 0,
                 }}
               >
                 <TwitterIcon css={{ verticalAlign: `text-top` }} />
