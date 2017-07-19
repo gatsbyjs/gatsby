@@ -11,6 +11,7 @@ require(`prismjs/themes/prism-solarizedlight.css`)
 
 class DefaultLayout extends React.Component {
   render() {
+    console.log(this.props.data)
     return (
       <div>
         <div {...styles.container} {...styles.verticalPadding}>
@@ -43,3 +44,15 @@ class DefaultLayout extends React.Component {
 }
 
 export default DefaultLayout
+
+export const pageQuery = graphql`
+  query LayoutIndexQuery {
+    site {
+      siteMetadata {
+        title
+        author
+        description
+      }
+    }
+  }
+`

@@ -19,13 +19,10 @@ exports.runQueries = async () => {
   active = true
   const state = store.getState()
 
-  const items = [
-    ...state.pages,
-    ...state.layouts
-  ]
-
   // Run queued dirty nodes now that we're active.
   queuedDirtyActions = _.uniq(queuedDirtyActions, a => a.payload.id)
+
+  // console.log(queuedDirtyActions)
   await findAndRunQueriesForDirtyPaths(queuedDirtyActions)
 
   // Find paths without data dependencies and run them (just in case?)
@@ -33,6 +30,10 @@ exports.runQueries = async () => {
   // Run these pages
   await Promise.all(
     paths.map(id => {
+      const items = [
+        ...state.pages,
+        ...state.layouts
+      ]
       const item = items.find(item => item.path === id || item.id === id)
       const component = state.components[item.component]
       return queryRunner(item, component)
@@ -102,6 +103,7 @@ const findAndRunQueriesForDirtyPaths = actions => {
   })
 
   if (dirtyPaths.length > 0) {
+    console.log(dirtyPaths)
     // Run these pages
     return Promise.all(
       _.uniq(dirtyPaths).map(id => {
@@ -112,7 +114,7 @@ const findAndRunQueriesForDirtyPaths = actions => {
         const item = items.find(p => p.path === id || p.id === id)
         if (item) {
           const component = state.components[item.component]
-          return queryRunner(item, item)
+          return queryRunner(item, component)
         }
       })
     )

@@ -21,11 +21,13 @@ module.exports = async (page, component) => {
 
   // Nothing to do if the query doesn't exist.
   if (!component.query || component.query === ``) {
+    // console.log(page.id || page.path)
     result = {}
   } else {
-    // console.log(component.query)
     result = await graphql(component.query, { ...page, ...page.context })
-    // console.log(page.id || page.path, result)
+    // if (result) {
+    //   console.log(page.id || page.path)
+    // }
   }
 
   // If there's a graphql errort then log the error. If we're building, also
