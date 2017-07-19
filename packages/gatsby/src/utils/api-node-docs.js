@@ -115,10 +115,10 @@ exports.onCreatePage = true
  * to add new fields to the types created from data nodes. Many transformer
  * plugins use this to add fields that take arguments.
  *
- * * [`gatsby-transformer-remark`](/docs/packages/gatsby-transformer-remark/)
+ * * [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/)
  * adds an "excerpt" field where the user when writing their query can specify
  * how many characters to prune the markdown source to.
- * * [`gatsby-transformer-sharp`](/docs/packages/gatsby-transformer-sharp/) exposes
+ * * [`gatsby-transformer-sharp`](/packages/gatsby-transformer-sharp/) exposes
  * many image transformation options as GraphQL fields.
  */
 exports.setFieldsOnGraphQLNodeType = true

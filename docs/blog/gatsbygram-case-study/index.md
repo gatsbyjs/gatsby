@@ -124,7 +124,7 @@ an innovative *declarative* asset pipeline.
 For Gatsbygram, Gatsby generates over *1000* image thumbnails for
 responsive images without *any* custom scripting by leveraging the
 Gatsby image processing plugin
-[gatsby-transformer-sharp](/docs/packages/gatsby-transformer-sharp/).
+[gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/).
 
 Stop wasting time and build something!
 
@@ -396,7 +396,7 @@ but generates all the configuration for you.
 
 Normally page resources are pre-cached with a service worker. But as
 several browsers (Safari/Microsoft Edge) still don't support Service
-Workers, the [Gatsby `<Link>` component](/docs/packages/gatsby-link/)
+Workers, the [Gatsby `<Link>` component](/packages/gatsby-link/)
 pre-caches resources for pages it links to by loading them into memory.
 
 ## Plugins
@@ -550,7 +550,7 @@ generates only global styles so its styles are included on every page.
 Glamor includes some [clever server-rendering
 optimizations](https://github.com/threepointone/glamor/blob/master/docs/server.md)
 which I've implemented in the [Gatsby Glamor
-plugin](/docs/packages/gatsby-plugin-glamor/) where it automatically
+plugin](/packages/gatsby-plugin-glamor/) where it automatically
 extracts out the CSS used *in components on the page being server
 rendered* and automatically inlines those styles in the generated HTML
 page.

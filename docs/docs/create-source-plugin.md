@@ -9,7 +9,7 @@ There are two types of plugins that work within Gatsby's data system, "source" a
 
 For example:
 
-The [`gatsby-source-filesystem`](/docs/packages/gatsby-source-filesystem/)
+The [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/)
 plugin "sources" data about files from the file system. It creates nodes with
 a type `File`, each File node corresponding to a file on the filesystem. On
 each node are fields like the `absolutePath`, `extension`, `modifyDate`, etc.

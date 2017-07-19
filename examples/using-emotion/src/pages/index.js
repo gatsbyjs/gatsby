@@ -51,7 +51,7 @@ const IndexPage = () =>
       <a href="https://emotion.sh/">emotion</a>!
     </Title>
     <Subtitle>
-      <a href="https://www.gatsbyjs.org/docs/packages/gatsby-plugin-emotion/">
+      <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-emotion/">
         gatsby-plugin-emotion docs
       </a>
     </Subtitle>
