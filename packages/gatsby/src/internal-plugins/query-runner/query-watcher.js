@@ -28,6 +28,7 @@ exports.extractQueries = () => {
   const components = _.uniq(pagesAndLayouts.map(p => p.component))
   queryCompiler().then(queries => {
     components.forEach(component => {
+      console.log(component)
       const query = queries.get(normalize(component))
       boundActionCreators.replaceComponentQuery({
         query: query && query.text,
@@ -52,16 +53,21 @@ exports.extractQueries = () => {
 
 const runQueriesForComponent = componentPath => {
   const pages = getPagesForComponent(componentPath)
-  // Remove page data dependencies before re-running queries because
+  // Remove page & layout data dependencies before re-running queries because
   // the changing of the query could have changed the data dependencies.
   // Re-running the queries will add back data dependencies.
-  boundActionCreators.deleteComponentsDependencies(pages.map(p => p.path))
+  boundActionCreators.deleteComponentsDependencies(pages.map(p => p.path || p.id))
   const component = store.getState().components[componentPath]
   return Promise.all(pages.map(p => queryRunner(p, component)))
 }
 
-const getPagesForComponent = componentPath =>
-  store.getState().pages.filter(p => p.component === componentPath)
+const getPagesForComponent = componentPath => {
+  const state = store.getState()
+  return [
+    ...state.pages,
+    ...state.layout
+  ].filter(p => p.componentPath === componentPath)
+}
 
 let watcher
 exports.watchComponent = componentPath => {
@@ -80,6 +86,7 @@ const watch = rootDir => {
     queryCompiler().then(queries => {
       const components = store.getState().components
       queries.forEach(({ text }, path) => {
+        console.log(path)
         invariant(
           components[path],
           `Path ${path} not found in the store components: ${JSON.stringify(components)}`
