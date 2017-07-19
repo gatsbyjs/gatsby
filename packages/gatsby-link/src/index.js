@@ -4,7 +4,7 @@ import PropTypes from "prop-types"
 
 let pathPrefix = ``
 if (__PREFIX_PATHS__) {
-  pathPrefix = __PATH_PREFIX__
+  pathPrefix = `${__PATH_PREFIX__}/`
 }
 
 class GatsbyLink extends React.Component {
@@ -92,5 +92,5 @@ GatsbyLink.contextTypes = {
 export default GatsbyLink
 
 export const navigateTo = pathname => {
-  window.___navigateTo(pathname)
+  window.___navigateTo(pathPrefix + pathname)
 }
