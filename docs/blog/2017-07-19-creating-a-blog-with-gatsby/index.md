@@ -3,6 +3,7 @@ title: Creating a Blog with Gatsby
 date: "2017-07-19"
 author: "Dustin Schau"
 image: "ui-and-code.png"
+excerpt: "Gatsby is an incredible static site generator that lets you build a static site that still has all the benefits expected from a modern web application…"
 ---
 
 *This blog post was originally published at https://objectpartners.com/2017/07/19/creating-a-static-blog-with-gatsby/*
