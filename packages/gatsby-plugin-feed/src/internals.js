@@ -29,8 +29,8 @@ export const defaultOptions = {
     }
   `,
 
-  // Setup a few RSS object, merging on various feed-speciupfic options.
-  setup: ({ site: { siteMetadata }, ...rest }) => {
+  // Setup an RSS object, merging on various feed-specific options.
+  setup: ({ query: { site: { siteMetadata }, ...rest }}) => {
     return {
       ...siteMetadata,
       ...rest,
@@ -48,8 +48,10 @@ export const defaultOptions = {
             order: DESC,
             fields: [frontmatter___date]
           },
-          frontmatter: {
-            draft: { ne: true }
+          filter: {
+            frontmatter: {
+              draft: { ne: true }
+            }
           }
         ) {
           edges {
