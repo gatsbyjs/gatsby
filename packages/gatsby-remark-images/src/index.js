@@ -5,6 +5,7 @@ const _ = require(`lodash`)
 const { responsiveSizes } = require(`gatsby-plugin-sharp`)
 const Promise = require(`bluebird`)
 const cheerio = require(`cheerio`)
+const slash = require(`slash`)
 
 // If the image is relative (not hosted elsewhere)
 // 1. Find the image file
@@ -21,6 +22,7 @@ module.exports = (
     wrapperStyle: ``,
     backgroundColor: `white`,
     linkImagesToOriginal: true,
+    pathPrefix
   }
 
   const options = _.defaults(pluginOptions, defaults)
@@ -34,10 +36,16 @@ module.exports = (
   // Takes a node and generates the needed images and then returns
   // the needed HTML replacement for the image
   const generateImagesAndUpdateNode = async function(node, resolve) {
-    const imagePath = path.posix.join(
-      getNode(markdownNode.parent).dir,
-      node.url
-    )
+    // Check if this markdownNode has a File parent. This plugin
+    // won't work if the image isn't hosted locally.
+    const parentNode = getNode(markdownNode.parent)
+    let imagePath
+    if (parentNode && parentNode.dir) {
+      imagePath = slash(path.join(parentNode.dir, node.url))
+    } else {
+      return null
+    }
+
     const imageNode = _.find(files, file => {
       if (file && file.absolutePath) {
         return file.absolutePath === imagePath
@@ -68,8 +76,7 @@ module.exports = (
     const defaultAlt = fileNameNoExt.replace(/[^A-Z0-9]/gi, ` `)
 
     // TODO
-    // add support for sub-plugins having a gatsby-node.js so can add a
-    // bit of js/css to add blurry fade-in.
+    // Fade in images on load.
     // https://www.perpetual-beta.org/weblog/silky-smooth-image-loading.html
 
     // Construct new image node w/ aspect ratio placeholder
@@ -138,14 +145,18 @@ module.exports = (
           }
         })
     )
-  ).then(() => 
+  ).then(() =>
     // HTML image node stuff
 
-     Promise.all(
+    Promise.all(
       // Complex because HTML nodes can contain multiple images
       rawHtmlNodes.map(
         node =>
           new Promise(async (resolve, reject) => {
+            if (!node.value) {
+              return resolve()
+            }
+
             const $ = cheerio.load(node.value)
             if ($(`img`).length === 0) {
               // No img tags

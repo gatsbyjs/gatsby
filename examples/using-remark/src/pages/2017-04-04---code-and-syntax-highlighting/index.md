@@ -157,7 +157,7 @@ Let's do something crazy and add a list with another code example:
   > Initial versions were developed from the same code base as Internet Explorer for Windows. Later versions diverged, particularly with the release of version 5 which included the cutting edge, [fault-tolerant](https://en.wikipedia.org/wiki/Fault-tolerant) and highly standards-compliant [Tasman](https://en.wikipedia.org/wiki/Tasman_(layout_engine)) [layout engine](https://en.wikipedia.org/wiki/Layout_engine).
 
   Source: https://en.wikipedia.org/wiki/Internet_Explorer_for_Mac
-* ** The last list item** –- no more list items after this one, pinky swear!
+* **The last list item** –- no more list items after this one, pinky swear!
 
 [1]: https://www.gatsbyjs.org/docs/packages/gatsby-remark-prismjs/
 [2]: http://prismjs.com/

@@ -237,6 +237,7 @@ const queue = {
       const pageResources = {
         component: syncRequires.components[page.componentChunkName],
         json: syncRequires.json[page.jsonName],
+        page,
       }
       cb(pageResources)
       return pageResources
@@ -248,7 +249,7 @@ const queue = {
         console.log(`A page wasn't found for "${path}"`)
         return
       }
-
+      
       // Use the path from the page so the pathScriptsCache uses
       // the normalized path.
       path = page.path
@@ -274,8 +275,8 @@ const queue = {
       // we move on.
       const done = () => {
         if (component && json) {
-          pathScriptsCache[path] = { component, json }
-          const pageResources = { component, json }
+          pathScriptsCache[path] = { component, json, page }
+          const pageResources = { component, json, page }
           cb(pageResources)
           emitter.emit(`onPostLoadPageResources`, {
             page,

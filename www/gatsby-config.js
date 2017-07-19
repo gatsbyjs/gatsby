@@ -1,6 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: `Gatsby`,
+    siteUrl: `https://www.gatsbyjs.org`,
   },
   mapping: {
     "MarkdownRemark.frontmatter.author": `AuthorYaml`,
@@ -94,5 +95,6 @@ module.exports = {
         trackingId: `UA-93349937-1`,
       },
     },
+    `gatsby-plugin-sitemap`,
   ],
 }

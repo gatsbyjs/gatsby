@@ -158,6 +158,9 @@ const options = {
           fontSize: `${17 / 16 * 100}%`,
         },
       },
+      ".twitter-tweet-rendered": {
+        margin: `${rhythm(options.blockMarginBottom * 2)} auto !important`,
+      },
       [MOBILE_MEDIA_QUERY]: {
         // Make baseFontSize on mobile 16px.
         html: {
