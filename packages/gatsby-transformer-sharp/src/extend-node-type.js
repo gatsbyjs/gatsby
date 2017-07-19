@@ -16,7 +16,6 @@ const {
 } = require(`gatsby-plugin-sharp`)
 
 const sharp = require(`sharp`)
-const promisify = require('util.promisify');
 const fsExtra = require('fs-extra');
 const sizeOf = require('image-size');
 const path = require('path');
