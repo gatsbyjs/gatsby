@@ -467,7 +467,7 @@ actions.createParentChildLink = ({ parent, child }, plugin) => {
  */
 actions.createPageDependency = ({ path, nodeId, connection }, plugin = ``) => {
   return {
-    type: `CREATE_PAGE_DEPENDENCY`,
+    type: `CREATE_COMPONENT_DEPENDENCY`,
     plugin,
     payload: {
       path,
@@ -485,7 +485,7 @@ actions.createPageDependency = ({ path, nodeId, connection }, plugin = ``) => {
  */
 actions.deletePagesDependencies = paths => {
   return {
-    type: `DELETE_PAGES_DEPENDENCIES`,
+    type: `DELETE_COMPONENTS_DEPENDENCIES`,
     payload: {
       paths,
     },

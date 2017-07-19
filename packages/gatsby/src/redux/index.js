@@ -45,7 +45,7 @@ if (process.env.REDUX_DEVTOOLS === `true`) {
 
 // Persist state.
 const saveState = _.debounce(state => {
-  const pickedState = _.pick(state, [`nodes`, `status`, `pageDataDependencies`])
+  const pickedState = _.pick(state, [`nodes`, `status`, `componentDataDependencies`])
   fs.writeFile(
     `${process.cwd()}/.cache/redux-state.json`,
     stringify(pickedState, null, 2),

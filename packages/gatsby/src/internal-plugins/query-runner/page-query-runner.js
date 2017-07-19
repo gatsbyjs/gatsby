@@ -34,7 +34,7 @@ exports.runQueries = async () => {
   await Promise.all(
     paths.map(id => {
       const item = items.find(item => item.path === id || item.id === id)
-      const component = state.pageComponents[item.component]
+      const component = state.components[item.component]
       return queryRunner(item, component)
     })
   )
@@ -63,8 +63,8 @@ const findPathsWithoutDataDependencies = () => {
   const allTrackedPaths = _.uniq(
     _.flatten(
       _.concat(
-        _.values(state.pageDataDependencies.nodes),
-        _.values(state.pageDataDependencies.connections)
+        _.values(state.componentDataDependencies.nodes),
+        _.values(state.componentDataDependencies.connections)
       )
     )
   )
@@ -89,14 +89,14 @@ const findAndRunQueriesForDirtyPaths = actions => {
     }
 
     // Find invalid pages.
-    if (state.pageDataDependencies.nodes[node.id]) {
-      dirtyPaths = dirtyPaths.concat(state.pageDataDependencies.nodes[node.id])
+    if (state.componentDataDependencies.nodes[node.id]) {
+      dirtyPaths = dirtyPaths.concat(state.componentDataDependencies.nodes[node.id])
     }
 
     // Find invalid connections
-    if (state.pageDataDependencies.connections[node.internal.type]) {
+    if (state.componentDataDependencies.connections[node.internal.type]) {
       dirtyPaths = dirtyPaths.concat(
-        state.pageDataDependencies.connections[node.internal.type]
+        state.componentDataDependencies.connections[node.internal.type]
       )
     }
   })
@@ -111,7 +111,7 @@ const findAndRunQueriesForDirtyPaths = actions => {
         ]
         const item = items.find(p => p.path === id || p.id === id)
         if (item) {
-          const component = state.pageComponents[item.component]
+          const component = state.components[item.component]
           return queryRunner(item, item)
         }
       })

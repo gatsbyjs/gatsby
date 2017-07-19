@@ -67,7 +67,7 @@ const fetchResource = (resourceName, cb = () => {}) => {
   } else {
     // Find resource
     const resourceFunction =
-      resourceName.slice(0, 6) === `page-c`
+      resourceName.slice(0, 9) === `component`
         ? asyncRequires.components[resourceName] || asyncRequires.layouts[resourceName]
         : asyncRequires.json[resourceName]
 

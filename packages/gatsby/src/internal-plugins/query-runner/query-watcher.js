@@ -55,7 +55,7 @@ const runQueriesForComponent = componentPath => {
   // the changing of the query could have changed the data dependencies.
   // Re-running the queries will add back data dependencies.
   boundActionCreators.deletePagesDependencies(pages.map(p => p.path))
-  const component = store.getState().pageComponents[componentPath]
+  const component = store.getState().components[componentPath]
   return Promise.all(pages.map(p => queryRunner(p, component)))
 }
 
@@ -77,7 +77,7 @@ const watch = rootDir => {
 
   const debounceCompile = _.debounce(() => {
     queryCompiler().then(queries => {
-      const pages = store.getState().pageComponents
+      const pages = store.getState().components
       queries.forEach(({ text }, path) => {
         invariant(
           pages[path],

@@ -3,10 +3,10 @@ const path = require(`path`)
 
 const { watchComponent } = require(`./query-watcher`)
 
-let pageComponents = {}
+let components = {}
 exports.onCreatePage = ({ page, store, boundActionCreators }) => {
   const component = page.component
-  if (!pageComponents[component]) {
+  if (!components[component]) {
     // We haven't seen this component before so we:
     // - Ensure it has a JSON file.
     // - Add it to Redux
@@ -27,12 +27,12 @@ exports.onCreatePage = ({ page, store, boundActionCreators }) => {
   }
 
   // Mark we've seen this page component.
-  pageComponents[component] = component
+  components[component] = component
 }
 
 exports.onCreateLayout = ({ layout, store, boundActionCreators }) => {
   const component = layout.component
-  if (!pageComponents[component]) {
+  if (!components[component]) {
     // We haven't seen this component before so we:
     // - Ensure it has a JSON file.
     // - Add it to Redux
@@ -53,5 +53,5 @@ exports.onCreateLayout = ({ layout, store, boundActionCreators }) => {
   }
 
   // Mark we've seen this page component.
-  pageComponents[component] = component
+  components[component] = component
 }

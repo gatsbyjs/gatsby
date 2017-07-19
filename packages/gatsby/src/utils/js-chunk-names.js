@@ -14,7 +14,7 @@ const layoutComponentChunkName = componentPath => {
     directory = program.directory
   }
   const name = path.relative(directory, componentPath)
-  return `page-component---${_.kebabCase(name)}`
+  return `component---${_.kebabCase(name)}`
 }
 
 exports.pathChunkName = pathChunkName

@@ -3,7 +3,7 @@ const reducer = require(`../page-data-dependencies`)
 describe(`add page data dependency`, () => {
   it(`lets you add a node dependency`, () => {
     const action = {
-      type: `CREATE_PAGE_DEPENDENCY`,
+      type: `CREATE_COMPONENT_DEPENDENCY`,
       payload: {
         path: `/hi/`,
         nodeId: `123`,
@@ -19,21 +19,21 @@ describe(`add page data dependency`, () => {
   })
   it(`lets you add a node dependency to multiple paths`, () => {
     const action = {
-      type: `CREATE_PAGE_DEPENDENCY`,
+      type: `CREATE_COMPONENT_DEPENDENCY`,
       payload: {
         path: `/hi/`,
         nodeId: `1.2.3`,
       },
     }
     const action2 = {
-      type: `CREATE_PAGE_DEPENDENCY`,
+      type: `CREATE_COMPONENT_DEPENDENCY`,
       payload: {
         path: `/hi2/`,
         nodeId: `1.2.3`,
       },
     }
     const action3 = {
-      type: `CREATE_PAGE_DEPENDENCY`,
+      type: `CREATE_COMPONENT_DEPENDENCY`,
       payload: {
         path: `/blog/`,
         nodeId: `1.2.3`,
@@ -53,14 +53,14 @@ describe(`add page data dependency`, () => {
   })
   it(`lets you add a connection dependency`, () => {
     const action = {
-      type: `CREATE_PAGE_DEPENDENCY`,
+      type: `CREATE_COMPONENT_DEPENDENCY`,
       payload: {
         path: `/hi/`,
         connection: `Markdown.Remark`,
       },
     }
     const action2 = {
-      type: `CREATE_PAGE_DEPENDENCY`,
+      type: `CREATE_COMPONENT_DEPENDENCY`,
       payload: {
         path: `/hi2/`,
         connection: `Markdown.Remark`,
@@ -79,7 +79,7 @@ describe(`add page data dependency`, () => {
   })
   it(`removes duplicate paths`, () => {
     const action = {
-      type: `CREATE_PAGE_DEPENDENCY`,
+      type: `CREATE_COMPONENT_DEPENDENCY`,
       payload: {
         path: `/hi/`,
         nodeId: 1,
@@ -87,7 +87,7 @@ describe(`add page data dependency`, () => {
       },
     }
     const action2 = {
-      type: `CREATE_PAGE_DEPENDENCY`,
+      type: `CREATE_COMPONENT_DEPENDENCY`,
       payload: {
         path: `/hi2/`,
         nodeId: 1,
@@ -106,7 +106,7 @@ describe(`add page data dependency`, () => {
   })
   it(`lets you add both a node and connection in one action`, () => {
     const action = {
-      type: `CREATE_PAGE_DEPENDENCY`,
+      type: `CREATE_COMPONENT_DEPENDENCY`,
       payload: {
         path: `/hi/`,
         connection: `MarkdownRemark`,

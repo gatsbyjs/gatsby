@@ -10,7 +10,7 @@ module.exports = {
   layouts: require(`./layouts`),
   schema: require(`./schema`),
   status: require(`./status`),
-  pageDataDependencies: require(`./page-data-dependencies`),
-  pageComponents: require(`./page-components`),
+  componentDataDependencies: require(`./component-data-dependencies`),
+  components: require(`./components`),
   jobs: require(`./jobs`),
 }
