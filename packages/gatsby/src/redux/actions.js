@@ -10,7 +10,7 @@ const { getNode, hasNodeChanged } = require(`./index`)
 
 const { store } = require(`./index`)
 import * as joiSchemas from "../joi-schemas/joi"
-import { layoutComponentChunkName } from "../utils/js-chunk-names"
+import { generateComponentChunkName } from "../utils/js-chunk-names"
 
 const actions = {}
 
@@ -49,7 +49,7 @@ const pascalCase = _.flow(_.camelCase, _.upperFirst)
  * })
  */
 actions.createPage = (page, plugin = ``, traceId) => {
-  page.componentChunkName = layoutComponentChunkName(page.component)
+  page.componentChunkName = generateComponentChunkName(page.component)
 
   let jsonName = `${_.kebabCase(page.path)}.json`
   let internalComponentName = `Component${pascalCase(page.path)}`
@@ -121,7 +121,7 @@ actions.deleteLayout = (layout, plugin = ``) => {
  * })
  */
 actions.createLayout = (layout, plugin = ``, traceId) => {
-  layout.componentChunkName = layoutComponentChunkName(layout.component)
+  layout.componentChunkName = generateComponentChunkName(layout.component)
 
   layout.jsonName = `layout-${_.kebabCase(layout.id)}.json`
   layout.internalComponentName = `Component-layout-${pascalCase(layout.id)}`

@@ -7,7 +7,7 @@ const pathChunkName = path => {
   return `path---${name}`
 }
 
-const layoutComponentChunkName = componentPath => {
+const generateComponentChunkName = componentPath => {
   const program = store.getState().program
   let directory = `/`
   if (program && program.directory) {
@@ -18,4 +18,4 @@ const layoutComponentChunkName = componentPath => {
 }
 
 exports.pathChunkName = pathChunkName
-exports.layoutComponentChunkName = layoutComponentChunkName
+exports.generateComponentChunkName = generateComponentChunkName
