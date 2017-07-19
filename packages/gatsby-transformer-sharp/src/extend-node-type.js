@@ -17,8 +17,7 @@ const {
 
 const sharp = require(`sharp`)
 const promisify = require('util.promisify');
-const ncp = require('ncp');
-const ncpAsync = promisify(ncp);
+const fsExtra = require('fs-extra');
 const sizeOf = require('image-size');
 const path = require('path');
 
@@ -86,7 +85,13 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           `static/${imageName}`
         );
 
-        await ncpAsync(details.absolutePath, publicPath);
+        if (!fsExtra.existsSync(publicPath)) {
+          fsExtra.copy(details.absolutePath, publicPath, err => {
+            if (err) {
+              console.error(`error copying file`, err)
+            }
+          })
+        }
 
         return {
           width: dimensions.width,
