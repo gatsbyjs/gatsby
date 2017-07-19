@@ -1,6 +1,6 @@
 {
   "name": "gatsby-remark-images",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Processes images in markdown so they can be used in the production build.",
   "main": "index.js",
   "keywords": [

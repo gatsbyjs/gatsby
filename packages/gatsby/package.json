@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "React.js Static Site Generator",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./dist/gatsby-cli.js"
