@@ -1,4 +1,6 @@
-# Deploying Gatsby
+---
+title: "Deploying Gatsby"
+---
 
 ## Best Practice
 
