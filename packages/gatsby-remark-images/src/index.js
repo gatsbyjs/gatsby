@@ -22,7 +22,7 @@ module.exports = (
     wrapperStyle: ``,
     backgroundColor: `white`,
     linkImagesToOriginal: true,
-    pathPrefix
+    pathPrefix,
   }
 
   const options = _.defaults(pluginOptions, defaults)
@@ -116,7 +116,7 @@ module.exports = (
   </a>
     `
     }
-  
+
     return rawHTML
   }
 
@@ -145,67 +145,62 @@ module.exports = (
           }
         })
     )
-  )
-    .then((markdownImageNodes) => {
-      // HTML image node stuff
-      return Promise.all(
-        // Complex because HTML nodes can contain multiple images
-        rawHtmlNodes.map(
-          node =>
-            new Promise(async (resolve, reject) => {
-              if (!node.value) {
-                return resolve()
-              }
+  ).then(markdownImageNodes => 
+    // HTML image node stuff
+     Promise.all(
+      // Complex because HTML nodes can contain multiple images
+      rawHtmlNodes.map(
+        node =>
+          new Promise(async (resolve, reject) => {
+            if (!node.value) {
+              return resolve()
+            }
 
-              const $ = cheerio.load(node.value)
-              if ($(`img`).length === 0) {
-                // No img tags
-                return resolve()
-              }
+            const $ = cheerio.load(node.value)
+            if ($(`img`).length === 0) {
+              // No img tags
+              return resolve()
+            }
 
-              let imageRefs = []
-              $(`img`).each(function () {
-                imageRefs.push($(this))
-              })
-
-              for (let thisImg of imageRefs) {
-                //Get the details we need
-                let formattedImgTag = {}
-                formattedImgTag.url = thisImg.attr(`src`)
-                formattedImgTag.title = thisImg.attr(`title`)
-                formattedImgTag.alt = thisImg.attr(`alt`)
-
-                const fileType = formattedImgTag.url.slice(-3)
-
-
-                // Ignore gifs as we can't process them,
-                // svgs as they are already responsive by definition
-                if (
-                  isRelativeUrl(formattedImgTag.url) &&
-                  fileType !== `gif` &&
-                  fileType !== `svg`
-                ) {
-                  const rawHTML = await generateImagesAndUpdateNode(
-                    formattedImgTag,
-                    resolve
-                  )
-                  // Replace the image string
-                  thisImg.replaceWith(rawHTML)
-                } else {
-                  return resolve()
-                }
-              }
-
-              // Replace the image node with an inline HTML node.
-              node.type = `html`
-              node.value = $.html()
-
-              return resolve(node)
+            let imageRefs = []
+            $(`img`).each(function() {
+              imageRefs.push($(this))
             })
-        )
-      ).then(htmlImageNodes => {
-        return markdownImageNodes.concat(htmlImageNodes)
-          .filter(node => !!node)
-      })
-    })
+
+            for (let thisImg of imageRefs) {
+              //Get the details we need
+              let formattedImgTag = {}
+              formattedImgTag.url = thisImg.attr(`src`)
+              formattedImgTag.title = thisImg.attr(`title`)
+              formattedImgTag.alt = thisImg.attr(`alt`)
+
+              const fileType = formattedImgTag.url.slice(-3)
+
+              // Ignore gifs as we can't process them,
+              // svgs as they are already responsive by definition
+              if (
+                isRelativeUrl(formattedImgTag.url) &&
+                fileType !== `gif` &&
+                fileType !== `svg`
+              ) {
+                const rawHTML = await generateImagesAndUpdateNode(
+                  formattedImgTag,
+                  resolve
+                )
+                // Replace the image string
+                thisImg.replaceWith(rawHTML)
+              } else {
+                return resolve()
+              }
+            }
+
+            // Replace the image node with an inline HTML node.
+            node.type = `html`
+            node.value = $.html()
+
+            return resolve(node)
+          })
+      )
+    ).then(htmlImageNodes => markdownImageNodes.concat(htmlImageNodes).filter(node => !!node))
+  )
 }
