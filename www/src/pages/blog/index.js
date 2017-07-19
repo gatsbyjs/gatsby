@@ -1,6 +1,5 @@
 import React from "react"
 import Link from "gatsby-link"
-import colors from "../../utils/colors"
 
 import typography, { rhythm, scale } from "../../utils/typography"
 import presets from "../../utils/presets"
