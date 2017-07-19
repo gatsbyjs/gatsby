@@ -16,7 +16,7 @@ const {
 } = require(`gatsby-plugin-sharp`)
 
 const sharp = require(`sharp`)
-const {promisify} = require('util');
+const promisify = require('util.promisify');
 const ncp = require('ncp');
 const ncpAsync = promisify(ncp);
 const sizeOf = require('image-size');
