@@ -9,9 +9,6 @@ import InsetPage from './inset-page';
 import BlogPost from './blog-post';
 
 class MasterLayout extends React.Component {
-    static propTypes = {
-      location: PropTypes.object.isRequired
-    }
 
     render() {
         let location = this.props.location.pathname;
@@ -20,7 +17,7 @@ class MasterLayout extends React.Component {
         //  layouts do not yet have that support.
         if (location === '/') {
           jimmyPage = this.props.children()
-        } else if (location === '/about' || location === '/contact') {
+        } else if (location === '/contact') {
           jimmyPage = <InsetPage {...this.props} />
         } else {
           jimmyPage = <BlogPost {...this.props} />
