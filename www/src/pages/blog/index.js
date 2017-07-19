@@ -27,11 +27,7 @@ class BlogPostsIndex extends React.Component {
                 >
                   {post.frontmatter.title}
                 </h2>
-                <p
-                  css={{
-                    color: colors.b[13],
-                  }}
-                >
+                <p>
                   {post.frontmatter.excerpt
                     ? post.frontmatter.excerpt
                     : post.excerpt}
