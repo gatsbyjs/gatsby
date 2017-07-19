@@ -9,13 +9,13 @@ import {
 
 const options = {
   headerFontFamily: [`Futura PT`, `sans-serif`],
-  bodyFontFamily: [`Tex Gyre Schola`, `serif`],
+  bodyFontFamily: [`Spectral`, `Georgia`, `serif`],
   baseFontSize: `18px`,
   baseLineHeight: 1.4,
   // headerColor: `#44421f`,
-  headerColor: colors.c[15],
+  headerColor: colors.c[13],
   // bodyColor: `#44421f`,
-  bodyColor: colors.c[14],
+  bodyColor: colors.c[13],
   blockMarginBottom: 0.65,
   scaleRatio: 2.15,
   plugins: [new CodePlugin()],

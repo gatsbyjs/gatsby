@@ -36,7 +36,7 @@ export default class HTML extends React.Component {
           />
           <link
             rel="preload"
-            href="/static/tex-gyre-schola-400.030fe0c4.woff2"
+            href="/static/spectral-latin-400.bc2de9de.woff2"
             as="font"
             crossOrigin
           />
