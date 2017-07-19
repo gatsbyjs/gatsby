@@ -54,7 +54,7 @@ const runQueriesForComponent = componentPath => {
   // Remove page data dependencies before re-running queries because
   // the changing of the query could have changed the data dependencies.
   // Re-running the queries will add back data dependencies.
-  boundActionCreators.deletePagesDependencies(pages.map(p => p.path))
+  boundActionCreators.deleteComponentsDependencies(pages.map(p => p.path))
   const component = store.getState().components[componentPath]
   return Promise.all(pages.map(p => queryRunner(p, component)))
 }

@@ -483,26 +483,11 @@ actions.createPageDependency = ({ path, nodeId, connection }, plugin = ``) => {
  * @param {Array} paths the paths to delete.
  * @private
  */
-actions.deletePagesDependencies = paths => {
+actions.deleteComponentsDependencies = paths => {
   return {
     type: `DELETE_COMPONENTS_DEPENDENCIES`,
     payload: {
       paths,
-    },
-  }
-}
-
-/**
- * Used by the query watcher when it identifies a new component
- * which is probably a page. TODO perhaps the query watcher
- * just listens for new pages?
- * @private
- */
-actions.createComponent = componentPath => {
-  return {
-    type: `CREATE_COMPONENT`,
-    payload: {
-      componentPath,
     },
   }
 }

@@ -341,6 +341,7 @@ data
   }, 100)
 
   if (store.getState().jobs.active.length === 0) {
+    console.log(store.getState().components)
     console.log(``)
     console.log(`bootstrap finished, time since started: ${process.uptime()} s`)
     console.log(``)

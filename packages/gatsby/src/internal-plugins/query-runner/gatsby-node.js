@@ -4,6 +4,13 @@ const path = require(`path`)
 const { watchComponent } = require(`./query-watcher`)
 
 let components = {}
+
+exports.onCreateComponent = ({ component, store, boundActionCreators }) => {
+  // Make sure we're watching this component.
+  components[component.componentPath] = component.componentPath
+  watchComponent(component.componentPath)
+}
+
 exports.onCreatePage = ({ page, store, boundActionCreators }) => {
   const component = page.component
   if (!components[component]) {
@@ -20,10 +27,7 @@ exports.onCreatePage = ({ page, store, boundActionCreators }) => {
     if (!fs.existsSync(pathToJSONFile)) {
       fs.writeFile(pathToJSONFile, `{}`, () => {})
     }
-    boundActionCreators.createComponent(component)
-
-    // Make sure we're watching this component.
-    watchComponent(component)
+    // boundActionCreators.createComponent(component)
   }
 
   // Mark we've seen this page component.
@@ -35,7 +39,6 @@ exports.onCreateLayout = ({ layout, store, boundActionCreators }) => {
   if (!components[component]) {
     // We haven't seen this component before so we:
     // - Ensure it has a JSON file.
-    // - Add it to Redux
     // - Watch the component to detect query changes
     const pathToJSONFile = path.join(
       store.getState().program.directory,
@@ -46,12 +49,5 @@ exports.onCreateLayout = ({ layout, store, boundActionCreators }) => {
     if (!fs.existsSync(pathToJSONFile)) {
       fs.writeFile(pathToJSONFile, `{}`, () => {})
     }
-    boundActionCreators.createComponent(component)
-
-    // Make sure we're watching this component.
-    watchComponent(component)
   }
-
-  // Mark we've seen this page component.
-  components[component] = component
 }

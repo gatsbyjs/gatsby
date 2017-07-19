@@ -158,7 +158,7 @@ class Runner {
 
       invariant(
         !compiledNodes.has(filePath),
-        `Gatsby: Pages may only specify one "root" query tag. ` +
+        `Gatsby: Components may only specify one "root" query tag. ` +
           `Combine them into a single query`
       )
 
