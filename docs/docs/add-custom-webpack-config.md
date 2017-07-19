@@ -27,7 +27,7 @@ call each build type a "stage". The following stages exist:
 
 Check [webpack.config.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/webpack.config.js) for the source.
 
-There are many plugins in the Gatsby repo using this API to look to for examples e.g. [Sass](/docs/packages/gatsby-plugin-sass/), [Typescript](/docs/packages/gatsby-plugin-typescript/), [Glamor](/docs/packages/gatsby-plugin-glamor/), and many more!
+There are many plugins in the Gatsby repo using this API to look to for examples e.g. [Sass](/packages/gatsby-plugin-sass/), [Typescript](/packages/gatsby-plugin-typescript/), [Glamor](/packages/gatsby-plugin-glamor/), and many more!
 
 
 ## Example

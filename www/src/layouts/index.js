@@ -274,7 +274,8 @@ module.exports = React.createClass({
               ...sidebarStyles,
               [presets.Tablet]: {
                 display:
-                  this.props.location.pathname.slice(0, 6) === `/docs/`
+                  this.props.location.pathname.slice(0, 6) === `/docs/` ||
+                  this.props.location.pathname.slice(0, 10) === `/packages/`
                     ? `block`
                     : `none`,
               },
@@ -303,6 +304,7 @@ module.exports = React.createClass({
               [presets.Tablet]: {
                 paddingLeft:
                   this.props.location.pathname.slice(0, 6) === `/docs/` ||
+                  this.props.location.pathname.slice(0, 10) === `/packages/` ||
                   this.props.location.pathname.slice(0, 10) === `/tutorial/`
                     ? rhythm(10)
                     : 0,

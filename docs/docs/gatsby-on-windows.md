@@ -6,7 +6,7 @@ title: Gatsby on Windows
 
 Many Gatsby plugins and themes require building native Node.js modules, e.g.
 [Sharp (a common Gatsby dependency used for image
-processing)](/docs/packages/gatsby-plugin-sharp/). To do so, you need a
+processing)](/packages/gatsby-plugin-sharp/). To do so, you need a
 functional build environment (Python and Visual C++ Build Tools).
 
 The easy way to setup your build environment on Windows is to install the

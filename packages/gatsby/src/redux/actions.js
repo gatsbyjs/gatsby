@@ -469,7 +469,7 @@ actions.replacePageComponentQuery = ({ query, componentPath }) => {
 /**
  * Create a "job". This is a long-running process that are generally
  * started as side-effects to GraphQL queries.
- * [`gatsby-plugin-sharp`](/docs/packages/gatsby-plugin-sharp/) uses this for
+ * [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp/) uses this for
  * example.
  *
  * Gatsby doesn't finish its bootstrap until all jobs are ended.
