@@ -1,0 +1,73 @@
+// Variables don't need a dollar sign but it makes them easy to identify later
+// in code
+$color = pink
+
+borderRadius($radius = 5px)
+  -webkit-border-radius $radius
+  -moz-border-radius $radius
+  border-radius $radius
+
+.header
+  padding 20px
+  background thistle
+
+  h1
+    text-decoration none
+
+  .cta
+    display inline-block
+    color white
+    text-transform uppercase
+    text-decoration none
+    font-family sans-serif
+    padding 20px
+    background darken(thistle, 20%)
+
+  a
+    font-weight bold
+
+section
+  padding 20px
+
+.stylus-nav-example
+  ul
+    margin 0
+    padding 0
+    list-style none
+
+
+  li
+    display inline-block
+
+
+  a
+    borderRadius(3px)
+
+    background $color
+    display block
+    margin-right 6px
+    padding 3px 9px
+    text-decoration none
+
+
+.the-stylus-class
+  text-decoration underline
+
+
+:global(.grid) div
+  border 1px solid black
+  padding 0.5rem
+  margin-bottom 1rem
+  background #fafafa
+  border 1px solid #ddd
+  background orange
+
+
+@media (min-width: 400px)
+  :global(.grid) div
+    background transparentify(blue, 0.4)
+
+@media (min-width: 900px)
+  :global(.grid) div
+    background transparentify(pink, 0.1)
+

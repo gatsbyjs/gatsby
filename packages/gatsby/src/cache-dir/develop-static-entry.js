@@ -46,7 +46,9 @@ module.exports = (locals, callback) => {
   const htmlElement = React.createElement(HTML, {
     ...bodyProps,
     body: ``,
-    headComponents,
+    headComponents: headComponents.concat([
+      <script key={`io`} src="/socket.io/socket.io.js" />,
+    ]),
     preBodyComponents,
     postBodyComponents: postBodyComponents.concat([
       <script key={`commons`} src="/commons.js" />,

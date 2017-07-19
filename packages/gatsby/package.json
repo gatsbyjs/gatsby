@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "React.js Static Site Generator",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./dist/gatsby-cli.js"
@@ -35,6 +35,7 @@
     "css-loader": "^0.26.1",
     "debug": "^2.6.0",
     "detect-port": "^1.2.1",
+    "dotenv": "^4.0.0",
     "eventemitter2": "^4.1.0",
     "express": "^4.14.0",
     "express-graphql": "^0.6.6",
@@ -96,6 +97,7 @@
     "remote-redux-devtools": "^0.5.7",
     "sift": "^3.2.6",
     "slash": "^1.0.0",
+    "socket.io": "^2.0.3",
     "static-site-generator-webpack-plugin": "^3.1.0",
     "string-similarity": "^1.2.0",
     "style-loader": "^0.13.0",

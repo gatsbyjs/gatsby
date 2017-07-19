@@ -11,6 +11,7 @@ module.exports = async ({ spaceId, accessToken, host, syncToken }) => {
   const client = contentful.createClient({
     space: spaceId,
     accessToken,
+    host: host || `cdn.contentful.com`,
   })
 
   // The sync API puts the locale in all fields in this format { fieldName:
