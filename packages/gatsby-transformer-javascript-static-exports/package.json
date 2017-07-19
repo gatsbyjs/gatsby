@@ -14,7 +14,7 @@
   "author": "Jacob Bolda <me@jacobbolda.com>",
   "license": "MIT",
   "dependencies": {
-    "babel-traverse": "^6.25.0",
+    "babel-traverse": "^6.24.1",
     "babylon": "^6.17.3",
     "bluebird": "^3.5.0"
   }

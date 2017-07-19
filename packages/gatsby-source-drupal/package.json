@@ -15,7 +15,7 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.16.1",
-    "bluebird": "^3.4.6",
-    "lodash": "^4.17.2"
+    "bluebird": "^3.5.0",
+    "lodash": "^4.17.4"
   }
 }

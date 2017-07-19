@@ -4,7 +4,7 @@
   "version": "1.0.1",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "async": "^2.4.1",
+    "async": "^2.1.2",
     "bluebird": "^3.5.0",
     "image-size": "^0.5.1",
     "imagemin": "^5.2.2",
