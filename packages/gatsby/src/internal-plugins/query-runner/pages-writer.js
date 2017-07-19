@@ -4,8 +4,7 @@ const fs = require(`fs-extra`)
 
 const { store, emitter } = require(`../../redux/`)
 import {
-  layoutComponentChunkName,
-  pathChunkName,
+  generatePathChunkName,
 } from "../../utils/js-chunk-names"
 
 import { joinPath } from "../../utils/path"
@@ -120,7 +119,7 @@ const preferDefault = m => m && m.default || m
   asyncRequires += `exports.json = {\n${json
     .map(
       j =>
-        `  "${j.jsonName}": require("gatsby-module-loader?name=${pathChunkName(
+        `  "${j.jsonName}": require("gatsby-module-loader?name=${generatePathChunkName(
           j.path
         )}!${joinPath(program.directory, `/.cache/json/`, j.jsonName)}")`
     )

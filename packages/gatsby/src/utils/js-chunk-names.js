@@ -2,7 +2,7 @@ import _ from "lodash"
 const path = require(`path`)
 const { store } = require(`../redux`)
 
-const pathChunkName = path => {
+const generatePathChunkName = path => {
   const name = path === `/` ? `index` : _.kebabCase(path)
   return `path---${name}`
 }
@@ -17,5 +17,5 @@ const generateComponentChunkName = componentPath => {
   return `component---${_.kebabCase(name)}`
 }
 
-exports.pathChunkName = pathChunkName
+exports.generatePathChunkName = generatePathChunkName
 exports.generateComponentChunkName = generateComponentChunkName
