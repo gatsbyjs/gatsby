@@ -20,7 +20,7 @@ exports.onCreatePage = ({ page, store, boundActionCreators }) => {
     if (!fs.existsSync(pathToJSONFile)) {
       fs.writeFile(pathToJSONFile, `{}`, () => {})
     }
-    boundActionCreators.createPageComponent(component)
+    boundActionCreators.createComponent(component)
 
     // Make sure we're watching this component.
     watchComponent(component)
@@ -46,7 +46,7 @@ exports.onCreateLayout = ({ layout, store, boundActionCreators }) => {
     if (!fs.existsSync(pathToJSONFile)) {
       fs.writeFile(pathToJSONFile, `{}`, () => {})
     }
-    boundActionCreators.createPageComponent(component)
+    boundActionCreators.createComponent(component)
 
     // Make sure we're watching this component.
     watchComponent(component)

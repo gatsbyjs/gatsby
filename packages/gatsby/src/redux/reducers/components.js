@@ -5,7 +5,7 @@ module.exports = (state = {}, action) => {
   switch (action.type) {
     case `DELETE_CACHE`:
       return {}
-    case `CREATE_PAGE_COMPONENT`:
+    case `CREATE_COMPONENT`:
       action.payload.componentPath = normalize(action.payload.componentPath)
       state[action.payload.componentPath] = _.merge(
         {},
@@ -15,7 +15,7 @@ module.exports = (state = {}, action) => {
         }
       )
       return state
-    case `REPLACE_PAGE_COMPONENT_QUERY`:
+    case `REPLACE_COMPONENT_QUERY`:
       action.payload.componentPath = normalize(action.payload.componentPath)
       // console.log(state)
       state[action.payload.componentPath] = {

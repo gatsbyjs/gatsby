@@ -28,7 +28,7 @@ exports.extractQueries = () => {
   queryCompiler().then(queries => {
     components.forEach(component => {
       const query = queries.get(normalize(component))
-      boundActionCreators.replacePageComponentQuery({
+      boundActionCreators.replaceComponentQuery({
         query: query && query.text,
         componentPath: component,
       })
@@ -85,7 +85,7 @@ const watch = rootDir => {
         )
 
         if (text !== pages[path].query) {
-          boundActionCreators.replacePageComponentQuery({
+          boundActionCreators.replaceComponentQuery({
             query: text,
             componentPath: path,
           })

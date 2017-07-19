@@ -498,9 +498,9 @@ actions.deletePagesDependencies = paths => {
  * just listens for new pages?
  * @private
  */
-actions.createPageComponent = componentPath => {
+actions.createComponent = componentPath => {
   return {
-    type: `CREATE_PAGE_COMPONENT`,
+    type: `CREATE_COMPONENT`,
     payload: {
       componentPath,
     },
@@ -512,9 +512,9 @@ actions.createPageComponent = componentPath => {
  * this to store the query with its component.
  * @private
  */
-actions.replacePageComponentQuery = ({ query, componentPath }) => {
+actions.replaceComponentQuery = ({ query, componentPath }) => {
   return {
-    type: `REPLACE_PAGE_COMPONENT_QUERY`,
+    type: `REPLACE_COMPONENT_QUERY`,
     payload: {
       query,
       componentPath,
