@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "bluebird": "^3.5.0",
-    "cheerio": "1.0.0-rc.2",
+    "cheerio": "^1.0.0-rc.2",
     "lodash": "^4.17.4",
     "unist-util-visit": "^1.1.1"
   }
