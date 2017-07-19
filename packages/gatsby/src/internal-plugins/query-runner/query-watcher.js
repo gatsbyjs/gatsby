@@ -28,7 +28,6 @@ exports.extractQueries = () => {
   const components = _.uniq(pagesAndLayouts.map(p => p.component))
   queryCompiler().then(queries => {
     components.forEach(component => {
-      console.log(component)
       const query = queries.get(normalize(component))
       boundActionCreators.replaceComponentQuery({
         query: query && query.text,
@@ -81,7 +80,7 @@ exports.watchComponent = componentPath => {
 }
 const watch = rootDir => {
   if (watcher) return
-
+  console.log('watching!')
   const debounceCompile = _.debounce(() => {
     queryCompiler().then(queries => {
       const components = store.getState().components
