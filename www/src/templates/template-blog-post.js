@@ -97,6 +97,10 @@ const BlogPostTemplate = React.createClass({
             display: `flex`,
             marginTop: rhythm(-1 / 4),
             marginBottom: rhythm(1),
+            [presets.Tablet]: {
+              marginTop: rhythm(1 / 2),
+              marginBottom: rhythm(2),
+            },
           }}
         >
           <div
