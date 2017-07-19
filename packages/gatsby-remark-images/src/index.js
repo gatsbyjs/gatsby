@@ -138,17 +138,16 @@ module.exports = (
             // Replace the image node with an inline HTML node.
             node.type = `html`
             node.value = rawHTML
-            return resolve()
+            return resolve(node)
           } else {
             // Image isn't relative so there's nothing for us to do.
             return resolve()
           }
         })
     )
-  ).then(() =>
+  ).then(markdownImageNodes => 
     // HTML image node stuff
-
-    Promise.all(
+     Promise.all(
       // Complex because HTML nodes can contain multiple images
       rawHtmlNodes.map(
         node =>
@@ -190,6 +189,8 @@ module.exports = (
                 )
                 // Replace the image string
                 thisImg.replaceWith(rawHTML)
+              } else {
+                return resolve()
               }
             }
 
@@ -197,9 +198,9 @@ module.exports = (
             node.type = `html`
             node.value = $.html()
 
-            return resolve()
+            return resolve(node)
           })
       )
-    )
+    ).then(htmlImageNodes => markdownImageNodes.concat(htmlImageNodes).filter(node => !!node))
   )
 }
