@@ -6,20 +6,20 @@
 const getHashFn = require(`./get-hash-fn`)
 
 function HashedChunkIdsPlugin(options) {
-    this.options = options || {}
+  this.options = options || {}
 }
 
 HashedChunkIdsPlugin.prototype.apply = function apply(compiler) {
-    const hashFn = getHashFn(this.options)
-    compiler.plugin(`compilation`, compilation => {
-        compilation.plugin(`before-chunk-ids`, chunks => {
-            chunks.forEach(chunk => {
-                if (chunk.id === null) {
-                    chunk.id = hashFn(chunk.name)
-                }
-            });
-        });
-    });
-};
+  const hashFn = getHashFn(this.options)
+  compiler.plugin(`compilation`, compilation => {
+    compilation.plugin(`before-chunk-ids`, chunks => {
+      chunks.forEach(chunk => {
+        if (chunk.id === null) {
+          chunk.id = hashFn(chunk.name)
+        }
+      })
+    })
+  })
+}
 
 module.exports = HashedChunkIdsPlugin

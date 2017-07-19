@@ -45,7 +45,15 @@ class IndexRoute extends React.Component {
           </li>
         </ol>
         <h2>Using other starters</h2>
-        <p>Running <code>gatsby new</code> installs the default Gatsby starter. There are <Link to="/docs/gatsby-starters/">many other official and community starters</Link> you can use to kickstart building your Gatsby site.</p>
+        <p>
+          Running <code>gatsby new</code> installs the default Gatsby starter.
+          There are{` `}
+          <Link to="/docs/gatsby-starters/">
+            many other official and community starters
+          </Link>
+          {` `}
+          you can use to kickstart building your Gatsby site.
+        </p>
         <h2>Work through the tutorial</h2>
         <p>
           Part one of what will be a 4-part tutorial is finished. It walks you

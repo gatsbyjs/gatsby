@@ -6,7 +6,7 @@ import { defaultOptions, runQuery, writeFile } from "./internals"
 const publicPath = `./public`
 
 // A default function to transform query data into feed entries.
-const serialize = ({ query: { site, allMarkdownRemark }}) =>
+const serialize = ({ query: { site, allMarkdownRemark } }) =>
   allMarkdownRemark.edges.map(edge => {
     return {
       ...edge.node.frontmatter,
@@ -27,9 +27,9 @@ exports.onPostBuild = async ({ graphql }, pluginOptions) => {
   const options = {
     ...defaultOptions,
     ...pluginOptions,
-  } 
+  }
 
-  if ('query' in options) {
+  if (`query` in options) {
     options.query = await runQuery(graphql, options.query)
   }
 
@@ -43,17 +43,14 @@ exports.onPostBuild = async ({ graphql }, pluginOptions) => {
       }
     }
 
-    const {
-      setup,
-      ...locals,
-    } = {
+    const { setup, ...locals } = {
       ...options,
       ...f,
     }
 
     const feed = new RSS(setup(locals))
-    const serializer = f.serialize &&
-      typeof f.serialize === 'function' ? f.serialize : serialize
+    const serializer =
+      f.serialize && typeof f.serialize === `function` ? f.serialize : serialize
     const items = serializer(locals)
 
     items.forEach(i => feed.item(i))

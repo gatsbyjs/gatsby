@@ -8,19 +8,21 @@ class IndexComponent extends React.Component {
         <table>
           <thead>
             <tr>
-            <th>Letter</th>
-            <th>ASCII Value</th>
+              <th>Letter</th>
+              <th>ASCII Value</th>
             </tr>
           </thead>
           <tbody>
-            {data.map((row,i) => (<tr key={`${row.node.value} ${i}`}>
+            {data.map((row, i) =>
+              <tr key={`${row.node.value} ${i}`}>
                 <td>
                   {row.node.letter}
                 </td>
                 <td>
                   {row.node.value}
                 </td>
-              </tr>))}
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

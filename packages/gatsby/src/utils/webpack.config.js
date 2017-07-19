@@ -305,7 +305,7 @@ module.exports = async (
           new GatsbyModulePlugin(),
           // new WebpackStableModuleIdAndHash({ seed: 9, hashSize: 47 }),
           new webpack.NamedModulesPlugin(),
-          new HashedChunkIdsPlugin()
+          new HashedChunkIdsPlugin(),
         ]
       }
       default:

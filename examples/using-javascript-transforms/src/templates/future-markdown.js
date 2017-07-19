@@ -6,33 +6,33 @@ I would like to eventually use this as templates should really
  a react component that we can use.
 */
 
-import React from 'react';
+import React from "react"
 
 class markdownTemplate extends React.Component {
   render() {
-    const data = this.props.data.markdownRemark;
+    const data = this.props.data.markdownRemark
 
     return (
-        <div className='content'>
-          <div className='markdown section'>
-            <div className='container content'>
-              <div dangerouslySetInnerHTML={{ __html: data.html }} />
-            </div>
+      <div className="content">
+        <div className="markdown section">
+          <div className="container content">
+            <div dangerouslySetInnerHTML={{ __html: data.html }} />
           </div>
         </div>
+      </div>
     )
   }
 }
 
-export default markdownTemplate;
+export default markdownTemplate
 
 export const pageQuery = graphql`
-    query futuremarkdownTemplateBySlug($slug: String!) {
-      markdownRemark(fields: { slug: { eq: $slug }}) {
-        html
-        frontmatter {
-          title
-        }
+  query futuremarkdownTemplateBySlug($slug: String!) {
+    markdownRemark(fields: { slug: { eq: $slug } }) {
+      html
+      frontmatter {
+        title
       }
     }
+  }
 `

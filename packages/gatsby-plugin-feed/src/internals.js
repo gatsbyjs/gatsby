@@ -30,7 +30,7 @@ export const defaultOptions = {
   `,
 
   // Setup an RSS object, merging on various feed-specific options.
-  setup: ({ query: { site: { siteMetadata }, ...rest }}) => {
+  setup: ({ query: { site: { siteMetadata }, ...rest } }) => {
     return {
       ...siteMetadata,
       ...rest,

@@ -22,7 +22,7 @@ module.exports = (
     wrapperStyle: ``,
     backgroundColor: `white`,
     linkImagesToOriginal: true,
-    pathPrefix
+    pathPrefix,
   }
 
   const options = _.defaults(pluginOptions, defaults)
