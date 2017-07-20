@@ -1,6 +1,6 @@
 import React from "react"
 import { renderToString } from "react-dom/server"
-const { renderStaticOptimized } = require("glamor/server")
+const { renderStaticOptimized } = require(`glamor/server`)
 
 exports.replaceRenderer = ({
   bodyComponent,
