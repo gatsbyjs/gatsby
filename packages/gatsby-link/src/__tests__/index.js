@@ -6,8 +6,16 @@ const getInstance = (props, pathPrefix = '') => {
     __PATH_PREFIX__: pathPrefix  
   });
 
-  const Link = require('../index').default;
+  const Link = require('../').default;
   return new Link(props);
+};
+
+const getNavigateTo = () => {
+  Object.assign(global.window, {
+    ___navigateTo: jest.fn()
+  });
+
+  return require('../').navigateTo;
 };
 
 describe('<Link />', () => {
@@ -34,5 +42,11 @@ describe('<Link />', () => {
 
       expect(instance.state.to).toEqual(`${pathPrefix}${to}`);
     });
+  });
+
+  it('navigateTo is called with correct args', () => {
+    getNavigateTo()('/some-path');
+
+    expect(global.window.___navigateTo).toHaveBeenCalledWith('/some-path');
   });
 });
