@@ -53,7 +53,13 @@ function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
   return true
 }
 
-const noMatch = pages.find(r => r.path === `/dev-404-page/`)
+let noMatch;
+for(let i = 0; i < paths.length; i++) {
+    if(paths[i].path === `/dev-404-page/`) {
+        noMatch = paths[i];
+        break;
+    }
+}
 
 const addNotFoundRoute = () => {
   if (noMatch) {
