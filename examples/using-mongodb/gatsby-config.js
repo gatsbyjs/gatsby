@@ -6,6 +6,7 @@ module.exports = {
     {
       resolve: `gatsby-source-mongodb`,
       options: { dbName: `local`, collection: `documents` },
-    }
+    },
+    `gatsby-plugin-react-helmet`,
   ],
 }

@@ -7,17 +7,16 @@ class StoryItem extends React.Component {
     return (
       <div>
         <div>
-            <a href={item.url} className="storylink">
-              {item.name}
-            </a>
+          <a href={item.url} className="storylink">
+            {item.name}
+          </a>
         </div>
         <div>
-            <Link to={`/item/${item.id}/`}>
-              more details
-            </Link>
-            {` `}
+          <Link to={`/item/${item.id}/`}>more details</Link>
+          {` `}
         </div>
-        <br /><br />
+        <br />
+        <br />
       </div>
     )
   }

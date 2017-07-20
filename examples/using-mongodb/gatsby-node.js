@@ -11,13 +11,11 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
   const { createPage } = boundActionCreators
   return new Promise((resolve, reject) => {
     // The “graphql” function allows us to run arbitrary
-    // queries against local Hacker News graphql schema. Think of
-    // it like the site has a built-in database constructed
-    // from the fetched data that you can run queries against.
+    // queries against the mongoDB graphql schema.
 
-    // HnStory is a data node type created from the HN API “allHnStory” is a
+    // MongoDBDocField is a data node type created from mongoDB is a
     // "connection" (a GraphQL convention for accessing a list of nodes) gives
-    // us an easy way to query all HnStory nodes.
+    // us an easy way to query all MongoDBDocFields nodes.
     graphql(
       `
       {
@@ -35,10 +33,10 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         reject(result.errors)
       }
 
-      // Create HN story pages.
+      // Create pages.
       const pageTemplate = path.resolve(`./src/templates/item.js`)
       // We want to create a detailed page for each
-      // story page. We'll just use the HN story ID for the slug.
+      // document in our mongoDB collection
       _.each(result.data.allMongoDbDocField.edges, edge => {
         // Gatsby uses Redux to manage its internal state.
         // Plugins and sites can use functions like "createPage"

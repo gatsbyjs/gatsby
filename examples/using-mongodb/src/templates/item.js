@@ -4,14 +4,16 @@ import Link from "gatsby-link"
 class Item extends React.Component {
   render() {
     console.log(this.props)
-    const story = this.props.data.mongoDbDocField;
-  
+    const story = this.props.data.mongoDbDocField
+
     return (
       <div>
-              <a href={story.url} className="itemlink">
-                {story.name}
-              </a>
-              <div> {story.description} </div>
+        <a href={story.url} className="itemlink">
+          {story.name}
+        </a>
+        <div>
+          {` `}{story.description}{` `}
+        </div>
       </div>
     )
   }

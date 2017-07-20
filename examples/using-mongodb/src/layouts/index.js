@@ -19,7 +19,6 @@ class DefaultLayout extends React.Component {
             https://github.com/gatsbyjs/gatsby/tree/1.0/examples/using-mongodb
           </a>
         </p>
-        
       </div>
     )
   }

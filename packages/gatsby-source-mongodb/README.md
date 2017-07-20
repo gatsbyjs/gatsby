@@ -1,6 +1,6 @@
 # gatsby-source-mongodb
 
-Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from Wordpress sites using the [Wordpress JSON REST API](https://developer.wordpress.org/rest-api/reference/).
+Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from mongoDB collections.
 
 ## how to use
 ```javascript
