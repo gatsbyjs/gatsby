@@ -7,7 +7,7 @@
     "develop": "node_modules/.bin/gatsby develop",
     "dev:hard": "rm -rf .cache && rm -rf public && npm run develop",
     "build": "npm run clean & .\\node_modules\\.bin\\gatsby build",
-    "serve-build": "node_modules/.bin/gatsby serve-build",
+    "serve": "node_modules/.bin/gatsby serve",
     "clean:public": "rm -rf public & mkdir public",
     "clean": "npm run clean:public",
     "lint": "./node_modules/.bin/eslint --ext .js,.jsx --ignore-pattern public .",
