@@ -38,7 +38,7 @@ a regular sentence
 1. other numbered
     `)
 
-    const transformed = plugin({ markdownAST })
+    const transformed = plugin({ markdownAST: Object.assign({}, markdownAST) })
 
     expect(transformed).toEqual(markdownAST)
   })
