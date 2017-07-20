@@ -41,6 +41,7 @@ class MasterLayout extends React.Component {
 export default MasterLayout;
 
 // this is a placeholder, does not actually work
+/*
 export const pageQuery = graphql`
     query LayoutBySlug($slug: String!) {
       allJsFrontmatter {
@@ -60,3 +61,4 @@ export const pageQuery = graphql`
       }
     }
 `
+*/
