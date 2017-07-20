@@ -86,7 +86,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
   })
 
   it(`leaves absolute file paths alone`, () => {
-    const path = `https://google.comimages/sample-image.gif`
+    const path = `https://google.com/images/sample-image.gif`
 
     const markdownAST = remark.parse(`![some absolute image](${path})`)
 
