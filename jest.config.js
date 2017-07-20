@@ -11,6 +11,9 @@ module.exports = {
   roots: pkgs,
   modulePathIgnorePatterns: distDirs,
   coveragePathIgnorePatterns: distDirs,
+  globals: {
+    __PREFIX_PATHS__: false
+  },
   testPathIgnorePatterns: [
     `/examples/`,
     `/www/`,
