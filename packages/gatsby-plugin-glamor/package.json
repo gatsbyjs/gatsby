@@ -8,7 +8,7 @@
     "glamor": "next",
     "glamor-inline": "^1.0.5",
     "glamor-react": "^3.0.0-1",
-    "glamor-server": "next"
+    "glamor-server": "^3.0.0-3"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1"
