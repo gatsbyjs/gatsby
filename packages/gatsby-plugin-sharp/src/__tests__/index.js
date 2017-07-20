@@ -1,57 +1,57 @@
-const path = require('path');
+const path = require(`path`)
 
 const {
   queueImageResizing,
   base64,
   responsiveSizes,
-  responsiveResolution
-} = require('../');
+  responsiveResolution,
+} = require(`../`)
 
-describe('gatsby-plugin-sharp', () => {
+describe(`gatsby-plugin-sharp`, () => {
   const args = {
     duotone: false,
     grayscale: false,
     rotate: false,
-  };
-  const absolutePath = path.resolve('./www/src/argyle.png');
+  }
+  const absolutePath = path.resolve(`./www/src/argyle.png`)
   const file = {
     id: `${absolutePath} absPath of file`,
     absolutePath,
-    extension: 'png',
+    extension: `png`,
     internal: {
-      contentDigest: '1234'
-    }
-  };
+      contentDigest: `1234`,
+    },
+  }
 
-  describe('responsiveSizes', () => {
-    it('includes responsive image properties, e.g. sizes, srcset, etc.', async () => {
-      const result = await responsiveSizes({ file });
+  describe(`responsiveSizes`, () => {
+    it(`includes responsive image properties, e.g. sizes, srcset, etc.`, async () => {
+      const result = await responsiveSizes({ file })
 
-      expect(result).toMatchSnapshot();
-    });
+      expect(result).toMatchSnapshot()
+    })
 
-    it('adds pathPrefix if defined', async () => {
-      const pathPrefix = '/blog';
+    it(`adds pathPrefix if defined`, async () => {
+      const pathPrefix = `/blog`
       const result = await responsiveSizes({
         file,
         args: {
-          pathPrefix
-        }
-      });
+          pathPrefix,
+        },
+      })
 
-      expect(result.src.indexOf(pathPrefix)).toBe(0);
-      expect(result.srcSet.indexOf(pathPrefix)).toBe(0);
-    });
-  });
+      expect(result.src.indexOf(pathPrefix)).toBe(0)
+      expect(result.srcSet.indexOf(pathPrefix)).toBe(0)
+    })
+  })
 
-  describe('base64', () => {
-    it('converts image to base64', async () => {
+  describe(`base64`, () => {
+    it(`converts image to base64`, async () => {
       const result = await base64({
         file,
-        args
-      });
+        args,
+      })
 
-      expect(result).toMatchSnapshot();
-    });
-  });
-});
+      expect(result).toMatchSnapshot()
+    })
+  })
+})

@@ -1,106 +1,97 @@
-jest.mock('fs-extra', () => {
+jest.mock(`fs-extra`, () => {
   return {
     existsSync: () => false,
-    copy: jest.fn()
-  };
-});
-const Remark = require('remark');
-const fsExtra = require('fs-extra');
+    copy: jest.fn(),
+  }
+})
+const Remark = require(`remark`)
+const fsExtra = require(`fs-extra`)
 
-const plugin = require('../');
+const plugin = require(`../`)
 
 const remark = new Remark().data(`settings`, {
   commonmark: true,
   footnotes: true,
   pedantic: true,
-});
+})
 
-
-describe('gatsby-remark-copy-linked-files', () => {
+describe(`gatsby-remark-copy-linked-files`, () => {
   afterEach(() => {
-    fsExtra.copy.mockReset();
-  });
+    fsExtra.copy.mockReset()
+  })
 
   const markdownNode = {
-    parent: {}
-  };
-  const getNode = () => ({
-    dir: '',
+    parent: {},
+  }
+  const getNode = () => {return {
+    dir: ``,
     internal: {
-      type: 'File'
-    }
-  });
-  const getFiles = path => {
-    return [
+      type: `File`,
+    },
+  }}
+  const getFiles = path => [
       {
         absolutePath: path,
         internal: {},
-        extension: path.split('.').pop().trim()
-      }
-    ];
-  };
-
-  describe('images', () => {
-    [
-      'svg',
-      'gif'
+        extension: path.split(`.`).pop().trim(),
+      },
     ]
-      .forEach(extension => {
-        it(`can copy .${extension}`, () => {
-          const path = `images/sample-image.${extension}`;
-          const markdownAST = remark.parse(`![some image](${path})`);
 
-          plugin({ files: getFiles(path), markdownAST, markdownNode, getNode });
+  describe(`images`, () => {
+    ;[`svg`, `gif`].forEach(extension => {
+      it(`can copy .${extension}`, () => {
+        const path = `images/sample-image.${extension}`
+        const markdownAST = remark.parse(`![some image](${path})`)
 
-          expect(fsExtra.copy).toHaveBeenCalledWith(expect.any(String), expect.any(String), expect.any(Function));
-        });
-      });
-    
-    [
-      'png',
-      'jpg',
-      'jpeg'
-    ]
-      .forEach(extension => {
-        it(`ignores images with .${extension}`, () => {
-          const path = `images/sample-image.${extension}`;
-          const markdownAST = remark.parse(`![some image](${path})`);
+        plugin({ files: getFiles(path), markdownAST, markdownNode, getNode })
 
-          plugin({ files: getFiles(path), markdownAST, markdownNode, getNode });
+        expect(fsExtra.copy).toHaveBeenCalledWith(
+          expect.any(String),
+          expect.any(String),
+          expect.any(Function)
+        )
+      })
+    })
 
-          expect(fsExtra.copy).not.toHaveBeenCalled();
-        });
-      });
-  });
-  
-  it('can copy file links', () => {
-    const path = `files/sample-file.txt`;
+    ;[`png`, `jpg`, `jpeg`].forEach(extension => {
+      it(`ignores images with .${extension}`, () => {
+        const path = `images/sample-image.${extension}`
+        const markdownAST = remark.parse(`![some image](${path})`)
 
-    const markdownAST = remark.parse(`[path to file](${path})`);
+        plugin({ files: getFiles(path), markdownAST, markdownNode, getNode })
 
-    plugin({ files: getFiles(path), markdownAST, markdownNode, getNode });
+        expect(fsExtra.copy).not.toHaveBeenCalled()
+      })
+    })
+  })
 
-    expect(fsExtra.copy).toHaveBeenCalled();
-  });
+  it(`can copy file links`, () => {
+    const path = `files/sample-file.txt`
 
-  it('can copy HTML images', () => {
-    const path = `images/sample-image.gif`;
+    const markdownAST = remark.parse(`[path to file](${path})`)
 
-    const markdownAST = remark.parse(`<img src="${path}">`);
+    plugin({ files: getFiles(path), markdownAST, markdownNode, getNode })
 
-    plugin({ files: getFiles(path), markdownAST, markdownNode, getNode });
+    expect(fsExtra.copy).toHaveBeenCalled()
+  })
 
-    expect(fsExtra.copy).toHaveBeenCalled();
-  });
+  it(`can copy HTML images`, () => {
+    const path = `images/sample-image.gif`
 
-  it('leaves absolute file paths alone', () => {
-    const path = `https://google.comimages/sample-image.gif`;
+    const markdownAST = remark.parse(`<img src="${path}">`)
 
-    const markdownAST = remark.parse(`![some absolute image](${path})`);
+    plugin({ files: getFiles(path), markdownAST, markdownNode, getNode })
 
-    plugin({ files: getFiles(path), markdownAST, markdownNode, getNode });
+    expect(fsExtra.copy).toHaveBeenCalled()
+  })
 
-    expect(fsExtra.copy).not.toHaveBeenCalled();
+  it(`leaves absolute file paths alone`, () => {
+    const path = `https://google.comimages/sample-image.gif`
 
-  });
-});
+    const markdownAST = remark.parse(`![some absolute image](${path})`)
+
+    plugin({ files: getFiles(path), markdownAST, markdownNode, getNode })
+
+    expect(fsExtra.copy).not.toHaveBeenCalled()
+  })
+})
