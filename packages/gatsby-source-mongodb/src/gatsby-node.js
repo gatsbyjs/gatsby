@@ -51,7 +51,6 @@ exports.sourceNodes = (
           id: `${item._id}`,
           parent: item.parent || `__${collectionName}__`,
           children: item.children || [],
-          collection: collectionName,
           internal: {
             mediaType: `application/json`,
             type: `mongodb${caps(dbName)}${caps(collectionName)}`,
