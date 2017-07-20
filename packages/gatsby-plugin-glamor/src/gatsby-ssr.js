@@ -1,13 +1,15 @@
 import React from "react"
 import { renderToString } from "react-dom/server"
-import renderStatic from "glamor/server"
+const { renderStaticOptimized } = require("glamor/server")
 
 exports.replaceRenderer = ({
   bodyComponent,
   replaceBodyHTMLString,
   setHeadComponents,
 }) => {
-  let { html, css, ids } = renderStatic(() => renderToString(bodyComponent))
+  let { html, css, ids } = renderStaticOptimized(() =>
+    renderToString(bodyComponent)
+  )
 
   replaceBodyHTMLString(html)
 

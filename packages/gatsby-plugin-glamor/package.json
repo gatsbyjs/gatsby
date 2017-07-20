@@ -4,7 +4,6 @@
   "version": "1.1.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "babel-plugin-glamor": "^3.0.0-1",
     "glamor": "^2.20.29"
   },
   "devDependencies": {
