@@ -50,9 +50,11 @@ const createNode = content => {
 const createPluginOptions = (content, imagePaths = `/`) => {
   const dirName = `not-a-real-dir`
   return {
-    files: [].concat(imagePaths).map(imagePath => {return {
-      absolutePath: `${dirName}/${imagePath}`,
-    }}),
+    files: [].concat(imagePaths).map(imagePath => {
+      return {
+        absolutePath: `${dirName}/${imagePath}`,
+      }
+    }),
     markdownNode: createNode(content),
     markdownAST: remark.parse(content),
     getNode: () => {

@@ -1,9 +1,29 @@
+import React from "react"
 import { renderToString } from "react-dom/server"
-import inline from "glamor-inline"
+const { renderStaticOptimized } = require(`glamor/server`)
 
-exports.replaceRenderer = ({ bodyComponent, replaceBodyHTMLString }) => {
-  const bodyHTML = renderToString(bodyComponent)
-  const inlinedHTML = inline(bodyHTML)
+exports.replaceRenderer = ({
+  bodyComponent,
+  replaceBodyHTMLString,
+  setHeadComponents,
+}) => {
+  let { html, css, ids } = renderStaticOptimized(() =>
+    renderToString(bodyComponent)
+  )
 
-  replaceBodyHTMLString(inlinedHTML)
+  replaceBodyHTMLString(html)
+
+  setHeadComponents([
+    <style id="glamor-styles" dangerouslySetInnerHTML={{ __html: css }} />,
+    <script
+      id="glamor-ids"
+      dangerouslySetInnerHTML={{
+        __html: `
+        // <![CDATA[
+        window._glamor = ${JSON.stringify(ids)}
+        // ]]>
+        `,
+      }}
+    />,
+  ])
 }

@@ -145,9 +145,9 @@ module.exports = (
           }
         })
     )
-  ).then(markdownImageNodes => 
+  ).then(markdownImageNodes =>
     // HTML image node stuff
-     Promise.all(
+    Promise.all(
       // Complex because HTML nodes can contain multiple images
       rawHtmlNodes.map(
         node =>
@@ -201,6 +201,8 @@ module.exports = (
             return resolve(node)
           })
       )
-    ).then(htmlImageNodes => markdownImageNodes.concat(htmlImageNodes).filter(node => !!node))
+    ).then(htmlImageNodes =>
+      markdownImageNodes.concat(htmlImageNodes).filter(node => !!node)
+    )
   )
 }
