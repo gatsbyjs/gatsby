@@ -13,13 +13,13 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     // The “graphql” function allows us to run arbitrary
     // queries against the mongoDB graphql schema.
 
-    // MongoDBDocField is a data node type created from mongoDB is a
+    // Mongodb{dbName}{collection} is a data node type created from mongoDB is a
     // "connection" (a GraphQL convention for accessing a list of nodes) gives
-    // us an easy way to query all MongoDBDocFields nodes.
+    // us an easy way to query all documents in the mongoDB collection.
     graphql(
       `
       {
-        allMongoDbDocField(limit: 1000) {
+        allMongodbLocalDocuments(limit: 1000) {
           edges {
             node {
               id
@@ -37,7 +37,8 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
       const pageTemplate = path.resolve(`./src/templates/item.js`)
       // We want to create a detailed page for each
       // document in our mongoDB collection
-      _.each(result.data.allMongoDbDocField.edges, edge => {
+      console.log(result.data);
+      _.each(result.data.allMongodbLocalDocuments.edges, edge => {
         // Gatsby uses Redux to manage its internal state.
         // Plugins and sites can use functions like "createPage"
         // to interact with Gatsby.

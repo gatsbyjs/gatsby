@@ -25,7 +25,7 @@ class StoryItem extends React.Component {
 export default StoryItem
 
 export const storyFragment = graphql`
-  fragment Story_item on mongoDBDocField {
+  fragment Story_item on mongodbLocalDocuments {
     id
     url
     name

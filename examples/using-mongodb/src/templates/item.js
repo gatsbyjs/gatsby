@@ -4,7 +4,7 @@ import Link from "gatsby-link"
 class Item extends React.Component {
   render() {
     console.log(this.props)
-    const story = this.props.data.mongoDbDocField
+    const story = this.props.data.mongodbLocalDocuments
 
     return (
       <div>
@@ -23,7 +23,7 @@ export default Item
 
 export const pageQuery = graphql`
   query ItemQuery($id: String!) {
-    mongoDbDocField(id: { eq: $id }) {
+    mongodbLocalDocuments(id: { eq: $id }) {
       id
       name
       url
