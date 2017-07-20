@@ -4,7 +4,7 @@ import PropTypes from "prop-types"
 
 let pathPrefix = ``
 if (__PREFIX_PATHS__) {
-  pathPrefix = `${__PATH_PREFIX__}/`
+  pathPrefix = __PATH_PREFIX__.replace(/\/?$/, '');
 }
 
 class GatsbyLink extends React.Component {
