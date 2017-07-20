@@ -2,6 +2,7 @@ module.exports = {
   siteMetadata: {
     title: `Gatsby`,
     siteUrl: `https://www.gatsbyjs.org`,
+    description: `Blazing-fast static site generator for React`,
   },
   mapping: {
     "MarkdownRemark.frontmatter.author": `AuthorYaml`,
@@ -96,5 +97,61 @@ module.exports = {
       },
     },
     `gatsby-plugin-sitemap`,
+    {
+      resolve: `gatsby-plugin-feed`,
+      options: {
+        feeds: [
+          {
+            query: `
+              {
+                allMarkdownRemark(
+                  sort: { order: DESC, fields: [frontmatter___date] }
+                  filter: {
+                    frontmatter: { draft: { ne: true } }
+                    fileAbsolutePath: { regex: "/blog/" }
+                  }
+                ) {
+                  edges {
+                    node {
+                      excerpt
+                      html
+                      frontmatter {
+                        title
+                        date
+                        excerpt
+                        author {
+                          id
+                        }
+                      }
+                      fields {
+                        slug
+                      }
+                    }
+                  }
+                }
+              }
+            `,
+            output: `/blog/rss.xml`,
+            setup: ({ query: { site: { siteMetadata }}}) => ({
+              title: siteMetadata.title,
+              description: siteMetadata.description,
+              feed_url: siteMetadata.siteUrl + '/blog/rss.xml',
+              site_url: siteMetadata.siteUrl,
+              generator: 'GatsbyJS',
+            }),
+            serialize: ({ query: { site, allMarkdownRemark }}) => (
+              allMarkdownRemark.edges.map(({ node }) => ({
+                title: node.frontmatter.title,
+                description: node.frontmatter.excerpt || node.excerpt,
+                url: site.siteMetadata.siteUrl + node.fields.slug,
+                guid: site.siteMetadata.siteUrl + node.fields.slug,
+                custom_elements: [{ "content:encoded": node.html }],
+                author: node.frontmatter.author.id,
+              }))
+            )
+          },
+        ],
+      },
+    },
   ],
 }
