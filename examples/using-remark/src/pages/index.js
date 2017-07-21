@@ -35,6 +35,7 @@ class Index extends React.Component {
             <a href="https://github.com/KyleAMathews/typefaces">Typefaces</a>
             {` `}
             project.
+            {}
           </h1>
           <ul
             css={{
@@ -44,6 +45,8 @@ class Index extends React.Component {
               listStyle: `none`,
             }}
           >
+          {this.props.data.site.siteMetadata.title} <br/>
+          {this.props.data.site.siteMetadata.description}
             {posts.map(post =>
               <li key={post.node.fields.slug}>
                 <span
@@ -77,6 +80,8 @@ export const pageQuery = graphql`
     site {
       siteMetadata {
         title
+        author
+        description
       }
     }
     allMarkdownRemark(

@@ -165,14 +165,14 @@ module.exports = async (
           // the numerical IDs aren't useful. In production we use numerical module
           // ids to reduce filesize.
           new webpack.NamedModulesPlugin(),
-          new FriendlyErrorsWebpackPlugin({
-            compilationSuccessInfo: {
-              messages: [
-                `Your site is running at http://localhost:${program.port}`,
-                `Your graphql debugger is running at http://localhost:${program.port}/___graphql`,
-              ],
-            },
-          }),
+          // new FriendlyErrorsWebpackPlugin({
+          //   compilationSuccessInfo: {
+          //     messages: [
+          //       `Your site is running at http://localhost:${program.port}`,
+          //       `Your graphql debugger is running at http://localhost:${program.port}/___graphql`,
+          //     ],
+          //   },
+          // }),
         ]
       case `develop-html`:
         return [

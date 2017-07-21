@@ -52,6 +52,7 @@ exports.extractQueries = () => {
 
 const runQueriesForComponent = componentPath => {
   const pages = getPagesForComponent(componentPath)
+  // console({pages})
   // Remove page & layout data dependencies before re-running queries because
   // the changing of the query could have changed the data dependencies.
   // Re-running the queries will add back data dependencies.
@@ -64,7 +65,7 @@ const getPagesForComponent = componentPath => {
   const state = store.getState()
   return [
     ...state.pages,
-    ...state.layout
+    ...state.layouts
   ].filter(p => p.componentPath === componentPath)
 }
 
@@ -80,23 +81,22 @@ exports.watchComponent = componentPath => {
 }
 const watch = rootDir => {
   if (watcher) return
-  console.log('watching!')
   const debounceCompile = _.debounce(() => {
     queryCompiler().then(queries => {
       const components = store.getState().components
-      queries.forEach(({ text }, path) => {
-        console.log(path)
+      queries.forEach(({ text }, id) => {
         invariant(
-          components[path],
-          `Path ${path} not found in the store components: ${JSON.stringify(components)}`
+          components[id],
+          `${id} not found in the store components: ${JSON.stringify(components)}`
         )
 
-        if (text !== components[path].query) {
+        if (text !== components[id].query) {
+          console.log(id, text)
           boundActionCreators.replaceComponentQuery({
             query: text,
-            componentPath: path,
+            componentPath: id,
           })
-          runQueriesForComponent(path)
+          runQueriesForComponent(id)
         }
       })
     })

@@ -14,7 +14,7 @@ const DefaultLayout = ({ children }) => (
 // will just render, else will render null.
 class ComponentRenderer extends React.Component {
   constructor(props) {
-    super()
+    super(props)
     this.state = {
       location: props.location,
       pageResources: loader.getResourcesForPathname(props.location.pathname),
@@ -22,7 +22,12 @@ class ComponentRenderer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.state.location.pathname !== nextProps.location.pathname) {
+    // hmm, would this ever be false?
+
+    if (
+      this.shouldComponentUpdate(null, nextProps) ||
+      this.state.pageResources !== nextProps.pageResources
+    ) {
       const pageResources = loader.getResourcesForPathname(
         nextProps.location.pathname
       )
@@ -85,6 +90,7 @@ class ComponentRenderer extends React.Component {
   }
 
   render() {
+    console.log('rendering!')
     if (this.state.pageResources) {
       return createElement(
         withRouter(this.state.pageResources.layout || DefaultLayout), {

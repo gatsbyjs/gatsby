@@ -11,7 +11,7 @@ require(`prismjs/themes/prism-solarizedlight.css`)
 
 class DefaultLayout extends React.Component {
   render() {
-    console.log(this.props.data)
+    const { author, homepage } = this.props.data.site.siteMetadata
     return (
       <div>
         <div {...styles.container} {...styles.verticalPadding}>
@@ -31,18 +31,23 @@ class DefaultLayout extends React.Component {
                 margin: 0,
               }}
             >
-              {this.props.data.site.siteMetadata.title} by {this.props.data.site.siteMetadata.author}
             </h1>
           </Link>
         </div>
         <div {...styles.container} {...styles.verticalPadding}>
-          test - {this.props.data.site.siteMetadata.description}
           {this.props.children()}
+          <p css={{
+            ...scale(-.5),
+            color: styles.colors.light
+          }}>
+            powered by <a target="_blank" href={homepage}>{author}</a>
+          </p>
         </div>
       </div>
     )
   }
 }
+
 
 export default DefaultLayout
 
@@ -50,7 +55,8 @@ export const pageQuery = graphql`
   query LayoutIndexQuery {
     site {
       siteMetadata {
-        title
+        author
+        homepage
       }
     }
   }
