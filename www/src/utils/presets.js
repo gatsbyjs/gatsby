@@ -18,4 +18,9 @@ module.exports = {
   purple: colors.a[13],
   lightPurple: colors.b[2],
   veryLightPurple: colors.b[0],
+  vPR: 1.5,
+  vPHdR: 2.5,
+  vPVHdR: 3.5,
+  vPVVHdR: 4.5,
+  logoWidth: 1.7,
 }

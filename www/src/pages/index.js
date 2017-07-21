@@ -6,30 +6,40 @@ import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import presets from "../utils/presets"
 import colors from "../utils/colors"
 
-const mobileBackgroundImage = {
-  backgroundImage: `
-            linear-gradient(-45deg, #744c9e 30%, transparent 30%),
-            linear-gradient(-45deg, #9d7cbf 40%, transparent 40%),
-            linear-gradient(45deg, #f5f3f7 33%, white 33%)`,
-}
-const phabletBackgroundImage = {
-  backgroundImage: `
-            linear-gradient(-45deg, #744c9e 32.5%, transparent 32.5%),
-            linear-gradient(-45deg, #9d7cbf 47.5%, transparent 47.5%),
-            linear-gradient(45deg, #f5f3f7 37.5%, white 37.5%)`,
-}
-const desktopBackgroundImage = {
-  backgroundImage: `
-            linear-gradient(-45deg, #744c9e 40%, transparent 40%),
-            linear-gradient(-45deg, #9d7cbf 50%, transparent 50%),
-            linear-gradient(45deg, #f5f3f7 33%, white 33%)`,
-}
+import bg from "../hero-bg-left.svg"
+import bgr from "../hero-bg-right.svg"
+
 const FuturaParagraph = ({ children }) =>
   <p css={{ fontFamily: options.headerFontFamily.join(`,`), ...scale(1 / 10) }}>
     {children}
   </p>
 
-const headerHeight = `55px`
+const vP = rhythm(presets.vPR)
+const vPHd = rhythm(presets.vPHdR)
+const vPVHd = rhythm(presets.vPVHdR)
+const vPVVHd = rhythm(presets.vPVVHdR)
+
+const vPOff = rhythm(presets.vPR - presets.logoWidth)
+const vPHdOff = rhythm(presets.vPHdR - presets.logoWidth)
+const vPVHdOff = rhythm(presets.vPVHdR - presets.logoWidth)
+const vPVVHdOff = rhythm(presets.vPVVHdR - presets.logoWidth)
+
+const verticalPadding = {
+  paddingLeft: vP,
+  paddingRight: vP,
+  [presets.Hd]: {
+    paddingLeft: vPHd,
+    paddingRight: vPHd,
+  },
+  [presets.VHd]: {
+    paddingLeft: vPVHd,
+    paddingRight: vPVHd,
+  },
+  [presets.VVHd]: {
+    paddingLeft: vPVVHd,
+    paddingRight: vPVVHd,
+  },
+}
 const ctaButtonStyles = {
   ...scale(2 / 5),
   display: `inline-block`,
@@ -43,6 +53,183 @@ const ctaButtonStyles = {
     ":hover": { background: `#744c9e`, color: `white` },
   },
 }
+const cardStyles = {
+  flex: `0 0 100%`,
+  background: `white`,
+  padding: `0 1rem`,
+  [presets.Tablet]: {
+    flex: 1,
+    flexBasis: `50%`,
+    maxWidth: `50%`,
+  },
+  [presets.Desktop]: {
+    flexBasis: `33%`,
+    maxWidth: `33%`,
+  },
+}
+const HeroUnitBackground = ({ position }) =>
+  <div
+    className="heroUnitBackground"
+    css={{
+      position: position,
+      top: 0,
+      left: 0,
+      bottom: 0,
+      right: 0,
+      zIndex: -1,
+    }}
+  >
+    <div
+      css={{
+        position: `absolute`,
+        width: vPOff,
+        bottom: 0,
+        left: 0,
+        top: 0,
+        zIndex: -10,
+        background: `#F5F3F7`,
+        [presets.Hd]: {
+          width: vPHdOff,
+        },
+        [presets.VHd]: {
+          width: vPVHdOff,
+        },
+        [presets.VVHd]: {
+          width: vPVVHdOff,
+        },
+      }}
+    />
+    <div
+      className="heroUnitBackground-white"
+      css={{
+        position: `absolute`,
+        right: 0,
+        bottom: 0,
+        left: vPOff,
+        top: 0,
+        zIndex: -2,
+        background: `white`,
+        [presets.Hd]: {
+          left: vPHdOff,
+        },
+        [presets.VHd]: {
+          left: vPVHdOff,
+        },
+        [presets.VVHd]: {
+          left: vPVVHdOff,
+        },
+      }}
+    />
+    <div
+      className="heroUnitBackground-right"
+      css={{
+        position: `absolute`,
+        right: 0,
+        bottom: 0,
+        left: position === `absolute` ? `25%` : 0,
+        top: 0,
+        zIndex: -1,
+        background: `url(${bgr})`,
+        backgroundRepeat: `no-repeat`,
+        backgroundSize: `cover`,
+        //backgroundPosition: `0 0`,
+      }}
+    />
+    <div
+      className="heroUnitBackground-left"
+      css={{
+        position: `absolute`,
+        right: 0,
+        left: vPOff,
+        top: 0,
+        bottom: 0,
+        zIndex: -2,
+        background: `url(${bg})`,
+        //backgroundSize: `cover`,
+        backgroundRepeat: `no-repeat`,
+        [presets.Hd]: {
+          left: vPHdOff,
+        },
+        [presets.VHd]: {
+          left: vPVHdOff,
+        },
+        [presets.VVHd]: {
+          left: vPVVHdOff,
+        },
+      }}
+    />
+  </div>
+
+const HeroUnit = () =>
+  <div
+    css={{
+      padding: rhythm(3 / 4),
+      paddingLeft: rhythm(1.5),
+      paddingTop: rhythm(4),
+      paddingBottom: rhythm(4),
+      position: `relative`,
+      [presets.Mobile]: {
+        width: rhythm(15),
+        //background: `yellow`,
+      },
+      [presets.Phablet]: {
+        width: rhythm(17),
+        //background: `orange`,
+      },
+      [presets.Tablet]: {
+        width: rhythm(19),
+        //background: `orange`,
+      },
+      [presets.Desktop]: {
+        width: rhythm(22),
+        //background: `red`,
+        paddingBottom: rhythm(5),
+      },
+      [presets.Hd]: {
+        paddingLeft: vPHd,
+        width: rhythm(22),
+      },
+      [presets.VHd]: {
+        paddingBottom: rhythm(4),
+        paddingLeft: vPVHd,
+        width: rhythm(29),
+      },
+      [presets.VVHd]: {
+        paddingBottom: rhythm(6),
+        paddingLeft: vPVVHd,
+        width: rhythm(30),
+      },
+    }}
+  >
+    <h1
+      css={{
+        color: `#744c9e`,
+        ...scale(0.9),
+        margin: 0,
+        marginBottom: `1em`,
+        padding: 0,
+        lineHeight: 1,
+        [presets.Phablet]: {
+          fontSize: scale(1.2).fontSize,
+        },
+        [presets.Tablet]: {
+          fontSize: scale(1.3).fontSize,
+        },
+        [presets.Desktop]: {
+          fontSize: scale(1.5).fontSize,
+        },
+        [presets.VHd]: {
+          fontSize: scale(1.75).fontSize,
+        },
+      }}
+    >
+      Blazing-fast static site generator for React
+    </h1>
+    <Link css={ctaButtonStyles} to="/docs/">
+      Get Started
+    </Link>
+  </div>
+
 const IndexRoute = React.createClass({
   render() {
     console.log(this.props)
@@ -51,192 +238,88 @@ const IndexRoute = React.createClass({
       <div>
         <div
           css={{
-            background: presets.purple,
-            ...mobileBackgroundImage,
-            // backgroundImage: `url("http://www.transparenttextures.com/patterns/argyle.png")`,
-            // backgroundImage: `linear-gradient(135deg,${colors.b[14]},${colors
-            // .b[13]},${colors.b[12]})`,
-            paddingBottom: rhythm(1),
-            paddingTop: headerHeight,
-            minHeight: rhythm(20),
-            [presets.Phablet]: {
-              ...phabletBackgroundImage,
-            },
-            [presets.Desktop]: {
-              ...desktopBackgroundImage,
-            },
+            position: `relative`,
           }}
         >
+          <HeroUnitBackground position="fixed" />
+          <HeroUnit />
+        </div>
+
+        <div css={{ ...verticalPadding }}>
           <div
             css={{
-              padding: rhythm(1),
-              paddingLeft: rhythm(1.5),
-              [presets.Mobile]: {
-                width: rhythm(17),
-              },
-              [presets.Phablet]: {
-                width: rhythm(18),
-              },
-              [presets.Tablet]: {
-                width: rhythm(20),
-              },
-              [presets.Desktop]: {
-                width: rhythm(23),
-              },
-              [presets.Hd]: {
-                padding: rhythm(1),
-                paddingLeft: rhythm(2.5),
-                width: rhythm(28),
-              },
-              [presets.VHd]: {
-                paddingLeft: rhythm(3.5),
-                width: rhythm(29),
-              },
-              [presets.VVHd]: {
-                paddingLeft: rhythm(4.5),
-                width: rhythm(30),
-              },
+              display: `flex`,
+              flex: `0 1 auto`,
+              flexWrap: `wrap`,
+              marginRight: `-1rem`,
+              marginLeft: `-1rem`,
+              background: `white`,
+              paddingBottom: `2rem`,
+              //boxShadow: `0 5px 15px rgba(0,0,0,0.2)`,
             }}
           >
-            <h1
-              css={{
-                marginTop: rhythm(1),
-                marginBottom: rhythm(1.5),
-                color: `#744c9e`,
-                ...scale(0.9),
-                lineHeight: 1,
-                [presets.Mobile]: {
-                  fontSize: scale(1.1).fontSize,
-                },
-                [presets.Phablet]: {
-                  fontSize: scale(1.2).fontSize,
-                },
-                [presets.Tablet]: {
-                  fontSize: scale(1.3).fontSize,
-                },
-                [presets.Desktop]: {
-                  fontSize: scale(1.5).fontSize,
-                },
-                [presets.Hd]: {
-                  fontSize: scale(1.75).fontSize,
-                },
-              }}
-            >
-              Blazing-fast static site generator for React
-            </h1>
-            <div>
-              <Link css={ctaButtonStyles} to="/docs/">
-                Get Started
-              </Link>
+            <div css={cardStyles}>
+              <h2>Modern web tech without the headache</h2>
+              <FuturaParagraph>
+                Enjoy all the power of the latest web technologies. React.js,
+                webpack, modern JavaScript and CSS and more are all setup and
+                waiting for you to install and start building.
+              </FuturaParagraph>
+            </div>
+            <div css={cardStyles}>
+              <h2>Bring your own data</h2>
+              <FuturaParagraph>
+                Gatsby’s rich data plugin ecosystem lets you build sites with
+                the data you want. Integrate data from one or many sources:
+                headless CMSs, SaaS services, APIs, databases, your file system,
+                and more. Pull data directly into your pages using GraphQL.
+              </FuturaParagraph>
+            </div>
+            <div css={cardStyles}>
+              <h2>Scale to the entire internet</h2>
+              <FuturaParagraph>
+                Gatsby.js is Internet Scale. Forget complicated deploys with
+                databases and servers and their expensive, time-consuming setup
+                costs, maintenance, and scaling fears. Gatsby.js builds your
+                site as “static” files which can be deployed easily on dozens of
+                services.
+              </FuturaParagraph>
+            </div>
+            <div css={cardStyles}>
+              <h2>Future-proof your website</h2>
+              <FuturaParagraph>
+                Don't build a website with last decade's tech. The future of the
+                web is mobile, JavaScript and APIs—the {` `}
+                <a href="https://jamstack.org/">JAMstack</a>. Every website is a
+                web app and every web app is a website. Gatsby.js is the
+                universal JavaScript framework you’ve been waiting for.
+              </FuturaParagraph>
+            </div>
+            <div css={cardStyles}>
+              <h2>
+                <em>Static</em> Progressive Web Apps
+              </h2>
+              <FuturaParagraph>
+                Gatsby.js is a static PWA (Progressive Web App) generator. You
+                get code and data splitting out-of-the-box. Gatsby loads an HTML
+                file that’s a server rendered version of your React.js page then
+                makes it live with JavaScript. Code and data for other pages get
+                preloaded so clicking around the site feels incredibly fast.
+              </FuturaParagraph>
+            </div>
+            <div css={cardStyles}>
+              <h2>Speed past the competition</h2>
+              <FuturaParagraph>
+                Gatsby.js builds the fastest possible website. Instead of
+                waiting to generate pages when requested, pre-build pages and
+                lift them into a global cloud of servers—ready to be delivered
+                instantly to your users wherever they are.
+              </FuturaParagraph>
             </div>
           </div>
         </div>
+
         <Container hasSideBar={false}>
-          <div
-            css={{
-              [presets.Tablet]: {
-                marginLeft: rhythm(-1),
-                marginRight: rhythm(-1),
-              },
-            }}
-          >
-            <div css={{ display: `flex`, flexWrap: `wrap` }}>
-              <div
-                css={{
-                  flex: `0 0 100%`,
-                  [presets.Tablet]: { flex: 1, padding: `0 ${rhythm(1)}` },
-                }}
-              >
-                <h2>Modern web tech without the headache</h2>
-                <FuturaParagraph>
-                  Enjoy all the power of the latest web technologies. React.js,
-                  webpack, modern JavaScript and CSS and more are all setup and
-                  waiting for you to install and start building.
-                </FuturaParagraph>
-              </div>
-              <div
-                css={{
-                  flex: `0 0 100%`,
-                  [presets.Tablet]: { flex: 1, padding: `0 ${rhythm(1)}` },
-                }}
-              >
-                <h2>Bring your own data</h2>
-                <FuturaParagraph>
-                  Gatsby’s rich data plugin ecosystem lets you build sites with
-                  the data you want. Integrate data from one or many sources:
-                  headless CMSs, SaaS services, APIs, databases, your file
-                  system, and more. Pull data directly into your pages using
-                  GraphQL.
-                </FuturaParagraph>
-              </div>
-            </div>
-            <div css={{ display: `flex`, flexWrap: `wrap` }}>
-              <div
-                css={{
-                  flex: `0 0 100%`,
-                  [presets.Tablet]: { flex: 1, padding: `0 ${rhythm(1)}` },
-                }}
-              >
-                <h2>Scale to the entire internet</h2>
-                <FuturaParagraph>
-                  Gatsby.js is Internet Scale. Forget complicated deploys with
-                  databases and servers and their expensive, time-consuming
-                  setup costs, maintenance, and scaling fears. Gatsby.js builds
-                  your site as “static” files which can be deployed easily on
-                  dozens of services.
-                </FuturaParagraph>
-              </div>
-              <div
-                css={{
-                  flex: `0 0 100%`,
-                  [presets.Tablet]: { flex: 1, padding: `0 ${rhythm(1)}` },
-                }}
-              >
-                <h2>Future-proof your website</h2>
-                <FuturaParagraph>
-                  Don't build a website with last decade's tech. The future of
-                  the web is mobile, JavaScript and APIs—the {` `}
-                  <a href="https://jamstack.org/">JAMstack</a>. Every website is
-                  a web app and every web app is a website. Gatsby.js is the
-                  universal JavaScript framework you’ve been waiting for.
-                </FuturaParagraph>
-              </div>
-            </div>
-            <div css={{ display: `flex`, flexWrap: `wrap` }}>
-              <div
-                css={{
-                  flex: `0 0 100%`,
-                  [presets.Tablet]: { flex: 1, padding: `0 ${rhythm(1)}` },
-                }}
-              >
-                <h2>
-                  <em>Static</em> Progressive Web Apps
-                </h2>
-                <FuturaParagraph>
-                  Gatsby.js is a static PWA (Progressive Web App) generator. You
-                  get code and data splitting out-of-the-box. Gatsby loads an
-                  HTML file that’s a server rendered version of your React.js
-                  page then makes it live with JavaScript. Code and data for
-                  other pages get preloaded so clicking around the site feels
-                  incredibly fast.
-                </FuturaParagraph>
-              </div>
-              <div
-                css={{
-                  flex: `0 0 100%`,
-                  [presets.Tablet]: { flex: 1, padding: `0 ${rhythm(1)}` },
-                }}
-              >
-                <h2>Speed past the competition</h2>
-                <FuturaParagraph>
-                  Gatsby.js builds the fastest possible website. Instead of
-                  waiting to generate pages when requested, pre-build pages and
-                  lift them into a global cloud of servers—ready to be delivered
-                  instantly to your users wherever they are.
-                </FuturaParagraph>
-              </div>
-            </div>
-          </div>
           <div>
             <h1>How Gatsby works</h1>
             <img
@@ -259,7 +342,6 @@ const IndexRoute = React.createClass({
         </Container>
         <div
           css={{
-            backgroundColor: `#f5f3f7`,
             padding: `${rhythm(0.25)} 0`,
             [presets.Tablet]: {
               padding: `${rhythm(2)} 0`,
