@@ -18,20 +18,19 @@ const pathChunkName = path => {
   return `path---${name}`
 }
 
-const getLayout = (path) => {
-  const page = pages.find(
+const getPage = (path) => {
+  return pages.find(
     page => page.path === path
   )
-  let layout
-  if (syncRequires.layouts[page.layoutComponentChunkName]) {
-    layout = syncRequires.layouts[page.layoutComponentChunkName]
-  } else {
-    layout = () =>
-      <div>
-        {props.children()}
-      </div>
-  }
-  return layout
+}
+const defaultLayout = (props) =>
+  <div>
+    {props.children()}
+  </div>
+
+const getLayout = (page) => {
+  const layout = syncRequires.layouts[page.layoutComponentChunkName]
+  return layout ? layout : defaultLayout
 }
 
 const $ = React.createElement
@@ -76,20 +75,22 @@ module.exports = (locals, callback) => {
       },
       context: {},
     },
-    $(withRouter(getLayout(locals.path)), {
-      children: layoutProps =>
-        $(Route, {
-          children: routeProps => {
-            const props = layoutProps ? layoutProps : routeProps
-            const page = pages.find(
-              page => page.path === props.location.pathname
-            )
-            return $(syncRequires.components[page.componentChunkName], {
+    $(Route, {
+      render: props => {
+        const page = getPage(props.location.pathname)
+        const layout = getLayout(page)
+        return $(
+          withRouter(layout), {
+          ...props,
+          ...syncRequires.json[page.layoutJsonName],
+          children: (props) =>
+            $(syncRequires.components[page.componentChunkName], {
               ...props,
-              ...syncRequires.json[page.jsonName],
+              ...syncRequires.json[page.jsonName]
             })
-          },
-        }),
+          }
+        )
+      },
     })
   )
 

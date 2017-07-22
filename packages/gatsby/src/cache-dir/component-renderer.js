@@ -25,7 +25,6 @@ class ComponentRenderer extends React.Component {
     // hmm, would this ever be false?
 
     if (
-      this.shouldComponentUpdate(null, nextProps) ||
       this.state.pageResources !== nextProps.pageResources
     ) {
       const pageResources = loader.getResourcesForPathname(
@@ -90,7 +89,6 @@ class ComponentRenderer extends React.Component {
   }
 
   render() {
-    console.log('rendering!')
     if (this.state.pageResources) {
       return createElement(
         withRouter(this.state.pageResources.layout || DefaultLayout), {
