@@ -134,8 +134,8 @@ exports.onCreatePage = true
 exports.onCreateLayout = true
 
 /**
- * Called when a new layout is created. This extension API is useful
- * for programmatically manipulating layouts created by other plugins
+ * Called when a new component is created. This is used internally to track
+ * page and layout components and queries.
  */
 exports.onCreateComponent = true
 

@@ -52,7 +52,6 @@ exports.extractQueries = () => {
 
 const runQueriesForComponent = componentPath => {
   const pages = getPagesForComponent(componentPath)
-  // console({pages})
   // Remove page & layout data dependencies before re-running queries because
   // the changing of the query could have changed the data dependencies.
   // Re-running the queries will add back data dependencies.
@@ -91,7 +90,6 @@ const watch = rootDir => {
         )
 
         if (text !== components[id].query) {
-          console.log(id, text)
           boundActionCreators.replaceComponentQuery({
             query: text,
             componentPath: id,

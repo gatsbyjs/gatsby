@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Add layouts allows you to add layouts 1`] = `
+Object {
+  "payload": Object {
+    "component": "/whatever/index.js",
+    "componentChunkName": "component---whatever-index-js",
+    "context": Object {},
+    "id": "index",
+    "internalComponentName": "Component-layout-Index",
+    "jsonName": "layout-index.json",
+  },
+  "plugin": Object {
+    "name": "test",
+  },
+  "traceId": undefined,
+  "type": "CREATE_LAYOUT",
+}
+`;
+
+exports[`Add layouts allows you to add layouts 2`] = `Array []`;
+
+exports[`Add layouts allows you to add multiple pages 1`] = `Array []`;
+
+exports[`Add layouts allows you to add pages with context 1`] = `
+Object {
+  "payload": Object {
+    "component": "/whatever/index.js",
+    "componentChunkName": "component---whatever-index-js",
+    "context": Object {
+      "title": "layout title",
+    },
+    "id": "index",
+    "internalComponentName": "Component-layout-Index",
+    "jsonName": "layout-index.json",
+  },
+  "plugin": Object {
+    "name": "test",
+  },
+  "traceId": undefined,
+  "type": "CREATE_LAYOUT",
+}
+`;
+
+exports[`Add layouts allows you to add pages with context 2`] = `Array []`;
+
+exports[`Add layouts allows you to delete ids 1`] = `Array []`;
+
+exports[`Add layouts allows you to update existing pages (based on id) 1`] = `Array []`;

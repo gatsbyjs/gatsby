@@ -165,14 +165,14 @@ module.exports = async (
           // the numerical IDs aren't useful. In production we use numerical module
           // ids to reduce filesize.
           new webpack.NamedModulesPlugin(),
-          // new FriendlyErrorsWebpackPlugin({
-          //   compilationSuccessInfo: {
-          //     messages: [
-          //       `Your site is running at http://localhost:${program.port}`,
-          //       `Your graphql debugger is running at http://localhost:${program.port}/___graphql`,
-          //     ],
-          //   },
-          // }),
+          new FriendlyErrorsWebpackPlugin({
+            compilationSuccessInfo: {
+              messages: [
+                `Your site is running at http://localhost:${program.port}`,
+                `Your graphql debugger is running at http://localhost:${program.port}/___graphql`,
+              ],
+            },
+          }),
         ]
       case `develop-html`:
         return [
@@ -209,7 +209,6 @@ module.exports = async (
           .getState()
           .pages.map(page => page.componentChunkName)
         components = uniq(components)
-        components.push(`layout-component---index`)
         return [
           // Moment.js includes 100s of KBs of extra localization data by
           // default in Webpack that most sites don't want. This line disables
