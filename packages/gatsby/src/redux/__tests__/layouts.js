@@ -1,4 +1,4 @@
-const reducer = require(`../reducers/pages`)
+const reducer = require(`../reducers/layouts`)
 const { actions } = require(`../actions`)
 
 describe(`Add layouts`, () => {
@@ -15,7 +15,7 @@ describe(`Add layouts`, () => {
     expect(state).toMatchSnapshot()
   })
 
-  it(`allows you to add pages with context`, () => {
+  it(`allows you to add layout with context`, () => {
     const action = actions.createLayout(
       {
         id: `index`,
@@ -31,7 +31,7 @@ describe(`Add layouts`, () => {
     expect(state).toMatchSnapshot()
   })
 
-  it(`allows you to add multiple pages`, () => {
+  it(`allows you to add multiple layouts`, () => {
     const action = actions.createLayout(
       {
         id: `index`,
@@ -52,7 +52,7 @@ describe(`Add layouts`, () => {
     expect(state.length).toEqual(2)
   })
 
-  it(`allows you to update existing pages (based on id)`, () => {
+  it(`allows you to update existing layouts (based on id)`, () => {
     const action = actions.createLayout(
       {
         id: `index`,
@@ -84,7 +84,7 @@ describe(`Add layouts`, () => {
       },
       { name: `test` }
     )
-    const action2 = actions.deletePage({ id: `index` })
+    const action2 = actions.deleteLayout({ id: `index` })
 
     let state = reducer(undefined, action)
     state = reducer(state, action2)

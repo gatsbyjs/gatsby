@@ -1,4 +1,4 @@
-const reducer = require(`../page-data-dependencies`)
+const reducer = require(`../component-data-dependencies`)
 
 describe(`add page data dependency`, () => {
   it(`lets you add a node dependency`, () => {

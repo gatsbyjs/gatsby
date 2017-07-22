@@ -15,7 +15,7 @@ module.exports = (state = { nodes: {}, connections: {} }, action) => {
         if (state.nodes[action.payload.nodeId]) {
           existingPaths = state.nodes[action.payload.nodeId]
         }
-        const newPaths = _.uniq(existingPaths.concat(action.payload.componentPath || action.payload.id))
+        const newPaths = _.uniq(existingPaths.concat(action.payload.path || action.payload.id))
         state.nodes[action.payload.nodeId] = newPaths
       }
 
