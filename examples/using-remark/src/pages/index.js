@@ -45,8 +45,6 @@ class Index extends React.Component {
               listStyle: `none`,
             }}
           >
-          {this.props.data.site.siteMetadata.title} <br/>
-          {this.props.data.site.siteMetadata.description}
             {posts.map(post =>
               <li key={post.node.fields.slug}>
                 <span

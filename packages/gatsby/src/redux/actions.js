@@ -118,6 +118,9 @@ actions.deleteLayout = (layout, plugin = ``) => {
  * createLayout({
  *   id: `myNewLayout`,
  *   component: path.resolve('./src/templates/myNewLayout.js`)
+ *   context: {
+ *     title: `My New Layout`
+ *   }
  * })
  */
 actions.createLayout = (layout, plugin = ``, traceId) => {
@@ -125,6 +128,11 @@ actions.createLayout = (layout, plugin = ``, traceId) => {
 
   layout.jsonName = `layout-${_.kebabCase(layout.id)}.json`
   layout.internalComponentName = `Component-layout-${pascalCase(layout.id)}`
+
+  // Ensure the layout has a context object
+  if (!layout.context) {
+    layout.context = {}
+  }
 
   const result = Joi.validate(layout, joiSchemas.layoutSchema)
   if (result.error) {

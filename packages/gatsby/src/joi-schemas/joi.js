@@ -15,7 +15,8 @@ export const layoutSchema = Joi.object()
   .keys({
     id: Joi.string().required(),
     component: Joi.string().required(),
-    componentChunkName: Joi.string().required()
+    componentChunkName: Joi.string().required(),
+    context: Joi.object(),
   })
   .unknown()
 

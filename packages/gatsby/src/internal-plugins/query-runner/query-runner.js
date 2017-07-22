@@ -42,8 +42,12 @@ module.exports = async (pageOrLayout, component) => {
     }
   }
 
-  // Add the path context onto the results.
-  result.pathContext = pageOrLayout.context
+  // Add the path/layout context onto the results.
+  let contextKey = `pathContext`
+  if (!pageOrLayout.path) {
+    contextKey = `layoutContext`
+  }
+  result[contextKey] = pageOrLayout.context
   const resultJSON = JSON.stringify(result, null, 4)
   return writeFileAsync(
     joinPath(program.directory, `.cache`, `json`, pageOrLayout.jsonName),
