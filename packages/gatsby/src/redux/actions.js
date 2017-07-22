@@ -62,7 +62,9 @@ actions.createPage = (page, plugin = ``, traceId) => {
   // if it exists we set it as default
   if (
     !page.layout &&
-    !glob.sync(joinPath(store.getState().program.directory, `src/layouts/index.*`)).length == 0
+    !glob.sync(
+      joinPath(store.getState().program.directory, `src/layouts/index.*`)
+    ).length == 0
   ) {
     page.layout = `index`
   }
@@ -136,7 +138,9 @@ actions.createLayout = (layout, plugin = ``, traceId) => {
 
   const result = Joi.validate(layout, joiSchemas.layoutSchema)
   if (result.error) {
-    console.log(chalk.blue.bgYellow(`The upserted layout didn't pass validation`))
+    console.log(
+      chalk.blue.bgYellow(`The upserted layout didn't pass validation`)
+    )
     console.log(chalk.bold.red(result.error))
     console.log(layout)
     return

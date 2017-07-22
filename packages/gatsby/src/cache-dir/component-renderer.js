@@ -3,11 +3,10 @@ import loader from "./loader"
 import emitter from "./emitter"
 import { withRouter } from "react-router-dom"
 
-const DefaultLayout = ({ children }) => (
+const DefaultLayout = ({ children }) =>
   <div>
     {children()}
   </div>
-)
 
 // Pass pathname in as prop.
 // component will try fetching resources. If they exist,
@@ -24,9 +23,7 @@ class ComponentRenderer extends React.Component {
   componentWillReceiveProps(nextProps) {
     // hmm, would this ever be false?
 
-    if (
-      this.state.pageResources !== nextProps.pageResources
-    ) {
+    if (this.state.pageResources !== nextProps.pageResources) {
       const pageResources = loader.getResourcesForPathname(
         nextProps.location.pathname
       )
@@ -91,17 +88,19 @@ class ComponentRenderer extends React.Component {
   render() {
     if (this.state.pageResources) {
       return createElement(
-        withRouter(this.state.pageResources.layout || DefaultLayout), {
-        ...this.state.pageResources.layoutJson,
-        ...this.props,
-        children: (layoutProps) =>
-          createElement(this.state.pageResources.component, {
-            key: this.props.location.pathname,
-            ...layoutProps,
-            ...this.props,
-            ...this.state.pageResources.json,
-          })
-        })
+        withRouter(this.state.pageResources.layout || DefaultLayout),
+        {
+          ...this.state.pageResources.layoutJson,
+          ...this.props,
+          children: layoutProps =>
+            createElement(this.state.pageResources.component, {
+              key: this.props.location.pathname,
+              ...layoutProps,
+              ...this.props,
+              ...this.state.pageResources.json,
+            }),
+        }
+      )
     } else {
       return null
     }

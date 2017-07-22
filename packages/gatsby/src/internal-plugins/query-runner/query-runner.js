@@ -22,7 +22,10 @@ module.exports = async (pageOrLayout, component) => {
   if (!component.query || component.query === ``) {
     result = {}
   } else {
-    result = await graphql(component.query, { ...pageOrLayout, ...pageOrLayout.context })
+    result = await graphql(component.query, {
+      ...pageOrLayout,
+      ...pageOrLayout.context,
+    })
   }
 
   // If there's a graphql errort then log the error. If we're building, also

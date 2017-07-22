@@ -30,18 +30,22 @@ class DefaultLayout extends React.Component {
                 lineHeight: 1,
                 margin: 0,
               }}
-            >
-            </h1>
+            />
           </Link>
         </div>
         <div {...styles.container} {...styles.verticalPadding}>
-            {this.props.children()}
-            <div css={{
-              ...scale(-.5),
-              color: styles.colors.light
-            }}>
-              powered by <a target="_blank" href={homepage}>{author}</a>
-            </div>
+          {this.props.children()}
+          <div
+            css={{
+              ...scale(-0.5),
+              color: styles.colors.light,
+            }}
+          >
+            powered by{` `}
+            <a target="_blank" href={homepage}>
+              {author}
+            </a>
+          </div>
         </div>
       </div>
     )

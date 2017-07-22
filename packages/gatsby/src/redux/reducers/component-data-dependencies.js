@@ -15,7 +15,9 @@ module.exports = (state = { nodes: {}, connections: {} }, action) => {
         if (state.nodes[action.payload.nodeId]) {
           existingPaths = state.nodes[action.payload.nodeId]
         }
-        const newPaths = _.uniq(existingPaths.concat(action.payload.path || action.payload.id))
+        const newPaths = _.uniq(
+          existingPaths.concat(action.payload.path || action.payload.id)
+        )
         state.nodes[action.payload.nodeId] = newPaths
       }
 
@@ -25,7 +27,9 @@ module.exports = (state = { nodes: {}, connections: {} }, action) => {
         if (state.connections[action.payload.connection]) {
           existingPaths = state.connections[action.payload.connection]
         }
-        const newPaths = _.uniq(existingPaths.concat(action.payload.path || action.payload.id))
+        const newPaths = _.uniq(
+          existingPaths.concat(action.payload.path || action.payload.id)
+        )
         state.connections[action.payload.connection] = newPaths
       }
 

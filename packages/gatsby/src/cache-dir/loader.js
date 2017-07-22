@@ -68,7 +68,8 @@ const fetchResource = (resourceName, cb = () => {}) => {
     // Find resource
     const resourceFunction =
       resourceName.slice(0, 9) === `component`
-        ? asyncRequires.components[resourceName] || asyncRequires.layouts[resourceName]
+        ? asyncRequires.components[resourceName] ||
+          asyncRequires.layouts[resourceName]
         : asyncRequires.json[resourceName]
 
     // Download the resource
@@ -238,7 +239,8 @@ const queue = {
         component: syncRequires.components[page.componentChunkName],
         json: syncRequires.json[page.jsonName],
         layout: syncRequires.layouts[page.layoutComponentChunkName],
-        layoutJson: syncRequires.json[page.layoutJsonName]
+        layoutJson: syncRequires.json[page.layoutJsonName],
+        page,
       }
       cb(pageResources)
       return pageResources

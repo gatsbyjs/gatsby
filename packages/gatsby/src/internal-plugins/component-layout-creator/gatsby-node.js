@@ -21,7 +21,10 @@ exports.createPagesStatefully = async (
 ) => {
   const { createLayout, deleteLayout } = boundActionCreators
   const program = store.getState().program
-  const layoutDirectory = systemPath.posix.join(program.directory, `/src/layouts`)
+  const layoutDirectory = systemPath.posix.join(
+    program.directory,
+    `/src/layouts`
+  )
   const exts = program.extensions.map(e => `${e.slice(1)}`).join(`,`)
 
   // Get initial list of files.
@@ -39,10 +42,13 @@ exports.createPagesStatefully = async (
     })
     .on(`unlink`, path => {
       // Delete the page for the now deleted component.
-      store.getState().layouts.filter(p => p.component === path).forEach(layout => {
-        deleteLayout({ name: layout.name })
-        files = files.filter(f => f !== name)
-      })
+      store
+        .getState()
+        .layouts.filter(p => p.component === path)
+        .forEach(layout => {
+          deleteLayout({ name: layout.name })
+          files = files.filter(f => f !== name)
+        })
     })
     .on(`ready`, () => doneCb())
 }

@@ -18,17 +18,13 @@ const pathChunkName = path => {
   return `path---${name}`
 }
 
-const getPage = (path) => {
-  return pages.find(
-    page => page.path === path
-  )
-}
-const defaultLayout = (props) =>
+const getPage = path => pages.find(page => page.path === path)
+const defaultLayout = props =>
   <div>
     {props.children()}
   </div>
 
-const getLayout = (page) => {
+const getLayout = page => {
   const layout = syncRequires.layouts[page.layoutComponentChunkName]
   return layout ? layout : defaultLayout
 }
@@ -79,17 +75,15 @@ module.exports = (locals, callback) => {
       render: props => {
         const page = getPage(props.location.pathname)
         const layout = getLayout(page)
-        return $(
-          withRouter(layout), {
+        return $(withRouter(layout), {
           ...props,
           ...syncRequires.json[page.layoutJsonName],
-          children: (props) =>
+          children: props =>
             $(syncRequires.components[page.componentChunkName], {
               ...props,
-              ...syncRequires.json[page.jsonName]
-            })
-          }
-        )
+              ...syncRequires.json[page.jsonName],
+            }),
+        })
       },
     })
   )
@@ -148,7 +142,7 @@ module.exports = (locals, callback) => {
     `app`,
     pathChunkName(locals.path),
     page.componentChunkName,
-    page.layoutComponentChunkName
+    page.layoutComponentChunkName,
   ]
     .map(s => {
       const fetchKey = `assetsByChunkName[${s}]`

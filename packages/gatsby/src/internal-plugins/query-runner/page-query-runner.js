@@ -60,10 +60,10 @@ const findIdsWithoutDataDependencies = () => {
 
   // Get list of paths not already tracked and run the queries for these
   // paths.
-  return _.difference([
-    ...state.pages.map(p => p.path),
-    ...state.layouts.map(l => l.id)
-  ], allTrackedIds)
+  return _.difference(
+    [...state.pages.map(p => p.path), ...state.layouts.map(l => l.id)],
+    allTrackedIds
+  )
 }
 
 const runQueriesForIds = ids => {
@@ -73,10 +73,7 @@ const runQueriesForIds = ids => {
   const state = store.getState()
   return Promise.all(
     ids.map(id => {
-      const pagesAndLayouts = [
-        ...state.pages,
-        ...state.layouts
-      ]
+      const pagesAndLayouts = [...state.pages, ...state.layouts]
       const pl = pagesAndLayouts.find(pl => pl.path === id || pl.id === id)
       return queryRunner(pl, state.components[pl.component])
     })

@@ -3,17 +3,11 @@ const glob = require(`glob`)
 const fs = require(`fs-extra`)
 
 const { store, emitter } = require(`../../redux/`)
-import {
-  generatePathChunkName,
-} from "../../utils/js-chunk-names"
+import { generatePathChunkName } from "../../utils/js-chunk-names"
 
 import { joinPath } from "../../utils/path"
 
-const getLayoutById = (layouts) => {
-  return (id) => {
-    return layouts.find((l) => l.id === id)
-  }
-}
+const getLayoutById = layouts => id => layouts.find(l => l.id === id)
 
 // Write out pages information.
 const writePages = async () => {
@@ -26,11 +20,12 @@ const writePages = async () => {
       {
         componentChunkName,
         layout,
-        layoutComponentChunkName: getLayoutById(layouts)(layout).componentChunkName,
+        layoutComponentChunkName: getLayoutById(layouts)(layout)
+          .componentChunkName,
         layoutJsonName: getLayoutById(layouts)(layout).jsonName,
         jsonName,
         path,
-        matchPath
+        matchPath,
       },
     ],
     []
@@ -50,7 +45,7 @@ const writePages = async () => {
       let layout = getLayoutById(layouts)(p.layout)
       pageLayouts.push(layout)
       json.push({
-        jsonName: layout.jsonName
+        jsonName: layout.jsonName,
       })
     }
     json.push({ path: p.path, jsonName: p.jsonName })
@@ -91,11 +86,9 @@ const preferDefault = m => m && m.default || m
     .join(`,\n`)}
 }\n\n`
   syncRequires += `exports.layouts = {\n${pageLayouts
-    .map(l => {
-        return `  "${l.componentChunkName}": preferDefault(require("${joinPath(
-          l.component
-        )}"))`
-    })
+    .map(l => `  "${l.componentChunkName}": preferDefault(require("${joinPath(
+        l.component
+      )}"))`)
     .join(`,\n`)}
 }`
 
@@ -126,11 +119,9 @@ const preferDefault = m => m && m.default || m
     .join(`,\n`)}
 }\n\n`
   asyncRequires += `exports.layouts = {\n${pageLayouts
-    .map(l => {
-      return `  "${l.componentChunkName}": require("gatsby-module-loader?name=${l.componentChunkName}!${joinPath(
+    .map(l => `  "${l.componentChunkName}": require("gatsby-module-loader?name=${l.componentChunkName}!${joinPath(
         l.component
-      )}")`
-    })
+      )}")`)
     .join(`,\n`)}
 }`
 

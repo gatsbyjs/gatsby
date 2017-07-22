@@ -115,28 +115,26 @@ const DefaultRouter = ({ children }) =>
     {children}
   </Router>
 
-
-  loader.getResourcesForPathname(window.location.pathname, () => {
-    const Root = () =>
+loader.getResourcesForPathname(window.location.pathname, () => {
+  const Root = () =>
+    createElement(
+      AltRouter ? AltRouter : DefaultRouter,
+      null,
       createElement(
-        AltRouter ? AltRouter : DefaultRouter,
-        null,
-        createElement(
-          ScrollContext,
-          { shouldUpdateScroll },
-          createElement(Route, {
-            render: props => {
-              attachToHistory(props.history)
-              if (loader.getPage(props.location.pathname)) {
-                return createElement(ComponentRenderer, { ...props })
-              } else {
-                return createElement(ComponentRenderer, {
-                  location: { pathname: `/404.html` },
-                })
-              }
-            },
-          })
-        )
+        ScrollContext,
+        { shouldUpdateScroll },
+        createElement(Route, {
+          render: props => {
+            attachToHistory(props.history)
+            if (loader.getPage(props.location.pathname)) {
+              return createElement(ComponentRenderer, { ...props })
+            } else {
+              return createElement(ComponentRenderer, {
+                location: { pathname: `/404.html` },
+              })
+            }
+          },
+        })
       )
 
     const NewRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
@@ -147,4 +145,12 @@ const DefaultRouter = ({ children }) =>
         : void 0,
       () => { apiRunner(`onInitialClientRender`) }
     )
-  })
+
+  const NewRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
+  ReactDOM.render(
+    <NewRoot />,
+    typeof window !== `undefined`
+      ? document.getElementById(`___gatsby`)
+      : void 0
+  )
+})

@@ -25,14 +25,11 @@ exports.onCreateComponent = ({ component, store, boundActionCreators }) => {
 
   if (!components[component.componentPath]) {
     const state = store.getState()
-    const pagesAndLayouts = [
-      ...state.pages,
-      ...state.layouts
-    ]
+    const pagesAndLayouts = [...state.pages, ...state.layouts]
 
     pagesAndLayouts
-    .filter(pl => pl.componentPath === component.componentPath)
-    .map(writeJsonFile)
+      .filter(pl => pl.componentPath === component.componentPath)
+      .map(writeJsonFile)
 
     watchComponent(component.componentPath)
     components[component.componentPath] = component.componentPath

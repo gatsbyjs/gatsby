@@ -13,7 +13,10 @@ exports.createPageDependency = ({ path, nodeId, connection }) => {
   if (!nodeId) {
     nodeDependencyExists = true
   }
-  if (nodeId && _.includes(state.componentDataDependencies.nodes[nodeId], path)) {
+  if (
+    nodeId &&
+    _.includes(state.componentDataDependencies.nodes[nodeId], path)
+  ) {
     nodeDependencyExists = true
   }
   if (!connection) {

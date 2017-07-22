@@ -21,10 +21,7 @@ const normalize = require(`normalize-path`)
 exports.extractQueries = () => {
   // TODO We can just grab the components straight from store here?
   const state = store.getState()
-  const pagesAndLayouts = [
-    ...state.pages,
-    ...state.layouts
-  ]
+  const pagesAndLayouts = [...state.pages, ...state.layouts]
   const components = _.uniq(pagesAndLayouts.map(p => p.component))
   queryCompiler().then(queries => {
     components.forEach(component => {
@@ -55,17 +52,18 @@ const runQueriesForComponent = componentPath => {
   // Remove page & layout data dependencies before re-running queries because
   // the changing of the query could have changed the data dependencies.
   // Re-running the queries will add back data dependencies.
-  boundActionCreators.deleteComponentsDependencies(pages.map(p => p.path || p.id))
+  boundActionCreators.deleteComponentsDependencies(
+    pages.map(p => p.path || p.id)
+  )
   const component = store.getState().components[componentPath]
   return Promise.all(pages.map(p => queryRunner(p, component)))
 }
 
 const getPagesForComponent = componentPath => {
   const state = store.getState()
-  return [
-    ...state.pages,
-    ...state.layouts
-  ].filter(p => p.componentPath === componentPath)
+  return [...state.pages, ...state.layouts].filter(
+    p => p.componentPath === componentPath
+  )
 }
 
 let watcher
@@ -86,7 +84,9 @@ const watch = rootDir => {
       queries.forEach(({ text }, id) => {
         invariant(
           components[id],
-          `${id} not found in the store components: ${JSON.stringify(components)}`
+          `${id} not found in the store components: ${JSON.stringify(
+            components
+          )}`
         )
 
         if (text !== components[id].query) {
