@@ -70,6 +70,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           height: { type: GraphQLFloat },
           src: { type: GraphQLString },
           srcSet: { type: GraphQLString },
+          originalName: { type: GraphQLString },
         },
       }),
       args: {
@@ -123,6 +124,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           srcSet: { type: GraphQLString },
           sizes: { type: GraphQLString },
           originalImg: { type: GraphQLString },
+          originalName: { type: GraphQLString },
         },
       }),
       args: {
@@ -173,6 +175,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           width: { type: GraphQLInt },
           height: { type: GraphQLInt },
           aspectRatio: { type: GraphQLFloat },
+          originalName: { type: GraphQLString },
         },
       }),
       args: {
