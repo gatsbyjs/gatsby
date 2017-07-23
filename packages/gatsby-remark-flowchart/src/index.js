@@ -1,6 +1,6 @@
 const visit = require(`unist-util-visit`)
-console.log(___dirname)
-const flowchart = require(`flowchart.js/index.js`)
+const raphael = require(`raphael`)
+const flowchart = require(`./flowchart.js`)
 const _ = require(`lodash`)
 
 module.exports = ({ markdownAST }, pluginOptions = {}) =>
@@ -10,8 +10,4 @@ module.exports = ({ markdownAST }, pluginOptions = {}) =>
       let diagram = flowchart.parse(node.value)
       node.value = diagram.drawSVG('diagram')
     }
-    // const processedText = String(
-    //   retext().use(smartypants, pluginOptions).process(node.value)
-    // )
-    // node.value = processedText
   })

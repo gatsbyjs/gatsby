@@ -17,6 +17,7 @@
   "license": "MIT",
   "dependencies": {
     "flowchart.js": "^1.6.6",
+    "raphael": "^2.2.7",
     "unist-util-visit": "^1.1.1"
   }
 }
