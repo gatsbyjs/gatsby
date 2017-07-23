@@ -23,4 +23,12 @@ module.exports = {
   vPVHdR: 3.5,
   vPVVHdR: 4.5,
   logoWidth: 1.7,
+  brand: `#744C9E`,
+  heroMid: `#9D7CBF`,
+  //heroMid: `#744C9E`,
+  heroBright: `#F5F3F7`,
+  heroBright: `#f9f5ff`,
+  heroDark: `#744C9E`,
+  //heroDark: `#9D7CBF`,
+  sidebar: `#fcfaff`,
 }
