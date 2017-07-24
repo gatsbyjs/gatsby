@@ -19,7 +19,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     graphql(
       `
       {
-        allMongodbLocalDocuments(limit: 1000) {
+        allMongodbCloudDocuments(limit: 1000) {
           edges {
             node {
               id
@@ -38,7 +38,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
       // We want to create a detailed page for each
       // document in our mongoDB collection
       console.log(result.data);
-      _.each(result.data.allMongodbLocalDocuments.edges, edge => {
+      _.each(result.data.allMongodbCloudDocuments.edges, edge => {
         // Gatsby uses Redux to manage its internal state.
         // Plugins and sites can use functions like "createPage"
         // to interact with Gatsby.
