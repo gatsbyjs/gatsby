@@ -23,12 +23,21 @@ module.exports = {
   vPVHdR: 3.5,
   vPVVHdR: 4.5,
   logoWidth: 1.7,
+  sidebar: `#fcfaff`,
   brand: `#744C9E`,
   heroMid: `#9D7CBF`,
-  //heroMid: `#744C9E`,
   heroBright: `#F5F3F7`,
   heroBright: `#f9f5ff`,
   heroDark: `#744C9E`,
-  //heroDark: `#9D7CBF`,
-  sidebar: `#fcfaff`,
+  radius: 3,
+  radiusLg: 6,
+  // heroDark: `#9D7CBF`,
+  // bolder palette as per @ArchieHicklin
+  // @see https://github.com/gatsbyjs/gatsby/issues/1173#issuecomment-309415650
+  accent: `#ffb238`, // "Mustard"
+  // brand: `#6653ff`, // Gatsby
+  // hero colors based on "Gatsby", not yet from Archie's palette
+  // heroBright: `#f5f5ff`,
+  // heroMid: `#877DFC`,
+  // heroDark: `#6653ff`,
 }

@@ -161,10 +161,10 @@ module.exports = React.createClass({
                 : `rgba(0,0,0,0)`,
             position: this.props.location.pathname !== `/` ? false : `absolute`,
             height: headerHeight,
+            zIndex: `1`,
             [presets.Tablet]: {
               position:
                 this.props.location.pathname !== `/` ? `fixed` : `absolute`,
-              zIndex: `1`,
               left: 0,
               right: 0,
             },
@@ -172,7 +172,7 @@ module.exports = React.createClass({
         >
           <div
             css={{
-              // maxWidth: rhythm(presets.maxWidth),
+              //maxWidth: rhythm(presets.maxWidth),
               margin: `0 auto`,
               paddingLeft: rhythm(3 / 4),
               paddingRight: rhythm(3 / 4),
@@ -234,6 +234,7 @@ module.exports = React.createClass({
             </ul>
             <div
               css={{
+                marginLeft: `auto`,
                 [presets.Tablet]: {
                   marginLeft: `auto`,
                 },
@@ -249,7 +250,7 @@ module.exports = React.createClass({
                       this.props.location.pathname !== `/` ? false : `white`,
                   },
                   [presets.Desktop]: {
-                    fontSize: scale(1 / 5).fontSize,
+                    fontSize: scale(0).fontSize,
                   },
                 }}
               >
@@ -266,7 +267,7 @@ module.exports = React.createClass({
                       this.props.location.pathname !== `/` ? false : `white`,
                   },
                   [presets.Desktop]: {
-                    fontSize: scale(1 / 5).fontSize,
+                    fontSize: scale(0).fontSize,
                   },
                 }}
               >
@@ -282,7 +283,7 @@ module.exports = React.createClass({
                       this.props.location.pathname !== `/` ? false : `white`,
                   },
                   [presets.Desktop]: {
-                    fontSize: scale(1 / 5).fontSize,
+                    fontSize: scale(0).fontSize,
                   },
                 }}
               >

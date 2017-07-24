@@ -60,7 +60,17 @@ class SidebarBody extends React.Component {
 
                 // If the last character is a * then the doc page is still in draft
                 let changedTitle = title
-                let linkStyle = {}
+                let linkStyle = {
+                  "&&": {
+                    borderBottom: `none`,
+                    boxShadow: `none`,
+                    ":hover": {
+                      color: `inherit`,
+                      borderBottom: `none`,
+                      boxShadow: `none`,
+                    },
+                  },
+                }
                 if (title.slice(-1) === `*`) {
                   changedTitle = title.slice(0, -1)
                   linkStyle = {
@@ -69,12 +79,16 @@ class SidebarBody extends React.Component {
                     "&&": {
                       color: `rgba(0, 0, 0, 0.4)`,
                       borderBottomColor: presets.veryLightPurple,
+                      borderBottom: `none`,
                       boxShadow: `inset 0 -5px 0px 0px ${presets.veryLightPurple}`,
+                      boxShadow: `none`,
                       fontStyle: `italic`,
                       ":hover": {
                         color: `inherit`,
                         borderBottomColor: presets.lightPurple,
                         boxShadow: `inset 0 -5px 0px 0px ${presets.lightPurple}`,
+                        borderBottom: `none`,
+                        boxShadow: `none`,
                       },
                     },
                   }

@@ -1,7 +1,10 @@
-import CtaButton from "./cta-button"
+import Link from "gatsby-link"
+import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
+
 import { rhythm, scale, options } from "../utils/typography"
 import presets from "../utils/presets"
-import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
+import CtaButton from "./cta-button"
+import FuturaParagraph from "./futura-paragraph"
 
 const vP = rhythm(presets.vPR)
 const vPHd = rhythm(presets.vPHdR)
@@ -30,11 +33,11 @@ const verticalPadding = {
   },
 }
 
-const HeroUnitBackground = ({ position }) =>
+const HeroUnitBackground = () =>
   <div
     className="heroUnitBackground"
     css={{
-      position: position,
+      position: `fixed`,
       top: 0,
       left: 0,
       bottom: 0,
@@ -69,7 +72,7 @@ const HeroUnitBackground = ({ position }) =>
         position: `absolute`,
         right: 0,
         bottom: 0,
-        left: position === `absolute` ? `25%` : `0`,
+        left: 0,
         top: 0,
         width: `100%`,
         height: `100%`,
@@ -99,20 +102,19 @@ const HeroUnitBackground = ({ position }) =>
         </style>
         <polygon
           className="st0 sm"
-          points="-230,571.8 456.8,-115 1090,-115 1090,571.8 "
+          points="-250,571.8 436.8,-115 1070,-115 1070,571.8 "
         />
         <polygon
           className="st1 sm"
           points="-130,571.8 556.8,-115 1586.2,-115 1586.2,571.8 "
         />
-
         <polygon
           className="st0 lg"
-          points="-200,460 486.8,-226.8 1120,-226.8 1120,460 "
+          points="-190,460 496.8,-226.8 1130,-226.8 1130,460 "
         />
         <polygon
           className="st1 lg"
-          points="-140,460 546.8,-226.8 1576.2,-226.8 1576.2,460 "
+          points="-130,460 556.8,-226.8 1586.2,-226.8 1586.2,460 "
         />
       </svg>
     </div>
@@ -144,11 +146,9 @@ const HeroUnitBackground = ({ position }) =>
         preserveAspectRatio="xMinYMin slice"
         style={{ width: `100%`, height: `100%` }}
       >
-        <style type="text/css">
-          {`.st9{ fill:${presets.heroBright}; }`}
-        </style>
         <polygon
           className="st9"
+          fill={presets.heroBright}
           points="-5000,-5000 15000,15000 -5000,15000 "
         />
       </svg>
@@ -159,51 +159,42 @@ const HeroUnit = () =>
   <div
     className="heroUnit"
     css={{
-      padding: rhythm(3 / 4),
-      paddingLeft: rhythm(1.5),
+      padding: rhythm(1.5),
       paddingTop: rhythm(4),
-      paddingBottom: rhythm(4),
-      position: `relative`,
+      paddingBottom: rhythm(3),
       width: rhythm(14),
-      [presets.Mobile]: {
-        //background: `rgba(255,255,0,0.2)`,
-      },
       [presets.Phablet]: {
         width: rhythm(17),
-        //background: `rgba(255,200,0,0.1)`,
-      },
-      [presets.Tablet]: {
-        width: rhythm(17),
-        //background: `rgba(255,100,0,0.1)`,
       },
       [presets.Desktop]: {
         width: rhythm(17),
-        //background: `red`,
         paddingTop: rhythm(5),
       },
       [presets.Hd]: {
         paddingLeft: vPHd,
+        paddingRight: vPHd,
         width: rhythm(22),
       },
       [presets.VHd]: {
         paddingLeft: vPVHd,
+        paddingRight: vPVHd,
         width: rhythm(29),
       },
       [presets.VVHd]: {
-        paddingBottom: rhythm(6),
         paddingLeft: vPVVHd,
+        paddingRight: vPVVHd,
         width: rhythm(30),
       },
     }}
   >
     <h1
       css={{
-        color: presets.brand,
         ...scale(0.8),
+        color: presets.brand,
+        lineHeight: 1,
         margin: 0,
         marginBottom: `1.2em`,
         padding: 0,
-        lineHeight: 1,
         [presets.Mobile]: {
           fontSize: scale(1).fontSize,
         },
@@ -230,12 +221,8 @@ const HeroUnit = () =>
   </div>
 
 const Hero = () =>
-  <div
-    css={{
-      position: `relative`,
-    }}
-  >
-    <HeroUnitBackground position="fixed" />
+  <div>
+    <HeroUnitBackground />
     <HeroUnit />
   </div>
 

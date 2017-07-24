@@ -4,42 +4,12 @@ import { rhythm, scale, options } from "../utils/typography"
 import Container from "../components/container"
 import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import Hero from "../components/hero"
+import Diagram from "../components/diagram"
+import FuturaParagraph from "../components/futura-paragraph"
 import CtaButton from "../components/cta-button"
 import presets from "../utils/presets"
 import colors from "../utils/colors"
-
-const Card = ({ children }) =>
-  <div
-    css={{
-      flex: `0 0 100%`,
-      paddingLeft: 0,
-      paddingRight: 0,
-      [presets.Tablet]: {
-        flex: 1,
-        flexBasis: `50%`,
-        maxWidth: `50%`,
-        paddingLeft: vP,
-        paddingRight: vP,
-      },
-    }}
-  >
-    {children}
-  </div>
-
-const CardHeadline = ({ children }) =>
-  <h2 css={{ ...scale(2 / 5), lineHeight: 1.2 }}>
-    {children}
-  </h2>
-
-const FuturaParagraph = ({ children }) =>
-  <p
-    css={{
-      fontFamily: options.headerFontFamily.join(`,`),
-      ...scale(1 / 10),
-    }}
-  >
-    {children}
-  </p>
+import { JSIcon, WebpackIcon, ReactJSIcon, GraphQLIcon } from "../assets/logos"
 
 const vP = rhythm(presets.vPR)
 const vPHd = rhythm(presets.vPHdR)
@@ -63,6 +33,86 @@ const verticalPadding = {
   },
 }
 
+const Card = ({ children }) =>
+  <div
+    css={{
+      boxSizing: `border-box`,
+      display: `flex`,
+      [presets.Tablet]: {
+        flex: `0 0 50%`,
+        maxWidth: `50%`,
+        boxShadow: `0 1px 0 0 ${presets.veryLightPurple}`,
+        "&:nth-child(5),&:nth-child(6)": {
+          boxShadow: `none`,
+        },
+        "&:nth-child(2n)": {
+          borderLeft: `1px solid ${presets.veryLightPurple}`,
+        },
+      },
+      [presets.Hd]: {
+        flex: `0 0 33.33333333%`,
+        maxWidth: `33.33333333%`,
+        borderLeft: `1px solid ${presets.veryLightPurple}`,
+        "&:nth-child(4)": {
+          boxShadow: `none`,
+        },
+        "&:nth-child(3n+1)": {
+          borderLeft: 0,
+        },
+      },
+    }}
+  >
+    <div
+      css={{
+        padding: rhythm(presets.vPR / 2),
+        paddingBottom: 0,
+        [presets.Mobile]: {
+          padding: vP,
+          paddingBottom: 0,
+        },
+        [presets.Phablet]: {
+          padding: vP,
+        },
+        [presets.VHd]: {
+          padding: vPHd,
+        },
+        [presets.VVHd]: {
+          padding: vPVHd,
+        },
+      }}
+    >
+      {children}
+    </div>
+  </div>
+
+const CardHeadline = ({ children }) =>
+  <h2
+    css={{
+      ...scale(2 / 5),
+      lineHeight: 1.2,
+      marginTop: 0,
+      //color: presets.brand,
+      [presets.Tablet]: {
+        ...scale(1 / 10),
+        lineHeight: 1.2,
+      },
+      [presets.Desktop]: {
+        ...scale(3 / 10),
+        lineHeight: 1.2,
+      },
+      [presets.VHd]: {
+        ...scale(5 / 10),
+        lineHeight: 1.2,
+      },
+      [presets.VVHd]: {
+        ...scale(7 / 10),
+        lineHeight: 1.2,
+      },
+    }}
+  >
+    {children}
+  </h2>
+
 const IndexRoute = React.createClass({
   render() {
     console.log(this.props)
@@ -71,35 +121,24 @@ const IndexRoute = React.createClass({
       <div>
         <Hero />
         <div
-          className="flexContainer"
           css={{
-            ...verticalPadding,
-            // marginLeft: vP,
-            // marginRight: vP,
-            // [presets.Hd]: {
-            //   marginLeft: vPHd,
-            //   marginRight: vPHd,
-            // },
-            // [presets.VHd]: {
-            //   marginLeft: vPVHd,
-            //   marginRight: vPVHd,
-            // },
-            // [presets.VVHd]: {
-            //   marginLeft: vPVVHd,
-            //   marginRight: vPVVHd,
-            // },
-            [presets.Mobile]: {},
+            marginLeft: rhythm(presets.vPR / 2),
+            marginRight: rhythm(presets.vPR / 2),
+            [presets.Hd]: {
+              marginLeft: rhythm(presets.vPHd),
+              marginRight: rhythm(presets.vPHd),
+            },
+            [presets.VHd]: {
+              marginLeft: rhythm(presets.vPVHd),
+              marginRight: rhythm(presets.vPVHd),
+            },
           }}
         >
           <div
             css={{
-              background: `white`,
-              borderRadius: `3px`,
-              ...verticalPadding,
-              marginBottom: `3rem`,
-              boxShadow: `0 5px 15px rgba(0,0,0,0.1)`,
-              [presets.Desktop]: {
-                paddingTop: `1rem`,
+              paddingBottom: rhythm(presets.vPR / 2),
+              [presets.Hd]: {
+                paddingBottom: vP,
               },
             }}
           >
@@ -108,6 +147,8 @@ const IndexRoute = React.createClass({
                 display: `flex`,
                 flex: `0 1 auto`,
                 flexWrap: `wrap`,
+                background: `rgba(255,255,255,0.975)`,
+                borderRadius: presets.radiusLg,
               }}
             >
               <Card>
@@ -115,19 +156,54 @@ const IndexRoute = React.createClass({
                   Modern web tech without the headache
                 </CardHeadline>
                 <FuturaParagraph>
-                  Enjoy all the power of the latest web technologies. React.js,
-                  webpack, modern JavaScript and CSS and more are all setup and
-                  waiting for you to install and start building.
+                  Enjoy all the power of the latest web technologies –{` `}
+                  <span css={{ whiteSpace: `nowrap` }}>
+                    React.js&nbsp;
+                    <img
+                      src={ReactJSIcon}
+                      css={{
+                        height: `1.2em`,
+                        width: `auto`,
+                        margin: 0,
+                        verticalAlign: `middle`,
+                      }}
+                    />
+                  </span>
+                  ,{` `}
+                  <span css={{ whiteSpace: `nowrap` }}>
+                    Webpack&nbsp;
+                    <img
+                      src={WebpackIcon}
+                      css={{
+                        height: `1.2em`,
+                        width: `auto`,
+                        margin: 0,
+                        verticalAlign: `middle`,
+                      }}
+                    />
+                  </span>
+                  , modern JavaScript and CSS and more – all setup and waiting
+                  for you to start building.
                 </FuturaParagraph>
               </Card>
               <Card>
                 <CardHeadline>Bring your own data</CardHeadline>
                 <FuturaParagraph>
                   Gatsby’s rich data plugin ecosystem lets you build sites with
-                  the data you want. Integrate data from one or many sources:
+                  the data you want – from one or many sources: Pull data from
                   headless CMSs, SaaS services, APIs, databases, your file
-                  system, and more. Pull data directly into your pages using
-                  GraphQL.
+                  system & more directly into your pages using{` `}
+                  <span css={{ whiteSpace: `nowrap` }}>
+                    GraphQL&nbsp;<img
+                      src={GraphQLIcon}
+                      css={{
+                        height: `1.2em`,
+                        width: `auto`,
+                        margin: 0,
+                        verticalAlign: `middle`,
+                      }}
+                    />
+                  </span>.
                 </FuturaParagraph>
               </Card>
               <Card>
@@ -154,7 +230,11 @@ const IndexRoute = React.createClass({
               </Card>
               <Card>
                 <CardHeadline>
-                  <em>Static</em> Progressive Web Apps
+                  <em css={{ color: presets.brand, fontStyle: `normal` }}>
+                    Static
+                  </em>
+                  {` `}
+                  Progressive Web Apps
                 </CardHeadline>
                 <FuturaParagraph>
                   Gatsby.js is a static PWA (Progressive Web App) generator. You
@@ -174,28 +254,46 @@ const IndexRoute = React.createClass({
                   instantly to your users wherever they are.
                 </FuturaParagraph>
               </Card>
+              <Diagram
+                containerCSS={{
+                  borderTopLeftRadius: 0,
+                  borderTopRightRadius: 0,
+                  background: `transparent`,
+                  flex: `1 1 100%`,
+                  borderTop: `1px solid ${presets.veryLightPurple}`,
+                }}
+              />
             </div>
+          </div>
+        </div>
 
+        <div css={{ background: `white` }}>
+          <Container hasSideBar={false}>
+            <div
+              css={{
+                textAlign: `center`,
+                padding: `3rem 0`,
+              }}
+            >
+              <h1 css={{ marginTop: 0 }}>Curious yet?</h1>
+              <FuturaParagraph>
+                It only takes a few minutes to get up and running!
+              </FuturaParagraph>
+              <CtaButton to="/docs/" overrideCSS={{ marginTop: `1rem` }}>
+                Get Started
+              </CtaButton>
+            </div>
+          </Container>
+          <div
+            css={{
+              borderTop: `1px solid #eee`,
+              [presets.Tablet]: {
+                paddingTop: rhythm(1),
+              },
+            }}
+          >
             <Container hasSideBar={false}>
-              <div>
-                <h1>How Gatsby works</h1>
-                <img
-                  src={this.props.data.file.childImageSharp.responsiveSizes.src}
-                  srcSet={
-                    this.props.data.file.childImageSharp.responsiveSizes.srcSet
-                  }
-                  sizes={
-                    this.props.data.file.childImageSharp.responsiveSizes.sizes
-                  }
-                />
-              </div>
-              <div css={{ textAlign: `center`, padding: `${rhythm(2)} 0` }}>
-                <h1 css={{ marginTop: 0 }}>Curious yet?</h1>
-                <FuturaParagraph>
-                  It only takes a few minutes to get up and running!
-                </FuturaParagraph>
-                <CtaButton to="/docs/">Get Started</CtaButton>
-              </div>
+              {` `}
               <h2
                 css={{
                   textAlign: `left`,
