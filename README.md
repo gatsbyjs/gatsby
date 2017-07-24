@@ -21,7 +21,7 @@ Websites built with Gatbsy:
 * [Jamie Henson's Blog](http://jamiehenson.com/) [(source)](https://github.com/jamiehenson/jh47-gatsby)
 * [Sean Coker's Blog](https://sean.is/)
 * [Dustin Schau's Blog](https://dustinschau.com/blog/) [(source)](https://github.com/dschau/blog)
-* [The Chiedo Companies Websites](https://www.chiedo.com)
+* [The Chiedo Companies Website](https://www.chiedo.com)
 
 ## Docs
 
