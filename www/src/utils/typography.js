@@ -9,7 +9,7 @@ import {
 
 const options = {
   headerFontFamily: [`Futura PT`, `sans-serif`],
-  bodyFontFamily: [`Tex Gyre Schola`, `serif`],
+  bodyFontFamily: [`Spectral`, `Georgia`, `serif`],
   baseFontSize: `18px`,
   baseLineHeight: 1.4,
   // headerColor: `#44421f`,

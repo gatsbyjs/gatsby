@@ -23,7 +23,7 @@ import "../fonts/Webfonts/futurapt_demi_macroman/stylesheet.css"
 import "../fonts/Webfonts/futurapt_demiitalic_macroman/stylesheet.css"
 
 // Other fonts
-import "typeface-tex-gyre-schola"
+import "typeface-spectral"
 import "typeface-space-mono"
 
 module.exports = React.createClass({
