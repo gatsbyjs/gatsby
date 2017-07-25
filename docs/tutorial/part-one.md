@@ -72,7 +72,7 @@ Gatsby has a built-in development server. Let's start it up. (TODO tell people t
 
 Run from your terminal `./node_modules/.bin/gatsby develop`
 
-You should see shortly some text that says `The development server is listening at: http://localhost:8000`. Open that address in your browser.
+You should see shortly some text that says `The development server is listening at:` [http://localhost:8000](http://localhost:8000). Open that address in your browser.
 
 ![Gatsby.js development 404 page](images/index-404.png)
 
@@ -228,7 +228,7 @@ The class form of React allows us to add component state. We'll need that for ou
 
 Let's continue to flesh out our counter. Let's add two buttons. One to increment and one to decrement the count of the counter.
 
-```jsx{6-11}
+```jsx{5-12}
 import React from "react"
 
 class Counter extends React.Component {
@@ -251,7 +251,7 @@ So now we have everything we need to make a nice counter. Let's make it live.
 
 First we'll setup the component state.
 
-```jsx{4-6,12}
+```jsx{4-7,12-13}
 import React from "react"
 
 class Counter extends React.Component {
@@ -330,7 +330,7 @@ npm install --global surge
 Then build your site by running in the terminal at the root of your site:
 
 ```bash
-gatsby build
+./node_modules/.bin/gatsby build
 ```
 
 Building should take 15-30 seconds. Take a look at the generated files by looking
