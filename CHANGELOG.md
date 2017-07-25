@@ -1,5 +1,37 @@
 # Change Log
 
+## [1.3.0] - 2017-07-19
+
+### Added
+
+* docs: add "creating a static blog with gatsby" blog post #1560 @DSchau
+* add tests to gatsby-remark-images #1559 @DSchau
+* add glitch-gatsby-starter-blog #1554 @100ideas
+* use consistent chunk ids #1534 @stevensurgnier
+* Enhance API for multiple feeds #1548 @nicholaswyoung
+* Add new plugin to handle csv files #1496 @ssonal
+* Adds showcase segment for starters/websites built with Gatsby. #1535 @Vagr9K
+* Fancy Javascript Example #1492 @jbolda
+* Add sitemap plugin to www #1541 @nicholaswyoung
+
+### Fixed
+
+* Clone context to prevent mutations #1553 @kyleamathews
+* Update dependencies to avoid hoisting errors #1552 @kyleamathews
+* Set pathPrefix if not defined to an empty string to avoid undefined #1551 @kyleamathews
+* Fix prefixes in gatsby-link + navigateTo #1550 @kyleamathews
+* Make path to packages the same on website as github #1549 @kyleamathews
+* Fixing sw.js 404-ing because of pathPrefix not being prefixed to sw.js properly. Fixing #1539 #1540 @gregsqueeb
+* [gatsby-plugin-sharp] Fix PNG generation when using the "duotone" option #1506 @fk
+* fix: ensure pathPrefix is added to responsive images #1510 @DSchau
+* Fix the onClick override logic #1489 @jakedeichert
+* Check if node.value is set as otherwise cheerio throws an error #1543 @kyleamathews
+* Fix docs referencing outdated React Router <Link> API #1523 @ahfarmer
+* Fixes component-renderer to allow for use of internal routing #1542 @scottyeck
+* Center .twitter-tweet-rendered #1529 @fk
+* double '... use use ...' word #1528 @GoreStarry
+
+
 ## [1.2.0] - 2017-07-13
 
 ### Added

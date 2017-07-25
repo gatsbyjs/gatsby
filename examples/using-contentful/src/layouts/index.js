@@ -31,8 +31,8 @@ class DefaultLayout extends React.Component {
         <p>
           The src for this website is at
           {` `}
-          <a href="https://github.com/gatsbyjs/gatsby/tree/1.0/examples/using-contentful">
-            https://github.com/gatsbyjs/gatsby/tree/1.0/examples/using-contentful
+          <a href="https://github.com/gatsbyjs/gatsby/tree/master/examples/using-contentful">
+            https://github.com/gatsbyjs/gatsby/tree/master/examples/using-contentful
           </a>
         </p>
         <p>
