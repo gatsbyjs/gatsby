@@ -17,6 +17,7 @@
     "bluebird": "^3.5.0",
     "chokidar": "^1.7.0",
     "pretty-bytes": "^4.0.2",
+    "md5-file": "^3.1.1",
     "slash": "^1.0.0"
   }
 }
