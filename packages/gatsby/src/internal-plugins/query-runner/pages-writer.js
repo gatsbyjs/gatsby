@@ -15,19 +15,21 @@ const writePages = async () => {
   let { program, config, pages, layouts } = store.getState()
   // Write out pages.json
   const pagesData = pages.reduce(
-    (mem, { path, matchPath, componentChunkName, layout, jsonName }) => [
-      ...mem,
-      {
-        componentChunkName,
-        layout,
-        layoutComponentChunkName: getLayoutById(layouts)(layout)
-          .componentChunkName,
-        layoutJsonName: getLayoutById(layouts)(layout).jsonName,
-        jsonName,
-        path,
-        matchPath,
-      },
-    ],
+    (mem, { path, matchPath, componentChunkName, layout, jsonName }) => {
+      const layoutOjb = getLayoutById(layouts)(layout)
+      return [
+        ...mem,
+        {
+          componentChunkName,
+          layout,
+          layoutComponentChunkName: layoutOjb && layoutOjb.componentChunkName,
+          layoutJsonName: layoutOjb && layoutOjb.jsonName,
+          jsonName,
+          path,
+          matchPath,
+        },
+      ]
+    },
     []
   )
 
