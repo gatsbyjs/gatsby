@@ -1,6 +1,6 @@
 {
   "name": "gatsby-source-filesystem",
-  "version": "1.0.1",
+  "version": "1.4.0",
   "description": "Gatsby plugin which parses files within a directory for further parsing by other plugins",
   "scripts": {
     "build": "babel src --out-dir .",
@@ -16,9 +16,9 @@
     "babel-cli": "^6.24.1",
     "bluebird": "^3.5.0",
     "chokidar": "^1.7.0",
-    "pretty-bytes": "^4.0.2",
     "md5-file": "^3.1.1",
     "mime": "^1.3.6",
+    "pretty-bytes": "^4.0.2",
     "slash": "^1.0.0"
   }
 }
