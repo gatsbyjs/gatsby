@@ -1,6 +1,6 @@
 # Using Wordpress
 
-[TODO : Insert Hosted Gatsby Wordpress site URL.]
+[TODO : Insert Hosted Gatsby WordPress site URL.]
 
 Example site that demonstrates how to build Gatsby sites
-that pull data from the [Wordpress CMS API](https://www.wordpress.com/).
+that pull data from the [WordPress CMS API](https://www.wordpress.com/).
