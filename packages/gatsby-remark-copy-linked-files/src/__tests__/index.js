@@ -6,6 +6,7 @@ jest.mock(`fs-extra`, () => {
 })
 const Remark = require(`remark`)
 const fsExtra = require(`fs-extra`)
+const path = require(`path`)
 
 const plugin = require(`../`)
 
@@ -29,11 +30,11 @@ describe(`gatsby-remark-copy-linked-files`, () => {
       type: `File`,
     },
   }}
-  const getFiles = path => [
+  const getFiles = filePath => [
       {
-        absolutePath: path,
+        absolutePath: path.normalize(filePath),
         internal: {},
-        extension: path.split(`.`).pop().trim(),
+        extension: filePath.split(`.`).pop().trim(),
       },
     ]
 
