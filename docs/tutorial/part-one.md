@@ -72,7 +72,7 @@ Gatsby has a built-in development server. Let's start it up. (TODO tell people t
 
 Run from your terminal `./node_modules/.bin/gatsby develop`
 
-You should see shortly some text that says `The development server is listening at: [http://localhost:8000](http://localhost:8000)`. Open that address in your browser.
+You should see shortly some text that says `The development server is listening at:` [http://localhost:8000](http://localhost:8000). Open that address in your browser.
 
 ![Gatsby.js development 404 page](images/index-404.png)
 
