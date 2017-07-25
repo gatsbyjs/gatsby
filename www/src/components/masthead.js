@@ -5,39 +5,38 @@ import { rhythm, scale, options } from "../utils/typography"
 import presets from "../utils/presets"
 import CtaButton from "./cta-button"
 import FuturaParagraph from "./futura-paragraph"
+import { vP, vPHd, vPVHd, vPVVHd } from "../components/gutters"
 
-const vP = rhythm(presets.vPR)
-const vPHd = rhythm(presets.vPHdR)
-const vPVHd = rhythm(presets.vPVHdR)
-const vPVVHd = rhythm(presets.vPVVHdR)
+const vPOff = rhythm(presets.gutters.default - presets.logoOffset)
+const vPHdOff = rhythm(presets.gutters.HdR - presets.logoOffset)
+const vPVHdOff = rhythm(presets.gutters.VHdR - presets.logoOffset)
+const vPVVHdOff = rhythm(presets.gutters.VVHdR - presets.logoOffset)
 
-const vPOff = rhythm(presets.vPR - presets.logoWidth)
-const vPHdOff = rhythm(presets.vPHdR - presets.logoWidth)
-const vPVHdOff = rhythm(presets.vPVHdR - presets.logoWidth)
-const vPVVHdOff = rhythm(presets.vPVVHdR - presets.logoWidth)
+const cover = {
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+}
 
 const MastheadBg = () =>
   <div
     className="Masthead-bg"
     css={{
+      ...cover,
       position: `fixed`,
-      top: 0,
-      left: 0,
-      bottom: 0,
-      right: 0,
       zIndex: -1,
       background: `white`,
     }}
   >
     <div
       css={{
+        ...cover,
         position: `absolute`,
+        right: `auto`,
         width: vPOff,
-        bottom: 0,
-        left: 0,
-        top: 0,
         zIndex: -10,
-        background: presets.heroBright,
+        background: presets.brandLighter,
         [presets.Hd]: {
           width: vPHdOff,
         },
@@ -52,11 +51,8 @@ const MastheadBg = () =>
     <div
       className="Masthead-bg-right"
       css={{
+        ...cover,
         position: `absolute`,
-        right: 0,
-        bottom: 0,
-        left: 0,
-        top: 0,
         width: `100%`,
         height: `100%`,
         zIndex: -1,
@@ -71,32 +67,34 @@ const MastheadBg = () =>
       >
         <style type="text/css">
           {`
-            .st0 { fill: ${presets.heroMid}; }
-    	      .st1 { fill: ${presets.heroDark}; }
-            .lg {
+            .Masthead-bg-right--lg {
               display: none;
             }
             @media screen and (min-width: 960px) and (min-height: 600px) {
-              .lg {
+              .Masthead-bg-right--lg {
                 display: block;
               }
             }
           `}
         </style>
         <polygon
-          className="st0 sm"
+          fill={presets.brandLight}
+          className="Masthead-bg-right--sm"
           points="-250,571.8 436.8,-115 1070,-115 1070,571.8 "
         />
         <polygon
-          className="st1 sm"
+          fill={presets.brandDark}
+          className="Masthead-bg-right--sm"
           points="-130,571.8 556.8,-115 1586.2,-115 1586.2,571.8 "
         />
         <polygon
-          className="st0 lg"
+          fill={presets.brandLight}
+          className="Masthead-bg-right--lg"
           points="-190,460 496.8,-226.8 1130,-226.8 1130,460 "
         />
         <polygon
-          className="st1 lg"
+          fill={presets.brandDark}
+          className="Masthead-bg-right--lg"
           points="-130,460 556.8,-226.8 1586.2,-226.8 1586.2,460 "
         />
       </svg>
@@ -105,10 +103,8 @@ const MastheadBg = () =>
       className="Masthead-bg-left"
       css={{
         position: `absolute`,
-        right: 0,
+        ...cover,
         left: vPOff,
-        top: 0,
-        bottom: 0,
         zIndex: -2,
         [presets.Hd]: {
           left: vPHdOff,
@@ -131,7 +127,7 @@ const MastheadBg = () =>
       >
         <polygon
           className="st9"
-          fill={presets.heroBright}
+          fill={presets.brandLighter}
           points="-5000,-5000 15000,15000 -5000,15000 "
         />
       </svg>
@@ -142,7 +138,7 @@ const MastheadContent = () =>
   <div
     className="Masthead-content"
     css={{
-      padding: rhythm(1.5),
+      padding: vP,
       paddingTop: rhythm(4),
       paddingBottom: rhythm(3),
       width: rhythm(14),

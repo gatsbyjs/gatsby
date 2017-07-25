@@ -16,6 +16,7 @@ import tutorialSidebar from "../pages/docs/tutorial-links.yml"
 import docsSidebar from "../pages/docs/doc-links.yaml"
 import presets from "../utils/presets"
 import colors from "../utils/colors"
+import { vP, vPHd, vPVHd, vPVVHd } from "../components/gutters"
 
 import "../css/prism-coy.css"
 
@@ -29,11 +30,6 @@ import "../fonts/Webfonts/futurapt_demiitalic_macroman/stylesheet.css"
 import "typeface-tex-gyre-schola"
 import "typeface-space-mono"
 
-const vP = rhythm(presets.vPR)
-const vPHd = rhythm(presets.vPHdR)
-const vPVHd = rhythm(presets.vPVHdR)
-const vPVVHd = rhythm(presets.vPVVHdR)
-
 module.exports = React.createClass({
   propTypes() {
     return {
@@ -43,7 +39,7 @@ module.exports = React.createClass({
   render() {
     const headerHeight =
       this.props.location.pathname !== `/` ? `3.5rem` : `3.5rem`
-    const verticalPadding =
+    const gutters =
       this.props.location.pathname !== `/`
         ? {}
         : {
@@ -114,7 +110,7 @@ module.exports = React.createClass({
       <Link
         to={linkTo}
         css={{
-          color: `#744c9e`,
+          color: presets.brand,
           marginBottom: 2,
           textDecoration: `none`,
           textAlign: `center`,
@@ -176,7 +172,7 @@ module.exports = React.createClass({
               margin: `0 auto`,
               paddingLeft: rhythm(3 / 4),
               paddingRight: rhythm(3 / 4),
-              ...verticalPadding,
+              ...gutters,
               transition: `padding .1s ease-out`,
               fontFamily: typography.options.headerFontFamily.join(`,`),
               display: `flex`,
@@ -244,7 +240,7 @@ module.exports = React.createClass({
                 href="https://github.com/gatsbyjs/gatsby"
                 css={{
                   ...navItemStyles,
-                  color: presets.heroMid,
+                  color: presets.brandLight,
                   [presets.Tablet]: {
                     color:
                       this.props.location.pathname !== `/` ? false : `white`,
@@ -261,7 +257,7 @@ module.exports = React.createClass({
                 href="https://discord.gg/0ZcbPKXt5bZjGY5n"
                 css={{
                   ...navItemStyles,
-                  color: presets.heroMid,
+                  color: presets.brandLight,
                   [presets.Tablet]: {
                     color:
                       this.props.location.pathname !== `/` ? false : `white`,
@@ -277,7 +273,7 @@ module.exports = React.createClass({
                 href="https://twitter.com/gatsbyjs"
                 css={{
                   ...navItemStyles,
-                  color: presets.heroMid,
+                  color: presets.brandLight,
                   [presets.Tablet]: {
                     color:
                       this.props.location.pathname !== `/` ? false : `white`,

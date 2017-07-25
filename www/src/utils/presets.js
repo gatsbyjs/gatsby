@@ -20,24 +20,20 @@ module.exports = {
   veryLightPurple: colors.b[0],
   sidebar: `#fcfaff`,
   brand: `#744C9E`,
-  heroMid: `#9D7CBF`,
-  heroBright: `#F5F3F7`,
-  heroBright: `#f9f5ff`,
-  heroDark: `#744C9E`,
-  // heroDark: `#9D7CBF`,
-  // bolder palette as per @ArchieHicklin
+  brandLight: `#9D7CBF`,
+  brandLighter: `#F5F3F7`,
+  brandLighter: `#f9f5ff`,
+  brandDark: `#744C9E`,
+  // bolder palette by @ArchieHicklin
   // @see https://github.com/gatsbyjs/gatsby/issues/1173#issuecomment-309415650
   accent: `#ffb238`, // "Mustard"
-  // brand: `#6653ff`, // Gatsby
-  // hero colors based on "Gatsby", not yet from Archie's palette
-  // heroBright: `#f5f5ff`,
-  // heroMid: `#877DFC`,
-  // heroDark: `#6653ff`,
   radius: 3,
   radiusLg: 6,
-  vPR: 1.5,
-  vPHdR: 2.5,
-  vPVHdR: 3.5,
-  vPVVHdR: 4.5,
-  logoWidth: 1.7,
+  gutters: {
+    default: 1.5,
+    HdR: 2.5,
+    VHdR: 3.5,
+    VVHdR: 4.5,
+  },
+  logoOffset: 1.7,
 }

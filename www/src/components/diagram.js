@@ -3,12 +3,8 @@ import { css } from "glamor"
 import { rhythm, scale, options } from "../utils/typography"
 import presets from "../utils/presets"
 import logo from "../gatsby-negative.svg"
-import { StaticWebHostIcon, GraphQLIcon, ReactJSIcon } from "../assets/logos"
-
-const vP = rhythm(presets.vPR)
-const vPHd = rhythm(presets.vPHdR)
-const vPVHd = rhythm(presets.vPVHdR)
-const vPVVHd = rhythm(presets.vPVVHdR)
+import { GraphQLIcon, ReactJSIcon } from "../assets/logos"
+import { vP, vPHd, vPVHd, vPVVHd } from "../components/gutters"
 
 const labelColor = presets.accent
 const labelBorderColor = presets.lightPurple
@@ -117,7 +113,6 @@ const SourceItem = ({ children }) =>
         ...borderAndBoxShadow,
         padding: `.5rem .8rem`,
         lineHeight: 1.2,
-        color: presets.heroMid,
         textAlign: `left`,
       }}
     >
@@ -125,23 +120,69 @@ const SourceItem = ({ children }) =>
     </div>
   </div>
 
-const dataSourceItemHeadline = {
-  color: presets.brand,
-  margin: 0,
-  fontStyle: `normal`,
-  ...scale(0),
-}
+const SourceTitle = ({ children }) =>
+  <h3
+    css={{
+      color: presets.brand,
+      margin: 0,
+      fontStyle: `normal`,
+      ...scale(0),
+    }}
+  >
+    {children}
+  </h3>
 
-const deploy = {
-  ...borderAndBoxShadow,
-  borderRadius: `100%`,
-  height: `60px`,
-  width: `60px`,
-  margin: `0 auto`,
-  display: `flex`,
-  justifyContent: `center`,
-  alignItems: `center`,
-}
+const ItemDescription = ({ children }) =>
+  <small
+    css={{
+      lineHeight: 1.2,
+      display: `block`,
+      color: presets.brandLight,
+    }}
+  >
+    {children}
+  </small>
+
+const Gatsby = ({ children }) =>
+  <div
+    css={{
+      ...borderAndBoxShadow,
+      padding: `1rem`,
+      margin: `0 auto`,
+      width: `6.5rem`,
+      height: `6.5rem`,
+    }}
+  >
+    <img
+      src={logo}
+      css={{
+        display: `inline-block`,
+        height: rhythm(1.6),
+        width: rhythm(1.6),
+        margin: 0,
+        verticalAlign: `middle`,
+      }}
+    />
+    <small
+      css={{
+        lineHeight: 1.2,
+        color: presets.brand,
+        display: `block`,
+        marginTop: `.25rem`,
+      }}
+    >
+      <span css={{ color: presets.brandLight }}>powered by</span>
+      <br />GraphQL{` `}&nbsp;<img
+        src={GraphQLIcon}
+        css={{
+          height: `1.2em`,
+          width: `auto`,
+          margin: 0,
+          verticalAlign: `sub`,
+        }}
+      />
+    </small>
+  </div>
 
 const Diagram = ({ containerCSS }) =>
   <section
@@ -150,8 +191,12 @@ const Diagram = ({ containerCSS }) =>
       borderRadius: presets.radiusLg,
       fontFamily: options.headerFontFamily.join(`,`),
       padding: vP,
+      marginTop: rhythm(1),
       textAlign: `center`,
       ...containerCSS,
+      [presets.Tablet]: {
+        marginTop: 0,
+      },
     }}
   >
     <h1 css={{ marginBottom: `1em`, ...scale(0.9) }}>How Gatsby works</h1>
@@ -164,22 +209,18 @@ const Diagram = ({ containerCSS }) =>
       <SegmentTitle>Data Sources</SegmentTitle>
       <SourceItems>
         <SourceItem>
-          <h3 css={dataSourceItemHeadline}>Markdown</h3>
-          <small css={{ lineHeight: 1.2, display: `block` }}>
-            Documentation, Posts, etc.
-          </small>
+          <SourceTitle>Markdown</SourceTitle>
+          <ItemDescription>Documentation, Posts, etc.</ItemDescription>
         </SourceItem>
         <SourceItem>
-          <h3 css={dataSourceItemHeadline}>APIs</h3>
-          <small css={{ lineHeight: 1.2, display: `block` }}>
-            Contentful, Drupal, Wordpress & more
-          </small>
+          <SourceTitle>APIs</SourceTitle>
+          <ItemDescription>
+            Contentful, Drupal, WordPress & more
+          </ItemDescription>
         </SourceItem>
         <SourceItem>
-          <h3 css={dataSourceItemHeadline}>YAML/JSON</h3>
-          <small css={{ lineHeight: 1.2, display: `block` }}>
-            Any Data you can think of…
-          </small>
+          <SourceTitle>YAML/JSON</SourceTitle>
+          <ItemDescription>Any Data you can think of…</ItemDescription>
         </SourceItem>
       </SourceItems>
     </Segment>
@@ -196,45 +237,7 @@ const Diagram = ({ containerCSS }) =>
         }}
       >
         <VerticalLine />
-        <div
-          css={{
-            ...borderAndBoxShadow,
-            padding: `1rem`,
-            margin: `0 auto`,
-            width: `6.5rem`,
-            height: `6.5rem`,
-          }}
-        >
-          <img
-            src={logo}
-            css={{
-              display: `inline-block`,
-              height: rhythm(1.6),
-              width: rhythm(1.6),
-              margin: 0,
-              verticalAlign: `middle`,
-            }}
-          />
-          <small
-            css={{
-              lineHeight: 1.2,
-              color: presets.brand,
-              display: `block`,
-              marginTop: `.25rem`,
-            }}
-          >
-            <span css={{ color: presets.heroMid }}>powered by</span>
-            <br />GraphQL{` `}&nbsp;<img
-              src={GraphQLIcon}
-              css={{
-                height: `1.2em`,
-                width: `auto`,
-                margin: 0,
-                verticalAlign: `sub`,
-              }}
-            />
-          </small>
-        </div>
+        <Gatsby />
         <VerticalLine />
         <small
           css={{
@@ -243,7 +246,7 @@ const Diagram = ({ containerCSS }) =>
             padding: `1rem`,
             lineHeight: 1,
             display: `inline-block`,
-            color: presets.heroMid,
+            color: presets.brandLight,
           }}
         >
           HTML &middot; CSS &middot; React&nbsp;<img
@@ -266,41 +269,23 @@ const Diagram = ({ containerCSS }) =>
       <div
         css={{
           ...box,
-          paddingTop: 0,
+          paddingTop: rhythm(1),
           paddingBottom: rhythm(1),
         }}
       >
-        <VerticalLine />
-        <div css={deploy}>
-          <img
-            src={StaticWebHostIcon}
-            css={{
-              height: `60%`,
-              width: `auto`,
-              margin: 0,
-            }}
-          />
-        </div>
         <h3
           css={{
             fontStyle: `normal`,
             ...scale(0),
-            marginTop: rhythm(1 / 3),
-            marginBottom: 0,
+            margin: 0,
             color: presets.brand,
           }}
         >
           Static Web Host
         </h3>
-        <small
-          css={{
-            color: presets.heroMid,
-            lineHeight: 1.2,
-            display: `block`,
-          }}
-        >
-          Self-hosted or Amazon S3, Netlify, Github Pages, Surge.sh, Aerobatic…
-        </small>
+        <ItemDescription>
+          Amazon S3, Netlify, Github Pages, Surge.sh, Aerobatic…
+        </ItemDescription>
       </div>
     </Segment>
   </section>

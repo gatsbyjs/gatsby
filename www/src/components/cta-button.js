@@ -17,7 +17,7 @@ const CtaButton = ({ to, overrideCSS, children }) =>
       display: `inline-block`,
       fontFamily: options.headerFontFamily.join(`,`),
       padding: `${rhythm(1 / 3)} ${rhythm(1 / 2)}`,
-      borderRadius: `3px`,
+      borderRadius: presets.radius,
       // Increase specificity
       [presets.Tablet]: {
         ...scale(2 / 5),

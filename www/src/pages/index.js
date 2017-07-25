@@ -1,95 +1,20 @@
 import React from "react"
 import Link from "gatsby-link"
-import { rhythm, scale, options } from "../utils/typography"
-import Container from "../components/container"
-import BlogPostPreviewItem from "../components/blog-post-preview-item"
-import Masthead from "../components/masthead"
-import Diagram from "../components/diagram"
-import FuturaParagraph from "../components/futura-paragraph"
-import CtaButton from "../components/cta-button"
+
 import presets from "../utils/presets"
 import colors from "../utils/colors"
+import { rhythm, scale, options } from "../utils/typography"
 import { JSIcon, WebpackIcon, ReactJSIcon, GraphQLIcon } from "../assets/logos"
-
-const vP = rhythm(presets.vPR)
-const vPHd = rhythm(presets.vPHdR)
-const vPVHd = rhythm(presets.vPVHdR)
-const vPVVHd = rhythm(presets.vPVVHdR)
-
-const Card = ({ children }) =>
-  <div
-    css={{
-      boxSizing: `border-box`,
-      display: `flex`,
-      [presets.Tablet]: {
-        flex: `0 0 50%`,
-        maxWidth: `50%`,
-        boxShadow: `0 1px 0 0 ${presets.veryLightPurple}`,
-        "&:nth-child(5),&:nth-child(6)": {
-          boxShadow: `none`,
-        },
-        "&:nth-child(2n)": {
-          borderLeft: `1px solid ${presets.veryLightPurple}`,
-        },
-      },
-      [presets.Hd]: {
-        flex: `0 0 33.33333333%`,
-        maxWidth: `33.33333333%`,
-        borderLeft: `1px solid ${presets.veryLightPurple}`,
-        "&:nth-child(4)": {
-          boxShadow: `none`,
-        },
-        "&:nth-child(3n+1)": {
-          borderLeft: 0,
-        },
-      },
-    }}
-  >
-    <div
-      css={{
-        padding: rhythm(presets.vPR / 2),
-        paddingBottom: 0,
-        [presets.Mobile]: {
-          padding: vP,
-          paddingBottom: 0,
-        },
-        [presets.Phablet]: {
-          padding: vP,
-        },
-        [presets.VHd]: {
-          padding: vPHd,
-        },
-        [presets.VVHd]: {
-          padding: vPVHd,
-        },
-      }}
-    >
-      {children}
-    </div>
-  </div>
-
-const CardHeadline = ({ children }) =>
-  <h2
-    css={{
-      ...scale(2 / 5),
-      lineHeight: 1.2,
-      marginTop: 0,
-      [presets.Tablet]: {
-        fontSize: scale(1 / 10).fontSize,
-      },
-      [presets.Desktop]: {
-        fontSize: scale(3 / 10).fontSize,
-      },
-      [presets.VHd]: {
-        fontSize: scale(5 / 10).fontSize,
-      },
-      [presets.VVHd]: {
-        fontSize: scale(7 / 10).fontSize,
-      },
-    }}
-  >
-    {children}
-  </h2>
+import { vP, vPHd, vPVHd, vPVVHd } from "../components/gutters"
+import Container from "../components/container"
+import Masthead from "../components/masthead"
+import Cards from "../components/cards"
+import Card from "../components/card"
+import CardHeadline from "../components/card-headline"
+import Diagram from "../components/diagram"
+import BlogPostPreviewItem from "../components/blog-post-preview-item"
+import FuturaParagraph from "../components/futura-paragraph"
+import CtaButton from "../components/cta-button"
 
 const IndexRoute = React.createClass({
   render() {
@@ -100,194 +25,172 @@ const IndexRoute = React.createClass({
         <Masthead />
         <div
           css={{
-            marginLeft: rhythm(presets.vPR / 2),
-            marginRight: rhythm(presets.vPR / 2),
+            margin: rhythm(presets.gutters.default / 2),
             [presets.Hd]: {
-              marginLeft: vPHd,
-              marginRight: vPHd,
-            },
-            [presets.VHd]: {
-              marginLeft: vPVHd,
-              marginRight: vPVHd,
+              margin: vP,
+              marginTop: 0,
             },
           }}
         >
-          <div
-            css={{
-              paddingBottom: rhythm(presets.vPR / 2),
-              [presets.Hd]: {
-                paddingBottom: vP,
-              },
-            }}
-          >
-            <div
-              css={{
-                display: `flex`,
-                flex: `0 1 auto`,
-                flexWrap: `wrap`,
-                background: `rgba(255,255,255,0.975)`,
-                borderRadius: presets.radiusLg,
-              }}
-            >
-              <Card>
-                <CardHeadline>
-                  Modern web tech without the headache
-                </CardHeadline>
-                <FuturaParagraph>
-                  Enjoy all the power of the latest web technologies –{` `}
-                  <span css={{ whiteSpace: `nowrap` }}>
-                    React.js&nbsp;
-                    <img
-                      src={ReactJSIcon}
-                      css={{
-                        height: `1.2em`,
-                        width: `auto`,
-                        margin: 0,
-                        verticalAlign: `middle`,
-                      }}
-                    />
-                  </span>
-                  ,{` `}
-                  <span css={{ whiteSpace: `nowrap` }}>
-                    Webpack&nbsp;
-                    <img
-                      src={WebpackIcon}
-                      css={{
-                        height: `1.2em`,
-                        width: `auto`,
-                        margin: 0,
-                        verticalAlign: `middle`,
-                      }}
-                    />
-                  </span>
-                  , modern JavaScript and CSS and more – all setup and waiting
-                  for you to start building.
-                </FuturaParagraph>
-              </Card>
-              <Card>
-                <CardHeadline>Bring your own data</CardHeadline>
-                <FuturaParagraph>
-                  Gatsby’s rich data plugin ecosystem lets you build sites with
-                  the data you want – from one or many sources: Pull data from
-                  headless CMSs, SaaS services, APIs, databases, your file
-                  system & more directly into your pages using{` `}
-                  <span css={{ whiteSpace: `nowrap` }}>
-                    GraphQL&nbsp;<img
-                      src={GraphQLIcon}
-                      css={{
-                        height: `1.2em`,
-                        width: `auto`,
-                        margin: 0,
-                        verticalAlign: `middle`,
-                      }}
-                    />
-                  </span>.
-                </FuturaParagraph>
-              </Card>
-              <Card>
-                <CardHeadline>Scale to the entire internet</CardHeadline>
-                <FuturaParagraph>
-                  Gatsby.js is Internet Scale. Forget complicated deploys with
-                  databases and servers and their expensive, time-consuming
-                  setup costs, maintenance, and scaling fears. Gatsby.js builds
-                  your site as “static” files which can be deployed easily on
-                  dozens of services.
-                </FuturaParagraph>
-              </Card>
-              <Card>
-                <CardHeadline css={{ color: presets.heroDark }}>
-                  Future-proof your website
-                </CardHeadline>
-                <FuturaParagraph>
-                  Don't build a website with last decade's tech. The future of
-                  the web is mobile, JavaScript and APIs—the {` `}
-                  <a href="https://jamstack.org/">JAMstack</a>. Every website is
-                  a web app and every web app is a website. Gatsby.js is the
-                  universal JavaScript framework you’ve been waiting for.
-                </FuturaParagraph>
-              </Card>
-              <Card>
-                <CardHeadline>
-                  <em css={{ color: presets.brand, fontStyle: `normal` }}>
-                    Static
-                  </em>
-                  {` `}
-                  Progressive Web Apps
-                </CardHeadline>
-                <FuturaParagraph>
-                  Gatsby.js is a static PWA (Progressive Web App) generator. You
-                  get code and data splitting out-of-the-box. Gatsby loads an
-                  HTML file that’s a server rendered version of your React.js
-                  page then makes it live with JavaScript. Code and data for
-                  other pages get preloaded so clicking around the site feels
-                  incredibly fast.
-                </FuturaParagraph>
-              </Card>
-              <Card>
-                <CardHeadline>Speed past the competition</CardHeadline>
-                <FuturaParagraph>
-                  Gatsby.js builds the fastest possible website. Instead of
-                  waiting to generate pages when requested, pre-build pages and
-                  lift them into a global cloud of servers—ready to be delivered
-                  instantly to your users wherever they are.
-                </FuturaParagraph>
-              </Card>
-              <Diagram
-                containerCSS={{
-                  borderTopLeftRadius: 0,
-                  borderTopRightRadius: 0,
-                  flex: `1 1 100%`,
-                  borderTop: `1px solid ${presets.veryLightPurple}`,
-                }}
-              />
-            </div>
-          </div>
-        </div>
-
-        <div css={{ background: `#fff` }}>
-          <Container hasSideBar={false}>
-            <div
-              css={{
-                textAlign: `center`,
-                padding: `3rem 0`,
-              }}
-            >
-              <h1 css={{ marginTop: 0 }}>Curious yet?</h1>
+          <Cards>
+            <Card>
+              <CardHeadline>Modern web tech without the headache</CardHeadline>
               <FuturaParagraph>
-                It only takes a few minutes to get up and running!
+                Enjoy all the power of the latest web technologies –{` `}
+                <span css={{ whiteSpace: `nowrap` }}>
+                  React.js&nbsp;
+                  <img
+                    src={ReactJSIcon}
+                    css={{
+                      height: `1.2em`,
+                      width: `auto`,
+                      margin: 0,
+                      verticalAlign: `middle`,
+                    }}
+                  />
+                </span>
+                ,{` `}
+                <span css={{ whiteSpace: `nowrap` }}>
+                  Webpack&nbsp;
+                  <img
+                    src={WebpackIcon}
+                    css={{
+                      height: `1.2em`,
+                      width: `auto`,
+                      margin: 0,
+                      verticalAlign: `middle`,
+                    }}
+                  />
+                </span>
+                , modern JavaScript and CSS and more – all setup and waiting for
+                you to start building.
               </FuturaParagraph>
-              <CtaButton to="/docs/" overrideCSS={{ marginTop: `1rem` }}>
-                Get Started
-              </CtaButton>
+            </Card>
+            <Card>
+              <CardHeadline>Bring your own data</CardHeadline>
+              <FuturaParagraph>
+                Gatsby’s rich data plugin ecosystem lets you build sites with
+                the data you want – from one or many sources: Pull data from
+                headless CMSs, SaaS services, APIs, databases, your file system
+                & more directly into your pages using{` `}
+                <span css={{ whiteSpace: `nowrap` }}>
+                  GraphQL&nbsp;<img
+                    src={GraphQLIcon}
+                    css={{
+                      height: `1.2em`,
+                      width: `auto`,
+                      margin: 0,
+                      verticalAlign: `middle`,
+                    }}
+                  />
+                </span>.
+              </FuturaParagraph>
+            </Card>
+            <Card>
+              <CardHeadline>Scale to the entire internet</CardHeadline>
+              <FuturaParagraph>
+                Gatsby.js is Internet Scale. Forget complicated deploys with
+                databases and servers and their expensive, time-consuming setup
+                costs, maintenance, and scaling fears. Gatsby.js builds your
+                site as “static” files which can be deployed easily on dozens of
+                services.
+              </FuturaParagraph>
+            </Card>
+            <Card>
+              <CardHeadline css={{ color: presets.brandDark }}>
+                Future-proof your website
+              </CardHeadline>
+              <FuturaParagraph>
+                Don't build a website with last decade's tech. The future of the
+                web is mobile, JavaScript and APIs—the {` `}
+                <a href="https://jamstack.org/">JAMstack</a>. Every website is a
+                web app and every web app is a website. Gatsby.js is the
+                universal JavaScript framework you’ve been waiting for.
+              </FuturaParagraph>
+            </Card>
+            <Card>
+              <CardHeadline>
+                <em css={{ color: presets.brand, fontStyle: `normal` }}>
+                  Static
+                </em>
+                {` `}
+                Progressive Web Apps
+              </CardHeadline>
+              <FuturaParagraph>
+                Gatsby.js is a static PWA (Progressive Web App) generator. You
+                get code and data splitting out-of-the-box. Gatsby loads an HTML
+                file that’s a server rendered version of your React.js page then
+                makes it live with JavaScript. Code and data for other pages get
+                preloaded so clicking around the site feels incredibly fast.
+              </FuturaParagraph>
+            </Card>
+            <Card>
+              <CardHeadline>Speed past the competition</CardHeadline>
+              <FuturaParagraph>
+                Gatsby.js builds the fastest possible website. Instead of
+                waiting to generate pages when requested, pre-build pages and
+                lift them into a global cloud of servers—ready to be delivered
+                instantly to your users wherever they are.
+              </FuturaParagraph>
+            </Card>
+
+            <Diagram
+              containerCSS={{
+                borderTopLeftRadius: 0,
+                borderTopRightRadius: 0,
+                flex: `1 1 100%`,
+                borderTop: `1px solid ${presets.veryLightPurple}`,
+              }}
+            />
+
+            <div css={{ flex: `1 1 100%` }}>
+              <Container hasSideBar={false}>
+                <div
+                  css={{
+                    textAlign: `center`,
+                    padding: `${rhythm(1)} 0 ${rhythm(2)}`,
+                  }}
+                >
+                  <h1 css={{ marginTop: 0 }}>Curious yet?</h1>
+                  <FuturaParagraph>
+                    It only takes a few minutes to get up and running!
+                  </FuturaParagraph>
+                  <CtaButton to="/docs/" overrideCSS={{ marginTop: `1rem` }}>
+                    Get Started
+                  </CtaButton>
+                </div>
+              </Container>
             </div>
-          </Container>
-          <div
-            css={{
-              borderTop: `1px solid ${presets.veryLightPurple}`,
-              [presets.Tablet]: {
-                paddingTop: rhythm(1),
-              },
-            }}
-          >
-            <Container hasSideBar={false}>
-              {` `}
-              <h2
-                css={{
-                  textAlign: `left`,
-                  marginTop: 0,
-                  color: `#744c9e`,
-                  [presets.Tablet]: {
-                    paddingBottom: rhythm(1),
-                  },
-                }}
-              >
-                Latest from the Gatsby blog
-              </h2>
-              {blogPosts.edges.map(({ node }) =>
-                <BlogPostPreviewItem post={node} key={node.fields.slug} />
-              )}
-            </Container>
-          </div>
+
+            <div
+              css={{
+                borderTop: `1px solid ${presets.veryLightPurple}`,
+                flex: `1 1 100%`,
+                [presets.Tablet]: {
+                  paddingTop: rhythm(1),
+                },
+              }}
+            >
+              <Container hasSideBar={false}>
+                {` `}
+                <h2
+                  css={{
+                    textAlign: `left`,
+                    marginTop: 0,
+                    color: presets.brand,
+                    [presets.Tablet]: {
+                      paddingBottom: rhythm(1),
+                    },
+                  }}
+                >
+                  Latest from the Gatsby blog
+                </h2>
+                {blogPosts.edges.map(({ node }) =>
+                  <BlogPostPreviewItem post={node} key={node.fields.slug} />
+                )}
+              </Container>
+            </div>
+          </Cards>
         </div>
       </div>
     )

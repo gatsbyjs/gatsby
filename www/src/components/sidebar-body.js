@@ -38,7 +38,7 @@ class SidebarBody extends React.Component {
                 fontStyle: headerStyle,
                 textTransform: headerTextTransform,
                 marginTop: index === 0 ? 0 : false,
-                color: presets.heroMid,
+                color: presets.brandLight,
               }}
             >
               {section.title}
