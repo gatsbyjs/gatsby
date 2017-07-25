@@ -326,7 +326,7 @@ module.exports = async (
       modulesDirectories: [
         directoryPath(`node_modules`),
         `node_modules`,
-        directoryPath(`node_modules`, `gatsby`, `node_modules`),
+        path.join(__dirname, `..`, `..`, `node_modules`),
       ],
     }
   }
