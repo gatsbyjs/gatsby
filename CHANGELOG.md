@@ -1,5 +1,29 @@
 # Change Log
 
+## [1.4.0] - 2017-07-25
+
+### Added
+
+* Add gatsby-plugin-feed to www #1569 @nicholaswyoung
+* Implement gatsby-plugin-jss #1431 @wizardzloy
+* gatsby-transformer-sharp: Added the option to use the original image #1556 @chiedo
+
+### Fixed
+
+* [www] Blog post meta styles #1561 @fk
+* Fix unsupported method in IE #1573 @variadicintegrity
+* Don't set a default title in html.js as not overriden by react-helmet #1578 @KyleAMathews
+* Downgrade Glamor to v2 as v3 unstable #1580 @KyleAMathews
+* Remove the slash between the pathPrefix and pathname when navigating #1574 @DaleWebb
+* Fix url in Contentful example #1596 @axe312ger
+* Small fixes to tutorial #1586 @benmathews
+* Add missing dep to gatsby-source-filesystem #1607 @jquense
+* Wordpress -> WordPress #1608 @Alaev
+* Fix typo #1609 @fk
+* Update modifyWebpackConfig docs #1613 @KyleAMathews
+* Fix broken links #1614 @KyleAMathews
+
+
 ## [1.3.0] - 2017-07-19
 
 ### Added
