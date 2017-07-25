@@ -18,8 +18,13 @@ Upgrade node to the latest stable release.`
   Get the locally installed version of gatsby/lib/bin/cli.js from the place
   where this program was executed.
 */
-const cliFile = `dist/bin/cli.js`
-const localPath = path.resolve(`node_modules/gatsby`, cliFile)
+let localPath
+
+try {
+  localPath = require.resolve(`gatsby/dist/bin/cli.js`)
+} catch (err) {
+  useGlobalGatsby()
+}
 
 const useGlobalGatsby = function() {
   // Never use global install *except* for new and help commands
@@ -34,13 +39,11 @@ You should save Gatsby as a site dependency e.g. npm install --save gatsby`
   require(`./bin/cli`)
 }
 
-if (fs.existsSync(localPath)) {
+if (localPath) {
   try {
     require(localPath)
   } catch (error) {
     console.error(`A local install of Gatsby exists but failed to load.`)
     console.error(error)
   }
-} else {
-  useGlobalGatsby()
 }
