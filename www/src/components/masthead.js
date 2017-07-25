@@ -16,26 +16,9 @@ const vPHdOff = rhythm(presets.vPHdR - presets.logoWidth)
 const vPVHdOff = rhythm(presets.vPVHdR - presets.logoWidth)
 const vPVVHdOff = rhythm(presets.vPVVHdR - presets.logoWidth)
 
-const verticalPadding = {
-  paddingLeft: vP,
-  paddingRight: vP,
-  [presets.Hd]: {
-    paddingLeft: vPHd,
-    paddingRight: vPHd,
-  },
-  [presets.VHd]: {
-    paddingLeft: vPVHd,
-    paddingRight: vPVHd,
-  },
-  [presets.VVHd]: {
-    paddingLeft: vPVVHd,
-    paddingRight: vPVVHd,
-  },
-}
-
-const HeroUnitBackground = () =>
+const MastheadBg = () =>
   <div
-    className="heroUnitBackground"
+    className="Masthead-bg"
     css={{
       position: `fixed`,
       top: 0,
@@ -67,7 +50,7 @@ const HeroUnitBackground = () =>
       }}
     />
     <div
-      className="heroUnitBackground-right"
+      className="Masthead-bg-right"
       css={{
         position: `absolute`,
         right: 0,
@@ -119,7 +102,7 @@ const HeroUnitBackground = () =>
       </svg>
     </div>
     <div
-      className="heroUnitBackground-left"
+      className="Masthead-bg-left"
       css={{
         position: `absolute`,
         right: 0,
@@ -155,9 +138,9 @@ const HeroUnitBackground = () =>
     </div>
   </div>
 
-const HeroUnit = () =>
+const MastheadContent = () =>
   <div
-    className="heroUnit"
+    className="Masthead-content"
     css={{
       padding: rhythm(1.5),
       paddingTop: rhythm(4),
@@ -220,10 +203,10 @@ const HeroUnit = () =>
     </CtaButton>
   </div>
 
-const Hero = () =>
-  <div>
-    <HeroUnitBackground />
-    <HeroUnit />
-  </div>
+const Masthead = () =>
+  <main className="Masthead">
+    <MastheadBg />
+    <MastheadContent />
+  </main>
 
-export default Hero
+export default Masthead

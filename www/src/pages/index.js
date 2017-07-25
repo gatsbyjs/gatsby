@@ -3,7 +3,7 @@ import Link from "gatsby-link"
 import { rhythm, scale, options } from "../utils/typography"
 import Container from "../components/container"
 import BlogPostPreviewItem from "../components/blog-post-preview-item"
-import Hero from "../components/hero"
+import Masthead from "../components/masthead"
 import Diagram from "../components/diagram"
 import FuturaParagraph from "../components/futura-paragraph"
 import CtaButton from "../components/cta-button"
@@ -15,23 +15,6 @@ const vP = rhythm(presets.vPR)
 const vPHd = rhythm(presets.vPHdR)
 const vPVHd = rhythm(presets.vPVHdR)
 const vPVVHd = rhythm(presets.vPVVHdR)
-
-const verticalPadding = {
-  paddingLeft: vP,
-  paddingRight: vP,
-  [presets.Hd]: {
-    paddingLeft: vPHd,
-    paddingRight: vPHd,
-  },
-  [presets.VHd]: {
-    paddingLeft: vPVHd,
-    paddingRight: vPVHd,
-  },
-  [presets.VVHd]: {
-    paddingLeft: vPVVHd,
-    paddingRight: vPVVHd,
-  },
-}
 
 const Card = ({ children }) =>
   <div
@@ -91,22 +74,17 @@ const CardHeadline = ({ children }) =>
       ...scale(2 / 5),
       lineHeight: 1.2,
       marginTop: 0,
-      //color: presets.brand,
       [presets.Tablet]: {
-        ...scale(1 / 10),
-        lineHeight: 1.2,
+        fontSize: scale(1 / 10).fontSize,
       },
       [presets.Desktop]: {
-        ...scale(3 / 10),
-        lineHeight: 1.2,
+        fontSize: scale(3 / 10).fontSize,
       },
       [presets.VHd]: {
-        ...scale(5 / 10),
-        lineHeight: 1.2,
+        fontSize: scale(5 / 10).fontSize,
       },
       [presets.VVHd]: {
-        ...scale(7 / 10),
-        lineHeight: 1.2,
+        fontSize: scale(7 / 10).fontSize,
       },
     }}
   >
@@ -119,18 +97,18 @@ const IndexRoute = React.createClass({
     const blogPosts = this.props.data.allMarkdownRemark
     return (
       <div>
-        <Hero />
+        <Masthead />
         <div
           css={{
             marginLeft: rhythm(presets.vPR / 2),
             marginRight: rhythm(presets.vPR / 2),
             [presets.Hd]: {
-              marginLeft: rhythm(presets.vPHd),
-              marginRight: rhythm(presets.vPHd),
+              marginLeft: vPHd,
+              marginRight: vPHd,
             },
             [presets.VHd]: {
-              marginLeft: rhythm(presets.vPVHd),
-              marginRight: rhythm(presets.vPVHd),
+              marginLeft: vPVHd,
+              marginRight: vPVHd,
             },
           }}
         >
@@ -258,7 +236,6 @@ const IndexRoute = React.createClass({
                 containerCSS={{
                   borderTopLeftRadius: 0,
                   borderTopRightRadius: 0,
-                  background: `transparent`,
                   flex: `1 1 100%`,
                   borderTop: `1px solid ${presets.veryLightPurple}`,
                 }}
@@ -267,7 +244,7 @@ const IndexRoute = React.createClass({
           </div>
         </div>
 
-        <div css={{ background: `white` }}>
+        <div css={{ background: `#fff` }}>
           <Container hasSideBar={false}>
             <div
               css={{
@@ -286,7 +263,7 @@ const IndexRoute = React.createClass({
           </Container>
           <div
             css={{
-              borderTop: `1px solid #eee`,
+              borderTop: `1px solid ${presets.veryLightPurple}`,
               [presets.Tablet]: {
                 paddingTop: rhythm(1),
               },

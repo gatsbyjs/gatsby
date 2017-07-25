@@ -1,14 +1,9 @@
+import { css } from "glamor"
+
 import { rhythm, scale, options } from "../utils/typography"
 import presets from "../utils/presets"
-import { StaticWebHostIcon, GraphQLIcon, ReactJSIcon } from "../assets/logos"
 import logo from "../gatsby-negative.svg"
-import { css, after } from "glamor"
-
-const bgAnim = css.keyframes({
-  "0%": { backgroundPosition: `0 0` },
-  "100%": { backgroundPosition: `240px 480px` },
-})
-const stripeColor = `249, 245, 255, 0.75`
+import { StaticWebHostIcon, GraphQLIcon, ReactJSIcon } from "../assets/logos"
 
 const vP = rhythm(presets.vPR)
 const vPHd = rhythm(presets.vPHdR)
@@ -20,24 +15,54 @@ const labelBorderColor = presets.lightPurple
 const labelBorderWidth = `1px`
 const labelBorderStyle = `dotted`
 
-const con = { maxWidth: rhythm(30), margin: `0 auto` }
-
-const label = {
-  display: `inline`,
-  background: labelColor,
-  color: `white`,
-  borderRadius: presets.radius,
-  textAlign: `left`,
-  margin: `0 auto`,
-  position: `relative`,
-  bottom: `-.5rem`,
-  padding: `.35rem .6rem`,
-  fontWeight: `normal`,
-  letterSpacing: `.5px`,
-  ...scale(-2 / 5),
-  lineHeight: 1,
-  textTransform: `uppercase`,
+const stripeColor = `249, 245, 255, 1`
+const stripeSize = 15
+const stripeAnimation = css.keyframes({
+  "0%": {
+    backgroundPosition: `${rhythm(stripeSize)} ${rhythm(stripeSize * 2)}`,
+  },
+  "100%": { backgroundPosition: `0 0` },
+})
+const stripeBg = {
+  backgroundColor: presets.sidebar,
+  backgroundSize: `${rhythm(stripeSize)} ${rhythm(stripeSize)}`,
+  backgroundImage: `linear-gradient(45deg, rgba(${stripeColor}) 25%, transparent 25%, transparent 50%, rgba(${stripeColor}) 50%, rgba(${stripeColor}) 75%, transparent 75%, transparent)`,
+  animation: `${stripeAnimation} 14s linear infinite`,
 }
+
+const Segment = ({ className, children }) =>
+  <div
+    className={`Segment ${className}`}
+    css={{
+      maxWidth: rhythm(30),
+      margin: `0 auto`,
+      textAlign: `center`,
+    }}
+  >
+    {children}
+  </div>
+
+const SegmentTitle = ({ children }) =>
+  <h2
+    className="Segment-title"
+    css={{
+      display: `inline`,
+      background: labelColor,
+      color: `#fff`,
+      borderRadius: presets.radius,
+      margin: `0 auto`,
+      position: `relative`,
+      bottom: `-.5rem`,
+      padding: `.35rem .6rem`,
+      fontWeight: `normal`,
+      letterSpacing: `.5px`,
+      ...scale(-2 / 5),
+      lineHeight: 1,
+      textTransform: `uppercase`,
+    }}
+  >
+    {children}
+  </h2>
 
 const VerticalLine = () =>
   <div
@@ -51,47 +76,54 @@ const VerticalLine = () =>
     }}
   />
 
-const stepContainer = {
+const box = {
   border: `${labelBorderWidth} ${labelBorderStyle} ${labelBorderColor}`,
   borderRadius: presets.radiusLg,
   padding: `${rhythm(1)} ${rhythm(1)} 0`,
-  //background: presets.heroBright,
+  background: presets.sidebar,
 }
 
 const borderAndBoxShadow = {
   border: `1px solid ${presets.veryLightPurple}`,
-  background: `white`,
+  background: `#fff`,
   width: `100%`,
   boxShadow: `0 5px 15px rgba(0,0,0,0.035)`,
   borderRadius: presets.radius,
 }
 
-const dataSourceItems = {
-  display: `flex`,
-  flexWrap: `wrap`,
-  justifyContent: `space-around`,
-  ...stepContainer,
-}
+const SourceItems = ({ children }) =>
+  <div
+    css={{
+      display: `flex`,
+      flexWrap: `wrap`,
+      justifyContent: `space-around`,
+      ...box,
+    }}
+  >
+    {children}
+  </div>
 
-const dataSourceItemContainer = {
-  boxSizing: `border-box`,
-  padding: `0 .8rem ${rhythm(1)}`,
-  display: `flex`,
-  flex: `1 1 33%`,
-}
-
-const dataSourceItemContainerBig = {
-  // flexBasis: `50%`,
-  // maxWidth: `320px`,
-}
-
-const dataSourceItem = {
-  ...borderAndBoxShadow,
-  padding: `.5rem .8rem`,
-  lineHeight: 1.2,
-  color: presets.heroMid,
-  textAlign: `left`,
-}
+const SourceItem = ({ children }) =>
+  <div
+    css={{
+      boxSizing: `border-box`,
+      padding: `0 .8rem ${rhythm(1)}`,
+      display: `flex`,
+      flex: `1 1 33%`,
+    }}
+  >
+    <div
+      css={{
+        ...borderAndBoxShadow,
+        padding: `.5rem .8rem`,
+        lineHeight: 1.2,
+        color: presets.heroMid,
+        textAlign: `left`,
+      }}
+    >
+      {children}
+    </div>
+  </div>
 
 const dataSourceItemHeadline = {
   color: presets.brand,
@@ -112,74 +144,55 @@ const deploy = {
 }
 
 const Diagram = ({ containerCSS }) =>
-  <div
+  <section
+    className="Diagram"
     css={{
-      background: presets.sidebar,
       borderRadius: presets.radiusLg,
+      fontFamily: options.headerFontFamily.join(`,`),
       padding: vP,
       textAlign: `center`,
-      fontFamily: options.headerFontFamily.join(`,`),
       ...containerCSS,
     }}
   >
-    <h1
-      css={{
-        marginBottom: `1em`,
-        color: presets.brand,
-      }}
-    >
-      How Gatsby works
-    </h1>
-    <p css={{ maxWidth: `480px`, margin: `0 auto` }}>
+    <h1 css={{ marginBottom: `1em`, ...scale(0.9) }}>How Gatsby works</h1>
+    <p css={{ maxWidth: `480px`, margin: `0 auto 3rem` }}>
       Some supporting text here how anything is possible with Gatsby – maybe
       mention (source) plugins somehow?
     </p>
-    <div css={con}>
-      <div css={{ marginTop: `3rem` }}>
-        <h2 css={label}>Data Sources</h2>
-      </div>
-      <div css={dataSourceItems}>
-        <div css={dataSourceItemContainer}>
-          <div css={dataSourceItem}>
-            <h3 css={dataSourceItemHeadline}>Markdown</h3>
-            <small css={{ lineHeight: 1.2, display: `block` }}>
-              Documentation, Posts, etc.
-            </small>
-          </div>
-        </div>
-        <div
-          css={{ ...dataSourceItemContainer, ...dataSourceItemContainerBig }}
-        >
-          <div css={dataSourceItem}>
-            <h3 css={dataSourceItemHeadline}>APIs</h3>
-            <small css={{ lineHeight: 1.2, display: `block` }}>
-              Contentful, Drupal, Wordpress & more
-            </small>
-          </div>
-        </div>
-        <div css={dataSourceItemContainer}>
-          <div css={dataSourceItem}>
-            <h3 css={dataSourceItemHeadline}>YAML/JSON</h3>
-            <small css={{ lineHeight: 1.2, display: `block` }}>
-              Any Data you can think of…
-            </small>
-          </div>
-        </div>
-      </div>
-    </div>
-    <VerticalLine />
-    <div css={{ ...con, textAlign: `center` }}>
-      <h2 css={label}>Build</h2>
+
+    <Segment className="Source">
+      <SegmentTitle>Data Sources</SegmentTitle>
+      <SourceItems>
+        <SourceItem>
+          <h3 css={dataSourceItemHeadline}>Markdown</h3>
+          <small css={{ lineHeight: 1.2, display: `block` }}>
+            Documentation, Posts, etc.
+          </small>
+        </SourceItem>
+        <SourceItem>
+          <h3 css={dataSourceItemHeadline}>APIs</h3>
+          <small css={{ lineHeight: 1.2, display: `block` }}>
+            Contentful, Drupal, Wordpress & more
+          </small>
+        </SourceItem>
+        <SourceItem>
+          <h3 css={dataSourceItemHeadline}>YAML/JSON</h3>
+          <small css={{ lineHeight: 1.2, display: `block` }}>
+            Any Data you can think of…
+          </small>
+        </SourceItem>
+      </SourceItems>
+    </Segment>
+
+    <Segment className="Build">
+      <VerticalLine />
+      <SegmentTitle>Build</SegmentTitle>
       <div
         css={{
-          ...stepContainer,
+          ...box,
+          ...stripeBg,
           paddingTop: 0,
           paddingBottom: 0,
-          backgroundColor: presets.sidebar,
-          backgroundSize: `240px 240px`,
-          backgroundImage: `linear-gradient(45deg, rgba(${stripeColor}) 25%, transparent 25%, transparent 50%, rgba(${stripeColor}) 50%, rgba(${stripeColor}) 75%, transparent 75%, transparent)`,
-          color: `white`,
-          animation: `${bgAnim} 20s linear infinite`,
         }}
       >
         <VerticalLine />
@@ -245,17 +258,14 @@ const Diagram = ({ containerCSS }) =>
         </small>
         <VerticalLine />
       </div>
-    </div>
-    <div
-      css={{
-        ...con,
-      }}
-    >
+    </Segment>
+
+    <Segment className="Deploy">
       <VerticalLine />
-      <h2 css={label}>Deploy</h2>
+      <SegmentTitle>Deploy</SegmentTitle>
       <div
         css={{
-          ...stepContainer,
+          ...box,
           paddingTop: 0,
           paddingBottom: rhythm(1),
         }}
@@ -277,6 +287,7 @@ const Diagram = ({ containerCSS }) =>
             ...scale(0),
             marginTop: rhythm(1 / 3),
             marginBottom: 0,
+            color: presets.brand,
           }}
         >
           Static Web Host
@@ -291,7 +302,7 @@ const Diagram = ({ containerCSS }) =>
           Self-hosted or Amazon S3, Netlify, Github Pages, Surge.sh, Aerobatic…
         </small>
       </div>
-    </div>
-  </div>
+    </Segment>
+  </section>
 
 export default Diagram
