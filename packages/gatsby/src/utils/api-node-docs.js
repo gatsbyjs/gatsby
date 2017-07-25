@@ -145,8 +145,10 @@ exports.modifyBabelrc = true
 
 /**
  * Let plugins extend/mutate the site's webpack configuration.
- * This API will change before 1.0 as it needs still to be converted to use
- * Redux actions.
+ *
+ * Refer to the [Add custom webpack config docs
+ * page](/docs/add-custom-webpack-config/) for detailed documentation on
+ * modifying webpack docs).
  */
 exports.modifyWebpackConfig = true
 
