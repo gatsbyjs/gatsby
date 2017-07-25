@@ -92,7 +92,7 @@ const SourceItems = ({ children }) =>
     css={{
       display: `flex`,
       flexWrap: `wrap`,
-      justifyContent: `space-around`,
+      justifyContent: `center`,
       ...box,
     }}
   >
@@ -105,7 +105,12 @@ const SourceItem = ({ children }) =>
       boxSizing: `border-box`,
       padding: `0 .8rem ${rhythm(1)}`,
       display: `flex`,
-      flex: `1 1 33%`,
+      [presets.Mobile]: {
+        flex: `1 1 50%`,
+      },
+      [presets.Phablet]: {
+        flex: `1 1 33%`,
+      },
     }}
   >
     <div
