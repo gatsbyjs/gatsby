@@ -32,12 +32,24 @@ exports.sourceNodes = (
       return
     }
 
-    let collectionName = pluginOptions.collection || `documents`;
-    let collection = db.collection(collectionName);
-    let cursor = collection.find();
+    if (pluginOptions.auth) {
+      db.authenticate(pluginOptions.auth.user, pluginOptions.auth.password, function(err, result) {
+         createNodes(db, pluginOptions, dbName, createNode, done);   
+      });
+    } else {
+         createNodes(db, pluginOptions, dbName, createNode, done);
+    }
+  });
+}
+
+function createNodes(db, pluginOptions, dbName, createNode, done) {
+  console.log("create nodes ...");
+  let collectionName = pluginOptions.collection || `documents`;
+  let collection = db.collection(collectionName);
+  let cursor = collection.find();
     
-    // Execute the each command, triggers for each document
-    cursor.each(function(err, item) {
+  // Execute the each command, triggers for each document
+  cursor.each(function(err, item) {
       
       // If the item is null then the cursor is exhausted/empty and closed
       if (item == null) {
@@ -63,7 +75,6 @@ exports.sourceNodes = (
         })
       }
     })
-  })
 }
 
 function caps(s) {
