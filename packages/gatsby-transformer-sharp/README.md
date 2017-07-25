@@ -22,7 +22,7 @@ plugins: [
 
 ## Parsing algorithm
 
-It recongnizes files with the following extensions as images.
+It recognizes files with the following extensions as images.
 
 * jpeg
 * jpg
