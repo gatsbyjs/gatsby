@@ -152,18 +152,26 @@ const Gatsby = ({ children }) =>
   <div
     css={{
       ...borderAndBoxShadow,
-      padding: `1rem`,
+      padding: rhythm(1),
       margin: `0 auto`,
-      width: `6.5rem`,
-      height: `6.5rem`,
+      width: rhythm(5.5),
+      height: rhythm(5.5),
+      [presets.Desktop]: {
+        width: rhythm(6),
+        height: rhythm(6),
+      },
     }}
   >
     <img
       src={logo}
       css={{
         display: `inline-block`,
-        height: rhythm(1.6),
-        width: rhythm(1.6),
+        height: rhythm(1.75),
+        width: rhythm(1.75),
+        [presets.Desktop]: {
+          width: rhythm(2.25),
+          height: rhythm(2.25),
+        },
         margin: 0,
         verticalAlign: `middle`,
       }}
