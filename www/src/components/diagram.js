@@ -6,6 +6,7 @@ import presets from "../utils/presets"
 import logo from "../gatsby-negative.svg"
 import { GraphQLIcon, ReactJSIcon } from "../assets/logos"
 import { vP, vPHd, vPVHd, vPVVHd } from "../components/gutters"
+import FuturaParagraph from "../components/futura-paragraph"
 
 const stripeColor = `249, 245, 255, 1`
 const stripeSize = 15
@@ -223,10 +224,13 @@ const Diagram = ({ containerCSS }) =>
     }}
   >
     <h1 css={{ marginBottom: rhythm(1.5), ...scale(0.9) }}>How Gatsby works</h1>
-    <p css={{ maxWidth: `480px`, margin: `0 auto ${rhythm(2)}` }}>
-      Gatsby lets you build blazing-fast sites with <em>your data</em>, whatever
-      the source. Liberate your sites from legacy CMSs and fly into the future.
-    </p>
+    <div css={{ maxWidth: rhythm(20), margin: `0 auto ${rhythm(2)}` }}>
+      <FuturaParagraph>
+        Gatsby lets you build blazing-fast sites with <em>your data</em>,
+        whatever the source. Liberate your sites from legacy CMSs and fly into
+        the future.
+      </FuturaParagraph>
+    </div>
 
     <Segment className="Source">
       <SegmentTitle>Data Sources</SegmentTitle>
