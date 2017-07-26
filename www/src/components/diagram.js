@@ -64,8 +64,8 @@ const SegmentTitle = ({ children }) =>
 const VerticalLine = () =>
   <svg
     width="20"
-    height="40"
-    viewBox="0 0 20 40"
+    height="30"
+    viewBox="0 0 20 30"
     css={{ margin: `0 auto`, display: `block` }}
   >
     <line
@@ -77,7 +77,7 @@ const VerticalLine = () =>
       stroke={presets.brandLight}
       strokeWidth="3"
       strokeLinecap="round"
-      strokeDasharray="0.5, 12"
+      strokeDasharray="0.5, 10"
       css={{ animation: `${lineAnimation} 40s linear infinite` }}
     />
   </svg>
