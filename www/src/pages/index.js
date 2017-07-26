@@ -171,7 +171,7 @@ const IndexRoute = React.createClass({
                 },
               }}
             >
-              <Container hasSideBar={false}>
+              <Container hasSideBar={false} css={{ maxWidth: rhythm(30) }}>
                 {` `}
                 <h2
                   css={{

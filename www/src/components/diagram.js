@@ -1,3 +1,5 @@
+import React from "react"
+
 import { css } from "glamor"
 
 import { rhythm, scale, options } from "../utils/typography"
@@ -212,10 +214,10 @@ const Diagram = ({ containerCSS }) =>
       },
     }}
   >
-    <h1 css={{ marginBottom: `1em`, ...scale(0.9) }}>How Gatsby works</h1>
-    <p css={{ maxWidth: `480px`, margin: `0 auto 3rem` }}>
-      Some supporting text here how anything is possible with Gatsby – maybe
-      mention (source) plugins somehow?
+    <h1 css={{ marginBottom: rhythm(1.5), ...scale(0.9) }}>How Gatsby works</h1>
+    <p css={{ maxWidth: `480px`, margin: `0 auto ${rhythm(2)}` }}>
+      Gatsby lets you build blazing-fast sites with <em>your data</em>, whatever
+      the source. Liberate your sites from legacy CMSs and fly into the future.
     </p>
 
     <Segment className="Source">
