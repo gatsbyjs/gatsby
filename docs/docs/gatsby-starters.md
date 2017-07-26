@@ -29,6 +29,7 @@ Official:
 
 * [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default) [(demo)](http://gatsbyjs.github.io/gatsby-starter-default/)
 * [gatsby-starter-blog](https://github.com/gatsbyjs/gatsby-starter-blog) [(demo)](http://gatsbyjs.github.io/gatsby-starter-blog/)
+* [gatsby-starter-hello-world](https://github.com/gatsbyjs/gatsby-starter-hello-world) [(demo)](https://aberrant-fifth.surge.sh/)
 
 Community:
 
