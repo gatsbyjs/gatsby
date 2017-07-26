@@ -52,6 +52,7 @@ Now let's now try running Gatsby!
 Gatsby has a built-in development server. Let's start it up.
 
 ```sh
+cd tutorial-part-one
 npm run develop
 ```
 
