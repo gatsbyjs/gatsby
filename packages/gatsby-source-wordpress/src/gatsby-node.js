@@ -115,7 +115,7 @@ exports.sourceNodes = async (
     console.log(``)
 
     for (let route of validRoutes) {
-      await fetchData(route, auth, createNode)
+      await fetchData(route, createNode)
       console.log(``)
     }
 
