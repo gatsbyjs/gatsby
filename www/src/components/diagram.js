@@ -242,7 +242,7 @@ const Diagram = ({ containerCSS }) =>
           </ItemDescription>
         </SourceItem>
         <SourceItem>
-          <SourceTitle>YAML/JSON</SourceTitle>
+          <SourceTitle>YAML, JSON, CSV</SourceTitle>
           <ItemDescription>Any Data you can think of…</ItemDescription>
         </SourceItem>
       </SourceItems>
