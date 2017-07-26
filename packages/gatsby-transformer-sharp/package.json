@@ -1,6 +1,6 @@
 {
   "name": "gatsby-transformer-sharp",
-  "version": "1.0.1",
+  "version": "1.4.0",
   "description": "Gatsby transformer plugin for images using Sharp",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
@@ -15,7 +15,9 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "bluebird": "^3.5.0"
+    "bluebird": "^3.5.0",
+    "fs-extra": "^4.0.0",
+    "image-size": "^0.6.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1"
