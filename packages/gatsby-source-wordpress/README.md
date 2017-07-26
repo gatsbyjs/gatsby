@@ -366,6 +366,19 @@ Note : you will have to populate the acf node with your config. Put this in the 
       }
     }
   }
+  allWordpressWpApiMenusMenusExtended {
+    edges {
+      node {
+        name
+        count
+        items {
+          order
+          title
+          url
+        }
+      }
+    }
+  }
 ```
 ### Query any other plugin
 In the following example, `${Manufacturer}` will be replaced by the endpoint prefix and `${Endpoint}` by the name of the endpoint.
