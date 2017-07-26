@@ -16,6 +16,19 @@ import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import FuturaParagraph from "../components/futura-paragraph"
 import CtaButton from "../components/cta-button"
 
+const TechWithIcon = ({ icon, children }) =>
+  <span css={{ whiteSpace: `nowrap` }}>
+    {children}&nbsp;<img
+      src={icon}
+      css={{
+        height: `1.2em`,
+        width: `auto`,
+        margin: 0,
+        verticalAlign: `text-bottom`,
+      }}
+    />
+  </span>
+
 const IndexRoute = React.createClass({
   render() {
     console.log(this.props)
@@ -37,32 +50,9 @@ const IndexRoute = React.createClass({
               <CardHeadline>Modern web tech without the headache</CardHeadline>
               <FuturaParagraph>
                 Enjoy all the power of the latest web technologies –{` `}
-                <span css={{ whiteSpace: `nowrap` }}>
-                  React.js&nbsp;
-                  <img
-                    src={ReactJSIcon}
-                    css={{
-                      height: `1.2em`,
-                      width: `auto`,
-                      margin: 0,
-                      verticalAlign: `middle`,
-                    }}
-                  />
-                </span>
-                ,{` `}
-                <span css={{ whiteSpace: `nowrap` }}>
-                  Webpack&nbsp;
-                  <img
-                    src={WebpackIcon}
-                    css={{
-                      height: `1.2em`,
-                      width: `auto`,
-                      margin: 0,
-                      verticalAlign: `middle`,
-                    }}
-                  />
-                </span>
-                , modern JavaScript and CSS and more – all setup and waiting for
+                <TechWithIcon icon={ReactJSIcon}>React.js</TechWithIcon>,{` `}
+                <TechWithIcon icon={WebpackIcon}>Webpack</TechWithIcon>,{` `}
+                modern JavaScript and CSS and more – all setup and waiting for
                 you to start building.
               </FuturaParagraph>
             </Card>
@@ -73,17 +63,7 @@ const IndexRoute = React.createClass({
                 the data you want – from one or many sources: Pull data from
                 headless CMSs, SaaS services, APIs, databases, your file system
                 & more directly into your pages using{` `}
-                <span css={{ whiteSpace: `nowrap` }}>
-                  GraphQL&nbsp;<img
-                    src={GraphQLIcon}
-                    css={{
-                      height: `1.2em`,
-                      width: `auto`,
-                      margin: 0,
-                      verticalAlign: `middle`,
-                    }}
-                  />
-                </span>.
+                <TechWithIcon icon={GraphQLIcon}>GraphQL</TechWithIcon>.
               </FuturaParagraph>
             </Card>
             <Card>
