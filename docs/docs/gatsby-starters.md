@@ -99,4 +99,10 @@ Community:
     * glitch serves assets over CDN, API unclear
     * virtual server container provides [**128MB** for app](https://glitch.com/faq#restrictions) (512MB for assets)
     * server can't install certain gatsby plugins (`sharp`-based; out of mem?)
-  
+
+* [gatsby-starter-grommet](https://github.com/alampros/gatsby-starter-grommet)
+
+  Features:
+  * Barebones configuration for using the [Grommet](https://grommet.github.io/) design system
+  * Uses SASS (with CSS modules support)
+
