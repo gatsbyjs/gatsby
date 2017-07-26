@@ -217,7 +217,7 @@ export const pageQuery = graphql`
     }
     allMarkdownRemark(
       sort: { order: DESC, fields: [frontmatter___date] }
-      limit: 2
+      limit: 3
       filter: {
         frontmatter: { draft: { ne: true } }
         fileAbsolutePath: { regex: "/blog/" }
