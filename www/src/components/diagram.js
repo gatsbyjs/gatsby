@@ -1,5 +1,4 @@
 import React from "react"
-
 import { css } from "glamor"
 
 import { rhythm, scale, options } from "../utils/typography"
@@ -7,11 +6,6 @@ import presets from "../utils/presets"
 import logo from "../gatsby-negative.svg"
 import { GraphQLIcon, ReactJSIcon } from "../assets/logos"
 import { vP, vPHd, vPVHd, vPVVHd } from "../components/gutters"
-
-const labelColor = presets.accent
-const labelBorderColor = presets.lightPurple
-const labelBorderWidth = `1px`
-const labelBorderStyle = `dotted`
 
 const stripeColor = `249, 245, 255, 1`
 const stripeSize = 15
@@ -27,6 +21,11 @@ const stripeBg = {
   backgroundImage: `linear-gradient(45deg, rgba(${stripeColor}) 25%, transparent 25%, transparent 50%, rgba(${stripeColor}) 50%, rgba(${stripeColor}) 75%, transparent 75%, transparent)`,
   animation: `${stripeAnimation} 14s linear infinite`,
 }
+const lineAnimation = css.keyframes({
+  to: {
+    strokeDashoffset: 1000,
+  },
+})
 
 const Segment = ({ className, children }) =>
   <div
@@ -45,7 +44,7 @@ const SegmentTitle = ({ children }) =>
     className="Segment-title"
     css={{
       display: `inline`,
-      background: labelColor,
+      background: presets.accent,
       color: `#fff`,
       borderRadius: presets.radius,
       margin: `0 auto`,
@@ -63,19 +62,28 @@ const SegmentTitle = ({ children }) =>
   </h2>
 
 const VerticalLine = () =>
-  <div
-    css={{
-      width: labelBorderWidth,
-      borderLeft: `${labelBorderWidth} ${labelBorderStyle} ${labelBorderColor}`,
-      borderTop: `1px solid transparent`,
-      borderBottom: `1px solid transparent`,
-      height: rhythm(1),
-      margin: `0 auto`,
-    }}
-  />
+  <svg
+    width="20"
+    height="40"
+    viewBox="0 0 20 40"
+    css={{ margin: `0 auto`, display: `block` }}
+  >
+    <line
+      className="path"
+      x1="10"
+      x2="10"
+      y1="110"
+      y2="-10"
+      stroke={presets.brandLight}
+      strokeWidth="3"
+      strokeLinecap="round"
+      strokeDasharray="0.5, 12"
+      css={{ animation: `${lineAnimation} 40s linear infinite` }}
+    />
+  </svg>
 
 const box = {
-  border: `${labelBorderWidth} ${labelBorderStyle} ${labelBorderColor}`,
+  border: `1px solid #eee2fd`,
   borderRadius: presets.radiusLg,
   padding: `${rhythm(1)} ${rhythm(1)} 0`,
   background: presets.sidebar,
