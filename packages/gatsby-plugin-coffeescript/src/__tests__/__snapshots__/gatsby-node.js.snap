@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`gatsby-plugin-coffeescript contains coffee script extensions 1`] = `
+Array [
+  ".coffee",
+  ".cjsx",
+]
+`;
+
+exports[`gatsby-plugin-coffeescript pre processing transforms .cjsx files 1`] = `
+"(function() {
+  var React;
+
+  React = require('react');
+
+  module.exports = class extends React.Component({
+      render: function() {
+        return React.createElement(\\"div\\", null, React.createElement(\\"h1\\", null, \\"Hello World\\"));
+      }
+    }) {};
+
+}).call(this);
+"
+`;
+
+exports[`gatsby-plugin-coffeescript pre processing transforms .coffee files 1`] = `
+"(function() {
+  if (typeof elvis !== \\"undefined\\" && elvis !== null) {
+    alert(\\"I knew it!\\");
+  }
+
+}).call(this);
+"
+`;
