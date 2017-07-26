@@ -232,18 +232,20 @@ const Diagram = ({ containerCSS }) =>
       <SegmentTitle>Data Sources</SegmentTitle>
       <SourceItems>
         <SourceItem>
-          <SourceTitle>Markdown</SourceTitle>
-          <ItemDescription>Documentation, Posts, etc.</ItemDescription>
-        </SourceItem>
-        <SourceItem>
-          <SourceTitle>APIs</SourceTitle>
+          <SourceTitle>CMSs</SourceTitle>
           <ItemDescription>
             Contentful, Drupal, WordPress & more
           </ItemDescription>
         </SourceItem>
         <SourceItem>
-          <SourceTitle>YAML, JSON, CSV</SourceTitle>
-          <ItemDescription>Any Data you can think of…</ItemDescription>
+          <SourceTitle>Markdown</SourceTitle>
+          <ItemDescription>Documentation, Posts, etc.</ItemDescription>
+        </SourceItem>
+        <SourceItem>
+          <SourceTitle>Data</SourceTitle>
+          <ItemDescription>
+            APIs, Databases, YAML, JSON, CSV & more
+          </ItemDescription>
         </SourceItem>
       </SourceItems>
     </Segment>
