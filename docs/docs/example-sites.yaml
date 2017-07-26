@@ -1,0 +1,12 @@
+- title: Segment Blog
+  url: https://segment.com/blog/
+  description: Segment relaunched their blog on Gatsby
+  thumbnail: images/segment.png
+- title: Fabric
+  url: https://meetfabric.com/
+  description: The life insurance startup Fabric built their marketing site and web app using Gatsby
+  thumbnail: images/fabric.png
+- title: Formidable
+  url: https://formidable.com/
+  description: JavaScript consultancy Formidable built their website on Gatsby
+  thumbnail: images/formidable.png
