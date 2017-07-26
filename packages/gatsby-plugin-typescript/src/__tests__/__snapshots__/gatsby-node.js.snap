@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`gatsby-plugin-typescript modifies webpack config 1`] = `
+Array [
+  "typescript",
+  Object {
+    "loaders": Array [
+      "babel?{\\"plugins\\":[\\"\\"]}",
+      "ts-loader?{\\"compilerOptions\\":{\\"target\\":\\"esnext\\",\\"experimentalDecorators\\":true,\\"jsx\\":\\"react\\",\\"module\\":\\"commonjs\\"},\\"transpileOnly\\":true}",
+    ],
+    "test": /\\\\\\.tsx\\?\\$/,
+  },
+]
+`;
+
+exports[`gatsby-plugin-typescript pre-processing transforms .ts files 1`] = `
+"const now = moment().format('HH:MM:ss');
+"
+`;
+
+exports[`gatsby-plugin-typescript pre-processing transforms JSX files 1`] = `
+"import * as React from 'react';
+export default () => React.createElement(\\"h1\\", null, \\"Hello World\\");
+"
+`;
+
+exports[`gatsby-plugin-typescript returns correct extensions 1`] = `
+Array [
+  ".ts",
+  ".tsx",
+]
+`;

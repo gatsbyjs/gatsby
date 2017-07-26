@@ -11,7 +11,7 @@ image: 'ui-and-code.png'
 built with Gatsby v1.
 
 The [source code for
-Gatsbygram](https://github.com/gatsbyjs/gatsby/tree/1.0/examples/gatsbygram)
+Gatsbygram](https://github.com/gatsbyjs/gatsby/tree/master/examples/gatsbygram)
 lives in the Gatsby monorepo. See the instructions at the end for how to
 start playing with the code!
 
@@ -380,7 +380,7 @@ sites as it has logic to show clicked images in either a modal on larger
 screens or on their own page on smaller screens.
 
 [Read Gatsbygram's Layout component on
-Github](https://github.com/gatsbyjs/gatsby/blob/master/examples/gatsbygram/src/layouts/default.js).
+Github](https://github.com/gatsbyjs/gatsby/blob/master/examples/gatsbygram/src/layouts/index.js).
 
 ## Client routing and pre-caching
 

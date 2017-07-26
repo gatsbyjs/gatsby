@@ -2,6 +2,7 @@ import React from "react"
 import Link from "gatsby-link"
 import { rhythm, scale, options } from "../utils/typography"
 import Container from "../components/container"
+import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import presets from "../utils/presets"
 import colors from "../utils/colors"
 
@@ -45,9 +46,7 @@ const ctaButtonStyles = {
 const IndexRoute = React.createClass({
   render() {
     console.log(this.props)
-    const blogPosts = this.props.data.allMarkdownRemark.edges.map(
-      edge => edge.node
-    )
+    const blogPosts = this.props.data.allMarkdownRemark
     return (
       <div>
         <div
@@ -280,77 +279,9 @@ const IndexRoute = React.createClass({
             >
               Latest from the Gatsby blog
             </h2>
-            {blogPosts.map(post => {
-              const avatar =
-                post.frontmatter.author.avatar.childImageSharp
-                  .responsiveResolution
-              return (
-                <div key={post.fields.slug} css={{ paddingBottom: rhythm(2) }}>
-                  <Link to={post.fields.slug}>
-                    <h2
-                      css={{
-                        marginBottom: rhythm(1 / 8),
-                      }}
-                    >
-                      {post.frontmatter.title}
-                    </h2>
-                    <p
-                      css={{
-                        color: colors.b[13],
-                      }}
-                    >
-                      {post.frontmatter.excerpt
-                        ? post.frontmatter.excerpt
-                        : post.excerpt}
-                    </p>
-                  </Link>
-                  <div>
-                    <img
-                      alt={`Avatar for ${post.frontmatter.author.id}`}
-                      src={avatar.src}
-                      srcSet={avatar.srcSet}
-                      height={avatar.height}
-                      width={avatar.width}
-                      css={{
-                        borderRadius: `100%`,
-                        display: `inline-block`,
-                        marginRight: rhythm(1 / 2),
-                        marginBottom: 0,
-                        verticalAlign: `top`,
-                      }}
-                    />
-                    <div
-                      css={{
-                        display: `inline-block`,
-                      }}
-                    >
-                      <div
-                        css={{
-                          color: colors.b[12],
-                          lineHeight: 1.1,
-                        }}
-                      >
-                        <small>
-                          {post.frontmatter.author.id}
-                        </small>
-                      </div>
-                      <div
-                        css={{
-                          color: colors.b[12],
-                          lineHeight: 1.1,
-                        }}
-                      >
-                        <small>
-                          <em>
-                            {post.frontmatter.date}
-                          </em>
-                        </small>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )
-            })}
+            {blogPosts.edges.map(({ node }) =>
+              <BlogPostPreviewItem post={node} key={node.fields.slug} />
+            )}
           </Container>
         </div>
       </div>
@@ -386,28 +317,7 @@ export const pageQuery = graphql`
     ) {
       edges {
         node {
-          excerpt
-          fields {
-            slug
-          }
-          frontmatter {
-            excerpt
-            title
-            date(formatString: "DD MMMM, YYYY")
-            author {
-              id
-              avatar {
-                childImageSharp {
-                  responsiveResolution(width: 35, height: 35) {
-                    width
-                    height
-                    src
-                    srcSet
-                  }
-                }
-              }
-            }
-          }
+          ...BlogPostPreview_item
         }
       }
     }
