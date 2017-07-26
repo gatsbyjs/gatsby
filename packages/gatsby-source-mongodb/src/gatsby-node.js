@@ -1,12 +1,6 @@
 var Db = require(`mongodb`).Db,
   MongoClient = require(`mongodb`).MongoClient,
-  Server = require(`mongodb`).Server,
   ObjectID = require(`mongodb`).ObjectID,
-  Binary = require(`mongodb`).Binary,
-  GridStore = require(`mongodb`).GridStore,
-  Grid = require(`mongodb`).Grid,
-  Code = require(`mongodb`).Code,
-  assert = require(`assert`),
   crypto = require(`crypto`)
 
 exports.sourceNodes = (
@@ -20,30 +14,22 @@ exports.sourceNodes = (
     address: `localhost`,
     port: 27017,
   }
-  let dbName = pluginOptions.dbName || `local`;
-  let db = new Db(
-    dbName,
-    new Server(serverOptions.address, serverOptions.port)
-  )
+  let dbName = pluginOptions.dbName || `local`, authUrlPart = '';
+  if (pluginOptions.auth) authUrlPart = `${pluginOptions.auth.user}:${pluginOptions.auth.password}@`;
+
+  MongoClient.connect(`mongodb://${authUrlPart}${serverOptions.address}:${serverOptions.port}/${dbName}`, function(err, db) {
   // Establish connection to db
-  db.open(function(err, db) {
     if (err) {
       console.warn(err)
       return
     }
 
-    if (pluginOptions.auth) {
-      db.authenticate(pluginOptions.auth.user, pluginOptions.auth.password, function(err, result) {
-         createNodes(db, pluginOptions, dbName, createNode, done);   
-      });
-    } else {
-         createNodes(db, pluginOptions, dbName, createNode, done);
-    }
+    createNodes(db, pluginOptions, dbName, createNode, done);   
   });
 }
 
 function createNodes(db, pluginOptions, dbName, createNode, done) {
-  console.log("create nodes ...");
+  console.log("create nodes with new api ...");
   let collectionName = pluginOptions.collection || `documents`;
   let collection = db.collection(collectionName);
   let cursor = collection.find();
