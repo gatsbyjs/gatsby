@@ -51,7 +51,7 @@ const extractFieldExamples = (nodes: any[]) =>
   // $FlowFixMe
   _.mergeWith(
     _.isArray(nodes[0]) ? [] : {},
-    ...JSON.parse(JSON.stringify(nodes)),
+    ..._.cloneDeep(nodes),
     (obj, next, key, po, pn, stack) => {
       if (obj === INVALID_VALUE) return obj
 
