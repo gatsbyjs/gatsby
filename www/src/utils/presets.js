@@ -19,10 +19,11 @@ module.exports = {
   lightPurple: colors.b[2],
   veryLightPurple: colors.b[0],
   sidebar: `#fcfaff`,
+  // palette by @SachaG
+  // @see https://www.figma.com/file/J6IYJEtdRmwJQOrcZ2DfvxDD/Gatsby
   brand: `#744C9E`,
   brandLight: `#9D7CBF`,
-  brandLighter: `#F5F3F7`, // @SachaG's original color
-  //brandLighter: `#f9f5ff`,
+  brandLighter: `#F5F3F7`,
   brandDark: `#744C9E`,
   // bolder palette by @ArchieHicklin
   // @see https://github.com/gatsbyjs/gatsby/issues/1173#issuecomment-309415650

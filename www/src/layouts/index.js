@@ -125,7 +125,7 @@ module.exports = React.createClass({
       </Link>
     const socialIconsStyles = {
       color: presets.brandLight,
-      [presets.Desktop]: {
+      [presets.Tablet]: {
         color: this.props.location.pathname !== `/` ? false : `white`,
         fontSize: scale(0).fontSize,
       },
@@ -237,7 +237,7 @@ module.exports = React.createClass({
             </ul>
             <div
               css={{
-                marginLeft: `auto`,
+                marginLeft: rhythm(1 / 2),
                 [presets.Tablet]: {
                   marginLeft: `auto`,
                 },
