@@ -4,14 +4,12 @@ const { watchComponent } = require(`./query-watcher`)
 
 let components = {}
 
-exports.onCreateComponent = ({ component, store, boundActionCreators }) => {
-  // if we haven't seen component before
-  // - get corresponding pages + layouts
-  // - ensure they have a json files
+const handlePageOrLayout = (store) => ((pageOrLayout) => {
+  // - ensure corresponding page or layout has json files.
+  // - get corresponding component
   // - watch component
   // - mark component
   const writeJsonFile = ({ jsonName }) => {
-    // console.log(jsonName)
     const dest = path.join(
       store.getState().program.directory,
       `.cache`,
@@ -23,15 +21,22 @@ exports.onCreateComponent = ({ component, store, boundActionCreators }) => {
     }
   }
 
-  if (!components[component.componentPath]) {
-    const state = store.getState()
-    const pagesAndLayouts = [...state.pages, ...state.layouts]
+  writeJsonFile(pageOrLayout)
 
-    pagesAndLayouts
-      .filter(pl => pl.componentPath === component.componentPath)
-      .map(writeJsonFile)
+  const component = store.getState().components[pageOrLayout.componentPath]
 
-    watchComponent(component.componentPath)
-    components[component.componentPath] = component.componentPath
+  if (components[component.componentPath]) {
+    return
   }
+
+  watchComponent(component.componentPath)
+  components[component.componentPath] = component.componentPath
+})
+
+exports.onCreatePage = ({ page, store, boundActionCreators }) => {
+  handlePageOrLayout(store)(page)
+}
+
+exports.onCreateLayout = ({ layout, store, boundActionCreators }) => {
+  handlePageOrLayout(store)(layout)
 }

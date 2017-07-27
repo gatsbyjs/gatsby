@@ -19,7 +19,6 @@ const invariant = require(`invariant`)
 const normalize = require(`normalize-path`)
 
 exports.extractQueries = () => {
-  // TODO We can just grab the components straight from store here?
   const state = store.getState()
   const pagesAndLayouts = [...state.pages, ...state.layouts]
   const components = _.uniq(pagesAndLayouts.map(p => p.component))

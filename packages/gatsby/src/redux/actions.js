@@ -58,8 +58,7 @@ actions.createPage = (page, plugin = ``, traceId) => {
     internalComponentName = `ComponentIndex`
   }
 
-  // if no layout is set we check if `/src/layouts/index`
-  // if it exists we set it as default
+  // If no layout is set we try fallback to `/src/layouts/index`.
   if (
     !page.layout &&
     !glob.sync(
@@ -114,12 +113,12 @@ actions.deleteLayout = (layout, plugin = ``) => {
 /**
  * Create a layout.
  * @param {Object} layout a layout object
- * @param {string} page.id Unique id for layout
- * @param {string} page.component The absolute path to the component for this layout
+ * @param {string} layout.id Unique id for layout
+ * @param {string} layout.component The absolute path to the component for this layout
  * @example
  * createLayout({
  *   id: `myNewLayout`,
- *   component: path.resolve('./src/templates/myNewLayout.js`)
+ *   component: path.resolve(`./src/templates/myNewLayout.js`)
  *   context: {
  *     title: `My New Layout`
  *   }
