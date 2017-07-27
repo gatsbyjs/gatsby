@@ -1,6 +1,6 @@
 ---
 title: Gatsby.js Tutorial Part One
-typora-copy-images-to: ../tutorial/images
+typora-copy-images-to: ./
 ---
 
 Hello fellow Gatsby-er! Welcome to *part one* of our community Gatsby.js tutorial.
@@ -19,7 +19,7 @@ Open a terminal window and type `node --version` then `npm --version`.
 
 You should see something like:
 
-![Check if node.js/npm is installed](images/check-versions.png)
+![Check if node.js/npm is installed](check-versions.png)
 
 Gatsby supports versions of Node back to v4 and NPM to v3.
 
@@ -58,7 +58,7 @@ npm run develop
 
 You should see shortly some text that says `The development server is listening at:` [http://localhost:8000](http://localhost:8000). Open that address in your browser and...
 
-![Gatsby.js hello world](images/hello-world.png)
+![Gatsby.js hello world](hello-world.png)
 
 Yeah! It's working!!!
 
@@ -113,7 +113,7 @@ export default () =>
 
 Now your screen should look something like this.
 
-![Screen Shot 2017-06-03 at 11.57.10 AM](images/moving-along.png)
+![Screen Shot 2017-06-03 at 11.57.10 AM](moving-along.png)
 
 ## Linking between pages
 
@@ -141,7 +141,7 @@ export default () =>
 
 Click on that link and you should see:
 
-![Gatsby.js development 404 page](images/dev-404.png)
+![Gatsby.js development 404 page](dev-404.png)
 
 What you're seeing is the Gatsby.js development 404 page. Let's do what it says and create a React.js page component at `src/pages/page-2.js`.
 
@@ -314,7 +314,7 @@ surge public/
 
 Once this finishes running, you should see in your terminal something like:
 
-![Screenshot of publishing Gatsby site with Surge](images/surge-deployment.png)
+![Screenshot of publishing Gatsby site with Surge](surge-deployment.png)
 
 Open the web address listed on the bottom line (`lowly-pain.surge.sh` in this case) and you'll see your newly published site!
 
