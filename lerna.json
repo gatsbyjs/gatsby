@@ -4,6 +4,5 @@
   "packages": [
     "packages/*"
   ],
-  "hoist": true,
-  "version": "1.5.0"
+  "hoist": true
 }
