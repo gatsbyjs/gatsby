@@ -241,9 +241,7 @@ const Diagram = ({ containerCSS }) =>
       <SourceItems>
         <SourceItem>
           <ItemTitle>CMSs</ItemTitle>
-          <ItemDescription>
-            Contentful, Drupal, WordPress & more
-          </ItemDescription>
+          <ItemDescription>Contentful, Drupal, WordPress, etc.</ItemDescription>
         </SourceItem>
         <SourceItem>
           <ItemTitle>Markdown</ItemTitle>
@@ -252,7 +250,7 @@ const Diagram = ({ containerCSS }) =>
         <SourceItem>
           <ItemTitle>Data</ItemTitle>
           <ItemDescription>
-            APIs, Databases, YAML, JSON, CSV & more
+            APIs, Databases, YAML, JSON, CSV, etc.
           </ItemDescription>
         </SourceItem>
       </SourceItems>
@@ -304,7 +302,8 @@ const Diagram = ({ containerCSS }) =>
       >
         <ItemTitle>Static Web Host</ItemTitle>
         <ItemDescription>
-          Amazon S3, Netlify, Github Pages, Surge.sh, Aerobatic, Now.sh…
+          Amazon S3, Netlify, Github Pages, Surge.sh, Aerobatic, Now.sh, & many
+          more
         </ItemDescription>
       </div>
     </Segment>
