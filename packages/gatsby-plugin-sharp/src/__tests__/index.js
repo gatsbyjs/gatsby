@@ -13,7 +13,7 @@ describe(`gatsby-plugin-sharp`, () => {
     grayscale: false,
     rotate: false,
   }
-  const absolutePath = path.resolve(`./www/src/argyle.png`)
+  const absolutePath = path.join(__dirname, `images/test.png`)
   const file = {
     id: `${absolutePath} absPath of file`,
     absolutePath,
