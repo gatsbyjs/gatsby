@@ -4,7 +4,7 @@
   "description": "Gatsby example site demonstrating using css modules in Gatsby with normal (Postcss) css and sass/scss.",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "gatsby": "latest",
+    "gatsby": "file:../../packages/gatsby",
     "gatsby-link": "latest",
     "gatsby-plugin-sass": "latest"
   },

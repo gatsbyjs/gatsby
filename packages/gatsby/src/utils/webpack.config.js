@@ -7,6 +7,7 @@ import { StatsWriterPlugin } from 'webpack-stats-plugin'
 import FriendlyErrorsWebpackPlugin from 'friendly-errors-webpack-plugin'
 
 const { store } = require(`../redux`)
+const { actions } = require(`../redux/actions`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
 const WebpackMD5Hash = require(`webpack-md5-hash`)
 const ChunkManifestPlugin = require(`chunk-manifest-webpack-plugin`)
@@ -14,7 +15,7 @@ const GatsbyModulePlugin = require(`../loaders/gatsby-module-loader/plugin`)
 const { withBasePath } = require(`./path`)
 const HashedChunkIdsPlugin = require(`./hashed-chunk-ids-plugin`)
 
-const apiRunnerNode = require('./api-runner-node')
+const apiRunnerNode = require(`./api-runner-node`)
 const createConfig = require(`./webpack-config`)
 
 // Five stages or modes:
@@ -425,14 +426,18 @@ module.exports = async (
     },
   }
 
-  // We don't care about the return as plugins just mutate the config directly.
+  store.dispatch(
+    actions.replaceWebpackConfig(config)
+  )
+  const getConfig = () => store.getState().webpack
+
   await apiRunnerNode(`modifyWebpackConfig`, {
-    config,
+    getConfig,
     stage,
     rules,
     loaders,
     plugins,
   })
 
-  return config
+  return getConfig()
 }

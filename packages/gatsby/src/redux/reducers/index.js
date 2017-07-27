@@ -12,4 +12,5 @@ module.exports = {
   pageDataDependencies: require(`./page-data-dependencies`),
   pageComponents: require(`./page-components`),
   jobs: require(`./jobs`),
+  webpack: require(`./webpack`),
 }

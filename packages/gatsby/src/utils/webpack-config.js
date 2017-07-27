@@ -273,7 +273,7 @@ module.exports = async ({ stage, program }) => {
       // TODO: these extra passes are costly on time and can be
       // fixed in more optimal ways
       disable: stage === `develop` || stage === `develop-html`,
-,
+
       ...options,
     })
 

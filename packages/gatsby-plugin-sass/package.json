@@ -10,7 +10,11 @@
   "devDependencies": {
     "babel-cli": "^6.24.1"
   },
-  "keywords": ["gatsby", "sass", "scss"],
+  "keywords": [
+    "gatsby",
+    "sass",
+    "scss"
+  ],
   "license": "MIT",
   "main": "index.js",
   "readme": "README.md",

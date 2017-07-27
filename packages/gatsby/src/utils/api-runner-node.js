@@ -1,11 +1,21 @@
 const Promise = require(`bluebird`)
 const glob = require(`glob`)
 const _ = require(`lodash`)
+const { stripIndent } = require(`common-tags`)
+
 const mapSeries = require(`async/mapSeries`)
 
 const cache = require(`./cache`)
 
 const apiList = require(`./api-node-docs`)
+
+const pluginError = (plugin, error) => console.error(
+  stripIndent`
+    Plugin ${plugin} returned an error:
+
+    ${error}
+  `
+)
 
 // Bind action creators per plugin so we can auto-add
 // metadata to actions they create.
@@ -146,10 +156,7 @@ module.exports = async (api, args = {}, pluginSource) =>
       },
       (err, results) => {
         if (err) {
-          console.log(``)
-          console.log(`Plugin ${currentPluginName} returned an error:`)
-          console.log(``)
-          console.log(err)
+          pluginError(currentPluginName, err)
         }
         // Remove runner instance
         apisRunning = apisRunning.filter(runner => runner !== apiRunInstance)
