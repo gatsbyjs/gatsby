@@ -1,6 +1,6 @@
 ---
 title: Gatsby.js Tutorial Part One
-typora-copy-images-to: ../tutorial/images
+typora-copy-images-to: ./
 ---
 
 Hello fellow Gatsby-er! Welcome to *part one* of our community Gatsby.js tutorial.
