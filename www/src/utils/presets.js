@@ -27,8 +27,8 @@ module.exports = {
   // bolder palette by @ArchieHicklin
   // @see https://github.com/gatsbyjs/gatsby/issues/1173#issuecomment-309415650
   accent: `#ffb238`, // "Mustard"
-  radius: 3,
-  radiusLg: 6,
+  radius: 2,
+  radiusLg: 4,
   gutters: {
     default: 1.5,
     HdR: 2.5,
