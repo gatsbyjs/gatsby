@@ -19,6 +19,19 @@ const cover = {
   bottom: 0,
 }
 
+const MastheadBgRightPoly = ({ fill }) =>
+  <polygon fill={fill} points="-27,105 83,-5 130,-5 130,105 " />
+
+const MastheadBgRightGroup = ({ brightOff, darkOff, cssClassName }) =>
+  <g className={`Masthead-bg-right-group ${cssClassName}`}>
+    <g className="bright" transform={`translate(${brightOff})`}>
+      <MastheadBgRightPoly fill={presets.brandLight} />
+    </g>
+    <g className="dark" transform={`translate(${darkOff})`}>
+      <MastheadBgRightPoly fill={presets.brandDark} />
+    </g>
+  </g>
+
 const MastheadBg = () =>
   <div
     className="Masthead-bg"
@@ -48,8 +61,12 @@ const MastheadBg = () =>
         },
       }}
     />
-    <div
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
       className="Masthead-bg-right"
+      viewBox="0 0 100 100"
+      preserveAspectRatio="xMidYMin slice"
       css={{
         ...cover,
         position: `absolute`,
@@ -58,48 +75,40 @@ const MastheadBg = () =>
         zIndex: -1,
       }}
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        xmlnsXlink="http://www.w3.org/1999/xlink"
-        viewBox="0 0 400 400"
-        preserveAspectRatio="xMinYMin slice"
-        style={{ width: `100%`, height: `100%` }}
-      >
-        <style type="text/css">
-          {`
+      <style type="text/css">
+        {`
+          .Masthead-bg-right--lg {
+            display: none;
+          }
+          @media screen and (min-width: 960px) and (min-height: 600px) {
             .Masthead-bg-right--lg {
-              display: none;
+              display: block;
             }
-            @media screen and (min-width: 960px) and (min-height: 600px) {
-              .Masthead-bg-right--lg {
-                display: block;
-              }
-            }
-          `}
-        </style>
-        <polygon
-          fill={presets.brandLight}
-          className="Masthead-bg-right--sm"
-          points="-250,571.8 436.8,-115 1070,-115 1070,571.8 "
-        />
-        <polygon
-          fill={presets.brandDark}
-          className="Masthead-bg-right--sm"
-          points="-130,571.8 556.8,-115 1586.2,-115 1586.2,571.8 "
-        />
-        <polygon
-          fill={presets.brandLight}
-          className="Masthead-bg-right--lg"
-          points="-190,460 496.8,-226.8 1130,-226.8 1130,460 "
-        />
-        <polygon
-          fill={presets.brandDark}
-          className="Masthead-bg-right--lg"
-          points="-130,460 556.8,-226.8 1586.2,-226.8 1586.2,460 "
-        />
-      </svg>
-    </div>
-    <div
+          }
+        `}
+      </style>
+      {/* :-/ */}
+      {/* works for phones */}
+      <MastheadBgRightGroup
+        brightOff="20,0"
+        darkOff="35,0"
+        cssClassName="Masthead-bg-right--sm"
+      />
+      {/* works for ipad/pro portrait, but not for any phone in portrait mode */}
+      {/* <MastheadBgRightGroup brightOff="-5,0" darkOff="15,0" /> *}
+      {/* works for large screens */}
+      <MastheadBgRightGroup
+        brightOff="-10,0"
+        darkOff="5,0"
+        cssClassName="Masthead-bg-right--lg"
+      />
+    </svg>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+      viewBox="0 0 100 100"
+      xmlSpace="preserve"
+      preserveAspectRatio="xMinYMin slice"
       className="Masthead-bg-left"
       css={{
         position: `absolute`,
@@ -115,23 +124,12 @@ const MastheadBg = () =>
         [presets.VVHd]: {
           left: vPVVHdOff,
         },
+        width: `100%`,
+        height: `100%`,
       }}
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        xmlnsXlink="http://www.w3.org/1999/xlink"
-        viewBox="0 0 10000 10000"
-        xmlSpace="preserve"
-        preserveAspectRatio="xMinYMin slice"
-        style={{ width: `100%`, height: `100%` }}
-      >
-        <polygon
-          className="st9"
-          fill={presets.brandLighter}
-          points="-5000,-5000 15000,15000 -5000,15000 "
-        />
-      </svg>
-    </div>
+      <polygon fill={presets.brandLighter} points="-50,-50 150,150 -50,150 " />
+    </svg>
   </div>
 
 const MastheadContent = () =>

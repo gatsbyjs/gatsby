@@ -123,6 +123,13 @@ module.exports = React.createClass({
           {title}
         </div>
       </Link>
+    const socialIconsStyles = {
+      color: presets.brandLight,
+      [presets.Desktop]: {
+        color: this.props.location.pathname !== `/` ? false : `white`,
+        fontSize: scale(0).fontSize,
+      },
+    }
 
     return (
       <div>
@@ -240,14 +247,7 @@ module.exports = React.createClass({
                 href="https://github.com/gatsbyjs/gatsby"
                 css={{
                   ...navItemStyles,
-                  color: presets.brandLight,
-                  [presets.Tablet]: {
-                    color:
-                      this.props.location.pathname !== `/` ? false : `white`,
-                  },
-                  [presets.Desktop]: {
-                    fontSize: scale(0).fontSize,
-                  },
+                  ...socialIconsStyles,
                 }}
               >
                 <GithubIcon css={{ verticalAlign: `text-top` }} />
@@ -257,14 +257,7 @@ module.exports = React.createClass({
                 href="https://discord.gg/0ZcbPKXt5bZjGY5n"
                 css={{
                   ...navItemStyles,
-                  color: presets.brandLight,
-                  [presets.Tablet]: {
-                    color:
-                      this.props.location.pathname !== `/` ? false : `white`,
-                  },
-                  [presets.Desktop]: {
-                    fontSize: scale(0).fontSize,
-                  },
+                  ...socialIconsStyles,
                 }}
               >
                 <DiscordIcon />
@@ -273,14 +266,7 @@ module.exports = React.createClass({
                 href="https://twitter.com/gatsbyjs"
                 css={{
                   ...navItemStyles,
-                  color: presets.brandLight,
-                  [presets.Tablet]: {
-                    color:
-                      this.props.location.pathname !== `/` ? false : `white`,
-                  },
-                  [presets.Desktop]: {
-                    fontSize: scale(0).fontSize,
-                  },
+                  ...socialIconsStyles,
                 }}
               >
                 <TwitterIcon css={{ verticalAlign: `text-top` }} />
