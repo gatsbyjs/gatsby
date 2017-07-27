@@ -7,6 +7,7 @@ import logo from "../gatsby-negative.svg"
 import { GraphQLIcon, ReactJSIcon } from "../assets/logos"
 import { vP, vPHd, vPVHd, vPVVHd } from "../components/gutters"
 import FuturaParagraph from "../components/futura-paragraph"
+import TechWithIcon from "../components/tech-with-icon"
 
 const stripeColor = `249, 245, 255, 1`
 const stripeSize = 15
@@ -84,7 +85,7 @@ const VerticalLine = () =>
   </svg>
 
 const box = {
-  border: `1px solid #eee2fd`,
+  border: `1px solid #f4ecfe`,
   borderRadius: presets.radiusLg,
   padding: `${rhythm(1)} ${rhythm(1)} 0`,
   background: presets.sidebar,
@@ -110,11 +111,13 @@ const SourceItems = ({ children }) =>
     {children}
   </div>
 
+const boxPadding = { padding: `${rhythm(1 / 3)} ${rhythm(2 / 4)}` }
+
 const SourceItem = ({ children }) =>
   <div
     css={{
       boxSizing: `border-box`,
-      padding: `0 .8rem ${rhythm(1)}`,
+      padding: `0 ${rhythm(2 / 3)} ${rhythm(1)}`,
       display: `flex`,
       [presets.Mobile]: {
         flex: `1 1 50%`,
@@ -127,7 +130,7 @@ const SourceItem = ({ children }) =>
     <div
       css={{
         ...borderAndBoxShadow,
-        padding: `.5rem .8rem`,
+        ...boxPadding,
         lineHeight: 1.2,
         textAlign: `left`,
       }}
@@ -136,7 +139,7 @@ const SourceItem = ({ children }) =>
     </div>
   </div>
 
-const SourceTitle = ({ children }) =>
+const ItemTitle = ({ children }) =>
   <h3
     css={{
       color: presets.brand,
@@ -154,6 +157,9 @@ const ItemDescription = ({ children }) =>
       lineHeight: 1.2,
       display: `block`,
       color: presets.brandLight,
+      [presets.Hd]: {
+        fontSize: scale(-1 / 5).fontSize,
+      },
     }}
   >
     {children}
@@ -187,25 +193,23 @@ const Gatsby = ({ children }) =>
         verticalAlign: `middle`,
       }}
     />
-    <small
-      css={{
-        lineHeight: 1.2,
-        color: presets.brand,
-        display: `block`,
-        marginTop: `.25rem`,
-      }}
-    >
-      <span css={{ color: presets.brandLight }}>powered by</span>
-      <br />GraphQL{` `}&nbsp;<img
-        src={GraphQLIcon}
+    <ItemDescription>
+      <small
         css={{
-          height: `1.2em`,
-          width: `auto`,
-          margin: 0,
-          verticalAlign: `sub`,
+          marginTop: `.25rem`,
+          display: `block`,
         }}
-      />
-    </small>
+      >
+        powered by
+      </small>
+      <span
+        css={{
+          color: presets.brand,
+        }}
+      >
+        <TechWithIcon icon={GraphQLIcon}>GraphQL</TechWithIcon>
+      </span>
+    </ItemDescription>
   </div>
 
 const Diagram = ({ containerCSS }) =>
@@ -236,17 +240,17 @@ const Diagram = ({ containerCSS }) =>
       <SegmentTitle>Data Sources</SegmentTitle>
       <SourceItems>
         <SourceItem>
-          <SourceTitle>CMSs</SourceTitle>
+          <ItemTitle>CMSs</ItemTitle>
           <ItemDescription>
             Contentful, Drupal, WordPress & more
           </ItemDescription>
         </SourceItem>
         <SourceItem>
-          <SourceTitle>Markdown</SourceTitle>
+          <ItemTitle>Markdown</ItemTitle>
           <ItemDescription>Documentation, Posts, etc.</ItemDescription>
         </SourceItem>
         <SourceItem>
-          <SourceTitle>Data</SourceTitle>
+          <ItemTitle>Data</ItemTitle>
           <ItemDescription>
             APIs, Databases, YAML, JSON, CSV & more
           </ItemDescription>
@@ -268,26 +272,23 @@ const Diagram = ({ containerCSS }) =>
         <VerticalLine />
         <Gatsby />
         <VerticalLine />
-        <small
+        <div
           css={{
             ...borderAndBoxShadow,
+            ...boxPadding,
+            paddingTop: rhythm(1 / 2),
+            paddingBottom: rhythm(1 / 2),
             width: `auto`,
-            padding: `1rem`,
-            lineHeight: 1,
             display: `inline-block`,
-            color: presets.brandLight,
           }}
         >
-          HTML &middot; CSS &middot; React&nbsp;<img
-            src={ReactJSIcon}
-            css={{
-              height: `1.1em`,
-              width: `auto`,
-              margin: 0,
-              verticalAlign: `sub`,
-            }}
-          />
-        </small>
+          <ItemDescription>
+            HTML &middot; CSS &middot;{` `}
+            <TechWithIcon icon={ReactJSIcon} height="1.1em">
+              React
+            </TechWithIcon>
+          </ItemDescription>
+        </div>
         <VerticalLine />
       </div>
     </Segment>
@@ -298,20 +299,10 @@ const Diagram = ({ containerCSS }) =>
       <div
         css={{
           ...box,
-          paddingTop: rhythm(1),
           paddingBottom: rhythm(1),
         }}
       >
-        <h3
-          css={{
-            fontStyle: `normal`,
-            ...scale(0),
-            margin: 0,
-            color: presets.brand,
-          }}
-        >
-          Static Web Host
-        </h3>
+        <ItemTitle>Static Web Host</ItemTitle>
         <ItemDescription>
           Amazon S3, Netlify, Github Pages, Surge.sh, Aerobatic, Now.sh…
         </ItemDescription>

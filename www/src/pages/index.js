@@ -15,19 +15,7 @@ import Diagram from "../components/diagram"
 import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import FuturaParagraph from "../components/futura-paragraph"
 import CtaButton from "../components/cta-button"
-
-const TechWithIcon = ({ icon, children }) =>
-  <span css={{ whiteSpace: `nowrap` }}>
-    {children}&nbsp;<img
-      src={icon}
-      css={{
-        height: `1.2em`,
-        width: `auto`,
-        margin: 0,
-        verticalAlign: `text-bottom`,
-      }}
-    />
-  </span>
+import TechWithIcon from "../components/tech-with-icon"
 
 const IndexRoute = React.createClass({
   render() {
