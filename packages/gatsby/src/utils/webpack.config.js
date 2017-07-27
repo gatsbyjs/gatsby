@@ -1,10 +1,10 @@
-import { uniq, some } from 'lodash'
-import fs from 'fs'
-import path from 'path'
-import dotenv from 'dotenv'
-import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin'
-import { StatsWriterPlugin } from 'webpack-stats-plugin'
-import FriendlyErrorsWebpackPlugin from 'friendly-errors-webpack-plugin'
+import { uniq, some } from "lodash"
+import fs from "fs"
+import path from "path"
+import dotenv from "dotenv"
+import StaticSiteGeneratorPlugin from "static-site-generator-webpack-plugin"
+import { StatsWriterPlugin } from "webpack-stats-plugin"
+import FriendlyErrorsWebpackPlugin from "friendly-errors-webpack-plugin"
 
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
@@ -158,7 +158,7 @@ module.exports = async (
       // optimizations for React) and whether prefixing links is enabled
       // (__PREFIX_PATHS__) and what the link prefix is (__PATH_PREFIX__).
       plugins.define({
-        'process.env': processEnv(stage, env),
+        "process.env": processEnv(stage, env),
         __PREFIX_PATHS__: program.prefixPaths,
         __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
       }),
@@ -426,9 +426,7 @@ module.exports = async (
     },
   }
 
-  store.dispatch(
-    actions.replaceWebpackConfig(config)
-  )
+  store.dispatch(actions.replaceWebpackConfig(config))
   const getConfig = () => store.getState().webpack
 
   await apiRunnerNode(`modifyWebpackConfig`, {

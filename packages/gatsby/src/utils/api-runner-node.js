@@ -9,13 +9,14 @@ const cache = require(`./cache`)
 
 const apiList = require(`./api-node-docs`)
 
-const pluginError = (plugin, error) => console.error(
-  stripIndent`
+const pluginError = (plugin, error) =>
+  console.error(
+    stripIndent`
     Plugin ${plugin} returned an error:
 
     ${error}
   `
-)
+  )
 
 // Bind action creators per plugin so we can auto-add
 // metadata to actions they create.

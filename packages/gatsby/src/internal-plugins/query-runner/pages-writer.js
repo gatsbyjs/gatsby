@@ -3,9 +3,9 @@ const glob = require(`glob`)
 const fs = require(`fs-extra`)
 
 const { store, emitter } = require(`../../redux/`)
-import { pathChunkName } from '../../utils/js-chunk-names'
+import { pathChunkName } from "../../utils/js-chunk-names"
 
-import { joinPath } from '../../utils/path'
+import { joinPath } from "../../utils/path"
 
 // Write out pages information.
 const writePages = async () => {

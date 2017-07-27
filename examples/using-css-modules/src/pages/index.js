@@ -1,7 +1,7 @@
-import React from 'react'
-import Link from 'gatsby-link'
+import React from "react"
+import Link from "gatsby-link"
 
-import indexStyles from '../styles/index.module.css'
+import indexStyles from "../styles/index.module.css"
 
 class IndexComponent extends React.Component {
   render() {

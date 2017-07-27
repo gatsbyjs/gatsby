@@ -71,22 +71,22 @@ module.exports = async ({ stage, program }) => {
     }
   }
 
-  loaders.file = options => ({
+  loaders.file = options => {return {
     loader: require.resolve(`file-loader`),
     options: {
       name: `static/[name]-[hash:*].[ext]`,
       ...options,
     },
-  })
+  }}
 
-  loaders.url = options => ({
+  loaders.url = options => {return {
     loader: require.resolve(`url-loader`),
     options: {
       limit: 10000,
       name: `static/[name]-[hash:*].[ext]`,
       ...options,
     },
-  })
+  }}
 
   loaders.js = (options = babelConfig) => {
     return {
@@ -100,36 +100,36 @@ module.exports = async ({ stage, program }) => {
    */
   const rules = (configuration.rules = {})
 
-  rules.yaml = () => ({
+  rules.yaml = () => {return {
     use: loaders.yaml,
     test: /\.ya?ml/,
-  })
+  }}
 
   /**
    * Javascript loader via babel, excludes node_modules
    */
-  rules.js = options => ({
+  rules.js = options => {return {
     test: /\.jsx?$/,
     exclude: VENDOR_MODULE_REGEX,
     use: loaders.js(options),
-  })
+  }}
 
   /**
    * Loads image assets, inlines images via a data URI if they are below
    * the size threshold
    */
-  rules.images = options => ({
+  rules.images = options => {return {
     use: loaders.url(options),
     test: /\.(svg|jpg|jpeg|png|gif|mp4|webm|wav|mp3|m4a|aac|oga)(\?.*)?$/,
-  })
+  }}
 
   /**
    * Web font loader
    */
-  rules.assets = options => ({
+  rules.assets = options => {return {
     use: loaders.file(options),
     test: /\.(ico|eot|otf|webp|ttf|woff(2)?)(\?.*)?$/,
-  })
+  }}
 
   /**
    * CSS style loader, excludes node_modules. Includes postCSS loader with

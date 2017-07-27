@@ -1,6 +1,5 @@
 const merge = require(`webpack-merge`)
 
-
 module.exports = (state = {}, action) => {
   switch (action.type) {
     case `SET_WEBPACK_CONFIG`: {
@@ -17,4 +16,3 @@ module.exports = (state = {}, action) => {
       return state
   }
 }
-

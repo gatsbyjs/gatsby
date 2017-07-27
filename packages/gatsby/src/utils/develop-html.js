@@ -1,8 +1,8 @@
 /* @flow */
-import webpack from 'webpack'
-import Promise from 'bluebird'
-import fs from 'fs'
-import webpackConfig from './webpack.config'
+import webpack from "webpack"
+import Promise from "bluebird"
+import fs from "fs"
+import webpackConfig from "./webpack.config"
 
 const debug = require(`debug`)(`gatsby:html`)
 

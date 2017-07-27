@@ -475,7 +475,7 @@ actions.replacePageComponentQuery = ({ query, componentPath }) => {
  *
  * @param {Object} A partial webpack config
  */
-actions.setWebpackConfig = (config) => {
+actions.setWebpackConfig = config => {
   return {
     type: `SET_WEBPACK_CONFIG`,
     payload: config,
@@ -491,13 +491,12 @@ actions.setWebpackConfig = (config) => {
  *
  * @param {Object} A complete webpack config
  */
-actions.replaceWebpackConfig = (config) => {
+actions.replaceWebpackConfig = config => {
   return {
     type: `REPLACE_WEBPACK_CONFIG`,
     payload: config,
   }
 }
-
 
 /**
  * Create a "job". This is a long-running process that are generally
