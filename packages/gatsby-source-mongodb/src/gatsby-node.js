@@ -34,7 +34,6 @@ exports.sourceNodes = (
 }
 
 function createNodes(db, pluginOptions, dbName, createNode, done) {
-  console.log(`create nodes with new api ...`)
   let collectionName = pluginOptions.collection || `documents`
   let collection = db.collection(collectionName)
   let cursor = collection.find()
