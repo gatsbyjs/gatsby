@@ -1,6 +1,6 @@
 {
   "name": "gatsby-source-mongodb",
-  "version": "",
+  "version": "1.5.0",
   "description": "Stub description for gatsby-source-mongodb",
   "main": "index.js",
   "scripts": {
