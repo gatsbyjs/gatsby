@@ -19,7 +19,7 @@ const CtaButton = ({ to, overrideCSS, children }) =>
       padding: `${rhythm(1 / 3)} ${rhythm(1 / 2)}`,
       borderRadius: presets.radius,
       // Increase specificity
-      [presets.Tablet]: {
+      [presets.Phablet]: {
         ...scale(2 / 5),
         padding: `${rhythm(1 / 2)} ${rhythm(1)}`,
       },
