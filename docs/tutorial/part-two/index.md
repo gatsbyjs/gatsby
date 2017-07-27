@@ -18,7 +18,9 @@ global vs component styles. components living in soup of global styles.
 
 ### Typography.js
 
-quick setup
+quick setup. Typography theme is like your base wall color when designing a room. Components are furniture, tables, wall decorations, etc. Sets overall theme and components need to be in harmony with it.
+
+start with default, choose some others
 
 ### CSS Modules (postcss)
 
@@ -28,7 +30,7 @@ new page with some little components
 
 little components with inline — brag about SSR inlining
 
-### ### Styled Components
+### ### Emotion
 
 delete glamor cause they conflict — little components again with sir
 
