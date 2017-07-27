@@ -14,7 +14,7 @@ HashedChunkIdsPlugin.prototype.apply = function apply(compiler) {
   compiler.plugin(`compilation`, compilation => {
     compilation.plugin(`before-chunk-ids`, chunks => {
       chunks.forEach(chunk => {
-        if (chunk.id === null) {
+        if (chunk.id === null && chunk.name != null) {
           chunk.id = hashFn(chunk.name)
         }
       })

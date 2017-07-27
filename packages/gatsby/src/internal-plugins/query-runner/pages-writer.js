@@ -3,17 +3,14 @@ const glob = require(`glob`)
 const fs = require(`fs-extra`)
 
 const { store, emitter } = require(`../../redux/`)
-import {
-  layoutComponentChunkName,
-  pathChunkName,
-} from "../../utils/js-chunk-names"
+import { pathChunkName } from '../../utils/js-chunk-names'
 
-import { joinPath } from "../../utils/path"
+import { joinPath } from '../../utils/path'
 
 // Write out pages information.
 const writePages = async () => {
   writtenOnce = true
-  const { program, config, pages } = store.getState()
+  const { program, pages } = store.getState()
 
   // Write out pages.json
   const pagesData = pages.reduce(
@@ -41,12 +38,10 @@ const writePages = async () => {
   })
 
   // Add the default layout if it exists.
-  let defaultLayoutExists = false
   if (
     glob.sync(joinPath(program.directory, `src/layouts/index.*`)).length !== 0
   ) {
     layouts.push(`index`)
-    defaultLayoutExists = true
   }
 
   layouts = _.uniq(layouts)

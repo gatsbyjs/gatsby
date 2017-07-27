@@ -112,7 +112,7 @@ module.exports = (locals, callback) => {
   })
 
   // Add the chunk-manifest as a head component.
-  const chunkManifest = require(`!raw!../public/chunk-manifest.json`)
+  const chunkManifest = require(`!raw-loader!../public/chunk-manifest.json`)
 
   headComponents.unshift(
     <script

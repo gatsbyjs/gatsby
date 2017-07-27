@@ -1,8 +1,8 @@
 /* @flow */
-import webpack from "webpack"
-import Promise from "bluebird"
-import fs from "fs"
-import webpackConfig from "./webpack.config"
+import webpack from 'webpack'
+import Promise from 'bluebird'
+import fs from 'fs'
+import webpackConfig from './webpack.config'
 const { store } = require(`../redux`)
 
 const debug = require(`debug`)(`gatsby:html`)
@@ -24,7 +24,7 @@ module.exports = async (program: any) => {
   )
 
   return new Promise((resolve, reject) => {
-    webpack(compilerConfig.resolve()).run((e, stats) => {
+    webpack(compilerConfig).run((e, stats) => {
       if (e) {
         return reject(e)
       }

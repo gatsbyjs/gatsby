@@ -4,19 +4,13 @@
   "version": "1.0.1",
   "author": "Daniel Farrell <daniel@mobelux.com>",
   "dependencies": {
-    "extract-text-webpack-plugin": "^1.0.1",
     "node-sass": "^4.5.2",
-    "sass-loader": "^4.1.1",
-    "webpack": "^1.13.3"
+    "sass-loader": "^6.0.6"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1"
   },
-  "keywords": [
-    "gatsby",
-    "sass",
-    "scss"
-  ],
+  "keywords": ["gatsby", "sass", "scss"],
   "license": "MIT",
   "main": "index.js",
   "readme": "README.md",

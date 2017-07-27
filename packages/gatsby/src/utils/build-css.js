@@ -1,8 +1,8 @@
 /* @flow */
-import webpack from "webpack"
-import fs from "fs-extra"
-import Promise from "bluebird"
-import webpackConfig from "./webpack.config"
+import webpack from 'webpack'
+import fs from 'fs-extra'
+import Promise from 'bluebird'
+import webpackConfig from './webpack.config'
 
 module.exports = async (program: any) => {
   const { directory } = program
@@ -10,7 +10,7 @@ module.exports = async (program: any) => {
   const compilerConfig = await webpackConfig(program, directory, `build-css`)
 
   return new Promise((resolve, reject) => {
-    webpack(compilerConfig.resolve()).run(err => {
+    webpack(compilerConfig).run(err => {
       if (err) {
         reject(err)
       }
