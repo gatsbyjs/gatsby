@@ -11,9 +11,9 @@ class Item extends React.Component {
         <a href={story.url} className="itemlink">
           {story.name}
         </a>
-        <div>
-          {` `}{story.description}{` `}
-        </div>
+        <p>
+          {story.description}
+        </p>
       </div>
     )
   }

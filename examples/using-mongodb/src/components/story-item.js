@@ -5,19 +5,12 @@ class StoryItem extends React.Component {
   render() {
     const item = this.props.item
     return (
-      <div>
+      <li>
         <div>
-          <a href={item.url} className="storylink">
-            {item.name}
-          </a>
-        </div>
-        <div>
+          <a href={item.url}>{item.name}</a> —{` `}
           <Link to={`/item/${item.id}/`}>more details</Link>
-          {` `}
         </div>
-        <br />
-        <br />
-      </div>
+      </li>
     )
   }
 }

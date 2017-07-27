@@ -8,10 +8,13 @@ class Index extends React.Component {
     const { allMongodbCloudDocuments } = this.props.data
 
     return (
-      <div className="itemlist" cellPadding={0} cellSpacing={0}>
-        {allMongodbCloudDocuments.edges.map(({ node }) =>
-          <StoryItem item={node} key={node.id} />
-        )}
+      <div>
+        <h1>Website information stored in MongoDB</h1>
+        <ul>
+          {allMongodbCloudDocuments.edges.map(({ node }) =>
+            <StoryItem item={node} key={node.id} />
+          )}
+        </ul>
       </div>
     )
   }

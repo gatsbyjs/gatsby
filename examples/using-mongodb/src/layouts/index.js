@@ -4,14 +4,17 @@ import Helmet from "react-helmet"
 
 class DefaultLayout extends React.Component {
   render() {
-    let siteMetadata = {title: 'mongoDB within Gatsby.JS'}
+    let siteMetadata = { title: `mongoDB within Gatsby.JS` }
 
     return (
-      <div class="websites">
+      <div className="websites">
         <Helmet
           defaultTitle={siteMetadata.title}
           meta={[
-            { name: `description`, content: `An example site to show how to use mongoDB with Gatsby.JS` },
+            {
+              name: `description`,
+              content: `An example site to show how to use mongoDB with Gatsby.JS`,
+            },
             { name: `keywords`, content: `websites listings` },
           ]}
         />
@@ -25,8 +28,8 @@ class DefaultLayout extends React.Component {
         <p>
           The src for this website is at
           {` `}
-          <a href="https://github.com/gatsbyjs/gatsby/tree/1.0/examples/using-mongodb">
-            https://github.com/gatsbyjs/gatsby/tree/1.0/examples/using-mongodb
+          <a href="https://github.com/gatsbyjs/gatsby/tree/master/examples/using-mongodb">
+            https://github.com/gatsbyjs/gatsby/tree/master/examples/using-mongodb
           </a>
         </p>
       </div>

@@ -333,14 +333,22 @@ const getManufacturer = route =>
  * @param {any} parentNodeId (Optionnal parent node ID)
  */
 async function fetchData(route, createNode, parentNodeId) {
-
   const type = route.type
   const url = route.url
 
   if (parentNodeId != undefined) {
-    console.log(colorized.out(`Extended node content`, colorized.color.Font.FgBlue), url)
+    console.log(
+      colorized.out(`Extended node content`, colorized.color.Font.FgBlue),
+      url
+    )
   } else {
-    console.log(colorized.out(`=== [ Fetching ${type} ] ===`, colorized.color.Font.FgBlue), url)
+    console.log(
+      colorized.out(
+        `=== [ Fetching ${type} ] ===`,
+        colorized.color.Font.FgBlue
+      ),
+      url
+    )
     if (_verbose) console.time(`Fetching the ${type} took`)
   }
 
@@ -353,7 +361,12 @@ async function fetchData(route, createNode, parentNodeId) {
         await createGraphQLNode(ent, type, createNode, parentNodeId)
       }
     } else {
-      await createGraphQLNode(routeResponse.data, type, createNode, parentNodeId)
+      await createGraphQLNode(
+        routeResponse.data,
+        type,
+        createNode,
+        parentNodeId
+      )
     }
 
     // TODO : Get the number of created nodes using the nodes in state.
@@ -375,8 +388,8 @@ async function fetchData(route, createNode, parentNodeId) {
     )
   }
 
-  if (_verbose && parentNodeId == undefined) console.timeEnd(`Fetching the ${type} took`)
-
+  if (_verbose && parentNodeId == undefined)
+    console.timeEnd(`Fetching the ${type} took`)
 }
 
 /**
@@ -438,7 +451,6 @@ function createGraphQLNode(ent, type, createNode, parentNodeId) {
   if (parentNodeId != undefined) {
     _parentChildNodes.push({ parentId: parentNodeId, childNodeId: node.id })
   }
-
 }
 
 /**
@@ -467,9 +479,17 @@ function addFields(ent, newEnt, createNode) {
     acfNode.internal.contentDigest = digest(stringify(acfNode))
     createNode(acfNode)
     _parentChildNodes.push({ parentId: newEnt.id, childNodeId: acfNode.id })
-  } else if (newEnt.meta != undefined && newEnt.meta.links != undefined && newEnt.meta.links.self != undefined) {
+  } else if (
+    newEnt.meta != undefined &&
+    newEnt.meta.links != undefined &&
+    newEnt.meta.links.self != undefined
+  ) {
     //The entity as a link to more content for this entity
-    fetchData({ 'url': newEnt.meta.links.self, 'type': `${newEnt.internal.type}_Extended` }, createNode, newEnt.id)
+    fetchData(
+      { url: newEnt.meta.links.self, type: `${newEnt.internal.type}_Extended` },
+      createNode,
+      newEnt.id
+    )
   }
   return newEnt
 }
