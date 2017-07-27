@@ -165,7 +165,9 @@ loadLayout(layout => {
       typeof window !== `undefined`
         ? document.getElementById(`___gatsby`)
         : void 0,
-      () => { apiRunner(`onInitialClientRender`) }
+      () => {
+        apiRunner(`onInitialClientRender`)
+      }
     )
   })
 })

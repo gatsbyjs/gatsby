@@ -24,19 +24,21 @@ describe(`gatsby-remark-copy-linked-files`, () => {
   const markdownNode = {
     parent: {},
   }
-  const getNode = () => {return {
-    dir: ``,
-    internal: {
-      type: `File`,
-    },
-  }}
-  const getFiles = filePath => [
-      {
-        absolutePath: path.normalize(filePath),
-        internal: {},
-        extension: filePath.split(`.`).pop().trim(),
+  const getNode = () => {
+    return {
+      dir: ``,
+      internal: {
+        type: `File`,
       },
-    ]
+    }
+  }
+  const getFiles = filePath => [
+    {
+      absolutePath: path.normalize(filePath),
+      internal: {},
+      extension: filePath.split(`.`).pop().trim(),
+    },
+  ]
 
   describe(`images`, () => {
     ;[`svg`, `gif`].forEach(extension => {
@@ -53,7 +55,6 @@ describe(`gatsby-remark-copy-linked-files`, () => {
         )
       })
     })
-
     ;[`png`, `jpg`, `jpeg`].forEach(extension => {
       it(`ignores images with .${extension}`, () => {
         const path = `images/sample-image.${extension}`
