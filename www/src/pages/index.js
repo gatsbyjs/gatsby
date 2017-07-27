@@ -37,10 +37,10 @@ const IndexRoute = React.createClass({
             <Card>
               <CardHeadline>Modern web tech without the headache</CardHeadline>
               <FuturaParagraph>
-                Enjoy all the power of the latest web technologies –{` `}
+                Enjoy the power of the latest web technologies –{` `}
                 <TechWithIcon icon={ReactJSIcon}>React.js</TechWithIcon>,{` `}
                 <TechWithIcon icon={WebpackIcon}>Webpack</TechWithIcon>,{` `}
-                modern JavaScript and CSS and more – all setup and waiting for
+                modern JavaScript and CSS and more — all setup and waiting for
                 you to start building.
               </FuturaParagraph>
             </Card>
@@ -48,7 +48,7 @@ const IndexRoute = React.createClass({
               <CardHeadline>Bring your own data</CardHeadline>
               <FuturaParagraph>
                 Gatsby’s rich data plugin ecosystem lets you build sites with
-                the data you want – from one or many sources: Pull data from
+                the data you want — from one or many sources: Pull data from
                 headless CMSs, SaaS services, APIs, databases, your file system
                 & more directly into your pages using{` `}
                 <TechWithIcon icon={GraphQLIcon}>GraphQL</TechWithIcon>.
@@ -86,10 +86,11 @@ const IndexRoute = React.createClass({
               </CardHeadline>
               <FuturaParagraph>
                 Gatsby.js is a static PWA (Progressive Web App) generator. You
-                get code and data splitting out-of-the-box. Gatsby loads an HTML
-                file that’s a server rendered version of your React.js page then
-                makes it live with JavaScript. Code and data for other pages get
-                preloaded so clicking around the site feels incredibly fast.
+                get code and data splitting out-of-the-box. Gatsby loads only
+                the critical HTML, CSS, data, and JavaScript so your site loads
+                as fast as possible. Once loaded, Gatsby prefetches resources
+                for other pages so clicking around the site feels incredibly
+                fast.
               </FuturaParagraph>
             </Card>
             <Card>
@@ -97,7 +98,7 @@ const IndexRoute = React.createClass({
               <FuturaParagraph>
                 Gatsby.js builds the fastest possible website. Instead of
                 waiting to generate pages when requested, pre-build pages and
-                lift them into a global cloud of servers—ready to be delivered
+                lift them into a global cloud of servers — ready to be delivered
                 instantly to your users wherever they are.
               </FuturaParagraph>
             </Card>
