@@ -127,6 +127,8 @@ module.exports = React.createClass({
       color: presets.brandLight,
       [presets.Tablet]: {
         color: this.props.location.pathname !== `/` ? false : `white`,
+      },
+      [presets.Desktop]: {
         fontSize: scale(0).fontSize,
       },
     }
