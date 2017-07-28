@@ -239,7 +239,8 @@ module.exports = React.createClass({
             </ul>
             <div
               css={{
-                marginLeft: rhythm(1 / 2),
+                marginLeft:
+                  this.props.location.pathname !== `/` ? `auto` : rhythm(1 / 2),
                 [presets.Tablet]: {
                   marginLeft: `auto`,
                 },
