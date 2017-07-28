@@ -29,8 +29,10 @@ module.exports = async (program: any) => {
         return reject(`Error: ${stats.toJson().errors}`, stats)
       }
 
-      // Remove the temp JS bundle file built for the static-site-generator-plugin
-      fs.unlinkSync(`${directory}/public/render-page.js`)
+      try {
+        // Remove the temp JS bundle file built for the static-site-generator-plugin
+        fs.unlinkSync(`${directory}/public/render-page.js`)
+      } catch (err) { /* ignore */ }
 
       return resolve(null, stats)
     })

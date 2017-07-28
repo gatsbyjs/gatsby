@@ -4,10 +4,11 @@
   "version": "1.1.0",
   "author": "Ian Sinnott <ian@iansinnott.com>",
   "dependencies": {
-    "babel-cli": "^6.24.1",
-    "extract-text-webpack-plugin": "^1.0.1",
     "stylus": "^0.54.5",
-    "stylus-loader": "webpack1"
+    "stylus-loader": "^3.0.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1"
   },
   "keywords": [
     "gatsby",

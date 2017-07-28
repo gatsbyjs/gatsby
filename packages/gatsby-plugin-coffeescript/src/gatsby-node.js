@@ -8,20 +8,28 @@ export function resolvableExtensions() {
   return [`.coffee`, `.cjsx`]
 }
 
-export function modifyWebpackConfig({ config }) {
+export function modifyWebpackConfig({ rules, boundActionCreators }) {
+  const coffeeLoader = [rules.js(), require.resolve(`coffee-loader`)]
+
   // We need to use Babel to get around the ES6 export issue.
-  config.loader(`coffee`, {
-    test: COFFEE,
-    loaders: [`babel`, `coffee`],
-  })
-  config.loader(`cjsx`, {
-    test: CJSX,
-    loaders: [`babel`, `coffee`, `cjsx`],
+  boundActionCreators.setWebpackConfig({
+    module: {
+      rules: [
+        {
+          test: COFFEE,
+          use: coffeeLoader,
+        },
+        {
+          test: COFFEE,
+          use: [...coffeeLoader, require.resolve(`cjsx-loader`)],
+        },
+      ],
+    },
   })
 }
 
 export function preprocessSource({ filename, contents }, pluginOptions) {
-  // Don't need to account for ES6, Babylon can parse it.
+  // Don`t need to account for ES6, Babylon can parse it.
   if (CJSX.test(filename)) {
     return compile(transform(contents), pluginOptions)
   } else if (COFFEE.test(filename)) {

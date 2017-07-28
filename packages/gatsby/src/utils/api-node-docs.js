@@ -36,7 +36,7 @@ exports.resolvableExtensions = true
  *         if (result.errors) {
  *           reject(result.errors)
  *         }
- * 
+ *
  *         // Create blog post pages.
  *         result.data.allMarkdownRemark.edges.forEach(edge => {
  *             createPage({
@@ -47,7 +47,7 @@ exports.resolvableExtensions = true
  *               },
  *             })
  *         })
- * 
+ *
  *         return
  *       })
  *     )
@@ -146,9 +146,30 @@ exports.modifyBabelrc = true
 /**
  * Let plugins extend/mutate the site's webpack configuration.
  *
- * Refer to the [Add custom webpack config docs
- * page](/docs/add-custom-webpack-config/) for detailed documentation on
- * modifying webpack docs).
+ * See also the documentation for [`setWebpackConfig`](/docs/bound-action-creators/#setWebpackConfig).
+ *
+ * @param {object} $0
+ * @param {'develop' | 'develop-html' | 'build-css' | 'build-javascript' | 'build-html'} $0.stage The current build stage
+ * @param {function(): object} $0.getConfig Returns the current webpack config
+ * @param {object} $0.rules A set of preconfigured webpack config rules
+ * @param {object} $0.loaders A set of preconfigured webpack config loaders
+ * @param {object} $0.plugins A set of preconfigured webpack config plugins
+ * @param {object} $0.boundActionCreators
+ * @example
+ * exports.modifyBabelrc = ({
+ *  getConfig, stage, loaders, boundActionCreators
+ * }) => {
+ *   boundActionCreators.setWebpackConfig({
+ *     module: {
+ *       rules: [
+ *         {
+ *           test: 'my-css',
+ *           use: [loaders.style, loaders.css()]
+ *         },
+ *       ],
+ *     },
+ *   });
+ * }
  */
 exports.modifyWebpackConfig = true
 

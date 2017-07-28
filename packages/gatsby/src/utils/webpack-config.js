@@ -21,6 +21,10 @@ module.exports = async ({ stage, program }) => {
    */
   const loaders = (configuration.loaders = {})
 
+  loaders.json = {
+    loader: require.resolve(`json-loader`),
+  }
+
   loaders.yaml = {
     loader: require.resolve(`yaml-loader`),
   }
@@ -100,19 +104,25 @@ module.exports = async ({ stage, program }) => {
    */
   const rules = (configuration.rules = {})
 
-  rules.yaml = () => {return {
-    use: loaders.yaml,
-    test: /\.ya?ml/,
-  }}
+  rules.yaml = () => {
+    return {
+      test: /\.ya?ml/,
+      use: [loaders.json, loaders.yaml],
+    }
+}
 
   /**
    * Javascript loader via babel, excludes node_modules
+   *
+   * @param {object=} options Options passed to babel-loader
    */
-  rules.js = options => {return {
-    test: /\.jsx?$/,
-    exclude: VENDOR_MODULE_REGEX,
-    use: loaders.js(options),
-  }}
+  rules.js = options => {
+    return {
+      test: /\.jsx?$/,
+      exclude: VENDOR_MODULE_REGEX,
+      use: loaders.js(options),
+    }
+  }
 
   /**
    * Loads image assets, inlines images via a data URI if they are below

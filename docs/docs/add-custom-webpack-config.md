@@ -13,7 +13,7 @@ a `gatsby-node.js` file in your root directory.
 
 Inside this file, export a function called `modifyWebpackConfig`.
 
-When Gatsby creates its webpack config, this function will be called allowing you to modify the default
+When Gatsby creates its webpack config, this function will be called allowing you to update the default
 webpack config.
 
 Gatsby does multiple webpack builds with somewhat different configuration. We
@@ -32,40 +32,39 @@ There are many plugins in the Gatsby repo using this API to look to for examples
 
 ## Example
 
-Here is an example adding support for **flexboxgrid** when processing css files.
+Here is an example adding an additional global variable via the `DefinePlugin` and
+the `less-loader`
 
 ```js
-exports.modifyWebpackConfig = ({ config, stage }) => {
-  switch (stage) {
-    case 'develop':
-      config.loader('css', {
-        include: /flexboxgrid/,
-      });
+exports.modifyWebpackConfig = ({ stage, rules, loaders, plugins, boundActionCreators }) => {
 
-      break;
+  boundActionCreators.setWebpackConfig({
+    module: {
+      rules: [
+        {
+          test: /\.less$/,
+          // We don't need to add the matching ExtractText plugin
+          // because gatsby already includes it and makes sure its only
+          // run at the appropriate stages, e.g. not in development
+          use: plugins.extractText.extract({
+            fallback: loaders.style,
+            use: [
+              loaders.css({ importLoaders: 1 }),
+              // the postcss loader comes with some nice defaults
+              // including autoprefixer for our configured browsers
+              loaders.postcss(),
+              `less-loader`
+            ],
+          }),
+        }
+      ]
+    },
+    plugins: [
+      plugins.define({
+        __DEVELOPMENT__: stage === `develop` || stage === `develop-html`
+      })
+    ]
+  })
 
-    case 'build-css':
-      config.loader('css', {
-        include: /flexboxgrid/,
-      });
-
-      break;
-
-    case 'build-html':
-      config.loader('css', {
-        include: /flexboxgrid/,
-      });
-
-      break;
-
-    case 'build-javascript':
-      config.loader('css', {
-        include: /flexboxgrid/,
-      });
-
-      break;
-  }
-
-  return config;
 };
 ```

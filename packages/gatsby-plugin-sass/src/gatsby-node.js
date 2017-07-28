@@ -1,11 +1,14 @@
 
-exports.modifyWebpackConfig = ({ boundActionCreators, stage, rules, plugins, loaders }) => {
+exports.modifyWebpackConfig = ({ boundActionCreators, stage, rules, plugins, loaders }, { postCssPlugins, ...sassOptions }) => {
   const { setWebpackConfig } = boundActionCreators
   const PRODUCTION = stage !== `develop`
 
   const sassLoader = {
     loader: require.resolve(`sass-loader`),
-    options: { sourceMap: !PRODUCTION },
+    options: {
+      sourceMap: !PRODUCTION,
+      ...sassOptions,
+    },
   }
 
   const sassRule = {
@@ -13,7 +16,7 @@ exports.modifyWebpackConfig = ({ boundActionCreators, stage, rules, plugins, loa
     exclude: /\.module\.s(a|c)ss$/,
     use: plugins.extractText.extract({
       fallback: loaders.style,
-      use: [loaders.css({ importLoaders: 1 }), loaders.postcss(), sassLoader],
+      use: [loaders.css({ importLoaders: 1 }), loaders.postcss({ plugins: postCssPlugins }), sassLoader],
     }),
   }
   const sassRuleModules = {
@@ -22,7 +25,7 @@ exports.modifyWebpackConfig = ({ boundActionCreators, stage, rules, plugins, loa
       fallback: loaders.style,
       use: [
         loaders.css({ modules: true, importLoaders: 1 }),
-        loaders.postcss(),
+        loaders.postcss({ plugins: postCssPlugins }),
         sassLoader,
       ],
     }),

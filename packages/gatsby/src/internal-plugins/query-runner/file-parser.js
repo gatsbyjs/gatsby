@@ -5,11 +5,9 @@ const crypto = require(`crypto`)
 // Traverse is a es6 module...
 import traverse from "babel-traverse"
 const babylon = require(`babylon`)
-const Bluebird = require(`bluebird`)
+const { getGraphQLTag } = require(`babel-plugin-remove-graphql-queries`)
 const { stripIndent } = require(`common-tags`)
 
-const apiRunnerNode = require(`../../utils/api-runner-node`)
-const { getGraphQLTag } = require(`../../utils/babel-plugin-extract-graphql`)
 
 import type { DocumentNode, DefinitionNode } from "graphql"
 
@@ -63,7 +61,10 @@ async function parseToAst(filePath, fileStr) {
 async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
   return new Promise(resolve => {
     parseToAst(file, text).then(ast => {
-      if (!ast) return []
+      if (!ast) {
+        resolve([])
+        return
+      }
 
       let queries = []
       traverse(ast, {

@@ -3,7 +3,6 @@ const fs = require(`fs`)
 const Promise = require(`bluebird`)
 
 const writeFileAsync = Promise.promisify(fs.writeFile)
-const { boundActionCreators } = require(`../../redux/actions`)
 const { joinPath } = require(`../../utils/path`)
 
 const { store } = require(`../../redux`)

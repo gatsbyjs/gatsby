@@ -473,9 +473,9 @@ actions.replacePageComponentQuery = ({ query, componentPath }) => {
  *
  * For full control over the webpack config, use `replaceWebpackConfig()`.
  *
- * @param {Object} A partial webpack config
+ * @param {Object} config partial webpack config, to be merged into the current one
  */
-actions.setWebpackConfig = config => {
+actions.setWebpackConfig = (config: Object) => {
   return {
     type: `SET_WEBPACK_CONFIG`,
     payload: config,
@@ -489,9 +489,9 @@ actions.setWebpackConfig = config => {
  * Generally only useful for cases where you need to handle config merging logic
  * yourself, in which case consider using `webpack-merge`.
  *
- * @param {Object} A complete webpack config
+ * @param {Object} config complete webpack config
  */
-actions.replaceWebpackConfig = config => {
+actions.replaceWebpackConfig = (config: Object) => {
   return {
     type: `REPLACE_WEBPACK_CONFIG`,
     payload: config,

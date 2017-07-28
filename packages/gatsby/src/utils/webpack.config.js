@@ -13,7 +13,6 @@ const WebpackMD5Hash = require(`webpack-md5-hash`)
 const ChunkManifestPlugin = require(`chunk-manifest-webpack-plugin`)
 const GatsbyModulePlugin = require(`../loaders/gatsby-module-loader/plugin`)
 const { withBasePath } = require(`./path`)
-const HashedChunkIdsPlugin = require(`./hashed-chunk-ids-plugin`)
 
 const apiRunnerNode = require(`./api-runner-node`)
 const createConfig = require(`./webpack-config`)
@@ -152,7 +151,9 @@ module.exports = async (
 
     let configPlugins = [
       plugins.moment(),
-      plugins.loaderOptions(),
+
+      // There seems to be a bug in file-loader that assumes this will be set.
+      plugins.loaderOptions({ fileLoader: {} }),
 
       // Add a few global variables. Set NODE_ENV to production (enables
       // optimizations for React) and whether prefixing links is enabled
@@ -271,9 +272,8 @@ module.exports = async (
           // Minify Javascript.
           plugins.uglify(),
           new GatsbyModulePlugin(),
-          // new WebpackStableModuleIdAndHash({ seed: 9, hashSize: 47 }),
           plugins.namedModules(),
-          new HashedChunkIdsPlugin(),
+          plugins.namedChunks(),
         ])
         break
       }

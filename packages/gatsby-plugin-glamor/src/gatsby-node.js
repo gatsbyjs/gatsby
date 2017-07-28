@@ -1,12 +1,14 @@
-const webpack = require(`webpack`)
 
 // Add Glamor support
-exports.modifyWebpackConfig = ({ config }) =>
-  config.plugin(`Glamor`, webpack.ProvidePlugin, [
-    {
-      Glamor: `glamor/react`,
-    },
-  ])
+exports.modifyWebpackConfig = ({ boundActionCreators, plugins }) =>
+  boundActionCreators.setWebpackConfig({
+    plugins: [
+      plugins.provide({
+        Glamor: `glamor/react`,
+      }),
+    ],
+  })
+
 
 // Add Glamor support
 exports.modifyBabelrc = ({ babelrc }) => {
