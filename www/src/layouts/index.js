@@ -37,28 +37,27 @@ module.exports = React.createClass({
     }
   },
   render() {
-    const headerHeight =
-      this.props.location.pathname !== `/` ? `3.5rem` : `3.5rem`
-    const gutters =
-      this.props.location.pathname !== `/`
-        ? {}
-        : {
-            paddingLeft: vP,
-            paddingRight: vP,
-            paddingTop: rhythm(1.5),
-            [presets.Hd]: {
-              paddingLeft: vPHd,
-              paddingRight: vPHd,
-            },
-            [presets.VHd]: {
-              paddingLeft: vPVHd,
-              paddingRight: vPVHd,
-            },
-            [presets.VVHd]: {
-              paddingLeft: vPVVHd,
-              paddingRight: vPVVHd,
-            },
-          }
+    const isHomepage = this.props.location.pathname == `/`
+    const headerHeight = `3.5rem`
+    const gutters = isHomepage
+      ? {
+          paddingLeft: vP,
+          paddingRight: vP,
+          paddingTop: rhythm(1.5),
+          [presets.Hd]: {
+            paddingLeft: vPHd,
+            paddingRight: vPHd,
+          },
+          [presets.VHd]: {
+            paddingLeft: vPVHd,
+            paddingRight: vPVHd,
+          },
+          [presets.VVHd]: {
+            paddingLeft: vPVVHd,
+            paddingRight: vPVVHd,
+          },
+        }
+      : {}
     const sidebarStyles = {
       borderRight: `1px solid ${colors.b[0]}`,
       backgroundColor: presets.sidebar,
@@ -126,7 +125,7 @@ module.exports = React.createClass({
     const socialIconsStyles = {
       color: presets.brandLight,
       [presets.Tablet]: {
-        color: this.props.location.pathname !== `/` ? false : `white`,
+        color: isHomepage ? `white` : false,
       },
       [presets.Desktop]: {
         fontSize: scale(0).fontSize,
@@ -156,20 +155,17 @@ module.exports = React.createClass({
         <div
           css={{
             borderBottom: `1px solid ${presets.veryLightPurple}`,
-            borderBottomColor:
-              this.props.location.pathname !== `/`
-                ? `${presets.veryLightPurple}`
-                : `transparent`,
-            backgroundColor:
-              this.props.location.pathname !== `/`
-                ? `rgba(255,255,255,0.975)`
-                : `rgba(0,0,0,0)`,
-            position: this.props.location.pathname !== `/` ? false : `absolute`,
+            borderBottomColor: isHomepage
+              ? `transparent`
+              : `${presets.veryLightPurple}`,
+            backgroundColor: isHomepage
+              ? `rgba(0,0,0,0)`
+              : `rgba(255,255,255,0.975)`,
+            position: isHomepage ? `absolute` : false,
             height: headerHeight,
             zIndex: `1`,
             [presets.Tablet]: {
-              position:
-                this.props.location.pathname !== `/` ? `fixed` : `absolute`,
+              position: isHomepage ? `absolute` : `fixed`,
               left: 0,
               right: 0,
             },
@@ -239,8 +235,7 @@ module.exports = React.createClass({
             </ul>
             <div
               css={{
-                marginLeft:
-                  this.props.location.pathname !== `/` ? `auto` : rhythm(1 / 2),
+                marginLeft: isHomepage ? rhythm(1 / 2) : `auto`,
                 [presets.Tablet]: {
                   marginLeft: `auto`,
                 },
@@ -283,8 +278,7 @@ module.exports = React.createClass({
             paddingTop: 0,
             [presets.Tablet]: {
               margin: `0 auto`,
-              paddingTop:
-                this.props.location.pathname !== `/` ? headerHeight : 0,
+              paddingTop: isHomepage ? 0 : headerHeight,
             },
           }}
         >
