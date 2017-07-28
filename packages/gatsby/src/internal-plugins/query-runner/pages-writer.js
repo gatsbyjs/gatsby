@@ -88,9 +88,12 @@ const preferDefault = m => m && m.default || m
     .join(`,\n`)}
 }\n\n`
   syncRequires += `exports.layouts = {\n${pageLayouts
-    .map(l => `  "${l.componentChunkName}": preferDefault(require("${joinPath(
-        l.component
-      )}"))`)
+    .map(
+      l =>
+        `  "${l.componentChunkName}": preferDefault(require("${joinPath(
+          l.component
+        )}"))`
+    )
     .join(`,\n`)}
 }`
 
@@ -121,9 +124,12 @@ const preferDefault = m => m && m.default || m
     .join(`,\n`)}
 }\n\n`
   asyncRequires += `exports.layouts = {\n${pageLayouts
-    .map(l => `  "${l.componentChunkName}": require("gatsby-module-loader?name=${l.componentChunkName}!${joinPath(
-        l.component
-      )}")`)
+    .map(
+      l =>
+        `  "${l.componentChunkName}": require("gatsby-module-loader?name=${l.componentChunkName}!${joinPath(
+          l.component
+        )}")`
+    )
     .join(`,\n`)}
 }`
 

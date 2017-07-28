@@ -134,12 +134,6 @@ exports.onCreatePage = true
 exports.onCreateLayout = true
 
 /**
- * Called when a new component is created. This is used internally to track
- * page and layout components and queries.
- */
-exports.onCreateComponent = true
-
-/**
  * Called during the creation of the GraphQL schema. Allows plugins
  * to add new fields to the types created from data nodes. Many transformer
  * plugins use this to add fields that take arguments.

@@ -42,7 +42,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
             slug: edge.node.fields.slug,
             highlight: edge.node.frontmatter.highlight,
             shadow: edge.node.frontmatter.shadow,
-            newthing: 'fooBar'
+            newthing: `fooBar`,
           },
         })
       })

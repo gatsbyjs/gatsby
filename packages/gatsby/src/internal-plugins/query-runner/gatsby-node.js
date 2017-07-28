@@ -4,7 +4,7 @@ const { watchComponent } = require(`./query-watcher`)
 
 let components = {}
 
-const handlePageOrLayout = (store) => ((pageOrLayout) => {
+const handlePageOrLayout = store => pageOrLayout => {
   // - ensure corresponding page or layout has json files.
   // - get corresponding component
   // - watch component
@@ -31,7 +31,7 @@ const handlePageOrLayout = (store) => ((pageOrLayout) => {
 
   watchComponent(component.componentPath)
   components[component.componentPath] = component.componentPath
-})
+}
 
 exports.onCreatePage = ({ page, store, boundActionCreators }) => {
   handlePageOrLayout(store)(page)

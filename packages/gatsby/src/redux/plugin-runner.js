@@ -16,13 +16,6 @@ emitter.on(`CREATE_PAGE`, action => {
     { page, traceId: action.traceId },
     action.plugin.name
   )
-
-  const component = store.getState().components[page.component]
-  apiRunnerNode(
-    `onCreateComponent`,
-    { component, traceId: action.traceId },
-    action.plugin.name
-  )
 })
 
 emitter.on(`CREATE_LAYOUT`, action => {
@@ -30,13 +23,6 @@ emitter.on(`CREATE_LAYOUT`, action => {
   apiRunnerNode(
     `onCreateLayout`,
     { layout, traceId: action.traceId },
-    action.plugin.name
-  )
-
-  const component = store.getState().components[layout.component]
-  apiRunnerNode(
-    `onCreateComponent`,
-    { component, traceId: action.traceId },
     action.plugin.name
   )
 })
