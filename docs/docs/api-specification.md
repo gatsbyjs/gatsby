@@ -22,7 +22,7 @@ Plugins can extend Gatsby in many ways:
 
 A single plugin can use multiple APIs to accomplish its purpose. E.g. the
 plugin for the css-in-js library [Glamor
-](/docs/packages/gatsby-plugin-glamor/)
+](/packages/gatsby-plugin-glamor/)
 
 1. modifies the webpack config to add its plugin
 2. adds a Babel plugin to replace React's default createElement
@@ -31,13 +31,13 @@ out the critical CSS for each rendered page and inline the CSS in the
 `<head>` of that HTML page.
 
 Plugins can also depend on other plugins.
-[The Sharp plugin](/docs/packages/gatsby-plugin-sharp/)
+[The Sharp plugin](/packages/gatsby-plugin-sharp/)
 exposes a number of high-level APIs for transforming images that several
 other Gatsby image plugins depend on.
-[gatsby-transformer-remark](/docs/packages/gatsby-transformer-remark/)
+[gatsby-transformer-remark](/packages/gatsby-transformer-remark/)
 does basic markdown->html transformation but exposes an API to allow other
 plugins to intervene in the conversion process e.g.
-[gatsby-remark-prismjs](/docs/packages/gatsby-remark-prismjs/)
+[gatsby-remark-prismjs](/packages/gatsby-remark-prismjs/)
 which adds highlighting to code blocks.
 
 Transformer plugins are decoupled from source plugins. Transformer plugins

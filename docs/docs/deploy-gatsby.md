@@ -1,4 +1,6 @@
-# Deploying Gatsby
+---
+title: "Deploying Gatsby"
+---
 
 ## Best Practice
 
@@ -24,8 +26,18 @@ because this is going to be executed on every deploy it is suggested that you us
 
 ## Debugging
 
-`Unable to find element with ID ##`
+### Don't minify HTML
+
+If you see the following error:
+
+```
+Unable to find element with ID ##
+```
+
 or alternatively
-`Uncaught Error: Minified React error #32; visit http://facebook.github.io/react/docs/error-decoder.html?invariant=32&args[]=## for the full message or use the non-minified dev environment for full errors and additional helpful warnings.`
+
+```
+Uncaught Error: Minified React error #32; visit http://facebook.github.io/react/docs/error-decoder.html?invariant=32&args[]=## for the full message or use the non-minified dev environment for full errors and additional helpful warnings.
+```
 
 This is a new problem when dealing with static sites built with React.  React uses HTML comments to help identify locations of components that do not render anything.  If you are using a CDN that minifies your HTML, it will eliminate the HTML comments used by react to take control of the page on the client.

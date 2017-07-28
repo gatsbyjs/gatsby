@@ -6,7 +6,7 @@ title: Gatsby on Windows
 
 Many Gatsby plugins and themes require building native Node.js modules, e.g.
 [Sharp (a common Gatsby dependency used for image
-processing)](/docs/packages/gatsby-plugin-sharp/). To do so, you need a
+processing)](/packages/gatsby-plugin-sharp/). To do so, you need a
 functional build environment (Python and Visual C++ Build Tools).
 
 The easy way to setup your build environment on Windows is to install the
@@ -23,7 +23,10 @@ Sometimes the `windows-build-tools` won't properly install the required librarie
 
 This might be your problem if, after running `npm install` on a Gatsby site, you see compilation errors such as `node-gyp` or `sharp` or `binding.gyp not found`.
 
-If you suspect this is your problem, download the [Visual Studio Express 2015 Package](https://www.visualstudio.com/products/visual-studio-community-vs) and install the package `Programming languages > Visual C++ > Common tools for Visual Studio 2015`. You can uncheck everything else. You don't need to install the full VS2015 Express on your system and this won't mess up your existing VS201x installs.
+If you suspect this is your problem, download the [Visual Studio Community 2015 Package](https://www.visualstudio.com/products/visual-studio-community-vs) and install only the part of the package that interests us : `Programming languages > Visual C++ > Common tools for Visual Studio 2015`. Be sure to download the 2015 version of VS Community, not the 2017 version (see Note 1 below) ; you'll have to use the [search bar on the VS site](https://www.visualstudio.com/products/visual-studio-community-vs) to find it. You can uncheck everything else. You don't need to install the full VS2015 Express on your system and this won't mess up your existing VS201x installs.
+
+![Common tools for Visual Studio 2015 inside the VS 2015 Community Package](https://i.stack.imgur.com/J1aet.png)
+
 
 Then run the commands on Gatsby:
 
@@ -38,3 +41,5 @@ npm install
 You should then be all set.
 
 If that still doesn't work, refer to the [`node-gyp` npm package homepage](https://www.npmjs.com/package/node-gyp) for further instructions and contact the `node-gyp`team on [GitHub](https://github.com/nodejs/node-gyp/issues).
+
+Note 1 : the Visual Studio Community 2017 surely contains the package too but we weren't able to find it. If you found it, run `npm config set msvs_version 2017` instead and report it here with a screenshot!

@@ -159,6 +159,6 @@ Let's do something crazy and add a list with another code example:
   Source: https://en.wikipedia.org/wiki/Internet_Explorer_for_Mac
 * **The last list item** –- no more list items after this one, pinky swear!
 
-[1]: https://www.gatsbyjs.org/docs/packages/gatsby-remark-prismjs/
+[1]: https://www.gatsbyjs.org/packages/gatsby-remark-prismjs/
 [2]: http://prismjs.com/
 [3]: http://prismjs.com/#languages-list

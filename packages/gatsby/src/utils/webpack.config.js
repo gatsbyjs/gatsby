@@ -20,6 +20,7 @@ const ChunkManifestPlugin = require(`chunk-manifest-webpack-plugin`)
 const GatsbyModulePlugin = require(`../loaders/gatsby-module-loader/plugin`)
 const genBabelConfig = require(`./babel-config`)
 const { withBasePath } = require(`./path`)
+const HashedChunkIdsPlugin = require(`./hashed-chunk-ids-plugin`)
 
 // Five stages or modes:
 //   1) develop: for `gatsby develop` command, hot reload and CSS injection into page
@@ -304,6 +305,7 @@ module.exports = async (
           new GatsbyModulePlugin(),
           // new WebpackStableModuleIdAndHash({ seed: 9, hashSize: 47 }),
           new webpack.NamedModulesPlugin(),
+          new HashedChunkIdsPlugin(),
         ]
       }
       default:

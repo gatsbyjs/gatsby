@@ -249,7 +249,7 @@ const queue = {
         console.log(`A page wasn't found for "${path}"`)
         return
       }
-      
+
       // Use the path from the page so the pathScriptsCache uses
       // the normalized path.
       path = page.path

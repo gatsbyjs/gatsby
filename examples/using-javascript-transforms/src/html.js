@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react"
 import * as PropTypes from "prop-types"
-import Helmet from 'react-helmet';
+import Helmet from "react-helmet"
 
 let stylesStr
 if (process.env.NODE_ENV === `production`) {

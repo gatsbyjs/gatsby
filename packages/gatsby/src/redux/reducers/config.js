@@ -34,6 +34,12 @@ module.exports = (state = {}, action) => {
         }
       }
 
+      // If pathPrefix isn't set, set it to an empty string
+      // to avoid it showing up as undefined elsewhere.
+      if (!_.has(action, [`payload`, `pathPrefix`])) {
+        action = _.set(action, [`payload`, `pathPrefix`], ``)
+      }
+
       return {
         ...action.payload,
       }

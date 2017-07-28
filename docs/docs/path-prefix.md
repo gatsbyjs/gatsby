@@ -14,7 +14,7 @@ In addition links to various resources (JavaScript, images, CSS) need the same
 prefix added.
 
 Luckily, for most sites, this work can be offloaded to Gatsby. Using
-[gatsby-link](/docs/packages/gatsby-link/) for internal links ensures those
+[gatsby-link](/packages/gatsby-link/) for internal links ensures those
 links will be prefixed correctly. Gatsby ensures that paths created internally
 and by webpack are also correctly prefixed.
 

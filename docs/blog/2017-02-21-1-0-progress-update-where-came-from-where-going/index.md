@@ -228,7 +228,7 @@ Plugins can:
 * add drop-in support for lightweight React-compatible frameworks
 [Preact](https://preactjs.com/) and [Inferno](https://infernojs.org/)
 * add a sitemap or RSS feed
-* add [Google Analytics](/docs/packages/gatsby-plugin-google-analytics/)
+* add [Google Analytics](/packages/gatsby-plugin-google-analytics/)
 * ...and many more!
 
 Plugins also drive the new GraphQL data processing layer.
@@ -340,15 +340,15 @@ imaginable data format and source and potential way of processing its
 data will be an npm install away.
 
 So far I've focused on building out the markdown ecosystem. So there are
-plugins to [parse markdown](/docs/packages/gatsby-parser-remark/) and
+plugins to [parse markdown](/packages/gatsby-parser-remark/) and
 process it in a variety of ways (including [adding syntax highlighting
-with PrismJS](/docs/packages/gatsby-typegen-remark-prismjs/) and
+with PrismJS](/packages/gatsby-typegen-remark-prismjs/) and
 [resizing images referenced in markdown
-files](/docs/packages/gatsby-typegen-remark-images/) so
+files](/packages/gatsby-typegen-remark-images/) so
 they're mobile ready). I've also added parsers for
-[YAML](/docs/packages/gatsby-parser-yaml/),
-[JSON](/docs/packages/gatsby-parser-json/), and
-[images](/docs/packages/gatsby-parser-sharp/).
+[YAML](/packages/gatsby-parser-yaml/),
+[JSON](/packages/gatsby-parser-json/), and
+[images](/packages/gatsby-parser-sharp/).
 
 These plugins are easy to write (somewhat similar to webpack loaders) so
 I expect to see the list of plugins grow rapidly.

@@ -16,6 +16,7 @@ let _siteURL
 let _getNode
 let _useACF
 let _hostingWPCOM
+let _auth
 
 let _parentChildNodes = []
 
@@ -42,6 +43,7 @@ exports.sourceNodes = async (
   _getNode = getNode
   _useACF = useACF
   _hostingWPCOM = hostingWPCOM
+  _auth = auth
 
   // If the site is hosted on wordpress.com, the API Route differs.
   // Same entity types are exposed (excepted for medias and users which need auth)
@@ -76,7 +78,7 @@ exports.sourceNodes = async (
   )
   console.log(
     colorized.out(
-      `Using Auth: ${auth.user} ${auth.pass}`,
+      `Using Auth: ${_auth.user} ${_auth.pass}`,
       colorized.color.Font.FgBlue
     )
   )
@@ -98,7 +100,7 @@ exports.sourceNodes = async (
     .forEach(n => touchNode(n.id))
 
   // Call the main API Route to discover the all the routes exposed on this API.
-  let allRoutes = await axiosHelper(url, auth)
+  let allRoutes = await axiosHelper(url)
 
   if (allRoutes != undefined) {
     let validRoutes = getValidRoutes(allRoutes, url, baseUrl)
@@ -113,7 +115,7 @@ exports.sourceNodes = async (
     console.log(``)
 
     for (let route of validRoutes) {
-      await fetchData(route, auth, createNode)
+      await fetchData(route, createNode)
       console.log(``)
     }
 
@@ -146,17 +148,17 @@ exports.sourceNodes = async (
  * @param {any} auth 
  * @returns 
  */
-async function axiosHelper(url, auth) {
+async function axiosHelper(url) {
   let result
   try {
     let options = {
       method: `get`,
       url: url,
     }
-    if (auth != undefined) {
+    if (_auth != undefined) {
       options.auth = {
-        username: auth.user,
-        password: auth.pass,
+        username: _auth.user,
+        password: _auth.pass,
       }
     }
     result = await axios(options)
@@ -325,30 +327,46 @@ const getManufacturer = route =>
 
 /**
  * Fetch the data from specified route url, using the auth provided.
- * 
- * @param {any} route 
- * @param {any} auth 
+ *
+ * @param {any} route
+ * @param {any} createNode
+ * @param {any} parentNodeId (Optionnal parent node ID)
  */
-async function fetchData(route, auth, createNode) {
+async function fetchData(route, createNode, parentNodeId) {
   const type = route.type
   const url = route.url
 
-  console.log(
-    colorized.out(`=== [ Fetching ${type} ] ===`, colorized.color.Font.FgBlue),
-    url
-  )
-  if (_verbose) console.time(`Fetching the ${type} took`)
+  if (parentNodeId != undefined) {
+    console.log(
+      colorized.out(`Extended node content`, colorized.color.Font.FgBlue),
+      url
+    )
+  } else {
+    console.log(
+      colorized.out(
+        `=== [ Fetching ${type} ] ===`,
+        colorized.color.Font.FgBlue
+      ),
+      url
+    )
+    if (_verbose) console.time(`Fetching the ${type} took`)
+  }
 
-  let routeResponse = await axiosHelper(url, auth)
+  let routeResponse = await axiosHelper(url)
 
   if (routeResponse) {
     // Process entities to creating GraphQL Nodes.
     if (Array.isArray(routeResponse.data)) {
       for (let ent of routeResponse.data) {
-        await createGraphQLNode(ent, type, createNode)
+        await createGraphQLNode(ent, type, createNode, parentNodeId)
       }
     } else {
-      await createGraphQLNode(routeResponse.data, type, createNode)
+      await createGraphQLNode(
+        routeResponse.data,
+        type,
+        createNode,
+        parentNodeId
+      )
     }
 
     // TODO : Get the number of created nodes using the nodes in state.
@@ -370,7 +388,8 @@ async function fetchData(route, auth, createNode) {
     )
   }
 
-  if (_verbose) console.timeEnd(`Fetching the ${type} took`)
+  if (_verbose && parentNodeId == undefined)
+    console.timeEnd(`Fetching the ${type} took`)
 }
 
 /**
@@ -382,10 +401,13 @@ const digest = str => crypto.createHash(`md5`).update(str).digest(`hex`)
 
 /**
  * Create the Graph QL Node
- * 
- * @param {any} node 
+ *
+ * @param {any} ent
+ * @param {any} type
+ * @param {any} createNode
+ * @param {any} parentNodeId (Optionnal parent node ID)
  */
-function createGraphQLNode(ent, type, createNode) {
+function createGraphQLNode(ent, type, createNode, parentNodeId) {
   let id = ent.id == undefined ? (ent.ID == undefined ? 0 : ent.ID) : ent.id
   let node = {
     id: `${type}_${id.toString()}`,
@@ -418,13 +440,17 @@ function createGraphQLNode(ent, type, createNode) {
     type == refactoredEntityTypes.post ||
     type == refactoredEntityTypes.page
   ) {
-    // TODO : Move this to field recursive and add other fields that have rendered child field
+    // TODO : Move this to field recursive and add other fields that have rendered field
     node.title = ent.title.rendered
     node.content = ent.content.rendered
     node.excerpt = ent.excerpt.rendered
   }
   node.internal.contentDigest = digest(stringify(node))
   createNode(node)
+
+  if (parentNodeId != undefined) {
+    _parentChildNodes.push({ parentId: parentNodeId, childNodeId: node.id })
+  }
 }
 
 /**
@@ -453,6 +479,17 @@ function addFields(ent, newEnt, createNode) {
     acfNode.internal.contentDigest = digest(stringify(acfNode))
     createNode(acfNode)
     _parentChildNodes.push({ parentId: newEnt.id, childNodeId: acfNode.id })
+  } else if (
+    newEnt.meta != undefined &&
+    newEnt.meta.links != undefined &&
+    newEnt.meta.links.self != undefined
+  ) {
+    //The entity as a link to more content for this entity
+    fetchData(
+      { url: newEnt.meta.links.self, type: `${newEnt.internal.type}_Extended` },
+      createNode,
+      newEnt.id
+    )
   }
   return newEnt
 }
@@ -516,35 +553,3 @@ function getValidName(key) {
   }
   return nkey
 }
-
-// const mkdirp = require(`mkdirp`)
-// const cacheSitePath = `${store.getState().program.directory}/.cache/source-wordpress`
-// mkdirp(cacheSitePath, function (err) {
-//   if (err) console.error(err)
-// })
-// "get-urls": "^7.x",
-// const getUrls = require(`get-urls`)
-// const downloader = require(`./image-downloader.js`)
-// const getImagesAndGraphQLNode = (node, auth, createNode, cacheSitePath) => {
-
-//   const nodeStr = JSON.stringify(node)
-//   // -------- Fetch the assets (images for now)
-//   const urls = getUrls(nodeStr)
-
-//   urls.forEach((url) => {
-//     if (url.endsWith(`jpg`) || url.endsWith(`jpeg`) || url.endsWith(`png`) || url.endsWith(`gif`)) {
-//       downloader.image({
-//         url: url,
-//         dest: cacheSitePath,
-//         auth: auth,
-//       })
-//         .then(({ filename, image }) => {
-//           // console.log(`Image saved to`, filename)
-//         }).catch((err) => {
-//           console.log(`Some error occurred. The image couldn\`t be downloaded.`, err)
-//         })
-//     }
-
-//   })
-
-// }

@@ -164,7 +164,10 @@ loadLayout(layout => {
       <NewRoot />,
       typeof window !== `undefined`
         ? document.getElementById(`___gatsby`)
-        : void 0
+        : void 0,
+      () => {
+        apiRunner(`onInitialClientRender`)
+      }
     )
   })
 })
