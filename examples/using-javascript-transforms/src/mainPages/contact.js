@@ -4,7 +4,7 @@ import SiteLinks from "../components/SiteLinks"
 
 exports.data = {
   layoutType: `page`,
-  path: `contact`,
+  path: `/contact/`,
 }
 
 class ContactMe extends React.Component {

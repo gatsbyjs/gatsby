@@ -3,7 +3,7 @@ title: First Post About First Post
 written: "2017-01-22"
 updated: "2017-03-04"
 layoutType: post
-path: "a-first-post"
+path: "/a-first-post/"
 category: "Beginnings"
 description: "From humble beginnings to... space?"
 ---
