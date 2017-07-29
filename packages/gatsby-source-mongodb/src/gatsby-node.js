@@ -51,10 +51,9 @@ function createNodes(db, pluginOptions, dbName, createNode, done) {
         // Data for the node.
         ...item,
         id: `${item._id}`,
-        parent: item.parent || `__${collectionName}__`,
-        children: item.children || [],
+        parent: `__${collectionName}__`,
+        children: [],
         internal: {
-          mediaType: `application/json`,
           type: `mongodb${caps(dbName)}${caps(collectionName)}`,
           content: JSON.stringify(item),
           contentDigest: crypto
