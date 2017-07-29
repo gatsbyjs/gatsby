@@ -205,6 +205,7 @@ export function inferInputObjectStructureFromNodes({
       prefix: `${prefix}${_.upperFirst(key)}`,
     })
 
+    if (typeof key !== 'string') return
     if (field == null) return
     inferredFields[createKey(key)] = field
   })
