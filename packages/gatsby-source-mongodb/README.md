@@ -16,6 +16,21 @@ Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from m
     }
   ],
 ```
+
+## Plugin options
+
+dbName: indicates the database name that you want to use
+collection: the collection name within mongodb
+server: contains the server info, with sub properties address and port
+        ex. server: { address: `ds143532.mlab.com`, port: 43532 },
+
+auth: the authentication data to login a mongodb collection, with sub properties user and password.
+      ex. auth: { user: `admin`, password: `12345` } 
+
+map: with this option you can map a field to a content type, it is an array
+     ex. map: {description: `text\x-markdown`}
+
+
 ## How to query : GraphQL
 
 Find below a global pageQuery to query all mongoDB document nodes. 
