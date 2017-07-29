@@ -3,6 +3,7 @@ const crypto = require(`crypto`)
 const _ = require(`lodash`)
 const stringify = require(`json-stringify-safe`)
 const colorized = require(`./output-color`)
+const qs = require('qs')
 
 const typePrefix = `wordpress__`
 
@@ -17,6 +18,7 @@ let _getNode
 let _useACF
 let _hostingWPCOM
 let _auth
+let _accessToken
 
 let _parentChildNodes = []
 
@@ -51,6 +53,7 @@ exports.sourceNodes = async (
   let url
   if (hostingWPCOM) {
     url = `https://public-api.wordpress.com/wp/v2/sites/${baseUrl}`
+    _accessToken = await getWPCOMAccessToken()
   } else {
     url = `${_siteURL}/wp-json`
   }
@@ -156,17 +159,52 @@ async function axiosHelper(url) {
       url: url,
     }
     if (_auth != undefined) {
-      options.auth = {
-        username: _auth.user,
-        password: _auth.pass,
+      if (_hostingWPCOM) {
+        options.headers = {
+          Authorization: `Bearer ${_accessToken}`
+        }
+      } else {
+        options.auth = {
+          username: _auth.user,
+          password: _auth.pass,
+        }
       }
     }
+   
     result = await axios(options)
   } catch (e) {
     httpExceptionHandler(e)
   }
   return result
 }
+
+/**
+ * Gets wordpress.com access token so it can fetch private data
+ */
+async function getWPCOMAccessToken() {
+  let result
+  const oauthUrl = `https://public-api.wordpress.com/oauth2/token`;
+  try {
+    let options = {
+        url: oauthUrl,
+        method: `post`,
+        data : qs.stringify({
+          client_secret: _auth.clientSecret,
+          client_id: _auth.clientId,
+          username: _auth.user,
+          password: _auth.pass,
+          grant_type: 'password',      
+        })
+    }
+
+    result = await axios(options)
+    result = result.data.access_token
+  } catch (e) {
+    httpExceptionHandler(e)
+  }
+
+  return result
+} 
 
 /**
  * Handles HTTP Exceptions (axios)

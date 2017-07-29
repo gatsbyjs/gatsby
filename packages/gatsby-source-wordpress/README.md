@@ -9,7 +9,7 @@ An example site for using this plugin will be published soon as this is a WIP.
 - [x] source plugin
 - [x] pull data from self-hosted WordPress
 - [x] pull data from site hosted on wordpress.com, wordpress.org
-- [ ] authentify to wordpress.com API so medias can be queried.
+- [x] authentify to wordpress.com API so medias can be queried.
 - [ ] pull images to local file system [WIP]
 - [ ] responsive images using sharp
 
@@ -86,6 +86,14 @@ The Authentication on Wordpress.com is not supported yet. This means that you wo
           user: 'your-htaccess-username',
           pass: 'your-htaccess-password',
           sendImmediately: false
+
+          // If hostingWPCOM is true then you will need 
+          // to communicate with wordpress.com api
+          // in order to do that you need to create an app
+          // at https://developer.wordpress.com/apps/
+          // then add the clientId and clientSecret here
+          clientId: '',
+          clientSecret: ''
         },
         // Set verboseOutput to true to display a verbose output on `npm run develop` or `npm run build` 
         // It can help you debug specific API Endpoints problems 
