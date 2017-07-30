@@ -5,6 +5,9 @@ Object {
   "anArray": Object {
     "field": "anArray",
   },
+  "context___nestedObject___someOtherProperty": Object {
+    "field": "context___nestedObject___someOtherProperty",
+  },
   "date": Object {
     "field": "date",
   },
@@ -40,6 +43,11 @@ Object {
   "anArray": Array [
     1,
   ],
+  "context": Object {
+    "nestedObject": Object {
+      "someOtherProperty": 3,
+    },
+  },
   "date": "2006-07-22T22:39:53.000Z",
   "emptyArray": null,
   "frontmatter": Object {

@@ -1,18 +1,13 @@
-import React from "react"
-import * as PropTypes from "prop-types"
-import Helmet from "react-helmet"
-import siteMetadata from "../components/metadata.yaml"
-import "../static/css/base.scss"
-require(`prismjs/themes/prism-coy.css`)
+import React from 'react';
+import * as PropTypes from 'prop-types';
+import Helmet from 'react-helmet';
+import siteMetadata from '../components/metadata.yaml';
+import '../static/css/base.scss';
 
 import InsetPage from "./inset-page"
 import BlogPost from "./blog-post"
 
 class MasterLayout extends React.Component {
-  static propTypes = {
-    location: PropTypes.object.isRequired,
-  }
-
   render() {
     let location = this.props.location.pathname
     let jimmyPage // you jimmy a lock until it opens, so same thing here ;)
@@ -44,6 +39,7 @@ class MasterLayout extends React.Component {
 export default MasterLayout
 
 // this is a placeholder, does not actually work
+/*
 export const pageQuery = graphql`
   query LayoutBySlug($slug: String!) {
     allJsFrontmatter {
@@ -63,3 +59,4 @@ export const pageQuery = graphql`
     }
   }
 `
+*/

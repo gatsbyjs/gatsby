@@ -1,6 +1,6 @@
 ---
 title: Gatsby.js Tutorial Part One
-typora-copy-images-to: ../tutorial/images
+typora-copy-images-to: ./
 ---
 
 Hello fellow Gatsby-er! Welcome to *part one* of our community Gatsby.js tutorial.
@@ -11,7 +11,7 @@ Sit down, buckle up, and let's get going!
 
 ## Check your development environment
 
-Let's check first that you have everything setup to start working with Gatsby. You will need a recent version of [Node.js](https://nodejs.org) installed.
+Let's check first that you have everything setup to start creating with Gatsby. You will need a recent version of [Node.js](https://nodejs.org) installed.
 
 Node.js is a programming tool for running JavaScript on servers and in your computer's terminal. Gatsby is built using Node.js.
 
@@ -19,84 +19,48 @@ Open a terminal window and type `node --version` then `npm --version`.
 
 You should see something like:
 
-![Check if node.js/npm is installed](images/check-versions.png)
+![Check if node.js/npm is installed](check-versions.png)
 
 Gatsby supports versions of Node back to v4 and NPM to v3.
 
 If you don't have Node.js installed, go to https://nodejs.org/ and install the recommended version for your operating system.
 
-## Creating a Gatsby site from scratch
+## Install the "Hello World" starter
 
-Go to a directory on your computer for coding projects and create a new directory titled perhaps "my-first-gatsby-site".
+Gatsby uses "starters" for starting new projects. As the name suggests, starters are partially built Gatsby sites pre-configured to help you get moving faster. There are several official starters and many others contributed from the Gatsby community! [See the Starters page for the full list](/docs/gatsby-starters/).
 
-Once inside the directory. Type `npm init`. This is a command to start a new Node.js project. You can just press enter through most of the questions.
+To install a starter, first install Gatsby's terminal program.
 
-![Init new project](images/npm-init.png)
-
-Now type `ls` to see the list of files in your folder. You should see `package.json`.
-
-Now we'll add the two dependencies required for a Gatsby site—`gatsby` and `gatsby-link`.
-
-```bash
-npm install --save gatsby gatsby-link
+```sh
+npm install --global gatsby
 ```
 
-Installation should take a minute or two.
 
-Now type `cat package.json` and you should see that `gatsby` and `gatsby-link` are now added to the `package.json` as `dependencies`.
 
-```bash
-~/p/my-first-gatsby-site: cat package.json
-{
-  "name": "my-first-gatsby-site",
-  "version": "1.0.0",
-  "description": "My first Gatsby site",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "gatsby": "^1.0.0",
-    "gatsby-link": "^1.0.0"
-  }
-}
+Once that's installed, run:
+
+```sh
+gatsby new tutorial-part-one https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
-Sweet! We're making progress 😎
 
-Let's now try running Gatsby!
 
-Gatsby has a built-in development server. Let's start it up. (TODO tell people to use the `gatsby-cli` package once that's built).
+This command downloads the files for the starter and then installs the needed NPM packages. It should take around 1.5-3 minutes to finish.
 
-Run from your terminal `./node_modules/.bin/gatsby develop`
+Now let's now try running Gatsby!
 
-You should see shortly some text that says `The development server is listening at: http://localhost:8000`. Open that address in your browser.
+Gatsby has a built-in development server. Let's start it up.
 
-![Gatsby.js development 404 page](images/index-404.png)
+```sh
+cd tutorial-part-one
+npm run develop
+```
+
+You should see shortly some text that says `The development server is listening at:` [http://localhost:8000](http://localhost:8000). Open that address in your browser and...
+
+![Gatsby.js hello world](hello-world.png)
 
 Yeah! It's working!!!
-
-What you're seeing is the Gatsby.js development 404 page. Let's do what it says and create a React.js page component at `src/pages/index.js`.
-
-In a new terminal window (leave the `gatsby develop` process running), first create the `src/pages` directory.
-
-```bash
-mkdir -p src/pages
-```
-
-Then open up `src/pages/index.js` in your editor of choice and type in the "hello world" of page components.
-
-```jsx
-import React from 'react'
-
-export default () => <div>Hello world!</div>
-```
-
-Save that and… 😮😮😮
-
-![It's alive!](images/hello-world.png)
 
 Too cool 😎
 
@@ -106,7 +70,7 @@ This is huge because it makes development so much faster and fun.
 
 Let's try it.
 
-Try changing "Hello world!" in the page component to "Hello Gatsby!". The text in your browser should change within a second.
+Try changing "Hello world!" in the page component to "Hello Gatsby!". You'll find the page component at `src/pages/index.js`. The text in your browser should change within a second.
 
 Try some other tricks.
 
@@ -149,7 +113,7 @@ export default () =>
 
 Now your screen should look something like this.
 
-![Screen Shot 2017-06-03 at 11.57.10 AM](images/moving-along.png)
+![Screen Shot 2017-06-03 at 11.57.10 AM](moving-along.png)
 
 ## Linking between pages
 
@@ -157,9 +121,9 @@ Websites are pages and links between pages. While we've now got a pretty sweet f
 
 First create the link to the new page.
 
-To do that, import the `<Link>` component from the `gatsby-link` package we installed earlier.
+To do that, import the `<Link>` component from the `gatsby-link` package that was installed along with the starter.
 
-Unlike the normal HTML `<a>` element, our `Link` component uses `to` for specifying the page you want to link to. Let's link to a page with the pathname of `/my-second-gatsby-page/`. Try adding that. Once you're done, the page component should look like:
+Unlike the normal HTML `<a>` element, our `Link` component uses `to` for specifying the page you want to link to. Let's link to a page with the pathname of `/page-2/`. Try adding that. Once you're done, the page component should look like:
 
 ```jsx{2,9-10}
 import React from "react"
@@ -171,13 +135,15 @@ export default () =>
     <p>What a world.</p>
     <img src="http://lorempixel.com/400/200/" />
     <br />
-    <Link to="/my-second-gatsby-page/">Link</Link>
+    <Link to="/page-2/">Link</Link>
   </div>
 ```
 
-Click on that link and again we see the development 404 page.
+Click on that link and you should see:
 
-Let's do what it says again and create a new page component at `src/pages/my-second-gatsby-page.js`.
+![Gatsby.js development 404 page](dev-404.png)
+
+What you're seeing is the Gatsby.js development 404 page. Let's do what it says and create a React.js page component at `src/pages/page-2.js`.
 
 Make the second page component look something like:
 
@@ -208,9 +174,9 @@ One nice thing about using Gatsby for building websites vs other tools is it's s
 
 Let's see how easy it is to add interactive elements to our pages.
 
-We'll start by creating a new link to a page at `/counter`/ from our original `index.js` page component.
+We'll start by creating a new link to a page at `/counter`/ from our original `index.js` page component `<Link to="/counter/">Counter</Link>`.
 
-Add that link, click on it, and then create a "Hello World" page component for `/counter/` as before. But instead of using what's called the "functional component" form for React we'll create a "class" component.
+Add that link, click on it, and then we'll create a "Hello World" page component for `/counter/` as before. But instead of using the "functional component" form as we did before, we'll create a "class" component.
 
 ```jsx
 import React from "react"
@@ -224,11 +190,11 @@ class Counter extends React.Component {
 export default Counter
 ```
 
-The class form of React allows us to add component state. We'll need that for our counter.
+The class form of React allows us to have component state. We'll need that for our counter.
 
 Let's continue to flesh out our counter. Let's add two buttons. One to increment and one to decrement the count of the counter.
 
-```jsx{6-11}
+```jsx{5-12}
 import React from "react"
 
 class Counter extends React.Component {
@@ -251,7 +217,7 @@ So now we have everything we need to make a nice counter. Let's make it live.
 
 First we'll setup the component state.
 
-```jsx{4-6,12}
+```jsx{4-7,12-13}
 import React from "react"
 
 class Counter extends React.Component {
@@ -317,9 +283,9 @@ Gatsby.js is a *static site generator* which makes deploying Gatsby sites to
 the web really easy. There are no servers to setup or complicated databases to
 deploy.  Instead, the Gatsby `build` command produces a directory of static
 HTML and JavaScript files which you can deploy to a static site hosting
-service. (TODO link to deployment docs)
+service.
 
-Let's try using [Surge](http://surge.sh/) for deploying our first Gatsby website.
+Let's try using [Surge](http://surge.sh/) for deploying our first Gatsby website. Surge is one of many "static site hosts" which make it really easy to deploy Gatsby sites.
 
 First install their terminal tool:
 
@@ -330,7 +296,7 @@ npm install --global surge
 Then build your site by running in the terminal at the root of your site:
 
 ```bash
-gatsby build
+npm run build
 ```
 
 Building should take 15-30 seconds. Take a look at the generated files by looking
@@ -340,11 +306,17 @@ at the `public` directory:
 ls public
 ```
 
-Then finally deploy your site by pushing the generated files to surge.sh:
+Then finally deploy your site by publishing the generated files to surge.sh. You'll first need to create a (free) account by typing `surge`. Then run:
 
 ```bash
 surge public/
 ```
+
+Once this finishes running, you should see in your terminal something like:
+
+![Screenshot of publishing Gatsby site with Surge](surge-deployment.png)
+
+Open the web address listed on the bottom line (`lowly-pain.surge.sh` in this case) and you'll see your newly published site!
 
 ## Good work!
 

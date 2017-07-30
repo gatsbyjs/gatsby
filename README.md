@@ -21,6 +21,9 @@ Websites built with Gatbsy:
 * [Jamie Henson's Blog](http://jamiehenson.com/) [(source)](https://github.com/jamiehenson/jh47-gatsby)
 * [Sean Coker's Blog](https://sean.is/)
 * [Dustin Schau's Blog](https://dustinschau.com/blog/) [(source)](https://github.com/dschau/blog)
+* [The Chiedo Companies Website](https://www.chiedo.com)
+* [Damir.io](http://damir.io/) [(source)](https://github.com/dvzrd/gatsby-sfiction)
+* [Ruben's Blog](https://vagr9k.me/) [(source)](https://github.com/Vagr9K/Blog)
 
 ## Docs
 

@@ -402,7 +402,7 @@ async function responsiveSizes({ file, args = {} }) {
 
     return queueImageResizing({
       file,
-      args: arrrgs,
+      args: arrrgs, // matey
     })
   })
 
