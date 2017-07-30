@@ -225,18 +225,7 @@ function httpExceptionHandler(e) {
         colorized.color.Font.FgRed
       )
     )
-  if (
-    e.response.status == 400 ||
-    e.response.status == 401 ||
-    e.response.status == 402 ||
-    e.response.status == 403
-  )
-    console.log(
-      colorized.out(
-        `Auth on endpoint is not implemented on this gatsby-source plugin.`,
-        colorized.color.Font.FgRed
-      )
-    )
+
 }
 
 /**
