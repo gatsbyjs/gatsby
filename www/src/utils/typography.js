@@ -58,7 +58,7 @@ const options = {
         // background: `hsla(23, 60%, 97%, 1)`,
         background: colors.a[0],
         border: `1px solid ${colors.a[1]}`,
-        borderRadius: `3px`,
+        borderRadius: `${presets.radius}px`,
         padding: rhythm(options.blockMarginBottom),
         marginBottom: rhythm(options.blockMarginBottom),
         overflow: `auto`,

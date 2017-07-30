@@ -1,13 +1,13 @@
 # gatsby-source-wordpress
 
-Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from Wordpress sites using the [Wordpress JSON REST API](https://developer.wordpress.org/rest-api/reference/).
+Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from WordPress sites using the [WordPress JSON REST API](https://developer.wordpress.org/rest-api/reference/).
 
 An example site for using this plugin will be published soon as this is a WIP.
 
 ## WIP
 
 - [x] source plugin
-- [x] pull data from self-hosted wordpress
+- [x] pull data from self-hosted WordPress
 - [x] pull data from site hosted on wordpress.com, wordpress.org
 - [ ] authentify to wordpress.com API so medias can be queried.
 - [ ] pull images to local file system [WIP]
@@ -15,7 +15,7 @@ An example site for using this plugin will be published soon as this is a WIP.
 
 ## Status
 
-This module is at prototype-level. It currently pulls from Wordpress the following entities : 
+This module is at prototype-level. It currently pulls from WordPress the following entities : 
 - [x] posts
 - [x] pages
 - [x] tags
@@ -27,14 +27,14 @@ This module is at prototype-level. It currently pulls from Wordpress the followi
 - [x] taxonomies
 - [x] and entities exposed by other plugins
 
-It will pull any endpoint provided by Wordpress Plugins as long as it appears in the list of endpoints.
-  * `//your-site.com/wp-json/` for a self-hosted wordpress or hosted on wordpress.org
+It will pull any endpoint provided by WordPress Plugins as long as it appears in the list of endpoints.
+  * `//your-site.com/wp-json/` for a self-hosted WordPress or hosted on wordpress.org
   * `https://public-api.wordpress.com/wp/v2/sites/your-site.com` for a site hosted on wordpress.com
 
 Currently only these plugins were tested but it should work with any.
 - [x] [ACF](https://www.advancedcustomfields.com/) As this is a special plugin, this must be activated with `useACF: true` in your site's `gatsby-config.js`.
-    *  You must have the plugin [acf-to-rest-api](https://github.com/airesvsg/acf-to-rest-api) installed in Wordpress in order to be able to access the ACF Fields from the API (this is the only known way to do that).
-    *  Will pull the `acf: { ... }` fields's contents from any entity which has it attached (pages, posts, medias, ... you choose from in Wordpress back-end while creating a Group of Fields). Every node below `acf` is [Stringify'd](https://www.w3schools.com/js/js_json_stringify.asp), then put in a childNode, which means that you will have to call `JSON.parse()` to get an `Object`. (ex. ```const fields = JSON.parse(childWordpressAcfField.internal.content)```)
+    *  You must have the plugin [acf-to-rest-api](https://github.com/airesvsg/acf-to-rest-api) installed in WordPress in order to be able to access the ACF Fields from the API (this is the only known way to do that).
+    *  Will pull the `acf: { ... }` fields's contents from any entity which has it attached (pages, posts, medias, ... you choose from in WordPress back-end while creating a Group of Fields). Every node below `acf` is [Stringify'd](https://www.w3schools.com/js/js_json_stringify.asp), then put in a childNode, which means that you will have to call `JSON.parse()` to get an `Object`. (ex. ```const fields = JSON.parse(childWordpressAcfField.internal.content)```)
     *  You will also have to include the children ACF Field Node in your GraphQL query. (See `Query posts with the child ACF Fields Node` below)
 
 - [x] [ACF Pro](https://www.advancedcustomfields.com/pro/)
@@ -366,6 +366,19 @@ Note : you will have to populate the acf node with your config. Put this in the 
       }
     }
   }
+  allWordpressWpApiMenusMenusExtended {
+    edges {
+      node {
+        name
+        count
+        items {
+          order
+          title
+          url
+        }
+      }
+    }
+  }
 ```
 ### Query any other plugin
 In the following example, `${Manufacturer}` will be replaced by the endpoint prefix and `${Endpoint}` by the name of the endpoint.
@@ -473,13 +486,13 @@ const slash = require(`slash`)
 // called after the Gatsby bootstrap is finished so you have
 // access to any information necessary to programatically
 // create pages.
-// Will create pages for Wordpress pages (route : /{slug})
-// Will create pages for Wordpress posts (route : /post/{slug})
+// Will create pages for WordPress pages (route : /{slug})
+// Will create pages for WordPress posts (route : /post/{slug})
 exports.createPages = ({ graphql, boundActionCreators }) => {
   const { createPage } = boundActionCreators
   return new Promise((resolve, reject) => {
     // The “graphql” function allows us to run arbitrary
-    // queries against the local Wordpress graphql schema. Think of
+    // queries against the local WordPress graphql schema. Think of
     // it like the site has a built-in database constructed
     // from the fetched data that you can run queries against.
 
@@ -511,7 +524,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         // Create Page pages.
         const pageTemplate = path.resolve('./src/templates/page.js')
         // We want to create a detailed page for each
-        // page node. We'll just use the Wordpress Slug for the slug.
+        // page node. We'll just use the WordPress Slug for the slug.
         // The Page ID is prefixed with 'PAGE_'
         _.each(result.data.allWordpressPage.edges, edge => {
           // Gatsby uses Redux to manage its internal state.
@@ -557,7 +570,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           }
           const postTemplate = path.resolve('./src/templates/post.js')
         // We want to create a detailed page for each
-        // post node. We'll just use the Wordpress Slug for the slug.
+        // post node. We'll just use the WordPress Slug for the slug.
         // The Post ID is prefixed with 'POST_'
           _.each(result.data.allWordpressPost.edges, edge => {
             createPage({

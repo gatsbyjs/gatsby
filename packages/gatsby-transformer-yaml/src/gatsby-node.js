@@ -1,5 +1,4 @@
 const select = require(`unist-util-select`)
-const Promise = require(`bluebird`)
 const fs = require(`fs`)
 const jsYaml = require(`js-yaml`)
 const _ = require(`lodash`)

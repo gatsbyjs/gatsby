@@ -29,6 +29,7 @@ Official:
 
 * [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default) [(demo)](http://gatsbyjs.github.io/gatsby-starter-default/)
 * [gatsby-starter-blog](https://github.com/gatsbyjs/gatsby-starter-blog) [(demo)](http://gatsbyjs.github.io/gatsby-starter-blog/)
+* [gatsby-starter-hello-world](https://github.com/gatsbyjs/gatsby-starter-hello-world) [(demo)](https://aberrant-fifth.surge.sh/)
 
 Community:
 
@@ -71,7 +72,7 @@ Community:
   * Blog post listing with previews for each blog post
   * Navigation between posts with a previous/next post button
   * Tags and tag navigation
-  
+
 * [gatsby-advanced-starter](https://github.com/Vagr9K/gatsby-advanced-starter) [(demo)](https://vagr9k.github.io/gatsby-advanced-starter/)
 
   Features:
@@ -99,4 +100,10 @@ Community:
     * glitch serves assets over CDN, API unclear
     * virtual server container provides [**128MB** for app](https://glitch.com/faq#restrictions) (512MB for assets)
     * server can't install certain gatsby plugins (`sharp`-based; out of mem?)
-  
+
+* [gatsby-starter-grommet](https://github.com/alampros/gatsby-starter-grommet) [(demo)](https://alampros.github.io/gatsby-starter-grommet/)
+
+  Features:
+  * Barebones configuration for using the [Grommet](https://grommet.github.io/) design system
+  * Uses SASS (with CSS modules support)
+

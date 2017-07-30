@@ -40,7 +40,10 @@ ReactDOM.render(
   <HotContainer>
     <Root />
   </HotContainer>,
-  rootElement
+  rootElement,
+  () => {
+    apiRunner(`onInitialClientRender`)
+  }
 )
 
 if (module.hot) {
@@ -53,7 +56,10 @@ if (module.hot) {
       <HotContainer>
         <NextRoot />
       </HotContainer>,
-      rootElement
+      rootElement,
+      () => {
+        apiRunner(`onInitialClientRender`)
+      }
     )
   })
 }
