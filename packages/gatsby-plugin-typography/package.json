@@ -1,13 +1,12 @@
 {
   "name": "gatsby-plugin-typography",
-  "version": "1.0.0",
+  "version": "1.6.0",
   "description": "Gatsby plugin to setup server rendering of Typography.js' CSS",
   "main": "index.js",
   "dependencies": {
     "react-typography": "^0.15.10",
     "typography": "^0.15.10"
   },
-  "devDependencies": {},
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
     "watch": "babel -w src --out-dir . --ignore __tests__"
