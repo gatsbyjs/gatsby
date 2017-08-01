@@ -136,7 +136,8 @@ loader.getResourcesForPathname(window.location.pathname, () => {
           },
         })
       )
-
+    )
+    
     const NewRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
     ReactDOM.render(
       <NewRoot />,
@@ -147,12 +148,4 @@ loader.getResourcesForPathname(window.location.pathname, () => {
         apiRunner(`onInitialClientRender`)
       }
     )
-
-  const NewRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
-  ReactDOM.render(
-    <NewRoot />,
-    typeof window !== `undefined`
-      ? document.getElementById(`___gatsby`)
-      : void 0
-  )
 })
