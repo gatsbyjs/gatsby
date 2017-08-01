@@ -16,7 +16,7 @@ exports.sourceNodes = ({ store }, pluginOptions) => {
   } else {
     module = `const Typography = require("typography")
 const typography = new Typography()
-module.exports typography`
+module.exports = typography`
   }
 
   const dir = `${__dirname}/.cache`
