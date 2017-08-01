@@ -9,7 +9,6 @@ exports.modifyWebpackConfig = ({ config }) =>
   ])
 
 // Add Glamor support
-// // Add Glamor support
 exports.modifyBabelrc = ({ babelrc }) => {
   return {
     ...babelrc,
