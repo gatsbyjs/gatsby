@@ -10,7 +10,7 @@ const serialize = ({ query: { site, allMarkdownRemark } }) =>
   allMarkdownRemark.edges.map(edge => {
     return {
       ...edge.node.frontmatter,
-      description: edge.node.excerpt,
+      description: edge.node.excerpt || edge.node.frontmatter.excerpt,
       url: site.siteMetadata.siteUrl + edge.node.fields.slug,
       guid: site.siteMetadata.siteUrl + edge.node.fields.slug,
       custom_elements: [{ "content:encoded": edge.node.html }],
