@@ -13,7 +13,7 @@ export const data = {
   title: `Alternate Choropleth on d3v4`,
   written: `2017-05-30`,
   layoutType: `post`,
-  path: `choropleth-on-d3v4-alternate`,
+  path: `/choropleth-on-d3v4-alternate/`,
   category: `data science`,
   description: `Even more things about the choropleth. No, seriously.`,
 }
