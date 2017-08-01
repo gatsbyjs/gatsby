@@ -6,7 +6,7 @@ typora-copy-images-to: ./
 
 Welcome to part two of the Gatsby tutorial!
 
-In this part we're going to explore options for styling Gatsby websites,  dive deeper into using React components for building sites, and finish by exploring Gatsby's special "layout" components which can be used for sitewide navigation and other uses.
+In this part we're going to explore options for styling Gatsby websites and dive deeper into using React components for building sites.
 
 ## Building with components
 
@@ -603,19 +603,3 @@ Gatsby supports almost every possible styling option (if there isn't a plugin ye
 * [JSS](/packages/gatsby-plugin-jss/)
 * [Stylus](/packages/gatsby-plugin-stylus/)
 * and more!
-
-## Layouts
-
-### hand  drawing showing how layouts surround pages
-
-container component — so flexible how center things.
-
-one container in layout
-
-container in header/footer/each page, show page with background colored sections
-
-hot reload changing maxWidth — expressiveness. Make components which are meaningful per project
-
-Add layout/index with header/footer
-
-add layout tree near end of first tutorial
