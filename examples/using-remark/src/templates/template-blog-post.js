@@ -60,6 +60,10 @@ class BlogPostRoute extends React.Component {
             {post.timeToRead} min read &middot; {tagsSection}
           </p>
         </header>
+
+        <h2>Contents</h2>
+        <div dangerouslySetInnerHTML={{ __html: post.tableOfContents }} className="toc" />
+
         <div dangerouslySetInnerHTML={{ __html: post.html }} className="post" />
         <hr
           css={{
@@ -122,6 +126,7 @@ export const pageQuery = graphql`
     markdownRemark(fields: { slug: { eq: $slug } }) {
       html
       timeToRead
+      tableOfContents
       fields {
         tagSlugs
       }

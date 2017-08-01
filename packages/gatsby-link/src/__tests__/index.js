@@ -19,6 +19,14 @@ const getNavigateTo = () => {
 }
 
 describe(`<Link />`, () => {
+
+  it(`does not fail to initialize when __PREFIX_PATHS__ is not defined`, () => {
+    expect(() => {
+      const Link = require(`../`).default
+      const link = new Link({}) //eslint-disable-line no-unused-vars
+    }).not.toThrow()
+  })
+
   describe(`path prefixing`, () => {
     it(`does not include path prefix by default`, () => {
       const to = `/path`

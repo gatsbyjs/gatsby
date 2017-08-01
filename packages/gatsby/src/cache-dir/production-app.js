@@ -143,7 +143,9 @@ loader.getResourcesForPathname(window.location.pathname, () => {
       typeof window !== `undefined`
         ? document.getElementById(`___gatsby`)
         : void 0,
-      () => { apiRunner(`onInitialClientRender`) }
+      () => {
+        apiRunner(`onInitialClientRender`)
+      }
     )
 
   const NewRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
