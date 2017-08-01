@@ -127,30 +127,32 @@ import React from "react"
 
 export default () =>
   <div>
-    <h1>header 1</h1>
-    <h2>header 2</h2>
-    <h3>header 3</h3>
-    <h4>header 4</h4>
-    <h5>header 5</h5>
-    <h6>header 6</h6>
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce cursus
-      malesuada faucibus. In ac consectetur odio. Sed ut nisl justo. Donec
-      varius metus sapien. Orci varius natoque penatibus et magnis dis
-      parturient montes, nascetur ridiculus mus. Ut facilisis congue dui, sed
-      consequat purus pretium id. Maecenas in accumsan ante. Praesent ornare
-      ligula nulla, in blandit leo pellentesque ornare. Mauris vitae libero
-      eros. Nullam viverra nibh et ante tristique maximus eget in nulla. Aliquam
-      eu interdum nulla. Duis consectetur risus at enim eleifend tincidunt.
-      Phasellus auctor mollis consequat. Sed facilisis felis lacus. Proin ac est
-      sit amet sem iaculis tempor vitae et urna.
-    </p>
+    <h1>Richard Hamming on Luck</h1>
+    <div>
+      <p>
+        From Richard Hamming’s classic and must-read talk, ”<a href="http://www.cs.virginia.edu/~robins/YouAndYourResearch.html">
+          You and Your Research
+        </a>“.
+      </p>
+      <blockquote>
+        <p>
+          There is indeed an element of luck, and no, there isn’t. The prepared
+          mind sooner or later finds something important and does it. So yes, it
+          is luck.{" "}
+          <em>
+            The particular thing you do is luck, but that you do something is
+            not.
+          </em>
+        </p>
+      </blockquote>
+    </div>
+    <p>Posted April 09, 2011</p>
   </div>
 ```
 
 Your site should now look like this:
 
-![basic-typograpy](basic-typograpy.png)
+![typography-not-centered](typography-not-centered.png)
 
 Let's make a quick improvement. Many sites have a single column of text centered in the middle of the page. To create this, add the following styles to the `<div>` in `src/pages/index.js`.
 
@@ -158,29 +160,31 @@ Let's make a quick improvement. Many sites have a single column of text centered
 import React from "react"
 
 export default () =>
-  <div style={{ margin: '1.5rem auto', maxWidth: 600 }}>
-    <h1>header 1</h1>
-    <h2>header 2</h2>
-    <h3>header 3</h3>
-    <h4>header 4</h4>
-    <h5>header 5</h5>
-    <h6>header 6</h6>
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce cursus
-      malesuada faucibus. In ac consectetur odio. Sed ut nisl justo. Donec
-      varius metus sapien. Orci varius natoque penatibus et magnis dis
-      parturient montes, nascetur ridiculus mus. Ut facilisis congue dui, sed
-      consequat purus pretium id. Maecenas in accumsan ante. Praesent ornare
-      ligula nulla, in blandit leo pellentesque ornare. Mauris vitae libero
-      eros. Nullam viverra nibh et ante tristique maximus eget in nulla. Aliquam
-      eu interdum nulla. Duis consectetur risus at enim eleifend tincidunt.
-      Phasellus auctor mollis consequat. Sed facilisis felis lacus. Proin ac est
-      sit amet sem iaculis tempor vitae et urna.
-    </p>
+  <div style={{ margin: '3rem auto', maxWidth: 600 }}>
+    <h1>Richard Hamming on Luck</h1>
+    <div>
+      <p>
+        From Richard Hamming’s classic and must-read talk, ”<a href="http://www.cs.virginia.edu/~robins/YouAndYourResearch.html">
+          You and Your Research
+        </a>“.
+      </p>
+      <blockquote>
+        <p>
+          There is indeed an element of luck, and no, there isn’t. The prepared
+          mind sooner or later finds something important and does it. So yes, it
+          is luck.{" "}
+          <em>
+            The particular thing you do is luck, but that you do something is
+            not.
+          </em>
+        </p>
+      </blockquote>
+    </div>
+    <p>Posted April 09, 2011</p>
   </div>
 ```
 
-![basic-typography-centered](basic-typography-centered.png)
+![basic-typography-centered](typography-centered.png)
 
 Ah, this is starting to look nice!
 
@@ -221,7 +225,7 @@ There are many themes available for Typography.js. Let's try a couple. Run in yo
 npm install --save typography-theme-bootstrap typography-theme-lawton
 ```
 
-To use the Bootstrap theme, change your typography module code to:
+To use the Bootstrap theme, change your typography code to:
 
 ```javascript{2,4}
 import Typography from "typography"
@@ -252,7 +256,7 @@ Typography.js has more than 30 themes! Check them out at http://kyleamathews.git
 
 ## Component CSS
 
-Gatsby has a wealth of options available for styling components. Let's explore three very popular and production-ready options.
+Gatsby has a wealth of options available for styling components. Let's explore three very popular and production-ready options. We'll build a simple page three times with each styling option.
 
 Each is a variant on "CSS-in-JS" — which solves many of the problems with traditional CSS.
 
@@ -263,6 +267,8 @@ With CSS-in-JS you avoid all that as CSS selectors are scoped automatically to t
 For some background reading on CSS-in-JS, see [Christopher "vjeux" Chedeau's 2014 presentation that sparked this movement](https://speakerdeck.com/vjeux/react-css-in-js) as well as [Mark Dalgleish's more recent post "A Unified Styling Language"](https://medium.com/seek-blog/a-unified-styling-language-d0c208de2660).
 
 ### CSS Modules
+
+Let's explore first **CSS Modules**.
 
 Quoting from [the CSS Module homepage](https://github.com/css-modules/css-modules):
 
