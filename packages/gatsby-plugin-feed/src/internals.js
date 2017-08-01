@@ -58,6 +58,7 @@ export const defaultOptions = {
             node {
               frontmatter {
                 title
+                excerpt
                 date
               }
               fields {
