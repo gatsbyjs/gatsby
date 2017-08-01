@@ -19,5 +19,11 @@ const typography = new Typography()
 module.exports typography`
   }
 
-  fs.writeFileSync(`${__dirname}/.cache/typography.js`, module)
+  const dir = `${__dirname}/.cache`
+
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir)
+  }
+
+  fs.writeFileSync(`${dir}/typography.js`, module)
 }
