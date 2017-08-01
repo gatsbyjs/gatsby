@@ -34,7 +34,7 @@ In the world of components, you instead create a `PrimaryButton` component with 
 
 Components become the base building blocks of your site. Instead of being limited to what the browser provides e.g. `<button>`, you can easily create new building blocks that elegantly meet the needs of your projects.
 
-## Creating global or base styles
+## Creating global styles
 
 Every site has some sort of global style. This includes things like the site's typography and background colors. These styles set the overall feel of the site — much like the color and texture of a wall sets the overall feel of a room.
 
