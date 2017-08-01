@@ -130,9 +130,9 @@ export default () =>
     <h1>Richard Hamming on Luck</h1>
     <div>
       <p>
-        From Richard Hamming’s classic and must-read talk, ”<a href="http://www.cs.virginia.edu/~robins/YouAndYourResearch.html">
+        From Richard Hamming’s classic and must-read talk, “<a href="http://www.cs.virginia.edu/~robins/YouAndYourResearch.html">
           You and Your Research
-        </a>“.
+        </a>”.
       </p>
       <blockquote>
         <p>
@@ -164,9 +164,9 @@ export default () =>
     <h1>Richard Hamming on Luck</h1>
     <div>
       <p>
-        From Richard Hamming’s classic and must-read talk, ”<a href="http://www.cs.virginia.edu/~robins/YouAndYourResearch.html">
+        From Richard Hamming’s classic and must-read talk, “<a href="http://www.cs.virginia.edu/~robins/YouAndYourResearch.html">
           You and Your Research
-        </a>“.
+        </a>”.
       </p>
       <blockquote>
         <p>
@@ -217,7 +217,7 @@ module.exports = {
 
 Stop `gatsby develop` and then restart it again for our plugin change to take effect.
 
-Now the text font sizes should be all slightly bigger. Try changing the `baseFontSize` to `24px` then `12px`. All elements get resized as their `font-size` is based on the `baseFontSize`.
+Now all the text font sizes should be slightly bigger. Try changing the `baseFontSize` to `24px` then `12px`. All elements get resized as their `font-size` is based on the `baseFontSize`.
 
 There are many themes available for Typography.js. Let's try a couple. Run in your terminal at the root of your site:
 
