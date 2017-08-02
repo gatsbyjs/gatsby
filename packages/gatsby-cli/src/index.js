@@ -15,7 +15,6 @@ try {
     inGatsbySite = true
   }
 } catch (e) {
-  console.log(e)
   // ignore
 }
 
