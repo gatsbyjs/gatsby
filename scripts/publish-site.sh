@@ -1,7 +1,7 @@
 echo "=== Building ES5 version of Gatsby"
 ./node_modules/.bin/lerna run build
 
-yarn global add gatsby-dev-cli@canary
+yarn global add gatsby-dev-cli
 gatsby-dev --set-path-to-repo .
 
 echo "=== Installing the website dependencies"
