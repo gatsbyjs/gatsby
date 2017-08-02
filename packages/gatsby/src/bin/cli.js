@@ -17,6 +17,18 @@ process.on(`unhandledRejection`, error => {
 
 const defaultHost = `localhost`
 
+let inGatsbySite = false
+let localPackageJSON
+try {
+  localPackageJSON = require(path.resolve(`./package.json`))
+  if (localPackageJSON.dependencies && localPackageJSON.dependencies.gatsby) {
+    inGatsbySite = true
+  }
+} catch (e) {
+  console.log(e)
+  // ignore
+}
+
 const directory = path.resolve(`.`)
 const getSiteInfo = () => {
   const sitePackageJson = require(path.join(directory, `package.json`))
@@ -30,82 +42,85 @@ const getSiteInfo = () => {
 
 program.version(packageJson.version).usage(`[command] [options]`)
 
-// console.time(`time to load develop`)
-program
-  .command(`develop`)
-  .description(
-    `Start development server. Watches files and rebuilds and hot reloads ` +
-      `if something changes`
-  ) // eslint-disable-line max-len
-  .option(
-    `-H, --host <url>`,
-    `Set host. Defaults to ${defaultHost}`,
-    defaultHost
-  )
-  .option(`-p, --port <port>`, `Set port. Defaults to 8000`, `8000`)
-  .option(`-o, --open`, `Open the site in your browser for you.`)
-  .action(command => {
-    const developPath = resolveCwd(`gatsby/dist/utils/develop`)
-    const develop = require(developPath)
-    // console.timeEnd(`time to load develop`)
-    const { sitePackageJson, browserslist } = getSiteInfo()
-    const p = {
-      ...command,
-      directory,
-      sitePackageJson,
-      browserslist,
-    }
-    develop(p)
-  })
-
-program
-  .command(`build`)
-  .description(`Build a Gatsby project.`)
-  .option(
-    `--prefix-paths`,
-    `Build site with link paths prefixed (set prefix in your config).`
-  )
-  .action(command => {
-    // Set NODE_ENV to 'production'
-    process.env.NODE_ENV = `production`
-
-    const buildPath = resolveCwd(`gatsby/dist/utils/build`)
-    const build = require(buildPath)
-    const { sitePackageJson, browserslist } = getSiteInfo()
-    const p = {
-      ...command,
-      directory,
-      sitePackageJson,
-      browserslist,
-    }
-    build(p).then(() => {
-      console.log(`Done building in`, process.uptime(), `seconds`)
-      process.exit()
+// If there's a package.json in the current directory w/ a gatsby dependency
+// include the develop/build/serve commands. Otherwise, just the new.
+if (inGatsbySite) {
+  program
+    .command(`develop`)
+    .description(
+      `Start development server. Watches files and rebuilds and hot reloads ` +
+        `if something changes`
+    ) // eslint-disable-line max-len
+    .option(
+      `-H, --host <url>`,
+      `Set host. Defaults to ${defaultHost}`,
+      defaultHost
+    )
+    .option(`-p, --port <port>`, `Set port. Defaults to 8000`, `8000`)
+    .option(`-o, --open`, `Open the site in your browser for you.`)
+    .action(command => {
+      const developPath = resolveCwd(`gatsby/dist/utils/develop`)
+      const develop = require(developPath)
+      // console.timeEnd(`time to load develop`)
+      const { sitePackageJson, browserslist } = getSiteInfo()
+      const p = {
+        ...command,
+        directory,
+        sitePackageJson,
+        browserslist,
+      }
+      develop(p)
     })
-  })
 
-program
-  .command(`serve`)
-  .description(`Serve built site.`)
-  .option(
-    `-H, --host <url>`,
-    `Set host. Defaults to ${defaultHost}`,
-    defaultHost
-  )
-  .option(`-p, --port <port>`, `Set port. Defaults to 9000`, `9000`)
-  .option(`-o, --open`, `Open the site in your browser for you.`)
-  .action(command => {
-    const servePath = resolveCwd(`gatsby/dist/utils/serve`)
-    const serve = require(servePath)
-    const { sitePackageJson, browserslist } = getSiteInfo()
-    const p = {
-      ...command,
-      directory,
-      sitePackageJson,
-      browserslist,
-    }
-    serve(p)
-  })
+  program
+    .command(`build`)
+    .description(`Build a Gatsby project.`)
+    .option(
+      `--prefix-paths`,
+      `Build site with link paths prefixed (set prefix in your config).`
+    )
+    .action(command => {
+      // Set NODE_ENV to 'production'
+      process.env.NODE_ENV = `production`
+
+      const buildPath = resolveCwd(`gatsby/dist/utils/build`)
+      const build = require(buildPath)
+      const { sitePackageJson, browserslist } = getSiteInfo()
+      const p = {
+        ...command,
+        directory,
+        sitePackageJson,
+        browserslist,
+      }
+      build(p).then(() => {
+        console.log(`Done building in`, process.uptime(), `seconds`)
+        process.exit()
+      })
+    })
+
+  program
+    .command(`serve`)
+    .description(`Serve built site.`)
+    .option(
+      `-H, --host <url>`,
+      `Set host. Defaults to ${defaultHost}`,
+      defaultHost
+    )
+    .option(`-p, --port <port>`, `Set port. Defaults to 9000`, `9000`)
+    .option(`-o, --open`, `Open the site in your browser for you.`)
+    .action(command => {
+      const servePath = resolveCwd(`gatsby/dist/utils/serve`)
+      const serve = require(servePath)
+      const { sitePackageJson, browserslist } = getSiteInfo()
+      const p = {
+        ...command,
+        directory,
+        sitePackageJson,
+        browserslist,
+      }
+      serve(p)
+    })
+}
 
 program
   .command(`new [rootPath] [starter]`)
