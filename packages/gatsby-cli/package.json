@@ -19,6 +19,7 @@
     "babel-cli": "^6.24.1"
   },
   "dependencies": {
+    "babel-runtime": "^6.25.0",
     "commander": "^2.11.0",
     "resolve-cwd": "^2.0.0"
   }
