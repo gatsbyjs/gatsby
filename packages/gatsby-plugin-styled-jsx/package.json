@@ -1,7 +1,8 @@
 {
   "name": "gatsby-plugin-styled-jsx",
   "version": "1.0.1",
-  "description": "Stub description for gatsby-plugin-styled-jsx",
+  "description": "Adds SSR support for styled-jsx",
+  "author": "Tim Suchanek <tim.suchanek@gmail.com>",
   "main": "index.js",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
@@ -10,9 +11,8 @@
   "keywords": [
     "gatsby"
   ],
-  "author": "Kyle Mathews &lt;mathews.kyle@gmail.com&gt;",
   "license": "MIT",
-  "devDependencies": {
-    "babel-cli": "^6.24.1"
+  "dependencies": {
+    "styled-jsx": "^1.0.10"
   }
 }
