@@ -15,7 +15,7 @@ const GatsbyModulePlugin = require(`../loaders/gatsby-module-loader/plugin`)
 const { withBasePath } = require(`./path`)
 
 const apiRunnerNode = require(`./api-runner-node`)
-const createConfig = require(`./webpack-config`)
+const createConfig = require(`./webpack-utils`)
 
 // Five stages or modes:
 //   1) develop: for `gatsby develop` command, hot reload and CSS injection into page

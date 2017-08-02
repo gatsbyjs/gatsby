@@ -5,7 +5,7 @@ import ReactDOM from "react-dom"
 import { AppContainer as HotContainer } from "react-hot-loader"
 import socketIo from "./socketIo"
 
-window.___emitter = require(`./emitter`)
+window.___emitter = require(`./emitter`).default
 
 // Let the site/plugins run code very early.
 apiRunner(`onClientEntry`)

@@ -11,14 +11,15 @@ describe(`gatsby-plugin-typescript`, () => {
   })
 
   it(`modifies webpack config`, () => {
-    const config = {
-      loader: jest.fn(),
+    const boundActionCreators = {
+      setWebpackConfig: jest.fn(),
     }
+    const loaders = { js: () => `babel-loader` }
 
-    modifyWebpackConfig({ config }, { compilerOptions: {} })
+    modifyWebpackConfig({ boundActionCreators, loaders }, { compilerOptions: {} })
 
-    expect(config.loader).toHaveBeenCalledTimes(1)
-    const lastCall = config.loader.mock.calls.pop()
+    expect(boundActionCreators.setWebpackConfig).toHaveBeenCalledTimes(1)
+    const lastCall = boundActionCreators.setWebpackConfig.mock.calls.pop()
     expect(lastCall).toMatchSnapshot()
   })
 

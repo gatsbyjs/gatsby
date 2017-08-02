@@ -18,7 +18,7 @@ module.exports.modifyWebpackConfig = (
   // gatsby removes graphql queries from source code since they are processed
   // and run ahead of time. We need to do that here as well in order to avoid
   // extra dead code.
-  const jsLoader = loaders.js({  plugins: [babelPluginRemoveQueries] })
+  const jsLoader = loaders.js({ plugins: [babelPluginRemoveQueries] })
 
   const typescriptOptions = {
     // React-land is rather undertyped; nontrivial TS projects will most likely

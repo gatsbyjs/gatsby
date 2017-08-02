@@ -6,7 +6,7 @@
 
 const apis = require(`./api-ssr-docs`)
 
-module.exports = (api, args, defaultReturn) => {
+module.exports (api, args, defaultReturn) => {
   if (!apis[api]) {
     console.log(`This API doesn't exist`, api)
   }

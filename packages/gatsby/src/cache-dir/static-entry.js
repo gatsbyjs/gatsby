@@ -13,6 +13,8 @@ try {
   Html = require(`./default-html`)
 }
 
+Html = Html && Html.__esModule ? Html.default : Html
+
 const pathChunkName = path => {
   const name = path === `/` ? `index` : kebabCase(path)
   return `path---${name}`

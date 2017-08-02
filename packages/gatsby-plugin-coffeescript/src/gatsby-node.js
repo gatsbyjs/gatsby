@@ -8,8 +8,8 @@ export function resolvableExtensions() {
   return [`.coffee`, `.cjsx`]
 }
 
-export function modifyWebpackConfig({ rules, boundActionCreators }) {
-  const coffeeLoader = [rules.js(), require.resolve(`coffee-loader`)]
+export function modifyWebpackConfig({ loaders, boundActionCreators }) {
+  const coffeeLoader = [loaders.js(), require.resolve(`coffee-loader`)]
 
   // We need to use Babel to get around the ES6 export issue.
   boundActionCreators.setWebpackConfig({

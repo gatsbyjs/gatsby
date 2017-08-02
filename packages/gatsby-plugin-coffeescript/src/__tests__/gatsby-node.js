@@ -10,16 +10,18 @@ describe(`gatsby-plugin-coffeescript`, () => {
   })
 
   it(`modifies webpack config with cofeescript extensions`, () => {
-    const spy = jest.fn()
-    const config = {
-      loader(...args) {
-        spy(...args)
-      },
+    const boundActionCreators = {
+      setWebpackConfig: jest.fn(),
     }
+    const loaders = { js: () => `babel-loader` }
 
-    modifyWebpackConfig({ config })
+    modifyWebpackConfig({ boundActionCreators, loaders })
 
-    expect(spy).toHaveBeenCalledTimes(resolvableExtensions().length)
+    expect(boundActionCreators.setWebpackConfig)
+      .toHaveBeenCalledTimes(resolvableExtensions().length)
+
+    const lastCall = boundActionCreators.setWebpackConfig.mock.calls.pop()
+    expect(lastCall).toMatchSnapshot()
   })
 
   describe(`pre processing`, () => {
@@ -38,27 +40,6 @@ describe(`gatsby-plugin-coffeescript`, () => {
           {
             filename: `test.coffee`,
             contents: `alert "I knew it!" if elvis?`,
-          },
-          {}
-        )
-      ).toMatchSnapshot()
-    })
-
-    it(`transforms .cjsx files`, () => {
-      expect(
-        preprocessSource(
-          {
-            filename: `test.cjsx`,
-            contents: `
-          React = require('react');
-
-          module.exports = class extends React.Component {
-            render: ->
-              <div>
-                <h1>Hello World</h1>
-              </div>
-          }
-        `,
           },
           {}
         )

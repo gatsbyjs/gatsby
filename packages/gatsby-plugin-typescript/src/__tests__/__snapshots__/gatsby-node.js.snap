@@ -2,13 +2,29 @@
 
 exports[`gatsby-plugin-typescript modifies webpack config 1`] = `
 Array [
-  "typescript",
   Object {
-    "loaders": Array [
-      "babel?{\\"plugins\\":[\\"\\"]}",
-      "ts-loader?{\\"compilerOptions\\":{\\"target\\":\\"esnext\\",\\"experimentalDecorators\\":true,\\"jsx\\":\\"react\\",\\"module\\":\\"commonjs\\"},\\"transpileOnly\\":true}",
-    ],
-    "test": /\\\\\\.tsx\\?\\$/,
+    "module": Object {
+      "rules": Array [
+        Object {
+          "test": /\\\\\\.tsx\\?\\$/,
+          "use": Array [
+            "babel-loader",
+            Object {
+              "loader": "/Users/jason/src/gatsby/node_modules/ts-loader/index.js",
+              "options": Object {
+                "compilerOptions": Object {
+                  "experimentalDecorators": true,
+                  "jsx": "react",
+                  "module": "es6",
+                  "target": "esnext",
+                },
+                "transpileOnly": true,
+              },
+            },
+          ],
+        },
+      ],
+    },
   },
 ]
 `;

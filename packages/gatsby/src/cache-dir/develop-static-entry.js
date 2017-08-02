@@ -2,15 +2,15 @@ import React from "react"
 import { renderToStaticMarkup } from "react-dom/server"
 import { merge } from "lodash"
 import apiRunner from "./api-runner-ssr"
-import pages from "./pages.json"
-import ReactDOMServer from "react-dom/server"
 
-let HTML
+let Html
 try {
-  HTML = require(`../src/html`)
+  Html = require(`../src/html`)
 } catch (e) {
-  HTML = require(`./default-html`)
+  Html = require(`./default-html`)
 }
+
+Html = Html && Html.__esModule ? Html.default : Html
 
 module.exports = (locals, callback) => {
   // const apiRunner = require(`${directory}/.cache/api-runner-ssr`)
@@ -43,7 +43,7 @@ module.exports = (locals, callback) => {
     setBodyProps,
   })
 
-  const htmlElement = React.createElement(HTML, {
+  const htmlElement = React.createElement(Html, {
     ...bodyProps,
     body: ``,
     headComponents: headComponents.concat([
