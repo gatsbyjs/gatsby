@@ -1,0 +1,3 @@
+# gatsby-cli
+
+Stub README
