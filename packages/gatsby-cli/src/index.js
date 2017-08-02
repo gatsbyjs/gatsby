@@ -114,7 +114,7 @@ program
   .command(`new [rootPath] [starter]`)
   .description(`Create new Gatsby project.`)
   .action((rootPath, starter) => {
-    const newCommand = require(`../utils/new`)
+    const newCommand = require(`./new`)
     newCommand(rootPath, starter)
   })
 

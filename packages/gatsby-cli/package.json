@@ -21,7 +21,10 @@
   "dependencies": {
     "babel-runtime": "^6.25.0",
     "commander": "^2.11.0",
+    "fs-extra": "^4.0.1",
+    "hosted-git-info": "^2.5.0",
     "lodash": "^4.17.4",
-    "resolve-cwd": "^2.0.0"
+    "resolve-cwd": "^2.0.0",
+    "tracer": "^0.8.9"
   }
 }
