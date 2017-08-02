@@ -95,6 +95,7 @@
     "redux": "^3.6.0",
     "relay-compiler": "^1.1.0",
     "remote-redux-devtools": "^0.5.7",
+    "resolve-cwd": "^2.0.0",
     "sift": "^3.2.6",
     "slash": "^1.0.0",
     "socket.io": "^2.0.3",

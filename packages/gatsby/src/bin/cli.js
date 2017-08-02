@@ -3,6 +3,7 @@ const packageJson = require(`../../package.json`)
 const path = require(`path`)
 const _ = require(`lodash`)
 const Promise = require(`bluebird`)
+const resolveCwd = require("resolve-cwd")
 
 // Improve Promise error handling. Maybe... what's the best
 // practice for this these days?
@@ -44,7 +45,8 @@ program
   .option(`-p, --port <port>`, `Set port. Defaults to 8000`, `8000`)
   .option(`-o, --open`, `Open the site in your browser for you.`)
   .action(command => {
-    const develop = require(`../utils/develop`)
+    const developPath = resolveCwd(`gatsby/dist/utils/develop`)
+    const develop = require(developPath)
     // console.timeEnd(`time to load develop`)
     const { sitePackageJson, browserslist } = getSiteInfo()
     const p = {
@@ -67,7 +69,8 @@ program
     // Set NODE_ENV to 'production'
     process.env.NODE_ENV = `production`
 
-    const build = require(`../utils/build`)
+    const buildPath = resolveCwd(`gatsby/dist/utils/build`)
+    const build = require(buildPath)
     const { sitePackageJson, browserslist } = getSiteInfo()
     const p = {
       ...command,
@@ -92,7 +95,8 @@ program
   .option(`-p, --port <port>`, `Set port. Defaults to 9000`, `9000`)
   .option(`-o, --open`, `Open the site in your browser for you.`)
   .action(command => {
-    const serve = require(`../utils/serve`)
+    const servePath = resolveCwd(`gatsby/dist/utils/serve`)
+    const serve = require(servePath)
     const { sitePackageJson, browserslist } = getSiteInfo()
     const p = {
       ...command,
