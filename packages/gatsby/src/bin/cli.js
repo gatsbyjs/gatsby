@@ -103,6 +103,14 @@ program
     serve(p)
   })
 
+program
+  .command(`new [rootPath] [starter]`)
+  .description(`Create new Gatsby project.`)
+  .action((rootPath, starter) => {
+    const newCommand = require(`../utils/new`)
+    newCommand(rootPath, starter)
+  })
+
 program.on(`--help`, () => {
   console.log(
     `To show subcommand help:
