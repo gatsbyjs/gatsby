@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "react-typography": "^0.15.10",
-    "typography": "^0.15.10"
+    "typography": "^0.16.0"
   },
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
