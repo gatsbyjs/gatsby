@@ -1,18 +1,12 @@
 import colors from "./colors"
 
 module.exports = {
-  handsetSmall: `(min-width: 360px)`,
-  HandsetSmall: `@media (min-width: 360px)`,
   mobile: `(min-width: 400px)`,
   Mobile: `@media (min-width: 400px)`,
-  handsetLarge: `(min-width: 480px)`,
-  HandsetLarge: `@media (min-width: 480px)`,
   phablet: `(min-width: 550px)`,
   Phablet: `@media (min-width: 550px)`,
   tablet: `(min-width: 750px)`,
   Tablet: `@media (min-width: 750px)`,
-  tabletLarge: `(min-width: 840px)`,
-  TabletLarge: `@media (min-width: 840px)`,
   desktop: `(min-width: 1000px)`,
   Desktop: `@media (min-width: 1000px)`,
   hd: `(min-width: 1200px)`,
