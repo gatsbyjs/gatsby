@@ -77,6 +77,9 @@ const UsedBy = () =>
         flexShrink: `1`,
         alignSelf: `flex-end`,
         textAlign: `center`,
+        "@media (max-height: 650px)": {
+          textAlign: `right`,
+        },
         [presets.Tablet]: {
           flexGrow: `0`,
         },
@@ -89,6 +92,9 @@ const UsedBy = () =>
           fontFamily: `Futura-pt`,
           marginBottom: 0,
           fontSize: scale(-2 / 5).fontSize,
+          "@media (max-height: 650px)": {
+            textAlign: `right`,
+          },
           [presets.Tablet]: {
             fontSize: scale(-1 / 5).fontSize,
             textAlign: `right`,
