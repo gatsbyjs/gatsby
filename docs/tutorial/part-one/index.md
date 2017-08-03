@@ -32,7 +32,7 @@ Gatsby uses "starters" for starting new projects. As the name suggests, starters
 To install a starter, first install Gatsby's terminal program.
 
 ```sh
-npm install --global gatsby
+npm install --global gatsby-cli
 ```
 
 
@@ -322,5 +322,5 @@ Open the web address listed on the bottom line (`lowly-pain.surge.sh` in this ca
 
 In this tutorial, you've installed Gatsby, played in the development
 environment, and deployed your first site! Awesome! We hope you're enjoying
-yourself so far. Feel free to continue now on to the second part of the tutorial
+yourself so far. Feel free to continue now on to [the second part of the tutorial](/tutorial/part-two/)
 or go exploring around the rest of the site.

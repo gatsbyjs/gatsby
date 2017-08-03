@@ -1,21 +1,11 @@
+#!/usr/bin/env node
 const program = require(`commander`)
-const packageJson = require(`../../package.json`)
+const packageJson = require(`./package.json`)
 const path = require(`path`)
 const _ = require(`lodash`)
-const Promise = require(`bluebird`)
 const resolveCwd = require("resolve-cwd")
 
-// Improve Promise error handling. Maybe... what's the best
-// practice for this these days?
-global.Promise = require(`bluebird`)
-Promise.onPossiblyUnhandledRejection(error => {
-  throw error
-})
-process.on(`unhandledRejection`, error => {
-  console.error(`UNHANDLED REJECTION`, error.stack)
-})
-
-const defaultHost = `localhost`
+program.version(packageJson.version).usage(`[command] [options]`)
 
 let inGatsbySite = false
 let localPackageJSON
@@ -28,6 +18,8 @@ try {
   // ignore
 }
 
+const defaultHost = `localhost`
+
 const directory = path.resolve(`.`)
 const getSiteInfo = () => {
   const sitePackageJson = require(path.join(directory, `package.json`))
@@ -38,8 +30,6 @@ const getSiteInfo = () => {
   ]
   return { sitePackageJson, browserslist }
 }
-
-program.version(packageJson.version).usage(`[command] [options]`)
 
 // If there's a package.json in the current directory w/ a gatsby dependency
 // include the develop/build/serve commands. Otherwise, just the new.
@@ -60,7 +50,6 @@ if (inGatsbySite) {
     .action(command => {
       const developPath = resolveCwd(`gatsby/dist/utils/develop`)
       const develop = require(developPath)
-      // console.timeEnd(`time to load develop`)
       const { sitePackageJson, browserslist } = getSiteInfo()
       const p = {
         ...command,
@@ -125,7 +114,7 @@ program
   .command(`new [rootPath] [starter]`)
   .description(`Create new Gatsby project.`)
   .action((rootPath, starter) => {
-    const newCommand = require(`../utils/new`)
+    const newCommand = require(`./new`)
     newCommand(rootPath, starter)
   })
 

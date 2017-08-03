@@ -1,9 +1,10 @@
+/*global __PREFIX_PATHS__, __PATH_PREFIX__ */
 import React from "react"
 import { Link, NavLink } from "react-router-dom"
 import PropTypes from "prop-types"
 
 let pathPrefix = ``
-if (__PREFIX_PATHS__) {
+if (typeof __PREFIX_PATHS__ !== `undefined` && __PREFIX_PATHS__) {
   pathPrefix = __PATH_PREFIX__
 }
 

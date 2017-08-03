@@ -42,6 +42,11 @@ const options = {
       h5: {
         ...scale(0),
       },
+      blockquote: {
+        paddingLeft: rhythm(3 / 8),
+        marginLeft: rhythm(3 / 8),
+        borderLeft: `${rhythm(2 / 8)} solid ${presets.brandDark}`,
+      },
       "tt,code": {
         // background: `hsla(23, 60%, 97%, 1)`,
         background: colors.a[0],

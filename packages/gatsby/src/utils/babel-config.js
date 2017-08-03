@@ -171,11 +171,6 @@ module.exports = async function babelConfig(program, stage) {
     babelrc.plugins.unshift(`react-hot-loader/babel`)
   }
 
-  // Always add this plugin so our generated routes
-  // will work regardless of how users export
-  // their components. Yeah for multiple module standards!
-  babelrc.plugins.unshift(`add-module-exports`)
-
   babelrc.plugins.unshift(require.resolve(`./babel-plugin-extract-graphql`))
 
   if (!babelrc.hasOwnProperty(`cacheDirectory`)) {
@@ -183,7 +178,9 @@ module.exports = async function babelConfig(program, stage) {
   }
 
   const normalizedConfig = normalizeConfig(babelrc, directory)
-  let modifiedConfig = await apiRunnerNode(`modifyBabelrc`, { babelrc })
+  let modifiedConfig = await apiRunnerNode(`modifyBabelrc`, {
+    babelrc: normalizedConfig,
+  })
   if (modifiedConfig.length > 0) {
     modifiedConfig = _.merge({}, ...modifiedConfig)
     // Otherwise this means no plugin changed the babel config.
