@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "React.js Static Site Generator",
-  "version": "1.5.0",
+  "version": "1.6.5",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./dist/gatsby-cli.js"
@@ -95,6 +95,7 @@
     "redux": "^3.6.0",
     "relay-compiler": "^1.1.0",
     "remote-redux-devtools": "^0.5.7",
+    "resolve-cwd": "^2.0.0",
     "sift": "^3.2.6",
     "slash": "^1.0.0",
     "socket.io": "^2.0.3",

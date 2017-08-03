@@ -22,8 +22,10 @@ export default () =>
         {` `}— Starting new projects, developing, and deploying sites.
       </li>
       <li>
-        Introduction to styling options, plugins, Styled Components/Glamor,
-        layout component
+        <Link to="/tutorial/part-two/">
+          Introduction to using CSS in Gatsby
+        </Link>. Explore libraries like Typography.js, CSS Modules, Glamor, and
+        Styled Components.
       </li>
       <li>
         How to work with GraphQL & different data sources: Markdown, JSON,
