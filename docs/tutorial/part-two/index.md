@@ -374,7 +374,7 @@ Modify `about-css-modules.js` so it looks like the following:
 
 ```jsx{6-17,23-30}
 import React from "react"
-import styles from "../css/about-css-modules.module.css"
+import styles from "./about-css-modules.module.css"
 
 import Container from "../components/container"
 
