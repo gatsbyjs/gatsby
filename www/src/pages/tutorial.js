@@ -28,6 +28,12 @@ export default () =>
         Styled Components.
       </li>
       <li>
+        <Link to="/tutorial/part-three/">
+          Explore building nested layouts in Gatsby.
+        </Link>. Layouts are sections of your site that are reused across
+        multiple pages like headers and footers.
+      </li>
+      <li>
         How to work with GraphQL & different data sources: Markdown, JSON,
         Remote data sources, etc. As well as an introduction to Gatsby’s data
         layer and writing queries with GraphQL.
