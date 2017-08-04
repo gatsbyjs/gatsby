@@ -1,4 +1,4 @@
-import { rhythm, scale, options } from "../utils/typography"
+import typography, { rhythm, scale, options } from "../utils/typography"
 import presets from "../utils/presets"
 import { vP, vPHd, vPVHd, vPVVHd } from "../components/gutters"
 import { FormidableIcon, FabricIcon, SegmentIcon } from "../assets/logos"
@@ -90,6 +90,7 @@ const UsedBy = () =>
           color: `#fff`,
           letterSpacing: `0.02em`,
           marginBottom: 0,
+          fontFamily: typography.options.headerFontFamily.join(`,`),
           fontSize: scale(-2 / 5).fontSize,
           "@media (max-height: 650px)": {
             textAlign: `right`,
