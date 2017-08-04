@@ -89,7 +89,6 @@ const UsedBy = () =>
         css={{
           color: `#fff`,
           letterSpacing: `0.02em`,
-          fontFamily: `Futura-pt`,
           marginBottom: 0,
           fontSize: scale(-2 / 5).fontSize,
           "@media (max-height: 650px)": {

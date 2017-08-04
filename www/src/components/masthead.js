@@ -53,8 +53,6 @@ const MastheadContent = () =>
           lineHeight: 1,
           margin: 0,
           marginBottom: `1.2em`,
-          fontFamily: `futura-pt`,
-          fontWeight: `700`,
           padding: 0,
           letterSpacing: `-0.0075em`,
           transition: `font-size .05s ease-in`,
