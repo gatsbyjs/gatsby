@@ -24,7 +24,19 @@ const IndexRoute = React.createClass({
     console.log(this.props)
     const blogPosts = this.props.data.allMarkdownRemark
     return (
-      <div>
+      <div css={{ position: `relative` }}>
+        <div
+          css={{
+            background: presets.brand,
+            position: `absolute`,
+            bottom: `0`,
+            top: `0`,
+            left: `0`,
+            right: `0`,
+            height: `100%`,
+            zIndex: -1,
+          }}
+        />
         <MastheadBg />
         <div
           css={{

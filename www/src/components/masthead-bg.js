@@ -19,9 +19,12 @@ const MastheadBg = () =>
     className="Masthead-bg"
     css={{
       ...cover,
-      position: `fixed`,
+      position: `absolute`,
+      background: `#fff`,
+      bottom: `auto`,
+      height: `200vh`,
+      overflow: `hidden`,
       zIndex: -1,
-      background: `white`,
     }}
   >
     <div
@@ -107,7 +110,7 @@ const MastheadBg = () =>
     >
       <svg
         x="-15%"
-        y="-5%"
+        y="-10%"
         style={{
           overflow: `visible`,
         }}
