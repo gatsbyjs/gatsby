@@ -92,9 +92,9 @@ export default () =>
 
 
 
-So now we have the start of a nice personal site!
-
 ![no-layout](no-layout.png)
+
+We now we have the start of a nice personal site!
 
 But a few problems. First, it'd be nice if the page content was centered on the screen like in part two of the tutorial. And second, we should really have some sort of global navigation so it's easy for visitors to find and visit each of the sub-pages.
 
@@ -169,4 +169,4 @@ export default ({ children }) =>
 
 ![with-navigation](with-navigation.png)
 
-And there we have it! A simple three page site with a simple global navigation.
+And there we have it! A three page site with a simple global navigation. With your layout component, you can easily add headers, footers, global navigation, sidebars, etc.
