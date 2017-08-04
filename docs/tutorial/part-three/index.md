@@ -92,9 +92,9 @@ export default () =>
 
 
 
-So now we have a nice personal site!
+So now we have the start of a nice personal site!
 
-[SCREENSHOT]
+![no-layout](no-layout.png)
 
 But a few problems. First, it'd be nice if the page content was centered on the screen like in part two of the tutorial. And second, we should really have some sort of global navigation so it's easy for visitors to find and visit each of the sub-pages.
 
@@ -107,17 +107,66 @@ First create a new directory at `src/layouts`. All layout components have to be 
 Let's create a very simple layout component at `src/layouts/index.js`
 
 ```jsx
-import React from 'react'
+import React from "react"
 
-export default ({ children }) => <div>{children()}</div>
+export default ({ children }) =>
+  <div style={{ margin: `0 auto`, maxWidth: 650, padding: `0 1rem` }}>
+    <h3>MySweetSite</h3>
+    {children()}
+  </div>
 ```
 
-Now add some text above children
+Stop `gatsby develop` and start it again for the new layout to take effect.
 
-it's on every page
+![with-layout2](with-layout2.png)
 
-Add title w/ logo from react-icons
+Sweet, the layout is working as now our text is centered and constrained to a column 650 pixels wide as we specified.
 
-add navigation to other pages w/ some color in header bar
+Let's now add our site title.
 
-and that's it?
+```jsx{5}
+import React from "react"
+
+export default ({ children }) =>
+  <div style={{ margin: `0 auto`, maxWidth: 650, padding: `0 1rem` }}>
+    <h3>MySweetSite</h3>
+    {children()}
+  </div>
+```
+
+If we go to any of our three pages we'll see the same title added e.g. the `/about/` page:
+
+![with-title](with-title.png)
+
+Let's add navigation links to each of our three pages.
+
+```jsx{2-9,12-22}
+import React from "react"
+import Link from "gatsby-link"
+
+const ListLink = props =>
+  <li style={{ display: `inline-block`, marginRight: `1rem` }}>
+    <Link to={props.to}>
+      {props.children}
+    </Link>
+  </li>
+
+export default ({ children }) =>
+  <div style={{ margin: `0 auto`, maxWidth: 650, padding: `1.25rem 1rem` }}>
+    <header style={{ marginBottom: `1.5rem` }}>
+      <Link to="/" style={{ textShadow: `none`, backgroundImage: `none` }}>
+        <h3 style={{ display: `inline` }}>MySweetSite</h3>
+      </Link>
+      <ul style={{ listStyle: `none`, float: `right` }}>
+        <ListLink to="/">Home</ListLink>
+        <ListLink to="/about/">About</ListLink>
+        <ListLink to="/contact/">Contact</ListLink>
+      </ul>
+    </header>
+    {children()}
+  </div>
+```
+
+![with-navigation](with-navigation.png)
+
+And there we have it! A simple three page site with a simple global navigation.
