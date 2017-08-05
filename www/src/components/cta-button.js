@@ -18,11 +18,14 @@ const CtaButton = ({ to, overrideCSS, children }) =>
       fontFamily: options.headerFontFamily.join(`,`),
       padding: `${rhythm(1 / 3)} ${rhythm(1 / 2)}`,
       borderRadius: presets.radius,
-      // Increase specificity
-      [presets.Phablet]: {
+      [presets.Tablet]: {
         ...scale(2 / 5),
+        padding: `${rhythm(1 / 3)} ${rhythm(3 / 5)}`,
+      },
+      [presets.VHd]: {
         padding: `${rhythm(1 / 2)} ${rhythm(1)}`,
       },
+      // Increase specificity
       "&&": {
         border: `1px solid ${presets.brand}`,
         boxShadow: `none`,
@@ -34,7 +37,7 @@ const CtaButton = ({ to, overrideCSS, children }) =>
           backgroundSize: `30px 30px`,
           backgroundColor: presets.brand,
           backgroundImage: `linear-gradient(45deg, rgba(0,0,0, 0.1) 25%, transparent 25%, transparent 50%, rgba(0,0,0, 0.1) 50%, rgba(0,0,0, 0.1) 75%, transparent 75%, transparent)`,
-          color: `white`,
+          color: `#fff`,
           animation: `${stripeAnimation} 2.8s linear infinite`,
         },
         ":after": {
