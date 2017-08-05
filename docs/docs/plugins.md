@@ -114,3 +114,7 @@ you can place the files in a `src` subfolder and build them to the plugin folder
 ## Official components
 
 * [gatsby-link](/packages/gatsby-link/)
+
+## Community Plugins
+
+* [gatsby-plugin-antd](https://github.com/bskimball/gatsby-plugin-antd)
