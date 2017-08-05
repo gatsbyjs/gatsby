@@ -124,7 +124,7 @@ module.exports = React.createClass({
       </Link>
     const socialIconsStyles = {
       color: presets.brandLight,
-      [presets.Tablet]: {
+      [presets.Phablet]: {
         color: isHomepage ? presets.brandLighter : false,
       },
       [presets.Desktop]: {
@@ -164,10 +164,10 @@ module.exports = React.createClass({
             position: isHomepage ? `absolute` : false,
             height: headerHeight,
             zIndex: `1`,
+            left: 0,
+            right: 0,
             [presets.Tablet]: {
               position: isHomepage ? `absolute` : `fixed`,
-              left: 0,
-              right: 0,
             },
           }}
         >
@@ -236,39 +236,41 @@ module.exports = React.createClass({
             <div
               css={{
                 marginLeft: isHomepage ? rhythm(1 / 2) : `auto`,
-                [presets.Tablet]: {
-                  marginLeft: `auto`,
+                [presets.Phablet]: {
+                  marginLeft: isHomepage ? `auto` : `auto`,
                 },
               }}
             >
               <a
                 href="https://github.com/gatsbyjs/gatsby"
+                title="Github"
                 css={{
                   ...navItemStyles,
                   ...socialIconsStyles,
                 }}
               >
-                <GithubIcon css={{ verticalAlign: `text-top` }} />
-                {` `}
+                <GithubIcon style={{ verticalAlign: `text-top` }} />
               </a>
               <a
                 href="https://discord.gg/0ZcbPKXt5bZjGY5n"
+                title="Discord"
                 css={{
                   ...navItemStyles,
                   ...socialIconsStyles,
                 }}
               >
-                <DiscordIcon />
+                <DiscordIcon overrideCSS={{ verticalAlign: `text-top` }} />
               </a>
               <a
                 href="https://twitter.com/gatsbyjs"
+                title="@gatsbyjs"
                 css={{
                   ...navItemStyles,
                   ...socialIconsStyles,
                   paddingRight: 0,
                 }}
               >
-                <TwitterIcon css={{ verticalAlign: `text-top` }} />
+                <TwitterIcon style={{ verticalAlign: `text-top` }} />
               </a>
             </div>
           </div>

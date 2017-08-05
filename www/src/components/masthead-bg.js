@@ -16,7 +16,7 @@ const cover = {
 
 const MastheadBg = () =>
   <div
-    className="Masthead-bg"
+    className="masthead-bg"
     css={{
       ...cover,
       position: `absolute`,
@@ -50,7 +50,7 @@ const MastheadBg = () =>
     <svg
       viewBox="0 0 10 10"
       preserveAspectRatio="xMinYMin slice"
-      className="Masthead-bg-left"
+      className="masthead-bg-left"
       css={{
         position: `absolute`,
         ...cover,
@@ -73,24 +73,33 @@ const MastheadBg = () =>
     </svg>
     <style>
       {`
-          @media (max-width: 650px) {
-            .Masthead-bg-left {
-              width: calc(200% + 4vh);
+          .masthead-bg-left-dark {
+            transition: fill 100ms linear;
+          }
+          @media (max-width: 650px),
+          (max-width: 768px) and (orientation:portrait) {
+            .masthead-bg-left {
+              width: calc(180% + 4vh);
+            }
+          }
+          ${presets.Phablet} {
+            .masthead-bg-left {
+              width: calc(130% + 2vh);
             }
           }
           ${presets.Tablet} {
-            .Masthead-bg-left {
+            .masthead-bg-left {
               width: calc(125% + 4vh);
             }
           }
           ${presets.Desktop}  {
-            .Masthead-bg-left {
+            .masthead-bg-left {
               width: 110%;
             }
           }
           ${presets.Hd}  {
-            .Masthead-bg-left {
-              width: 100%;
+            .masthead-bg-left {
+              width: calc(100%);
             }
           }
         `}
@@ -98,11 +107,11 @@ const MastheadBg = () =>
     <svg
       viewBox="0 0 10 10"
       preserveAspectRatio="xMidYMin meet"
-      className="Masthead-bg-left"
+      className="masthead-bg-left"
       css={{
         ...cover,
         position: `absolute`,
-        width: `calc(200% - 50vw - 2vh)`,
+        width: `calc(180% - + 4vh)`,
         height: `100%`,
         zIndex: -1,
         transition: `width 100ms linear`,
@@ -116,8 +125,9 @@ const MastheadBg = () =>
         }}
       >
         <rect
-          width="1000%"
-          height="1000%"
+          className="masthead-bg-left-dark"
+          width="10000%"
+          height="10000%"
           fill={presets.brand}
           transform="rotate(45 100 50) translate(0 0)"
         />

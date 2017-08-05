@@ -37,7 +37,7 @@ const CtaButton = ({ to, overrideCSS, children }) =>
           backgroundSize: `30px 30px`,
           backgroundColor: presets.brand,
           backgroundImage: `linear-gradient(45deg, rgba(0,0,0, 0.1) 25%, transparent 25%, transparent 50%, rgba(0,0,0, 0.1) 50%, rgba(0,0,0, 0.1) 75%, transparent 75%, transparent)`,
-          color: `white`,
+          color: `#fff`,
           animation: `${stripeAnimation} 2.8s linear infinite`,
         },
         ":after": {

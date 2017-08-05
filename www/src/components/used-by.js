@@ -19,8 +19,13 @@ const Icon = ({ icon }) =>
       css={{
         margin: 0,
         verticalAlign: `text-bottom`,
-        height: `1em`,
-        [presets.Phablet]: {
+        height: `20px`,
+        transition: `height ${presets.animation.speedDefault} ${presets
+          .animation.curveDefault}`,
+        [presets.Mobile]: {
+          height: `14px`,
+        },
+        [presets.Tablet]: {
           height: `20px`,
         },
         [presets.Desktop]: {
@@ -46,7 +51,7 @@ const UsedBy = () =>
         .animation.curveDefault}`,
       order: `3`,
       flexGrow: `1`,
-      [presets.Tablet]: {
+      [presets.Phablet]: {
         paddingTop: rhythm(4),
         marginBottom: 0,
         paddingLeft: 0,
@@ -80,7 +85,7 @@ const UsedBy = () =>
         "@media (max-height: 650px)": {
           textAlign: `right`,
         },
-        [presets.Tablet]: {
+        [presets.Phablet]: {
           flexGrow: `0`,
         },
       }}
@@ -95,7 +100,7 @@ const UsedBy = () =>
           "@media (max-height: 650px)": {
             textAlign: `right`,
           },
-          [presets.Tablet]: {
+          [presets.Phablet]: {
             fontSize: scale(-1 / 5).fontSize,
             textAlign: `right`,
           },

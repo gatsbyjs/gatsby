@@ -10,7 +10,7 @@ import { vP, vPHd, vPVHd, vPVVHd } from "../components/gutters"
 
 const MastheadContent = () =>
   <div
-    className="Masthead-content"
+    className="masthead-content"
     css={{
       display: `flex`,
       padding: vP,
@@ -22,26 +22,29 @@ const MastheadContent = () =>
         .animation.curveDefault}`,
       flexGrow: `0`,
       flexShrink: `1`,
-      //background: `rgba(255,255,0,0.2)`,
       [presets.Mobile]: {
         paddingBottom: rhythm(2),
       },
-      [presets.Phablet]: {},
+      [presets.Phablet]: {
+        paddingRight: 0,
+      },
       [presets.Desktop]: {
         paddingTop: rhythm(5),
       },
       [presets.Hd]: {
+        paddingTop: rhythm(5),
         paddingLeft: vPHd,
-        paddingRight: vPHd,
+        //paddingRight: vPHd,
         paddingBottom: rhythm(3),
       },
       [presets.VHd]: {
+        paddingTop: rhythm(6),
         paddingLeft: vPVHd,
-        paddingRight: vPVHd,
+        //paddingRight: vPVHd,
       },
       [presets.VVHd]: {
         paddingLeft: vPVVHd,
-        paddingRight: vPVVHd,
+        //paddingRight: vPVVHd,
       },
     }}
   >
@@ -55,10 +58,13 @@ const MastheadContent = () =>
           marginBottom: `1.2em`,
           padding: 0,
           letterSpacing: `-0.0075em`,
-          transition: `font-size .05s ease-in`,
+          width: rhythm(10),
           //fontSize: `calc(12px + 2vh + 2vw)`,
           [presets.Mobile]: {
-            fontSize: scale(0.9).fontSize,
+            width: rhythm(10),
+          },
+          "@media (min-width: 650px)": {
+            fontSize: scale(1).fontSize,
             width: rhythm(13),
           },
           [presets.Tablet]: {
