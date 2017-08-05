@@ -7,7 +7,7 @@ export default () =>
     <h1 css={{ marginTop: 0 }}>Gatsby.js Tutorial</h1>
     <p>
       Hi! We’re so happy you decided to try using Gatsby. This tutorial has (or
-      rather will have once all parts are written) four parts that'll walk you
+      rather will have once all parts are written) five parts that'll walk you
       from getting started developing and building Gatsby sites to deploying a
       finished and polished high performance static PWA.
     </p>
