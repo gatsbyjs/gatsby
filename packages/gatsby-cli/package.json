@@ -1,6 +1,6 @@
 {
   "name": "gatsby-cli",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Gatsby command-line interface for creating new sites and running Gatsby commands",
   "main": "index.js",
   "bin": {
