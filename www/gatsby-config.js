@@ -23,6 +23,10 @@ module.exports = {
       },
     },
     {
+      resolve: `gatsby-plugin-typography`,
+      pathToConfigModule: `src/utils/typography`,
+    },
+    {
       resolve: `gatsby-plugin-canonical-urls`,
       options: {
         siteUrl: `https://www.gatsbyjs.org`,
