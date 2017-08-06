@@ -1,5 +1,5 @@
 const remark = require(`remark`)
-const plugin = require(`../index`)
+const plugin = require(`../index`).parse
 
 describe(`remark prism plugin`, () => {
   it(`generates a <pre> tag with class="language-*" prefix by default`, () => {

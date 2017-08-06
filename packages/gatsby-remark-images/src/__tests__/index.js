@@ -15,7 +15,7 @@ jest.mock(`gatsby-plugin-sharp`, () => {
 
 const Remark = require(`remark`)
 
-const plugin = require(`../`)
+const plugin = require(`../`).parse
 
 const remark = new Remark().data(`settings`, {
   commonmark: true,
