@@ -170,35 +170,33 @@ async function axiosHelper(url) {
 
 /**
  * Handles HTTP Exceptions (axios)
- * 
- * @param {any} e 
+ *
+ * @param {any} e
  */
-function httpExceptionHandler(e) {
+function httpExceptionHandler (e) {
+  const { status, statusText, data: { message } } = e.response
   console.log(
     colorized.out(
-      `The server response was "${e.response.status} ${e.response.statusText}"`,
+      `The server response was "${status} ${statusText}"`,
       colorized.color.Font.FgRed
     )
   )
-  if (e.response.data.message != undefined)
+  if (message != undefined) {
     console.log(
       colorized.out(
-        `Inner exception message : "${e.response.data.message}"`,
+        `Inner exception message : "${message}"`,
         colorized.color.Font.FgRed
       )
     )
-  if (
-    e.response.status == 400 ||
-    e.response.status == 401 ||
-    e.response.status == 402 ||
-    e.response.status == 403
-  )
+  }
+  if ([400, 401, 402, 403].indexOf(status !== 'undefined')) {
     console.log(
       colorized.out(
         `Auth on endpoint is not implemented on this gatsby-source plugin.`,
         colorized.color.Font.FgRed
       )
     )
+  }
 }
 
 /**
