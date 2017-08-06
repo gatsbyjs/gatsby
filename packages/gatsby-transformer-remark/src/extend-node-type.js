@@ -39,14 +39,19 @@ module.exports = (
   }
 
   pluginsCacheStr = pluginOptions.plugins.map(p => p.name).join(``)
+  const parserPlugins = pluginOptions.parserPlugins || []
 
   return new Promise((resolve, reject) => {
     // Setup Remark.
-    const remark = new Remark().data(`settings`, {
+    let remark = new Remark().data(`settings`, {
       commonmark: true,
       footnotes: true,
       pedantic: true,
     })
+
+    for (let parserPlugin of parserPlugins) {
+      remark = remark.use(require(parserPlugin));
+    }
 
     async function getAST(markdownNode) {
       const cachedAST = await cache.get(astCacheKey(markdownNode))

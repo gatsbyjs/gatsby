@@ -1,0 +1,22 @@
+{
+  "name": "gatsby-remark-katex",
+  "description": "Transform math nodes to html markup",
+  "version": "1.0.0",
+  "author": "Jeffrey Xiao <jeffrey.xiao1998@gmail.com>",
+  "dependencies": {
+    "katex": "^0.7.1",
+    "unist-util-visit": "^1.1.1"
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "remark",
+    "katex"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src --out-dir . --ignore __tests__",
+    "watch": "babel -w src --out-dir . --ignore __tests__"
+  }
+}
