@@ -3,7 +3,7 @@ const packageJson = require(`../../package.json`)
 const path = require(`path`)
 const _ = require(`lodash`)
 const Promise = require(`bluebird`)
-const resolveCwd = require("resolve-cwd")
+const resolveCwd = require(`resolve-cwd`)
 
 // Improve Promise error handling. Maybe... what's the best
 // practice for this these days?

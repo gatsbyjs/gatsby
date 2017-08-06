@@ -3,7 +3,7 @@ const program = require(`commander`)
 const packageJson = require(`./package.json`)
 const path = require(`path`)
 const _ = require(`lodash`)
-const resolveCwd = require("resolve-cwd")
+const resolveCwd = require(`resolve-cwd`)
 
 program.version(packageJson.version).usage(`[command] [options]`)
 
@@ -12,6 +12,11 @@ let localPackageJSON
 try {
   localPackageJSON = require(path.resolve(`./package.json`))
   if (localPackageJSON.dependencies && localPackageJSON.dependencies.gatsby) {
+    inGatsbySite = true
+  } else if (
+    localPackageJSON.devDependencies &&
+    localPackageJSON.devDependencies.gatsby
+  ) {
     inGatsbySite = true
   }
 } catch (e) {

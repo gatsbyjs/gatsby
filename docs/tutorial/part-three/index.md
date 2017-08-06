@@ -168,4 +168,6 @@ export default ({ children }) =>
 
 ![with-navigation](with-navigation.png)
 
-And there we have it! A three page site with a simple global navigation. With your layout component, you can easily add headers, footers, global navigation, sidebars, etc.
+And there we have it! A three page site with a simple global navigation.
+
+With your new "layout component" powers, you can easily add to your Gatsby sites headers, footers, global navigation, sidebars, etc.

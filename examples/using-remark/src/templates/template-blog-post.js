@@ -62,7 +62,10 @@ class BlogPostRoute extends React.Component {
         </header>
 
         <h2>Contents</h2>
-        <div dangerouslySetInnerHTML={{ __html: post.tableOfContents }} className="toc" />
+        <div
+          dangerouslySetInnerHTML={{ __html: post.tableOfContents }}
+          className="toc"
+        />
 
         <div dangerouslySetInnerHTML={{ __html: post.html }} className="post" />
         <hr
