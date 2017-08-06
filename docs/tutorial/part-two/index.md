@@ -609,3 +609,5 @@ Gatsby supports almost every possible styling option (if there isn't a plugin ye
 * [JSS](/packages/gatsby-plugin-jss/)
 * [Stylus](/packages/gatsby-plugin-stylus/)
 * and more!
+
+Now continue on to [Part Three](/tutorial/part-three/) of the tutorial.
