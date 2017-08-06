@@ -4,13 +4,7 @@ import { AppContainer as HotContainer } from "react-hot-loader"
 import socketIo from "./socketIo"
 import apiRunner from "./api-runner-browser"
 import emitter from "./emitter"
-import Root from "./root"
 
-
-// Troubles with this import in the past?
-if (Root.default) {
-  Root = Root.default
-}
 
 window.___emitter = emitter
 
@@ -19,6 +13,12 @@ Promise
   .then(() => {
 
     const rootElement = document.getElementById(`___gatsby`)
+
+    // Troubles with this import in the past?
+    let Root = require("./root");
+    if (Root.default) {
+      Root = Root.default
+    }
 
     socketIo()
 
@@ -57,10 +57,9 @@ Promise
 
           NextRoot = NextRoot.default
         }
+
         ReactDOM.render(
-          <HotContainer>
-            <NextRoot />
-          </HotContainer>,
+          <HotContainer><NextRoot /></HotContainer>,
           rootElement,
           () => apiRunner(`onInitialClientRender`)
         )
