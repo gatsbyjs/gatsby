@@ -228,7 +228,7 @@ function httpExceptionHandler (e) {
       colorized.color.Font.FgRed
     )
   )
-  if (message != undefined) {
+  if (message) {
     console.log(
       colorized.out(
         `Inner exception message : "${message}"`,
@@ -236,7 +236,7 @@ function httpExceptionHandler (e) {
       )
     )
   }
-  if ([400, 401, 402, 403].indexOf(status !== 'undefined')) {
+  if ([400, 401, 402, 403].includes(status)) {
     console.log(
       colorized.out(
         `Auth on endpoint is not implemented on this gatsby-source plugin.`,
