@@ -39,6 +39,7 @@ module.exports = {
               dashes: `oldschool`,
             },
           },
+          `gatsby-remark-flowchart`,
           `gatsby-remark-prismjs`,
           `gatsby-remark-autolink-headers`,
         ],
