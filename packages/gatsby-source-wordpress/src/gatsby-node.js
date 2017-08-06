@@ -169,7 +169,10 @@ async function axiosPaginator (url, perPage = 10, page = 1) {
     const getOptions = (perPage, page) => {
       return {
         method: `get`,
-        url: `${url}?${querystring.stringify({ 'per_page': perPage, 'page': page })}`
+        url: `${url}?${querystring.stringify({ 'per_page': perPage, 'page': page })}`,
+        auth: _auth
+          ? { username: _auth.user, password: _auth.pass }
+          : null
       }
     }
 
