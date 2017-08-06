@@ -18,6 +18,7 @@ let _getNode
 let _useACF
 let _hostingWPCOM
 let _auth
+let _perPage
 
 let _parentChildNodes = []
 
@@ -31,7 +32,7 @@ const refactoredEntityTypes = {
 // ========= Main ===========
 exports.sourceNodes = async (
   { boundActionCreators, getNode, hasNodeChanged, store },
-  { baseUrl, protocol, hostingWPCOM, useACF, auth, verboseOutput }
+  { baseUrl, protocol, hostingWPCOM, useACF, auth, verboseOutput, perPage = 10 }
 ) => {
   const {
     createNode,
@@ -45,6 +46,7 @@ exports.sourceNodes = async (
   _useACF = useACF
   _hostingWPCOM = hostingWPCOM
   _auth = auth
+  _perPage = perPage
 
   // If the site is hosted on wordpress.com, the API Route differs.
   // Same entity types are exposed (excepted for medias and users which need auth)
@@ -348,8 +350,8 @@ function getValidRoutes (allRoutes, url, baseUrl) {
 
 /**
  * Extract the raw entity type from route
- * 
- * @param {any} route 
+ *
+ * @param {any} route
  */
 const getRawEntityType = route =>
   route._links.self.substring(
@@ -359,8 +361,8 @@ const getRawEntityType = route =>
 
 /**
  * Extract the route manufacturer
- * 
- * @param {any} route 
+ *
+ * @param {any} route
  */
 const getManufacturer = route =>
   route.namespace.substring(0, route.namespace.lastIndexOf(`/`))
@@ -392,7 +394,7 @@ async function fetchData(route, createNode, parentNodeId) {
     if (_verbose) console.time(`Fetching the ${type} took`)
   }
 
-  const routeResponse = await axiosPaginator(url, 40, 1)
+  const routeResponse = await axiosPaginator(url, _perPage, 1)
 
   if (routeResponse) {
     // Process entities to creating GraphQL Nodes.
@@ -433,8 +435,8 @@ async function fetchData(route, createNode, parentNodeId) {
 
 /**
  * Encrypts a String using md5 hash of hexadecimal digest.
- * 
- * @param {any} str 
+ *
+ * @param {any} str
  */
 const digest = str => crypto.createHash(`md5`).update(str).digest(`hex`)
 
@@ -494,9 +496,9 @@ function createGraphQLNode(ent, type, createNode, parentNodeId) {
 
 /**
  * Loop through fields to validate naming conventions and extract child nodes.
- * 
+ *
  * @param {any} ent
- * @param {any} newEnt 
+ * @param {any} newEnt
  * @returns the new entity with fields
  */
 function addFields(ent, newEnt, createNode) {
@@ -535,9 +537,9 @@ function addFields(ent, newEnt, createNode) {
 
 /**
  * Add fields recursively
- * 
- * @param {any} ent 
- * @param {any} newEnt 
+ *
+ * @param {any} ent
+ * @param {any} newEnt
  * @returns the new node
  */
 function recursiveAddFields(ent, newEnt) {
@@ -566,8 +568,8 @@ function recursiveAddFields(ent, newEnt) {
 
 /**
  * Validate the GraphQL naming convetions & protect specific fields.
- * 
- * @param {any} key 
+ *
+ * @param {any} key
  * @returns the valid name
  */
 function getValidName(key) {
