@@ -37,6 +37,17 @@ This plugin adds additional fields to the `MarkdownRemark`
 GraphQL type including `html`, `excerpt`, `headers`, etc. Other Gatsby
 plugins can also add additional fields.
 
+## Adding custom classes
+You can also add custom classes to elements. This is especially useful for custom positioning of images, for example right-aligning:
+```markdown
+![Octocat](octocat.gif "This is Octocat"){.img .img--right}
+```
+
+This will result in the following:
+```html
+<img class="img img--right" src="octocat.gif" alt="Octocat" title="This is Octocat" />
+```
+
 ## How to query
 
 A sample GraphQL query to get MarkdownRemark nodes:
