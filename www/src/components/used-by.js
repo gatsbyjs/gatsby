@@ -9,8 +9,12 @@ const Icon = ({ icon }) =>
       marginRight: rhythm(3 / 4),
       display: `inline-block`,
       padding: 0,
-      ":last-child": {
-        marginRight: 0,
+      [presets.Phablet]: {
+        marginBottom: 0,
+        width: `auto`,
+        ":last-child": {
+          marginRight: 0,
+        },
       },
     }}
   >
@@ -18,21 +22,12 @@ const Icon = ({ icon }) =>
       src={icon}
       css={{
         margin: 0,
-        verticalAlign: `text-bottom`,
-        height: `20px`,
-        transition: `height ${presets.animation.speedDefault} ${presets
-          .animation.curveDefault}`,
-        [presets.Mobile]: {
-          height: `14px`,
+        height: `calc(14px + 1vw)`,
+        [presets.Phablet]: {
+          height: `calc(9px + 1vw)`,
         },
         [presets.Tablet]: {
-          height: `20px`,
-        },
-        [presets.Desktop]: {
-          height: `24px`,
-        },
-        [presets.VHd]: {
-          height: `28px`,
+          height: `calc(12px + 1vw)`,
         },
       }}
     />
@@ -81,10 +76,6 @@ const UsedBy = () =>
         flexGrow: `1`,
         flexShrink: `1`,
         alignSelf: `flex-end`,
-        textAlign: `center`,
-        "@media (max-height: 650px)": {
-          textAlign: `right`,
-        },
         [presets.Phablet]: {
           flexGrow: `0`,
         },
@@ -94,24 +85,27 @@ const UsedBy = () =>
         css={{
           color: `#fff`,
           letterSpacing: `0.02em`,
-          marginBottom: 0,
           fontFamily: typography.options.headerFontFamily.join(`,`),
           fontSize: scale(-2 / 5).fontSize,
-          "@media (max-height: 650px)": {
-            textAlign: `right`,
-          },
+          marginBottom: 0,
           [presets.Phablet]: {
-            fontSize: scale(-1 / 5).fontSize,
+            fontSize: scale(-2 / 5).fontSize,
             textAlign: `right`,
           },
-          [presets.Hd]: {
-            fontSize: scale(0 / 5).fontSize,
+          [presets.Desktop]: {
+            fontSize: scale(-1 / 5).fontSize,
           },
         }}
       >
         Used by
       </p>
-      <ul css={{ margin: 0, listStyle: `none`, opacity: 0.75 }}>
+      <ul
+        css={{
+          margin: 0,
+          listStyle: `none`,
+          opacity: 0.75,
+        }}
+      >
         <Icon icon={FabricIcon} />
         <Icon icon={SegmentIcon} />
         <Icon icon={FormidableIcon} />
