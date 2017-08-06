@@ -46,7 +46,6 @@ const MastheadBg = () =>
         },
       }}
     />
-
     <svg
       viewBox="0 0 10 10"
       preserveAspectRatio="xMinYMin slice"
@@ -114,7 +113,7 @@ const MastheadBg = () =>
         width: `calc(180% - + 4vh)`,
         height: `100%`,
         zIndex: -1,
-        transition: `width 100ms linear`,
+        //transition: `width 100ms linear`,
       }}
     >
       <svg
