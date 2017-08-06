@@ -1,6 +1,6 @@
 const axios = require(`axios`)
 const crypto = require(`crypto`)
-const querystring = require('querystring')
+const querystring = require(`querystring`)
 const _ = require(`lodash`)
 const stringify = require(`json-stringify-safe`)
 const colorized = require(`./output-color`)
@@ -162,17 +162,18 @@ exports.sourceNodes = async (
   return
 }
 
-async function getPages (url, perPage = 10, page = 1) {
+async function getPages(url, perPage = 10, page = 1) {
   try {
     let result = []
 
     const getOptions = (perPage, page) => {
       return {
         method: `get`,
-        url: `${url}?${querystring.stringify({ 'per_page': perPage, 'page': page })}`,
-        auth: _auth
-          ? { username: _auth.user, password: _auth.pass }
-          : null
+        url: `${url}?${querystring.stringify({
+          per_page: perPage,
+          page: page,
+        })}`,
+        auth: _auth ? { username: _auth.user, password: _auth.pass } : null,
       }
     }
 
@@ -185,7 +186,7 @@ async function getPages (url, perPage = 10, page = 1) {
     result = result.concat(response.data)
 
     // Get total number of entities
-    const total = parseInt(response.headers['x-wp-total'])
+    const total = parseInt(response.headers[`x-wp-total`])
     const totalPages = Math.ceil(total / perPage)
 
     if (_verbose) {
@@ -198,7 +199,7 @@ async function getPages (url, perPage = 10, page = 1) {
     }
 
     // For each X entities, make an HTTP request to page N
-    const requests = _.range(2, totalPages + 1).map((getPage) => {
+    const requests = _.range(2, totalPages + 1).map(getPage => {
       const options = getOptions(perPage, getPage)
       return axios(options)
     })
@@ -220,7 +221,7 @@ async function getPages (url, perPage = 10, page = 1) {
  *
  * @param {any} e
  */
-function httpExceptionHandler (e) {
+function httpExceptionHandler(e) {
   const { status, statusText, data: { message } } = e.response
   console.log(
     colorized.out(
@@ -254,7 +255,7 @@ function httpExceptionHandler (e) {
  * @param {any} baseUrl
  * @returns
  */
-function getValidRoutes (allRoutes, url, baseUrl) {
+function getValidRoutes(allRoutes, url, baseUrl) {
   let validRoutes = []
 
   for (let key of Object.keys(allRoutes.data.routes)) {
@@ -406,20 +407,12 @@ async function fetchData(route, createNode, parentNodeId) {
         await createGraphQLNode(ent, type, createNode, parentNodeId)
       }
     } else {
-      await createGraphQLNode(
-        routeResponse,
-        type,
-        createNode,
-        parentNodeId
-      )
+      await createGraphQLNode(routeResponse, type, createNode, parentNodeId)
     }
 
     // TODO : Get the number of created nodes using the nodes in state.
     let length
-    if (
-      routeResponse != undefined &&
-      Array.isArray(routeResponse)
-    ) {
+    if (routeResponse != undefined && Array.isArray(routeResponse)) {
       length = routeResponse.length
     } else if (
       routeResponse != undefined &&
