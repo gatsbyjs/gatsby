@@ -162,7 +162,7 @@ exports.sourceNodes = async (
   return
 }
 
-async function axiosPaginator (url, perPage = 10, page = 1) {
+async function getPages (url, perPage = 10, page = 1) {
   try {
     let result = []
 
@@ -397,7 +397,7 @@ async function fetchData(route, createNode, parentNodeId) {
     if (_verbose) console.time(`Fetching the ${type} took`)
   }
 
-  const routeResponse = await axiosPaginator(url, _perPage, 1)
+  const routeResponse = await getPages(url, _perPage, 1)
 
   if (routeResponse) {
     // Process entities to creating GraphQL Nodes.
