@@ -1,5 +1,4 @@
 import apiRunner from "./api-runner-browser"
-
 import React, { createElement } from "react"
 import ReactDOM from "react-dom"
 import {
@@ -10,77 +9,131 @@ import {
 } from "react-router-dom"
 import { ScrollContext } from "react-router-scroll"
 import createHistory from "history/createBrowserHistory"
-// import invariant from "invariant"
 import emitter from "./emitter"
-window.___emitter = emitter
-// emitter.on(`*`, (type, e) => console.log(`emitter`, type, e))
-
 import pages from "./pages.json"
 import ComponentRenderer from "./component-renderer"
-import asyncRequires from "./async-requires"
 import loader from "./loader"
-loader.addPagesArray(pages)
-loader.addProdRequires(asyncRequires)
-window.asyncRequires = asyncRequires
+import asyncRequires from "./async-requires"
+
 
 window.___loader = loader
-
+window.___emitter = emitter
 window.matchPath = matchPath
+window.asyncRequires = asyncRequires
+loader.addPagesArray(pages)
+loader.addProdRequires(asyncRequires)
 
-// Let the site/plugins run code very early.
-apiRunner(`onClientEntry`)
+Promise
+  .all(apiRunner(`onClientEntry`))
+  .catch((error) => { throw error })
+  .then(() => {
 
-// Let plugins register a service worker. The plugin just needs
-// to return true.
-if (apiRunner(`registerServiceWorker`).length > 0) {
-  require(`./register-service-worker`)
-}
-
-const navigateTo = pathname => {
-  // If we're already at this path, do nothing.
-  if (window.location.pathname === pathname) {
-    return
-  }
-
-  // Listen to loading events. If page resources load before
-  // a second, navigate immediately.
-  function eventHandler(e) {
-    if (e.page.path === loader.getPage(pathname).path) {
-      emitter.off(`onPostLoadPageResources`, eventHandler)
-      clearTimeout(timeoutId)
-      window.___history.push(pathname)
+    // Let plugins register a service worker. The plugin just needs
+    // to return true.
+    if (apiRunner(`registerServiceWorker`).length > 0) {
+      require(`./register-service-worker`)
     }
-  }
 
-  // Start a timer to wait for a second before transitioning and showing a
-  // loader in case resources aren't around yet.
-  const timeoutId = setTimeout(() => {
-    emitter.off(`onPostLoadPageResources`, eventHandler)
-    emitter.emit(`onDelayedLoadPageResources`, { pathname })
-    window.___history.push(pathname)
-  }, 1000)
+    const navigateTo = pathname => {
+      // If we're already at this path, do nothing.
+      if (window.location.pathname === pathname) {
+        return
+      }
 
-  if (loader.getResourcesForPathname(pathname)) {
-    // The resources are already loaded so off we go.
-    clearTimeout(timeoutId)
-    window.___history.push(pathname)
-  } else {
-    // They're not loaded yet so let's add a listener for when
-    // they finish loading.
-    emitter.on(`onPostLoadPageResources`, eventHandler)
-  }
-}
+      // Start a timer to wait for a second before transitioning and showing a
+      // loader in case resources aren't around yet.
+      const timeoutId = setTimeout(() => {
+        emitter.off(`onPostLoadPageResources`, eventHandler)
+        emitter.emit(`onDelayedLoadPageResources`, { pathname })
+        window.___history.push(pathname)
+      }, 1000)
 
-// window.___loadScriptsForPath = loadScriptsForPath
-window.___navigateTo = navigateTo
+      if (loader.getResourcesForPathname(pathname)) {
+        // The resources are already loaded so off we go.
+        clearTimeout(timeoutId)
+        window.___history.push(pathname)
+      } else {
+        // They're not loaded yet so let's add a listener for when
+        // they finish loading.
+        emitter.on(`onPostLoadPageResources`, eventHandler)
+      }
+    }
 
-const history = createHistory()
+    // window.___loadScriptsForPath = loadScriptsForPath
+    window.___navigateTo = navigateTo
 
-// Call onRouteUpdate on the initial page load.
-apiRunner(`onRouteUpdate`, {
-  location: history.location,
-  action: history.action,
-})
+    const history = createHistory()
+
+    // Call onRouteUpdate on the initial page load.
+    apiRunner(`onRouteUpdate`, {
+      location: history.location,
+      action: history.action,
+    })
+
+    const AltRouter = apiRunner(`replaceRouterComponent`, { history })[0]
+    const DefaultRouter = ({ children }) =>
+      <Router history={history}>
+        {children}
+      </Router>
+
+    const loadLayout = cb => {
+      if (asyncRequires.layouts[`index`]) {
+        asyncRequires.layouts[`index`]((err, executeChunk) => {
+          const module = executeChunk()
+          cb(module)
+        })
+      } else {
+        cb(props =>
+          <div>
+            {props.children()}
+          </div>
+        )
+      }
+    }
+
+    loadLayout(layout => {
+      loader.getResourcesForPathname(window.location.pathname, () => {
+        const Root = () =>
+          createElement(
+            AltRouter ? AltRouter : DefaultRouter,
+            null,
+            createElement(
+              ScrollContext,
+              { shouldUpdateScroll },
+              createElement(withRouter(layout), {
+                children: layoutProps =>
+                  createElement(Route, {
+                    render: routeProps => {
+                      attachToHistory(routeProps.history)
+                      const props = layoutProps ? layoutProps : routeProps
+                      if (loader.getPage(props.location.pathname)) {
+                        return createElement(ComponentRenderer, { ...props })
+                      }
+                      else {
+                        return createElement(ComponentRenderer, {
+                          location: { pathname: `/404.html` },
+                        })
+                      }
+                    },
+                  }),
+              })
+            )
+          )
+
+        const NewRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
+        ReactDOM.render(
+          <NewRoot />,
+          typeof window !== `undefined`
+            ? document.getElementById(`___gatsby`)
+            : void 0,
+          () => {
+            apiRunner(`onInitialClientRender`)
+          }
+        )
+      })
+    })
+  })
+  .catch((error) => { throw error })
 
 function attachToHistory(history) {
   if (!window.___history) {
@@ -110,64 +163,12 @@ function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
   return true
 }
 
-const AltRouter = apiRunner(`replaceRouterComponent`, { history })[0]
-const DefaultRouter = ({ children }) =>
-  <Router history={history}>
-    {children}
-  </Router>
-
-const loadLayout = cb => {
-  if (asyncRequires.layouts[`index`]) {
-    asyncRequires.layouts[`index`]((err, executeChunk) => {
-      const module = executeChunk()
-      cb(module)
-    })
-  } else {
-    cb(props =>
-      <div>
-        {props.children()}
-      </div>
-    )
+// Listen to loading events. If page resources load before
+// a second, navigate immediately.
+function eventHandler(e) {
+  if (e.page.path === loader.getPage(pathname).path) {
+    emitter.off(`onPostLoadPageResources`, eventHandler)
+    clearTimeout(timeoutId)
+    window.___history.push(pathname)
   }
 }
-
-loadLayout(layout => {
-  loader.getResourcesForPathname(window.location.pathname, () => {
-    const Root = () =>
-      createElement(
-        AltRouter ? AltRouter : DefaultRouter,
-        null,
-        createElement(
-          ScrollContext,
-          { shouldUpdateScroll },
-          createElement(withRouter(layout), {
-            children: layoutProps =>
-              createElement(Route, {
-                render: routeProps => {
-                  attachToHistory(routeProps.history)
-                  const props = layoutProps ? layoutProps : routeProps
-                  if (loader.getPage(props.location.pathname)) {
-                    return createElement(ComponentRenderer, { ...props })
-                  } else {
-                    return createElement(ComponentRenderer, {
-                      location: { pathname: `/404.html` },
-                    })
-                  }
-                },
-              }),
-          })
-        )
-      )
-
-    const NewRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
-    ReactDOM.render(
-      <NewRoot />,
-      typeof window !== `undefined`
-        ? document.getElementById(`___gatsby`)
-        : void 0,
-      () => {
-        apiRunner(`onInitialClientRender`)
-      }
-    )
-  })
-})

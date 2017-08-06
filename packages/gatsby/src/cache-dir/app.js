@@ -10,12 +10,13 @@ window.___emitter = emitter
 
 Promise
   .all(apiRunner(`onClientEntry`))
+  .catch((error) => { throw error })
   .then(() => {
 
     const rootElement = document.getElementById(`___gatsby`)
 
     // Troubles with this import in the past?
-    let Root = require("./root");
+    let Root = require("./root")
     if (Root.default) {
       Root = Root.default
     }
@@ -66,3 +67,4 @@ Promise
       })
     }
   })
+  .catch((error) => { throw error })

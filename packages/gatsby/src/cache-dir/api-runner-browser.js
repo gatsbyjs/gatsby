@@ -6,7 +6,6 @@
 // ]
 
 module.exports = (api, args, defaultReturn) => {
-  // Run each plugin in series.
   let results = plugins.map(plugin => {
     if (plugin.plugin[api]) {
       const result = plugin.plugin[api](args, plugin.options)
