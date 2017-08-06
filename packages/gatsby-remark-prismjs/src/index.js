@@ -40,5 +40,5 @@ module.exports = {
       )}</code></pre>
         </div>`
     })
-  }
+  },
 }

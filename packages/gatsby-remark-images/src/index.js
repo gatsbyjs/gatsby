@@ -206,5 +206,5 @@ module.exports = {
         markdownImageNodes.concat(htmlImageNodes).filter(node => !!node)
       )
     )
-  }
+  },
 }

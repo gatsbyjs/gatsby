@@ -60,5 +60,5 @@ module.exports = {
       })
 
       return resolve(markdownAST)
-    })
+    }),
 }
