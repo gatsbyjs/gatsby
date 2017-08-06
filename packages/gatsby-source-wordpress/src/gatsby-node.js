@@ -1,5 +1,6 @@
 const axios = require(`axios`)
 const crypto = require(`crypto`)
+const querystring = require('querystring')
 const _ = require(`lodash`)
 const stringify = require(`json-stringify-safe`)
 const colorized = require(`./output-color`)
@@ -100,7 +101,25 @@ exports.sourceNodes = async (
     .forEach(n => touchNode(n.id))
 
   // Call the main API Route to discover the all the routes exposed on this API.
-  let allRoutes = await axiosHelper(url)
+  let allRoutes
+  try {
+    let options = {
+      method: `get`,
+      url: url,
+    }
+    if (_auth != undefined) {
+      options.auth = {
+        username: _auth.user,
+        password: _auth.pass,
+      }
+    }
+    allRoutes = await axios({
+      method: `get`,
+      url: url,
+    })
+  } catch (e) {
+    httpExceptionHandler(e)
+  }
 
   if (allRoutes != undefined) {
     let validRoutes = getValidRoutes(allRoutes, url, baseUrl)
@@ -141,31 +160,54 @@ exports.sourceNodes = async (
   return
 }
 
-/**
- * Helper for axios GET with auth
- * 
- * @param {any} url 
- * @param {any} auth 
- * @returns 
- */
-async function axiosHelper(url) {
-  let result
+async function axiosPaginator (url, perPage = 10, page = 1) {
   try {
-    let options = {
-      method: `get`,
-      url: url,
-    }
-    if (_auth != undefined) {
-      options.auth = {
-        username: _auth.user,
-        password: _auth.pass,
+    let result = []
+
+    const getOptions = (perPage, page) => {
+      return {
+        method: `get`,
+        url: `${url}?${querystring.stringify({ 'per_page': perPage, 'page': page })}`
       }
     }
-    result = await axios(options)
+
+    // Initial request gets the first page of data
+    // but also the total count of objects, used for
+    // multiple concurrent requests (rather than waterfall)
+    const options = getOptions(perPage, page)
+    const response = await axios(options)
+
+    result = result.concat(response.data)
+
+    // Get total number of entities
+    const total = parseInt(response.headers['x-wp-total'])
+    const totalPages = Math.ceil(total / perPage)
+
+    if (_verbose) {
+      console.log(`\nTotal entities :`, total)
+      console.log(`Pages to be requested :`, totalPages)
+    }
+
+    if (total < perPage) {
+      return result
+    }
+
+    // For each X entities, make an HTTP request to page N
+    const requests = _.range(2, totalPages + 1).map((getPage) => {
+      const options = getOptions(perPage, getPage)
+      return axios(options)
+    })
+
+    return Promise.all(requests).then(pages => {
+      const data = pages.map(page => page.data)
+      data.forEach(postList => {
+        result = result.concat(postList)
+      })
+      return result
+    })
   } catch (e) {
     httpExceptionHandler(e)
   }
-  return result
 }
 
 /**
@@ -201,13 +243,13 @@ function httpExceptionHandler (e) {
 
 /**
  * Extract valid routes and format its data.
- * 
- * @param {any} allRoutes 
- * @param {any} url 
- * @param {any} baseUrl 
- * @returns 
+ *
+ * @param {any} allRoutes
+ * @param {any} url
+ * @param {any} baseUrl
+ * @returns
  */
-function getValidRoutes(allRoutes, url, baseUrl) {
+function getValidRoutes (allRoutes, url, baseUrl) {
   let validRoutes = []
 
   for (let key of Object.keys(allRoutes.data.routes)) {
@@ -328,7 +370,7 @@ const getManufacturer = route =>
  *
  * @param {any} route
  * @param {any} createNode
- * @param {any} parentNodeId (Optionnal parent node ID)
+ * @param {any} parentNodeId (Optional parent node ID)
  */
 async function fetchData(route, createNode, parentNodeId) {
   const type = route.type
@@ -350,17 +392,17 @@ async function fetchData(route, createNode, parentNodeId) {
     if (_verbose) console.time(`Fetching the ${type} took`)
   }
 
-  let routeResponse = await axiosHelper(url)
+  const routeResponse = await axiosPaginator(url, 40, 1)
 
   if (routeResponse) {
     // Process entities to creating GraphQL Nodes.
-    if (Array.isArray(routeResponse.data)) {
-      for (let ent of routeResponse.data) {
+    if (Array.isArray(routeResponse)) {
+      for (let ent of routeResponse) {
         await createGraphQLNode(ent, type, createNode, parentNodeId)
       }
     } else {
       await createGraphQLNode(
-        routeResponse.data,
+        routeResponse,
         type,
         createNode,
         parentNodeId
@@ -371,15 +413,14 @@ async function fetchData(route, createNode, parentNodeId) {
     let length
     if (
       routeResponse != undefined &&
-      routeResponse.data != undefined &&
-      Array.isArray(routeResponse.data)
+      Array.isArray(routeResponse)
     ) {
-      length = routeResponse.data.length
+      length = routeResponse.length
     } else if (
-      routeResponse.data != undefined &&
+      routeResponse != undefined &&
       !Array.isArray(routeResponse.data)
     ) {
-      length = Object.keys(routeResponse.data).length
+      length = Object.keys(routeResponse).length
     }
     console.log(
       colorized.out(`${type} fetched : ${length}`, colorized.color.Font.FgGreen)
