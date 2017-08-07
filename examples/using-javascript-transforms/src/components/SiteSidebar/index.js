@@ -7,7 +7,7 @@ import siteMetadata from "../metadata.yaml"
 
 class SiteSidebar extends React.Component {
   render() {
-    const isHome = location.pathname === `/`
+    const isHome = this.props.location.pathname === `/`
     // const siteMetadata = this.props.data.siteMetadata;
     // placeholder ^ for graphql
     // TODO, deal with image more nice like

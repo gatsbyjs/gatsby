@@ -27,6 +27,8 @@ server: contains the server info, with sub properties address and port
 auth: the authentication data to login a mongodb collection, with sub properties user and password.
       ex. auth: { user: `admin`, password: `12345` } 
 
+### experimental
+
 map: with this option you can map a field to a content type, it is an array
      ex. map: {description: `text\x-markdown`}
 

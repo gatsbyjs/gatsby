@@ -9,7 +9,7 @@ exports.sourceNodes = (
   pluginOptions,
   done
 ) => {
-  const { createNode, createParentChildLink, deleteNode } = boundActionCreators
+  const { createNode, deleteNode } = boundActionCreators
 
   let serverOptions = pluginOptions.server || {
     address: `localhost`,
@@ -29,13 +29,12 @@ exports.sourceNodes = (
         return
       }
 
-      createNodes(db, pluginOptions, dbName, createNode, createParentChildLink, done)
+      createNodes(db, pluginOptions, dbName, createNode, done)
     }
   )
 }
 
-function createNodes(db, pluginOptions, dbName, createNode, createParentChildLink, done) {
-  console.log(`create nodes for mongoDB with children [key] ...`)
+function createNodes(db, pluginOptions, dbName, createNode, done) {
   let collectionName = pluginOptions.collection || `documents`
   let collection = db.collection(collectionName)
   let cursor = collection.find()

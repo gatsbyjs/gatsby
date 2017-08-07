@@ -23,6 +23,7 @@ Websites built with Gatbsy:
 * [Dustin Schau's Blog](https://dustinschau.com/blog/) [(source)](https://github.com/dschau/blog)
 * [The Chiedo Companies Website](https://www.chiedo.com)
 * [Damir.io](http://damir.io/) [(source)](https://github.com/dvzrd/gatsby-sfiction)
+* [Ruben's Blog](https://vagr9k.me/) [(source)](https://github.com/Vagr9K/Blog)
 
 ## Docs
 

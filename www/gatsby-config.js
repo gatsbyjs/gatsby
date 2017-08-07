@@ -23,6 +23,10 @@ module.exports = {
       },
     },
     {
+      resolve: `gatsby-plugin-typography`,
+      pathToConfigModule: `src/utils/typography`,
+    },
+    {
       resolve: `gatsby-plugin-canonical-urls`,
       options: {
         siteUrl: `https://www.gatsbyjs.org`,
@@ -132,6 +136,7 @@ module.exports = {
               }
             `,
             output: `/blog/rss.xml`,
+<<<<<<< HEAD
             setup: ({ query: { site: { siteMetadata } } }) => {return {
               title: siteMetadata.title,
               description: siteMetadata.description,
@@ -148,6 +153,28 @@ module.exports = {
                 custom_elements: [{ "content:encoded": node.html }],
                 author: node.frontmatter.author.id,
               }}),
+=======
+            setup: ({ query: { site: { siteMetadata } } }) => {
+              return {
+                title: siteMetadata.title,
+                description: siteMetadata.description,
+                feed_url: siteMetadata.siteUrl + `/blog/rss.xml`,
+                site_url: siteMetadata.siteUrl,
+                generator: `GatsbyJS`,
+              }
+            },
+            serialize: ({ query: { site, allMarkdownRemark } }) =>
+              allMarkdownRemark.edges.map(({ node }) => {
+                return {
+                  title: node.frontmatter.title,
+                  description: node.frontmatter.excerpt || node.excerpt,
+                  url: site.siteMetadata.siteUrl + node.fields.slug,
+                  guid: site.siteMetadata.siteUrl + node.fields.slug,
+                  custom_elements: [{ "content:encoded": node.html }],
+                  author: node.frontmatter.author.id,
+                }
+              }),
+>>>>>>> master
           },
         ],
       },

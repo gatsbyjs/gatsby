@@ -17,8 +17,11 @@ exports.replaceRenderer = ({
 
   replaceBodyHTMLString(bodyHTML)
   setHeadComponents([
-    <style type="text/css" id="server-side-jss">
-      {sheets.toString()}
-    </style>,
+    <style
+      type="text/css"
+      id="server-side-jss"
+      key="server-side-jss"
+      dangerouslySetInnerHTML={{ __html: sheets.toString() }}
+    />,
   ])
 }
