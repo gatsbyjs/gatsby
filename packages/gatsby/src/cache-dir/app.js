@@ -1,3 +1,6 @@
+if(__POLYFILL__) {
+  require("core-js/modules/es6.promise")
+}
 import React from "react"
 import ReactDOM from "react-dom"
 import { AppContainer as HotContainer } from "react-hot-loader"

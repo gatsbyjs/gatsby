@@ -159,6 +159,7 @@ module.exports = async (
             "process.env": processEnv(stage, `development`),
             __PREFIX_PATHS__: program.prefixPaths,
             __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
+            __POLYFILL__: store.getState().config.polyfill,
           }),
           // Names module ids with their filepath. We use this in development
           // to make it easier to see what modules have hot reloaded, etc. as

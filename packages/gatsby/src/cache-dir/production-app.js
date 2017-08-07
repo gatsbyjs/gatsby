@@ -1,3 +1,6 @@
+if(__POLYFILL__) {
+  require("core-js/modules/es6.promise")
+}
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import React, { createElement } from "react"
 import ReactDOM from "react-dom"
