@@ -32,7 +32,7 @@ Gatsby uses "starters" for starting new projects. As the name suggests, starters
 To install a starter, first install Gatsby's terminal program.
 
 ```sh
-npm install --global gatsby
+npm install --global gatsby-cli
 ```
 
 

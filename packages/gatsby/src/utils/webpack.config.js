@@ -323,9 +323,9 @@ module.exports = async (
       // directory if you need to install a specific version of a module for a
       // part of your site.
       modulesDirectories: [
-        directoryPath(`node_modules`),
         `node_modules`,
-        directoryPath(`node_modules`, `gatsby`, `node_modules`),
+        directoryPath(`node_modules`),
+        directoryPath(`node_modules`, `gatsby/node_modules`),
       ],
     }
   }

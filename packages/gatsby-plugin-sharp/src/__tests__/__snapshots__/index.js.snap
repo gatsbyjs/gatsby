@@ -4,6 +4,7 @@ exports[`gatsby-plugin-sharp base64 converts image to base64 1`] = `
 Object {
   "aspectRatio": 1,
   "height": 20,
+  "originalName": undefined,
   "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAGElEQVQ4y2P4TwFgGNU8qnlU86jmgdUMAOBEq42KgAyMAAAAAElFTkSuQmCC",
   "width": 20,
 }
@@ -13,7 +14,8 @@ exports[`gatsby-plugin-sharp responsiveSizes includes responsive image propertie
 Object {
   "aspectRatio": 1,
   "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAGElEQVQ4y2P4TwFgGNU8qnlU86jmgdUMAOBEq42KgAyMAAAAAElFTkSuQmCC",
-  "originalImage": "/static/1234-7fd61.png",
+  "originalImg": "/static/1234-7fd61.png",
+  "originalName": undefined,
   "sizes": "(max-width: 800px) 100vw, 800px",
   "src": "/static/1234-7fd61.png",
   "srcSet": "/static/1234-7fd61.png 1w",

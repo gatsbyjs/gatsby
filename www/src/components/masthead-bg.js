@@ -14,37 +14,17 @@ const cover = {
   bottom: 0,
 }
 
-const MastheadBgRightPoly = ({ fill }) =>
-  <polygon fill={fill} points="-27,105 83,-5 130,-5 130,105 " />
-
-const MastheadBgRightGroup = ({
-  brightOff,
-  darkOff,
-  cssClassName,
-  brightBg,
-}) => {
-  const bg = brightBg ? brightBg : presets.brandLight
-
-  return (
-    <g className={`Masthead-bg-right-group ${cssClassName}`}>
-      <g className="bright" transform={`translate(${brightOff})`}>
-        <MastheadBgRightPoly fill={bg} />
-      </g>
-      <g className="dark" transform={`translate(${darkOff})`}>
-        <MastheadBgRightPoly fill={presets.brandDark} />
-      </g>
-    </g>
-  )
-}
-
 const MastheadBg = () =>
   <div
-    className="Masthead-bg"
+    className="masthead-bg"
     css={{
       ...cover,
-      position: `fixed`,
+      position: `absolute`,
+      background: `#fff`,
+      bottom: `auto`,
+      height: `200vh`,
+      overflow: `hidden`,
       zIndex: -1,
-      background: `white`,
     }}
   >
     <div
@@ -67,87 +47,9 @@ const MastheadBg = () =>
       }}
     />
     <svg
-      xmlns="http://www.w3.org/2000/svg"
-      xmlnsXlink="http://www.w3.org/1999/xlink"
-      className="Masthead-bg-right"
-      viewBox="0 0 100 100"
-      preserveAspectRatio="xMidYMin slice"
-      css={{
-        ...cover,
-        position: `absolute`,
-        width: `100%`,
-        height: `100%`,
-        zIndex: -1,
-      }}
-    >
-      <style type="text/css">
-        {`
-          .Masthead-bg-right--sm-landscape,
-          .Masthead-bg-right--lg,
-          .Masthead-bg-right--lg-landscape {
-            display: none;
-          }
-          @media (min-aspect-ratio: 1/1) {
-            .Masthead-bg-right--sm-landscape {
-              display: block;
-            }
-            .Masthead-bg-right--sm,
-            .Masthead-bg-right--lg,
-            .Masthead-bg-right--lg-landscape {
-              display: none;
-            }
-          }
-          @media (min-aspect-ratio: 1/1) and ${presets.desktop},
-                 (max-aspect-ratio: 1/1) and ${presets.tablet} {
-            .Masthead-bg-right--lg {
-              display: block;
-            }
-            .Masthead-bg-right--lg-landscape {
-              display: none;
-            }
-          }
-          @media (min-aspect-ratio: 1/1) and ${presets.hd} {
-            .Masthead-bg-right--lg-landscape {
-              display: block;
-            }
-            .Masthead-bg-right--lg {
-              display: none;
-            }
-          }
-        `}
-      </style>
-      <MastheadBgRightGroup
-        brightOff="20,0"
-        darkOff="40,0"
-        //brightBg="yellow"
-        cssClassName="Masthead-bg-right--sm"
-      />
-      <MastheadBgRightGroup
-        brightOff="5,0"
-        darkOff="30,0"
-        //brightBg="orange"
-        cssClassName="Masthead-bg-right--sm-landscape"
-      />
-      <MastheadBgRightGroup
-        brightOff="-10,0"
-        darkOff="5,0"
-        //brightBg="red"
-        cssClassName="Masthead-bg-right--lg"
-      />
-      <MastheadBgRightGroup
-        brightOff="-15,0"
-        darkOff="0,0"
-        //brightBg="purple"
-        cssClassName="Masthead-bg-right--lg-landscape"
-      />
-    </svg>
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      xmlnsXlink="http://www.w3.org/1999/xlink"
-      viewBox="0 0 100 100"
-      xmlSpace="preserve"
+      viewBox="0 0 10 10"
       preserveAspectRatio="xMinYMin slice"
-      className="Masthead-bg-left"
+      className="masthead-bg-left"
       css={{
         position: `absolute`,
         ...cover,
@@ -166,7 +68,81 @@ const MastheadBg = () =>
         height: `100%`,
       }}
     >
-      <polygon fill={presets.brandLighter} points="-50,-50 150,150 -50,150 " />
+      <polygon fill={presets.brandLighter} points="-5,-5 15,15 -5,15 " />
+    </svg>
+    <style>
+      {`
+          .masthead-bg-left-light {
+            fill: ${presets.brand};
+          }
+          @media (max-width: 650px),
+          (max-width: 768px) and (orientation:portrait) {
+            .masthead-bg-left {
+              width: calc(180% + 4vh);
+            }
+          }
+          ${presets.Phablet} {
+            .masthead-bg-left {
+              width: calc(130% + 2vh);
+            }
+          }
+          ${presets.Tablet} {
+            .masthead-bg-left {
+              width: calc(125% + 4vh);
+            }
+          }
+          ${presets.Desktop}  {
+            .masthead-bg-left {
+              width: 110%;
+            }
+
+            .masthead-bg-left-light {
+              fill: ${presets.brandLight};
+            }
+          }
+          ${presets.Hd}  {
+            .masthead-bg-left {
+              width: calc(100%);
+            }
+          }
+        `}
+    </style>
+    <svg
+      viewBox="0 0 10 10"
+      preserveAspectRatio="xMidYMin meet"
+      className="masthead-bg-left"
+      css={{
+        ...cover,
+        position: `absolute`,
+        width: `calc(180% - + 4vh)`,
+        height: `100%`,
+        zIndex: -1,
+        //transition: `width 100ms linear`,
+      }}
+    >
+      <svg
+        x="-15%"
+        y="-10%"
+        style={{
+          overflow: `visible`,
+        }}
+      >
+        <rect
+          className="masthead-bg-left-light"
+          width="10000%"
+          height="10000%"
+          fill={presets.brandLight}
+          transform="rotate(45 100 50) translate(0 0)"
+        />
+        <rect
+          className="masthead-bg-left-dark"
+          width="10000%"
+          height="10000%"
+          fill={presets.brand}
+          transform="rotate(45 100 50) translate(1.25 0)"
+        />
+        {/*<polygon fill="blue" points="0,10 10,0 10,10" />*/}
+      </svg>
     </svg>
   </div>
 

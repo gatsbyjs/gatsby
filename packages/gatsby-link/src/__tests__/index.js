@@ -19,7 +19,6 @@ const getNavigateTo = () => {
 }
 
 describe(`<Link />`, () => {
-
   it(`does not fail to initialize when __PREFIX_PATHS__ is not defined`, () => {
     expect(() => {
       const Link = require(`../`).default
