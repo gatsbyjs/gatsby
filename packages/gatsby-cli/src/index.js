@@ -13,6 +13,11 @@ try {
   localPackageJSON = require(path.resolve(`./package.json`))
   if (localPackageJSON.dependencies && localPackageJSON.dependencies.gatsby || localPackageJSON.devDependencies && localPackageJSON.devDependencies.gatsby) {
     inGatsbySite = true
+  } else if (
+    localPackageJSON.devDependencies &&
+    localPackageJSON.devDependencies.gatsby
+  ) {
+    inGatsbySite = true
   }
 } catch (e) {
   // ignore
