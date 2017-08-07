@@ -1,4 +1,4 @@
-import apiRunner from "./api-runner-browser"
+import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import React, { createElement } from "react"
 import ReactDOM from "react-dom"
 import {
@@ -22,8 +22,7 @@ window.asyncRequires = asyncRequires
 loader.addPagesArray(pages)
 loader.addProdRequires(asyncRequires)
 
-Promise
-  .all(apiRunner(`onClientEntry`))
+apiRunnerAsync(`onClientEntry`)
   .catch((error) => { throw error })
   .then(() => {
 

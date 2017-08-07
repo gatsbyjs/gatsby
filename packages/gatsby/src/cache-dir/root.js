@@ -7,8 +7,7 @@ import {
 } from "react-router-dom"
 import { ScrollContext } from "react-router-scroll"
 import createHistory from "history/createBrowserHistory"
-
-import apiRunner from "./api-runner-browser"
+import { apiRunner } from "./api-runner-browser"
 import syncRequires from "./sync-requires"
 import pages from "./pages.json"
 import ComponentRenderer from "./component-renderer"

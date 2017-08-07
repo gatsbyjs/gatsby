@@ -5,7 +5,7 @@
 //   require('/path/to/plugin2/gatsby-browser.js'),
 // ]
 
-module.exports = (api, args, defaultReturn) => {
+export function apiRunner(api, args, defaultReturn) {
   let results = plugins.map(plugin => {
     if (plugin.plugin[api]) {
       const result = plugin.plugin[api](args, plugin.options)
@@ -23,4 +23,14 @@ module.exports = (api, args, defaultReturn) => {
   } else {
     return []
   }
+}
+
+export function apiRunnerAsync(api, args, defaultReturn) {
+  return plugins.reduce(
+    (previous, next) => 
+      next.plugin[api] 
+        ? previous.then(() => next.plugin[api](args, next.options)) 
+        : previous,
+    Promise.resolve()
+  )
 }

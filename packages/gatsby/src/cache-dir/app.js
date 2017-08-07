@@ -2,13 +2,12 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { AppContainer as HotContainer } from "react-hot-loader"
 import socketIo from "./socketIo"
-import apiRunner from "./api-runner-browser"
+import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import emitter from "./emitter"
 
 window.___emitter = emitter
 
-Promise
-  .all(apiRunner(`onClientEntry`))
+apiRunnerAsync(`onClientEntry`)
   .catch((error) => { throw error })
   .then(() => {
     const rootElement = document.getElementById(`___gatsby`)
