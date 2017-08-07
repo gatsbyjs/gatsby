@@ -15,7 +15,6 @@ import ComponentRenderer from "./component-renderer"
 import loader from "./loader"
 import asyncRequires from "./async-requires"
 
-
 window.___loader = loader
 window.___emitter = emitter
 window.matchPath = matchPath
