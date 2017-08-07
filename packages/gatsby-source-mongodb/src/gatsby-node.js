@@ -9,7 +9,7 @@ exports.sourceNodes = (
   pluginOptions,
   done
 ) => {
-  const { createNode, deleteNode } = boundActionCreators
+  const { createNode, createParentChildLink, deleteNode } = boundActionCreators
 
   let serverOptions = pluginOptions.server || {
     address: `localhost`,
@@ -29,13 +29,13 @@ exports.sourceNodes = (
         return
       }
 
-      createNodes(db, pluginOptions, dbName, createNode, done)
+      createNodes(db, pluginOptions, dbName, createNode, createParentChildLink, done)
     }
   )
 }
 
-function createNodes(db, pluginOptions, dbName, createNode, done) {
-  console.log(`create nodes for mongoDB ...`)
+function createNodes(db, pluginOptions, dbName, createNode, createParentChildLink, done) {
+  console.log(`create nodes for mongoDB with children [key] ...`)
   let collectionName = pluginOptions.collection || `documents`
   let collection = db.collection(collectionName)
   let cursor = collection.find()
@@ -63,42 +63,43 @@ function createNodes(db, pluginOptions, dbName, createNode, done) {
             .digest(`hex`),
         },
       }
+      let childNodes = [];
       if (pluginOptions.map) {
         // We need to map certain fields to a contenttype.
         var keys = Object.keys(pluginOptions.map).forEach(mediaItemFieldKey => {
             console.log(mediaItemFieldKey + " " + item[mediaItemFieldKey], item);
-            createMappingChildNodes(node, mediaItemFieldKey, item[mediaItemFieldKey], createNode);
+            childNodes.push(createMappingChildNodes(node, mediaItemFieldKey, item[mediaItemFieldKey], createNode));
 
             delete item[mediaItemFieldKey];
         });
       }
-      createNode(node);
     }
   })
 }
 
 function createMappingChildNodes(node, key, text, createNode) { 
-  const str = _.isString(text) ? text : ` `
+  const str = _.isString(text) ? text : ` `;
+  const id = `${node.id}${key}MappingNode`;
+  console.log('create ' + id + ' child node - ' + str);
   const mappingNode = {
-    id: `${node.id}${key}MappingNode`,
+    id: id,
     parent: node.id,
     children: [],
-    [key]: str,
     internal: {
       type: _.camelCase(`${node.internal.type} ${key} MappingNode`),
       mediaType: `text/x-markdown`,
       content: str,
       contentDigest: crypto
             .createHash(`md5`)
-            .update(JSON.stringify(text))
+            .update(JSON.stringify(str))
             .digest(`hex`),
-    }, 
+    } 
   }
 
   node.children = node.children.concat([mappingNode.id])
   createNode(mappingNode)
 
-  return mappingNode.id
+  return mappingNode;
 }
 
 function caps(s) {

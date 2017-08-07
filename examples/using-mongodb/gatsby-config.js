@@ -3,6 +3,7 @@ module.exports = {
     title: `Gatsby with MongoDB`,
   },
   plugins: [
+    `gatsby-transformer-remark`,
     {
       resolve: `gatsby-source-mongodb`,
       options: { dbName: `cloud`, collection: `documents`,
