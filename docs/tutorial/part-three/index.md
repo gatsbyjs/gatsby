@@ -40,10 +40,12 @@ Then our site's `gatsby-config.js`
 module.exports = {
   plugins: [
     {
-      resolve: 'gatsby-plugin-typography',
-      pathToConfigModule: 'src/utils/typography'
-    }
-  ]
+      resolve: `gatsby-plugin-typography`,
+      options: {
+        pathToConfigModule: `src/utils/typography.js`,
+      },
+    },
+  ],
 }
 ```
 
