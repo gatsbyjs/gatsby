@@ -171,7 +171,6 @@ const IndexRoute = React.createClass({
                   hasSideBar={false}
                   css={{ maxWidth: rhythm(30), paddingBottom: `0 !important` }}
                 >
-                  {` `}
                   <h2
                     css={{
                       textAlign: `left`,
