@@ -204,12 +204,13 @@ export function inferInputObjectStructureFromNodes({
       value,
       prefix: `${prefix}${_.upperFirst(key)}`,
     })
-
-    if (typeof key !== 'string') {
-      console.log('You have dirty data ...')
-      console.log('This key is not a string -> ' + key + ' and field is ' + JSON.stringify(field));
-    } 
+ 
     if (field == null) return
+    // check if your key is really a string
+    if (typeof key !== 'string') {
+      console.log('You have dirty data ...');
+      console.log('This key is not a string -> ' + key + ' and field is ' + JSON.stringify(field));
+    }
     inferredFields[createKey(key)] = field
   })
 
