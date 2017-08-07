@@ -47,10 +47,13 @@ function createNodes(db, pluginOptions, dbName, createNode, done) {
       db.close()
       done()
     } else {
+      var id = item._id.toString();
+      delete item._id;
+      
       var node = {
         // Data for the node.
         ...item,
-        id: `${item._id}`,
+        id: `${id}`,
         parent: `__${collectionName}__`,
         children: [],
         internal: {

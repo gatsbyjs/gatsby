@@ -7,10 +7,11 @@
     "gatsby": "latest",
     "gatsby-link": "latest",
     "gatsby-plugin-react-helmet": "latest",
-    "gatsby-transformer-remark": "latest",
     "gatsby-source-mongodb": "latest",
+    "gatsby-transformer-remark": "latest",
     "mongodb": "^2.2.30",
-    "react-helmet": "^5.1.3"
+    "react-helmet": "^5.1.3",
+    "react-router-scroll": "^0.4.2"
   },
   "license": "MIT",
   "main": "n/a",
