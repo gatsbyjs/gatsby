@@ -46,7 +46,6 @@ const MastheadBg = () =>
         },
       }}
     />
-
     <svg
       viewBox="0 0 10 10"
       preserveAspectRatio="xMinYMin slice"
@@ -73,8 +72,8 @@ const MastheadBg = () =>
     </svg>
     <style>
       {`
-          .masthead-bg-left-dark {
-            transition: fill 100ms linear;
+          .masthead-bg-left-light {
+            fill: ${presets.brand};
           }
           @media (max-width: 650px),
           (max-width: 768px) and (orientation:portrait) {
@@ -96,6 +95,10 @@ const MastheadBg = () =>
             .masthead-bg-left {
               width: 110%;
             }
+
+            .masthead-bg-left-light {
+              fill: ${presets.brandLight};
+            }
           }
           ${presets.Hd}  {
             .masthead-bg-left {
@@ -114,7 +117,7 @@ const MastheadBg = () =>
         width: `calc(180% - + 4vh)`,
         height: `100%`,
         zIndex: -1,
-        transition: `width 100ms linear`,
+        //transition: `width 100ms linear`,
       }}
     >
       <svg
@@ -125,11 +128,18 @@ const MastheadBg = () =>
         }}
       >
         <rect
+          className="masthead-bg-left-light"
+          width="10000%"
+          height="10000%"
+          fill={presets.brandLight}
+          transform="rotate(45 100 50) translate(0 0)"
+        />
+        <rect
           className="masthead-bg-left-dark"
           width="10000%"
           height="10000%"
           fill={presets.brand}
-          transform="rotate(45 100 50) translate(0 0)"
+          transform="rotate(45 100 50) translate(1.25 0)"
         />
         {/*<polygon fill="blue" points="0,10 10,0 10,10" />*/}
       </svg>
