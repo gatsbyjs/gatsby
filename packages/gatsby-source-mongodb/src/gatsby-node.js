@@ -62,43 +62,17 @@ function createNodes(db, pluginOptions, dbName, createNode, done) {
             .digest(`hex`),
         },
       }
-      let childNodes = [];
-      if (pluginOptions.map) {
+      /* if (pluginOptions.map) {
         // We need to map certain fields to a contenttype.
         var keys = Object.keys(pluginOptions.map).forEach(mediaItemFieldKey => {
-            console.log(mediaItemFieldKey + " " + item[mediaItemFieldKey], item);
-            childNodes.push(createMappingChildNodes(node, mediaItemFieldKey, item[mediaItemFieldKey], createNode));
+            createMappingChildNodes(node, mediaItemFieldKey, item[mediaItemFieldKey], createNode));
 
             delete item[mediaItemFieldKey];
         });
-      }
+      } */
+      createNode(node);
     }
   })
-}
-
-function createMappingChildNodes(node, key, text, createNode) { 
-  const str = _.isString(text) ? text : ` `;
-  const id = `${node.id}${key}MappingNode`;
-  console.log('create ' + id + ' child node - ' + str);
-  const mappingNode = {
-    id: id,
-    parent: node.id,
-    children: [],
-    internal: {
-      type: _.camelCase(`${node.internal.type} ${key} MappingNode`),
-      mediaType: `text/x-markdown`,
-      content: str,
-      contentDigest: crypto
-            .createHash(`md5`)
-            .update(JSON.stringify(str))
-            .digest(`hex`),
-    } 
-  }
-
-  node.children = node.children.concat([mappingNode.id])
-  createNode(mappingNode)
-
-  return mappingNode;
 }
 
 function caps(s) {
