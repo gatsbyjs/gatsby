@@ -8,7 +8,7 @@ describe(`remark katex plugin`, () => {
     for (let parserPlugins of plugin.setParserPlugins()) {
       remark = remark.use(parserPlugins)
     }
-    const markdownAST  = remark.parse(equation)
+    const markdownAST = remark.parse(equation)
     plugin({ markdownAST })
     expect(markdownAST).toMatchSnapshot()
   })
@@ -19,7 +19,7 @@ describe(`remark katex plugin`, () => {
     for (let parserPlugins of plugin.setParserPlugins()) {
       remark = remark.use(parserPlugins)
     }
-    const markdownAST  = remark.parse(equation)
+    const markdownAST = remark.parse(equation)
     plugin({ markdownAST })
     expect(markdownAST).toMatchSnapshot()
   })
