@@ -149,7 +149,7 @@ data
   initCache()
 
   // Ensure the public/static directory is created.
-  await fs.mkdirp(`${program.directory}/public/static`)
+  await fs.ensureDirSync(`${program.directory}/public/static`)
 
   // Copy our site files to the root of the site.
   activity = activityTimer(`copy gatsby files`)
@@ -158,7 +158,8 @@ data
   const siteDir = `${program.directory}/.cache`
   try {
     await fs.copy(srcDir, siteDir, { clobber: true })
-    await fs.mkdirs(`${program.directory}/.cache/json`)
+    await fs.ensureDirSync(`${program.directory}/.cache/json`)
+    await fs.ensureDirSync(`${program.directory}/.cache/layouts`)
   } catch (e) {
     console.log(`Unable to copy site files to .cache`)
     console.log(e)
@@ -271,6 +272,16 @@ data
     return graphql(schema, query, context, context, context)
   }
 
+  // Collect layouts.
+  activity = activityTimer(`createLayouts`)
+  activity.start()
+  await apiRunnerNode(`createLayouts`, {
+    graphql: graphqlRunner,
+    traceId: `initial-createLayouts`,
+    waitForCascadingActions: true,
+  })
+  activity.end()
+
   // Collect pages.
   activity = activityTimer(`createPages`)
   activity.start()
@@ -293,7 +304,6 @@ data
     waitForCascadingActions: true,
   })
   activity.end()
-
   // Extract queries
   activity = activityTimer(`extract queries from components`)
   activity.start()

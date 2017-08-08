@@ -135,6 +135,11 @@ module.exports = async (config = {}) => {
   )
   plugins.push(
     processPlugin(
+      path.join(__dirname, `../internal-plugins/component-layout-creator`)
+    )
+  )
+  plugins.push(
+    processPlugin(
       path.join(__dirname, `../internal-plugins/internal-data-bridge`)
     )
   )
