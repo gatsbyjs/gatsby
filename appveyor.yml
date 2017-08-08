@@ -44,23 +44,23 @@ install:
       }
   - ps: Install-Product node $env:nodejs_version $env:platform
   - ps: npm install -g windows-build-tools
-  - npm install -g gatsby-dev-cli@canary
+  - npm install -g gatsby-dev-cli@canary yarn
   - echo we are running on %PLATFORM%
-  - npm install
+  - yarn install
   - node --version
-  - npm --version
-  - npm test
+  - yarn --version
+  - yarn test
 
 # Build gatsby head
 before_build:
-  - npm run build
+  - yarn run build
 
 build_script:
   - cd examples/%example%
-  - npm install
+  - yarn install
   - gatsby-dev --set-path-to-repo ../..
   - gatsby-dev --scan-once
-  - npm run build
+  - yarn run build
 
 artifacts:
   - path: examples/$(example)
