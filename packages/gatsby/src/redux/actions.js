@@ -125,7 +125,7 @@ actions.deleteLayout = (layout, plugin = ``) => {
  */
 actions.createLayout = (layout, plugin = ``, traceId) => {
   layout.id = path.parse(layout.component).name
-  layout.componentWrapperPath = path.join(
+  layout.componentWrapperPath = joinPath(
     store.getState().program.directory,
     `.cache`,
     `layouts`,
