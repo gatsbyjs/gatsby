@@ -1,7 +1,7 @@
 const Remark = require(`remark`)
 const visit = require(`unist-util-visit`)
 
-const plugin = require(`../`).parse
+const plugin = require(`../`)
 
 const remark = new Remark().data(`settings`, {
   commonmark: true,

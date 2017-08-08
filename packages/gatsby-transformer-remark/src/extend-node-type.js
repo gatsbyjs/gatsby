@@ -39,6 +39,7 @@ module.exports = (
   }
 
   pluginsCacheStr = pluginOptions.plugins.map(p => p.name).join(``)
+  const parserPlugins = pluginOptions.parserPlugins || []
 
   return new Promise((resolve, reject) => {
     // Setup Remark.
@@ -48,14 +49,8 @@ module.exports = (
       pedantic: true,
     })
 
-    for (let plugin of pluginOptions.plugins) {
-      const requiredPlugin = require(plugin.resolve)
-      if (_.isFunction(requiredPlugin.getParserPlugins)) {
-        const parserPlugins = requiredPlugin.getParserPlugins()
-        for (let parserPlugin of parserPlugins) {
-          remark = remark.use(parserPlugin)
-        }
-      }
+    for (let parserPlugin of parserPlugins) {
+      remark = remark.use(require(parserPlugin));
     }
 
     async function getAST(markdownNode) {
@@ -123,8 +118,8 @@ module.exports = (
             Promise.all(
               pluginOptions.plugins.map(plugin => {
                 const requiredPlugin = require(plugin.resolve)
-                if (_.isFunction(requiredPlugin.parse)) {
-                  return requiredPlugin.parse(
+                if (_.isFunction(requiredPlugin)) {
+                  return requiredPlugin(
                     {
                       markdownAST,
                       markdownNode,

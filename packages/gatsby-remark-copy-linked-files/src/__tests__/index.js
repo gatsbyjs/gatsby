@@ -8,7 +8,7 @@ const Remark = require(`remark`)
 const fsExtra = require(`fs-extra`)
 const path = require(`path`)
 
-const plugin = require(`../`).parse
+const plugin = require(`../`)
 
 const remark = new Remark().data(`settings`, {
   commonmark: true,
