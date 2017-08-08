@@ -77,7 +77,6 @@ module.exports = (locals, callback) => {
         const layout = getLayout(page)
         return $(withRouter(layout), {
           ...props,
-          ...syncRequires.json[page.layoutJsonName],
           children: props =>
             $(syncRequires.components[page.componentChunkName], {
               ...props,

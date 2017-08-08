@@ -6,21 +6,28 @@ let components = {}
 
 const handlePageOrLayout = store => pageOrLayout => {
   // - Ensure page/layout component has a JSON file.
-  // - Add the component to Redux.
-  // - Watch the component to detect query changes..
-  const writeJsonFile = ({ jsonName }) => {
-    const dest = path.join(
-      store.getState().program.directory,
-      `.cache`,
-      `json`,
-      jsonName
-    )
-    if (!fs.existsSync(dest)) {
-      fs.writeFile(dest, `{}`, () => {})
-    }
+  const jsonDest = path.join(
+    store.getState().program.directory,
+    `.cache`,
+    `json`,
+    pageOrLayout.jsonName
+  )
+  if (!fs.existsSync(jsonDest)) {
+    fs.writeFile(jsonDest, `{}`, () => {})
   }
 
-  writeJsonFile(pageOrLayout)
+  // - Ensure layout component has a wrapper entry component file (which
+  // requires its JSON file so the data + code are one bundle).
+  if (pageOrLayout.isLayout) {
+    const wrapperComponent = `
+  import React from "react"
+  import Component from "${pageOrLayout.component}"
+  import data from "${jsonDest}"
+
+  export default (props) => <Component {...props} {...data} />
+  `
+    fs.writeFileSync(pageOrLayout.componentWrapperPath, wrapperComponent)
+  }
 
   const component = store.getState().components[pageOrLayout.componentPath]
 
@@ -28,8 +35,8 @@ const handlePageOrLayout = store => pageOrLayout => {
     return
   }
 
+  // - Watch the component to detect query changes.
   watchComponent(component.componentPath)
-  components[component.componentPath] = component.componentPath
 }
 
 exports.onCreatePage = ({ page, store, boundActionCreators }) => {

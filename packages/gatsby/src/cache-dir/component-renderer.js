@@ -90,7 +90,6 @@ class ComponentRenderer extends React.Component {
       return createElement(
         withRouter(this.state.pageResources.layout || DefaultLayout),
         {
-          ...this.state.pageResources.layoutJson,
           ...this.props,
           children: layoutProps =>
             createElement(this.state.pageResources.component, {

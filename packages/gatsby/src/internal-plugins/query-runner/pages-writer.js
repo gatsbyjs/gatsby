@@ -22,7 +22,6 @@ const writePages = async () => {
           componentChunkName,
           layout,
           layoutComponentChunkName: layoutOjb && layoutOjb.componentChunkName,
-          layoutJsonName: layoutOjb && layoutOjb.jsonName,
           jsonName,
           path,
           matchPath,
@@ -87,9 +86,7 @@ const preferDefault = m => m && m.default || m
   syncRequires += `exports.layouts = {\n${pageLayouts
     .map(
       l =>
-        `  "${l.componentChunkName}": preferDefault(require("${joinPath(
-          l.component
-        )}"))`
+        `  "${l.componentChunkName}": preferDefault(require("${l.componentWrapperPath}"))`
     )
     .join(`,\n`)}
 }`
@@ -123,9 +120,7 @@ const preferDefault = m => m && m.default || m
   asyncRequires += `exports.layouts = {\n${pageLayouts
     .map(
       l =>
-        `  "${l.componentChunkName}": require("gatsby-module-loader?name=${l.componentChunkName}!${joinPath(
-          l.component
-        )}")`
+        `  "${l.componentChunkName}": require("gatsby-module-loader?name=${l.componentChunkName}!${l.componentWrapperPath}")`
     )
     .join(`,\n`)}
 }`

@@ -125,9 +125,16 @@ actions.deleteLayout = (layout, plugin = ``) => {
  */
 actions.createLayout = (layout, plugin = ``, traceId) => {
   layout.id = path.parse(layout.component).name
+  layout.componentWrapperPath = path.join(
+    store.getState().program.directory,
+    `.cache`,
+    `layouts`,
+    layout.id + `.js`
+  )
   layout.componentChunkName = generateComponentChunkName(layout.component)
   layout.jsonName = `layout-${_.kebabCase(layout.id)}.json`
   layout.internalComponentName = `Component-layout-${pascalCase(layout.id)}`
+  layout.isLayout = true
 
   // Ensure the layout has a context object
   if (!layout.context) {

@@ -15,7 +15,9 @@ export const layoutSchema = Joi.object()
   .keys({
     id: Joi.string().required(),
     component: Joi.string().required(),
+    componentWrapperPath: Joi.string().required(),
     componentChunkName: Joi.string().required(),
+    isLayout: Joi.boolean().required(),
     context: Joi.object(),
   })
   .unknown()

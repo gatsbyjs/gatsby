@@ -30,7 +30,9 @@ class DefaultLayout extends React.Component {
                 lineHeight: 1,
                 margin: 0,
               }}
-            />
+            >
+              gatsby-example-using-remark
+            </h1>
           </Link>
         </div>
         <div {...styles.container} {...styles.verticalPadding}>
