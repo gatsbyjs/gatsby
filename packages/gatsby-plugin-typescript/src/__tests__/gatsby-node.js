@@ -1,3 +1,6 @@
+jest.mock(`../resolve`, () => (
+  (module) => `/resolved/path/${module}`
+))
 
 const {
   resolvableExtensions,

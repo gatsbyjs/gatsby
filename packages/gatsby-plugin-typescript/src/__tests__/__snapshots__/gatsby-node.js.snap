@@ -10,7 +10,7 @@ Array [
           "use": Array [
             "babel-loader",
             Object {
-              "loader": "/Users/jason/src/gatsby/node_modules/ts-loader/index.js",
+              "loader": "/resolved/path/ts-loader",
               "options": Object {
                 "compilerOptions": Object {
                   "experimentalDecorators": true,

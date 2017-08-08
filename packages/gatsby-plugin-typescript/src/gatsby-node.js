@@ -1,5 +1,6 @@
 const babelPluginRemoveQueries = require(`babel-plugin-remove-graphql-queries`)
 const { transpileModule } = require(`typescript`)
+const resolve = require(`./resolve`)
 
 const test = /\.tsx?$/
 const compilerDefaults = {
@@ -37,7 +38,7 @@ module.exports.modifyWebpackConfig = (
         {
           test,
           use: [jsLoader, {
-            loader: require.resolve(`ts-loader`),
+            loader: resolve(`ts-loader`),
             options: typescriptOptions,
           }],
         },
