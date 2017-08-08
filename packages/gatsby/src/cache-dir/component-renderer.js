@@ -1,19 +1,13 @@
 import React, { createElement } from "react"
 import loader from "./loader"
 import emitter from "./emitter"
-import { withRouter } from "react-router-dom"
-
-const DefaultLayout = ({ children }) =>
-  <div>
-    {children()}
-  </div>
 
 // Pass pathname in as prop.
 // component will try fetching resources. If they exist,
 // will just render, else will render null.
 class ComponentRenderer extends React.Component {
   constructor(props) {
-    super(props)
+    super()
     this.state = {
       location: props.location,
       pageResources: loader.getResourcesForPathname(props.location.pathname),
@@ -21,9 +15,7 @@ class ComponentRenderer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // hmm, would this ever be false?
-
-    if (this.state.pageResources !== nextProps.pageResources) {
+    if (this.state.location.pathname !== nextProps.location.pathname) {
       const pageResources = loader.getResourcesForPathname(
         nextProps.location.pathname
       )
@@ -67,9 +59,6 @@ class ComponentRenderer extends React.Component {
     ) {
       return true
     }
-    if (this.state.pageResources.layout !== nextState.pageResources.layout) {
-      return true
-    }
     if (this.state.pageResources.json !== nextState.pageResources.json) {
       return true
     }
@@ -87,20 +76,11 @@ class ComponentRenderer extends React.Component {
 
   render() {
     if (this.state.pageResources) {
-      return createElement(
-        withRouter(this.state.pageResources.layout || DefaultLayout),
-        {
-          ...this.props,
-          children: layoutProps => {
-            const props = layoutProps ? layoutProps : this.props
-            createElement(this.state.pageResources.component, {
-              key: this.props.location.pathname,
-              ...props,
-              ...this.state.pageResources.json,
-            })
-          },
-        }
-      )
+      return createElement(this.state.pageResources.component, {
+        key: this.props.location.pathname,
+        ...this.props,
+        ...this.state.pageResources.json,
+      })
     } else {
       return null
     }
