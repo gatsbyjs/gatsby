@@ -4,9 +4,9 @@
 //   require('/path/to/plugin2/gatsby-ssr.js'),
 // ]
 
-const apis = require(`./api-ssr-docs`)
+import apis from "./api-ssr-docs"
 
-module.exports (api, args, defaultReturn) => {
+export default (api, args, defaultReturn) => {
   if (!apis[api]) {
     console.log(`This API doesn't exist`, api)
   }
