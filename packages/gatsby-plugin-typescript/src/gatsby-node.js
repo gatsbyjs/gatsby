@@ -16,9 +16,9 @@ module.exports.modifyWebpackConfig = (
   { boundActionCreators, loaders },
   { compilerOptions, ...options }
 ) => {
-  // gatsby removes graphql queries from source code since they are processed
-  // and run ahead of time. We need to do that here as well in order to avoid
-  // extra dead code.
+  // Gatsby removes graphql queries from source code because they queries are
+  // run ahead of time. We need to do that here as well in order to avoid
+  // extra dead code sitting in the typescript files.
   const jsLoader = loaders.js({ plugins: [babelPluginRemoveQueries] })
 
   const typescriptOptions = {
