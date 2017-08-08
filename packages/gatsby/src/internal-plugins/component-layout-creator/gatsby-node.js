@@ -6,14 +6,12 @@ const systemPath = require(`path`)
 
 const glob = Promise.promisify(globCB)
 
-const createPath = require(`./create-path`)
 const validatePath = require(`./validate-path`)
 
 // Path creator.
 // Auto-create layouts.
 // algorithm is glob /layouts directory for js/jsx/cjsx files *not*
-// underscored. Then create url w/ our path algorithm *unless* user
-// takes control of that page component in gatsby-node.
+// underscored
 exports.createLayouts = async (
   { store, boundActionCreators },
   options,
@@ -54,16 +52,16 @@ exports.createLayouts = async (
 }
 const _createLayout = (filePath, layoutDirectory, createLayout) => {
   // Filter out special components that shouldn't be made into
-  // pages.
+  // layouts.
   if (!validatePath(systemPath.posix.relative(layoutDirectory, filePath))) {
     return
   }
 
-  // Create page object
+  // Create layout object
   const layout = {
     component: filePath,
   }
 
-  // Add page
+  // Add layout
   createLayout(layout)
 }
