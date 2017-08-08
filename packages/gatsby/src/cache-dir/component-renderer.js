@@ -91,13 +91,14 @@ class ComponentRenderer extends React.Component {
         withRouter(this.state.pageResources.layout || DefaultLayout),
         {
           ...this.props,
-          children: layoutProps =>
+          children: layoutProps => {
+            const props = layoutProps ? layoutProps : this.props
             createElement(this.state.pageResources.component, {
               key: this.props.location.pathname,
-              ...layoutProps,
-              ...this.props,
+              ...props,
               ...this.state.pageResources.json,
-            }),
+            })
+          },
         }
       )
     } else {
