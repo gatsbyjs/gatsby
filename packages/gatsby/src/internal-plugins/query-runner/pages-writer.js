@@ -1,5 +1,4 @@
 const _ = require(`lodash`)
-const glob = require(`glob`)
 const fs = require(`fs-extra`)
 
 const { store, emitter } = require(`../../redux/`)
@@ -12,7 +11,7 @@ const getLayoutById = layouts => id => layouts.find(l => l.id === id)
 // Write out pages information.
 const writePages = async () => {
   writtenOnce = true
-  let { program, config, pages, layouts } = store.getState()
+  let { program, pages, layouts } = store.getState()
   // Write out pages.json
   const pagesData = pages.reduce(
     (mem, { path, matchPath, componentChunkName, layout, jsonName }) => {
@@ -53,8 +52,6 @@ const writePages = async () => {
     json.push({ path: p.path, jsonName: p.jsonName })
   })
 
-  // Add the default layout if it exists.
-  let defaultLayoutExists = false
   pageLayouts = _.uniq(pageLayouts)
   components = _.uniqBy(components, c => c.componentChunkName)
 

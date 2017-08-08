@@ -82,29 +82,15 @@ Array [
     "pluginCreator___NODE": "Plugin test",
   },
   Object {
-    "component": "/whatever/index.js",
-    "componentChunkName": "component---whatever-index-js",
+    "component": "/whatever/pizza.js",
+    "componentChunkName": "component---whatever-pizza-js",
     "context": Object {},
-    "id": "indexpizza/",
-    "internalComponentName": "Component-layout-Indexpizza",
-    "jsonName": "layout-indexpizza.json",
+    "id": "pizza",
+    "internalComponentName": "Component-layout-Pizza",
+    "jsonName": "layout-pizza.json",
     "pluginCreator___NODE": "Plugin test",
   },
 ]
 `;
 
 exports[`Add layouts allows you to delete ids 1`] = `Array []`;
-
-exports[`Add layouts allows you to update existing layouts (based on id) 1`] = `
-Array [
-  Object {
-    "component": "/whatever2/index.js",
-    "componentChunkName": "component---whatever-2-index-js",
-    "context": Object {},
-    "id": "index",
-    "internalComponentName": "Component-layout-Index",
-    "jsonName": "layout-index.json",
-    "pluginCreator___NODE": "Plugin test",
-  },
-]
-`;
