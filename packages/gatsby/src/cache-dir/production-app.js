@@ -13,20 +13,21 @@ import {
 import { ScrollContext } from "react-router-scroll"
 import createHistory from "history/createBrowserHistory"
 import emitter from "./emitter"
+window.___emitter = emitter
 import pages from "./pages.json"
 import ComponentRenderer from "./component-renderer"
-import loader from "./loader"
 import asyncRequires from "./async-requires"
-
-window.___loader = loader
-window.___emitter = emitter
-window.matchPath = matchPath
-window.asyncRequires = asyncRequires
+import loader from "./loader"
 loader.addPagesArray(pages)
 loader.addProdRequires(asyncRequires)
+window.asyncRequires = asyncRequires
 
+window.___loader = loader
+
+window.matchPath = matchPath
+
+// Let the site/plugins run code very early.
 apiRunnerAsync(`onClientEntry`)
-  .catch((error) => { throw error })
   .then(() => {
 
     // Let plugins register a service worker. The plugin just needs
@@ -72,10 +73,7 @@ apiRunnerAsync(`onClientEntry`)
     })
 
     const AltRouter = apiRunner(`replaceRouterComponent`, { history })[0]
-    const DefaultRouter = ({ children }) =>
-      <Router history={history}>
-        {children}
-      </Router>
+    const DefaultRouter = ({ children }) => <Router history={history}>{children}</Router>
 
     const loadLayout = cb => {
       if (asyncRequires.layouts[`index`]) {
@@ -84,11 +82,7 @@ apiRunnerAsync(`onClientEntry`)
           cb(module)
         })
       } else {
-        cb(props =>
-          <div>
-            {props.children()}
-          </div>
-        )
+        cb(props => <div>{props.children()}</div>)
       }
     }
 
@@ -109,8 +103,7 @@ apiRunnerAsync(`onClientEntry`)
                       const props = layoutProps ? layoutProps : routeProps
                       if (loader.getPage(props.location.pathname)) {
                         return createElement(ComponentRenderer, { ...props })
-                      }
-                      else {
+                      } else {
                         return createElement(ComponentRenderer, {
                           location: { pathname: `/404.html` },
                         })
@@ -134,7 +127,7 @@ apiRunnerAsync(`onClientEntry`)
       })
     })
   })
-  .catch((error) => { throw error })
+
 
 function attachToHistory(history) {
   if (!window.___history) {

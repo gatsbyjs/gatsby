@@ -210,7 +210,6 @@ module.exports = async (
           .getState()
           .pages.map(page => page.componentChunkName)
         components = uniq(components)
-        components.push(`layout-component---index`)
         return [
           // Moment.js includes 100s of KBs of extra localization data by
           // default in Webpack that most sites don't want. This line disables

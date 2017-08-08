@@ -61,6 +61,7 @@
     "remotedev": "remotedev --hostname=localhost --port=19999",
     "test": "jest",
     "test:watch": "jest --watch",
+    "test:update": "jest --updateSnapshot",
     "test_bkup": "npm run lint && npm run test-node && npm run test-integration",
     "watch": "lerna run watch --no-sort --stream --concurrency 999"
   }

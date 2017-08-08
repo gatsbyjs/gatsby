@@ -29,7 +29,7 @@ Create the typography config file at `src/utils/typography.js`
 import Typography from 'typography'
 import fairyGateTheme from 'typography-theme-fairy-gates'
 
-const typography= new Typography(fairyGateTheme)
+const typography = new Typography(fairyGateTheme)
 
 module.exports = typography
 ```
@@ -40,10 +40,12 @@ Then our site's `gatsby-config.js`
 module.exports = {
   plugins: [
     {
-      resolve: 'gatsby-plugin-typography',
-      pathToConfigModule: 'src/utils/typography'
-    }
-  ]
+      resolve: `gatsby-plugin-typography`,
+      options: {
+        pathToConfigModule: `src/utils/typography.js`,
+      },
+    },
+  ],
 }
 ```
 

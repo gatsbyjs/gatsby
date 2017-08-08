@@ -159,7 +159,7 @@ module.exports = React.createClass({
               ? `transparent`
               : `${presets.veryLightPurple}`,
             backgroundColor: isHomepage
-              ? `rgba(0,0,0,0)`
+              ? `rgba(255,255,255,0)`
               : `rgba(255,255,255,0.975)`,
             position: isHomepage ? `absolute` : false,
             height: headerHeight,
