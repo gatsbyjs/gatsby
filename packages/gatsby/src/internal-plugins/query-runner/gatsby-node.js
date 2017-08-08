@@ -5,10 +5,9 @@ const { watchComponent } = require(`./query-watcher`)
 let components = {}
 
 const handlePageOrLayout = store => pageOrLayout => {
-  // - ensure corresponding page or layout has json files.
-  // - get corresponding component
-  // - watch component
-  // - mark component
+  // - Ensure page/layout component has a JSON file.
+  // - Add the component to Redux.
+  // - Watch the component to detect query changes..
   const writeJsonFile = ({ jsonName }) => {
     const dest = path.join(
       store.getState().program.directory,

@@ -7,9 +7,6 @@ import { rhythm, scale } from "../utils/typography"
 class Index extends React.Component {
   render() {
     const posts = this.props.data.allMarkdownRemark.edges
-    const author = this.props.data.site.siteMetadata.author
-    const authorTitle = this.props.data.site.siteMetadata.authorTitle
-    const description = this.props.data.site.siteMetadata.description
 
     return (
       <div>
@@ -75,13 +72,6 @@ export default Index
 
 export const pageQuery = graphql`
   query IndexQuery {
-    site {
-      siteMetadata {
-        title
-        author
-        description
-      }
-    }
     allMarkdownRemark(
       limit: 2000
       sort: { fields: [frontmatter___date], order: DESC }

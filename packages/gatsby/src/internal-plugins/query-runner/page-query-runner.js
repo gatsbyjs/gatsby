@@ -61,7 +61,10 @@ const findIdsWithoutDataDependencies = () => {
   // Get list of paths not already tracked and run the queries for these
   // paths.
   return _.difference(
-    [...state.pages.map(p => p.path), ...state.layouts.map(l => l.id)],
+    [
+      ...state.pages.map(p => p.path),
+      ...state.layouts.map(l => `LAYOUT___${l.id}`),
+    ],
     allTrackedIds
   )
 }
@@ -74,7 +77,9 @@ const runQueriesForIds = ids => {
   return Promise.all(
     ids.map(id => {
       const pagesAndLayouts = [...state.pages, ...state.layouts]
-      const pl = pagesAndLayouts.find(pl => pl.path === id || pl.id === id)
+      const pl = pagesAndLayouts.find(
+        pl => pl.path === id || `LAYOUT___${pl.id}` === id
+      )
       return queryRunner(pl, state.components[pl.component])
     })
   )
@@ -90,10 +95,10 @@ const findDirtyIds = actions => {
     }
 
     // find invalid pagesAndLayouts
-    dirtyIds.concat(state.componentDataDependencies.nodes[node.id])
+    dirtyIds = dirtyIds.concat(state.componentDataDependencies.nodes[node.id])
 
     // Find invalid connections
-    dirtyIds.concat(
+    dirtyIds = dirtyIds.concat(
       state.componentDataDependencies.connections[node.internal.type]
     )
 

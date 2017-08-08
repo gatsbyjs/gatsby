@@ -5,9 +5,10 @@ const _ = require(`lodash`)
 const { bindActionCreators } = require(`redux`)
 const { stripIndent } = require(`common-tags`)
 const glob = require(`glob`)
+const path = require(`path`)
+
 const { joinPath } = require(`../utils/path`)
 const { getNode, hasNodeChanged } = require(`./index`)
-
 const { store } = require(`./index`)
 import * as joiSchemas from "../joi-schemas/joi"
 import { generateComponentChunkName } from "../utils/js-chunk-names"
@@ -113,11 +114,9 @@ actions.deleteLayout = (layout, plugin = ``) => {
 /**
  * Create a layout.
  * @param {Object} layout a layout object
- * @param {string} layout.id Unique id for layout
  * @param {string} layout.component The absolute path to the component for this layout
  * @example
  * createLayout({
- *   id: `myNewLayout`,
  *   component: path.resolve(`./src/templates/myNewLayout.js`)
  *   context: {
  *     title: `My New Layout`
@@ -125,8 +124,8 @@ actions.deleteLayout = (layout, plugin = ``) => {
  * })
  */
 actions.createLayout = (layout, plugin = ``, traceId) => {
+  layout.id = path.parse(layout.component).name
   layout.componentChunkName = generateComponentChunkName(layout.component)
-
   layout.jsonName = `layout-${_.kebabCase(layout.id)}.json`
   layout.internalComponentName = `Component-layout-${pascalCase(layout.id)}`
 
@@ -136,6 +135,7 @@ actions.createLayout = (layout, plugin = ``, traceId) => {
   }
 
   const result = Joi.validate(layout, joiSchemas.layoutSchema)
+
   if (result.error) {
     console.log(
       chalk.blue.bgYellow(`The upserted layout didn't pass validation`)

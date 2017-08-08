@@ -14,7 +14,7 @@ const validatePath = require(`./validate-path`)
 // algorithm is glob /layouts directory for js/jsx/cjsx files *not*
 // underscored. Then create url w/ our path algorithm *unless* user
 // takes control of that page component in gatsby-node.
-exports.createPagesStatefully = async (
+exports.createLayouts = async (
   { store, boundActionCreators },
   options,
   doneCb
@@ -31,7 +31,7 @@ exports.createPagesStatefully = async (
   let files = await glob(`${layoutDirectory}/**/?(${exts})`)
   files.forEach(file => _createLayout(file, layoutDirectory, createLayout))
 
-  // Listen for new component pages to be added or removed.
+  // Listen for new layouts to be added or removed.
   chokidar
     .watch(`${layoutDirectory}/**/*.{${exts}}`)
     .on(`add`, path => {
@@ -41,7 +41,7 @@ exports.createPagesStatefully = async (
       }
     })
     .on(`unlink`, path => {
-      // Delete the page for the now deleted component.
+      // Delete the layout for the now deleted component.
       store
         .getState()
         .layouts.filter(p => p.component === path)
@@ -61,7 +61,6 @@ const _createLayout = (filePath, layoutDirectory, createLayout) => {
 
   // Create page object
   const layout = {
-    id: createPath(layoutDirectory, filePath),
     component: filePath,
   }
 

@@ -3,7 +3,7 @@ module.exports = {
     title: `gatsby-example-using-remark`,
     author: `@gatsbyjs`,
     description: `Blazing-fast React.js static site generator`,
-    homepage: `https://www.gatsbyjs.org`
+    homepage: `https://www.gatsbyjs.org`,
   },
   mapping: {
     "MarkdownRemark.frontmatter.author": `AuthorYaml`,

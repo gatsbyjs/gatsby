@@ -279,9 +279,12 @@ const queue = {
       // function when they're done loading. When both are loaded,
       // we move on.
       const done = () => {
-        if (component && json &&
+        if (
+          component &&
+          json &&
           (!page.layoutComponentChunkName || layout) &&
-          (!page.layoutJsonName || layoutJson)) {
+          (!page.layoutJsonName || layoutJson)
+        ) {
           pathScriptsCache[path] = { component, json, layout, layoutJson }
           const pageResources = { component, json, layout, layoutJson }
           cb(pageResources)
@@ -306,22 +309,23 @@ const queue = {
         done()
       })
 
-      page.layoutComponentChunkName && getResourceModule(page.layoutComponentChunkName, (err, l) => {
-        if (err) {
-          console.log(`Loading the Layout for ${page.path} failed`)
-        }
-        layout = l
-        done()
-      })
+      page.layoutComponentChunkName &&
+        getResourceModule(page.layoutComponentChunkName, (err, l) => {
+          if (err) {
+            console.log(`Loading the Layout for ${page.path} failed`)
+          }
+          layout = l
+          done()
+        })
 
       page.layoutJsonName &&
-      getResourceModule(page.layoutJsonName, (err, lj) => {
-        if (err) {
-          console.log(`Loading the Layout JSON for ${page.path} failed`)
-        }
-        layoutJson = lj
-        done()
-      })
+        getResourceModule(page.layoutJsonName, (err, lj) => {
+          if (err) {
+            console.log(`Loading the Layout JSON for ${page.path} failed`)
+          }
+          layoutJson = lj
+          done()
+        })
 
       return undefined
     }
