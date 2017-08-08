@@ -14,7 +14,7 @@
   links:
     404 Pages: /docs/add-404-page/
     Adding Images, Fonts, and Files: /docs/adding-images-fonts-files/
-    Browserslist: /docs/browserslist/
+    Browser Support: /docs/browser-support/
     Creating and Modifying Pages: /docs/creating-and-modifying-pages/
     Create a source plugin: /docs/create-source-plugin/
     Custom webpack config: /docs/add-custom-webpack-config/
