@@ -1,5 +1,6 @@
 const visit = require(`unist-util-visit`)
 const katex = require(`katex`)
+const remarkMath = require(`remark-math`)
 
 module.exports = ({ markdownAST }) => {
   visit(markdownAST, `inlineMath`, node => {
@@ -16,3 +17,5 @@ module.exports = ({ markdownAST }) => {
     })
   })
 }
+
+module.exports.setParserPlugins = () => [remarkMath]

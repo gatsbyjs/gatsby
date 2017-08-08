@@ -5,6 +5,7 @@
   "author": "Jeffrey Xiao <jeffrey.xiao1998@gmail.com>",
   "dependencies": {
     "katex": "^0.7.1",
+    "remark-math": "^0.2.4",
     "unist-util-visit": "^1.1.1"
   },
   "keywords": [
