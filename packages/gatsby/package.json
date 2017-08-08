@@ -85,6 +85,7 @@
     "postcss-import": "^8.2.0",
     "postcss-loader": "^0.13.0",
     "postcss-reporter": "^1.4.1",
+    "pretty-error": "^2.1.1",
     "raw-loader": "^0.5.1",
     "react": "^15.6.0",
     "react-dom": "^15.6.0",
@@ -152,6 +153,6 @@
     "build:cli": "babel src/gatsby-cli.js --out-file dist/gatsby-cli.js --presets es2015",
     "clean-test-bundles": "find test/ -type f -name bundle.js* -exec rm -rf {} +",
     "test-coverage": "node_modules/.bin/nyc --reporter=lcov --reporter=text npm test",
-    "watch": "rimraf dist && mkdir dist && npm run build:cli && npm run build:src -- --watch && npm run build:internal-plugins && npm run build:rawfiles"
+    "watch": "rimraf dist && mkdir dist && npm run build:cli && npm run build:internal-plugins && npm run build:rawfiles && npm run build:src -- --watch"
   }
 }

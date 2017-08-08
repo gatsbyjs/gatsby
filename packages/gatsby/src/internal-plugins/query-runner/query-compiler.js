@@ -2,7 +2,6 @@
 import path from "path"
 const normalize = require(`normalize-path`)
 import glob from "glob"
-import Bluebird from "bluebird"
 import invariant from "invariant"
 import { IRTransforms } from "relay-compiler"
 import ASTConvert from "relay-compiler/lib/ASTConvert"
@@ -13,11 +12,10 @@ const _ = require(`lodash`)
 import { store } from "../../redux"
 import FileParser from "./file-parser"
 import QueryPrinter from "./query-printer"
-
+import report from "../../utils/reporter"
 import type { DocumentNode, GraphQLSchema } from "graphql"
 
 const { printTransforms } = IRTransforms
-const globp = Bluebird.promisify(glob)
 
 const {
   ArgumentsOfCorrectTypeRule,
@@ -35,6 +33,30 @@ type RootQuery = {
   name: string,
   path: string,
   text: string,
+}
+
+const findFilePath = (docs, docName, pathMap) => {
+  let filePath = null
+  docs.find(doc => doc.definitions.find((node: any) => {
+    const { name: { value } } = node
+    if (value === docName) {
+      filePath = pathMap.get(value) || ``
+      return true
+    }
+    return false
+  }))
+  return filePath
+}
+
+function extractError(error: Error) {
+  const docRegex = /Invariant Violation: RelayParser: (.*). Source: document `(.*)` file:/g
+  let matches, message, docName
+  while ((matches = docRegex.exec(error.toString())) !== null) {
+    // This is necessary to avoid infinite loops with zero-width matches
+    if (matches.index === docRegex.lastIndex) docRegex.lastIndex++
+    ;[, message, docName] = matches
+  }
+  return { message, docName }
 }
 
 class Runner {
@@ -98,47 +120,21 @@ class Runner {
           VariablesInAllowedPositionRule,
         ])
       )
-    } catch (e) {
-      // Find the name of file
-      const regex = /Invariant Violation: RelayParser: (.*). Source: document `(.*)` file:/g
-      let m
-      let error
-      let docName
-      let filePath
-      while ((m = regex.exec(e.toString())) !== null) {
-        // This is necessary to avoid infinite loops with zero-width matches
-        if (m.index === regex.lastIndex) {
-          regex.lastIndex++
-        }
+    } catch (error) {
+      let { message, docName } = extractError(error)
+      let filePath = findFilePath(documents, docName, namePathMap)
 
-        // The result can be accessed through the `m`-variable.
-        m.forEach((match, groupIndex) => {
-          if (groupIndex === 1) {
-            error = match
-          } else if (groupIndex === 2) {
-            docName = match
-          }
-        })
-      }
-      const docWithError = documents.find(doc =>
-        doc.definitions.find((node: { name: string }) => {
-          const { name: { value } } = node
-          if (value === docName) {
-            filePath = namePathMap.get(value) || ``
-            return true
-          }
-          return false
-        })
-      )
-      if (docName && filePath && error) {
-        console.log(
-          `\nThere was an error while compiling your site's GraphQL queries in document "${docName}" in file "${filePath}".\n`
+      if (filePath && docName) {
+        error.message = message
+        report.error(
+          `There was an error while compiling your site's GraphQL queries in ` +
+          `document "${docName}" in file "${filePath}".`,
+          error
         )
-        console.log(`    `, error)
-        console.log(``)
       } else {
-        console.log(
-          `\nThere was an error while compiling your site's GraphQL queries\n${e.toString()}`
+        report.error(
+          `There was an error while compiling your site's GraphQL queries`,
+          error
         )
       }
     }
