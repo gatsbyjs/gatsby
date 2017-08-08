@@ -5,7 +5,7 @@ const { watchComponent } = require(`./query-watcher`)
 let components = {}
 
 const handlePageOrLayout = store => pageOrLayout => {
-  // - Ensure page/layout component has a JSON file.
+  // Ensure page/layout component has a JSON file.
   const jsonDest = path.join(
     store.getState().program.directory,
     `.cache`,
@@ -16,7 +16,7 @@ const handlePageOrLayout = store => pageOrLayout => {
     fs.writeFile(jsonDest, `{}`, () => {})
   }
 
-  // - Ensure layout component has a wrapper entry component file (which
+  // Ensure layout component has a wrapper entry component file (which
   // requires its JSON file so the data + code are one bundle).
   if (pageOrLayout.isLayout) {
     const wrapperComponent = `
@@ -35,7 +35,7 @@ const handlePageOrLayout = store => pageOrLayout => {
     return
   }
 
-  // - Watch the component to detect query changes.
+  // Watch the component to detect query changes.
   watchComponent(component.componentPath)
 }
 
