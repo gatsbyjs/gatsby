@@ -11,7 +11,11 @@ let inGatsbySite = false
 let localPackageJSON
 try {
   localPackageJSON = require(path.resolve(`./package.json`))
-  if (localPackageJSON.dependencies && localPackageJSON.dependencies.gatsby || localPackageJSON.devDependencies && localPackageJSON.devDependencies.gatsby) {
+  if (
+    (localPackageJSON.dependencies && localPackageJSON.dependencies.gatsby) ||
+    (localPackageJSON.devDependencies &&
+      localPackageJSON.devDependencies.gatsby)
+  ) {
     inGatsbySite = true
   } else if (
     localPackageJSON.devDependencies &&
