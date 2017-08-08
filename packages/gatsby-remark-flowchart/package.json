@@ -1,0 +1,22 @@
+{
+  "name": "gatsby-remark-flowchart",
+  "author": "Jacob Bolda <me@jacobbolda.com>",
+  "version": "1.0.0",
+  "description": "Use flowchartjs (or diagrams on npm) to transform markdown into an svg flowchart",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src --out-dir .",
+    "watch": "babel -w src --out-dir ."
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "flowchart",
+    "svg"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "mermaid": "^7.0.3",
+    "unist-util-visit": "^1.1.1"
+  }
+}
