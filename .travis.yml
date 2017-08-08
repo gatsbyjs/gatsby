@@ -8,10 +8,10 @@ dist: trusty
 sudo: required
 
 before_install:
-  - npm i -g npm@latest
+  - npm i -g yarn@latest
 
 install:
-  - npm install
+  - yarn install
 
 script:
   - npm test
