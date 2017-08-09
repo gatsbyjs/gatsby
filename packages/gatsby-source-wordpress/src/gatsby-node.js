@@ -32,7 +32,15 @@ const refactoredEntityTypes = {
 // ========= Main ===========
 exports.sourceNodes = async (
   { boundActionCreators, getNode, store },
-  { baseUrl, protocol, hostingWPCOM, useACF, auth, verboseOutput, perPage = 100 }
+  {
+    baseUrl,
+    protocol,
+    hostingWPCOM,
+    useACF,
+    auth,
+    verboseOutput,
+    perPage = 100,
+  }
 ) => {
   const {
     createNode,
@@ -109,7 +117,7 @@ exports.sourceNodes = async (
       method: `get`,
       url: url,
     }
-    if (_auth != undefined) {
+    if (_auth) {
       options.auth = {
         username: _auth.user,
         password: _auth.pass,
@@ -123,7 +131,7 @@ exports.sourceNodes = async (
     httpExceptionHandler(e)
   }
 
-  if (allRoutes != undefined) {
+  if (allRoutes) {
     let validRoutes = getValidRoutes(allRoutes, url, baseUrl)
 
     console.log(``)
@@ -166,7 +174,7 @@ async function getPages(url, page = 1) {
   try {
     let result = []
 
-    const getOptions = (page) => {
+    const getOptions = page => {
       return {
         method: `get`,
         url: `${url}?${querystring.stringify({
@@ -181,24 +189,26 @@ async function getPages(url, page = 1) {
     // but also the total count of objects, used for
     // multiple concurrent requests (rather than waterfall)
     const options = getOptions(page)
-    const response = await axios(options)
+    const { headers, data } = await axios(options)
 
-    result = result.concat(response.data)
+    result = result.concat(data)
 
-    // Get total number of entities
-    const total = parseInt(response.headers[`x-wp-total`])
-    const totalPages = Math.ceil(total / _perPage)
+    // Some resources have no paging, e.g. `/types`
+    const wpTotal = headers[`x-wp-total`]
+
+    const total = parseInt(wpTotal)
+    const totalPages = parseInt(headers[`x-wp-totalpages`])
+
+    if (!wpTotal || totalPages <= 1) {
+      return result
+    }
 
     if (_verbose) {
       console.log(`\nTotal entities :`, total)
       console.log(`Pages to be requested :`, totalPages)
     }
 
-    if (total < _perPage) {
-      return result
-    }
-
-    // For each X entities, make an HTTP request to page N
+    // We got page 1, now we want pages 2 through totalPages
     const requests = _.range(2, totalPages + 1).map(getPage => {
       const options = getOptions(getPage)
       return axios(options)
@@ -206,8 +216,8 @@ async function getPages(url, page = 1) {
 
     return Promise.all(requests).then(pages => {
       const data = pages.map(page => page.data)
-      data.forEach(postList => {
-        result = result.concat(postList)
+      data.forEach(list => {
+        result = result.concat(list)
       })
       return result
     })
@@ -471,7 +481,10 @@ function createGraphQLNode(ent, type, createNode, parentNodeId) {
 
   node = addFields(ent, node, createNode)
 
-  if (type === refactoredEntityTypes.post || type === refactoredEntityTypes.page) {
+  if (
+    type === refactoredEntityTypes.post ||
+    type === refactoredEntityTypes.page
+  ) {
     // TODO : Move this to field recursive and add other fields that have rendered field
     node.title = ent.title.rendered
     node.content = ent.content.rendered
