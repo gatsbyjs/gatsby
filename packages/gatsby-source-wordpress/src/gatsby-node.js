@@ -31,7 +31,7 @@ const refactoredEntityTypes = {
 
 // ========= Main ===========
 exports.sourceNodes = async (
-  { boundActionCreators, getNode, hasNodeChanged, store },
+  { boundActionCreators, getNode, store },
   { baseUrl, protocol, hostingWPCOM, useACF, auth, verboseOutput, perPage = 10 }
 ) => {
   const {
