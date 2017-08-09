@@ -4,7 +4,7 @@ module.exports = (state = { nodes: {}, connections: {} }, action) => {
   switch (action.type) {
     case `DELETE_CACHE`:
       return { nodes: {}, connections: {} }
-    case `CREATE_PAGE_DEPENDENCY`:
+    case `CREATE_COMPONENT_DEPENDENCY`:
       if (action.payload.path === ``) {
         return state
       }
@@ -15,7 +15,9 @@ module.exports = (state = { nodes: {}, connections: {} }, action) => {
         if (state.nodes[action.payload.nodeId]) {
           existingPaths = state.nodes[action.payload.nodeId]
         }
-        const newPaths = _.uniq(existingPaths.concat(action.payload.path))
+        const newPaths = _.uniq(
+          existingPaths.concat(action.payload.path || action.payload.id)
+        )
         state.nodes[action.payload.nodeId] = newPaths
       }
 
@@ -25,12 +27,14 @@ module.exports = (state = { nodes: {}, connections: {} }, action) => {
         if (state.connections[action.payload.connection]) {
           existingPaths = state.connections[action.payload.connection]
         }
-        const newPaths = _.uniq(existingPaths.concat(action.payload.path))
+        const newPaths = _.uniq(
+          existingPaths.concat(action.payload.path || action.payload.id)
+        )
         state.connections[action.payload.connection] = newPaths
       }
 
       return state
-    case `DELETE_PAGES_DEPENDENCIES`:
+    case `DELETE_COMPONENTS_DEPENDENCIES`:
       state.nodes = _.mapValues(state.nodes, paths =>
         _.difference(paths, action.payload.paths)
       )

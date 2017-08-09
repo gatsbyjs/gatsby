@@ -12,6 +12,7 @@ import apiRunner from "./api-runner-browser"
 import syncRequires from "./sync-requires"
 import pages from "./pages.json"
 import ComponentRenderer from "./component-renderer"
+import LayoutRenderer from "./layout-renderer"
 import loader from "./loader"
 loader.addPagesArray(pages)
 loader.addDevRequires(syncRequires)
@@ -88,17 +89,6 @@ const DefaultRouter = ({ children }) =>
     {children}
   </Router>
 
-// Use default layout if one isn't set.
-let layout
-if (syncRequires.layouts[`index`]) {
-  layout = syncRequires.layouts[`index`]
-} else {
-  layout = ({ children }) =>
-    <div>
-      {children()}
-    </div>
-}
-
 // Always have to have one top-level layout
 // can have ones below that. Find page, if has different
 // parent layout(s), loop through those until finally the
@@ -111,13 +101,12 @@ const Root = () =>
     createElement(
       ScrollContext,
       { shouldUpdateScroll },
-      createElement(withRouter(layout), {
+      createElement(withRouter(LayoutRenderer), {
         children: layoutProps =>
           createElement(Route, {
             render: routeProps => {
-              attachToHistory(routeProps.history)
-
               const props = layoutProps ? layoutProps : routeProps
+              attachToHistory(props.history)
               const pageResources = loader.getResourcesForPathname(
                 props.location.pathname
               )

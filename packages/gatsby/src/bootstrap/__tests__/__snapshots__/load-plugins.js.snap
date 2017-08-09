@@ -11,6 +11,14 @@ Array [
     "version": "1.0.0",
   },
   Object {
+    "name": "component-layout-creator",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "version": "1.0.0",
+  },
+  Object {
     "name": "internal-data-bridge",
     "pluginOptions": Object {
       "plugins": Array [],
@@ -64,6 +72,14 @@ exports[`Load plugins load plugins for a site 1`] = `
 Array [
   Object {
     "name": "component-page-creator",
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "version": "1.0.0",
+  },
+  Object {
+    "name": "component-layout-creator",
     "pluginOptions": Object {
       "plugins": Array [],
     },

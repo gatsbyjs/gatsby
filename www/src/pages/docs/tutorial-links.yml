@@ -20,4 +20,8 @@
     ">> CSS Modules": /tutorial/part-two/#css-modules
     ">> Glamor": /tutorial/part-two/#glamor
     ">> Styled Components": /tutorial/part-two/#styled-components
+- title: Part Three
+  links:
+    Part three: /tutorial/part-three/
+    ">> Our first layout component": /tutorial/part-three/#our-first-layout-component
 

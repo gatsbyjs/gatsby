@@ -1,6 +1,7 @@
 module.exports = function(root, cb) {
   root.addEventListener(`click`, function(ev) {
     if (
+      ev.button !== 0 ||
       ev.altKey ||
       ev.ctrlKey ||
       ev.metaKey ||

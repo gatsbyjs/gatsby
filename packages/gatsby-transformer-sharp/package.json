@@ -1,6 +1,6 @@
 {
   "name": "gatsby-transformer-sharp",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "Gatsby transformer plugin for images using Sharp",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
