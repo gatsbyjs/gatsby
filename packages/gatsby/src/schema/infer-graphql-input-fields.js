@@ -204,7 +204,7 @@ export function inferInputObjectStructureFromNodes({
       value,
       prefix: `${prefix}${_.upperFirst(key)}`,
     })
- 
+
     if (field == null) return
     inferredFields[createKey(key)] = field
   })

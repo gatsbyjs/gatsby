@@ -1,6 +1,6 @@
-module.export = function(node, key, text, createNode) { 
-  const str = _.isString(text) ? text : ` `;
-  const id = `${node.id}${key}MappingNode`;
+module.export = function(node, key, text, createNode) {
+  const str = _.isString(text) ? text : ` `
+  const id = `${node.id}${key}MappingNode`
   const mappingNode = {
     id: id,
     parent: node.id,
@@ -11,14 +11,14 @@ module.export = function(node, key, text, createNode) {
       mediaType: `text/x-markdown`,
       content: str,
       contentDigest: crypto
-            .createHash(`md5`)
-            .update(JSON.stringify(str))
-            .digest(`hex`),
-    } 
+        .createHash(`md5`)
+        .update(JSON.stringify(str))
+        .digest(`hex`),
+    },
   }
 
   node.children = node.children.concat([mappingNode.id])
   createNode(mappingNode)
 
-  return mappingNode;
+  return mappingNode
 }

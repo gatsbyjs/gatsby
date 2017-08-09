@@ -1,8 +1,8 @@
 const Db = require(`mongodb`).Db,
-      MongoClient = require(`mongodb`).MongoClient,
-      ObjectID = require(`mongodb`).ObjectID,
-      crypto = require(`crypto`),
-      _ = require(`lodash`)
+  MongoClient = require(`mongodb`).MongoClient,
+  ObjectID = require(`mongodb`).ObjectID,
+  crypto = require(`crypto`),
+  _ = require(`lodash`)
 
 exports.sourceNodes = (
   { boundActionCreators, getNode, hasNodeChanged },
@@ -47,9 +47,9 @@ function createNodes(db, pluginOptions, dbName, createNode, done) {
       db.close()
       done()
     } else {
-      var id = item._id.toString();
-      delete item._id;
-      
+      var id = item._id.toString()
+      delete item._id
+
       var node = {
         // Data for the node.
         ...item,
@@ -73,7 +73,7 @@ function createNodes(db, pluginOptions, dbName, createNode, done) {
             delete item[mediaItemFieldKey];
         });
       } */
-      createNode(node);
+      createNode(node)
     }
   })
 }
