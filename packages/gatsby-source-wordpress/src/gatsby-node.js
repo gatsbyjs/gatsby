@@ -32,7 +32,7 @@ const refactoredEntityTypes = {
 // ========= Main ===========
 exports.sourceNodes = async (
   { boundActionCreators, getNode, store },
-  { baseUrl, protocol, hostingWPCOM, useACF, auth, verboseOutput, perPage = 10 }
+  { baseUrl, protocol, hostingWPCOM, useACF, auth, verboseOutput, perPage = 100 }
 ) => {
   const {
     createNode,
@@ -471,7 +471,7 @@ function createGraphQLNode(ent, type, createNode, parentNodeId) {
 
   node = addFields(ent, node, createNode)
 
-  if (type === refactoredEntityTypes.post || Ztype === refactoredEntityTypes.page) {
+  if (type === refactoredEntityTypes.post || type === refactoredEntityTypes.page) {
     // TODO : Move this to field recursive and add other fields that have rendered field
     node.title = ent.title.rendered
     node.content = ent.content.rendered
