@@ -496,8 +496,6 @@ The final Glamor page should look identical to the CSS Modules page.
 
 ![glamor-example](glamor-example.png)
 
-In addition, you can also use this plugin to make [`glamorous`](https://github.com/paypal/glamorous) 💄 work with server side rendering and start writing React components that carry their styles with them.
-
 ### Styled Components
 
 For our final CSS-in-JS example, we'll try [Styled Components](https://www.styled-components.com/).
