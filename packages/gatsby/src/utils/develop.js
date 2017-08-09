@@ -12,6 +12,7 @@ const { store } = require(`../redux`)
 const copyStaticDirectory = require(`./copy-static-directory`)
 const developHtml = require(`./develop-html`)
 const { withBasePath } = require(`./path`)
+const report = require(`./reporter`)
 
 // Watch the static directory and copy files to public as they're added or
 // changed. Wait 10 seconds so copying doesn't interfer with the regular
@@ -30,13 +31,32 @@ rlInterface.on(`SIGINT`, () => {
   process.exit()
 })
 
+function formatWebpackError(error) {
+  // For HTML compilation issues we filter down the error
+  // to only the bits that are relevant for debugging
+  const formatter = report.getErrorFormatter()
+  formatter.skip(traceLine => !traceLine || traceLine.file !== `render-page.js`)
+  return formatter.render(error)
+}
+
+
 async function startServer(program) {
   const directory = program.directory
   const directoryPath = withBasePath(directory)
   const createIndexHtml = () =>
     developHtml(program).catch(err => {
-      console.error(err)
-      process.exit(1)
+      if (err.name !== `WebpackError`) {
+        report.panic(err)
+        return
+      }
+      report.panic(
+        report.stripIndent`
+          There was error compiling the entry index.html use to host the development site.
+
+          See our docs page on debugging HTML builds for help https://goo.gl/yL9lND
+
+        ` + formatWebpackError(err),
+      )
     })
 
   // Start bootstrap process.
@@ -127,27 +147,25 @@ async function startServer(program) {
     socket.join(`clients`)
   })
 
-  const listener = server.listen(program.port, program.host, e => {
-    if (e) {
-      if (e.code === `EADDRINUSE`) {
+  const listener = server.listen(program.port, program.host, err => {
+    if (err) {
+      if (err.code === `EADDRINUSE`) {
         // eslint-disable-next-line max-len
-        console.log(
+        report.panic(
           `Unable to start Gatsby on port ${program.port} as there's already a process listing on that port.`
         )
-      } else {
-        console.log(e)
+        return
       }
 
-      process.exit()
-    } else {
-      if (program.open) {
-        const host =
-          listener.address().address === `127.0.0.1`
-            ? `localhost`
-            : listener.address().address
-        const opn = require(`opn`)
-        opn(`http://${host}:${listener.address().port}`)
-      }
+      report.panic(`There was a problem starting the development server`, err)
+    }
+
+    if (program.open) {
+      const host =
+        listener.address().address === `127.0.0.1`
+          ? `localhost`
+          : listener.address().address
+      require(`opn`)(`http://${host}:${listener.address().port}`)
     }
   })
 
@@ -166,8 +184,7 @@ module.exports = (program: any) => {
 
   detect(port, (err, _port) => {
     if (err) {
-      console.error(err)
-      process.exit()
+      report.panic(err)
     }
 
     if (port !== _port) {
@@ -186,3 +203,5 @@ module.exports = (program: any) => {
     return startServer(program)
   })
 }
+
+module.exports.formatWebpackError = formatWebpackError

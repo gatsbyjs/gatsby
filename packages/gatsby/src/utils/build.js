@@ -5,6 +5,14 @@ const buildProductionBundle = require(`./build-javascript`)
 const bootstrap = require(`../bootstrap`)
 const apiRunnerNode = require(`./api-runner-node`)
 const copyStaticDirectory = require(`./copy-static-directory`)
+const { formatWebpackError } = require(`./develop`)
+const report = require(`./reporter`)
+
+function reportFailure(msg, err) {
+  report.log(``)
+  report.panic(msg, err.name !== `WebpackError` ? err : formatWebpackError(err))
+}
+
 
 async function html(program: any) {
   const { graphqlRunner } = await bootstrap(program)
@@ -12,36 +20,30 @@ async function html(program: any) {
   // an equivalent static directory within public.
   copyStaticDirectory()
 
-  console.log(`Generating CSS`)
+  let activity = report.activityTimer(`Generating CSS`)
+  activity.start()
   await buildCSS(program).catch(err => {
-    console.log(``)
-    console.log(`Generating CSS failed`, err)
-    console.log(``)
-    console.log(err)
-    process.exit(1)
+    reportFailure(`Generating CSS failed`, err)
   })
+  activity.end()
 
-  console.log(`Compiling production bundle.js`)
+  activity = report.activityTimer(`Compiling production bundle.js`)
+  activity.start()
   await buildProductionBundle(program).catch(err => {
-    console.log(``)
-    console.log(`Generating JS failed`, err)
-    console.log(``)
-    console.log(err)
-    process.exit(1)
+    reportFailure(`Generating JS failed`, err)
   })
+  activity.end()
 
-  console.log(`Generating static HTML for pages`)
+  activity = report.activityTimer(`Generating static HTML for pages`)
+  activity.start()
   await buildHTML(program).catch(err => {
-    console.log(``)
-    console.log(err)
-    console.log(``)
-    console.log(`Generating static HTML for pages failed`)
-    console.log(
-      `See our docs page on debugging HTML builds for help https://goo.gl/yL9lND`
-    )
+    reportFailure(report.stripIndent`
+      Generating static HTML for pages failed
 
-    process.exit(1)
+      See our docs page on debugging HTML builds for help https://goo.gl/yL9lND
+    `, err)
   })
+  activity.end()
 
   await apiRunnerNode(`onPostBuild`, { graphql: graphqlRunner })
 }

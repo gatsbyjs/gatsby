@@ -4,27 +4,42 @@ const { createReporter } = require(`yurnalist`)
 const { stripIndent } = require(`common-tags`)
 const convertHrtime = require(`convert-hrtime`)
 
-const prettyError = new PrettyError()
 
-prettyError.skipNodeFiles()
-prettyError.skipPackage(`regenerator-runtime`, `graphql`, `core-js`)
-prettyError.skip((traceLine, ln) => {
-  if (traceLine && traceLine.file === `asyncToGenerator.js`) return true
-  return false
-})
+function getErrorFormatter() {
+  const prettyError = new PrettyError()
 
-prettyError.appendStyle({
-  'pretty-error': {
-    marginTop: 1,
-  },
-})
+  prettyError.skipNodeFiles()
+  prettyError.skipPackage(
+    `regenerator-runtime`,
+    `graphql`,
+    `core-js`,
+    // `static-site-generator-webpack-plugin`,
+    // `tapable`, // webpack
+  )
+
+  prettyError.skip((traceLine, ln) => {
+    if (traceLine && traceLine.file === `asyncToGenerator.js`) return true
+    return false
+  })
+
+  prettyError.appendStyle({
+    'pretty-error': {
+      marginTop: 1,
+    },
+  })
+
+  return prettyError
+}
 
 
+const prettyError = getErrorFormatter()
 const reporter = createReporter({ emoji: true })
 const base = Object.getPrototypeOf(reporter)
 
 module.exports = Object.assign(reporter, {
   stripIndent,
+
+  getErrorFormatter,
 
   setVerbose(isVerbose) {
     this.isVerbose = true

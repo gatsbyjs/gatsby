@@ -6,6 +6,14 @@ import webpackConfig from "./webpack.config"
 
 const debug = require(`debug`)(`gatsby:html`)
 
+function createRealError(err: string) {
+  let split = err.split(/\r\n|[\n\r]/g)
+  let error = new Error(split[0].split(`:`).slice(1).join(`:`))
+  error.stack = split.join(`\n`)
+  error.name = `WebpackError`
+  return error
+}
+
 module.exports = async (program: any) => {
   const { directory } = program
 
@@ -26,7 +34,8 @@ module.exports = async (program: any) => {
         return reject(e)
       }
       if (stats.hasErrors()) {
-        return reject(`Error: ${stats.toJson().errors}`, stats)
+        let webpackErrors = stats.toJson().errors
+        return reject(createRealError(webpackErrors[0]))
       }
 
       // Remove the temp JS bundle file built for the static-site-generator-plugin
@@ -40,3 +49,5 @@ module.exports = async (program: any) => {
     })
   })
 }
+
+module.exports.createRealError = createRealError

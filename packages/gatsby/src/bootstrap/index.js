@@ -305,21 +305,17 @@ module.exports = async (program: any) => {
   const checkJobsDone = _.debounce(resolve => {
     const state = store.getState()
     if (state.jobs.active.length === 0) {
-      report.log(report.stripIndent`
-
-        bootstrap finished, time since started: ${process.uptime()}sec
-
-      ` )
+      report.log(``)
+      report.info(`bootstrap finished - ${process.uptime()} s`)
+      report.log(``)
       resolve({ graphqlRunner })
     }
   }, 100)
 
   if (store.getState().jobs.active.length === 0) {
-    report.log(report.stripIndent`
-
-      bootstrap finished, time since started: ${process.uptime()}sec
-
-    ` )
+    report.log(``)
+    report.info(`bootstrap finished - ${process.uptime()} s`)
+    report.log(``)
     return { graphqlRunner }
   } else {
     return new Promise(resolve => {
