@@ -6,4 +6,10 @@ const regex = new RegExp(`[^a-zA-Z0-9_]`, `g`)
  * characters and `_`. They also can't start with `__` which is reserved for
  * internal fields (`___foo` doesn't work either).
  */
-module.exports = (key: string): string => key.replace(regex, `_`)
+module.exports = (key: string): string => {
+    // check if your key is really a string otherwise you have bad data ...
+    if (typeof key !== 'string') {
+       throw `key is not a string -> ${key}`;
+    }
+    key.replace(regex, `_`)
+}
