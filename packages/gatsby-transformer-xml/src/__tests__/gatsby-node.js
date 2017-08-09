@@ -1,5 +1,5 @@
 const Promise = require(`bluebird`)
- 
+
 const { onCreateNode } = require(`../gatsby-node`)
 describe(`Process XML nodes correctly`, () => {
   const node = {
