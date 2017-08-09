@@ -8,6 +8,13 @@
     "lodash": "^4.17.4",
     "qs": "^6.4.0"
   },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-runtime": "^6.25.0"
+  },
   "deprecated": false,
   "description": "Gatsby source plugin for building websites using the Wordpress CMS as a data source.",
   "keywords": [
@@ -21,5 +28,20 @@
     "build": "babel src --out-dir .",
     "watch": "babel -w src --out-dir ."
   },
-  "version": "1.6.3"
+  "version": "1.6.3",
+  "babel": {
+    "presets": [
+      "es2015",
+      "stage-0"
+    ],
+    "plugins": [
+      [
+        "transform-runtime",
+        {
+          "polyfill": false,
+          "regenerator": true
+        }
+      ]
+    ]
+  }
 }
