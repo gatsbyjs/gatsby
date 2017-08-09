@@ -41,7 +41,7 @@ module.exports = (state = {}, action) => {
       }
 
       // Default polyfill to true.
-      if (!_.has(action, `polyfill`)) {
+      if (!_.has(action, [`payload`, `polyfill`])) {
         action = _.set(action, [`payload`, `polyfill`], true)
       }
 
