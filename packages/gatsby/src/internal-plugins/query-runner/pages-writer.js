@@ -1,33 +1,40 @@
 const _ = require(`lodash`)
-const glob = require(`glob`)
 const fs = require(`fs-extra`)
 
 const { store, emitter } = require(`../../redux/`)
-import {
-  layoutComponentChunkName,
-  pathChunkName,
-} from "../../utils/js-chunk-names"
+import { generatePathChunkName } from "../../utils/js-chunk-names"
 
 import { joinPath } from "../../utils/path"
+
+const getLayoutById = layouts => id => layouts.find(l => l.id === id)
 
 // Write out pages information.
 const writePages = async () => {
   writtenOnce = true
-  const { program, config, pages } = store.getState()
-
+  let { program, pages, layouts } = store.getState()
   // Write out pages.json
   const pagesData = pages.reduce(
-    (mem, { path, matchPath, componentChunkName, layout, jsonName }) => [
-      ...mem,
-      { componentChunkName, layout, jsonName, path, matchPath },
-    ],
+    (mem, { path, matchPath, componentChunkName, layout, jsonName }) => {
+      const layoutOjb = getLayoutById(layouts)(layout)
+      return [
+        ...mem,
+        {
+          componentChunkName,
+          layout,
+          layoutComponentChunkName: layoutOjb && layoutOjb.componentChunkName,
+          jsonName,
+          path,
+          matchPath,
+        },
+      ]
+    },
     []
   )
 
   // Get list of components, layouts, and json files.
   let components = []
-  let layouts = []
   let json = []
+  let pageLayouts = []
 
   pages.forEach(p => {
     components.push({
@@ -35,21 +42,16 @@ const writePages = async () => {
       component: p.component,
     })
     if (p.layout) {
-      layouts.push(p.layout)
+      let layout = getLayoutById(layouts)(p.layout)
+      pageLayouts.push(layout)
+      json.push({
+        jsonName: layout.jsonName,
+      })
     }
     json.push({ path: p.path, jsonName: p.jsonName })
   })
 
-  // Add the default layout if it exists.
-  let defaultLayoutExists = false
-  if (
-    glob.sync(joinPath(program.directory, `src/layouts/index.*`)).length !== 0
-  ) {
-    layouts.push(`index`)
-    defaultLayoutExists = true
-  }
-
-  layouts = _.uniq(layouts)
+  pageLayouts = _.uniq(pageLayouts)
   components = _.uniqBy(components, c => c.componentChunkName)
 
   await fs.writeFile(
@@ -81,20 +83,11 @@ const preferDefault = m => m && m.default || m
     )
     .join(`,\n`)}
 }\n\n`
-  syncRequires += `exports.layouts = {\n${layouts
-    .map(l => {
-      let componentName = l
-      if (l !== false || typeof l !== `undefined`) {
-        componentName = `index`
-        return `  "${l}": preferDefault(require("${joinPath(
-          program.directory,
-          `/src/layouts/`,
-          componentName
-        )}"))`
-      } else {
-        return `  "${l}": false`
-      }
-    })
+  syncRequires += `exports.layouts = {\n${pageLayouts
+    .map(
+      l =>
+        `  "${l.componentChunkName}": preferDefault(require("${l.componentWrapperPath}"))`
+    )
     .join(`,\n`)}
 }`
 
@@ -118,26 +111,17 @@ const preferDefault = m => m && m.default || m
   asyncRequires += `exports.json = {\n${json
     .map(
       j =>
-        `  "${j.jsonName}": require("gatsby-module-loader?name=${pathChunkName(
+        `  "${j.jsonName}": require("gatsby-module-loader?name=${generatePathChunkName(
           j.path
         )}!${joinPath(program.directory, `/.cache/json/`, j.jsonName)}")`
     )
     .join(`,\n`)}
 }\n\n`
-  asyncRequires += `exports.layouts = {\n${layouts
-    .map(layout => {
-      let componentName = layout
-      if (layout !== false || typeof layout !== `undefined`) {
-        componentName = `index`
-        return `  "${layout}": require("gatsby-module-loader?name=${`layout-component---${layout}`}!${joinPath(
-          program.directory,
-          `/src/layouts/`,
-          componentName
-        )}")`
-      } else {
-        return `  "${layout}": false`
-      }
-    })
+  asyncRequires += `exports.layouts = {\n${pageLayouts
+    .map(
+      l =>
+        `  "${l.componentChunkName}": require("gatsby-module-loader?name=${l.componentChunkName}!${l.componentWrapperPath}")`
+    )
     .join(`,\n`)}
 }`
 

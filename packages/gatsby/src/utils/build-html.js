@@ -33,8 +33,11 @@ module.exports = async (program: any) => {
       }
 
       // Remove the temp JS bundle file built for the static-site-generator-plugin
-      fs.unlinkSync(`${directory}/public/render-page.js`)
-
+      try {
+        fs.unlinkSync(`${directory}/public/render-page.js`)
+      } catch (e) {
+        // This function will fail on Windows with no further consequences.
+      }
       return resolve(null, stats)
     })
   })
