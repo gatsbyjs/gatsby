@@ -14,5 +14,10 @@
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.24.1"
+  },
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "lodash": "^4.17.4",
+    "xml-parser": "^1.2.1"
   }
 }
