@@ -3,6 +3,7 @@ const Promise = require(`bluebird`)
 const { onCreateNode } = require(`../gatsby-node`)
 describe(`Process XML nodes correctly`, () => {
   const node = {
+    name: `nodeName`,
     id: `whatever`,
     parent: `SOURCE`,
     children: [],

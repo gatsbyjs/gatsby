@@ -50,7 +50,7 @@ Array [
       "id": "bk101",
       "internal": Object {
         "contentDigest": "446732570969e52599dded1ba4941b65",
-        "type": "UndefinedXml",
+        "type": "NodeNameXml",
       },
       "name": "book",
       "parent": "whatever",
@@ -105,7 +105,7 @@ Array [
       "id": "bk102",
       "internal": Object {
         "contentDigest": "f1aadb72f7fc4e80a8b0f44899a4c30c",
-        "type": "UndefinedXml",
+        "type": "NodeNameXml",
       },
       "name": "book",
       "parent": "whatever",
@@ -165,7 +165,7 @@ Array [
         "id": "bk101",
         "internal": Object {
           "contentDigest": "446732570969e52599dded1ba4941b65",
-          "type": "UndefinedXml",
+          "type": "NodeNameXml",
         },
         "name": "book",
         "parent": "whatever",
@@ -202,6 +202,7 @@ Array [
           "mediaType": "application/xml",
           "name": "test",
         },
+        "name": "nodeName",
         "parent": "SOURCE",
       },
     },
@@ -256,7 +257,7 @@ Array [
         "id": "bk102",
         "internal": Object {
           "contentDigest": "f1aadb72f7fc4e80a8b0f44899a4c30c",
-          "type": "UndefinedXml",
+          "type": "NodeNameXml",
         },
         "name": "book",
         "parent": "whatever",
@@ -293,6 +294,7 @@ Array [
           "mediaType": "application/xml",
           "name": "test",
         },
+        "name": "nodeName",
         "parent": "SOURCE",
       },
     },
