@@ -2,6 +2,8 @@
 import path from "path"
 const normalize = require(`normalize-path`)
 import glob from "glob"
+
+import { validate } from "graphql"
 import invariant from "invariant"
 import { IRTransforms } from "relay-compiler"
 import ASTConvert from "relay-compiler/lib/ASTConvert"
@@ -12,7 +14,9 @@ const _ = require(`lodash`)
 import { store } from "../../redux"
 import FileParser from "./file-parser"
 import QueryPrinter from "./query-printer"
+import { graphqlError, graphqlValidationError, multipleRootQueriesError } from './graphql-errors'
 import report from "../../utils/reporter"
+
 import type { DocumentNode, GraphQLSchema } from "graphql"
 
 const { printTransforms } = IRTransforms
@@ -35,29 +39,19 @@ type RootQuery = {
   text: string,
 }
 
-const findFilePath = (docs, docName, pathMap) => {
-  let filePath = null
-  docs.find(doc => doc.definitions.find((node: any) => {
-    const { name: { value } } = node
-    if (value === docName) {
-      filePath = pathMap.get(value) || ``
-      return true
-    }
-    return false
-  }))
-  return filePath
-}
+type Queries = Map<string, RootQuery>;
 
-function extractError(error: Error) {
-  const docRegex = /Invariant Violation: RelayParser: (.*). Source: document `(.*)` file:/g
-  let matches, message, docName
-  while ((matches = docRegex.exec(error.toString())) !== null) {
-    // This is necessary to avoid infinite loops with zero-width matches
-    if (matches.index === docRegex.lastIndex) docRegex.lastIndex++
-    ;[, message, docName] = matches
-  }
-  return { message, docName }
-}
+const validationRules = [
+  ArgumentsOfCorrectTypeRule,
+  DefaultValuesOfCorrectTypeRule,
+  FragmentsOnCompositeTypesRule,
+  KnownTypeNamesRule,
+  LoneAnonymousOperationRule,
+  PossibleFragmentSpreadsRule,
+  ScalarLeafsRule,
+  VariablesAreInputTypesRule,
+  VariablesInAllowedPositionRule,
+]
 
 class Runner {
   baseDir: string
@@ -68,15 +62,22 @@ class Runner {
     this.schema = schema
   }
 
+  reportError(message) {
+    report.log(`${report.format.red(`GraphQL Error`)} ${message}`)
+  }
+
   async compileAll() {
     let nodes = await this.parseEverything()
     return await this.write(nodes)
   }
 
   async parseEverything() {
+    // FIXME: this should all use gatsby's configuration to determine parsable
+    // files (and how to parse them)
     let files = glob.sync(`${this.baseDir}/**/*.+(t|j)s?(x)`)
     files = files.filter(d => !d.match(/\.d\.ts$/))
     files = files.map(normalize)
+
     // Ensure all page components added as they're not necessarily in the
     // pages directory e.g. a plugin could add a page component.  Plugins
     // *should* copy their components (if they add a query) to .cache so that
@@ -93,50 +94,37 @@ class Runner {
     return await parser.parseFiles(files)
   }
 
-  async write(nodes: Map<string, DocumentNode>) {
+  async write(nodes: Map<string, DocumentNode>): Promise<Queries> {
+    const compiledNodes: Queries = new Map()
     const namePathMap = new Map()
+    const nameDefMap = new Map()
     const documents = []
 
-    nodes.forEach((doc, filePath) => {
+    for (let [filePath, doc] of nodes.entries()) {
+      let errors = validate(this.schema, doc, validationRules)
+
+      if (errors && errors.length) {
+        this.reportError(graphqlValidationError(errors, filePath))
+        return compiledNodes
+      }
+
       documents.push(doc)
       doc.definitions.forEach((def: any) => {
         const name: string = def.name.value
         namePathMap.set(name, filePath)
+        nameDefMap.set(name, def)
       })
-    })
+    }
+
 
     let compilerContext = new RelayCompilerContext(this.schema)
     try {
       compilerContext = compilerContext.addAll(
-        ASTConvert.convertASTDocuments(this.schema, documents, [
-          ArgumentsOfCorrectTypeRule,
-          DefaultValuesOfCorrectTypeRule,
-          FragmentsOnCompositeTypesRule,
-          KnownTypeNamesRule,
-          LoneAnonymousOperationRule,
-          PossibleFragmentSpreadsRule,
-          ScalarLeafsRule,
-          VariablesAreInputTypesRule,
-          VariablesInAllowedPositionRule,
-        ])
+        ASTConvert.convertASTDocuments(this.schema, documents, validationRules)
       )
     } catch (error) {
-      let { message, docName } = extractError(error)
-      let filePath = findFilePath(documents, docName, namePathMap)
-
-      if (filePath && docName) {
-        error.message = message
-        report.error(
-          `There was an error while compiling your site's GraphQL queries in ` +
-          `document "${docName}" in file "${filePath}".`,
-          error
-        )
-      } else {
-        report.error(
-          `There was an error while compiling your site's GraphQL queries`,
-          error
-        )
-      }
+      this.reportError(graphqlError(namePathMap, nameDefMap, error))
+      return compiledNodes
     }
 
     const printContext = printTransforms.reduce(
@@ -144,7 +132,6 @@ class Runner {
       compilerContext
     )
 
-    const compiledNodes: Map<string, RootQuery> = new Map()
 
     compilerContext.documents().forEach((node: { name: string }) => {
       if (node.kind !== `Root`) return
@@ -152,11 +139,16 @@ class Runner {
       const { name } = node
       let filePath = namePathMap.get(name) || ``
 
-      invariant(
-        !compiledNodes.has(filePath),
-        `Gatsby: Components may only specify one "root" query tag. ` +
-          `Combine them into a single query`
-      )
+      if (compiledNodes.has(filePath)) {
+        let otherNode = compiledNodes.get(filePath)
+        this.reportError(
+          multipleRootQueriesError(filePath,
+            nameDefMap.get(name),
+            otherNode && nameDefMap.get(otherNode.name),
+          )
+        )
+        return
+      }
 
       let text = filterContextForNode(printContext.getRoot(name), printContext)
         .documents()

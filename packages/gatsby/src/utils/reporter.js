@@ -7,6 +7,12 @@ const convertHrtime = require(`convert-hrtime`)
 const prettyError = new PrettyError()
 
 prettyError.skipNodeFiles()
+prettyError.skipPackage(`regenerator-runtime`, `graphql`, `core-js`)
+prettyError.skip((traceLine, ln) => {
+  if (traceLine && traceLine.file === `asyncToGenerator.js`) return true
+  return false
+})
+
 prettyError.appendStyle({
   'pretty-error': {
     marginTop: 1,
@@ -19,8 +25,14 @@ const base = Object.getPrototypeOf(reporter)
 
 module.exports = Object.assign(reporter, {
   stripIndent,
+
   setVerbose(isVerbose) {
     this.isVerbose = true
+  },
+
+  panic(...args) {
+    this.error(...args)
+    process.exit(1)
   },
 
   error(message, error) {

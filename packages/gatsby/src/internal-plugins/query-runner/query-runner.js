@@ -3,8 +3,8 @@ const fs = require(`fs`)
 const Promise = require(`bluebird`)
 
 const writeFileAsync = Promise.promisify(fs.writeFile)
-const { boundActionCreators } = require(`../../redux/actions`)
 const { joinPath } = require(`../../utils/path`)
+const report = require(`../../utils/reporter`)
 
 const { store } = require(`../../redux`)
 
@@ -28,11 +28,21 @@ module.exports = async (pageOrLayout, component) => {
     })
   }
 
-  // If there's a graphql errort then log the error. If we're building, also
+  // If there's a graphql error then log the error. If we're building, also
   // quit.
   if (result && result.errors) {
+    report.log(
+      report.stripIndent`
+        The GraphQL query from ${component.componentPath} failed
+
+        Errors:
+          ${(result.errors || [])}
+        Query:
+          ${component.query}
+      `
+    )
     console.log(``)
-    console.log(`The GraphQL query from ${component.componentPath} failed`)
+    console.log(``)
     console.log(``)
     console.log(`Query:`)
     console.log(component.query)

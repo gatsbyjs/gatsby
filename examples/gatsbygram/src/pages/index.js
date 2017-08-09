@@ -196,7 +196,19 @@ class Index extends React.Component {
 
 export default Index
 
+
 export const pageQuery = graphql`
+  query anotherOne {
+    user: allPostsJson(limit: 1) {
+      edges {
+        node {
+          username
+          ...Avatar_user
+        }
+      }
+    }
+  }
+
   query allImages {
     user: allPostsJson(limit: 1) {
       edges {

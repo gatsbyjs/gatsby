@@ -136,9 +136,8 @@ module.exports = async (program: any) => {
     await fs.copy(srcDir, siteDir, { clobber: true })
     await fs.ensureDirSync(`${program.directory}/.cache/json`)
     await fs.ensureDirSync(`${program.directory}/.cache/layouts`)
-  } catch (e) {
-    report.error(`Unable to copy site files to .cache`, e)
-    process.exit(1)
+  } catch (err) {
+    report.panic(`Unable to copy site files to .cache`, err)
   }
 
   // Find plugins which implement gatsby-browser and gatsby-ssr and write
@@ -174,7 +173,7 @@ module.exports = async (program: any) => {
       `utf-8`
     )
   } catch (err) {
-    console.error(`Failed to read ${siteDir}/api-runner-browser.js`)
+    report.panic(`Failed to read ${siteDir}/api-runner-browser.js`, err)
   }
 
   const browserPluginsRequires = browserPlugins
@@ -194,7 +193,7 @@ module.exports = async (program: any) => {
   try {
     sSRAPIRunner = fs.readFileSync(`${siteDir}/api-runner-ssr.js`, `utf-8`)
   } catch (err) {
-    console.error(`Failed to read ${siteDir}/api-runner-ssr.js`)
+    report.panic(`Failed to read ${siteDir}/api-runner-ssr.js`, err)
   }
 
   const ssrPluginsRequires = ssrPlugins
@@ -306,19 +305,21 @@ module.exports = async (program: any) => {
   const checkJobsDone = _.debounce(resolve => {
     const state = store.getState()
     if (state.jobs.active.length === 0) {
-      console.log(``)
-      console.log(
-        `bootstrap finished, time since started: ${process.uptime()}sec`
-      )
-      console.log(``)
+      report.log(report.stripIndent`
+
+        bootstrap finished, time since started: ${process.uptime()}sec
+
+      ` )
       resolve({ graphqlRunner })
     }
   }, 100)
 
   if (store.getState().jobs.active.length === 0) {
-    console.log(``)
-    console.log(`bootstrap finished, time since started: ${process.uptime()} s`)
-    console.log(``)
+    report.log(report.stripIndent`
+
+      bootstrap finished, time since started: ${process.uptime()}sec
+
+    ` )
     return { graphqlRunner }
   } else {
     return new Promise(resolve => {
