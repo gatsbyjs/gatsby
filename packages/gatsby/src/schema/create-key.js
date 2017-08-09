@@ -9,7 +9,7 @@ const regex = new RegExp(`[^a-zA-Z0-9_]`, `g`)
 module.exports = (key: string): string => {
     // check if your key is really a string otherwise you have bad data ...
     if (typeof key !== 'string') {
-       throw `key is not a string -> ${key}`;
+       throw `Graphql field name (key) is not a string -> ${key}`;
     }
     key.replace(regex, `_`)
 }
