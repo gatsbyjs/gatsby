@@ -70,9 +70,9 @@ async function parseToAst(filePath, fileStr) {
     } catch (error) {
       report.error(
         `There was a problem parsing "${filePath}"; any GraphQL ` +
-        `fragments or queries in this file were not processed. \n` +
-        `This may indicate a syntax error in the code, or it may be a file type ` +
-        `That Gatsby does not know how to parse.`,
+          `fragments or queries in this file were not processed. \n` +
+          `This may indicate a syntax error in the code, or it may be a file type ` +
+          `That Gatsby does not know how to parse.`,
         error
       )
     }
@@ -83,34 +83,35 @@ async function parseToAst(filePath, fileStr) {
 
 async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
   return new Promise((resolve, reject) => {
-    parseToAst(file, text).then(ast => {
-      let queries = []
-      if (!ast) {
+    parseToAst(file, text)
+      .then(ast => {
+        let queries = []
+        if (!ast) {
+          resolve(queries)
+          return
+        }
+
+        traverse(ast, {
+          ExportNamedDeclaration(path, state) {
+            path.traverse({
+              TaggedTemplateExpression(innerPath) {
+                const gqlAst = getGraphQLTag(innerPath)
+                if (gqlAst) {
+                  gqlAst.definitions.forEach(def => {
+                    if (!def.name || !def.name.value) {
+                      report.panic(getMissingNameErrorMessage(file))
+                    }
+                  })
+
+                  queries.push(...gqlAst.definitions)
+                }
+              },
+            })
+          },
+        })
         resolve(queries)
-        return
-      }
-
-      traverse(ast, {
-        ExportNamedDeclaration(path, state) {
-          path.traverse({
-            TaggedTemplateExpression(innerPath) {
-              const gqlAst = getGraphQLTag(innerPath)
-              if (gqlAst) {
-                gqlAst.definitions.forEach(def => {
-                  if (!def.name || !def.name.value) {
-                    report.panic(getMissingNameErrorMessage(file))
-                  }
-                })
-
-                queries.push(...gqlAst.definitions)
-              }
-            },
-          })
-        },
       })
-      resolve(queries)
-    })
-    .catch(reject)
+      .catch(reject)
   })
 }
 
@@ -151,11 +152,12 @@ export default class FileParser {
     const documents = new Map()
 
     return Promise.all(
-      files.map(file => this.parseFile(file).then(doc => {
-        if (!doc) return
-        documents.set(file, doc)
-      }))
-    )
-    .then(() => documents)
+      files.map(file =>
+        this.parseFile(file).then(doc => {
+          if (!doc) return
+          documents.set(file, doc)
+        })
+      )
+    ).then(() => documents)
   }
 }

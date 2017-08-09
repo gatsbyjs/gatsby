@@ -39,7 +39,6 @@ function formatWebpackError(error) {
   return formatter.render(error)
 }
 
-
 async function startServer(program) {
   const directory = program.directory
   const directoryPath = withBasePath(directory)
@@ -55,7 +54,7 @@ async function startServer(program) {
 
           See our docs page on debugging HTML builds for help https://goo.gl/yL9lND
 
-        ` + formatWebpackError(err),
+        ` + formatWebpackError(err)
       )
     })
 

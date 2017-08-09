@@ -1,34 +1,43 @@
 // @flow
 
 import { print, visit, GraphQLError, getLocation } from "graphql"
-import babelCodeFrame from 'babel-code-frame'
-import _ from 'lodash'
+import babelCodeFrame from "babel-code-frame"
+import _ from "lodash"
 import report from "../../utils/reporter"
 
-type RelayGraphQLError = Error & { validationErrors?: Object };
+type RelayGraphQLError = Error & { validationErrors?: Object }
 
 // These handle specific errors throw by RelayParser. If an error matches
 // you get a pointer to the location in the query that is broken, otherwise
 // we show the error and the query.
 const handlers = [
-  [/Unknown field `(.+)` on type `(.+)`/i, ([name], node) => {
-    if (node.kind === `Field` && node.name.value === name) {
-      return node.name.loc
-    }
-    return null
-  }],
-  [/Unknown argument `(.+)`/i, ([name], node) => {
-    if (node.kind === `Argument` && node.name.value === name) {
-      return node.name.loc
-    }
-    return null
-  }],
-  [/Unknown directive `@(.+)`/i, ([name], node) => {
-    if (node.kind === `Directive` && node.name.value === name) {
-      return node.name.loc
-    }
-    return null
-  }],
+  [
+    /Unknown field `(.+)` on type `(.+)`/i,
+    ([name], node) => {
+      if (node.kind === `Field` && node.name.value === name) {
+        return node.name.loc
+      }
+      return null
+    },
+  ],
+  [
+    /Unknown argument `(.+)`/i,
+    ([name], node) => {
+      if (node.kind === `Argument` && node.name.value === name) {
+        return node.name.loc
+      }
+      return null
+    },
+  ],
+  [
+    /Unknown directive `@(.+)`/i,
+    ([name], node) => {
+      if (node.kind === `Directive` && node.name.value === name) {
+        return node.name.loc
+      }
+      return null
+    },
+  ],
 ]
 
 function formatFilePath(filePath: string) {
@@ -36,18 +45,20 @@ function formatFilePath(filePath: string) {
 }
 
 function formatError(message: string, filePath: string, codeFrame: string) {
-  return report.stripIndent`
+  return (
+    report.stripIndent`
     ${message}
 
       ${formatFilePath(filePath)}
-  ` +
-  `\n\n${codeFrame}\n`
+  ` + `\n\n${codeFrame}\n`
+  )
 }
 
 function extractError(error: Error): { message: string, docName: string } {
   const docRegex = /Invariant Violation: RelayParser: (.*). Source: document `(.*)` file:/g
   let matches
-  let message = ``, docName = ``
+  let message = ``,
+    docName = ``
   while ((matches = docRegex.exec(error.toString())) !== null) {
     // This is necessary to avoid infinite loops with zero-width matches
     if (matches.index === docRegex.lastIndex) docRegex.lastIndex++
@@ -71,11 +82,7 @@ function findLocation(extractedMessage, def) {
   return location
 }
 
-function getCodeFrame(
-  query: string,
-  lineNumber?: number,
-  column?: number,
-) {
+function getCodeFrame(query: string, lineNumber?: number, column?: number) {
   return babelCodeFrame(query, lineNumber, column, {
     linesAbove: 10,
     linesBelow: 10,
@@ -92,21 +99,27 @@ function getCodeFrameFromRelayError(
 
   // we can't reliably get a location without the location source, since
   // the printed query may differ from the original.
-  let { line, column } = source && getLocation(source, start) || {}
+  let { line, column } = (source && getLocation(source, start)) || {}
   return getCodeFrame(query, line, column)
 }
 
-export function multipleRootQueriesError(filePath: string, def: any, otherDef: any) {
+export function multipleRootQueriesError(
+  filePath: string,
+  def: any,
+  otherDef: any
+) {
   let name = def.name.value
   let otherName = otherDef.name.value
-  let unifiedName = `${_.camelCase(name)}And${_.upperFirst(_.camelCase(otherName))}`
+  let unifiedName = `${_.camelCase(name)}And${_.upperFirst(
+    _.camelCase(otherName)
+  )}`
 
   return formatError(
     `Multiple "root" queries found in file: "${name}" and "${otherName}". ` +
-    `Only the first ("${otherName}") will be registered.`,
+      `Only the first ("${otherName}") will be registered.`,
     filePath,
     `  ${report.format.yellow(`Instead of:`)} \n\n` +
-    babelCodeFrame(report.stripIndent`
+      babelCodeFrame(report.stripIndent`
       query ${otherName} {
         bar {
           #...
@@ -119,8 +132,8 @@ export function multipleRootQueriesError(filePath: string, def: any, otherDef: a
         }
       }
     `) +
-    `\n\n  ${report.format.green(`Do:`)} \n\n` +
-    babelCodeFrame(report.stripIndent`
+      `\n\n  ${report.format.green(`Do:`)} \n\n` +
+      babelCodeFrame(report.stripIndent`
       query ${unifiedName} {
         bar {
           #...
@@ -155,12 +168,17 @@ export function graphqlError(
   let filePath = namePathMap.get(docName)
 
   if (filePath && docName) {
-    return formatError(message, filePath, getCodeFrameFromRelayError(nameDefMap.get(docName), message, error))
+    return formatError(
+      message,
+      filePath,
+      getCodeFrameFromRelayError(nameDefMap.get(docName), message, error)
+    )
   }
 
   message = `There was an error while compiling your site's GraphQL queries. `
   if (error.message.match(/must be an instance of/)) {
-    message += `This usually means that more than one instance of 'graphql' is installed ` +
+    message +=
+      `This usually means that more than one instance of 'graphql' is installed ` +
       `in your node_modules. Remove all but the top level one or run \`npm dedupe\` to fix it.`
   }
 

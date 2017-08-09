@@ -4,7 +4,6 @@ const { createReporter } = require(`yurnalist`)
 const { stripIndent } = require(`common-tags`)
 const convertHrtime = require(`convert-hrtime`)
 
-
 function getErrorFormatter() {
   const prettyError = new PrettyError()
 
@@ -12,7 +11,7 @@ function getErrorFormatter() {
   prettyError.skipPackage(
     `regenerator-runtime`,
     `graphql`,
-    `core-js`,
+    `core-js`
     // `static-site-generator-webpack-plugin`,
     // `tapable`, // webpack
   )
@@ -23,14 +22,13 @@ function getErrorFormatter() {
   })
 
   prettyError.appendStyle({
-    'pretty-error': {
+    "pretty-error": {
       marginTop: 1,
     },
   })
 
   return prettyError
 }
-
 
 const prettyError = getErrorFormatter()
 const reporter = createReporter({ emoji: true })

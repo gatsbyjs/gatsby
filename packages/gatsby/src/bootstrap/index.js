@@ -22,7 +22,6 @@ const {
 } = require(`../internal-plugins/query-runner/page-query-runner`)
 const { writePages } = require(`../internal-plugins/query-runner/pages-writer`)
 
-
 // Override console.log to add the source file + line number.
 // Useful for debugging if you lose a console.log somewhere.
 // Otherwise leave commented out.

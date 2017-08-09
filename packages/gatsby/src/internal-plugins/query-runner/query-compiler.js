@@ -14,7 +14,11 @@ const _ = require(`lodash`)
 import { store } from "../../redux"
 import FileParser from "./file-parser"
 import QueryPrinter from "./query-printer"
-import { graphqlError, graphqlValidationError, multipleRootQueriesError } from './graphql-errors'
+import {
+  graphqlError,
+  graphqlValidationError,
+  multipleRootQueriesError,
+} from "./graphql-errors"
 import report from "../../utils/reporter"
 
 import type { DocumentNode, GraphQLSchema } from "graphql"
@@ -39,7 +43,7 @@ type RootQuery = {
   text: string,
 }
 
-type Queries = Map<string, RootQuery>;
+type Queries = Map<string, RootQuery>
 
 const validationRules = [
   ArgumentsOfCorrectTypeRule,
@@ -116,7 +120,6 @@ class Runner {
       })
     }
 
-
     let compilerContext = new RelayCompilerContext(this.schema)
     try {
       compilerContext = compilerContext.addAll(
@@ -132,7 +135,6 @@ class Runner {
       compilerContext
     )
 
-
     compilerContext.documents().forEach((node: { name: string }) => {
       if (node.kind !== `Root`) return
 
@@ -142,9 +144,10 @@ class Runner {
       if (compiledNodes.has(filePath)) {
         let otherNode = compiledNodes.get(filePath)
         this.reportError(
-          multipleRootQueriesError(filePath,
+          multipleRootQueriesError(
+            filePath,
             nameDefMap.get(name),
-            otherNode && nameDefMap.get(otherNode.name),
+            otherNode && nameDefMap.get(otherNode.name)
           )
         )
         return

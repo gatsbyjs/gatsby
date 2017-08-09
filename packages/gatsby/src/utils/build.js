@@ -13,7 +13,6 @@ function reportFailure(msg, err) {
   report.panic(msg, err.name !== `WebpackError` ? err : formatWebpackError(err))
 }
 
-
 async function html(program: any) {
   const { graphqlRunner } = await bootstrap(program)
   // Copy files from the static directory to
@@ -37,11 +36,14 @@ async function html(program: any) {
   activity = report.activityTimer(`Generating static HTML for pages`)
   activity.start()
   await buildHTML(program).catch(err => {
-    reportFailure(report.stripIndent`
+    reportFailure(
+      report.stripIndent`
       Generating static HTML for pages failed
 
       See our docs page on debugging HTML builds for help https://goo.gl/yL9lND
-    `, err)
+    `,
+      err
+    )
   })
   activity.end()
 

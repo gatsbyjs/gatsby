@@ -22,7 +22,7 @@ process.on(`unhandledRejection`, error => {
   report.panic(`UNHANDLED REJECTION`, error)
 })
 
-process.on(`uncaughtException`, (error) => {
+process.on(`uncaughtException`, error => {
   report.panic(`UNHANDLED EXCEPTION`, error)
 })
 

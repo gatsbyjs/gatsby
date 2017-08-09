@@ -36,7 +36,7 @@ module.exports = async (pageOrLayout, component) => {
         The GraphQL query from ${component.componentPath} failed
 
         Errors:
-          ${(result.errors || [])}
+          ${result.errors || []}
         Query:
           ${component.query}
       `

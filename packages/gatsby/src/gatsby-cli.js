@@ -11,7 +11,7 @@ const verDigit = Number(version.match(/\d+/)[0])
 if (verDigit < 4) {
   report.panic(
     `Gatsby 1.0+ requires node.js v4 or higher (you have ${version}). \n` +
-    `Upgrade node to the latest stable release.`
+      `Upgrade node to the latest stable release.`
   )
 }
 
@@ -27,7 +27,7 @@ const useGlobalGatsby = function() {
   if (!_.includes([`new`, `--help`], process.argv[2])) {
     report.panic(
       `A local install of Gatsby was not found. \n` +
-      `You should save Gatsby as a site dependency e.g. npm install --save gatsby`
+        `You should save Gatsby as a site dependency e.g. npm install --save gatsby`
     )
   }
 

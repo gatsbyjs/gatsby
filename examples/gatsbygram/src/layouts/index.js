@@ -10,7 +10,6 @@ import { rhythm, scale } from "../utils/typography"
 import presets from "../utils/presets"
 import Modal from "../components/modal"
 
-
 class DefaultLayout extends React.Component {
   static propTypes = {
     location: PropTypes.object.isRequired,
