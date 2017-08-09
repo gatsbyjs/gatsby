@@ -212,7 +212,7 @@ async function getPages(url, page = 1) {
       return result
     })
   } catch (e) {
-    httpExceptionHandler(e)
+    return httpExceptionHandler(e)
   }
 }
 
@@ -290,7 +290,7 @@ function getValidRoutes(allRoutes, url, baseUrl) {
         const manufacturer = getManufacturer(route)
 
         let rawType = ``
-        if (manufacturer == `wp`) {
+        if (manufacturer === `wp`) {
           rawType = `${typePrefix}${entityType}`
         }
 
@@ -412,12 +412,9 @@ async function fetchData(route, createNode, parentNodeId) {
 
     // TODO : Get the number of created nodes using the nodes in state.
     let length
-    if (routeResponse != undefined && Array.isArray(routeResponse)) {
+    if (routeResponse && Array.isArray(routeResponse)) {
       length = routeResponse.length
-    } else if (
-      routeResponse != undefined &&
-      !Array.isArray(routeResponse.data)
-    ) {
+    } else if (routeResponse && !Array.isArray(routeResponse)) {
       length = Object.keys(routeResponse).length
     }
     console.log(
@@ -425,8 +422,9 @@ async function fetchData(route, createNode, parentNodeId) {
     )
   }
 
-  if (_verbose && parentNodeId == undefined)
+  if (_verbose && !parentNodeId) {
     console.timeEnd(`Fetching the ${type} took`)
+  }
 }
 
 /**
@@ -445,7 +443,7 @@ const digest = str => crypto.createHash(`md5`).update(str).digest(`hex`)
  * @param {any} parentNodeId (Optionnal parent node ID)
  */
 function createGraphQLNode(ent, type, createNode, parentNodeId) {
-  let id = ent.id == undefined ? (ent.ID == undefined ? 0 : ent.ID) : ent.id
+  let id = !ent.id ? (!ent.ID ? 0 : ent.ID) : ent.id
   let node = {
     id: `${type}_${id.toString()}`,
     children: [],
@@ -457,35 +455,33 @@ function createGraphQLNode(ent, type, createNode, parentNodeId) {
     },
   }
 
-  if (type == refactoredEntityTypes.post) {
+  if (type === refactoredEntityTypes.post) {
     node.id = `POST_${ent.id.toString()}`
     node.internal.type = refactoredEntityTypes.post
-  } else if (type == refactoredEntityTypes.page) {
+  } else if (type === refactoredEntityTypes.page) {
     node.id = `PAGE_${ent.id.toString()}`
     node.internal.type = refactoredEntityTypes.page
-  } else if (type == refactoredEntityTypes.tag) {
+  } else if (type === refactoredEntityTypes.tag) {
     node.id = `TAG_${ent.id.toString()}`
     node.internal.type = refactoredEntityTypes.tag
-  } else if (type == refactoredEntityTypes.category) {
+  } else if (type === refactoredEntityTypes.category) {
     node.id = `CATEGORY_${ent.id.toString()}`
     node.internal.type = refactoredEntityTypes.category
   }
 
   node = addFields(ent, node, createNode)
 
-  if (
-    type == refactoredEntityTypes.post ||
-    type == refactoredEntityTypes.page
-  ) {
+  if (type === refactoredEntityTypes.post || Ztype === refactoredEntityTypes.page) {
     // TODO : Move this to field recursive and add other fields that have rendered field
     node.title = ent.title.rendered
     node.content = ent.content.rendered
     node.excerpt = ent.excerpt.rendered
   }
+
   node.internal.contentDigest = digest(stringify(node))
   createNode(node)
 
-  if (parentNodeId != undefined) {
+  if (parentNodeId) {
     _parentChildNodes.push({ parentId: parentNodeId, childNodeId: node.id })
   }
 }
@@ -495,6 +491,7 @@ function createGraphQLNode(ent, type, createNode, parentNodeId) {
  *
  * @param {any} ent
  * @param {any} newEnt
+ * @param {function} createNode
  * @returns the new entity with fields
  */
 function addFields(ent, newEnt, createNode) {
@@ -516,11 +513,7 @@ function addFields(ent, newEnt, createNode) {
     acfNode.internal.contentDigest = digest(stringify(acfNode))
     createNode(acfNode)
     _parentChildNodes.push({ parentId: newEnt.id, childNodeId: acfNode.id })
-  } else if (
-    newEnt.meta != undefined &&
-    newEnt.meta.links != undefined &&
-    newEnt.meta.links.self != undefined
-  ) {
+  } else if (newEnt.meta && newEnt.meta.links && newEnt.meta.links.self) {
     //The entity as a link to more content for this entity
     fetchData(
       { url: newEnt.meta.links.self, type: `${newEnt.internal.type}_Extended` },
@@ -545,11 +538,11 @@ function recursiveAddFields(ent, newEnt) {
       if (key !== `acf`) {
         newEnt[key] = ent[k]
         // Nested Objects & Arrays of Objects
-        if (typeof ent[key] == `object`) {
+        if (typeof ent[key] === `object`) {
           if (!Array.isArray(ent[key]) && ent[key] != null) {
             newEnt[key] = recursiveAddFields(ent[key], {})
           } else if (Array.isArray(ent[key])) {
-            if (ent[key].length > 0 && typeof ent[key][0] == `object`) {
+            if (ent[key].length > 0 && typeof ent[key][0] === `object`) {
               ent[k].map((el, i) => {
                 newEnt[key][i] = recursiveAddFields(el, {})
               })
