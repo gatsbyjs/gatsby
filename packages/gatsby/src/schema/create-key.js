@@ -11,5 +11,5 @@ module.exports = (key: string): string => {
     if (typeof key !== 'string') {
        throw `Graphql field name (key) is not a string -> ${key}`;
     }
-    key.replace(regex, `_`)
+    return key.replace(regex, `_`)
 }
