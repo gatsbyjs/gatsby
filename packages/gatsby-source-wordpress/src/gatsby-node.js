@@ -162,15 +162,15 @@ exports.sourceNodes = async (
   return
 }
 
-async function getPages(url, perPage = 10, page = 1) {
+async function getPages(url, page = 1) {
   try {
     let result = []
 
-    const getOptions = (perPage, page) => {
+    const getOptions = (page) => {
       return {
         method: `get`,
         url: `${url}?${querystring.stringify({
-          per_page: perPage,
+          per_page: _perPage,
           page: page,
         })}`,
         auth: _auth ? { username: _auth.user, password: _auth.pass } : null,
@@ -180,27 +180,27 @@ async function getPages(url, perPage = 10, page = 1) {
     // Initial request gets the first page of data
     // but also the total count of objects, used for
     // multiple concurrent requests (rather than waterfall)
-    const options = getOptions(perPage, page)
+    const options = getOptions(page)
     const response = await axios(options)
 
     result = result.concat(response.data)
 
     // Get total number of entities
     const total = parseInt(response.headers[`x-wp-total`])
-    const totalPages = Math.ceil(total / perPage)
+    const totalPages = Math.ceil(total / _perPage)
 
     if (_verbose) {
       console.log(`\nTotal entities :`, total)
       console.log(`Pages to be requested :`, totalPages)
     }
 
-    if (total < perPage) {
+    if (total < _perPage) {
       return result
     }
 
     // For each X entities, make an HTTP request to page N
     const requests = _.range(2, totalPages + 1).map(getPage => {
-      const options = getOptions(perPage, getPage)
+      const options = getOptions(getPage)
       return axios(options)
     })
 
@@ -398,7 +398,7 @@ async function fetchData(route, createNode, parentNodeId) {
     if (_verbose) console.time(`Fetching the ${type} took`)
   }
 
-  const routeResponse = await getPages(url, _perPage, 1)
+  const routeResponse = await getPages(url, 1)
 
   if (routeResponse) {
     // Process entities to creating GraphQL Nodes.
