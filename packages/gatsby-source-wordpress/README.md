@@ -2,16 +2,18 @@
 
 Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from WordPress sites using the [WordPress JSON REST API](https://developer.wordpress.org/rest-api/reference/).
 
-An example site for using this plugin will be published soon as this is a WIP.
+An [example site](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress) for using this plugin is available.
 
-## WIP
+## Wish list
 
-- [x] source plugin
-- [x] pull data from self-hosted WordPress
+- [x] gatsby source plugin for WordPress
+- [x] pull data from self-hosted WordPress even behind HTAccess
 - [x] pull data from site hosted on wordpress.com, wordpress.org
-- [ ] authentify to wordpress.com API so medias can be queried.
+- [x] retrive any number of article and posts (tested on 900 posts)
+- [ ] authentify to wordpress.com API using OAuth 2 so medias can be queried. [[WIP](https://github.com/gatsbyjs/gatsby/pull/1657)]
 - [ ] pull images to local file system [WIP]
-- [ ] responsive images using sharp
+- [ ] responsive images using sharp [WIP]
+- [ ] add testing for `npm run test`
 
 ## Status
 
@@ -20,9 +22,9 @@ This module is at prototype-level. It currently pulls from WordPress the followi
 - [x] pages
 - [x] tags
 - [x] categories
-- [x] medias (not for a site hosted on wordpress.com)
+- [x] medias
 - [x] types
-- [x] users (not for a site hosted on wordpress.com)
+- [x] users
 - [x] statuses
 - [x] taxonomies
 - [x] and entities exposed by other plugins
@@ -30,25 +32,6 @@ This module is at prototype-level. It currently pulls from WordPress the followi
 It will pull any endpoint provided by WordPress Plugins as long as it appears in the list of endpoints.
   * `//your-site.com/wp-json/` for a self-hosted WordPress or hosted on wordpress.org
   * `https://public-api.wordpress.com/wp/v2/sites/your-site.com` for a site hosted on wordpress.com
-
-Currently only these plugins were tested but it should work with any.
-- [x] [ACF](https://www.advancedcustomfields.com/) As this is a special plugin, this must be activated with `useACF: true` in your site's `gatsby-config.js`.
-    *  You must have the plugin [acf-to-rest-api](https://github.com/airesvsg/acf-to-rest-api) installed in WordPress in order to be able to access the ACF Fields from the API (this is the only known way to do that).
-    *  Will pull the `acf: { ... }` fields's contents from any entity which has it attached (pages, posts, medias, ... you choose from in WordPress back-end while creating a Group of Fields). Every node below `acf` is [Stringify'd](https://www.w3schools.com/js/js_json_stringify.asp), then put in a childNode, which means that you will have to call `JSON.parse()` to get an `Object`. (ex. ```const fields = JSON.parse(childWordpressAcfField.internal.content)```)
-    *  You will also have to include the children ACF Field Node in your GraphQL query. (See `Query posts with the child ACF Fields Node` below)
-
-- [x] [ACF Pro](https://www.advancedcustomfields.com/pro/)
-    *  Will work with [Flexible content](https://www.advancedcustomfields.com/resources/flexible-content/) and premium stuff like that (repeater, gallery, ...).  
-    *  Will pull the content attached to the [options page](https://www.advancedcustomfields.com/add-ons/options-page/).
-
-- [x] [WP-API-MENUS](https://wordpress.org/plugins/wp-api-menus/) which gives you the menus and menu locations endpoint.
-
-- [ ] We encourage you to report plugin that works but not listed here.
-
-The plugin support Basic HTTP Authentication, so if your Wordpress site is in dev and still behind a [HTAccess](http://www.htaccesstools.com/htaccess-authentication/) it will work.
-
-The Authentication on Wordpress.com is not supported yet. This means that you won't be able to query the featured medias if your site is hosted on Wordpress.com, but you still be able to use images and assets which are inside the content field (aka. added using the WYSIWYG editor in the post's content for example).
-
 
 ## Install
 
@@ -94,6 +77,34 @@ The Authentication on Wordpress.com is not supported yet. This means that you wo
     },
   ]
 ```
+
+## WordPress Plugins 
+
+These plugins were tested but it should work with any plugin that extends the REST API content.
+
+- [x] Custom Post Types : it will work seemlessly, no further option needs to be activated.
+
+- [x] [ACF](https://www.advancedcustomfields.com/) The option `useACF: true` must be activated in your site's `gatsby-config.js`.
+    *  You must have the plugin [acf-to-rest-api](https://github.com/airesvsg/acf-to-rest-api) installed in WordPress.
+    *  Will pull the `acf: { ... }` fields's contents from any entity which has it attached (pages, posts, medias, ... you choose from in WordPress back-end while creating a Group of Fields). Every node below `acf` is [Stringify'd](https://www.w3schools.com/js/js_json_stringify.asp), then put in a childNode, which means that you will have to call `JSON.parse()` to get an `Object`. (ex. ```const fields = JSON.parse(childWordpressAcfField.internal.content)```)
+    *  You will also have to include the children ACF Field Node in your GraphQL query. (See `Query posts with the child ACF Fields Node` below)
+
+- [x] [ACF Pro](https://www.advancedcustomfields.com/pro/)
+    *  Will work with [Flexible content](https://www.advancedcustomfields.com/resources/flexible-content/) and premium stuff like that (repeater, gallery, ...).  
+    *  Will pull the content attached to the [options page](https://www.advancedcustomfields.com/add-ons/options-page/).
+
+- [x] [WP-API-MENUS](https://wordpress.org/plugins/wp-api-menus/) which gives you the menus and menu locations endpoint.
+
+- [ ] Please PR on this Readme file to report plugin that works but not listed here.
+
+
+## Wordpress.com hosting [WIP]
+
+This is [WIP](https://github.com/gatsbyjs/gatsby/pull/1657). At the moment, one cannot query on medias so only images inserted using the WYSIWYG editor will work.
+
+You will need to provide an (API Key)[https://en.support.wordpress.com/api-keys/].
+
+Note : you don't need this for Wordpress.org hosting in which your WordPress will behave like a self-hosted instance.
 
 ## How to query : GraphQL
 
