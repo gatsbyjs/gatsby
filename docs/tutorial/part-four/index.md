@@ -15,7 +15,7 @@ We've also explored styling components using CSS-in-JS which lets us encapsulate
 
 ## Data
 
-A website has four parts, HTML, CSS, JS, and data. The first half of the tutorial focused on the first three. Let's now learn how to use data in Gatsby sites.
+A website has four parts, HTML, CSS, JS, and data. The first half of the tutorial focused on the first three. Let's learn now how to use data in Gatsby sites.
 
 What is data?
 
@@ -25,17 +25,11 @@ For the purpose of working in Gatsby however, a more useful answer is "everythin
 
 So far we've been writing text and adding images *directly* in components. Which is an *excellent* way to build many websites. But often you want to store data *outside* components and then bring the data *into* the component as needed.
 
-Why's that? There's a few reasons. You'll often have data you want to reuse in many components e.g. your site title. Also it's often easier to write and maintain data/content outside of components. E.g. you build a blog with markdown files for posts or perhaps you setup Wordpress for a large Gatsby site where many people are contributing content through Wordpress.
+For example, if you're building a site with Wordpress and Gatsby, the *data* for the site (pages and posts) are in Wordpress and you *pull* that data as needed into your components.
 
-Data you might want to use for sites can live in many places and exist in many forms.
+Data can also live in markdown, csv, and other files, databases, and APIs of all sort.
 
-* Markdown
-* Wordpress and other CMSs
-* CSV files
-* Databases
-* APIs
-
-Gatsby's data layer lets us pull data from these and any other source directly into our components in the shape and form we want them.
+**Gatsby's data layer lets us pull data from these (and any other source) directly into our components**—in the shape and form we want our data.
 
 ## How Gatsby's data layer uses GraphQL to pull data into components 
 
@@ -49,7 +43,7 @@ Gatsby uses GraphQL to let components declare, using GraphQL queries, the data i
 
 ## Our first GraphQL query
 
-Let's create a new site for this part of the tutorial like in the previous parts. We're going to build a simple markdown blog called "Pandas Eating Lots"! It's dedicated to showing off the best pictures & videos of Pandas eating lots of food. Along the way we'll be dipping our toes into GraphQL and Gatsby's markdown support.
+Let's create another new site for this part of the tutorial like in the previous parts. We're going to build a simple markdown blog called "Pandas Eating Lots". It's dedicated to showing off the best pictures & videos of Pandas eating lots of food. Along the way we'll be dipping our toes into GraphQL and Gatsby's markdown support.
 
 ```shell
 gatsby new tutorial-part-four https://github.com/gatsbyjs/gatsby-starter-hello-world
@@ -158,19 +152,109 @@ Add the above files and then run `gatsby develop` like normal and you should see
 
 ![start](start.png)
 
-Simple site with title in layout and two pages in navigation. Use Glamorous + rhythm
+We have another simple site with a layout and two pages.
 
-Replace title with query from site metadata. Introduce GraphiQL
+Now let's start querying 😋
 
-hot reload title, all data is hot reloadable
+When building sites, it's common to want to reuse common bits of data across the site. Like the site title for example. You'll notice looking at the About page that we have the site title in both the layout component (for the header) as well as the title of the About page. But what if we want to change the site title at some point in the future? We'd have to search across the site for everywhere we put the title. Which is both cumbersome but it's also easy to miss spots, especially as sites get larger and more complex. Much better to store the title in one place and then *pull* that title into components whenever we need it.
 
-## Source and transformer plugins
+Gatsby has a simple way to site "metadata" like titles.
 
-where else can data come from? EVERYWHERE!!!
+In your `gatsby-config.js` you can add data which you can then easily query in your components. So let's add our site title to `gatsby-config.js` and then query it from our layout and about page!
 
-source-filesystem — examine data in graphical, add some transformer plugins e.g. the react docgen perhaps or documentationjs
+Edit your `gatsby-config.js`:
 
-[DRAWING of cloudy data and stack of components with graphql in between]
+```javascript{2-4}
+module.exports = {
+  siteMetadata: {
+    title: `Blah Blah Fake Title`,
+  },
+  plugins: [
+    `gatsby-plugin-glamor`,
+    {
+      resolve: `gatsby-plugin-typography`,
+      options: {
+        pathToConfigModule: `src/utils/typography`,
+      },
+    },
+  ],
+}
+```
+
+Then edit the two components:
+
+`src/pages/about.js`
+
+```jsx{3,6,11-14}
+import React from "react"
+
+export default ({ data }) =>
+  <div>
+    <h1>
+      About {data.site.siteMetadata.title}
+    </h1>
+    <p>
+      We're the only site running on your computer dedicated to showing the best
+      photos and videos of pandas eating lots of food.
+    </p>
+  </div>
+
+export const query = graphql`
+  query AboutQuery {
+    site {
+      siteMetadata {
+        title
+      }
+    }
+  }
+`
+```
+
+[SCREENSHOT]
+
+It worked!! 🎉
+
+But let's restore our title. One of the core ideas of Gatsby is that everyone should hot reload. That there should be this feeling of immediacy (connection) whatever Bret Victor said between manipulating an input of Gatsby and that output showing up on the screen.
+
+So almost everywhere (there's a few places were things don't hot reload) changes should just take effect.
+
+So editing `siteMetadata` works the same way—try changing the title back to "Pandas Eating Lots". The change should show up very quickly in your browser.
+
+## Graph*i*QL
+
+Graph*i*QL is the GraphQL IDE. It's a powerful tool you'll use often while building Gatsby websites.
+
+Embed Gif
+
+Site (TODO get rid of `allSite`).
+
+## Source + Transformer plugins
+
+Data in Gatsby sites can come literally from anywhere. APIs, databases, CMSs, local files, etc.
+
+Data is fetched, like everything else in Gatsby, using plugins. There are two types of plugins used in Gatsby's data system—"source" and "transformer".
+
+Source plugins fetch data from their source. E.g. the filesystem source plugin knows how to fetch data from the file system. The Wordpress plugin nows how to fetch data from the Wordpress API.
+
+But often the source format of the data isn't what you want to use to build your website. For example markdown. Many people use markdown for writing blog posts because it's a simpler format than HTML. For example this tutorial you're working through is written in markdown :-)
+
+Other common formats data is stored in include JSON, CSV, XML, YAML, and many others. To use these, all of them need *transformed* into JavaScript so they're usable within Gatsby React components.
+
+Which is what transformer plugins do.
+
+So it's very common to use source and transformer plugins together. Let's try this out by adding some markdown files to our project and setup a source & transformer plugin to add it to our project.
+
+### `gatsby-source-filesystem`
+
+Add source-filesystem and have them play around with files and show off data it brings up.
+
+[VIDEO]
+
+Have them create a page listing all the files with the total count at the top.
+
+### `gatsby-transformer-remark`
+
+Add Markdown — now can query markdown files. HTML, excerpt, reading time, front matter.
 
 ## Creating pages from Markdown
 
@@ -184,10 +268,10 @@ Introduce various options for querying e.g. filter, sort, etc.
 
 ## Archive page
 
-common to have all posts listed on an archive page. Not necessary of course here since we have so few pages but it's a good exercise.s
+common to have all posts listed on an archive page. Not necessary of course here since we have so few pages but it's a good exercise.
 
 ## Image handling
 
-gatsby-plugin-sharp / gatsby-remark-sharp & other remark plugins
+gatsby-plugin-sharp / gatsby-remark-sharp & gatsby-remark-iframe, gatsby-plugin-twitter, other remark plugins
 
-add mainImage to posts and show those on front page
+add mainImage to posts and query those on front page
