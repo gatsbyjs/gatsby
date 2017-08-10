@@ -27,7 +27,6 @@ module.exports = {
         // If useACF is true, then the source plugin will try to import the Wordpress ACF Plugin contents.
         // This feature is untested for sites hosted on Wordpress.com
         useACF: false,
-
         auth: {
           // If auth.user and auth.pass are filled, then the source plugin will be allowed
           // to access endpoints that are protected with .htaccess.
@@ -42,7 +41,6 @@ module.exports = {
           wpcom_app_clientId: '54793',
           wpcom_user: 'gatsbyjswpexample@gmail.com',
           wpcom_pass: 'very-secured-password',
-
         },
         // Set verboseOutput to true to display a verbose output on `npm run develop` or `npm run build`
         // It can help you debug specific API Endpoints problems

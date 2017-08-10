@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import { Row, Page, Column, BlockLink, P2, P4 } from "./styled"
 import styled from "styled-components"
 import theme from "./styled/theme"
-import striptags from 'striptags'
+import striptags from "striptags"
 
 const BlogPreviewImg = styled.img`width: 100%;`
 
