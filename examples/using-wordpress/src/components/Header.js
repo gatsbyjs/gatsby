@@ -28,7 +28,7 @@ const Header = ({ title, subtitle, pages }) =>
           return (
             <span key={p.node.id}>
               {i !== 0 ? ` - ` : ``}
-              <Link to={p.node.slug}>
+              <Link to={`/${p.node.slug}`}>
                 {unescape(p.node.title)}
               </Link>
             </span>
