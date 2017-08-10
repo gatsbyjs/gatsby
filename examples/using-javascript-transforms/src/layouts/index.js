@@ -1,8 +1,8 @@
-import React from 'react';
-import * as PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
-import siteMetadata from '../components/metadata.yaml';
-import '../static/css/base.scss';
+import React from "react"
+import * as PropTypes from "prop-types"
+import Helmet from "react-helmet"
+import siteMetadata from "../components/metadata.yaml"
+import "../static/css/base.scss"
 
 import InsetPage from "./inset-page"
 import BlogPost from "./blog-post"

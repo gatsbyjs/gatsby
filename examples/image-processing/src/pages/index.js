@@ -334,17 +334,20 @@ export const pageQuery = graphql`
         srcSet
         sizes
         originalImg
+        originalName
       }
     }
     resolution: imageSharp(id: { regex: "/lol.jpg/" }) {
       responsiveResolution(grayscale: true, width: 614) {
         src
         srcSet
+        originalName
       }
     }
     cropDefault: imageSharp(id: { regex: "/gatsby.jpg/" }) {
       resize(width: 180, height: 180) {
         src
+        originalName
       }
     }
     cropBottomLeft: imageSharp(id: { regex: "/nyancat/" }) {

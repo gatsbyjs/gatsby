@@ -6,11 +6,11 @@ import siteMetadata from "../metadata.yaml"
 // cheating with ^ because no graphql
 
 class SiteSidebar extends React.Component {
-    render() {
-        const isHome = this.props.location.pathname === ('/');
-        // const siteMetadata = this.props.data.siteMetadata;
-        // placeholder ^ for graphql
-        // TODO, deal with image more nice like
+  render() {
+    const isHome = this.props.location.pathname === `/`
+    // const siteMetadata = this.props.data.siteMetadata;
+    // placeholder ^ for graphql
+    // TODO, deal with image more nice like
 
     let header = (
       <div className="">
