@@ -3,8 +3,8 @@ const glob = require(`glob`)
 const _ = require(`lodash`)
 const mapSeries = require(`async/mapSeries`)
 
+const reporter = require(`../reporter`)
 const cache = require(`./cache`)
-const reporter = require(`./reporter`)
 const apiList = require(`./api-node-docs`)
 
 // Bind action creators per plugin so we can auto-add

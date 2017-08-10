@@ -3,7 +3,7 @@
 import { print, visit, GraphQLError, getLocation } from "graphql"
 import babelCodeFrame from "babel-code-frame"
 import _ from "lodash"
-import report from "../../utils/reporter"
+import report from "../../reporter"
 
 type RelayGraphQLError = Error & { validationErrors?: Object }
 

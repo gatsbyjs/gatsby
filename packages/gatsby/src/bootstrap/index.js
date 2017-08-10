@@ -12,7 +12,7 @@ const { graphql } = require(`graphql`)
 const { store, emitter } = require(`../redux`)
 const loadPlugins = require(`./load-plugins`)
 const { initCache } = require(`../utils/cache`)
-const report = require(`../utils/reporter`)
+const report = require(`../reporter`)
 
 const {
   extractQueries,
@@ -246,7 +246,7 @@ module.exports = async (program: any) => {
   }
 
   // Collect layouts.
-  activity = activityTimer(`createLayouts`)
+  activity = report.activityTimer(`createLayouts`)
   activity.start()
   await apiRunnerNode(`createLayouts`, {
     graphql: graphqlRunner,

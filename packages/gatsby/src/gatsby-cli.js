@@ -3,7 +3,7 @@ const path = require(`path`)
 const fs = require(`fs`)
 const _ = require(`lodash`)
 
-const report = require(`./utils/reporter`)
+const report = require(`./reporter`)
 
 const version = process.version
 const verDigit = Number(version.match(/\d+/)[0])

@@ -19,7 +19,7 @@ import {
   graphqlValidationError,
   multipleRootQueriesError,
 } from "./graphql-errors"
-import report from "../../utils/reporter"
+import report from "../../reporter"
 
 import type { DocumentNode, GraphQLSchema } from "graphql"
 

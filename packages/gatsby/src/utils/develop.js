@@ -1,4 +1,5 @@
 /* @flow */
+
 const express = require(`express`)
 const graphqlHTTP = require(`express-graphql`)
 const request = require(`request`)
@@ -12,7 +13,8 @@ const { store } = require(`../redux`)
 const copyStaticDirectory = require(`./copy-static-directory`)
 const developHtml = require(`./develop-html`)
 const { withBasePath } = require(`./path`)
-const report = require(`./reporter`)
+const report = require(`../reporter`)
+const { formatStaticBuildError } = require(`../reporter/errors`)
 
 // Watch the static directory and copy files to public as they're added or
 // changed. Wait 10 seconds so copying doesn't interfer with the regular
@@ -31,14 +33,6 @@ rlInterface.on(`SIGINT`, () => {
   process.exit()
 })
 
-function formatWebpackError(error) {
-  // For HTML compilation issues we filter down the error
-  // to only the bits that are relevant for debugging
-  const formatter = report.getErrorFormatter()
-  formatter.skip(traceLine => !traceLine || traceLine.file !== `render-page.js`)
-  return formatter.render(error)
-}
-
 async function startServer(program) {
   const directory = program.directory
   const directoryPath = withBasePath(directory)
@@ -54,7 +48,7 @@ async function startServer(program) {
 
           See our docs page on debugging HTML builds for help https://goo.gl/yL9lND
 
-        ` + formatWebpackError(err)
+        ` + formatStaticBuildError(err)
       )
     })
 
@@ -202,5 +196,3 @@ module.exports = (program: any) => {
     return startServer(program)
   })
 }
-
-module.exports.formatWebpackError = formatWebpackError

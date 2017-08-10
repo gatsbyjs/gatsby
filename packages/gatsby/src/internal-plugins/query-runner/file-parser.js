@@ -6,7 +6,7 @@ const crypto = require(`crypto`)
 import traverse from "babel-traverse"
 const babylon = require(`babylon`)
 
-const report = require(`../../utils/reporter`)
+const report = require(`../../reporter`)
 const { getGraphQLTag } = require(`../../utils/babel-plugin-extract-graphql`)
 
 import type { DocumentNode, DefinitionNode } from "graphql"

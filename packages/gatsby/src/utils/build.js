@@ -1,16 +1,20 @@
 /* @flow */
+
 const buildCSS = require(`./build-css`)
 const buildHTML = require(`./build-html`)
 const buildProductionBundle = require(`./build-javascript`)
 const bootstrap = require(`../bootstrap`)
+const report = require(`../reporter`)
+const { formatStaticBuildError } = require(`../reporter/errors`)
 const apiRunnerNode = require(`./api-runner-node`)
 const copyStaticDirectory = require(`./copy-static-directory`)
-const { formatWebpackError } = require(`./develop`)
-const report = require(`./reporter`)
 
-function reportFailure(msg, err) {
+function reportFailure(msg, err: Error) {
   report.log(``)
-  report.panic(msg, err.name !== `WebpackError` ? err : formatWebpackError(err))
+  report.panic(
+    msg,
+    err.name !== `WebpackError` ? err : formatStaticBuildError(err)
+  )
 }
 
 async function html(program: any) {
@@ -38,10 +42,10 @@ async function html(program: any) {
   await buildHTML(program).catch(err => {
     reportFailure(
       report.stripIndent`
-      Generating static HTML for pages failed
+        Generating static HTML for pages failed
 
-      See our docs page on debugging HTML builds for help https://goo.gl/yL9lND
-    `,
+        See our docs page on debugging HTML builds for help https://goo.gl/yL9lND
+      `,
       err
     )
   })

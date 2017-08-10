@@ -5,7 +5,7 @@ const _ = require(`lodash`)
 const Promise = require(`bluebird`)
 const resolveCwd = require(`resolve-cwd`)
 
-const report = require(`../utils/reporter`)
+const report = require(`../reporter`)
 
 // Improve Promise error handling. Maybe... what's the best
 // practice for this these days?

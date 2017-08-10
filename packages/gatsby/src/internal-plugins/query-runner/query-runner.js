@@ -4,7 +4,7 @@ const Promise = require(`bluebird`)
 
 const writeFileAsync = Promise.promisify(fs.writeFile)
 const { joinPath } = require(`../../utils/path`)
-const report = require(`../../utils/reporter`)
+const report = require(`../../reporter`)
 
 const { store } = require(`../../redux`)
 

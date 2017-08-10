@@ -4,7 +4,7 @@ import Promise from "bluebird"
 import fs from "fs"
 import webpackConfig from "./webpack.config"
 const { store } = require(`../redux`)
-const { createRealError } = require(`./develop-html`)
+const { createErrorFromString } = require(`../reporter/errors`)
 
 const debug = require(`debug`)(`gatsby:html`)
 
@@ -31,7 +31,7 @@ module.exports = async (program: any) => {
       }
       if (stats.hasErrors()) {
         let webpackErrors = stats.toJson().errors
-        return reject(createRealError(webpackErrors[0]))
+        return reject(createErrorFromString(webpackErrors[0]))
       }
 
       // Remove the temp JS bundle file built for the static-site-generator-plugin

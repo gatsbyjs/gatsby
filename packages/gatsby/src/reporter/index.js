@@ -1,43 +1,16 @@
 // @flow
-const PrettyError = require(`pretty-error`)
+
 const { createReporter } = require(`yurnalist`)
 const { stripIndent } = require(`common-tags`)
 const convertHrtime = require(`convert-hrtime`)
+const { getErrorFormatter } = require(`./errors`)
 
-function getErrorFormatter() {
-  const prettyError = new PrettyError()
-
-  prettyError.skipNodeFiles()
-  prettyError.skipPackage(
-    `regenerator-runtime`,
-    `graphql`,
-    `core-js`
-    // `static-site-generator-webpack-plugin`,
-    // `tapable`, // webpack
-  )
-
-  prettyError.skip((traceLine, ln) => {
-    if (traceLine && traceLine.file === `asyncToGenerator.js`) return true
-    return false
-  })
-
-  prettyError.appendStyle({
-    "pretty-error": {
-      marginTop: 1,
-    },
-  })
-
-  return prettyError
-}
-
-const prettyError = getErrorFormatter()
+const errorFormatter = getErrorFormatter()
 const reporter = createReporter({ emoji: true })
 const base = Object.getPrototypeOf(reporter)
 
 module.exports = Object.assign(reporter, {
   stripIndent,
-
-  getErrorFormatter,
 
   setVerbose(isVerbose) {
     this.isVerbose = true
@@ -54,7 +27,7 @@ module.exports = Object.assign(reporter, {
       message = error.message
     }
     base.error.call(this, message)
-    if (error) console.log(prettyError.render(error))
+    if (error) console.log(errorFormatter.render(error))
   },
 
   uptime(prefix: string) {

@@ -1,18 +1,10 @@
 /* @flow */
-import webpack from "webpack"
-import Promise from "bluebird"
-import fs from "fs"
-import webpackConfig from "./webpack.config"
-
+const webpack = require(`webpack`)
+const Promise = require(`bluebird`)
+const fs = require(`fs`)
+const webpackConfig = require(`./webpack.config`)
+const { createErrorFromString } = require(`../reporter/errors`)
 const debug = require(`debug`)(`gatsby:html`)
-
-function createRealError(err: string) {
-  let split = err.split(/\r\n|[\n\r]/g)
-  let error = new Error(split[0].split(`:`).slice(1).join(`:`))
-  error.stack = split.join(`\n`)
-  error.name = `WebpackError`
-  return error
-}
 
 module.exports = async (program: any) => {
   const { directory } = program
@@ -35,7 +27,7 @@ module.exports = async (program: any) => {
       }
       if (stats.hasErrors()) {
         let webpackErrors = stats.toJson().errors
-        return reject(createRealError(webpackErrors[0]))
+        return reject(createErrorFromString(webpackErrors[0]))
       }
 
       // Remove the temp JS bundle file built for the static-site-generator-plugin
@@ -49,5 +41,3 @@ module.exports = async (program: any) => {
     })
   })
 }
-
-module.exports.createRealError = createRealError
