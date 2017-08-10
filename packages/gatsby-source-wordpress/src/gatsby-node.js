@@ -19,6 +19,7 @@ let _useACF
 let _hostingWPCOM
 let _auth
 let _perPage
+let _accessToken
 
 let _parentChildNodes = []
 
@@ -62,6 +63,7 @@ exports.sourceNodes = async (
   let url
   if (hostingWPCOM) {
     url = `https://public-api.wordpress.com/wp/v2/sites/${baseUrl}`
+    _accessToken = await getWPCOMAccessToken()
   } else {
     url = `${_siteURL}/wp-json`
   }
@@ -89,7 +91,7 @@ exports.sourceNodes = async (
   )
   console.log(
     colorized.out(
-      `Using Auth: ${_auth.user} ${_auth.pass}`,
+      `Using Auth: ${_auth.htaccess_user} ${_auth.htaccess_pass}`,
       colorized.color.Font.FgBlue
     )
   )
@@ -119,8 +121,8 @@ exports.sourceNodes = async (
     }
     if (_auth) {
       options.auth = {
-        username: _auth.user,
-        password: _auth.pass,
+        username: _auth.htaccess_user,
+        password: _auth.htaccess_pass,
       }
     }
     allRoutes = await axios({
@@ -170,19 +172,35 @@ exports.sourceNodes = async (
   return
 }
 
+/**
+ * Get the pages of data
+ *
+ * @param {any} url
+ * @param {number} [page=1]
+ * @returns
+ */
 async function getPages(url, page = 1) {
   try {
     let result = []
 
     const getOptions = page => {
-      return {
+      let o = {
         method: `get`,
         url: `${url}?${querystring.stringify({
           per_page: _perPage,
           page: page,
         })}`,
-        auth: _auth ? { username: _auth.user, password: _auth.pass } : null,
       }
+      if (_hostingWPCOM) {
+        o.headers = {
+          Authorization: `Bearer ${_accessToken}`,
+        }
+      }else{
+         o.auth =_auth
+          ? { username: _auth.htaccess_user, password: _auth.htaccess_pass }
+          : null
+      }
+      return o
     }
 
     // Initial request gets the first page of data
@@ -227,6 +245,35 @@ async function getPages(url, page = 1) {
 }
 
 /**
+ * Gets wordpress.com access token so it can fetch private data like medias :/
+ *
+ * @returns
+ */
+async function getWPCOMAccessToken() {
+  let result
+  const oauthUrl = `https://public-api.wordpress.com/oauth2/token`
+  try {
+    let options = {
+      url: oauthUrl,
+      method: `post`,
+      data: querystring.stringify({
+        client_secret: _auth.wpcom_app_clientSecret,
+        client_id: _auth.wpcom_app_clientId,
+        username: _auth.wpcom_user,
+        password: _auth.wpcom_pass,
+        grant_type: `password`,
+      }),
+    }
+    result = await axios(options)
+    result = result.data.access_token
+  } catch (e) {
+    httpExceptionHandler(e)
+  }
+
+  return result
+}
+
+/**
  * Handles HTTP Exceptions (axios)
  *
  * @param {any} e
@@ -243,14 +290,6 @@ function httpExceptionHandler(e) {
     console.log(
       colorized.out(
         `Inner exception message : "${message}"`,
-        colorized.color.Font.FgRed
-      )
-    )
-  }
-  if ([400, 401, 402, 403].includes(status)) {
-    console.log(
-      colorized.out(
-        `Auth on endpoint is not implemented on this gatsby-source plugin.`,
         colorized.color.Font.FgRed
       )
     )

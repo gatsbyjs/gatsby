@@ -69,6 +69,14 @@ It will pull any endpoint provided by WordPress Plugins as long as it appears in
           user: 'your-htaccess-username',
           pass: 'your-htaccess-password',
           sendImmediately: false
+
+          // If hostingWPCOM is true then you will need 
+          // to communicate with wordpress.com api
+          // in order to do that you need to create an app
+          // at https://developer.wordpress.com/apps/
+          // then add the clientId and clientSecret here
+          clientId: '',
+          clientSecret: ''
         },
         // Set verboseOutput to true to display a verbose output on `npm run develop` or `npm run build` 
         // It can help you debug specific API Endpoints problems 
