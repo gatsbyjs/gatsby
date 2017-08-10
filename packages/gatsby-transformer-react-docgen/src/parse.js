@@ -21,7 +21,7 @@ function nameHandler(filePath = `/AnonymousComponent_${++fileCount}`) {
   let componentCount = 0
 
   return (docs, nodePath) => {
-    let displayName = docs.get(displayName)
+    let displayName = docs.get(`displayName`)
     if (displayName) return
 
     if (
