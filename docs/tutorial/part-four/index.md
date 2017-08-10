@@ -156,9 +156,9 @@ We have another simple site with a layout and two pages.
 
 Now let's start querying 😋
 
-When building sites, it's common to want to reuse common bits of data across the site. Like the site title for example. You'll notice looking at the About page that we have the site title in both the layout component (for the header) as well as the title of the About page. But what if we want to change the site title at some point in the future? We'd have to search across the site for everywhere we put the title. Which is both cumbersome but it's also easy to miss spots, especially as sites get larger and more complex. Much better to store the title in one place and then *pull* that title into components whenever we need it.
+When building sites, it's common to want to reuse common bits of data across the site. Like the *site title* for example. You'll notice looking at the About page that we have the site title in both the layout component (for the header) as well as the title of the About page. But what if we want to change the site title at some point in the future? We'd have to search across the site for everywhere we put the title. Which is both cumbersome but it's also easy to miss spots, especially as sites get larger and more complex. Much better to store the title in one place and then *pull* that title into components whenever we need it.
 
-Gatsby has a simple way to site "metadata" like titles.
+To solve this Gatsby supports a simple pattern for recording site "metadata" like the title.
 
 In your `gatsby-config.js` you can add data which you can then easily query in your components. So let's add our site title to `gatsby-config.js` and then query it from our layout and about page!
 
@@ -210,11 +210,54 @@ export const query = graphql`
 `
 ```
 
-[SCREENSHOT]
+`src/layouts/index.js`
+
+```jsx{10,19,28-33}
+import React from "react"
+import g from "glamorous"
+import { css } from "glamor"
+import Link from "gatsby-link"
+
+import { rhythm } from "../utils/typography"
+
+const linkStyle = css({ float: `right` })
+
+export default ({ children, data }) =>
+  <g.Div
+    margin={`0 auto`}
+    maxWidth={700}
+    padding={rhythm(2)}
+    paddingTop={rhythm(1.5)}
+  >
+    <Link to={`/`}>
+      <g.H3 marginBottom={rhythm(2)} display={`inline-block`}>
+        {data.site.siteMetadata.title}
+      </g.H3>
+    </Link>
+    <Link className={linkStyle} to={`/about/`}>
+      About
+    </Link>
+    {children()}
+  </g.Div>
+
+export const query = graphql`
+  query LayoutQuery {
+    site {
+      siteMetadata {
+        title
+      }
+    }
+  }
+`
+```
 
 It worked!! 🎉
 
-But let's restore our title. One of the core ideas of Gatsby is that everyone should hot reload. That there should be this feeling of immediacy (connection) whatever Bret Victor said between manipulating an input of Gatsby and that output showing up on the screen.
+![fake-title-graphql](fake-title-graphql.png)
+
+But let's restore the real title.
+
+One of the core ideas of Gatsby is that everyone should hot reload. That there should be this feeling of immediacy (connection) whatever Bret Victor said between manipulating an input of Gatsby and that output showing up on the screen.
 
 So almost everywhere (there's a few places were things don't hot reload) changes should just take effect.
 
