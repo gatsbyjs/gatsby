@@ -45,6 +45,7 @@ module.exports = (types: any) => {
         // If path isn't set, this is probably a layout
         if (
           !path &&
+          rootValue &&
           rootValue.componentChunkName &&
           _.includes(rootValue.componentChunkName, `layout`)
         ) {
