@@ -1,5 +1,5 @@
 ---
-title: Gatsby.js Tutorial Part Three
+title: Gatsby.js Tutorial Part Four
 typora-copy-images-to: ./
 ---
 
@@ -324,7 +324,263 @@ If you bring up the autocomplete window you'll see:
 
 Hit enter on `allFile` then type `ctrl-enter` to run a query.
 
-But often the source format of the data isn't what you want to use to build your website. For example markdown. Many people use markdown for writing blog posts because it's a simpler format than HTML. For example this tutorial you're working through is written in markdown :-)
+![filesystem-query](filesystem-query.png)
+
+Delete the `id` from the query and bring up the autocomplete again (ctrl-space).
+
+![filesystem-autocomplete](filesystem-autocomplete.png)
+
+Try adding a number of fields to your query pressing ctrl-enter each time to re-run the query. You'll see something like this:
+
+![allfile-query](allfile-query.png)
+
+The result is an array of File "nodes" (node is a fancy name for an object in a "graph"). Each File object has the fields we queried for.
+
+## Build a page with a GraphQL query
+
+Building new pages with Gatsby often starts in Graph*i*QL. You first sketch out the data query by playing in Graph*i*QL then copy this to a React page component to start building the UI.
+
+Let's try this.
+
+Create a new file at `src/pages/my-files.js` with the `allFile` query we just created.
+
+```jsx{4}
+import React from "react"
+
+export default ({ data }) => {
+  console.log(data)
+  return <div>Hello world</div>
+}
+
+export const query = graphql`
+  query MyFilesQuery {
+    allFile {
+      edges {
+        node {
+          relativePath
+          prettySize
+          extension
+          birthTime
+        }
+      }
+    }
+  }
+`
+```
+
+The `console.log(data)` line is highlighted above. It's often helpful when creating a new component to console out the data you're getting from the query so you can explore the data in your browser console while building the UI.
+
+If you visit the new page at `/my-pages/` and open up your browser console you will see:
+
+![data-in-console](data-in-console.png)
+
+The shape of the data matches the shape of the query.
+
+Let's add some code to our component to print out the File data.
+
+```jsx{5-36,40-54}
+import React from "react"
+
+export default ({ data }) => {
+  console.log(data)
+  return (
+    <div>
+      <h1>My Site's Files</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>relativePath</th>
+            <th>prettySize</th>
+            <th>extension</th>
+            <th>birthTime</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.allFile.edges.map(({ node }) =>
+            <tr>
+              <td>
+                {node.relativePath}
+              </td>
+              <td>
+                {node.prettySize}
+              </td>
+              <td>
+                {node.extension}
+              </td>
+              <td>
+                {node.birthTime}
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
+export const query = graphql`
+  query MyFilesQuery {
+    allFile {
+      edges {
+        node {
+          relativePath
+          prettySize
+          extension
+          birthTime(fromNow: true)
+        }
+      }
+    }
+  }
+`
+```
+
+And… 😲
+
+![my-files-page](my-files-page.png)
+
+## Transformer plugins
+
+But often the format of the data we get from source plugins isn't what you want to use to build your website. The filesystem source plugin let's you query information *about* files but what if you want to query data *inside* files?
+
+To make this possible, Gatsby supports transformer plugins which take raw content from source plugins and *transforms* this into something more usable.
+
+For example, markdown files.
+
+Let's add a markdown file to our site at `src/pages/sweet-pandas-eating-sweets.md` (This will become our first markdown blog post) and learn how to *transform* it to HTML using transformer plugins and GraphQL.
+
+```markdown
+---
+title: "Sweet Pandas Eating Sweets"
+date: "2017/08/10"
+---
+
+Pandas are really sweet.
+
+Here's a video of a panda eating sweets.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/4n0xNbfJLR8" frameborder="0" allowfullscreen></iframe>
+```
+
+Once you save the file, look at `/my-files/` again—the new markdown file is in the table. This is a very powerful feature of Gatsby. Like the earlier `siteMetadata` example, source plugins can live reload data. `gatsby-source-filesystem` is always scanning for new files to be added and when they are, re-runs your queries.
+
+Let's add a transformer plugin that can transform markdown.
+
+```shell
+npm install --save gatsby-transformer-remark
+```
+
+Then add it to the `gatsby-config.js` like normal.
+
+```javascript{13}
+module.exports = {
+  siteMetadata: {
+    title: `Pandas Eating Lots`,
+  },
+  plugins: [
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `src`,
+        path: `${__dirname}/src/`,
+      },
+    },
+    `gatsby-transformer-remark`,
+    `gatsby-plugin-glamor`,
+    {
+      resolve: `gatsby-plugin-typography`,
+      options: {
+        pathToConfigModule: `src/utils/typography`,
+      },
+    },
+  ],
+}
+```
+
+Restart the development server then refresh (or open again) Graph*i*QL and look at the autocomplete:
+
+![markdown-autocomplete](markdown-autocomplete.png)
+
+Select `allMarkdownRemark` again and run it like we did for `allFile`. Explore the fields that are available on the `MarkdownRemark` node.
+
+![markdown-query](markdown-query.png)
+
+Ok! Hopefully some basics are starting to fall into place. Source plugins bring data *into* Gatsby's data system and *transformer* plugins transform data from source plugins. This simple pattern can handle all data sourcing and data transformation you might need when building a Gatsby site.
+
+## Create a list of our site's markdown files in `src/pages/index.js`
+
+Let's now create a list of our markdown files on the front page. We'll soon be turning our markdown files into pages so this will be the first step to creating the normal blog index page which links to individual posts.
+
+Like with the `src/pages/my-pages.js` page, modify `src/pages/index.js` to add a query with some initial HTML and styling.
+
+```jsx
+import React from "react"
+import g from "glamorous"
+
+import { rhythm } from "../utils/typography"
+
+export default ({ data }) => {
+  console.log(data)
+  return (
+    <div>
+      <g.H1 display={"inline-block"} borderBottom={"1px solid"}>
+        Amazing Pandas Eating Things
+      </g.H1>
+      <h4>
+        {data.allMarkdownRemark.totalCount} Posts
+      </h4>
+      {data.allMarkdownRemark.edges.map(({ node }) =>
+        <div>
+          <g.H3 marginBottom={rhythm(1 / 4)}>
+            {node.frontmatter.title}{" "}
+            <g.Span color="#BBB">— {node.frontmatter.date}</g.Span>
+          </g.H3>
+          <p>
+            {node.excerpt}
+          </p>
+        </div>
+      )}
+    </div>
+  )
+}
+
+export const query = graphql`
+  query IndexQuery {
+    allMarkdownRemark {
+      totalCount
+      edges {
+        node {
+          frontmatter {
+            title
+            date(formatString: "DD MMMM, YYYY")
+          }
+          excerpt
+        }
+      }
+    }
+  }
+`
+```
+
+Now the frontpage should look like:
+
+![frontpage](frontpage.png)
+
+But our one blog post looks a bit lonely. So let's add another one at `src/pages/pandas-and-bananas.md`
+
+```markdown
+---
+title: Pandas and Bananas
+date: 2017-07-14
+---
+
+Do Pandas eat bananas? Check out this short video that shows that yes! pandas do seem to really enjoy bananas!
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/4SZl1r2O_bY" frameborder="0" allowfullscreen></iframe>
+```
+
+
+
+For example markdown. Many people use markdown for writing blog posts because it's a simpler format than HTML. For example this tutorial you're working through is written in markdown :-)
 
 Other common formats data is stored in include JSON, CSV, XML, YAML, and many others. To use these, all of them need *transformed* into JavaScript so they're usable within Gatsby React components.
 
