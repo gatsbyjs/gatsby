@@ -24,6 +24,9 @@
     "slash": "^1.0.0",
     "unist-util-select": "^1.5.0"
   },
+  "peerDependencies": {
+    "gatsby-plugin-sharp": "^1.6.0"
+  },
   "scripts": {
     "build": "babel src --out-dir .",
     "watch": "babel -w src --out-dir ."
