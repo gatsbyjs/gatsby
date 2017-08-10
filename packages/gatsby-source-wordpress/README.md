@@ -95,23 +95,6 @@ The Authentication on Wordpress.com is not supported yet. This means that you wo
   ]
 ```
 
-
-### How to raise the default and maximum number of posts to be returned in result set from REST API
-
-To modify the `per_page` `default` and `maximum` arguments add the following to your functions.php
-
-```php
-  add_filter( 'rest_endpoints', function( $endpoints ){
-      if ( ! isset( $endpoints['/wp/v2/posts'] ) ) {
-          return $endpoints;
-      }
-      $endpoints['/wp/v2/posts'][0]['args']['per_page']['default'] = 200; // defaults to 10
-      $endpoints['/wp/v2/posts'][0]['args']['per_page']['maximum'] = 200; // defaults to 100
-      return $endpoints;
-  });
-```
-
-
 ## How to query : GraphQL
 
 You can query nodes created from Wordpress using GraphQL like the following:
