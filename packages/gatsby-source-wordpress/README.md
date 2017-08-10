@@ -17,7 +17,7 @@ An [example site](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-
 
 ## Status
 
-This module is at prototype-level. It currently pulls from WordPress the following entities : 
+This module is at prototype-level. It currently pulls from WordPress the following entities :
 - [x] posts
 - [x] pages
 - [x] tags
@@ -51,42 +51,43 @@ It will pull any endpoint provided by WordPress Plugins as long as it appears in
       options: {
          /*
         * The base URL of the Wordpress site without the trailingslash and the protocol. This is required.
-        * Example : 'gatsbyjsexamplewordpress.wordpress.com' or 'www.example-site.com' 
+        * Example : 'gatsbyjsexamplewordpress.wordpress.com' or 'www.example-site.com'
         */
         baseUrl: 'gatsbyjsexamplewordpress.wordpress.com',
         // The protocol. This can be http or https.
         protocol: 'http',
-        // Indicates whether the site is hosted on wordpress.com. 
+        // Indicates whether the site is hosted on wordpress.com.
         // If false, then the asumption is made that the site is self hosted.
         // If true, then the plugin will source its content on wordpress.com using the JSON REST API V2.
         // If your site is hosted on wordpress.org, then set this to false.
         hostingWPCOM: true,
-        // If useACF is true, then the source plugin will try to import the Wordpress ACF Plugin contents. 
+        // If useACF is true, then the source plugin will try to import the Wordpress ACF Plugin contents.
         // This feature is untested for sites hosted on Wordpress.com
         useACF: false,
-        // If auth.user and auth.pass are filled, then the source plugin will be allowed to access endpoints that are protected with .htaccess. 
         auth: {
-          user: 'your-htaccess-username',
-          pass: 'your-htaccess-password',
-          sendImmediately: false
+          // If auth.user and auth.pass are filled, then the source plugin will be allowed
+          // to access endpoints that are protected with .htaccess.
+          htaccess_user: 'your-htaccess-username',
+          htaccess_pass: 'your-htaccess-password',
+          htaccess_sendImmediately: false,
 
-          // If hostingWPCOM is true then you will need 
-          // to communicate with wordpress.com api
-          // in order to do that you need to create an app
-          // at https://developer.wordpress.com/apps/
-          // then add the clientId and clientSecret here
-          clientId: '',
-          clientSecret: ''
+          // If hostingWPCOM is true then you will need to communicate with wordpress.com API
+          // in order to do that you need to create an app (of type Web) at https://developer.wordpress.com/apps/
+          // then add your clientId, clientSecret, username, and password here
+          wpcom_app_clientSecret: 'NMPnXYFtj2gKas7V1kZyMxr7oLry9V5ZxIyBQGu2txjVHg0GhFz6RYcKopkHICYg',
+          wpcom_app_clientId: '54793',
+          wpcom_user: 'gatsbyjswpexample@gmail.com',
+          wpcom_pass: 'very-secured-password',
         },
-        // Set verboseOutput to true to display a verbose output on `npm run develop` or `npm run build` 
-        // It can help you debug specific API Endpoints problems 
+        // Set verboseOutput to true to display a verbose output on `npm run develop` or `npm run build`
+        // It can help you debug specific API Endpoints problems
         verboseOutput: false,
       },
     },
   ]
 ```
 
-## WordPress Plugins 
+## WordPress Plugins
 
 These plugins were tested but it should work with any plugin that extends the REST API content.
 
@@ -98,7 +99,7 @@ These plugins were tested but it should work with any plugin that extends the RE
     *  You will also have to include the children ACF Field Node in your GraphQL query. (See `Query posts with the child ACF Fields Node` below)
 
 - [x] [ACF Pro](https://www.advancedcustomfields.com/pro/)
-    *  Will work with [Flexible content](https://www.advancedcustomfields.com/resources/flexible-content/) and premium stuff like that (repeater, gallery, ...).  
+    *  Will work with [Flexible content](https://www.advancedcustomfields.com/resources/flexible-content/) and premium stuff like that (repeater, gallery, ...).
     *  Will pull the content attached to the [options page](https://www.advancedcustomfields.com/add-ons/options-page/).
 
 - [x] [WP-API-MENUS](https://wordpress.org/plugins/wp-api-menus/) which gives you the menus and menu locations endpoint.
@@ -402,7 +403,7 @@ Note : you will have to populate the acf node with your config. Put this in the 
 ### Query any other plugin
 In the following example, `${Manufacturer}` will be replaced by the endpoint prefix and `${Endpoint}` by the name of the endpoint.
 
-To know what's what, check the URL of the endpoint. 
+To know what's what, check the URL of the endpoint.
 
 For example the following URL: `http://my-blog.wordpress.com/wp-json/acf/v2/options`
   * Manufacturer : `acf`
@@ -519,7 +520,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     graphql(
       `
       {
-        
+
           allWordpressPage {
             edges {
               node {
@@ -564,10 +565,10 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
       })
       // ==== END PAGES ====
 
-      // ==== POSTS (WORDPRESS NATIVE AND ACF) ====  
+      // ==== POSTS (WORDPRESS NATIVE AND ACF) ====
       .then(() => {
         graphql(
-          `{      
+          `{
                   allWordpressPost {
                     edges {
                       node {
@@ -602,8 +603,8 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           })
           resolve()
         })
-      }) 
-    // ==== END POSTS ====     
+      })
+    // ==== END POSTS ====
 
   })
 }
