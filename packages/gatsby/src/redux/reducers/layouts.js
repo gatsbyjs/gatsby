@@ -7,6 +7,9 @@ module.exports = (state = [], action) => {
       return []
     case `CREATE_LAYOUT`:
       action.payload.component = normalize(action.payload.component)
+      action.payload.componentWrapperPath = normalize(
+        action.payload.componentWrapperPath
+      )
       if (!action.plugin && !action.plugin.name) {
         console.log(``)
         console.error(JSON.stringify(action, null, 4))
