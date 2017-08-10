@@ -129,7 +129,7 @@ module.exports = async (program: any) => {
   // Copy our site files to the root of the site.
   activity = report.activityTimer(`copy gatsby files`)
   activity.start()
-  const srcDir = `${__dirname}/../cache-dir`
+  const srcDir = `${__dirname}/../../cache-dir`
   const siteDir = `${program.directory}/.cache`
   try {
     await fs.copy(srcDir, siteDir, { clobber: true })
