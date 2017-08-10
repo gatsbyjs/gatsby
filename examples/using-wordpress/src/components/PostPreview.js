@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import { Row, Page, Column, BlockLink, P2, P4 } from "./styled"
 import styled from "styled-components"
 import theme from "./styled/theme"
+import striptags from 'striptags'
 
 const BlogPreviewImg = styled.img`width: 100%;`
 
@@ -27,7 +28,7 @@ const PostPreview = ({ article, id }) => {
         />
         <P4
           color={theme.color.han}
-          dangerouslySetInnerHTML={{ __html: article.node.excerpt }}
+          dangerouslySetInnerHTML={{ __html: striptags(article.node.excerpt) }}
         />
         <P4 color={theme.color.link}>Read More</P4>
       </BlockLink>
