@@ -158,7 +158,7 @@ Now let's start querying 😋
 
 When building sites, it's common to want to reuse common bits of data across the site. Like the *site title* for example. You'll notice looking at the About page that we have the site title in both the layout component (for the header) as well as the title of the About page. But what if we want to change the site title at some point in the future? We'd have to search across the site for everywhere we put the title. Which is both cumbersome but it's also easy to miss spots, especially as sites get larger and more complex. Much better to store the title in one place and then *pull* that title into components whenever we need it.
 
-To solve this Gatsby supports a simple pattern for recording site "metadata" like the title.
+To solve this Gatsby supports a simple pattern for adding site "metadata" like the title.
 
 In your `gatsby-config.js` you can add data which you can then easily query in your components. So let's add our site title to `gatsby-config.js` and then query it from our layout and about page!
 
@@ -257,27 +257,72 @@ It worked!! 🎉
 
 But let's restore the real title.
 
-One of the core ideas of Gatsby is that everyone should hot reload. That there should be this feeling of immediacy (connection) whatever Bret Victor said between manipulating an input of Gatsby and that output showing up on the screen.
+One of the core principles of Gatsby is creators need an immediate connection to what they're creating ([hat tip to Bret Victor](http://blog.ezyang.com/2012/02/transcript-of-inventing-on-principleb/)). Or in other words, when you make any change to code you should immediately see the effect of that change. You manipulate an input of Gatsby and you see the new output showing up on the screen.
 
-So almost everywhere (there's a few places were things don't hot reload) changes should just take effect.
+So almost everywhere, changes you make will immediately take effect.
 
-So editing `siteMetadata` works the same way—try changing the title back to "Pandas Eating Lots". The change should show up very quickly in your browser.
+Try editing the title in `siteMetadata`—change the title back to "Pandas Eating Lots". The change should show up very quickly in your browser.
 
-## Graph*i*QL
+## Introduce Graph*i*QL
 
-Graph*i*QL is the GraphQL IDE. It's a powerful tool you'll use often while building Gatsby websites.
+Graph*i*QL is the GraphQL IDE. It's a powerful (and all-around awesome) tool you'll use often while building Gatsby websites.
 
-Embed Gif
+You can access when your site's development server is running—normally at http://localhost:8000/___graphql
 
-Site (TODO get rid of `allSite`).
+<video controls="controls" autoplay="true" loop="true">
+  <source type="video/mp4" src="/graphiql-explore.mp4"></source>
+  <p>Your browser does not support the video element.</p>
+</video>
 
-## Source + Transformer plugins
+Here we poke around the built-in `Site` "type" and see what fields are available on it—including the `siteMetadata` object we queried earlier. Try opening Graph*i*QL and play with your data! Press "ctrl-space" to bring up the autocomplete window and "ctrl-enter" to run the query. We'll be using Graph*i*QL a lot more through the remainder of the tutorial.
+
+## Source plugins
 
 Data in Gatsby sites can come literally from anywhere. APIs, databases, CMSs, local files, etc.
 
-Data is fetched, like everything else in Gatsby, using plugins. There are two types of plugins used in Gatsby's data system—"source" and "transformer".
-
 Source plugins fetch data from their source. E.g. the filesystem source plugin knows how to fetch data from the file system. The Wordpress plugin nows how to fetch data from the Wordpress API.
+
+Let's add [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) and explore how it works.
+
+First install the plugin:
+
+```sh
+npm install --save gatsby-source-filesystem
+```
+
+Then add it to your `gatsby-config.js`:
+
+```javascript{6-12}
+module.exports = {
+  siteMetadata: {
+    title: `Pandas Eating Lots`,
+  },
+  plugins: [
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `src`,
+        path: `${__dirname}/src/`,
+      },
+    },
+    `gatsby-plugin-glamor`,
+    {
+      resolve: `gatsby-plugin-typography`,
+      options: {
+        pathToConfigModule: `src/utils/typography`,
+      },
+    },
+  ],
+}
+```
+
+Save that and restart the gatsby development server. Then open up Graph*i*QL again.
+
+If you bring up the autocomplete window you'll see:	
+
+![graphiql-filesystem](graphiql-filesystem.png)
+
+Hit enter on `allFile` then type `ctrl-enter` to run a query.
 
 But often the source format of the data isn't what you want to use to build your website. For example markdown. Many people use markdown for writing blog posts because it's a simpler format than HTML. For example this tutorial you're working through is written in markdown :-)
 
@@ -290,8 +335,6 @@ So it's very common to use source and transformer plugins together. Let's try th
 ### `gatsby-source-filesystem`
 
 Add source-filesystem and have them play around with files and show off data it brings up.
-
-[VIDEO]
 
 Have them create a page listing all the files with the total count at the top.
 
