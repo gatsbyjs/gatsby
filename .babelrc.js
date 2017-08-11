@@ -14,6 +14,7 @@ function preset(_, options = {}) {
           useBuiltIns: true,
           targets: {
             node: PRODUCTION ? 4.0 : "current",
+            uglify: PRODUCTION ? true : false,
           },
         },
       ],
