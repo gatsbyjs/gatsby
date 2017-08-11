@@ -1,4 +1,9 @@
 #!/usr/bin/env node
+
+// babel-preset-env doesn't find this import if you
+// use require() with backtick strings so use the es6 syntax
+import "babel-polyfill"
+
 const program = require(`commander`)
 const packageJson = require(`./package.json`)
 const path = require(`path`)
