@@ -1,6 +1,8 @@
 platform:
   - x64
 
+skip_branch_with_pr: true
+
 for:
 -
   branches:
