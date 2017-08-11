@@ -2,7 +2,8 @@
 import path from "path"
 const normalize = require(`normalize-path`)
 import glob from "glob"
-import Bluebird from "bluebird"
+
+import { validate } from "graphql"
 import invariant from "invariant"
 import { IRTransforms } from "relay-compiler"
 import ASTConvert from "relay-compiler/lib/ASTConvert"
@@ -13,11 +14,16 @@ const _ = require(`lodash`)
 import { store } from "../../redux"
 import FileParser from "./file-parser"
 import QueryPrinter from "./query-printer"
+import {
+  graphqlError,
+  graphqlValidationError,
+  multipleRootQueriesError,
+} from "./graphql-errors"
+import report from "../../reporter"
 
 import type { DocumentNode, GraphQLSchema } from "graphql"
 
 const { printTransforms } = IRTransforms
-const globp = Bluebird.promisify(glob)
 
 const {
   ArgumentsOfCorrectTypeRule,
@@ -37,6 +43,20 @@ type RootQuery = {
   text: string,
 }
 
+type Queries = Map<string, RootQuery>
+
+const validationRules = [
+  ArgumentsOfCorrectTypeRule,
+  DefaultValuesOfCorrectTypeRule,
+  FragmentsOnCompositeTypesRule,
+  KnownTypeNamesRule,
+  LoneAnonymousOperationRule,
+  PossibleFragmentSpreadsRule,
+  ScalarLeafsRule,
+  VariablesAreInputTypesRule,
+  VariablesInAllowedPositionRule,
+]
+
 class Runner {
   baseDir: string
   schema: GraphQLSchema
@@ -46,15 +66,22 @@ class Runner {
     this.schema = schema
   }
 
+  reportError(message) {
+    report.log(`${report.format.red(`GraphQL Error`)} ${message}`)
+  }
+
   async compileAll() {
     let nodes = await this.parseEverything()
     return await this.write(nodes)
   }
 
   async parseEverything() {
+    // FIXME: this should all use gatsby's configuration to determine parsable
+    // files (and how to parse them)
     let files = glob.sync(`${this.baseDir}/**/*.+(t|j)s?(x)`)
     files = files.filter(d => !d.match(/\.d\.ts$/))
     files = files.map(normalize)
+
     // Ensure all page components added as they're not necessarily in the
     // pages directory e.g. a plugin could add a page component.  Plugins
     // *should* copy their components (if they add a query) to .cache so that
@@ -71,76 +98,36 @@ class Runner {
     return await parser.parseFiles(files)
   }
 
-  async write(nodes: Map<string, DocumentNode>) {
+  async write(nodes: Map<string, DocumentNode>): Promise<Queries> {
+    const compiledNodes: Queries = new Map()
     const namePathMap = new Map()
+    const nameDefMap = new Map()
     const documents = []
 
-    nodes.forEach((doc, filePath) => {
+    for (let [filePath, doc] of nodes.entries()) {
+      let errors = validate(this.schema, doc, validationRules)
+
+      if (errors && errors.length) {
+        this.reportError(graphqlValidationError(errors, filePath))
+        return compiledNodes
+      }
+
       documents.push(doc)
       doc.definitions.forEach((def: any) => {
         const name: string = def.name.value
         namePathMap.set(name, filePath)
+        nameDefMap.set(name, def)
       })
-    })
+    }
 
     let compilerContext = new RelayCompilerContext(this.schema)
     try {
       compilerContext = compilerContext.addAll(
-        ASTConvert.convertASTDocuments(this.schema, documents, [
-          ArgumentsOfCorrectTypeRule,
-          DefaultValuesOfCorrectTypeRule,
-          FragmentsOnCompositeTypesRule,
-          KnownTypeNamesRule,
-          LoneAnonymousOperationRule,
-          PossibleFragmentSpreadsRule,
-          ScalarLeafsRule,
-          VariablesAreInputTypesRule,
-          VariablesInAllowedPositionRule,
-        ])
+        ASTConvert.convertASTDocuments(this.schema, documents, validationRules)
       )
-    } catch (e) {
-      // Find the name of file
-      const regex = /Invariant Violation: RelayParser: (.*). Source: document `(.*)` file:/g
-      let m
-      let error
-      let docName
-      let filePath
-      while ((m = regex.exec(e.toString())) !== null) {
-        // This is necessary to avoid infinite loops with zero-width matches
-        if (m.index === regex.lastIndex) {
-          regex.lastIndex++
-        }
-
-        // The result can be accessed through the `m`-variable.
-        m.forEach((match, groupIndex) => {
-          if (groupIndex === 1) {
-            error = match
-          } else if (groupIndex === 2) {
-            docName = match
-          }
-        })
-      }
-      const docWithError = documents.find(doc =>
-        doc.definitions.find((node: { name: string }) => {
-          const { name: { value } } = node
-          if (value === docName) {
-            filePath = namePathMap.get(value) || ``
-            return true
-          }
-          return false
-        })
-      )
-      if (docName && filePath && error) {
-        console.log(
-          `\nThere was an error while compiling your site's GraphQL queries in document "${docName}" in file "${filePath}".\n`
-        )
-        console.log(`    `, error)
-        console.log(``)
-      } else {
-        console.log(
-          `\nThere was an error while compiling your site's GraphQL queries\n${e.toString()}`
-        )
-      }
+    } catch (error) {
+      this.reportError(graphqlError(namePathMap, nameDefMap, error))
+      return compiledNodes
     }
 
     const printContext = printTransforms.reduce(
@@ -148,19 +135,23 @@ class Runner {
       compilerContext
     )
 
-    const compiledNodes: Map<string, RootQuery> = new Map()
-
     compilerContext.documents().forEach((node: { name: string }) => {
       if (node.kind !== `Root`) return
 
       const { name } = node
       let filePath = namePathMap.get(name) || ``
 
-      invariant(
-        !compiledNodes.has(filePath),
-        `Gatsby: Components may only specify one "root" query tag. ` +
-          `Combine them into a single query`
-      )
+      if (compiledNodes.has(filePath)) {
+        let otherNode = compiledNodes.get(filePath)
+        this.reportError(
+          multipleRootQueriesError(
+            filePath,
+            nameDefMap.get(name),
+            otherNode && nameDefMap.get(otherNode.name)
+          )
+        )
+        return
+      }
 
       let text = filterContextForNode(printContext.getRoot(name), printContext)
         .documents()
