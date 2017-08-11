@@ -36,7 +36,7 @@
     "parse-filepath": "^1.0.1",
     "react-icons": "^2.2.3",
     "slash": "^1.0.0",
-    "typeface-space-mono": "^0.0.31",
+    "typeface-space-mono": "^0.0.35",
     "typeface-tex-gyre-schola": "^0.0.32",
     "typography-breakpoint-constants": "^0.15.10",
     "typography-plugin-code": "0.15.x"
