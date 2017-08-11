@@ -17,7 +17,6 @@ window.___emitter = emitter
 
 import pages from "./pages.json"
 import ComponentRenderer from "./component-renderer"
-import LayoutRenderer from "./layout-renderer"
 import asyncRequires from "./async-requires"
 import loader from "./loader"
 loader.addPagesArray(pages)
@@ -124,7 +123,8 @@ loader.getResourcesForPathname(window.location.pathname, () => {
       createElement(
         ScrollContext,
         { shouldUpdateScroll },
-        createElement(withRouter(LayoutRenderer), {
+        createElement(withRouter(ComponentRenderer), {
+          layout: true,
           children: layoutProps =>
             createElement(Route, {
               render: routeProps => {
@@ -132,10 +132,13 @@ loader.getResourcesForPathname(window.location.pathname, () => {
                 const props = layoutProps ? layoutProps : routeProps
 
                 if (loader.getPage(props.location.pathname)) {
-                  return createElement(ComponentRenderer, { ...props })
+                  return createElement(ComponentRenderer, {
+                    page: true,
+                    ...props,
+                  })
                 } else {
                   return createElement(ComponentRenderer, {
-                    location: { pathname: `/404.html` },
+                    location: { page: true, pathname: `/404.html` },
                   })
                 }
               },
