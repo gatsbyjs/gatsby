@@ -10,7 +10,6 @@ const propTypes = {
 
 class ProductTemplate extends React.Component {
   render() {
-    console.log(this.props)
     const product = this.props.data.contentfulProduct
     const {
       productName: { productName },
