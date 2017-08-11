@@ -195,8 +195,8 @@ async function getPages(url, page = 1) {
         o.headers = {
           Authorization: `Bearer ${_accessToken}`,
         }
-      }else{
-         o.auth =_auth
+      } else {
+        o.auth = _auth
           ? { username: _auth.htaccess_user, password: _auth.htaccess_pass }
           : null
       }
