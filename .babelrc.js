@@ -9,7 +9,7 @@ function preset(_, options = {}) {
         r("babel-preset-env"),
         {
           loose: true,
-          debug: options.debug,
+          debug: !!options.debug,
           modules: "commonjs",
           useBuiltIns: true,
           targets: {
