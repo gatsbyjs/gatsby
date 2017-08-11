@@ -80,7 +80,9 @@ const runQueriesForIds = ids => {
       const pl = pagesAndLayouts.find(
         pl => pl.path === id || `LAYOUT___${pl.id}` === id
       )
-      return queryRunner(pl, state.components[pl.component])
+      if (pl) {
+        return queryRunner(pl, state.components[pl.component])
+      }
     })
   )
 }

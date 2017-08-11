@@ -2,6 +2,7 @@
   "dependencies": {
     "babel-cli": "^6.24.1",
     "babel-eslint": "^7.2.3",
+    "babel-jest": "^20.0.3",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-lodash": "^3.2.11",
     "babel-plugin-transform-async-to-generator": "^6.24.1",
