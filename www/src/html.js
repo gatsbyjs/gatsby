@@ -72,12 +72,6 @@ export default class HTML extends React.Component {
             href={`/safari-pinned-tab.svg`}
             color="#5bbad5"
           />
-          <script src="https://use.typekit.net/vol0sfl.js" />
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `try{Typekit.load({ async: true })}catch(e){}`,
-            }}
-          />
           {css}
         </head>
         <body>

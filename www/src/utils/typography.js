@@ -10,14 +10,7 @@ import {
 
 const options = {
   headerFontFamily: [`Futura PT`, `sans-serif`],
-  bodyFontFamily: [
-    //`schoolbook`,
-    //`adobe-garamond-pro`,
-    //`Calluna`,
-    `Spectral`,
-    //`Georgia`,
-    `serif`,
-  ],
+  bodyFontFamily: [`Spectral`, `Georgia`, `serif`],
   baseFontSize: `18px`,
   baseLineHeight: 1.45,
   // headerColor: `#44421f`,
