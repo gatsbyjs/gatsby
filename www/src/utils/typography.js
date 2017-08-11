@@ -88,7 +88,7 @@ const options = {
       ".gatsby-highlight pre code": {
         display: `block`,
         fontSize: `90%`,
-        lineHeight: 1.5,
+        lineHeight: options.baseLineHeight,
       },
       ".gatsby-highlight-code-line": {
         background: colors.a[1],
