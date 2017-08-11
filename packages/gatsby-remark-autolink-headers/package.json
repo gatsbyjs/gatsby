@@ -1,7 +1,7 @@
 {
   "name": "gatsby-remark-autolink-headers",
   "description": "Gatsby plugin to autolink headers in markdown processed by Remark",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "github-slugger": "^1.1.1",
