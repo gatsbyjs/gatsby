@@ -11,6 +11,7 @@ function preset(_, options = {}) {
           loose: true,
           debug: !!options.debug,
           modules: "commonjs",
+          useBuiltIns: true,
           targets: {
             node: PRODUCTION ? 4.0 : "current",
             uglify: PRODUCTION ? true : false,
@@ -26,7 +27,6 @@ function preset(_, options = {}) {
         r("babel-plugin-transform-runtime"),
         {
           polyfill: false,
-          regenerator: false,
         },
       ],
       r(`babel-plugin-transform-flow-strip-types`),

@@ -16,6 +16,7 @@
     "babel-loader": "^6.0.0",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-transform-object-assign": "^6.8.0",
+    "babel-polyfill": "^6.23.0",
     "babel-preset-env": "^1.6.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
