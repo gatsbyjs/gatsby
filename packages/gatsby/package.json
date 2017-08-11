@@ -34,6 +34,7 @@
     "common-tags": "^1.4.0",
     "convert-hrtime": "^2.0.0",
     "copyfiles": "^1.2.0",
+    "core-js": "^2.5.0",
     "css-loader": "^0.26.1",
     "debug": "^2.6.0",
     "detect-port": "^1.2.1",
