@@ -18,7 +18,6 @@ export default props => {
       </p>
       <h2>Resize</h2>
       {assets.map(({ node: { title, resize } }) => {
-        console.log(title, resize)
         return (
           <img
             alt={title}
@@ -71,7 +70,6 @@ export default props => {
         You should prefer this operator over <code>resize</code>.
       </p>
       {assets.map(({ node: { title, responsiveResolution } }) => {
-        console.log(title, responsiveResolution)
         return (
           <img
             alt={title}
@@ -129,7 +127,6 @@ export default props => {
         </a>
       </p>
       {assets.map(({ node: { title, resizing } }) => {
-        console.log(title, resizing)
         return (
           <img
             alt={title}
