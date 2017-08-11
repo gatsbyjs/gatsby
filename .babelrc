@@ -1,6 +1,6 @@
 {
   "sourceMaps": true,
-  "ignore": ["__tests__", "dist"],
+  "ignore": ["dist"],
   "presets": [
     "./.babelrc.js"
   ]
