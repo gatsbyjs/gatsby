@@ -5,9 +5,9 @@ for:
 -
   branches:
     only:
-      - master
+      - /.*/
 
-  skip_non_tags: true
+  skip_tags: true
 
   environment:
     nodejs_version: "8"
@@ -19,7 +19,9 @@ for:
 -
   branches:
     only:
-      - master
+      - /.*/
+
+  skip_non_tags: true
 
   environment:
     nodejs_version: "8"
