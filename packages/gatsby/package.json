@@ -5,32 +5,6 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./dist/gatsby-cli.js"
-    },
-  "homepage": "https://github.com/gatsbyjs/gatsby#readme",
-  "keywords": [
-    "blog",
-    "generator",
-    "jekyll",
-    "markdown",
-    "react",
-    "ssg",
-    "website"
-  ],
-  "license": "MIT",
-  "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/gatsbyjs/gatsby.git"
-  },
-  "scripts": {
-    "build": "rimraf dist && npm run build:src && npm run build:cli && npm run build:internal-plugins && npm run build:rawfiles",
-    "build:src": "babel src --out-dir dist --source-maps --ignore gatsby-cli.js,raw_*,__tests__",
-    "build:internal-plugins": "copyfiles -u 1 src/internal-plugins/**/package.json dist",
-    "build:rawfiles": "copyfiles -u 1 src/internal-plugins/**/raw_* dist",
-    "build:cli": "babel src/gatsby-cli.js --out-file dist/gatsby-cli.js --presets es2015",
-    "clean-test-bundles": "find test/ -type f -name bundle.js* -exec rm -rf {} +",
-    "test-coverage": "node_modules/.bin/nyc --reporter=lcov --reporter=text npm test",
-    "watch": "rimraf dist && mkdir dist && npm run build:cli && npm run build:internal-plugins && npm run build:rawfiles && npm run build:src -- --watch"
   },
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -155,5 +129,31 @@
   },
   "engines": {
     "node": ">4.0.0"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby#readme",
+  "keywords": [
+    "blog",
+    "generator",
+    "jekyll",
+    "markdown",
+    "react",
+    "ssg",
+    "website"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gatsbyjs/gatsby.git"
+  },
+  "scripts": {
+    "build": "rimraf dist && npm run build:src && npm run build:cli && npm run build:internal-plugins && npm run build:rawfiles",
+    "build:cli": "babel src/gatsby-cli.js --out-file dist/gatsby-cli.js --presets es2015",
+    "build:internal-plugins": "copyfiles -u 1 src/internal-plugins/**/package.json dist",
+    "build:rawfiles": "copyfiles -u 1 src/internal-plugins/**/raw_* dist",
+    "build:src": "babel src --out-dir dist --source-maps --ignore gatsby-cli.js,raw_*,__tests__",
+    "clean-test-bundles": "find test/ -type f -name bundle.js* -exec rm -rf {} +",
+    "test-coverage": "node_modules/.bin/nyc --reporter=lcov --reporter=text npm test",
+    "watch": "rimraf dist && mkdir dist && npm run build:cli && npm run build:internal-plugins && npm run build:rawfiles && npm run build:src -- --watch"
   }
 }
