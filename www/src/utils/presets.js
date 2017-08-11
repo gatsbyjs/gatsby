@@ -14,7 +14,7 @@ module.exports = {
   VHd: `@media (min-width: 1450px)`,
   VVHd: `@media (min-width: 1650px)`,
   maxWidth: 36,
-  maxWidthWithSidebar: 24,
+  maxWidthWithSidebar: 25,
   lightPurple: colors.b[2],
   veryLightPurple: colors.b[0],
   veryLightPurple: `#f6f2f8`,

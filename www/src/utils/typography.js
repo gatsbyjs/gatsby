@@ -19,7 +19,7 @@ const options = {
     `serif`,
   ],
   baseFontSize: `18px`,
-  baseLineHeight: 1.5,
+  baseLineHeight: 1.45,
   // headerColor: `#44421f`,
   headerColor: colors.c[15],
   headerColor: `#26202c`,
