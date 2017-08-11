@@ -1,37 +1,41 @@
-# branches to build
-branches:
-  # whitelist
-  only:
-    - 1.0
-    - master
-
 platform:
   - x64
 
-environment:
-  nodejs_version: "8"
+for:
+-
+  branches:
+    only:
+      - master
 
-  matrix:
-  - example: gatsbygram
-    buildon: commit
+  skip_non_tags: true
 
-  - example: client-only-paths
-    buildon: tag
+  environment:
+    nodejs_version: "8"
 
-  - example: hn
-    buildon: tag
+    matrix:
+    - example: gatsbygram
+      buildon: commit
 
-  - example: no-plugins
-    buildon: tag
+-
+  branches:
+    only:
+      - master
 
-  - example: no-trailing-slashes
-    buildon: tag
+  environment:
+    nodejs_version: "8"
 
-  - example: using-drupal
-    buildon: tag
+    matrix:
+    - example: gatsbygram
+      buildon: commit
 
-  - example: using-postcss-sass
-    buildon: tag
+    - example: using-javascript-transforms
+      buildon: tag
+
+    - example: using-remark
+      buildon: tag
+
+    - example: no-plugins
+      buildon: tag
 
 # Install scripts. (runs after repo cloning)
 install:
