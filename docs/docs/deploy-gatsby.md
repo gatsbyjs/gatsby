@@ -41,3 +41,8 @@ Uncaught Error: Minified React error #32; visit http://facebook.github.io/react/
 ```
 
 This is a new problem when dealing with static sites built with React.  React uses HTML comments to help identify locations of components that do not render anything.  If you are using a CDN that minifies your HTML, it will eliminate the HTML comments used by react to take control of the page on the client.
+
+## Hosting on amazon s3 and cloudfront
+If you decide to host your gatsbyjs site to s3 having cloudfront as CDN you should edit on the cloudfront panel the "Origin Domain Name" with the real URL of your s3 bucket: **examplewebsite.com.s3-website-eu-west-1.amazonaws.com** instead of the default one automatically suggested by amazon **examplewebsite.com.s3.amazonaws.com**. 
+
+This is recommended for rendering correctly the post pages in the subfolders without typing the index.html path as described [here](https://forums.aws.amazon.com/message.jspa?messageID=314454).  
