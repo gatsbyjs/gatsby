@@ -23,9 +23,10 @@ exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
 }
 
 exports.createPages = ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators
+  const { createPage, createLayout } = boundActionCreators
 
   return new Promise((resolve, reject) => {
+
     const pages = []
     const markdownTemplate = path.resolve(`src/templates/markdown.js`)
 
@@ -70,6 +71,12 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           reject(result.errors)
         }
 
+        const layoutIndex = path.resolve(`src/layouts/index.js`)
+        createLayout({
+          id: `index`, // required
+          component: layoutIndex
+        })
+
         // Create from markdown
         result.data.allMarkdownRemark.edges.forEach(edge => {
           let frontmatter = edge.node.frontmatter
@@ -83,6 +90,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
             createPage({
               path: frontmatter.path, // required
               component: markdownTemplate,
+              layout: `index`,
               context: {
                 layoutType: frontmatter.layoutType,
                 slug: edge.node.fields.slug,
@@ -108,6 +116,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
               //  Templates are for converting non-react into react. jsFrontmatter
               //  picks up all of the javascript files. We have only written these in react.
               component: path.resolve(edge.node.fileAbsolutePath),
+              layout: `index`,
               context: {
                 layoutType: frontmatter.layoutType,
                 slug: edge.node.fields.slug,
@@ -117,6 +126,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
             createPage({
               path: `/`, // required, we don't have frontmatter for this page hence separate if()
               component: path.resolve(edge.node.fileAbsolutePath),
+              layout: `index`,
               context: {
                 slug: edge.node.fields.slug,
               },
