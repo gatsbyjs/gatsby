@@ -1,12 +1,13 @@
 const fs = require(`fs`)
 const path = require(`path`)
+const { joinPath } = require(`../../utils/path`)
 const { watchComponent } = require(`./query-watcher`)
 
 let components = {}
 
 const handlePageOrLayout = store => pageOrLayout => {
   // Ensure page/layout component has a JSON file.
-  const jsonDest = path.join(
+  const jsonDest = joinPath(
     store.getState().program.directory,
     `.cache`,
     `json`,
