@@ -1,10 +1,10 @@
 {
   "name": "gatsby-source-filesystem",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Gatsby plugin which parses files within a directory for further parsing by other plugins",
   "scripts": {
-    "build": "babel src --out-dir .",
-    "watch": "babel -w src --out-dir ."
+    "build": "babel src --out-dir . --ignore __tests__",
+    "watch": "babel -w src --out-dir . --ignore __tests__"
   },
   "keywords": [
     "gatsby",

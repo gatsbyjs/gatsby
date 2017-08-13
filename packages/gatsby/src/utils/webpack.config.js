@@ -167,6 +167,7 @@ module.exports = async (
           // ids to reduce filesize.
           new webpack.NamedModulesPlugin(),
           new FriendlyErrorsWebpackPlugin({
+            clearConsole: false,
             compilationSuccessInfo: {
               messages: [
                 `Your site is running at http://localhost:${program.port}`,

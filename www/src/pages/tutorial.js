@@ -29,7 +29,7 @@ export default () =>
       </li>
       <li>
         <Link to="/tutorial/part-three/">
-          Explore building nested layouts in Gatsby.
+          Explore building nested layouts in Gatsby
         </Link>. Layouts are sections of your site that are reused across
         multiple pages like headers and footers.
       </li>

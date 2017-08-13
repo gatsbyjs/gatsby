@@ -3,8 +3,8 @@ const glob = require(`glob`)
 const _ = require(`lodash`)
 const mapSeries = require(`async/mapSeries`)
 
+const reporter = require(`../reporter`)
 const cache = require(`./cache`)
-
 const apiList = require(`./api-node-docs`)
 
 // Bind action creators per plugin so we can auto-add
@@ -66,6 +66,7 @@ const runAPI = (plugin, api, args) => {
         getNodes,
         getNode,
         hasNodeChanged,
+        reporter,
         getNodeAndSavePathDependency,
         cache,
       },
@@ -97,7 +98,7 @@ module.exports = async (api, args = {}, pluginSource) =>
   new Promise(resolve => {
     // Check that the API is documented.
     if (!apiList[api]) {
-      console.log(`api`, api, `is not yet documented`)
+      reporter.error(`api: "${api}" is not a valid Gatsby api`)
       process.exit()
     }
 
@@ -146,10 +147,7 @@ module.exports = async (api, args = {}, pluginSource) =>
       },
       (err, results) => {
         if (err) {
-          console.log(``)
-          console.log(`Plugin ${currentPluginName} returned an error:`)
-          console.log(``)
-          console.log(err)
+          reporter.error(`Plugin ${currentPluginName} returned an error`, err)
         }
         // Remove runner instance
         apisRunning = apisRunning.filter(runner => runner !== apiRunInstance)

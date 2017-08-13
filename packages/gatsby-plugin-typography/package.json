@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-typography",
-  "version": "1.7.2",
+  "version": "1.7.3",
   "description": "Gatsby plugin to setup server rendering of Typography.js' CSS",
   "main": "index.js",
   "dependencies": {

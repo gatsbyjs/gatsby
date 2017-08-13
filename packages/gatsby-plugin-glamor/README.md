@@ -4,6 +4,8 @@ Provide drop-in support for using the css-in-js library
 [Glamor](https://github.com/threepointone/glamor) including optimized
 server rendering.
 
+In addition, you can also use this plugin to make [`glamorous`](https://github.com/paypal/glamorous) 💄 work with server side rendering and start writing React components that carry their styles with them.
+
 ## Install
 
 `npm install --save gatsby-plugin-glamor`

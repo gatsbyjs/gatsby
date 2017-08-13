@@ -1,6 +1,6 @@
 {
   "name": "gatsby-remark-images",
-  "version": "1.5.0",
+  "version": "1.5.2",
   "description": "Processes images in markdown so they can be used in the production build.",
   "main": "index.js",
   "keywords": [
@@ -24,8 +24,11 @@
     "slash": "^1.0.0",
     "unist-util-select": "^1.5.0"
   },
+  "peerDependencies": {
+    "gatsby-plugin-sharp": "^1.6.0"
+  },
   "scripts": {
-    "build": "babel src --out-dir .",
-    "watch": "babel -w src --out-dir ."
+    "build": "babel src --out-dir . --ignore __tests__",
+    "watch": "babel -w src --out-dir . --ignore __tests__"
   }
 }
