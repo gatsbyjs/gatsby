@@ -5,13 +5,9 @@ import { kebabCase, get, merge, isArray, isString } from "lodash"
 import apiRunner from "./api-runner-ssr"
 import pages from "./pages.json"
 import syncRequires from "./sync-requires"
+import requireWithFallback from './require-with-fallback'
 
-let Html
-try {
-  Html = require(`../src/html`)
-} catch (e) {
-  Html = require(`./default-html`)
-}
+const Html = requireWithFallback(`../src/html`, `./default-html`)
 
 const pathChunkName = path => {
   const name = path === `/` ? `index` : kebabCase(path)

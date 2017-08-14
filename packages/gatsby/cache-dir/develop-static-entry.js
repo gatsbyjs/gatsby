@@ -4,13 +4,9 @@ import { merge } from "lodash"
 import apiRunner from "./api-runner-ssr"
 import pages from "./pages.json"
 import ReactDOMServer from "react-dom/server"
+import requireWithFallback from "./require-with-fallback"
 
-let HTML
-try {
-  HTML = require(`../src/html`)
-} catch (e) {
-  HTML = require(`./default-html`)
-}
+const HTML = requireWithFallback(`../src/html`, `./default-html`)
 
 module.exports = (locals, callback) => {
   // const apiRunner = require(`${directory}/.cache/api-runner-ssr`)
