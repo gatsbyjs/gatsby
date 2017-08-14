@@ -18,7 +18,7 @@
     Creating and Modifying Pages: /docs/creating-and-modifying-pages/
     Create a source plugin: /docs/create-source-plugin/
     Custom webpack config: /docs/add-custom-webpack-config/
-    Customizing html.js: /docs/custom-htmljs/
+    Customizing html.js: /docs/custom-html/
     Debugging HTML Builds: /docs/debugging-html-builds/
     Environment Variables: /docs/environment-variables/
     Path Prefix: /docs/path-prefix/
