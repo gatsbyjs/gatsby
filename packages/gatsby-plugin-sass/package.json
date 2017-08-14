@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-sass",
   "description": "Gatsby plugin to handle scss/sass files",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "Daniel Farrell <daniel@mobelux.com>",
   "dependencies": {
     "extract-text-webpack-plugin": "^1.0.1",
@@ -21,7 +21,7 @@
   "main": "index.js",
   "readme": "README.md",
   "scripts": {
-    "build": "babel src --out-dir .",
-    "watch": "babel -w src --out-dir ."
+    "build": "babel src --out-dir . --ignore __tests__",
+    "watch": "babel -w src --out-dir . --ignore __tests__"
   }
 }
