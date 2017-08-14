@@ -9,7 +9,6 @@ const packageJson = require(`./package.json`)
 const path = require(`path`)
 const _ = require(`lodash`)
 const resolveCwd = require(`resolve-cwd`)
-const testRequireError = require(`../utils/test-require-error`)
 
 program.version(packageJson.version).usage(`[command] [options]`)
 
@@ -30,12 +29,9 @@ try {
     inGatsbySite = true
   }
 } catch (err) {
-  if (testRequireError(`package.json`, err)) {
-    // ignore
-  } else {
-    report.error(`There is an error in your site's package.json`, err)
-    process.exit(1)
-  }
+  // ignore
+  console.error(`There is an error in your site's package.json`, err)
+  process.exit(1)
 }
 
 const defaultHost = `localhost`
