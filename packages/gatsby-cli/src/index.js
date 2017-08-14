@@ -30,8 +30,6 @@ try {
   }
 } catch (err) {
   // ignore
-  console.error(`There is an error in your site's package.json`, err)
-  process.exit(1)
 }
 
 const defaultHost = `localhost`
