@@ -177,7 +177,10 @@ module.exports = async (
         ]
       case `develop-html`:
         return [
-          new StaticSiteGeneratorPlugin(`render-page.js`, pages),
+          new StaticSiteGeneratorPlugin({
+            entry: `render-page.js`,
+            paths: pages
+          }),
           new webpack.DefinePlugin({
             "process.env": processEnv(stage, `development`),
             __PREFIX_PATHS__: program.prefixPaths,
@@ -196,7 +199,10 @@ module.exports = async (
         ]
       case `build-html`:
         return [
-          new StaticSiteGeneratorPlugin(`render-page.js`, pages),
+          new StaticSiteGeneratorPlugin({
+            entry: `render-page.js`,
+            paths: pages
+          }),
           new webpack.DefinePlugin({
             "process.env": processEnv(stage, `production`),
             __PREFIX_PATHS__: program.prefixPaths,
