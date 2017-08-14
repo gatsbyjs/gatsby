@@ -64,25 +64,26 @@ function normalizeConfig(config, directory) {
   }
 
   const presets = config.presets || []
-  presets.forEach(preset => {
-    normalizedConfig.presets.push(resolvePlugin(preset, directory, `preset`))
-  })
-
   const plugins = config.plugins || []
-  plugins.forEach(plugin => {
-    let normalizedPlugin
 
-    if (_.isArray(plugin)) {
-      normalizedPlugin = [
-        resolvePlugin(plugin[0], directory, `plugin`),
-        plugin[1],
-      ]
+  const normalize = (value, name) => {
+    let normalized
+
+    if (_.isArray(value)) {
+      normalized = [resolvePlugin(value[0], directory, name), value[1]]
     } else {
-      normalizedPlugin = resolvePlugin(plugin, directory, `plugin`)
+      normalized = resolvePlugin(value, directory, name)
     }
 
-    normalizedConfig.plugins.push(normalizedPlugin)
-  })
+    return normalized
+  }
+
+  presets.forEach(preset =>
+    normalizedConfig.presets.push(normalize(preset, `preset`))
+  )
+  plugins.forEach(plugin =>
+    normalizedConfig.plugins.push(normalize(plugin, `plugin`))
+  )
 
   return objectAssign({}, config, normalizedConfig)
 }

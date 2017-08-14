@@ -8,6 +8,7 @@ const md5File = require(`md5-file/promise`)
 const crypto = require(`crypto`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
+const testRequireError = require(`../utils/test-require-error`)
 const { graphql } = require(`graphql`)
 const { store, emitter } = require(`../redux`)
 const loadPlugins = require(`./load-plugins`)
@@ -46,8 +47,7 @@ module.exports = async (program: any) => {
     // $FlowFixMe
     config = preferDefault(require(`${program.directory}/gatsby-config`))
   } catch (err) {
-    const firstLine = err.toString().split(`\n`)[0]
-    if (!/Error: Cannot find module.*gatsby-config/.test(firstLine)) {
+    if (!testRequireError(`gatsby-config`, err)) {
       report.error(`Could not load gatsby-config`, err)
       process.exit(1)
     }
@@ -129,10 +129,14 @@ module.exports = async (program: any) => {
   // Copy our site files to the root of the site.
   activity = report.activityTimer(`copy gatsby files`)
   activity.start()
-  const srcDir = `${__dirname}/../cache-dir`
+  const srcDir = `${__dirname}/../../cache-dir`
   const siteDir = `${program.directory}/.cache`
+  const tryRequire = `${__dirname}/../utils/test-require-error.js`
   try {
     await fs.copy(srcDir, siteDir, { clobber: true })
+    await fs.copy(tryRequire, `${siteDir}/test-require-error.js`, {
+      clobber: true,
+    })
     await fs.ensureDirSync(`${program.directory}/.cache/json`)
     await fs.ensureDirSync(`${program.directory}/.cache/layouts`)
   } catch (err) {

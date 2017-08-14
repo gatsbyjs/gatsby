@@ -36,8 +36,11 @@ function getErrorFormatter() {
 function createErrorFromString(errorStr: string) {
   let [message, ...rest] = errorStr.split(/\r\n|[\n\r]/g)
   // pull the message from the first line then remove the `Error:` prefix
-  let error = new Error(message.split(`:`).slice(1).join(`:`))
-  error.stack = rest.join(`\n`)
+  // FIXME: when https://github.com/AriaMinaei/pretty-error/pull/49 is merged
+  let error = new Error()
+  error.stack = [message.split(`:`).slice(1).join(`:`), rest.join(`\n`)].join(
+    `\n`
+  )
   error.name = `WebpackError`
   return error
 }
