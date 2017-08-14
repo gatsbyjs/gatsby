@@ -2,14 +2,18 @@ import React from "react"
 import { renderToStaticMarkup } from "react-dom/server"
 import { merge } from "lodash"
 import apiRunner from "./api-runner-ssr"
-import pages from "./pages.json"
-import ReactDOMServer from "react-dom/server"
+import testRequireError from "./test-require-error"
 
 let HTML
 try {
   HTML = require(`../src/html`)
-} catch (e) {
-  HTML = require(`./default-html`)
+} catch (err) {
+  if (testRequireError(`html`, err)) {
+    HTML = require(`./default-html`)
+  } else {
+    console.log(`There was an error requiring "src/html.js"\n\n`, err, `\n\n`)
+    process.exit()
+  }
 }
 
 module.exports = (locals, callback) => {

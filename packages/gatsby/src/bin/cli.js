@@ -10,6 +10,7 @@ const Promise = require(`bluebird`)
 const resolveCwd = require(`resolve-cwd`)
 
 const report = require(`../reporter`)
+const testRequireError = require(`../utils/test-require-error`)
 
 // Improve Promise error handling. Maybe... what's the best
 // practice for this these days?
@@ -39,8 +40,13 @@ try {
   if (localPackageJSON.dependencies && localPackageJSON.dependencies.gatsby) {
     inGatsbySite = true
   }
-} catch (e) {
-  // ignore
+} catch (err) {
+  if (testRequireError(`package.json`, err)) {
+    // ignore
+  } else {
+    report.error(`There is an error in your site's package.json`, err)
+    process.exit(1)
+  }
 }
 
 const directory = path.resolve(`.`)
