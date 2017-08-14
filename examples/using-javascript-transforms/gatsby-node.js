@@ -23,7 +23,7 @@ exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
 }
 
 exports.createPages = ({ graphql, boundActionCreators }) => {
-  const { createPage, createLayout } = boundActionCreators
+  const { createPage } = boundActionCreators
 
   return new Promise((resolve, reject) => {
 
