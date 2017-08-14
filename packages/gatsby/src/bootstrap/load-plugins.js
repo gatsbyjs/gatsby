@@ -198,7 +198,7 @@ module.exports = async (config = {}) => {
     try {
       gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
     } catch (err) {
-      if (testRequireError(`gatsby-node`, err)) {
+      if (!testRequireError(`gatsby-node`, err)) {
         // ignore
       } else {
         report.panic(`Error requiring ${plugin.resolve}/gatsby-node.js`, err)
