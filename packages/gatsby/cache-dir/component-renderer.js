@@ -60,6 +60,9 @@ class ComponentRenderer extends React.Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     // Check if the component or json have changed.
+    if (!this.state.pageResources || nextState.pageResources) {
+      return true
+    }
     if (
       this.state.pageResources.component !== nextState.pageResources.component
     ) {
@@ -92,10 +95,18 @@ class ComponentRenderer extends React.Component {
         return null
       }
     } else if (this.props.layout) {
-      return createElement(this.state.pageResources.layout || DefaultLayout, {
-        key: this.state.pageResources.layout,
-        ...this.props,
-      })
+      return createElement(
+        this.state.pageResources && this.state.pageResources.layout
+          ? this.state.pageResources.layout
+          : DefaultLayout,
+        {
+          key:
+            this.state.pageResources && this.state.pageResources.layout
+              ? this.state.pageResources.layout
+              : `DefaultLayout`,
+          ...this.props,
+        }
+      )
     } else {
       return null
     }

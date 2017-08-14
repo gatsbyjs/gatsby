@@ -179,7 +179,7 @@ module.exports = async (
         return [
           new StaticSiteGeneratorPlugin({
             entry: `render-page.js`,
-            paths: pages
+            paths: pages,
           }),
           new webpack.DefinePlugin({
             "process.env": processEnv(stage, `development`),
@@ -201,7 +201,7 @@ module.exports = async (
         return [
           new StaticSiteGeneratorPlugin({
             entry: `render-page.js`,
-            paths: pages
+            paths: pages,
           }),
           new webpack.DefinePlugin({
             "process.env": processEnv(stage, `production`),
