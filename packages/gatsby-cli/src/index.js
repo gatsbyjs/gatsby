@@ -1,4 +1,9 @@
 #!/usr/bin/env node
+
+// babel-preset-env doesn't find this import if you
+// use require() with backtick strings so use the es6 syntax
+import "babel-polyfill"
+
 const program = require(`commander`)
 const packageJson = require(`./package.json`)
 const path = require(`path`)
@@ -23,8 +28,10 @@ try {
   ) {
     inGatsbySite = true
   }
-} catch (e) {
+} catch (err) {
   // ignore
+  console.error(`There is an error in your site's package.json`, err)
+  process.exit(1)
 }
 
 const defaultHost = `localhost`

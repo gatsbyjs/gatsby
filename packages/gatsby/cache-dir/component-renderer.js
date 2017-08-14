@@ -1,6 +1,12 @@
 import React, { createElement } from "react"
+import PropTypes from "prop-types"
 import loader from "./loader"
 import emitter from "./emitter"
+
+const DefaultLayout = ({ children }) =>
+  <div>
+    {children()}
+  </div>
 
 // Pass pathname in as prop.
 // component will try fetching resources. If they exist,
@@ -75,16 +81,31 @@ class ComponentRenderer extends React.Component {
   }
 
   render() {
-    if (this.state.pageResources) {
-      return createElement(this.state.pageResources.component, {
-        key: this.props.location.pathname,
+    if (this.props.page) {
+      if (this.state.pageResources) {
+        return createElement(this.state.pageResources.component, {
+          key: this.props.location.pathname,
+          ...this.props,
+          ...this.state.pageResources.json,
+        })
+      } else {
+        return null
+      }
+    } else if (this.props.layout) {
+      return createElement(this.state.pageResources.layout || DefaultLayout, {
+        key: this.state.pageResources.layout,
         ...this.props,
-        ...this.state.pageResources.json,
       })
     } else {
       return null
     }
   }
+}
+
+ComponentRenderer.propTypes = {
+  page: PropTypes.bool,
+  layout: PropTypes.bool,
+  location: PropTypes.object,
 }
 
 export default ComponentRenderer

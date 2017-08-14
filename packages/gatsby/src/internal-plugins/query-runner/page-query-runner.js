@@ -77,10 +77,12 @@ const runQueriesForIds = ids => {
   return Promise.all(
     ids.map(id => {
       const pagesAndLayouts = [...state.pages, ...state.layouts]
-      const pl = pagesAndLayouts.find(
+      const plObj = pagesAndLayouts.find(
         pl => pl.path === id || `LAYOUT___${pl.id}` === id
       )
-      return queryRunner(pl, state.components[pl.component])
+      if (plObj) {
+        return queryRunner(plObj, state.components[plObj.component])
+      }
     })
   )
 }
