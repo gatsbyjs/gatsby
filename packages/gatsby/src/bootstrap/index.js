@@ -7,14 +7,14 @@ const slash = require(`slash`)
 const fs = require(`fs-extra`)
 const md5File = require(`md5-file/promise`)
 const crypto = require(`crypto`)
-const report = require(`yurnalist`)
-const convertHrtime = require(`convert-hrtime`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
+const testRequireError = require(`../utils/test-require-error`)
 const { graphql } = require(`graphql`)
 const { store, emitter } = require(`../redux`)
 const loadPlugins = require(`./load-plugins`)
 const { initCache } = require(`../utils/cache`)
+const report = require(`../reporter`)
 
 type ApiType = 'browser' | 'ssr';
 
@@ -25,26 +25,6 @@ const {
   runQueries,
 } = require(`../internal-plugins/query-runner/page-query-runner`)
 const { writePages } = require(`../internal-plugins/query-runner/pages-writer`)
-
-const activityTimer = name => {
-  const spinner = report.activity()
-  const start = process.hrtime()
-
-  const elapsedTime = function() {
-    var precision = 3 // 3 decimal places
-    var elapsed = process.hrtime(start)
-    return `${convertHrtime(elapsed)[`seconds`].toFixed(precision)} s`
-  }
-  return {
-    start: () => {
-      spinner.tick(name)
-    },
-    end: () => {
-      report.success(`${name} — ${elapsedTime()}`)
-      spinner.end()
-    },
-  }
-}
 
 // Override console.log to add the source file + line number.
 // Useful for debugging if you lose a console.log somewhere.
@@ -63,18 +43,15 @@ module.exports = async (program: any) => {
   })
 
   // Try opening the site's gatsby-config.js file.
-  let activity = activityTimer(`open and validate gatsby-config.js`)
+  let activity = report.activityTimer(`open and validate gatsby-config.js`)
   activity.start()
   let config
   try {
     // $FlowFixMe
     config = preferDefault(require(`${program.directory}/gatsby-config`))
-  } catch (e) {
-    const firstLine = e.toString().split(`\n`)[0]
-    if (!/Error: Cannot find module.*gatsby-config/.test(firstLine)) {
-      console.log(``)
-      console.log(``)
-      console.log(e)
+  } catch (err) {
+    if (!testRequireError(`${program.directory}/gatsby-config`, err)) {
+      report.error(`Could not load gatsby-config`, err)
       process.exit(1)
     }
   }
@@ -119,20 +96,18 @@ module.exports = async (program: any) => {
   // Also if the hash isn't there, then delete things just in case something
   // is weird.
   if (oldPluginsHash && pluginsHash !== oldPluginsHash) {
-    console.log(
-      `
-One or more of your plugins have changed since the last time you ran Gatsby. As
-a precaution, we're deleting your site's cache to ensure there's not any stale
-data
-`
-    )
+    report.info(report.stripIndent`
+      One or more of your plugins have changed since the last time you ran Gatsby. As
+      a precaution, we're deleting your site's cache to ensure there's not any stale
+      data
+    `)
   }
 
   if (!oldPluginsHash || pluginsHash !== oldPluginsHash) {
     try {
       await fs.remove(`${program.directory}/.cache`)
     } catch (e) {
-      console.error(`Failed to remove .cache files. ${e.message}`)
+      report.error(`Failed to remove .cache files.`, e)
     }
     // Tell reducers to delete their data (the store will already have
     // been loaded from the file system cache).
@@ -152,20 +127,23 @@ data
   initCache()
 
   // Ensure the public/static directory is created.
-  await fs.mkdirp(`${program.directory}/public/static`)
+  await fs.ensureDirSync(`${program.directory}/public/static`)
 
   // Copy our site files to the root of the site.
-  activity = activityTimer(`copy gatsby files`)
+  activity = report.activityTimer(`copy gatsby files`)
   activity.start()
-  const srcDir = `${__dirname}/../cache-dir`
+  const srcDir = `${__dirname}/../../cache-dir`
   const siteDir = `${program.directory}/.cache`
+  const tryRequire = `${__dirname}/../utils/test-require-error.js`
   try {
     await fs.copy(srcDir, siteDir, { clobber: true })
-    await fs.mkdirs(`${program.directory}/.cache/json`)
-  } catch (e) {
-    console.log(`Unable to copy site files to .cache`)
-    console.log(e)
-    process.exit(1)
+    await fs.copy(tryRequire, `${siteDir}/test-require-error.js`, {
+      clobber: true,
+    })
+    await fs.ensureDirSync(`${program.directory}/.cache/json`)
+    await fs.ensureDirSync(`${program.directory}/.cache/layouts`)
+  } catch (err) {
+    report.panic(`Unable to copy site files to .cache`, err)
   }
 
   // Find plugins which implement gatsby-browser and gatsby-ssr and write
@@ -182,7 +160,12 @@ data
   function appendPluginsToFile(type: ApiType) {
     const filePath = `${siteDir}/api-runner-${type}.js`
     const plugins = getPluginsForType(type)
-    let src = fs.readFileSync(filePath, `utf-8`)
+    let src
+    try {
+      src = fs.readFileSync(filePath, `utf-8`)
+    } catch (err) {
+      report.panic(`Failed to read ${siteDir}/api-runner-browser.js`, err)
+    }
 
     fs.writeFileSync(
       filePath,
@@ -208,13 +191,13 @@ data
   activity.end()
 
   // Source nodes
-  activity = activityTimer(`source and transform nodes`)
+  activity = report.activityTimer(`source and transform nodes`)
   activity.start()
   await require(`../utils/source-nodes`)()
   activity.end()
 
   // Create Schema.
-  activity = activityTimer(`building schema`)
+  activity = report.activityTimer(`building schema`)
   activity.start()
   await require(`../schema`)()
   activity.end()
@@ -237,8 +220,18 @@ data
     return graphql(schema, query, context, context, context)
   }
 
+  // Collect layouts.
+  activity = report.activityTimer(`createLayouts`)
+  activity.start()
+  await apiRunnerNode(`createLayouts`, {
+    graphql: graphqlRunner,
+    traceId: `initial-createLayouts`,
+    waitForCascadingActions: true,
+  })
+  activity.end()
+
   // Collect pages.
-  activity = activityTimer(`createPages`)
+  activity = report.activityTimer(`createPages`)
   activity.start()
   await apiRunnerNode(`createPages`, {
     graphql: graphqlRunner,
@@ -251,7 +244,7 @@ data
   // have full control over adding/removing pages. The normal
   // "createPages" API is called every time (during development)
   // that data changes.
-  activity = activityTimer(`createPagesStatefully`)
+  activity = report.activityTimer(`createPagesStatefully`)
   activity.start()
   await apiRunnerNode(`createPagesStatefully`, {
     graphql: graphqlRunner,
@@ -259,27 +252,26 @@ data
     waitForCascadingActions: true,
   })
   activity.end()
-
   // Extract queries
-  activity = activityTimer(`extract queries from components`)
+  activity = report.activityTimer(`extract queries from components`)
   activity.start()
   await extractQueries()
   activity.end()
 
   // Run queries
-  activity = activityTimer(`run graphql queries`)
+  activity = report.activityTimer(`run graphql queries`)
   activity.start()
   await runQueries()
   activity.end()
 
   // Write out files.
-  activity = activityTimer(`write out page data`)
+  activity = report.activityTimer(`write out page data`)
   activity.start()
   await writePages()
   activity.end()
 
   // Update Schema for SitePage.
-  activity = activityTimer(`update schema`)
+  activity = report.activityTimer(`update schema`)
   activity.start()
   await require(`../schema`)()
   activity.end()
@@ -287,19 +279,17 @@ data
   const checkJobsDone = _.debounce(resolve => {
     const state = store.getState()
     if (state.jobs.active.length === 0) {
-      console.log(``)
-      console.log(
-        `bootstrap finished, time since started: ${process.uptime()}sec`
-      )
-      console.log(``)
+      report.log(``)
+      report.info(`bootstrap finished - ${process.uptime()} s`)
+      report.log(``)
       resolve({ graphqlRunner })
     }
   }, 100)
 
   if (store.getState().jobs.active.length === 0) {
-    console.log(``)
-    console.log(`bootstrap finished, time since started: ${process.uptime()} s`)
-    console.log(``)
+    report.log(``)
+    report.info(`bootstrap finished - ${process.uptime()} s`)
+    report.log(``)
     return { graphqlRunner }
   } else {
     return new Promise(resolve => {
