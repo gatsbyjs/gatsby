@@ -9,29 +9,49 @@ import {
 } from "typography-breakpoint-constants"
 
 const options = {
-  headerFontFamily: [`Futura PT`, `sans-serif`],
-  bodyFontFamily: [`Spectral`, `Georgia`, `serif`],
+  headerFontFamily: [
+    `Futura PT`,
+    `-apple-system`,
+    `BlinkMacSystemFont`,
+    `Segoe UI`,
+    `Roboto`,
+    `Oxygen`,
+    `Ubuntu`,
+    `Cantarell`,
+    `Fira Sans`,
+    `Droid Sans`,
+    `Helvetica Neue`,
+    `Arial`,
+    `sans-serif`,
+  ],
+  bodyFontFamily: [`Spectral`, `Georgia`, `Times New Roman`, `Times`, `serif`],
+  monospaceFontFamily: [
+    `Space Mono`,
+    `SFMono-Regular`,
+    `Menlo`,
+    `Monaco`,
+    `Consolas`,
+    `Liberation Mono`,
+    `Courier New`,
+    `monospace`,
+  ],
   baseFontSize: `18px`,
-  baseLineHeight: 1.45,
-  // headerColor: `#44421f`,
-  headerColor: colors.c[15],
+  baseLineHeight: 1.4,
+  headerLineHeight: 1.075,
   headerColor: `#26202c`,
-  // bodyColor: `#44421f`,
-  bodyColor: colors.c[14],
   bodyColor: `#3d3347`,
-  blockMarginBottom: 0.8,
+  blockMarginBottom: 0.75,
   scaleRatio: 2,
   plugins: [new CodePlugin()],
   overrideStyles: ({ rhythm, scale }, options) => {
     return {
       "h1,h2,h4,h5,h6": {
-        lineHeight: 1.075,
-        marginTop: rhythm(1.5),
-        marginBottom: rhythm(3 / 4),
+        marginTop: rhythm(options.blockMarginBottom * 2),
+        marginBottom: rhythm(options.blockMarginBottom),
         letterSpacing: `-0.0075em`,
       },
-      ul: {
-        marginTop: rhythm(1 / 2),
+      "ul, ol": {
+        marginTop: rhythm(options.blockMarginBottom),
       },
       h1: {
         ...scale(4 / 5),
@@ -39,8 +59,8 @@ const options = {
       h3: {
         ...scale(2 / 5),
         lineHeight: 1,
-        marginTop: rhythm(1),
-        marginBottom: rhythm(1 / 2),
+        marginTop: rhythm(options.blockMarginBottom),
+        marginBottom: rhythm(options.blockMarginBottom),
       },
       h4: {
         ...scale(1 / 5),
@@ -49,14 +69,16 @@ const options = {
         ...scale(0),
       },
       blockquote: {
-        paddingLeft: rhythm(3 / 8),
-        marginLeft: rhythm(3 / 8),
-        borderLeft: `${rhythm(2 / 8)} solid ${presets.brandDark}`,
+        paddingLeft: rhythm(options.blockMarginBottom),
+        marginLeft: 0,
+        borderLeft: `${rhythm(
+          options.blockMarginBottom / 4
+        )} solid ${presets.brandLighter}`,
       },
       "tt,code": {
         // background: `hsla(23, 60%, 97%, 1)`,
         background: colors.a[0],
-        fontFamily: `"Space Mono",Consolas,"Roboto Mono","Droid Sans Mono","Liberation Mono",Menlo,Courier,monospace`,
+        fontFamily: options.monospaceFontFamily.join(`,`),
         fontSize: `80%`,
         // Disable ligatures as they look funny w/ Space Mono as code.
         fontVariant: `none`,
@@ -69,7 +91,7 @@ const options = {
         background: colors.a[0],
         boxShadow: `inset 0 0 0 1px ${colors.a[1]}`,
         borderRadius: `${presets.radius}px`,
-        padding: rhythm(3 / 4),
+        padding: rhythm(options.blockMarginBottom),
         marginBottom: rhythm(options.blockMarginBottom),
         overflow: `auto`,
         WebkitOverflowScrolling: `touch`,
@@ -92,11 +114,12 @@ const options = {
       },
       ".gatsby-highlight-code-line": {
         background: colors.a[1],
-        marginRight: `${rhythm(-3 / 4)}`,
-        marginLeft: `${rhythm(-3 / 4)}`,
-        paddingRight: rhythm(3 / 4),
-        paddingLeft: `${rhythm(3 / 4 / 4 * 3)}`,
-        borderLeft: `${rhythm(3 / 4 / 4 * 1)} solid ${colors.a[5]}`,
+        marginRight: `${rhythm(-options.blockMarginBottom)}`,
+        marginLeft: `${rhythm(-options.blockMarginBottom)}`,
+        paddingRight: rhythm(options.blockMarginBottom),
+        paddingLeft: `${rhythm(options.blockMarginBottom / 5 * 4)}`,
+        borderLeft: `${rhythm(options.blockMarginBottom / 5 * 1)} solid ${colors
+          .a[5]}`,
         display: `block`,
       },
       ".gatsby-highlight::-webkit-scrollbar": {
@@ -114,7 +137,7 @@ const options = {
         ...scale(-1 / 5),
         lineHeight: 1.3,
         paddingTop: rhythm(3 / 8),
-        marginBottom: rhythm(1),
+        marginBottom: rhythm(options.blockMarginBottom),
         display: `block`,
         textAlign: `center`,
         fontStyle: `normal`,
@@ -162,8 +185,8 @@ const options = {
         boxShadow: `none`,
       },
       ".post .gatsby-highlight, .post .gatsby-resp-iframe-wrapper, .post .gatsby-resp-image-link": {
-        marginLeft: rhythm(-3 / 4), // 3/4 rhythm is amount of padding on mobile.
-        marginRight: rhythm(-3 / 4),
+        marginLeft: rhythm(-options.blockMarginBottom), // 3/4 rhythm is amount of padding on mobile.
+        marginRight: rhythm(-options.blockMarginBottom),
       },
       ".gatsby-resp-image-link": {
         borderRadius: `${presets.radius}px`,
