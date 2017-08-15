@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-jss",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "Gatsby plugin that adds SSR support for JSS",
   "main": "index.js",
   "scripts": {

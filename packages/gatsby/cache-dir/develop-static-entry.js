@@ -2,15 +2,21 @@ import React from "react"
 import { renderToStaticMarkup } from "react-dom/server"
 import { merge } from "lodash"
 import apiRunner from "./api-runner-ssr"
+import testRequireError from "./test-require-error"
 
-let Html
+let HTML
 try {
-  Html = require(`../src/html`)
-} catch (e) {
-  Html = require(`./default-html`)
+  HTML = require(`../src/html`)
+} catch (err) {
+  if (testRequireError(`..\/src\/html`, err)) {
+    HTML = require(`./default-html`)
+  } else {
+    console.log(`There was an error requiring "src/html.js"\n\n`, err, `\n\n`)
+    process.exit()
+  }
 }
 
-Html = Html && Html.__esModule ? Html.default : Html
+HTML = HTML && HTML.__esModule ? HTML.default : HTML
 
 module.exports = (locals, callback) => {
   // const apiRunner = require(`${directory}/.cache/api-runner-ssr`)
@@ -43,7 +49,7 @@ module.exports = (locals, callback) => {
     setBodyProps,
   })
 
-  const htmlElement = React.createElement(Html, {
+  const htmlElement = React.createElement(HTML, {
     ...bodyProps,
     body: ``,
     headComponents: headComponents.concat([

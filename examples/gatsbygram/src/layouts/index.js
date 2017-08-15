@@ -13,7 +13,7 @@ import Modal from "../components/modal"
 class DefaultLayout extends React.Component {
   static propTypes = {
     location: PropTypes.object.isRequired,
-    children: PropTypes.node,
+    children: PropTypes.func,
   }
   static childContextTypes = {
     setPosts: PropTypes.func,

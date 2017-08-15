@@ -55,6 +55,7 @@ exports.resolvableExtensions = true
  * }
  * @returns {Array} array of extensions
  */
+
 exports.createPages = true
 
 /**
@@ -72,6 +73,22 @@ exports.createPages = true
  * add and remove pages.
  */
 exports.createPagesStatefully = true
+
+/**
+ * Tell plugins to add layouts. This extension point is called only after the initial
+ * sourcing and transformation of nodes plus creation of the GraphQL schema are
+ * complete so you can query your data in order to create layouts.
+ *
+ * See also the documentation for [`createLayout`](/docs/bound-action-creators/#createLayout).
+ * @example
+ * exports.createLayouts = ({ graphql, boundActionCreators }) => {
+ *  boundActionCreators.createLayout({
+ *    id: 'custom',
+ *    component: path.resolve(`src/templates/custom-layout.js`),
+ *   })
+ *  }
+ */
+exports.createLayouts = true
 
 /**
  * Extension point to tell plugins to source nodes.
@@ -109,6 +126,12 @@ exports.onCreateNode = true
  * for more on this API.
  */
 exports.onCreatePage = true
+
+/**
+ * Called when a new layout is created. This extension API is useful
+ * for programmatically manipulating layouts created by other plugins
+ */
+exports.onCreateLayout = true
 
 /**
  * Called during the creation of the GraphQL schema. Allows plugins

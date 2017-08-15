@@ -181,6 +181,7 @@ module.exports = async (
           // ids to reduce filesize.
           plugins.namedModules(),
           new FriendlyErrorsWebpackPlugin({
+            clearConsole: false,
             compilationSuccessInfo: {
               messages: [
                 `Your site is running at http://localhost:${program.port}`,
@@ -194,7 +195,10 @@ module.exports = async (
       case `develop-html`:
       case `build-html`:
         configPlugins = configPlugins.concat([
-          new StaticSiteGeneratorPlugin(`render-page.js`, pages),
+          new StaticSiteGeneratorPlugin({
+            entry: `render-page.js`,
+            paths: pages,
+          }),
         ])
         break
 

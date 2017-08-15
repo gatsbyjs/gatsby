@@ -1,0 +1,108 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Add layouts allows you to add layout with context 1`] = `
+Object {
+  "payload": Object {
+    "component": "/whatever/index.js",
+    "componentChunkName": "component---whatever-index-js",
+    "componentWrapperPath": "/.cache/layouts/index.js",
+    "context": Object {
+      "title": "layout title",
+    },
+    "id": "index",
+    "internalComponentName": "Component-layout-Index",
+    "isLayout": true,
+    "jsonName": "layout-index.json",
+    "pluginCreator___NODE": "Plugin test",
+  },
+  "plugin": Object {
+    "name": "test",
+  },
+  "traceId": undefined,
+  "type": "CREATE_LAYOUT",
+}
+`;
+
+exports[`Add layouts allows you to add layout with context 2`] = `
+Array [
+  Object {
+    "component": "/whatever/index.js",
+    "componentChunkName": "component---whatever-index-js",
+    "componentWrapperPath": "/.cache/layouts/index.js",
+    "context": Object {
+      "title": "layout title",
+    },
+    "id": "index",
+    "internalComponentName": "Component-layout-Index",
+    "isLayout": true,
+    "jsonName": "layout-index.json",
+    "pluginCreator___NODE": "Plugin test",
+  },
+]
+`;
+
+exports[`Add layouts allows you to add layouts 1`] = `
+Object {
+  "payload": Object {
+    "component": "/whatever/index.js",
+    "componentChunkName": "component---whatever-index-js",
+    "componentWrapperPath": "/.cache/layouts/index.js",
+    "context": Object {},
+    "id": "index",
+    "internalComponentName": "Component-layout-Index",
+    "isLayout": true,
+    "jsonName": "layout-index.json",
+    "pluginCreator___NODE": "Plugin test",
+  },
+  "plugin": Object {
+    "name": "test",
+  },
+  "traceId": undefined,
+  "type": "CREATE_LAYOUT",
+}
+`;
+
+exports[`Add layouts allows you to add layouts 2`] = `
+Array [
+  Object {
+    "component": "/whatever/index.js",
+    "componentChunkName": "component---whatever-index-js",
+    "componentWrapperPath": "/.cache/layouts/index.js",
+    "context": Object {},
+    "id": "index",
+    "internalComponentName": "Component-layout-Index",
+    "isLayout": true,
+    "jsonName": "layout-index.json",
+    "pluginCreator___NODE": "Plugin test",
+  },
+]
+`;
+
+exports[`Add layouts allows you to add multiple layouts 1`] = `
+Array [
+  Object {
+    "component": "/whatever/index.js",
+    "componentChunkName": "component---whatever-index-js",
+    "componentWrapperPath": "/.cache/layouts/index.js",
+    "context": Object {},
+    "id": "index",
+    "internalComponentName": "Component-layout-Index",
+    "isLayout": true,
+    "jsonName": "layout-index.json",
+    "pluginCreator___NODE": "Plugin test",
+  },
+  Object {
+    "component": "/whatever/pizza.js",
+    "componentChunkName": "component---whatever-pizza-js",
+    "componentWrapperPath": "/.cache/layouts/pizza.js",
+    "context": Object {},
+    "id": "pizza",
+    "internalComponentName": "Component-layout-Pizza",
+    "isLayout": true,
+    "jsonName": "layout-pizza.json",
+    "pluginCreator___NODE": "Plugin test",
+  },
+]
+`;
+
+exports[`Add layouts allows you to delete ids 1`] = `Array []`;

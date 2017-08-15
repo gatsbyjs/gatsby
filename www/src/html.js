@@ -1,7 +1,4 @@
 import React from "react"
-import { TypographyStyle } from "react-typography"
-
-import typography from "./utils/typography"
 
 let stylesStr
 if (process.env.NODE_ENV === `production`) {
@@ -75,7 +72,6 @@ export default class HTML extends React.Component {
             href={`/safari-pinned-tab.svg`}
             color="#5bbad5"
           />
-          <TypographyStyle key={`typography`} typography={typography} />
           {css}
         </head>
         <body>

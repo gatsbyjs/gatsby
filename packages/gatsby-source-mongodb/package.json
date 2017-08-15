@@ -1,6 +1,6 @@
 {
   "name": "gatsby-source-mongodb",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "Stub description for gatsby-source-mongodb",
   "main": "index.js",
   "scripts": {
@@ -16,6 +16,7 @@
     "babel-cli": "^6.24.1"
   },
   "dependencies": {
+    "lodash": "^4.17.4",
     "mongodb": "^2.2.30"
   }
 }
