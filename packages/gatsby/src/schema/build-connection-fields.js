@@ -104,7 +104,8 @@ module.exports = type => {
           groupConnections.push(groupConn)
         })
 
-        let tags = groupConnections.map(e=>{
+        // make tags arrays case ignored
+        const tags = groupConnections.map(e=>{
           if(e.field === 'frontmatter.tags'){
             e.fieldValue = e.fieldValue.toLowerCase()
           }
@@ -116,7 +117,8 @@ module.exports = type => {
           return acc
         }, {})
 
-        let output = _.uniqBy(
+        // uniq Tags' connections
+        const output = _.uniqBy(
           groupConnections.filter(e=>{
             if(e.field === 'frontmatter.tags') {
               e.totalCount = tags[e.fieldValue]
