@@ -4,12 +4,16 @@ const path = require(`path`)
 const parseFilepath = require(`parse-filepath`)
 const fs = require(`fs-extra`)
 const slash = require(`slash`)
+const slugify = require(`limax`)
 
 exports.createPages = ({ graphql, boundActionCreators }) => {
   const { createPage } = boundActionCreators
   return new Promise((resolve, reject) => {
     const docsTemplate = path.resolve(`src/templates/template-docs-markdown.js`)
     const blogPostTemplate = path.resolve(`src/templates/template-blog-post.js`)
+    const contributorPageTemplate = path.resolve(
+      `src/templates/template-contributor-page.js`
+    )
     const packageTemplate = path.resolve(
       `src/templates/template-docs-packages.js`
     )
@@ -33,6 +37,15 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
                 draft
                 canonicalLink
                 publishedAt
+              }
+            }
+          }
+        }
+        allAuthorYaml {
+          edges {
+            node {
+              fields {
+                slug
               }
             }
           }
@@ -70,6 +83,17 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
               slug: edge.node.fields.slug,
               prev,
               next,
+            },
+          })
+        })
+
+        // Create contributor pages.
+        result.data.allAuthorYaml.edges.forEach(edge => {
+          createPage({
+            path: `${edge.node.fields.slug}`,
+            component: slash(contributorPageTemplate),
+            context: {
+              slug: edge.node.fields.slug,
             },
           })
         })
@@ -148,6 +172,9 @@ exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
     if (slug) {
       createNodeField({ node, name: `slug`, value: slug })
     }
+  } else if (node.internal.type === `AuthorYaml`) {
+    slug = `/contributors/${slugify(node.id)}/`
+    createNodeField({ node, name: `slug`, value: slug })
   }
 }
 

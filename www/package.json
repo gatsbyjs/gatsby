@@ -31,6 +31,7 @@
     "gatsby-transformer-remark": "^1.6.3",
     "gatsby-transformer-sharp": "^1.6.0",
     "gatsby-transformer-yaml": "^1.5.3",
+    "limax": "^1.5.0",
     "lodash": "^4.16.6",
     "mitt": "^1.1.2",
     "parse-filepath": "^1.0.1",
