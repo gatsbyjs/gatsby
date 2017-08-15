@@ -23,7 +23,7 @@ Also anything you render in the `html.js` component will *not* be made "live" in
 
 ### Target container
 
-If you see this error: `Uncaught Error: _registerComponent(...): Target container is not a DOM element.` it means your `html.js` is missing the required "Target container". Inside your `<body>` you must have a div with an id of `___gatsby` like:
+If you see this error: `Uncaught Error: _registerComponent(...): Target container is not a DOM element.` it means your `html.js` is missing the required "target container". Inside your `<body>` you must have a div with an id of `___gatsby` like:
 
 ```jsx
 <div
