@@ -13,6 +13,6 @@ module.exports = async program => {
   )
 
   return new Promise(resolve => {
-    webpack(compilerConfig.resolve()).run(() => resolve())
+    webpack(compilerConfig).run(() => resolve())
   })
 }

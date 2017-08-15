@@ -467,6 +467,38 @@ actions.replacePageComponentQuery = ({ query, componentPath }) => {
 }
 
 /**
+ * Merge additional configuration into the current webpack config. A few
+ * configurations options will be ignored if set, in order to try prevent accidental breakage.
+ * Specifically, any change to `entry`, `output`, `target`, or `resolveLoaders` will be ignored.
+ *
+ * For full control over the webpack config, use `replaceWebpackConfig()`.
+ *
+ * @param {Object} config partial webpack config, to be merged into the current one
+ */
+actions.setWebpackConfig = (config: Object) => {
+  return {
+    type: `SET_WEBPACK_CONFIG`,
+    payload: config,
+  }
+}
+
+/**
+ * Completely replace the webpack config for the current stage. This can be
+ * dangerous and break Gatsby if certain configuration options are changed.
+ *
+ * Generally only useful for cases where you need to handle config merging logic
+ * yourself, in which case consider using `webpack-merge`.
+ *
+ * @param {Object} config complete webpack config
+ */
+actions.replaceWebpackConfig = (config: Object) => {
+  return {
+    type: `REPLACE_WEBPACK_CONFIG`,
+    payload: config,
+  }
+}
+
+/**
  * Create a "job". This is a long-running process that are generally
  * started as side-effects to GraphQL queries.
  * [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp/) uses this for

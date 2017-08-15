@@ -1,37 +1,49 @@
+const babelPluginRemoveQueries = require(`babel-plugin-remove-graphql-queries`)
 const { transpileModule } = require(`typescript`)
-const path = require(`path`)
+const resolve = require(`./resolve`)
 
 const test = /\.tsx?$/
 const compilerDefaults = {
   target: `esnext`,
   experimentalDecorators: true,
   jsx: `react`,
+  module: `es6`,
 }
 
 module.exports.resolvableExtensions = () => [`.ts`, `.tsx`]
 
-module.exports.modifyWebpackConfig = ({ config }, { compilerOptions }) => {
-  // CommonJS to keep Webpack happy.
-  const copts = Object.assign({}, compilerDefaults, compilerOptions, {
-    module: `commonjs`,
-  })
+module.exports.modifyWebpackConfig = (
+  { boundActionCreators, loaders },
+  { compilerOptions, ...options }
+) => {
+  // Gatsby removes graphql queries from source code because they queries are
+  // run ahead of time. We need to do that here as well in order to avoid
+  // extra dead code sitting in the typescript files.
+  const jsLoader = loaders.js({ plugins: [babelPluginRemoveQueries] })
 
-  // React-land is rather undertyped; nontrivial TS projects will most likely
-  // error (i.e., not build) at something or other.
-  const opts = { compilerOptions: copts, transpileOnly: true }
+  const typescriptOptions = {
+    // React-land is rather undertyped; nontrivial TS projects will most likely
+    // error (i.e., not build) at something or other.
+    transpileOnly: true,
+    compilerOptions: {
+      ...compilerDefaults,
+      ...compilerOptions,
+    },
+    ...options,
+  }
 
-  // Load gatsby babel plugin to extract graphql query
-  const extractQueryPlugin = path.resolve(
-    __dirname,
-    `../gatsby/dist/utils/babel-plugin-extract-graphql.js`
-  )
-
-  config.loader(`typescript`, {
-    test,
-    loaders: [
-      `babel?${JSON.stringify({ plugins: [extractQueryPlugin] })}`,
-      `ts-loader?${JSON.stringify(opts)}`,
-    ],
+  boundActionCreators.setWebpackConfig({
+    module: {
+      rules: [
+        {
+          test,
+          use: [jsLoader, {
+            loader: resolve(`ts-loader`),
+            options: typescriptOptions,
+          }],
+        },
+      ],
+    },
   })
 }
 
@@ -39,11 +51,8 @@ module.exports.preprocessSource = (
   { contents, filename },
   { compilerOptions }
 ) => {
-  // overwrite defaults with custom compiler options
-  const copts = Object.assign({}, compilerDefaults, compilerOptions, {
-    target: `esnext`,
-    module: `es6`,
-  })
+  const copts = { ...compilerDefaults, ...compilerOptions }
+
   // return the transpiled source if it's TypeScript, otherwise null
   return test.test(filename)
     ? transpileModule(contents, { compilerOptions: copts }).outputText

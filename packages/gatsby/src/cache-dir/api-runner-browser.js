@@ -5,7 +5,7 @@
 //   require('/path/to/plugin2/gatsby-browser.js'),
 // ]
 
-module.exports = (api, args, defaultReturn) => {
+export default (api, args, defaultReturn) => {
   // Run each plugin in series.
   let results = plugins.map(plugin => {
     if (plugin.plugin[api]) {

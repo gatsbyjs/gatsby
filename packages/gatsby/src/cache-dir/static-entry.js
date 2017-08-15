@@ -13,6 +13,8 @@ try {
   Html = require(`./default-html`)
 }
 
+Html = Html && Html.__esModule ? Html.default : Html
+
 const pathChunkName = path => {
   const name = path === `/` ? `index` : kebabCase(path)
   return `path---${name}`
@@ -112,7 +114,7 @@ module.exports = (locals, callback) => {
   })
 
   // Add the chunk-manifest as a head component.
-  const chunkManifest = require(`!raw!../public/chunk-manifest.json`)
+  const chunkManifest = require(`!raw-loader!../public/chunk-manifest.json`)
 
   headComponents.unshift(
     <script

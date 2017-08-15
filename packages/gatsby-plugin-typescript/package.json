@@ -7,6 +7,7 @@
     "Noah Lange <noahrlange@gmail.com>"
   ],
   "dependencies": {
+    "babel-plugin-remove-graphql-queries": "1.4.1",
     "ts-loader": "^2.0.3",
     "typescript": "^2.2.1"
   },
@@ -20,7 +21,7 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "build": "babel src --out-dir .",
-    "watch": "babel -w src --out-dir ."
+    "build": "babel src --out-dir . --ignore __tests__",
+    "watch": "babel -w src --out-dir . --ignore __tests__"
   }
 }

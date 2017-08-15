@@ -9,7 +9,7 @@ function getGraphQLTag(path) {
 
   if (quasis.length !== 1) {
     throw new Error(
-      `BabelPluginGraphQL: Substitutions are not allowed in graphql. ` +
+      `BabelPluginRemoveGraphQL: String interpolations are not allowed in graphql ` +
         `fragments. Included fragments should be referenced ` +
         `as \`...MyModule_foo\`.`
     )
@@ -21,17 +21,17 @@ function getGraphQLTag(path) {
     const ast = graphql.parse(text)
 
     if (ast.definitions.length === 0) {
-      throw new Error(`BabelPluginGraphQL: Unexpected empty graphql tag.`)
+      throw new Error(`BabelPluginRemoveGraphQL: Unexpected empty graphql tag.`)
     }
     return ast
   } catch (err) {
     throw new Error(
-      `BabelPluginGraphQL: GraphQL syntax error in query:\n\n${text}\n\nmessage:\n\n${err.message}`
+      `BabelPluginRemoveGraphQLQueries: GraphQL syntax error in query:\n\n${text}\n\nmessage:\n\n${err.message}`
     )
   }
 }
 
-function BabelPluginGraphQL({ types: t }) {
+function BabelPluginRemoveGraphQLQueries({ types: t }) {
   return {
     visitor: {
       TaggedTemplateExpression(path, state) {
@@ -47,5 +47,6 @@ function BabelPluginGraphQL({ types: t }) {
   }
 }
 
-BabelPluginGraphQL.getGraphQLTag = getGraphQLTag
-module.exports = BabelPluginGraphQL
+BabelPluginRemoveGraphQLQueries.getGraphQLTag = getGraphQLTag
+
+module.exports = BabelPluginRemoveGraphQLQueries

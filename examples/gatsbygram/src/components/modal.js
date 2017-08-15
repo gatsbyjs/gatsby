@@ -12,9 +12,9 @@ import { rhythm } from "../utils/typography"
 
 class GatsbyGramModal extends React.Component {
   static propTypes = {
-    isOpen: React.PropTypes.bool,
-    location: React.PropTypes.object.isRequired,
-    posts: React.PropTypes.array.isRequired,
+    isOpen: PropTypes.bool,
+    location: PropTypes.object.isRequired,
+    posts: PropTypes.array.isRequired,
   }
 
   componentDidMount() {

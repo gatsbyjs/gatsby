@@ -10,7 +10,7 @@ module.exports = async (program: any) => {
   const compilerConfig = await webpackConfig(program, directory, `build-css`)
 
   return new Promise((resolve, reject) => {
-    webpack(compilerConfig.resolve()).run(err => {
+    webpack(compilerConfig).run(err => {
       if (err) {
         reject(err)
       }

@@ -24,7 +24,7 @@ module.exports = async (program: any) => {
   )
 
   return new Promise((resolve, reject) => {
-    webpack(compilerConfig.resolve()).run((e, stats) => {
+    webpack(compilerConfig).run((e, stats) => {
       if (e) {
         return reject(e)
       }

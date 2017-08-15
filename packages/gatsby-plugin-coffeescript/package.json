@@ -7,7 +7,7 @@
     "Noah Lange <noahrlange@gmail.com>"
   ],
   "dependencies": {
-    "coffee-react-transform": "^5.0.0",
+    "coffee-loader": "^0.7.3",
     "coffeescript": "next"
   },
   "devDependencies": {
@@ -21,7 +21,7 @@
   "main": "index.js",
   "readme": "README.md",
   "scripts": {
-    "build": "babel src --out-dir .",
-    "watch": "babel -w src --out-dir ."
+    "build": "babel src --out-dir . --ignore __tests__",
+    "watch": "babel -w src --out-dir . --ignore __tests__"
   }
 }
