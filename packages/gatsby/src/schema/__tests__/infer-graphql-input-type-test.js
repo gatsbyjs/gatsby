@@ -93,6 +93,7 @@ describe(`GraphQL Input args`, () => {
         date: `2006-07-22T22:39:53.000Z`,
         title: `The world of dash and adventure`,
         blue: 100,
+        tags: ['Html', 'Javascript'],
       },
       anObjectArray: [
         { aString: `some string`, aNumber: 2, aBoolean: true },
@@ -109,6 +110,7 @@ describe(`GraphQL Input args`, () => {
         title: `The world of slash and adventure`,
         blue: 10010,
         circle: `happy`,
+        tags: ['html', 'Javascript'],
       },
     },
   ]
@@ -409,6 +411,34 @@ describe(`GraphQL Input args`, () => {
     expect(result.data.allNode.anArray[0].field).toEqual(`anArray`)
     expect(result.data.allNode.anArray[0].totalCount).toEqual(2)
   })
+
+
+  it(`handles the group connection tags field(case ignored)`, async () => {
+    let result = await queryResult(
+      nodes,
+      ` {
+        allNode {
+          tags: group(field: frontmatter___tags) {
+            field
+            fieldValue
+            totalCount
+          }
+        }
+      }`
+    )
+
+    expect(result.errors).not.toBeDefined()
+
+
+    expect(result.data.allNode.tags).toHaveLength(2)
+    expect(result.data.allNode.tags[0].fieldValue).toEqual(`html`)
+    expect(result.data.allNode.tags[0].field).toEqual(`frontmatter.tags`)
+    expect(result.data.allNode.tags[0].totalCount).toEqual(2)
+    expect(result.data.allNode.tags[1].totalCount).toEqual(2)
+    expect(result.data.allNode.tags[1].fieldValue).toEqual(`javascript`)
+  })
+
+
 
   it(`can query object arrays`, async () => {
     let result = await queryResult(
