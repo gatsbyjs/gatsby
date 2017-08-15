@@ -10,7 +10,8 @@ import {
 } from "react-router-dom"
 import { ScrollContext } from "react-router-scroll"
 import createHistory from "history/createBrowserHistory"
-// import invariant from "invariant"
+import domReady from "domready"
+
 import emitter from "./emitter"
 window.___emitter = emitter
 // emitter.on(`*`, (type, e) => console.log(`emitter`, type, e))
@@ -148,13 +149,15 @@ loader.getResourcesForPathname(window.location.pathname, () => {
     )
 
   const NewRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
-  ReactDOM.render(
-    <NewRoot />,
-    typeof window !== `undefined`
-      ? document.getElementById(`___gatsby`)
-      : void 0,
-    () => {
-      apiRunner(`onInitialClientRender`)
-    }
+  domReady(() =>
+    ReactDOM.render(
+      <NewRoot />,
+      typeof window !== `undefined`
+        ? document.getElementById(`___gatsby`)
+        : void 0,
+      () => {
+        apiRunner(`onInitialClientRender`)
+      }
+    )
   )
 })

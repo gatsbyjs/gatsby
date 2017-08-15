@@ -39,7 +39,7 @@ try {
   if (localPackageJSON.dependencies && localPackageJSON.dependencies.gatsby) {
     inGatsbySite = true
   }
-} catch (e) {
+} catch (err) {
   // ignore
 }
 
