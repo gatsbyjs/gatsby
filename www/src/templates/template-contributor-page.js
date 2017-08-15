@@ -1,11 +1,13 @@
 import React from "react"
 
 import Container from "../components/container"
+import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import { rhythm, scale } from "../utils/typography"
 
 const ContributorPageTemplate = React.createClass({
   render() {
     const contributor = this.props.data.authorYaml
+    const allMarkdownRemark = this.props.data.allMarkdownRemark
     return (
       <div>
         <Container>
@@ -47,6 +49,16 @@ const ContributorPageTemplate = React.createClass({
               <a href={`https://twitter.com/${contributor.twitter}`}>
                 {contributor.twitter}
               </a>
+              <h2>Blog posts</h2>
+              {allMarkdownRemark.edges.map(({ node }) => {
+                if (node.frontmatter.author) {
+                  if (node.frontmatter.author.id === contributor.id) {
+                    return (
+                      <BlogPostPreviewItem post={node} key={node.fields.slug} />
+                    )
+                  }
+                }
+              })}
             </div>
           </div>
         </Container>
@@ -73,6 +85,19 @@ export const pageQuery = graphql`
       }
       fields {
         slug
+      }
+    }
+    allMarkdownRemark(
+      sort: { order: DESC, fields: [frontmatter___date] }
+      filter: {
+        fileAbsolutePath: { regex: "/blog/" }
+        frontmatter: { draft: { ne: true } }
+      }
+    ) {
+      edges {
+        node {
+          ...BlogPostPreview_item
+        }
       }
     }
   }

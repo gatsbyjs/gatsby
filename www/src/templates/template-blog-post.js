@@ -166,15 +166,17 @@ const BlogPostTemplate = React.createClass({
                 marginLeft: rhythm(1 / 2),
               }}
             >
-              <h4
-                css={{
-                  ...scale(0),
-                  fontWeight: 400,
-                  margin: 0,
-                }}
-              >
-                {post.frontmatter.author.id}
-              </h4>
+              <Link to={post.frontmatter.author.fields.slug}>
+                <h4
+                  css={{
+                    ...scale(0),
+                    fontWeight: 400,
+                    margin: 0,
+                  }}
+                >
+                  {post.frontmatter.author.id}
+                </h4>
+              </Link>
               <BioLine>
                 {post.frontmatter.author.bio}
               </BioLine>
@@ -317,6 +319,9 @@ export const pageQuery = graphql`
                 srcSet
               }
             }
+          }
+          fields {
+            slug
           }
         }
       }
