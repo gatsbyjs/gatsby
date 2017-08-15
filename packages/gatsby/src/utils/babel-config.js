@@ -70,10 +70,7 @@ function normalizeConfig(config, directory) {
     let normalized
 
     if (_.isArray(value)) {
-      normalized = [
-        resolvePlugin(value[0], directory, name),
-        value[1],
-      ]
+      normalized = [resolvePlugin(value[0], directory, name), value[1]]
     } else {
       normalized = resolvePlugin(value, directory, name)
     }
@@ -81,8 +78,12 @@ function normalizeConfig(config, directory) {
     return normalized
   }
 
-  presets.forEach(preset => normalizedConfig.presets.push(normalize(preset, `preset`)))
-  plugins.forEach(plugin => normalizedConfig.plugins.push(normalize(plugin, `plugin`)))
+  presets.forEach(preset =>
+    normalizedConfig.presets.push(normalize(preset, `preset`))
+  )
+  plugins.forEach(plugin =>
+    normalizedConfig.plugins.push(normalize(plugin, `plugin`))
+  )
 
   return objectAssign({}, config, normalizedConfig)
 }
@@ -150,7 +151,7 @@ module.exports = async function babelConfig(program, stage) {
       {
         loose: true,
         uglify: true,
-        modules: false,
+        modules: `commonjs`,
         targets: {
           browsers: program.browserslist,
         },
