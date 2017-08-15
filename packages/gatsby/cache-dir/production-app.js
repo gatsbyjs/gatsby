@@ -12,25 +12,22 @@ import {
 } from "react-router-dom"
 import { ScrollContext } from "react-router-scroll"
 import createHistory from "history/createBrowserHistory"
+import domReady from "domready"
 import emitter from "./emitter"
 window.___emitter = emitter
 import pages from "./pages.json"
 import ComponentRenderer from "./component-renderer"
 import asyncRequires from "./async-requires"
 import loader from "./loader"
-
 loader.addPagesArray(pages)
 loader.addProdRequires(asyncRequires)
 window.asyncRequires = asyncRequires
 window.___loader = loader
 window.matchPath = matchPath
 
-
+// Let the site/plugins run code very early.
 apiRunnerAsync(`onClientEntry`)
   .then(() => {
-    // Let the site/plugins run code very early.
-    apiRunner(`onClientEntry`)
-
     // Let plugins register a service worker. The plugin just needs
     // to return true.
     if (apiRunner(`registerServiceWorker`).length > 0) {
@@ -150,14 +147,16 @@ apiRunnerAsync(`onClientEntry`)
         )
 
       const NewRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
-      ReactDOM.render(
-        <NewRoot />,
-        typeof window !== `undefined`
-          ? document.getElementById(`___gatsby`)
-          : void 0,
-        () => {
-          apiRunner(`onInitialClientRender`)
-        }
+      domReady(() =>
+        ReactDOM.render(
+          <NewRoot />,
+          typeof window !== `undefined`
+            ? document.getElementById(`___gatsby`)
+            : void 0,
+          () => {
+            apiRunner(`onInitialClientRender`)
+          }
+        )
       )
     })
   })

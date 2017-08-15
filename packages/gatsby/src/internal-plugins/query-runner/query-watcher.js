@@ -22,7 +22,7 @@ exports.extractQueries = () => {
   const state = store.getState()
   const pagesAndLayouts = [...state.pages, ...state.layouts]
   const components = _.uniq(pagesAndLayouts.map(p => p.component))
-  queryCompiler().then(queries => {
+  const queryCompilerPromise = queryCompiler().then(queries => {
     components.forEach(component => {
       const query = queries.get(normalize(component))
       boundActionCreators.replaceComponentQuery({
@@ -44,6 +44,8 @@ exports.extractQueries = () => {
       watcher.add(component)
     })
   }
+
+  return queryCompilerPromise
 }
 
 const runQueriesForComponent = componentPath => {

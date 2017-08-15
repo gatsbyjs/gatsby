@@ -28,7 +28,7 @@ try {
   ) {
     inGatsbySite = true
   }
-} catch (e) {
+} catch (err) {
   // ignore
 }
 

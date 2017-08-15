@@ -1,24 +1,21 @@
 if(__POLYFILL__) {
   require("core-js/modules/es6.promise")
 }
+import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import React from "react"
 import ReactDOM from "react-dom"
 import { AppContainer as HotContainer } from "react-hot-loader"
+import domReady from "domready"
 import socketIo from "./socketIo"
-import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
-import emitter from "./emitter"
 
-window.___emitter = emitter
+window.___emitter = require(`./emitter`)
 
+// Let the site/plugins run code very early.
 apiRunnerAsync(`onClientEntry`)
-  .catch((error) => { throw error })
   .then(() => {
-    const rootElement = document.getElementById(`___gatsby`)
-    let Root = require("./root")
-    if (Root.default) {
-      Root = Root.default
-    }
+    // Hook up the client to socket.io on server
     socketIo()
+
     /**
      * Service Workers are persistent by nature. They stick around,
      * serving a cached version of the site if they aren't removed.
@@ -34,11 +31,26 @@ apiRunnerAsync(`onClientEntry`)
         }
       })
     }
-    ReactDOM.render(
-      <HotContainer><Root /></HotContainer>,
-      rootElement,
-      () => apiRunner(`onInitialClientRender`)
+
+    const rootElement = document.getElementById(`___gatsby`)
+
+    let Root = require(`./root`)
+    if (Root.default) {
+      Root = Root.default
+    }
+
+    domReady(() =>
+      ReactDOM.render(
+        <HotContainer>
+          <Root />
+        </HotContainer>,
+        rootElement,
+        () => {
+          apiRunner(`onInitialClientRender`)
+        }
+      )
     )
+
     if (module.hot) {
       module.hot.accept(`./root`, () => {
         let NextRoot = require(`./root`)
@@ -46,11 +58,14 @@ apiRunnerAsync(`onClientEntry`)
           NextRoot = NextRoot.default
         }
         ReactDOM.render(
-          <HotContainer><NextRoot /></HotContainer>,
+          <HotContainer>
+            <NextRoot />
+          </HotContainer>,
           rootElement,
-          () => apiRunner(`onInitialClientRender`)
+          () => {
+            apiRunner(`onInitialClientRender`)
+          }
         )
       })
     }
   })
-  .catch((error) => { throw error })
