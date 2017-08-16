@@ -24,7 +24,7 @@ git mv utils src
 
 ## Replace react-router's Link component with gatsby-link
 
-`gatsby-link` is a wrapper for the `<Link>` component in react-router.  It automatically prefixes urls and handles prefetching on browsers that don't support ServiceWorker.  Gatsby doesn't include it, so you should install it:
+`gatsby-link` is a wrapper for the `<Link>` component in react-router.  It automatically prefixes urls and handles prefetching.  Add `gatsby-link` to your project by running:
 
 `npm install --save gatsby-link`
 
@@ -33,14 +33,14 @@ git mv utils src
 ```jsx
 import Link from 'gatsby-link'
 
-// Equivelant to react-router's <Link>
+// Equivalent to react-router's <Link>
 <Link to="/page-2/">Page 2</Link>
 
-// Equivelant to react-router's <NavLink>
+// Equivalent to react-router's <NavLink>
 <Link to="/page-2/" activeClassName="selected">Page 2</Link>
 
 // `exact` prop replaces <IndexLink> from react-router v3
-<Link to="/" exact>Home</IndexLink>
+<Link to="/" exact>Home</Link>
 ```
 
 ## config.toml is now gatsby-config.js
