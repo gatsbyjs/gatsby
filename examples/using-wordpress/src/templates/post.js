@@ -1,15 +1,17 @@
-import React from "react"
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+
 import Helmet from "react-helmet"
 import Header from "../components/Header"
 import Footer from "../components/Footer"
 import { H1, Row, Page, Column } from "../components/styled"
 
-class PostTemplate extends React.Component {
+class PostTemplate extends Component {
   render() {
+    // console.log(`this.props is`, this.props)
+
     const post = this.props.data.wordpressPost
-
     const wordpressPages = this.props.data.allWordpressPage
-
     const siteMetadata = this.props.data.site.siteMetadata
 
     return (
@@ -38,6 +40,11 @@ class PostTemplate extends React.Component {
   }
 }
 //<img src={post.image.sizes.thumbnail} />
+
+PostTemplate.propTypes = {
+  data: PropTypes.object.isRequired,
+  edges: PropTypes.array,
+}
 
 export default PostTemplate
 
@@ -108,28 +115,6 @@ export const pageQuery = graphql`
           format
           categories
           tags
-        }
-      }
-    }
-    allWordpressTag {
-      edges {
-        node {
-          id
-          slug
-          description
-          name
-          taxonomy
-        }
-      }
-    }
-    allWordpressCategory {
-      edges {
-        node {
-          id
-          description
-          name
-          slug
-          taxonomy
         }
       }
     }
