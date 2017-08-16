@@ -3,13 +3,13 @@ const fs = require(`fs`)
 const Promise = require(`bluebird`)
 
 const writeFileAsync = Promise.promisify(fs.writeFile)
-const { boundActionCreators } = require(`../../redux/actions`)
 const { joinPath } = require(`../../utils/path`)
+const report = require(`../../reporter`)
 
 const { store } = require(`../../redux`)
 
 // Run query for a page
-module.exports = async (page, component) => {
+module.exports = async (pageOrLayout, component) => {
   const { schema, program } = store.getState()
 
   const graphql = (query, context) =>
@@ -22,14 +22,27 @@ module.exports = async (page, component) => {
   if (!component.query || component.query === ``) {
     result = {}
   } else {
-    result = await graphql(component.query, { ...page, ...page.context })
+    result = await graphql(component.query, {
+      ...pageOrLayout,
+      ...pageOrLayout.context,
+    })
   }
 
-  // If there's a graphql errort then log the error. If we're building, also
+  // If there's a graphql error then log the error. If we're building, also
   // quit.
   if (result && result.errors) {
+    report.log(
+      report.stripIndent`
+        The GraphQL query from ${component.componentPath} failed
+
+        Errors:
+          ${result.errors || []}
+        Query:
+          ${component.query}
+      `
+    )
     console.log(``)
-    console.log(`The GraphQL query from ${component.componentPath} failed`)
+    console.log(``)
     console.log(``)
     console.log(`Query:`)
     console.log(component.query)
@@ -42,11 +55,15 @@ module.exports = async (page, component) => {
     }
   }
 
-  // Add the path context onto the results.
-  result.pathContext = { ...page.context }
+  // Add the path/layout context onto the results.
+  let contextKey = `pathContext`
+  if (!pageOrLayout.path) {
+    contextKey = `layoutContext`
+  }
+  result[contextKey] = pageOrLayout.context
   const resultJSON = JSON.stringify(result, null, 4)
   return writeFileAsync(
-    joinPath(program.directory, `.cache`, `json`, page.jsonName),
+    joinPath(program.directory, `.cache`, `json`, pageOrLayout.jsonName),
     resultJSON
   )
 }

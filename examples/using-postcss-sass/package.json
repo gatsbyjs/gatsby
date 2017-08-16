@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "develop": "gatsby develop",
-    "build": "gatsby build"
+    "build": "gatsby build",
+    "serve": "gatsby serve"
   },
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "license": "MIT",

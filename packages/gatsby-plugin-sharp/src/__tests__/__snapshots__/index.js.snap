@@ -2,20 +2,22 @@
 
 exports[`gatsby-plugin-sharp base64 converts image to base64 1`] = `
 Object {
-  "aspectRatio": 1.1111111111111112,
-  "height": 18,
-  "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAASCAYAAABb0P4QAAAACXBIWXMAAAsSAAALEgHS3X78AAACsUlEQVQ4y02U2U9aQRTGvVjBigupNZJWkH2Vy6ZgSxUQ1Ia6tSZdfagPXdI16f//0N93c4Zcko8598yZ76wzC5VKZXMh9Mvlcrv5fL4geTqdelrr9fra3t7ehuROpxPosElks1kfLLuzjUYjulAoFIZOgfwQpHESgfix05dKpRxooI8amexW0O1qDZ339XddLBZT8gxJURs6iD6IvFwuJzjYAYfok3bwEWeCyIiwiIMoe3H0F9q8AaccjEOYCUUVA5sYZkQGQQ+bKmtSe86O7y2lD0dfwYnwSgLKcxl0u92gRuPx2MN4V2SgC/ZNrmIftUwiVvceuts5IWQfwR3Fn3vu9/uLEDbZnxhhR/UGL2q1WtxqGbF1DL46whs8/LZIO46Q9LYgeY7uGOKBIkQeIQ+JLF2tVhct5Sz6GRw/FKXY7/m4s1rOMF5vtVoPIGxaVEeKjIPBag06YH9jMpl46E7Aa3jewvNN+f9RdxSuYYDxDoeeWd0OlLYah9yz9A+xyaFrg0sL5sIR/jKiK9uYytgaoEha6M6JYCZZOqLtI5dVT9dUa+xnEf5EuDGyS4x3aM6yDio9vlXHkVKzWrYVvW4YnKtyBt6AV3D9VQ3fIXy30I/clcM4pRStKUOTR1aKCk6j1hTfJuUefFKXLxG+iBjD+XXzfT9mnT2xoW6bPKTD66FpiKEfE9S/8Bzegg8y4BEIZmswGGiwC2Bkae4rfdCGJLh2zWbTzeExeO8IVdAZ2OZeppznTCazhO6piq8mWIN8zR2/+QVAXie6lI3PtXscatwMDy91d4/RbYYGvGejknaPg4sSuQLUxKSyleKlBtlCX8VbjqsVQd6WDnkJ47LSphFxI1nBYZzoZL4Wer4G6lIm/MBClMYweGDPzs48FyV4Yg48exA2lBFrLPRCJf4D6Rm392Z6xqEAAAAASUVORK5CYII=",
+  "aspectRatio": 1,
+  "height": 20,
+  "originalName": undefined,
+  "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAGElEQVQ4y2P4TwFgGNU8qnlU86jmgdUMAOBEq42KgAyMAAAAAElFTkSuQmCC",
   "width": 20,
 }
 `;
 
 exports[`gatsby-plugin-sharp responsiveSizes includes responsive image properties, e.g. sizes, srcset, etc. 1`] = `
 Object {
-  "aspectRatio": 1.1041666666666667,
-  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAASCAYAAABb0P4QAAAACXBIWXMAAAsSAAALEgHS3X78AAACsUlEQVQ4y02U2U9aQRTGvVjBigupNZJWkH2Vy6ZgSxUQ1Ia6tSZdfagPXdI16f//0N93c4Zcko8598yZ76wzC5VKZXMh9Mvlcrv5fL4geTqdelrr9fra3t7ehuROpxPosElks1kfLLuzjUYjulAoFIZOgfwQpHESgfix05dKpRxooI8amexW0O1qDZ339XddLBZT8gxJURs6iD6IvFwuJzjYAYfok3bwEWeCyIiwiIMoe3H0F9q8AaccjEOYCUUVA5sYZkQGQQ+bKmtSe86O7y2lD0dfwYnwSgLKcxl0u92gRuPx2MN4V2SgC/ZNrmIftUwiVvceuts5IWQfwR3Fn3vu9/uLEDbZnxhhR/UGL2q1WtxqGbF1DL46whs8/LZIO46Q9LYgeY7uGOKBIkQeIQ+JLF2tVhct5Sz6GRw/FKXY7/m4s1rOMF5vtVoPIGxaVEeKjIPBag06YH9jMpl46E7Aa3jewvNN+f9RdxSuYYDxDoeeWd0OlLYah9yz9A+xyaFrg0sL5sIR/jKiK9uYytgaoEha6M6JYCZZOqLtI5dVT9dUa+xnEf5EuDGyS4x3aM6yDio9vlXHkVKzWrYVvW4YnKtyBt6AV3D9VQ3fIXy30I/clcM4pRStKUOTR1aKCk6j1hTfJuUefFKXLxG+iBjD+XXzfT9mnT2xoW6bPKTD66FpiKEfE9S/8Bzegg8y4BEIZmswGGiwC2Bkae4rfdCGJLh2zWbTzeExeO8IVdAZ2OZeppznTCazhO6piq8mWIN8zR2/+QVAXie6lI3PtXscatwMDy91d4/RbYYGvGejknaPg4sSuQLUxKSyleKlBtlCX8VbjqsVQd6WDnkJ47LSphFxI1nBYZzoZL4Wer4G6lIm/MBClMYweGDPzs48FyV4Yg48exA2lBFrLPRCJf4D6Rm392Z6xqEAAAAASUVORK5CYII=",
-  "originalImage": "/static/1234-bc51b.png",
+  "aspectRatio": 1,
+  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAGElEQVQ4y2P4TwFgGNU8qnlU86jmgdUMAOBEq42KgAyMAAAAAElFTkSuQmCC",
+  "originalImg": "/static/1234-7fd61.png",
+  "originalName": undefined,
   "sizes": "(max-width: 800px) 100vw, 800px",
-  "src": "/static/1234-bc51b.png",
-  "srcSet": "/static/1234-bc51b.png 106w",
+  "src": "/static/1234-7fd61.png",
+  "srcSet": "/static/1234-7fd61.png 1w",
 }
 `;

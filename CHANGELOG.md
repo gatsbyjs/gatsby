@@ -1,5 +1,27 @@
 # Change Log
 
+## [1.5.0] - 2017-07-27
+
+### Added
+
+* Add gatsby-source-mongodb plugin to gatsby (#1570) @jorishermans
+* [www] Refactor Homepage and Navigation & convert diagram to html/css (#1605) @fk
+* Included example with WP-API-MENUS items (#1619) @sebastienfi
+* added new site to showcase (#1616) @dvzrd
+* Docs: add grommet starter (#1626) @alampros
+* add a bunch of tests for various plugins (#1581) @DSchau
+
+### Fixed
+
+* fix broken gatsby link definition for typescript 2.4.2 (#1628) @DominikGuzei
+* test: fix failing test due to missing argyle image (#1636) @DSchau
+* Revise part one of tutorial to use hello-world starter (#1630) @KyleAMathews
+* Fix passing createNode as argument (#1629) @sebastienfi
+* Don't mutate page context (#1537) @okcoker
+* Updated instructions for Windows (#1621) @sebastienfi
+* Tweak JSS links + add it to plugins page (#1615) @KyleAMathews
+
+
 ## [1.4.0] - 2017-07-25
 
 ### Added

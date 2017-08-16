@@ -16,9 +16,9 @@ const {
 } = require(`gatsby-plugin-sharp`)
 
 const sharp = require(`sharp`)
-const fsExtra = require('fs-extra');
-const sizeOf = require('image-size');
-const path = require('path');
+const fsExtra = require(`fs-extra`)
+const sizeOf = require(`image-size`)
+const path = require(`path`)
 
 const ImageFormatType = new GraphQLEnumType({
   name: `ImageFormat`,
@@ -72,17 +72,16 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           src: { type: GraphQLString },
         },
       }),
-      args: {
-      },
+      args: {},
       async resolve(image, fieldArgs, context) {
-        const details = getNodeAndSavePathDependency(image.parent, context.path);
-        const dimensions = sizeOf(details.absolutePath);
-        const imageName = `${image.internal.contentDigest}${details.ext}`;
+        const details = getNodeAndSavePathDependency(image.parent, context.path)
+        const dimensions = sizeOf(details.absolutePath)
+        const imageName = `${image.internal.contentDigest}${details.ext}`
         const publicPath = path.join(
           process.cwd(),
           `public`,
           `static/${imageName}`
-        );
+        )
 
         if (!fsExtra.existsSync(publicPath)) {
           fsExtra.copy(details.absolutePath, publicPath, err => {
@@ -95,7 +94,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
         return {
           width: dimensions.width,
           height: dimensions.height,
-          src: '/static/' + imageName,
+          src: `/static/` + imageName,
         }
       },
     },
@@ -109,6 +108,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           height: { type: GraphQLFloat },
           src: { type: GraphQLString },
           srcSet: { type: GraphQLString },
+          originalName: { type: GraphQLString },
         },
       }),
       args: {
@@ -162,6 +162,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           srcSet: { type: GraphQLString },
           sizes: { type: GraphQLString },
           originalImg: { type: GraphQLString },
+          originalName: { type: GraphQLString },
         },
       }),
       args: {
@@ -212,6 +213,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           width: { type: GraphQLInt },
           height: { type: GraphQLInt },
           aspectRatio: { type: GraphQLFloat },
+          originalName: { type: GraphQLString },
         },
       }),
       args: {

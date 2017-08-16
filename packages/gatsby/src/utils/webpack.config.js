@@ -166,6 +166,7 @@ module.exports = async (
           // ids to reduce filesize.
           new webpack.NamedModulesPlugin(),
           new FriendlyErrorsWebpackPlugin({
+            clearConsole: false,
             compilationSuccessInfo: {
               messages: [
                 `Your site is running at http://localhost:${program.port}`,
@@ -176,7 +177,10 @@ module.exports = async (
         ]
       case `develop-html`:
         return [
-          new StaticSiteGeneratorPlugin(`render-page.js`, pages),
+          new StaticSiteGeneratorPlugin({
+            entry: `render-page.js`,
+            paths: pages,
+          }),
           new webpack.DefinePlugin({
             "process.env": processEnv(stage, `development`),
             __PREFIX_PATHS__: program.prefixPaths,
@@ -195,7 +199,10 @@ module.exports = async (
         ]
       case `build-html`:
         return [
-          new StaticSiteGeneratorPlugin(`render-page.js`, pages),
+          new StaticSiteGeneratorPlugin({
+            entry: `render-page.js`,
+            paths: pages,
+          }),
           new webpack.DefinePlugin({
             "process.env": processEnv(stage, `production`),
             __PREFIX_PATHS__: program.prefixPaths,
@@ -209,7 +216,6 @@ module.exports = async (
           .getState()
           .pages.map(page => page.componentChunkName)
         components = uniq(components)
-        components.push(`layout-component---index`)
         return [
           // Moment.js includes 100s of KBs of extra localization data by
           // default in Webpack that most sites don't want. This line disables
@@ -324,9 +330,9 @@ module.exports = async (
       // directory if you need to install a specific version of a module for a
       // part of your site.
       modulesDirectories: [
-        directoryPath(`node_modules`),
         `node_modules`,
-        directoryPath(`node_modules`, `gatsby`, `node_modules`),
+        directoryPath(`node_modules`),
+        directoryPath(`node_modules`, `gatsby/node_modules`),
       ],
     }
   }
