@@ -3,9 +3,12 @@ const slash = require(`slash`)
 const fs = require(`fs`)
 const path = require(`path`)
 const crypto = require(`crypto`)
+const glob = require(`glob`)
+
 const { store } = require(`../redux`)
 const nodeAPIs = require(`../utils/api-node-docs`)
-const glob = require(`glob`)
+const testRequireError = require(`../utils/test-require-error`)
+const report = require(`../reporter`)
 
 function createFileContentHash(root, globPattern) {
   const hash = crypto.createHash(`md5`)
@@ -135,6 +138,11 @@ module.exports = async (config = {}) => {
   )
   plugins.push(
     processPlugin(
+      path.join(__dirname, `../internal-plugins/component-layout-creator`)
+    )
+  )
+  plugins.push(
+    processPlugin(
       path.join(__dirname, `../internal-plugins/internal-data-bridge`)
     )
   )
@@ -189,8 +197,12 @@ module.exports = async (config = {}) => {
     let gatsbyNode
     try {
       gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
-    } catch (e) {
-      // ignore
+    } catch (err) {
+      if (!testRequireError(`gatsby-node`, err)) {
+        // ignore
+      } else {
+        report.panic(`Error requiring ${plugin.resolve}/gatsby-node.js`, err)
+      }
     }
 
     if (gatsbyNode) {

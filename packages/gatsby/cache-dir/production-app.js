@@ -10,7 +10,8 @@ import {
 } from "react-router-dom"
 import { ScrollContext } from "react-router-scroll"
 import createHistory from "history/createBrowserHistory"
-// import invariant from "invariant"
+import domReady from "domready"
+
 import emitter from "./emitter"
 window.___emitter = emitter
 // emitter.on(`*`, (type, e) => console.log(`emitter`, type, e))
@@ -26,7 +27,6 @@ window.asyncRequires = asyncRequires
 window.___loader = loader
 
 window.matchPath = matchPath
-
 // Let the site/plugins run code very early.
 apiRunner(`onClientEntry`)
 
@@ -116,50 +116,40 @@ const DefaultRouter = ({ children }) =>
     {children}
   </Router>
 
-const loadLayout = cb => {
-  if (asyncRequires.layouts[`index`]) {
-    asyncRequires.layouts[`index`]((err, executeChunk) => {
-      const module = executeChunk()
-      cb(module)
-    })
-  } else {
-    cb(props =>
-      <div>
-        {props.children()}
-      </div>
-    )
-  }
-}
-
-loadLayout(layout => {
-  loader.getResourcesForPathname(window.location.pathname, () => {
-    const Root = () =>
+loader.getResourcesForPathname(window.location.pathname, () => {
+  const Root = () =>
+    createElement(
+      AltRouter ? AltRouter : DefaultRouter,
+      null,
       createElement(
-        AltRouter ? AltRouter : DefaultRouter,
-        null,
-        createElement(
-          ScrollContext,
-          { shouldUpdateScroll },
-          createElement(withRouter(layout), {
-            children: layoutProps =>
-              createElement(Route, {
-                render: routeProps => {
-                  attachToHistory(routeProps.history)
-                  const props = layoutProps ? layoutProps : routeProps
-                  if (loader.getPage(props.location.pathname)) {
-                    return createElement(ComponentRenderer, { ...props })
-                  } else {
-                    return createElement(ComponentRenderer, {
-                      location: { pathname: `/404.html` },
-                    })
-                  }
-                },
-              }),
-          })
-        )
-      )
+        ScrollContext,
+        { shouldUpdateScroll },
+        createElement(withRouter(ComponentRenderer), {
+          layout: true,
+          children: layoutProps =>
+            createElement(Route, {
+              render: routeProps => {
+                attachToHistory(routeProps.history)
+                const props = layoutProps ? layoutProps : routeProps
 
-    const NewRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
+                if (loader.getPage(props.location.pathname)) {
+                  return createElement(ComponentRenderer, {
+                    page: true,
+                    ...props,
+                  })
+                } else {
+                  return createElement(ComponentRenderer, {
+                    location: { page: true, pathname: `/404.html` },
+                  })
+                }
+              },
+            }),
+        })
+      )
+    )
+
+  const NewRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
+  domReady(() =>
     ReactDOM.render(
       <NewRoot />,
       typeof window !== `undefined`
@@ -169,5 +159,5 @@ loadLayout(layout => {
         apiRunner(`onInitialClientRender`)
       }
     )
-  })
+  )
 })

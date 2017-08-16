@@ -1,7 +1,7 @@
 {
   "name": "gatsby-remark-autolink-headers",
   "description": "Gatsby plugin to autolink headers in markdown processed by Remark",
-  "version": "1.4.1",
+  "version": "1.4.3",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "github-slugger": "^1.1.1",
@@ -19,7 +19,7 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "build": "babel src --out-dir .",
-    "watch": "babel -w src --out-dir ."
+    "build": "babel src --out-dir . --ignore __tests__",
+    "watch": "babel -w src --out-dir . --ignore __tests__"
   }
 }

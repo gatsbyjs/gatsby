@@ -1,4 +1,9 @@
 #!/usr/bin/env node
+
+// babel-preset-env doesn't find this import if you
+// use require() with backtick strings so use the es6 syntax
+import "babel-polyfill"
+
 const program = require(`commander`)
 const packageJson = require(`./package.json`)
 const path = require(`path`)
@@ -11,7 +16,11 @@ let inGatsbySite = false
 let localPackageJSON
 try {
   localPackageJSON = require(path.resolve(`./package.json`))
-  if (localPackageJSON.dependencies && localPackageJSON.dependencies.gatsby) {
+  if (
+    (localPackageJSON.dependencies && localPackageJSON.dependencies.gatsby) ||
+    (localPackageJSON.devDependencies &&
+      localPackageJSON.devDependencies.gatsby)
+  ) {
     inGatsbySite = true
   } else if (
     localPackageJSON.devDependencies &&
@@ -19,7 +28,7 @@ try {
   ) {
     inGatsbySite = true
   }
-} catch (e) {
+} catch (err) {
   // ignore
 }
 

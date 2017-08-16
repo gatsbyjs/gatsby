@@ -1,3 +1,7 @@
+// babel-preset-env doesn't find this import if you
+// use require() with backtick strings so use the es6 syntax
+import "babel-polyfill"
+
 const program = require(`commander`)
 const packageJson = require(`../../package.json`)
 const path = require(`path`)
@@ -5,14 +9,25 @@ const _ = require(`lodash`)
 const Promise = require(`bluebird`)
 const resolveCwd = require(`resolve-cwd`)
 
+const report = require(`../reporter`)
+
 // Improve Promise error handling. Maybe... what's the best
 // practice for this these days?
 global.Promise = require(`bluebird`)
+
 Promise.onPossiblyUnhandledRejection(error => {
+  report.error(error)
   throw error
 })
+
 process.on(`unhandledRejection`, error => {
-  console.error(`UNHANDLED REJECTION`, error.stack)
+  // This will exit the process in newer Node anyway so lets be consistent
+  // across versions and crash
+  report.panic(`UNHANDLED REJECTION`, error)
+})
+
+process.on(`uncaughtException`, error => {
+  report.panic(`UNHANDLED EXCEPTION`, error)
 })
 
 const defaultHost = `localhost`
@@ -24,7 +39,7 @@ try {
   if (localPackageJSON.dependencies && localPackageJSON.dependencies.gatsby) {
     inGatsbySite = true
   }
-} catch (e) {
+} catch (err) {
   // ignore
 }
 
@@ -92,7 +107,7 @@ if (inGatsbySite) {
         browserslist,
       }
       build(p).then(() => {
-        console.log(`Done building in`, process.uptime(), `seconds`)
+        report.success(`Done building in ${process.uptime()} seconds`)
         process.exit()
       })
     })

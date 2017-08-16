@@ -1,7 +1,8 @@
-var Db = require(`mongodb`).Db,
+const Db = require(`mongodb`).Db,
   MongoClient = require(`mongodb`).MongoClient,
   ObjectID = require(`mongodb`).ObjectID,
-  crypto = require(`crypto`)
+  crypto = require(`crypto`),
+  _ = require(`lodash`)
 
 exports.sourceNodes = (
   { boundActionCreators, getNode, hasNodeChanged },
@@ -46,14 +47,16 @@ function createNodes(db, pluginOptions, dbName, createNode, done) {
       db.close()
       done()
     } else {
-      createNode({
+      var id = item._id.toString()
+      delete item._id
+
+      var node = {
         // Data for the node.
         ...item,
-        id: `${item._id}`,
-        parent: item.parent || `__${collectionName}__`,
-        children: item.children || [],
+        id: `${id}`,
+        parent: `__${collectionName}__`,
+        children: [],
         internal: {
-          mediaType: `application/json`,
           type: `mongodb${caps(dbName)}${caps(collectionName)}`,
           content: JSON.stringify(item),
           contentDigest: crypto
@@ -61,7 +64,16 @@ function createNodes(db, pluginOptions, dbName, createNode, done) {
             .update(JSON.stringify(item))
             .digest(`hex`),
         },
-      })
+      }
+      /* if (pluginOptions.map) {
+        // We need to map certain fields to a contenttype.
+        var keys = Object.keys(pluginOptions.map).forEach(mediaItemFieldKey => {
+            createMappingChildNodes(node, mediaItemFieldKey, item[mediaItemFieldKey], createNode));
+
+            delete item[mediaItemFieldKey];
+        });
+      } */
+      createNode(node)
     }
   })
 }
