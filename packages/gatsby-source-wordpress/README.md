@@ -98,8 +98,9 @@ These plugins were tested but it should work with any plugin that extends the RE
     *  Will pull the `acf: { ... }` fields's contents from any entity which has it attached (pages, posts, medias, ... you choose from in WordPress back-end while creating a Group of Fields). Every node below `acf` is [Stringify'd](https://www.w3schools.com/js/js_json_stringify.asp), then put in a childNode, which means that you will have to call `JSON.parse()` to get an `Object`. (ex. ```const fields = JSON.parse(childWordpressAcfField.internal.content)```)
     *  You will also have to include the children ACF Field Node in your GraphQL query. (See `Query posts with the child ACF Fields Node` below)
 
-- [x] [ACF Pro](https://www.advancedcustomfields.com/pro/)
-    *  Will work with [Flexible content](https://www.advancedcustomfields.com/resources/flexible-content/) and premium stuff like that (repeater, gallery, ...).
+- [x] [ACF Pro](https://www.advancedcustomfields.com/pro/) 
+    Same as ACF 
+    *  Will work with [Flexible content](https://www.advancedcustomfields.com/resources/flexible-content/) and premium stuff like that (repeater, gallery, ...).
     *  Will pull the content attached to the [options page](https://www.advancedcustomfields.com/add-ons/options-page/).
 
 - [x] [WP-API-MENUS](https://wordpress.org/plugins/wp-api-menus/) which gives you the menus and menu locations endpoint.
@@ -109,7 +110,7 @@ These plugins were tested but it should work with any plugin that extends the RE
 
 ## Wordpress.com hosting [WIP]
 
-This is [WIP](https://github.com/gatsbyjs/gatsby/pull/1657). At the moment, one cannot query on medias so only images inserted using the WYSIWYG editor will work.
+Set `hostingWPCOM: true`.
 
 You will need to provide an (API Key)[https://en.support.wordpress.com/api-keys/].
 
