@@ -1,11 +1,12 @@
 import path from "path"
-import RSS from "RSS"
+import RSS from "rss"
+import merge from "lodash.merge"
 import { defaultOptions, runQuery, writeFile } from "./internals"
 
 const publicPath = `./public`
 
 // A default function to transform query data into feed entries.
-const serialize = ({ site, allMarkdownRemark }) =>
+const serialize = ({ query: { site, allMarkdownRemark } }) =>
   allMarkdownRemark.edges.map(edge => {
     return {
       ...edge.node.frontmatter,
@@ -23,27 +24,37 @@ exports.onPostBuild = async ({ graphql }, pluginOptions) => {
    * Run the site settings query to gather context, then
    * then run the corresponding feed for each query.
    */
-  const { query, setup, feeds, ...rest } = {
+  const options = {
     ...defaultOptions,
     ...pluginOptions,
   }
 
-  const globals = await runQuery(graphql, query)
+  if (`query` in options) {
+    options.query = await runQuery(graphql, options.query)
+  }
 
-  for (let f of feeds) {
-    let locals = {}
+  for (let f of options.feeds) {
     if (f.query) {
-      locals = await runQuery(graphql, f.query)
+      f.query = await runQuery(graphql, f.query)
+
+      if (options.query) {
+        f.query = merge(options.query, f.query)
+        delete options.query
+      }
     }
 
-    const output = path.join(publicPath, f.output)
-    const ctx = { ...globals, ...locals }
-    const feed = new RSS(setup({ ...rest, ...ctx }))
-    const items = f.serialize ? f.serialize(ctx) : serialize(ctx)
+    const { setup, ...locals } = {
+      ...options,
+      ...f,
+    }
+
+    const feed = new RSS(setup(locals))
+    const serializer =
+      f.serialize && typeof f.serialize === `function` ? f.serialize : serialize
+    const items = serializer(locals)
 
     items.forEach(i => feed.item(i))
-
-    await writeFile(output, feed.xml())
+    await writeFile(path.join(publicPath, f.output), feed.xml())
   }
 
   return Promise.resolve()

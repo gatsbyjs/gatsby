@@ -31,7 +31,7 @@ Add new package to project.
 Use in place of react-router's Link
 
 ```jsx
-import Link from 'gastsby-link'
+import Link from 'gatsby-link'
 
 // Works identically to react-router's <Link>
 <Link to="/another-page/">Another page</Link>
@@ -61,6 +61,22 @@ module.exports = {
   }
 }
 ```
+
+and a minimal query would look like 
+
+```
+export const pageQuery = graphql`
+  query SiteMetadataLookup($slug: String!) {
+    site {
+      siteMetadata {
+        title
+      }
+    }
+}
+`
+```
+
+exporting that from the same file as a React component will make the config information available to the component as a `data` prop on the component.  For instance, the title attribute could be referenced as  `props.data.site.siteMetadata.title`.  
 
 ## Migrate wrapper components to template components
 

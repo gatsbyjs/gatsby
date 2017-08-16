@@ -58,5 +58,5 @@ module.exports = ({ markdownAST }, pluginOptions = {}) =>
       }
     })
 
-    return resolve()
+    return resolve(markdownAST)
   })

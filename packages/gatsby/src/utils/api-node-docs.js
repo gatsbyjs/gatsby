@@ -36,7 +36,7 @@ exports.resolvableExtensions = true
  *         if (result.errors) {
  *           reject(result.errors)
  *         }
- * 
+ *
  *         // Create blog post pages.
  *         result.data.allMarkdownRemark.edges.forEach(edge => {
  *             createPage({
@@ -47,7 +47,7 @@ exports.resolvableExtensions = true
  *               },
  *             })
  *         })
- * 
+ *
  *         return
  *       })
  *     )
@@ -55,6 +55,7 @@ exports.resolvableExtensions = true
  * }
  * @returns {Array} array of extensions
  */
+
 exports.createPages = true
 
 /**
@@ -65,13 +66,29 @@ exports.createPages = true
  * `createPagesStatefully` will not.
  *
  * An example of a plugin that uses this extension point is the internal plugin
- * [component-page-creator](https://github.com/gatsbyjs/gatsby/tree/1.0/packages/gatsby/src/internal-plugins/component-page-creator)
+ * [component-page-creator](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby/src/internal-plugins/component-page-creator)
  * which monitors the `src/pages` directory for the adding and removal of JS
  * pages. As its source of truth, files in the pages directory, is not known by
  * Gatsby, it needs to keep its own state about its world to know when to
  * add and remove pages.
  */
 exports.createPagesStatefully = true
+
+/**
+ * Tell plugins to add layouts. This extension point is called only after the initial
+ * sourcing and transformation of nodes plus creation of the GraphQL schema are
+ * complete so you can query your data in order to create layouts.
+ *
+ * See also the documentation for [`createLayout`](/docs/bound-action-creators/#createLayout).
+ * @example
+ * exports.createLayouts = ({ graphql, boundActionCreators }) => {
+ *  boundActionCreators.createLayout({
+ *    id: 'custom',
+ *    component: path.resolve(`src/templates/custom-layout.js`),
+ *   })
+ *  }
+ */
+exports.createLayouts = true
 
 /**
  * Extension point to tell plugins to source nodes.
@@ -111,14 +128,20 @@ exports.onCreateNode = true
 exports.onCreatePage = true
 
 /**
+ * Called when a new layout is created. This extension API is useful
+ * for programmatically manipulating layouts created by other plugins
+ */
+exports.onCreateLayout = true
+
+/**
  * Called during the creation of the GraphQL schema. Allows plugins
  * to add new fields to the types created from data nodes. Many transformer
  * plugins use this to add fields that take arguments.
  *
- * * [`gatsby-transformer-remark`](/docs/packages/gatsby-transformer-remark/)
+ * * [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/)
  * adds an "excerpt" field where the user when writing their query can specify
  * how many characters to prune the markdown source to.
- * * [`gatsby-transformer-sharp`](/docs/packages/gatsby-transformer-sharp/) exposes
+ * * [`gatsby-transformer-sharp`](/packages/gatsby-transformer-sharp/) exposes
  * many image transformation options as GraphQL fields.
  */
 exports.setFieldsOnGraphQLNodeType = true
@@ -145,8 +168,10 @@ exports.modifyBabelrc = true
 
 /**
  * Let plugins extend/mutate the site's webpack configuration.
- * This API will change before 1.0 as it needs still to be converted to use
- * Redux actions.
+ *
+ * Refer to the [Add custom webpack config docs
+ * page](/docs/add-custom-webpack-config/) for detailed documentation on
+ * modifying webpack docs).
  */
 exports.modifyWebpackConfig = true
 

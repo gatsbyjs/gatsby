@@ -13,6 +13,36 @@ class NodeAPIDocs extends React.Component {
           Gatsby gives plugins and site builders many APIs for controlling your
           site.
         </p>
+        <h3>Async plugins</h3>
+        <p>
+          If your plugin performs async operations (disk I/O, database access,
+          calling remote APIs, etc.) you must either return a promise or use the
+          callback passed to the 3rd argument. Gatsby needs to know when plugins
+          are finished as some APIs, to work correctly, require previous APIs to
+          be complete first.
+        </p>
+        <pre>
+          <code
+            className="language-javascript"
+            dangerouslySetInnerHTML={{
+              __html: `// Promise API
+exports.createPages = () => {
+  return new Promise((resolve, reject) => {
+    // do async work
+  })
+}
+
+// Callback API
+exports.createPages = (_, pluginOptions, cb) => {
+  // do Async work
+  cb()
+}`,
+            }}
+          />
+        </pre>
+        <p>
+          If your plugin doesn't do async work, you can just return directly.
+        </p>
         <h2 css={{ marginBottom: rhythm(1 / 2) }}>APIs</h2>
         <ul css={{ ...scale(-1 / 5) }}>
           {this.props.data.allDocumentationJs.edges.map(({ node }, i) =>

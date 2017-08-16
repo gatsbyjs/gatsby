@@ -17,7 +17,7 @@ modify pages created in core or plugins or to create client-only pages.
 
 To see what pages are being created by your code or plugins, you can query
 for page information while developing in Graph*i*QL. Paste the following
-query in the Graph*i*QL IDE for your site.
+query in the Graph*i*QL IDE for your site. The Graph*i*QL IDE is available when running your sites development server at `HOST:PORT/__graphql` e.g. `localhost:8000/__graphql`.
 
 ```graphql
 {
@@ -49,7 +49,7 @@ of the markdown file.
 ```javascript
 // Implement the Gatsby API “createPages”. This is called once the
 // data layer is bootstrapped to let plugins create pages from data.
-exports.createPages = ({ boundActionCreators }) => {
+exports.createPages = ({ boundActionCreators, graphql }) => {
   const { createPage } = boundActionCreators
 
   return new Promise((resolve, reject) => {
@@ -77,8 +77,9 @@ exports.createPages = ({ boundActionCreators }) => {
 
         // Create pages for each markdown file.
         result.data.allMarkdownRemark.edges.forEach(({ node }) => {
+          const path = node.frontmatter.path;
           createPage({
-            path: node.path,
+            path,
             component: blogPostTemplate,
             // In your blog post template's graphql query, you can use path
             // as a GraphQL variable to query for data from the markdown file.

@@ -1,0 +1,22 @@
+{
+  "name": "gatsby-plugin-typography",
+  "version": "1.7.5",
+  "description": "Gatsby plugin to setup server rendering of Typography.js' CSS",
+  "main": "index.js",
+  "dependencies": {
+    "react-typography": "^0.16.1",
+    "typography": "^0.16.0"
+  },
+  "scripts": {
+    "build": "babel src --out-dir . --ignore __tests__",
+    "watch": "babel -w src --out-dir . --ignore __tests__"
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "typography",
+    "typography.js"
+  ],
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "license": "MIT"
+}

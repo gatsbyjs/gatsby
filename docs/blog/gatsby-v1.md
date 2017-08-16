@@ -9,7 +9,7 @@ Gatsby is your friendly, blazing fast static site generator for React. And after
 
 Static site generators offer many benefits over traditional dynamic website frameworks — *better performance, higher security, lower cost of scaling, and a better developer experience.*
 
-As part of v1, Gatsby blazes new ground for static site generators by supporting rich integrations with CMSs like Contentful, Wordpress, and Drupal, and a suite of features, on by default, that make your sites startlingly fast — route-based code splitting, service workers, offline support, and more.
+In v1, Gatsby blazes new ground for static site generators by enabling rich integrations with CMSs like Contentful, Wordpress, and Drupal, and a suite of features, on by default, that make your sites startlingly fast — route-based code splitting, service workers, offline support, and more.
 
 Gatsby means no more compromising between developers, designers, and authors.
 
@@ -23,7 +23,7 @@ Gatsby means no more compromising between developers, designers, and authors.
 
  In the last year, Gatsby community and usage have exploded. Milestones reached:
 
-* 160 code contributors on Github (with many more helping in [our chat room on Discord](https://discord.gg/0ZcbPKXt5bVoxkfV)).
+* 196 code contributors on Github (with many more helping in [our chat room on Discord](https://discord.gg/0ZcbPKXt5bVoxkfV)).
 * 10,000 stars on Github
 * 1000 followers on Twitter
 * 500,000 NPM downloads (100,000 in the last month!!)
@@ -40,7 +40,7 @@ Gatsby means no more compromising between developers, designers, and authors.
 
 And you're on of course a Gatsby website 😛
 
-## The three questions that have guided Gatsby's design
+## The three questions that guide Gatsby's design
 
 Gatsby started, like all the best projects do, as a spark of curiosity — "I wonder if I could create a tool for building static websites with React?".
 
@@ -81,7 +81,7 @@ Plugins can:
 * add drop-in support for lightweight React-compatible frameworks
 [Preact](https://preactjs.com/) and [Inferno](https://infernojs.org/)
 * add a sitemap or RSS feed
-* add [Google Analytics](/docs/packages/gatsby-plugin-google-analytics/)
+* add [Google Analytics](/packages/gatsby-plugin-google-analytics/)
 * ...and much more!
 
 ## GraphQL-based data processing layer
@@ -92,7 +92,7 @@ In Gatsby v0, (like pretty much every static site generator) data
 was processed then *pushed* into templates to be rendered into HTML. This
 is a simple pattern and works great for many use cases. But when you
 start working on more complex sites, you really start to miss the
-flexibility of building a database-driven site. With a database, all
+flexibility of a database-driven site. With a database, all
 your data is available to query against in any fashion you'd like.
 Whatever bits of data you need to assemble a page, you can *pull* in.
 You want to create author pages showing their bio and last 5 posts? It's
@@ -141,15 +141,17 @@ import React from "react"
 
 class BlogPostTemplate extends React.Component {
   render () {
-    <div>
-      <h1>{this.props.data.markdownRemark.frontmatter.title}</h1>
-      <small>{this.props.data.markdownRemark.frontmatter.date}</small>
-      <div
-        dangerouslySetInnerHTML={{
-          __html: this.props.data.markdownRemark.html,
-        }}
-      />
-    </div>
+    return (
+      <div>
+        <h1>{this.props.data.markdownRemark.frontmatter.title}</h1>
+        <small>{this.props.data.markdownRemark.frontmatter.date}</small>
+        <div
+          dangerouslySetInnerHTML={{
+            __html: this.props.data.markdownRemark.html,
+          }}
+        />
+      </div>
+    )
   }
 }
 
@@ -176,12 +178,12 @@ imaginable data source and potential ways of transforming its
 data will be an `npm install` away.
 
 For the markdown ecosystem there's already a robust set of plugins including [adding syntax highlighting
-with PrismJS](/docs/packages/gatsby-remark-prismjs/) and
+with PrismJS](/packages/gatsby-remark-prismjs/) and
 [resizing images referenced in markdown
-files](/docs/packages/gatsby-remark-images/) so
+files](/packages/gatsby-remark-images/) so
 they're mobile ready.
 
-There's also source plugins written for [Contentful](/docs/packages/gatsby-source-contentful/), [Wordpress](/docs/packages/gatsby-source-wordpress/), [Drupal](/docs/packages/gatsby-source-drupal/), [Hacker News](/docs/packages/gatsby-source-hacker-news/) (really 😛), and more as well as transformer plugins for [markdown](/docs/packages/gatsby-transformer-remark/), [JSON](/docs/packages/gatsby-transformer-json/), [YAML](/docs/packages/gatsby-transformer-yaml/), [JSDoc](/docs/packages/gatsby-transformer-documentationjs/), React prop-types, and [images](/docs/packages/gatsby-plugin-sharp/). We're collecting a list of additional source/transformer plugins that'd be useful to have over at https://github.com/gatsbyjs/gatsby/issues/1199
+There's also source plugins written for [Contentful](/packages/gatsby-source-contentful/), [Wordpress](/packages/gatsby-source-wordpress/), [Drupal](/packages/gatsby-source-drupal/), [Hacker News](/packages/gatsby-source-hacker-news/) (really 😛), and more as well as transformer plugins for [markdown](/packages/gatsby-transformer-remark/), [JSON](/packages/gatsby-transformer-json/), [YAML](/packages/gatsby-transformer-yaml/), [JSDoc](/packages/gatsby-transformer-documentationjs/), React prop-types, and [images](/packages/gatsby-plugin-sharp/). We're collecting a list of additional source/transformer plugins that'd be useful to have over at https://github.com/gatsbyjs/gatsby/issues/1199
 
 These plugins are easy to write (somewhat similar to webpack loaders) so
 we expect to see the list of plugins grow rapidly.

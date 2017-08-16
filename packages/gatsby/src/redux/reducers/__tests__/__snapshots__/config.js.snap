@@ -2,10 +2,15 @@
 
 exports[`config reducer Validates configs with unsupported options 1`] = `"The site's gatsby-config.js failed validation"`;
 
-exports[`config reducer handles empty configs 1`] = `Object {}`;
+exports[`config reducer handles empty configs 1`] = `
+Object {
+  "pathPrefix": "",
+}
+`;
 
 exports[`config reducer let's you add a config 1`] = `
 Object {
+  "pathPrefix": "",
   "siteMetadata": Object {
     "hi": true,
   },

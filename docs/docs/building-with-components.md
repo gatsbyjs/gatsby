@@ -10,9 +10,9 @@ The [official tutorial](https://facebook.github.io/react/tutorial/tutorial.html)
 
 ## Why React components?
 
-React's component architecture simplifies building large websites by encouraging modularity, reusabilty, and clear abstraction. React has a large ecosystem of open source components, tutorials, and tooling that can be used seamlessly while building sites with Gatsby. Gatsby is built to behave almost exactly like a normal React application.
+React's component architecture simplifies building large websites by encouraging modularity, reusabilty, and clear abstraction. React has a large ecosystem of open source components, tutorials, and tooling that can be used seamlessly for building sites with Gatsby. Gatsby is built to behave almost exactly like a normal React application.
 
-Here you can read more about [Thinking in React](https://facebook.github.io/react/docs/thinking-in-react.html).
+[Thinking in React](https://facebook.github.io/react/docs/thinking-in-react.html) is a good resource for learning how to structure applications with React.
 
 ## How does Gatsby use React Components?
 
@@ -42,9 +42,11 @@ A basic directory structure of a project might look like this:
         └── index.jsx
 ```
 
-### Base HTML generation
+### HTML component
 
-`src/html.jsx` is responsible for generating the base HTML document where the React component tree will be mounted.
+`src/html.jsx` is responsible for everything other than where Gatsby lives in the `<body />`.
+
+In this file you can modify the `<head>` metadata, general structure of the document and add external links.
 
 Example:
 
@@ -98,11 +100,9 @@ export default class HTML extends React.Component {
 }
 ```
 
-In this file you can modify the `<head>` metadata, general structure of the document and add external links.
-
 ### Layout components
 
-`src/layouts/index.jsx` (optional) wraps page components. You can use use it for portions of pages that are shared across pages like headers and footers.
+`src/layouts/index.jsx` (optional) wraps page components. You can use it for portions of pages that are shared across pages like headers and footers.
 
 Example:
 
@@ -122,7 +122,7 @@ export default class Template extends React.Component {
 }
 ```
 
-### Page generation
+### Page components
 
 Components under `src/pages` become pages automatically with paths based on their file name. For example `src/pages/index.jsx` is mapped to `yoursite.com` and `src/pages/about.jsx` becomes `yoursite.com/about/`.
 
@@ -147,11 +147,11 @@ class AboutPage extends Component {
 export default AboutPage;
 ```
 
-You may have noticed that `src/pages/posts` also contains markdown files. You can transform any file into pages using [Gatsby plugins](https://www.gatsbyjs.org/docs/plugins/).
+### Page template components
 
-### Page templates
+You can programatically create pages using "page template components". All pages are React components but very often these components are fairly simple wrappers around data from files or other sources.
 
-`src/templates/post.jsx` (optional) is an example of a page component. It queries the GraphQL schema for markdown data and then renders the page using this data.
+`src/templates/post.jsx` is an example of a page component. It queries GraphQL for markdown data and then renders the page using this data.
 
 Example:
 
@@ -185,4 +185,4 @@ query BlogPostBySlug($slug: String!) {
 `
 ```
 
-These are examples of the different ways React components are used in Gatsby sites. To see full working examples, check out the [examples directory](https://github.com/gatsbyjs/gatsby/tree/1.0/examples) in the Gatsby repo.
+These are examples of the different ways React components are used in Gatsby sites. To see full working examples, check out the [examples directory](https://github.com/gatsbyjs/gatsby/tree/master/examples) in the Gatsby repo.

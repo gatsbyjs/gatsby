@@ -5,19 +5,22 @@
   "version": "1.0.0",
   "author": "Florian Kissling <sechskilo@gmail.com>",
   "dependencies": {
-    "gatsby": "next",
-    "gatsby-link": "next",
-    "gatsby-plugin-google-analytics": "next",
-    "gatsby-plugin-offline": "next",
-    "gatsby-plugin-sharp": "next",
-    "gatsby-source-drupal": "next",
-    "gatsby-source-filesystem": "next",
-    "gatsby-transformer-sharp": "next",
+    "gatsby": "latest",
+    "gatsby-link": "latest",
+    "gatsby-plugin-google-analytics": "latest",
+    "gatsby-plugin-offline": "latest",
+    "gatsby-plugin-sharp": "latest",
+    "gatsby-source-drupal": "latest",
+    "gatsby-source-filesystem": "latest",
+    "gatsby-transformer-sharp": "latest",
     "react-typography": "^0.15.0",
     "typography": "^0.15.8",
     "typography-theme-bootstrap": "^0.15.10"
   },
-  "keywords": ["gatsby", "sharp"],
+  "keywords": [
+    "gatsby",
+    "sharp"
+  ],
   "license": "MIT",
   "main": "n/a",
   "scripts": {

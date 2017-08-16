@@ -140,6 +140,7 @@ https://gatsbygram.gatsbyjs.org and the case study on how its built https://www.
 * [Thijs Koerselman](https://www.vauxlab.com)
 * [Programming Is Easy](http://programming-is-easy.com)
 * [Arun Venkatesan](http://arun.is)
+* [effulgence.io](http://effulgence.io)([source](https://github.com/prayasht/prayasht.github.io/tree/develop/v3))
 * [Edit this file to add yours!](https://github.com/gatsbyjs/gatsby/blob/master/README.md)
 
 *Note, for the sites that have made their source available, you can

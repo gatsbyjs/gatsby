@@ -1,0 +1,22 @@
+{
+  "name": "gatsby-plugin-emotion",
+  "version": "1.1.1",
+  "description": "Gatsby plugin to add support for Emotion",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src --out-dir . --ignore __tests__",
+    "watch": "babel -w src --out-dir . --ignore __tests__"
+  },
+  "keywords": [
+    "gatsby",
+    "emotion"
+  ],
+  "author": "Tegan Churchill <churchill.tegan@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.24.1"
+  },
+  "dependencies": {
+    "emotion": "^5.2.0"
+  }
+}

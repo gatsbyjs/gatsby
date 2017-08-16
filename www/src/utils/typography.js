@@ -42,6 +42,11 @@ const options = {
       h5: {
         ...scale(0),
       },
+      blockquote: {
+        paddingLeft: rhythm(3 / 8),
+        marginLeft: rhythm(3 / 8),
+        borderLeft: `${rhythm(2 / 8)} solid ${presets.brandDark}`,
+      },
       "tt,code": {
         // background: `hsla(23, 60%, 97%, 1)`,
         background: colors.a[0],
@@ -58,7 +63,7 @@ const options = {
         // background: `hsla(23, 60%, 97%, 1)`,
         background: colors.a[0],
         border: `1px solid ${colors.a[1]}`,
-        borderRadius: `3px`,
+        borderRadius: `${presets.radius}px`,
         padding: rhythm(options.blockMarginBottom),
         marginBottom: rhythm(options.blockMarginBottom),
         overflow: `auto`,
@@ -158,6 +163,9 @@ const options = {
           fontSize: `${17 / 16 * 100}%`,
         },
       },
+      ".twitter-tweet-rendered": {
+        margin: `${rhythm(options.blockMarginBottom * 2)} auto !important`,
+      },
       [MOBILE_MEDIA_QUERY]: {
         // Make baseFontSize on mobile 16px.
         html: {
@@ -195,10 +203,5 @@ const options = {
 }
 
 const typography = new Typography(options)
-
-// Hot reload typography in development.
-if (process.env.NODE_ENV !== `production`) {
-  typography.injectStyles()
-}
 
 export default typography

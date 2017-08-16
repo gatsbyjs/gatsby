@@ -35,11 +35,11 @@ internal: {
 
 New nodes are added to Gatsby by "source" plugins. A common one that many
 Gatsby sites use is the [Filesystem source
-plugin](/docs/packages/gatsby-source-filesystem/) which turns files on disk
+plugin](/packages/gatsby-source-filesystem/) which turns files on disk
 into File nodes.
 
-Other source plugins pull data from external APIs such as the [Drupal](/docs/packages/gatsby-source-drupal/) and
-[Hacker News](/docs/packages/gatsby-source-hacker-news/)
+Other source plugins pull data from external APIs such as the [Drupal](/packages/gatsby-source-drupal/) and
+[Hacker News](/packages/gatsby-source-hacker-news/)
 
 ## Transformer plugins
 
@@ -52,10 +52,10 @@ nodes.
 
 * The [Remark
 (Markdown library) transformer
-plugin](/docs/packages/gatsby-transformer-remark/) looks for new nodes that
+plugin](/packages/gatsby-transformer-remark/) looks for new nodes that
 are created with a `mediaType` of `text/x-markdown` and then transforms these
 nodes into `MarkdownRemark` nodes with an `html` field.
-* The [YAML transformer plugin](/docs/packages/gatsby-transformer-yaml/) looks
+* The [YAML transformer plugin](/packages/gatsby-transformer-yaml/) looks
 for new nodes with a media type of `text/yaml` (e.g. a `.yaml` file) and creates new
 YAML child node(s) by parsing the YAML source into JavaScript objects.
 

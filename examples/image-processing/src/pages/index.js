@@ -15,7 +15,7 @@ class Index extends React.Component {
     return (
       <div>
         <p>
-          <a href="https://www.gatsbyjs.org/docs/packages/gatsby-plugin-sharp/">
+          <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/">
             <code>gatsby-plugin-sharp</code>
           </a>
           {` `}
@@ -30,7 +30,7 @@ class Index extends React.Component {
           <strong>
             Consult the
             {` `}
-            <a href="https://www.gatsbyjs.org/docs/packages/gatsby-plugin-sharp/">
+            <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/">
               documentation
             </a>
             {` `}
@@ -44,7 +44,7 @@ class Index extends React.Component {
             paddingTop: rhythm(2),
           }}
         >
-          <a href="https://www.gatsbyjs.org/docs/packages/gatsby-plugin-sharp/#resize">
+          <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/#resize">
             <code>
               <strong>resize</strong>
             </code>
@@ -145,7 +145,7 @@ class Index extends React.Component {
             paddingTop: rhythm(2),
           }}
         >
-          <a href="https://www.gatsbyjs.org/docs/packages/gatsby-plugin-sharp/#responsive-sizes">
+          <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/#responsive-sizes">
             <code>
               <strong>responsiveSizes</strong>
             </code>
@@ -183,7 +183,7 @@ class Index extends React.Component {
           {` `}
           (and also available as a Gatsby plugin for Markdown content as
           {` `}
-          <a href="https://www.gatsbyjs.org/docs/packages/gatsby-remark-images/">
+          <a href="https://www.gatsbyjs.org/packages/gatsby-remark-images/">
             gatsby-remark-images
           </a>).
         </p>
@@ -258,7 +258,7 @@ class Index extends React.Component {
             paddingTop: rhythm(2),
           }}
         >
-          <a href="https://www.gatsbyjs.org/docs/packages/gatsby-plugin-sharp/#responsive-resolution">
+          <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/#responsive-resolution">
             <code>responsiveResolution</code>
           </a>
         </h2>
@@ -334,17 +334,20 @@ export const pageQuery = graphql`
         srcSet
         sizes
         originalImg
+        originalName
       }
     }
     resolution: imageSharp(id: { regex: "/lol.jpg/" }) {
       responsiveResolution(grayscale: true, width: 614) {
         src
         srcSet
+        originalName
       }
     }
     cropDefault: imageSharp(id: { regex: "/gatsby.jpg/" }) {
       resize(width: 180, height: 180) {
         src
+        originalName
       }
     }
     cropBottomLeft: imageSharp(id: { regex: "/nyancat/" }) {

@@ -1,11 +1,11 @@
 {
   "name": "gatsby-remark-responsive-iframe",
-  "version": "1.0.1",
+  "version": "1.4.2",
   "description": "Make iframes in Markdown processed by Remark responsive",
   "main": "index.js",
   "scripts": {
-    "build": "babel src --out-dir .",
-    "watch": "babel -w src --out-dir ."
+    "build": "babel src --out-dir . --ignore __tests__",
+    "watch": "babel -w src --out-dir . --ignore __tests__"
   },
   "keywords": [
     "gatsby",
@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "bluebird": "^3.5.0",
-    "cheerio": "^0.22.0",
+    "cheerio": "^1.0.0-rc.2",
     "lodash": "^4.17.4",
     "unist-util-visit": "^1.1.1"
   }

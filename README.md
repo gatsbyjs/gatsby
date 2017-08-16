@@ -9,6 +9,22 @@
 
 ⚛️📄🚀 Blazing-fast static site generator for React
 
+## Showcase
+
+Websites built with Gatbsy:
+
+* [Bricolage.io](https://www.bricolage.io/) [(source)](https://github.com/KyleAMathews/blog)
+* [Segment's Blog](https://segment.com/blog/)
+* [Fabric](https://meetfabric.com/)
+* [Formidable](https://formidable.com/)
+* [ReasonML Docs](https://reasonml.github.io/) [(source)](https://github.com/reasonml/reasonml.github.io)
+* [Jamie Henson's Blog](http://jamiehenson.com/) [(source)](https://github.com/jamiehenson/jh47-gatsby)
+* [Sean Coker's Blog](https://sean.is/)
+* [Dustin Schau's Blog](https://dustinschau.com/blog/) [(source)](https://github.com/dschau/blog)
+* [The Chiedo Companies Website](https://www.chiedo.com)
+* [Damir.io](http://damir.io/) [(source)](https://github.com/dvzrd/gatsby-sfiction)
+* [Ruben's Blog](https://vagr9k.me/) [(source)](https://github.com/Vagr9K/Blog)
+
 ## Docs
 
 **[View the docs on gatsbyjs.org](https://www.gatsbyjs.org/docs/)**

@@ -5,16 +5,17 @@
   "main": "index.js",
   "scripts": {
     "develop": "gatsby develop",
-    "build": "gatsby build"
+    "build": "gatsby build",
+    "serve": "gatsby serve"
   },
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "gatsby": "next",
-    "gatsby-link": "next",
-    "gatsby-plugin-google-analytics": "next",
-    "gatsby-plugin-offline": "next",
-    "gatsby-plugin-postcss-sass": "next",
+    "gatsby": "latest",
+    "gatsby-link": "latest",
+    "gatsby-plugin-google-analytics": "latest",
+    "gatsby-plugin-offline": "latest",
+    "gatsby-plugin-postcss-sass": "latest",
     "lost": "^8.0.0",
     "react-typography": "^0.15.10",
     "typography": "^0.15.10"

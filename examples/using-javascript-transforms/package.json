@@ -1,0 +1,50 @@
+{
+  "name": "gatsby-example-using-javascript-transforms",
+  "version": "1.0.0",
+  "description": "example site and blog",
+  "main": "index.js",
+  "scripts": {
+    "develop": "node_modules/.bin/gatsby develop",
+    "dev:hard": "rm -rf .cache && rm -rf public && npm run develop",
+    "build": "npm run clean & .\\node_modules\\.bin\\gatsby build",
+    "serve": "node_modules/.bin/gatsby serve",
+    "clean:public": "rm -rf public & mkdir public",
+    "clean": "npm run clean:public",
+    "lint": "./node_modules/.bin/eslint --ext .js,.jsx --ignore-pattern public .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "personal",
+    "blog"
+  ],
+  "author": "jbolda",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "homepage": "https://www.gatsbyjs.org",
+  "dependencies": {
+    "bulma": "0.4.2",
+    "d3": "4.9.1",
+    "gatsby": "latest",
+    "gatsby-link": "latest",
+    "gatsby-plugin-offline": "latest",
+    "gatsby-plugin-postcss-sass": "latest",
+    "gatsby-plugin-sharp": "latest",
+    "gatsby-remark-copy-linked-files": "latest",
+    "gatsby-remark-prismjs": "latest",
+    "gatsby-remark-responsive-iframe": "latest",
+    "gatsby-remark-images": "latest",
+    "gatsby-remark-smartypants": "latest",
+    "gatsby-source-filesystem": "latest",
+    "gatsby-source-contentful": "latest",
+    "gatsby-transformer-javascript-static-exports": "latest",
+    "gatsby-transformer-remark": "latest",
+    "gatsby-transformer-sharp": "latest",
+    "gatsby-transformer-yaml": "latest",
+    "moment": "^2.14.1",
+    "normalize.css": "^7.0.0",
+    "prop-types": "^15.5.8",
+    "react-helmet": "^3.1.0"
+  }
+}

@@ -7,7 +7,7 @@ export default () =>
     <h1 css={{ marginTop: 0 }}>Gatsby.js Tutorial</h1>
     <p>
       Hi! We’re so happy you decided to try using Gatsby. This tutorial has (or
-      rather will have once all parts are written) four parts that'll walk you
+      rather will have once all parts are written) five parts that'll walk you
       from getting started developing and building Gatsby sites to deploying a
       finished and polished high performance static PWA.
     </p>
@@ -22,8 +22,16 @@ export default () =>
         {` `}— Starting new projects, developing, and deploying sites.
       </li>
       <li>
-        Introduction to styling options, plugins, Styled Components/Glamor,
-        layout component
+        <Link to="/tutorial/part-two/">
+          Introduction to using CSS in Gatsby
+        </Link>. Explore libraries like Typography.js, CSS Modules, Glamor, and
+        Styled Components.
+      </li>
+      <li>
+        <Link to="/tutorial/part-three/">
+          Explore building nested layouts in Gatsby
+        </Link>. Layouts are sections of your site that are reused across
+        multiple pages like headers and footers.
       </li>
       <li>
         How to work with GraphQL & different data sources: Markdown, JSON,

@@ -1,5 +1,147 @@
 # Change Log
 
+## [1.5.0] - 2017-07-27
+
+### Added
+
+* Add gatsby-source-mongodb plugin to gatsby (#1570) @jorishermans
+* [www] Refactor Homepage and Navigation & convert diagram to html/css (#1605) @fk
+* Included example with WP-API-MENUS items (#1619) @sebastienfi
+* added new site to showcase (#1616) @dvzrd
+* Docs: add grommet starter (#1626) @alampros
+* add a bunch of tests for various plugins (#1581) @DSchau
+
+### Fixed
+
+* fix broken gatsby link definition for typescript 2.4.2 (#1628) @DominikGuzei
+* test: fix failing test due to missing argyle image (#1636) @DSchau
+* Revise part one of tutorial to use hello-world starter (#1630) @KyleAMathews
+* Fix passing createNode as argument (#1629) @sebastienfi
+* Don't mutate page context (#1537) @okcoker
+* Updated instructions for Windows (#1621) @sebastienfi
+* Tweak JSS links + add it to plugins page (#1615) @KyleAMathews
+
+
+## [1.4.0] - 2017-07-25
+
+### Added
+
+* Add gatsby-plugin-feed to www #1569 @nicholaswyoung
+* Implement gatsby-plugin-jss #1431 @wizardzloy
+* gatsby-transformer-sharp: Added the option to use the original image #1556 @chiedo
+
+### Fixed
+
+* [www] Blog post meta styles #1561 @fk
+* Fix unsupported method in IE #1573 @variadicintegrity
+* Don't set a default title in html.js as not overriden by react-helmet #1578 @KyleAMathews
+* Downgrade Glamor to v2 as v3 unstable #1580 @KyleAMathews
+* Remove the slash between the pathPrefix and pathname when navigating #1574 @DaleWebb
+* Fix url in Contentful example #1596 @axe312ger
+* Small fixes to tutorial #1586 @benmathews
+* Add missing dep to gatsby-source-filesystem #1607 @jquense
+* Wordpress -> WordPress #1608 @Alaev
+* Fix typo #1609 @fk
+* Update modifyWebpackConfig docs #1613 @KyleAMathews
+* Fix broken links #1614 @KyleAMathews
+
+
+## [1.3.0] - 2017-07-19
+
+### Added
+
+* docs: add "creating a static blog with gatsby" blog post #1560 @DSchau
+* add tests to gatsby-remark-images #1559 @DSchau
+* add glitch-gatsby-starter-blog #1554 @100ideas
+* use consistent chunk ids #1534 @stevensurgnier
+* Enhance API for multiple feeds #1548 @nicholaswyoung
+* Add new plugin to handle csv files #1496 @ssonal
+* Adds showcase segment for starters/websites built with Gatsby. #1535 @Vagr9K
+* Fancy Javascript Example #1492 @jbolda
+* Add sitemap plugin to www #1541 @nicholaswyoung
+
+### Fixed
+
+* Clone context to prevent mutations #1553 @kyleamathews
+* Update dependencies to avoid hoisting errors #1552 @kyleamathews
+* Set pathPrefix if not defined to an empty string to avoid undefined #1551 @kyleamathews
+* Fix prefixes in gatsby-link + navigateTo #1550 @kyleamathews
+* Make path to packages the same on website as github #1549 @kyleamathews
+* Fixing sw.js 404-ing because of pathPrefix not being prefixed to sw.js properly. Fixing #1539 #1540 @gregsqueeb
+* [gatsby-plugin-sharp] Fix PNG generation when using the "duotone" option #1506 @fk
+* fix: ensure pathPrefix is added to responsive images #1510 @DSchau
+* Fix the onClick override logic #1489 @jakedeichert
+* Check if node.value is set as otherwise cheerio throws an error #1543 @kyleamathews
+* Fix docs referencing outdated React Router <Link> API #1523 @ahfarmer
+* Fixes component-renderer to allow for use of internal routing #1542 @scottyeck
+* Center .twitter-tweet-rendered #1529 @fk
+* double '... use use ...' word #1528 @GoreStarry
+
+
+## [1.2.0] - 2017-07-13
+
+### Added
+
+* Watch for changes to html.js #1473 @felixjung
+* Add stylus example #1479 @iansinnott
+* Added support for nested img tags in html nodes #1485 @chiedo
+* Prism plugin bugfix alt #1491 @bvaughn
+* Allow for env files #1462 @okcoker
+* Create deploy-gatsby.md #1480 @couturecraigj
+
+### Fixed
+
+* Fix Contentful example URL #1483 @oscar-b
+* Fix reference to program.directory #1490 @jakedeichert
+* Fixes docs referencing removed "1.0" branch source code instead of master. #1495 @Vagr9K
+* fix(gatsby-source-contentful): missing host param in createClient #1487 @Smiter
+* use program directory over cwd #1478 @craig-mulligan
+
+
+## [1.1.0] - 2017-07-11
+
+### Added
+
+* Add gatsby-plugin-twitter for embedding Tweets #1389 @KyleAMathews
+* Document promise/callback interface for async plugins #1409 @KyleAMathews
+* Add an example of a config query to migration docs #1429 @benmccormick
+* Adds more information to documentation pages. #1428 @Vagr9K
+* Add new plugin `gatsby-plugin-emotion` #1447 @rawrmonstar
+* Gatsby remark images default alt tags and optional linking #1451 @chiedo
+* Add stylus support #1437 @iansinnott
+* [gatsby-source-contentful] Add Support for preview api #1464 @Khaledgarbaya
+
+### Fixed
+
+* Update init-starter.js #1393 @kimown
+* fix URL for packages, using the master branch #1399 @bmackinney
+* Use latest instead of next for versions in examples #1404 @KyleAMathews
+* Update www dependencies #1402 @KyleAMathews
+* Fix frontpage copy issues #1401 @KyleAMathews
+* Add missing return statement #1405 @ahmedlhanafy
+* Fixed documentation #1406 @chiedo
+* fix: Update examples directory URL due to 404 with current link #1410 @bencodezen
+* Add link to gatsby-dev-cli + we're stable + copy editing @KyleAMathews
+* fix glamor + babel modification #1416 @jaredly
+* Typo, grammar and standardising flags #1426 @IrregularShed
+* Fix bug where the target is incorrectly set #1427 @samzhao
+* Fix "gastsby" to "gatsby" on line 34 #1433 @trautlein
+* Fix "Creating Pages" example's variable reference #1430 @benmccormick
+* Fixes the example for navigateTo. #1440 @Vagr9K
+* Properly load options for Remark #1441 @benmccormick
+* Use lowercase require for "rss" #1444 @nicholaswyoung
+* fix issue with ssr for redux example #1445 lemuelbarango
+* Update .nvmrc, Node 8 #1446 @nicholaswyoung
+* Set a key on pages so when switching between pages, the same component instance isn't reusued #1460 @KyleAMathews
+* Removed `owner` assignation to prevent error #1454 @sebastienfi
+* Update gatsby-node.js #1452 @sebastienfi
+* Update README.md #1453 @sebastienfi
+* Improve typescript example #1466 @fabien0102
+* Remove react-helmet from src/html.js fixes #1443 #1474 @KyleAMathews
+* Updates add-custom-webpack-config.md to fix broken links #1420 @marcustisater
+* Fix source-wordpress npmignore #1476 @KyleAMathews
+
+
 ## [1.0.0] - 2017-07-06
 
 ### Added

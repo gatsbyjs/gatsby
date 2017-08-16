@@ -1,18 +1,24 @@
 {
   "name": "gatsby-plugin-stylus",
-  "version": "1.0.1",
-  "description": "Stub description for gatsby-plugin-stylus",
-  "main": "index.js",
+  "description": "Gatsby support for Stylus",
+  "version": "1.1.1",
+  "author": "Ian Sinnott <ian@iansinnott.com>",
+  "dependencies": {
+    "babel-cli": "^6.24.1",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "stylus": "^0.54.5",
+    "stylus-loader": "webpack1"
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "stylus"
+  ],
+  "license": "MIT",
+  "main": "./gatsby-node.js",
+  "readme": "README.md",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
     "watch": "babel -w src --out-dir . --ignore __tests__"
-  },
-  "keywords": [
-    "gatsby"
-  ],
-  "author": "Kyle Mathews &lt;mathews.kyle@gmail.com&gt;",
-  "license": "MIT",
-  "devDependencies": {
-    "babel-cli": "^6.24.1"
   }
 }

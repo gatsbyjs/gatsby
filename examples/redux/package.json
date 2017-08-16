@@ -5,8 +5,8 @@
   "version": "1.0.0",
   "author": "Scotty Eckenthal <scott.eckenthal@gmail.com>",
   "dependencies": {
-    "gatsby": "next",
-    "gatsby-link": "next",
+    "gatsby": "latest",
+    "gatsby-link": "latest",
     "lodash": "^4.16.4",
     "react-redux": "5.0.5",
     "react-router-redux": "4.0.8",

@@ -1,12 +1,12 @@
 {
   "name": "gatsby-link",
-  "version": "1.0.1",
+  "version": "1.6.7",
   "description": "An enhanced Link component for Gatsby sites with support for resource prefetching",
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
-    "build": "babel src --out-dir .",
-    "watch": "babel -w src --out-dir ."
+    "build": "babel src --out-dir . --ignore __tests__",
+    "watch": "babel -w src --out-dir . --ignore __tests__"
   },
   "keywords": [
     "gatsby",
