@@ -68,44 +68,51 @@ exports.sourceNodes = async (
     url = `${_siteURL}/wp-json`
   }
 
-  console.log()
-  console.log(
-    colorized.out(
-      `=START PLUGIN=====================================`,
-      colorized.color.Font.FgBlue
+  if (_verbose) console.log()
+  if (_verbose)
+    console.log(
+      colorized.out(
+        `=START PLUGIN=====================================`,
+        colorized.color.Font.FgBlue
+      )
     )
-  )
-  console.time(`=END PLUGIN=====================================`)
-  console.log(``)
-  console.log(
-    colorized.out(`Site URL: ${_siteURL}`, colorized.color.Font.FgBlue)
-  )
-  console.log(
-    colorized.out(
-      `Site hosted on Wordpress.com: ${hostingWPCOM}`,
-      colorized.color.Font.FgBlue
+  if (_verbose) console.time(`=END PLUGIN=====================================`)
+  if (_verbose) console.log(``)
+  if (_verbose)
+    console.log(
+      colorized.out(`Site URL: ${_siteURL}`, colorized.color.Font.FgBlue)
     )
-  )
-  console.log(
-    colorized.out(`Using ACF: ${useACF}`, colorized.color.Font.FgBlue)
-  )
-  console.log(
-    colorized.out(
-      `Using Auth: ${_auth.htaccess_user} ${_auth.htaccess_pass}`,
-      colorized.color.Font.FgBlue
+  if (_verbose)
+    console.log(
+      colorized.out(
+        `Site hosted on Wordpress.com: ${hostingWPCOM}`,
+        colorized.color.Font.FgBlue
+      )
     )
-  )
-  console.log(
-    colorized.out(
-      `Verbose output: ${verboseOutput}`,
-      colorized.color.Font.FgBlue
+  if (_verbose)
+    console.log(
+      colorized.out(`Using ACF: ${useACF}`, colorized.color.Font.FgBlue)
     )
-  )
-  console.log(``)
-  console.log(
-    colorized.out(`Mama Route URL: ${url}`, colorized.color.Font.FgBlue)
-  )
-  console.log(``)
+  if (_verbose)
+    console.log(
+      colorized.out(
+        `Using Auth: ${_auth.htaccess_user} ${_auth.htaccess_pass}`,
+        colorized.color.Font.FgBlue
+      )
+    )
+  if (_verbose)
+    console.log(
+      colorized.out(
+        `Verbose output: ${verboseOutput}`,
+        colorized.color.Font.FgBlue
+      )
+    )
+  if (_verbose) console.log(``)
+  if (_verbose)
+    console.log(
+      colorized.out(`Mama Route URL: ${url}`, colorized.color.Font.FgBlue)
+    )
+  if (_verbose) console.log(``)
 
   // Touch existing Wordpress nodes so Gatsby doesn`t garbage collect them.
   _.values(store.getState().nodes)
@@ -136,18 +143,19 @@ exports.sourceNodes = async (
   if (allRoutes) {
     let validRoutes = getValidRoutes(allRoutes, url, baseUrl)
 
-    console.log(``)
-    console.log(
-      colorized.out(
-        `Fetching the JSON data from ${validRoutes.length} valid API Routes...`,
-        colorized.color.Font.FgBlue
+    if (_verbose) console.log(``)
+    if (_verbose)
+      console.log(
+        colorized.out(
+          `Fetching the JSON data from ${validRoutes.length} valid API Routes...`,
+          colorized.color.Font.FgBlue
+        )
       )
-    )
-    console.log(``)
+    if (_verbose) console.log(``)
 
     for (let route of validRoutes) {
       await fetchData(route, createNode)
-      console.log(``)
+      if (_verbose) console.log(``)
     }
 
     for (let item of _parentChildNodes) {
@@ -163,7 +171,8 @@ exports.sourceNodes = async (
       },
     })
 
-    console.timeEnd(`=END PLUGIN=====================================`)
+    if (_verbose)
+      console.timeEnd(`=END PLUGIN=====================================`)
   } else {
     console.log(
       colorized.out(`No routes to fetch. Ending.`, colorized.color.Font.FgRed)
@@ -280,19 +289,21 @@ async function getWPCOMAccessToken() {
  */
 function httpExceptionHandler(e) {
   const { status, statusText, data: { message } } = e.response
-  console.log(
-    colorized.out(
-      `The server response was "${status} ${statusText}"`,
-      colorized.color.Font.FgRed
-    )
-  )
-  if (message) {
+  if (_verbose)
     console.log(
       colorized.out(
-        `Inner exception message : "${message}"`,
+        `The server response was "${status} ${statusText}"`,
         colorized.color.Font.FgRed
       )
     )
+  if (message) {
+    if (_verbose)
+      console.log(
+        colorized.out(
+          `Inner exception message : "${message}"`,
+          colorized.color.Font.FgRed
+        )
+      )
   }
 }
 
@@ -389,12 +400,13 @@ function getValidRoutes(allRoutes, url, baseUrl) {
       )
     if (_hostingWPCOM) {
       // TODO : Need to test that out with ACF on Wordpress.com hosted site. Need a premium account on wp.com to install extensions.
-      console.log(
-        colorized.out(
-          `The ACF options pages is untested under wordpress.com hosting. Please let me know if it works.`,
-          colorized.color.Effect.Blink
+      if (_verbose)
+        console.log(
+          colorized.out(
+            `The ACF options pages is untested under wordpress.com hosting. Please let me know if it works.`,
+            colorized.color.Effect.Blink
+          )
         )
-      )
     }
   }
 
@@ -432,18 +444,20 @@ async function fetchData(route, createNode, parentNodeId) {
   const url = route.url
 
   if (parentNodeId != undefined) {
-    console.log(
-      colorized.out(`Extended node content`, colorized.color.Font.FgBlue),
-      url
-    )
+    if (_verbose)
+      console.log(
+        colorized.out(`Extended node content`, colorized.color.Font.FgBlue),
+        url
+      )
   } else {
-    console.log(
-      colorized.out(
-        `=== [ Fetching ${type} ] ===`,
-        colorized.color.Font.FgBlue
-      ),
-      url
-    )
+    if (_verbose)
+      console.log(
+        colorized.out(
+          `=== [ Fetching ${type} ] ===`,
+          colorized.color.Font.FgBlue
+        ),
+        url
+      )
     if (_verbose) console.time(`Fetching the ${type} took`)
   }
 
@@ -467,7 +481,10 @@ async function fetchData(route, createNode, parentNodeId) {
       length = Object.keys(routeResponse).length
     }
     console.log(
-      colorized.out(`${type} fetched : ${length}`, colorized.color.Font.FgGreen)
+      colorized.out(
+        ` -> ${type} fetched : ${length}`,
+        colorized.color.Font.FgGreen
+      )
     )
   }
 
@@ -498,9 +515,7 @@ function createGraphQLNode(ent, type, createNode, parentNodeId) {
     children: [],
     parent: `__SOURCE__`,
     internal: {
-      type: type.toUpperCase(),
-      content: JSON.stringify(node),
-      mediaType: `text/html`,
+      type: type,
     },
   }
 
@@ -530,6 +545,7 @@ function createGraphQLNode(ent, type, createNode, parentNodeId) {
     node.excerpt = ent.excerpt.rendered
   }
 
+  node.internal.content = JSON.stringify(node)
   node.internal.contentDigest = digest(stringify(node))
   createNode(node)
 
@@ -559,7 +575,6 @@ function addFields(ent, newEnt, createNode) {
       internal: {
         type: `${typePrefix}ACF_Field`,
         content: JSON.stringify(ent.acf),
-        mediaType: `application/json`,
       },
     }
     acfNode.internal.contentDigest = digest(stringify(acfNode))
@@ -616,8 +631,8 @@ function recursiveAddFields(ent, newEnt) {
 function getValidName(key) {
   let nkey = key
   const NAME_RX = /^[_a-zA-Z][_a-zA-Z0-9]*$/
-  if (!NAME_RX.test(nkey)) {
-    nkey = `_${nkey}`.replace(/-/g, `_`).replace(/:/g, `_`)
+  if (!NAME_RX.test(nkey) || restrictedNodeFields.includes(nkey)) {
+    nkey = `${conflictFieldPrefix}${nkey}`.replace(/-|__|:|\.|\s/g, `_`)
     if (_verbose)
       console.log(
         colorized.out(
@@ -625,13 +640,6 @@ function getValidName(key) {
           colorized.color.Font.FgRed
         )
       )
-  }
-  if (restrictedNodeFields.includes(nkey)) {
-    if (_verbose)
-      console.log(
-        `Restricted field found for ${nkey}. Prefixing with ${conflictFieldPrefix}.`
-      )
-    nkey = `${conflictFieldPrefix}${nkey}`
   }
   return nkey
 }
