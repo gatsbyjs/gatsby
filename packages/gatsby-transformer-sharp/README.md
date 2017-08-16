@@ -5,7 +5,7 @@ Creates `ImageSharp` nodes from image types that are supported by the
 fields in their GraphQL types for processing your images in a variety of ways
 including resizing, cropping, and creating responsive images.
 
-[Live demo](https://image-processing.gatsbyjs.org/) ([source](https://github.com/gatsbyjs/gatsby/tree/1.0/examples/image-processing))
+[Live demo](https://image-processing.gatsbyjs.org/) ([source](https://github.com/gatsbyjs/gatsby/tree/master/examples/image-processing))
 
 ## Install
 
@@ -22,7 +22,7 @@ plugins: [
 
 ## Parsing algorithm
 
-It recongnizes files with the following extensions as images.
+It recognizes files with the following extensions as images.
 
 * jpeg
 * jpg

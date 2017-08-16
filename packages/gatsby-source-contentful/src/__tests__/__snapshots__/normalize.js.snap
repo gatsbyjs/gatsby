@@ -1599,7 +1599,7 @@ Object {
 `;
 
 exports[`Process contentful data builds list of resolvable data 1`] = `
-Array [
+Set {
   "c7LAnCobuuWYSqks6wAwY2a",
   "c24DPGBDeGEaYy8ms4Y8QMQ",
   "c651CQ8rLoIYCeY6G0QG22q",
@@ -1620,7 +1620,7 @@ Array [
   "wtrHxeu3zEoEce2MokCSi",
   "c10TkaLheGeQG6qQGqWYqUI",
   "c6s3iG2OVmoUcosmA8ocqsG",
-]
+}
 `;
 
 exports[`Process contentful data creates nodes for each asset 1`] = `

@@ -1,10 +1,9 @@
 /*
 We don't actually use this component at all.
-
 I would like to eventually use this as templates should really
  only be concerned about converting non-react (markdown -> html here) into
  a react component that we can use.
-*/
+
 
 import React from "react"
 
@@ -32,7 +31,14 @@ export const pageQuery = graphql`
       html
       frontmatter {
         title
+        written
+        updated
+        layoutType
+        path
+        category
+        description
       }
     }
   }
 `
+*/

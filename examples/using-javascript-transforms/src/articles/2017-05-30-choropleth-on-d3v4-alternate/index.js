@@ -1,19 +1,13 @@
 import React from "react"
 import { findDOMNode } from "react-dom"
 var d3 = require(`d3`)
-import PostPublished from "../../components/PostPublished"
-import HelmetBlock from "../../components/HelmetBlock"
-// We have to include these components on every javascript page
-//  as we cannot use templates and layouts cannot query for data.
-//  Logically it would make sense to put these on the parents, but
-//  for now they have to be children of EVERY post.
 
 // this is an additional method to export data and make it usable elsewhere
 export const data = {
   title: `Alternate Choropleth on d3v4`,
   written: `2017-05-30`,
   layoutType: `post`,
-  path: `choropleth-on-d3v4-alternate`,
+  path: `/choropleth-on-d3v4-alternate/`,
   category: `data science`,
   description: `Even more things about the choropleth. No, seriously.`,
 }
@@ -58,7 +52,6 @@ class choroplethAltBase extends React.Component {
 
     return (
       <div className="">
-        <HelmetBlock {...frontmatter} />
         <div className="section">
           <div className="container">
             <div id="states" />
@@ -70,7 +63,6 @@ class choroplethAltBase extends React.Component {
             <div dangerouslySetInnerHTML={{ __html: html }} />
           </div>
         </div>
-        <PostPublished {...frontmatter} />
       </div>
     )
   }

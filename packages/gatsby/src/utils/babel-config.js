@@ -64,25 +64,26 @@ function normalizeConfig(config, directory) {
   }
 
   const presets = config.presets || []
-  presets.forEach(preset => {
-    normalizedConfig.presets.push(resolvePlugin(preset, directory, `preset`))
-  })
-
   const plugins = config.plugins || []
-  plugins.forEach(plugin => {
-    let normalizedPlugin
 
-    if (_.isArray(plugin)) {
-      normalizedPlugin = [
-        resolvePlugin(plugin[0], directory, `plugin`),
-        plugin[1],
-      ]
+  const normalize = (value, name) => {
+    let normalized
+
+    if (_.isArray(value)) {
+      normalized = [resolvePlugin(value[0], directory, name), value[1]]
     } else {
-      normalizedPlugin = resolvePlugin(plugin, directory, `plugin`)
+      normalized = resolvePlugin(value, directory, name)
     }
 
-    normalizedConfig.plugins.push(normalizedPlugin)
-  })
+    return normalized
+  }
+
+  presets.forEach(preset =>
+    normalizedConfig.presets.push(normalize(preset, `preset`))
+  )
+  plugins.forEach(plugin =>
+    normalizedConfig.plugins.push(normalize(plugin, `plugin`))
+  )
 
   return objectAssign({}, config, normalizedConfig)
 }
@@ -150,7 +151,7 @@ module.exports = async function babelConfig(program, stage) {
       {
         loose: true,
         uglify: true,
-        modules: false,
+        modules: `commonjs`,
         targets: {
           browsers: program.browserslist,
         },
@@ -171,11 +172,6 @@ module.exports = async function babelConfig(program, stage) {
     babelrc.plugins.unshift(`react-hot-loader/babel`)
   }
 
-  // Always add this plugin so our generated routes
-  // will work regardless of how users export
-  // their components. Yeah for multiple module standards!
-  babelrc.plugins.unshift(`add-module-exports`)
-
   babelrc.plugins.unshift(require.resolve(`./babel-plugin-extract-graphql`))
 
   if (!babelrc.hasOwnProperty(`cacheDirectory`)) {
@@ -183,7 +179,9 @@ module.exports = async function babelConfig(program, stage) {
   }
 
   const normalizedConfig = normalizeConfig(babelrc, directory)
-  let modifiedConfig = await apiRunnerNode(`modifyBabelrc`, { babelrc })
+  let modifiedConfig = await apiRunnerNode(`modifyBabelrc`, {
+    babelrc: normalizedConfig,
+  })
   if (modifiedConfig.length > 0) {
     modifiedConfig = _.merge({}, ...modifiedConfig)
     // Otherwise this means no plugin changed the babel config.

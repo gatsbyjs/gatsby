@@ -11,7 +11,8 @@
     "gatsby-plugin-styled-components": "latest",
     "gatsby-source-wordpress": "latest",
     "hedron": "^0.7.1",
-    "lodash": "^4.16.4"
+    "lodash": "^4.16.4",
+    "striptags": "^3.0.1"
   },
   "keywords": [
     "gatsby"

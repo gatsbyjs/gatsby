@@ -241,6 +241,7 @@ function queueImageResizing({ file, args = {} }) {
   // Calculate the eventual width/height of the image.
   const dimensions = imageSize(file.absolutePath)
   const aspectRatio = dimensions.width / dimensions.height
+  const originalName = file.base
 
   // If the width/height are both set, we're cropping so just return
   // that.
@@ -276,6 +277,7 @@ function queueImageResizing({ file, args = {} }) {
     height,
     aspectRatio,
     finishedPromise,
+    originalName: originalName,
   }
 }
 
@@ -322,12 +324,14 @@ async function notMemoizedbase64({ file, args = {} }) {
   }
 
   const [buffer, info] = await pipeline.toBufferAsync()
+  const originalName = file.base
 
   return {
     src: `data:image/${info.format};base64,${buffer.toString(`base64`)}`,
     width: info.width,
     height: info.height,
     aspectRatio: info.width / info.height,
+    originalName: originalName,
   }
 }
 
@@ -398,7 +402,7 @@ async function responsiveSizes({ file, args = {} }) {
 
     return queueImageResizing({
       file,
-      args: arrrgs,
+      args: arrrgs, // matey
     })
   })
 
@@ -419,6 +423,7 @@ async function responsiveSizes({ file, args = {} }) {
   const srcSet = images
     .map(image => `${image.src} ${Math.round(image.width)}w`)
     .join(`,\n`)
+  const originalName = file.base
 
   return {
     base64: base64Image.src,
@@ -426,7 +431,8 @@ async function responsiveSizes({ file, args = {} }) {
     src: fallbackSrc,
     srcSet,
     sizes: options.sizes,
-    originalImage: originalImg,
+    originalImg: originalImg,
+    originalName: originalName,
   }
 }
 
@@ -519,6 +525,8 @@ async function responsiveResolution({ file, args = {} }) {
     })
     .join(`,\n`)
 
+  const originalName = file.base
+
   return {
     base64: base64Image.src,
     aspectRatio: images[0].aspectRatio,
@@ -526,6 +534,7 @@ async function responsiveResolution({ file, args = {} }) {
     height: images[0].height,
     src: fallbackSrc,
     srcSet,
+    originalName: originalName,
   }
 }
 

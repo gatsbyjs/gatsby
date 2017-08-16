@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-coffeescript",
   "description": "Adds CoffeeScript support for Gatsby layouts and pages.",
-  "version": "1.0.1",
+  "version": "1.4.2",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "contributors": [
     "Noah Lange <noahrlange@gmail.com>"
@@ -21,7 +21,7 @@
   "main": "index.js",
   "readme": "README.md",
   "scripts": {
-    "build": "babel src --out-dir .",
-    "watch": "babel -w src --out-dir ."
+    "build": "babel src --out-dir . --ignore __tests__",
+    "watch": "babel -w src --out-dir . --ignore __tests__"
   }
 }

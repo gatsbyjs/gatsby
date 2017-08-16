@@ -4,15 +4,14 @@ import SiteLinks from "../components/SiteLinks"
 
 exports.data = {
   layoutType: `page`,
-  path: `contact`,
+  path: `/contact/`,
 }
 
 class ContactMe extends React.Component {
   render() {
     return (
-      <div className="container">
+      <div className="box container">
         <p>I would love to hear from you!</p>
-        <SiteLinks {...this.props} />
       </div>
     )
   }

@@ -9,4 +9,19 @@
     ">> Linking between pages": /tutorial/part-one/#linking-between-pages
     ">> Interactive page": /tutorial/part-one/#interactive-page
     ">> Deploying Gatsby.js websites on the web": /tutorial/part-one/#deploying-gatsbyjs-websites-on-the-web
+- title: Part Two
+  links:
+    Part two: /tutorial/part-two/
+    ">> Building with components": /tutorial/part-two/#building-with-components
+    ">> Creating Global Styles": /tutorial/part-two/#creating-global-styles
+    ">> Typography.js": /tutorial/part-two/#typographyjs
+    ">> Gatsby Plugins": /tutorial/part-two/#gatsby-plugins
+    ">> Component CSS": /tutorial/part-two/#component-css
+    ">> CSS Modules": /tutorial/part-two/#css-modules
+    ">> Glamor": /tutorial/part-two/#glamor
+    ">> Styled Components": /tutorial/part-two/#styled-components
+- title: Part Three
+  links:
+    Part three: /tutorial/part-three/
+    ">> Our first layout component": /tutorial/part-three/#our-first-layout-component
 
