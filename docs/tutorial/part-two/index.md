@@ -364,7 +364,7 @@ If you open the developer console in your browser you'll see:
 
 ![css-modules-console](css-modules-console.png)
 
-If you compare that to our CSS file, you'll see that each class is now a key in the imported object pointing to a long string e.g. `avatar` points to `about-css-modules-module—--avatar---—hYcv`. These are the class names CSS Modules generates. They're guaranteed to be unique across your site. And because you have to import them to use the classes, there's never any question about where some CSS is being used.
+If you compare that to our CSS file, you'll see that each class is now a key in the imported object pointing to a long string e.g. `avatar` points to `about-css-modules-module---avatar----hYcv`. These are the class names CSS Modules generates. They're guaranteed to be unique across your site. And because you have to import them to use the classes, there's never any question about where some CSS is being used.
 
 Let's use our styles to create a simple `User` component.
 
@@ -374,7 +374,7 @@ Modify `about-css-modules.js` so it looks like the following:
 
 ```jsx{6-17,23-30}
 import React from "react"
-import styles from "../css/about-css-modules.module.css"
+import styles from "./about-css-modules.module.css"
 
 import Container from "../components/container"
 
@@ -609,3 +609,5 @@ Gatsby supports almost every possible styling option (if there isn't a plugin ye
 * [JSS](/packages/gatsby-plugin-jss/)
 * [Stylus](/packages/gatsby-plugin-stylus/)
 * and more!
+
+Now continue on to [Part Three](/tutorial/part-three/) of the tutorial.

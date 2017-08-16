@@ -5,6 +5,7 @@ const { onCreateNode } = require(`../gatsby-node`)
 
 describe(`Process JSON nodes correctly`, () => {
   const node = {
+    name: `nodeName`,
     id: `whatever`,
     parent: `SOURCE`,
     children: [],

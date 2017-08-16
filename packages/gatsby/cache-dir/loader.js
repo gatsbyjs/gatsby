@@ -1,3 +1,4 @@
+import React, { createElement } from "react"
 import pageFinderFactory from "./find-page"
 import emitter from "./emitter"
 let findPage
@@ -66,8 +67,9 @@ const fetchResource = (resourceName, cb = () => {}) => {
   } else {
     // Find resource
     const resourceFunction =
-      resourceName.slice(0, 6) === `page-c`
-        ? asyncRequires.components[resourceName]
+      resourceName.slice(0, 9) === `component`
+        ? asyncRequires.components[resourceName] ||
+          asyncRequires.layouts[resourceName]
         : asyncRequires.json[resourceName]
 
     // Download the resource
@@ -233,10 +235,10 @@ const queue = {
     if (process.env.NODE_ENV !== `production`) {
       const page = findPage(path)
       if (!page) return
-
       const pageResources = {
         component: syncRequires.components[page.componentChunkName],
         json: syncRequires.json[page.jsonName],
+        layout: syncRequires.layouts[page.layoutComponentChunkName],
         page,
       }
       cb(pageResources)
@@ -270,13 +272,14 @@ const queue = {
       // Nope, we need to load resource(s)
       let component
       let json
-      // Load the component/json and parallal and call this
+      let layout
+      // Load the component/json/layout and parallel and call this
       // function when they're done loading. When both are loaded,
       // we move on.
       const done = () => {
-        if (component && json) {
-          pathScriptsCache[path] = { component, json, page }
-          const pageResources = { component, json, page }
+        if (component && json && (!page.layoutComponentChunkName || layout)) {
+          pathScriptsCache[path] = { component, json, layout }
+          const pageResources = { component, json, layout }
           cb(pageResources)
           emitter.emit(`onPostLoadPageResources`, {
             page,
@@ -298,6 +301,15 @@ const queue = {
         json = j
         done()
       })
+
+      page.layoutComponentChunkName &&
+        getResourceModule(page.layoutComponentChunkName, (err, l) => {
+          if (err) {
+            console.log(`Loading the Layout for ${page.path} failed`)
+          }
+          layout = l
+          done()
+        })
 
       return undefined
     }

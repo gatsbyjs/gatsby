@@ -5,14 +5,30 @@ const crypto = require(`crypto`)
 // Traverse is a es6 module...
 import traverse from "babel-traverse"
 const babylon = require(`babylon`)
-const Bluebird = require(`bluebird`)
-const { stripIndent } = require(`common-tags`)
 
-const apiRunnerNode = require(`../../utils/api-runner-node`)
+const report = require(`../../reporter`)
 const { getGraphQLTag } = require(`../../utils/babel-plugin-extract-graphql`)
 
 import type { DocumentNode, DefinitionNode } from "graphql"
 
+const getMissingNameErrorMessage = file => report.stripIndent`
+  GraphQL definitions must be "named".
+  The query with the missing name is in ${file}.
+  To fix the query, add "query MyQueryName" to the start of your query.
+  So instead of:
+    {
+      allMarkdownRemark {
+        totalCount
+      }
+    }
+
+  Do:
+    query MyQueryName {
+      allMarkdownRemark {
+        totalCount
+      }
+    }
+`
 async function parseToAst(filePath, fileStr) {
   let ast
 
@@ -36,13 +52,13 @@ async function parseToAst(filePath, fileStr) {
         })
         ast = tmp
         break
-      } catch (e) {
-        console.info(e)
+      } catch (error) {
+        report.error(error)
         continue
       }
     }
     if (ast === undefined) {
-      console.error(`Failed to parse preprocessed file ${filePath}`)
+      report.error(`Failed to parse preprocessed file ${filePath}`)
     }
   } else {
     try {
@@ -51,9 +67,14 @@ async function parseToAst(filePath, fileStr) {
         sourceFilename: true,
         plugins: [`*`],
       })
-    } catch (e) {
-      console.log(`Failed to parse ${filePath}`)
-      console.log(e)
+    } catch (error) {
+      report.error(
+        `There was a problem parsing "${filePath}"; any GraphQL ` +
+          `fragments or queries in this file were not processed. \n` +
+          `This may indicate a syntax error in the code, or it may be a file type ` +
+          `That Gatsby does not know how to parse.`,
+        error
+      )
     }
   }
 
@@ -61,50 +82,36 @@ async function parseToAst(filePath, fileStr) {
 }
 
 async function findGraphQLTags(file, text): Promise<Array<DefinitionNode>> {
-  return new Promise(resolve => {
-    parseToAst(file, text).then(ast => {
-      if (!ast) return []
+  return new Promise((resolve, reject) => {
+    parseToAst(file, text)
+      .then(ast => {
+        let queries = []
+        if (!ast) {
+          resolve(queries)
+          return
+        }
 
-      let queries = []
-      traverse(ast, {
-        ExportNamedDeclaration(path, state) {
-          path.traverse({
-            TaggedTemplateExpression(innerPath) {
-              const gqlAst = getGraphQLTag(innerPath)
-              if (gqlAst) {
-                gqlAst.definitions.forEach(def => {
-                  if (!def.name || !def.name.value) {
-                    console.log(stripIndent`
-                  GraphQL definitions must be "named".
-                  The query with the missing name is in ${file}.
-                  To fix the query, add "query MyQueryName" to the start of your query.
-                  So instead of:
-                  {
-                    allMarkdownRemark {
-                      totalCount
+        traverse(ast, {
+          ExportNamedDeclaration(path, state) {
+            path.traverse({
+              TaggedTemplateExpression(innerPath) {
+                const gqlAst = getGraphQLTag(innerPath)
+                if (gqlAst) {
+                  gqlAst.definitions.forEach(def => {
+                    if (!def.name || !def.name.value) {
+                      report.panic(getMissingNameErrorMessage(file))
                     }
-                  }
+                  })
 
-                  Do:
-
-                  query MyQueryName {
-                    allMarkdownRemark {
-                      totalCount
-                    }
-                  }
-                `)
-                    process.exit(1)
-                  }
-                })
-
-                queries.push(...gqlAst.definitions)
-              }
-            },
-          })
-        },
+                  queries.push(...gqlAst.definitions)
+                }
+              },
+            })
+          },
+        })
+        resolve(queries)
       })
-      resolve(queries)
-    })
+      .catch(reject)
   })
 }
 
@@ -133,32 +140,24 @@ export default class FileParser {
           }
         : null
     } catch (err) {
-      console.error(`Failed to parse GQL query from file: ${file}`)
-      console.error(err.message)
+      report.error(
+        `There was a problem parsing the GraphQL query in file: ${file}`,
+        err
+      )
       return null
     }
   }
 
   async parseFiles(files: Array<string>): Promise<Map<string, DocumentNode>> {
     const documents = new Map()
+
     return Promise.all(
-      files.map(
-        file =>
-          new Promise(resolve => {
-            this.parseFile(file)
-              .then(doc => {
-                if (doc) documents.set(file, doc)
-                resolve()
-              })
-              .catch(e => {
-                console.log(`parsing file failed`, file, e)
-              })
-          })
+      files.map(file =>
+        this.parseFile(file).then(doc => {
+          if (!doc) return
+          documents.set(file, doc)
+        })
       )
-    )
-      .then(() => documents)
-      .catch(e => {
-        console.log(`parsing files failed`, e)
-      })
+    ).then(() => documents)
   }
 }

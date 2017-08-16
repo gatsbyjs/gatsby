@@ -1,4 +1,4 @@
-const DiscordIcon = () =>
+const DiscordIcon = ({ overrideCSS }) =>
   <svg
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -8,7 +8,7 @@ const DiscordIcon = () =>
     height="1em"
     width="1em"
     preserveAspectRatio="xMidYMid meet"
-    style={{ verticalAlign: `middle` }}
+    css={{ verticalAlign: `middle`, ...overrideCSS }}
   >
     <g>
       <path d="M11.5,11.7c-0.8,0-1.4,0.7-1.4,1.6s0.6,1.6,1.4,1.6c0.8,0,1.4-0.7,1.4-1.6

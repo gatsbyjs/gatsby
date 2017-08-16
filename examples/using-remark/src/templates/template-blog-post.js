@@ -4,6 +4,8 @@ import styles from "../styles"
 import { rhythm, scale } from "../utils/typography"
 import presets from "../utils/presets"
 
+require(`katex/dist/katex.min.css`)
+
 class BlogPostRoute extends React.Component {
   render() {
     const post = this.props.data.markdownRemark
@@ -62,7 +64,10 @@ class BlogPostRoute extends React.Component {
         </header>
 
         <h2>Contents</h2>
-        <div dangerouslySetInnerHTML={{ __html: post.tableOfContents }} className="toc" />
+        <div
+          dangerouslySetInnerHTML={{ __html: post.tableOfContents }}
+          className="toc"
+        />
 
         <div dangerouslySetInnerHTML={{ __html: post.html }} className="post" />
         <hr

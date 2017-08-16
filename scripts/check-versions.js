@@ -27,4 +27,3 @@ if (warned) {
 } else {
   console.log(`All packages depend on the most current local versions`)
 }
-

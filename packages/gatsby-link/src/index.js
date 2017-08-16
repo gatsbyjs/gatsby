@@ -8,6 +8,15 @@ if (typeof __PREFIX_PATHS__ !== `undefined` && __PREFIX_PATHS__) {
   pathPrefix = __PATH_PREFIX__
 }
 
+const NavLinkPropTypes = {
+  activeClassName: PropTypes.string,
+  activeStyle: PropTypes.object,
+  exact: PropTypes.bool,
+  strict: PropTypes.bool,
+  isActive: PropTypes.func,
+  location: PropTypes.object,
+}
+
 class GatsbyLink extends React.Component {
   constructor(props) {
     super()
@@ -16,9 +25,8 @@ class GatsbyLink extends React.Component {
     }
   }
   propTypes: {
+    ...NavLinkPropTypes,
     to: PropTypes.string.isRequired,
-    activeClassName: PropTypes.string,
-    activeStyle: PropTypes.object,
     onClick: PropTypes.func,
   }
 
@@ -37,7 +45,7 @@ class GatsbyLink extends React.Component {
 
   render() {
     const { onClick, ...rest } = this.props
-    if (this.props.activeStyle || this.props.activeClassName) {
+    if (Object.keys(NavLinkPropTypes).some(propName => this.props[propName])) {
       var El = NavLink
     } else {
       var El = Link

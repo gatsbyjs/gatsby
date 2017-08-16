@@ -5,12 +5,22 @@ import { kebabCase, get, merge, isArray, isString } from "lodash"
 import apiRunner from "./api-runner-ssr"
 import pages from "./pages.json"
 import syncRequires from "./sync-requires"
+import testRequireError from "./test-require-error"
 
 let Html
 try {
   Html = require(`../src/html`)
-} catch (e) {
-  Html = require(`./default-html`)
+} catch (err) {
+  if (testRequireError(`..\/src\/html`, err)) {
+    Html = require(`./default-html`)
+  } else {
+    console.log(
+      `\n\nThere was an error requiring "src/html.js"\n\n`,
+      err,
+      `\n\n`
+    )
+    process.exit()
+  }
 }
 
 const pathChunkName = path => {
@@ -18,18 +28,18 @@ const pathChunkName = path => {
   return `path---${name}`
 }
 
-const $ = React.createElement
+const getPage = path => pages.find(page => page.path === path)
+const defaultLayout = props =>
+  <div>
+    {props.children()}
+  </div>
 
-// Use default layout if one isn't set.
-let layout
-if (syncRequires.layouts.index) {
-  layout = syncRequires.layouts.index
-} else {
-  layout = props =>
-    <div>
-      {props.children()}
-    </div>
+const getLayout = page => {
+  const layout = syncRequires.layouts[page.layoutComponentChunkName]
+  return layout ? layout : defaultLayout
 }
+
+const $ = React.createElement
 
 module.exports = (locals, callback) => {
   let pathPrefix = `/`
@@ -71,20 +81,19 @@ module.exports = (locals, callback) => {
       },
       context: {},
     },
-    $(withRouter(layout), {
-      children: layoutProps =>
-        $(Route, {
-          children: routeProps => {
-            const props = layoutProps ? layoutProps : routeProps
-            const page = pages.find(
-              page => page.path === props.location.pathname
-            )
-            return $(syncRequires.components[page.componentChunkName], {
+    $(Route, {
+      render: props => {
+        const page = getPage(props.location.pathname)
+        const layout = getLayout(page)
+        return $(withRouter(layout), {
+          ...props,
+          children: props =>
+            $(syncRequires.components[page.componentChunkName], {
               ...props,
               ...syncRequires.json[page.jsonName],
-            })
-          },
-        }),
+            }),
+        })
+      },
     })
   )
 
@@ -136,12 +145,13 @@ module.exports = (locals, callback) => {
   }
 
   // Create paths to scripts
+  const page = pages.find(page => page.path === locals.path)
   const scripts = [
     `commons`,
     `app`,
-    `layout-component---index`,
     pathChunkName(locals.path),
-    pages.find(page => page.path === locals.path).componentChunkName,
+    page.componentChunkName,
+    page.layoutComponentChunkName,
   ]
     .map(s => {
       const fetchKey = `assetsByChunkName[${s}]`
