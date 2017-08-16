@@ -47,7 +47,7 @@ module.exports = async (program: any) => {
     // $FlowFixMe
     config = preferDefault(require(`${program.directory}/gatsby-config`))
   } catch (err) {
-    if (!testRequireError(`gatsby-config`, err)) {
+    if (!testRequireError(`${program.directory}/gatsby-config`, err)) {
       report.error(`Could not load gatsby-config`, err)
       process.exit(1)
     }

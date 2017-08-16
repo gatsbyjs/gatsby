@@ -151,7 +151,7 @@ module.exports = async function babelConfig(program, stage) {
       {
         loose: true,
         uglify: true,
-        modules: false,
+        modules: `commonjs`,
         targets: {
           browsers: program.browserslist,
         },
