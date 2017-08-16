@@ -124,6 +124,7 @@ module.exports = async (
             `${require.resolve(
               `webpack-hot-middleware/client`
             )}?path=http://${program.host}:${webpackPort}/__webpack_hmr&reload=true`,
+            require.resolve(`react-error-overlay`),
             directoryPath(`.cache/app`),
           ],
         }
@@ -355,7 +356,10 @@ module.exports = async (
     // Common config for every env.
     config.loader(`js`, {
       test: /\.jsx?$/, // Accept either .js or .jsx files.
-      exclude: /(node_modules|bower_components)/,
+      exclude: modulePath =>
+        // transpile react-error-overlay through babel since its not browser ready
+        /(node_modules|bower_components)/.test(modulePath)
+          && !/react-error-overlay/.test(modulePath),
       loader: `babel`,
       query: babelConfig,
     })

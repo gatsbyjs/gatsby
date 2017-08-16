@@ -93,6 +93,7 @@
     "raw-loader": "^0.5.1",
     "react": "^15.6.0",
     "react-dom": "^15.6.0",
+    "react-error-overlay": "^1.0.10",
     "react-hot-loader": "^3.0.0-beta.6",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
