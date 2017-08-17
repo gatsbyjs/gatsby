@@ -5,11 +5,8 @@ skip_branch_with_pr: true
 
 for:
 -
-  branches:
-    only:
-      - /.*/
-
-  skip_tags: true
+  skip_commits:
+    message: /Publish/
 
   environment:
     nodejs_version: "8"
@@ -19,11 +16,8 @@ for:
       buildon: commit
 
 -
-  branches:
-    only:
-      - /.*/
-
-  skip_non_tags: true
+  only_commits:
+    message: /Publish/
 
   environment:
     nodejs_version: "8"
