@@ -1,6 +1,10 @@
 platform:
   - x64
 
+cache:
+  - '%AppData%/npm-cache'
+  - C:\Users\appveyor\AppData\Roaming\npm\node_modules\windows-build-tools
+
 skip_branch_with_pr: true
 
 for:
