@@ -9,17 +9,6 @@ skip_branch_with_pr: true
 
 for:
 -
-  skip_commits:
-    message: /Publish/
-
-  environment:
-    nodejs_version: "8"
-
-    matrix:
-    - example: gatsbygram
-      buildon: commit
-
--
   only_commits:
     message: /Publish/
 
@@ -38,6 +27,17 @@ for:
 
     - example: no-plugins
       buildon: tag
+
+-
+  skip_commits:
+    message: /Publish/
+
+  environment:
+    nodejs_version: "8"
+
+    matrix:
+    - example: gatsbygram
+      buildon: commit
 
 # Install scripts. (runs after repo cloning)
 install:
