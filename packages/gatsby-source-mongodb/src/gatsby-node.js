@@ -2,6 +2,7 @@ const Db = require(`mongodb`).Db,
   MongoClient = require(`mongodb`).MongoClient,
   ObjectID = require(`mongodb`).ObjectID,
   crypto = require(`crypto`),
+  createMappingChildNodes = require(`./mapping`),
   _ = require(`lodash`)
 
 exports.sourceNodes = (
@@ -65,14 +66,14 @@ function createNodes(db, pluginOptions, dbName, createNode, done) {
             .digest(`hex`),
         },
       }
-      /* if (pluginOptions.map) {
+      if (pluginOptions.map) {
         // We need to map certain fields to a contenttype.
         var keys = Object.keys(pluginOptions.map).forEach(mediaItemFieldKey => {
-            createMappingChildNodes(node, mediaItemFieldKey, item[mediaItemFieldKey], createNode));
+            createMappingChildNodes(node, mediaItemFieldKey, item[mediaItemFieldKey], createNode);
 
             delete item[mediaItemFieldKey];
         });
-      } */
+      }
       createNode(node)
     }
   })

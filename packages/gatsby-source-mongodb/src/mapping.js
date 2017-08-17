@@ -1,4 +1,7 @@
-module.export = function(node, key, text, createNode) {
+const _ = require(`lodash`),
+      crypto = require(`crypto`);
+
+module.exports = function(node, key, text, createNode) {
   const str = _.isString(text) ? text : ` `
   const id = `${node.id}${key}MappingNode`
   const mappingNode = {
