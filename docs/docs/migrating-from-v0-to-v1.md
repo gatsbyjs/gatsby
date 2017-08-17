@@ -43,6 +43,10 @@ import Link from 'gatsby-link'
 <Link to="/" exact>Home</Link>
 ```
 
+Prefixing links is also now handled automatically by our new `<Link>` component so remove usages of `prefixLink` in links.
+
+Use `gatsby-link` everywhere and things will Just Work™.
+
 ## config.toml is now gatsby-config.js
 
 If you previously added site metadata to `config.toml`, move that into
