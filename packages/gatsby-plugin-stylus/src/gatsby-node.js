@@ -14,6 +14,7 @@
  *     resolve: `gatsby-plugin-stylus`,
  *     options: {
  *       use: [],
+ *       import: []
  *     },
  *   },
  * ],
@@ -24,7 +25,7 @@ exports.modifyWebpackConfig = ({ config, stage }, options = {}) => {
   const cssModulesConfProd = `css?modules&minimize&importLoaders=1`
   const cssModulesConfDev = `css?modules&importLoaders=1&localIdentName=[name]---[local]---[hash:base64:5]`
 
-  // Pass in stylus plugins regardless of stage.
+  // Pass in stylus options regardless of stage.
   if (Array.isArray(options.use)) {
     config.merge(current => {
       current.stylus = {
@@ -35,6 +36,18 @@ exports.modifyWebpackConfig = ({ config, stage }, options = {}) => {
   } else if (options.use) {
     throw new Error(
       `gatsby-plugin-stylus "use" option passed with ${options.use}. Pass an array of stylus plugins instead`
+    )
+  }
+  if (Array.isArray(options.import)) {
+    config.merge(current => {
+      current.stylus = {
+        import: options.import,
+      }
+      return current
+    })
+  } else if (options.import) {
+    throw new Error(
+      `gatsby-plugin-stylus "import" option passed with ${options.import}. Pass an array of filenames instead`
     )
   }
 
