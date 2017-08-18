@@ -7,21 +7,21 @@ cache:
 
 skip_branch_with_pr: true
 
-  environment:
-    nodejs_version: "8"
+environment:
+  nodejs_version: "8"
 
-    matrix:
-    - example: gatsbygram
-      buildon: commit
+  matrix:
+  - example: gatsbygram
+    buildon: commit
 
-    - example: using-javascript-transforms
-      buildon: tag
+  - example: using-javascript-transforms
+    buildon: tag
 
-    - example: using-remark
-      buildon: tag
+  - example: using-remark
+    buildon: tag
 
-    - example: no-plugins
-      buildon: tag
+  - example: no-plugins
+    buildon: tag
 
 # Install scripts. (runs after repo cloning)
 install:
