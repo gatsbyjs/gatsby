@@ -24,24 +24,28 @@ git mv utils src
 
 ## Replace react-router's Link component with gatsby-link
 
-Add new package to project.
+`gatsby-link` is a wrapper for the `<Link>` component in react-router.  It automatically prefixes urls and handles prefetching.  Add `gatsby-link` to your project by running:
 
 `npm install --save gatsby-link`
 
-Use in place of react-router's Link
+`gatsby-link` auto-detects whether to use a plain `<Link>` or `<NavLink>` based on what props you pass it.  There's no need to wrap `<IndexLink>` because it was dropped in react-router v4 in favor of the `exact` prop.
 
 ```jsx
 import Link from 'gatsby-link'
 
-// Works identically to react-router's <Link>
-<Link to="/another-page/">Another page</Link>
+// Equivalent to react-router's <Link>
+<Link to="/page-2/">Page 2</Link>
+
+// Equivalent to react-router's <NavLink>
+<Link to="/page-2/" activeClassName="selected">Page 2</Link>
+
+// `exact` prop replaces <IndexLink> from react-router v3
+<Link to="/" exact>Home</Link>
 ```
 
-Prefixing links is also now handled automatically by our new `<Link>` component
-so remove usages of `prefixLink` in links.
+Prefixing links is also now handled automatically by our new `<Link>` component so remove usages of `prefixLink` in links.
 
 Use `gatsby-link` everywhere and things will Just Work™.
-
 
 ## config.toml is now gatsby-config.js
 
