@@ -15,9 +15,7 @@ class InsetPageTemplate extends React.Component {
               <SiteSidebar {...this.props} />
             </div>
             <div className="column">
-              <div className="box">
-                {this.props.children()}
-              </div>
+              {this.props.children()}
             </div>
           </div>
         </div>

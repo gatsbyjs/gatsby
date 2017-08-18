@@ -16,7 +16,11 @@ module.exports = async (program: any) => {
       }
 
       // We don't want any javascript produced by this step in the process.
-      fs.unlinkSync(`${directory}/public/bundle-for-css.js`)
+      try {
+        fs.unlinkSync(`${directory}/public/bundle-for-css.js`)
+      } catch (e) {
+        // ignore.
+      }
 
       // Ensure there's a styles.css file in public so tools that expect it
       // can find it.

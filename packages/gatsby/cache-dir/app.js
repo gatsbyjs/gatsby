@@ -3,6 +3,8 @@ const apiRunner = require(`./api-runner-browser`)
 import React from "react"
 import ReactDOM from "react-dom"
 import { AppContainer as HotContainer } from "react-hot-loader"
+import domReady from "domready"
+
 import socketIo from "./socketIo"
 
 window.___emitter = require(`./emitter`)
@@ -36,14 +38,16 @@ if (Root.default) {
   Root = Root.default
 }
 
-ReactDOM.render(
-  <HotContainer>
-    <Root />
-  </HotContainer>,
-  rootElement,
-  () => {
-    apiRunner(`onInitialClientRender`)
-  }
+domReady(() =>
+  ReactDOM.render(
+    <HotContainer>
+      <Root />
+    </HotContainer>,
+    rootElement,
+    () => {
+      apiRunner(`onInitialClientRender`)
+    }
+  )
 )
 
 if (module.hot) {

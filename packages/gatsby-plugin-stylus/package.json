@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-stylus",
   "description": "Gatsby support for Stylus",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "author": "Ian Sinnott <ian@iansinnott.com>",
   "dependencies": {
     "babel-cli": "^6.24.1",
@@ -18,7 +18,7 @@
   "main": "./gatsby-node.js",
   "readme": "README.md",
   "scripts": {
-    "build": "babel src --out-dir .",
-    "watch": "babel -w src --out-dir ."
+    "build": "babel src --out-dir . --ignore __tests__",
+    "watch": "babel -w src --out-dir . --ignore __tests__"
   }
 }
