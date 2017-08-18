@@ -13,7 +13,12 @@ class Item extends React.Component {
           {story.name}
         </a>
         <p>
-          <div dangerouslySetInnerHTML={{ __html: story.children[0].children[0].html }} className="story" />
+          <div
+            dangerouslySetInnerHTML={{
+              __html: story.children[0].children[0].html,
+            }}
+            className="story"
+          />
         </p>
       </div>
     )
@@ -29,15 +34,15 @@ export const pageQuery = graphql`
       name
       url
       children {
-          ... on mongodbCloudDocumentsDescriptionMappingNode {
-            id
-            children {
-              ... on MarkdownRemark {
-                id
-                html
-              }
+        ... on mongodbCloudDocumentsDescriptionMappingNode {
+          id
+          children {
+            ... on MarkdownRemark {
+              id
+              html
             }
           }
+        }
       }
     }
   }
