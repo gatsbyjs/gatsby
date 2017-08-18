@@ -20,6 +20,18 @@ environment:
   - example: using-remark
     buildon: tag
 
+  - example: using-contentful
+    buildon: tag
+
+  - example: using-wordpress
+    buildon: tag
+
+  - example: using-mongodb
+    buildon: tag
+
+  - example: using-typescript
+    buildon: tag
+
   - example: no-plugins
     buildon: tag
 
