@@ -159,6 +159,7 @@ module.exports = async (
             "process.env": processEnv(stage, `development`),
             __PREFIX_PATHS__: program.prefixPaths,
             __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
+            __POLYFILL__: store.getState().config.polyfill,
           }),
           // Names module ids with their filepath. We use this in development
           // to make it easier to see what modules have hot reloaded, etc. as
@@ -185,6 +186,7 @@ module.exports = async (
             "process.env": processEnv(stage, `development`),
             __PREFIX_PATHS__: program.prefixPaths,
             __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
+            __POLYFILL__: store.getState().config.polyfill,
           }),
           new ExtractTextPlugin(`build-html-styles.css`),
         ]
@@ -194,6 +196,7 @@ module.exports = async (
             "process.env": processEnv(stage, `production`),
             __PREFIX_PATHS__: program.prefixPaths,
             __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
+            __POLYFILL__: store.getState().config.polyfill,
           }),
           new ExtractTextPlugin(`styles.css`, { allChunks: true }),
         ]
@@ -207,6 +210,7 @@ module.exports = async (
             "process.env": processEnv(stage, `production`),
             __PREFIX_PATHS__: program.prefixPaths,
             __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
+            __POLYFILL__: store.getState().config.polyfill,
           }),
           new ExtractTextPlugin(`build-html-styles.css`),
         ]
@@ -279,6 +283,7 @@ module.exports = async (
             "process.env": processEnv(stage, `production`),
             __PREFIX_PATHS__: program.prefixPaths,
             __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
+            __POLYFILL__: store.getState().config.polyfill,
           }),
           // Extract CSS so it doesn't get added to JS bundles.
           new ExtractTextPlugin(`build-js-styles.css`),
