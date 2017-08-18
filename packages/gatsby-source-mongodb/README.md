@@ -28,8 +28,8 @@ Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from M
 
 ### Advanced feature
 
-In gatsby you have transformers, that transforms your data for example markdown into html.
-Let's say we have a markdown field in our mongoDB collection. Would it not be wonderfull to use these plugins to render out our content properly.
+In Gatsby you have transformers, that transforms your data for example markdown into html.
+Let's say we have a markdown field in our mongoDB collection. Would it not be great to use these plugins to render out our content properly.
 
 Well in the gatsby-config.js file you can add the option **map**. 
 With as a key the fieldname and as a value the mediatype of that field, in our case here `text\x-markdown`.
