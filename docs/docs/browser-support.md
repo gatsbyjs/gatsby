@@ -6,7 +6,7 @@ Gatsby supports [the same browsers as the current stable version of React.js](ht
 
 ## Polyfills
 
-Gatsby uses the ES6 Promise API. As some older browsers don't support this, Gatsby includes by default a Promise polyfill. If you would like to provide your own promise implementation, you can set `polyfill` to `false` in your `gatsby-config.js`:
+Gatsby uses the ES6 Promise API. As some older browsers don't support this, Gatsby includes by default a Promise polyfill. If you would like to provide your own Promise polyfill, you can set `polyfill` to `false` in your `gatsby-config.js`:
 
 ```
 module.exports = {
