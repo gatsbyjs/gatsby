@@ -93,7 +93,7 @@ const findDirtyIds = actions => {
     const node = state.nodes[action.payload.id]
     // Check if the node was deleted
     if (!node) {
-      return
+      return dirtyIds
     }
 
     // find invalid pagesAndLayouts
