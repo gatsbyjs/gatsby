@@ -7,11 +7,6 @@ cache:
 
 skip_branch_with_pr: true
 
-for:
--
-  only_commits:
-    message: /Publish/
-
   environment:
     nodejs_version: "8"
 
@@ -28,23 +23,12 @@ for:
     - example: no-plugins
       buildon: tag
 
--
-  skip_commits:
-    message: /Publish/
-
-  environment:
-    nodejs_version: "8"
-
-    matrix:
-    - example: gatsbygram
-      buildon: commit
-
 # Install scripts. (runs after repo cloning)
 install:
   - echo This example is built on %buildon% and the commit tag is %APPVEYOR_REPO_TAG% and the tag is %APPVEYOR_REPO_TAG_NAME%
     # we kill the build for most examples unless it is a release or a forced build
   - ps: |
-      if (($env:buildon -eq "tag") -and ($env:APPVEYOR_REPO_TAG -eq "false") -and ($env:APPVEYOR_FORCED_BUILD -ne "True"))
+      if (($env:buildon -eq "tag") -and ($env:APPVEYOR_REPO_COMMIT_MESSAGE -eq "Publish") -and ($env:APPVEYOR_FORCED_BUILD -ne "True"))
       {
         Exit-AppVeyorBuild
       }
