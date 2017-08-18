@@ -28,7 +28,7 @@ install:
   - echo This example is built on %buildon% and the commit tag is %APPVEYOR_REPO_TAG% and the tag is %APPVEYOR_REPO_TAG_NAME%
     # we kill the build for most examples unless it is a release or a forced build
   - ps: |
-      if (($env:buildon -eq "tag") -and ($env:APPVEYOR_REPO_COMMIT_MESSAGE -eq "Publish") -and ($env:APPVEYOR_FORCED_BUILD -ne "True"))
+      if (($env:buildon -eq "tag") -and ($env:APPVEYOR_REPO_COMMIT_MESSAGE -ne "Publish") -and ($env:APPVEYOR_FORCED_BUILD -ne "True"))
       {
         Exit-AppVeyorBuild
       }
