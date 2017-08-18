@@ -36,9 +36,6 @@ With as a key the fieldname and as a value the mediatype of that field, in our c
 
 Gatsby will create child nodes for you that will do the magic.
 
-map: with this option you can map a field to a content type, it is an array
-     ex. map: {description: `text\x-markdown`}
-
 The graphql query would look something like this.
 
 ```graphql
@@ -65,6 +62,11 @@ query ItemQuery($id: String!) {
 ## How to query : GraphQL
 
 Find below a global pageQuery to query all MongoDB document nodes of our db named **'Cloud'** and our collection named **'documents'**. 
+
+## How to query : GraphQL
+
+Find below a global pageQuery to query all MongoDB document nodes. 
+
 All the documents in Mongodb of a certain collection will be pulled into Gatsby.
 
 ```graphql

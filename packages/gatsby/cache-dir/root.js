@@ -12,7 +12,6 @@ import apiRunner from "./api-runner-browser"
 import syncRequires from "./sync-requires"
 import pages from "./pages.json"
 import ComponentRenderer from "./component-renderer"
-import LayoutRenderer from "./layout-renderer"
 import loader from "./loader"
 loader.addPagesArray(pages)
 loader.addDevRequires(syncRequires)
@@ -101,7 +100,8 @@ const Root = () =>
     createElement(
       ScrollContext,
       { shouldUpdateScroll },
-      createElement(withRouter(LayoutRenderer), {
+      createElement(withRouter(ComponentRenderer), {
+        layout: true,
         children: layoutProps =>
           createElement(Route, {
             render: routeProps => {
@@ -112,6 +112,7 @@ const Root = () =>
               )
               if (pageResources) {
                 return createElement(ComponentRenderer, {
+                  page: true,
                   ...props,
                   pageResources,
                 })

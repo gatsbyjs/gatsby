@@ -5,12 +5,22 @@ import { kebabCase, get, merge, isArray, isString } from "lodash"
 import apiRunner from "./api-runner-ssr"
 import pages from "./pages.json"
 import syncRequires from "./sync-requires"
+import testRequireError from "./test-require-error"
 
 let Html
 try {
   Html = require(`../src/html`)
-} catch (e) {
-  Html = require(`./default-html`)
+} catch (err) {
+  if (testRequireError(`..\/src\/html`, err)) {
+    Html = require(`./default-html`)
+  } else {
+    console.log(
+      `\n\nThere was an error requiring "src/html.js"\n\n`,
+      err,
+      `\n\n`
+    )
+    process.exit()
+  }
 }
 
 const pathChunkName = path => {

@@ -16,7 +16,7 @@ Gatsby [recently released][gatsby-release] a v1.0.0 with a bunch of new features
 
 ### Installing the CLI
 
-`npm install -g gatsby`
+`npm install -g gatsby-cli`
 
 Gatsby ships with a great CLI (command line interface) that contains the functionality of scaffolding out a working site, as well as commands to help develop the site once created.
 
