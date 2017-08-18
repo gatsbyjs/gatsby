@@ -71,7 +71,7 @@ function createNodes(db, pluginOptions, dbName, createNode, done) {
         var keys = Object.keys(pluginOptions.map).forEach(mediaItemFieldKey => {
             createMappingChildNodes(node, mediaItemFieldKey, item[mediaItemFieldKey], createNode);
 
-            delete item[mediaItemFieldKey];
+            delete node[mediaItemFieldKey];
         });
       }
       createNode(node)
