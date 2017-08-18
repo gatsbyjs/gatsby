@@ -26,19 +26,50 @@ Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from M
 * **auth**: the authentication data to login a Mongodb collection, with sub properties user and password.
       ex. auth: { user: `admin`, password: `12345` } 
 
-### TODO WIP
+### Advanced feature
+
+In gatsby you have transformers, that transforms your data for example markdown into html.
+Let's say we have a markdown field in our mongoDB collection. Would it not be wonderfull to use these plugins to render out our content properly.
+
+Well in the gatsby-config.js file you can add the option **map**. 
+With as a key the fieldname and as a value the mediatype of that field, in our case here `text\x-markdown`.
+
+Gatsby will create child nodes for you that will do the magic.
 
 map: with this option you can map a field to a content type, it is an array
      ex. map: {description: `text\x-markdown`}
 
+The graphql query would look something like this.
+
+```graphql
+query ItemQuery($id: String!) {
+    mongodbCloudDocuments(id: { eq: $id }) {
+      id
+      name
+      url
+      children {
+          ... on mongodbCloudDocumentsDescriptionMappingNode {
+            id
+            children {
+              ... on MarkdownRemark {
+                id
+                html
+              }
+            }
+          }
+      }
+    }
+  }
+```    
+
 ## How to query : GraphQL
 
-Find below a global pageQuery to query all MongoDB document nodes. 
+Find below a global pageQuery to query all MongoDB document nodes of our db named **'Cloud'** and our collection named **'documents'**. 
 All the documents in Mongodb of a certain collection will be pulled into Gatsby.
 
 ```graphql
 query PageQuery {
-    allMongoDbDocField {
+    allMongodbCloudDocuments {
       edges {
         node {
            id
