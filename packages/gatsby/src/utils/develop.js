@@ -105,6 +105,31 @@ async function startServer(program) {
       req.pipe(request(proxiedUrl)).pipe(res)
     })
   }
+
+  // Check if the file exists in the public folder.
+  app.get(`*`, (req, res, next) => {
+    // Load file but ignore errors.
+    res.sendFile(directoryPath(`/public/${req.url}`), err => {
+      // No err so a file was sent successfully.
+      if (!err) {
+        next()
+      } else if (err) {
+        // There was an error. Let's check if the error was because it
+        // couldn't find an HTML file. We ignore these as we want to serve
+        // all HTML from our single empty SSR html file.
+        const parsedPath = parsePath(err.path)
+        if (
+          parsedPath.extname === `` ||
+          parsedPath.extname.startsWith(`.html`)
+        ) {
+          next()
+        } else {
+          res.status(404).end()
+        }
+      }
+    })
+  })
+
   // Render an HTML page and serve it.
   app.use((req, res, next) => {
     const parsedPath = parsePath(req.originalUrl)
@@ -117,16 +142,6 @@ async function startServer(program) {
     } else {
       next()
     }
-  })
-
-  // As last step, check if the file exists in the public folder.
-  app.get(`*`, (req, res) => {
-    // Load file but ignore errors.
-    res.sendFile(directoryPath(`/public/${req.url}`), err => {
-      if (err) {
-        res.status(404).end()
-      }
-    })
   })
 
   /**
