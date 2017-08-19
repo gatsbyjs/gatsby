@@ -23,5 +23,5 @@ module.exports = function(node, key, text, createNode) {
   node.children = node.children.concat([mappingNode.id])
   createNode(mappingNode)
 
-  return mappingNode
+  return mappingNode.id;
 }

@@ -44,15 +44,10 @@ query ItemQuery($id: String!) {
       id
       name
       url
-      children {
-          ... on mongodbCloudDocumentsDescriptionMappingNode {
-            id
-            children {
-              ... on MarkdownRemark {
-                id
-                html
-              }
-            }
+      description {
+          childMarkdownRemark {
+              id
+              html
           }
       }
     }

@@ -13,7 +13,7 @@ class Item extends React.Component {
         <p>
           <div
             dangerouslySetInnerHTML={{
-              __html: story.childMongodbCloudDocumentsDescriptionMappingNode.childMarkdownRemark.html,
+              __html: story.description.childMarkdownRemark.html,
             }}
             className="story"
           />
@@ -31,8 +31,7 @@ export const pageQuery = graphql`
       id
       name
       url
-      childMongodbCloudDocumentsDescriptionMappingNode {
-          id
+      description {
           childMarkdownRemark {
               id
               html
