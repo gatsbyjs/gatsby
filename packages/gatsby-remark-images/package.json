@@ -17,6 +17,7 @@
     "babel-cli": "^6.24.1"
   },
   "dependencies": {
+    "babel-runtime": "6.26.0",
     "cheerio": "^1.0.0-rc.2",
     "gatsby-plugin-sharp": "^1.6.1",
     "image-size": "^0.5.1",

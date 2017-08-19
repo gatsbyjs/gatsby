@@ -18,6 +18,7 @@
     "babel-cli": "^6.24.1"
   },
   "dependencies": {
+    "babel-runtime": "6.26.0",
     "bluebird": "^3.5.0",
     "cheerio": "^1.0.0-rc.2",
     "lodash": "^4.17.4",

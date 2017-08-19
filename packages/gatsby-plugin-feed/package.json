@@ -20,6 +20,7 @@
     "babel-cli": "^6.24.1"
   },
   "dependencies": {
+    "babel-runtime": "6.26.0",
     "lodash.merge": "^4.6.0",
     "pify": "^3.0.0",
     "rss": "^1.2.2"

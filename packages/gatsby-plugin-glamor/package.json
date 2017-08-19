@@ -4,6 +4,7 @@
   "version": "1.6.3",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
+    "babel-runtime": "6.26.0",
     "glamor": "^2.20.29"
   },
   "devDependencies": {

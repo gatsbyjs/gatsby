@@ -16,5 +16,8 @@
   "scripts": {
     "build": "babel src --out-dir dist",
     "watch": "babel -w src --out-dir dist"
+  },
+  "dependencies": {
+    "babel-runtime": "6.26.0"
   }
 }
