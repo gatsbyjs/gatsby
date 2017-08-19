@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-manifest",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Gatsby plugin which adds a manifest.json to make sites progressive web apps",
   "main": "index.js",
   "scripts": {
@@ -20,6 +20,7 @@
     "babel-cli": "^6.24.1"
   },
   "dependencies": {
+    "babel-runtime": "6.26.0",
     "bluebird": "^3.5.0"
   }
 }

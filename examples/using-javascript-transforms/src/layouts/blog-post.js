@@ -19,7 +19,7 @@ class BlogPostTemplate extends React.Component {
         </div>
       </div>
     )
-/*
+    /*
     if (frontmatter.updated === null) {
       var published = (
         <div className="date-published">
@@ -76,7 +76,8 @@ class BlogPostTemplate extends React.Component {
         */
     let published = <div className="date-published" />
 
-    return (<div>
+    return (
+      <div>
         {home}
         <div className="container">
           {this.props.children()}

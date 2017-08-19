@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-jss",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "description": "Gatsby plugin that adds SSR support for JSS",
   "main": "index.js",
   "scripts": {
@@ -17,6 +17,7 @@
   "author": "Vladimir Guguiev <wizardzloy@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "babel-runtime": "6.26.0",
     "react-jss": "^7.0.2"
   },
   "devDependencies": {

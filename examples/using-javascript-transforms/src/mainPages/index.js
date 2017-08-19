@@ -6,7 +6,6 @@ import moment from "moment"
 
 class SiteIndex extends React.Component {
   render() {
-
     const pageLinks = []
     let iteratorKey = 0
     let pageRaw = [
