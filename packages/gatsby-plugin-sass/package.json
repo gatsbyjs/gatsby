@@ -1,9 +1,10 @@
 {
   "name": "gatsby-plugin-sass",
   "description": "Gatsby plugin to handle scss/sass files",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "Daniel Farrell <daniel@mobelux.com>",
   "dependencies": {
+    "babel-runtime": "6.26.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "node-sass": "^4.5.2",
     "sass-loader": "^4.1.1",

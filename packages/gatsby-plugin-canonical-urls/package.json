@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-canonical-urls",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Stub description for gatsby-plugin-canonical-urls",
   "main": "index.js",
   "scripts": {
@@ -14,5 +14,8 @@
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.24.1"
+  },
+  "dependencies": {
+    "babel-runtime": "6.26.0"
   }
 }

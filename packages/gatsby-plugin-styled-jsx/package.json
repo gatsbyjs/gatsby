@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-styled-jsx",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Adds SSR support for styled-jsx",
   "author": "Tim Suchanek <tim.suchanek@gmail.com>",
   "main": "index.js",
@@ -13,6 +13,7 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "babel-runtime": "6.26.0",
     "styled-jsx": "^1.0.10"
   }
 }

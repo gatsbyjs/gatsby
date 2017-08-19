@@ -2,18 +2,6 @@
 title: "Deploying Gatsby"
 ---
 
-## Best Practice
-
-
-Though you can deploy from the same location multiple times it is recommended that you clear your public directory of any `.html` files before each build
-e.g. using surge
-
-```bash
-rm -rf public/*.html && gatsby build && surge public/
-```
-
-We suggest creating an [NPM script](https://docs.npmjs.com/cli/run-script) for your deploy script.
-
 ## Tutorials for deploying on different static site hosts
 
 * [S3/Cloudfront](/docs/deploy-gatsby/#amazon-s3-and-cloudfront)
@@ -21,9 +9,9 @@ We suggest creating an [NPM script](https://docs.npmjs.com/cli/run-script) for y
 
 ## Amazon S3 and Cloudfront
 
-If you decide to host your Gatsby site to S3 having Cloudfront as CDN you should edit on the Cloudfront panel the "Origin Domain Name" with the real URL of your S3 bucket: **examplewebsite.com.s3-website-eu-west-1.amazonaws.com** instead of the default one automatically suggested by Amazon **examplewebsite.com.s3.amazonaws.com**. 
+If you decide to host your Gatsby site on S3 with Cloudfront as CDN, you should change the "Origin Domain Name" on the Cloudfront panel with the real URL of your S3 bucket: **examplewebsite.com.s3-website-eu-west-1.amazonaws.com** replacing the default URL suggested by Amazon **examplewebsite.com.s3.amazonaws.com**. 
 
-This is recommended for rendering correctly the post pages in the subfolders without typing the index.html path as described [here](https://forums.aws.amazon.com/message.jspa?messageID=314454). 
+Without this change, [S3 doesn't look for index.html files when serving "clean urls"](https://forums.aws.amazon.com/message.jspa?messageID=314454). 
 
 ## Github Pages
 
@@ -39,7 +27,7 @@ Then add a **deploy** command in your `package.json` file.
 
 ```
 "scripts": {
-  "deploy": "rm -rf public && gatsby build --prefix-paths && gh-pages -d public",
+  "deploy": "gatsby build --prefix-paths && gh-pages -d public",
 }
 ```
 
