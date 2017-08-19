@@ -19,7 +19,7 @@ class BlogPostTemplate extends React.Component {
         </div>
       </div>
     )
-    /*
+
     if (frontmatter.updated === null) {
       var published = (
         <div className="date-published">
@@ -72,12 +72,6 @@ class BlogPostTemplate extends React.Component {
             { name: `twitter:data2`, content: frontmatter.written },
           ]}
         />
-
-        */
-    let published = <div className="date-published" />
-
-    return (
-      <div>
         {home}
         <div className="container">
           {this.props.children()}
