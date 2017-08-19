@@ -32,10 +32,10 @@ export const pageQuery = graphql`
       name
       url
       description {
-          childMarkdownRemark {
-              id
-              html
-          }
+        childMarkdownRemark {
+          id
+          html
+        }
       }
     }
   }
