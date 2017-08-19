@@ -27,7 +27,8 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 
   return new Promise((resolve, reject) => {
     const pages = []
-    const markdownTemplate = path.resolve(`src/templates/markdown.js`)
+    const markdownTemplate = path.resolve(`src/templates/blog-post-markdown.js`)
+    const javascriptTemplate = path.resolve(`src/templates/blog-post-javascript.js`)
 
     // Query for all markdown "nodes" and for the slug we previously created.
     resolve(
@@ -107,7 +108,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
               // Note, we can't have a template, but rather require the file directly.
               //  Templates are for converting non-react into react. jsFrontmatter
               //  picks up all of the javascript files. We have only written these in react.
-              component: path.resolve(edge.node.fileAbsolutePath),
+              component: javascriptTemplate,
               context: {
                 layoutType: frontmatter.layoutType,
                 slug: edge.node.fields.slug,
