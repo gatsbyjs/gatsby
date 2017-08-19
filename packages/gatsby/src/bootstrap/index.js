@@ -6,6 +6,7 @@ const slash = require(`slash`)
 const fs = require(`fs-extra`)
 const md5File = require(`md5-file/promise`)
 const crypto = require(`crypto`)
+const del = require(`del`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const testRequireError = require(`../utils/test-require-error`)
@@ -31,7 +32,7 @@ const { writePages } = require(`../internal-plugins/query-runner/pages-writer`)
 const preferDefault = m => (m && m.default) || m
 
 module.exports = async (program: any) => {
-  // Fix program directory path for windows env
+  // Fix program directory path for windows env.
   program.directory = slash(program.directory)
 
   store.dispatch({
@@ -39,8 +40,15 @@ module.exports = async (program: any) => {
     payload: program,
   })
 
+  // Delete html files from the public directory as we don't want deleted
+  // pages from previous builds to stick around.
+  let activity = report.activityTimer(`delete html files from previous builds`)
+  activity.start()
+  await del([`public/*.html`, `public/**/*.html`])
+  activity.end()
+
   // Try opening the site's gatsby-config.js file.
-  let activity = report.activityTimer(`open and validate gatsby-config.js`)
+  activity = report.activityTimer(`open and validate gatsby-config.js`)
   activity.start()
   let config
   try {
