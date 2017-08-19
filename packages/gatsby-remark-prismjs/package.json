@@ -4,6 +4,7 @@
   "version": "1.2.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
+    "babel-runtime": "6.26.0",
     "parse-numeric-range": "^0.0.2",
     "prismjs": "^1.6.0",
     "unist-util-visit": "^1.1.1"

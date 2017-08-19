@@ -16,6 +16,7 @@
     "babel-cli": "^6.24.1"
   },
   "dependencies": {
+    "babel-runtime": "6.26.0",
     "lodash": "^4.17.4",
     "mongodb": "^2.2.30"
   }

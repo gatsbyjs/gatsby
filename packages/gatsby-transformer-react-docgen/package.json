@@ -16,6 +16,7 @@
   "author": "Jason Quense <monastic.panic@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "babel-runtime": "6.26.0",
     "babel-types": "^6.24.1",
     "common-tags": "^1.4.0",
     "graphql-type-json": "^0.1.4",

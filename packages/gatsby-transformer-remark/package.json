@@ -4,6 +4,7 @@
   "version": "1.7.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
+    "babel-runtime": "6.26.0",
     "bluebird": "^3.5.0",
     "gray-matter": "^2.1.0",
     "hast-util-to-html": "^3.0.0",

@@ -7,6 +7,7 @@
     "Noah Lange <noahrlange@gmail.com>"
   ],
   "dependencies": {
+    "babel-runtime": "6.26.0",
     "ts-loader": "^2.0.3",
     "typescript": "^2.2.1"
   },

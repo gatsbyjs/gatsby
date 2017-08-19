@@ -5,6 +5,7 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "async": "^2.1.2",
+    "babel-runtime": "6.26.0",
     "bluebird": "^3.5.0",
     "image-size": "^0.5.1",
     "imagemin": "^5.2.2",

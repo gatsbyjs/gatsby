@@ -15,6 +15,7 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "babel-runtime": "6.26.0",
     "retext": "^4.0.0",
     "retext-smartypants": "^2.0.0",
     "unist-util-visit": "^1.1.1"

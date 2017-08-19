@@ -4,6 +4,7 @@
   "version": "1.0.2",
   "author": "Scotty Eckenthal <scotty@meetfabric.com>",
   "dependencies": {
+    "babel-runtime": "6.26.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "node-sass": "^4.5.2",
     "sass-loader": "^4.1.1"
