@@ -15,17 +15,6 @@ Without this change, [S3 doesn't look for index.html files when serving "clean u
 
 ## Github Pages
 
-### Deploying a user/organization site
-For the initial deployment of a user/organization site on Github pages, we need to push the **build** files on a new repository named `username.github.io`.
-
-In your terminal, `cd` to your gatsby project and run `gatsby build` or `npm run build` or `yarn build` (if you have yarn installed). Copy the all the contents of the `public` folder in a new folder outside the gatsby project. 
-
-In Github, create a new repository with the name `username.github.io` (*Important: the repository name should be in this format* [See more details about Github Pages](https://pages.github.com/)). In your terminal `cd` to your new folder that contains the build files then run `git init` then `git remote add origin https://github.com/username/username.github.io.git` to initialize the Git repository. Now run `git add .` and `git commit -m "your message"` to commit changes. Run `git push -u origin master` to push changes to the Github repository.
-
-Visit `https://username.github.io` to preview changes.
-
-To update the site, just run the build command again, copy the build files to the static site folder, then commit and push your changes again to the `username.github.io` repository.
-
 ### Deploying a project page
 
 You can deploy sites on Github Pages with or without a custom domain. If you choose to use the default setup (without a custom domain), you will need to setup your site with [path prefixing](/docs/path-prefix/).
@@ -51,6 +40,17 @@ module.exports = {
 ```
 
 Now run `yarn deploy` or `npm run deploy`. Preview changes in your github page `https://username.github.io/project-name/`. You also can also find the link to your site on Github under `Settings` > `Github Pages`. 
+
+### Deploying a user/organization site
+For the initial deployment of a user/organization site on Github pages, we need to push the **build** files on a new repository named `username.github.io`.
+
+In your terminal, `cd` to your gatsby project and run `gatsby build` or `npm run build` or `yarn build` (if you have yarn installed). Copy the all the contents of the `public` folder in a new folder outside the gatsby project. 
+
+In Github, create a new repository with the name `username.github.io` (*Important: the repository name should be in this format* [See more details about Github Pages](https://pages.github.com/)). In your terminal `cd` to your new folder that contains the build files then run `git init` then `git remote add origin https://github.com/username/username.github.io.git` to initialize the Git repository. Now run `git add .` and `git commit -m "your message"` to commit changes. Run `git push -u origin master` to push changes to the Github repository.
+
+Visit `https://username.github.io` to preview changes.
+
+To update the site, just run the build command again, copy the build files to the static site folder, then commit and push your changes again to the `username.github.io` repository.
 
 ## Debugging tips
 
