@@ -1,7 +1,7 @@
 const _ = require(`lodash`),
   crypto = require(`crypto`)
 
-module.exports = function(node, key, text, createNode) {
+module.exports = function(node, key, text, mediaType, createNode) {
   const str = _.isString(text) ? text : ` `
   const id = `${node.id}${key}MappingNode`
   const mappingNode = {
@@ -11,7 +11,7 @@ module.exports = function(node, key, text, createNode) {
     children: [],
     internal: {
       type: _.camelCase(`${node.internal.type} ${key} MappingNode`),
-      mediaType: `text/x-markdown`,
+      mediaType: mediaType,
       content: str,
       contentDigest: crypto
         .createHash(`md5`)

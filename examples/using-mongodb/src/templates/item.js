@@ -33,7 +33,6 @@ export const pageQuery = graphql`
       url
       description {
         childMarkdownRemark {
-          id
           html
         }
       }

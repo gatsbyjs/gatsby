@@ -26,7 +26,7 @@ Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from M
 * **auth**: the authentication data to login a Mongodb collection, with sub properties user and password.
       ex. auth: { user: `admin`, password: `12345` } 
 
-### Advanced feature
+### Mapping mediatype feature
 
 In Gatsby you have transformers, that transforms your data for example markdown into html.
 Let's say we have a markdown field in our mongoDB collection. Would it not be great to use these plugins to render out our content properly.

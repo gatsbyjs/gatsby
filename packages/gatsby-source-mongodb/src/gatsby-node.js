@@ -73,6 +73,7 @@ function createNodes(db, pluginOptions, dbName, createNode, done) {
             node,
             mediaItemFieldKey,
             node[mediaItemFieldKey],
+            pluginOptions.map[mediaItemFieldKey],
             createNode
           )
 
