@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-cxs",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Stub description for gatsby-plugin-cxs",
   "main": "index.js",
   "scripts": {

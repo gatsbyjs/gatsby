@@ -1,6 +1,6 @@
 {
   "name": "gatsby-transformer-yaml",
-  "version": "1.5.3",
+  "version": "1.5.4",
   "description": "Gatsby transformer plugin for yaml",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",

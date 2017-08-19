@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-aphrodite",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Stub description for gatsby-plugin-aphrodite",
   "main": "index.js",
   "scripts": {

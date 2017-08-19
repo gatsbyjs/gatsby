@@ -1,6 +1,6 @@
 {
   "name": "gatsby-remark-smartypants",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "Use retext-smartypants to auto-enhance typography of markdown",
   "main": "index.js",
   "scripts": {

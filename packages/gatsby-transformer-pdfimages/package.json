@@ -1,6 +1,6 @@
 {
   "name": "gatsby-transformer-pdfimages",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Gatsby transformer plugin for extracting images from PDFs",
   "main": "index.js",
   "scripts": {

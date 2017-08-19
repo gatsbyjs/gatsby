@@ -1,6 +1,6 @@
 {
   "name": "gatsby-source-hacker-news",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Gatsby source plugin for building websites using Hacker News as a data source",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",

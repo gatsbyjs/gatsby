@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-postcss-sass",
   "description": "Gatsby plugin to handle scss/sass files with integrated support for also processing with Postcss plugins",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "Scotty Eckenthal <scotty@meetfabric.com>",
   "dependencies": {
     "babel-runtime": "6.26.0",

@@ -1,6 +1,6 @@
 {
   "name": "gatsby-remark-images",
-  "version": "1.5.3",
+  "version": "1.5.4",
   "description": "Processes images in markdown so they can be used in the production build.",
   "main": "index.js",
   "keywords": [
@@ -19,7 +19,7 @@
   "dependencies": {
     "babel-runtime": "6.26.0",
     "cheerio": "^1.0.0-rc.2",
-    "gatsby-plugin-sharp": "^1.6.1",
+    "gatsby-plugin-sharp": "^1.6.2",
     "image-size": "^0.5.1",
     "is-relative-url": "^2.0.0",
     "lodash": "^4.17.4",
