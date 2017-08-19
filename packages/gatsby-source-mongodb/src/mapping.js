@@ -1,4 +1,7 @@
-module.export = function(node, key, text, createNode) {
+const _ = require(`lodash`),
+  crypto = require(`crypto`)
+
+module.exports = function(node, key, text, mediaType, createNode) {
   const str = _.isString(text) ? text : ` `
   const id = `${node.id}${key}MappingNode`
   const mappingNode = {
@@ -8,7 +11,7 @@ module.export = function(node, key, text, createNode) {
     children: [],
     internal: {
       type: _.camelCase(`${node.internal.type} ${key} MappingNode`),
-      mediaType: `text/x-markdown`,
+      mediaType: mediaType,
       content: str,
       contentDigest: crypto
         .createHash(`md5`)
@@ -20,5 +23,5 @@ module.export = function(node, key, text, createNode) {
   node.children = node.children.concat([mappingNode.id])
   createNode(mappingNode)
 
-  return mappingNode
+  return mappingNode.id
 }
