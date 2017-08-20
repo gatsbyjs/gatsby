@@ -102,3 +102,22 @@ class jsBlogPostTemplate extends React.Component {
 }
 
 export default jsBlogPostTemplate
+export default jsBlogPostTemplate
+
+export const pageQuery = graphql`
+query javascriptTemplateBySlug($slug: String!) {
+  jsFrontmatter(fields: { slug: { eq: $slug } }) {
+    fileAbsolutePath
+    data {
+      error
+      layoutType
+      path
+      title
+      written
+      updated
+      category
+      description
+    }
+  }
+}
+`
