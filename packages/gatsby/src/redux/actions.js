@@ -52,9 +52,7 @@ const pascalCase = _.flow(_.camelCase, _.upperFirst)
 actions.createPage = (page, plugin = ``, traceId) => {
   if (Array.isArray(page.component)) {
     page.componentChunkName = []
-    page.component.forEach(c => {
-      page.componentChunkName.push(generateComponentChunkName(c))
-    })
+    page.component.forEach(c => page.componentChunkName.push(generateComponentChunkName(c)))
   } else {
     page.componentChunkName = generateComponentChunkName(page.component)
   }
@@ -96,7 +94,7 @@ actions.createPage = (page, plugin = ``, traceId) => {
   if (page.path[0] !== `/`) {
     page.path = `/` + page.path
   }
-  console.log(page)
+
   return {
     type: `CREATE_PAGE`,
     plugin,
