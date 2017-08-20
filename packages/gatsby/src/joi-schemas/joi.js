@@ -27,8 +27,8 @@ export const pageSchema = Joi.object()
   .keys({
     path: Joi.string().required(),
     matchPath: Joi.string(),
-    component: Joi.string().required(),
-    componentChunkName: Joi.string().required(),
+    component: Joi.alternatives().try(Joi.string(), Joi.array()).required(),
+    componentChunkName: Joi.alternatives().try(Joi.string(), Joi.array()).required(),
     context: Joi.object(),
   })
   .unknown()
