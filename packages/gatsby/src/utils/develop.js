@@ -111,7 +111,7 @@ async function startServer(program) {
     // Load file but ignore errors.
     res.sendFile(directoryPath(`/public/${req.url}`), err => {
       // No err so a file was sent successfully.
-      if (!err) {
+      if (!err || !err.path) {
         next()
       } else if (err) {
         // There was an error. Let's check if the error was because it
