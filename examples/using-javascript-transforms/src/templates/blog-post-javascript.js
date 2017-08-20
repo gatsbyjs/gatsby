@@ -3,8 +3,16 @@ import Link from "gatsby-link"
 import Helmet from "react-helmet"
 import moment from "moment"
 
-class BlogPostTemplate extends React.Component {
+class jsBlogPostTemplate extends React.Component {
   render() {
+    console.log(this)
+
+    return (
+      <div className='test'>
+
+      </div>
+    )
+/*
     let frontmatter = this.props.frontmatter
     let siteMetadata = this.props.siteMetadata
 
@@ -43,6 +51,7 @@ class BlogPostTemplate extends React.Component {
         </div>
       )
     }
+
 
     return (
       <div className="ArticleTemplate">
@@ -88,7 +97,8 @@ class BlogPostTemplate extends React.Component {
         </div>
       </div>
     )
+    */
   }
 }
 
-export default BlogPostTemplate
+export default jsBlogPostTemplate
