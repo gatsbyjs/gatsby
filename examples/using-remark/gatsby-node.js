@@ -2,6 +2,7 @@ const _ = require(`lodash`)
 const Promise = require(`bluebird`)
 const path = require(`path`)
 const slash = require(`slash`)
+const { createFilePath } = require(`gatsby-source-filesystem`)
 
 const webpackLodashPlugin = require(`lodash-webpack-plugin`)
 

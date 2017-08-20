@@ -313,6 +313,20 @@ module.exports = async (program: any) => {
   await require(`../schema`)()
   activity.end()
 
+  // Load the page hot reloader. It listens for node changes
+  // and re-runs `createPages` and removes pages which weren't
+  // recreated.
+  //
+  // Algorithm is make clone of pages, run createPages, remove from
+  // both pages create by plugins only implementing `createPagesStatefully`.
+  // Check for pages not updated (need update timestamp) and remove
+  // those. yeah, just figure out in reducer if the plugin implements
+  // createPagesStatefully and mark the page as stateful to simplify
+  // things.
+  //
+  // TODO fix deleting nodes so we can both add markdown pages
+  // and remove pages as well just by adding/removing markdown files.
+
   const checkJobsDone = _.debounce(resolve => {
     const state = store.getState()
     if (state.jobs.active.length === 0) {

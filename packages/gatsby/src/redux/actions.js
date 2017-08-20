@@ -41,9 +41,9 @@ const pascalCase = _.flow(_.camelCase, _.upperFirst)
  * @example
  * createPage({
  *   path: `/my-sweet-new-page/`,
- *   component: path.resolve('./src/templates/my-sweet-new-page.js`),
- *   // context gets passed in as props to the page as well
- *   // as into the page/template's GraphQL query.
+ *   component: path.resolve(`./src/templates/my-sweet-new-page.js`),
+ *   // The context is passed as props to the component as well
+ *   // as into the component's GraphQL query.
  *   context: {
  *     id: `123456`,
  *   },
