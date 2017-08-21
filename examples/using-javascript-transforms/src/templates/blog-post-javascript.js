@@ -5,14 +5,18 @@ import moment from "moment"
 
 class jsBlogPostTemplate extends React.Component {
   render() {
-    console.log(this)
-
     return (
       <div className='test'>
-
       </div>
     )
 /*
+    // we might expect to use something like this
+    // like used in layouts.
+        {this.props.children()}
+
+
+    // we eventually want to use the below
+    // but comment out for now to gatsby can build
     let frontmatter = this.props.frontmatter
     let siteMetadata = this.props.siteMetadata
 
@@ -101,7 +105,6 @@ class jsBlogPostTemplate extends React.Component {
   }
 }
 
-export default jsBlogPostTemplate
 export default jsBlogPostTemplate
 
 export const pageQuery = graphql`
