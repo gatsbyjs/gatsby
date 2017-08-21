@@ -20,28 +20,7 @@ module.exports.sourceNodes = async (
 
   const fullData = await client.request(assembleQueries(typeData))
 
-  R.forEachObjIndexed((value, key) => {
-    R.forEach(node => {
-      const { id, ...fields } = node
-
-      const jsonNode = JSON.stringify(node)
-
-      createNode({
-        id,
-        ...fields,
-        parent: `${SOURCE_NAME}_${key}`,
-        children: [],
-        internal: {
-          type: extractTypeName(key),
-          content: jsonNode,
-          contentDigest: crypto
-            .createHash(`md5`)
-            .update(jsonNode)
-            .digest(`hex`),
-        },
-      })
-    }, value)
-  }, fullData)
+  R.forEachObjIndexed(createNodes(createNode), fullData)
 }
 
 // Query for fetching all node times from graphql endpoint.
@@ -58,3 +37,23 @@ const metaQuery = `
   }
 }
 `
+
+const createNodes = createNode => (value, key) => {
+  R.forEach(node => {
+    const { id, ...fields } = node
+
+    const jsonNode = JSON.stringify(node)
+
+    createNode({
+      id,
+      ...fields,
+      parent: `${SOURCE_NAME}_${key}`,
+      children: [],
+      internal: {
+        type: extractTypeName(key),
+        content: jsonNode,
+        contentDigest: crypto.createHash(`md5`).update(jsonNode).digest(`hex`),
+      },
+    })
+  }, value)
+}
