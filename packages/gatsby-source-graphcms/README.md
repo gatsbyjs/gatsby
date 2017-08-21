@@ -11,7 +11,7 @@ plugins: [
    * plugins. Here the site sources its data from a graphql endpoint
    */
   {
-    resolve: `gatsby-source-graphql`,
+    resolve: `gatsby-source-graphcms`,
     options: {
       endpoint: `graphql_endpoint`,
       token: `graphql_token`,
