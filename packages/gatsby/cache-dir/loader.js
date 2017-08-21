@@ -239,6 +239,7 @@ const queue = {
         component: syncRequires.components[page.componentChunkName],
         json: syncRequires.json[page.jsonName],
         layout: syncRequires.layouts[page.layoutComponentChunkName],
+        pageComponent: 'we expect the javascript page component here via syncRequires', //we want this as a sync requires
         page,
       }
       cb(pageResources)
