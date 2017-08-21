@@ -108,7 +108,10 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
               // Note, we can't have a template, but rather require the file directly.
               //  Templates are for converting non-react into react. jsFrontmatter
               //  picks up all of the javascript files. We have only written these in react.
-              component: javascriptTemplate,
+              component: [
+                javascriptTemplate,
+                path.resolve(edge.node.fileAbsolutePath)
+              ],
               context: {
                 layoutType: frontmatter.layoutType,
                 slug: edge.node.fields.slug,
