@@ -10,12 +10,14 @@
   "keywords": [
     "gatsby"
   ],
-  "author": "Kyle Mathews &lt;mathews.kyle@gmail.com&gt;",
+  "author": "monastic.panic@gmail.com",
   "license": "MIT",
+  "dependencies": {
+    "babel-runtime": "^6.26.0",
+    "less": "^2.7.2",
+    "less-loader": "^4.0.5"
+  },
   "devDependencies": {
     "babel-cli": "^6.24.1"
-  },
-  "dependencies": {
-    "babel-runtime": "6.26.0"
   }
 }
