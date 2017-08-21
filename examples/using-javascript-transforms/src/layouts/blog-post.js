@@ -1,17 +1,12 @@
-/*
-See the notes in future-blog-post.js as well. This is slimmed down as this component
- does not have necessary data (no queries on layouts). We moved the blog post type components
- into templates/markdown.js and into EACH javascript file itself.
-*/
-
 import React from "react"
 import Link from "gatsby-link"
-import siteMetadata from "../components/metadata.yaml"
+import Helmet from "react-helmet"
+import moment from "moment"
 
 class BlogPostTemplate extends React.Component {
   render() {
-    let frontmatter = this.props.data
-    // let siteMetadata = this.props.siteMetadata;
+    let frontmatter = this.props.frontmatter
+    let siteMetadata = this.props.siteMetadata
 
     const home = (
       <div className="nav">
@@ -24,14 +19,71 @@ class BlogPostTemplate extends React.Component {
         </div>
       </div>
     )
+    /*
+    if (frontmatter.updated === null) {
+      var published = (
+        <div className="date-published">
+          <p>
+            <em>
+              published {moment(frontmatter.written).format(`D MMM YYYY`)}
+            </em>
+          </p>
+        </div>
+      )
+    } else {
+      var published = (
+        <div className="date-published">
+          <p>
+            <em>
+              originally published{` `}
+              {moment(frontmatter.written).format(`D MMM YYYY`)} and updated{` `}
+              {moment(frontmatter.updated).format(`D MMM YYYY`)}
+            </em>
+          </p>
+        </div>
+      )
+    }
 
     return (
       <div className="ArticleTemplate">
+        <Helmet
+          title={frontmatter.title}
+          meta={[
+            { name: `description`, content: frontmatter.description },
+            {
+              property: `og:url`,
+              content: `https://www.jacobbolda.com/` + frontmatter.path,
+            },
+            { property: `og:description`, content: frontmatter.description },
+            { property: `og:type`, content: `article` },
+            { property: `og:article:author`, content: `Jacob Bolda` },
+            {
+              property: `og:article:published_time`,
+              content: moment(frontmatter.written, `YYYY-MM-DD`),
+            },
+            {
+              property: `og:article:modified_time`,
+              content: moment(frontmatter.updated, `YYYY-MM-DD`),
+            },
+            { property: `og:article:tag`, content: frontmatter.category },
+            { name: `twitter:label1`, content: `Category` },
+            { name: `twitter:data1`, content: frontmatter.category },
+            { name: `twitter:label2`, content: `Written` },
+            { name: `twitter:data2`, content: frontmatter.written },
+          ]}
+        />
+
+        */
+    let published = <div className="date-published" />
+
+    return (
+      <div>
         {home}
         <div className="container">
           {this.props.children()}
         </div>
         <div className="footer container">
+          {published}
           <hr />
           <p>
             {siteMetadata.siteDescr}

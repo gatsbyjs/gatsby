@@ -42,11 +42,20 @@ module.exports = (
 
   return new Promise((resolve, reject) => {
     // Setup Remark.
-    const remark = new Remark().data(`settings`, {
+    let remark = new Remark().data(`settings`, {
       commonmark: true,
       footnotes: true,
       pedantic: true,
     })
+
+    for (let plugin of pluginOptions.plugins) {
+      const requiredPlugin = require(plugin.resolve)
+      if (_.isFunction(requiredPlugin.setParserPlugins)) {
+        for (let parserPlugin of requiredPlugin.setParserPlugins()) {
+          remark = remark.use(parserPlugin)
+        }
+      }
+    }
 
     async function getAST(markdownNode) {
       const cachedAST = await cache.get(astCacheKey(markdownNode))
@@ -164,7 +173,13 @@ module.exports = (
         return cachedToc
       } else {
         const ast = await getAST(markdownNode)
-        const toc = hastToHTML(toHAST(mdastToToc(ast).map))
+        const tocAst = mdastToToc(ast)
+        let toc
+        if (tocAst.map) {
+          toc = hastToHTML(toHAST(tocAst.map))
+        } else {
+          toc = ``
+        }
         cache.set(tableOfContentsCacheKey(markdownNode), toc)
         return toc
       }

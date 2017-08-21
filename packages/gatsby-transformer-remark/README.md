@@ -15,6 +15,8 @@ plugins: [
 ]
 ```
 
+A full explanation of how to use markdown in Gatsby can be found here: [Creating a Blog with Gatsby](https://www.gatsbyjs.org/blog/2017-07-19-creating-a-blog-with-gatsby/)
+
 ## Parsing algorithm
 
 It recongnizes files with the following extensions as Markdown.

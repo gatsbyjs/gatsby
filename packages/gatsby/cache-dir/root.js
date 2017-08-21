@@ -7,8 +7,7 @@ import {
 } from "react-router-dom"
 import { ScrollContext } from "react-router-scroll"
 import createHistory from "history/createBrowserHistory"
-
-import apiRunner from "./api-runner-browser"
+import { apiRunner } from "./api-runner-browser"
 import syncRequires from "./sync-requires"
 import pages from "./pages.json"
 import ComponentRenderer from "./component-renderer"
@@ -88,17 +87,6 @@ const DefaultRouter = ({ children }) =>
     {children}
   </Router>
 
-// Use default layout if one isn't set.
-let layout
-if (syncRequires.layouts[`index`]) {
-  layout = syncRequires.layouts[`index`]
-} else {
-  layout = ({ children }) =>
-    <div>
-      {children()}
-    </div>
-}
-
 // Always have to have one top-level layout
 // can have ones below that. Find page, if has different
 // parent layout(s), loop through those until finally the
@@ -111,18 +99,19 @@ const Root = () =>
     createElement(
       ScrollContext,
       { shouldUpdateScroll },
-      createElement(withRouter(layout), {
+      createElement(withRouter(ComponentRenderer), {
+        layout: true,
         children: layoutProps =>
           createElement(Route, {
             render: routeProps => {
-              attachToHistory(routeProps.history)
-
               const props = layoutProps ? layoutProps : routeProps
+              attachToHistory(props.history)
               const pageResources = loader.getResourcesForPathname(
                 props.location.pathname
               )
               if (pageResources) {
                 return createElement(ComponentRenderer, {
+                  page: true,
                   ...props,
                   pageResources,
                 })

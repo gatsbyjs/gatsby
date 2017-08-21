@@ -9,9 +9,7 @@ you to contribute back your plugin to the Gatsby repo so it's available to
 others (including your future self 😀)._
 
 To add custom webpack configurations, create (if there's not one already)
-a `gatsby-node.js` file in your root directory.
-
-Inside this file, export a function called `modifyWebpackConfig`.
+a `gatsby-node.js` file in your root directory.  Inside this file, export a function called `modifyWebpackConfig`.
 
 When Gatsby creates its webpack config, this function will be called allowing you to update the default
 webpack config.

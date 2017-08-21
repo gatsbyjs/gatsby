@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`JavaScript layout creator create-path should create unix paths 1`] = `
+Array [
+  "b/c/de",
+  "bee",
+  "b/d/c",
+]
+`;
+
+exports[`JavaScript layout creator create-path should deal with windows paths 1`] = `
+Array [
+  "404",
+  "index",
+  "blog",
+]
+`;

@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-nprogress",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Shows page loading indicator when loading page resources is delayed",
   "main": "index.js",
   "scripts": {
@@ -16,6 +16,7 @@
     "babel-cli": "^6.24.1"
   },
   "dependencies": {
+    "babel-runtime": "6.26.0",
     "nprogress": "^0.2.0"
   }
 }

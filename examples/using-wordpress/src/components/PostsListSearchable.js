@@ -15,7 +15,7 @@ class PostsListSearchable extends Component {
   handleFilter = id => {
     this.setState({
       data: this.props.propsData.allWordpressPost.edges.filter(p =>
-        p.node.categories.includes(id.replace(`CATEGORY_`, ``))
+        p.node.categories.includes(parseInt(id.replace(`CATEGORY_`, ``)))
       ),
     })
   }

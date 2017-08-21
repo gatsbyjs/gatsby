@@ -1,6 +1,7 @@
 const Joi = require(`joi`)
 
 export const gatsbyConfigSchema = Joi.object().keys({
+  polyfill: Joi.boolean(),
   siteMetadata: Joi.object(),
   pathPrefix: Joi.string(),
   mapping: Joi.object(),
@@ -10,6 +11,17 @@ export const gatsbyConfigSchema = Joi.object().keys({
     url: Joi.string().required(),
   }),
 })
+
+export const layoutSchema = Joi.object()
+  .keys({
+    id: Joi.string().required(),
+    component: Joi.string().required(),
+    componentWrapperPath: Joi.string().required(),
+    componentChunkName: Joi.string().required(),
+    isLayout: Joi.boolean().required(),
+    context: Joi.object(),
+  })
+  .unknown()
 
 export const pageSchema = Joi.object()
   .keys({

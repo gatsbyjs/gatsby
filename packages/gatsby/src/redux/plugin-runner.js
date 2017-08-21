@@ -2,6 +2,7 @@
 
 const { store, emitter } = require(`./index`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
+const _ = require(`lodash`)
 
 emitter.on(`CREATE_NODE`, action => {
   const node = store.getState().nodes[action.payload.id]
@@ -13,6 +14,15 @@ emitter.on(`CREATE_PAGE`, action => {
   apiRunnerNode(
     `onCreatePage`,
     { page, traceId: action.traceId },
+    action.plugin.name
+  )
+})
+
+emitter.on(`CREATE_LAYOUT`, action => {
+  const layout = action.payload
+  apiRunnerNode(
+    `onCreateLayout`,
+    { layout, traceId: action.traceId },
     action.plugin.name
   )
 })

@@ -2,29 +2,46 @@
 title: "Deploying Gatsby"
 ---
 
-## Best Practice
+## Tutorials for deploying on different static site hosts
 
+* [S3/Cloudfront](/docs/deploy-gatsby/#amazon-s3-and-cloudfront)
+* [Github Pages](/docs/deploy-gatsby/#github-pages)
 
-Though you can deploy from the same location multiple times it is recommended that you clear your public directory of any `.html` files before each build
-e.g. using surge
+## Amazon S3 and Cloudfront
 
-```bash
-rm -rf public/*.html && gatsby build && surge public/
+If you decide to host your Gatsby site on S3 with Cloudfront as CDN, you should change the "Origin Domain Name" on the Cloudfront panel with the real URL of your S3 bucket: **examplewebsite.com.s3-website-eu-west-1.amazonaws.com** replacing the default URL suggested by Amazon **examplewebsite.com.s3.amazonaws.com**. 
+
+Without this change, [S3 doesn't look for index.html files when serving "clean urls"](https://forums.aws.amazon.com/message.jspa?messageID=314454). 
+
+## Github Pages
+
+### Deploying a project page
+
+You can deploy sites on Github Pages with or without a custom domain. If you choose to use the default setup (without a custom domain), you will need to setup your site with [path prefixing](/docs/path-prefix/).
+
+### Use the NPM package `gh-pages` for deploying
+
+First add **gh-pages** as a `devDependency` of your site and create an npm script command to **deploy** your project by running `npm install gh-pages --save-dev` or `yarn add gh-pages --dev` (if you have yarn installed).
+
+Then add a **deploy** command in your `package.json` file.
+
+```
+"scripts": {
+  "deploy": "gatsby build --prefix-paths && gh-pages -d public",
+}
 ```
 
-because this is going to be executed on every deploy it is suggested that you use a `package.json` script to simplify this process
+In the `gatsby-config.js`, set the `pathPrefix` to be added to your site's link paths. The `pathPrefix` should be the project name in your repository. (ex. `https://github.com/username/project-name` - your `pathPrefix` should be `/project-name`). See [the docs page on path prefixing for more](/docs/path-prefix/).
 
-## Providers
+```
+module.exports = {
+  pathPrefix: `/project-name`,
+}
+```
 
-[Surge.sh](http://surge.sh/)
+Now run `yarn deploy` or `npm run deploy`. Preview changes in your github page `https://username.github.io/project-name/`. You also can also find the link to your site on Github under `Settings` > `Github Pages`. 
 
-[Forge](https://getforge.com/)
-
-[Netlify](https://www.netlify.com/)
-
-[GitHub-Pages](https://pages.github.com/)
-
-## Debugging
+## Debugging tips
 
 ### Don't minify HTML
 

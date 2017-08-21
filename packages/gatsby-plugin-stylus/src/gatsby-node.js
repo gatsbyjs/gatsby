@@ -14,6 +14,7 @@
  *     resolve: `gatsby-plugin-stylus`,
  *     options: {
  *       use: [],
+ *       import: []
  *     },
  *   },
  * ],

@@ -144,11 +144,6 @@ module.exports = async (
   }
 
   function getPlugins() {
-    const env =
-      stage === `develop` || stage === `develop-html`
-        ? `development`
-        : `production`
-
     let configPlugins = [
       plugins.moment(),
 
@@ -159,9 +154,10 @@ module.exports = async (
       // optimizations for React) and whether prefixing links is enabled
       // (__PREFIX_PATHS__) and what the link prefix is (__PATH_PREFIX__).
       plugins.define({
-        "process.env": processEnv(stage, env),
+        "process.env": processEnv(stage, `development`),
         __PREFIX_PATHS__: program.prefixPaths,
         __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
+        __POLYFILL__: store.getState().config.polyfill,
       }),
 
       plugins.extractText({
@@ -181,6 +177,7 @@ module.exports = async (
           // ids to reduce filesize.
           plugins.namedModules(),
           new FriendlyErrorsWebpackPlugin({
+            clearConsole: false,
             compilationSuccessInfo: {
               messages: [
                 `Your site is running at http://localhost:${program.port}`,
@@ -257,7 +254,6 @@ module.exports = async (
               return isFramework || count > 3
             },
           }),
-
           // Write out mapping between chunk names and their hashed names. We use
           // this to add the needed javascript files to each HTML page.
           new StatsWriterPlugin(),

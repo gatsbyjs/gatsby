@@ -1,9 +1,9 @@
 /* @flow */
-import webpack from "webpack"
-import Promise from "bluebird"
-import fs from "fs"
-import webpackConfig from "./webpack.config"
-
+const webpack = require(`webpack`)
+const Promise = require(`bluebird`)
+const fs = require(`fs`)
+const webpackConfig = require(`./webpack.config`)
+const { createErrorFromString } = require(`../reporter/errors`)
 const debug = require(`debug`)(`gatsby:html`)
 
 module.exports = async (program: any) => {
@@ -26,13 +26,16 @@ module.exports = async (program: any) => {
         return reject(e)
       }
       if (stats.hasErrors()) {
-        return reject(`Error: ${stats.toJson().errors}`, stats)
+        let webpackErrors = stats.toJson().errors
+        return reject(createErrorFromString(webpackErrors[0]))
       }
 
+      // Remove the temp JS bundle file built for the static-site-generator-plugin
       try {
-        // Remove the temp JS bundle file built for the static-site-generator-plugin
         fs.unlinkSync(`${directory}/public/render-page.js`)
-      } catch (err) { /* ignore */ }
+      } catch (e) {
+        // This function will fail on Windows with no further consequences.
+      }
 
       return resolve(null, stats)
     })

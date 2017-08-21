@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-catch-links",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "description": "Intercepts local links from markdown and other non-react pages and does a client-side pushState to avoid the browser having to refresh the page.",
   "main": "index.js",
   "scripts": {
@@ -15,5 +15,8 @@
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.24.1"
+  },
+  "dependencies": {
+    "babel-runtime": "6.26.0"
   }
 }

@@ -17,22 +17,19 @@ export default props => {
         options
       </p>
       <h2>Resize</h2>
-      {assets.map(({ node: { title, resize } }) => {
-        console.log(title, resize)
-        return (
-          <img
-            alt={title}
-            src={resize.src}
-            width={resize.width}
-            height={resize.height}
-            style={{
-              marginRight: rhythm(1 / 2),
-              marginBottom: rhythm(1 / 2),
-              border: `1px solid tomato`,
-            }}
-          />
-        )
-      })}
+      {assets.map(({ node: { title, resize } }) =>
+        <img
+          alt={title}
+          src={resize.src}
+          width={resize.width}
+          height={resize.height}
+          style={{
+            marginRight: rhythm(1 / 2),
+            marginBottom: rhythm(1 / 2),
+            border: `1px solid tomato`,
+          }}
+        />
+      )}
       <h4>GraphQL query</h4>
       <pre style={{ background: `#efeded`, padding: rhythm(3 / 4) }}>
         <code
@@ -70,23 +67,20 @@ export default props => {
       <p>
         You should prefer this operator over <code>resize</code>.
       </p>
-      {assets.map(({ node: { title, responsiveResolution } }) => {
-        console.log(title, responsiveResolution)
-        return (
-          <img
-            alt={title}
-            src={responsiveResolution.src}
-            srcSet={responsiveResolution.srcSet}
-            width={responsiveResolution.width}
-            height={responsiveResolution.height}
-            style={{
-              marginRight: rhythm(1 / 2),
-              marginBottom: rhythm(1 / 2),
-              border: `1px solid tomato`,
-            }}
-          />
-        )
-      })}
+      {assets.map(({ node: { title, responsiveResolution } }) =>
+        <img
+          alt={title}
+          src={responsiveResolution.src}
+          srcSet={responsiveResolution.srcSet}
+          width={responsiveResolution.width}
+          height={responsiveResolution.height}
+          style={{
+            marginRight: rhythm(1 / 2),
+            marginBottom: rhythm(1 / 2),
+            border: `1px solid tomato`,
+          }}
+        />
+      )}
       <h4>GraphQL query</h4>
       <pre style={{ background: `#efeded`, padding: rhythm(3 / 4) }}>
         <code
@@ -128,23 +122,20 @@ export default props => {
           resizing focus area
         </a>
       </p>
-      {assets.map(({ node: { title, resizing } }) => {
-        console.log(title, resizing)
-        return (
-          <img
-            alt={title}
-            src={resizing.src}
-            srcSet={resizing.srcSet}
-            width={resizing.width}
-            height={resizing.height}
-            style={{
-              marginRight: rhythm(1 / 2),
-              marginBottom: rhythm(1 / 2),
-              border: `1px solid tomato`,
-            }}
-          />
-        )
-      })}
+      {assets.map(({ node: { title, resizing } }) =>
+        <img
+          alt={title}
+          src={resizing.src}
+          srcSet={resizing.srcSet}
+          width={resizing.width}
+          height={resizing.height}
+          style={{
+            marginRight: rhythm(1 / 2),
+            marginBottom: rhythm(1 / 2),
+            border: `1px solid tomato`,
+          }}
+        />
+      )}
       <h4>GraphQL query</h4>
       <pre style={{ background: `#efeded`, padding: rhythm(3 / 4) }}>
         <code

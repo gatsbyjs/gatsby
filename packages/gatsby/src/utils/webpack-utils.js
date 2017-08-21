@@ -65,7 +65,7 @@ module.exports = async (
     program,
   }: { stage: Stage, program: any }
 ): Promise<WebpackConfigUtils> => {
-  const PRODUCTION = stage !== `develop`
+  const PRODUCTION = !stage.includes(`develop`)
   const DEFAULT_BROWSERS = program.browserlist
 
   const babelConfig = await genBabelConfig(program, stage)

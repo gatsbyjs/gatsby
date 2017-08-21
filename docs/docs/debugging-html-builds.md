@@ -49,3 +49,22 @@ In this worst case scenario, you can either grep node_modules for the
 code or you can start back tracking up the stack trace (i.e. go to line
 number in the next referenced line) until you find code you recognize and
 work from there.
+
+## Fixing third-party modules
+
+So, the worst has happened and you're using an NPM module that expects `window` to be defined.  You may be able to file an issue and get the module patched, but what to do in the mean time?
+
+One solution is to [customize](../add-custom-webpack-config) your webpack configuration to replace the offending module with a dummy module during server rendering.
+
+`gatsby-node.js` in the project root:
+```js
+exports.modifyWebpackConfig = ({ config, stage }) => {
+  if (stage === 'build-html') {
+    config.loader('null', {
+      test: /bad-module/,
+      loader: 'null-loader'
+    })
+  }
+}
+```
+

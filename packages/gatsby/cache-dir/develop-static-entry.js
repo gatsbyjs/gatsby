@@ -2,12 +2,18 @@ import React from "react"
 import { renderToStaticMarkup } from "react-dom/server"
 import { merge } from "lodash"
 import apiRunner from "./api-runner-ssr"
+import testRequireError from "./test-require-error"
 
 let Html
 try {
-  Html = require(`../src/html`)
-} catch (e) {
-  Html = require(`./default-html`)
+  HTML = require(`../src/html`)
+} catch (err) {
+  if (testRequireError(`..\/src\/html`, err)) {
+    HTML = require(`./default-html`)
+  } else {
+    console.log(`There was an error requiring "src/html.js"\n\n`, err, `\n\n`)
+    process.exit()
+  }
 }
 
 Html = Html && Html.__esModule ? Html.default : Html

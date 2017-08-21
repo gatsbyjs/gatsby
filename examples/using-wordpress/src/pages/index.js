@@ -51,7 +51,7 @@ Home.propTypes = {
 // Set here the ID of the home page.
 export const pageQuery = graphql`
   query homePageQuery {
-    wordpressPage(id: { eq: "PAGE_5" }) {
+    wordpressPage(id: { eq: "PAGE_25" }) {
       id
       title
       content

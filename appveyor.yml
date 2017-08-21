@@ -1,12 +1,11 @@
-# branches to build
-branches:
-  # whitelist
-  only:
-    - 1.0
-    - master
-
 platform:
   - x64
+
+cache:
+  - '%AppData%/npm-cache'
+  - C:\Users\appveyor\AppData\Roaming\npm\node_modules\windows-build-tools
+
+skip_branch_with_pr: true
 
 environment:
   nodejs_version: "8"
@@ -15,22 +14,25 @@ environment:
   - example: gatsbygram
     buildon: commit
 
-  - example: client-only-paths
+  - example: using-javascript-transforms
     buildon: tag
 
-  - example: hn
+  - example: using-remark
+    buildon: tag
+
+  - example: using-contentful
+    buildon: tag
+
+  - example: using-wordpress
+    buildon: tag
+
+  - example: using-mongodb
+    buildon: tag
+
+  - example: using-typescript
     buildon: tag
 
   - example: no-plugins
-    buildon: tag
-
-  - example: no-trailing-slashes
-    buildon: tag
-
-  - example: using-drupal
-    buildon: tag
-
-  - example: using-postcss-sass
     buildon: tag
 
 # Install scripts. (runs after repo cloning)
@@ -38,7 +40,7 @@ install:
   - echo This example is built on %buildon% and the commit tag is %APPVEYOR_REPO_TAG% and the tag is %APPVEYOR_REPO_TAG_NAME%
     # we kill the build for most examples unless it is a release or a forced build
   - ps: |
-      if (($env:buildon -eq "tag") -and ($env:APPVEYOR_REPO_TAG -eq "false") -and ($env:APPVEYOR_FORCED_BUILD -ne "True"))
+      if (($env:buildon -eq "tag") -and ($env:APPVEYOR_REPO_COMMIT_MESSAGE -ne "Publish") -and ($env:APPVEYOR_FORCED_BUILD -ne "True"))
       {
         Exit-AppVeyorBuild
       }
