@@ -71,6 +71,7 @@ actions.createPage = (page, plugin = ``, traceId) => {
 
   page.jsonName = jsonName
   page.internalComponentName = internalComponentName
+  page.updatedAt = new Date().toJSON()
 
   // Ensure the page has a context object
   if (!page.context) {
@@ -163,13 +164,15 @@ actions.createLayout = (layout, plugin = ``, traceId) => {
 /**
  * Delete a node
  * @param {string} nodeId a node id
+ * @param {object} node the node object
  * @example
- * deleteNode(node.id)
+ * deleteNode(node.id, node)
  */
-actions.deleteNode = (nodeId, plugin = ``) => {
+actions.deleteNode = (nodeId, node, plugin = ``) => {
   return {
     type: `DELETE_NODE`,
     plugin,
+    node,
     payload: nodeId,
   }
 }

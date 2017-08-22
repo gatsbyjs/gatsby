@@ -295,6 +295,11 @@ module.exports = async (program: any) => {
   await extractQueries()
   activity.end()
 
+  // Start the createPages hot reloader.
+  if (process.env.NODE_ENV !== `production`) {
+    require(`./page-hot-reloader`)(graphqlRunner)
+  }
+
   // Run queries
   activity = report.activityTimer(`run graphql queries`)
   activity.start()

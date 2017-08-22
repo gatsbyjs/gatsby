@@ -118,4 +118,58 @@ describe(`add page data dependency`, () => {
 
     expect(state).toMatchSnapshot()
   })
+  it(`removes node/page connections when the node is deleted`, () => {
+    const action = {
+      type: `CREATE_COMPONENT_DEPENDENCY`,
+      payload: {
+        path: `/hi/`,
+        nodeId: `123`,
+      },
+    }
+
+    let state = reducer(undefined, action)
+
+    const deleteNodeAction = {
+      type: `DELETE_NODE`,
+      payload: 123,
+    }
+
+    state = reducer(state, deleteNodeAction)
+
+    expect(state).toEqual({
+      connections: {},
+      nodes: {},
+    })
+  })
+  it(`removes node/page connections when multiple nodes are deleted`, () => {
+    const action = {
+      type: `CREATE_COMPONENT_DEPENDENCY`,
+      payload: {
+        path: `/hi/`,
+        nodeId: `123`,
+      },
+    }
+    const action2 = {
+      type: `CREATE_COMPONENT_DEPENDENCY`,
+      payload: {
+        path: `/hi2/`,
+        nodeId: `1234`,
+      },
+    }
+
+    let state = reducer(undefined, action)
+    state = reducer(state, action2)
+
+    const deleteNodeAction = {
+      type: `DELETE_NODES`,
+      payload: [123, 1234],
+    }
+
+    state = reducer(state, deleteNodeAction)
+
+    expect(state).toEqual({
+      connections: {},
+      nodes: {},
+    })
+  })
 })
