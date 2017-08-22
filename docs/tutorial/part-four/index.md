@@ -5,11 +5,11 @@ typora-copy-images-to: ./
 
 Welcome to Part Four of the tutorial! Halfway through! Hope things are starting to feel pretty comfortable 😀
 
-But don't feel too comfortable 😉. In this tutorial, we're going to travel into some new territory which will requires some brain stretching to fully understand. But don't worry, it'll be worth it. In the next two parts of the tutorial, we'll be diving into the Gatsby data layer!
+But get too comfortable 😉. In this tutorial, we're headed to new territory which will require some brain stretching to fully understand. In the next two parts of the tutorial, we'll be diving into the Gatsby data layer! A powerful feature of Gatsby that lets you easily build sites from markdown, Wordpress, headless CMSs, and other data sources of all flavors.
 
 ## Recap of first half of the tutorial
 
-So far we've been learning how to use React.js components to build websites. That we can easily create our own components to act as custom building blocks for building sites.
+So far we've been learning how to use React.js components to build websites. How we can create our own components to act as custom building blocks for building sites.
 
 We've also explored styling components using CSS-in-JS which lets us encapsulate CSS within our components.
 
@@ -25,7 +25,7 @@ For the purpose of working in Gatsby however, a more useful answer is "everythin
 
 So far we've been writing text and adding images *directly* in components. Which is an *excellent* way to build many websites. But often you want to store data *outside* components and then bring the data *into* the component as needed.
 
-For example, if you're building a site with Wordpress and Gatsby, the *data* for the site (pages and posts) are in Wordpress and you *pull* that data as needed into your components.
+For example, if you're building a site with Wordpress (so other contributors have a nice interface for adding & maintaining content) and Gatsby, the *data* for the site (pages and posts) are in Wordpress and you *pull* that data as needed into your components.
 
 Data can also live in file types like markdown, CSV, etc. as well as databases and APIs of all sorts.
 
@@ -33,13 +33,13 @@ Data can also live in file types like markdown, CSV, etc. as well as databases a
 
 ## How Gatsby's data layer uses GraphQL to pull data into components 
 
-If you're familiar with the React world, there's many options for how to load data into components. One of the most popular and robust of these is a technology called [GraphQL](http://graphql.org/).
+If you're familiar with the React world, there are many options for how to load data into components. One of the most popular and robust of these is a technology called [GraphQL](http://graphql.org/).
 
-GraphQL was invented at Facebook to help product engineers pull data into components.
+GraphQL was invented at Facebook to help product engineers pull needed data into components.
 
-GraphQL is a query language (the *QL* part of its name). If you're familiar with SQL, it works in a very similar way. You describe in code, using a special syntax, the data you want and then that data is given to you.
+GraphQL is a **q**uery **l**anguage (the *QL* part of its name). If you're familiar with SQL, it works in a very similar way. You describe in your component, using a special syntax, the data you want and then that data is given to you.
 
-Gatsby uses GraphQL to let components declare, using GraphQL queries, the data it needs and then gives this data to components.
+Gatsby uses GraphQL to let components declare the data it needs and then gives this data to components.
 
 ## Our first GraphQL query
 
@@ -148,7 +148,7 @@ module.exports = {
 }
 ```
 
-Add the above files and then run `gatsby develop` like normal and you should see the following:
+Add the above files and then run `gatsby develop` like normal and you should see the following: 
 
 ![start](start.png)
 
@@ -156,11 +156,11 @@ We have another simple site with a layout and two pages.
 
 Now let's start querying 😋
 
-When building sites, it's common to want to reuse common bits of data across the site. Like the *site title* for example. You'll notice looking at the About page that we have the site title in both the layout component (for the header) as well as the title of the About page. But what if we want to change the site title at some point in the future? We'd have to search across the site for everywhere we put the title. Which is both cumbersome but it's also easy to miss spots, especially as sites get larger and more complex. Much better to store the title in one place and then *pull* that title into components whenever we need it.
+When building sites, it's common to want to reuse common bits of data across the site. Like the *site title* for example. Look at the `/about/` page. You'll notice that we have the site title in both the layout component (the site header) as well as in the title of the About page. But what if we want to change the site title at some point in the future? We'd have to search across all our components for spots using the site title. Which is both cumbersome and error-prone, especially as sites get larger and more complex. Much better to store the title in one place and then *pull* that title into components whenever we need it.
 
-To solve this Gatsby supports a simple pattern for adding site "metadata" like the title.
+To solve this Gatsby supports a simple pattern for adding site "metadata"—like the title.
 
-In your `gatsby-config.js` you can add data which you can then easily query in your components. So let's add our site title to `gatsby-config.js` and then query it from our layout and about page!
+We add this data to the `gatsby-config.js` file. Let's add our site title to `gatsby-config.js` and then query it from our layout and about page!
 
 Edit your `gatsby-config.js`:
 
@@ -265,7 +265,7 @@ So almost everywhere, changes you make will immediately take effect.
 
 Try editing the title in `siteMetadata`—change the title back to "Pandas Eating Lots". The change should show up very quickly in your browser.
 
-## Introduce Graph*i*QL
+## Introducing Graph*i*QL
 
 Graph*i*QL is the GraphQL IDE. It's a powerful (and all-around awesome) tool you'll use often while building Gatsby websites.
 
@@ -442,11 +442,11 @@ And… 😲
 
 ## Transformer plugins
 
-But often the format of the data we get from source plugins isn't what you want to use to build your website. The filesystem source plugin let's you query information *about* files but what if you want to query data *inside* files?
+But often the format of the data we get from source plugins isn't what you want to use to build your website. The filesystem source plugin let's you query data *about* files but what if you want to query data *inside* files?
 
 To make this possible, Gatsby supports transformer plugins which take raw content from source plugins and *transforms* this into something more usable.
 
-For example, markdown files.
+For example, markdown files. Markdown is nice to write in but when you build a page with it, you need the markdown to be HTML.
 
 Let's add a markdown file to our site at `src/pages/sweet-pandas-eating-sweets.md` (This will become our first markdown blog post) and learn how to *transform* it to HTML using transformer plugins and GraphQL.
 
@@ -506,7 +506,7 @@ Select `allMarkdownRemark` again and run it like we did for `allFile`. You'll se
 
 ![markdown-query](markdown-query.png)
 
-Ok! Hopefully some basics are starting to fall into place. Source plugins bring data *into* Gatsby's data system and *transformer* plugins transform the data brought by source plugins. This simple pattern can handle all data sourcing and data transformation you might need when building a Gatsby site.
+Ok! Hopefully some basics are starting to fall into place. Source plugins bring data *into* Gatsby's data system and *transformer* plugins transform raw content brought by source plugins. This simple pattern can handle all data sourcing and data transformation you might need when building a Gatsby site.
 
 ## Create a list of our site's markdown files in `src/pages/index.js`
 
@@ -584,7 +584,7 @@ Do Pandas eat bananas? Check out this short video that shows that yes! pandas do
 
 Which looks great! Except… the order of the posts is wrong.
 
-But this is easy to fix. When querying a connection of some type, you can pass a variety of arguments to the query. You can `sort` and `filter` nodes as well as set how many nodes to `skip` as well as choose the `limit` of how many nodes to retrieve. With this powerful set of operators, we can select any data we want, in the format we need.
+But this is easy to fix. When querying a connection of some type, you can pass a variety of arguments to the query. You can `sort` and `filter` nodes, set how many nodes to `skip`, and choose the `limit` of how many nodes to retrieve. With this powerful set of operators, we can select any data we want, in the format we need.
 
 In our index page's query, change `allMarkdownRemark` to `  allMarkdownRemark(sort: {fields: [frontmatter___date], order: DESC})`. Save this and the sort order should be fixed.
 
@@ -602,9 +602,9 @@ Creating new pages has two steps, 1) generate the "path" or "slug" for the page 
 
 To create our markdown pages, we'll learn to use two Gatsby APIs [`onCreateNode`](/docs/node-apis/#onCreateNode) and [`createPages`](/docs/node-apis/#createPages). These are two workhorse APIs you'll see used in many sites and plugins.
 
-APIs are simple to implement. To implement an API you simply export a function with the name of the API from `gatsby-node.js`.
+APIs are simple to implement. To implement an API, you simply export a function with the name of the API from `gatsby-node.js`.
 
-So let's do that. In the root of your site, create a file named `gatsby-node.js`. Then add to it the following:
+So let's do that. In the root of your site, create a file named `gatsby-node.js`. Then add to it the following. This function will be called by Gatsby whenever a new node is created (or updated).
 
 ```javascript
 exports.onCreateNode = ({ node }) => {
@@ -626,9 +626,9 @@ exports.onCreateNode = ({ node }) => {
 }
 ```
 
-We want to use each markdown file name to create the page slug. So `pandas-and-bananas.md"` will become `/pandas-and-bananas/`. But how do we get the file name from the `MarkdownRemark` node? To get it, we need to *traverse* the "node graph" to its *parent* `File`  node, as `File` nodes contain information about files on disk. To do that, modify our function again:
+We want to use each markdown file name to create the page slug. So `pandas-and-bananas.md"` will become `/pandas-and-bananas/`. But how do we get the file name from the `MarkdownRemark` node? To get it, we need to *traverse* the "node graph" to its *parent* `File`  node, as `File` nodes contain data we need about files on disk. To do that, modify our function again:
 
-```javascript{3-4}
+```javascript{1,3-4}
 exports.onCreateNode = ({ node, getNode }) => {
   if (node.internal.type === `MarkdownRemark`) {
     const fileNode = getNode(node.parent)
@@ -655,7 +655,7 @@ exports.onCreateNode = ({ node, getNode }) => {
 
 The function handles finding the parent `File` node along with creating the slug. Run the development server again and you should see logged to the terminal two slugs, one for each markdown file.
 
-Now lets add our new slugs to the `MarkdownRemark` nodes. This is powerful as any data we add to nodes is available to query later with GraphQL. So it'll be easy to get the slug when it comes time to create the pages.
+Now lets add our new slugs directly onto the `MarkdownRemark` nodes. This is powerful as any data we add to nodes is available to query later with GraphQL. So it'll be easy to get the slug when it comes time to create the pages.
 
 To do so, we'll use a function passed to our API implementation called [`createNodeField`](/docs/bound-action-creators/#createNodeField). This function allows us to create additional fields on nodes created by other plugins. Only the original creator of a node can directly modify the node—all other plugins (including our `gatsby-node.js`) must use this function to create additional fields.
 
@@ -733,7 +733,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 }
 ```
 
-We've add an implementation of the `createPages` API which Gatsby calls in plugins to add pages. We're using the passed in `graphql` function to query for the markdown slugs we just created. Then we're logging out the result of the query which should look like:
+We've added an implementation of the [`createPages`](/docs/node-apis/#createPages) API which Gatsby calls to add pages. We're using the passed in `graphql` function to query for the markdown slugs we just created. Then we're logging out the result of the query which should look like:
 
 ![query-markdown-slugs](query-markdown-slugs.png)
 
@@ -836,7 +836,9 @@ export const query = graphql`
 `
 ```
 
-[INSERT SCREENSHOT WHEN HAVE INTERNET FOR VIDEO TO SHOW UP]
+And…
+
+![blog-post](blog-post.png)
 
 Sweet!
 
@@ -901,4 +903,14 @@ export const query = graphql`
 `
 ```
 
+And there we go! A working (albeit quite simple still) blog!
+
+This is the foundation of Gatsby. You *source* and *transform* data using plugins and Gatsby's data layer. Using the automatically constructed GraphQL schema, you *map* data to pages. Then in page template components, you *query* for data.
+
+Everything in Gatsby builds from this.
+
+## One more thing…
+
 TODO fix hot reloading pages and tell them to add another post.
+
+FIX deleting files
