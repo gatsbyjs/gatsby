@@ -18,7 +18,7 @@ import {
   graphqlValidationError,
   multipleRootQueriesError,
 } from "./graphql-errors"
-import report from "../../reporter"
+import report from "gatsby-cli/lib/reporter"
 
 import type { DocumentNode, GraphQLSchema } from "graphql"
 
