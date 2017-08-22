@@ -8,7 +8,7 @@ Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from a
 plugins: [
   /*
    * Gatsby's data processing layer begins with “source”
-   * plugins. Here the site sources its data from a graphql endpoint
+   * plugins. Here the site sources its data from the GraphCMS endpoint
    */
   {
     resolve: `gatsby-source-graphcms`,
@@ -19,13 +19,13 @@ plugins: [
   }
 ],
 ```
-I suggest either using a `.env` file or setting environment variables to access ala `process.env.GATSBY_GRAPHQL_ENDPOINT`, `process.env.GATSBY_GRAPHQL_TOKEN` so theres no endpoint and token on git ;)
+Use a `.env` file or set environment variables directly to access the GraphCMS endpoint and token. This avoids committing potentially sensitive data.
 
 ## Plugin options
 |              |                                                          |
 |-------------:|:---------------------------------------------------------|
 | **endpoint** | indicates the endpoint to use for the graphql connection |
-| **token**    | The API access token.                                    |
+| **token**    | The API access token. Optional if the endpoint is public |
 
 ## How to query : GraphQL
 
