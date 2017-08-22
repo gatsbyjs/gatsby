@@ -11,11 +11,13 @@ module.exports.sourceNodes = async (
 ) => {
   const { createNode } = boundActionCreators
 
-  const client = new GraphQLClient(endpoint, {
+  const clientOptions = {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: token ? `Bearer ${token}` : undefined,
     },
-  })
+  }
+
+  const client = new GraphQLClient(endpoint, clientOptions)
   const typeData = await client.request(metaQuery)
 
   const fullData = await client.request(assembleQueries(typeData))
