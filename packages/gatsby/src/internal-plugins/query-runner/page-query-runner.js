@@ -14,14 +14,18 @@ const queryRunner = require(`./query-runner`)
 let queuedDirtyActions = []
 let active = false
 
+// Do initial run of graphql queries during bootstrap.
+// Afterwards we listen "API_RUNNING_QUEUE_EMPTY" and check
+// for dirty nodes before running queries.
 exports.runQueries = async () => {
   active = true
-  const state = store.getState()
 
   // Run queued dirty nodes now that we're active.
   queuedDirtyActions = _.uniq(queuedDirtyActions, a => a.payload.id)
   const dirtyIds = findDirtyIds(queuedDirtyActions)
   await runQueriesForIds(dirtyIds)
+
+  queuedDirtyActions = []
 
   // Find ids without data dependencies and run them (just in case?)
   const cleanIds = findIdsWithoutDataDependencies()
@@ -70,6 +74,7 @@ const findIdsWithoutDataDependencies = () => {
 }
 
 const runQueriesForIds = ids => {
+  ids = _.uniq(ids)
   if (ids.length < 1) {
     return Promise.resolve()
   }
