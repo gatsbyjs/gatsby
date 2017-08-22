@@ -14,7 +14,7 @@ const { graphql } = require(`graphql`)
 const { store, emitter } = require(`../redux`)
 const loadPlugins = require(`./load-plugins`)
 const { initCache } = require(`../utils/cache`)
-const report = require(`../reporter`)
+const report = require(`gatsby-cli/lib/reporter`)
 
 const {
   extractQueries,

@@ -4,7 +4,7 @@
   "version": "1.8.13",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
-    "gatsby": "./dist/gatsby-cli.js"
+    "gatsby": "./bin/gatsby.js"
   },
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
