@@ -96,7 +96,7 @@ export default () =>
 
 ![no-layout](no-layout.png)
 
-We now we have the start of a nice personal site!
+We now have the start of a nice personal site!
 
 But a few problems. First, it'd be nice if the page content was centered on the screen like in part two of the tutorial. And second, we should really have some sort of global navigation so it's easy for visitors to find and visit each of the sub-pages.
 
