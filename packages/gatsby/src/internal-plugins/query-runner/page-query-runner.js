@@ -81,11 +81,17 @@ const runQueriesForIds = ids => {
         pl => pl.path === id || `LAYOUT___${pl.id}` === id
       )
       if (plObj) {
-        let pIterable = []
-        plObj.component.forEach(c => {
-          pIterable.push(queryRunner(plObj, state.components[c]))
-        })
-        return Promise.all(pIterable)
+        // component is always an array, but this runs on layouts
+        //  as well which are expected to be a string
+        if (Array.isArray(plObj.component)) {
+          let pIterable = []
+          plObj.component.forEach(c => {
+            pIterable.push(queryRunner(plObj, state.components[c]))
+          })
+          return Promise.all(pIterable)
+        } else {
+          return queryRunner(plObj, state.components[plObj.component])
+        }
       }
     })
   )
