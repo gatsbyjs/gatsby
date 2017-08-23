@@ -161,9 +161,8 @@ export default () =>
 Save that and now you should be able to click back and forth between the two pages!
 
 <video controls="controls" autoplay="true" loop="true">
-<source type="video/mp4" src="/images/clicking-2.mp4"></source>
-<p>Your browser does not support the video element.</p>
-
+  <source type="video/mp4" src="/images/clicking-2.mp4"></source>
+  <p>Your browser does not support the video element.</p>
 </video>
 
 

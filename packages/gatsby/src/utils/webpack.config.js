@@ -212,7 +212,7 @@ module.exports = async (
             __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
             __POLYFILL__: store.getState().config.polyfill,
           }),
-          new ExtractTextPlugin(`build-html-styles.css`),
+          new ExtractTextPlugin(`build-html-styles.css`, { allChunks: true }),
         ]
       case `build-javascript`: {
         // Get array of page template component names.
@@ -286,7 +286,7 @@ module.exports = async (
             __POLYFILL__: store.getState().config.polyfill,
           }),
           // Extract CSS so it doesn't get added to JS bundles.
-          new ExtractTextPlugin(`build-js-styles.css`),
+          new ExtractTextPlugin(`build-js-styles.css`, { allChunks: true }),
           // Write out mapping between chunk names and their hashed names. We use
           // this to add the needed javascript files to each HTML page.
           new StatsWriterPlugin(),

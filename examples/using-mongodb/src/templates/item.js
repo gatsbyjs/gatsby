@@ -3,7 +3,6 @@ import Link from "gatsby-link"
 
 class Item extends React.Component {
   render() {
-    console.log(this.props)
     const story = this.props.data.mongodbCloudDocuments
 
     return (
@@ -12,7 +11,12 @@ class Item extends React.Component {
           {story.name}
         </a>
         <p>
-          {story.description}
+          <div
+            dangerouslySetInnerHTML={{
+              __html: story.description.childMarkdownRemark.html,
+            }}
+            className="story"
+          />
         </p>
       </div>
     )
@@ -27,7 +31,11 @@ export const pageQuery = graphql`
       id
       name
       url
-      description
+      description {
+        childMarkdownRemark {
+          html
+        }
+      }
     }
   }
 `

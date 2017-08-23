@@ -3,6 +3,7 @@
 exports[`Load plugins Loads plugins defined with an object but without an option key 1`] = `
 Array [
   Object {
+    "id": "Plugin component-page-creator",
     "name": "component-page-creator",
     "pluginOptions": Object {
       "plugins": Array [],
@@ -11,6 +12,7 @@ Array [
     "version": "1.0.0",
   },
   Object {
+    "id": "Plugin component-layout-creator",
     "name": "component-layout-creator",
     "pluginOptions": Object {
       "plugins": Array [],
@@ -19,6 +21,7 @@ Array [
     "version": "1.0.0",
   },
   Object {
+    "id": "Plugin internal-data-bridge",
     "name": "internal-data-bridge",
     "pluginOptions": Object {
       "plugins": Array [],
@@ -27,6 +30,7 @@ Array [
     "version": "1.0.0",
   },
   Object {
+    "id": "Plugin dev-404-page",
     "name": "dev-404-page",
     "pluginOptions": Object {
       "plugins": Array [],
@@ -35,6 +39,7 @@ Array [
     "version": "1.0.0",
   },
   Object {
+    "id": "Plugin prod-404",
     "name": "prod-404",
     "pluginOptions": Object {
       "plugins": Array [],
@@ -43,6 +48,7 @@ Array [
     "version": "1.0.0",
   },
   Object {
+    "id": "Plugin query-runner",
     "name": "query-runner",
     "pluginOptions": Object {
       "plugins": Array [],
@@ -58,6 +64,7 @@ Array [
     "resolve": "",
   },
   Object {
+    "id": "Plugin default-site-plugin",
     "name": "default-site-plugin",
     "pluginOptions": Object {
       "plugins": Array [],
@@ -71,6 +78,7 @@ Array [
 exports[`Load plugins load plugins for a site 1`] = `
 Array [
   Object {
+    "id": "Plugin component-page-creator",
     "name": "component-page-creator",
     "pluginOptions": Object {
       "plugins": Array [],
@@ -79,6 +87,7 @@ Array [
     "version": "1.0.0",
   },
   Object {
+    "id": "Plugin component-layout-creator",
     "name": "component-layout-creator",
     "pluginOptions": Object {
       "plugins": Array [],
@@ -87,6 +96,7 @@ Array [
     "version": "1.0.0",
   },
   Object {
+    "id": "Plugin internal-data-bridge",
     "name": "internal-data-bridge",
     "pluginOptions": Object {
       "plugins": Array [],
@@ -95,6 +105,7 @@ Array [
     "version": "1.0.0",
   },
   Object {
+    "id": "Plugin dev-404-page",
     "name": "dev-404-page",
     "pluginOptions": Object {
       "plugins": Array [],
@@ -103,6 +114,7 @@ Array [
     "version": "1.0.0",
   },
   Object {
+    "id": "Plugin prod-404",
     "name": "prod-404",
     "pluginOptions": Object {
       "plugins": Array [],
@@ -111,6 +123,7 @@ Array [
     "version": "1.0.0",
   },
   Object {
+    "id": "Plugin query-runner",
     "name": "query-runner",
     "pluginOptions": Object {
       "plugins": Array [],
@@ -119,6 +132,7 @@ Array [
     "version": "1.0.0",
   },
   Object {
+    "id": "Plugin default-site-plugin",
     "name": "default-site-plugin",
     "pluginOptions": Object {
       "plugins": Array [],
