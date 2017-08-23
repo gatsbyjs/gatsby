@@ -37,9 +37,11 @@ const writePages = async () => {
   let pageLayouts = []
 
   pages.forEach(p => {
-    components.push({
-      componentChunkName: p.componentChunkName,
-      component: p.component,
+    p.component.forEach((c, i) => {
+      components.push({
+        componentChunkName: p.componentChunkName[i],
+        component: c,
+      })
     })
     if (p.layout) {
       let layout = getLayoutById(layouts)(p.layout)
@@ -53,9 +55,6 @@ const writePages = async () => {
 
   pageLayouts = _.uniq(pageLayouts)
   components = _.uniqBy(components, c => c.componentChunkName)
-  // returns an array of objects that each contain
-  //  the componentChunkName and component which
-  //  each themselves are arrays
 
   await fs.writeFile(
     joinPath(program.directory, `.cache/pages.json`),
@@ -69,11 +68,9 @@ const preferDefault = m => m && m.default || m
   syncRequires += `exports.components = {\n${components
     .map(
       c =>
-        c.component.map((eachComponent, i) =>
-            `  "${c.componentChunkName[i]}": preferDefault(require("${joinPath(
-              eachComponent
-            )}"))`
-        )
+        `  "${c.componentChunkName}": preferDefault(require("${joinPath(
+          c.component
+        )}"))`
     )
     .join(`,\n`)}
 }\n\n`
@@ -107,11 +104,9 @@ const preferDefault = m => m && m.default || m
   asyncRequires += `exports.components = {\n${components
     .map(
       c =>
-        c.component.map((eachComponent, i) =>
-            `  "${c.componentChunkName[i]}": require("gatsby-module-loader?name=${c.componentChunkName[i]}!${joinPath(
-              eachComponent
-            )}")`
-        )
+        `  "${c.componentChunkName}": require("gatsby-module-loader?name=${c.componentChunkName}!${joinPath(
+          c.component
+        )}")`
     )
     .join(`,\n`)}
 }\n\n`
