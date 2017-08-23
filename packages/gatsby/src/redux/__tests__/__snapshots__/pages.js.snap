@@ -11,7 +11,7 @@ Array [
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
-    "updatedAt": "2017-08-23T02:25:12.551Z",
+    "updatedAt": 1482363367071,
   },
   Object {
     "component": "/whatever/index.js",
@@ -22,7 +22,7 @@ Array [
     "path": "/hi/pizza/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
-    "updatedAt": "2017-08-23T02:25:12.552Z",
+    "updatedAt": 1482363367071,
   },
 ]
 `;
@@ -38,7 +38,7 @@ Object {
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
-    "updatedAt": "2017-08-23T02:25:12.519Z",
+    "updatedAt": 1482363367071,
   },
   "plugin": Object {
     "id": "test",
@@ -60,7 +60,7 @@ Array [
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
-    "updatedAt": "2017-08-23T02:25:12.519Z",
+    "updatedAt": 1482363367071,
   },
 ]
 `;
@@ -78,7 +78,7 @@ Object {
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
-    "updatedAt": "2017-08-23T02:25:12.546Z",
+    "updatedAt": 1482363367071,
   },
   "plugin": Object {
     "id": "test",
@@ -102,7 +102,7 @@ Array [
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
-    "updatedAt": "2017-08-23T02:25:12.546Z",
+    "updatedAt": 1482363367071,
   },
 ]
 `;
@@ -120,7 +120,7 @@ Array [
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
-    "updatedAt": "2017-08-23T02:25:12.557Z",
+    "updatedAt": 1482363367071,
   },
 ]
 `;
