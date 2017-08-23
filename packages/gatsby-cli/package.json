@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "babel-runtime": "^6.25.0",
+    "bluebird": "^3.5.0",
     "common-tags": "^1.4.0",
     "convert-hrtime": "^2.0.0",
     "core-js": "^2.5.0",
