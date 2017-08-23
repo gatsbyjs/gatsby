@@ -5,8 +5,10 @@ import moment from "moment"
 
 class jsBlogPostTemplate extends React.Component {
   render() {
+    console.log(this)
     return (
-      <div className='test'>
+      <div className="javascriptPost">
+        {this.props.children()}
       </div>
     )
 /*

@@ -92,6 +92,32 @@ const DefaultRouter = ({ children }) =>
 // parent layout(s), loop through those until finally the
 // page. Tricky part is avoiding re-mounting I think...
 
+const NestedTemplates = (componentArray, templateIndex, props, pageResources) => {
+  if (componentArray[templateIndex + 1]) {
+    // if this is not the last component in the array,
+    //  we will have children
+    return createElement(ComponentRenderer, {
+      page: true,
+      ...props,
+      pageResources,
+      componentIndex: templateIndex,
+      children: routeProps => NestedTemplates(componentArray, templateIndex + 1, props, pageResources)
+    })
+  } else {
+    // if this is last in the array, we need to render
+    return createElement(Route, {
+      render: routeProps => {
+        return createElement(ComponentRenderer, {
+          page: true,
+          ...props,
+          componentIndex: templateIndex,
+          pageResources
+        })
+      }
+    })
+  }
+}
+
 const Root = () =>
   createElement(
     AltRouter ? AltRouter : DefaultRouter,
@@ -103,18 +129,16 @@ const Root = () =>
         layout: true,
         children: layoutProps =>
           createElement(Route, {
-            render: routeProps => {
+            children: routeProps => {
               const props = layoutProps ? layoutProps : routeProps
               attachToHistory(props.history)
               const pageResources = loader.getResourcesForPathname(
                 props.location.pathname
               )
               if (pageResources) {
-                return createElement(ComponentRenderer, {
-                  page: true,
-                  ...props,
-                  pageResources,
-                })
+                let templateIndex = 0
+                let componentArray = pageResources.component
+                return NestedTemplates(componentArray, templateIndex, props, pageResources)
               } else {
                 return addNotFoundRoute()
               }

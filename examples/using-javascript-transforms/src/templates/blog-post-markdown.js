@@ -1,8 +1,3 @@
-/*
-This is a temporary holdover until we can get queries on layouts. We only use markdown for posts
- so we just put some of the layout type things in here such as react-helmet and post publish comments.
-*/
-
 import React from "react"
 import moment from "moment"
 import PostPublished from "../components/PostPublished"
@@ -10,12 +5,13 @@ import HelmetBlock from "../components/HelmetBlock"
 
 class mdBlogPostTemplate extends React.Component {
   render() {
+    console.log(this)
     const data = this.props.data.markdownRemark
     const html = data.html
     const frontmatter = data.frontmatter
 
     return (
-      <div>
+      <div className="markdownPost">
         <HelmetBlock {...frontmatter} />
         <div className="content">
           <div className="markdown section">
