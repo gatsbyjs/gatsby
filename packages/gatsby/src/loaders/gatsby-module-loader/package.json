@@ -4,6 +4,7 @@
   "description": "_Based on https://github.com/webpack/bundle-loader and https://github.com/NekR/async-module-loader_",
   "main": "index.js",
   "scripts": {
+    "build": "babel src --out-dir . --ignore __tests__",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
