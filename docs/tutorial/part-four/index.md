@@ -5,7 +5,7 @@ typora-copy-images-to: ./
 
 Welcome to Part Four of the tutorial! Halfway through! Hope things are starting to feel pretty comfortable 😀
 
-But get too comfortable 😉. In this tutorial, we're headed to new territory which will require some brain stretching to fully understand. In the next two parts of the tutorial, we'll be diving into the Gatsby data layer! A powerful feature of Gatsby that lets you easily build sites from markdown, Wordpress, headless CMSs, and other data sources of all flavors.
+But don't get too comfortable 😉. In this tutorial, we're headed to new territory which will require some brain stretching to fully understand. In the next two parts of the tutorial, we'll be diving into the Gatsby data layer! A powerful feature of Gatsby that lets you easily build sites from markdown, Wordpress, headless CMSs, and other data sources of all flavors.
 
 ## Recap of first half of the tutorial
 
@@ -13,7 +13,7 @@ So far we've been learning how to use React.js components to build websites. How
 
 We've also explored styling components using CSS-in-JS which lets us encapsulate CSS within our components.
 
-## Data
+## Data in Gatsby
 
 A website has four parts, HTML, CSS, JS, and data. The first half of the tutorial focused on the first three. Let's learn now how to use data in Gatsby sites.
 
@@ -905,8 +905,6 @@ export const query = graphql`
 
 And there we go! A working (albeit quite simple still) blog!
 
-Try adding some more markdown files. Explore adding other data from the `MarkdownRemark` nodes to the frontpage or blog posts pages.
+Try playing more with the site. Try adding some more markdown files. Explore querying other data from the `MarkdownRemark` nodes and adding them to the frontpage or blog posts pages.
 
-What we've learned in this part of the tutorial is the very foundation of Gatsby. You *source* and *transform* data using plugins and Gatsby's data layer. Using the automatically constructed GraphQL schema, you *map* data to pages. Then in page template components, you *query* for data.
-
-Everything in Gatsby builds from this.
+In this part of the tutorial, we've learned the foundations of building with Gatsby's data layer. You've learned how to *source* and *transform* data using plugins. How to use GraphQL to *map* data to pages. Then how to build *page template components* where you query for data for each page.

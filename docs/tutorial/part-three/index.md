@@ -173,3 +173,5 @@ export default ({ children }) =>
 And there we have it! A three page site with a simple global navigation.
 
 With your new "layout component" powers, you can easily add to your Gatsby sites headers, footers, global navigation, sidebars, etc.
+
+Continue on to [part four of the tutorial where we'll start learning about Gatsby's data layer and programmatic pages!](/tutorial/part-four/)
