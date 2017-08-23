@@ -46,19 +46,15 @@ export default MasterLayout
 
 export const pageQuery = graphql`
   query LayoutBySlug {
-    allSite {
-      edges {
-        node {
-          siteMetadata {
-            title
-            siteDescr
-            siteAuthor
-            siteEmailUrl
-            siteEmailPretty
-            siteTwitterUrl
-            siteTwitterPretty
-          }
-        }
+    site {
+      siteMetadata {
+        title
+        siteDescr
+        siteAuthor
+        siteEmailUrl
+        siteEmailPretty
+        siteTwitterUrl
+        siteTwitterPretty
       }
     }
   }
