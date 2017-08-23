@@ -7,6 +7,7 @@
 
 const _ = require(`lodash`)
 const Promise = require(`bluebird`)
+const normalize = require(`normalize-path`)
 
 const { store, emitter } = require(`../../redux`)
 const queryRunner = require(`./query-runner`)
@@ -102,7 +103,7 @@ const runQueriesForIds = ids => {
         if (Array.isArray(plObj.component)) {
           let pIterable = []
           plObj.component.forEach(c => {
-            pIterable.push(queryRunner(plObj, state.components[c]))
+            pIterable.push(queryRunner(plObj, state.components[normalize(c)]))
           })
           return Promise.all(pIterable)
         } else {
