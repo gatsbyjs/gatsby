@@ -55,4 +55,3 @@ module.exports = async function build(program: any) {
 
   report.info(`Done building in ${process.uptime()} sec`)
 }
-

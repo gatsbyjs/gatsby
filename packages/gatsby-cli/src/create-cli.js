@@ -3,11 +3,7 @@ const resolveCwd = require(`resolve-cwd`)
 const yargs = require(`yargs`)
 const report = require(`./reporter`)
 
-const DEFAULT_BROWSERS =  [
-  `> 1%`,
-  `last 2 versions`,
-  `IE >= 9`,
-]
+const DEFAULT_BROWSERS = [`> 1%`, `last 2 versions`, `IE >= 9`]
 
 function buildLocalCommands(cli, isLocalSite) {
   const defaultHost = `localhost`
@@ -27,8 +23,8 @@ function buildLocalCommands(cli, isLocalSite) {
       report.verbose(`current directory: ${directory}`)
       return report.panic(
         `gatsby <${command}> can only be run for a gatsby site. \n` +
-        `Either the current working directory does not contain a package.json or ` +
-        `'gatsby' is not specified as a dependency`
+          `Either the current working directory does not contain a package.json or ` +
+          `'gatsby' is not specified as a dependency`
       )
     }
     try {
@@ -47,23 +43,25 @@ function buildLocalCommands(cli, isLocalSite) {
     desc:
       `Start development server. Watches files, rebuilds, and hot reloads ` +
       `if something changes`,
-    builder: _ => _
-      .option(`H`, {
+    builder: _ =>
+      _.option(`H`, {
         alias: `host`,
         type: `string`,
+        default: defaultHost,
         describe: `Set host. Defaults to ${defaultHost}`,
       })
-      .option(`p`, {
-        alias: `port`,
-        type: `string`,
-        default: `8000`,
-        describe: `Set port. Defaults to 8000`,
-      })
-      .option(`o`, {
-        alias: `open`,
-        type: `boolean`,
-        describe: `Open the site in your browser for you.`,
-      }),
+        .option(`p`, {
+          alias: `port`,
+          type: `string`,
+          default: `8000`,
+          describe: `Set port. Defaults to 8000`,
+        })
+        .option(`o`, {
+          alias: `open`,
+          type: `boolean`,
+          default: false,
+          describe: `Open the site in your browser for you.`,
+        }),
     handler: argv => {
       const { sitePackageJson, browserslist } = getSiteInfo()
 
@@ -76,73 +74,76 @@ function buildLocalCommands(cli, isLocalSite) {
     },
   })
 
-  cli
-    .command({
-      command: `build`,
-      desc: `Build a Gatsby project.`,
-      builder: _ => _
-        .option(`prefix-paths`, {
-          type: `string`,
-          describe: `Build site with link paths prefixed (set prefix in your config).`,
-        }),
-      handler: argv => {
-        process.env.NODE_ENV = `production`
-        const { sitePackageJson, browserslist } = getSiteInfo()
+  cli.command({
+    command: `build`,
+    desc: `Build a Gatsby project.`,
+    builder: _ =>
+      _.option(`prefix-paths`, {
+        type: `string`,
+        describe: `Build site with link paths prefixed (set prefix in your config).`,
+      }),
+    handler: argv => {
+      process.env.NODE_ENV = `production`
+      const { sitePackageJson, browserslist } = getSiteInfo()
 
-        resolveLocalCommand(`build`)({
-          ...argv,
-          directory,
-          sitePackageJson,
-          browserslist,
-        })
-      },
-    })
-
-    cli
-      .command({
-        command: `serve`,
-        desc: `Serve previously built Gatsby site.`,
-        builder: _ => _
-          .option(`H`, {
-            alias: `host`,
-            type: `string`,
-            describe: `Set host. Defaults to ${defaultHost}`,
-          })
-          .option(`p`, {
-            alias: `port`,
-            type: `string`,
-            default: `8000`,
-            describe: `Set port. Defaults to 8000`,
-          })
-          .option(`o`, {
-            alias: `open`,
-            type: `boolean`,
-            default: `8000`,
-            describe: `Open the site in your browser for you.`,
-          }),
-
-        handler: argv => {
-          const { sitePackageJson, browserslist } = getSiteInfo()
-
-          resolveLocalCommand(`serve`)({
-            ...argv,
-            directory,
-            sitePackageJson,
-            browserslist,
-          })
-        },
+      resolveLocalCommand(`build`)({
+        ...argv,
+        directory,
+        sitePackageJson,
+        browserslist,
       })
+    },
+  })
+
+  cli.command({
+    command: `serve`,
+    desc: `Serve previously built Gatsby site.`,
+    builder: _ =>
+      _.option(`H`, {
+        alias: `host`,
+        type: `string`,
+        default: defaultHost,
+        describe: `Set host. Defaults to ${defaultHost}`,
+      })
+        .option(`p`, {
+          alias: `port`,
+          type: `string`,
+          default: `8000`,
+          describe: `Set port. Defaults to 8000`,
+        })
+        .option(`o`, {
+          alias: `open`,
+          type: `boolean`,
+          default: true,
+          describe: `Open the site in your browser for you.`,
+        }),
+
+    handler: argv => {
+      const { sitePackageJson, browserslist } = getSiteInfo()
+
+      console.log(argv)
+      resolveLocalCommand(`serve`)({
+        ...argv,
+        directory,
+        sitePackageJson,
+        browserslist,
+      })
+    },
+  })
 }
 
 function isLocalGatsbySite() {
   let inGatsbySite = false
   try {
-    let { dependencies, devDependencies } = require(path.resolve(`./package.json`))
-    inGatsbySite = (
+    let { dependencies, devDependencies } = require(path.resolve(
+      `./package.json`
+    ))
+    inGatsbySite =
       (dependencies && dependencies.gatsby) ||
       (devDependencies && devDependencies.gatsby)
-    )
-  } catch (err) { /* ignore */ }
+  } catch (err) {
+    /* ignore */
+  }
   return inGatsbySite
 }
 
@@ -152,8 +153,10 @@ module.exports = (argv, handlers) => {
 
   cli
     .usage(`Usage: $0 <command> [options]`)
-    .help(`h`).alias(`h`, `help`)
-    .version().alias(`v`, `version`)
+    .help(`h`)
+    .alias(`h`, `help`)
+    .version()
+    .alias(`v`, `version`)
 
   buildLocalCommands(cli, isLocalSite)
 

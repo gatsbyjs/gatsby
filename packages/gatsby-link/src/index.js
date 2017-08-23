@@ -9,7 +9,7 @@ if (typeof __PREFIX_PATHS__ !== `undefined` && __PREFIX_PATHS__) {
 }
 
 function normalizePath(path) {
-  return path.replace(/^\/\//g, '/')
+  return path.replace(/^\/\//g, `/`)
 }
 
 const NavLinkPropTypes = {

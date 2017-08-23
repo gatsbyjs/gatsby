@@ -35,7 +35,6 @@ process.on(`uncaughtException`, error => {
   report.panic(`UNHANDLED EXCEPTION`, error)
 })
 
-
 createCli(process.argv, {
   develop: () => require(resolveCwd(`gatsby/dist/commands/develop`)),
   build: () => require(resolveCwd(`gatsby/dist/commands/build`)),
