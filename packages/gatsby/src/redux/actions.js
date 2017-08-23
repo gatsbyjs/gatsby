@@ -51,11 +51,14 @@ const pascalCase = _.flow(_.camelCase, _.upperFirst)
  */
 actions.createPage = (page, plugin = ``, traceId) => {
   if (Array.isArray(page.component)) {
-    page.componentChunkName = []
-    page.component.forEach(c => page.componentChunkName.push(generateComponentChunkName(c)))
+    page.component.forEach(c => path.normalize(c))
   } else {
-    page.componentChunkName = generateComponentChunkName(page.component)
+    // make strings into an array so it is easier to reason about (always an array)
+    //   and deals with windows path issues in an array?
+    page.component = [path.normalize(page.component)]
   }
+  page.componentChunkName = []
+  page.component.forEach(c => page.componentChunkName.push(generateComponentChunkName(c)))
 
   let jsonName = `${_.kebabCase(page.path)}.json`
   let internalComponentName = `Component${pascalCase(page.path)}`

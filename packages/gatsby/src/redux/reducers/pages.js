@@ -6,11 +6,7 @@ module.exports = (state = [], action) => {
     case `DELETE_CACHE`:
       return []
     case `CREATE_PAGE`:
-      if (Array.isArray(action.payload.component)) {
-        action.payload.component.forEach(c => normalize(c))
-      } else {
-        action.payload.component = normalize(action.payload.component)
-      }
+      action.payload.component.forEach(c => normalize(c))
       if (!action.plugin && !action.plugin.name) {
         console.log(``)
         console.error(JSON.stringify(action, null, 4))
