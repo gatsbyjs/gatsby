@@ -8,7 +8,7 @@ import BlogPost from "./blog-post"
 
 class MasterLayout extends React.Component {
   render() {
-    let siteMetadata = this.props.data.allSite.edges[0].node.siteMetadata
+    let siteMetadata = this.props.data.site.siteMetadata
     let location = this.props.location.pathname
     let jimmyPage // you jimmy a lock until it opens, so same thing here ;)
 
