@@ -14,7 +14,6 @@ const DefaultLayout = ({ children }) =>
 class ComponentRenderer extends React.Component {
   constructor(props) {
     super()
-    console.log(props)
     this.state = {
       location: props.location,
       componentIndex: props.componentIndex,
