@@ -81,7 +81,11 @@ const runQueriesForIds = ids => {
         pl => pl.path === id || `LAYOUT___${pl.id}` === id
       )
       if (plObj) {
-        return queryRunner(plObj, state.components[plObj.component])
+        let pIterable = []
+        plObj.component.forEach(c => {
+          pIterable.push(queryRunner(plObj, state.components[c]))
+        })
+        return Promise.all(pIterable)
       }
     })
   )

@@ -53,6 +53,9 @@ const writePages = async () => {
 
   pageLayouts = _.uniq(pageLayouts)
   components = _.uniqBy(components, c => c.componentChunkName)
+  // returns an array of objects that each contain
+  //  the componentChunkName and component which
+  //  each themselves are arrays
 
   await fs.writeFile(
     joinPath(program.directory, `.cache/pages.json`),
@@ -66,9 +69,11 @@ const preferDefault = m => m && m.default || m
   syncRequires += `exports.components = {\n${components
     .map(
       c =>
-        `  "${c.componentChunkName}": preferDefault(require("${joinPath(
-          c.component
-        )}"))`
+        c.component.map((eachComponent, i) =>
+            `  "${c.componentChunkName[i]}": preferDefault(require("${joinPath(
+              eachComponent
+            )}"))`
+        )
     )
     .join(`,\n`)}
 }\n\n`
@@ -102,9 +107,11 @@ const preferDefault = m => m && m.default || m
   asyncRequires += `exports.components = {\n${components
     .map(
       c =>
-        `  "${c.componentChunkName}": require("gatsby-module-loader?name=${c.componentChunkName}!${joinPath(
-          c.component
-        )}")`
+        c.component.map((eachComponent, i) =>
+            `  "${c.componentChunkName[i]}": require("gatsby-module-loader?name=${c.componentChunkName[i]}!${joinPath(
+              eachComponent
+            )}")`
+        )
     )
     .join(`,\n`)}
 }\n\n`
