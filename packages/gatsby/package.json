@@ -4,7 +4,7 @@
   "version": "1.8.16",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
-    "gatsby": "./dist/gatsby-cli.js"
+    "gatsby": "./bin/gatsby.js"
   },
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -50,6 +50,7 @@
     "friendly-errors-webpack-plugin": "^1.6.1",
     "front-matter": "^2.1.0",
     "fs-extra": "^3.0.1",
+    "gatsby-cli": "^1.0.12",
     "glob": "^7.1.1",
     "graphql": "^0.10.3",
     "graphql-relay": "^0.5.1",
