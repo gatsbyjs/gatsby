@@ -152,13 +152,12 @@
     "url": "git+https://github.com/gatsbyjs/gatsby.git"
   },
   "scripts": {
-    "build": "rimraf dist && npm run build:src && npm run build:cli && npm run build:internal-plugins && npm run build:rawfiles",
-    "build:cli": "babel src/gatsby-cli.js --out-file dist/gatsby-cli.js --presets es2015",
+    "build": "rimraf dist && npm run build:src && npm run build:internal-plugins && npm run build:rawfiles",
     "build:internal-plugins": "copyfiles -u 1 src/internal-plugins/**/package.json dist",
     "build:rawfiles": "copyfiles -u 1 src/internal-plugins/**/raw_* dist",
-    "build:src": "babel src --out-dir dist --source-maps --ignore gatsby-cli.js,raw_*,__tests__",
+    "build:src": "babel src --out-dir dist --source-maps raw_*,__tests__",
     "clean-test-bundles": "find test/ -type f -name bundle.js* -exec rm -rf {} +",
     "test-coverage": "node_modules/.bin/nyc --reporter=lcov --reporter=text npm test",
-    "watch": "rimraf dist && mkdir dist && npm run build:cli && npm run build:internal-plugins && npm run build:rawfiles && npm run build:src -- --watch"
+    "watch": "rimraf dist && mkdir dist && npm run build:internal-plugins && npm run build:rawfiles && npm run build:src -- --watch"
   }
 }
