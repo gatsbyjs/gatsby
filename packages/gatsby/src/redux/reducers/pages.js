@@ -14,7 +14,9 @@ module.exports = (state = [], action) => {
         throw new Error(`Pages can only be created by plugins. There wasn't a plugin set
         when creating this page.`)
       }
-      action.payload.pluginCreator___NODE = `Plugin ${action.plugin.name}`
+      // Link page to its plugin.
+      action.payload.pluginCreator___NODE = action.plugin.id
+      action.payload.pluginCreatorId = action.plugin.id
       const index = _.findIndex(state, p => p.path === action.payload.path)
       // If the path already exists, overwrite it.
       // Otherwise, add it to the end.

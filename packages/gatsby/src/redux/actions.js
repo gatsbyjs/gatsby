@@ -41,9 +41,9 @@ const pascalCase = _.flow(_.camelCase, _.upperFirst)
  * @example
  * createPage({
  *   path: `/my-sweet-new-page/`,
- *   component: path.resolve('./src/templates/my-sweet-new-page.js`),
- *   // context gets passed in as props to the page as well
- *   // as into the page/template's GraphQL query.
+ *   component: path.resolve(`./src/templates/my-sweet-new-page.js`),
+ *   // The context is passed as props to the component as well
+ *   // as into the component's GraphQL query.
  *   context: {
  *     id: `123456`,
  *   },
@@ -79,6 +79,7 @@ actions.createPage = (page, plugin = ``, traceId) => {
 
   page.jsonName = jsonName
   page.internalComponentName = internalComponentName
+  page.updatedAt = new Date().toJSON()
 
   // Ensure the page has a context object
   if (!page.context) {
@@ -171,13 +172,15 @@ actions.createLayout = (layout, plugin = ``, traceId) => {
 /**
  * Delete a node
  * @param {string} nodeId a node id
+ * @param {object} node the node object
  * @example
- * deleteNode(node.id)
+ * deleteNode(node.id, node)
  */
-actions.deleteNode = (nodeId, plugin = ``) => {
+actions.deleteNode = (nodeId, node, plugin = ``) => {
   return {
     type: `DELETE_NODE`,
     plugin,
+    node,
     payload: nodeId,
   }
 }

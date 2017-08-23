@@ -30,6 +30,8 @@ export const pageSchema = Joi.object()
     component: Joi.alternatives().try(Joi.string(), Joi.array()).required(),
     componentChunkName: Joi.alternatives().try(Joi.string(), Joi.array()).required(),
     context: Joi.object(),
+    pluginCreator___NODE: Joi.string(),
+    pluginCreatorName: Joi.string(),
   })
   .unknown()
 

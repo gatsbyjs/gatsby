@@ -25,14 +25,14 @@ plugins: [
   {
     resolve: `gatsby-source-filesystem`,
     options: {
-      name: `docs`,
+      name: `pages`,
       path: `${__dirname}/pages/`,
     },
   },
   {
     resolve: `gatsby-source-filesystem`,
     options: {
-      name: `packages`,
+      name: `data`,
       path: `${__dirname}/data/`,
     },
   },

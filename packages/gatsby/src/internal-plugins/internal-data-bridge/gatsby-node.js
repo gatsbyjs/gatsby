@@ -69,7 +69,6 @@ exports.sourceNodes = ({ boundActionCreators, store }) => {
       packageJson: transformPackageJson(
         require(`${plugin.resolve}/package.json`)
       ),
-      id: `Plugin ${plugin.name}`,
       parent: `SOURCE`,
       children: [],
       internal: {
