@@ -905,12 +905,8 @@ export const query = graphql`
 
 And there we go! A working (albeit quite simple still) blog!
 
-This is the foundation of Gatsby. You *source* and *transform* data using plugins and Gatsby's data layer. Using the automatically constructed GraphQL schema, you *map* data to pages. Then in page template components, you *query* for data.
+Try adding some more markdown files. Explore adding other data from the `MarkdownRemark` nodes to the frontpage or blog posts pages.
+
+What we've learned in this part of the tutorial is the very foundation of Gatsby. You *source* and *transform* data using plugins and Gatsby's data layer. Using the automatically constructed GraphQL schema, you *map* data to pages. Then in page template components, you *query* for data.
 
 Everything in Gatsby builds from this.
-
-## One more thing…
-
-TODO fix hot reloading pages and tell them to add another post.
-
-FIX deleting files
