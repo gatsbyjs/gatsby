@@ -71,7 +71,7 @@ actions.createPage = (page, plugin = ``, traceId) => {
 
   page.jsonName = jsonName
   page.internalComponentName = internalComponentName
-  page.updatedAt = new Date().toJSON()
+  page.updatedAt = Date.now()
 
   // Ensure the page has a context object
   if (!page.context) {
