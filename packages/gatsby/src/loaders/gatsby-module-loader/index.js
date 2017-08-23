@@ -1,51 +1,35 @@
+"use strict";
+
 /*
   Based on Tobias Koppers @sokra bundle-loader
   https://github.com/webpack/bundle-loader
 
   and Arthur Stolyar's async-module-loader
 */
-const loaderUtils = require(`loader-utils`)
-const path = require(`path`)
+var loaderUtils = require("loader-utils");
+var path = require("path");
 
-module.exports = function() {}
-module.exports.pitch = function(remainingRequest) {
-  this.cacheable && this.cacheable()
+module.exports = function () {};
+module.exports.pitch = function (remainingRequest) {
+  this.cacheable && this.cacheable();
 
-  const query = loaderUtils.parseQuery(this.query)
-  let chunkName = ``
+  var query = loaderUtils.parseQuery(this.query);
+  var chunkName = "";
 
   if (query.name) {
     chunkName = loaderUtils.interpolateName(this, query.name, {
       context: query.context,
-      regExp: query.regExp,
-    })
-    chunkName = `, ${JSON.stringify(chunkName)}`
+      regExp: query.regExp });
+    chunkName = ", " + JSON.stringify(chunkName);
   }
 
-  const request = loaderUtils.stringifyRequest(this, `!!` + remainingRequest)
+  var request = loaderUtils.stringifyRequest(this, "!!" + remainingRequest);
 
-  const callback = `function() { return require(` + request + `) }`
+  var callback = "function() { return require(" + request + ") }";
 
-  const executor = `
-     return require.ensure([], function(_, error) {
-        if (error) {
-          console.log('bundle loading error', error)
-          cb(true)
-        } else {
-          cb(null, ${callback})
-        }
-      }${chunkName});
-    `
+  var executor = "\n     return require.ensure([], function(_, error) {\n        if (error) {\n          console.log('bundle loading error', error)\n          cb(true)\n        } else {\n          cb(null, " + callback + ")\n        }\n      }" + chunkName + ");\n    ";
 
-  const result = `
-    require(
-      ${loaderUtils.stringifyRequest(
-        this,
-        `!${path.join(__dirname, `patch.js`)}`
-      )}
-    );
-    module.exports = function(cb) { ${executor} }
-    `
+  var result = "\n    require(\n      " + loaderUtils.stringifyRequest(this, "!" + path.join(__dirname, "patch.js")) + "\n    );\n    module.exports = function(cb) { " + executor + " }\n    ";
 
-  return result
-}
+  return result;
+};
