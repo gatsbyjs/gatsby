@@ -236,7 +236,7 @@ const queue = {
       const page = findPage(path)
       if (!page) return
       const pageResources = {
-        component: syncRequires.components[page.componentChunkName],
+        component: page.componentChunkName.map(chunk => syncRequires.components[chunk]),
         json: syncRequires.json[page.jsonName],
         layout: syncRequires.layouts[page.layoutComponentChunkName],
         pageComponent: 'we expect the javascript page component here via syncRequires', //we want this as a sync requires
