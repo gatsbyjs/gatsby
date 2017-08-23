@@ -13,4 +13,6 @@ async function loadNodeContent(fileNode) {
   })
 }
 
+exports.createFilePath = require(`./create-file-path`)
+
 exports.loadNodeContent = loadNodeContent

@@ -51,6 +51,7 @@ function resolvePlugin(pluginName) {
         return {
           resolve: resolvedPath,
           name: packageJSON.name || pluginName,
+          id: `Plugin ${packageJSON.name || pluginName}`,
           version:
             packageJSON.version || createFileContentHash(resolvedPath, `**`),
         }
@@ -74,6 +75,7 @@ function resolvePlugin(pluginName) {
 
     return {
       resolve: resolvedPath,
+      id: `Plugin ${packageJSON.name}`,
       name: packageJSON.name,
       version: packageJSON.version,
     }
@@ -166,6 +168,7 @@ module.exports = async (config = {}) => {
   // Add the site's default "plugin" i.e. gatsby-x files in root of site.
   plugins.push({
     resolve: slash(process.cwd()),
+    id: `Plugin default-site-plugin`,
     name: `default-site-plugin`,
     version: createFileContentHash(process.cwd(), `gatsby-*`),
     pluginOptions: {
