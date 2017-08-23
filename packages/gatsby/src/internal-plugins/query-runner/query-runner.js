@@ -19,7 +19,7 @@ module.exports = async (pageOrLayout, component) => {
   let result
 
   // Nothing to do if the query doesn't exist.
-  if (!component.query || component.query === ``) {
+  if (!component || !component.query || component.query === ``) {
     result = {}
   } else {
     result = await graphql(component.query, {
