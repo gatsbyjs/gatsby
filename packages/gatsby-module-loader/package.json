@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
+    "watch": "babel -w src --out-dir . --ignore __tests__",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
