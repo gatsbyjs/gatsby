@@ -173,7 +173,13 @@ module.exports = (
         return cachedToc
       } else {
         const ast = await getAST(markdownNode)
-        const toc = hastToHTML(toHAST(mdastToToc(ast).map))
+        const tocAst = mdastToToc(ast)
+        let toc
+        if (tocAst.map) {
+          toc = hastToHTML(toHAST(tocAst.map))
+        } else {
+          toc = ``
+        }
         cache.set(tableOfContentsCacheKey(markdownNode), toc)
         return toc
       }

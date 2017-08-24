@@ -116,7 +116,11 @@ exports.sourceNodes = (
   })
   watcher.on(`unlink`, path => {
     console.log(`file deleted at`, path)
-    deleteNode(createId(path))
+    const node = getNode(createId(path))
+    deleteNode(node.id, node)
+
+    // Also delete nodes for the file's transformed children nodes.
+    node.children.forEach(childId => deleteNode(childId, getNode(childId)))
   })
   watcher.on(`ready`, () => {
     if (ready) {

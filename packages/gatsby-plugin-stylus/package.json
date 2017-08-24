@@ -1,10 +1,11 @@
 {
   "name": "gatsby-plugin-stylus",
   "description": "Gatsby support for Stylus",
-  "version": "1.1.1",
+  "version": "1.1.3",
   "author": "Ian Sinnott <ian@iansinnott.com>",
   "dependencies": {
     "babel-cli": "^6.24.1",
+    "babel-runtime": "6.26.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "stylus": "^0.54.5",
     "stylus-loader": "webpack1"

@@ -6,6 +6,7 @@ const slash = require(`slash`)
 const fs = require(`fs-extra`)
 const md5File = require(`md5-file/promise`)
 const crypto = require(`crypto`)
+const del = require(`del`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const testRequireError = require(`../utils/test-require-error`)
@@ -31,7 +32,7 @@ const { writePages } = require(`../internal-plugins/query-runner/pages-writer`)
 const preferDefault = m => (m && m.default) || m
 
 module.exports = async (program: any) => {
-  // Fix program directory path for windows env
+  // Fix program directory path for windows env.
   program.directory = slash(program.directory)
 
   store.dispatch({
@@ -39,8 +40,15 @@ module.exports = async (program: any) => {
     payload: program,
   })
 
+  // Delete html files from the public directory as we don't want deleted
+  // pages from previous builds to stick around.
+  let activity = report.activityTimer(`delete html files from previous builds`)
+  activity.start()
+  await del([`public/*.html`, `public/**/*.html`])
+  activity.end()
+
   // Try opening the site's gatsby-config.js file.
-  let activity = report.activityTimer(`open and validate gatsby-config.js`)
+  activity = report.activityTimer(`open and validate gatsby-config.js`)
   activity.start()
   let config
   try {
@@ -287,6 +295,11 @@ module.exports = async (program: any) => {
   await extractQueries()
   activity.end()
 
+  // Start the createPages hot reloader.
+  if (process.env.NODE_ENV !== `production`) {
+    require(`./page-hot-reloader`)(graphqlRunner)
+  }
+
   // Run queries
   activity = report.activityTimer(`run graphql queries`)
   activity.start()
@@ -304,6 +317,20 @@ module.exports = async (program: any) => {
   activity.start()
   await require(`../schema`)()
   activity.end()
+
+  // Load the page hot reloader. It listens for node changes
+  // and re-runs `createPages` and removes pages which weren't
+  // recreated.
+  //
+  // Algorithm is make clone of pages, run createPages, remove from
+  // both pages create by plugins only implementing `createPagesStatefully`.
+  // Check for pages not updated (need update timestamp) and remove
+  // those. yeah, just figure out in reducer if the plugin implements
+  // createPagesStatefully and mark the page as stateful to simplify
+  // things.
+  //
+  // TODO fix deleting nodes so we can both add markdown pages
+  // and remove pages as well just by adding/removing markdown files.
 
   const checkJobsDone = _.debounce(resolve => {
     const state = store.getState()

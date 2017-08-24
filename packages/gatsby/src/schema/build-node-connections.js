@@ -12,6 +12,11 @@ module.exports = (types: any) => {
   const connections = {}
 
   _.each(types, (type /* , fieldName*/) => {
+    // Don't create a connection for the Site node since there can only be one
+    // of them.
+    if (type.name === `Site`) {
+      return
+    }
     const nodes = type.nodes
     const { connectionType: typeConnection } = connectionDefinitions({
       nodeType: type.nodeObjectType,
