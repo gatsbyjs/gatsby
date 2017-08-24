@@ -6,6 +6,7 @@ const _ = require(`lodash`)
 
 const { emitter } = require(`../../redux`)
 const { boundActionCreators } = require(`../../redux/actions`)
+const { getNode } = require(`../../redux`)
 
 function transformPackageJson(json) {
   const transformDeps = deps =>
@@ -150,6 +151,6 @@ exports.onCreatePage = ({ page, boundActionCreators }) => {
 // Listen for DELETE_PAGE and delete page nodes.
 emitter.on(`DELETE_PAGE`, action => {
   const nodeId = createPageId(action.payload.path)
-  const node = boundActionCreators.getNode(nodeId)
+  const node = getNode(nodeId)
   boundActionCreators.deleteNode(nodeId, node)
 })
