@@ -1,6 +1,7 @@
 /* @flow */
-const webpack = require(`webpack`)
-const webpackConfig = require(`../utils/webpack.config`)
+import webpack from "webpack"
+import Promise from "bluebird"
+import webpackConfig from "./webpack.config"
 
 module.exports = async program => {
   const { directory } = program
