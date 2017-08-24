@@ -54,4 +54,5 @@ module.exports = async function build(program: any) {
   await apiRunnerNode(`onPostBuild`, { graphql: graphqlRunner })
 
   report.info(`Done building in ${process.uptime()} sec`)
+  process.exit()
 }
