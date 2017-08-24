@@ -2,10 +2,11 @@ const reducer = require(`../reducers/pages`)
 const { actions } = require(`../actions`)
 
 const start = Date.now()
-Date.now = jest.fn(() => {
-  // const diff = new Date().getTime() - start
-  return 1482363367071 // + diff
-})
+Date.now = jest.fn(
+  () =>
+    // const diff = new Date().getTime() - start
+    1482363367071 // + diff
+)
 
 describe(`Add pages`, () => {
   it(`allows you to add pages`, () => {

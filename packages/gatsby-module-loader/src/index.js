@@ -26,8 +26,7 @@ module.exports.pitch = function(remainingRequest) {
 
   const callback = `function() { return require(` + request + `) }`
 
-  const executor = `
-     return require.ensure([], function(_, error) {
+  const executor = `return require.ensure([], function(_, error) {
         if (error) {
           console.log('bundle loading error', error)
           cb(true)
@@ -37,8 +36,7 @@ module.exports.pitch = function(remainingRequest) {
       }${chunkName});
     `
 
-  const result = `
-    require(
+  const result = `require(
       ${loaderUtils.stringifyRequest(
         this,
         `!${path.join(__dirname, `patch.js`)}`
