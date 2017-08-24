@@ -11,6 +11,7 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "babel-runtime": "^6.26.0",
     "loader-utils": "^0.2.16"
   },
   "devDependencies": {
