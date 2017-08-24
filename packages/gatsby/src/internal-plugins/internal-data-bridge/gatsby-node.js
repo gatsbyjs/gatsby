@@ -149,5 +149,7 @@ exports.onCreatePage = ({ page, boundActionCreators }) => {
 
 // Listen for DELETE_PAGE and delete page nodes.
 emitter.on(`DELETE_PAGE`, action => {
-  boundActionCreators.deleteNode(createPageId(action.payload.path))
+  const nodeId = createPageId(action.payload.path)
+  const node = boundActionCreators.getNode(nodeId)
+  boundActionCreators.deleteNode(nodeId, node)
 })
