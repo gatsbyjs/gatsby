@@ -107,14 +107,15 @@ const findDirtyIds = actions => {
   const state = store.getState()
   return actions.reduce((dirtyIds, action) => {
     const node = action.payload
+    if (!_.isUndefined(node)) {
+      // find invalid pagesAndLayouts
+      dirtyIds = dirtyIds.concat(state.componentDataDependencies.nodes[node.id])
 
-    // find invalid pagesAndLayouts
-    dirtyIds = dirtyIds.concat(state.componentDataDependencies.nodes[node.id])
-
-    // Find invalid connections
-    dirtyIds = dirtyIds.concat(
-      state.componentDataDependencies.connections[node.internal.type]
-    )
+      // Find invalid connections
+      dirtyIds = dirtyIds.concat(
+        state.componentDataDependencies.connections[node.internal.type]
+      )
+    }
 
     return _.compact(dirtyIds)
   }, [])
