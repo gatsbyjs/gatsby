@@ -1,38 +1,47 @@
-#!/usr/bin/env node
-
 // babel-preset-env doesn't find this import if you
 // use require() with backtick strings so use the es6 syntax
 import "babel-polyfill"
 
 const program = require(`commander`)
-const packageJson = require(`./package.json`)
+const packageJson = require(`../../package.json`)
 const path = require(`path`)
 const _ = require(`lodash`)
+const Promise = require(`bluebird`)
 const resolveCwd = require(`resolve-cwd`)
 
-program.version(packageJson.version).usage(`[command] [options]`)
+const report = require(`../reporter`)
+
+// Improve Promise error handling. Maybe... what's the best
+// practice for this these days?
+global.Promise = require(`bluebird`)
+
+Promise.onPossiblyUnhandledRejection(error => {
+  report.error(error)
+  throw error
+})
+
+process.on(`unhandledRejection`, error => {
+  // This will exit the process in newer Node anyway so lets be consistent
+  // across versions and crash
+  report.panic(`UNHANDLED REJECTION`, error)
+})
+
+process.on(`uncaughtException`, error => {
+  report.panic(`UNHANDLED EXCEPTION`, error)
+})
+
+const defaultHost = `localhost`
 
 let inGatsbySite = false
 let localPackageJSON
 try {
   localPackageJSON = require(path.resolve(`./package.json`))
-  if (
-    (localPackageJSON.dependencies && localPackageJSON.dependencies.gatsby) ||
-    (localPackageJSON.devDependencies &&
-      localPackageJSON.devDependencies.gatsby)
-  ) {
-    inGatsbySite = true
-  } else if (
-    localPackageJSON.devDependencies &&
-    localPackageJSON.devDependencies.gatsby
-  ) {
+  if (localPackageJSON.dependencies && localPackageJSON.dependencies.gatsby) {
     inGatsbySite = true
   }
 } catch (err) {
   // ignore
 }
-
-const defaultHost = `localhost`
 
 const directory = path.resolve(`.`)
 const getSiteInfo = () => {
@@ -44,6 +53,8 @@ const getSiteInfo = () => {
   ]
   return { sitePackageJson, browserslist }
 }
+
+program.version(packageJson.version).usage(`[command] [options]`)
 
 // If there's a package.json in the current directory w/ a gatsby dependency
 // include the develop/build/serve commands. Otherwise, just the new.
@@ -64,6 +75,7 @@ if (inGatsbySite) {
     .action(command => {
       const developPath = resolveCwd(`gatsby/dist/utils/develop`)
       const develop = require(developPath)
+      // console.timeEnd(`time to load develop`)
       const { sitePackageJson, browserslist } = getSiteInfo()
       const p = {
         ...command,
@@ -95,7 +107,7 @@ if (inGatsbySite) {
         browserslist,
       }
       build(p).then(() => {
-        console.log(`Done building in`, process.uptime(), `seconds`)
+        report.success(`Done building in ${process.uptime()} seconds`)
         process.exit()
       })
     })
@@ -128,7 +140,7 @@ program
   .command(`new [rootPath] [starter]`)
   .description(`Create new Gatsby project.`)
   .action((rootPath, starter) => {
-    const newCommand = require(`./new`)
+    const newCommand = require(`../utils/new`)
     newCommand(rootPath, starter)
   })
 

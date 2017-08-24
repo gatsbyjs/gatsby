@@ -8,7 +8,7 @@ const glob = require(`glob`)
 const { store } = require(`../redux`)
 const nodeAPIs = require(`../utils/api-node-docs`)
 const testRequireError = require(`../utils/test-require-error`)
-const report = require(`gatsby-cli/lib/reporter`)
+const report = require(`../reporter`)
 
 function createFileContentHash(root, globPattern) {
   const hash = crypto.createHash(`md5`)
