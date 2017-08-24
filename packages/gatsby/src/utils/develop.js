@@ -1,20 +1,20 @@
 /* @flow */
 
-const chokidar = require(`chokidar`)
 const express = require(`express`)
 const graphqlHTTP = require(`express-graphql`)
-const parsePath = require(`parse-filepath`)
 const request = require(`request`)
-const rl = require(`readline`)
-const webpack = require(`webpack`)
-const webpackConfig = require(`../utils/webpack.config`)
 const bootstrap = require(`../bootstrap`)
+const chokidar = require(`chokidar`)
+const webpack = require(`webpack`)
+const webpackConfig = require(`./webpack.config`)
+const rl = require(`readline`)
+const parsePath = require(`parse-filepath`)
 const { store } = require(`../redux`)
-const copyStaticDirectory = require(`../utils/copy-static-directory`)
+const copyStaticDirectory = require(`./copy-static-directory`)
 const developHtml = require(`./develop-html`)
-const { withBasePath } = require(`../utils/path`)
-const report = require(`gatsby-cli/lib/reporter`)
-const { formatStaticBuildError } = require(`gatsby-cli/lib/reporter/errors`)
+const { withBasePath } = require(`./path`)
+const report = require(`../reporter`)
+const { formatStaticBuildError } = require(`../reporter/errors`)
 
 // Watch the static directory and copy files to public as they're added or
 // changed. Wait 10 seconds so copying doesn't interfer with the regular

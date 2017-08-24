@@ -3,7 +3,7 @@ const glob = require(`glob`)
 const _ = require(`lodash`)
 const mapSeries = require(`async/mapSeries`)
 
-const reporter = require(`gatsby-cli/lib/reporter`)
+const reporter = require(`../reporter`)
 const cache = require(`./cache`)
 const apiList = require(`./api-node-docs`)
 
