@@ -693,7 +693,7 @@ Restart the development server and open or refresh Graph*i*QL and run this query
 
 Now that the slugs are created, we can create the pages.
 
-In the same `gatsby-node.js` file, add the following:
+In the same `gatsby-node.js` file, add the following. Here we tell Gatsby about our pages—what is their paths, what template component do they use, etc.
 
 ```javascript{15-35}
 const { createFilePath } = require(`gatsby-source-filesystem`)
