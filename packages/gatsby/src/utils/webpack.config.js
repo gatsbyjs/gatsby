@@ -11,7 +11,7 @@ const { actions } = require(`../redux/actions`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
 const WebpackMD5Hash = require(`webpack-md5-hash`)
 const ChunkManifestPlugin = require(`chunk-manifest-webpack-plugin`)
-const GatsbyModulePlugin = require(`../loaders/gatsby-module-loader/plugin`)
+const GatsbyModulePlugin = require(`gatsby-module-loader/plugin`)
 const { withBasePath } = require(`./path`)
 
 const apiRunnerNode = require(`./api-runner-node`)
@@ -190,11 +190,27 @@ module.exports = async (
 
       case `develop-html`:
       case `build-html`:
+<<<<<<< HEAD
         configPlugins = configPlugins.concat([
           new StaticSiteGeneratorPlugin(`render-page.js`, pages),
         ])
         break
 
+=======
+        return [
+          new StaticSiteGeneratorPlugin({
+            entry: `render-page.js`,
+            paths: pages,
+          }),
+          new webpack.DefinePlugin({
+            "process.env": processEnv(stage, `production`),
+            __PREFIX_PATHS__: program.prefixPaths,
+            __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
+            __POLYFILL__: store.getState().config.polyfill,
+          }),
+          new ExtractTextPlugin(`build-html-styles.css`, { allChunks: true }),
+        ]
+>>>>>>> master
       case `build-javascript`: {
         // Get array of page template component names.
         let components = store
@@ -254,6 +270,20 @@ module.exports = async (
               return isFramework || count > 3
             },
           }),
+<<<<<<< HEAD
+=======
+          // Add a few global variables. Set NODE_ENV to production (enables
+          // optimizations for React) and whether prefixing links is enabled
+          // (__PREFIX_PATHS__) and what the link prefix is (__PATH_PREFIX__).
+          new webpack.DefinePlugin({
+            "process.env": processEnv(stage, `production`),
+            __PREFIX_PATHS__: program.prefixPaths,
+            __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
+            __POLYFILL__: store.getState().config.polyfill,
+          }),
+          // Extract CSS so it doesn't get added to JS bundles.
+          new ExtractTextPlugin(`build-js-styles.css`, { allChunks: true }),
+>>>>>>> master
           // Write out mapping between chunk names and their hashed names. We use
           // this to add the needed javascript files to each HTML page.
           new StatsWriterPlugin(),

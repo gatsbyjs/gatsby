@@ -10,7 +10,7 @@ exports.resolvableExtensions = true
  * sourcing and transformation of nodes plus creation of the GraphQL schema are
  * complete so you can query your data in order to create pages.
  *
- * See also the documentation for [`createPage`](/docs/bound-action-creators/#createPage).
+ * See also [the documentation for the boundActionCreator `createPage`](/docs/bound-action-creators/#createPage).
  * @example
  * exports.createPages = ({ graphql, boundActionCreators }) => {
  *   const { createPage } = boundActionCreators

@@ -1,6 +1,6 @@
 {
   "name": "gatsby-link",
-  "version": "1.6.8",
+  "version": "1.6.12",
   "description": "An enhanced Link component for Gatsby sites with support for resource prefetching",
   "main": "index.js",
   "types": "index.d.ts",

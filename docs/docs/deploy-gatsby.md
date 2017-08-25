@@ -21,9 +21,9 @@ You can deploy sites on Github Pages with or without a custom domain. If you cho
 
 ### Use the NPM package `gh-pages` for deploying
 
-First add **gh-pages** as a `devDependency` of your site and create an npm script command to **deploy** your project by running `npm install gh-pages --save-dev` or `yarn add gh-pages --dev` (if you have yarn installed).
+First add **gh-pages** as a `devDependency` of your site and create an npm script to **deploy** your project by running `npm install gh-pages --save-dev` or `yarn add gh-pages --dev` (if you have yarn installed).
 
-Then add a **deploy** command in your `package.json` file.
+Then add a `deploy` script in your `package.json` file.
 
 ```
 "scripts": {
@@ -40,6 +40,20 @@ module.exports = {
 ```
 
 Now run `yarn deploy` or `npm run deploy`. Preview changes in your github page `https://username.github.io/project-name/`. You also can also find the link to your site on Github under `Settings` > `Github Pages`. 
+
+### Deploying a user/organization site
+
+Unlike project pages, user/organization sites on Github live in a special repository dedicated to files for the site. The sites must be published from the `master` branch of the repository which means the site source files should be kept in a branch named `source` or something similar. We also don't need to prefix links like we do with project sites.
+
+The repository for these sites requires a special name. See https://help.github.com/articles/user-organization-and-project-pages/ for documentation on naming your site's repository.
+
+Like with project sites, add `gh-pages` as a `devDependency` and add a `deploy` script to your site's `package.json` file:
+
+```
+"scripts": {
+  "deploy": "gatsby build && gh-pages -d public --branch master",
+}
+```
 
 ## Debugging tips
 
