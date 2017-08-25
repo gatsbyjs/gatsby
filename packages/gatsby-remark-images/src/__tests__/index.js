@@ -3,7 +3,7 @@ jest.mock(`gatsby-plugin-sharp`, () => {
     responsiveSizes({ file, args }) {
       return Promise.resolve({
         aspectRatio: 0.75,
-        originalImage: file.absolutePath,
+        originalImg: file.absolutePath,
         src: file.absolutePath,
         srcSet: `${file.absolutePath}, ${file.absolutePath}`,
         sizes: `(max-width: ${args.maxWidth}px) 100vw, ${args.maxWidth}px`,
