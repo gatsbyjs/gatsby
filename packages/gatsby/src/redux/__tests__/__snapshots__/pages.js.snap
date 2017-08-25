@@ -9,7 +9,9 @@ Array [
     "internalComponentName": "ComponentHi",
     "jsonName": "hi.json",
     "path": "/hi/",
-    "pluginCreator___NODE": "Plugin test",
+    "pluginCreatorId": "test",
+    "pluginCreator___NODE": "test",
+    "updatedAt": 1482363367071,
   },
   Object {
     "component": "/whatever/index.js",
@@ -18,7 +20,9 @@ Array [
     "internalComponentName": "ComponentHiPizza",
     "jsonName": "hi-pizza.json",
     "path": "/hi/pizza/",
-    "pluginCreator___NODE": "Plugin test",
+    "pluginCreatorId": "test",
+    "pluginCreator___NODE": "test",
+    "updatedAt": 1482363367071,
   },
 ]
 `;
@@ -32,9 +36,12 @@ Object {
     "internalComponentName": "ComponentHi",
     "jsonName": "hi.json",
     "path": "/hi/",
-    "pluginCreator___NODE": "Plugin test",
+    "pluginCreatorId": "test",
+    "pluginCreator___NODE": "test",
+    "updatedAt": 1482363367071,
   },
   "plugin": Object {
+    "id": "test",
     "name": "test",
   },
   "traceId": undefined,
@@ -51,7 +58,9 @@ Array [
     "internalComponentName": "ComponentHi",
     "jsonName": "hi.json",
     "path": "/hi/",
-    "pluginCreator___NODE": "Plugin test",
+    "pluginCreatorId": "test",
+    "pluginCreator___NODE": "test",
+    "updatedAt": 1482363367071,
   },
 ]
 `;
@@ -67,9 +76,12 @@ Object {
     "internalComponentName": "ComponentHi",
     "jsonName": "hi.json",
     "path": "/hi/",
-    "pluginCreator___NODE": "Plugin test",
+    "pluginCreatorId": "test",
+    "pluginCreator___NODE": "test",
+    "updatedAt": 1482363367071,
   },
   "plugin": Object {
+    "id": "test",
     "name": "test",
   },
   "traceId": undefined,
@@ -88,7 +100,9 @@ Array [
     "internalComponentName": "ComponentHi",
     "jsonName": "hi.json",
     "path": "/hi/",
-    "pluginCreator___NODE": "Plugin test",
+    "pluginCreatorId": "test",
+    "pluginCreator___NODE": "test",
+    "updatedAt": 1482363367071,
   },
 ]
 `;
@@ -104,7 +118,9 @@ Array [
     "internalComponentName": "ComponentHi",
     "jsonName": "hi.json",
     "path": "/hi/",
-    "pluginCreator___NODE": "Plugin test",
+    "pluginCreatorId": "test",
+    "pluginCreator___NODE": "test",
+    "updatedAt": 1482363367071,
   },
 ]
 `;
