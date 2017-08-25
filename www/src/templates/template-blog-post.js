@@ -60,6 +60,25 @@ const BlogPostTemplate = React.createClass({
         href: post.frontmatter.canonicalLink,
       })
     }
+    let imageProps
+    if (post.frontmatter.image) {
+      imageProps = {
+        src: post.frontmatter.image.childImageSharp.responsiveSizes.src,
+        srcSet: post.frontmatter.image.childImageSharp.responsiveSizes.srcSet,
+        className: `gatsby-resp-image-image`,
+        css: {
+          width: `100%`,
+          margin: 0,
+          verticalAlign: `middle`,
+          position: `absolute`,
+          boxShadow: `inset 0px 0px 0px 400px #fff`,
+        },
+        sizes: post.frontmatter.image.childImageSharp.responsiveSizes.sizes,
+      }
+      if (post.frontmatter.imageTitle) {
+        imageProps.alt = post.frontmatter.imageTitle
+      }
+    }
     console.log(headLinks)
     return (
       <div>
@@ -203,6 +222,49 @@ const BlogPostTemplate = React.createClass({
           >
             {this.props.data.markdownRemark.frontmatter.title}
           </h1>
+          {post.frontmatter.image &&
+            <div
+              css={{
+                marginBottom: rhythm(1),
+              }}
+            >
+              <div className="gatsby-resp-image-link">
+                <div
+                  className="gatsby-resp-image-wrapper"
+                  css={{
+                    position: `relative`,
+                    zIndex: -1,
+                  }}
+                >
+                  <div
+                    className="gatsby-resp-image-background-image"
+                    css={{
+                      paddingBottom: `${1 /
+                        post.frontmatter.image.childImageSharp.responsiveSizes
+                          .aspectRatio *
+                        100}%`,
+                      position: `relative`,
+                      width: `100%`,
+                      bottom: 0,
+                      left: 0,
+                      backgroundImage: `url(${post.frontmatter.image
+                        .childImageSharp.responsiveSizes.base64})`,
+                      backgroundSize: `cover`,
+                    }}
+                  >
+                    <img {...imageProps} />
+                  </div>
+                </div>
+              </div>
+              {post.frontmatter.imageAuthor &&
+                post.frontmatter.imageAuthorLink &&
+                <em>
+                  Image by{` `}
+                  <a href={post.frontmatter.imageAuthorLink}>
+                    {post.frontmatter.imageAuthor}
+                  </a>
+                </em>}
+            </div>}
           <div
             className="post-body"
             dangerouslySetInnerHTML={{
@@ -210,7 +272,6 @@ const BlogPostTemplate = React.createClass({
             }}
           />
         </Container>
-
         <div
           css={{
             borderTop: `1px solid ${presets.veryLightPurple}`,
@@ -306,8 +367,18 @@ export const pageQuery = graphql`
             resize(width: 1500, height: 1500) {
               src
             }
+            responsiveSizes(maxWidth: 756) {
+              src
+              srcSet
+              aspectRatio
+              base64
+              sizes
+            }
           }
         }
+        imageAuthor
+        imageAuthorLink
+        imageTitle
         author {
           id
           bio

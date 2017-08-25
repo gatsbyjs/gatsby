@@ -2,12 +2,12 @@
 title: Gatsby's first beta release
 date: "2017-06-15"
 author: "Kyle Mathews"
-image: 'images/13382568193_31cfce63be_o-edited.jpg'
+image: "images/13382568193_31cfce63be_o-edited.jpg"
+imageAuthor: Kees Torn
+imageAuthorLink: https://flic.kr/p/mozahn
+imageTitle: Container ship loading containers
 excerpt: "We shipped today Gatsby's first beta for 1.0! Gatsby is a modern blazing-fast static site generator for React.js…"
 ---
-
-![Container ship loading containers](images/13382568193_31cfce63be_o-edited.jpg)*Image by [Kees Torn](https://flic.kr/p/mozahn)*
-
 We shipped today Gatsby's first beta for 1.0! Gatsby is a modern blazing-fast static
 site generator for React.js.
 
