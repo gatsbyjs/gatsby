@@ -1,7 +1,7 @@
 {
   "name": "gatsby-remark-katex",
   "description": "Transform math nodes to html markup",
-  "version": "1.0.3",
+  "version": "2.0.0",
   "author": "Jeffrey Xiao <jeffrey.xiao1998@gmail.com>",
   "dependencies": {
     "babel-runtime": "6.26.0",

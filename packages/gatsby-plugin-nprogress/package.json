@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-nprogress",
-  "version": "1.0.3",
+  "version": "2.0.0",
   "description": "Shows page loading indicator when loading page resources is delayed",
   "main": "index.js",
   "scripts": {

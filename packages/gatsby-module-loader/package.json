@@ -1,6 +1,6 @@
 {
   "name": "gatsby-module-loader",
-  "version": "1.0.3",
+  "version": "2.0.0",
   "description": "_Based on https://github.com/webpack/bundle-loader and https://github.com/NekR/async-module-loader_",
   "main": "index.js",
   "scripts": {
