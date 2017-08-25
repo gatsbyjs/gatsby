@@ -104,7 +104,30 @@ module.exports = type => {
           groupConnections.push(groupConn)
         })
 
-        return groupConnections
+        // make tags arrays case ignored
+        const tags = groupConnections.map(e=>{
+          if(e.field === 'frontmatter.tags'){
+            e.fieldValue = e.fieldValue.toLowerCase()
+          }
+          return e
+        }).reduce((acc, e)=>{
+          acc[e.fieldValue]
+          ? acc[e.fieldValue]+=e.totalCount
+          : acc[e.fieldValue]= e.totalCount
+          return acc
+        }, {})
+
+        // uniq Tags' connections
+        const output = _.uniqBy(
+          groupConnections.filter(e=>{
+            if(e.field === 'frontmatter.tags') {
+              e.totalCount = tags[e.fieldValue]
+            }
+            return e
+          })
+        , 'fieldValue')
+
+        return output
       },
     },
   }
