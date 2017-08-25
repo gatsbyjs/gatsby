@@ -12,7 +12,7 @@ Source plugin for pulling data into Gatsby from unofficial Medium JSON endpoints
 // In your gatsby-config.js
 plugins: [
   {
-    resolve: `gatsby-source-hacker-news`,
+    resolve: `gatsby-source-medium`,
     options: {
       username: `username/publication`
     }
