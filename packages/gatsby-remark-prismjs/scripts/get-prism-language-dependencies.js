@@ -19,7 +19,7 @@ function processData(data, url) {
   // }
   eval(data)
   if (typeof components === `undefined`) {
-    throw new Error(`components.js content structure seems changed`)
+    throw new Error(`The content structure of \`components.js\` seems changed.`)
   }
 
   // eslint-disable-next-line no-undef
@@ -56,7 +56,7 @@ function requestData() {
       })
     })
     .on(`error`, e => {
-      console.error(e)
+      console.error(e.message)
     })
 }
 

@@ -1,4 +1,4 @@
-// "https://raw.githubusercontent.com/PrismJS/prism/v1.6.0/components.js"
+// From "https://raw.githubusercontent.com/PrismJS/prism/v1.6.0/components.js"
 module.exports = {
   "meta": {
     "path": "components/prism-{id}",
