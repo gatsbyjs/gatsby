@@ -3,9 +3,6 @@
 exports[`create-file-node creates a file node 1`] = `
 Object {
   "absolutePath": "/Users/kylemathews/programs/gatsby/packages/gatsby-source-filesystem/src/__tests__/fixtures/file.json",
-  "accessTime": "2017-08-26T02:20:48.000Z",
-  "atime": "2017-08-26T02:20:48.000Z",
-  "atimeMs": 1503714048000,
   "base": "file.json",
   "birthTime": "2017-08-26T02:16:56.000Z",
   "birthtime": "2017-08-26T02:16:56.000Z",

@@ -8,6 +8,11 @@ describe(`create-file-node`, () => {
       path.resolve(`${__dirname}/fixtures/file.json`),
       {},
       (err, fileNode) => {
+        // Delete access time since this changes on every run.
+        delete fileNode.accessTime
+        delete fileNode.atime
+        delete fileNode.atimeMs
+
         expect(fileNode).toMatchSnapshot()
         done()
       }

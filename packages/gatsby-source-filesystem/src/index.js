@@ -14,5 +14,6 @@ async function loadNodeContent(fileNode) {
 }
 
 exports.createFilePath = require(`./create-file-path`)
+exports.createRemoteFileNode = require(`./create-remote-file-node`)
 
 exports.loadNodeContent = loadNodeContent
