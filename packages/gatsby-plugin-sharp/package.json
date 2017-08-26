@@ -12,7 +12,7 @@
     "imagemin-pngquant": "^5.0.0",
     "lodash": "^4.17.4",
     "progress": "^1.1.8",
-    "sharp": "^0.17.3"
+    "sharp": "^0.18.2"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1"
