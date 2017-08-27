@@ -3,9 +3,13 @@ import React from "react"
 import { Link, NavLink } from "react-router-dom"
 import PropTypes from "prop-types"
 
-let pathPrefix = ``
+let pathPrefix = `/`
 if (typeof __PREFIX_PATHS__ !== `undefined` && __PREFIX_PATHS__) {
   pathPrefix = __PATH_PREFIX__
+}
+
+function normalizePath(path) {
+  return path.replace(/^\/\//g, `/`)
 }
 
 const NavLinkPropTypes = {
@@ -21,7 +25,7 @@ class GatsbyLink extends React.Component {
   constructor(props) {
     super()
     this.state = {
-      to: pathPrefix + props.to,
+      to: normalizePath(pathPrefix + props.to),
     }
   }
   propTypes: {
@@ -33,7 +37,7 @@ class GatsbyLink extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.to !== nextProps.to) {
       this.setState({
-        to: pathPrefix + nextProps.to,
+        to: normalizePath(pathPrefix + nextProps.to),
       })
       ___loader.enqueue(this.state.to)
     }
@@ -101,5 +105,5 @@ GatsbyLink.contextTypes = {
 export default GatsbyLink
 
 export const navigateTo = pathname => {
-  window.___navigateTo(pathPrefix + pathname)
+  window.___navigateTo(normalizePath(pathPrefix + pathname))
 }

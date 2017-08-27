@@ -1,52 +1,46 @@
 platform:
   - x64
 
+cache:
+  - '%AppData%/npm-cache'
+  - C:\Users\appveyor\AppData\Roaming\npm\node_modules\windows-build-tools
+
 skip_branch_with_pr: true
 
-for:
--
-  branches:
-    only:
-      - /.*/
+environment:
+  nodejs_version: "8"
 
-  skip_tags: true
+  matrix:
+  - example: gatsbygram
+    buildon: commit
 
-  environment:
-    nodejs_version: "8"
+  - example: using-javascript-transforms
+    buildon: tag
 
-    matrix:
-    - example: gatsbygram
-      buildon: commit
+  - example: using-remark
+    buildon: tag
 
--
-  branches:
-    only:
-      - /.*/
+  - example: using-contentful
+    buildon: tag
 
-  skip_non_tags: true
+  - example: using-wordpress
+    buildon: tag
 
-  environment:
-    nodejs_version: "8"
+  - example: using-mongodb
+    buildon: tag
 
-    matrix:
-    - example: gatsbygram
-      buildon: commit
+  - example: using-typescript
+    buildon: tag
 
-    - example: using-javascript-transforms
-      buildon: tag
-
-    - example: using-remark
-      buildon: tag
-
-    - example: no-plugins
-      buildon: tag
+  - example: no-plugins
+    buildon: tag
 
 # Install scripts. (runs after repo cloning)
 install:
   - echo This example is built on %buildon% and the commit tag is %APPVEYOR_REPO_TAG% and the tag is %APPVEYOR_REPO_TAG_NAME%
     # we kill the build for most examples unless it is a release or a forced build
   - ps: |
-      if (($env:buildon -eq "tag") -and ($env:APPVEYOR_REPO_TAG -eq "false") -and ($env:APPVEYOR_FORCED_BUILD -ne "True"))
+      if (($env:buildon -eq "tag") -and ($env:APPVEYOR_REPO_COMMIT_MESSAGE -ne "Publish") -and ($env:APPVEYOR_FORCED_BUILD -ne "True"))
       {
         Exit-AppVeyorBuild
       }

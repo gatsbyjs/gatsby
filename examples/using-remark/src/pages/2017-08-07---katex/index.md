@@ -39,6 +39,13 @@ $$
 a^2 + b^2 = c^2
 $$
 
+**Add Katex CSS to your template**
+Katex's CSS file is required to render the formulas correctly. Include the CSS file in your template ([example][4])
+```
+require(`katex/dist/katex.min.css`)
+```
+
 [1]: https://www.gatsbyjs.org/packages/gatsby-remark-katex/
 [2]: https://github.com/Khan/KaTeX
 [3]: https://github.com/Rokt33r/remark-math
+[4]: https://github.com/gatsbyjs/gatsby/blob/master/examples/using-remark/src/templates/template-blog-post.js

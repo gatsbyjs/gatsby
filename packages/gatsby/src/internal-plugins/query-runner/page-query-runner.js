@@ -14,17 +14,23 @@ const queryRunner = require(`./query-runner`)
 let queuedDirtyActions = []
 let active = false
 
+// Do initial run of graphql queries during bootstrap.
+// Afterwards we listen "API_RUNNING_QUEUE_EMPTY" and check
+// for dirty nodes before running queries.
 exports.runQueries = async () => {
   active = true
-  const state = store.getState()
 
   // Run queued dirty nodes now that we're active.
   queuedDirtyActions = _.uniq(queuedDirtyActions, a => a.payload.id)
   const dirtyIds = findDirtyIds(queuedDirtyActions)
   await runQueriesForIds(dirtyIds)
 
-  // Find ids without data dependencies and run them (just in case?)
+  queuedDirtyActions = []
+
+  // Find ids without data dependencies (i.e. no queries have been run for
+  // them before) and run them.
   const cleanIds = findIdsWithoutDataDependencies()
+
   // Run these pages
   await runQueriesForIds(cleanIds)
   return
@@ -34,11 +40,20 @@ emitter.on(`CREATE_NODE`, action => {
   queuedDirtyActions.push(action)
 })
 
+emitter.on(`DELETE_NODE`, action => {
+  queuedDirtyActions.push({ payload: action.node })
+})
+
 const runQueuedActions = async () => {
   if (active) {
     queuedDirtyActions = _.uniq(queuedDirtyActions, a => a.payload.id)
     await runQueriesForIds(findDirtyIds(queuedDirtyActions))
     queuedDirtyActions = []
+
+    // Find ids without data dependencies (e.g. new pages) and run
+    // their queries.
+    const cleanIds = findIdsWithoutDataDependencies()
+    runQueriesForIds(cleanIds)
   }
 }
 
@@ -70,6 +85,7 @@ const findIdsWithoutDataDependencies = () => {
 }
 
 const runQueriesForIds = ids => {
+  ids = _.uniq(ids)
   if (ids.length < 1) {
     return Promise.resolve()
   }
@@ -90,11 +106,7 @@ const runQueriesForIds = ids => {
 const findDirtyIds = actions => {
   const state = store.getState()
   return actions.reduce((dirtyIds, action) => {
-    const node = state.nodes[action.payload.id]
-    // Check if the node was deleted
-    if (!node) {
-      return
-    }
+    const node = action.payload
 
     // find invalid pagesAndLayouts
     dirtyIds = dirtyIds.concat(state.componentDataDependencies.nodes[node.id])

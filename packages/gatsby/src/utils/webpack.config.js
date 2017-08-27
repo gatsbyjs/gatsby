@@ -17,7 +17,7 @@ const { store } = require(`../redux`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
 const WebpackMD5Hash = require(`webpack-md5-hash`)
 const ChunkManifestPlugin = require(`chunk-manifest-webpack-plugin`)
-const GatsbyModulePlugin = require(`../loaders/gatsby-module-loader/plugin`)
+const GatsbyModulePlugin = require(`gatsby-module-loader/plugin`)
 const genBabelConfig = require(`./babel-config`)
 const { withBasePath } = require(`./path`)
 const HashedChunkIdsPlugin = require(`./hashed-chunk-ids-plugin`)
@@ -159,6 +159,7 @@ module.exports = async (
             "process.env": processEnv(stage, `development`),
             __PREFIX_PATHS__: program.prefixPaths,
             __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
+            __POLYFILL__: store.getState().config.polyfill,
           }),
           // Names module ids with their filepath. We use this in development
           // to make it easier to see what modules have hot reloaded, etc. as
@@ -185,6 +186,7 @@ module.exports = async (
             "process.env": processEnv(stage, `development`),
             __PREFIX_PATHS__: program.prefixPaths,
             __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
+            __POLYFILL__: store.getState().config.polyfill,
           }),
           new ExtractTextPlugin(`build-html-styles.css`),
         ]
@@ -194,6 +196,7 @@ module.exports = async (
             "process.env": processEnv(stage, `production`),
             __PREFIX_PATHS__: program.prefixPaths,
             __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
+            __POLYFILL__: store.getState().config.polyfill,
           }),
           new ExtractTextPlugin(`styles.css`, { allChunks: true }),
         ]
@@ -207,8 +210,9 @@ module.exports = async (
             "process.env": processEnv(stage, `production`),
             __PREFIX_PATHS__: program.prefixPaths,
             __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
+            __POLYFILL__: store.getState().config.polyfill,
           }),
-          new ExtractTextPlugin(`build-html-styles.css`),
+          new ExtractTextPlugin(`build-html-styles.css`, { allChunks: true }),
         ]
       case `build-javascript`: {
         // Get array of page template component names.
@@ -279,9 +283,10 @@ module.exports = async (
             "process.env": processEnv(stage, `production`),
             __PREFIX_PATHS__: program.prefixPaths,
             __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
+            __POLYFILL__: store.getState().config.polyfill,
           }),
           // Extract CSS so it doesn't get added to JS bundles.
-          new ExtractTextPlugin(`build-js-styles.css`),
+          new ExtractTextPlugin(`build-js-styles.css`, { allChunks: true }),
           // Write out mapping between chunk names and their hashed names. We use
           // this to add the needed javascript files to each HTML page.
           new StatsWriterPlugin(),

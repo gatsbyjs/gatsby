@@ -19,7 +19,7 @@ class SiteLinks extends React.Component {
       <div className="blog-social">
         <ul>
           <li>
-            <a href={'mailto:' + siteMetadata.siteEmailUrl}>
+            <a href={`mailto:` + siteMetadata.siteEmailUrl}>
               <i className="fa fa-envelope-o" /> {siteMetadata.siteEmailPretty}
             </a>
           </li>
