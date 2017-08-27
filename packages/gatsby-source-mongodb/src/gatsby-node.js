@@ -29,14 +29,19 @@ exports.sourceNodes = (
         console.warn(err)
         return
       }
-
-      createNodes(db, pluginOptions, dbName, createNode, done)
+      let collection = pluginOptions.collection || `documents`
+      if( Object.prototype.toString.call( collection ) === '[object Array]' ) {
+        for (col of collection) {
+          createNodes(db, pluginOptions, dbName, createNode, col, done);
+        }
+      } else {
+          createNodes(db, pluginOptions, dbName, createNode, collection, done);
+      }
     }
   )
 }
 
-function createNodes(db, pluginOptions, dbName, createNode, done) {
-  let collectionName = pluginOptions.collection || `documents`
+function createNodes(db, pluginOptions, dbName, createNode, collectionName, done) {
   let collection = db.collection(collectionName)
   let cursor = collection.find()
 
