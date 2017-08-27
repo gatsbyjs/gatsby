@@ -1,6 +1,13 @@
 const reducer = require(`../reducers/pages`)
 const { actions } = require(`../actions`)
 
+const start = Date.now()
+Date.now = jest.fn(
+  () =>
+    // const diff = new Date().getTime() - start
+    1482363367071 // + diff
+)
+
 describe(`Add pages`, () => {
   it(`allows you to add pages`, () => {
     const action = actions.createPage(
@@ -8,7 +15,7 @@ describe(`Add pages`, () => {
         path: `/hi/`,
         component: `/whatever/index.js`,
       },
-      { name: `test` }
+      { id: `test`, name: `test` }
     )
     const state = reducer(undefined, action)
     expect(action).toMatchSnapshot()
@@ -24,7 +31,7 @@ describe(`Add pages`, () => {
           id: 123,
         },
       },
-      { name: `test` }
+      { id: `test`, name: `test` }
     )
     const state = reducer(undefined, action)
     expect(action).toMatchSnapshot()
@@ -37,14 +44,14 @@ describe(`Add pages`, () => {
         path: `/hi/`,
         component: `/whatever/index.js`,
       },
-      { name: `test` }
+      { id: `test`, name: `test` }
     )
     const action2 = actions.createPage(
       {
         path: `/hi/pizza/`,
         component: `/whatever/index.js`,
       },
-      { name: `test` }
+      { id: `test`, name: `test` }
     )
     let state = reducer(undefined, action)
     state = reducer(state, action2)
@@ -58,7 +65,7 @@ describe(`Add pages`, () => {
         path: `/hi/`,
         component: `/whatever/index.js`,
       },
-      { name: `test` }
+      { id: `test`, name: `test` }
     )
 
     // Change the component
@@ -67,7 +74,7 @@ describe(`Add pages`, () => {
         path: `/hi/`,
         component: `/whatever2/index.js`,
       },
-      { name: `test` }
+      { id: `test`, name: `test` }
     )
 
     let state = reducer(undefined, action)

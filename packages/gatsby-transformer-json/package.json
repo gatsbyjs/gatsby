@@ -1,6 +1,6 @@
 {
   "name": "gatsby-transformer-json",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Gatsby transformer plugin for JSON files",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
