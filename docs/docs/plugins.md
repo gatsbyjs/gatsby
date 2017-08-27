@@ -118,4 +118,5 @@ you can place the files in a `src` subfolder and build them to the plugin folder
 ## Community Plugins
 
 * [gatsby-plugin-antd](https://github.com/bskimball/gatsby-plugin-antd)
+* [gatsby-plugin-i18n](https://github.com/angeloocana/gatsby-plugin-i18n)
 * [gatsby-plugin-yandex-metrika](https://github.com/viatsko/gatsby-plugin-yandex-metrika)
