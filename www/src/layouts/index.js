@@ -137,21 +137,11 @@ module.exports = React.createClass({
         <Helmet
           defaultTitle={`GatsbyJS`}
           titleTemplate={`%s | GatsbyJS`}
-          meta={[
-            {
-              name: `twitter:site`,
-              content: `@gatsbyjs`,
-            },
-            {
-              name: `og:type`,
-              content: `website`,
-            },
-            {
-              name: `og:site_name`,
-              content: `GatsbyJS`,
-            },
-          ]}
-        />
+        >
+          <meta name="twitter:site" content="@gatsbyjs" />
+          <meta name="og:type" content="website" />
+          <meta name="og:site_name" content="GatsbyJS" />
+        </Helmet>
         <div
           css={{
             borderBottom: `1px solid ${presets.veryLightPurple}`,
