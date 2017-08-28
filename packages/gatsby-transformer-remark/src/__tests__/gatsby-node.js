@@ -8,7 +8,7 @@ describe(`Process markdown content correctly`, () => {
     children: [],
     internal: {
       contentDigest: `whatever`,
-      mediaType: `text/x-markdown`,
+      mediaType: `text/markdown`,
     },
   }
 
