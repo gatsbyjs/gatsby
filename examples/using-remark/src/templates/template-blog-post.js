@@ -18,9 +18,7 @@ class BlogPostRoute extends React.Component {
         const divider = i < tagsArray.length - 1 && <span>{`, `}</span>
         return (
           <span key={tag}>
-            <Link to={tag}>
-              {post.frontmatter.tags[i]}
-            </Link>
+            <Link to={tag}>{post.frontmatter.tags[i]}</Link>
             {divider}
           </span>
         )

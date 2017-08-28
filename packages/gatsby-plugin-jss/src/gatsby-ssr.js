@@ -10,9 +10,7 @@ exports.replaceRenderer = ({
   const sheets = new SheetsRegistry()
 
   const bodyHTML = renderToString(
-    <JssProvider registry={sheets}>
-      {bodyComponent}
-    </JssProvider>
+    <JssProvider registry={sheets}>{bodyComponent}</JssProvider>
   )
 
   replaceBodyHTMLString(bodyHTML)

@@ -2,7 +2,7 @@ import React from "react"
 import Link from "gatsby-link"
 import Container from "../components/container"
 
-export default () =>
+export default () => (
   <Container>
     <h1 css={{ marginTop: 0 }}>Gatsby.js Tutorial</h1>
     <p>
@@ -48,3 +48,4 @@ export default () =>
       </li>
     </ol>
   </Container>
+)

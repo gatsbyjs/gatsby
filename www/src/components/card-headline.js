@@ -1,7 +1,7 @@
 import presets from "../utils/presets"
 import { rhythm, scale, options } from "../utils/typography"
 
-const CardHeadline = ({ children }) =>
+const CardHeadline = ({ children }) => (
   <h2
     css={{
       ...scale(2 / 5),
@@ -23,5 +23,6 @@ const CardHeadline = ({ children }) =>
   >
     {children}
   </h2>
+)
 
 export default CardHeadline

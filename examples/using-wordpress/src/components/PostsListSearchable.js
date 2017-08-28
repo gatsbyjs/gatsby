@@ -31,7 +31,7 @@ class PostsListSearchable extends Component {
           <Column fluid xs={1} sm={10} md={10} lg={10}>
             <span>Filter by category: </span>
             <span onClick={() => this.resetFilter()}>All - </span>
-            {this.props.propsData.allWordpressCategory.edges.map((cat, i) =>
+            {this.props.propsData.allWordpressCategory.edges.map((cat, i) => (
               <span
                 key={cat.node.id}
                 onClick={() => this.handleFilter(cat.node.id)}
@@ -39,18 +39,18 @@ class PostsListSearchable extends Component {
                 {i !== 0 ? ` - ` : ``}
                 {cat.node.name}
               </span>
-            )}
+            ))}
             <span onClick={() => this.resetFilter()}> - Reset filter</span>
           </Column>
         </Row>
         <Row gutter>
-          {this.state.data.map(article =>
+          {this.state.data.map(article => (
             <PostPreview
               key={article.node.slug}
               id={article.node.slug}
               article={article}
             />
-          )}
+          ))}
         </Row>
         <Row gutter height={19} />
       </Page>

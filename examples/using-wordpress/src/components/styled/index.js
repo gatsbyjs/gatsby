@@ -107,15 +107,14 @@ export const DefaultLink = styled(
     ...rest
   }) => <Link {...rest} />
 )`
-  ${props => PR.ftzProps(props)}
-  ${props => PR.colorProps(props, color.link)}
-  text-decoration: ${props => (props.underline ? `underline` : `none`)};
+  ${props => PR.ftzProps(props)} ${props =>
+      PR.colorProps(props, color.link)} text-decoration: ${props =>
+      props.underline ? `underline` : `none`};
   &:hover {
-    ${props => PR.colorHoverProps(props, `blue`)}
-    ${props =>
-      props.block &&
-      typeof props.block === `boolean` &&
-      `background-color: ${color.white}`}
+    ${props => PR.colorHoverProps(props, `blue`)} ${props =>
+        props.block &&
+        typeof props.block === `boolean` &&
+        `background-color: ${color.white}`};
   }
 `
 

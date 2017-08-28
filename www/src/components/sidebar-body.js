@@ -25,7 +25,7 @@ class SidebarBody extends React.Component {
           padding: this.props.inline ? 0 : rhythm(3 / 4),
         }}
       >
-        {menu.map((section, index) =>
+        {menu.map((section, index) => (
           <div
             key={section.title}
             css={{
@@ -103,7 +103,7 @@ class SidebarBody extends React.Component {
               })}
             </ul>
           </div>
-        )}
+        ))}
       </div>
     )
   }
