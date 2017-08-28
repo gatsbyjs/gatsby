@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "React.js Static Site Generator",
-  "version": "1.8.13",
+  "version": "1.9.9",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./dist/gatsby-cli.js"
@@ -50,10 +50,11 @@
     "friendly-errors-webpack-plugin": "^1.6.1",
     "front-matter": "^2.1.0",
     "fs-extra": "^3.0.1",
+    "gatsby-module-loader": "^1.0.4",
     "glob": "^7.1.1",
     "graphql": "^0.10.3",
     "graphql-relay": "^0.5.1",
-    "graphql-skip-limit": "^1.0.2",
+    "graphql-skip-limit": "^1.0.3",
     "gray-matter": "^2.1.0",
     "hapi": "^8.5.1",
     "history": "^4.6.2",
@@ -65,7 +66,6 @@
     "json-loader": "^0.5.2",
     "json-stringify-safe": "^5.0.1",
     "json5": "^0.5.0",
-    "loader-utils": "^0.2.16",
     "lodash": "^4.17.4",
     "lodash-id": "^0.14.0",
     "lowdb": "^0.16.2",

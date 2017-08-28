@@ -96,7 +96,7 @@ export default () =>
 
 ![no-layout](no-layout.png)
 
-We now we have the start of a nice personal site!
+We now have the start of a nice personal site!
 
 But a few problems. First, it'd be nice if the page content was centered on the screen like in part two of the tutorial. And second, we should really have some sort of global navigation so it's easy for visitors to find and visit each of the sub-pages.
 
@@ -173,3 +173,5 @@ export default ({ children }) =>
 And there we have it! A three page site with a simple global navigation.
 
 With your new "layout component" powers, you can easily add to your Gatsby sites headers, footers, global navigation, sidebars, etc.
+
+Continue on to [part four of the tutorial where we'll start learning about Gatsby's data layer and programmatic pages!](/tutorial/part-four/)

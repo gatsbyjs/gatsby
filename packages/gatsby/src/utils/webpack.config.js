@@ -17,7 +17,7 @@ const { store } = require(`../redux`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
 const WebpackMD5Hash = require(`webpack-md5-hash`)
 const ChunkManifestPlugin = require(`chunk-manifest-webpack-plugin`)
-const GatsbyModulePlugin = require(`../loaders/gatsby-module-loader/plugin`)
+const GatsbyModulePlugin = require(`gatsby-module-loader/plugin`)
 const genBabelConfig = require(`./babel-config`)
 const { withBasePath } = require(`./path`)
 const HashedChunkIdsPlugin = require(`./hashed-chunk-ids-plugin`)
@@ -212,7 +212,7 @@ module.exports = async (
             __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
             __POLYFILL__: store.getState().config.polyfill,
           }),
-          new ExtractTextPlugin(`build-html-styles.css`),
+          new ExtractTextPlugin(`build-html-styles.css`, { allChunks: true }),
         ]
       case `build-javascript`: {
         // Get array of page template component names.
@@ -286,7 +286,7 @@ module.exports = async (
             __POLYFILL__: store.getState().config.polyfill,
           }),
           // Extract CSS so it doesn't get added to JS bundles.
-          new ExtractTextPlugin(`build-js-styles.css`),
+          new ExtractTextPlugin(`build-js-styles.css`, { allChunks: true }),
           // Write out mapping between chunk names and their hashed names. We use
           // this to add the needed javascript files to each HTML page.
           new StatsWriterPlugin(),
@@ -376,7 +376,7 @@ module.exports = async (
     // "file" loader makes sure those assets end up in the `public` folder.
     // When you `import` an asset, you get its filename.
     config.loader(`file-loader`, {
-      test: /\.(ico|eot|otf|webp|ttf|woff(2)?)(\?.*)?$/,
+      test: /\.(ico|eot|otf|webp|pdf|ttf|woff(2)?)(\?.*)?$/,
       loader: `file`,
       query: {
         name: `static/[name].[hash:8].[ext]`,
