@@ -1,6 +1,6 @@
 import React, { createElement } from "react"
 import {
-  BrowserRouter as Router,
+  Router,
   Route,
   matchPath,
   withRouter,
