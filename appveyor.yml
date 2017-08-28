@@ -51,7 +51,7 @@ install:
   - yarn install
   - node --version
   - yarn --version
-  - yarn test
+  - npm test
 
 # Build gatsby head
 before_build:
