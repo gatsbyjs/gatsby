@@ -212,7 +212,7 @@ const typeOwners = {}
  * one if your data doesn't fit in any existing bucket. Transformer plugins
  * frequently use node media types for deciding if they should transform a
  * node into a new one. E.g. markdown transformers look for media types of
- * text/x-markdown.
+ * text/markdown.
  * @param {string} node.internal.type An arbitrary globally unique type
  * choosen by the plugin creating the node. Should be descriptive of the
  * node as the type is used in forming GraphQL types so users will query
@@ -232,7 +232,7 @@ const typeOwners = {}
  *   parent: `the-id-of-the-parent-node`,
  *   children: [],
  *   internal: {
- *     mediaType: `text/x-markdown`,
+ *     mediaType: `text/markdown`,
  *     type: `CoolServiceMarkdownField`,
  *     content: JSON.stringify(fieldData),
  *     contentDigest: crypto

@@ -47,7 +47,7 @@ module.exports = {
         dbName: `local`,
         collection: `documents`
         map: {
-          body: `text/x-markdown`,
+          body: `text/markdown`,
         },
       },
     }

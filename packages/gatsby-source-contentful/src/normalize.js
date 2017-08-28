@@ -143,7 +143,7 @@ function createTextNode(node, key, text, createNode) {
     [key]: str,
     internal: {
       type: _.camelCase(`${node.internal.type} ${key} TextNode`),
-      mediaType: `text/x-markdown`,
+      mediaType: `text/markdown`,
       content: str,
       contentDigest: digest(str),
     },

@@ -33,7 +33,7 @@ function createDescriptionNode(
     children: [],
     internal: {
       type: `DocumentationJSComponentDescription`,
-      mediaType: `text/x-markdown`,
+      mediaType: `text/markdown`,
       content: markdownStr,
       contentDigest: digest(markdownStr),
     },
