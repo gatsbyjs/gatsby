@@ -28,6 +28,7 @@ Websites built with Gatbsy:
 * [Kostas Bariotis' Blog](https://kostasbariotis.com/) [(source)](https://github.com/kbariotis/kostasbariotis.com)
 * [Travellers.cafe](https://travellers.cafe/)
 * [Oliver Benns' Portfolio](https://oliverbenns.com) [(source)](https://github.com/oliverbenns/oliverbenns.com)
+* [angeloocana.com](https://angeloocana.com)
 
 ## Docs
 
