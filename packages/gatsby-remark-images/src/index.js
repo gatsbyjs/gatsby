@@ -83,7 +83,7 @@ module.exports = (
     let rawHTML = `
   <span
     class="gatsby-resp-image-wrapper"
-    style="position: relative; z-index: -1; display: block; ${options.wrapperStyle}"
+    style="position: relative; display: block; ${options.wrapperStyle}"
   >
     <span
       class="gatsby-resp-image-background-image"
