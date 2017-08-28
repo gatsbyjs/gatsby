@@ -16,7 +16,7 @@ plugins: [
 ```
 
 ## Options
-SASS defaults to 5 [digits of precision](http://sass-lang.com/documentation/Sass/Script/Value/Number.html#precision%3D-class_method). If this is too low for you ([if you use Bootstrap, for example](https://github.com/twbs/bootstrap-sass/blob/master/README.md#sass-number-precision)), you may configure it as follows:
+SASS defaults to [5 digits of precision](https://github.com/sass/sass/issues/1122). If this is too low for you (e.g. [if you use Bootstrap](https://github.com/twbs/bootstrap-sass/blob/master/README.md#sass-number-precision)), you may configure it as follows:
 ```javascript
 // in gatsby-config.js
 plugins: [
