@@ -35,20 +35,12 @@ class ProductTemplate extends React.Component {
             src={image[0].responsiveResolution.src}
             srcSet={image[0].responsiveResolution.srcSet}
           />
-          <h4>
-            {productName}
-          </h4>
+          <h4>{productName}</h4>
         </div>
-        <h1>
-          {productName}
-        </h1>
-        <h4>
-          Made by {brand.companyName.companyName}
-        </h4>
+        <h1>{productName}</h1>
+        <h4>Made by {brand.companyName.companyName}</h4>
         <div>
-          <span>
-            Price: ${price}
-          </span>
+          <span>Price: ${price}</span>
           <div
             dangerouslySetInnerHTML={{
               __html: productDescription.childMarkdownRemark.html,
@@ -57,13 +49,13 @@ class ProductTemplate extends React.Component {
           <div>
             <span>See other: </span>
             <ul>
-              {categories.map((category, i) =>
+              {categories.map((category, i) => (
                 <li key={i}>
                   <Link key={i} to={`/categories/${category.id}`}>
                     {category.title.title}
                   </Link>
                 </li>
-              )}
+              ))}
             </ul>
           </div>
         </div>

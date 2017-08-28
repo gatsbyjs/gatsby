@@ -3,13 +3,12 @@ import PropTypes from "prop-types"
 import Link from "gatsby-link"
 import { connect } from "react-redux"
 
-const Counter = ({ count, increment }) =>
+const Counter = ({ count, increment }) => (
   <div>
-    <p>
-      Count: {count}
-    </p>
+    <p>Count: {count}</p>
     <button onClick={increment}>Increment</button>
   </div>
+)
 
 Counter.propTypes = {
   count: PropTypes.number.isRequired,

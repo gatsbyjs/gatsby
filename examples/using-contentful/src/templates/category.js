@@ -31,24 +31,20 @@ class CategoryTemplate extends React.Component {
             src={iconImg.src}
             srcSet={iconImg.srcSet}
           />
-          <h4 style={{ marginBottom: 0 }}>
-            {title}
-          </h4>
+          <h4 style={{ marginBottom: 0 }}>{title}</h4>
         </div>
-        <h1>
-          {title}
-        </h1>
+        <h1>{title}</h1>
         <div>
           <span>Products</span>
           <ul>
             {product &&
-              product.map((p, i) =>
+              product.map((p, i) => (
                 <li key={i}>
                   <Link to={`/products/${p.id}`}>
                     {p.productName.productName}
                   </Link>
                 </li>
-              )}
+              ))}
           </ul>
         </div>
       </div>

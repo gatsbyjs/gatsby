@@ -110,7 +110,10 @@ async function onCreateNode({
     }
   } finally {
     const objStr = JSON.stringify(node)
-    const contentDigest = crypto.createHash(`md5`).update(objStr).digest(`hex`)
+    const contentDigest = crypto
+      .createHash(`md5`)
+      .update(objStr)
+      .digest(`hex`)
 
     const nodeData = {
       id: `${node.id} >>> JSFrontmatter`,

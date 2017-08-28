@@ -3,7 +3,11 @@ const crypto = require(`crypto`)
 const stringify = require(`json-stringify-safe`)
 const deepMap = require(`deep-map`)
 
-const digest = str => crypto.createHash(`md5`).update(str).digest(`hex`)
+const digest = str =>
+  crypto
+    .createHash(`md5`)
+    .update(str)
+    .digest(`hex`)
 const typePrefix = `Contentful`
 const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 
