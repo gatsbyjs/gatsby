@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
-    "gatsby-1-config-css-modules": "file:../gatsby-1-config-css-modules"
+    "gatsby-1-config-css-modules": "^1.0.0"
   },
   "keywords": [
     "gatsby",
