@@ -14,7 +14,7 @@ const cover = {
   bottom: 0,
 }
 
-const MastheadBg = () =>
+const MastheadBg = () => (
   <div
     className="masthead-bg"
     css={{
@@ -145,5 +145,6 @@ const MastheadBg = () =>
       </svg>
     </svg>
   </div>
+)
 
 export default MastheadBg

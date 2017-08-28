@@ -79,11 +79,11 @@ class Index extends React.Component {
         </h3>
 
         <ul style={styles.ul}>
-          {images.map(image =>
+          {images.map(image => (
             <li style={styles.thumbnail} key={image.node.resize.src}>
               <img src={image.node.resize.src} />
             </li>
-          )}
+          ))}
         </ul>
 
         <p

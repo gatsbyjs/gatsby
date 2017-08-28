@@ -67,9 +67,7 @@ class Story extends React.Component {
               </a>
               {` `}
               <span className="age">
-                <Link to={`/item/${story.id}/`}>
-                  {story.timeISO}
-                </Link>
+                <Link to={`/item/${story.id}/`}>{story.timeISO}</Link>
               </span>
               {` `}
               |
@@ -84,9 +82,9 @@ class Story extends React.Component {
         </table>
         <table border="0" className="comment-tree">
           <tr className="athing comtr " id="14174940">
-            {flatComemnts.map(comment =>
+            {flatComemnts.map(comment => (
               <StoryComment comment={comment} width={width} />
-            )}
+            ))}
           </tr>
         </table>
       </div>

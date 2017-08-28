@@ -29,7 +29,7 @@ const lineAnimation = css.keyframes({
   },
 })
 
-const Segment = ({ className, children }) =>
+const Segment = ({ className, children }) => (
   <div
     className={`Segment ${className}`}
     css={{
@@ -40,8 +40,9 @@ const Segment = ({ className, children }) =>
   >
     {children}
   </div>
+)
 
-const SegmentTitle = ({ children }) =>
+const SegmentTitle = ({ children }) => (
   <h2
     className="Segment-title"
     css={{
@@ -62,8 +63,9 @@ const SegmentTitle = ({ children }) =>
   >
     {children}
   </h2>
+)
 
-const VerticalLine = () =>
+const VerticalLine = () => (
   <svg
     width="20"
     height="30"
@@ -83,6 +85,7 @@ const VerticalLine = () =>
       css={{ animation: `${lineAnimation} 40s linear infinite` }}
     />
   </svg>
+)
 
 const box = {
   border: `1px solid #f4ecfe`,
@@ -99,7 +102,7 @@ const borderAndBoxShadow = {
   borderRadius: presets.radius,
 }
 
-const SourceItems = ({ children }) =>
+const SourceItems = ({ children }) => (
   <div
     css={{
       display: `flex`,
@@ -110,10 +113,11 @@ const SourceItems = ({ children }) =>
   >
     {children}
   </div>
+)
 
 const boxPadding = { padding: `${rhythm(1 / 3)} ${rhythm(2 / 4)}` }
 
-const SourceItem = ({ children }) =>
+const SourceItem = ({ children }) => (
   <div
     css={{
       boxSizing: `border-box`,
@@ -138,8 +142,9 @@ const SourceItem = ({ children }) =>
       {children}
     </div>
   </div>
+)
 
-const ItemTitle = ({ children }) =>
+const ItemTitle = ({ children }) => (
   <h3
     css={{
       color: presets.brand,
@@ -150,8 +155,9 @@ const ItemTitle = ({ children }) =>
   >
     {children}
   </h3>
+)
 
-const ItemDescription = ({ children }) =>
+const ItemDescription = ({ children }) => (
   <small
     css={{
       lineHeight: 1.2,
@@ -164,8 +170,9 @@ const ItemDescription = ({ children }) =>
   >
     {children}
   </small>
+)
 
-const Gatsby = ({ children }) =>
+const Gatsby = ({ children }) => (
   <div
     css={{
       ...borderAndBoxShadow,
@@ -211,8 +218,9 @@ const Gatsby = ({ children }) =>
       </span>
     </ItemDescription>
   </div>
+)
 
-const Diagram = ({ containerCSS }) =>
+const Diagram = ({ containerCSS }) => (
   <section
     className="Diagram"
     css={{
@@ -308,5 +316,6 @@ const Diagram = ({ containerCSS }) =>
       </div>
     </Segment>
   </section>
+)
 
 export default Diagram
