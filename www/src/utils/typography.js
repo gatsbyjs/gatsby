@@ -198,6 +198,9 @@ const options = {
         // color: `blue`,
         color: colors.b[8],
       },
+      "#nprogress .spinner": {
+        display: `none !important`,
+      },
     }
   },
 }
