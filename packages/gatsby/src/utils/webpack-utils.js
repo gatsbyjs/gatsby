@@ -189,7 +189,7 @@ module.exports = async (
      */
     assets: options => {return {
       use: loaders.file(options),
-      test: /\.(ico|eot|otf|webp|ttf|woff(2)?)(\?.*)?$/,
+      test: /\.(ico|eot|otf|webp|pdf|ttf|woff(2)?)(\?.*)?$/,
     }},
 
     /**
