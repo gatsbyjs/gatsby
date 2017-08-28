@@ -17,7 +17,7 @@ function createDescriptionNode(node, entry, boundActionCreators) {
     text: entry.description,
     internal: {
       type: `ComponentDescription`,
-      mediaType: `text/x-markdown`,
+      mediaType: `text/markdown`,
       content: entry.description,
       contentDigest: digest(entry.description),
     },
