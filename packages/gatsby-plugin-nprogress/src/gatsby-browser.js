@@ -2,6 +2,7 @@ import NProgress from "nprogress"
 
 exports.onClientEntry = (a, pluginOptions = { color: `#29d` }) => {
   window.___emitter.on(`onDelayedLoadPageResources`, () => {
+    NProgress.configure(pluginOptions)
     NProgress.start()
   })
   window.___emitter.on(`onPostLoadPageResources`, () => {
