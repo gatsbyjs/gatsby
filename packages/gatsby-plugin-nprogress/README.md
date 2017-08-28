@@ -25,6 +25,6 @@ plugins: [
 ]
 ```
 
-In addition to `color`, a configuration option specific to
+In addition to `color` – a configuration option specific to
 `gatsby-plugin-nprogress` that saves some time [customizing the nprogress CSS](https://github.com/rstacruz/nprogress#customization) to match your site
-colors, you may pass all available [nprogress configuration options](https://github.com/rstacruz/nprogress#configuration) with the exception of `parent`.
+colors – you may pass all available [nprogress configuration options](https://github.com/rstacruz/nprogress#configuration).
