@@ -36,9 +36,7 @@ exports.sourceNodes = async ({ boundActionCreators }, { username }) => {
         parent: `__SOURCE__`,
         children: [],
         internal: {
-          mediaType: `application/json`,
           type: `Medium${resource.type}`,
-          content: resource.title ? resource.title : resource.name,
           contentDigest: digest,
         },
       })
