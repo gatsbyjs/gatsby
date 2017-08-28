@@ -58,7 +58,7 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     let types = groupBy(createdNodes, `internal.type`)
     expect(
       types.DocumentationJSComponentDescription.every(
-        d => d.internal.mediaType === `text/x-markdown`
+        d => d.internal.mediaType === `text/markdown`
       )
     ).toBe(true)
   })

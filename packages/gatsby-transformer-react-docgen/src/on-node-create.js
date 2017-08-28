@@ -1,7 +1,11 @@
 import crypto from "crypto"
 import parseMetadata from "./parse"
 
-const digest = str => crypto.createHash(`md5`).update(str).digest(`hex`)
+const digest = str =>
+  crypto
+    .createHash(`md5`)
+    .update(str)
+    .digest(`hex`)
 
 const propsId = (parentId, name) => `${parentId}--ComponentProp-${name}`
 const descId = parentId => `${parentId}--ComponentDescription`
@@ -17,7 +21,7 @@ function createDescriptionNode(node, entry, boundActionCreators) {
     text: entry.description,
     internal: {
       type: `ComponentDescription`,
-      mediaType: `text/x-markdown`,
+      mediaType: `text/markdown`,
       content: entry.description,
       contentDigest: digest(entry.description),
     },

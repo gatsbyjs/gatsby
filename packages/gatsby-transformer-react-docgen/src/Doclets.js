@@ -1,6 +1,10 @@
 const metadata = require(`react-docgen`)
 
-let cleanDocletValue = str => str.trim().replace(/^\{/, ``).replace(/\}$/, ``)
+let cleanDocletValue = str =>
+  str
+    .trim()
+    .replace(/^\{/, ``)
+    .replace(/\}$/, ``)
 
 let isLiteral = str => /^('|")/.test(str.trim())
 

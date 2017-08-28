@@ -52,20 +52,23 @@ const colorStr = `
 const colors = { a: [], b: [], c: [] }
 
 let pointer = `a`
-colorStr.split(`\n`).reverse().forEach(c => {
-  if (c === ``) return
-  colors[pointer].push(c)
-  switch (pointer) {
-    case `a`:
-      pointer = `b`
-      break
-    case `b`:
-      pointer = `c`
-      break
-    case `c`:
-      pointer = `a`
-      break
-  }
-})
+colorStr
+  .split(`\n`)
+  .reverse()
+  .forEach(c => {
+    if (c === ``) return
+    colors[pointer].push(c)
+    switch (pointer) {
+      case `a`:
+        pointer = `b`
+        break
+      case `b`:
+        pointer = `c`
+        break
+      case `c`:
+        pointer = `a`
+        break
+    }
+  })
 
 module.exports = colors
