@@ -1,8 +1,11 @@
 import ExtractTextPlugin from "extract-text-webpack-plugin"
+import cssModulesConfig from "gatsby/dist/utils/css-modules-config"
 
-exports.modifyWebpackConfig = ({ config, stage }, { postCssPlugins }) => {
-  const cssModulesConf = `css?modules&minimize&importLoaders=1`
-  const cssModulesConfDev = `${cssModulesConf}&sourceMap&localIdentName=[name]---[local]---[hash:base64:5]`
+exports.modifyWebpackConfig = (
+  { config, stage },
+  { postCssPlugins, precision }
+) => {
+  const sassLoader = precision ? `sass?precision=${precision}` : `sass`
 
   // Pass in plugins regardless of stage.
   // If none specified, fallback to Gatsby default postcss plugins.
@@ -18,12 +21,12 @@ exports.modifyWebpackConfig = ({ config, stage }, { postCssPlugins }) => {
       config.loader(`sass`, {
         test: /\.s(a|c)ss$/,
         exclude: /\.module\.s(a|c)ss$/,
-        loaders: [`style`, `css`, `postcss`, `sass`],
+        loaders: [`style`, `css`, `postcss`, sassLoader],
       })
 
       config.loader(`sassModules`, {
         test: /\.module\.s(a|c)ss$/,
-        loaders: [`style`, cssModulesConfDev, `postcss`, `sass`],
+        loaders: [`style`, cssModulesConfig(stage), `postcss`, sassLoader],
       })
       return config
     }
@@ -31,15 +34,19 @@ exports.modifyWebpackConfig = ({ config, stage }, { postCssPlugins }) => {
       config.loader(`sass`, {
         test: /\.s(a|c)ss$/,
         exclude: /\.module\.s(a|c)ss$/,
-        loader: ExtractTextPlugin.extract([`css?minimize`, `postcss`, `sass`]),
+        loader: ExtractTextPlugin.extract([
+          `css?minimize`,
+          `postcss`,
+          sassLoader,
+        ]),
       })
 
       config.loader(`sassModules`, {
         test: /\.module\.s(a|c)ss$/,
         loader: ExtractTextPlugin.extract(`style`, [
-          cssModulesConf,
+          cssModulesConfig(stage),
           `postcss`,
-          `sass`,
+          sassLoader,
         ]),
       })
       return config
@@ -55,9 +62,9 @@ exports.modifyWebpackConfig = ({ config, stage }, { postCssPlugins }) => {
       config.loader(`sassModules`, {
         test: /\.module\.s(a|c)ss$/,
         loader: ExtractTextPlugin.extract(`style`, [
-          cssModulesConf,
+          cssModulesConfig(stage),
           `postcss`,
-          `sass`,
+          sassLoader,
         ]),
       })
       return config
@@ -71,7 +78,10 @@ exports.modifyWebpackConfig = ({ config, stage }, { postCssPlugins }) => {
 
       config.loader(`sassModules`, {
         test: /\.module\.s(a|c)ss$/,
-        loader: ExtractTextPlugin.extract(`style`, [cssModulesConf, `sass`]),
+        loader: ExtractTextPlugin.extract(`style`, [
+          cssModulesConfig(stage),
+          sassLoader,
+        ]),
       })
       return config
     }

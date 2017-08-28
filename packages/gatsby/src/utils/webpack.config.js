@@ -8,6 +8,7 @@ import ExtractTextPlugin from "extract-text-webpack-plugin"
 import StaticSiteGeneratorPlugin from "static-site-generator-webpack-plugin"
 import { StatsWriterPlugin } from "webpack-stats-plugin"
 import FriendlyErrorsWebpackPlugin from "friendly-errors-webpack-plugin"
+import cssModulesConfig from "./css-modules-config"
 
 // This isn't working right it seems.
 // import WebpackStableModuleIdAndHash from 'webpack-stable-module-id-and-hash'
@@ -393,9 +394,6 @@ module.exports = async (
       },
     })
 
-    const cssModulesConf = `css?modules&minimize&importLoaders=1`
-    const cssModulesConfDev = `${cssModulesConf}&sourceMap&localIdentName=[name]---[local]---[hash:base64:5]`
-
     switch (stage) {
       case `develop`:
         config.loader(`css`, {
@@ -407,7 +405,7 @@ module.exports = async (
         // CSS modules
         config.loader(`cssModules`, {
           test: /\.module\.css$/,
-          loaders: [`style`, cssModulesConfDev, `postcss`],
+          loaders: [`style`, cssModulesConfig(stage), `postcss`],
         })
 
         config.merge({
@@ -433,7 +431,7 @@ module.exports = async (
         config.loader(`cssModules`, {
           test: /\.module\.css$/,
           loader: ExtractTextPlugin.extract(`style`, [
-            cssModulesConf,
+            cssModulesConfig(stage),
             `postcss`,
           ]),
         })
@@ -463,7 +461,7 @@ module.exports = async (
         config.loader(`cssModules`, {
           test: /\.module\.css$/,
           loader: ExtractTextPlugin.extract(`style`, [
-            cssModulesConf,
+            cssModulesConfig(stage),
             `postcss`,
           ]),
         })
@@ -489,7 +487,7 @@ module.exports = async (
         config.loader(`cssModules`, {
           test: /\.module\.css$/,
           loader: ExtractTextPlugin.extract(`style`, [
-            cssModulesConf,
+            cssModulesConfig(stage),
             `postcss`,
           ]),
         })

@@ -1,20 +1,20 @@
 import ExtractTextPlugin from "extract-text-webpack-plugin"
+import cssModulesConfig from "gatsby/dist/utils/css-modules-config"
 
-exports.modifyWebpackConfig = ({ config, stage }) => {
-  const cssModulesConf = `css?modules&minimize&importLoaders=1`
-  const cssModulesConfDev = `${cssModulesConf}&sourceMap&localIdentName=[name]---[local]---[hash:base64:5]`
+exports.modifyWebpackConfig = ({ config, stage }, { precision }) => {
+  const sassLoader = precision ? `sass?precision=${precision}` : `sass`
 
   switch (stage) {
     case `develop`: {
       config.loader(`sass`, {
         test: /\.s(a|c)ss$/,
         exclude: /\.module\.s(a|c)ss$/,
-        loaders: [`style`, `css`, `sass`],
+        loaders: [`style`, `css`, sassLoader],
       })
 
       config.loader(`sassModules`, {
         test: /\.module\.s(a|c)ss$/,
-        loaders: [`style`, cssModulesConfDev, `sass`],
+        loaders: [`style`, cssModulesConfig(stage), sassLoader],
       })
       return config
     }
@@ -22,28 +22,17 @@ exports.modifyWebpackConfig = ({ config, stage }) => {
       config.loader(`sass`, {
         test: /\.s(a|c)ss$/,
         exclude: /\.module\.s(a|c)ss$/,
-        loader: ExtractTextPlugin.extract([`css?minimize`, `sass`]),
+        loader: ExtractTextPlugin.extract([`css?minimize`, sassLoader]),
       })
 
       config.loader(`sassModules`, {
         test: /\.module\.s(a|c)ss$/,
-        loader: ExtractTextPlugin.extract(`style`, [cssModulesConf, `sass`]),
+        loader: ExtractTextPlugin.extract(`style`, [cssModulesConfig(stage), sassLoader]),
       })
       return config
     }
-    case `build-html`: {
-      config.loader(`sass`, {
-        test: /\.s(a|c)ss$/,
-        exclude: /\.module\.s(a|c)ss$/,
-        loader: `null`,
-      })
-
-      config.loader(`sassModules`, {
-        test: /\.module\.s(a|c)ss$/,
-        loader: ExtractTextPlugin.extract(`style`, [cssModulesConf, `sass`]),
-      })
-      return config
-    }
+    case `develop-html`:
+    case `build-html`:
     case `build-javascript`: {
       config.loader(`sass`, {
         test: /\.s(a|c)ss$/,
@@ -53,7 +42,7 @@ exports.modifyWebpackConfig = ({ config, stage }) => {
 
       config.loader(`sassModules`, {
         test: /\.module\.s(a|c)ss$/,
-        loader: ExtractTextPlugin.extract(`style`, [cssModulesConf, `sass`]),
+        loader: ExtractTextPlugin.extract(`style`, [cssModulesConfig(stage), sassLoader]),
       })
       return config
     }
