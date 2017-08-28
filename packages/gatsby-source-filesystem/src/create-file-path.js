@@ -43,8 +43,8 @@ module.exports = ({
     slash(basePath),
     slash(fileNode.relativePath)
   )
-  const { dirname = ``, name } = path.parse(relativePath)
+  const { dir = ``, name } = path.parse(relativePath)
   const parsedName = name === `index` ? `` : name
 
-  return path.posix.join(`/`, dirname, parsedName, trailingSlash ? `/` : ``)
+  return path.posix.join(`/`, dir, parsedName, trailingSlash ? `/` : ``)
 }
