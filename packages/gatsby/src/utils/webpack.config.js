@@ -376,7 +376,7 @@ module.exports = async (
     // "file" loader makes sure those assets end up in the `public` folder.
     // When you `import` an asset, you get its filename.
     config.loader(`file-loader`, {
-      test: /\.(ico|eot|otf|webp|ttf|woff(2)?)(\?.*)?$/,
+      test: /\.(ico|eot|otf|webp|pdf|ttf|woff(2)?)(\?.*)?$/,
       loader: `file`,
       query: {
         name: `static/[name].[hash:8].[ext]`,
