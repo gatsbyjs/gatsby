@@ -6,10 +6,10 @@ import testRequireError from "./test-require-error"
 
 let Html
 try {
-  HTML = require(`../src/html`)
+  Html = require(`../src/html`)
 } catch (err) {
   if (testRequireError(`..\/src\/html`, err)) {
-    HTML = require(`./default-html`)
+    Html = require(`./default-html`)
   } else {
     console.log(`There was an error requiring "src/html.js"\n\n`, err, `\n\n`)
     process.exit()

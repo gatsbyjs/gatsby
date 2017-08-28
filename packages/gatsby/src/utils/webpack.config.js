@@ -169,7 +169,7 @@ module.exports = async (
       case `develop`:
         configPlugins = configPlugins.concat([
           plugins.hotModuleReplacement(),
-          plugins.noErrors(),
+          plugins.noEmitErrors(),
 
           // Names module ids with their filepath. We use this in development
           // to make it easier to see what modules have hot reloaded, etc. as

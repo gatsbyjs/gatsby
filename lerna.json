@@ -2,8 +2,7 @@
   "lerna": "2.1.0",
   "npmClient": "yarn",
   "packages": [
-    "packages/*",
-    "www"
+    "packages/*"
   ],
   "hoist": true,
   "version": "independent"
