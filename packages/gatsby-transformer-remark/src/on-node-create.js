@@ -11,7 +11,7 @@ module.exports = async function onCreateNode({
 
   // We only care about markdown content.
   if (
-    node.internal.mediaType !== `text/markdown` ||
+    node.internal.mediaType !== `text/markdown` &&
     node.internal.mediaType !== `text/x-markdown`
   ) {
     return
