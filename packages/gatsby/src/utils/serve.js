@@ -57,8 +57,9 @@ function startServer(program, launchPort) {
 }
 
 module.exports = program => {
-  const port =
-    typeof program.port === `string` ? parseInt(program.port, 10) : program.port
+  const port = typeof program.port === `string`
+    ? parseInt(program.port, 10)
+    : program.port
 
   detect(port, (err, _port) => {
     if (err) {
