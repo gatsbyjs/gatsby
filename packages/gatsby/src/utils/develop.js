@@ -96,6 +96,10 @@ async function startServer(program) {
     })
   )
 
+  app.use(
+    require(`react-error-overlay/middleware`)()
+  )
+
   // Set up API proxy.
   const { proxy } = store.getState().config
   if (proxy) {
