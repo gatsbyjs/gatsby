@@ -20,6 +20,11 @@
   "author": "Ming Aldrich-Gan <mingaldrichgan@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "babel-plugin-react-css-modules": "^3.2.1"
+    "babel-plugin-react-css-modules": "^3.2.1",
+    "babel-runtime": "^6.26.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "gatsby-1-config-css-modules": "file:../gatsby-1-config-css-modules"
   }
 }
