@@ -15,10 +15,10 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "babel-cli": "^6.24.1"
+    "babel-cli": "^6.26.0"
   },
   "dependencies": {
-    "babel-runtime": "6.26.0",
+    "babel-runtime": "^6.26.0",
     "prop-types": "^15.5.8",
     "ric": "^1.3.0"
   }

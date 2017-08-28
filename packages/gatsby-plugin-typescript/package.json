@@ -7,12 +7,12 @@
     "Noah Lange <noahrlange@gmail.com>"
   ],
   "dependencies": {
-    "babel-runtime": "6.26.0",
+    "babel-runtime": "^6.26.0",
     "ts-loader": "^2.0.3",
     "typescript": "^2.2.1"
   },
   "devDependencies": {
-    "babel-cli": "^6.24.1"
+    "babel-cli": "^6.26.0"
   },
   "keywords": [
     "gatsby",

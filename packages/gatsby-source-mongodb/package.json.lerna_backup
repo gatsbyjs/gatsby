@@ -1,7 +1,7 @@
 {
-  "name": "gatsby-transformer-pdf",
-  "version": "1.0.3",
-  "description": "Stub description for gatsby-transformer-pdf",
+  "name": "gatsby-source-mongodb",
+  "version": "1.5.5",
+  "description": "Stub description for gatsby-source-mongodb",
   "main": "index.js",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
@@ -10,12 +10,14 @@
   "keywords": [
     "gatsby"
   ],
-  "author": "Kyle Mathews &lt;mathews.kyle@gmail.com&gt;",
+  "author": "jhermans85@hotmail.com",
   "license": "MIT",
   "devDependencies": {
-    "babel-cli": "^6.26.0"
+    "babel-cli": "^6.24.1"
   },
   "dependencies": {
-    "babel-runtime": "^6.26.0"
+    "babel-runtime": "^6.26.0",
+    "lodash": "^4.17.4",
+    "mongodb": "^2.2.30"
   }
 }

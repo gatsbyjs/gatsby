@@ -4,7 +4,7 @@
   "description": "Gatsby plugin to setup server rendering of Typography.js' CSS",
   "main": "index.js",
   "dependencies": {
-    "babel-runtime": "6.26.0",
+    "babel-runtime": "^6.26.0",
     "react-typography": "^0.16.1",
     "typography": "^0.16.0"
   },

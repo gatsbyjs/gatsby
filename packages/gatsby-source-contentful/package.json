@@ -15,7 +15,7 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.16.1",
-    "babel-runtime": "6.26.0",
+    "babel-runtime": "^6.26.0",
     "base64-img": "^1.0.3",
     "bluebird": "^3.5.0",
     "contentful": "^4.3.0",
