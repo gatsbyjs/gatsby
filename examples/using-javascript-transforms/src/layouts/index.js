@@ -8,7 +8,7 @@ import BlogPost from "./blog-post"
 
 class MasterLayout extends React.Component {
   render() {
-    let siteMetadata = this.props.data.allSite.edges[0].node.siteMetadata
+    let siteMetadata = this.props.data.site.siteMetadata
     let location = this.props.location.pathname
     let jimmyPage // you jimmy a lock until it opens, so same thing here ;)
 
@@ -46,19 +46,15 @@ export default MasterLayout
 
 export const pageQuery = graphql`
   query LayoutBySlug {
-    allSite {
-      edges {
-        node {
-          siteMetadata {
-            title
-            siteDescr
-            siteAuthor
-            siteEmailUrl
-            siteEmailPretty
-            siteTwitterUrl
-            siteTwitterPretty
-          }
-        }
+    site {
+      siteMetadata {
+        title
+        siteDescr
+        siteAuthor
+        siteEmailUrl
+        siteEmailPretty
+        siteTwitterUrl
+        siteTwitterPretty
       }
     }
   }
