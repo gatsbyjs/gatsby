@@ -498,7 +498,11 @@ async function fetchData(route, createNode, parentNodeId) {
  *
  * @param {any} str
  */
-const digest = str => crypto.createHash(`md5`).update(str).digest(`hex`)
+const digest = str =>
+  crypto
+    .createHash(`md5`)
+    .update(str)
+    .digest(`hex`)
 
 /**
  * Create the Graph QL Node

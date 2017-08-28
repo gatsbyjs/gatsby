@@ -154,19 +154,22 @@ class DefaultLayout extends React.Component {
           }}
         >
           <div>
-            {isModal
-              ? this.props.children({
-                  ...this.props,
-                  location: { pathname: `/` },
-                })
-              : this.props.children()}
+            {isModal ? (
+              this.props.children({
+                ...this.props,
+                location: { pathname: `/` },
+              })
+            ) : (
+              this.props.children()
+            )}
           </div>
 
           <div>
-            {isModal &&
+            {isModal && (
               <Modal isOpen={true} posts={this.posts} location={location}>
                 {this.props.children}
-              </Modal>}
+              </Modal>
+            )}
           </div>
         </div>
       </div>

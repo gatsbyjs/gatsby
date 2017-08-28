@@ -9,7 +9,7 @@ let stripeAnimation = css.keyframes({
   "100%": { backgroundPosition: `30px 60px` },
 })
 
-const CtaButton = ({ to, overrideCSS, children }) =>
+const CtaButton = ({ to, overrideCSS, children }) => (
   <Link
     css={{
       ...overrideCSS,
@@ -50,5 +50,6 @@ const CtaButton = ({ to, overrideCSS, children }) =>
   >
     {children}
   </Link>
+)
 
 export default CtaButton

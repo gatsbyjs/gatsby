@@ -4,13 +4,11 @@ import Link from "gatsby-link"
 class TagRoute extends React.Component {
   render() {
     const posts = this.props.data.allMarkdownRemark.edges
-    const postLinks = posts.map(post =>
+    const postLinks = posts.map(post => (
       <li key={post.node.fields.slug}>
-        <Link to={post.node.fields.slug}>
-          {post.node.frontmatter.title}
-        </Link>
+        <Link to={post.node.fields.slug}>{post.node.frontmatter.title}</Link>
       </li>
-    )
+    ))
 
     return (
       <div>
@@ -18,9 +16,7 @@ class TagRoute extends React.Component {
           {this.props.data.allMarkdownRemark.totalCount}
           {` `}posts tagged with “{this.props.pathContext.tag}”
         </h1>
-        <ul>
-          {postLinks}
-        </ul>
+        <ul>{postLinks}</ul>
         <p>
           <Link to="/tags/">Browse all tags</Link>
         </p>
