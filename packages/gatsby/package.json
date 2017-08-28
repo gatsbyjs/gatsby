@@ -125,6 +125,7 @@
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
+    "gatsby-1-config-css-modules": "^1.0.0",
     "iflow-debug": "^1.0.15",
     "iflow-lodash": "^1.1.24",
     "iflow-react-router": "^1.2.1",

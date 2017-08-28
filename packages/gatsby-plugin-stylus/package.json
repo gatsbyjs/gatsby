@@ -4,11 +4,14 @@
   "version": "1.1.4",
   "author": "Ian Sinnott <ian@iansinnott.com>",
   "dependencies": {
-    "babel-cli": "^6.24.1",
     "babel-runtime": "6.26.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "stylus": "^0.54.5",
     "stylus-loader": "webpack1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "gatsby-1-config-css-modules": "^1.0.0"
   },
   "keywords": [
     "gatsby",
