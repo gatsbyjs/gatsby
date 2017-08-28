@@ -1,6 +1,9 @@
 # gatsby-source-medium
 
-Source plugin for pulling data into Gatsby from unofficial Medium JSON endpoints.
+Source plugin for pulling data into Gatsby from an unofficial Medium JSON
+endpoint. Unfortunately the JSON endpoint does not provide the complete stories,
+but only previews. If you need the complete stories, you might have a look at
+something like [gatsby-source-rss](https://github.com/jondubin/gatsby-source-rss).
 
 ## Install
 
