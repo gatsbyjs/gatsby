@@ -45,8 +45,8 @@ install:
         Exit-AppVeyorBuild
       }
   - ps: Install-Product node $env:nodejs_version $env:platform
-  - ps: npm install -g windows-build-tools
-  - yarn install -g gatsby-dev-cli@canary
+  - ps: yarn global add windows-build-tools
+  - yarn global add gatsby-dev-cli@canary
   - echo we are running on %PLATFORM%
   - yarn install
   - node --version
