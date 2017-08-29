@@ -169,7 +169,7 @@ module.exports = async (
       case `develop`:
         configPlugins = configPlugins.concat([
           plugins.hotModuleReplacement(),
-          plugins.noEmitErrors(),
+          plugins.noEmitOnErrors(),
 
           // Names module ids with their filepath. We use this in development
           // to make it easier to see what modules have hot reloaded, etc. as
@@ -253,22 +253,27 @@ module.exports = async (
               return isFramework || count > 3
             },
           }),
+
+          // using a chunk name that doesn't exist creates a chunk with
+          // just the runtime bits
+          plugins.commonsChunk({
+            name: `webpack-runtime`,
+          }),
           // Write out mapping between chunk names and their hashed names. We use
           // this to add the needed javascript files to each HTML page.
           new StatsWriterPlugin(),
 
-          // Extract the webpack chunk manifest out of commons.js so commons.js
-          // doesn't get changed everytime you build. This increases the cache-hit
-          // rate for commons.js.
-          new ChunkManifestPlugin({
-            filename: `chunk-manifest.json`,
-            manifestVariable: `webpackManifest`,
-          }),
+
           // Minify Javascript.
-          plugins.uglify(),
+          // plugins.uglify(),
           new GatsbyModulePlugin(),
           plugins.namedModules(),
-          plugins.namedChunks(),
+          plugins.namedChunks((chunk) => {
+            if (chunk.name) return chunk.name
+            return chunk.modules
+              .map(m => path.relative(m.context, m.request))
+              .join(`_`)
+          }),
         ])
         break
       }

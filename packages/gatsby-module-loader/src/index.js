@@ -5,13 +5,12 @@
   and Arthur Stolyar's async-module-loader
 */
 const loaderUtils = require(`loader-utils`)
-const path = require(`path`)
 
 module.exports = function() {}
 module.exports.pitch = function(remainingRequest) {
   this.cacheable && this.cacheable()
 
-  const query = loaderUtils.parseQuery(this.query)
+  const query = loaderUtils.getOptions(this) || {}
   let chunkName = ``
 
   if (query.name) {
@@ -19,31 +18,10 @@ module.exports.pitch = function(remainingRequest) {
       context: query.context,
       regExp: query.regExp,
     })
-    chunkName = `, ${JSON.stringify(chunkName)}`
   }
 
   const request = loaderUtils.stringifyRequest(this, `!!` + remainingRequest)
+  const chunkComment = chunkName && `/* webpackChunkName: ${JSON.stringify(chunkName)} */ `
 
-  const callback = `function() { return require(` + request + `) }`
-
-  const executor = `return require.ensure([], function(_, error) {
-        if (error) {
-          console.log('bundle loading error', error)
-          cb(true)
-        } else {
-          cb(null, ${callback})
-        }
-      }${chunkName});
-    `
-
-  const result = `require(
-      ${loaderUtils.stringifyRequest(
-        this,
-        `!${path.join(__dirname, `patch.js`)}`
-      )}
-    );
-    module.exports = function(cb) { ${executor} }
-    `
-
-  return result
+  return `module.exports = () => import(${chunkComment}${request})`
 }

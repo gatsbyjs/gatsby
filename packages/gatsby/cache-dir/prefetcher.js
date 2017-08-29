@@ -1,23 +1,35 @@
-module.exports = ({ getNextQueuedResources, createResourceDownload }) => {
-  let pagesLoading = []
-  let resourcesDownloading = []
+// @flow
 
-  // Do things
-  const startResourceDownloading = () => {
-    const nextResource = getNextQueuedResources()
-    if (nextResource) {
-      resourcesDownloading.push(nextResource)
-      createResourceDownload(nextResource)
-    }
+type PrefetcherOptions = {
+  fetchNextResource: () => ?Promise,
+};
+
+module.exports = (
+  { fetchNextResource }: PrefetcherOptions
+) => {
+  let pagesLoading = []
+  let current = null
+  const clearCurrent = () => {
+    current = null
+  }
+
+  const enqueueUpdate = () => {
+    // Take actions.
+    // Wait for event loop queue to finish.
+    setTimeout(() => {
+      if (current || !!pagesLoading.length) return
+
+      // Start another resource downloading.
+      let next = fetchNextResource()
+      if (!next) return
+      current = next
+        .then(clearCurrent, clearCurrent)
+        .then(enqueueUpdate)
+    })
   }
 
   const reducer = action => {
     switch (action.type) {
-      case `RESOURCE_FINISHED`:
-        resourcesDownloading = resourcesDownloading.filter(
-          r => r !== action.payload
-        )
-        break
       case `ON_PRE_LOAD_PAGE_RESOURCES`:
         pagesLoading.push(action.payload.path)
         break
@@ -28,14 +40,7 @@ module.exports = ({ getNextQueuedResources, createResourceDownload }) => {
         break
     }
 
-    // Take actions.
-    // Wait for event loop queue to finish.
-    setTimeout(() => {
-      if (resourcesDownloading.length === 0 && pagesLoading.length === 0) {
-        // Start another resource downloading.
-        startResourceDownloading()
-      }
-    }, 0)
+    enqueueUpdate()
   }
 
   return {
@@ -60,11 +65,11 @@ module.exports = ({ getNextQueuedResources, createResourceDownload }) => {
       reducer({ type: `ON_NEW_RESOURCES_ADDED` })
     },
     getState: () => {
-      return { pagesLoading, resourcesDownloading }
+      return { pagesLoading, current }
     },
     empty: () => {
       pagesLoading = []
-      resourcesDownloading = []
+      clearCurrent()
     },
   }
 }
