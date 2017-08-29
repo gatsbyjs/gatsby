@@ -141,7 +141,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       )
 
     const NewRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
-    domReady(() =>
+    domReady(() => {
       ReactDOM.render(
         <NewRoot />,
         typeof window !== `undefined`
@@ -151,6 +151,6 @@ apiRunnerAsync(`onClientEntry`).then(() => {
           apiRunner(`onInitialClientRender`)
         }
       )
-    )
+    })
   })
 })

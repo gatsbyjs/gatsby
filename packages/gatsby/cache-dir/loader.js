@@ -1,36 +1,40 @@
-import React, { createElement } from "react"
 import pageFinderFactory from "./find-page"
 import emitter from "./emitter"
-let findPage
 
-let syncRequires = {}
-let asyncRequires = {}
-let pathScriptsCache = {}
-let resourceStrCache = {}
-let resourceCache = {}
-let pages = []
-// Note we're not actively using the path data atm. There
-// could be future optimizations however around trying to ensure
-// we load all resources for likely-to-be-visited paths.
-let pathArray = []
-let pathCount = {}
-let resourcesArray = []
-let resourcesCount = {}
+
 const preferDefault = m => (m && m.default) || m
+
 let prefetcher
 let inInitialRender = true
+let hasFetched = Object.create(null)
+let syncRequires = {}
+let asyncRequires = {}
+
+const fetchResource = (resourceName) => {
+  // Find resource
+  const resourceFunction =
+    resourceName.startsWith(`component---`)
+      ? asyncRequires.components[resourceName] ||
+        asyncRequires.layouts[resourceName]
+      : asyncRequires.json[resourceName]
+
+  // Download the resource
+  hasFetched[resourceName] = true
+  return resourceFunction()
+}
+
+const getResourceModule = (resourceName) =>
+  fetchResource(resourceName).then(preferDefault)
 
 // Prefetcher logic
 if (process.env.NODE_ENV === `production`) {
   prefetcher = require(`./prefetcher`)({
-    getNextQueuedResources: () => resourcesArray.slice(-1)[0],
-    createResourceDownload: resourceName => {
-      fetchResource(resourceName, () => {
-        resourcesArray = resourcesArray.filter(r => r !== resourceName)
-        prefetcher.onResourcedFinished(resourceName)
-      })
+    fetchNextResource: () => {
+      let next = queue.dequeue()
+      return next && fetchResource(next)
     },
   })
+
   emitter.on(`onPreLoadPageResources`, e => {
     prefetcher.onPreLoadPageResources(e)
   })
@@ -39,74 +43,51 @@ if (process.env.NODE_ENV === `production`) {
   })
 }
 
+
+
+// const sortPagesByCount = (a, b) => {
+//   if (pathCount[a] > pathCount[b]) {
+//     return 1
+//   } else if (pathCount[a] < pathCount[b]) {
+//     return -1
+//   } else {
+//     return 0
+//   }
+// }
+
+
+
+
+
+// Note we're not actively using the path data atm. There
+// could be future optimizations however around trying to ensure
+// we load all resources for likely-to-be-visited paths.
+// let pathArray = []
+// let pathCount = {}
+
+let resourcesCount = Object.create(null)
 const sortResourcesByCount = (a, b) => {
-  if (resourcesCount[a] > resourcesCount[b]) {
-    return 1
-  } else if (resourcesCount[a] < resourcesCount[b]) {
-    return -1
-  } else {
-    return 0
-  }
+  if (resourcesCount[a] > resourcesCount[b]) return 1
+  else if (resourcesCount[a] < resourcesCount[b]) return -1
+  else return 0
 }
 
-const sortPagesByCount = (a, b) => {
-  if (pathCount[a] > pathCount[b]) {
-    return 1
-  } else if (pathCount[a] < pathCount[b]) {
-    return -1
-  } else {
-    return 0
-  }
-}
 
-const fetchResource = (resourceName, cb = () => {}) => {
-  if (resourceStrCache[resourceName]) {
-    process.nextTick(() => {
-      cb(null, resourceStrCache[resourceName])
-    })
-  } else {
-    // Find resource
-    const resourceFunction =
-      resourceName.slice(0, 12) === `component---`
-        ? asyncRequires.components[resourceName] ||
-          asyncRequires.layouts[resourceName]
-        : asyncRequires.json[resourceName]
-
-    // Download the resource
-    resourceFunction((err, executeChunk) => {
-      resourceStrCache[resourceName] = executeChunk
-      cb(err, executeChunk)
-    })
-  }
-}
-
-const getResourceModule = (resourceName, cb) => {
-  if (resourceCache[resourceName]) {
-    process.nextTick(() => {
-      cb(null, resourceCache[resourceName])
-    })
-  } else {
-    fetchResource(resourceName, (err, executeChunk) => {
-      if (err) {
-        cb(err)
-      } else {
-        const module = preferDefault(executeChunk())
-        resourceCache[resourceName] = module
-        cb(err, module)
-      }
-    })
-  }
-}
-
+let findPage
+let pages = []
+let pathScriptsCache = {}
+let resourcesArray = []
 let mountOrder = 1
+
 const queue = {
   empty: () => {
-    pathArray = []
-    pathCount = {}
-    resourcesCount = {}
+    // pathArray = []
+    // pathCount = {}
+    resourcesCount = Object.create(null)
     resourcesArray = []
     pages = []
   },
+
   addPagesArray: newPages => {
     pages = newPages
     let pathPrefix = ``
@@ -121,7 +102,11 @@ const queue = {
   addProdRequires: prodRequires => {
     asyncRequires = prodRequires
   },
-  dequeue: path => pathArray.pop(),
+
+  dequeue: () => resourcesArray.pop(),
+
+  // dequeue: path => pathArray.pop(),
+
   enqueue: path => {
     // Check page exists.
     if (!pages.some(p => p.path === path)) {
@@ -130,82 +115,60 @@ const queue = {
 
     const mountOrderBoost = 1 / mountOrder
     mountOrder += 1
+
+    function enqueueResource(resourceName) {
+      if (!resourceName) return
+      if (!resourcesCount[resourceName]) {
+        resourcesCount[resourceName] = 1 + mountOrderBoost
+      } else {
+        resourcesCount[resourceName] += 1 + mountOrderBoost
+      }
+
+      // Before adding, checking that the resource isn't either
+      // already queued or been downloading.
+      if (hasFetched[resourceName] || resourcesArray.includes(resourceName))
+        return
+
+      resourcesArray.unshift(resourceName)
+    }
+
     // console.log(
-    // `enqueue "${path}", mountOrder: "${mountOrder}, mountOrderBoost: ${mountOrderBoost}`
+    // `enqueue "${path}", mountOrder: ${mountOrder}, mountOrderBoost: ${mountOrderBoost}`
     // )
 
     // Add to path counts.
-    if (!pathCount[path]) {
-      pathCount[path] = 1
-    } else {
-      pathCount[path] += 1
-    }
+    // if (!pathCount[path]) {
+    //   pathCount[path] = 1
+    // } else {
+    //   pathCount[path] += 1
+    // }
 
-    // Add path to queue.
-    if (!queue.has(path)) {
-      pathArray.unshift(path)
-    }
+    // // Add path to queue.
+    // if (!queue.has(path)) {
+    //   pathArray.unshift(path)
+    // }
 
-    // Sort pages by pathCount
-    pathArray.sort(sortPagesByCount)
+    // // Sort pages by pathCount
+    // pathArray.sort(sortPagesByCount)
 
     // Add resources to queue.
     const page = findPage(path)
-    if (page.jsonName) {
-      if (!resourcesCount[page.jsonName]) {
-        resourcesCount[page.jsonName] = 1 + mountOrderBoost
-      } else {
-        resourcesCount[page.jsonName] += 1 + mountOrderBoost
-      }
 
-      // Before adding, checking that the JSON resource isn't either
-      // already queued or been downloading.
-      if (
-        resourcesArray.indexOf(page.jsonName) === -1 &&
-        !resourceStrCache[page.jsonName]
-      ) {
-        resourcesArray.unshift(page.jsonName)
-      }
-    }
-    if (page.componentChunkName) {
-      if (!resourcesCount[page.componentChunkName]) {
-        resourcesCount[page.componentChunkName] = 1 + mountOrderBoost
-      } else {
-        resourcesCount[page.componentChunkName] += 1 + mountOrderBoost
-      }
-
-      // Before adding, checking that the component resource isn't either
-      // already queued or been downloading.
-      if (
-        resourcesArray.indexOf(page.componentChunkName) === -1 &&
-        !resourceStrCache[page.jsonName]
-      ) {
-        resourcesArray.unshift(page.componentChunkName)
-      }
-    }
-
+    enqueueResource(page.jsonName)
+    enqueueResource(page.componentChunkName)
+    // console.log(resourcesArray, resourcesCount)
     // Sort resources by resourcesCount.
     resourcesArray.sort(sortResourcesByCount)
+
     if (process.env.NODE_ENV === `production`) {
       prefetcher.onNewResourcesAdded()
     }
 
     return true
   },
-  getResources: () => {
-    return {
-      resourcesArray,
-      resourcesCount,
-    }
-  },
-  getPages: () => {
-    return {
-      pathArray,
-      pathCount,
-    }
-  },
+
   getPage: pathname => findPage(pathname),
-  has: path => pathArray.some(p => p === path),
+
   getResourcesForPathname: (path, cb = () => {}) => {
     if (
       inInitialRender &&
@@ -234,89 +197,66 @@ const queue = {
     // so we just return with it immediately.
     if (process.env.NODE_ENV !== `production`) {
       const page = findPage(path)
-      if (!page) return
+      if (!page) return null
+
       const pageResources = {
         component: syncRequires.components[page.componentChunkName],
         json: syncRequires.json[page.jsonName],
         layout: syncRequires.layouts[page.layoutComponentChunkName],
-        page,
+        // page,
       }
       cb(pageResources)
       return pageResources
-      // Production code path
-    } else {
-      const page = findPage(path)
 
-      if (!page) {
-        console.log(`A page wasn't found for "${path}"`)
-        return
-      }
-
-      // Use the path from the page so the pathScriptsCache uses
-      // the normalized path.
-      path = page.path
-
-      // Check if it's in the cache already.
-      if (pathScriptsCache[path]) {
-        process.nextTick(() => {
-          cb(pathScriptsCache[path])
-          emitter.emit(`onPostLoadPageResources`, {
-            page,
-            pageResources: pathScriptsCache[path],
-          })
-        })
-        return pathScriptsCache[path]
-      }
-
-      emitter.emit(`onPreLoadPageResources`, { path })
-      // Nope, we need to load resource(s)
-      let component
-      let json
-      let layout
-      // Load the component/json/layout and parallel and call this
-      // function when they're done loading. When both are loaded,
-      // we move on.
-      const done = () => {
-        if (component && json && (!page.layoutComponentChunkName || layout)) {
-          pathScriptsCache[path] = { component, json, layout }
-          const pageResources = { component, json, layout }
-          cb(pageResources)
-          emitter.emit(`onPostLoadPageResources`, {
-            page,
-            pageResources,
-          })
-        }
-      }
-      getResourceModule(page.componentChunkName, (err, c) => {
-        if (err) {
-          console.log(`Loading the component for ${page.path} failed`)
-        }
-        component = c
-        done()
-      })
-      getResourceModule(page.jsonName, (err, j) => {
-        if (err) {
-          console.log(`Loading the JSON for ${page.path} failed`)
-        }
-        json = j
-        done()
-      })
-
-      page.layoutComponentChunkName &&
-        getResourceModule(page.layoutComponentChunkName, (err, l) => {
-          if (err) {
-            console.log(`Loading the Layout for ${page.path} failed`)
-          }
-          layout = l
-          done()
-        })
-
-      return undefined
     }
+    // Production code path
+    const page = findPage(path)
+
+    if (!page) {
+      console.log(`A page wasn't found for "${path}"`)
+      return null
+    }
+
+    // Use the path from the page so the pathScriptsCache uses
+    // the normalized path.
+    path = page.path
+
+    // Check if it's in the cache already.
+    if (pathScriptsCache[path]) {
+      Promise.resolve().then(() => {
+        cb(pathScriptsCache[path])
+        emitter.emit(`onPostLoadPageResources`, {
+          page,
+          pageResources: pathScriptsCache[path],
+        })
+      })
+      return pathScriptsCache[path]
+    }
+
+    emitter.emit(`onPreLoadPageResources`, { path })
+
+    Promise.all([
+      getResourceModule(page.componentChunkName),
+      getResourceModule(page.jsonName),
+      getResourceModule(page.layoutComponentChunkName),
+    ])
+    .then(([component, json, layout] )=> {
+      const pageResources = { component, json, layout }
+
+      pathScriptsCache[path] = pageResources
+      cb(pageResources)
+
+      emitter.emit(`onPostLoadPageResources`, {
+        page,
+        pageResources,
+      })
+    })
+
+    return null
   },
-  peek: path => pathArray.slice(-1)[0],
-  length: () => pathArray.length,
-  indexOf: path => pathArray.length - pathArray.indexOf(path) - 1,
+
+  // for testing
+  ___resources: () => resourcesArray.slice().reverse(),
 }
 
 module.exports = queue
