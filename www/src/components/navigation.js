@@ -10,7 +10,7 @@ import presets from "../utils/presets"
 import { vP, vPHd, vPVHd, vPVVHd } from "./gutters"
 
 const navItemStyles = {
-  ...scale(-1 / 5),
+  ...scale(-1 / 3),
   boxSizing: `border-box`,
   display: `inline-block`,
   color: `inherit`,
