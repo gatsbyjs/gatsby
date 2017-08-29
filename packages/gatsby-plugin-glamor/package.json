@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-glamor",
   "description": "Gatsby plugin to add support for Glamor",
-  "version": "1.6.4",
+  "version": "1.6.5",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "babel-runtime": "6.26.0",

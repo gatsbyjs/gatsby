@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-glamorous",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Stub description for gatsby-plugin-glamorous",
   "main": "index.js",
   "scripts": {

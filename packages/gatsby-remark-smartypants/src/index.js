@@ -6,7 +6,9 @@ const _ = require(`lodash`)
 module.exports = ({ markdownAST }, pluginOptions = {}) => {
   visit(markdownAST, `text`, node => {
     const processedText = String(
-      retext().use(smartypants, pluginOptions).process(node.value)
+      retext()
+        .use(smartypants, pluginOptions)
+        .process(node.value)
     )
     node.value = processedText
   })

@@ -13,7 +13,7 @@
     "gatsby-plugin-glamor": "^1.6.0",
     "gatsby-plugin-google-analytics": "^1.0.1",
     "gatsby-plugin-manifest": "^1.0.1",
-    "gatsby-plugin-nprogress": "^1.0.1",
+    "gatsby-plugin-nprogress": "^1.0.5",
     "gatsby-plugin-offline": "^1.0.1",
     "gatsby-plugin-react-helmet": "^1.0.1",
     "gatsby-plugin-sharp": "^1.6.0",

@@ -8,7 +8,7 @@ import MastheadBg from "./masthead-bg"
 import FuturaParagraph from "./futura-paragraph"
 import { vP, vPHd, vPVHd, vPVVHd } from "../components/gutters"
 
-const MastheadContent = () =>
+const MastheadContent = () => (
   <div
     className="masthead-content"
     css={{
@@ -99,6 +99,7 @@ const MastheadContent = () =>
       </CtaButton>
     </div>
   </div>
+)
 
 const Masthead = () => <MastheadContent />
 

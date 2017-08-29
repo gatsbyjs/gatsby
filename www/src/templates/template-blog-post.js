@@ -84,66 +84,43 @@ const BlogPostTemplate = React.createClass({
       <div>
         <Container className="post" css={{ paddingBottom: `0 !important` }}>
           {/* Add long list of social meta tags */}
-          <Helmet
-            title={post.frontmatter.title}
-            link={headLinks}
-            meta={[
-              {
-                name: `description`,
-                content: post.frontmatter.excerpt
-                  ? post.frontmatter.excerpt
-                  : post.excerpt,
-              },
-              {
-                name: `og:description`,
-                content: post.excerpt,
-              },
-              {
-                name: `twitter:description`,
-                content: post.excerpt,
-              },
-              {
-                name: `og:title`,
-                content: post.frontmatter.title,
-              },
-              {
-                name: `og:image`,
-                content: post.frontmatter.image.childImageSharp.resize.src,
-              },
-              {
-                name: `twitter:image`,
-                content: post.frontmatter.image.childImageSharp.resize.src,
-              },
-              {
-                name: `og:type`,
-                content: `article`,
-              },
-              {
-                name: `article:author`,
-                content: post.frontmatter.author.id,
-              },
-              {
-                name: `twitter:creator`,
-                content: post.frontmatter.author.twitter,
-              },
-              {
-                name: `author`,
-                content: post.frontmatter.author.id,
-              },
-              {
-                name: `twitter:label1`,
-                content: `Reading time`,
-              },
-              {
-                name: `twitter:data1`,
-                content: `${post.timeToRead} min read`,
-              },
-              {
-                name: `article:published_time`,
-                content: post.frontmatter.rawDate,
-              },
-            ]}
-          />
+          <Helmet>
+            <title>{post.frontmatter.title}</title>
+            <link
+              rel="author"
+              href={`https://gatsbyjs.org${post.frontmatter.author.slug}`}
+            />
+            <meta
+              name="description"
+              content={
+                post.frontmatter.excerpt ? post.frontmatter.excerpt : post.excerpt
+              }
+            />
+            <meta name="og:description" content={post.excerpt} />
+            <meta name="twitter:description" content={post.excerpt} />
+            <meta name="og:title" content={post.frontmatter.title} />
+            <meta
+              name="og:image"
+              content={post.frontmatter.image.childImageSharp.resize.src}
+            />
+            <meta
+              name="twitter:image"
+              content={post.frontmatter.image.childImageSharp.resize.src}
+            />
+            <meta name="og:type" content="article" />
+            <meta name="article:author" content={post.frontmatter.author.id} />
+            <meta
+              name="twitter:creator"
+              content={post.frontmatter.author.twitter}
+            />
+            <meta name="author" content={post.frontmatter.author.id} />
+            <meta name="twitter:label1" content="Reading time" />
+            <meta name="twitter:data1" content={`${post.timeToRead} min read`} />
+            <meta
+              name="article:published_time"
+              content={post.frontmatter.rawDate}
+            />
+          </Helmet>
           <header
             css={{
               display: `flex`,

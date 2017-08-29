@@ -53,4 +53,4 @@ flag, see https://github.com/gatsbyjs/gatsby/blob/master/scripts/publish-site.sh
 #### `--quiet`
 
 Don't output anything except for a quit message when used together with
-`--scan-one`.
+`--scan-once`.

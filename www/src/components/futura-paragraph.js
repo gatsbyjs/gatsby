@@ -1,7 +1,7 @@
 import { rhythm, scale, options } from "../utils/typography"
 import presets from "../utils/presets"
 
-const FuturaParagraph = ({ children }) =>
+const FuturaParagraph = ({ children }) => (
   <p
     css={{
       fontFamily: options.headerFontFamily.join(`,`),
@@ -20,5 +20,6 @@ const FuturaParagraph = ({ children }) =>
   >
     {children}
   </p>
+)
 
 export default FuturaParagraph

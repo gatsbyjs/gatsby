@@ -1,0 +1,30 @@
+{
+  "name": "gatsby-plugin-react-css-modules",
+  "version": "1.0.2",
+  "description": "Gatsby plugin that transforms styleName to className using compile time CSS module resolution",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src --out-dir . --ignore __tests__",
+    "watch": "babel -w src --out-dir . --ignore __tests__"
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "babel",
+    "babel-plugin",
+    "react",
+    "css modules",
+    "styleName",
+    "className"
+  ],
+  "author": "Ming Aldrich-Gan <mingaldrichgan@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "babel-plugin-react-css-modules": "^3.2.1",
+    "babel-runtime": "^6.26.0",
+    "gatsby-1-config-css-modules": "^1.0.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1"
+  }
+}

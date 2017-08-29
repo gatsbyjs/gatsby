@@ -21,13 +21,11 @@ class ActionCreatorsDocs extends React.Component {
         </p>
         <h2 css={{ marginBottom: rhythm(1 / 2) }}>Functions</h2>
         <ul css={{ ...scale(-1 / 5) }}>
-          {this.props.data.allDocumentationJs.edges.map(({ node }, i) =>
+          {this.props.data.allDocumentationJs.edges.map(({ node }, i) => (
             <li key={`function list ${node.name}`}>
-              <a href={`#${node.name}`}>
-                {node.name}
-              </a>
+              <a href={`#${node.name}`}>{node.name}</a>
             </li>
-          )}
+          ))}
         </ul>
         <hr />
         <h2>Reference</h2>

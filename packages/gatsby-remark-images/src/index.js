@@ -65,7 +65,7 @@ module.exports = (
     // Calculate the paddingBottom %
     const ratio = `${1 / responsiveSizesResult.aspectRatio * 100}%`
 
-    const originalImg = responsiveSizesResult.originalImage
+    const originalImg = responsiveSizesResult.originalImg
     const fallbackSrc = responsiveSizesResult.src
     const srcSet = responsiveSizesResult.srcSet
 
@@ -83,7 +83,7 @@ module.exports = (
     let rawHTML = `
   <span
     class="gatsby-resp-image-wrapper"
-    style="position: relative; z-index: -1; display: block; ${options.wrapperStyle}"
+    style="position: relative; display: block; ${options.wrapperStyle}"
   >
     <span
       class="gatsby-resp-image-background-image"
