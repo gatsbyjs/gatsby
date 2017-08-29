@@ -1,5 +1,5 @@
-import ExtractTextPlugin from "extract-text-webpack-plugin"
-import cssModulesConfig from "gatsby-1-config-css-modules"
+const ExtractTextPlugin = require("extract-text-webpack-plugin")
+const { cssModulesConfig } = require("gatsby-1-config-css-modules")
 
 exports.modifyWebpackConfig = (
   { config, stage },
