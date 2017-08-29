@@ -11,7 +11,7 @@
     "gatsby",
     "less"
   ],
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "author": "Ming Aldrich-Gan <mingaldrichgan@gmail.com>",
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.24.1"
@@ -21,6 +21,7 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "gatsby-1-config-css-modules": "^1.0.1",
     "less": "^2.7.2",
-    "less-loader": "^4.0.5"
+    "less-loader": "^3.0.0",
+    "webpack": "^1.13.3"
   }
 }
