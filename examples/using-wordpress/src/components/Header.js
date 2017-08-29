@@ -4,18 +4,14 @@ import Link from "gatsby-link"
 import { H1, H2, H3, H4 } from "../components/styled"
 import { Row, Page, Column } from "./styled"
 
-const Header = ({ title, subtitle, pages }) =>
+const Header = ({ title, subtitle, pages }) => (
   // TODO : Sort order of menu based on field menu_order
   <Page>
     <Row>
-      <H3>
-        {title}
-      </H3>
+      <H3>{title}</H3>
     </Row>
     <Row>
-      <H4>
-        {subtitle}
-      </H4>
+      <H4>{subtitle}</H4>
     </Row>
     <Row>
       <Column fluid xs={1} sm={10} md={10} lg={10}>
@@ -28,9 +24,7 @@ const Header = ({ title, subtitle, pages }) =>
           return (
             <span key={p.node.id}>
               {i !== 0 ? ` - ` : ``}
-              <Link to={`/${p.node.slug}`}>
-                {unescape(p.node.title)}
-              </Link>
+              <Link to={`/${p.node.slug}`}>{unescape(p.node.title)}</Link>
             </span>
           )
         })}
@@ -38,6 +32,7 @@ const Header = ({ title, subtitle, pages }) =>
       <hr />
     </Row>
   </Page>
+)
 
 Header.propTypes = {
   title: PropTypes.string,

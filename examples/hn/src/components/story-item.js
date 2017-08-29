@@ -17,9 +17,7 @@ class StoryItem extends React.Component {
             }}
             className="title"
           >
-            <span className="rank">
-              {story.order}.
-            </span>
+            <span className="rank">{story.order}.</span>
           </td>
           <td className="title">
             <a href={story.url} className="storylink">
@@ -46,9 +44,7 @@ class StoryItem extends React.Component {
             </a>
             {` `}
             <span className="age">
-              <Link to={`/item/${story.id}/`}>
-                {story.timeISO}
-              </Link>
+              <Link to={`/item/${story.id}/`}>{story.timeISO}</Link>
             </span>
             {` `}
             <span id={`unv_${story.id}`} />

@@ -1,4 +1,4 @@
-const DiscordIcon = ({ overrideCSS }) =>
+const DiscordIcon = ({ overrideCSS }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -23,5 +23,6 @@ const DiscordIcon = ({ overrideCSS }) =>
                 C22.3,16.2,21.1,18.2,18,18.3L18,18.3z" />
     </g>
   </svg>
+)
 
 export default DiscordIcon

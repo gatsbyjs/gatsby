@@ -53,7 +53,7 @@ nodes.
 * The [Remark
 (Markdown library) transformer
 plugin](/packages/gatsby-transformer-remark/) looks for new nodes that
-are created with a `mediaType` of `text/x-markdown` and then transforms these
+are created with a `mediaType` of `text/markdown` and then transforms these
 nodes into `MarkdownRemark` nodes with an `html` field.
 * The [YAML transformer plugin](/packages/gatsby-transformer-yaml/) looks
 for new nodes with a media type of `text/yaml` (e.g. a `.yaml` file) and creates new

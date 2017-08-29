@@ -1,11 +1,12 @@
 {
   "name": "gatsby-plugin-postcss-sass",
   "description": "Gatsby plugin to handle scss/sass files with integrated support for also processing with Postcss plugins",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "author": "Scotty Eckenthal <scotty@meetfabric.com>",
   "dependencies": {
     "babel-runtime": "6.26.0",
     "extract-text-webpack-plugin": "^1.0.1",
+    "gatsby-1-config-css-modules": "^1.0.1",
     "node-sass": "^4.5.2",
     "sass-loader": "^4.1.1"
   },

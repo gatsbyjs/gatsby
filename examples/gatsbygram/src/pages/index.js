@@ -128,7 +128,7 @@ class Index extends React.Component {
           </div>
         </div>
         {/* posts */}
-        {chunk(posts.slice(0, this.state.postsToShow), 3).map((chunk, i) =>
+        {chunk(posts.slice(0, this.state.postsToShow), 3).map((chunk, i) => (
           <div
             key={`chunk-${i}`}
             css={{
@@ -142,17 +142,17 @@ class Index extends React.Component {
               },
             }}
           >
-            {chunk.map(node =>
+            {chunk.map(node => (
               <Post
                 key={node.id}
                 post={node}
                 location={this.props.location}
                 onClick={post => this.setState({ activePost: post })}
               />
-            )}
+            ))}
           </div>
-        )}
-        {!this.state.showingMore &&
+        ))}
+        {!this.state.showingMore && (
           <a
             css={{
               ...scale(-0.5),
@@ -188,7 +188,8 @@ class Index extends React.Component {
             }}
           >
             Load More
-          </a>}
+          </a>
+        )}
       </div>
     )
   }

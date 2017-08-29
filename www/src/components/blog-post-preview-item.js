@@ -52,12 +52,8 @@ class BlogPostPreviewItem extends React.Component {
               },
             }}
           >
-            <div>
-              {post.frontmatter.author.id}
-            </div>
-            <div>
-              {post.frontmatter.date}
-            </div>
+            <div>{post.frontmatter.author.id}</div>
+            <div>{post.frontmatter.date}</div>
           </div>
         </div>
       </div>
