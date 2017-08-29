@@ -265,7 +265,7 @@ module.exports = async (
 
 
           // Minify Javascript.
-          // plugins.uglify(),
+          plugins.uglify(),
           new GatsbyModulePlugin(),
           plugins.namedModules(),
           plugins.namedChunks((chunk) => {
