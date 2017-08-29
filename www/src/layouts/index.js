@@ -1,12 +1,12 @@
 import React from "react"
 import Helmet from "react-helmet"
 
-import typography, { rhythm, scale } from "../utils/typography"
 import Navigation from "../components/navigation"
 import MobileNavigation from "../components/navigation-mobile"
 import SidebarBody from "../components/sidebar-body"
 import tutorialSidebar from "../pages/docs/tutorial-links.yml"
 import docsSidebar from "../pages/docs/doc-links.yaml"
+import { rhythm, scale } from "../utils/typography"
 import presets from "../utils/presets"
 import colors from "../utils/colors"
 

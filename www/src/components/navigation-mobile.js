@@ -13,12 +13,12 @@ const MobileNavItem = ({ linkTo, title, children }) =>
   <Link
     to={linkTo}
     css={{
-      //color: presets.brand,
+      color: presets.brand,
+      fontSize: scale(-1 / 2).fontSize,
+      letterSpacing: `0.07em`,
       textDecoration: `none`,
       textAlign: `center`,
       textTransform: `uppercase`,
-      letterSpacing: `0.07em`,
-      fontSize: scale(-1 / 2).fontSize,
     }}
   >
     {children}
@@ -41,7 +41,7 @@ export default () =>
       height: rhythm(2.3),
       background: presets.veryLightPurple,
       borderTop: `1px solid ${colors.b[0]}`,
-      background: `#fcfaff`,
+      background: presets.sidebar,
       fontFamily: typography.options.headerFontFamily.join(`,`),
       [presets.Tablet]: {
         display: `none`,
