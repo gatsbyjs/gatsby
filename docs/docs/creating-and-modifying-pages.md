@@ -160,3 +160,28 @@ exports.onCreatePage = async ({ page, boundActionCreators }) => {
   })
 }
 ```
+
+### Changing layout
+
+By default, Gatsby will apply the layout found at `/layouts/index.js` to all pages.
+You may wish to have a custom layout for certain pages (such as removing header and footer for landing pages). You can change the template used using the `onCreatePage` API. Each template in the `/layouts/` directory will be available for use, with the key being its name without the file extension.
+
+```javascript
+// Implement the Gatsby API “onCreatePage”. This is
+// called after every page is created.
+exports.onCreatePage = async ({ page, boundActionCreators }) => {
+  const { createPage } = boundActionCreators
+
+  return new Promise((resolve, reject) => {
+    if (page.path.match(/^\/landing-page/)) {
+      // Assumed `landingPage.js` exists in the `/layouts/` directory
+      page.layout = "landingPage"
+
+      // Update the page.
+      createPage(page)
+    }
+
+    resolve()
+  })
+}
+```
