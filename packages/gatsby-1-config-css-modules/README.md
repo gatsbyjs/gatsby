@@ -8,7 +8,7 @@ CSS Modules configuration for Gatsby v1 plugins
 Example from [`gatsby-plugin-sass`](../gatsby-plugin-sass/):
 ```javascript
 // in gatsby-node.js
-import cssModulesConfig from "gatsby-1-config-css-modules"
+const { cssModulesConfig } = require("gatsby-1-config-css-modules")
 
 exports.modifyWebpackConfig = ({ config, stage }, { precision }) => {
   const sassFiles = /\.s[ac]ss$/
