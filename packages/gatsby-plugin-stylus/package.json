@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-stylus",
   "description": "Gatsby support for Stylus",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "author": "Ian Sinnott <ian@iansinnott.com>",
   "dependencies": {
     "babel-runtime": "6.26.0",
