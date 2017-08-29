@@ -1,6 +1,6 @@
 {
   "name": "gatsby-1-config-css-modules",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "CSS Modules configuration for Gatsby v1 plugins",
   "main": "index.js",
   "scripts": {
