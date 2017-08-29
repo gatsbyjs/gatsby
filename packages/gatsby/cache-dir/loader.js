@@ -1,7 +1,6 @@
 import pageFinderFactory from "./find-page"
 import emitter from "./emitter"
 
-
 const preferDefault = m => (m && m.default) || m
 
 let prefetcher
@@ -44,21 +43,6 @@ if (process.env.NODE_ENV === `production`) {
 }
 
 
-
-// const sortPagesByCount = (a, b) => {
-//   if (pathCount[a] > pathCount[b]) {
-//     return 1
-//   } else if (pathCount[a] < pathCount[b]) {
-//     return -1
-//   } else {
-//     return 0
-//   }
-// }
-
-
-
-
-
 // Note we're not actively using the path data atm. There
 // could be future optimizations however around trying to ensure
 // we load all resources for likely-to-be-visited paths.
@@ -81,8 +65,6 @@ let mountOrder = 1
 
 const queue = {
   empty: () => {
-    // pathArray = []
-    // pathCount = {}
     resourcesCount = Object.create(null)
     resourcesArray = []
     pages = []
@@ -132,31 +114,12 @@ const queue = {
       resourcesArray.unshift(resourceName)
     }
 
-    // console.log(
-    // `enqueue "${path}", mountOrder: ${mountOrder}, mountOrderBoost: ${mountOrderBoost}`
-    // )
-
-    // Add to path counts.
-    // if (!pathCount[path]) {
-    //   pathCount[path] = 1
-    // } else {
-    //   pathCount[path] += 1
-    // }
-
-    // // Add path to queue.
-    // if (!queue.has(path)) {
-    //   pathArray.unshift(path)
-    // }
-
-    // // Sort pages by pathCount
-    // pathArray.sort(sortPagesByCount)
-
     // Add resources to queue.
     const page = findPage(path)
 
     enqueueResource(page.jsonName)
     enqueueResource(page.componentChunkName)
-    // console.log(resourcesArray, resourcesCount)
+
     // Sort resources by resourcesCount.
     resourcesArray.sort(sortResourcesByCount)
 
