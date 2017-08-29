@@ -19,8 +19,8 @@
  *   },
  * ],
  */
-const ExtractTextPlugin = require("extract-text-webpack-plugin")
-const { cssModulesConfig } = require("gatsby-1-config-css-modules")
+const ExtractTextPlugin = require(`extract-text-webpack-plugin`)
+const { cssModulesConfig } = require(`gatsby-1-config-css-modules`)
 
 exports.modifyWebpackConfig = ({ config, stage }, options = {}) => {
   // Pass in stylus options regardless of stage.

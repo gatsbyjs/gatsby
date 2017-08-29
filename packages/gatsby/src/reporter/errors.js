@@ -38,9 +38,13 @@ function createErrorFromString(errorStr: string) {
   // pull the message from the first line then remove the `Error:` prefix
   // FIXME: when https://github.com/AriaMinaei/pretty-error/pull/49 is merged
   let error = new Error()
-  error.stack = [message.split(`:`).slice(1).join(`:`), rest.join(`\n`)].join(
-    `\n`
-  )
+  error.stack = [
+    message
+      .split(`:`)
+      .slice(1)
+      .join(`:`),
+    rest.join(`\n`),
+  ].join(`\n`)
   error.name = `WebpackError`
   return error
 }

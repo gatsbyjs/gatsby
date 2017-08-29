@@ -1,4 +1,4 @@
-const { cssModulesConfig, LOCAL_IDENT_NAME } = require("../index")
+const { cssModulesConfig, LOCAL_IDENT_NAME } = require(`../index`)
 
 describe(`gatsby-1-config-css-modules`, () => {
   ;[
