@@ -39,10 +39,13 @@ exports.createPagesStatefully = async (
     })
     .on(`unlink`, path => {
       // Delete the page for the now deleted component.
-      store.getState().pages.filter(p => p.component === path).forEach(page => {
-        deletePage({ path: page.path })
-        files = files.filter(f => f !== path)
-      })
+      store
+        .getState()
+        .pages.filter(p => p.component === path)
+        .forEach(page => {
+          deletePage({ path: page.path })
+          files = files.filter(f => f !== path)
+        })
     })
     .on(`ready`, () => doneCb())
 }

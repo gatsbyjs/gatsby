@@ -44,11 +44,13 @@ function createErrorFromString(errorStr: string, sourceMapFile: string) {
   let [message, ...rest] = errorStr.split(/\r\n|[\n\r]/g)
   // pull the message from the first line then remove the `Error:` prefix
   // FIXME: when https://github.com/AriaMinaei/pretty-error/pull/49 is merged
+
   message = message.split(`:`).slice(1).join(`:`)
 
   let error = new Error(message)
 
   error.stack = [message, rest.join(`\n`)].join(`\n`)
+
   error.name = `WebpackError`
 
   if (sourceMapFile)

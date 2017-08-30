@@ -2052,13 +2052,14 @@ eslint-plugin-prettier@^2.2.0:
     fast-diff "^1.1.1"
     jest-docblock "^20.0.1"
 
-eslint-plugin-react@^7.2.1:
-  version "7.2.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.2.1.tgz#c2673526ed6571b08c69c5f453d03f5f13e8ddbe"
+eslint-plugin-react@^7.3.0:
+  version "7.3.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.3.0.tgz#ca9368da36f733fbdc05718ae4e91f778f38e344"
   dependencies:
     doctrine "^2.0.0"
     has "^1.0.1"
     jsx-ast-utils "^2.0.0"
+    prop-types "^15.5.10"
 
 eslint-scope@^3.7.1:
   version "3.7.1"
@@ -3692,9 +3693,9 @@ lcid@^1.0.0:
   dependencies:
     invert-kv "^1.0.0"
 
-lerna@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/lerna/-/lerna-2.1.0.tgz#22da4c9cb09f7733a7e87ba8f34779a509c172ea"
+lerna@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/lerna/-/lerna-2.1.1.tgz#1d563926204dca11e56d637cac16587d66aa264a"
   dependencies:
     async "^1.5.0"
     chalk "^2.1.0"
@@ -4106,9 +4107,9 @@ node-notifier@^5.0.2:
     shellwords "^0.1.0"
     which "^1.2.12"
 
-node-plop@=0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/node-plop/-/node-plop-0.7.0.tgz#d4a605453a0c4b6791f9ebd7c01f40eabdeaca4f"
+node-plop@=0.7.1:
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/node-plop/-/node-plop-0.7.1.tgz#0e545a2f0f8bf35d57892ec99c845bfcc6a8731c"
   dependencies:
     change-case "^2.3.1"
     co "^4.6.0"
@@ -4467,15 +4468,15 @@ pkg-dir@^1.0.0:
   dependencies:
     find-up "^1.0.0"
 
-plop@^1.7.4:
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/plop/-/plop-1.8.0.tgz#665c650feb5107d821387c0549b1f97e9af8c3da"
+plop@^1.8.1:
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/plop/-/plop-1.8.1.tgz#8d736c1679c9d366dba67f814c73bb6595c58556"
   dependencies:
     chalk "^1.1.3"
     interpret "^1.0.0"
     liftoff "^2.2.0"
     minimist "^1.2.0"
-    node-plop "=0.7.0"
+    node-plop "=0.7.1"
     v8flags "^2.0.10"
 
 pluralize@^1.2.1:
@@ -4535,9 +4536,9 @@ prettier@^1.5.0:
   version "1.5.3"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.5.3.tgz#59dadc683345ec6b88f88b94ed4ae7e1da394bfe"
 
-prettier@^1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.6.0.tgz#23e9c68251f440feb847f558821bead21765919a"
+prettier@^1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.6.1.tgz#850f411a3116226193e32ea5acfc21c0f9a76d7d"
 
 pretty-format@^20.0.3:
   version "20.0.3"
@@ -4568,7 +4569,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.8:
+prop-types@^15.5.10, prop-types@^15.5.8:
   version "15.5.10"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.10.tgz#2797dfc3126182e3a95e3dfbb2e893ddd7456154"
   dependencies:

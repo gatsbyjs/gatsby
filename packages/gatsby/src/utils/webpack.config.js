@@ -8,7 +8,7 @@ import ExtractTextPlugin from "extract-text-webpack-plugin"
 import StaticSiteGeneratorPlugin from "static-site-generator-webpack-plugin"
 import { StatsWriterPlugin } from "webpack-stats-plugin"
 import FriendlyErrorsWebpackPlugin from "friendly-errors-webpack-plugin"
-import cssModulesConfig from "gatsby-1-config-css-modules"
+import { cssModulesConfig } from "gatsby-1-config-css-modules"
 
 // This isn't working right it seems.
 // import WebpackStableModuleIdAndHash from 'webpack-stable-module-id-and-hash'
