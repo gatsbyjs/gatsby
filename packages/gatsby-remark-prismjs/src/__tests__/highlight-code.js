@@ -1,5 +1,4 @@
 const parseLineNumberRange = require(`../parse-line-number-range`)
-const highlightCode = require(`../highlight-code`)
 
 describe(`highlight code and lines with PrismJS`, () => {
   it(`parses numeric ranges from the languages variable`, () => {
@@ -46,10 +45,30 @@ describe(`highlight code and lines with PrismJS`, () => {
     expect(parseLineNumberRange(`jsx`).splitLanguage).toEqual(`jsx`)
   })
 
-  it(`highlights code`, () => {
-    const language = `jsx`
-    const lineNumbersHighlight = [12, 13, 15]
-    const code = `
+  describe(`highlights code for language`, () => {
+    afterEach(() => {
+      jest.resetModules()
+    })
+
+    it(`cpp`, () => {
+      const highlightCode = require(`../highlight-code`)
+      const language = `cpp`
+      const lineNumbersHighlight = [1, 2]
+      const code = `
+int sum(a, b) {
+  return a + b;
+}
+`
+      expect(
+        highlightCode(language, code, lineNumbersHighlight)
+      ).toMatchSnapshot()
+    })
+
+    it(`jsx`, () => {
+      const highlightCode = require(`../highlight-code`)
+      const language = `jsx`
+      const lineNumbersHighlight = [12, 13, 15]
+      const code = `
 import React from "react"
 
 class Counter extends React.Component {
@@ -76,8 +95,9 @@ class Counter extends React.Component {
 
 export default Counter
 `
-    expect(
-      highlightCode(language, code, lineNumbersHighlight)
-    ).toMatchSnapshot()
+      expect(
+        highlightCode(language, code, lineNumbersHighlight)
+      ).toMatchSnapshot()
+    })
   })
 })

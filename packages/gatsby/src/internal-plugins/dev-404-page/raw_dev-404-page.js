@@ -27,25 +27,22 @@ class Dev404Page extends React.Component {
           component you created.
         </p>
         {this.props.data.allSitePage &&
-          this.props.data.allSitePage.totalCount > 1 &&
+        this.props.data.allSitePage.totalCount > 1 && (
           <div>
             <p>
               If you were trying to reach another page, perhaps you can find it
               below.
             </p>
-            <h2>
-              Pages ({this.props.data.allSitePage.totalCount})
-            </h2>
+            <h2>Pages ({this.props.data.allSitePage.totalCount})</h2>
             <ul>
-              {this.props.data.allSitePage.edges.map(({ node }) =>
+              {this.props.data.allSitePage.edges.map(({ node }) => (
                 <li key={node.path}>
-                  <Link to={node.path}>
-                    {node.path}
-                  </Link>
+                  <Link to={node.path}>{node.path}</Link>
                 </li>
-              )}
+              ))}
             </ul>
-          </div>}
+          </div>
+        )}
       </div>
     )
   }

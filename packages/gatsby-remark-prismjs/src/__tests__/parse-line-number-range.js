@@ -1,6 +1,6 @@
 const parseLineNumberRange = require(`../parse-line-number-range`)
 
-describe(`parses numeric ranges from the languges markdown code directive`, () => {
+describe(`parses numeric ranges from the languages markdown code directive`, () => {
   it(`parses numeric ranges from the languages variable`, () => {
     expect(parseLineNumberRange(`jsx{1,5,7-8}`).highlightLines).toEqual([
       1,
