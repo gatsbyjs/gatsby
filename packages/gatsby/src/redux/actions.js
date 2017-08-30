@@ -207,29 +207,36 @@ const typeOwners = {}
  * @param {Object} node.internal node fields that aren't generally
  * interesting to consumers of node data but are very useful for plugin writers
  * and Gatsby core.
- * @param {string} node.internal.mediaType Either an official media type (we use
- * mime-db as our source (https://www.npmjs.com/package/mime-db) or a made-up
- * one if your data doesn't fit in any existing bucket. Transformer plugins
- * frequently use node media types for deciding if they should transform a
- * node into a new one. E.g. markdown transformers look for media types of
+ * @param {string} node.internal.mediaType An optional field to indicate to
+ * transformer plugins that your node has raw content they can transform.
+ * Use either an official media type (we use mime-db as our source
+ * (https://www.npmjs.com/package/mime-db) or a made-up one if your data
+ * doesn't fit in any existing bucket. Transformer plugins node media types
+ * for deciding if they should transform a node into a new one. E.g.
+ * markdown transformers look for media types of
  * text/markdown.
  * @param {string} node.internal.type An arbitrary globally unique type
  * choosen by the plugin creating the node. Should be descriptive of the
  * node as the type is used in forming GraphQL types so users will query
  * for nodes based on the type choosen here. Nodes of a given type can
  * only be created by one plugin.
- * @param {string} node.internal.content raw content of the node. Can be
- * excluded if it'd be memory intensive to load in which case you must
- * define a `loadNodeContent` function for this node.
+ * @param {string} node.internal.content An optional field. The raw content
+ * of the node. Can be excluded if it'd require a lot of memory to load in
+ * which case you must define a `loadNodeContent` function for this node.
  * @param {string} node.internal.contentDigest the digest for the content
  * of this node. Helps Gatsby avoid doing extra work on data that hasn't
  * changed.
  * @example
  * createNode({
  *   // Data for the node.
- *   ...fieldData,
+ *   field1: `a string`,
+ *   field2: 10,
+ *   field3: true,
+ *   ...arbitraryOtherData,
+ *
+ *   // Required fields.
  *   id: `a-node-id`,
- *   parent: `the-id-of-the-parent-node`,
+ *   parent: `the-id-of-the-parent-node`, // or null if it's a source node without a parent
  *   children: [],
  *   internal: {
  *     mediaType: `text/markdown`,
