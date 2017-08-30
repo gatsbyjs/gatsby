@@ -93,3 +93,18 @@ Object {
   },
 }
 `;
+
+exports[`GraphQL type inferance handles date objects 1`] = `
+Object {
+  "data": Object {
+    "listNode": Array [
+      Object {
+        "dateObject": "2012-11-05T00:00:00.000Z",
+      },
+      Object {
+        "dateObject": "2012-11-05T00:00:00.000Z",
+      },
+    ],
+  },
+}
+`;
