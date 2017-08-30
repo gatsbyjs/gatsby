@@ -5,17 +5,15 @@ const buildHTML = require(`./build-html`)
 const buildProductionBundle = require(`./build-javascript`)
 const bootstrap = require(`../bootstrap`)
 const report = require(`../reporter`)
-const { formatStaticBuildError } = require(`../reporter/errors`)
 const apiRunnerNode = require(`./api-runner-node`)
 const copyStaticDirectory = require(`./copy-static-directory`)
 
 function reportFailure(msg, err: Error) {
   report.log(``)
-  report.panic(
-    msg,
-    err.name !== `WebpackError` ? err : formatStaticBuildError(err)
-  )
+  report.panic(msg, err)
 }
+
+
 
 async function html(program: any) {
   const { graphqlRunner } = await bootstrap(program)
