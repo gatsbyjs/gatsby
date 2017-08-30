@@ -55,6 +55,8 @@ plugins
     └── package.json
 ```
 
+You still need to add the plugin to your `gatsby-config.js` like for plugins installed from NPM.
+
 Each plugin requires a package.json file, but the minimum content is just an
 empty object `{}`. The `name` and `version` fields are read from the package file.
 The name is used to identify the plugin when it mutates the GraphQL data structure.

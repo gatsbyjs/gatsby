@@ -39,7 +39,9 @@ export const nodeSchema = Joi.object()
   .keys({
     id: Joi.string().required(),
     children: Joi.array(Joi.string()).required(),
-    parent: Joi.string().required(),
+    parent: Joi.string()
+      .allow(null)
+      .required(),
     fields: Joi.object(),
     internal: Joi.object().keys({
       contentDigest: Joi.string().required(),
