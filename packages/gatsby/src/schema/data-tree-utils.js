@@ -18,6 +18,8 @@ const areAllSameType = list =>
 const isEmptyObjectOrArray = (obj: any): boolean => {
   if (obj === INVALID_VALUE) {
     return true
+  } else if (_.isDate(obj)) {
+    return false
     // Simple "is object empty" check.
   } else if (_.isObject(obj) && _.isEmpty(obj)) {
     return true
