@@ -15,6 +15,6 @@
     "loader-utils": "^0.2.16"
   },
   "devDependencies": {
-    "babel-cli": "^6.24.1"
+    "babel-cli": "^6.26.0"
   }
 }

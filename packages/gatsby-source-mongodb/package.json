@@ -13,7 +13,7 @@
   "author": "jhermans85@hotmail.com",
   "license": "MIT",
   "devDependencies": {
-    "babel-cli": "^6.24.1"
+    "babel-cli": "^6.26.0"
   },
   "dependencies": {
     "babel-runtime": "6.26.0",

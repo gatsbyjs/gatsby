@@ -4,7 +4,7 @@
   "version": "1.0.3",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "devDependencies": {
-    "babel-cli": "^6.24.1",
+    "babel-cli": "^6.26.0",
     "graphql": "^0.10.3"
   },
   "keywords": [
@@ -18,6 +18,6 @@
     "watch": "babel -w src --out-dir dist"
   },
   "dependencies": {
-    "babel-runtime": "6.26.0"
+    "babel-runtime": "^6.26.0"
   }
 }

@@ -3,6 +3,7 @@ platform:
 
 cache:
   - '%AppData%/npm-cache'
+  - "%LOCALAPPDATA%/Yarn"
   - C:\Users\appveyor\AppData\Roaming\npm\node_modules\windows-build-tools
 
 skip_branch_with_pr: true
@@ -46,23 +47,24 @@ install:
       }
   - ps: Install-Product node $env:nodejs_version $env:platform
   - ps: npm install -g windows-build-tools
-  - npm install -g gatsby-dev-cli@canary
+  - choco install yarn --ignore-dependencies
+  - refreshenv
   - echo we are running on %PLATFORM%
-  - npm install
+  - yarn global add gatsby-dev-cli@canary
+  - yarn install
   - node --version
-  - npm --version
-  - npm test
+  - yarn test
 
 # Build gatsby head
 before_build:
-  - npm run build
+  - yarn run build
 
 build_script:
   - cd examples/%example%
-  - npm install
+  - yarn install
   - gatsby-dev --set-path-to-repo ../..
   - gatsby-dev --scan-once
-  - npm run build
+  - yarn run build
 
 artifacts:
   - path: examples/$(example)

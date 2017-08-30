@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "babel-runtime": "^6.23.0",
+    "babel-runtime": "^6.26.0",
     "chokidar": "^1.7.0",
     "configstore": "^3.1.0",
     "fs-extra": "^3.0.1",
@@ -13,7 +13,7 @@
   "description": "CLI helpers for contributors working on Gatsby",
   "main": "index.js",
   "devDependencies": {
-    "babel-cli": "^6.24.1"
+    "babel-cli": "^6.26.0"
   },
   "bin": {
     "gatsby-dev": "./dist/index.js"

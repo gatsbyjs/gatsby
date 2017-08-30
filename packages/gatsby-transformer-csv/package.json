@@ -15,11 +15,11 @@
   "author": "Sonal Saldanha <sonal.saldanha@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "babel-cli": "^6.24.1",
+    "babel-cli": "^6.26.0",
     "json2csv": "^3.7"
   },
   "dependencies": {
-    "babel-runtime": "6.26.0",
+    "babel-runtime": "^6.26.0",
     "bluebird": "^3.5.0",
     "csvtojson": "^1.1"
   }

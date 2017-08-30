@@ -7,7 +7,7 @@
     "gatsby": "./index.js"
   },
   "dependencies": {
-    "babel-runtime": "^6.25.0",
+    "babel-runtime": "^6.26.0",
     "commander": "^2.11.0",
     "core-js": "^2.5.0",
     "fs-extra": "^4.0.1",
@@ -17,7 +17,7 @@
     "tracer": "^0.8.9"
   },
   "devDependencies": {
-    "babel-cli": "^6.24.1"
+    "babel-cli": "^6.26.0"
   },
   "keywords": [
     "gatsby"
