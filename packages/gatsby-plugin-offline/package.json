@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-offline",
   "description": "Gatsby plugin which sets up a site to be able to run offline",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "devDependencies": {
     "babel-cli": "^6.26.0"
