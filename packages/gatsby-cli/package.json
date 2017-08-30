@@ -18,6 +18,8 @@
     "lodash": "^4.17.4",
     "pretty-error": "^2.1.1",
     "resolve-cwd": "^2.0.0",
+    "source-map": "^0.5.7",
+    "stack-trace": "^0.0.10",
     "yargs": "^8.0.2",
     "yurnalist": "^0.2.1"
   },
