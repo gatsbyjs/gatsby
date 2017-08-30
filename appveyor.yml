@@ -47,7 +47,7 @@ install:
       }
   - ps: Install-Product node $env:nodejs_version $env:platform
   - ps: npm install -g windows-build-tools
-  - choco install yarn
+  - choco install yarn --ignore-dependencies
   - refreshenv
   - echo we are running on %PLATFORM%
   - yarn global add gatsby-dev-cli@canary
