@@ -9,7 +9,7 @@ const DEFAULT_BROWSERS =  [
   `IE >= 9`,
 ]
 
-const handler = (fn) => (...args) => {
+const handlerP = (fn) => (...args) => {
   Promise.resolve(fn(...args))
     .then(() => process.exit(0), (err) => report.panic(err))
 }
@@ -80,15 +80,16 @@ function buildLocalCommands(cli, isLocalSite) {
         type: `boolean`,
         describe: `Open the site in your browser for you.`,
       }),
-    handler: handler(argv => {
+    handler: argv => {
       const { sitePackageJson, browserslist } = getSiteInfo()
-      return resolveLocalCommand(`develop`)({
+
+      resolveLocalCommand(`develop`)({
         ...argv,
         directory,
         sitePackageJson,
         browserslist,
       })
-    }),
+    },
   })
 
   cli
@@ -101,7 +102,7 @@ function buildLocalCommands(cli, isLocalSite) {
           default: false,
           describe: `Build site with link paths prefixed (set prefix in your config).`,
         }),
-      handler: handler(argv => {
+      handler: handlerP(argv => {
         process.env.NODE_ENV = `production`
         const { sitePackageJson, browserslist } = getSiteInfo()
 
@@ -137,15 +138,16 @@ function buildLocalCommands(cli, isLocalSite) {
             describe: `Open the site in your browser for you.`,
           }),
 
-        handler: handler(argv => {
+        handler: argv => {
           const { sitePackageJson, browserslist } = getSiteInfo()
-          return resolveLocalCommand(`serve`)({
+
+          resolveLocalCommand(`serve`)({
             ...argv,
             directory,
             sitePackageJson,
             browserslist,
           })
-        }),
+        },
       })
 }
 
@@ -176,7 +178,7 @@ module.exports = (argv, handlers) => {
     .command({
       command: `new [rootPath] [starter]`,
       desc: `Create new Gatsby project.`,
-      handler: handler(({
+      handler: handlerP(({
         rootPath,
         starter = `gatsbyjs/gatsby-starter-default`,
       }) => {
