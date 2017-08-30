@@ -13,7 +13,14 @@ function reportFailure(msg, err: Error) {
   report.panic(msg, err)
 }
 
-module.exports = async function build(program: any) {
+type BuildArgs = {
+  directory: string,
+  sitePackageJson: object,
+  browserslist: string[],
+  prefixPaths: boolean
+};
+
+module.exports = async function build(program: BuildArgs) {
   const { graphqlRunner } = await bootstrap(program)
 
   await apiRunnerNode(`onPreBuild`, { graphql: graphqlRunner })

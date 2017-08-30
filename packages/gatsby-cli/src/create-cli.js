@@ -9,6 +9,11 @@ const DEFAULT_BROWSERS =  [
   `IE >= 9`,
 ]
 
+const handler = (fn) => (...args) => {
+  Promise.resolve(fn(...args))
+    .then(() => process.exit(0), (err) => report.panic(err))
+}
+
 function buildLocalCommands(cli, isLocalSite) {
   const defaultHost = `localhost`
   const directory = path.resolve(`.`)
@@ -31,8 +36,18 @@ function buildLocalCommands(cli, isLocalSite) {
         `'gatsby' is not specified as a dependency`
       )
     }
+
     try {
-      return require(resolveCwd(`gatsby/dist/commands/${command}`))
+      const cmdPath = (
+        resolveCwd.silent(`gatsby/dist/commands/${command}`) ||
+        // Old location of commands
+        resolveCwd.silent(`gatsby/dist/utils/${command}`)
+      )
+      if (!cmdPath)
+        return report.panic(`There was a problem loading the local ${command} command. Gatsby may not be installed.`)
+
+      report.verbose(`loading local command from: ${cmdPath}`)
+      return require(cmdPath)
     } catch (err) {
       cli.showHelp()
       return report.panic(
@@ -51,6 +66,7 @@ function buildLocalCommands(cli, isLocalSite) {
       .option(`H`, {
         alias: `host`,
         type: `string`,
+        default: defaultHost,
         describe: `Set host. Defaults to ${defaultHost}`,
       })
       .option(`p`, {
@@ -64,16 +80,15 @@ function buildLocalCommands(cli, isLocalSite) {
         type: `boolean`,
         describe: `Open the site in your browser for you.`,
       }),
-    handler: argv => {
+    handler: handler(argv => {
       const { sitePackageJson, browserslist } = getSiteInfo()
-
-      resolveLocalCommand(`develop`)({
+      return resolveLocalCommand(`develop`)({
         ...argv,
         directory,
         sitePackageJson,
         browserslist,
       })
-    },
+    }),
   })
 
   cli
@@ -82,20 +97,21 @@ function buildLocalCommands(cli, isLocalSite) {
       desc: `Build a Gatsby project.`,
       builder: _ => _
         .option(`prefix-paths`, {
-          type: `string`,
+          type: `boolean`,
+          default: false,
           describe: `Build site with link paths prefixed (set prefix in your config).`,
         }),
-      handler: argv => {
+      handler: handler(argv => {
         process.env.NODE_ENV = `production`
         const { sitePackageJson, browserslist } = getSiteInfo()
 
-        resolveLocalCommand(`build`)({
+        return resolveLocalCommand(`build`)({
           ...argv,
           directory,
           sitePackageJson,
           browserslist,
         })
-      },
+      }),
     })
 
     cli
@@ -106,6 +122,7 @@ function buildLocalCommands(cli, isLocalSite) {
           .option(`H`, {
             alias: `host`,
             type: `string`,
+            default: defaultHost,
             describe: `Set host. Defaults to ${defaultHost}`,
           })
           .option(`p`, {
@@ -117,20 +134,18 @@ function buildLocalCommands(cli, isLocalSite) {
           .option(`o`, {
             alias: `open`,
             type: `boolean`,
-            default: `8000`,
             describe: `Open the site in your browser for you.`,
           }),
 
-        handler: argv => {
+        handler: handler(argv => {
           const { sitePackageJson, browserslist } = getSiteInfo()
-
-          resolveLocalCommand(`serve`)({
+          return resolveLocalCommand(`serve`)({
             ...argv,
             directory,
             sitePackageJson,
             browserslist,
           })
-        },
+        }),
       })
 }
 
@@ -161,9 +176,13 @@ module.exports = (argv, handlers) => {
     .command({
       command: `new [rootPath] [starter]`,
       desc: `Create new Gatsby project.`,
-      handler: ({ rootPath, starter = `gatsbyjs/gatsby-starter-default` }) => {
-        require(`./init-starter`)(starter, { rootPath })
-      },
+      handler: handler(({
+        rootPath,
+        starter = `gatsbyjs/gatsby-starter-default`,
+      }) => {
+        const initStarter = require(`./init-starter`)
+        return initStarter(starter, { rootPath })
+      }),
     })
     .wrap(cli.terminalWidth())
     .demandCommand(1, `Pass --help to see all available commands and options.`)

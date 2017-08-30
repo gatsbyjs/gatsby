@@ -4,7 +4,6 @@
 // use require() with backtick strings so use the es6 syntax
 import "babel-polyfill"
 
-const resolveCwd = require(`resolve-cwd`)
 const createCli = require(`./create-cli`)
 const report = require(`./reporter`)
 
@@ -36,8 +35,4 @@ process.on(`uncaughtException`, error => {
 })
 
 
-createCli(process.argv, {
-  develop: () => require(resolveCwd(`gatsby/dist/commands/develop`)),
-  build: () => require(resolveCwd(`gatsby/dist/commands/build`)),
-  serve: () => require(resolveCwd(`gatsby/dist/commands/serve`)),
-})
+createCli(process.argv)
