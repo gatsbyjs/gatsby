@@ -2,67 +2,73 @@ import React from "react"
 
 import Container from "../components/container"
 import BlogPostPreviewItem from "../components/blog-post-preview-item"
-import { rhythm, scale } from "../utils/typography"
+import typography, { rhythm, scale, options } from "../utils/typography"
+import presets from "../utils/presets"
 
 const ContributorPageTemplate = React.createClass({
   render() {
     const contributor = this.props.data.authorYaml
     const allMarkdownRemark = this.props.data.allMarkdownRemark
     return (
-      <div>
-        <Container>
-          <div css={{ display: `flex` }}>
-            <div
+      <Container>
+        <div
+          css={{
+            textAlign: `center`,
+            padding: `${rhythm(1.5)} ${rhythm(options.blockMarginBottom)}`,
+          }}
+        >
+          <div>
+            <img
+              src={contributor.avatar.childImageSharp.responsiveResolution.src}
+              srcSet={
+                contributor.avatar.childImageSharp.responsiveResolution.srcSet
+              }
               css={{
-                flex: `0 0 auto`,
-                marginRight: `1rem`,
+                height: rhythm(2.3),
+                width: rhythm(2.3),
+                borderRadius: `100%`,
+                display: `inline-block`,
+                verticalAlign: `middle`,
+              }}
+            />
+            <h1
+              css={{
+                marginTop: 0,
               }}
             >
-              <img
-                src={
-                  contributor.avatar.childImageSharp.responsiveResolution.src
-                }
-                srcSet={
-                  contributor.avatar.childImageSharp.responsiveResolution.srcSet
-                }
-                css={{
-                  height: rhythm(2.3),
-                  width: rhythm(2.3),
-                  margin: 0,
-                  borderRadius: `100%`,
-                  display: `inline-block`,
-                  verticalAlign: `middle`,
-                }}
-              />
-            </div>
-            <div>
-              <h1
-                css={{
-                  marginTop: 0,
-                }}
-              >
-                {contributor.id}
-              </h1>
-              <p>
-                {contributor.bio}
-              </p>
-              <a href={`https://twitter.com/${contributor.twitter}`}>
-                {contributor.twitter}
-              </a>
-              <h2>Blog posts</h2>
-              {allMarkdownRemark.edges.map(({ node }) => {
-                if (node.frontmatter.author) {
-                  if (node.frontmatter.author.id === contributor.id) {
-                    return (
-                      <BlogPostPreviewItem post={node} key={node.fields.slug} />
-                    )
-                  }
-                }
-              })}
-            </div>
+              {contributor.id}
+            </h1>
+            <p
+              css={{
+                fontFamily: typography.options.headerFontFamily.join(`,`),
+                maxWidth: rhythm(18),
+                marginLeft: `auto`,
+                marginRight: `auto`,
+              }}
+            >
+              {contributor.bio}
+            </p>
+            <a href={`https://twitter.com/${contributor.twitter}`}>
+              {contributor.twitter}
+            </a>
           </div>
-        </Container>
-      </div>
+        </div>
+        <div
+          css={{
+            padding: `${rhythm(1.5)} ${rhythm(options.blockMarginBottom)}`,
+          }}
+        >
+          {allMarkdownRemark.edges.map(({ node }) => {
+            if (node.frontmatter.author) {
+              if (node.frontmatter.author.id === contributor.id) {
+                return (
+                  <BlogPostPreviewItem post={node} key={node.fields.slug} />
+                )
+              }
+            }
+          })}
+        </div>
+      </Container>
     )
   },
 })
