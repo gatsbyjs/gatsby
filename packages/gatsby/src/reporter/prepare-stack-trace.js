@@ -9,21 +9,30 @@ const { SourceMapConsumer } = require(`source-map`)
 
 module.exports = function prepareStackTrace(error, source) {
   const map = new SourceMapConsumer(readFileSync(source, `utf8`))
-  const stack = stackTrace.parse(error)
+  const stack = stackTrace
+    .parse(error)
     .map(frame => wrapCallSite(map, frame))
     .filter(frame => !frame.getFileName().match(/^webpack:\/+webpack\//))
 
   error.codeFrame = getErrorSource(map, stack[0])
-  error.stack = `${error.name}: ${error.message}\n` + stack
-    .map(frame => `    at ${frame}`)
-    .join(`\n`)
+  error.stack =
+    `${error.name}: ${error.message}\n` +
+    stack.map(frame => `    at ${frame}`).join(`\n`)
 }
 
 function getErrorSource(map, topFrame) {
   let source = map.sourceContentFor(topFrame.getFileName(), true)
-  return source && babelCodeFrame(source, topFrame.getLineNumber(), topFrame.getColumnNumber(), {
-    highlightCode: true,
-  })
+  return (
+    source &&
+    babelCodeFrame(
+      source,
+      topFrame.getLineNumber(),
+      topFrame.getColumnNumber(),
+      {
+        highlightCode: true,
+      }
+    )
+  )
 }
 
 function wrapCallSite(map, frame) {
@@ -48,8 +57,6 @@ function getPosition(map, frame) {
   return map.originalPositionFor({ source, line, column })
 }
 
-
-
 // This is copied almost verbatim from the V8 source code at
 // https://code.google.com/p/v8/source/browse/trunk/src/messages.js.
 function CallSiteToString() {
@@ -58,7 +65,9 @@ function CallSiteToString() {
   if (this.isNative()) {
     fileLocation = `native`
   } else {
-    fileName = this.scriptNameOrSourceURL && this.scriptNameOrSourceURL() || this.getFileName()
+    fileName =
+      (this.scriptNameOrSourceURL && this.scriptNameOrSourceURL()) ||
+      this.getFileName()
     fileName = fileName.replace(/^webpack:\/+/, ``)
 
     if (!fileName && this.isEval && this.isEval()) {
@@ -89,14 +98,19 @@ function CallSiteToString() {
   let isConstructor = this.isConstructor && this.isConstructor()
   let methodName = this.getMethodName()
   let typeName = this.getTypeName()
-  let isMethodCall = methodName && !(this.isToplevel && this.isToplevel() || isConstructor)
+  let isMethodCall =
+    methodName && !((this.isToplevel && this.isToplevel()) || isConstructor)
   if (isMethodCall && functionName) {
     if (functionName) {
       if (typeName && functionName.indexOf(typeName) != 0) {
         line += `${typeName}.`
       }
       line += functionName
-      if (methodName && functionName.indexOf(`.` + methodName) != functionName.length - methodName.length - 1) {
+      if (
+        methodName &&
+        functionName.indexOf(`.` + methodName) !=
+          functionName.length - methodName.length - 1
+      ) {
         line += ` [as ${methodName}]`
       }
     } else {

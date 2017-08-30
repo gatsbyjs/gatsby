@@ -27,10 +27,10 @@ function getErrorFormatter() {
     },
   })
 
-  prettyError.render = (err) => {
+  prettyError.render = err => {
     let rendered = baseRender.call(prettyError, err)
     if (err && err.codeFrame) rendered = `\n${err.codeFrame}\n${rendered}`
-      return rendered
+    return rendered
   }
   return prettyError
 }
@@ -45,7 +45,10 @@ function createErrorFromString(errorStr: string, sourceMapFile: string) {
   // pull the message from the first line then remove the `Error:` prefix
   // FIXME: when https://github.com/AriaMinaei/pretty-error/pull/49 is merged
 
-  message = message.split(`:`).slice(1).join(`:`)
+  message = message
+    .split(`:`)
+    .slice(1)
+    .join(`:`)
 
   let error = new Error(message)
 
@@ -53,8 +56,7 @@ function createErrorFromString(errorStr: string, sourceMapFile: string) {
 
   error.name = `WebpackError`
 
-  if (sourceMapFile)
-    prepareStackTrace(error, sourceMapFile)
+  if (sourceMapFile) prepareStackTrace(error, sourceMapFile)
 
   return error
 }
