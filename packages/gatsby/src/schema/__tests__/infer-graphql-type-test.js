@@ -116,6 +116,16 @@ describe(`GraphQL type inferance`, () => {
     expect(result.data.listNode[0].number).toEqual(1.1)
   })
 
+  it(`handles date objects`, async () => {
+    let result = await queryResult(
+      [{ dateObject: new Date(10) }, { dateObject: new Date(14) }],
+      `
+        dateObject
+      `
+    )
+    expect(result).toMatchSnapshot()
+  })
+
   it(`filters out empty objects`, async () => {
     let result = await queryResult(
       [{ foo: {}, bar: `baz` }],
