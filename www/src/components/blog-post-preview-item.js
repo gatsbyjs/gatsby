@@ -52,8 +52,26 @@ class BlogPostPreviewItem extends React.Component {
               },
             }}
           >
-            <div>{post.frontmatter.author.id}</div>
-            <div>{post.frontmatter.date}</div>
+            <div>
+              <Link
+                to={post.frontmatter.author.fields.slug}
+                css={{
+                  boxShadow: `none !important`,
+                  borderBottom: `0 !important`,
+                  "&&": {
+                    ":hover": {
+                      color: presets.brand,
+                      background: `transparent`,
+                    },
+                  },
+                }}
+              >
+                {post.frontmatter.author.id}
+              </Link>
+            </div>
+            <div>
+              {post.frontmatter.date}
+            </div>
           </div>
         </div>
       </div>
@@ -75,6 +93,9 @@ export const blogPostPreviewFragment = graphql`
       date(formatString: "DD MMMM, YYYY")
       author {
         id
+        fields {
+          slug
+        }
         avatar {
           childImageSharp {
             responsiveResolution(width: 36, height: 36) {
