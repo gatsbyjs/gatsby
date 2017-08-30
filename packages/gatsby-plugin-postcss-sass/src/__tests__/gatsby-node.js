@@ -63,7 +63,13 @@ describe(`gatsby-plugin-postcss-sass`, () => {
       describe(`stage: ${stage}`, () => {
         ;[
           { options: {}, sassLoader: `sass` },
+          { options: { includePaths: [] }, sassLoader: `sass` },
           { options: { precision: 8 }, sassLoader: `sass?precision=8` },
+          { options: { precision: 8, includePaths: [] }, sassLoader: `sass?precision=8` },
+          { options: { includePaths: ['./node_modules'] }, sassLoader: `sass?includePaths[]=./node_modules` },
+          { options: { includePaths: ['./node_modules', './path'] }, sassLoader: `sass?includePaths[]=./node_modules,./path` },
+          { options: { precision: 8, includePaths: ['./node_modules'] }, sassLoader: `sass?precision=8&includePaths[]=./node_modules` },
+          { options: { precision: 8, includePaths: ['./node_modules', './path'] }, sassLoader: `sass?precision=8&includePaths[]=./node_modules,./path` },
         ].forEach(({ options, sassLoader }) => {
           const stringified = JSON.stringify(options)
 
