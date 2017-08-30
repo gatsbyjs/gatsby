@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-styletron",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Stub description for gatsby-plugin-styletron",
   "main": "index.js",
   "scripts": {

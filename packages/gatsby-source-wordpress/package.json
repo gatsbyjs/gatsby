@@ -22,5 +22,5 @@
     "build": "babel src --out-dir . --ignore __tests__",
     "watch": "babel -w src --out-dir . --ignore __tests__"
   },
-  "version": "1.7.8"
+  "version": "1.7.9"
 }

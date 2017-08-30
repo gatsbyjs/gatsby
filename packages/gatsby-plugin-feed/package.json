@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-feed",
-  "version": "1.3.7",
+  "version": "1.3.8",
   "description": "Creates an RSS feed for your Gatsby site.",
   "main": "index.js",
   "scripts": {
