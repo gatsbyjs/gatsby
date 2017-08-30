@@ -1,9 +1,11 @@
 // @flow
 
 const PrettyError = require(`pretty-error`)
+const prepareStackTrace = require(`./prepare-stack-trace`)
 
 function getErrorFormatter() {
   const prettyError = new PrettyError()
+  const baseRender = prettyError.render
 
   prettyError.skipNodeFiles()
   prettyError.skipPackage(
@@ -25,6 +27,11 @@ function getErrorFormatter() {
     },
   })
 
+  prettyError.render = (err) => {
+    let rendered = baseRender.call(prettyError, err)
+    if (err && err.codeFrame) rendered = `\n${err.codeFrame}\n${rendered}`
+      return rendered
+  }
   return prettyError
 }
 
@@ -33,39 +40,26 @@ function getErrorFormatter() {
  * an Error instance so it can be formatted properly
  * @param {string} errorStr
  */
-function createErrorFromString(errorStr: string) {
+function createErrorFromString(errorStr: string, sourceMapFile: string) {
   let [message, ...rest] = errorStr.split(/\r\n|[\n\r]/g)
   // pull the message from the first line then remove the `Error:` prefix
   // FIXME: when https://github.com/AriaMinaei/pretty-error/pull/49 is merged
-  let error = new Error()
-  error.stack = [
-    message
-      .split(`:`)
-      .slice(1)
-      .join(`:`),
-    rest.join(`\n`),
-  ].join(`\n`)
-  error.name = `WebpackError`
-  return error
-}
 
-/**
- * Format a html stage compilation error to only show stack lines
- * for 'render-page.js' the output file for those stages, since it contains
- * the relevant details for debugging.
- *
- * @param {Error} error
- */
-function formatStaticBuildError(error: Error) {
-  // For HTML compilation issues we filter down the error
-  // to only the bits that are relevant for debugging
-  const formatter = getErrorFormatter()
-  formatter.skip(traceLine => !traceLine || traceLine.file !== `render-page.js`)
-  return formatter.render(error)
+  message = message.split(`:`).slice(1).join(`:`)
+
+  let error = new Error(message)
+
+  error.stack = [message, rest.join(`\n`)].join(`\n`)
+
+  error.name = `WebpackError`
+
+  if (sourceMapFile)
+    prepareStackTrace(error, sourceMapFile)
+
+  return error
 }
 
 module.exports = {
   createErrorFromString,
   getErrorFormatter,
-  formatStaticBuildError,
 }
