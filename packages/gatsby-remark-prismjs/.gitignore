@@ -1,3 +1,5 @@
 /index.js
 /highlight-code.js
 /parse-line-number-range.js
+/load-prism-language.js
+/prism-language-dependencies.js
