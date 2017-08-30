@@ -77,7 +77,7 @@ class SidebarBody extends React.Component {
                     // Increase specifity to override `.main-body a` styles
                     // defined in src/utils/typography.js.
                     "&&": {
-                      color: `rgba(0, 0, 0, 0.4)`,
+                      color: presets.calm,
                       borderBottomColor: presets.veryLightPurple,
                       borderBottom: `none`,
                       boxShadow: `inset 0 -5px 0px 0px ${presets.veryLightPurple}`,

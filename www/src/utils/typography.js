@@ -141,8 +141,7 @@ const options = {
         display: `block`,
         textAlign: `center`,
         fontStyle: `normal`,
-        color: `rgb(62, 87, 121)`,
-        color: `rgba(38, 32, 44,.62)`,
+        color: presets.calm,
         position: `relative`,
       },
       ".gatsby-resp-image-link + em a": {

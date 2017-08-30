@@ -19,6 +19,7 @@ module.exports = {
   veryLightPurple: colors.b[0],
   veryLightPurple: `#f6f2f8`,
   sidebar: `#fcfaff`,
+  calm: `rgba(38, 32, 44, .5)`,
   // palette by @SachaG
   // @see https://www.figma.com/file/J6IYJEtdRmwJQOrcZ2DfvxDD/Gatsby
   brand: `#744C9E`,

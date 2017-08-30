@@ -43,7 +43,7 @@ class BlogPostPreviewItem extends React.Component {
             css={{
               display: `inline-block`,
               fontFamily: typography.options.headerFontFamily.join(`,`),
-              color: `rgba(0,0,0,.44)`,
+              color: presets.calm,
               ...scale(-2 / 5),
               lineHeight: 1.3,
               [presets.Mobile]: {

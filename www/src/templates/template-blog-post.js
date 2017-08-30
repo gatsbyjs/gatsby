@@ -25,8 +25,7 @@ const BlogPostTemplate = React.createClass({
     const prevNextLabelStyles = {
       marginTop: 0,
       marginBottom: 0,
-      color: `rgba(0,0,0,.30)`,
-      color: `rgba(38, 32, 44,.44)`,
+      color: presets.calm,
       fontWeight: `normal`,
       ...scale(0),
       lineHeight: 1,
@@ -38,8 +37,7 @@ const BlogPostTemplate = React.createClass({
           fontFamily: typography.options.headerFontFamily.join(`,`),
           lineHeight: 1.2,
           margin: 0,
-          color: `rgba(0,0,0,.44)`,
-          color: `rgba(38, 32, 44,.62)`,
+          color: presets.calm,
           [presets.Mobile]: {
             ...scale(-1 / 5),
             lineHeight: 1.2,
