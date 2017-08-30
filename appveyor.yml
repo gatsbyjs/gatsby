@@ -47,17 +47,18 @@ install:
       }
   - choco install yarn
   - refreshenv
+  - yarn --version
   - ps: Install-Product node $env:nodejs_version $env:platform
-  - ps: npm install -g windows-build-tools gatsby-dev-cli@canary
+  - ps: npm install -g windows-build-tools
   - echo we are running on %PLATFORM%
+  - yarn global add gatsby-dev-cli@canary
   - yarn install
   - node --version
-  - yarn --version
   - yarn test
 
 # Build gatsby head
 before_build:
-  - npm run build
+  - yarn run build
 
 build_script:
   - cd examples/%example%
