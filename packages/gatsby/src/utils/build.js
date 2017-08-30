@@ -13,8 +13,6 @@ function reportFailure(msg, err: Error) {
   report.panic(msg, err)
 }
 
-
-
 async function html(program: any) {
   const { graphqlRunner } = await bootstrap(program)
   // Copy files from the static directory to
