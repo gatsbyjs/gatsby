@@ -118,7 +118,10 @@ describe(`GraphQL type inferance`, () => {
 
   it(`handles date objects`, async () => {
     let result = await queryResult(
-      [{ dateObject: new Date(10) }, { dateObject: new Date(14) }],
+      [
+        { dateObject: new Date(Date.UTC(2012, 10, 5)) },
+        { dateObject: new Date(Date.UTC(2012, 10, 5)) },
+      ],
       `
         dateObject
       `
