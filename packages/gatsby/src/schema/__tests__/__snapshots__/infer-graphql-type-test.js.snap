@@ -99,10 +99,10 @@ Object {
   "data": Object {
     "listNode": Array [
       Object {
-        "dateObject": "Sun Nov 04 2012 16:00:00 GMT-0800 (PST)",
+        "dateObject": "2012-11-05T00:00:00.000Z",
       },
       Object {
-        "dateObject": "Sun Nov 04 2012 16:00:00 GMT-0800 (PST)",
+        "dateObject": "2012-11-05T00:00:00.000Z",
       },
     ],
   },
