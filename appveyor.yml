@@ -3,6 +3,7 @@ platform:
 
 cache:
   - '%AppData%/npm-cache'
+  - "%LOCALAPPDATA%/Yarn"
   - C:\Users\appveyor\AppData\Roaming\npm\node_modules\windows-build-tools
 
 skip_branch_with_pr: true
@@ -44,14 +45,15 @@ install:
       {
         Exit-AppVeyorBuild
       }
+  - choco install yarn
+  - refreshenv
   - ps: Install-Product node $env:nodejs_version $env:platform
-  - ps: npm install -g windows-build-tools
-  - yarn global add gatsby-dev-cli@canary
+  - ps: npm install -g windows-build-tools gatsby-dev-cli@canary
   - echo we are running on %PLATFORM%
   - yarn install
   - node --version
   - yarn --version
-  - npm test
+  - yarn test
 
 # Build gatsby head
 before_build:
