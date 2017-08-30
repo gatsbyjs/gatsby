@@ -13,7 +13,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "babel-runtime": "6.26.0",
+    "babel-runtime": "^6.26.0",
     "styled-jsx": "^1.0.10"
   }
 }
