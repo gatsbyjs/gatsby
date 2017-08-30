@@ -23,6 +23,7 @@ describe(`parses numeric ranges from the languages markdown code directive`, () 
       5,
     ])
   })
+
   it(`ignores negative numbers`, () => {
     expect(parseLineNumberRange(`jsx{-1,1,5,7-8}`).highlightLines).toEqual([
       1,
@@ -37,8 +38,13 @@ describe(`parses numeric ranges from the languages markdown code directive`, () 
       4,
     ])
   })
+
   it(`handles bad inputs`, () => {
     expect(parseLineNumberRange(`jsx{-1`).highlightLines).toEqual([])
     expect(parseLineNumberRange(`jsx{-1....`).highlightLines).toEqual([])
+  })
+
+  it(`parses languages without ranges`, () => {
+    expect(parseLineNumberRange(`jsx`).splitLanguage).toEqual(`jsx`)
   })
 })

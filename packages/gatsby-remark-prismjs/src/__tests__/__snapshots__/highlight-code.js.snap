@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`highlight code and lines with PrismJS highlights code for language cpp 1`] = `
+exports[`highlight code and lines with PrismJS for language cpp 1`] = `
 "<span class=\\"gatsby-highlight-code-line\\">
 </span><span class=\\"gatsby-highlight-code-line\\"><span class=\\"token keyword\\">int</span> <span class=\\"token function\\">sum</span><span class=\\"token punctuation\\">(</span>a<span class=\\"token punctuation\\">,</span> b<span class=\\"token punctuation\\">)</span> <span class=\\"token punctuation\\">{</span>
 </span>  <span class=\\"token keyword\\">return</span> a <span class=\\"token operator\\">+</span> b<span class=\\"token punctuation\\">;</span>
@@ -9,7 +9,7 @@ exports[`highlight code and lines with PrismJS highlights code for language cpp 
 "
 `;
 
-exports[`highlight code and lines with PrismJS highlights code for language jsx 1`] = `
+exports[`highlight code and lines with PrismJS for language jsx 1`] = `
 "
 <span class=\\"token keyword\\">import</span> React <span class=\\"token keyword\\">from</span> <span class=\\"token string\\">\\"react\\"</span>
 
