@@ -6,7 +6,8 @@ const path = require(`path`)
 const { createFileNode } = require(`./create-file-node`)
 const cacheId = url => `create-remote-file-node-${url}`
 
-module.exports = ({ url, store, cache, creatNode }) => new Promise(async resolve => {
+module.exports = ({ url, store, cache, createNode }) =>
+  new Promise(async (resolve, reject) => {
     if (!url) {
       return resolve()
     }
@@ -22,7 +23,12 @@ module.exports = ({ url, store, cache, creatNode }) => new Promise(async resolve
     if (cachedHeaders && cachedHeaders.etag) {
       headers[`If-None-Match`] = cachedHeaders.etag
     }
-    const response = await got(url, { headers })
+    let response
+    try {
+      response = await got(url, { headers })
+    } catch (e) {
+      return reject(e)
+    }
     const digest = crypto
       .createHash(`md5`)
       .update(url)
@@ -38,6 +44,7 @@ module.exports = ({ url, store, cache, creatNode }) => new Promise(async resolve
       fs.writeFileSync(filename, response.body)
     }
     createFileNode(filename, {}, (err, fileNode) => {
+      createNode(fileNode)
       resolve(fileNode)
     })
   })
