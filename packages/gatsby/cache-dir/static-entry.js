@@ -123,21 +123,21 @@ module.exports = (locals, callback) => {
   })
 
   // Add the chunk-manifest as a head component.
-  const chunkManifest = require(`!raw-loader!../public/chunk-manifest.json`)
+  // const chunkManifest = require(`!raw-loader!../public/chunk-manifest.json`)
 
-  headComponents.unshift(
-    <script
-      id="webpack-manifest"
-      key="webpack-manifest"
-      dangerouslySetInnerHTML={{
-        __html: `
-            //<![CDATA[
-            window.webpackManifest = ${chunkManifest}
-            //]]>
-            `,
-      }}
-    />
-  )
+  // headComponents.unshift(
+  //   <script
+  //     id="webpack-manifest"
+  //     key="webpack-manifest"
+  //     dangerouslySetInnerHTML={{
+  //       __html: `
+  //           //<![CDATA[
+  //           window.webpackManifest = ${chunkManifest}
+  //           //]]>
+  //           `,
+  //     }}
+  //   />
+  // )
 
   let stats
   try {
@@ -149,6 +149,7 @@ module.exports = (locals, callback) => {
   // Create paths to scripts
   const page = pages.find(page => page.path === locals.path)
   const scripts = [
+    `webpack-runtime`,
     `commons`,
     `app`,
     pathChunkName(locals.path),
