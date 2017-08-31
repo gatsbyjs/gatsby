@@ -1,13 +1,12 @@
-const fs = require("fs-extra")
-const got = require("got")
-const crypto = require("crypto")
+const fs = require(`fs-extra`)
+const got = require(`got`)
+const crypto = require(`crypto`)
 const path = require(`path`)
 
 const { createFileNode } = require(`./create-file-node`)
 const cacheId = url => `create-remote-file-node-${url}`
 
-module.exports = ({ url, store, cache }) => {
-  return new Promise(async resolve => {
+module.exports = ({ url, store, cache, creatNode }) => new Promise(async resolve => {
     if (!url) {
       return resolve()
     }
@@ -21,10 +20,13 @@ module.exports = ({ url, store, cache }) => {
     const cachedHeaders = await cache.get(cacheId(url))
     const headers = {}
     if (cachedHeaders && cachedHeaders.etag) {
-      headers["If-None-Match"] = cachedHeaders.etag
+      headers[`If-None-Match`] = cachedHeaders.etag
     }
     const response = await got(url, { headers })
-    const digest = crypto.createHash("md5").update(url).digest("hex")
+    const digest = crypto
+      .createHash(`md5`)
+      .update(url)
+      .digest(`hex`)
     const filename = path.join(
       store.getState().program.directory,
       `.cache`,
@@ -39,4 +41,3 @@ module.exports = ({ url, store, cache }) => {
       resolve(fileNode)
     })
   })
-}
