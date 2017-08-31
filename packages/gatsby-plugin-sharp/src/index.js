@@ -363,8 +363,8 @@ async function responsiveSizes({ file, args = {} }) {
     options.sizes = `(max-width: ${options.maxWidth}px) 100vw, ${options.maxWidth}px`
   }
 
-  // Account for images with a high pixel density. We assume that these types
-  // of images are intended to be used as high resolution ("retina") images.
+  // Account for images with a high pixel density. We assume that these types of
+  // images are intended to be displayed at their native resolution.
   const { width, height, density } = await sharp(file.absolutePath).metadata()
   const densityFactor = typeof density === `number` && density > 0 ? density / 72 : 1
   const presentationWidth = Math.min(options.maxWidth, Math.round(width / densityFactor))
