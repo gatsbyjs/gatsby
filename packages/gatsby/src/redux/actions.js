@@ -239,13 +239,13 @@ const typeOwners = {}
  *   parent: `the-id-of-the-parent-node`, // or null if it's a source node without a parent
  *   children: [],
  *   internal: {
- *     mediaType: `text/markdown`,
  *     type: `CoolServiceMarkdownField`,
- *     content: JSON.stringify(fieldData),
  *     contentDigest: crypto
  *       .createHash(`md5`)
  *       .update(JSON.stringify(fieldData))
  *       .digest(`hex`),
+ *     mediaType: `text/markdown`, // optional
+ *     content: JSON.stringify(fieldData), // optional
  *   }
  * })
  */
