@@ -4,7 +4,7 @@ exports[`it transforms HTML img tags 1`] = `
 "<html><head></head><body>
   <a class=\\"gatsby-resp-image-link\\" href=\\"not-a-real-dir/image/my-image.jpeg\\" style=\\"display: block\\" target=\\"_blank\\" rel=\\"noopener\\">
   
-  <span class=\\"gatsby-resp-image-wrapper\\" style=\\"position: relative; z-index: -1; display: block; \\">
+  <span class=\\"gatsby-resp-image-wrapper\\" style=\\"position: relative; display: block; \\">
     <span class=\\"gatsby-resp-image-background-image\\" style=\\"padding-bottom: 133.33333333333331%;position: relative; width: 100%; bottom: 0; left: 0; background-image: url(&apos;url(&apos;data:image/png;base64, iVBORw)&apos;); background-size: cover; display: block;\\">
       <img class=\\"gatsby-resp-image-image\\" style=\\"width: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;\\" alt=\\"my image\\" title=\\"\\" src=\\"not-a-real-dir/image/my-image.jpeg\\" srcset=\\"not-a-real-dir/image/my-image.jpeg, not-a-real-dir/image/my-image.jpeg\\" sizes=\\"(max-width: 650px) 100vw, 650px\\">
     </span>
@@ -26,7 +26,7 @@ exports[`it transforms images in markdown 1`] = `
   
   <span
     class=\\"gatsby-resp-image-wrapper\\"
-    style=\\"position: relative; z-index: -1; display: block; \\"
+    style=\\"position: relative; display: block; \\"
   >
     <span
       class=\\"gatsby-resp-image-background-image\\"

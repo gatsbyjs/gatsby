@@ -9,9 +9,9 @@ class BlogPostsIndex extends React.Component {
     return (
       <Container>
         <h1 css={{ marginTop: 0 }}>Blog</h1>
-        {allMarkdownRemark.edges.map(({ node }) =>
+        {allMarkdownRemark.edges.map(({ node }) => (
           <BlogPostPreviewItem post={node} key={node.fields.slug} />
-        )}
+        ))}
       </Container>
     )
   }

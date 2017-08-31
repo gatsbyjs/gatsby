@@ -42,7 +42,9 @@ and common cross-browser flexbox bugs. Normally you don't need to think about it
 you'd prefer to add additional postprocessing to your SASS output you can sepecify plugins
 in the plugin options
 
+## Other Options
 
+SASS defaults to [5 digits of precision](https://github.com/sass/sass/issues/1122). If this is too low for you (e.g. [if you use Bootstrap](https://github.com/twbs/bootstrap-sass/blob/master/README.md#sass-number-precision)), you may configure it as follows:
 ```javascript
 // in gatsby-config.js
 plugins: [
@@ -51,7 +53,8 @@ plugins: [
     options: {
       postCssPlugins: [
         somePostCssPlugin()
-      ]
+      ],
+      precision: 8,
     }
   }
 ]

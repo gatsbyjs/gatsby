@@ -27,7 +27,9 @@ module.exports = ({ markdownAST }, pluginOptions = {}) =>
             height: 100%;
           `
           )
-          $(`iframe, object`).attr(`width`, null).attr(`height`, null)
+          $(`iframe, object`)
+            .attr(`width`, null)
+            .attr(`height`, null)
           const newIframe = $.html()
 
           // TODO add youtube preview image as background-image.

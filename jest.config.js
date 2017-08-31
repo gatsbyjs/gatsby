@@ -19,9 +19,6 @@ module.exports = {
     `__tests__/fixtures`,
   ],
   moduleNameMapper: {
-    "^graphql-skip-limit$": `<rootDir>/packages/graphql-skip-limit/src/index.js`,
-    "^gatsby-plugin-sharp$": `<rootDir>/packages/gatsby-plugin-sharp/src/index.js`,
-    "^gatsby/dist/redux/actions$": `<rootDir>/packages/gatsby/src/redux/actions.js`,
     "^highlight.js$": `<rootDir>/node_modules/highlight.js/lib/index.js`,
   },
 }

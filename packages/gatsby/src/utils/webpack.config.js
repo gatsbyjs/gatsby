@@ -5,6 +5,7 @@ import dotenv from "dotenv"
 import StaticSiteGeneratorPlugin from "static-site-generator-webpack-plugin"
 import { StatsWriterPlugin } from "webpack-stats-plugin"
 import FriendlyErrorsWebpackPlugin from "friendly-errors-webpack-plugin"
+import { cssModulesConfig } from "gatsby-1-config-css-modules"
 
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
@@ -286,6 +287,10 @@ module.exports = async (
     switch (stage) {
       case `develop`:
         return `cheap-module-source-map`
+      // use a normal `source-map` for the html phases since
+      // it gives better line and column numbers
+      case `develop-html`:
+      case `build-html`:
       case `build-javascript`:
         return `source-map`
       case `build-html`:

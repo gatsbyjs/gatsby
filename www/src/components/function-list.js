@@ -27,27 +27,30 @@ const Param = (param, depth = 0) => {
         {param.name === `$0` ? `destructured object` : param.name}
         {` `}
         {param.type &&
-          param.name !== `$0` &&
-          <span css={{ color: `#73725f` }}>{`{${param.type.name}}`}</span>}
+        param.name !== `$0` && (
+          <span css={{ color: `#73725f` }}>{`{${param.type.name}}`}</span>
+        )}
       </h5>
-      {param.description &&
+      {param.description && (
         <div
           css={{ marginBottom: rhythm(-1 / 4) }}
           dangerouslySetInnerHTML={{
             __html: param.description.childMarkdownRemark.html,
           }}
-        />}
-      {param.properties &&
+        />
+      )}
+      {param.properties && (
         <div css={{ marginBottom: rhythm(1), marginTop: rhythm(1 / 2) }}>
           {param.properties.map(param => Param(param, depth + 1))}
-        </div>}
+        </div>
+      )}
     </div>
   )
 }
 
-export default ({ functions }) =>
+export default ({ functions }) => (
   <div>
-    {functions.map(({ node }, i) =>
+    {functions.map(({ node }, i) => (
       <div
         id={node.name}
         key={`reference list ${node.name}`}
@@ -56,9 +59,7 @@ export default ({ functions }) =>
         {i !== 0 && <hr />}
         <h3>
           <a href={`#${node.name}`}>
-            <code>
-              {node.name}
-            </code>
+            <code>{node.name}</code>
           </a>
         </h3>
         <div
@@ -66,18 +67,19 @@ export default ({ functions }) =>
             __html: node.description.childMarkdownRemark.html,
           }}
         />
-        {(node.params && node.params.length) > 0 &&
+        {(node.params && node.params.length) > 0 && (
           <div>
             <h4>Parameters</h4>
             {node.params.map(param => Param(param, 0))}
-          </div>}
+          </div>
+        )}
 
         {node.examples &&
-          node.examples.length > 0 &&
+        node.examples.length > 0 && (
           <div>
             <h4 css={{ marginTop: rhythm(1) }}>Example</h4>
             {` `}
-            {node.examples.map((example, i) =>
+            {node.examples.map((example, i) => (
               <pre key={`${node.name} example ${i}`}>
                 <code
                   className="language-javascript"
@@ -86,11 +88,13 @@ export default ({ functions }) =>
                   }}
                 />
               </pre>
-            )}
-          </div>}
+            ))}
+          </div>
+        )}
       </div>
-    )}
+    ))}
   </div>
+)
 
 export const pageQuery = graphql`
   fragment FunctionList on DocumentationJs {

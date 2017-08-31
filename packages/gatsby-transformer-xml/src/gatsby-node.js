@@ -13,7 +13,10 @@ async function onCreateNode({ node, boundActionCreators, loadNodeContent }) {
   const parsedXml = parseXml(rawXml)
   const nodeArray = parsedXml.root.children.map((obj, i) => {
     const objStr = JSON.stringify(obj)
-    const contentDigest = crypto.createHash(`md5`).update(objStr).digest(`hex`)
+    const contentDigest = crypto
+      .createHash(`md5`)
+      .update(objStr)
+      .digest(`hex`)
     return {
       ...obj,
       id: obj.attributes.id ? obj.attributes.id : `${node.id} [${i}] >>> XML`,

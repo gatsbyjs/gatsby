@@ -36,7 +36,10 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     {
       absolutePath: path.normalize(filePath),
       internal: {},
-      extension: filePath.split(`.`).pop().trim(),
+      extension: filePath
+        .split(`.`)
+        .pop()
+        .trim(),
     },
   ]
 

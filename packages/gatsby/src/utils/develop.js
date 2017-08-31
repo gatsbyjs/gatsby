@@ -168,15 +168,18 @@ async function startServer(program) {
     }
 
     if (program.open) {
-      const host = listener.address().address === `127.0.0.1`
-        ? `localhost`
-        : listener.address().address
+      const host =
+        listener.address().address === `127.0.0.1`
+          ? `localhost`
+          : listener.address().address
       require(`opn`)(`http://${host}:${listener.address().port}`)
     }
   })
 
   // Register watcher that rebuilds index.html every time html.js changes.
-  const watchGlobs = [`src/html.js`, `**/gatsby-ssr.js`].map(directoryPath)
+  const watchGlobs = [`src/html.js`, `plugins/**/gatsby-ssr.js`].map(
+    directoryPath
+  )
   chokidar.watch(watchGlobs).on(`change`, async () => {
     await createIndexHtml()
     io.to(`clients`).emit(`reload`)
@@ -185,9 +188,8 @@ async function startServer(program) {
 
 module.exports = (program: any) => {
   const detect = require(`detect-port`)
-  const port = typeof program.port === `string`
-    ? parseInt(program.port, 10)
-    : program.port
+  const port =
+    typeof program.port === `string` ? parseInt(program.port, 10) : program.port
 
   detect(port, (err, _port) => {
     if (err) {

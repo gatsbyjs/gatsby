@@ -101,24 +101,20 @@ function pagedGet(
   pageLimit = 1000,
   aggregatedResponse = null
 ) {
-  return client
-    [method]({
-      ...query,
-      skip: skip,
-      limit: pageLimit,
-      order: `sys.createdAt`,
-    })
-    .then(response => {
-      if (!aggregatedResponse) {
-        aggregatedResponse = response
-      } else {
-        aggregatedResponse.items = aggregatedResponse.items.concat(
-          response.items
-        )
-      }
-      if (skip + pageLimit <= response.total) {
-        return pagedGet(client, method, skip + pageLimit, aggregatedResponse)
-      }
-      return aggregatedResponse
-    })
+  return client[method]({
+    ...query,
+    skip: skip,
+    limit: pageLimit,
+    order: `sys.createdAt`,
+  }).then(response => {
+    if (!aggregatedResponse) {
+      aggregatedResponse = response
+    } else {
+      aggregatedResponse.items = aggregatedResponse.items.concat(response.items)
+    }
+    if (skip + pageLimit <= response.total) {
+      return pagedGet(client, method, skip + pageLimit, aggregatedResponse)
+    }
+    return aggregatedResponse
+  })
 }
