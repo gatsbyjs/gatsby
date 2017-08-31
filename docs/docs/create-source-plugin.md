@@ -36,7 +36,7 @@ For example, it's quite common for services to allow you to add content as markd
 If you pull that markdown into Gatsby and create a new node, what then? How would
 a user of your source plugin convert that markdown into HTML they can use in
 their site? Luckily you don't have to do anything. Just create a node for the markdown
-content and set its mediaType as `text/x-markdown` and the various Gatsby markdown transformer
+content and set its mediaType as `text/markdown` and the various Gatsby markdown transformer
 plugins will see your node and transform it into HTML.
 
 This loose coupling between data source and transformer plugins allow Gatsby site

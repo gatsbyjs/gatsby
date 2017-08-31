@@ -2209,7 +2209,7 @@ Array [
       "internal": Object {
         "content": "Home & Kitchen",
         "contentDigest": "71520a45fe8b5ecded737e074a6b30a0",
-        "mediaType": "text/x-markdown",
+        "mediaType": "text/markdown",
         "type": "contentfulCategoryTitleTextNode",
       },
       "parent": "c7LAnCobuuWYSqks6wAwY2a",
@@ -2224,7 +2224,7 @@ Array [
       "internal": Object {
         "content": "Shop for furniture, bedding, bath, vacuums, kitchen products, and more",
         "contentDigest": "24709e2bdb88b89104c215e6b5492bf8",
-        "mediaType": "text/x-markdown",
+        "mediaType": "text/markdown",
         "type": "contentfulCategoryCategoryDescriptionTextNode",
       },
       "parent": "c7LAnCobuuWYSqks6wAwY2a",
@@ -2237,7 +2237,7 @@ Array [
       "internal": Object {
         "content": "Toys",
         "contentDigest": "66d0af2d5da0109dc2aae67829f7d4d4",
-        "mediaType": "text/x-markdown",
+        "mediaType": "text/markdown",
         "type": "contentfulCategoryTitleTextNode",
       },
       "parent": "c24DPGBDeGEaYy8ms4Y8QMQ",
@@ -2252,7 +2252,7 @@ Array [
       "internal": Object {
         "content": "Shop for toys, games, educational aids",
         "contentDigest": "c3cd3eaea58a115e968573664df3a603",
-        "mediaType": "text/x-markdown",
+        "mediaType": "text/markdown",
         "type": "contentfulCategoryCategoryDescriptionTextNode",
       },
       "parent": "c24DPGBDeGEaYy8ms4Y8QMQ",
@@ -2323,7 +2323,7 @@ Array [
       "internal": Object {
         "content": "Haus & Küche",
         "contentDigest": "21786d8d63d043d9cc0f639450bd5b70",
-        "mediaType": "text/x-markdown",
+        "mediaType": "text/markdown",
         "type": "contentfulCategoryTitleTextNode",
       },
       "parent": "c7LAnCobuuWYSqks6wAwY2a___de",
@@ -2338,7 +2338,7 @@ Array [
       "internal": Object {
         "content": "Shop für Möbel, Bettwäsche, Bad, Staubsauger, Küchenprodukte und vieles mehr",
         "contentDigest": "7d7b0c68e20954c3f092bae55ccbdd9f",
-        "mediaType": "text/x-markdown",
+        "mediaType": "text/markdown",
         "type": "contentfulCategoryCategoryDescriptionTextNode",
       },
       "parent": "c7LAnCobuuWYSqks6wAwY2a___de",
@@ -2351,7 +2351,7 @@ Array [
       "internal": Object {
         "content": "Spielzeug",
         "contentDigest": "22658c0cbfd038b32380aa036bff1cfe",
-        "mediaType": "text/x-markdown",
+        "mediaType": "text/markdown",
         "type": "contentfulCategoryTitleTextNode",
       },
       "parent": "c24DPGBDeGEaYy8ms4Y8QMQ___de",
@@ -2366,7 +2366,7 @@ Array [
       "internal": Object {
         "content": "Spielzeugladen, Spiele, Lernhilfen",
         "contentDigest": "93335f47e41d44163239227427760695",
-        "mediaType": "text/x-markdown",
+        "mediaType": "text/markdown",
         "type": "contentfulCategoryCategoryDescriptionTextNode",
       },
       "parent": "c24DPGBDeGEaYy8ms4Y8QMQ___de",
@@ -2438,7 +2438,7 @@ Array [
       "internal": Object {
         "content": "Normann Copenhagen",
         "contentDigest": "5fb9d019c3646f6fee84172952337463",
-        "mediaType": "text/x-markdown",
+        "mediaType": "text/markdown",
         "type": "contentfulBrandCompanyNameTextNode",
       },
       "parent": "c651CQ8rLoIYCeY6G0QG22q",
@@ -2452,7 +2452,7 @@ Array [
       "internal": Object {
         "content": "Normann Copenhagen is a way of living - a mindset. We love to challenge the conventional design rules. This is why you will find traditional materials put into untraditional use such as a Stone Hook made of Icelandic stones, a vase made out of silicon and last but not least a dog made out of plastic.",
         "contentDigest": "8010f6e93f3a7dbca56c041a46d4ab77",
-        "mediaType": "text/x-markdown",
+        "mediaType": "text/markdown",
         "type": "contentfulBrandCompanyDescriptionTextNode",
       },
       "parent": "c651CQ8rLoIYCeY6G0QG22q",
@@ -2466,7 +2466,7 @@ Array [
       "internal": Object {
         "content": "Lemnos",
         "contentDigest": "7b0e3f7cc613d34aafa689516e96056e",
-        "mediaType": "text/x-markdown",
+        "mediaType": "text/markdown",
         "type": "contentfulBrandCompanyNameTextNode",
       },
       "parent": "c4LgMotpNF6W20YKmuemW0a",
@@ -2500,7 +2500,7 @@ In recent years, we also have been given high priority to develop interior acces
 
 Our Lemnos products are made carefully by our craftsmen finely honed skillful techniques in Japan. They surely bring out the attractiveness of the materials to the maximum and create fine products not being influenced on the fashion trend accordingly. TAKATA Lemnos Inc. definitely would like to be innovative and continuously propose the beauty lasts forever.",
         "contentDigest": "fa3b5588d6eb6ed5a367ea48e5e47be2",
-        "mediaType": "text/x-markdown",
+        "mediaType": "text/markdown",
         "type": "contentfulBrandCompanyDescriptionTextNode",
       },
       "parent": "c4LgMotpNF6W20YKmuemW0a",
@@ -2514,7 +2514,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       "internal": Object {
         "content": "Playsam",
         "contentDigest": "1d2de5c3096635ca01f6ab4131252039",
-        "mediaType": "text/x-markdown",
+        "mediaType": "text/markdown",
         "type": "contentfulBrandCompanyNameTextNode",
       },
       "parent": "JrePkDVYomE8AwcuCUyMi",
@@ -2528,7 +2528,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       "internal": Object {
         "content": "Playsam is the leading Scandinavian design company for executive wooden toy gift. Scandinavian design playful creativity, integrity and sophistication are Playsam. Scandinavian design and wooden toy makes Playsam gift lovely to the world of design since 1984.",
         "contentDigest": "f27a71b7f2ee9eabad3335e0c03da951",
-        "mediaType": "text/x-markdown",
+        "mediaType": "text/markdown",
         "type": "contentfulBrandCompanyDescriptionTextNode",
       },
       "parent": "JrePkDVYomE8AwcuCUyMi",
@@ -2632,7 +2632,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       "internal": Object {
         "content": "Normann Copenhagen",
         "contentDigest": "5fb9d019c3646f6fee84172952337463",
-        "mediaType": "text/x-markdown",
+        "mediaType": "text/markdown",
         "type": "contentfulBrandCompanyNameTextNode",
       },
       "parent": "c651CQ8rLoIYCeY6G0QG22q___de",
@@ -2646,7 +2646,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       "internal": Object {
         "content": "Normann Kopenhagen ist eine Art zu leben - eine Denkweise. Wir lieben es, die konventionellen Designregeln herauszufordern. Aus diesem Grund finden Sie traditionelle Materialien, die in untraditionelle Verwendung wie ein Steinhaken aus isländischen Steinen, eine Vase aus Silizium und last but not least ein Hund aus Kunststoff.",
         "contentDigest": "0a7c7553a38bb0a62a22c20deb99a93f",
-        "mediaType": "text/x-markdown",
+        "mediaType": "text/markdown",
         "type": "contentfulBrandCompanyDescriptionTextNode",
       },
       "parent": "c651CQ8rLoIYCeY6G0QG22q___de",
@@ -2660,7 +2660,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       "internal": Object {
         "content": "Lemnos",
         "contentDigest": "7b0e3f7cc613d34aafa689516e96056e",
-        "mediaType": "text/x-markdown",
+        "mediaType": "text/markdown",
         "type": "contentfulBrandCompanyNameTextNode",
       },
       "parent": "c4LgMotpNF6W20YKmuemW0a___de",
@@ -2694,7 +2694,7 @@ In den vergangenen Jahren haben wir auch eine hohe Priorität für die Entwicklu
 
 Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliffen geschickten Techniken in Japan gemacht. Sie bringen sicherlich die Attraktivität der Materialien auf das Maximum und schaffen feine Produkte nicht beeinflusst auf die Mode-Trend entsprechend. TAKATA Lemnos Inc. möchte definitiv innovativ sein und ständig vorschlagen, die Schönheit dauert ewig.",
         "contentDigest": "b8d1cb0f951b10e0f84f32a8c28ee503",
-        "mediaType": "text/x-markdown",
+        "mediaType": "text/markdown",
         "type": "contentfulBrandCompanyDescriptionTextNode",
       },
       "parent": "c4LgMotpNF6W20YKmuemW0a___de",
@@ -2708,7 +2708,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "internal": Object {
         "content": "Playsam",
         "contentDigest": "1d2de5c3096635ca01f6ab4131252039",
-        "mediaType": "text/x-markdown",
+        "mediaType": "text/markdown",
         "type": "contentfulBrandCompanyNameTextNode",
       },
       "parent": "JrePkDVYomE8AwcuCUyMi___de",
@@ -2722,7 +2722,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "internal": Object {
         "content": "Playsam ist die führende skandinavische Designfirma für Executive Holzspielzeug Geschenk. Skandinavisches Design spielerische Kreativität, Integrität und Raffinesse sind Playsam. Skandinavisches Design und hölzernes Spielzeug macht Playsam Geschenk schön in die Welt des Designs seit 1984.",
         "contentDigest": "7b0a48d4861111805b6c614bf2373eb6",
-        "mediaType": "text/x-markdown",
+        "mediaType": "text/markdown",
         "type": "contentfulBrandCompanyDescriptionTextNode",
       },
       "parent": "JrePkDVYomE8AwcuCUyMi___de",
@@ -2825,7 +2825,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "internal": Object {
         "content": "Playsam Streamliner Classic Car, Espresso",
         "contentDigest": "fb5febcf7ce227772c3998af60b6e740",
-        "mediaType": "text/x-markdown",
+        "mediaType": "text/markdown",
         "type": "contentfulProductProductNameTextNode",
       },
       "parent": "c5KsDBWseXY6QegucYAoacS",
@@ -2839,7 +2839,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "internal": Object {
         "content": "A classic Playsam design, the Streamliner Classic Car has been selected as Swedish Design Classic by the Swedish National Museum for its inventive style and sleek surface. It's no wonder that this wooden car has also been a long-standing favorite for children both big and small!",
         "contentDigest": "d27a98d8abd9865c279017aed14f2766",
-        "mediaType": "text/x-markdown",
+        "mediaType": "text/markdown",
         "type": "contentfulProductProductDescriptionTextNode",
       },
       "parent": "c5KsDBWseXY6QegucYAoacS",
@@ -2853,7 +2853,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "internal": Object {
         "content": "Hudson Wall Cup",
         "contentDigest": "927daa584fb961e59edbd07f921b916c",
-        "mediaType": "text/x-markdown",
+        "mediaType": "text/markdown",
         "type": "contentfulProductProductNameTextNode",
       },
       "parent": "c3DVqIYj4dOwwcKu6sgqOgg",
@@ -2867,7 +2867,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "internal": Object {
         "content": "Wall Hanging Glass Flower Vase and Terrarium",
         "contentDigest": "da605021a35b1da89c6810fb46275a58",
-        "mediaType": "text/x-markdown",
+        "mediaType": "text/markdown",
         "type": "contentfulProductProductDescriptionTextNode",
       },
       "parent": "c3DVqIYj4dOwwcKu6sgqOgg",
@@ -2881,7 +2881,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "internal": Object {
         "content": "Whisk Beater",
         "contentDigest": "bfab59c3dba2ca3c2fce106049470741",
-        "mediaType": "text/x-markdown",
+        "mediaType": "text/markdown",
         "type": "contentfulProductProductNameTextNode",
       },
       "parent": "c6dbjWqNd9SqccegcqYq224",
@@ -2895,7 +2895,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "internal": Object {
         "content": "A creative little whisk that comes in 8 different colors. Handy and easy to clean after use. A great gift idea.",
         "contentDigest": "223b5836966aa0ab2c43a9a870e7a631",
-        "mediaType": "text/x-markdown",
+        "mediaType": "text/markdown",
         "type": "contentfulProductProductDescriptionTextNode",
       },
       "parent": "c6dbjWqNd9SqccegcqYq224",
@@ -2909,7 +2909,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "internal": Object {
         "content": "SoSo Wall Clock",
         "contentDigest": "2bd6c9f1667f2fbb59343e203cb0b7bf",
-        "mediaType": "text/x-markdown",
+        "mediaType": "text/markdown",
         "type": "contentfulProductProductNameTextNode",
       },
       "parent": "c4BqrajvA8E6qwgkieoqmqO",
@@ -2923,7 +2923,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "internal": Object {
         "content": "The newly released SoSo Clock from Lemnos marries simple, clean design and bold, striking features. Its saturated marigold face is a lively pop of color to white or grey walls, but would also pair nicely with navy and maroon. Where most clocks feature numbers at the border of the clock, the SoSo brings them in tight to the middle, leaving a wide space between the numbers and the slight frame. The hour hand provides a nice interruption to the black and yellow of the clock - it is featured in a brilliant white. Despite its bold color and contrast, the SoSo maintains a clean, pure aesthetic that is suitable to a variety of contemporary interiors.",
         "contentDigest": "c5b4a61c6d533216a0efe0d4ee66c98b",
-        "mediaType": "text/x-markdown",
+        "mediaType": "text/markdown",
         "type": "contentfulProductProductDescriptionTextNode",
       },
       "parent": "c4BqrajvA8E6qwgkieoqmqO",
@@ -3097,7 +3097,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "internal": Object {
         "content": "Playsam Streamliner Klassisches Auto, Espresso",
         "contentDigest": "7f76178eaaeb38fc20570d0c6eb49c3e",
-        "mediaType": "text/x-markdown",
+        "mediaType": "text/markdown",
         "type": "contentfulProductProductNameTextNode",
       },
       "parent": "c5KsDBWseXY6QegucYAoacS___de",
@@ -3111,7 +3111,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "internal": Object {
         "content": "Ein klassisches Playsam-Design, das Streamliner Classic Car wurde als Swedish Design Classic vom Schwedischen Nationalmuseum für seinen erfinderischen Stil und seine schlanke Oberfläche ausgewählt. Es ist kein Wunder, dass dieses hölzerne Auto auch ein langjähriger Liebling für Kinder gewesen ist, die groß und klein sind!",
         "contentDigest": "85779a170b2fe2458d707b34459d4085",
-        "mediaType": "text/x-markdown",
+        "mediaType": "text/markdown",
         "type": "contentfulProductProductDescriptionTextNode",
       },
       "parent": "c5KsDBWseXY6QegucYAoacS___de",
@@ -3125,7 +3125,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "internal": Object {
         "content": "Becher",
         "contentDigest": "aac31ab0dcf429f1be1d2764db549f43",
-        "mediaType": "text/x-markdown",
+        "mediaType": "text/markdown",
         "type": "contentfulProductProductNameTextNode",
       },
       "parent": "c3DVqIYj4dOwwcKu6sgqOgg___de",
@@ -3139,7 +3139,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "internal": Object {
         "content": "Wand-hängende Glas-Blumen-Vase und Terrarium",
         "contentDigest": "41d1166dbe8f8af2f8f2bad50fe42f03",
-        "mediaType": "text/x-markdown",
+        "mediaType": "text/markdown",
         "type": "contentfulProductProductDescriptionTextNode",
       },
       "parent": "c3DVqIYj4dOwwcKu6sgqOgg___de",
@@ -3153,7 +3153,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "internal": Object {
         "content": "Schneebesen",
         "contentDigest": "811253206ba751ed27cf3ceb68e334dc",
-        "mediaType": "text/x-markdown",
+        "mediaType": "text/markdown",
         "type": "contentfulProductProductNameTextNode",
       },
       "parent": "c6dbjWqNd9SqccegcqYq224___de",
@@ -3167,7 +3167,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "internal": Object {
         "content": "Ein kreativer kleiner Schneebesen, der in 8 verschiedenen Farben kommt. Praktisch und nach dem Gebrauch leicht zu reinigen. Eine tolle Geschenkidee.",
         "contentDigest": "d0793a3c142dc3f7377edd6625091cb7",
-        "mediaType": "text/x-markdown",
+        "mediaType": "text/markdown",
         "type": "contentfulProductProductDescriptionTextNode",
       },
       "parent": "c6dbjWqNd9SqccegcqYq224___de",
@@ -3181,7 +3181,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "internal": Object {
         "content": "SoSo wanduhr",
         "contentDigest": "8b38ff25d8ab847042efc8d525aaf7a0",
-        "mediaType": "text/x-markdown",
+        "mediaType": "text/markdown",
         "type": "contentfulProductProductNameTextNode",
       },
       "parent": "c4BqrajvA8E6qwgkieoqmqO___de",
@@ -3195,7 +3195,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "internal": Object {
         "content": "Die neu veröffentlichte SoSo Clock von Lemnos heiratet einfaches, sauberes Design und fette, auffällige Features. Sein gesättigtes Ringelblumengesicht ist ein lebhafter Pop der Farbe zu den weißen oder grauen Wänden, aber würde auch gut mit Marine und kastanienbraun paaren. Wo die meisten Uhren am Rande der Uhr Nummern sind, bringt der SoSo sie in die Mitte und lässt einen weiten Raum zwischen den Zahlen und dem leichten Rahmen. Der Stundenzeiger bietet eine schöne Unterbrechung der schwarzen und gelben der Uhr - es ist in einem brillanten Weiß vorgestellt. Trotz seiner kräftigen Farbe und des Kontrastes behält der SoSo eine saubere, reine Ästhetik, die für eine Vielzahl von zeitgenössischen Interieurs geeignet ist.",
         "contentDigest": "038ff737ccc03e4525691d265d5a92b7",
-        "mediaType": "text/x-markdown",
+        "mediaType": "text/markdown",
         "type": "contentfulProductProductDescriptionTextNode",
       },
       "parent": "c4BqrajvA8E6qwgkieoqmqO___de",

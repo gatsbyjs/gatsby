@@ -65,7 +65,7 @@ Where oh where is my little pony?
         "id": "whatever",
         "internal": Object {
           "contentDigest": "whatever",
-          "mediaType": "text/x-markdown",
+          "mediaType": "text/markdown",
         },
       },
     },

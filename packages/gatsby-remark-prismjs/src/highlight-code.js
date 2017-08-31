@@ -1,11 +1,13 @@
 const Prism = require(`prismjs`)
 const _ = require(`lodash`)
 
+const loadPrismLanguage = require(`./load-prism-language`)
+
 module.exports = (language, code, lineNumbersHighlight = []) => {
   // (Try to) load languages on demand.
   if (!Prism.languages[language]) {
     try {
-      require(`prismjs/components/prism-${language}.js`)
+      loadPrismLanguage(language)
     } catch (e) {
       // Language wasn't loaded so let's bail.
       return code

@@ -94,7 +94,7 @@ module.exports = React.createClass({
         opacity: 0.8,
       },
     }
-    const NavItem = ({ linkTo, children }) =>
+    const NavItem = ({ linkTo, children }) => (
       <li
         css={{
           display: `inline-block`,
@@ -105,7 +105,8 @@ module.exports = React.createClass({
           {children}
         </Link>
       </li>
-    const MobileNavItem = ({ linkTo, title, children }) =>
+    )
+    const MobileNavItem = ({ linkTo, title, children }) => (
       <Link
         to={linkTo}
         css={{
@@ -118,10 +119,9 @@ module.exports = React.createClass({
         }}
       >
         {children}
-        <div css={{ opacity: 0.8 }}>
-          {title}
-        </div>
+        <div css={{ opacity: 0.8 }}>{title}</div>
       </Link>
+    )
     const socialIconsStyles = {
       color: presets.brandLight,
       [presets.Phablet]: {
@@ -134,10 +134,7 @@ module.exports = React.createClass({
 
     return (
       <div>
-        <Helmet
-          defaultTitle={`GatsbyJS`}
-          titleTemplate={`%s | GatsbyJS`}
-        >
+        <Helmet defaultTitle={`GatsbyJS`} titleTemplate={`%s | GatsbyJS`}>
           <meta name="twitter:site" content="@gatsbyjs" />
           <meta name="og:type" content="website" />
           <meta name="og:site_name" content="GatsbyJS" />

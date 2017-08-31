@@ -9,7 +9,7 @@ Array [
       "content": "A pretty cool jsdoc example
 ",
       "contentDigest": "1effd106a9028bac69276a250a0f96f5",
-      "mediaType": "text/x-markdown",
+      "mediaType": "text/markdown",
       "type": "DocumentationJSComponentDescription",
     },
     "parent": "node_1",
@@ -21,7 +21,7 @@ Array [
       "content": "A nice crispy apple
 ",
       "contentDigest": "bdc56b714e173673c86ecf5f556c5fd1",
-      "mediaType": "text/x-markdown",
+      "mediaType": "text/markdown",
       "type": "DocumentationJSComponentDescription",
     },
     "parent": "node_1",

@@ -4,7 +4,8 @@
   "description": "Gatsby source plugin for building websites using the Contentful CMS as a data source",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
-    "watch": "babel -w src --out-dir . --ignore __tests__"
+    "watch": "babel -w src --out-dir . --ignore __tests__",
+    "prepublish": "cross-env NODE_ENV=production npm run build"
   },
   "keywords": [
     "gatsby",
@@ -15,7 +16,7 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.16.1",
-    "babel-runtime": "6.26.0",
+    "babel-runtime": "^6.26.0",
     "base64-img": "^1.0.3",
     "bluebird": "^3.5.0",
     "contentful": "^4.3.0",
@@ -23,5 +24,8 @@
     "json-stringify-safe": "^5.0.1",
     "lodash": "^4.17.4",
     "qs": "^6.4.0"
+  },
+  "devDependencies": {
+    "cross-env": "^5.0.5"
   }
 }
