@@ -12,7 +12,10 @@ module.exports = function prepareStackTrace(error, source) {
   const stack = stackTrace
     .parse(error)
     .map(frame => wrapCallSite(map, frame))
-    .filter(frame => !frame.getFileName().match(/^webpack:\/+webpack\//))
+    .filter(frame =>
+      !frame.getFileName() ||
+      !frame.getFileName().match(/^webpack:\/+webpack\//)
+    )
 
   error.codeFrame = getErrorSource(map, stack[0])
   error.stack =
@@ -68,14 +71,13 @@ function CallSiteToString() {
     fileName =
       (this.scriptNameOrSourceURL && this.scriptNameOrSourceURL()) ||
       this.getFileName()
-    fileName = fileName.replace(/^webpack:\/+/, ``)
 
     if (!fileName && this.isEval && this.isEval()) {
       fileLocation = `${this.getEvalOrigin()}, `
     }
 
     if (fileName) {
-      fileLocation += fileName
+      fileLocation += fileName.replace(/^webpack:\/+/, ``)
     } else {
       // Source code does not originate from a file and is not native, but we
       // can still get the source position inside the source string, e.g. in
