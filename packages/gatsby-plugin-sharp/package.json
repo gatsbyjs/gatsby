@@ -15,7 +15,8 @@
     "sharp": "^0.17.3"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0"
+    "babel-cli": "^6.26.0",
+    "cross-env": "^5.0.5"
   },
   "keywords": [
     "gatsby",
@@ -26,6 +27,7 @@
   "main": "index.js",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
-    "watch": "babel -w src --out-dir . --ignore __tests__"
+    "watch": "babel -w src --out-dir . --ignore __tests__",
+    "prepublish": "cross-env NODE_ENV=production npm run build"
   }
 }

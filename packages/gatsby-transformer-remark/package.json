@@ -19,7 +19,8 @@
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "babel-plugin-transform-object-rest-spread": "^6.20.2"
+    "babel-plugin-transform-object-rest-spread": "^6.20.2",
+    "cross-env": "^5.0.5"
   },
   "keywords": [
     "gatsby",
@@ -30,6 +31,7 @@
   "license": "MIT",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
-    "watch": "babel -w src --out-dir . --ignore __tests__"
+    "watch": "babel -w src --out-dir . --ignore __tests__",
+    "prepublish": "cross-env NODE_ENV=production npm run build"
   }
 }

@@ -51,7 +51,7 @@ install:
   - refreshenv
   - echo we are running on %PLATFORM%
   - yarn global add gatsby-dev-cli@canary
-  - yarn install
+  - yarn run bootstrap
   - node --version
   - yarn test
 

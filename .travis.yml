@@ -11,8 +11,7 @@ before_install:
   - npm i -g yarn@latest
 
 install:
-  - yarn install
-  - yarn run lerna bootstrap
+  - yarn run bootstrap
 
 script:
   - npm test

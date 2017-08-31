@@ -12,7 +12,8 @@
     "typescript": "^2.2.1"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0"
+    "babel-cli": "^6.26.0",
+    "cross-env": "^5.0.5"
   },
   "keywords": [
     "gatsby",
@@ -22,6 +23,7 @@
   "main": "index.js",
   "scripts": {
     "build": "babel src --out-dir .",
-    "watch": "babel -w src --out-dir ."
+    "watch": "babel -w src --out-dir .",
+    "prepublish": "cross-env NODE_ENV=production npm run build"
   }
 }
