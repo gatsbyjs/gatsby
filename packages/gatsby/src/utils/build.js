@@ -13,34 +13,32 @@ function reportFailure(msg, err: Error) {
   report.panic(msg, err)
 }
 
-
-
 async function html(program: any) {
   const { graphqlRunner } = await bootstrap(program)
   // Copy files from the static directory to
   // an equivalent static directory within public.
   copyStaticDirectory()
 
-  let activity = report.activityTimer(`Generating CSS`)
+  let activity = report.activityTimer(`Building CSS`)
   activity.start()
   await buildCSS(program).catch(err => {
     reportFailure(`Generating CSS failed`, err)
   })
   activity.end()
 
-  activity = report.activityTimer(`Compiling production bundle.js`)
+  activity = report.activityTimer(`Building production JavaScript bundles`)
   activity.start()
   await buildProductionBundle(program).catch(err => {
-    reportFailure(`Generating JS failed`, err)
+    reportFailure(`Generating JavaScript bundles failed`, err)
   })
   activity.end()
 
-  activity = report.activityTimer(`Generating static HTML for pages`)
+  activity = report.activityTimer(`Building static HTML for pages`)
   activity.start()
   await buildHTML(program).catch(err => {
     reportFailure(
       report.stripIndent`
-        Generating static HTML for pages failed
+        Building static HTML for pages failed
 
         See our docs page on debugging HTML builds for help https://goo.gl/yL9lND
       `,

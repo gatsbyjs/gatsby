@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-aphrodite",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Stub description for gatsby-plugin-aphrodite",
   "main": "index.js",
   "scripts": {
@@ -13,9 +13,9 @@
   "author": "Kyle Mathews &lt;mathews.kyle@gmail.com&gt;",
   "license": "MIT",
   "devDependencies": {
-    "babel-cli": "^6.24.1"
+    "babel-cli": "^6.26.0"
   },
   "dependencies": {
-    "babel-runtime": "6.26.0"
+    "babel-runtime": "^6.26.0"
   }
 }

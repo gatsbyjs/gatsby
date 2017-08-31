@@ -1,6 +1,6 @@
 {
   "name": "gatsby-source-mongodb",
-  "version": "1.5.6",
+  "version": "1.5.7",
   "description": "Stub description for gatsby-source-mongodb",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,7 @@
   "author": "jhermans85@hotmail.com",
   "license": "MIT",
   "devDependencies": {
-    "babel-cli": "^6.24.1"
+    "babel-cli": "^6.26.0"
   },
   "dependencies": {
     "babel-runtime": "6.26.0",

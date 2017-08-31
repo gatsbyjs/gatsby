@@ -1,11 +1,11 @@
 {
   "name": "gatsby-source-filesystem",
+  "version": "1.4.8",
   "description": "Gatsby plugin which parses files within a directory for further parsing by other plugins",
-  "version": "1.4.7",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-runtime": "6.26.0",
+    "babel-cli": "^6.26.0",
+    "babel-runtime": "^6.26.0",
     "bluebird": "^3.5.0",
     "chokidar": "^1.7.0",
     "fs-extra": "^4.0.1",

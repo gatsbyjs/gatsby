@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-twitter",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Stub description for gatsby-plugin-twitter",
   "main": "index.js",
   "scripts": {
@@ -13,9 +13,9 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "babel-cli": "^6.24.1"
+    "babel-cli": "^6.26.0"
   },
   "dependencies": {
-    "babel-runtime": "6.26.0"
+    "babel-runtime": "^6.26.0"
   }
 }
