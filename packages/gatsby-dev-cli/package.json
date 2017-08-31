@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "babel-runtime": "^6.23.0",
+    "babel-runtime": "^6.26.0",
     "chokidar": "^1.7.0",
     "configstore": "^3.1.0",
     "fs-extra": "^3.0.1",
@@ -9,11 +9,12 @@
     "yargs": "^8.0.1"
   },
   "name": "gatsby-dev-cli",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "CLI helpers for contributors working on Gatsby",
   "main": "index.js",
   "devDependencies": {
-    "babel-cli": "^6.24.1"
+    "babel-cli": "^6.26.0",
+    "cross-env": "^5.0.5"
   },
   "bin": {
     "gatsby-dev": "./dist/index.js"
@@ -21,7 +22,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel src --out-dir dist --presets es2015",
-    "watch": "babel -w src --out-dir dist --presets es2015"
+    "watch": "babel -w src --out-dir dist --presets es2015",
+    "prepublish": "cross-env NODE_ENV=production npm run build"
   },
   "keywords": [
     "gatsby"
