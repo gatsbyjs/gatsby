@@ -19,6 +19,10 @@
   "main": "index.js",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
-    "watch": "babel -w src --out-dir . --ignore __tests__"
+    "watch": "babel -w src --out-dir . --ignore __tests__",
+    "prepublish": "cross-env NODE_ENV=production npm run build"
+  },
+  "devDependencies": {
+    "cross-env": "^5.0.5"
   }
 }
