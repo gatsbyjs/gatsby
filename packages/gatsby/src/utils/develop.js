@@ -178,7 +178,9 @@ async function startServer(program) {
   })
 
   // Register watcher that rebuilds index.html every time html.js changes.
-  const watchGlobs = [`src/html.js`, `**/gatsby-ssr.js`].map(directoryPath)
+  const watchGlobs = [`src/html.js`, `plugins/**/gatsby-ssr.js`].map(
+    directoryPath
+  )
   chokidar.watch(watchGlobs).on(`change`, async () => {
     await createIndexHtml()
     io.to(`clients`).emit(`reload`)
