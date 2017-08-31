@@ -13,7 +13,8 @@
   "description": "CLI helpers for contributors working on Gatsby",
   "main": "index.js",
   "devDependencies": {
-    "babel-cli": "^6.26.0"
+    "babel-cli": "^6.26.0",
+    "cross-env": "^5.0.5"
   },
   "bin": {
     "gatsby-dev": "./dist/index.js"
@@ -21,7 +22,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel src --out-dir dist --presets es2015",
-    "watch": "babel -w src --out-dir dist --presets es2015"
+    "watch": "babel -w src --out-dir dist --presets es2015",
+    "prepublish": "cross-env NODE_ENV=production npm run build"
   },
   "keywords": [
     "gatsby"

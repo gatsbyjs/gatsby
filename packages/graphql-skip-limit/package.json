@@ -5,7 +5,8 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "graphql": "^0.10.3"
+    "graphql": "^0.10.3",
+    "cross-env": "^5.0.5"
   },
   "keywords": [
     "gatsby",
@@ -15,7 +16,8 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "babel src --out-dir dist",
-    "watch": "babel -w src --out-dir dist"
+    "watch": "babel -w src --out-dir dist",
+    "prepublish": "cross-env NODE_ENV=production npm run build"
   },
   "dependencies": {
     "babel-runtime": "^6.26.0"
