@@ -1,5 +1,5 @@
 import ExtractTextPlugin from "extract-text-webpack-plugin"
-import cssModulesConfig from "gatsby-1-config-css-modules"
+import { cssModulesConfig } from "gatsby-1-config-css-modules"
 
 exports.modifyWebpackConfig = ({ config, stage }) => {
   const lessFiles = /\.less$/
@@ -28,7 +28,10 @@ exports.modifyWebpackConfig = ({ config, stage }) => {
 
       config.loader(`lessModules`, {
         test: lessModulesFiles,
-        loader: ExtractTextPlugin.extract(`style`, [cssModulesConfig(stage), `less`]),
+        loader: ExtractTextPlugin.extract(`style`, [
+          cssModulesConfig(stage),
+          `less`,
+        ]),
       })
       return config
     }
@@ -43,7 +46,10 @@ exports.modifyWebpackConfig = ({ config, stage }) => {
 
       config.loader(`lessModules`, {
         test: lessModulesFiles,
-        loader: ExtractTextPlugin.extract(`style`, [cssModulesConfig(stage), `less`]),
+        loader: ExtractTextPlugin.extract(`style`, [
+          cssModulesConfig(stage),
+          `less`,
+        ]),
       })
       return config
     }
