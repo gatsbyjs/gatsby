@@ -55,10 +55,6 @@ install:
   - node --version
   - yarn test
 
-# Build gatsby head
-before_build:
-  - yarn run build
-
 build_script:
   - cd examples/%example%
   - yarn install
