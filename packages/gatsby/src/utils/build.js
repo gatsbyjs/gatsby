@@ -26,12 +26,10 @@ async function html(program: any) {
   })
   activity.end()
 
-  activity = report.activityTimer(
-    `Creating production JavaScript route bundles`
-  )
+  activity = report.activityTimer(`Generating production JavaScript bundles`)
   activity.start()
   await buildProductionBundle(program).catch(err => {
-    reportFailure(`Generating JS failed`, err)
+    reportFailure(`Generating JavaScript bundles failed`, err)
   })
   activity.end()
 
