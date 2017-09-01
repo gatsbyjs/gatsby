@@ -8,7 +8,7 @@ import MastheadBg from "./masthead-bg"
 import FuturaParagraph from "./futura-paragraph"
 import { vP, vPHd, vPVHd, vPVVHd } from "../components/gutters"
 
-const MastheadContent = () => (
+const MastheadContent = () =>
   <div
     className="masthead-content"
     css={{
@@ -16,7 +16,6 @@ const MastheadContent = () => (
       padding: vP,
       paddingTop: rhythm(4),
       paddingBottom: rhythm(1),
-      maxWidth: rhythm(14),
       paddingBottom: rhythm(1),
       transition: `padding-top ${presets.animation.speedFast} ${presets
         .animation.curveDefault}`,
@@ -37,17 +36,14 @@ const MastheadContent = () => (
       [presets.Hd]: {
         paddingTop: rhythm(5),
         paddingLeft: vPHd,
-        //paddingRight: vPHd,
         paddingBottom: rhythm(3),
       },
       [presets.VHd]: {
         paddingTop: rhythm(6),
         paddingLeft: vPVHd,
-        //paddingRight: vPVHd,
       },
       [presets.VVHd]: {
         paddingLeft: vPVVHd,
-        //paddingRight: vPVVHd,
       },
     }}
   >
@@ -60,15 +56,14 @@ const MastheadContent = () => (
           margin: 0,
           marginBottom: `1.2em`,
           padding: 0,
-          letterSpacing: `-0.0075em`,
           width: rhythm(10),
           //fontSize: `calc(12px + 2vh + 2vw)`,
           [presets.Mobile]: {
-            width: rhythm(8),
+            width: rhythm(10),
           },
           "@media (min-width: 650px)": {
             fontSize: scale(1).fontSize,
-            width: rhythm(11),
+            width: rhythm(12),
           },
           [presets.Tablet]: {
             fontSize: scale(1.1).fontSize,
@@ -99,7 +94,6 @@ const MastheadContent = () => (
       </CtaButton>
     </div>
   </div>
-)
 
 const Masthead = () => <MastheadContent />
 
