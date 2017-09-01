@@ -5,13 +5,11 @@ import dotenv from "dotenv"
 import StaticSiteGeneratorPlugin from "static-site-generator-webpack-plugin"
 import { StatsWriterPlugin } from "webpack-stats-plugin"
 import FriendlyErrorsWebpackPlugin from "friendly-errors-webpack-plugin"
-import { cssModulesConfig } from "gatsby-1-config-css-modules"
 
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
 const WebpackMD5Hash = require(`webpack-md5-hash`)
-const ChunkManifestPlugin = require(`chunk-manifest-webpack-plugin`)
 const GatsbyModulePlugin = require(`gatsby-module-loader/plugin`)
 const { withBasePath } = require(`./path`)
 
@@ -293,8 +291,6 @@ module.exports = async (
       case `build-html`:
       case `build-javascript`:
         return `source-map`
-      case `build-html`:
-      case `develop-html`:
       default:
         return false
     }

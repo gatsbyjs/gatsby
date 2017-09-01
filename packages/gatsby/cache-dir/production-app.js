@@ -9,16 +9,20 @@ import { ScrollContext } from "react-router-scroll"
 import createHistory from "history/createBrowserHistory"
 import domReady from "domready"
 import emitter from "./emitter"
-window.___emitter = emitter
+
 import pages from "./pages.json"
 import ComponentRenderer from "./component-renderer"
 import asyncRequires from "./async-requires"
 import loader from "./loader"
+
+window.asyncRequires = asyncRequires
+window.___emitter = emitter
+window.___loader = loader
+
+window.matchPath = matchPath
+
 loader.addPagesArray(pages)
 loader.addProdRequires(asyncRequires)
-window.asyncRequires = asyncRequires
-window.___loader = loader
-window.matchPath = matchPath
 
 // Let the site/plugins run code very early.
 apiRunnerAsync(`onClientEntry`).then(() => {

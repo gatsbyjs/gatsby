@@ -11,7 +11,7 @@ let Html
 try {
   Html = require(`../src/html`)
 } catch (err) {
-  if (testRequireError(`..\/src\/html`, err)) {
+  if (testRequireError(`../src/html`, err)) {
     Html = require(`./default-html`)
   } else {
     console.log(
@@ -121,23 +121,6 @@ module.exports = (locals, callback) => {
     setBodyProps,
     pathname: locals.path,
   })
-
-  // Add the chunk-manifest as a head component.
-  // const chunkManifest = require(`!raw-loader!../public/chunk-manifest.json`)
-
-  // headComponents.unshift(
-  //   <script
-  //     id="webpack-manifest"
-  //     key="webpack-manifest"
-  //     dangerouslySetInnerHTML={{
-  //       __html: `
-  //           //<![CDATA[
-  //           window.webpackManifest = ${chunkManifest}
-  //           //]]>
-  //           `,
-  //     }}
-  //   />
-  // )
 
   let stats
   try {
