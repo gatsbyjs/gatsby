@@ -64,6 +64,7 @@ class SidebarBody extends React.Component {
                   "&&": {
                     borderBottom: `none`,
                     boxShadow: `none`,
+                    fontWeight: `normal`,
                     ":hover": {
                       color: `inherit`,
                       borderBottom: `none`,

@@ -30,6 +30,7 @@ const CtaButton = ({ to, overrideCSS, children }) => (
         border: `1px solid ${presets.brand}`,
         boxShadow: `none`,
         color: presets.brand,
+        fontWeight: `normal`,
         backgroundColor: `transparent`,
         backgroundSize: `30px 30px`,
         transiton: `all .15s ease-out`,

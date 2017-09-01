@@ -35,29 +35,17 @@ const BlogPostTemplate = React.createClass({
         css={{
           ...scale(-2 / 5),
           fontFamily: typography.options.headerFontFamily.join(`,`),
-          lineHeight: 1.2,
+          lineHeight: 1.3,
           margin: 0,
           color: presets.calm,
           [presets.Mobile]: {
             ...scale(-1 / 5),
-            lineHeight: 1.2,
+            lineHeight: 1.3,
           },
         }}
       >
         {children}
       </p>
-    const headLinks = [
-      {
-        rel: `author`,
-        href: `https://gatsbyjs.org${post.frontmatter.author.slug}`,
-      },
-    ]
-    if (post.frontmatter.canonicalLink) {
-      headLinks.push({
-        rel: `canonical`,
-        href: post.frontmatter.canonicalLink,
-      })
-    }
     let imageProps
     if (post.frontmatter.image) {
       imageProps = {
@@ -77,23 +65,29 @@ const BlogPostTemplate = React.createClass({
         imageProps.alt = post.frontmatter.imageTitle
       }
     }
-    console.log(headLinks)
     return (
       <div>
         <Container className="post" css={{ paddingBottom: `0 !important` }}>
           {/* Add long list of social meta tags */}
           <Helmet>
-            <title>{post.frontmatter.title}</title>
+            <title>
+              {post.frontmatter.title}
+            </title>
             <link
               rel="author"
               href={`https://gatsbyjs.org${post.frontmatter.author.slug}`}
             />
+            {post.frontmatter.canonicalLink &&
+              <link rel="canonical" href={post.frontmatter.canonicalLink} />}
             <meta
               name="description"
               content={
-                post.frontmatter.excerpt ? post.frontmatter.excerpt : post.excerpt
+                post.frontmatter.excerpt
+                  ? post.frontmatter.excerpt
+                  : post.excerpt
               }
             />
+
             <meta name="og:description" content={post.excerpt} />
             <meta name="twitter:description" content={post.excerpt} />
             <meta name="og:title" content={post.frontmatter.title} />
@@ -113,7 +107,10 @@ const BlogPostTemplate = React.createClass({
             />
             <meta name="author" content={post.frontmatter.author.id} />
             <meta name="twitter:label1" content="Reading time" />
-            <meta name="twitter:data1" content={`${post.timeToRead} min read`} />
+            <meta
+              name="twitter:data1"
+              content={`${post.timeToRead} min read`}
+            />
             <meta
               name="article:published_time"
               content={post.frontmatter.rawDate}
@@ -342,7 +339,7 @@ export const pageQuery = graphql`
             resize(width: 1500, height: 1500) {
               src
             }
-            responsiveSizes(maxWidth: 756) {
+            responsiveSizes(maxWidth: 786) {
               src
               srcSet
               aspectRatio

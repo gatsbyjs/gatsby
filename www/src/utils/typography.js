@@ -5,6 +5,7 @@ import colors from "./colors"
 import {
   MOBILE_MEDIA_QUERY,
   TABLET_MEDIA_QUERY,
+  MIN_DEFAULT_MEDIA_QUERY,
   MIN_LARGER_DISPLAY_MEDIA_QUERY,
 } from "typography-breakpoint-constants"
 
@@ -60,7 +61,7 @@ const options = {
         ...scale(2 / 5),
         lineHeight: 1,
         marginTop: rhythm(options.blockMarginBottom),
-        marginBottom: rhythm(options.blockMarginBottom),
+        marginBottom: rhythm(options.blockMarginBottom / 2),
       },
       h4: {
         ...scale(1 / 5),
@@ -88,8 +89,10 @@ const options = {
         paddingBottom: `0.1em`,
       },
       ".gatsby-highlight": {
-        background: colors.a[0],
-        boxShadow: `inset 0 0 0 1px ${colors.a[1]}`,
+        //background: colors.a[0],
+        background: `#fdfaf6`,
+        //boxShadow: `inset 0 0 0 1px ${colors.a[1]}`,
+        boxShadow: `inset 0 0 0 1px #faede5`,
         borderRadius: `${presets.radius}px`,
         padding: rhythm(options.blockMarginBottom),
         marginBottom: rhythm(options.blockMarginBottom),
@@ -109,17 +112,18 @@ const options = {
       },
       ".gatsby-highlight pre code": {
         display: `block`,
-        fontSize: `90%`,
+        fontSize: `95%`,
         lineHeight: options.baseLineHeight,
       },
       ".gatsby-highlight-code-line": {
-        background: colors.a[1],
+        //background: colors.a[1],
+        background: `#faede5`,
         marginRight: `${rhythm(-options.blockMarginBottom)}`,
         marginLeft: `${rhythm(-options.blockMarginBottom)}`,
         paddingRight: rhythm(options.blockMarginBottom),
         paddingLeft: `${rhythm(options.blockMarginBottom / 5 * 4)}`,
         borderLeft: `${rhythm(options.blockMarginBottom / 5 * 1)} solid ${colors
-          .a[5]}`,
+          .a[3]}`,
         display: `block`,
       },
       ".gatsby-highlight::-webkit-scrollbar": {
@@ -130,14 +134,16 @@ const options = {
         background: colors.a[2],
       },
       ".gatsby-highlight::-webkit-scrollbar-track": {
-        background: colors.a[1],
+        //background: colors.a[1],
+        background: `#faede5`,
+        borderRadius: `0 0 ${presets.radiusLg}px ${presets.radiusLg}px`,
       },
       // Target image captions. This is kind of a fragile selector...
       ".gatsby-resp-image-link + em": {
         ...scale(-1 / 5),
         lineHeight: 1.3,
         paddingTop: rhythm(3 / 8),
-        marginBottom: rhythm(options.blockMarginBottom),
+        marginBottom: rhythm(options.blockMarginBottom * 2),
         display: `block`,
         textAlign: `center`,
         fontStyle: `normal`,
@@ -156,10 +162,10 @@ const options = {
           .animation.curveDefault}`,
         borderBottom: `1px solid ${presets.lightPurple}`,
         boxShadow: `inset 0 -2px 0px 0px ${presets.lightPurple}`,
-      },
-      ".post-body a": {
         fontFamily: options.headerFontFamily.join(`,`),
         fontWeight: `bold`,
+      },
+      ".post-body a": {
         fontSize: `102%`,
       },
       ".main-body a:hover": {
@@ -178,28 +184,29 @@ const options = {
       ".main-body a.gatsby-resp-image-link": {
         boxShadow: `none`,
         borderBottom: `transparent`,
+        marginTop: rhythm(options.blockMarginBottom * 2),
       },
       ".main-body a.gatsby-resp-image-link:hover": {
         background: `none`,
         boxShadow: `none`,
       },
-      ".post .gatsby-highlight, .post .gatsby-resp-iframe-wrapper, .post .gatsby-resp-image-link": {
-        marginLeft: rhythm(-options.blockMarginBottom), // 3/4 rhythm is amount of padding on mobile.
+      ".gatsby-highlight, .post .gatsby-resp-iframe-wrapper, .post .gatsby-resp-image-link": {
+        marginLeft: rhythm(-options.blockMarginBottom),
         marginRight: rhythm(-options.blockMarginBottom),
       },
       ".gatsby-resp-image-link": {
         borderRadius: `${presets.radius}px`,
         overflow: `hidden`,
       },
-      "@media (max-width:628px)": {
-        ".post-body .gatsby-highlight, .gatsby-resp-image-link": {
+      "@media (max-width:634px)": {
+        ".gatsby-highlight, .gatsby-resp-image-link": {
           borderRadius: 0,
           borderLeft: 0,
           borderRight: 0,
         },
-        ".post-body .gatsby-highlight": {
-          boxShadow: `inset 0 1px 0 0 ${colors.a[1]}, inset 0 -1px 0 0 ${colors
-            .a[1]}`,
+        ".gatsby-highlight": {
+          //boxShadow: `inset 0 1px 0 0 ${colors.a[1]}, inset 0 -1px 0 0 ${colors.a[1]}`,
+          boxShadow: `inset 0 1px 0 0 #faede5, inset 0 -1px 0 0 #faede5`,
         },
       },
       video: {
@@ -218,6 +225,23 @@ const options = {
       [TABLET_MEDIA_QUERY]: {
         html: {
           fontSize: `${17 / 16 * 100}%`,
+        },
+      },
+      [MIN_DEFAULT_MEDIA_QUERY]: {
+        ".gatsby-highlight, .post .gatsby-resp-iframe-wrapper, .post .gatsby-resp-image-link": {
+          marginLeft: rhythm(-options.blockMarginBottom * 1.5),
+          marginRight: rhythm(-options.blockMarginBottom * 1.5),
+        },
+        ".gatsby-highlight": {
+          padding: rhythm(options.blockMarginBottom * 1.5),
+          marginBottom: rhythm(options.blockMarginBottom * 1.5),
+        },
+        ".gatsby-highlight-code-line": {
+          marginRight: `${rhythm(-options.blockMarginBottom * 1.5)}`,
+          marginLeft: `${rhythm(-options.blockMarginBottom * 1.5)}`,
+          paddingRight: rhythm(options.blockMarginBottom * 1.5),
+          paddingLeft: `${rhythm(options.blockMarginBottom * 1.5 / 5 * 4)}`,
+          borderLeftWidth: `${rhythm(options.blockMarginBottom * 1.5 / 5 * 1)}`,
         },
       },
       [MIN_LARGER_DISPLAY_MEDIA_QUERY]: {

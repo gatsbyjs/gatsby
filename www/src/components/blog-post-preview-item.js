@@ -13,18 +13,14 @@ class BlogPostPreviewItem extends React.Component {
     return (
       <div css={{ marginBottom: rhythm(2) }}>
         <Link to={post.fields.slug}>
-          <h2
-            css={{
-              marginBottom: rhythm(1 / 8),
-            }}
-          >
+          <h2>
             {post.frontmatter.title}
           </h2>
-          <p>
+          <p css={{ fontWeight: `normal` }}>
             {post.frontmatter.excerpt ? post.frontmatter.excerpt : post.excerpt}
           </p>
         </Link>
-        <div>
+        <div css={{ display: `flex`, alignItems: `center` }}>
           <img
             alt={`Avatar for ${post.frontmatter.author.id}`}
             src={avatar.src}
@@ -45,10 +41,11 @@ class BlogPostPreviewItem extends React.Component {
               fontFamily: typography.options.headerFontFamily.join(`,`),
               color: presets.calm,
               ...scale(-2 / 5),
-              lineHeight: 1.3,
               [presets.Mobile]: {
                 ...scale(-1 / 5),
-                lineHeight: 1.3,
+              },
+              [presets.Desktop]: {
+                ...scale(0),
               },
             }}
           >
@@ -59,6 +56,7 @@ class BlogPostPreviewItem extends React.Component {
                   boxShadow: `none !important`,
                   borderBottom: `0 !important`,
                   "&&": {
+                    fontWeight: `normal`,
                     ":hover": {
                       color: presets.brand,
                       background: `transparent`,
@@ -68,8 +66,8 @@ class BlogPostPreviewItem extends React.Component {
               >
                 {post.frontmatter.author.id}
               </Link>
-            </div>
-            <div>
+              {` `}
+              on
               {post.frontmatter.date}
             </div>
           </div>
@@ -98,7 +96,7 @@ export const blogPostPreviewFragment = graphql`
         }
         avatar {
           childImageSharp {
-            responsiveResolution(width: 36, height: 36) {
+            responsiveResolution(width: 30, height: 30) {
               width
               height
               src
