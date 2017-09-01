@@ -41,14 +41,7 @@ module.exports = async (pageOrLayout, component) => {
           ${component.query}
       `
     )
-    console.log(``)
-    console.log(``)
-    console.log(``)
-    console.log(`Query:`)
-    console.log(component.query)
-    console.log(``)
-    console.log(`GraphQL Error:`)
-    console.log(result.errors)
+
     // Perhaps this isn't the best way to see if we're building?
     if (program._name === `build`) {
       process.exit(1)
