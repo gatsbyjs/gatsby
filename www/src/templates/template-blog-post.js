@@ -77,8 +77,6 @@ const BlogPostTemplate = React.createClass({
               rel="author"
               href={`https://gatsbyjs.org${post.frontmatter.author.slug}`}
             />
-            {post.frontmatter.canonicalLink &&
-              <link rel="canonical" href={post.frontmatter.canonicalLink} />}
             <meta
               name="description"
               content={
