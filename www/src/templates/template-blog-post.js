@@ -330,7 +330,7 @@ export const pageQuery = graphql`
       frontmatter {
         title
         excerpt
-        date(formatString: "MMM D, YYYY")
+        date(formatString: "MMMM Do YYYY")
         rawDate: date
         canonicalLink
         publishedAt

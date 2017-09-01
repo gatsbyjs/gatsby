@@ -68,6 +68,7 @@ class BlogPostPreviewItem extends React.Component {
               </Link>
               {` `}
               on
+              {` `}
               {post.frontmatter.date}
             </div>
           </div>
@@ -88,7 +89,7 @@ export const blogPostPreviewFragment = graphql`
     frontmatter {
       excerpt
       title
-      date(formatString: "DD MMMM, YYYY")
+      date(formatString: "MMMM Do YYYY")
       author {
         id
         fields {
