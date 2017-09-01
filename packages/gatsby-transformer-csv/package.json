@@ -1,6 +1,6 @@
 {
   "name": "gatsby-transformer-csv",
-  "version": "1.3.4",
+  "version": "1.3.5",
   "description": "Gatsby transformer plugin for CSV files",
   "main": "index.js",
   "scripts": {
@@ -17,8 +17,8 @@
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "json2csv": "^3.7",
-    "cross-env": "^5.0.5"
+    "cross-env": "^5.0.5",
+    "json2csv": "^3.7"
   },
   "dependencies": {
     "babel-runtime": "^6.26.0",
