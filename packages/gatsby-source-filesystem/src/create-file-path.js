@@ -34,10 +34,7 @@ module.exports = ({
 }) => {
   // Find the File node
   const fileNode = findFileNode({ node, getNode })
-
-  if (!fileNode) {
-    return
-  }
+  if (!fileNode) return undefined
 
   const relativePath = path.posix.relative(
     slash(basePath),
