@@ -1,3 +1,6 @@
+echo "=== Updating Yarn ==="
+npm install -g yarn@latest
+
 echo "=== Building ES5 version of Gatsby"
 ./node_modules/.bin/lerna run build
 
