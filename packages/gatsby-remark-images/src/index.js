@@ -68,6 +68,7 @@ module.exports = (
     const originalImg = responsiveSizesResult.originalImg
     const fallbackSrc = responsiveSizesResult.src
     const srcSet = responsiveSizesResult.srcSet
+    const presentationWidth = responsiveSizesResult.presentationWidth
 
     // Generate default alt tag
     const srcSplit = node.url.split(`/`)
@@ -83,11 +84,11 @@ module.exports = (
     let rawHTML = `
   <span
     class="gatsby-resp-image-wrapper"
-    style="position: relative; display: block; ${options.wrapperStyle}"
+    style="position: relative; display: block; ${options.wrapperStyle}; max-width: ${presentationWidth}px; margin-left: auto; margin-right: auto;"
   >
     <span
       class="gatsby-resp-image-background-image"
-      style="padding-bottom: ${ratio};position: relative; width: 100%; bottom: 0; left: 0; background-image: url('${responsiveSizesResult.base64}'); background-size: cover; display: block;"
+      style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0; background-image: url('${responsiveSizesResult.base64}'); background-size: cover; display: block;"
     >
       <img
         class="gatsby-resp-image-image"
