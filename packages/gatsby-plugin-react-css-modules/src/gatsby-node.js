@@ -1,4 +1,3 @@
-import { LOCAL_IDENT_NAME } from "gatsby-1-config-css-modules"
 
 exports.modifyBabelrc = ({ babelrc }, { plugins, ...options }) => {
   return {
@@ -8,7 +7,7 @@ exports.modifyBabelrc = ({ babelrc }, { plugins, ...options }) => {
       [
         `react-css-modules`,
         {
-          generateScopedName: LOCAL_IDENT_NAME,
+          generateScopedName: `[name]--[local]--[hash:base64:5]`,
           webpackHotModuleReloading: process.env.NODE_ENV !== `production`,
           ...options,
         },
