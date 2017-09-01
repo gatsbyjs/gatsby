@@ -3,9 +3,8 @@ const chokidar = require(`chokidar`)
 const { createId, createFileNode } = require(`./create-file-node`)
 
 exports.sourceNodes = (
-  { boundActionCreators, getNode, hasNodeChanged },
-  pluginOptions,
-  done
+  { boundActionCreators, getNode, hasNodeChanged, reporter },
+  pluginOptions
 ) => {
   const { createNode, deleteNode } = boundActionCreators
 
@@ -23,63 +22,48 @@ exports.sourceNodes = (
     ],
   })
 
+  const createAndProcessNode = path =>
+    createFileNode(path, pluginOptions).then(createNode)
+
   // For every path that is reported before the 'ready' event, we throw them
   // into a queue and then flush the queue when 'ready' event arrives.
   // After 'ready', we handle the 'add' event without putting it into a queue.
   let pathQueue = []
-  const flushPathQueue = onComplete => {
-    let queue = pathQueue
+  const flushPathQueue = () => {
+    let queue = pathQueue.slice()
     pathQueue = []
-
-    let numPathsProcessed = 0
-    let numPaths = queue.length
-
-    queue.forEach(path => {
-      createFileNode(path, pluginOptions, (err, file) => {
-        createNode(file)
-
-        numPathsProcessed++
-        if (numPathsProcessed === numPaths) {
-          onComplete()
-        }
-      })
-    })
+    return Promise.all(queue.map(createAndProcessNode))
   }
 
   watcher.on(`add`, path => {
     if (ready) {
-      console.log(`added file at`, path)
-      createFileNode(path, pluginOptions, (err, file) => {
-        createNode(file)
-      })
+      reporter.info(`added file at ${path}`)
+      createAndProcessNode(path).catch(err => reporter.error(err))
     } else {
       pathQueue.push(path)
     }
   })
+
   watcher.on(`change`, path => {
-    console.log(`changed file at`, path)
-    createFileNode(path, pluginOptions, (err, file) => {
-      createNode(file)
-    })
+    reporter.info(`changed file at ${path}`)
+    createAndProcessNode(path).catch(err => reporter.error(err))
   })
+
   watcher.on(`unlink`, path => {
-    console.log(`file deleted at`, path)
+    reporter.info(`file deleted at ${path}`)
     const node = getNode(createId(path))
     deleteNode(node.id, node)
 
     // Also delete nodes for the file's transformed children nodes.
     node.children.forEach(childId => deleteNode(childId, getNode(childId)))
   })
-  watcher.on(`ready`, () => {
-    if (ready) {
-      return
-    }
 
-    ready = true
-    flushPathQueue(() => {
-      done()
+  return new Promise((resolve, reject) => {
+    watcher.on(`ready`, () => {
+      if (ready) return
+
+      ready = true
+      flushPathQueue().then(resolve, reject)
     })
   })
-
-  return
 }
