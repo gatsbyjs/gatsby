@@ -1,6 +1,6 @@
 {
   "name": "gatsby-transformer-react-docgen",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Expose React component metadata and prop information as GraphQL types",
   "main": "index.js",
   "scripts": {
@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "lodash": "^4.17.4",
-    "cross-env": "^5.0.5"
+    "cross-env": "^5.0.5",
+    "lodash": "^4.17.4"
   }
 }
