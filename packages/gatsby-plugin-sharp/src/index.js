@@ -358,17 +358,17 @@ async function responsiveSizes({ file, args = {} }) {
   const options = _.defaults(args, defaultArgs)
   options.maxWidth = parseInt(options.maxWidth, 10)
 
-  // If the users didn't set a default sizes, we'll make one.
-  if (!options.sizes) {
-    options.sizes = `(max-width: ${options.maxWidth}px) 100vw, ${options.maxWidth}px`
-  }
-
   // Account for images with a high pixel density. We assume that these types of
   // images are intended to be displayed at their native resolution.
   const { width, height, density } = await sharp(file.absolutePath).metadata()
-  const densityFactor = typeof density === `number` && density > 0 ? density / 72 : 1
-  const presentationWidth = Math.min(options.maxWidth, Math.round(width / densityFactor))
+  const pixelRatio = typeof density === `number` && density > 0 ? density / 72 : 1
+  const presentationWidth = Math.min(options.maxWidth, Math.round(width / pixelRatio))
   const presentationHeight = Math.round(presentationWidth * (height / width))
+
+  // If the users didn't set a default sizes, we'll make one.
+  if (!options.sizes) {
+    options.sizes = `(max-width: ${presentationWidth}px) 100vw, ${presentationWidth}px`
+  }
 
   // Create sizes (in width) for the image. If the max width of the container
   // for the rendered markdown file is 800px, the sizes would then be: 200,
