@@ -84,6 +84,7 @@ class SidebarBody extends React.Component {
                       boxShadow: `inset 0 -5px 0px 0px ${presets.veryLightPurple}`,
                       boxShadow: `none`,
                       fontStyle: `italic`,
+                      fontWeight: `normal`,
                       ":hover": {
                         color: `inherit`,
                         borderBottomColor: presets.lightPurple,
