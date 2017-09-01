@@ -1,9 +1,6 @@
 const path = require(`path`)
 
-const {
-  base64,
-  responsiveSizes,
-} = require(`../`)
+const { base64, responsiveSizes } = require(`../`)
 
 describe(`gatsby-plugin-sharp`, () => {
   const args = {
@@ -35,7 +32,9 @@ describe(`gatsby-plugin-sharp`, () => {
     })
 
     it(`accounts for pixel density`, async () => {
-      const result = await responsiveSizes({ file: getFileObject(path.join(__dirname, `images/144-density.png`)) })
+      const result = await responsiveSizes({
+        file: getFileObject(path.join(__dirname, `images/144-density.png`)),
+      })
 
       expect(result).toMatchSnapshot()
     })

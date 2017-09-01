@@ -361,8 +361,12 @@ async function responsiveSizes({ file, args = {} }) {
   // Account for images with a high pixel density. We assume that these types of
   // images are intended to be displayed at their native resolution.
   const { width, height, density } = await sharp(file.absolutePath).metadata()
-  const pixelRatio = typeof density === `number` && density > 0 ? density / 72 : 1
-  const presentationWidth = Math.min(options.maxWidth, Math.round(width / pixelRatio))
+  const pixelRatio =
+    typeof density === `number` && density > 0 ? density / 72 : 1
+  const presentationWidth = Math.min(
+    options.maxWidth,
+    Math.round(width / pixelRatio)
+  )
   const presentationHeight = Math.round(presentationWidth * (height / width))
 
   // If the users didn't set a default sizes, we'll make one.
