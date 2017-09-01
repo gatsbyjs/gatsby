@@ -49,20 +49,30 @@ describe(`gatsby-remark-copy-linked-files`, () => {
         const path = `images/sample-image.${extension}`
         const markdownAST = remark.parse(`![some image](${path})`)
 
-        await plugin({ files: getFiles(path), markdownAST, markdownNode, getNode })
+        await plugin({
+          files: getFiles(path),
+          markdownAST,
+          markdownNode,
+          getNode,
+        })
 
         expect(fsExtra.copy).toHaveBeenCalledWith(
           expect.any(String),
-          expect.any(String),
+          expect.any(String)
         )
       })
     })
     ;[`png`, `jpg`, `jpeg`].forEach(extension => {
-      it(`ignores images with .${extension}`, async() => {
+      it(`ignores images with .${extension}`, async () => {
         const path = `images/sample-image.${extension}`
         const markdownAST = remark.parse(`![some image](${path})`)
 
-        await plugin({ files: getFiles(path), markdownAST, markdownNode, getNode })
+        await plugin({
+          files: getFiles(path),
+          markdownAST,
+          markdownNode,
+          getNode,
+        })
 
         expect(fsExtra.copy).not.toHaveBeenCalled()
       })
