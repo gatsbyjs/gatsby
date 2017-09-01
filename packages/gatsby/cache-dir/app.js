@@ -7,8 +7,9 @@ import ReactDOM from "react-dom"
 import { AppContainer as HotContainer } from "react-hot-loader"
 import domReady from "domready"
 import socketIo from "./socketIo"
+import emitter from "./emitter"
 
-window.___emitter = require(`./emitter`)
+window.___emitter = emitter
 
 // Let the site/plugins run code very early.
 apiRunnerAsync(`onClientEntry`).then(() => {
