@@ -1,7 +1,7 @@
 import React from "react"
 import Link from "gatsby-link"
 
-import typography, { rhythm, scale } from "../utils/typography"
+import typography, { rhythm, scale, options } from "../utils/typography"
 import presets from "../utils/presets"
 
 class SidebarBody extends React.Component {
@@ -12,11 +12,18 @@ class SidebarBody extends React.Component {
     // but smaller on > tablet so as not to compete with body text.
     const fontSize = this.props.inline
       ? scale(0).fontSize
-      : scale(-1 / 10).fontSize
-    const headerSize = this.props.inline
-      ? scale(2 / 5).fontSize
-      : scale(-1 / 5).fontSize
-    const headerStyle = this.props.inline ? false : `normal`
+      : scale(-2 / 10).fontSize
+    const headerStyles = this.props.inline
+      ? {
+          fontSize: scale(2 / 5).fontSize,
+          fontStyle: false,
+          color: false,
+        }
+      : {
+          fontSize: scale(-1 / 3).fontSize,
+          fontStyle: `normal`,
+          color: presets.brandLight,
+        }
     const headerTextTransform = this.props.inline ? false : `uppercase`
     return (
       <div
@@ -34,11 +41,9 @@ class SidebarBody extends React.Component {
           >
             <h3
               css={{
-                fontSize: headerSize,
-                fontStyle: headerStyle,
+                ...headerStyles,
                 textTransform: headerTextTransform,
                 marginTop: index === 0 ? 0 : false,
-                color: presets.brandLight,
               }}
             >
               {section.title}
@@ -64,6 +69,7 @@ class SidebarBody extends React.Component {
                   "&&": {
                     borderBottom: `none`,
                     boxShadow: `none`,
+                    fontWeight: `normal`,
                     ":hover": {
                       color: `inherit`,
                       borderBottom: `none`,
@@ -77,12 +83,13 @@ class SidebarBody extends React.Component {
                     // Increase specifity to override `.main-body a` styles
                     // defined in src/utils/typography.js.
                     "&&": {
-                      color: `rgba(0, 0, 0, 0.4)`,
+                      color: presets.calm,
                       borderBottomColor: presets.veryLightPurple,
                       borderBottom: `none`,
                       boxShadow: `inset 0 -5px 0px 0px ${presets.veryLightPurple}`,
                       boxShadow: `none`,
                       fontStyle: `italic`,
+                      fontWeight: `normal`,
                       ":hover": {
                         color: `inherit`,
                         borderBottomColor: presets.lightPurple,
@@ -94,7 +101,10 @@ class SidebarBody extends React.Component {
                   }
                 }
                 return (
-                  <li key={section.links[title]}>
+                  <li
+                    key={section.links[title]}
+                    css={{ marginBottom: options.blockMarginBottom / 2 }}
+                  >
                     <Link to={section.links[title]} css={linkStyle}>
                       {changedTitle}
                     </Link>

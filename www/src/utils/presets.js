@@ -13,11 +13,13 @@ module.exports = {
   Hd: `@media (min-width: 1200px)`,
   VHd: `@media (min-width: 1450px)`,
   VVHd: `@media (min-width: 1650px)`,
-  maxWidth: 36,
+  maxWidth: 35,
   maxWidthWithSidebar: 26,
   lightPurple: colors.b[2],
   veryLightPurple: colors.b[0],
+  veryLightPurple: `#f6f2f8`,
   sidebar: `#fcfaff`,
+  calm: `rgba(38, 32, 44, .5)`,
   // palette by @SachaG
   // @see https://www.figma.com/file/J6IYJEtdRmwJQOrcZ2DfvxDD/Gatsby
   brand: `#744C9E`,
@@ -29,9 +31,9 @@ module.exports = {
   radius: 2,
   radiusLg: 4,
   gutters: {
-    default: 1.5,
+    default: 1.25,
     HdR: 2.5,
-    VHdR: 3.5,
+    VHdR: 3,
     VVHdR: 4.5,
   },
   animation: {
@@ -40,4 +42,5 @@ module.exports = {
     speedFast: `100ms`,
   },
   logoOffset: 1.7,
+  headerHeight: `3.5rem`,
 }

@@ -12,25 +12,22 @@ const cover = {
   left: 0,
   right: 0,
   bottom: 0,
+  position: `absolute`,
 }
 
-const MastheadBg = () => (
+const MastheadBg = () =>
   <div
     className="masthead-bg"
     css={{
       ...cover,
-      position: `absolute`,
-      background: `#fff`,
-      bottom: `auto`,
-      height: `200vh`,
       overflow: `hidden`,
       zIndex: -1,
     }}
   >
     <div
+      className="masthead-bg-left-fill"
       css={{
         ...cover,
-        position: `absolute`,
         right: `auto`,
         width: vPOff,
         zIndex: -10,
@@ -51,7 +48,6 @@ const MastheadBg = () => (
       preserveAspectRatio="xMinYMin slice"
       className="masthead-bg-left"
       css={{
-        position: `absolute`,
         ...cover,
         left: vPOff,
         zIndex: -2,
@@ -72,36 +68,37 @@ const MastheadBg = () => (
     </svg>
     <style>
       {`
-          .masthead-bg-left-light {
+          .masthead-bg-right-light {
             fill: ${presets.brand};
           }
           @media (max-width: 650px),
           (max-width: 768px) and (orientation:portrait) {
-            .masthead-bg-left {
-              width: calc(180% + 4vh);
+            .masthead-bg-right {
+              width: calc(160% + 4vh);
             }
           }
           ${presets.Phablet} {
-            .masthead-bg-left {
+            .masthead-bg-right {
               width: calc(130% + 2vh);
+              top: 0;
             }
           }
           ${presets.Tablet} {
-            .masthead-bg-left {
+            .masthead-bg-right {
               width: calc(125% + 4vh);
             }
           }
           ${presets.Desktop}  {
-            .masthead-bg-left {
+            .masthead-bg-right {
               width: 110%;
             }
 
-            .masthead-bg-left-light {
+            .masthead-bg-right-light {
               fill: ${presets.brandLight};
             }
           }
           ${presets.Hd}  {
-            .masthead-bg-left {
+            .masthead-bg-right {
               width: calc(100%);
             }
           }
@@ -110,13 +107,13 @@ const MastheadBg = () => (
     <svg
       viewBox="0 0 10 10"
       preserveAspectRatio="xMidYMin meet"
-      className="masthead-bg-left"
+      className="masthead-bg-right"
       css={{
         ...cover,
-        position: `absolute`,
         width: `calc(180% - + 4vh)`,
         height: `100%`,
         zIndex: -1,
+        top: `2%`,
         //transition: `width 100ms linear`,
       }}
     >
@@ -128,7 +125,7 @@ const MastheadBg = () => (
         }}
       >
         <rect
-          className="masthead-bg-left-light"
+          className="masthead-bg-right-light"
           width="10000%"
           height="10000%"
           fill={presets.brandLight}
@@ -145,6 +142,5 @@ const MastheadBg = () => (
       </svg>
     </svg>
   </div>
-)
 
 export default MastheadBg
