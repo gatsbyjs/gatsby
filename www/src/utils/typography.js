@@ -209,6 +209,12 @@ const options = {
           boxShadow: `inset 0 1px 0 0 #faede5, inset 0 -1px 0 0 #faede5`,
         },
       },
+      [`${presets.Tablet} and (max-width:980px)`]: {
+        ".has-sidebar .gatsby-highlight": {
+          marginLeft: 0,
+          marginRight: 0,
+        }
+      },
       video: {
         width: `100%`,
         marginBottom: rhythm(options.blockMarginBottom),

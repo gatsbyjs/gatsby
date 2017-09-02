@@ -30,6 +30,9 @@ module.exports = React.createClass({
   },
   render() {
     const isHomepage = this.props.location.pathname == `/`
+    const hasSidebar = this.props.location.pathname.slice(0, 6) === `/docs/` ||
+    this.props.location.pathname.slice(0, 10) === `/packages/` ||
+    this.props.location.pathname.slice(0, 10) === `/tutorial/`
     const sidebarStyles = {
       borderRight: `1px solid ${colors.b[0]}`,
       backgroundColor: presets.sidebar,
@@ -61,7 +64,7 @@ module.exports = React.createClass({
         </Helmet>
         <Navigation isHomepage={isHomepage} />
         <div
-          className={`main-body`}
+          className={hasSidebar ? `main-body has-sidebar` : `main-body`}
           css={{
             paddingTop: 0,
             [presets.Tablet]: {
@@ -103,12 +106,9 @@ module.exports = React.createClass({
           </div>
           <div
             css={{
-              paddingLeft: 0,
               [presets.Tablet]: {
                 paddingLeft:
-                  this.props.location.pathname.slice(0, 6) === `/docs/` ||
-                  this.props.location.pathname.slice(0, 10) === `/packages/` ||
-                  this.props.location.pathname.slice(0, 10) === `/tutorial/`
+                  hasSidebar
                     ? rhythm(10)
                     : 0,
               },
