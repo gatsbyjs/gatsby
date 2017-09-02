@@ -1,8 +1,6 @@
 import { graphql as graphqlFunction } from "graphql"
-const fs = require(`fs`)
-const Promise = require(`bluebird`)
+const fs = require(`fs-extra`)
 
-const writeFileAsync = Promise.promisify(fs.writeFile)
 const { joinPath } = require(`../../utils/path`)
 const report = require(`../../reporter`)
 
@@ -55,7 +53,8 @@ module.exports = async (pageOrLayout, component) => {
   }
   result[contextKey] = pageOrLayout.context
   const resultJSON = JSON.stringify(result, null, 4)
-  return writeFileAsync(
+
+  await fs.writeFile(
     joinPath(program.directory, `.cache`, `json`, pageOrLayout.jsonName),
     resultJSON
   )

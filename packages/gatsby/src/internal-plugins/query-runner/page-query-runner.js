@@ -18,8 +18,6 @@ let active = false
 // Afterwards we listen "API_RUNNING_QUEUE_EMPTY" and check
 // for dirty nodes before running queries.
 exports.runQueries = async () => {
-  active = true
-
   // Run queued dirty nodes now that we're active.
   queuedDirtyActions = _.uniq(queuedDirtyActions, a => a.payload.id)
   const dirtyIds = findDirtyIds(queuedDirtyActions)
@@ -33,6 +31,8 @@ exports.runQueries = async () => {
 
   // Run these pages
   await runQueriesForIds(cleanIds)
+
+  active = true
   return
 }
 

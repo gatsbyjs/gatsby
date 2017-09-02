@@ -31,7 +31,7 @@ const Wrapper = styled.section`
 const Title = styled.h1`
   font-size: 1.5em;
   color: #ff79c6;
-  margin-bottom: .5em;
+  margin-bottom: 0.5em;
   & a {
     color: #8be9fd;
   }
@@ -44,7 +44,7 @@ const Subtitle = styled.p`
   }
 `
 
-const IndexPage = () =>
+const IndexPage = () => (
   <Wrapper>
     <Title>
       Hello World, this is my first component styled with{` `}
@@ -56,5 +56,6 @@ const IndexPage = () =>
       </a>
     </Subtitle>
   </Wrapper>
+)
 
 export default IndexPage

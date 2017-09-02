@@ -30,11 +30,7 @@ class PostPublished extends React.Component {
       )
     }
 
-    return (
-      <div>
-        {published}
-      </div>
-    )
+    return <div>{published}</div>
   }
 }
 
