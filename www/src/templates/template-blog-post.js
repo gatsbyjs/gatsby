@@ -192,7 +192,7 @@ const BlogPostTemplate = React.createClass({
           >
             {this.props.data.markdownRemark.frontmatter.title}
           </h1>
-          {post.frontmatter.image &&
+          {post.frontmatter.image && !(post.frontmatter.showImageInArticle === false) &&
             <div
               css={{
                 marginBottom: rhythm(1),
@@ -349,6 +349,7 @@ export const pageQuery = graphql`
         imageAuthor
         imageAuthorLink
         imageTitle
+        showImageInArticle
         author {
           id
           bio
