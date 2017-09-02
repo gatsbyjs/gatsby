@@ -249,6 +249,7 @@ const queue = {
 
       if (!page) {
         console.log(`A page wasn't found for "${path}"`)
+        cb({})
         return
       }
 
