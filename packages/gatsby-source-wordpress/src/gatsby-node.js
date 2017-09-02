@@ -3,6 +3,9 @@ const crypto = require(`crypto`)
 const querystring = require(`querystring`)
 const _ = require(`lodash`)
 const stringify = require(`json-stringify-safe`)
+const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
+const path = require(`path`)
+
 const colorized = require(`./output-color`)
 
 const typePrefix = `wordpress__`
@@ -32,7 +35,7 @@ const refactoredEntityTypes = {
 
 // ========= Main ===========
 exports.sourceNodes = async (
-  { boundActionCreators, getNode, store },
+  { boundActionCreators, getNode, store, cache },
   {
     baseUrl,
     protocol,
@@ -154,7 +157,7 @@ exports.sourceNodes = async (
     if (_verbose) console.log(``)
 
     for (let route of validRoutes) {
-      await fetchData(route, createNode)
+      await fetchData(route, createNode, store, cache)
       if (_verbose) console.log(``)
     }
 
@@ -439,7 +442,7 @@ const getManufacturer = route =>
  * @param {any} createNode
  * @param {any} parentNodeId (Optional parent node ID)
  */
-async function fetchData(route, createNode, parentNodeId) {
+async function fetchData(route, createNode, store, cache, parentNodeId) {
   const type = route.type
   const url = route.url
 
@@ -466,11 +469,20 @@ async function fetchData(route, createNode, parentNodeId) {
   if (routeResponse) {
     // Process entities to creating GraphQL Nodes.
     if (Array.isArray(routeResponse)) {
-      for (let ent of routeResponse) {
-        await createGraphQLNode(ent, type, createNode, parentNodeId)
-      }
+      await Promise.all(
+        routeResponse.map(ent =>
+          createGraphQLNode(ent, type, createNode, store, cache, parentNodeId)
+        )
+      )
     } else {
-      await createGraphQLNode(routeResponse, type, createNode, parentNodeId)
+      await createGraphQLNode(
+        routeResponse,
+        type,
+        createNode,
+        store,
+        cache,
+        parentNodeId
+      )
     }
 
     // TODO : Get the number of created nodes using the nodes in state.
@@ -512,12 +524,19 @@ const digest = str =>
  * @param {any} createNode
  * @param {any} parentNodeId (Optionnal parent node ID)
  */
-function createGraphQLNode(ent, type, createNode, parentNodeId) {
+async function createGraphQLNode(
+  ent,
+  type,
+  createNode,
+  store,
+  cache,
+  parentNodeId
+) {
   let id = !ent.id ? (!ent.ID ? 0 : ent.ID) : ent.id
   let node = {
     id: `${type}_${id.toString()}`,
     children: [],
-    parent: `__SOURCE__`,
+    parent: null,
     internal: {
       type: type,
     },
@@ -549,6 +568,33 @@ function createGraphQLNode(ent, type, createNode, parentNodeId) {
     node.excerpt = ent.excerpt.rendered
   }
 
+  // Download any remote URLs and replace them with reference to
+  // downloaded file node.
+  await Promise.all(
+    Object.keys(node).map(async key => {
+      if (_.isString(node[key])) {
+        const parts = path.parse(node[key])
+        if (parts.ext !== ``) {
+          console.log(key, node[key])
+          let fileNode = { id: null }
+          try {
+            fileNode = await createRemoteFileNode({
+              url: node[key],
+              store,
+              cache,
+              createNode,
+            })
+          } catch (e) {
+            // Ignore
+          }
+          console.log(fileNode.id)
+          node[`${key}___NODE`] = fileNode.id
+          delete node[key]
+        }
+      }
+    })
+  )
+
   node.internal.content = JSON.stringify(node)
   node.internal.contentDigest = digest(stringify(node))
   createNode(node)
@@ -566,7 +612,7 @@ function createGraphQLNode(ent, type, createNode, parentNodeId) {
  * @param {function} createNode
  * @returns the new entity with fields
  */
-function addFields(ent, newEnt, createNode) {
+function addFields(ent, newEnt, createNode, store, cache) {
   newEnt = recursiveAddFields(ent, newEnt)
 
   // TODO : add other types of child nodes
@@ -589,6 +635,8 @@ function addFields(ent, newEnt, createNode) {
     fetchData(
       { url: newEnt.meta.links.self, type: `${newEnt.internal.type}_Extended` },
       createNode,
+      store,
+      cache,
       newEnt.id
     )
   }
