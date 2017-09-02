@@ -158,7 +158,7 @@ const options = {
       ".main-body a": {
         color: `inherit`,
         textDecoration: `none`,
-        transition: `background ${presets.animation.speedDefault} ${presets
+        transition: `all ${presets.animation.speedFast} ${presets
           .animation.curveDefault}`,
         borderBottom: `1px solid ${presets.lightPurple}`,
         boxShadow: `inset 0 -2px 0px 0px ${presets.lightPurple}`,
