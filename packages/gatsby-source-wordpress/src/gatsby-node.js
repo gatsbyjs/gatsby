@@ -575,7 +575,6 @@ async function createGraphQLNode(
       if (_.isString(node[key])) {
         const parts = path.parse(node[key])
         if (parts.ext !== ``) {
-          console.log(key, node[key])
           let fileNode = { id: null }
           try {
             fileNode = await createRemoteFileNode({
@@ -587,9 +586,7 @@ async function createGraphQLNode(
           } catch (e) {
             // Ignore
           }
-          console.log(fileNode.id)
-          node[`${key}___NODE`] = fileNode.id
-          delete node[key]
+          node[`${key}_local_file___NODE`] = fileNode.id
         }
       }
     })
@@ -617,7 +614,7 @@ function addFields(ent, newEnt, createNode, store, cache) {
 
   // TODO : add other types of child nodes
   if (_useACF && ent.acf != undefined && ent.acf != `false`) {
-    //Create a child node with acf field json
+    // Create a child node with acf field json.
     const acfNode = {
       id: `${newEnt.id}_ACF_Field`,
       children: [],
