@@ -358,9 +358,20 @@ async function responsiveSizes({ file, args = {} }) {
   const options = _.defaults(args, defaultArgs)
   options.maxWidth = parseInt(options.maxWidth, 10)
 
+  // Account for images with a high pixel density. We assume that these types of
+  // images are intended to be displayed at their native resolution.
+  const { width, height, density } = await sharp(file.absolutePath).metadata()
+  const pixelRatio =
+    typeof density === `number` && density > 0 ? density / 72 : 1
+  const presentationWidth = Math.min(
+    options.maxWidth,
+    Math.round(width / pixelRatio)
+  )
+  const presentationHeight = Math.round(presentationWidth * (height / width))
+
   // If the users didn't set a default sizes, we'll make one.
   if (!options.sizes) {
-    options.sizes = `(max-width: ${options.maxWidth}px) 100vw, ${options.maxWidth}px`
+    options.sizes = `(max-width: ${presentationWidth}px) 100vw, ${presentationWidth}px`
   }
 
   // Create sizes (in width) for the image. If the max width of the container
@@ -378,13 +389,12 @@ async function responsiveSizes({ file, args = {} }) {
   sizes.push(options.maxWidth * 1.5)
   sizes.push(options.maxWidth * 2)
   sizes.push(options.maxWidth * 3)
-  const dimensions = imageSize(file.absolutePath)
-  const filteredSizes = sizes.filter(size => size < dimensions.width)
+  const filteredSizes = sizes.filter(size => size < width)
 
   // Add the original image to ensure the largest image possible
   // is available for small images. Also so we can link to
   // the original image.
-  filteredSizes.push(dimensions.width)
+  filteredSizes.push(width)
 
   // Sort sizes for prettiness.
   const sortedSizes = _.sortBy(filteredSizes)
@@ -433,6 +443,9 @@ async function responsiveSizes({ file, args = {} }) {
     sizes: options.sizes,
     originalImg: originalImg,
     originalName: originalName,
+    density,
+    presentationWidth,
+    presentationHeight,
   }
 }
 

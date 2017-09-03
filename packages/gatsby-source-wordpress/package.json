@@ -23,7 +23,7 @@
     "watch": "babel -w src --out-dir . --ignore __tests__",
     "prepublish": "cross-env NODE_ENV=production npm run build"
   },
-  "version": "1.7.9",
+  "version": "1.7.10",
   "devDependencies": {
     "cross-env": "^5.0.5"
   }
