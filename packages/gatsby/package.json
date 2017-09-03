@@ -50,12 +50,12 @@
     "flat": "^2.0.1",
     "friendly-errors-webpack-plugin": "^1.6.1",
     "front-matter": "^2.1.0",
-    "fs-extra": "^3.0.1",
+    "fs-extra": "^4.0.1",
     "gatsby-module-loader": "^1.0.5",
     "glob": "^7.1.1",
     "graphql": "^0.10.3",
     "graphql-relay": "^0.5.1",
-    "graphql-skip-limit": "^1.0.4",
+    "graphql-skip-limit": "^1.0.5",
     "gray-matter": "^2.1.0",
     "hapi": "^8.5.1",
     "history": "^4.6.2",
@@ -126,12 +126,12 @@
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "cross-env": "^5.0.5",
     "iflow-debug": "^1.0.15",
     "iflow-lodash": "^1.1.24",
     "iflow-react-router": "^1.2.1",
     "nyc": "^7.0.0",
-    "rimraf": "^2.6.1",
-    "cross-env": "^5.0.5"
+    "rimraf": "^2.6.1"
   },
   "engines": {
     "node": ">4.0.0"

@@ -1,22 +1,14 @@
 import React from "react"
-import Link from "gatsby-link"
-import DocumentIcon from "react-icons/lib/go/file-text"
-import CodeIcon from "react-icons/lib/go/code"
-import PencilIcon from "react-icons/lib/go/pencil"
-import PersonIcon from "react-icons/lib/md/person"
-import GithubIcon from "react-icons/lib/go/mark-github"
-import TwitterIcon from "react-icons/lib/fa/twitter"
 import Helmet from "react-helmet"
 
-import logo from "../gatsby-negative.svg"
-import typography, { rhythm, scale } from "../utils/typography"
+import Navigation from "../components/navigation"
+import MobileNavigation from "../components/navigation-mobile"
 import SidebarBody from "../components/sidebar-body"
-import DiscordIcon from "../components/discord"
 import tutorialSidebar from "../pages/docs/tutorial-links.yml"
 import docsSidebar from "../pages/docs/doc-links.yaml"
+import { rhythm, scale } from "../utils/typography"
 import presets from "../utils/presets"
 import colors from "../utils/colors"
-import { vP, vPHd, vPVHd, vPVVHd } from "../components/gutters"
 
 import "../css/prism-coy.css"
 
@@ -27,7 +19,7 @@ import "../fonts/Webfonts/futurapt_demi_macroman/stylesheet.css"
 import "../fonts/Webfonts/futurapt_demiitalic_macroman/stylesheet.css"
 
 // Other fonts
-import "typeface-tex-gyre-schola"
+import "typeface-spectral"
 import "typeface-space-mono"
 
 module.exports = React.createClass({
@@ -38,26 +30,9 @@ module.exports = React.createClass({
   },
   render() {
     const isHomepage = this.props.location.pathname == `/`
-    const headerHeight = `3.5rem`
-    const gutters = isHomepage
-      ? {
-          paddingLeft: vP,
-          paddingRight: vP,
-          paddingTop: rhythm(1.5),
-          [presets.Hd]: {
-            paddingLeft: vPHd,
-            paddingRight: vPHd,
-          },
-          [presets.VHd]: {
-            paddingLeft: vPVHd,
-            paddingRight: vPVHd,
-          },
-          [presets.VVHd]: {
-            paddingLeft: vPVVHd,
-            paddingRight: vPVVHd,
-          },
-        }
-      : {}
+    const hasSidebar = this.props.location.pathname.slice(0, 6) === `/docs/` ||
+    this.props.location.pathname.slice(0, 10) === `/packages/` ||
+    this.props.location.pathname.slice(0, 10) === `/tutorial/`
     const sidebarStyles = {
       borderRight: `1px solid ${colors.b[0]}`,
       backgroundColor: presets.sidebar,
@@ -66,7 +41,7 @@ module.exports = React.createClass({
       display: `none`,
       position: `fixed`,
       overflowY: `auto`,
-      height: `calc(100vh - ${headerHeight})`,
+      height: `calc(100vh - ${presets.headerHeight})`,
       WebkitOverflowScrolling: `touch`,
       "::-webkit-scrollbar": {
         width: `6px`,
@@ -79,58 +54,6 @@ module.exports = React.createClass({
         background: presets.veryLightPurple,
       },
     }
-    const navItemStyles = {
-      ...scale(-1 / 5),
-      display: `inline-block`,
-      color: `inherit`,
-      textDecoration: `none`,
-      textTransform: `uppercase`,
-      letterSpacing: `0.03em`,
-      padding: `0 ${rhythm(0.5)}`,
-      position: `relative`,
-      top: 2,
-      transition: `color .15s ease-out`,
-      "&:hover": {
-        opacity: 0.8,
-      },
-    }
-    const NavItem = ({ linkTo, children }) => (
-      <li
-        css={{
-          display: `inline-block`,
-          margin: 0,
-        }}
-      >
-        <Link to={linkTo} css={navItemStyles}>
-          {children}
-        </Link>
-      </li>
-    )
-    const MobileNavItem = ({ linkTo, title, children }) => (
-      <Link
-        to={linkTo}
-        css={{
-          color: presets.brand,
-          marginBottom: 2,
-          textDecoration: `none`,
-          textAlign: `center`,
-          textTransform: `uppercase`,
-          letterSpacing: `0.07em`,
-        }}
-      >
-        {children}
-        <div css={{ opacity: 0.8 }}>{title}</div>
-      </Link>
-    )
-    const socialIconsStyles = {
-      color: presets.brandLight,
-      [presets.Phablet]: {
-        color: isHomepage ? presets.brandLighter : false,
-      },
-      [presets.Desktop]: {
-        fontSize: scale(0).fontSize,
-      },
-    }
 
     return (
       <div>
@@ -139,136 +62,14 @@ module.exports = React.createClass({
           <meta name="og:type" content="website" />
           <meta name="og:site_name" content="GatsbyJS" />
         </Helmet>
+        <Navigation isHomepage={isHomepage} />
         <div
-          css={{
-            borderBottom: `1px solid ${presets.veryLightPurple}`,
-            borderBottomColor: isHomepage
-              ? `transparent`
-              : `${presets.veryLightPurple}`,
-            backgroundColor: isHomepage
-              ? `rgba(255,255,255,0)`
-              : `rgba(255,255,255,0.975)`,
-            position: isHomepage ? `absolute` : false,
-            height: headerHeight,
-            zIndex: `1`,
-            left: 0,
-            right: 0,
-            [presets.Tablet]: {
-              position: isHomepage ? `absolute` : `fixed`,
-            },
-          }}
-        >
-          <div
-            css={{
-              //maxWidth: rhythm(presets.maxWidth),
-              margin: `0 auto`,
-              paddingLeft: rhythm(3 / 4),
-              paddingRight: rhythm(3 / 4),
-              ...gutters,
-              transition: `padding .1s ease-out`,
-              fontFamily: typography.options.headerFontFamily.join(`,`),
-              display: `flex`,
-              alignItems: `center`,
-              width: `100%`,
-              height: `100%`,
-            }}
-          >
-            <Link
-              to="/"
-              css={{
-                color: `inherit`,
-                display: `inline-block`,
-                textDecoration: `none`,
-                marginRight: rhythm(0.5),
-              }}
-            >
-              <img
-                src={logo}
-                css={{
-                  display: `inline-block`,
-                  height: rhythm(1.3),
-                  width: rhythm(1.3),
-                  margin: 0,
-                  marginRight: rhythm(2 / 4),
-                  verticalAlign: `middle`,
-                }}
-              />
-              <h1
-                css={{
-                  ...scale(2 / 5),
-                  display: `inline-block`,
-                  margin: 0,
-                  verticalAlign: `middle`,
-                }}
-              >
-                Gatsby
-              </h1>
-            </Link>
-            <ul
-              css={{
-                display: `none`,
-                [presets.Tablet]: {
-                  display: `block`,
-                  margin: 0,
-                  padding: 0,
-                  listStyle: `none`,
-                },
-              }}
-            >
-              <NavItem linkTo="/docs/">Docs</NavItem>
-              <NavItem linkTo="/tutorial/">Tutorial</NavItem>
-              <NavItem linkTo="/community/">Community</NavItem>
-              <NavItem linkTo="/blog/">Blog</NavItem>
-            </ul>
-            <div
-              css={{
-                marginLeft: isHomepage ? rhythm(1 / 2) : `auto`,
-                [presets.Phablet]: {
-                  marginLeft: isHomepage ? `auto` : `auto`,
-                },
-              }}
-            >
-              <a
-                href="https://github.com/gatsbyjs/gatsby"
-                title="Github"
-                css={{
-                  ...navItemStyles,
-                  ...socialIconsStyles,
-                }}
-              >
-                <GithubIcon style={{ verticalAlign: `text-top` }} />
-              </a>
-              <a
-                href="https://discord.gg/0ZcbPKXt5bZjGY5n"
-                title="Discord"
-                css={{
-                  ...navItemStyles,
-                  ...socialIconsStyles,
-                }}
-              >
-                <DiscordIcon overrideCSS={{ verticalAlign: `text-top` }} />
-              </a>
-              <a
-                href="https://twitter.com/gatsbyjs"
-                title="@gatsbyjs"
-                css={{
-                  ...navItemStyles,
-                  ...socialIconsStyles,
-                  paddingRight: 0,
-                }}
-              >
-                <TwitterIcon style={{ verticalAlign: `text-top` }} />
-              </a>
-            </div>
-          </div>
-        </div>
-        <div
-          className={`main-body`}
+          className={hasSidebar ? `main-body has-sidebar` : `main-body`}
           css={{
             paddingTop: 0,
             [presets.Tablet]: {
               margin: `0 auto`,
-              paddingTop: isHomepage ? 0 : headerHeight,
+              paddingTop: isHomepage ? 0 : presets.headerHeight,
             },
           }}
         >
@@ -305,12 +106,9 @@ module.exports = React.createClass({
           </div>
           <div
             css={{
-              paddingLeft: 0,
               [presets.Tablet]: {
                 paddingLeft:
-                  this.props.location.pathname.slice(0, 6) === `/docs/` ||
-                  this.props.location.pathname.slice(0, 10) === `/packages/` ||
-                  this.props.location.pathname.slice(0, 10) === `/tutorial/`
+                  hasSidebar
                     ? rhythm(10)
                     : 0,
               },
@@ -319,70 +117,7 @@ module.exports = React.createClass({
             {this.props.children()}
           </div>
         </div>
-        <div
-          css={{
-            ...scale(-2 / 5),
-            position: `fixed`,
-            display: `flex`,
-            justifyContent: `space-around`,
-            alignItems: `flex-end`,
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: rhythm(2.5),
-            background: presets.veryLightPurple,
-            borderTop: `1px solid ${colors.b[0]}`,
-            background: `#fcfaff`,
-            fontFamily: typography.options.headerFontFamily.join(`,`),
-            [presets.Tablet]: {
-              display: `none`,
-            },
-          }}
-        >
-          <MobileNavItem linkTo="/docs/">
-            <DocumentIcon
-              css={{
-                fontSize: rhythm(0.9),
-              }}
-            />
-            <div>Docs</div>
-          </MobileNavItem>
-          <MobileNavItem linkTo="/tutorial/" title="Tutorial">
-            <CodeIcon
-              css={{
-                fontSize: rhythm(1),
-              }}
-            />
-          </MobileNavItem>
-          <MobileNavItem linkTo="/community/" title="Community">
-            <PersonIcon
-              css={{
-                fontSize: rhythm(5 / 6),
-                position: `relative`,
-                right: -4,
-              }}
-            />
-            <PersonIcon
-              css={{
-                fontSize: rhythm(5 / 6),
-              }}
-            />
-            <PersonIcon
-              css={{
-                fontSize: rhythm(5 / 6),
-                position: `relative`,
-                left: -4,
-              }}
-            />
-          </MobileNavItem>
-          <MobileNavItem linkTo="/blog/" title="Blog">
-            <PencilIcon
-              css={{
-                fontSize: rhythm(0.9),
-              }}
-            />
-          </MobileNavItem>
-        </div>
+        <MobileNavigation />
       </div>
     )
   },

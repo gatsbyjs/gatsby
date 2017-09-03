@@ -10,14 +10,33 @@ Object {
 }
 `;
 
+exports[`gatsby-plugin-sharp responsiveSizes accounts for pixel density 1`] = `
+Object {
+  "aspectRatio": 2.0661764705882355,
+  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAYAAAC0VX7mAAAACXBIWXMAABYlAAAWJQFJUiTwAAAA9klEQVQoz7WRQUvDQBCF+/9v3sSzl+K9oqStVqmoN2mpJLZJYyweKpiQbLLZJM83JQ1VCrnEheF9zA5vZ2Z76Pj0/s3QVNVOS6oqyx1r8j5vDriqdV9/1PBRKTha4y5JcBMnsMn3icKI/EaeMC+8JMu9FccNz7MMRW3cGAZ5jm1RwKNKbE0Bn+rqHF/Mr8mrmkXlEWG5/zSmmaqzHeq/HXb6KbLknCNl3IVoazccN2VtGEX4DiOEjOqwQ5Wm8Px3vDoOlq7bahhsNqzzcGkNMX16hjW+/W3oBx+YTB9wNRxjcG21Gq68NRa2jZPTM7zM5jjvXzSGP/5nCvc9Ga2VAAAAAElFTkSuQmCC",
+  "density": 144,
+  "originalImg": "/static/1234-f54e4.png",
+  "originalName": undefined,
+  "presentationHeight": 68,
+  "presentationWidth": 141,
+  "sizes": "(max-width: 141px) 100vw, 141px",
+  "src": "/static/1234-f54e4.png",
+  "srcSet": "/static/1234-a0d9a.png 200w,
+/static/1234-f54e4.png 281w",
+}
+`;
+
 exports[`gatsby-plugin-sharp responsiveSizes includes responsive image properties, e.g. sizes, srcset, etc. 1`] = `
 Object {
   "aspectRatio": 1,
   "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAGElEQVQ4y2P4TwFgGNU8qnlU86jmgdUMAOBEq42KgAyMAAAAAElFTkSuQmCC",
-  "originalImg": "/static/1234-7fd61.png",
+  "density": 72,
+  "originalImg": "/static/1234-18c2a.png",
   "originalName": undefined,
-  "sizes": "(max-width: 800px) 100vw, 800px",
-  "src": "/static/1234-7fd61.png",
-  "srcSet": "/static/1234-7fd61.png 1w",
+  "presentationHeight": 1,
+  "presentationWidth": 1,
+  "sizes": "(max-width: 1px) 100vw, 1px",
+  "src": "/static/1234-18c2a.png",
+  "srcSet": "/static/1234-18c2a.png 1w",
 }
 `;

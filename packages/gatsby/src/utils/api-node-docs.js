@@ -161,7 +161,7 @@ exports.generateSideEffects = true
 
 /**
  * Let plugins extend/mutate the site's Babel configuration.
- * This API will change before 1.0 as it needs still to be converted to use
+ * This API will change before 2.0 as it needs still to be converted to use
  * Redux actions.
  */
 exports.modifyBabelrc = true

@@ -3,8 +3,8 @@ title: "Announcing Gatsby 1.0.0 🎉🎉🎉"
 date: "2017-07-06"
 author: "Kyle Mathews"
 image: 'images/container-ship-leaving.jpg'
+showImageInArticle: false
 ---
-
 Gatsby is your friendly, blazing fast static site generator for React. And after nearly a year of research, prototyping, and testing, Gatsby v1 is ready for action.
 
 Static site generators offer many benefits over traditional dynamic website frameworks — *better performance, higher security, lower cost of scaling, and a better developer experience.*

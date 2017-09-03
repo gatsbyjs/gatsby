@@ -12,9 +12,10 @@ module.exports = function prepareStackTrace(error, source) {
   const stack = stackTrace
     .parse(error)
     .map(frame => wrapCallSite(map, frame))
-    .filter(frame =>
-      !frame.getFileName() ||
-      !frame.getFileName().match(/^webpack:\/+webpack\//)
+    .filter(
+      frame =>
+        !frame.getFileName() ||
+        !frame.getFileName().match(/^webpack:\/+webpack\//)
     )
 
   error.codeFrame = getErrorSource(map, stack[0])
