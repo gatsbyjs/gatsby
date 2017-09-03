@@ -340,6 +340,9 @@ module.exports = async (
         directoryPath(`node_modules`),
         directoryPath(`node_modules`, `gatsby/node_modules`),
       ],
+      // Resolve modules in src. Makes it possible to use non-relative module
+      // paths with TypeScript.
+      root: [directoryPath(`src`)],
     }
   }
 
