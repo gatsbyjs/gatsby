@@ -526,12 +526,13 @@ actions.deleteComponentsDependencies = paths => {
  * this to store the query with its component.
  * @private
  */
-actions.replaceComponentQuery = ({ query, componentPath }) => {
+actions.replaceComponentQuery = ({ query, componentPath, componentChunkName }) => {
   return {
     type: `REPLACE_COMPONENT_QUERY`,
     payload: {
       query,
       componentPath,
+      componentChunkName,
     },
   }
 }

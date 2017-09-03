@@ -25,6 +25,7 @@ module.exports = (state = {}, action) => {
       state[action.payload.componentPath] = {
         ...state[action.payload.componentPath],
         query: action.payload.query,
+        componentChunkName: action.payload.componentChunkName,
       }
       return state
   }

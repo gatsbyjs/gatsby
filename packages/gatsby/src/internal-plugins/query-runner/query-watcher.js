@@ -17,6 +17,7 @@ const queryCompiler = require(`./query-compiler`).default
 const queryRunner = require(`./query-runner`)
 const invariant = require(`invariant`)
 const normalize = require(`normalize-path`)
+import { generateComponentChunkName } from "../../utils/js-chunk-names"
 
 exports.extractQueries = () => {
   const state = store.getState()
@@ -28,6 +29,7 @@ exports.extractQueries = () => {
       boundActionCreators.replaceComponentQuery({
         query: query && query.text,
         componentPath: component,
+        componentChunkName: generateComponentChunkName(component),
       })
     })
 
@@ -94,6 +96,7 @@ const watch = rootDir => {
           boundActionCreators.replaceComponentQuery({
             query: text,
             componentPath: id,
+            componentChunkName: generateComponentChunkName(id),
           })
           runQueriesForComponent(id)
         }
