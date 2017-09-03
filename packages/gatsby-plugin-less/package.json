@@ -1,14 +1,11 @@
 {
   "name": "gatsby-plugin-less",
-  "version": "2.0.0-alpha.0",
+  "version": "2.0.0-alpha.1",
   "description": "Stub description for gatsby-plugin-less",
-  "version": "1.0.5",
-  "author": "Ming Aldrich-Gan <mingaldrichgan@gmail.com>",
-
+  "author": "monastic.panic@gmail.com",
   "keywords": [
     "gatsby"
   ],
-  "author": "monastic.panic@gmail.com",
   "license": "MIT",
   "dependencies": {
     "babel-runtime": "^6.26.0",
