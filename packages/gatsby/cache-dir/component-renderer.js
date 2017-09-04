@@ -16,7 +16,6 @@ class ComponentRenderer extends React.Component {
     super()
     this.state = {
       location: props.location,
-      componentIndex: props.componentIndex,
       pageResources: loader.getResourcesForPathname(props.location.pathname),
     }
   }
@@ -87,10 +86,10 @@ class ComponentRenderer extends React.Component {
   render() {
     if (this.props.page) {
       if (this.state.pageResources) {
-        return createElement(this.state.pageResources.component[this.props.componentIndex], {
+        return createElement(this.props.component.componentRender, {
           key: this.props.location.pathname,
           ...this.props,
-          ...this.state.pageResources.json,
+          ...this.state.pageResources.json[this.props.component.componentChunkName],
         })
       } else {
         return null

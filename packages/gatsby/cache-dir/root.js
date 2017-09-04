@@ -92,32 +92,6 @@ const DefaultRouter = ({ children }) =>
 // parent layout(s), loop through those until finally the
 // page. Tricky part is avoiding re-mounting I think...
 
-const NestedTemplates = (componentArray, templateIndex, props, pageResources) => {
-  if (componentArray[templateIndex + 1]) {
-    // if this is not the last component in the array,
-    //  we will have children
-    return createElement(ComponentRenderer, {
-      page: true,
-      ...props,
-      pageResources,
-      componentIndex: templateIndex,
-      children: routeProps => NestedTemplates(componentArray, templateIndex + 1, props, pageResources)
-    })
-  } else {
-    // if this is last in the array, we need to render
-    return createElement(Route, {
-      render: routeProps => {
-        return createElement(ComponentRenderer, {
-          page: true,
-          ...props,
-          componentIndex: templateIndex,
-          pageResources
-        })
-      }
-    })
-  }
-}
-
 const Root = () =>
   createElement(
     AltRouter ? AltRouter : DefaultRouter,
@@ -137,7 +111,7 @@ const Root = () =>
               )
               if (pageResources) {
                 let templateIndex = 0
-                let componentArray = pageResources.component
+                let componentArray = pageResources.components
                 return NestedTemplates(componentArray, templateIndex, props, pageResources)
               } else {
                 return addNotFoundRoute()
@@ -147,6 +121,40 @@ const Root = () =>
       })
     )
   )
+
+const NestedTemplates = (componentArray, templateIndex, props, pageResources) => {
+  if (componentArray[templateIndex + 1]) {
+    // if this is not the last component in the array,
+    //  we will have children
+    return createElement(ComponentRenderer, {
+      page: true,
+      ...props,
+      pageResources,
+      component: {
+        componentIndex: templateIndex,
+        componentRender: componentArray[templateIndex],
+        componentChunkName: pageResources.page.componentChunkName[templateIndex],
+      },
+      children: routeProps => NestedTemplates(componentArray, templateIndex + 1, props, pageResources)
+    })
+  } else {
+    // if this is last in the array, we need to render
+    return createElement(Route, {
+      render: routeProps => {
+        return createElement(ComponentRenderer, {
+          page: true,
+          ...props,
+          pageResources,
+          component: {
+            componentIndex: templateIndex,
+            componentRender: componentArray[templateIndex],
+            componentChunkName: pageResources.page.componentChunkName[templateIndex],
+          },
+        })
+      }
+    })
+  }
+}
 
 // Let site, plugins wrap the site e.g. for Redux.
 const WrappedRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]

@@ -236,7 +236,7 @@ const queue = {
       const page = findPage(path)
       if (!page) return
       const pageResources = {
-        component: page.componentChunkName.map(chunk => syncRequires.components[chunk]),
+        components: page.componentChunkName.map(chunk => syncRequires.components[chunk]),
         json: syncRequires.json[page.jsonName],
         layout: syncRequires.layouts[page.layoutComponentChunkName],
         page,
