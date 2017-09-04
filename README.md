@@ -33,6 +33,7 @@ Websites built with Gatbsy:
 * [angeloocana.com](https://angeloocana.com)
 * [knpw.rs](https://knpw.rs) [(source)](https://github.com/knpwrs/knpw.rs)
 * [Overlap.show](https://overlap.show) [(source)](https://github.com/pouretrebelle/overlap.show)
+* [smartive Company Website](https://smartive.ch)
 
 ## Docs
 
