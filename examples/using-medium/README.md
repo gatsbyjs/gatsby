@@ -1,5 +1,5 @@
 # Using Medium
 
-https://using-medum.gatsbyjs.org
+https://using-medium.gatsbyjs.org
 
 Gatsby example site that shows how to use the gatsby-source-medium plugin.
