@@ -26,7 +26,7 @@ const navItemStyles = {
     opacity: 0.8,
   },
 }
-const NavItem = ({ linkTo, children }) =>
+const NavItem = ({ linkTo, children }) => (
   <li
     css={{
       display: `inline-block`,
@@ -37,6 +37,7 @@ const NavItem = ({ linkTo, children }) =>
       {children}
     </Link>
   </li>
+)
 
 export default ({ isHomepage }) => {
   const socialIconsStyles = {
