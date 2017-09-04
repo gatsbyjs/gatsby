@@ -2,8 +2,6 @@ import { graphql as graphqlFunction } from "graphql"
 const fs = require(`fs`)
 const Promise = require(`bluebird`)
 
-const openFileAsync = Promise.promisify(fs.open)
-const writeFileAsync = Promise.promisify(fs.write)
 const { joinPath } = require(`../../utils/path`)
 const report = require(`../../reporter`)
 
@@ -65,50 +63,23 @@ module.exports = async (pageOrLayout, component) => {
   const jsonPath = joinPath(program.directory, `.cache`, `json`, pageOrLayout.jsonName)
 
   if (pageOrLayout.isLayout) {
-    return openFileAsync(jsonPath, 'w')
-      .then(fd => {
-        const resultJSON = JSON.stringify(result, null, 4)
-        return writeFileAsync(fd, resultJSON)
-          .then(buffer => {
-            return
-          })
-          .catch(error => {
-            throw error
-          })
-      })
-      .catch(error => {
-        throw error
-      })
+    const resultJSON = JSON.stringify(result, null, 4)
+    await fs.writeFileSync(jsonPath, resultJSON)
   } else {
-    return openFileAsync(jsonPath, 'w+')
-      .then(fd => {
+    await new Promise(resolve => {
+      if (fs.existsSync(jsonPath)) {
+        let jsonExisting = fs.readFileSync(jsonPath)
+        const existingJSON = JSON.parse(jsonExisting)
+        let resultCombined = existingJSON
+        resultCombined[component.componentChunkName] = result
+        const resultJSON = JSON.stringify(resultCombined, null, 4)
+        resolve(fs.writeFileSync(jsonPath, resultJSON))
+      } else {
         let resultCombined = {}
         resultCombined[component.componentChunkName] = result
         const resultJSON = JSON.stringify(resultCombined, null, 4)
-        return writeFileAsync(fd, resultJSON)
-          .then(buffer => {
-            return
-          })
-          .catch(error => {
-            throw error
-          })
-      })
-      .catch(error => {
-        if (err.code === 'EEXIST') {
-            let jsonExistBuffer
-            fs.readSync(fd, jsonExistBuffer)
-            const existingJSON = JSON.parse(jsonExistBuffer)
-            let resultCombined = existingJSON
-            resultCombined[component.componentChunkName] = result
-            const resultJSON = JSON.stringify(resultCombined, null, 4)
-            return writeFileAsync(fd, resultJSON)
-              .then(buffer => {
-                return
-              })
-              .catch(error => {
-                throw error
-              })
-        } else {throw err}
-      })
-    }
+        resolve(fs.writeFileSync(jsonPath, resultJSON))
+      }
+    })
+  }
 }
