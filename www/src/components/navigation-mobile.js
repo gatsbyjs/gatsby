@@ -9,7 +9,7 @@ import colors from "../utils/colors"
 import presets from "../utils/presets"
 import typography, { rhythm, scale } from "../utils/typography"
 
-const MobileNavItem = ({ linkTo, title, children }) =>
+const MobileNavItem = ({ linkTo, title, children }) => (
   <Link
     to={linkTo}
     css={{
@@ -26,8 +26,9 @@ const MobileNavItem = ({ linkTo, title, children }) =>
       {title}
     </div>
   </Link>
+)
 
-export default () =>
+export default () => (
   <div
     css={{
       lineHeight: 2,
@@ -91,3 +92,4 @@ export default () =>
       />
     </MobileNavItem>
   </div>
+)

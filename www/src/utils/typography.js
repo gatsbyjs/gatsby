@@ -158,8 +158,8 @@ const options = {
       ".main-body a": {
         color: `inherit`,
         textDecoration: `none`,
-        transition: `all ${presets.animation.speedFast} ${presets
-          .animation.curveDefault}`,
+        transition: `all ${presets.animation.speedFast} ${presets.animation
+          .curveDefault}`,
         borderBottom: `1px solid ${presets.lightPurple}`,
         boxShadow: `inset 0 -2px 0px 0px ${presets.lightPurple}`,
         fontFamily: options.headerFontFamily.join(`,`),
@@ -213,7 +213,7 @@ const options = {
         ".has-sidebar .gatsby-highlight": {
           marginLeft: 0,
           marginRight: 0,
-        }
+        },
       },
       video: {
         width: `100%`,

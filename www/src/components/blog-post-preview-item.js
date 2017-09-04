@@ -13,9 +13,7 @@ class BlogPostPreviewItem extends React.Component {
     return (
       <div css={{ marginBottom: rhythm(2) }}>
         <Link to={post.fields.slug}>
-          <h2>
-            {post.frontmatter.title}
-          </h2>
+          <h2>{post.frontmatter.title}</h2>
           <p css={{ fontWeight: `normal` }}>
             {post.frontmatter.excerpt ? post.frontmatter.excerpt : post.excerpt}
           </p>
