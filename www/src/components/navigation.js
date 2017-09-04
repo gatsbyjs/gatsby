@@ -39,9 +39,9 @@ const NavItem = ({ linkTo, children }) => (
   </li>
 )
 
-export default ({ location }) => {
-  const isHomepage = location.pathname == `/`
-  const isBlog = location.pathname == `/blog/`
+export default ({ pathname }) => {
+  const isHomepage = pathname == `/`
+  const isBlog = pathname == `/blog/`
   let styles = {}
   if (isHomepage) {
     styles.backgroundColor = `rgba(255,255,255,0)`
@@ -57,7 +57,6 @@ export default ({ location }) => {
       backgroundColor: presets.sidebar,
     }
   }
-  console.log(styles)
   const socialIconsStyles = {
     color: presets.brandLight,
     [presets.Phablet]: {

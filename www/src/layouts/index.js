@@ -63,7 +63,7 @@ module.exports = React.createClass({
           <meta name="og:type" content="website" />
           <meta name="og:site_name" content="GatsbyJS" />
         </Helmet>
-        <Navigation location={location} />
+        <Navigation pathname={this.props.location.pathname} />
         <div
           className={hasSidebar ? `main-body has-sidebar` : `main-body`}
           css={{
