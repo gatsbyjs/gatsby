@@ -8,9 +8,12 @@
   "license": "MIT",
   "dependencies": {
     "gatsby": "latest",
-    "gatsby-link": "latest"
+    "gatsby-link": "latest",
+    "gatsby-source-medium": "^1.0.1"
   },
-  "keywords": ["gatsby"],
+  "keywords": [
+    "gatsby"
+  ],
   "scripts": {
     "develop": "gatsby develop",
     "build": "gatsby build"
