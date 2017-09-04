@@ -35,7 +35,14 @@ class BlogPostsIndex extends React.Component {
           <h1
             css={{
               marginTop: 0,
-              display: `none`,
+              position: `absolute`,
+              width: 1,
+              height: 1,
+              padding: 0,
+              overflow: `hidden`,
+              clip: `rect(0,0,0,0)`,
+              whiteSpace: `nowrap`,
+              clipPath: `inset(50%)`,
             }}
           >
             Blog
