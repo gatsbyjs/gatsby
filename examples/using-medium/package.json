@@ -1,0 +1,18 @@
+{
+  "name": "gatsby-example-using-medmium",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Gatsby example site that shows how to use the Medium source plugin",
+  "main": "index.js",
+  "author": "Robert Vogt <robert@smartive.ch>",
+  "license": "MIT",
+  "dependencies": {
+    "gatsby": "latest",
+    "gatsby-link": "latest"
+  },
+  "keywords": ["gatsby"],
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build"
+  }
+}
