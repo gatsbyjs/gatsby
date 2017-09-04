@@ -1,6 +1,6 @@
 {
   "name": "gatsby-source-medium",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Gatsby source plugin for building websites using Medium as a data source",
   "author": "Robert Vogt <robert@smartive.ch>",
   "license": "MIT",
