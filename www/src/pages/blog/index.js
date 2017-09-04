@@ -48,7 +48,9 @@ class BlogPostsIndex extends React.Component {
             Blog
           </h1>
           {allMarkdownRemark.edges.map(({ node }) => (
-            <div
+            <BlogPostPreviewItem
+              post={node}
+              key={node.fields.slug}
               css={{
                 marginBottom: rhythm(options.blockMarginBottom),
                 [presets.Tablet]: {
@@ -74,10 +76,7 @@ class BlogPostsIndex extends React.Component {
                 [presets.Desktop]: {},
                 [presets.Hd]: {},
               }}
-              key={node.fields.slug}
-            >
-              <BlogPostPreviewItem post={node} />
-            </div>
+            />
           ))}
         </Container>
       </div>
