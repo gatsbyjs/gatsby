@@ -17,11 +17,6 @@ fetchData({
   baseUrl: `dev-gatbsyjswp.pantheonsite.io`,
   _useACF: true,
   _hostingWPCOM: false,
-  auth: {
-    user: "gatsby",
-    pass: "gLd*7G50mo!qugKXbV",
-    sendImmediately: false,
-  },
   _perPage: 100,
   typePrefix,
   refactoredEntityTypes,

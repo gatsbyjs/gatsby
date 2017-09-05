@@ -1,3 +1,4 @@
+const colorized = require(`./output-color`)
 const conflictFieldPrefix = `wordpress_`
 // restrictedNodeFields from here https://www.gatsbyjs.org/docs/node-interface/
 const restrictedNodeFields = [`id`, `children`, `parent`, `fields`, `internal`]
@@ -87,6 +88,7 @@ async function createGraphQLNode(ent, type, createNode, store, cache) {
   node.internal.contentDigest = digest(stringify(node))
   createNode(node)
 }
+exports.createGraphQLNode = createGraphQLNode
 
 /**
  * Loop through fields to validate naming conventions and extract child nodes.
@@ -133,6 +135,7 @@ function addFields(ent, newEnt, createNode, store, cache) {
   }
   return newEnt
 }
+exports.addFields = addFields
 
 /**
  * Add fields recursively
@@ -144,7 +147,7 @@ function addFields(ent, newEnt, createNode, store, cache) {
 function recursiveAddFields(ent, newEnt) {
   for (let k of Object.keys(ent)) {
     if (!newEnt.hasOwnProperty(k)) {
-      let key = getValidName(k)
+      let key = getValidKey(k)
       if (key !== `acf`) {
         newEnt[key] = ent[k]
         // Nested Objects & Arrays of Objects
@@ -164,6 +167,7 @@ function recursiveAddFields(ent, newEnt) {
   }
   return newEnt
 }
+exports.recursiveAddFields = recursiveAddFields
 
 /**
  * Validate the GraphQL naming convetions & protect specific fields.
@@ -171,23 +175,37 @@ function recursiveAddFields(ent, newEnt) {
  * @param {any} key
  * @returns the valid name
  */
-function getValidName(key) {
-  let nkey = key
+function getValidKey({ key, verbose = false }) {
+  let nkey = String(key)
   const NAME_RX = /^[_a-zA-Z][_a-zA-Z0-9]*$/
-  if (!NAME_RX.test(nkey) || restrictedNodeFields.includes(nkey)) {
-    nkey = `${conflictFieldPrefix}${nkey}`.replace(/-|__|:|\.|\s/g, `_`)
-    if (_verbose)
-      console.log(
-        colorized.out(
-          `Object with key "${key}" breaks GraphQL naming convention. Renamed to "${nkey}"`,
-          colorized.color.Font.FgRed
-        )
-      )
+  let changed = false
+  // Replace invalid characters
+  if (!NAME_RX.test(nkey)) {
+    changed = true
+    nkey = nkey.replace(/-|__|:|\.|\s/g, `_`)
   }
+  // Prefix if first character isn't a letter.
+  if (!NAME_RX.test(nkey.slice(0, 1))) {
+    changed = true
+    nkey = `${conflictFieldPrefix}${nkey}`
+  }
+  if (restrictedNodeFields.includes(nkey)) {
+    changed = true
+    nkey = `${conflictFieldPrefix}${nkey}`.replace(/-|__|:|\.|\s/g, `_`)
+  }
+  if (changed && verbose)
+    console.log(
+      colorized.out(
+        `Object with key "${key}" breaks GraphQL naming convention. Renamed to "${nkey}"`,
+        colorized.color.Font.FgRed
+      )
+    )
   return nkey
 }
 
-module.exports = async ({
+exports.getValidKey = getValidKey
+
+exports.buildReferenceMap = async ({
   entities,
   typePrefix,
   _verbose,
