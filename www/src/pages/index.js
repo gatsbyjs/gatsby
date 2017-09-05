@@ -172,7 +172,11 @@ const IndexRoute = React.createClass({
                     Latest from the Gatsby blog
                   </h2>
                   {blogPosts.edges.map(({ node }) => (
-                    <BlogPostPreviewItem post={node} key={node.fields.slug} />
+                    <BlogPostPreviewItem
+                      post={node}
+                      key={node.fields.slug}
+                      css={{ marginBottom: rhythm(2) }}
+                    />
                   ))}
                 </Container>
               </div>
