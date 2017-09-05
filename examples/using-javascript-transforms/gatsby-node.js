@@ -81,7 +81,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
             createPage({
               path: frontmatter.path, // required
               component: markdownTemplate,
-              layout: 'blogPost',
+              layout: 'blogPost', // this matches the filename of src/layouts/blogPost.js, layout created automatically
               context: {
                 layoutType: frontmatter.layoutType,
                 slug: edge.node.fields.slug,
@@ -91,7 +91,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
             createPage({
               path: frontmatter.path, // required
               component: markdownTemplate,
-              layout: 'insetPage',
+              layout: 'insetPage', // this matches the filename of src/layouts/insetPage.js, layout created automatically
               context: {
                 layoutType: frontmatter.layoutType,
                 slug: edge.node.fields.slug,
@@ -117,7 +117,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
                 javascriptTemplate,
                 path.resolve(edge.node.fileAbsolutePath)
               ],
-              layout: 'blogPost',
+              layout: 'blogPost', // this matches the filename of src/layouts/blogPost.js, layout created automatically
               context: {
                 layoutType: frontmatter.layoutType,
                 slug: edge.node.fields.slug,
@@ -127,7 +127,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
             createPage({
               path: `/`, // required, we don't have frontmatter for this page hence separate if()
               component: path.resolve(edge.node.fileAbsolutePath),
-              layout: 'insetPage',
+              layout: 'insetPage', // this matches the filename of src/layouts/insetPage.js, layout created automatically
               context: {
                 slug: edge.node.fields.slug,
               },
