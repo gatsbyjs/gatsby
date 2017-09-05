@@ -9,18 +9,6 @@ class jsBlogPostTemplate extends React.Component {
     let frontmatter = this.props.data.jsFrontmatter.data
     let siteMetadata = this.props.data.site.siteMetadata
 
-    const home = (
-      <div className="nav">
-        <div className="container">
-          <div className="nav-left">
-            <Link className="nav-item is-tab is-active" to={`/`}>
-              Home
-            </Link>
-          </div>
-        </div>
-      </div>
-    )
-
     if (frontmatter.updated === null) {
       var published = (
         <div className="date-published">
@@ -74,7 +62,6 @@ class jsBlogPostTemplate extends React.Component {
             { name: `twitter:data2`, content: frontmatter.written },
           ]}
         />
-        {home}
         <div className="container">
           {this.props.children()}
         </div>

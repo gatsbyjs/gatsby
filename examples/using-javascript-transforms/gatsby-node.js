@@ -23,7 +23,7 @@ exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
 }
 
 exports.createPages = ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators
+  const { createPage, createLayout } = boundActionCreators
 
   return new Promise((resolve, reject) => {
     const pages = []
@@ -77,13 +77,21 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           // ideally we would want to use layoutType to
           //  decide which (nested) layout to use, but
           //  gatsby currently doesnt support this.
-          if (
-            frontmatter.layoutType === `post` ||
-            frontmatter.layoutType === `page`
-          ) {
+          if (frontmatter.layoutType === `post`) {
             createPage({
               path: frontmatter.path, // required
               component: markdownTemplate,
+              layout: 'blogPost',
+              context: {
+                layoutType: frontmatter.layoutType,
+                slug: edge.node.fields.slug,
+              },
+            })
+          } else if (frontmatter.layoutType === `page`) {
+            createPage({
+              path: frontmatter.path, // required
+              component: markdownTemplate,
+              layout: 'insetPage',
               context: {
                 layoutType: frontmatter.layoutType,
                 slug: edge.node.fields.slug,
@@ -99,10 +107,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         result.data.allJsFrontmatter.edges.forEach(edge => {
           let frontmatter = edge.node.data
           // see above
-          if (
-            frontmatter.layoutType === `post` ||
-            frontmatter.layoutType === `page`
-          ) {
+          if (frontmatter.layoutType === `post`) {
             createPage({
               path: frontmatter.path, // required
               // Note, we can't have a template, but rather require the file directly.
@@ -112,6 +117,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
                 javascriptTemplate,
                 path.resolve(edge.node.fileAbsolutePath)
               ],
+              layout: 'blogPost',
               context: {
                 layoutType: frontmatter.layoutType,
                 slug: edge.node.fields.slug,
@@ -121,6 +127,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
             createPage({
               path: `/`, // required, we don't have frontmatter for this page hence separate if()
               component: path.resolve(edge.node.fileAbsolutePath),
+              layout: 'insetPage',
               context: {
                 slug: edge.node.fields.slug,
               },

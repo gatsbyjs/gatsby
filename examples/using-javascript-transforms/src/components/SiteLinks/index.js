@@ -13,7 +13,7 @@ class SiteLinks extends React.Component {
   }
 
   render() {
-    const siteMetadata = this.props.siteMetadata
+    const siteMetadata = this.props.data.site.siteMetadata
 
     return (
       <div className="blog-social">
