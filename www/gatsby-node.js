@@ -4,12 +4,16 @@ const path = require(`path`)
 const parseFilepath = require(`parse-filepath`)
 const fs = require(`fs-extra`)
 const slash = require(`slash`)
+const slugify = require(`limax`)
 
 exports.createPages = ({ graphql, boundActionCreators }) => {
   const { createPage } = boundActionCreators
   return new Promise((resolve, reject) => {
     const docsTemplate = path.resolve(`src/templates/template-docs-markdown.js`)
     const blogPostTemplate = path.resolve(`src/templates/template-blog-post.js`)
+    const contributorPageTemplate = path.resolve(
+      `src/templates/template-contributor-page.js`
+    )
     const packageTemplate = path.resolve(
       `src/templates/template-docs-packages.js`
     )
@@ -18,12 +22,30 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
       graphql(
         `
       {
-        allMarkdownRemark(limit: 1000) {
+        allMarkdownRemark(
+          sort: { order: DESC, fields: [frontmatter___date] }
+          limit: 1000
+        ) {
           edges {
             node {
               fields {
                 slug
                 package
+              }
+              frontmatter {
+                title
+                draft
+                canonicalLink
+                publishedAt
+              }
+            }
+          }
+        }
+        allAuthorYaml {
+          edges {
+            node {
+              fields {
+                slug
               }
             }
           }
@@ -35,20 +57,53 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           reject(result.errors)
         }
 
+        const blogPosts = _.filter(
+          result.data.allMarkdownRemark.edges,
+          edge => {
+            const slug = _.get(edge, `node.fields.slug`)
+            const draft = _.get(edge, `node.frontmatter.draft`)
+            if (!slug) return
+
+            if (_.includes(slug, `/blog/`) && !draft) {
+              return edge
+            }
+          }
+        )
+
+        // Create blog pages.
+        blogPosts.forEach((edge, index) => {
+          const next = index === 0 ? false : blogPosts[index - 1].node
+          const prev =
+            index === blogPosts.length - 1 ? false : blogPosts[index + 1].node
+
+          createPage({
+            path: `${edge.node.fields.slug}`, // required
+            component: slash(blogPostTemplate),
+            context: {
+              slug: edge.node.fields.slug,
+              prev,
+              next,
+            },
+          })
+        })
+
+        // Create contributor pages.
+        result.data.allAuthorYaml.edges.forEach(edge => {
+          createPage({
+            path: `${edge.node.fields.slug}`,
+            component: slash(contributorPageTemplate),
+            context: {
+              slug: edge.node.fields.slug,
+            },
+          })
+        })
+
         // Create docs pages.
         result.data.allMarkdownRemark.edges.forEach(edge => {
           const slug = _.get(edge, `node.fields.slug`)
           if (!slug) return
 
-          if (_.includes(slug, `/blog/`)) {
-            createPage({
-              path: `${edge.node.fields.slug}`, // required
-              component: slash(blogPostTemplate),
-              context: {
-                slug: edge.node.fields.slug,
-              },
-            })
-          } else {
+          if (!_.includes(slug, `/blog/`)) {
             createPage({
               path: `${edge.node.fields.slug}`, // required
               component: slash(
@@ -117,6 +172,9 @@ exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
     if (slug) {
       createNodeField({ node, name: `slug`, value: slug })
     }
+  } else if (node.internal.type === `AuthorYaml`) {
+    slug = `/contributors/${slugify(node.id)}/`
+    createNodeField({ node, name: `slug`, value: slug })
   }
 }
 
