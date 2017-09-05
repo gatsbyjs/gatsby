@@ -1,10 +1,7 @@
 const ExtractTextPlugin = require(`extract-text-webpack-plugin`)
 const { cssModulesConfig } = require(`gatsby-1-config-css-modules`)
 
-exports.modifyWebpackConfig = (
-  { config, stage },
-  options
-) => {
+exports.modifyWebpackConfig = ({ config, stage }, options) => {
   // Pass in plugins regardless of stage.
   // If none specified, fallback to Gatsby default postcss plugins.
   if (options.postCssPlugins) {
@@ -13,7 +10,7 @@ exports.modifyWebpackConfig = (
       return current
     })
   }
-  
+
   const sassFiles = /\.s[ac]ss$/
   const sassModulesFiles = /\.module\.s[ac]ss$/
   const sassLoader = `sass?${JSON.stringify(options)}`
