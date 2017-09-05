@@ -1,5 +1,3 @@
-/gatsby-node.js
-/index.js
-/create-file-path.js
-/create-file-node.js
-/create-remote-file-node.js
+/*.js
+!index.js
+yarn.lock
