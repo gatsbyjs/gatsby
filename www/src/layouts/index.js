@@ -52,7 +52,7 @@ module.exports = React.createClass({
         background: presets.lightPurple,
       },
       "::-webkit-scrollbar-track": {
-        background: presets.veryLightPurple,
+        background: presets.brandLighter,
       },
     }
 
@@ -63,7 +63,7 @@ module.exports = React.createClass({
           <meta name="og:type" content="website" />
           <meta name="og:site_name" content="GatsbyJS" />
         </Helmet>
-        <Navigation isHomepage={isHomepage} />
+        <Navigation pathname={this.props.location.pathname} />
         <div
           className={hasSidebar ? `main-body has-sidebar` : `main-body`}
           css={{

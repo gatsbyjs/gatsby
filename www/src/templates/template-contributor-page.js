@@ -62,7 +62,11 @@ const ContributorPageTemplate = React.createClass({
             if (node.frontmatter.author) {
               if (node.frontmatter.author.id === contributor.id) {
                 return (
-                  <BlogPostPreviewItem post={node} key={node.fields.slug} />
+                  <BlogPostPreviewItem
+                    post={node}
+                    key={node.fields.slug}
+                    css={{ marginBottom: rhythm(2) }}
+                  />
                 )
               }
             }
