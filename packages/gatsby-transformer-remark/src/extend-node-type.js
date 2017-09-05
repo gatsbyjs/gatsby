@@ -70,7 +70,6 @@ module.exports = (
             pluginOptions.plugins.map(plugin => {
               const requiredPlugin = require(plugin.resolve)
               if (_.isFunction(requiredPlugin.mutateSource)) {
-                console.log(`running plugin to mutate markdown source`)
                 return requiredPlugin.mutateSource(
                   {
                     markdownNode,
