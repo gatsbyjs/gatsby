@@ -6,6 +6,7 @@ const _ = require(`lodash`)
 const $ = require(`cheerio`)
 
 module.exports = ({ files, markdownNode, markdownAST, getNode }) => {
+  const filesToCopy = new Map()
   // Copy linked files to the public directory and modify the AST to point to
   // new location of the files.
   const visitor = link => {
@@ -30,13 +31,8 @@ module.exports = ({ files, markdownNode, markdownAST, getNode }) => {
           `/${linkNode.internal.contentDigest}.${linkNode.extension}`
         )
         link.url = `${relativePath}`
-        if (!fsExtra.existsSync(newPath)) {
-          fsExtra.copy(linkPath, newPath, err => {
-            if (err) {
-              console.error(`error copying file`, err)
-            }
-          })
-        }
+
+        filesToCopy.set(linkPath, newPath)
       }
     }
   }
@@ -87,4 +83,16 @@ module.exports = ({ files, markdownNode, markdownAST, getNode }) => {
       }
     }
   })
+
+  return Promise.all(
+    Array.from(filesToCopy, async ([linkPath, newPath]) => {
+      if (!fsExtra.existsSync(newPath)) {
+        try {
+          await fsExtra.copy(linkPath, newPath)
+        } catch (err) {
+          console.error(`error copying file`, err)
+        }
+      }
+    })
+  )
 }

@@ -1,11 +1,6 @@
 const path = require(`path`)
 
-const {
-  queueImageResizing,
-  base64,
-  responsiveSizes,
-  responsiveResolution,
-} = require(`../`)
+const { base64, responsiveSizes } = require(`../`)
 
 describe(`gatsby-plugin-sharp`, () => {
   const args = {
@@ -14,14 +9,7 @@ describe(`gatsby-plugin-sharp`, () => {
     rotate: false,
   }
   const absolutePath = path.join(__dirname, `images/test.png`)
-  const file = {
-    id: `${absolutePath} absPath of file`,
-    absolutePath,
-    extension: `png`,
-    internal: {
-      contentDigest: `1234`,
-    },
-  }
+  const file = getFileObject(absolutePath)
 
   describe(`responsiveSizes`, () => {
     it(`includes responsive image properties, e.g. sizes, srcset, etc.`, async () => {
@@ -42,6 +30,14 @@ describe(`gatsby-plugin-sharp`, () => {
       expect(result.src.indexOf(pathPrefix)).toBe(0)
       expect(result.srcSet.indexOf(pathPrefix)).toBe(0)
     })
+
+    it(`accounts for pixel density`, async () => {
+      const result = await responsiveSizes({
+        file: getFileObject(path.join(__dirname, `images/144-density.png`)),
+      })
+
+      expect(result).toMatchSnapshot()
+    })
   })
 
   describe(`base64`, () => {
@@ -55,3 +51,14 @@ describe(`gatsby-plugin-sharp`, () => {
     })
   })
 })
+
+function getFileObject(absolutePath) {
+  return {
+    id: `${absolutePath} absPath of file`,
+    absolutePath,
+    extension: `png`,
+    internal: {
+      contentDigest: `1234`,
+    },
+  }
+}

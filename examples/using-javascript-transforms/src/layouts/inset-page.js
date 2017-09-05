@@ -14,9 +14,7 @@ class InsetPageTemplate extends React.Component {
             <div className="column is-one-quarter">
               <SiteSidebar {...this.props} />
             </div>
-            <div className="column">
-              {this.props.children()}
-            </div>
+            <div className="column">{this.props.children()}</div>
           </div>
         </div>
       </div>

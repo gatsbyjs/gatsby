@@ -42,11 +42,101 @@ A basic directory structure of a project might look like this:
         └── index.jsx
 ```
 
+### Page components
+
+Components under `src/pages` become pages automatically with paths based on their file name. For example `src/pages/index.jsx` is mapped to `yoursite.com` and `src/pages/about.jsx` becomes `yoursite.com/about/`.
+
+Example:
+
+`src/pages/about.jsx`
+
+```jsx
+import React, { Component } from 'react';
+
+class AboutPage extends Component {
+  render() {
+    const config = this.props.data.site.siteMetadata;
+    return (
+        <div className="about-container">
+          <p>About me.</p>
+        </div>
+    );
+  }
+}
+
+export default AboutPage;
+```
+
+### Page template components
+
+You can programatically create pages using "page template components". All pages are React components but very often these components are fairly simple wrappers around data from files or other sources.
+
+`src/templates/post.jsx` is an example of a page component. It queries GraphQL for markdown data and then renders the page using this data.
+
+See [part four](/tutorial/part-four/) of the tutorial for a detailed introduction to programatically creating pages.
+
+Example:
+
+```jsx
+import React from "react"
+
+class BlogPostTemplate extends React.Component {
+  render() {
+    const post = this.props.data.markdownRemark
+
+    return (
+      <div>
+        <h1>{post.frontmatter.title}</h1>
+        <div dangerouslySetInnerHTML={{ __html: post.html }} />
+      </div>
+    )
+  }
+}
+
+export default BlogPostTemplate
+
+export const pageQuery = graphql`
+query BlogPostBySlug($slug: String!) {
+  markdownRemark(fields: { slug: { eq: $slug }}) {
+    html
+    frontmatter {
+      title
+    }
+  }
+}
+`
+```
+
+### Layout components
+
+`src/layouts/index.jsx` (optional) wraps page components. You can use it for portions of pages that are shared across pages like headers and footers.
+
+Example:
+
+```jsx
+import React from 'react';
+import Navigation from '../components/Navigation/Navigation.jsx';
+
+export default class Template extends React.Component {
+
+  render() {
+    return (
+      <Navigation>
+        {this.props.children()}
+      </Navigation>
+    );
+  }
+}
+```
+
 ### HTML component
 
 `src/html.jsx` is responsible for everything other than where Gatsby lives in the `<body />`.
 
 In this file you can modify the `<head>` metadata, general structure of the document and add external links.
+
+Typically you should omit this from your site as the default html.js file will suffice. If you need
+more control over server rendering, then it's valuable to have an html.js.
 
 Example:
 
@@ -98,91 +188,6 @@ export default class HTML extends React.Component {
     );
   }
 }
-```
-
-### Layout components
-
-`src/layouts/index.jsx` (optional) wraps page components. You can use it for portions of pages that are shared across pages like headers and footers.
-
-Example:
-
-```jsx
-import React from 'react';
-import Navigation from '../components/Navigation/Navigation.jsx';
-
-export default class Template extends React.Component {
-
-  render() {
-    return (
-      <Navigation>
-        {this.props.children()}
-      </Navigation>
-    );
-  }
-}
-```
-
-### Page components
-
-Components under `src/pages` become pages automatically with paths based on their file name. For example `src/pages/index.jsx` is mapped to `yoursite.com` and `src/pages/about.jsx` becomes `yoursite.com/about/`.
-
-Example:
-
-`src/pages/about.jsx`
-
-```jsx
-import React, { Component } from 'react';
-
-class AboutPage extends Component {
-  render() {
-    const config = this.props.data.site.siteMetadata;
-    return (
-        <div className="about-container">
-          <p>About me.</p>
-        </div>
-    );
-  }
-}
-
-export default AboutPage;
-```
-
-### Page template components
-
-You can programatically create pages using "page template components". All pages are React components but very often these components are fairly simple wrappers around data from files or other sources.
-
-`src/templates/post.jsx` is an example of a page component. It queries GraphQL for markdown data and then renders the page using this data.
-
-Example:
-
-```jsx
-import React from "react"
-
-class BlogPostTemplate extends React.Component {
-  render() {
-    const post = this.props.data.markdownRemark
-
-    return (
-      <div>
-        <h1>{post.frontmatter.title}</h1>
-        <div dangerouslySetInnerHTML={{ __html: post.html }} />
-      </div>
-    )
-  }
-}
-
-export default BlogPostTemplate
-
-export const pageQuery = graphql`
-query BlogPostBySlug($slug: String!) {
-  markdownRemark(fields: { slug: { eq: $slug }}) {
-    html
-    frontmatter {
-      title
-    }
-  }
-}
-`
 ```
 
 These are examples of the different ways React components are used in Gatsby sites. To see full working examples, check out the [examples directory](https://github.com/gatsbyjs/gatsby/tree/master/examples) in the Gatsby repo.
