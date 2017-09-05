@@ -3,20 +3,20 @@ const { cssModulesConfig } = require(`gatsby-1-config-css-modules`)
 
 exports.modifyWebpackConfig = (
   { config, stage },
-  { postCssPlugins, precision }
+  options
 ) => {
   // Pass in plugins regardless of stage.
   // If none specified, fallback to Gatsby default postcss plugins.
-  if (postCssPlugins) {
+  if (options.postCssPlugins) {
     config.merge(current => {
-      current.postcss = postCssPlugins
+      current.postcss = options.postCssPlugins
       return current
     })
   }
-
+  
   const sassFiles = /\.s[ac]ss$/
   const sassModulesFiles = /\.module\.s[ac]ss$/
-  const sassLoader = precision ? `sass?precision=${precision}` : `sass`
+  const sassLoader = `sass?${JSON.stringify(options)}`
 
   switch (stage) {
     case `develop`: {
