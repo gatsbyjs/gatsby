@@ -25,35 +25,44 @@ plugins: [
 
 ## How to query
 
-You can query nodes created from Medium like the following:
+Get all posts with the preview image ID and the author's name:
 
 ```graphql
-
 query StoriesQuery {
-    allMediumPost(sort: { fields: [createdAt], order: DESC }) {
-      edges {
-        node {
-          id
-          title
-          creatorId
-          slug
-          uniqueSlug
-          virtuals {
-            subtitle
-            previewImage {
-              imageId
-            }
+  allMediumPost(sort: { fields: [createdAt], order: DESC }) {
+    edges {
+      node {
+        id
+        title
+        virtuals {
+          subtitle
+          previewImage {
+            imageId
           }
         }
-      }
-    }
-    allMediumUser {
-      edges {
-        node {
-          id
+        author {
           name
         }
       }
     }
   }
+}
 ```
+
+Get all users with their posts:
+
+```graphql
+query StoriesQuery {
+  allMediumUser {
+    edges {
+      node {
+        name
+        posts {
+          title
+        }
+      }
+    }
+  }
+}
+```
+
