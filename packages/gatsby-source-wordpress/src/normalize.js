@@ -267,7 +267,7 @@ exports.liftRenderedField = entities =>
   entities.map(e => {
     Object.keys(e).forEach(key => {
       const value = e[key]
-      if (_.isObject(value) && value.rendered) {
+      if (_.isObject(value) && _.isString(value.rendered)) {
         e[key] = value.rendered
       }
     })
