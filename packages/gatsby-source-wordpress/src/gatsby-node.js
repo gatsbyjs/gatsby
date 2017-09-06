@@ -84,6 +84,9 @@ exports.sourceNodes = async (
   // Creates links between posts and tags/categories.
   entities = normalize.mapPostsToTagsCategories(entities)
 
+  // Creates links between tags/categories and taxonomies.
+  entities = normalize.mapTagsCategoriesToTaxonomies(entities)
+
   // Creates links from entities to media nodes
   entities = normalize.mapEntitiesToMedia(entities)
 

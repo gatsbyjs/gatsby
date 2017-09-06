@@ -352,6 +352,22 @@ exports.mapPostsToTagsCategories = entities => {
   })
 }
 
+// TODO generalize this for all taxonomy types.
+exports.mapTagsCategoriesToTaxonomies = entities => {
+  const taxonomies = entities.filter(
+    e => e.__type === `wordpress__wp_taxonomies`
+  )
+
+  return entities.map(e => {
+    if (e.taxonomy) {
+      // Replace taxonomy with a link to the taxonomy node.
+      e.taxonomy___NODE = taxonomies.find(t => t.wordpress_id === e.taxonomy).id
+      delete e.taxonomy
+    }
+    return e
+  })
+}
+
 exports.mapEntitiesToMedia = entities => {
   const media = entities.filter(e => e.__type === `wordpress__wp_media`)
   return entities.map(e => {

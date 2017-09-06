@@ -35,6 +35,12 @@ describe(`Process WordPress data`, () => {
     entities = normalize.mapPostsToTagsCategories(entities)
     expect(entities).toMatchSnapshot()
   })
+
+  it(`Creates links between tags/categories and taxonomies`, () => {
+    entities = normalize.mapTagsCategoriesToTaxonomies(entities)
+    expect(entities).toMatchSnapshot()
+  })
+
   it(`Creates links from entities to media nodes`, () => {
     entities = normalize.mapEntitiesToMedia(entities)
     expect(entities).toMatchSnapshot()
