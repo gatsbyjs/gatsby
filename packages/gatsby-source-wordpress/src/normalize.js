@@ -1,3 +1,8 @@
+const crypto = require(`crypto`)
+const deepMapKeys = require(`deep-map-keys`)
+const _ = require(`lodash`)
+const uuidv5 = require("uuid/v5")
+
 const colorized = require(`./output-color`)
 const conflictFieldPrefix = `wordpress_`
 // restrictedNodeFields from here https://www.gatsbyjs.org/docs/node-interface/
@@ -200,10 +205,231 @@ function getValidKey({ key, verbose = false }) {
         colorized.color.Font.FgRed
       )
     )
+
   return nkey
 }
 
 exports.getValidKey = getValidKey
+
+// Create entities from the few the WordPress API returns as an object for presumably
+// legacy reasons.
+exports.normalizeEntities = entities => {
+  const mapType = e =>
+    Object.keys(e)
+      .filter(key => key !== `__type`)
+      .map(key => {
+        return {
+          id: key,
+          ...e[key],
+          __type: e.__type,
+        }
+      })
+  return entities.reduce((acc, e) => {
+    switch (e.__type) {
+      case `wordpress__wp_types`:
+        return acc.concat(mapType(e))
+      case `wordpress__wp_statuses`:
+        return acc.concat(mapType(e))
+      case `wordpress__wp_taxonomies`:
+        return acc.concat(mapType(e))
+      case `wordpress__acf_options`:
+        return acc.concat(mapType(e))
+      default:
+        return acc.concat(e)
+    }
+  }, [])
+}
+
+// Standardize ids + make sure keys are valid.
+exports.standardizeKeys = entities =>
+  entities.map(e =>
+    deepMapKeys(
+      e,
+      key => (key === `ID` ? getValidKey({ key: `id` }) : getValidKey({ key }))
+    )
+  )
+
+// Standardize dates on ISO 8601 version.
+exports.standardizeDates = entities =>
+  entities.map(e => {
+    Object.keys(e).forEach(key => {
+      if (e[`${key}_gmt`]) {
+        e[key] = new Date(e[`${key}_gmt`] + `z`).toJSON()
+        delete e[`${key}_gmt`]
+      }
+    })
+
+    return e
+  })
+
+// Lift "rendered" fields to top-level
+exports.liftRenderedField = entities =>
+  entities.map(e => {
+    Object.keys(e).forEach(key => {
+      const value = e[key]
+      if (_.isObject(value) && value.rendered) {
+        e[key] = value.rendered
+      }
+    })
+
+    return e
+  })
+
+const seedConstant = `b2012db8-fafc-5a03-915f-e6016ff32086`
+const typeNamespaces = {}
+exports.createGatsbyIds = entities =>
+  entities.map(e => {
+    let namespace
+    if (typeNamespaces[e.__type]) {
+      namespace = typeNamespaces[e.__type]
+    } else {
+      typeNamespaces[e.__type] = uuidv5(e.__type, seedConstant)
+      namespace = typeNamespaces[e.__type]
+    }
+    e.id = uuidv5(e.wordpress_id.toString(), namespace)
+    return e
+  })
+
+// Build foreign reference map.
+exports.mapTypes = entities => {
+  const groups = _.groupBy(entities, e => e.__type)
+  for (let groupId in groups) {
+    groups[groupId] = groups[groupId].map(e => {
+      return {
+        wordpress_id: e.wordpress_id,
+        id: e.id,
+      }
+    })
+  }
+
+  return groups
+}
+
+exports.mapAuthorsToUsers = entities => {
+  const users = entities.filter(e => e.__type === `wordpress__wp_users`)
+  return entities.map(e => {
+    if (e.author) {
+      // Find the user
+      const user = users.find(u => u.wordpress_id === e.author)
+      if (user) {
+        e.author___NODE = user.id
+
+        // Add a link to the user to the entity.
+        if (!user.all_authored_entities___NODE) {
+          user.all_authored_entities___NODE = []
+        }
+        user.all_authored_entities___NODE.push(e.id)
+        if (!user[`authored_${e.__type}___NODE`]) {
+          user[`authored_${e.__type}___NODE`] = []
+        }
+        user[`authored_${e.__type}___NODE`].push(e.id)
+
+        delete e.author
+      }
+    }
+    return e
+  })
+}
+
+exports.mapPostsToTagsCategories = entities => {
+  const tags = entities.filter(e => e.__type === `wordpress__TAG`)
+  const categories = entities.filter(e => e.__type === `wordpress__CATEGORY`)
+
+  return entities.map(e => {
+    if (e.__type === `wordpress__POST`) {
+      // Replace tags & categories with links to their nodes.
+      e.tags___NODE = e.tags.map(
+        t => tags.find(tObj => t === tObj.wordpress_id).id
+      )
+      delete e.tags
+
+      e.categories___NODE = e.categories.map(
+        c => categories.find(cObj => c === cObj.wordpress_id).id
+      )
+      delete e.categories
+    }
+    return e
+  })
+}
+
+exports.mapEntitiesToMedia = entities => {
+  const media = entities.filter(e => e.__type === `wordpress__wp_media`)
+  return entities.map(e => {
+    // acf.linked_image
+    if (e.acf && e.acf.linked_image) {
+      const me = media.find(m => m.source_url === e.acf.linked_image)
+      e.acf.linked_image___NODE = me.id
+      delete e.acf.linked_image
+    }
+
+    if (e.acf && e.acf.page_builder) {
+      // Replace photo fields.
+      // acf.page_builder[].photo
+      // acf.page_builder[].pictures[].picture
+      e.acf.page_builder = e.acf.page_builder.map(f => {
+        if (f.photo) {
+          f.photo___NODE = media.find(
+            m => m.wordpress_id === f.photo.wordpress_id
+          ).id
+          delete f.photo
+        }
+        if (f.pictures) {
+          f.pictures = f.pictures.map(p => {
+            p.picture___NODE = media.find(
+              m => m.wordpress_id === p.picture.wordpress_id
+            ).id
+            delete p.picture
+            return p
+          })
+        }
+        return f
+      })
+    }
+    return e
+  })
+}
+
+exports.createNodesFromEntities = ({ entities, createNode }) => {
+  entities.forEach(e => {
+    // Create subnodes for page_builder
+    // find any "rendered" field and make that top-level
+    // TODO download files for media nodes and set as local_file.
+    let { __type, ...entity } = e
+    let children = []
+    // Create child nodes for acf.page_builder
+    if (entity.acf && entity.acf.page_builder) {
+      entity.acf.page_builder___NODE = entity.acf.page_builder.map((f, i) => {
+        const type = `WordPressAcf_${f.acf_fc_layout}`
+        delete f.acf_fc_layout
+        const acfChildNode = {
+          ...f,
+          id: entity.id + i + type,
+          parent: entity.id,
+          children: [],
+          internal: { type, contentDigest: digest(JSON.stringify(f)) },
+        }
+        createNode(acfChildNode)
+        children.push(acfChildNode.id)
+        return acfChildNode.id
+      })
+      delete entity.acf.page_builder
+    }
+
+    let node = {
+      ...entity,
+      children,
+      parent: null,
+      internal: {
+        type: e.__type,
+        contentDigest: digest(JSON.stringify(entity)),
+      },
+    }
+    createNode(node)
+  })
+}
+
+// Move *_gmt fields to be standard version as Gatsby assumes
+// you pass in UTC dates.
 
 exports.buildReferenceMap = async ({
   entities,

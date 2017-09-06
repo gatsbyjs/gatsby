@@ -311,7 +311,7 @@ exports.createContentTypeNodes = ({
     // Create a node for each content type
     const contentTypeNode = {
       id: contentTypeItemId,
-      parent: `__SOURCE__`,
+      parent: null,
       children: [],
       name: contentTypeItem.name,
       displayField: contentTypeItem.displayField,
@@ -358,7 +358,7 @@ exports.createAssetNodes = ({
     }
     const assetNode = {
       id: mId(localizedAsset.sys.id),
-      parent: `__SOURCE__`,
+      parent: null,
       children: [],
       ...localizedAsset.fields,
       node_locale: locale.code,

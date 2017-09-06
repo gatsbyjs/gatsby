@@ -40,12 +40,7 @@ exports.sourceNodes = async (
     perPage = 100,
   }
 ) => {
-  const {
-    createNode,
-    touchNode,
-    setPluginStatus,
-    createParentChildLink,
-  } = boundActionCreators
+  const { createNode } = boundActionCreators
   _verbose = verboseOutput
   _siteURL = `${protocol}://${baseUrl}`
   _getNode = getNode
@@ -54,7 +49,7 @@ exports.sourceNodes = async (
   _auth = auth
   _perPage = perPage
 
-  const entities = await fetch({
+  let entities = await fetch({
     baseUrl,
     _verbose,
     _siteURL,
@@ -67,5 +62,33 @@ exports.sourceNodes = async (
   })
 
   // Normalize data & create nodes
-  await normalize({ entities, typePrefix, _verbose, refactoredEntityTypes })
+  //
+  // Creates entities from object collections of entities
+  entities = normalize.normalizeEntities(entities)
+
+  // Standardizes ids & cleans keys
+  entities = normalize.standardizeKeys(entities)
+
+  // Converts to use only GMT dates
+  entities = normalize.standardizeDates(entities)
+
+  // Lifts all "rendered" fields to top-level.
+  entities = normalize.liftRenderedField(entities)
+
+  // creates Gatsby IDs for each entity
+  entities = normalize.createGatsbyIds(entities)
+
+  // Creates links between authors and user entities
+  entities = normalize.mapAuthorsToUsers(entities)
+
+  // Creates links between posts and tags/categories.
+  entities = normalize.mapPostsToTagsCategories(entities)
+
+  // Creates links from entities to media nodes
+  entities = normalize.mapEntitiesToMedia(entities)
+
+  // creates nodes for each entry
+  normalize.createNodesFromEntities({ entities, createNode })
+
+  return
 }
