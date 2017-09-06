@@ -139,7 +139,7 @@ exports.buildForeignReferenceMap = ({
 }
 
 function createTextNode(node, key, text, createNode) {
-  const str = _.isString(text) ? text : ` `
+  const str = _.isString(text) && text !== `` ? text : ` `
   const textNode = {
     id: `${node.id}${key}TextNode`,
     parent: node.id,
@@ -197,15 +197,10 @@ exports.createContentTypeNodes = ({
       contentTypeItem.fields.forEach(contentTypeItemField => {
         const fieldName = contentTypeItemField.id
         if (typeof entryItemFields[fieldName] === "undefined") {
-          if (contentTypeItemField.type.match(/Symbol|Date/)) {
+          if (contentTypeItemField.type.match(/Symbol|Text|Date/)) {
             entryItemFields[fieldName] = ""
-          } else if (contentTypeItemField.type.match(/Text/)) {
-            // NOTE: Can not set empty string on text field because of validationError
-            // The new node didn't pass validation
-            // ValidationError: child "internal" fails because [child "content" fails because ["content" is not allowed to be empty]]
-            entryItemFields[fieldName] = " "
           } else if (contentTypeItemField.type.match(/Number/)) {
-            // NOTE: Might be a problem for some people to auto set to 0??
+            // NOTE: Might be a problem for some people to auto set to 0?
             entryItemFields[fieldName] = 0
           } else if (
             contentTypeItemField.type.match(/Object|Location|Media|Reference/)
