@@ -1,6 +1,6 @@
 # gatsby-source-lever
 
-Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from [Lever.co]](https://www.lever.co/).
+Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from [Lever.co](https://www.lever.co/).
 
 ## Wish list
 
@@ -17,10 +17,6 @@ Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from [
 ```javascript
 // In your gatsby-config.js
   plugins: [
-    /*
-     * Gatsby's data processing layer begins with “source”
-     * plugins. Here the site sources its data from Wordpress.
-     */
     {
       resolve: 'gatsby-source-lever',
       options: {
