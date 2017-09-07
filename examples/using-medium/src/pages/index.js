@@ -7,17 +7,17 @@ const IndexPage = ({ data }) => {
 
   return (
     <main>
-      {posts.map(post =>
+      {posts.map(post => (
         <article key={post.node.id}>
-          <h2>
-            {post.node.title}
-          </h2>
-          <h3>
-            by {post.node.author.name}
-          </h3>
-          <img src={`${mediumCDNUrl}/${post.node.virtuals.previewImage.imageId}`} alt={post.node.title} width="150" />
+          <h2>{post.node.title}</h2>
+          <h3>by {post.node.author.name}</h3>
+          <img
+            src={`${mediumCDNUrl}/${post.node.virtuals.previewImage.imageId}`}
+            alt={post.node.title}
+            width="150"
+          />
         </article>
-      )}
+      ))}
     </main>
   )
 }

@@ -11,14 +11,20 @@ class BlogPostPreviewItem extends React.Component {
       post.frontmatter.author.avatar.childImageSharp.responsiveResolution
 
     return (
-      <div css={{ marginBottom: rhythm(2) }}>
+      <article className={this.props.className} css={{ position: `relative` }}>
         <Link to={post.fields.slug}>
           <h2>{post.frontmatter.title}</h2>
           <p css={{ fontWeight: `normal` }}>
             {post.frontmatter.excerpt ? post.frontmatter.excerpt : post.excerpt}
           </p>
         </Link>
-        <div css={{ display: `flex`, alignItems: `center` }}>
+        <div
+          css={{
+            display: `flex`,
+            alignItems: `center`,
+            marginBottom: rhythm(2),
+          }}
+        >
           <img
             alt={`Avatar for ${post.frontmatter.author.id}`}
             src={avatar.src}
@@ -53,6 +59,8 @@ class BlogPostPreviewItem extends React.Component {
                 css={{
                   boxShadow: `none !important`,
                   borderBottom: `0 !important`,
+                  position: `relative`,
+                  zIndex: 1,
                   "&&": {
                     fontWeight: `normal`,
                     ":hover": {
@@ -71,7 +79,30 @@ class BlogPostPreviewItem extends React.Component {
             </div>
           </div>
         </div>
-      </div>
+        <Link
+          to={post.fields.slug}
+          css={{
+            position: `absolute`,
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            overflow: `hidden`,
+            textIndent: `-100%`,
+            whiteSpace: `nowrap`,
+            zIndex: 0,
+            "&&": {
+              border: 0,
+              boxShadow: `none`,
+              "&:hover": {
+                background: `none`,
+              },
+            },
+          }}
+        >
+          Read more
+        </Link>
+      </article>
     )
   }
 }
