@@ -5,7 +5,7 @@ Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from [
 ## Wish list
 
 - [x] gatsby source plugin for Lever.co
-- [ ] tests
+- [x] tests
 - [ ] example site
 
 ## Install
