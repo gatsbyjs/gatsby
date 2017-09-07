@@ -4,7 +4,7 @@ const _ = require(`lodash`)
 const uuidv5 = require(`uuid/v5`)
 const stringify = require(`json-stringify-safe`)
 
-const conflictFieldPrefix = `wordpress_`
+const conflictFieldPrefix = `lever_`
 // restrictedNodeFields from here https://www.gatsbyjs.org/docs/node-interface/
 const restrictedNodeFields = [`id`, `children`, `parent`, `fields`, `internal`]
 
@@ -107,10 +107,12 @@ function getValidKey({ key, verbose = false }) {
 
 exports.getValidKey = getValidKey
 
-// Create entities from the few the WordPress API returns as an object for presumably
+// Create entities from the few the lever API returns as an object for presumably
 // legacy reasons.
 exports.normalizeEntities = entities =>
-  entities.reduce((acc, e) => acc.concat(e), [])
+  {
+    return entities.reduce((acc, e) => acc.concat(e), [])
+  }
 
 // Standardize ids + make sure keys are valid.
 exports.standardizeKeys = entities =>
@@ -124,28 +126,16 @@ exports.standardizeKeys = entities =>
 // Standardize dates on ISO 8601 version.
 exports.standardizeDates = entities =>
   entities.map(e => {
-    Object.keys(e).forEach(key => {
-      if (e[`${key}_gmt`]) {
-        e[key] = new Date(e[`${key}_gmt`] + `z`).toJSON()
-        delete e[`${key}_gmt`]
-      }
-    })
-
+    if (e.createdAt) {
+      e.createdAt = new Date(e.createdAt).toJSON()
+    }
     return e
   })
 
 const seedConstant = `c2012db8-fafc-5a03-915f-e6016ff32086`
-const typeNamespaces = {}
 exports.createGatsbyIds = entities =>
   entities.map(e => {
-    let namespace
-    if (typeNamespaces[e.__type]) {
-      namespace = typeNamespaces[e.__type]
-    } else {
-      typeNamespaces[e.__type] = uuidv5(e.__type, seedConstant)
-      namespace = typeNamespaces[e.__type]
-    }
-    e.id = uuidv5(e.lever_id.toString(), namespace)
+    e.id = uuidv5(e.lever_id.toString(), uuidv5(`lever` , seedConstant))
     return e
   })
 
@@ -155,8 +145,9 @@ exports.createNodesFromEntities = ({ entities, createNode }) => {
     let node = {
       ...entity,
       parent: null,
+      children: [],
       internal: {
-        type: e.__type,
+        type: `lever`,
         contentDigest: digest(JSON.stringify(entity)),
       },
     }
