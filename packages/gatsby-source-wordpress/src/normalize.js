@@ -9,8 +9,6 @@ const conflictFieldPrefix = `wordpress_`
 // restrictedNodeFields from here https://www.gatsbyjs.org/docs/node-interface/
 const restrictedNodeFields = [`id`, `children`, `parent`, `fields`, `internal`]
 
-let _parentChildNodes = []
-
 /**
  * Encrypts a String using md5 hash of hexadecimal digest.
  *
@@ -21,159 +19,6 @@ const digest = str =>
     .createHash(`md5`)
     .update(str)
     .digest(`hex`)
-
-/**
- * Create the Graph QL Node
- *
- * @param {any} ent
- * @param {any} type
- * @param {any} createNode
- */
-async function createGraphQLNode(ent, type, createNode, store, cache) {
-  let id = !ent.id ? (!ent.ID ? 0 : ent.ID) : ent.id
-  let node = {
-    id: `${type}_${id.toString()}`,
-    children: [],
-    parent: null,
-    internal: {
-      type: type,
-    },
-  }
-
-  if (type === refactoredEntityTypes.post) {
-    node.id = `POST_${ent.id.toString()}`
-    node.internal.type = refactoredEntityTypes.post
-  } else if (type === refactoredEntityTypes.page) {
-    node.id = `PAGE_${ent.id.toString()}`
-    node.internal.type = refactoredEntityTypes.page
-  } else if (type === refactoredEntityTypes.tag) {
-    node.id = `TAG_${ent.id.toString()}`
-    node.internal.type = refactoredEntityTypes.tag
-  } else if (type === refactoredEntityTypes.category) {
-    node.id = `CATEGORY_${ent.id.toString()}`
-    node.internal.type = refactoredEntityTypes.category
-  }
-
-  node = addFields(ent, node, createNode)
-
-  if (
-    type === refactoredEntityTypes.post ||
-    type === refactoredEntityTypes.page
-  ) {
-    // TODO : Move this to field recursive and add other fields that have rendered field
-    node.title = ent.title.rendered
-    node.content = ent.content.rendered
-    node.excerpt = ent.excerpt.rendered
-  }
-
-  // Download any remote URLs and replace them with reference to
-  // downloaded file node.
-  await Promise.all(
-    Object.keys(node).map(async key => {
-      if (_.isString(node[key])) {
-        const parts = path.parse(node[key])
-        if (parts.ext !== ``) {
-          let fileNode = { id: null }
-          try {
-            fileNode = await createRemoteFileNode({
-              url: node[key],
-              store,
-              cache,
-              createNode,
-            })
-          } catch (e) {
-            // Ignore
-          }
-          node[`${key}_local_file___NODE`] = fileNode.id
-        }
-      }
-    })
-  )
-
-  node.internal.content = JSON.stringify(node)
-  node.internal.contentDigest = digest(stringify(node))
-  createNode(node)
-}
-exports.createGraphQLNode = createGraphQLNode
-
-/**
- * Loop through fields to validate naming conventions and extract child nodes.
- *
- * @param {any} ent
- * @param {any} newEnt
- * @param {function} createNode
- * @returns the new entity with fields
- */
-function addFields(ent, newEnt, createNode, store, cache) {
-  newEnt = recursiveAddFields(ent, newEnt)
-
-  // TODO : add other types of child nodes
-  if (_useACF && ent.acf != undefined && ent.acf != `false`) {
-    // Create a child node with acf field json.
-    const acfNode = {
-      id: `${newEnt.id}_ACF_Field`,
-      children: [],
-      parent: newEnt.id,
-      internal: {
-        type: `${typePrefix}ACF_Field`,
-        content: JSON.stringify(ent.acf),
-      },
-    }
-    acfNode.internal.contentDigest = digest(stringify(acfNode))
-    createNode(acfNode)
-    _parentChildNodes.push({ parentId: newEnt.id, childNodeId: acfNode.id })
-  } else if (newEnt.meta && newEnt.meta.links && newEnt.meta.links.self) {
-    console.log(newEnt.meta)
-    //The entity as a link to more content for this entity
-    fetchData({
-      route: {
-        url: newEnt.meta.links.self,
-        type: `${newEnt.internal.type}_Extended`,
-      },
-      createNode,
-      store,
-      cache,
-      _verbose,
-      _perPage,
-      _hostingWPCOM,
-      _accessToken,
-    })
-  }
-  return newEnt
-}
-exports.addFields = addFields
-
-/**
- * Add fields recursively
- *
- * @param {any} ent
- * @param {any} newEnt
- * @returns the new node
- */
-function recursiveAddFields(ent, newEnt) {
-  for (let k of Object.keys(ent)) {
-    if (!newEnt.hasOwnProperty(k)) {
-      let key = getValidKey(k)
-      if (key !== `acf`) {
-        newEnt[key] = ent[k]
-        // Nested Objects & Arrays of Objects
-        if (typeof ent[key] === `object`) {
-          if (!Array.isArray(ent[key]) && ent[key] != null) {
-            newEnt[key] = recursiveAddFields(ent[key], {})
-          } else if (Array.isArray(ent[key])) {
-            if (ent[key].length > 0 && typeof ent[key][0] === `object`) {
-              ent[k].map((el, i) => {
-                newEnt[key][i] = recursiveAddFields(el, {})
-              })
-            }
-          }
-        }
-      }
-    }
-  }
-  return newEnt
-}
-exports.recursiveAddFields = recursiveAddFields
 
 /**
  * Validate the GraphQL naming convetions & protect specific fields.
@@ -214,7 +59,7 @@ exports.getValidKey = getValidKey
 
 // Create entities from the few the WordPress API returns as an object for presumably
 // legacy reasons.
-exports.normalizeEntities = entities => {
+const normalizeEntities = entities => {
   const mapType = e =>
     Object.keys(e)
       .filter(key => key !== `__type`)
@@ -243,6 +88,8 @@ exports.normalizeEntities = entities => {
     }
   }, [])
 }
+
+exports.normalizeEntities = normalizeEntities
 
 // Standardize ids + make sure keys are valid.
 exports.standardizeKeys = entities =>
@@ -361,7 +208,7 @@ exports.mapPostsToTagsCategories = entities => {
 exports.mapTagsCategoriesToTaxonomies = entities => {
   return entities.map(e => {
     // Where should api_menus stuff link to?
-    if (e.taxonomy & (e.__type !== `wordpress__wp_api_menus_menus`)) {
+    if (e.taxonomy && e.__type !== `wordpress__wp_api_menus_menus`) {
       // Replace taxonomy with a link to the taxonomy node.
       e.taxonomy___NODE = entities.find(t => t.wordpress_id === e.taxonomy).id
       delete e.taxonomy
@@ -380,26 +227,35 @@ exports.mapEntitiesToMedia = entities => {
       delete e.acf.linked_image
     }
 
+    const hasPhoto = object => _.some(object, value => isPhoto(value))
+
+    const isPhoto = field =>
+      _.isObject(field) &&
+      field.wordpress_id &&
+      field.url &&
+      field.width &&
+      field.height
+        ? true
+        : false
+
+    const replacePhoto = field =>
+      media.find(m => m.wordpress_id === field.wordpress_id).id
+
+    const replaceFieldsInObject = object => {
+      _.each(object, (value, key) => {
+        if (_.isArray(value)) {
+          return value.forEach(v => replaceFieldsInObject(v))
+        }
+        if (isPhoto(value)) {
+          object[`${key}___NODE`] = replacePhoto(value)
+          delete object[key]
+        }
+      })
+    }
+
     if (e.acf && e.acf.page_builder) {
-      // Replace photo fields.
-      // acf.page_builder[].photo
-      // acf.page_builder[].pictures[].picture
       e.acf.page_builder = e.acf.page_builder.map(f => {
-        if (f.photo) {
-          f.photo___NODE = media.find(
-            m => m.wordpress_id === f.photo.wordpress_id
-          ).id
-          delete f.photo
-        }
-        if (f.pictures) {
-          f.pictures = f.pictures.map(p => {
-            p.picture___NODE = media.find(
-              m => m.wordpress_id === p.picture.wordpress_id
-            ).id
-            delete p.picture
-            return p
-          })
-        }
+        replaceFieldsInObject(f)
         return f
       })
     }
@@ -434,11 +290,52 @@ exports.downloadMediaFiles = async ({ entities, store, cache, createNode }) =>
     })
   )
 
+const createACFChildNodes = (
+  obj,
+  entityId,
+  topLevelIndex,
+  type,
+  children,
+  createNode
+) => {
+  // Replace any child arrays with pointers to nodes
+  _.each(obj, (value, key) => {
+    if (_.isArray(value)) {
+      obj[`${key}___NODE`] = value.map(v =>
+        createACFChildNodes(
+          v,
+          entityId,
+          topLevelIndex,
+          type + key,
+          children,
+          createNode
+        )
+      )
+      delete obj[key]
+    }
+  })
+  // obj = deepMapKeys(
+  // obj,
+  // key => (key === `ID` ? getValidKey({ key: `id` }) : getValidKey({ key }))
+  // )
+  // console.log(obj)
+  const acfChildNode = {
+    ...obj,
+    id: entityId + topLevelIndex + type,
+    parent: entityId,
+    children: [],
+    internal: { type, contentDigest: digest(JSON.stringify(obj)) },
+  }
+  createNode(acfChildNode)
+  children.push(acfChildNode.id)
+
+  return acfChildNode
+}
+
 exports.createNodesFromEntities = ({ entities, createNode }) => {
   entities.forEach(e => {
     // Create subnodes for page_builder
     // find any "rendered" field and make that top-level
-    // TODO download files for media nodes and set as local_file.
     let { __type, ...entity } = e
     let children = []
     // Create child nodes for acf.page_builder
@@ -446,17 +343,19 @@ exports.createNodesFromEntities = ({ entities, createNode }) => {
       entity.acf.page_builder___NODE = entity.acf.page_builder.map((f, i) => {
         const type = `WordPressAcf_${f.acf_fc_layout}`
         delete f.acf_fc_layout
-        const acfChildNode = {
-          ...f,
-          id: entity.id + i + type,
-          parent: entity.id,
-          children: [],
-          internal: { type, contentDigest: digest(JSON.stringify(f)) },
-        }
-        createNode(acfChildNode)
-        children.push(acfChildNode.id)
+
+        const acfChildNode = createACFChildNodes(
+          f,
+          entity.id,
+          i,
+          type,
+          children,
+          createNode
+        )
+
         return acfChildNode.id
       })
+
       delete entity.acf.page_builder
     }
 
