@@ -10,10 +10,11 @@ async function fetch({ site, verbose, typePrefix }) {
 
   let entities = []
   try {
-    entities = await axios({
+    let res = await axios({
       method: `get`,
       url: `https://api.lever.co/v0/postings/${site}?mode=json`,
     })
+    entities = res.data
   } catch (e) {
     httpExceptionHandler(e)
   }
