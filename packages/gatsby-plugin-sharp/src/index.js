@@ -355,7 +355,7 @@ async function responsiveSizes({ file, args = {} }) {
     pathPrefix: ``,
     toFormat: ``,
   }
-  const options = _.defaults(args, defaultArgs)
+  const options = _.defaults({}, args, defaultArgs)
   options.maxWidth = parseInt(options.maxWidth, 10)
 
   // Account for images with a high pixel density. We assume that these types of
@@ -460,7 +460,7 @@ async function responsiveResolution({ file, args = {} }) {
     pathPrefix: ``,
     toFormat: ``,
   }
-  const options = _.defaults(args, defaultArgs)
+  const options = _.defaults({}, args, defaultArgs)
   options.width = parseInt(options.width, 10)
 
   // Create sizes for different resolutions — we do 1x, 1.5x, 2x, and 3x.
