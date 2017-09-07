@@ -225,9 +225,12 @@ exports.normalizeEntities = entities => {
           __type: e.__type,
         }
       })
+
   return entities.reduce((acc, e) => {
     switch (e.__type) {
       case `wordpress__wp_types`:
+        return acc.concat(mapType(e))
+      case `wordpress__wp_api_menus_menu_locations`:
         return acc.concat(mapType(e))
       case `wordpress__wp_statuses`:
         return acc.concat(mapType(e))
@@ -287,6 +290,7 @@ exports.createGatsbyIds = entities =>
       typeNamespaces[e.__type] = uuidv5(e.__type, seedConstant)
       namespace = typeNamespaces[e.__type]
     }
+
     e.id = uuidv5(e.wordpress_id.toString(), namespace)
     return e
   })
@@ -355,14 +359,11 @@ exports.mapPostsToTagsCategories = entities => {
 
 // TODO generalize this for all taxonomy types.
 exports.mapTagsCategoriesToTaxonomies = entities => {
-  const taxonomies = entities.filter(
-    e => e.__type === `wordpress__wp_taxonomies`
-  )
-
   return entities.map(e => {
-    if (e.taxonomy) {
+    // Where should api_menus stuff link to?
+    if (e.taxonomy & (e.__type !== `wordpress__wp_api_menus_menus`)) {
       // Replace taxonomy with a link to the taxonomy node.
-      e.taxonomy___NODE = taxonomies.find(t => t.wordpress_id === e.taxonomy).id
+      e.taxonomy___NODE = entities.find(t => t.wordpress_id === e.taxonomy).id
       delete e.taxonomy
     }
     return e
@@ -412,12 +413,16 @@ exports.downloadMediaFiles = async ({ entities, store, cache, createNode }) =>
     entities.map(async e => {
       let fileNode
       if (e.__type === `wordpress__wp_media`) {
-        fileNode = await createRemoteFileNode({
-          url: e.source_url,
-          store,
-          cache,
-          createNode,
-        })
+        try {
+          fileNode = await createRemoteFileNode({
+            url: e.source_url,
+            store,
+            cache,
+            createNode,
+          })
+        } catch (e) {
+          // Ignore
+        }
       }
 
       if (fileNode) {
