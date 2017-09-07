@@ -48,20 +48,29 @@ module.exports = ({ url, store, cache, createNode }) =>
     )
 
     // Fetch the file.
+    let statusCode
+    let responseHeaders
     const responseStream = got.stream(url, { headers })
     responseStream.pipe(fs.createWriteStream(tmpFilename))
+    responseStream.on("downloadProgress", pro => console.log(pro))
 
     // If there's a 400/500 response or other error.
     responseStream.on(`error`, (error, body, response) => {
       fs.removeSync(tmpFilename)
-      reject(error, body, response)
+      return reject(error, body, response)
     })
 
     // If the status code is 200, move the piped temp file to the real name.
     // Else if 304, remove the empty response.
     responseStream.on(`response`, response => {
-      cache.set(cacheId(url), response.headers)
-      if (response.statusCode === 200) {
+      statusCode = response.statusCode
+      responseHeaders = response.headers
+    })
+
+    responseStream.on(`end`, response => {
+      // Save the response headers for future requests.
+      cache.set(cacheId(url), responseHeaders)
+      if (statusCode === 200) {
         fs.moveSync(tmpFilename, filename, { overwrite: true })
       } else {
         fs.removeSync(tmpFilename)

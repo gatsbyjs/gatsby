@@ -45,6 +45,14 @@ describe(`Process WordPress data`, () => {
     entities = normalize.mapEntitiesToMedia(entities)
     expect(entities).toMatchSnapshot()
   })
+
+  // Actually let's not test this since it's a bit tricky to mock
+  // as it needs access to the store/cache + would download file.
+  // it(`Downloads media files and removes "sizes" data as useless in Gatsby context`, () => {
+  // entities = await normalize.downloadMediaFiles(entities)
+  // expect(entities).toMatchSnapshot()
+  // })
+
   it(`creates nodes for each entry`, () => {
     const createNode = jest.fn()
     normalize.createNodesFromEntities({ entities, createNode })

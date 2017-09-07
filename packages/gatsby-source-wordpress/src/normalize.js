@@ -2,6 +2,7 @@ const crypto = require(`crypto`)
 const deepMapKeys = require(`deep-map-keys`)
 const _ = require(`lodash`)
 const uuidv5 = require("uuid/v5")
+const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
 const colorized = require(`./output-color`)
 const conflictFieldPrefix = `wordpress_`
@@ -405,6 +406,29 @@ exports.mapEntitiesToMedia = entities => {
   })
 }
 
+// Downloads media files and removes "sizes" data as useless in Gatsby context.
+exports.downloadMediaFiles = async ({ entities, store, cache, createNode }) =>
+  Promise.all(
+    entities.map(async e => {
+      let fileNode
+      if (e.__type === `wordpress__wp_media`) {
+        fileNode = await createRemoteFileNode({
+          url: e.source_url,
+          store,
+          cache,
+          createNode,
+        })
+      }
+
+      if (fileNode) {
+        e.localFile___NODE = fileNode.id
+        delete e.media_details.sizes
+      }
+
+      return e
+    })
+  )
+
 exports.createNodesFromEntities = ({ entities, createNode }) => {
   entities.forEach(e => {
     // Create subnodes for page_builder
@@ -444,21 +468,14 @@ exports.createNodesFromEntities = ({ entities, createNode }) => {
   })
 }
 
-// Move *_gmt fields to be standard version as Gatsby assumes
-// you pass in UTC dates.
-
-exports.buildReferenceMap = async ({
-  entities,
-  typePrefix,
-  _verbose,
-  refactoredEntityTypes,
-}) => {
-  console.log(JSON.stringify(entities, null, 4))
-  return
-}
-
 // TODOs
 // * just use date_gmt & modified_gmt since we expect UTC/GMT dates.
 // * discard most information about photos since a lot of it is for giving you
 // different sizes
 // * Maybe delete unusable links pointing back to the wordpress site.
+//
+// Real leftover TODOs
+// * download media + user avatar images (and cleanup user avatar data)
+// * Delete unused code here
+// * test this against their site
+// * rebuild example site using this sample data.
