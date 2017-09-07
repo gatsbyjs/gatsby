@@ -12,9 +12,6 @@ async function fetch({
 }) {
   // return require(`./data.json`)
 
-  // If the site is hosted on wordpress.com, the API Route differs.
-  // Same entity types are exposed (excepted for medias and users which need auth)
-  // but the data model contain slights variations.
   let entities = []
   try {
     entities = await axios({
