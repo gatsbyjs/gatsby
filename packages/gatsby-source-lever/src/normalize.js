@@ -1,7 +1,7 @@
 const crypto = require(`crypto`)
 const deepMapKeys = require(`deep-map-keys`)
 const _ = require(`lodash`)
-const uuidv5 = require("uuid/v5")
+const uuidv5 = require(`uuid/v5`)
 const stringify = require(`json-stringify-safe`)
 
 const conflictFieldPrefix = `wordpress_`
@@ -54,19 +54,19 @@ function recursiveAddFields(ent, newEnt) {
   for (let k of Object.keys(ent)) {
     if (!newEnt.hasOwnProperty(k)) {
       let key = getValidKey(k)
-        newEnt[key] = ent[k]
-        // Nested Objects & Arrays of Objects
-        if (typeof ent[key] === `object`) {
-          if (!Array.isArray(ent[key]) && ent[key] != null) {
-            newEnt[key] = recursiveAddFields(ent[key], {})
-          } else if (Array.isArray(ent[key])) {
-            if (ent[key].length > 0 && typeof ent[key][0] === `object`) {
-              ent[k].map((el, i) => {
-                newEnt[key][i] = recursiveAddFields(el, {})
-              })
-            }
+      newEnt[key] = ent[k]
+      // Nested Objects & Arrays of Objects
+      if (typeof ent[key] === `object`) {
+        if (!Array.isArray(ent[key]) && ent[key] != null) {
+          newEnt[key] = recursiveAddFields(ent[key], {})
+        } else if (Array.isArray(ent[key])) {
+          if (ent[key].length > 0 && typeof ent[key][0] === `object`) {
+            ent[k].map((el, i) => {
+              newEnt[key][i] = recursiveAddFields(el, {})
+            })
           }
         }
+      }
     }
   }
   return newEnt
@@ -98,7 +98,9 @@ function getValidKey({ key, verbose = false }) {
     nkey = `${conflictFieldPrefix}${nkey}`.replace(/-|__|:|\.|\s/g, `_`)
   }
   if (changed && verbose)
-    console.log(`Object with key "${key}" breaks GraphQL naming convention. Renamed to "${nkey}"`)
+    console.log(
+      `Object with key "${key}" breaks GraphQL naming convention. Renamed to "${nkey}"`
+    )
 
   return nkey
 }
@@ -107,7 +109,8 @@ exports.getValidKey = getValidKey
 
 // Create entities from the few the WordPress API returns as an object for presumably
 // legacy reasons.
-exports.normalizeEntities = entities => entities.reduce((acc, e) => acc.concat(e), [])
+exports.normalizeEntities = entities =>
+  entities.reduce((acc, e) => acc.concat(e), [])
 
 // Standardize ids + make sure keys are valid.
 exports.standardizeKeys = entities =>

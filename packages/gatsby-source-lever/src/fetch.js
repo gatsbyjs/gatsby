@@ -5,11 +5,7 @@ const httpExceptionHandler = require(`./http-exception-handler`)
  * High-level function to coordinate fetching data from Lever.co
  * site.
  */
-async function fetch({
-  site,
-  verbose,
-  typePrefix,
-}) {
+async function fetch({ site, verbose, typePrefix }) {
   // return require(`./data.json`)
 
   let entities = []

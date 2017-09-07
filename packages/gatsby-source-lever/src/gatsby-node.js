@@ -5,10 +5,7 @@ const typePrefix = `lever__`
 
 exports.sourceNodes = async (
   { boundActionCreators, getNode, store, cache },
-  {
-    site,
-    verboseOutput,
-  }
+  { site, verboseOutput }
 ) => {
   const { createNode } = boundActionCreators
 
