@@ -6,59 +6,24 @@ const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 const path = require(`path`)
 
 const fetch = require(`./fetch`)
-const colorized = require(`./output-color`)
 const httpExceptionHandler = require(`./http-exception-handler`)
 const normalize = require(`./normalize`)
 
-const typePrefix = `wordpress__`
-const refactoredEntityTypes = {
-  post: `${typePrefix}POST`,
-  page: `${typePrefix}PAGE`,
-  tag: `${typePrefix}TAG`,
-  category: `${typePrefix}CATEGORY`,
-}
-
-/* If true, will output many console logs. */
-let _verbose
-let _siteURL
-let _getNode
-let _useACF
-let _hostingWPCOM
-let _auth
-let _perPage
-let _accessToken
+const typePrefix = `lever__`
 
 exports.sourceNodes = async (
   { boundActionCreators, getNode, store, cache },
   {
-    baseUrl,
-    protocol,
-    hostingWPCOM,
-    useACF,
-    auth,
+    site,
     verboseOutput,
-    perPage = 100,
   }
 ) => {
   const { createNode } = boundActionCreators
-  _verbose = verboseOutput
-  _siteURL = `${protocol}://${baseUrl}`
-  _getNode = getNode
-  _useACF = useACF
-  _hostingWPCOM = hostingWPCOM
-  _auth = auth
-  _perPage = perPage
 
   let entities = await fetch({
-    baseUrl,
-    _verbose,
-    _siteURL,
-    _useACF,
-    _hostingWPCOM,
-    _auth,
-    _perPage,
+    site,
+    verboseOutput,
     typePrefix,
-    refactoredEntityTypes,
   })
 
   // Normalize data & create nodes
