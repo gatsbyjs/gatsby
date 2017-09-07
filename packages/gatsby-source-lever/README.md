@@ -24,7 +24,8 @@ Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from [
     {
       resolve: 'gatsby-source-lever',
       options: {
-
+        // Your Lever site instance name.
+        site: 'lever',
         // Set verboseOutput to true to display a verbose output on `npm run develop` or `npm run build`
         // It can help you debug specific API Endpoints problems
         verboseOutput: false,
@@ -33,30 +34,30 @@ Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from [
   ]
 ```
 
-### Query posts
+### GraphQL Query to get all jobs
 ```    graphql
-  allWordpressPost {
+  allLever {
     edges {
       node {
         id
-        slug
-        title
-        content
-        excerpt
-        date
-        date_gmt
-        modified
-        modified_gmt
-        status
-        author
-        featured_media
-        comment_status
-        ping_status
-        sticky
-        template
-        format
-        categories
-        tags
+        lever_id
+        createdAt
+        text
+        hostedUrl
+        applyUrl
+        categories {
+          commitment
+          location
+          team
+        }
+        description
+        descriptionPlain
+        lists {
+          text
+          content
+        }
+        additional
+        additionalPlain
       }
     }
   }
@@ -64,7 +65,7 @@ Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from [
 
 ## Site's `gatsby-node.js` example
 
-If you wish to create Gatsby Pages for Lever.co jobs, you can modify your  `gatsby-node.js`.
+If you wish to create Gatsby Pages for each Lever.co jobs, you can modify your  `gatsby-node.js`.
 
 ```javascript
 const _ = require(`lodash`)
@@ -72,12 +73,6 @@ const Promise = require(`bluebird`)
 const path = require(`path`)
 const slash = require(`slash`)
 
-// Implement the Gatsby API “createPages”. This is
-// called after the Gatsby bootstrap is finished so you have
-// access to any information necessary to programatically
-// create pages.
-// Will create pages for WordPress pages (route : /{slug})
-// Will create pages for WordPress posts (route : /post/{slug})
 exports.createPages = ({ graphql, boundActionCreators }) => {
   const { createPage } = boundActionCreators
   return new Promise((resolve, reject) => {
@@ -86,18 +81,15 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     // it like the site has a built-in database constructed
     // from the fetched data that you can run queries against.
 
-    // ==== PAGES (WORDPRESS NATIVE) ====
+    // ==== PAGES (LEVER) ====
     graphql(
       `
       {
 
-          allWordpressPage {
+          allLever {
             edges {
               node {
                 id
-                slug
-                status
-                template
               }
             }
           }
@@ -111,12 +103,11 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           reject(result.errors)
         }
 
-        // Create Page pages.
+        // Create Lever pages.
         const pageTemplate = path.resolve('./src/templates/page.js')
         // We want to create a detailed page for each
-        // page node. We'll just use the WordPress Slug for the slug.
-        // The Page ID is prefixed with 'PAGE_'
-        _.each(result.data.allWordpressPage.edges, edge => {
+        // lever node. We'll just use the ID for the slug.
+        _.each(result.data.allLever.edges, edge => {
           // Gatsby uses Redux to manage its internal state.
           // Plugins and sites can use functions like "createPage"
           // to interact with Gatsby.
@@ -125,7 +116,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
             // as a template component. The `context` is
             // optional but is often necessary so the template
             // can query data specific to each page.
-            path: `/${edge.node.slug}/`,
+            path: `/${edge.node.id}/`,
             component: slash(pageTemplate),
             context: {
               id: edge.node.id,
@@ -135,47 +126,8 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
       })
       // ==== END PAGES ====
 
-      // ==== POSTS (WORDPRESS NATIVE AND ACF) ====
-      .then(() => {
-        graphql(
-          `{
-                  allWordpressPost {
-                    edges {
-                      node {
-                        id
-                        slug
-                        status
-                        template
-                        format
-                      }
-                    }
-                  }
-
-                }
-              `
-        ).then(result => {
-          if (result.errors) {
-            console.log(result.errors)
-            reject(result.errors)
-          }
-          const postTemplate = path.resolve('./src/templates/post.js')
-        // We want to create a detailed page for each
-        // post node. We'll just use the WordPress Slug for the slug.
-        // The Post ID is prefixed with 'POST_'
-          _.each(result.data.allWordpressPost.edges, edge => {
-            createPage({
-              path: `/post/${edge.node.slug}/`,
-              component: slash(postTemplate),
-              context: {
-                id: edge.node.id,
-              },
-            })
-          })
-          resolve()
-        })
-      })
-    // ==== END POSTS ====
-
+      // resolve() must be called at the end so Gatsby knows that we're done add pages.
+      .then(resolve())
   })
 }
 ```
