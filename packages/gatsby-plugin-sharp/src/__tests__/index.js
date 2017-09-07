@@ -38,6 +38,16 @@ describe(`gatsby-plugin-sharp`, () => {
 
       expect(result).toMatchSnapshot()
     })
+
+    it(`does not change the arguments object it is given`, async () => {
+      const args = { maxWidth: 400 }
+      await responsiveSizes({
+        file,
+        args,
+      })
+
+      expect(args).toEqual({ maxWidth: 400 })
+    })
   })
 
   describe(`base64`, () => {
