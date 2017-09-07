@@ -109,10 +109,7 @@ exports.getValidKey = getValidKey
 
 // Create entities from the few the lever API returns as an object for presumably
 // legacy reasons.
-exports.normalizeEntities = entities =>
-  {
-    return entities.reduce((acc, e) => acc.concat(e), [])
-  }
+exports.normalizeEntities = entities => entities.reduce((acc, e) => acc.concat(e), [])
 
 // Standardize ids + make sure keys are valid.
 exports.standardizeKeys = entities =>
@@ -135,7 +132,7 @@ exports.standardizeDates = entities =>
 const seedConstant = `c2012db8-fafc-5a03-915f-e6016ff32086`
 exports.createGatsbyIds = entities =>
   entities.map(e => {
-    e.id = uuidv5(e.lever_id.toString(), uuidv5(`lever` , seedConstant))
+    e.id = uuidv5(e.lever_id.toString(), uuidv5(`lever`, seedConstant))
     return e
   })
 
