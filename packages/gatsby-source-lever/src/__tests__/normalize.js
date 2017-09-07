@@ -2,8 +2,7 @@ const normalize = require(`../normalize`)
 
 let entities = require(`./data.json`)
 
-describe(`Process WordPress data`, () => {
-  let entityTypes
+describe(`Process Lever data`, () => {
   it(`Creates entities from object collections of entities`, () => {
     entities = normalize.normalizeEntities(entities)
   })
@@ -15,44 +14,10 @@ describe(`Process WordPress data`, () => {
     entities = normalize.standardizeDates(entities)
     expect(entities).toMatchSnapshot()
   })
-  it(`Lifts all "rendered" fields to top-level`, () => {
-    entities = normalize.liftRenderedField(entities)
-    expect(entities).toMatchSnapshot()
-  })
   it(`creates Gatsby IDs for each entity`, () => {
     entities = normalize.createGatsbyIds(entities)
     expect(entities).toMatchSnapshot()
   })
-  it(`Creates map of types`, () => {
-    entityTypes = normalize.mapTypes(entities)
-    expect(entityTypes).toMatchSnapshot()
-  })
-  it(`Creates links between authors and user entities`, () => {
-    entities = normalize.mapAuthorsToUsers(entities)
-    expect(entities).toMatchSnapshot()
-  })
-  it(`Creates links between posts and tags/categories`, () => {
-    entities = normalize.mapPostsToTagsCategories(entities)
-    expect(entities).toMatchSnapshot()
-  })
-
-  it(`Creates links between tags/categories and taxonomies`, () => {
-    entities = normalize.mapTagsCategoriesToTaxonomies(entities)
-    expect(entities).toMatchSnapshot()
-  })
-
-  it(`Creates links from entities to media nodes`, () => {
-    entities = normalize.mapEntitiesToMedia(entities)
-    expect(entities).toMatchSnapshot()
-  })
-
-  // Actually let's not test this since it's a bit tricky to mock
-  // as it needs access to the store/cache + would download file.
-  // it(`Downloads media files and removes "sizes" data as useless in Gatsby context`, () => {
-  // entities = await normalize.downloadMediaFiles(entities)
-  // expect(entities).toMatchSnapshot()
-  // })
-
   it(`creates nodes for each entry`, () => {
     const createNode = jest.fn()
     normalize.createNodesFromEntities({ entities, createNode })
@@ -73,14 +38,14 @@ describe(`getValidKey`, () => {
       normalize.getValidKey({
         key: `0hi`,
       })
-    ).toBe(`wordpress_0hi`)
+    ).toBe(`lever_0hi`)
   })
   it(`It prefixes keys that conflict with default Gatsby fields`, () => {
     expect(
       normalize.getValidKey({
         key: `children`,
       })
-    ).toBe(`wordpress_children`)
+    ).toBe(`lever_children`)
   })
   it(`It replaces invalid characters`, () => {
     expect(
