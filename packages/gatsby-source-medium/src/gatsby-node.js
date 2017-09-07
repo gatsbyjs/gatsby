@@ -29,7 +29,10 @@ exports.sourceNodes = async ({ boundActionCreators }, { username }) => {
 
     const resources = Array.prototype.concat(...importableResources)
     resources.map(resource => {
-      const digest = crypto.createHash(`md5`).update(JSON.stringify(resource)).digest(`hex`)
+      const digest = crypto
+        .createHash(`md5`)
+        .update(JSON.stringify(resource))
+        .digest(`hex`)
 
       const links =
         resource.type === `Post`
@@ -38,7 +41,9 @@ exports.sourceNodes = async ({ boundActionCreators }, { username }) => {
             }
           : resource.type === `User`
             ? {
-                posts___NODE: posts.filter(post => post.creatorId === resource.userId).map(post => post.id),
+                posts___NODE: posts
+                  .filter(post => post.creatorId === resource.userId)
+                  .map(post => post.id),
               }
             : {}
 

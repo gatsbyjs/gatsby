@@ -15,10 +15,9 @@ module.exports = {
   VVHd: `@media (min-width: 1650px)`,
   maxWidth: 35,
   maxWidthWithSidebar: 26,
-  lightPurple: colors.b[2],
-  veryLightPurple: colors.b[0],
+  lightPurple: `#e0d6eb`,
   veryLightPurple: `#f6f2f8`,
-  sidebar: `#fcfaff`,
+  sidebar: `#fbfafc`,
   calm: `rgba(38, 32, 44, .5)`,
   // palette by @SachaG
   // @see https://www.figma.com/file/J6IYJEtdRmwJQOrcZ2DfvxDD/Gatsby
