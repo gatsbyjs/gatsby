@@ -40,6 +40,7 @@ export default () => (
       bottom: 0,
       left: 0,
       right: 0,
+      zIndex: 1,
       background: presets.veryLightPurple,
       borderTop: `1px solid ${colors.b[0]}`,
       background: presets.sidebar,
