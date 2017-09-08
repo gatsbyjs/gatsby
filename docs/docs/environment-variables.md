@@ -32,7 +32,7 @@ GATSBY_ASSETS_URL=http://s3.amazonaws.com/bucketname
 ```
 # Usage
 
-<img src={`${GATSBY_ASSETS_URL}/logo.png`} />
+<img src={`${process.env.GATSBY_ASSETS_URL}/logo.png`} />
 
 ```
 
