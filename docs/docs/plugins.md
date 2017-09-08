@@ -55,6 +55,8 @@ plugins
     └── package.json
 ```
 
+You still need to add the plugin to your `gatsby-config.js` like for plugins installed from NPM.
+
 Each plugin requires a package.json file, but the minimum content is just an
 empty object `{}`. The `name` and `version` fields are read from the package file.
 The name is used to identify the plugin when it mutates the GraphQL data structure.
@@ -101,6 +103,7 @@ you can place the files in a `src` subfolder and build them to the plugin folder
 * [gatsby-source-drupal](/packages/gatsby-source-drupal/)
 * [gatsby-source-filesystem](/packages/gatsby-source-filesystem/)
 * [gatsby-source-hacker-news](/packages/gatsby-source-hacker-news/)
+* [gatsby-source-medium](/packages/gatsby-source-medium/)
 * [gatsby-source-mongodb](/packages/gatsby-source-mongodb/)
 * [gatsby-source-wordpress](/packages/gatsby-source-wordpress/)
 * [gatsby-transformer-documentationjs](/packages/gatsby-transformer-documentationjs/)
@@ -118,4 +121,7 @@ you can place the files in a `src` subfolder and build them to the plugin folder
 ## Community Plugins
 
 * [gatsby-plugin-antd](https://github.com/bskimball/gatsby-plugin-antd)
+* [gatsby-plugin-i18n](https://github.com/angeloocana/gatsby-plugin-i18n)
 * [gatsby-plugin-yandex-metrika](https://github.com/viatsko/gatsby-plugin-yandex-metrika)
+* [gatsby-plugin-protoculture](https://github.com/atrauzzi/gatsby-plugin-protoculture)
+* [gatsby-source-workable](https://github.com/tumblbug/gatsby-source-workable)

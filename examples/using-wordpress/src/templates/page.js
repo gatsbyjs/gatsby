@@ -16,7 +16,9 @@ class PageTemplate extends Component {
       <div>
         <Page>
           <Row>
-            <Helmet title={siteMetadata.title} />
+            <Helmet>
+              <title>{siteMetadata.title}</title>
+            </Helmet>
             <Header
               title={siteMetadata.title}
               subtitle={siteMetadata.subtitle}

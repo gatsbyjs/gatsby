@@ -29,10 +29,10 @@ const { sizes, color } = theme
 // Iterate through the sizes and create a media template
 export const media = Object.keys(sizes).reduce((acc, label) => {
   acc[label] = (...args) => css`
-		@media (max-width: ${sizes[label] / 16}em) {
-			${css(...args)}
-		}
-	`
+    @media (max-width: ${sizes[label] / 16}em) {
+      ${css(...args)};
+    }
+  `
   return acc
 }, {})
 
@@ -47,18 +47,20 @@ export const Page = styled(HedronPage)`
     margin: 0 auto;
     max-width: 100%;
     ${props.width ? `width: ${props.width};` : `width: ${sizes.max};`}
-    `}
+    `};
 `
 
 export const RowHedron = styled(HedronRow)`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  ${ifDefined(`alignContent`, `align-content`)}
-  ${ifDefined(`alignItems`, `align-items`)}
-  ${ifDefined(`alignSelf`, `align-self`)}
-  ${ifDefined(`justifyContent`, `justify-content`)}
-  ${ifDefined(`order`)}
+  ${ifDefined(`alignContent`, `align-content`)} ${ifDefined(
+      `alignItems`,
+      `align-items`
+    )} ${ifDefined(`alignSelf`, `align-self`)} ${ifDefined(
+      `justifyContent`,
+      `justify-content`
+    )} ${ifDefined(`order`)};
 `
 
 export const gutter = props => css`
@@ -67,7 +69,7 @@ export const gutter = props => css`
   ${media.sm`
     padding-right: 15px;
     padding-left: 15px;
-  `}
+  `};
 `
 
 export const Row = styled(
@@ -83,32 +85,28 @@ export const Row = styled(
     ...rest
   }) => <RowHedron {...rest} />
 )`
-
   ${props => props.gutter && gutter};
   ${props =>
-    css` background-color: ${props.gutterWhite
-      ? color.white
-      : color.lightGray}`};
+    css`
+      background-color: ${props.gutterWhite ? color.white : color.lightGray};
+    `};
   ${PR.heightProps};
   ${PR.borderProps};
   ${PR.outlineProps};
 `
 
-export const Column = styled(({ outline, ...rest }) =>
+export const Column = styled(({ outline, ...rest }) => (
   <HedronColumn {...rest} />
-)`
+))`
   display: block;
   ${props =>
     props.debug
       ? `background-color: rgba(50, 50, 255, .1);
   outline: 1px solid #fff;`
-      : ``}
-  box-sizing: border-box;
+      : ``} box-sizing: border-box;
   padding: 0;
   width: 100%;
-  ${compute(`xs`)}
-  ${compute(`sm`)}
-  ${compute(`md`)}
-  ${compute(`lg`)}
-  ${PR.outlineProps}
+  ${compute(`xs`)} ${compute(`sm`)} ${compute(`md`)} ${compute(
+      `lg`
+    )} ${PR.outlineProps};
 `

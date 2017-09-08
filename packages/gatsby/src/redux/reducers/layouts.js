@@ -14,8 +14,10 @@ module.exports = (state = [], action) => {
         console.log(``)
         console.error(JSON.stringify(action, null, 4))
         console.log(``)
-        throw new Error(`Pages can only be created by plugins. There wasn't a plugin set
-        when creating this page.`)
+        throw new Error(
+          `Pages can only be created by plugins. There wasn't a plugin set
+        when creating this page.`
+        )
       }
       action.payload.pluginCreator___NODE = `Plugin ${action.plugin.name}`
       const index = _.findIndex(state, l => l.id === action.payload.id)

@@ -3,7 +3,11 @@ const crypto = require(`crypto`)
 const stringify = require(`json-stringify-safe`)
 const deepMap = require(`deep-map`)
 
-const digest = str => crypto.createHash(`md5`).update(str).digest(`hex`)
+const digest = str =>
+  crypto
+    .createHash(`md5`)
+    .update(str)
+    .digest(`hex`)
 const typePrefix = `Contentful`
 const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 
@@ -143,7 +147,7 @@ function createTextNode(node, key, text, createNode) {
     [key]: str,
     internal: {
       type: _.camelCase(`${node.internal.type} ${key} TextNode`),
-      mediaType: `text/x-markdown`,
+      mediaType: `text/markdown`,
       content: str,
       contentDigest: digest(str),
     },

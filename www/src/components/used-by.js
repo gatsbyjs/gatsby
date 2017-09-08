@@ -3,7 +3,7 @@ import presets from "../utils/presets"
 import { vP, vPHd, vPVHd, vPVVHd } from "../components/gutters"
 import { FormidableIcon, FabricIcon, SegmentIcon } from "../assets/logos"
 
-const Icon = ({ icon }) =>
+const Icon = ({ icon }) => (
   <li
     css={{
       marginRight: rhythm(3 / 4),
@@ -32,8 +32,9 @@ const Icon = ({ icon }) =>
       }}
     />
   </li>
+)
 
-const UsedBy = () =>
+const UsedBy = () => (
   <div
     className="Masthead-usedBy"
     css={{
@@ -112,5 +113,6 @@ const UsedBy = () =>
       </ul>
     </div>
   </div>
+)
 
 export default UsedBy

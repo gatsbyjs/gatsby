@@ -31,9 +31,7 @@ class SiteSidebar extends React.Component {
               {siteMetadata.title}
             </Link>
           </p>
-          <p style={{ fontStyle: `italic` }}>
-            {siteMetadata.siteDescr}
-          </p>
+          <p style={{ fontStyle: `italic` }}>{siteMetadata.siteDescr}</p>
         </div>
       </div>
     )

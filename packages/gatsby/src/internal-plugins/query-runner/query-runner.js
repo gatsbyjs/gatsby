@@ -1,6 +1,5 @@
 import { graphql as graphqlFunction } from "graphql"
-const fs = require(`fs`)
-const Promise = require(`bluebird`)
+const fs = require(`fs-extra`)
 
 const { joinPath } = require(`../../utils/path`)
 const report = require(`../../reporter`)
@@ -40,14 +39,7 @@ module.exports = async (pageOrLayout, component) => {
           ${component.query}
       `
     )
-    console.log(``)
-    console.log(``)
-    console.log(``)
-    console.log(`Query:`)
-    console.log(component.query)
-    console.log(``)
-    console.log(`GraphQL Error:`)
-    console.log(result.errors)
+
     // Perhaps this isn't the best way to see if we're building?
     if (program._name === `build`) {
       process.exit(1)

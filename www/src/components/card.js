@@ -2,7 +2,7 @@ import presets from "../utils/presets"
 import { rhythm, scale, options } from "../utils/typography"
 import { vP, vPHd, vPVHd, vPVVHd } from "../components/gutters"
 
-const Card = ({ children }) =>
+const Card = ({ children }) => (
   <div
     css={{
       boxSizing: `border-box`,
@@ -53,5 +53,6 @@ const Card = ({ children }) =>
       {children}
     </div>
   </div>
+)
 
 export default Card

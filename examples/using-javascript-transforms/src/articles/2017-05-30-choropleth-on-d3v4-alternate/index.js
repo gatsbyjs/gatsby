@@ -163,7 +163,11 @@ let mouseOver = d => {
 }
 
 let mouseOut = () => {
-  d3.select(`#tooltip`).transition().duration(500).style(`opacity`, 0)
+  d3
+    .select(`#tooltip`)
+    .transition()
+    .duration(500)
+    .style(`opacity`, 0)
 }
 
 function scale(scaleFactor, width, height) {

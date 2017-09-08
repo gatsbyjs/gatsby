@@ -11,8 +11,10 @@ module.exports = (state = [], action) => {
         console.log(``)
         console.error(JSON.stringify(action, null, 4))
         console.log(``)
-        throw new Error(`Pages can only be created by plugins. There wasn't a plugin set
-        when creating this page.`)
+        throw new Error(
+          `Pages can only be created by plugins. There wasn't a plugin set
+        when creating this page.`
+        )
       }
       // Link page to its plugin.
       action.payload.pluginCreator___NODE = action.plugin.id

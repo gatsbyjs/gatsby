@@ -175,11 +175,17 @@ export function graphqlError(
     )
   }
 
-  message = `There was an error while compiling your site's GraphQL queries. `
+  message = `There was an error while compiling your site's GraphQL queries.
+  ${message}
+    `
   if (error.message.match(/must be an instance of/)) {
     message +=
       `This usually means that more than one instance of 'graphql' is installed ` +
       `in your node_modules. Remove all but the top level one or run \`npm dedupe\` to fix it.`
+  }
+
+  if (error.message.match(/Duplicate document/)) {
+    message += `${error.message.slice(21)}\n`
   }
 
   return message

@@ -2,7 +2,7 @@ import React from "react"
 import Link from "gatsby-link"
 import Container from "../components/container"
 
-export default () =>
+export default () => (
   <Container>
     <h1 css={{ marginTop: 0 }}>Gatsby.js Tutorial</h1>
     <p>
@@ -36,7 +36,8 @@ export default () =>
       <li>
         <Link to="/tutorial/part-four/">
           Learn how to work with Gatsby's data layer.
-        </Link>{" "}
+        </Link>
+        {` `}
         Explore source & transformer plugins. Get introduced to programmatic
         pages and how to write GraphQL queries. In this part of the tutorial
         we'll build a simple markdown blog.
@@ -47,3 +48,4 @@ export default () =>
       </li>
     </ol>
   </Container>
+)
