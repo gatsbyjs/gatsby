@@ -18,6 +18,7 @@ const MobileNavItem = ({ linkTo, label, icon }) => (
       color: presets.brand,
       fontSize: scale(-1 / 2).fontSize,
       fontWeight: `bold`,
+      lineHeight: 1,
       padding: `${rhythm(options.blockMarginBottom / 4)} ${rhythm(
         options.blockMarginBottom
       )} ${rhythm(options.blockMarginBottom / 2)} `,
@@ -26,7 +27,7 @@ const MobileNavItem = ({ linkTo, label, icon }) => (
     }}
   >
     <img src={icon} css={{ height: 32, display: `block`, margin: `0 auto` }} />
-    <div css={{ opacity: 0.8, lineHeight: 1 }}>{label}</div>
+    <div>{label}</div>
   </Link>
 )
 
