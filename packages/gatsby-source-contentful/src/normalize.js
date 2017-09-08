@@ -60,7 +60,7 @@ exports.buildResolvableSet = ({
   existingNodes = [],
   assets = [],
   locales,
-  defaultLocale
+  defaultLocale,
 }) => {
   const resolvable = new Set()
   existingNodes.forEach(n => resolvable.add(n.id))
@@ -80,7 +80,7 @@ exports.buildForeignReferenceMap = ({
   entryList,
   resolvable,
   defaultLocale,
-  locales
+  locales,
 }) => {
   const foreignReferenceMap = {}
   contentTypeItems.forEach((contentTypeItem, i) => {
@@ -111,7 +111,7 @@ exports.buildForeignReferenceMap = ({
                 }
                 foreignReferenceMap[v.sys.id].push({
                   name: `${contentTypeItemId}___NODE`,
-                  id: entryItem.sys.id
+                  id: entryItem.sys.id,
                 })
               })
             }
@@ -127,7 +127,7 @@ exports.buildForeignReferenceMap = ({
             }
             foreignReferenceMap[entryItemFieldValue.sys.id].push({
               name: `${contentTypeItemId}___NODE`,
-              id: entryItem.sys.id
+              id: entryItem.sys.id,
             })
           }
         }
@@ -149,8 +149,8 @@ function createTextNode(node, key, text, createNode) {
       type: _.camelCase(`${node.internal.type} ${key} TextNode`),
       mediaType: `text/markdown`,
       content: str,
-      contentDigest: digest(str)
-    }
+      contentDigest: digest(str),
+    },
   }
 
   node.children = node.children.concat([textNode.id])
@@ -169,7 +169,7 @@ exports.createContentTypeNodes = ({
   resolvable,
   foreignReferenceMap,
   defaultLocale,
-  locales
+  locales,
 }) => {
   const contentTypeItemId = contentTypeItem.name
   locales.forEach(locale => {
@@ -194,23 +194,29 @@ exports.createContentTypeNodes = ({
       const entryItemFields = _.mapValues(entryItem.fields, v => getField(v))
 
       // If entry is not set by user, provide an empty value of the same type
+      const setBlankValue = contentTypeItemField => {
+        if (contentTypeItemField.type.match(/Symbol|Text|Date/)) {
+          return ``
+        } else if (contentTypeItemField.type.match(/Number/)) {
+          return NaN
+        } else if (
+          contentTypeItemField.type.match(
+            /Object|Location|Media|Reference|Link/
+          )
+        ) {
+          return {}
+        } else if (contentTypeItemField.type.match(/Array/)) {
+          // Setting values recursively is useful for 'never defined entries'
+          // TODO: Does not work for arrays of references, assets, objects, ...
+          return [setBlankValue(contentTypeItemField.items)]
+        } else if (contentTypeItemField.type.match(/Boolean/)) {
+          return false
+        }
+      }
       contentTypeItem.fields.forEach(contentTypeItemField => {
         const fieldName = contentTypeItemField.id
-        if (typeof entryItemFields[fieldName] === "undefined") {
-          if (contentTypeItemField.type.match(/Symbol|Text|Date/)) {
-            entryItemFields[fieldName] = ""
-          } else if (contentTypeItemField.type.match(/Number/)) {
-            // NOTE: Might be a problem for some people to auto set to 0?
-            entryItemFields[fieldName] = 0
-          } else if (
-            contentTypeItemField.type.match(/Object|Location|Media|Reference/)
-          ) {
-            entryItemFields[fieldName] = {}
-          } else if (contentTypeItemField.type.match(/Array/)) {
-            entryItemFields[fieldName] = []
-          } else if (contentTypeItemField.type.match(/Boolean/)) {
-            entryItemFields[fieldName] = false
-          }
+        if (typeof entryItemFields[fieldName] === `undefined`) {
+          entryItemFields[fieldName] = setBlankValue(contentTypeItemField)
         }
       })
 
@@ -278,8 +284,8 @@ exports.createContentTypeNodes = ({
         parent: contentTypeItemId,
         children: [],
         internal: {
-          type: `${makeTypeName(contentTypeItemId)}`
-        }
+          type: `${makeTypeName(contentTypeItemId)}`,
+        },
       }
 
       // Use default locale field.
@@ -339,8 +345,8 @@ exports.createContentTypeNodes = ({
       displayField: contentTypeItem.displayField,
       description: contentTypeItem.description,
       internal: {
-        type: `${makeTypeName(`ContentType`)}`
-      }
+        type: `${makeTypeName(`ContentType`)}`,
+      },
     }
 
     // Get content digest of node.
@@ -359,7 +365,7 @@ exports.createAssetNodes = ({
   assetItem,
   createNode,
   defaultLocale,
-  locales
+  locales,
 }) => {
   locales.forEach(locale => {
     const mId = makeMakeId({ currentLocale: locale.code, defaultLocale })
@@ -376,7 +382,7 @@ exports.createAssetNodes = ({
         : ``,
       description: localizedAsset.fields.description
         ? getField(localizedAsset.fields.description)
-        : ``
+        : ``,
     }
     const assetNode = {
       id: mId(localizedAsset.sys.id),
@@ -385,8 +391,8 @@ exports.createAssetNodes = ({
       ...localizedAsset.fields,
       node_locale: locale.code,
       internal: {
-        type: `${makeTypeName(`Asset`)}`
-      }
+        type: `${makeTypeName(`Asset`)}`,
+      },
     }
 
     // Get content digest of node.
