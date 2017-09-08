@@ -29,11 +29,15 @@ In addition any variable in the environment prefixed with `GATSBY_` will be avai
 GATSBY_ASSETS_URL=http://s3.amazonaws.com/bucketname
 ```
 
-```
-# Usage
-
-<img src={`${process.env.GATSBY_ASSETS_URL}/logo.png`} />
-
+```jsx
+// usage
+render() {
+  return (
+    <div>
+      <img src={`${process.env.GATSBY_ASSETS_URL}/logo.png`} />
+    </div>
+  )
+}
 ```
 
 
