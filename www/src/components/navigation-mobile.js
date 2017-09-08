@@ -17,7 +17,7 @@ const MobileNavItem = ({ linkTo, label, icon }) => (
     css={{
       color: presets.brand,
       fontSize: scale(-1 / 2).fontSize,
-      fontWeight: `bold`,
+      letterSpacing: `0.0075rem`,
       lineHeight: 1,
       padding: `${rhythm(options.blockMarginBottom / 4)} ${rhythm(
         options.blockMarginBottom
@@ -42,8 +42,7 @@ export default () => (
       left: 0,
       right: 0,
       zIndex: 1,
-      background: presets.veryLightPurple,
-      borderTop: `1px solid ${colors.b[0]}`,
+      borderTop: `1px solid ${presets.veryLightPurple}`,
       background: presets.sidebar,
       fontFamily: typography.options.headerFontFamily.join(`,`),
       [presets.Tablet]: {
