@@ -129,7 +129,12 @@ function inferGraphQLType({
         },
       },
       resolve(object, { fromNow, difference, formatString }) {
-        const date = JSON.parse(JSON.stringify(object[fieldName]))
+        let date
+        if (object[fieldName]) {
+          date = JSON.parse(JSON.stringify(object[fieldName]))
+        } else {
+          return
+        }
         if (formatString) {
           return moment.utc(date, ISO_8601_FORMAT, true).format(formatString)
         } else if (fromNow) {
