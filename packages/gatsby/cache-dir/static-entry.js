@@ -87,15 +87,37 @@ module.exports = (locals, callback) => {
         const layout = getLayout(page)
         return $(withRouter(layout), {
           ...props,
-          children: props =>
-            $(syncRequires.components[page.componentChunkName], {
-              ...props,
-              ...syncRequires.json[page.jsonName],
-            }),
+          children: props => nestedComponents(
+                                0,
+                                page.jsonName,
+                                page.componentChunkName,
+                                props
+                              )
         })
       },
     })
   )
+
+  let nestedComponents = (templateIndex, jsonName, componentChunkName, props) => {
+    let thisChunk = componentChunkName[templateIndex]
+    if (!componentChunkName[templateIndex + 1]) {
+      return $(syncRequires.components[thisChunk], {
+        ...props,
+        ...syncRequires.json[jsonName][thisChunk],
+      })
+    } else {
+      return $(syncRequires.components[thisChunk], {
+        ...props,
+        ...syncRequires.json[jsonName][thisChunk],
+        children: props => nestedComponents(
+          templateIndex + 1,
+          jsonName,
+          componentChunkName,
+          props
+        )
+      })
+    }
+  }
 
   // Let the site or plugin render the page component.
   apiRunner(`replaceRenderer`, {

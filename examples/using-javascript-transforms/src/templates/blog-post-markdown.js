@@ -5,9 +5,7 @@ import HelmetBlock from "../components/HelmetBlock"
 
 class mdBlogPostTemplate extends React.Component {
   render() {
-    const data = this.props.data.markdownRemark
-    const html = data.html
-    const frontmatter = data.frontmatter
+    const {html, frontmatter} = this.props.data.markdownRemark
 
     return (
       <div className="markdownPost">
