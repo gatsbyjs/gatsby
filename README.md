@@ -30,7 +30,7 @@ Websites built with Gatbsy:
 * [Bakadono](http://bakadono.com/)
 * [Travellers.cafe](https://travellers.cafe/)
 * [Oliver Benns' Portfolio](https://oliverbenns.com) [(source)](https://github.com/oliverbenns/oliverbenns.com)
-* [angeloocana.com](https://angeloocana.com)
+* [angeloocana.com](https://angeloocana.com) [(source)](https://github.com/angeloocana/angeloocana)
 * [knpw.rs](https://knpw.rs) [(source)](https://github.com/knpwrs/knpw.rs)
 * [Overlap.show](https://overlap.show) [(source)](https://github.com/pouretrebelle/overlap.show)
 * [smartive Company Website](https://smartive.ch)
