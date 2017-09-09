@@ -21,6 +21,27 @@ API_URL=https://example.com/api
 
 These variables will be available to your site as `process.env.API_URL`.
 
+In addition any variable in the environment prefixed with `GATSBY_` will be available.
+
+## Example
+
+```
+GATSBY_ASSETS_URL=http://s3.amazonaws.com/bucketname
+```
+
+```jsx
+// usage
+render() {
+  return (
+    <div>
+      <img src={`${process.env.GATSBY_ASSETS_URL}/logo.png`} />
+    </div>
+  )
+}
+```
+
+
+
 > You can not override certain environment variables as some are used internally for optimizations during build
 
 Reserved environment variables:
