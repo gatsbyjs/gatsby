@@ -5,7 +5,6 @@ import moment from "moment"
 
 class jsBlogPostTemplate extends React.Component {
   render() {
-    console.log(this)
     let frontmatter = this.props.data.jsFrontmatter.data
     let siteMetadata = this.props.data.site.siteMetadata
 
