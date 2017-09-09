@@ -118,14 +118,15 @@ actions.deleteLayout = (layout, plugin = ``) => {
  * @param {string} layout.component The absolute path to the component for this layout
  * @example
  * createLayout({
- *   component: path.resolve(`./src/templates/myNewLayout.js`)
+ *   component: path.resolve(`./src/templates/myNewLayout.js`),
+ *   id: 'custom-id', // If no id is provided, the filename will be used as id.
  *   context: {
  *     title: `My New Layout`
  *   }
  * })
  */
 actions.createLayout = (layout, plugin = ``, traceId) => {
-  layout.id = path.parse(layout.component).name
+  layout.id = layout.id || path.parse(layout.component).name
   layout.componentWrapperPath = joinPath(
     store.getState().program.directory,
     `.cache`,

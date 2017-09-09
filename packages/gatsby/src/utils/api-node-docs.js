@@ -83,8 +83,8 @@ exports.createPagesStatefully = true
  * @example
  * exports.createLayouts = ({ graphql, boundActionCreators }) => {
  *  boundActionCreators.createLayout({
- *    id: 'custom',
  *    component: path.resolve(`src/templates/custom-layout.js`),
+ *    id: 'custom', // optional - if not provided the filename will be used as id
  *   })
  *  }
  */
