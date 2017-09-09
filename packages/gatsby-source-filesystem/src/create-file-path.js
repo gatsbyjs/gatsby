@@ -7,6 +7,7 @@ function findFileNode({ node, getNode }) {
 
   let whileCount = 0
   while (
+    fileNode.internal.type !== `File` &&
     fileNode.parent &&
     getNode(fileNode.parent) !== undefined &&
     whileCount < 101
