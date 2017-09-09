@@ -5,6 +5,7 @@ const mime = require(`mime`)
 const prettyBytes = require(`pretty-bytes`)
 
 const md5File = require(`bluebird`).promisify(require(`md5-file`))
+const md5Dir = require(`bluebird`).promisify(require(`md5-dir`))
 
 const createId = path => {
   const slashed = slash(path)
@@ -20,8 +21,24 @@ exports.createFileNode = async (pathToFile, pluginOptions = {}) => {
     absolutePath: slashed,
   }
   // console.log('createFileNode', slashedFile.absolutePath)
-  const contentDigest = await md5File(slashedFile.absolutePath)
   const stats = await fs.stat(slashedFile.absolutePath)
+  const isDirectory = stats.isDirectory()
+  var internal;
+  if(isDirectory) {
+    const contentDigest = await md5Dir(slashedFile.absolutePath)
+    internal = {
+        contentDigest: contentDigest,
+        mediaType: `Directory`,
+        type: `Directory`,
+    }
+  } else {
+    const contentDigest = await md5File(slashedFile.absolutePath)
+    internal = {
+        contentDigest: contentDigest,
+        mediaType: mime.lookup(slashedFile.ext),
+        type: `File`,
+    }
+  }
 
   // console.log('createFileNode:stat', slashedFile.absolutePath)
   // Stringify date objects.
@@ -33,11 +50,7 @@ exports.createFileNode = async (pathToFile, pluginOptions = {}) => {
       id: createId(pathToFile),
       children: [],
       parent: `___SOURCE___`,
-      internal: {
-        contentDigest: contentDigest,
-        mediaType: mime.lookup(slashedFile.ext),
-        type: `File`,
-      },
+      internal: internal,
       sourceInstanceName: pluginOptions.name || `__PROGRAMATTIC__`,
       absolutePath: slashedFile.absolutePath,
       relativePath: slash(

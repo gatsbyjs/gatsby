@@ -35,28 +35,35 @@ exports.sourceNodes = (
     return Promise.all(queue.map(createAndProcessNode))
   }
 
-  watcher.on(`add`, path => {
+  const handleAdd = path => {
     if (ready) {
-      reporter.info(`added file at ${path}`)
+      reporter.info(`added ${path}`)
       createAndProcessNode(path).catch(err => reporter.error(err))
     } else {
       pathQueue.push(path)
     }
-  })
+  }
 
-  watcher.on(`change`, path => {
+  const handleChange = path => {
     reporter.info(`changed file at ${path}`)
     createAndProcessNode(path).catch(err => reporter.error(err))
-  })
+  }
 
-  watcher.on(`unlink`, path => {
-    reporter.info(`file deleted at ${path}`)
+  const handleUnlink = path => {
+    reporter.info(`deleted ${path}`)
     const node = getNode(createId(path))
     deleteNode(node.id, node)
 
     // Also delete nodes for the file's transformed children nodes.
     node.children.forEach(childId => deleteNode(childId, getNode(childId)))
-  })
+  }
+
+  watcher.on(`add`, handleAdd)
+  watcher.on(`change`, handleChange)
+  watcher.on(`unlink`, handleUnlink)
+
+  watcher.on(`addDir`, handleAdd)
+  watcher.on(`unlinkDir`, handleUnlink)
 
   return new Promise((resolve, reject) => {
     watcher.on(`ready`, () => {
