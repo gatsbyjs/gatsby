@@ -14,6 +14,19 @@ describe(`Add layouts`, () => {
     expect(state).toMatchSnapshot()
   })
 
+  it(`allows you to add layouts and specify their id`, () => {
+    const action = actions.createLayout(
+      {
+        component: `/whatever/index.js`,
+        id: `test-id`,
+      },
+      { name: `test` }
+    )
+    const state = reducer(undefined, action)
+    expect(action).toMatchSnapshot()
+    expect(state).toMatchSnapshot()
+  })
+
   it(`allows you to add layout with context`, () => {
     const action = actions.createLayout(
       {
