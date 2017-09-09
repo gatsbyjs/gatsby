@@ -47,7 +47,6 @@ class choroplethBase extends React.Component {
   }
 
   render() {
-    console.log(this)
     let data = this.props.data.markdownRemark
     let html = data.html
     let frontmatter = this.props.data.jsFrontmatter.data
