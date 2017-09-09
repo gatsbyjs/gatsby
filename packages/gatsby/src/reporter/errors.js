@@ -55,9 +55,11 @@ function createErrorFromString(errorStr: string, sourceMapFile: string) {
   error.stack = [message, rest.join(`\n`)].join(`\n`)
 
   error.name = `WebpackError`
-
-  if (sourceMapFile) prepareStackTrace(error, sourceMapFile)
-
+  try {
+    if (sourceMapFile) prepareStackTrace(error, sourceMapFile)
+  } catch (err) {
+    // don't shadow a real error because of a parsing issue  
+  }
   return error
 }
 
