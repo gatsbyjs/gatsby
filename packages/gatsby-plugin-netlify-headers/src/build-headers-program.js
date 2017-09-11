@@ -1,0 +1,200 @@
+import _ from "lodash"
+import fs from "fs"
+import pify from "pify"
+
+import {
+  ROOT_WILDCARD,
+  COMMON_BUNDLES,
+  SECURITY_HEADERS,
+  LINK_REGEX,
+  NETLIFY_HEADERS_FILENAME,
+} from "./constants"
+
+const writeFile = pify(fs.writeFile)
+
+function validHeaders(headers) {
+  if (!headers || !_.isObject(headers)) {
+    return false
+  }
+
+  return _.every(headers, (headersList, path) => (
+    _.isArray(headersList) && _.every(headersList, (header) => _.isString(header))
+  ))
+}
+
+function linkTemplate(assetPath, type = `script`) {
+  return `Link: <${assetPath}>; rel=preload; as=${type}`
+}
+
+function pathChunkName(path) {
+  const name = path === `/` ? `index` : _.kebabCase(path)
+  return `path---${name}`
+}
+
+function createScriptHeaderGenerator(manifest, pathPrefix) {
+  return (script) => {
+    const chunk = manifest[script]
+
+    if (!chunk) {
+      return null
+    }
+
+    // Always add starting slash, as link entries start with slash as relative to deploy root
+    return linkTemplate(`${pathPrefix}/${chunk}`)
+  }
+}
+
+function linkHeaders(scripts, manifest, pathPrefix) {
+  return _.compact(scripts.map(createScriptHeaderGenerator(manifest, pathPrefix)))
+}
+
+function headersPath(pathPrefix, path) {
+  return `${pathPrefix}${path}`
+}
+
+function preloadHeadersByPage(pages, manifest, pathPrefix) {
+  let linksByPage = {}
+
+  pages.forEach((page) => {
+    const scripts = [
+      pathChunkName(page.path),
+      page.componentChunkName,
+      page.layoutComponentChunkName,
+    ]
+
+    const pathKey = headersPath(pathPrefix, page.path)
+
+    linksByPage[pathKey] = linkHeaders(scripts, manifest, pathPrefix)
+  })
+
+  return linksByPage
+}
+
+function defaultMerge(...headers) {
+  function unionMerge(objValue, srcValue) {
+    if (_.isArray(objValue)) {
+      return _.union(objValue, srcValue)
+    } else {
+      return undefined // opt into default merge behavior
+    }
+  }
+
+  return _.mergeWith({}, ...headers, unionMerge)
+}
+
+function transformLink(manifest, publicFolder) {
+  return (header) => (
+    header.replace(LINK_REGEX, (__, prefix, file, suffix) => {
+      const hashed = manifest[file]
+      if (hashed) {
+        return `${prefix}${hashed}${suffix}`
+      } else if (fs.existsSync(publicFolder(file))) {
+        return `${prefix}${file}${suffix}`
+      } else {
+        throw new Error(
+          `Could not find the file specified in the Link header \`${header}\`.` +
+          `The gatsby-plugin-netlify-headers is looking for a matching file (with or without a ` +
+          `webpack hash). Check the public folder and your gatsby-config.js to ensure you are ` +
+          `pointing to a public file.`
+        )
+      }
+    })
+  )
+}
+
+// Writes out headers file format, with two spaces for indentation
+// https://www.netlify.com/docs/headers-and-basic-auth/
+function stringifyHeaders(headers) {
+  return _.reduce(headers, (text, headerList, path) => {
+    const headersString = _.reduce(headerList, (accum, header) => `${accum}  ${header}\n`, ``)
+    return `${text}${path}\n${headersString}`
+  }, ``)
+}
+
+// program methods
+
+const validateUserOptions = (pluginOptions) => (headers) => {
+  if (!validHeaders(headers)) {
+    throw new Error(
+      `The "headers" option to gatsby-plugin-netlify-headers is in the wrong shape. ` +
+      `You should pass in a object with string keys (representing the paths) and an array ` +
+      `of strings as the value (representing the headers). ` +
+      `Check your gatsby-config.js.`
+    )
+  }
+
+  if (!_.isBoolean(pluginOptions.mergeSecurityHeaders)) {
+    throw new Error(
+      `The "mergeSecurityHeaders" option to gatsby-plugin-netlify-headers must be a boolean. ` +
+      `Check your gatsby-config.js.`
+    )
+  }
+
+  if (!_.isBoolean(pluginOptions.mergeLinkHeaders)) {
+    throw new Error(
+      `The "mergeLinkHeaders" option to gatsby-plugin-netlify-headers must be a boolean. ` +
+      `Check your gatsby-config.js.`
+    )
+  }
+
+  if (!_.isFunction(pluginOptions.transformHeaders)) {
+    throw new Error(
+      `The "transformHeaders" option to gatsby-plugin-netlify-headers must be a function ` +
+      `that returns a array of header strings.` +
+      `Check your gatsby-config.js.`
+    )
+  }
+
+  return headers
+}
+
+const mapUserLinkHeaders = ({ manifest, publicFolder }) => (headers) => (
+  _.mapValues(headers, (headerList) => _.map(headerList, transformLink(manifest, publicFolder)))
+)
+
+const applyLinkHeaders = (pluginData, { mergeLinkHeaders }) => (headers) => {
+  if (!mergeLinkHeaders) {
+    return headers
+  }
+
+  const { pages, manifest, pathPrefix } = pluginData
+
+  const rootPath = headersPath(pathPrefix, ROOT_WILDCARD)
+  const wildcardHeaders = { [rootPath ]: linkHeaders(COMMON_BUNDLES, manifest, pathPrefix) }
+  const perPageHeaders = preloadHeadersByPage(pages, manifest, pathPrefix)
+
+  return defaultMerge(headers, wildcardHeaders, perPageHeaders)
+}
+
+const applySecurityHeaders = ({ mergeSecurityHeaders }) => (headers) => {
+  if (!mergeSecurityHeaders) {
+    return headers
+  }
+
+  // TODO use user merge if provided as function
+  return defaultMerge(headers, SECURITY_HEADERS)
+}
+
+const applyTransfromHeaders = ({ transformHeaders }) => (headers) => (
+  _.mapValues(headers, transformHeaders)
+)
+
+const transformToString = (headers) => (
+  `## Created with gatsby-plugin-netlify-headers\n\n${stringifyHeaders(headers)}`
+)
+
+const writeHeadersFile = ({ publicFolder }) => (contents) => (
+  writeFile(publicFolder(NETLIFY_HEADERS_FILENAME), contents)
+)
+
+export default function buildHeadersProgram(pluginData, pluginOptions) {
+  return _.flow(
+    validateUserOptions(pluginOptions),
+    mapUserLinkHeaders(pluginData, pluginOptions),
+    applyLinkHeaders(pluginData, pluginOptions),
+    applySecurityHeaders(pluginOptions),
+    applyTransfromHeaders(pluginOptions),
+    transformToString,
+    writeHeadersFile(pluginData),
+  )(pluginOptions.headers)
+}
