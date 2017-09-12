@@ -1,0 +1,135 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`remark katex plugin renders inlineMath node properly 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "data": Object {
+            "hChildren": Array [
+              Object {
+                "type": "text",
+                "value": "a^2 + b^2 = c^2",
+              },
+            ],
+            "hName": "span",
+            "hProperties": Object {
+              "className": "inlineMath",
+            },
+          },
+          "position": Position {
+            "end": Object {
+              "column": 18,
+              "line": 1,
+              "offset": 17,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 1,
+              "line": 1,
+              "offset": 0,
+            },
+          },
+          "type": "html",
+          "value": "<span class=\\"katex\\"><span class=\\"katex-mathml\\"><math><semantics><mrow><msup><mi>a</mi><mn>2</mn></msup><mo>+</mo><msup><mi>b</mi><mn>2</mn></msup><mo>=</mo><msup><mi>c</mi><mn>2</mn></msup></mrow><annotation encoding=\\"application/x-tex\\">a^2 + b^2 = c^2</annotation></semantics></math></span><span class=\\"katex-html\\" aria-hidden=\\"true\\"><span class=\\"strut\\" style=\\"height:0.8141079999999999em;\\"></span><span class=\\"strut bottom\\" style=\\"height:0.897438em;vertical-align:-0.08333em;\\"></span><span class=\\"base textstyle uncramped\\"><span class=\\"mord\\"><span class=\\"mord mathit\\">a</span><span class=\\"msupsub\\"><span class=\\"vlist\\"><span style=\\"top:-0.363em;margin-right:0.05em;\\"><span class=\\"fontsize-ensurer reset-size5 size5\\"><span style=\\"font-size:0em;\\">​</span></span><span class=\\"reset-textstyle scriptstyle uncramped mtight\\"><span class=\\"mord mathrm mtight\\">2</span></span></span><span class=\\"baseline-fix\\"><span class=\\"fontsize-ensurer reset-size5 size5\\"><span style=\\"font-size:0em;\\">​</span></span>​</span></span></span></span><span class=\\"mbin\\">+</span><span class=\\"mord\\"><span class=\\"mord mathit\\">b</span><span class=\\"msupsub\\"><span class=\\"vlist\\"><span style=\\"top:-0.363em;margin-right:0.05em;\\"><span class=\\"fontsize-ensurer reset-size5 size5\\"><span style=\\"font-size:0em;\\">​</span></span><span class=\\"reset-textstyle scriptstyle uncramped mtight\\"><span class=\\"mord mathrm mtight\\">2</span></span></span><span class=\\"baseline-fix\\"><span class=\\"fontsize-ensurer reset-size5 size5\\"><span style=\\"font-size:0em;\\">​</span></span>​</span></span></span></span><span class=\\"mrel\\">=</span><span class=\\"mord\\"><span class=\\"mord mathit\\">c</span><span class=\\"msupsub\\"><span class=\\"vlist\\"><span style=\\"top:-0.363em;margin-right:0.05em;\\"><span class=\\"fontsize-ensurer reset-size5 size5\\"><span style=\\"font-size:0em;\\">​</span></span><span class=\\"reset-textstyle scriptstyle uncramped mtight\\"><span class=\\"mord mathrm mtight\\">2</span></span></span><span class=\\"baseline-fix\\"><span class=\\"fontsize-ensurer reset-size5 size5\\"><span style=\\"font-size:0em;\\">​</span></span>​</span></span></span></span></span></span></span>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 18,
+          "line": 1,
+          "offset": 17,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 18,
+      "line": 1,
+      "offset": 17,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`remark katex plugin renders math node properly 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "data": Object {
+            "hChildren": Array [
+              Object {
+                "type": "text",
+                "value": "a^2 + b^2 = c^2",
+              },
+            ],
+            "hName": "span",
+            "hProperties": Object {
+              "className": "inlineMath inlineMathDouble",
+            },
+          },
+          "position": Position {
+            "end": Object {
+              "column": 20,
+              "line": 1,
+              "offset": 19,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 1,
+              "line": 1,
+              "offset": 0,
+            },
+          },
+          "type": "html",
+          "value": "<span class=\\"katex\\"><span class=\\"katex-mathml\\"><math><semantics><mrow><msup><mi>a</mi><mn>2</mn></msup><mo>+</mo><msup><mi>b</mi><mn>2</mn></msup><mo>=</mo><msup><mi>c</mi><mn>2</mn></msup></mrow><annotation encoding=\\"application/x-tex\\">a^2 + b^2 = c^2</annotation></semantics></math></span><span class=\\"katex-html\\" aria-hidden=\\"true\\"><span class=\\"strut\\" style=\\"height:0.8141079999999999em;\\"></span><span class=\\"strut bottom\\" style=\\"height:0.897438em;vertical-align:-0.08333em;\\"></span><span class=\\"base textstyle uncramped\\"><span class=\\"mord\\"><span class=\\"mord mathit\\">a</span><span class=\\"msupsub\\"><span class=\\"vlist\\"><span style=\\"top:-0.363em;margin-right:0.05em;\\"><span class=\\"fontsize-ensurer reset-size5 size5\\"><span style=\\"font-size:0em;\\">​</span></span><span class=\\"reset-textstyle scriptstyle uncramped mtight\\"><span class=\\"mord mathrm mtight\\">2</span></span></span><span class=\\"baseline-fix\\"><span class=\\"fontsize-ensurer reset-size5 size5\\"><span style=\\"font-size:0em;\\">​</span></span>​</span></span></span></span><span class=\\"mbin\\">+</span><span class=\\"mord\\"><span class=\\"mord mathit\\">b</span><span class=\\"msupsub\\"><span class=\\"vlist\\"><span style=\\"top:-0.363em;margin-right:0.05em;\\"><span class=\\"fontsize-ensurer reset-size5 size5\\"><span style=\\"font-size:0em;\\">​</span></span><span class=\\"reset-textstyle scriptstyle uncramped mtight\\"><span class=\\"mord mathrm mtight\\">2</span></span></span><span class=\\"baseline-fix\\"><span class=\\"fontsize-ensurer reset-size5 size5\\"><span style=\\"font-size:0em;\\">​</span></span>​</span></span></span></span><span class=\\"mrel\\">=</span><span class=\\"mord\\"><span class=\\"mord mathit\\">c</span><span class=\\"msupsub\\"><span class=\\"vlist\\"><span style=\\"top:-0.363em;margin-right:0.05em;\\"><span class=\\"fontsize-ensurer reset-size5 size5\\"><span style=\\"font-size:0em;\\">​</span></span><span class=\\"reset-textstyle scriptstyle uncramped mtight\\"><span class=\\"mord mathrm mtight\\">2</span></span></span><span class=\\"baseline-fix\\"><span class=\\"fontsize-ensurer reset-size5 size5\\"><span style=\\"font-size:0em;\\">​</span></span>​</span></span></span></span></span></span></span>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 20,
+          "line": 1,
+          "offset": 19,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 20,
+      "line": 1,
+      "offset": 19,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;

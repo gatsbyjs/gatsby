@@ -64,6 +64,30 @@ describe(`Create and update nodes`, () => {
     expect(state[`hi`].deep2).toEqual({ boom: `foo` })
   })
 
+  it(`allows deleting nodes`, () => {
+    const action = actions.createNode(
+      {
+        id: `hi`,
+        children: [],
+        parent: `test`,
+        internal: {
+          contentDigest: `hasdfljds`,
+          type: `Test`,
+        },
+        pickle: true,
+        deep: {
+          array: [0, 1, { boom: true }],
+        },
+      },
+      { name: `tests` }
+    )
+    const deleteAction = actions.deleteNode(`hi`)
+
+    let state = nodeReducer(undefined, action)
+    state = nodeReducer(state, deleteAction)
+    expect(state[`hi`]).toBeUndefined()
+  })
+
   it(`nodes that are added are also "touched"`, () => {
     const action = actions.createNode(
       {

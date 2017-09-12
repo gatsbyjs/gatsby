@@ -27,7 +27,7 @@ type Props = {
   classes: { [string]: string },
 }
 
-const HomePage = ({ classes }: Props) =>
+const HomePage = ({ classes }: Props) => (
   <div>
     <h1 className={classes.heading}>Home page</h1>
     <main className={classes.main}>
@@ -41,5 +41,6 @@ const HomePage = ({ classes }: Props) =>
       disabled JavaScript
     </footer>
   </div>
+)
 
 export default injectSheet(styles)(HomePage)

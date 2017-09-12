@@ -1,5 +1,6 @@
 const fs = require(`fs`)
 const path = require(`path`)
+const os = require(`os`)
 
 // Write out a typography module to .cache.
 
@@ -13,6 +14,9 @@ exports.sourceNodes = ({ store }, pluginOptions) => {
       program.directory,
       pluginOptions.pathToConfigModule
     )}")`
+    if (os.platform() == `win32`) {
+      module = module.split(`\\`).join(`\\\\`)
+    }
   } else {
     module = `const Typography = require("typography")
 const typography = new Typography()

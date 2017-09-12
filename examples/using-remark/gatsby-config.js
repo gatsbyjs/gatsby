@@ -3,6 +3,7 @@ module.exports = {
     title: `gatsby-example-using-remark`,
     author: `@gatsbyjs`,
     description: `Blazing-fast React.js static site generator`,
+    homepage: `https://www.gatsbyjs.org`,
   },
   mapping: {
     "MarkdownRemark.frontmatter.author": `AuthorYaml`,
@@ -41,6 +42,7 @@ module.exports = {
           },
           `gatsby-remark-prismjs`,
           `gatsby-remark-autolink-headers`,
+          `gatsby-remark-katex`,
         ],
       },
     },

@@ -1,7 +1,4 @@
 import React from "react"
-import { TypographyStyle } from "react-typography"
-
-import typography from "./utils/typography"
 
 let stylesStr
 if (process.env.NODE_ENV === `production`) {
@@ -36,7 +33,7 @@ export default class HTML extends React.Component {
           />
           <link
             rel="preload"
-            href="/static/tex-gyre-schola-400.030fe0c4.woff2"
+            href="/static/spectral-latin-400.bc2de9de.woff2"
             as="font"
             crossOrigin
           />
@@ -75,7 +72,6 @@ export default class HTML extends React.Component {
             href={`/safari-pinned-tab.svg`}
             color="#5bbad5"
           />
-          <TypographyStyle key={`typography`} typography={typography} />
           {css}
         </head>
         <body>

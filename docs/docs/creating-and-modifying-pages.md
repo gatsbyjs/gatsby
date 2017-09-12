@@ -17,7 +17,7 @@ modify pages created in core or plugins or to create client-only pages.
 
 To see what pages are being created by your code or plugins, you can query
 for page information while developing in Graph*i*QL. Paste the following
-query in the Graph*i*QL IDE for your site.
+query in the Graph*i*QL IDE for your site. The Graph*i*QL IDE is available when running your sites development server at `HOST:PORT/___graphql` e.g. `localhost:8000/___graphql`.
 
 ```graphql
 {
@@ -151,6 +151,32 @@ exports.onCreatePage = async ({ page, boundActionCreators }) => {
     // only on the client.
     if (page.path.match(/^\/app/)) {
       page.matchPath = "/app/:path"
+
+      // Update the page.
+      createPage(page)
+    }
+
+    resolve()
+  })
+}
+```
+
+### Choosing the page layout
+
+By default, all pages will use the layout found at `/layouts/index.js`.
+
+You may wish to choose a custom layout for certain pages (such as removing header and footer for landing pages). You can choose the layout component when creating pages with the `createPage` action by adding a layout key to the page object or modify pages created elsewhere using the `onCreatePage` API. All components in the `/layouts/` directory are automatically available.
+
+```javascript
+// Implement the Gatsby API “onCreatePage”. This is
+// called after every page is created.
+exports.onCreatePage = async ({ page, boundActionCreators }) => {
+  const { createPage } = boundActionCreators
+
+  return new Promise((resolve, reject) => {
+    if (page.path.match(/^\/landing-page/)) {
+      // It's assumed that `landingPage.js` exists in the `/layouts/` directory
+      page.layout = "landingPage"
 
       // Update the page.
       createPage(page)

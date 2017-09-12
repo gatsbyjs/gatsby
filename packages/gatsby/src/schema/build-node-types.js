@@ -162,7 +162,7 @@ module.exports = async () => {
           return runSift({
             args: { filter: { ...args } },
             nodes: latestNodes,
-            path: context.path,
+            path: context.path ? context.path : `LAYOUT___${context.id}`,
           })
         },
       },

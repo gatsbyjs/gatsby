@@ -37,7 +37,6 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
       const pageTemplate = path.resolve(`./src/templates/item.js`)
       // We want to create a detailed page for each
       // document in our mongoDB collection
-      console.log(result.data)
       _.each(result.data.allMongodbCloudDocuments.edges, edge => {
         // Gatsby uses Redux to manage its internal state.
         // Plugins and sites can use functions like "createPage"

@@ -5,40 +5,64 @@ const { ftz, color, goldenRatio } = theme
 // FONT SIZES
 const ftzMap = p => {
   if (p.h1) {
-    return css`font-size: ${ftz.h1};`
+    return css`
+      font-size: ${ftz.h1};
+    `
   }
   if (p.h2) {
-    return css`font-size: ${ftz.h2};`
+    return css`
+      font-size: ${ftz.h2};
+    `
   }
   if (p.h3) {
-    return css`font-size: ${ftz.h3};`
+    return css`
+      font-size: ${ftz.h3};
+    `
   }
   if (p.h4) {
-    return css`font-size: ${ftz.h4};`
+    return css`
+      font-size: ${ftz.h4};
+    `
   }
   if (p.h5) {
-    return css`font-size: ${ftz.h5};`
+    return css`
+      font-size: ${ftz.h5};
+    `
   }
   if (p.h6) {
-    return css`font-size: ${ftz.h6};`
+    return css`
+      font-size: ${ftz.h6};
+    `
   }
   if (p.h7) {
-    return css`font-size: ${ftz.h7};`
+    return css`
+      font-size: ${ftz.h7};
+    `
   }
   if (p.p1) {
-    return css`font-size: ${ftz.p1};`
+    return css`
+      font-size: ${ftz.p1};
+    `
   }
   if (p.p2) {
-    return css`font-size: ${ftz.p2};`
+    return css`
+      font-size: ${ftz.p2};
+    `
   }
   if (p.p3) {
-    return css`font-size: ${ftz.p3};`
+    return css`
+      font-size: ${ftz.p3};
+    `
   }
   if (p.p4) {
-    return css`font-size: ${ftz.p4};`
+    return css`
+      font-size: ${ftz.p4};
+    `
   }
   if (p.p5) {
-    return css`font-size: ${ftz.p5};`
+    return css`
+      font-size: ${ftz.p5};
+    `
   }
 }
 export const ftzPropsVar = {
@@ -73,9 +97,13 @@ export const ftzProps = (props, def = `inherit`) => {
   ) {
     return ftzMap(props)
   } else if (props.ftz) {
-    return css`font-size: ${props.ftz};`
+    return css`
+      font-size: ${props.ftz};
+    `
   } else {
-    return css`font-size: ${def};`
+    return css`
+      font-size: ${def};
+    `
   }
 }
 
@@ -219,11 +247,11 @@ export const backgroundProps = props => css`
 export const heightProps = props => css`
   ${props.height &&
     typeof props.height === `number` &&
-    `height: ${goldenRatio * props.height}px;`}
+    `height: ${goldenRatio * props.height}px;`};
 `
 
 export const outlineProps = props => css`
   ${props.outline &&
     typeof props.outline === `boolean` &&
-    `outline: 1px solid white`}
+    `outline: 1px solid white`};
 `

@@ -1,0 +1,303 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Process XML nodes correctly correctly creates nodes from XML 1`] = `
+Array [
+  Array [
+    Object {
+      "attributes": Object {
+        "id": "bk101",
+      },
+      "children": Array [
+        Object {
+          "attributes": Object {},
+          "children": Array [],
+          "content": "Gambardella, Matthew",
+          "name": "author",
+        },
+        Object {
+          "attributes": Object {},
+          "children": Array [],
+          "content": "XML Developer's Guide",
+          "name": "title",
+        },
+        Object {
+          "attributes": Object {},
+          "children": Array [],
+          "content": "Computer",
+          "name": "genre",
+        },
+        Object {
+          "attributes": Object {},
+          "children": Array [],
+          "content": "44.95",
+          "name": "price",
+        },
+        Object {
+          "attributes": Object {},
+          "children": Array [],
+          "content": "2000-10-01",
+          "name": "publish_date",
+        },
+        Object {
+          "attributes": Object {},
+          "children": Array [],
+          "content": "An in-depth look at creating applications 
+            with XML.",
+          "name": "description",
+        },
+      ],
+      "content": "",
+      "id": "bk101",
+      "internal": Object {
+        "contentDigest": "446732570969e52599dded1ba4941b65",
+        "type": "NodeNameXml",
+      },
+      "name": "book",
+      "parent": "whatever",
+    },
+  ],
+  Array [
+    Object {
+      "attributes": Object {
+        "id": "bk102",
+      },
+      "children": Array [
+        Object {
+          "attributes": Object {},
+          "children": Array [],
+          "content": "Ralls, Kim",
+          "name": "author",
+        },
+        Object {
+          "attributes": Object {},
+          "children": Array [],
+          "content": "Midnight Rain",
+          "name": "title",
+        },
+        Object {
+          "attributes": Object {},
+          "children": Array [],
+          "content": "Fantasy",
+          "name": "genre",
+        },
+        Object {
+          "attributes": Object {},
+          "children": Array [],
+          "content": "5.95",
+          "name": "price",
+        },
+        Object {
+          "attributes": Object {},
+          "children": Array [],
+          "content": "2000-12-16",
+          "name": "publish_date",
+        },
+        Object {
+          "attributes": Object {},
+          "children": Array [],
+          "content": "A former architect battles corporate zombies, 
+            an evil sorceress, and her own childhood to become queen 
+            of the world.",
+          "name": "description",
+        },
+      ],
+      "content": "",
+      "id": "bk102",
+      "internal": Object {
+        "contentDigest": "f1aadb72f7fc4e80a8b0f44899a4c30c",
+        "type": "NodeNameXml",
+      },
+      "name": "book",
+      "parent": "whatever",
+    },
+  ],
+]
+`;
+
+exports[`Process XML nodes correctly correctly creates nodes from XML 2`] = `
+Array [
+  Array [
+    Object {
+      "child": Object {
+        "attributes": Object {
+          "id": "bk101",
+        },
+        "children": Array [
+          Object {
+            "attributes": Object {},
+            "children": Array [],
+            "content": "Gambardella, Matthew",
+            "name": "author",
+          },
+          Object {
+            "attributes": Object {},
+            "children": Array [],
+            "content": "XML Developer's Guide",
+            "name": "title",
+          },
+          Object {
+            "attributes": Object {},
+            "children": Array [],
+            "content": "Computer",
+            "name": "genre",
+          },
+          Object {
+            "attributes": Object {},
+            "children": Array [],
+            "content": "44.95",
+            "name": "price",
+          },
+          Object {
+            "attributes": Object {},
+            "children": Array [],
+            "content": "2000-10-01",
+            "name": "publish_date",
+          },
+          Object {
+            "attributes": Object {},
+            "children": Array [],
+            "content": "An in-depth look at creating applications 
+            with XML.",
+            "name": "description",
+          },
+        ],
+        "content": "",
+        "id": "bk101",
+        "internal": Object {
+          "contentDigest": "446732570969e52599dded1ba4941b65",
+          "type": "NodeNameXml",
+        },
+        "name": "book",
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "
+      <?xml version=\\"1.0\\"?>
+      <catalog>
+        <book id=\\"bk101\\">
+            <author>Gambardella, Matthew</author>
+            <title>XML Developer's Guide</title>
+            <genre>Computer</genre>
+            <price>44.95</price>
+            <publish_date>2000-10-01</publish_date>
+            <description>An in-depth look at creating applications 
+            with XML.</description>
+         </book>
+         <book id=\\"bk102\\">
+            <author>Ralls, Kim</author>
+            <title>Midnight Rain</title>
+            <genre>Fantasy</genre>
+            <price>5.95</price>
+            <publish_date>2000-12-16</publish_date>
+            <description>A former architect battles corporate zombies, 
+            an evil sorceress, and her own childhood to become queen 
+            of the world.</description>
+         </book>
+      </catalog>
+    ",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "application/xml",
+          "name": "test",
+        },
+        "name": "nodeName",
+        "parent": "SOURCE",
+      },
+    },
+  ],
+  Array [
+    Object {
+      "child": Object {
+        "attributes": Object {
+          "id": "bk102",
+        },
+        "children": Array [
+          Object {
+            "attributes": Object {},
+            "children": Array [],
+            "content": "Ralls, Kim",
+            "name": "author",
+          },
+          Object {
+            "attributes": Object {},
+            "children": Array [],
+            "content": "Midnight Rain",
+            "name": "title",
+          },
+          Object {
+            "attributes": Object {},
+            "children": Array [],
+            "content": "Fantasy",
+            "name": "genre",
+          },
+          Object {
+            "attributes": Object {},
+            "children": Array [],
+            "content": "5.95",
+            "name": "price",
+          },
+          Object {
+            "attributes": Object {},
+            "children": Array [],
+            "content": "2000-12-16",
+            "name": "publish_date",
+          },
+          Object {
+            "attributes": Object {},
+            "children": Array [],
+            "content": "A former architect battles corporate zombies, 
+            an evil sorceress, and her own childhood to become queen 
+            of the world.",
+            "name": "description",
+          },
+        ],
+        "content": "",
+        "id": "bk102",
+        "internal": Object {
+          "contentDigest": "f1aadb72f7fc4e80a8b0f44899a4c30c",
+          "type": "NodeNameXml",
+        },
+        "name": "book",
+        "parent": "whatever",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "
+      <?xml version=\\"1.0\\"?>
+      <catalog>
+        <book id=\\"bk101\\">
+            <author>Gambardella, Matthew</author>
+            <title>XML Developer's Guide</title>
+            <genre>Computer</genre>
+            <price>44.95</price>
+            <publish_date>2000-10-01</publish_date>
+            <description>An in-depth look at creating applications 
+            with XML.</description>
+         </book>
+         <book id=\\"bk102\\">
+            <author>Ralls, Kim</author>
+            <title>Midnight Rain</title>
+            <genre>Fantasy</genre>
+            <price>5.95</price>
+            <publish_date>2000-12-16</publish_date>
+            <description>A former architect battles corporate zombies, 
+            an evil sorceress, and her own childhood to become queen 
+            of the world.</description>
+         </book>
+      </catalog>
+    ",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "application/xml",
+          "name": "test",
+        },
+        "name": "nodeName",
+        "parent": "SOURCE",
+      },
+    },
+  ],
+]
+`;

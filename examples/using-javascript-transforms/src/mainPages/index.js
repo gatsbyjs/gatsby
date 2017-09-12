@@ -3,13 +3,9 @@ import Link from "gatsby-link"
 import Helmet from "react-helmet"
 import sortBy from "lodash/sortBy"
 import moment from "moment"
-import SiteSidebar from "../components/SiteSidebar"
-import siteMetadata from "../components/metadata.yaml"
 
 class SiteIndex extends React.Component {
   render() {
-    this.props.data.siteMetadata = { ...siteMetadata }
-
     const pageLinks = []
     let iteratorKey = 0
     let pageRaw = [
@@ -59,14 +55,10 @@ class SiteIndex extends React.Component {
                         ).format(`MMMM YYYY`)}
                       </time>
                     </h4>
-                    <h5 className="level-right">
-                      {frontmatter.category}
-                    </h5>
+                    <h5 className="level-right">{frontmatter.category}</h5>
                   </div>
                   <h1 className="title is-marginless">
-                    <Link to={frontmatter.path}>
-                      {frontmatter.title}
-                    </Link>
+                    <Link to={frontmatter.path}>{frontmatter.title}</Link>
                   </h1>
                 </div>
                 <div className="content">
@@ -90,20 +82,7 @@ class SiteIndex extends React.Component {
       }
     })
 
-    return (
-      <div>
-        <div className="section">
-          <div className="columns">
-            <div className="column is-one-quarter">
-              <SiteSidebar {...this.props} />
-            </div>
-            <div className="column">
-              {pageLinks}
-            </div>
-          </div>
-        </div>
-      </div>
-    )
+    return <div>{pageLinks}</div>
   }
 }
 

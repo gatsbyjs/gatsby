@@ -5,12 +5,14 @@ const crypto = require(`crypto`)
 
 const convertToJson = (data, options) =>
   new Promise((res, rej) => {
-    csv(options).fromString(data).on(`end_parsed`, jsonData => {
-      if (!jsonData) {
-        rej(`CSV to JSON conversion failed!`)
-      }
-      res(jsonData)
-    })
+    csv(options)
+      .fromString(data)
+      .on(`end_parsed`, jsonData => {
+        if (!jsonData) {
+          rej(`CSV to JSON conversion failed!`)
+        }
+        res(jsonData)
+      })
   })
 
 async function onCreateNode(

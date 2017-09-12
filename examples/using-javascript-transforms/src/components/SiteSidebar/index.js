@@ -2,14 +2,11 @@ import React from "react"
 import Link from "gatsby-link"
 import SiteNav from "../SiteNav"
 import SiteLinks from "../SiteLinks"
-import siteMetadata from "../metadata.yaml"
-// cheating with ^ because no graphql
 
 class SiteSidebar extends React.Component {
   render() {
     const isHome = this.props.location.pathname === `/`
-    // const siteMetadata = this.props.data.siteMetadata;
-    // placeholder ^ for graphql
+    const siteMetadata = this.props.siteMetadata
     // TODO, deal with image more nice like
 
     let header = (
@@ -34,9 +31,7 @@ class SiteSidebar extends React.Component {
               {siteMetadata.title}
             </Link>
           </p>
-          <p style={{ fontStyle: `italic` }}>
-            {siteMetadata.siteDescr}
-          </p>
+          <p style={{ fontStyle: `italic` }}>{siteMetadata.siteDescr}</p>
         </div>
       </div>
     )
@@ -65,24 +60,3 @@ class SiteSidebar extends React.Component {
 }
 
 export default SiteSidebar
-
-// this doesn't work currently so we cheat above (see imports)
-const pageQuery = graphql`
-  fragment siteMetadata on siteMetadata {
-    siteTitle
-    siteDescr
-    siteAuthor
-    siteEmailUrl
-    siteEmailPretty
-    siteLinkedInUrl
-    siteLinkedInPretty
-    siteTwitterUrl
-    siteTwitterPretty
-    siteGithubUrl
-    siteGithubPretty
-    siteKeybaseUrl
-    siteKeybasePretty
-    sitePhotoUrl
-    sitePhotoPretty
-  }
-`

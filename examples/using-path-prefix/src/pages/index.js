@@ -1,7 +1,7 @@
 import React from "react"
 import Link from "gatsby-link"
 
-const Home = () =>
+const Home = () => (
   <div>
     <h1>Using prefixed paths</h1>
     <ul>
@@ -16,5 +16,6 @@ const Home = () =>
       </li>
     </ul>
   </div>
+)
 
 export default Home

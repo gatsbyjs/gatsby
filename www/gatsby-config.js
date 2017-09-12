@@ -24,7 +24,9 @@ module.exports = {
     },
     {
       resolve: `gatsby-plugin-typography`,
-      pathToConfigModule: `src/utils/typography`,
+      options: {
+        pathToConfigModule: `src/utils/typography`,
+      },
     },
     {
       resolve: `gatsby-plugin-canonical-urls`,
@@ -42,7 +44,7 @@ module.exports = {
           {
             resolve: `gatsby-remark-images`,
             options: {
-              maxWidth: 690,
+              maxWidth: 786,
               backgroundColor: `#ffffff`,
             },
           },
@@ -62,7 +64,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-nprogress`,
       options: {
-        color: `#a2466c`,
+        color: `#9D7CBF`,
+        showSpinner: false,
       },
     },
     `gatsby-plugin-glamor`,

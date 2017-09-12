@@ -1,4 +1,5 @@
 /* @flow */
+
 const express = require(`express`)
 const graphqlHTTP = require(`express-graphql`)
 const request = require(`request`)
@@ -12,6 +13,7 @@ const { store } = require(`../redux`)
 const copyStaticDirectory = require(`./copy-static-directory`)
 const developHtml = require(`./develop-html`)
 const { withBasePath } = require(`./path`)
+const report = require(`../reporter`)
 
 // Watch the static directory and copy files to public as they're added or
 // changed. Wait 10 seconds so copying doesn't interfer with the regular
@@ -35,8 +37,18 @@ async function startServer(program) {
   const directoryPath = withBasePath(directory)
   const createIndexHtml = () =>
     developHtml(program).catch(err => {
-      console.error(err)
-      process.exit(1)
+      if (err.name !== `WebpackError`) {
+        report.panic(err)
+        return
+      }
+      report.panic(
+        report.stripIndent`
+          There was an error compiling the html.js component for the development server.
+
+          See our docs page on debugging HTML builds for help https://goo.gl/yL9lND
+        `,
+        err
+      )
     })
 
   // Start bootstrap process.
@@ -92,10 +104,35 @@ async function startServer(program) {
       req.pipe(request(proxiedUrl)).pipe(res)
     })
   }
+
+  // Check if the file exists in the public folder.
+  app.get(`*`, (req, res, next) => {
+    // Load file but ignore errors.
+    res.sendFile(directoryPath(`/public/${req.url}`), err => {
+      // No err so a file was sent successfully.
+      if (!err || !err.path) {
+        next()
+      } else if (err) {
+        // There was an error. Let's check if the error was because it
+        // couldn't find an HTML file. We ignore these as we want to serve
+        // all HTML from our single empty SSR html file.
+        const parsedPath = parsePath(err.path)
+        if (
+          parsedPath.extname === `` ||
+          parsedPath.extname.startsWith(`.html`)
+        ) {
+          next()
+        } else {
+          res.status(404).end()
+        }
+      }
+    })
+  })
+
   // Render an HTML page and serve it.
   app.use((req, res, next) => {
     const parsedPath = parsePath(req.originalUrl)
-    if (parsedPath.extname === `` || parsedPath.extname === `.html`) {
+    if (parsedPath.extname === `` || parsedPath.extname.startsWith(`.html`)) {
       res.sendFile(directoryPath(`public/index.html`), err => {
         if (err) {
           res.status(500).end()
@@ -104,16 +141,6 @@ async function startServer(program) {
     } else {
       next()
     }
-  })
-
-  // As last step, check if the file exists in the public folder.
-  app.get(`*`, (req, res) => {
-    // Load file but ignore errors.
-    res.sendFile(directoryPath(`/public/${req.url}`), err => {
-      if (err) {
-        res.status(404).end()
-      }
-    })
   })
 
   /**
@@ -127,32 +154,32 @@ async function startServer(program) {
     socket.join(`clients`)
   })
 
-  const listener = server.listen(program.port, program.host, e => {
-    if (e) {
-      if (e.code === `EADDRINUSE`) {
+  const listener = server.listen(program.port, program.host, err => {
+    if (err) {
+      if (err.code === `EADDRINUSE`) {
         // eslint-disable-next-line max-len
-        console.log(
+        report.panic(
           `Unable to start Gatsby on port ${program.port} as there's already a process listing on that port.`
         )
-      } else {
-        console.log(e)
+        return
       }
 
-      process.exit()
-    } else {
-      if (program.open) {
-        const host =
-          listener.address().address === `127.0.0.1`
-            ? `localhost`
-            : listener.address().address
-        const opn = require(`opn`)
-        opn(`http://${host}:${listener.address().port}`)
-      }
+      report.panic(`There was a problem starting the development server`, err)
+    }
+
+    if (program.open) {
+      const host =
+        listener.address().address === `127.0.0.1`
+          ? `localhost`
+          : listener.address().address
+      require(`opn`)(`http://${host}:${listener.address().port}`)
     }
   })
 
   // Register watcher that rebuilds index.html every time html.js changes.
-  const watchGlobs = [`src/html.js`, `**/gatsby-ssr.js`].map(directoryPath)
+  const watchGlobs = [`src/html.js`, `plugins/**/gatsby-ssr.js`].map(
+    directoryPath
+  )
   chokidar.watch(watchGlobs).on(`change`, async () => {
     await createIndexHtml()
     io.to(`clients`).emit(`reload`)
@@ -166,8 +193,7 @@ module.exports = (program: any) => {
 
   detect(port, (err, _port) => {
     if (err) {
-      console.error(err)
-      process.exit()
+      report.panic(err)
     }
 
     if (port !== _port) {

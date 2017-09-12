@@ -10,7 +10,7 @@ Array [
       "id": "foo",
       "internal": Object {
         "contentDigest": "8838e569ae02d98806532310fb2a577a",
-        "type": "UndefinedJson",
+        "type": "NodeNameJson",
       },
       "parent": "whatever",
     },
@@ -23,7 +23,7 @@ Array [
       "id": "whatever [1] >>> JSON",
       "internal": Object {
         "contentDigest": "f624311d932d73dcd416d2a8bea2b67d",
-        "type": "UndefinedJson",
+        "type": "NodeNameJson",
       },
       "parent": "whatever",
     },
@@ -42,7 +42,7 @@ Array [
         "id": "foo",
         "internal": Object {
           "contentDigest": "8838e569ae02d98806532310fb2a577a",
-          "type": "UndefinedJson",
+          "type": "NodeNameJson",
         },
         "parent": "whatever",
       },
@@ -55,6 +55,7 @@ Array [
           "mediaType": "application/json",
           "name": "test",
         },
+        "name": "nodeName",
         "parent": "SOURCE",
       },
     },
@@ -68,7 +69,7 @@ Array [
         "id": "whatever [1] >>> JSON",
         "internal": Object {
           "contentDigest": "f624311d932d73dcd416d2a8bea2b67d",
-          "type": "UndefinedJson",
+          "type": "NodeNameJson",
         },
         "parent": "whatever",
       },
@@ -81,6 +82,7 @@ Array [
           "mediaType": "application/json",
           "name": "test",
         },
+        "name": "nodeName",
         "parent": "SOURCE",
       },
     },

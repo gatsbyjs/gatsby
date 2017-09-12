@@ -54,10 +54,10 @@ function watch(root, packages, { scanOnce, quiet }) {
           copyPath(path, newPath, quiet)
 
           // If this is from "cache-dir" also copy it into the site's .cache
-          if (_.includes(path, `dist/cache-dir`)) {
+          if (_.includes(path, `cache-dir`)) {
             const newCachePath = syspath.join(
               `.cache/`,
-              syspath.relative(syspath.join(prefix, `dist`, `cache-dir`), path)
+              syspath.relative(syspath.join(prefix, `cache-dir`), path)
             )
             copyPath(path, newCachePath, quiet)
           }

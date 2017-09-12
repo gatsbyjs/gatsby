@@ -10,9 +10,8 @@ exports.data = {
 class ContactMe extends React.Component {
   render() {
     return (
-      <div className="container">
+      <div className="box container">
         <p>I would love to hear from you!</p>
-        <SiteLinks {...this.props} />
       </div>
     )
   }

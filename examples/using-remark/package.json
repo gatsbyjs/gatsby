@@ -15,6 +15,7 @@
     "gatsby-plugin-sharp": "latest",
     "gatsby-remark-autolink-headers": "latest",
     "gatsby-remark-copy-linked-files": "latest",
+    "gatsby-remark-katex": "latest",
     "gatsby-remark-prismjs": "latest",
     "gatsby-remark-responsive-iframe": "latest",
     "gatsby-remark-images": "latest",
@@ -36,6 +37,7 @@
   "main": "index.js",
   "scripts": {
     "develop": "gatsby develop",
-    "build": "gatsby build"
+    "build": "gatsby build",
+    "serve": "gatsby serve"
   }
 }

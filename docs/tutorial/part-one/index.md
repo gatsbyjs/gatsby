@@ -74,7 +74,7 @@ Try changing "Hello world!" in the page component to "Hello Gatsby!". You'll fin
 
 Try some other tricks.
 
-1. Gatsby let's you add "inline styles" via a JavaScript style "prop" (we'll learn about other styling options later).
+1. Gatsby lets you add "inline styles" via a JavaScript style "prop" (we'll learn about other styling options later).
 
    Try making your page component look like this:
 
@@ -161,9 +161,8 @@ export default () =>
 Save that and now you should be able to click back and forth between the two pages!
 
 <video controls="controls" autoplay="true" loop="true">
-<source type="video/mp4" src="/images/clicking-2.mp4"></source>
-<p>Your browser does not support the video element.</p>
-
+  <source type="video/mp4" src="/images/clicking-2.mp4"></source>
+  <p>Your browser does not support the video element.</p>
 </video>
 
 
