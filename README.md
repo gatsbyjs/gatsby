@@ -24,6 +24,7 @@ Websites built with Gatbsy:
 * [The Chiedo Companies Website](https://www.chiedo.com)
 * [Damir.io](http://damir.io/) [(source)](https://github.com/dvzrd/gatsby-sfiction)
 * [Ruben's Blog](https://vagr9k.me/) [(source)](https://github.com/Vagr9K/Blog)
+* [Charlie Harrington's Blog](https://charlieharrington.com) [(source)](https://github.com/whatrocks/blog)
 
 ## Docs
 
