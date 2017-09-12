@@ -12,6 +12,6 @@ Add the plugin to your `gatsby-config.js`.
 
 ```js
 plugins: [
-  'gatbsy-plugin-emotion'
+  'gatsby-plugin-emotion'
 ]
 ```

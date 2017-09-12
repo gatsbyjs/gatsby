@@ -12,6 +12,11 @@ module.exports = (pages, pathPrefix = ``) => pathname => {
     trimmedPathname = trimmedPathname.split(`#`).slice(0, -1).join(``)
   }
 
+  // Remove search query
+  if (trimmedPathname.split(`?`).length > 1) {
+    trimmedPathname = trimmedPathname.split(`?`).slice(0, -1).join(``)
+  }
+
   if (pageCache[trimmedPathname]) {
     return pageCache[trimmedPathname]
   }

@@ -74,7 +74,7 @@ Try changing "Hello world!" in the page component to "Hello Gatsby!". You'll fin
 
 Try some other tricks.
 
-1. Gatsby let's you add "inline styles" via a JavaScript style "prop" (we'll learn about other styling options later).
+1. Gatsby lets you add "inline styles" via a JavaScript style "prop" (we'll learn about other styling options later).
 
    Try making your page component look like this:
 

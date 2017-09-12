@@ -12,6 +12,7 @@ import apiRunnerNode from "./api-runner-node"
 // https://github.com/js-dxtools/webpack-validator#customizing
 const validationWhitelist = Joi.object({
   stylus: Joi.any(),
+  sassLoader: Joi.any(),
   sassResources: [Joi.string(), Joi.array().items(Joi.string())],
 })
 

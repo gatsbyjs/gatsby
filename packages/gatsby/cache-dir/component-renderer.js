@@ -3,10 +3,7 @@ import PropTypes from "prop-types"
 import loader from "./loader"
 import emitter from "./emitter"
 
-const DefaultLayout = ({ children }) =>
-  <div>
-    {children()}
-  </div>
+const DefaultLayout = ({ children }) => <div>{children()}</div>
 
 // Pass pathname in as prop.
 // component will try fetching resources. If they exist,
@@ -61,7 +58,7 @@ class ComponentRenderer extends React.Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     // Check if the component or json have changed.
-    if (!this.state.pageResources || nextState.pageResources) {
+    if (!this.state.pageResources && nextState.pageResources) {
       return true
     }
     if (
@@ -77,7 +74,7 @@ class ComponentRenderer extends React.Component {
     if (
       this.state.location.key !== nextState.location.key &&
       nextState.pageResources.page &&
-      nextState.pageResources.page.matchPath
+      (nextState.pageResources.page.matchPath || nextState.pageResources.page.path)
     ) {
       return true
     }
