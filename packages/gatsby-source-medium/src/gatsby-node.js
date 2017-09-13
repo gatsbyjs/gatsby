@@ -8,11 +8,10 @@ const fetch = username => {
 
 const prefix = `])}while(1);</x>`
 
-const serializeBigInt = (nextObj, prevObj, prevKey) => {
+const serialiseBigInt = (nextObj, prevObj, prevKey) => {
   if (typeof nextObj === "object") {
-    Object.keys(nextObj).map(function(key) {
-      crawlObject(nextObj[key], nextObj, key)
-    })
+    Object.keys(nextObj).map((key) =>
+      serialiseBigInt(nextObj[key], nextObj, key))
   } else {
     if (typeof nextObj === 'number' && (nextObj >> 0) !== nextObj) {
       prevObj[prevKey] = String(nextObj)
