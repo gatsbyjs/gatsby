@@ -33,6 +33,11 @@ Official:
 
 Community:
 
+* [gatsby-starter-blog-no-styles](https://github.com/noahg/gatsby-starter-blog-no-styles) [(demo)](http://capricious-spring.surge.sh/)
+
+  Features:
+  * Same as official gatsby-starter-blog but with all styling removed
+
 * [gatsby-material-starter](https://github.com/Vagr9K/gatsby-material-starter) [(demo)](https://vagr9k.github.io/gatsby-material-starter/)
 
   Features:
