@@ -40,7 +40,7 @@ exports.sourceNodes = async ({ boundActionCreators }, { username }) => {
 
     const resources = Array.prototype.concat(...importableResources)
     resources.map(resource => {
-      serializeBigInt(resource)
+      serialiseBigInt(resource)
 
       const digest = crypto
         .createHash(`md5`)
