@@ -8,6 +8,18 @@ const fetch = username => {
 
 const prefix = `])}while(1);</x>`
 
+const serializeBigInt = (nextObj, prevObj, prevKey) => {
+  if (typeof nextObj === "object") {
+    Object.keys(nextObj).map(function(key) {
+      crawlObject(nextObj[key], nextObj, key)
+    })
+  } else {
+    if (typeof nextObj === 'number' && (nextObj >> 0) !== nextObj) {
+      prevObj[prevKey] = String(nextObj)
+    }
+  }
+}
+
 const strip = payload => payload.replace(prefix, ``)
 
 exports.sourceNodes = async ({ boundActionCreators }, { username }) => {
@@ -29,6 +41,8 @@ exports.sourceNodes = async ({ boundActionCreators }, { username }) => {
 
     const resources = Array.prototype.concat(...importableResources)
     resources.map(resource => {
+      serializeBigInt(resource)
+
       const digest = crypto
         .createHash(`md5`)
         .update(JSON.stringify(resource))
