@@ -38,7 +38,9 @@ export const pageSchema = Joi.object()
 export const nodeSchema = Joi.object()
   .keys({
     id: Joi.string().required(),
-    children: Joi.array(Joi.string()).required(),
+    children: Joi.array()
+      .items(Joi.string())
+      .required(),
     parent: Joi.string()
       .allow(null)
       .required(),
