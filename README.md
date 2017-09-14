@@ -37,6 +37,7 @@ Websites built with Gatbsy:
 * [Haboba Find Jobs at Phu Quoc Island](http://haboba.com)
 * [Charlie Harrington's Blog](https://charlieharrington.com) [(source)](https://github.com/whatrocks/blog)
 * [Song Wang’s website](https://songwang.io/) [(source)](https://github.com/wangsongiam/songwang.io)
+* [Digital Psychology](http://digitalpsychology.io) [(source)](https://github.com/danistefanovic/digitalpsychology.io)
 
 ## Docs
 
