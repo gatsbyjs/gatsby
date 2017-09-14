@@ -35,6 +35,8 @@ Websites built with Gatbsy:
 * [Overlap.show](https://overlap.show) [(source)](https://github.com/pouretrebelle/overlap.show)
 * [smartive Company Website](https://smartive.ch)
 * [Haboba Find Jobs at Phu Quoc Island](http://haboba.com)
+* [Charlie Harrington's Blog](https://charlieharrington.com) [(source)](https://github.com/whatrocks/blog)
+* [Song Wang’s website](https://songwang.io/) [(source)](https://github.com/wangsongiam/songwang.io)
 
 ## Docs
 

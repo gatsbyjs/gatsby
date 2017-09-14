@@ -39,6 +39,10 @@ describe(`find-page`, () => {
     expect(findPage(`/about/me/#hashtagawesome`).path).toBe(`/about/me/`)
   })
 
+  it(`can find links with search query`, () => {
+    expect(findPage(`/about/me/?query=awesome`).path).toBe(`/about/me/`)
+  })
+
   it(`handles finding prefixed links`, () => {
     const newPages = [
       {

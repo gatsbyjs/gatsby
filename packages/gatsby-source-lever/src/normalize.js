@@ -109,7 +109,8 @@ exports.getValidKey = getValidKey
 
 // Create entities from the few the lever API returns as an object for presumably
 // legacy reasons.
-exports.normalizeEntities = entities => entities.reduce((acc, e) => acc.concat(e), [])
+exports.normalizeEntities = entities =>
+  entities.reduce((acc, e) => acc.concat(e), [])
 
 // Standardize ids + make sure keys are valid.
 exports.standardizeKeys = entities =>

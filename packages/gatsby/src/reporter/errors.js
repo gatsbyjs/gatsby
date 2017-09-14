@@ -58,7 +58,7 @@ function createErrorFromString(errorStr: string, sourceMapFile: string) {
   try {
     if (sourceMapFile) prepareStackTrace(error, sourceMapFile)
   } catch (err) {
-    // don't shadow a real error because of a parsing issue  
+    // don't shadow a real error because of a parsing issue
   }
   return error
 }
