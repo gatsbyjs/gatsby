@@ -53,9 +53,14 @@ function convertToInputType(type: GraphQLType): GraphQLInputType {
   } else if (type instanceof GraphQLObjectType) {
     return new GraphQLInputObjectType({
       name: createTypeName(`${type.name}InputObject`),
-      fields: _.mapValues(type.getFields(), fieldConfig => {return {
-        type: convertToInputType(fieldConfig.type),
-      }}),
+      fields: _.transform(type.getFields(), (out, fieldConfig, key) => {
+        try {
+          const type = convertToInputType(fieldConfig.type)
+          out[key] = { type }
+        } catch (e) {
+          console.log(e)
+        }
+      }),
     })
   } else if (type instanceof GraphQLList) {
     return new GraphQLList(makeNullable(convertToInputType(type.ofType)))
@@ -112,17 +117,15 @@ function convertToInputFilter(
   } else if (type instanceof GraphQLInputObjectType) {
     return new GraphQLInputObjectType({
       name: createTypeName(`${prefix}{type.name}`),
-      fields: _.mapValues(type.getFields(), (fieldConfig, key) => {
+      fields: _.transform(type.getFields(), (out, fieldConfig, key) => {
         try {
-          return {
-            type: convertToInputFilter(
-              `${prefix}${_.upperFirst(key)}`,
-              fieldConfig.type
-            ),
-          }
+          const type = convertToInputFilter(
+            `${prefix}${_.upperFirst(key)}`,
+            fieldConfig.type
+          )
+          out[key] = { type }
         } catch (e) {
           console.log(e)
-          return undefined
         }
       }),
     })
