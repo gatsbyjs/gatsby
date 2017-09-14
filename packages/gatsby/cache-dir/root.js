@@ -1,12 +1,7 @@
 import React, { createElement } from "react"
-import {
-  Router,
-  Route,
-  matchPath,
-  withRouter,
-} from "react-router-dom"
+import { Router, Route, matchPath, withRouter } from "react-router-dom"
 import { ScrollContext } from "react-router-scroll"
-import createHistory from "history/createBrowserHistory"
+import history from "./dev-history"
 import { apiRunner } from "./api-runner-browser"
 import syncRequires from "./sync-requires"
 import pages from "./pages.json"
@@ -15,8 +10,6 @@ import loader from "./loader"
 loader.addPagesArray(pages)
 loader.addDevRequires(syncRequires)
 window.___loader = loader
-
-const history = createHistory()
 
 // Call onRouteUpdate on the initial page load.
 apiRunner(`onRouteUpdate`, {
@@ -82,10 +75,9 @@ const navigateTo = pathname => {
 window.___navigateTo = navigateTo
 
 const AltRouter = apiRunner(`replaceRouterComponent`, { history })[0]
-const DefaultRouter = ({ children }) =>
-  <Router history={history}>
-    {children}
-  </Router>
+const DefaultRouter = ({ children }) => (
+  <Router history={history}>{children}</Router>
+)
 
 // Always have to have one top-level layout
 // can have ones below that. Find page, if has different
