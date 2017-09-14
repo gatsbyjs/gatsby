@@ -7,7 +7,16 @@ Array [
       "attributes": Object {
         "id": "bk101",
       },
-      "children": Array [
+      "children": Array [],
+      "content": "",
+      "id": "bk101",
+      "internal": Object {
+        "contentDigest": "446732570969e52599dded1ba4941b65",
+        "type": "NodeNameXml",
+      },
+      "name": "book",
+      "parent": "whatever",
+      "xmlChildren": Array [
         Object {
           "attributes": Object {},
           "children": Array [],
@@ -46,14 +55,6 @@ Array [
           "name": "description",
         },
       ],
-      "content": "",
-      "id": "bk101",
-      "internal": Object {
-        "contentDigest": "446732570969e52599dded1ba4941b65",
-        "type": "NodeNameXml",
-      },
-      "name": "book",
-      "parent": "whatever",
     },
   ],
   Array [
@@ -61,7 +62,16 @@ Array [
       "attributes": Object {
         "id": "bk102",
       },
-      "children": Array [
+      "children": Array [],
+      "content": "",
+      "id": "bk102",
+      "internal": Object {
+        "contentDigest": "f1aadb72f7fc4e80a8b0f44899a4c30c",
+        "type": "NodeNameXml",
+      },
+      "name": "book",
+      "parent": "whatever",
+      "xmlChildren": Array [
         Object {
           "attributes": Object {},
           "children": Array [],
@@ -101,14 +111,6 @@ Array [
           "name": "description",
         },
       ],
-      "content": "",
-      "id": "bk102",
-      "internal": Object {
-        "contentDigest": "f1aadb72f7fc4e80a8b0f44899a4c30c",
-        "type": "NodeNameXml",
-      },
-      "name": "book",
-      "parent": "whatever",
     },
   ],
 ]
@@ -122,7 +124,16 @@ Array [
         "attributes": Object {
           "id": "bk101",
         },
-        "children": Array [
+        "children": Array [],
+        "content": "",
+        "id": "bk101",
+        "internal": Object {
+          "contentDigest": "446732570969e52599dded1ba4941b65",
+          "type": "NodeNameXml",
+        },
+        "name": "book",
+        "parent": "whatever",
+        "xmlChildren": Array [
           Object {
             "attributes": Object {},
             "children": Array [],
@@ -161,14 +172,6 @@ Array [
             "name": "description",
           },
         ],
-        "content": "",
-        "id": "bk101",
-        "internal": Object {
-          "contentDigest": "446732570969e52599dded1ba4941b65",
-          "type": "NodeNameXml",
-        },
-        "name": "book",
-        "parent": "whatever",
       },
       "parent": Object {
         "children": Array [],
@@ -213,7 +216,16 @@ Array [
         "attributes": Object {
           "id": "bk102",
         },
-        "children": Array [
+        "children": Array [],
+        "content": "",
+        "id": "bk102",
+        "internal": Object {
+          "contentDigest": "f1aadb72f7fc4e80a8b0f44899a4c30c",
+          "type": "NodeNameXml",
+        },
+        "name": "book",
+        "parent": "whatever",
+        "xmlChildren": Array [
           Object {
             "attributes": Object {},
             "children": Array [],
@@ -253,14 +265,6 @@ Array [
             "name": "description",
           },
         ],
-        "content": "",
-        "id": "bk102",
-        "internal": Object {
-          "contentDigest": "f1aadb72f7fc4e80a8b0f44899a4c30c",
-          "type": "NodeNameXml",
-        },
-        "name": "book",
-        "parent": "whatever",
       },
       "parent": Object {
         "children": Array [],
