@@ -1,5 +1,5 @@
 if (__POLYFILL__) {
-  require("core-js/modules/es6.promise")
+  require(`core-js/modules/es6.promise`)
 }
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import React, { createElement } from "react"
@@ -103,10 +103,9 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   }
 
   const AltRouter = apiRunner(`replaceRouterComponent`, { history })[0]
-  const DefaultRouter = ({ children }) =>
-    <Router history={history}>
-      {children}
-    </Router>
+  const DefaultRouter = ({ children }) => (
+    <Router history={history}>{children}</Router>
+  )
 
   loader.getResourcesForPathname(window.location.pathname, () => {
     const Root = () =>
