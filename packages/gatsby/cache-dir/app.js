@@ -1,5 +1,5 @@
 if (__POLYFILL__) {
-  require("core-js/modules/es6.promise")
+  require(`core-js/modules/es6.promise`)
 }
 import React from "react"
 import ReactDOM from "react-dom"

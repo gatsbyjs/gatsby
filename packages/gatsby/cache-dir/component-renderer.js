@@ -73,7 +73,8 @@ class ComponentRenderer extends React.Component {
     if (
       this.state.location.key !== nextState.location.key &&
       nextState.pageResources.page &&
-      (nextState.pageResources.page.matchPath || nextState.pageResources.page.path)
+      (nextState.pageResources.page.matchPath ||
+        nextState.pageResources.page.path)
     ) {
       return true
     }

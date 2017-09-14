@@ -9,12 +9,18 @@ module.exports = (pages, pathPrefix = ``) => pathname => {
 
   // Remove any hashfragment
   if (trimmedPathname.split(`#`).length > 1) {
-    trimmedPathname = trimmedPathname.split(`#`).slice(0, -1).join(``)
+    trimmedPathname = trimmedPathname
+      .split(`#`)
+      .slice(0, -1)
+      .join(``)
   }
 
   // Remove search query
   if (trimmedPathname.split(`?`).length > 1) {
-    trimmedPathname = trimmedPathname.split(`?`).slice(0, -1).join(``)
+    trimmedPathname = trimmedPathname
+      .split(`?`)
+      .slice(0, -1)
+      .join(``)
   }
 
   if (pageCache[trimmedPathname]) {
