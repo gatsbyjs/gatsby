@@ -17,10 +17,15 @@ async function onCreateNode({ node, boundActionCreators, loadNodeContent }) {
       .createHash(`md5`)
       .update(objStr)
       .digest(`hex`)
+    if (obj.children) {
+      obj.xmlChildren = obj.children
+      delete obj.children
+    }
     return {
       ...obj,
       id: obj.attributes.id ? obj.attributes.id : `${node.id} [${i}] >>> XML`,
       parent: node.id,
+      children: [],
       internal: {
         contentDigest,
         type: _.upperFirst(_.camelCase(`${node.name} xml`)),
