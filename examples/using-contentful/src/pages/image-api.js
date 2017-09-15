@@ -17,7 +17,7 @@ export default props => {
         options
       </p>
       <h2>Resize</h2>
-      {assets.map(({ node: { title, resize } }) =>
+      {assets.map(({ node: { title, resize } }) => (
         <img
           alt={title}
           src={resize.src}
@@ -29,7 +29,7 @@ export default props => {
             border: `1px solid tomato`,
           }}
         />
-      )}
+      ))}
       <h4>GraphQL query</h4>
       <pre style={{ background: `#efeded`, padding: rhythm(3 / 4) }}>
         <code
@@ -67,7 +67,7 @@ export default props => {
       <p>
         You should prefer this operator over <code>resize</code>.
       </p>
-      {assets.map(({ node: { title, responsiveResolution } }) =>
+      {assets.map(({ node: { title, responsiveResolution } }) => (
         <img
           alt={title}
           src={responsiveResolution.src}
@@ -80,7 +80,7 @@ export default props => {
             border: `1px solid tomato`,
           }}
         />
-      )}
+      ))}
       <h4>GraphQL query</h4>
       <pre style={{ background: `#efeded`, padding: rhythm(3 / 4) }}>
         <code
@@ -122,7 +122,7 @@ export default props => {
           resizing focus area
         </a>
       </p>
-      {assets.map(({ node: { title, resizing } }) =>
+      {assets.map(({ node: { title, resizing } }) => (
         <img
           alt={title}
           src={resizing.src}
@@ -135,7 +135,7 @@ export default props => {
             border: `1px solid tomato`,
           }}
         />
-      )}
+      ))}
       <h4>GraphQL query</h4>
       <pre style={{ background: `#efeded`, padding: rhythm(3 / 4) }}>
         <code
@@ -171,7 +171,7 @@ export default props => {
         specify a <code>maxWidth</code>, the max width the container of the
         images reaches.
       </p>
-      {assets.map(({ node: { title, responsiveSizes } }) =>
+      {assets.map(({ node: { title, responsiveSizes } }) => (
         <img
           alt={title}
           src={responsiveSizes.src}
@@ -183,7 +183,7 @@ export default props => {
             border: `1px solid tomato`,
           }}
         />
-      )}
+      ))}
       <h4>GraphQL query</h4>
       <pre style={{ background: `#efeded`, padding: rhythm(3 / 4) }}>
         <code

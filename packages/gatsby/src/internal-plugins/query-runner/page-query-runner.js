@@ -33,6 +33,8 @@ exports.runQueries = async () => {
 
   // Run these pages
   await runQueriesForIds(cleanIds)
+
+  active = true
   return
 }
 

@@ -25,18 +25,6 @@ const IndexRoute = React.createClass({
     const blogPosts = this.props.data.allMarkdownRemark
     return (
       <div css={{ position: `relative` }}>
-        <div
-          css={{
-            background: presets.brand,
-            position: `absolute`,
-            bottom: `0`,
-            top: `0`,
-            left: `0`,
-            right: `0`,
-            height: `100%`,
-            zIndex: -1,
-          }}
-        />
         <MastheadBg />
         <div
           css={{
@@ -183,9 +171,13 @@ const IndexRoute = React.createClass({
                   >
                     Latest from the Gatsby blog
                   </h2>
-                  {blogPosts.edges.map(({ node }) =>
-                    <BlogPostPreviewItem post={node} key={node.fields.slug} />
-                  )}
+                  {blogPosts.edges.map(({ node }) => (
+                    <BlogPostPreviewItem
+                      post={node}
+                      key={node.fields.slug}
+                      css={{ marginBottom: rhythm(2) }}
+                    />
+                  ))}
                 </Container>
               </div>
             </Cards>

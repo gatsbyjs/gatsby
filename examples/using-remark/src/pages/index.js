@@ -42,7 +42,7 @@ class Index extends React.Component {
               listStyle: `none`,
             }}
           >
-            {posts.map(post =>
+            {posts.map(post => (
               <li key={post.node.fields.slug}>
                 <span
                   css={{
@@ -60,7 +60,7 @@ class Index extends React.Component {
                   {post.node.frontmatter.title}
                 </Link>
               </li>
-            )}
+            ))}
           </ul>
         </div>
       </div>

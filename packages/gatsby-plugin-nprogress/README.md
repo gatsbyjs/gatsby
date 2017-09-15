@@ -18,7 +18,13 @@ plugins: [
     options: {
       // Setting a color is optional.
       color: `tomato`,
+      // Disable the loading spinner.
+      showSpinner: false,
     }
   }
 ]
 ```
+
+In addition to `color` – a configuration option specific to
+`gatsby-plugin-nprogress` that saves some time [customizing the nprogress CSS](https://github.com/rstacruz/nprogress#customization) to match your site
+colors – you may pass all available [nprogress configuration options](https://github.com/rstacruz/nprogress#configuration).

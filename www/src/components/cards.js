@@ -2,7 +2,7 @@ import presets from "../utils/presets"
 import { rhythm, scale, options } from "../utils/typography"
 import { vP, vPHd, vPVHd, vPVVHd } from "../components/gutters"
 
-const Cards = ({ children }) =>
+const Cards = ({ children }) => (
   <div
     css={{
       display: `flex`,
@@ -15,5 +15,6 @@ const Cards = ({ children }) =>
   >
     {children}
   </div>
+)
 
 export default Cards

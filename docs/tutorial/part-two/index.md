@@ -458,14 +458,19 @@ export default () =>
 
 Let's add the same inline `User` component but this time using Glamor's `css` prop.
 
-```jsx{5-21,27-35}
+```jsx{5-26,32-40}
 import React from "react"
 
 import Container from "../components/container"
 
 const User = props =>
   <div
-    css={{ display: `flex`, alignItems: `center`, margin: `0 auto 12px auto` }}
+    css={{
+      display: `flex`,
+      alignItems: `center`,
+      margin: `0 auto 12px auto`,
+      "&:last-child": { marginBottom: 0 }
+    }}
   >
     <img
       src={props.avatar}

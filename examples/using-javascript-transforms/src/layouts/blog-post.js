@@ -79,9 +79,7 @@ class BlogPostTemplate extends React.Component {
     return (
       <div>
         {home}
-        <div className="container">
-          {this.props.children()}
-        </div>
+        <div className="container">{this.props.children()}</div>
         <div className="footer container">
           {published}
           <hr />

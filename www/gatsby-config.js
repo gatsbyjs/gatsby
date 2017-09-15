@@ -44,7 +44,7 @@ module.exports = {
           {
             resolve: `gatsby-remark-images`,
             options: {
-              maxWidth: 690,
+              maxWidth: 786,
               backgroundColor: `#ffffff`,
             },
           },
@@ -64,7 +64,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-nprogress`,
       options: {
-        color: `#a2466c`,
+        color: `#9D7CBF`,
+        showSpinner: false,
       },
     },
     `gatsby-plugin-glamor`,

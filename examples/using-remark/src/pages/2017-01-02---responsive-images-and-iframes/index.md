@@ -40,6 +40,12 @@ Let's see some more photos by [Max Boettinger](https://unsplash.com/@maxboetting
 
 ![](max-boettinger-288448.jpg)
 
+### What about retina images?
+
+Absolutely, these are supported too! Gatsby takes care to retain images' pixel density.
+
+![Gandalf telling you that you should stay where you are](144-density.jpg)
+
 ### Okay, nice! But what about GIFs?
 
 Sadly, [Sharp](https://github.com/lovell/sharp) – the library that does the
