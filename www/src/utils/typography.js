@@ -185,6 +185,7 @@ const options = {
         boxShadow: `none`,
         borderBottom: `transparent`,
         marginTop: rhythm(options.blockMarginBottom * 2),
+        marginBottom: rhythm(options.blockMarginBottom * 2),
       },
       ".main-body a.gatsby-resp-image-link:hover": {
         background: `none`,
