@@ -12,6 +12,7 @@
 ## Showcase
 
 Websites built with Gatbsy:
+* [Simply](https://simply.co.za)
 * [mParticle's Documentation](https://docs.mparticle.com)
 * [Segment's Blog](https://segment.com/blog/)
 * [Fabric](https://meetfabric.com/)
