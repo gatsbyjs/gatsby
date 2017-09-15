@@ -29,14 +29,19 @@ exports.sourceNodes = (
         console.warn(err)
         return
       }
-
-      createNodes(db, pluginOptions, dbName, createNode, done)
+      let collection = pluginOptions.collection || `documents`
+      if( Object.prototype.toString.call( collection ) === '[object Array]' ) {
+        for (col of collection) {
+          createNodes(db, pluginOptions, dbName, createNode, col, done);
+        }
+      } else {
+          createNodes(db, pluginOptions, dbName, createNode, collection, done);
+      }
     }
   )
 }
 
-function createNodes(db, pluginOptions, dbName, createNode, done) {
-  let collectionName = pluginOptions.collection || `documents`
+function createNodes(db, pluginOptions, dbName, createNode, collectionName, done) {
   let collection = db.collection(collectionName)
   let cursor = collection.find()
 
@@ -67,17 +72,25 @@ function createNodes(db, pluginOptions, dbName, createNode, done) {
         },
       }
       if (pluginOptions.map) {
+        let mapObj = pluginOptions.map;
+        if (pluginOptions.map[collectionName]) {
+          mapObj = pluginOptions.map[collectionName];
+        }
         // We need to map certain fields to a contenttype.
-        var keys = Object.keys(pluginOptions.map).forEach(mediaItemFieldKey => {
-          node[`${mediaItemFieldKey}___NODE`] = createMappingChildNodes(
-            node,
-            mediaItemFieldKey,
-            node[mediaItemFieldKey],
-            pluginOptions.map[mediaItemFieldKey],
-            createNode
-          )
+        console.log('shine for me ...')
+        var keys = Object.keys(mapObj).forEach(mediaItemFieldKey => {
+          if (node[mediaItemFieldKey] && (
+              typeof mapObj[mediaItemFieldKey] === 'string' || mapObj[mediaItemFieldKey] instanceof String)) {
+              node[`${mediaItemFieldKey}___NODE`] = createMappingChildNodes(
+                node,
+                mediaItemFieldKey,
+                node[mediaItemFieldKey],
+                mapObj[mediaItemFieldKey],
+                createNode
+              )
 
-          delete node[mediaItemFieldKey]
+              delete node[mediaItemFieldKey]
+          }
         })
       }
       createNode(node)
