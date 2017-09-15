@@ -217,7 +217,7 @@ As I was prepping for my talk, Tom Dale of Ember, conveniently made similar poin
 
 ## Performance is hard, let's make Gatsby do the work
 
-Building highly performant websites is a science of itself. Our goal with Gatsby is to give you an approachable, highly productive modern development environment that let's you concentrate on what matters to you—content, design, and interactions—and we take care of turning your amazing site into the fastest site possible.
+Building highly performant websites can be really hard. Our goal with Gatsby is to give you an approachable, highly productive modern development environment that let's you concentrate on what matters to you—content, design, and interactions—and we take care of turning your amazing site into the fastest site possible.
 
 If you've been waiting to try out React, Gatsby is a great place to start! If you're struggling to make your React app fast, try switching to Gatsby! If you're tired of using technology X to build websites and have a huge secret crush on React, well, Gatsby is waiting with open arms 🤗
 
