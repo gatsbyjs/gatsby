@@ -103,9 +103,23 @@ const buildFieldEnumValues = (nodes: any[]) => {
   return enumValues
 }
 
+// extract a list of field names
+// nested objects get flattened to "outer___inner" which will be converted back to
+// "outer.inner" by run-sift
+const extractFieldNames = (nodes: any[]) => {
+  const values = flatten(extractFieldExamples(nodes), {
+    maxDepth: 3,
+    safe: true, // don't flatten arrays.
+    delimiter: `___`,
+  })
+
+  return Object.keys(values)
+}
+
 module.exports = {
   INVALID_VALUE,
   extractFieldExamples,
   buildFieldEnumValues,
+  extractFieldNames,
   isEmptyObjectOrArray,
 }
