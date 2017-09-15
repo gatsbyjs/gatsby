@@ -1,21 +1,13 @@
 {
   "name": "gatsby-module-loader",
-<<<<<<< HEAD
-  "version": "1.0.4",
-=======
   "version": "1.0.6",
->>>>>>> master
   "description": "_Based on https://github.com/webpack/bundle-loader and https://github.com/NekR/async-module-loader_",
   "main": "index.js",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
     "watch": "babel -w src --out-dir . --ignore __tests__",
-<<<<<<< HEAD
-    "test": "echo \"Error: no test specified\" && exit 1"
-=======
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepublish": "cross-env NODE_ENV=production npm run build"
->>>>>>> master
   },
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "license": "MIT",
@@ -24,11 +16,7 @@
     "loader-utils": "^0.2.16"
   },
   "devDependencies": {
-<<<<<<< HEAD
-    "babel-cli": "^6.24.1"
-=======
     "babel-cli": "^6.26.0",
     "cross-env": "^5.0.5"
->>>>>>> master
   }
 }

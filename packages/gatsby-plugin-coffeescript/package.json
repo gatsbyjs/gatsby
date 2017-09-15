@@ -1,11 +1,7 @@
 {
   "name": "gatsby-plugin-coffeescript",
   "description": "Adds CoffeeScript support for Gatsby layouts and pages.",
-<<<<<<< HEAD
-  "version": "1.4.4",
-=======
   "version": "1.4.6",
->>>>>>> master
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "contributors": [
     "Noah Lange <noahrlange@gmail.com>"
