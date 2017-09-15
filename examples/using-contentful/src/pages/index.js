@@ -7,7 +7,7 @@ const propTypes = {
   data: PropTypes.object.isRequired,
 }
 
-const Product = ({ node }) =>
+const Product = ({ node }) => (
   <div key={node.id}>
     <Link
       style={{ color: `inherit`, textDecoration: `none` }}
@@ -23,21 +23,21 @@ const Product = ({ node }) =>
         }}
       >
         <div style={{ marginRight: rhythm(1 / 2) }}>
-          {node.image[0].responsiveResolution.src &&
+          {node.image[0].responsiveResolution.src && (
             <img
               style={{ margin: 0 }}
               width={node.image[0].responsiveResolution.width}
               height={node.image[0].responsiveResolution.height}
               src={node.image[0].responsiveResolution.src}
               srcSet={node.image[0].responsiveResolution.srcSet}
-            />}
+            />
+          )}
         </div>
-        <div style={{ flex: 1 }}>
-          {node.productName.productName}
-        </div>
+        <div style={{ flex: 1 }}>{node.productName.productName}</div>
       </div>
     </Link>
   </div>
+)
 
 class IndexPage extends React.Component {
   render() {

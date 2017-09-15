@@ -1,6 +1,10 @@
 const documentation = require(`documentation`)
 const crypto = require(`crypto`)
-const digest = str => crypto.createHash(`md5`).update(str).digest(`hex`)
+const digest = str =>
+  crypto
+    .createHash(`md5`)
+    .update(str)
+    .digest(`hex`)
 const remark = require(`remark`)
 const _ = require(`lodash`)
 const Prism = require(`prismjs`)
@@ -33,7 +37,7 @@ function createDescriptionNode(
     children: [],
     internal: {
       type: `DocumentationJSComponentDescription`,
-      mediaType: `text/x-markdown`,
+      mediaType: `text/markdown`,
       content: markdownStr,
       contentDigest: digest(markdownStr),
     },
@@ -109,7 +113,10 @@ exports.onCreateNode = async ({
         // When documenting destructured parameters, the name
         // is parent.child where we just want the child.
         if (param.name.split(`.`).length > 1) {
-          param.name = param.name.split(`.`).slice(-1).join(`.`)
+          param.name = param.name
+            .split(`.`)
+            .slice(-1)
+            .join(`.`)
         }
 
         if (param.properties) {

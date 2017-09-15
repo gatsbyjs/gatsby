@@ -83,7 +83,9 @@ exports.sourceNodes = ({ boundActionCreators, store }) => {
   })
 
   // Add site node.
-  const buildTime = moment().subtract(process.uptime(), `seconds`).toJSON()
+  const buildTime = moment()
+    .subtract(process.uptime(), `seconds`)
+    .toJSON()
 
   const createGatsbyConfigNode = (config = {}) => {
     // Delete plugins from the config as we add plugins above.

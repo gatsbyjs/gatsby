@@ -9,18 +9,18 @@ let stripeAnimation = css.keyframes({
   "100%": { backgroundPosition: `30px 60px` },
 })
 
-const CtaButton = ({ to, overrideCSS, children }) =>
+const CtaButton = ({ to, overrideCSS, children }) => (
   <Link
     css={{
       ...overrideCSS,
       ...scale(1 / 5),
       display: `inline-block`,
       fontFamily: options.headerFontFamily.join(`,`),
-      padding: `${rhythm(1 / 3)} ${rhythm(1 / 2)}`,
+      padding: `${rhythm(2 / 5)} ${rhythm(1 / 2)}`,
       borderRadius: presets.radius,
       [presets.Tablet]: {
         ...scale(2 / 5),
-        padding: `${rhythm(1 / 3)} ${rhythm(3 / 5)}`,
+        padding: `${rhythm(1 / 4)} ${rhythm(3 / 5)}`,
       },
       [presets.VHd]: {
         padding: `${rhythm(1 / 2)} ${rhythm(1)}`,
@@ -30,6 +30,7 @@ const CtaButton = ({ to, overrideCSS, children }) =>
         border: `1px solid ${presets.brand}`,
         boxShadow: `none`,
         color: presets.brand,
+        fontWeight: `normal`,
         backgroundColor: `transparent`,
         backgroundSize: `30px 30px`,
         transiton: `all .15s ease-out`,
@@ -50,5 +51,6 @@ const CtaButton = ({ to, overrideCSS, children }) =>
   >
     {children}
   </Link>
+)
 
 export default CtaButton

@@ -1,12 +1,13 @@
 if (__POLYFILL__) {
-  require("core-js/modules/es6.promise")
+  require(`core-js/modules/es6.promise`)
 }
-import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import React from "react"
 import ReactDOM from "react-dom"
 import { AppContainer as HotContainer } from "react-hot-loader"
 import domReady from "domready"
+
 import socketIo from "./socketIo"
+import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 
 window.___emitter = require(`./emitter`)
 

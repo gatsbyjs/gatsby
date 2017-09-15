@@ -27,9 +27,9 @@ export function apiRunner(api, args, defaultReturn) {
 
 export function apiRunnerAsync(api, args, defaultReturn) {
   return plugins.reduce(
-    (previous, next) => 
-      next.plugin[api] 
-        ? previous.then(() => next.plugin[api](args, next.options)) 
+    (previous, next) =>
+      next.plugin[api]
+        ? previous.then(() => next.plugin[api](args, next.options))
         : previous,
     Promise.resolve()
   )

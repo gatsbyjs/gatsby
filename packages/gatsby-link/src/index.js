@@ -72,10 +72,16 @@ class GatsbyLink extends React.Component {
             // just scroll there.
             let pathname = this.state.to
             if (pathname.split(`#`).length > 1) {
-              pathname = pathname.split(`#`).slice(0, -1).join(``)
+              pathname = pathname
+                .split(`#`)
+                .slice(0, -1)
+                .join(``)
             }
             if (pathname === window.location.pathname) {
-              const hashFragment = this.state.to.split(`#`).slice(1).join(`#`)
+              const hashFragment = this.state.to
+                .split(`#`)
+                .slice(1)
+                .join(`#`)
               const element = document.getElementById(hashFragment)
               if (element !== null) {
                 element.scrollIntoView()

@@ -30,7 +30,7 @@ exports.onPostBuild = (args, pluginOptions) => {
     // the `public` prefix with `pathPrefix`.
     // See more at:
     // https://github.com/GoogleChrome/sw-precache#replaceprefix-string
-    replacePrefix: args.pathPrefix || '',
+    replacePrefix: args.pathPrefix || ``,
     navigateFallback: `/offline-plugin-app-shell-fallback/index.html`,
     // Only match URLs without extensions.
     // So example.com/about/ will pass but

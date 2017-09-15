@@ -3,10 +3,7 @@ import PropTypes from "prop-types"
 import loader from "./loader"
 import emitter from "./emitter"
 
-const DefaultLayout = ({ children }) =>
-  <div>
-    {children()}
-  </div>
+const DefaultLayout = ({ children }) => <div>{children()}</div>
 
 // Pass pathname in as prop.
 // component will try fetching resources. If they exist,
@@ -59,27 +56,37 @@ class ComponentRenderer extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    // Check if the component or json have changed.
-    if (!this.state.pageResources || nextState.pageResources) {
+    // 404
+    if (!nextState.pageResources) {
       return true
     }
+
+    // Check if the component or json have changed.
+    if (!this.state.pageResources && nextState.pageResources) {
+      return true
+    }
+
     if (
       this.state.pageResources.component !== nextState.pageResources.component
     ) {
       return true
     }
+
     if (this.state.pageResources.json !== nextState.pageResources.json) {
       return true
     }
+
     // Check if location has changed on a page using internal routing
     // via matchPath configuration.
     if (
       this.state.location.key !== nextState.location.key &&
       nextState.pageResources.page &&
-      nextState.pageResources.page.matchPath
+      (nextState.pageResources.page.matchPath ||
+        nextState.pageResources.page.path)
     ) {
       return true
     }
+
     return false
   }
 
