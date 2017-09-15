@@ -47,24 +47,21 @@ const BlogPostTemplate = React.createClass({
         {children}
       </p>
     )
-    let imageProps
-    if (post.frontmatter.image) {
-      imageProps = {
-        src: post.frontmatter.image.childImageSharp.responsiveSizes.src,
-        srcSet: post.frontmatter.image.childImageSharp.responsiveSizes.srcSet,
-        className: `gatsby-resp-image-image`,
-        css: {
-          width: `100%`,
-          margin: 0,
-          verticalAlign: `middle`,
-          position: `absolute`,
-          boxShadow: `inset 0px 0px 0px 400px #fff`,
-        },
-        sizes: post.frontmatter.image.childImageSharp.responsiveSizes.sizes,
-      }
-      if (post.frontmatter.imageTitle) {
-        imageProps.alt = post.frontmatter.imageTitle
-      }
+    const imageProps = {
+      src: post.frontmatter.image.childImageSharp.responsiveSizes.src,
+      srcSet: post.frontmatter.image.childImageSharp.responsiveSizes.srcSet,
+      className: `gatsby-resp-image-image`,
+      css: {
+        width: `100%`,
+        margin: 0,
+        verticalAlign: `middle`,
+        position: `absolute`,
+        boxShadow: `inset 0px 0px 0px 400px #fff`,
+      },
+      sizes: post.frontmatter.image.childImageSharp.responsiveSizes.sizes,
+    }
+    if (post.frontmatter.imageTitle) {
+      imageProps.alt = post.frontmatter.imageTitle
     }
     return (
       <div>
