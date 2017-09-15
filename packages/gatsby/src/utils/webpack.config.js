@@ -259,8 +259,8 @@ module.exports = async (
                 `fbjs`,
                 `react-router`,
                 `react-router-dom`,
-                `react-router-scroll`,
-                `dom-helpers`, // Used in react-router-scroll
+                `gatsby-react-router-scroll`,
+                `dom-helpers`, // Used in gatsby-react-router-scroll
                 `path-to-regexp`,
                 `isarray`, // Used by path-to-regexp.
                 `scroll-behavior`,
