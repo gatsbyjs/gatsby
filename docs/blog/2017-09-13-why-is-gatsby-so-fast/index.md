@@ -19,7 +19,7 @@ _Slides to follow interspersed with notes._
 
 ![reactnext-gatsby-performance.008](reactnext-gatsby-performance.008.png)
 
-I open sourced the initial prototype of Gatsby in mid-2015. A year later, after I quit working on my startup, I went full-time on Gatsby as it seemed the most interesting and potentially fruitful thing I could do. Two months ago in July, Gatsby v1 was released. I'm currently working on a Gatsby-related startup.
+I open sourced the initial prototype of Gatsby in mid-2015. A year later, post failed startup, I went full-time on Gatsby as it seemed the most interesting and potentially fruitful thing I could do. After ten months of work, I, along with the 40 other contributors, released Gatsby v1. I'm currently working on a Gatsby-related startup.
 
 ![reactnext-gatsby-performance.007](reactnext-gatsby-performance.007.png)
 
@@ -107,10 +107,19 @@ Which is close to 1/2 of an eternity in web browsing time. And makes for a very 
 
 ### Let's review our scores
 
-|             | CNN.com | Downy.com | Washingtonpost.com | Gatbyjs.org |
-| ----------- | ------- | --------- | ------------------ | ----------- |
-| Speed Index | 8098    | 5568      | 7649               | 2365        |
-| TTI         | 32.1s   | 14.2s     | 31.4s              | 4.4s        |
+#### Speed Index
+
+* 8098 — CNN.com
+* 5568 — downy.com
+* 7649 — washingtonpost.com
+* 2365 — gatsbyjs.org
+
+#### Time to Interactive
+
+* 32.1s — CNN.com
+* 14.2s — downy.com
+* 31.4s — washingtonpost.com
+* 4.4s — gatsbyjs.org
 
 ![reactnext-gatsby-performance.038](reactnext-gatsby-performance.038.png)
 
@@ -118,7 +127,7 @@ Let's discuss some ways to improve performance.
 
 ![reactnext-gatsby-performance.039](reactnext-gatsby-performance.039.png)
 
-A clickable link—https://developers.google.com/web/fundamentals/performance/critical-rendering-path/
+Clickable link—https://developers.google.com/web/fundamentals/performance/critical-rendering-path/
 
 ![reactnext-gatsby-performance.040](reactnext-gatsby-performance.040.png)
 
@@ -212,4 +221,4 @@ Building highly performant websites is a science of itself. Our goal with Gatsby
 
 If you've been waiting to try out React, Gatsby is a great place to start! If you're struggling to make your React app fast, try switching to Gatsby! If you're tired of using technology X to build websites and have a huge secret crush on React, well, Gatsby is waiting with open arms 🤗
 
-And lastly, if you're a performance-obsessed engineer like me, come help build Gatsby and improve the performance of thousands (growing quickly) of Gatsby sites on the internet.
+And lastly, *if you're a performance-obsessed engineer like me, come help build Gatsby* and improve the performance of thousands (numbers growing quickly) of Gatsby sites on the internet.
