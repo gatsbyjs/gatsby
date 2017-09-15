@@ -39,7 +39,7 @@ Slow loading sites tend to have many related performance problems.
 
 ## How to think about & measure performance?
 
-Ok, I've convinced you that site performance is important. You perhaps already have a site that you know is too slow. How to do you go about improving things?
+Ok, I've convinced you that site performance is important. You perhaps already have a site that you know is too slow. How do you go about improving things?
 
 Let's discuss two key website performance metrics that summarize the most important parts of website performance. How quickly is your website visible (Speed Index) and how quickly is your site usable (Time to Interactive—TTI).
 
@@ -183,7 +183,7 @@ I mean I *love* performance but even I really don't want to be worrying about th
 
 ![reactnext-gatsby-performance.061](reactnext-gatsby-performance.061.png)
 
-As browsers and tooling gets more sophisticated, "best practices" for building the most performant website changes.
+As browsers and tooling get more sophisticated, "best practices" for building the most performant website change.
 
 ![reactnext-gatsby-performance.062](reactnext-gatsby-performance.062.png)
 
@@ -217,7 +217,7 @@ As I was prepping for my talk, Tom Dale of Ember, conveniently made similar poin
 
 ## Performance is hard, let's make Gatsby do the work
 
-Building highly performant websites can be really hard. Our goal with Gatsby is to give you an approachable, highly productive modern development environment that let's you concentrate on what matters to you—content, design, and interactions—and we take care of turning your amazing site into the fastest site possible.
+Building highly performant websites can be really hard. Our goal with Gatsby is to give you an approachable, highly productive modern development environment that lets you concentrate on what matters to you—content, design, and interactions—and we take care of turning your amazing site into the fastest site possible.
 
 If you've been waiting to try out React, Gatsby is a great place to start! If you're struggling to make your React app fast, try switching to Gatsby! If you're tired of using technology X to build websites and have a huge secret crush on React, well, Gatsby is waiting with open arms 🤗
 
