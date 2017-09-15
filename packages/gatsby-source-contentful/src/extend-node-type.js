@@ -128,19 +128,6 @@ const resolveResponsiveResolution = (image, options) => {
         image,
         options
       ).then(({ contentType, base64Str, width, height, aspectRatio }) => {
-        // Special case handling gifs. Contentful's image api can't handle
-        // them so we just return them as is.
-        if (contentType === `image/gif`) {
-          return resolve({
-            base64: ``,
-            aspectRatio: aspectRatio,
-            width: Math.round(options.width),
-            height: Math.round(pickedHeight),
-            src: image.file.url,
-            srcSet: ``,
-          })
-        }
-
         let desiredAspectRatio = aspectRatio
 
         // If we're cropping, calculate the specified aspect ratio.
@@ -238,20 +225,6 @@ const resolveResponsiveSizes = (image, options) => {
         image,
         options
       ).then(({ contentType, base64Str, width, height, aspectRatio }) => {
-        // Special case handling gifs. Contentful's image api can't handle
-        // them so we just return them as is.
-        if (contentType === `image/gif`) {
-          return resolve({
-            base64: ``,
-            srcSet: ``,
-            sizes: ``,
-            aspectRatio: aspectRatio,
-            width: Math.round(options.width),
-            height: Math.round(pickedHeight),
-            src: image.file.url,
-          })
-        }
-
         let desiredAspectRatio = aspectRatio
 
         // If we're cropping, calculate the specified aspect ratio.
@@ -326,18 +299,6 @@ const resolveResize = (image, options) =>
         image,
         options
       ).then(({ contentType, base64Str, width, height, aspectRatio }) => {
-        // Special case handling gifs. Contentful's image api can't handle
-        // them so we just return them as is.
-        if (contentType === `image/gif`) {
-          return resolve({
-            base64: ``,
-            aspectRatio: aspectRatio,
-            width: Math.round(options.width),
-            height: Math.round(pickedHeight),
-            src: image.file.url,
-          })
-        }
-
         // If the user selected a height (so cropping) and options for focus
         // and fit aren't set, we'll set our defaults
         if (options.height) {
