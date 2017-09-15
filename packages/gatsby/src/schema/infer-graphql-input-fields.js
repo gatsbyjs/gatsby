@@ -17,7 +17,7 @@ const createTypeName = require(`./create-type-name`)
 const createKey = require(`./create-key`)
 const {
   extractFieldExamples,
-  buildFieldEnumValues,
+  extractFieldNames,
   isEmptyObjectOrArray,
 } = require(`./data-tree-utils`)
 
@@ -185,7 +185,7 @@ export function inferInputObjectStructureFromNodes({
   typeName = ``,
   prefix = ``,
   exampleValue = extractFieldExamples(nodes),
-}: InferInputOptions): GraphQLInputFieldConfigMap {
+}: InferInputOptions): Object {
   const inferredFields = {}
   const isRoot = !prefix
 
@@ -210,37 +210,9 @@ export function inferInputObjectStructureFromNodes({
   })
 
   // Add sorting (but only to the top level).
-  let sort
+  let sort = []
   if (typeName) {
-    const enumValues = buildFieldEnumValues(nodes)
-
-    const SortByType = new GraphQLEnumType({
-      name: `${typeName}SortByFieldsEnum`,
-      values: enumValues,
-    })
-
-    sort = {
-      type: new GraphQLInputObjectType({
-        name: _.camelCase(`${typeName} sort`),
-        fields: {
-          fields: {
-            name: _.camelCase(`${typeName} sortFields`),
-            type: new GraphQLNonNull(new GraphQLList(SortByType)),
-          },
-          order: {
-            name: _.camelCase(`${typeName} sortOrder`),
-            defaultValue: `asc`,
-            type: new GraphQLEnumType({
-              name: _.camelCase(`${typeName} sortOrderValues`),
-              values: {
-                ASC: { value: `asc` },
-                DESC: { value: `desc` },
-              },
-            }),
-          },
-        },
-      }),
-    }
+    sort = extractFieldNames(nodes)
   }
 
   return { inferredFields, sort }
