@@ -7,7 +7,7 @@ showImageInArticle: false
 typora-copy-images-to: ./
 ---
 
-_I gave this talk last weekend at [ReactNext](http://react-next.com/) in Tel Aviv. I spoke on the basics of measuring and improving web performance and how Gatsby is designed to ensure sites built with it are always very very fast._
+_I gave this talk last weekend at [ReactNext](http://react-next.com/) in Tel Aviv. I spoke on the basics of measuring and improving web performance and how Gatsby is designed so sites built with it are always very very fast._
 
 _Slides to follow interspersed with notes._
 
@@ -206,7 +206,7 @@ As I was prepping for my talk, Tom Dale of Ember, conveniently made similar poin
 
 ![reactnext-gatsby-performance.073](reactnext-gatsby-performance.073.png)
 
-## Performance is hard, just use Gatsby
+## Performance is hard, let's make Gatsby do the work
 
 Building highly performant websites is a science of itself. Our goal with Gatsby is to give you an approachable, highly productive modern development environment that let's you concentrate on what matters to you—content, design, and interactions—and we take care of turning your amazing site into the fastest site possible.
 
