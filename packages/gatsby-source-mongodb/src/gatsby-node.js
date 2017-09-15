@@ -71,18 +71,26 @@ function createNodes(db, pluginOptions, dbName, createNode, collectionName, done
             .digest(`hex`),
         },
       }
-      if (pluginOptions.map && pluginOptions.map[collectionName]) {
+      if (pluginOptions.map) {
+        let mapObj = pluginOptions.map;
+        if (pluginOptions.map[collectionName]) {
+          mapObj = pluginOptions.map[collectionName];
+        }
         // We need to map certain fields to a contenttype.
-        var keys = Object.keys(pluginOptions.map[collectionName]).forEach(mediaItemFieldKey => {
-          node[`${mediaItemFieldKey}___NODE`] = createMappingChildNodes(
-            node,
-            mediaItemFieldKey,
-            node[mediaItemFieldKey],
-            pluginOptions.map[collectionName][mediaItemFieldKey],
-            createNode
-          )
+        console.log('shine for me ...')
+        var keys = Object.keys(mapObj).forEach(mediaItemFieldKey => {
+          if (node[mediaItemFieldKey] && (
+              typeof mapObj[mediaItemFieldKey] === 'string' || mapObj[mediaItemFieldKey] instanceof String)) {
+              node[`${mediaItemFieldKey}___NODE`] = createMappingChildNodes(
+                node,
+                mediaItemFieldKey,
+                node[mediaItemFieldKey],
+                mapObj[mediaItemFieldKey],
+                createNode
+              )
 
-          delete node[mediaItemFieldKey]
+              delete node[mediaItemFieldKey]
+          }
         })
       }
       createNode(node)
