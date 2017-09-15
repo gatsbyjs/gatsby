@@ -8,6 +8,11 @@ cache:
 
 skip_branch_with_pr: true
 
+skip_commits:
+  files:
+    - docs/*
+    - www/*
+
 environment:
   nodejs_version: "8"
 
@@ -40,8 +45,9 @@ environment:
 install:
   - echo This example is built on %buildon% and the commit tag is %APPVEYOR_REPO_TAG% and the tag is %APPVEYOR_REPO_TAG_NAME%
     # we kill the build for most examples unless it is a release or a forced build
+    # if you append --build-all to your commit message (not PR) then it will still build all the examples
   - ps: |
-      if (($env:buildon -eq "tag") -and ($env:APPVEYOR_REPO_COMMIT_MESSAGE -ne "Publish") -and ($env:APPVEYOR_FORCED_BUILD -ne "True"))
+      if (($env:buildon -eq "tag") -and ($env:APPVEYOR_REPO_COMMIT_MESSAGE -ne "Publish") -and ($env:APPVEYOR_REPO_COMMIT_MESSAGE -notlike "* --build-all") -and ($env:APPVEYOR_FORCED_BUILD -ne "True"))
       {
         Exit-AppVeyorBuild
       }
