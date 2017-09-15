@@ -8,6 +8,11 @@ cache:
 
 skip_branch_with_pr: true
 
+skip_commits:
+  files:
+    - docs/*
+    - www/*
+
 environment:
   nodejs_version: "8"
 
