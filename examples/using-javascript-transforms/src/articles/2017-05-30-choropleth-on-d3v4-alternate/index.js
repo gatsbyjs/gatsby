@@ -46,9 +46,9 @@ class choroplethAltBase extends React.Component {
   }
 
   render() {
-    let data = this.props.data.markdownRemark
-    let html = data.html
-    let frontmatter = this.props.data.jsFrontmatter.data
+    let {markdownRemark, jsFrontmatter} = this.props.data
+    let html = markdownRemark.html
+    let frontmatter = jsFrontmatter.data
 
     return (
       <div className="">
