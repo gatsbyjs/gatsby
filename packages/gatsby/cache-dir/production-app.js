@@ -153,7 +153,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
           component: {
             componentIndex: templateIndex,
             componentRender: componentArray[templateIndex],
-            // componentChunkName: pageResources.page.componentChunkName[templateIndex],
+            componentChunkName: pageResources.page.componentChunkName[templateIndex],
           },
           children: routeProps => NestedTemplates(componentArray, templateIndex + 1, props, pageResources)
         })
@@ -168,7 +168,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
               component: {
                 componentIndex: templateIndex,
                 componentRender: componentArray[templateIndex],
-                // componentChunkName: pageResources.page.componentChunkName[templateIndex],
+                componentChunkName: pageResources.page.componentChunkName[templateIndex],
               },
             })
           }
