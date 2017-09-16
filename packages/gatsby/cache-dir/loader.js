@@ -25,11 +25,12 @@ if (process.env.NODE_ENV === `production`) {
   prefetcher = require(`./prefetcher`)({
     getNextQueuedResources: () => resourcesArray.slice(-1)[0],
     createResourceDownload: resourceName => {
-      console.log(resourceName)
-      console.log(resourcesArray)
-      fetchResource(resourceName, () => {
-        resourcesArray = resourcesArray.filter(r => r !== resourceName)
-        prefetcher.onResourcedFinished(resourceName)
+      resourceName = Array.isArray(resourceName) ? resourceName : [resourceName]
+      resourceName.forEach((rName) => {
+        fetchResource(rName, () => {
+          resourcesArray = resourcesArray.filter(r => r !== rName)
+          prefetcher.onResourcedFinished(rName)
+        })
       })
     },
   })
