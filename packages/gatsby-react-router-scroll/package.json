@@ -11,6 +11,7 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-plugin-dev-expression": "^0.2.1",
+    "babel-preset-stage-1": "^6.24.1",
     "cross-env": "^5.0.5"
   },
   "keywords": [

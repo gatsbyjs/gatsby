@@ -63,7 +63,7 @@ class ScrollContext extends React.Component {
     return { history, location }
   }
 
-  shouldUpdateScroll(prevRouterProps, routerProps) {
+  shouldUpdateScroll = (prevRouterProps, routerProps) => {
     const { shouldUpdateScroll } = this.props
     if (!shouldUpdateScroll) {
       return true
@@ -77,7 +77,7 @@ class ScrollContext extends React.Component {
     )
   }
 
-  registerElement(key, element, shouldUpdateScroll) {
+  registerElement = (key, element, shouldUpdateScroll) => {
     this.scrollBehavior.registerElement(
       key,
       element,
@@ -86,7 +86,7 @@ class ScrollContext extends React.Component {
     )
   }
 
-  unregisterElement(key) {
+  unregisterElement = key => {
     this.scrollBehavior.unregisterElement(key)
   }
 

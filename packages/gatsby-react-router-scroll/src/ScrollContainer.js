@@ -62,7 +62,7 @@ class ScrollContainer extends React.Component {
     this.context.scrollBehavior.unregisterElement(this.scrollKey)
   }
 
-  shouldUpdateScroll(prevRouterProps, routerProps) {
+  shouldUpdateScroll = (prevRouterProps, routerProps) => {
     const { shouldUpdateScroll } = this.props
     if (!shouldUpdateScroll) {
       return true

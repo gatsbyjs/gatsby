@@ -1,2 +1,4 @@
-exports.ScrollContainer = require(`./ScrollContainer`)
-exports.ScrollContext = require(`./ScrollBehaviorContext`)
+import ScrollBehaviorContext from "./ScrollBehaviorContext"
+import ScrollContainer from "./ScrollContainer"
+exports.ScrollContainer = ScrollContainer
+exports.ScrollContext = ScrollBehaviorContext
