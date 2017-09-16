@@ -1,6 +1,6 @@
 import React, { createElement } from "react"
 import { Router, Route, matchPath, withRouter } from "react-router-dom"
-import { ScrollContext } from "react-router-scroll"
+import { ScrollContext } from "gatsby-react-router-scroll"
 import history from "./dev-history"
 import { apiRunner } from "./api-runner-browser"
 import syncRequires from "./sync-requires"
