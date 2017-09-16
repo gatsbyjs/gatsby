@@ -22,12 +22,7 @@ import "../fonts/Webfonts/futurapt_demiitalic_macroman/stylesheet.css"
 import "typeface-spectral"
 import "typeface-space-mono"
 
-module.exports = React.createClass({
-  propTypes() {
-    return {
-      children: React.PropTypes.any,
-    }
-  },
+class DefaultLayout extends React.Component {
   render() {
     const isHomepage = this.props.location.pathname == `/`
     const hasSidebar =
@@ -118,5 +113,7 @@ module.exports = React.createClass({
         <MobileNavigation />
       </div>
     )
-  },
-})
+  }
+}
+
+module.exports = DefaultLayout

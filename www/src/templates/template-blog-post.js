@@ -8,7 +8,7 @@ import presets from "../utils/presets"
 import typography, { rhythm, scale, options } from "../utils/typography"
 import Container from "../components/container"
 
-const BlogPostTemplate = React.createClass({
+class BlogPostTemplate extends React.Component {
   render() {
     const post = this.props.data.markdownRemark
     const prev = this.props.pathContext.prev
@@ -313,8 +313,8 @@ const BlogPostTemplate = React.createClass({
         </div>
       </div>
     )
-  },
-})
+  }
+}
 
 export default BlogPostTemplate
 
