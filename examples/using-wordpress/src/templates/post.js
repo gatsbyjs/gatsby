@@ -8,35 +8,45 @@ import { H1, Row, Page, Column } from "../components/styled"
 
 class PostTemplate extends Component {
   render() {
-    // console.log(`this.props is`, this.props)
-
     const post = this.props.data.wordpressPost
-    const wordpressPages = this.props.data.allWordpressPage
-    const siteMetadata = this.props.data.site.siteMetadata
+    console.log(post)
 
     return (
       <div>
-        <Page>
-          <Row>
-            <Helmet>
-              <title>{siteMetadata.title}</title>
-            </Helmet>
-            <Header
-              title={siteMetadata.title}
-              subtitle={siteMetadata.subtitle}
-              pages={wordpressPages}
-            />
-          </Row>
-          <Row>
-            <H1 dangerouslySetInnerHTML={{ __html: post.title }} />
-          </Row>
-          <Row>
-            <div dangerouslySetInnerHTML={{ __html: post.content }} />
-          </Row>
-          <Row>
-            <Footer />
-          </Row>
-        </Page>
+        <h1 dangerouslySetInnerHTML={{ __html: post.title }} />
+        <div dangerouslySetInnerHTML={{ __html: post.content }} />
+        {post.childWordPressAcfImageGallery && <h2>Image Gallery</h2>}
+        {post.childWordPressAcfImageGallery &&
+          post.childWordPressAcfImageGallery.pictures.map(({ picture }) => {
+            console.log(picture)
+            const img = picture.localFile.childImageSharp.responsiveResolution
+            return (
+              <img
+                src={img.src}
+                srcSet={img.srcSet}
+                width={img.width}
+                height={img.height}
+                style={{ marginRight: 10 }}
+              />
+            )
+          })}
+        {post.childWordPressAcfPostPhoto && <h2>Post Photo</h2>}
+        {post.childWordPressAcfPostPhoto &&
+          (() => {
+            console.log(post.childWordPressAcfPostPhoto)
+            const img =
+              post.childWordPressAcfPostPhoto.photo.localFile.childImageSharp
+                .responsiveResolution
+            return (
+              <img
+                src={img.src}
+                srcSet={img.srcSet}
+                width={img.width}
+                height={img.height}
+                style={{ marginRight: 10 }}
+              />
+            )
+          })()}
       </div>
     )
   }
@@ -53,75 +63,41 @@ export default PostTemplate
 export const pageQuery = graphql`
   query currentPostQuery($id: String!) {
     wordpressPost(id: { eq: $id }) {
-      id
-      slug
       title
       content
-      excerpt
-      date
-      date_gmt
-      modified
-      modified_gmt
-      status
-      author
-      featured_media
-      comment_status
-      ping_status
-      sticky
-      template
-      format
-      categories
-      tags
-    }
-    allWordpressPage {
-      edges {
-        node {
-          id
-          title
-          content
-          excerpt
-          date
-          date_gmt
-          modified
-          modified_gmt
-          slug
-          status
-          author
-          featured_media
-          menu_order
-          comment_status
-          ping_status
-          template
+      childWordPressAcfPostPhoto {
+        photo {
+          localFile {
+            childImageSharp {
+              responsiveResolution(width: 300) {
+                width
+                height
+                src
+                srcSet
+              }
+            }
+          }
         }
       }
-    }
-    allWordpressPost {
-      edges {
-        node {
-          id
-          slug
+      childWordPressAcfImageGallery {
+        pictures {
           title
-          content
-          excerpt
-          date
-          date_gmt
-          modified
-          modified_gmt
-          status
-          author
-          featured_media
-          comment_status
-          ping_status
-          sticky
-          template
-          format
-          categories
-          tags
+          picture {
+            localFile {
+              childImageSharp {
+                responsiveResolution(width: 300) {
+                  width
+                  height
+                  src
+                  srcSet
+                }
+              }
+            }
+          }
         }
       }
     }
     site {
-      id
       siteMetadata {
         title
         subtitle

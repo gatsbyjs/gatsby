@@ -1,42 +1,39 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
-import Helmet from "react-helmet"
-import Header from "../components/Header"
-import Footer from "../components/Footer"
-import PostsListSearchable from "../components/PostsListSearchable"
-import { H1, Row, Page, Column } from "../components/styled"
+import Link from "gatsby-link"
 
 class Home extends Component {
   render() {
     // this.props is where all the data of my site lives: { data, history, location. match... }
     // much of this if from the router, but data object is where all my api data lives
 
-    const wordpressPages = this.props.data.allWordpressPage
-    const siteMetadata = this.props.data.site.siteMetadata
-    const currentPage = this.props.data.wordpressPage
+    console.log(this.props.data)
+    const data = this.props.data
 
     return (
       <div>
-        <Page>
-          <Row>
-            <Helmet>
-              <title>{siteMetadata.title}</title>
-            </Helmet>
-            <Header
-              title={siteMetadata.title}
-              subtitle={siteMetadata.subtitle}
-              pages={wordpressPages}
-            />
-          </Row>
-          <Row>
-            <H1 dangerouslySetInnerHTML={{ __html: currentPage.title }} />
-            <div dangerouslySetInnerHTML={{ __html: currentPage.content }} />
-            <PostsListSearchable propsData={this.props.data} />
-          </Row>
-          <Row>
-            <Footer />
-          </Row>
-        </Page>
+        <h1>Pages</h1>
+        {data.allWordpressPage.edges.map(({ node }) => {
+          return (
+            <div>
+              <Link to={node.slug} style={{ textDecoration: `none` }}>
+                <h3>{node.title}</h3>
+                <div dangerouslySetInnerHTML={{ __html: node.excerpt }} />
+              </Link>
+            </div>
+          )
+        })}
+        <h1>Posts</h1>
+        {data.allWordpressPost.edges.map(({ node }) => {
+          return (
+            <div>
+              <Link to={node.slug} style={{ textDecoration: `none` }}>
+                <h3>{node.title}</h3>
+                <div dangerouslySetInnerHTML={{ __html: node.excerpt }} />
+              </Link>
+            </div>
+          )
+        })}
       </div>
     )
   }
@@ -53,98 +50,22 @@ Home.propTypes = {
 // Set here the ID of the home page.
 export const pageQuery = graphql`
   query homePageQuery {
-    wordpressPage(id: { eq: "PAGE_25" }) {
-      id
-      title
-      content
-      excerpt
-      date
-      date_gmt
-      modified
-      modified_gmt
-      slug
-      status
-      author
-      featured_media
-      menu_order
-      comment_status
-      ping_status
-      template
-    }
     allWordpressPage {
       edges {
         node {
-          id
           title
-          content
           excerpt
-          date
-          date_gmt
-          modified
-          modified_gmt
           slug
-          status
-          author
-          featured_media
-          menu_order
-          comment_status
-          ping_status
-          template
         }
       }
     }
     allWordpressPost {
       edges {
         node {
-          id
-          slug
           title
-          content
           excerpt
-          date
-          date_gmt
-          modified
-          modified_gmt
-          status
-          author
-          featured_media
-          comment_status
-          ping_status
-          sticky
-          template
-          format
-          categories
-          tags
-        }
-      }
-    }
-    allWordpressTag {
-      edges {
-        node {
-          id
           slug
-          description
-          name
-          taxonomy
         }
-      }
-    }
-    allWordpressCategory {
-      edges {
-        node {
-          id
-          description
-          name
-          slug
-          taxonomy
-        }
-      }
-    }
-    site {
-      id
-      siteMetadata {
-        title
-        subtitle
       }
     }
   }

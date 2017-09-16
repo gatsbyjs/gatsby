@@ -277,6 +277,7 @@ exports.downloadMediaFiles = async ({ entities, store, cache, createNode }) =>
             createNode,
           })
         } catch (e) {
+          console.log(e)
           // Ignore
         }
       }
@@ -301,15 +302,16 @@ const createACFChildNodes = (
   // Replace any child arrays with pointers to nodes
   _.each(obj, (value, key) => {
     if (_.isArray(value)) {
-      obj[`${key}___NODE`] = value.map(v =>
-        createACFChildNodes(
-          v,
-          entityId,
-          topLevelIndex,
-          type + key,
-          children,
-          createNode
-        )
+      obj[`${key}___NODE`] = value.map(
+        v =>
+          createACFChildNodes(
+            v,
+            entityId,
+            topLevelIndex,
+            type + key,
+            children,
+            createNode
+          ).id
       )
       delete obj[key]
     }
