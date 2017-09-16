@@ -12,7 +12,8 @@
 ## Showcase
 
 Websites built with Gatbsy:
-
+* [Simply](https://simply.co.za)
+* [mParticle's Documentation](https://docs.mparticle.com)
 * [Segment's Blog](https://segment.com/blog/)
 * [Fabric](https://meetfabric.com/)
 * [Formidable](https://formidable.com/)
@@ -35,6 +36,9 @@ Websites built with Gatbsy:
 * [Overlap.show](https://overlap.show) [(source)](https://github.com/pouretrebelle/overlap.show)
 * [smartive Company Website](https://smartive.ch)
 * [Haboba Find Jobs at Phu Quoc Island](http://haboba.com)
+* [Charlie Harrington's Blog](https://charlieharrington.com) [(source)](https://github.com/whatrocks/blog)
+* [Song Wang’s website](https://songwang.io/) [(source)](https://github.com/wangsongiam/songwang.io)
+* [Digital Psychology](http://digitalpsychology.io) [(source)](https://github.com/danistefanovic/digitalpsychology.io)
 
 ## Docs
 

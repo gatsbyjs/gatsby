@@ -56,27 +56,37 @@ class ComponentRenderer extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
+    // 404
+    if (!nextState.pageResources) {
+      return true
+    }
+
     // Check if the component or json have changed.
     if (!this.state.pageResources && nextState.pageResources) {
       return true
     }
+
     if (
       this.state.pageResources.component !== nextState.pageResources.component
     ) {
       return true
     }
+
     if (this.state.pageResources.json !== nextState.pageResources.json) {
       return true
     }
+
     // Check if location has changed on a page using internal routing
     // via matchPath configuration.
     if (
       this.state.location.key !== nextState.location.key &&
       nextState.pageResources.page &&
-      nextState.pageResources.page.matchPath
+      (nextState.pageResources.page.matchPath ||
+        nextState.pageResources.page.path)
     ) {
       return true
     }
+
     return false
   }
 

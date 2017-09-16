@@ -5,6 +5,11 @@ const { GraphQLInputObjectType } = require(`graphql`)
 const {
   inferInputObjectStructureFromNodes,
 } = require(`./infer-graphql-input-fields`)
+const {
+  inferInputObjectStructureFromFields,
+  createSortField,
+} = require(`./infer-graphql-input-fields-from-fields`)
+
 const buildConnectionFields = require(`./build-connection-fields`)
 const { getNodes } = require(`../redux`)
 
@@ -18,15 +23,31 @@ module.exports = (types: any) => {
       return
     }
     const nodes = type.nodes
+    const typeName = `${type.name}Connection`
     const { connectionType: typeConnection } = connectionDefinitions({
       nodeType: type.nodeObjectType,
       connectionFields: () => buildConnectionFields(type),
     })
 
-    const { sort, inferredFields } = inferInputObjectStructureFromNodes({
+    const inferredInputFieldsFromNodes = inferInputObjectStructureFromNodes({
       nodes,
-      typeName: `${type.name}Connection`,
+      typeName,
     })
+
+    const inferredInputFieldsFromPlugins = inferInputObjectStructureFromFields({
+      fields: type.fieldsFromPlugins,
+      typeName,
+    })
+
+    const filterFields = _.merge(
+      {},
+      inferredInputFieldsFromNodes.inferredFields,
+      inferredInputFieldsFromPlugins.inferredFields
+    )
+    const sortNames = inferredInputFieldsFromNodes.sort.concat(
+      inferredInputFieldsFromPlugins.sort
+    )
+    const sort = createSortField(typeName, sortNames)
 
     connections[_.camelCase(`all ${type.name}`)] = {
       type: typeConnection,
@@ -38,7 +59,7 @@ module.exports = (types: any) => {
           type: new GraphQLInputObjectType({
             name: _.camelCase(`filter ${type.name}`),
             description: `Filter connection on its fields`,
-            fields: () => inferredFields,
+            fields: () => filterFields,
           }),
         },
       },
@@ -66,6 +87,7 @@ module.exports = (types: any) => {
           nodes: latestNodes,
           connection: true,
           path,
+          type: type.node.type,
         })
       },
     }
