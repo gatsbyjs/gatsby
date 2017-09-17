@@ -237,7 +237,7 @@ const queue = {
     // so we just return with it immediately.
     if (process.env.NODE_ENV !== `production`) {
       const page = findPage(path)
-      if (!page) return
+      if (!page) return cb()
       const pageResources = {
         components: page.componentChunkName.map(chunk => syncRequires.components[chunk]),
         json: syncRequires.json[page.jsonName],

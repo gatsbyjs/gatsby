@@ -64,11 +64,18 @@ module.exports = async (
       return acc
     }, {})
 
+    const gatsbyVarObject = Object.keys(process.env).reduce((acc, key) => {
+      if (key.match(/^GATSBY_/)) {
+        acc[key] = JSON.stringify(process.env[key])
+      }
+      return acc
+    }, {})
+
     // Don't allow overwriting of NODE_ENV, PUBLIC_DIR as to not break gatsby things
     envObject.NODE_ENV = JSON.stringify(env)
     envObject.PUBLIC_DIR = JSON.stringify(`${process.cwd()}/public`)
 
-    return envObject
+    return Object.assign(envObject, gatsbyVarObject)
   }
 
   debug(`Loading webpack config for stage "${stage}"`)
@@ -252,8 +259,8 @@ module.exports = async (
                 `fbjs`,
                 `react-router`,
                 `react-router-dom`,
-                `react-router-scroll`,
-                `dom-helpers`, // Used in react-router-scroll
+                `gatsby-react-router-scroll`,
+                `dom-helpers`, // Used in gatsby-react-router-scroll
                 `path-to-regexp`,
                 `isarray`, // Used by path-to-regexp.
                 `scroll-behavior`,
@@ -338,7 +345,7 @@ module.exports = async (
       modulesDirectories: [
         `node_modules`,
         directoryPath(`node_modules`),
-        directoryPath(`node_modules`, `gatsby/node_modules`),
+        directoryPath(`node_modules`, `gatsby`, `node_modules`),
       ],
     }
   }

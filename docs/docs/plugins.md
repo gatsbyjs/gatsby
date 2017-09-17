@@ -103,6 +103,7 @@ you can place the files in a `src` subfolder and build them to the plugin folder
 * [gatsby-source-drupal](/packages/gatsby-source-drupal/)
 * [gatsby-source-filesystem](/packages/gatsby-source-filesystem/)
 * [gatsby-source-hacker-news](/packages/gatsby-source-hacker-news/)
+* [gatsby-source-lever](/packages/gatsby-source-lever/)
 * [gatsby-source-medium](/packages/gatsby-source-medium/)
 * [gatsby-source-mongodb](/packages/gatsby-source-mongodb/)
 * [gatsby-source-wordpress](/packages/gatsby-source-wordpress/)
@@ -121,7 +122,11 @@ you can place the files in a `src` subfolder and build them to the plugin folder
 ## Community Plugins
 
 * [gatsby-plugin-antd](https://github.com/bskimball/gatsby-plugin-antd)
+* [gatsby-plugin-copy](https://github.com/aquilio/gatsby-plugin-copy)
 * [gatsby-plugin-i18n](https://github.com/angeloocana/gatsby-plugin-i18n)
-* [gatsby-plugin-yandex-metrika](https://github.com/viatsko/gatsby-plugin-yandex-metrika)
+* [gatsby-plugin-i18n-tags](https://github.com/angeloocana/gatsby-plugin-i18n-tags)
+* [gatsby-plugin-i18n-readnext](https://github.com/angeloocana/gatsby-plugin-i18n-readnext)
 * [gatsby-plugin-protoculture](https://github.com/atrauzzi/gatsby-plugin-protoculture)
+* [gatsby-plugin-yandex-metrika](https://github.com/viatsko/gatsby-plugin-yandex-metrika)
+* [gatsby-remark-emoji](https://github.com/Rulikkk/gatsby-remark-emoji)
 * [gatsby-source-workable](https://github.com/tumblbug/gatsby-source-workable)

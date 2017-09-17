@@ -269,7 +269,7 @@ Try editing the title in `siteMetadata`—change the title back to "Pandas Eatin
 
 Graph*i*QL is the GraphQL IDE. It's a powerful (and all-around awesome) tool you'll use often while building Gatsby websites.
 
-You can access when your site's development server is running—normally at http://localhost:8000/___graphql
+You can access it when your site's development server is running—normally at http://localhost:8000/___graphql.
 
 <video controls="controls" autoplay="true" loop="true">
   <source type="video/mp4" src="/graphiql-explore.mp4"></source>
@@ -282,7 +282,7 @@ Here we poke around the built-in `Site` "type" and see what fields are available
 
 Data in Gatsby sites can come literally from anywhere. APIs, databases, CMSs, local files, etc.
 
-Source plugins fetch data from their source. E.g. the filesystem source plugin knows how to fetch data from the file system. The Wordpress plugin nows how to fetch data from the Wordpress API.
+Source plugins fetch data from their source. E.g. the filesystem source plugin knows how to fetch data from the file system. The Wordpress plugin knows how to fetch data from the Wordpress API.
 
 Let's add [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) and explore how it works.
 
@@ -372,7 +372,7 @@ export const query = graphql`
 
 The `console.log(data)` line is highlighted above. It's often helpful when creating a new component to console out the data you're getting from the query so you can explore the data in your browser console while building the UI.
 
-If you visit the new page at `/my-pages/` and open up your browser console you will see:
+If you visit the new page at `/my-files/` and open up your browser console you will see:
 
 ![data-in-console](data-in-console.png)
 
@@ -512,7 +512,7 @@ Ok! Hopefully some basics are starting to fall into place. Source plugins bring 
 
 Let's now create a list of our markdown files on the front page. Like many blogs, we want to end up with a list of links on the front page pointing to each blog post. With GraphQL we can *query* for the current list of markdown blog posts so we won't need to maintain the list manually.
 
-Like with the `src/pages/my-pages.js` page, replace `src/pages/index.js` with the following to add a query with some initial HTML and styling.
+Like with the `src/pages/my-files.js` page, replace `src/pages/index.js` with the following to add a query with some initial HTML and styling.
 
 ```jsx
 import React from "react"

@@ -78,6 +78,43 @@ Array [
 ]
 `;
 
+exports[`Add layouts allows you to add layouts and specify their id 1`] = `
+Object {
+  "payload": Object {
+    "component": "/whatever/index.js",
+    "componentChunkName": "component---whatever-index-js",
+    "componentWrapperPath": "/.cache/layouts/test-id.js",
+    "context": Object {},
+    "id": "test-id",
+    "internalComponentName": "Component-layout-TestId",
+    "isLayout": true,
+    "jsonName": "layout-test-id.json",
+    "pluginCreator___NODE": "Plugin test",
+  },
+  "plugin": Object {
+    "name": "test",
+  },
+  "traceId": undefined,
+  "type": "CREATE_LAYOUT",
+}
+`;
+
+exports[`Add layouts allows you to add layouts and specify their id 2`] = `
+Array [
+  Object {
+    "component": "/whatever/index.js",
+    "componentChunkName": "component---whatever-index-js",
+    "componentWrapperPath": "/.cache/layouts/test-id.js",
+    "context": Object {},
+    "id": "test-id",
+    "internalComponentName": "Component-layout-TestId",
+    "isLayout": true,
+    "jsonName": "layout-test-id.json",
+    "pluginCreator___NODE": "Plugin test",
+  },
+]
+`;
+
 exports[`Add layouts allows you to add multiple layouts 1`] = `
 Array [
   Object {

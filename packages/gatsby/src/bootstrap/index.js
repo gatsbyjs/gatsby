@@ -16,6 +16,11 @@ const loadPlugins = require(`./load-plugins`)
 const { initCache } = require(`../utils/cache`)
 const report = require(`../reporter`)
 
+// Show stack trace on unhandled promises.
+process.on("unhandledRejection", (reason, p) => {
+  report.panic(reason)
+})
+
 const {
   extractQueries,
 } = require(`../internal-plugins/query-runner/query-watcher`)

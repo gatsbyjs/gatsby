@@ -5,7 +5,7 @@ import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import typography, { rhythm, scale, options } from "../utils/typography"
 import presets from "../utils/presets"
 
-const ContributorPageTemplate = React.createClass({
+class ContributorPageTemplate extends React.Component {
   render() {
     const contributor = this.props.data.authorYaml
     const allMarkdownRemark = this.props.data.allMarkdownRemark
@@ -74,8 +74,8 @@ const ContributorPageTemplate = React.createClass({
         </div>
       </Container>
     )
-  },
-})
+  }
+}
 
 export default ContributorPageTemplate
 
