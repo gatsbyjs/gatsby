@@ -6,7 +6,7 @@ author: "Kostas Bariotis"
 excerpt: "In this post, I will talk about static site generators -- how they have evolved and why I switched from a Ghost powered site to Gatsby.js, a modern static site generator."
 ---
 
-In this post, I will talk about static site generators -- how they have evolved and why I switched from a [Ghost](https://ghost.org) powered site to [Gatsby.js](https://gatsbyjs.org), a modern static site generator.
+In this post, I will talk about static site generators -- how they have evolved and why I switched from a [Ghost](https://ghost.org) powered site to [Gatsby.js](/), a modern static site generator.
 
 ## Static site generators as we know them
 Jekyll, my tool of preference for quite a few years, helped me build [robust](http://devastation.tv) [professional](http://devitconf.org) [web presences](http://skgtech.io) that content managers can update with the click of a button. It helped me quickly move a project of mine from idea to production by creating a landing page very fast.
@@ -30,7 +30,7 @@ This architecture is fairly similar to a Wordpress site. A Wordpress engine also
 
 So to recap, the nice part of the static site setup is that your website is just static assets that are sitting somewhere ready to be served to user requests. No need to maintain a runtime, a database, application code, or complex optimized web servers.
 
-On the downside, you have to keep separate template files that will eventually rendered as HTML on the browser, and Javascript file that will eventually manipulate that HTML again on the browser (and CSS assets too).
+But the downside is you have to keep separate template files that will eventually rendered as HTML on the browser, and Javascript file that will eventually manipulate that HTML again on the browser (and CSS assets too).
 
 ## Enter the new world order
 I [started experimenting](https://kostasbariotis.com/hands-on-react-js/) with React two years ago. It came with so many features out of the box that no one ever has seen except the guys working internally on Facebook’s codebase. But the thing that stood out immediately was the way which React was handling the DOM, aka the Virtual DOM.
@@ -59,7 +59,7 @@ There is the need for a strong abstraction that will…
 * parse content written in another format, like blog posts written in Markdown
 * generate code that will not bloat the client and will efficiently serve the content to the user.
 
-Thankfully, there are a few projects that took the initiative on this:  [Gatsby.js](https://gatsbyjs.org), [Phenomic](https://phenomic.io), and [nextein](https://nextein.now.sh).
+Thankfully, there are a few projects that took the initiative on this:  [Gatsby.js](/), [Phenomic](https://phenomic.io), and [nextein](https://nextein.now.sh).
 
 At the time that I started following them, early 2017, all of them were in a very early stage and none of them could generate my site's content the way I wanted.
 
@@ -77,7 +77,7 @@ Let me give you a sense of how this site is being generated. You can find all my
 
 During development, Gatsby will generate all of these in memory and fire up a development server that I can use to preview my site.
 
-You can try it yourself by cloning the [source code](https://github.com/kbariotis/kostasbariotis.com) and after installing dependencies, hit:
+You can try it yourself by cloning the [source code](https://github.com/kbariotis/kostasbariotis.com) and after installing dependencies, run:
 
 * `npm run develop` to fire up the development server
 * `npm run build` to build the site (check the `/public` folder after it’s done)
@@ -89,14 +89,14 @@ One path is the one I took -- for the last three years, I was using a similar sy
 
 Another option, if you want to keep Wordpress' Admin UI is to maintain your content, is to separate the backend from the frontend.
 
-Imagine that instead of having [memcached](https://memcached.org/) caching your HTML in front of your WordPress site, you trigger a hook each time your database changes that will re-generate the frontend using Gatsby’s [Wordpress plugin](https://www.gatsbyjs.org/packages/gatsby-source-wordpress/). Yes, Gatsby supports multiple backend sources to load your content. Instead of storing them inside your version control like me, you can just as well load them from your Wordpress's MySQL database.
+Imagine that instead of having [memcached](https://memcached.org/) caching your HTML in front of your WordPress site, you trigger a hook each time your database changes that will re-generate the frontend using Gatsby’s [Wordpress plugin](/packages/gatsby-source-wordpress/). Yes, Gatsby supports multiple backend sources to load your content. Instead of storing them inside your version control like me, you can just as well load them from your Wordpress's MySQL database.
 
-To conclude, modern static generators will allow us to:
+To conclude, Gatsby will allow us to:
 
 * serve static content without maintaining complex stacks
-* keep a clear separation between the backend and the frontend
+* keep a clear separation between content and the presentation layer
 * have cool features like client side routing and hot reload on development, out of the box
 * reuse the same code that is being used to generate the backend content at our visitors' browsers
 
-Hope you will experiment with Gatsby, and let me know what you think!
+I hope you will experiment with Gatsby, and let me know what you think!
 
