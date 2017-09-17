@@ -218,6 +218,20 @@ exports.createContentTypeNodes = ({
         if (typeof entryItemFields[fieldName] === `undefined`) {
           entryItemFields[fieldName] = setBlankValue(contentTypeItemField)
         }
+        // Add a "json" property on Objects with the stringified version of its content
+        // This allows for querying objects with changing properties
+        // TODO: how to handle a property "json" entered by user? Should we just
+        // use a more specific name than "json" for our created property
+        if (contentTypeItemField.type === `Object`) {
+          if (typeof entryItemFields[fieldName].json === `undefined`) {
+            entryItemFields[fieldName].json = JSON.stringify(
+              entryItemFields[fieldName]
+            )
+          } else {
+            const { json, ...originalObj } = entryItemFields[fieldName]
+            entryItemFields[fieldName].json = JSON.stringify(originalObj)
+          }
+        }
       })
 
       // Prefix any conflicting fields
