@@ -21,37 +21,37 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     resolve(
       graphql(
         `
-      {
-        allMarkdownRemark(
-          sort: { order: DESC, fields: [frontmatter___date] }
-          limit: 1000
-        ) {
-          edges {
-            node {
-              fields {
-                slug
-                package
+          {
+            allMarkdownRemark(
+              sort: { order: DESC, fields: [frontmatter___date] }
+              limit: 1000
+            ) {
+              edges {
+                node {
+                  fields {
+                    slug
+                    package
+                  }
+                  frontmatter {
+                    title
+                    draft
+                    canonicalLink
+                    publishedAt
+                  }
+                }
               }
-              frontmatter {
-                title
-                draft
-                canonicalLink
-                publishedAt
+            }
+            allAuthorYaml {
+              edges {
+                node {
+                  fields {
+                    slug
+                  }
+                }
               }
             }
           }
-        }
-        allAuthorYaml {
-          edges {
-            node {
-              fields {
-                slug
-              }
-            }
-          }
-        }
-      }
-    `
+        `
       ).then(result => {
         if (result.errors) {
           reject(result.errors)

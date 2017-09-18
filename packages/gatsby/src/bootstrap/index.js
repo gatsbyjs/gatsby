@@ -17,7 +17,7 @@ const { initCache } = require(`../utils/cache`)
 const report = require(`../reporter`)
 
 // Show stack trace on unhandled promises.
-process.on("unhandledRejection", (reason, p) => {
+process.on(`unhandledRejection`, (reason, p) => {
   report.panic(reason)
 })
 

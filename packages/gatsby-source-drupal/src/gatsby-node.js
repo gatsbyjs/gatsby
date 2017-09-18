@@ -132,8 +132,8 @@ exports.sourceNodes = async (
             )
             .catch(() => console.log(`fail fetch`, gatsbyUser))
             .then(pictureResult => {
-              gatsbyUser.picture = `${baseUrl}${pictureResult
-                .data.data.attributes.url}`
+              gatsbyUser.picture = `${baseUrl}${pictureResult.data.data
+                .attributes.url}`
 
               // Get content digest of node.
               const contentDigest = crypto
