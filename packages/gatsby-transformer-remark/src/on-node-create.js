@@ -1,5 +1,6 @@
 const grayMatter = require(`gray-matter`)
 const crypto = require(`crypto`)
+const _ = require(`lodash`)
 
 module.exports = async function onCreateNode({
   node,
@@ -18,7 +19,20 @@ module.exports = async function onCreateNode({
   }
 
   const content = await loadNodeContent(node)
-  const data = grayMatter(content)
+  let data = grayMatter(content)
+
+  // Convert date objects to string. Otherwise there's type mismatches
+  // during inference as some dates are strings and others date objects.
+  if (data.data) {
+    data.data = _.mapValues(data.data, v => {
+      if (_.isDate(v)) {
+        return v.toString()
+      } else {
+        return v
+      }
+    })
+  }
+
   const contentDigest = crypto
     .createHash(`md5`)
     .update(JSON.stringify(data))
