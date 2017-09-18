@@ -36,7 +36,9 @@ Where oh where is my little pony?
       boundActionCreators,
     }).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
-      expect(_.isString(createNode.mock.calls[0].frontmatter.date)).toBeTruthy()
+      expect(
+        _.isString(createNode.mock.calls[0][0].frontmatter.date)
+      ).toBeTruthy()
       expect(createParentChildLink.mock.calls).toMatchSnapshot()
       expect(createNode).toHaveBeenCalledTimes(1)
       expect(createParentChildLink).toHaveBeenCalledTimes(1)
