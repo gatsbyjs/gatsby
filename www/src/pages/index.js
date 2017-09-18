@@ -19,7 +19,7 @@ import FuturaParagraph from "../components/futura-paragraph"
 import CtaButton from "../components/cta-button"
 import TechWithIcon from "../components/tech-with-icon"
 
-const IndexRoute = React.createClass({
+class IndexRoute extends React.Component {
   render() {
     console.log(this.props)
     const blogPosts = this.props.data.allMarkdownRemark
@@ -185,8 +185,8 @@ const IndexRoute = React.createClass({
         </div>
       </div>
     )
-  },
-})
+  }
+}
 
 export default IndexRoute
 

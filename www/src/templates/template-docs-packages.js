@@ -5,7 +5,7 @@ import { rhythm, scale } from "../utils/typography"
 import presets from "../utils/presets"
 import Container from "../components/container"
 
-const DocsTemplate = React.createClass({
+class DocsPackagesTemplate extends React.Component {
   render() {
     const packageName = this.props.data.markdownRemark.fields.title
     const page = this.props.data.markdownRemark
@@ -41,10 +41,10 @@ const DocsTemplate = React.createClass({
         />
       </Container>
     )
-  },
-})
+  }
+}
 
-export default DocsTemplate
+export default DocsPackagesTemplate
 
 export const pageQuery = graphql`
   query TemplateDocsPackages($slug: String!) {
