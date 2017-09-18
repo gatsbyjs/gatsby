@@ -26,7 +26,7 @@ const stripeBg = {
 }
 const lineAnimation = css.keyframes({
   to: {
-    strokeDashoffset: 1000,
+    strokeDashoffset: 10,
   },
 })
 
@@ -60,6 +60,7 @@ const SegmentTitle = ({ children }) => (
       ...scale(-2 / 5),
       lineHeight: 1,
       textTransform: `uppercase`,
+      transform: "translateZ(0)",
     }}
   >
     {children}
@@ -73,17 +74,15 @@ const VerticalLine = () => (
     viewBox="0 0 20 30"
     css={{ margin: `0 auto`, display: `block` }}
   >
-    <line
-      className="path"
-      x1="10"
-      x2="10"
-      y1="110"
-      y2="-10"
-      stroke={presets.brandLight}
-      strokeWidth="3"
-      strokeLinecap="round"
-      strokeDasharray="0.5, 10"
-      css={{ animation: `${lineAnimation} 40s linear infinite` }}
+    <path
+      d="M10 40 L10 -10"
+      css={{
+        stroke: presets.brandLight,
+        strokeWidth: "3",
+        strokeLinecap: "round",
+        strokeDasharray: "0.5 10",
+        animation: `${lineAnimation} 400ms linear infinite`
+      }}
     />
   </svg>
 )
@@ -101,6 +100,7 @@ const borderAndBoxShadow = {
   width: `100%`,
   boxShadow: `0 5px 15px rgba(0,0,0,0.035)`,
   borderRadius: presets.radius,
+  transform: "translateZ(0)",
 }
 
 const SourceItems = ({ children }) => (
