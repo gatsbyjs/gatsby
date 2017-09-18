@@ -124,19 +124,14 @@ const validateUserOptions = (pluginOptions) => (headers) => {
     )
   }
 
-  if (!_.isBoolean(pluginOptions.mergeSecurityHeaders)) {
-    throw new Error(
-      `The "mergeSecurityHeaders" option to gatsby-plugin-netlify-headers must be a boolean. ` +
-      `Check your gatsby-config.js.`
-    )
-  }
-
-  if (!_.isBoolean(pluginOptions.mergeLinkHeaders)) {
-    throw new Error(
-      `The "mergeLinkHeaders" option to gatsby-plugin-netlify-headers must be a boolean. ` +
-      `Check your gatsby-config.js.`
-    )
-  }
+  [`mergeSecurityHeaders`, `mergeLinkHeaders`, `mergeCachingHeaders`].forEach((mergeOption) => {
+    if (!_.isBoolean(pluginOptions[mergeOption])) {
+      throw new Error(
+        `The "${mergeOption}" option to gatsby-plugin-netlify-headers must be a boolean. ` +
+        `Check your gatsby-config.js.`
+      )
+    }
+  })
 
   if (!_.isFunction(pluginOptions.transformHeaders)) {
     throw new Error(
