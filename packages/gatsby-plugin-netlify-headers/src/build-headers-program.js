@@ -6,6 +6,7 @@ import {
   ROOT_WILDCARD,
   COMMON_BUNDLES,
   SECURITY_HEADERS,
+  CACHING_HEADERS,
   LINK_REGEX,
   NETLIFY_HEADERS_FILENAME,
 } from "./constants"
@@ -160,7 +161,7 @@ const applyLinkHeaders = (pluginData, { mergeLinkHeaders }) => (headers) => {
   const { pages, manifest, pathPrefix } = pluginData
 
   const rootPath = headersPath(pathPrefix, ROOT_WILDCARD)
-  const wildcardHeaders = { [rootPath ]: linkHeaders(COMMON_BUNDLES, manifest, pathPrefix) }
+  const wildcardHeaders = { [rootPath]: linkHeaders(COMMON_BUNDLES, manifest, pathPrefix) }
   const perPageHeaders = preloadHeadersByPage(pages, manifest, pathPrefix)
 
   return defaultMerge(headers, wildcardHeaders, perPageHeaders)
@@ -171,8 +172,15 @@ const applySecurityHeaders = ({ mergeSecurityHeaders }) => (headers) => {
     return headers
   }
 
-  // TODO use user merge if provided as function
   return defaultMerge(headers, SECURITY_HEADERS)
+}
+
+const applyCachingHeaders = ({ mergeCachingHeaders }) => (headers) => {
+  if (!mergeCachingHeaders) {
+    return headers
+  }
+
+  return defaultMerge(headers, CACHING_HEADERS)
 }
 
 const applyTransfromHeaders = ({ transformHeaders }) => (headers) => (
@@ -193,6 +201,7 @@ export default function buildHeadersProgram(pluginData, pluginOptions) {
     mapUserLinkHeaders(pluginData, pluginOptions),
     applyLinkHeaders(pluginData, pluginOptions),
     applySecurityHeaders(pluginOptions),
+    applyCachingHeaders(pluginOptions),
     applyTransfromHeaders(pluginOptions),
     transformToString,
     writeHeadersFile(pluginData),
