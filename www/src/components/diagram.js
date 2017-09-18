@@ -60,7 +60,7 @@ const SegmentTitle = ({ children }) => (
       ...scale(-2 / 5),
       lineHeight: 1,
       textTransform: `uppercase`,
-      transform: "translateZ(0)",
+      transform: `translateZ(0)`,
     }}
   >
     {children}
@@ -78,10 +78,10 @@ const VerticalLine = () => (
       d="M10 40 L10 -10"
       css={{
         stroke: presets.brandLight,
-        strokeWidth: "3",
-        strokeLinecap: "round",
-        strokeDasharray: "0.5 10",
-        animation: `${lineAnimation} 400ms linear infinite`
+        strokeWidth: `3`,
+        strokeLinecap: `round`,
+        strokeDasharray: `0.5 10`,
+        animation: `${lineAnimation} 400ms linear infinite`,
       }}
     />
   </svg>
@@ -100,7 +100,7 @@ const borderAndBoxShadow = {
   width: `100%`,
   boxShadow: `0 5px 15px rgba(0,0,0,0.035)`,
   borderRadius: presets.radius,
-  transform: "translateZ(0)",
+  transform: `translateZ(0)`,
 }
 
 const SourceItems = ({ children }) => (

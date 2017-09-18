@@ -11,7 +11,7 @@ const Cards = ({ children }) => (
       background: `#fff`,
       borderRadius: presets.radiusLg,
       boxShadow: `0 5px 20px rgba(25, 17, 34, 0.1)`,
-      transform: "translateZ(0)",
+      transform: `translateZ(0)`,
     }}
   >
     {children}
