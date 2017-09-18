@@ -73,11 +73,8 @@ const VerticalLine = () => (
     viewBox="0 0 20 30"
     css={{ margin: `0 auto`, display: `block` }}
   >
-    <line
-      x1="10"
-      y1="40"
-      x2="10"
-      y2="-10"
+    <path
+      d="M10 40 L10 -10"
       css={{
         stroke: presets.brandLight,
         strokeWidth: "3",
