@@ -16,16 +16,16 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     // from the fetched data that you can run queries against.
     graphql(
       `
-      {
-        allContentfulProduct(limit: 1000) {
-          edges {
-            node {
-              id
+        {
+          allContentfulProduct(limit: 1000) {
+            edges {
+              node {
+                id
+              }
             }
           }
         }
-      }
-    `
+      `
     )
       .then(result => {
         if (result.errors) {
@@ -56,16 +56,16 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
       .then(() => {
         graphql(
           `
-        {
-          allContentfulCategory(limit: 1000) {
-            edges {
-              node {
-                id
+            {
+              allContentfulCategory(limit: 1000) {
+                edges {
+                  node {
+                    id
+                  }
+                }
               }
             }
-          }
-        }
-        `
+          `
         ).then(result => {
           if (result.errors) {
             reject(result.errors)
