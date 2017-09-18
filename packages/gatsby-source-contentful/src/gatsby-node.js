@@ -37,10 +37,10 @@ exports.sourceNodes = async (
   let syncToken
   if (
     store.getState().status.plugins &&
-    store.getState().status.plugins[`gatsby-source-contentful`]
+    store.getState().status.plugins[`gatsby-source-contentful`] &&
+    store.getState().status.plugins[`gatsby-source-contentful`][spaceId]
   ) {
-    syncToken = store.getState().status.plugins[`gatsby-source-contentful`]
-      .status.syncToken
+    syncToken = store.getState().status.plugins[`gatsby-source-contentful`][spaceId]
   }
 
   const {
@@ -85,13 +85,10 @@ exports.sourceNodes = async (
   // Store our sync state for the next sync.
   // TODO: we do not store the token if we are using preview, since only initial sync is possible there
   // This might change though
-  // TODO: Also we should think about not overriding tokens between host
   if (host !== `preview.contentful.com`) {
-    setPluginStatus({
-      status: {
-        syncToken: nextSyncToken,
-      },
-    })
+    const newState = {}
+    newState[spaceId] = nextSyncToken
+    setPluginStatus(newState)
   }
 
   // Create map of resolvable ids so we can check links against them while creating
