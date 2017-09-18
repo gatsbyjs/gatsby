@@ -10,7 +10,7 @@ exports.sourceNodes = (
   pluginOptions,
   done
 ) => {
-  const { createNode, deleteNode } = boundActionCreators
+  const { createNode } = boundActionCreators
 
   let serverOptions = pluginOptions.server || {
     address: `localhost`,
@@ -30,8 +30,8 @@ exports.sourceNodes = (
         return
       }
       let collection = pluginOptions.collection || `documents`
-      if (Object.prototype.toString.call(collection) === `[object Array]`) {
-        for (col of collection) {
+      if (_.isArray(collection)) {
+        for (const col of collection) {
           createNodes(db, pluginOptions, dbName, createNode, col, done)
         }
       } else {
@@ -84,8 +84,7 @@ function createNodes(
           mapObj = pluginOptions.map[collectionName]
         }
         // We need to map certain fields to a contenttype.
-        console.log(`shine for me ... new`)
-        var keys = Object.keys(mapObj).forEach(mediaItemFieldKey => {
+        Object.keys(mapObj).forEach(mediaItemFieldKey => {
           if (
             node[mediaItemFieldKey] &&
             (typeof mapObj[mediaItemFieldKey] === `string` ||
