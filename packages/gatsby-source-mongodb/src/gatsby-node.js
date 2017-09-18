@@ -30,18 +30,25 @@ exports.sourceNodes = (
         return
       }
       let collection = pluginOptions.collection || `documents`
-      if( Object.prototype.toString.call( collection ) === '[object Array]' ) {
+      if (Object.prototype.toString.call(collection) === `[object Array]`) {
         for (col of collection) {
-          createNodes(db, pluginOptions, dbName, createNode, col, done);
+          createNodes(db, pluginOptions, dbName, createNode, col, done)
         }
       } else {
-          createNodes(db, pluginOptions, dbName, createNode, collection, done);
+        createNodes(db, pluginOptions, dbName, createNode, collection, done)
       }
     }
   )
 }
 
-function createNodes(db, pluginOptions, dbName, createNode, collectionName, done) {
+function createNodes(
+  db,
+  pluginOptions,
+  dbName,
+  createNode,
+  collectionName,
+  done
+) {
   let collection = db.collection(collectionName)
   let cursor = collection.find()
 
@@ -72,24 +79,27 @@ function createNodes(db, pluginOptions, dbName, createNode, collectionName, done
         },
       }
       if (pluginOptions.map) {
-        let mapObj = pluginOptions.map;
+        let mapObj = pluginOptions.map
         if (pluginOptions.map[collectionName]) {
-          mapObj = pluginOptions.map[collectionName];
+          mapObj = pluginOptions.map[collectionName]
         }
         // We need to map certain fields to a contenttype.
-        console.log('shine for me ... new')
+        console.log(`shine for me ... new`)
         var keys = Object.keys(mapObj).forEach(mediaItemFieldKey => {
-          if (node[mediaItemFieldKey] && (
-              typeof mapObj[mediaItemFieldKey] === 'string' || mapObj[mediaItemFieldKey] instanceof String)) {
-              node[`${mediaItemFieldKey}___NODE`] = createMappingChildNodes(
-                node,
-                mediaItemFieldKey,
-                node[mediaItemFieldKey],
-                mapObj[mediaItemFieldKey],
-                createNode
-              )
+          if (
+            node[mediaItemFieldKey] &&
+            (typeof mapObj[mediaItemFieldKey] === `string` ||
+              mapObj[mediaItemFieldKey] instanceof String)
+          ) {
+            node[`${mediaItemFieldKey}___NODE`] = createMappingChildNodes(
+              node,
+              mediaItemFieldKey,
+              node[mediaItemFieldKey],
+              mapObj[mediaItemFieldKey],
+              createNode
+            )
 
-              delete node[mediaItemFieldKey]
+            delete node[mediaItemFieldKey]
           }
         })
       }
