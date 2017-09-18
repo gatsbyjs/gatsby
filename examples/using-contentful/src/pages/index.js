@@ -8,7 +8,7 @@ const propTypes = {
 }
 
 const Product = ({ node }) => (
-  <div key={node.id}>
+  <div>
     <Link
       style={{ color: `inherit`, textDecoration: `none` }}
       to={`/products/${node.id}/`}
@@ -63,11 +63,11 @@ class IndexPage extends React.Component {
           nodes from a single locale
         </p>
         <h3>en-US</h3>
-        {usProductEdges.map(({ node }, i) => <Product node={node} />)}
+        {usProductEdges.map(({ node }, i) => <Product node={node} key={node.id} />)}
         <br />
         <br />
         <h3>de</h3>
-        {deProductEdges.map(({ node }, i) => <Product node={node} />)}
+        {deProductEdges.map(({ node }, i) => <Product node={node} key={node.id} />)}
       </div>
     )
   }
