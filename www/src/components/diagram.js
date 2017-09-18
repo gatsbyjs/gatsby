@@ -26,7 +26,7 @@ const stripeBg = {
 }
 const lineAnimation = css.keyframes({
   to: {
-    strokeDashoffset: 1000,
+    strokeDashoffset: 10,
   },
 })
 
@@ -74,16 +74,17 @@ const VerticalLine = () => (
     css={{ margin: `0 auto`, display: `block` }}
   >
     <line
-      className="path"
       x1="10"
+      y1="40"
       x2="10"
-      y1="110"
       y2="-10"
-      stroke={presets.brandLight}
-      strokeWidth="3"
-      strokeLinecap="round"
-      strokeDasharray="0.5, 10"
-      css={{ animation: `${lineAnimation} 40s linear infinite` }}
+      css={{
+        stroke: presets.brandLight,
+        strokeWidth: "3",
+        strokeLinecap: "round",
+        strokeDasharray: "0.5 10",
+        animation: `${lineAnimation} 400ms linear infinite`
+      }}
     />
   </svg>
 )
