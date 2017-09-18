@@ -20,8 +20,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     // ==== PAGES (WORDPRESS NATIVE) ====
     graphql(
       `
-      {
-        
+        {
           allWordpressPage {
             edges {
               node {
@@ -32,9 +31,8 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
               }
             }
           }
- 
-      }
-    `
+        }
+      `
     )
       .then(result => {
         if (result.errors) {
@@ -69,21 +67,21 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
       // ==== POSTS (WORDPRESS NATIVE AND ACF) ====
       .then(() => {
         graphql(
-          `{      
-                  allWordpressPost {
-                    edges {
-                      node {
-                        id
-                        slug
-                        status
-                        template
-                        format
-                      }
-                    }
+          `
+            {
+              allWordpressPost {
+                edges {
+                  node {
+                    id
+                    slug
+                    status
+                    template
+                    format
                   }
- 
                 }
-              `
+              }
+            }
+          `
         ).then(result => {
           if (result.errors) {
             console.log(result.errors)

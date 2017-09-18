@@ -25,16 +25,16 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     resolve(
       graphql(
         `
-      {
-        allPostsJson(limit: 1000) {
-          edges {
-            node {
-              id
+          {
+            allPostsJson(limit: 1000) {
+              edges {
+                node {
+                  id
+                }
+              }
             }
           }
-        }
-      }
-    `
+        `
       ).then(result => {
         if (result.errors) {
           reject(new Error(result.errors))
