@@ -60,6 +60,7 @@ const SegmentTitle = ({ children }) => (
       ...scale(-2 / 5),
       lineHeight: 1,
       textTransform: `uppercase`,
+      transform: "translateZ(0)",
     }}
   >
     {children}
@@ -99,6 +100,7 @@ const borderAndBoxShadow = {
   width: `100%`,
   boxShadow: `0 5px 15px rgba(0,0,0,0.035)`,
   borderRadius: presets.radius,
+  transform: "translateZ(0)",
 }
 
 const SourceItems = ({ children }) => (
