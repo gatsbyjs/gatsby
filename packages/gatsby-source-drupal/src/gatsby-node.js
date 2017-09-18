@@ -103,7 +103,7 @@ exports.sourceNodes = async (
   })
 
   // Fetch users.
-  const userUrl = `http://dev-gatsbyjs-d8.pantheonsite.io/jsonapi/user/user`
+  const userUrl = `${baseUrl}/jsonapi/user/user`
   const userResult = await axios.get(userUrl)
   const users = processEntities(userResult.data.data)
   const blue = await Promise.all(
@@ -132,7 +132,7 @@ exports.sourceNodes = async (
             )
             .catch(() => console.log(`fail fetch`, gatsbyUser))
             .then(pictureResult => {
-              gatsbyUser.picture = `http://dev-gatsbyjs-d8.pantheonsite.io${pictureResult
+              gatsbyUser.picture = `${baseUrl}${pictureResult
                 .data.data.attributes.url}`
 
               // Get content digest of node.
