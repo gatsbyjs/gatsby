@@ -25,3 +25,4 @@ plugins: [
   },
 ]
 ```
+Files must be named `filename.module.css` for Gatsby to read them as CSS modules. Or you can set up a custom webpack config to use css modules. https://www.gatsbyjs.org/docs/add-custom-webpack-config/
