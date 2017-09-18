@@ -40,7 +40,9 @@ exports.sourceNodes = async (
     store.getState().status.plugins[`gatsby-source-contentful`] &&
     store.getState().status.plugins[`gatsby-source-contentful`][spaceId]
   ) {
-    syncToken = store.getState().status.plugins[`gatsby-source-contentful`][spaceId]
+    syncToken = store.getState().status.plugins[`gatsby-source-contentful`][
+      spaceId
+    ]
   }
 
   const {
