@@ -62,7 +62,7 @@ exports.sourceNodes = async (
   })
 
   // Normalize data & create nodes
-  //
+
   // Creates entities from object collections of entities
   entities = normalize.normalizeEntities(entities)
 

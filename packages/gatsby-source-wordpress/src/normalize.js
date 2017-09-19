@@ -282,7 +282,6 @@ exports.downloadMediaFiles = async ({ entities, store, cache, createNode }) =>
             createNode,
           })
         } catch (e) {
-          console.log(e)
           // Ignore
         }
       }
@@ -306,7 +305,7 @@ const createACFChildNodes = (
 ) => {
   // Replace any child arrays with pointers to nodes
   _.each(obj, (value, key) => {
-    if (_.isArray(value)) {
+    if (_.isArray(value) && value[0].acf_fc_layout) {
       obj[`${key}___NODE`] = value.map(
         v =>
           createACFChildNodes(
@@ -344,13 +343,13 @@ exports.createNodesFromEntities = ({ entities, createNode }) => {
       _.each(entity.acf, (value, key) => {
         if (_.isArray(value) && value[0].acf_fc_layout) {
           entity.acf[`${key}___NODE`] = entity.acf[key].map((f, i) => {
-            const type = `WordPressAcf_${f.acf_fc_layout}`
+            const type = `WordPressAcf_${__type.slice(11)}_${f.acf_fc_layout}`
             delete f.acf_fc_layout
 
             const acfChildNode = createACFChildNodes(
               f,
               entity.id,
-              i,
+              key,
               type,
               children,
               createNode
@@ -376,15 +375,3 @@ exports.createNodesFromEntities = ({ entities, createNode }) => {
     createNode(node)
   })
 }
-
-// TODOs
-// * just use date_gmt & modified_gmt since we expect UTC/GMT dates.
-// * discard most information about photos since a lot of it is for giving you
-// different sizes
-// * Maybe delete unusable links pointing back to the wordpress site.
-//
-// Real leftover TODOs
-// * download media + user avatar images (and cleanup user avatar data)
-// * Delete unused code here
-// * test this against their site
-// * rebuild example site using this sample data.
