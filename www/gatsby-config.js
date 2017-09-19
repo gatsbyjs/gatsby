@@ -96,7 +96,13 @@ module.exports = {
         ],
       },
     },
-    `gatsby-plugin-offline`,
+    {
+      resolve: `gatsby-plugin-offline`,
+      options: {
+        navigateFallback: null,
+        navigateFallbackWhitelist: [],
+      },
+    },
     `gatsby-plugin-twitter`,
     `gatsby-plugin-react-helmet`,
     {
