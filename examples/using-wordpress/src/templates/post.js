@@ -1,52 +1,49 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
+import PostIcons from "../components/PostIcons"
 
-import Helmet from "react-helmet"
-import Header from "../components/Header"
-import Footer from "../components/Footer"
-import { H1, Row, Page, Column } from "../components/styled"
+import { rhythm } from "../utils/typography"
 
 class PostTemplate extends Component {
   render() {
     const post = this.props.data.wordpressPost
-    console.log(post)
 
     return (
       <div>
         <h1 dangerouslySetInnerHTML={{ __html: post.title }} />
+        <PostIcons node={post} style={{ marginBottom: rhythm(1 / 2) }} />
         <div dangerouslySetInnerHTML={{ __html: post.content }} />
-        {post.childWordPressAcfImageGallery && <h2>Image Gallery</h2>}
-        {post.childWordPressAcfImageGallery &&
-          post.childWordPressAcfImageGallery.pictures.map(({ picture }) => {
-            console.log(picture)
-            const img = picture.localFile.childImageSharp.responsiveResolution
-            return (
-              <img
-                src={img.src}
-                srcSet={img.srcSet}
-                width={img.width}
-                height={img.height}
-                style={{ marginRight: 10 }}
-              />
-            )
+        {post.acf &&
+          post.acf.page_builder &&
+          post.acf.page_builder.map(layout => {
+            if (layout.__typename === `WordPressAcf_POST_image_gallery`) {
+              return (
+                <div>
+                  <h2>ACF Image Gallery</h2>
+                  {layout.pictures.map(({ picture }) => {
+                    const img =
+                      picture.localFile.childImageSharp.responsiveSizes
+                    return (
+                      <img
+                        src={img.src}
+                        srcSet={img.srcSet}
+                        sizes={img.sizes}
+                      />
+                    )
+                  })}
+                </div>
+              )
+            }
+            if (layout.__typename === `WordPressAcf_POST_post_photo`) {
+              const img = layout.photo.localFile.childImageSharp.responsiveSizes
+              return (
+                <div>
+                  <h2>ACF Post Photo</h2>
+                  <img src={img.src} srcSet={img.srcSet} sizes={img.sizes} />
+                </div>
+              )
+            }
           })}
-        {post.childWordPressAcfPostPhoto && <h2>Post Photo</h2>}
-        {post.childWordPressAcfPostPhoto &&
-          (() => {
-            console.log(post.childWordPressAcfPostPhoto)
-            const img =
-              post.childWordPressAcfPostPhoto.photo.localFile.childImageSharp
-                .responsiveResolution
-            return (
-              <img
-                src={img.src}
-                srcSet={img.srcSet}
-                width={img.width}
-                height={img.height}
-                style={{ marginRight: 10 }}
-              />
-            )
-          })()}
       </div>
     )
   }
@@ -65,31 +62,34 @@ export const pageQuery = graphql`
     wordpressPost(id: { eq: $id }) {
       title
       content
-      childWordPressAcfPostPhoto {
-        photo {
-          localFile {
-            childImageSharp {
-              responsiveResolution(width: 300) {
-                width
-                height
-                src
-                srcSet
+      ...PostIcons
+      acf {
+        page_builder {
+          __typename
+          ... on WordPressAcf_POST_post_photo {
+            photo {
+              localFile {
+                childImageSharp {
+                  responsiveSizes(maxWidth: 680) {
+                    src
+                    srcSet
+                    sizes
+                  }
+                }
               }
             }
           }
-        }
-      }
-      childWordPressAcfImageGallery {
-        pictures {
-          title
-          picture {
-            localFile {
-              childImageSharp {
-                responsiveResolution(width: 300) {
-                  width
-                  height
-                  src
-                  srcSet
+          ... on WordPressAcf_POST_image_gallery {
+            pictures {
+              picture {
+                localFile {
+                  childImageSharp {
+                    responsiveSizes(maxWidth: 680) {
+                      src
+                      srcSet
+                      sizes
+                    }
+                  }
                 }
               }
             }

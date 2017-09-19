@@ -1,36 +1,51 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 import Link from "gatsby-link"
+import ClockIcon from "react-icons/lib/fa/clock-o"
+import TagIcon from "react-icons/lib/fa/tag"
+import OpenIcon from "react-icons/lib/fa/folder-open"
+
+import PostIcons from "../components/PostIcons"
+
+import { rhythm } from "../utils/typography"
 
 class Home extends Component {
   render() {
-    // this.props is where all the data of my site lives: { data, history, location. match... }
-    // much of this if from the router, but data object is where all my api data lives
-
-    console.log(this.props.data)
     const data = this.props.data
 
     return (
       <div>
-        <h1>Pages</h1>
-        {data.allWordpressPage.edges.map(({ node }) => {
-          return (
-            <div>
-              <Link to={node.slug} style={{ textDecoration: `none` }}>
-                <h3>{node.title}</h3>
+        <div style={{ marginBottom: rhythm(1) }}>
+          <h1>Pages</h1>
+          {data.allWordpressPage.edges.map(({ node }) => {
+            return (
+              <div key={node.slug}>
+                <Link to={node.slug} style={{ textDecoration: `none` }}>
+                  <h3>{node.title}</h3>
+                </Link>
                 <div dangerouslySetInnerHTML={{ __html: node.excerpt }} />
-              </Link>
-            </div>
-          )
-        })}
+                <span>
+                  <ClockIcon
+                    size={14}
+                    style={{ position: `relative`, bottom: 1 }}
+                  />
+                  {` `}
+                  {node.date}
+                </span>
+              </div>
+            )
+          })}
+        </div>
+        <hr />
         <h1>Posts</h1>
         {data.allWordpressPost.edges.map(({ node }) => {
           return (
-            <div>
+            <div style={{ marginBottom: rhythm(2) }} key={node.slug}>
               <Link to={node.slug} style={{ textDecoration: `none` }}>
                 <h3>{node.title}</h3>
-                <div dangerouslySetInnerHTML={{ __html: node.excerpt }} />
               </Link>
+              <div dangerouslySetInnerHTML={{ __html: node.excerpt }} />
+              <PostIcons node={node} />
             </div>
           )
         })}
@@ -41,30 +56,27 @@ class Home extends Component {
 
 export default Home
 
-Home.propTypes = {
-  data: PropTypes.object.isRequired,
-  allWordpressPage: PropTypes.object,
-  edges: PropTypes.array,
-}
-
 // Set here the ID of the home page.
 export const pageQuery = graphql`
   query homePageQuery {
     allWordpressPage {
       edges {
         node {
+          id
           title
           excerpt
           slug
+          date(formatString: "MMMM DD, YYYY")
         }
       }
     }
-    allWordpressPost {
+    allWordpressPost(sort: { fields: [date] }) {
       edges {
         node {
           title
           excerpt
           slug
+          ...PostIcons
         }
       }
     }
