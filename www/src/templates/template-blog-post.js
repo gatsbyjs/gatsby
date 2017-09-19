@@ -76,11 +76,9 @@ class BlogPostTemplate extends React.Component {
             <meta
               name="description"
               content={
-                post.frontmatter.excerpt ? (
-                  post.frontmatter.excerpt
-                ) : (
-                  post.excerpt
-                )
+                post.frontmatter.excerpt
+                  ? post.frontmatter.excerpt
+                  : post.excerpt
               }
             />
 
@@ -190,51 +188,51 @@ class BlogPostTemplate extends React.Component {
             {this.props.data.markdownRemark.frontmatter.title}
           </h1>
           {post.frontmatter.image &&
-          !(post.frontmatter.showImageInArticle === false) && (
-            <div
-              css={{
-                marginBottom: rhythm(1),
-              }}
-            >
-              <div className="gatsby-resp-image-link">
-                <div
-                  className="gatsby-resp-image-wrapper"
-                  css={{
-                    position: `relative`,
-                    zIndex: -1,
-                  }}
-                >
+            !(post.frontmatter.showImageInArticle === false) && (
+              <div
+                css={{
+                  marginBottom: rhythm(1),
+                }}
+              >
+                <div className="gatsby-resp-image-link">
                   <div
-                    className="gatsby-resp-image-background-image"
+                    className="gatsby-resp-image-wrapper"
                     css={{
-                      paddingBottom: `${1 /
-                        post.frontmatter.image.childImageSharp.responsiveSizes
-                          .aspectRatio *
-                        100}%`,
                       position: `relative`,
-                      width: `100%`,
-                      bottom: 0,
-                      left: 0,
-                      backgroundImage: `url(${post.frontmatter.image
-                        .childImageSharp.responsiveSizes.base64})`,
-                      backgroundSize: `cover`,
+                      zIndex: -1,
                     }}
                   >
-                    <img {...imageProps} />
+                    <div
+                      className="gatsby-resp-image-background-image"
+                      css={{
+                        paddingBottom: `${1 /
+                          post.frontmatter.image.childImageSharp.responsiveSizes
+                            .aspectRatio *
+                          100}%`,
+                        position: `relative`,
+                        width: `100%`,
+                        bottom: 0,
+                        left: 0,
+                        backgroundImage: `url(${post.frontmatter.image
+                          .childImageSharp.responsiveSizes.base64})`,
+                        backgroundSize: `cover`,
+                      }}
+                    >
+                      <img {...imageProps} />
+                    </div>
                   </div>
                 </div>
+                {post.frontmatter.imageAuthor &&
+                  post.frontmatter.imageAuthorLink && (
+                    <em>
+                      Image by{` `}
+                      <a href={post.frontmatter.imageAuthorLink}>
+                        {post.frontmatter.imageAuthor}
+                      </a>
+                    </em>
+                  )}
               </div>
-              {post.frontmatter.imageAuthor &&
-              post.frontmatter.imageAuthorLink && (
-                <em>
-                  Image by{` `}
-                  <a href={post.frontmatter.imageAuthorLink}>
-                    {post.frontmatter.imageAuthor}
-                  </a>
-                </em>
-              )}
-            </div>
-          )}
+            )}
           <div
             className="post-body"
             dangerouslySetInnerHTML={{
