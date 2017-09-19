@@ -1,7 +1,7 @@
 const crypto = require(`crypto`)
 const deepMapKeys = require(`deep-map-keys`)
 const _ = require(`lodash`)
-const uuidv5 = require("uuid/v5")
+const uuidv5 = require(`uuid/v5`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
 const colorized = require(`./output-color`)
@@ -205,8 +205,7 @@ exports.mapPostsToTagsCategories = entities => {
 }
 
 // TODO generalize this for all taxonomy types.
-exports.mapTagsCategoriesToTaxonomies = entities => {
-  return entities.map(e => {
+exports.mapTagsCategoriesToTaxonomies = entities => entities.map(e => {
     // Where should api_menus stuff link to?
     if (e.taxonomy && e.__type !== `wordpress__wp_api_menus_menus`) {
       // Replace taxonomy with a link to the taxonomy node.
@@ -215,7 +214,6 @@ exports.mapTagsCategoriesToTaxonomies = entities => {
     }
     return e
   })
-}
 
 exports.mapEntitiesToMedia = entities => {
   const media = entities.filter(e => e.__type === `wordpress__wp_media`)

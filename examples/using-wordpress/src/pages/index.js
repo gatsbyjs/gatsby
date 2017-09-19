@@ -17,8 +17,7 @@ class Home extends Component {
       <div>
         <div style={{ marginBottom: rhythm(1) }}>
           <h1>Pages</h1>
-          {data.allWordpressPage.edges.map(({ node }) => {
-            return (
+          {data.allWordpressPage.edges.map(({ node }) => (
               <div key={node.slug}>
                 <Link to={node.slug} style={{ textDecoration: `none` }}>
                   <h3>{node.title}</h3>
@@ -33,13 +32,11 @@ class Home extends Component {
                   {node.date}
                 </span>
               </div>
-            )
-          })}
+            ))}
         </div>
         <hr />
         <h1>Posts</h1>
-        {data.allWordpressPost.edges.map(({ node }) => {
-          return (
+        {data.allWordpressPost.edges.map(({ node }) => (
             <div style={{ marginBottom: rhythm(2) }} key={node.slug}>
               <Link to={node.slug} style={{ textDecoration: `none` }}>
                 <h3>{node.title}</h3>
@@ -47,8 +44,7 @@ class Home extends Component {
               <div dangerouslySetInnerHTML={{ __html: node.excerpt }} />
               <PostIcons node={node} />
             </div>
-          )
-        })}
+          ))}
       </div>
     )
   }
