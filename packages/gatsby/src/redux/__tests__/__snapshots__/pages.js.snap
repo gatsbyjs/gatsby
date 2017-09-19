@@ -4,7 +4,7 @@ exports[`Add pages allows you to add multiple pages 1`] = `
 Array [
   Object {
     "component": Array [
-      "\\\\whatever\\\\index.js",
+      "/whatever/index.js",
     ],
     "componentChunkName": Array [
       "component---whatever-index-js",
@@ -19,7 +19,7 @@ Array [
   },
   Object {
     "component": Array [
-      "\\\\whatever\\\\index.js",
+      "/whatever/index.js",
     ],
     "componentChunkName": Array [
       "component---whatever-index-js",
@@ -39,7 +39,7 @@ exports[`Add pages allows you to add pages 1`] = `
 Object {
   "payload": Object {
     "component": Array [
-      "\\\\whatever\\\\index.js",
+      "/whatever/index.js",
     ],
     "componentChunkName": Array [
       "component---whatever-index-js",
@@ -65,7 +65,7 @@ exports[`Add pages allows you to add pages 2`] = `
 Array [
   Object {
     "component": Array [
-      "\\\\whatever\\\\index.js",
+      "/whatever/index.js",
     ],
     "componentChunkName": Array [
       "component---whatever-index-js",
@@ -85,7 +85,7 @@ exports[`Add pages allows you to add pages with context 1`] = `
 Object {
   "payload": Object {
     "component": Array [
-      "\\\\whatever\\\\index.js",
+      "/whatever/index.js",
     ],
     "componentChunkName": Array [
       "component---whatever-index-js",
@@ -113,7 +113,7 @@ exports[`Add pages allows you to add pages with context 2`] = `
 Array [
   Object {
     "component": Array [
-      "\\\\whatever\\\\index.js",
+      "/whatever/index.js",
     ],
     "componentChunkName": Array [
       "component---whatever-index-js",
@@ -137,7 +137,7 @@ exports[`Add pages allows you to update existing pages (based on path) 1`] = `
 Array [
   Object {
     "component": Array [
-      "\\\\whatever2\\\\index.js",
+      "/whatever2/index.js",
     ],
     "componentChunkName": Array [
       "component---whatever-2-index-js",

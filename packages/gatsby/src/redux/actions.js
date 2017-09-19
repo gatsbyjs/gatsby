@@ -8,6 +8,7 @@ const glob = require(`glob`)
 const path = require(`path`)
 
 const { joinPath } = require(`../utils/path`)
+const normalize = require(`normalize-path`)
 const { getNode, hasNodeChanged } = require(`./index`)
 const { store } = require(`./index`)
 import * as joiSchemas from "../joi-schemas/joi"
@@ -51,11 +52,11 @@ const pascalCase = _.flow(_.camelCase, _.upperFirst)
  */
 actions.createPage = (page, plugin = ``, traceId) => {
   if (Array.isArray(page.component)) {
-    page.component.forEach(c => path.normalize(c))
+    page.component.forEach(c => normalize(c))
   } else {
     // make strings into an array so it is easier to reason about (always an array)
     //   and deals with windows path issues in an array?
-    page.component = [path.normalize(page.component)]
+    page.component = [normalize(page.component)]
   }
   page.componentChunkName = []
   page.component.forEach(c => page.componentChunkName.push(generateComponentChunkName(c)))
