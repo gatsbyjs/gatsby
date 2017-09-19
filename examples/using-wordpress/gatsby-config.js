@@ -31,6 +31,7 @@ module.exports = {
     },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
+    `gatsby-plugin-glamor`,
     {
       resolve: `gatsby-plugin-typography`,
       options: {
