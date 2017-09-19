@@ -18,16 +18,16 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     // us an easy way to query all documents in the mongoDB collection.
     graphql(
       `
-      {
-        allMongodbCloudDocuments(limit: 1000) {
-          edges {
-            node {
-              id
+        {
+          allMongodbCloudDocuments(limit: 1000) {
+            edges {
+              node {
+                id
+              }
             }
           }
         }
-      }
-    `
+      `
     ).then(result => {
       if (result.errors) {
         reject(result.errors)

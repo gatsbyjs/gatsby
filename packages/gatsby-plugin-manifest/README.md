@@ -52,3 +52,4 @@ plugins: [
   },
 ]
 ```
+To create `manifest.json`, you need to run `gatsby build`.

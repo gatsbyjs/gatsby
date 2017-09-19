@@ -60,7 +60,9 @@ const extractFieldExamples = (nodes: any[]) =>
       // TODO: if you want to support infering Union types this should be handled
       // differently. Maybe merge all like types into examples for each type?
       // e.g. union: [1, { foo: true }, ['brown']] -> Union Int|Object|List
-      if (!isSameType(obj, next)) return INVALID_VALUE
+      if (!isSameType(obj, next)) {
+        return INVALID_VALUE
+      }
 
       if (!_.isArray(obj || next)) {
         // Prefer floats over ints as they're more specific.
