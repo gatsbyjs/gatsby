@@ -11153,21 +11153,41 @@ Array [
   Array [
     Object {
       "children": Array [],
+      "id": "73e99b4e-2409-51f9-9c10-23b7fa60fe061WordPressAcf_image_gallerypictures",
+      "internal": Object {
+        "contentDigest": "761de77b24ffa17144d02c00cda194ae",
+        "type": "WordPressAcf_image_gallerypictures",
+      },
+      "parent": "73e99b4e-2409-51f9-9c10-23b7fa60fe06",
+      "picture___NODE": "61ef7ef2-032f-5c90-bba3-99d04c9a1f07",
+      "title": "Venise",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "id": "73e99b4e-2409-51f9-9c10-23b7fa60fe061WordPressAcf_image_gallerypictures",
+      "internal": Object {
+        "contentDigest": "6aefd1c64777e0fb891e53c13bf76aec",
+        "type": "WordPressAcf_image_gallerypictures",
+      },
+      "parent": "73e99b4e-2409-51f9-9c10-23b7fa60fe06",
+      "picture___NODE": "950513a1-a720-5588-b262-9533aa598624",
+      "title": "",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
       "id": "73e99b4e-2409-51f9-9c10-23b7fa60fe061WordPressAcf_image_gallery",
       "internal": Object {
-        "contentDigest": "fef851242d5ca07b2fb89905bc75c0f4",
+        "contentDigest": "06d18a18b8cc5787e6adb26f9ac1636d",
         "type": "WordPressAcf_image_gallery",
       },
       "parent": "73e99b4e-2409-51f9-9c10-23b7fa60fe06",
-      "pictures": Array [
-        Object {
-          "picture___NODE": "61ef7ef2-032f-5c90-bba3-99d04c9a1f07",
-          "title": "Venise",
-        },
-        Object {
-          "picture___NODE": "950513a1-a720-5588-b262-9533aa598624",
-          "title": "",
-        },
+      "pictures___NODE": Array [
+        "73e99b4e-2409-51f9-9c10-23b7fa60fe061WordPressAcf_image_gallerypictures",
+        "73e99b4e-2409-51f9-9c10-23b7fa60fe061WordPressAcf_image_gallerypictures",
       ],
     },
   ],
@@ -11256,6 +11276,8 @@ Array [
       ],
       "children": Array [
         "73e99b4e-2409-51f9-9c10-23b7fa60fe060WordPressAcf_excerpt",
+        "73e99b4e-2409-51f9-9c10-23b7fa60fe061WordPressAcf_image_gallerypictures",
+        "73e99b4e-2409-51f9-9c10-23b7fa60fe061WordPressAcf_image_gallerypictures",
         "73e99b4e-2409-51f9-9c10-23b7fa60fe061WordPressAcf_image_gallery",
         "73e99b4e-2409-51f9-9c10-23b7fa60fe062WordPressAcf_post_photo",
       ],

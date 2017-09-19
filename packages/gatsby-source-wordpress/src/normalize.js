@@ -220,13 +220,6 @@ exports.mapTagsCategoriesToTaxonomies = entities => {
 exports.mapEntitiesToMedia = entities => {
   const media = entities.filter(e => e.__type === `wordpress__wp_media`)
   return entities.map(e => {
-    // acf.linked_image
-    if (e.acf && e.acf.linked_image) {
-      const me = media.find(m => m.source_url === e.acf.linked_image)
-      e.acf.linked_image___NODE = me.id
-      delete e.acf.linked_image
-    }
-
     const hasPhoto = object => _.some(object, value => isPhoto(value))
 
     const isPhoto = field =>
@@ -238,13 +231,15 @@ exports.mapEntitiesToMedia = entities => {
         ? true
         : false
 
+    const photoRegex = /\.(gif|jpg|jpeg|tiff|png)$/i
+    const isPhotoUrl = filename => photoRegex.test(filename)
     const replacePhoto = field =>
       media.find(m => m.wordpress_id === field.wordpress_id).id
 
     const replaceFieldsInObject = object => {
       _.each(object, (value, key) => {
         if (_.isArray(value)) {
-          return value.forEach(v => replaceFieldsInObject(v))
+          value.forEach(v => replaceFieldsInObject(v))
         }
         if (isPhoto(value)) {
           object[`${key}___NODE`] = replacePhoto(value)
@@ -253,10 +248,20 @@ exports.mapEntitiesToMedia = entities => {
       })
     }
 
-    if (e.acf && e.acf.page_builder) {
-      e.acf.page_builder = e.acf.page_builder.map(f => {
-        replaceFieldsInObject(f)
-        return f
+    if (e.acf) {
+      _.each(e.acf, (value, key) => {
+        if (_.isString(value) && isPhotoUrl(value)) {
+          const me = media.find(m => m.source_url === value)
+          e.acf[`${key}___NODE`] = me.id
+          delete e.acf[key]
+        }
+
+        if (_.isArray(value) && value[0].acf_fc_layout) {
+          e.acf[key] = e.acf[key].map(f => {
+            replaceFieldsInObject(f)
+            return f
+          })
+        }
       })
     }
     return e
@@ -316,11 +321,7 @@ const createACFChildNodes = (
       delete obj[key]
     }
   })
-  // obj = deepMapKeys(
-  // obj,
-  // key => (key === `ID` ? getValidKey({ key: `id` }) : getValidKey({ key }))
-  // )
-  // console.log(obj)
+
   const acfChildNode = {
     ...obj,
     id: entityId + topLevelIndex + type,
@@ -336,29 +337,31 @@ const createACFChildNodes = (
 
 exports.createNodesFromEntities = ({ entities, createNode }) => {
   entities.forEach(e => {
-    // Create subnodes for page_builder
-    // find any "rendered" field and make that top-level
+    // Create subnodes for ACF Flexible layouts
     let { __type, ...entity } = e
     let children = []
-    // Create child nodes for acf.page_builder
-    if (entity.acf && entity.acf.page_builder) {
-      entity.acf.page_builder___NODE = entity.acf.page_builder.map((f, i) => {
-        const type = `WordPressAcf_${f.acf_fc_layout}`
-        delete f.acf_fc_layout
+    if (entity.acf) {
+      _.each(entity.acf, (value, key) => {
+        if (_.isArray(value) && value[0].acf_fc_layout) {
+          entity.acf[`${key}___NODE`] = entity.acf[key].map((f, i) => {
+            const type = `WordPressAcf_${f.acf_fc_layout}`
+            delete f.acf_fc_layout
 
-        const acfChildNode = createACFChildNodes(
-          f,
-          entity.id,
-          i,
-          type,
-          children,
-          createNode
-        )
+            const acfChildNode = createACFChildNodes(
+              f,
+              entity.id,
+              i,
+              type,
+              children,
+              createNode
+            )
 
-        return acfChildNode.id
+            return acfChildNode.id
+          })
+
+          delete entity.acf[key]
+        }
       })
-
-      delete entity.acf.page_builder
     }
 
     let node = {
