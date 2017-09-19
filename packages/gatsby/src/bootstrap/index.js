@@ -1,5 +1,6 @@
 /* @flow */
 const Promise = require(`bluebird`)
+
 const glob = require(`glob`)
 const _ = require(`lodash`)
 const slash = require(`slash`)
