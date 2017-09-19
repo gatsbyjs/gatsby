@@ -58,6 +58,7 @@ function preloadHeadersByPage(pages, manifest, pathPrefix) {
 
   pages.forEach((page) => {
     const scripts = [
+      ...COMMON_BUNDLES,
       pathChunkName(page.path),
       page.componentChunkName,
       page.layoutComponentChunkName,
@@ -83,14 +84,14 @@ function defaultMerge(...headers) {
   return _.mergeWith({}, ...headers, unionMerge)
 }
 
-function transformLink(manifest, publicFolder) {
+function transformLink(manifest, publicFolder, pathPrefix) {
   return (header) => (
     header.replace(LINK_REGEX, (__, prefix, file, suffix) => {
       const hashed = manifest[file]
       if (hashed) {
-        return `${prefix}${hashed}${suffix}`
+        return `${prefix}${pathPrefix}${hashed}${suffix}`
       } else if (fs.existsSync(publicFolder(file))) {
-        return `${prefix}${file}${suffix}`
+        return `${prefix}${pathPrefix}${file}${suffix}`
       } else {
         throw new Error(
           `Could not find the file specified in the Link header \`${header}\`.` +
@@ -144,9 +145,28 @@ const validateUserOptions = (pluginOptions) => (headers) => {
   return headers
 }
 
-const mapUserLinkHeaders = ({ manifest, publicFolder }) => (headers) => (
-  _.mapValues(headers, (headerList) => _.map(headerList, transformLink(manifest, publicFolder)))
+const mapUserLinkHeaders = ({ manifest, pathPrefix, publicFolder }) => (headers) => (
+  _.mapValues(headers, (headerList) => (
+    _.map(headerList, transformLink(manifest, publicFolder, pathPrefix)))
+  )
 )
+
+const mapUserLinkAllPageHeaders = (pluginData, { allPageHeaders }) => (headers) => {
+  if (!allPageHeaders) {
+    return headers
+  }
+
+  const { pages, manifest, publicFolder, pathPrefix } = pluginData
+
+  const headersList = _.map(allPageHeaders, transformLink(manifest, publicFolder, pathPrefix))
+
+  const duplicateHeadersByPage = _.reduce(pages, (combined, page) => {
+    const pathKey = headersPath(pathPrefix, page.path)
+    return defaultMerge(combined, { [pathKey]: headersList })
+  }, {})
+
+  return defaultMerge(headers, duplicateHeadersByPage)
+}
 
 const applyLinkHeaders = (pluginData, { mergeLinkHeaders }) => (headers) => {
   if (!mergeLinkHeaders) {
@@ -154,12 +174,9 @@ const applyLinkHeaders = (pluginData, { mergeLinkHeaders }) => (headers) => {
   }
 
   const { pages, manifest, pathPrefix } = pluginData
-
-  const rootPath = headersPath(pathPrefix, ROOT_WILDCARD)
-  const wildcardHeaders = { [rootPath]: linkHeaders(COMMON_BUNDLES, manifest, pathPrefix) }
   const perPageHeaders = preloadHeadersByPage(pages, manifest, pathPrefix)
 
-  return defaultMerge(headers, wildcardHeaders, perPageHeaders)
+  return defaultMerge(headers, perPageHeaders)
 }
 
 const applySecurityHeaders = ({ mergeSecurityHeaders }) => (headers) => {
@@ -194,9 +211,10 @@ export default function buildHeadersProgram(pluginData, pluginOptions) {
   return _.flow(
     validateUserOptions(pluginOptions),
     mapUserLinkHeaders(pluginData, pluginOptions),
-    applyLinkHeaders(pluginData, pluginOptions),
     applySecurityHeaders(pluginOptions),
     applyCachingHeaders(pluginOptions),
+    mapUserLinkAllPageHeaders(pluginData, pluginOptions),
+    applyLinkHeaders(pluginData, pluginOptions),
     applyTransfromHeaders(pluginOptions),
     transformToString,
     writeHeadersFile(pluginData),

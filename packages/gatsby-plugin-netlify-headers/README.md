@@ -28,6 +28,7 @@ plugins: [
     resolve: ` gatsby-plugin-netlify-headers`,
     options: {
       headers: {},                                  // option to add more headers. `Link` headers are transformed by the below criteria
+      allPageHeaders: [],                           // option to add headers for all pages. `Link` headers are transformed by the below criteria
       mergeSecurityHeaders: true,                   // boolean to turn off the default security headers
       mergeLinkHeaders: true,                       // boolean to turn off the default gatsby js headers
       mergeCachingHeaders: true,                    // boolean to turn off the default caching headers
@@ -48,19 +49,36 @@ An example:
   options: {
     headers: {
       "/*": [
-        "Link: </static/logo.png>; rel=preload; as=image",
+        "Basic-Auth: someuser:somepassword anotheruser:anotherpassword",
       ],
       "/my-page": [
-        "Basic-Auth: someuser:somepassword anotheruser:anotherpassword",
-        "Link: </other.css>; rel=preload; as=stylesheet",
-        "Link: </other.js>; rel=preload; as=script",
-        "Link: </other.jpg>; rel=preload; as=image",
+        // matching headers (by type) are replaced by netlify with more specific routes
+        "Basic-Auth: differentuser:differentpassword",
       ],
     },
   }
 }
-````
+```
 
 Link paths are specially handed by this plugin. Since most files are processed and cache-busted through Gatsby (with a file hash), the plugin will transform any base file names to the hashed variants. If the file is not hashed, it will ensure the path is valid relative to the output `public` folder. You should be able to reference assets imported through javascript in the `static` folder.
+
+Do not specify the public path in the config, as the plugin will provide it for you.
+
+The netlify `_headers` file does not inherit headers, and it will replace any matching headers it finds in more specific routes. For example, if you add a link to the the root wildcard path (`/*`), it will be replaced by any more specific path. If you want a resource to put linked across the site, you will have to add to every path. To make this easier, the plugin provides the `allPageHeaders` option to inject the same headers on every path.
+
+```javascript
+{
+  options: {
+    allPageHeaders: [
+      "Link: </static/my-logo.png>; rel=preload; as=image",
+    ],
+    headers: {
+      "/*": [
+        "Basic-Auth: someuser:somepassword anotheruser:anotherpassword",
+      ],
+    },
+  }
+}
+```
 
 You can validate the `_headers` config through the [netlify playground app](https://play.netlify.com/headers).
