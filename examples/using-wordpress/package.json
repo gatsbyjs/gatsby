@@ -8,11 +8,16 @@
     "gatsby": "latest",
     "gatsby-link": "latest",
     "gatsby-plugin-react-helmet": "latest",
+    "gatsby-plugin-sharp": "^1.6.7",
     "gatsby-plugin-styled-components": "latest",
-    "gatsby-source-wordpress": "latest",
+    "gatsby-plugin-typography": "^1.7.9",
+    "gatsby-source-wordpress": "^2.0.0",
+    "gatsby-transformer-sharp": "^1.6.5",
     "hedron": "^0.7.1",
     "lodash": "^4.16.4",
-    "striptags": "^3.0.1"
+    "react-icons": "^2.2.5",
+    "striptags": "^3.0.1",
+    "typography-theme-wordpress-2013": "^0.15.10"
   },
   "keywords": [
     "gatsby"
