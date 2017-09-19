@@ -88,7 +88,7 @@ exports.sourceNodes = async (
         ...node.internal,
         type: makeTypeName(node.internal.type),
       },
-      author___NODE: result.data.data[i].relationships.uid.data.id,
+      uid: result.data.data[i].relationships.uid.data.id,
     }
 
     // Get content digest of node.
