@@ -53,7 +53,7 @@ module.exports = ({ url, store, cache, createNode }) =>
     let responseError = false
     const responseStream = got.stream(url, { headers })
     responseStream.pipe(fs.createWriteStream(tmpFilename))
-    responseStream.on("downloadProgress", pro => console.log(pro))
+    responseStream.on(`downloadProgress`, pro => console.log(pro))
 
     // If there's a 400/500 response or other error.
     responseStream.on(`error`, (error, body, response) => {

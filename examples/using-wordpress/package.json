@@ -13,10 +13,8 @@
     "gatsby-plugin-typography": "^1.7.9",
     "gatsby-source-wordpress": "^2.0.0",
     "gatsby-transformer-sharp": "^1.6.5",
-    "hedron": "^0.7.1",
     "lodash": "^4.16.4",
     "react-icons": "^2.2.5",
-    "striptags": "^3.0.1",
     "typography-theme-wordpress-2013": "^0.15.10"
   },
   "keywords": [
