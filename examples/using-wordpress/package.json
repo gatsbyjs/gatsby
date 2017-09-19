@@ -7,6 +7,7 @@
   "dependencies": {
     "gatsby": "latest",
     "gatsby-link": "latest",
+    "gatsby-plugin-glamor": "^1.6.7",
     "gatsby-plugin-react-helmet": "latest",
     "gatsby-plugin-sharp": "^1.6.7",
     "gatsby-plugin-styled-components": "latest",

@@ -15,36 +15,36 @@ class Home extends Component {
 
     return (
       <div>
-        <div style={{ marginBottom: rhythm(1) }}>
+        <div css={{ marginBottom: rhythm(1) }}>
           <h1>Pages</h1>
           {data.allWordpressPage.edges.map(({ node }) => (
-              <div key={node.slug}>
-                <Link to={node.slug} style={{ textDecoration: `none` }}>
-                  <h3>{node.title}</h3>
-                </Link>
-                <div dangerouslySetInnerHTML={{ __html: node.excerpt }} />
-                <span>
-                  <ClockIcon
-                    size={14}
-                    style={{ position: `relative`, bottom: 1 }}
-                  />
-                  {` `}
-                  {node.date}
-                </span>
-              </div>
-            ))}
+            <div key={node.slug}>
+              <Link to={node.slug} css={{ textDecoration: `none` }}>
+                <h3>{node.title}</h3>
+              </Link>
+              <div dangerouslySetInnerHTML={{ __html: node.excerpt }} />
+              <span>
+                <ClockIcon
+                  size={14}
+                  css={{ position: `relative`, bottom: 1 }}
+                />
+                {` `}
+                {node.date}
+              </span>
+            </div>
+          ))}
         </div>
         <hr />
         <h1>Posts</h1>
         {data.allWordpressPost.edges.map(({ node }) => (
-            <div style={{ marginBottom: rhythm(2) }} key={node.slug}>
-              <Link to={node.slug} style={{ textDecoration: `none` }}>
-                <h3>{node.title}</h3>
-              </Link>
-              <div dangerouslySetInnerHTML={{ __html: node.excerpt }} />
-              <PostIcons node={node} />
-            </div>
-          ))}
+          <div css={{ marginBottom: rhythm(2) }} key={node.slug}>
+            <Link to={node.slug} css={{ textDecoration: `none` }}>
+              <h3>{node.title}</h3>
+            </Link>
+            <div dangerouslySetInnerHTML={{ __html: node.excerpt }} />
+            <PostIcons node={node} />
+          </div>
+        ))}
       </div>
     )
   }

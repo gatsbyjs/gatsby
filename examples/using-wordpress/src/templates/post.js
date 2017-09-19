@@ -11,7 +11,7 @@ class PostTemplate extends Component {
     return (
       <div>
         <h1 dangerouslySetInnerHTML={{ __html: post.title }} />
-        <PostIcons node={post} style={{ marginBottom: rhythm(1 / 2) }} />
+        <PostIcons node={post} css={{ marginBottom: rhythm(1 / 2) }} />
         <div dangerouslySetInnerHTML={{ __html: post.content }} />
         {post.acf &&
           post.acf.page_builder &&

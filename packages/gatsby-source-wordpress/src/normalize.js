@@ -205,7 +205,8 @@ exports.mapPostsToTagsCategories = entities => {
 }
 
 // TODO generalize this for all taxonomy types.
-exports.mapTagsCategoriesToTaxonomies = entities => entities.map(e => {
+exports.mapTagsCategoriesToTaxonomies = entities =>
+  entities.map(e => {
     // Where should api_menus stuff link to?
     if (e.taxonomy && e.__type !== `wordpress__wp_api_menus_menus`) {
       // Replace taxonomy with a link to the taxonomy node.
