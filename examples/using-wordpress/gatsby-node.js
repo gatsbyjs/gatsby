@@ -75,6 +75,8 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
                     id
                     slug
                     status
+                    template
+                    format
                   }
                 }
               }

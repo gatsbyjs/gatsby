@@ -1,4 +1,5 @@
-const React = require(`react`)
+const path = require(`path`)
+const React = require(path.resolve(process.cwd(), `node_modules/react`))
 
 exports.modifyWebpackConfig = ({ config, stage }) => {
   if (React.version.slice(0, 2) !== `16`) {

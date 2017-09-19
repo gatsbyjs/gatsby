@@ -39,6 +39,7 @@ Websites built with Gatbsy:
 * [Charlie Harrington's Blog](https://charlieharrington.com) [(source)](https://github.com/whatrocks/blog)
 * [Song Wang’s website](https://songwang.io/) [(source)](https://github.com/wangsongiam/songwang.io)
 * [Digital Psychology](http://digitalpsychology.io) [(source)](https://github.com/danistefanovic/digitalpsychology.io)
+* [Magicly's blog](https://magicly.me/) [(source)](https://github.com/magicly/gatsby-blog)
 
 ## Docs
 
