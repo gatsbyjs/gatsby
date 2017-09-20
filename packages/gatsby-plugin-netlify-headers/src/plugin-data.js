@@ -8,18 +8,23 @@ export function buildPrefixer(prefix, ...paths) {
 // Webpack stats map to an array if source maps are enabled.
 // We normalize to make direct map.
 function normalizeStats(stats) {
-  return _.mapValues(stats.assetsByChunkName, (script) => _.isArray(script) ? script[0] : script)
+  return _.mapValues(
+    stats.assetsByChunkName,
+    script => (_.isArray(script) ? script[0] : script)
+  )
 }
 
 // Layouts are separated by key, so we join in to the pages.
 function applyLayouts(pages, layouts) {
   const layoutLookup = _.keyBy(layouts, `id`)
-  return pages.map((page) => {
+  return pages.map(page => {
     const pageLayout = layoutLookup[page.layout]
-    return { ...page, layoutComponentChunkName: pageLayout && pageLayout.componentChunkName }
+    return {
+      ...page,
+      layoutComponentChunkName: pageLayout && pageLayout.componentChunkName,
+    }
   })
 }
-
 
 // This function assembles data across the manifests and store to match a similar
 // shape of `static-entry.js`. With it, we can build headers that point to the correct

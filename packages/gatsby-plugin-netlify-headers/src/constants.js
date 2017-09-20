@@ -24,15 +24,10 @@ export const SECURITY_HEADERS = {
 }
 
 export const CACHING_HEADERS = {
-  "/static/*": [
-    `Cache-Control: max-age=31536000`,
-  ],
+  "/static/*": [`Cache-Control: max-age=31536000`],
 }
 
 export const LINK_REGEX = /^(Link: <\/)(.+)(>;.+)/
 export const ROOT_WILDCARD = `/*`
 
-export const COMMON_BUNDLES = [
-  `commons`,
-  `app`,
-]
+export const COMMON_BUNDLES = [`commons`, `app`]

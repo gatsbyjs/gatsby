@@ -18,9 +18,12 @@ function validHeaders(headers) {
     return false
   }
 
-  return _.every(headers, (headersList, path) => (
-    _.isArray(headersList) && _.every(headersList, (header) => _.isString(header))
-  ))
+  return _.every(
+    headers,
+    (headersList, path) =>
+      _.isArray(headersList) &&
+      _.every(headersList, header => _.isString(header))
+  )
 }
 
 function linkTemplate(assetPath, type = `script`) {
@@ -33,7 +36,7 @@ function pathChunkName(path) {
 }
 
 function createScriptHeaderGenerator(manifest, pathPrefix) {
-  return (script) => {
+  return script => {
     const chunk = manifest[script]
 
     if (!chunk) {
@@ -46,7 +49,9 @@ function createScriptHeaderGenerator(manifest, pathPrefix) {
 }
 
 function linkHeaders(scripts, manifest, pathPrefix) {
-  return _.compact(scripts.map(createScriptHeaderGenerator(manifest, pathPrefix)))
+  return _.compact(
+    scripts.map(createScriptHeaderGenerator(manifest, pathPrefix))
+  )
 }
 
 function headersPath(pathPrefix, path) {
@@ -56,7 +61,7 @@ function headersPath(pathPrefix, path) {
 function preloadHeadersByPage(pages, manifest, pathPrefix) {
   let linksByPage = {}
 
-  pages.forEach((page) => {
+  pages.forEach(page => {
     const scripts = [
       ...COMMON_BUNDLES,
       pathChunkName(page.path),
@@ -85,7 +90,7 @@ function defaultMerge(...headers) {
 }
 
 function transformLink(manifest, publicFolder, pathPrefix) {
-  return (header) => (
+  return header =>
     header.replace(LINK_REGEX, (__, prefix, file, suffix) => {
       const hashed = manifest[file]
       if (hashed) {
@@ -95,41 +100,52 @@ function transformLink(manifest, publicFolder, pathPrefix) {
       } else {
         throw new Error(
           `Could not find the file specified in the Link header \`${header}\`.` +
-          `The gatsby-plugin-netlify-headers is looking for a matching file (with or without a ` +
-          `webpack hash). Check the public folder and your gatsby-config.js to ensure you are ` +
-          `pointing to a public file.`
+            `The gatsby-plugin-netlify-headers is looking for a matching file (with or without a ` +
+            `webpack hash). Check the public folder and your gatsby-config.js to ensure you are ` +
+            `pointing to a public file.`
         )
       }
     })
-  )
 }
 
 // Writes out headers file format, with two spaces for indentation
 // https://www.netlify.com/docs/headers-and-basic-auth/
 function stringifyHeaders(headers) {
-  return _.reduce(headers, (text, headerList, path) => {
-    const headersString = _.reduce(headerList, (accum, header) => `${accum}  ${header}\n`, ``)
-    return `${text}${path}\n${headersString}`
-  }, ``)
+  return _.reduce(
+    headers,
+    (text, headerList, path) => {
+      const headersString = _.reduce(
+        headerList,
+        (accum, header) => `${accum}  ${header}\n`,
+        ``
+      )
+      return `${text}${path}\n${headersString}`
+    },
+    ``
+  )
 }
 
 // program methods
 
-const validateUserOptions = (pluginOptions) => (headers) => {
+const validateUserOptions = pluginOptions => headers => {
   if (!validHeaders(headers)) {
     throw new Error(
       `The "headers" option to gatsby-plugin-netlify-headers is in the wrong shape. ` +
-      `You should pass in a object with string keys (representing the paths) and an array ` +
-      `of strings as the value (representing the headers). ` +
-      `Check your gatsby-config.js.`
+        `You should pass in a object with string keys (representing the paths) and an array ` +
+        `of strings as the value (representing the headers). ` +
+        `Check your gatsby-config.js.`
     )
   }
 
-  [`mergeSecurityHeaders`, `mergeLinkHeaders`, `mergeCachingHeaders`].forEach((mergeOption) => {
+  ;[
+    `mergeSecurityHeaders`,
+    `mergeLinkHeaders`,
+    `mergeCachingHeaders`,
+  ].forEach(mergeOption => {
     if (!_.isBoolean(pluginOptions[mergeOption])) {
       throw new Error(
         `The "${mergeOption}" option to gatsby-plugin-netlify-headers must be a boolean. ` +
-        `Check your gatsby-config.js.`
+          `Check your gatsby-config.js.`
       )
     }
   })
@@ -137,38 +153,51 @@ const validateUserOptions = (pluginOptions) => (headers) => {
   if (!_.isFunction(pluginOptions.transformHeaders)) {
     throw new Error(
       `The "transformHeaders" option to gatsby-plugin-netlify-headers must be a function ` +
-      `that returns a array of header strings.` +
-      `Check your gatsby-config.js.`
+        `that returns a array of header strings.` +
+        `Check your gatsby-config.js.`
     )
   }
 
   return headers
 }
 
-const mapUserLinkHeaders = ({ manifest, pathPrefix, publicFolder }) => (headers) => (
-  _.mapValues(headers, (headerList) => (
-    _.map(headerList, transformLink(manifest, publicFolder, pathPrefix)))
+const mapUserLinkHeaders = ({
+  manifest,
+  pathPrefix,
+  publicFolder,
+}) => headers =>
+  _.mapValues(headers, headerList =>
+    _.map(headerList, transformLink(manifest, publicFolder, pathPrefix))
   )
-)
 
-const mapUserLinkAllPageHeaders = (pluginData, { allPageHeaders }) => (headers) => {
+const mapUserLinkAllPageHeaders = (
+  pluginData,
+  { allPageHeaders }
+) => headers => {
   if (!allPageHeaders) {
     return headers
   }
 
   const { pages, manifest, publicFolder, pathPrefix } = pluginData
 
-  const headersList = _.map(allPageHeaders, transformLink(manifest, publicFolder, pathPrefix))
+  const headersList = _.map(
+    allPageHeaders,
+    transformLink(manifest, publicFolder, pathPrefix)
+  )
 
-  const duplicateHeadersByPage = _.reduce(pages, (combined, page) => {
-    const pathKey = headersPath(pathPrefix, page.path)
-    return defaultMerge(combined, { [pathKey]: headersList })
-  }, {})
+  const duplicateHeadersByPage = _.reduce(
+    pages,
+    (combined, page) => {
+      const pathKey = headersPath(pathPrefix, page.path)
+      return defaultMerge(combined, { [pathKey]: headersList })
+    },
+    {}
+  )
 
   return defaultMerge(headers, duplicateHeadersByPage)
 }
 
-const applyLinkHeaders = (pluginData, { mergeLinkHeaders }) => (headers) => {
+const applyLinkHeaders = (pluginData, { mergeLinkHeaders }) => headers => {
   if (!mergeLinkHeaders) {
     return headers
   }
@@ -179,7 +208,7 @@ const applyLinkHeaders = (pluginData, { mergeLinkHeaders }) => (headers) => {
   return defaultMerge(headers, perPageHeaders)
 }
 
-const applySecurityHeaders = ({ mergeSecurityHeaders }) => (headers) => {
+const applySecurityHeaders = ({ mergeSecurityHeaders }) => headers => {
   if (!mergeSecurityHeaders) {
     return headers
   }
@@ -187,7 +216,7 @@ const applySecurityHeaders = ({ mergeSecurityHeaders }) => (headers) => {
   return defaultMerge(headers, SECURITY_HEADERS)
 }
 
-const applyCachingHeaders = ({ mergeCachingHeaders }) => (headers) => {
+const applyCachingHeaders = ({ mergeCachingHeaders }) => headers => {
   if (!mergeCachingHeaders) {
     return headers
   }
@@ -195,17 +224,16 @@ const applyCachingHeaders = ({ mergeCachingHeaders }) => (headers) => {
   return defaultMerge(headers, CACHING_HEADERS)
 }
 
-const applyTransfromHeaders = ({ transformHeaders }) => (headers) => (
+const applyTransfromHeaders = ({ transformHeaders }) => headers =>
   _.mapValues(headers, transformHeaders)
-)
 
-const transformToString = (headers) => (
-  `## Created with gatsby-plugin-netlify-headers\n\n${stringifyHeaders(headers)}`
-)
+const transformToString = headers =>
+  `## Created with gatsby-plugin-netlify-headers\n\n${stringifyHeaders(
+    headers
+  )}`
 
-const writeHeadersFile = ({ publicFolder }) => (contents) => (
+const writeHeadersFile = ({ publicFolder }) => contents =>
   writeFile(publicFolder(NETLIFY_HEADERS_FILENAME), contents)
-)
 
 export default function buildHeadersProgram(pluginData, pluginOptions) {
   return _.flow(
@@ -217,6 +245,6 @@ export default function buildHeadersProgram(pluginData, pluginOptions) {
     applyLinkHeaders(pluginData, pluginOptions),
     applyTransfromHeaders(pluginOptions),
     transformToString,
-    writeHeadersFile(pluginData),
+    writeHeadersFile(pluginData)
   )(pluginOptions.headers)
 }

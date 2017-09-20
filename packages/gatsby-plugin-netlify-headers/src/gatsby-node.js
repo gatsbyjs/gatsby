@@ -28,7 +28,6 @@ exports.modifyWebpackConfig = ({ config, stage }) => {
   return config
 }
 
-
 exports.onPostBuild = async ({ store, pathPrefix }, userPluginOptions) => {
   const pluginData = makePluginData(store, assetsManifest, pathPrefix)
   const pluginOptions = { ...DEFAULT_OPTIONS, ...userPluginOptions }
