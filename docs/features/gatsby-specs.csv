@@ -1,0 +1,34 @@
+Category,Subcategory,Feature,Gatsby,Jekyll,Wordpress,Squarespace,Description
+Performance,Faster content delivery,Static content,3,3,1,2,"Can you builds your site as “static” files which can be deployed easily?
+Gatsby, like other static site generators, can.
+Squarespace allows static content but doesn't allow it to be edited with the CMS (https://developers.squarespace.com/static-pages/). 
+Wordpress allows it with some customization. https://www.itsupportguides.com/knowledge-base/wordpress/wordpress-how-to-serve-static-content-from-a-cookieless-domain/"
+,,CDN,2,2,2,3,"Site builders come with a CDN out of the box.
+Wordpress allows through plugins."
+,,AMP support,2,2,2,3,"Google's AMP 
+https://blog.squarespace.com/blog/now-supporting-accelerated-mobile-pages"
+,Progressive Web,Offline access,3,1,2,0,"You can set this up w/ Jekyll: https://fossbytes.com/get-jekyll-blog-work-offline/. Mozilla wrote a plugin for Wordpress, which seems to have pretty low adoption: https://wordpress.org/plugins/offline-content/. Squarespace doesn't seem to support this. https://answers.squarespace.com/questions/56762/i-need-to-run-a-demo-of-my-squarespace-website-offline.html"
+,,Prefetch linked pages,3,1,1,0,Eg Jekyll: http://tom.preston-werner.com/2010/08/23/readme-driven-development.html. Content is not preloaded
+,,Page caching,3,3,2,0,https://answers.squarespace.com/questions/173452/enabling-browser-cache-for-sqaurespace-site.html
+,,No Extraneous Code Loading (code splitting),3,0,3,3,"Webpack and Squarespace score well on this one, mostly because they don't try to be SPAs"
+,Faster time to interaction,Progressive image loading,3,1,1,1,Load a blurry placeholder image before loading the full heavyweight asset. Medium has this. WP has a plugin (https://wordpress.org/plugins/progressive-images/) with <10 active installs. Squarespace calls Progressive Image loading something else
+,,Responsive image loading,3,1,3,3,Load the right size asset given browser size. Wordpress supports this automatically (https://www.smashingmagazine.com/2015/12/responsive-images-in-wordpress-core/).  Jekyll does it a bit but requires a lot of customization (https://github.com/wildlyinaccurate/jekyll-responsive-image). 
+,,Inlines critical CSS,3,1,1,1,"Load page immediately without blocking request for CSS. https://www.sitepoint.com/inline-css-in-jekyll/, https://joe-watkins.io/javascript/inline-critical-css-with-wordpress/, https://answers.squarespace.com/questions/172166/pagesense-optimization-with-the-bedford-template.html"
+,,Font self-hosting,3,1,1,0,"Load page immediately without blocking request for fonts. Kyle pretty much wrote the book on self-hosting fonts, so it's not surprising we're head and shoulders above here: https://www.bricolage.io/typefaces-easiest-way-to-self-host-fonts/"
+DX,Maintenance & Extensibility,Serverless (no ops),3,3,2,2,Hosted is not quite as good as serverless -- they still have a server you just don't see it.
+,,Export as Code,3,3,3,0,Site builders have platform lock-in; you can't take your code and run
+,Faster edit/debug cycle time,Refresh to preview / linked preview page,3,3,3,3,Preview Mode is a pretty universal experience
+,,Hot reload content,3,2,1,N/A,"You can see the content, but not in context of the page"
+,,Hot reload code,3,2,0,N/A,"You can see the content, but not in context of the page"
+,Declarative frameworks,Componentization,3,0,3,3,Wordpress and Site Builders have component systems
+,,One-way data binding,3,0,2,N/A,Calypso still built on React
+,,Declarative API data queries (GraphQL),3,0,2,N/A,
+,,Declarative UI,3,0,1,N/A,
+,Modern code syntax,Advanced Javascript syntax (ES7),3,1,1,1,Wordpress: https://visible.vc/engineering/asset-pipeline-for-wordpress-theme-development/
+,,CSS Extensions (eg Sass),3,1,1,1,Eg squarespace supports less but not sass
+,,Asset pipelines,3,1,1,N/A,Wordpress: https://visible.vc/engineering/asset-pipeline-for-wordpress-theme-development/
+Ecosystem,,Component ecosystem,3,0,3,,
+,,Hosted option,2,2,3,,
+,,Theme ecosystem,2,2,3,,
+Design,Faster design iterations,Programmatic Design,2,,,,Typography.js
+,,Component library / design systems,2,,,,react-sketch

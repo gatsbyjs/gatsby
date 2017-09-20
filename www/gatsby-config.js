@@ -96,6 +96,7 @@ module.exports = {
         ],
       },
     },
+    `gatsby-transformer-csv`,
     `gatsby-plugin-offline`,
     `gatsby-plugin-twitter`,
     `gatsby-plugin-react-helmet`,
