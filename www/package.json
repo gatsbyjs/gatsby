@@ -14,6 +14,7 @@
     "gatsby-plugin-google-analytics": "^1.0.7",
     "gatsby-plugin-lodash": "^1.0.0",
     "gatsby-plugin-manifest": "^1.0.7",
+    "gatsby-plugin-netlify-headers": "canary",
     "gatsby-plugin-nprogress": "^1.0.7",
     "gatsby-plugin-offline": "^1.0.9",
     "gatsby-plugin-react-helmet": "^1.0.6",
