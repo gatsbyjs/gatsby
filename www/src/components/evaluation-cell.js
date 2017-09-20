@@ -16,11 +16,12 @@ class EvaluationCell extends Component {
         case `0`: {
           return `none`
         }
+        case ``:
         case `N/A`: {
           return `none`
         }
       }
-      return null
+      return `none`
     }
     const basicStyling = {
       width: `30px`,
@@ -37,7 +38,11 @@ class EvaluationCell extends Component {
           ...basicStyling,
           "verticalAlign": "middle",
           textAlign: `middle`,
-          backgroundColor: this.props.num === `0` ? `#dddddd` : `#9d7cbf`,
+          backgroundColor: (
+            !this.props.num || this.props.num === `N/A` ?
+              `#dddddd` :
+              `#9d7cbf`
+          ),
           backgroundImage: getBackground(this.props.num),
         }}
       >

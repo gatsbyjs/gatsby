@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import presets from "../utils/presets"
 import EvaluationCell from './evaluation-cell'
 
 class EvaluationTable extends Component {
@@ -13,11 +14,11 @@ class EvaluationTable extends Component {
       `Site builders`,
     ]
     const subHeaderTitles = [
+      `Area`,
       `Category`,
-      `Subcategory`,
       `Feature`,
       <img
-        src={`https://camo.githubusercontent.com/9c70ec950802d744cd3bccaa97fadbfdd7c8f2a9/68747470733a2f2f7777772e6761747362796a732e6f72672f6761747362792d6e656761746976652e737667`}
+        src={'https://camo.githubusercontent.com/9c70ec950802d744cd3bccaa97fadbfdd7c8f2a9/68747470733a2f2f7777772e6761747362796a732e6f72672f6761747362792d6e656761746976652e737667'}
         height={`30`}
         style={{ marginBottom: 0, display: `block`, margin: `auto` }}
       />,
@@ -37,6 +38,57 @@ class EvaluationTable extends Component {
         style={{ marginBottom: 0, display: `block`, margin: `auto` }}
       />,
     ]
+
+    const renderSuperHeader = () => (
+      <div style={{ display: `table-row` }}>
+        {
+          superHeaderTitles.map((header, i) => (
+            <div css={{
+              display: i >= 2 ? `table-cell` : `none`,
+              borderBottom: i > 2 ? `1px solid #dddddd` : `none`,
+              padding: 10,
+              textTransform: `uppercase`,
+              fontSize: `80%`,
+              fontWeight: 600,
+              textAlign: `center`,
+              verticalAlign: `bottom`,
+              [presets.Tablet]: {
+                display: i === 0 ? `none` : `table-cell`,
+              },
+            }}>
+              { header }
+            </div>
+          ))
+        }
+      </div>
+    )
+
+    const renderSubHeader = () => (
+      <div style={{ display: `table-row` }}>
+        {
+          subHeaderTitles.map((header, i) => (
+            <div css={{
+              display: i >= 2 ? `table-cell` : `none`,
+              borderBottom: `1px solid #dddddd`,
+              borderLeft: i > 2 ? `1px solid #dddddd` : `none`,
+              borderRight: i === 6 ? `1px solid #dddddd` : `none`,
+              padding: 10,
+              textTransform: `uppercase`,
+              fontWeight: 600,
+              fontSize: `80%`,
+              textAlign: `center`,
+              verticalAlign: `center`,
+              [presets.Tablet]: {
+                display: i === 0 ? `none` : `table-cell`,
+              },
+            }}>
+              { header }
+            </div>
+          ))
+        }
+      </div>
+    )
+
     const headers = [
       `Category`,
       `Subcategory`,
@@ -67,7 +119,8 @@ class EvaluationTable extends Component {
               style={{
                 padding: 10,
                 verticalAlign: `middle`,
-                maxWidth: 200,
+                textAlign: `center`,
+                maxWidth: 150,
               }}
             >
               { text }
@@ -80,8 +133,8 @@ class EvaluationTable extends Component {
               style={{
                 padding: 10,
                 verticalAlign: `middle`,
-                maxWidth: 200,
-
+                textAlign: `center`,
+                maxWidth: 150,
               }}
             >
               { text }
@@ -112,73 +165,76 @@ class EvaluationTable extends Component {
       }
     }
 
+    const sections = this.props.data
+      .map((row, i) => row.node.Category ? i + 1 : 0)
+      .filter(rowNum => rowNum)
+      .map((rowNum, i, arr) => {
+        if (i < arr.length - 1) {
+          return [rowNum, arr[i+1]]
+        }
+
+        return [rowNum, arr.length]
+      })
+      .map(bounds => this.props.data.slice(bounds[0], bounds[1]))
+
+    const sectionHeaders = this.props.data
+      .filter(row => row.node.Category)
+      .map(row => row.node.Category)
+
     return (
-      <div>
-        <div style={{
-          display: `table`,
-          color: `#9d9d9d`,
-          marginLeft: 20,
-          borderBottom: `1px solid #dddddd`,
-          borderRight: `1px solid #dddddd`,
-        }}>
-          <div style={{ display: `table-row` }}>
-            {
-              superHeaderTitles.map((header, i) => (
-                <div style={{
-                  display: `table-cell`,
-                  borderBottom: i > 2 ? `1px solid #dddddd` : `none`,
-                  padding: 10,
-                  textTransform: `uppercase`,
-                  fontSize: `80%`,
-                  fontWeight: 600,
-                  textAlign: `center`,
-                  verticalAlign: `bottom`,
-                }}>
-                  { header }
-                </div>
-              ))
-            }
+      <div style={{marginLeft: 25, marginRight: 25}}>
+        <div style={{ display: `table-row` }}>
+          <div style={{ borderBottom: 0, marginBottom: 25 }}>
+            { this.props.header }
           </div>
-          <div style={{ display: `table-row` }}>
-            {
-              subHeaderTitles.map((header, i) => (
-                <div style={{
-                  display: `table-cell`,
-                  borderBottom: `1px solid #dddddd`,
-                  borderLeft: i > 2 ? `1px solid #dddddd` : `none`,
-                  padding: 10,
-                  textTransform: `uppercase`,
-                  fontWeight: 600,
-                  fontSize: `80%`,
-                  textAlign: `center`,
-                  verticalAlign: `center`,
-                }}>
-                  { header }
-                </div>
-              ))
-            }
-          </div>
-          {
-            (this.props.data || []).map((row, i) => (
+        </div>
+        {
+          sections.map((section, s) => (
+            <div>
               <div style={{ display: `table-row` }}>
+                <br/>
+                <h3>{sectionHeaders[s]}</h3>
+              </div>
+              <div style={{
+                display: `table`,
+                color: `#9d9d9d`,
+                marginLeft: `auto`,
+                marginRight: `auto`,
+                borderBottom: `1px solid #dddddd`,
+                maxWidth: 800,
+                paddingLeft: 25,
+                paddingRight: 25,
+              }}>
+                { renderSuperHeader() }
+                { renderSubHeader() }
                 {
-                  headers.map((header, j) => (
-                    <div style={{
-                      display: `table-cell`,
-                      borderBottom: j === 2 ? `1px solid #dddddd` : `none`,
-                      borderLeft: j < 4 ? `1px solid #dddddd` : `none`,
-                      borderTop: i > 0 && j < 2 && row.node[header] ? `1px solid #dddddd` : `none`,
-                    }}>
+                  section.map((row, i) => (
+                    <div style={{ display: `table-row` }}>
                       {
-                        renderCell(row.node[header], j)
+                        headers.map((header, j) => (
+                          <div css={{
+                            display: j < 2 ? `none` : `table-cell`,
+                            borderBottom: j === 2 ? `1px solid #dddddd` : `none`,
+                            borderLeft: j < 7 ? `1px solid #dddddd` : `none`,
+                            borderRight: j === 6 ? `1px solid #dddddd` : `none`,
+                            borderTop: (i > 0 && j < 2 && row.node[header]) || (i > 0 && j > 2) ? `1px solid #dddddd` : `none`,
+                            [presets.Tablet]: {
+                              display: j === 0 ? `none` : `table-cell`,
+                            },
+                          }}>
+                            {
+                              renderCell(row.node[header], j)
+                            }
+                          </div>
+                        ))
                       }
                     </div>
                   ))
                 }
               </div>
-            ))
-          }
-        </div>
+            </div>
+          ))
+        }
       </div>
     )
   }
