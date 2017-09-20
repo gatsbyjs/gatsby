@@ -11,9 +11,9 @@ An [example site](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-
 - [x] pull data from site hosted on wordpress.com, wordpress.org
 - [x] retrive any number of article and posts (tested on 900 posts)
 - [x] authentify to wordpress.com API using OAuth 2 so medias can be queried.
-- [ ] pull images to local file system [WIP]
-- [ ] responsive images using sharp [WIP]
-- [ ] add testing for `npm run test`
+- [x] pull images to local file system
+- [x] responsive images using sharp
+- [x] add testing for `npm run test`
 
 ## Status
 

@@ -12,6 +12,7 @@ test/**/public
 yarn.lock
 package-lock.json
 
-# Package specific 
-/gatsby-node.js
-/output-color.js
+/*.js
+!index.js
+yarn.lock
+scripts

@@ -135,15 +135,20 @@ function inferGraphQLInputFields({
       }
     }
     case `object`: {
-      return {
-        type: new GraphQLInputObjectType({
-          name: createTypeName(`${prefix}InputObject`),
-          fields: inferInputObjectStructureFromNodes({
-            nodes,
-            prefix,
-            exampleValue: value,
-          }).inferredFields,
-        }),
+      const fields = inferInputObjectStructureFromNodes({
+        nodes,
+        prefix,
+        exampleValue: value,
+      }).inferredFields
+      if (!_.isEmpty(fields)) {
+        return {
+          type: new GraphQLInputObjectType({
+            name: createTypeName(`${prefix}InputObject`),
+            fields,
+          }),
+        }
+      } else {
+        return null
       }
     }
     case `number`: {
