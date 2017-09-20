@@ -39,7 +39,7 @@ class EvaluationCell extends Component {
           "verticalAlign": "middle",
           textAlign: `middle`,
           backgroundColor: (
-            !this.props.num || this.props.num === `N/A` ?
+            [`N/A`, `0`, ``].indexOf(this.props.num) !== -1 ?
               `#dddddd` :
               `#9d7cbf`
           ),
