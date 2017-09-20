@@ -131,7 +131,7 @@ module.exports = (locals, callback) => {
       dangerouslySetInnerHTML={{
         __html: `
             //<![CDATA[
-            window.webpackManifest = createElement{chunkManifest}
+            window.webpackManifest = ${chunkManifest}
             //]]>
             `,
       }}
