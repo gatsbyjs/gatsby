@@ -12,7 +12,7 @@ loader.addPagesArray(pages)
 loader.addDevRequires(syncRequires)
 window.___loader = loader
 
-// Convert to a map for faster lookup in rdner function below
+// Convert to a map for faster lookup in maybeRedirect()
 const redirectMap = redirects.reduce((map, redirect) => {
   map[redirect.fromPath] = redirect
   return map
