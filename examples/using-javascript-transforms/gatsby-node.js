@@ -27,8 +27,8 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 
   return new Promise((resolve, reject) => {
     const pages = []
-    const markdownTemplate = path.resolve(`src/templates/blog-post-markdown.js`)
-    const javascriptTemplate = path.resolve(`src/templates/blog-post-javascript.js`)
+    const blogPostTemplate = path.resolve(`src/templates/blog-post-template.js`)
+    const markdownTemplate = path.resolve(`src/templates/markdown.js`)
 
     // Query for all markdown "nodes" and for the slug we previously created.
     resolve(
@@ -39,8 +39,14 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
               edges {
                 node {
                   frontmatter {
-                    layoutType
+                    title
                     path
+                    layoutType
+                    written
+                    updated
+                    what
+                    category
+                    description
                   }
                   fields {
                     slug
@@ -80,10 +86,13 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           if (frontmatter.layoutType === `post`) {
             createPage({
               path: frontmatter.path, // required
-              component: markdownTemplate,
+              component: [
+                blogPostTemplate,
+                markdownTemplate
+              ],
               layout: 'blogPost', // this matches the filename of src/layouts/blogPost.js, layout created automatically
               context: {
-                layoutType: frontmatter.layoutType,
+                frontmatter: frontmatter,
                 slug: edge.node.fields.slug,
               },
             })
@@ -93,7 +102,6 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
               component: markdownTemplate,
               layout: 'insetPage', // this matches the filename of src/layouts/insetPage.js, layout created automatically
               context: {
-                layoutType: frontmatter.layoutType,
                 slug: edge.node.fields.slug,
               },
             })
@@ -114,12 +122,12 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
               //  Templates are for converting non-react into react. jsFrontmatter
               //  picks up all of the javascript files. We have only written these in react.
               component: [
-                javascriptTemplate,
+                blogPostTemplate,
                 path.resolve(edge.node.fileAbsolutePath)
               ],
               layout: 'blogPost', // this matches the filename of src/layouts/blogPost.js, layout created automatically
               context: {
-                layoutType: frontmatter.layoutType,
+                frontmatter: frontmatter,
                 slug: edge.node.fields.slug,
               },
             })

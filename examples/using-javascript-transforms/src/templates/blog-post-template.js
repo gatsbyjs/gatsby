@@ -8,12 +8,12 @@ class mdBlogPostTemplate extends React.Component {
     const {html, frontmatter} = this.props.data.markdownRemark
 
     return (
-      <div className="markdownPost">
+      <div className="blogPost">
         <HelmetBlock {...frontmatter} />
         <div className="content">
-          <div className="markdown section">
-            <div className="container content">
-              <div dangerouslySetInnerHTML={{ __html: html }} />
+          <div className="section">
+            <div className="container">
+              {this.props.children()}
             </div>
           </div>
         </div>
