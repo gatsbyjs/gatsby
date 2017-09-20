@@ -1,4 +1,4 @@
-# gatsby-plugin-netlify-headers
+# gatsby-plugin-netlify
 
 Generates a `_headers` file at the root of the public folder, to configure [HTTP headers on netlify](https://www.netlify.com/docs/headers-and-basic-auth/). Notably, you can immediately enable HTTP/2 server push of critical Gatsby assets through the `Link` headers.
 
@@ -6,14 +6,14 @@ By default, the plugin will add HTTP/2 assets to server push the critical Gatsby
 
 ## Install
 
-`npm install --save gatsby-plugin-netlify-headers`
+`npm install --save gatsby-plugin-netlify`
 
 ## How to use
 
 ```javascript
 // In your gatsby-config.js
 plugins: [
-  ` gatsby-plugin-netlify-headers`, // make sure to put last in the array
+  ` gatsby-plugin-netlify`, // make sure to put last in the array
 ]
 ```
 
@@ -25,7 +25,7 @@ If you just need the critical assets, you don't need to add any additional confi
 plugins: [
   // make sure to put last in the array
   {
-    resolve: ` gatsby-plugin-netlify-headers`,
+    resolve: ` gatsby-plugin-netlify`,
     options: {
       headers: {},                                  // option to add more headers. `Link` headers are transformed by the below criteria
       allPageHeaders: [],                           // option to add headers for all pages. `Link` headers are transformed by the below criteria

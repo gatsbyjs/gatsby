@@ -100,7 +100,7 @@ function transformLink(manifest, publicFolder, pathPrefix) {
       } else {
         throw new Error(
           `Could not find the file specified in the Link header \`${header}\`.` +
-            `The gatsby-plugin-netlify-headers is looking for a matching file (with or without a ` +
+            `The gatsby-plugin-netlify is looking for a matching file (with or without a ` +
             `webpack hash). Check the public folder and your gatsby-config.js to ensure you are ` +
             `pointing to a public file.`
         )
@@ -130,7 +130,7 @@ function stringifyHeaders(headers) {
 const validateUserOptions = pluginOptions => headers => {
   if (!validHeaders(headers)) {
     throw new Error(
-      `The "headers" option to gatsby-plugin-netlify-headers is in the wrong shape. ` +
+      `The "headers" option to gatsby-plugin-netlify is in the wrong shape. ` +
         `You should pass in a object with string keys (representing the paths) and an array ` +
         `of strings as the value (representing the headers). ` +
         `Check your gatsby-config.js.`
@@ -144,7 +144,7 @@ const validateUserOptions = pluginOptions => headers => {
   ].forEach(mergeOption => {
     if (!_.isBoolean(pluginOptions[mergeOption])) {
       throw new Error(
-        `The "${mergeOption}" option to gatsby-plugin-netlify-headers must be a boolean. ` +
+        `The "${mergeOption}" option to gatsby-plugin-netlify must be a boolean. ` +
           `Check your gatsby-config.js.`
       )
     }
@@ -152,7 +152,7 @@ const validateUserOptions = pluginOptions => headers => {
 
   if (!_.isFunction(pluginOptions.transformHeaders)) {
     throw new Error(
-      `The "transformHeaders" option to gatsby-plugin-netlify-headers must be a function ` +
+      `The "transformHeaders" option to gatsby-plugin-netlify must be a function ` +
         `that returns a array of header strings.` +
         `Check your gatsby-config.js.`
     )
@@ -228,7 +228,7 @@ const applyTransfromHeaders = ({ transformHeaders }) => headers =>
   _.mapValues(headers, transformHeaders)
 
 const transformToString = headers =>
-  `## Created with gatsby-plugin-netlify-headers\n\n${stringifyHeaders(
+  `## Created with gatsby-plugin-netlify\n\n${stringifyHeaders(
     headers
   )}`
 
