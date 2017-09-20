@@ -91,6 +91,7 @@ class ComponentRenderer extends React.Component {
   }
 
   render() {
+    // If page.
     if (this.props.page) {
       if (this.state.pageResources) {
         return createElement(this.state.pageResources.component, {
@@ -101,6 +102,7 @@ class ComponentRenderer extends React.Component {
       } else {
         return null
       }
+      // If layout.
     } else if (this.props.layout) {
       return createElement(
         this.state.pageResources && this.state.pageResources.layout
