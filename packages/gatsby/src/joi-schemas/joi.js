@@ -39,7 +39,7 @@ export const nodeSchema = Joi.object()
   .keys({
     id: Joi.string().required(),
     children: Joi.array()
-      .items(Joi.string())
+      .items(Joi.string(), Joi.object().forbidden())
       .required(),
     parent: Joi.string()
       .allow(null)
