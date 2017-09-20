@@ -1,4 +1,3 @@
-/gatsby-node.js
-/constants.js
-/plugin-data.js
-/build-headers-program.js
+/*.js
+!index.js
+yarn.lock
