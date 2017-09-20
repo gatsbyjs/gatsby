@@ -93,6 +93,7 @@ export const pageQuery = graphql`
           Wordpress
           Squarespace
           Jekyll
+          Description
         }
       }
     }

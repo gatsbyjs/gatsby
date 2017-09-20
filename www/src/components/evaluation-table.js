@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import presets from "../utils/presets"
 import EvaluationCell from './evaluation-cell'
+import Link from "gatsby-link"
 
 class EvaluationTable extends Component {
   render() {
@@ -120,7 +121,7 @@ class EvaluationTable extends Component {
                 padding: 10,
                 verticalAlign: `middle`,
                 textAlign: `center`,
-                maxWidth: 150,
+                width: 150,
               }}
             >
               { text }
@@ -134,10 +135,14 @@ class EvaluationTable extends Component {
                 padding: 10,
                 verticalAlign: `middle`,
                 textAlign: `center`,
-                maxWidth: 150,
+                width: 150,
               }}
             >
-              { text }
+              {
+                <Link to={`/features/#${text.toLowerCase().split(` `).join(`-`)}`}>
+                  { text }
+                </Link>
+              }
             </div>
           )
         }
@@ -166,14 +171,14 @@ class EvaluationTable extends Component {
     }
 
     const sections = this.props.data
-      .map((row, i) => row.node.Category ? i + 1 : 0)
-      .filter(rowNum => rowNum)
+      .map((row, i) => row.node.Category ? i : -1)
+      .filter(rowNum => rowNum !== -1)
       .map((rowNum, i, arr) => {
         if (i < arr.length - 1) {
           return [rowNum, arr[i+1]]
         }
 
-        return [rowNum, arr.length]
+        return [rowNum, this.props.data.length]
       })
       .map(bounds => this.props.data.slice(bounds[0], bounds[1]))
 
@@ -235,6 +240,26 @@ class EvaluationTable extends Component {
             </div>
           ))
         }
+        {
+          sections.map((section, s) => (
+            <div>
+              <div style={{ display: `table-row`, textAlign: `left` }}>
+                <br/>
+                <h3>{sectionHeaders[s]}</h3>
+              </div>
+              {
+                section.map((row, i) => (
+                  <div style={{textAlign: `left`}}>
+                    <h4 id={row.node[`Feature`].toLowerCase().split(` `).join(`-`)}>
+                      {row.node[`Feature`]}
+                    </h4>
+                    <p>{row.node.Description}</p>
+                  </div>
+                ))
+              }
+          </div>
+        ))
+      }
       </div>
     )
   }
