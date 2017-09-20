@@ -7,8 +7,12 @@ wordpress2013.overrideThemeStyles = () => {
     a: {
       color: `rgb(60,99,243)`,
     },
+    h1: {
+      lineHeight: 1,
+    },
   }
 }
+console.log(wordpress2013)
 
 const typography = new Typography(wordpress2013)
 

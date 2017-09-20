@@ -17,17 +17,22 @@ class DefaultLayout extends React.Component {
         <div
           css={{
             background: `rgb(207, 58, 62)`,
-            padding: `${rhythm(2)} ${rhythm(3 / 4)}`,
             marginBottom: rhythm(1),
+            padding: `${rhythm(1)} 0px`,
+            "@media screen and (min-width: 500px)": {
+              padding: `${rhythm(2)} 0px`,
+            },
           }}
         >
           <div css={containerStyle}>
             <h1
               css={{
                 margin: 0,
-                ...scale(1.5),
+                fontSize: scale(1.5).fontSize,
+                lineHeight: 1,
                 "@media screen and (min-width: 500px)": {
-                  ...scale(1.9),
+                  fontSize: scale(1.9).fontSize,
+                  lineHeight: 1,
                 },
               }}
             >

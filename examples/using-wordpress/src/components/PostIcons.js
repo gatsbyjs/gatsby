@@ -5,8 +5,8 @@ import OpenIcon from "react-icons/lib/fa/folder-open"
 
 import { rhythm } from "../utils/typography"
 
-export default ({ node, style = {} }) => (
-  <div style={style}>
+export default ({ node, className = `` }) => (
+  <div css={{ marginTop: rhythm(-1 / 2) }} className={className}>
     <span style={{ marginRight: rhythm(1) }}>
       <ClockIcon size={14} style={{ position: `relative`, bottom: 1 }} />
       {` `}
