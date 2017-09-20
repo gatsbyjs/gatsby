@@ -1,5 +1,5 @@
 {
-  "name": "gatsby-plugin-netlify-headers",
+  "name": "gatsby-plugin-netlify",
   "version": "1.0.1",
   "description": "A Gatsby plugin which generates a _headers file for netlify",
   "main": "index.js",

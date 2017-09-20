@@ -606,5 +606,27 @@ actions.setPluginStatus = (status, plugin) => {
   }
 }
 
+/**
+ * Create a redirect from one page to another.
+ * Redirect data can be used to configure environments like Netlify.
+ *
+ * @param {Object} redirect Redirect data
+ * @param {string} redirect.fromPath Any valid URL. Must start with a forward slash
+ * @param {string} redirect.isPermanent This is a permanent redirect; defaults to temporary
+ * @param {Object} redirect.toPath URL of a created page (see `createPage`)
+ * @example
+ * createRedirect({ fromPath: '/old-url', toPath: '/new-url', isPermanent: true })
+ */
+actions.createRedirect = ({ fromPath, isPermanent = false, toPath }) => {
+  return {
+    type: `CREATE_REDIRECT`,
+    payload: {
+      fromPath,
+      isPermanent,
+      toPath,
+    },
+  }
+}
+
 exports.actions = actions
 exports.boundActionCreators = bindActionCreators(actions, store.dispatch)
