@@ -29,6 +29,9 @@ const {
   runQueries,
 } = require(`../internal-plugins/query-runner/page-query-runner`)
 const { writePages } = require(`../internal-plugins/query-runner/pages-writer`)
+const {
+  writeRedirects,
+} = require(`../internal-plugins/query-runner/redirects-writer`)
 
 // Override console.log to add the source file + line number.
 // Useful for debugging if you lose a console.log somewhere.
@@ -316,6 +319,12 @@ module.exports = async (program: any) => {
   activity = report.activityTimer(`write out page data`)
   activity.start()
   await writePages()
+  activity.end()
+
+  // Write out redirects.
+  activity = report.activityTimer(`write out redirect data`)
+  activity.start()
+  await writeRedirects()
   activity.end()
 
   // Update Schema for SitePage.

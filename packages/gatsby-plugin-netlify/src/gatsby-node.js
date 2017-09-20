@@ -4,6 +4,7 @@ import WebpackAssetsManifest from "webpack-assets-manifest"
 
 import makePluginData from "./plugin-data"
 import buildHeadersProgram from "./build-headers-program"
+import createRedirects from "./create-redirects"
 import { DEFAULT_OPTIONS, BUILD_HTML_STAGE, BUILD_CSS_STAGE } from "./constants"
 
 let assetsManifest = {}
@@ -32,5 +33,8 @@ exports.onPostBuild = async ({ store, pathPrefix }, userPluginOptions) => {
   const pluginData = makePluginData(store, assetsManifest, pathPrefix)
   const pluginOptions = { ...DEFAULT_OPTIONS, ...userPluginOptions }
 
-  return buildHeadersProgram(pluginData, pluginOptions)
+  const { redirects } = store.getState()
+
+  await buildHeadersProgram(pluginData, pluginOptions)
+  await createRedirects(pluginData, redirects)
 }
