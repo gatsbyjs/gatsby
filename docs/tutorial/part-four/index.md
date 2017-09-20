@@ -31,7 +31,7 @@ Data can also live in file types like markdown, CSV, etc. as well as databases a
 
 **Gatsby's data layer lets us pull data from these (and any other source) directly into our components**—in the shape and form we want.
 
-## How Gatsby's data layer uses GraphQL to pull data into components 
+## How Gatsby's data layer uses GraphQL to pull data into components
 
 If you're familiar with the React world, there are many options for how to load data into components. One of the most popular and robust of these is a technology called [GraphQL](http://graphql.org/).
 
@@ -148,7 +148,7 @@ module.exports = {
 }
 ```
 
-Add the above files and then run `gatsby develop` like normal and you should see the following: 
+Add the above files and then run `gatsby develop` like normal and you should see the following:
 
 ![start](start.png)
 
@@ -159,6 +159,8 @@ Now let's start querying 😋
 When building sites, it's common to want to reuse common bits of data across the site. Like the *site title* for example. Look at the `/about/` page. You'll notice that we have the site title in both the layout component (the site header) as well as in the title of the About page. But what if we want to change the site title at some point in the future? We'd have to search across all our components for spots using the site title. Which is both cumbersome and error-prone, especially as sites get larger and more complex. Much better to store the title in one place and then *pull* that title into components whenever we need it.
 
 To solve this Gatsby supports a simple pattern for adding site "metadata"—like the title.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/dmgcUbz8gq8?rel=0" frameborder="0" allowfullscreen></iframe>
 
 We add this data to the `gatsby-config.js` file. Let's add our site title to `gatsby-config.js` and then query it from our layout and about page!
 
@@ -284,6 +286,8 @@ Data in Gatsby sites can come literally from anywhere. APIs, databases, CMSs, lo
 
 Source plugins fetch data from their source. E.g. the filesystem source plugin knows how to fetch data from the file system. The Wordpress plugin knows how to fetch data from the Wordpress API.
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/qGvq3tKprGo?rel=0" frameborder="0" allowfullscreen></iframe>
+
 Let's add [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) and explore how it works.
 
 First install the plugin:
@@ -320,7 +324,7 @@ module.exports = {
 
 Save that and restart the gatsby development server. Then open up Graph*i*QL again.
 
-If you bring up the autocomplete window you'll see:	
+If you bring up the autocomplete window you'll see:
 
 ![graphiql-filesystem](graphiql-filesystem.png)
 
@@ -447,6 +451,8 @@ But often the format of the data we get from source plugins isn't what you want 
 To make this possible, Gatsby supports transformer plugins which take raw content from source plugins and *transforms* this into something more usable.
 
 For example, markdown files. Markdown is nice to write in but when you build a page with it, you need the markdown to be HTML.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/fEsDM8jZN_g?rel=0" frameborder="0" allowfullscreen></iframe>
 
 Let's add a markdown file to our site at `src/pages/sweet-pandas-eating-sweets.md` (This will become our first markdown blog post) and learn how to *transform* it to HTML using transformer plugins and GraphQL.
 

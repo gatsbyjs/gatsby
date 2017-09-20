@@ -13,6 +13,8 @@ Sit down, buckle up, and let's get going!
 
 Let's check first that you have everything setup to start creating with Gatsby. You will need a recent version of [Node.js](https://nodejs.org) installed.
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/_Jvs3gyNZWw?rel=0" frameborder="0" allowfullscreen></iframe>
+
 Node.js is a programming tool for running JavaScript on servers and in your computer's terminal. Gatsby is built using Node.js.
 
 Open a terminal window and type `node --version` then `npm --version`.
@@ -28,6 +30,8 @@ If you don't have Node.js installed, go to https://nodejs.org/ and install the r
 ## Install the "Hello World" starter
 
 Gatsby uses "starters" for starting new projects. As the name suggests, starters are partially built Gatsby sites pre-configured to help you get moving faster. There are several official starters and many others contributed from the Gatsby community! [See the Starters page for the full list](/docs/gatsby-starters/).
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/XNwKrZIiIDQ?rel=0" frameborder="0" allowfullscreen></iframe>
 
 To install a starter, first install Gatsby's terminal program.
 
@@ -69,6 +73,8 @@ Gatsby's development server is a "hot reloading" server meaning any change you m
 This is huge because it makes development so much faster and fun.
 
 Let's try it.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/JFwZeuykjo4?rel=0" frameborder="0" allowfullscreen></iframe>
 
 Try changing "Hello world!" in the page component to "Hello Gatsby!". You'll find the page component at `src/pages/index.js`. The text in your browser should change within a second.
 
@@ -116,6 +122,8 @@ Now your screen should look something like this.
 ![Screen Shot 2017-06-03 at 11.57.10 AM](moving-along.png)
 
 ## Linking between pages
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/5-ft670tGo4?rel=0" frameborder="0" allowfullscreen></iframe>
 
 Websites are pages and links between pages. While we've now got a pretty sweet first page—one page and no links doesn't feel very webby. So let's create a new page.
 
@@ -172,6 +180,8 @@ Save that and now you should be able to click back and forth between the two pag
 One nice thing about using Gatsby for building websites vs other tools is it's so easy to add interactivity to your pages. React.js was designed for Facebook.com and is used on many other world-class web applications.
 
 Let's see how easy it is to add interactive elements to our pages.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/W9wmjlnWes8?rel=0" frameborder="0" allowfullscreen></iframe>
 
 We'll start by creating a new link to a page at `/counter`/ from our original `index.js` page component `<Link to="/counter/">Counter</Link>`.
 

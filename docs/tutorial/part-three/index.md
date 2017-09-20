@@ -9,6 +9,8 @@ On this page, the sidebar to the left (assuming you're on a larger device) and t
 
 Let's dive in and explore Gatsby layouts.
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/8yPad1T05eY?rel=0" frameborder="0" allowfullscreen></iframe>
+
 First create a new site for this part of the tutorial. We'll use the "hello world" starter again.
 
 ```shell
