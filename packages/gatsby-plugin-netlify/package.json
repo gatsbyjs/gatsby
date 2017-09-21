@@ -24,8 +24,8 @@
   "license": "MIT",
   "dependencies": {
     "babel-runtime": "^6.26.0",
+    "fs-extra": "^4.0.2",
     "lodash": "^4.17.4",
-    "pify": "3.0.0",
     "webpack-assets-manifest": "^1.0.0"
   },
   "devDependencies": {
