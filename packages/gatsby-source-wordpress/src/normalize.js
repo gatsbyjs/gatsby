@@ -347,7 +347,7 @@ exports.createNodesFromEntities = ({ entities, createNode }) => {
 
             const acfChildNode = createACFChildNodes(
               f,
-              entity.id,
+              entity.id + i,
               key,
               type,
               children,
