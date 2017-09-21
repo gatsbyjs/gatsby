@@ -137,9 +137,9 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
                 slug: edge.node.fields.slug,
               },
             })
-          } else if (edge.node.fields.slug === `/index/`) {
+          } else {
             createPage({
-              path: `/`, // required, we don't have frontmatter for this page hence separate if()
+              path: edge.node.fields.slug === `/index/` ? `/` : frontmatter.path,
               component: path.resolve(edge.node.fileAbsolutePath),
               layout: 'insetPage', // this matches the filename of src/layouts/insetPage.js, layout created automatically
               context: {
