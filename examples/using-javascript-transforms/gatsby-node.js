@@ -59,8 +59,14 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
                 node {
                   fileAbsolutePath
                   data {
+                    error
                     layoutType
                     path
+                    title
+                    written
+                    updated
+                    category
+                    description
                   }
                   fields {
                     slug

@@ -3,9 +3,9 @@ import moment from "moment"
 import PostPublished from "../components/PostPublished"
 import HelmetBlock from "../components/HelmetBlock"
 
-class mdBlogPostTemplate extends React.Component {
+class generalBlogPostTemplate extends React.Component {
   render() {
-    const {html, frontmatter} = this.props.data.markdownRemark
+    const {frontmatter} = this.props.pathContext
 
     return (
       <div className="blogPost">
@@ -23,22 +23,4 @@ class mdBlogPostTemplate extends React.Component {
   }
 }
 
-export default mdBlogPostTemplate
-
-export const pageQuery = graphql`
-  query markdownTemplateBySlug($slug: String!) {
-    markdownRemark(fields: { slug: { eq: $slug } }) {
-      html
-      frontmatter {
-        title
-        path
-        layoutType
-        written
-        updated
-        what
-        category
-        description
-      }
-    }
-  }
-`
+export default generalBlogPostTemplate

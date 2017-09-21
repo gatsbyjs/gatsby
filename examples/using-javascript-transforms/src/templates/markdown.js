@@ -12,7 +12,7 @@ class mdTemplate extends React.Component {
   }
 }
 
-export default mdBlogPostTemplate
+export default mdTemplate
 
 export const pageQuery = graphql`
   query markdownTemplateBySlug($slug: String!) {
