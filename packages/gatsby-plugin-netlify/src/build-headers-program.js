@@ -1,5 +1,6 @@
 import _ from "lodash"
 import { writeFile } from "fs-extra"
+import { HEADER_COMMENT } from "./constants"
 
 import {
   ROOT_WILDCARD,
@@ -225,7 +226,7 @@ const applyTransfromHeaders = ({ transformHeaders }) => headers =>
   _.mapValues(headers, transformHeaders)
 
 const transformToString = headers =>
-  `## Created with gatsby-plugin-netlify\n\n${stringifyHeaders(headers)}`
+  `${HEADER_COMMENT}\n\n${stringifyHeaders(headers)}`
 
 const writeHeadersFile = ({ publicFolder }) => contents =>
   writeFile(publicFolder(NETLIFY_HEADERS_FILENAME), contents)

@@ -31,3 +31,5 @@ export const LINK_REGEX = /^(Link: <\/)(.+)(>;.+)/
 export const ROOT_WILDCARD = `/*`
 
 export const COMMON_BUNDLES = [`commons`, `app`]
+
+export const HEADER_COMMENT = `## Created with gatsby-plugin-netlify`
