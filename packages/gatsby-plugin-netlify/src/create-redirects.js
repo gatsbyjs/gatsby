@@ -14,8 +14,6 @@ export default async function writeRedirectsFile(pluginData, redirects) {
       return `${redirect.fromPath}  ${redirect.toPath}  ${status}`
     })
 
-    const data = `${HEADER_COMMENT}\n\n${redirects.join(`\n`)}`
-
     let appendToFile = false
 
     // Websites may also have statically defined redirects
@@ -28,6 +26,8 @@ export default async function writeRedirectsFile(pluginData, redirects) {
         appendToFile = true
       }
     }
+
+    const data = `${HEADER_COMMENT}\n\n${redirects.join(`\n`)}`
 
     return appendToFile
       ? appendFile(FILE_PATH, `\n\n${data}`)
