@@ -35,6 +35,8 @@ exports.onPostBuild = async ({ store, pathPrefix }, userPluginOptions) => {
 
   const { redirects } = store.getState()
 
-  await buildHeadersProgram(pluginData, pluginOptions)
-  await createRedirects(pluginData, redirects)
+  await Promise.all([
+    buildHeadersProgram(pluginData, pluginOptions),
+    createRedirects(pluginData, redirects),
+  ])
 }
