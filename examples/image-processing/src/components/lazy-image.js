@@ -3,18 +3,21 @@ import React from "react"
 let io
 const listeners = []
 if (typeof window !== `undefined` && window.IntersectionObserver) {
-  io = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      listeners.forEach(l => {
-        if (l[0] === entry.target) {
-          if (entry.isIntersecting) {
-            io.unobserve(l[0])
-            l[1]()
+  io = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        listeners.forEach(l => {
+          if (l[0] === entry.target) {
+            if (entry.isIntersecting) {
+              io.unobserve(l[0])
+              l[1]()
+            }
           }
-        }
+        })
       })
-    })
-  })
+    },
+    { rootMargin: `200px` }
+  )
 }
 
 const listenToIntersections = (el, cb) => {
