@@ -8,13 +8,15 @@ const fetch = username => {
 
 const prefix = `])}while(1);</x>`
 
-const serialiseBigInt = (nextObj, prevObj, prevKey) => {
-  if (typeof nextObj === "object") {
-    Object.keys(nextObj).map((key) =>
-      serialiseBigInt(nextObj[key], nextObj, key))
+const convertTimestamps = (nextObj, prevObj, prevKey) => {
+  if (typeof nextObj === 'object') {
+    Object.keys(nextObj).map(key => convertTimestamps(nextObj[key], nextObj, key));
   } else {
-    if (typeof nextObj === 'number' && (nextObj >> 0) !== nextObj) {
-      prevObj[prevKey] = String(nextObj)
+    if (typeof nextObj === 'number' && nextObj >> 0 !== nextObj) {
+      const date = new Date(nextObj);
+      if (date.getTime() === nextObj) {
+        prevObj[prevKey] = date.toISOString().slice(0, 10);
+      }
     }
   }
 }
@@ -40,7 +42,7 @@ exports.sourceNodes = async ({ boundActionCreators }, { username }) => {
 
     const resources = Array.prototype.concat(...importableResources)
     resources.map(resource => {
-      serialiseBigInt(resource)
+      convertTimestamps(resource)
 
       const digest = crypto
         .createHash(`md5`)
