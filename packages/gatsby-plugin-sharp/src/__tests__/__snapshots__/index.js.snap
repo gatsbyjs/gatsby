@@ -13,7 +13,7 @@ Object {
 exports[`gatsby-plugin-sharp responsiveSizes accounts for pixel density 1`] = `
 Object {
   "aspectRatio": 2.0661764705882355,
-  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAYAAAC0VX7mAAAACXBIWXMAABYlAAAWJQFJUiTwAAAA9klEQVQoz7WRQUvDQBCF+/9v3sSzl+K9oqStVqmoN2mpJLZJYyweKpiQbLLZJM83JQ1VCrnEheF9zA5vZ2Z76Pj0/s3QVNVOS6oqyx1r8j5vDriqdV9/1PBRKTha4y5JcBMnsMn3icKI/EaeMC+8JMu9FccNz7MMRW3cGAZ5jm1RwKNKbE0Bn+rqHF/Mr8mrmkXlEWG5/zSmmaqzHeq/HXb6KbLknCNl3IVoazccN2VtGEX4DiOEjOqwQ5Wm8Px3vDoOlq7bahhsNqzzcGkNMX16hjW+/W3oBx+YTB9wNRxjcG21Gq68NRa2jZPTM7zM5jjvXzSGP/5nCvc9Ga2VAAAAAElFTkSuQmCC",
+  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAYAAAC0VX7mAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAuUlEQVQoz9WRywqCYBCFff9lq6BFLSIQSoIW1UpIulDZ1VKS7GJiapGWl99cnH7sAdy4cTZzmJnzMcwwyDmYYgAHQYBZGKH2cjEOQ7S8d6r3hKS59/HB+0GqNxFB3fXA0hmReqq0ppAYxjfJd0MzSYp0w1yBPn3Idi+j0+2DF4awbCfTdL0ZEEYTlMoVsFwbjSaHqbj4A+M4xlraQZIVXHQdzuOZCbzbNlRNw3y5gnJQcTydYVpW2vsBqlELaS2F/80AAAAASUVORK5CYII=",
   "density": 144,
   "originalImg": "/static/1234-f54e4.png",
   "originalName": undefined,

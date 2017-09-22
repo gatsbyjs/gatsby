@@ -416,10 +416,14 @@ async function responsiveSizes({ file, args = {} }) {
     })
   })
 
+  const base64Width = 20
+  const base64Height = Math.max(1, Math.round(base64Width * height / width))
   const base64Args = {
     duotone: options.duotone,
     grayscale: options.grayscale,
     rotate: options.rotate,
+    width: base64Width,
+    height: base64Height,
   }
 
   // Get base64 version
