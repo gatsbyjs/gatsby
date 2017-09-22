@@ -1,4 +1,5 @@
 import React from "react"
+import LazyImage from "../components/lazy-image"
 
 import { rhythm } from "../utils/typography"
 
@@ -6,6 +7,7 @@ class Index extends React.Component {
   render() {
     const images = this.props.data.allImageSharp.edges
     const responsiveSizes = this.props.data.sizes.responsiveSizes
+    const responsiveSizes2 = this.props.data.sizes2.responsiveSizes
     const responsiveResolution = this.props.data.resolution.responsiveResolution
     const cropDefault = this.props.data.cropDefault.resize
     const cropBottomLeft = this.props.data.cropBottomLeft.resize
@@ -252,6 +254,7 @@ class Index extends React.Component {
             </div>
           </div>
         </div>
+        <LazyImage responsiveSizes={responsiveSizes2} />
 
         <h2
           style={{
@@ -328,6 +331,17 @@ export const pageQuery = graphql`
         duotone: { highlight: "#f00e2e", shadow: "#192550" }
         toFormat: PNG
       ) {
+        base64
+        aspectRatio
+        src
+        srcSet
+        sizes
+        originalImg
+        originalName
+      }
+    }
+    sizes2: imageSharp(id: { regex: "/fecolormatrix-kanye-west.jpg/" }) {
+      responsiveSizes(duotone: { highlight: "#f00e2e", shadow: "#192550" }) {
         base64
         aspectRatio
         src
