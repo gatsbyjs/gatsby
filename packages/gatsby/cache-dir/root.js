@@ -19,7 +19,7 @@ const redirectMap = redirects.reduce((map, redirect) => {
 }, {})
 
 // Check for initial page-load redirect
-maybeRedirect(location.pathname);
+maybeRedirect(location.pathname)
 
 // Call onRouteUpdate on the initial page load.
 apiRunner(`onRouteUpdate`, {
@@ -46,13 +46,15 @@ function maybeRedirect(pathname) {
     const pageResources = loader.getResourcesForPathname(pathname)
 
     if (pageResources != null) {
-      console.error(`The route "${pathname}" matches both a page and a redirect; this is probably not intentional.`)
+      console.error(
+        `The route "${pathname}" matches both a page and a redirect; this is probably not intentional.`
+      )
     }
 
     history.replace(redirect.toPath)
-    return true;
+    return true
   } else {
-    return false;
+    return false
   }
 }
 
@@ -127,7 +129,7 @@ const Root = () =>
             render: routeProps => {
               const props = layoutProps ? layoutProps : routeProps
               attachToHistory(props.history)
-              const {pathname} = props.location
+              const { pathname } = props.location
               const pageResources = loader.getResourcesForPathname(pathname)
               if (pageResources) {
                 return createElement(ComponentRenderer, {
