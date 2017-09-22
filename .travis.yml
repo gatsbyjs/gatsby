@@ -17,7 +17,7 @@ script:
   - npm test
 
 after_success:
-  - yarn run semantic-release
+  - yarn run lerna-semantic-release
 
 branches:
   except:

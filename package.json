@@ -53,7 +53,7 @@
     "publish-canary": "lerna publish --canary --yes",
     "publish-next": "lerna publish --npm-tag=next",
     "remotedev": "remotedev --hostname=localhost --port=19999",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
+    "lerna-semantic-release": "lerna-semantic-release pre && lerna-semantic-release perform && lerna-semantic-release post",
     "test": "jest",
     "test:update": "jest --updateSnapshot",
     "test:watch": "jest --watch",
@@ -61,12 +61,13 @@
     "watch": "lerna run watch --no-sort --stream --concurrency 999"
   },
   "devDependencies": {
+    "commitizen": "^2.9.6",
     "cz-conventional-changelog": "^2.0.0",
     "semantic-release": "^8.0.0"
   },
   "config": {
     "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
+      "path": "./node_modules/cz-lerna-changelog"
     }
   }
 }
