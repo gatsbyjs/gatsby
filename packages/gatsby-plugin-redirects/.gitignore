@@ -1,0 +1,3 @@
+*.js
+!src/**/*.js
+yarn.lock
