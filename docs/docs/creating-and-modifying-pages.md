@@ -145,19 +145,15 @@ like the following:
 // called after every page is created.
 exports.onCreatePage = async ({ page, boundActionCreators }) => {
   const { createPage } = boundActionCreators
+  
+  // page.matchPath is a special key that's used for matching pages
+  // only on the client.
+  if (page.path.match(/^\/app/)) {
+    page.matchPath = "/app/:path"
 
-  return new Promise((resolve, reject) => {
-    // page.matchPath is a special key that's used for matching pages
-    // only on the client.
-    if (page.path.match(/^\/app/)) {
-      page.matchPath = "/app/:path"
-
-      // Update the page.
-      createPage(page)
-    }
-
-    resolve()
-  })
+    // Update the page.
+    createPage(page)
+  }
 }
 ```
 
