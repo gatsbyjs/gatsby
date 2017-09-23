@@ -17,7 +17,7 @@ An [example site](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-
 
 ## Status
 
-This module is at prototype-level. It currently pulls from WordPress the following entities :
+This module currently pulls from WordPress the following entities:
 - [x] posts
 - [x] pages
 - [x] tags
