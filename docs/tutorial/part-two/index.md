@@ -380,7 +380,7 @@ import Container from "../components/container"
 
 const User = props =>
   <div className={styles.user}>
-    <img src={props.avatar} className={styles.avatar} />
+    <img src={props.avatar} className={styles.avatar} alt="" />
     <div className={styles.description}>
       <h2 className={styles.username}>
         {props.username}
@@ -475,6 +475,7 @@ const User = props =>
     <img
       src={props.avatar}
       css={{ flex: `0 0 96px`, width: 96, height: 96, margin: 0 }}
+      alt=""
     />
     <div css={{ flex: 1, marginLeft: 18, padding: 12 }}>
       <h2 css={{ margin: `0 0 12px 0`, padding: 0 }}>
@@ -574,7 +575,7 @@ const Excerpt = styled.p`margin: 0;`
 
 const User = props =>
   <UserWrapper>
-    <Avatar src={props.avatar} />
+    <Avatar src={props.avatar} alt="" />
     <Description>
       <Username>
         {props.username}

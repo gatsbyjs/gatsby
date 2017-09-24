@@ -85,6 +85,7 @@ export default ({ pathname }) => {
 
   return (
     <div
+      role="navigation"
       css={{
         borderBottom: `1px solid ${presets.veryLightPurple}`,
         backgroundColor: `rgba(255,255,255,0.975)`,
@@ -133,6 +134,7 @@ export default ({ pathname }) => {
               marginRight: rhythm(2 / 4),
               verticalAlign: `middle`,
             }}
+            alt=""
           />
           <h1
             css={{
