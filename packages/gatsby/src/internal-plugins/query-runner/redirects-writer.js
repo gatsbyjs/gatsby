@@ -8,9 +8,12 @@ const writeRedirects = async () => {
 
   let { program, redirects } = store.getState()
 
+  // Filter for redirects that are meant for the browser.
+  const browserRedirects = redirects.filter(r => r.redirectInBrowser)
+
   await fs.writeFile(
     joinPath(program.directory, `.cache/redirects.json`),
-    JSON.stringify(redirects, null, 2)
+    JSON.stringify(browserRedirects, null, 2)
   )
 }
 
