@@ -72,40 +72,77 @@ class Image extends React.Component {
   }
 
   render() {
-    const image = this.props.responsiveSizes
-
     console.log(this.props, this.state)
-    return (
-      <div
-        style={{
-          position: `relative`,
-          overflow: `hidden`,
-        }}
-        ref={this.handleRef}
-      >
-        {/* Preserve the aspect ratio. */}
+    if (this.props.responsiveSizes) {
+      const image = this.props.responsiveSizes
+      return (
         <div
+          className={this.props.className}
           style={{
-            width: `100%`,
-            paddingBottom: `${100 / image.aspectRatio}%`,
+            position: `relative`,
+            overflow: `hidden`,
+            ...this.props.style,
           }}
-        />
-        {/* Show the blury base64 image. */}
-        <Img src={image.base64} opacity={1} />
-        {/* Once the image is visible, start downloading the image */}
-        {this.state.isVisible && (
-          <Img
-            width={image.width}
-            height={image.height}
-            srcSet={image.srcSet}
-            src={image.src}
-            sizes={image.sizes}
-            opacity={this.state.imgLoaded ? 1 : 0}
-            onLoad={() => this.setState({ imgLoaded: true })}
+          ref={this.handleRef}
+        >
+          {/* Preserve the aspect ratio. */}
+          <div
+            style={{
+              width: `100%`,
+              paddingBottom: `${100 / image.aspectRatio}%`,
+            }}
           />
-        )}
-      </div>
-    )
+
+          {/* Show the blury base64 image. */}
+          {image.base64 && <Img src={image.base64} opacity={1} />}
+
+          {/* Once the image is visible, start downloading the image */}
+          {this.state.isVisible && (
+            <Img
+              width={image.width}
+              height={image.height}
+              srcSet={image.srcSet}
+              src={image.src}
+              sizes={image.sizes}
+              opacity={this.state.imgLoaded ? 1 : 0}
+              onLoad={() => this.setState({ imgLoaded: true })}
+            />
+          )}
+        </div>
+      )
+    }
+    if (this.props.responsiveResolution) {
+      const image = this.props.responsiveResolution
+      return (
+        <div
+          className={this.props.className}
+          style={{
+            position: `relative`,
+            overflow: `hidden`,
+            width: image.width,
+            height: image.height,
+            background: `lightgray`,
+            ...this.props.style,
+          }}
+          ref={this.handleRef}
+        >
+          {/* Show the blury base64 image. */}
+          {image.base64 && <Img src={image.base64} opacity={1} />}
+
+          {/* Once the image is visible, start downloading the image */}
+          {this.state.isVisible && (
+            <Img
+              width={image.width}
+              height={image.height}
+              srcSet={image.srcSet}
+              src={image.src}
+              opacity={this.state.imgLoaded ? 1 : 0}
+              onLoad={() => this.setState({ imgLoaded: true })}
+            />
+          )}
+        </div>
+      )
+    }
   }
 }
 
