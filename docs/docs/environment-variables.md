@@ -34,7 +34,7 @@ GATSBY_ASSETS_URL=http://s3.amazonaws.com/bucketname
 render() {
   return (
     <div>
-      <img src={`${process.env.GATSBY_ASSETS_URL}/logo.png`} />
+      <img src={`${process.env.GATSBY_ASSETS_URL}/logo.png`} alt="Logo" />
     </div>
   )
 }
