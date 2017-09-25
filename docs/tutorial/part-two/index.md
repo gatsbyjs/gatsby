@@ -98,7 +98,7 @@ This is the minimal setup for a Gatsby site.
 
 To install a plugin, there's two steps. First you install the plugin's NPM package and second you add the plugin to your site's `gatsby-config.js`.
 
-Typography.js has a Gatsby plugin, so let's install that by running
+Typography.js has a Gatsby plugin, so let's install that by running:
 
 ```shell
 npm install --save gatsby-plugin-typography
@@ -262,7 +262,7 @@ Each is a variant on "CSS-in-JS"—which solves many of the problems with tradit
 
 One of the most important problems they solve is selector name collisions. With traditional CSS, you have to be careful not to overwrite CSS selectors used elsewhere in a site because all CSS selectors live in the same global namespace. This unfortunate restriction can lead to elaborate (and often confusing) selector naming schemes.
 
-With CSS-in-JS, you avoid all that as CSS selectors are scoped automatically to their component. Styles are tightly coupled with their components. This makes it very easy to know how to edit a component's CSS, as there's never any confusion about how and where CSS is being used.
+With CSS-in-JS, you avoid all that as CSS selectors are scoped automatically to their component. Styles are tightly coupled with their components. This makes it very easy to know how to edit a component's CSS as there's never any confusion about how and where CSS is being used.
 
 For some background reading on CSS-in-JS, see [Christopher "vjeux" Chedeau's 2014 presentation that sparked this movement](https://speakerdeck.com/vjeux/react-css-in-js) as well as [Mark Dalgleish's more recent post "A Unified Styling Language"](https://medium.com/seek-blog/a-unified-styling-language-d0c208de2660).
 
@@ -274,7 +274,7 @@ Quoting from [the CSS Module homepage](https://github.com/css-modules/css-module
 
 > A **CSS Module** is a CSS file in which all class names and animation names are scoped locally by default.
 
-CSS Modules is very popular, as it lets you write CSS like normal but with a lot more safety: the tool automatically makes class and animation names unique so you don't have to worry about selector name collisions.
+CSS Modules is very popular, as it lets you write CSS like normal but with a lot more safety. The tool automatically makes class and animation names unique so you don't have to worry about selector name collisions.
 
 CSS Modules are highly recommended for those new to building with Gatsby (and React in general).
 
