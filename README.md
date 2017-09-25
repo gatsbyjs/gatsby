@@ -43,6 +43,7 @@ Websites built with Gatbsy:
 * [Magicly's blog](https://magicly.me/) [(source)](https://github.com/magicly/gatsby-blog)
 * [Dalbinaco's website](http://dalbinaco.com/) [(source)](https://github.com/dalbinaco/dalbinaco.github.io)
 * [Phu Quoc Works](http://phuquocworks.net)
+* [Kabir Goel's website](https://kbrgl.github.io) [(source)](https://github.com/kbrgl/kbrgl.github.io)
 
 ## Docs
 
