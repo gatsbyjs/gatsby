@@ -3,7 +3,7 @@ title: Gatsby.js Tutorial Part Three
 typora-copy-images-to: ./
 ---
 
-Gatsby lets you easily create "layout components." Layout components are sections of your site that you want to share across multiple pages. For example, Gatsby sites will commonly have a layout component with a shared header and footer. Other common things to add to layouts are a sidebar and navigation menu.
+Gatsby lets you easily create "layout components". Layout components are sections of your site that you want to share across multiple pages. For example, Gatsby sites will commonly have a layout component with a shared header and footer. Other common things to add to layouts are a sidebar and navigation menu.
 
 On this page, the sidebar to the left (assuming you're on a larger device) and the header at the top are part of gatsbyjs.org's layout component.
 
@@ -15,12 +15,11 @@ First, create a new site for this part of the tutorial. We'll use the "hello wor
 gatsby new tutorial-part-three https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
-Once the site is finished installing, install `gatsby-plugin-typography`. For a Typography.js theme, let's try the "Fairy Gates" typography theme this time.
+Once the site is finished installing, install `gatsby-plugin-typography`. For the Typography.js theme, let's try this time the "Fairy Gates" typography theme.
 
 ```shell
 npm install --save gatsby-plugin-typography typography-theme-fairy-gates
 ```
-
 
 Create the typography config file at `src/utils/typography.js`
 
@@ -97,7 +96,7 @@ export default () =>
 
 We now have the start of a nice personal site!
 
-But, there are a few problems. First, it'd be nice if the page content was centered on the screen like in part two of the tutorial. And second, we should really have some sort of global navigation so it's easy for visitors to find and visit each of the sub-pages.
+But there are a few problems. First, it'd be nice if the page content was centered on the screen like in part two of the tutorial. And second, we should really have some sort of global navigation so it's easy for visitors to find and visit each of the sub-pages.
 
 Let's tackle these problems by creating our first layout component.
 
