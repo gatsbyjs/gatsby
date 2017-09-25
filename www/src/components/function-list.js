@@ -30,6 +30,9 @@ const Param = (param, depth = 0) => {
           param.name !== `$0` && (
             <span css={{ color: `#73725f` }}>{`{${param.type.name}}`}</span>
           )}
+        {param.default && (
+          <span css={{ color: `#73725f` }}>[default={param.default}]</span>
+        )}
       </h5>
       {param.description && (
         <div
@@ -125,6 +128,7 @@ export const pageQuery = graphql`
         type {
           name
         }
+        default
         description {
           childMarkdownRemark {
             html
