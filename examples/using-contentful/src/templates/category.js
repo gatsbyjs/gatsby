@@ -30,6 +30,7 @@ class CategoryTemplate extends React.Component {
             }}
             src={iconImg.src}
             srcSet={iconImg.srcSet}
+            alt=""
           />
           <h4 style={{ marginBottom: 0 }}>{title}</h4>
         </div>
