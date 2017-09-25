@@ -54,6 +54,12 @@ module.exports = (pages, pathPrefix = ``) => pathname => {
         pageCache[trimmedPathname] = page
         return true
       }
+
+      if (trimmedPathname == page.path + 'index.html') {
+        foundPage = page
+        pageCache[trimmedPathname] = page
+        return true
+      }
     }
 
     return false
