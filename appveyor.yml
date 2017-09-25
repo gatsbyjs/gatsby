@@ -10,8 +10,9 @@ skip_branch_with_pr: true
 
 skip_commits:
   files:
-    - docs/*
-    - www/*
+    - docs/**
+    - www/**
+    - '**/*.md'
 
 environment:
   nodejs_version: "8"
