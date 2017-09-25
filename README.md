@@ -12,6 +12,7 @@
 ## Showcase
 
 Websites built with Gatbsy:
+* [Sourcegraph](https://about.sourcegraph.com)
 * [Simply](https://simply.co.za)
 * [mParticle's Documentation](https://docs.mparticle.com)
 * [Segment's Blog](https://segment.com/blog/)
@@ -40,6 +41,8 @@ Websites built with Gatbsy:
 * [Song Wang’s website](https://songwang.io/) [(source)](https://github.com/wangsongiam/songwang.io)
 * [Digital Psychology](http://digitalpsychology.io) [(source)](https://github.com/danistefanovic/digitalpsychology.io)
 * [Magicly's blog](https://magicly.me/) [(source)](https://github.com/magicly/gatsby-blog)
+* [Dalbinaco's website](http://dalbinaco.com/) [(source)](https://github.com/dalbinaco/dalbinaco.github.io)
+* [Phu Quoc Works](http://phuquocworks.net)
 
 ## Docs
 

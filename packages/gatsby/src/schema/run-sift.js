@@ -24,8 +24,8 @@ function awaitSiftField(fields, node, k) {
 }
 
 /*
-* Filters a list of nodes using mongodb-like syntax
-* Returns a single unwrapped element if connection = false
+* Filters a list of nodes using mongodb-like syntax.
+* Returns a single unwrapped element if connection = false.
 *
 */
 module.exports = ({
@@ -60,8 +60,8 @@ module.exports = ({
     return newObject
   }
 
-  // build an object that excludes the innermost leafs,
-  // this avoids including { eq: x } when resolving fields
+  // Build an object that excludes the innermost leafs,
+  // this avoids including { eq: x } when resolving fields.
   function extractFieldsToSift(prekey, key, preobj, obj, val) {
     if (_.isObject(val) && !_.isArray(val)) {
       _.forEach((val: any), (v, k) => {
@@ -77,7 +77,7 @@ module.exports = ({
   const fieldsToSift = {}
   if (clonedArgs.filter) {
     _.each(clonedArgs.filter, (v, k) => {
-      // Ignore connection and sorting args
+      // Ignore connection and sorting args.
       if (_.includes([`skip`, `limit`, `sort`], k)) return
 
       siftArgs.push(siftifyArgs({ [k]: v }))
@@ -85,7 +85,7 @@ module.exports = ({
     })
   }
 
-  // resolves every field used in the sift
+  // Resolves every field used in the sift.
   function resolveRecursive(node, siftFieldsObj, gqFields) {
     return Promise.all(
       _.keys(siftFieldsObj).map(k =>
@@ -119,6 +119,13 @@ module.exports = ({
       const index = _.isEmpty(siftArgs)
         ? 0
         : sift.indexOf({ $and: siftArgs }, myNodes)
+
+      // Create dependency between resulting node and the path.
+      createPageDependency({
+        path,
+        nodeId: myNodes[index].id,
+      })
+
       return myNodes[index]
     }
 

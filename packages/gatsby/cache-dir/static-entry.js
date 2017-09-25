@@ -36,7 +36,7 @@ const getLayout = page => {
   return layout ? layout : defaultLayout
 }
 
-const $ = React.createElement
+const createElement = React.createElement
 
 module.exports = (locals, callback) => {
   let pathPrefix = `/`
@@ -70,7 +70,7 @@ module.exports = (locals, callback) => {
     bodyProps = merge({}, bodyProps, props)
   }
 
-  const bodyComponent = $(
+  const bodyComponent = createElement(
     StaticRouter,
     {
       location: {
@@ -78,17 +78,16 @@ module.exports = (locals, callback) => {
       },
       context: {},
     },
-    $(Route, {
-      render: props => {
-        const page = getPage(props.location.pathname)
+    createElement(Route, {
+      render: routeProps => {
+        const page = getPage(routeProps.location.pathname)
         const layout = getLayout(page)
-        return $(withRouter(layout), {
-          ...props,
-          children: props => nestedComponents(
+        return createElement(withRouter(layout), {
+          children: layoutProps => nestedComponents(
                                 0,
                                 page.jsonName,
                                 page.componentChunkName,
-                                props
+                                layoutProps
                               )
         })
       },

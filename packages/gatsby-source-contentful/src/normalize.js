@@ -29,10 +29,12 @@ exports.getLocalizedField = getLocalizedField
 // If the id starts with a number, left-pad it with a c (for Contentful of
 // course :-))
 const fixId = id => {
+  if (!_.isString(id)) {
+    id = id.toString();
+  }
   if (!isNaN(id.slice(0, 1))) {
     return `c${id}`
-  }
-
+  }  
   return id
 }
 exports.fixId = fixId

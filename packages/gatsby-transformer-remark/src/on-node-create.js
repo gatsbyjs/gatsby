@@ -26,7 +26,7 @@ module.exports = async function onCreateNode({
   if (data.data) {
     data.data = _.mapValues(data.data, v => {
       if (_.isDate(v)) {
-        return v.toString()
+        return v.toJSON()
       } else {
         return v
       }
