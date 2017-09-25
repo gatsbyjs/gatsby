@@ -97,12 +97,12 @@ module.exports = (locals, callback) => {
   let nestedComponents = (templateIndex, jsonName, componentChunkName, props) => {
     let thisChunk = componentChunkName[templateIndex]
     if (!componentChunkName[templateIndex + 1]) {
-      return $(syncRequires.components[thisChunk], {
+      return createElement(syncRequires.components[thisChunk], {
         ...props,
         ...syncRequires.json[jsonName][thisChunk],
       })
     } else {
-      return $(syncRequires.components[thisChunk], {
+      return createElement(syncRequires.components[thisChunk], {
         ...props,
         ...syncRequires.json[jsonName][thisChunk],
         children: props => nestedComponents(
