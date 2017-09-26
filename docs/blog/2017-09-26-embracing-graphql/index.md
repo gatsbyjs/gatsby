@@ -55,7 +55,6 @@ When 1.0 landed, I waited for a while before trying to update my website.  The r
 Then on Sep 8 2017 I saw this tweet from @ryanflorence
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">.<a href="https://twitter.com/gatsbyjs">@gatsbyjs</a> is a completely original approach to web development. The mix of static/dynamic and how it handles data is really interesting.</p>&mdash; Ryan Florence (@ryanflorence) <a href="https://twitter.com/ryanflorence/status/906233888560758784">September 8, 2017</a></blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 Well that sounds like a pretty good endorsement.
 
