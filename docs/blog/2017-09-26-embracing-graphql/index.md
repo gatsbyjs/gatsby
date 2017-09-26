@@ -1,12 +1,12 @@
 ---
-title: "Embracing GraphQL - How I migrated to Gatsby v1"
+title: "Embracing GraphQL — How I migrated to Gatsby v1"
 date: "2017-09-26"
 image: "toa-heftiba-274947.jpg"
 author: "Tim Arney"
 excerpt: "Moving to Gatsby 1.x and embracing the new GraphQL setup can be daunting but the effort is going to payoff"
 ---
 
-Before I built React FAQ, I went looking for a static site generator.
+Before I built [React FAQ](https://reactfaq.site/), I went looking for a static site generator.
 
 I had a few criteria in mind.
 
@@ -19,7 +19,7 @@ Gatsby at the time was still pre-1.0 but it's workflow met my needs. I loved tha
 
 Webpack loader —> React.js wrapper component —> static HTML page. Done.
 
-Done until I read this [Github Issue](https://github.com/gatsbyjs/gatsby/issues/420) ... New GraphQL data layer.
+Done until I read this [Github Issue](https://github.com/gatsbyjs/gatsby/issues/420) … "New GraphQL data layer".
 
 ![issue-420](issue-420.png) 
 
@@ -45,7 +45,7 @@ export const routeQuery = `
 
 What happened to my “drop files into a folder and call it a day” setup?  What is all this weird syntax @kylemathews.
 
-Reading the issue Kyle's reasoning made sense but this didn't seem to be simple at all. 0.x seemed more “automatic” to me.  Drop in your files and go.
+Reading the issue, Kyle's reasoning made sense but this didn't seem to be simple at all. 0.x seemed more “automatic” to me.  Drop in your files and go.
 
 
 ## 1.0 Released
@@ -63,11 +63,11 @@ Well that sounds like a pretty good endorsement.
 With the [gatsby-starter-blog](https://github.com/gatsbyjs/gatsby-starter-blog
 ) in hand as a solid example, I started converting my website
 
-There were a few bumps into the road but thanks to the starter example, I pieced things together quickly.  Quickly as in “I have no idea how this GraphQL stuff works but I have it working so cool”.  Easy to update - check.
+There were a few bumps into the road but thanks to the starter example, I pieced things together quickly.  Quickly as in “I have no idea how this GraphQL stuff works but I have it working so cool”.  Easy to update — check.
 
 ## Digging Deeper
 
-I'm not the type of person to settle on “It's working don't touch anything”. So I started digging into how Gatsby 1.x works—particular the [data layer](https://www.gatsbyjs.org/tutorial/part-four/#data-in-gatsby).
+I'm not the type of person to settle on “It's working so don't touch anything”. So I started digging into how Gatsby 1.x works—particular the [data layer](https://www.gatsbyjs.org/tutorial/part-four/#data-in-gatsby).
 
 Things really clicked when I read this part  about GraphiQL and watched how to drill down on the data.
 
@@ -82,4 +82,4 @@ Prior to reading / seeing that part in the documentation, looking at the code I 
 
 ## That's a wrap
 
-With my 1.x update complete I'm feeling that not only was GatsbyJS a solid pick but something that is going to evolve the way I build websites. It's a nice starter push into GraphQL and many other advanced features the websites of the future will need to be performant.  Sometimes we don’t do things because they are unfamiliar to us.  Sometimes we need a little push.  Thanks for the push GatsbyJS.  The learning curve may seem daunting but the payoff is huge.  GatsbyJS has become a powerful tool and I’ve extended my development skills.
+With my 1.x update complete, I'm feeling that not only was GatsbyJS a solid pick but something that is going to evolve the way I build websites. It's a nice starter push into GraphQL and many other advanced features the websites of the future will need to be performant.  Sometimes we don’t do things because they are unfamiliar to us.  Sometimes we need a little push.  Thanks for the push GatsbyJS.  The learning curve may seem daunting but the payoff is huge.  GatsbyJS has become a powerful tool and I’ve extended my development skills.
