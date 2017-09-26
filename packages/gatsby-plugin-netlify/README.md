@@ -13,7 +13,7 @@ By default, the plugin will add HTTP/2 assets to server push the critical Gatsby
 ```javascript
 // In your gatsby-config.js
 plugins: [
-  ` gatsby-plugin-netlify`, // make sure to put last in the array
+  `gatsby-plugin-netlify`, // make sure to put last in the array
 ]
 ```
 
@@ -25,7 +25,7 @@ If you just need the critical assets, you don't need to add any additional confi
 plugins: [
   // make sure to put last in the array
   {
-    resolve: ` gatsby-plugin-netlify`,
+    resolve: `gatsby-plugin-netlify`,
     options: {
       headers: {},                                  // option to add more headers. `Link` headers are transformed by the below criteria
       allPageHeaders: [],                           // option to add headers for all pages. `Link` headers are transformed by the below criteria
