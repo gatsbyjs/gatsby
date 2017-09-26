@@ -5,7 +5,6 @@ const os = require(`os`)
 // Write out a typography module to .cache.
 
 exports.onPreBootstrap = ({ store }, pluginOptions) => {
-  console.log("yo onPreBootstrap")
   const program = store.getState().program
 
   let module
