@@ -35,6 +35,45 @@ Array [
 ]
 `;
 
+exports[`Add pages allows you to add multiple pages each with multiple components 1`] = `
+Array [
+  Object {
+    "component": Array [
+      "/whatever/index.js",
+      "/morewhatever/index.js",
+    ],
+    "componentChunkName": Array [
+      "component---whatever-index-js",
+      "component---morewhatever-index-js",
+    ],
+    "context": Object {},
+    "internalComponentName": "ComponentHi",
+    "jsonName": "hi.json",
+    "path": "/hi/",
+    "pluginCreatorId": "test",
+    "pluginCreator___NODE": "test",
+    "updatedAt": 1482363367071,
+  },
+  Object {
+    "component": Array [
+      "/whatever/index.js",
+      "/pizza/index.js",
+    ],
+    "componentChunkName": Array [
+      "component---whatever-index-js",
+      "component---pizza-index-js",
+    ],
+    "context": Object {},
+    "internalComponentName": "ComponentHiHotpizza",
+    "jsonName": "hi-hotpizza.json",
+    "path": "/hi/hotpizza/",
+    "pluginCreatorId": "test",
+    "pluginCreator___NODE": "test",
+    "updatedAt": 1482363367071,
+  },
+]
+`;
+
 exports[`Add pages allows you to add pages 1`] = `
 Object {
   "payload": Object {
@@ -131,7 +170,113 @@ Array [
 ]
 `;
 
+exports[`Add pages allows you to add pages with context when using multiple components 1`] = `
+Object {
+  "payload": Object {
+    "component": Array [
+      "/whatever/index.js",
+      "/differentwhatever/index.js",
+    ],
+    "componentChunkName": Array [
+      "component---whatever-index-js",
+      "component---differentwhatever-index-js",
+    ],
+    "context": Object {
+      "id": 123,
+    },
+    "internalComponentName": "ComponentHi",
+    "jsonName": "hi.json",
+    "path": "/hi/",
+    "pluginCreatorId": "test",
+    "pluginCreator___NODE": "test",
+    "updatedAt": 1482363367071,
+  },
+  "plugin": Object {
+    "id": "test",
+    "name": "test",
+  },
+  "traceId": undefined,
+  "type": "CREATE_PAGE",
+}
+`;
+
+exports[`Add pages allows you to add pages with context when using multiple components 2`] = `
+Array [
+  Object {
+    "component": Array [
+      "/whatever/index.js",
+      "/differentwhatever/index.js",
+    ],
+    "componentChunkName": Array [
+      "component---whatever-index-js",
+      "component---differentwhatever-index-js",
+    ],
+    "context": Object {
+      "id": 123,
+    },
+    "internalComponentName": "ComponentHi",
+    "jsonName": "hi.json",
+    "path": "/hi/",
+    "pluginCreatorId": "test",
+    "pluginCreator___NODE": "test",
+    "updatedAt": 1482363367071,
+  },
+]
+`;
+
+exports[`Add pages allows you to add pages with multiple components 1`] = `
+Object {
+  "payload": Object {
+    "component": Array [
+      "/whatever/index.js",
+      "/morewhatever/index.js",
+    ],
+    "componentChunkName": Array [
+      "component---whatever-index-js",
+      "component---morewhatever-index-js",
+    ],
+    "context": Object {},
+    "internalComponentName": "ComponentHi",
+    "jsonName": "hi.json",
+    "path": "/hi/",
+    "pluginCreatorId": "test",
+    "pluginCreator___NODE": "test",
+    "updatedAt": 1482363367071,
+  },
+  "plugin": Object {
+    "id": "test",
+    "name": "test",
+  },
+  "traceId": undefined,
+  "type": "CREATE_PAGE",
+}
+`;
+
+exports[`Add pages allows you to add pages with multiple components 2`] = `
+Array [
+  Object {
+    "component": Array [
+      "/whatever/index.js",
+      "/morewhatever/index.js",
+    ],
+    "componentChunkName": Array [
+      "component---whatever-index-js",
+      "component---morewhatever-index-js",
+    ],
+    "context": Object {},
+    "internalComponentName": "ComponentHi",
+    "jsonName": "hi.json",
+    "path": "/hi/",
+    "pluginCreatorId": "test",
+    "pluginCreator___NODE": "test",
+    "updatedAt": 1482363367071,
+  },
+]
+`;
+
 exports[`Add pages allows you to delete paths 1`] = `Array []`;
+
+exports[`Add pages allows you to delete paths that have multiple components 1`] = `Array []`;
 
 exports[`Add pages allows you to update existing pages (based on path) 1`] = `
 Array [
@@ -141,6 +286,28 @@ Array [
     ],
     "componentChunkName": Array [
       "component---whatever-2-index-js",
+    ],
+    "context": Object {},
+    "internalComponentName": "ComponentHi",
+    "jsonName": "hi.json",
+    "path": "/hi/",
+    "pluginCreatorId": "test",
+    "pluginCreator___NODE": "test",
+    "updatedAt": 1482363367071,
+  },
+]
+`;
+
+exports[`Add pages allows you to update existing pages with multiple components (based on path) 1`] = `
+Array [
+  Object {
+    "component": Array [
+      "/whateven/index.js",
+      "/supercereal/index.js",
+    ],
+    "componentChunkName": Array [
+      "component---whateven-index-js",
+      "component---supercereal-index-js",
     ],
     "context": Object {},
     "internalComponentName": "ComponentHi",
