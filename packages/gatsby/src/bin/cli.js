@@ -70,10 +70,16 @@ if (inGatsbySite) {
       `Set host. Defaults to ${defaultHost}`,
       defaultHost
     )
+    .option(
+      `-r, --rootDir <rootDir>`,
+      `Specify where your node_modules reside.`,
+      `./`
+    )
     .option(`-p, --port <port>`, `Set port. Defaults to 8000`, `8000`)
     .option(`-o, --open`, `Open the site in your browser for you.`)
     .action(command => {
-      const developPath = resolveCwd(`gatsby/dist/utils/develop`)
+      command.rootDir = path.resolve(command.rootDir)
+      const developPath = `../utils/develop`
       const develop = require(developPath)
       // console.timeEnd(`time to load develop`)
       const { sitePackageJson, browserslist } = getSiteInfo()
@@ -93,11 +99,17 @@ if (inGatsbySite) {
       `--prefix-paths`,
       `Build site with link paths prefixed (set prefix in your config).`
     )
+    .option(
+      `-r, --rootDir <rootDir>`,
+      `Specify where your node_modules reside.`,
+      `./`
+    )
     .action(command => {
       // Set NODE_ENV to 'production'
       process.env.NODE_ENV = `production`
-
-      const buildPath = resolveCwd(`gatsby/dist/utils/build`)
+      command.rootDir = path.resolve(command.rootDir)
+      const buildPath = `../utils/build`
+      // const buildPath = resolveCwd(`gatsby/dist/utils/build`)
       const build = require(buildPath)
       const { sitePackageJson, browserslist } = getSiteInfo()
       const p = {

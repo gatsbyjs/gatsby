@@ -33,7 +33,7 @@ rlInterface.on(`SIGINT`, () => {
 })
 
 async function startServer(program) {
-  const directory = program.directory
+  const directory = program.rootDir
   const directoryPath = withBasePath(directory)
   const createIndexHtml = () =>
     developHtml(program).catch(err => {
@@ -85,7 +85,7 @@ async function startServer(program) {
     })
   )
 
-  app.use(express.static(__dirname + `/public`))
+  app.use(express.static(process.cwd() + `/public`))
 
   app.use(
     require(`webpack-dev-middleware`)(compiler, {
