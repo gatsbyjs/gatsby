@@ -9,7 +9,7 @@ But don't get too comfortable 😉. In this tutorial, we're headed to new territ
 
 ## Recap of first half of the tutorial
 
-So far, we've been learning how to use React.js and creating our own components to act as custom building blocks for websites.
+So far, we've been learning how to use React.js—how powerful it is to be able to create our *own* components to act as custom building blocks for websites.
 
 We've also explored styling components using CSS-in-JS, which lets us encapsulate CSS within our components.
 
@@ -17,13 +17,13 @@ We've also explored styling components using CSS-in-JS, which lets us encapsulat
 
 A website has four parts, HTML, CSS, JS, and data. The first half of the tutorial focused on the first three. Let's learn now how to use data in Gatsby sites.
 
-What are data?
+What is data?
 
-A very computer science-y answer would be: data are things like `"strings"`, integers (`42`), objects (`{ pizza: true }`), etc.
+A very computer science-y answer would be: data is things like `"strings"`, integers (`42`), objects (`{ pizza: true }`), etc.
 
-For the purpose of working in Gatsby however, a more useful answer is "everything that lives outside a React component."
+For the purpose of working in Gatsby however, a more useful answer is "everything that lives outside a React component".
 
-So far, we've been writing text and adding images *directly* in components, which is an *excellent* way to build many websites. But, often you want to store data *outside* components and then bring the data *into* the component as needed.
+So far, we've been writing text and adding images *directly* in components. Which is an *excellent* way to build many websites. But, often you want to store data *outside* components and then bring the data *into* the component as needed.
 
 For example, if you're building a site with Wordpress (so other contributors have a nice interface for adding & maintaining content) and Gatsby, the *data* for the site (pages and posts) are in Wordpress and you *pull* that data as needed into your components.
 
@@ -279,7 +279,7 @@ You can access it when your site's development server is running—normally at h
   <p>Your browser does not support the video element.</p>
 </video>
 
-Here we poke around the built-in `site` "type" and see what fields are available on it—including the `siteMetadata` object we queried earlier. Try opening Graph*i*QL and play with your data! Press <kbd>Cmd/Ctrl + Space</kbd> to bring up the autocomplete window and <kbd>Cmd/Ctrl + Enter</kbd> to run the query. We'll be using Graph*i*QL a lot more through the remainder of the tutorial.
+Here we poke around the built-in `Site` "type" and see what fields are available on it—including the `siteMetadata` object we queried earlier. Try opening Graph*i*QL and play with your data! Press <kbd>Ctrl + Space</kbd> to bring up the autocomplete window and <kbd>Ctrl + Enter</kbd> to run the query. We'll be using Graph*i*QL a lot more through the remainder of the tutorial.
 
 ## Source plugins
 
@@ -327,15 +327,15 @@ If you bring up the autocomplete window you'll see:
 
 ![graphiql-filesystem](graphiql-filesystem.png)
 
-Hit <kbd>Enter</kbd> on `allFile` then type <kbd>Cmd/Ctrl + Enter</kbd> to run a query.
+Hit <kbd>Enter</kbd> on `allFile` then type <kbd>Ctrl + Enter</kbd> to run a query.
 
 ![filesystem-query](filesystem-query.png)
 
-Delete the `id` from the query and bring up the autocomplete again (<kbd>Cmd/Ctrl + Space</kbd>).
+Delete the `id` from the query and bring up the autocomplete again (<kbd>Ctrl + Space</kbd>).
 
 ![filesystem-autocomplete](filesystem-autocomplete.png)
 
-Try adding a number of fields to your query, pressing <kbd>Cmd/Ctrl + Enter</kbd> each time to re-run the query. You'll see something like this:
+Try adding a number of fields to your query, pressing <kbd>Ctrl + Enter</kbd> each time to re-run the query. You'll see something like this:
 
 ![allfile-query](allfile-query.png)
 
@@ -571,7 +571,7 @@ Now the frontpage should look like:
 
 ![frontpage](frontpage.png)
 
-But, our one blog post looks a bit lonely. So let's add another one at `src/pages/pandas-and-bananas.md`
+But our one blog post looks a bit lonely. So let's add another one at `src/pages/pandas-and-bananas.md`
 
 ```markdown
 ---
@@ -588,7 +588,7 @@ Do Pandas eat bananas? Check out this short video that shows that yes! pandas do
 
 Which looks great! Except…the order of the posts is wrong.
 
-But, this is easy to fix. When querying a connection of some type, you can pass a variety of arguments to the query. You can `sort` and `filter` nodes, set how many nodes to `skip`, and choose the `limit` of how many nodes to retrieve. With this powerful set of operators, we can select any data we want in the format we need.
+But this is easy to fix. When querying a connection of some type, you can pass a variety of arguments to the query. You can `sort` and `filter` nodes, set how many nodes to `skip`, and choose the `limit` of how many nodes to retrieve. With this powerful set of operators, we can select any data we want—in the format we need.
 
 In our index page's query, change `allMarkdownRemark` to `  allMarkdownRemark(sort: {fields: [frontmatter___date], order: DESC})`. Save this and the sort order should be fixed.
 
@@ -645,7 +645,7 @@ There in your terminal you should see the relative paths for our two markdown fi
 
 ![markdown-relative-path](markdown-relative-path.png)
 
-Now, let's create slugs. As the logic for creating slugs from file names can get tricky, the `gatsby-source-filesystem` plugin ships with a function for creating slugs. Let's use that.
+Now let's create slugs. As the logic for creating slugs from file names can get tricky, the `gatsby-source-filesystem` plugin ships with a function for creating slugs. Let's use that.
 
 ```javascript{1,5}
 const { createFilePath } = require(`gatsby-source-filesystem`)
@@ -659,7 +659,7 @@ exports.onCreateNode = ({ node, getNode }) => {
 
 The function handles finding the parent `File` node along with creating the slug. Run the development server again and you should see logged to the terminal two slugs, one for each markdown file.
 
-Now, lets add our new slugs directly onto the `MarkdownRemark` nodes. This is powerful, as any data we add to nodes is available to query later with GraphQL. So, it'll be easy to get the slug when it comes time to create the pages.
+Now lets add our new slugs directly onto the `MarkdownRemark` nodes. This is powerful, as any data we add to nodes is available to query later with GraphQL. So it'll be easy to get the slug when it comes time to create the pages.
 
 To do so, we'll use a function passed to our API implementation called [`createNodeField`](/docs/bound-action-creators/#createNodeField). This function allows us to create additional fields on nodes created by other plugins. Only the original creator of a node can directly modify the node—all other plugins (including our `gatsby-node.js`) must use this function to create additional fields.
 
@@ -679,7 +679,7 @@ exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
 }
 ```
 
-Restart the development server and open or refresh Graph*i*QL. Then, run this query to see our new slugs.
+Restart the development server and open or refresh Graph*i*QL. Then run this query to see our new slugs.
 
 ```graphql
 {
@@ -846,7 +846,7 @@ And…
 
 Sweet!
 
-Now, the last step is to link to our new pages from the index page.
+The last step is to link to our new pages from the index page.
 
 Return to `src/pages/index.js` and let's query for our markdown slugs and create links.
 
@@ -911,4 +911,4 @@ And there we go! A working (albeit quite simple still) blog!
 
 Try playing more with the site. Try adding some more markdown files. Explore querying other data from the `MarkdownRemark` nodes and adding them to the frontpage or blog posts pages.
 
-In this part of the tutorial, we've learned the foundations of building with Gatsby's data layer. You've learned how to *source* and *transform* data using plugins, how to use GraphQL to *map* data to pages, and how to build *page template components* where you query for data for each page.
+In this part of the tutorial, we've learned the foundations of building with Gatsby's data layer. You've learned how to *source* and *transform* data using plugins. How to use GraphQL to *map* data to pages. Then how to build *page template components* where you query for data for each page.
