@@ -21,7 +21,6 @@ if (verDigit < 4) {
 */
 const cliFile = `dist/bin/cli.js`
 const localPath = path.resolve(`node_modules/gatsby`, cliFile)
-const parentPath = path.resolve(`../node_modules/gatsby`, cliFile)
 
 const useGlobalGatsby = function() {
   // Never use global install *except* for new and help commands
@@ -41,8 +40,6 @@ if (fs.existsSync(localPath)) {
   } catch (error) {
     report.error(`A local install of Gatsby exists but failed to load.`, error)
   }
-} else if (fs.existsSync(parentPath)) {
-  require(parentPath)
 } else {
   useGlobalGatsby()
 }
