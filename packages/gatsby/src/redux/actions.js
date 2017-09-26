@@ -113,7 +113,9 @@ actions.deleteLayout = (layout, plugin = ``) => {
 }
 
 /**
- * Create a layout.
+ * Create a layout. Generally layouts are created automatically by placing a
+ * React component in the `src/layouts/` directory. This action should be used
+ * if loading layouts from an NPM package or from a non-standard location.
  * @param {Object} layout a layout object
  * @param {string} layout.component The absolute path to the component for this layout
  * @example
@@ -194,7 +196,7 @@ actions.deleteNodes = (nodes, plugin = ``) => {
 
 const typeOwners = {}
 /**
- * Create a new node
+ * Create a new node.
  * @param {Object} node a node object
  * @param {string} node.id The node's ID. Must be globally unique.
  * @param {string} node.parent The ID of the parent's node. If the node is
@@ -212,10 +214,10 @@ const typeOwners = {}
  * transformer plugins that your node has raw content they can transform.
  * Use either an official media type (we use mime-db as our source
  * (https://www.npmjs.com/package/mime-db) or a made-up one if your data
- * doesn't fit in any existing bucket. Transformer plugins node media types
+ * doesn't fit in any existing bucket. Transformer plugins use node media types
  * for deciding if they should transform a node into a new one. E.g.
  * markdown transformers look for media types of
- * text/markdown.
+ * `text/markdown`.
  * @param {string} node.internal.type An arbitrary globally unique type
  * choosen by the plugin creating the node. Should be descriptive of the
  * node as the type is used in forming GraphQL types so users will query
@@ -398,6 +400,8 @@ actions.touchNode = (nodeId, plugin = ``) => {
  * directly. So to extend another node, use this.
  * @param {Object} $0
  * @param {Object} $0.node the target node object
+ * @param {string} $0.fieldName [deprecated] the name for the field
+ * @param {string} $0.fieldValue [deprecated] the value for the field
  * @param {string} $0.name the name for the field
  * @param {string} $0.value the value for the field
  * @example
@@ -613,17 +617,24 @@ actions.setPluginStatus = (status, plugin) => {
  * @param {Object} redirect Redirect data
  * @param {string} redirect.fromPath Any valid URL. Must start with a forward slash
  * @param {string} redirect.isPermanent This is a permanent redirect; defaults to temporary
- * @param {Object} redirect.toPath URL of a created page (see `createPage`)
+ * @param {string} redirect.toPath URL of a created page (see `createPage`)
+ * @param {string} redirect.redirectInBrowser Redirects are generally for redirecting legacy URLs to their new configuration. If you can't update your UI for some reason, set `redirectInBrowser` to true and Gatsby will handle redirecting in the client as well.
  * @example
  * createRedirect({ fromPath: '/old-url', toPath: '/new-url', isPermanent: true })
  */
-actions.createRedirect = ({ fromPath, isPermanent = false, toPath }) => {
+actions.createRedirect = ({
+  fromPath,
+  isPermanent = false,
+  toPath,
+  redirectInBrowser = false,
+}) => {
   return {
     type: `CREATE_REDIRECT`,
     payload: {
       fromPath,
       isPermanent,
       toPath,
+      redirectInBrowser,
     },
   }
 }

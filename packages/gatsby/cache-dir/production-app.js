@@ -11,6 +11,7 @@ import domReady from "domready"
 import emitter from "./emitter"
 window.___emitter = emitter
 import pages from "./pages.json"
+import redirects from "./redirects.json"
 import ComponentRenderer from "./component-renderer"
 import asyncRequires from "./async-requires"
 import loader from "./loader"
@@ -19,6 +20,36 @@ loader.addProdRequires(asyncRequires)
 window.asyncRequires = asyncRequires
 window.___loader = loader
 window.matchPath = matchPath
+
+const history = createHistory()
+
+// Convert to a map for faster lookup in maybeRedirect()
+const redirectMap = redirects.reduce((map, redirect) => {
+  map[redirect.fromPath] = redirect
+  return map
+}, {})
+
+const maybeRedirect = pathname => {
+  const redirect = redirectMap[pathname]
+
+  if (redirect != null) {
+    const pageResources = loader.getResourcesForPathname(pathname)
+
+    if (pageResources != null) {
+      console.error(
+        `The route "${pathname}" matches both a page and a redirect; this is probably not intentional.`
+      )
+    }
+
+    history.replace(redirect.toPath)
+    return true
+  } else {
+    return false
+  }
+}
+
+// Check for initial page-load redirect
+maybeRedirect(window.location.pathname)
 
 // Let the site/plugins run code very early.
 apiRunnerAsync(`onClientEntry`).then(() => {
@@ -66,8 +97,6 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   // window.___loadScriptsForPath = loadScriptsForPath
   window.___navigateTo = navigateTo
 
-  const history = createHistory()
-
   // Call onRouteUpdate on the initial page load.
   apiRunner(`onRouteUpdate`, {
     location: history.location,
@@ -79,7 +108,9 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       window.___history = history
 
       history.listen((location, action) => {
-        apiRunner(`onRouteUpdate`, { location, action })
+        if (!maybeRedirect(location.pathname)) {
+          apiRunner(`onRouteUpdate`, { location, action })
+        }
       })
     }
   }

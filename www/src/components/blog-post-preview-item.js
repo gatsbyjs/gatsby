@@ -26,7 +26,7 @@ class BlogPostPreviewItem extends React.Component {
           }}
         >
           <img
-            alt={`Avatar for ${post.frontmatter.author.id}`}
+            alt=""
             src={avatar.src}
             srcSet={avatar.srcSet}
             height={avatar.height}
