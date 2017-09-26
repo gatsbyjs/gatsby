@@ -1,5 +1,5 @@
 ---
-title: "Embracing GraphQL — How I migrated to Gatsby v1"
+title: "Embracing GraphQL — How I migrated reactfaq.site to Gatsby v1"
 date: "2017-09-26"
 image: "toa-heftiba-274947.jpg"
 author: "Tim Arney"
