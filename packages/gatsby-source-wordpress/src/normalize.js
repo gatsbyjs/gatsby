@@ -341,7 +341,9 @@ exports.createNodesFromEntities = ({ entities, createNode }) => {
     if (entity.acf) {
       _.each(entity.acf, (value, key) => {
         if (_.isArray(value) && value[0].acf_fc_layout) {
-          entity.acf[`${key}_${entity.type}___NODE`] = entity.acf[key].map((f, i) => {
+          entity.acf[`${key}_${entity.type}___NODE`] = entity.acf[
+            key
+          ].map((f, i) => {
             const type = `WordPressAcf_${f.acf_fc_layout}`
             delete f.acf_fc_layout
 

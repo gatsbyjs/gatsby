@@ -1,17 +1,19 @@
 platform:
   - x64
 
-cache:
-  - '%AppData%/npm-cache'
-  - "%LOCALAPPDATA%/Yarn"
-  - C:\Users\appveyor\AppData\Roaming\npm\node_modules\windows-build-tools
+#TODO, I think we need to create the folder first in the init in case it doesn't exist
+#cache:
+  #- '%AppData%/npm-cache'
+  #- "%LOCALAPPDATA%/Yarn"
+  #- C:\Users\appveyor\AppData\Roaming\npm\node_modules\windows-build-tools
 
 skip_branch_with_pr: true
 
 skip_commits:
   files:
-    - docs/*
-    - www/*
+    - docs/**
+    - www/**
+    - '**/*.md'
 
 environment:
   nodejs_version: "8"
@@ -52,7 +54,6 @@ install:
         Exit-AppVeyorBuild
       }
   - ps: Install-Product node $env:nodejs_version $env:platform
-  - ps: npm install -g windows-build-tools
   - choco install yarn --ignore-dependencies
   - refreshenv
   - echo we are running on %PLATFORM%

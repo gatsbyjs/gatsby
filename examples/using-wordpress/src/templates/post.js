@@ -14,9 +14,9 @@ class PostTemplate extends Component {
         <PostIcons node={post} css={{ marginBottom: rhythm(1 / 2) }} />
         <div dangerouslySetInnerHTML={{ __html: post.content }} />
         {post.acf &&
-          post.acf.page_builder &&
-          post.acf.page_builder.map(layout => {
-            if (layout.__typename === `WordPressAcf_POST_image_gallery`) {
+          post.acf.page_builder_post &&
+          post.acf.page_builder_post.map(layout => {
+            if (layout.__typename === `WordPressAcf_image_gallery`) {
               return (
                 <div>
                   <h2>ACF Image Gallery</h2>
@@ -34,7 +34,7 @@ class PostTemplate extends Component {
                 </div>
               )
             }
-            if (layout.__typename === `WordPressAcf_POST_post_photo`) {
+            if (layout.__typename === `WordPressAcf_post_photo`) {
               const img = layout.photo.localFile.childImageSharp.responsiveSizes
               return (
                 <div>
@@ -64,9 +64,9 @@ export const pageQuery = graphql`
       content
       ...PostIcons
       acf {
-        page_builder {
+        page_builder_post {
           __typename
-          ... on WordPressAcf_POST_post_photo {
+          ... on WordPressAcf_post_photo {
             photo {
               localFile {
                 childImageSharp {
@@ -79,7 +79,7 @@ export const pageQuery = graphql`
               }
             }
           }
-          ... on WordPressAcf_POST_image_gallery {
+          ... on WordPressAcf_image_gallery {
             pictures {
               picture {
                 localFile {
