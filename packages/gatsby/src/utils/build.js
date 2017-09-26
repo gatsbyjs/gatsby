@@ -15,6 +15,9 @@ function reportFailure(msg, err: Error) {
 
 async function html(program: any) {
   const { graphqlRunner } = await bootstrap(program)
+
+  await apiRunnerNode(`onPreBuild`, { graphql: graphqlRunner })
+
   // Copy files from the static directory to
   // an equivalent static directory within public.
   copyStaticDirectory()

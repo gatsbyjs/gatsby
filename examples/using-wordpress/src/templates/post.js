@@ -15,16 +15,17 @@ class PostTemplate extends Component {
         <div dangerouslySetInnerHTML={{ __html: post.content }} />
         {post.acf &&
           post.acf.page_builder_post &&
-          post.acf.page_builder_post.map(layout => {
+          post.acf.page_builder_post.map((layout, i) => {
             if (layout.__typename === `WordPressAcf_image_gallery`) {
               return (
-                <div>
+                <div key={`${i} image-gallery`}>
                   <h2>ACF Image Gallery</h2>
                   {layout.pictures.map(({ picture }) => {
                     const img =
                       picture.localFile.childImageSharp.responsiveSizes
                     return (
                       <img
+                        key={img.src}
                         src={img.src}
                         srcSet={img.srcSet}
                         sizes={img.sizes}
@@ -37,12 +38,13 @@ class PostTemplate extends Component {
             if (layout.__typename === `WordPressAcf_post_photo`) {
               const img = layout.photo.localFile.childImageSharp.responsiveSizes
               return (
-                <div>
+                <div key={`${i}-photo`}>
                   <h2>ACF Post Photo</h2>
                   <img src={img.src} srcSet={img.srcSet} sizes={img.sizes} />
                 </div>
               )
             }
+            return null
           })}
       </div>
     )
