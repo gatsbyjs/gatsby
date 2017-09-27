@@ -4,7 +4,7 @@ Provide support for using the css-in-js library [Emotion](https://github.com/tkh
 ## Install
 
 ```
-npm install --save gatsby-plugin-emotion
+npm install --save gatsby-plugin-emotion emotion emotion-server
 ```
 
 ## How to use
