@@ -23,6 +23,6 @@
   },
   "peerDependencies": {
     "emotion": "7 || 8 ",
-    "react-emotion": "7 || 8"
+    "emotion-server": "7 || 8"
   }
 }
