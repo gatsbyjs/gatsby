@@ -396,16 +396,13 @@ function shouldInferFile(nodes, key, value) {
 
         if (value === undefined || value === null) continue
 
-        if (typeof value === "object" || typeof value === "function") {
+        if (typeof value === `object` || typeof value === `function`) {
           visit(current[key], selector.concat([key]), fn)
           continue
         }
 
         let proceed = fn(current[key], key, selector, current)
 
-        // returning false (and only false)
-        // from the visitor function will stop the
-        // visitations
         if (proceed === false) {
           break
         }
@@ -418,6 +415,8 @@ function shouldInferFile(nodes, key, value) {
       let isMatch = false
       visit(n, [], (v, k, selector, parent) => {
         if (v === value) {
+          // Remove integers as they're for arrays, which our passed
+          // in object path doesn't have.
           const normalizedSelector = selector
             .map(s => (isNormalInteger(s) ? `` : s))
             .filter(s => s !== ``)
