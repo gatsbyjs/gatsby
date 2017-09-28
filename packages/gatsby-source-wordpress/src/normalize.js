@@ -138,7 +138,10 @@ exports.createGatsbyIds = entities =>
       namespace = typeNamespaces[e.__type]
     }
 
-    e.id = uuidv5(e.wordpress_id.toString(), namespace)
+    e.id = uuidv5(
+      e.wordpress_id ? e.wordpress_id.toString() : Math.floor((1 + Math.random()) * 0x10000).toString(16),
+      namespace
+    )
     return e
   })
 
