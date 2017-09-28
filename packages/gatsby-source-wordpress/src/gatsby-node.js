@@ -75,7 +75,10 @@ exports.sourceNodes = async (
   // Lifts all "rendered" fields to top-level.
   entities = normalize.liftRenderedField(entities)
 
-  // creates Gatsby IDs for each entity
+  // Exclude entities of unknown shape
+  entities = normalize.excludeUnknownEntities(entities)
+
+  // Creates Gatsby IDs for each entity
   entities = normalize.createGatsbyIds(entities)
 
   // Creates links between authors and user entities
