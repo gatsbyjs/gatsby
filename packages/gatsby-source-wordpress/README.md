@@ -2,19 +2,18 @@
 
 Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from WordPress sites using the [WordPress JSON REST API](https://developer.wordpress.org/rest-api/reference/).
 
-An example site for using this plugin is available.
+An example site for this plugin is available.
 
 * [Demo](https://using-wordpress.gatsbyjs.org/)
-* [Site source code](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress)
+* [Example site source code](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress)
 
-## Feature list
+## Features
 
 - Pulls data from any self-hosted WordPress site—even if behind HTAccess
 - Pulls data from sites hosted on wordpress.com and wordpress.org
 - Works with any number of article and posts (tested on a site with 900 posts)
 - Can authenticate to wordpress.com's API using OAuth 2 so media can be queried
-- Downloads images and other media to local file system
-- Easily create responsive images from images uploaded to WordPress API
+- Easily create responsive images in Gatsby from WordPress images.
 
 ## Supported WordPress entities
 
@@ -31,7 +30,7 @@ This module currently pulls from WordPress the following entities:
 - [x] [ACF (Advanced Custom Fields)](https://www.advancedcustomfields.com/)
 - [x] Custom Post Types
 
-We welcome support for entities added by other plugins.
+We welcome PRs adding support for data from other plugins.
 
 ## Install
 
