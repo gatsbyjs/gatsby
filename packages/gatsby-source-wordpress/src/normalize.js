@@ -3,6 +3,7 @@ const deepMapKeys = require(`deep-map-keys`)
 const _ = require(`lodash`)
 const uuidv5 = require(`uuid/v5`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
+const stringify = require(`json-stringify-safe`)
 
 const colorized = require(`./output-color`)
 const conflictFieldPrefix = `wordpress_`
@@ -139,7 +140,7 @@ exports.createGatsbyIds = entities =>
     }
 
     e.id = uuidv5(
-      e.wordpress_id ? e.wordpress_id.toString() : Math.floor((1 + Math.random()) * 0x10000).toString(16),
+      e.wordpress_id ? e.wordpress_id.toString() : stringify(e),
       namespace
     )
     return e
