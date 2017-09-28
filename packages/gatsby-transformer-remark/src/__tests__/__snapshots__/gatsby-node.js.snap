@@ -6,7 +6,7 @@ Array [
     Object {
       "children": Array [],
       "frontmatter": Object {
-        "___PARENT": "whatever",
+        "_PARENT": "whatever",
         "date": "2017-09-18T23:19:51.246Z",
         "parent": "whatever",
         "title": "my little pony",
@@ -36,7 +36,7 @@ Array [
       "child": Object {
         "children": Array [],
         "frontmatter": Object {
-          "___PARENT": "whatever",
+          "_PARENT": "whatever",
           "date": "2017-09-18T23:19:51.246Z",
           "parent": "whatever",
           "title": "my little pony",
