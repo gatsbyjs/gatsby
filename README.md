@@ -12,7 +12,9 @@
 ## Showcase
 
 Websites built with Gatbsy:
-
+* [Sourcegraph](https://about.sourcegraph.com)
+* [Simply](https://simply.co.za)
+* [mParticle's Documentation](https://docs.mparticle.com)
 * [Segment's Blog](https://segment.com/blog/)
 * [Fabric](https://meetfabric.com/)
 * [Formidable](https://formidable.com/)
@@ -26,7 +28,22 @@ Websites built with Gatbsy:
 * [Damir.io](http://damir.io/) [(source)](https://github.com/dvzrd/gatsby-sfiction)
 * [Ruben's Blog](https://vagr9k.me/) [(source)](https://github.com/Vagr9K/Blog)
 * [Kostas Bariotis' Blog](https://kostasbariotis.com/) [(source)](https://github.com/kbariotis/kostasbariotis.com)
+* [Thao Am Private Enterprise](http://thaoam.com/)
+* [Bakadono](http://bakadono.com/)
 * [Travellers.cafe](https://travellers.cafe/)
+* [Oliver Benns' Portfolio](https://oliverbenns.com) [(source)](https://github.com/oliverbenns/oliverbenns.com)
+* [angeloocana.com](https://angeloocana.com) [(source)](https://github.com/angeloocana/angeloocana)
+* [knpw.rs](https://knpw.rs) [(source)](https://github.com/knpwrs/knpw.rs)
+* [Overlap.show](https://overlap.show) [(source)](https://github.com/pouretrebelle/overlap.show)
+* [smartive Company Website](https://smartive.ch)
+* [Haboba Find Jobs at Phu Quoc Island](http://haboba.com)
+* [Charlie Harrington's Blog](https://charlieharrington.com) [(source)](https://github.com/whatrocks/blog)
+* [Song Wang’s website](https://songwang.io/) [(source)](https://github.com/wangsongiam/songwang.io)
+* [Digital Psychology](http://digitalpsychology.io) [(source)](https://github.com/danistefanovic/digitalpsychology.io)
+* [Magicly's blog](https://magicly.me/) [(source)](https://github.com/magicly/gatsby-blog)
+* [Dalbinaco's website](http://dalbinaco.com/) [(source)](https://github.com/dalbinaco/dalbinaco.github.io)
+* [Phu Quoc Works](http://phuquocworks.net)
+* [Kabir Goel's website](https://kbrgl.github.io) [(source)](https://github.com/kbrgl/kbrgl.github.io)
 
 ## Docs
 

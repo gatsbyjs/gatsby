@@ -43,6 +43,12 @@ module.exports = (state = { nodes: {}, connections: {} }, action) => {
       )
 
       return state
+    case `DELETE_NODE`:
+      delete state.nodes[action.payload]
+      return state
+    case `DELETE_NODES`:
+      action.payload.forEach(n => delete state.nodes[n])
+      return state
     default:
       return state
   }

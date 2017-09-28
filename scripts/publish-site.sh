@@ -1,4 +1,5 @@
 echo "=== Building ES5 version of Gatsby"
+yarn bootstrap
 ./node_modules/.bin/lerna run build
 
 yarn global add gatsby-dev-cli

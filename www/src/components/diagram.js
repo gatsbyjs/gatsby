@@ -2,6 +2,7 @@ import React from "react"
 import { css } from "glamor"
 
 import { rhythm, scale, options } from "../utils/typography"
+import colors from "../utils/colors"
 import presets from "../utils/presets"
 import logo from "../gatsby-negative.svg"
 import { GraphQLIcon, ReactJSIcon } from "../assets/logos"
@@ -25,11 +26,11 @@ const stripeBg = {
 }
 const lineAnimation = css.keyframes({
   to: {
-    strokeDashoffset: 1000,
+    strokeDashoffset: 10,
   },
 })
 
-const Segment = ({ className, children }) =>
+const Segment = ({ className, children }) => (
   <div
     className={`Segment ${className}`}
     css={{
@@ -40,8 +41,9 @@ const Segment = ({ className, children }) =>
   >
     {children}
   </div>
+)
 
-const SegmentTitle = ({ children }) =>
+const SegmentTitle = ({ children }) => (
   <h2
     className="Segment-title"
     css={{
@@ -58,34 +60,35 @@ const SegmentTitle = ({ children }) =>
       ...scale(-2 / 5),
       lineHeight: 1,
       textTransform: `uppercase`,
+      transform: `translateZ(0)`,
     }}
   >
     {children}
   </h2>
+)
 
-const VerticalLine = () =>
+const VerticalLine = () => (
   <svg
     width="20"
     height="30"
     viewBox="0 0 20 30"
     css={{ margin: `0 auto`, display: `block` }}
   >
-    <line
-      className="path"
-      x1="10"
-      x2="10"
-      y1="110"
-      y2="-10"
-      stroke={presets.brandLight}
-      strokeWidth="3"
-      strokeLinecap="round"
-      strokeDasharray="0.5, 10"
-      css={{ animation: `${lineAnimation} 40s linear infinite` }}
+    <path
+      d="M10 40 L10 -10"
+      css={{
+        stroke: presets.brandLight,
+        strokeWidth: `3`,
+        strokeLinecap: `round`,
+        strokeDasharray: `0.5 10`,
+        animation: `${lineAnimation} 400ms linear infinite`,
+      }}
     />
   </svg>
+)
 
 const box = {
-  border: `1px solid #f4ecfe`,
+  border: `1px solid ${colors.b[0]}`,
   borderRadius: presets.radiusLg,
   padding: `${rhythm(1)} ${rhythm(1)} 0`,
   background: presets.sidebar,
@@ -97,9 +100,10 @@ const borderAndBoxShadow = {
   width: `100%`,
   boxShadow: `0 5px 15px rgba(0,0,0,0.035)`,
   borderRadius: presets.radius,
+  transform: `translateZ(0)`,
 }
 
-const SourceItems = ({ children }) =>
+const SourceItems = ({ children }) => (
   <div
     css={{
       display: `flex`,
@@ -110,10 +114,11 @@ const SourceItems = ({ children }) =>
   >
     {children}
   </div>
+)
 
 const boxPadding = { padding: `${rhythm(1 / 3)} ${rhythm(2 / 4)}` }
 
-const SourceItem = ({ children }) =>
+const SourceItem = ({ children }) => (
   <div
     css={{
       boxSizing: `border-box`,
@@ -138,8 +143,9 @@ const SourceItem = ({ children }) =>
       {children}
     </div>
   </div>
+)
 
-const ItemTitle = ({ children }) =>
+const ItemTitle = ({ children }) => (
   <h3
     css={{
       color: presets.brand,
@@ -150,8 +156,9 @@ const ItemTitle = ({ children }) =>
   >
     {children}
   </h3>
+)
 
-const ItemDescription = ({ children }) =>
+const ItemDescription = ({ children }) => (
   <small
     css={{
       lineHeight: 1.2,
@@ -164,8 +171,9 @@ const ItemDescription = ({ children }) =>
   >
     {children}
   </small>
+)
 
-const Gatsby = ({ children }) =>
+const Gatsby = ({ children }) => (
   <div
     css={{
       ...borderAndBoxShadow,
@@ -192,6 +200,7 @@ const Gatsby = ({ children }) =>
         margin: 0,
         verticalAlign: `middle`,
       }}
+      alt=""
     />
     <ItemDescription>
       <small
@@ -211,8 +220,9 @@ const Gatsby = ({ children }) =>
       </span>
     </ItemDescription>
   </div>
+)
 
-const Diagram = ({ containerCSS }) =>
+const Diagram = ({ containerCSS }) => (
   <section
     className="Diagram"
     css={{
@@ -308,5 +318,6 @@ const Diagram = ({ containerCSS }) =>
       </div>
     </Segment>
   </section>
+)
 
 export default Diagram

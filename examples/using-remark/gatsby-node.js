@@ -2,6 +2,7 @@ const _ = require(`lodash`)
 const Promise = require(`bluebird`)
 const path = require(`path`)
 const slash = require(`slash`)
+const { createFilePath } = require(`gatsby-source-filesystem`)
 
 const webpackLodashPlugin = require(`lodash-webpack-plugin`)
 
@@ -13,21 +14,24 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     const tagPagesTemplate = path.resolve(`src/templates/template-tag-page.js`)
     graphql(
       `
-      {
-        allMarkdownRemark(limit: 1000, filter: { frontmatter: { draft: { ne: true }}}) {
-          edges {
-            node {
-              fields {
-                slug
-              }
-              frontmatter {
-                tags
+        {
+          allMarkdownRemark(
+            limit: 1000
+            filter: { frontmatter: { draft: { ne: true } } }
+          ) {
+            edges {
+              node {
+                fields {
+                  slug
+                }
+                frontmatter {
+                  tags
+                }
               }
             }
           }
         }
-      }
-    `
+      `
     ).then(result => {
       if (result.errors) {
         console.log(result.errors)

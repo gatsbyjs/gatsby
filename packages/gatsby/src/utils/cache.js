@@ -38,7 +38,10 @@ exports.get = key =>
   new Promise((resolve, reject) => {
     let pair
     try {
-      pair = db.get(`keys`).getById(key).value()
+      pair = db
+        .get(`keys`)
+        .getById(key)
+        .value()
     } catch (e) {
       // ignore
     }
@@ -52,7 +55,10 @@ exports.get = key =>
 
 exports.set = (key, value) =>
   new Promise((resolve, reject) => {
-    db.get(`keys`).upsert({ id: key, value }).write()
+    db
+      .get(`keys`)
+      .upsert({ id: key, value })
+      .write()
     save()
     resolve(`Ok`)
   })

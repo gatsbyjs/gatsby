@@ -5,14 +5,18 @@
   "version": "1.0.0-beta.6",
   "author": "Sebastien Fichot <fichot.sebastien@gmail.com>",
   "dependencies": {
-    "gatsby": "latest",
+    "gatsby": "^1.9.45",
     "gatsby-link": "latest",
+    "gatsby-plugin-glamor": "^1.6.7",
     "gatsby-plugin-react-helmet": "latest",
+    "gatsby-plugin-sharp": "^1.6.7",
     "gatsby-plugin-styled-components": "latest",
-    "gatsby-source-wordpress": "latest",
-    "hedron": "^0.7.1",
+    "gatsby-plugin-typography": "^1.7.9",
+    "gatsby-source-wordpress": "^2.0.0",
+    "gatsby-transformer-sharp": "^1.6.5",
     "lodash": "^4.16.4",
-    "striptags": "^3.0.1"
+    "react-icons": "^2.2.5",
+    "typography-theme-wordpress-2013": "^0.15.10"
   },
   "keywords": [
     "gatsby"

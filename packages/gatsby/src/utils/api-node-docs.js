@@ -10,7 +10,7 @@ exports.resolvableExtensions = true
  * sourcing and transformation of nodes plus creation of the GraphQL schema are
  * complete so you can query your data in order to create pages.
  *
- * See also the documentation for [`createPage`](/docs/bound-action-creators/#createPage).
+ * See also [the documentation for the boundActionCreator `createPage`](/docs/bound-action-creators/#createPage).
  * @example
  * exports.createPages = ({ graphql, boundActionCreators }) => {
  *   const { createPage } = boundActionCreators
@@ -83,8 +83,8 @@ exports.createPagesStatefully = true
  * @example
  * exports.createLayouts = ({ graphql, boundActionCreators }) => {
  *  boundActionCreators.createLayout({
- *    id: 'custom',
  *    component: path.resolve(`src/templates/custom-layout.js`),
+ *    id: 'custom', // optional - if not provided the filename will be used as id
  *   })
  *  }
  */
@@ -161,7 +161,7 @@ exports.generateSideEffects = true
 
 /**
  * Let plugins extend/mutate the site's Babel configuration.
- * This API will change before 1.0 as it needs still to be converted to use
+ * This API will change before 2.0 as it needs still to be converted to use
  * Redux actions.
  */
 exports.modifyBabelrc = true
@@ -174,6 +174,21 @@ exports.modifyBabelrc = true
  * modifying webpack docs).
  */
 exports.modifyWebpackConfig = true
+
+/**
+ * Called at the start of the bootstrap process before any other extension APIs are called.
+ */
+exports.onPreBootstrap = true
+
+/**
+ * Called at the end of the bootstrap process after all other extension APIs have been called.
+ */
+exports.onPostBootstrap = true
+
+/**
+ * The first extension point called during the build process. Called after the bootstrap has completed but before the build steps start.
+ */
+exports.onPreBuild = true
 
 /**
  * The last extension point called after all other parts of the build process

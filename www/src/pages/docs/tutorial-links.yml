@@ -24,4 +24,16 @@
   links:
     Part three: /tutorial/part-three/
     ">> Our first layout component": /tutorial/part-three/#our-first-layout-component
-
+- title: Part Four
+  links:
+    Part four: /tutorial/part-four/
+    ">> Recap of first half of the tutorial": /tutorial/part-four/#recap-of-first-half-of-the-tutorial
+    ">> Data in Gatsby": /tutorial/part-four/#data-in-gatsby
+    ">> How Gatsby’s data layer uses GraphQL to pull data into components": /tutorial/part-four/#how-gatsbys-data-layer-uses-graphql-to-pull-data-into-components
+    ">> Our first GraphQL query": /tutorial/part-four/#our-first-graphql-query
+    ">> Introducing GraphiQL": /tutorial/part-four/#introducing-graphiql
+    ">> Source Plugins": /tutorial/part-four/#source-plugins
+    ">> Build a page with a GraphQL query": /tutorial/part-four/#build-a-page-with-a-graphql-query
+    ">> Transformer Plugins": /tutorial/part-four/#transformer-plugins
+    ">> Create a list of our site’s markdown files in src/pages/index.js": /tutorial/part-four/#create-a-list-of-our-sites-markdown-files-in-srcpagesindexjs
+    ">> Programatically creating pages from data": /tutorial/part-four/#programatically-creating-pages-from-data

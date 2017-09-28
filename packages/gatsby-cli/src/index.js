@@ -22,11 +22,6 @@ try {
       localPackageJSON.devDependencies.gatsby)
   ) {
     inGatsbySite = true
-  } else if (
-    localPackageJSON.devDependencies &&
-    localPackageJSON.devDependencies.gatsby
-  ) {
-    inGatsbySite = true
   }
 } catch (err) {
   // ignore

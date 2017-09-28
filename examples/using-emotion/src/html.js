@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-const Html = ({ headComponents, body, postBodyComponents }) =>
+const Html = ({ headComponents, body, postBodyComponents }) => (
   <html lang="en">
     <head>
       <meta name="referrer" content="origin" />
@@ -17,6 +17,7 @@ const Html = ({ headComponents, body, postBodyComponents }) =>
       {postBodyComponents}
     </body>
   </html>
+)
 
 Html.propTypes = {
   headComponents: PropTypes.node.isRequired,

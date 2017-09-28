@@ -2,7 +2,7 @@ import React from "react"
 import Link from "gatsby-link"
 import Container from "../components/container"
 
-export default () =>
+export default () => (
   <Container>
     <h1 css={{ marginTop: 0 }}>Gatsby.js Tutorial</h1>
     <p>
@@ -34,9 +34,13 @@ export default () =>
         multiple pages like headers and footers.
       </li>
       <li>
-        How to work with GraphQL & different data sources: Markdown, JSON,
-        Remote data sources, etc. As well as an introduction to Gatsby’s data
-        layer and writing queries with GraphQL.
+        <Link to="/tutorial/part-four/">
+          Learn how to work with Gatsby's data layer.
+        </Link>
+        {` `}
+        Explore source & transformer plugins. Get introduced to programmatic
+        pages and how to write GraphQL queries. In this part of the tutorial
+        we'll build a simple markdown blog.
       </li>
       <li>
         Finishing and deploying a website. React Helmet. We walk through how to
@@ -44,3 +48,4 @@ export default () =>
       </li>
     </ol>
   </Container>
+)

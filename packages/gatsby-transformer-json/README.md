@@ -21,8 +21,8 @@ plugins: [
 The algorithm for arrays is to convert each item in the array into
 a node.
 
-So if your project has a `letters.json` with `[{ value: 'a' }, { value:
-'b' }, { value: 'c' }]` then the following three nodes would be created.
+So if your project has a `letters.json` with `[{ "value": "a" }, { "value":
+"b" }, { "value": "c" }]` then the following three nodes would be created.
 
 ```javascript
 [

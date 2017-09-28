@@ -20,16 +20,16 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     // us an easy way to query all HnStory nodes.
     graphql(
       `
-      {
-        allHnStory(limit: 1000) {
-          edges {
-            node {
-              id
+        {
+          allHnStory(limit: 1000) {
+            edges {
+              node {
+                id
+              }
             }
           }
         }
-      }
-    `
+      `
     ).then(result => {
       if (result.errors) {
         reject(result.errors)

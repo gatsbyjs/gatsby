@@ -12,28 +12,31 @@ If you want your issue to be resolved quickly, please include in your issue:
   changes you've made there.
 
 ## Contributing
+Gatsby uses a "monorepo" pattern to manage its many dependencies and relies on
+lerna and yarn to configure the repository for active development.
+
 You can install the latest version of Gatsby by following these steps:
 
 * Clone the repo, navigate to its directory.
-* Install dependencies using `npm install` in the root of the repo.
+* Install dependencies using `yarn run bootstrap` in the root of the repo.
 
 The usual contributing steps are:
 
 * Fork the [official repository](https://github.com/gatsbyjs/gatsby).
 * Clone your fork: git clone `git@github.com:<your-username>/gatsby.git`
-* Install [gatsby-dev-cli](/packages/gatsby-dev-cli/) globally: `npm install -g gatsby-dev-cli`
-* Install dependencies: `npm install`
-* Make sure tests are passing for you: `npm test`
+* setup up repo and Install dependencies: `yarn run bootstrap`
+* Make sure tests are passing for you: `yarn test`
 * Create a topic branch: `git checkout -b topics/new-feature-name`
 * Run `npm run watch` from the root of the repo to first do an initial Babel build of all packages and then watch for
   changes to packages' source code and compile these changes on-the-fly as you
   work.
+* Install [gatsby-dev-cli](/packages/gatsby-dev-cli/) globally: `yarn global add gatsby-dev-cli`
 * For each of your Gatsby test sites, run the `gatsby-dev` command there to copy
   the built files from your cloned copy of Gatsby. It'll watch for your changes
   to Gatsby packages and copy them into the site. For more detailed
   instructions see the [gatsby-dev-cli README](/packages/gatsby-dev-cli/)
 * Add tests and code for your changes.
-* Once you're done, make sure all tests still pass: `npm test`
+* Once you're done, make sure all tests still pass: `yarn test`
 * Commit and push to your fork.
 * Create an pull request from your branch.
 
@@ -73,7 +76,7 @@ see actions start showing up.
 
 ![gatsby redux remote devtools](./images/running-redux-devtools.png)
 
-**Warning!! Lots of buginess**. While having this available is extreamly
+**Warning!! Lots of buginess**. While having this available is extremely
 helpful, this setup is very buggy and fragile. There is a memory leak in the
 extension that's triggered it seems every time you restart the Gatsby
 development server. Also the extension often, for no apparent reason, just

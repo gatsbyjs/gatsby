@@ -10,7 +10,7 @@ const getLayoutById = layouts => id => layouts.find(l => l.id === id)
 
 // Write out pages information.
 const writePages = async () => {
-  writtenOnce = true
+  bootstrapFinished = true
   let { program, pages, layouts } = store.getState()
   // Write out pages.json
   const pagesData = pages.reduce(
@@ -135,10 +135,11 @@ const preferDefault = m => m && m.default || m
 
 exports.writePages = writePages
 
-let writtenOnce = false
+let bootstrapFinished = false
 let oldPages
 const debouncedWritePages = _.debounce(() => {
-  if (!writtenOnce || !_.isEqual(oldPages, store.getState().pages)) {
+  // Don't write pages again until bootstrap has finished.
+  if (bootstrapFinished && !_.isEqual(oldPages, store.getState().pages)) {
     writePages()
     oldPages = store.getState().pages
   }

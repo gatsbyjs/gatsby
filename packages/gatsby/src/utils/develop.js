@@ -14,7 +14,6 @@ const copyStaticDirectory = require(`./copy-static-directory`)
 const developHtml = require(`./develop-html`)
 const { withBasePath } = require(`./path`)
 const report = require(`../reporter`)
-const { formatStaticBuildError } = require(`../reporter/errors`)
 
 // Watch the static directory and copy files to public as they're added or
 // changed. Wait 10 seconds so copying doesn't interfer with the regular
@@ -47,8 +46,8 @@ async function startServer(program) {
           There was an error compiling the html.js component for the development server.
 
           See our docs page on debugging HTML builds for help https://goo.gl/yL9lND
-
-        ` + formatStaticBuildError(err)
+        `,
+        err
       )
     })
 
@@ -178,7 +177,10 @@ async function startServer(program) {
   })
 
   // Register watcher that rebuilds index.html every time html.js changes.
-  const watchGlobs = [`src/html.js`, `**/gatsby-ssr.js`].map(directoryPath)
+  const watchGlobs = [`src/html.js`, `plugins/**/gatsby-ssr.js`].map(path =>
+    directoryPath(path)
+  )
+
   chokidar.watch(watchGlobs).on(`change`, async () => {
     await createIndexHtml()
     io.to(`clients`).emit(`reload`)

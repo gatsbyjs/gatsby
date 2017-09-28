@@ -1,2 +1,3 @@
-/gatsby-node.js
-/index.js
+/*.js
+!index.js
+yarn.lock
