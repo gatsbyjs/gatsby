@@ -19,8 +19,10 @@
     "cross-env": "^5.0.5"
   },
   "dependencies": {
-    "babel-runtime": "^6.26.0",
-    "emotion": "^7.3.2",
-    "react-emotion": "^7.3.2"
+    "babel-runtime": "^6.26.0"
+  },
+  "peerDependencies": {
+    "emotion": "7 || 8 ",
+    "emotion-server": "7 || 8"
   }
 }
