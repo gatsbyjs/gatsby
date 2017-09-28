@@ -345,12 +345,12 @@ function findRootNode(node) {
   let rootNode = node
   let whileCount = 0
   while (
-    (rootNode.___PARENT || rootNode.parent) &&
-    (getNode(rootNode.parent) !== undefined || getNode(rootNode.___PARENT)) &&
+    (rootNode._PARENT || rootNode.parent) &&
+    (getNode(rootNode.parent) !== undefined || getNode(rootNode._PARENT)) &&
     whileCount < 101
   ) {
-    if (rootNode.___PARENT) {
-      rootNode = getNode(rootNode.___PARENT)
+    if (rootNode._PARENT) {
+      rootNode = getNode(rootNode._PARENT)
     } else {
       rootNode = getNode(rootNode.parent)
     }
