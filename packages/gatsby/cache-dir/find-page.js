@@ -3,7 +3,8 @@ import { matchPath } from "react-router-dom"
 
 const pageCache = {}
 
-module.exports = (pages, pathPrefix = ``) => pathname => {
+module.exports = (pages, pathPrefix = ``) => rawPathname => {
+  let pathname = decodeURIComponent(rawPathname)
   // Remove the pathPrefix from the pathname.
   let trimmedPathname = pathname.slice(pathPrefix.length)
 
