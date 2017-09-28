@@ -45,13 +45,6 @@ class SiteSidebar extends React.Component {
             <div className="is-hidden-mobile">
               <SiteLinks {...this.props} />
             </div>
-            <div>
-              <p className="copyright">&copy; All rights reserved.</p>
-              <p className="copyright">
-                Made with <i className="fa fa-heart" aria-hidden="true" /> by{` `}
-                <Link to={siteMetadata.siteTwitterUrl}>Jacob Bolda</Link>
-              </p>
-            </div>
           </footer>
         </div>
       </div>
