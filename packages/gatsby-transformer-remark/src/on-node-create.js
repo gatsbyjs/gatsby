@@ -47,9 +47,26 @@ module.exports = async function onCreateNode({
       type: `MarkdownRemark`,
     },
   }
+
+  // Add ___PARENT to sub-object in the frontmatter so we can
+  // use this to find the root markdown node when running GraphQL
+  // queries. Yes this is lame. But it's because in GraphQL child nodes
+  // can't access their parent nodes so we use this ___PARENT convention
+  // to get around this.
+  _.each(data.data, (v, k) => {
+    if (_.isArray(v) && _.isObject(v[0])) {
+      data.data[k] = v.map(o => {
+        return { ...o, ___PARENT: node.id }
+      })
+    }
+  })
+
   markdownNode.frontmatter = {
     title: ``, // always include a title
     ...data.data,
+    ___PARENT: node.id,
+    // TODO Depreciate this at v2 as much larger chance of conflicting with a
+    // user supplied field.
     parent: node.id,
   }
 

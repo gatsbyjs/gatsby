@@ -345,11 +345,15 @@ function findRootNode(node) {
   let rootNode = node
   let whileCount = 0
   while (
-    rootNode.parent &&
-    getNode(rootNode.parent) !== undefined &&
+    (rootNode.___PARENT || rootNode.parent) &&
+    (getNode(rootNode.parent) !== undefined || getNode(rootNode.___PARENT)) &&
     whileCount < 101
   ) {
-    rootNode = getNode(rootNode.parent)
+    if (rootNode.___PARENT) {
+      rootNode = getNode(rootNode.___PARENT)
+    } else {
+      rootNode = getNode(rootNode.parent)
+    }
     whileCount += 1
     if (whileCount > 100) {
       console.log(
@@ -363,13 +367,6 @@ function findRootNode(node) {
 }
 
 function shouldInferFile(nodes, key, value) {
-  // Find the node used for this example.
-  const node = nodes.find(n => _.get(n, key) === value)
-
-  if (!node) {
-    return false
-  }
-
   const looksLikeFile =
     _.isString(value) &&
     mime.lookup(value) !== `application/octet-stream` &&
@@ -380,6 +377,67 @@ function shouldInferFile(nodes, key, value) {
 
   if (!looksLikeFile) {
     return false
+  }
+
+  // Find the node used for this example.
+  let node = nodes.find(n => _.get(n, key) === value)
+
+  if (!node) {
+    // Try another search as our "key" isn't always correct e.g.
+    // it doesn't support arrays so the right key could be "a.b[0].c" but
+    // this function will get "a.b.c".
+    //
+    // We loop through every value of nodes until we find
+    // a match.
+    const visit = (current, selector = [], fn) => {
+      for (let i = 0, keys = Object.keys(current); i < keys.length; i++) {
+        const key = keys[i]
+        const value = current[key]
+
+        if (value === undefined || value === null) continue
+
+        if (typeof value === `object` || typeof value === `function`) {
+          visit(current[key], selector.concat([key]), fn)
+          continue
+        }
+
+        let proceed = fn(current[key], key, selector, current)
+
+        if (proceed === false) {
+          break
+        }
+      }
+    }
+
+    const isNormalInteger = str => /^\+?(0|[1-9]\d*)$/.test(str)
+
+    node = nodes.find(n => {
+      let isMatch = false
+      visit(n, [], (v, k, selector, parent) => {
+        if (v === value) {
+          // Remove integers as they're for arrays, which our passed
+          // in object path doesn't have.
+          const normalizedSelector = selector
+            .map(s => (isNormalInteger(s) ? `` : s))
+            .filter(s => s !== ``)
+          const fullSelector = `${normalizedSelector.join(`.`)}.${k}`
+          if (fullSelector === key) {
+            isMatch = true
+            return false
+          }
+        }
+
+        // Not a match so we continue
+        return true
+      })
+
+      return isMatch
+    })
+
+    // Still no node.
+    if (!node) {
+      return false
+    }
   }
 
   const rootNode = findRootNode(node)
@@ -498,6 +556,7 @@ export function inferObjectStructureFromNodes({
       // Third if the field is pointing to a file (from another file).
     } else if (
       nodes[0].internal.type !== `File` &&
+      _.isString(value) &&
       shouldInferFile(nodes, nextSelector, value)
     ) {
       inferredField = inferFromUri(key, types)
