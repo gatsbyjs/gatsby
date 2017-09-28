@@ -22,7 +22,7 @@ const refactoredEntityTypes = {
 let _verbose
 let _siteURL
 let _getNode
-let _useACF
+let _useACF = true
 let _hostingWPCOM
 let _auth
 let _perPage
@@ -34,7 +34,7 @@ exports.sourceNodes = async (
     baseUrl,
     protocol,
     hostingWPCOM,
-    useACF,
+    useACF = true,
     auth,
     verboseOutput,
     perPage = 100,
