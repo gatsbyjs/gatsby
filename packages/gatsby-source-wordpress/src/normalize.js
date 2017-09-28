@@ -140,7 +140,7 @@ exports.createGatsbyIds = entities =>
     }
 
     e.id = uuidv5(
-      e.wordpress_id ? e.wordpress_id.toString() : stringify(e),
+      e.wordpress_id ? e.wordpress_id.toString() : digest(stringify(e)),
       namespace
     )
     return e
