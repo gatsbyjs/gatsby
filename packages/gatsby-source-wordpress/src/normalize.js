@@ -129,18 +129,20 @@ exports.liftRenderedField = entities =>
 const seedConstant = `b2012db8-fafc-5a03-915f-e6016ff32086`
 const typeNamespaces = {}
 exports.createGatsbyIds = entities =>
-  entities.map(e => {
-    let namespace
-    if (typeNamespaces[e.__type]) {
-      namespace = typeNamespaces[e.__type]
-    } else {
-      typeNamespaces[e.__type] = uuidv5(e.__type, seedConstant)
-      namespace = typeNamespaces[e.__type]
-    }
+  entities
+    .filter(e => e.wordpress_id) // Excluding entities without ID
+    .map(e => {
+      let namespace
+      if (typeNamespaces[e.__type]) {
+        namespace = typeNamespaces[e.__type]
+      } else {
+        typeNamespaces[e.__type] = uuidv5(e.__type, seedConstant)
+        namespace = typeNamespaces[e.__type]
+      }
 
-    e.id = uuidv5(e.wordpress_id.toString(), namespace)
-    return e
-  })
+      e.id = uuidv5(e.wordpress_id.toString(), namespace)
+      return e
+    })
 
 // Build foreign reference map.
 exports.mapTypes = entities => {
