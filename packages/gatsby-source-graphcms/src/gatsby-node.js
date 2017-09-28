@@ -7,7 +7,7 @@ const SOURCE_NAME = `GraphCMS`
 
 module.exports.sourceNodes = async (
   { boundActionCreators, getNode, hasNodeChanged },
-  { endpoint, token }
+  { endpoint, token, query }
 ) => {
   const { createNode } = boundActionCreators
 
@@ -18,23 +18,49 @@ module.exports.sourceNodes = async (
   }
 
   const client = new GraphQLClient(endpoint, clientOptions)
-  const typeData = await client.request(metaQuery)
 
-  const fullData = await client.request(assembleQueries(typeData))
+  if (query) {
+    const userQueryResult = await client.request(query)
+    console.log(userQueryResult)
+    R.forEachObjIndexed(createNodes(createNode), userQueryResult)
+  }
 
-  R.forEachObjIndexed(createNodes(createNode), fullData)
+  // TODO: Use introspection to construct a query to fetch all data and add them as nodes.
+  // const typeData = await client.request(metaQuery)
+  //
+  // const {
+  //   __type: {
+  //     possibleTypes
+  //   },
+  // } = typeData
+  //
+  // R.map(type => {
+  //   console.log('type ', type.name, 'has fields: \n', type.fields);
+  // })(possibleTypes)
+
+  // const fullData = await client.request(assembleQueries(typeData))
 }
+
+const findEmbeddedFields = R.map(field => {
+  console.log(`field: `, field.name, `is type: `, field.type.name)
+  //is a node
+
+  const embeddedField = R.find(R.propEq(`name`, field.type.name))(possibleTypes)
+  console.log(`embedded field is `, embeddedField)
+})
 
 // Query for fetching all node times from graphql endpoint.
 const metaQuery = `
-{
+query getTypeFields {
   __type(name: "Node") {
     possibleTypes {
       name
       fields {
         name
+        type {
+          name
+        }
       }
-      description
     }
   }
 }
@@ -45,6 +71,8 @@ const createNodes = createNode => (value, key) => {
     const { id, ...fields } = node
 
     const jsonNode = JSON.stringify(node)
+
+    console.log(`Making node with id `, id, ` and fields: `, fields)
 
     createNode({
       id,
