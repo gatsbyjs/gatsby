@@ -17,7 +17,7 @@ module.exports = async (pageOrLayout, component) => {
   let result
 
   // Nothing to do if the query doesn't exist.
-  if (!component.query || component.query === ``) {
+  if (!component || !component.query || component.query === ``) {
     result = {}
   } else {
     result = await graphql(component.query, {
@@ -52,10 +52,26 @@ module.exports = async (pageOrLayout, component) => {
     contextKey = `layoutContext`
   }
   result[contextKey] = pageOrLayout.context
-  const resultJSON = JSON.stringify(result, null, 4)
+  const jsonPath = joinPath(program.directory, `.cache`, `json`, pageOrLayout.jsonName)
 
-  await fs.writeFile(
-    joinPath(program.directory, `.cache`, `json`, pageOrLayout.jsonName),
-    resultJSON
-  )
+  if (pageOrLayout.isLayout) {
+    const resultJSON = JSON.stringify(result, null, 4)
+    await fs.writeFileSync(jsonPath, resultJSON)
+  } else {
+    await new Promise(resolve => {
+      if (fs.existsSync(jsonPath)) {
+        let jsonExisting = fs.readFileSync(jsonPath)
+        const existingJSON = JSON.parse(jsonExisting)
+        let resultCombined = existingJSON
+        resultCombined[component.componentChunkName] = result
+        const resultJSON = JSON.stringify(resultCombined, null, 4)
+        resolve(fs.writeFileSync(jsonPath, resultJSON))
+      } else {
+        let resultCombined = {}
+        resultCombined[component.componentChunkName] = result
+        const resultJSON = JSON.stringify(resultCombined, null, 4)
+        resolve(fs.writeFileSync(jsonPath, resultJSON))
+      }
+    })
+  }
 }

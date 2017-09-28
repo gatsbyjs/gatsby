@@ -126,17 +126,15 @@ const Root = () =>
         layout: true,
         children: layoutProps =>
           createElement(Route, {
-            render: routeProps => {
+            children: routeProps => {
               const props = layoutProps ? layoutProps : routeProps
               attachToHistory(props.history)
               const { pathname } = props.location
               const pageResources = loader.getResourcesForPathname(pathname)
               if (pageResources) {
-                return createElement(ComponentRenderer, {
-                  page: true,
-                  ...props,
-                  pageResources,
-                })
+                let templateIndex = 0
+                let componentArray = pageResources.components
+                return NestedTemplates(componentArray, templateIndex, props, pageResources)
               } else {
                 return addNotFoundRoute()
               }
@@ -145,6 +143,40 @@ const Root = () =>
       })
     )
   )
+
+const NestedTemplates = (componentArray, templateIndex, props, pageResources) => {
+  if (componentArray[templateIndex + 1]) {
+    // if this is not the last component in the array,
+    //  we will have children
+    return createElement(ComponentRenderer, {
+      page: true,
+      ...props,
+      pageResources,
+      component: {
+        componentIndex: templateIndex,
+        componentRender: componentArray[templateIndex],
+        componentChunkName: pageResources.page.componentChunkName[templateIndex],
+      },
+      children: routeProps => NestedTemplates(componentArray, templateIndex + 1, props, pageResources)
+    })
+  } else {
+    // if this is last in the array, we need to render
+    return createElement(Route, {
+      render: routeProps => {
+        return createElement(ComponentRenderer, {
+          page: true,
+          ...props,
+          pageResources,
+          component: {
+            componentIndex: templateIndex,
+            componentRender: componentArray[templateIndex],
+            componentChunkName: pageResources.page.componentChunkName[templateIndex],
+          },
+        })
+      }
+    })
+  }
+}
 
 // Let site, plugins wrap the site e.g. for Redux.
 const WrappedRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]

@@ -94,10 +94,10 @@ class ComponentRenderer extends React.Component {
     // If page.
     if (this.props.page) {
       if (this.state.pageResources) {
-        return createElement(this.state.pageResources.component, {
+        return createElement(this.props.component.componentRender, {
           key: this.props.location.pathname,
           ...this.props,
-          ...this.state.pageResources.json,
+          ...this.state.pageResources.json[this.props.component.componentChunkName],
         })
       } else {
         return null

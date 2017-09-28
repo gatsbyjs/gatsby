@@ -37,9 +37,11 @@ const writePages = async () => {
   let pageLayouts = []
 
   pages.forEach(p => {
-    components.push({
-      componentChunkName: p.componentChunkName,
-      component: p.component,
+    p.component.forEach((c, i) => {
+      components.push({
+        componentChunkName: p.componentChunkName[i],
+        component: c,
+      })
     })
     if (p.layout) {
       let layout = getLayoutById(layouts)(p.layout)

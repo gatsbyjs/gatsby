@@ -17,17 +17,19 @@ const queryCompiler = require(`./query-compiler`).default
 const queryRunner = require(`./query-runner`)
 const invariant = require(`invariant`)
 const normalize = require(`normalize-path`)
+import { generateComponentChunkName } from "../../utils/js-chunk-names"
 
 exports.extractQueries = () => {
   const state = store.getState()
   const pagesAndLayouts = [...state.pages, ...state.layouts]
-  const components = _.uniq(pagesAndLayouts.map(p => p.component))
+  const components = _.uniq(_.flatten(pagesAndLayouts.map(p => p.component)))
   const queryCompilerPromise = queryCompiler().then(queries => {
     components.forEach(component => {
       const query = queries.get(normalize(component))
       boundActionCreators.replaceComponentQuery({
         query: query && query.text,
         componentPath: component,
+        componentChunkName: generateComponentChunkName(component),
       })
     })
 
@@ -94,6 +96,7 @@ const watch = rootDir => {
           boundActionCreators.replaceComponentQuery({
             query: text,
             componentPath: id,
+            componentChunkName: generateComponentChunkName(id),
           })
           runQueriesForComponent(id)
         }

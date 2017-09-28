@@ -6,7 +6,7 @@ import SiteLinks from "../SiteLinks"
 class SiteSidebar extends React.Component {
   render() {
     const isHome = this.props.location.pathname === `/`
-    const siteMetadata = this.props.siteMetadata
+    const siteMetadata = this.props.data.site.siteMetadata
     // TODO, deal with image more nice like
 
     let header = (

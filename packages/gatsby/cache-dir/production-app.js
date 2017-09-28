@@ -155,10 +155,12 @@ apiRunnerAsync(`onClientEntry`).then(() => {
                   const props = layoutProps ? layoutProps : routeProps
 
                   if (loader.getPage(props.location.pathname)) {
-                    return createElement(ComponentRenderer, {
-                      page: true,
-                      ...props,
-                    })
+                    const pageResources = loader.getResourcesForPathname(
+                      props.location.pathname
+                    )
+                    let templateIndex = 0
+                    let componentArray = pageResources.components
+                    return NestedTemplates(componentArray, templateIndex, props, pageResources)
                   } else {
                     return createElement(ComponentRenderer, {
                       location: { page: true, pathname: `/404.html` },
@@ -169,6 +171,40 @@ apiRunnerAsync(`onClientEntry`).then(() => {
           })
         )
       )
+
+    const NestedTemplates = (componentArray, templateIndex, props, pageResources) => {
+      if (componentArray[templateIndex + 1]) {
+        // if this is not the last component in the array,
+        //  we will have children
+        return createElement(ComponentRenderer, {
+          page: true,
+          ...props,
+          pageResources,
+          component: {
+            componentIndex: templateIndex,
+            componentRender: componentArray[templateIndex],
+            componentChunkName: pageResources.page.componentChunkName[templateIndex],
+          },
+          children: routeProps => NestedTemplates(componentArray, templateIndex + 1, props, pageResources)
+        })
+      } else {
+        // if this is last in the array, we need to render
+        return createElement(Route, {
+          render: routeProps => {
+            return createElement(ComponentRenderer, {
+              page: true,
+              ...props,
+              pageResources,
+              component: {
+                componentIndex: templateIndex,
+                componentRender: componentArray[templateIndex],
+                componentChunkName: pageResources.page.componentChunkName[templateIndex],
+              },
+            })
+          }
+        })
+      }
+    }
 
     const NewRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
     domReady(() =>

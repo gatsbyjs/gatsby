@@ -25,9 +25,12 @@ if (process.env.NODE_ENV === `production`) {
   prefetcher = require(`./prefetcher`)({
     getNextQueuedResources: () => resourcesArray.slice(-1)[0],
     createResourceDownload: resourceName => {
-      fetchResource(resourceName, () => {
-        resourcesArray = resourcesArray.filter(r => r !== resourceName)
-        prefetcher.onResourcedFinished(resourceName)
+      resourceName = Array.isArray(resourceName) ? resourceName : [resourceName]
+      resourceName.forEach((rName) => {
+        fetchResource(rName, () => {
+          resourcesArray = resourcesArray.filter(r => r !== rName)
+          prefetcher.onResourcedFinished(rName)
+        })
       })
     },
   })
@@ -236,7 +239,7 @@ const queue = {
       const page = findPage(path)
       if (!page) return cb()
       const pageResources = {
-        component: syncRequires.components[page.componentChunkName],
+        components: page.componentChunkName.map(chunk => syncRequires.components[chunk]),
         json: syncRequires.json[page.jsonName],
         layout: syncRequires.layouts[page.layoutComponentChunkName],
         page,
@@ -270,16 +273,21 @@ const queue = {
 
       emitter.emit(`onPreLoadPageResources`, { path })
       // Nope, we need to load resource(s)
-      let component
+      let components = []
       let json
       let layout
       // Load the component/json/layout and parallel and call this
       // function when they're done loading. When both are loaded,
       // we move on.
       const done = () => {
-        if (component && json && (!page.layoutComponentChunkName || layout)) {
-          pathScriptsCache[path] = { component, json, layout }
-          const pageResources = { component, json, layout }
+        if (components.length === page.componentChunkName.length && json && (!page.layoutComponentChunkName || layout)) {
+          pathScriptsCache[path] = { components, page, json, layout }
+          const pageResources = {
+            components,
+            page,
+            json,
+            layout
+          }
           cb(pageResources)
           emitter.emit(`onPostLoadPageResources`, {
             page,
@@ -287,12 +295,14 @@ const queue = {
           })
         }
       }
-      getResourceModule(page.componentChunkName, (err, c) => {
-        if (err) {
-          console.log(`Loading the component for ${page.path} failed`)
-        }
-        component = c
-        done()
+      page.componentChunkName.forEach(thisChunk => {
+        getResourceModule(thisChunk, (err, c) => {
+          if (err) {
+            console.log(`Loading the component for ${page.path} failed`)
+          }
+          components.push(c)
+          done()
+        })
       })
       getResourceModule(page.jsonName, (err, j) => {
         if (err) {

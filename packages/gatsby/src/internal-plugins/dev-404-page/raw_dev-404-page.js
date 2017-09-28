@@ -4,6 +4,7 @@ import Link from "gatsby-link"
 class Dev404Page extends React.Component {
   render() {
     const pathname = this.props.location.pathname
+    const {allSitePage} = this.props[`component---cache-dev-404-page-js`].data
     let newFilePath
     if (pathname === `/`) {
       newFilePath = `src/pages/index.js`
@@ -26,16 +27,16 @@ class Dev404Page extends React.Component {
           and this page will automatically refresh to show the new page
           component you created.
         </p>
-        {this.props.data.allSitePage &&
-          this.props.data.allSitePage.totalCount > 1 && (
+        {allSitePage &&
+          allSitePage.totalCount > 1 && (
             <div>
               <p>
                 If you were trying to reach another page, perhaps you can find
                 it below.
               </p>
-              <h2>Pages ({this.props.data.allSitePage.totalCount})</h2>
+              <h2>Pages ({allSitePage.totalCount})</h2>
               <ul>
-                {this.props.data.allSitePage.edges.map(({ node }) => (
+                {allSitePage.edges.map(({ node }) => (
                   <li key={node.path}>
                     <Link to={node.path}>{node.path}</Link>
                   </li>

@@ -7,6 +7,7 @@
 
 const _ = require(`lodash`)
 const Promise = require(`bluebird`)
+const normalize = require(`normalize-path`)
 
 const { store, emitter } = require(`../../redux`)
 const queryRunner = require(`./query-runner`)
@@ -97,7 +98,17 @@ const runQueriesForIds = ids => {
         pl => pl.path === id || `LAYOUT___${pl.id}` === id
       )
       if (plObj) {
-        return queryRunner(plObj, state.components[plObj.component])
+        // component is always an array, but this runs on layouts
+        //  as well which are expected to be a string
+        if (Array.isArray(plObj.component)) {
+          let pIterable = []
+          plObj.component.forEach(c => {
+            pIterable.push(queryRunner(plObj, state.components[normalize(c)]))
+          })
+          return Promise.all(pIterable)
+        } else {
+          return queryRunner(plObj, state.components[plObj.component])
+        }
       }
     })
   )

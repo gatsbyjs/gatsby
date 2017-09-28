@@ -1,6 +1,4 @@
 import React from "react"
-import Helmet from "react-helmet"
-import SiteLinks from "../components/SiteLinks"
 
 exports.data = {
   layoutType: `page`,

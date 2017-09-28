@@ -83,20 +83,37 @@ module.exports = (locals, callback) => {
         const page = getPage(routeProps.location.pathname)
         const layout = getLayout(page)
         return createElement(withRouter(layout), {
-          children: layoutProps => {
-            const props = layoutProps ? layoutProps : routeProps
-            return createElement(
-              syncRequires.components[page.componentChunkName],
-              {
-                ...props,
-                ...syncRequires.json[page.jsonName],
-              }
-            )
-          },
+          children: layoutProps => nestedComponents(
+                                0,
+                                page.jsonName,
+                                page.componentChunkName,
+                                layoutProps
+                              )
         })
       },
     })
   )
+
+  let nestedComponents = (templateIndex, jsonName, componentChunkName, props) => {
+    let thisChunk = componentChunkName[templateIndex]
+    if (!componentChunkName[templateIndex + 1]) {
+      return createElement(syncRequires.components[thisChunk], {
+        ...props,
+        ...syncRequires.json[jsonName][thisChunk],
+      })
+    } else {
+      return createElement(syncRequires.components[thisChunk], {
+        ...props,
+        ...syncRequires.json[jsonName][thisChunk],
+        children: props => nestedComponents(
+          templateIndex + 1,
+          jsonName,
+          componentChunkName,
+          props
+        )
+      })
+    }
+  }
 
   // Let the site or plugin render the page component.
   apiRunner(`replaceRenderer`, {
