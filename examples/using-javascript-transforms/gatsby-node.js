@@ -28,6 +28,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
   return new Promise((resolve, reject) => {
     const pages = []
     const markdownTemplate = path.resolve(`src/templates/markdown.js`)
+    const mdBlogPost = path.resolve(`src/templates/markdown.js`)
 
     // Query for all markdown "nodes" and for the slug we previously created.
     resolve(
@@ -73,18 +74,22 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         // Create from markdown
         result.data.allMarkdownRemark.edges.forEach(edge => {
           let frontmatter = edge.node.frontmatter
-          // ideally we would want to use layoutType to
-          //  decide which (nested) layout to use, but
-          //  gatsby currently doesnt support this.
           if (
-            frontmatter.layoutType === `post` ||
-            frontmatter.layoutType === `page`
-          ) {
+            frontmatter.layoutType === `post`) {
             createPage({
               path: frontmatter.path, // required
+              layout: 'blogPost', // this matches the filename of src/layouts/blogPost.js, layout created automatically
+              component: mdBlogPost,
+              context: {
+                slug: edge.node.fields.slug,
+              },
+            })
+          } else {
+            createPage({
+              path: frontmatter.path, // required
+              layout: 'insetPage', // this matches the filename of src/layouts/blogPost.js, layout created automatically
               component: markdownTemplate,
               context: {
-                layoutType: frontmatter.layoutType,
                 slug: edge.node.fields.slug,
               },
             })
@@ -98,24 +103,22 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         result.data.allJsFrontmatter.edges.forEach(edge => {
           let frontmatter = edge.node.data
           // see above
-          if (
-            frontmatter.layoutType === `post` ||
-            frontmatter.layoutType === `page`
-          ) {
+          if (frontmatter.layoutType === `post`) {
             createPage({
               path: frontmatter.path, // required
+              layout: 'blogPost', // this matches the filename of src/layouts/blogPost.js, layout created automatically
               // Note, we can't have a template, but rather require the file directly.
               //  Templates are for converting non-react into react. jsFrontmatter
               //  picks up all of the javascript files. We have only written these in react.
               component: path.resolve(edge.node.fileAbsolutePath),
               context: {
-                layoutType: frontmatter.layoutType,
                 slug: edge.node.fields.slug,
               },
             })
           } else if (edge.node.fields.slug === `/index/`) {
             createPage({
               path: `/`, // required, we don't have frontmatter for this page hence separate if()
+              layout: 'insetPage', // this matches the filename of src/layouts/insetPage.js, layout created automatically
               component: path.resolve(edge.node.fileAbsolutePath),
               context: {
                 slug: edge.node.fields.slug,
