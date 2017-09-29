@@ -23,3 +23,28 @@ class BlogPostChrome extends React.Component {
 }
 
 export default BlogPostChrome
+
+export const blogPostFragment = graphql`
+  fragment MarkdownBlogPost_frontmatter on MarkdownRemark {
+    frontmatter {
+      title
+      path
+      layoutType
+      written
+      updated
+      category
+      description
+    }
+  }
+  fragment JSBlogPost_data on JSFrontmatter {
+    data {
+      title
+      path
+      layoutType
+      written
+      updated
+      category
+      description
+    }
+  }
+`

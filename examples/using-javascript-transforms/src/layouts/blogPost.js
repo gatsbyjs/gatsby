@@ -5,7 +5,7 @@ import moment from "moment"
 
 import MasterLayout from "./master"
 
-class BlogPostTemplate extends React.Component {
+class BlogPostLayout extends React.Component {
   render() {
     let siteMetadata = this.props.data.site.siteMetadata
 
@@ -43,7 +43,7 @@ class BlogPostTemplate extends React.Component {
   }
 }
 
-export default BlogPostTemplate
+export default BlogPostLayout
 
 export const pageQuery = graphql`
 query BlogPostLayoutBySlug {

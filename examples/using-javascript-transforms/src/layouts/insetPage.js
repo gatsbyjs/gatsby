@@ -3,7 +3,7 @@ import SiteSidebar from "../components/SiteSidebar"
 import MasterLayout from "./master"
 
 
-class InsetPageTemplate extends React.Component {
+class InsetPageLayout extends React.Component {
   render() {
     const siteMetadata = this.props.data.site
 
@@ -26,7 +26,7 @@ class InsetPageTemplate extends React.Component {
   }
 }
 
-export default InsetPageTemplate
+export default InsetPageLayout
 
 export const pageQuery = graphql`
 query InsetLayoutBySlug {

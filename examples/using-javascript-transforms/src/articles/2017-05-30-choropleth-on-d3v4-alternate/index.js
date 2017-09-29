@@ -49,10 +49,9 @@ class choroplethAltBase extends React.Component {
   render() {
     let data = this.props.data.markdownRemark
     let html = data.html
-    let frontmatter = this.props.data.jsFrontmatter.data
 
     return (
-      <BlogPostChrome {...frontmatter}>
+      <BlogPostChrome {...this.props.data.jsFrontmatter.data}>
         <div className="section">
           <div className="container">
             <div id="states" />
@@ -210,16 +209,7 @@ export const pageQuery = graphql`
       html
     }
     jsFrontmatter(fields: { slug: { eq: $slug } }) {
-      data {
-        error
-        layoutType
-        path
-        title
-        written
-        category
-        description
-        updated
-      }
+      ...JSBlogPost_data
     }
   }
 `

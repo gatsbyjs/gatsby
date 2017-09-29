@@ -22,16 +22,7 @@ export const pageQuery = graphql`
   query mdBlogPostBySlug($slug: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
       html
-      frontmatter {
-        title
-        path
-        layoutType
-        written
-        updated
-        what
-        category
-        description
-      }
+      ...MarkdownBlogPost_frontmatter
     }
   }
 `
