@@ -126,6 +126,10 @@ exports.liftRenderedField = entities =>
     return e
   })
 
+// Exclude entities of unknown shape
+exports.excludeUnknownEntities = entities =>
+  entities.filter(e => e.wordpress_id) // Excluding entities without ID
+
 const seedConstant = `b2012db8-fafc-5a03-915f-e6016ff32086`
 const typeNamespaces = {}
 exports.createGatsbyIds = entities =>

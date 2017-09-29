@@ -22,7 +22,7 @@ const refactoredEntityTypes = {
 let _verbose
 let _siteURL
 let _getNode
-let _useACF
+let _useACF = true
 let _hostingWPCOM
 let _auth
 let _perPage
@@ -34,7 +34,7 @@ exports.sourceNodes = async (
     baseUrl,
     protocol,
     hostingWPCOM,
-    useACF,
+    useACF = true,
     auth,
     verboseOutput,
     perPage = 100,
@@ -75,7 +75,10 @@ exports.sourceNodes = async (
   // Lifts all "rendered" fields to top-level.
   entities = normalize.liftRenderedField(entities)
 
-  // creates Gatsby IDs for each entity
+  // Exclude entities of unknown shape
+  entities = normalize.excludeUnknownEntities(entities)
+
+  // Creates Gatsby IDs for each entity
   entities = normalize.createGatsbyIds(entities)
 
   // Creates links between authors and user entities
