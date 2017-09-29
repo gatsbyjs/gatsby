@@ -108,7 +108,7 @@ async function startServer(program) {
   // Check if the file exists in the public folder.
   app.get(`*`, (req, res, next) => {
     // Load file but ignore errors.
-    res.sendFile(directoryPath(`/public/${req.url}`), err => {
+    res.sendFile(directoryPath(`/public/${decodeURIComponent(req.url)}`), err => {
       // No err so a file was sent successfully.
       if (!err || !err.path) {
         next()
