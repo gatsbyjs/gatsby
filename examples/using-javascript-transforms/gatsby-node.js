@@ -74,8 +74,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         // Create from markdown
         result.data.allMarkdownRemark.edges.forEach(edge => {
           let frontmatter = edge.node.frontmatter
-          if (
-            frontmatter.layoutType === `post`) {
+          if (frontmatter.layoutType === `post`) {
             createPage({
               path: frontmatter.path, // required
               layout: 'blogPost', // this matches the filename of src/layouts/blogPost.js, layout created automatically
@@ -84,7 +83,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
                 slug: edge.node.fields.slug,
               },
             })
-          } else {
+          } else if (frontmatter.layoutType === `page`) {
             createPage({
               path: frontmatter.path, // required
               layout: 'insetPage', // this matches the filename of src/layouts/blogPost.js, layout created automatically
