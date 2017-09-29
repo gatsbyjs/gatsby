@@ -11,7 +11,8 @@
 
 ## Showcase
 
-Websites built with Gatbsy:
+Websites built with Gatsby:
+* [React](https://reactjs.org/) ([source](https://github.com/facebook/react/tree/master/www))
 * [Sourcegraph](https://about.sourcegraph.com)
 * [Simply](https://simply.co.za)
 * [mParticle's Documentation](https://docs.mparticle.com)
@@ -44,7 +45,8 @@ Websites built with Gatbsy:
 * [Dalbinaco's website](http://dalbinaco.com/) [(source)](https://github.com/dalbinaco/dalbinaco.github.io)
 * [Phu Quoc Works](http://phuquocworks.net)
 * [Kabir Goel's website](https://kbrgl.github.io) [(source)](https://github.com/kbrgl/kbrgl.github.io)
-
+* [Gabriel Adorf's Portfolio](https://gabrieladorf.com/) [(source)](https://github.com/gabdorf/gabriel-adorf-portfolio)
+* [CSS Grid Playground by MozillaDev](https://mozilladevelopers.github.io/playground/)[(source)](https://github.com/MozillaDevelopers/playground)
 ## Docs
 
 **[View the docs on gatsbyjs.org](https://www.gatsbyjs.org/docs/)**

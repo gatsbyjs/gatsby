@@ -3,7 +3,8 @@ import { matchPath } from "react-router-dom"
 
 const pageCache = {}
 
-module.exports = (pages, pathPrefix = ``) => pathname => {
+module.exports = (pages, pathPrefix = ``) => rawPathname => {
+  let pathname = decodeURIComponent(rawPathname)
   // Remove the pathPrefix from the pathname.
   let trimmedPathname = pathname.slice(pathPrefix.length)
 
@@ -48,6 +49,17 @@ module.exports = (pages, pathPrefix = ``) => pathname => {
         matchPath(trimmedPathname, {
           path: page.path,
           exact: true,
+        })
+      ) {
+        foundPage = page
+        pageCache[trimmedPathname] = page
+        return true
+      }
+
+      // Finally, try and match request with default document.
+      if (
+        matchPath(trimmedPathname, {
+          path: page.path + 'index.html'
         })
       ) {
         foundPage = page

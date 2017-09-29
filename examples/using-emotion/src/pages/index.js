@@ -1,6 +1,6 @@
 import React from "react"
 import { fontFace, injectGlobal } from "emotion"
-import styled from "emotion/react"
+import styled from "react-emotion"
 
 injectGlobal`
   * {
