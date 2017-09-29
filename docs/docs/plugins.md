@@ -133,3 +133,4 @@ you can place the files in a `src` subfolder and build them to the plugin folder
 * [gatsby-plugin-yandex-metrika](https://github.com/viatsko/gatsby-plugin-yandex-metrika)
 * [gatsby-remark-emoji](https://github.com/Rulikkk/gatsby-remark-emoji)
 * [gatsby-source-workable](https://github.com/tumblbug/gatsby-source-workable)
+* [gatsby-source-google-sheets](https://github.com/brandonmp/gatsby-source-google-sheets)
