@@ -11,7 +11,7 @@
 
 ## Showcase
 
-Websites built with Gatbsy:
+Websites built with Gatsby:
 * [React](https://reactjs.org/) ([source](https://github.com/facebook/react/tree/master/www))
 * [Sourcegraph](https://about.sourcegraph.com)
 * [Simply](https://simply.co.za)
