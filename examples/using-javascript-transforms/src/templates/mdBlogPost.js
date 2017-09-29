@@ -3,7 +3,7 @@ import moment from "moment"
 import PostPublished from "../components/PostPublished"
 import HelmetBlock from "../components/HelmetBlock"
 
-class markdownTemplate extends React.Component {
+class mdBlogPost extends React.Component {
   render() {
     const data = this.props.data.markdownRemark
     const html = data.html
@@ -25,10 +25,10 @@ class markdownTemplate extends React.Component {
   }
 }
 
-export default markdownTemplate
+export default mdBlogPost
 
 export const pageQuery = graphql`
-  query markdownTemplateBySlug($slug: String!) {
+  query mdBlogPostBySlug($slug: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
       html
       frontmatter {
