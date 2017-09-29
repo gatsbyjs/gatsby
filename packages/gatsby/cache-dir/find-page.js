@@ -55,6 +55,17 @@ module.exports = (pages, pathPrefix = ``) => rawPathname => {
         pageCache[trimmedPathname] = page
         return true
       }
+
+      // Finally, try and match request with default document.
+      if (
+        matchPath(trimmedPathname, {
+          path: page.path + 'index.html'
+        })
+      ) {
+        foundPage = page
+        pageCache[trimmedPathname] = page
+        return true
+      }
     }
 
     return false
