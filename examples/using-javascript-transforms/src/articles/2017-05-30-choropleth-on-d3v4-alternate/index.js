@@ -1,4 +1,5 @@
 import React from "react"
+import BlogPostChrome from "../../components/BlogPostChrome"
 import { findDOMNode } from "react-dom"
 var d3 = require(`d3`)
 
@@ -51,7 +52,7 @@ class choroplethAltBase extends React.Component {
     let frontmatter = this.props.data.jsFrontmatter.data
 
     return (
-      <div className="">
+      <BlogPostChrome {...frontmatter}>
         <div className="section">
           <div className="container">
             <div id="states" />
@@ -63,7 +64,7 @@ class choroplethAltBase extends React.Component {
             <div dangerouslySetInnerHTML={{ __html: html }} />
           </div>
         </div>
-      </div>
+      </BlogPostChrome>
     )
   }
 }

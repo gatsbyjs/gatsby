@@ -21,14 +21,21 @@ class BlogPostTemplate extends React.Component {
       </div>
     )
 
-    let published = <div className="date-published" />
-
     return (
       <div>
         <MasterLayout {...this.props}>
           {home}
           <div className="container">
             {this.props.children()}
+          </div>
+          <div className="footer container">
+            <hr />
+            <p>
+              {siteMetadata.siteDescr}
+              <a href={siteMetadata.siteTwitterUrl}>
+                <br /> <strong>{siteMetadata.siteAuthor}</strong> on Twitter
+              </a>
+            </p>
           </div>
         </MasterLayout> 
       </div>

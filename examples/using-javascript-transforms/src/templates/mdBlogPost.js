@@ -1,26 +1,17 @@
 import React from "react"
 import moment from "moment"
-import PostPublished from "../components/PostPublished"
-import HelmetBlock from "../components/HelmetBlock"
+import BlogPostChrome from "../components/BlogPostChrome"
 
 class mdBlogPost extends React.Component {
   render() {
-    const data = this.props.data.markdownRemark
-    const html = data.html
-    const frontmatter = data.frontmatter
+    const {html, frontmatter} = this.props.data.markdownRemark
 
     return (
-      <div>
-        <HelmetBlock {...frontmatter} />
-        <div className="content">
-          <div className="markdown section">
-            <div className="container content">
-              <div dangerouslySetInnerHTML={{ __html: html }} />
-            </div>
-          </div>
+      <BlogPostChrome {...frontmatter}>
+        <div className="container content">
+          <div dangerouslySetInnerHTML={{ __html: html }} />
         </div>
-        <PostPublished {...frontmatter} />
-      </div>
+      </BlogPostChrome>
     )
   }
 }
