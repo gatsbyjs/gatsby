@@ -27,7 +27,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 
   return new Promise((resolve, reject) => {
     const pages = []
-    const markdownTemplate = path.resolve(`src/templates/markdown.js`)
+    const mdInsetPage = path.resolve(`src/templates/mdInsetPage.js`)
     const mdBlogPost = path.resolve(`src/templates/mdBlogPost.js`)
 
     // Query for all markdown "nodes" and for the slug we previously created.
@@ -87,7 +87,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
             createPage({
               path: frontmatter.path, // required
               layout: 'insetPage', // this matches the filename of src/layouts/blogPost.js, layout created automatically
-              component: markdownTemplate,
+              component: mdInsetPage,
               context: {
                 slug: edge.node.fields.slug,
               },
@@ -114,6 +114,15 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
                 slug: edge.node.fields.slug,
               },
             })
+          } else if (frontmatter.layoutType === `page`) {
+              createPage({
+                path: frontmatter.path, // required
+                layout: 'insetPage', // this matches the filename of src/layouts/insetPage.js, layout created automatically
+                component: path.resolve(edge.node.fileAbsolutePath),
+                context: {
+                  slug: edge.node.fields.slug,
+                },
+              })
           } else if (edge.node.fields.slug === `/index/`) {
             createPage({
               path: `/`, // required, we don't have frontmatter for this page hence separate if()

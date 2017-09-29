@@ -1,18 +1,18 @@
 import React from "react"
 
-class markdownTemplate extends React.Component {
+class mdInsetPage extends React.Component {
   render() {
-    const {html} = this.props.data.markdownRemark.data
+    const {html} = this.props.data.markdownRemark
 
     return (
-      <div>
+      <div className="box container content">
         <div dangerouslySetInnerHTML={{ __html: html }} />
       </div>
     )
   }
 }
 
-export default markdownTemplate
+export default mdInsetPage
 
 export const pageQuery = graphql`
   query markdownTemplateBySlug($slug: String!) {

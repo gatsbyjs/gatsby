@@ -1,5 +1,5 @@
 ---
-path: /about
+path: /about/
 layoutType: page
 ---
 
