@@ -11,7 +11,7 @@
 
 ## Showcase
 
-Websites built with Gatbsy:
+Websites built with Gatsby:
 * [Sourcegraph](https://about.sourcegraph.com)
 * [Simply](https://simply.co.za)
 * [mParticle's Documentation](https://docs.mparticle.com)
