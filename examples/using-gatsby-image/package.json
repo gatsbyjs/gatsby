@@ -1,0 +1,25 @@
+{
+  "name": "using-gatsby-image",
+  "private": true,
+  "description": "Gatsby example site using using-gatsby-image",
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "dependencies": {
+    "gatsby": "latest",
+    "gatsby-link": "latest",
+    "gatsby-image": "latest",
+    "gatsby-plugin-glamor": "^1.6.7",
+    "gatsby-plugin-netlify": "^1.0.0",
+    "gatsby-plugin-sharp": "^1.6.8",
+    "gatsby-plugin-typography": "^1.7.10",
+    "gatsby-source-filesystem": "^1.5.1",
+    "gatsby-transformer-sharp": "^1.6.6",
+    "typography": "^0.16.6",
+    "typography-theme-elk-glen": "^0.15.11"
+  },
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build"
+  }
+}

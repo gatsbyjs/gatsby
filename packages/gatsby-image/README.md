@@ -1,0 +1,3 @@
+# gatsby-image
+
+Stub README
