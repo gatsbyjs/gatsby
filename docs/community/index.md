@@ -11,7 +11,7 @@ regardless of age, body size, disability, ethnicity, gender identity and
 expression, level of experience, nationality, personal appearance, race,
 religion, or sexual identity and orientation.
 
-[Read full code of conduct](/code-of-conduct/)
+[Read full code of conduct](/docs/code-of-conduct.md)
 
 ## Gatsby news
 
