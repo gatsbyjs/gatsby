@@ -4,8 +4,8 @@ title: "Deploying Gatsby"
 
 ## Tutorials for deploying on different static site hosts
 
-* [S3/Cloudfront](/docs/deploy-gatsby/#amazon-s3-and-cloudfront)
-* [Github Pages](/docs/deploy-gatsby/#github-pages)
+* [S3/Cloudfront](/docs/docs/deploy-gatsby.md#amazon-s3-and-cloudfront)
+* [Github Pages](/docs/docs/deploy-gatsby.md#github-pages)
 
 ## Amazon S3 and Cloudfront
 
