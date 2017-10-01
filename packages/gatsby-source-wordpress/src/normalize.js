@@ -194,15 +194,18 @@ exports.mapPostsToTagsCategories = entities => {
   return entities.map(e => {
     if (e.__type === `wordpress__POST`) {
       // Replace tags & categories with links to their nodes.
-      e.tags___NODE = e.tags.map(
-        t => tags.find(tObj => t === tObj.wordpress_id).id
-      )
-      delete e.tags
-
-      e.categories___NODE = e.categories.map(
-        c => categories.find(cObj => c === cObj.wordpress_id).id
-      )
-      delete e.categories
+      if (e.tags.length) {
+        e.tags___NODE = e.tags.map(
+          t => tags.find(tObj => t === tObj.wordpress_id).id
+        )
+        delete e.tags
+      }
+      if (e.categories.length) {
+        e.categories___NODE = e.categories.map(
+          c => categories.find(cObj => c === cObj.wordpress_id).id
+        )
+        delete e.categories
+      }
     }
     return e
   })
@@ -223,8 +226,7 @@ exports.mapTagsCategoriesToTaxonomies = entities =>
 exports.mapEntitiesToMedia = entities => {
   const media = entities.filter(e => e.__type === `wordpress__wp_media`)
   return entities.map(e => {
-    const hasPhoto = object => _.some(object, value => isPhoto(value))
-
+    // TODO : featured_media field is photo ID
     const isPhoto = field =>
       _.isObject(field) &&
       field.wordpress_id &&
