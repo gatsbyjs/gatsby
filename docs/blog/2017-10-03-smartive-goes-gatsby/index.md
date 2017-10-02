@@ -80,8 +80,8 @@ look at our code [on GitHub](https://github.com/smartive/smartive.ch).
 We are really looking forward to build other cool stuff for our customers using
 Gatsby!
 
-_Special thanks goes to my co-worker [Robert Vogt](https://twitter.com/_deniaz) who did most of the work on our website and contributed the Medium plugin mentioned above._
-
 ---
 
 If you have any questions about the way we built [smartive.ch](https://smartive.ch) feel free to contact me on [Twitter](https://twitter.com/luagsh_mrn).
+
+_Special thanks goes to my co-worker [Robert Vogt](https://twitter.com/_deniaz) who did most of the work on our website and contributed the Medium plugin mentioned above._
