@@ -15,6 +15,7 @@ Websites built with Gatsby:
 * [React](https://reactjs.org/) ([source](https://github.com/facebook/react/tree/master/www))
 * [Sourcegraph](https://about.sourcegraph.com)
 * [Simply](https://simply.co.za)
+* [FloydHub's Blog](https://blog.floydhub.com)
 * [mParticle's Documentation](https://docs.mparticle.com)
 * [Segment's Blog](https://segment.com/blog/)
 * [Fabric](https://meetfabric.com/)
@@ -39,9 +40,6 @@ Websites built with Gatsby:
 * [smartive Company Website](https://smartive.ch)
 * [Haboba Find Jobs at Phu Quoc Island](http://haboba.com)
 * [Charlie Harrington's Blog](https://charlieharrington.com) [(source)](https://github.com/whatrocks/blog)
-<<<<<<< HEAD
-
-=======
 * [Song Wang’s website](https://songwang.io/) [(source)](https://github.com/wangsongiam/songwang.io)
 * [Digital Psychology](http://digitalpsychology.io) [(source)](https://github.com/danistefanovic/digitalpsychology.io)
 * [Magicly's blog](https://magicly.me/) [(source)](https://github.com/magicly/gatsby-blog)
@@ -51,7 +49,7 @@ Websites built with Gatsby:
 * [Gabriel Adorf's Portfolio](https://gabrieladorf.com/) [(source)](https://github.com/gabdorf/gabriel-adorf-portfolio)
 * [CSS Grid Playground by MozillaDev](https://mozilladevelopers.github.io/playground/) [(source)](https://github.com/MozillaDevelopers/playground)
 * [David James' Portfolio](http://dfjames.com) [(source)](https://github.com/daviddeejjames/dfjames-gatsby)
->>>>>>> aef6a40f0a1243776d8592dba2d9641400588786
+
 ## Docs
 
 **[View the docs on gatsbyjs.org](https://www.gatsbyjs.org/docs/)**
