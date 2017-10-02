@@ -4,6 +4,6 @@
   "packages": [
     "packages/*"
   ],
-  "hoist": true,
-  "version": "independent"
+  "version": "independent",
+  "useWorkspaces": true
 }
