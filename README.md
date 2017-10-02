@@ -15,6 +15,7 @@ Websites built with Gatsby:
 * [React](https://reactjs.org/) ([source](https://github.com/facebook/react/tree/master/www))
 * [Sourcegraph](https://about.sourcegraph.com)
 * [Simply](https://simply.co.za)
+* [FloydHub's Blog](https://blog.floydhub.com)
 * [mParticle's Documentation](https://docs.mparticle.com)
 * [Segment's Blog](https://segment.com/blog/)
 * [Fabric](https://meetfabric.com/)
@@ -48,6 +49,7 @@ Websites built with Gatsby:
 * [Gabriel Adorf's Portfolio](https://gabrieladorf.com/) [(source)](https://github.com/gabdorf/gabriel-adorf-portfolio)
 * [CSS Grid Playground by MozillaDev](https://mozilladevelopers.github.io/playground/) [(source)](https://github.com/MozillaDevelopers/playground)
 * [David James' Portfolio](http://dfjames.com) [(source)](https://github.com/daviddeejjames/dfjames-gatsby)
+
 ## Docs
 
 **[View the docs on gatsbyjs.org](https://www.gatsbyjs.org/docs/)**
