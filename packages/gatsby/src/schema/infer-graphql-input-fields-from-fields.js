@@ -158,8 +158,6 @@ function extractFieldNamesFromInputField(
     })
   } else if (type instanceof GraphQLNonNull) {
     extractFieldNamesFromInputField(prefix, type.ofType, accu)
-  } else {
-    throw new Error(`Unknown input field type`)
   }
 }
 
