@@ -26,7 +26,7 @@ class IndexComponent extends React.Component {
           <p>
             <a href="https://www.gatsbyjs.org/packages/gatsby-image/">
               gatsby-image
-            </a>{" "}
+            </a>{` `}
             is the official Image component for use in building Gatsby websites.
             It provides the fastest, most optimized image loading performance
             possible for Gatsby (and other React) websites.
@@ -39,7 +39,7 @@ class IndexComponent extends React.Component {
           <p>
             <a href="https://github.com/gatsbyjs/gatsby/blob/master/examples/using-gatsby-image/">
               See the site source
-            </a>{" "}
+            </a>{` `}
             on how to start using gatsby-image on your site. Full documentation
             coming soon.
           </p>

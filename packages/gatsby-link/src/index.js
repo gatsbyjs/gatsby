@@ -53,7 +53,8 @@ class GatsbyLink extends React.Component {
 
     return (
       <El
-        onClick={e => { // eslint-disable-line
+        onClick={e => {
+          // eslint-disable-line
           onClick && onClick(e)
 
           if (

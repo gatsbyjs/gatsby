@@ -56,7 +56,6 @@ const { connectionType: friendConnection } = connectionDefinitions({
   },
 })
 
-
 const queryType = new GraphQLObjectType({
   name: `Query`,
   fields: () => {

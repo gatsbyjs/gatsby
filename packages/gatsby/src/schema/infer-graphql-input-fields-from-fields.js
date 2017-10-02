@@ -38,8 +38,7 @@ function makeNullable(type: GraphQLInputType): GraphQLNullableInputType<any> {
 function convertToInputType(type: GraphQLType): ?GraphQLInputType {
   if (type instanceof GraphQLScalarType || type instanceof GraphQLEnumType) {
     return type
-  }
-  else if (type instanceof GraphQLObjectType) {
+  } else if (type instanceof GraphQLObjectType) {
     return new GraphQLInputObjectType({
       name: createTypeName(`${type.name}InputObject`),
       fields: _.transform(type.getFields(), (out, fieldConfig, key) => {
@@ -47,16 +46,13 @@ function convertToInputType(type: GraphQLType): ?GraphQLInputType {
         if (type) out[key] = { type }
       }),
     })
-  }
-  else if (type instanceof GraphQLList) {
+  } else if (type instanceof GraphQLList) {
     let innerType = convertToInputType(type.ofType)
     return innerType ? new GraphQLList(makeNullable(innerType)) : null
-  }
-  else if (type instanceof GraphQLNonNull) {
+  } else if (type instanceof GraphQLNonNull) {
     let innerType = convertToInputType(type.ofType)
     return innerType ? new GraphQLNonNull(makeNullable(innerType)) : null
-  }
-  else {
+  } else {
     let message = type ? `for type: ${type.name}` : ``
     if (type instanceof GraphQLInterfaceType) {
       message = `GraphQLInterfaceType not yet implemented ${message}`
@@ -105,8 +101,7 @@ function convertToInputFilter(
       name: createTypeName(`${prefix}Query${name}`),
       fields: fields,
     })
-  }
-  else if (type instanceof GraphQLInputObjectType) {
+  } else if (type instanceof GraphQLInputObjectType) {
     return new GraphQLInputObjectType({
       name: createTypeName(`${prefix}{type.name}`),
       fields: _.transform(type.getFields(), (out, fieldConfig, key) => {
@@ -117,13 +112,10 @@ function convertToInputFilter(
         if (type) out[key] = { type }
       }),
     })
-  }
-  else if (type instanceof GraphQLList) {
+  } else if (type instanceof GraphQLList) {
     const innerType = type.ofType
-    const innerFilter = convertToInputFilter(
-      `${prefix}ListElem`,
-      innerType
-    ) || {}
+    const innerFilter =
+      convertToInputFilter(`${prefix}ListElem`, innerType) || {}
 
     const innerFields = innerFilter ? innerFilter.getFields() : {}
 
@@ -171,8 +163,8 @@ export function inferInputObjectStructureFromFields({
 
   _.each(fields, (fieldConfig, key) => {
     const inputType = convertToInputType(fieldConfig.type)
-    const inputFilter = inputType &&
-      convertToInputFilter(_.upperFirst(key), inputType)
+    const inputFilter =
+      inputType && convertToInputFilter(_.upperFirst(key), inputType)
 
     if (!inputFilter) return
 
@@ -186,4 +178,3 @@ export function inferInputObjectStructureFromFields({
 
   return { inferredFields, sort }
 }
-
