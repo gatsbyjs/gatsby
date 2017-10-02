@@ -18,6 +18,7 @@ lerna and yarn to configure the repository for active development.
 You can install the latest version of Gatsby by following these steps:
 
 * Clone the repo, navigate to its directory.
+* ensure you have the latest version of yarn installed (>= 1.0.2) https://yarnpkg.com/en/docs/install
 * Install dependencies using `yarn run bootstrap` in the root of the repo.
 
 The usual contributing steps are:

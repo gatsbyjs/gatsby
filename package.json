@@ -36,6 +36,9 @@
     "rimraf": "^2.6.1"
   },
   "private": true,
+  "engines": {
+    "yarn": "^1.0.2"
+  },
   "scripts": {
     "check-versions": "babel-node scripts/check-versions.js",
     "format": "npm run format-packages && npm run format-cache-dir && npm run format-www && npm run format-examples && npm run format-scripts",
@@ -48,7 +51,7 @@
     "lint": "npm run check-versions && eslint --ext .js,.jsx --ignore-path .gitignore .",
     "lint:flow": "babel-node scripts/flow-check.js",
     "plop": "plop",
-    "bootstrap": "yarn && npm run check-versions && lerna bootstrap",
+    "bootstrap": "yarn && npm run check-versions && lerna run prepublish",
     "publish": "lerna publish",
     "publish-canary": "lerna publish --canary --yes",
     "publish-next": "lerna publish --npm-tag=next",
@@ -58,5 +61,8 @@
     "test:watch": "jest --watch",
     "test_bkup": "npm run lint && npm run test-node && npm run test-integration",
     "watch": "lerna run watch --no-sort --stream --concurrency 999"
-  }
+  },
+  "workspaces": [
+    "packages/*"
+  ]
 }
