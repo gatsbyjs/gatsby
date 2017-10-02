@@ -1,5 +1,6 @@
 /* @flow */
 const Promise = require(`bluebird`)
+
 const glob = require(`glob`)
 const _ = require(`lodash`)
 const slash = require(`slash`)
@@ -16,6 +17,11 @@ const loadPlugins = require(`./load-plugins`)
 const { initCache } = require(`../utils/cache`)
 const report = require(`../reporter`)
 
+// Show stack trace on unhandled promises.
+process.on(`unhandledRejection`, (reason, p) => {
+  report.panic(reason)
+})
+
 const {
   extractQueries,
 } = require(`../internal-plugins/query-runner/query-watcher`)
@@ -23,6 +29,9 @@ const {
   runQueries,
 } = require(`../internal-plugins/query-runner/page-query-runner`)
 const { writePages } = require(`../internal-plugins/query-runner/pages-writer`)
+const {
+  writeRedirects,
+} = require(`../internal-plugins/query-runner/redirects-writer`)
 
 // Override console.log to add the source file + line number.
 // Useful for debugging if you lose a console.log somewhere.
@@ -226,6 +235,15 @@ module.exports = async (program: any) => {
   fs.writeFileSync(`${siteDir}/api-runner-ssr.js`, sSRAPIRunner, `utf-8`)
 
   activity.end()
+  /**
+   * Start the main bootstrap processes.
+   */
+
+  // onPreBootstrap
+  activity = report.activityTimer(`onPreBootstrap`)
+  activity.start()
+  await apiRunnerNode(`onPreBootstrap`)
+  activity.end()
 
   // Source nodes
   activity = report.activityTimer(`source and transform nodes`)
@@ -312,25 +330,17 @@ module.exports = async (program: any) => {
   await writePages()
   activity.end()
 
+  // Write out redirects.
+  activity = report.activityTimer(`write out redirect data`)
+  activity.start()
+  await writeRedirects()
+  activity.end()
+
   // Update Schema for SitePage.
   activity = report.activityTimer(`update schema`)
   activity.start()
   await require(`../schema`)()
   activity.end()
-
-  // Load the page hot reloader. It listens for node changes
-  // and re-runs `createPages` and removes pages which weren't
-  // recreated.
-  //
-  // Algorithm is make clone of pages, run createPages, remove from
-  // both pages create by plugins only implementing `createPagesStatefully`.
-  // Check for pages not updated (need update timestamp) and remove
-  // those. yeah, just figure out in reducer if the plugin implements
-  // createPagesStatefully and mark the page as stateful to simplify
-  // things.
-  //
-  // TODO fix deleting nodes so we can both add markdown pages
-  // and remove pages as well just by adding/removing markdown files.
 
   const checkJobsDone = _.debounce(resolve => {
     const state = store.getState()
@@ -343,6 +353,12 @@ module.exports = async (program: any) => {
   }, 100)
 
   if (store.getState().jobs.active.length === 0) {
+    // onPostBootstrap
+    activity = report.activityTimer(`onPostBootstrap`)
+    activity.start()
+    await apiRunnerNode(`onPostBootstrap`)
+    activity.end()
+
     report.log(``)
     report.info(`bootstrap finished - ${process.uptime()} s`)
     report.log(``)

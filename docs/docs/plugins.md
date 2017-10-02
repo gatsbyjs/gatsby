@@ -83,6 +83,7 @@ you can place the files in a `src` subfolder and build them to the plugin folder
 * [gatsby-plugin-google-tagmanager](/packages/gatsby-plugin-google-tagmanager/)
 * [gatsby-plugin-jss](/packages/gatsby-plugin-jss/)
 * [gatsby-plugin-manifest](/packages/gatsby-plugin-manifest/)
+* [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify/)
 * [gatsby-plugin-nprogress](/packages/gatsby-plugin-nprogress/)
 * [gatsby-plugin-offline](/packages/gatsby-plugin-offline/)
 * [gatsby-plugin-preact](/packages/gatsby-plugin-preact/)
@@ -122,10 +123,15 @@ you can place the files in a `src` subfolder and build them to the plugin folder
 ## Community Plugins
 
 * [gatsby-plugin-antd](https://github.com/bskimball/gatsby-plugin-antd)
+* [gatsby-plugin-copy](https://github.com/aquilio/gatsby-plugin-copy)
+* [gatsby-plugin-google-fonts](https://github.com/didierfranc/gatsby-plugin-google-fonts)
 * [gatsby-plugin-i18n](https://github.com/angeloocana/gatsby-plugin-i18n)
 * [gatsby-plugin-i18n-tags](https://github.com/angeloocana/gatsby-plugin-i18n-tags)
 * [gatsby-plugin-i18n-readnext](https://github.com/angeloocana/gatsby-plugin-i18n-readnext)
 * [gatsby-plugin-protoculture](https://github.com/atrauzzi/gatsby-plugin-protoculture)
+* [gatsby-plugin-purify-css](https://github.com/rongierlach/gatsby-plugin-purify-css)
 * [gatsby-plugin-yandex-metrika](https://github.com/viatsko/gatsby-plugin-yandex-metrika)
 * [gatsby-remark-emoji](https://github.com/Rulikkk/gatsby-remark-emoji)
+* [gatsby-remark-external-links](https://github.com/JLongley/gatsby-remark-external-links)
 * [gatsby-source-workable](https://github.com/tumblbug/gatsby-source-workable)
+* [gatsby-source-google-sheets](https://github.com/brandonmp/gatsby-source-google-sheets)

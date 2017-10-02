@@ -119,6 +119,10 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
         height: {
           type: GraphQLInt,
         },
+        jpegProgressive: {
+          type: GraphQLBoolean,
+          defaultValue: true,
+        },
         grayscale: {
           type: GraphQLBoolean,
           defaultValue: false,
@@ -176,6 +180,10 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
         grayscale: {
           type: GraphQLBoolean,
           defaultValue: false,
+        },
+        jpegProgressive: {
+          type: GraphQLBoolean,
+          defaultValue: true,
         },
         duotone: {
           type: DuotoneGradientType,

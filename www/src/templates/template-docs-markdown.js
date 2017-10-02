@@ -5,7 +5,7 @@ import GithubIcon from "react-icons/lib/go/mark-github"
 import { rhythm } from "../utils/typography"
 import Container from "../components/container"
 
-const DocsTemplate = React.createClass({
+class DocsTemplate extends React.Component {
   render() {
     const page = this.props.data.markdownRemark
     return (
@@ -28,8 +28,8 @@ const DocsTemplate = React.createClass({
         />
       </Container>
     )
-  },
-})
+  }
+}
 
 export default DocsTemplate
 

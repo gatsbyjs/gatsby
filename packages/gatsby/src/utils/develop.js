@@ -108,7 +108,7 @@ async function startServer(program) {
   // Check if the file exists in the public folder.
   app.get(`*`, (req, res, next) => {
     // Load file but ignore errors.
-    res.sendFile(directoryPath(`/public/${req.url}`), err => {
+    res.sendFile(directoryPath(`/public/${decodeURIComponent(req.url)}`), err => {
       // No err so a file was sent successfully.
       if (!err || !err.path) {
         next()
@@ -177,9 +177,10 @@ async function startServer(program) {
   })
 
   // Register watcher that rebuilds index.html every time html.js changes.
-  const watchGlobs = [`src/html.js`, `plugins/**/gatsby-ssr.js`].map(
-    directoryPath
+  const watchGlobs = [`src/html.js`, `plugins/**/gatsby-ssr.js`].map(path =>
+    directoryPath(path)
   )
+
   chokidar.watch(watchGlobs).on(`change`, async () => {
     await createIndexHtml()
     io.to(`clients`).emit(`reload`)
