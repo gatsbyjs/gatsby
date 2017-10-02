@@ -67,13 +67,13 @@ function inferGraphQLType({
   selector,
   ...otherArgs
 }): ?GraphQLFieldConfig<*, *> {
-  if (exampleValue == null || isEmptyObjectOrArray(exampleValue)) return
+  if (exampleValue == null || isEmptyObjectOrArray(exampleValue)) return null
   let fieldName = selector.split(`.`).pop()
 
   if (Array.isArray(exampleValue)) {
     exampleValue = exampleValue[0]
 
-    if (exampleValue == null) return
+    if (exampleValue == null) return null
 
     let headType
     // If the array contains objects, than treat them as "nodes"
@@ -133,7 +133,7 @@ function inferGraphQLType({
         if (object[fieldName]) {
           date = JSON.parse(JSON.stringify(object[fieldName]))
         } else {
-          return
+          return null
         }
         if (formatString) {
           return moment.utc(date, ISO_8601_FORMAT, true).format(formatString)
@@ -187,7 +187,7 @@ function inferFromMapping(
   )
   if (_.isEmpty(matchedTypes)) {
     console.log(`Couldn't find a matching node type for "${fieldSelector}"`)
-    return
+    return null
   }
 
   const findNode = (fieldValue, path) => {
@@ -200,6 +200,7 @@ function inferFromMapping(
       createPageDependency({ path, nodeId: linkedNode.id })
       return linkedNode
     }
+    return null
   }
 
   if (_.isArray(value)) {
@@ -242,11 +243,10 @@ function findLinkedNode(value, linkedField, path) {
   }
 
   if (linkedNode) {
-    if (path) {
-      createPageDependency({ path, nodeId: linkedNode.id })
-    }
+    if (path) createPageDependency({ path, nodeId: linkedNode.id })
     return linkedNode
   }
+  return null
 }
 
 function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
@@ -460,7 +460,7 @@ function shouldInferFile(nodes, key, value) {
 function inferFromUri(key, types) {
   const fileField = types.find(type => type.name === `File`)
 
-  if (!fileField) return
+  if (!fileField) return null
 
   return {
     type: fileField.nodeObjectType,

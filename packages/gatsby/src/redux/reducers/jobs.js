@@ -4,7 +4,7 @@ const moment = require(`moment`)
 module.exports = (state = { active: [], done: [] }, action) => {
   switch (action.type) {
     case `CREATE_JOB`:
-    case `SET_JOB`:
+    case `SET_JOB`: {
       if (!action.payload.id) {
         throw new Error(`An ID must be provided when creating or setting job`)
       }
@@ -36,8 +36,8 @@ module.exports = (state = { active: [], done: [] }, action) => {
           ]),
         }
       }
-
-    case `END_JOB`:
+    }
+    case `END_JOB`: {
       if (!action.payload.id) {
         throw new Error(`An ID must be provided when ending a job`)
       }
@@ -61,6 +61,7 @@ module.exports = (state = { active: [], done: [] }, action) => {
         ]),
         active: state.active.filter(j => j.id !== action.payload.id),
       }
+    }
   }
 
   return state

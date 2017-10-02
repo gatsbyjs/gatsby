@@ -1,5 +1,3 @@
-const select = require(`unist-util-select`)
-const fs = require(`fs`)
 const jsYaml = require(`js-yaml`)
 const _ = require(`lodash`)
 const crypto = require(`crypto`)

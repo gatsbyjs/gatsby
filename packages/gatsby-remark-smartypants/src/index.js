@@ -1,7 +1,6 @@
 const retext = require(`retext`)
 const visit = require(`unist-util-visit`)
 const smartypants = require(`retext-smartypants`)
-const _ = require(`lodash`)
 
 module.exports = ({ markdownAST }, pluginOptions = {}) => {
   visit(markdownAST, `text`, node => {

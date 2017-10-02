@@ -14,4 +14,4 @@ install:
   - yarn run bootstrap
 
 script:
-  - npm test
+  - yarn test

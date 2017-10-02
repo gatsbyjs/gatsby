@@ -49,7 +49,7 @@ const Img = props => {
 
 Img.propTypes = {
   opacity: PropTypes.number,
-  onLoad: PropTypes.func
+  onLoad: PropTypes.func,
 }
 
 class Image extends React.Component {

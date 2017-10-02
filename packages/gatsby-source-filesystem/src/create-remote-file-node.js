@@ -9,7 +9,8 @@ const cacheId = url => `create-remote-file-node-${url}`
 module.exports = ({ url, store, cache, createNode }) =>
   new Promise(async (resolve, reject) => {
     if (!url) {
-      return resolve()
+      resolve()
+      return
     }
 
     // Ensure our cache directory exists.

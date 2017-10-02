@@ -14,9 +14,14 @@ exports.replaceRenderer = ({
   replaceBodyHTMLString(html)
 
   setHeadComponents([
-    <style id="glamor-styles" dangerouslySetInnerHTML={{ __html: css }} />,
+    <style
+      id="glamor-styles"
+      key="glamor-styles"
+      dangerouslySetInnerHTML={{ __html: css }}
+    />,
     <script
       id="glamor-ids"
+      key="glamor-ids"
       dangerouslySetInnerHTML={{
         __html: `
         // <![CDATA[
