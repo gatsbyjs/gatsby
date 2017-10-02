@@ -94,6 +94,8 @@ class GatsbyLink extends React.Component {
               window.___navigateTo(this.state.to)
             }
           }
+
+          return true
         }}
         {...rest}
         to={this.state.to}
