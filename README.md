@@ -46,7 +46,8 @@ Websites built with Gatsby:
 * [Phu Quoc Works](http://phuquocworks.net)
 * [Kabir Goel's website](https://kbrgl.github.io) [(source)](https://github.com/kbrgl/kbrgl.github.io)
 * [Gabriel Adorf's Portfolio](https://gabrieladorf.com/) [(source)](https://github.com/gabdorf/gabriel-adorf-portfolio)
-* [CSS Grid Playground by MozillaDev](https://mozilladevelopers.github.io/playground/)[(source)](https://github.com/MozillaDevelopers/playground)
+* [CSS Grid Playground by MozillaDev](https://mozilladevelopers.github.io/playground/) [(source)](https://github.com/MozillaDevelopers/playground)
+* [David James' Portfolio](http://dfjames.com) [(source)](https://github.com/daviddeejjames/dfjames-gatsby)
 ## Docs
 
 **[View the docs on gatsbyjs.org](https://www.gatsbyjs.org/docs/)**
