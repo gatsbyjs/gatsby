@@ -224,10 +224,7 @@ function queueImageResizing({ file, args = {} }) {
     .update(JSON.stringify(sortedArgs))
     .digest(`hex`)
 
-  const argsDigestShort = argsDigest.substr(argsDigest.length - 5)
-
-  const imgSrc = `/${file.internal
-    .contentDigest}-${argsDigestShort}.${fileExtension}`
+  const imgSrc = `/${file.name}-${argsDigest}.${fileExtension}`
   const filePath = path.join(process.cwd(), `public`, `static`, imgSrc)
 
   // Create function to call when the image is finished.
