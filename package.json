@@ -45,7 +45,7 @@
     "format-scripts": "prettier-eslint --write \"scripts/**/*.js\"",
     "format-www": "prettier-eslint --write \"www/*.js\" \"www/src/**/*.js\"",
     "lerna": "lerna",
-    "lint": "npm run check-versions && eslint --ext .js,.jsx --ignore-path .gitignore .",
+    "lint": "eslint --ext .js,.jsx --ignore-path .gitignore packages/**/src",
     "lint:flow": "babel-node scripts/flow-check.js",
     "plop": "plop",
     "bootstrap": "yarn && npm run check-versions && lerna bootstrap",

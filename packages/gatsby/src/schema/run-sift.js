@@ -2,15 +2,9 @@
 const sift = require(`sift`)
 const _ = require(`lodash`)
 const { connectionFromArray } = require(`graphql-skip-limit`)
-const { store } = require(`../redux/`)
 const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 const prepareRegex = require(`./prepare-regex`)
 const Promise = require(`bluebird`)
-
-type Node = {
-  id: String,
-  type: String,
-}
 
 function awaitSiftField(fields, node, k) {
   const field = fields[k]
@@ -133,7 +127,7 @@ module.exports = ({
       ? myNodes
       : sift({ $and: siftArgs }, myNodes)
 
-    if (!result || !result.length) return
+    if (!result || !result.length) return null
 
     // Sort results.
     if (clonedArgs.sort) {
