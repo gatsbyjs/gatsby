@@ -63,21 +63,25 @@ module.exports = async ({ spaceId, accessToken, host, syncToken }) => {
     if (e) {
       return normalize.fixIds(e)
     }
+    return null
   })
   currentSyncData.assets = currentSyncData.assets.map(a => {
     if (a) {
       return normalize.fixIds(a)
     }
+    return null
   })
   currentSyncData.deletedEntries = currentSyncData.deletedEntries.map(e => {
     if (e) {
       return normalize.fixIds(e)
     }
+    return null
   })
   currentSyncData.deletedAssets = currentSyncData.deletedAssets.map(a => {
     if (a) {
       return normalize.fixIds(a)
     }
+    return null
   })
 
   return {

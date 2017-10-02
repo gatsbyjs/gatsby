@@ -1,7 +1,6 @@
 const reducer = require(`../reducers/pages`)
 const { actions } = require(`../actions`)
 
-const start = Date.now()
 Date.now = jest.fn(
   () =>
     // const diff = new Date().getTime() - start

@@ -1,6 +1,5 @@
 const crypto = require(`crypto`)
 const deepMapKeys = require(`deep-map-keys`)
-const _ = require(`lodash`)
 const uuidv5 = require(`uuid/v5`)
 const stringify = require(`json-stringify-safe`)
 
