@@ -59,7 +59,7 @@ module.exports = (pages, pathPrefix = ``) => rawPathname => {
       // Finally, try and match request with default document.
       if (
         matchPath(trimmedPathname, {
-          path: page.path + 'index.html'
+          path: page.path + `index.html`,
         })
       ) {
         foundPage = page

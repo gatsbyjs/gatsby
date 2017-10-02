@@ -1,6 +1,4 @@
-const _ = require(`lodash`)
 const {
-  graphql,
   GraphQLBoolean,
   GraphQLFloat,
   GraphQLInt,
@@ -9,13 +7,11 @@ const {
   GraphQLObjectType,
   GraphQLScalarType,
   GraphQLList,
-  GraphQLSchema,
   GraphQLInputObjectType,
+  Kind,
 } = require(`graphql`)
-const { connectionArgs, connectionDefinitions } = require(`graphql-skip-limit`)
 
 const {
-  createSortField,
   inferInputObjectStructureFromFields,
 } = require(`../infer-graphql-input-fields-from-fields.js`)
 

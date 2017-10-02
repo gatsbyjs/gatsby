@@ -1,6 +1,6 @@
 const querystring = require(`querystring`)
 const axios = require(`axios`)
-
+const _ = require(`lodash`)
 const colorized = require(`./output-color`)
 const httpExceptionHandler = require(`./http-exception-handler`)
 
@@ -248,7 +248,7 @@ async function fetchData({
  * @returns
  */
 async function getPages(
-  { url, _perPage, _hostingWPCOM, _auth, _accessToken },
+  { url, _perPage, _hostingWPCOM, _auth, _accessToken, _verbose },
   page = 1
 ) {
   try {

@@ -78,8 +78,6 @@ exports.sourceNodes = async (
 
   const nodes = processEntities(result.data.data)
   nodes.forEach((node, i) => {
-    const nodeStr = JSON.stringify(node)
-
     const gatsbyNode = {
       ...node,
       children: [],
@@ -106,12 +104,10 @@ exports.sourceNodes = async (
   const userUrl = `${baseUrl}/jsonapi/user/user`
   const userResult = await axios.get(userUrl)
   const users = processEntities(userResult.data.data)
-  const blue = await Promise.all(
+  await Promise.all(
     users.map(
       (user, i) =>
         new Promise(resolve => {
-          const userStr = JSON.stringify(user)
-
           const gatsbyUser = {
             ...user,
             children: [],
@@ -122,7 +118,8 @@ exports.sourceNodes = async (
           }
 
           if (gatsbyUser.uid === 1) {
-            return resolve()
+            resolve()
+            return
           }
 
           axios
@@ -150,6 +147,4 @@ exports.sourceNodes = async (
         })
     )
   )
-
-  return
 }

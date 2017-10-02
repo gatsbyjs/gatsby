@@ -17,22 +17,10 @@ const {
 
 import type { GraphQLInputType, GraphQLType } from "graphql"
 
-const { oneLine } = require(`common-tags`)
 const _ = require(`lodash`)
-const invariant = require(`invariant`)
-const typeOf = require(`type-of`)
+const report = require(`../reporter`)
 const createTypeName = require(`./create-type-name`)
 const createKey = require(`./create-key`)
-const {
-  extractFieldExamples,
-  buildFieldEnumValues,
-  isEmptyObjectOrArray,
-} = require(`./data-tree-utils`)
-
-import type {
-  GraphQLInputFieldConfig,
-  GraphQLInputFieldConfigMap,
-} from "graphql/type/definition"
 
 type GraphQLNullableInputType<T> =
   | GraphQLScalarType
@@ -47,34 +35,36 @@ function makeNullable(type: GraphQLInputType): GraphQLNullableInputType<any> {
   return type
 }
 
-function convertToInputType(type: GraphQLType): GraphQLInputType {
+function convertToInputType(type: GraphQLType): ?GraphQLInputType {
   if (type instanceof GraphQLScalarType || type instanceof GraphQLEnumType) {
     return type
   } else if (type instanceof GraphQLObjectType) {
     return new GraphQLInputObjectType({
       name: createTypeName(`${type.name}InputObject`),
       fields: _.transform(type.getFields(), (out, fieldConfig, key) => {
-        try {
-          const type = convertToInputType(fieldConfig.type)
-          out[key] = { type }
-        } catch (e) {
-          console.log(e)
-        }
+        const type = convertToInputType(fieldConfig.type)
+        if (type) out[key] = { type }
       }),
     })
   } else if (type instanceof GraphQLList) {
-    return new GraphQLList(makeNullable(convertToInputType(type.ofType)))
+    let innerType = convertToInputType(type.ofType)
+    return innerType ? new GraphQLList(makeNullable(innerType)) : null
   } else if (type instanceof GraphQLNonNull) {
-    return new GraphQLNonNull(makeNullable(convertToInputType(type.ofType)))
-  } else if (type instanceof GraphQLInterfaceType) {
-    throw new Error(`GraphQLInterfaceType not yet implemented`)
-  } else if (type instanceof GraphQLUnionType) {
-    throw new Error(`GraphQLUnionType not yet implemented`)
+    let innerType = convertToInputType(type.ofType)
+    return innerType ? new GraphQLNonNull(makeNullable(innerType)) : null
   } else {
-    throw new Error(
-      `Invalid input type ${type && type.constructor && type.constructor.name}`
-    )
+    let message = type ? `for type: ${type.name}` : ``
+    if (type instanceof GraphQLInterfaceType) {
+      message = `GraphQLInterfaceType not yet implemented ${message}`
+    } else if (type instanceof GraphQLUnionType) {
+      message = `GraphQLUnionType not yet implemented ${message}`
+    } else {
+      message = `Invalid input type ${message}`
+    }
+    report.verbose(message)
   }
+
+  return null
 }
 
 const scalarFilterMap = {
@@ -101,15 +91,12 @@ const scalarFilterMap = {
 function convertToInputFilter(
   prefix: string,
   type: GraphQLInputType
-): GraphQLInputObjectType {
+): ?GraphQLInputObjectType {
   if (type instanceof GraphQLScalarType) {
     const name = type.name
     const fields = scalarFilterMap[name]
 
-    if (fields == null) {
-      throw new Error(`Unknown scalar type for input filter`)
-    }
-
+    if (fields == null) return null
     return new GraphQLInputObjectType({
       name: createTypeName(`${prefix}Query${name}`),
       fields: fields,
@@ -118,28 +105,19 @@ function convertToInputFilter(
     return new GraphQLInputObjectType({
       name: createTypeName(`${prefix}{type.name}`),
       fields: _.transform(type.getFields(), (out, fieldConfig, key) => {
-        try {
-          const type = convertToInputFilter(
-            `${prefix}${_.upperFirst(key)}`,
-            fieldConfig.type
-          )
-          out[key] = { type }
-        } catch (e) {
-          console.log(e)
-        }
+        const type = convertToInputFilter(
+          `${prefix}${_.upperFirst(key)}`,
+          fieldConfig.type
+        )
+        if (type) out[key] = { type }
       }),
     })
   } else if (type instanceof GraphQLList) {
     const innerType = type.ofType
-    let innerFields = {}
-    try {
-      innerFields = convertToInputFilter(
-        `${prefix}ListElem`,
-        innerType
-      ).getFields()
-    } catch (e) {
-      console.log(e)
-    }
+    const innerFilter =
+      convertToInputFilter(`${prefix}ListElem`, innerType) || {}
+
+    const innerFields = innerFilter ? innerFilter.getFields() : {}
 
     return new GraphQLInputObjectType({
       name: createTypeName(`${prefix}QueryList`),
@@ -152,7 +130,7 @@ function convertToInputFilter(
     return convertToInputFilter(prefix, type.ofType)
   }
 
-  throw new Error(`Unknown input field type`)
+  return null
 }
 
 function extractFieldNamesFromInputField(
@@ -172,8 +150,6 @@ function extractFieldNamesFromInputField(
     })
   } else if (type instanceof GraphQLNonNull) {
     extractFieldNamesFromInputField(prefix, type.ofType, accu)
-  } else {
-    throw new Error(`Unknown input field type`)
   }
 }
 
@@ -186,58 +162,19 @@ export function inferInputObjectStructureFromFields({
   const sort = []
 
   _.each(fields, (fieldConfig, key) => {
-    try {
-      const inputType = convertToInputType(fieldConfig.type)
-      const filterType = convertToInputFilter(_.upperFirst(key), inputType)
+    const inputType = convertToInputType(fieldConfig.type)
+    const inputFilter =
+      inputType && convertToInputFilter(_.upperFirst(key), inputType)
 
-      inferredFields[createKey(key)] = {
-        type: filterType,
-      }
+    if (!inputFilter) return
 
-      // Add sorting (but only to the top level).
-      if (typeName) {
-        extractFieldNamesFromInputField(key, inputType, sort)
-      }
-    } catch (e) {
-      console.log(key, fieldConfig, e)
+    inferredFields[createKey(key)] = { type: inputFilter }
+
+    // Add sorting (but only to the top level).
+    if (typeName) {
+      extractFieldNamesFromInputField(key, inputType, sort)
     }
   })
 
   return { inferredFields, sort }
-}
-
-// builds an input field for sorting, given an array of names to sort on
-export function createSortField(typeName: string, fieldNames: string[]) {
-  const enumValues = {}
-  fieldNames.forEach(field => {
-    enumValues[createKey(field)] = { value: field }
-  })
-
-  const SortByType = new GraphQLEnumType({
-    name: `${typeName}SortByFieldsEnum`,
-    values: enumValues,
-  })
-
-  return {
-    type: new GraphQLInputObjectType({
-      name: _.camelCase(`${typeName} sort`),
-      fields: {
-        fields: {
-          name: _.camelCase(`${typeName} sortFields`),
-          type: new GraphQLNonNull(new GraphQLList(SortByType)),
-        },
-        order: {
-          name: _.camelCase(`${typeName} sortOrder`),
-          defaultValue: `asc`,
-          type: new GraphQLEnumType({
-            name: _.camelCase(`${typeName} sortOrderValues`),
-            values: {
-              ASC: { value: `asc` },
-              DESC: { value: `desc` },
-            },
-          }),
-        },
-      },
-    }),
-  }
 }

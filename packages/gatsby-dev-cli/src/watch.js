@@ -13,7 +13,8 @@ const debouncedQuit = _.debounce(() => {
 const copyPath = (oldPath, newPath, quiet) => {
   fs.copy(oldPath, newPath, err => {
     if (err) {
-      return console.error(err)
+      console.error(err)
+      return
     }
 
     numCopied += 1
@@ -28,7 +29,7 @@ function watch(root, packages, { scanOnce, quiet }) {
     const prefix = syspath.join(root, `/packages/`, p)
 
     const ignoreRegs = [
-      /[\/\\]node_modules[\/\\]/i,
+      /[/\\]node_modules[/\\]/i,
       /\.git/i,
       new RegExp(`${p}[\\/\\\\]src[\\/\\\\]`, `i`),
     ]

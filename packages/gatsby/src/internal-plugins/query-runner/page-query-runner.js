@@ -99,6 +99,7 @@ const runQueriesForIds = ids => {
       if (plObj) {
         return queryRunner(plObj, state.components[plObj.component])
       }
+      return null
     })
   )
 }

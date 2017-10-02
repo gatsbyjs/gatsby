@@ -15,7 +15,7 @@ module.exports = ({ markdownAST }, pluginOptions = {}) =>
       if (iframe) {
         const width = iframe.attr(`width`)
         const height = iframe.attr(`height`)
-        const src = iframe.attr(`src`)
+
         if (width && height) {
           $(`iframe, object`).attr(
             `style`,

@@ -1,5 +1,4 @@
 const fs = require(`fs`)
-const path = require(`path`)
 const { joinPath } = require(`../../utils/path`)
 const { watchComponent } = require(`./query-watcher`)
 

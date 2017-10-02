@@ -5,7 +5,7 @@ module.exports = (state = [], action) => {
   switch (action.type) {
     case `DELETE_CACHE`:
       return []
-    case `CREATE_LAYOUT`:
+    case `CREATE_LAYOUT`: {
       action.payload.component = normalize(action.payload.component)
       action.payload.componentWrapperPath = normalize(
         action.payload.componentWrapperPath
@@ -33,6 +33,7 @@ module.exports = (state = [], action) => {
       } else {
         return [...state.concat(action.payload)]
       }
+    }
     case `DELETE_LAYOUT`:
       return state.filter(l => l.id !== action.payload.id)
     default:

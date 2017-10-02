@@ -342,7 +342,7 @@ const createACFChildNodes = (
 exports.createNodesFromEntities = ({ entities, createNode }) => {
   entities.forEach(e => {
     // Create subnodes for ACF Flexible layouts
-    let { __type, ...entity } = e
+    let { __type, ...entity } = e // eslint-disable-line no-unused-vars
     let children = []
     if (entity.acf) {
       _.each(entity.acf, (value, key) => {

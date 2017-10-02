@@ -7,9 +7,8 @@ const {
 } = require(`./infer-graphql-input-fields`)
 const {
   inferInputObjectStructureFromFields,
-  createSortField,
 } = require(`./infer-graphql-input-fields-from-fields`)
-
+const createSortField = require(`./create-sort-field`)
 const buildConnectionFields = require(`./build-connection-fields`)
 const { getNodes } = require(`../redux`)
 
