@@ -15,3 +15,10 @@ install:
 
 script:
   - npm test
+
+after_success:
+  - yarn run lerna-semantic-release
+
+branches:
+  except:
+    - "/^v\\d+\\.\\d+\\.\\d+$/"
