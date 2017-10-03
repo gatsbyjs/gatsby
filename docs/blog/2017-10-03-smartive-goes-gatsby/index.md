@@ -1,5 +1,5 @@
 ---
-title: "smartive.ch goes Gatsby"
+title: "Why we choose Gatsby over Next.js and Wintersmith"
 date: "2017-10-03"
 image: "smartive-loves-gatsby.png"
 author: "Moreno Feltscher"
