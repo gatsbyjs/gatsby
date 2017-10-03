@@ -22,7 +22,7 @@
     "babel-runtime": "^6.26.0"
   },
   "peerDependencies": {
-    "emotion": "7 || 8 ",
-    "emotion-server": "7 || 8"
+    "emotion": "^7.0.0 || ^18.0.0",
+    "emotion-server": "^7.0.0 || ^18.0.0"
   }
 }
