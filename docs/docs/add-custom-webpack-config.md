@@ -28,7 +28,7 @@ Check [webpack.config.js](https://github.com/gatsbyjs/gatsby/blob/master/package
 There are many plugins in the Gatsby repo using this API to look to for examples e.g. [Sass](/packages/gatsby-plugin-sass/), [Typescript](/packages/gatsby-plugin-typescript/), [Glamor](/packages/gatsby-plugin-glamor/), and many more!
 
 
-## Example
+## Examples
 
 Here is an example adding support for **flexboxgrid** when processing css files.
 
@@ -66,4 +66,18 @@ exports.modifyWebpackConfig = ({ config, stage }) => {
 
   return config;
 };
+```
+
+Here is an example to allow webpack to load JSON files.
+
+```js
+exports.modifyWebpackConfig = function({config, env}) {
+  config.merge({
+    resolve: {
+      root: path.resolve(__dirname, './src'),
+      extensions: ['', '.js', '.jsx', '.json'],
+    }
+  });
+  return config;
+}
 ```
