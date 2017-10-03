@@ -10,7 +10,7 @@ Array [
       "id": "foo",
       "internal": Object {
         "contentDigest": "8838e569ae02d98806532310fb2a577a",
-        "type": "BlahJsonJson",
+        "type": "FooJson",
       },
       "parent": "whatever",
     },
@@ -29,14 +29,14 @@ Array [
         "id": "foo",
         "internal": Object {
           "contentDigest": "8838e569ae02d98806532310fb2a577a",
-          "type": "BlahJsonJson",
+          "type": "FooJson",
         },
         "parent": "whatever",
       },
       "parent": Object {
         "children": Array [],
         "content": "{\\"id\\":\\"foo\\",\\"blue\\":true,\\"funny\\":\\"yup\\"}",
-        "dir": "/tmp/blah.json",
+        "dir": "/tmp/foo/",
         "id": "whatever",
         "internal": Object {
           "contentDigest": "whatever",

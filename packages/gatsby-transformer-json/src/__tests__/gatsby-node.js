@@ -45,7 +45,7 @@ describe(`Process JSON nodes correctly`, () => {
   it(`correctly creates a node from JSON which is a single object`, async () => {
     const data = { id: `foo`, blue: true, funny: `yup` }
     node.content = JSON.stringify(data)
-    node.dir = `/tmp/blah.json`
+    node.dir = `/tmp/foo/`
 
     const createNode = jest.fn()
     const createParentChildLink = jest.fn()

@@ -10,7 +10,7 @@ Array [
       "id": "whatever >>> YAML",
       "internal": Object {
         "contentDigest": "73901821b17d5aa9dd6026181f73b64c",
-        "type": "BlahYmlYaml",
+        "type": "BarYaml",
       },
       "parent": "whatever",
     },
@@ -29,7 +29,7 @@ Array [
         "id": "whatever >>> YAML",
         "internal": Object {
           "contentDigest": "73901821b17d5aa9dd6026181f73b64c",
-          "type": "BlahYmlYaml",
+          "type": "BarYaml",
         },
         "parent": "whatever",
       },
@@ -38,7 +38,7 @@ Array [
         "content": "blue: true
 funny: yup
 ",
-        "dir": "/tmp/blah.yml",
+        "dir": "/tmp/bar/",
         "id": "whatever",
         "internal": Object {
           "contentDigest": "whatever",

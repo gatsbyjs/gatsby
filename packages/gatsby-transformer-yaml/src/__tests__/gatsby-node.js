@@ -42,7 +42,7 @@ describe(`Process YAML nodes correctly`, () => {
   it(`correctly creates a node from JSON which is a single object`, async () => {
     const data = { blue: true, funny: `yup` }
     node.content = yaml.safeDump(data)
-    node.dir = `/tmp/blah.yml`
+    node.dir = `/tmp/bar/`
 
     const createNode = jest.fn()
     const createParentChildLink = jest.fn()
