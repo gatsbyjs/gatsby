@@ -114,9 +114,7 @@ function convertToInputFilter(
     })
   } else if (type instanceof GraphQLList) {
     const innerType = type.ofType
-    const innerFilter =
-      convertToInputFilter(`${prefix}ListElem`, innerType) || {}
-
+    const innerFilter = convertToInputFilter(`${prefix}ListElem`, innerType)
     const innerFields = innerFilter ? innerFilter.getFields() : {}
 
     return new GraphQLInputObjectType({
