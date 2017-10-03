@@ -6,6 +6,7 @@
   "author": "Sebastien Fichot <fichot.sebastien@gmail.com>",
   "dependencies": {
     "gatsby": "^1.9.45",
+    "gatsby-image": "^1.0.4",
     "gatsby-link": "latest",
     "gatsby-plugin-glamor": "^1.6.7",
     "gatsby-plugin-react-helmet": "latest",

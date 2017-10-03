@@ -112,8 +112,6 @@ export const query = graphql`
         src
         srcSet
         sizes
-        originalImg
-        originalName
       }
     }
   }

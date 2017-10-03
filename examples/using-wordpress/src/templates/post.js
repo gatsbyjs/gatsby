@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 import PostIcons from "../components/PostIcons"
+import Img from "gatsby-image"
 
 import { rhythm } from "../utils/typography"
 
@@ -23,14 +24,7 @@ class PostTemplate extends Component {
                   {layout.pictures.map(({ picture }) => {
                     const img =
                       picture.localFile.childImageSharp.responsiveSizes
-                    return (
-                      <img
-                        key={img.src}
-                        src={img.src}
-                        srcSet={img.srcSet}
-                        sizes={img.sizes}
-                      />
-                    )
+                    return <Img key={img.src} responsiveSizes={img} />
                   })}
                 </div>
               )
@@ -40,7 +34,7 @@ class PostTemplate extends Component {
               return (
                 <div key={`${i}-photo`}>
                   <h2>ACF Post Photo</h2>
-                  <img src={img.src} srcSet={img.srcSet} sizes={img.sizes} />
+                  <Img src={img.src} responsiveSizes={img} />
                 </div>
               )
             }
@@ -73,6 +67,8 @@ export const pageQuery = graphql`
               localFile {
                 childImageSharp {
                   responsiveSizes(maxWidth: 680) {
+                    base64
+                    aspectRatio
                     src
                     srcSet
                     sizes
@@ -87,6 +83,8 @@ export const pageQuery = graphql`
                 localFile {
                   childImageSharp {
                     responsiveSizes(maxWidth: 680) {
+                      base64
+                      aspectRatio
                       src
                       srcSet
                       sizes
