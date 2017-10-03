@@ -57,7 +57,7 @@ plugin](https://www.npmjs.com/package/gatsby-transformer-json) internally. Keep
 in mind that our content rarely changes, so this was always the way we wanted it
 to be (without knowing for some time as we had to admit to ourselves).
 
-One of our main goals all along was to show our latest blog posts on Medium.
+One of our main goals all along was to show [our latest blog posts](https://blog.smartive.ch) on Medium.
 Unfortunately at that time there was no plugin to achieve this so we decided to
 write one ourselves. By the time of writing I’m proud to say we successfully did
 so and even [contributed it back to the
