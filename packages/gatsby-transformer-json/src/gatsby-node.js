@@ -1,7 +1,28 @@
 const _ = require(`lodash`)
 const crypto = require(`crypto`)
+const path = require(`path`)
 
 async function onCreateNode({ node, boundActionCreators, loadNodeContent }) {
+  function transformObject(obj, id, type) {
+      const objStr = JSON.stringify(obj)
+      const contentDigest = crypto
+        .createHash(`md5`)
+        .update(objStr)
+        .digest(`hex`)
+      const jsonNode = {
+        ...obj,
+        id,
+        children: [],
+        parent: node.id,
+        internal: {
+          contentDigest,
+          type,
+        },
+      }
+      createNode(jsonNode)
+      createParentChildLink({ parent: node, child: jsonNode })
+  }
+
   const { createNode, createParentChildLink } = boundActionCreators
 
   // We only care about JSON content.
@@ -12,37 +33,22 @@ async function onCreateNode({ node, boundActionCreators, loadNodeContent }) {
   const content = await loadNodeContent(node)
   const parsedContent = JSON.parse(content)
 
-  // TODO handle non-array data.
   if (_.isArray(parsedContent)) {
-    const JSONArray = parsedContent.map((obj, i) => {
-      const objStr = JSON.stringify(obj)
-      const contentDigest = crypto
-        .createHash(`md5`)
-        .update(objStr)
-        .digest(`hex`)
-
-      return {
-        ...obj,
-        id: obj.id ? obj.id : `${node.id} [${i}] >>> JSON`,
-        children: [],
-        parent: node.id,
-        internal: {
-          contentDigest,
-          // TODO make choosing the "type" a lot smarter. This assumes
-          // the parent node is a file.
-          // PascalCase
-          type: _.upperFirst(_.camelCase(`${node.name} Json`)),
-        },
-      }
-    })
-
-    _.each(JSONArray, j => {
-      createNode(j)
-      createParentChildLink({ parent: node, child: j })
+    parsedContent.forEach((obj, i) => {
+      transformObject(
+        obj,
+        obj.id ? obj.id : `${node.id} [${i}] >>> JSON`,
+        _.upperFirst(_.camelCase(`${node.name} Json`)),
+      )
     })
   }
-
-  return
+  else if (_.isPlainObject(parsedContent)) {
+    transformObject(
+      parsedContent,
+      parsedContent.id ? parsedContent.id : `${node.id} >>> JSON`,
+      _.upperFirst(_.camelCase(`${path.basename(node.dir)} Json`)),
+    )
+  }
 }
 
 exports.onCreateNode = onCreateNode
