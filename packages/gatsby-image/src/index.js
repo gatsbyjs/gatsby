@@ -57,14 +57,27 @@ class Image extends React.Component {
     super(props)
 
     // If this browser doesn't support the IntersectionObserver API
-    // we just start downloading the image right away.
+    // we default to start downloading the image right away.
     let isVisible = true
+    let imgLoaded = true
+    let IOSupported = false
+
     if (typeof window !== `undefined` && window.IntersectionObserver) {
       isVisible = false
+      imgLoaded = false
+      IOSupported = true
+    }
+
+    // Always don't render image while server rendering
+    if (typeof window === `undefined`) {
+      isVisible = false
+      imgLoaded = false
     }
 
     this.state = {
       isVisible,
+      imgLoaded,
+      IOSupported,
     }
 
     this.handleRef = this.handleRef.bind(this)
@@ -129,7 +142,7 @@ class Image extends React.Component {
             />
           )}
 
-          {/* Once the image is visible, start downloading the image */}
+          {/* Once the image is visible (or the browser doesn't support IntersectionObserver), start downloading the image */}
           {this.state.isVisible && (
             <Img
               alt={alt}
@@ -140,7 +153,8 @@ class Image extends React.Component {
               opacity={
                 this.state.imgLoaded || this.props.fadeIn === false ? 1 : 0
               }
-              onLoad={() => this.setState({ imgLoaded: true })}
+              onLoad={() =>
+                this.state.IOSupported && this.setState({ imgLoaded: true })}
             />
           )}
         </div>
