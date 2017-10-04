@@ -41,7 +41,7 @@ const Img = props => {
         width: `100%`,
         height: `100%`,
         objectFit: `cover`,
-        objectPosition: `center`
+        objectPosition: `center`,
       }}
     />
   )
@@ -49,7 +49,7 @@ const Img = props => {
 
 Img.propTypes = {
   opacity: PropTypes.number,
-  onLoad: PropTypes.func
+  onLoad: PropTypes.func,
 }
 
 class Image extends React.Component {
@@ -64,7 +64,7 @@ class Image extends React.Component {
     }
 
     this.state = {
-      isVisible
+      isVisible,
     }
 
     this.handleRef = this.handleRef.bind(this)
@@ -86,7 +86,7 @@ class Image extends React.Component {
       style,
       responsiveSizes,
       responsiveResolution,
-      backgroundColor
+      backgroundColor,
     } = this.props
 
     if (responsiveSizes) {
@@ -97,7 +97,7 @@ class Image extends React.Component {
           style={{
             position: `relative`,
             overflow: `hidden`,
-            ...style
+            ...style,
           }}
           ref={this.handleRef}
         >
@@ -105,7 +105,7 @@ class Image extends React.Component {
           <div
             style={{
               width: `100%`,
-              paddingBottom: `${100 / image.aspectRatio}%`
+              paddingBottom: `${100 / image.aspectRatio}%`,
             }}
           />
 
@@ -129,7 +129,7 @@ class Image extends React.Component {
                 top: 0,
                 bottom: 0,
                 right: 0,
-                left: 0
+                left: 0,
               }}
             />
           )}
@@ -163,7 +163,7 @@ class Image extends React.Component {
             width: image.width,
             height: image.height,
             background: `lightgray`,
-            ...style
+            ...style,
           }}
           ref={this.handleRef}
         >
@@ -184,7 +184,7 @@ class Image extends React.Component {
               style={{
                 backgroundColor: backgroundColor,
                 width: image.width,
-                height: image.height
+                height: image.height,
               }}
             />
           )}
@@ -214,7 +214,7 @@ class Image extends React.Component {
 
 Image.defaultProps = {
   fadeIn: true,
-  alt: ``
+  alt: ``,
 }
 
 Image.propTypes = {
@@ -226,7 +226,7 @@ Image.propTypes = {
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]), // Support Glamor's css prop.
   style: PropTypes.object,
   backgroundColor: PropTypes.string,
-  wrapperClassName: PropTypes.oneOfType([PropTypes.string, PropTypes.object]) // Support Glamor's css prop.
+  wrapperClassName: PropTypes.oneOfType([PropTypes.string, PropTypes.object]), // Support Glamor's css prop.
 }
 
 export default Image
