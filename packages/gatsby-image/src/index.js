@@ -111,7 +111,12 @@ class Image extends React.Component {
 
           {/* Show the blury base64 image. */}
           {image.base64 && (
-            <Img alt={alt} title={title} src={image.base64} opacity={1} />
+            <Img
+              alt={alt}
+              title={title}
+              src={image.base64}
+              opacity={!this.state.imgLoaded ? 1 : 0}
+            />
           )}
 
           {/* Show a solid background color. */}
@@ -164,7 +169,12 @@ class Image extends React.Component {
         >
           {/* Show the blury base64 image. */}
           {image.base64 && (
-            <Img alt={alt} title={title} src={image.base64} opacity={1} />
+            <Img
+              alt={alt}
+              title={title}
+              src={image.base64}
+              opacity={!this.state.imgLoaded ? 1 : 0}
+            />
           )}
 
           {/* Show a solid background color. */}
