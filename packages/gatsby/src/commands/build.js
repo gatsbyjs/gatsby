@@ -1,10 +1,10 @@
 /* @flow */
 
+const report = require(`gatsby-cli/lib/reporter`)
 const buildCSS = require(`./build-css`)
 const buildHTML = require(`./build-html`)
 const buildProductionBundle = require(`./build-javascript`)
 const bootstrap = require(`../bootstrap`)
-const report = require(`../reporter`)
 const apiRunnerNode = require(`./api-runner-node`)
 const copyStaticDirectory = require(`./copy-static-directory`)
 
