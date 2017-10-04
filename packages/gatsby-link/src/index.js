@@ -9,7 +9,7 @@ if (typeof __PREFIX_PATHS__ !== `undefined` && __PREFIX_PATHS__) {
 }
 
 export function withPrefix(path) {
-  return pathPrefix + path;
+  return pathPrefix + path
 }
 
 function normalizePath(path) {
