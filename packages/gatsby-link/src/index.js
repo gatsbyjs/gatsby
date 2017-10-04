@@ -8,6 +8,10 @@ if (typeof __PREFIX_PATHS__ !== `undefined` && __PREFIX_PATHS__) {
   pathPrefix = __PATH_PREFIX__
 }
 
+export function withPrefix(path) {
+  return pathPrefix + path;
+}
+
 function normalizePath(path) {
   return path.replace(/^\/\//g, `/`)
 }
@@ -25,14 +29,14 @@ class GatsbyLink extends React.Component {
   constructor(props) {
     super()
     this.state = {
-      to: normalizePath(pathPrefix + props.to),
+      to: normalizePath(withPrefix(props.to)),
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.to !== nextProps.to) {
       this.setState({
-        to: normalizePath(pathPrefix + nextProps.to),
+        to: normalizePath(withPrefix(nextProps.to)),
       })
       ___loader.enqueue(this.state.to)
     }
@@ -117,5 +121,5 @@ GatsbyLink.contextTypes = {
 export default GatsbyLink
 
 export const navigateTo = pathname => {
-  window.___navigateTo(normalizePath(pathPrefix + pathname))
+  window.___navigateTo(normalizePath(withPrefix(pathname)))
 }
