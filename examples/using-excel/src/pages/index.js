@@ -1,7 +1,7 @@
-import React from 'react'
+import React from "react"
 
 class IndexComponent extends React.Component {
-  render () {
+  render() {
     const data1 = this.props.data.allLettersXlsxSheet1.edges
     const data2 = this.props.data.allLettersXlsxSheet2.edges
     return (
@@ -9,7 +9,7 @@ class IndexComponent extends React.Component {
         <table>
           <thead>
             <tr>
-              <th colspan="2">Sheet1</th>
+              <th colSpan="2">Sheet1</th>
             </tr>
             <tr>
               <th>Letter</th>
@@ -28,7 +28,7 @@ class IndexComponent extends React.Component {
         <table>
           <thead>
             <tr>
-              <th colspan="2">Sheet2</th>
+              <th colSpan="2">Sheet2</th>
             </tr>
             <tr>
               <th>Letter</th>

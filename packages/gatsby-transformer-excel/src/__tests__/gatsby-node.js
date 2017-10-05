@@ -21,12 +21,10 @@ describe(`Process  nodes correctly`, () => {
   const loadNodeContent = node => Promise.resolve(node.content)
 
   it(`correctly creates nodes from JSON which is an array of objects`, async () => {
-    const data = [
-      [`blue`, `funny`],
-      [true, `yup` ],
-      [false, `nope` ],
-    ]
-    const csv = XLSX.utils.sheet_to_csv(XLSX.utils.aoa_to_sheet(data, { raw:true }))
+    const data = [[`blue`, `funny`], [true, `yup`], [false, `nope`]]
+    const csv = XLSX.utils.sheet_to_csv(
+      XLSX.utils.aoa_to_sheet(data, { raw: true })
+    )
     node.content = csv
 
     const createNode = jest.fn()
@@ -48,10 +46,12 @@ describe(`Process  nodes correctly`, () => {
   it(`If the object has an id, it uses that as the id instead of the auto-generated one`, async () => {
     const data = [
       [`id`, `blue`, `funny`],
-      [`foo`, true, `yup` ],
-      [void 0, false, `nope` ],
+      [`foo`, true, `yup`],
+      [void 0, false, `nope`],
     ]
-    const csv = XLSX.utils.sheet_to_csv(XLSX.utils.aoa_to_sheet(data, { raw:true }))
+    const csv = XLSX.utils.sheet_to_csv(
+      XLSX.utils.aoa_to_sheet(data, { raw: true })
+    )
     node.content = csv
 
     const createNode = jest.fn()
@@ -69,13 +69,15 @@ describe(`Process  nodes correctly`, () => {
 
   it(`the different objects shouldn't get the same ID even if they have the same content`, async () => {
     const data = [
-			[`id`, `blue`, `funny`, `green` ],
-      [ `foo`, true, `yup` ],
-      [ void 0, false, `nope` ],
-      [ void 0, false, `nope` ],
-      [ void 0, void 0, `nope`, false ],
+      [`id`, `blue`, `funny`, `green`],
+      [`foo`, true, `yup`],
+      [void 0, false, `nope`],
+      [void 0, false, `nope`],
+      [void 0, void 0, `nope`, false],
     ]
-    const csv = XLSX.utils.sheet_to_csv(XLSX.utils.aoa_to_sheet(data, { raw:true }))
+    const csv = XLSX.utils.sheet_to_csv(
+      XLSX.utils.aoa_to_sheet(data, { raw: true })
+    )
     node.content = csv
 
     const createNode = jest.fn()

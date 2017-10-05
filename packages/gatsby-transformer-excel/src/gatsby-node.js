@@ -5,7 +5,9 @@ const crypto = require(`crypto`)
 
 // read files as `binary` from file system
 function _loadNodeContent(fileNode, fallback) {
-  return fileNode.absolutePath ? fs.readFile(fileNode.absolutePath, `binary`) : fallback(fileNode)
+  return fileNode.absolutePath
+    ? fs.readFile(fileNode.absolutePath, `binary`)
+    : fallback(fileNode)
 }
 
 async function onCreateNode(
@@ -13,17 +15,19 @@ async function onCreateNode(
   options
 ) {
   const { createNode, createParentChildLink } = boundActionCreators
-  const extensions = `xls|xlsx|xlsm|xlsb|xml|xlw|xlc|csv|txt|dif|sylk|slk|prn|ods|fods|uos|dbf|wks|123|wq1|qpw|htm|html`.split(`|`)
-  if (extensions.indexOf((node.extension||``).toLowerCase()) == -1) {
+  const extensions = `xls|xlsx|xlsm|xlsb|xml|xlw|xlc|csv|txt|dif|sylk|slk|prn|ods|fods|uos|dbf|wks|123|wq1|qpw|htm|html`.split(
+    `|`
+  )
+  if (extensions.indexOf((node.extension || ``).toLowerCase()) == -1) {
     return
   }
   // Load binary string
   const content = await _loadNodeContent(node, loadNodeContent)
   // Parse
-  let wb = XLSX.read(content, { type:`binary`, cellDates:true })
+  let wb = XLSX.read(content, { type: `binary`, cellDates: true })
   wb.SheetNames.forEach((n, idx) => {
     let ws = wb.Sheets[n]
-    let parsedContent = XLSX.utils.sheet_to_json(ws, { raw:true })
+    let parsedContent = XLSX.utils.sheet_to_json(ws, { raw: true })
 
     if (_.isArray(parsedContent)) {
       const csvArray = parsedContent.map((obj, i) => {
@@ -40,7 +44,10 @@ async function onCreateNode(
           parent: node.id,
           internal: {
             contentDigest,
-            type: _.upperFirst(_.camelCase(`${node.name} ${node.extension}`)) + `__` + _.upperFirst(_.camelCase(`${n}`)),
+            type:
+              _.upperFirst(_.camelCase(`${node.name} ${node.extension}`)) +
+              `__` +
+              _.upperFirst(_.camelCase(`${n}`)),
           },
         }
       })
@@ -51,7 +58,7 @@ async function onCreateNode(
         createParentChildLink({ parent: node, child: y })
       })
 
-      const shObj = { name:n, idx:idx }
+      const shObj = { name: n, idx: idx }
       const shStr = JSON.stringify(shObj)
       const contentDigest = crypto
         .createHash(`md5`)
