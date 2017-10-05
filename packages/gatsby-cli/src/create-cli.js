@@ -9,21 +9,23 @@ const DEFAULT_BROWSERS =  [
   `IE >= 9`,
 ]
 
+
+
 const handlerP = (fn) => (...args) => {
   Promise.resolve(fn(...args))
     .then(() => process.exit(0), (err) => report.panic(err))
 }
 
+
 function buildLocalCommands(cli, isLocalSite) {
   const defaultHost = `localhost`
   const directory = path.resolve(`.`)
 
-  function getSiteInfo() {
-    if (!isLocalSite) return {}
-
-    const sitePackageJson = require(path.join(directory, `package.json`))
-    const browserslist = sitePackageJson.browserslist || DEFAULT_BROWSERS
-    return { sitePackageJson, browserslist }
+  let siteInfo = { directory, browserslist: DEFAULT_BROWSERS }
+  if (isLocalSite) {
+    const json = require(path.join(directory, `package.json`))
+    siteInfo.sitePackageJson = json
+    siteInfo.browserslist =  json.browserslist || siteInfo.browserslist
   }
 
   function resolveLocalCommand(command) {
@@ -57,6 +59,26 @@ function buildLocalCommands(cli, isLocalSite) {
     }
   }
 
+  function getCommandHandler(command, handler) {
+    return argv => {
+      report.setVerbose(!!argv.verbose)
+
+      process.env.gatsby_log_level = argv.verbose ? `verbose` : `normal`
+      report.verbose(`set gatsby_log_level: "${process.env.gatsby_log_level}"`)
+
+      process.env.gatsby_executing_command === command
+      report.verbose(`set gatsby_executing_command: "${command}"`)
+
+      let localCmd = resolveLocalCommand(command)
+      let args = { ...argv, ...siteInfo }
+
+      report.verbose(`running command: ${command}`)
+      return handler ?
+        handler(args, localCmd) :
+        localCmd(args)
+    }
+  }
+
   cli.command({
     command: `develop`,
     desc:
@@ -80,16 +102,7 @@ function buildLocalCommands(cli, isLocalSite) {
         type: `boolean`,
         describe: `Open the site in your browser for you.`,
       }),
-    handler: argv => {
-      const { sitePackageJson, browserslist } = getSiteInfo()
-
-      resolveLocalCommand(`develop`)({
-        ...argv,
-        directory,
-        sitePackageJson,
-        browserslist,
-      })
-    },
+    handler: getCommandHandler(`develop`),
   })
 
   cli
@@ -102,17 +115,12 @@ function buildLocalCommands(cli, isLocalSite) {
           default: false,
           describe: `Build site with link paths prefixed (set prefix in your config).`,
         }),
-      handler: handlerP(argv => {
-        process.env.NODE_ENV = `production`
-        const { sitePackageJson, browserslist } = getSiteInfo()
-
-        return resolveLocalCommand(`build`)({
-          ...argv,
-          directory,
-          sitePackageJson,
-          browserslist,
+      handler: handlerP(
+        getCommandHandler(`build`, (args, cmd) => {
+          process.env.NODE_ENV = `production`
+          return cmd(args)
         })
-      }),
+      ),
     })
 
     cli
@@ -138,16 +146,7 @@ function buildLocalCommands(cli, isLocalSite) {
             describe: `Open the site in your browser for you.`,
           }),
 
-        handler: argv => {
-          const { sitePackageJson, browserslist } = getSiteInfo()
-
-          resolveLocalCommand(`serve`)({
-            ...argv,
-            directory,
-            sitePackageJson,
-            browserslist,
-          })
-        },
+        handler: getCommandHandler(`serve`),
       })
 }
 
@@ -171,6 +170,12 @@ module.exports = (argv, handlers) => {
     .usage(`Usage: $0 <command> [options]`)
     .help(`h`).alias(`h`, `help`)
     .version().alias(`v`, `version`)
+    .option(`verbose`, {
+      default: false,
+      type: `boolean`,
+      describe: `Turn on verbose output`,
+      global: true,
+    })
 
   buildLocalCommands(cli, isLocalSite)
 
