@@ -4,7 +4,6 @@ const normalize = require(`normalize-path`)
 import glob from "glob"
 
 import { validate } from "graphql"
-import invariant from "invariant"
 import { IRTransforms } from "relay-compiler"
 import ASTConvert from "relay-compiler/lib/ASTConvert"
 import RelayCompilerContext from "relay-compiler/lib/RelayCompilerContext"

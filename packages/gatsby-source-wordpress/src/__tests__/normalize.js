@@ -19,6 +19,9 @@ describe(`Process WordPress data`, () => {
     entities = normalize.liftRenderedField(entities)
     expect(entities).toMatchSnapshot()
   })
+  it(`excludes unknown entities`, () => {
+    entities = normalize.excludeUnknownEntities(entities)
+  })
   it(`creates Gatsby IDs for each entity`, () => {
     entities = normalize.createGatsbyIds(entities)
     expect(entities).toMatchSnapshot()

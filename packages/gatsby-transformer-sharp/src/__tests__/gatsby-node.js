@@ -1,5 +1,3 @@
-const Promise = require(`bluebird`)
-
 const { onCreateNode } = require(`../gatsby-node`)
 
 describe(`Process image nodes correctly`, () => {

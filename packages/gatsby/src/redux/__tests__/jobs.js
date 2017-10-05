@@ -1,4 +1,4 @@
-const { actions, boundActions } = require(`../actions`)
+const { actions } = require(`../actions`)
 const jobsReducer = require(`../reducers/jobs`)
 
 Date.now = jest.fn(() => 1482363367071)
@@ -45,6 +45,7 @@ describe(`Job actions/reducer`, () => {
         state,
         actions.endJob({ id: `test job` }, { name: `test-plugin` })
       )
+      return state
     }
 
     expect(runReducer).toThrowErrorMatchingSnapshot()

@@ -14,9 +14,7 @@ const buildConnectionFields = require(`../build-connection-fields`)
 const {
   inferInputObjectStructureFromNodes,
 } = require(`../infer-graphql-input-fields`)
-const {
-  createSortField,
-} = require(`../infer-graphql-input-fields-from-fields.js`)
+const createSortField = require(`../create-sort-field`)
 
 function queryResult(nodes, query, { types = [] } = {}) {
   const nodeType = new GraphQLObjectType({

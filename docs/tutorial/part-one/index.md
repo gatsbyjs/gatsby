@@ -53,7 +53,7 @@ Gatsby has a built-in development server. Let's start it up.
 
 ```sh
 cd tutorial-part-one
-npm run develop
+gatsby develop
 ```
 
 You should see shortly some text that says `The development server is listening at:` [http://localhost:8000](http://localhost:8000). Open that address in your browser and...
@@ -64,7 +64,7 @@ Yeah! It's working!!!
 
 Too cool 😎
 
-Gatsby's development server is a "hot reloading" server meaning any change you make to your React.js page components (and later we'll learn, your data files) will hot reload in the browser.
+Gatsby's development server is a "hot reloading" server, meaning any change you make to your React.js page components (and later we'll learn, your data files) will hot reload in the browser.
 
 This is huge because it makes development so much faster and fun.
 

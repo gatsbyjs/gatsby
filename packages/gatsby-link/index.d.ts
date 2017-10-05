@@ -6,4 +6,6 @@ export interface GatsbyLinkProps extends NavLinkProps {
   onClick?: (event: any) => void
 }
 
+export const navigateTo: (path: string) => void;
+
 export default class GatsbyLink extends React.Component<GatsbyLinkProps> { }

@@ -135,8 +135,6 @@ async function onCreateNode({
 
     createNode(nodeData)
     createParentChildLink({ parent: node, child: nodeData })
-
-    return
   }
 }
 

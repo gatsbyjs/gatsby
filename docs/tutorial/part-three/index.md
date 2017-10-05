@@ -9,19 +9,17 @@ On this page, the sidebar to the left (assuming you're on a larger device) and t
 
 Let's dive in and explore Gatsby layouts.
 
-First create a new site for this part of the tutorial. We'll use the "hello world" starter again.
+First, create a new site for this part of the tutorial. We'll use the "hello world" starter again.
 
 ```shell
 gatsby new tutorial-part-three https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
-Once the site is finished installing, install `gatsby-plugin-typography` and for a Typography.js theme, let's try this time the "Fairy Gates" typography theme.
+Once the site is finished installing, install `gatsby-plugin-typography`. For the Typography.js theme, let's try this time the "Fairy Gates" typography theme.
 
 ```shell
 npm install --save gatsby-plugin-typography typography-theme-fairy-gates
 ```
-
- Set these up in your site directory.
 
 Create the typography config file at `src/utils/typography.js`
 
@@ -49,7 +47,7 @@ module.exports = {
 }
 ```
 
-Now let's add a few different pages, a front page, an about page, and a contact page.
+Now, let's add a few different pages: a front page, an about page, and a contact page.
 
 `src/pages/index.js`
 
@@ -98,13 +96,13 @@ export default () =>
 
 We now have the start of a nice personal site!
 
-But a few problems. First, it'd be nice if the page content was centered on the screen like in part two of the tutorial. And second, we should really have some sort of global navigation so it's easy for visitors to find and visit each of the sub-pages.
+But there are a few problems. First, it'd be nice if the page content was centered on the screen like in part two of the tutorial. And second, we should really have some sort of global navigation so it's easy for visitors to find and visit each of the sub-pages.
 
 Let's tackle these problems by creating our first layout component.
 
 ## Our first layout component
 
-First create a new directory at `src/layouts`. All layout components have to be in this directory.
+First, create a new directory at `src/layouts`. All layout components have to be in this directory.
 
 Let's create a very simple layout component at `src/layouts/index.js`
 
@@ -172,6 +170,6 @@ export default ({ children }) =>
 
 And there we have it! A three page site with a simple global navigation.
 
-With your new "layout component" powers, you can easily add to your Gatsby sites headers, footers, global navigation, sidebars, etc.
+With your new "layout component" powers, you can easily add headers, footers, global navigation, sidebars, etc. to your Gatsby sites.
 
 Continue on to [part four of the tutorial where we'll start learning about Gatsby's data layer and programmatic pages!](/tutorial/part-four/)

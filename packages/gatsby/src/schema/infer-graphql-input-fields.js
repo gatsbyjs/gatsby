@@ -6,8 +6,6 @@ const {
   GraphQLFloat,
   GraphQLInt,
   GraphQLList,
-  GraphQLEnumType,
-  GraphQLNonNull,
 } = require(`graphql`)
 const { oneLine } = require(`common-tags`)
 const _ = require(`lodash`)

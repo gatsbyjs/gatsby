@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-react-next",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Use React 16 with your Gatsby v1 site",
   "main": "index.js",
   "scripts": {
@@ -16,8 +16,8 @@
   "dependencies": {
     "babel-runtime": "^6.26.0",
     "core-js": "^2.5.1",
-    "react": "16.0.0-rc.3",
-    "react-dom": "16.0.0-rc.3"
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

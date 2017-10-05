@@ -14,17 +14,18 @@ class PostTemplate extends Component {
         <PostIcons node={post} css={{ marginBottom: rhythm(1 / 2) }} />
         <div dangerouslySetInnerHTML={{ __html: post.content }} />
         {post.acf &&
-          post.acf.page_builder &&
-          post.acf.page_builder.map(layout => {
-            if (layout.__typename === `WordPressAcf_POST_image_gallery`) {
+          post.acf.page_builder_post &&
+          post.acf.page_builder_post.map((layout, i) => {
+            if (layout.__typename === `WordPressAcf_image_gallery`) {
               return (
-                <div>
+                <div key={`${i} image-gallery`}>
                   <h2>ACF Image Gallery</h2>
                   {layout.pictures.map(({ picture }) => {
                     const img =
                       picture.localFile.childImageSharp.responsiveSizes
                     return (
                       <img
+                        key={img.src}
                         src={img.src}
                         srcSet={img.srcSet}
                         sizes={img.sizes}
@@ -34,15 +35,16 @@ class PostTemplate extends Component {
                 </div>
               )
             }
-            if (layout.__typename === `WordPressAcf_POST_post_photo`) {
+            if (layout.__typename === `WordPressAcf_post_photo`) {
               const img = layout.photo.localFile.childImageSharp.responsiveSizes
               return (
-                <div>
+                <div key={`${i}-photo`}>
                   <h2>ACF Post Photo</h2>
                   <img src={img.src} srcSet={img.srcSet} sizes={img.sizes} />
                 </div>
               )
             }
+            return null
           })}
       </div>
     )
@@ -64,9 +66,9 @@ export const pageQuery = graphql`
       content
       ...PostIcons
       acf {
-        page_builder {
+        page_builder_post {
           __typename
-          ... on WordPressAcf_POST_post_photo {
+          ... on WordPressAcf_post_photo {
             photo {
               localFile {
                 childImageSharp {
@@ -79,7 +81,7 @@ export const pageQuery = graphql`
               }
             }
           }
-          ... on WordPressAcf_POST_image_gallery {
+          ... on WordPressAcf_image_gallery {
             pictures {
               picture {
                 localFile {

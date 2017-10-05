@@ -254,7 +254,7 @@ module.exports = (
           return getAST(markdownNode).then(ast => {
             const textNodes = []
             visit(ast, `text`, textNode => textNodes.push(textNode.value))
-            return prune(textNodes.join(` `), pruneLength, '…')
+            return prune(textNodes.join(` `), pruneLength, `…`)
           })
         },
       },
