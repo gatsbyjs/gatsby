@@ -22,7 +22,7 @@ plugins: [
 
 ## Parsing algorithm
 
-It recognizes files with the following extensions as images.
+Per default it recognizes files with the following extensions as images:
 
 * jpeg
 * jpg
@@ -30,6 +30,21 @@ It recognizes files with the following extensions as images.
 * webp
 * tif
 * tiff
-* svg
+
+If you want to modify the extensions of files being parsed as images you can
+use the `fileExtensions` option of the plugin as follows:
+
+```javascript
+// In your gatsby-config.js
+plugins: [
+  {
+    resolve: 'gatsby-transformer-sharp',
+    options: {
+      // add support for SVG files as well
+      fileExtensions: ['jpeg', 'jpg', 'png', 'webp', 'tif', 'tiff', 'svg']
+    }
+  },
+]
+```
 
 Each image file is parsed into a node of type `ImageSharp`.

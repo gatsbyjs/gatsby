@@ -1,10 +1,13 @@
 const _ = require(`lodash`)
 
-module.exports = async function onCreateNode({ node, boundActionCreators }) {
+module.exports = async function onCreateNode({ node, boundActionCreators }, pluginOptions) {
   const { createNode, createParentChildLink } = boundActionCreators
+  const defaultOptions = {
+    fileExtensions: [`jpeg`, `jpg`, `png`, `webp`, `tif`, `tiff`],
+  }
+  const options = _.defaults(pluginOptions, defaultOptions)
 
-  const extensions = [`jpeg`, `jpg`, `png`, `webp`, `tif`, `tiff`]
-  if (!_.includes(extensions, node.extension)) {
+  if (!_.includes(options.fileExtensions, node.extension)) {
     return
   }
 
