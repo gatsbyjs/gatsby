@@ -594,7 +594,7 @@ In our index page's query, change `allMarkdownRemark` to `  allMarkdownRemark(so
 
 Try opening Graph*i*QL and playing with different sort options. You can sort the `allFile` connection along with other connections.
 
-## Programatically creating pages from data
+## Programmatically creating pages from data
 
 So this is great! We have a nice index page where we're querying our markdown files. But we don't want to just see excerpts, we want actual pages for our markdown files.
 

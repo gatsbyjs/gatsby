@@ -69,11 +69,11 @@ export default AboutPage;
 
 ### Page template components
 
-You can programatically create pages using "page template components". All pages are React components but very often these components are fairly simple wrappers around data from files or other sources.
+You can programmatically create pages using "page template components". All pages are React components but very often these components are fairly simple wrappers around data from files or other sources.
 
 `src/templates/post.jsx` is an example of a page component. It queries GraphQL for markdown data and then renders the page using this data.
 
-See [part four](/tutorial/part-four/) of the tutorial for a detailed introduction to programatically creating pages.
+See [part four](/tutorial/part-four/) of the tutorial for a detailed introduction to programmatically creating pages.
 
 Example:
 
