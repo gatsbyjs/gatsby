@@ -1,6 +1,7 @@
 import React from "react"
 import Link from "gatsby-link"
 import * as PropTypes from "prop-types"
+import Img from "gatsby-image"
 
 import { rhythm } from "../utils/typography"
 
@@ -22,15 +23,13 @@ class CategoryTemplate extends React.Component {
             marginBottom: rhythm(1 / 2),
           }}
         >
-          <img
+          <Img
             style={{
               height: iconImg.height,
               width: iconImg.width,
               marginRight: rhythm(1 / 2),
             }}
-            src={iconImg.src}
-            srcSet={iconImg.srcSet}
-            alt=""
+            responsiveResolution={iconImg}
           />
           <h4 style={{ marginBottom: 0 }}>{title}</h4>
         </div>
@@ -65,6 +64,7 @@ export const pageQuery = graphql`
       }
       icon {
         responsiveResolution(width: 75) {
+          base64
           src
           srcSet
           height

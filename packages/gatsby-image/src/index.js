@@ -1,6 +1,11 @@
 import React from "react"
 import PropTypes from "prop-types"
 
+// TODO responsiveSizes => sizes, responsiveResolution => resolutions
+// TODO support adding node_modules/gatsby-image as place to scan for graphql fragments to gatsby-plugin-sharp and gatsby-source-contentful
+// TODO cache if a image has been loaded already and don't wait to show it.
+// TODO add fragments here with and without base64.
+
 let io
 const listeners = []
 if (typeof window !== `undefined` && window.IntersectionObserver) {
@@ -27,7 +32,7 @@ const listenToIntersections = (el, cb) => {
 }
 
 const Img = props => {
-  const { opacity, onLoad, ...otherProps } = props
+  const { opacity, onLoad, opacityTransition = true, ...otherProps } = props
   return (
     <img
       {...otherProps}
@@ -36,7 +41,7 @@ const Img = props => {
         position: `absolute`,
         top: 0,
         left: 0,
-        transition: `opacity 0.5s`,
+        transition: opacityTransition ? `opacity 0.5s` : ``,
         opacity,
         width: `100%`,
         height: `100%`,
@@ -49,6 +54,7 @@ const Img = props => {
 
 Img.propTypes = {
   opacity: PropTypes.number,
+  opacityTransition: PropTypes.bool,
   onLoad: PropTypes.func,
 }
 
@@ -129,6 +135,7 @@ class Image extends React.Component {
               title={title}
               src={image.base64}
               opacity={!this.state.imgLoaded ? 1 : 0}
+              opacityTransition={false}
             />
           )}
 
@@ -188,6 +195,7 @@ class Image extends React.Component {
               title={title}
               src={image.base64}
               opacity={!this.state.imgLoaded ? 1 : 0}
+              opacityTransition={false}
             />
           )}
 

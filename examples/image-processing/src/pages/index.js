@@ -1,4 +1,5 @@
 import React from "react"
+import Img from "gatsby-image"
 
 import { rhythm } from "../utils/typography"
 
@@ -15,16 +16,19 @@ class Index extends React.Component {
     return (
       <div>
         <p>
-          <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/">
-            <code>gatsby-plugin-sharp</code>
+          <a href="https://www.gatsbyjs.org/packages/gatsby-transformer-sharp/">
+            <code>gatsby-transformer-sharp</code>
           </a>
           {` `}
-          exposes several image processing functions built on the
+          exposes several image processing GraphQL functions built on the
           {` `}
           <a href="https://github.com/lovell/sharp">
             Sharp image processing library
-          </a>. It is a low-level helper plugin generally used by other Gatsby
-          plugins – but you can easily use it in your own GraphQL queries!
+          </a>. With it and{" "}
+          <a href="https://www.gatsbyjs.org/packages/gatsby-image/">
+            Gatsby Image
+          </a>{" "}
+          you can easily add fast, optimized, responsive images to your site.
         </p>
         <p>
           <strong>
@@ -152,10 +156,16 @@ class Index extends React.Component {
           </a>
         </h2>
         <p>
-          Create sizes (in width) for the image. If the max width of the
-          container for the rendered markdown file is 800px, the sizes would
-          then be: 200, 400, 800, 1200, 1600, 2400 – enough to provide close to
-          the optimal image size for every device size / screen resolution.
+          For when you want an image that stretches across a fluid width
+          container but will download the smallest image needed for the device
+          e.g. a smartphone will download a much smaller image than a desktop
+          device.
+        </p>
+        <p>
+          If the max width of the container for the rendered markdown file is
+          800px, the sizes would then be: 200, 400, 800, 1200, 1600, 2400 –
+          enough to provide close to the optimal image size for every device
+          size / screen resolution.
         </p>
         <p>
           On top of that, <code>responsiveSizes</code>
@@ -220,39 +230,7 @@ class Index extends React.Component {
             highlight: "#f00e2e", shadow: "#192550" {`}`}, toFormat: PNG)
           </small>
         </h3>
-        <div>
-          <div
-            style={{
-              position: `relative`,
-              zIndex: -1,
-            }}
-          >
-            <div
-              style={{
-                paddingBottom: `${1 / responsiveSizes.aspectRatio * 100}%`,
-                position: `relative`,
-                width: `100%`,
-                bottom: 0,
-                left: 0,
-                backgroundImage: `url(${responsiveSizes.base64})`,
-                backgroundSize: `cover`,
-              }}
-            >
-              <img
-                src={responsiveSizes.src}
-                srcSet={responsiveSizes.srcSet}
-                style={{
-                  width: `100%`,
-                  margin: 0,
-                  verticalAlign: `middle`,
-                  position: `absolute`,
-                }}
-                sizes={responsiveSizes.sizes}
-              />
-            </div>
-          </div>
-        </div>
-
+        <Img responsiveSizes={responsiveSizes} />
         <h2
           style={{
             paddingTop: rhythm(2),
@@ -263,8 +241,12 @@ class Index extends React.Component {
           </a>
         </h2>
         <p>
-          Automatically create sizes for different resolutions — we do 1x, 1.5x,
-          2x, and 3x.
+          For when you want a fixed sized image but that has different sized
+          thumbnails for screens that support different density of images
+        </p>
+        <p>
+          Automatically create images for different resolutions — we do 1x,
+          1.5x, 2x, and 3x.
           {` `}
         </p>
 
@@ -282,10 +264,7 @@ class Index extends React.Component {
           to convert the source image to 8-bit greyscale, 256 shades of grey.
         </p>
 
-        <img
-          src={responsiveResolution.src}
-          srcSet={responsiveResolution.srcSet}
-        />
+        <Img responsiveResolution={responsiveResolution} />
       </div>
     )
   }
@@ -338,7 +317,9 @@ export const pageQuery = graphql`
       }
     }
     resolution: imageSharp(id: { regex: "/lol.jpg/" }) {
-      responsiveResolution(grayscale: true, width: 614) {
+      responsiveResolution(grayscale: true, width: 500) {
+        height
+        width
         src
         srcSet
         originalName
