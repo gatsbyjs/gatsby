@@ -35,7 +35,7 @@ function createDescriptionNode(node, entry, boundActionCreators) {
 }
 
 function createPropNodes(node, component, boundActionCreators) {
-  const { createNode, updateNode } = boundActionCreators
+  const { createNode } = boundActionCreators
   let children = new Array(component.props.length)
 
   component.props.forEach((prop, i) => {

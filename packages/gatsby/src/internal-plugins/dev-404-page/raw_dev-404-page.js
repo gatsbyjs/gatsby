@@ -1,7 +1,12 @@
+/* global graphql: false */
 import React from "react"
 import Link from "gatsby-link"
 
 class Dev404Page extends React.Component {
+  static propTypes = {
+    data: () => {},
+    location: () => {},
+  }
   render() {
     const pathname = this.props.location.pathname
     let newFilePath
@@ -16,7 +21,8 @@ class Dev404Page extends React.Component {
       <div>
         <h1>Gatsby.js development 404 page</h1>
         <p>
-          There's not a page yet at <code>{pathname}</code>
+          {`There's not a page yet at `}
+          <code>{pathname}</code>
         </p>
         <p>
           Create a React.js component in your site directory at

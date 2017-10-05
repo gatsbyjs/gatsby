@@ -11,7 +11,7 @@ const remark = new Remark().data(`settings`, {
 
 describe(`gatsby-remark-smartypants`, () => {
   it(`applies smartypants to text nodes`, () => {
-    const sentence = `He said, "A \'simple\' english sentence. . .`
+    const sentence = `He said, "A 'simple' english sentence. . .`
 
     const markdownAST = remark.parse(`
 ${sentence}

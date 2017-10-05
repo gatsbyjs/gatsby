@@ -83,7 +83,7 @@ actions.createPage = (page, plugin = ``, traceId) => {
     console.log(chalk.blue.bgYellow(`The upserted page didn't pass validation`))
     console.log(chalk.bold.red(result.error))
     console.log(page)
-    return
+    return null
   }
 
   // If the path doesn't have an initial forward slash, add it.
@@ -153,7 +153,7 @@ actions.createLayout = (layout, plugin = ``, traceId) => {
     )
     console.log(chalk.bold.red(result.error))
     console.log(layout)
-    return
+    return null
   }
 
   return {

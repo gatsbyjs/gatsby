@@ -29,7 +29,7 @@ exports.createPageDependency = ({ path, nodeId, connection }) => {
     connectionDependencyExists = true
   }
   if (nodeDependencyExists && connectionDependencyExists) {
-    return false
+    return
   }
 
   // It's new, let's dispatch it

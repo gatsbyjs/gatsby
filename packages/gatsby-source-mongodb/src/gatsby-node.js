@@ -1,9 +1,7 @@
-const Db = require(`mongodb`).Db,
-  MongoClient = require(`mongodb`).MongoClient,
-  ObjectID = require(`mongodb`).ObjectID,
-  crypto = require(`crypto`),
-  createMappingChildNodes = require(`./mapping`),
-  _ = require(`lodash`)
+const MongoClient = require(`mongodb`).MongoClient
+const crypto = require(`crypto`)
+const createMappingChildNodes = require(`./mapping`)
+const _ = require(`lodash`)
 
 exports.sourceNodes = (
   { boundActionCreators, getNode, hasNodeChanged },
