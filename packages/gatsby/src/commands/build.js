@@ -17,8 +17,8 @@ type BuildArgs = {
   directory: string,
   sitePackageJson: object,
   browserslist: string[],
-  prefixPaths: boolean
-};
+  prefixPaths: boolean,
+}
 
 module.exports = async function build(program: BuildArgs) {
   const { graphqlRunner } = await bootstrap(program)
@@ -61,4 +61,3 @@ module.exports = async function build(program: BuildArgs) {
 
   report.info(`Done building in ${process.uptime()} sec`)
 }
-

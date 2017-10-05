@@ -6,7 +6,6 @@ const fs = require(`fs-extra`)
 const sysPath = require(`path`)
 const report = require(`./reporter`)
 
-
 const spawn = (cmd: string) => {
   const [file, ...args] = cmd.split(/\s+/)
   return execa(file, args, { stdio: `inherit` })
@@ -27,7 +26,7 @@ const shouldUseYarn = () => {
 }
 
 // Executes `npm install` or `yarn install` in rootPath.
-const install = async (rootPath) => {
+const install = async rootPath => {
   const prevDir = process.cwd()
 
   report.info(`Installing packages...`)
@@ -82,9 +81,8 @@ const clone = async (hostInfo: any, rootPath: string) => {
 }
 
 type InitOptions = {
-  rootPath?: string
-};
-
+  rootPath?: string,
+}
 
 /**
  * Main function that clones or copies the starter.
@@ -101,4 +99,3 @@ module.exports = async (starter: string, options: InitOptions = {}) => {
   if (hostedInfo) await clone(hostedInfo, rootPath)
   else await copy(starter, rootPath)
 }
-

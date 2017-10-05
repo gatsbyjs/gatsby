@@ -2,7 +2,7 @@
 const webpack = require(`webpack`)
 const webpackConfig = require(`../utils/webpack.config`)
 
-module.exports = async (program) => {
+module.exports = async program => {
   const { directory } = program
 
   const compilerConfig = await webpackConfig(

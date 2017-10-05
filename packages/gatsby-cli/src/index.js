@@ -34,5 +34,4 @@ process.on(`uncaughtException`, error => {
   report.panic(`UNHANDLED EXCEPTION`, error)
 })
 
-
 createCli(process.argv)
