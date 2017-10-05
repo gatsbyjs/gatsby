@@ -18,7 +18,7 @@ const BlurUp = ({ data }) => (
       }}
       backgroundColor={`lightgray`}
       title={`Photo by Redd Angelo on Unsplash`}
-      responsiveResolution={data.reddImageMobile.responsiveResolution}
+      resolutions={data.reddImageMobile.resolutions}
     />
     <Img
       css={{
@@ -32,7 +32,7 @@ const BlurUp = ({ data }) => (
       }}
       backgroundColor={`lightgray`}
       title={`Photo by Redd Angelo on Unsplash`}
-      responsiveResolution={data.reddImage.responsiveResolution}
+      resolutions={data.reddImage.resolutions}
     />
     <p>
       Lorem markdownum nocens, est aut tergo, inmansuetique bella. Neve illud
@@ -64,7 +64,7 @@ const BlurUp = ({ data }) => (
       <li>Constitit nomine senta suspirat et signis genuisse</li>
     </ol>
     <Img
-      responsiveSizes={data.kenImage.responsiveSizes}
+      sizes={data.kenImage.sizes}
       backgroundColor={`lightgray`}
       title={`Photo by Ken Treloar on Unsplash`}
     />
@@ -89,7 +89,7 @@ export default BlurUp
 export const query = graphql`
   query BackgroundColorQuery {
     reddImageMobile: imageSharp(id: { regex: "/redd/" }) {
-      responsiveResolution(width: 126) {
+      resolutions(width: 126) {
         aspectRatio
         width
         height
@@ -98,7 +98,7 @@ export const query = graphql`
       }
     }
     reddImage: imageSharp(id: { regex: "/redd/" }) {
-      responsiveResolution(width: 201) {
+      resolutions(width: 201) {
         aspectRatio
         width
         height
@@ -107,7 +107,7 @@ export const query = graphql`
       }
     }
     kenImage: imageSharp(id: { regex: "/ken-treloar/" }) {
-      responsiveSizes(maxWidth: 599) {
+      sizes(maxWidth: 599) {
         aspectRatio
         src
         srcSet

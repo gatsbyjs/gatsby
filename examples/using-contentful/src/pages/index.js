@@ -24,10 +24,10 @@ const Product = ({ node }) => (
         }}
       >
         <div style={{ marginRight: rhythm(1 / 2) }}>
-          {node.image[0].responsiveResolution.src && (
+          {node.image[0].resolutions.src && (
             <Img
               style={{ margin: 0 }}
-              responsiveResolution={node.image[0].responsiveResolution}
+              resolutions={node.image[0].resolutions}
             />
           )}
         </div>
@@ -89,7 +89,7 @@ export const pageQuery = graphql`
             productName
           }
           image {
-            responsiveResolution(width: 75) {
+            resolutions(width: 75) {
               base64
               src
               srcSet
@@ -108,7 +108,7 @@ export const pageQuery = graphql`
             productName
           }
           image {
-            responsiveResolution(width: 75) {
+            resolutions(width: 75) {
               base64
               src
               srcSet

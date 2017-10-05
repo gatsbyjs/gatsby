@@ -22,19 +22,18 @@ class PostTemplate extends Component {
                 <div key={`${i} image-gallery`}>
                   <h2>ACF Image Gallery</h2>
                   {layout.pictures.map(({ picture }) => {
-                    const img =
-                      picture.localFile.childImageSharp.responsiveSizes
-                    return <Img key={img.src} responsiveSizes={img} />
+                    const img = picture.localFile.childImageSharp.sizes
+                    return <Img key={img.src} sizes={img} />
                   })}
                 </div>
               )
             }
             if (layout.__typename === `WordPressAcf_post_photo`) {
-              const img = layout.photo.localFile.childImageSharp.responsiveSizes
+              const img = layout.photo.localFile.childImageSharp.sizes
               return (
                 <div key={`${i}-photo`}>
                   <h2>ACF Post Photo</h2>
-                  <Img src={img.src} responsiveSizes={img} />
+                  <Img src={img.src} sizes={img} />
                 </div>
               )
             }
@@ -66,7 +65,7 @@ export const pageQuery = graphql`
             photo {
               localFile {
                 childImageSharp {
-                  responsiveSizes(maxWidth: 680) {
+                  sizes(maxWidth: 680) {
                     base64
                     aspectRatio
                     src
@@ -82,7 +81,7 @@ export const pageQuery = graphql`
               picture {
                 localFile {
                   childImageSharp {
-                    responsiveSizes(maxWidth: 680) {
+                    sizes(maxWidth: 680) {
                       base64
                       aspectRatio
                       src

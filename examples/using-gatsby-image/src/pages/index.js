@@ -11,7 +11,7 @@ class IndexComponent extends React.Component {
         <Img
           css={{ top: 0, left: 0, right: 0, zIndex: -1 }}
           style={{ position: `absolute` }}
-          responsiveSizes={this.props.data.imageSharp.responsiveSizes}
+          sizes={this.props.data.imageSharp.sizes}
         />
         <div
           css={{
@@ -90,7 +90,7 @@ export default IndexComponent
 export const query = graphql`
   query FrontPageQuery {
     imageSharp(id: { regex: "/nasa/" }) {
-      responsiveSizes(maxWidth: 1500) {
+      sizes(maxWidth: 1500) {
         base64
         aspectRatio
         src

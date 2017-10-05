@@ -7,8 +7,7 @@ import presets from "../utils/presets"
 class BlogPostPreviewItem extends React.Component {
   render() {
     const post = this.props.post
-    const avatar =
-      post.frontmatter.author.avatar.childImageSharp.responsiveResolution
+    const avatar = post.frontmatter.author.avatar.childImageSharp.resolutions
 
     return (
       <article className={this.props.className} css={{ position: `relative` }}>
@@ -126,7 +125,7 @@ export const blogPostPreviewFragment = graphql`
         }
         avatar {
           childImageSharp {
-            responsiveResolution(width: 30, height: 30) {
+            resolutions(width: 30, height: 30) {
               width
               height
               src

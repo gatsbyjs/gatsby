@@ -19,10 +19,8 @@ class ContributorPageTemplate extends React.Component {
         >
           <div>
             <img
-              src={contributor.avatar.childImageSharp.responsiveResolution.src}
-              srcSet={
-                contributor.avatar.childImageSharp.responsiveResolution.srcSet
-              }
+              src={contributor.avatar.childImageSharp.resolutions.src}
+              srcSet={contributor.avatar.childImageSharp.resolutions.srcSet}
               css={{
                 height: rhythm(2.3),
                 width: rhythm(2.3),
@@ -87,7 +85,7 @@ export const pageQuery = graphql`
       twitter
       avatar {
         childImageSharp {
-          responsiveResolution(width: 63, height: 63, quality: 75) {
+          resolutions(width: 63, height: 63, quality: 75) {
             src
             srcSet
           }

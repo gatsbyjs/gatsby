@@ -55,7 +55,7 @@ export default props => {
 
       <h2>Responsive Resolution</h2>
       <p>
-        If you make queries with <code>responsiveResolution</code> then Gatsby
+        If you make queries with <code>resolutions</code> then Gatsby
         automatically generates images with 1x, 1.5x, 2x, and 3x versions so
         your images look great on whatever screen resolution of device they're
         on.
@@ -67,13 +67,13 @@ export default props => {
       <p>
         You should prefer this operator over <code>resize</code>.
       </p>
-      {assets.map(({ node: { title, responsiveResolution } }) => (
+      {assets.map(({ node: { title, resolutions } }) => (
         <img
           alt={title}
-          src={responsiveResolution.src}
-          srcSet={responsiveResolution.srcSet}
-          width={responsiveResolution.width}
-          height={responsiveResolution.height}
+          src={resolutions.src}
+          srcSet={resolutions.srcSet}
+          width={resolutions.width}
+          height={resolutions.height}
           style={{
             marginRight: rhythm(1 / 2),
             marginBottom: rhythm(1 / 2),
@@ -90,7 +90,7 @@ export default props => {
     edges {
       node {
         title
-        responsiveResolution(width: 100) {
+        resolutions(width: 100) {
           width
           height
           src
@@ -106,7 +106,7 @@ export default props => {
 
       <h2>Resizing</h2>
       <p>
-        On both resize and responsiveResolution you can also add a{` `}
+        On both resize and resolutions you can also add a{` `}
         <code>height</code>
         {` `}
         argument to the GraphQL argument to crop the image to a certain size.
@@ -145,7 +145,7 @@ export default props => {
     edges {
       node {
         title
-        responsiveResolution(width: 100, height: 100) {
+        resolutions(width: 100, height: 100) {
           width
           height
           src
@@ -167,16 +167,16 @@ export default props => {
         desktop device.
       </p>
       <p>
-        Instead of specifying a width and height, with responsiveSizes you
-        specify a <code>maxWidth</code>, the max width the container of the
-        images reaches.
+        Instead of specifying a width and height, with sizes you specify a{` `}
+        <code>maxWidth</code>, the max width the container of the images
+        reaches.
       </p>
-      {assets.map(({ node: { title, responsiveSizes } }) => (
+      {assets.map(({ node: { title, sizes } }) => (
         <img
           alt={title}
-          src={responsiveSizes.src}
-          srcSet={responsiveSizes.srcSet}
-          sizes={responsiveSizes.sizes}
+          src={sizes.src}
+          srcSet={sizes.srcSet}
+          sizes={sizes.sizes}
           style={{
             marginRight: rhythm(1 / 2),
             marginBottom: rhythm(1 / 2),
@@ -193,7 +193,7 @@ export default props => {
     edges {
       node {
         title
-        responsiveSizes(maxWidth: 613) {
+        sizes(maxWidth: 613) {
           sizes
           src
           srcSet
@@ -221,19 +221,19 @@ export const pageQuery = graphql`
             height
             aspectRatio
           }
-          responsiveResolution(width: 100) {
+          resolutions(width: 100) {
             width
             height
             src
             srcSet
           }
-          resizing: responsiveResolution(width: 100, height: 100) {
+          resizing: resolutions(width: 100, height: 100) {
             width
             height
             src
             srcSet
           }
-          responsiveSizes(maxWidth: 613) {
+          sizes(maxWidth: 613) {
             sizes
             src
             srcSet

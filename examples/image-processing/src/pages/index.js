@@ -6,8 +6,8 @@ import { rhythm } from "../utils/typography"
 class Index extends React.Component {
   render() {
     const images = this.props.data.allImageSharp.edges
-    const responsiveSizes = this.props.data.sizes.responsiveSizes
-    const responsiveResolution = this.props.data.resolution.responsiveResolution
+    const sizes = this.props.data.sizes.sizes
+    const resolutions = this.props.data.resolution.resolutions
     const cropDefault = this.props.data.cropDefault.resize
     const cropBottomLeft = this.props.data.cropBottomLeft.resize
     const cropEntropy = this.props.data.cropEntropy.resize
@@ -24,10 +24,10 @@ class Index extends React.Component {
           {` `}
           <a href="https://github.com/lovell/sharp">
             Sharp image processing library
-          </a>. With it and{" "}
+          </a>. With it and{` `}
           <a href="https://www.gatsbyjs.org/packages/gatsby-image/">
             Gatsby Image
-          </a>{" "}
+          </a>{` `}
           you can easily add fast, optimized, responsive images to your site.
         </p>
         <p>
@@ -151,7 +151,7 @@ class Index extends React.Component {
         >
           <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/#responsive-sizes">
             <code>
-              <strong>responsiveSizes</strong>
+              <strong>sizes</strong>
             </code>
           </a>
         </h2>
@@ -168,7 +168,7 @@ class Index extends React.Component {
           size / screen resolution.
         </p>
         <p>
-          On top of that, <code>responsiveSizes</code>
+          On top of that, <code>sizes</code>
           {` `}
           returns everything else (namely
           {` `}
@@ -224,20 +224,20 @@ class Index extends React.Component {
 
         <h3>
           <small>
-            responsiveSizes(duotone:
+            sizes(duotone:
             {` `}
             {`{ `}
             highlight: "#f00e2e", shadow: "#192550" {`}`}, toFormat: PNG)
           </small>
         </h3>
-        <Img responsiveSizes={responsiveSizes} />
+        <Img sizes={sizes} />
         <h2
           style={{
             paddingTop: rhythm(2),
           }}
         >
           <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/#responsive-resolution">
-            <code>responsiveResolution</code>
+            <code>resolutions</code>
           </a>
         </h2>
         <p>
@@ -264,7 +264,7 @@ class Index extends React.Component {
           to convert the source image to 8-bit greyscale, 256 shades of grey.
         </p>
 
-        <Img responsiveResolution={responsiveResolution} />
+        <Img resolutions={resolutions} />
       </div>
     )
   }
@@ -303,7 +303,7 @@ export const pageQuery = graphql`
       }
     }
     sizes: imageSharp(id: { regex: "/fecolormatrix-kanye-west.jpg/" }) {
-      responsiveSizes(
+      sizes(
         duotone: { highlight: "#f00e2e", shadow: "#192550" }
         toFormat: PNG
       ) {
@@ -317,7 +317,7 @@ export const pageQuery = graphql`
       }
     }
     resolution: imageSharp(id: { regex: "/lol.jpg/" }) {
-      responsiveResolution(grayscale: true, width: 500) {
+      resolutions(grayscale: true, width: 500) {
         height
         width
         src

@@ -13,7 +13,7 @@ class CategoryTemplate extends React.Component {
   render() {
     const category = this.props.data.contentfulCategory
     const { title: { title }, product, icon } = category
-    const iconImg = icon.responsiveResolution
+    const iconImg = icon.resolutions
     return (
       <div>
         <div
@@ -29,7 +29,7 @@ class CategoryTemplate extends React.Component {
               width: iconImg.width,
               marginRight: rhythm(1 / 2),
             }}
-            responsiveResolution={iconImg}
+            resolutions={iconImg}
           />
           <h4 style={{ marginBottom: 0 }}>{title}</h4>
         </div>
@@ -63,7 +63,7 @@ export const pageQuery = graphql`
         title
       }
       icon {
-        responsiveResolution(width: 75) {
+        resolutions(width: 75) {
           base64
           src
           srcSet

@@ -48,8 +48,8 @@ class BlogPostTemplate extends React.Component {
       </p>
     )
     const imageProps = {
-      src: post.frontmatter.image.childImageSharp.responsiveSizes.src,
-      srcSet: post.frontmatter.image.childImageSharp.responsiveSizes.srcSet,
+      src: post.frontmatter.image.childImageSharp.sizes.src,
+      srcSet: post.frontmatter.image.childImageSharp.sizes.srcSet,
       className: `gatsby-resp-image-image`,
       css: {
         width: `100%`,
@@ -58,7 +58,7 @@ class BlogPostTemplate extends React.Component {
         position: `absolute`,
         boxShadow: `inset 0px 0px 0px 400px #fff`,
       },
-      sizes: post.frontmatter.image.childImageSharp.responsiveSizes.sizes,
+      sizes: post.frontmatter.image.childImageSharp.sizes.sizes,
     }
     if (post.frontmatter.imageTitle) {
       imageProps.alt = post.frontmatter.imageTitle
@@ -128,12 +128,11 @@ class BlogPostTemplate extends React.Component {
             >
               <img
                 src={
-                  post.frontmatter.author.avatar.childImageSharp
-                    .responsiveResolution.src
+                  post.frontmatter.author.avatar.childImageSharp.resolutions.src
                 }
                 srcSet={
-                  post.frontmatter.author.avatar.childImageSharp
-                    .responsiveResolution.srcSet
+                  post.frontmatter.author.avatar.childImageSharp.resolutions
+                    .srcSet
                 }
                 css={{
                   height: rhythm(2.3),
@@ -206,7 +205,7 @@ class BlogPostTemplate extends React.Component {
                       className="gatsby-resp-image-background-image"
                       css={{
                         paddingBottom: `${1 /
-                          post.frontmatter.image.childImageSharp.responsiveSizes
+                          post.frontmatter.image.childImageSharp.sizes
                             .aspectRatio *
                           100}%`,
                         position: `relative`,
@@ -214,7 +213,7 @@ class BlogPostTemplate extends React.Component {
                         bottom: 0,
                         left: 0,
                         backgroundImage: `url(${post.frontmatter.image
-                          .childImageSharp.responsiveSizes.base64})`,
+                          .childImageSharp.sizes.base64})`,
                         backgroundSize: `cover`,
                       }}
                     >
@@ -337,7 +336,7 @@ export const pageQuery = graphql`
             resize(width: 1500, height: 1500) {
               src
             }
-            responsiveSizes(maxWidth: 786) {
+            sizes(maxWidth: 786) {
               src
               srcSet
               aspectRatio
@@ -356,7 +355,7 @@ export const pageQuery = graphql`
           twitter
           avatar {
             childImageSharp {
-              responsiveResolution(width: 63, height: 63, quality: 75) {
+              resolutions(width: 63, height: 63, quality: 75) {
                 src
                 srcSet
               }

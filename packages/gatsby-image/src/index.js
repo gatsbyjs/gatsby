@@ -5,12 +5,27 @@ import PropTypes from "prop-types"
 // TODO support adding node_modules/gatsby-image as place to scan for graphql fragments to gatsby-plugin-sharp and gatsby-source-contentful
 // TODO add fragments here with and without base64 in fragments file so not included in pages.
 
+const convertProps = props => {
+  let convertedProps = { ...props }
+  if (convertedProps.responsiveResolution) {
+    convertedProps.resolutions = convertedProps.responsiveResolution
+    delete convertedProps.responsiveResolution
+  }
+  if (convertedProps.responsiveSizes) {
+    convertedProps.sizes = convertedProps.responsiveSizes
+    delete convertedProps.responsiveSizes
+  }
+
+  return convertedProps
+}
+
 const imageCache = {}
 const inImageCache = props => {
+  const convertedProps = convertProps(props)
   // Find src
-  const src = props.responsiveSizes
-    ? props.responsiveSizes.src
-    : props.responsiveResolution.src
+  const src = convertedProps.sizes
+    ? convertedProps.sizes.src
+    : convertedProps.resolutions.src
 
   if (imageCache[src]) {
     return true
@@ -126,13 +141,13 @@ class Image extends React.Component {
       alt,
       className,
       style,
-      responsiveSizes,
-      responsiveResolution,
+      sizes,
+      resolutions,
       backgroundColor,
-    } = this.props
+    } = convertProps(this.props)
 
-    if (responsiveSizes) {
-      const image = responsiveSizes
+    if (sizes) {
+      const image = sizes
       return (
         <div
           className={`${className ? className : ``} gatsby-image-wrapper`}
@@ -196,8 +211,8 @@ class Image extends React.Component {
       )
     }
 
-    if (responsiveResolution) {
-      const image = responsiveResolution
+    if (resolutions) {
+      const image = resolutions
       return (
         <div
           className={`${className ? className : ``} gatsby-image-wrapper`}
@@ -265,6 +280,8 @@ Image.defaultProps = {
 Image.propTypes = {
   responsiveResolution: PropTypes.object,
   responsiveSizes: PropTypes.object,
+  resolutions: PropTypes.object,
+  sizes: PropTypes.object,
   fadeIn: PropTypes.bool,
   title: PropTypes.string,
   alt: PropTypes.string,
