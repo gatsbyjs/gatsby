@@ -26,7 +26,11 @@ The answer... [GraphQL](http://graphql.org/). Gatsby ships with it and through a
 
 With very little configuration and the installation of a single plugin on my WordPress site, I began creating pages and pulling data from them using a simple GraphQL schema. Here is an example of my Projects page which includes pulling some ACF fields which were originally defined in my Projects page template:
 
+![graphql query](image1.png)
+
 Pulling blog posts was even easier! If you’d like to sort them by date, ID, title etc. you just add a simple flag to the query like so:
+
+![graphql query](image2.png)
 
 ## Wrap up and future
 
