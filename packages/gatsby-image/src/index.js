@@ -4,7 +4,7 @@ import PropTypes from "prop-types"
 // TODO responsiveSizes => sizes, responsiveResolution => resolutions
 // TODO support adding node_modules/gatsby-image as place to scan for graphql fragments to gatsby-plugin-sharp and gatsby-source-contentful
 // TODO cache if a image has been loaded already and don't wait to show it.
-// TODO add fragments here with and without base64.
+// TODO add fragments here with and without base64 in fragments file so not included in pages.
 
 let io
 const listeners = []
