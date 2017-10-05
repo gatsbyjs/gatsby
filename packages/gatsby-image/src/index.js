@@ -3,8 +3,22 @@ import PropTypes from "prop-types"
 
 // TODO responsiveSizes => sizes, responsiveResolution => resolutions
 // TODO support adding node_modules/gatsby-image as place to scan for graphql fragments to gatsby-plugin-sharp and gatsby-source-contentful
-// TODO cache if a image has been loaded already and don't wait to show it.
 // TODO add fragments here with and without base64 in fragments file so not included in pages.
+
+const imageCache = {}
+const inImageCache = props => {
+  // Find src
+  const src = props.responsiveSizes
+    ? props.responsiveSizes.src
+    : props.responsiveResolution.src
+
+  if (imageCache[src]) {
+    return true
+  } else {
+    imageCache[src] = true
+    return false
+  }
+}
 
 let io
 const listeners = []
@@ -32,7 +46,7 @@ const listenToIntersections = (el, cb) => {
 }
 
 const Img = props => {
-  const { opacity, onLoad, opacityTransition = true, ...otherProps } = props
+  const { opacity, onLoad, transitionDelay = ``, ...otherProps } = props
   return (
     <img
       {...otherProps}
@@ -41,7 +55,8 @@ const Img = props => {
         position: `absolute`,
         top: 0,
         left: 0,
-        transition: opacityTransition ? `opacity 0.5s` : ``,
+        transition: `opacity 0.5s`,
+        transitionDelay,
         opacity,
         width: `100%`,
         height: `100%`,
@@ -54,7 +69,7 @@ const Img = props => {
 
 Img.propTypes = {
   opacity: PropTypes.number,
-  opacityTransition: PropTypes.bool,
+  transitionDelay: PropTypes.string,
   onLoad: PropTypes.func,
 }
 
@@ -68,7 +83,15 @@ class Image extends React.Component {
     let imgLoaded = true
     let IOSupported = false
 
-    if (typeof window !== `undefined` && window.IntersectionObserver) {
+    // If this image has already been loaded before then we can assume it's
+    // already in the browser cache so it's cheap to just show directly.
+    const seenBefore = inImageCache(props)
+
+    if (
+      !seenBefore &&
+      typeof window !== `undefined` &&
+      window.IntersectionObserver
+    ) {
       isVisible = false
       imgLoaded = false
       IOSupported = true
@@ -90,7 +113,7 @@ class Image extends React.Component {
   }
 
   handleRef(ref) {
-    if (window.IntersectionObserver && ref) {
+    if (this.state.IOSupported && ref) {
       listenToIntersections(ref, () => {
         this.setState({ isVisible: true, imgLoaded: false })
       })
@@ -135,7 +158,7 @@ class Image extends React.Component {
               title={title}
               src={image.base64}
               opacity={!this.state.imgLoaded ? 1 : 0}
-              opacityTransition={false}
+              transitionDelay={`0.25s`}
             />
           )}
 
@@ -195,7 +218,7 @@ class Image extends React.Component {
               title={title}
               src={image.base64}
               opacity={!this.state.imgLoaded ? 1 : 0}
-              opacityTransition={false}
+              transitionDelay={`0.25s`}
             />
           )}
 
@@ -248,7 +271,6 @@ Image.propTypes = {
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]), // Support Glamor's css prop.
   style: PropTypes.object,
   backgroundColor: PropTypes.string,
-  wrapperClassName: PropTypes.oneOfType([PropTypes.string, PropTypes.object]), // Support Glamor's css prop.
 }
 
 export default Image
