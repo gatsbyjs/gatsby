@@ -1,7 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-// TODO responsiveSizes => sizes, responsiveResolution => resolutions
 // TODO support adding node_modules/gatsby-image as place to scan for graphql fragments to gatsby-plugin-sharp and gatsby-source-contentful
 // TODO add fragments here with and without base64 in fragments file so not included in pages.
 
