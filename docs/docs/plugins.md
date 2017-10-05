@@ -9,8 +9,8 @@ support, process images, etc.
 For larger / complex sites, they let you modularize your site customizations
 into site-specific plugins.
 
-Gatsby has a large and growing set of plugins. See below for the list
-of official plugins. We'll eventually add support here for searching and browsing
+Gatsby has a large and growing set of plugins. See below for the [list
+of official plugins](#official-plugins). We'll eventually add support here for searching and browsing
 both official plugins and community plugins published on NPM.
 
 ## How to use?

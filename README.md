@@ -49,6 +49,7 @@ Websites built with Gatsby:
 * [Gabriel Adorf's Portfolio](https://gabrieladorf.com/) [(source)](https://github.com/gabdorf/gabriel-adorf-portfolio)
 * [CSS Grid Playground by MozillaDev](https://mozilladevelopers.github.io/playground/) [(source)](https://github.com/MozillaDevelopers/playground)
 * [David James' Portfolio](http://dfjames.com) [(source)](https://github.com/daviddeejjames/dfjames-gatsby)
+* [Tic Tac Toe AI](https://tic-tac-toe-ai.surge.sh) [(source)](https://github.com/angeloocana/tic-tac-toe-ai)
 
 ## Docs
 
