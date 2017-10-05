@@ -62,7 +62,7 @@ function buildLocalCommands(cli, isLocalSite) {
       process.env.gatsby_log_level = argv.verbose ? `verbose` : `normal`
       report.verbose(`set gatsby_log_level: "${process.env.gatsby_log_level}"`)
 
-      process.env.gatsby_executing_command === command
+      process.env.gatsby_executing_command = command
       report.verbose(`set gatsby_executing_command: "${command}"`)
 
       let localCmd = resolveLocalCommand(command)
