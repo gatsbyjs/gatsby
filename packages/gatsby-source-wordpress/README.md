@@ -473,7 +473,7 @@ const slash = require(`slash`)
 
 // Implement the Gatsby API “createPages”. This is
 // called after the Gatsby bootstrap is finished so you have
-// access to any information necessary to programatically
+// access to any information necessary to programmatically
 // create pages.
 // Will create pages for WordPress pages (route : /{slug})
 // Will create pages for WordPress posts (route : /post/{slug})

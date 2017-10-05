@@ -2,7 +2,7 @@
 title: "Creating and modifying pages"
 ---
 
-Gatsby makes it easy to programatically control your pages.
+Gatsby makes it easy to programmatically control your pages.
 
 Pages can be created in three ways:
 
