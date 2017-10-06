@@ -1,10 +1,5 @@
 /* @flow */
-const Promise = require(`bluebird`)
-<<<<<<< HEAD
-const { stripIndent } = require(`common-tags`)
-=======
 
->>>>>>> master
 const glob = require(`glob`)
 const _ = require(`lodash`)
 const slash = require(`slash`)
@@ -184,7 +179,7 @@ module.exports = async (program: any) => {
 
     fs.writeFileSync(
       filePath,
-      stripIndent`
+      report.stripIndent`
         var preferDefault = m => (m && m.default) || m;
         var plugins = [
           ${plugins.map(({ options, resolve }) => `
