@@ -6,8 +6,6 @@ const {
   GraphQLFloat,
   GraphQLInt,
   GraphQLList,
-  GraphQLEnumType,
-  GraphQLNonNull,
 } = require(`graphql`)
 const { oneLine } = require(`common-tags`)
 const _ = require(`lodash`)
@@ -17,7 +15,7 @@ const createTypeName = require(`./create-type-name`)
 const createKey = require(`./create-key`)
 const {
   extractFieldExamples,
-  buildFieldEnumValues,
+  extractFieldNames,
   isEmptyObjectOrArray,
 } = require(`./data-tree-utils`)
 
@@ -135,15 +133,20 @@ function inferGraphQLInputFields({
       }
     }
     case `object`: {
-      return {
-        type: new GraphQLInputObjectType({
-          name: createTypeName(`${prefix}InputObject`),
-          fields: inferInputObjectStructureFromNodes({
-            nodes,
-            prefix,
-            exampleValue: value,
-          }).inferredFields,
-        }),
+      const fields = inferInputObjectStructureFromNodes({
+        nodes,
+        prefix,
+        exampleValue: value,
+      }).inferredFields
+      if (!_.isEmpty(fields)) {
+        return {
+          type: new GraphQLInputObjectType({
+            name: createTypeName(`${prefix}InputObject`),
+            fields,
+          }),
+        }
+      } else {
+        return null
       }
     }
     case `number`: {
@@ -185,7 +188,7 @@ export function inferInputObjectStructureFromNodes({
   typeName = ``,
   prefix = ``,
   exampleValue = extractFieldExamples(nodes),
-}: InferInputOptions): GraphQLInputFieldConfigMap {
+}: InferInputOptions): Object {
   const inferredFields = {}
   const isRoot = !prefix
 
@@ -210,37 +213,9 @@ export function inferInputObjectStructureFromNodes({
   })
 
   // Add sorting (but only to the top level).
-  let sort
+  let sort = []
   if (typeName) {
-    const enumValues = buildFieldEnumValues(nodes)
-
-    const SortByType = new GraphQLEnumType({
-      name: `${typeName}SortByFieldsEnum`,
-      values: enumValues,
-    })
-
-    sort = {
-      type: new GraphQLInputObjectType({
-        name: _.camelCase(`${typeName} sort`),
-        fields: {
-          fields: {
-            name: _.camelCase(`${typeName} sortFields`),
-            type: new GraphQLNonNull(new GraphQLList(SortByType)),
-          },
-          order: {
-            name: _.camelCase(`${typeName} sortOrder`),
-            defaultValue: `asc`,
-            type: new GraphQLEnumType({
-              name: _.camelCase(`${typeName} sortOrderValues`),
-              values: {
-                ASC: { value: `asc` },
-                DESC: { value: `desc` },
-              },
-            }),
-          },
-        },
-      }),
-    }
+    sort = extractFieldNames(nodes)
   }
 
   return { inferredFields, sort }

@@ -1,6 +1,3 @@
-const Promise = require(`bluebird`)
-const _ = require(`lodash`)
-
 const { onCreateNode } = require(`../gatsby-node`)
 
 describe(`Process TOML nodes correctly`, () => {

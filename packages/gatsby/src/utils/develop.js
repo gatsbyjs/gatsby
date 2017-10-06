@@ -14,7 +14,6 @@ const copyStaticDirectory = require(`./copy-static-directory`)
 const developHtml = require(`./develop-html`)
 const { withBasePath } = require(`./path`)
 const report = require(`../reporter`)
-const { formatStaticBuildError } = require(`../reporter/errors`)
 
 // Watch the static directory and copy files to public as they're added or
 // changed. Wait 10 seconds so copying doesn't interfer with the regular
@@ -47,8 +46,8 @@ async function startServer(program) {
           There was an error compiling the html.js component for the development server.
 
           See our docs page on debugging HTML builds for help https://goo.gl/yL9lND
-
-        ` + formatStaticBuildError(err)
+        `,
+        err
       )
     })
 
@@ -108,25 +107,28 @@ async function startServer(program) {
   // Check if the file exists in the public folder.
   app.get(`*`, (req, res, next) => {
     // Load file but ignore errors.
-    res.sendFile(directoryPath(`/public/${req.url}`), err => {
-      // No err so a file was sent successfully.
-      if (!err || !err.path) {
-        next()
-      } else if (err) {
-        // There was an error. Let's check if the error was because it
-        // couldn't find an HTML file. We ignore these as we want to serve
-        // all HTML from our single empty SSR html file.
-        const parsedPath = parsePath(err.path)
-        if (
-          parsedPath.extname === `` ||
-          parsedPath.extname.startsWith(`.html`)
-        ) {
+    res.sendFile(
+      directoryPath(`/public/${decodeURIComponent(req.url)}`),
+      err => {
+        // No err so a file was sent successfully.
+        if (!err || !err.path) {
           next()
-        } else {
-          res.status(404).end()
+        } else if (err) {
+          // There was an error. Let's check if the error was because it
+          // couldn't find an HTML file. We ignore these as we want to serve
+          // all HTML from our single empty SSR html file.
+          const parsedPath = parsePath(err.path)
+          if (
+            parsedPath.extname === `` ||
+            parsedPath.extname.startsWith(`.html`)
+          ) {
+            next()
+          } else {
+            res.status(404).end()
+          }
         }
       }
-    })
+    )
   })
 
   // Render an HTML page and serve it.
@@ -177,9 +179,10 @@ async function startServer(program) {
   })
 
   // Register watcher that rebuilds index.html every time html.js changes.
-  const watchGlobs = [`src/html.js`, `plugins/**/gatsby-ssr.js`].map(
-    directoryPath
+  const watchGlobs = [`src/html.js`, `plugins/**/gatsby-ssr.js`].map(path =>
+    directoryPath(path)
   )
+
   chokidar.watch(watchGlobs).on(`change`, async () => {
     await createIndexHtml()
     io.to(`clients`).emit(`reload`)

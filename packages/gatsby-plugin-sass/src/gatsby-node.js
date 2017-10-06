@@ -1,5 +1,8 @@
 
-exports.modifyWebpackConfig = ({ boundActionCreators, stage, rules, plugins, loaders }, { postCssPlugins, ...sassOptions }) => {
+exports.modifyWebpackConfig = (
+  { boundActionCreators, stage, rules, plugins, loaders },
+  { postCssPlugins, ...sassOptions }
+) => {
   const { setWebpackConfig } = boundActionCreators
   const PRODUCTION = stage !== `develop`
 

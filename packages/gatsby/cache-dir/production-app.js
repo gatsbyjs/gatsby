@@ -1,16 +1,17 @@
 if (__POLYFILL__) {
-  require("core-js/modules/es6.promise")
+  require(`core-js/modules/es6.promise`)
 }
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import React, { createElement } from "react"
 import ReactDOM from "react-dom"
 import { Router, Route, withRouter, matchPath } from "react-router-dom"
-import { ScrollContext } from "react-router-scroll"
+import { ScrollContext } from "gatsby-react-router-scroll"
 import createHistory from "history/createBrowserHistory"
 import domReady from "domready"
 import emitter from "./emitter"
 
 import pages from "./pages.json"
+import redirects from "./redirects.json"
 import ComponentRenderer from "./component-renderer"
 import asyncRequires from "./async-requires"
 import loader from "./loader"
@@ -24,6 +25,28 @@ window.matchPath = matchPath
 loader.addPagesArray(pages)
 loader.addProdRequires(asyncRequires)
 
+const history = createHistory()
+
+// Convert to a map for faster lookup in maybeRedirect()
+const redirectMap = redirects.reduce((map, redirect) => {
+  map[redirect.fromPath] = redirect
+  return map
+}, {})
+
+const maybeRedirect = pathname => {
+  const redirect = redirectMap[pathname]
+
+  if (redirect != null) {
+    history.replace(redirect.toPath)
+    return true
+  } else {
+    return false
+  }
+}
+
+// Check for initial page-load redirect
+maybeRedirect(window.location.pathname)
+
 // Let the site/plugins run code very early.
 apiRunnerAsync(`onClientEntry`).then(() => {
   // Let plugins register a service worker. The plugin just needs
@@ -33,6 +56,14 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   }
 
   const navigateTo = pathname => {
+    const redirect = redirectMap[pathname]
+
+    // If we're redirecting, just replace the passed in pathname
+    // to the one we want to redirect to.
+    if (redirect) {
+      pathname = redirect.toPath
+    }
+
     // If we're already at this path, do nothing.
     if (window.location.pathname === pathname) {
       return
@@ -70,8 +101,6 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   // window.___loadScriptsForPath = loadScriptsForPath
   window.___navigateTo = navigateTo
 
-  const history = createHistory()
-
   // Call onRouteUpdate on the initial page load.
   apiRunner(`onRouteUpdate`, {
     location: history.location,
@@ -83,7 +112,9 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       window.___history = history
 
       history.listen((location, action) => {
-        apiRunner(`onRouteUpdate`, { location, action })
+        if (!maybeRedirect(location.pathname)) {
+          apiRunner(`onRouteUpdate`, { location, action })
+        }
       })
     }
   }
@@ -107,10 +138,9 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   }
 
   const AltRouter = apiRunner(`replaceRouterComponent`, { history })[0]
-  const DefaultRouter = ({ children }) =>
-    <Router history={history}>
-      {children}
-    </Router>
+  const DefaultRouter = ({ children }) => (
+    <Router history={history}>{children}</Router>
+  )
 
   loader.getResourcesForPathname(window.location.pathname, () => {
     const Root = () =>

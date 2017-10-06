@@ -154,14 +154,12 @@ class DefaultLayout extends React.Component {
           }}
         >
           <div>
-            {isModal ? (
-              this.props.children({
-                ...this.props,
-                location: { pathname: `/` },
-              })
-            ) : (
-              this.props.children()
-            )}
+            {isModal
+              ? this.props.children({
+                  ...this.props,
+                  location: { pathname: `/` },
+                })
+              : this.props.children()}
           </div>
 
           <div>

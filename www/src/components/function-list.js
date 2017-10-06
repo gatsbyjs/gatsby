@@ -27,8 +27,11 @@ const Param = (param, depth = 0) => {
         {param.name === `$0` ? `destructured object` : param.name}
         {` `}
         {param.type &&
-        param.name !== `$0` && (
-          <span css={{ color: `#73725f` }}>{`{${param.type.name}}`}</span>
+          param.name !== `$0` && (
+            <span css={{ color: `#73725f` }}>{`{${param.type.name}}`}</span>
+          )}
+        {param.default && (
+          <span css={{ color: `#73725f` }}>[default={param.default}]</span>
         )}
       </h5>
       {param.description && (
@@ -75,22 +78,22 @@ export default ({ functions }) => (
         )}
 
         {node.examples &&
-        node.examples.length > 0 && (
-          <div>
-            <h4 css={{ marginTop: rhythm(1) }}>Example</h4>
-            {` `}
-            {node.examples.map((example, i) => (
-              <pre key={`${node.name} example ${i}`}>
-                <code
-                  className="language-javascript"
-                  dangerouslySetInnerHTML={{
-                    __html: example.highlighted,
-                  }}
-                />
-              </pre>
-            ))}
-          </div>
-        )}
+          node.examples.length > 0 && (
+            <div>
+              <h4 css={{ marginTop: rhythm(1) }}>Example</h4>
+              {` `}
+              {node.examples.map((example, i) => (
+                <pre key={`${node.name} example ${i}`}>
+                  <code
+                    className="language-javascript"
+                    dangerouslySetInnerHTML={{
+                      __html: example.highlighted,
+                    }}
+                  />
+                </pre>
+              ))}
+            </div>
+          )}
       </div>
     ))}
   </div>
@@ -125,6 +128,7 @@ export const pageQuery = graphql`
         type {
           name
         }
+        default
         description {
           childMarkdownRemark {
             html

@@ -1,4 +1,4 @@
-const { actions, boundActions } = require(`../actions`)
+const { actions } = require(`../actions`)
 const nodeReducer = require(`../reducers/nodes`)
 const nodeTouchedReducer = require(`../reducers/nodes-touched`)
 

@@ -39,7 +39,7 @@ module.exports = {
 }
 ```
 
-Now run `yarn deploy` or `npm run deploy`. Preview changes in your github page `https://username.github.io/project-name/`. You also can also find the link to your site on Github under `Settings` > `Github Pages`. 
+Now run `yarn deploy` or `npm run deploy`. Preview changes in your github page `https://username.github.io/project-name/`. You can also find the link to your site on Github under `Settings` > `Github Pages`. 
 
 ### Deploying a user/organization site
 

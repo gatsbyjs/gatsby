@@ -31,17 +31,14 @@ const pathChunkName = path => {
 }
 
 const getPage = path => pages.find(page => page.path === path)
-const defaultLayout = props =>
-  <div>
-    {props.children()}
-  </div>
+const defaultLayout = props => <div>{props.children()}</div>
 
 const getLayout = page => {
   const layout = syncRequires.layouts[page.layoutComponentChunkName]
   return layout ? layout : defaultLayout
 }
 
-const $ = React.createElement
+const createElement = React.createElement
 
 module.exports = (locals, callback) => {
   let pathPrefix = `/`
@@ -75,7 +72,7 @@ module.exports = (locals, callback) => {
     bodyProps = merge({}, bodyProps, props)
   }
 
-  const bodyComponent = $(
+  const bodyComponent = createElement(
     StaticRouter,
     {
       location: {
@@ -83,17 +80,21 @@ module.exports = (locals, callback) => {
       },
       context: {},
     },
-    $(Route, {
-      render: props => {
-        const page = getPage(props.location.pathname)
+    createElement(Route, {
+      render: routeProps => {
+        const page = getPage(routeProps.location.pathname)
         const layout = getLayout(page)
-        return $(withRouter(layout), {
-          ...props,
-          children: props =>
-            $(syncRequires.components[page.componentChunkName], {
-              ...props,
-              ...syncRequires.json[page.jsonName],
-            }),
+        return createElement(withRouter(layout), {
+          children: layoutProps => {
+            const props = layoutProps ? layoutProps : routeProps
+            return createElement(
+              syncRequires.components[page.componentChunkName],
+              {
+                ...props,
+                ...syncRequires.json[page.jsonName],
+              }
+            )
+          },
         })
       },
     })

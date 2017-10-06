@@ -1,42 +1,51 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
+import PostIcons from "../components/PostIcons"
 
-import Helmet from "react-helmet"
-import Header from "../components/Header"
-import Footer from "../components/Footer"
-import { H1, Row, Page, Column } from "../components/styled"
+import { rhythm } from "../utils/typography"
 
 class PostTemplate extends Component {
   render() {
-    // console.log(`this.props is`, this.props)
-
     const post = this.props.data.wordpressPost
-    const wordpressPages = this.props.data.allWordpressPage
-    const siteMetadata = this.props.data.site.siteMetadata
 
     return (
       <div>
-        <Page>
-          <Row>
-            <Helmet>
-              <title>{siteMetadata.title}</title>
-            </Helmet>
-            <Header
-              title={siteMetadata.title}
-              subtitle={siteMetadata.subtitle}
-              pages={wordpressPages}
-            />
-          </Row>
-          <Row>
-            <H1 dangerouslySetInnerHTML={{ __html: post.title }} />
-          </Row>
-          <Row>
-            <div dangerouslySetInnerHTML={{ __html: post.content }} />
-          </Row>
-          <Row>
-            <Footer />
-          </Row>
-        </Page>
+        <h1 dangerouslySetInnerHTML={{ __html: post.title }} />
+        <PostIcons node={post} css={{ marginBottom: rhythm(1 / 2) }} />
+        <div dangerouslySetInnerHTML={{ __html: post.content }} />
+        {post.acf &&
+          post.acf.page_builder_post &&
+          post.acf.page_builder_post.map((layout, i) => {
+            if (layout.__typename === `WordPressAcf_image_gallery`) {
+              return (
+                <div key={`${i} image-gallery`}>
+                  <h2>ACF Image Gallery</h2>
+                  {layout.pictures.map(({ picture }) => {
+                    const img =
+                      picture.localFile.childImageSharp.responsiveSizes
+                    return (
+                      <img
+                        key={img.src}
+                        src={img.src}
+                        srcSet={img.srcSet}
+                        sizes={img.sizes}
+                      />
+                    )
+                  })}
+                </div>
+              )
+            }
+            if (layout.__typename === `WordPressAcf_post_photo`) {
+              const img = layout.photo.localFile.childImageSharp.responsiveSizes
+              return (
+                <div key={`${i}-photo`}>
+                  <h2>ACF Post Photo</h2>
+                  <img src={img.src} srcSet={img.srcSet} sizes={img.sizes} />
+                </div>
+              )
+            }
+            return null
+          })}
       </div>
     )
   }
@@ -53,75 +62,44 @@ export default PostTemplate
 export const pageQuery = graphql`
   query currentPostQuery($id: String!) {
     wordpressPost(id: { eq: $id }) {
-      id
-      slug
       title
       content
-      excerpt
-      date
-      date_gmt
-      modified
-      modified_gmt
-      status
-      author
-      featured_media
-      comment_status
-      ping_status
-      sticky
-      template
-      format
-      categories
-      tags
-    }
-    allWordpressPage {
-      edges {
-        node {
-          id
-          title
-          content
-          excerpt
-          date
-          date_gmt
-          modified
-          modified_gmt
-          slug
-          status
-          author
-          featured_media
-          menu_order
-          comment_status
-          ping_status
-          template
-        }
-      }
-    }
-    allWordpressPost {
-      edges {
-        node {
-          id
-          slug
-          title
-          content
-          excerpt
-          date
-          date_gmt
-          modified
-          modified_gmt
-          status
-          author
-          featured_media
-          comment_status
-          ping_status
-          sticky
-          template
-          format
-          categories
-          tags
+      ...PostIcons
+      acf {
+        page_builder_post {
+          __typename
+          ... on WordPressAcf_post_photo {
+            photo {
+              localFile {
+                childImageSharp {
+                  responsiveSizes(maxWidth: 680) {
+                    src
+                    srcSet
+                    sizes
+                  }
+                }
+              }
+            }
+          }
+          ... on WordPressAcf_image_gallery {
+            pictures {
+              picture {
+                localFile {
+                  childImageSharp {
+                    responsiveSizes(maxWidth: 680) {
+                      src
+                      srcSet
+                      sizes
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }
     site {
-      id
       siteMetadata {
         title
         subtitle

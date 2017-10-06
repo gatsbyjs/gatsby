@@ -6,7 +6,8 @@ Array [
     Object {
       "children": Array [],
       "frontmatter": Object {
-        "date": "12/12/2014",
+        "_PARENT": "whatever",
+        "date": "2017-09-18T23:19:51.246Z",
         "parent": "whatever",
         "title": "my little pony",
       },
@@ -14,12 +15,12 @@ Array [
       "internal": Object {
         "content": "---
 title: \\"my little pony\\"
-date: \\"12/12/2014\\"
+date: \\"2017-09-18T23:19:51.246Z\\"
 ---
 
 Where oh where is my little pony?
     ",
-        "contentDigest": "54cfa2ad99756f2fa232cac585280a37",
+        "contentDigest": "1235e2d6fdcadd5f09bf4c221bdf9094",
         "type": "MarkdownRemark",
       },
       "parent": "whatever",
@@ -35,7 +36,8 @@ Array [
       "child": Object {
         "children": Array [],
         "frontmatter": Object {
-          "date": "12/12/2014",
+          "_PARENT": "whatever",
+          "date": "2017-09-18T23:19:51.246Z",
           "parent": "whatever",
           "title": "my little pony",
         },
@@ -43,12 +45,12 @@ Array [
         "internal": Object {
           "content": "---
 title: \\"my little pony\\"
-date: \\"12/12/2014\\"
+date: \\"2017-09-18T23:19:51.246Z\\"
 ---
 
 Where oh where is my little pony?
     ",
-          "contentDigest": "54cfa2ad99756f2fa232cac585280a37",
+          "contentDigest": "1235e2d6fdcadd5f09bf4c221bdf9094",
           "type": "MarkdownRemark",
         },
         "parent": "whatever",
@@ -57,7 +59,7 @@ Where oh where is my little pony?
         "children": Array [],
         "content": "---
 title: \\"my little pony\\"
-date: \\"12/12/2014\\"
+date: \\"2017-09-18T23:19:51.246Z\\"
 ---
 
 Where oh where is my little pony?

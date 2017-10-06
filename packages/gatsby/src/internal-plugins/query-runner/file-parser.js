@@ -10,6 +10,8 @@ const report = require(`../../reporter`)
 
 import type { DocumentNode, DefinitionNode } from "graphql"
 
+const apiRunnerNode = require(`../../utils/api-runner-node`)
+
 const getMissingNameErrorMessage = file => report.stripIndent`
   GraphQL definitions must be "named".
   The query with the missing name is in ${file}.
@@ -31,16 +33,12 @@ const getMissingNameErrorMessage = file => report.stripIndent`
 async function parseToAst(filePath, fileStr) {
   let ast
 
-  let transpiled
-  // TODO figure out why awaiting apiRunnerNode doesn't work
-  // Currently if I try that it just returns immediately.
-  //
   // Preprocess and attempt to parse source; return an AST if we can, log an
   // error if we can't.
-  // const transpiled = await apiRunnerNode(`preprocessSource`, {
-  // filename: filePath,
-  // contents: fileStr,
-  // })
+  const transpiled = await apiRunnerNode(`preprocessSource`, {
+    filename: filePath,
+    contents: fileStr,
+  })
 
   if (transpiled && transpiled.length) {
     for (const item of transpiled) {

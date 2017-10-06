@@ -26,7 +26,7 @@ const navItemStyles = {
     opacity: 0.8,
   },
 }
-const NavItem = ({ linkTo, children }) =>
+const NavItem = ({ linkTo, children }) => (
   <li
     css={{
       display: `inline-block`,
@@ -37,8 +37,26 @@ const NavItem = ({ linkTo, children }) =>
       {children}
     </Link>
   </li>
+)
 
-export default ({ isHomepage }) => {
+export default ({ pathname }) => {
+  const isHomepage = pathname == `/`
+  const isBlog = pathname == `/blog/`
+  let styles = {}
+  if (isHomepage) {
+    styles.backgroundColor = `rgba(255,255,255,0)`
+    styles.borderBottomColor = `transparent`
+    styles[presets.Tablet] = {
+      position: isHomepage || isBlog ? `absolute` : `fixed`,
+    }
+  } else if (isBlog) {
+    styles.backgroundColor = `#fff`
+    styles[presets.Tablet] = {
+      borderBottomColor: `transparent`,
+      position: isHomepage || isBlog ? `absolute` : `fixed`,
+      backgroundColor: presets.sidebar,
+    }
+  }
   const socialIconsStyles = {
     color: presets.brandLight,
     [presets.Phablet]: {
@@ -67,22 +85,19 @@ export default ({ isHomepage }) => {
 
   return (
     <div
+      role="navigation"
       css={{
         borderBottom: `1px solid ${presets.veryLightPurple}`,
-        borderBottomColor: isHomepage
-          ? `transparent`
-          : `${presets.veryLightPurple}`,
-        backgroundColor: isHomepage
-          ? `rgba(255,255,255,0)`
-          : `rgba(255,255,255,0.975)`,
+        backgroundColor: `rgba(255,255,255,0.975)`,
         position: isHomepage ? `absolute` : false,
         height: presets.headerHeight,
         zIndex: `1`,
         left: 0,
         right: 0,
         [presets.Tablet]: {
-          position: isHomepage ? `absolute` : `fixed`,
+          position: isHomepage || isBlog ? `absolute` : `fixed`,
         },
+        ...styles,
       }}
     >
       <div
@@ -119,6 +134,7 @@ export default ({ isHomepage }) => {
               marginRight: rhythm(2 / 4),
               verticalAlign: `middle`,
             }}
+            alt=""
           />
           <h1
             css={{

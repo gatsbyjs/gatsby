@@ -33,36 +33,36 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     resolve(
       graphql(
         `
-        {
-          allMarkdownRemark {
-            edges {
-              node {
-                frontmatter {
-                  layoutType
-                  path
+          {
+            allMarkdownRemark {
+              edges {
+                node {
+                  frontmatter {
+                    layoutType
+                    path
+                  }
+                  fields {
+                    slug
+                  }
                 }
-                fields {
-                  slug
+              }
+            }
+            allJsFrontmatter {
+              edges {
+                node {
+                  fileAbsolutePath
+                  data {
+                    layoutType
+                    path
+                  }
+                  fields {
+                    slug
+                  }
                 }
               }
             }
           }
-          allJsFrontmatter {
-            edges {
-              node {
-                fileAbsolutePath
-                data {
-                  layoutType
-                  path
-                }
-                fields {
-                  slug
-                }
-              }
-            }
-          }
-        }
-      `
+        `
       ).then(result => {
         if (result.errors) {
           console.log(result.errors)

@@ -4,8 +4,7 @@ const os = require(`os`)
 
 // Write out a typography module to .cache.
 
-// TODO add a new API hook e.g onPreBootstrap
-exports.sourceNodes = ({ store }, pluginOptions) => {
+exports.onPreBootstrap = ({ store }, pluginOptions) => {
   const program = store.getState().program
 
   let module
