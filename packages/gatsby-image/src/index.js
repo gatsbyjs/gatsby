@@ -153,6 +153,7 @@ class Image extends React.Component {
           style={{
             position: `relative`,
             overflow: `hidden`,
+            zIndex: 1,
             ...style,
           }}
           ref={this.handleRef}
@@ -218,6 +219,7 @@ class Image extends React.Component {
           style={{
             position: `relative`,
             overflow: `hidden`,
+            zIndex: 1,
             width: image.width,
             height: image.height,
             background: `lightgray`,

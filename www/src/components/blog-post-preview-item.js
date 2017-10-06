@@ -123,7 +123,7 @@ export const blogPostPreviewFragment = graphql`
         }
         avatar {
           childImageSharp {
-            resolutions(width: 30, height: 30) {
+            resolutions(width: 30, height: 30, quality: 80) {
               ...GatsbyImageSharpResolutions_noBase64
             }
           }
