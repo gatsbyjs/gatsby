@@ -344,7 +344,7 @@ async function base64(args) {
   return await memoizedBase64(args)
 }
 
-async function sizes({ file, args = {} }) {
+async function responsiveSizes({ file, args = {} }) {
   const defaultArgs = {
     maxWidth: 800,
     quality: 50,
@@ -557,7 +557,7 @@ async function resolutions({ file, args = {} }) {
 
 exports.queueImageResizing = queueImageResizing
 exports.base64 = base64
-exports.responsiveSizes = sizes
+exports.responsiveSizes = responsiveSizes
 exports.responsiveResolution = resolutions
-exports.sizes = sizes
+exports.sizes = responsiveSizes
 exports.resolutions = resolutions
