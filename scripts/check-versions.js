@@ -3,6 +3,10 @@ const Repository = require(`lerna/lib/Repository`)
 const repo = new Repository()
 let warned = false
 
+process.exit()
+
+console.log(Object.keys(repo))
+
 repo.packages.forEach(pkg => {
   const outdated = repo.packages
     .filter(p => !!pkg.allDependencies[p.name] && p.name !== pkg.name)
