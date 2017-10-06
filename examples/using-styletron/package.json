@@ -1,0 +1,29 @@
+{
+  "name": "gatsby-example-using-styletron",
+  "private": true,
+  "description": "Gatsby example site using the styletron plugin",
+  "version": "1.0.0",
+  "author": "Nadiia Dmytrenko <nadiia.dmytrenko@gmail.com>",
+  "dependencies": {
+    "gatsby": "latest",
+    "gatsby-link": "latest",
+    "gatsby-plugin-google-analytics": "latest",
+    "gatsby-plugin-offline": "latest",
+    "gatsby-plugin-styletron": "latest",
+    "lodash": "^4.16.4",
+    "react-typography": "^0.15.0",
+    "slash": "^1.0.0",
+    "styletron-react": "^3.0.0-rc.2",
+    "typography": "^0.15.8",
+    "typography-breakpoint-constants": "^0.14.0"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build"
+  }
+}
