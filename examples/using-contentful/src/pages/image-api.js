@@ -20,6 +20,7 @@ export default props => {
       <h2>Resize</h2>
       {assets.map(({ node: { title, resize } }) => (
         <img
+          key={resize.src}
           alt={title}
           src={resize.src}
           width={resize.width}
@@ -69,8 +70,10 @@ export default props => {
       </p>
       {assets.map(({ node: { title, resolutions } }) => (
         <Img
+          key={resolutions.src}
           alt={title}
           resolutions={resolutions}
+          backgroundColor
           style={{
             marginRight: rhythm(1 / 2),
             marginBottom: rhythm(1 / 2),
@@ -121,6 +124,7 @@ export default props => {
       </p>
       {assets.map(({ node: { title, resizing } }) => (
         <Img
+          key={resizing.src}
           alt={title}
           resolutions={resizing}
           style={{
@@ -167,6 +171,7 @@ export default props => {
       </p>
       {assets.map(({ node: { title, sizes } }) => (
         <Img
+          key={sizes.src}
           alt={title}
           sizes={sizes}
           style={{

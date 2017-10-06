@@ -142,6 +142,11 @@ class Image extends React.Component {
       backgroundColor,
     } = convertProps(this.props)
 
+    let bgColor
+    if (typeof backgroundColor === `boolean`) {
+      bgColor = `lightgray`
+    }
+
     if (sizes) {
       const image = sizes
       return (
@@ -175,14 +180,15 @@ class Image extends React.Component {
           )}
 
           {/* Show a solid background color. */}
-          {backgroundColor && (
+          {bgColor && (
             <div
               title={title}
               style={{
-                backgroundColor: backgroundColor,
+                backgroundColor: bgColor,
                 position: `absolute`,
                 top: 0,
                 bottom: 0,
+                opacity: !this.state.imgLoaded ? 1 : 0,
                 right: 0,
                 left: 0,
               }}
@@ -220,7 +226,6 @@ class Image extends React.Component {
             zIndex: 1,
             width: image.width,
             height: image.height,
-            background: `lightgray`,
             ...style,
           }}
           ref={this.handleRef}
@@ -237,12 +242,13 @@ class Image extends React.Component {
           )}
 
           {/* Show a solid background color. */}
-          {backgroundColor && (
+          {bgColor && (
             <div
               title={title}
               style={{
-                backgroundColor: backgroundColor,
+                backgroundColor: bgColor,
                 width: image.width,
+                opacity: !this.state.imgLoaded ? 1 : 0,
                 height: image.height,
               }}
             />
@@ -286,7 +292,7 @@ Image.propTypes = {
   alt: PropTypes.string,
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]), // Support Glamor's css prop.
   style: PropTypes.object,
-  backgroundColor: PropTypes.string,
+  backgroundColor: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 }
 
 export default Image

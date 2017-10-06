@@ -27,6 +27,7 @@ class BlogPostPreviewItem extends React.Component {
         >
           <Img
             alt=""
+            backgroundColor
             resolutions={avatar}
             css={{
               borderRadius: `100%`,
