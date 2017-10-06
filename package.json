@@ -64,5 +64,11 @@
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "devDependencies": {
+    "chokidar": "^1.7.0"
+  },
+  "optionalDependencies": {
+    "fsevents": "^1.1.2"
+  }
 }
