@@ -90,11 +90,7 @@ export const pageQuery = graphql`
           }
           image {
             resolutions(width: 75) {
-              base64
-              src
-              srcSet
-              height
-              width
+              ...GatsbyContentfulResolutions
             }
           }
         }
@@ -109,11 +105,7 @@ export const pageQuery = graphql`
           }
           image {
             resolutions(width: 75) {
-              base64
-              src
-              srcSet
-              height
-              width
+              ...GatsbyContentfulResolutions
             }
           }
         }

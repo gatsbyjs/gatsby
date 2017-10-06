@@ -342,7 +342,7 @@ exports.extendNodeType = ({ type }) => {
   return {
     resolutions: {
       type: new GraphQLObjectType({
-        name: `ContentfulResponsiveResolution`,
+        name: `ContentfulResolutions`,
         fields: {
           base64: { type: GraphQLString },
           aspectRatio: { type: GraphQLFloat },
@@ -382,7 +382,7 @@ exports.extendNodeType = ({ type }) => {
     },
     sizes: {
       type: new GraphQLObjectType({
-        name: `ContentfulResponsiveSizes`,
+        name: `ContentfulSizes`,
         fields: {
           base64: { type: GraphQLString },
           aspectRatio: { type: GraphQLFloat },
@@ -423,8 +423,7 @@ exports.extendNodeType = ({ type }) => {
       },
     },
     responsiveResolution: {
-      deprecationReason:
-        `We dropped the "responsive" part of the name to make it shorter https://github.com/gatsbyjs/gatsby/pull/2320/`,
+      deprecationReason: `We dropped the "responsive" part of the name to make it shorter https://github.com/gatsbyjs/gatsby/pull/2320/`,
       type: new GraphQLObjectType({
         name: `ContentfulResponsiveResolution`,
         fields: {
@@ -465,8 +464,7 @@ exports.extendNodeType = ({ type }) => {
       },
     },
     responsiveSizes: {
-      deprecationReason:
-        `We dropped the "responsive" part of the name to make it shorter https://github.com/gatsbyjs/gatsby/pull/2320/`,
+      deprecationReason: `We dropped the "responsive" part of the name to make it shorter https://github.com/gatsbyjs/gatsby/pull/2320/`,
       type: new GraphQLObjectType({
         name: `ContentfulResponsiveSizes`,
         fields: {

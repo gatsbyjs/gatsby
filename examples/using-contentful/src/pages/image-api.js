@@ -1,4 +1,5 @@
 import React from "react"
+import Img from "gatsby-image"
 import { rhythm } from "../utils/typography"
 
 export default props => {
@@ -43,7 +44,6 @@ export default props => {
           src
           width
           height
-          aspectRatio
         }
       }
     }
@@ -68,12 +68,9 @@ export default props => {
         You should prefer this operator over <code>resize</code>.
       </p>
       {assets.map(({ node: { title, resolutions } }) => (
-        <img
+        <Img
           alt={title}
-          src={resolutions.src}
-          srcSet={resolutions.srcSet}
-          width={resolutions.width}
-          height={resolutions.height}
+          resolutions={resolutions}
           style={{
             marginRight: rhythm(1 / 2),
             marginBottom: rhythm(1 / 2),
@@ -123,12 +120,9 @@ export default props => {
         </a>
       </p>
       {assets.map(({ node: { title, resizing } }) => (
-        <img
+        <Img
           alt={title}
-          src={resizing.src}
-          srcSet={resizing.srcSet}
-          width={resizing.width}
-          height={resizing.height}
+          resolutions={resizing}
           style={{
             marginRight: rhythm(1 / 2),
             marginBottom: rhythm(1 / 2),
@@ -172,11 +166,9 @@ export default props => {
         reaches.
       </p>
       {assets.map(({ node: { title, sizes } }) => (
-        <img
+        <Img
           alt={title}
-          src={sizes.src}
-          srcSet={sizes.srcSet}
-          sizes={sizes.sizes}
+          sizes={sizes}
           style={{
             marginRight: rhythm(1 / 2),
             marginBottom: rhythm(1 / 2),
@@ -219,24 +211,15 @@ export const pageQuery = graphql`
             src
             width
             height
-            aspectRatio
           }
           resolutions(width: 100) {
-            width
-            height
-            src
-            srcSet
+            ...GatsbyContentfulResolutions_noBase64
           }
           resizing: resolutions(width: 100, height: 100) {
-            width
-            height
-            src
-            srcSet
+            ...GatsbyContentfulResolutions_noBase64
           }
           sizes(maxWidth: 613) {
-            sizes
-            src
-            srcSet
+            ...GatsbyContentfulSizes_noBase64
           }
         }
       }

@@ -1,9 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-// TODO support adding node_modules/gatsby-image as place to scan for graphql fragments to gatsby-plugin-sharp and gatsby-source-contentful
-// TODO add fragments here with and without base64 in fragments file so not included in pages.
-
 const convertProps = props => {
   let convertedProps = { ...props }
   if (convertedProps.responsiveResolution) {
@@ -219,6 +216,7 @@ class Image extends React.Component {
           style={{
             position: `relative`,
             overflow: `hidden`,
+            display: `inline-block`,
             zIndex: 1,
             width: image.width,
             height: image.height,
