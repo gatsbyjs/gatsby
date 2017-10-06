@@ -6,7 +6,7 @@ author: "David James"
 excerpt: "Recreating my WordPress portfolio site using GatsbyJS, React and the WordPress REST API"
 ---
 
-_This article was originally published on [my portfoilo site](http://dfjames.com/blog/site-generating-with-the-great-gatsbyjs) on October 1, 2017._
+_This article was originally published on [my portfolio site](http://dfjames.com/blog/site-generating-with-the-great-gatsbyjs) on October 1, 2017._
 
 # Site generating with the great GatsbyJS
 
