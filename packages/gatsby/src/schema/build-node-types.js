@@ -5,11 +5,13 @@ const {
   GraphQLNonNull,
   GraphQLID,
   GraphQLList,
-  GraphQLString,
 } = require(`graphql`)
 
 const apiRunner = require(`../utils/api-runner-node`)
 const { inferObjectStructureFromNodes } = require(`./infer-graphql-type`)
+const {
+  inferInputObjectStructureFromFields,
+} = require(`./infer-graphql-input-fields-from-fields`)
 const {
   inferInputObjectStructureFromNodes,
 } = require(`./infer-graphql-input-fields`)
@@ -129,6 +131,11 @@ module.exports = async () => {
     })
 
     const mergedFieldsFromPlugins = _.merge(...fieldsFromPlugins)
+
+    const inferredInputFieldsFromPlugins = inferInputObjectStructureFromFields({
+      fields: mergedFieldsFromPlugins,
+    })
+
     const gqlType = new GraphQLObjectType({
       name: typeName,
       description: `Node of type ${typeName}`,
@@ -142,6 +149,12 @@ module.exports = async () => {
       typeName,
     })
 
+    const filterFields = _.merge(
+      {},
+      inferedInputFields.inferredFields,
+      inferredInputFieldsFromPlugins.inferredFields
+    )
+
     const proccesedType: ProcessedNodeType = {
       ...intermediateType,
       fieldsFromPlugins: mergedFieldsFromPlugins,
@@ -149,7 +162,7 @@ module.exports = async () => {
       node: {
         name: typeName,
         type: gqlType,
-        args: inferedInputFields.inferredFields,
+        args: filterFields,
         resolve(a, args, context) {
           const runSift = require(`./run-sift`)
           const latestNodes = _.filter(
@@ -163,6 +176,7 @@ module.exports = async () => {
             args: { filter: { ...args } },
             nodes: latestNodes,
             path: context.path ? context.path : `LAYOUT___${context.id}`,
+            type: gqlType,
           })
         },
       },

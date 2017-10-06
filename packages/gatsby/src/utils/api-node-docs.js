@@ -83,8 +83,8 @@ exports.createPagesStatefully = true
  * @example
  * exports.createLayouts = ({ graphql, boundActionCreators }) => {
  *  boundActionCreators.createLayout({
- *    id: 'custom',
  *    component: path.resolve(`src/templates/custom-layout.js`),
+ *    id: 'custom', // optional - if not provided the filename will be used as id
  *   })
  *  }
  */
@@ -195,6 +195,21 @@ exports.modifyBabelrc = true
  * }
  */
 exports.modifyWebpackConfig = true
+
+/**
+ * Called at the start of the bootstrap process before any other extension APIs are called.
+ */
+exports.onPreBootstrap = true
+
+/**
+ * Called at the end of the bootstrap process after all other extension APIs have been called.
+ */
+exports.onPostBootstrap = true
+
+/**
+ * The first extension point called during the build process. Called after the bootstrap has completed but before the build steps start.
+ */
+exports.onPreBuild = true
 
 /**
  * The last extension point called after all other parts of the build process

@@ -2,7 +2,6 @@
 
 const { store, emitter } = require(`./index`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
-const _ = require(`lodash`)
 
 emitter.on(`CREATE_NODE`, action => {
   const node = store.getState().nodes[action.payload.id]

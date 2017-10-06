@@ -36,9 +36,9 @@ Components become the base building blocks of your site. Instead of being limite
 
 ## Creating global styles
 
-Every site has some sort of global style. This includes things like the site's typography and background colors. These styles set the overall feel of the site — much like the color and texture of a wall sets the overall feel of a room.
+Every site has some sort of global style. This includes things like the site's typography and background colors. These styles set the overall feel of the site—much like the color and texture of a wall sets the overall feel of a room.
 
-Often people will use something like Bootstrap or Foundation for their global styles. The problem with these however is they're difficult to customize and they're not designed to work well with React components.
+Often people will use something like Bootstrap or Foundation for their global styles. The problem with these, however, is they're difficult to customize and they're not designed to work well with React components.
 
 So for this tutorial let's explore a JavaScript library called [Typography.js](https://github.com/kyleamathews/typography.js) that generates global styles and works particularly well with Gatsby and React.
 
@@ -63,7 +63,7 @@ const typography = new Typography({
 })
 ```
 
-## Gatsby Plugins
+## Gatsby plugins
 
 But before we can get back to building and trying out Typography.js, let's make a quick diversion and talk about Gatsby plugins.
 
@@ -71,7 +71,7 @@ You're probably familiar with the idea of plugins. Many software systems support
 
 Gatsby plugins work the same way.
 
-Community members (like you!) can contribute plugins (small amounts of JavaScript code) that then others can use when building Gatsby sites.
+Community members (like you!) can contribute plugins (small amounts of JavaScript code) that others can then use when building Gatsby sites.
 
 There's already dozens of plugins! Check them out at the [plugins section of the site](/docs/plugins/).
 
@@ -98,13 +98,13 @@ This is the minimal setup for a Gatsby site.
 
 To install a plugin, there's two steps. First you install the plugin's NPM package and second you add the plugin to your site's `gatsby-config.js`.
 
-Typography.js has a Gatsby plugin so let's install that by running.
+Typography.js has a Gatsby plugin, so let's install that by running:
 
 ```shell
 npm install --save gatsby-plugin-typography
 ```
 
-Next create a file at the base of your site named `gatsby-config.js`. This is where you add plugins to a site along with other site configuration.
+Next, create a file at the root of your project folder named `gatsby-config.js`. This is where you add plugins to a site along with other site configuration.
 
 Copy the following into `gatsby-config.js`
 
@@ -116,7 +116,7 @@ module.exports = {
 
 Gatsby reads the site's config file when starting. Here we tell it to look for a plugin named `gatsby-plugin-typography`. Gatsby knows to look for plugins that are NPM packages so it will find the package we installed previously.
 
-Now run `gatsby develop` again. Once you load the site, if you inspect the generated HTML using the Chrome developer tools, you'll see that the typography plugin added a `<style>` element to the head with its generated CSS.
+Now run `gatsby develop`. Once you load the site, if you inspect the generated HTML using the Chrome developer tools, you'll see that the typography plugin added a `<style>` element to the `<head>` element with its generated CSS.
 
 ![typography-styles](typography-styles.png)
 
@@ -188,9 +188,9 @@ export default () =>
 
 Ah, this is starting to look nice!
 
-What we're seeing here is the default CSS Typography.js produces. We can easily customize it however. Let's do that.
+What we're seeing here is the default CSS Typography.js produces. We can easily customize it, however. Let's do that.
 
-In your site, create a new directory at `src/utils`. There create a file `typography.js`. In it add the following code.
+In your site, create a new directory at `src/utils`. There create a file named `typography.js`. In it, add the following code.
 
 ```javascript
 import Typography from "typography"
@@ -219,7 +219,7 @@ Stop `gatsby develop` and then restart it again for our plugin change to take ef
 
 Now all the text font sizes should be slightly bigger. Try changing the `baseFontSize` to `24px` then `12px`. All elements get resized as their `font-size` is based on the `baseFontSize`.
 
-There are many themes available for Typography.js. Let's try a couple. Run in your terminal at the root of your site:
+There are [many themes available](https://github.com/KyleAMathews/typography.js#published-typographyjs-themes) for Typography.js. Let's try a couple. Run in your terminal at the root of your site:
 
 ```shell
 npm install --save typography-theme-bootstrap typography-theme-lawton
@@ -238,7 +238,7 @@ export default typography
 
 ![typography-bootstrap](typography-bootstrap.png)
 
-Themes can also add Google Fonts. The Lawton theme we installed along with the Bootstrap theme does this. Replace your typography module code with the following then restart the dev server (necessary to load the new Google Fonts).
+Themes can also add Google Fonts. The Lawton theme we installed along with the Bootstrap theme does this. Replace your typography module code with the following, then restart the dev server (necessary to load the new Google Fonts).
 
 ```javascript{2-3,5}
 import Typography from "typography"
@@ -256,13 +256,13 @@ Typography.js has more than 30 themes! Check them out at http://kyleamathews.git
 
 ## Component CSS
 
-Gatsby has a wealth of options available for styling components. Let's explore three very popular and production-ready options. We'll build a simple page three times with each styling option.
+Gatsby has a wealth of options available for styling components. Let's explore three very popular and production-ready options. We'll build a simple page three times to explore each styling option.
 
-Each is a variant on "CSS-in-JS" — which solves many of the problems with traditional CSS.
+Each is a variant on "CSS-in-JS"—which solves many of the problems with traditional CSS.
 
 One of the most important problems they solve is selector name collisions. With traditional CSS, you have to be careful not to overwrite CSS selectors used elsewhere in a site because all CSS selectors live in the same global namespace. This unfortunate restriction can lead to elaborate (and often confusing) selector naming schemes.
 
-With CSS-in-JS you avoid all that as CSS selectors are scoped automatically to their component. Styles are tightly coupled with their components. This makes it very easy to know how to edit a component's CSS as there's never any confusion about how and where CSS is being used.
+With CSS-in-JS, you avoid all that as CSS selectors are scoped automatically to their component. Styles are tightly coupled with their components. This makes it very easy to know how to edit a component's CSS as there's never any confusion about how and where CSS is being used.
 
 For some background reading on CSS-in-JS, see [Christopher "vjeux" Chedeau's 2014 presentation that sparked this movement](https://speakerdeck.com/vjeux/react-css-in-js) as well as [Mark Dalgleish's more recent post "A Unified Styling Language"](https://medium.com/seek-blog/a-unified-styling-language-d0c208de2660).
 
@@ -274,7 +274,7 @@ Quoting from [the CSS Module homepage](https://github.com/css-modules/css-module
 
 > A **CSS Module** is a CSS file in which all class names and animation names are scoped locally by default.
 
-CSS Modules is very popular as it lets you write CSS like normal but with a lot more safety as the tool automatically makes class and animation names unique so you don't have to worry about selector name collisions.
+CSS Modules is very popular, as it lets you write CSS like normal but with a lot more safety. The tool automatically makes class and animation names unique so you don't have to worry about selector name collisions.
 
 CSS Modules are highly recommended for those new to building with Gatsby (and React in general).
 
@@ -282,7 +282,7 @@ Gatsby works out of the box with CSS Modules.
 
 Let's build a page using CSS Modules.
 
-First let's create a new `Container` component which we'll use for each of the CSS-in-JS examples. Create a `components` directory at `src/components` and then in this directory, create a file named `container.js` and paste the following.
+First, let's create a new `Container` component which we'll use for each of the CSS-in-JS examples. Create a `components` directory at `src/components` and then, in this directory, create a file named `container.js` and paste the following.
 
 ```javascript
 import React from "react"
@@ -317,7 +317,7 @@ Your page should now look like:
 
 Let's create a simple list of people with names, avatars, and short latin biographies.
 
-First let's create the file for the CSS at `src/pages/about-css-modules.module.css`. You'll notice that the file name ends with `.module.css` instead of `.css` like normal. This is how we tell Gatsby that this CSS file should be processed as CSS modules.
+First, let's create the file for the CSS at `src/pages/about-css-modules.module.css`. You'll notice that the file name ends with `.module.css` instead of `.css` like normal. This is how we tell Gatsby that this CSS file should be processed as CSS modules.
 
 ```css
 .user {
@@ -368,7 +368,7 @@ If you compare that to our CSS file, you'll see that each class is now a key in 
 
 Let's use our styles to create a simple `User` component.
 
-Let's create the new component inline in the `about-css-modules.js` page component. The general rule of thumb is if you use a component in multiple places on a site, it should be in its own module file in the `components` directory. But if it's used only in one file, create in inline.
+Let's create the new component inline in the `about-css-modules.js` page component. The general rule of thumb is if you use a component in multiple places on a site, it should be in its own module file in the `components` directory. But, if it's used only in one file, create it inline.
 
 Modify `about-css-modules.js` so it looks like the following:
 
@@ -380,7 +380,7 @@ import Container from "../components/container"
 
 const User = props =>
   <div className={styles.user}>
-    <img src={props.avatar} className={styles.avatar} />
+    <img src={props.avatar} className={styles.avatar} alt="" />
     <div className={styles.description}>
       <h2 className={styles.username}>
         {props.username}
@@ -458,18 +458,24 @@ export default () =>
 
 Let's add the same inline `User` component but this time using Glamor's `css` prop.
 
-```jsx{5-21,27-35}
+```jsx{5-26,32-40}
 import React from "react"
 
 import Container from "../components/container"
 
 const User = props =>
   <div
-    css={{ display: `flex`, alignItems: `center`, margin: `0 auto 12px auto` }}
+    css={{
+      display: `flex`,
+      alignItems: `center`,
+      margin: `0 auto 12px auto`,
+      "&:last-child": { marginBottom: 0 }
+    }}
   >
     <img
       src={props.avatar}
       css={{ flex: `0 0 96px`, width: 96, height: 96, margin: 0 }}
+      alt=""
     />
     <div css={{ flex: 1, marginLeft: 18, padding: 12 }}>
       <h2 css={{ margin: `0 0 12px 0`, padding: 0 }}>
@@ -569,7 +575,7 @@ const Excerpt = styled.p`margin: 0;`
 
 const User = props =>
   <UserWrapper>
-    <Avatar src={props.avatar} />
+    <Avatar src={props.avatar} alt="" />
     <Description>
       <Username>
         {props.username}

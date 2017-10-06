@@ -22,17 +22,13 @@ import "../fonts/Webfonts/futurapt_demiitalic_macroman/stylesheet.css"
 import "typeface-spectral"
 import "typeface-space-mono"
 
-module.exports = React.createClass({
-  propTypes() {
-    return {
-      children: React.PropTypes.any,
-    }
-  },
+class DefaultLayout extends React.Component {
   render() {
     const isHomepage = this.props.location.pathname == `/`
-    const hasSidebar = this.props.location.pathname.slice(0, 6) === `/docs/` ||
-    this.props.location.pathname.slice(0, 10) === `/packages/` ||
-    this.props.location.pathname.slice(0, 10) === `/tutorial/`
+    const hasSidebar =
+      this.props.location.pathname.slice(0, 6) === `/docs/` ||
+      this.props.location.pathname.slice(0, 10) === `/packages/` ||
+      this.props.location.pathname.slice(0, 10) === `/tutorial/`
     const sidebarStyles = {
       borderRight: `1px solid ${colors.b[0]}`,
       backgroundColor: presets.sidebar,
@@ -51,7 +47,7 @@ module.exports = React.createClass({
         background: presets.lightPurple,
       },
       "::-webkit-scrollbar-track": {
-        background: presets.veryLightPurple,
+        background: presets.brandLighter,
       },
     }
 
@@ -62,7 +58,7 @@ module.exports = React.createClass({
           <meta name="og:type" content="website" />
           <meta name="og:site_name" content="GatsbyJS" />
         </Helmet>
-        <Navigation isHomepage={isHomepage} />
+        <Navigation pathname={this.props.location.pathname} />
         <div
           className={hasSidebar ? `main-body has-sidebar` : `main-body`}
           css={{
@@ -107,10 +103,7 @@ module.exports = React.createClass({
           <div
             css={{
               [presets.Tablet]: {
-                paddingLeft:
-                  hasSidebar
-                    ? rhythm(10)
-                    : 0,
+                paddingLeft: hasSidebar ? rhythm(10) : 0,
               },
             }}
           >
@@ -120,5 +113,7 @@ module.exports = React.createClass({
         <MobileNavigation />
       </div>
     )
-  },
-})
+  }
+}
+
+module.exports = DefaultLayout

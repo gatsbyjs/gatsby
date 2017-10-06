@@ -5,7 +5,7 @@ import BlogPostPreviewItem from "../components/blog-post-preview-item"
 import typography, { rhythm, scale, options } from "../utils/typography"
 import presets from "../utils/presets"
 
-const ContributorPageTemplate = React.createClass({
+class ContributorPageTemplate extends React.Component {
   render() {
     const contributor = this.props.data.authorYaml
     const allMarkdownRemark = this.props.data.allMarkdownRemark
@@ -62,7 +62,11 @@ const ContributorPageTemplate = React.createClass({
             if (node.frontmatter.author) {
               if (node.frontmatter.author.id === contributor.id) {
                 return (
-                  <BlogPostPreviewItem post={node} key={node.fields.slug} />
+                  <BlogPostPreviewItem
+                    post={node}
+                    key={node.fields.slug}
+                    css={{ marginBottom: rhythm(2) }}
+                  />
                 )
               }
             }
@@ -70,8 +74,8 @@ const ContributorPageTemplate = React.createClass({
         </div>
       </Container>
     )
-  },
-})
+  }
+}
 
 export default ContributorPageTemplate
 

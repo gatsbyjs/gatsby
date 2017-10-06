@@ -2,36 +2,35 @@
 
 Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from WordPress sites using the [WordPress JSON REST API](https://developer.wordpress.org/rest-api/reference/).
 
-An [example site](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress) for using this plugin is available.
+An example site for this plugin is available.
 
-## Wish list
+* [Demo](https://using-wordpress.gatsbyjs.org/)
+* [Example site source code](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress)
 
-- [x] gatsby source plugin for WordPress
-- [x] pull data from self-hosted WordPress even behind HTAccess
-- [x] pull data from site hosted on wordpress.com, wordpress.org
-- [x] retrive any number of article and posts (tested on 900 posts)
-- [x] authentify to wordpress.com API using OAuth 2 so medias can be queried.
-- [ ] pull images to local file system [WIP]
-- [ ] responsive images using sharp [WIP]
-- [ ] add testing for `npm run test`
+## Features
 
-## Status
+- Pulls data from any self-hosted WordPress site—even if behind HTAccess
+- Pulls data from sites hosted on wordpress.com and wordpress.org
+- Works with any number of article and posts (tested on a site with 900 posts)
+- Can authenticate to wordpress.com's API using OAuth 2 so media can be queried
+- Easily create responsive images in Gatsby from WordPress images.
 
-This module is at prototype-level. It currently pulls from WordPress the following entities :
+## Supported WordPress entities
+
+This module currently pulls from WordPress the following entities:
 - [x] posts
 - [x] pages
 - [x] tags
 - [x] categories
-- [x] medias
+- [x] media
 - [x] types
 - [x] users
 - [x] statuses
 - [x] taxonomies
-- [x] and entities exposed by other plugins
+- [x] [ACF (Advanced Custom Fields)](https://www.advancedcustomfields.com/)
+- [x] Custom Post Types
 
-It will pull any endpoint provided by WordPress Plugins as long as it appears in the list of endpoints.
-  * `//your-site.com/wp-json/` for a self-hosted WordPress or hosted on wordpress.org
-  * `https://public-api.wordpress.com/wp/v2/sites/your-site.com` for a site hosted on wordpress.com
+We welcome PRs adding support for data from other plugins.
 
 ## Install
 
@@ -62,8 +61,9 @@ It will pull any endpoint provided by WordPress Plugins as long as it appears in
         // If your site is hosted on wordpress.org, then set this to false.
         hostingWPCOM: true,
         // If useACF is true, then the source plugin will try to import the Wordpress ACF Plugin contents.
-        // This feature is untested for sites hosted on Wordpress.com
-        useACF: false,
+        // This feature is untested for sites hosted on Wordpress.com.
+        // Defaults to true.
+        useACF: true,
         auth: {
           // If auth.user and auth.pass are filled, then the source plugin will be allowed
           // to access endpoints that are protected with .htaccess.
@@ -105,7 +105,7 @@ These plugins were tested but it should work with any plugin that extends the RE
 
 - [x] [WP-API-MENUS](https://wordpress.org/plugins/wp-api-menus/) which gives you the menus and menu locations endpoint.
 
-- [ ] Please PR on this Readme file to report plugin that works but not listed here.
+- [ ] Please PR to this README file to report plugin that works but not listed here.
 
 
 ## Wordpress.com hosting [WIP]
@@ -125,7 +125,7 @@ You can query nodes created from Wordpress using GraphQL like the following:
   * Note 3: A complete example of site's `gatsby-config.js` to create pages for Wordpress Pages and Posts is provided at the end of this section.
 
 ### Query posts
-```    graphql
+```graphql
   allWordpressPost {
     edges {
       node {
@@ -135,26 +135,14 @@ You can query nodes created from Wordpress using GraphQL like the following:
         content
         excerpt
         date
-        date_gmt
         modified
-        modified_gmt
-        status
-        author
-        featured_media
-        comment_status
-        ping_status
-        sticky
-        template
-        format
-        categories
-        tags
       }
     }
   }
 ```
 
 ### Query pages
-```    graphql
+```graphql
   allWordpressPage {
     edges {
       node {
@@ -163,24 +151,16 @@ You can query nodes created from Wordpress using GraphQL like the following:
         content
         excerpt
         date
-        date_gmt
         modified
-        modified_gmt
         slug
         status
-        author
-        featured_media
-        menu_order
-        comment_status
-        ping_status
-        template
       }
     }
   }
 ```
 
 ### Query tags
-```    graphql
+```graphql
   allWordpressTag {
     edges {
       node {
@@ -188,14 +168,13 @@ You can query nodes created from Wordpress using GraphQL like the following:
         slug
         description
         name
-        taxonomy
       }
     }
   }
 ```
 
 ### Query categories
-```    graphql
+```graphql
   allWordpressCategory {
     edges {
       node {
@@ -203,34 +182,27 @@ You can query nodes created from Wordpress using GraphQL like the following:
         description
         name
         slug
-        taxonomy
       }
     }
   }
 ```
 
 ### Query medias
-```    graphql
+```graphql
   allWordpressMedia {
     edges {
       node {
         id
         date
-        date_gmt
         modified
-        modified_gmt
         slug
         status
         author
         comment_status
         ping_status
         template
-        title {
-          rendered
-        }
-        caption {
-          rendered
-        }
+        title
+        caption
         alt_text
         media_type
         mime_type
@@ -248,7 +220,7 @@ You can query nodes created from Wordpress using GraphQL like the following:
 
 ### Query types
 Note : If you add a new type (like with custom post types plugins) then you will have to add it at the same level than `post`.
-```    graphql
+```graphql
   allWordpressTypes {
     edges {
       node {
@@ -280,7 +252,7 @@ Note : If you add a new type (like with custom post types plugins) then you will
 ```
 
 ### Query users
-```    graphql
+```graphql
   allWordpressUsers {
     edges {
       node {
@@ -299,7 +271,7 @@ Note : If you add a new type (like with custom post types plugins) then you will
 ```
 
 ### Query statuses
-```    graphql
+```graphql
   allWordpressStatuses {
     edges {
       node {
@@ -316,7 +288,7 @@ Note : If you add a new type (like with custom post types plugins) then you will
 ```
 
 ### Query taxonomies
-```    graphql
+```graphql
   allWordpressTaxonomies {
     edges {
       node {
@@ -341,7 +313,7 @@ Note : If you add a new type (like with custom post types plugins) then you will
 ```
 ### Query ACF Options
 Note : you will have to populate the acf node with your config. Put this in the ___GraphiQL debugger to discover your site's options data model.
-```    graphql
+```graphql
   allWordpressAcfOptions {
     edges {
       node {
@@ -354,7 +326,7 @@ Note : you will have to populate the acf node with your config. Put this in the 
   }
 ```
 ### Query WP-API-Menus
-```    graphql
+```graphql
   allWordpressWpApiMenusMenus {
     edges {
       node {
@@ -416,7 +388,7 @@ For example the following URL: `http://my-blog.wordpress.com/wp-api-menus/v2/men
   * Endpoint : `menulocations`
   * Final GraphQL Type : AllWordpressWpApiMenusMenuLocations
 
-```    graphql
+```graphql
   allWordpress${Manufacturer}${Endpoint} {
     edges {
       node {
@@ -430,7 +402,7 @@ For example the following URL: `http://my-blog.wordpress.com/wp-api-menus/v2/men
 
 ### Query posts with the child ACF Fields Node
 Mention the apparition of `childWordpressAcfField` in the query below :
-```    graphql
+```graphql
   allWordpressPost {
     edges {
       node {
@@ -440,9 +412,7 @@ Mention the apparition of `childWordpressAcfField` in the query below :
         content
         excerpt
         date
-        date_gmt
         modified
-        modified_gmt
         status
         author
         featured_media
@@ -465,7 +435,7 @@ Mention the apparition of `childWordpressAcfField` in the query below :
 
 ### Query pages with the child ACF Fields Node
 Mention the apparition of `childWordpressAcfField` in the query below :
-```    graphql
+```graphql
   allWordpressPage {
     edges {
       node {
@@ -474,9 +444,7 @@ Mention the apparition of `childWordpressAcfField` in the query below :
         content
         excerpt
         date
-        date_gmt
         modified
-        modified_gmt
         slug
         status
         author
@@ -505,7 +473,7 @@ const slash = require(`slash`)
 
 // Implement the Gatsby API “createPages”. This is
 // called after the Gatsby bootstrap is finished so you have
-// access to any information necessary to programatically
+// access to any information necessary to programmatically
 // create pages.
 // Will create pages for WordPress pages (route : /{slug})
 // Will create pages for WordPress posts (route : /post/{slug})

@@ -1,4 +1,5 @@
 const Promise = require(`bluebird`)
+const _ = require(`lodash`)
 
 const { onCreateNode } = require(`../gatsby-node`)
 
@@ -18,7 +19,7 @@ describe(`Process markdown content correctly`, () => {
   it(`Correctly creates a new MarkdownRemark node`, async () => {
     const content = `---
 title: "my little pony"
-date: "12/12/2014"
+date: "2017-09-18T23:19:51.246Z"
 ---
 
 Where oh where is my little pony?
@@ -35,6 +36,9 @@ Where oh where is my little pony?
       boundActionCreators,
     }).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
+      expect(
+        _.isString(createNode.mock.calls[0][0].frontmatter.date)
+      ).toBeTruthy()
       expect(createParentChildLink.mock.calls).toMatchSnapshot()
       expect(createNode).toHaveBeenCalledTimes(1)
       expect(createParentChildLink).toHaveBeenCalledTimes(1)

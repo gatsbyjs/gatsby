@@ -20,10 +20,23 @@ module.exports = {
 }
 ```
 
+### multiple collections 
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-mongodb`,
+      options: { dbName: `local`, collection: [`documents`, `vehicles`] },
+    }
+  ],
+}
+```
+
 ## Plugin options
 
 * **dbName**: indicates the database name that you want to use
-* **collection**: the collection name within Mongodb
+* **collection**: the collection name within Mongodb, this can also be an array for multiple collections
 * **server**: contains the server info, with sub properties address and port
         ex. server: { address: `ds143532.mlab.com`, port: 43532 }. Defaults to a server running locally on the default port.
 * **auth**: the authentication data to login a Mongodb collection, with sub properties user and password.
@@ -34,7 +47,7 @@ module.exports = {
 Gatsby supports transformer plugins that know how to transform one data type to another e.g. markdown to html. In the plugin options you can setup
 "mappings" for fields in your collections. You can tell Gatsby that a certain field is a given media type and with the correct transformer plugins installed, your data will be transformed automatically.
 
-Let's say we have a markdown field named `body` in our mongoDB collection. We want to author our content in markdown but want to transform the markdown to HTML for including in our React components.
+Let's say we have a markdown field named `body` in our mongoDB collection `documents`. We want to author our content in markdown but want to transform the markdown to HTML for including in our React components.
 
 To do this, we modify the plugin configuration in `gatsby-config.js` like follows:
 
@@ -47,7 +60,7 @@ module.exports = {
         dbName: `local`,
         collection: `documents`
         map: {
-          body: `text/markdown`,
+          {documents: {body: `text/markdown`}
         },
       },
     }

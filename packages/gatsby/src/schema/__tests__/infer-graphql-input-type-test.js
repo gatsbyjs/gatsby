@@ -14,6 +14,7 @@ const buildConnectionFields = require(`../build-connection-fields`)
 const {
   inferInputObjectStructureFromNodes,
 } = require(`../infer-graphql-input-fields`)
+const createSortField = require(`../create-sort-field`)
 
 function queryResult(nodes, query, { types = [] } = {}) {
   const nodeType = new GraphQLObjectType({
@@ -48,7 +49,7 @@ function queryResult(nodes, query, { types = [] } = {}) {
             type: nodeConnection,
             args: {
               ...connectionArgs,
-              sort,
+              sort: createSortField(`RootQueryType`, sort),
               filter: {
                 type: new GraphQLInputObjectType({
                   name: _.camelCase(`filter test`),
@@ -62,6 +63,7 @@ function queryResult(nodes, query, { types = [] } = {}) {
                 args,
                 nodes,
                 connection: true,
+                type: nodeType,
               })
             },
           },

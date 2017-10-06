@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 21.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 36 32" style="enable-background:new 0 0 36 32;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#FFFFFF;}
+	.st1{fill:#FFFFFF;stroke:#FFB238;stroke-width:1.4173;stroke-miterlimit:10;}
+	.st2{fill:#9966CC;}
+	.st3{fill:url(#SVGID_1_);}
+	.st4{fill:#744C9E;}
+</style>
+<circle class="st0" cx="15.4" cy="19.2" r="6.8"/>
+<polygon class="st1" points="25.3,21.5 17.7,21.5 21.5,14.8 25.3,8.2 29.2,14.8 33,21.5 "/>
+<g>
+	<path class="st2" d="M15.5,13.4c3.4,0,6.1,2.7,6.1,6.1s-2.7,6.1-6.1,6.1s-6.1-2.7-6.1-6.1S12.1,13.4,15.5,13.4 M15.5,12
+		C11.4,12,8,15.4,8,19.5s3.4,7.5,7.5,7.5s7.5-3.4,7.5-7.5S19.6,12,15.5,12L15.5,12z"/>
+</g>
+<g>
+	<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="9" y1="17.2915" x2="9" y2="6.7085">
+		<stop  offset="0" style="stop-color:#FFFFFF;stop-opacity:0"/>
+		<stop  offset="1" style="stop-color:#FFB238"/>
+	</linearGradient>
+	<rect x="3.7" y="6.7" class="st3" width="10.6" height="10.6"/>
+	<path class="st4" d="M13.6,7.4v9.2H4.4V7.4H13.6 M15,6H3v12h12V6L15,6z"/>
+</g>
+</svg>

@@ -5,7 +5,7 @@ module.exports = (state = [], action) => {
   switch (action.type) {
     case `DELETE_CACHE`:
       return []
-    case `CREATE_PAGE`:
+    case `CREATE_PAGE`: {
       action.payload.component = normalize(action.payload.component)
       if (!action.plugin && !action.plugin.name) {
         console.log(``)
@@ -32,6 +32,7 @@ module.exports = (state = [], action) => {
       } else {
         return [...state.concat(action.payload)]
       }
+    }
     case `DELETE_PAGE`:
       return state.filter(p => p.path !== action.payload.path)
     default:
