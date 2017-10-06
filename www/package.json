@@ -6,6 +6,7 @@
   "dependencies": {
     "bluebird": "^3.4.6",
     "gatsby": "^1.9.31",
+    "gatsby-image": "^1.0.5",
     "gatsby-link": "^1.6.16",
     "gatsby-plugin-canonical-urls": "^1.0.6",
     "gatsby-plugin-catch-links": "^1.0.8",
