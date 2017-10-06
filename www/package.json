@@ -46,7 +46,6 @@
     "typography-breakpoint-constants": "^0.15.10",
     "typography-plugin-code": "0.15.x"
   },
-  "devDependencies": {},
   "keywords": [
     "gatsby"
   ],
