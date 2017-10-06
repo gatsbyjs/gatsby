@@ -1,7 +1,5 @@
 echo "=== Building ES5 version of Gatsby"
-rm yarn.lock
 NODE_ENV=development yarn bootstrap
-# ./node_modules/.bin/lerna run build
 
 yarn global add gatsby-dev-cli
 gatsby-dev --set-path-to-repo .
