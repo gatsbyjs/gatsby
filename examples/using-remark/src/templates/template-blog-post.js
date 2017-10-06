@@ -144,10 +144,7 @@ export const pageQuery = graphql`
                   quality: 75
                   grayscale: true
                 ) {
-                  width
-                  height
-                  src
-                  srcSet
+                  ...GatsbyImageSharpResolutions
                 }
               }
             }

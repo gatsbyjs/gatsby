@@ -87,31 +87,17 @@ export const query = graphql`
   query BlurUpQuery {
     reddImageMobile: imageSharp(id: { regex: "/redd/" }) {
       resolutions(width: 125) {
-        base64
-        aspectRatio
-        width
-        height
-        src
-        srcSet
+        ...GatsbyImageSharpResolutions
       }
     }
     reddImage: imageSharp(id: { regex: "/redd/" }) {
       resolutions(width: 200) {
-        base64
-        aspectRatio
-        width
-        height
-        src
-        srcSet
+        ...GatsbyImageSharpResolutions
       }
     }
     kenImage: imageSharp(id: { regex: "/ken-treloar/" }) {
       sizes(maxWidth: 600) {
-        base64
-        aspectRatio
-        src
-        srcSet
-        sizes
+        ...GatsbyImageSharpSizes
       }
     }
   }

@@ -91,13 +91,7 @@ export const query = graphql`
   query FrontPageQuery {
     imageSharp(id: { regex: "/nasa/" }) {
       sizes(maxWidth: 1500) {
-        base64
-        aspectRatio
-        src
-        srcSet
-        sizes
-        originalImg
-        originalName
+        ...GatsbyImageSharpSizes
       }
     }
   }

@@ -27,7 +27,8 @@ class Index extends React.Component {
           </a>. With it and{` `}
           <a href="https://www.gatsbyjs.org/packages/gatsby-image/">
             Gatsby Image
-          </a>{` `}
+          </a>
+          {` `}
           you can easily add fast, optimized, responsive images to your site.
         </p>
         <p>
@@ -307,28 +308,17 @@ export const pageQuery = graphql`
         duotone: { highlight: "#f00e2e", shadow: "#192550" }
         toFormat: PNG
       ) {
-        base64
-        aspectRatio
-        src
-        srcSet
-        sizes
-        originalImg
-        originalName
+        ...GatsbyImageSharpSizes
       }
     }
     resolution: imageSharp(id: { regex: "/lol.jpg/" }) {
       resolutions(grayscale: true, width: 500) {
-        height
-        width
-        src
-        srcSet
-        originalName
+        ...GatsbyImageSharpResolutions
       }
     }
     cropDefault: imageSharp(id: { regex: "/gatsby.jpg/" }) {
       resize(width: 180, height: 180) {
         src
-        originalName
       }
     }
     cropBottomLeft: imageSharp(id: { regex: "/nyancat/" }) {

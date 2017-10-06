@@ -66,11 +66,7 @@ export const pageQuery = graphql`
               localFile {
                 childImageSharp {
                   sizes(maxWidth: 680) {
-                    base64
-                    aspectRatio
-                    src
-                    srcSet
-                    sizes
+                    ...GatsbyImageSharpSizes
                   }
                 }
               }
@@ -82,11 +78,7 @@ export const pageQuery = graphql`
                 localFile {
                   childImageSharp {
                     sizes(maxWidth: 680) {
-                      base64
-                      aspectRatio
-                      src
-                      srcSet
-                      sizes
+                      ...GatsbyImageSharpSizes
                     }
                   }
                 }

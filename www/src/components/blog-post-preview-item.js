@@ -1,5 +1,6 @@
 import React from "react"
 import Link from "gatsby-link"
+import Img from "gatsby-image"
 
 import typography, { rhythm, scale } from "../utils/typography"
 import presets from "../utils/presets"
@@ -24,12 +25,9 @@ class BlogPostPreviewItem extends React.Component {
             marginBottom: rhythm(2),
           }}
         >
-          <img
+          <Img
             alt=""
-            src={avatar.src}
-            srcSet={avatar.srcSet}
-            height={avatar.height}
-            width={avatar.width}
+            resolutions={avatar}
             css={{
               borderRadius: `100%`,
               display: `inline-block`,
@@ -126,10 +124,7 @@ export const blogPostPreviewFragment = graphql`
         avatar {
           childImageSharp {
             resolutions(width: 30, height: 30) {
-              width
-              height
-              src
-              srcSet
+              ...GatsbyImageSharpResolutions_noBase64
             }
           }
         }

@@ -90,30 +90,17 @@ export const query = graphql`
   query BackgroundColorQuery {
     reddImageMobile: imageSharp(id: { regex: "/redd/" }) {
       resolutions(width: 126) {
-        aspectRatio
-        width
-        height
-        src
-        srcSet
+        ...GatsbyImageSharpResolutions_noBase64
       }
     }
     reddImage: imageSharp(id: { regex: "/redd/" }) {
       resolutions(width: 201) {
-        aspectRatio
-        width
-        height
-        src
-        srcSet
+        ...GatsbyImageSharpResolutions_noBase64
       }
     }
     kenImage: imageSharp(id: { regex: "/ken-treloar/" }) {
       sizes(maxWidth: 599) {
-        aspectRatio
-        src
-        srcSet
-        sizes
-        originalImg
-        originalName
+        ...GatsbyImageSharpSizes_noBase64
       }
     }
   }

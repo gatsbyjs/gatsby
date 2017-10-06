@@ -1,4 +1,5 @@
 import React from "react"
+import Img from "gatsby-image"
 
 import Container from "../components/container"
 import BlogPostPreviewItem from "../components/blog-post-preview-item"
@@ -18,9 +19,8 @@ class ContributorPageTemplate extends React.Component {
           }}
         >
           <div>
-            <img
-              src={contributor.avatar.childImageSharp.resolutions.src}
-              srcSet={contributor.avatar.childImageSharp.resolutions.srcSet}
+            <Img
+              resolutions={contributor.avatar.childImageSharp.resolutions}
               css={{
                 height: rhythm(2.3),
                 width: rhythm(2.3),
@@ -86,8 +86,7 @@ export const pageQuery = graphql`
       avatar {
         childImageSharp {
           resolutions(width: 63, height: 63, quality: 75) {
-            src
-            srcSet
+            ...GatsbyImageSharpResolutions_noBase64
           }
         }
       }
