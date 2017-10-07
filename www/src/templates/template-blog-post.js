@@ -112,6 +112,7 @@ class BlogPostTemplate extends React.Component {
               }}
             >
               <Img
+                backgroundColor
                 resolutions={
                   post.frontmatter.author.avatar.childImageSharp.resolutions
                 }
