@@ -340,7 +340,90 @@ exports.extendNodeType = ({ type }) => {
   }
 
   return {
+    resolutions: {
+      type: new GraphQLObjectType({
+        name: `ContentfulResolutions`,
+        fields: {
+          base64: { type: GraphQLString },
+          aspectRatio: { type: GraphQLFloat },
+          width: { type: GraphQLFloat },
+          height: { type: GraphQLFloat },
+          src: { type: GraphQLString },
+          srcSet: { type: GraphQLString },
+        },
+      }),
+      args: {
+        width: {
+          type: GraphQLInt,
+          defaultValue: 400,
+        },
+        height: {
+          type: GraphQLInt,
+        },
+        quality: {
+          type: GraphQLInt,
+          defaultValue: 50,
+        },
+        toFormat: {
+          type: ImageFormatType,
+          defaultValue: ``,
+        },
+        resizingBehavior: {
+          type: ImageResizingBehavior,
+        },
+        cropFocus: {
+          type: ImageCropFocusType,
+          defaultValue: null,
+        },
+      },
+      resolve(image, options, context) {
+        return resolveResponsiveResolution(image, options)
+      },
+    },
+    sizes: {
+      type: new GraphQLObjectType({
+        name: `ContentfulSizes`,
+        fields: {
+          base64: { type: GraphQLString },
+          aspectRatio: { type: GraphQLFloat },
+          src: { type: GraphQLString },
+          srcSet: { type: GraphQLString },
+          sizes: { type: GraphQLString },
+        },
+      }),
+      args: {
+        maxWidth: {
+          type: GraphQLInt,
+          defaultValue: 800,
+        },
+        maxHeight: {
+          type: GraphQLInt,
+        },
+        quality: {
+          type: GraphQLInt,
+          defaultValue: 50,
+        },
+        toFormat: {
+          type: ImageFormatType,
+          defaultValue: ``,
+        },
+        resizingBehavior: {
+          type: ImageResizingBehavior,
+        },
+        cropFocus: {
+          type: ImageCropFocusType,
+          defaultValue: null,
+        },
+        sizes: {
+          type: GraphQLString,
+        },
+      },
+      resolve(image, options, context) {
+        return resolveResponsiveSizes(image, options)
+      },
+    },
     responsiveResolution: {
+      deprecationReason: `We dropped the "responsive" part of the name to make it shorter https://github.com/gatsbyjs/gatsby/pull/2320/`,
       type: new GraphQLObjectType({
         name: `ContentfulResponsiveResolution`,
         fields: {
@@ -381,6 +464,7 @@ exports.extendNodeType = ({ type }) => {
       },
     },
     responsiveSizes: {
+      deprecationReason: `We dropped the "responsive" part of the name to make it shorter https://github.com/gatsbyjs/gatsby/pull/2320/`,
       type: new GraphQLObjectType({
         name: `ContentfulResponsiveSizes`,
         fields: {

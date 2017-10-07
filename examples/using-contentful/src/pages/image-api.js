@@ -1,4 +1,5 @@
 import React from "react"
+import Img from "gatsby-image"
 import { rhythm } from "../utils/typography"
 
 export default props => {
@@ -19,6 +20,7 @@ export default props => {
       <h2>Resize</h2>
       {assets.map(({ node: { title, resize } }) => (
         <img
+          key={resize.src}
           alt={title}
           src={resize.src}
           width={resize.width}
@@ -43,7 +45,6 @@ export default props => {
           src
           width
           height
-          aspectRatio
         }
       }
     }
@@ -55,7 +56,7 @@ export default props => {
 
       <h2>Responsive Resolution</h2>
       <p>
-        If you make queries with <code>responsiveResolution</code> then Gatsby
+        If you make queries with <code>resolutions</code> then Gatsby
         automatically generates images with 1x, 1.5x, 2x, and 3x versions so
         your images look great on whatever screen resolution of device they're
         on.
@@ -67,13 +68,12 @@ export default props => {
       <p>
         You should prefer this operator over <code>resize</code>.
       </p>
-      {assets.map(({ node: { title, responsiveResolution } }) => (
-        <img
+      {assets.map(({ node: { title, resolutions } }) => (
+        <Img
+          key={resolutions.src}
           alt={title}
-          src={responsiveResolution.src}
-          srcSet={responsiveResolution.srcSet}
-          width={responsiveResolution.width}
-          height={responsiveResolution.height}
+          resolutions={resolutions}
+          backgroundColor
           style={{
             marginRight: rhythm(1 / 2),
             marginBottom: rhythm(1 / 2),
@@ -90,7 +90,7 @@ export default props => {
     edges {
       node {
         title
-        responsiveResolution(width: 100) {
+        resolutions(width: 100) {
           width
           height
           src
@@ -106,7 +106,7 @@ export default props => {
 
       <h2>Resizing</h2>
       <p>
-        On both resize and responsiveResolution you can also add a{` `}
+        On both resize and resolutions you can also add a{` `}
         <code>height</code>
         {` `}
         argument to the GraphQL argument to crop the image to a certain size.
@@ -123,12 +123,10 @@ export default props => {
         </a>
       </p>
       {assets.map(({ node: { title, resizing } }) => (
-        <img
+        <Img
+          key={resizing.src}
           alt={title}
-          src={resizing.src}
-          srcSet={resizing.srcSet}
-          width={resizing.width}
-          height={resizing.height}
+          resolutions={resizing}
           style={{
             marginRight: rhythm(1 / 2),
             marginBottom: rhythm(1 / 2),
@@ -145,7 +143,7 @@ export default props => {
     edges {
       node {
         title
-        responsiveResolution(width: 100, height: 100) {
+        resolutions(width: 100, height: 100) {
           width
           height
           src
@@ -167,16 +165,15 @@ export default props => {
         desktop device.
       </p>
       <p>
-        Instead of specifying a width and height, with responsiveSizes you
-        specify a <code>maxWidth</code>, the max width the container of the
-        images reaches.
+        Instead of specifying a width and height, with sizes you specify a{` `}
+        <code>maxWidth</code>, the max width the container of the images
+        reaches.
       </p>
-      {assets.map(({ node: { title, responsiveSizes } }) => (
-        <img
+      {assets.map(({ node: { title, sizes } }) => (
+        <Img
+          key={sizes.src}
           alt={title}
-          src={responsiveSizes.src}
-          srcSet={responsiveSizes.srcSet}
-          sizes={responsiveSizes.sizes}
+          sizes={sizes}
           style={{
             marginRight: rhythm(1 / 2),
             marginBottom: rhythm(1 / 2),
@@ -193,7 +190,7 @@ export default props => {
     edges {
       node {
         title
-        responsiveSizes(maxWidth: 613) {
+        sizes(maxWidth: 613) {
           sizes
           src
           srcSet
@@ -219,24 +216,15 @@ export const pageQuery = graphql`
             src
             width
             height
-            aspectRatio
           }
-          responsiveResolution(width: 100) {
-            width
-            height
-            src
-            srcSet
+          resolutions(width: 100) {
+            ...GatsbyContentfulResolutions_noBase64
           }
-          resizing: responsiveResolution(width: 100, height: 100) {
-            width
-            height
-            src
-            srcSet
+          resizing: resolutions(width: 100, height: 100) {
+            ...GatsbyContentfulResolutions_noBase64
           }
-          responsiveSizes(maxWidth: 613) {
-            sizes
-            src
-            srcSet
+          sizes(maxWidth: 613) {
+            ...GatsbyContentfulSizes_noBase64
           }
         }
       }

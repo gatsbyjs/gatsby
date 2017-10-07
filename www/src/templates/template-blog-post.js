@@ -3,6 +3,7 @@ import Helmet from "react-helmet"
 import Link from "gatsby-link"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import ArrowBackIcon from "react-icons/lib/md/arrow-back"
+import Img from "gatsby-image"
 
 import presets from "../utils/presets"
 import typography, { rhythm, scale, options } from "../utils/typography"
@@ -47,22 +48,6 @@ class BlogPostTemplate extends React.Component {
         {children}
       </p>
     )
-    const imageProps = {
-      src: post.frontmatter.image.childImageSharp.responsiveSizes.src,
-      srcSet: post.frontmatter.image.childImageSharp.responsiveSizes.srcSet,
-      className: `gatsby-resp-image-image`,
-      css: {
-        width: `100%`,
-        margin: 0,
-        verticalAlign: `middle`,
-        position: `absolute`,
-        boxShadow: `inset 0px 0px 0px 400px #fff`,
-      },
-      sizes: post.frontmatter.image.childImageSharp.responsiveSizes.sizes,
-    }
-    if (post.frontmatter.imageTitle) {
-      imageProps.alt = post.frontmatter.imageTitle
-    }
     return (
       <div>
         <Container className="post" css={{ paddingBottom: `0 !important` }}>
@@ -126,14 +111,10 @@ class BlogPostTemplate extends React.Component {
                 flex: `0 0 auto`,
               }}
             >
-              <img
-                src={
-                  post.frontmatter.author.avatar.childImageSharp
-                    .responsiveResolution.src
-                }
-                srcSet={
-                  post.frontmatter.author.avatar.childImageSharp
-                    .responsiveResolution.srcSet
+              <Img
+                backgroundColor
+                resolutions={
+                  post.frontmatter.author.avatar.childImageSharp.resolutions
                 }
                 css={{
                   height: rhythm(2.3),
@@ -194,34 +175,7 @@ class BlogPostTemplate extends React.Component {
                   marginBottom: rhythm(1),
                 }}
               >
-                <div className="gatsby-resp-image-link">
-                  <div
-                    className="gatsby-resp-image-wrapper"
-                    css={{
-                      position: `relative`,
-                      zIndex: -1,
-                    }}
-                  >
-                    <div
-                      className="gatsby-resp-image-background-image"
-                      css={{
-                        paddingBottom: `${1 /
-                          post.frontmatter.image.childImageSharp.responsiveSizes
-                            .aspectRatio *
-                          100}%`,
-                        position: `relative`,
-                        width: `100%`,
-                        bottom: 0,
-                        left: 0,
-                        backgroundImage: `url(${post.frontmatter.image
-                          .childImageSharp.responsiveSizes.base64})`,
-                        backgroundSize: `cover`,
-                      }}
-                    >
-                      <img {...imageProps} />
-                    </div>
-                  </div>
-                </div>
+                <Img sizes={post.frontmatter.image.childImageSharp.sizes} />
                 {post.frontmatter.imageAuthor &&
                   post.frontmatter.imageAuthorLink && (
                     <em>
@@ -337,12 +291,8 @@ export const pageQuery = graphql`
             resize(width: 1500, height: 1500) {
               src
             }
-            responsiveSizes(maxWidth: 786) {
-              src
-              srcSet
-              aspectRatio
-              base64
-              sizes
+            sizes(maxWidth: 786) {
+              ...GatsbyImageSharpSizes
             }
           }
         }
@@ -356,9 +306,8 @@ export const pageQuery = graphql`
           twitter
           avatar {
             childImageSharp {
-              responsiveResolution(width: 63, height: 63, quality: 75) {
-                src
-                srcSet
+              resolutions(width: 63, height: 63, quality: 75) {
+                ...GatsbyImageSharpResolutions_noBase64
               }
             }
           }

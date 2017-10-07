@@ -2,7 +2,7 @@ const select = require(`unist-util-select`)
 const path = require(`path`)
 const isRelativeUrl = require(`is-relative-url`)
 const _ = require(`lodash`)
-const { responsiveSizes } = require(`gatsby-plugin-sharp`)
+const { sizes } = require(`gatsby-plugin-sharp`)
 const Promise = require(`bluebird`)
 const cheerio = require(`cheerio`)
 const slash = require(`slash`)
@@ -56,7 +56,7 @@ module.exports = (
       return resolve()
     }
 
-    let responsiveSizesResult = await responsiveSizes({
+    let responsiveSizesResult = await sizes({
       file: imageNode,
       args: options,
     })

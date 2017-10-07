@@ -5,16 +5,17 @@
   "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "gatsby": "latest",
-    "gatsby-link": "latest",
-    "gatsby-plugin-glamor": "latest",
-    "gatsby-plugin-google-analytics": "latest",
-    "gatsby-plugin-manifest": "latest",
-    "gatsby-plugin-offline": "latest",
-    "gatsby-plugin-sharp": "latest",
-    "gatsby-source-filesystem": "latest",
-    "gatsby-transformer-json": "latest",
-    "gatsby-transformer-sharp": "latest",
+    "gatsby": "^1.9.52",
+    "gatsby-image": "^1.0.5",
+    "gatsby-link": "^1.6.20",
+    "gatsby-plugin-glamor": "^1.6.8",
+    "gatsby-plugin-google-analytics": "^1.0.8",
+    "gatsby-plugin-manifest": "^1.0.8",
+    "gatsby-plugin-offline": "^1.0.9",
+    "gatsby-plugin-sharp": "^1.6.8",
+    "gatsby-source-filesystem": "^1.5.2",
+    "gatsby-transformer-json": "^1.0.8",
+    "gatsby-transformer-sharp": "^1.6.8",
     "instagram-screen-scrape": "^2.0.0",
     "lodash": "^4.16.4",
     "mkdirp": "^0.5.1",
@@ -30,7 +31,9 @@
     "typeface-space-mono": "^0.0.22",
     "typography": "^0.15.0"
   },
-  "keywords": ["gatsby"],
+  "keywords": [
+    "gatsby"
+  ],
   "license": "MIT",
   "main": "n/a",
   "scripts": {
