@@ -2,15 +2,15 @@
 
 Speedy, optimized images without the work.
 
-`gatsby-image` is a React component specially designed to work seamlessly with Gatsby's GraphQL queries. It combines [Gatsby's native image processing](https://image-processing.gatsbyjs.org/) capabilities with advanced image loading techniques to easily and completely optimize image loading in your sites.
+`gatsby-image` is a React component specially designed to work seamlessly with Gatsby's GraphQL queries. It combines [Gatsby's native image processing](https://image-processing.gatsbyjs.org/) capabilities with advanced image loading techniques to easily and completely optimize image loading for your sites.
 
 **[Demo](https://using-gatsby-image.gatsbyjs.org)**
 
 ## Problem
 
-Huge, unoptimized images dramatically slow down your site.
+Large, unoptimized images dramatically slow down your site.
 
-Creating optimized images for websites has long been a thorny problem. Ideally you would:
+But creating optimized images for websites has long been a thorny problem. Ideally you would:
 
 * Resize large images to the size needed by your design
 * Generate multiple smaller images so smartphones and tablets don't download desktop-sized images
@@ -23,17 +23,19 @@ Doing this consistantly across a site feels like sisyphean labor. You manually o
 
 Most solutions involve a lot of manual labor and bookkeeping to ensure every image is optimized.
 
-This isn't ideal. Optimized images should be the default and very easy.
+This isn't ideal. Optimized images should be easy and the default.
 
 ## Solution
 
 With Gatsby, we can make images way *way* better.
 
 `gatsby-image` is designed to work seamlessly with Gatsby's native image processing capabilities powered by GraphQL and Sharp. To produce
-perfect images, you only need to:
+perfect images, you need only:
 
 1) Import `gatsby-image` and use it in place of the built-in `img`
 2) Write a simple GraphQL query using one of the included GraphQL "fragments" which specify the fields needed by `gatsby-image`.
+
+The GraphQL query creates multiple thumbnails with optimized JPEG and PNG compression. The `gatsby-image` component automatically sets up the "blur-up" effect as well as lazy loading of images further down the screen.
 
 This is what a component using `gatsby-images` looks like.
 
@@ -70,19 +72,19 @@ There are two types of responsive images supported by gatsby-image.
 1) Images that have a *fixed* width and height
 2) Images that stretch across a fluid container
 
-In the first scenario, you want to vary the image's size for different screen resolution -- in other words, create retina images.
+In the first scenario, you want to vary the image's size for different screen *resolutions* -- in other words, create retina images.
 
-For the second scenario, you want to create multiple thumbnails for devices with widths stretching from smartphone to wide desktop monitors and give the browser "hints" about how to choose the right image.
+For the second scenario, you want to create multiple *sizes* of thumbnails for devices with widths stretching from smartphone to wide desktop monitors.
 
-If that sounds complicated, well, it is. But luckily Gatsby does the work, so you don't have to.
+To decide between the two, ask yourself: "do I know the exact size this image will be?" If yes, it's the first type. If no and its width and/or height need to vary depending on the size of the screen, then it's the second type.
 
-Just ask yourself "do I know what size this image will be?" If yes, it's the first type. If no, or you're setting a `max-width: 100%;` on your image, then it's the second type.
-
-In Gatsby's GraphQL implementation, you query for the first type by querying a child object of an image called "resolutions" — which you can see in the sample component above. For the second type, you do a similar query but for a child object called "sizes".
+In Gatsby's GraphQL implementation, you query for the first type by querying a child object of an image called `resolutions` — which you can see in the sample component above. For the second type, you do a similar query but for a child object called `sizes`.
 
 ## Fragments
 
-GraphQL includes a concept called "query fragments". Which, as the name suggests, are parts of queries that can be reused in multiple queries. To ease building with `gatsby-image`, Gatsby image processing plugins which support `gatsby-image` ship with fragments which you can easily include in your queries. Note, [due to a limitation of GraphiQL](https://github.com/graphql/graphiql/issues/612), you can not currently use these fragments in the GraphiQL IDE.
+GraphQL includes a concept called "query fragments". Which, as the name suggests, are a part of a query that can be used in multiple queries. To ease building with `gatsby-image`, Gatsby image processing plugins which support `gatsby-image` ship with fragments which you can easily include in your queries.
+
+Note, [due to a limitation of GraphiQL](https://github.com/graphql/graphiql/issues/612), you can not currently use these fragments in the GraphiQL IDE.
 
 Plugins supporting `gatsby-image` currently include [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/) and [gatsby-source-contentful](/packages/gatsby-source-contentful/).
 
@@ -148,13 +150,16 @@ Pass in the data returned from the `sizes` object in your query via the `sizes` 
 }
 ```
 
-## Component props
+## `gatsby-image` props
 
-* `resolutions` — PropTypes.object
-* `sizes` — PropTypes.object
-* `fadeIn` — PropTypes.bool // Defaults to fading in the image on load
-* `title` — PropTypes.string
-* `alt` — PropTypes.string
-* `className` — PropTypes.oneOfType([PropTypes.string, PropTypes.object]), // Support Glamor's css prop
-* `style` — PropTypes.object
-* `backgroundColor` — PropTypes.oneOfType([PropTypes.string, PropTypes.bool]) // Set a colored background placeholder. If set to true, uses `lightgray` as the color. You can pass in any valid color string.
+| Name              | Type            | Description                              |
+| ----------------- | --------------- | ---------------------------------------- |
+| `resolutions`       | `object`        | Data returned from the `resolutions` query  |
+| `sizes`           | `object`        | Data returned from the `sizes` query   |
+| `fadeIn`          | `bool`          | Defaults to fading in the image on load  |
+| `title`           | `string`        | Passed to the `img` element  |
+| `alt`             | `string`        | Passed to the `img` element   |
+| `className`       | `string|object` | Passed to the wrapper div. Object is needed to support Glamor's css prop |
+| `style`           | `object`        | Spread into the default styles in the outer div |
+| `backgroundColor` | `string|bool`   | Set a colored background placeholder. If true, uses "lightgray" for the color. You can also pass in any valid color string. |
+
