@@ -38,7 +38,7 @@ perfect images, you only need to:
 This is what a component using `gatsby-images` looks like.
 
 ```jsx
-import React from 'react
+import React from 'react'
 import Img from 'gatsby-image'
 
 export default ({ data }) => (
