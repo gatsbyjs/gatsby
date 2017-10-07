@@ -1,5 +1,5 @@
 echo "=== Building ES5 version of Gatsby"
-NODE_ENV=development yarn bootstrap
+./node_modules/.bin/lerna build
 
 yarn global add gatsby-dev-cli
 gatsby-dev --set-path-to-repo .
@@ -23,4 +23,4 @@ rm -rf .cache
 echo "temp delete offline-plugin gatsby-ssr.js"
 rm ./node_modules/gatsby-plugin-offline/gatsby-ssr.js
 
-./node_modules/.bin/gatsby build
+NODE_ENV=production ./node_modules/.bin/gatsby build
