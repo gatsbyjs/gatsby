@@ -4,7 +4,7 @@ Speedy, optimized images without the work.
 
 `gatsby-image` is a React component specially designed to work seamlessly with Gatsby's GraphQL queries. It combines [Gatsby's native image processing](https://image-processing.gatsbyjs.org/) capabilities with advanced image loading techniques to easily and completely optimize image loading in your sites.
 
-**[Demo](https://using-gatsby-images.gatsbyjs.org)**
+**[Demo](https://using-gatsby-image.gatsbyjs.org)**
 
 ## Problem
 
