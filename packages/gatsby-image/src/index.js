@@ -1,6 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 
+// Handle legacy names for image queries.
 const convertProps = props => {
   let convertedProps = { ...props }
   if (convertedProps.responsiveResolution) {
@@ -15,6 +16,8 @@ const convertProps = props => {
   return convertedProps
 }
 
+// Cache if we've seen an image before so we don't both with
+// lazy-loading & fading in on subsequent mounts.
 const imageCache = {}
 const inImageCache = props => {
   const convertedProps = convertProps(props)
