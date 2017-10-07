@@ -38,12 +38,15 @@ class IndexComponent extends React.Component {
             plugins.
           </p>
           <p>
+            <a href="https://www.gatsbyjs.org/packages/gatsby-image/">
+              See the component's documentation
+            </a>{` `}
+            as well as
             <a href="https://github.com/gatsbyjs/gatsby/blob/master/examples/using-gatsby-image/">
-              See the site source
+              view this site's source
             </a>
             {` `}
-            on how to start using gatsby-image on your site. Full documentation
-            coming soon.
+            to learn how to start using gatsby-image on your Gatsby sites.
           </p>
           <h2>Demo pages</h2>
           <ul>
