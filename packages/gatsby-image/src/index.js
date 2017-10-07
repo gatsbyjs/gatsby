@@ -154,14 +154,15 @@ class Image extends React.Component {
       const image = sizes
       // The outer div is necessary to reset the z-index to 0.
       return (
-        <div style={{ zIndex: 0, position: `relative` }}>
+        <div
+          style={{ zIndex: 0, position: `relative`, ...style }}
+          className={`${className ? className : ``} gatsby-image-wrapper`}
+        >
           <div
-            className={`${className ? className : ``} gatsby-image-wrapper`}
             style={{
               position: `relative`,
               overflow: `hidden`,
               zIndex: 1,
-              ...style,
             }}
             ref={this.handleRef}
           >
@@ -224,9 +225,11 @@ class Image extends React.Component {
       const image = resolutions
       // The outer div is necessary to reset the z-index to 0.
       return (
-        <div style={{ zIndex: 0, position: `relative` }}>
+        <div
+          style={{ zIndex: 0, position: `relative`, ...style }}
+          className={`${className ? className : ``} gatsby-image-wrapper`}
+        >
           <div
-            className={`${className ? className : ``} gatsby-image-wrapper`}
             style={{
               position: `relative`,
               overflow: `hidden`,
@@ -234,7 +237,6 @@ class Image extends React.Component {
               zIndex: 1,
               width: image.width,
               height: image.height,
-              ...style,
             }}
             ref={this.handleRef}
           >
