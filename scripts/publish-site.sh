@@ -1,5 +1,6 @@
 echo "=== Building ES5 version of Gatsby"
-yarn bootstrap
+rm -r node_modules yarn.lock
+NODE_ENV=development yarn
 ./node_modules/.bin/lerna run build
 
 yarn global add gatsby-dev-cli
@@ -10,7 +11,6 @@ cd $1
 # Normally you wouldn't do this but we
 # want to test the latest versions of packages always
 # so our example site builds catch problems early.
-rm yarn.lock
 yarn
 
 echo "=== Copying built Gatsby to website."
@@ -24,4 +24,4 @@ rm -rf .cache
 echo "temp delete offline-plugin gatsby-ssr.js"
 rm ./node_modules/gatsby-plugin-offline/gatsby-ssr.js
 
-./node_modules/.bin/gatsby build
+NODE_ENV=production ./node_modules/.bin/gatsby build

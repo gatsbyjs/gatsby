@@ -2,6 +2,7 @@ import React from "react"
 import Link from "gatsby-link"
 import * as PropTypes from "prop-types"
 import { rhythm } from "../utils/typography"
+import Img from "gatsby-image"
 
 const propTypes = {
   data: PropTypes.object.isRequired,
@@ -23,13 +24,10 @@ const Product = ({ node }) => (
         }}
       >
         <div style={{ marginRight: rhythm(1 / 2) }}>
-          {node.image[0].responsiveResolution.src && (
-            <img
+          {node.image[0].resolutions.src && (
+            <Img
               style={{ margin: 0 }}
-              width={node.image[0].responsiveResolution.width}
-              height={node.image[0].responsiveResolution.height}
-              src={node.image[0].responsiveResolution.src}
-              srcSet={node.image[0].responsiveResolution.srcSet}
+              resolutions={node.image[0].resolutions}
             />
           )}
         </div>
@@ -91,11 +89,8 @@ export const pageQuery = graphql`
             productName
           }
           image {
-            responsiveResolution(width: 75) {
-              src
-              srcSet
-              height
-              width
+            resolutions(width: 75) {
+              ...GatsbyContentfulResolutions
             }
           }
         }
@@ -109,11 +104,8 @@ export const pageQuery = graphql`
             productName
           }
           image {
-            responsiveResolution(width: 75) {
-              src
-              srcSet
-              height
-              width
+            resolutions(width: 75) {
+              ...GatsbyContentfulResolutions
             }
           }
         }

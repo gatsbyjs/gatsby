@@ -156,6 +156,11 @@ module.exports = async (program: any) => {
     })
     await fs.ensureDirSync(`${program.directory}/.cache/json`)
     await fs.ensureDirSync(`${program.directory}/.cache/layouts`)
+
+    // Ensure .cache/fragments exists and is empty. We want fragments to be
+    // added on every run in response to data as fragments can only be added if
+    // the data used to create the schema they're dependent on is available.
+    await fs.emptyDir(`${program.directory}/.cache/fragments`)
   } catch (err) {
     report.panic(`Unable to copy site files to .cache`, err)
   }
@@ -307,6 +312,12 @@ module.exports = async (program: any) => {
     waitForCascadingActions: true,
   })
   activity.end()
+
+  activity = report.activityTimer(`onPreExtractQueries`)
+  activity.start()
+  await apiRunnerNode(`onPreExtractQueries`)
+  activity.end()
+
   // Extract queries
   activity = report.activityTimer(`extract queries from components`)
   activity.start()

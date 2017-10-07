@@ -6,6 +6,7 @@
   "author": "Marcus Ericsson <mericsson@gmail.com> (mericsson.com)",
   "dependencies": {
     "gatsby": "latest",
+    "gatsby-image": "^1.0.5",
     "gatsby-link": "latest",
     "gatsby-plugin-google-analytics": "latest",
     "gatsby-plugin-offline": "latest",
@@ -17,7 +18,9 @@
     "typography": "^0.15.8",
     "typography-breakpoint-constants": "^0.14.0"
   },
-  "keywords": ["gatsby"],
+  "keywords": [
+    "gatsby"
+  ],
   "license": "MIT",
   "main": "n/a",
   "scripts": {
