@@ -14,6 +14,7 @@ const validationWhitelist = Joi.object({
   stylus: Joi.any(),
   sassLoader: Joi.any(),
   sassResources: [Joi.string(), Joi.array().items(Joi.string())],
+  responsiveLoader: Joi.any(),
 })
 
 export default (async function ValidateWebpackConfig(config, stage) {
