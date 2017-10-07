@@ -20,6 +20,7 @@ class IndexComponent extends React.Component {
             padding: rhythm(2),
             borderRadius: rhythm(1 / 2),
             marginTop: rhythm(3),
+            position: `relative`,
           }}
         >
           <h1 css={{ marginTop: 0 }}>Gatsby Image</h1>
@@ -40,7 +41,8 @@ class IndexComponent extends React.Component {
           <p>
             <a href="https://www.gatsbyjs.org/packages/gatsby-image/">
               See the component's documentation
-            </a>{` `}
+            </a>
+            {` `}
             as well as
             <a href="https://github.com/gatsbyjs/gatsby/blob/master/examples/using-gatsby-image/">
               view this site's source
