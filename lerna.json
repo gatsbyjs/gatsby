@@ -5,5 +5,5 @@
     "packages/*"
   ],
   "version": "independent",
-  "useWorkspaces": true
+  "hoist": true
 }
