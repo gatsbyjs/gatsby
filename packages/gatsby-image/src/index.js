@@ -149,126 +149,132 @@ class Image extends React.Component {
 
     if (sizes) {
       const image = sizes
+      // The outer div is necessary to reset the z-index to 0.
       return (
-        <div
-          className={`${className ? className : ``} gatsby-image-wrapper`}
-          style={{
-            position: `relative`,
-            overflow: `hidden`,
-            zIndex: 1,
-            ...style,
-          }}
-          ref={this.handleRef}
-        >
-          {/* Preserve the aspect ratio. */}
+        <div style={{ zIndex: 0, position: `relative` }}>
           <div
+            className={`${className ? className : ``} gatsby-image-wrapper`}
             style={{
-              width: `100%`,
-              paddingBottom: `${100 / image.aspectRatio}%`,
+              position: `relative`,
+              overflow: `hidden`,
+              zIndex: 1,
+              ...style,
             }}
-          />
-
-          {/* Show the blury base64 image. */}
-          {image.base64 && (
-            <Img
-              alt={alt}
-              title={title}
-              src={image.base64}
-              opacity={!this.state.imgLoaded ? 1 : 0}
-              transitionDelay={`0.25s`}
-            />
-          )}
-
-          {/* Show a solid background color. */}
-          {bgColor && (
+            ref={this.handleRef}
+          >
+            {/* Preserve the aspect ratio. */}
             <div
-              title={title}
               style={{
-                backgroundColor: bgColor,
-                position: `absolute`,
-                top: 0,
-                bottom: 0,
-                opacity: !this.state.imgLoaded ? 1 : 0,
-                right: 0,
-                left: 0,
+                width: `100%`,
+                paddingBottom: `${100 / image.aspectRatio}%`,
               }}
             />
-          )}
 
-          {/* Once the image is visible (or the browser doesn't support IntersectionObserver), start downloading the image */}
-          {this.state.isVisible && (
-            <Img
-              alt={alt}
-              title={title}
-              srcSet={image.srcSet}
-              src={image.src}
-              sizes={image.sizes}
-              opacity={
-                this.state.imgLoaded || this.props.fadeIn === false ? 1 : 0
-              }
-              onLoad={() =>
-                this.state.IOSupported && this.setState({ imgLoaded: true })}
-            />
-          )}
+            {/* Show the blury base64 image. */}
+            {image.base64 && (
+              <Img
+                alt={alt}
+                title={title}
+                src={image.base64}
+                opacity={!this.state.imgLoaded ? 1 : 0}
+                transitionDelay={`0.25s`}
+              />
+            )}
+
+            {/* Show a solid background color. */}
+            {bgColor && (
+              <div
+                title={title}
+                style={{
+                  backgroundColor: bgColor,
+                  position: `absolute`,
+                  top: 0,
+                  bottom: 0,
+                  opacity: !this.state.imgLoaded ? 1 : 0,
+                  right: 0,
+                  left: 0,
+                }}
+              />
+            )}
+
+            {/* Once the image is visible (or the browser doesn't support IntersectionObserver), start downloading the image */}
+            {this.state.isVisible && (
+              <Img
+                alt={alt}
+                title={title}
+                srcSet={image.srcSet}
+                src={image.src}
+                sizes={image.sizes}
+                opacity={
+                  this.state.imgLoaded || this.props.fadeIn === false ? 1 : 0
+                }
+                onLoad={() =>
+                  this.state.IOSupported && this.setState({ imgLoaded: true })}
+              />
+            )}
+          </div>
         </div>
       )
     }
 
     if (resolutions) {
       const image = resolutions
+      // The outer div is necessary to reset the z-index to 0.
       return (
-        <div
-          className={`${className ? className : ``} gatsby-image-wrapper`}
-          style={{
-            position: `relative`,
-            overflow: `hidden`,
-            display: `inline-block`,
-            zIndex: 1,
-            width: image.width,
-            height: image.height,
-            ...style,
-          }}
-          ref={this.handleRef}
-        >
-          {/* Show the blury base64 image. */}
-          {image.base64 && (
-            <Img
-              alt={alt}
-              title={title}
-              src={image.base64}
-              opacity={!this.state.imgLoaded ? 1 : 0}
-              transitionDelay={`0.25s`}
-            />
-          )}
+        <div style={{ zIndex: 0, position: `relative` }}>
+          <div
+            className={`${className ? className : ``} gatsby-image-wrapper`}
+            style={{
+              position: `relative`,
+              overflow: `hidden`,
+              display: `inline-block`,
+              zIndex: 1,
+              width: image.width,
+              height: image.height,
+              ...style,
+            }}
+            ref={this.handleRef}
+          >
+            {/* Show the blury base64 image. */}
+            {image.base64 && (
+              <Img
+                alt={alt}
+                title={title}
+                src={image.base64}
+                opacity={!this.state.imgLoaded ? 1 : 0}
+                transitionDelay={`0.25s`}
+              />
+            )}
 
-          {/* Show a solid background color. */}
-          {bgColor && (
-            <div
-              title={title}
-              style={{
-                backgroundColor: bgColor,
-                width: image.width,
-                opacity: !this.state.imgLoaded ? 1 : 0,
-                height: image.height,
-              }}
-            />
-          )}
+            {/* Show a solid background color. */}
+            {bgColor && (
+              <div
+                title={title}
+                style={{
+                  backgroundColor: bgColor,
+                  width: image.width,
+                  opacity: !this.state.imgLoaded ? 1 : 0,
+                  height: image.height,
+                }}
+              />
+            )}
 
-          {/* Once the image is visible, start downloading the image */}
-          {this.state.isVisible && (
-            <Img
-              alt={alt}
-              title={title}
-              width={image.width}
-              height={image.height}
-              srcSet={image.srcSet}
-              src={image.src}
-              opacity={
-                this.state.imgLoaded || this.props.fadeIn === false ? 1 : 0
-              }
-              onLoad={() => this.setState({ imgLoaded: true })}
-            />
-          )}
+            {/* Once the image is visible, start downloading the image */}
+            {this.state.isVisible && (
+              <Img
+                alt={alt}
+                title={title}
+                width={image.width}
+                height={image.height}
+                srcSet={image.srcSet}
+                src={image.src}
+                opacity={
+                  this.state.imgLoaded || this.props.fadeIn === false ? 1 : 0
+                }
+                onLoad={() => this.setState({ imgLoaded: true })}
+              />
+            )}
+          </div>
         </div>
       )
     }
