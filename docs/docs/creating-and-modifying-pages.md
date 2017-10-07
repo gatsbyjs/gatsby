@@ -81,10 +81,8 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
           createPage({
             path,
             component: blogPostTemplate,
-            // By default, all pages will use the layout found at `/layouts/index.js`
-            // Assuming that `landingPage.js` exists in the `/layouts/` directory
-            // you can choose a custom layout like so:
-            layout: "landingPage"
+            // If you have a layout component at src/layouts/blog-layout.js
+            layout: `blog-layout`,
             // In your blog post template's graphql query, you can use path
             // as a GraphQL variable to query for data from the markdown file.
             context: {
