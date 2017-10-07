@@ -160,6 +160,7 @@ Pass in the data returned from the `sizes` object in your query via the `sizes` 
 | `title`           | `string`        | Passed to the `img` element  |
 | `alt`             | `string`        | Passed to the `img` element   |
 | `className`       | `string|object` | Passed to the wrapper div. Object is needed to support Glamor's css prop |
-| `style`           | `object`        | Spread into the default styles in the outer div |
+| `style`           | `object`        | Spread into the default styles in the wrapper div |
+| `position`           | `string`        | Defaults to `relative`. Pass in `absolute` to make the component `absolute` positioned |
 | `backgroundColor` | `string|bool`   | Set a colored background placeholder. If true, uses "lightgray" for the color. You can also pass in any valid color string. |
 
