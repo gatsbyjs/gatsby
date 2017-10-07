@@ -164,3 +164,6 @@ Pass in the data returned from the `sizes` object in your query via the `sizes` 
 | `position`           | `string`        | Defaults to `relative`. Pass in `absolute` to make the component `absolute` positioned |
 | `backgroundColor` | `string|bool`   | Set a colored background placeholder. If true, uses "lightgray" for the color. You can also pass in any valid color string. |
 
+## Some other stuff to be aware of
+
+* If you want to set `display: none;` on a component using a `resolutions` prop, you need to also pass in to the style prop `{ display: 'inherit' }`.* Images don't load until JavaScript is loaded. Gatsby's automatic code splitting generally makes this fine but if images seem slow coming in on a page, check how much JavaScript is being loaded there.
