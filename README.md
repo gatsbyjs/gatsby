@@ -12,7 +12,7 @@
 ## Showcase
 
 Websites built with Gatsby:
-* [React](https://reactjs.org/) ([source](https://github.com/facebook/react/tree/master/www))
+* [React](https://reactjs.org/) ([source](https://github.com/reactjs/reactjs.org))
 * [Sourcegraph](https://about.sourcegraph.com)
 * [Simply](https://simply.co.za)
 * [FloydHub's Blog](https://blog.floydhub.com)
