@@ -70,13 +70,13 @@ There are two types of responsive images supported by gatsby-image.
 1) Images that have a *fixed* width and height
 2) Images that stretch across a fluid container
 
-In the first, you want to vary the image's size for different screen resolution. Or retina images in other words.
+In the first scenario, you want to vary the image's size for different screen resolution -- in other words, create retina images.
 
-For the second, you want to create multiple thumbnails for devices with widths stretching from smartphone to wide desktop monitors and give the browser "hints" about how to choose the right image.
+For the second scenario, you want to create multiple thumbnails for devices with widths stretching from smartphone to wide desktop monitors and give the browser "hints" about how to choose the right image.
 
-If that sounds complicated, well… it is. But luckily you (mostly) don't need to think about it with Gatsby.
+If that sounds complicated, well, it is. But luckily Gatsby does the work, so you don't have to.
 
-Instead, just ask yourself "do I know what size this image will be?" if yes, it's the first type. If no, or you're setting a `max-width: 100%;` on your image, then it's the second type.
+Just ask yourself "do I know what size this image will be?" If yes, it's the first type. If no, or you're setting a `max-width: 100%;` on your image, then it's the second type.
 
 In Gatsby's GraphQL implementation, you query for the first type by querying a child object of an image called "resolutions" — which you can see in the sample component above. For the second type, you do a similar query but for a child object called "sizes".
 
