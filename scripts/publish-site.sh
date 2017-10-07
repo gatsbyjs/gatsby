@@ -1,4 +1,5 @@
 echo "=== Building ES5 version of Gatsby"
+rm -r node_modules yarn.lock
 NODE_ENV=development yarn
 ./node_modules/.bin/lerna build
 
