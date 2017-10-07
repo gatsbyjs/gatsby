@@ -8,25 +8,29 @@ const BlurUp = ({ data }) => (
     <h1>Viribus quid</h1>
     <h2>Hippason sinu</h2>
     <Img
+      style={{ display: `inherit` }}
       css={{
         marginBottom: rhythm(options.blockMarginBottom),
         marginLeft: rhythm(options.blockMarginBottom),
         float: `right`,
-        "@media (min-width: 500px)": {
-          display: `none`,
+        "&": {
+          "@media (min-width: 500px)": {
+            display: `none`,
+          },
         },
       }}
       title={`Photo by Redd Angelo on Unsplash`}
       resolutions={data.reddImageMobile.resolutions}
     />
     <Img
+      style={{ display: `inherit` }}
       css={{
         marginBottom: rhythm(options.blockMarginBottom),
         marginLeft: rhythm(options.blockMarginBottom),
         float: `right`,
         display: `none`,
         "@media (min-width: 500px)": {
-          display: `block`,
+          display: `inline-block`,
         },
       }}
       title={`Photo by Redd Angelo on Unsplash`}

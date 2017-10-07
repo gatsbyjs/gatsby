@@ -139,7 +139,7 @@ class Image extends React.Component {
       title,
       alt,
       className,
-      style,
+      style = {},
       sizes,
       resolutions,
       backgroundColor,
@@ -148,21 +148,29 @@ class Image extends React.Component {
     let bgColor
     if (typeof backgroundColor === `boolean`) {
       bgColor = `lightgray`
+    } else {
+      bgColor = backgroundColor
     }
 
     if (sizes) {
       const image = sizes
+      console.log(image)
       // The outer div is necessary to reset the z-index to 0.
       return (
         <div
-          style={{ zIndex: 0, position: `relative`, ...style }}
-          className={`${className ? className : ``} gatsby-image-wrapper`}
+          style={{
+            zIndex: 0,
+            // Let users set component to be absolutely positioned.
+            position: style.position === `absolute` ? `initial` : `relative`,
+          }}
         >
           <div
+            className={`${className ? className : ``} gatsby-image-wrapper`}
             style={{
               position: `relative`,
               overflow: `hidden`,
               zIndex: 1,
+              ...style,
             }}
             ref={this.handleRef}
           >
@@ -195,6 +203,7 @@ class Image extends React.Component {
                   top: 0,
                   bottom: 0,
                   opacity: !this.state.imgLoaded ? 1 : 0,
+                  transitionDelay: `0.35s`,
                   right: 0,
                   left: 0,
                 }}
@@ -223,21 +232,32 @@ class Image extends React.Component {
 
     if (resolutions) {
       const image = resolutions
+      const divStyle = {
+        position: `relative`,
+        overflow: `hidden`,
+        display: `inline-block`,
+        zIndex: 1,
+        width: image.width,
+        height: image.height,
+        ...style,
+      }
+
+      if (style.display === `inherit`) {
+        delete divStyle.display
+      }
+
       // The outer div is necessary to reset the z-index to 0.
       return (
         <div
-          style={{ zIndex: 0, position: `relative`, ...style }}
-          className={`${className ? className : ``} gatsby-image-wrapper`}
+          style={{
+            zIndex: 0,
+            // Let users set component to be absolutely positioned.
+            position: style.position === `absolute` ? `initial` : `relative`,
+          }}
         >
           <div
-            style={{
-              position: `relative`,
-              overflow: `hidden`,
-              display: `inline-block`,
-              zIndex: 1,
-              width: image.width,
-              height: image.height,
-            }}
+            className={`${className ? className : ``} gatsby-image-wrapper`}
+            style={divStyle}
             ref={this.handleRef}
           >
             {/* Show the blury base64 image. */}
@@ -247,7 +267,7 @@ class Image extends React.Component {
                 title={title}
                 src={image.base64}
                 opacity={!this.state.imgLoaded ? 1 : 0}
-                transitionDelay={`0.25s`}
+                transitionDelay={`0.35s`}
               />
             )}
 
@@ -259,6 +279,7 @@ class Image extends React.Component {
                   backgroundColor: bgColor,
                   width: image.width,
                   opacity: !this.state.imgLoaded ? 1 : 0,
+                  transitionDelay: `0.25s`,
                   height: image.height,
                 }}
               />
@@ -303,6 +324,7 @@ Image.propTypes = {
   alt: PropTypes.string,
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]), // Support Glamor's css prop.
   style: PropTypes.object,
+  position: PropTypes.string,
   backgroundColor: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 }
 
