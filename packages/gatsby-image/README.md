@@ -4,7 +4,7 @@ Speedy, optimized images without the work.
 
 `gatsby-image` is a React component specially designed to work seamlessly with Gatsby's GraphQL queries. It combines Gatsby's native image processing capabilities with advanced image loading techniques to easily and completely optimize image loading in your sites.
 
-[Demo](https://using-gatsby-images.gatsbyjs.org)
+**[Demo](https://using-gatsby-images.gatsbyjs.org)**
 
 ## Problem
 
@@ -52,7 +52,9 @@ export const query = graphql`
   query GatsbyImageSampleQuery {
     file(relativePath: { eq: "blog/avatars/kyle-mathews.jpeg"}) {
       childImageSharp {
-        resolutions(width: 300, height: 400) {
+        # Specify the image processing steps right in the query
+        # Makes it trivial to update as your page's design changes.
+        resolutions(width: l25, height: 125) {
           ...GatsbyImageSharpResolutions
         }
       }
@@ -80,7 +82,7 @@ In Gatsby's GraphQL implementation, you query for the first type by querying a c
 
 ## Fragments
 
-GraphQL includes a concept called "query fragments" which as the name suggests are parts of queries that can be reused in multiple queries. To ease building with `gatsby-image`, Gatsby image processing plugins which support `gatsby-image` ship with fragments which you can easily include in your queries.
+GraphQL includes a concept called "query fragments". Which, as the name suggests, are parts of queries that can be reused in multiple queries. To ease building with `gatsby-image`, Gatsby image processing plugins which support `gatsby-image` ship with fragments which you can easily include in your queries. Note, [due to a limitation of GraphiQL](https://github.com/graphql/graphiql/issues/612), you can not currently use these fragments in the GraphiQL IDE.
 
 Plugins supporting `gatsby-image` currently include [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/) and [gatsby-source-contentful](/packages/gatsby-source-contentful/).
 
@@ -102,7 +104,7 @@ Their fragments are:
 
 If you don't want to use the blur-up effect, choose the fragment with `noBase64` at the end.
 
-## Resolutions queries
+## "Resolutions" queries
 
 ### Component
 
@@ -113,16 +115,17 @@ Pass in the data returned from the `resolutions` object in your query via the `r
 ```graphql
 {
   imageSharp {
-    # Other options include height (set both width and height to crop), grayscale, duotone, rotate, etc.
+    # Other options include height (set both width and height to crop),
+    # grayscale, duotone, rotate, etc.
     resolutions(width: 400) {
-      ## Choose either the fragment including a small base64ed image or one without.
+      # Choose either the fragment including a small base64ed image or one without.
       ...GatsbyImageSharpResolutions
     }
   }
 }
 ```
 
-## Sizes queries
+## "Sizes" queries
 
 ### Component
 
@@ -133,9 +136,12 @@ Pass in the data returned from the `sizes` object in your query via the `sizes` 
 ```graphql
 {
   imageSharp {
-    # i.e. the max width of your container is 700 pixels. Other options include maxHeight (set both maxWidth and maxHeight to crop), grayscale, duotone, rotate, etc.
+    # i.e. the max width of your container is 700 pixels.
+    #
+    # Other options include maxHeight (set both maxWidth and maxHeight to crop),
+    # grayscale, duotone, rotate, etc.
     sizes(maxWidth: 700) {
-      ## Choose either the fragment including a small base64ed image or one without.
+      # Choose either the fragment including a small base64ed image or one without.
       ...GatsbyImageSharpSizes_noBase64
     }
   }
