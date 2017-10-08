@@ -1,9 +1,31 @@
 const jsYaml = require(`js-yaml`)
 const _ = require(`lodash`)
 const crypto = require(`crypto`)
+const path = require(`path`)
 
 async function onCreateNode({ node, boundActionCreators, loadNodeContent }) {
+  function transformObject(obj, id, type) {
+      const objStr = JSON.stringify(obj)
+      const contentDigest = crypto
+        .createHash(`md5`)
+        .update(objStr)
+        .digest(`hex`)
+      const yamlNode = {
+        ...obj,
+        id,
+        children: [],
+        parent: node.id,
+        internal: {
+          contentDigest,
+          type,
+        },
+      }
+      createNode(yamlNode)
+      createParentChildLink({ parent: node, child: yamlNode })
+  }
+
   const { createNode, createParentChildLink } = boundActionCreators
+
   if (node.internal.mediaType !== `text/yaml`) {
     return
   }
@@ -11,37 +33,22 @@ async function onCreateNode({ node, boundActionCreators, loadNodeContent }) {
   const content = await loadNodeContent(node)
   const parsedContent = jsYaml.load(content)
 
-  // TODO handle non-array data.
   if (_.isArray(parsedContent)) {
-    const yamlArray = parsedContent.map((obj, i) => {
-      const objStr = JSON.stringify(obj)
-      const contentDigest = crypto
-        .createHash(`md5`)
-        .update(objStr)
-        .digest(`hex`)
-
-      return {
-        ...obj,
-        id: obj.id ? obj.id : `${node.id} [${i}] >>> YAML`,
-        children: [],
-        parent: node.id,
-        internal: {
-          contentDigest,
-          // TODO make choosing the "type" a lot smarter. This assumes
-          // the parent node is a file.
-          // PascalCase
-          type: _.upperFirst(_.camelCase(`${node.name} Yaml`)),
-        },
-      }
-    })
-
-    _.each(yamlArray, y => {
-      createNode(y)
-      createParentChildLink({ parent: node, child: y })
+    parsedContent.forEach((obj, i) => {
+      transformObject(
+        obj,
+        obj.id ? obj.id : `${node.id} [${i}] >>> YAML`,
+        _.upperFirst(_.camelCase(`${node.name} Yaml`)),
+      )
     })
   }
-
-  return
+  else if (_.isPlainObject(parsedContent)) {
+    transformObject(
+      parsedContent,
+      parsedContent.id ? parsedContent.id : `${node.id} >>> YAML`,
+      _.upperFirst(_.camelCase(`${path.basename(node.dir)} Yaml`)),
+    )
+  }
 }
 
 exports.onCreateNode = onCreateNode
