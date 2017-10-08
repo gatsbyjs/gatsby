@@ -41,7 +41,7 @@
   },
   "private": true,
   "scripts": {
-    "bootstrap": "yarn && npm run check-versions && lerna run prepublish",
+    "bootstrap": "yarn && npm run check-versions && lerna bootstrap",
     "check-versions": "babel-node scripts/check-versions.js",
     "format": "npm run format-packages && npm run format-cache-dir && npm run format-www && npm run format-examples && npm run format-scripts",
     "format-cache-dir": "prettier-eslint --write \"packages/gatsby/cache-dir/*.js\"",
