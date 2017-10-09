@@ -4,23 +4,23 @@ const path = require(`path`)
 
 async function onCreateNode({ node, boundActionCreators, loadNodeContent }) {
   function transformObject(obj, id, type) {
-      const objStr = JSON.stringify(obj)
-      const contentDigest = crypto
-        .createHash(`md5`)
-        .update(objStr)
-        .digest(`hex`)
-      const jsonNode = {
-        ...obj,
-        id,
-        children: [],
-        parent: node.id,
-        internal: {
-          contentDigest,
-          type,
-        },
-      }
-      createNode(jsonNode)
-      createParentChildLink({ parent: node, child: jsonNode })
+    const objStr = JSON.stringify(obj)
+    const contentDigest = crypto
+      .createHash(`md5`)
+      .update(objStr)
+      .digest(`hex`)
+    const jsonNode = {
+      ...obj,
+      id,
+      children: [],
+      parent: node.id,
+      internal: {
+        contentDigest,
+        type,
+      },
+    }
+    createNode(jsonNode)
+    createParentChildLink({ parent: node, child: jsonNode })
   }
 
   const { createNode, createParentChildLink } = boundActionCreators
@@ -38,15 +38,14 @@ async function onCreateNode({ node, boundActionCreators, loadNodeContent }) {
       transformObject(
         obj,
         obj.id ? obj.id : `${node.id} [${i}] >>> JSON`,
-        _.upperFirst(_.camelCase(`${node.name} Json`)),
+        _.upperFirst(_.camelCase(`${node.name} Json`))
       )
     })
-  }
-  else if (_.isPlainObject(parsedContent)) {
+  } else if (_.isPlainObject(parsedContent)) {
     transformObject(
       parsedContent,
       parsedContent.id ? parsedContent.id : `${node.id} >>> JSON`,
-      _.upperFirst(_.camelCase(`${path.basename(node.dir)} Json`)),
+      _.upperFirst(_.camelCase(`${path.basename(node.dir)} Json`))
     )
   }
 }
