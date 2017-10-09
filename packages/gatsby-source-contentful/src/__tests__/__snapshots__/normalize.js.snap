@@ -2587,7 +2587,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       "email": "info@acgears.com",
       "id": "c4LgMotpNF6W20YKmuemW0a",
       "internal": Object {
-        "contentDigest": "179698e2d0fdeafe064c16dc552905e0",
+        "contentDigest": "56c8049cbea94a91a808515540f1e0b3",
         "type": "ContentfulBrand",
       },
       "logo___NODE": "c2Y8LhXLnYAYqKCGEWG4EKI",
@@ -2599,6 +2599,7 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       "product___NODE": Array [
         "c4BqrajvA8E6qwgkieoqmqO",
       ],
+      "twitter": "",
       "website": "http://www.lemnos.jp/en/",
     },
   ],
@@ -2610,17 +2611,22 @@ Our Lemnos products are made carefully by our craftsmen finely honed skillful te
       ],
       "companyDescription___NODE": "JrePkDVYomE8AwcuCUyMicompanyDescriptionTextNode",
       "companyName___NODE": "JrePkDVYomE8AwcuCUyMicompanyNameTextNode",
+      "email": "",
       "id": "JrePkDVYomE8AwcuCUyMi",
       "internal": Object {
-        "contentDigest": "60153e88a39483fa024d4bf41ab95b6a",
+        "contentDigest": "98dc28795de1ada78c781c9979afb19b",
         "type": "ContentfulBrand",
       },
       "logo___NODE": "c4zj1ZOfHgQ8oqgaSKm4Qo2",
       "node_locale": "en-US",
       "parent": "Brand",
+      "phone": Array [
+        "",
+      ],
       "product___NODE": Array [
         "c5KsDBWseXY6QegucYAoacS",
       ],
+      "twitter": "",
       "website": "http://playsam.com/",
     },
   ],
@@ -2781,7 +2787,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "email": "info@acgears.com",
       "id": "c4LgMotpNF6W20YKmuemW0a___de",
       "internal": Object {
-        "contentDigest": "6e4e76e159aef9a4c09d87404ffb6009",
+        "contentDigest": "62689ca2ee05da931171762ee0a60d1d",
         "type": "ContentfulBrand",
       },
       "logo___NODE": "c2Y8LhXLnYAYqKCGEWG4EKI___de",
@@ -2793,6 +2799,7 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       "product___NODE": Array [
         "c4BqrajvA8E6qwgkieoqmqO___de",
       ],
+      "twitter": "",
       "website": "http://www.lemnos.jp/en/",
     },
   ],
@@ -2804,17 +2811,22 @@ Unsere Lemnos Produkte werden sorgfältig von unseren Handwerkern fein geschliff
       ],
       "companyDescription___NODE": "JrePkDVYomE8AwcuCUyMi___decompanyDescriptionTextNode",
       "companyName___NODE": "JrePkDVYomE8AwcuCUyMi___decompanyNameTextNode",
+      "email": "",
       "id": "JrePkDVYomE8AwcuCUyMi___de",
       "internal": Object {
-        "contentDigest": "51ead6a16ac5a54cc51e571eb8a0923d",
+        "contentDigest": "6d5995e7a04b1680c48c75a17112c533",
         "type": "ContentfulBrand",
       },
       "logo___NODE": "c4zj1ZOfHgQ8oqgaSKm4Qo2___de",
       "node_locale": "de",
       "parent": "Brand",
+      "phone": Array [
+        "",
+      ],
       "product___NODE": Array [
         "c5KsDBWseXY6QegucYAoacS___de",
       ],
+      "twitter": "",
       "website": "http://playsam.com/",
     },
   ],
