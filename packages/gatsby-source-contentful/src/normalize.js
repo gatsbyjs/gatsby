@@ -255,6 +255,8 @@ exports.createContentTypeNodes = ({
 
       let entryNode = {
         id: mId(entryItem.sys.id),
+        createdAt: entryItem.sys.createdAt,
+        updatedAt: entryItem.sys.updatedAt,
         parent: contentTypeItemId,
         children: [],
         internal: {
