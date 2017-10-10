@@ -28,11 +28,6 @@ class GatsbyLink extends React.Component {
       to: normalizePath(pathPrefix + props.to),
     }
   }
-  propTypes: {
-    ...NavLinkPropTypes,
-    to: PropTypes.string.isRequired,
-    onClick: PropTypes.func,
-  }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.to !== nextProps.to) {
@@ -49,16 +44,19 @@ class GatsbyLink extends React.Component {
 
   render() {
     const { onClick, ...rest } = this.props
+    let El
     if (Object.keys(NavLinkPropTypes).some(propName => this.props[propName])) {
-      var El = NavLink
+      El = NavLink
     } else {
-      var El = Link
+      El = Link
     }
 
     return (
       <El
         onClick={e => {
+          // eslint-disable-line
           onClick && onClick(e)
+
           if (
             e.button === 0 && // ignore right clicks
             !this.props.target && // let browser handle "target=_blank"
@@ -96,12 +94,20 @@ class GatsbyLink extends React.Component {
               window.___navigateTo(this.state.to)
             }
           }
+
+          return true
         }}
         {...rest}
         to={this.state.to}
       />
     )
   }
+}
+
+GatsbyLink.propTypes = {
+  ...NavLinkPropTypes,
+  to: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
 }
 
 GatsbyLink.contextTypes = {

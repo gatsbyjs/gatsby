@@ -199,7 +199,7 @@ export const pageQuery = graphql`
     }
     file(relativePath: { eq: "gatsby-explanation.png" }) {
       childImageSharp {
-        responsiveSizes(maxWidth: 870) {
+        sizes(maxWidth: 870) {
           src
           srcSet
           sizes

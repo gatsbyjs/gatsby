@@ -19,4 +19,6 @@ exports.onRenderBody = ({ setPostBodyComponents }, pluginOptions) => {
       />,
     ])
   }
+
+  return null
 }

@@ -1,9 +1,8 @@
 import _ from "lodash"
-import { writeFile } from "fs-extra"
+import { writeFile, existsSync } from "fs-extra"
 import { HEADER_COMMENT } from "./constants"
 
 import {
-  ROOT_WILDCARD,
   COMMON_BUNDLES,
   SECURITY_HEADERS,
   CACHING_HEADERS,
@@ -93,7 +92,7 @@ function transformLink(manifest, publicFolder, pathPrefix) {
       const hashed = manifest[file]
       if (hashed) {
         return `${prefix}${pathPrefix}${hashed}${suffix}`
-      } else if (fs.existsSync(publicFolder(file))) {
+      } else if (existsSync(publicFolder(file))) {
         return `${prefix}${pathPrefix}${file}${suffix}`
       } else {
         throw new Error(

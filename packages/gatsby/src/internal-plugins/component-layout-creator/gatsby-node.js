@@ -45,7 +45,7 @@ exports.createLayouts = async (
         .layouts.filter(p => p.component === path)
         .forEach(layout => {
           deleteLayout({ name: layout.name })
-          files = files.filter(f => f !== name)
+          files = files.filter(f => f !== layout.name)
         })
     })
     .on(`ready`, () => doneCb())

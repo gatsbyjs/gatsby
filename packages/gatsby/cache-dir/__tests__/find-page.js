@@ -16,6 +16,11 @@ describe(`find-page`, () => {
         jsonName: `about-me.json`,
       },
       {
+        path: `/about/the best/`,
+        componentChunkName: `page-component---src-pages-test-js`,
+        jsonName: `the-best.json`,
+      },
+      {
         path: `/app/`,
         matchPath: `/app/*`,
         componentChunkName: `page-component---src-pages-app-js`,
@@ -28,6 +33,11 @@ describe(`find-page`, () => {
   it(`can find a page`, () => {
     expect(findPage(`/about/`).path).toBe(`/about/`)
     expect(findPage(`/about/me/`).path).toBe(`/about/me/`)
+  })
+
+  it(`can find a page with space in its path`, () => {
+    expect(findPage(`/about/the best/`).path).toBe(`/about/the best/`)
+    expect(findPage(`/about/the%20best/`).path).toBe(`/about/the best/`)
   })
 
   it(`can find a client only path`, () => {

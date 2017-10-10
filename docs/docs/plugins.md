@@ -9,8 +9,8 @@ support, process images, etc.
 For larger / complex sites, they let you modularize your site customizations
 into site-specific plugins.
 
-Gatsby has a large and growing set of plugins. See below for the list
-of official plugins. We'll eventually add support here for searching and browsing
+Gatsby has a large and growing set of plugins. See below for the [list
+of official plugins](#official-plugins). We'll eventually add support here for searching and browsing
 both official plugins and community plugins published on NPM.
 
 ## How to use?
@@ -119,6 +119,7 @@ you can place the files in a `src` subfolder and build them to the plugin folder
 ## Official components
 
 * [gatsby-link](/packages/gatsby-link/)
+* [gatsby-image](/packages/gatsby-image/)
 
 ## Community Plugins
 
@@ -132,4 +133,6 @@ you can place the files in a `src` subfolder and build them to the plugin folder
 * [gatsby-plugin-purify-css](https://github.com/rongierlach/gatsby-plugin-purify-css)
 * [gatsby-plugin-yandex-metrika](https://github.com/viatsko/gatsby-plugin-yandex-metrika)
 * [gatsby-remark-emoji](https://github.com/Rulikkk/gatsby-remark-emoji)
+* [gatsby-remark-external-links](https://github.com/JLongley/gatsby-remark-external-links)
 * [gatsby-source-workable](https://github.com/tumblbug/gatsby-source-workable)
+* [gatsby-source-google-sheets](https://github.com/brandonmp/gatsby-source-google-sheets)

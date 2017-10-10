@@ -126,6 +126,10 @@ exports.liftRenderedField = entities =>
     return e
   })
 
+// Exclude entities of unknown shape
+exports.excludeUnknownEntities = entities =>
+  entities.filter(e => e.wordpress_id) // Excluding entities without ID
+
 const seedConstant = `b2012db8-fafc-5a03-915f-e6016ff32086`
 const typeNamespaces = {}
 exports.createGatsbyIds = entities =>
@@ -190,15 +194,18 @@ exports.mapPostsToTagsCategories = entities => {
   return entities.map(e => {
     if (e.__type === `wordpress__POST`) {
       // Replace tags & categories with links to their nodes.
-      e.tags___NODE = e.tags.map(
-        t => tags.find(tObj => t === tObj.wordpress_id).id
-      )
-      delete e.tags
-
-      e.categories___NODE = e.categories.map(
-        c => categories.find(cObj => c === cObj.wordpress_id).id
-      )
-      delete e.categories
+      if (e.tags.length) {
+        e.tags___NODE = e.tags.map(
+          t => tags.find(tObj => t === tObj.wordpress_id).id
+        )
+        delete e.tags
+      }
+      if (e.categories.length) {
+        e.categories___NODE = e.categories.map(
+          c => categories.find(cObj => c === cObj.wordpress_id).id
+        )
+        delete e.categories
+      }
     }
     return e
   })
@@ -219,8 +226,7 @@ exports.mapTagsCategoriesToTaxonomies = entities =>
 exports.mapEntitiesToMedia = entities => {
   const media = entities.filter(e => e.__type === `wordpress__wp_media`)
   return entities.map(e => {
-    const hasPhoto = object => _.some(object, value => isPhoto(value))
-
+    // TODO : featured_media field is photo ID
     const isPhoto = field =>
       _.isObject(field) &&
       field.wordpress_id &&
@@ -336,7 +342,7 @@ const createACFChildNodes = (
 exports.createNodesFromEntities = ({ entities, createNode }) => {
   entities.forEach(e => {
     // Create subnodes for ACF Flexible layouts
-    let { __type, ...entity } = e
+    let { __type, ...entity } = e // eslint-disable-line no-unused-vars
     let children = []
     if (entity.acf) {
       _.each(entity.acf, (value, key) => {

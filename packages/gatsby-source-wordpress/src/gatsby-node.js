@@ -1,13 +1,4 @@
-const crypto = require(`crypto`)
-const querystring = require(`querystring`)
-const _ = require(`lodash`)
-const stringify = require(`json-stringify-safe`)
-const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
-const path = require(`path`)
-
 const fetch = require(`./fetch`)
-const colorized = require(`./output-color`)
-const httpExceptionHandler = require(`./http-exception-handler`)
 const normalize = require(`./normalize`)
 
 const typePrefix = `wordpress__`
@@ -21,12 +12,10 @@ const refactoredEntityTypes = {
 /* If true, will output many console logs. */
 let _verbose
 let _siteURL
-let _getNode
-let _useACF
+let _useACF = true
 let _hostingWPCOM
 let _auth
 let _perPage
-let _accessToken
 
 exports.sourceNodes = async (
   { boundActionCreators, getNode, store, cache },
@@ -34,7 +23,7 @@ exports.sourceNodes = async (
     baseUrl,
     protocol,
     hostingWPCOM,
-    useACF,
+    useACF = true,
     auth,
     verboseOutput,
     perPage = 100,
@@ -43,7 +32,6 @@ exports.sourceNodes = async (
   const { createNode } = boundActionCreators
   _verbose = verboseOutput
   _siteURL = `${protocol}://${baseUrl}`
-  _getNode = getNode
   _useACF = useACF
   _hostingWPCOM = hostingWPCOM
   _auth = auth
@@ -75,7 +63,10 @@ exports.sourceNodes = async (
   // Lifts all "rendered" fields to top-level.
   entities = normalize.liftRenderedField(entities)
 
-  // creates Gatsby IDs for each entity
+  // Exclude entities of unknown shape
+  entities = normalize.excludeUnknownEntities(entities)
+
+  // Creates Gatsby IDs for each entity
   entities = normalize.createGatsbyIds(entities)
 
   // Creates links between authors and user entities

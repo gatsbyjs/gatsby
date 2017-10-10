@@ -33,14 +33,6 @@ const maybeRedirect = pathname => {
   const redirect = redirectMap[pathname]
 
   if (redirect != null) {
-    const pageResources = loader.getResourcesForPathname(pathname)
-
-    if (pageResources != null) {
-      console.error(
-        `The route "${pathname}" matches both a page and a redirect; this is probably not intentional.`
-      )
-    }
-
     history.replace(redirect.toPath)
     return true
   } else {
@@ -60,6 +52,14 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   }
 
   const navigateTo = pathname => {
+    const redirect = redirectMap[pathname]
+
+    // If we're redirecting, just replace the passed in pathname
+    // to the one we want to redirect to.
+    if (redirect) {
+      pathname = redirect.toPath
+    }
+
     // If we're already at this path, do nothing.
     if (window.location.pathname === pathname) {
       return

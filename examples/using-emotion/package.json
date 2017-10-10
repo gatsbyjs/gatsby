@@ -4,6 +4,9 @@
   "description": "Gatsby example site using using-emotion",
   "author": "Tegan Churchill <churchill.tegan@gmail.com>",
   "dependencies": {
+    "emotion": "^8.0.2-8",
+    "emotion-server": "^8.0.2-8",
+    "react-emotion": "^8.0.2-8",
     "gatsby": "^1.0.11",
     "gatsby-link": "^1.0.9",
     "gatsby-plugin-emotion": "latest",

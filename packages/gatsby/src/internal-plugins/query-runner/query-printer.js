@@ -61,6 +61,7 @@ function print(node: Root | Fragment): string {
   } else {
     invariant(false, `RelayPrinter: Unsupported IR node \`%s\`.`, node.kind)
   }
+  return null
 }
 
 function printSelections(

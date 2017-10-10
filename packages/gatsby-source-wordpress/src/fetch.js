@@ -1,6 +1,6 @@
 const querystring = require(`querystring`)
 const axios = require(`axios`)
-
+const _ = require(`lodash`)
 const colorized = require(`./output-color`)
 const httpExceptionHandler = require(`./http-exception-handler`)
 
@@ -26,7 +26,7 @@ async function fetch({
   let _accessToken
   if (_hostingWPCOM) {
     url = `https://public-api.wordpress.com/wp/v2/sites/${baseUrl}`
-    _accessToken = await getWPCOMAccessToken()
+    _accessToken = await getWPCOMAccessToken(_auth)
   } else {
     url = `${_siteURL}/wp-json`
   }
@@ -149,7 +149,7 @@ async function fetch({
  *
  * @returns
  */
-async function getWPCOMAccessToken() {
+async function getWPCOMAccessToken(_auth) {
   let result
   const oauthUrl = `https://public-api.wordpress.com/oauth2/token`
   try {
@@ -248,7 +248,7 @@ async function fetchData({
  * @returns
  */
 async function getPages(
-  { url, _perPage, _hostingWPCOM, _auth, _accessToken },
+  { url, _perPage, _hostingWPCOM, _auth, _accessToken, _verbose },
   page = 1
 ) {
   try {

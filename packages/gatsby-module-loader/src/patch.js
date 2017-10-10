@@ -1,3 +1,4 @@
+/* global document: false, __webpack_require__: false */
 patch()
 
 function patch() {

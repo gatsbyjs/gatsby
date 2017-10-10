@@ -5,9 +5,7 @@ const {
   GraphQLNonNull,
   GraphQLID,
   GraphQLList,
-  GraphQLString,
 } = require(`graphql`)
-import { NAMED_TYPE } from "graphql/language/kinds"
 
 const apiRunner = require(`../utils/api-runner-node`)
 const { inferObjectStructureFromNodes } = require(`./infer-graphql-type`)
