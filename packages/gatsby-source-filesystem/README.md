@@ -50,7 +50,7 @@ You can query file nodes like the following:
       node {
         extension
         dir
-        modifyDate
+        modifiedTime
       }
     }
   }
