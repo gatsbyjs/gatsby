@@ -154,7 +154,7 @@ class Image extends React.Component {
 
     if (sizes) {
       const image = sizes
-      console.log(image)
+
       // The outer div is necessary to reset the z-index to 0.
       return (
         <div

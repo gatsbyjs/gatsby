@@ -401,8 +401,8 @@ export default ({ data }) => {
           </tr>
         </thead>
         <tbody>
-          {data.allFile.edges.map(({ node }) =>
-            <tr>
+          {data.allFile.edges.map(({ node }, index) =>
+            <tr key={index}>
               <td>
                 {node.relativePath}
               </td>

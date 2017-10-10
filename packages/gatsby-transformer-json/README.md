@@ -92,7 +92,7 @@ single objects, you'd be able to query your letters like:
 
 ```graphql
 {
-  allLetters {
+  allLettersJson {
     edges {
       node {
         value
@@ -106,7 +106,7 @@ Which would return:
 
 ```javascript
 {
-  allLetters: {
+  allLettersJson: {
     edges: [
       {
         node: {
