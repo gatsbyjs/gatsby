@@ -52,6 +52,7 @@ Websites built with Gatsby:
 * [Tic Tac Toe AI](https://tic-tac-toe-ai.surge.sh) [(source)](https://github.com/angeloocana/tic-tac-toe-ai)
 * [Etcetera Design](https://etcetera.design) [(source)](https://github.com/etceteradesign/website)
 * [Azer Koçulu](http://azer.bike)
+* [Steven Natera's blog](https://www.stevennatera.com)
 
 ## Docs
 
