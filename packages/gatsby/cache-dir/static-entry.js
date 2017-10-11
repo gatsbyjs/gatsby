@@ -2,8 +2,7 @@ import React from "react"
 import { renderToString, renderToStaticMarkup } from "react-dom/server"
 import { StaticRouter, Route, withRouter } from "react-router-dom"
 import { kebabCase, get, merge, isArray, isString } from "lodash"
-
-import apiRunner from "./api-runner-ssr"
+import { apiRunnerAsync } from "./api-runner-ssr"
 import pages from "./pages.json"
 import syncRequires from "./sync-requires"
 import testRequireError from "./test-require-error"
@@ -110,7 +109,7 @@ module.exports = (locals, callback) => {
   )
 
   // Let the site or plugin render the page component.
-  apiRunner(`replaceRenderer`, {
+  apiRunnerAsync(`replaceRenderer`, {
     bodyComponent,
     replaceBodyHTMLString,
     setHeadComponents,
@@ -120,7 +119,6 @@ module.exports = (locals, callback) => {
     setPostBodyComponents,
     setBodyProps,
   })
-
   // If no one stepped up, we'll handle it.
   if (!bodyHtml) {
     bodyHtml = renderToString(bodyComponent)
@@ -150,64 +148,64 @@ module.exports = (locals, callback) => {
             window.webpackManifest = ${chunkManifest}
             //]]>
             `,
-      }}
-    />
-  )
+                }}
+            />
+        )
 
-  let stats
-  try {
-    stats = require(`../public/stats.json`)
-  } catch (e) {
-    // ignore
-  }
+        let stats
+        try {
+          stats = require(`../public/stats.json`)
+        } catch (e) {
+          // ignore
+        }
 
-  // Create paths to scripts
-  const page = pages.find(page => page.path === locals.path)
-  const scripts = [
-    `commons`,
-    `app`,
-    pathChunkName(locals.path),
-    page.componentChunkName,
-    page.layoutComponentChunkName,
-  ]
-    .map(s => {
-      const fetchKey = `assetsByChunkName[${s}]`
+        // Create paths to scripts
+        const page = pages.find(page => page.path === locals.path)
+        const scripts = [
+          `commons`,
+          `app`,
+          pathChunkName(locals.path),
+          page.componentChunkName,
+          page.layoutComponentChunkName,
+        ]
+            .map(s => {
+              const fetchKey = `assetsByChunkName[${s}]`
 
-      let fetchedScript = get(stats, fetchKey)
+              let fetchedScript = get(stats, fetchKey)
 
-      if (!fetchedScript) {
-        return null
-      }
+              if (!fetchedScript) {
+                return null
+              }
 
-      // If sourcemaps are enabled, then the entry will be an array with
-      // the script name as the first entry.
-      fetchedScript = isArray(fetchedScript) ? fetchedScript[0] : fetchedScript
-      const prefixedScript = `${pathPrefix}${fetchedScript}`
+              // If sourcemaps are enabled, then the entry will be an array with
+              // the script name as the first entry.
+              fetchedScript = isArray(fetchedScript) ? fetchedScript[0] : fetchedScript
+              const prefixedScript = `${pathPrefix}${fetchedScript}`
 
-      // Make sure we found a component.
-      if (prefixedScript === `/`) {
-        return null
-      }
+              // Make sure we found a component.
+              if (prefixedScript === `/`) {
+                return null
+              }
 
-      return prefixedScript
-    })
-    .filter(s => isString(s))
+              return prefixedScript
+            })
+            .filter(s => isString(s))
 
-  scripts.forEach(script => {
-    // Add preload <link>s for scripts.
-    headComponents.unshift(
-      <link rel="preload" key={script} href={script} as="script" />
-    )
-  })
+        scripts.forEach(script => {
+          // Add preload <link>s for scripts.
+          headComponents.unshift(
+              <link rel="preload" key={script} href={script} as="script"/>
+          )
+        })
 
-  // Add script loader for page scripts to the head.
-  // Taken from https://www.html5rocks.com/en/tutorials/speed/script-loading/
-  const scriptsString = scripts.map(s => `"${s}"`).join(`,`)
-  headComponents.push(
-    <script
-      key={`script-loader`}
-      dangerouslySetInnerHTML={{
-        __html: `
+        // Add script loader for page scripts to the head.
+        // Taken from https://www.html5rocks.com/en/tutorials/speed/script-loading/
+        const scriptsString = scripts.map(s => `"${s}"`).join(`,`)
+        headComponents.push(
+            <script
+                key={`script-loader`}
+                dangerouslySetInnerHTML={{
+                  __html: `
   !function(e,t,r){function n(){for(;d[0]&&"loaded"==d[0][f];)c=d.shift(),c[o]=!i.parentNode.insertBefore(c,i)}for(var s,a,c,d=[],i=e.scripts[0],o="onreadystatechange",f="readyState";s=r.shift();)a=e.createElement(t),"async"in i?(a.async=!1,e.head.appendChild(a)):i[f]?(d.push(a),a[o]=n):e.write("<"+t+' src="'+s+'" defer></'+t+">"),a.src=s}(document,"script",[
   ${scriptsString}
 ])

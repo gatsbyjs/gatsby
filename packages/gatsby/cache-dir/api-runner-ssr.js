@@ -6,7 +6,7 @@
 
 const apis = require(`./api-ssr-docs`)
 
-module.exports = (api, args, defaultReturn) => {
+export function apiRunner(api, args, defaultReturn) {
   if (!apis[api]) {
     console.log(`This API doesn't exist`, api)
   }
@@ -26,4 +26,14 @@ module.exports = (api, args, defaultReturn) => {
   } else {
     return [defaultReturn]
   }
+}
+
+export function apiRunnerAsync(api, args, defaultReturn) {
+  return plugins.reduce(
+      (previous, next) =>
+          next.plugin[api]
+              ? previous.then(() => next.plugin[api](args, next.options))
+              : previous,
+      Promise.resolve()
+  )
 }
