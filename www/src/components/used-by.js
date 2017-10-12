@@ -3,7 +3,7 @@ import presets from "../utils/presets"
 import { vP, vPHd, vPVHd, vPVVHd } from "../components/gutters"
 import { FormidableIcon, FabricIcon, SegmentIcon } from "../assets/logos"
 
-const Icon = ({ icon }) =>
+const Icon = ({ icon }) => (
   <li
     css={{
       marginRight: rhythm(3 / 4),
@@ -32,8 +32,9 @@ const Icon = ({ icon }) =>
       }}
     />
   </li>
+)
 
-const UsedBy = () =>
+const UsedBy = () => (
   <div
     className="Masthead-usedBy"
     css={{
@@ -46,6 +47,7 @@ const UsedBy = () =>
         .animation.curveDefault}`,
       order: `3`,
       flexGrow: `1`,
+      transform: `translateZ(0)`,
       [presets.Phablet]: {
         paddingTop: rhythm(4),
         marginBottom: 0,
@@ -76,6 +78,7 @@ const UsedBy = () =>
         flexGrow: `1`,
         flexShrink: `1`,
         alignSelf: `flex-end`,
+        transform: `translateZ(0)`,
         [presets.Phablet]: {
           flexGrow: `0`,
         },
@@ -112,5 +115,6 @@ const UsedBy = () =>
       </ul>
     </div>
   </div>
+)
 
 export default UsedBy

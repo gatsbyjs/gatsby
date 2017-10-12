@@ -2,12 +2,14 @@
 title: Creating a Blog with Gatsby
 date: "2017-07-19"
 author: "Dustin Schau"
-image: "ui-and-code.png"
-excerpt: "Gatsby is an incredible static site generator that lets you build a static site that still has all the benefits expected from a modern web application…"
+image: "../images/15009741473_9ced5e3209_o.jpg"
+imageAuthor: Daniel Go
+imageAuthorLink: "https://flic.kr/p/oSmRd6"
+imageTitle: "Old typewriter"
+canonicalLink: "https://objectpartners.com/2017/07/19/creating-a-static-blog-with-gatsby/"
+publishedAt: "Object Partners, Inc."
+excerpt: "In this post, we'll take a deep dive into Gatsby and some of the new 1.0 features by creating a static blog. Let's get on it!"
 ---
-
-*This blog post was originally published at https://objectpartners.com/2017/07/19/creating-a-static-blog-with-gatsby/*
-
 Gatsby is an incredible static site generator that allows for React to be used as the underlying rendering engine to scaffold out a static site that truly has all the benefits expected in a modern web application. It does this by rendering dynamic React components into static HTML content via [server side rendering][react-dom-server] at build time. This means that your users get all the benefits of a static site such as the ability to work without JavaScript, search engine friendliness, speedy load times, etc. without losing the dynamism and interactivity that is expected of the modern web. Once rendered to static HTML, client-site React/JavaScript _can_ take over (if creating stateful components or logic in `componentDidMount`) and add dynamism to the statically generated content.
 
 Gatsby [recently released][gatsby-release] a v1.0.0 with a bunch of new features, including (but not limited to) the ability to create content queries with GraphQL, integration with various CMSs--including WordPress, Contentful, Drupal, etc., and route based code splitting to keep the end-user experience as snappy as possible. In this post, we'll take a deep dive into Gatsby and some of these new features by creating a static blog. Let's get on it!
@@ -241,13 +243,13 @@ The underlying query name `BlogPostByPath` (note: these query names need to be u
 
 `frontmatter`, is of course our data structure we provided at the beginning of our Markdown file. Each key we define there will be available to be injected into the query.
 
-At this point, we have a bunch of plugins installed to load files off of disk, transform Markdown to HTML, and other utilities. We have a single, lonely Markdown file that will be rendered as a blog post. Finally, we have a React template for blog posts, as well as a wired up GraphQL query to query for a blog post and inject the React template with the queried data. Next up: programatically creating the necessary static pages (and injecting the templates) with Gatsby's Node API. Let's get down to it.
+At this point, we have a bunch of plugins installed to load files off of disk, transform Markdown to HTML, and other utilities. We have a single, lonely Markdown file that will be rendered as a blog post. Finally, we have a React template for blog posts, as well as a wired up GraphQL query to query for a blog post and inject the React template with the queried data. Next up: programmatically creating the necessary static pages (and injecting the templates) with Gatsby's Node API. Let's get down to it.
 
 An important note to make at this point is that the GraphQL query takes place at **build** time. The component is injected with the `data` prop that is seeded by the GraphQL query. Unless anything dynamic (e.g. logic in `componentDidMount`, state changes, etc.) occurs, this component will be pure, rendered HTML generated via the React rendering engine, GraphQL, and Gatsby!
 
 ## Creating the static pages
 
-Gatsby exposes a powerful Node API, which allows for functionality such as creating dynamic pages (blog posts!), extending the babel or webpack configs, modifying the created nodes or pages, etc. This API is exposed in the `gatsby-node.js` file in the root directory of your project--e.g. at the same level as `gatsby-config.js`. Each export found in this file will be parsed by Gatsby, as detailed in its [Node API specification][node-spec]. However, we only care about one particular API in this instance, `createPages`.
+Gatsby exposes a powerful Node API, which allows for functionality such as creating dynamic pages (blog posts!), extending the babel or webpack configs, modifying the created nodes or pages, etc. This API is exposed in the `gatsby-node.js` file in the root directory of your project—e.g. at the same level as `gatsby-config.js`. Each export found in this file will be parsed by Gatsby, as detailed in its [Node API specification][node-spec]. However, we only care about one particular API in this instance, `createPages`.
 
 ```javascript
 const path = require('path');
@@ -302,7 +304,7 @@ We're using GraphQL to get all Markdown nodes and making them available under th
 
 One cool note here is that the `gatsby-plugin-remark` plugin exposes some useful data for us to query with GraphQL, e.g. `excerpt` (a short snippet to display as a preview), `id` (a unique identifier for each post), etc.
 
-We now have our query written, but we haven't yet programatically created the pages (with the `createPage` action creator). Let's do that!
+We now have our query written, but we haven't yet programmatically created the pages (with the `createPage` action creator). Let's do that!
 
 ### Creating the pages
 
@@ -337,7 +339,7 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
       if (result.errors) {
         return Promise.reject(result.errors);
       }
-      
+
       result.data.allMarkdownRemark.edges
         .forEach(({ node }) => {
           createPage({

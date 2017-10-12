@@ -6,7 +6,6 @@ import moment from "moment"
 
 class SiteIndex extends React.Component {
   render() {
-
     const pageLinks = []
     let iteratorKey = 0
     let pageRaw = [
@@ -56,14 +55,10 @@ class SiteIndex extends React.Component {
                         ).format(`MMMM YYYY`)}
                       </time>
                     </h4>
-                    <h5 className="level-right">
-                      {frontmatter.category}
-                    </h5>
+                    <h5 className="level-right">{frontmatter.category}</h5>
                   </div>
                   <h1 className="title is-marginless">
-                    <Link to={frontmatter.path}>
-                      {frontmatter.title}
-                    </Link>
+                    <Link to={frontmatter.path}>{frontmatter.title}</Link>
                   </h1>
                 </div>
                 <div className="content">
@@ -87,11 +82,7 @@ class SiteIndex extends React.Component {
       }
     })
 
-    return (
-      <div>
-        {pageLinks}
-      </div>
-    )
+    return <div>{pageLinks}</div>
   }
 }
 

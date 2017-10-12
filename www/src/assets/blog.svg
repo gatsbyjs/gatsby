@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 21.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 36 32" style="enable-background:new 0 0 36 32;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#9966CC;stroke-width:1.4173;stroke-miterlimit:10;}
+	.st1{fill:url(#SVGID_1_);}
+	.st2{fill:#744C9E;}
+	.st3{fill:none;stroke:#744C9E;stroke-width:1.4173;stroke-miterlimit:10;}
+</style>
+<g>
+	<line class="st0" x1="24.1" y1="10.7" x2="28.3" y2="10.7"/>
+	<line class="st0" x1="21.2" y1="13.5" x2="26.9" y2="13.5"/>
+	<line class="st0" x1="19.8" y1="14.9" x2="19.7" y2="9.2"/>
+	<line class="st0" x1="17" y1="17.8" x2="16.9" y2="12"/>
+	
+		<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="-274.6005" y1="392.2683" x2="-274.6005" y2="371.2683" gradientTransform="matrix(0.7071 0.7071 -0.7071 0.7071 484.2914 -61.1829)">
+		<stop  offset="0" style="stop-color:#FFFFFF;stop-opacity:0"/>
+		<stop  offset="1" style="stop-color:#FFB238"/>
+	</linearGradient>
+	<path class="st1" d="M27.6,12.8L18.4,22c-1.6,1.6-5.7,0-5.7,0l0,0c0,0-1.6-4.1,0-5.7l9.2-9.2c1.6-1.6,4.1-1.6,5.7,0l0,0
+		C29.2,8.7,29.2,11.3,27.6,12.8z"/>
+	<line class="st0" x1="27.6" y1="7.2" x2="13.1" y2="21.7"/>
+	<g>
+		<polygon class="st2" points="10.4,25.4 8,25.8 12.9,20.8 14,21.8 		"/>
+	</g>
+	<path class="st3" d="M27.6,12.8L18.4,22h-5.7l0,0v-5.7l9.2-9.2c1.6-1.6,4.1-1.6,5.7,0l0,0C29.2,8.7,29.2,11.3,27.6,12.8z"/>
+</g>
+</svg>

@@ -70,7 +70,6 @@ module.exports = (
             pluginOptions.plugins.map(plugin => {
               const requiredPlugin = require(plugin.resolve)
               if (_.isFunction(requiredPlugin.mutateSource)) {
-                console.log(`running plugin to mutate markdown source`)
                 return requiredPlugin.mutateSource(
                   {
                     markdownNode,
@@ -173,7 +172,13 @@ module.exports = (
         return cachedToc
       } else {
         const ast = await getAST(markdownNode)
-        const toc = hastToHTML(toHAST(mdastToToc(ast).map))
+        const tocAst = mdastToToc(ast)
+        let toc
+        if (tocAst.map) {
+          toc = hastToHTML(toHAST(tocAst.map))
+        } else {
+          toc = ``
+        }
         cache.set(tableOfContentsCacheKey(markdownNode), toc)
         return toc
       }
@@ -249,7 +254,7 @@ module.exports = (
           return getAST(markdownNode).then(ast => {
             const textNodes = []
             visit(ast, `text`, textNode => textNodes.push(textNode.value))
-            return prune(textNodes.join(` `), pruneLength)
+            return prune(textNodes.join(` `), pruneLength, `…`)
           })
         },
       },

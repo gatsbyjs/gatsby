@@ -31,7 +31,7 @@ You aren't just limited to markdown image tags either. You can either use markdo
 Or HTML image tags:
 
 ```
-&lt;img src="image.png"&gt;
+&lt;img src="image.png" alt=""&gt;
 ```
 
 Let's see some more photos by [Max Boettinger](https://unsplash.com/@maxboettinger) ([I](https://unsplash.com/photos/T7Lnl3PFISM), [II](https://unsplash.com/@maxboettinger?photo=SUFS6CPjB5Q)):
@@ -39,6 +39,12 @@ Let's see some more photos by [Max Boettinger](https://unsplash.com/@maxboetting
 ![](max-boettinger-109436.jpg)
 
 ![](max-boettinger-288448.jpg)
+
+### What about retina images?
+
+Absolutely, these are supported too! Gatsby takes care to retain images' pixel density.
+
+![Gandalf telling you that you should stay where you are](144-density.jpg)
 
 ### Okay, nice! But what about GIFs?
 

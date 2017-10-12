@@ -14,6 +14,7 @@ const buildConnectionFields = require(`../build-connection-fields`)
 const {
   inferInputObjectStructureFromNodes,
 } = require(`../infer-graphql-input-fields`)
+const createSortField = require(`../create-sort-field`)
 
 function queryResult(nodes, query, { types = [] } = {}) {
   const nodeType = new GraphQLObjectType({
@@ -48,7 +49,7 @@ function queryResult(nodes, query, { types = [] } = {}) {
             type: nodeConnection,
             args: {
               ...connectionArgs,
-              sort,
+              sort: createSortField(`RootQueryType`, sort),
               filter: {
                 type: new GraphQLInputObjectType({
                   name: _.camelCase(`filter test`),
@@ -62,6 +63,7 @@ function queryResult(nodes, query, { types = [] } = {}) {
                 args,
                 nodes,
                 connection: true,
+                type: nodeType,
               })
             },
           },
@@ -98,6 +100,7 @@ describe(`GraphQL Input args`, () => {
         { aString: `some string`, aNumber: 2, aBoolean: true },
         { aString: `some string`, aNumber: 2, anArray: [1, 2] },
       ],
+      boolean: true,
     },
     {
       name: `The Mad Wax`,
@@ -107,6 +110,18 @@ describe(`GraphQL Input args`, () => {
       frontmatter: {
         date: `2006-07-22T22:39:53.000Z`,
         title: `The world of slash and adventure`,
+        blue: 10010,
+        circle: `happy`,
+      },
+      boolean: false,
+    },
+    {
+      name: `The Mad Wax`,
+      hair: 0,
+      date: `2006-07-22T22:39:53.000Z`,
+      frontmatter: {
+        date: `2006-07-22T22:39:53.000Z`,
+        title: `The world of shave and adventure`,
         blue: 10010,
         circle: `happy`,
       },
@@ -261,6 +276,40 @@ describe(`GraphQL Input args`, () => {
     expect(result.data.allNode.edges[0].node.hair).toEqual(2)
   })
 
+  it(`handles eq operator with false value`, async () => {
+    let result = await queryResult(
+      nodes,
+      `
+        {
+          allNode(filter: {boolean: { eq: false }}) {
+            edges { node { name }}
+          }
+        }
+      `
+    )
+
+    expect(result.errors).not.toBeDefined()
+    expect(result.data.allNode.edges.length).toEqual(1)
+    expect(result.data.allNode.edges[0].node.name).toEqual(`The Mad Wax`)
+  })
+
+  it(`handles eq operator with 0`, async () => {
+    let result = await queryResult(
+      nodes,
+      `
+        {
+          allNode(filter: {hair: { eq: 0 }}) {
+            edges { node { hair }}
+          }
+        }
+      `
+    )
+
+    expect(result.errors).not.toBeDefined()
+    expect(result.data.allNode.edges.length).toEqual(1)
+    expect(result.data.allNode.edges[0].node.hair).toEqual(0)
+  })
+
   it(`handles ne operator`, async () => {
     let result = await queryResult(
       nodes,
@@ -274,7 +323,7 @@ describe(`GraphQL Input args`, () => {
     )
 
     expect(result.errors).not.toBeDefined()
-    expect(result.data.allNode.edges.length).toEqual(1)
+    expect(result.data.allNode.edges.length).toEqual(2)
     expect(result.data.allNode.edges[0].node.hair).toEqual(1)
   })
 
@@ -290,7 +339,7 @@ describe(`GraphQL Input args`, () => {
     `
     )
     expect(result.errors).not.toBeDefined()
-    expect(result.data.allNode.edges.length).toEqual(1)
+    expect(result.data.allNode.edges.length).toEqual(2)
     expect(result.data.allNode.edges[0].node.name).toEqual(`The Mad Wax`)
   })
 
@@ -322,7 +371,7 @@ describe(`GraphQL Input args`, () => {
       `
     )
     expect(result.errors).not.toBeDefined()
-    expect(result.data.allNode.edges.length).toEqual(1)
+    expect(result.data.allNode.edges.length).toEqual(2)
     expect(result.data.allNode.edges[0].node.name).toEqual(`The Mad Wax`)
   })
 
@@ -344,7 +393,7 @@ describe(`GraphQL Input args`, () => {
       `
     )
     expect(result.errors).not.toBeDefined()
-    expect(result.data.allNode.edges.length).toEqual(2)
+    expect(result.data.allNode.edges.length).toEqual(3)
     expect(result.data.allNode.edges[0].node.name).toEqual(`The Mad Wax`)
   })
 

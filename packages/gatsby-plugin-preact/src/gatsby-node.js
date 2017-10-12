@@ -6,6 +6,7 @@ exports.modifyWebpackConfig = ({ config, stage }) => {
     config._config.resolve.alias = {
       react: `preact-compat`,
       "react-dom": `preact-compat`,
+      "create-react-class": `preact-compat/lib/create-react-class`,
     }
   }
 

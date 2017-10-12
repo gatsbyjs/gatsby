@@ -6,6 +6,7 @@ const _ = require(`lodash`)
 
 const { emitter } = require(`../../redux`)
 const { boundActionCreators } = require(`../../redux/actions`)
+const { getNode } = require(`../../redux`)
 
 function transformPackageJson(json) {
   const transformDeps = deps =>
@@ -69,7 +70,6 @@ exports.sourceNodes = ({ boundActionCreators, store }) => {
       packageJson: transformPackageJson(
         require(`${plugin.resolve}/package.json`)
       ),
-      id: `Plugin ${plugin.name}`,
       parent: `SOURCE`,
       children: [],
       internal: {
@@ -83,7 +83,9 @@ exports.sourceNodes = ({ boundActionCreators, store }) => {
   })
 
   // Add site node.
-  const buildTime = moment().subtract(process.uptime(), `seconds`).toJSON()
+  const buildTime = moment()
+    .subtract(process.uptime(), `seconds`)
+    .toJSON()
 
   const createGatsbyConfigNode = (config = {}) => {
     // Delete plugins from the config as we add plugins above.
@@ -150,5 +152,7 @@ exports.onCreatePage = ({ page, boundActionCreators }) => {
 
 // Listen for DELETE_PAGE and delete page nodes.
 emitter.on(`DELETE_PAGE`, action => {
-  boundActionCreators.deleteNode(createPageId(action.payload.path))
+  const nodeId = createPageId(action.payload.path)
+  const node = getNode(nodeId)
+  boundActionCreators.deleteNode(nodeId, node)
 })

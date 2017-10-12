@@ -19,13 +19,9 @@ class StoryComment extends React.Component {
           <td className="default">
             <div style={{ marginTop: 2, marginBottom: -10 }}>
               <span className="comhead">
-                <strong>
-                  {comment.by}
-                </strong>
+                <strong>{comment.by}</strong>
                 {` `}
-                <span className="age">
-                  {comment.timeISO}
-                </span>
+                <span className="age">{comment.timeISO}</span>
               </span>
             </div>
             <br />

@@ -1,4 +1,4 @@
-const { actions, boundActions } = require(`../actions`)
+const { actions } = require(`../actions`)
 const nodeReducer = require(`../reducers/nodes`)
 const nodeTouchedReducer = require(`../reducers/nodes-touched`)
 
@@ -62,6 +62,30 @@ describe(`Create and update nodes`, () => {
     expect(state[`hi`].pickle).toEqual(false)
     expect(state[`hi`].deep).toEqual({ array: [1, 2] })
     expect(state[`hi`].deep2).toEqual({ boom: `foo` })
+  })
+
+  it(`allows deleting nodes`, () => {
+    const action = actions.createNode(
+      {
+        id: `hi`,
+        children: [],
+        parent: `test`,
+        internal: {
+          contentDigest: `hasdfljds`,
+          type: `Test`,
+        },
+        pickle: true,
+        deep: {
+          array: [0, 1, { boom: true }],
+        },
+      },
+      { name: `tests` }
+    )
+    const deleteAction = actions.deleteNode(`hi`)
+
+    let state = nodeReducer(undefined, action)
+    state = nodeReducer(state, deleteAction)
+    expect(state[`hi`]).toBeUndefined()
   })
 
   it(`nodes that are added are also "touched"`, () => {

@@ -3,7 +3,7 @@ const createHash = require(`crypto`).createHash
 const getHashFn = ({
   hashFunction = `md5`,
   hashDigest = `hex`,
-  hashDigestBits = 64,
+  hashDigestBits = 48,
   cache = new Set(),
 }) => input => {
   const hash = createHash(hashFunction)

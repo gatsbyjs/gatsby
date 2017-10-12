@@ -41,9 +41,11 @@ const pascalCase = _.flow(_.camelCase, _.upperFirst)
  * @example
  * createPage({
  *   path: `/my-sweet-new-page/`,
- *   component: path.resolve('./src/templates/my-sweet-new-page.js`),
- *   // context gets passed in as props to the page as well
- *   // as into the page/template's GraphQL query.
+ *   component: path.resolve(`./src/templates/my-sweet-new-page.js`),
+ *   // If you have a layout component at src/layouts/blog-layout.js
+ *   layout: `blog-layout`,
+ *   // The context is passed as props to the component as well
+ *   // as into the component's GraphQL query.
  *   context: {
  *     id: `123456`,
  *   },
@@ -71,6 +73,7 @@ actions.createPage = (page, plugin = ``, traceId) => {
 
   page.jsonName = jsonName
   page.internalComponentName = internalComponentName
+  page.updatedAt = Date.now()
 
   // Ensure the page has a context object
   if (!page.context) {
@@ -82,7 +85,7 @@ actions.createPage = (page, plugin = ``, traceId) => {
     console.log(chalk.blue.bgYellow(`The upserted page didn't pass validation`))
     console.log(chalk.bold.red(result.error))
     console.log(page)
-    return
+    return null
   }
 
   // If the path doesn't have an initial forward slash, add it.
@@ -112,19 +115,22 @@ actions.deleteLayout = (layout, plugin = ``) => {
 }
 
 /**
- * Create a layout.
+ * Create a layout. Generally layouts are created automatically by placing a
+ * React component in the `src/layouts/` directory. This action should be used
+ * if loading layouts from an NPM package or from a non-standard location.
  * @param {Object} layout a layout object
  * @param {string} layout.component The absolute path to the component for this layout
  * @example
  * createLayout({
- *   component: path.resolve(`./src/templates/myNewLayout.js`)
+ *   component: path.resolve(`./src/templates/myNewLayout.js`),
+ *   id: 'custom-id', // If no id is provided, the filename will be used as id.
  *   context: {
  *     title: `My New Layout`
  *   }
  * })
  */
 actions.createLayout = (layout, plugin = ``, traceId) => {
-  layout.id = path.parse(layout.component).name
+  layout.id = layout.id || path.parse(layout.component).name
   layout.componentWrapperPath = joinPath(
     store.getState().program.directory,
     `.cache`,
@@ -149,7 +155,7 @@ actions.createLayout = (layout, plugin = ``, traceId) => {
     )
     console.log(chalk.bold.red(result.error))
     console.log(layout)
-    return
+    return null
   }
 
   return {
@@ -163,13 +169,15 @@ actions.createLayout = (layout, plugin = ``, traceId) => {
 /**
  * Delete a node
  * @param {string} nodeId a node id
+ * @param {object} node the node object
  * @example
- * deleteNode(node.id)
+ * deleteNode(node.id, node)
  */
-actions.deleteNode = (nodeId, plugin = ``) => {
+actions.deleteNode = (nodeId, node, plugin = ``) => {
   return {
     type: `DELETE_NODE`,
     plugin,
+    node,
     payload: nodeId,
   }
 }
@@ -190,7 +198,7 @@ actions.deleteNodes = (nodes, plugin = ``) => {
 
 const typeOwners = {}
 /**
- * Create a new node
+ * Create a new node.
  * @param {Object} node a node object
  * @param {string} node.id The node's ID. Must be globally unique.
  * @param {string} node.parent The ID of the parent's node. If the node is
@@ -204,38 +212,45 @@ const typeOwners = {}
  * @param {Object} node.internal node fields that aren't generally
  * interesting to consumers of node data but are very useful for plugin writers
  * and Gatsby core.
- * @param {string} node.internal.mediaType Either an official media type (we use
- * mime-db as our source (https://www.npmjs.com/package/mime-db) or a made-up
- * one if your data doesn't fit in any existing bucket. Transformer plugins
- * frequently use node media types for deciding if they should transform a
- * node into a new one. E.g. markdown transformers look for media types of
- * text/x-markdown.
+ * @param {string} node.internal.mediaType An optional field to indicate to
+ * transformer plugins that your node has raw content they can transform.
+ * Use either an official media type (we use mime-db as our source
+ * (https://www.npmjs.com/package/mime-db) or a made-up one if your data
+ * doesn't fit in any existing bucket. Transformer plugins use node media types
+ * for deciding if they should transform a node into a new one. E.g.
+ * markdown transformers look for media types of
+ * `text/markdown`.
  * @param {string} node.internal.type An arbitrary globally unique type
  * choosen by the plugin creating the node. Should be descriptive of the
  * node as the type is used in forming GraphQL types so users will query
  * for nodes based on the type choosen here. Nodes of a given type can
  * only be created by one plugin.
- * @param {string} node.internal.content raw content of the node. Can be
- * excluded if it'd be memory intensive to load in which case you must
- * define a `loadNodeContent` function for this node.
+ * @param {string} node.internal.content An optional field. The raw content
+ * of the node. Can be excluded if it'd require a lot of memory to load in
+ * which case you must define a `loadNodeContent` function for this node.
  * @param {string} node.internal.contentDigest the digest for the content
  * of this node. Helps Gatsby avoid doing extra work on data that hasn't
  * changed.
  * @example
  * createNode({
  *   // Data for the node.
- *   ...fieldData,
+ *   field1: `a string`,
+ *   field2: 10,
+ *   field3: true,
+ *   ...arbitraryOtherData,
+ *
+ *   // Required fields.
  *   id: `a-node-id`,
- *   parent: `the-id-of-the-parent-node`,
+ *   parent: `the-id-of-the-parent-node`, // or null if it's a source node without a parent
  *   children: [],
  *   internal: {
- *     mediaType: `text/x-markdown`,
  *     type: `CoolServiceMarkdownField`,
- *     content: JSON.stringify(fieldData),
  *     contentDigest: crypto
  *       .createHash(`md5`)
  *       .update(JSON.stringify(fieldData))
  *       .digest(`hex`),
+ *     mediaType: `text/markdown`, // optional
+ *     content: JSON.stringify(fieldData), // optional
  *   }
  * })
  */
@@ -387,6 +402,8 @@ actions.touchNode = (nodeId, plugin = ``) => {
  * directly. So to extend another node, use this.
  * @param {Object} $0
  * @param {Object} $0.node the target node object
+ * @param {string} $0.fieldName [deprecated] the name for the field
+ * @param {string} $0.fieldValue [deprecated] the value for the field
  * @param {string} $0.name the name for the field
  * @param {string} $0.value the value for the field
  * @example
@@ -592,6 +609,35 @@ actions.setPluginStatus = (status, plugin) => {
     type: `SET_PLUGIN_STATUS`,
     plugin,
     payload: status,
+  }
+}
+
+/**
+ * Create a redirect from one page to another.
+ * Redirect data can be used to configure environments like Netlify.
+ *
+ * @param {Object} redirect Redirect data
+ * @param {string} redirect.fromPath Any valid URL. Must start with a forward slash
+ * @param {string} redirect.isPermanent This is a permanent redirect; defaults to temporary
+ * @param {string} redirect.toPath URL of a created page (see `createPage`)
+ * @param {string} redirect.redirectInBrowser Redirects are generally for redirecting legacy URLs to their new configuration. If you can't update your UI for some reason, set `redirectInBrowser` to true and Gatsby will handle redirecting in the client as well.
+ * @example
+ * createRedirect({ fromPath: '/old-url', toPath: '/new-url', isPermanent: true })
+ */
+actions.createRedirect = ({
+  fromPath,
+  isPermanent = false,
+  toPath,
+  redirectInBrowser = false,
+}) => {
+  return {
+    type: `CREATE_REDIRECT`,
+    payload: {
+      fromPath,
+      isPermanent,
+      toPath,
+      redirectInBrowser,
+    },
   }
 }
 

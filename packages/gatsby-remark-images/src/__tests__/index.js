@@ -1,9 +1,10 @@
 jest.mock(`gatsby-plugin-sharp`, () => {
   return {
-    responsiveSizes({ file, args }) {
+    sizes({ file, args }) {
       return Promise.resolve({
         aspectRatio: 0.75,
-        originalImage: file.absolutePath,
+        presentationWidth: 300,
+        originalImg: file.absolutePath,
         src: file.absolutePath,
         srcSet: `${file.absolutePath}, ${file.absolutePath}`,
         sizes: `(max-width: ${args.maxWidth}px) 100vw, ${args.maxWidth}px`,
@@ -80,7 +81,7 @@ Look ma, no images
 test(`it leaves non-relative images alone`, async () => {
   const imagePath = `https://google.com/images/an-image.jpeg`
   const content = `
-![asdf](${imagePath}) 
+![asdf](${imagePath})
   `.trim()
 
   const result = await plugin(createPluginOptions(content, imagePath))

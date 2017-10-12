@@ -1,11 +1,13 @@
 /* @flow */
 const Promise = require(`bluebird`)
+
 const glob = require(`glob`)
 const _ = require(`lodash`)
 const slash = require(`slash`)
 const fs = require(`fs-extra`)
 const md5File = require(`md5-file/promise`)
 const crypto = require(`crypto`)
+const del = require(`del`)
 
 const apiRunnerNode = require(`../utils/api-runner-node`)
 const testRequireError = require(`../utils/test-require-error`)
@@ -13,7 +15,12 @@ const { graphql } = require(`graphql`)
 const { store, emitter } = require(`../redux`)
 const loadPlugins = require(`./load-plugins`)
 const { initCache } = require(`../utils/cache`)
-const report = require(`../reporter`)
+const report = require(`gatsby-cli/lib/reporter`)
+
+// Show stack trace on unhandled promises.
+process.on(`unhandledRejection`, (reason, p) => {
+  report.panic(reason)
+})
 
 const {
   extractQueries,
@@ -22,6 +29,9 @@ const {
   runQueries,
 } = require(`../internal-plugins/query-runner/page-query-runner`)
 const { writePages } = require(`../internal-plugins/query-runner/pages-writer`)
+const {
+  writeRedirects,
+} = require(`../internal-plugins/query-runner/redirects-writer`)
 
 // Override console.log to add the source file + line number.
 // Useful for debugging if you lose a console.log somewhere.
@@ -30,17 +40,32 @@ const { writePages } = require(`../internal-plugins/query-runner/pages-writer`)
 
 const preferDefault = m => (m && m.default) || m
 
-module.exports = async (program: any) => {
-  // Fix program directory path for windows env
-  program.directory = slash(program.directory)
+type BootstrapArgs = {
+  directory: string,
+  prefixPaths?: boolean,
+}
+
+module.exports = async (args: BootstrapArgs) => {
+  const program = {
+    ...args,
+    // Fix program directory path for windows env.
+    directory: slash(args.directory),
+  }
 
   store.dispatch({
     type: `SET_PROGRAM`,
     payload: program,
   })
 
+  // Delete html files from the public directory as we don't want deleted
+  // pages from previous builds to stick around.
+  let activity = report.activityTimer(`delete html files from previous builds`)
+  activity.start()
+  await del([`public/*.html`, `public/**/*.html`])
+  activity.end()
+
   // Try opening the site's gatsby-config.js file.
-  let activity = report.activityTimer(`open and validate gatsby-config.js`)
+  activity = report.activityTimer(`open and validate gatsby-config.js`)
   activity.start()
   let config
   try {
@@ -139,6 +164,11 @@ module.exports = async (program: any) => {
     })
     await fs.ensureDirSync(`${program.directory}/.cache/json`)
     await fs.ensureDirSync(`${program.directory}/.cache/layouts`)
+
+    // Ensure .cache/fragments exists and is empty. We want fragments to be
+    // added on every run in response to data as fragments can only be added if
+    // the data used to create the schema they're dependent on is available.
+    await fs.emptyDir(`${program.directory}/.cache/fragments`)
   } catch (err) {
     report.panic(`Unable to copy site files to .cache`, err)
   }
@@ -218,6 +248,15 @@ module.exports = async (program: any) => {
   fs.writeFileSync(`${siteDir}/api-runner-ssr.js`, sSRAPIRunner, `utf-8`)
 
   activity.end()
+  /**
+   * Start the main bootstrap processes.
+   */
+
+  // onPreBootstrap
+  activity = report.activityTimer(`onPreBootstrap`)
+  activity.start()
+  await apiRunnerNode(`onPreBootstrap`)
+  activity.end()
 
   // Source nodes
   activity = report.activityTimer(`source and transform nodes`)
@@ -281,11 +320,22 @@ module.exports = async (program: any) => {
     waitForCascadingActions: true,
   })
   activity.end()
+
+  activity = report.activityTimer(`onPreExtractQueries`)
+  activity.start()
+  await apiRunnerNode(`onPreExtractQueries`)
+  activity.end()
+
   // Extract queries
   activity = report.activityTimer(`extract queries from components`)
   activity.start()
   await extractQueries()
   activity.end()
+
+  // Start the createPages hot reloader.
+  if (process.env.NODE_ENV !== `production`) {
+    require(`./page-hot-reloader`)(graphqlRunner)
+  }
 
   // Run queries
   activity = report.activityTimer(`run graphql queries`)
@@ -297,6 +347,12 @@ module.exports = async (program: any) => {
   activity = report.activityTimer(`write out page data`)
   activity.start()
   await writePages()
+  activity.end()
+
+  // Write out redirects.
+  activity = report.activityTimer(`write out redirect data`)
+  activity.start()
+  await writeRedirects()
   activity.end()
 
   // Update Schema for SitePage.
@@ -316,6 +372,12 @@ module.exports = async (program: any) => {
   }, 100)
 
   if (store.getState().jobs.active.length === 0) {
+    // onPostBootstrap
+    activity = report.activityTimer(`onPostBootstrap`)
+    activity.start()
+    await apiRunnerNode(`onPostBootstrap`)
+    activity.end()
+
     report.log(``)
     report.info(`bootstrap finished - ${process.uptime()} s`)
     report.log(``)

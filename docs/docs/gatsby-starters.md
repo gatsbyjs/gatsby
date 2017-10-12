@@ -9,7 +9,7 @@ creating a certain type of site.
 When creating a new site, you can optionally specify a starter to
 base your new site on e.g.
 
-`gatsby new [SITE_DIRECTORY] [URL_OF_STARTER]`
+`gatsby new [SITE_DIRECTORY] [URL_OF_STARTER_GITHUB_REPO]`
 
 For example, to quickly create a blog using Gatsby, you could install
 the Gatsby Starter Blog by running:
@@ -32,6 +32,11 @@ Official:
 * [gatsby-starter-hello-world](https://github.com/gatsbyjs/gatsby-starter-hello-world) [(demo)](https://aberrant-fifth.surge.sh/)
 
 Community:
+
+* [gatsby-starter-blog-no-styles](https://github.com/noahg/gatsby-starter-blog-no-styles) [(demo)](http://capricious-spring.surge.sh/)
+
+  Features:
+  * Same as official gatsby-starter-blog but with all styling removed
 
 * [gatsby-material-starter](https://github.com/Vagr9K/gatsby-material-starter) [(demo)](https://vagr9k.github.io/gatsby-material-starter/)
 

@@ -1,9 +1,9 @@
 {
-  "lerna": "2.0.0",
-  "npmClient": "npm",
+  "lerna": "2.4.0",
+  "npmClient": "yarn",
   "packages": [
     "packages/*"
   ],
-  "hoist": true,
-  "version": "independent"
+  "version": "independent",
+  "hoist": true
 }

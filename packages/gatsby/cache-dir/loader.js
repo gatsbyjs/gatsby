@@ -67,7 +67,7 @@ const fetchResource = (resourceName, cb = () => {}) => {
   } else {
     // Find resource
     const resourceFunction =
-      resourceName.slice(0, 9) === `component`
+      resourceName.slice(0, 12) === `component---`
         ? asyncRequires.components[resourceName] ||
           asyncRequires.layouts[resourceName]
         : asyncRequires.json[resourceName]
@@ -234,7 +234,7 @@ const queue = {
     // so we just return with it immediately.
     if (process.env.NODE_ENV !== `production`) {
       const page = findPage(path)
-      if (!page) return
+      if (!page) return cb()
       const pageResources = {
         component: syncRequires.components[page.componentChunkName],
         json: syncRequires.json[page.jsonName],

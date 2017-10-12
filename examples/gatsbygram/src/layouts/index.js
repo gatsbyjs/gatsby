@@ -163,10 +163,11 @@ class DefaultLayout extends React.Component {
           </div>
 
           <div>
-            {isModal &&
+            {isModal && (
               <Modal isOpen={true} posts={this.posts} location={location}>
                 {this.props.children}
-              </Modal>}
+              </Modal>
+            )}
           </div>
         </div>
       </div>

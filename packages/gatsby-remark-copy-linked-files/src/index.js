@@ -13,6 +13,8 @@ module.exports = ({ files, markdownNode, markdownAST, getNode }, pluginOptions) 
 
   const options = _.defaults(pluginOptions, defaults)
 
+module.exports = ({ files, markdownNode, markdownAST, getNode }) => {
+  const filesToCopy = new Map()
   // Copy linked files to the public directory and modify the AST to point to
   // new location of the files.
   const visitor = link => {
@@ -43,16 +45,8 @@ module.exports = ({ files, markdownNode, markdownAST, getNode }, pluginOptions) 
           `/${linkNode.internal.contentDigest}.${linkNode.extension}`
         )
         link.url = `${relativePath}`
-        
-        if (!fsExtra.existsSync(newPath)) {
-          try{ 
-            // Using copy sync to prevent race conditions that were caused by using
-            // async copy
-            fsExtra.copySync(linkPath, newPath);
-          } catch(err) {
-            console.error('\nerror copying: ' + linkPath + ' to ' + newPath);
-          }
-        }
+
+        filesToCopy.set(linkPath, newPath)
       }
     }
   }
@@ -215,4 +209,16 @@ module.exports = ({ files, markdownNode, markdownAST, getNode }, pluginOptions) 
     node.value = $.html();
     return;
   })
+
+  return Promise.all(
+    Array.from(filesToCopy, async ([linkPath, newPath]) => {
+      if (!fsExtra.existsSync(newPath)) {
+        try {
+          await fsExtra.copy(linkPath, newPath)
+        } catch (err) {
+          console.error(`error copying file`, err)
+        }
+      }
+    })
+  )
 }

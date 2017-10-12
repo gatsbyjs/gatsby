@@ -5,12 +5,14 @@ exports[`config reducer Validates configs with unsupported options 1`] = `"The s
 exports[`config reducer handles empty configs 1`] = `
 Object {
   "pathPrefix": "",
+  "polyfill": true,
 }
 `;
 
 exports[`config reducer let's you add a config 1`] = `
 Object {
   "pathPrefix": "",
+  "polyfill": true,
   "siteMetadata": Object {
     "hi": true,
   },
