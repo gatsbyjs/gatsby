@@ -35,22 +35,28 @@ function makeNullable(type: GraphQLInputType): GraphQLNullableInputType<any> {
   return type
 }
 
-function convertToInputType(type: GraphQLType): ?GraphQLInputType {
+function convertToInputType(type: GraphQLType, typeMap: any): ?GraphQLInputType {
+  // track types already processed in current tree, to avoid infinite recursion
+  if (typeMap[type.name]) {
+    return null
+  }
+  const nextTypeMap = { ...typeMap, [type.name]: true }
+
   if (type instanceof GraphQLScalarType || type instanceof GraphQLEnumType) {
     return type
   } else if (type instanceof GraphQLObjectType) {
     return new GraphQLInputObjectType({
       name: createTypeName(`${type.name}InputObject`),
       fields: _.transform(type.getFields(), (out, fieldConfig, key) => {
-        const type = convertToInputType(fieldConfig.type)
+        const type = convertToInputType(fieldConfig.type, nextTypeMap)
         if (type) out[key] = { type }
       }),
     })
   } else if (type instanceof GraphQLList) {
-    let innerType = convertToInputType(type.ofType)
+    let innerType = convertToInputType(type.ofType, nextTypeMap)
     return innerType ? new GraphQLList(makeNullable(innerType)) : null
   } else if (type instanceof GraphQLNonNull) {
-    let innerType = convertToInputType(type.ofType)
+    let innerType = convertToInputType(type.ofType, nextTypeMap)
     return innerType ? new GraphQLNonNull(makeNullable(innerType)) : null
   } else {
     let message = type ? `for type: ${type.name}` : ``
@@ -160,7 +166,7 @@ export function inferInputObjectStructureFromFields({
   const sort = []
 
   _.each(fields, (fieldConfig, key) => {
-    const inputType = convertToInputType(fieldConfig.type)
+    const inputType = convertToInputType(fieldConfig.type, {})
     const inputFilter =
       inputType && convertToInputFilter(_.upperFirst(key), inputType)
 
