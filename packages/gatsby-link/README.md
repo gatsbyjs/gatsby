@@ -13,7 +13,7 @@ This is bad. Any unnecessary latency should be avoided. So to avoid
 that, by default, Gatsby utilizes a Service Worker that precaches code
 chunks so navigating to new pages is quick. But as there are several
 popular browsers that don't yet support Service Workers (Safari, IE,
-Edge), this component will also preload code chunks on these browsers.
+Edge), this component will also preload code chunks on these browsers. In addition, `<Link>` reacts to it's position in the viewport to only prefetch code chunks for pages the user is likely to navigate to.
 
 ## Install
 
