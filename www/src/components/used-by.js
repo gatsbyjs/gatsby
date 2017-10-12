@@ -47,6 +47,7 @@ const UsedBy = () => (
         .animation.curveDefault}`,
       order: `3`,
       flexGrow: `1`,
+      transform: `translateZ(0)`,
       [presets.Phablet]: {
         paddingTop: rhythm(4),
         marginBottom: 0,
@@ -77,6 +78,7 @@ const UsedBy = () => (
         flexGrow: `1`,
         flexShrink: `1`,
         alignSelf: `flex-end`,
+        transform: `translateZ(0)`,
         [presets.Phablet]: {
           flexGrow: `0`,
         },

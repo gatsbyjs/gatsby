@@ -416,10 +416,14 @@ async function responsiveSizes({ file, args = {} }) {
     })
   })
 
+  const base64Width = 20
+  const base64Height = Math.max(1, Math.round(base64Width * height / width))
   const base64Args = {
     duotone: options.duotone,
     grayscale: options.grayscale,
     rotate: options.rotate,
+    width: base64Width,
+    height: base64Height,
   }
 
   // Get base64 version
@@ -449,7 +453,7 @@ async function responsiveSizes({ file, args = {} }) {
   }
 }
 
-async function responsiveResolution({ file, args = {} }) {
+async function resolutions({ file, args = {} }) {
   const defaultArgs = {
     width: 400,
     quality: 50,
@@ -479,7 +483,7 @@ async function responsiveResolution({ file, args = {} }) {
     filteredSizes.push(dimensions.width)
     console.warn(
       `
-                 The requested width "${options.width}px" for a responsiveResolution field for
+                 The requested width "${options.width}px" for a resolutions field for
                  the file ${file.absolutePath}
                  was wider than the actual image width of ${dimensions.width}px!
                  If possible, replace the current image with a larger one.
@@ -554,4 +558,6 @@ async function responsiveResolution({ file, args = {} }) {
 exports.queueImageResizing = queueImageResizing
 exports.base64 = base64
 exports.responsiveSizes = responsiveSizes
-exports.responsiveResolution = responsiveResolution
+exports.responsiveResolution = resolutions
+exports.sizes = responsiveSizes
+exports.resolutions = resolutions

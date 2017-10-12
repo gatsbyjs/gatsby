@@ -29,19 +29,19 @@ export default class HTML extends React.Component {
             rel="preload"
             href="/static/ftn45-webfont.c2439033.woff2"
             as="font"
-            crossOrigin
+            crossOrigin="anonymous"
           />
           <link
             rel="preload"
             href="/static/spectral-latin-400.bc2de9de.woff2"
             as="font"
-            crossOrigin
+            crossOrigin="anonymous"
           />
           <link
             rel="preload"
             href="/static/ftn65-webfont.0ddc10d2.woff2"
             as="font"
-            crossOrigin
+            crossOrigin="anonymous"
           />
           {this.props.headComponents}
           <meta charSet="utf-8" />

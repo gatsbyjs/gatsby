@@ -169,7 +169,7 @@ const slash = require(`slash`)
 
 // Implement the Gatsby API “createPages”. This is
 // called after the Gatsby bootstrap is finished so you have
-// access to any information necessary to programatically
+// access to any information necessary to programmatically
 // create pages.
 exports.createPages = ({ graphql, boundActionCreators }) => {
   const { createPage } = boundActionCreators
@@ -294,7 +294,7 @@ export const pageQuery = `
             # thumbnails are created. This makes iterating on
             # designs effortless as we simply change the args
             # for the query and we get new thumbnails.
-            big: responsiveSizes(maxWidth: 640) {
+            big: sizes(maxWidth: 640) {
               src
               srcSet
             }

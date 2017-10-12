@@ -31,7 +31,7 @@ You aren't just limited to markdown image tags either. You can either use markdo
 Or HTML image tags:
 
 ```
-&lt;img src="image.png"&gt;
+&lt;img src="image.png" alt=""&gt;
 ```
 
 Let's see some more photos by [Max Boettinger](https://unsplash.com/@maxboettinger) ([I](https://unsplash.com/photos/T7Lnl3PFISM), [II](https://unsplash.com/@maxboettinger?photo=SUFS6CPjB5Q)):

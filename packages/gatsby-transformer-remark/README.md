@@ -19,7 +19,7 @@ A full explanation of how to use markdown in Gatsby can be found here: [Creating
 
 ## Parsing algorithm
 
-It recongnizes files with the following extensions as Markdown.
+It recognizes files with the following extensions as Markdown:
 
 * md
 * rmd
