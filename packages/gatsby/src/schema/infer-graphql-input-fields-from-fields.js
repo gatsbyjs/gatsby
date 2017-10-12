@@ -18,7 +18,7 @@ const {
 import type { GraphQLInputType, GraphQLType } from "graphql"
 
 const _ = require(`lodash`)
-const report = require(`../reporter`)
+const report = require(`gatsby-cli/lib/reporter`)
 const createTypeName = require(`./create-type-name`)
 const createKey = require(`./create-key`)
 

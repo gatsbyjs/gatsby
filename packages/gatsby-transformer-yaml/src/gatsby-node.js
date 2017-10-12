@@ -5,23 +5,23 @@ const path = require(`path`)
 
 async function onCreateNode({ node, boundActionCreators, loadNodeContent }) {
   function transformObject(obj, id, type) {
-      const objStr = JSON.stringify(obj)
-      const contentDigest = crypto
-        .createHash(`md5`)
-        .update(objStr)
-        .digest(`hex`)
-      const yamlNode = {
-        ...obj,
-        id,
-        children: [],
-        parent: node.id,
-        internal: {
-          contentDigest,
-          type,
-        },
-      }
-      createNode(yamlNode)
-      createParentChildLink({ parent: node, child: yamlNode })
+    const objStr = JSON.stringify(obj)
+    const contentDigest = crypto
+      .createHash(`md5`)
+      .update(objStr)
+      .digest(`hex`)
+    const yamlNode = {
+      ...obj,
+      id,
+      children: [],
+      parent: node.id,
+      internal: {
+        contentDigest,
+        type,
+      },
+    }
+    createNode(yamlNode)
+    createParentChildLink({ parent: node, child: yamlNode })
   }
 
   const { createNode, createParentChildLink } = boundActionCreators
@@ -38,15 +38,14 @@ async function onCreateNode({ node, boundActionCreators, loadNodeContent }) {
       transformObject(
         obj,
         obj.id ? obj.id : `${node.id} [${i}] >>> YAML`,
-        _.upperFirst(_.camelCase(`${node.name} Yaml`)),
+        _.upperFirst(_.camelCase(`${node.name} Yaml`))
       )
     })
-  }
-  else if (_.isPlainObject(parsedContent)) {
+  } else if (_.isPlainObject(parsedContent)) {
     transformObject(
       parsedContent,
       parsedContent.id ? parsedContent.id : `${node.id} >>> YAML`,
-      _.upperFirst(_.camelCase(`${path.basename(node.dir)} Yaml`)),
+      _.upperFirst(_.camelCase(`${path.basename(node.dir)} Yaml`))
     )
   }
 }
