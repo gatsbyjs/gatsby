@@ -38,7 +38,7 @@ module.exports = async (
   pages = []
 ) => {
   const babelStage = suppliedStage
-  const directoryPath = withBasePath(directory)
+  const directoryPath = withBasePath(process.cwd())
 
   // We combine develop & develop-html stages for purposes of generating the
   // webpack config.

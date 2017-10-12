@@ -7,7 +7,6 @@ const packageJson = require(`../../package.json`)
 const path = require(`path`)
 const _ = require(`lodash`)
 const Promise = require(`bluebird`)
-const resolveCwd = require(`resolve-cwd`)
 
 const report = require(`../reporter`)
 
@@ -70,10 +69,19 @@ if (inGatsbySite) {
       `Set host. Defaults to ${defaultHost}`,
       defaultHost
     )
+    .option(
+      `-r, --rootDir <rootDir>`,
+      `Specify where your project root node_modules are.`,
+      `./`
+    )
     .option(`-p, --port <port>`, `Set port. Defaults to 8000`, `8000`)
     .option(`-o, --open`, `Open the site in your browser for you.`)
     .action(command => {
-      const developPath = resolveCwd(`gatsby/dist/utils/develop`)
+      command.rootDir = path.resolve(command.rootDir)
+      const developPath = path.resolve(
+        command.rootDir,
+        `gatsby/dist/utils/develop`
+      )
       const develop = require(developPath)
       // console.timeEnd(`time to load develop`)
       const { sitePackageJson, browserslist } = getSiteInfo()
@@ -93,11 +101,16 @@ if (inGatsbySite) {
       `--prefix-paths`,
       `Build site with link paths prefixed (set prefix in your config).`
     )
+    .option(
+      `-r, --rootDir <rootDir>`,
+      `Specify where your project root node_modules are.`,
+      `./`
+    )
     .action(command => {
       // Set NODE_ENV to 'production'
       process.env.NODE_ENV = `production`
-
-      const buildPath = resolveCwd(`gatsby/dist/utils/build`)
+      command.rootDir = path.resolve(command.rootDir)
+      const buildPath = path.resolve(command.rootDir, `gatsby/dist/utils/build`)
       const build = require(buildPath)
       const { sitePackageJson, browserslist } = getSiteInfo()
       const p = {
@@ -120,10 +133,16 @@ if (inGatsbySite) {
       `Set host. Defaults to ${defaultHost}`,
       defaultHost
     )
+    .option(
+      `-r, --rootDir <rootDir>`,
+      `Specify where your project root node_modules are.`,
+      `./`
+    )
     .option(`-p, --port <port>`, `Set port. Defaults to 9000`, `9000`)
     .option(`-o, --open`, `Open the site in your browser for you.`)
     .action(command => {
-      const servePath = resolveCwd(`gatsby/dist/utils/serve`)
+      const servePath = path.resolve(command.rootDir, `gatsby/dist/utils/serve`)
+      command.rootDir = path.resolve(command.rootDir)
       const serve = require(servePath)
       const { sitePackageJson, browserslist } = getSiteInfo()
       const p = {

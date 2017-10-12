@@ -26,7 +26,7 @@ const useGlobalGatsby = function() {
   // Never use global install *except* for new and help commands
   if (!_.includes([`new`, `--help`], process.argv[2])) {
     report.panic(
-      `A local install of Gatsby was not found. \n` +
+      `A local install of Gatsby was not found in the current working directory nor in its parent directory. \n` +
         `You should save Gatsby as a site dependency e.g. npm install --save gatsby`
     )
   }

@@ -7,14 +7,14 @@ const { createErrorFromString } = require(`../reporter/errors`)
 const debug = require(`debug`)(`gatsby:html`)
 
 module.exports = async (program: any) => {
-  const { directory } = program
+  const { rootDir } = program
 
   debug(`generating static HTML`)
 
   // Static site generation.
   const compilerConfig = await webpackConfig(
     program,
-    directory,
+    rootDir,
     `develop-html`,
     null,
     [`/`]
@@ -25,7 +25,7 @@ module.exports = async (program: any) => {
       if (e) {
         return reject(e)
       }
-      const outputFile = `${directory}/public/render-page.js`
+      const outputFile = `${process.cwd()}/public/render-page.js`
       if (stats.hasErrors()) {
         let webpackErrors = stats.toJson().errors
         return reject(

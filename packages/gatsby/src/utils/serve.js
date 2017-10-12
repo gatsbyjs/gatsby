@@ -12,7 +12,6 @@ const rlInterface = rl.createInterface({
 const debug = require(`debug`)(`gatsby:application`)
 
 function startServer(program, launchPort) {
-  const directory = program.directory
   const serverPort = launchPort || program.port
 
   debug(`Serving /public`)
@@ -28,7 +27,7 @@ function startServer(program, launchPort) {
     path: `/{path*}`,
     handler: {
       directory: {
-        path: `${directory}/public`,
+        path: `${process.cwd()}/public`,
         listing: false,
         index: true,
       },
