@@ -5,6 +5,7 @@ const mime = require(`mime`)
 const prettyBytes = require(`pretty-bytes`)
 
 const md5File = require(`bluebird`).promisify(require(`md5-file`))
+const crypto = require(`crypto`)
 
 const createId = path => {
   const slashed = slash(path)
@@ -15,13 +16,38 @@ exports.createId = createId
 
 exports.createFileNode = async (pathToFile, pluginOptions = {}) => {
   const slashed = slash(pathToFile)
+  const parsedSlashed = path.parse(slashed)
   const slashedFile = {
-    ...path.parse(slashed),
+    ...parsedSlashed,
     absolutePath: slashed,
+    // Useful for limiting graphql query with certain parent directory
+    relativeDirectory: path.relative(
+      pluginOptions.path || process.cwd(),
+      parsedSlashed.dir
+    ),
   }
-  // console.log('createFileNode', slashedFile.absolutePath)
-  const contentDigest = await md5File(slashedFile.absolutePath)
+
   const stats = await fs.stat(slashedFile.absolutePath)
+  let internal
+  if (stats.isDirectory()) {
+    const contentDigest = crypto
+      .createHash(`md5`)
+      .update(
+        JSON.stringify({ stats: stats, absolutePath: slashedFile.absolutePath })
+      )
+      .digest(`hex`)
+    internal = {
+      contentDigest,
+      type: `Directory`,
+    }
+  } else {
+    const contentDigest = await md5File(slashedFile.absolutePath)
+    internal = {
+      contentDigest,
+      mediaType: mime.lookup(slashedFile.ext),
+      type: `File`,
+    }
+  }
 
   // console.log('createFileNode:stat', slashedFile.absolutePath)
   // Stringify date objects.
@@ -33,11 +59,7 @@ exports.createFileNode = async (pathToFile, pluginOptions = {}) => {
       id: createId(pathToFile),
       children: [],
       parent: `___SOURCE___`,
-      internal: {
-        contentDigest: contentDigest,
-        mediaType: mime.lookup(slashedFile.ext),
-        type: `File`,
-      },
+      internal,
       sourceInstanceName: pluginOptions.name || `__PROGRAMATTIC__`,
       absolutePath: slashedFile.absolutePath,
       relativePath: slash(
