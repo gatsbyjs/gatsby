@@ -61,7 +61,6 @@ module.exports = (
       args: options,
     })
 
-    // console.log("responsiveSizesResult", responsiveSizesResult)
     // Calculate the paddingBottom %
     const ratio = `${1 / responsiveSizesResult.aspectRatio * 100}%`
 
@@ -174,6 +173,10 @@ module.exports = (
               formattedImgTag.url = thisImg.attr(`src`)
               formattedImgTag.title = thisImg.attr(`title`)
               formattedImgTag.alt = thisImg.attr(`alt`)
+
+              if (!formattedImgTag.url) {
+                return resolve()
+              }
 
               const fileType = formattedImgTag.url.slice(-3)
 
