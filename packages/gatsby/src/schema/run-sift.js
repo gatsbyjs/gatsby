@@ -10,7 +10,7 @@ function awaitSiftField(fields, node, k) {
   const field = fields[k]
   if (field.resolve) {
     return field.resolve(node)
-  } else if (node[k]) {
+  } else if (node[k] !== undefined) {
     return node[k]
   }
 
