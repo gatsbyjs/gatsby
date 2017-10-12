@@ -6,7 +6,7 @@ const buildHTML = require(`./build-html`)
 const buildProductionBundle = require(`./build-javascript`)
 const bootstrap = require(`../bootstrap`)
 const apiRunnerNode = require(`../utils/api-runner-node`)
-const copyStaticDirectory = require(`./copy-static-directory`)
+const copyStaticDirectory = require(`../utils/copy-static-directory`)
 
 function reportFailure(msg, err: Error) {
   report.log(``)
