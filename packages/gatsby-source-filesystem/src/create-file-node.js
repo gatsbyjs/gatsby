@@ -59,7 +59,7 @@ exports.createFileNode = async (pathToFile, pluginOptions = {}) => {
       id: createId(pathToFile),
       children: [],
       parent: `___SOURCE___`,
-      internal: internal,
+      internal,
       sourceInstanceName: pluginOptions.name || `__PROGRAMATTIC__`,
       absolutePath: slashedFile.absolutePath,
       relativePath: slash(
