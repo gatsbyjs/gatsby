@@ -21,34 +21,31 @@ exports.createFileNode = async (pathToFile, pluginOptions = {}) => {
     ...parsedSlashed,
     absolutePath: slashed,
     // Useful for limiting graphql query with certain parent directory
-    dirRelative: path.relative(
-                  pluginOptions.path || process.cwd(),
-                  parsedSlashed.dir
-                )
+    relativeDirectory: path.relative(
+      pluginOptions.path || process.cwd(),
+      parsedSlashed.dir
+    ),
   }
-  // console.log('createFileNode', slashedFile.absolutePath)
+
   const stats = await fs.stat(slashedFile.absolutePath)
-  const isDirectory = stats.isDirectory()
-  var internal;
-  if(isDirectory) {
+  let internal
+  if (stats.isDirectory) {
     const contentDigest = crypto
-          .createHash(`md5`)
-          .update(
-              JSON.stringify(
-                {stats: stats, absolutePath: slashedFile.absolutePath}
-          ))
-          .digest(`hex`);
+      .createHash(`md5`)
+      .update(
+        JSON.stringify({ stats: stats, absolutePath: slashedFile.absolutePath })
+      )
+      .digest(`hex`)
     internal = {
-        contentDigest: contentDigest,
-        mediaType: `Directory`,
-        type: `Directory`,
+      contentDigest,
+      type: `Directory`,
     }
   } else {
     const contentDigest = await md5File(slashedFile.absolutePath)
     internal = {
-        contentDigest: contentDigest,
-        mediaType: mime.lookup(slashedFile.ext),
-        type: `File`,
+      contentDigest,
+      mediaType: mime.lookup(slashedFile.ext),
+      type: `File`,
     }
   }
 

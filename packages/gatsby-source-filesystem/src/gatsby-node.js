@@ -71,9 +71,6 @@ exports.sourceNodes = (
     reporter.info(`directory deleted at ${path}`)
     const node = getNode(createId(path))
     deleteNode(node.id, node)
-
-    // Also delete nodes for the file's transformed children nodes.
-    node.children.forEach(childId => deleteNode(childId, getNode(childId)))
   })
 
   return new Promise((resolve, reject) => {
