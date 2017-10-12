@@ -139,7 +139,9 @@ module.exports = (
         if (isRelativeUrl($(this).attr(`src`))) {
           imageRefs.push($(this))
         }
-      } catch (err) {}
+      } catch (err) {
+        // Ignore
+      }
     })
 
     for (let thisImg of imageRefs) {
@@ -153,7 +155,9 @@ module.exports = (
         }
 
         await generateImagesAndUpdateNode(thisImg)
-      } catch (err) {}
+      } catch (err) {
+        // Ignore
+      }
     }
 
     const videoRefs = []
@@ -163,7 +167,9 @@ module.exports = (
         if (isRelativeUrl($(this).attr(`src`))) {
           videoRefs.push($(this))
         }
-      } catch (err) {}
+      } catch (err) {
+        // Ignore
+      }
     })
 
     for (let thisVideo of videoRefs) {
@@ -181,7 +187,9 @@ module.exports = (
         const link = { url: thisVideo.attr(`src`) }
         await visitor(link)
         thisVideo.attr(`src`, link.url)
-      } catch (err) {}
+      } catch (err) {
+        // Ignore
+      }
     }
 
     // Handle a tags.
@@ -191,7 +199,9 @@ module.exports = (
         if (isRelativeUrl($(this).attr(`href`))) {
           aRefs.push($(this))
         }
-      } catch (err) {}
+      } catch (err) {
+        // Ignore
+      }
     })
 
     for (let thisATag of aRefs) {
@@ -209,7 +219,9 @@ module.exports = (
         const link = { url: thisATag.attr(`href`) }
         await visitor(link)
         thisATag.attr(`href`, link.url)
-      } catch (err) {}
+      } catch (err) {
+        // Ignore
+      }
     }
 
     // Replace the image node with an inline HTML node.
