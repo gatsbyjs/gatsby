@@ -36,7 +36,7 @@ plugins: [
         { 
           resolve: 'gatsby-remark-copy-linked-files',
           options: {
-            // Defaults to [`png`, `jpg`, `jpeg`, `bmp`, `tiff`]
+            // `ignoreFileExtensions` defaults to [`png`, `jpg`, `jpeg`, `bmp`, `tiff`]
             // as we assume you'll use gatsby-remark-images to handle
             // images in markdown as it automatically creates responsive
             // versions of images.
