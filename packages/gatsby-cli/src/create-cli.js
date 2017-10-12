@@ -129,8 +129,8 @@ function buildLocalCommands(cli, isLocalSite) {
         .option(`p`, {
           alias: `port`,
           type: `string`,
-          default: `8000`,
-          describe: `Set port. Defaults to 8000`,
+          default: `9000`,
+          describe: `Set port. Defaults to 9000`,
         })
         .option(`o`, {
           alias: `open`,
