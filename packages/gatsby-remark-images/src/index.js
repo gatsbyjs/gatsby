@@ -168,7 +168,7 @@ module.exports = (
             })
 
             for (let thisImg of imageRefs) {
-              //Get the details we need
+              // Get the details we need.
               let formattedImgTag = {}
               formattedImgTag.url = thisImg.attr(`src`)
               formattedImgTag.title = thisImg.attr(`title`)
