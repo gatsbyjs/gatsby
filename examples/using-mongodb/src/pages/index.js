@@ -11,9 +11,9 @@ class Index extends React.Component {
       <div>
         <h1>Website information stored in MongoDB</h1>
         <ul>
-          {allMongodbCloudDocuments.edges.map(({ node }) =>
+          {allMongodbCloudDocuments.edges.map(({ node }) => (
             <StoryItem item={node} key={node.id} />
-          )}
+          ))}
         </ul>
       </div>
     )

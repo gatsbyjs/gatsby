@@ -5,45 +5,22 @@ import { rhythm, scale } from "../utils/typography"
 import presets from "../utils/presets"
 import Container from "../components/container"
 
-const DocsTemplate = React.createClass({
+class DocsPackagesTemplate extends React.Component {
   render() {
     const packageName = this.props.data.markdownRemark.fields.title
     const page = this.props.data.markdownRemark
     return (
       <Container>
-        <Helmet
-          title={page.fields.title}
-          meta={[
-            {
-              name: `description`,
-              content: page.excerpt,
-            },
-            {
-              name: `og:description`,
-              content: page.excerpt,
-            },
-            {
-              name: `twitter:description`,
-              content: page.excerpt,
-            },
-            {
-              name: `og:title`,
-              content: page.fields.title,
-            },
-            {
-              name: `og:type`,
-              content: `article`,
-            },
-            {
-              name: `twitter:label1`,
-              content: `Reading time`,
-            },
-            {
-              name: `twitter:data1`,
-              content: `${page.timeToRead} min read`,
-            },
-          ]}
-        />
+        <Helmet>
+          <title>{page.fields.title}</title>
+          <meta name="description" content={page.excerpt} />
+          <meta name="og:description" content={page.excerpt} />
+          <meta name="twitter:description" content={page.excerpt} />
+          <meta name="og:title" content={page.fields.title} />
+          <meta name="og:type" content="article" />
+          <meta name="twitter.label1" content="Reading time" />
+          <meta name="twitter:data1" content={`${page.timeToRead} min read`} />
+        </Helmet>
         <strong>
           <a
             href={`https://github.com/gatsbyjs/gatsby/tree/master/packages/${packageName}`}
@@ -64,10 +41,10 @@ const DocsTemplate = React.createClass({
         />
       </Container>
     )
-  },
-})
+  }
+}
 
-export default DocsTemplate
+export default DocsPackagesTemplate
 
 export const pageQuery = graphql`
   query TemplateDocsPackages($slug: String!) {

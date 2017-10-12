@@ -1,4 +1,5 @@
 /gatsby-node.js
+/fragments.js
 /extend-node-type.js
 /normalize.js
 /fetch.js

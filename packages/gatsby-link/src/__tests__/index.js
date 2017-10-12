@@ -1,5 +1,3 @@
-import React from "react"
-
 const getInstance = (props, pathPrefix = ``) => {
   Object.assign(global.window, {
     __PREFIX_PATHS__: pathPrefix ? true : false,

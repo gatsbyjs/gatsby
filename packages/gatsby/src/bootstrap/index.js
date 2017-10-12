@@ -1,5 +1,6 @@
 /* @flow */
 const Promise = require(`bluebird`)
+
 const glob = require(`glob`)
 const _ = require(`lodash`)
 const slash = require(`slash`)
@@ -14,7 +15,12 @@ const { graphql } = require(`graphql`)
 const { store, emitter } = require(`../redux`)
 const loadPlugins = require(`./load-plugins`)
 const { initCache } = require(`../utils/cache`)
-const report = require(`../reporter`)
+const report = require(`gatsby-cli/lib/reporter`)
+
+// Show stack trace on unhandled promises.
+process.on(`unhandledRejection`, (reason, p) => {
+  report.panic(reason)
+})
 
 const {
   extractQueries,
@@ -23,6 +29,9 @@ const {
   runQueries,
 } = require(`../internal-plugins/query-runner/page-query-runner`)
 const { writePages } = require(`../internal-plugins/query-runner/pages-writer`)
+const {
+  writeRedirects,
+} = require(`../internal-plugins/query-runner/redirects-writer`)
 
 // Override console.log to add the source file + line number.
 // Useful for debugging if you lose a console.log somewhere.
@@ -31,9 +40,17 @@ const { writePages } = require(`../internal-plugins/query-runner/pages-writer`)
 
 const preferDefault = m => (m && m.default) || m
 
-module.exports = async (program: any) => {
-  // Fix program directory path for windows env.
-  program.directory = slash(program.directory)
+type BootstrapArgs = {
+  directory: string,
+  prefixPaths?: boolean,
+}
+
+module.exports = async (args: BootstrapArgs) => {
+  const program = {
+    ...args,
+    // Fix program directory path for windows env.
+    directory: slash(args.directory),
+  }
 
   store.dispatch({
     type: `SET_PROGRAM`,
@@ -147,6 +164,11 @@ module.exports = async (program: any) => {
     })
     await fs.ensureDirSync(`${program.directory}/.cache/json`)
     await fs.ensureDirSync(`${program.directory}/.cache/layouts`)
+
+    // Ensure .cache/fragments exists and is empty. We want fragments to be
+    // added on every run in response to data as fragments can only be added if
+    // the data used to create the schema they're dependent on is available.
+    await fs.emptyDir(`${program.directory}/.cache/fragments`)
   } catch (err) {
     report.panic(`Unable to copy site files to .cache`, err)
   }
@@ -226,6 +248,15 @@ module.exports = async (program: any) => {
   fs.writeFileSync(`${siteDir}/api-runner-ssr.js`, sSRAPIRunner, `utf-8`)
 
   activity.end()
+  /**
+   * Start the main bootstrap processes.
+   */
+
+  // onPreBootstrap
+  activity = report.activityTimer(`onPreBootstrap`)
+  activity.start()
+  await apiRunnerNode(`onPreBootstrap`)
+  activity.end()
 
   // Source nodes
   activity = report.activityTimer(`source and transform nodes`)
@@ -289,6 +320,12 @@ module.exports = async (program: any) => {
     waitForCascadingActions: true,
   })
   activity.end()
+
+  activity = report.activityTimer(`onPreExtractQueries`)
+  activity.start()
+  await apiRunnerNode(`onPreExtractQueries`)
+  activity.end()
+
   // Extract queries
   activity = report.activityTimer(`extract queries from components`)
   activity.start()
@@ -312,25 +349,17 @@ module.exports = async (program: any) => {
   await writePages()
   activity.end()
 
+  // Write out redirects.
+  activity = report.activityTimer(`write out redirect data`)
+  activity.start()
+  await writeRedirects()
+  activity.end()
+
   // Update Schema for SitePage.
   activity = report.activityTimer(`update schema`)
   activity.start()
   await require(`../schema`)()
   activity.end()
-
-  // Load the page hot reloader. It listens for node changes
-  // and re-runs `createPages` and removes pages which weren't
-  // recreated.
-  //
-  // Algorithm is make clone of pages, run createPages, remove from
-  // both pages create by plugins only implementing `createPagesStatefully`.
-  // Check for pages not updated (need update timestamp) and remove
-  // those. yeah, just figure out in reducer if the plugin implements
-  // createPagesStatefully and mark the page as stateful to simplify
-  // things.
-  //
-  // TODO fix deleting nodes so we can both add markdown pages
-  // and remove pages as well just by adding/removing markdown files.
 
   const checkJobsDone = _.debounce(resolve => {
     const state = store.getState()
@@ -343,6 +372,12 @@ module.exports = async (program: any) => {
   }, 100)
 
   if (store.getState().jobs.active.length === 0) {
+    // onPostBootstrap
+    activity = report.activityTimer(`onPostBootstrap`)
+    activity.start()
+    await apiRunnerNode(`onPostBootstrap`)
+    activity.end()
+
     report.log(``)
     report.info(`bootstrap finished - ${process.uptime()} s`)
     report.log(``)

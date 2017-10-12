@@ -2,13 +2,14 @@ import React from "react"
 import Link from "gatsby-link"
 import * as PropTypes from "prop-types"
 import { rhythm } from "../utils/typography"
+import Img from "gatsby-image"
 
 const propTypes = {
   data: PropTypes.object.isRequired,
 }
 
-const Product = ({ node }) =>
-  <div key={node.id}>
+const Product = ({ node }) => (
+  <div>
     <Link
       style={{ color: `inherit`, textDecoration: `none` }}
       to={`/products/${node.id}/`}
@@ -23,21 +24,18 @@ const Product = ({ node }) =>
         }}
       >
         <div style={{ marginRight: rhythm(1 / 2) }}>
-          {node.image[0].responsiveResolution.src &&
-            <img
+          {node.image[0].resolutions.src && (
+            <Img
               style={{ margin: 0 }}
-              width={node.image[0].responsiveResolution.width}
-              height={node.image[0].responsiveResolution.height}
-              src={node.image[0].responsiveResolution.src}
-              srcSet={node.image[0].responsiveResolution.srcSet}
-            />}
+              resolutions={node.image[0].resolutions}
+            />
+          )}
         </div>
-        <div style={{ flex: 1 }}>
-          {node.productName.productName}
-        </div>
+        <div style={{ flex: 1 }}>{node.productName.productName}</div>
       </div>
     </Link>
   </div>
+)
 
 class IndexPage extends React.Component {
   render() {
@@ -63,11 +61,15 @@ class IndexPage extends React.Component {
           nodes from a single locale
         </p>
         <h3>en-US</h3>
-        {usProductEdges.map(({ node }, i) => <Product node={node} />)}
+        {usProductEdges.map(({ node }, i) => (
+          <Product node={node} key={node.id} />
+        ))}
         <br />
         <br />
         <h3>de</h3>
-        {deProductEdges.map(({ node }, i) => <Product node={node} />)}
+        {deProductEdges.map(({ node }, i) => (
+          <Product node={node} key={node.id} />
+        ))}
       </div>
     )
   }
@@ -87,11 +89,8 @@ export const pageQuery = graphql`
             productName
           }
           image {
-            responsiveResolution(width: 75) {
-              src
-              srcSet
-              height
-              width
+            resolutions(width: 75) {
+              ...GatsbyContentfulResolutions
             }
           }
         }
@@ -105,11 +104,8 @@ export const pageQuery = graphql`
             productName
           }
           image {
-            responsiveResolution(width: 75) {
-              src
-              srcSet
-              height
-              width
+            resolutions(width: 75) {
+              ...GatsbyContentfulResolutions
             }
           }
         }

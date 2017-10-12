@@ -2,7 +2,7 @@ const select = require(`unist-util-select`)
 const path = require(`path`)
 const isRelativeUrl = require(`is-relative-url`)
 const _ = require(`lodash`)
-const { responsiveSizes } = require(`gatsby-plugin-sharp`)
+const { sizes } = require(`gatsby-plugin-sharp`)
 const Promise = require(`bluebird`)
 const cheerio = require(`cheerio`)
 const slash = require(`slash`)
@@ -56,7 +56,7 @@ module.exports = (
       return resolve()
     }
 
-    let responsiveSizesResult = await responsiveSizes({
+    let responsiveSizesResult = await sizes({
       file: imageNode,
       args: options,
     })
@@ -68,6 +68,7 @@ module.exports = (
     const originalImg = responsiveSizesResult.originalImg
     const fallbackSrc = responsiveSizesResult.src
     const srcSet = responsiveSizesResult.srcSet
+    const presentationWidth = responsiveSizesResult.presentationWidth
 
     // Generate default alt tag
     const srcSplit = node.url.split(`/`)
@@ -83,11 +84,11 @@ module.exports = (
     let rawHTML = `
   <span
     class="gatsby-resp-image-wrapper"
-    style="position: relative; z-index: -1; display: block; ${options.wrapperStyle}"
+    style="position: relative; display: block; ${options.wrapperStyle}; max-width: ${presentationWidth}px; margin-left: auto; margin-right: auto;"
   >
     <span
       class="gatsby-resp-image-background-image"
-      style="padding-bottom: ${ratio};position: relative; width: 100%; bottom: 0; left: 0; background-image: url('${responsiveSizesResult.base64}'); background-size: cover; display: block;"
+      style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0; background-image: url('${responsiveSizesResult.base64}'); background-size: cover; display: block;"
     >
       <img
         class="gatsby-resp-image-image"

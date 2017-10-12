@@ -34,17 +34,14 @@ module.exports = ({
 }) => {
   // Find the File node
   const fileNode = findFileNode({ node, getNode })
-
-  if (!fileNode) {
-    return
-  }
+  if (!fileNode) return undefined
 
   const relativePath = path.posix.relative(
     slash(basePath),
     slash(fileNode.relativePath)
   )
-  const { dirname = ``, name } = path.parse(relativePath)
+  const { dir = ``, name } = path.parse(relativePath)
   const parsedName = name === `index` ? `` : name
 
-  return path.posix.join(`/`, dirname, parsedName, trailingSlash ? `/` : ``)
+  return path.posix.join(`/`, dir, parsedName, trailingSlash ? `/` : ``)
 }

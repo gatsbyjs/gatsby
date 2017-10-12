@@ -94,7 +94,7 @@ class Post extends React.Component {
           />
         </div>
         {/* overlay */}
-        {this.state.hovering &&
+        {this.state.hovering && (
           <div
             css={{
               position: `absolute`,
@@ -118,7 +118,8 @@ class Post extends React.Component {
             />
             {` `}
             {likes}
-          </div>}
+          </div>
+        )}
       </Link>
     )
   }

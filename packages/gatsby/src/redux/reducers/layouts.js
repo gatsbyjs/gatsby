@@ -5,7 +5,7 @@ module.exports = (state = [], action) => {
   switch (action.type) {
     case `DELETE_CACHE`:
       return []
-    case `CREATE_LAYOUT`:
+    case `CREATE_LAYOUT`: {
       action.payload.component = normalize(action.payload.component)
       action.payload.componentWrapperPath = normalize(
         action.payload.componentWrapperPath
@@ -14,8 +14,10 @@ module.exports = (state = [], action) => {
         console.log(``)
         console.error(JSON.stringify(action, null, 4))
         console.log(``)
-        throw new Error(`Pages can only be created by plugins. There wasn't a plugin set
-        when creating this page.`)
+        throw new Error(
+          `Pages can only be created by plugins. There wasn't a plugin set
+        when creating this page.`
+        )
       }
       action.payload.pluginCreator___NODE = `Plugin ${action.plugin.name}`
       const index = _.findIndex(state, l => l.id === action.payload.id)
@@ -31,6 +33,7 @@ module.exports = (state = [], action) => {
       } else {
         return [...state.concat(action.payload)]
       }
+    }
     case `DELETE_LAYOUT`:
       return state.filter(l => l.id !== action.payload.id)
     default:

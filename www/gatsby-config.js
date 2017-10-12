@@ -44,7 +44,7 @@ module.exports = {
           {
             resolve: `gatsby-remark-images`,
             options: {
-              maxWidth: 690,
+              maxWidth: 786,
               backgroundColor: `#ffffff`,
             },
           },
@@ -64,12 +64,15 @@ module.exports = {
     {
       resolve: `gatsby-plugin-nprogress`,
       options: {
-        color: `#a2466c`,
+        color: `#9D7CBF`,
+        showSpinner: false,
       },
     },
     `gatsby-plugin-glamor`,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-catch-links`,
+    `gatsby-plugin-react-next`,
+    `gatsby-plugin-lodash`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -93,7 +96,13 @@ module.exports = {
         ],
       },
     },
-    `gatsby-plugin-offline`,
+    {
+      resolve: `gatsby-plugin-offline`,
+      options: {
+        navigateFallback: null,
+        navigateFallbackWhitelist: [],
+      },
+    },
     `gatsby-plugin-twitter`,
     `gatsby-plugin-react-helmet`,
     {
@@ -162,5 +171,6 @@ module.exports = {
         ],
       },
     },
+    `gatsby-plugin-netlify`,
   ],
 }

@@ -42,6 +42,7 @@ node_modules/
 .netlify
 
 # IDE specific
+.idea/
 .vscode/
 yarn.lock
 package-lock.json

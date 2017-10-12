@@ -8,16 +8,13 @@ class DefaultLayout extends React.Component {
 
     return (
       <div className="websites">
-        <Helmet
-          defaultTitle={siteMetadata.title}
-          meta={[
-            {
-              name: `description`,
-              content: `An example site to show how to use mongoDB with Gatsby.JS`,
-            },
-            { name: `keywords`, content: `websites listings` },
-          ]}
-        />
+        <Helmet defaultTitle={siteMetadata.title}>
+          <meta
+            name="description"
+            content="An example site to show how to use mongoDB with Gatsby.JS"
+          />
+          <meta name="keywords" content="websites listings" />
+        </Helmet>
         <Link style={{ textDecoration: `none` }} to="/">
           <h3 style={{ color: `tomato` }}>
             Example of using mongoDB as a data source for a Gatsby site

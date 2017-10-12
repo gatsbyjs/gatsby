@@ -11,8 +11,8 @@ const {
 const {
   queueImageResizing,
   base64,
-  responsiveSizes,
-  responsiveResolution,
+  sizes,
+  resolutions,
 } = require(`gatsby-plugin-sharp`)
 
 const sharp = require(`sharp`)
@@ -98,9 +98,9 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
         }
       },
     },
-    responsiveResolution: {
+    resolutions: {
       type: new GraphQLObjectType({
-        name: `ImageSharpResponsiveResolution`,
+        name: `ImageSharpResolutions`,
         fields: {
           base64: { type: GraphQLString },
           aspectRatio: { type: GraphQLFloat },
@@ -118,6 +118,10 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
         },
         height: {
           type: GraphQLInt,
+        },
+        jpegProgressive: {
+          type: GraphQLBoolean,
+          defaultValue: true,
         },
         grayscale: {
           type: GraphQLBoolean,
@@ -145,7 +149,123 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
         },
       },
       resolve(image, fieldArgs, context) {
-        const promise = responsiveResolution({
+        const promise = resolutions({
+          file: getNodeAndSavePathDependency(image.parent, context.path),
+          args: { ...fieldArgs, pathPrefix },
+        })
+        return promise
+      },
+    },
+    sizes: {
+      type: new GraphQLObjectType({
+        name: `ImageSharpSizes`,
+        fields: {
+          base64: { type: GraphQLString },
+          aspectRatio: { type: GraphQLFloat },
+          src: { type: GraphQLString },
+          srcSet: { type: GraphQLString },
+          sizes: { type: GraphQLString },
+          originalImg: { type: GraphQLString },
+          originalName: { type: GraphQLString },
+        },
+      }),
+      args: {
+        maxWidth: {
+          type: GraphQLInt,
+          defaultValue: 800,
+        },
+        maxHeight: {
+          type: GraphQLInt,
+        },
+        grayscale: {
+          type: GraphQLBoolean,
+          defaultValue: false,
+        },
+        jpegProgressive: {
+          type: GraphQLBoolean,
+          defaultValue: true,
+        },
+        duotone: {
+          type: DuotoneGradientType,
+          defaultValue: false,
+        },
+        quality: {
+          type: GraphQLInt,
+          defaultValue: 50,
+        },
+        toFormat: {
+          type: ImageFormatType,
+          defaultValue: ``,
+        },
+        cropFocus: {
+          type: ImageCropFocusType,
+          defaultValue: sharp.strategy.attention,
+        },
+        rotate: {
+          type: GraphQLInt,
+          defaultValue: 0,
+        },
+      },
+      resolve(image, fieldArgs, context) {
+        return sizes({
+          file: getNodeAndSavePathDependency(image.parent, context.path),
+          args: { ...fieldArgs, pathPrefix },
+        })
+      },
+    },
+    responsiveResolution: {
+      deprecationReason: `We dropped the "responsive" part of the name to make it shorter https://github.com/gatsbyjs/gatsby/pull/2320/`,
+      type: new GraphQLObjectType({
+        name: `ImageSharpResponsiveResolution`,
+        fields: {
+          base64: { type: GraphQLString },
+          aspectRatio: { type: GraphQLFloat },
+          width: { type: GraphQLFloat },
+          height: { type: GraphQLFloat },
+          src: { type: GraphQLString },
+          srcSet: { type: GraphQLString },
+          originalName: { type: GraphQLString },
+        },
+      }),
+      args: {
+        width: {
+          type: GraphQLInt,
+          defaultValue: 400,
+        },
+        height: {
+          type: GraphQLInt,
+        },
+        jpegProgressive: {
+          type: GraphQLBoolean,
+          defaultValue: true,
+        },
+        grayscale: {
+          type: GraphQLBoolean,
+          defaultValue: false,
+        },
+        duotone: {
+          type: DuotoneGradientType,
+          defaultValue: false,
+        },
+        quality: {
+          type: GraphQLInt,
+          defaultValue: 50,
+        },
+        toFormat: {
+          type: ImageFormatType,
+          defaultValue: ``,
+        },
+        cropFocus: {
+          type: ImageCropFocusType,
+          defaultValue: sharp.strategy.attention,
+        },
+        rotate: {
+          type: GraphQLInt,
+          defaultValue: 0,
+        },
+      },
+      resolve(image, fieldArgs, context) {
+        const promise = resolutions({
           file: getNodeAndSavePathDependency(image.parent, context.path),
           args: { ...fieldArgs, pathPrefix },
         })
@@ -153,6 +273,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
       },
     },
     responsiveSizes: {
+      deprecationReason: `We dropped the "responsive" part of the name to make it shorter https://github.com/gatsbyjs/gatsby/pull/2320/`,
       type: new GraphQLObjectType({
         name: `ImageSharpResponsiveSizes`,
         fields: {
@@ -177,6 +298,10 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           type: GraphQLBoolean,
           defaultValue: false,
         },
+        jpegProgressive: {
+          type: GraphQLBoolean,
+          defaultValue: true,
+        },
         duotone: {
           type: DuotoneGradientType,
           defaultValue: false,
@@ -199,7 +324,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
         },
       },
       resolve(image, fieldArgs, context) {
-        return responsiveSizes({
+        return sizes({
           file: getNodeAndSavePathDependency(image.parent, context.path),
           args: { ...fieldArgs, pathPrefix },
         })

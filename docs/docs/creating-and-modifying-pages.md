@@ -2,7 +2,7 @@
 title: "Creating and modifying pages"
 ---
 
-Gatsby makes it easy to programatically control your pages.
+Gatsby makes it easy to programmatically control your pages.
 
 Pages can be created in three ways:
 
@@ -81,6 +81,8 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
           createPage({
             path,
             component: blogPostTemplate,
+            // If you have a layout component at src/layouts/blog-layout.js
+            layout: `blog-layout`,
             // In your blog post template's graphql query, you can use path
             // as a GraphQL variable to query for data from the markdown file.
             context: {
@@ -145,12 +147,34 @@ like the following:
 // called after every page is created.
 exports.onCreatePage = async ({ page, boundActionCreators }) => {
   const { createPage } = boundActionCreators
+  
+  // page.matchPath is a special key that's used for matching pages
+  // only on the client.
+  if (page.path.match(/^\/app/)) {
+    page.matchPath = "/app/:path"
+
+    // Update the page.
+    createPage(page)
+  }
+}
+```
+
+### Choosing the page layout
+
+By default, all pages will use the layout found at `/layouts/index.js`.
+
+You may wish to choose a custom layout for certain pages (such as removing header and footer for landing pages). You can choose the layout component when creating pages with the `createPage` action by adding a layout key to the page object or modify pages created elsewhere using the `onCreatePage` API. All components in the `/layouts/` directory are automatically available.
+
+```javascript
+// Implement the Gatsby API “onCreatePage”. This is
+// called after every page is created.
+exports.onCreatePage = async ({ page, boundActionCreators }) => {
+  const { createPage } = boundActionCreators
 
   return new Promise((resolve, reject) => {
-    // page.matchPath is a special key that's used for matching pages
-    // only on the client.
-    if (page.path.match(/^\/app/)) {
-      page.matchPath = "/app/:path"
+    if (page.path.match(/^\/landing-page/)) {
+      // It's assumed that `landingPage.js` exists in the `/layouts/` directory
+      page.layout = "landingPage"
 
       // Update the page.
       createPage(page)
