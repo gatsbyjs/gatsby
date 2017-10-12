@@ -35,14 +35,17 @@ class BlogPostsIndex extends React.Component {
           <h1
             css={{
               marginTop: 0,
-              position: `absolute`,
-              width: 1,
-              height: 1,
-              padding: 0,
-              overflow: `hidden`,
-              clip: `rect(0,0,0,0)`,
-              whiteSpace: `nowrap`,
-              clipPath: `inset(50%)`,
+              [presets.Tablet]: {
+                marginTop: 0,
+                position: `absolute`,
+                width: 1,
+                height: 1,
+                padding: 0,
+                overflow: `hidden`,
+                clip: `rect(0,0,0,0)`,
+                whiteSpace: `nowrap`,
+                clipPath: `inset(50%)`,
+              },
             }}
           >
             Blog
@@ -71,6 +74,11 @@ class BlogPostsIndex extends React.Component {
                   "&:hover": {
                     transform: `translateY(-4px)`,
                     boxShadow: `0 10px 42px rgba(25, 17, 34, 0.1)`,
+                  },
+                  "&:active": {
+                    boxShadow: `0 3px 10px rgba(25, 17, 34, 0.05)`,
+                    transform: `translateY(0)`,
+                    transition: `transform 50ms`,
                   },
                 },
                 [presets.Desktop]: {},

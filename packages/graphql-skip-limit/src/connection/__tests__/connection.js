@@ -56,11 +56,6 @@ const { connectionType: friendConnection } = connectionDefinitions({
   },
 })
 
-const { connectionType: userConnection } = connectionDefinitions({
-  nodeType: userType,
-  resolveNode: edge => allUsers[edge.node],
-})
-
 const queryType = new GraphQLObjectType({
   name: `Query`,
   fields: () => {

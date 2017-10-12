@@ -71,6 +71,8 @@ module.exports = {
     `gatsby-plugin-glamor`,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-catch-links`,
+    `gatsby-plugin-react-next`,
+    `gatsby-plugin-lodash`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -94,7 +96,13 @@ module.exports = {
         ],
       },
     },
-    `gatsby-plugin-offline`,
+    {
+      resolve: `gatsby-plugin-offline`,
+      options: {
+        navigateFallback: null,
+        navigateFallbackWhitelist: [],
+      },
+    },
     `gatsby-plugin-twitter`,
     `gatsby-plugin-react-helmet`,
     {
@@ -163,5 +171,6 @@ module.exports = {
         ],
       },
     },
+    `gatsby-plugin-netlify`,
   ],
 }

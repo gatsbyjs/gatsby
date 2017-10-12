@@ -1,9 +1,8 @@
 import { graphql as graphqlFunction } from "graphql"
 const fs = require(`fs-extra`)
+const report = require(`gatsby-cli/lib/reporter`)
 
 const { joinPath } = require(`../../utils/path`)
-const report = require(`../../reporter`)
-
 const { store } = require(`../../redux`)
 
 // Run query for a page

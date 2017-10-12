@@ -21,17 +21,38 @@ const NavLinkPropTypes = {
   location: PropTypes.object,
 }
 
+// Set up IntersectionObserver
+const handleIntersection = (el, cb) => {
+  const io = new window.IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (el === entry.target) {
+        // Check if element is within viewport, remove listener, destroy observer, and run link callback.
+        if (entry.isIntersecting) {
+          io.unobserve(el)
+          io.disconnect()
+          cb()
+        }
+      }
+    })
+  })
+  // Add element to the observer
+  io.observe(el)
+}
+
 class GatsbyLink extends React.Component {
   constructor(props) {
     super()
+    // Default to no support for IntersectionObserver
+    let IOSupported = false
+    if (typeof window !== `undefined` && window.IntersectionObserver) {
+      IOSupported = true
+    }
+
     this.state = {
       to: normalizePath(pathPrefix + props.to),
+      IOSupported,
     }
-  }
-  propTypes: {
-    ...NavLinkPropTypes,
-    to: PropTypes.string.isRequired,
-    onClick: PropTypes.func,
+    this.handleRef = this.handleRef.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -39,26 +60,44 @@ class GatsbyLink extends React.Component {
       this.setState({
         to: normalizePath(pathPrefix + nextProps.to),
       })
-      ___loader.enqueue(this.state.to)
+      // Preserve non IO functionality if no support
+      if (!this.state.IOSupported) {
+        ___loader.enqueue(this.state.to)
+      }
     }
   }
 
   componentDidMount() {
-    ___loader.enqueue(this.state.to)
+    // Preserve non IO functionality if no support
+    if (!this.state.IOSupported) {
+      ___loader.enqueue(this.state.to)
+    }
+  }
+
+  handleRef(ref) {
+    if (this.state.IOSupported && ref) {
+      // If IO supported and element reference found, setup Observer functionality
+      handleIntersection(ref, () => {
+        ___loader.enqueue(this.state.to)
+      })
+    }
   }
 
   render() {
     const { onClick, ...rest } = this.props
+    let El
     if (Object.keys(NavLinkPropTypes).some(propName => this.props[propName])) {
-      var El = NavLink
+      El = NavLink
     } else {
-      var El = Link
+      El = Link
     }
 
     return (
       <El
         onClick={e => {
+          // eslint-disable-line
           onClick && onClick(e)
+
           if (
             e.button === 0 && // ignore right clicks
             !this.props.target && // let browser handle "target=_blank"
@@ -96,12 +135,21 @@ class GatsbyLink extends React.Component {
               window.___navigateTo(this.state.to)
             }
           }
+
+          return true
         }}
         {...rest}
         to={this.state.to}
+        innerRef={this.handleRef}
       />
     )
   }
+}
+
+GatsbyLink.propTypes = {
+  ...NavLinkPropTypes,
+  to: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
 }
 
 GatsbyLink.contextTypes = {

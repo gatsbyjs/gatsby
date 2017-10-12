@@ -1,6 +1,6 @@
 jest.mock(`gatsby-plugin-sharp`, () => {
   return {
-    responsiveSizes({ file, args }) {
+    sizes({ file, args }) {
       return Promise.resolve({
         aspectRatio: 0.75,
         presentationWidth: 300,

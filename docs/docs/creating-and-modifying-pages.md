@@ -2,7 +2,7 @@
 title: "Creating and modifying pages"
 ---
 
-Gatsby makes it easy to programatically control your pages.
+Gatsby makes it easy to programmatically control your pages.
 
 Pages can be created in three ways:
 
@@ -81,6 +81,8 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
           createPage({
             path,
             component: blogPostTemplate,
+            // If you have a layout component at src/layouts/blog-layout.js
+            layout: `blog-layout`,
             // In your blog post template's graphql query, you can use path
             // as a GraphQL variable to query for data from the markdown file.
             context: {
@@ -145,19 +147,15 @@ like the following:
 // called after every page is created.
 exports.onCreatePage = async ({ page, boundActionCreators }) => {
   const { createPage } = boundActionCreators
+  
+  // page.matchPath is a special key that's used for matching pages
+  // only on the client.
+  if (page.path.match(/^\/app/)) {
+    page.matchPath = "/app/:path"
 
-  return new Promise((resolve, reject) => {
-    // page.matchPath is a special key that's used for matching pages
-    // only on the client.
-    if (page.path.match(/^\/app/)) {
-      page.matchPath = "/app/:path"
-
-      // Update the page.
-      createPage(page)
-    }
-
-    resolve()
-  })
+    // Update the page.
+    createPage(page)
+  }
 }
 ```
 

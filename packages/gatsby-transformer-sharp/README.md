@@ -30,6 +30,5 @@ It recognizes files with the following extensions as images.
 * webp
 * tif
 * tiff
-* svg
 
 Each image file is parsed into a node of type `ImageSharp`.

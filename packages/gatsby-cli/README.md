@@ -2,9 +2,9 @@
 
 Gatsby command line tool.
 
-Let's you create new Gatsby sites using [Gatsby starters](https://www.gatsbyjs.org/docs/gatsby-starters/)
+Let's you create new Gatsby sites using [Gatsby starters](https://www.gatsbyjs.org/docs/gatsby-starters/).
 
-Also let's you run commands on sites. The tool runs code from the `gatsby` package
+It also let's you run commands on sites. The tool runs code from the `gatsby` package
 installed locally.
 
 ## Install
@@ -19,7 +19,7 @@ Run `gatsby --help` for full help.
 
 `gatsby new gatsby-site`
 
-See the [Gatsby starters docs](https://www.gatsbyjs.org/docs/gatsby-starters/) for more
+See the [Gatsby starters docs](https://www.gatsbyjs.org/docs/gatsby-starters/) for more.
 
 ### Develop
 
