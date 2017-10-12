@@ -6,6 +6,8 @@ Parses YAML files. Supports arrays of objects and single objects.
 
 `npm install --save gatsby-transformer-yaml`
 
+You also need to have `gatsby-source-filesystem` installed and configured so it points to your files.
+
 ## How to use
 
 ```javascript
