@@ -4,7 +4,6 @@ import fs from "fs"
 import path from "path"
 import json5 from "json5"
 import _ from "lodash"
-import objectAssign from "object-assign"
 import invariant from "invariant"
 import apiRunnerNode from "./api-runner-node"
 
@@ -85,7 +84,7 @@ function normalizeConfig(config, directory) {
     normalizedConfig.plugins.push(normalize(plugin, `plugin`))
   )
 
-  return objectAssign({}, config, normalizedConfig)
+  return Object.assign({}, config, normalizedConfig)
 }
 
 /**

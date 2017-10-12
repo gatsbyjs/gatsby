@@ -6,10 +6,10 @@
     "fs-extra": "^4.0.1",
     "is-absolute": "^0.2.6",
     "lodash": "^4.17.4",
-    "yargs": "^8.0.1"
+    "yargs": "^8.0.2"
   },
   "name": "gatsby-dev-cli",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "description": "CLI helpers for contributors working on Gatsby",
   "main": "index.js",
   "devDependencies": {

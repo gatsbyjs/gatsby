@@ -6,6 +6,8 @@ Parses JSON files. Supports arrays of objects and single objects.
 
 `npm install --save gatsby-transformer-json`
 
+You also need to have `gatsby-source-filesystem` installed and configured so it points to your files.
+
 ## How to use
 
 ```javascript
@@ -92,7 +94,7 @@ single objects, you'd be able to query your letters like:
 
 ```graphql
 {
-  allLetters {
+  allLettersJson {
     edges {
       node {
         value
@@ -106,7 +108,7 @@ Which would return:
 
 ```javascript
 {
-  allLetters: {
+  allLettersJson: {
     edges: [
       {
         node: {
