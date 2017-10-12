@@ -9,13 +9,10 @@ You can set the `activeStyle` or `activeClassName` prop to add styling attribute
 
 Gatsby does per-route code splitting. This means that when navigating to a new
 page, the code chunks necessary for that page might not be loaded. This is bad.
-Any unnecessary latency should be avoided. So to avoid that Gatsby optionally
-(with [gatsby-plugin-offline](/packages/gatsby-plugin-offline/) utilizes
-a Service Worker that precaches code chunks so navigating to new pages is
-quick. But as there are several popular browsers that don't yet support Service
-Workers (Safari, IE, Edge), this component will also preload code chunks on
-these browsers. Preloading is triggered by a link entering the viewport so it
-only prefetchs code/data chunks for pages the user is likely to navigate to.
+Any unnecessary latency when changing pages should be avoided. So to avoid that
+Gatsby preloads code chunks and page data. Preloading is triggered by a link
+entering the viewport so it only prefetchs code/data chunks for pages the user
+is likely to navigate to.
 
 ## Install
 
