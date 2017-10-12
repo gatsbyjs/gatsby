@@ -29,7 +29,7 @@ exports.createFileNode = async (pathToFile, pluginOptions = {}) => {
 
   const stats = await fs.stat(slashedFile.absolutePath)
   let internal
-  if (stats.isDirectory) {
+  if (stats.isDirectory()) {
     const contentDigest = crypto
       .createHash(`md5`)
       .update(
