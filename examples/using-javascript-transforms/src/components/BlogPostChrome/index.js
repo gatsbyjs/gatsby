@@ -11,9 +11,7 @@ class BlogPostChrome extends React.Component {
         <HelmetBlock {...frontmatter} />
         <div className="content">
           <div className="section">
-            <div className="container content">
-            {this.props.children}
-            </div>
+            <div className="container content">{this.props.children}</div>
           </div>
         </div>
         <PostPublished {...frontmatter} />
@@ -36,6 +34,7 @@ export const blogPostFragment = graphql`
       description
     }
   }
+
   fragment JSBlogPost_data on JSFrontmatter {
     data {
       title

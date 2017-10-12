@@ -2,7 +2,7 @@ import React from "react"
 
 class mdInsetPage extends React.Component {
   render() {
-    const {html} = this.props.data.markdownRemark
+    const { html } = this.props.data.markdownRemark
 
     return (
       <div className="box container content">
