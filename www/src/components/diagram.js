@@ -200,7 +200,7 @@ const Gatsby = ({ children }) => (
         margin: 0,
         verticalAlign: `middle`,
       }}
-      alt=""
+      alt="Gatsby"
     />
     <ItemDescription>
       <small
