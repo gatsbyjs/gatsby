@@ -9,10 +9,17 @@ module.exports = {
       options: {
         endpoint: `https://api.graphcms.com/simple/v1/vinylbase`,
         query: `{
-            allArtists {
+          allArtists {
+            id
+            name
+            slug
+            picture { 
               id
-              name
+              url
+              height
+              width
             }
+          }
         }`,
       },
     },
