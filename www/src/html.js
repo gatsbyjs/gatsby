@@ -23,7 +23,7 @@ export default class HTML extends React.Component {
     }
 
     return (
-      <html lang="en">
+      <html {...this.props.htmlAttributes}>
         <head>
           <link
             rel="preload"
@@ -74,7 +74,7 @@ export default class HTML extends React.Component {
           />
           {css}
         </head>
-        <body>
+        <body {...this.props.bodyAttributes}>
           <div
             id="___gatsby"
             dangerouslySetInnerHTML={{ __html: this.props.body }}

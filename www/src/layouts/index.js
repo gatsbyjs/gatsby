@@ -57,6 +57,7 @@ class DefaultLayout extends React.Component {
           <meta name="twitter:site" content="@gatsbyjs" />
           <meta name="og:type" content="website" />
           <meta name="og:site_name" content="GatsbyJS" />
+          <html lang="en" />
         </Helmet>
         <Navigation pathname={this.props.location.pathname} />
         <div
