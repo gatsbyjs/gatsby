@@ -37,13 +37,13 @@ function makeNullable(type: GraphQLInputType): GraphQLNullableInputType<any> {
 
 function convertToInputType(
   type: GraphQLType,
-  typeMap: any
+  typeMap: Set
 ): ?GraphQLInputType {
   // track types already processed in current tree, to avoid infinite recursion
-  if (typeMap[type.name]) {
+  if (typeMap.has(type)) {
     return null
   }
-  const nextTypeMap = { ...typeMap, [type.name]: true }
+  const nextTypeMap = new Set([...typeMap, type])
 
   if (type instanceof GraphQLScalarType || type instanceof GraphQLEnumType) {
     return type
@@ -169,7 +169,7 @@ export function inferInputObjectStructureFromFields({
   const sort = []
 
   _.each(fields, (fieldConfig, key) => {
-    const inputType = convertToInputType(fieldConfig.type, {})
+    const inputType = convertToInputType(fieldConfig.type, new Set())
     const inputFilter =
       inputType && convertToInputFilter(_.upperFirst(key), inputType)
 

@@ -133,6 +133,37 @@ describe(`GraphQL Input args from fields, test-only`, () => {
     isStringInput(innerObjFields.foo.type)
   })
 
+  it(`handles lists within lists`, async () => {
+    const Row = new GraphQLObjectType({
+      name: `Row`,
+      fields: () => {
+        return {
+          cells: typeField(new GraphQLList(Cell)),
+        }
+      },
+    })
+
+    const Cell = new GraphQLObjectType({
+      name: `Cell`,
+      fields: () => {
+        return {
+          value: typeField(GraphQLInt),
+        }
+      },
+    })
+
+    const fields = {
+      rows: typeField(new GraphQLList(Row)),
+    }
+    
+    expect(() => {
+      inferInputObjectStructureFromFields({
+        fields,
+        typeName: `ListTypes`,
+      })
+    }).not.toThrow()
+  })
+
   it(`protects against infinite recursion on circular definitions`, async () => {
     const TypeA = new GraphQLObjectType({
       name: `TypeA`,
