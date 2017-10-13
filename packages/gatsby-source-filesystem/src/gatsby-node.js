@@ -58,6 +58,21 @@ exports.sourceNodes = (
     node.children.forEach(childId => deleteNode(childId, getNode(childId)))
   })
 
+  watcher.on(`addDir`, path => {
+    if (ready) {
+      reporter.info(`added directory at ${path}`)
+      createAndProcessNode(path).catch(err => reporter.error(err))
+    } else {
+      pathQueue.push(path)
+    }
+  })
+
+  watcher.on(`unlinkDir`, path => {
+    reporter.info(`directory deleted at ${path}`)
+    const node = getNode(createId(path))
+    deleteNode(node.id, node)
+  })
+
   return new Promise((resolve, reject) => {
     watcher.on(`ready`, () => {
       if (ready) return
