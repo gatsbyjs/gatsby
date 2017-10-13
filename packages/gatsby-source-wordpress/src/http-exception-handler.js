@@ -7,7 +7,7 @@ const colorized = require(`./output-color`)
  */
 function httpExceptionHandler(e) {
   const { response, code } = e
-  if(!response){
+  if (!response) {
     console.log(
       colorized.out(
         `The request failed with error code "${code}"`,
