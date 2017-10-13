@@ -5,7 +5,7 @@ import { assembleQueries, extractTypeName } from "./util"
 
 const SOURCE_NAME = `GraphCMS`
 
-module.exports.sourceNodes = async (
+exports.sourceNodes = async (
   { boundActionCreators, getNode, hasNodeChanged },
   { endpoint, token, query }
 ) => {
