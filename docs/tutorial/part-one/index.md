@@ -15,7 +15,7 @@ Let's check first that you have everything setup to start creating with Gatsby. 
 
 Node.js is a programming tool for running JavaScript on servers and in your computer's terminal. Gatsby is built using Node.js.
 
-Open a <a href="http://www.macworld.co.uk/feature/mac-software/how-use-terminal-on-mac-3608274/">terminal window</a> and type `node --version` then `npm --version`.
+Open a terminal window. See [these instructions](http://www.macworld.co.uk/feature/mac-software/how-use-terminal-on-mac-3608274/) for Mac users and [these other instructions](https://www.quora.com/How-do-I-open-terminal-in-windows) for Windows users. In your terminal window, type `node --version` then `npm --version`.
 
 You should see something like:
 
@@ -70,7 +70,7 @@ This is huge because it makes development so much faster and fun.
 
 Let's try it.
 
-You'll need code editing software for the next part of this tutorial. <a href="https://code.visualstudio.com/">VS Studio</a>  is a nice one. After downloading and opening a code editing software, open a folder on your computer called "tutorial-part-one." This folder was automatically created when you ran the previous terminal commands in the first part of this tutorial.
+You'll need code editing software for the next part of this tutorial. [VS Code](https://code.visualstudio.com/) is a nice one. After downloading and opening a code editing software, open a folder on your computer called "tutorial-part-one." This folder was automatically created when you ran the previous terminal commands in the first part of this tutorial.
 
 Now that you've opened the "tutorial-part-one" folder in your code editing software, it's time to edit your website. In the code editing software, you'll need to find the 'src/pages/index.js' page. Once you find that, try changing "Hello world!" in the page component to "Hello Gatsby!". The text in your browser should change within a second.
 
