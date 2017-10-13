@@ -1,8 +1,8 @@
 {
   "name": "gatsby-source-graphcms",
-  "description": "Bridges gatsby to a graphcms endpoint for data sourcing.",
+  "description": "Gatsby source plugin for building websites using the GraphCMS as a data source.",
   "author": "Angel Piscola <angelpiscola@gmail.com>",
-  "version": "",
+  "version": "0.0.1",
   "license": "MIT",
   "deprecated": false,
   "main": "index.js",
