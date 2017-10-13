@@ -6,7 +6,7 @@ import Link from "gatsby-link"
 import SectionTitle from "./evaluation-table-section-title"
 import SectionHeaderTop from "./evaluation-table-section-header-top"
 import SectionHeaderBottom from "./evaluation-table-section-header-bottom"
-import { options } from "../utils/typography"
+import { options, rhythm } from "../utils/typography"
 
 class EvaluationTable extends Component {
   constructor() {
@@ -28,7 +28,7 @@ class EvaluationTable extends Component {
           return (
             <div
               style={{
-                padding: 10,
+                padding: rhythm(1 / 2),
                 verticalAlign: `middle`,
                 textAlign: `center`,
                 width: 130,
@@ -44,7 +44,7 @@ class EvaluationTable extends Component {
             <div
               id={text.toLowerCase().split(` `).join(`-`)}
               style={{
-                padding: 10,
+                padding: rhythm(1 / 2),
                 verticalAlign: `middle`,
                 textAlign: `center`,
                 width: 130,
@@ -90,9 +90,8 @@ class EvaluationTable extends Component {
             <table
               key={s}
               style={{
-                color: `#9d9d9d`,
                 borderBottom: options.tableBorder,
-                marginTop: 25,
+                marginTop: rhythm(1),
                 maxWidth: 800,
               }}
             >
@@ -122,9 +121,8 @@ class EvaluationTable extends Component {
                               "&:hover": {
                                 cursor: j >= 1 ? `pointer` : `inherit`,
                               },
-                              "&:first-child": {
-                                paddingRight: 0,
-                              },
+                              paddingRight: 0,
+                              paddingLeft: 0,
                             }}
                             onClick={() => {
                               j >= 1 && this.setState({
@@ -157,6 +155,8 @@ class EvaluationTable extends Component {
                                 [presets.Tablet]: {
                                   display: `table-cell`,
                                 },
+                                paddingRight: 0,
+                                paddingLeft: 0,
                               }}
                             /> :
                             <td
@@ -165,13 +165,15 @@ class EvaluationTable extends Component {
                                 borderBottom: options.tableBorder,
                                 padding: `10px !important`,
                                 fontSize: `70%`,
+                                paddingRight: 0,
+                                paddingLeft: 0,
                               }}
                               colSpan="4"
                             >
                               {
                                 <span
                                   dangerouslySetInnerHTML={{
-                                    __html: `<div>${row.node.Description}</div>`,
+                                    __html: row.node.Description,
                                   }}
                                 />
                               }

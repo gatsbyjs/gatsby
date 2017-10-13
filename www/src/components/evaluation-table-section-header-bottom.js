@@ -4,29 +4,30 @@ import logo from "../gatsby-negative.svg"
 import jekyll from "../assets/jekyll.svg"
 import wordpress from "../assets/wordpress.png"
 import squarespace from "../assets/squarespace-compressed.png"
+import { rhythm } from "../utils/typography"
 
 const subHeaderTitles = [
   `Category`,
   `Feature`,
   <img
     src={logo}
-    height={`30`}
-    style={{ marginBottom: 0, display: `block`, margin: `auto` }}
+    key="0"
+    style={{ height: rhythm(5 / 4), marginBottom: 0, display: `block`, margin: `auto` }}
   />,
   <img
     src={jekyll}
-    height={`30`}
-    style={{ marginBottom: 0, display: `block`, margin: `auto` }}
+    key="1"
+    style={{ height: rhythm(5 / 4), marginBottom: 0, display: `block`, margin: `auto` }}
   />,
   <img
     src={wordpress}
-    height={`30`}
-    style={{ marginBottom: 0, display: `block`, margin: `auto` }}
+    key="2"
+    style={{ height: rhythm(5 / 4), marginBottom: 0, display: `block`, margin: `auto` }}
   />,
   <img
     src={squarespace}
-    height={`40`}
-    style={{ marginBottom: 0, display: `block`, margin: `auto` }}
+    key="3"
+    style={{ height: rhythm(3 / 2), marginBottom: 0, display: `block`, margin: `auto` }}
   />,
 ]
 
@@ -41,10 +42,10 @@ const renderSubHeader = () => (
             borderBottom: `1px solid #dddddd`,
             borderLeft: i > 1 ? `1px solid #dddddd` : `none`,
             borderRight: i === 5 ? `1px solid #dddddd` : `none`,
-            paddingTop: 10,
-            paddingLeft: 10,
-            paddingRight: 10,
-            paddingBottom: i == 5 ? 10 : 20,
+            paddingTop: rhythm(1 / 2),
+            paddingLeft: rhythm(1 / 2),
+            paddingRight: rhythm(1 / 2),
+            paddingBottom: rhythm(1 / 2),
             textTransform: `uppercase`,
             fontWeight: 600,
             fontSize: `80%`,

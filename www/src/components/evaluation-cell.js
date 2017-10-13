@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { rhythm } from "../utils/typography"
 
 class EvaluationCell extends Component {
   render() {
@@ -24,8 +25,8 @@ class EvaluationCell extends Component {
       return `none`
     }
     const basicStyling = {
-      width: `30px`,
-      height: `30px`,
+      width: rhythm(5 / 4),
+      height: rhythm(5 / 4),
       display: `block`,
       borderRadius: `50%`,
       border: `1px solid #9d7cbf`,
@@ -36,7 +37,7 @@ class EvaluationCell extends Component {
       <div
         style={{
           ...basicStyling,
-          "verticalAlign": "middle",
+          "verticalAlign": `middle`,
           textAlign: `middle`,
           backgroundColor: (
             [`N/A`, `0`, ``].indexOf(this.props.num) !== -1 ?

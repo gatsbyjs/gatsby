@@ -1,5 +1,7 @@
 import React from 'react'
 import presets from "../utils/presets"
+import { rhythm } from "../utils/typography"
+
 
 const superHeaderTitles = [
   ``,
@@ -19,7 +21,7 @@ const superHeader = () => (
           css={{
             display: i >= 1 ? `table-cell` : `none`,
             borderBottom: i > 1 ? `1px solid #dddddd` : `none`,
-            padding: 10,
+            padding: rhythm(1 / 2),
             textTransform: `uppercase`,
             fontSize: `80%`,
             fontWeight: 600,
