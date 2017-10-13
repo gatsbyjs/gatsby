@@ -105,9 +105,15 @@ class SidebarBody extends React.Component {
                     key={section.links[title]}
                     css={{ marginBottom: options.blockMarginBottom / 2 }}
                   >
-                    <Link to={section.links[title]} css={linkStyle}>
-                      {changedTitle}
-                    </Link>
+                    {
+                      section.links[title][0] == `#` ?
+                        <a href={section.links[title]} css={linkStyle}>
+                          {changedTitle}
+                        </a> :
+                        <Link to={section.links[title]} css={linkStyle}>
+                          {changedTitle}
+                        </Link>
+                    }
                   </li>
                 )
               })}
