@@ -52,3 +52,13 @@ Let's say you have a GraphQL type called `Post`. You would query it like so:
   }
 }
 ```
+
+## Current limitations
+
+1. Currently only one level GraphQL queries are supported
+
+## TODOs
+
+1. Add support for more 
+1. Implement support for relationships/embedded fields
+1. Implement mapping feature for transformation plugins, like the MongoDB plugin
