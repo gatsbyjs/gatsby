@@ -133,6 +133,61 @@ describe(`GraphQL Input args from fields, test-only`, () => {
     isStringInput(innerObjFields.foo.type)
   })
 
+  it(`protects against infinite recursion on circular definitions`, async () => {
+    const TypeA = new GraphQLObjectType({
+      name: `TypeA`,
+      fields: () => {
+        return {
+          foo: typeField(GraphQLInt),
+          typeb: typeField(TypeB),
+        }
+      },
+    })
+
+    const TypeB = new GraphQLObjectType({
+      name: `TypeB`,
+      fields: () => {
+        return {
+          bar: typeField(GraphQLInt),
+          typea: typeField(TypeA),
+        }
+      },
+    })
+
+    const fields = {
+      entryPointA: typeField(TypeA),
+      entryPointB: typeField(TypeB),
+    }
+
+    let inferredFields
+
+    expect(() => {
+      inferredFields = inferInputObjectStructureFromFields({
+        fields,
+        typeName: `AType`,
+      }).inferredFields
+    }).not.toThrow()
+
+    const entryPointA = inferredFields.entryPointA.type
+    const entryPointAFields = entryPointA.getFields()
+    const entryPointB = inferredFields.entryPointB.type
+    const entryPointBFields = entryPointB.getFields()
+
+    expect(entryPointA instanceof GraphQLInputObjectType).toBeTruthy()
+    expect(entryPointB instanceof GraphQLInputObjectType).toBeTruthy()
+    isIntInput(entryPointAFields.foo.type)
+    isIntInput(entryPointBFields.bar.type)
+
+    // next level should also work, ie. typeA -> type B
+    const childAB = entryPointAFields.typeb.type
+    const childABFields = childAB.getFields()
+    expect(childAB instanceof GraphQLInputObjectType).toBeTruthy()
+    isIntInput(childABFields.bar.type)
+
+    // circular level should not be here, ie. typeA -> typeB -> typeA
+    expect(childABFields.typea).toBeUndefined()
+  })
+
   it(`recovers from unknown output types`, async () => {
     const fields = {
       obj: {
