@@ -2,18 +2,19 @@ import React, { Component } from 'react';
 
 class IndexPage extends Component {
   render() {
-    const artists = this.props.data.artists
+    const artists = this.props.data.artists.edges
 
     return (
       <div>
         <h1>Vinylbase Artists</h1>
         <p>Welcome to your new Gatsby example site using the GraphCMS source plugin.</p>
         <p>This is the list of artists and their IDs:</p>
-        <ol>
-          {artists.edges.map(({ node }, i) => (
-            <li key={node.id}>{node.name} (id: {node.id})</li>
-          ))}
-        </ol>
+        { artists.map(({ node }, i) => (
+          <div key={node.id}>
+            <h2>{node.name} (slug: {node.slug})</h2>
+            <img src={node.picture.url} alt={node.name} title={node.name}/>
+          </div>
+        ))}
       </div>
     )
   }
@@ -28,6 +29,13 @@ query getAllArtists {
       node {
         id
         name
+        slug
+        picture {
+          id
+          url
+          width
+          height
+        }
       }
     }
   }
