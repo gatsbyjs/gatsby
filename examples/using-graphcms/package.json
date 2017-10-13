@@ -1,12 +1,13 @@
 {
-  "name": "gatsby-starter-default",
-  "description": "Gatsby default starter",
+  "name": "gatsby-example-using-graphcms",
+  "description": "Gatsby example site using the GraphCMS source plugin",
   "version": "1.0.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "author": "Rafael Cordones <rafael@cordones.me>",
   "dependencies": {
     "gatsby": "^1.9.45",
     "gatsby-link": "^1.6.17",
-    "gatsby-plugin-react-helmet": "^1.0.5"
+    "gatsby-plugin-react-helmet": "^1.0.5",
+    "gatsby-source-graphcms": "../../packages/gatsby-source-graphcms"
   },
   "keywords": [
     "gatsby"
