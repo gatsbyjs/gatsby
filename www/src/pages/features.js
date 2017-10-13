@@ -137,6 +137,12 @@ const getFeaturesData = function(data){
   }
 }
 
+const FeaturesFooter = () => (
+  <p css={{fontSize: "80%"}}>Want to help keep this information complete, accurate, and up-to-date? Please comment <a href="https://github.com/gatsbyjs/gatsby/pull/2443" target="_blank">here.</a></p>
+)
+
+
+
 class FeaturesPage extends Component {
   render() {
     const { sections, sectionHeaders } = getFeaturesData(this.props.data.allGatsbySpecsCsv.edges)
@@ -148,6 +154,7 @@ class FeaturesPage extends Component {
           sections={sections}
           sectionHeaders={sectionHeaders}
         />
+        <FeaturesFooter />
       </Container>
     )
   }
