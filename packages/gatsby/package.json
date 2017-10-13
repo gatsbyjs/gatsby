@@ -4,7 +4,7 @@
   "version": "1.9.62",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
-    "gatsby": "./bin/gatsby.js"
+    "gatsby": "./dist/bin/gatsby.js"
   },
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -149,8 +149,8 @@
     "build:rawfiles": "copyfiles -u 1 src/internal-plugins/**/raw_* dist",
     "build:src": "babel src --out-dir dist --source-maps --ignore gatsby-cli.js,raw_*,__tests__",
     "clean-test-bundles": "find test/ -type f -name bundle.js* -exec rm -rf {} +",
+    "prepublish": "cross-env NODE_ENV=production npm run build",
     "test-coverage": "node_modules/.bin/nyc --reporter=lcov --reporter=text npm test",
-    "watch": "rimraf dist && mkdir dist && npm run build:cli && npm run build:internal-plugins && npm run build:rawfiles && npm run build:src -- --watch",
-    "prepublish": "cross-env NODE_ENV=production npm run build"
+    "watch": "rimraf dist && mkdir dist && npm run build:cli && npm run build:internal-plugins && npm run build:rawfiles && npm run build:src -- --watch"
   }
 }
