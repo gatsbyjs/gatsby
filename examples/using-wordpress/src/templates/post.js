@@ -23,7 +23,13 @@ class PostTemplate extends Component {
                   <h2>ACF Image Gallery</h2>
                   {layout.pictures.map(({ picture }) => {
                     const img = picture.localFile.childImageSharp.sizes
-                    return <Img key={img.src} sizes={img} />
+                    return (
+                      <Img
+                        css={{ marginBottom: rhythm(1) }}
+                        key={img.src}
+                        sizes={img}
+                      />
+                    )
                   })}
                 </div>
               )
@@ -33,7 +39,11 @@ class PostTemplate extends Component {
               return (
                 <div key={`${i}-photo`}>
                   <h2>ACF Post Photo</h2>
-                  <Img src={img.src} sizes={img} />
+                  <Img
+                    css={{ marginBottom: rhythm(1) }}
+                    src={img.src}
+                    sizes={img}
+                  />
                 </div>
               )
             }
