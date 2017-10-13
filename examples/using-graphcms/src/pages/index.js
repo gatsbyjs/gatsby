@@ -4,6 +4,8 @@ class IndexPage extends Component {
   render() {
     const artists = this.props.data.artists.edges
 
+    console.log(`artists: ` , artists)
+
     return (
       <div>
         <h1>Vinylbase Artists</h1>
@@ -13,6 +15,14 @@ class IndexPage extends Component {
           <div key={node.id}>
             <h2>{node.name} (slug: {node.slug})</h2>
             <img src={node.picture.url} alt={node.name} title={node.name}/>
+            <h3>Records</h3>
+            {
+              node.records.map(record => (
+                <ol key={record.id}>
+                  <li>{record.title}</li>
+                </ol>
+              ))
+            }
           </div>
         ))}
       </div>
@@ -35,6 +45,10 @@ query getAllArtists {
           url
           width
           height
+        }
+        records {
+          id
+          title
         }
       }
     }

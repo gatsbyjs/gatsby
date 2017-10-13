@@ -19,6 +19,10 @@ module.exports = {
               height
               width
             }
+            records {
+              id
+              title
+            }
           }
         }`,
       },
