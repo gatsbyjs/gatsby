@@ -3,7 +3,7 @@ import presets from "../utils/presets"
 import { rhythm } from "../utils/typography"
 
 const superHeaderTitles = [
-  ``,
+  `Feature`,
   `Gatsby`,
   `Static frameworks`,
   `CMS`,

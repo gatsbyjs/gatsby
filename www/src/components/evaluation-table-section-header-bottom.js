@@ -7,7 +7,7 @@ import squarespace from "../assets/squarespace-compressed.png"
 import { rhythm } from "../utils/typography"
 
 const subHeaderTitles = [
-  `Feature`,
+  ``,
   <img
     src={logo}
     key="0"
@@ -45,6 +45,7 @@ const subHeaderTitles = [
       [presets.Mobile]: {
         height: rhythm(5 / 4),
       },
+
     }}
   />,
   <img
@@ -62,8 +63,13 @@ const subHeaderTitles = [
   />,
 ]
 
-const renderSubHeader = () => (
-  <tr key="subhead" style={{ display: `table-row` }}>
+const renderSubHeader = props => (
+  <tr
+    key="subhead"
+    style={{
+      display: !props.display ? `none` : `table-row`
+    }}
+  >
     {
       subHeaderTitles.map((header, i) => (
         <td
@@ -71,15 +77,15 @@ const renderSubHeader = () => (
           css={{
             display: `table-cell`,
             borderBottom: `none`,
+            background: "#f8f8f8",
             //borderLeft: i > 1 ? `1px solid #dddddd` : `none`,
             //borderRight: i === 5 ? `1px solid #dddddd` : `none`,
             paddingTop: rhythm(1 / 4),
             paddingLeft: rhythm(1 / 4),
             paddingRight: i >= 1 ? rhythm(1 / 4) : 0,
             paddingBottom: rhythm(1 / 4),
-            textTransform: `uppercase`,
+            fontStyle: `italic`,
             fontWeight: 600,
-            fontSize: `80%`,
             textAlign: `center`,
             verticalAlign: `middle`,
             "&:last-child": {
@@ -96,7 +102,7 @@ const renderSubHeader = () => (
             },
           }
         }>
-          { header }
+          { header || props.category || `Feature` }
         </td>
       ))
     }

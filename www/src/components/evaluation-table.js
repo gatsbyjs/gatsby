@@ -14,6 +14,26 @@ class EvaluationTable extends Component {
     this.state = {}
   }
   render() {
+    const renderText = (txt) => {
+      const words = txt.split(` `);
+      return [
+        words.slice(0, words.length - 1).join(` `),
+        <span css={{
+          wordSpace: `nowrap`,
+          display: `inline-block`,
+        }}>
+          &nbsp;
+          {`${words[words.length - 1]} `}
+          <img
+            src={infoIcon}
+            css={{
+              height: rhythm(1 / 2),
+              marginBottom: 0,
+            }}
+          />
+        </span>
+      ]
+    }
     const headers = [
       `Feature`,
       `Gatsby`,
@@ -37,16 +57,7 @@ class EvaluationTable extends Component {
               }}
             >
               <a css={{fontWeight: `normal !important` }} onClick={e => {e.preventDefault()}}>
-                {text}
-                &nbsp;
-                <img
-                  src={infoIcon}
-                  css={{
-                    height: rhythm(1 / 2),
-                    marginBottom: 0,
-                    display: `inline-block`,
-                  }}
-                />
+                {renderText(text)}
               </a>
             </div>
           )
@@ -82,136 +93,114 @@ class EvaluationTable extends Component {
     )
 
     const { sections, sectionHeaders } = this.props
+    const flatten = arrays => [].concat.apply([], arrays)
+
     return (
-      <div>
+      <div
+        style={{
+          // this should be a table, but that breaks the
+          // anchor links on this page due to a bug in the
+          // scrolling library
+          display: `table`,
+          //borderBottom: options.tableBorder,
+          overflowX: "scroll"
+        }}
+      >
         {
-          sections.map((section, s) => [
-            <div
-              // this should be a table, but that breaks the
-              // anchor links on this page due to a bug in the
-              // scrolling library
-              key={s}
-              style={{
-                marginTop: rhythm(1),
-                maxWidth: 800,
-              }}
-            >
-              <div
-                style={{
-                  display: `table`,
-                  //borderBottom: options.tableBorder,
-                  overflowX: "scroll"
-                }}
-              >
-                <SectionTitle text={sectionHeaders[s]}/>
-                <SectionHeaderTop />
-                <SectionHeaderBottom />
-                {
-                  section.map((row, i) => ([
-                    //
-                    <tr
-                      key="header"
-                      css={{
-                        display: !row.node.Subcategory ? `none` : `table-row`,
-                        borderBottom: `none`,
-                        //borderLeft: options.tableBorder,
-                        //borderRight: options.tableBorder,
-                      }}
-                    >
-                      <td
-                        css={{
-                          borderBottom: `none`,
-                          fontFamily: options.headerFontFamily.join(`,`),
-                          textAlign: `center`,
-                          paddingRight: 0,
-                        }}
-                      >
-                        <b><i>{row.node.Subcategory}</i></b>
-                      </td>
-                      <td css={{ borderBottom: `none` }}/>
-                      <td css={{ borderBottom: `none` }}/>
-                      <td css={{ borderBottom: `none` }}/>
-                      <td css={{ borderBottom: `none` }}/>
-                    </tr>,
-                    <div key="fake" dangerouslySetInnerHTML={{ __html: `<span id="${row.node.Feature.toLowerCase().split(` `).join(`-`)}"></span>` }}/>,
-                    <tr
-                      key={2*i}
-                    >
-                      {
-                        headers.map((header, j) => (
+          flatten(
+            sections.map((section, s) => [
+              <SectionTitle text={sectionHeaders[s]} />,
+              <SectionHeaderTop />].
+              concat(
+                flatten(
+                  section.map((row, i) => (
+                    ((row.node.Subcategory && i) ? [<br />] : []).concat(
+                      [
+                        <SectionHeaderBottom
+                          display={row.node.Subcategory}
+                          category={row.node.Subcategory}
+                        />,
+                        <div key="fake" dangerouslySetInnerHTML={{ __html: `<span id="${row.node.Feature.toLowerCase().split(` `).join(`-`)}"></span>` }}/>,
+                        <tr
+                          key={2*i}
+                        >
+                          {
+                            headers.map((header, j) => (
+                              <td
+                                key={j}
+                                css={{
+                                  display: `table-cell`,
+                                  borderBottom: `none`,
+                                  //borderLeft: j < 1 || !showTooltip(s,i) ? options.tableBorder : `none`,
+                                  "&:hover": {
+                                    cursor: j >= 0 ? `pointer` : `inherit`,
+                                  },
+                                  width: j === 0 ? 120 : `inherit`,
+                                  paddingRight: 0,
+                                  paddingLeft: 0,
+                                  textAlign: `center`,
+                                  verticalAlign: `middle`,
+                                }}
+                                onClick={() => {
+                                  this.setState({
+                                    [`${s},${i}`]: !showTooltip(s,i),
+                                  })
+                                }}
+                              >
+                                {
+                                  renderCell(row.node[header], j)
+                                }
+                              </td>
+                            ))
+                          }
+                        </tr>,
+                        <tr
+                          key={2*i + 1}
+                          style={{
+                            display: showTooltip(s,i) ? `table-row` : `none`,
+                            borderRight: options.tableBorder,
+                          }}
+                        >
                           <td
-                            key={j}
+                            key={0}
                             css={{
                               display: `table-cell`,
-                              borderBottom: `none`,
-                              //borderLeft: j < 1 || !showTooltip(s,i) ? options.tableBorder : `none`,
-                              "&:hover": {
-                                cursor: j >= 0 ? `pointer` : `inherit`,
+                              //borderLeft: options.tableBorder,
+                              [presets.Tablet]: {
+                                display: `table-cell`,
                               },
-                              width: j === 0 ? 120 : `inherit`,
                               paddingRight: 0,
                               paddingLeft: 0,
-                              textAlign: `center`,
-                              verticalAlign: `middle`,
-                            }}
-                            onClick={() => {
-                              this.setState({
-                                [`${s},${i}`]: !showTooltip(s,i),
-                              })
-                            }}
-                          >
-                            {
-                              renderCell(row.node[header], j)
-                            }
-                          </td>
-                        ))
-                      }
-                    </tr>,
-                    <tr
-                      key={2*i + 1}
-                      style={{
-                        display: showTooltip(s,i) ? `table-row` : `none`,
-                        borderRight: options.tableBorder,
-                      }}
-                    >
-                      <td
-                        key={0}
-                        css={{
-                          display: `table-cell`,
-                          //borderLeft: options.tableBorder,
-                          [presets.Tablet]: {
-                            display: `table-cell`,
-                          },
-                          paddingRight: 0,
-                          paddingLeft: 0,
-                          borderBottom: `none`,
-                        }}
-                      />
-                      <td
-                        key={1}
-                        css={{
-                          //borderBottom: options.tableBorder,
-                          fontFamily: options.headerFontFamily.join(`,`),
-                          paddingRight: 0,
-                          paddingLeft: 0,
-                          borderBottom: `none`,
-                        }}
-                        colSpan="4"
-                      >
-                        {
-                          <span
-                            dangerouslySetInnerHTML={{
-                              __html: row.node.Description,
+                              borderBottom: `none`,
                             }}
                           />
-                        }
-                      </td>
-                    </tr>,
-                  ]))
-                }
-              </div>
-            </div>
-          ])
+                          <td
+                            key={1}
+                            css={{
+                              //borderBottom: options.tableBorder,
+                              fontFamily: options.headerFontFamily.join(`,`),
+                              paddingRight: 0,
+                              paddingLeft: 0,
+                              borderBottom: `none`,
+                            }}
+                            colSpan="4"
+                          >
+                            {
+                              <span
+                                dangerouslySetInnerHTML={{
+                                  __html: row.node.Description,
+                                }}
+                              />
+                            }
+                          </td>
+                        </tr>,
+                      ]
+                    )
+                  ))
+                )
+              )
+            )
+          )
         }
       </div>
     )
