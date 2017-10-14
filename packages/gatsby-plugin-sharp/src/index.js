@@ -530,7 +530,7 @@ async function resolutions({ file, args = {} }) {
   const base64Image = await base64({ file, args: base64Args })
 
   // Get traced SVG base64
-  const tracedSVG = await traceSVG(file, options.trace)
+  const tracedSVG = await traceSVG({ file, args: options.trace })
 
   const fallbackSrc = images[0].src
   const srcSet = images
@@ -569,10 +569,19 @@ async function resolutions({ file, args = {} }) {
   }
 }
 
-async function traceSVG(file, args) {
+async function notMemoizedtraceSVG({ file, args }) {
   return await trace(file.absolutePath, args)
     .then(svg => optimize(svg))
     .then(svg => `data:image/svg+xml;utf8,${svg.toString(`base64`)}`)
+}
+
+const memoizedTraceSVG = _.memoize(
+  notMemoizedtraceSVG,
+  ({ file, args }) => `${file.id}${JSON.stringify(args)}`
+)
+
+async function traceSVG(args) {
+  return await memoizedTraceSVG(args)
 }
 
 const optimize = svg =>
