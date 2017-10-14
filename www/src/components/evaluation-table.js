@@ -176,6 +176,7 @@ class EvaluationTable extends Component {
                               fontFamily: options.headerFontFamily.join(`,`),
                               paddingRight: `${rhythm(1)} !important`,
                               paddingLeft: `${rhythm(1)} !important`,
+                              paddingBottom: `calc(${rhythm(1)} - 1px)`,
                               [presets.Mobile]: {
                                 paddingRight: `${rhythm(2)} !important`,
                                 paddingLeft: `${rhythm(2)} !important`,
