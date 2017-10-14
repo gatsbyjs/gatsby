@@ -359,8 +359,9 @@ async function responsiveSizes({ file, args = {} }) {
     duotone: false,
     trace: {
       color: `#ddd`,
-      turdSize: 100,
       optTolerance: 0.4,
+      turdSize: 100,
+      turnPolicy: potrace.Potrace.TURNPOLICY_MAJORITY,
     },
     pathPrefix: ``,
     toFormat: ``,
@@ -477,8 +478,9 @@ async function resolutions({ file, args = {} }) {
     duotone: false,
     trace: {
       color: `#ddd`,
-      turdSize: 100,
       optTolerance: 0.4,
+      turdSize: 100,
+      turnPolicy: potrace.Potrace.TURNPOLICY_MAJORITY,
     },
     pathPrefix: ``,
     toFormat: ``,
