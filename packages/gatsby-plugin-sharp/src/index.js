@@ -357,10 +357,15 @@ async function responsiveSizes({ file, args = {} }) {
     pngCompressionLevel: 9,
     grayscale: false,
     duotone: false,
+    trace: {
+      color: `#ddd`,
+      turdSize: 100,
+      optTolerance: 0.4,
+    },
     pathPrefix: ``,
     toFormat: ``,
   }
-  const options = _.defaults({}, args, defaultArgs)
+  const options = _.defaultsDeep({}, args, defaultArgs)
   options.maxWidth = parseInt(options.maxWidth, 10)
 
   // Account for images with a high pixel density. We assume that these types of
@@ -434,6 +439,9 @@ async function responsiveSizes({ file, args = {} }) {
   // Get base64 version
   const base64Image = await base64({ file, args: base64Args })
 
+  // Get traced SVG base64
+  const tracedSVG = await traceSVG({ file, args: options.trace })
+
   // Construct src and srcSet strings.
   const originalImg = _.maxBy(images, image => image.width).src
   const fallbackSrc = _.minBy(images, image =>
@@ -446,6 +454,7 @@ async function responsiveSizes({ file, args = {} }) {
 
   return {
     base64: base64Image.src,
+    tracedSVG: tracedSVG,
     aspectRatio: images[0].aspectRatio,
     src: fallbackSrc,
     srcSet,
@@ -559,13 +568,13 @@ async function resolutions({ file, args = {} }) {
 
   return {
     base64: base64Image.src,
+    tracedSVG: tracedSVG,
     aspectRatio: images[0].aspectRatio,
     width: images[0].width,
     height: images[0].height,
     src: fallbackSrc,
     srcSet,
     originalName: originalName,
-    tracedSVG: tracedSVG,
   }
 }
 
