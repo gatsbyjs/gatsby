@@ -1,41 +1,41 @@
 - title: Introduction
   links:
-    Introduction: /features/#introduction
-    Legend: /features/#legend
+    Introduction: "#introduction"
+    Legend: "#legend"
 - title: Performance
   links:
-    Static content: /features/#static-content
-    CDN: /features/#cdn
-    AMP support: /features/#amp-support
-    Offline access: /features/#offline-access
-    Prefetch linked pages: /features/#prefetch-linked-pages
-    Page caching: /features/#page-caching
-    No extraneous code fetching: /features/#no-extraneous-code-fetching
-    Progressive image loading: /features/#progressive-image-loading
-    Responsive image loading: /features/#responsive-image-loading
-    Inlines critical CSS: /features/#inlines-critical-css
-    Font self-hosting: /features/#font-self-hosting
+    Static content: "#static-content"
+    CDN: "#cdn"
+    AMP support: "#amp-support"
+    Offline access: "#offline-access"
+    Prefetch linked pages: "#prefetch-linked-pages"
+    Page caching: "#page-caching"
+    No extraneous code fetching: "#no-extraneous-code-fetching"
+    Progressive image loading: "#progressive-image-loading"
+    Responsive image loading: "#responsive-image-loading"
+    Inlines critical CSS: "#inlines-critical-css"
+    Font self-hosting: "#font-self-hosting"
 - title: Developer Experience
   links:
-    Serverless: /features/#serverless
-    Export as Code: /features/#export-as-code
-    Refresh or link to preview: /features/#refresh-or-link-to-preview
-    Hot reload content: /features/#hot-reload-content
-    Hot reload code: /features/#hot-reload-code
-    Componentization: /features/#componentization
-    One-way data binding: /features/#one-way-data-binding
-    Declarative API data queries (GraphQL): /features/#declarative-api-data-queries-(graphql)
-    Declarative UI: /features/#declarative-ui
-    Asset pipelines: /features/#asset-pipelines
-    CSS Extensions (eg Sass): /features/#css-extensions-(eg-sass)
-    Advanced Javascript syntax: /features/#advanced-javascript-syntax
+    Serverless: "#serverless"
+    Export as Code: "#export-as-code"
+    Refresh or link to preview: "#refresh-or-link-to-preview"
+    Hot reload content: "#hot-reload-content"
+    Hot reload code: "#hot-reload-code"
+    Componentization: "#componentization"
+    One-way data binding: "#one-way-data-binding"
+    Declarative API data queries (GraphQL): "#declarative-api-data-queries-(graphql)"
+    Declarative UI: "#declarative-ui"
+    Asset pipelines: "#asset-pipelines"
+    CSS Extensions (eg Sass): "#css-extensions-(eg-sass)"
+    Advanced Javascript syntax: "#advanced-javascript-syntax"
 - title: Ecosystem
   links:
-    Component ecosystem: /features/#component-ecosystem
-    Hosted option: /features/#hosted-option
-    Theme ecosystem: /features/#theme-ecosystem
+    Component ecosystem: "#component-ecosystem"
+    Hosted option: "#hosted-option"
+    Theme ecosystem: "#theme-ecosystem"
 - title: Design
   links:
-    Programmatic Design: /features/#programmatic-design
-    Design systems: /features/#design-systems
-    Component library: /features/#component-library
+    Programmatic Design: "#programmatic-design"
+    Design systems: "#design-systems"
+    Component library: "#component-library"

@@ -7,27 +7,58 @@ import squarespace from "../assets/squarespace-compressed.png"
 import { rhythm } from "../utils/typography"
 
 const subHeaderTitles = [
-  `Category`,
   `Feature`,
   <img
     src={logo}
     key="0"
-    style={{ height: rhythm(5 / 4), marginBottom: 0, display: `block`, margin: `auto` }}
+    css={{
+      height: rhythm(3 / 4),
+      marginBottom: 0,
+      display: `block`,
+      margin: `auto`,
+      [presets.Mobile]: {
+        height: rhythm(5 / 4),
+      },
+    }}
   />,
   <img
     src={jekyll}
     key="1"
-    style={{ height: rhythm(5 / 4), marginBottom: 0, display: `block`, margin: `auto` }}
+    css={{
+      height: rhythm(3 / 4),
+      marginBottom: 0,
+      display: `block`,
+      margin: `auto`,
+      [presets.Mobile]: {
+        height: rhythm(5 / 4),
+      },
+    }}
   />,
   <img
     src={wordpress}
     key="2"
-    style={{ height: rhythm(5 / 4), marginBottom: 0, display: `block`, margin: `auto` }}
+    css={{
+      height: rhythm(3 / 4),
+      marginBottom: 0,
+      display: `block`,
+      margin: `auto`,
+      [presets.Mobile]: {
+        height: rhythm(5 / 4),
+      },
+    }}
   />,
   <img
     src={squarespace}
     key="3"
-    style={{ height: rhythm(3 / 2), marginBottom: 0, display: `block`, margin: `auto` }}
+    css={{
+      height: rhythm(3 / 4),
+      marginBottom: 0,
+      display: `block`,
+      margin: `auto`,
+      [presets.Mobile]: {
+        height: rhythm(5 / 4),
+      },
+    }}
   />,
 ]
 
@@ -38,21 +69,30 @@ const renderSubHeader = () => (
         <td
           key={i}
           css={{
-            display: i >= 1 ? `table-cell` : `none`,
-            borderBottom: `1px solid #dddddd`,
-            borderLeft: i > 1 ? `1px solid #dddddd` : `none`,
-            borderRight: i === 5 ? `1px solid #dddddd` : `none`,
-            paddingTop: rhythm(1 / 2),
-            paddingLeft: rhythm(1 / 2),
-            paddingRight: rhythm(1 / 2),
-            paddingBottom: rhythm(1 / 2),
+            display: `table-cell`,
+            borderBottom: `none`,
+            //borderLeft: i > 1 ? `1px solid #dddddd` : `none`,
+            //borderRight: i === 5 ? `1px solid #dddddd` : `none`,
+            paddingTop: rhythm(1 / 4),
+            paddingLeft: rhythm(1 / 4),
+            paddingRight: i >= 1 ? rhythm(1 / 4) : 0,
+            paddingBottom: rhythm(1 / 4),
             textTransform: `uppercase`,
             fontWeight: 600,
             fontSize: `80%`,
             textAlign: `center`,
             verticalAlign: `middle`,
-            [presets.Tablet]: {
-              display: `table-cell`,
+            "&:last-child": {
+              paddingRight: rhythm(1 / 2),
+            },
+            [presets.Mobile]: {
+              paddingTop: rhythm(1 / 2),
+              paddingLeft: rhythm(1 / 2),
+              paddingRight: i >= 1 ? rhythm(1 / 2) : 0,
+              "&:last-child": {
+                paddingRight: rhythm(1 / 2),
+              },
+              paddingBottom: rhythm(1 / 2),
             },
           }
         }>

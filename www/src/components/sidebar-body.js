@@ -106,8 +106,8 @@ class SidebarBody extends React.Component {
                     css={{ marginBottom: options.blockMarginBottom / 2 }}
                   >
                     {
-                      section.links[title][0] == `#` ?
-                        <a href={section.links[title]} css={linkStyle}>
+                      console.log(section.links[title][0]) || section.links[title][0] == `#` ?
+                        <a href={section.links[title]} css={linkStyle} onClick={e => {console.log('click')}}>
                           {changedTitle}
                         </a> :
                         <Link to={section.links[title]} css={linkStyle}>

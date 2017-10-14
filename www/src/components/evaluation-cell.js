@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { rhythm } from "../utils/typography"
+import presets from "../utils/presets"
 
 class EvaluationCell extends Component {
   render() {
@@ -25,20 +26,21 @@ class EvaluationCell extends Component {
       return `none`
     }
     const basicStyling = {
-      width: rhythm(5 / 4),
-      height: rhythm(5 / 4),
+      height: rhythm(3 / 4),
+      width: rhythm(3 / 4),
       display: `block`,
       borderRadius: `50%`,
       border: `1px solid #9d7cbf`,
-      float: `left`,
-      margin: `6px`,
+      [presets.Mobile]: {
+        height: rhythm(5 / 4),
+        width: rhythm(5 / 4),
+      },
     }
     return (
       <div
-        style={{
+        css={{
           ...basicStyling,
           "verticalAlign": `middle`,
-          textAlign: `middle`,
           backgroundColor: (
             [`N/A`, `0`, ``].indexOf(this.props.num) !== -1 ?
               `#dddddd` :

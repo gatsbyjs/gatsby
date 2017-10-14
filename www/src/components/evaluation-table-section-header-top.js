@@ -2,13 +2,11 @@ import React from 'react'
 import presets from "../utils/presets"
 import { rhythm } from "../utils/typography"
 
-
 const superHeaderTitles = [
-  ``,
   ``,
   `Gatsby`,
   `Static frameworks`,
-  `Open-source CMS`,
+  `CMS`,
   `Site builders`,
 ]
 
@@ -19,16 +17,23 @@ const superHeader = () => (
         <td
           key={i}
           css={{
-            display: i >= 1 ? `table-cell` : `none`,
-            borderBottom: i > 1 ? `1px solid #dddddd` : `none`,
+            display: `none`,
+            borderBottom: `none`,
             padding: rhythm(1 / 2),
             textTransform: `uppercase`,
             fontSize: `80%`,
             fontWeight: 600,
             textAlign: `center`,
             verticalAlign: `bottom`,
-            [presets.Tablet]: {
+            [presets.Mobile]: {
               display: `table-cell`,
+              maxWidth: 125,
+            },
+            [presets.Tablet]: {
+              maxWidth: 150,
+            },
+            [presets.Desktop]: {
+              maxWidth: `inherit`,
             },
           }}
         >
