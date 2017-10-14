@@ -3,6 +3,7 @@
 exports[`Add pages allows you to add multiple pages 1`] = `
 Array [
   Object {
+    "asyncSSR": false,
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
     "context": Object {},
@@ -14,6 +15,7 @@ Array [
     "updatedAt": 1482363367071,
   },
   Object {
+    "asyncSSR": false,
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
     "context": Object {},
@@ -30,6 +32,7 @@ Array [
 exports[`Add pages allows you to add pages 1`] = `
 Object {
   "payload": Object {
+    "asyncSSR": false,
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
     "context": Object {},
@@ -52,6 +55,7 @@ Object {
 exports[`Add pages allows you to add pages 2`] = `
 Array [
   Object {
+    "asyncSSR": false,
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
     "context": Object {},
@@ -68,6 +72,7 @@ Array [
 exports[`Add pages allows you to add pages with context 1`] = `
 Object {
   "payload": Object {
+    "asyncSSR": false,
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
     "context": Object {
@@ -92,6 +97,7 @@ Object {
 exports[`Add pages allows you to add pages with context 2`] = `
 Array [
   Object {
+    "asyncSSR": false,
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
     "context": Object {
@@ -112,6 +118,7 @@ exports[`Add pages allows you to delete paths 1`] = `Array []`;
 exports[`Add pages allows you to update existing pages (based on path) 1`] = `
 Array [
   Object {
+    "asyncSSR": false,
     "component": "/whatever2/index.js",
     "componentChunkName": "component---whatever-2-index-js",
     "context": Object {},

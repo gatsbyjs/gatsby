@@ -25,6 +25,7 @@ export const layoutSchema = Joi.object()
 
 export const pageSchema = Joi.object()
   .keys({
+    asyncSSR: Joi.bool(),
     path: Joi.string().required(),
     matchPath: Joi.string(),
     component: Joi.string().required(),

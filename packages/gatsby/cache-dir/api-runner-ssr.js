@@ -6,7 +6,7 @@
 
 const apis = require(`./api-ssr-docs`)
 
-export function apiRunner(api, args, defaultReturn) {
+export function apiRunnerSync(api, args, defaultReturn) {
   if (!apis[api]) {
     console.log(`This API doesn't exist`, api)
   }

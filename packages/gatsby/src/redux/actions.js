@@ -71,6 +71,9 @@ actions.createPage = (page, plugin = ``, traceId) => {
     page.layout = `index`
   }
 
+  if (!page.asyncSSR) {
+    page.asyncSSR = false
+  }
   page.jsonName = jsonName
   page.internalComponentName = internalComponentName
   page.updatedAt = Date.now()
