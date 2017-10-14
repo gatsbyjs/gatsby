@@ -29,7 +29,8 @@ module.exports = async function build(program: BuildArgs) {
   // an equivalent static directory within public.
   copyStaticDirectory()
 
-  let activity = report.activityTimer(`Building CSS`)
+  let activity
+  activity = report.activityTimer(`Building CSS`)
   activity.start()
   await buildCSS(program).catch(err => {
     reportFailure(`Generating CSS failed`, err)

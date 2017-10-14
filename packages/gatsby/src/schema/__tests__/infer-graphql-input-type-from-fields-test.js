@@ -2,6 +2,7 @@ const {
   GraphQLBoolean,
   GraphQLFloat,
   GraphQLInt,
+  GraphQLID,
   GraphQLNonNull,
   GraphQLString,
   GraphQLObjectType,
@@ -20,6 +21,14 @@ function isIntInput(type) {
   expect(type.getFields()).toEqual({
     eq: { name: `eq`, type: GraphQLInt },
     ne: { name: `ne`, type: GraphQLInt },
+  })
+}
+
+function isIdInput(type) {
+  expect(type instanceof GraphQLInputObjectType).toBeTruthy()
+  expect(type.getFields()).toEqual({
+    eq: { name: `eq`, type: GraphQLID },
+    ne: { name: `ne`, type: GraphQLID },
   })
 }
 
@@ -133,12 +142,42 @@ describe(`GraphQL Input args from fields, test-only`, () => {
     isStringInput(innerObjFields.foo.type)
   })
 
+  it(`handles lists within lists`, async () => {
+    const Row = new GraphQLObjectType({
+      name: `Row`,
+      fields: () => {
+        return {
+          cells: typeField(new GraphQLList(Cell)),
+        }
+      },
+    })
+
+    const Cell = new GraphQLObjectType({
+      name: `Cell`,
+      fields: () => {
+        return {
+          value: typeField(GraphQLInt),
+        }
+      },
+    })
+
+    const fields = {
+      rows: typeField(new GraphQLList(Row)),
+    }
+    
+    expect(() => {
+      inferInputObjectStructureFromFields({
+        fields,
+        typeName: `ListTypes`,
+      })
+    }).not.toThrow()
+  })
+
   it(`protects against infinite recursion on circular definitions`, async () => {
     const TypeA = new GraphQLObjectType({
       name: `TypeA`,
       fields: () => {
         return {
-          foo: typeField(GraphQLInt),
           typeb: typeField(TypeB),
         }
       },
@@ -148,7 +187,7 @@ describe(`GraphQL Input args from fields, test-only`, () => {
       name: `TypeB`,
       fields: () => {
         return {
-          bar: typeField(GraphQLInt),
+          bar: typeField(GraphQLID),
           typea: typeField(TypeA),
         }
       },
@@ -175,17 +214,20 @@ describe(`GraphQL Input args from fields, test-only`, () => {
 
     expect(entryPointA instanceof GraphQLInputObjectType).toBeTruthy()
     expect(entryPointB instanceof GraphQLInputObjectType).toBeTruthy()
-    isIntInput(entryPointAFields.foo.type)
-    isIntInput(entryPointBFields.bar.type)
+    isIdInput(entryPointBFields.bar.type)
 
     // next level should also work, ie. typeA -> type B
     const childAB = entryPointAFields.typeb.type
     const childABFields = childAB.getFields()
     expect(childAB instanceof GraphQLInputObjectType).toBeTruthy()
-    isIntInput(childABFields.bar.type)
+    isIdInput(childABFields.bar.type)
 
     // circular level should not be here, ie. typeA -> typeB -> typeA
     expect(childABFields.typea).toBeUndefined()
+    
+    // in the other direction, from entryPointB -> typeA, the latter shouldn't exist, 
+    // due to having no further non-circular fields to filter
+    expect(entryPointBFields.typea).toBeUndefined()
   })
 
   it(`recovers from unknown output types`, async () => {

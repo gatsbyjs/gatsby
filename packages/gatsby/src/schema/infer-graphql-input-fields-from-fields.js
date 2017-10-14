@@ -6,6 +6,7 @@ const {
   GraphQLString,
   GraphQLFloat,
   GraphQLInt,
+  GraphQLID,
   GraphQLList,
   GraphQLEnumType,
   GraphQLNonNull,
@@ -37,23 +38,27 @@ function makeNullable(type: GraphQLInputType): GraphQLNullableInputType<any> {
 
 function convertToInputType(
   type: GraphQLType,
-  typeMap: any
+  typeMap: Set
 ): ?GraphQLInputType {
   // track types already processed in current tree, to avoid infinite recursion
-  if (typeMap[type.name]) {
+  if (typeMap.has(type)) {
     return null
   }
-  const nextTypeMap = { ...typeMap, [type.name]: true }
+  const nextTypeMap = new Set([...typeMap, type])
 
   if (type instanceof GraphQLScalarType || type instanceof GraphQLEnumType) {
     return type
   } else if (type instanceof GraphQLObjectType) {
+    const fields = _.transform(type.getFields(), (out, fieldConfig, key) => {
+      const type = convertToInputType(fieldConfig.type, nextTypeMap)
+      if (type) out[key] = { type }
+    })
+    if (Object.keys(fields).length===0) {
+      return null
+    }
     return new GraphQLInputObjectType({
       name: createTypeName(`${type.name}InputObject`),
-      fields: _.transform(type.getFields(), (out, fieldConfig, key) => {
-        const type = convertToInputType(fieldConfig.type, nextTypeMap)
-        if (type) out[key] = { type }
-      }),
+      fields,
     })
   } else if (type instanceof GraphQLList) {
     let innerType = convertToInputType(type.ofType, nextTypeMap)
@@ -84,6 +89,10 @@ const scalarFilterMap = {
   Float: {
     eq: { type: GraphQLFloat },
     ne: { type: GraphQLFloat },
+  },
+  ID: {
+    eq: { type: GraphQLID },
+    ne: { type: GraphQLID },
   },
   String: {
     eq: { type: GraphQLString },
@@ -169,7 +178,7 @@ export function inferInputObjectStructureFromFields({
   const sort = []
 
   _.each(fields, (fieldConfig, key) => {
-    const inputType = convertToInputType(fieldConfig.type, {})
+    const inputType = convertToInputType(fieldConfig.type, new Set())
     const inputFilter =
       inputType && convertToInputFilter(_.upperFirst(key), inputType)
 
