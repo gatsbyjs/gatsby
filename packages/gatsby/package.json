@@ -151,6 +151,6 @@
     "clean-test-bundles": "find test/ -type f -name bundle.js* -exec rm -rf {} +",
     "prepublish": "cross-env NODE_ENV=production npm run build",
     "test-coverage": "node_modules/.bin/nyc --reporter=lcov --reporter=text npm test",
-    "watch": "rimraf dist && mkdir dist && npm run build:cli && npm run build:internal-plugins && npm run build:rawfiles && npm run build:src -- --watch"
+    "watch": "rimraf dist && mkdir dist && npm run build:internal-plugins && npm run build:rawfiles && npm run build:src -- --watch"
   }
 }
