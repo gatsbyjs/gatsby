@@ -18,7 +18,7 @@ const superHeader = () => (
           key={i}
           css={{
             display: `none`,
-            borderBottom: `none`,
+            borderBottom: `1px solid #dddddd`,
             padding: rhythm(1 / 2),
             textTransform: `uppercase`,
             fontSize: `80%`,

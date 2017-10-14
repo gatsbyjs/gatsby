@@ -93,8 +93,8 @@ const renderSubHeader = props => (
             },
             [presets.Mobile]: {
               paddingTop: rhythm(1 / 2),
-              paddingLeft: rhythm(1 / 2),
-              paddingRight: i >= 1 ? rhythm(1 / 2) : 0,
+              paddingLeft: `${rhythm(1 / 2)} !important`,
+              paddingRight: rhythm(1 / 2),
               "&:last-child": {
                 paddingRight: rhythm(1 / 2),
               },

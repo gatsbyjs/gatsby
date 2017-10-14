@@ -19,7 +19,10 @@ class EvaluationTable extends Component {
       return [
         words.slice(0, words.length - 1).join(` `),
         <span css={{
-          wordSpace: `nowrap`,
+          "-webkitHyphens": `auto`,
+          "-msHyphens": `auto`,
+          hyphens: `auto`,
+          wordBreak: `break-all`,
           display: `inline-block`,
         }}>
           &nbsp;
@@ -131,7 +134,6 @@ class EvaluationTable extends Component {
                                 css={{
                                   display: `table-cell`,
                                   borderBottom: `none`,
-                                  //borderLeft: j < 1 || !showTooltip(s,i) ? options.tableBorder : `none`,
                                   "&:hover": {
                                     cursor: j >= 0 ? `pointer` : `inherit`,
                                   },
@@ -162,28 +164,19 @@ class EvaluationTable extends Component {
                           }}
                         >
                           <td
-                            key={0}
-                            css={{
-                              display: `table-cell`,
-                              //borderLeft: options.tableBorder,
-                              [presets.Tablet]: {
-                                display: `table-cell`,
-                              },
-                              paddingRight: 0,
-                              paddingLeft: 0,
-                              borderBottom: `none`,
-                            }}
-                          />
-                          <td
                             key={1}
                             css={{
                               //borderBottom: options.tableBorder,
                               fontFamily: options.headerFontFamily.join(`,`),
-                              paddingRight: 0,
-                              paddingLeft: 0,
+                              paddingRight: `${rhythm(1)} !important`,
+                              paddingLeft: `${rhythm(1)} !important`,
                               borderBottom: `none`,
+                              [presets.Mobile]: {
+                                paddingRight: `${rhythm(2)} !important`,
+                                paddingLeft: `${rhythm(2)} !important`,
+                              },
                             }}
-                            colSpan="4"
+                            colSpan="5"
                           >
                             {
                               <span

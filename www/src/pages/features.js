@@ -127,7 +127,7 @@ const LegendTable = () => {
 const FeaturesHeader = () => {
   return (
     <div>
-      <h1 style={{marginTop: 0}}>Features</h1>
+      <h1 id="introduction" style={{marginTop: 0}}>Features</h1>
       <FuturaParagraph>
         There are many ways to build a website. If you're considering Gatsby, you may also be looking at some alternatives:
       </FuturaParagraph>
@@ -145,7 +145,7 @@ const FeaturesHeader = () => {
       <FuturaParagraph>
         The chart below details Gatsby's capabilities in comparison with a representative from each category. Click on any row to see a more detailed explanation on that feature and our rating for each system.
       </FuturaParagraph>
-      <h6 css={{ textTransform: `uppercase` }}>Legend</h6>
+      <h6 id="legend" css={{ textTransform: `uppercase` }}>Legend</h6>
       <LegendTable />
     </div>
   )
@@ -175,7 +175,7 @@ const getFeaturesData = function(data){
 }
 
 const FeaturesFooter = () => (
-  <p css={{fontSize: "80%", marginTop: rhythm(1) }}>Want to help keep this information complete, accurate, and up-to-date? Please comment <a href="https://github.com/gatsbyjs/gatsby/pull/2443" target="_blank">here.</a></p>
+  <p css={{fontSize: "80%", marginTop: rhythm(1) }}>Want to help keep this information complete, accurate, and up-to-date? Please comment <a href="https://github.com/gatsbyjs/gatsby/issues/2444" target="_blank">here.</a></p>
 )
 
 
