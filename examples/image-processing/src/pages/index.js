@@ -12,7 +12,6 @@ class Index extends React.Component {
     const cropBottomLeft = this.props.data.cropBottomLeft.resize
     const cropEntropy = this.props.data.cropEntropy.resize
     const cropCenter = this.props.data.cropCenter.resize
-    const tracedSVG = this.props.data.tracedSVG.resolutions
 
     return (
       <div>
@@ -43,15 +42,6 @@ class Index extends React.Component {
             or peep the code of this example site for more information.
           </strong>
         </p>
-
-        <h2>Potrace</h2>
-
-        <img
-          src={tracedSVG.tracedSVG}
-          height={tracedSVG.height}
-          width={tracedSVG.width}
-        />
-        <img src={tracedSVG.src} />
 
         <h2
           style={{
@@ -323,7 +313,7 @@ export const pageQuery = graphql`
     }
     resolution: imageSharp(id: { regex: "/lol.jpg/" }) {
       resolutions(grayscale: true, width: 500) {
-        ...GatsbyImageSharpResolutions
+        ...GatsbyImageSharpResolutions_tracedSVG
       }
     }
     cropDefault: imageSharp(id: { regex: "/gatsby.jpg/" }) {
@@ -344,18 +334,6 @@ export const pageQuery = graphql`
     cropCenter: imageSharp(id: { regex: "/gatsby.jpg/" }) {
       resize(width: 180, height: 180, cropFocus: CENTER) {
         src
-      }
-    }
-    tracedSVG: imageSharp(id: { regex: "/fecolormatrix-kanye-west.jpg/" }) {
-      resolutions(
-        width: 500
-        trace: { background: "#f00e2e", color: "#192550" }
-        duotone: { highlight: "#f00e2e", shadow: "#192550" }
-      ) {
-        src
-        tracedSVG
-        height
-        width
       }
     }
   }

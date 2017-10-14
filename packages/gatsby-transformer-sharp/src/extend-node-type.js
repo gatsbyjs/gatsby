@@ -115,13 +115,13 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
         name: `ImageSharpResolutions`,
         fields: {
           base64: { type: GraphQLString },
+          tracedSVG: { type: GraphQLString },
           aspectRatio: { type: GraphQLFloat },
           width: { type: GraphQLFloat },
           height: { type: GraphQLFloat },
           src: { type: GraphQLString },
           srcSet: { type: GraphQLString },
           originalName: { type: GraphQLString },
-          tracedSVG: { type: GraphQLString },
         },
       }),
       args: {
@@ -182,6 +182,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
         name: `ImageSharpSizes`,
         fields: {
           base64: { type: GraphQLString },
+          tracedSVG: { type: GraphQLString },
           aspectRatio: { type: GraphQLFloat },
           src: { type: GraphQLString },
           srcSet: { type: GraphQLString },
@@ -209,6 +210,14 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
         duotone: {
           type: DuotoneGradientType,
           defaultValue: false,
+        },
+        trace: {
+          type: PotraceType,
+          defaultValue: {
+            color: `#ddd`,
+            turdSize: 100,
+            optTolerance: 0.4,
+          },
         },
         quality: {
           type: GraphQLInt,
