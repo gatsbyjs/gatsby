@@ -1,19 +1,26 @@
 /* @flow */
 
+const report = require(`gatsby-cli/lib/reporter`)
 const buildCSS = require(`./build-css`)
 const buildHTML = require(`./build-html`)
 const buildProductionBundle = require(`./build-javascript`)
 const bootstrap = require(`../bootstrap`)
-const report = require(`../reporter`)
-const apiRunnerNode = require(`./api-runner-node`)
-const copyStaticDirectory = require(`./copy-static-directory`)
+const apiRunnerNode = require(`../utils/api-runner-node`)
+const copyStaticDirectory = require(`../utils/copy-static-directory`)
 
 function reportFailure(msg, err: Error) {
   report.log(``)
   report.panic(msg, err)
 }
 
-async function html(program: any) {
+type BuildArgs = {
+  directory: string,
+  sitePackageJson: object,
+  browserslist: string[],
+  prefixPaths: boolean,
+}
+
+module.exports = async function build(program: BuildArgs) {
   const { graphqlRunner } = await bootstrap(program)
 
   await apiRunnerNode(`onPreBuild`, { graphql: graphqlRunner })
@@ -22,7 +29,8 @@ async function html(program: any) {
   // an equivalent static directory within public.
   copyStaticDirectory()
 
-  let activity = report.activityTimer(`Building CSS`)
+  let activity
+  activity = report.activityTimer(`Building CSS`)
   activity.start()
   await buildCSS(program).catch(err => {
     reportFailure(`Generating CSS failed`, err)
@@ -51,6 +59,6 @@ async function html(program: any) {
   activity.end()
 
   await apiRunnerNode(`onPostBuild`, { graphql: graphqlRunner })
-}
 
-module.exports = html
+  report.info(`Done building in ${process.uptime()} sec`)
+}

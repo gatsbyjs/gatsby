@@ -7,9 +7,9 @@
   "dependencies": {
     "gatsby": "^1.9.45",
     "gatsby-image": "^1.0.4",
-    "gatsby-link": "latest",
+    "gatsby-link": "^1.6.21",
     "gatsby-plugin-glamor": "^1.6.7",
-    "gatsby-plugin-react-helmet": "latest",
+    "gatsby-plugin-react-helmet": "^1.0.7",
     "gatsby-plugin-sharp": "^1.6.7",
     "gatsby-plugin-styled-components": "latest",
     "gatsby-plugin-typography": "^1.7.9",

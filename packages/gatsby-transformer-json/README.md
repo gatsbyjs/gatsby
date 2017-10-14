@@ -6,6 +6,8 @@ Parses JSON files. Supports arrays of objects and single objects.
 
 `npm install --save gatsby-transformer-json`
 
+You also need to have `gatsby-source-filesystem` installed and configured so it points to your files.
+
 ## How to use
 
 ```javascript

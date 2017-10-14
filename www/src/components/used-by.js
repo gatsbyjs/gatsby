@@ -3,7 +3,7 @@ import presets from "../utils/presets"
 import { vP, vPHd, vPVHd, vPVVHd } from "../components/gutters"
 import { FormidableIcon, FabricIcon, SegmentIcon } from "../assets/logos"
 
-const Icon = ({ icon }) => (
+const Icon = ({ icon, alt }) => (
   <li
     css={{
       marginRight: rhythm(3 / 4),
@@ -20,6 +20,7 @@ const Icon = ({ icon }) => (
   >
     <img
       src={icon}
+      alt={alt}
       css={{
         margin: 0,
         height: `calc(14px + 1vw)`,
@@ -109,9 +110,9 @@ const UsedBy = () => (
           opacity: 0.75,
         }}
       >
-        <Icon icon={FabricIcon} />
-        <Icon icon={SegmentIcon} />
-        <Icon icon={FormidableIcon} />
+        <Icon icon={FabricIcon} alt="Fabric" />
+        <Icon icon={SegmentIcon} alt="Segment" />
+        <Icon icon={FormidableIcon} alt="Formidable" />
       </ul>
     </div>
   </div>

@@ -1,8 +1,8 @@
 import React from "react"
-import {styled} from "styletron-react"
+import { styled } from "styletron-react"
 
 // Create a Container element that'll render a <div> tag with some styles
-const Container = styled('div', {
+const Container = styled(`div`, {
   margin: `0 auto`,
   marginTop: `3rem`,
   padding: `1.5rem`,
@@ -11,14 +11,14 @@ const Container = styled('div', {
 })
 
 // Create a Title element that'll render an <h1> tag with some styles
-const Title = styled('h1', {
+const Title = styled(`h1`, {
   fontSize: `1.5em`,
   textAlign: `center`,
   color: `#744d9e`,
 })
 
 // Create a Wrapper element that'll render a <section> tag with some styles
-const Wrapper = styled('div', {
+const Wrapper = styled(`div`, {
   padding: `4em`,
   background: `#f5f3f7`,
 })
@@ -28,7 +28,9 @@ class IndexPage extends React.Component {
     return (
       <Container>
         <Wrapper>
-          <Title>Hello World, this is my first component styled with Styletron!</Title>
+          <Title>
+            Hello World, this is my first component styled with Styletron!
+          </Title>
           <p>
             <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-styletron/">
               gatsby-plugin-styletron docs

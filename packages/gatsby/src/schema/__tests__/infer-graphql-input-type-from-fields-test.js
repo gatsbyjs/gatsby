@@ -2,6 +2,7 @@ const {
   GraphQLBoolean,
   GraphQLFloat,
   GraphQLInt,
+  GraphQLID,
   GraphQLNonNull,
   GraphQLString,
   GraphQLObjectType,
@@ -20,6 +21,14 @@ function isIntInput(type) {
   expect(type.getFields()).toEqual({
     eq: { name: `eq`, type: GraphQLInt },
     ne: { name: `ne`, type: GraphQLInt },
+  })
+}
+
+function isIdInput(type) {
+  expect(type instanceof GraphQLInputObjectType).toBeTruthy()
+  expect(type.getFields()).toEqual({
+    eq: { name: `eq`, type: GraphQLID },
+    ne: { name: `ne`, type: GraphQLID },
   })
 }
 
@@ -131,6 +140,94 @@ describe(`GraphQL Input args from fields, test-only`, () => {
     const innerObj = objFields.bar.type
     const innerObjFields = innerObj.getFields()
     isStringInput(innerObjFields.foo.type)
+  })
+
+  it(`handles lists within lists`, async () => {
+    const Row = new GraphQLObjectType({
+      name: `Row`,
+      fields: () => {
+        return {
+          cells: typeField(new GraphQLList(Cell)),
+        }
+      },
+    })
+
+    const Cell = new GraphQLObjectType({
+      name: `Cell`,
+      fields: () => {
+        return {
+          value: typeField(GraphQLInt),
+        }
+      },
+    })
+
+    const fields = {
+      rows: typeField(new GraphQLList(Row)),
+    }
+
+    expect(() => {
+      inferInputObjectStructureFromFields({
+        fields,
+        typeName: `ListTypes`,
+      })
+    }).not.toThrow()
+  })
+
+  it(`protects against infinite recursion on circular definitions`, async () => {
+    const TypeA = new GraphQLObjectType({
+      name: `TypeA`,
+      fields: () => {
+        return {
+          typeb: typeField(TypeB),
+        }
+      },
+    })
+
+    const TypeB = new GraphQLObjectType({
+      name: `TypeB`,
+      fields: () => {
+        return {
+          bar: typeField(GraphQLID),
+          typea: typeField(TypeA),
+        }
+      },
+    })
+
+    const fields = {
+      entryPointA: typeField(TypeA),
+      entryPointB: typeField(TypeB),
+    }
+
+    let inferredFields
+
+    expect(() => {
+      inferredFields = inferInputObjectStructureFromFields({
+        fields,
+        typeName: `AType`,
+      }).inferredFields
+    }).not.toThrow()
+
+    const entryPointA = inferredFields.entryPointA.type
+    const entryPointAFields = entryPointA.getFields()
+    const entryPointB = inferredFields.entryPointB.type
+    const entryPointBFields = entryPointB.getFields()
+
+    expect(entryPointA instanceof GraphQLInputObjectType).toBeTruthy()
+    expect(entryPointB instanceof GraphQLInputObjectType).toBeTruthy()
+    isIdInput(entryPointBFields.bar.type)
+
+    // next level should also work, ie. typeA -> type B
+    const childAB = entryPointAFields.typeb.type
+    const childABFields = childAB.getFields()
+    expect(childAB instanceof GraphQLInputObjectType).toBeTruthy()
+    isIdInput(childABFields.bar.type)
+
+    // circular level should not be here, ie. typeA -> typeB -> typeA
+    expect(childABFields.typea).toBeUndefined()
+
+    // in the other direction, from entryPointB -> typeA, the latter shouldn't exist,
+    // due to having no further non-circular fields to filter
+    expect(entryPointBFields.typea).toBeUndefined()
   })
 
   it(`recovers from unknown output types`, async () => {

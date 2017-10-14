@@ -26,6 +26,11 @@ Object {
             "anObjectArray": null,
           },
         },
+        Object {
+          "node": Object {
+            "anObjectArray": null,
+          },
+        },
       ],
     },
   },

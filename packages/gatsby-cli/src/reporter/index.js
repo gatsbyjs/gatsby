@@ -5,15 +5,17 @@ const { stripIndent } = require(`common-tags`)
 const convertHrtime = require(`convert-hrtime`)
 const { getErrorFormatter } = require(`./errors`)
 
+const VERBOSE = process.env.gatsby_log_level === `verbose`
+
 const errorFormatter = getErrorFormatter()
-const reporter = createReporter({ emoji: true })
+const reporter = createReporter({ emoji: true, verbose: VERBOSE })
 const base = Object.getPrototypeOf(reporter)
 
 module.exports = Object.assign(reporter, {
   stripIndent,
 
-  setVerbose(isVerbose) {
-    this.isVerbose = true
+  setVerbose(isVerbose = true) {
+    this.isVerbose = !!isVerbose
   },
 
   panic(...args) {
