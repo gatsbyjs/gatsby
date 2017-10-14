@@ -57,6 +57,18 @@ const DuotoneGradientType = new GraphQLInputObjectType({
   },
 })
 
+const PotraceType = new GraphQLInputObjectType({
+  name: `Potrace`,
+  fields: () => {
+    return {
+      background: { type: GraphQLString },
+      color: { type: GraphQLString },
+      turdSize: { type: GraphQLFloat },
+      optTolerance: { type: GraphQLFloat },
+    }
+  },
+})
+
 module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
   if (type.name !== `ImageSharp`) {
     return {}
@@ -109,6 +121,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           src: { type: GraphQLString },
           srcSet: { type: GraphQLString },
           originalName: { type: GraphQLString },
+          tracedSVG: { type: GraphQLString },
         },
       }),
       args: {
@@ -130,6 +143,14 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
         duotone: {
           type: DuotoneGradientType,
           defaultValue: false,
+        },
+        trace: {
+          type: PotraceType,
+          defaultValue: {
+            color: `#ddd`,
+            turdSize: 100,
+            optTolerance: 0.4,
+          },
         },
         quality: {
           type: GraphQLInt,

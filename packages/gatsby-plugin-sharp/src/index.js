@@ -9,9 +9,14 @@ const imagemin = require(`imagemin`)
 const imageminPngquant = require(`imagemin-pngquant`)
 const queue = require(`async/queue`)
 const path = require(`path`)
+const potrace = require(`potrace`)
+const SVGO = require(`svgo`)
 
 const duotone = require(`./duotone`)
 const { boundActionCreators } = require(`gatsby/dist/redux/actions`)
+
+const svgo = new SVGO()
+const trace = Promise.promisify(potrace.trace)
 
 // Promisify the sharp prototype (methods) to promisify the alternative (for
 // raw) callback-accepting toBuffer(...) method
@@ -461,10 +466,15 @@ async function resolutions({ file, args = {} }) {
     pngCompressionLevel: 9,
     grayscale: false,
     duotone: false,
+    trace: {
+      color: `#ddd`,
+      turdSize: 100,
+      optTolerance: 0.4,
+    },
     pathPrefix: ``,
     toFormat: ``,
   }
-  const options = _.defaults({}, args, defaultArgs)
+  const options = _.defaultsDeep({}, args, defaultArgs)
   options.width = parseInt(options.width, 10)
 
   // Create sizes for different resolutions — we do 1x, 1.5x, 2x, and 3x.
@@ -519,6 +529,9 @@ async function resolutions({ file, args = {} }) {
   // Get base64 version
   const base64Image = await base64({ file, args: base64Args })
 
+  // Get traced SVG base64
+  const tracedSVG = await traceSVG(file, options.trace)
+
   const fallbackSrc = images[0].src
   const srcSet = images
     .map((image, i) => {
@@ -552,8 +565,20 @@ async function resolutions({ file, args = {} }) {
     src: fallbackSrc,
     srcSet,
     originalName: originalName,
+    tracedSVG: tracedSVG,
   }
 }
+
+async function traceSVG(file, args) {
+  return await trace(file.absolutePath, args)
+    .then(svg => optimize(svg))
+    .then(svg => `data:image/svg+xml;utf8,${svg.toString(`base64`)}`)
+}
+
+const optimize = svg =>
+  new Promise((resolve, reject) => {
+    svgo.optimize(svg, ({ data }) => resolve(data))
+  })
 
 exports.queueImageResizing = queueImageResizing
 exports.base64 = base64
