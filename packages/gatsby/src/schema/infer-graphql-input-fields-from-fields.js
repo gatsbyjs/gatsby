@@ -53,7 +53,7 @@ function convertToInputType(
       const type = convertToInputType(fieldConfig.type, nextTypeMap)
       if (type) out[key] = { type }
     })
-    if (Object.keys(fields).length===0) {
+    if (Object.keys(fields).length === 0) {
       return null
     }
     return new GraphQLInputObjectType({
