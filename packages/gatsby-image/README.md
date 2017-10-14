@@ -152,17 +152,18 @@ Pass in the data returned from the `sizes` object in your query via the `sizes` 
 
 ## `gatsby-image` props
 
-| Name              | Type            | Description                              |
-| ----------------- | --------------- | ---------------------------------------- |
-| `resolutions`       | `object`        | Data returned from the `resolutions` query  |
-| `sizes`           | `object`        | Data returned from the `sizes` query   |
-| `fadeIn`          | `bool`          | Defaults to fading in the image on load  |
-| `title`           | `string`        | Passed to the `img` element  |
-| `alt`             | `string`        | Passed to the `img` element   |
-| `className`       | `string|object` | Passed to the wrapper div. Object is needed to support Glamor's css prop |
-| `style`           | `object`        | Spread into the default styles in the wrapper div |
-| `position`           | `string`        | Defaults to `relative`. Pass in `absolute` to make the component `absolute` positioned |
-| `backgroundColor` | `string|bool`   | Set a colored background placeholder. If true, uses "lightgray" for the color. You can also pass in any valid color string. |
+| Name                      | Type            | Description                              |
+| ------------------------- | --------------- | ---------------------------------------- |
+| `resolutions`             | `object`        | Data returned from the `resolutions` query  |
+| `sizes`                   | `object`        | Data returned from the `sizes` query   |
+| `fadeIn`                  | `bool`          | Defaults to fading in the image on load  |
+| `title`                   | `string`        | Passed to the `img` element  |
+| `alt`                     | `string`        | Passed to the `img` element   |
+| `className`               | `string|object` | Passed to the wrapper div. Object is needed to support Glamor's css prop |
+| `outerWrapperClassName`   | `string|object` | Passed to the outer wrapper div. Object is needed to support Glamor's css prop |
+| `style`                   | `object`        | Spread into the default styles in the wrapper div |
+| `position`                | `string`        | Defaults to `relative`. Pass in `absolute` to make the component `absolute` positioned |
+| `backgroundColor`         | `string|bool`   | Set a colored background placeholder. If true, uses "lightgray" for the color. You can also pass in any valid color string. |
 
 ## Some other stuff to be aware of
 

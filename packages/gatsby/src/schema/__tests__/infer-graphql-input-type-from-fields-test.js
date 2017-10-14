@@ -164,7 +164,7 @@ describe(`GraphQL Input args from fields, test-only`, () => {
     const fields = {
       rows: typeField(new GraphQLList(Row)),
     }
-    
+
     expect(() => {
       inferInputObjectStructureFromFields({
         fields,
@@ -224,8 +224,8 @@ describe(`GraphQL Input args from fields, test-only`, () => {
 
     // circular level should not be here, ie. typeA -> typeB -> typeA
     expect(childABFields.typea).toBeUndefined()
-    
-    // in the other direction, from entryPointB -> typeA, the latter shouldn't exist, 
+
+    // in the other direction, from entryPointB -> typeA, the latter shouldn't exist,
     // due to having no further non-circular fields to filter
     expect(entryPointBFields.typea).toBeUndefined()
   })

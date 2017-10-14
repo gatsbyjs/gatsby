@@ -139,6 +139,7 @@ class Image extends React.Component {
       title,
       alt,
       className,
+      outerWrapperClassName,
       style = {},
       sizes,
       resolutions,
@@ -158,6 +159,9 @@ class Image extends React.Component {
       // The outer div is necessary to reset the z-index to 0.
       return (
         <div
+          className={`${outerWrapperClassName
+            ? outerWrapperClassName
+            : ``} gatsby-image-outer-wrapper`}
           style={{
             zIndex: 0,
             // Let users set component to be absolutely positioned.
@@ -249,6 +253,9 @@ class Image extends React.Component {
       // The outer div is necessary to reset the z-index to 0.
       return (
         <div
+          className={`${outerWrapperClassName
+            ? outerWrapperClassName
+            : ``} gatsby-image-outer-wrapper`}
           style={{
             zIndex: 0,
             // Let users set component to be absolutely positioned.
@@ -323,6 +330,10 @@ Image.propTypes = {
   title: PropTypes.string,
   alt: PropTypes.string,
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]), // Support Glamor's css prop.
+  outerWrapperClassName: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+  ]),
   style: PropTypes.object,
   position: PropTypes.string,
   backgroundColor: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
