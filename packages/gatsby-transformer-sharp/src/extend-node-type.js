@@ -19,6 +19,7 @@ const sharp = require(`sharp`)
 const fsExtra = require(`fs-extra`)
 const sizeOf = require(`image-size`)
 const path = require(`path`)
+const Potrace = require(`potrace`).Potrace
 
 const ImageFormatType = new GraphQLEnumType({
   name: `ImageFormat`,
@@ -61,10 +62,27 @@ const PotraceType = new GraphQLInputObjectType({
   name: `Potrace`,
   fields: () => {
     return {
-      background: { type: GraphQLString },
-      color: { type: GraphQLString },
+      turnPolicy: {
+        type: new GraphQLEnumType({
+          name: `PotraceTurnPolicy`,
+          values: {
+            TURNPOLICY_BLACK: { value: Potrace.TURNPOLICY_BLACK },
+            TURNPOLICY_WHITE: { value: Potrace.TURNPOLICY_WHITE },
+            TURNPOLICY_LEFT: { value: Potrace.TURNPOLICY_LEFT },
+            TURNPOLICY_RIGHT: { value: Potrace.TURNPOLICY_RIGHT },
+            TURNPOLICY_MINORITY: { value: Potrace.TURNPOLICY_MINORITY },
+            TURNPOLICY_MAJORITY: { value: Potrace.TURNPOLICY_MAJORITY },
+          },
+        }),
+      },
       turdSize: { type: GraphQLFloat },
+      alphaMax: { type: GraphQLFloat },
+      optCurve: { type: GraphQLBoolean },
       optTolerance: { type: GraphQLFloat },
+      threshold: { type: GraphQLInt },
+      blackOnWhite: { type: GraphQLBoolean },
+      color: { type: GraphQLString },
+      background: { type: GraphQLString },
     }
   },
 })
