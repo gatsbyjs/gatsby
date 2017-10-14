@@ -15,7 +15,7 @@ Let's check first that you have everything setup to start creating with Gatsby. 
 
 Node.js is a programming tool for running JavaScript on servers and in your computer's terminal. Gatsby is built using Node.js.
 
-Open a terminal window and type `node --version` then `npm --version`.
+Open a terminal window. See [these instructions](http://www.macworld.co.uk/feature/mac-software/how-use-terminal-on-mac-3608274/) for Mac users and [these other instructions](https://www.quora.com/How-do-I-open-terminal-in-windows) for Windows users. In your terminal window, type `node --version` then `npm --version`.
 
 You should see something like:
 
@@ -29,7 +29,7 @@ If you don't have Node.js installed, go to https://nodejs.org/ and install the r
 
 Gatsby uses "starters" for starting new projects. As the name suggests, starters are partially built Gatsby sites pre-configured to help you get moving faster. There are several official starters and many others contributed from the Gatsby community! [See the Starters page for the full list](/docs/gatsby-starters/).
 
-To install a starter, first install Gatsby's terminal program.
+To install a starter, first install Gatsby's terminal program by typing the following command into the a terminal window and hit ENTER.
 
 ```sh
 npm install --global gatsby-cli
@@ -37,7 +37,7 @@ npm install --global gatsby-cli
 
 
 
-Once that's installed, run:
+Once that's installed, type the following command in and hit ENTER:
 
 ```sh
 gatsby new tutorial-part-one https://github.com/gatsbyjs/gatsby-starter-hello-world
@@ -45,11 +45,11 @@ gatsby new tutorial-part-one https://github.com/gatsbyjs/gatsby-starter-hello-wo
 
 
 
-This command downloads the files for the starter and then installs the needed NPM packages. It should take around 1.5-3 minutes to finish.
+This command downloads the files for the starter and then installs the needed NPM packages. It should take around 1.5-3 minutes to finish. It may look like nothing is happening at first; be patient!
 
 Now let's now try running Gatsby!
 
-Gatsby has a built-in development server. Let's start it up.
+Gatsby has a built-in development server. Let's start it up by typing in the following commands into the same terminal window you've used so far in this tutorial.
 
 ```sh
 cd tutorial-part-one
@@ -70,9 +70,11 @@ This is huge because it makes development so much faster and fun.
 
 Let's try it.
 
-Try changing "Hello world!" in the page component to "Hello Gatsby!". You'll find the page component at `src/pages/index.js`. The text in your browser should change within a second.
+You'll need code editing software for the next part of this tutorial. [VS Code](https://code.visualstudio.com/) is a nice one. After downloading and opening a code editing software, open a folder on your computer called "tutorial-part-one." This folder was automatically created when you ran the previous terminal commands in the first part of this tutorial.
 
-Try some other tricks.
+Now that you've opened the "tutorial-part-one" folder in your code editing software, it's time to edit your website. In the code editing software, you'll need to find the `src/pages/index.js`. Once you find that, try changing "Hello world!" in the page component to "Hello Gatsby!". The text in your browser should change within a second.
+
+Try some other tricks, like the ones below:
 
 1. Gatsby lets you add "inline styles" via a JavaScript style "prop" (we'll learn about other styling options later).
 
@@ -84,7 +86,7 @@ import React from "react"
 export default () => <div style={{ color: `blue` }}>Hello Gatsby!</div>
 ```
 
-   Change the color to "pink". Then "tomato".
+   Change the color to "pink". Then to "tomato".
 
 2. Add some paragraph text.
 
