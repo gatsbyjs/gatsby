@@ -76,7 +76,6 @@ const renderSubHeader = props => (
           key={i}
           css={{
             display: `table-cell`,
-            borderBottom: `none`,
             background: "#f8f8f8",
             //borderLeft: i > 1 ? `1px solid #dddddd` : `none`,
             //borderRight: i === 5 ? `1px solid #dddddd` : `none`,

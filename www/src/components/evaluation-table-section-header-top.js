@@ -5,7 +5,7 @@ import { rhythm } from "../utils/typography"
 const superHeaderTitles = [
   `Feature`,
   `Gatsby`,
-  `Static frameworks`,
+  `Static site gens`,
   `CMS`,
   `Site builders`,
 ]
@@ -18,26 +18,33 @@ const superHeader = () => (
           key={i}
           css={{
             display: `none`,
-            borderBottom: `1px solid #dddddd`,
             padding: rhythm(1 / 2),
             textTransform: `uppercase`,
             fontSize: `80%`,
             fontWeight: 600,
             textAlign: `center`,
             verticalAlign: `bottom`,
+            width: i === 0 ? 120 : `inherit`,
             [presets.Mobile]: {
               display: `table-cell`,
-              maxWidth: 125,
+              width: 125,
             },
             [presets.Tablet]: {
-              maxWidth: 150,
+              width: 150,
             },
             [presets.Desktop]: {
-              maxWidth: `inherit`,
+              width: 175,
             },
           }}
         >
-          { header }
+          <span css={{
+            "-webkitHyphens": `auto`,
+            "-msHyphens": `auto`,
+            hyphens: `auto`,
+            display: `inline-block`,
+          }}>
+            { header }
+          </span>
         </td>
       ))
     }

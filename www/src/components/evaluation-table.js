@@ -24,6 +24,9 @@ class EvaluationTable extends Component {
           hyphens: `auto`,
           wordBreak: `break-all`,
           display: `inline-block`,
+          "&:hover": {
+            background: `#e0d6eb`,
+          },
         }}>
           &nbsp;
           {`${words[words.length - 1]} `}
@@ -59,7 +62,12 @@ class EvaluationTable extends Component {
                 marginRight: `auto`,
               }}
             >
-              <a css={{fontWeight: `normal !important` }} onClick={e => {e.preventDefault()}}>
+              <a
+                css={{
+                  fontWeight: `normal !important`,
+                }}
+                onClick={e => {e.preventDefault()}}
+              >
                 {renderText(text)}
               </a>
             </div>
@@ -105,7 +113,6 @@ class EvaluationTable extends Component {
           // anchor links on this page due to a bug in the
           // scrolling library
           display: `table`,
-          //borderBottom: options.tableBorder,
           overflowX: "scroll"
         }}
       >
@@ -117,7 +124,7 @@ class EvaluationTable extends Component {
               concat(
                 flatten(
                   section.map((row, i) => (
-                    ((row.node.Subcategory && i) ? [<br />] : []).concat(
+                    ([]).concat(
                       [
                         <SectionHeaderBottom
                           display={row.node.Subcategory}
@@ -133,11 +140,11 @@ class EvaluationTable extends Component {
                                 key={j}
                                 css={{
                                   display: `table-cell`,
-                                  borderBottom: `none`,
                                   "&:hover": {
                                     cursor: j >= 0 ? `pointer` : `inherit`,
                                   },
-                                  width: j === 0 ? 120 : `inherit`,
+                                  borderBottom: !showTooltip(s,i) ? `invalidCSS` : `none`,
+                                  minWidth: 40,
                                   paddingRight: 0,
                                   paddingLeft: 0,
                                   textAlign: `center`,
@@ -166,11 +173,9 @@ class EvaluationTable extends Component {
                           <td
                             key={1}
                             css={{
-                              //borderBottom: options.tableBorder,
                               fontFamily: options.headerFontFamily.join(`,`),
                               paddingRight: `${rhythm(1)} !important`,
                               paddingLeft: `${rhythm(1)} !important`,
-                              borderBottom: `none`,
                               [presets.Mobile]: {
                                 paddingRight: `${rhythm(2)} !important`,
                                 paddingLeft: `${rhythm(2)} !important`,
