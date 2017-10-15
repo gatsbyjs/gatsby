@@ -357,12 +357,7 @@ async function responsiveSizes({ file, args = {} }) {
     pngCompressionLevel: 9,
     grayscale: false,
     duotone: false,
-    trace: {
-      color: `#ddd`,
-      optTolerance: 0.4,
-      turdSize: 100,
-      turnPolicy: potrace.Potrace.TURNPOLICY_MAJORITY,
-    },
+    trace: false,
     pathPrefix: ``,
     toFormat: ``,
   }
@@ -476,12 +471,7 @@ async function resolutions({ file, args = {} }) {
     pngCompressionLevel: 9,
     grayscale: false,
     duotone: false,
-    trace: {
-      color: `#ddd`,
-      optTolerance: 0.4,
-      turdSize: 100,
-      turnPolicy: potrace.Potrace.TURNPOLICY_MAJORITY,
-    },
+    trace: false,
     pathPrefix: ``,
     toFormat: ``,
   }
