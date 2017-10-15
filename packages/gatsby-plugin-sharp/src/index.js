@@ -9,14 +9,9 @@ const imagemin = require(`imagemin`)
 const imageminPngquant = require(`imagemin-pngquant`)
 const queue = require(`async/queue`)
 const path = require(`path`)
-const potrace = require(`potrace`)
-const SVGO = require(`svgo`)
 
 const duotone = require(`./duotone`)
 const { boundActionCreators } = require(`gatsby/dist/redux/actions`)
-
-const svgo = new SVGO()
-const trace = Promise.promisify(potrace.trace)
 
 // Promisify the sharp prototype (methods) to promisify the alternative (for
 // raw) callback-accepting toBuffer(...) method
@@ -571,6 +566,8 @@ async function resolutions({ file, args = {} }) {
 }
 
 async function notMemoizedtraceSVG({ file, args }) {
+  const potrace = require(`potrace`)
+  const trace = Promise.promisify(potrace.trace)
   return await trace(file.absolutePath, args)
     .then(svg => optimize(svg))
     .then(svg => `data:image/svg+xml,${svg.toString(`base64`)}`)
@@ -585,10 +582,13 @@ async function traceSVG(args) {
   return await memoizedTraceSVG(args)
 }
 
-const optimize = svg =>
-  new Promise((resolve, reject) => {
+const optimize = svg => {
+  const SVGO = require(`svgo`)
+  const svgo = new SVGO()
+  return new Promise((resolve, reject) => {
     svgo.optimize(svg, ({ data }) => resolve(data))
   })
+}
 
 exports.queueImageResizing = queueImageResizing
 exports.base64 = base64
