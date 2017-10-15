@@ -166,8 +166,9 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           type: PotraceType,
           defaultValue: {
             color: `#ddd`,
-            turdSize: 100,
             optTolerance: 0.4,
+            turnPolicy: Potrace.TURNPOLICY_MAJORITY,
+            turdSize: 100,
           },
         },
         quality: {
@@ -233,8 +234,9 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           type: PotraceType,
           defaultValue: {
             color: `#ddd`,
-            turdSize: 100,
             optTolerance: 0.4,
+            turdSize: 100,
+            turnPolicy: Potrace.TURNPOLICY_MAJORITY,
           },
         },
         quality: {
