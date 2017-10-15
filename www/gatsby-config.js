@@ -103,6 +103,7 @@ module.exports = {
         navigateFallbackWhitelist: [],
       },
     },
+    `gatsby-transformer-csv`,
     `gatsby-plugin-twitter`,
     `gatsby-plugin-react-helmet`,
     {
