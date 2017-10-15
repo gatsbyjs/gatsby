@@ -6,10 +6,10 @@ import MobileNavigation from "../components/navigation-mobile"
 import SidebarBody from "../components/sidebar-body"
 import tutorialSidebar from "../pages/docs/tutorial-links.yml"
 import docsSidebar from "../pages/docs/doc-links.yaml"
+import featuresSidebar from "../pages/docs/features-links.yaml"
 import { rhythm, scale } from "../utils/typography"
 import presets from "../utils/presets"
 import colors from "../utils/colors"
-
 import "../css/prism-coy.css"
 
 // Import Futura PT typeface
@@ -28,7 +28,8 @@ class DefaultLayout extends React.Component {
     const hasSidebar =
       this.props.location.pathname.slice(0, 6) === `/docs/` ||
       this.props.location.pathname.slice(0, 10) === `/packages/` ||
-      this.props.location.pathname.slice(0, 10) === `/tutorial/`
+      this.props.location.pathname.slice(0, 10) === `/tutorial/` ||
+      this.props.location.pathname.slice(0, 9) === `/features`
     const sidebarStyles = {
       borderRight: `1px solid ${colors.b[0]}`,
       backgroundColor: presets.sidebar,
@@ -100,6 +101,19 @@ class DefaultLayout extends React.Component {
             }}
           >
             <SidebarBody yaml={tutorialSidebar} />
+          </div>
+          <div
+            css={{
+              ...sidebarStyles,
+              [presets.Tablet]: {
+                display:
+                  this.props.location.pathname.slice(0, 9) === `/features`
+                    ? `block`
+                    : `none`,
+              },
+            }}
+          >
+            <SidebarBody yaml={featuresSidebar} />
           </div>
           <div
             css={{
