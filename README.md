@@ -55,6 +55,7 @@ Websites built with Gatsby:
 * [Random Screencast](https://randomscreencast.com)
 * [Phu Quoc Tea & Coffee Store](http://trasuaphuquoc.com)
 * [Steven Natera's blog](https://www.stevennatera.com)
+* [LekoArts - Graphic Designer](https://www.lekoarts.de)
 
 ## Docs
 
