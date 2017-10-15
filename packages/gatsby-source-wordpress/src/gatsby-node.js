@@ -24,7 +24,7 @@ exports.sourceNodes = async (
     protocol,
     hostingWPCOM,
     useACF = true,
-    auth,
+    auth = {},
     verboseOutput,
     perPage = 100,
   }
