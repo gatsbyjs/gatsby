@@ -32,8 +32,8 @@ class EvaluationCell extends Component {
       borderRadius: `50%`,
       border: `1px solid #9d7cbf`,
       [presets.Mobile]: {
-        height: rhythm(5 / 4),
-        width: rhythm(5 / 4),
+        height: rhythm(1),
+        width: rhythm(1),
       },
     }
     return (

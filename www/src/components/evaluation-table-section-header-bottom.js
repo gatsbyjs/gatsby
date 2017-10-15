@@ -87,6 +87,8 @@ const renderSubHeader = props => (
             fontWeight: 600,
             textAlign: `center`,
             verticalAlign: `middle`,
+            fontSize: `90%`,
+            lineHeight: `${rhythm(1)}`,
             "&:last-child": {
               paddingRight: rhythm(1 / 2),
             },

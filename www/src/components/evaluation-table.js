@@ -33,8 +33,9 @@ class EvaluationTable extends Component {
           <img
             src={infoIcon}
             css={{
-              height: rhythm(1 / 2),
-              marginBottom: 0,
+              height: rhythm(2 / 5),
+              marginBottom: rhythm(2 / 15),
+              verticalAlign: `text-bottom`,
             }}
           />
         </span>
@@ -85,8 +86,8 @@ class EvaluationTable extends Component {
                 width: rhythm(3 / 4),
                 verticalAlign: `middle`,
                 [presets.Mobile]: {
-                  height: rhythm(5 / 4),
-                  width: rhythm(5 / 4),
+                  height: rhythm(1),
+                  width: rhythm(1),
                 },
               }}
             >
@@ -149,6 +150,8 @@ class EvaluationTable extends Component {
                                   paddingLeft: 0,
                                   textAlign: `center`,
                                   verticalAlign: `middle`,
+                                  fontSize: `80%`,
+                                  lineHeight: `${rhythm(3 / 4)}`,
                                 }}
                                 onClick={() => {
                                   this.setState({
