@@ -570,7 +570,7 @@ async function notMemoizedtraceSVG({ file, args }) {
   const trace = Promise.promisify(potrace.trace)
   return await trace(file.absolutePath, args)
     .then(svg => optimize(svg))
-    .then(svg => `data:image/svg+xml,${svg.toString(`base64`)}`)
+    .then(svg => encodeOptimizedSVGDataUri(svg))
 }
 
 const memoizedTraceSVG = _.memoize(
@@ -580,6 +580,19 @@ const memoizedTraceSVG = _.memoize(
 
 async function traceSVG(args) {
   return await memoizedTraceSVG(args)
+}
+
+// https://codepen.io/tigt/post/optimizing-svgs-in-data-uris
+function encodeOptimizedSVGDataUri(svgString) {
+  var uriPayload = encodeURIComponent(svgString) // encode URL-unsafe characters
+    .replace(/%0A/g, ``) // remove newlines
+    .replace(/%20/g, ` `) // put spaces back in
+    .replace(/%3D/g, `=`) // ditto equals signs
+    .replace(/%3A/g, `:`) // ditto colons
+    .replace(/%2F/g, `/`) // ditto slashes
+    .replace(/%22/g, `'`) // replace quotes with apostrophes (may break certain SVGs)
+
+  return `data:image/svg+xml,` + uriPayload
 }
 
 const optimize = svg => {
