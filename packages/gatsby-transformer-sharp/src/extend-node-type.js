@@ -73,15 +73,16 @@ const PotraceType = new GraphQLInputObjectType({
             TURNPOLICY_MINORITY: { value: Potrace.TURNPOLICY_MINORITY },
             TURNPOLICY_MAJORITY: { value: Potrace.TURNPOLICY_MAJORITY },
           },
+          defaultValue: Potrace.TURNPOLICY_MAJORITY,
         }),
       },
-      turdSize: { type: GraphQLFloat },
+      turdSize: { type: GraphQLFloat, defaultValue: 100 },
       alphaMax: { type: GraphQLFloat },
       optCurve: { type: GraphQLBoolean },
-      optTolerance: { type: GraphQLFloat },
+      optTolerance: { type: GraphQLFloat, defaultValue: 0.4 },
       threshold: { type: GraphQLInt },
       blackOnWhite: { type: GraphQLBoolean },
-      color: { type: GraphQLString },
+      color: { type: GraphQLString, defaultValue: `lightgray` },
       background: { type: GraphQLString },
     }
   },
@@ -164,12 +165,6 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
         },
         trace: {
           type: PotraceType,
-          defaultValue: {
-            color: `lightgray`,
-            optTolerance: 0.4,
-            turnPolicy: Potrace.TURNPOLICY_MAJORITY,
-            turdSize: 100,
-          },
         },
         quality: {
           type: GraphQLInt,
@@ -232,12 +227,6 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
         },
         trace: {
           type: PotraceType,
-          defaultValue: {
-            color: `lightgray`,
-            optTolerance: 0.4,
-            turdSize: 100,
-            turnPolicy: Potrace.TURNPOLICY_MAJORITY,
-          },
         },
         quality: {
           type: GraphQLInt,
