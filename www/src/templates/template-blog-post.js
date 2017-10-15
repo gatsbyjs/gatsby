@@ -70,14 +70,18 @@ class BlogPostTemplate extends React.Component {
             <meta name="og:description" content={post.excerpt} />
             <meta name="twitter:description" content={post.excerpt} />
             <meta name="og:title" content={post.frontmatter.title} />
-            <meta
-              name="og:image"
-              content={post.frontmatter.image.childImageSharp.resize.src}
-            />
-            <meta
-              name="twitter:image"
-              content={post.frontmatter.image.childImageSharp.resize.src}
-            />
+            {post.frontmatter.image && (
+              <meta
+                name="og:image"
+                content={post.frontmatter.image.childImageSharp.resize.src}
+              />
+            )}
+            {post.frontmatter.image && (
+              <meta
+                name="twitter:image"
+                content={post.frontmatter.image.childImageSharp.resize.src}
+              />
+            )}
             <meta name="og:type" content="article" />
             <meta name="article:author" content={post.frontmatter.author.id} />
             <meta
