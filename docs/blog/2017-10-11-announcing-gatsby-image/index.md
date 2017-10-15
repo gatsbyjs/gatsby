@@ -69,7 +69,7 @@ The React version of headroom.js is far simpler and *safer* to use as the HTML, 
 
 ## What makes technology fun?
 
-This is a complex philosophical question and I'm writing this on a Saturday afternoon so I'll cheat a bit and just cut the gordian knot by saying "simplicity is fun" and conversily "complexity is not fun".
+This is a complex philosophical question and I'm writing this on a Saturday afternoon so I'll cheat a bit and just cut the gordian knot by saying "simplicity is fun" and conversely "complexity is not fun".
 
 Every one loves new projects. Why? Because they're simple! We can dive in and experiment and reliably get something done. The more complex the project, the more things seem to break, the more time gets wasted on various yak shaves, and critically, the gap between thinking up an idea and being able to try it grows larger and larger.
 
@@ -103,15 +103,15 @@ Alan Kay told a great story in his recent talk [The Power of Simplicity](https:/
 
 ![Cassini model of planet motion](Cassini_apparent.jpg)
 
-From ancient times to the 1600s, people believed that the planets' orbits must be perfect circles. Which introduced a ton of complexity into their models. This complexity persisted until Kepler came along with the stunning insight (hindsight sarcasm) that no, orbits were elliptical not circlular. With this new insight, models of planatary motion became dramatically simpler.
+From ancient times to the 1600s, people believed that the planets' orbits must be perfect circles. Which introduced a ton of complexity into their models. This complexity persisted until Kepler came along with the stunning insight (hindsight sarcasm) that no, orbits were elliptical not circular. With this new insight, models of planetary motion became dramatically simpler.
 
 This false belief, that orbits must be circular, helped stall our understanding of the solar system for *1000s of years*! All the complex calculations that the astronomers studiously completed to force-fit the circular idea into their models just got in the way of understanding what was actually going on.
 
 ## Find the right building blocks
 
-Later in the talk, Alan Kay summarized his message by stating that "you get simplicity by finding *slightly more sophesticated building blocks*".
+Later in the talk, Alan Kay summarized his message by stating that "you get simplicity by finding *slightly more sophisticated building blocks*".
 
-Each problem space has a "particularly felicitious point-of-view". Find that point-of-view and the problem complexity collapses.
+Each problem space has a "particularly felicitous point-of-view". Find that point-of-view and the problem complexity collapses.
 
 The right building blocks allows us to directly manipulate the parts of the problem that we actually care about. We have [an immediate connection](http://blog.ezyang.com/2012/02/transcript-of-inventing-on-principleb/) between our thoughts and the visible outputs.
 
@@ -161,9 +161,9 @@ But if this was all gatsby-image did, it'd be a nice new component to have aroun
 
 If we think about the entire process of building for the web, there are many steps before we get to actually coding the frontend.
 
-For example, how does a single image typically get on a website? First a page needs to be designed, then an image choosen for a spot in the design, then the choosen image must be resized (ideally multiple thumbnails to fit different devices), and then finally the HTML/CSS/JS (or React component) gets written.
+For example, how does a single image typically get on a website? First a page needs to be designed, then an image chosen for a spot in the design, then the chosen image must be resized (ideally multiple thumbnails to fit different devices), and then finally the HTML/CSS/JS (or React component) gets written.
 
-The page component I showed above wasn't complete. Gatsby let's you *query your site data* with GraphQL *including* querying for different sizes and shapes of images.
+The page component I showed above wasn't complete. Gatsby lets you *query your site data* with GraphQL *including* querying for different sizes and shapes of images.
 
 What makes gatsby-image really interesting is it's *seamlessly integrated into Gatsby's data layer* which has native image processing capabilities.
 
@@ -198,7 +198,7 @@ export const query = graphql`
 
 
 
-So not only do we skip all the complexity around setting up lazy-loading images that hold their place with nice placeholders but we can also skip the complexity around generating (and regenerating as design requirements change) the right sized image thumbails.
+So not only do we skip all the complexity around setting up lazy-loading images that hold their place with nice placeholders but we can also skip the complexity around generating (and regenerating as design requirements change) the right sized image thumbnails.
 
 So instead of a long list of tasks to setup optimized images for your site, the steps now are:
 
