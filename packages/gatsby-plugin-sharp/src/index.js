@@ -583,7 +583,7 @@ async function resolutions({ file, args = {} }) {
 async function notMemoizedtraceSVG({ file, args }) {
   return await trace(file.absolutePath, args)
     .then(svg => optimize(svg))
-    .then(svg => `data:image/svg+xml;utf8,${svg.toString(`base64`)}`)
+    .then(svg => `data:image/svg+xml,${svg.toString(`base64`)}`)
 }
 
 const memoizedTraceSVG = _.memoize(
