@@ -7,11 +7,11 @@ typora-copy-images-to: ./
 
 I still remember the first non-trivial React component I built in 2014—not long after I started using React seriously.
 
-I decided to port to React [headroom.js](http://wicky.nillia.ms/headroom.js/), a JavaScript library that shows/hides headers as you scroll up/down a site.
+I decided to port to React [headroom.js](http://wicky.nillia.ms/headroom.js/), a JavaScript library that shows & hides headers as you scroll up & down a site.
 
-After a day or two of working through the niceties of writing a React component and publish it to NPM, I started writing the docs and realized… there was almost nothing to write.
+After a day or two of working through the niceties of writing a React component and publishing it to NPM, I started writing the documentation and realized… there was almost nothing to write.
 
-Using [react-headroom](https://github.com/KyleAMathews/react-headroom) is so simple you almost don't need docs. A React header component using it would look like this:
+Using [react-headroom](https://github.com/KyleAMathews/react-headroom) is so simple I realized you almost don't need documentation. A React header component using it would look like this:
 
 ```jsx
 import React from 'react'
@@ -25,7 +25,7 @@ export default () =>
   </Headroom>
 ```
 
-Having coming from years of building things with Backbone.js and jQuery where implementing a new Backbone/jQuery plugin felt like following a long & intricate cooking recipe, the simplicity of react-headroom was astounding. That's all you do? Import it and "use" it like an HTML element?
+Having coming from years of building things with Backbone.js and jQuery where implementing a new plugin felt like following a long & intricate cooking recipe, the simplicity of react-headroom was astounding. That's all you do? Import it and use it like an HTML element?
 
 Compare this with the minimum code necessary for the original headroom.js.
 
@@ -69,7 +69,7 @@ The React version of headroom.js is far simpler and *safer* to use as the HTML, 
 
 ## What makes technology fun?
 
-This is a complex philosophical question and I'm writing this on a Saturday afternoon so I'll cheat a bit and just cut the gordian knot by saying "simplicity is fun"; and conversely, "complexity is not fun".
+This is a complex philosophical question and I'm writing this on a Saturday afternoon so I'll cheat a bit and just cut the gordian knot by saying "simplicity is fun" and conversely, "complexity is not fun".
 
 Every one loves new projects. Why? Because they're simple! We can dive in and experiment and reliably get something done. The more complex the project, the more things seem to break, the more time gets wasted on various yak shaves, and critically, the gap between thinking up an idea and being able to try it grows larger and larger.
 
@@ -95,15 +95,15 @@ But big doesn't necessarily mean complex.
 
 ![project-complexity](project-complexity-8023880.png)
 
-Perhaps you've been on projects that followed the red curve as well as others the blue curve.
+Perhaps you've been on projects that followed the red curve as well as others, the blue curve.
 
 Projects *do* get more complex as they scale but there are very large projects that still don't feel very complex while there are relatively small projects that are mired in complexity.
 
-Alan Kay told a great story in his recent talk [The Power of Simplicity](https://www.youtube.com/watch?v=NdSD07U5uBs)  (story starts at 5:45) about the history of mapping and modeling planet orbits in our solar system.
+Alan Kay told a great story in his recent talk [The Power of Simplicity](https://www.youtube.com/watch?v=NdSD07U5uBs)  (story starts at 5:45) about the history of modeling planet orbits in our solar system.
 
 ![Cassini model of planet motion](Cassini_apparent.jpg)
 
-From ancient times to the 1600s, people believed that the planets' orbits must be perfect circles. Which introduced a ton of complexity into their models. This complexity persisted until Kepler came along with the stunning insight (hindsight sarcasm) that no, orbits were elliptical not circular. With this new insight, models of planetary motion became dramatically simpler.
+From ancient times to the 1600s, people believed wrongly that the planets' orbits must be perfect circles. This false belief introduced a ton of complexity into their models. This complexity persisted until Kepler came along with the stunning insight (hindsight sarcasm) that no, orbits were elliptical not circular. With this new insight, models of planetary motion became dramatically simpler.
 
 This false belief, that orbits must be circular, helped stall our understanding of the solar system for *1000s of years*! All the complex calculations that the astronomers studiously completed to force-fit the circular idea into their models just got in the way of understanding what was actually going on.
 
@@ -125,7 +125,7 @@ This isn't trivial. As we saw, many of the brightest minds for 1000s of years co
 
 But literally weeks into using React.js, I was able to easily make a new React headroom component that is dramatically simpler than headroom.js.
 
-Which suggests React is a far better building block for the web than raw HTML/JS/CSS as it allows for easy encapsulation and composition.
+Which suggests React is a far better building block for the web than raw HTML/JS/CSS.
 
 Which also suggests the general principle that **if you're mired in complexity at one layer, you need to step *down* a layer or two and redesign the building blocks at *that* layer.**
 
@@ -159,15 +159,22 @@ But if this was all gatsby-image did, it'd be a nice new component to have aroun
 
 ## Reducing the complexity around the *entire* process of building a website
 
-If we think about the entire process of building for the web, there are many steps before we get to actually coding the frontend.
+If we think about the process of building for the web, there are many steps before we get to actually coding the frontend.
 
-For example, how does a single image typically get on a website? First a page needs to be designed, then an image chosen for a spot in the design, then the chosen image must be resized (ideally multiple thumbnails to fit different devices), and then finally the HTML/CSS/JS (or React component) gets written.
+For example, how does a single image typically get on a website?
 
-The page component I showed above wasn't complete. Gatsby lets you *query your site data* with GraphQL *including* querying for different sizes and shapes of images.
+1. a page is designed
+2. specifc images are chosen
+3. the images are resized (with ideally multiple thumbnails to fit different devices)
+4. and finally, the image(s) are included in the HTML/CSS/JS (or React component) for the page.
 
 What makes gatsby-image really interesting is it's *seamlessly integrated into Gatsby's data layer* which has native image processing capabilities.
 
-The full page component looks like:
+Gatsby lets you *query your site data* with GraphQL *including* querying for different sizes and shapes of images.
+
+So not only do we skip all the complexity around setting up lazy-loading images that hold their place with nice placeholders but we can also skip the complexity around generating (and regenerating as design requirements change) the right sized image thumbnails.
+
+The code I showed above was missing the GraphQL query. A full image component would look like:
 
 ```jsx
 import React from 'react'
@@ -196,10 +203,6 @@ export const query = graphql`
 `
 ```
 
-
-
-So not only do we skip all the complexity around setting up lazy-loading images that hold their place with nice placeholders but we can also skip the complexity around generating (and regenerating as design requirements change) the right sized image thumbnails.
-
 So instead of a long pipeline of tasks to setup optimized images for your site, the steps now are:
 
 1. Install gatsby-image
@@ -215,7 +218,7 @@ The goal of Gatsby is to make it easy to build incredibly fast websites. Right n
 
 We’ll make website building fun by creating higher-level components and design tools that allow us to more easily express our intent.
 
-We'll make the web fast again through efforts like gatsby-image were we re-examine basic building blocks of the web like `img` and improve their design through **seamless integration of data processing and React components**.
+We'll make the web fast again through efforts like gatsby-image where we re-examine basic building blocks of the web like `<img>` and improve their design through **seamless integration of data processing and React components**.
 
 We live at an extraordinary time. We work on the largest platform that has ever existed. Tools like [Babel](https://babeljs.io/) let us easily experiment with new syntax. [CSS-in-JS](https://medium.com/seek-blog/a-unified-styling-language-d0c208de2660) enables entirely new ways of thinking about styles and theming. Browser vendors are pushing hard to improve all parts of the web platform. There's never been a better time to re-examine old doctrines and try audacious experiments. Radical improvements to the web are waiting us.
 
