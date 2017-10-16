@@ -69,7 +69,7 @@ The React version of headroom.js is far simpler and *safer* to use as the HTML, 
 
 ## What makes technology fun?
 
-This is a complex philosophical question and I'm writing this on a Saturday afternoon so I'll cheat a bit and just cut the gordian knot by saying "simplicity is fun" and conversely "complexity is not fun".
+This is a complex philosophical question and I'm writing this on a Saturday afternoon so I'll cheat a bit and just cut the gordian knot by saying "simplicity is fun"; and conversely, "complexity is not fun".
 
 Every one loves new projects. Why? Because they're simple! We can dive in and experiment and reliably get something done. The more complex the project, the more things seem to break, the more time gets wasted on various yak shaves, and critically, the gap between thinking up an idea and being able to try it grows larger and larger.
 
@@ -113,7 +113,7 @@ Later in the talk, Alan Kay summarized his message by stating that "you get simp
 
 Each problem space has a "particularly felicitous point-of-view". Find that point-of-view and the problem complexity collapses.
 
-The right building blocks allows us to directly manipulate the parts of the problem that we actually care about. We have [an immediate connection](http://blog.ezyang.com/2012/02/transcript-of-inventing-on-principleb/) between our thoughts and the visible outputs.
+The right building blocks allows us to directly manipulate the parts of the problem that we actually care about. They create [an immediate connection](http://blog.ezyang.com/2012/02/transcript-of-inventing-on-principleb/) between our thoughts and the visible outputs.
 
 With the right building blocks, creating is fun! It's play! With bad building blocks, it's tedious work and muddy thinking.
 
@@ -121,7 +121,7 @@ With the right building blocks, creating is fun! It's play! With bad building bl
 
 Ahhh, now we're getting to the really interesting question.
 
-This isn't trivial. As we saw, many of the brightest minds for 1000s of years couldn't figure out that planets' orbits aren't circles. Leonardo da Vinci couldn't build most of the machines he dreamt up. And I, no Leonardo for sure, couldn't ever improve on headroom.js.
+This isn't trivial. As we saw, many of the brightest minds for 1000s of years couldn't figure out that planets' orbits aren't circles. Leonardo da Vinci couldn't build most of the machines he dreamt up. And I, no Leonardo, couldn't ever improve on headroom.js.
 
 But literally weeks into using React.js, I was able to easily make a new React headroom component that is dramatically simpler than headroom.js.
 
@@ -200,7 +200,7 @@ export const query = graphql`
 
 So not only do we skip all the complexity around setting up lazy-loading images that hold their place with nice placeholders but we can also skip the complexity around generating (and regenerating as design requirements change) the right sized image thumbnails.
 
-So instead of a long list of tasks to setup optimized images for your site, the steps now are:
+So instead of a long list of pipeline tasks to setup optimized images for your site, the steps now are:
 
 1. Install gatsby-image
 2. See what size of image you need (125x125 in the example above)
@@ -213,7 +213,11 @@ Now playing with images is fun! Want to tweak your design? No problem, just chan
 
 The goal of Gatsby is to make it easy to build incredibly fast websites. Right now, that's far too hard to do and [most sites fail at it](/blog/2017-09-13-why-is-gatsby-so-fast/).
 
+We’ll make website building fun by creating higher-level components, design tools, and website “compilers” that allow us to more easily express our intent.
+
 We'll make the web fast again through efforts like gatsby-image were we re-examine basic building blocks of the web like `img` and improve their design through **seamless integration of data processing and React components**.
+
+We live at an extraordinary time. We work on the largest platform that has ever existed. Tools like Babel let us easily experiment with new syntax. CSS-in-JS enables entirely new ways of thinking about styles and theming. Browser vendors are pushing hard to improve all parts of the web platform. This is the perfect time to re-examine old doctrines and try audacious experiments.
 
 Gatsby's claim is that a React website, built with highly performant React component building blocks and compiled by Gatsby, is faster than all but the most tightly tuned, hand-crafted websites and at a *tiny* fraction of the effort.
 
