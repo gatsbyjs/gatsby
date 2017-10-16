@@ -121,3 +121,8 @@ Community:
   * Leaves the styling to you
   * Uses data from local json files
   * Contains Node.js server code for easy, secure, and fast hosting
+
+* [gatsby-starter-default-i18n](https://github.com/angeloocana/gatsby-starter-default-i18n) [(demo)](https://gatsby-starter-default-i18n.netlify.com)
+
+  Features:
+  * localization (Multilanguage)
