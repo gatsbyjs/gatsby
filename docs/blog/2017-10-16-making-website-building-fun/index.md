@@ -103,7 +103,7 @@ Alan Kay told a great story in his recent talk [The Power of Simplicity](https:/
 
 ![Cassini model of planet motion](Cassini_apparent.jpg)
 
-From ancient times to the 1600s, people believed wrongly that the planets' orbits must be perfect circles. This false belief introduced a ton of complexity into their models. This complexity persisted until Kepler came along with the stunning insight (hindsight sarcasm) that no, orbits were elliptical not circular. With this new insight, models of planetary motion became dramatically simpler.
+From ancient times to the 1600s, people believed that the planets' orbits must be perfect circles. This false belief introduced a ton of complexity into their models. This complexity persisted until Kepler came along with the stunning insight (hindsight sarcasm) that no, orbits were elliptical not circular. With this new insight, models of planetary motion became dramatically simpler.
 
 This false belief, that orbits must be circular, helped stall our understanding of the solar system for *1000s of years*! All the complex calculations that the astronomers studiously completed to force-fit the circular idea into their models just got in the way of understanding what was actually going on.
 
