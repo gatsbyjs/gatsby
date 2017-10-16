@@ -111,7 +111,7 @@ This false belief, that orbits must be circular, helped stall our understanding 
 
 Later in the talk, Alan Kay summarized his message by stating that "you get simplicity by finding *slightly more sophisticated building blocks*".
 
-Each problem space has a "particularly felicitous point-of-view". Find that point-of-view and the problem complexity collapses.
+Each problem space has a "particularly felicitous point-of-view". Find that point-of-view and problem complexity collapses.
 
 The right building blocks allows us to directly manipulate the parts of the problem that we actually care about. They create [an immediate connection](http://blog.ezyang.com/2012/02/transcript-of-inventing-on-principleb/) between our thoughts and the visible outputs.
 
@@ -200,10 +200,10 @@ export const query = graphql`
 
 So not only do we skip all the complexity around setting up lazy-loading images that hold their place with nice placeholders but we can also skip the complexity around generating (and regenerating as design requirements change) the right sized image thumbnails.
 
-So instead of a long list of pipeline tasks to setup optimized images for your site, the steps now are:
+So instead of a long pipeline of tasks to setup optimized images for your site, the steps now are:
 
 1. Install gatsby-image
-2. See what size of image you need (125x125 in the example above)
+2. Decide what size of image you need (125x125 in the example above)
 3. Add your query and the gatsby-image component to your page
 4. And… that's it!
 
@@ -213,12 +213,12 @@ Now playing with images is fun! Want to tweak your design? No problem, just chan
 
 The goal of Gatsby is to make it easy to build incredibly fast websites. Right now, that's far too hard to do and [most sites fail at it](/blog/2017-09-13-why-is-gatsby-so-fast/).
 
-We’ll make website building fun by creating higher-level components, design tools, and website “compilers” that allow us to more easily express our intent.
+We’ll make website building fun by creating higher-level components and design tools that allow us to more easily express our intent.
 
 We'll make the web fast again through efforts like gatsby-image were we re-examine basic building blocks of the web like `img` and improve their design through **seamless integration of data processing and React components**.
 
-We live at an extraordinary time. We work on the largest platform that has ever existed. Tools like Babel let us easily experiment with new syntax. CSS-in-JS enables entirely new ways of thinking about styles and theming. Browser vendors are pushing hard to improve all parts of the web platform. This is the perfect time to re-examine old doctrines and try audacious experiments.
+We live at an extraordinary time. We work on the largest platform that has ever existed. Tools like [Babel](https://babeljs.io/) let us easily experiment with new syntax. [CSS-in-JS](https://medium.com/seek-blog/a-unified-styling-language-d0c208de2660) enables entirely new ways of thinking about styles and theming. Browser vendors are pushing hard to improve all parts of the web platform. There's never been a better time to re-examine old doctrines and try audacious experiments. Radical improvements to the web are waiting us.
 
-Gatsby's claim is that a React website, built with highly performant React component building blocks and compiled by Gatsby, is faster than all but the most tightly tuned, hand-crafted websites and at a *tiny* fraction of the effort.
+Gatsby's claim is that a React website, built with our highly performant React component building blocks and compiled by Gatsby, is faster than all but the most tightly tuned, hand-crafted websites and at a *tiny* fraction of the effort.
 
-And I think we're just getting started. Come join us and help design and build the building blocks for the fastest possible websites which take the least amount of effort.
+And I think we're just getting started. Come join us and help design and write the building blocks for the fastest possible websites which take the least amount of effort.
