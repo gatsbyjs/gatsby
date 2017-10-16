@@ -60,13 +60,10 @@ exports.getValidKey = getValidKey
 // Remove the ACF key from the response when it's not an object
 const normalizeACF = entities =>
   entities.map(e => {
-    Object.keys(e)
-      .forEach(key => {
-        if (!_.isObject(e[`acf`])) {
-          delete e[`acf`]
-        }
-      })
-      return e
+    if (!_.isObject(e[`acf`])) {
+      delete e[`acf`]
+    }
+    return e
   })
 
 exports.normalizeACF = normalizeACF
