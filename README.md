@@ -56,6 +56,7 @@ Websites built with Gatsby:
 * [Phu Quoc Tea & Coffee Store](http://trasuaphuquoc.com)
 * [Steven Natera's blog](https://www.stevennatera.com)
 * [LekoArts - Graphic Designer](https://www.lekoarts.de)
+* [Georgi Yanev](https://blog.georgi-yanev.com) [(source)](https://github.com/jumpalottahigh/blog.georgi-yanev.com)
 
 ## Docs
 
