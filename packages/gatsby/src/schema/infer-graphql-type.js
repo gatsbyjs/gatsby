@@ -128,7 +128,7 @@ function inferGraphQLType({
             and seconds.`,
         },
       },
-      resolve(object, { fromNow, difference, formatString }) {
+      resolve(object, { fromNow, difference, formatString, locale = `en` }) {
         let date
         if (object[fieldName]) {
           date = JSON.parse(JSON.stringify(object[fieldName]))
@@ -136,12 +136,12 @@ function inferGraphQLType({
           return null
         }
         if (formatString) {
-          return moment.utc(date, ISO_8601_FORMAT, true).format(formatString)
+          return moment.utc(date, ISO_8601_FORMAT, true).locale(locale).format(formatString)
         } else if (fromNow) {
-          return moment.utc(date, ISO_8601_FORMAT, true).fromNow()
+          return moment.utc(date, ISO_8601_FORMAT, true).locale(locale).fromNow()
         } else if (difference) {
           return moment().diff(
-            moment.utc(date, ISO_8601_FORMAT, true),
+            moment.utc(date, ISO_8601_FORMAT, true).locale(locale),
             difference
           )
         } else {
