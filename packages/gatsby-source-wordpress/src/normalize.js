@@ -57,6 +57,20 @@ function getValidKey({ key, verbose = false }) {
 
 exports.getValidKey = getValidKey
 
+// Remove the ACF key from the response when it's not an object
+const normalizeACF = entities =>
+  entities.map(e => {
+    Object.keys(e)
+      .forEach(key => {
+        if (!_.isObject(e[`acf`])) {
+          delete e[`acf`]
+        }
+      })
+      return e
+  })
+
+exports.normalizeACF = normalizeACF
+
 // Create entities from the few the WordPress API returns as an object for presumably
 // legacy reasons.
 const normalizeEntities = entities => {

@@ -51,6 +51,9 @@ exports.sourceNodes = async (
 
   // Normalize data & create nodes
 
+  // Remove ACF key if it's not an object
+  entities = normalize.normalizeACF(entities)
+
   // Creates entities from object collections of entities
   entities = normalize.normalizeEntities(entities)
 
