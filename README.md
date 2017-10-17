@@ -59,6 +59,7 @@ Websites built with Gatsby:
 * [Georgi Yanev](https://blog.georgi-yanev.com) [(source)](https://github.com/jumpalottahigh/blog.georgi-yanev.com)
 * [OnCallogy.com](https://www.oncallogy.com)
 * [doopoll's marketing site](https://doopoll.co)
+* [Design Systems Weekly](https://designsystems.email/)
 
 ## Docs
 
