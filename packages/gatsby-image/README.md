@@ -56,7 +56,7 @@ export const query = graphql`
       childImageSharp {
         # Specify the image processing steps right in the query
         # Makes it trivial to update as your page's design changes.
-        resolutions(width: l25, height: 125) {
+        resolutions(width: 125, height: 125) {
           ...GatsbyImageSharpResolutions
         }
       }
