@@ -352,7 +352,12 @@ async function responsiveSizes({ file, args = {} }) {
     pngCompressionLevel: 9,
     grayscale: false,
     duotone: false,
-    trace: false,
+    trace: {
+      color: `lightgray`,
+      optTolerance: 0.4,
+      turdSize: 100,
+      turnPolicy: `majority`,
+    },
     pathPrefix: ``,
     toFormat: ``,
   }
@@ -466,7 +471,12 @@ async function resolutions({ file, args = {} }) {
     pngCompressionLevel: 9,
     grayscale: false,
     duotone: false,
-    trace: false,
+    trace: {
+      color: `lightgray`,
+      optTolerance: 0.4,
+      turdSize: 100,
+      turnPolicy: `majority`,
+    },
     pathPrefix: ``,
     toFormat: ``,
   }
