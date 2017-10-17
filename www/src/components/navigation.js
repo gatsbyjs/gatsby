@@ -163,7 +163,6 @@ export default ({ pathname }) => {
           <NavItem linkTo="/community/">Community</NavItem>
           <NavItem linkTo="/features/">Features</NavItem>
           <NavItem linkTo="/blog/">Blog</NavItem>
-
         </ul>
         <div
           css={{

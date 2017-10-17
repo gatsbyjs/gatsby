@@ -1,5 +1,5 @@
 import presets from "../utils/presets"
-import React from 'react'
+import React from "react"
 import logo from "../gatsby-negative.svg"
 import jekyll from "../assets/jekyll.svg"
 import wordpress from "../assets/wordpress.png"
@@ -45,7 +45,6 @@ const subHeaderTitles = [
       [presets.Mobile]: {
         height: rhythm(5 / 4),
       },
-
     }}
   />,
   <img
@@ -67,46 +66,44 @@ const renderSubHeader = props => (
   <tr
     key="subhead"
     style={{
-      display: !props.display ? `none` : `table-row`
+      display: !props.display ? `none` : `table-row`,
     }}
   >
-    {
-      subHeaderTitles.map((header, i) => (
-        <td
-          key={i}
-          css={{
-            display: `table-cell`,
-            background: "#f8f8f8",
-            //borderLeft: i > 1 ? `1px solid #dddddd` : `none`,
-            //borderRight: i === 5 ? `1px solid #dddddd` : `none`,
-            paddingTop: rhythm(1 / 4),
-            paddingLeft: rhythm(1 / 4),
-            paddingRight: i >= 1 ? rhythm(1 / 4) : 0,
-            paddingBottom: rhythm(1 / 4),
-            fontStyle: `italic`,
-            fontWeight: 600,
-            textAlign: `center`,
-            verticalAlign: `middle`,
-            fontSize: `90%`,
-            lineHeight: `${rhythm(1)}`,
+    {subHeaderTitles.map((header, i) => (
+      <td
+        key={i}
+        css={{
+          display: `table-cell`,
+          background: `#f8f8f8`,
+          //borderLeft: i > 1 ? `1px solid #dddddd` : `none`,
+          //borderRight: i === 5 ? `1px solid #dddddd` : `none`,
+          paddingTop: rhythm(1 / 4),
+          paddingLeft: rhythm(1 / 4),
+          paddingRight: i >= 1 ? rhythm(1 / 4) : 0,
+          paddingBottom: rhythm(1 / 4),
+          fontStyle: `italic`,
+          fontWeight: 600,
+          textAlign: `center`,
+          verticalAlign: `middle`,
+          fontSize: `90%`,
+          lineHeight: `${rhythm(1)}`,
+          "&:last-child": {
+            paddingRight: rhythm(1 / 2),
+          },
+          [presets.Mobile]: {
+            paddingTop: rhythm(1 / 2),
+            paddingLeft: `${rhythm(1 / 2)} !important`,
+            paddingRight: rhythm(1 / 2),
             "&:last-child": {
               paddingRight: rhythm(1 / 2),
             },
-            [presets.Mobile]: {
-              paddingTop: rhythm(1 / 2),
-              paddingLeft: `${rhythm(1 / 2)} !important`,
-              paddingRight: rhythm(1 / 2),
-              "&:last-child": {
-                paddingRight: rhythm(1 / 2),
-              },
-              paddingBottom: rhythm(1 / 2),
-            },
-          }
-        }>
-          { header || props.category || `Feature` }
-        </td>
-      ))
-    }
+            paddingBottom: rhythm(1 / 2),
+          },
+        }}
+      >
+        {header || props.category || `Feature`}
+      </td>
+    ))}
   </tr>
 )
 
