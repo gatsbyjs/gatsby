@@ -2,9 +2,9 @@
 title: Gatsby Style Guide
 ---
 
-The Gatsby community is building a massive, searchable "Gatsby Guides." This reference tool will eventually include thousands of articles that cover all topics relevant to people building on Gatsby - all written to be easily understood by the awesome community of people who love building with Gatsby!
+The Gatsby community is building out a more comprehsive Guides section full of relevant articles written to be easily understood by the awesome community of people who love building with Gatsby!
 
-This repo is where we plan, write, and maintain these Guide articles, which we then host at Gatsby Guides.
+We plan, write, and maintain these Guide articles on Github.
 
 ## Table of Contents
 - [What are Guide articles?](#what-are-guide-articles?)
