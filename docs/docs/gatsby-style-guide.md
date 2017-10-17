@@ -31,7 +31,7 @@ Before you begin writing, make sure to read the article style guide below.
 
 You can create a PR with your draft article (or edits on an existing article) in two ways:
 
-1. The easiest method is to use the GitHub interface. Watch the video demonstration or follow the steps below it: [insert video if needed. Is this necessary?]
+1. The easiest method is to use the GitHub interface. Read [these instructions](https://help.github.com/articles/editing-files-in-another-user-s-repository/) on how to create a draft article or propose edits in the Github interface.
 2. Go into the ["docs" folder](gatsbyjs/gatsby/docs) and find the article stub you'd like to write or edit. All stubs will be in an index.md file.
 3. Click the "Edit this file" pencil icon and make your changes to the file in GitHub-flavored Markdown.
 4. Scroll to the bottom of the screen and add a commit message explaining your changes. Then select the radio button option for "Create a new branch for this commit and start a pull request" and click "Propose file changes"
