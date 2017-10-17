@@ -10,13 +10,10 @@ class MasterLayout extends React.Component {
 
     return (
       <div className="MasterLayout">
-        <Helmet
-          defaultTitle={siteMetadata.title}
-          meta={[
-            { name: `description`, content: siteMetadata.siteDescr },
-            { name: `keywords`, content: `articles` },
-          ]}
-        />
+        <Helmet defaultTitle={siteMetadata.title}>
+          <meta name="description" content={siteMetadata.siteDescr} />
+          <meta name="keywords" content="articles" />
+        </Helmet>
         {this.props.children}
       </div>
     )
