@@ -49,10 +49,7 @@ describe(`Process WordPress data`, () => {
     expect(entities).toMatchSnapshot()
   })
   it(`Removes the acf key when acf is not an object`, () => {
-    let dummyEntities = [
-      { id: 1, acf: false },
-      { id: 2, acf: {} },
-    ]
+    let dummyEntities = [{ id: 1, acf: false }, { id: 2, acf: {} }]
     expect(normalize.normalizeACF(dummyEntities)).toEqual([
       { id: 1 },
       { id: 2, acf: {} },

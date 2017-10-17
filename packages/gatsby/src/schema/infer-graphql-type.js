@@ -136,9 +136,15 @@ function inferGraphQLType({
           return null
         }
         if (formatString) {
-          return moment.utc(date, ISO_8601_FORMAT, true).locale(locale).format(formatString)
+          return moment
+            .utc(date, ISO_8601_FORMAT, true)
+            .locale(locale)
+            .format(formatString)
         } else if (fromNow) {
-          return moment.utc(date, ISO_8601_FORMAT, true).locale(locale).fromNow()
+          return moment
+            .utc(date, ISO_8601_FORMAT, true)
+            .locale(locale)
+            .fromNow()
         } else if (difference) {
           return moment().diff(
             moment.utc(date, ISO_8601_FORMAT, true).locale(locale),

@@ -30,7 +30,7 @@ module.exports = async (program: any) => {
       }
       const outputFile = `${directory}/public/render-page.js`
       if (stats.hasErrors()) {
-        let webpackErrors = stats.compilation.errors.filter((e) => e)
+        let webpackErrors = stats.compilation.errors.filter(e => e)
         return reject(
           createErrorFromString(webpackErrors[0], `${outputFile}.map`)
         )
