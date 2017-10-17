@@ -58,6 +58,7 @@ Websites built with Gatsby:
 * [LekoArts - Graphic Designer](https://www.lekoarts.de)
 * [Georgi Yanev](https://blog.georgi-yanev.com) [(source)](https://github.com/jumpalottahigh/blog.georgi-yanev.com)
 * [OnCallogy.com](https://www.oncallogy.com)
+* [doopoll's marketing site](https://doopoll.co)
 
 ## Docs
 
