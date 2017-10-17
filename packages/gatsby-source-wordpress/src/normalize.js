@@ -240,11 +240,11 @@ exports.mapEntitiesToMedia = entities => {
     // Map featured_media to its media node
     let featuredMedia
     if (e.featured_media) {
-      featuredMedia = media.find(m => m.wordpress_id === e.featured_media).id
+      featuredMedia = media.find(m => m.wordpress_id === e.featured_media)
     }
 
     if (featuredMedia) {
-      e.featured_media___NODE = featuredMedia
+      e.featured_media___NODE = featuredMedia.id
     }
 
     // Always delete even if we can't find a featuredMedia as WordPress' API sets
