@@ -81,6 +81,6 @@ folder and the markdown HTML will be modified to point to it.
 
 ### Supported HTML tags
 
-- <img />
-- <video />
-- <a />
+- `<img />`
+- `<video />`
+- `<a />`
