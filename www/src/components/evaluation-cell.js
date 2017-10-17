@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
+import React, { Component } from "react"
 import { rhythm } from "../utils/typography"
 import presets from "../utils/presets"
 
 class EvaluationCell extends Component {
   render() {
     const getBackground = num => {
-      switch (num){
+      switch (num) {
         case `3`: {
           return `none`
         }
@@ -40,17 +40,15 @@ class EvaluationCell extends Component {
       <div
         css={{
           ...basicStyling,
-          "verticalAlign": `middle`,
-          backgroundColor: (
-            [`N/A`, `0`, ``].indexOf(this.props.num) !== -1 ?
-              `#dddddd` :
-              `#9d7cbf`
-          ),
+          verticalAlign: `middle`,
+          backgroundColor:
+            [`N/A`, `0`, ``].indexOf(this.props.num) !== -1
+              ? `#dddddd`
+              : `#9d7cbf`,
           backgroundImage: getBackground(this.props.num),
           ...(this.props.style || {}),
         }}
-      >
-      </div>
+      />
     )
   }
 }
