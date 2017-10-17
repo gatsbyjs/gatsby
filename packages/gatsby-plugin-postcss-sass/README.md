@@ -16,7 +16,8 @@ plugins: [
     options: {
       postCssPlugins: [
         somePostCssPlugin()
-      ]
+      ],
+      precision: 8 // SASS default: 5
     }
   }
 ]

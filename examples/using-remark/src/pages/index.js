@@ -7,9 +7,6 @@ import { rhythm, scale } from "../utils/typography"
 class Index extends React.Component {
   render() {
     const posts = this.props.data.allMarkdownRemark.edges
-    const author = this.props.data.site.siteMetadata.author
-    const authorTitle = this.props.data.site.siteMetadata.authorTitle
-    const description = this.props.data.site.siteMetadata.description
 
     return (
       <div>
@@ -22,7 +19,7 @@ class Index extends React.Component {
             }}
           >
             This example demonstrates{` `}
-            <a href="https://www.gatsbyjs.org/docs/packages/gatsby-transformer-remark/">
+            <a href="https://www.gatsbyjs.org/packages/gatsby-transformer-remark/">
               gatsby-transformer-remark
             </a>
             {` `}
@@ -35,6 +32,7 @@ class Index extends React.Component {
             <a href="https://github.com/KyleAMathews/typefaces">Typefaces</a>
             {` `}
             project.
+            {}
           </h1>
           <ul
             css={{
@@ -44,7 +42,7 @@ class Index extends React.Component {
               listStyle: `none`,
             }}
           >
-            {posts.map(post =>
+            {posts.map(post => (
               <li key={post.node.fields.slug}>
                 <span
                   css={{
@@ -62,7 +60,7 @@ class Index extends React.Component {
                   {post.node.frontmatter.title}
                 </Link>
               </li>
-            )}
+            ))}
           </ul>
         </div>
       </div>
@@ -74,13 +72,6 @@ export default Index
 
 export const pageQuery = graphql`
   query IndexQuery {
-    site {
-      siteMetadata {
-        title
-        author
-        description
-      }
-    }
     allMarkdownRemark(
       limit: 2000
       sort: { fields: [frontmatter___date], order: DESC }

@@ -9,8 +9,8 @@ support, process images, etc.
 For larger / complex sites, they let you modularize your site customizations
 into site-specific plugins.
 
-Gatsby has a large and growing set of plugins. See below for the list
-of official plugins. We'll eventually add support here for searching and browsing
+Gatsby has a large and growing set of plugins. See below for the [list
+of official plugins](#official-plugins). We'll eventually add support here for searching and browsing
 both official plugins and community plugins published on NPM.
 
 ## How to use?
@@ -55,6 +55,8 @@ plugins
     └── package.json
 ```
 
+You still need to add the plugin to your `gatsby-config.js` like for plugins installed from NPM.
+
 Each plugin requires a package.json file, but the minimum content is just an
 empty object `{}`. The `name` and `version` fields are read from the package file.
 The name is used to identify the plugin when it mutates the GraphQL data structure.
@@ -73,42 +75,65 @@ you can place the files in a `src` subfolder and build them to the plugin folder
 
 ## Official plugins
 
-* [gatsby-plugin-catch-links](/docs/packages/gatsby-plugin-catch-links/)
-* [gatsby-plugin-coffeescript](/docs/packages/gatsby-plugin-coffeescript/)
-* [gatsby-plugin-feed](/docs/packages/gatsby-plugin-feed/)
-* [gatsby-plugin-glamor](/docs/packages/gatsby-plugin-glamor/)
-* [gatsby-plugin-google-analytics](/docs/packages/gatsby-plugin-google-analytics/)
-* [gatsby-plugin-google-tagmanager](/docs/packages/gatsby-plugin-google-tagmanager/)
-* [gatsby-plugin-manifest](/docs/packages/gatsby-plugin-manifest/)
-* [gatsby-plugin-nprogress](/docs/packages/gatsby-plugin-nprogress/)
-* [gatsby-plugin-offline](/docs/packages/gatsby-plugin-offline/)
-* [gatsby-plugin-preact](/docs/packages/gatsby-plugin-preact/)
-* [gatsby-plugin-react-helmet](/docs/packages/gatsby-plugin-react-helmet/)
-* [gatsby-plugin-sass](/docs/packages/gatsby-plugin-sass/)
-* [gatsby-plugin-sharp](/docs/packages/gatsby-plugin-sharp/)
-* [gatsby-plugin-sitemap](/docs/packages/gatsby-plugin-sitemap/)
-* [gatsby-plugin-styled-components](/docs/packages/gatsby-plugin-styled-components/)
-* [gatsby-plugin-twitter](/docs/packages/gatsby-plugin-twitter/)
-* [gatsby-plugin-typescript](/docs/packages/gatsby-plugin-typescript/)
-* [gatsby-remark-autolink-headers](/docs/packages/gatsby-remark-autolink-headers/)
-* [gatsby-remark-copy-linked-files](/docs/packages/gatsby-remark-copy-linked-files/)
-* [gatsby-remark-prismjs](/docs/packages/gatsby-remark-prismjs/)
-* [gatsby-remark-responsive-iframe](/docs/packages/gatsby-remark-responsive-iframe/)
-* [gatsby-remark-images](/docs/packages/gatsby-remark-images/)
-* [gatsby-remark-smartypants](/docs/packages/gatsby-remark-smartypants/)
-* [gatsby-source-contentful](/docs/packages/gatsby-source-contentful/)
-* [gatsby-source-drupal](/docs/packages/gatsby-source-drupal/)
-* [gatsby-source-filesystem](/docs/packages/gatsby-source-filesystem/)
-* [gatsby-source-hacker-news](/docs/packages/gatsby-source-hacker-news/)
-* [gatsby-source-wordpress](/docs/packages/gatsby-source-wordpress/)
-* [gatsby-transformer-documentationjs](/docs/packages/gatsby-transformer-documentationjs/)
-* [gatsby-transformer-javascript-static-exports](/docs/packages/gatsby-transformer-javascript-static-exports/)
-* [gatsby-transformer-json](/docs/packages/gatsby-transformer-json/)
-* [gatsby-transformer-remark](/docs/packages/gatsby-transformer-remark/)
-* [gatsby-transformer-sharp](/docs/packages/gatsby-transformer-sharp/)
-* [gatsby-transformer-yaml](/docs/packages/gatsby-transformer-yaml/)
-* [gatsby-transformer-toml](/docs/packages/gatsby-transformer-toml/)
+* [gatsby-plugin-catch-links](/packages/gatsby-plugin-catch-links/)
+* [gatsby-plugin-coffeescript](/packages/gatsby-plugin-coffeescript/)
+* [gatsby-plugin-feed](/packages/gatsby-plugin-feed/)
+* [gatsby-plugin-glamor](/packages/gatsby-plugin-glamor/)
+* [gatsby-plugin-google-analytics](/packages/gatsby-plugin-google-analytics/)
+* [gatsby-plugin-google-tagmanager](/packages/gatsby-plugin-google-tagmanager/)
+* [gatsby-plugin-jss](/packages/gatsby-plugin-jss/)
+* [gatsby-plugin-manifest](/packages/gatsby-plugin-manifest/)
+* [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify/)
+* [gatsby-plugin-nprogress](/packages/gatsby-plugin-nprogress/)
+* [gatsby-plugin-offline](/packages/gatsby-plugin-offline/)
+* [gatsby-plugin-preact](/packages/gatsby-plugin-preact/)
+* [gatsby-plugin-react-helmet](/packages/gatsby-plugin-react-helmet/)
+* [gatsby-plugin-sass](/packages/gatsby-plugin-sass/)
+* [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/)
+* [gatsby-plugin-sitemap](/packages/gatsby-plugin-sitemap/)
+* [gatsby-plugin-styled-components](/packages/gatsby-plugin-styled-components/)
+* [gatsby-plugin-twitter](/packages/gatsby-plugin-twitter/)
+* [gatsby-plugin-typescript](/packages/gatsby-plugin-typescript/)
+* [gatsby-remark-autolink-headers](/packages/gatsby-remark-autolink-headers/)
+* [gatsby-remark-copy-linked-files](/packages/gatsby-remark-copy-linked-files/)
+* [gatsby-remark-prismjs](/packages/gatsby-remark-prismjs/)
+* [gatsby-remark-responsive-iframe](/packages/gatsby-remark-responsive-iframe/)
+* [gatsby-remark-images](/packages/gatsby-remark-images/)
+* [gatsby-remark-smartypants](/packages/gatsby-remark-smartypants/)
+* [gatsby-source-contentful](/packages/gatsby-source-contentful/)
+* [gatsby-source-drupal](/packages/gatsby-source-drupal/)
+* [gatsby-source-filesystem](/packages/gatsby-source-filesystem/)
+* [gatsby-source-hacker-news](/packages/gatsby-source-hacker-news/)
+* [gatsby-source-lever](/packages/gatsby-source-lever/)
+* [gatsby-source-medium](/packages/gatsby-source-medium/)
+* [gatsby-source-mongodb](/packages/gatsby-source-mongodb/)
+* [gatsby-source-wordpress](/packages/gatsby-source-wordpress/)
+* [gatsby-transformer-documentationjs](/packages/gatsby-transformer-documentationjs/)
+* [gatsby-transformer-javascript-static-exports](/packages/gatsby-transformer-javascript-static-exports/)
+* [gatsby-transformer-json](/packages/gatsby-transformer-json/)
+* [gatsby-transformer-remark](/packages/gatsby-transformer-remark/)
+* [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/)
+* [gatsby-transformer-yaml](/packages/gatsby-transformer-yaml/)
+* [gatsby-transformer-toml](/packages/gatsby-transformer-toml/)
 
 ## Official components
 
-* [gatsby-link](/docs/packages/gatsby-link/)
+* [gatsby-link](/packages/gatsby-link/)
+* [gatsby-image](/packages/gatsby-image/)
+
+## Community Plugins
+
+* [gatsby-plugin-antd](https://github.com/bskimball/gatsby-plugin-antd)
+* [gatsby-plugin-copy](https://github.com/aquilio/gatsby-plugin-copy)
+* [gatsby-plugin-google-fonts](https://github.com/didierfranc/gatsby-plugin-google-fonts)
+* [gatsby-plugin-i18n](https://github.com/angeloocana/gatsby-plugin-i18n)
+* [gatsby-plugin-i18n-tags](https://github.com/angeloocana/gatsby-plugin-i18n-tags)
+* [gatsby-plugin-i18n-readnext](https://github.com/angeloocana/gatsby-plugin-i18n-readnext)
+* [gatsby-plugin-protoculture](https://github.com/atrauzzi/gatsby-plugin-protoculture)
+* [gatsby-plugin-purify-css](https://github.com/rongierlach/gatsby-plugin-purify-css)
+* [gatsby-plugin-yandex-metrika](https://github.com/viatsko/gatsby-plugin-yandex-metrika)
+* [gatsby-plugin-klipse](https://github.com/ahmedelgabri/gatsby-plugin-klipse)
+* [gatsby-remark-emoji](https://github.com/Rulikkk/gatsby-remark-emoji)
+* [gatsby-remark-external-links](https://github.com/JLongley/gatsby-remark-external-links)
+* [gatsby-source-workable](https://github.com/tumblbug/gatsby-source-workable)
+* [gatsby-source-google-sheets](https://github.com/brandonmp/gatsby-source-google-sheets)

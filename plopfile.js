@@ -13,38 +13,49 @@ module.exports = function(plop) {
         name: `author`,
         message: `Your name/email for putting in the package.json of the new package`,
       },
-    ],
-    actions: [
       {
-        type: `add`,
-        path: `packages/{{kebabCase name}}/package.json`,
-        templateFile: `plop-templates/package/package.json.hbs`,
-      },
-      {
-        type: `add`,
-        path: `packages/{{kebabCase name}}/index.js`,
-        templateFile: `plop-templates/package/index.js.hbs`,
-      },
-      {
-        type: `add`,
-        path: `packages/{{kebabCase name}}/README.md`,
-        templateFile: `plop-templates/package/README.md.hbs`,
-      },
-      {
-        type: `add`,
-        path: `packages/{{kebabCase name}}/.gitignore`,
-        templateFile: `plop-templates/package/.gitignore.hbs`,
-      },
-      {
-        type: `add`,
-        path: `packages/{{kebabCase name}}/.npmignore`,
-        templateFile: `plop-templates/package/.npmignore.hbs`,
-      },
-      {
-        type: `add`,
-        path: `packages/{{kebabCase name}}/src/.gitkeep`,
+        type: `confirm`,
+        name: `isBrowser`,
+        message: `Will this package contain code that runs in a browser, e.g. have a gatsby-browser.js or gatsby-ssr.js file?`,
       },
     ],
+    actions: (data) =>
+      [
+        {
+          type: `add`,
+          path: `packages/{{kebabCase name}}/package.json`,
+          templateFile: `plop-templates/package/package.json.hbs`,
+        },
+        {
+          type: `add`,
+          path: `packages/{{kebabCase name}}/index.js`,
+          templateFile: `plop-templates/package/index.js.hbs`,
+        },
+        {
+          type: `add`,
+          path: `packages/{{kebabCase name}}/README.md`,
+          templateFile: `plop-templates/package/README.md.hbs`,
+        },
+        data.isBrowser && {
+          type: `add`,
+          path: `packages/{{kebabCase name}}/.babelrc`,
+          templateFile: `plop-templates/package/.babelrc.hbs`,
+        },
+        {
+          type: `add`,
+          path: `packages/{{kebabCase name}}/.gitignore`,
+          templateFile: `plop-templates/package/.gitignore.hbs`,
+        },
+        {
+          type: `add`,
+          path: `packages/{{kebabCase name}}/.npmignore`,
+          templateFile: `plop-templates/package/.npmignore.hbs`,
+        },
+        {
+          type: `add`,
+          path: `packages/{{kebabCase name}}/src/.gitkeep`,
+        },
+      ].filter(Boolean),
   })
   // Add new example site
   plop.setGenerator(`example`, {

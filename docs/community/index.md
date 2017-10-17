@@ -26,13 +26,13 @@ Twitter](https://twitter.com/gatsbyjs).
 
 Many members of the community use Stack Overflow to ask questions. Read
 through the [existing
-questions](http://stackoverflow.com/questions/tagged/gatsbyjs) tagged
+questions](http://stackoverflow.com/questions/tagged/gatsby) tagged
 with **gatsby** or [ask your
 own](http://stackoverflow.com/questions/ask?tags=gatsby)!
 
 ### Reactiflux Chat
 
 If you need an answer right away, check out the [Reactiflux
-Discord](https://discord.gg/0ZcbPKXt5bZjGY5n) #gatsby channnel. There are
+Discord](https://discord.gg/0ZcbPKXt5bZjGY5n) #gatsby channel. There are
 usually a number of Gatsby experts there who can help out or point you to
 useful resources.

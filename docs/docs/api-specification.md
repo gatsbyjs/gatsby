@@ -22,7 +22,7 @@ Plugins can extend Gatsby in many ways:
 
 A single plugin can use multiple APIs to accomplish its purpose. E.g. the
 plugin for the css-in-js library [Glamor
-](/docs/packages/gatsby-plugin-glamor/)
+](/packages/gatsby-plugin-glamor/)
 
 1. modifies the webpack config to add its plugin
 2. adds a Babel plugin to replace React's default createElement
@@ -31,13 +31,13 @@ out the critical CSS for each rendered page and inline the CSS in the
 `<head>` of that HTML page.
 
 Plugins can also depend on other plugins.
-[The Sharp plugin](/docs/packages/gatsby-plugin-sharp/)
+[The Sharp plugin](/packages/gatsby-plugin-sharp/)
 exposes a number of high-level APIs for transforming images that several
 other Gatsby image plugins depend on.
-[gatsby-transformer-remark](/docs/packages/gatsby-transformer-remark/)
+[gatsby-transformer-remark](/packages/gatsby-transformer-remark/)
 does basic markdown->html transformation but exposes an API to allow other
 plugins to intervene in the conversion process e.g.
-[gatsby-remark-prismjs](/docs/packages/gatsby-remark-prismjs/)
+[gatsby-remark-prismjs](/packages/gatsby-remark-prismjs/)
 which adds highlighting to code blocks.
 
 Transformer plugins are decoupled from source plugins. Transformer plugins
@@ -56,13 +56,12 @@ plugins later) plugins](/docs/plugins/).
 
 
 * *Page* — a site page with a pathname, a template component, and optional graphql query and layout component
-* *Layout Component* — surrounds a page and (eventually) can optionally have a parent layout component as well as a graphql query
-* *Template Component* — responsible for rendering N pages. Can optionally have a graphql query
+* *Page Component* — React.js component that renders a page and can optionally specify a layout component and a graphql query
 * *Component extensions* — extensions that are resolvable as components. `.js` and `.jsx` are supported by core. But plugins can add support for other compile-to-js languages.
 * *Dependency* — Gatsby tracks automatically dependencies between different objects e.g. a page can depend on certain nodes. This allows for hot reloading, caching, incremental rebuilds, etc.
 * *Node* — a data object
 * *Node Field* — a field added by a plugin to a node that it doesn't control
-* *Node Link* — a connection between nodes that gets converted to GraphQL relationships (is there a name for this?). Can be created in a variety of ways as well as automatically inferred. Parent/child links from nodes and their transformed derivative nodes are first class links.
+* *Node Link* — a connection between nodes that gets converted to GraphQL relationships. Can be created in a variety of ways as well as automatically inferred. Parent/child links from nodes and their transformed derivative nodes are first class links.
 
 ## Operators
 
@@ -106,9 +105,7 @@ APIs in the server rendering process and the browser e.g. `onClientEntry` or
 `onRouteUpdate`
 
 The three main inspirations for this API and spec are React.js' API
-specifically @leebyron's email on the React API
-(https://gist.github.com/vjeux/f2b015d230cc1ab18ed1df30550495ed), this talk
-"How to Design a Good API and Why it Matters" by Joshua Bloch who designed
-many parts of Java. https://www.youtube.com/watch?v=heh4OeB9A-c&app=desktop,
-and [Hapi.js](https://hapijs.com/api)' plugin design.
+specifically [@leebyron's email on the React API](https://gist.github.com/vjeux/f2b015d230cc1ab18ed1df30550495ed), this talk
+["How to Design a Good API and Why it Matters" by Joshua Bloch](https://www.youtube.com/watch?v=heh4OeB9A-c&app=desktop) who designed
+many parts of Java, and [Hapi.js](https://hapijs.com/api)' plugin design.
 

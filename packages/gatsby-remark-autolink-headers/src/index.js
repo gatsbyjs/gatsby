@@ -41,4 +41,6 @@ module.exports = ({ markdownAST }) => {
       },
     })
   })
+
+  return markdownAST
 }

@@ -1,8 +1,12 @@
 import React from "react"
 import Link from "gatsby-link"
+import Img from "gatsby-image"
+
 import styles from "../styles"
 import { rhythm, scale } from "../utils/typography"
 import presets from "../utils/presets"
+
+import "katex/dist/katex.min.css"
 
 class BlogPostRoute extends React.Component {
   render() {
@@ -16,9 +20,7 @@ class BlogPostRoute extends React.Component {
         const divider = i < tagsArray.length - 1 && <span>{`, `}</span>
         return (
           <span key={tag}>
-            <Link to={tag}>
-              {post.frontmatter.tags[i]}
-            </Link>
+            <Link to={tag}>{post.frontmatter.tags[i]}</Link>
             {divider}
           </span>
         )
@@ -60,6 +62,13 @@ class BlogPostRoute extends React.Component {
             {post.timeToRead} min read &middot; {tagsSection}
           </p>
         </header>
+
+        <h2>Contents</h2>
+        <div
+          dangerouslySetInnerHTML={{ __html: post.tableOfContents }}
+          className="toc"
+        />
+
         <div dangerouslySetInnerHTML={{ __html: post.html }} className="post" />
         <hr
           css={{
@@ -74,16 +83,9 @@ class BlogPostRoute extends React.Component {
             alignItems: `center`,
           }}
         >
-          <img
+          <Img
             alt={`Avatar of ${post.frontmatter.author.id}`}
-            src={
-              post.frontmatter.author.avatar.children[0].responsiveResolution
-                .src
-            }
-            srcSet={
-              post.frontmatter.author.avatar.children[0].responsiveResolution
-                .srcSet
-            }
+            resolutions={post.frontmatter.author.avatar.children[0].resolutions}
             css={{
               borderRadius: `100%`,
               float: `left`,
@@ -122,6 +124,7 @@ export const pageQuery = graphql`
     markdownRemark(fields: { slug: { eq: $slug } }) {
       html
       timeToRead
+      tableOfContents
       fields {
         tagSlugs
       }
@@ -135,14 +138,13 @@ export const pageQuery = graphql`
           avatar {
             children {
               ... on ImageSharp {
-                responsiveResolution(
+                resolutions(
                   width: 50
                   height: 50
                   quality: 75
                   grayscale: true
                 ) {
-                  src
-                  srcSet
+                  ...GatsbyImageSharpResolutions
                 }
               }
             }

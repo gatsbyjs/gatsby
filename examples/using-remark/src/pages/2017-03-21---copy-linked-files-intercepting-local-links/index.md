@@ -27,5 +27,5 @@ to refresh the page.
 
 Let's try linking to the "[Code and Syntax Highlighting with PrismJS](/code-and-syntax-highlighting/)" article…
 
-[1]: https://www.gatsbyjs.org/docs/packages/gatsby-remark-copy-linked-files/
-[2]: https://www.gatsbyjs.org/docs/packages/gatsby-plugin-catch-links/
+[1]: https://www.gatsbyjs.org/packages/gatsby-remark-copy-linked-files/
+[2]: https://www.gatsbyjs.org/packages/gatsby-plugin-catch-links/

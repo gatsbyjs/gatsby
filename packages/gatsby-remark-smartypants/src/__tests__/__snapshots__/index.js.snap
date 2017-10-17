@@ -1,0 +1,6 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`gatsby-remark-smartypants applies smartypants to text nodes 1`] = `
+"He said, “A ‘simple’ english sentence…
+    "
+`;

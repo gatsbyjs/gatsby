@@ -3,8 +3,8 @@ const glob = require(`glob`)
 const _ = require(`lodash`)
 const mapSeries = require(`async/mapSeries`)
 
+const reporter = require(`gatsby-cli/lib/reporter`)
 const cache = require(`./cache`)
-
 const apiList = require(`./api-node-docs`)
 
 // Bind action creators per plugin so we can auto-add
@@ -20,8 +20,15 @@ const doubleBind = (boundActionCreators, api, plugin, { traceId }) => {
       const key = keys[i]
       const boundActionCreator = boundActionCreators[key]
       if (typeof boundActionCreator === `function`) {
-        doubleBoundActionCreators[key] = (...args) =>
-          boundActionCreator(...args, plugin, traceId)
+        doubleBoundActionCreators[key] = (...args) => {
+          // Let action callers override who the plugin is. Shouldn't be used
+          // that often.
+          if (args.length === 1) {
+            boundActionCreator(args[0], plugin, traceId)
+          } else if (args.length === 2) {
+            boundActionCreator(args[0], args[1], traceId)
+          }
+        }
       }
     }
     boundPluginActionCreators[
@@ -66,6 +73,7 @@ const runAPI = (plugin, api, args) => {
         getNodes,
         getNode,
         hasNodeChanged,
+        reporter,
         getNodeAndSavePathDependency,
         cache,
       },
@@ -97,7 +105,7 @@ module.exports = async (api, args = {}, pluginSource) =>
   new Promise(resolve => {
     // Check that the API is documented.
     if (!apiList[api]) {
-      console.log(`api`, api, `is not yet documented`)
+      reporter.error(`api: "${api}" is not a valid Gatsby api`)
       process.exit()
     }
 
@@ -146,10 +154,7 @@ module.exports = async (api, args = {}, pluginSource) =>
       },
       (err, results) => {
         if (err) {
-          console.log(``)
-          console.log(`Plugin ${currentPluginName} returned an error:`)
-          console.log(``)
-          console.log(err)
+          reporter.error(`Plugin ${currentPluginName} returned an error`, err)
         }
         // Remove runner instance
         apisRunning = apisRunning.filter(runner => runner !== apiRunInstance)

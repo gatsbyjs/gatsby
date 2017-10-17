@@ -1,90 +1,93 @@
 import React from "react"
-import Link from "gatsby-link"
-import colors from "../../utils/colors"
-
-import { rhythm, scale } from "../../utils/typography"
-import presets from "../../utils/presets"
 import Container from "../../components/container"
+import BlogPostPreviewItem from "../../components/blog-post-preview-item"
+
+import presets from "../../utils/presets"
+import { rhythm, scale, options } from "../../utils/typography"
+import footerLogo from "../../gatsby-calm.svg"
 
 class BlogPostsIndex extends React.Component {
   render() {
-    const blogPosts = this.props.data.allMarkdownRemark.edges.map(
-      edge => edge.node
-    )
+    const { allMarkdownRemark } = this.props.data
+
     return (
-      <Container>
-        <h1 css={{ marginTop: 0 }}>Blog</h1>
-        {blogPosts.map(post => {
-          const avatar =
-            post.frontmatter.author.avatar.childImageSharp.responsiveResolution
-          return (
-            <div key={post.fields.slug} css={{ marginBottom: rhythm(2) }}>
-              <Link to={post.fields.slug}>
-                <h2
-                  css={{
-                    marginBottom: rhythm(1 / 8),
-                  }}
-                >
-                  {post.frontmatter.title}
-                </h2>
-                <p
-                  css={{
-                    color: colors.b[13],
-                  }}
-                >
-                  {post.frontmatter.excerpt
-                    ? post.frontmatter.excerpt
-                    : post.excerpt}
-                </p>
-              </Link>
-              <div>
-                <img
-                  alt={`Avatar for ${post.frontmatter.author.id}`}
-                  src={avatar.src}
-                  srcSet={avatar.srcSet}
-                  height={avatar.height}
-                  width={avatar.width}
-                  css={{
-                    borderRadius: `100%`,
-                    display: `inline-block`,
-                    marginRight: rhythm(1 / 2),
-                    marginBottom: 0,
-                    verticalAlign: `top`,
-                  }}
-                />
-                <div
-                  css={{
-                    display: `inline-block`,
-                  }}
-                >
-                  <div
-                    css={{
-                      color: colors.b[12],
-                      lineHeight: 1.1,
-                    }}
-                  >
-                    <small>
-                      {post.frontmatter.author.id}
-                    </small>
-                  </div>
-                  <div
-                    css={{
-                      color: colors.b[12],
-                      lineHeight: 1.1,
-                    }}
-                  >
-                    <small>
-                      <em>
-                        {post.frontmatter.date}
-                      </em>
-                    </small>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )
-        })}
-      </Container>
+      <div
+        css={{
+          [presets.Tablet]: {
+            background: presets.sidebar,
+            paddingBottom: rhythm(options.blockMarginBottom * 4),
+          },
+        }}
+      >
+        <Container
+          css={{
+            [presets.Tablet]: {
+              background: `url(${footerLogo})`,
+              paddingBottom: `${rhythm(
+                options.blockMarginBottom * 4
+              )} !important`,
+              backgroundSize: `30px 30px`,
+              backgroundRepeat: `no-repeat`,
+              backgroundPosition: `bottom center`,
+            },
+          }}
+        >
+          <h1
+            css={{
+              marginTop: 0,
+              [presets.Tablet]: {
+                marginTop: 0,
+                position: `absolute`,
+                width: 1,
+                height: 1,
+                padding: 0,
+                overflow: `hidden`,
+                clip: `rect(0,0,0,0)`,
+                whiteSpace: `nowrap`,
+                clipPath: `inset(50%)`,
+              },
+            }}
+          >
+            Blog
+          </h1>
+          {allMarkdownRemark.edges.map(({ node }) => (
+            <BlogPostPreviewItem
+              post={node}
+              key={node.fields.slug}
+              css={{
+                marginBottom: rhythm(options.blockMarginBottom),
+                [presets.Tablet]: {
+                  background: `#fff`,
+                  borderRadius: presets.radiusLg,
+                  boxShadow: `0 3px 10px rgba(25, 17, 34, 0.05)`,
+                  padding: rhythm(options.blockMarginBottom * 2),
+                  paddingLeft: rhythm(options.blockMarginBottom * 3),
+                  paddingRight: rhythm(options.blockMarginBottom * 3),
+                  marginLeft: rhythm(-options.blockMarginBottom * 2),
+                  marginRight: rhythm(-options.blockMarginBottom * 2),
+                  transition: `transform ${presets.animation
+                    .speedDefault} ${presets.animation
+                    .curveDefault},  box-shadow ${presets.animation
+                    .speedDefault} ${presets.animation
+                    .curveDefault}, padding ${presets.animation
+                    .speedDefault} ${presets.animation.curveDefault}`,
+                  "&:hover": {
+                    transform: `translateY(-4px)`,
+                    boxShadow: `0 10px 42px rgba(25, 17, 34, 0.1)`,
+                  },
+                  "&:active": {
+                    boxShadow: `0 3px 10px rgba(25, 17, 34, 0.05)`,
+                    transform: `translateY(0)`,
+                    transition: `transform 50ms`,
+                  },
+                },
+                [presets.Desktop]: {},
+                [presets.Hd]: {},
+              }}
+            />
+          ))}
+        </Container>
+      </div>
     )
   }
 }
@@ -102,28 +105,7 @@ export const pageQuery = graphql`
     ) {
       edges {
         node {
-          excerpt
-          fields {
-            slug
-          }
-          frontmatter {
-            excerpt
-            title
-            date(formatString: "DD MMMM, YYYY")
-            author {
-              id
-              avatar {
-                childImageSharp {
-                  responsiveResolution(width: 35, height: 35) {
-                    width
-                    height
-                    src
-                    srcSet
-                  }
-                }
-              }
-            }
-          }
+          ...BlogPostPreview_item
         }
       }
     }

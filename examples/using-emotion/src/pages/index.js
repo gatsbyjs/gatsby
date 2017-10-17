@@ -1,6 +1,6 @@
 import React from "react"
 import { fontFace, injectGlobal } from "emotion"
-import styled from "emotion/react"
+import styled from "react-emotion"
 
 injectGlobal`
   * {
@@ -31,7 +31,7 @@ const Wrapper = styled.section`
 const Title = styled.h1`
   font-size: 1.5em;
   color: #ff79c6;
-  margin-bottom: .5em;
+  margin-bottom: 0.5em;
   & a {
     color: #8be9fd;
   }
@@ -44,17 +44,18 @@ const Subtitle = styled.p`
   }
 `
 
-const IndexPage = () =>
+const IndexPage = () => (
   <Wrapper>
     <Title>
       Hello World, this is my first component styled with{` `}
       <a href="https://emotion.sh/">emotion</a>!
     </Title>
     <Subtitle>
-      <a href="https://www.gatsbyjs.org/docs/packages/gatsby-plugin-emotion/">
+      <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-emotion/">
         gatsby-plugin-emotion docs
       </a>
     </Subtitle>
   </Wrapper>
+)
 
 export default IndexPage

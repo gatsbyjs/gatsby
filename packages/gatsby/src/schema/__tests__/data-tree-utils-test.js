@@ -18,6 +18,9 @@ describe(`Gatsby data tree utils`, () => {
         title: `The world of dash and adventure`,
         blue: 100,
       },
+      context: {
+        nestedObject: null,
+      },
     },
     {
       name: `The Mad Wax`,
@@ -33,6 +36,11 @@ describe(`Gatsby data tree utils`, () => {
         circle: `happy`,
         draft: false,
       },
+      context: {
+        nestedObject: {
+          someOtherProperty: 1,
+        },
+      },
     },
     {
       name: `The Mad Wax`,
@@ -46,6 +54,11 @@ describe(`Gatsby data tree utils`, () => {
         blue: 10010,
         circle: `happy`,
         draft: false,
+      },
+      context: {
+        nestedObject: {
+          someOtherProperty: 2,
+        },
       },
     },
     {
@@ -61,6 +74,11 @@ describe(`Gatsby data tree utils`, () => {
         circle: `happy`,
         draft: false,
       },
+      context: {
+        nestedObject: {
+          someOtherProperty: 3,
+        },
+      },
     },
   ]
 
@@ -70,6 +88,14 @@ describe(`Gatsby data tree utils`, () => {
 
   it(`null fields should have a null value`, () => {
     expect(extractFieldExamples(nodes).iAmNull).toBeNull()
+  })
+
+  it(`should not mutate the nodes`, () => {
+    extractFieldExamples(nodes)
+    expect(nodes[0].context.nestedObject).toBeNull()
+    expect(nodes[1].context.nestedObject.someOtherProperty).toEqual(1)
+    expect(nodes[2].context.nestedObject.someOtherProperty).toEqual(2)
+    expect(nodes[3].context.nestedObject.someOtherProperty).toEqual(3)
   })
 
   it(`turns empty or sparse arrays to null`, () => {

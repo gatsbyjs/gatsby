@@ -1,0 +1,30 @@
+
+.blog-social {
+	margin-top: 30px;
+}
+.blog-social ul {
+	list-style: none;
+	padding: 0;
+	margin: 10px 0;
+	clear: fix-legacy;
+}
+
+.blog-social ul > li {
+	margin-right: 5px;
+	height: 24px;
+}
+
+.blog-social ul > li > a {
+	border-bottom: 0;
+}
+
+.blog-social ul > li > a > i {
+	color: #606060;
+	font-size: 14px;
+	line-height: 24px;
+}
+
+.blog-social ul > li:hover a > i {
+	color: #444;
+	font-color: #444;
+}

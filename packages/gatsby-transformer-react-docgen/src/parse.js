@@ -13,6 +13,7 @@ function getAssignedIdenifier(path) {
     if (types.isVariableDeclarator(property.node)) return property.node.id.name
     property = property.parentPath
   }
+  return null
 }
 
 let fileCount = 0
@@ -21,7 +22,7 @@ function nameHandler(filePath = `/AnonymousComponent_${++fileCount}`) {
   let componentCount = 0
 
   return (docs, nodePath) => {
-    let displayName = docs.get(displayName)
+    let displayName = docs.get(`displayName`)
     if (displayName) return
 
     if (

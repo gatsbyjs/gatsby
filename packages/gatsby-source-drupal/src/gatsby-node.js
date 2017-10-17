@@ -78,8 +78,6 @@ exports.sourceNodes = async (
 
   const nodes = processEntities(result.data.data)
   nodes.forEach((node, i) => {
-    const nodeStr = JSON.stringify(node)
-
     const gatsbyNode = {
       ...node,
       children: [],
@@ -103,15 +101,13 @@ exports.sourceNodes = async (
   })
 
   // Fetch users.
-  const userUrl = `http://dev-gatsbyjs-d8.pantheonsite.io/jsonapi/user/user`
+  const userUrl = `${baseUrl}/jsonapi/user/user`
   const userResult = await axios.get(userUrl)
   const users = processEntities(userResult.data.data)
-  const blue = await Promise.all(
+  await Promise.all(
     users.map(
       (user, i) =>
         new Promise(resolve => {
-          const userStr = JSON.stringify(user)
-
           const gatsbyUser = {
             ...user,
             children: [],
@@ -122,7 +118,8 @@ exports.sourceNodes = async (
           }
 
           if (gatsbyUser.uid === 1) {
-            return resolve()
+            resolve()
+            return
           }
 
           axios
@@ -132,8 +129,8 @@ exports.sourceNodes = async (
             )
             .catch(() => console.log(`fail fetch`, gatsbyUser))
             .then(pictureResult => {
-              gatsbyUser.picture = `http://dev-gatsbyjs-d8.pantheonsite.io${pictureResult
-                .data.data.attributes.url}`
+              gatsbyUser.picture = `${baseUrl}${pictureResult.data.data
+                .attributes.url}`
 
               // Get content digest of node.
               const contentDigest = crypto
@@ -150,6 +147,4 @@ exports.sourceNodes = async (
         })
     )
   )
-
-  return
 }

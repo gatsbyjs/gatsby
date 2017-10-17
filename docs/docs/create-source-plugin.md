@@ -9,10 +9,10 @@ There are two types of plugins that work within Gatsby's data system, "source" a
 
 For example:
 
-The [`gatsby-source-filesystem`](/docs/packages/gatsby-source-filesystem/)
+The [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/)
 plugin "sources" data about files from the file system. It creates nodes with
 a type `File`, each File node corresponding to a file on the filesystem. On
-each node are fields like the `absolutePath`, `extension`, `modifyDate`, etc.
+each node are fields like the `absolutePath`, `extension`, `modifiedTime`, etc.
 
 And importantly, each node created by the filesystem source plugin includes the
 raw content of the file and its *media type*.
@@ -36,7 +36,7 @@ For example, it's quite common for services to allow you to add content as markd
 If you pull that markdown into Gatsby and create a new node, what then? How would
 a user of your source plugin convert that markdown into HTML they can use in
 their site? Luckily you don't have to do anything. Just create a node for the markdown
-content and set its mediaType as `text/x-markdown` and the various Gatsby markdown transformer
+content and set its mediaType as `text/markdown` and the various Gatsby markdown transformer
 plugins will see your node and transform it into HTML.
 
 This loose coupling between data source and transformer plugins allow Gatsby site

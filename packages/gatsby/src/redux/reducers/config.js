@@ -6,7 +6,7 @@ const { gatsbyConfigSchema } = require(`../../joi-schemas/joi`)
 
 module.exports = (state = {}, action) => {
   switch (action.type) {
-    case `SET_SITE_CONFIG`:
+    case `SET_SITE_CONFIG`: {
       // Validate the config.
       const result = Joi.validate(action.payload, gatsbyConfigSchema)
       // TODO use Redux for capturing errors from different
@@ -34,9 +34,21 @@ module.exports = (state = {}, action) => {
         }
       }
 
+      // If pathPrefix isn't set, set it to an empty string
+      // to avoid it showing up as undefined elsewhere.
+      if (!_.has(action, [`payload`, `pathPrefix`])) {
+        action = _.set(action, [`payload`, `pathPrefix`], ``)
+      }
+
+      // Default polyfill to true.
+      if (!_.has(action, [`payload`, `polyfill`])) {
+        action = _.set(action, [`payload`, `polyfill`], true)
+      }
+
       return {
         ...action.payload,
       }
+    }
     default:
       return state
   }

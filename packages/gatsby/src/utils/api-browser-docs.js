@@ -9,6 +9,15 @@
 exports.onClientEntry = true
 
 /**
+ * Called when the initial render of Gatsby App is done on the client.
+ * @example
+ * exports.onInitialClientRender = () => {
+ *   console.log("ReactDOM.render is executed")
+ * }
+ */
+exports.onInitialClientRender = true
+
+/**
  * Called when the user changes routes
  * @param {object} $0
  * @param {object} $0.location A location object

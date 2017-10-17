@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`gatsby-remark-responsive-iframe transforms an iframe 1`] = `
+"
+          <div
+            class=\\"gatsby-resp-iframe-wrapper\\"
+            style=\\"padding-bottom: 66.66666666666666%; position: relative; height: 0; overflow: hidden;\\"
+          >
+            <html><head></head><body><iframe url=\\"http://www.example.com/\\" style=\\"
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+          \\"></iframe>
+    </body></html>
+          </div>
+          "
+`;
+
+exports[`gatsby-remark-responsive-iframe transforms an object 1`] = `
+"
+          <div
+            class=\\"gatsby-resp-iframe-wrapper\\"
+            style=\\"padding-bottom: 66.66666666666666%; position: relative; height: 0; overflow: hidden;\\"
+          >
+            <html><head></head><body><object url=\\"http://www.example.com/\\" style=\\"
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+          \\"></object></body></html>
+          </div>
+          "
+`;

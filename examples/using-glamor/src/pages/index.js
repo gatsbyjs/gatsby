@@ -15,7 +15,7 @@ class IndexPage extends React.Component {
       >
         <h1>Using Glamor + Gatsby</h1>
         <p>
-          <a href="https://www.gatsbyjs.org/docs/packages/gatsby-plugin-glamor/">
+          <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-glamor/">
             gatsby-plugin-glamor docs
           </a>
         </p>

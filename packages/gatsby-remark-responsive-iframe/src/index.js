@@ -15,7 +15,7 @@ module.exports = ({ markdownAST }, pluginOptions = {}) =>
       if (iframe) {
         const width = iframe.attr(`width`)
         const height = iframe.attr(`height`)
-        const src = iframe.attr(`src`)
+
         if (width && height) {
           $(`iframe, object`).attr(
             `style`,
@@ -27,7 +27,9 @@ module.exports = ({ markdownAST }, pluginOptions = {}) =>
             height: 100%;
           `
           )
-          $(`iframe, object`).attr(`width`, null).attr(`height`, null)
+          $(`iframe, object`)
+            .attr(`width`, null)
+            .attr(`height`, null)
           const newIframe = $.html()
 
           // TODO add youtube preview image as background-image.
@@ -58,5 +60,5 @@ module.exports = ({ markdownAST }, pluginOptions = {}) =>
       }
     })
 
-    return resolve()
+    return resolve(markdownAST)
   })

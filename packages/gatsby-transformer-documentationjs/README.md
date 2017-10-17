@@ -1,6 +1,6 @@
 # gatsby-transformer-documentationjs
 
-Uses [Documentation.js](https://documentation.js.org) to extract
+Uses [Documentation.js](http://documentation.js.org/) to extract
 code metadata (JSDocs is supported currently though Flow is also supported
 by Documentation.js and can be added to this plugin as well).
 

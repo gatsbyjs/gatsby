@@ -50,7 +50,7 @@ export const data = {
 
 ## How to query
 
-You'd be able to query your letters like:
+You'd be able to query your data like:
 
 ```graphql
 {

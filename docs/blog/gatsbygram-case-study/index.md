@@ -3,15 +3,13 @@ title: Gatsbygram Case Study
 date: "2017-03-09"
 author: "Kyle Mathews"
 image: 'ui-and-code.png'
+imageTitle: Gatsbygram
 ---
-
-![Gatsbygram](ui-and-code.png)
-
 [Gatsbygram](https://gatsbygram.gatsbyjs.org) is a clone of Instagram
 built with Gatsby v1.
 
 The [source code for
-Gatsbygram](https://github.com/gatsbyjs/gatsby/tree/1.0/examples/gatsbygram)
+Gatsbygram](https://github.com/gatsbyjs/gatsby/tree/master/examples/gatsbygram)
 lives in the Gatsby monorepo. See the instructions at the end for how to
 start playing with the code!
 
@@ -124,7 +122,7 @@ an innovative *declarative* asset pipeline.
 For Gatsbygram, Gatsby generates over *1000* image thumbnails for
 responsive images without *any* custom scripting by leveraging the
 Gatsby image processing plugin
-[gatsby-transformer-sharp](/docs/packages/gatsby-transformer-sharp/).
+[gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/).
 
 Stop wasting time and build something!
 
@@ -171,7 +169,7 @@ const slash = require(`slash`)
 
 // Implement the Gatsby API “createPages”. This is
 // called after the Gatsby bootstrap is finished so you have
-// access to any information necessary to programatically
+// access to any information necessary to programmatically
 // create pages.
 exports.createPages = ({ graphql, boundActionCreators }) => {
   const { createPage } = boundActionCreators
@@ -296,7 +294,7 @@ export const pageQuery = `
             # thumbnails are created. This makes iterating on
             # designs effortless as we simply change the args
             # for the query and we get new thumbnails.
-            big: responsiveSizes(maxWidth: 640) {
+            big: sizes(maxWidth: 640) {
               src
               srcSet
             }
@@ -380,7 +378,7 @@ sites as it has logic to show clicked images in either a modal on larger
 screens or on their own page on smaller screens.
 
 [Read Gatsbygram's Layout component on
-Github](https://github.com/gatsbyjs/gatsby/blob/master/examples/gatsbygram/src/layouts/default.js).
+Github](https://github.com/gatsbyjs/gatsby/blob/master/examples/gatsbygram/src/layouts/index.js).
 
 ## Client routing and pre-caching
 
@@ -396,7 +394,7 @@ but generates all the configuration for you.
 
 Normally page resources are pre-cached with a service worker. But as
 several browsers (Safari/Microsoft Edge) still don't support Service
-Workers, the [Gatsby `<Link>` component](/docs/packages/gatsby-link/)
+Workers, the [Gatsby `<Link>` component](/packages/gatsby-link/)
 pre-caches resources for pages it links to by loading them into memory.
 
 ## Plugins
@@ -550,7 +548,7 @@ generates only global styles so its styles are included on every page.
 Glamor includes some [clever server-rendering
 optimizations](https://github.com/threepointone/glamor/blob/master/docs/server.md)
 which I've implemented in the [Gatsby Glamor
-plugin](/docs/packages/gatsby-plugin-glamor/) where it automatically
+plugin](/packages/gatsby-plugin-glamor/) where it automatically
 extracts out the CSS used *in components on the page being server
 rendered* and automatically inlines those styles in the generated HTML
 page.

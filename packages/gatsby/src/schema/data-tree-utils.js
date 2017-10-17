@@ -18,6 +18,8 @@ const areAllSameType = list =>
 const isEmptyObjectOrArray = (obj: any): boolean => {
   if (obj === INVALID_VALUE) {
     return true
+  } else if (_.isDate(obj)) {
+    return false
     // Simple "is object empty" check.
   } else if (_.isObject(obj) && _.isEmpty(obj)) {
     return true
@@ -51,14 +53,16 @@ const extractFieldExamples = (nodes: any[]) =>
   // $FlowFixMe
   _.mergeWith(
     _.isArray(nodes[0]) ? [] : {},
-    ...nodes,
+    ..._.cloneDeep(nodes),
     (obj, next, key, po, pn, stack) => {
       if (obj === INVALID_VALUE) return obj
 
       // TODO: if you want to support infering Union types this should be handled
       // differently. Maybe merge all like types into examples for each type?
       // e.g. union: [1, { foo: true }, ['brown']] -> Union Int|Object|List
-      if (!isSameType(obj, next)) return INVALID_VALUE
+      if (!isSameType(obj, next)) {
+        return INVALID_VALUE
+      }
 
       if (!_.isArray(obj || next)) {
         // Prefer floats over ints as they're more specific.
@@ -101,9 +105,23 @@ const buildFieldEnumValues = (nodes: any[]) => {
   return enumValues
 }
 
+// extract a list of field names
+// nested objects get flattened to "outer___inner" which will be converted back to
+// "outer.inner" by run-sift
+const extractFieldNames = (nodes: any[]) => {
+  const values = flatten(extractFieldExamples(nodes), {
+    maxDepth: 3,
+    safe: true, // don't flatten arrays.
+    delimiter: `___`,
+  })
+
+  return Object.keys(values)
+}
+
 module.exports = {
   INVALID_VALUE,
   extractFieldExamples,
   buildFieldEnumValues,
+  extractFieldNames,
   isEmptyObjectOrArray,
 }

@@ -1,0 +1,19 @@
+{
+  "name": "using-mongodb",
+  "private": true,
+  "description": "Gatsby example site using gatsby-source-mongodb",
+  "author": "jhermans85@hotmail.com",
+  "dependencies": {
+    "gatsby": "latest",
+    "gatsby-link": "latest",
+    "gatsby-plugin-react-helmet": "latest",
+    "gatsby-source-mongodb": "latest",
+    "gatsby-transformer-remark": "latest"
+  },
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build"
+  }
+}
