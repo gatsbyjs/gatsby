@@ -5607,7 +5607,6 @@ Array [
     "date": "2017-09-02T10:50:27.000Z",
     "excerpt": "<p>Mauris mattis elit erat, ut sodales lorem vestibulum sit amet. Sed eget urna suscipit nunc facilisis tempor. Nunc vel consequat diam. Fusce scelerisque gravida ex, vitae porttitor velit dictum at. Etiam arcu metus, gravida in libero vitae, porta volutpat ligula. Morbi vestibulum fermentum ipsum id ornare. Curabitur fermentum tellus elit, nec semper diam blandit id. [&hellip;]</p>
 ",
-    "featured_media": 0,
     "format": "standard",
     "guid": "http://dev-gatbsyjswp.pantheonsite.io/?p=28",
     "id": "8ec6feda-5dc2-5f17-b408-abda06425750",
@@ -5724,7 +5723,6 @@ Array [
     "date": "2017-09-02T10:49:35.000Z",
     "excerpt": "<p>Phasellus blandit sollicitudin metus, vitae ultricies tortor pretium sed. Donec et elit sed sapien mattis dapibus non at magna. Nulla et accumsan libero. Cras sodales imperdiet diam ac dictum. Donec mattis lacus nec tempus tempor. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc velit arcu, facilisis nec enim vitae, [&hellip;]</p>
 ",
-    "featured_media": 0,
     "format": "standard",
     "guid": "http://dev-gatbsyjswp.pantheonsite.io/?p=26",
     "id": "73e99b4e-2409-51f9-9c10-23b7fa60fe06",
@@ -5806,7 +5804,6 @@ Array [
     "date": "2017-09-02T10:30:57.000Z",
     "excerpt": "<p>Lorem ipsum Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et odio sit amet est eleifend semper vitae iaculis risus. Etiam sit amet purus interdum, laoreet massa ac, tristique tortor. Suspendisse porta nibh a quam faucibus vestibulum. Morbi magna justo, semper eget pellentesque at, maximus sed justo. Vivamus sodales sem in imperdiet lacinia. Proin [&hellip;]</p>
 ",
-    "featured_media": 0,
     "guid": "http://dev-gatbsyjswp.pantheonsite.io/?page_id=5",
     "id": "340ceded-7db7-583c-9486-120758f5d967",
     "link": "http://dev-gatbsyjswp.pantheonsite.io/",
@@ -11113,12 +11110,11 @@ Array [
       "date": "2017-09-02T10:50:27.000Z",
       "excerpt": "<p>Mauris mattis elit erat, ut sodales lorem vestibulum sit amet. Sed eget urna suscipit nunc facilisis tempor. Nunc vel consequat diam. Fusce scelerisque gravida ex, vitae porttitor velit dictum at. Etiam arcu metus, gravida in libero vitae, porta volutpat ligula. Morbi vestibulum fermentum ipsum id ornare. Curabitur fermentum tellus elit, nec semper diam blandit id. [&hellip;]</p>
 ",
-      "featured_media": 0,
       "format": "standard",
       "guid": "http://dev-gatbsyjswp.pantheonsite.io/?p=28",
       "id": "8ec6feda-5dc2-5f17-b408-abda06425750",
       "internal": Object {
-        "contentDigest": "abc48678757c5342d9f47cf0299f947d",
+        "contentDigest": "31dd3b260cd81c9451e531f863dd7f87",
         "type": "wordpress__POST",
       },
       "link": "http://dev-gatbsyjswp.pantheonsite.io/sample-post-2/",
@@ -11268,12 +11264,11 @@ Array [
       "date": "2017-09-02T10:49:35.000Z",
       "excerpt": "<p>Phasellus blandit sollicitudin metus, vitae ultricies tortor pretium sed. Donec et elit sed sapien mattis dapibus non at magna. Nulla et accumsan libero. Cras sodales imperdiet diam ac dictum. Donec mattis lacus nec tempus tempor. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc velit arcu, facilisis nec enim vitae, [&hellip;]</p>
 ",
-      "featured_media": 0,
       "format": "standard",
       "guid": "http://dev-gatbsyjswp.pantheonsite.io/?p=26",
       "id": "73e99b4e-2409-51f9-9c10-23b7fa60fe06",
       "internal": Object {
-        "contentDigest": "ae52194f71a246b842f00e5bd31df319",
+        "contentDigest": "1cd5e3cfee9236897bad2bf3c256ab90",
         "type": "wordpress__POST",
       },
       "link": "http://dev-gatbsyjswp.pantheonsite.io/sample-post-1/",
@@ -11357,11 +11352,10 @@ Array [
       "date": "2017-09-02T10:30:57.000Z",
       "excerpt": "<p>Lorem ipsum Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et odio sit amet est eleifend semper vitae iaculis risus. Etiam sit amet purus interdum, laoreet massa ac, tristique tortor. Suspendisse porta nibh a quam faucibus vestibulum. Morbi magna justo, semper eget pellentesque at, maximus sed justo. Vivamus sodales sem in imperdiet lacinia. Proin [&hellip;]</p>
 ",
-      "featured_media": 0,
       "guid": "http://dev-gatbsyjswp.pantheonsite.io/?page_id=5",
       "id": "340ceded-7db7-583c-9486-120758f5d967",
       "internal": Object {
-        "contentDigest": "4e1f52cdfb9820771b8e9d3a793e6bb6",
+        "contentDigest": "bf7491f5ede200a6f3ce8db4c28e3eca",
         "type": "wordpress__PAGE",
       },
       "link": "http://dev-gatbsyjswp.pantheonsite.io/",
