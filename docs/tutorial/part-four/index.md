@@ -135,7 +135,7 @@ const typography = new Typography(kirkhamTheme)
 module.exports = typography
 ```
 
-`gatsby-config.js`
+`gatsby-config.js` (must be in the root of your project, not under src)
 
 ```javascript
 module.exports = {
