@@ -95,7 +95,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
   }
 
   const getTracedSVG = (image, fieldArgs) => {
-    const publicPath = path.join(process.cwd(), `public`, image.originalImg)
+    const publicPath = path.join(process.cwd(), `public`, image.src)
     const promise = traceSVG({
       file: { absolutePath: publicPath },
       args: { ...fieldArgs, pathPrefix },
@@ -146,6 +146,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           base64: { type: GraphQLString },
           tracedSVG: {
             type: GraphQLString,
+            resolve: (image, fieldArgs) => getTracedSVG(image, fieldArgs),
           },
           aspectRatio: { type: GraphQLFloat },
           width: { type: GraphQLFloat },

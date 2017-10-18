@@ -565,7 +565,7 @@ async function notMemoizedtraceSVG({ file, args }) {
 
 const memoizedTraceSVG = _.memoize(
   notMemoizedtraceSVG,
-  ({ file, args }) => `${file.id}${JSON.stringify(args)}`
+  ({ file, args }) => `${file.absolutePath}${JSON.stringify(args)}`
 )
 
 async function traceSVG(args) {
