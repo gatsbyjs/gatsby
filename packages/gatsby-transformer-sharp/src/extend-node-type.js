@@ -146,7 +146,6 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           base64: { type: GraphQLString },
           tracedSVG: {
             type: GraphQLString,
-            resolve: (image, fieldArgs) => getTracedSVG(image, fieldArgs),
           },
           aspectRatio: { type: GraphQLFloat },
           width: { type: GraphQLFloat },
