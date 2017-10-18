@@ -1,9 +1,10 @@
 import React from "react"
 import Helmet from "react-helmet"
-import GithubIcon from "react-icons/lib/go/mark-github"
+import gray from "gray-percentage"
+import EditIcon from "react-icons/lib/md/create"
 
-import { rhythm } from "../utils/typography"
 import Container from "../components/container"
+import { rhythm, scale } from "../utils/typography"
 
 class DocsTemplate extends React.Component {
   render() {
@@ -26,6 +27,25 @@ class DocsTemplate extends React.Component {
             __html: page.html,
           }}
         />
+        <a
+          css={{
+            "&&": {
+              display: `block`,
+              color: gray(60, 270),
+              fontSize: scale(-1 / 5).fontSize,
+              border: `none`,
+              boxShadow: `none`,
+              marginTop: rhythm(1.5),
+            },
+          }}
+          href={`https://github.com/gatsbyjs/gatsby/blob/master/docs/${page
+            .parent.relativePath}`}
+        >
+          <EditIcon
+            css={{ fontSize: 20, position: `relative`, top: -2 }}
+          />{` `}
+          edit this page on Github
+        </a>
       </Container>
     )
   }
@@ -41,6 +61,11 @@ export const pageQuery = graphql`
       timeToRead
       frontmatter {
         title
+      }
+      parent {
+        ... on File {
+          relativePath
+        }
       }
     }
   }

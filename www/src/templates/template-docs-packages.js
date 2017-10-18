@@ -1,5 +1,7 @@
 import React from "react"
 import Helmet from "react-helmet"
+import gray from "gray-percentage"
+import EditIcon from "react-icons/lib/md/create"
 
 import { rhythm, scale } from "../utils/typography"
 import presets from "../utils/presets"
@@ -28,7 +30,7 @@ class DocsPackagesTemplate extends React.Component {
               position: `absolute`,
             }}
           >
-            Browse source code for package on Github
+            Browse source code for this package on Github
           </a>
         </strong>
         <div
@@ -39,6 +41,25 @@ class DocsPackagesTemplate extends React.Component {
             __html: this.props.data.markdownRemark.html,
           }}
         />
+        <a
+          css={{
+            "&&": {
+              display: `block`,
+              color: gray(60, 270),
+              fontSize: scale(-1 / 5).fontSize,
+              border: `none`,
+              boxShadow: `none`,
+              marginTop: rhythm(1.5),
+            },
+          }}
+          href={`https://github.com/gatsbyjs/gatsby/blob/master/packages/${page
+            .parent.relativePath}`}
+        >
+          <EditIcon
+            css={{ fontSize: 20, position: `relative`, top: -2 }}
+          />{` `}
+          edit this page on Github
+        </a>
       </Container>
     )
   }
@@ -54,6 +75,11 @@ export const pageQuery = graphql`
       timeToRead
       fields {
         title
+      }
+      parent {
+        ... on File {
+          relativePath
+        }
       }
     }
   }
