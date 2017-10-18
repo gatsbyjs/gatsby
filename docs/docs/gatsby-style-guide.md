@@ -81,15 +81,19 @@ Article titles should be as short and clear as possible. We want readers to quic
 
 Here are some title examples:
 
-- [add some examples here]
+- Creating and Modifying Pages
+- 404 Pages
+- What is GraphQL?
 
 The folder name is used in the URL, so only use dashes -, numbers 0-9, and lowercase letters a-z for it.
 
 Here are some folder name examples:
 
-- [make this match list above]
+- creating-and-modifying-pages
+- 404-pages
+- what-is-graphql
 
-Just to clarify: you can include special characters in the article title but not in the folder name.
+Note: Just to clarify, you can include special characters in the article title but *not* in the folder name (e.g. Title: What is GraphQL? and Folder Name: what-is-graphql). 
 
 # Modularity
 
@@ -158,8 +162,10 @@ Here are specific formatting guidelines for any code:
 # Adding images to articles
 
 For including images, if the images aren't already hosted somewhere else on the web, you'll need to put them online yourself. A good way to do this is to commit them to a GitHub repository of your own, then push them to GitHub. Then you can right click the image and copy its image source.
+
 Then you'd just need to reference them in your markdown file with this syntax:
 `[your alt text](your url)`
+
 Then the images should show up when you click the "preview table" tab.
 
 # Proper nouns
@@ -174,6 +180,7 @@ Front-end development (adjective form with a dash) is when you’re working on t
 # How to Write Clearly
 
 Technical writing, or the literature of science and technology, is difficult because it requires you to take a technical (usually abstract) topic and explain it in a clear, accurate, and objective manner. You'll likely go through several rounds of proofreading and editing before you're happy with your writing.
+
 Use the [Hemingway App](http://www.hemingwayapp.com/). There’s nothing magical about this simple tool, but it will automatically detect widely agreed-upon style issues:
 
 - passive voice
@@ -181,5 +188,7 @@ Use the [Hemingway App](http://www.hemingwayapp.com/). There’s nothing magical
 - words that have more common equivalents
 
 The Hemingway App will assign a “grade level” for your writing. You should aim for a grade level of 6. Another tool available is the De-Jargonizer, originally designed for scientific communication but might help avoid overspecialized wording.
+
 Also, there's a community of support from a whole team of contributors, whom you can bounce ideas off of and ask for input on your writing. Stay active in the contributors chat room and ask lots of questions.
+
 With your help, we can create a comprehensive reference tool that will help millions of people who are learning to code for years to come.
