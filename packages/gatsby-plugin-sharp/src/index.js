@@ -355,7 +355,7 @@ async function responsiveSizes({ file, args = {} }) {
     pathPrefix: ``,
     toFormat: ``,
   }
-  const options = _.defaultsDeep({}, args, defaultArgs)
+  const options = _.defaults({}, args, defaultArgs)
   options.maxWidth = parseInt(options.maxWidth, 10)
 
   // Account for images with a high pixel density. We assume that these types of
@@ -464,7 +464,7 @@ async function resolutions({ file, args = {} }) {
     pathPrefix: ``,
     toFormat: ``,
   }
-  const options = _.defaultsDeep({}, args, defaultArgs)
+  const options = _.defaults({}, args, defaultArgs)
   options.width = parseInt(options.width, 10)
 
   // Create sizes for different resolutions — we do 1x, 1.5x, 2x, and 3x.
@@ -558,7 +558,14 @@ async function resolutions({ file, args = {} }) {
 async function notMemoizedtraceSVG({ file, args }) {
   const potrace = require(`potrace`)
   const trace = Promise.promisify(potrace.trace)
-  return await trace(file.absolutePath, args)
+  let defaultArgs = {
+    color: `lightgray`,
+    optTolerance: 0.4,
+    turdSize: 100,
+    turnPolicy: `majority`,
+  }
+  const options = _.defaults({}, args, defaultArgs)
+  return await trace(file.absolutePath, options)
     .then(svg => optimize(svg))
     .then(svg => encodeOptimizedSVGDataUri(svg))
 }

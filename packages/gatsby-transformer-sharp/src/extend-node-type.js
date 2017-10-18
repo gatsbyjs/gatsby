@@ -74,16 +74,15 @@ const PotraceType = new GraphQLInputObjectType({
             TURNPOLICY_MINORITY: { value: Potrace.TURNPOLICY_MINORITY },
             TURNPOLICY_MAJORITY: { value: Potrace.TURNPOLICY_MAJORITY },
           },
-          defaultValue: Potrace.TURNPOLICY_MAJORITY,
         }),
       },
-      turdSize: { type: GraphQLFloat, defaultValue: 100 },
+      turdSize: { type: GraphQLFloat },
       alphaMax: { type: GraphQLFloat },
       optCurve: { type: GraphQLBoolean },
-      optTolerance: { type: GraphQLFloat, defaultValue: 0.4 },
+      optTolerance: { type: GraphQLFloat },
       threshold: { type: GraphQLInt },
       blackOnWhite: { type: GraphQLBoolean },
-      color: { type: GraphQLString, defaultValue: `lightgray` },
+      color: { type: GraphQLString },
       background: { type: GraphQLString },
     }
   },
@@ -94,11 +93,10 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
     return {}
   }
 
-  const getTracedSVG = (image, fieldArgs) => {
-    const publicPath = path.join(process.cwd(), `public`, image.src)
+  const getTracedSVG = parent => {
     const promise = traceSVG({
-      file: { absolutePath: publicPath },
-      args: { ...fieldArgs, pathPrefix },
+      file: { absolutePath: path.join(process.cwd(), `public`, parent.src) },
+      args: { ...parent.fieldArgs.trace },
     })
     return promise
   }
@@ -146,7 +144,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           base64: { type: GraphQLString },
           tracedSVG: {
             type: GraphQLString,
-            resolve: (image, fieldArgs) => getTracedSVG(image, fieldArgs),
+            resolve: parent => getTracedSVG(parent),
           },
           aspectRatio: { type: GraphQLFloat },
           width: { type: GraphQLFloat },
@@ -178,6 +176,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
         },
         trace: {
           type: PotraceType,
+          defaultValue: false,
         },
         quality: {
           type: GraphQLInt,
@@ -196,13 +195,17 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           defaultValue: 0,
         },
       },
-      resolve(image, fieldArgs, context) {
-        const promise = resolutions({
-          file: getNodeAndSavePathDependency(image.parent, context.path),
-          args: { ...fieldArgs, pathPrefix },
-        })
-        return promise
-      },
+      resolve: (image, fieldArgs, context) =>
+        Promise.resolve(
+          resolutions({
+            file: getNodeAndSavePathDependency(image.parent, context.path),
+            args: { ...fieldArgs, pathPrefix },
+          })
+        ).then(o =>
+          Object.assign({}, o, {
+            fieldArgs,
+          })
+        ),
     },
     sizes: {
       type: new GraphQLObjectType({
@@ -211,7 +214,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           base64: { type: GraphQLString },
           tracedSVG: {
             type: GraphQLString,
-            resolve: (image, fieldArgs) => getTracedSVG(image, fieldArgs),
+            resolve: parent => getTracedSVG(parent),
           },
           aspectRatio: { type: GraphQLFloat },
           src: { type: GraphQLString },
@@ -243,6 +246,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
         },
         trace: {
           type: PotraceType,
+          defaultValue: false,
         },
         quality: {
           type: GraphQLInt,
@@ -261,12 +265,17 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           defaultValue: 0,
         },
       },
-      resolve(image, fieldArgs, context) {
-        return sizes({
-          file: getNodeAndSavePathDependency(image.parent, context.path),
-          args: { ...fieldArgs, pathPrefix },
-        })
-      },
+      resolve: (image, fieldArgs, context) =>
+        Promise.resolve(
+          sizes({
+            file: getNodeAndSavePathDependency(image.parent, context.path),
+            args: { ...fieldArgs, pathPrefix },
+          })
+        ).then(o =>
+          Object.assign({}, o, {
+            fieldArgs,
+          })
+        ),
     },
     responsiveResolution: {
       deprecationReason: `We dropped the "responsive" part of the name to make it shorter https://github.com/gatsbyjs/gatsby/pull/2320/`,
