@@ -53,9 +53,11 @@ render () {
 }
 ```
 
-## Retaining path prefixes
+## Prefixed paths helper
 
-If you would like to append your configured [`pathPrefix`](/docs/path-prefix) to any of your links, you can use `withPrefix`:
+Gatsby allows you to [automatically prefix links](/docs/path-prefix/) for sites hosted on Github Pages or other places where your site isn't at the root of the domain.
+
+This can create problems during development as pathnames won't be prefixed. To handle both, gatsby-link exports a helper function `withPrefix` that prepends the prefix during production but doesn't in development.
 
 ```jsx
 import { withPrefix } from "gatsby-link"
