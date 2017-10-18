@@ -352,12 +352,6 @@ async function responsiveSizes({ file, args = {} }) {
     pngCompressionLevel: 9,
     grayscale: false,
     duotone: false,
-    trace: {
-      color: `lightgray`,
-      optTolerance: 0.4,
-      turdSize: 100,
-      turnPolicy: `majority`,
-    },
     pathPrefix: ``,
     toFormat: ``,
   }
@@ -435,9 +429,6 @@ async function responsiveSizes({ file, args = {} }) {
   // Get base64 version
   const base64Image = await base64({ file, args: base64Args })
 
-  // Get traced SVG base64
-  const tracedSVG = await traceSVG({ file, args: options.trace })
-
   // Construct src and srcSet strings.
   const originalImg = _.maxBy(images, image => image.width).src
   const fallbackSrc = _.minBy(images, image =>
@@ -450,7 +441,6 @@ async function responsiveSizes({ file, args = {} }) {
 
   return {
     base64: base64Image.src,
-    tracedSVG: tracedSVG,
     aspectRatio: images[0].aspectRatio,
     src: fallbackSrc,
     srcSet,
@@ -471,12 +461,6 @@ async function resolutions({ file, args = {} }) {
     pngCompressionLevel: 9,
     grayscale: false,
     duotone: false,
-    trace: {
-      color: `lightgray`,
-      optTolerance: 0.4,
-      turdSize: 100,
-      turnPolicy: `majority`,
-    },
     pathPrefix: ``,
     toFormat: ``,
   }
@@ -535,9 +519,6 @@ async function resolutions({ file, args = {} }) {
   // Get base64 version
   const base64Image = await base64({ file, args: base64Args })
 
-  // Get traced SVG base64
-  const tracedSVG = await traceSVG({ file, args: options.trace })
-
   const fallbackSrc = images[0].src
   const srcSet = images
     .map((image, i) => {
@@ -565,7 +546,6 @@ async function resolutions({ file, args = {} }) {
 
   return {
     base64: base64Image.src,
-    tracedSVG: tracedSVG,
     aspectRatio: images[0].aspectRatio,
     width: images[0].width,
     height: images[0].height,
@@ -615,6 +595,7 @@ const optimize = svg => {
 
 exports.queueImageResizing = queueImageResizing
 exports.base64 = base64
+exports.traceSVG = traceSVG
 exports.responsiveSizes = responsiveSizes
 exports.responsiveResolution = resolutions
 exports.sizes = responsiveSizes

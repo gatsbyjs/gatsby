@@ -13,6 +13,7 @@ const {
   base64,
   sizes,
   resolutions,
+  traceSVG,
 } = require(`gatsby-plugin-sharp`)
 
 const sharp = require(`sharp`)
@@ -93,6 +94,15 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
     return {}
   }
 
+  const getTracedSVG = (image, fieldArgs) => {
+    const publicPath = path.join(process.cwd(), `public`, image.originalImg)
+    const promise = traceSVG({
+      file: { absolutePath: publicPath },
+      args: { ...fieldArgs, pathPrefix },
+    })
+    return promise
+  }
+
   return {
     original: {
       type: new GraphQLObjectType({
@@ -134,7 +144,10 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
         name: `ImageSharpResolutions`,
         fields: {
           base64: { type: GraphQLString },
-          tracedSVG: { type: GraphQLString },
+          tracedSVG: {
+            type: GraphQLString,
+            resolve: (image, fieldArgs) => getTracedSVG(image, fieldArgs),
+          },
           aspectRatio: { type: GraphQLFloat },
           width: { type: GraphQLFloat },
           height: { type: GraphQLFloat },
@@ -196,7 +209,10 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
         name: `ImageSharpSizes`,
         fields: {
           base64: { type: GraphQLString },
-          tracedSVG: { type: GraphQLString },
+          tracedSVG: {
+            type: GraphQLString,
+            resolve: (image, fieldArgs) => getTracedSVG(image, fieldArgs),
+          },
           aspectRatio: { type: GraphQLFloat },
           src: { type: GraphQLString },
           srcSet: { type: GraphQLString },
