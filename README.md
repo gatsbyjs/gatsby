@@ -60,6 +60,7 @@ Websites built with Gatsby:
 * [OnCallogy.com](https://www.oncallogy.com)
 * [doopoll's marketing site](https://doopoll.co)
 * [Design Systems Weekly](https://designsystems.email/)
+* [Slite landing pages](https://slite.com/)
 
 ## Docs
 
