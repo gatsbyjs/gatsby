@@ -52,3 +52,22 @@ render () {
   </div>
 }
 ```
+
+## Retaining path prefixes
+
+If you would like to append your configured [`pathPrefix`](/docs/path-prefix) to any of your links, you can use `withPrefix`:
+
+```jsx
+import { withPrefix } from "gatsby-link"
+
+const IndexLayout = ({ children, location }) => {
+  const isHomepage = location.pathname === withPrefix('/');
+
+  return (
+    <div>
+      <h1>Welcome {isHomepage ? 'home' : 'aboard'}!</h1>
+      {children()}
+    </div>
+  )
+}
+```
