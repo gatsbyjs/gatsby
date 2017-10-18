@@ -100,51 +100,51 @@ const LegendTable = () => {
 }
 
 const FeaturesHeader = () => (
-    <div>
-      <h1 id="introduction" style={{ marginTop: 0 }}>
-        Features
-      </h1>
-      <FuturaParagraph>
-        There are many ways to build a website. If you're considering Gatsby,
-        you may also be looking at some alternatives:
-      </FuturaParagraph>
-      <ul css={{ fontFamily: options.headerFontFamily.join(`,`) }}>
-        <li>
-          <b>Traditional static site generators</b> such as{` `}
-          <a href="http://jekyllrb.com/">Jekyll</a> let you put text or markdown
-          in a specific directory such as <code>pages/</code> in a
-          version-controlled codebase. They then build a specific kind of site,
-          usually a blog, as HTML files from the content you've added. These
-          files can be cached and served from a CDN.
-        </li>
-        <li>
-          <b>Content Management Systems</b> (CMSs) like{` `}
-          <a href="http://wordpress.org/">Wordpress</a> give you an online text
-          editor to create content. You customize the look and feel through
-          choosing themes and plugins, or writing custom PHP or Javascript code.
-          Content is saved in a database, which is retrieved and sent to users
-          when they visit the website. Depending onYou can self-host your
-          website, or use an official hosting provider.
-        </li>
-        <li>
-          <b>Site builders</b> like{` `}
-          <a href="http://squarespace.com/">Squarespace</a> are a type of hosted
-          closed-source CMS. They focus on making it fast to build a website;
-          however, they don't allow self-hosting or enable you to export your
-          website and customize it.
-        </li>
-      </ul>
-      <FuturaParagraph>
-        The chart below details Gatsby's capabilities in comparison with a
-        representative from each category. Click on any row to see a more
-        detailed explanation on that feature and our rating for each system.
-      </FuturaParagraph>
-      <h6 id="legend" css={{ textTransform: `uppercase` }}>
-        Legend
-      </h6>
-      <LegendTable />
-    </div>
-  )
+  <div>
+    <h1 id="introduction" style={{ marginTop: 0 }}>
+      Features
+    </h1>
+    <FuturaParagraph>
+      There are many ways to build a website. If you're considering Gatsby, you
+      may also be looking at some alternatives:
+    </FuturaParagraph>
+    <ul css={{ fontFamily: options.headerFontFamily.join(`,`) }}>
+      <li>
+        <b>Traditional static site generators</b> such as{` `}
+        <a href="http://jekyllrb.com/">Jekyll</a> let you put text or markdown
+        in a specific directory such as <code>pages/</code> in a
+        version-controlled codebase. They then build a specific kind of site,
+        usually a blog, as HTML files from the content you've added. These files
+        can be cached and served from a CDN.
+      </li>
+      <li>
+        <b>Content Management Systems</b> (CMSs) like{` `}
+        <a href="http://wordpress.org/">Wordpress</a> give you an online text
+        editor to create content. You customize the look and feel through
+        choosing themes and plugins, or writing custom PHP or Javascript code.
+        Content is saved in a database, which is retrieved and sent to users
+        when they visit the website. Depending onYou can self-host your website,
+        or use an official hosting provider.
+      </li>
+      <li>
+        <b>Site builders</b> like{` `}
+        <a href="http://squarespace.com/">Squarespace</a> are a type of hosted
+        closed-source CMS. They focus on making it fast to build a website;
+        however, they don't allow self-hosting or enable you to export your
+        website and customize it.
+      </li>
+    </ul>
+    <FuturaParagraph>
+      The chart below details Gatsby's capabilities in comparison with a
+      representative from each category. Click on any row to see a more detailed
+      explanation on that feature and our rating for each system.
+    </FuturaParagraph>
+    <h6 id="legend" css={{ textTransform: `uppercase` }}>
+      Legend
+    </h6>
+    <LegendTable />
+  </div>
+)
 
 const getFeaturesData = function(data) {
   const sections = (data || [])
