@@ -2,13 +2,13 @@
 title: Gatsby Style Guide
 ---
 
-The Gatsby community is building out a more comprehsive Guides section full of relevant articles written to be easily understood by the awesome community of people who love building with Gatsby!
+The Gatsby community is building out a more comprehensive Guides section. It will be full of relevant articles written to be easily understood by the awesome people who love building with Gatsby!
 
 We plan, write, and maintain these Guide articles on Github.
 
 ## Table of Contents
-- [What are Guide articles?](#what-are-guide-articles?)
-- [What can I write an article about?](#what-can-i-write-an-article-about?)
+- [What are Guide articles?](#what-are-guide-articles)
+- [What can I write an article about?](#what-can-i-write-an-article-about)
 - [How to contribute](#how-to-contribute)
 - [Running the Guide locally on your own computer](#running-the-guide-locally-on-your-own-computer)
 - [Article style guide](#article-style-guide)
@@ -19,11 +19,11 @@ Guide articles can cover a broad range of topics. Please see the following examp
 
 # What can I write an article about?
 
-We welcome your help writing these articles. You don't have to be an expert in a topic to write about it - this entire Guide is open source, so even if you make a mistake, another contributor will eventually correct it.
+We welcome your help writing these articles! You don't have to be an expert in a topic to write about it--this entire Guide is open source, so even if you make a mistake, another contributor will eventually correct it.
 
-If you’d like to help write an article, find a stub article in the Gatsby Guides, write the article, then open a pull request (PR) in this repo to replace the stub with your article.
+If you’d like to help by writing an article, find a stub article in the Gatsby Guides, write the article, then open a pull request (PR) in the Gatsby Github repo to replace the stub with your article.
 
-If you can't find a stub about the topic you'd like to write about, you can open a PR that creates the stub and includes your draft article. Feel free to ask us questions if you're not sure where to put a new article in the directory structure.
+If you can't find a stub about the topic you'd like to write about, you can open a PR in Github that creates the stub and includes your draft article. Feel free to ask us questions if you're not sure where to put a new article in the directory structure.
 
 Before you begin writing, make sure to read the article style guide below.
 
@@ -41,7 +41,7 @@ If you prefer to write locally before submitting a PR, then follow these steps:
 
 1. Fork this repository
 2. Copy it to your local machine by running the command `git clone` `https://github.com/YOUR-GITHUB-USERNAME/guides.git`
-3. Add a remote upstream so git knows where the official freeCodeCamp guides repository is located by running the command `git remote add upstream` `https://github.com/freeCodeCamp/guides.git`
+3. Add a remote upstream so git knows where the official Gatsby Guides repository is located by running the command `git remote add upstream` *incomplete code here*
 4. Create a new branch for your work with the command `git checkout -b NEW-BRANCH-NAME`. Try to name your branch in a way that describes your article topic, like `fix/ArticleHTMLElements`
 5. Write your article, commit your changes locally, and push your new branch to GitHub with the command `git push origin NEW-BRANCH-NAME`
 6. Go to your repository on GitHub and open a PR
@@ -73,7 +73,7 @@ We've written the following article style guide to help you get started with con
 - [Formatting example code](#formatting-example-code)
 - [Adding images to articles](#adding-images-to-articles)
 - [Proper nouns](#proper-nouns)
-- [Where to get help](#where-to-get-help)
+- [How to write clearly](#how-to-write-clearly)
 
 # Article title
 
@@ -99,15 +99,15 @@ Note: Just to clarify, you can include special characters in the article title b
 
 Each article should explain exactly one concept, and that concept should be apparent from the article's title.
 
-We can reference other articles by linking to them inline, or in an "Other Resources" section at the end of the article. Our goal is to have thousands of articles that cover a broad range of technical topics.
+We can reference other articles by linking to them inline or in an "Other Resources" section at the end of the article. Our goal is to have many articles that cover a broad range of technical topics.
 
 # General writing tips
 
 Before you begin writing, create an outline of the topic and think about any coding examples you'll use (if applicable). This helps to organize your thoughts and make the writing process easier.
 
-Articles should be written with short, clear sentences, and use as little jargon as necessary. All jargon should be defined immediately in plain English. In other words, pretend like your readers have very little coding experience and define words that beginners might have a hard time understanding.
+Articles should be written with short, clear sentences, and use as little jargon as necessary. All jargon should be defined immediately in plain English. In other words, pretend like your readers have very little coding experience; you need to define words that beginners might have a hard time understanding.
 
-The introduction paragraph should only be 1-2 sentences long and be a simple explanation of the main topic. It should limit the use of any links to other Guide articles, as they can be distracting.
+The introduction paragraph should only be a 1-2 sentence explanation of the main topic. It should limit the use of any links to other Guide articles, as these can be distracting.
 
 Keep paragraphs short (around 1-4 sentences). People are more likely to read several short paragraphs instead of a huge block of text.
 
