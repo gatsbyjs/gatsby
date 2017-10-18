@@ -7,32 +7,30 @@ class HelmetBlock extends React.Component {
     const frontmatter = this.props
     return (
       <div>
-        <Helmet
-          title={frontmatter.title}
-          meta={[
-            { name: `description`, content: frontmatter.description },
-            {
-              property: `og:url`,
-              content: `https://www.jacobbolda.com/` + frontmatter.path,
-            },
-            { property: `og:description`, content: frontmatter.description },
-            { property: `og:type`, content: `article` },
-            { property: `og:article:author`, content: `Jacob Bolda` },
-            {
-              property: `og:article:published_time`,
-              content: moment(frontmatter.written, `YYYY-MM-DD`),
-            },
-            {
-              property: `og:article:modified_time`,
-              content: moment(frontmatter.updated, `YYYY-MM-DD`),
-            },
-            { property: `og:article:tag`, content: frontmatter.category },
-            { name: `twitter:label1`, content: `Category` },
-            { name: `twitter:data1`, content: frontmatter.category },
-            { name: `twitter:label2`, content: `Written` },
-            { name: `twitter:data2`, content: frontmatter.written },
-          ]}
-        />
+        <Helmet>
+          <title>{frontmatter.title}</title>
+          <meta name="description" content={frontmatter.description} />
+          <meta
+            name="og:url"
+            content={`https://www.jacobbolda.com/${frontmatter.path}`}
+          />
+          <meta name="og:description" content={frontmatter.description} />
+          <meta name="og:type" content="article" />
+          <meta name="og:article:author" content="Jacob Bolda" />
+          <meta
+            name="og:article:published_time"
+            content={moment(frontmatter.written, `YYYY-MM-DD`)}
+          />
+          <meta
+            name="og:article:modified_time"
+            content={moment(frontmatter.updated, `YYYY-MM-DD`)}
+          />
+          <meta name="og:article:tag" content={frontmatter.category} />
+          <meta name="twitter:label1" content="Category" />
+          <meta name="twitter:data1" content={frontmatter.category} />
+          <meta name="twitter:label2" content="Written" />
+          <meta name="twitter:data2" content={frontmatter.written} />
+        </Helmet>
       </div>
     )
   }

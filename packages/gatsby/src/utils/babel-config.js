@@ -4,14 +4,13 @@ import fs from "fs"
 import path from "path"
 import json5 from "json5"
 import _ from "lodash"
-import objectAssign from "object-assign"
 import invariant from "invariant"
 import apiRunnerNode from "./api-runner-node"
 
 // TODO update this to store Babelrc config in Redux store.
 
 /**
- * Uses babel-core helpers to resolve the plugin given it's name. It
+ * Uses babel-core helpers to resolve the plugin given its name. It
  * resolves plugins in the following order:
  *
  * 1. Adding babel-type prefix and checking user's local modules
@@ -85,7 +84,7 @@ function normalizeConfig(config, directory) {
     normalizedConfig.plugins.push(normalize(plugin, `plugin`))
   )
 
-  return objectAssign({}, config, normalizedConfig)
+  return Object.assign({}, config, normalizedConfig)
 }
 
 /**

@@ -87,10 +87,7 @@ async function fetch({
         password: _auth.htaccess_pass,
       }
     }
-    allRoutes = await axios({
-      method: `get`,
-      url: url,
-    })
+    allRoutes = await axios(options)
   } catch (e) {
     httpExceptionHandler(e)
   }

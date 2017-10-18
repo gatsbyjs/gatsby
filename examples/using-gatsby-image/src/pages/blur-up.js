@@ -8,29 +8,33 @@ const BlurUp = ({ data }) => (
     <h1>Viribus quid</h1>
     <h2>Hippason sinu</h2>
     <Img
+      style={{ display: `inherit` }}
       css={{
         marginBottom: rhythm(options.blockMarginBottom),
         marginLeft: rhythm(options.blockMarginBottom),
         float: `right`,
-        "@media (min-width: 500px)": {
-          display: `none`,
+        "&": {
+          "@media (min-width: 500px)": {
+            display: `none`,
+          },
         },
       }}
       title={`Photo by Redd Angelo on Unsplash`}
-      responsiveResolution={data.reddImageMobile.responsiveResolution}
+      resolutions={data.reddImageMobile.resolutions}
     />
     <Img
+      style={{ display: `inherit` }}
       css={{
         marginBottom: rhythm(options.blockMarginBottom),
         marginLeft: rhythm(options.blockMarginBottom),
         float: `right`,
         display: `none`,
         "@media (min-width: 500px)": {
-          display: `block`,
+          display: `inline-block`,
         },
       }}
       title={`Photo by Redd Angelo on Unsplash`}
-      responsiveResolution={data.reddImage.responsiveResolution}
+      resolutions={data.reddImage.resolutions}
     />
     <p>
       Lorem markdownum nocens, est aut tergo, inmansuetique bella. Neve illud
@@ -62,7 +66,7 @@ const BlurUp = ({ data }) => (
       <li>Constitit nomine senta suspirat et signis genuisse</li>
     </ol>
     <Img
-      responsiveSizes={data.kenImage.responsiveSizes}
+      sizes={data.kenImage.sizes}
       title={`Photo by Ken Treloar on Unsplash`}
     />
     <h2>Levia mihi</h2>
@@ -86,34 +90,18 @@ export default BlurUp
 export const query = graphql`
   query BlurUpQuery {
     reddImageMobile: imageSharp(id: { regex: "/redd/" }) {
-      responsiveResolution(width: 125) {
-        base64
-        aspectRatio
-        width
-        height
-        src
-        srcSet
+      resolutions(width: 125) {
+        ...GatsbyImageSharpResolutions
       }
     }
     reddImage: imageSharp(id: { regex: "/redd/" }) {
-      responsiveResolution(width: 200) {
-        base64
-        aspectRatio
-        width
-        height
-        src
-        srcSet
+      resolutions(width: 200) {
+        ...GatsbyImageSharpResolutions
       }
     }
     kenImage: imageSharp(id: { regex: "/ken-treloar/" }) {
-      responsiveSizes(maxWidth: 600) {
-        base64
-        aspectRatio
-        src
-        srcSet
-        sizes
-        originalImg
-        originalName
+      sizes(maxWidth: 600) {
+        ...GatsbyImageSharpSizes
       }
     }
   }

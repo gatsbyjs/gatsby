@@ -14,6 +14,7 @@
     "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.26.0",
     "babel-runtime": "^6.26.0",
+    "chokidar": "^1.7.0",
     "cross-env": "^5.0.5",
     "eslint": "^4.5.0",
     "eslint-config-google": "^0.9.1",
@@ -35,23 +36,23 @@
     "remotedev-server": "^0.2.3",
     "rimraf": "^2.6.1"
   },
-  "private": true,
   "engines": {
     "yarn": "^1.0.2"
   },
+  "private": true,
   "scripts": {
+    "bootstrap": "yarn && npm run check-versions && lerna bootstrap",
     "check-versions": "babel-node scripts/check-versions.js",
     "format": "npm run format-packages && npm run format-cache-dir && npm run format-www && npm run format-examples && npm run format-scripts",
+    "format-cache-dir": "prettier-eslint --write \"packages/gatsby/cache-dir/*.js\"",
     "format-examples": "prettier-eslint --write \"examples/**/gatsby-node.js\" \"examples/**/gatsby-config.js\" \"examples/**/src/**/*.js\"",
     "format-packages": "prettier-eslint --write \"packages/*/src/**/*.js\"",
-    "format-cache-dir": "prettier-eslint --write \"packages/gatsby/cache-dir/*.js\"",
     "format-scripts": "prettier-eslint --write \"scripts/**/*.js\"",
     "format-www": "prettier-eslint --write \"www/*.js\" \"www/src/**/*.js\"",
     "lerna": "lerna",
     "lint": "eslint --ext .js,.jsx packages/**/src",
     "lint:flow": "babel-node scripts/flow-check.js",
     "plop": "plop",
-    "bootstrap": "yarn && npm run check-versions && lerna run prepublish",
     "publish": "lerna publish",
     "publish-canary": "lerna publish --canary --yes",
     "publish-next": "lerna publish --npm-tag=next",
@@ -61,8 +62,5 @@
     "test:watch": "jest --watch",
     "test_bkup": "npm run lint && npm run test-node && npm run test-integration",
     "watch": "lerna run watch --no-sort --stream --concurrency 999"
-  },
-  "workspaces": [
-    "packages/*"
-  ]
+  }
 }

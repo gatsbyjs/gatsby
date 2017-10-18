@@ -243,7 +243,7 @@ The underlying query name `BlogPostByPath` (note: these query names need to be u
 
 `frontmatter`, is of course our data structure we provided at the beginning of our Markdown file. Each key we define there will be available to be injected into the query.
 
-At this point, we have a bunch of plugins installed to load files off of disk, transform Markdown to HTML, and other utilities. We have a single, lonely Markdown file that will be rendered as a blog post. Finally, we have a React template for blog posts, as well as a wired up GraphQL query to query for a blog post and inject the React template with the queried data. Next up: programatically creating the necessary static pages (and injecting the templates) with Gatsby's Node API. Let's get down to it.
+At this point, we have a bunch of plugins installed to load files off of disk, transform Markdown to HTML, and other utilities. We have a single, lonely Markdown file that will be rendered as a blog post. Finally, we have a React template for blog posts, as well as a wired up GraphQL query to query for a blog post and inject the React template with the queried data. Next up: programmatically creating the necessary static pages (and injecting the templates) with Gatsby's Node API. Let's get down to it.
 
 An important note to make at this point is that the GraphQL query takes place at **build** time. The component is injected with the `data` prop that is seeded by the GraphQL query. Unless anything dynamic (e.g. logic in `componentDidMount`, state changes, etc.) occurs, this component will be pure, rendered HTML generated via the React rendering engine, GraphQL, and Gatsby!
 
@@ -304,7 +304,7 @@ We're using GraphQL to get all Markdown nodes and making them available under th
 
 One cool note here is that the `gatsby-plugin-remark` plugin exposes some useful data for us to query with GraphQL, e.g. `excerpt` (a short snippet to display as a preview), `id` (a unique identifier for each post), etc.
 
-We now have our query written, but we haven't yet programatically created the pages (with the `createPage` action creator). Let's do that!
+We now have our query written, but we haven't yet programmatically created the pages (with the `createPage` action creator). Let's do that!
 
 ### Creating the pages
 

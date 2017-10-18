@@ -57,6 +57,17 @@ function getValidKey({ key, verbose = false }) {
 
 exports.getValidKey = getValidKey
 
+// Remove the ACF key from the response when it's not an object
+const normalizeACF = entities =>
+  entities.map(e => {
+    if (!_.isObject(e[`acf`])) {
+      delete e[`acf`]
+    }
+    return e
+  })
+
+exports.normalizeACF = normalizeACF
+
 // Create entities from the few the WordPress API returns as an object for presumably
 // legacy reasons.
 const normalizeEntities = entities => {
@@ -226,7 +237,20 @@ exports.mapTagsCategoriesToTaxonomies = entities =>
 exports.mapEntitiesToMedia = entities => {
   const media = entities.filter(e => e.__type === `wordpress__wp_media`)
   return entities.map(e => {
-    // TODO : featured_media field is photo ID
+    // Map featured_media to its media node
+    let featuredMedia
+    if (e.featured_media) {
+      featuredMedia = media.find(m => m.wordpress_id === e.featured_media)
+    }
+
+    if (featuredMedia) {
+      e.featured_media___NODE = featuredMedia.id
+    }
+
+    // Always delete even if we can't find a featuredMedia as WordPress' API sets
+    // featured_media to 0 when there isn't one which is useless to us.
+    delete e.featured_media
+
     const isPhoto = field =>
       _.isObject(field) &&
       field.wordpress_id &&
