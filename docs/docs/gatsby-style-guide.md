@@ -2,13 +2,13 @@
 title: Gatsby Style Guide
 ---
 
-The Gatsby community is building out a more comprehsive Guides section full of relevant articles written to be easily understood by the awesome community of people who love building with Gatsby!
+The Gatsby community is building out a more comprehensive Guides section. It will be full of relevant articles written to be easily understood by the awesome people who love building with Gatsby!
 
 We plan, write, and maintain these Guide articles on Github.
 
 ## Table of Contents
-- [What are Guide articles?](#what-are-guide-articles?)
-- [What can I write an article about?](#what-can-i-write-an-article-about?)
+- [What are Guide articles?](#what-are-guide-articles)
+- [What can I write an article about?](#what-can-i-write-an-article-about)
 - [How to contribute](#how-to-contribute)
 - [Running the Guide locally on your own computer](#running-the-guide-locally-on-your-own-computer)
 - [Article style guide](#article-style-guide)
@@ -73,7 +73,7 @@ We've written the following article style guide to help you get started with con
 - [Formatting example code](#formatting-example-code)
 - [Adding images to articles](#adding-images-to-articles)
 - [Proper nouns](#proper-nouns)
-- [Where to get help](#where-to-get-help)
+- [How to write clearly](#how-to-write-clearly)
 
 # Article title
 
