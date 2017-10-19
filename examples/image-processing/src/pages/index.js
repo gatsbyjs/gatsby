@@ -306,7 +306,7 @@ export const pageQuery = graphql`
     sizes: imageSharp(id: { regex: "/fecolormatrix-kanye-west.jpg/" }) {
       sizes(
         duotone: { highlight: "#f00e2e", shadow: "#192550" }
-        trace: {
+        traceSVG: {
           color: "#f00e2e"
           turnPolicy: TURNPOLICY_MINORITY
           blackOnWhite: false

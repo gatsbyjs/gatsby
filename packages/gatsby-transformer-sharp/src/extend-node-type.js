@@ -98,7 +98,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
       file: {
         absolutePath: parent.image.parent.split(` `)[0],
       },
-      args: { ...parent.fieldArgs.trace },
+      args: { ...parent.fieldArgs.traceSVG },
     })
     return promise
   }
@@ -176,7 +176,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           type: DuotoneGradientType,
           defaultValue: false,
         },
-        trace: {
+        traceSVG: {
           type: PotraceType,
           defaultValue: false,
         },
@@ -247,7 +247,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           type: DuotoneGradientType,
           defaultValue: false,
         },
-        trace: {
+        traceSVG: {
           type: PotraceType,
           defaultValue: false,
         },
