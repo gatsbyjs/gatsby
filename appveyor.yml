@@ -58,8 +58,9 @@ install:
   - refreshenv
   - echo we are running on %PLATFORM%
   - node --version
-  - yarn global add gatsby-dev-cli@canary
+  - yarn global add gatsby-dev-cli
   - yarn run bootstrap
+  - ./node_modules/.bin/lerna run build
   - node --version
   - yarn test
 
