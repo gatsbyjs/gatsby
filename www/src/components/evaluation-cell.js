@@ -31,7 +31,6 @@ class EvaluationCell extends Component {
     const basicStyling = {
       height: rhythm(3 / 4),
       width: rhythm(3 / 4),
-      display: `block`,
       borderRadius: `50%`,
       margin: `0 auto`,
       [presets.Mobile]: {
@@ -43,7 +42,6 @@ class EvaluationCell extends Component {
       <div
         css={{
           ...basicStyling,
-          verticalAlign: `middle`,
           // border: `1px solid ${presets.brandLight}`,
           backgroundColor:
             [`N/A`, `0`, ``].indexOf(this.props.num) !== -1
