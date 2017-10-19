@@ -285,7 +285,7 @@ exports.mapEntitiesToMedia = entities => {
           delete e.acf[key]
         }
 
-        if (_.isArray(value) && value[0].acf_fc_layout) {
+        if (_.isArray(value) && value[0] && value[0].acf_fc_layout) {
           e.acf[key] = e.acf[key].map(f => {
             replaceFieldsInObject(f)
             return f
