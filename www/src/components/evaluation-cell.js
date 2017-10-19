@@ -5,7 +5,7 @@ import presets from "../utils/presets"
 class EvaluationCell extends Component {
   render() {
     const bgDefault = `#edebf0`
-    const bgFeatureAvailability = presets.brandLight
+    const bgFeatureAvailability = presets.accent
 
     const getBackground = num => {
       switch (num) {
