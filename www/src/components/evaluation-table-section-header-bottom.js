@@ -4,7 +4,7 @@ import logo from "../gatsby-negative.svg"
 import jekyll from "../assets/jekyll.svg"
 import wordpress from "../assets/wordpress.png"
 import squarespace from "../assets/squarespace-compressed.png"
-import { rhythm } from "../utils/typography"
+import { rhythm, scale, options } from "../utils/typography"
 
 const subHeaderTitles = [
   ``,
@@ -74,30 +74,33 @@ const renderSubHeader = props => (
         key={i}
         css={{
           display: `table-cell`,
-          background: `#f8f8f8`,
-          //borderLeft: i > 1 ? `1px solid #dddddd` : `none`,
-          //borderRight: i === 5 ? `1px solid #dddddd` : `none`,
-          paddingTop: rhythm(1 / 4),
-          paddingLeft: rhythm(1 / 4),
-          paddingRight: i >= 1 ? rhythm(1 / 4) : 0,
-          paddingBottom: rhythm(1 / 4),
-          fontStyle: `italic`,
+          background: `${presets.sidebar}`,
+          // borderLeft: i > 0 ? `1px solid ${presets.brandLighter}` : `none`,
+          // borderRight: i === 5 ? `1px solid ${presets.brandLighter}` : `none`,
           fontWeight: 600,
-          textAlign: `center`,
+          ...scale(-1 / 9),
+          lineHeight: 1.3,
+          textAlign: `left`,
           verticalAlign: `middle`,
-          fontSize: `90%`,
-          lineHeight: `${rhythm(1)}`,
-          "&:last-child": {
-            paddingRight: rhythm(1 / 2),
+          fontFamily: options.headerFontFamily.join(`,`),
+          borderColor: presets.veryLightPurple,
+          "&&": {
+            paddingTop: rhythm(1 / 4),
+            paddingLeft: rhythm(1 / 4),
+            paddingRight: i >= 1 ? rhythm(1 / 2) : 0,
+            paddingBottom: rhythm(1 / 4),
+            "&:last-child": {
+              paddingRight: i >= 1 ? rhythm(1 / 2) : 0,
+            },
           },
           [presets.Mobile]: {
             paddingTop: rhythm(1 / 2),
             paddingLeft: `${rhythm(1 / 2)} !important`,
             paddingRight: rhythm(1 / 2),
+            paddingBottom: rhythm(1 / 2),
             "&:last-child": {
               paddingRight: rhythm(1 / 2),
             },
-            paddingBottom: rhythm(1 / 2),
           },
         }}
       >

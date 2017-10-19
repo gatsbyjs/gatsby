@@ -19,8 +19,8 @@ const LegendTable = () => {
     verticalAlign: `middle`,
     textAlign: `center`,
     padding: 10,
-    borderLeft: `1px solid #dddddd`,
-    borderBottom: `1px solid #dddddd`,
+    borderLeft: `1px solid ${presets.lightPurple}`,
+    borderBottom: `1px solid ${presets.lightPurple}`,
   }
 
   const legendExplanationCellStyle = {
@@ -28,8 +28,8 @@ const LegendTable = () => {
     verticalAlign: `middle`,
     textAlign: `center`,
     padding: 10,
-    borderLeft: `1px solid #dddddd`,
-    borderBottom: `1px solid #dddddd`,
+    borderLeft: `1px solid ${presets.lightPurple}`,
+    borderBottom: `1px solid ${presets.lightPurple}`,
   }
 
   const balls = [
@@ -64,7 +64,7 @@ const LegendTable = () => {
     <div>
       <div
         css={{
-          border: `1px solid #dddddd`,
+          border: `1px solid ${presets.lightPurple}`,
           borderLeft: 0,
           fontFamily: options.headerFontFamily.join(`,`),
           display: `none`,
@@ -79,7 +79,7 @@ const LegendTable = () => {
       <div
         css={{
           display: `table`,
-          border: `1px solid #dddddd`,
+          border: `1px solid ${presets.lightPurple}`,
           borderLeft: 0,
           fontFamily: options.headerFontFamily.join(`,`),
           display: `table`,
