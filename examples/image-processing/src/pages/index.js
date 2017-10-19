@@ -150,7 +150,7 @@ class Index extends React.Component {
             paddingTop: rhythm(2),
           }}
         >
-          <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/#responsive-sizes">
+          <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/#responsivesizes">
             <code>
               <strong>sizes</strong>
             </code>
@@ -237,7 +237,7 @@ class Index extends React.Component {
             paddingTop: rhythm(2),
           }}
         >
-          <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/#responsive-resolution">
+          <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/#responsiveresolution">
             <code>resolutions</code>
           </a>
         </h2>
