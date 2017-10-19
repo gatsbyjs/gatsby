@@ -1,10 +1,9 @@
 import React from "react"
 import Helmet from "react-helmet"
-import gray from "gray-percentage"
-import EditIcon from "react-icons/lib/md/create"
+
+import MarkdownPageFooter from "../components/markdown-page-footer"
 
 import Container from "../components/container"
-import { rhythm, scale } from "../utils/typography"
 
 class DocsTemplate extends React.Component {
   render() {
@@ -27,25 +26,7 @@ class DocsTemplate extends React.Component {
             __html: page.html,
           }}
         />
-        <a
-          css={{
-            "&&": {
-              display: `block`,
-              color: gray(60, 270),
-              fontSize: scale(-1 / 5).fontSize,
-              border: `none`,
-              boxShadow: `none`,
-              marginTop: rhythm(1.5),
-            },
-          }}
-          href={`https://github.com/gatsbyjs/gatsby/blob/master/docs/${page
-            .parent.relativePath}`}
-        >
-          <EditIcon
-            css={{ fontSize: 20, position: `relative`, top: -2 }}
-          />{` `}
-          edit this page on Github
-        </a>
+        <MarkdownPageFooter page={page} />
       </Container>
     )
   }
@@ -62,11 +43,7 @@ export const pageQuery = graphql`
       frontmatter {
         title
       }
-      parent {
-        ... on File {
-          relativePath
-        }
-      }
+      ...MarkdownPageFooter
     }
   }
 `
