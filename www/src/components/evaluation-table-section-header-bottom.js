@@ -6,60 +6,22 @@ import wordpress from "../assets/wordpress.png"
 import squarespace from "../assets/squarespace-compressed.png"
 import { rhythm, scale, options } from "../utils/typography"
 
+const subHeaderTitleStyles = {
+  height: rhythm(3 / 4),
+  marginBottom: 0,
+  display: `block`,
+  margin: `auto`,
+  [presets.Mobile]: {
+    height: rhythm(5 / 4),
+  },
+}
+
 const subHeaderTitles = [
   ``,
-  <img
-    src={logo}
-    key="0"
-    css={{
-      height: rhythm(3 / 4),
-      marginBottom: 0,
-      display: `block`,
-      margin: `auto`,
-      [presets.Mobile]: {
-        height: rhythm(5 / 4),
-      },
-    }}
-  />,
-  <img
-    src={jekyll}
-    key="1"
-    css={{
-      height: rhythm(3 / 4),
-      marginBottom: 0,
-      display: `block`,
-      margin: `auto`,
-      [presets.Mobile]: {
-        height: rhythm(5 / 4),
-      },
-    }}
-  />,
-  <img
-    src={wordpress}
-    key="2"
-    css={{
-      height: rhythm(3 / 4),
-      marginBottom: 0,
-      display: `block`,
-      margin: `auto`,
-      [presets.Mobile]: {
-        height: rhythm(5 / 4),
-      },
-    }}
-  />,
-  <img
-    src={squarespace}
-    key="3"
-    css={{
-      height: rhythm(3 / 4),
-      marginBottom: 0,
-      display: `block`,
-      margin: `auto`,
-      [presets.Mobile]: {
-        height: rhythm(5 / 4),
-      },
-    }}
-  />,
+  <img src={logo} key="0" css={subHeaderTitleStyles} />,
+  <img src={jekyll} key="1" css={subHeaderTitleStyles} />,
+  <img src={wordpress} key="2" css={subHeaderTitleStyles} />,
+  <img src={squarespace} key="3" css={subHeaderTitleStyles} />,
 ]
 
 const renderSubHeader = props => (
