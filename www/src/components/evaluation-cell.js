@@ -33,9 +33,10 @@ class EvaluationCell extends Component {
       width: rhythm(3 / 4),
       display: `block`,
       borderRadius: `50%`,
+      margin: `0 auto`,
       [presets.Mobile]: {
-        height: rhythm(0.95),
-        width: rhythm(0.95),
+        height: rhythm(0.875),
+        width: rhythm(0.875),
       },
     }
     return (

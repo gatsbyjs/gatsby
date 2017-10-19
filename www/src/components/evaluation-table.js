@@ -83,22 +83,7 @@ class EvaluationTable extends Component {
         case 2:
         case 3:
         case 4: {
-          return (
-            <div
-              css={{
-                margin: `auto`,
-                height: rhythm(3 / 4),
-                width: rhythm(3 / 4),
-                verticalAlign: `middle`,
-                [presets.Mobile]: {
-                  height: rhythm(1),
-                  width: rhythm(1),
-                },
-              }}
-            >
-              <EvaluationCell num={text} />
-            </div>
-          )
+          return <EvaluationCell num={text} />
         }
       }
     }
