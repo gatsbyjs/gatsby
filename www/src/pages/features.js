@@ -123,8 +123,8 @@ const FeaturesHeader = () => (
         editor to create content. You customize the look and feel through
         choosing themes and plugins, or writing custom PHP or Javascript code.
         Content is saved in a database, which is retrieved and sent to users
-        when they visit the website. Depending onYou can self-host your website,
-        or use an official hosting provider.
+        when they visit the website. Depending on your requirements you can
+        self-host your website, or use an official hosting provider.
       </li>
       <li>
         <b>Site builders</b> like{` `}
