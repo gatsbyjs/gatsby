@@ -6,6 +6,8 @@ import Container from "../components/container"
 import { options, rhythm } from "../utils/typography"
 import presets from "../utils/presets"
 
+const legendBorderColor = presets.veryLightPurple
+
 const LegendTable = () => {
   const legendBallStyle = {
     float: `none`,
@@ -19,8 +21,8 @@ const LegendTable = () => {
     verticalAlign: `middle`,
     textAlign: `center`,
     padding: 10,
-    borderLeft: `1px solid #dddddd`,
-    borderBottom: `1px solid #dddddd`,
+    borderLeft: `1px solid ${legendBorderColor}`,
+    borderBottom: `1px solid ${legendBorderColor}`,
   }
 
   const legendExplanationCellStyle = {
@@ -28,8 +30,11 @@ const LegendTable = () => {
     verticalAlign: `middle`,
     textAlign: `center`,
     padding: 10,
-    borderLeft: `1px solid #dddddd`,
-    borderBottom: `1px solid #dddddd`,
+    borderLeft: `1px solid ${legendBorderColor}`,
+    borderBottom: `1px solid ${legendBorderColor}`,
+    [presets.Phablet]: {
+      borderBottom: 0,
+    },
   }
 
   const balls = [
@@ -64,7 +69,7 @@ const LegendTable = () => {
     <div>
       <div
         css={{
-          border: `1px solid #dddddd`,
+          border: `1px solid ${legendBorderColor}`,
           borderLeft: 0,
           fontFamily: options.headerFontFamily.join(`,`),
           display: `none`,
@@ -79,7 +84,7 @@ const LegendTable = () => {
       <div
         css={{
           display: `table`,
-          border: `1px solid #dddddd`,
+          border: `1px solid ${legendBorderColor}`,
           borderLeft: 0,
           fontFamily: options.headerFontFamily.join(`,`),
           display: `table`,
