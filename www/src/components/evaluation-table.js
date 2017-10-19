@@ -162,12 +162,18 @@ class EvaluationTable extends Component {
                       <td
                         css={{
                           fontFamily: options.headerFontFamily.join(`,`),
-                          paddingRight: `${rhythm(1)} !important`,
-                          paddingLeft: `${rhythm(1)} !important`,
                           paddingBottom: `calc(${rhythm(1)} - 1px)`,
-                          [presets.Mobile]: {
-                            paddingRight: `${rhythm(2)} !important`,
-                            paddingLeft: `${rhythm(2)} !important`,
+                          "&&": {
+                            paddingRight: `${rhythm(1 / 4)}`,
+                            paddingLeft: `${rhythm(1 / 4)}`,
+                            [presets.Mobile]: {
+                              paddingRight: `${rhythm(1 / 2)}`,
+                              paddingLeft: `${rhythm(1 / 2)}`,
+                            },
+                            [presets.Phablet]: {
+                              paddingRight: `${rhythm(2)}`,
+                              paddingLeft: `${rhythm(2)}`,
+                            },
                           },
                         }}
                         colSpan="5"
