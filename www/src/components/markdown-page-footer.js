@@ -8,7 +8,7 @@ import { GraphQLClient } from "graphql-request"
 import { rhythm, scale } from "../utils/typography"
 
 const client = new GraphQLClient(
-  "https://api.graph.cool/relay/v1/cj8xuo77f0a3a0164y7jketkr"
+  `https://api.graph.cool/relay/v1/cj8xuo77f0a3a0164y7jketkr`
 )
 
 function sendReview(thumbsUp, relativePath) {
@@ -40,7 +40,7 @@ export default class MarkdownPageFooter extends React.Component {
           <span css={{ lineHeight: rhythm(2) }}>Thank you!</span>
         ) : (
           <span css={{ lineHeight: rhythm(2) }}>
-            Was this helpful?{" "}
+            Was this helpful?{` `}
             <CheckIcon
               onClick={() => {
                 sendReview(true, this.props.page.parent.relativePath)
