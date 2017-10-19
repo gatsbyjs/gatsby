@@ -95,7 +95,9 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
 
   const getTracedSVG = parent => {
     const promise = traceSVG({
-      file: { absolutePath: path.join(process.cwd(), `public`, parent.src) },
+      file: {
+        absolutePath: parent.image.parent.split(` `)[0],
+      },
       args: { ...parent.fieldArgs.trace },
     })
     return promise
@@ -204,6 +206,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
         ).then(o =>
           Object.assign({}, o, {
             fieldArgs,
+            image,
           })
         ),
     },
@@ -274,6 +277,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
         ).then(o =>
           Object.assign({}, o, {
             fieldArgs,
+            image,
           })
         ),
     },
