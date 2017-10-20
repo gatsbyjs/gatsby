@@ -133,14 +133,26 @@ const Root = () =>
               attachToHistory(props.history)
               const { pathname } = props.location
               const pageResources = loader.getResourcesForPathname(pathname)
-              if (pageResources) {
+              if (pageResources && pageResources.component) {
                 return createElement(ComponentRenderer, {
+                  key: `normal-page`,
                   page: true,
                   ...props,
                   pageResources,
                 })
               } else {
-                return addNotFoundRoute()
+                const dev404Page = pages.find(p => p.path === `/dev-404-page/`)
+                return createElement(Route, {
+                  key: `404-page`,
+                  component: props =>
+                    createElement(
+                      syncRequires.components[dev404Page.componentChunkName],
+                      {
+                        ...props,
+                        ...syncRequires.json[dev404Page.jsonName],
+                      }
+                    ),
+                })
               }
             },
           }),
