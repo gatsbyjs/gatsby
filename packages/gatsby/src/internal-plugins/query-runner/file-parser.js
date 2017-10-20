@@ -117,15 +117,11 @@ const cache = {}
 
 export default class FileParser {
   async parseFile(file: string): Promise<?DocumentNode> {
-    console.warn(`parsing file ${file}`)
     let text
     try {
       text = await fs.readFile(file, `utf8`)
     } catch (err) {
-      report.error(
-        `There was a problem reading the file: ${file}`,
-        err
-      )
+      report.error(`There was a problem reading the file: ${file}`, err)
       return null
     }
 

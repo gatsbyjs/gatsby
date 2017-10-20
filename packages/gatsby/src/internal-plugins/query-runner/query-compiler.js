@@ -79,7 +79,6 @@ class Runner {
     // FIXME: this should all use gatsby's configuration to determine parsable
     // files (and how to parse them)
     let files = glob.sync(`${this.fragmentsDir}/**/*.+(t|j)s?(x)`)
-    console.warn(files)
     files = files.concat(glob.sync(`${this.baseDir}/**/*.+(t|j)s?(x)`))
     files = files.filter(d => !d.match(/\.d\.ts$/))
     files = files.map(normalize)
@@ -90,11 +89,9 @@ class Runner {
     // our babel plugin to remove the query on building is active (we don't
     // run babel on code in node_modules). Otherwise the component will throw
     // an error in the browser of "graphql is not defined".
-    console.warn(files)
     files = files.concat(
       Object.keys(store.getState().components).map(c => normalize(c))
     )
-    console.warn(files)
     files = _.uniq(files)
 
     let parser = new FileParser()
