@@ -1,12 +1,12 @@
 ---
-title: What's coming in Gatsby 1.0
+title: Developing in React - Starting to See It
 date: "2017-10-20"
 author: "Benjamin Read"
 ---
 
 As a frontend designer I've always prided myself on being a HTML and CSS specialist. My use of JavaScript has been limited to animations and DOM manipulation. However, at [Indigo Tree](https://indigotree.co.uk "Indigo Tree: We Build Awesome Websites") we're branching out from our staple of Wordpress and trying different methods of creating websites with functionality that our clients require, whilst maximising their budget.
 
-We're also bracing ourselves for what we’re anticipating to be the stormfront of [Gutenberg](https://wordpress.org/plugins/gutenberg/ “Gutenberg – Wordpress plugins”) for our Wordpress projects. Once it's included in the WordPress Core, writing components in JavaScript for the Gutenberg editor will be necessary for every developer on a project
+We're also bracing ourselves for what we’re anticipating to be the stormfront of [Gutenberg](https://wordpress.org/plugins/gutenberg/ “Gutenberg Wordpress plugins”) for our Wordpress projects. Once it's included in the WordPress Core, writing components in JavaScript for the Gutenberg editor will be necessary for every developer on a project
 
 So I decided to dive into learning React with a few courses, some experimentation, and the aim of building a site in [Gatsby.js](https://www.gatsbyjs.org/ "Blazing-fast static site generator for React") as a test for doing projects built entirely in React.
 
@@ -87,7 +87,7 @@ However, since I'm managing my HTML with JavaScript, why not CSS as well? As abo
 
 ## My Project
 
-Following the [tutorial on Gatsbyjs](https://www.gatsbyjs.org/tutorial/ "GatsbyJS Tutorial”) I built up my project from scratch, breaking things profusely at first, but it honestly didn’t take long to gain confidence enough so that I launched my first site at [freebabylon5.com recently](https://freebabylon5.com “Freebabylon5.com: our last, best hope of getting back on the air”).
+Following the [tutorial on Gatsbyjs](https://www.gatsbyjs.org/tutorial/  "GatsbyJS Tutorial”) I built up my project from scratch, breaking things profusely at first, but it honestly didn’t take long to gain confidence enough so that I launched my first site at [freebabylon5.com recently](https://freebabylon5.com “Freebabylon5.com: our last, best hope of getting back on the air”).
 
 Be warned: the tutorial isn’t quite finished yet, you might be better off starting with [one of the starter kits already available](https://www.gatsbyjs.org/docs/gatsby-starters/ “Gatsby Starters”), so that you get `react-helmet` and active links implemented, the 2 things I had to learn independently.
 
