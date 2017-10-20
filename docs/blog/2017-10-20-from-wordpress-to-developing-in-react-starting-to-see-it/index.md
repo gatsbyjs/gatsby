@@ -1,5 +1,5 @@
 ---
-title: Developing in React - Starting to See It
+title: From Wordpress to Developing in React — Starting to See It
 date: "2017-10-20"
 author: "Benjamin Read"
 ---
