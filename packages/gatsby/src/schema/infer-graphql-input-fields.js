@@ -91,7 +91,7 @@ function inferGraphQLInputFields({
           })
           invariant(
             inferredField,
-            `Could not infer graphQL type for value: ${headValue}`
+            `Could not infer graphQL type for value: ${JSON.stringify(Object.keys(headValue))}`
           )
           inType = inferredField.type
           break
