@@ -95,9 +95,13 @@ Their fragments are:
 * `GatsbyImageSharpResolutions`
 * `GatsbyImageSharpResolutions_noBase64`
 * `GatsbyImageSharpResolutions_tracedSVG`
+* `GatsbyImageSharpResolutions_withWebp`
+* `GatsbyImageSharpResolutions_withWebp_noBase64`
 * `GatsbyImageSharpSizes`
 * `GatsbyImageSharpSizes_noBase64`
 * `GatsbyImageSharpSizes_tracedSVG`
+* `GatsbyImageSharpSizes_withWebp`
+* `GatsbyImageSharpSizes_withWebp_noBase64`
 
 ### gatsby-source-contentful
 
@@ -106,7 +110,8 @@ Their fragments are:
 * `GatsbyContentfulSizes`
 * `GatsbyContentfulSizes_noBase64`
 
-If you don't want to use the blur-up effect, choose the fragment with `noBase64` at the end. If you want to use the traced placeholder SVGs, choose the fragment with `tracedSVG` at the end.
+If you don't want to use the blur-up effect, choose the fragment with `noBase64` at the end. If you want to use the traced placeholder SVGs, choose the fragment with `tracedSVG` at the end. 
+If you want additional WebP versions of your image, use the `withWebp` fragments.
 
 _Please see the [gatsby-plugin-sharp](https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/#tracedsvg) documentation for more information on `tracedSVG` and its configuration options._
 
