@@ -102,13 +102,7 @@ export const query = graphql`
     kenImage: imageSharp(id: { regex: "/ken-treloar/" }) {
       sizes(
         maxWidth: 600
-        traceSVG: {
-          turnPolicy: TURNPOLICY_MINORITY
-          blackOnWhite: true
-          turdSize: 100
-          threshold: 100
-          optTolerance: 1000
-        }
+        traceSVG: { color: "lightblue", background: "lightcyan" }
       ) {
         ...GatsbyImageSharpSizes_tracedSVG
       }
