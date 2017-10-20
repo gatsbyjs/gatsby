@@ -103,6 +103,7 @@ test(`it transforms images in markdown`, async () => {
   const node = nodes.pop()
   expect(node.type).toBe(`html`)
   expect(node.value).toMatchSnapshot()
+  expect(node.value).not.toMatch(`<html>`)
 })
 
 test(`it transforms multiple images in markdown`, async () => {
@@ -132,6 +133,7 @@ test(`it transforms HTML img tags`, async () => {
   const node = nodes.pop()
   expect(node.type).toBe(`html`)
   expect(node.value).toMatchSnapshot()
+  expect(node.value).not.toMatch(`<html>`)
 })
 
 test(`it leaves non-relative HTML img tags alone`, async () => {
