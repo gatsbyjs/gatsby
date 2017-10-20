@@ -93,15 +93,12 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
     return {}
   }
 
-  const getTracedSVG = parent => {
-    const promise = traceSVG({
-      file: {
-        absolutePath: parent.image.parent.split(` `)[0],
-      },
-      args: { ...parent.fieldArgs.traceSVG },
+  const getTracedSVG = async ({ file, image, fieldArgs }) =>
+    traceSVG({
+      file,
+      args: { ...fieldArgs.traceSVG },
+      fileArgs: fieldArgs,
     })
-    return promise
-  }
 
   return {
     original: {
@@ -197,18 +194,22 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           defaultValue: 0,
         },
       },
-      resolve: (image, fieldArgs, context) =>
-        Promise.resolve(
+      resolve: (image, fieldArgs, context) => {
+        const file = getNodeAndSavePathDependency(image.parent, context.path)
+        const args = { ...fieldArgs, pathPrefix }
+        return Promise.resolve(
           resolutions({
-            file: getNodeAndSavePathDependency(image.parent, context.path),
-            args: { ...fieldArgs, pathPrefix },
+            file,
+            args,
           })
         ).then(o =>
           Object.assign({}, o, {
-            fieldArgs,
+            fieldArgs: args,
             image,
+            file,
           })
-        ),
+        )
+      },
     },
     sizes: {
       type: new GraphQLObjectType({
@@ -268,18 +269,22 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           defaultValue: 0,
         },
       },
-      resolve: (image, fieldArgs, context) =>
-        Promise.resolve(
+      resolve: (image, fieldArgs, context) => {
+        const file = getNodeAndSavePathDependency(image.parent, context.path)
+        const args = { ...fieldArgs, pathPrefix }
+        return Promise.resolve(
           sizes({
-            file: getNodeAndSavePathDependency(image.parent, context.path),
-            args: { ...fieldArgs, pathPrefix },
+            file,
+            args,
           })
-        ).then(o =>
-          Object.assign({}, o, {
-            fieldArgs,
+        ).then(o => {
+          return Object.assign({}, o, {
+            fieldArgs: args,
             image,
+            file,
           })
-        ),
+        })
+      },
     },
     responsiveResolution: {
       deprecationReason: `We dropped the "responsive" part of the name to make it shorter https://github.com/gatsbyjs/gatsby/pull/2320/`,
@@ -332,12 +337,21 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           defaultValue: 0,
         },
       },
-      resolve(image, fieldArgs, context) {
-        const promise = resolutions({
-          file: getNodeAndSavePathDependency(image.parent, context.path),
-          args: { ...fieldArgs, pathPrefix },
-        })
-        return promise
+      resolve: (image, fieldArgs, context) => {
+        const file = getNodeAndSavePathDependency(image.parent, context.path)
+        const args = { ...fieldArgs, pathPrefix }
+        return Promise.resolve(
+          resolutions({
+            file,
+            args,
+          })
+        ).then(o =>
+          Object.assign({}, o, {
+            fieldArgs: args,
+            image,
+            file,
+          })
+        )
       },
     },
     responsiveSizes: {
@@ -391,11 +405,21 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           defaultValue: 0,
         },
       },
-      resolve(image, fieldArgs, context) {
-        return sizes({
-          file: getNodeAndSavePathDependency(image.parent, context.path),
-          args: { ...fieldArgs, pathPrefix },
-        })
+      resolve: (image, fieldArgs, context) => {
+        const file = getNodeAndSavePathDependency(image.parent, context.path)
+        const args = { ...fieldArgs, pathPrefix }
+        return Promise.resolve(
+          sizes({
+            file,
+            args,
+          })
+        ).then(o =>
+          Object.assign({}, o, {
+            fieldArgs: args,
+            image,
+            file,
+          })
+        )
       },
     },
     resize: {
@@ -403,6 +427,10 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
         name: `ImageSharpResize`,
         fields: {
           src: { type: GraphQLString },
+          tracedSVG: {
+            type: GraphQLString,
+            resolve: parent => getTracedSVG(parent),
+          },
           width: { type: GraphQLInt },
           height: { type: GraphQLInt },
           aspectRatio: { type: GraphQLFloat },
@@ -441,6 +469,10 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           type: GraphQLBoolean,
           defaultValue: false,
         },
+        traceSVG: {
+          type: PotraceType,
+          defaultValue: false,
+        },
         toFormat: {
           type: ImageFormatType,
           defaultValue: ``,
@@ -454,9 +486,10 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           defaultValue: 0,
         },
       },
-      resolve(image, fieldArgs, context) {
+      resolve: (image, fieldArgs, context) => {
+        const file = getNodeAndSavePathDependency(image.parent, context.path)
+        const args = { ...fieldArgs, pathPrefix }
         return new Promise(resolve => {
-          const file = getNodeAndSavePathDependency(image.parent, context.path)
           if (fieldArgs.base64) {
             resolve(
               base64({
@@ -464,10 +497,15 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
               })
             )
           } else {
-            resolve(
-              queueImageResizing({
+            const o = queueImageResizing({
+              file,
+              args,
+            })
+            return resolve(
+              Object.assign({}, o, {
+                image,
                 file,
-                args: { ...fieldArgs, pathPrefix },
+                fieldArgs: args,
               })
             )
           }

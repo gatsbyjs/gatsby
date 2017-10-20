@@ -555,7 +555,7 @@ async function resolutions({ file, args = {} }) {
   }
 }
 
-async function notMemoizedtraceSVG({ file, args }) {
+async function notMemoizedtraceSVG({ file, args, fileArgs }) {
   const potrace = require(`potrace`)
   const trace = Promise.promisify(potrace.trace)
   let defaultArgs = {
@@ -564,8 +564,61 @@ async function notMemoizedtraceSVG({ file, args }) {
     turdSize: 100,
     turnPolicy: `majority`,
   }
-  const options = _.defaults({}, args, defaultArgs)
-  return await trace(file.absolutePath, options)
+
+  const defaultFileResizeArgs = {
+    width: 400,
+    quality: 50,
+    jpegProgressive: true,
+    pngCompressionLevel: 9,
+    grayscale: false,
+    duotone: false,
+    toFormat: ``,
+  }
+  const options = _.defaults(fileArgs, defaultFileResizeArgs)
+  let pipeline = sharp(file.absolutePath).rotate()
+
+  pipeline
+    .resize(options.width, options.height)
+    .crop(options.cropFocus)
+    .png({
+      compressionLevel: options.pngCompressionLevel,
+      adaptiveFiltering: false,
+      force: args.toFormat === `png`,
+    })
+    .jpeg({
+      quality: options.quality,
+      progressive: options.jpegProgressive,
+      force: args.toFormat === `jpg`,
+    })
+
+  // grayscale
+  if (options.grayscale) {
+    pipeline = pipeline.grayscale()
+  }
+
+  // rotate
+  if (options.rotate && options.rotate !== 0) {
+    pipeline = pipeline.rotate(options.rotate)
+  }
+
+  // duotone
+  if (options.duotone) {
+    pipeline = await duotone(options.duotone, file.extension, pipeline)
+  }
+
+  const tmpDir = require(`os`).tmpdir()
+  const tmpFilePath = `${tmpDir}/${file.name}-${crypto
+    .createHash(`md5`)
+    .update(JSON.stringify(fileArgs))
+    .digest(`hex`)}.${file.extension}`
+
+  await new Promise(resolve =>
+    pipeline.toFile(tmpFilePath, (err, info) => {
+      resolve()
+    })
+  )
+
+  return trace(tmpFilePath, options)
     .then(svg => optimize(svg))
     .then(svg => encodeOptimizedSVGDataUri(svg))
 }
