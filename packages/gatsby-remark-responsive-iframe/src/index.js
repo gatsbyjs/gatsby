@@ -30,7 +30,7 @@ module.exports = ({ markdownAST }, pluginOptions = {}) =>
           $(`iframe, object`)
             .attr(`width`, null)
             .attr(`height`, null)
-          const newIframe = $('body').children().html(); // fix for cheerio v1
+          const newIframe = $(`body`).children().html() // fix for cheerio v1
 
           // TODO add youtube preview image as background-image.
 
