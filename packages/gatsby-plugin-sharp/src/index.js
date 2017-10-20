@@ -7,6 +7,7 @@ const fs = require(`fs`)
 const ProgressBar = require(`progress`)
 const imagemin = require(`imagemin`)
 const imageminPngquant = require(`imagemin-pngquant`)
+const imageminWebp = require(`imagemin-webp`)
 const queue = require(`async/queue`)
 const path = require(`path`)
 
@@ -70,6 +71,10 @@ const processFile = (file, jobs, cb) => {
         progressive: args.jpegProgressive,
         force: args.toFormat === `jpg`,
       })
+      .webp({
+        quality: args.quality,
+        force: args.toFormat === `webp`,
+      })
 
     // grayscale
     if (args.grayscale) {
@@ -90,7 +95,7 @@ const processFile = (file, jobs, cb) => {
       )
     }
 
-    if (job.file.extension.match(/^jp/)) {
+    if ((job.file.extension.match(/^jp/) && args.toFormat === ``) || args.toFormat === `jpg`) {
       clonedPipeline.toFile(job.outputPath, (err, info) => {
         imagesFinished += 1
         bar.tick()
@@ -104,7 +109,7 @@ const processFile = (file, jobs, cb) => {
         job.outsideResolve(info)
       })
       // Compress pngs
-    } else if (job.file.extension === `png`) {
+    } else if ((job.file.extension === `png` && args.toFormat === ``) || args.toFormat === `png`) {
       clonedPipeline.toBuffer().then(sharpBuffer => {
         imagemin
           .buffer(sharpBuffer, {
@@ -112,6 +117,30 @@ const processFile = (file, jobs, cb) => {
               imageminPngquant({
                 quality: `${args.quality}-${Math.min(args.quality + 25, 100)}`, // e.g. 40-65
               }),
+            ],
+          })
+          .then(imageminBuffer => {
+            fs.writeFile(job.outputPath, imageminBuffer, () => {
+              imagesFinished += 1
+              bar.tick()
+              boundActionCreators.setJob(
+                {
+                  id: `processing image ${job.file.absolutePath}`,
+                  imagesFinished,
+                },
+                { name: `gatsby-plugin-sharp` }
+              )
+              job.outsideResolve()
+            })
+          })
+      })
+      // Compress webp
+    } else if ((job.file.extension === `webp` && args.toFormat === ``) || args.toFormat === `webp`) {
+      clonedPipeline.toBuffer().then(sharpBuffer => {
+        imagemin
+          .buffer(sharpBuffer, {
+            plugins: [
+              imageminWebp({ quality: args.quality }),
             ],
           })
           .then(imageminBuffer => {
@@ -439,11 +468,43 @@ async function responsiveSizes({ file, args = {} }) {
     .join(`,\n`)
   const originalName = file.base
 
+  // Construct additional webp src and srcSet strings.
+  let srcWebp
+  let srcSetWebp
+// If the file is already in webp format or should be converted to webp, we do not create additional webp files
+  if (file.ext !== `webp` && options.toFormat !== `webp`) {
+    const webpImages = sortedSizes.map(size => {
+      const arrrgs = {
+        ...options,
+        width: Math.round(size),
+        toFormat: `webp`,
+      }
+      // Queue sizes for processing.
+      if (options.height) {
+        arrrgs.height = Math.round(size * (options.height / options.width))
+      }
+
+      return queueImageResizing({
+        file,
+        args: arrrgs,
+      })
+    })
+
+    srcWebp = _.minBy(webpImages, image =>
+      Math.abs(options.maxWidth - image.width)
+    ).src
+    srcSetWebp = webpImages
+      .map(image => `${image.src} ${Math.round(image.width)}w`)
+      .join(`,\n`)
+  }
+
   return {
     base64: base64Image.src,
     aspectRatio: images[0].aspectRatio,
     src: fallbackSrc,
     srcSet,
+    srcWebp,
+    srcSetWebp,
     sizes: options.sizes,
     originalImg: originalImg,
     originalName: originalName,
@@ -544,6 +605,52 @@ async function resolutions({ file, args = {} }) {
 
   const originalName = file.base
 
+  // Construct additional webp src and srcSet strings.
+  let srcWebp
+  let srcSetWebp
+  // If the file is already in webp format or should be converted to webp, we do not create additional webp files
+  if (file.ext !== `webp` && options.toFormat !== `webp`) {
+    const webpImages = sortedSizes.map(size => {
+      const arrrgs = {
+        ...options,
+        width: Math.round(size),
+        toFormat: `webp`,
+      }
+      // Queue sizes for processing.
+      if (options.height) {
+        arrrgs.height = Math.round(size * (options.height / options.width))
+      }
+
+      return queueImageResizing({
+        file,
+        args: arrrgs,
+      })
+    })
+
+    srcWebp = webpImages[0].src
+    srcSetWebp = webpImages
+      .map((image, i) => {
+        let resolution
+        switch (i) {
+          case 0:
+            resolution = `1x`
+            break
+          case 1:
+            resolution = `1.5x`
+            break
+          case 2:
+            resolution = `2x`
+            break
+          case 3:
+            resolution = `3x`
+            break
+          default:
+        }
+        return `${image.src} ${resolution}`
+      })
+      .join(`,\n`)
+  }
+
   return {
     base64: base64Image.src,
     aspectRatio: images[0].aspectRatio,
@@ -551,6 +658,8 @@ async function resolutions({ file, args = {} }) {
     height: images[0].height,
     src: fallbackSrc,
     srcSet,
+    srcWebp,
+    srcSetWebp,
     originalName: originalName,
   }
 }

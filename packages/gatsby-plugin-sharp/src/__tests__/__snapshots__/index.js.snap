@@ -23,6 +23,9 @@ Object {
   "src": "/static/1234-f54e4.png",
   "srcSet": "/static/1234-a0d9a.png 200w,
 /static/1234-f54e4.png 281w",
+  "srcSetWebp": "/static/1234-48719.webp 200w,
+/static/1234-ad965.webp 281w",
+  "srcWebp": "/static/1234-ad965.webp",
 }
 `;
 
@@ -38,5 +41,7 @@ Object {
   "sizes": "(max-width: 1px) 100vw, 1px",
   "src": "/static/1234-18c2a.png",
   "srcSet": "/static/1234-18c2a.png 1w",
+  "srcSetWebp": "/static/1234-12667.webp 1w",
+  "srcWebp": "/static/1234-12667.webp",
 }
 `;

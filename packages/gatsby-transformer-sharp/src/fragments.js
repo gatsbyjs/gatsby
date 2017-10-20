@@ -9,12 +9,35 @@ export const gatsbyImageSharpResolutions = graphql`
   }
 `
 
+export const gatsbyImageSharpResolutionsPreferWebp = graphql`
+  fragment GatsbyImageSharpResolutions_withWebp on ImageSharpResolutions {
+    base64
+    width
+    height
+    src
+    srcSet
+    srcWebp
+    srcSetWebp
+  }
+`
+
 export const gatsbyImageSharpResolutionsNoBase64 = graphql`
   fragment GatsbyImageSharpResolutions_noBase64 on ImageSharpResolutions {
     width
     height
     src
     srcSet
+  }
+`
+
+export const gatsbyImageSharpResolutionsPreferWebpNoBase64 = graphql`
+  fragment GatsbyImageSharpResolutions_withWebp_noBase64 on ImageSharpResolutions {
+    width
+    height
+    src
+    srcSet
+    srcWebp
+    srcSetWebp
   }
 `
 
@@ -28,11 +51,34 @@ export const gatsbyImageSharpSizes = graphql`
   }
 `
 
+export const gatsbyImageSharpSizesPreferWebp = graphql`
+  fragment GatsbyImageSharpSizes_withWebp on ImageSharpSizes {
+    base64
+    aspectRatio
+    src
+    srcSet
+    srcWebp
+    srcSetWebp
+    sizes
+  }
+`
+
 export const gatsbyImageSharpSizesNoBase64 = graphql`
   fragment GatsbyImageSharpSizes_noBase64 on ImageSharpSizes {
     aspectRatio
     src
     srcSet
+    sizes
+  }
+`
+
+export const gatsbyImageSharpSizesPreferWebpNoBase64 = graphql`
+  fragment GatsbyImageSharpSizes_withWebp_noBase64 on ImageSharpSizes {
+    aspectRatio
+    src
+    srcSet
+    srcWebp
+    srcSetWebp
     sizes
   }
 `
