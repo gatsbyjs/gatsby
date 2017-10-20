@@ -648,7 +648,7 @@ function encodeOptimizedSVGDataUri(svgString) {
 
 const optimize = svg => {
   const SVGO = require(`svgo`)
-  const svgo = new SVGO()
+  const svgo = new SVGO({ multipass: true, floatPrecision: 1 })
   return new Promise((resolve, reject) => {
     svgo.optimize(svg, ({ data }) => resolve(data))
   })
