@@ -31,6 +31,18 @@ export const gatsbyImageSharpResolutionsPreferWebp = graphql`
   }
 `
 
+export const gatsbyImageSharpResolutionsPreferWebpTracedSVG = graphql`
+  fragment GatsbyImageSharpResolutions_withWebp_tracedSVG on ImageSharpResolutions {
+    tracedSVG
+    width
+    height
+    src
+    srcSet
+    srcWebp
+    srcSetWebp
+  }
+`
+
 export const gatsbyImageSharpResolutionsNoBase64 = graphql`
   fragment GatsbyImageSharpResolutions_noBase64 on ImageSharpResolutions {
     width
@@ -74,6 +86,18 @@ export const gatsbyImageSharpSizesTracedSVG = graphql`
 export const gatsbyImageSharpSizesPreferWebp = graphql`
   fragment GatsbyImageSharpSizes_withWebp on ImageSharpSizes {
     base64
+    aspectRatio
+    src
+    srcSet
+    srcWebp
+    srcSetWebp
+    sizes
+  }
+`
+
+export const gatsbyImageSharpSizesPreferWebpTracedSVG = graphql`
+  fragment GatsbyImageSharpSizes_withWebp_tracedSVG on ImageSharpSizes {
+    tracedSVG
     aspectRatio
     src
     srcSet

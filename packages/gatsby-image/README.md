@@ -97,11 +97,13 @@ Their fragments are:
 * `GatsbyImageSharpResolutions_tracedSVG`
 * `GatsbyImageSharpResolutions_withWebp`
 * `GatsbyImageSharpResolutions_withWebp_noBase64`
+* `GatsbyImageSharpResolutions_withWebp_tracedSVG`
 * `GatsbyImageSharpSizes`
 * `GatsbyImageSharpSizes_noBase64`
 * `GatsbyImageSharpSizes_tracedSVG`
 * `GatsbyImageSharpSizes_withWebp`
 * `GatsbyImageSharpSizes_withWebp_noBase64`
+* `GatsbyImageSharpSizes_withWebp_tracedSVG`
 
 ### gatsby-source-contentful
 
