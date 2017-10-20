@@ -61,6 +61,7 @@ Websites built with Gatsby:
 * [doopoll's marketing site](https://doopoll.co)
 * [Design Systems Weekly](https://designsystems.email/)
 * [Slite landing pages](https://slite.com/)
+* [Hallingdata](http://hallingdata.no/)
 
 ## Docs
 
