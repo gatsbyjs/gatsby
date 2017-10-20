@@ -199,10 +199,6 @@ responsiveResolution(
 }
 ```
 
-Heads up: `tracedSVG` currently traces the _original_ image source. Depending
-on source image size and settings, please make sure that the generated SVG
-is of reasonable size, especially when using it as a placeholder.
-
 [1]: https://alistapart.com/article/finessing-fecolormatrix
 [2]: http://blog.72lions.com/blog/2015/7/7/duotone-in-js
 [3]: https://ines.io/blog/dynamic-duotone-svg-jade
