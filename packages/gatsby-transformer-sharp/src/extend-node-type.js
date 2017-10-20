@@ -13,12 +13,14 @@ const {
   base64,
   sizes,
   resolutions,
+  traceSVG,
 } = require(`gatsby-plugin-sharp`)
 
 const sharp = require(`sharp`)
 const fsExtra = require(`fs-extra`)
 const sizeOf = require(`image-size`)
 const path = require(`path`)
+const Potrace = require(`potrace`).Potrace
 
 const ImageFormatType = new GraphQLEnumType({
   name: `ImageFormat`,
@@ -57,10 +59,46 @@ const DuotoneGradientType = new GraphQLInputObjectType({
   },
 })
 
+const PotraceType = new GraphQLInputObjectType({
+  name: `Potrace`,
+  fields: () => {
+    return {
+      turnPolicy: {
+        type: new GraphQLEnumType({
+          name: `PotraceTurnPolicy`,
+          values: {
+            TURNPOLICY_BLACK: { value: Potrace.TURNPOLICY_BLACK },
+            TURNPOLICY_WHITE: { value: Potrace.TURNPOLICY_WHITE },
+            TURNPOLICY_LEFT: { value: Potrace.TURNPOLICY_LEFT },
+            TURNPOLICY_RIGHT: { value: Potrace.TURNPOLICY_RIGHT },
+            TURNPOLICY_MINORITY: { value: Potrace.TURNPOLICY_MINORITY },
+            TURNPOLICY_MAJORITY: { value: Potrace.TURNPOLICY_MAJORITY },
+          },
+        }),
+      },
+      turdSize: { type: GraphQLFloat },
+      alphaMax: { type: GraphQLFloat },
+      optCurve: { type: GraphQLBoolean },
+      optTolerance: { type: GraphQLFloat },
+      threshold: { type: GraphQLInt },
+      blackOnWhite: { type: GraphQLBoolean },
+      color: { type: GraphQLString },
+      background: { type: GraphQLString },
+    }
+  },
+})
+
 module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
   if (type.name !== `ImageSharp`) {
     return {}
   }
+
+  const getTracedSVG = async ({ file, image, fieldArgs }) =>
+    traceSVG({
+      file,
+      args: { ...fieldArgs.traceSVG },
+      fileArgs: fieldArgs,
+    })
 
   return {
     original: {
@@ -103,6 +141,10 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
         name: `ImageSharpResolutions`,
         fields: {
           base64: { type: GraphQLString },
+          tracedSVG: {
+            type: GraphQLString,
+            resolve: parent => getTracedSVG(parent),
+          },
           aspectRatio: { type: GraphQLFloat },
           width: { type: GraphQLFloat },
           height: { type: GraphQLFloat },
@@ -133,6 +175,10 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           type: DuotoneGradientType,
           defaultValue: false,
         },
+        traceSVG: {
+          type: PotraceType,
+          defaultValue: false,
+        },
         quality: {
           type: GraphQLInt,
           defaultValue: 50,
@@ -150,12 +196,21 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           defaultValue: 0,
         },
       },
-      resolve(image, fieldArgs, context) {
-        const promise = resolutions({
-          file: getNodeAndSavePathDependency(image.parent, context.path),
-          args: { ...fieldArgs, pathPrefix },
-        })
-        return promise
+      resolve: (image, fieldArgs, context) => {
+        const file = getNodeAndSavePathDependency(image.parent, context.path)
+        const args = { ...fieldArgs, pathPrefix }
+        return Promise.resolve(
+          resolutions({
+            file,
+            args,
+          })
+        ).then(o =>
+          Object.assign({}, o, {
+            fieldArgs: args,
+            image,
+            file,
+          })
+        )
       },
     },
     sizes: {
@@ -163,6 +218,10 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
         name: `ImageSharpSizes`,
         fields: {
           base64: { type: GraphQLString },
+          tracedSVG: {
+            type: GraphQLString,
+            resolve: parent => getTracedSVG(parent),
+          },
           aspectRatio: { type: GraphQLFloat },
           src: { type: GraphQLString },
           srcSet: { type: GraphQLString },
@@ -193,6 +252,10 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           type: DuotoneGradientType,
           defaultValue: false,
         },
+        traceSVG: {
+          type: PotraceType,
+          defaultValue: false,
+        },
         quality: {
           type: GraphQLInt,
           defaultValue: 50,
@@ -210,11 +273,21 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           defaultValue: 0,
         },
       },
-      resolve(image, fieldArgs, context) {
-        return sizes({
-          file: getNodeAndSavePathDependency(image.parent, context.path),
-          args: { ...fieldArgs, pathPrefix },
-        })
+      resolve: (image, fieldArgs, context) => {
+        const file = getNodeAndSavePathDependency(image.parent, context.path)
+        const args = { ...fieldArgs, pathPrefix }
+        return Promise.resolve(
+          sizes({
+            file,
+            args,
+          })
+        ).then(o =>
+          Object.assign({}, o, {
+            fieldArgs: args,
+            image,
+            file,
+          })
+        )
       },
     },
     responsiveResolution: {
@@ -270,12 +343,21 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           defaultValue: 0,
         },
       },
-      resolve(image, fieldArgs, context) {
-        const promise = resolutions({
-          file: getNodeAndSavePathDependency(image.parent, context.path),
-          args: { ...fieldArgs, pathPrefix },
-        })
-        return promise
+      resolve: (image, fieldArgs, context) => {
+        const file = getNodeAndSavePathDependency(image.parent, context.path)
+        const args = { ...fieldArgs, pathPrefix }
+        return Promise.resolve(
+          resolutions({
+            file,
+            args,
+          })
+        ).then(o =>
+          Object.assign({}, o, {
+            fieldArgs: args,
+            image,
+            file,
+          })
+        )
       },
     },
     responsiveSizes: {
@@ -331,11 +413,21 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           defaultValue: 0,
         },
       },
-      resolve(image, fieldArgs, context) {
-        return sizes({
-          file: getNodeAndSavePathDependency(image.parent, context.path),
-          args: { ...fieldArgs, pathPrefix },
-        })
+      resolve: (image, fieldArgs, context) => {
+        const file = getNodeAndSavePathDependency(image.parent, context.path)
+        const args = { ...fieldArgs, pathPrefix }
+        return Promise.resolve(
+          sizes({
+            file,
+            args,
+          })
+        ).then(o =>
+          Object.assign({}, o, {
+            fieldArgs: args,
+            image,
+            file,
+          })
+        )
       },
     },
     resize: {
@@ -343,6 +435,10 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
         name: `ImageSharpResize`,
         fields: {
           src: { type: GraphQLString },
+          tracedSVG: {
+            type: GraphQLString,
+            resolve: parent => getTracedSVG(parent),
+          },
           width: { type: GraphQLInt },
           height: { type: GraphQLInt },
           aspectRatio: { type: GraphQLFloat },
@@ -381,6 +477,10 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           type: GraphQLBoolean,
           defaultValue: false,
         },
+        traceSVG: {
+          type: PotraceType,
+          defaultValue: false,
+        },
         toFormat: {
           type: ImageFormatType,
           defaultValue: ``,
@@ -394,9 +494,10 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           defaultValue: 0,
         },
       },
-      resolve(image, fieldArgs, context) {
+      resolve: (image, fieldArgs, context) => {
+        const file = getNodeAndSavePathDependency(image.parent, context.path)
+        const args = { ...fieldArgs, pathPrefix }
         return new Promise(resolve => {
-          const file = getNodeAndSavePathDependency(image.parent, context.path)
           if (fieldArgs.base64) {
             resolve(
               base64({
@@ -404,10 +505,15 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
               })
             )
           } else {
+            const o = queueImageResizing({
+              file,
+              args,
+            })
             resolve(
-              queueImageResizing({
+              Object.assign({}, o, {
+                image,
                 file,
-                args: { ...fieldArgs, pathPrefix },
+                fieldArgs: args,
               })
             )
           }

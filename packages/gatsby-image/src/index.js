@@ -219,6 +219,17 @@ class Image extends React.Component {
               />
             )}
 
+            {/* Show the traced SVG image. */}
+            {image.tracedSVG && (
+              <Img
+                alt={alt}
+                title={title}
+                src={image.tracedSVG}
+                opacity={!this.state.imgLoaded ? 1 : 0}
+                transitionDelay={`0.25s`}
+              />
+            )}
+
             {/* Show a solid background color. */}
             {bgColor && (
               <div
@@ -303,6 +314,17 @@ class Image extends React.Component {
                 src={image.base64}
                 opacity={!this.state.imgLoaded ? 1 : 0}
                 transitionDelay={`0.35s`}
+              />
+            )}
+
+            {/* Show the traced SVG image. */}
+            {image.tracedSVG && (
+              <Img
+                alt={alt}
+                title={title}
+                src={image.tracedSVG}
+                opacity={!this.state.imgLoaded ? 1 : 0}
+                transitionDelay={`0.25s`}
               />
             )}
 
