@@ -110,6 +110,8 @@ const DefaultRouter = ({ children }) => (
   <Router history={history}>{children}</Router>
 )
 
+const ComponentRendererWithRouter = withRouter(ComponentRenderer)
+
 // Always have to have one top-level layout
 // can have ones below that. Find page, if has different
 // parent layout(s), loop through those until finally the
@@ -122,7 +124,7 @@ const Root = () =>
     createElement(
       ScrollContext,
       { shouldUpdateScroll },
-      createElement(withRouter(ComponentRenderer), {
+      createElement(ComponentRendererWithRouter, {
         layout: true,
         children: layoutProps =>
           createElement(Route, {

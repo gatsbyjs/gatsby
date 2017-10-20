@@ -236,6 +236,7 @@ exports.mapTagsCategoriesToTaxonomies = entities =>
 
 exports.mapEntitiesToMedia = entities => {
   const media = entities.filter(e => e.__type === `wordpress__wp_media`)
+
   return entities.map(e => {
     // Map featured_media to its media node
     let featuredMedia
@@ -274,6 +275,24 @@ exports.mapEntitiesToMedia = entities => {
           object[`${key}___NODE`] = replacePhoto(value)
           delete object[key]
         }
+
+        // featured_media can be nested inside ACF fields
+        if (_.isObject(value) && value.featured_media) {
+          featuredMedia = media.find(
+            m => m.wordpress_id === value.featured_media
+          )
+          if (featuredMedia) {
+            value.featured_media___NODE = featuredMedia.id
+          }
+          delete value.featured_media
+        }
+        if (_.isNumber(value) && key == `featured_media`) {
+          featuredMedia = media.find(m => m.wordpress_id === value)
+          if (featuredMedia) {
+            object[`${key}___NODE`] = featuredMedia.id
+          }
+          delete object[key]
+        }
       })
     }
 
@@ -285,7 +304,7 @@ exports.mapEntitiesToMedia = entities => {
           delete e.acf[key]
         }
 
-        if (_.isArray(value) && value[0].acf_fc_layout) {
+        if (_.isArray(value) && value[0] && value[0].acf_fc_layout) {
           e.acf[key] = e.acf[key].map(f => {
             replaceFieldsInObject(f)
             return f

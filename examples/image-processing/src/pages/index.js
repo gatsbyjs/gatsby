@@ -150,7 +150,7 @@ class Index extends React.Component {
             paddingTop: rhythm(2),
           }}
         >
-          <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/#responsive-sizes">
+          <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/#responsivesizes">
             <code>
               <strong>sizes</strong>
             </code>
@@ -237,7 +237,7 @@ class Index extends React.Component {
             paddingTop: rhythm(2),
           }}
         >
-          <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/#responsive-resolution">
+          <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/#responsiveresolution">
             <code>resolutions</code>
           </a>
         </h2>
@@ -306,14 +306,19 @@ export const pageQuery = graphql`
     sizes: imageSharp(id: { regex: "/fecolormatrix-kanye-west.jpg/" }) {
       sizes(
         duotone: { highlight: "#f00e2e", shadow: "#192550" }
+        traceSVG: {
+          color: "#f00e2e"
+          turnPolicy: TURNPOLICY_MINORITY
+          blackOnWhite: false
+        }
         toFormat: PNG
       ) {
-        ...GatsbyImageSharpSizes
+        ...GatsbyImageSharpSizes_tracedSVG
       }
     }
     resolution: imageSharp(id: { regex: "/lol.jpg/" }) {
       resolutions(grayscale: true, width: 500) {
-        ...GatsbyImageSharpResolutions
+        ...GatsbyImageSharpResolutions_tracedSVG
       }
     }
     cropDefault: imageSharp(id: { regex: "/gatsby.jpg/" }) {

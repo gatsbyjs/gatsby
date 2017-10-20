@@ -7,7 +7,7 @@ typora-copy-images-to: ./
 
 I still remember the first non-trivial React component I built in 2014—not long after I started using React seriously.
 
-I decided to port to React [headroom.js](http://wicky.nillia.ms/headroom.js/), a JavaScript library that shows & hides headers as you scroll up & down a site.
+I decided to port to React [headroom.js](http://wicky.nillia.ms/headroom.js/)—a JavaScript library that shows & hides headers as you scroll up & down a site.
 
 After a day or two of working through the niceties of writing a React component and publishing it to NPM, I started writing the documentation and realized… there was almost nothing to write.
 
@@ -129,7 +129,7 @@ Which suggests React is a far better building block for the web than raw HTML/JS
 
 Which also suggests the general principle that **if you're mired in complexity at one layer, you need to step *down* a layer or two and redesign the building blocks at *that* layer.**
 
-headroom.js is probably as simple as vanilla HTML/JS/CSS will allow it. We couldn't make building for the web simpler until we moved to a robust component model like React provides.
+headroom.js is probably as simple as vanilla HTML/JS/CSS will allow it. We couldn't make building for the web simpler until we moved to a more sophesticated component model like React provides.
 
 ## Another case study: gatsby-image
 
