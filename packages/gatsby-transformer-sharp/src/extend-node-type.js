@@ -277,11 +277,13 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
             file,
             args,
           })
-        ).then(o => Object.assign({}, o, {
+        ).then(o =>
+          Object.assign({}, o, {
             fieldArgs: args,
             image,
             file,
-          }))
+          })
+        )
       },
     },
     responsiveResolution: {
@@ -499,7 +501,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
               file,
               args,
             })
-            return resolve(
+            resolve(
               Object.assign({}, o, {
                 image,
                 file,
