@@ -165,7 +165,7 @@ Logic is borrowed from [react-duotone][5].
 
 #### tracedSVG
 
-Generates a traced SVG of your image (see [the original GitHub issue][9]) and
+Generates a traced SVG of the image (see [the original GitHub issue][9]) and
 returns the SVG as "[optimized URL-encoded][10]" `data:` URI.
 It it used in [gatsby-image](https://www.gatsbyjs.org/packages/gatsby-image/) to
 provide an alternative to the default inline base64 placeholder image.
@@ -200,7 +200,7 @@ responsiveResolution(
 ```
 
 Heads up: `tracedSVG` currently traces the _original_ image source. Depending
-on your source image size and settings, please make sure that the generated SVG
+on source image size and settings, please make sure that the generated SVG
 is of reasonable size, especially when using it as a placeholder.
 
 [1]: https://alistapart.com/article/finessing-fecolormatrix
