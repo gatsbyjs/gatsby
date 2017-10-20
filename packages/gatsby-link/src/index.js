@@ -9,7 +9,7 @@ if (typeof __PREFIX_PATHS__ !== `undefined` && __PREFIX_PATHS__) {
 }
 
 export function withPrefix(path) {
-  return pathPrefix + path
+  return normalizePath(pathPrefix + path)
 }
 
 function normalizePath(path) {
@@ -53,7 +53,7 @@ class GatsbyLink extends React.Component {
     }
 
     this.state = {
-      to: normalizePath(withPrefix(props.to)),
+      to: withPrefix(props.to),
       IOSupported,
     }
     this.handleRef = this.handleRef.bind(this)
@@ -62,7 +62,7 @@ class GatsbyLink extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.to !== nextProps.to) {
       this.setState({
-        to: normalizePath(withPrefix(nextProps.to)),
+        to: withPrefix(nextProps.to),
       })
       // Preserve non IO functionality if no support
       if (!this.state.IOSupported) {
@@ -163,5 +163,5 @@ GatsbyLink.contextTypes = {
 export default GatsbyLink
 
 export const navigateTo = pathname => {
-  window.___navigateTo(normalizePath(withPrefix(pathname)))
+  window.___navigateTo(withPrefix(pathname))
 }
