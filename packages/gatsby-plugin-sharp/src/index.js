@@ -558,12 +558,13 @@ async function resolutions({ file, args = {} }) {
 async function notMemoizedtraceSVG({ file, args, fileArgs }) {
   const potrace = require(`potrace`)
   const trace = Promise.promisify(potrace.trace)
-  let defaultArgs = {
+  const defaultArgs = {
     color: `lightgray`,
     optTolerance: 0.4,
     turdSize: 100,
-    turnPolicy: `majority`,
+    turnPolicy: potrace.Potrace.TURNPOLICY_MAJORITY,
   }
+  const optionsSVG = _.defaults(args, defaultArgs)
 
   const defaultFileResizeArgs = {
     width: 400,
@@ -618,7 +619,7 @@ async function notMemoizedtraceSVG({ file, args, fileArgs }) {
     })
   )
 
-  return trace(tmpFilePath, options)
+  return trace(tmpFilePath, optionsSVG)
     .then(svg => optimize(svg))
     .then(svg => encodeOptimizedSVGDataUri(svg))
 }

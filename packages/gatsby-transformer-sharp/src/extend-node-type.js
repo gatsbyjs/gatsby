@@ -83,7 +83,7 @@ const PotraceType = new GraphQLInputObjectType({
       threshold: { type: GraphQLInt },
       blackOnWhite: { type: GraphQLBoolean },
       color: { type: GraphQLString },
-      background: { type: GraphQLString, defaultValue: `#d3d3d3` },
+      background: { type: GraphQLString },
     }
   },
 })
