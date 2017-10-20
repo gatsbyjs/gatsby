@@ -8,7 +8,7 @@
     "babel-plugin-lodash": "^3.2.11",
     "bluebird": "^3.4.7",
     "es6-object-assign": "^1.1.0",
-    "gatsby": "latest",
+    "gatsby": "^1.9.75",
     "gatsby-image": "^1.0.5",
     "gatsby-link": "latest",
     "gatsby-plugin-catch-links": "latest",
