@@ -3,31 +3,16 @@ import Link from "gatsby-link"
 
 class IndexPage extends React.Component {
   render() {
-    // console.log(this.props)
-    const articleEdges = this.props.data.allDrupalNodeArticle.edges
+    console.log(this.props)
+    const data = this.props.data
     return (
       <div>
-        {articleEdges.map(edge => {
-          const article = edge.node
-          let name = `anonymous`
-          if (article.author) {
-            name = article.author.name
-          }
-          return (
-            <div key={article.nid}>
-              <Link to={`/node/${article.nid}/`}>
-                <h4>
-                  <span style={{ color: `gray` }}>{article.created}</span>
-                  {` `}
-                  |
-                  {` `}“{article.title}” by
-                  {` `}
-                  <em>{name}</em>
-                </h4>
-              </Link>
-            </div>
-          )
-        })}
+        <h1>Recipes ({data.allRecipes.totalCount})</h1>
+        <ul>
+          {data.allRecipes.edges.map(({ node }) => {
+            return <li>{node.title}</li>
+          })}
+        </ul>
       </div>
     )
   }
@@ -36,16 +21,15 @@ class IndexPage extends React.Component {
 export default IndexPage
 
 export const pageQuery = graphql`
-  query PageQuery {
-    allDrupalNodeArticle(sort: { fields: [created], order: DESC }) {
+  query IndexPageQuery {
+    allRecipes(filter: { ingredients: { regex: "/lamb/" } }) {
+      totalCount
       edges {
         node {
+          id
+          isPublished
           title
-          nid
-          created(formatString: "DD-MMM-YYYY")
-          author {
-            name
-          }
+          ingredients
         }
       }
     }

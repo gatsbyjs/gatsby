@@ -53,19 +53,3 @@ class ArticleTemplate extends React.Component {
 }
 
 export default ArticleTemplate
-
-export const pageQuery = graphql`
-  query articleQuery($id: String!) {
-    drupalNodeArticle(id: { eq: $id }) {
-      title
-      created(formatString: "DD-MMM-YYYY")
-      author {
-        name
-        picture
-      }
-      body {
-        value
-      }
-    }
-  }
-`
