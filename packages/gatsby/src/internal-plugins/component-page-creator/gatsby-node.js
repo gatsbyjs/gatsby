@@ -43,7 +43,10 @@ exports.createPagesStatefully = async (
         .getState()
         .pages.filter(p => p.component === path)
         .forEach(page => {
-          deletePage({ path: page.path })
+          deletePage({
+            path: createPath(pagesDirectory, path),
+            component: path,
+          })
           files = files.filter(f => f !== path)
         })
     })
