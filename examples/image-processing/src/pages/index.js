@@ -306,14 +306,19 @@ export const pageQuery = graphql`
     sizes: imageSharp(id: { regex: "/fecolormatrix-kanye-west.jpg/" }) {
       sizes(
         duotone: { highlight: "#f00e2e", shadow: "#192550" }
+        traceSVG: {
+          color: "#f00e2e"
+          turnPolicy: TURNPOLICY_MINORITY
+          blackOnWhite: false
+        }
         toFormat: PNG
       ) {
-        ...GatsbyImageSharpSizes
+        ...GatsbyImageSharpSizes_tracedSVG
       }
     }
     resolution: imageSharp(id: { regex: "/lol.jpg/" }) {
       resolutions(grayscale: true, width: 500) {
-        ...GatsbyImageSharpResolutions
+        ...GatsbyImageSharpResolutions_tracedSVG
       }
     }
     cropDefault: imageSharp(id: { regex: "/gatsby.jpg/" }) {
