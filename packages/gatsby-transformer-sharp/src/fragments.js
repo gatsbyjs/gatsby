@@ -9,6 +9,16 @@ export const gatsbyImageSharpResolutions = graphql`
   }
 `
 
+export const gatsbyImageSharpResolutionsTracedSVG = graphql`
+  fragment GatsbyImageSharpResolutions_tracedSVG on ImageSharpResolutions {
+    tracedSVG
+    width
+    height
+    src
+    srcSet
+  }
+`
+
 export const gatsbyImageSharpResolutionsNoBase64 = graphql`
   fragment GatsbyImageSharpResolutions_noBase64 on ImageSharpResolutions {
     width
@@ -21,6 +31,16 @@ export const gatsbyImageSharpResolutionsNoBase64 = graphql`
 export const gatsbyImageSharpSizes = graphql`
   fragment GatsbyImageSharpSizes on ImageSharpSizes {
     base64
+    aspectRatio
+    src
+    srcSet
+    sizes
+  }
+`
+
+export const gatsbyImageSharpSizesTracedSVG = graphql`
+  fragment GatsbyImageSharpSizes_tracedSVG on ImageSharpSizes {
+    tracedSVG
     aspectRatio
     src
     srcSet
