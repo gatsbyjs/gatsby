@@ -16,7 +16,7 @@ But creating optimized images for websites has long been a thorny problem. Ideal
 * Generate multiple smaller images so smartphones and tablets don't download desktop-sized images
 * Strip all unnecessary metadata and optimize JPEG and PNG compression
 * Efficiently lazy load images to speed initial page load and save bandwidth
-* Use the "blur-up" technique to show a preview of the image while it loads
+* Use the "blur-up" technique or a "[traced placeholder](https://github.com/gatsbyjs/gatsby/issues/2435)" SVG to show a preview of the image while it loads
 * Hold the image position so your page doesn't jump while images load
 
 Doing this consistantly across a site feels like sisyphean labor. You manually optimize your images and then… several images are swapped in at the last minute or a design-tweak shaves 100px of width off your images.
@@ -94,8 +94,10 @@ Their fragments are:
 
 * `GatsbyImageSharpResolutions`
 * `GatsbyImageSharpResolutions_noBase64`
+* `GatsbyImageSharpResolutions_tracedSVG`
 * `GatsbyImageSharpSizes`
 * `GatsbyImageSharpSizes_noBase64`
+* `GatsbyImageSharpSizes_tracedSVG`
 
 ### gatsby-source-contentful
 
@@ -104,7 +106,9 @@ Their fragments are:
 * `GatsbyContentfulSizes`
 * `GatsbyContentfulSizes_noBase64`
 
-If you don't want to use the blur-up effect, choose the fragment with `noBase64` at the end.
+If you don't want to use the blur-up effect, choose the fragment with `noBase64` at the end. If you want to use the traced placeholder SVGs, choose the fragment with `tracedSVG` at the end.
+
+_Please see the [gatsby-plugin-sharp](https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/#tracedsvg) documentation for more information on `tracedSVG` and its configuration options._
 
 ## "Resolutions" queries
 
@@ -120,7 +124,7 @@ Pass in the data returned from the `resolutions` object in your query via the `r
     # Other options include height (set both width and height to crop),
     # grayscale, duotone, rotate, etc.
     resolutions(width: 400) {
-      # Choose either the fragment including a small base64ed image or one without.
+      # Choose either the fragment including a small base64ed image, a traced placeholder SVG, or one without.
       ...GatsbyImageSharpResolutions
     }
   }
@@ -143,7 +147,7 @@ Pass in the data returned from the `sizes` object in your query via the `sizes` 
     # Other options include maxHeight (set both maxWidth and maxHeight to crop),
     # grayscale, duotone, rotate, etc.
     sizes(maxWidth: 700) {
-      # Choose either the fragment including a small base64ed image or one without.
+      # Choose either the fragment including a small base64ed image, a traced placeholder SVG, or one without.
       ...GatsbyImageSharpSizes_noBase64
     }
   }

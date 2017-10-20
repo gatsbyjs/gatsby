@@ -16,6 +16,8 @@ yarn
 echo "=== Copying built Gatsby to website."
 gatsby-dev --scan-once --quiet
 
+cp ../../packages/gatsby-transformer-sharp/src/fragments.js node_modules/gatsby-transformer-sharp/src/fragments.js
+
 echo "=== Building website"
 # Once we get better cache invalidation, remove the following
 # line.

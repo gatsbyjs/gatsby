@@ -18,6 +18,17 @@ class ComponentRenderer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    // During development, always pass a component's JSON through so graphql
+    // updates go through.
+    if (process.env.NODE_ENV !== `production`) {
+      if (
+        nextProps &&
+        nextProps.pageResources &&
+        nextProps.pageResources.json
+      ) {
+        this.setState({ pageResources: nextProps.pageResources })
+      }
+    }
     if (this.state.location.pathname !== nextProps.location.pathname) {
       const pageResources = loader.getResourcesForPathname(
         nextProps.location.pathname
