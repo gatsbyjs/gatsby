@@ -277,13 +277,11 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
             file,
             args,
           })
-        ).then(o => {
-          return Object.assign({}, o, {
+        ).then(o => Object.assign({}, o, {
             fieldArgs: args,
             image,
             file,
-          })
-        })
+          }))
       },
     },
     responsiveResolution: {
