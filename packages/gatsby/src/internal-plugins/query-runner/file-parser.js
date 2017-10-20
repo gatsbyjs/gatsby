@@ -117,8 +117,8 @@ const cache = {}
 
 export default class FileParser {
   async parseFile(file: string): Promise<?DocumentNode> {
-    console.warn(`parsing file ${file}`);
-    let text;
+    console.warn(`parsing file ${file}`)
+    let text
     try {
       text = await fs.readFile(file, `utf8`)
     } catch (err) {
@@ -126,7 +126,7 @@ export default class FileParser {
         `There was a problem reading the file: ${file}`,
         err
       )
-      return null;
+      return null
     }
 
     if (text.indexOf(`graphql`) === -1) return null
