@@ -110,8 +110,9 @@ Their fragments are:
 * `GatsbyContentfulSizes`
 * `GatsbyContentfulSizes_noBase64`
 
-If you don't want to use the blur-up effect, choose the fragment with `noBase64` at the end. If you want to use the traced placeholder SVGs, choose the fragment with `tracedSVG` at the end. 
-If you want additional WebP versions of your image, use the `withWebp` fragments.
+If you don't want to use the blur-up effect, choose the fragment with `noBase64` at the end. If you want to use the traced placeholder SVGs, choose the fragment with `tracedSVG` at the end.
+
+If you want to automatically use WebP images when the browser supports the file format, use the `withWebp` fragments. If the browser doesn't support WebP, `gatsby-image` will fall back to the default image format.
 
 _Please see the [gatsby-plugin-sharp](https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/#tracedsvg) documentation for more information on `tracedSVG` and its configuration options._
 
