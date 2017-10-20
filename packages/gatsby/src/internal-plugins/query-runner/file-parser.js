@@ -117,8 +117,17 @@ const cache = {}
 
 export default class FileParser {
   async parseFile(file: string): Promise<?DocumentNode> {
-    // TODO figure out why fs-extra isn't returning a promise
-    const text = fs.readFileSync(file, `utf8`)
+    console.warn(`parsing file ${file}`);
+    let text;
+    try {
+      text = await fs.readFile(file, `utf8`)
+    } catch (err) {
+      report.error(
+        `There was a problem reading the file: ${file}`,
+        err
+      )
+      return null;
+    }
 
     if (text.indexOf(`graphql`) === -1) return null
     const hash = crypto
