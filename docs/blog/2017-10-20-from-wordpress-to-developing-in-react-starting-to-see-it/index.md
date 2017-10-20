@@ -89,7 +89,7 @@ However, since I'm managing my HTML with JavaScript, why not CSS as well? As abo
 
 Following the [tutorial on Gatsbyjs](https://www.gatsbyjs.org/tutorial/  "GatsbyJS Tutorial") I built up my project from scratch, breaking things profusely at first, but it honestly didn’t take long to gain confidence enough so that I launched my first site at [freebabylon5.com recently](https://freebabylon5.com "Freebabylon5.com: our last, best hope of getting back on the air").
 
-Be warned: the tutorial isn’t quite finished yet, you might be better off starting with [one of the starter kits already available](https://www.gatsbyjs.org/docs/gatsby-starters/ “Gatsby Starters”), so that you get `react-helmet` and active links implemented, the 2 things I had to learn independently.
+Be warned: the tutorial isn’t quite finished yet, you might be better off starting with [one of the starter kits already available](https://www.gatsbyjs.org/docs/gatsby-starters/ "Gatsby Starters"), so that you get `react-helmet` and active links implemented, the 2 things I had to learn independently.
 
 
 ## The Way Forward?
