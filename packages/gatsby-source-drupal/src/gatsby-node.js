@@ -62,10 +62,21 @@ exports.sourceNodes = async (
       if (type === `self`) return
       if (!url) return
       if (!type) return
-      const d = await axios.get(url)
+      const getNext = async (url, data = []) => {
+        const d = await axios.get(url)
+        data = data.concat(d.data.data)
+        if (d.data.links.next) {
+          data = await getNext(d.data.links.next, data)
+        }
+
+        return data
+      }
+
+      const data = await getNext(url)
+
       return {
         type,
-        data: d.data,
+        data,
       }
     })
   )
@@ -75,7 +86,7 @@ exports.sourceNodes = async (
   const ids = {}
   _.each(allData, contentType => {
     if (!contentType) return
-    _.each(contentType.data.data, datum => {
+    _.each(contentType.data, datum => {
       ids[datum.id] = true
     })
   })
@@ -84,9 +95,10 @@ exports.sourceNodes = async (
   const backRefs = {}
   _.each(allData, contentType => {
     if (!contentType) return
-    _.each(contentType.data.data, datum => {
+    _.each(contentType.data, datum => {
       if (datum.relationships) {
         _.each(datum.relationships, (v, k) => {
+          if (!v.data) return
           if (ids[v.data.id]) {
             if (!backRefs[v.data.id]) {
               backRefs[v.data.id] = []
@@ -97,17 +109,13 @@ exports.sourceNodes = async (
       }
     })
   })
-  console.log(backRefs)
 
   // Process nodes
   const nodes = []
   _.each(allData, contentType => {
     if (!contentType) return
 
-    _.each(contentType.data.data, datum => {
-      if (Object.keys(datum.links).length > 1) {
-        console.log(`big datum`, datum)
-      }
+    _.each(contentType.data, datum => {
       const node = {
         id: datum.id,
         parent: null,
@@ -122,6 +130,7 @@ exports.sourceNodes = async (
       if (datum.relationships) {
         node.relationships = {}
         _.each(datum.relationships, (v, k) => {
+          if (!v.data) return
           if (ids[v.data.id]) {
             node.relationships[`${k}___NODE`] = v.data.id
           }
@@ -137,7 +146,7 @@ exports.sourceNodes = async (
       nodes.push(node)
     })
   })
-  console.log(JSON.stringify(nodes.slice(0, 2), null, 4))
+
   nodes.forEach(n => createNode(n))
 
   // process.exit()

@@ -22,7 +22,7 @@ export default IndexPage
 
 export const pageQuery = graphql`
   query IndexPageQuery {
-    allRecipes {
+    allRecipes(sort: { fields: [title] }) {
       totalCount
       edges {
         node {
