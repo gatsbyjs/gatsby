@@ -60,6 +60,8 @@ exports.sourceNodes = async (
   const allData = await Promise.all(
     _.map(data.data.links, async (url, type) => {
       if (type === `self`) return
+      if (!url) return
+      if (!type) return
       const d = await axios.get(url)
       return {
         type,
@@ -68,7 +70,34 @@ exports.sourceNodes = async (
     })
   )
 
-  console.log(allData)
+  // Make list of all IDs so we can check against that when creating
+  // relationships.
+  const ids = {}
+  _.each(allData, contentType => {
+    if (!contentType) return
+    _.each(contentType.data.data, datum => {
+      ids[datum.id] = true
+    })
+  })
+
+  // Create back references
+  const backRefs = {}
+  _.each(allData, contentType => {
+    if (!contentType) return
+    _.each(contentType.data.data, datum => {
+      if (datum.relationships) {
+        _.each(datum.relationships, (v, k) => {
+          if (ids[v.data.id]) {
+            if (!backRefs[v.data.id]) {
+              backRefs[v.data.id] = []
+            }
+            backRefs[v.data.id].push({ id: datum.id, type: datum.type })
+          }
+        })
+      }
+    })
+  })
+  console.log(backRefs)
 
   // Process nodes
   const nodes = []
@@ -87,13 +116,28 @@ exports.sourceNodes = async (
         internal: {
           type: datum.type.replace(/-|__|:|\.|\s/g, `_`),
         },
-        links: datum.links,
+      }
+
+      // Add relationships
+      if (datum.relationships) {
+        node.relationships = {}
+        _.each(datum.relationships, (v, k) => {
+          if (ids[v.data.id]) {
+            node.relationships[`${k}___NODE`] = v.data.id
+          }
+          // Add back reference relationships.
+          if (backRefs[datum.id]) {
+            backRefs[datum.id].forEach(
+              ref => (node.relationships[`${ref.type}___NODE`] = ref.id)
+            )
+          }
+        })
       }
       node.internal.contentDigest = createContentDigest(node)
       nodes.push(node)
     })
   })
-  console.log(JSON.stringify(nodes.slice(0, 10), null, 4))
+  console.log(JSON.stringify(nodes.slice(0, 2), null, 4))
   nodes.forEach(n => createNode(n))
 
   // process.exit()

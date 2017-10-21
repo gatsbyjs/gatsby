@@ -22,7 +22,7 @@ export default IndexPage
 
 export const pageQuery = graphql`
   query IndexPageQuery {
-    allRecipes(filter: { ingredients: { regex: "/lamb/" } }) {
+    allRecipes {
       totalCount
       edges {
         node {
