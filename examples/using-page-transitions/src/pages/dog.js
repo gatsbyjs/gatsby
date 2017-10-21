@@ -2,16 +2,16 @@
 import React from 'react'
 import Link from 'gatsby-link'
 
-const Index = ({ transition }) => (
+const Dog = ({ transition }) => (
   <div style={transition.style}>
-    <h1>animals</h1>
+    <h1>ruff</h1>
     <div>
-      <Link to="/cat/">Go to cat</Link>
+      <Link to="/">Go to home</Link>
     </div>
     <div>
-      <Link to="/dog/">Go to dog</Link>
+      <Link to="/cat/">Go to cat</Link>
     </div>
   </div>
 )
 
-export default Index
+export default Dog
