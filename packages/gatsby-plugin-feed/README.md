@@ -60,7 +60,7 @@ plugins: [
               allMarkdownRemark(
                 limit: 1000,
                 sort: { order: DESC, fields: [frontmatter___date] },
-                frontmatter: { draft: { ne: true } }
+                filter: {frontmatter: { draft: { ne: true } }}
               ) {
                 edges {
                   node {
