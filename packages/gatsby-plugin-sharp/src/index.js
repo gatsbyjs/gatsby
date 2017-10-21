@@ -468,43 +468,11 @@ async function responsiveSizes({ file, args = {} }) {
     .join(`,\n`)
   const originalName = file.base
 
-  // Construct additional webp src and srcSet strings.
-  let srcWebp
-  let srcSetWebp
-// If the file is already in webp format or should be converted to webp, we do not create additional webp files
-  if (file.ext !== `webp` && options.toFormat !== `webp`) {
-    const webpImages = sortedSizes.map(size => {
-      const arrrgs = {
-        ...options,
-        width: Math.round(size),
-        toFormat: `webp`,
-      }
-      // Queue sizes for processing.
-      if (options.height) {
-        arrrgs.height = Math.round(size * (options.height / options.width))
-      }
-
-      return queueImageResizing({
-        file,
-        args: arrrgs,
-      })
-    })
-
-    srcWebp = _.minBy(webpImages, image =>
-      Math.abs(options.maxWidth - image.width)
-    ).src
-    srcSetWebp = webpImages
-      .map(image => `${image.src} ${Math.round(image.width)}w`)
-      .join(`,\n`)
-  }
-
   return {
     base64: base64Image.src,
     aspectRatio: images[0].aspectRatio,
     src: fallbackSrc,
     srcSet,
-    srcWebp,
-    srcSetWebp,
     sizes: options.sizes,
     originalImg: originalImg,
     originalName: originalName,
@@ -605,52 +573,6 @@ async function resolutions({ file, args = {} }) {
 
   const originalName = file.base
 
-  // Construct additional webp src and srcSet strings.
-  let srcWebp
-  let srcSetWebp
-  // If the file is already in webp format or should be converted to webp, we do not create additional webp files
-  if (file.ext !== `webp` && options.toFormat !== `webp`) {
-    const webpImages = sortedSizes.map(size => {
-      const arrrgs = {
-        ...options,
-        width: Math.round(size),
-        toFormat: `webp`,
-      }
-      // Queue sizes for processing.
-      if (options.height) {
-        arrrgs.height = Math.round(size * (options.height / options.width))
-      }
-
-      return queueImageResizing({
-        file,
-        args: arrrgs,
-      })
-    })
-
-    srcWebp = webpImages[0].src
-    srcSetWebp = webpImages
-      .map((image, i) => {
-        let resolution
-        switch (i) {
-          case 0:
-            resolution = `1x`
-            break
-          case 1:
-            resolution = `1.5x`
-            break
-          case 2:
-            resolution = `2x`
-            break
-          case 3:
-            resolution = `3x`
-            break
-          default:
-        }
-        return `${image.src} ${resolution}`
-      })
-      .join(`,\n`)
-  }
-
   return {
     base64: base64Image.src,
     aspectRatio: images[0].aspectRatio,
@@ -658,8 +580,6 @@ async function resolutions({ file, args = {} }) {
     height: images[0].height,
     src: fallbackSrc,
     srcSet,
-    srcWebp,
-    srcSetWebp,
     originalName: originalName,
   }
 }
