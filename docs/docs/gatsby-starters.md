@@ -132,5 +132,5 @@ Community:
   Features:
   * A simple blog built with Netlify CMS 
   * Basic directory organization
-  * Uses [Bulma](bulma.io) for styling
+  * Uses [Bulma](https://bulma.io/) for styling
   * Visit [the repo](https://github.com/AustinGreen/gatsby-starter-netlify-cms) to learn how to set up authentication, and begin modeling your content.
