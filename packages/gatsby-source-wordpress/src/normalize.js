@@ -293,6 +293,9 @@ exports.mapEntitiesToMedia = entities => {
           }
           delete object[key]
         }
+        if (_.isBoolean(value) && key == `featured_media`) {
+          delete object[key]
+        }
       })
     }
 
