@@ -1,13 +1,13 @@
 module.exports = {
   siteMetadata: {
-    title: `Fancy Javascript Example`,
-    siteDescr: `We get fancy with some javascript here.`,
-    siteAuthor: `Jacob Bolda`,
+    title: `Using Javascript Example`,
+    siteDescr: `Some best practices for using JavaScript in Gatsby.`,
+    siteAuthor: `The Gatsby`,
 
     siteEmailUrl: `me@x.com`,
     siteEmailPretty: `me@x.com`,
-    siteTwitterUrl: `https://twitter.com/jacob_bolda`,
-    siteTwitterPretty: `@jacob_bolda`,
+    siteTwitterUrl: `https://twitter.com/gatsbyjs`,
+    siteTwitterPretty: `@gatsbyjs`,
   },
   plugins: [
     {

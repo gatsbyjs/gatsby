@@ -1,5 +1,6 @@
 import React from "react"
 import Link from "gatsby-link"
+import Img from "gatsby-image"
 
 import typography, { rhythm, scale } from "../utils/typography"
 import presets from "../utils/presets"
@@ -7,8 +8,7 @@ import presets from "../utils/presets"
 class BlogPostPreviewItem extends React.Component {
   render() {
     const post = this.props.post
-    const avatar =
-      post.frontmatter.author.avatar.childImageSharp.responsiveResolution
+    const avatar = post.frontmatter.author.avatar.childImageSharp.resolutions
 
     return (
       <article className={this.props.className} css={{ position: `relative` }}>
@@ -25,12 +25,9 @@ class BlogPostPreviewItem extends React.Component {
             marginBottom: rhythm(2),
           }}
         >
-          <img
+          <Img
             alt=""
-            src={avatar.src}
-            srcSet={avatar.srcSet}
-            height={avatar.height}
-            width={avatar.width}
+            resolutions={avatar}
             css={{
               borderRadius: `100%`,
               display: `inline-block`,
@@ -126,11 +123,17 @@ export const blogPostPreviewFragment = graphql`
         }
         avatar {
           childImageSharp {
-            responsiveResolution(width: 30, height: 30) {
-              width
-              height
-              src
-              srcSet
+            resolutions(
+              width: 30
+              height: 30
+              quality: 80
+              traceSVG: {
+                turdSize: 10
+                background: "#f6f2f8"
+                color: "#e0d6eb"
+              }
+            ) {
+              ...GatsbyImageSharpResolutions_tracedSVG
             }
           }
         }

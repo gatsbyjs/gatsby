@@ -12,7 +12,7 @@ For example:
 The [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/)
 plugin "sources" data about files from the file system. It creates nodes with
 a type `File`, each File node corresponding to a file on the filesystem. On
-each node are fields like the `absolutePath`, `extension`, `modifyDate`, etc.
+each node are fields like the `absolutePath`, `extension`, `modifiedTime`, etc.
 
 And importantly, each node created by the filesystem source plugin includes the
 raw content of the file and its *media type*.

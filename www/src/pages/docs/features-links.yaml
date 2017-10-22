@@ -1,0 +1,41 @@
+- title: Introduction
+  links:
+    Introduction: "#introduction"
+    Legend: "#legend"
+- title: Performance
+  links:
+    Static content: "#static-content"
+    CDN: "#cdn"
+    AMP support: "#amp-support"
+    Offline access: "#offline-access"
+    Prefetch linked pages: "#prefetch-linked-pages"
+    Page caching: "#page-caching"
+    No extraneous code fetching: "#no-extraneous-code-fetching"
+    Progressive image loading: "#progressive-image-loading"
+    Responsive image loading: "#responsive-image-loading"
+    Inlines critical CSS: "#inlines-critical-css"
+    Font self-hosting: "#font-self-hosting"
+- title: Developer Experience
+  links:
+    Serverless: "#serverless"
+    Export as Code: "#export-as-code"
+    Refresh or link to preview: "#refresh-or-link-to-preview"
+    Hot reload content: "#hot-reload-content"
+    Hot reload code: "#hot-reload-code"
+    Componentization: "#componentization"
+    One-way data binding: "#one-way-data-binding"
+    Declarative API data queries (GraphQL): "#declarative-api-data-queries-(graphql)"
+    Declarative UI: "#declarative-ui"
+    Asset pipelines: "#asset-pipelines"
+    CSS Extensions (eg Sass): "#css-extensions-(eg-sass)"
+    Advanced Javascript syntax: "#advanced-javascript-syntax"
+- title: Ecosystem
+  links:
+    Component ecosystem: "#component-ecosystem"
+    Hosted option: "#hosted-option"
+    Theme ecosystem: "#theme-ecosystem"
+- title: Design
+  links:
+    Programmatic Design: "#programmatic-design"
+    Design systems: "#design-systems"
+    Component library: "#component-library"

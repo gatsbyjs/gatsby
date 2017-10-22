@@ -75,6 +75,11 @@ class BlogPostsIndex extends React.Component {
                     transform: `translateY(-4px)`,
                     boxShadow: `0 10px 42px rgba(25, 17, 34, 0.1)`,
                   },
+                  "&:active": {
+                    boxShadow: `0 3px 10px rgba(25, 17, 34, 0.05)`,
+                    transform: `translateY(0)`,
+                    transition: `transform 50ms`,
+                  },
                 },
                 [presets.Desktop]: {},
                 [presets.Hd]: {},

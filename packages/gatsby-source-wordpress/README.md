@@ -9,26 +9,18 @@ An example site for this plugin is available.
 
 ## Features
 
-- Pulls data from any self-hosted WordPress site—even if behind HTAccess
-- Pulls data from sites hosted on wordpress.com and wordpress.org
-- Works with any number of article and posts (tested on a site with 900 posts)
+- Pulls data from self-hosted WordPress sites, hosted on wordpress.com or wordpress.org
+- Should work with any number of article and post (tested on a site with 900 posts)
 - Can authenticate to wordpress.com's API using OAuth 2 so media can be queried
-- Easily create responsive images in Gatsby from WordPress images.
+- Easily create responsive images in Gatsby from WordPress images using  `gatsby-transformer-sharp` and  `gatsby-plugin-sharp` in your `gatsby-config.js`
 
-## Supported WordPress entities
+## WordPress and custom entities
 
 This module currently pulls from WordPress the following entities:
-- [x] posts
-- [x] pages
-- [x] tags
-- [x] categories
-- [x] media
-- [x] types
-- [x] users
-- [x] statuses
-- [x] taxonomies
-- [x] [ACF (Advanced Custom Fields)](https://www.advancedcustomfields.com/)
-- [x] Custom Post Types
+- [x] All entities are supported (posts, pages, tags, categories, media, types, users, statuses, taxonomies, ...)
+- [x] Any new entity should be pulled as long the IDs are correct.
+- [x] [ACF Entities (Advanced Custom Fields)](https://www.advancedcustomfields.com/)
+- [x] Custom post types (any type you could have declared using WordPress' `functions.php`)
 
 We welcome PRs adding support for data from other plugins.
 
@@ -89,26 +81,21 @@ We welcome PRs adding support for data from other plugins.
 
 ## WordPress Plugins
 
-These plugins were tested but it should work with any plugin that extends the REST API content.
+These plugins were tested. We welcome PRs adding support for data from other plugins.
 
-- [x] Custom Post Types : it will work seemlessly, no further option needs to be activated.
+- [x] Custom Post Types : it will work seemlessly, no further option needs to be activated. ("Show in REST API" setting needs to be set to true on the custom post in the plugin settings for this to work. It's set to "false" by default.)
 
 - [x] [ACF](https://www.advancedcustomfields.com/) The option `useACF: true` must be activated in your site's `gatsby-config.js`.
-    *  You must have the plugin [acf-to-rest-api](https://github.com/airesvsg/acf-to-rest-api) installed in WordPress.
-    *  Will pull the `acf: { ... }` fields's contents from any entity which has it attached (pages, posts, medias, ... you choose from in WordPress back-end while creating a Group of Fields). Every node below `acf` is [Stringify'd](https://www.w3schools.com/js/js_json_stringify.asp), then put in a childNode, which means that you will have to call `JSON.parse()` to get an `Object`. (ex. ```const fields = JSON.parse(childWordpressAcfField.internal.content)```)
-    *  You will also have to include the children ACF Field Node in your GraphQL query. (See `Query posts with the child ACF Fields Node` below)
-
-- [x] [ACF Pro](https://www.advancedcustomfields.com/pro/) 
-    Same as ACF 
-    *  Will work with [Flexible content](https://www.advancedcustomfields.com/resources/flexible-content/) and premium stuff like that (repeater, gallery, ...).
-    *  Will pull the content attached to the [options page](https://www.advancedcustomfields.com/add-ons/options-page/).
+  *  You must have the plugin [acf-to-rest-api](https://github.com/airesvsg/acf-to-rest-api) installed in WordPress.
+  *  Will pull the `acf: { ... }` fields's contents from any entity which has it attached (pages, posts, medias, ... you choose from in WordPress back-end while creating a Group of Fields).
+  *  [ACF Pro](https://www.advancedcustomfields.com/pro/) same as ACF : 
+  *  Will work with [Flexible content](https://www.advancedcustomfields.com/resources/flexible-content/) and premium stuff like that (repeater, gallery, ...).
+  *  Will pull the content attached to the [options page](https://www.advancedcustomfields.com/add-ons/options-page/).
 
 - [x] [WP-API-MENUS](https://wordpress.org/plugins/wp-api-menus/) which gives you the menus and menu locations endpoint.
 
-- [ ] Please PR to this README file to report plugin that works but not listed here.
 
-
-## Wordpress.com hosting [WIP]
+## How to use Gatsby with Wordpress.com hosting
 
 Set `hostingWPCOM: true`.
 
@@ -116,13 +103,10 @@ You will need to provide an (API Key)[https://en.support.wordpress.com/api-keys/
 
 Note : you don't need this for Wordpress.org hosting in which your WordPress will behave like a self-hosted instance.
 
-## How to query : GraphQL
+## How to query
 
 You can query nodes created from Wordpress using GraphQL like the following:
-
-  * Note 1: if you use ACF, then add the `acf` field to the queries that has field groups attached.
-  * Note 2: to know more about GraphQL and Gatsby, visit this issue in branch [1.0]: https://github.com/gatsbyjs/gatsby/issues/420
-  * Note 3: A complete example of site's `gatsby-config.js` to create pages for Wordpress Pages and Posts is provided at the end of this section.
+Note : Learn to use the GraphQL tool and Ctrl+Spacebar at http://localhost:3000/___graphiql to discover the types and properties of your GraphQL model.
 
 ### Query posts
 ```graphql
@@ -159,224 +143,12 @@ You can query nodes created from Wordpress using GraphQL like the following:
   }
 ```
 
-### Query tags
-```graphql
-  allWordpressTag {
-    edges {
-      node {
-        id
-        slug
-        description
-        name
-      }
-    }
-  }
-```
+Same thing for other type of entity (tag, media, categories, ...).
 
-### Query categories
-```graphql
-  allWordpressCategory {
-    edges {
-      node {
-        id
-        description
-        name
-        slug
-      }
-    }
-  }
-```
-
-### Query medias
-```graphql
-  allWordpressMedia {
-    edges {
-      node {
-        id
-        date
-        modified
-        slug
-        status
-        author
-        comment_status
-        ping_status
-        template
-        title
-        caption
-        alt_text
-        media_type
-        mime_type
-        media_details {
-          width
-          height
-          file
-        }
-        post
-        source_url
-      }
-    }
-  }
-```
-
-### Query types
-Note : If you add a new type (like with custom post types plugins) then you will have to add it at the same level than `post`.
-```graphql
-  allWordpressTypes {
-    edges {
-      node {
-        id
-        post {
-          description
-          hierarchical
-          name
-          slug
-          rest_base
-        }
-        page {
-          description
-          hierarchical
-          name
-          slug
-          rest_base
-        }
-        attachment {
-          description
-          hierarchical
-          name
-          slug
-          rest_base
-        }
-      }
-    }
-  }
-```
-
-### Query users
-```graphql
-  allWordpressUsers {
-    edges {
-      node {
-        id
-        name
-        description
-        slug
-        avatar_urls {
-          _24
-          _48
-          _96
-        }
-      }
-    }
-  }
-```
-
-### Query statuses
-```graphql
-  allWordpressStatuses {
-    edges {
-      node {
-        id
-        publish {
-          name
-          public
-          queryable
-          slug
-        }
-      }
-    }
-  }
-```
-
-### Query taxonomies
-```graphql
-  allWordpressTaxonomies {
-    edges {
-      node {
-        id
-        category {
-          name
-          slug
-          description
-          hierarchical
-          rest_base
-        }
-        post_tag {
-          name
-          slug
-          description
-          hierarchical
-          rest_base
-        }
-      }
-    }
-  }
-```
-### Query ACF Options
-Note : you will have to populate the acf node with your config. Put this in the ___GraphiQL debugger to discover your site's options data model.
-```graphql
-  allWordpressAcfOptions {
-    edges {
-      node {
-        id
-        acf {
-          // put your field group name here
-        }
-      }
-    }
-  }
-```
-### Query WP-API-Menus
-```graphql
-  allWordpressWpApiMenusMenus {
-    edges {
-      node {
-        id
-        term_id
-        name
-        name
-        slug
-        term_group
-        term_taxonomy_id
-        taxonomy
-        description
-        count
-        filter
-        ID
-        meta {
-          links {
-            collection
-            self
-          }
-        }
-      }
-    }
-  }
-  allWordpressWpApiMenusMenuLocations {
-    edges {
-      node {
-        id
-        // Put your menus locations names here
-      }
-    }
-  }
-  allWordpressWpApiMenusMenusExtended {
-    edges {
-      node {
-        name
-        count
-        items {
-          order
-          title
-          url
-        }
-      }
-    }
-  }
-```
-### Query any other plugin
+### Query any other entity
 In the following example, `${Manufacturer}` will be replaced by the endpoint prefix and `${Endpoint}` by the name of the endpoint.
 
-To know what's what, check the URL of the endpoint.
+To know what's what, check the URL of the endpoint. You can set `verboseOutput: true` in order to get more information of what's executed by the source plugin behind the scene.
 
 For example the following URL: `http://my-blog.wordpress.com/wp-json/acf/v2/options`
   * Manufacturer : `acf`
@@ -413,20 +185,13 @@ Mention the apparition of `childWordpressAcfField` in the query below :
         excerpt
         date
         modified
-        status
         author
         featured_media
-        comment_status
-        ping_status
-        sticky
         template
-        format
         categories
         tags
-        childWordpressAcfField {
-          internal {
-            content
-          }
+        acf {
+         // use ___GraphiQL debugger and Ctrl+Spacebar to describe your model.
         }
       }
     }
@@ -446,17 +211,11 @@ Mention the apparition of `childWordpressAcfField` in the query below :
         date
         modified
         slug
-        status
         author
         featured_media
-        menu_order
-        comment_status
-        ping_status
         template
-        childWordpressAcfField {
-          internal {
-            content
-          }
+        acf {
+         // use ___GraphiQL debugger and Ctrl+Spacebar to describe your model.
         }
       }
     }
@@ -563,7 +322,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         // The Post ID is prefixed with 'POST_'
           _.each(result.data.allWordpressPost.edges, edge => {
             createPage({
-              path: `/post/${edge.node.slug}/`,
+              path: `/${edge.node.slug}/`,
               component: slash(postTemplate),
               context: {
                 id: edge.node.id,

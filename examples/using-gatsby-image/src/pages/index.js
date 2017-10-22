@@ -11,7 +11,7 @@ class IndexComponent extends React.Component {
         <Img
           css={{ top: 0, left: 0, right: 0, zIndex: -1 }}
           style={{ position: `absolute` }}
-          responsiveSizes={this.props.data.imageSharp.responsiveSizes}
+          sizes={this.props.data.imageSharp.sizes}
         />
         <div
           css={{
@@ -20,6 +20,7 @@ class IndexComponent extends React.Component {
             padding: rhythm(2),
             borderRadius: rhythm(1 / 2),
             marginTop: rhythm(3),
+            position: `relative`,
           }}
         >
           <h1 css={{ marginTop: 0 }}>Gatsby Image</h1>
@@ -38,12 +39,16 @@ class IndexComponent extends React.Component {
             plugins.
           </p>
           <p>
-            <a href="https://github.com/gatsbyjs/gatsby/blob/master/examples/using-gatsby-image/">
-              See the site source
+            <a href="https://www.gatsbyjs.org/packages/gatsby-image/">
+              See the component's documentation
             </a>
             {` `}
-            on how to start using gatsby-image on your site. Full documentation
-            coming soon.
+            as well as
+            <a href="https://github.com/gatsbyjs/gatsby/blob/master/examples/using-gatsby-image/">
+              view this site's source
+            </a>
+            {` `}
+            to learn how to start using gatsby-image on your Gatsby sites.
           </p>
           <h2>Demo pages</h2>
           <ul>
@@ -52,6 +57,9 @@ class IndexComponent extends React.Component {
             </li>
             <li>
               <Link to="/background-color/">Background color</Link>
+            </li>
+            <li>
+              <Link to="/traced-svg/">Traced SVG</Link>
             </li>
           </ul>
           <h2>Out of the box it:</h2>
@@ -67,6 +75,9 @@ class IndexComponent extends React.Component {
             <li>
               Uses the "blur-up" effect i.e. it loads a tiny version of the
               image to show while the full image is loading
+            </li>
+            <li>
+              Alternatively provides a "traced placeholder" SVG of the image.
             </li>
             <li>
               Lazy loads images which reduces bandwidth and speeds the initial
@@ -90,14 +101,8 @@ export default IndexComponent
 export const query = graphql`
   query FrontPageQuery {
     imageSharp(id: { regex: "/nasa/" }) {
-      responsiveSizes(maxWidth: 1500) {
-        base64
-        aspectRatio
-        src
-        srcSet
-        sizes
-        originalImg
-        originalName
+      sizes(maxWidth: 1500) {
+        ...GatsbyImageSharpSizes
       }
     }
   }

@@ -57,6 +57,17 @@ function getValidKey({ key, verbose = false }) {
 
 exports.getValidKey = getValidKey
 
+// Remove the ACF key from the response when it's not an object
+const normalizeACF = entities =>
+  entities.map(e => {
+    if (!_.isObject(e[`acf`])) {
+      delete e[`acf`]
+    }
+    return e
+  })
+
+exports.normalizeACF = normalizeACF
+
 // Create entities from the few the WordPress API returns as an object for presumably
 // legacy reasons.
 const normalizeEntities = entities => {
@@ -225,8 +236,22 @@ exports.mapTagsCategoriesToTaxonomies = entities =>
 
 exports.mapEntitiesToMedia = entities => {
   const media = entities.filter(e => e.__type === `wordpress__wp_media`)
+
   return entities.map(e => {
-    // TODO : featured_media field is photo ID
+    // Map featured_media to its media node
+    let featuredMedia
+    if (e.featured_media) {
+      featuredMedia = media.find(m => m.wordpress_id === e.featured_media)
+    }
+
+    if (featuredMedia) {
+      e.featured_media___NODE = featuredMedia.id
+    }
+
+    // Always delete even if we can't find a featuredMedia as WordPress' API sets
+    // featured_media to 0 when there isn't one which is useless to us.
+    delete e.featured_media
+
     const isPhoto = field =>
       _.isObject(field) &&
       field.wordpress_id &&
@@ -250,6 +275,27 @@ exports.mapEntitiesToMedia = entities => {
           object[`${key}___NODE`] = replacePhoto(value)
           delete object[key]
         }
+
+        // featured_media can be nested inside ACF fields
+        if (_.isObject(value) && value.featured_media) {
+          featuredMedia = media.find(
+            m => m.wordpress_id === value.featured_media
+          )
+          if (featuredMedia) {
+            value.featured_media___NODE = featuredMedia.id
+          }
+          delete value.featured_media
+        }
+        if (_.isNumber(value) && key == `featured_media`) {
+          featuredMedia = media.find(m => m.wordpress_id === value)
+          if (featuredMedia) {
+            object[`${key}___NODE`] = featuredMedia.id
+          }
+          delete object[key]
+        }
+        if (_.isBoolean(value) && key == `featured_media`) {
+          delete object[key]
+        }
       })
     }
 
@@ -261,7 +307,7 @@ exports.mapEntitiesToMedia = entities => {
           delete e.acf[key]
         }
 
-        if (_.isArray(value) && value[0].acf_fc_layout) {
+        if (_.isArray(value) && value[0] && value[0].acf_fc_layout) {
           e.acf[key] = e.acf[key].map(f => {
             replaceFieldsInObject(f)
             return f

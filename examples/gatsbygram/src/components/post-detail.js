@@ -213,7 +213,7 @@ export const postDetailFragment = graphql`
         # thumbnails are created. This makes iterating on
         # designs effortless as we simply change the args
         # for the query and we get new thumbnails.
-        big: responsiveSizes(maxWidth: 640) {
+        big: sizes(maxWidth: 640) {
           src
           srcSet
         }
