@@ -91,7 +91,7 @@ module.exports = (
     >
       <img
         class="gatsby-resp-image-image"
-        style="width: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px ${options.backgroundColor};"
+        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px ${options.backgroundColor};"
         alt="${node.alt ? node.alt : defaultAlt}"
         title="${node.title ? node.title : ``}"
         src="${fallbackSrc}"
@@ -200,7 +200,9 @@ module.exports = (
 
             // Replace the image node with an inline HTML node.
             node.type = `html`
-            node.value = $.html()
+            node.value = $(`body`)
+              .children()
+              .html() // fix for cheerio v1
 
             return resolve(node)
           })

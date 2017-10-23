@@ -55,6 +55,13 @@ Websites built with Gatsby:
 * [Random Screencast](https://randomscreencast.com)
 * [Phu Quoc Tea & Coffee Store](http://trasuaphuquoc.com)
 * [Steven Natera's blog](https://www.stevennatera.com)
+* [LekoArts - Graphic Designer](https://www.lekoarts.de)
+* [Georgi Yanev](https://blog.georgi-yanev.com) [(source)](https://github.com/jumpalottahigh/blog.georgi-yanev.com)
+* [OnCallogy.com](https://www.oncallogy.com)
+* [doopoll's marketing site](https://doopoll.co)
+* [Design Systems Weekly](https://designsystems.email/)
+* [Slite landing pages](https://slite.com/)
+* [Hallingdata](http://hallingdata.no/)
 
 ## Docs
 

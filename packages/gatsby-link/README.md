@@ -52,3 +52,24 @@ render () {
   </div>
 }
 ```
+
+## Prefixed paths helper
+
+Gatsby allows you to [automatically prefix links](/docs/path-prefix/) for sites hosted on Github Pages or other places where your site isn't at the root of the domain.
+
+This can create problems during development as pathnames won't be prefixed. To handle both, gatsby-link exports a helper function `withPrefix` that prepends the prefix during production but doesn't in development.
+
+```jsx
+import { withPrefix } from "gatsby-link"
+
+const IndexLayout = ({ children, location }) => {
+  const isHomepage = location.pathname === withPrefix('/');
+
+  return (
+    <div>
+      <h1>Welcome {isHomepage ? 'home' : 'aboard'}!</h1>
+      {children()}
+    </div>
+  )
+}
+```

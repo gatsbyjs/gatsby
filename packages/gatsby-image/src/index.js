@@ -139,6 +139,7 @@ class Image extends React.Component {
       title,
       alt,
       className,
+      outerWrapperClassName,
       style = {},
       sizes,
       resolutions,
@@ -158,6 +159,9 @@ class Image extends React.Component {
       // The outer div is necessary to reset the z-index to 0.
       return (
         <div
+          className={`${outerWrapperClassName
+            ? outerWrapperClassName
+            : ``} gatsby-image-outer-wrapper`}
           style={{
             zIndex: 0,
             // Let users set component to be absolutely positioned.
@@ -188,6 +192,17 @@ class Image extends React.Component {
                 alt={alt}
                 title={title}
                 src={image.base64}
+                opacity={!this.state.imgLoaded ? 1 : 0}
+                transitionDelay={`0.25s`}
+              />
+            )}
+
+            {/* Show the traced SVG image. */}
+            {image.tracedSVG && (
+              <Img
+                alt={alt}
+                title={title}
+                src={image.tracedSVG}
                 opacity={!this.state.imgLoaded ? 1 : 0}
                 transitionDelay={`0.25s`}
               />
@@ -249,6 +264,9 @@ class Image extends React.Component {
       // The outer div is necessary to reset the z-index to 0.
       return (
         <div
+          className={`${outerWrapperClassName
+            ? outerWrapperClassName
+            : ``} gatsby-image-outer-wrapper`}
           style={{
             zIndex: 0,
             // Let users set component to be absolutely positioned.
@@ -268,6 +286,17 @@ class Image extends React.Component {
                 src={image.base64}
                 opacity={!this.state.imgLoaded ? 1 : 0}
                 transitionDelay={`0.35s`}
+              />
+            )}
+
+            {/* Show the traced SVG image. */}
+            {image.tracedSVG && (
+              <Img
+                alt={alt}
+                title={title}
+                src={image.tracedSVG}
+                opacity={!this.state.imgLoaded ? 1 : 0}
+                transitionDelay={`0.25s`}
               />
             )}
 
@@ -323,6 +352,10 @@ Image.propTypes = {
   title: PropTypes.string,
   alt: PropTypes.string,
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]), // Support Glamor's css prop.
+  outerWrapperClassName: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+  ]),
   style: PropTypes.object,
   position: PropTypes.string,
   backgroundColor: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),

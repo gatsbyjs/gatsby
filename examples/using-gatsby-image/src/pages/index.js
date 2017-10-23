@@ -44,6 +44,7 @@ class IndexComponent extends React.Component {
             </a>
             {` `}
             as well as
+            {` `}
             <a href="https://github.com/gatsbyjs/gatsby/blob/master/examples/using-gatsby-image/">
               view this site's source
             </a>
@@ -57,6 +58,9 @@ class IndexComponent extends React.Component {
             </li>
             <li>
               <Link to="/background-color/">Background color</Link>
+            </li>
+            <li>
+              <Link to="/traced-svg/">Traced SVG</Link>
             </li>
           </ul>
           <h2>Out of the box it:</h2>
@@ -72,6 +76,9 @@ class IndexComponent extends React.Component {
             <li>
               Uses the "blur-up" effect i.e. it loads a tiny version of the
               image to show while the full image is loading
+            </li>
+            <li>
+              Alternatively provides a "traced placeholder" SVG of the image.
             </li>
             <li>
               Lazy loads images which reduces bandwidth and speeds the initial

@@ -10,13 +10,11 @@
     "serve": "node_modules/.bin/gatsby serve",
     "clean:public": "rm -rf public & mkdir public",
     "clean": "npm run clean:public",
-    "lint": "./node_modules/.bin/eslint --ext .js,.jsx --ignore-pattern public .",
+    "lint":
+      "./node_modules/.bin/eslint --ext .js,.jsx --ignore-pattern public .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [
-    "personal",
-    "blog"
-  ],
+  "keywords": ["personal", "blog"],
   "author": "gatsbyjs",
   "license": "MIT",
   "bugs": {
@@ -45,6 +43,6 @@
     "moment": "^2.14.1",
     "normalize.css": "^7.0.0",
     "prop-types": "^15.5.8",
-    "react-helmet": "^3.1.0"
+    "react-helmet": "^5.2.0"
   }
 }

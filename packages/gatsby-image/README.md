@@ -16,7 +16,7 @@ But creating optimized images for websites has long been a thorny problem. Ideal
 * Generate multiple smaller images so smartphones and tablets don't download desktop-sized images
 * Strip all unnecessary metadata and optimize JPEG and PNG compression
 * Efficiently lazy load images to speed initial page load and save bandwidth
-* Use the "blur-up" technique to show a preview of the image while it loads
+* Use the "blur-up" technique or a "[traced placeholder](https://github.com/gatsbyjs/gatsby/issues/2435)" SVG to show a preview of the image while it loads
 * Hold the image position so your page doesn't jump while images load
 
 Doing this consistantly across a site feels like sisyphean labor. You manually optimize your images and then… several images are swapped in at the last minute or a design-tweak shaves 100px of width off your images.
@@ -56,7 +56,7 @@ export const query = graphql`
       childImageSharp {
         # Specify the image processing steps right in the query
         # Makes it trivial to update as your page's design changes.
-        resolutions(width: l25, height: 125) {
+        resolutions(width: 125, height: 125) {
           ...GatsbyImageSharpResolutions
         }
       }
@@ -94,8 +94,10 @@ Their fragments are:
 
 * `GatsbyImageSharpResolutions`
 * `GatsbyImageSharpResolutions_noBase64`
+* `GatsbyImageSharpResolutions_tracedSVG`
 * `GatsbyImageSharpSizes`
 * `GatsbyImageSharpSizes_noBase64`
+* `GatsbyImageSharpSizes_tracedSVG`
 
 ### gatsby-source-contentful
 
@@ -104,7 +106,9 @@ Their fragments are:
 * `GatsbyContentfulSizes`
 * `GatsbyContentfulSizes_noBase64`
 
-If you don't want to use the blur-up effect, choose the fragment with `noBase64` at the end.
+If you don't want to use the blur-up effect, choose the fragment with `noBase64` at the end. If you want to use the traced placeholder SVGs, choose the fragment with `tracedSVG` at the end.
+
+_Please see the [gatsby-plugin-sharp](https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/#tracedsvg) documentation for more information on `tracedSVG` and its configuration options._
 
 ## "Resolutions" queries
 
@@ -120,7 +124,7 @@ Pass in the data returned from the `resolutions` object in your query via the `r
     # Other options include height (set both width and height to crop),
     # grayscale, duotone, rotate, etc.
     resolutions(width: 400) {
-      # Choose either the fragment including a small base64ed image or one without.
+      # Choose either the fragment including a small base64ed image, a traced placeholder SVG, or one without.
       ...GatsbyImageSharpResolutions
     }
   }
@@ -143,7 +147,7 @@ Pass in the data returned from the `sizes` object in your query via the `sizes` 
     # Other options include maxHeight (set both maxWidth and maxHeight to crop),
     # grayscale, duotone, rotate, etc.
     sizes(maxWidth: 700) {
-      # Choose either the fragment including a small base64ed image or one without.
+      # Choose either the fragment including a small base64ed image, a traced placeholder SVG, or one without.
       ...GatsbyImageSharpSizes_noBase64
     }
   }
@@ -152,17 +156,18 @@ Pass in the data returned from the `sizes` object in your query via the `sizes` 
 
 ## `gatsby-image` props
 
-| Name              | Type            | Description                              |
-| ----------------- | --------------- | ---------------------------------------- |
-| `resolutions`       | `object`        | Data returned from the `resolutions` query  |
-| `sizes`           | `object`        | Data returned from the `sizes` query   |
-| `fadeIn`          | `bool`          | Defaults to fading in the image on load  |
-| `title`           | `string`        | Passed to the `img` element  |
-| `alt`             | `string`        | Passed to the `img` element   |
-| `className`       | `string|object` | Passed to the wrapper div. Object is needed to support Glamor's css prop |
-| `style`           | `object`        | Spread into the default styles in the wrapper div |
-| `position`           | `string`        | Defaults to `relative`. Pass in `absolute` to make the component `absolute` positioned |
-| `backgroundColor` | `string|bool`   | Set a colored background placeholder. If true, uses "lightgray" for the color. You can also pass in any valid color string. |
+| Name                      | Type            | Description                              |
+| ------------------------- | --------------- | ---------------------------------------- |
+| `resolutions`             | `object`        | Data returned from the `resolutions` query  |
+| `sizes`                   | `object`        | Data returned from the `sizes` query   |
+| `fadeIn`                  | `bool`          | Defaults to fading in the image on load  |
+| `title`                   | `string`        | Passed to the `img` element  |
+| `alt`                     | `string`        | Passed to the `img` element   |
+| `className`               | `string|object` | Passed to the wrapper div. Object is needed to support Glamor's css prop |
+| `outerWrapperClassName`   | `string|object` | Passed to the outer wrapper div. Object is needed to support Glamor's css prop |
+| `style`                   | `object`        | Spread into the default styles in the wrapper div |
+| `position`                | `string`        | Defaults to `relative`. Pass in `absolute` to make the component `absolute` positioned |
+| `backgroundColor`         | `string|bool`   | Set a colored background placeholder. If true, uses "lightgray" for the color. You can also pass in any valid color string. |
 
 ## Some other stuff to be aware of
 

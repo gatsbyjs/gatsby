@@ -70,14 +70,18 @@ class BlogPostTemplate extends React.Component {
             <meta name="og:description" content={post.excerpt} />
             <meta name="twitter:description" content={post.excerpt} />
             <meta name="og:title" content={post.frontmatter.title} />
-            <meta
-              name="og:image"
-              content={post.frontmatter.image.childImageSharp.resize.src}
-            />
-            <meta
-              name="twitter:image"
-              content={post.frontmatter.image.childImageSharp.resize.src}
-            />
+            {post.frontmatter.image && (
+              <meta
+                name="og:image"
+                content={post.frontmatter.image.childImageSharp.resize.src}
+              />
+            )}
+            {post.frontmatter.image && (
+              <meta
+                name="twitter:image"
+                content={post.frontmatter.image.childImageSharp.resize.src}
+              />
+            )}
             <meta name="og:type" content="article" />
             <meta name="article:author" content={post.frontmatter.author.id} />
             <meta
@@ -112,7 +116,6 @@ class BlogPostTemplate extends React.Component {
               }}
             >
               <Img
-                backgroundColor
                 resolutions={
                   post.frontmatter.author.avatar.childImageSharp.resolutions
                 }
@@ -306,8 +309,17 @@ export const pageQuery = graphql`
           twitter
           avatar {
             childImageSharp {
-              resolutions(width: 63, height: 63, quality: 75) {
-                ...GatsbyImageSharpResolutions_noBase64
+              resolutions(
+                width: 63
+                height: 63
+                quality: 75
+                traceSVG: {
+                  turdSize: 10
+                  background: "#f6f2f8"
+                  color: "#e0d6eb"
+                }
+              ) {
+                ...GatsbyImageSharpResolutions_tracedSVG
               }
             }
           }
