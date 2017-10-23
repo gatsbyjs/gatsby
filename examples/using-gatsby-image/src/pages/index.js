@@ -44,6 +44,7 @@ class IndexComponent extends React.Component {
             </a>
             {` `}
             as well as
+            {` `}
             <a href="https://github.com/gatsbyjs/gatsby/blob/master/examples/using-gatsby-image/">
               view this site's source
             </a>
