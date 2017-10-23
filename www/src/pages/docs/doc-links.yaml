@@ -13,14 +13,20 @@
 - title: Guides
   links:
     404 Pages: /docs/add-404-page/
+    Adding a List of Markdown Blog Posts: /docs/adding-a-list-of-markdown-blog-posts/
     Adding Images, Fonts, and Files: /docs/adding-images-fonts-files/
+    Adding Markdown Pages: /docs/adding-markdown-pages/
+    Adding Tags and Categories to Blog Posts: /docs/adding-tags-and-categories-to-blog-posts/
     Browser Support: /docs/browser-support/
     Creating and Modifying Pages: /docs/creating-and-modifying-pages/
+    Creating Dynamically-Rendered Navigation: /docs/creating-dynamically-rendered-navigation/
     Create a source plugin: /docs/create-source-plugin/
     Custom webpack config: /docs/add-custom-webpack-config/
     Customizing html.js: /docs/custom-html/
     Debugging HTML Builds: /docs/debugging-html-builds/
+    Dropping Images into Static Folders: /docs/dropping-images-into-static-folders/
     Environment Variables: /docs/environment-variables/
+    How Gatsby Works with Github Pages: /docs/how-gatsby-works-with-github-pages/
     Path Prefix: /docs/path-prefix/
     Proxying API Requests: /docs/api-proxy/
 - title: Reference
