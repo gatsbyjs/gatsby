@@ -10,7 +10,14 @@ class IndexPage extends React.Component {
         <h1>Recipes ({data.allRecipes.totalCount})</h1>
         <ul>
           {data.allRecipes.edges.map(({ node }) => {
-            return <li>{node.title}</li>
+            return (
+              <li>
+                {node.title} ({node.preparationTime} mins)
+                <img
+                  src={node.relationships.image.relationships.imageFile.uri}
+                />
+              </li>
+            )
           })}
         </ul>
       </div>
@@ -22,14 +29,21 @@ export default IndexPage
 
 export const pageQuery = graphql`
   query IndexPageQuery {
-    allRecipes(sort: { fields: [title] }) {
+    allRecipes(sort: { fields: [title] }, limit: 10) {
       totalCount
       edges {
         node {
-          id
-          isPublished
           title
-          ingredients
+          preparationTime
+          relationships {
+            image {
+              relationships {
+                imageFile {
+                  uri
+                }
+              }
+            }
+          }
         }
       }
     }

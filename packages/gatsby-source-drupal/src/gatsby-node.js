@@ -1,6 +1,7 @@
 const axios = require(`axios`)
 const crypto = require(`crypto`)
 const _ = require(`lodash`)
+const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
 const makeTypeName = type => `drupal__${type.replace(/-/g, `_`)}`
 
@@ -32,7 +33,7 @@ const processEntities = ents =>
   })
 
 exports.sourceNodes = async (
-  { boundActionCreators, getNode, hasNodeChanged, store },
+  { boundActionCreators, getNode, hasNodeChanged, store, cache },
   { baseUrl }
 ) => {
   const { createNode, setPluginStatus, touchNode } = boundActionCreators
@@ -146,6 +147,28 @@ exports.sourceNodes = async (
       nodes.push(node)
     })
   })
+
+  // Download all files.
+  await Promise.all(
+    nodes.map(async node => {
+      let fileNode
+      if (node.internal.type === `files`) {
+        try {
+          fileNode = await createRemoteFileNode({
+            url: node.uri,
+            store,
+            cache,
+            createNode,
+          })
+        } catch (e) {
+          // Ignore
+        }
+        if (fileNode) {
+          node.localFile___NODE = fileNode.id
+        }
+      }
+    })
+  )
 
   nodes.forEach(n => createNode(n))
 
