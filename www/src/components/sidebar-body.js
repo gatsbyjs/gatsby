@@ -33,6 +33,7 @@ const listStyles = {
         [presets.Hd]: {
           height: 6,
           width: 6,
+          top: `.65em`,
           marginTop: -3,
           left: `-1em`,
         },
