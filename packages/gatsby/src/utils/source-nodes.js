@@ -1,9 +1,33 @@
 const _ = require(`lodash`)
+const report = require(`gatsby-cli/lib/reporter`)
 
 const apiRunner = require(`./api-runner-node`)
 const { store, getNode } = require(`../redux`)
 const { boundActionCreators } = require(`../redux/actions`)
 const { deleteNodes } = boundActionCreators
+
+/**
+ * Finds the name of all plugins which implement Gatsby APIs that
+ * may create nodes, but which have not actually created any nodes.
+ */
+function discoverPluginsWithoutNodes(storeState) {
+  // Discover which plugins implement APIs which may create nodes
+  const nodeCreationPlugins = _.without(
+    _.union(
+      storeState.apiToPlugins.sourceNodes,
+      storeState.apiToPlugins.onCreateNode
+    ),
+    `default-site-plugin`
+  )
+  // Find out which plugins own already created nodes
+  const nodeOwners = _.uniq(
+    _.values(storeState.nodes).reduce((acc, node) => {
+      acc.push(node.internal.owner)
+      return acc
+    }, [])
+  )
+  return _.difference(nodeCreationPlugins, nodeOwners)
+}
 
 module.exports = async () => {
   await apiRunner(`sourceNodes`, {
@@ -12,6 +36,14 @@ module.exports = async () => {
   })
 
   const state = store.getState()
+
+  // Warn about plugins that should have created nodes but didn't.
+  const pluginsWithNoNodes = discoverPluginsWithoutNodes(state)
+  pluginsWithNoNodes.map(name =>
+    report.warn(
+      `The ${name} plugin has generated no Gatsby nodes. Do you need it?`
+    )
+  )
 
   // Garbage collect stale data nodes
   const touchedNodes = Object.keys(state.nodesTouched)
