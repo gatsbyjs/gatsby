@@ -70,7 +70,7 @@ This is huge because it makes development so much faster and fun.
 
 Let's try it.
 
-You'll need code editing software for the next part of this tutorial. [VS Code](https://code.visualstudio.com/) is a nice one. After downloading and opening a code editing software, open a folder on your computer called "tutorial-part-one." This folder was automatically created when you ran the previous terminal commands in the first part of this tutorial.
+You'll need code editing software for the next part of this tutorial. [VS Code](https://code.visualstudio.com/) is a nice one. With your code editor, open a folder on your computer called "tutorial-part-one." This folder was automatically created when you ran the previous terminal commands in the first part of this tutorial.
 
 Now that you've opened the "tutorial-part-one" folder in your code editing software, it's time to edit your website. In the code editing software, you'll need to find the `src/pages/index.js`. Once you find that, try changing "Hello world!" in the page component to "Hello Gatsby!". The text in your browser should change within a second.
 

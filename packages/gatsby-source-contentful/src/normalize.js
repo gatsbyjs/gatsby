@@ -17,7 +17,7 @@ const getLocalizedField = ({ field, defaultLocale, locale }) => {
   } else if (field[locale.fallbackCode]) {
     return field[locale.fallbackCode]
   } else {
-    return field[defaultLocale]
+    return null
   }
 }
 

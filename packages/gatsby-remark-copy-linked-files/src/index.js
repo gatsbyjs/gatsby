@@ -55,7 +55,7 @@ module.exports = (
 
   // Takes a node and generates the needed images and then returns
   // the needed HTML replacement for the image
-  const generateImagesAndUpdateNode = async function(image) {
+  const generateImagesAndUpdateNode = function(image) {
     const imagePath = path.posix.join(
       getNode(markdownNode.parent).dir,
       image.attr(`src`)
@@ -74,7 +74,7 @@ module.exports = (
     // The link object will be modified to the new location so we'll
     // use that data to update our ref
     const link = { url: image.attr(`src`) }
-    await visitor(link)
+    visitor(link)
     image.attr(`src`, link.url)
 
     let dimensions
@@ -130,7 +130,7 @@ module.exports = (
   })
 
   // For each HTML Node
-  visit(markdownAST, `html`, async node => {
+  visit(markdownAST, `html`, node => {
     const $ = cheerio.load(node.value)
     // Handle Images
     const imageRefs = []
@@ -154,7 +154,7 @@ module.exports = (
           return
         }
 
-        await generateImagesAndUpdateNode(thisImg)
+        generateImagesAndUpdateNode(thisImg)
       } catch (err) {
         // Ignore
       }
@@ -185,7 +185,7 @@ module.exports = (
         // The link object will be modified to the new location so we'll
         // use that data to update our ref
         const link = { url: thisVideo.attr(`src`) }
-        await visitor(link)
+        visitor(link)
         thisVideo.attr(`src`, link.url)
       } catch (err) {
         // Ignore
@@ -217,7 +217,7 @@ module.exports = (
         // The link object will be modified to the new location so we'll
         // use that data to update our ref
         const link = { url: thisATag.attr(`href`) }
-        await visitor(link)
+        visitor(link)
         thisATag.attr(`href`, link.url)
       } catch (err) {
         // Ignore
