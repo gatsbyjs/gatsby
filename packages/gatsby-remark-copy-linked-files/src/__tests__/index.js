@@ -99,6 +99,17 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     expect(fsExtra.copy).toHaveBeenCalled()
   })
 
+  it(`can copy HTML multiple images`, async () => {
+    const path1 = `images/sample-image.gif`
+    const path2 = `images/another-sample-image.gif`
+
+    const markdownAST = remark.parse(`<div><img src="${path1}"><img src="${path2}"></div>`)
+
+    await plugin({ files: [...getFiles(path1), ...getFiles(path2)], markdownAST, markdownNode, getNode })
+
+    expect(fsExtra.copy).toHaveBeenCalledTimes(2)
+  })
+
   it(`leaves absolute file paths alone`, async () => {
     const path = `https://google.com/images/sample-image.gif`
 
