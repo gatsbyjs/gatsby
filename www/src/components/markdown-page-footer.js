@@ -47,10 +47,11 @@ export default class MarkdownPageFooter extends React.Component {
                 this.setState({ feedbackSubmitted: true })
               }}
               css={{
-                color: `green`,
-                fontSize: rhythm(1.5),
+                color: `#37b635`,
+                fontSize: rhythm(1.3),
+                padding: rhythm(0.2),
                 position: `relative`,
-                top: -6,
+                top: -3,
                 marginLeft: rhythm(1 / 4),
                 cursor: `pointer`,
               }}
@@ -61,7 +62,12 @@ export default class MarkdownPageFooter extends React.Component {
                 sendReview(false, this.props.page.parent.relativePath)
                 this.setState({ feedbackSubmitted: true })
               }}
-              css={{ color: `red`, fontSize: rhythm(1.5), cursor: `pointer` }}
+              css={{
+                color: `#ec1818`,
+                fontSize: rhythm(1.3),
+                padding: rhythm(0.2),
+                cursor: `pointer`,
+              }}
             />
           </span>
         )}
