@@ -103,9 +103,16 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     const path1 = `images/sample-image.gif`
     const path2 = `images/another-sample-image.gif`
 
-    const markdownAST = remark.parse(`<div><img src="${path1}"><img src="${path2}"></div>`)
+    const markdownAST = remark.parse(
+      `<div><img src="${path1}"><img src="${path2}"></div>`
+    )
 
-    await plugin({ files: [...getFiles(path1), ...getFiles(path2)], markdownAST, markdownNode, getNode })
+    await plugin({
+      files: [...getFiles(path1), ...getFiles(path2)],
+      markdownAST,
+      markdownNode,
+      getNode,
+    })
 
     expect(fsExtra.copy).toHaveBeenCalledTimes(2)
   })
