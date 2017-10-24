@@ -144,3 +144,11 @@ Community:
 * [Normalize](https://github.com/necolas/normalize.css/) css (7.0).
 * [Feather](https://feather.netlify.com/) icons.
 * Font styles taken from [Tachyons](http://tachyons.io/).
+
+* [gatsby-starter-netlify-cms](https://github.com/AustinGreen/gatsby-starter-netlify-cms) [(demo)](https://gatsby-netlify-cms.netlify.com/)
+
+  Features:
+  * A simple blog built with Netlify CMS 
+  * Basic directory organization
+  * Uses [Bulma](https://bulma.io/) for styling
+  * Visit [the repo](https://github.com/AustinGreen/gatsby-starter-netlify-cms) to learn how to set up authentication, and begin modeling your content.
