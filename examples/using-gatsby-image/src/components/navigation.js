@@ -19,6 +19,8 @@ const Navigation = () => (
     <nav
       css={{
         ...scale(-4 / 5),
+        fontFamily: options.headerFontFamily.join(`,`),
+        textTransform: `uppercase`,
         margin: 0,
         marginLeft: `auto`,
         "& a": {
@@ -29,7 +31,6 @@ const Navigation = () => (
         "& .nav-link-active": {
           color: options.accentColor,
           opacity: 1,
-          borderBottom: `1px solid ${options.accentColor}`,
         },
       }}
     >

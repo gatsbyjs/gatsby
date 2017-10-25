@@ -28,7 +28,7 @@ const UnsplashMasonry = edges => (
         "@media screen and (min-width: 800px)": {
           columnCount: 3,
         },
-        "@media screen and (min-width: 1200px)": {
+        "@media screen and (min-width: 1400px)": {
           columnCount: 4,
         },
       }}
@@ -170,7 +170,7 @@ export const query = graphql`
       edges {
         node {
           sizes(
-            maxWidth: 380
+            maxWidth: 430
             quality: 80
             traceSVG: { background: "#f2f8f3", color: "#d6ebd9" }
           ) {
