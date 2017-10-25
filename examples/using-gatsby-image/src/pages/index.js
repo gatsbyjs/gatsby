@@ -1,8 +1,9 @@
 import React from "react"
 import Link from "gatsby-link"
 import Img from "gatsby-image"
+import Navigation from "../components/navigation"
 
-import { rhythm } from "../utils/typography"
+import { rhythm, options } from "../utils/typography"
 
 class IndexComponent extends React.Component {
   render() {
@@ -17,13 +18,23 @@ class IndexComponent extends React.Component {
           css={{
             background: `white`,
             zIndex: 1,
-            padding: rhythm(2),
-            borderRadius: rhythm(1 / 2),
-            marginTop: rhythm(3),
+            padding: rhythm(1),
+            "@media screen and (min-width: 640px)": {
+              padding: rhythm(2),
+            },
+            borderRadius: rhythm(1 / 4),
+            marginTop: `30vh`,
             position: `relative`,
           }}
         >
-          <h1 css={{ marginTop: 0 }}>Gatsby Image</h1>
+          <div
+            css={{
+              paddingBottom: rhythm(options.blockMarginBottom * 2),
+            }}
+          >
+            <Navigation />
+          </div>
+          {` `}
           <p>
             <a href="https://www.gatsbyjs.org/packages/gatsby-image/">
               gatsby-image
@@ -34,9 +45,13 @@ class IndexComponent extends React.Component {
             possible for Gatsby (and other React) websites.
           </p>
           <p>
-            The component requires <em>no configuration</em> when used within
-            Gatsby. All image processing is done within Gatsby and official
-            plugins.
+            The component requires{` `}
+            <em css={{ fontWeight: `bold`, fontStyle: `normal` }}>
+              no configuration
+            </em>
+            {` `}
+            when used within Gatsby. All image processing is done within Gatsby
+            and official plugins.
           </p>
           <p>
             <a href="https://www.gatsbyjs.org/packages/gatsby-image/">
@@ -101,8 +116,8 @@ export default IndexComponent
 
 export const query = graphql`
   query FrontPageQuery {
-    imageSharp(id: { regex: "/nasa/" }) {
-      sizes(maxWidth: 1500) {
+    imageSharp(id: { regex: "/ng-55646/" }) {
+      sizes(maxWidth: 1500, rotate: 180) {
         ...GatsbyImageSharpSizes
       }
     }

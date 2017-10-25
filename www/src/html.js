@@ -33,7 +33,7 @@ export default class HTML extends React.Component {
           />
           <link
             rel="preload"
-            href="/static/spectral-latin-400.bc2de9de.woff2"
+            href="/static/spectral-latin-400.d6a7b14a.woff2"
             as="font"
             crossOrigin="anonymous"
           />

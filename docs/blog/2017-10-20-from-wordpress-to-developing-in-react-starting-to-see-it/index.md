@@ -6,22 +6,22 @@ author: "Benjamin Read"
 
 As a frontend designer I've always prided myself on being a HTML and CSS specialist. My use of JavaScript has been limited to animations and DOM manipulation. However, at [Indigo Tree](https://indigotree.co.uk "Indigo Tree: We Build Awesome Websites") we're branching out from our staple of WordPress and trying different methods of creating websites with functionality that our clients require, whilst maximising their budget.
 
-We're also bracing ourselves for what we’re anticipating to be the stormfront of [Gutenberg](https://wordpress.org/plugins/gutenberg/ "Gutenberg Wordpress plugins") for our WordPress projects. Once it's included in the WordPress Core, writing components in JavaScript for the Gutenberg editor will be necessary for every developer on a project
+We're also bracing ourselves for what we’re anticipating to be the stormfront of [Gutenberg](https://wordpress.org/plugins/gutenberg/ "Gutenberg Wordpress plugins") for our WordPress projects. Once it's included in the WordPress Core, writing components in JavaScript for the Gutenberg editor will be necessary for every developer on a project.
 
-So I decided to dive into learning React with a few courses, some experimentation, and the aim of building a site in [Gatsby.js](https://www.gatsbyjs.org/ "Blazing-fast static site generator for React") as a test for doing projects built entirely in React.
+So I decided to dive into learning React with a few courses and some experimentation. I had the aim of building a site in [Gatsby.js](https://www.gatsbyjs.org/ "Blazing-fast static site generator for React") as a test for doing projects built entirely in React.
 
 ## Letting Go
 
 The first thing I had to do while investigating React was to let go of some preconceived ideas I had - that JSX is just plain weird, that JSS (JavaScript Stylesheets) was an unnecessary abstraction.
-So I tried not to be bothered by the templating weirdness too much, and embrace the differences. My classes soon became `classNames`s, my `<a>` tags `<Links>`, and I quickly saw what people had been enthusing about.
+So I tried not to be bothered by the templating weirdness too much and embrace the differences. My classes soon became `classNames`s, my `<a>` tags became `<Links>`, and I quickly saw what people had been enthusing about.
 
 Managing everything in one place is such a cathartic experience.
 
 With WordPress templating, I used to have function files, filter files, template files, and SASS partials, often with similar names, depending on the framework I'd be using. To build a site meant needing to buffer the entire project in my short-term memory. Not an easy feat to manage.
 
-And then you would complete a project, and forget it all entirely. Until it went to the client…
+And then you would complete a project, and forget it all entirely. Until it went to the client...
 
-Every time a client returned with a last-minute change, I would open up the code (which I might not have touched for weeks or months), and try to grok what function lived where, or what I had called that SASS partial... even with the help of browser dev tools, this can be really annoying.
+Every time a client returned with a last-minute change, I would open up the code (which I might not have touched for weeks or months), and try to grok what function lived where, or what I had called that SASS partial. Even with the help of browser dev tools, this can be really annoying.
 
 Now with Gatsby and React, I have my logic in one language, and in a way that makes groking easier. I have my layout, template and config modules at hand in the folder structure, without duplication.
 
@@ -87,16 +87,16 @@ However, since I'm managing my HTML with JavaScript, why not CSS as well? As abo
 
 ## My Project
 
-Following the [tutorial on Gatsbyjs](https://www.gatsbyjs.org/tutorial/  "GatsbyJS Tutorial") I built up my project from scratch, breaking things profusely at first, but it honestly didn’t take long to gain confidence enough so that I launched my first site at [freebabylon5.com recently](https://freebabylon5.com "Freebabylon5.com: our last, best hope of getting back on the air").
+Following the [tutorial on Gatsbyjs](https://www.gatsbyjs.org/tutorial/) I built up my project from scratch, breaking things profusely at first, but it honestly didn’t take long to gain confidence enough so that I launched my first site at [freebabylon5.com](https://freebabylon5.com "Our last, best hope of getting back on the air") recently.
 
-Be warned: the tutorial isn’t quite finished yet, you might be better off starting with [one of the starter kits already available](https://www.gatsbyjs.org/docs/gatsby-starters/ "Gatsby Starters"), so that you get `react-helmet` and active links implemented, the 2 things I had to learn independently.
+Be warned: the tutorial isn’t quite finished yet, you might be better off starting with [one of the starter kits already available](https://www.gatsbyjs.org/docs/gatsby-starters/), so that you get `react-helmet` and active links implemented, the 2 things I had to learn independently.
 
 
 ## The Way Forward?
 
 My initial concerns around using a JavaScript framework such as React seem to have all been allayed. With server-side React, we no longer have a dependency on frontend JavaScript, so progressive enhancement is not just a possibility but a standard. There's momentum towards better accessibility, and for me as a developer, the tools are there (such as Babel, Chrome Dev Tools React extension, and others) for a faster, more efficient development experience.
 
-I'm glad to say I'm sold on the idea and methods of developing with JavaScript, and React in particular. The site I've re-built from WordPress into Gatsby.js is now live at [https://freebabylon5.com](https://freebabylon5.com).
+I'm glad to say I'm sold on the idea and methods of developing with JavaScript, and React in particular. The site I've re-built from WordPress into Gatsby.js is now live at [https://freebabylon5.com](https://freebabylon5.com "Our last, best hope of getting back on the air").
 
 Together with my colleagues at [Indigo Tree](https://indigotree.co.uk "Indigo Tree: We Build Awesome Websites") we’re now looking at using WordPress as a backend, where clients can edit their content without the worries of insecure plugins or other methods of being hacked.
 

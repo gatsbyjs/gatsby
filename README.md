@@ -63,6 +63,7 @@ Websites built with Gatsby:
 * [Slite landing pages](https://slite.com/)
 * [Hallingdata](http://hallingdata.no/)
 * [@swyx](http://swyx.io) [(source)](https://github.com/sw-yx/swyxdotio)
+* [Portfolio of Piotr Fedorczyk](https://piotrf.pl)
 
 ## Docs
 
