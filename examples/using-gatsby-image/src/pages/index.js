@@ -18,9 +18,9 @@ class IndexComponent extends React.Component {
           css={{
             background: `white`,
             zIndex: 1,
-            padding: rhythm(1),
+            padding: rhythm(4 / 3),
             "@media screen and (min-width: 640px)": {
-              padding: rhythm(2),
+              padding: rhythm(5 / 3),
             },
             borderRadius: rhythm(1 / 4),
             marginTop: `30vh`,
@@ -102,9 +102,7 @@ class IndexComponent extends React.Component {
               Lazy loads images which reduces bandwidth and speeds the initial
               load time
             </li>
-            <li>
-              Uses WebP images if browser supports the format
-            </li>
+            <li>Uses WebP images if browser supports the format</li>
           </ul>
           <h2>Documentation</h2>
           <p>
