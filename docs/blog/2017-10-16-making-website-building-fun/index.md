@@ -129,7 +129,7 @@ Which suggests React is a far better building block for the web than raw HTML/JS
 
 Which also suggests the general principle that **if you're mired in complexity at one layer, you need to step *down* a layer or two and redesign the building blocks at *that* layer.**
 
-headroom.js is probably as simple as vanilla HTML/JS/CSS will allow it. We couldn't make building for the web simpler until we moved to a more sophesticated component model like React provides.
+headroom.js is probably as simple as vanilla HTML/JS/CSS will allow it. We couldn't make building for the web simpler until we moved to a more sophisticated component model like React provides.
 
 ## Another case study: gatsby-image
 
@@ -163,10 +163,10 @@ If we think about the process of building for the web, there are many steps befo
 
 For example, how does a single image typically get on a website?
 
-1. a page is designed
-2. specifc images are chosen
-3. the images are resized (with ideally multiple thumbnails to fit different devices)
-4. and finally, the image(s) are included in the HTML/CSS/JS (or React component) for the page.
+1. A page is designed
+2. Specific images are chosen
+3. The images are resized (with ideally multiple thumbnails to fit different devices)
+4. And finally, the image(s) are included in the HTML/CSS/JS (or React component) for the page.
 
 What makes gatsby-image really interesting is it's *seamlessly integrated into Gatsby's data layer* which has native image processing capabilities.
 
@@ -210,7 +210,7 @@ So instead of a long pipeline of tasks to setup optimized images for your site, 
 3. Add your query and the gatsby-image component to your page
 4. And… that's it!
 
-Now playing with images is fun! Want to tweak your design? No problem, just change your query a bit and see how the page updates. By eliminating the complexity around adding images, building performant sites with many images becomes fun again. 
+Now playing with images is fun! Want to tweak your design? No problem, just change your query a bit and see how the page updates. By eliminating the complexity around adding images, building performant sites with many images becomes fun again.
 
 ## Gatsby is a playground for discovering new building blocks for the web
 

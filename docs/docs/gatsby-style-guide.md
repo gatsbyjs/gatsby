@@ -21,7 +21,7 @@ Guide articles can cover a broad range of topics. Please see the following examp
 
 We welcome your help writing these articles! You don't have to be an expert in a topic to write about it--this entire Guide is open source, so even if you make a mistake, another contributor will eventually correct it.
 
-If you’d like to help by writing an article, find a stub article in the Gatsby Guides, write the article, then open a pull request (PR) in the Gatsby Github repo to replace the stub with your article.
+If you’d like to help by writing an article, find a stub article in the Gatsby Guides (with an italicized title like this *Title*), write the article, then open a pull request (PR) in the Gatsby Github repo to replace the stub with your article.
 
 If you can't find a stub about the topic you'd like to write about, you can open a PR in Github that creates the stub and includes your draft article. Feel free to ask us questions if you're not sure where to put a new article in the directory structure.
 
@@ -141,7 +141,7 @@ Here are specific formatting guidelines for any code:
 - Comments made should have a space between the comment characters and the comment themselves
 - GitHub-flavored markdown supports syntax highlighting in code blocks for many programming languages. To use it, indicate the language after starting ```
    ```html
-        <div class='awesome' id='more-awesome'>
+        <div class="awesome" id="more-awesome">
           <p>This is text in html</p>
         </div>
     ```
