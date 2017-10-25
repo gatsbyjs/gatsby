@@ -7,8 +7,7 @@ import { rhythm, options } from "../utils/typography"
 
 const BlurUp = ({ data }) => (
   <div>
-    <h1>Background Color</h1>
-    <h2>The machine that goes ping</h2>
+    <h2>Background color</h2>
     <Img
       backgroundColor
       style={{ display: `inherit` }}

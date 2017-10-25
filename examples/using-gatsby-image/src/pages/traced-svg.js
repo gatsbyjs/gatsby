@@ -100,8 +100,7 @@ class TracedSVG extends React.Component {
     const data = this.props.data
     return (
       <div>
-        <h1>Traced SVG</h1>
-        <h2>The machine that goes ping</h2>
+        <h2>Traced SVG Placeholders</h2>
         <Img
           style={{ display: `inherit` }}
           css={{
