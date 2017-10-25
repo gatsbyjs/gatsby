@@ -11,7 +11,11 @@ const remark = new Remark().data(`settings`, {
 })
 
 const extractObjectTag = mdast =>
-  _.reduce(mdast.children, (result, child) => result + child.value, ``)
+  _.reduce(
+    mdast.children[0].children,
+    (result, child) => result + child.value,
+    ``
+  )
 
 const extractIframeTag = mdast => mdast.children[0].value
 
