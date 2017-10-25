@@ -1,89 +1,151 @@
 import React from "react"
 import Img from "gatsby-image"
+import numeral from "numeral"
 
-import { rhythm, options } from "../utils/typography"
+import Lorem from "../components/lorem"
+import Ipsum from "../components/ipsum"
+import { rhythm, options, scale } from "../utils/typography"
 
-const TracedSVG = ({ data }) => (
-  <div>
-    <h1>Viribus quid</h1>
-    <h2>Hippason sinu</h2>
-    <Img
-      style={{ display: `inherit` }}
+numeral.locale(`en`)
+
+const UnsplashMasonry = edges => (
+  <div
+    css={{
+      "@media screen and (min-width: 640px)": {
+        margin: `0 calc(-50vw + 320px)`,
+      },
+    }}
+  >
+    <div
       css={{
-        marginBottom: rhythm(options.blockMarginBottom),
-        marginLeft: rhythm(options.blockMarginBottom),
-        float: `right`,
-        "&": {
-          "@media (min-width: 500px)": {
-            display: `none`,
-          },
+        columnCount: 1,
+        columnGap: 0,
+        maxWidth: 1360,
+        margin: `0 auto`,
+        "@media screen and (min-width: 400px)": {
+          columnCount: 2,
+        },
+        "@media screen and (min-width: 800px)": {
+          columnCount: 3,
+        },
+        "@media screen and (min-width: 1400px)": {
+          columnCount: 4,
         },
       }}
-      title={`Photo by Redd Angelo on Unsplash`}
-      resolutions={data.reddImageMobile.resolutions}
-    />
-    <Img
-      style={{ display: `inherit` }}
-      css={{
-        marginBottom: rhythm(options.blockMarginBottom),
-        marginLeft: rhythm(options.blockMarginBottom),
-        float: `right`,
-        display: `none`,
-        "@media (min-width: 500px)": {
-          display: `inline-block`,
-        },
-      }}
-      title={`Photo by Redd Angelo on Unsplash`}
-      resolutions={data.reddImage.resolutions}
-    />
-    <p>
-      Lorem markdownum nocens, est aut tergo, inmansuetique bella. Neve illud
-      contrarius ad es prior.{` `}
-      <a href="http://nunc.io/fuit.html">Planguntur</a> quondam, sua ferunt
-      uterum semina advertere si fraudesque terram hosti subiecta, nec. Audenti
-      refugitque manibusque aliis infelicem sed mihi aevis! Que ipso templa; tua
-      triformis animumque ad coluit in aliquid.
-    </p>
-    <ul>
-      <li>Infamia lumina sequuntur ulla</li>
-      <li>Aquarum rutilos</li>
-      <li>Hinc vimque</li>
-    </ul>
-    <h2>Et solebat pectus fletus erat furit officium</h2>
-    <p>
-      Proteus ut dis nec exsecrantia data: agrestes, truculenta Peleus. Et
-      diffidunt, talia intravit Thaumantias; figere et <em>et</em> qui socio
-      qui, <a href="http://vixmonet.io/in.html">tuo servet unda</a> hoc{` `}
-      <strong>classi</strong>? Causam <em>quemque</em>? Subigebant cornibus
-      fibras ut per nare nati, cunctis et <strong>illa verba</strong> inrita.
-    </p>
-    <ol>
-      <li>Furori adacto</li>
-      <li>Nocent imagine precari id ante sic</li>
-      <li>Ipsos sine Iuno placabitis silet relinquent blandarum</li>
-      <li>Et pars tabe sociorum et luna illum</li>
-      <li>Et frustra pestifero et inquit cornua victa</li>
-      <li>Constitit nomine senta suspirat et signis genuisse</li>
-    </ol>
-    <Img
-      sizes={data.kenImage.sizes}
-      title={`Photo by Ken Treloar on Unsplash`}
-    />
-    <h2>Levia mihi</h2>
-    <p>
-      Precor Ortygiam, prudens diro stabant prodis moenia; aut tergo{` `}
-      <a href="http://orehaec.io/">loquax et data</a> sua rite in vulnere. Esse
-      lumina plaustrum lacus necopina, iam umbrae nec clipeo sentit{` `}
-      <a href="http://ut.org/hinc">sinistra</a>.
-    </p>
-    <p>
-      Pendebat nitidum vidistis ecce crematisregia fera et lucemque crines.{` `}
-      <a href="http://www.sub.net/">Est sopita satis</a> quod harena
-      Antimachumque tulit fusile. Fieri qui que prosit equidem, meis praescia
-      monebat cacumina tergo acerbo saepe nullaque.
-    </p>
+    >
+      {edges.images.map(image => (
+        <div
+          key={image.node.src}
+          css={{
+            border: `4px solid transparent`,
+            breakInside: `avoid`,
+            position: `relative`,
+            "@media screen and (min-width: 400px)": {
+              borderWidth: 8,
+            },
+            "@media screen and (min-width: 800px)": {
+              borderWidth: 8,
+            },
+            "@media screen and (min-width: 1000px)": {
+              borderWidth: 12,
+            },
+            "& img": {
+              borderRadius: 2,
+            },
+            "& .gatsby-image-wrapper:hover": {
+              "& div + img": {
+                opacity: `1 !important`,
+              },
+              "& img + img": {
+                opacity: `0 !important`,
+              },
+              "& span": {
+                opacity: `1 !important`,
+              },
+            },
+          }}
+        >
+          <Img sizes={image.node.sizes} />
+          <span
+            css={{
+              ...scale(-2.5),
+              color: options.bodyColor,
+              position: `absolute`,
+              bottom: 10,
+              right: 10,
+              padding: `.25rem`,
+              background: `#fff`,
+              borderRadius: 2,
+              lineHeight: 1,
+              opacity: 0.5,
+              fontFamily: options.monospaceFontFamily.join(`,`),
+            }}
+          >
+            <span css={{ color: options.headerColor }}>SVG</span>
+            {` `}
+            {numeral(
+              Buffer.byteLength(image.node.sizes.tracedSVG, `utf8`)
+            ).format()}
+            {` `}
+            B
+          </span>
+        </div>
+      ))}
+    </div>
   </div>
 )
+
+class TracedSVG extends React.Component {
+  render() {
+    const data = this.props.data
+    return (
+      <div>
+        <h1>Traced SVG</h1>
+        <h2>The machine that goes ping</h2>
+        <Img
+          style={{ display: `inherit` }}
+          css={{
+            marginBottom: rhythm(options.blockMarginBottom * 2),
+            marginLeft: rhythm(options.blockMarginBottom * 2),
+            float: `right`,
+            "&": {
+              "@media (min-width: 500px)": {
+                display: `none`,
+              },
+            },
+          }}
+          title={`Photo by Redd Angelo on Unsplash`}
+          resolutions={data.reddImageMobile.resolutions}
+        />
+        <Img
+          style={{ display: `inherit` }}
+          css={{
+            marginBottom: rhythm(options.blockMarginBottom * 2),
+            marginLeft: rhythm(options.blockMarginBottom * 2),
+            float: `right`,
+            display: `none`,
+            "@media (min-width: 500px)": {
+              display: `inline-block`,
+            },
+          }}
+          title={`Photo by Redd Angelo on Unsplash`}
+          resolutions={data.reddImage.resolutions}
+        />
+        <Lorem />
+
+        <h2>Unsplash</h2>
+        <UnsplashMasonry images={data.unsplashImages.edges} />
+
+        <Ipsum />
+
+        <Img
+          sizes={data.kenImage.sizes}
+          title={`Photo by Ken Treloar on Unsplash`}
+        />
+      </div>
+    )
+  }
+}
 
 export default TracedSVG
 
@@ -100,11 +162,21 @@ export const query = graphql`
       }
     }
     kenImage: imageSharp(id: { regex: "/ken-treloar/" }) {
-      sizes(
-        maxWidth: 600
-        traceSVG: { color: "lightblue", background: "lightcyan" }
-      ) {
+      sizes(maxWidth: 600) {
         ...GatsbyImageSharpSizes_tracedSVG
+      }
+    }
+    unsplashImages: allImageSharp(filter: { id: { regex: "/unsplash/" } }) {
+      edges {
+        node {
+          sizes(
+            maxWidth: 430
+            quality: 80
+            traceSVG: { background: "#f2f8f3", color: "#d6ebd9" }
+          ) {
+            ...GatsbyImageSharpSizes_tracedSVG
+          }
+        }
       }
     }
   }
