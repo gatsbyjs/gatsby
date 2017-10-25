@@ -46,6 +46,14 @@ exports.shouldUpdateScroll = true
 exports.replaceRouterComponent = true
 
 /**
+ * Allow a plugin to replace the page and layout component renderer. This api runner can be used to
+ * implement page transitions. See https://github.com/gatsbyjs/gatsby/tree/master/examples/using-page-transitions for an example of this.
+ * @param {object} $0
+ * @param {object} $0.props The props of the page or layout.
+ */
+exports.replaceComponentRenderer = true
+
+/**
  * Allow a plugin to wrap the root component.
  * @param {object} $0
  * @param {object} $0.Root The "Root" component built by Gatsby.
