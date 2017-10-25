@@ -8,7 +8,7 @@ As a frontend designer I've always prided myself on being a HTML and CSS special
 
 We're also bracing ourselves for what we’re anticipating to be the stormfront of [Gutenberg](https://wordpress.org/plugins/gutenberg/ "Gutenberg Wordpress plugins") for our WordPress projects. Once it's included in the WordPress Core, writing components in JavaScript for the Gutenberg editor will be necessary for every developer on a project.
 
-So I decided to dive into learning React by using a few courses and some experimentation. I had the aim of building a site in [Gatsby.js](https://www.gatsbyjs.org/ "Blazing-fast static site generator for React") as a test for doing projects built entirely in React.
+So I decided to dive into learning React with a few courses and some experimentation. I had the aim of building a site in [Gatsby.js](https://www.gatsbyjs.org/ "Blazing-fast static site generator for React") as a test for doing projects built entirely in React.
 
 ## Letting Go
 
