@@ -59,6 +59,22 @@ const listenToIntersections = (el, cb) => {
   listeners.push([el, cb])
 }
 
+let isWebpSupportedCache = null
+const isWebpSupported = () => {
+  if(isWebpSupportedCache !== null) {
+    return isWebpSupportedCache
+  }
+
+  const elem = typeof window !== `undefined` ? window.document.createElement(`canvas`) : {}
+  if (elem.getContext && elem.getContext(`2d`)) {
+    isWebpSupportedCache = elem.toDataURL(`image/webp`).indexOf(`data:image/webp`) === 0
+  } else {
+    isWebpSupportedCache = false
+  }
+
+  return isWebpSupportedCache
+}
+
 const Img = props => {
   const { opacity, onLoad, transitionDelay = ``, ...otherProps } = props
   return (
@@ -155,6 +171,12 @@ class Image extends React.Component {
 
     if (sizes) {
       const image = sizes
+
+    // Use webp by default if browser supports it
+    if (image.srcWebp && image.srcSetWebp && isWebpSupported()) {
+      image.src = image.srcWebp
+      image.srcSet = image.srcSetWebp
+    }
 
       // The outer div is necessary to reset the z-index to 0.
       return (
@@ -259,6 +281,12 @@ class Image extends React.Component {
 
       if (style.display === `inherit`) {
         delete divStyle.display
+      }
+
+      // Use webp by default if browser supports it
+      if (image.srcWebp && image.srcSetWebp && isWebpSupported()) {
+        image.src = image.srcWebp
+        image.srcSet = image.srcSetWebp
       }
 
       // The outer div is necessary to reset the z-index to 0.

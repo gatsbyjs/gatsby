@@ -318,7 +318,7 @@ export const pageQuery = graphql`
     }
     resolution: imageSharp(id: { regex: "/lol.jpg/" }) {
       resolutions(grayscale: true, width: 500) {
-        ...GatsbyImageSharpResolutions_tracedSVG
+        ...GatsbyImageSharpResolutions_withWebp
       }
     }
     cropDefault: imageSharp(id: { regex: "/gatsby.jpg/" }) {

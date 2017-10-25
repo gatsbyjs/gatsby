@@ -77,6 +77,9 @@ class IndexComponent extends React.Component {
             <li>
               <Link to="/traced-svg/">Traced SVG</Link>
             </li>
+            <li>
+              <Link to="/prefer-webp/">Prefer WebP</Link>
+            </li>
           </ul>
           <h2>Out of the box it:</h2>
           <ul>
@@ -98,6 +101,9 @@ class IndexComponent extends React.Component {
             <li>
               Lazy loads images which reduces bandwidth and speeds the initial
               load time
+            </li>
+            <li>
+              Uses WebP images if browser supports the format
             </li>
           </ul>
           <h2>Documentation</h2>
