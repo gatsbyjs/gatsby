@@ -20,13 +20,25 @@ exports[`gatsby-remark-responsive-iframe doesn't transform an iframe with dimens
       "
 `;
 
-exports[`gatsby-remark-responsive-iframe doesn't transform an object with dimensions: '100%' '100' 1`] = `""`;
+exports[`gatsby-remark-responsive-iframe doesn't transform an object with dimensions: '100%' '100' 1`] = `
+"  <object url=\\"http://www.example.com/\\" width=\\"100%\\" height=\\"100\\"></object>
+      "
+`;
 
-exports[`gatsby-remark-responsive-iframe doesn't transform an object with dimensions: '100' '100%' 1`] = `""`;
+exports[`gatsby-remark-responsive-iframe doesn't transform an object with dimensions: '100' '100%' 1`] = `
+"  <object url=\\"http://www.example.com/\\" width=\\"100\\" height=\\"100%\\"></object>
+      "
+`;
 
-exports[`gatsby-remark-responsive-iframe doesn't transform an object with dimensions: '100' 'invalid' 1`] = `""`;
+exports[`gatsby-remark-responsive-iframe doesn't transform an object with dimensions: '100' 'invalid' 1`] = `
+"  <object url=\\"http://www.example.com/\\" width=\\"100\\" height=\\"invalid\\"></object>
+      "
+`;
 
-exports[`gatsby-remark-responsive-iframe doesn't transform an object with dimensions: 'invalid' '100' 1`] = `""`;
+exports[`gatsby-remark-responsive-iframe doesn't transform an object with dimensions: 'invalid' '100' 1`] = `
+"  <object url=\\"http://www.example.com/\\" width=\\"invalid\\" height=\\"100\\"></object>
+      "
+`;
 
 exports[`gatsby-remark-responsive-iframe transforms an iframe with pixel width and height 1`] = `
 "

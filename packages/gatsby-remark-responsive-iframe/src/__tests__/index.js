@@ -11,20 +11,9 @@ const remark = new Remark().data(`settings`, {
 })
 
 const extractObjectTag = mdast =>
-  _.reduce(
-    mdast.children[0].children,
-    (result, child) => result + child.value,
-    ``
-  )
+  _.reduce(mdast.children, (result, child) => result + child.value, ``)
 
 const extractIframeTag = mdast => mdast.children[0].value
-
-const shouldntTransform = [
-  [`100%`, `100`],
-  [`100`, `100%`],
-  [`invalid`, `100`],
-  [`100`, `invalid`],
-]
 
 describe(`gatsby-remark-responsive-iframe`, () => {
   ;[`iframe`, `object`].forEach(tag => {
@@ -63,6 +52,13 @@ describe(`gatsby-remark-responsive-iframe`, () => {
       expect(child.value).toMatchSnapshot()
     })
   })
+
+  const shouldntTransform = [
+    [`100%`, `100`],
+    [`100`, `100%`],
+    [`invalid`, `100`],
+    [`100`, `invalid`],
+  ]
 
   _.map(shouldntTransform, ([width, height]) => {
     ;[`iframe`, `object`].forEach(tag => {
