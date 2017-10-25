@@ -8,7 +8,6 @@ export default class SessionStorage {
       return JSON.parse(value)
     } catch (e) {
       console.warn('[gatsby-react-router-scroll] Unable to access sessionStorage; sessionStorage is not available.');
-      return;
     }
 
   }
@@ -20,20 +19,13 @@ export default class SessionStorage {
       sessionStorage.setItem(stateKey, storedValue)
     } catch (e) {
       console.warn('[gatsby-react-router-scroll] Unable to save state in sessionStorage; sessionStorage is not available.');
-      return;
     }
 
   }
 
   getStateKey(location, key) {
-    try {
-      const locationKey = location.key
-      const stateKeyBase = `${STATE_KEY_PREFIX}${locationKey}`
-      return key == null ? stateKeyBase : `${stateKeyBase}|${key}`
-    } catch (e) {
-      console.warn('Please enable cookies');
-      return;
-    }
-
+    const locationKey = location.key
+    const stateKeyBase = `${STATE_KEY_PREFIX}${locationKey}`
+    return key == null ? stateKeyBase : `${stateKeyBase}|${key}`
   }
 }
