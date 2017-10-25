@@ -19,13 +19,6 @@ const extractObjectTag = mdast =>
 
 const extractIframeTag = mdast => mdast.children[0].value
 
-const shouldntTransform = [
-  [`100%`, `100`],
-  [`100`, `100%`],
-  [`invalid`, `100`],
-  [`100`, `invalid`],
-]
-
 describe(`gatsby-remark-responsive-iframe`, () => {
   ;[`iframe`, `object`].forEach(tag => {
     it(`transforms an ${tag} with unitless width and height`, async () => {
@@ -63,6 +56,13 @@ describe(`gatsby-remark-responsive-iframe`, () => {
       expect(child.value).toMatchSnapshot()
     })
   })
+
+  const shouldntTransform = [
+    [`100%`, `100`],
+    [`100`, `100%`],
+    [`invalid`, `100`],
+    [`100`, `invalid`],
+  ]
 
   _.map(shouldntTransform, ([width, height]) => {
     ;[`iframe`, `object`].forEach(tag => {
