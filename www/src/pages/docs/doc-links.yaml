@@ -44,6 +44,16 @@
       link: /docs/path-prefix/
     - title: Proxying API Requests
       link: /docs/api-proxy/
+    - title: Adding a List of Markdown Blog Posts*
+      link: /docs/adding-a-list-of-markdown-blog-posts/
+    - title: Adding Tags and Categories to Blog Posts*
+      link:: /docs/adding-tags-and-categories-to-blog-posts/
+    - title: Creating Dynamically-Rendered Navigation*
+      link: /docs/creating-dynamically-rendered-navigation/
+    - title: Dropping Images into Static Folders*
+      link: /docs/dropping-images-into-static-folders/
+    - title: How Gatsby Works with Github Pages*
+      link: /docs/how-gatsby-works-with-github-pages/
 - title: Reference
   items:
     - title: Node Interface
