@@ -18,7 +18,7 @@ const Navigation = () => (
     </h1>
     <nav
       css={{
-        ...scale(-4 / 5),
+        ...scale(-7 / 5),
         fontFamily: options.headerFontFamily.join(`,`),
         textTransform: `uppercase`,
         margin: 0,
@@ -48,7 +48,11 @@ const Navigation = () => (
       >
         Background Color
       </Link>
-      <Link to="/traced-svg/" activeClassName="nav-link-active">
+      <Link
+        to="/traced-svg/"
+        activeClassName="nav-link-active"
+        css={{ marginRight: `.5rem` }}
+      >
         Traced SVG
       </Link>
       <Link to="/prefer-webp/" activeClassName="nav-link-active">
