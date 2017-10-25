@@ -81,7 +81,7 @@ Try some other tricks, like the ones below:
    Try making your page component look like this:
 
 ```jsx
-import React from "react"
+import React from 'react'
 
 export default () => <div style={{ color: `blue` }}>Hello Gatsby!</div>
 ```
@@ -91,7 +91,7 @@ export default () => <div style={{ color: `blue` }}>Hello Gatsby!</div>
 2. Add some paragraph text.
 
 ```jsx{5-6}
-import React from "react"
+import React from 'react'
 
 export default () =>
  <div style={{ color: `tomato` }}>
@@ -103,7 +103,7 @@ export default () =>
 3. Add an image
 
 ```jsx{7}
-import React from "react"
+import React from 'react'
 
 export default () =>
  <div style={{ color: `tomato` }}>
@@ -128,8 +128,8 @@ To do that, import the `<Link>` component from the `gatsby-link` package that wa
 Unlike the normal HTML `<a>` element, our `Link` component uses `to` for specifying the page you want to link to. Let's link to a page with the pathname of `/page-2/`. Try adding that. Once you're done, the page component should look like:
 
 ```jsx{2,9-10}
-import React from "react"
-import Link from "gatsby-link"
+import React from 'react'
+import Link from 'gatsby-link'
 
 export default () =>
   <div style={{ color: `tomato` }}>
@@ -180,7 +180,7 @@ We'll start by creating a new link to a page at `/counter`/ from our original `i
 Add that link, click on it, and then we'll create a "Hello World" page component for `/counter/` as before. But instead of using the "functional component" form as we did before, we'll create a "class" component.
 
 ```jsx
-import React from "react"
+import React from 'react'
 
 class Counter extends React.Component {
   render() {
@@ -196,7 +196,7 @@ The class form of React allows us to have component state. We'll need that for o
 Let's continue to flesh out our counter. Let's add two buttons. One to increment and one to decrement the count of the counter.
 
 ```jsx{5-12}
-import React from "react"
+import React from 'react'
 
 class Counter extends React.Component {
   render() {
@@ -219,7 +219,7 @@ So now we have everything we need to make a nice counter. Let's make it live.
 First we'll setup the component state.
 
 ```jsx{4-7,12-13}
-import React from "react"
+import React from 'react'
 
 class Counter extends React.Component {
   constructor() {
@@ -247,7 +247,7 @@ We're now rendering the current count from the component state.
 Let's now change the state when we click on our buttons.
 
 ```jsx{14-19}
-import React from "react"
+import React from 'react'
 
 class Counter extends React.Component {
   constructor() {
