@@ -46,7 +46,14 @@ exports[`gatsby-remark-responsive-iframe transforms an iframe with pixel width a
             class=\\"gatsby-resp-iframe-wrapper\\"
             style=\\"padding-bottom: NaN%; position: relative; height: 0; overflow: hidden;\\"
           >
-            
+            <iframe url=\\"http://www.example.com/\\" style=\\"
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+          \\"></iframe>
+    
           </div>
           "
 `;
@@ -57,7 +64,14 @@ exports[`gatsby-remark-responsive-iframe transforms an iframe with unitless widt
             class=\\"gatsby-resp-iframe-wrapper\\"
             style=\\"padding-bottom: 66.66666666666666%; position: relative; height: 0; overflow: hidden;\\"
           >
-            
+            <iframe url=\\"http://www.example.com/\\" style=\\"
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+          \\"></iframe>
+    
           </div>
           "
 `;
@@ -68,7 +82,13 @@ exports[`gatsby-remark-responsive-iframe transforms an object with pixel width a
             class=\\"gatsby-resp-iframe-wrapper\\"
             style=\\"padding-bottom: NaN%; position: relative; height: 0; overflow: hidden;\\"
           >
-            
+            <object url=\\"http://www.example.com/\\" style=\\"
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+          \\"></object>
           </div>
           "
 `;
@@ -79,7 +99,13 @@ exports[`gatsby-remark-responsive-iframe transforms an object with unitless widt
             class=\\"gatsby-resp-iframe-wrapper\\"
             style=\\"padding-bottom: 66.66666666666666%; position: relative; height: 0; overflow: hidden;\\"
           >
-            
+            <object url=\\"http://www.example.com/\\" style=\\"
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+          \\"></object>
           </div>
           "
 `;
