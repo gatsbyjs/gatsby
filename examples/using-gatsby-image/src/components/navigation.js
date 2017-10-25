@@ -42,14 +42,17 @@ const Navigation = () => (
         Blur Up
       </Link>
       <Link
-        to="background-color/"
+        to="/background-color/"
         css={{ marginRight: `.5rem` }}
         activeClassName="nav-link-active"
       >
         Background Color
       </Link>
-      <Link to="traced-svg/" activeClassName="nav-link-active">
+      <Link to="/traced-svg/" activeClassName="nav-link-active">
         Traced SVG
+      </Link>
+      <Link to="/prefer-webp/" activeClassName="nav-link-active">
+        Prefer WebP
       </Link>
     </nav>
   </div>

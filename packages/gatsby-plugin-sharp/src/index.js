@@ -7,6 +7,7 @@ const fs = require(`fs`)
 const ProgressBar = require(`progress`)
 const imagemin = require(`imagemin`)
 const imageminPngquant = require(`imagemin-pngquant`)
+const imageminWebp = require(`imagemin-webp`)
 const queue = require(`async/queue`)
 const path = require(`path`)
 
@@ -70,6 +71,10 @@ const processFile = (file, jobs, cb) => {
         progressive: args.jpegProgressive,
         force: args.toFormat === `jpg`,
       })
+      .webp({
+        quality: args.quality,
+        force: args.toFormat === `webp`,
+      })
 
     // grayscale
     if (args.grayscale) {
@@ -90,7 +95,7 @@ const processFile = (file, jobs, cb) => {
       )
     }
 
-    if (job.file.extension.match(/^jp/)) {
+    if ((job.file.extension.match(/^jp/) && args.toFormat === ``) || args.toFormat === `jpg`) {
       clonedPipeline.toFile(job.outputPath, (err, info) => {
         imagesFinished += 1
         bar.tick()
@@ -104,7 +109,7 @@ const processFile = (file, jobs, cb) => {
         job.outsideResolve(info)
       })
       // Compress pngs
-    } else if (job.file.extension === `png`) {
+    } else if ((job.file.extension === `png` && args.toFormat === ``) || args.toFormat === `png`) {
       clonedPipeline.toBuffer().then(sharpBuffer => {
         imagemin
           .buffer(sharpBuffer, {
@@ -112,6 +117,30 @@ const processFile = (file, jobs, cb) => {
               imageminPngquant({
                 quality: `${args.quality}-${Math.min(args.quality + 25, 100)}`, // e.g. 40-65
               }),
+            ],
+          })
+          .then(imageminBuffer => {
+            fs.writeFile(job.outputPath, imageminBuffer, () => {
+              imagesFinished += 1
+              bar.tick()
+              boundActionCreators.setJob(
+                {
+                  id: `processing image ${job.file.absolutePath}`,
+                  imagesFinished,
+                },
+                { name: `gatsby-plugin-sharp` }
+              )
+              job.outsideResolve()
+            })
+          })
+      })
+      // Compress webp
+    } else if ((job.file.extension === `webp` && args.toFormat === ``) || args.toFormat === `webp`) {
+      clonedPipeline.toBuffer().then(sharpBuffer => {
+        imagemin
+          .buffer(sharpBuffer, {
+            plugins: [
+              imageminWebp({ quality: args.quality }),
             ],
           })
           .then(imageminBuffer => {
