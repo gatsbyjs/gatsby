@@ -263,7 +263,7 @@ const resolveResponsiveSizes = (image, options) => {
       // Create the srcSet.
       const srcSet = sortedSizes
         .map(width => {
-          const h = Math.round(width * desiredAspectRatio)
+          const h = Math.round(width / desiredAspectRatio)
           return `${createUrl(image.file.url, {
             ...options,
             width,
