@@ -39,7 +39,6 @@ exports.onPostBuild = async ({ graphql }, pluginOptions) => {
 
       if (options.query) {
         f.query = merge(options.query, f.query)
-        delete options.query
       }
     }
 
@@ -57,5 +56,8 @@ exports.onPostBuild = async ({ graphql }, pluginOptions) => {
     await writeFile(path.join(publicPath, f.output), feed.xml())
   }
 
+  if (options.query) {
+    delete options.query
+  }
   return Promise.resolve()
 }

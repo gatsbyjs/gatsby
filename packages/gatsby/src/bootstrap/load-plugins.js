@@ -192,12 +192,19 @@ module.exports = async (config = {}) => {
     extractPlugins(plugin)
   })
 
-  // Validate plugins before saving. Plugins can only export known APIs. Collect
-  // any bad exports (either typos or outdated) and output an error and quit.
+  // Validate plugins before saving. Plugins can only export known APIs. The known
+  // APIs that a plugin supports are saved along with the plugin in the store for
+  // easier filtering later. If there are bad exports (either typos, outdated, or
+  // plain incorrect), then we output a readable error & quit.
   const apis = _.keys(nodeAPIs)
+  const apiToPlugins = apis.reduce((acc, value) => {
+    acc[value] = []
+    return acc
+  }, {})
   let badExports = []
   flattenedPlugins.forEach(plugin => {
     let gatsbyNode
+    plugin.nodeAPIs = []
     try {
       gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
     } catch (err) {
@@ -209,8 +216,15 @@ module.exports = async (config = {}) => {
     }
 
     if (gatsbyNode) {
+      const gatsbyNodeKeys = _.keys(gatsbyNode)
+      // Discover which nodeAPIs this plugin implements and store
+      // an array against the plugin node itself *and* in a node
+      // API to plugins map for faster lookups later.
+      plugin.nodeAPIs = _.intersection(gatsbyNodeKeys, apis)
+      plugin.nodeAPIs.map(nodeAPI => apiToPlugins[nodeAPI].push(plugin.name))
+      // Discover any exports from plugins which are not "known"
       badExports = badExports.concat(
-        _.without(_.keys(gatsbyNode), ...apis).map(e => {
+        _.difference(gatsbyNodeKeys, apis).map(e => {
           return {
             exportName: e,
             pluginName: plugin.name,
@@ -262,6 +276,11 @@ module.exports = async (config = {}) => {
   store.dispatch({
     type: `SET_SITE_FLATTENED_PLUGINS`,
     payload: flattenedPlugins,
+  })
+
+  store.dispatch({
+    type: `SET_SITE_API_TO_PLUGINS`,
+    payload: apiToPlugins,
   })
 
   return flattenedPlugins
