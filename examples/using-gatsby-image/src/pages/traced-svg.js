@@ -3,7 +3,7 @@ import Img from "gatsby-image"
 import Lorem from "../components/lorem"
 import Ipsum from "../components/ipsum"
 
-import { rhythm, options } from "../utils/typography"
+import { rhythm, options, scale } from "../utils/typography"
 
 const UnsplashMasonry = edges => (
   <div
@@ -36,6 +36,7 @@ const UnsplashMasonry = edges => (
           css={{
             border: `4px solid transparent`,
             breakInside: `avoid`,
+            position: `relative`,
             "@media screen and (min-width: 400px)": {
               borderWidth: 8,
             },
@@ -48,9 +49,39 @@ const UnsplashMasonry = edges => (
             "& img": {
               borderRadius: 2,
             },
+            "& .gatsby-image-wrapper:hover": {
+              "& div + img": {
+                opacity: `1 !important`,
+              },
+              "& img + img": {
+                opacity: `0 !important`,
+              },
+              "& span": {
+                opacity: `1 !important`,
+              },
+            },
           }}
         >
           <Img sizes={image.node.sizes} />
+          <span
+            css={{
+              ...scale(-2.5),
+              color: options.bodyColor,
+              position: `absolute`,
+              bottom: 10,
+              right: 10,
+              padding: `.25rem`,
+              background: `#fff`,
+              borderRadius: 2,
+              lineHeight: 1,
+              opacity: 0.5,
+              fontFamily: options.monospaceFontFamily.join(`,`),
+            }}
+          >
+            <span css={{ color: options.headerColor }}>SVG</span>
+            {` `}
+            {Buffer.byteLength(image.node.sizes.tracedSVG, `utf8`)} KB
+          </span>
         </div>
       ))}
     </div>

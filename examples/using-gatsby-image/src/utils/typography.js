@@ -7,6 +7,16 @@ elkGlenTheme.headerColor = `#253c28`
 elkGlenTheme.bodyColor = `#304f35`
 elkGlenTheme.accentColor = `#4c9e59`
 elkGlenTheme.scaleRatio = 1.35
+elkGlenTheme.monospaceFontFamily = [
+  `Space Mono`,
+  `SFMono-Regular`,
+  `Menlo`,
+  `Monaco`,
+  `Consolas`,
+  `Liberation Mono`,
+  `Courier New`,
+  `monospace`,
+]
 
 elkGlenTheme.overrideThemeStyles = ({ rhythm, scale }, options) => {
   return {
