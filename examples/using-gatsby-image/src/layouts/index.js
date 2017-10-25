@@ -3,6 +3,9 @@ import Navigation from "../components/navigation"
 
 import { rhythm, scale, options } from "../utils/typography"
 
+import "typeface-pt-sans"
+import "typeface-oswald"
+
 const MainLayout = ({ children, location }) => (
   <div
     css={{
@@ -11,11 +14,7 @@ const MainLayout = ({ children, location }) => (
       padding: `${rhythm(1)} ${rhythm(3 / 4)}`,
     }}
   >
-    {location.pathname !== `/` && (
-      <div css={{ "& h1": { opacity: 0.5 } }}>
-        <Navigation />
-      </div>
-    )}
+    {location.pathname !== `/` && <Navigation />}
     {children()}
   </div>
 )

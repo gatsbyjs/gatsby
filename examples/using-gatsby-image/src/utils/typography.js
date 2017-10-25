@@ -7,7 +7,6 @@ elkGlenTheme.blockMarginBottom = 0.75
 elkGlenTheme.headerColor = `#253c28`
 elkGlenTheme.bodyColor = `#304f35`
 elkGlenTheme.accentColor = `#4c9e59`
-elkGlenTheme.scaleRatio = 1.35
 elkGlenTheme.monospaceFontFamily = [
   `Space Mono`,
   `SFMono-Regular`,
@@ -23,6 +22,7 @@ elkGlenTheme.overrideThemeStyles = ({ rhythm, scale }, options) => {
   return {
     "h1, h2, h3, h4, h5, h6": {
       textTransform: `uppercase`,
+      letterSpacing: `-.025em`,
     },
     h1: {
       ...scale(1),

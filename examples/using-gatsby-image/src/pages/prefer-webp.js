@@ -5,8 +5,7 @@ import { rhythm, options } from "../utils/typography"
 
 const PreferWebp = ({ data }) => (
   <div>
-    <h1>Viribus quid</h1>
-    <h2>Hippason sinu</h2>
+    <h2>Prefer WebP</h2>
     <Img
       style={{ display: `inherit` }}
       css={{
