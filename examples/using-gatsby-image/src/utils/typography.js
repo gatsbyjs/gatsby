@@ -1,5 +1,6 @@
 import Typography from "typography"
 import elkGlenTheme from "typography-theme-elk-glen"
+delete elkGlenTheme.googleFonts
 elkGlenTheme.baseFontSize = `16px`
 elkGlenTheme.baseLineHeight = 1.45
 elkGlenTheme.blockMarginBottom = 0.75

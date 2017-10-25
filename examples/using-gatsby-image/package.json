@@ -14,6 +14,8 @@
     "gatsby-source-filesystem": "^1.5.1",
     "gatsby-transformer-sharp": "^1.6.12",
     "numeral": "^2.0.6",
+    "typeface-oswald": "^0.0.40",
+    "typeface-pt-sans": "^0.0.40",
     "typography": "^0.16.6",
     "typography-theme-elk-glen": "^0.16.9"
   },
