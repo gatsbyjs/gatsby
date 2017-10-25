@@ -1,4 +1,7 @@
 import React from "react"
+import "typeface-oswald"
+import "typeface-pt-sans"
+
 import Navigation from "../components/navigation"
 
 import { rhythm, scale, options } from "../utils/typography"
