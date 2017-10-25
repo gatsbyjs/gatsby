@@ -52,7 +52,7 @@ Community:
   * SEO
   * [Full list here!](https://github.com/Vagr9K/gatsby-material-starter#features)
 
-* [gatsby-typescript-starter](https://github.com/fabien0102/gatsby-starter) [(demo)](https://github.com/fabien0102/gatsby-starter)
+* [gatsby-typescript-starter](https://github.com/fabien0102/gatsby-starter) [(demo)](https://fabien0102-gatsby-starter.netlify.com/)
 
   Features:
   * Semantic-ui for styling
