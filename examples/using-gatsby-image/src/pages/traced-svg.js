@@ -1,9 +1,12 @@
 import React from "react"
 import Img from "gatsby-image"
+import numeral from "numeral"
+
 import Lorem from "../components/lorem"
 import Ipsum from "../components/ipsum"
-
 import { rhythm, options, scale } from "../utils/typography"
+
+numeral.locale(`en`)
 
 const UnsplashMasonry = edges => (
   <div
@@ -80,7 +83,11 @@ const UnsplashMasonry = edges => (
           >
             <span css={{ color: options.headerColor }}>SVG</span>
             {` `}
-            {Buffer.byteLength(image.node.sizes.tracedSVG, `utf8`)} KB
+            {numeral(
+              Buffer.byteLength(image.node.sizes.tracedSVG, `utf8`)
+            ).format()}
+            {` `}
+            B
           </span>
         </div>
       ))}

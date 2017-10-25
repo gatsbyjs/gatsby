@@ -13,6 +13,7 @@
     "gatsby-plugin-typography": "^1.7.10",
     "gatsby-source-filesystem": "^1.5.1",
     "gatsby-transformer-sharp": "^1.6.12",
+    "numeral": "^2.0.6",
     "typography": "^0.16.6",
     "typography-theme-elk-glen": "^0.16.9"
   },
