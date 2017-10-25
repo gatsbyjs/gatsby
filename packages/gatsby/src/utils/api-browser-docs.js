@@ -9,10 +9,10 @@
 exports.onClientEntry = true
 
 /**
- * Called when the initial render of Gatsby App is done on the client.
+ * Called when the initial (but not subsequent) render of Gatsby App is done on the client.
  * @example
  * exports.onInitialClientRender = () => {
- *   console.log("ReactDOM.render is executed")
+ *   console.log("ReactDOM.render has executed")
  * }
  */
 exports.onInitialClientRender = true
