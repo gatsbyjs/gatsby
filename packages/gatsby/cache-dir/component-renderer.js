@@ -92,32 +92,40 @@ class ComponentRenderer extends React.Component {
   }
 
   render() {
-    const pluginResponses = apiRunner(`replaceComponentRenderer`, { props: this.props })
+    const pluginResponses = apiRunner(`replaceComponentRenderer`, {
+      props: this.props,
+    })
     const replacementComponent = pluginResponses[0]
     // If page.
     if (this.props.page) {
       if (this.state.pageResources) {
-        return replacementComponent || createElement(this.state.pageResources.component, {
-          key: this.props.location.pathname,
-          ...this.props,
-          ...this.state.pageResources.json,
-        })
+        return (
+          replacementComponent ||
+          createElement(this.state.pageResources.component, {
+            key: this.props.location.pathname,
+            ...this.props,
+            ...this.state.pageResources.json,
+          })
+        )
       } else {
         return null
       }
       // If layout.
     } else if (this.props.layout) {
-      return replacementComponent || createElement(
-        this.state.pageResources && this.state.pageResources.layout
-          ? this.state.pageResources.layout
-          : DefaultLayout,
-        {
-          key:
-            this.state.pageResources && this.state.pageResources.layout
-              ? this.state.pageResources.layout
-              : `DefaultLayout`,
-          ...this.props,
-        }
+      return (
+        replacementComponent ||
+        createElement(
+          this.state.pageResources && this.state.pageResources.layout
+            ? this.state.pageResources.layout
+            : DefaultLayout,
+          {
+            key:
+              this.state.pageResources && this.state.pageResources.layout
+                ? this.state.pageResources.layout
+                : `DefaultLayout`,
+            ...this.props,
+          }
+        )
       )
     } else {
       return null
