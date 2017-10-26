@@ -270,6 +270,18 @@ exports.mapEntitiesToMedia = entities => {
       const replacePhoto = field =>
         media.find(m => m.wordpress_id === field.wordpress_id).id
 
+      // Try to get media node from value:
+      //  - check if value is photo url
+      //  - check if value is ACF Image Object
+      const getMediaFromACFValue = value => {
+        if (isPhotoUrl(value)) {
+          return media.find(m => m.source_url === value);
+        } else if (isACFPhotoData(value)) {
+          return media.find(m => m.source_url === value.url);
+        }
+        return null;
+      }
+
       const replaceFieldsInObject = object => {
         _.each(object, (value, key) => {
           if (_.isArray(value)) {
