@@ -271,12 +271,15 @@ exports.mapEntitiesToMedia = entities => {
         media.find(m => m.wordpress_id === field.wordpress_id).id
       const isFeaturedMedia = (value, key) =>
         (_.isNumber(value) || _.isBoolean(value)) && key === 'featured_media'
+      const isACFGallery = field =>
+        _.isArray(field) && field.length > 0 && isACFPhotoData(field[0])
       const getMediaItemID = mediaItem => mediaItem ? mediaItem.id : null
 
       // Try to get media node from value:
       //  - special case - check if key is featured_media and value is photo ID
       //  - check if value is photo url
       //  - check if value is ACF Image Object
+      //  - check if value is ACF Gallery
       const getMediaFromACFValue = (value, key) => {
         if (isFeaturedMedia(value, key)) {
           return {
@@ -295,6 +298,13 @@ exports.mapEntitiesToMedia = entities => {
           return {
             mediaNodeID,
             deleteField: !!mediaNodeID
+          }
+        } else if (isACFGallery(value)) {
+          return {
+            mediaNodeID:
+              value.map(item => getMediaFromACFValue(item, key).mediaNodeID)
+                .filter(id => id !== null),
+            deleteField: true
           }
         }
         return {
