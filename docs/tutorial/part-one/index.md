@@ -150,8 +150,8 @@ What you're seeing is the Gatsby.js development 404 page. Let's do what it says 
 Make the second page component look something like:
 
 ```jsx
-import React from 'react'
-import Link from 'gatsby-link'
+import React from "react"
+import Link from "gatsby-link"
 
 export default () =>
   <div>
