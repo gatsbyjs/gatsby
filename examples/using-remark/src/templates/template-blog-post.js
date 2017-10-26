@@ -1,5 +1,7 @@
 import React from "react"
 import Link from "gatsby-link"
+import Img from "gatsby-image"
+
 import styles from "../styles"
 import { rhythm, scale } from "../utils/typography"
 import presets from "../utils/presets"
@@ -81,16 +83,9 @@ class BlogPostRoute extends React.Component {
             alignItems: `center`,
           }}
         >
-          <img
+          <Img
             alt={`Avatar of ${post.frontmatter.author.id}`}
-            src={
-              post.frontmatter.author.avatar.children[0].responsiveResolution
-                .src
-            }
-            srcSet={
-              post.frontmatter.author.avatar.children[0].responsiveResolution
-                .srcSet
-            }
+            resolutions={post.frontmatter.author.avatar.children[0].resolutions}
             css={{
               borderRadius: `100%`,
               float: `left`,
@@ -143,14 +138,13 @@ export const pageQuery = graphql`
           avatar {
             children {
               ... on ImageSharp {
-                responsiveResolution(
+                resolutions(
                   width: 50
                   height: 50
                   quality: 75
                   grayscale: true
                 ) {
-                  src
-                  srcSet
+                  ...GatsbyImageSharpResolutions
                 }
               }
             }

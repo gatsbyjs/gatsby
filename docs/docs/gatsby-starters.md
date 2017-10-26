@@ -52,7 +52,7 @@ Community:
   * SEO
   * [Full list here!](https://github.com/Vagr9K/gatsby-material-starter#features)
 
-* [gatsby-typescript-starter](https://github.com/fabien0102/gatsby-starter) [(demo)](https://github.com/fabien0102/gatsby-starter)
+* [gatsby-typescript-starter](https://github.com/fabien0102/gatsby-starter) [(demo)](https://fabien0102-gatsby-starter.netlify.com/)
 
   Features:
   * Semantic-ui for styling
@@ -112,3 +112,43 @@ Community:
   * Barebones configuration for using the [Grommet](https://grommet.github.io/) design system
   * Uses SASS (with CSS modules support)
 
+* [gatsby-starter-basic](https://github.com/PrototypeInteractive/gatsby-react-boilerplate) [(demo)](https://prototypeinteractive.github.io/gatsby-react-boilerplate/)
+
+  Features:
+  * Basic configuration and folder structure
+  * Uses postcss and sass (with autoprefixer and pixrem)
+  * Uses boostrap 4 grid
+  * Leaves the styling to you
+  * Uses data from local json files
+  * Contains Node.js server code for easy, secure, and fast hosting
+
+* [gatsby-starter-default-i18n](https://github.com/angeloocana/gatsby-starter-default-i18n) [(demo)](https://gatsby-starter-default-i18n.netlify.com)
+
+  Features:
+  * localization (Multilanguage)
+
+* [gatsby-starter-gatsbythemes](https://github.com/saschajullmann/gatsby-starter-gatsbythemes) [(demo)](https://themes.gatsbythemes.com/gatsby-starter/)
+
+  Features:
+  * CSS-in-JS via [Emotion](https://github.com/emotion-js/emotion).
+  * Jest and Enzyme for testing.
+  * Eslint in dev mode with the airbnb config and prettier formatting rules.
+  * React 16.
+  * A basic blog, with posts under src/pages/blog. There's also a script which creates a new Blog entry (post.sh).
+  * Data per JSON files.
+  * A few basic components (Navigation, Footer, Layout).
+  * Layout components make use of [Styled-System](https://github.com/jxnblk/styled-system).
+  * Google Analytics (you just have to enter your tracking-id).
+  * Gatsby-Plugin-Offline which includes Service Workers.
+  * [Prettier](https://github.com/prettier/prettier) for a uniform codebase.
+  * [Normalize](https://github.com/necolas/normalize.css/) css (7.0).
+  * [Feather](https://feather.netlify.com/) icons.
+  * Font styles taken from [Tachyons](http://tachyons.io/).
+
+* [gatsby-starter-netlify-cms](https://github.com/AustinGreen/gatsby-starter-netlify-cms) [(demo)](https://gatsby-netlify-cms.netlify.com/)
+
+  Features:
+  * A simple blog built with Netlify CMS 
+  * Basic directory organization
+  * Uses [Bulma](https://bulma.io/) for styling
+  * Visit [the repo](https://github.com/AustinGreen/gatsby-starter-netlify-cms) to learn how to set up authentication, and begin modeling your content.

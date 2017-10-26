@@ -48,6 +48,13 @@ describe(`Process WordPress data`, () => {
     entities = normalize.mapEntitiesToMedia(entities)
     expect(entities).toMatchSnapshot()
   })
+  it(`Removes the acf key when acf is not an object`, () => {
+    let dummyEntities = [{ id: 1, acf: false }, { id: 2, acf: {} }]
+    expect(normalize.normalizeACF(dummyEntities)).toEqual([
+      { id: 1 },
+      { id: 2, acf: {} },
+    ])
+  })
 
   // Actually let's not test this since it's a bit tricky to mock
   // as it needs access to the store/cache + would download file.

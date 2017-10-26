@@ -42,6 +42,8 @@ const pascalCase = _.flow(_.camelCase, _.upperFirst)
  * createPage({
  *   path: `/my-sweet-new-page/`,
  *   component: path.resolve(`./src/templates/my-sweet-new-page.js`),
+ *   // If you have a layout component at src/layouts/blog-layout.js
+ *   layout: `blog-layout`,
  *   // The context is passed as props to the component as well
  *   // as into the component's GraphQL query.
  *   context: {
@@ -643,8 +645,9 @@ actions.setPluginStatus = (status, plugin) => {
 }
 
 /**
- * Create a redirect from one page to another.
- * Redirect data can be used to configure environments like Netlify.
+ * Create a redirect from one page to another.  Redirect data can be used to
+ * configure hosting environments like Netlify (automatically handled with the
+ * [Netlify plugin](/packages/gatsby-plugin-netlify/)).
  *
  * @param {Object} redirect Redirect data
  * @param {string} redirect.fromPath Any valid URL. Must start with a forward slash

@@ -39,6 +39,27 @@ describe(`Process YAML nodes correctly`, () => {
     })
   })
 
+  it(`correctly creates a node from JSON which is a single object`, async () => {
+    const data = { blue: true, funny: `yup` }
+    node.content = yaml.safeDump(data)
+    node.dir = `/tmp/bar/`
+
+    const createNode = jest.fn()
+    const createParentChildLink = jest.fn()
+    const boundActionCreators = { createNode, createParentChildLink }
+
+    await onCreateNode({
+      node,
+      loadNodeContent,
+      boundActionCreators,
+    }).then(() => {
+      expect(createNode.mock.calls).toMatchSnapshot()
+      expect(createParentChildLink.mock.calls).toMatchSnapshot()
+      expect(createNode).toHaveBeenCalledTimes(1)
+      expect(createParentChildLink).toHaveBeenCalledTimes(1)
+    })
+  })
+
   it(`If the object has an id, it uses that as the id instead of the auto-generated one`, async () => {
     const data = [
       { id: `foo`, blue: true, funny: `yup` },

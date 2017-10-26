@@ -135,7 +135,7 @@ const typography = new Typography(kirkhamTheme)
 module.exports = typography
 ```
 
-`gatsby-config.js`
+`gatsby-config.js` (must be in the root of your project, not under src)
 
 ```javascript
 module.exports = {
@@ -401,8 +401,8 @@ export default ({ data }) => {
           </tr>
         </thead>
         <tbody>
-          {data.allFile.edges.map(({ node }) =>
-            <tr>
+          {data.allFile.edges.map(({ node }, index) =>
+            <tr key={index}>
               <td>
                 {node.relativePath}
               </td>

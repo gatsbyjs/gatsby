@@ -1,2 +1,4 @@
+/lib
 /*.js
+/reporter
 yarn.lock

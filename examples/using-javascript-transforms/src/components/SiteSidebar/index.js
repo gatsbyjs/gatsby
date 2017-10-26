@@ -6,7 +6,7 @@ import SiteLinks from "../SiteLinks"
 class SiteSidebar extends React.Component {
   render() {
     const isHome = this.props.location.pathname === `/`
-    const siteMetadata = this.props.siteMetadata
+    const { siteMetadata } = this.props.data.site
     // TODO, deal with image more nice like
 
     let header = (
@@ -44,13 +44,6 @@ class SiteSidebar extends React.Component {
           <footer>
             <div className="is-hidden-mobile">
               <SiteLinks {...this.props} />
-            </div>
-            <div>
-              <p className="copyright">&copy; All rights reserved.</p>
-              <p className="copyright">
-                Made with <i className="fa fa-heart" aria-hidden="true" /> by{` `}
-                <Link to={siteMetadata.siteTwitterUrl}>Jacob Bolda</Link>
-              </p>
             </div>
           </footer>
         </div>

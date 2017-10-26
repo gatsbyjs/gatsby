@@ -18,7 +18,7 @@ import {
   graphqlValidationError,
   multipleRootQueriesError,
 } from "./graphql-errors"
-import report from "../../reporter"
+import report from "gatsby-cli/lib/reporter"
 
 import type { DocumentNode, GraphQLSchema } from "graphql"
 
@@ -60,8 +60,9 @@ class Runner {
   baseDir: string
   schema: GraphQLSchema
 
-  constructor(baseDir: string, schema: GraphQLSchema) {
+  constructor(baseDir: string, fragmentsDir: string, schema: GraphQLSchema) {
     this.baseDir = baseDir
+    this.fragmentsDir = fragmentsDir
     this.schema = schema
   }
 
@@ -77,7 +78,8 @@ class Runner {
   async parseEverything() {
     // FIXME: this should all use gatsby's configuration to determine parsable
     // files (and how to parse them)
-    let files = glob.sync(`${this.baseDir}/**/*.+(t|j)s?(x)`)
+    let files = glob.sync(`${this.fragmentsDir}/**/*.+(t|j)s?(x)`)
+    files = files.concat(glob.sync(`${this.baseDir}/**/*.+(t|j)s?(x)`))
     files = files.filter(d => !d.match(/\.d\.ts$/))
     files = files.map(normalize)
 
@@ -171,7 +173,11 @@ class Runner {
 export default async function compile(): Promise<Map<string, RootQuery>> {
   const { program, schema } = store.getState()
 
-  const runner = new Runner(`${program.directory}/src`, schema)
+  const runner = new Runner(
+    `${program.directory}/src`,
+    `${program.directory}/.cache/fragments`,
+    schema
+  )
 
   const queries = await runner.compileAll()
 

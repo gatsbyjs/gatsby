@@ -1,12 +1,13 @@
 import React from "react"
+import Img from "gatsby-image"
 
 import { rhythm } from "../utils/typography"
 
 class Index extends React.Component {
   render() {
     const images = this.props.data.allImageSharp.edges
-    const responsiveSizes = this.props.data.sizes.responsiveSizes
-    const responsiveResolution = this.props.data.resolution.responsiveResolution
+    const sizes = this.props.data.sizes.sizes
+    const resolutions = this.props.data.resolution.resolutions
     const cropDefault = this.props.data.cropDefault.resize
     const cropBottomLeft = this.props.data.cropBottomLeft.resize
     const cropEntropy = this.props.data.cropEntropy.resize
@@ -15,16 +16,20 @@ class Index extends React.Component {
     return (
       <div>
         <p>
-          <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/">
-            <code>gatsby-plugin-sharp</code>
+          <a href="https://www.gatsbyjs.org/packages/gatsby-transformer-sharp/">
+            <code>gatsby-transformer-sharp</code>
           </a>
           {` `}
-          exposes several image processing functions built on the
+          exposes several image processing GraphQL functions built on the
           {` `}
           <a href="https://github.com/lovell/sharp">
             Sharp image processing library
-          </a>. It is a low-level helper plugin generally used by other Gatsby
-          plugins – but you can easily use it in your own GraphQL queries!
+          </a>. With it and{` `}
+          <a href="https://www.gatsbyjs.org/packages/gatsby-image/">
+            Gatsby Image
+          </a>
+          {` `}
+          you can easily add fast, optimized, responsive images to your site.
         </p>
         <p>
           <strong>
@@ -145,20 +150,26 @@ class Index extends React.Component {
             paddingTop: rhythm(2),
           }}
         >
-          <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/#responsive-sizes">
+          <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/#responsivesizes">
             <code>
-              <strong>responsiveSizes</strong>
+              <strong>sizes</strong>
             </code>
           </a>
         </h2>
         <p>
-          Create sizes (in width) for the image. If the max width of the
-          container for the rendered markdown file is 800px, the sizes would
-          then be: 200, 400, 800, 1200, 1600, 2400 – enough to provide close to
-          the optimal image size for every device size / screen resolution.
+          For when you want an image that stretches across a fluid width
+          container but will download the smallest image needed for the device
+          e.g. a smartphone will download a much smaller image than a desktop
+          device.
         </p>
         <p>
-          On top of that, <code>responsiveSizes</code>
+          If the max width of the container for the rendered markdown file is
+          800px, the sizes would then be: 200, 400, 800, 1200, 1600, 2400 –
+          enough to provide close to the optimal image size for every device
+          size / screen resolution.
+        </p>
+        <p>
+          On top of that, <code>sizes</code>
           {` `}
           returns everything else (namely
           {` `}
@@ -214,57 +225,29 @@ class Index extends React.Component {
 
         <h3>
           <small>
-            responsiveSizes(duotone:
+            sizes(duotone:
             {` `}
             {`{ `}
             highlight: "#f00e2e", shadow: "#192550" {`}`}, toFormat: PNG)
           </small>
         </h3>
-        <div>
-          <div
-            style={{
-              position: `relative`,
-              zIndex: -1,
-            }}
-          >
-            <div
-              style={{
-                paddingBottom: `${1 / responsiveSizes.aspectRatio * 100}%`,
-                position: `relative`,
-                width: `100%`,
-                bottom: 0,
-                left: 0,
-                backgroundImage: `url(${responsiveSizes.base64})`,
-                backgroundSize: `cover`,
-              }}
-            >
-              <img
-                src={responsiveSizes.src}
-                srcSet={responsiveSizes.srcSet}
-                style={{
-                  width: `100%`,
-                  margin: 0,
-                  verticalAlign: `middle`,
-                  position: `absolute`,
-                }}
-                sizes={responsiveSizes.sizes}
-              />
-            </div>
-          </div>
-        </div>
-
+        <Img sizes={sizes} />
         <h2
           style={{
             paddingTop: rhythm(2),
           }}
         >
-          <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/#responsive-resolution">
-            <code>responsiveResolution</code>
+          <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/#responsiveresolution">
+            <code>resolutions</code>
           </a>
         </h2>
         <p>
-          Automatically create sizes for different resolutions — we do 1x, 1.5x,
-          2x, and 3x.
+          For when you want a fixed sized image but that has different sized
+          thumbnails for screens that support different density of images
+        </p>
+        <p>
+          Automatically create images for different resolutions — we do 1x,
+          1.5x, 2x, and 3x.
           {` `}
         </p>
 
@@ -282,10 +265,7 @@ class Index extends React.Component {
           to convert the source image to 8-bit greyscale, 256 shades of grey.
         </p>
 
-        <img
-          src={responsiveResolution.src}
-          srcSet={responsiveResolution.srcSet}
-        />
+        <Img resolutions={resolutions} />
       </div>
     )
   }
@@ -324,30 +304,26 @@ export const pageQuery = graphql`
       }
     }
     sizes: imageSharp(id: { regex: "/fecolormatrix-kanye-west.jpg/" }) {
-      responsiveSizes(
+      sizes(
         duotone: { highlight: "#f00e2e", shadow: "#192550" }
+        traceSVG: {
+          color: "#f00e2e"
+          turnPolicy: TURNPOLICY_MINORITY
+          blackOnWhite: false
+        }
         toFormat: PNG
       ) {
-        base64
-        aspectRatio
-        src
-        srcSet
-        sizes
-        originalImg
-        originalName
+        ...GatsbyImageSharpSizes_tracedSVG
       }
     }
     resolution: imageSharp(id: { regex: "/lol.jpg/" }) {
-      responsiveResolution(grayscale: true, width: 614) {
-        src
-        srcSet
-        originalName
+      resolutions(grayscale: true, width: 500) {
+        ...GatsbyImageSharpResolutions_withWebp
       }
     }
     cropDefault: imageSharp(id: { regex: "/gatsby.jpg/" }) {
       resize(width: 180, height: 180) {
         src
-        originalName
       }
     }
     cropBottomLeft: imageSharp(id: { regex: "/nyancat/" }) {

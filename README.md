@@ -12,7 +12,7 @@
 ## Showcase
 
 Websites built with Gatsby:
-* [React](https://reactjs.org/) ([source](https://github.com/facebook/react/tree/master/www))
+* [React](https://reactjs.org/) ([source](https://github.com/reactjs/reactjs.org))
 * [Sourcegraph](https://about.sourcegraph.com)
 * [Simply](https://simply.co.za)
 * [FloydHub's Blog](https://blog.floydhub.com)
@@ -50,6 +50,20 @@ Websites built with Gatsby:
 * [CSS Grid Playground by MozillaDev](https://mozilladevelopers.github.io/playground/) [(source)](https://github.com/MozillaDevelopers/playground)
 * [David James' Portfolio](http://dfjames.com) [(source)](https://github.com/daviddeejjames/dfjames-gatsby)
 * [Tic Tac Toe AI](https://tic-tac-toe-ai.surge.sh) [(source)](https://github.com/angeloocana/tic-tac-toe-ai)
+* [Etcetera Design](https://etcetera.design) [(source)](https://github.com/etceteradesign/website)
+* [Azer Koçulu](http://azer.bike)
+* [Random Screencast](https://randomscreencast.com)
+* [Phu Quoc Tea & Coffee Store](http://trasuaphuquoc.com)
+* [Steven Natera's blog](https://www.stevennatera.com)
+* [LekoArts - Graphic Designer](https://www.lekoarts.de)
+* [Georgi Yanev](https://blog.georgi-yanev.com) [(source)](https://github.com/jumpalottahigh/blog.georgi-yanev.com)
+* [OnCallogy.com](https://www.oncallogy.com)
+* [doopoll's marketing site](https://doopoll.co)
+* [Design Systems Weekly](https://designsystems.email/)
+* [Slite landing pages](https://slite.com/)
+* [Hallingdata](http://hallingdata.no/)
+* [@swyx](http://swyx.io) [(source)](https://github.com/sw-yx/swyxdotio)
+* [Portfolio of Piotr Fedorczyk](https://piotrf.pl)
 
 ## Docs
 
