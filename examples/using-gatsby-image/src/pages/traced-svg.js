@@ -68,7 +68,7 @@ const UnsplashMasonry = edges => (
           <Img sizes={image.node.sizes} />
           <span
             css={{
-              ...scale(-2.5),
+              ...scale(-1),
               color: options.bodyColor,
               position: `absolute`,
               bottom: 10,
