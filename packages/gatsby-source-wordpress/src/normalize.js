@@ -269,17 +269,37 @@ exports.mapEntitiesToMedia = entities => {
         _.isString(filename) && photoRegex.test(filename)
       const replacePhoto = field =>
         media.find(m => m.wordpress_id === field.wordpress_id).id
+      const isFeaturedMedia = (value, key) =>
+        (_.isNumber(value) || _.isBoolean(value)) && key === 'featured_media'
 
       // Try to get media node from value:
+      //  - special case - check if key is featured_media and value is photo ID
       //  - check if value is photo url
       //  - check if value is ACF Image Object
-      const getMediaFromACFValue = value => {
-        if (isPhotoUrl(value)) {
-          return media.find(m => m.source_url === value);
+      const getMediaFromACFValue = (value, key) => {
+        if (isFeaturedMedia(value, key)) {
+          return {
+            mediaItem:
+              _.isNumber(value) ? media.find(m => m.wordpress_id === value) : null,
+            deleteField: true
+          }
+        } else if (isPhotoUrl(value)) {
+          const mediaItem = media.find(m => m.source_url === value);
+          return {
+            mediaItem,
+            deleteField: !!media
+          }
         } else if (isACFPhotoData(value)) {
-          return media.find(m => m.source_url === value.url);
+          const mediaItem = media.find(m => m.source_url === value.url);
+          return {
+            mediaItem,
+            deleteField: !!media
+          }
         }
-        return null;
+        return {
+          mediaItem: null,
+          deleteField: false
+        };
       }
 
       const replaceFieldsInObject = object => {
@@ -287,9 +307,11 @@ exports.mapEntitiesToMedia = entities => {
           if (_.isArray(value)) {
             value.forEach(v => replaceFieldsInObject(v))
           }
-          const media = getMediaFromACFValue(value);
-          if (media) {
-            object[`${key}___NODE`] = media.id;
+          const { mediaItem, deleteField } = getMediaFromACFValue(value, key);
+          if (mediaItem) {
+            object[`${key}___NODE`] = mediaItem.id;
+          }
+          if (deleteField) {
             delete object[key];
           }
 
@@ -303,23 +325,15 @@ exports.mapEntitiesToMedia = entities => {
             }
             delete value.featured_media
           }
-          if (_.isNumber(value) && key == `featured_media`) {
-            featuredMedia = media.find(m => m.wordpress_id === value)
-            if (featuredMedia) {
-              object[`${key}___NODE`] = featuredMedia.id
-            }
-            delete object[key]
-          }
-          if (_.isBoolean(value) && key == `featured_media`) {
-            delete object[key]
-          }
         })
       }
 
       _.each(e.acf, (value, key) => {
-        const media = getMediaFromACFValue(value);
-        if (media) {
-          e.acf[`${key}___NODE`] = media.id;
+        const { mediaItem, deleteField } = getMediaFromACFValue(value, key);
+        if (mediaItem) {
+          e.acf[`${key}___NODE`] = mediaItem.id;
+        }
+        if (deleteField) {
           delete e.acf[key];
         }
 
