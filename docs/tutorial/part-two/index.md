@@ -53,7 +53,7 @@ This makes it trivial to change the font size of all elements on a site without 
 Using it looks something like this:
 
 ```javascript
-import Typography from 'typography'
+import Typography from "typography"
 
 const typography = new Typography({
   baseFontSize: '18px',
