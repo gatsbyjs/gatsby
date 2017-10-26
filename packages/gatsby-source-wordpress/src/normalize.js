@@ -253,7 +253,9 @@ exports.mapEntitiesToMedia = entities => {
     delete e.featured_media
 
     if (e.acf) {
-      const isPhoto = field =>
+      // Check if it's value of ACF Image field, that has 'Return value' set to
+      // 'Image Object' ( https://www.advancedcustomfields.com/resources/image/ )
+      const isACFPhotoData = field =>
         _.isObject(field) &&
         field.wordpress_id &&
         field.url &&
@@ -272,7 +274,7 @@ exports.mapEntitiesToMedia = entities => {
           if (_.isArray(value)) {
             value.forEach(v => replaceFieldsInObject(v))
           }
-          if (isPhoto(value)) {
+          if (isACFPhotoData(value)) {
             object[`${key}___NODE`] = replacePhoto(value)
             delete object[key]
           }
