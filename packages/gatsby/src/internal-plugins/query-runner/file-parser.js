@@ -6,7 +6,7 @@ const crypto = require(`crypto`)
 import traverse from "babel-traverse"
 const babylon = require(`babylon`)
 const { getGraphQLTag } = require(`babel-plugin-remove-graphql-queries`)
-const report = require(`../../reporter`)
+const report = require(`gatsby-cli/lib/reporter`)
 
 import type { DocumentNode, DefinitionNode } from "graphql"
 
@@ -116,8 +116,13 @@ const cache = {}
 
 export default class FileParser {
   async parseFile(file: string): Promise<?DocumentNode> {
-    // TODO figure out why fs-extra isn't returning a promise
-    const text = fs.readFileSync(file, `utf8`)
+    let text
+    try {
+      text = await fs.readFile(file, `utf8`)
+    } catch (err) {
+      report.error(`There was a problem reading the file: ${file}`, err)
+      return null
+    }
 
     if (text.indexOf(`graphql`) === -1) return null
     const hash = crypto

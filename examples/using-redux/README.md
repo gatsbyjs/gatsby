@@ -1,5 +1,5 @@
 # Redux
 
-https://redux.gatsbyjs.org
+https://using-redux.gatsbyjs.org/
 
 Gatsby example site that shows use of redux.

@@ -119,6 +119,7 @@ you can place the files in a `src` subfolder and build them to the plugin folder
 ## Official components
 
 * [gatsby-link](/packages/gatsby-link/)
+* [gatsby-image](/packages/gatsby-image/)
 
 ## Community Plugins
 
@@ -131,6 +132,7 @@ you can place the files in a `src` subfolder and build them to the plugin folder
 * [gatsby-plugin-protoculture](https://github.com/atrauzzi/gatsby-plugin-protoculture)
 * [gatsby-plugin-purify-css](https://github.com/rongierlach/gatsby-plugin-purify-css)
 * [gatsby-plugin-yandex-metrika](https://github.com/viatsko/gatsby-plugin-yandex-metrika)
+* [gatsby-plugin-klipse](https://github.com/ahmedelgabri/gatsby-plugin-klipse)
 * [gatsby-remark-emoji](https://github.com/Rulikkk/gatsby-remark-emoji)
 * [gatsby-remark-external-links](https://github.com/JLongley/gatsby-remark-external-links)
 * [gatsby-source-workable](https://github.com/tumblbug/gatsby-source-workable)

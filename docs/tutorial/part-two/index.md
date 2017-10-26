@@ -53,7 +53,7 @@ This makes it trivial to change the font size of all elements on a site without 
 Using it looks something like this:
 
 ```javascript
-import Typography from 'typography'
+import Typography from "typography"
 
 const typography = new Typography({
   baseFontSize: '18px',
@@ -252,7 +252,7 @@ export default typography
 
 ![typography-lawton](typography-lawton.png)
 
-Typography.js has more than 30 themes! Check them out at http://kyleamathews.github.io/typography.js/
+Typography.js has more than 30 themes! [Try them live](http://kyleamathews.github.io/typography.js) or check out [the complete list](https://github.com/KyleAMathews/typography.js#published-typographyjs-themes)
 
 ## Component CSS
 

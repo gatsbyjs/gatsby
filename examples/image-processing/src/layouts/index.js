@@ -21,7 +21,7 @@ class DefaultLayout extends React.Component {
             fontWeight: `normal`,
           }}
         >
-          Image Processing with <code>gatsby-plugin-sharp</code>
+          Image Processing with <code>gatsby-transformer-sharp</code>
         </h1>
         {this.props.children()}
       </div>

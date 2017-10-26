@@ -76,6 +76,9 @@ const _options = {
           options.blockMarginBottom / 4
         )} solid ${presets.brandLighter}`,
       },
+      hr: {
+        backgroundColor: presets.brandLighter,
+      },
       "tt,code": {
         // background: `hsla(23, 60%, 97%, 1)`,
         background: colors.a[0],

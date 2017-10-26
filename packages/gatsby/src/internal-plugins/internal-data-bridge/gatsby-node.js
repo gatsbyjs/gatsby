@@ -47,7 +47,7 @@ exports.sourceNodes = ({ boundActionCreators, store }) => {
   const { flattenedPlugins } = state
 
   // Add our default development page since we know it's going to
-  // exist and we need a node to exist so it's query works :-)
+  // exist and we need a node to exist so its query works :-)
   const page = { path: `/dev-404-page/` }
   createNode({
     ...page,

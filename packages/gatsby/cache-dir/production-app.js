@@ -142,6 +142,8 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     <Router history={history}>{children}</Router>
   )
 
+  const ComponentRendererWithRouter = withRouter(ComponentRenderer)
+
   loader.getResourcesForPathname(window.location.pathname, () => {
     const Root = () =>
       createElement(
@@ -150,7 +152,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
         createElement(
           ScrollContext,
           { shouldUpdateScroll },
-          createElement(withRouter(ComponentRenderer), {
+          createElement(ComponentRendererWithRouter, {
             layout: true,
             children: layoutProps =>
               createElement(Route, {

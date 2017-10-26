@@ -53,7 +53,6 @@ async function onCreateNode(
       })
 
       _.each(csvArray, y => {
-        console.log(y)
         createNode(y)
         createParentChildLink({ parent: node, child: y })
       })

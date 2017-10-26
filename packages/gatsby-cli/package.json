@@ -1,20 +1,28 @@
 {
   "name": "gatsby-cli",
   "description": "Gatsby command-line interface for creating new sites and running Gatsby commands",
-  "version": "1.1.7",
+  "version": "1.1.11",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
-    "gatsby": "./index.js"
+    "gatsby": "lib/index.js"
   },
   "dependencies": {
+    "babel-code-frame": "^6.26.0",
     "babel-runtime": "^6.26.0",
-    "commander": "^2.11.0",
+    "bluebird": "^3.5.0",
+    "common-tags": "^1.4.0",
+    "convert-hrtime": "^2.0.0",
     "core-js": "^2.5.0",
+    "execa": "^0.8.0",
     "fs-extra": "^4.0.1",
     "hosted-git-info": "^2.5.0",
     "lodash": "^4.17.4",
+    "pretty-error": "^2.1.1",
     "resolve-cwd": "^2.0.0",
-    "tracer": "^0.8.9"
+    "source-map": "^0.5.7",
+    "stack-trace": "^0.0.10",
+    "yargs": "^8.0.2",
+    "yurnalist": "^0.2.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -24,10 +32,10 @@
     "gatsby"
   ],
   "license": "MIT",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "build": "babel src --out-dir . --ignore __tests__",
-    "watch": "babel -w src --out-dir . --ignore __tests__",
+    "build": "babel src --out-dir lib --ignore __tests__",
+    "watch": "babel -w src --out-dir lib --ignore __tests__",
     "prepublish": "cross-env NODE_ENV=production npm run build"
   }
 }

@@ -35,6 +35,10 @@ module.exports = {
     VHdR: 3,
     VVHdR: 4.5,
   },
+  shadowKeyUmbraOpacity: 0.1,
+  shadowKeyPenumbraOpacity: 0.07,
+  shadowAmbientShadowOpacity: 0.06,
+  shadowColor: `157, 124, 191`,
   animation: {
     curveDefault: `cubic-bezier(0.4, 0, 0.2, 1)`,
     speedDefault: `250ms`,

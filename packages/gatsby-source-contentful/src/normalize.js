@@ -17,7 +17,7 @@ const getLocalizedField = ({ field, defaultLocale, locale }) => {
   } else if (field[locale.fallbackCode]) {
     return field[locale.fallbackCode]
   } else {
-    return field[defaultLocale]
+    return null
   }
 }
 
@@ -255,6 +255,8 @@ exports.createContentTypeNodes = ({
 
       let entryNode = {
         id: mId(entryItem.sys.id),
+        createdAt: entryItem.sys.createdAt,
+        updatedAt: entryItem.sys.updatedAt,
         parent: contentTypeItemId,
         children: [],
         internal: {

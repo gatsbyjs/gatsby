@@ -21,7 +21,7 @@ module.exports = class HTML extends React.Component {
       )
     }
     return (
-      <html>
+      <html {...this.props.htmlAttributes}>
         <head>
           <meta charSet="utf-8" />
           <meta httpEquiv="x-ua-compatible" content="ie=edge" />
@@ -32,7 +32,7 @@ module.exports = class HTML extends React.Component {
           {this.props.headComponents}
           {css}
         </head>
-        <body>
+        <body {...this.props.bodyAttributes}>
           {this.props.preBodyComponents}
           <div
             key={`body`}

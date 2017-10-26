@@ -107,7 +107,6 @@ export default ({ pathname }) => {
           paddingLeft: rhythm(3 / 4),
           paddingRight: rhythm(3 / 4),
           ...gutters,
-          transition: `padding .1s ease-out`,
           fontFamily: typography.options.headerFontFamily.join(`,`),
           display: `flex`,
           alignItems: `center`,
@@ -161,6 +160,7 @@ export default ({ pathname }) => {
           <NavItem linkTo="/docs/">Docs</NavItem>
           <NavItem linkTo="/tutorial/">Tutorial</NavItem>
           <NavItem linkTo="/community/">Community</NavItem>
+          <NavItem linkTo="/features/">Features</NavItem>
           <NavItem linkTo="/blog/">Blog</NavItem>
         </ul>
         <div

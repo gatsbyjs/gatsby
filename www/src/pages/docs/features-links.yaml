@@ -1,0 +1,72 @@
+- title: Introduction
+  items:
+    - title: Introduction
+      link: "#introduction"
+    - title: Legend
+      link: "#legend"
+- title: Performance
+  items:
+    - title: Static content
+      link: "#static-content"
+    - title: CDN
+      link: "#cdn"
+    - title: AMP support
+      link: "#amp-support"
+    - title: Offline access
+      link: "#offline-access"
+    - title: Prefetch linked pages
+      link: "#prefetch-linked-pages"
+    - title: Page caching
+      link: "#page-caching"
+    - title: No extraneous code fetching
+      link: "#no-extraneous-code-fetching"
+    - title: Progressive image loading
+      link: "#progressive-image-loading"
+    - title: Responsive image loading
+      link: "#responsive-image-loading"
+    - title: Inlines critical CSS
+      link: "#inlines-critical-css"
+    - title: Font self-hosting
+      link: "#font-self-hosting"
+- title: Developer Experience
+  items:
+    - title: Serverless
+      link: "#serverless"
+    - title: Export as Code
+      link: "#export-as-code"
+    - title: Refresh or link to preview
+      link: "#refresh-or-link-to-preview"
+    - title: Hot reload content
+      link: "#hot-reload-content"
+    - title: Hot reload code
+      link: "#hot-reload-code"
+    - title: Componentization
+      link: "#componentization"
+    - title: One-way data binding
+      link: "#one-way-data-binding"
+    - title: Declarative API data queries (GraphQL)
+      link: "#declarative-api-data-queries-(graphql)"
+    - title: Declarative UI
+      link: "#declarative-ui"
+    - title: Asset pipelines
+      link: "#asset-pipelines"
+    - title: CSS Extensions (eg Sass)
+      link: "#css-extensions-(eg-sass)"
+    - title: Advanced Javascript syntax
+      link: "#advanced-javascript-syntax"
+- title: Ecosystem
+  items:
+    - title: Component ecosystem
+      link: "#component-ecosystem"
+    - title: Hosted option
+      link: "#hosted-option"
+    - title: Theme ecosystem
+      link: "#theme-ecosystem"
+- title: Design
+  items:
+    - title: Programmatic Design
+      link: "#programmatic-design"
+    - title: Design systems
+      link: "#design-systems"
+    - title: Component library
+      link: "#component-library"

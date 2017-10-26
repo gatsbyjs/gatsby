@@ -17,8 +17,6 @@ const MastheadContent = () => (
       paddingTop: rhythm(4),
       paddingBottom: rhythm(1),
       paddingBottom: rhythm(1),
-      transition: `padding-top ${presets.animation.speedFast} ${presets
-        .animation.curveDefault}`,
       flexGrow: `0`,
       flexShrink: `1`,
       [presets.Mobile]: {

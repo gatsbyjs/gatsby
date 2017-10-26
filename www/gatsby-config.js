@@ -56,8 +56,8 @@ module.exports = {
           },
           `gatsby-remark-prismjs`,
           `gatsby-remark-copy-linked-files`,
-          `gatsby-remark-smartypants`,
           `gatsby-remark-autolink-headers`,
+          `gatsby-remark-smartypants`,
         ],
       },
     },
@@ -103,6 +103,7 @@ module.exports = {
         navigateFallbackWhitelist: [],
       },
     },
+    `gatsby-transformer-csv`,
     `gatsby-plugin-twitter`,
     `gatsby-plugin-react-helmet`,
     {

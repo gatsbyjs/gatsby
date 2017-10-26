@@ -7,7 +7,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
     ...pluginOptions,
   }
 
-  const links = feeds.map(({ output }, i) => {
+  const links = feeds.map(({ output, feedTitle = `` }, i) => {
     if (output.charAt(0) !== `/`) {
       output = `/` + output
     }
@@ -17,6 +17,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
         key={`gatsby-plugin-feed-${i}`}
         rel="alternate"
         type="application/rss+xml"
+        title={feedTitle}
         href={output}
       />
     )

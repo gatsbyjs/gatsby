@@ -1,37 +1,78 @@
 - title: Quick Start
-  links:
-    Getting Started: /docs/
-    Migrating from v0 to v1: /docs/migrating-from-v0-to-v1/
-    Building with Components: /docs/building-with-components/
-    Querying with GraphQL*: /docs/querying-with-graphql/
-    Lifecycle APIs: /docs/gatsby-lifecycle-apis/
-    Deploying: /docs/deploy-gatsby/
-    Starters: /docs/gatsby-starters/
-    Plugins: /docs/plugins/
-    PRPL Pattern: /docs/prpl-pattern/
-    Gatsby on Windows: /docs/gatsby-on-windows/
+  items:
+    - title: Getting Started
+      link: /docs/
+    - title: Migrating from v0 to v1
+      link: /docs/migrating-from-v0-to-v1/
+    - title: Building with Components
+      link: /docs/building-with-components/
+    - title: Querying with GraphQL*
+      link: /docs/querying-with-graphql/
+    - title: Lifecycle APIs
+      link: /docs/gatsby-lifecycle-apis/
+    - title: Deploying
+      link: /docs/deploy-gatsby/
+    - title: Starters
+      link: /docs/gatsby-starters/
+    - title: Plugins
+      link: /docs/plugins/
+    - title: PRPL Pattern
+      link: /docs/prpl-pattern/
+    - title: Gatsby on Windows
+      link: /docs/gatsby-on-windows/
 - title: Guides
-  links:
-    404 Pages: /docs/add-404-page/
-    Adding Images, Fonts, and Files: /docs/adding-images-fonts-files/
-    Browser Support: /docs/browser-support/
-    Creating and Modifying Pages: /docs/creating-and-modifying-pages/
-    Create a source plugin: /docs/create-source-plugin/
-    Custom webpack config: /docs/add-custom-webpack-config/
-    Customizing html.js: /docs/custom-html/
-    Debugging HTML Builds: /docs/debugging-html-builds/
-    Environment Variables: /docs/environment-variables/
-    Path Prefix: /docs/path-prefix/
-    Proxying API Requests: /docs/api-proxy/
+  items:
+    - title: 404 Pages
+      link: /docs/add-404-page/
+    - title: Adding Images, Fonts, and Files
+      link: /docs/adding-images-fonts-files/
+    - title: Browser Support
+      link: /docs/browser-support/
+    - title: Creating and Modifying Pages
+      link: /docs/creating-and-modifying-pages/
+    - title: Create a source plugin
+      link: /docs/create-source-plugin/
+    - title: Custom webpack config
+      link: /docs/add-custom-webpack-config/
+    - title: Customizing html.js
+      link: /docs/custom-html/
+    - title: Debugging HTML Builds
+      link: /docs/debugging-html-builds/
+    - title: Environment Variables
+      link: /docs/environment-variables/
+    - title: Path Prefix
+      link: /docs/path-prefix/
+    - title: Proxying API Requests
+      link: /docs/api-proxy/
+    - title: Adding a List of Markdown Blog Posts*
+      link: /docs/adding-a-list-of-markdown-blog-posts/
+    - title: Adding Tags and Categories to Blog Posts*
+      link:: /docs/adding-tags-and-categories-to-blog-posts/
+    - title: Creating Dynamically-Rendered Navigation*
+      link: /docs/creating-dynamically-rendered-navigation/
+    - title: Dropping Images into Static Folders*
+      link: /docs/dropping-images-into-static-folders/
+    - title: How Gatsby Works with Github Pages*
+      link: /docs/how-gatsby-works-with-github-pages/
 - title: Reference
-  links:
-    Node Interface: /docs/node-interface/
-    API Specification: /docs/api-specification/
-    Bound Action Creators: /docs/bound-action-creators/
-    Gatsby Browser APIs: /docs/browser-apis/
-    Gatsby Node APIs: /docs/node-apis/
-    Gatsby SSR APIs: /docs/ssr-apis/
+  items:
+    - title: Node Interface
+      link: /docs/node-interface/
+    - title: API Specification
+      link: /docs/api-specification/
+    - title: Bound Action Creators
+      link: /docs/bound-action-creators/
+    - title: Gatsby Browser APIs
+      link: /docs/browser-apis/
+    - title: Gatsby Node APIs
+      link: /docs/node-apis/
+    - title: Gatsby SSR APIs
+      link: /docs/ssr-apis/
 - title: Contributing
-  links:
-    How to Contribute: /docs/how-to-contribute/
-    Design Principles*: /docs/design-principles/
+  items:
+    - title: How to Contribute
+      link: /docs/how-to-contribute/
+    - title: Gatsby Style Guide
+      link: /docs/gatsby-style-guide/
+    - title: Design Principles*
+      link: /docs/design-principles/

@@ -4,7 +4,7 @@ const _ = require(`lodash`)
 
 const mapSeries = require(`async/mapSeries`)
 
-const reporter = require(`../reporter`)
+const reporter = require(`gatsby-cli/lib/reporter`)
 const cache = require(`./cache`)
 const apiList = require(`./api-node-docs`)
 
@@ -22,8 +22,15 @@ const doubleBind = (boundActionCreators, api, plugin, { traceId }) => {
       const key = keys[i]
       const boundActionCreator = boundActionCreators[key]
       if (typeof boundActionCreator === `function`) {
-        doubleBoundActionCreators[key] = (...args) =>
-          boundActionCreator(...args, plugin, traceId)
+        doubleBoundActionCreators[key] = (...args) => {
+          // Let action callers override who the plugin is. Shouldn't be used
+          // that often.
+          if (args.length === 1) {
+            boundActionCreator(args[0], plugin, traceId)
+          } else if (args.length === 2) {
+            boundActionCreator(args[0], args[1], traceId)
+          }
+        }
       }
     }
     boundPluginActionCreators[

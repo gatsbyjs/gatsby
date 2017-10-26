@@ -16,6 +16,10 @@ module.exports = (state = {}, action) => {
         }
       )
       return state
+    case `DELETE_PAGE`:
+      action.payload.componentPath = normalize(action.payload.component)
+      delete state[action.payload.componentPath]
+      return state
     case `REPLACE_COMPONENT_QUERY`:
       action.payload.componentPath = normalize(action.payload.componentPath)
       state[action.payload.componentPath] = {

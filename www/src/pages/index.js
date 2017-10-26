@@ -21,7 +21,6 @@ import TechWithIcon from "../components/tech-with-icon"
 
 class IndexRoute extends React.Component {
   render() {
-    console.log(this.props)
     const blogPosts = this.props.data.allMarkdownRemark
     return (
       <div css={{ position: `relative` }}>
@@ -199,7 +198,7 @@ export const pageQuery = graphql`
     }
     file(relativePath: { eq: "gatsby-explanation.png" }) {
       childImageSharp {
-        responsiveSizes(maxWidth: 870) {
+        sizes(maxWidth: 870) {
           src
           srcSet
           sizes

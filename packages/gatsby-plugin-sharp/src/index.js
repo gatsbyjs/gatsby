@@ -7,6 +7,7 @@ const fs = require(`fs`)
 const ProgressBar = require(`progress`)
 const imagemin = require(`imagemin`)
 const imageminPngquant = require(`imagemin-pngquant`)
+const imageminWebp = require(`imagemin-webp`)
 const queue = require(`async/queue`)
 const path = require(`path`)
 
@@ -70,6 +71,10 @@ const processFile = (file, jobs, cb) => {
         progressive: args.jpegProgressive,
         force: args.toFormat === `jpg`,
       })
+      .webp({
+        quality: args.quality,
+        force: args.toFormat === `webp`,
+      })
 
     // grayscale
     if (args.grayscale) {
@@ -90,7 +95,10 @@ const processFile = (file, jobs, cb) => {
       )
     }
 
-    if (job.file.extension.match(/^jp/)) {
+    if (
+      (job.file.extension.match(/^jp/) && args.toFormat === ``) ||
+      args.toFormat === `jpg`
+    ) {
       clonedPipeline.toFile(job.outputPath, (err, info) => {
         imagesFinished += 1
         bar.tick()
@@ -104,7 +112,10 @@ const processFile = (file, jobs, cb) => {
         job.outsideResolve(info)
       })
       // Compress pngs
-    } else if (job.file.extension === `png`) {
+    } else if (
+      (job.file.extension === `png` && args.toFormat === ``) ||
+      args.toFormat === `png`
+    ) {
       clonedPipeline.toBuffer().then(sharpBuffer => {
         imagemin
           .buffer(sharpBuffer, {
@@ -113,6 +124,31 @@ const processFile = (file, jobs, cb) => {
                 quality: `${args.quality}-${Math.min(args.quality + 25, 100)}`, // e.g. 40-65
               }),
             ],
+          })
+          .then(imageminBuffer => {
+            fs.writeFile(job.outputPath, imageminBuffer, () => {
+              imagesFinished += 1
+              bar.tick()
+              boundActionCreators.setJob(
+                {
+                  id: `processing image ${job.file.absolutePath}`,
+                  imagesFinished,
+                },
+                { name: `gatsby-plugin-sharp` }
+              )
+              job.outsideResolve()
+            })
+          })
+      })
+      // Compress webp
+    } else if (
+      (job.file.extension === `webp` && args.toFormat === ``) ||
+      args.toFormat === `webp`
+    ) {
+      clonedPipeline.toBuffer().then(sharpBuffer => {
+        imagemin
+          .buffer(sharpBuffer, {
+            plugins: [imageminWebp({ quality: args.quality })],
           })
           .then(imageminBuffer => {
             fs.writeFile(job.outputPath, imageminBuffer, () => {
@@ -453,7 +489,7 @@ async function responsiveSizes({ file, args = {} }) {
   }
 }
 
-async function responsiveResolution({ file, args = {} }) {
+async function resolutions({ file, args = {} }) {
   const defaultArgs = {
     width: 400,
     quality: 50,
@@ -483,7 +519,7 @@ async function responsiveResolution({ file, args = {} }) {
     filteredSizes.push(dimensions.width)
     console.warn(
       `
-                 The requested width "${options.width}px" for a responsiveResolution field for
+                 The requested width "${options.width}px" for a resolutions field for
                  the file ${file.absolutePath}
                  was wider than the actual image width of ${dimensions.width}px!
                  If possible, replace the current image with a larger one.
@@ -555,7 +591,109 @@ async function responsiveResolution({ file, args = {} }) {
   }
 }
 
+async function notMemoizedtraceSVG({ file, args, fileArgs }) {
+  const potrace = require(`potrace`)
+  const trace = Promise.promisify(potrace.trace)
+  const defaultArgs = {
+    color: `lightgray`,
+    optTolerance: 0.4,
+    turdSize: 100,
+    turnPolicy: potrace.Potrace.TURNPOLICY_MAJORITY,
+  }
+  const optionsSVG = _.defaults(args, defaultArgs)
+
+  const defaultFileResizeArgs = {
+    width: 400,
+    quality: 50,
+    jpegProgressive: true,
+    pngCompressionLevel: 9,
+    grayscale: false,
+    duotone: false,
+    toFormat: ``,
+  }
+  const options = _.defaults(fileArgs, defaultFileResizeArgs)
+  let pipeline = sharp(file.absolutePath).rotate()
+
+  pipeline
+    .resize(options.width, options.height)
+    .crop(options.cropFocus)
+    .png({
+      compressionLevel: options.pngCompressionLevel,
+      adaptiveFiltering: false,
+      force: args.toFormat === `png`,
+    })
+    .jpeg({
+      quality: options.quality,
+      progressive: options.jpegProgressive,
+      force: args.toFormat === `jpg`,
+    })
+
+  // grayscale
+  if (options.grayscale) {
+    pipeline = pipeline.grayscale()
+  }
+
+  // rotate
+  if (options.rotate && options.rotate !== 0) {
+    pipeline = pipeline.rotate(options.rotate)
+  }
+
+  // duotone
+  if (options.duotone) {
+    pipeline = await duotone(options.duotone, file.extension, pipeline)
+  }
+
+  const tmpDir = require(`os`).tmpdir()
+  const tmpFilePath = `${tmpDir}/${file.name}-${crypto
+    .createHash(`md5`)
+    .update(JSON.stringify(fileArgs))
+    .digest(`hex`)}.${file.extension}`
+
+  await new Promise(resolve =>
+    pipeline.toFile(tmpFilePath, (err, info) => {
+      resolve()
+    })
+  )
+
+  return trace(tmpFilePath, optionsSVG)
+    .then(svg => optimize(svg))
+    .then(svg => encodeOptimizedSVGDataUri(svg))
+}
+
+const memoizedTraceSVG = _.memoize(
+  notMemoizedtraceSVG,
+  ({ file, args }) => `${file.absolutePath}${JSON.stringify(args)}`
+)
+
+async function traceSVG(args) {
+  return await memoizedTraceSVG(args)
+}
+
+// https://codepen.io/tigt/post/optimizing-svgs-in-data-uris
+function encodeOptimizedSVGDataUri(svgString) {
+  var uriPayload = encodeURIComponent(svgString) // encode URL-unsafe characters
+    .replace(/%0A/g, ``) // remove newlines
+    .replace(/%20/g, ` `) // put spaces back in
+    .replace(/%3D/g, `=`) // ditto equals signs
+    .replace(/%3A/g, `:`) // ditto colons
+    .replace(/%2F/g, `/`) // ditto slashes
+    .replace(/%22/g, `'`) // replace quotes with apostrophes (may break certain SVGs)
+
+  return `data:image/svg+xml,` + uriPayload
+}
+
+const optimize = svg => {
+  const SVGO = require(`svgo`)
+  const svgo = new SVGO({ multipass: true, floatPrecision: 1 })
+  return new Promise((resolve, reject) => {
+    svgo.optimize(svg, ({ data }) => resolve(data))
+  })
+}
+
 exports.queueImageResizing = queueImageResizing
 exports.base64 = base64
+exports.traceSVG = traceSVG
 exports.responsiveSizes = responsiveSizes
-exports.responsiveResolution = responsiveResolution
+exports.responsiveResolution = resolutions
+exports.sizes = responsiveSizes
+exports.resolutions = resolutions
