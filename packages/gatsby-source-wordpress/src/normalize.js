@@ -304,46 +304,25 @@ exports.mapEntitiesToMedia = entities => {
 
       const replaceFieldsInObject = object => {
         _.each(object, (value, key) => {
-          if (_.isArray(value)) {
-            value.forEach(v => replaceFieldsInObject(v))
-          }
           const { mediaItem, deleteField } = getMediaFromACFValue(value, key);
           if (mediaItem) {
             object[`${key}___NODE`] = mediaItem.id;
           }
           if (deleteField) {
             delete object[key];
+            // We found photo node (even if it has no image),
+            // We can end processing this path
+            return;
           }
 
-          // featured_media can be nested inside ACF fields
-          if (_.isObject(value) && value.featured_media) {
-            featuredMedia = media.find(
-              m => m.wordpress_id === value.featured_media
-            )
-            if (featuredMedia) {
-              value.featured_media___NODE = featuredMedia.id
-            }
-            delete value.featured_media
+          if (_.isArray(value)) {
+            value.forEach(v => replaceFieldsInObject(v))
+          } else if (_.isObject(value)) {
+            replaceFieldsInObject(value)
           }
         })
       }
-
-      _.each(e.acf, (value, key) => {
-        const { mediaItem, deleteField } = getMediaFromACFValue(value, key);
-        if (mediaItem) {
-          e.acf[`${key}___NODE`] = mediaItem.id;
-        }
-        if (deleteField) {
-          delete e.acf[key];
-        }
-
-        if (_.isArray(value) && value[0] && value[0].acf_fc_layout) {
-          e.acf[key] = e.acf[key].map(f => {
-            replaceFieldsInObject(f)
-            return f
-          })
-        }
-      })
+      replaceFieldsInObject(e.acf);
     }
     return e
   })
