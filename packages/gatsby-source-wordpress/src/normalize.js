@@ -303,8 +303,10 @@ exports.mapEntitiesToMedia = entities => {
       _.each(e.acf, (value, key) => {
         if (_.isString(value) && isPhotoUrl(value)) {
           const me = media.find(m => m.source_url === value)
-          e.acf[`${key}___NODE`] = me.id
-          delete e.acf[key]
+          if (me) {
+            e.acf[`${key}___NODE`] = me.id
+            delete e.acf[key] 
+          }
         }
 
         if (_.isArray(value) && value[0] && value[0].acf_fc_layout) {

@@ -2,6 +2,7 @@
 
 exports[`it transforms HTML img tags 1`] = `
 "
+  <a class=\\"gatsby-resp-image-link\\" href=\\"not-a-real-dir/image/my-image.jpeg\\" style=\\"display: block\\" target=\\"_blank\\" rel=\\"noopener\\">
   
   <span class=\\"gatsby-resp-image-wrapper\\" style=\\"position: relative; display: block; ; max-width: 300px; margin-left: auto; margin-right: auto;\\">
     <span class=\\"gatsby-resp-image-background-image\\" style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url(&apos;url(&apos;data:image/png;base64, iVBORw)&apos;); background-size: cover; display: block;\\">
@@ -9,7 +10,8 @@ exports[`it transforms HTML img tags 1`] = `
     </span>
   </span>
   
-  "
+  </a>
+    "
 `;
 
 exports[`it transforms images in markdown 1`] = `
