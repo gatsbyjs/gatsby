@@ -24,8 +24,8 @@ npm install --save gatsby-plugin-typography typography-theme-fairy-gates
 Create the typography config file at `src/utils/typography.js`
 
 ```javascript
-import Typography from 'typography'
-import fairyGateTheme from 'typography-theme-fairy-gates'
+import Typography from "typography"
+import fairyGateTheme from "typography-theme-fairy-gates"
 
 const typography = new Typography(fairyGateTheme)
 
