@@ -5,7 +5,7 @@ const slash = require(`slash`)
 
 // Implement the Gatsby API “createPages”. This is
 // called after the Gatsby bootstrap is finished so you have
-// access to any information necessary to programatically
+// access to any information necessary to programmatically
 // create pages.
 exports.createPages = ({ graphql, boundActionCreators }) => {
   const { createPage } = boundActionCreators
@@ -18,16 +18,16 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     // us an easy way to query all documents in the mongoDB collection.
     graphql(
       `
-      {
-        allMongodbCloudDocuments(limit: 1000) {
-          edges {
-            node {
-              id
+        {
+          allMongodbCloudDocuments(limit: 1000) {
+            edges {
+              node {
+                id
+              }
             }
           }
         }
-      }
-    `
+      `
     ).then(result => {
       if (result.errors) {
         reject(result.errors)

@@ -15,10 +15,9 @@ module.exports = {
   VVHd: `@media (min-width: 1650px)`,
   maxWidth: 35,
   maxWidthWithSidebar: 26,
-  lightPurple: colors.b[2],
-  veryLightPurple: colors.b[0],
+  lightPurple: `#e0d6eb`,
   veryLightPurple: `#f6f2f8`,
-  sidebar: `#fcfaff`,
+  sidebar: `#fbfafc`,
   calm: `rgba(38, 32, 44, .5)`,
   // palette by @SachaG
   // @see https://www.figma.com/file/J6IYJEtdRmwJQOrcZ2DfvxDD/Gatsby
@@ -36,6 +35,10 @@ module.exports = {
     VHdR: 3,
     VVHdR: 4.5,
   },
+  shadowKeyUmbraOpacity: 0.1,
+  shadowKeyPenumbraOpacity: 0.07,
+  shadowAmbientShadowOpacity: 0.06,
+  shadowColor: `157, 124, 191`,
   animation: {
     curveDefault: `cubic-bezier(0.4, 0, 0.2, 1)`,
     speedDefault: `250ms`,

@@ -160,13 +160,12 @@ const queue = {
     // so we just return with it immediately.
     if (process.env.NODE_ENV !== `production`) {
       const page = findPage(path)
-      if (!page) return null
-
+      if (!page) return cb()
       const pageResources = {
         component: syncRequires.components[page.componentChunkName],
         json: syncRequires.json[page.jsonName],
         layout: syncRequires.layouts[page.layoutComponentChunkName],
-        // page,
+        page,
       }
       cb(pageResources)
       return pageResources
@@ -204,7 +203,7 @@ const queue = {
       getResourceModule(page.layoutComponentChunkName),
     ])
     .then(([component, json, layout] )=> {
-      const pageResources = { component, json, layout }
+      const pageResources = { component, json, layout, page }
 
       pathScriptsCache[path] = pageResources
       cb(pageResources)

@@ -20,7 +20,7 @@ plugins: [
     resolve: `gatsby-source-contentful`,
     options: {
       spaceId: `your_space_id`,
-      accessToken: `your_acces_token`,
+      accessToken: `your_access_token`,
     },
   },
 ]
@@ -34,7 +34,7 @@ plugins: [
     resolve: `gatsby-source-contentful`,
     options: {
       spaceId: `your_space_id`,
-      accessToken: `your_acces_token`,
+      accessToken: `your_access_token`,
       host: `preview.contentful.com`,
     },
   },

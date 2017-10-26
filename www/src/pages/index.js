@@ -19,9 +19,8 @@ import FuturaParagraph from "../components/futura-paragraph"
 import CtaButton from "../components/cta-button"
 import TechWithIcon from "../components/tech-with-icon"
 
-const IndexRoute = React.createClass({
+class IndexRoute extends React.Component {
   render() {
-    console.log(this.props)
     const blogPosts = this.props.data.allMarkdownRemark
     return (
       <div css={{ position: `relative` }}>
@@ -172,7 +171,11 @@ const IndexRoute = React.createClass({
                     Latest from the Gatsby blog
                   </h2>
                   {blogPosts.edges.map(({ node }) => (
-                    <BlogPostPreviewItem post={node} key={node.fields.slug} />
+                    <BlogPostPreviewItem
+                      post={node}
+                      key={node.fields.slug}
+                      css={{ marginBottom: rhythm(2) }}
+                    />
                   ))}
                 </Container>
               </div>
@@ -181,8 +184,8 @@ const IndexRoute = React.createClass({
         </div>
       </div>
     )
-  },
-})
+  }
+}
 
 export default IndexRoute
 
@@ -195,7 +198,7 @@ export const pageQuery = graphql`
     }
     file(relativePath: { eq: "gatsby-explanation.png" }) {
       childImageSharp {
-        responsiveSizes(maxWidth: 870) {
+        sizes(maxWidth: 870) {
           src
           srcSet
           sizes

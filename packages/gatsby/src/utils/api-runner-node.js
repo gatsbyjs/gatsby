@@ -1,22 +1,13 @@
 const Promise = require(`bluebird`)
 const glob = require(`glob`)
 const _ = require(`lodash`)
-const { stripIndent } = require(`common-tags`)
 
 const mapSeries = require(`async/mapSeries`)
 
-const reporter = require(`../reporter`)
+const reporter = require(`gatsby-cli/lib/reporter`)
 const cache = require(`./cache`)
 const apiList = require(`./api-node-docs`)
 
-const pluginError = (plugin, error) =>
-  console.error(
-    stripIndent`
-    Plugin ${plugin} returned an error:
-
-    ${error}
-  `
-  )
 
 // Bind action creators per plugin so we can auto-add
 // metadata to actions they create.
@@ -31,8 +22,15 @@ const doubleBind = (boundActionCreators, api, plugin, { traceId }) => {
       const key = keys[i]
       const boundActionCreator = boundActionCreators[key]
       if (typeof boundActionCreator === `function`) {
-        doubleBoundActionCreators[key] = (...args) =>
-          boundActionCreator(...args, plugin, traceId)
+        doubleBoundActionCreators[key] = (...args) => {
+          // Let action callers override who the plugin is. Shouldn't be used
+          // that often.
+          if (args.length === 1) {
+            boundActionCreator(args[0], plugin, traceId)
+          } else if (args.length === 2) {
+            boundActionCreator(args[0], args[1], traceId)
+          }
+        }
       }
     }
     boundPluginActionCreators[

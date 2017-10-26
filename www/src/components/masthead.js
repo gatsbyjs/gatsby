@@ -8,7 +8,7 @@ import MastheadBg from "./masthead-bg"
 import FuturaParagraph from "./futura-paragraph"
 import { vP, vPHd, vPVHd, vPVVHd } from "../components/gutters"
 
-const MastheadContent = () =>
+const MastheadContent = () => (
   <div
     className="masthead-content"
     css={{
@@ -17,8 +17,6 @@ const MastheadContent = () =>
       paddingTop: rhythm(4),
       paddingBottom: rhythm(1),
       paddingBottom: rhythm(1),
-      transition: `padding-top ${presets.animation.speedFast} ${presets
-        .animation.curveDefault}`,
       flexGrow: `0`,
       flexShrink: `1`,
       [presets.Mobile]: {
@@ -94,6 +92,7 @@ const MastheadContent = () =>
       </CtaButton>
     </div>
   </div>
+)
 
 const Masthead = () => <MastheadContent />
 

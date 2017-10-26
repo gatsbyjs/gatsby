@@ -1,5 +1,6 @@
 import React from "react"
 import Link from "gatsby-link"
+import Img from "gatsby-image"
 
 import typography, { rhythm, scale } from "../utils/typography"
 import presets from "../utils/presets"
@@ -7,26 +8,26 @@ import presets from "../utils/presets"
 class BlogPostPreviewItem extends React.Component {
   render() {
     const post = this.props.post
-    const avatar =
-      post.frontmatter.author.avatar.childImageSharp.responsiveResolution
+    const avatar = post.frontmatter.author.avatar.childImageSharp.resolutions
 
     return (
-      <div css={{ marginBottom: rhythm(2) }}>
+      <article className={this.props.className} css={{ position: `relative` }}>
         <Link to={post.fields.slug}>
-          <h2>
-            {post.frontmatter.title}
-          </h2>
+          <h2>{post.frontmatter.title}</h2>
           <p css={{ fontWeight: `normal` }}>
             {post.frontmatter.excerpt ? post.frontmatter.excerpt : post.excerpt}
           </p>
         </Link>
-        <div css={{ display: `flex`, alignItems: `center` }}>
-          <img
-            alt={`Avatar for ${post.frontmatter.author.id}`}
-            src={avatar.src}
-            srcSet={avatar.srcSet}
-            height={avatar.height}
-            width={avatar.width}
+        <div
+          css={{
+            display: `flex`,
+            alignItems: `center`,
+            marginBottom: rhythm(2),
+          }}
+        >
+          <Img
+            alt=""
+            resolutions={avatar}
             css={{
               borderRadius: `100%`,
               display: `inline-block`,
@@ -55,6 +56,8 @@ class BlogPostPreviewItem extends React.Component {
                 css={{
                   boxShadow: `none !important`,
                   borderBottom: `0 !important`,
+                  position: `relative`,
+                  zIndex: 1,
                   "&&": {
                     fontWeight: `normal`,
                     ":hover": {
@@ -73,7 +76,30 @@ class BlogPostPreviewItem extends React.Component {
             </div>
           </div>
         </div>
-      </div>
+        <Link
+          to={post.fields.slug}
+          css={{
+            position: `absolute`,
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            overflow: `hidden`,
+            textIndent: `-100%`,
+            whiteSpace: `nowrap`,
+            zIndex: 0,
+            "&&": {
+              border: 0,
+              boxShadow: `none`,
+              "&:hover": {
+                background: `none`,
+              },
+            },
+          }}
+        >
+          Read more
+        </Link>
+      </article>
     )
   }
 }
@@ -97,11 +123,17 @@ export const blogPostPreviewFragment = graphql`
         }
         avatar {
           childImageSharp {
-            responsiveResolution(width: 30, height: 30) {
-              width
-              height
-              src
-              srcSet
+            resolutions(
+              width: 30
+              height: 30
+              quality: 80
+              traceSVG: {
+                turdSize: 10
+                background: "#f6f2f8"
+                color: "#e0d6eb"
+              }
+            ) {
+              ...GatsbyImageSharpResolutions_tracedSVG
             }
           }
         }

@@ -3,12 +3,13 @@ import Helmet from "react-helmet"
 import Link from "gatsby-link"
 import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import ArrowBackIcon from "react-icons/lib/md/arrow-back"
+import Img from "gatsby-image"
 
 import presets from "../utils/presets"
 import typography, { rhythm, scale, options } from "../utils/typography"
 import Container from "../components/container"
 
-const BlogPostTemplate = React.createClass({
+class BlogPostTemplate extends React.Component {
   render() {
     const post = this.props.data.markdownRemark
     const prev = this.props.pathContext.prev
@@ -30,7 +31,7 @@ const BlogPostTemplate = React.createClass({
       ...scale(0),
       lineHeight: 1,
     }
-    const BioLine = ({ children }) =>
+    const BioLine = ({ children }) => (
       <p
         css={{
           ...scale(-2 / 5),
@@ -46,33 +47,13 @@ const BlogPostTemplate = React.createClass({
       >
         {children}
       </p>
-    let imageProps
-    if (post.frontmatter.image) {
-      imageProps = {
-        src: post.frontmatter.image.childImageSharp.responsiveSizes.src,
-        srcSet: post.frontmatter.image.childImageSharp.responsiveSizes.srcSet,
-        className: `gatsby-resp-image-image`,
-        css: {
-          width: `100%`,
-          margin: 0,
-          verticalAlign: `middle`,
-          position: `absolute`,
-          boxShadow: `inset 0px 0px 0px 400px #fff`,
-        },
-        sizes: post.frontmatter.image.childImageSharp.responsiveSizes.sizes,
-      }
-      if (post.frontmatter.imageTitle) {
-        imageProps.alt = post.frontmatter.imageTitle
-      }
-    }
+    )
     return (
       <div>
         <Container className="post" css={{ paddingBottom: `0 !important` }}>
           {/* Add long list of social meta tags */}
           <Helmet>
-            <title>
-              {post.frontmatter.title}
-            </title>
+            <title>{post.frontmatter.title}</title>
             <link
               rel="author"
               href={`https://gatsbyjs.org${post.frontmatter.author.slug}`}
@@ -89,14 +70,18 @@ const BlogPostTemplate = React.createClass({
             <meta name="og:description" content={post.excerpt} />
             <meta name="twitter:description" content={post.excerpt} />
             <meta name="og:title" content={post.frontmatter.title} />
-            <meta
-              name="og:image"
-              content={post.frontmatter.image.childImageSharp.resize.src}
-            />
-            <meta
-              name="twitter:image"
-              content={post.frontmatter.image.childImageSharp.resize.src}
-            />
+            {post.frontmatter.image && (
+              <meta
+                name="og:image"
+                content={post.frontmatter.image.childImageSharp.resize.src}
+              />
+            )}
+            {post.frontmatter.image && (
+              <meta
+                name="twitter:image"
+                content={post.frontmatter.image.childImageSharp.resize.src}
+              />
+            )}
             <meta name="og:type" content="article" />
             <meta name="article:author" content={post.frontmatter.author.id} />
             <meta
@@ -130,14 +115,9 @@ const BlogPostTemplate = React.createClass({
                 flex: `0 0 auto`,
               }}
             >
-              <img
-                src={
-                  post.frontmatter.author.avatar.childImageSharp
-                    .responsiveResolution.src
-                }
-                srcSet={
-                  post.frontmatter.author.avatar.childImageSharp
-                    .responsiveResolution.srcSet
+              <Img
+                resolutions={
+                  post.frontmatter.author.avatar.childImageSharp.resolutions
                 }
                 css={{
                   height: rhythm(2.3),
@@ -166,19 +146,18 @@ const BlogPostTemplate = React.createClass({
                   {post.frontmatter.author.id}
                 </h4>
               </Link>
-              <BioLine>
-                {post.frontmatter.author.bio}
-              </BioLine>
+              <BioLine>{post.frontmatter.author.bio}</BioLine>
               <BioLine>
                 {post.timeToRead} min read · {post.frontmatter.date}
-                {post.frontmatter.canonicalLink &&
+                {post.frontmatter.canonicalLink && (
                   <span>
                     {` `}
                     (originally published at{` `}
                     <a href={post.frontmatter.canonicalLink}>
                       {post.frontmatter.publishedAt}
                     </a>)
-                  </span>}
+                  </span>
+                )}
               </BioLine>
             </div>
           </header>
@@ -192,49 +171,25 @@ const BlogPostTemplate = React.createClass({
           >
             {this.props.data.markdownRemark.frontmatter.title}
           </h1>
-          {post.frontmatter.image && !(post.frontmatter.showImageInArticle === false) &&
-            <div
-              css={{
-                marginBottom: rhythm(1),
-              }}
-            >
-              <div className="gatsby-resp-image-link">
-                <div
-                  className="gatsby-resp-image-wrapper"
-                  css={{
-                    position: `relative`,
-                    zIndex: -1,
-                  }}
-                >
-                  <div
-                    className="gatsby-resp-image-background-image"
-                    css={{
-                      paddingBottom: `${1 /
-                        post.frontmatter.image.childImageSharp.responsiveSizes
-                          .aspectRatio *
-                        100}%`,
-                      position: `relative`,
-                      width: `100%`,
-                      bottom: 0,
-                      left: 0,
-                      backgroundImage: `url(${post.frontmatter.image
-                        .childImageSharp.responsiveSizes.base64})`,
-                      backgroundSize: `cover`,
-                    }}
-                  >
-                    <img {...imageProps} />
-                  </div>
-                </div>
+          {post.frontmatter.image &&
+            !(post.frontmatter.showImageInArticle === false) && (
+              <div
+                css={{
+                  marginBottom: rhythm(1),
+                }}
+              >
+                <Img sizes={post.frontmatter.image.childImageSharp.sizes} />
+                {post.frontmatter.imageAuthor &&
+                  post.frontmatter.imageAuthorLink && (
+                    <em>
+                      Image by{` `}
+                      <a href={post.frontmatter.imageAuthorLink}>
+                        {post.frontmatter.imageAuthor}
+                      </a>
+                    </em>
+                  )}
               </div>
-              {post.frontmatter.imageAuthor &&
-                post.frontmatter.imageAuthorLink &&
-                <em>
-                  Image by{` `}
-                  <a href={post.frontmatter.imageAuthorLink}>
-                    {post.frontmatter.imageAuthor}
-                  </a>
-                </em>}
-            </div>}
+            )}
           <div
             className="post-body"
             dangerouslySetInnerHTML={{
@@ -269,7 +224,7 @@ const BlogPostTemplate = React.createClass({
                   },
                 }}
               >
-                {prev &&
+                {prev && (
                   <Link to={prev.fields.slug} css={prevNextLinkStyles}>
                     <h4 css={prevNextLabelStyles}>Previous</h4>
                     <span
@@ -282,7 +237,8 @@ const BlogPostTemplate = React.createClass({
                       <ArrowBackIcon style={{ verticalAlign: `sub` }} />
                       {prev.frontmatter.title}
                     </span>
-                  </Link>}
+                  </Link>
+                )}
               </div>
               <div
                 css={{
@@ -291,7 +247,7 @@ const BlogPostTemplate = React.createClass({
                   [presets.Phablet]: { marginTop: 0, width: `50%` },
                 }}
               >
-                {next &&
+                {next && (
                   <Link to={next.fields.slug} css={prevNextLinkStyles}>
                     <h4 css={prevNextLabelStyles}>Next</h4>
                     <span
@@ -304,15 +260,16 @@ const BlogPostTemplate = React.createClass({
                       {next.frontmatter.title}
                       <ArrowForwardIcon style={{ verticalAlign: `sub` }} />
                     </span>
-                  </Link>}
+                  </Link>
+                )}
               </div>
             </div>
           </Container>
         </div>
       </div>
     )
-  },
-})
+  }
+}
 
 export default BlogPostTemplate
 
@@ -337,12 +294,8 @@ export const pageQuery = graphql`
             resize(width: 1500, height: 1500) {
               src
             }
-            responsiveSizes(maxWidth: 786) {
-              src
-              srcSet
-              aspectRatio
-              base64
-              sizes
+            sizes(maxWidth: 786) {
+              ...GatsbyImageSharpSizes
             }
           }
         }
@@ -356,9 +309,17 @@ export const pageQuery = graphql`
           twitter
           avatar {
             childImageSharp {
-              responsiveResolution(width: 63, height: 63, quality: 75) {
-                src
-                srcSet
+              resolutions(
+                width: 63
+                height: 63
+                quality: 75
+                traceSVG: {
+                  turdSize: 10
+                  background: "#f6f2f8"
+                  color: "#e0d6eb"
+                }
+              ) {
+                ...GatsbyImageSharpResolutions_tracedSVG
               }
             }
           }

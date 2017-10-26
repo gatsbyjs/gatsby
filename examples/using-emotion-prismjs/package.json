@@ -1,0 +1,29 @@
+{
+  "name": "using-emotion-prismjs",
+  "description": "Gatsby example using emotion and PrismJS Gatsby plugin for code snippet highlighting",
+  "main": "n/a",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build"
+  },
+  "dependencies": {
+    "emotion": "^8.0.2-8",
+    "emotion-server": "^8.0.2-8",
+    "gatsby": "^1.0.11",
+    "gatsby-link": "^1.0.9",
+    "gatsby-plugin-emotion": "latest",
+    "gatsby-plugin-google-analytics": "^1.0.1",
+    "gatsby-plugin-offline": "^1.0.1",
+    "gatsby-plugin-typography": "^1.7.10",
+    "gatsby-remark-prismjs": "^1.2.8",
+    "gatsby-source-filesystem": "^1.5.5",
+    "gatsby-transformer-remark": "^1.7.17",
+    "lodash": "^4.17.4",
+    "prop-types": "^15.6.0",
+    "react-emotion": "^8.0.2-8",
+    "typography": "^0.16.6",
+    "typography-theme-bootstrap": "^0.16.7"
+  },
+  "author": "Andrew Wyatt <andrewrwyatt@gmail.com>",
+  "license": "MIT"
+}

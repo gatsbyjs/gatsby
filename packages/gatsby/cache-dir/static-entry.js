@@ -2,6 +2,7 @@ import React from "react"
 import { renderToString, renderToStaticMarkup } from "react-dom/server"
 import { StaticRouter, Route, withRouter } from "react-router-dom"
 import { kebabCase, get, merge, isArray, isString } from "lodash"
+
 import apiRunner from "./api-runner-ssr"
 import pages from "./pages.json"
 import syncRequires from "./sync-requires"
@@ -31,17 +32,14 @@ const pathChunkName = path => {
 }
 
 const getPage = path => pages.find(page => page.path === path)
-const defaultLayout = props =>
-  <div>
-    {props.children()}
-  </div>
+const defaultLayout = props => <div>{props.children()}</div>
 
 const getLayout = page => {
   const layout = syncRequires.layouts[page.layoutComponentChunkName]
   return layout ? layout : defaultLayout
 }
 
-const $ = React.createElement
+const createElement = React.createElement
 
 module.exports = (locals, callback) => {
   let pathPrefix = `/`
@@ -49,18 +47,28 @@ module.exports = (locals, callback) => {
     pathPrefix = `${__PATH_PREFIX__}/`
   }
 
-  let bodyHTML = ``
+  let bodyHtml = ``
   let headComponents = []
+  let htmlAttributes = {}
+  let bodyAttributes = {}
   let preBodyComponents = []
   let postBodyComponents = []
   let bodyProps = {}
 
   const replaceBodyHTMLString = body => {
-    bodyHTML = body
+    bodyHtml = body
   }
 
   const setHeadComponents = components => {
     headComponents = headComponents.concat(components)
+  }
+
+  const setHtmlAttributes = attributes => {
+    htmlAttributes = merge(htmlAttributes, attributes)
+  }
+
+  const setBodyAttributes = attributes => {
+    bodyAttributes = merge(bodyAttributes, attributes)
   }
 
   const setPreBodyComponents = components => {
@@ -75,7 +83,7 @@ module.exports = (locals, callback) => {
     bodyProps = merge({}, bodyProps, props)
   }
 
-  const bodyComponent = $(
+  const bodyComponent = createElement(
     StaticRouter,
     {
       location: {
@@ -83,17 +91,21 @@ module.exports = (locals, callback) => {
       },
       context: {},
     },
-    $(Route, {
-      render: props => {
-        const page = getPage(props.location.pathname)
+    createElement(Route, {
+      render: routeProps => {
+        const page = getPage(routeProps.location.pathname)
         const layout = getLayout(page)
-        return $(withRouter(layout), {
-          ...props,
-          children: props =>
-            $(syncRequires.components[page.componentChunkName], {
-              ...props,
-              ...syncRequires.json[page.jsonName],
-            }),
+        return createElement(withRouter(layout), {
+          children: layoutProps => {
+            const props = layoutProps ? layoutProps : routeProps
+            return createElement(
+              syncRequires.components[page.componentChunkName],
+              {
+                ...props,
+                ...syncRequires.json[page.jsonName],
+              }
+            )
+          },
         })
       },
     })
@@ -104,22 +116,27 @@ module.exports = (locals, callback) => {
     bodyComponent,
     replaceBodyHTMLString,
     setHeadComponents,
+    setHtmlAttributes,
+    setBodyAttributes,
     setPreBodyComponents,
     setPostBodyComponents,
     setBodyProps,
   })
 
   // If no one stepped up, we'll handle it.
-  if (!bodyHTML) {
-    bodyHTML = renderToString(bodyComponent)
+  if (!bodyHtml) {
+    bodyHtml = renderToString(bodyComponent)
   }
 
   apiRunner(`onRenderBody`, {
     setHeadComponents,
+    setHtmlAttributes,
+    setBodyAttributes,
     setPreBodyComponents,
     setPostBodyComponents,
     setBodyProps,
     pathname: locals.path,
+    bodyHtml,
   })
 
   let stats
@@ -189,9 +206,11 @@ module.exports = (locals, callback) => {
     <Html
       {...bodyProps}
       headComponents={headComponents}
+      htmlAttributes={htmlAttributes}
+      bodyAttributes={bodyAttributes}
       preBodyComponents={preBodyComponents}
       postBodyComponents={postBodyComponents}
-      body={bodyHTML}
+      body={bodyHtml}
       path={locals.path}
     />
   )}`

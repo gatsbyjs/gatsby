@@ -2,11 +2,9 @@ import React, { createElement } from "react"
 import PropTypes from "prop-types"
 import loader from "./loader"
 import emitter from "./emitter"
+import { apiRunner } from "./api-runner-browser"
 
-const DefaultLayout = ({ children }) =>
-  <div>
-    {children()}
-  </div>
+const DefaultLayout = ({ children }) => <div>{children()}</div>
 
 // Pass pathname in as prop.
 // component will try fetching resources. If they exist,
@@ -21,6 +19,17 @@ class ComponentRenderer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    // During development, always pass a component's JSON through so graphql
+    // updates go through.
+    if (process.env.NODE_ENV !== `production`) {
+      if (
+        nextProps &&
+        nextProps.pageResources &&
+        nextProps.pageResources.json
+      ) {
+        this.setState({ pageResources: nextProps.pageResources })
+      }
+    }
     if (this.state.location.pathname !== nextProps.location.pathname) {
       const pageResources = loader.getResourcesForPathname(
         nextProps.location.pathname
@@ -59,53 +68,75 @@ class ComponentRenderer extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    // Check if the component or json have changed.
-    if (!this.state.pageResources || nextState.pageResources) {
+    // 404
+    if (!nextState.pageResources) {
       return true
     }
+
+    // Check if the component or json have changed.
+    if (!this.state.pageResources && nextState.pageResources) {
+      return true
+    }
+
     if (
       this.state.pageResources.component !== nextState.pageResources.component
     ) {
       return true
     }
+
     if (this.state.pageResources.json !== nextState.pageResources.json) {
       return true
     }
+
     // Check if location has changed on a page using internal routing
     // via matchPath configuration.
     if (
       this.state.location.key !== nextState.location.key &&
       nextState.pageResources.page &&
-      nextState.pageResources.page.matchPath
+      (nextState.pageResources.page.matchPath ||
+        nextState.pageResources.page.path)
     ) {
       return true
     }
+
     return false
   }
 
   render() {
+    const pluginResponses = apiRunner(`replaceComponentRenderer`, {
+      props: this.props,
+    })
+    const replacementComponent = pluginResponses[0]
+    // If page.
     if (this.props.page) {
       if (this.state.pageResources) {
-        return createElement(this.state.pageResources.component, {
-          key: this.props.location.pathname,
-          ...this.props,
-          ...this.state.pageResources.json,
-        })
+        return (
+          replacementComponent ||
+          createElement(this.state.pageResources.component, {
+            key: this.props.location.pathname,
+            ...this.props,
+            ...this.state.pageResources.json,
+          })
+        )
       } else {
         return null
       }
+      // If layout.
     } else if (this.props.layout) {
-      return createElement(
-        this.state.pageResources && this.state.pageResources.layout
-          ? this.state.pageResources.layout
-          : DefaultLayout,
-        {
-          key:
-            this.state.pageResources && this.state.pageResources.layout
-              ? this.state.pageResources.layout
-              : `DefaultLayout`,
-          ...this.props,
-        }
+      return (
+        replacementComponent ||
+        createElement(
+          this.state.pageResources && this.state.pageResources.layout
+            ? this.state.pageResources.layout
+            : DefaultLayout,
+          {
+            key:
+              this.state.pageResources && this.state.pageResources.layout
+                ? this.state.pageResources.layout
+                : `DefaultLayout`,
+            ...this.props,
+          }
+        )
       )
     } else {
       return null

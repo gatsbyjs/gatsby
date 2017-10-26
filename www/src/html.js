@@ -23,25 +23,25 @@ export default class HTML extends React.Component {
     }
 
     return (
-      <html lang="en">
+      <html {...this.props.htmlAttributes}>
         <head>
           <link
             rel="preload"
             href="/static/ftn45-webfont.c2439033.woff2"
             as="font"
-            crossOrigin
+            crossOrigin="anonymous"
           />
           <link
             rel="preload"
-            href="/static/spectral-latin-400.bc2de9de.woff2"
+            href="/static/spectral-latin-400.d6a7b14a.woff2"
             as="font"
-            crossOrigin
+            crossOrigin="anonymous"
           />
           <link
             rel="preload"
             href="/static/ftn65-webfont.0ddc10d2.woff2"
             as="font"
-            crossOrigin
+            crossOrigin="anonymous"
           />
           {this.props.headComponents}
           <meta charSet="utf-8" />
@@ -74,7 +74,7 @@ export default class HTML extends React.Component {
           />
           {css}
         </head>
-        <body>
+        <body {...this.props.bodyAttributes}>
           <div
             id="___gatsby"
             dangerouslySetInnerHTML={{ __html: this.props.body }}

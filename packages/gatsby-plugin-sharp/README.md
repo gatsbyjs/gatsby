@@ -163,6 +163,42 @@ the source image colors will be converted to match a gradient color chosen based
 on each pixel's [relative luminance][4].  
 Logic is borrowed from [react-duotone][5].
 
+#### tracedSVG
+
+Generates a traced SVG of the image (see [the original GitHub issue][9]) and
+returns the SVG as "[optimized URL-encoded][10]" `data:` URI.
+It it used in [gatsby-image](https://www.gatsbyjs.org/packages/gatsby-image/) to
+provide an alternative to the default inline base64 placeholder image.
+
+Uses [node-potrace][11] and [SVGO][12] under the hood.
+Default settings for node-potrace:
+
+```javascript
+  {
+    color: `lightgray`,
+    optTolerance: 0.4,
+    turdSize: 100,
+    turnPolicy: TURNPOLICY_MAJORITY,
+  }
+```
+
+All [node-potrace `Potrace` parameters][13] are exposed and can be set via the
+`traceSVG` argument:
+
+```javascript
+responsiveResolution(
+  traceSVG: {
+    color: "#f00e2e"
+    turnPolicy: TURNPOLICY_MINORITY
+    blackOnWhite: false
+  }
+) {
+  src
+  srcSet
+  tracedSVG
+}
+```
+
 [1]: https://alistapart.com/article/finessing-fecolormatrix
 [2]: http://blog.72lions.com/blog/2015/7/7/duotone-in-js
 [3]: https://ines.io/blog/dynamic-duotone-svg-jade
@@ -171,3 +207,9 @@ Logic is borrowed from [react-duotone][5].
 [6]: http://sharp.dimens.io/en/stable/api-resize/#crop
 [7]: http://sharp.dimens.io/en/stable/api-operation/#rotate
 [8]: http://sharp.dimens.io/en/stable/api-colour/#greyscale
+[9]: https://github.com/gatsbyjs/gatsby/issues/2435
+[10]: https://codepen.io/tigt/post/optimizing-svgs-in-data-uris
+[11]: https://github.com/tooolbox/node-potrace
+[12]: https://github.com/svg/svgo
+[13]: https://github.com/tooolbox/node-potrace#parameters
+[14]: https://github.com/oliver-moran/jimp

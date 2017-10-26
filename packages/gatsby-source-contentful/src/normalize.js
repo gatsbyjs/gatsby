@@ -17,7 +17,7 @@ const getLocalizedField = ({ field, defaultLocale, locale }) => {
   } else if (field[locale.fallbackCode]) {
     return field[locale.fallbackCode]
   } else {
-    return field[defaultLocale]
+    return null
   }
 }
 
@@ -29,10 +29,12 @@ exports.getLocalizedField = getLocalizedField
 // If the id starts with a number, left-pad it with a c (for Contentful of
 // course :-))
 const fixId = id => {
+  if (!_.isString(id)) {
+    id = id.toString()
+  }
   if (!isNaN(id.slice(0, 1))) {
     return `c${id}`
   }
-
   return id
 }
 exports.fixId = fixId
@@ -253,6 +255,8 @@ exports.createContentTypeNodes = ({
 
       let entryNode = {
         id: mId(entryItem.sys.id),
+        createdAt: entryItem.sys.createdAt,
+        updatedAt: entryItem.sys.updatedAt,
         parent: contentTypeItemId,
         children: [],
         internal: {
@@ -311,7 +315,7 @@ exports.createContentTypeNodes = ({
     // Create a node for each content type
     const contentTypeNode = {
       id: contentTypeItemId,
-      parent: `__SOURCE__`,
+      parent: null,
       children: [],
       name: contentTypeItem.name,
       displayField: contentTypeItem.displayField,
@@ -358,7 +362,7 @@ exports.createAssetNodes = ({
     }
     const assetNode = {
       id: mId(localizedAsset.sys.id),
-      parent: `__SOURCE__`,
+      parent: null,
       children: [],
       ...localizedAsset.fields,
       node_locale: locale.code,

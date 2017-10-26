@@ -6,10 +6,10 @@ import MobileNavigation from "../components/navigation-mobile"
 import SidebarBody from "../components/sidebar-body"
 import tutorialSidebar from "../pages/docs/tutorial-links.yml"
 import docsSidebar from "../pages/docs/doc-links.yaml"
+import featuresSidebar from "../pages/docs/features-links.yaml"
 import { rhythm, scale } from "../utils/typography"
 import presets from "../utils/presets"
 import colors from "../utils/colors"
-
 import "../css/prism-coy.css"
 
 // Import Futura PT typeface
@@ -22,26 +22,25 @@ import "../fonts/Webfonts/futurapt_demiitalic_macroman/stylesheet.css"
 import "typeface-spectral"
 import "typeface-space-mono"
 
-module.exports = React.createClass({
-  propTypes() {
-    return {
-      children: React.PropTypes.any,
-    }
-  },
+class DefaultLayout extends React.Component {
   render() {
     const isHomepage = this.props.location.pathname == `/`
-    const hasSidebar = this.props.location.pathname.slice(0, 6) === `/docs/` ||
-    this.props.location.pathname.slice(0, 10) === `/packages/` ||
-    this.props.location.pathname.slice(0, 10) === `/tutorial/`
+    const hasSidebar =
+      this.props.location.pathname.slice(0, 6) === `/docs/` ||
+      this.props.location.pathname.slice(0, 10) === `/packages/` ||
+      this.props.location.pathname.slice(0, 10) === `/tutorial/` ||
+      this.props.location.pathname.slice(0, 9) === `/features`
     const sidebarStyles = {
       borderRight: `1px solid ${colors.b[0]}`,
       backgroundColor: presets.sidebar,
-      float: `left`,
+      boxShadow: `inset 0 4px 5px 0 rgba(116, 76, 158, ${presets.shadowKeyPenumbraOpacity}), inset 0 1px 10px 0 rgba(${presets.shadowColor}, ${presets.shadowAmbientShadowOpacity}), inset 0 2px 4px -1px rgba(${presets.shadowColor}, ${presets.shadowKeyUmbraOpacity})`,
       width: rhythm(10),
       display: `none`,
       position: `fixed`,
+      top: `calc(${presets.headerHeight} - 1px)`,
       overflowY: `auto`,
-      height: `calc(100vh - ${presets.headerHeight})`,
+      zIndex: 1,
+      height: `calc(100vh - ${presets.headerHeight} + 1px)`,
       WebkitOverflowScrolling: `touch`,
       "::-webkit-scrollbar": {
         width: `6px`,
@@ -51,7 +50,11 @@ module.exports = React.createClass({
         background: presets.lightPurple,
       },
       "::-webkit-scrollbar-track": {
-        background: presets.veryLightPurple,
+        background: presets.brandLighter,
+      },
+      [presets.Desktop]: {
+        width: rhythm(12),
+        padding: rhythm(1),
       },
     }
 
@@ -61,8 +64,9 @@ module.exports = React.createClass({
           <meta name="twitter:site" content="@gatsbyjs" />
           <meta name="og:type" content="website" />
           <meta name="og:site_name" content="GatsbyJS" />
+          <html lang="en" />
         </Helmet>
-        <Navigation isHomepage={isHomepage} />
+        <Navigation pathname={this.props.location.pathname} />
         <div
           className={hasSidebar ? `main-body has-sidebar` : `main-body`}
           css={{
@@ -106,11 +110,24 @@ module.exports = React.createClass({
           </div>
           <div
             css={{
+              ...sidebarStyles,
               [presets.Tablet]: {
-                paddingLeft:
-                  hasSidebar
-                    ? rhythm(10)
-                    : 0,
+                display:
+                  this.props.location.pathname.slice(0, 9) === `/features`
+                    ? `block`
+                    : `none`,
+              },
+            }}
+          >
+            <SidebarBody yaml={featuresSidebar} />
+          </div>
+          <div
+            css={{
+              [presets.Tablet]: {
+                paddingLeft: hasSidebar ? rhythm(10) : 0,
+              },
+              [presets.Desktop]: {
+                paddingLeft: hasSidebar ? rhythm(12) : 0,
               },
             }}
           >
@@ -120,5 +137,7 @@ module.exports = React.createClass({
         <MobileNavigation />
       </div>
     )
-  },
-})
+  }
+}
+
+module.exports = DefaultLayout

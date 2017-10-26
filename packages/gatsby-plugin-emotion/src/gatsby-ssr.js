@@ -1,6 +1,6 @@
 import React from "react"
 import { renderToString } from "react-dom/server"
-import { extractCritical } from "emotion/server"
+import { extractCritical } from "emotion-server"
 
 exports.replaceRenderer = ({
   bodyComponent,
