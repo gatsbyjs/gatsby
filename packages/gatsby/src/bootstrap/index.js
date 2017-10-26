@@ -61,7 +61,12 @@ module.exports = async (args: BootstrapArgs) => {
   // pages from previous builds to stick around.
   let activity = report.activityTimer(`delete html files from previous builds`)
   activity.start()
-  await del([`public/*.html`, `public/**/*.html`, `!public/static`, `!public/static/**/*.html`])
+  await del([
+    `public/*.html`,
+    `public/**/*.html`,
+    `!public/static`,
+    `!public/static/**/*.html`,
+  ])
   activity.end()
 
   // Try opening the site's gatsby-config.js file.

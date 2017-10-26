@@ -1,6 +1,6 @@
-'use strict'
+"use strict"
 
-import { injectGlobal } from 'emotion'
+import { injectGlobal } from "emotion"
 
 const colors = {
   dark: `#282c34`,

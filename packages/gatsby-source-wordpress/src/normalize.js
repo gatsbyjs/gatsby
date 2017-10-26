@@ -305,7 +305,7 @@ exports.mapEntitiesToMedia = entities => {
           const me = media.find(m => m.source_url === value)
           if (me) {
             e.acf[`${key}___NODE`] = me.id
-            delete e.acf[key] 
+            delete e.acf[key]
           }
         }
 
