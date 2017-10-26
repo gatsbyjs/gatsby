@@ -42,8 +42,7 @@ const TemplateWrapper = ({ children }) => (
       meta={[
         {
           name: `description`,
-          content:
-            `Gatsby example site demonstrating using createRedirect for client-side, in browser redirection in Gatsby`,
+          content: `Gatsby example site demonstrating using createRedirect for client-side, in browser redirection in Gatsby`,
         },
       ]}
     />
