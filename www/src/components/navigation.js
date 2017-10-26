@@ -107,7 +107,6 @@ export default ({ pathname }) => {
           paddingLeft: rhythm(3 / 4),
           paddingRight: rhythm(3 / 4),
           ...gutters,
-          transition: `padding .1s ease-out`,
           fontFamily: typography.options.headerFontFamily.join(`,`),
           display: `flex`,
           alignItems: `center`,

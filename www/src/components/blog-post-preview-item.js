@@ -27,7 +27,6 @@ class BlogPostPreviewItem extends React.Component {
         >
           <Img
             alt=""
-            backgroundColor
             resolutions={avatar}
             css={{
               borderRadius: `100%`,
@@ -124,8 +123,17 @@ export const blogPostPreviewFragment = graphql`
         }
         avatar {
           childImageSharp {
-            resolutions(width: 30, height: 30, quality: 80) {
-              ...GatsbyImageSharpResolutions_noBase64
+            resolutions(
+              width: 30
+              height: 30
+              quality: 80
+              traceSVG: {
+                turdSize: 10
+                background: "#f6f2f8"
+                color: "#e0d6eb"
+              }
+            ) {
+              ...GatsbyImageSharpResolutions_tracedSVG
             }
           }
         }

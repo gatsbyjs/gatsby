@@ -1,8 +1,8 @@
 import React from "react"
 import Helmet from "react-helmet"
-import GithubIcon from "react-icons/lib/go/mark-github"
 
-import { rhythm } from "../utils/typography"
+import MarkdownPageFooter from "../components/markdown-page-footer"
+
 import Container from "../components/container"
 
 class DocsTemplate extends React.Component {
@@ -26,6 +26,7 @@ class DocsTemplate extends React.Component {
             __html: page.html,
           }}
         />
+        <MarkdownPageFooter page={page} />
       </Container>
     )
   }
@@ -42,6 +43,7 @@ export const pageQuery = graphql`
       frontmatter {
         title
       }
+      ...MarkdownPageFooter
     }
   }
 `

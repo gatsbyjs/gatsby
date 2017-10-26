@@ -33,12 +33,14 @@ class DefaultLayout extends React.Component {
     const sidebarStyles = {
       borderRight: `1px solid ${colors.b[0]}`,
       backgroundColor: presets.sidebar,
-      float: `left`,
+      boxShadow: `inset 0 4px 5px 0 rgba(116, 76, 158, ${presets.shadowKeyPenumbraOpacity}), inset 0 1px 10px 0 rgba(${presets.shadowColor}, ${presets.shadowAmbientShadowOpacity}), inset 0 2px 4px -1px rgba(${presets.shadowColor}, ${presets.shadowKeyUmbraOpacity})`,
       width: rhythm(10),
       display: `none`,
       position: `fixed`,
+      top: `calc(${presets.headerHeight} - 1px)`,
       overflowY: `auto`,
-      height: `calc(100vh - ${presets.headerHeight})`,
+      zIndex: 1,
+      height: `calc(100vh - ${presets.headerHeight} + 1px)`,
       WebkitOverflowScrolling: `touch`,
       "::-webkit-scrollbar": {
         width: `6px`,
@@ -49,6 +51,10 @@ class DefaultLayout extends React.Component {
       },
       "::-webkit-scrollbar-track": {
         background: presets.brandLighter,
+      },
+      [presets.Desktop]: {
+        width: rhythm(12),
+        padding: rhythm(1),
       },
     }
 
@@ -119,6 +125,9 @@ class DefaultLayout extends React.Component {
             css={{
               [presets.Tablet]: {
                 paddingLeft: hasSidebar ? rhythm(10) : 0,
+              },
+              [presets.Desktop]: {
+                paddingLeft: hasSidebar ? rhythm(12) : 0,
               },
             }}
           >

@@ -278,8 +278,8 @@ const queue = {
       // we move on.
       const done = () => {
         if (component && json && (!page.layoutComponentChunkName || layout)) {
-          pathScriptsCache[path] = { component, json, layout }
-          const pageResources = { component, json, layout }
+          pathScriptsCache[path] = { component, json, layout, page }
+          const pageResources = { component, json, layout, page }
           cb(pageResources)
           emitter.emit(`onPostLoadPageResources`, {
             page,

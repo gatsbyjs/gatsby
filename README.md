@@ -60,6 +60,10 @@ Websites built with Gatsby:
 * [OnCallogy.com](https://www.oncallogy.com)
 * [doopoll's marketing site](https://doopoll.co)
 * [Design Systems Weekly](https://designsystems.email/)
+* [Slite landing pages](https://slite.com/)
+* [Hallingdata](http://hallingdata.no/)
+* [@swyx](http://swyx.io) [(source)](https://github.com/sw-yx/swyxdotio)
+* [Portfolio of Piotr Fedorczyk](https://piotrf.pl)
 
 ## Docs
 

@@ -122,7 +122,7 @@ describe(`Gets field value based on current locale`, () => {
       })
     ).toBe(field[`de`])
   })
-  it(`falls back to the default locale if passed a locale that doesn't have a field nor a fallbackCode`, () => {
+  it(`returns null if passed a locale that doesn't have a field nor a fallbackCode`, () => {
     expect(
       normalize.getLocalizedField({
         field,
@@ -132,7 +132,7 @@ describe(`Gets field value based on current locale`, () => {
           fallbackCode: `null`,
         },
       })
-    ).toBe(field[`en-US`])
+    ).toEqual(null)
   })
 })
 

@@ -1,6 +1,7 @@
 import React from "react"
 import Helmet from "react-helmet"
 
+import MarkdownPageFooter from "../components/markdown-page-footer"
 import { rhythm, scale } from "../utils/typography"
 import presets from "../utils/presets"
 import Container from "../components/container"
@@ -28,7 +29,7 @@ class DocsPackagesTemplate extends React.Component {
               position: `absolute`,
             }}
           >
-            Browse source code for package on Github
+            Browse source code for this package on Github
           </a>
         </strong>
         <div
@@ -39,6 +40,7 @@ class DocsPackagesTemplate extends React.Component {
             __html: this.props.data.markdownRemark.html,
           }}
         />
+        <MarkdownPageFooter page={page} />
       </Container>
     )
   }
@@ -55,6 +57,7 @@ export const pageQuery = graphql`
       fields {
         title
       }
+      ...MarkdownPageFooter
     }
   }
 `

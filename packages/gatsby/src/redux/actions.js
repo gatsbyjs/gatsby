@@ -613,8 +613,9 @@ actions.setPluginStatus = (status, plugin) => {
 }
 
 /**
- * Create a redirect from one page to another.
- * Redirect data can be used to configure environments like Netlify.
+ * Create a redirect from one page to another.  Redirect data can be used to
+ * configure hosting environments like Netlify (automatically handled with the
+ * [Netlify plugin](/packages/gatsby-plugin-netlify/)).
  *
  * @param {Object} redirect Redirect data
  * @param {string} redirect.fromPath Any valid URL. Must start with a forward slash

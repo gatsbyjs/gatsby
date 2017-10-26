@@ -5,6 +5,9 @@ Array [
   Object {
     "id": "Plugin component-page-creator",
     "name": "component-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
     "pluginOptions": Object {
       "plugins": Array [],
     },
@@ -14,6 +17,9 @@ Array [
   Object {
     "id": "Plugin component-layout-creator",
     "name": "component-layout-creator",
+    "nodeAPIs": Array [
+      "createLayouts",
+    ],
     "pluginOptions": Object {
       "plugins": Array [],
     },
@@ -23,6 +29,10 @@ Array [
   Object {
     "id": "Plugin internal-data-bridge",
     "name": "internal-data-bridge",
+    "nodeAPIs": Array [
+      "sourceNodes",
+      "onCreatePage",
+    ],
     "pluginOptions": Object {
       "plugins": Array [],
     },
@@ -32,6 +42,9 @@ Array [
   Object {
     "id": "Plugin dev-404-page",
     "name": "dev-404-page",
+    "nodeAPIs": Array [
+      "createPages",
+    ],
     "pluginOptions": Object {
       "plugins": Array [],
     },
@@ -41,6 +54,9 @@ Array [
   Object {
     "id": "Plugin prod-404",
     "name": "prod-404",
+    "nodeAPIs": Array [
+      "onCreatePage",
+    ],
     "pluginOptions": Object {
       "plugins": Array [],
     },
@@ -50,6 +66,10 @@ Array [
   Object {
     "id": "Plugin query-runner",
     "name": "query-runner",
+    "nodeAPIs": Array [
+      "onCreatePage",
+      "onCreateLayout",
+    ],
     "pluginOptions": Object {
       "plugins": Array [],
     },
@@ -58,6 +78,7 @@ Array [
   },
   Object {
     "name": "TEST",
+    "nodeAPIs": Array [],
     "pluginOptions": Object {
       "plugins": Array [],
     },
@@ -66,6 +87,7 @@ Array [
   Object {
     "id": "Plugin default-site-plugin",
     "name": "default-site-plugin",
+    "nodeAPIs": Array [],
     "pluginOptions": Object {
       "plugins": Array [],
     },
@@ -80,6 +102,9 @@ Array [
   Object {
     "id": "Plugin component-page-creator",
     "name": "component-page-creator",
+    "nodeAPIs": Array [
+      "createPagesStatefully",
+    ],
     "pluginOptions": Object {
       "plugins": Array [],
     },
@@ -89,6 +114,9 @@ Array [
   Object {
     "id": "Plugin component-layout-creator",
     "name": "component-layout-creator",
+    "nodeAPIs": Array [
+      "createLayouts",
+    ],
     "pluginOptions": Object {
       "plugins": Array [],
     },
@@ -98,6 +126,10 @@ Array [
   Object {
     "id": "Plugin internal-data-bridge",
     "name": "internal-data-bridge",
+    "nodeAPIs": Array [
+      "sourceNodes",
+      "onCreatePage",
+    ],
     "pluginOptions": Object {
       "plugins": Array [],
     },
@@ -107,6 +139,9 @@ Array [
   Object {
     "id": "Plugin dev-404-page",
     "name": "dev-404-page",
+    "nodeAPIs": Array [
+      "createPages",
+    ],
     "pluginOptions": Object {
       "plugins": Array [],
     },
@@ -116,6 +151,9 @@ Array [
   Object {
     "id": "Plugin prod-404",
     "name": "prod-404",
+    "nodeAPIs": Array [
+      "onCreatePage",
+    ],
     "pluginOptions": Object {
       "plugins": Array [],
     },
@@ -125,6 +163,10 @@ Array [
   Object {
     "id": "Plugin query-runner",
     "name": "query-runner",
+    "nodeAPIs": Array [
+      "onCreatePage",
+      "onCreateLayout",
+    ],
     "pluginOptions": Object {
       "plugins": Array [],
     },
@@ -134,6 +176,7 @@ Array [
   Object {
     "id": "Plugin default-site-plugin",
     "name": "default-site-plugin",
+    "nodeAPIs": Array [],
     "pluginOptions": Object {
       "plugins": Array [],
     },
