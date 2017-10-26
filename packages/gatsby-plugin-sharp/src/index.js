@@ -95,7 +95,10 @@ const processFile = (file, jobs, cb) => {
       )
     }
 
-    if ((job.file.extension.match(/^jp/) && args.toFormat === ``) || args.toFormat === `jpg`) {
+    if (
+      (job.file.extension.match(/^jp/) && args.toFormat === ``) ||
+      args.toFormat === `jpg`
+    ) {
       clonedPipeline.toFile(job.outputPath, (err, info) => {
         imagesFinished += 1
         bar.tick()
@@ -109,7 +112,10 @@ const processFile = (file, jobs, cb) => {
         job.outsideResolve(info)
       })
       // Compress pngs
-    } else if ((job.file.extension === `png` && args.toFormat === ``) || args.toFormat === `png`) {
+    } else if (
+      (job.file.extension === `png` && args.toFormat === ``) ||
+      args.toFormat === `png`
+    ) {
       clonedPipeline.toBuffer().then(sharpBuffer => {
         imagemin
           .buffer(sharpBuffer, {
@@ -135,13 +141,14 @@ const processFile = (file, jobs, cb) => {
           })
       })
       // Compress webp
-    } else if ((job.file.extension === `webp` && args.toFormat === ``) || args.toFormat === `webp`) {
+    } else if (
+      (job.file.extension === `webp` && args.toFormat === ``) ||
+      args.toFormat === `webp`
+    ) {
       clonedPipeline.toBuffer().then(sharpBuffer => {
         imagemin
           .buffer(sharpBuffer, {
-            plugins: [
-              imageminWebp({ quality: args.quality }),
-            ],
+            plugins: [imageminWebp({ quality: args.quality })],
           })
           .then(imageminBuffer => {
             fs.writeFile(job.outputPath, imageminBuffer, () => {

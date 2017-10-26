@@ -10,18 +10,18 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     resolve(
       graphql(
         `
-      {
-        allMarkdownRemark(limit: 1000) {
-          edges {
-            node {
-              frontmatter {
-                path
+          {
+            allMarkdownRemark(limit: 1000) {
+              edges {
+                node {
+                  frontmatter {
+                    path
+                  }
+                }
               }
             }
           }
-        }
-      }
-    `
+        `
       ).then(result => {
         if (result.errors) {
           console.log(result.errors)

@@ -47,7 +47,11 @@ class BlogIndex extends React.Component {
       <div className={indexContainer}>
         <h2>
           Enjoy the nicely highlighted code snippets in the posts below styled
-          with the{` `} <a href="https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs">Gatsby PrismJS plugin</a> and 
+          with the{` `}{` `}
+          <a href="https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-prismjs">
+            Gatsby PrismJS plugin
+          </a>{` `}
+          and
           {` `}
           <a href="https://emotion.sh/">emotion</a>!
         </h2>

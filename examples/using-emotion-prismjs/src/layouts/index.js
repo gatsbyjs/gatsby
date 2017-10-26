@@ -35,10 +35,7 @@ class Template extends React.Component {
     } else {
       header = (
         <h3>
-          <Link
-            className={link}
-            to={`/`}
-          >
+          <Link className={link} to={`/`}>
             Using Gatsby with Emotion and PrismJS
           </Link>
         </h3>

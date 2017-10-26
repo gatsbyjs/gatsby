@@ -20,7 +20,7 @@ class BlogPostTemplate extends React.Component {
     console.log(this.props)
     const post = this.props.data.markdownRemark
     const postPath = post.frontmatter.postPath
-    const siteTitle = get(this.props, "data.site.siteMetadata.title")
+    const siteTitle = get(this.props, `data.site.siteMetadata.title`)
 
     return (
       <div className={postContainer}>
