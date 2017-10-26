@@ -252,54 +252,54 @@ exports.mapEntitiesToMedia = entities => {
     // featured_media to 0 when there isn't one which is useless to us.
     delete e.featured_media
 
-    const isPhoto = field =>
-      _.isObject(field) &&
-      field.wordpress_id &&
-      field.url &&
-      field.width &&
-      field.height
-        ? true
-        : false
-
-    const photoRegex = /\.(gif|jpg|jpeg|tiff|png)$/i
-    const isPhotoUrl = filename => photoRegex.test(filename)
-    const replacePhoto = field =>
-      media.find(m => m.wordpress_id === field.wordpress_id).id
-
-    const replaceFieldsInObject = object => {
-      _.each(object, (value, key) => {
-        if (_.isArray(value)) {
-          value.forEach(v => replaceFieldsInObject(v))
-        }
-        if (isPhoto(value)) {
-          object[`${key}___NODE`] = replacePhoto(value)
-          delete object[key]
-        }
-
-        // featured_media can be nested inside ACF fields
-        if (_.isObject(value) && value.featured_media) {
-          featuredMedia = media.find(
-            m => m.wordpress_id === value.featured_media
-          )
-          if (featuredMedia) {
-            value.featured_media___NODE = featuredMedia.id
-          }
-          delete value.featured_media
-        }
-        if (_.isNumber(value) && key == `featured_media`) {
-          featuredMedia = media.find(m => m.wordpress_id === value)
-          if (featuredMedia) {
-            object[`${key}___NODE`] = featuredMedia.id
-          }
-          delete object[key]
-        }
-        if (_.isBoolean(value) && key == `featured_media`) {
-          delete object[key]
-        }
-      })
-    }
-
     if (e.acf) {
+      const isPhoto = field =>
+        _.isObject(field) &&
+        field.wordpress_id &&
+        field.url &&
+        field.width &&
+        field.height
+          ? true
+          : false
+
+      const photoRegex = /\.(gif|jpg|jpeg|tiff|png)$/i
+      const isPhotoUrl = filename => photoRegex.test(filename)
+      const replacePhoto = field =>
+        media.find(m => m.wordpress_id === field.wordpress_id).id
+
+      const replaceFieldsInObject = object => {
+        _.each(object, (value, key) => {
+          if (_.isArray(value)) {
+            value.forEach(v => replaceFieldsInObject(v))
+          }
+          if (isPhoto(value)) {
+            object[`${key}___NODE`] = replacePhoto(value)
+            delete object[key]
+          }
+
+          // featured_media can be nested inside ACF fields
+          if (_.isObject(value) && value.featured_media) {
+            featuredMedia = media.find(
+              m => m.wordpress_id === value.featured_media
+            )
+            if (featuredMedia) {
+              value.featured_media___NODE = featuredMedia.id
+            }
+            delete value.featured_media
+          }
+          if (_.isNumber(value) && key == `featured_media`) {
+            featuredMedia = media.find(m => m.wordpress_id === value)
+            if (featuredMedia) {
+              object[`${key}___NODE`] = featuredMedia.id
+            }
+            delete object[key]
+          }
+          if (_.isBoolean(value) && key == `featured_media`) {
+            delete object[key]
+          }
+        })
+      }
+
       _.each(e.acf, (value, key) => {
         if (_.isString(value) && isPhotoUrl(value)) {
           const me = media.find(m => m.source_url === value)
