@@ -271,6 +271,7 @@ exports.mapEntitiesToMedia = entities => {
         media.find(m => m.wordpress_id === field.wordpress_id).id
       const isFeaturedMedia = (value, key) =>
         (_.isNumber(value) || _.isBoolean(value)) && key === 'featured_media'
+      const getMediaItemID = mediaItem => mediaItem ? mediaItem.id : null
 
       // Try to get media node from value:
       //  - special case - check if key is featured_media and value is photo ID
@@ -279,34 +280,34 @@ exports.mapEntitiesToMedia = entities => {
       const getMediaFromACFValue = (value, key) => {
         if (isFeaturedMedia(value, key)) {
           return {
-            mediaItem:
-              _.isNumber(value) ? media.find(m => m.wordpress_id === value) : null,
+            mediaNodeID:
+              _.isNumber(value) ? getMediaItemID(media.find(m => m.wordpress_id === value)) : null,
             deleteField: true
           }
         } else if (isPhotoUrl(value)) {
-          const mediaItem = media.find(m => m.source_url === value);
+          const mediaNodeID = getMediaItemID(media.find(m => m.source_url === value));
           return {
-            mediaItem,
-            deleteField: !!media
+            mediaNodeID,
+            deleteField: !!mediaNodeID
           }
         } else if (isACFPhotoData(value)) {
-          const mediaItem = media.find(m => m.source_url === value.url);
+          const mediaNodeID = getMediaItemID(media.find(m => m.source_url === value.url));
           return {
-            mediaItem,
-            deleteField: !!media
+            mediaNodeID,
+            deleteField: !!mediaNodeID
           }
         }
         return {
-          mediaItem: null,
+          mediaNodeID: null,
           deleteField: false
         };
       }
 
       const replaceFieldsInObject = object => {
         _.each(object, (value, key) => {
-          const { mediaItem, deleteField } = getMediaFromACFValue(value, key);
-          if (mediaItem) {
-            object[`${key}___NODE`] = mediaItem.id;
+          const { mediaNodeID, deleteField } = getMediaFromACFValue(value, key);
+          if (mediaNodeID) {
+            object[`${key}___NODE`] = mediaNodeID;
           }
           if (deleteField) {
             delete object[key];
