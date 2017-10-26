@@ -29,7 +29,7 @@ exports.sourceNodes = async ({ boundActionCreators }, { username }) => {
   const { createNode } = boundActionCreators
 
   try {
-    const isPublication = username[0] !== '@'  // username's start with `@` symbol
+    const isPublication = username[0] !== `@`  // username's start with `@` symbol
     const result = await fetch(username)
     const json = JSON.parse(strip(result.data))
     let importableResources = []
@@ -44,7 +44,7 @@ exports.sourceNodes = async ({ boundActionCreators }, { username }) => {
       const posts = json.payload.posts
       importableResources =  [
         posts,
-        userKeys.map(key => json.payload.references.User[key])
+        userKeys.map(key => json.payload.references.User[key]),
       ]
     }
 
