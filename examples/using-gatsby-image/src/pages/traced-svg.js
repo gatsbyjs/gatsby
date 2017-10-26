@@ -33,9 +33,9 @@ const UnsplashMasonry = edges => (
         },
       }}
     >
-      {edges.images.map(image => (
+      {edges.images.map((image, index) => (
         <div
-          key={image.node.src}
+          key={index}
           css={{
             border: `4px solid transparent`,
             breakInside: `avoid`,
