@@ -293,6 +293,9 @@ exports.mapEntitiesToMedia = entities => {
           }
           delete object[key]
         }
+        if (_.isBoolean(value) && key == `featured_media`) {
+          delete object[key]
+        }
       })
     }
 
@@ -300,8 +303,10 @@ exports.mapEntitiesToMedia = entities => {
       _.each(e.acf, (value, key) => {
         if (_.isString(value) && isPhotoUrl(value)) {
           const me = media.find(m => m.source_url === value)
-          e.acf[`${key}___NODE`] = me.id
-          delete e.acf[key]
+          if (me) {
+            e.acf[`${key}___NODE`] = me.id
+            delete e.acf[key]
+          }
         }
 
         if (_.isArray(value) && value[0] && value[0].acf_fc_layout) {
@@ -353,7 +358,7 @@ const createACFChildNodes = (
 ) => {
   // Replace any child arrays with pointers to nodes
   _.each(obj, (value, key) => {
-    if (_.isArray(value) && value[0].acf_fc_layout) {
+    if (_.isArray(value) && value[0] && value[0].acf_fc_layout) {
       obj[`${key}___NODE`] = value.map(
         v =>
           createACFChildNodes(
@@ -389,7 +394,7 @@ exports.createNodesFromEntities = ({ entities, createNode }) => {
     let children = []
     if (entity.acf) {
       _.each(entity.acf, (value, key) => {
-        if (_.isArray(value) && value[0].acf_fc_layout) {
+        if (_.isArray(value) && value[0] && value[0].acf_fc_layout) {
           entity.acf[`${key}_${entity.type}___NODE`] = entity.acf[
             key
           ].map((f, i) => {

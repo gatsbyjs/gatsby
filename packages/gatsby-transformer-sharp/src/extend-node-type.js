@@ -150,6 +150,38 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           height: { type: GraphQLFloat },
           src: { type: GraphQLString },
           srcSet: { type: GraphQLString },
+          srcWebp: {
+            type: GraphQLString,
+            resolve: ({ file, image, fieldArgs }) => {
+              // If the file is already in webp format or should explicitly
+              // be converted to webp, we do not create additional webp files
+              if (image.extension === `webp` || fieldArgs.toFormat === `webp`) {
+                return null
+              }
+              const args = { ...fieldArgs, pathPrefix, toFormat: `webp` }
+              return Promise.resolve(
+                resolutions({
+                  file,
+                  args,
+                })
+              ).then(({ src }) => src)
+            },
+          },
+          srcSetWebp: {
+            type: GraphQLString,
+            resolve: ({ file, image, fieldArgs }) => {
+              if (image.extension === `webp` || fieldArgs.toFormat === `webp`) {
+                return null
+              }
+              const args = { ...fieldArgs, pathPrefix, toFormat: `webp` }
+              return Promise.resolve(
+                resolutions({
+                  file,
+                  args,
+                })
+              ).then(({ srcSet }) => srcSet)
+            },
+          },
           originalName: { type: GraphQLString },
         },
       }),
@@ -223,6 +255,36 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
           aspectRatio: { type: GraphQLFloat },
           src: { type: GraphQLString },
           srcSet: { type: GraphQLString },
+          srcWebp: {
+            type: GraphQLString,
+            resolve: ({ file, image, fieldArgs }) => {
+              if (image.extension === `webp` || fieldArgs.toFormat === `webp`) {
+                return null
+              }
+              const args = { ...fieldArgs, pathPrefix, toFormat: `webp` }
+              return Promise.resolve(
+                sizes({
+                  file,
+                  args,
+                })
+              ).then(({ src }) => src)
+            },
+          },
+          srcSetWebp: {
+            type: GraphQLString,
+            resolve: ({ file, image, fieldArgs }) => {
+              if (image.extension === `webp` || fieldArgs.toFormat === `webp`) {
+                return null
+              }
+              const args = { ...fieldArgs, pathPrefix, toFormat: `webp` }
+              return Promise.resolve(
+                sizes({
+                  file,
+                  args,
+                })
+              ).then(({ srcSet }) => srcSet)
+            },
+          },
           sizes: { type: GraphQLString },
           originalImg: { type: GraphQLString },
           originalName: { type: GraphQLString },

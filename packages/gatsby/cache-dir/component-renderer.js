@@ -2,6 +2,7 @@ import React, { createElement } from "react"
 import PropTypes from "prop-types"
 import loader from "./loader"
 import emitter from "./emitter"
+import { apiRunner } from "./api-runner-browser"
 
 const DefaultLayout = ({ children }) => <div>{children()}</div>
 
@@ -102,30 +103,40 @@ class ComponentRenderer extends React.Component {
   }
 
   render() {
+    const pluginResponses = apiRunner(`replaceComponentRenderer`, {
+      props: this.props,
+    })
+    const replacementComponent = pluginResponses[0]
     // If page.
     if (this.props.page) {
       if (this.state.pageResources) {
-        return createElement(this.state.pageResources.component, {
-          key: this.props.location.pathname,
-          ...this.props,
-          ...this.state.pageResources.json,
-        })
+        return (
+          replacementComponent ||
+          createElement(this.state.pageResources.component, {
+            key: this.props.location.pathname,
+            ...this.props,
+            ...this.state.pageResources.json,
+          })
+        )
       } else {
         return null
       }
       // If layout.
     } else if (this.props.layout) {
-      return createElement(
-        this.state.pageResources && this.state.pageResources.layout
-          ? this.state.pageResources.layout
-          : DefaultLayout,
-        {
-          key:
-            this.state.pageResources && this.state.pageResources.layout
-              ? this.state.pageResources.layout
-              : `DefaultLayout`,
-          ...this.props,
-        }
+      return (
+        replacementComponent ||
+        createElement(
+          this.state.pageResources && this.state.pageResources.layout
+            ? this.state.pageResources.layout
+            : DefaultLayout,
+          {
+            key:
+              this.state.pageResources && this.state.pageResources.layout
+                ? this.state.pageResources.layout
+                : `DefaultLayout`,
+            ...this.props,
+          }
+        )
       )
     } else {
       return null

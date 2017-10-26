@@ -1,21 +1,20 @@
 import React from "react"
-import Link from "gatsby-link"
+import Navigation from "../components/navigation"
 
-import { rhythm } from "../utils/typography"
+import { rhythm, scale, options } from "../utils/typography"
+
+import "typeface-pt-sans"
+import "typeface-oswald"
 
 const MainLayout = ({ children, location }) => (
   <div
     css={{
-      maxWidth: 600,
+      maxWidth: 640,
       margin: `0 auto`,
       padding: `${rhythm(1)} ${rhythm(3 / 4)}`,
     }}
   >
-    {location.pathname !== `/` && (
-      <h4 css={{ margin: 0 }}>
-        <Link to={`/`}>Home</Link>
-      </h4>
-    )}
+    {location.pathname !== `/` && <Navigation />}
     {children()}
   </div>
 )
