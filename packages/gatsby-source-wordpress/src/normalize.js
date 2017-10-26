@@ -267,8 +267,6 @@ exports.mapEntitiesToMedia = entities => {
       const photoRegex = /\.(gif|jpg|jpeg|tiff|png)$/i
       const isPhotoUrl = filename =>
         _.isString(filename) && photoRegex.test(filename)
-      const replacePhoto = field =>
-        media.find(m => m.wordpress_id === field.wordpress_id).id
       const isFeaturedMedia = (value, key) =>
         (_.isNumber(value) || _.isBoolean(value)) && key === 'featured_media'
       const isACFGallery = field =>
