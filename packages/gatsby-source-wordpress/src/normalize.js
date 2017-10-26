@@ -314,6 +314,7 @@ exports.mapEntitiesToMedia = entities => {
       }
 
       const replaceFieldsInObject = object => {
+        let deletedAllFields = true;
         _.each(object, (value, key) => {
           const { mediaNodeID, deleteField } = getMediaFromACFValue(value, key);
           if (mediaNodeID) {
@@ -324,6 +325,8 @@ exports.mapEntitiesToMedia = entities => {
             // We found photo node (even if it has no image),
             // We can end processing this path
             return;
+          } else {
+            deletedAllFields = false;
           }
 
           if (_.isArray(value)) {
@@ -332,6 +335,15 @@ exports.mapEntitiesToMedia = entities => {
             replaceFieldsInObject(value)
           }
         })
+
+        // Deleting fields and replacing them with links to different nodes
+        // can cause build errors if object will have only linked properites:
+        // https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-input-fields.js#L205
+        // Hacky workaround:
+        // Adding dummy field with concrete value (not link) fixes build
+        if (deletedAllFields) {
+          object['dummy'] = true;
+        }
       }
       replaceFieldsInObject(e.acf);
     }
