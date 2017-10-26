@@ -287,9 +287,10 @@ exports.mapEntitiesToMedia = entities => {
           if (_.isArray(value)) {
             value.forEach(v => replaceFieldsInObject(v))
           }
-          if (isACFPhotoData(value)) {
-            object[`${key}___NODE`] = replacePhoto(value)
-            delete object[key]
+          const media = getMediaFromACFValue(value);
+          if (media) {
+            object[`${key}___NODE`] = media.id;
+            delete object[key];
           }
 
           // featured_media can be nested inside ACF fields
@@ -316,12 +317,10 @@ exports.mapEntitiesToMedia = entities => {
       }
 
       _.each(e.acf, (value, key) => {
-        if (isPhotoUrl(value)) {
-          const me = media.find(m => m.source_url === value)
-          if (me) {
-            e.acf[`${key}___NODE`] = me.id
-            delete e.acf[key]
-          }
+        const media = getMediaFromACFValue(value);
+        if (media) {
+          e.acf[`${key}___NODE`] = media.id;
+          delete e.acf[key];
         }
 
         if (_.isArray(value) && value[0] && value[0].acf_fc_layout) {
