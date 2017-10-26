@@ -358,7 +358,7 @@ const createACFChildNodes = (
 ) => {
   // Replace any child arrays with pointers to nodes
   _.each(obj, (value, key) => {
-    if (_.isArray(value) && value[0].acf_fc_layout) {
+    if (_.isArray(value) && value[0] && value[0].acf_fc_layout) {
       obj[`${key}___NODE`] = value.map(
         v =>
           createACFChildNodes(
@@ -394,7 +394,7 @@ exports.createNodesFromEntities = ({ entities, createNode }) => {
     let children = []
     if (entity.acf) {
       _.each(entity.acf, (value, key) => {
-        if (_.isArray(value) && value[0].acf_fc_layout) {
+        if (_.isArray(value) && value[0] && value[0].acf_fc_layout) {
           entity.acf[`${key}_${entity.type}___NODE`] = entity.acf[
             key
           ].map((f, i) => {
