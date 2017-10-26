@@ -265,7 +265,8 @@ exports.mapEntitiesToMedia = entities => {
           : false
 
       const photoRegex = /\.(gif|jpg|jpeg|tiff|png)$/i
-      const isPhotoUrl = filename => photoRegex.test(filename)
+      const isPhotoUrl = filename =>
+        _.isString(filename) && photoRegex.test(filename)
       const replacePhoto = field =>
         media.find(m => m.wordpress_id === field.wordpress_id).id
 
@@ -303,7 +304,7 @@ exports.mapEntitiesToMedia = entities => {
       }
 
       _.each(e.acf, (value, key) => {
-        if (_.isString(value) && isPhotoUrl(value)) {
+        if (isPhotoUrl(value)) {
           const me = media.find(m => m.source_url === value)
           if (me) {
             e.acf[`${key}___NODE`] = me.id
