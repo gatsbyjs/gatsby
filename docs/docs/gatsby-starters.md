@@ -152,3 +152,14 @@ Community:
   * Basic directory organization
   * Uses [Bulma](https://bulma.io/) for styling
   * Visit [the repo](https://github.com/AustinGreen/gatsby-starter-netlify-cms) to learn how to set up authentication, and begin modeling your content.
+
+* [gatsby-starter-portfolio-emma](https://github.com/LeKoArts/gatsby-starter-portfolio-emma) [(demo)](https://embalmer-glues-43220.netlify.com/)
+
+  Features:
+  * Perfect for designers and photographers
+  * Full-width Photo Grid-Layout (Responsive Images through [gatsby-image](https://using-gatsby-image.gatsbyjs.org/))
+  * Minimalistic light theme with large images
+  * Create your projects in Markdown
+  * Styling with SCSS and [Typography.js](https://kyleamathews.github.io/typography.js/)
+  * Easily configurable
+  * And other good stuff (SEO, Offline Support, WebApp Manifest Support)
