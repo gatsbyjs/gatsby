@@ -7,7 +7,7 @@ Gatsby uses a React component to server render the `<head>` and other parts of t
 Most sites should use the default `html.js` shipped with Gatsby. But if you need to customize your site's html.js, simply copy the default one into your source tree by running:
 
 ```shell
-cp .cache/default-html.js src/html.js
+cp .cache/default-html.js src/html.jsx
 ```
 
 And then making modifications as needed.
