@@ -5790,6 +5790,7 @@ Array [
       ],
     },
     "acf": Object {
+      "dummy": true,
       "linked_image___NODE": "950513a1-a720-5588-b262-9533aa598624",
     },
     "author___NODE": "ec1fb3e3-d897-5549-b5f6-72b358fbbe83",
@@ -5862,6 +5863,7 @@ Array [
     "id": "61ef7ef2-032f-5c90-bba3-99d04c9a1f07",
     "link": "http://dev-gatbsyjswp.pantheonsite.io/sample-post-1/pexels-photo-534327/",
     "media_details": Object {
+      "file": "2017/09/pexels-photo-534327.jpeg",
       "height": 4000,
       "image_meta": Object {
         "aperture": "7.1",
@@ -5879,30 +5881,35 @@ Array [
       },
       "sizes": Object {
         "full": Object {
+          "file": "pexels-photo-534327.jpeg",
           "height": 4000,
           "mime_type": "image/jpeg",
           "source_url": "http://dev-gatbsyjswp.pantheonsite.io/wp-content/uploads/2017/09/pexels-photo-534327.jpeg",
           "width": 6000,
         },
         "large": Object {
+          "file": "pexels-photo-534327-1024x683.jpeg",
           "height": 683,
           "mime_type": "image/jpeg",
           "source_url": "http://dev-gatbsyjswp.pantheonsite.io/wp-content/uploads/2017/09/pexels-photo-534327-1024x683.jpeg",
           "width": 1024,
         },
         "medium": Object {
+          "file": "pexels-photo-534327-300x200.jpeg",
           "height": 200,
           "mime_type": "image/jpeg",
           "source_url": "http://dev-gatbsyjswp.pantheonsite.io/wp-content/uploads/2017/09/pexels-photo-534327-300x200.jpeg",
           "width": 300,
         },
         "medium_large": Object {
+          "file": "pexels-photo-534327-768x512.jpeg",
           "height": 512,
           "mime_type": "image/jpeg",
           "source_url": "http://dev-gatbsyjswp.pantheonsite.io/wp-content/uploads/2017/09/pexels-photo-534327-768x512.jpeg",
           "width": 768,
         },
         "thumbnail": Object {
+          "file": "pexels-photo-534327-150x150.jpeg",
           "height": 150,
           "mime_type": "image/jpeg",
           "source_url": "http://dev-gatbsyjswp.pantheonsite.io/wp-content/uploads/2017/09/pexels-photo-534327-150x150.jpeg",
@@ -5968,6 +5975,7 @@ Array [
     "id": "950513a1-a720-5588-b262-9533aa598624",
     "link": "http://dev-gatbsyjswp.pantheonsite.io/gatsby-sample-home-page/pexels-photo-534351/",
     "media_details": Object {
+      "file": "2017/09/pexels-photo-534351.jpeg",
       "height": 4000,
       "image_meta": Object {
         "aperture": "10",
@@ -5985,30 +5993,35 @@ Array [
       },
       "sizes": Object {
         "full": Object {
+          "file": "pexels-photo-534351.jpeg",
           "height": 4000,
           "mime_type": "image/jpeg",
           "source_url": "http://dev-gatbsyjswp.pantheonsite.io/wp-content/uploads/2017/09/pexels-photo-534351.jpeg",
           "width": 6000,
         },
         "large": Object {
+          "file": "pexels-photo-534351-1024x683.jpeg",
           "height": 683,
           "mime_type": "image/jpeg",
           "source_url": "http://dev-gatbsyjswp.pantheonsite.io/wp-content/uploads/2017/09/pexels-photo-534351-1024x683.jpeg",
           "width": 1024,
         },
         "medium": Object {
+          "file": "pexels-photo-534351-300x200.jpeg",
           "height": 200,
           "mime_type": "image/jpeg",
           "source_url": "http://dev-gatbsyjswp.pantheonsite.io/wp-content/uploads/2017/09/pexels-photo-534351-300x200.jpeg",
           "width": 300,
         },
         "medium_large": Object {
+          "file": "pexels-photo-534351-768x512.jpeg",
           "height": 512,
           "mime_type": "image/jpeg",
           "source_url": "http://dev-gatbsyjswp.pantheonsite.io/wp-content/uploads/2017/09/pexels-photo-534351-768x512.jpeg",
           "width": 768,
         },
         "thumbnail": Object {
+          "file": "pexels-photo-534351-150x150.jpeg",
           "height": 150,
           "mime_type": "image/jpeg",
           "source_url": "http://dev-gatbsyjswp.pantheonsite.io/wp-content/uploads/2017/09/pexels-photo-534351-150x150.jpeg",
@@ -11325,6 +11338,7 @@ Array [
         ],
       },
       "acf": Object {
+        "dummy": true,
         "linked_image___NODE": "950513a1-a720-5588-b262-9533aa598624",
       },
       "author___NODE": "ec1fb3e3-d897-5549-b5f6-72b358fbbe83",
@@ -11343,7 +11357,7 @@ Array [
       "guid": "http://dev-gatbsyjswp.pantheonsite.io/?page_id=5",
       "id": "340ceded-7db7-583c-9486-120758f5d967",
       "internal": Object {
-        "contentDigest": "bf7491f5ede200a6f3ce8db4c28e3eca",
+        "contentDigest": "730b646cd1ae6cd070d74956e5041fd2",
         "type": "wordpress__PAGE",
       },
       "link": "http://dev-gatbsyjswp.pantheonsite.io/",
@@ -11404,11 +11418,12 @@ Array [
       "guid___NODE": "61ef7ef2-032f-5c90-bba3-99d04c9a1f07",
       "id": "61ef7ef2-032f-5c90-bba3-99d04c9a1f07",
       "internal": Object {
-        "contentDigest": "bb67f7d3418ce4c5787f6b37aabc9a4b",
+        "contentDigest": "e34c3e03101d1305788a27f283e90c6b",
         "type": "wordpress__wp_media",
       },
       "link": "http://dev-gatbsyjswp.pantheonsite.io/sample-post-1/pexels-photo-534327/",
       "media_details": Object {
+        "file": "2017/09/pexels-photo-534327.jpeg",
         "height": 4000,
         "image_meta": Object {
           "aperture": "7.1",
@@ -11426,30 +11441,35 @@ Array [
         },
         "sizes": Object {
           "full": Object {
+            "file": "pexels-photo-534327.jpeg",
             "height": 4000,
             "mime_type": "image/jpeg",
             "source_url": "http://dev-gatbsyjswp.pantheonsite.io/wp-content/uploads/2017/09/pexels-photo-534327.jpeg",
             "width": 6000,
           },
           "large": Object {
+            "file": "pexels-photo-534327-1024x683.jpeg",
             "height": 683,
             "mime_type": "image/jpeg",
             "source_url": "http://dev-gatbsyjswp.pantheonsite.io/wp-content/uploads/2017/09/pexels-photo-534327-1024x683.jpeg",
             "width": 1024,
           },
           "medium": Object {
+            "file": "pexels-photo-534327-300x200.jpeg",
             "height": 200,
             "mime_type": "image/jpeg",
             "source_url": "http://dev-gatbsyjswp.pantheonsite.io/wp-content/uploads/2017/09/pexels-photo-534327-300x200.jpeg",
             "width": 300,
           },
           "medium_large": Object {
+            "file": "pexels-photo-534327-768x512.jpeg",
             "height": 512,
             "mime_type": "image/jpeg",
             "source_url": "http://dev-gatbsyjswp.pantheonsite.io/wp-content/uploads/2017/09/pexels-photo-534327-768x512.jpeg",
             "width": 768,
           },
           "thumbnail": Object {
+            "file": "pexels-photo-534327-150x150.jpeg",
             "height": 150,
             "mime_type": "image/jpeg",
             "source_url": "http://dev-gatbsyjswp.pantheonsite.io/wp-content/uploads/2017/09/pexels-photo-534327-150x150.jpeg",
@@ -11517,11 +11537,12 @@ Array [
       "guid___NODE": "950513a1-a720-5588-b262-9533aa598624",
       "id": "950513a1-a720-5588-b262-9533aa598624",
       "internal": Object {
-        "contentDigest": "8cfda0374b40c9c1ea9eef010f5d4d40",
+        "contentDigest": "7bb20caef5bf65715b92b109cbfae7b9",
         "type": "wordpress__wp_media",
       },
       "link": "http://dev-gatbsyjswp.pantheonsite.io/gatsby-sample-home-page/pexels-photo-534351/",
       "media_details": Object {
+        "file": "2017/09/pexels-photo-534351.jpeg",
         "height": 4000,
         "image_meta": Object {
           "aperture": "10",
@@ -11539,30 +11560,35 @@ Array [
         },
         "sizes": Object {
           "full": Object {
+            "file": "pexels-photo-534351.jpeg",
             "height": 4000,
             "mime_type": "image/jpeg",
             "source_url": "http://dev-gatbsyjswp.pantheonsite.io/wp-content/uploads/2017/09/pexels-photo-534351.jpeg",
             "width": 6000,
           },
           "large": Object {
+            "file": "pexels-photo-534351-1024x683.jpeg",
             "height": 683,
             "mime_type": "image/jpeg",
             "source_url": "http://dev-gatbsyjswp.pantheonsite.io/wp-content/uploads/2017/09/pexels-photo-534351-1024x683.jpeg",
             "width": 1024,
           },
           "medium": Object {
+            "file": "pexels-photo-534351-300x200.jpeg",
             "height": 200,
             "mime_type": "image/jpeg",
             "source_url": "http://dev-gatbsyjswp.pantheonsite.io/wp-content/uploads/2017/09/pexels-photo-534351-300x200.jpeg",
             "width": 300,
           },
           "medium_large": Object {
+            "file": "pexels-photo-534351-768x512.jpeg",
             "height": 512,
             "mime_type": "image/jpeg",
             "source_url": "http://dev-gatbsyjswp.pantheonsite.io/wp-content/uploads/2017/09/pexels-photo-534351-768x512.jpeg",
             "width": 768,
           },
           "thumbnail": Object {
+            "file": "pexels-photo-534351-150x150.jpeg",
             "height": 150,
             "mime_type": "image/jpeg",
             "source_url": "http://dev-gatbsyjswp.pantheonsite.io/wp-content/uploads/2017/09/pexels-photo-534351-150x150.jpeg",
