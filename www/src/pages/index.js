@@ -210,7 +210,7 @@ export const pageQuery = graphql`
       limit: 3
       filter: {
         frontmatter: { draft: { ne: true } }
-        fileAbsolutePath: { regex: "/blog/" }
+        fileAbsolutePath: { regex: "/docs.blog/" }
       }
     ) {
       edges {
