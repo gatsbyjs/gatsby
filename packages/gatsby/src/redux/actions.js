@@ -631,12 +631,17 @@ actions.createRedirect = ({
   toPath,
   redirectInBrowser = false,
 }) => {
+  let pathPrefix = ``
+  if (store.getState().program.prefixPaths) {
+    pathPrefix = store.getState().config.pathPrefix
+  }
+
   return {
     type: `CREATE_REDIRECT`,
     payload: {
-      fromPath,
+      fromPath: `${pathPrefix}${fromPath}`,
       isPermanent,
-      toPath,
+      toPath: `${pathPrefix}${toPath}`,
       redirectInBrowser,
     },
   }
