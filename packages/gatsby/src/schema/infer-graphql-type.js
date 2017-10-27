@@ -127,6 +127,12 @@ function inferGraphQLType({
             measurement years, months, weeks, days, hours, minutes,
             and seconds.`,
         },
+        locale: {
+          type: GraphQLString,
+          description: oneLine`
+            Configures the locale Moment.js will use to format the date.
+          `,
+        },
       },
       resolve(object, { fromNow, difference, formatString, locale = `en` }) {
         let date
