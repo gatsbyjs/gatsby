@@ -60,8 +60,8 @@ describe(`Create and update nodes`, () => {
     let state = nodeReducer(undefined, action)
     state = nodeReducer(state, updateAction)
     expect(state[`hi`].pickle).toEqual(false)
-    expect(state[`hi`].deep).toEqual({ array: [1, 2] })
-    expect(state[`hi`].deep2).toEqual({ boom: `foo` })
+    expect(state[`hi`].deep.array[0]).toEqual(1)
+    expect(state[`hi`].deep2.boom).toEqual(`foo`)
   })
 
   it(`allows deleting nodes`, () => {
