@@ -3,8 +3,24 @@ const crypto = require(`crypto`)
 const path = require(`path`)
 
 async function onCreateNode({ node, boundActionCreators, loadNodeContent }) {
-  function transformObject(obj, id, type) {
+  function transformObject(obj, id, node, type) {
+    console.log(`node.id`, node.id)
     const objStr = JSON.stringify(obj)
+
+    // Just do this when creating nodes (if parent)
+    const addParentToSubObjects = data => {
+      _.each(data, (v, k) => {
+        if (_.isArray(v) && _.isObject(v[0])) {
+          _.each(v, o => addParentToSubObjects(o))
+        } else if (_.isObject(v)) {
+          addParentToSubObjects(v)
+        }
+      })
+      data._PARENT = node.id
+    }
+
+    addParentToSubObjects(obj)
+
     const contentDigest = crypto
       .createHash(`md5`)
       .update(objStr)
@@ -38,6 +54,7 @@ async function onCreateNode({ node, boundActionCreators, loadNodeContent }) {
       transformObject(
         obj,
         obj.id ? obj.id : `${node.id} [${i}] >>> JSON`,
+        node,
         _.upperFirst(_.camelCase(`${node.name} Json`))
       )
     })
@@ -45,6 +62,7 @@ async function onCreateNode({ node, boundActionCreators, loadNodeContent }) {
     transformObject(
       parsedContent,
       parsedContent.id ? parsedContent.id : `${node.id} >>> JSON`,
+      node,
       _.upperFirst(_.camelCase(`${path.basename(node.dir)} Json`))
     )
   }

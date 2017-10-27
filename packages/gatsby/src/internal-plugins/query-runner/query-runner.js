@@ -15,6 +15,7 @@ module.exports = async (pageOrLayout, component) => {
   // Run query
   let result
 
+  console.log(component.query, pageOrLayout.context)
   // Nothing to do if the query doesn't exist.
   if (!component.query || component.query === ``) {
     result = {}
@@ -28,6 +29,7 @@ module.exports = async (pageOrLayout, component) => {
   // If there's a graphql error then log the error. If we're building, also
   // quit.
   if (result && result.errors) {
+    console.log(result)
     report.log(
       report.stripIndent`
         The GraphQL query from ${component.componentPath} failed

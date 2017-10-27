@@ -9,6 +9,8 @@ const options = {
   baseLineHeight: 1.45,
   blockMarginBottom: 0.75,
   scaleRatio: 2.15,
+  bodyFontFamily: [`Josefin Sans`, `sans-serif`],
+  headerFontFamily: [`Josefin Slab`, `serif`],
   overrideStyles: ({ rhythm, scale }, options) => {
     return {
       "h1,h2,h3,h4": {

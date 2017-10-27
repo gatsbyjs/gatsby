@@ -14,5 +14,8 @@ module.exports = {
       },
     },
     `gatsby-plugin-offline`,
+    `gatsby-plugin-glamor`,
+    `gatsby-plugin-sharp`,
+    `gatsby-transformer-sharp`,
   ],
 }
