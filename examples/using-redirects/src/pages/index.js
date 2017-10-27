@@ -13,7 +13,8 @@ const IndexPage = () => (
       </code>
       &nbsp;<a href="https://www.gatsbyjs.org/docs/bound-action-creators/">
         bound action creator
-      </a>{` `}
+      </a>
+      {` `}
       example.
     </p>
     <p>
@@ -34,16 +35,17 @@ const IndexPage = () => (
       The{` `}
       <Link activeClassName="selected" to="/">
         here
-      </Link>{` `}
+      </Link>
+      {` `}
       link uses{` `}
-      <a href="https://www.gatsbyjs.org/packages/gatsby-link/">
-        gatsby-link
-      </a>{` `}
+      <a href="https://www.gatsbyjs.org/packages/gatsby-link/">gatsby-link</a>
+      {` `}
       <code>activeClassName</code>
       &nbsp;support derived from{` `}
       <a href="https://github.com/ReactTraining/react-router/blob/master/packages/react-router-dom/docs/api/NavLink.md">
         React Router’s NavLink component
-      </a>{` `}
+      </a>
+      {` `}
       to apply the <code>selected</code>
       &nbsp;class to links that match to the active path, and{` `}
       <code>import './selected.css'</code>
