@@ -252,70 +252,98 @@ exports.mapEntitiesToMedia = entities => {
     // featured_media to 0 when there isn't one which is useless to us.
     delete e.featured_media
 
-    const isPhoto = field =>
-      _.isObject(field) &&
-      field.wordpress_id &&
-      field.url &&
-      field.width &&
-      field.height
-        ? true
-        : false
-
-    const photoRegex = /\.(gif|jpg|jpeg|tiff|png)$/i
-    const isPhotoUrl = filename => photoRegex.test(filename)
-    const replacePhoto = field =>
-      media.find(m => m.wordpress_id === field.wordpress_id).id
-
-    const replaceFieldsInObject = object => {
-      _.each(object, (value, key) => {
-        if (_.isArray(value)) {
-          value.forEach(v => replaceFieldsInObject(v))
-        }
-        if (isPhoto(value)) {
-          object[`${key}___NODE`] = replacePhoto(value)
-          delete object[key]
-        }
-
-        // featured_media can be nested inside ACF fields
-        if (_.isObject(value) && value.featured_media) {
-          featuredMedia = media.find(
-            m => m.wordpress_id === value.featured_media
-          )
-          if (featuredMedia) {
-            value.featured_media___NODE = featuredMedia.id
-          }
-          delete value.featured_media
-        }
-        if (_.isNumber(value) && key == `featured_media`) {
-          featuredMedia = media.find(m => m.wordpress_id === value)
-          if (featuredMedia) {
-            object[`${key}___NODE`] = featuredMedia.id
-          }
-          delete object[key]
-        }
-        if (_.isBoolean(value) && key == `featured_media`) {
-          delete object[key]
-        }
-      })
-    }
-
     if (e.acf) {
-      _.each(e.acf, (value, key) => {
-        if (_.isString(value) && isPhotoUrl(value)) {
-          const me = media.find(m => m.source_url === value)
-          if (me) {
-            e.acf[`${key}___NODE`] = me.id
-            delete e.acf[key]
+      // Check if it's value of ACF Image field, that has 'Return value' set to
+      // 'Image Object' ( https://www.advancedcustomfields.com/resources/image/ )
+      const isACFPhotoData = field =>
+        _.isObject(field) &&
+        field.wordpress_id &&
+        field.url &&
+        field.width &&
+        field.height
+          ? true
+          : false
+
+      const photoRegex = /\.(gif|jpg|jpeg|tiff|png)$/i
+      const isPhotoUrl = filename =>
+        _.isString(filename) && photoRegex.test(filename)
+      const isFeaturedMedia = (value, key) =>
+        (_.isNumber(value) || _.isBoolean(value)) && key === 'featured_media'
+      const isACFGallery = field =>
+        _.isArray(field) && field.length > 0 && isACFPhotoData(field[0])
+      const getMediaItemID = mediaItem => mediaItem ? mediaItem.id : null
+
+      // Try to get media node from value:
+      //  - special case - check if key is featured_media and value is photo ID
+      //  - check if value is photo url
+      //  - check if value is ACF Image Object
+      //  - check if value is ACF Gallery
+      const getMediaFromACFValue = (value, key) => {
+        if (isFeaturedMedia(value, key)) {
+          return {
+            mediaNodeID:
+              _.isNumber(value) ? getMediaItemID(media.find(m => m.wordpress_id === value)) : null,
+            deleteField: true
+          }
+        } else if (isPhotoUrl(value)) {
+          const mediaNodeID = getMediaItemID(media.find(m => m.source_url === value));
+          return {
+            mediaNodeID,
+            deleteField: !!mediaNodeID
+          }
+        } else if (isACFPhotoData(value)) {
+          const mediaNodeID = getMediaItemID(media.find(m => m.source_url === value.url));
+          return {
+            mediaNodeID,
+            deleteField: !!mediaNodeID
+          }
+        } else if (isACFGallery(value)) {
+          return {
+            mediaNodeID:
+              value.map(item => getMediaFromACFValue(item, key).mediaNodeID)
+                .filter(id => id !== null),
+            deleteField: true
           }
         }
+        return {
+          mediaNodeID: null,
+          deleteField: false
+        };
+      }
 
-        if (_.isArray(value) && value[0] && value[0].acf_fc_layout) {
-          e.acf[key] = e.acf[key].map(f => {
-            replaceFieldsInObject(f)
-            return f
-          })
+      const replaceFieldsInObject = object => {
+        let deletedAllFields = true;
+        _.each(object, (value, key) => {
+          const { mediaNodeID, deleteField } = getMediaFromACFValue(value, key);
+          if (mediaNodeID) {
+            object[`${key}___NODE`] = mediaNodeID;
+          }
+          if (deleteField) {
+            delete object[key];
+            // We found photo node (even if it has no image),
+            // We can end processing this path
+            return;
+          } else {
+            deletedAllFields = false;
+          }
+
+          if (_.isArray(value)) {
+            value.forEach(v => replaceFieldsInObject(v))
+          } else if (_.isObject(value)) {
+            replaceFieldsInObject(value)
+          }
+        })
+
+        // Deleting fields and replacing them with links to different nodes
+        // can cause build errors if object will have only linked properites:
+        // https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-input-fields.js#L205
+        // Hacky workaround:
+        // Adding dummy field with concrete value (not link) fixes build
+        if (deletedAllFields) {
+          object['dummy'] = true;
         }
-      })
+      }
+      replaceFieldsInObject(e.acf);
     }
     return e
   })
