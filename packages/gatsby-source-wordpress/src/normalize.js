@@ -240,7 +240,9 @@ exports.mapEntitiesToMedia = entities => {
   return entities.map(e => {
     // Map featured_media to its media node
 
-    const isPhoto = field =>
+    // Check if it's value of ACF Image field, that has 'Return value' set to
+    // 'Image Object' ( https://www.advancedcustomfields.com/resources/image/ )
+    const isPhotoObject = field =>
       _.isObject(field) &&
       field.wordpress_id &&
       field.url &&
@@ -249,45 +251,92 @@ exports.mapEntitiesToMedia = entities => {
         ? true
         : false
 
-    const isPhotoNode = field =>
-      _.isObject(field) && field.id && field.source_url ? true : false
-
     const photoRegex = /\.(gif|jpg|jpeg|tiff|png)$/i
     const isPhotoUrl = filename =>
       _.isString(filename) && photoRegex.test(filename)
+    const isPhotoUrlAlreadyProcessed = key => key == `source_url`
+    const isFeaturedMedia = (value, key) =>
+      (_.isNumber(value) || _.isBoolean(value)) && key === `featured_media`
+    // ACF Gallery and similarly shaped arrays
+    const isArrayOfPhotoObject = field =>
+      _.isArray(field) && field.length > 0 && isPhotoObject(field[0])
+    const getMediaItemID = mediaItem => (mediaItem ? mediaItem.id : null)
+
+    // Try to get media node from value:
+    //  - special case - check if key is featured_media and value is photo ID
+    //  - check if value is photo url
+    //  - check if value is ACF Image Object
+    //  - check if value is ACF Gallery
+    const getMediaFromValue = (value, key) => {
+      if (isFeaturedMedia(value, key)) {
+        return {
+          mediaNodeID: _.isNumber(value)
+            ? getMediaItemID(media.find(m => m.wordpress_id === value))
+            : null,
+          deleteField: true,
+        }
+      } else if (isPhotoUrl(value) && !isPhotoUrlAlreadyProcessed(key)) {
+        const mediaNodeID = getMediaItemID(
+          media.find(m => m.source_url === value)
+        )
+        return {
+          mediaNodeID,
+          deleteField: !!mediaNodeID,
+        }
+      } else if (isPhotoObject(value)) {
+        const mediaNodeID = getMediaItemID(
+          media.find(m => m.source_url === value.url)
+        )
+        return {
+          mediaNodeID,
+          deleteField: !!mediaNodeID,
+        }
+      } else if (isArrayOfPhotoObject(value)) {
+        return {
+          mediaNodeID: value
+            .map(item => getMediaFromValue(item, key).mediaNodeID)
+            .filter(id => id !== null),
+          deleteField: true,
+        }
+      }
+      return {
+        mediaNodeID: null,
+        deleteField: false,
+      }
+    }
 
     const replaceFieldsInObject = object => {
+      let deletedAllFields = true
       _.each(object, (value, key) => {
+        const { mediaNodeID, deleteField } = getMediaFromValue(value, key)
+        if (mediaNodeID) {
+          object[`${key}___NODE`] = mediaNodeID
+        }
+        if (deleteField) {
+          delete object[key]
+          // We found photo node (even if it has no image),
+          // We can end processing this path
+          return
+        } else {
+          deletedAllFields = false
+        }
+
         if (_.isArray(value)) {
           value.forEach(v => replaceFieldsInObject(v))
-        } else if (isPhoto(value)) {
-          const me = media.find(m => m.wordpress_id === value.wordpress_id)
-          if (me) {
-            object[`${key}___NODE`] = me.id
-          }
-          // Always delete even if we can't find a featuredMedia as WordPress' API sets
-          // featured_media to 0 when there isn't one which is useless to us.
-          delete object[key]
-        } else if (isPhotoUrl(value) && key != `source_url`) {
-          const me = media.find(m => m.source_url === value)
-          if (me) {
-            object[`${key}___NODE`] = me.id
-          }
-          delete object[key]
-        } else if (_.isNumber(value) && key == `featured_media`) {
-          const me = media.find(m => m.wordpress_id === value)
-          if (me) {
-            object[`${key}___NODE`] = me.id
-          }
-          delete object[key]
-        } else if (_.isBoolean(value) && key == `featured_media`) {
-          delete object[key]
-        } else if (_.isObject(value) && !isPhotoNode(value)) {
+        } else if (_.isObject(value)) {
           replaceFieldsInObject(value)
         }
       })
-    }
 
+      // Deleting fields and replacing them with links to different nodes
+      // can cause build errors if object will have only linked properites:
+      // https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-input-fields.js#L205
+      // Hacky workaround:
+      // Adding dummy field with concrete value (not link) fixes build
+      if (deletedAllFields && object && _.isObject(object)) {
+        object[`dummy`] = true
+      }
+    }
     replaceFieldsInObject(e)
 
     return e
