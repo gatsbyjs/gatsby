@@ -239,18 +239,6 @@ exports.mapEntitiesToMedia = entities => {
 
   return entities.map(e => {
     // Map featured_media to its media node
-    let featuredMedia
-    if (e.featured_media) {
-      featuredMedia = media.find(m => m.wordpress_id === e.featured_media)
-    }
-
-    if (featuredMedia) {
-      e.featured_media___NODE = featuredMedia.id
-    }
-
-    // Always delete even if we can't find a featuredMedia as WordPress' API sets
-    // featured_media to 0 when there isn't one which is useless to us.
-    delete e.featured_media
 
     const isPhoto = field =>
       _.isObject(field) &&
@@ -261,62 +249,47 @@ exports.mapEntitiesToMedia = entities => {
         ? true
         : false
 
+    const isPhotoNode = field =>
+      _.isObject(field) && field.id && field.source_url ? true : false
+
     const photoRegex = /\.(gif|jpg|jpeg|tiff|png)$/i
-    const isPhotoUrl = filename => photoRegex.test(filename)
-    const replacePhoto = field =>
-      media.find(m => m.wordpress_id === field.wordpress_id).id
+    const isPhotoUrl = filename =>
+      _.isString(filename) && photoRegex.test(filename)
 
     const replaceFieldsInObject = object => {
       _.each(object, (value, key) => {
         if (_.isArray(value)) {
           value.forEach(v => replaceFieldsInObject(v))
-        }
-        if (isPhoto(value)) {
-          object[`${key}___NODE`] = replacePhoto(value)
-          delete object[key]
-        }
-
-        // featured_media can be nested inside ACF fields
-        if (_.isObject(value) && value.featured_media) {
-          featuredMedia = media.find(
-            m => m.wordpress_id === value.featured_media
-          )
-          if (featuredMedia) {
-            value.featured_media___NODE = featuredMedia.id
+        } else if (isPhoto(value)) {
+          const me = media.find(m => m.wordpress_id === value.wordpress_id)
+          if (me) {
+            object[`${key}___NODE`] = me.id
           }
-          delete value.featured_media
-        }
-        if (_.isNumber(value) && key == `featured_media`) {
-          featuredMedia = media.find(m => m.wordpress_id === value)
-          if (featuredMedia) {
-            object[`${key}___NODE`] = featuredMedia.id
-          }
+          // Always delete even if we can't find a featuredMedia as WordPress' API sets
+          // featured_media to 0 when there isn't one which is useless to us.
           delete object[key]
-        }
-        if (_.isBoolean(value) && key == `featured_media`) {
-          delete object[key]
-        }
-      })
-    }
-
-    if (e.acf) {
-      _.each(e.acf, (value, key) => {
-        if (_.isString(value) && isPhotoUrl(value)) {
+        } else if (isPhotoUrl(value) && key != `source_url`) {
           const me = media.find(m => m.source_url === value)
           if (me) {
-            e.acf[`${key}___NODE`] = me.id
-            delete e.acf[key]
+            object[`${key}___NODE`] = me.id
           }
-        }
-
-        if (_.isArray(value) && value[0] && value[0].acf_fc_layout) {
-          e.acf[key] = e.acf[key].map(f => {
-            replaceFieldsInObject(f)
-            return f
-          })
+          delete object[key]
+        } else if (_.isNumber(value) && key == `featured_media`) {
+          const me = media.find(m => m.wordpress_id === value)
+          if (me) {
+            object[`${key}___NODE`] = me.id
+          }
+          delete object[key]
+        } else if (_.isBoolean(value) && key == `featured_media`) {
+          delete object[key]
+        } else if (_.isObject(value) && !isPhotoNode(value)) {
+          replaceFieldsInObject(value)
         }
       })
     }
+
+    replaceFieldsInObject(e)
+
     return e
   })
 }
