@@ -64,6 +64,7 @@ Websites built with Gatsby:
 * [Hallingdata](http://hallingdata.no/)
 * [@swyx](http://swyx.io) [(source)](https://github.com/sw-yx/swyxdotio)
 * [Portfolio of Piotr Fedorczyk](https://piotrf.pl)
+* [JavaScript Stuff](https://www.javascriptstuff.com)
 
 ## Docs
 
