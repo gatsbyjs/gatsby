@@ -262,8 +262,7 @@ function queueImageResizing({ file, args = {} }) {
 
   const argsDigestShort = argsDigest.substr(argsDigest.length - 5)
 
-  const imgSrc = `/${file.internal
-    .contentDigest}-${argsDigestShort}.${fileExtension}`
+  const imgSrc = `/${file.name}-${argsDigestShort}.${fileExtension}`
   const filePath = path.join(process.cwd(), `public`, `static`, imgSrc)
 
   // Create function to call when the image is finished.
