@@ -47,7 +47,7 @@ gatsby new tutorial-part-one https://github.com/gatsbyjs/gatsby-starter-hello-wo
 
 This command downloads the files for the starter and then installs the needed NPM packages. It should take around 1.5-3 minutes to finish. It may look like nothing is happening at first; be patient!
 
-Now let's now try running Gatsby!
+Now let's try running Gatsby!
 
 Gatsby has a built-in development server. Let's start it up by typing in the following commands into the same terminal window you've used so far in this tutorial.
 
