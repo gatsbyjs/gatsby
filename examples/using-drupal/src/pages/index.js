@@ -15,12 +15,20 @@ class IndexPage extends React.Component {
     const nextTwoPromotedRecipes = data.nextTwoPromotedRecipes.edges.map(
       edge => edge.node
     )
+    console.log(nextTwoPromotedRecipes)
+    const nextFourPromotedRecipes = data.nextFourPromotedRecipes.edges.map(
+      edge => edge.node
+    )
 
     const FirstPromoted = ({ recipe }) => (
       <div
         css={{
           border: `1px solid ${gray(80)}`,
-          width: 400,
+          marginBottom: rhythm(1),
+          "@media(min-width: 800px)": {
+            marginBottom: 0,
+            width: `calc(1/2*100% - (1 - 1/2) * ${rhythm(1 / 2)})`,
+          },
         }}
       >
         <div
@@ -42,35 +50,46 @@ class IndexPage extends React.Component {
           <h2>{recipe.title}</h2>
         </div>
         <Img
-          css={{ position: `relative`, left: -1, bottom: -1, margin: 0 }}
-          resolutions={
+          sizes={
             recipe.relationships.image.relationships.imageFile.localFile
-              .childImageSharp.resolutions
+              .childImageSharp.sizes
           }
         />
       </div>
     )
 
-    const TopPromoted = ({ recipe }) => (
+    const PromotedCard = ({
+      recipe,
+      square = false,
+      columns = 4,
+      marginBottom = rhythm(1 / 2),
+    }) => (
       <div
         css={{
           display: `inline-block`,
           border: `1px solid ${gray(80)}`,
-          width: 207,
+          width: `calc(1/${columns}*100% - (1 - 1/${columns}) * ${rhythm(
+            1 / 2
+          )})`,
+          marginBottom,
         }}
       >
         <Img
-          css={{ position: `relative`, left: -1, top: -1, margin: 0 }}
-          resolutions={
+          sizes={
             recipe.relationships.image.relationships.imageFile.localFile
-              .childImageSharp.resolutions
+              .childImageSharp.sizes
           }
         />
         <div
           css={{
             padding: `${rhythm(3 / 4)} ${rhythm(1)}`,
-            height: 207,
-            width: 207,
+            width:
+              recipe.relationships.image.relationships.imageFile.localFile
+                .childImageSharp.sizes.width,
+            height: square
+              ? recipe.relationships.image.relationships.imageFile.localFile
+                  .childImageSharp.sizes.height
+              : undefined,
           }}
         >
           <h4
@@ -91,10 +110,22 @@ class IndexPage extends React.Component {
     return (
       <div css={{ overflow: `hidden` }}>
         <Container>
-          <div css={{ display: `flex`, justifyContent: `space-between` }}>
+          <div
+            css={{
+              "@media(min-width: 800px)": {
+                display: `flex`,
+                justifyContent: `space-between`,
+              },
+            }}
+          >
             <FirstPromoted recipe={topRecipe} />
             {nextTwoPromotedRecipes.map(recipe => (
-              <TopPromoted recipe={recipe} />
+              <PromotedCard
+                recipe={recipe}
+                square={true}
+                columns={4}
+                marginBottom={0}
+              />
             ))}
           </div>
         </Container>
@@ -106,9 +137,7 @@ class IndexPage extends React.Component {
         >
           <Container
             css={{
-              paddingTop: rhythm(2),
-              paddingBottom: rhythm(2),
-              paddingLeft: rhythm(2),
+              paddingLeft: rhythm(4),
             }}
           >
             <div css={{ maxWidth: rhythm(15) }}>
@@ -137,22 +166,37 @@ class IndexPage extends React.Component {
           </Container>
         </div>
 
-        <div
-          css={{
-            background: constants.paleYellow,
-          }}
-        >
-          <Container
+        <Container>
+          <h1 css={{ textAlign: `center` }}>Recipes</h1>
+          <h2 css={{ textAlign: `center` }}>
+            Explore recipes across every type of occasion, ingredients, and
+            skill level
+          </h2>
+          <div
             css={{
-              paddingTop: rhythm(2),
-              paddingBottom: rhythm(2),
+              display: `flex`,
+              justifyContent: `space-between`,
+              flexWrap: `wrap`,
             }}
           >
-            <h1 css={{ textAlign: `center` }}>Recipes</h1>
-            <h2 css={{ textAlign: `center` }}>
-              Explore recipes across every type of occassion, ingredients, and
-              skill level
-            </h2>
+            {nextFourPromotedRecipes.map(recipe => (
+              <PromotedCard recipe={recipe} columns={2} />
+            ))}
+          </div>
+        </Container>
+
+        <div
+          css={{
+            background: constants.darkYellow,
+          }}
+        >
+          <Container>
+            <h2>Umami Magazine</h2>
+            <p>
+              Umami Publications example footer content. Integer posuere erat a
+              ante venenatis dapibus posueure velit aliquet. Sed posueure
+              consectetur est at lobortis. Donec id elit non mi porta.
+            </p>
           </Container>
         </div>
       </div>
@@ -174,8 +218,8 @@ export const pageQuery = graphql`
                 imageFile {
                   localFile {
                     childImageSharp {
-                      resolutions(width: 400, height: 300) {
-                        ...GatsbyImageSharpResolutions
+                      sizes(maxWidth: 740, maxHeight: 555) {
+                        ...GatsbyImageSharpSizes
                       }
                     }
                   }
@@ -203,8 +247,37 @@ export const pageQuery = graphql`
                 imageFile {
                   localFile {
                     childImageSharp {
-                      resolutions(width: 207, height: 207) {
-                        ...GatsbyImageSharpResolutions
+                      sizes(maxWidth: 240, maxHeight: 240) {
+                        ...GatsbyImageSharpSizes
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    nextFourPromotedRecipes: allRecipes(
+      sort: { fields: [createdAt] }
+      limit: 4
+      skip: 3
+    ) {
+      edges {
+        node {
+          title
+          relationships {
+            category {
+              name
+            }
+            image {
+              relationships {
+                imageFile {
+                  localFile {
+                    childImageSharp {
+                      sizes(maxWidth: 475, maxHeight: 475) {
+                        ...GatsbyImageSharpSizes
                       }
                     }
                   }

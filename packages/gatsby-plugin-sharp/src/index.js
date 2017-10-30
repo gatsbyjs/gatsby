@@ -276,7 +276,7 @@ function queueImageResizing({ file, args = {} }) {
   let height
   // Calculate the eventual width/height of the image.
   const dimensions = imageSize(file.absolutePath)
-  const aspectRatio = dimensions.width / dimensions.height
+  let aspectRatio = dimensions.width / dimensions.height
   const originalName = file.base
 
   // If the width/height are both set, we're cropping so just return
@@ -284,6 +284,9 @@ function queueImageResizing({ file, args = {} }) {
   if (options.width && options.height) {
     width = options.width
     height = options.height
+    // Recalculate the aspectRatio for the cropped photo
+    console.log(`using cropped to gen aspectRatio`, width, height)
+    aspectRatio = width / height
   } else {
     // Use the aspect ratio of the image to calculate what will be the resulting
     // height.
@@ -407,7 +410,7 @@ async function responsiveSizes({ file, args = {} }) {
 
   // If the users didn't set a default sizes, we'll make one.
   if (!options.sizes) {
-    options.sizes = `(max-width: ${presentationWidth}px) 100vw, ${presentationWidth}px`
+    options.sizes = `(max-width: ${options.maxWidth}px) 100vw, ${options.maxWidth}px`
   }
 
   // Create sizes (in width) for the image. If the max width of the container
@@ -475,6 +478,19 @@ async function responsiveSizes({ file, args = {} }) {
     .join(`,\n`)
   const originalName = file.base
 
+  console.log(images)
+  console.log({
+    base64: base64Image.src,
+    aspectRatio: images[0].aspectRatio,
+    src: fallbackSrc,
+    srcSet,
+    sizes: options.sizes,
+    originalImg: originalImg,
+    originalName: originalName,
+    density,
+    presentationWidth,
+    presentationHeight,
+  })
   return {
     base64: base64Image.src,
     aspectRatio: images[0].aspectRatio,
