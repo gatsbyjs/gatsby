@@ -22,10 +22,10 @@ class About extends React.Component {
         <p>
           The code for the site lives at{` `}
           <a
-            href="https://github.com/gatsbyjs/gatsby/tree/1.0/examples/gatsbygram"
+            href="https://github.com/gatsbyjs/gatsby/tree/master/examples/gatsbygram"
             target="_blank"
           >
-            https://github.com/gatsbyjs/gatsby/tree/1.0/examples/gatsbygram
+            https://github.com/gatsbyjs/gatsby/tree/master/examples/gatsbygram
           </a>
         </p>
         <p>
