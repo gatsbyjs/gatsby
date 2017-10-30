@@ -54,7 +54,6 @@ install:
         Exit-AppVeyorBuild
       }
   - ps: Install-Product node $env:nodejs_version $env:platform
-  - choco install yarn --ignore-dependencies
   - refreshenv
   - echo we are running on %PLATFORM%
   - node --version
