@@ -44,7 +44,7 @@ function convertToInputType(
   if (typeMap.has(type)) {
     return null
   }
-  const nextTypeMap = new Set([...typeMap, type])
+  const nextTypeMap = new Set(Array.from(typeMap).concat([type]))
 
   if (type instanceof GraphQLScalarType || type instanceof GraphQLEnumType) {
     return type

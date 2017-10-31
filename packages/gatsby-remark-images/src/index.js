@@ -200,7 +200,7 @@ module.exports = (
 
             // Replace the image node with an inline HTML node.
             node.type = `html`
-            node.value = $.html()
+            node.value = $(`body`).html() // fix for cheerio v1
 
             return resolve(node)
           })

@@ -20,17 +20,17 @@ class EvaluationTable extends Component {
         words.slice(0, words.length - 1).join(` `),
         <span
           css={{
-            "-webkitHyphens": `auto`,
-            "-msHyphens": `auto`,
-            hyphens: `auto`,
-            wordBreak: `break-all`,
-            display: `inline-block`,
+            // WebkitHyphens: `auto`,
+            // MsHyphens: `auto`,
+            // hyphens: `auto`,
+            // wordBreak: `break-all`,
+            // display: `inline-block`,
             "&:hover": {
-              background: `#e0d6eb`,
+              background: presets.lightPurple,
             },
           }}
         >
-          &nbsp;
+          {` `}
           {`${words[words.length - 1]} `}
           <img
             src={infoIcon}
@@ -49,19 +49,26 @@ class EvaluationTable extends Component {
         case 0: {
           return (
             <div
-              style={{
-                padding: rhythm(1 / 2),
+              css={{
                 verticalAlign: `middle`,
-                textAlign: `center`,
-                width: 130,
+                textAlign: `left`,
                 display: `inline-block`,
                 marginLeft: `auto`,
                 marginRight: `auto`,
+                padding: `${rhythm(1 / 4)} 0 ${rhythm(1 / 4)} ${rhythm(1 / 4)}`,
+                [presets.Mobile]: {
+                  padding: `${rhythm(1 / 2)} 0 ${rhythm(1 / 2)} ${rhythm(
+                    1 / 2
+                  )}`,
+                },
               }}
             >
               <a
                 css={{
-                  fontWeight: `normal !important`,
+                  "&&": {
+                    fontWeight: `normal`,
+                    borderBottom: 0,
+                  },
                 }}
                 onClick={e => {
                   e.preventDefault()
@@ -76,22 +83,7 @@ class EvaluationTable extends Component {
         case 2:
         case 3:
         case 4: {
-          return (
-            <div
-              css={{
-                margin: `auto`,
-                height: rhythm(3 / 4),
-                width: rhythm(3 / 4),
-                verticalAlign: `middle`,
-                [presets.Mobile]: {
-                  height: rhythm(1),
-                  width: rhythm(1),
-                },
-              }}
-            >
-              <EvaluationCell num={text} />
-            </div>
-          )
+          return <EvaluationCell num={text} />
         }
       }
     }
@@ -125,7 +117,6 @@ class EvaluationTable extends Component {
                       category={row.node.Subcategory}
                     />,
                     <div
-                      key="fake"
                       dangerouslySetInnerHTML={{
                         __html: `<span id="${row.node.Feature
                           .toLowerCase()
@@ -133,7 +124,7 @@ class EvaluationTable extends Component {
                           .join(`-`)}"></span>`,
                       }}
                     />,
-                    <tr key={2 * i}>
+                    <tr>
                       {headers.map((header, j) => (
                         <td
                           key={j}
@@ -143,14 +134,14 @@ class EvaluationTable extends Component {
                               cursor: j >= 0 ? `pointer` : `inherit`,
                             },
                             borderBottom: !showTooltip(s, i)
-                              ? `invalidCSS`
+                              ? `1px solid ${presets.veryLightPurple}`
                               : `none`,
                             minWidth: 40,
                             paddingRight: 0,
                             paddingLeft: 0,
-                            textAlign: `center`,
+                            textAlign: `left`,
                             verticalAlign: `middle`,
-                            fontSize: `80%`,
+                            fontSize: `90%`,
                             lineHeight: `${rhythm(3 / 4)}`,
                           }}
                           onClick={() => {
@@ -164,22 +155,25 @@ class EvaluationTable extends Component {
                       ))}
                     </tr>,
                     <tr
-                      key={2 * i + 1}
                       style={{
                         display: showTooltip(s, i) ? `table-row` : `none`,
-                        borderRight: options.tableBorder,
                       }}
                     >
                       <td
-                        key={1}
                         css={{
                           fontFamily: options.headerFontFamily.join(`,`),
-                          paddingRight: `${rhythm(1)} !important`,
-                          paddingLeft: `${rhythm(1)} !important`,
                           paddingBottom: `calc(${rhythm(1)} - 1px)`,
-                          [presets.Mobile]: {
-                            paddingRight: `${rhythm(2)} !important`,
-                            paddingLeft: `${rhythm(2)} !important`,
+                          "&&": {
+                            paddingRight: `${rhythm(1 / 4)}`,
+                            paddingLeft: `${rhythm(1 / 4)}`,
+                            [presets.Mobile]: {
+                              paddingRight: `${rhythm(1 / 2)}`,
+                              paddingLeft: `${rhythm(1 / 2)}`,
+                            },
+                            [presets.Phablet]: {
+                              paddingRight: `${rhythm(2)}`,
+                              paddingLeft: `${rhythm(2)}`,
+                            },
                           },
                         }}
                         colSpan="5"

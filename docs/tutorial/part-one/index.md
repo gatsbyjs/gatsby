@@ -47,7 +47,7 @@ gatsby new tutorial-part-one https://github.com/gatsbyjs/gatsby-starter-hello-wo
 
 This command downloads the files for the starter and then installs the needed NPM packages. It should take around 1.5-3 minutes to finish. It may look like nothing is happening at first; be patient!
 
-Now let's now try running Gatsby!
+Now let's try running Gatsby!
 
 Gatsby has a built-in development server. Let's start it up by typing in the following commands into the same terminal window you've used so far in this tutorial.
 
@@ -70,7 +70,7 @@ This is huge because it makes development so much faster and fun.
 
 Let's try it.
 
-You'll need code editing software for the next part of this tutorial. [VS Code](https://code.visualstudio.com/) is a nice one. After downloading and opening a code editing software, open a folder on your computer called "tutorial-part-one." This folder was automatically created when you ran the previous terminal commands in the first part of this tutorial.
+You'll need code editing software for the next part of this tutorial. [VS Code](https://code.visualstudio.com/) is a nice one. With your code editor, open a folder on your computer called "tutorial-part-one." This folder was automatically created when you ran the previous terminal commands in the first part of this tutorial.
 
 Now that you've opened the "tutorial-part-one" folder in your code editing software, it's time to edit your website. In the code editing software, you'll need to find the `src/pages/index.js`. Once you find that, try changing "Hello world!" in the page component to "Hello Gatsby!". The text in your browser should change within a second.
 
@@ -150,8 +150,8 @@ What you're seeing is the Gatsby.js development 404 page. Let's do what it says 
 Make the second page component look something like:
 
 ```jsx
-import React from 'react'
-import Link from 'gatsby-link'
+import React from "react"
+import Link from "gatsby-link"
 
 export default () =>
   <div>

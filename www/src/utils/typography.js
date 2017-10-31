@@ -44,7 +44,6 @@ const options = {
   blockMarginBottom: 0.75,
   scaleRatio: 2,
   plugins: [new CodePlugin()],
-  tableBorder: `1px solid #dddddd`,
   overrideStyles: ({ rhythm, scale }, options) => {
     return {
       "h1,h2,h4,h5,h6": {
@@ -76,6 +75,9 @@ const options = {
         borderLeft: `${rhythm(
           options.blockMarginBottom / 4
         )} solid ${presets.brandLighter}`,
+      },
+      hr: {
+        backgroundColor: presets.brandLighter,
       },
       "tt,code": {
         // background: `hsla(23, 60%, 97%, 1)`,

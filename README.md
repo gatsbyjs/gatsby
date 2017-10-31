@@ -59,6 +59,14 @@ Websites built with Gatsby:
 * [Georgi Yanev](https://blog.georgi-yanev.com) [(source)](https://github.com/jumpalottahigh/blog.georgi-yanev.com)
 * [OnCallogy.com](https://www.oncallogy.com)
 * [doopoll's marketing site](https://doopoll.co)
+* [Design Systems Weekly](https://designsystems.email/)
+* [Slite landing pages](https://slite.com/)
+* [Hallingdata](http://hallingdata.no/)
+* [@swyx](http://swyx.io) [(source)](https://github.com/sw-yx/swyxdotio)
+* [Portfolio of Piotr Fedorczyk](https://piotrf.pl)
+* [JavaScript Stuff](https://www.javascriptstuff.com)
+* [GRANDstack - GraphQL, React, Apollo, Neo4j Database](http://grandstack.io/)
+* [GraphCMS's website](https://graphcms.com)
 
 ## Docs
 
