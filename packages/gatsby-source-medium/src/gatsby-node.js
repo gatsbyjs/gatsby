@@ -29,18 +29,24 @@ exports.sourceNodes = async ({ boundActionCreators }, { username }) => {
   const { createNode } = boundActionCreators
 
   try {
+    const isPublication = username[0] !== `@`  // username's start with `@` symbol
     const result = await fetch(username)
     const json = JSON.parse(strip(result.data))
-
-    const { posts } = json.payload
-    const collectionKeys = Object.keys(json.payload.references.Collection)
+    let importableResources = []
     const userKeys = Object.keys(json.payload.references.User)
-
-    const importableResources = [
-      userKeys.map(key => json.payload.references.User[key]),
-      posts,
-      collectionKeys.map(key => json.payload.references.Collection[key]),
-    ]
+    if(!isPublication){
+      const postKeys = Object.keys(json.payload.references.Post)
+      importableResources = [
+        userKeys.map(key => json.payload.references.User[key]),
+        postKeys.map(key => json.payload.references.Post[key]),
+      ]
+    } else {
+      const posts = json.payload.posts
+      importableResources =  [
+        posts,
+        userKeys.map(key => json.payload.references.User[key]),
+      ]
+    }
 
     const resources = Array.prototype.concat(...importableResources)
     resources.map(resource => {
@@ -50,19 +56,6 @@ exports.sourceNodes = async ({ boundActionCreators }, { username }) => {
         .createHash(`md5`)
         .update(JSON.stringify(resource))
         .digest(`hex`)
-
-      const links =
-        resource.type === `Post`
-          ? {
-              author___NODE: resource.creatorId,
-            }
-          : resource.type === `User`
-            ? {
-                posts___NODE: posts
-                  .filter(post => post.creatorId === resource.userId)
-                  .map(post => post.id),
-              }
-            : {}
 
       const node = Object.assign(
         resource,
@@ -75,7 +68,6 @@ exports.sourceNodes = async ({ boundActionCreators }, { username }) => {
             contentDigest: digest,
           },
         },
-        links
       )
 
       createNode(node)

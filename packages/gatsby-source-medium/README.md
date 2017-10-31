@@ -11,6 +11,7 @@ something like [gatsby-source-rss](https://github.com/jondubin/gatsby-source-rss
 
 ## How to use
 
+
 ```javascript
 // In your gatsby-config.js
 plugins: [
@@ -22,6 +23,8 @@ plugins: [
   }
 ]
 ```
+###### PS.Note
+if you wanna get user put username with `@`.
 
 ## How to query
 
