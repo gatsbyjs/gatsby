@@ -23,9 +23,6 @@ window.matchPath = matchPath
 
 const history = createHistory()
 
-// Persisting history at top level to account for pages not found
-window.___history = history
-
 // Convert to a map for faster lookup in maybeRedirect()
 const redirectMap = redirects.reduce((map, redirect) => {
   map[redirect.fromPath] = redirect
@@ -166,7 +163,8 @@ apiRunnerAsync(`onClientEntry`).then(() => {
                     })
                   } else {
                     return createElement(ComponentRenderer, {
-                      location: { page: true, pathname: `/404.html` },
+                      page: true,
+                      location: { pathname: `/404.html` },
                     })
                   }
                 },

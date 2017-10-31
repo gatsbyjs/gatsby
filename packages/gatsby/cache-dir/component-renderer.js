@@ -61,7 +61,10 @@ class ComponentRenderer extends React.Component {
     // This is only useful on delayed transitions as the page will get rendered
     // without the necessary page resources and then re-render once those come in.
     emitter.on(`onPostLoadPageResources`, e => {
-      if (e.page.path === loader.getPage(this.state.location.pathname).path) {
+      if (
+        loader.getPage(this.state.location.pathname) &&
+        e.page.path === loader.getPage(this.state.location.pathname).path
+      ) {
         this.setState({ pageResources: e.pageResources })
       }
     })
