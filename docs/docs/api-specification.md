@@ -87,7 +87,7 @@ fin
 
 Once the initial bootstrap is finished, for the development server we start
 `webpack-dev-server` and a simple express server for serving files and for a
-production build, we start building the css then javascript then HTML with
+production build, we start building the CSS then JavaScript then HTML with
 webpack.
 
 During these processes there are various extension points where plugins can
