@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
 /* globals window CustomEvent */
-import React, { createElement } from 'react'
-import { Transition } from 'react-transition-group'
+import React, { createElement } from "react"
+import { Transition } from "react-transition-group"
 import createHistory from "history/createBrowserHistory"
 
-import getTransitionStyle from './src/utils/getTransitionStyle'
+import getTransitionStyle from "./src/utils/getTransitionStyle"
 
 const timeout = 250
 const historyExitingEventType = `history::exiting`
