@@ -163,6 +163,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
                     })
                   } else {
                     return createElement(ComponentRenderer, {
+                      ...props,
                       page: true,
                       location: { pathname: `/404.html` },
                     })

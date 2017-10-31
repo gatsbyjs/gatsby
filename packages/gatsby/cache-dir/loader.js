@@ -249,8 +249,8 @@ const queue = {
 
       if (!page) {
         console.log(`A page wasn't found for "${path}"`)
-        cb()
-        return undefined
+        // Serving 404 page resources because it will also serve the same resource
+        page = findPage(`/404.html`)
       }
 
       // Use the path from the page so the pathScriptsCache uses
