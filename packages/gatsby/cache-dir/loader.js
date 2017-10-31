@@ -245,13 +245,12 @@ const queue = {
       return pageResources
       // Production code path
     } else {
-      let page = findPage(path)
+      const page = findPage(path)
 
       if (!page) {
         console.log(`A page wasn't found for "${path}"`)
-        // Rather than returning undefined or null, we just find resources using 404 page
-        // This will ensure we will still be able to navigate within page that does not exist
-        page = findPage(`/404.html`)
+        cb()
+        return undefined
       }
 
       // Use the path from the page so the pathScriptsCache uses
