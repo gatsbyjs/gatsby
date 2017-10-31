@@ -329,6 +329,8 @@ If you bring up the autocomplete window you'll see:
 
 Hit <kbd>Enter</kbd> on `allFile` then type <kbd>Ctrl + Enter</kbd> to run a query.
 
+(Note: If you're using your browser in incognito mode, you will not see `allFile` as one of the options in the autocomplete window. This is because your browser does not have access to local files in incognito mode.)
+
 ![filesystem-query](filesystem-query.png)
 
 Delete the `id` from the query and bring up the autocomplete again (<kbd>Ctrl + Space</kbd>).
