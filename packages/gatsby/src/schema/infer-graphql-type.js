@@ -469,13 +469,15 @@ function shouldInferFile(nodes, key, value) {
 
 // Look for fields that are pointing at a file — if the field has a known
 // extension then assume it should be a file field.
-function inferFromUri(key, types) {
+function inferFromUri(key, types, isArray) {
   const fileField = types.find(type => type.name === `File`)
 
   if (!fileField) return null
 
   return {
-    type: fileField.nodeObjectType,
+    type: isArray
+      ? new GraphQLList(fileField.nodeObjectType)
+      : fileField.nodeObjectType,
     resolve: (node, a, { path }) => {
       const fieldValue = node[key]
 
@@ -483,30 +485,38 @@ function inferFromUri(key, types) {
         return null
       }
 
-      // Find File node for this node (we assume the node is something
+      const findLinkedFileNode = relativePath => {
+        // Use the parent File node to create the absolute path to
+        // the linked file.
+        const fileLinkPath = normalize(
+          systemPath.resolve(parentFileNode.dir, relativePath)
+        )
+
+        // Use that path to find the linked File node.
+        const linkedFileNode = _.find(
+          getNodes(),
+          n => n.internal.type === `File` && n.absolutePath === fileLinkPath
+        )
+        if (linkedFileNode) {
+          createPageDependency({
+            path,
+            nodeId: linkedFileNode.id,
+          })
+          return linkedFileNode
+        } else {
+          return null
+        }
+      }
+
+      // Find the File node for this node (we assume the node is something
       // like markdown which would be a child node of a File node).
       const parentFileNode = findRootNode(node)
 
-      // Use the parent File node to create the absolute path to
-      // the linked file.
-      const fileLinkPath = normalize(
-        systemPath.resolve(parentFileNode.dir, fieldValue)
-      )
-
-      // Use that path to find the linked File node.
-      const linkedFileNode = _.find(
-        getNodes(),
-        n => n.internal.type === `File` && n.absolutePath === fileLinkPath
-      )
-
-      if (linkedFileNode) {
-        createPageDependency({
-          path,
-          nodeId: linkedFileNode.id,
-        })
-        return linkedFileNode
+      // Find the linked File node(s)
+      if (isArray) {
+        return fieldValue.map(relativePath => findLinkedFileNode(relativePath))
       } else {
-        return null
+        return findLinkedFileNode(fieldValue)
       }
     },
   }
@@ -565,13 +575,17 @@ export function inferObjectStructureFromNodes({
       ;[fieldName] = key.split(`___`)
       inferredField = inferFromFieldName(value, nextSelector, types)
 
-      // Third if the field is pointing to a file (from another file).
+      // Third if the field (whether a string or array of string(s)) is
+      // pointing to a file (from another file).
     } else if (
       nodes[0].internal.type !== `File` &&
-      _.isString(value) &&
-      shouldInferFile(nodes, nextSelector, value)
+      ((_.isString(value) && shouldInferFile(nodes, nextSelector, value)) ||
+        (_.isArray(value) &&
+          value.length === 1 &&
+          _.isString(value[0]) &&
+          shouldInferFile(nodes, `${nextSelector}[0]`, value[0])))
     ) {
-      inferredField = inferFromUri(key, types)
+      inferredField = inferFromUri(key, types, _.isArray(value))
     }
 
     // Finally our automatic inference of field value type.

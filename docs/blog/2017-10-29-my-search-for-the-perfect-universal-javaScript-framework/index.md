@@ -10,7 +10,7 @@ I spent days and nights trying to build a generic isomorphic web framework that 
 
 [React](https://reactjs.org) was the game changer. It was better suited to building universal apps since its core idea is mapping state to DOM, or in the server rendering case, state to an HTML string. But still, making React render on the server side and then rehydrating it on the client side includes solving many edge cases, messy configuration, and cryptic knowledge of Babel and webpack.
 
-So universal web apps are great but hard. And even when you do get Universal React working, SSR can be super slow and CPU intensive so it’ll often hog the Node.js event loop and even after optimizing it, our team's ultimate solution is always caching.
+So universal web apps are great but hard. And even when you do get universal React working, SSR can be super slow and CPU intensive so it’ll often hog the Node.js event loop. Even after lots of optimizing, our team's ultimate solution is always caching.
 
 But why dynamically rendered content just to cache it when you can just pre-cache everything? AKA static websites?
 
