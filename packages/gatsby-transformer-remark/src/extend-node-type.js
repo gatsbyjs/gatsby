@@ -257,9 +257,16 @@ module.exports = (
         },
         resolve(markdownNode, { pruneLength }) {
           return getAST(markdownNode).then(ast => {
-            const textNodes = []
-            visit(ast, `text`, textNode => textNodes.push(textNode.value))
-            return prune(textNodes.join(` `), pruneLength, `…`)
+            const excerptNodes = []
+
+            visit(ast, node => {
+              if (node.type === `text` || node.type === `inlineCode`) {
+                excerptNodes.push(node.value)
+              }
+              return
+            })
+
+            return prune(excerptNodes.join(` `), pruneLength, `…`)
           })
         },
       },
