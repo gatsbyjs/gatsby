@@ -3,7 +3,7 @@ import React from "react"
 import Link from "gatsby-link"
 
 const Index = ({ transition }) => (
-  <div style={transition.style}>
+  <div style={transition && transition.style}>
     <h1>animals</h1>
     <div>
       <Link to="/cat/">Go to cat</Link>

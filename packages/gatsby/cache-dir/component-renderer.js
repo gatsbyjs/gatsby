@@ -104,7 +104,7 @@ class ComponentRenderer extends React.Component {
 
   render() {
     const pluginResponses = apiRunner(`replaceComponentRenderer`, {
-      props: this.props,
+      props: { ...this.props, pageResources: this.state.pageResources },
     })
     const replacementComponent = pluginResponses[0]
     // If page.
