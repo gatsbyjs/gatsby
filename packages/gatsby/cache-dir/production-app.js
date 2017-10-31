@@ -23,6 +23,9 @@ window.matchPath = matchPath
 
 const history = createHistory()
 
+// Persisting history at top level to account for pages not found
+window.___history = history
+
 // Convert to a map for faster lookup in maybeRedirect()
 const redirectMap = redirects.reduce((map, redirect) => {
   map[redirect.fromPath] = redirect
@@ -71,13 +74,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       if (e.page.path === loader.getPage(pathname).path) {
         emitter.off(`onPostLoadPageResources`, eventHandler)
         clearTimeout(timeoutId)
-
-        // Only when `window.___history` exist, then navigate using it
-        if (window.___history) {
-          window.___history.push(pathname)
-        } else {
-          window.location.href = pathname
-        }
+        window.___history.push(pathname)
       }
     }
 
@@ -86,25 +83,13 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     const timeoutId = setTimeout(() => {
       emitter.off(`onPostLoadPageResources`, eventHandler)
       emitter.emit(`onDelayedLoadPageResources`, { pathname })
-
-      // Only when `window.___history` exist, then navigate using it
-      if (window.___history) {
-        window.___history.push(pathname)
-      } else {
-        window.location.href = pathname
-      }
+      window.___history.push(pathname)
     }, 1000)
 
     if (loader.getResourcesForPathname(pathname)) {
       // The resources are already loaded so off we go.
       clearTimeout(timeoutId)
-
-      // Only when `window.___history` exist, then navigate using it
-      if (window.___history) {
-        window.___history.push(pathname)
-      } else {
-        window.location.href = pathname
-      }
+      window.___history.push(pathname)
     } else {
       // They're not loaded yet so let's add a listener for when
       // they finish loading.
