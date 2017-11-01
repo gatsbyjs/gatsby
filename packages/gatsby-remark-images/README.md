@@ -46,6 +46,8 @@ plugins: [
             // Example: A screenshot made on a retina screen with a
             // resolution of 144 (e.g. Macbook) and a width of 100px,
             // will be rendered at 50px.
+            //
+            // Defaults to false.
             sizeByPixelDensity: true,
           },
         },
