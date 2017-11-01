@@ -57,6 +57,16 @@ describe(`config reducer`, () => {
     expect(reducer(undefined, action).pathPrefix).toBe(`/prefix`)
   })
 
+  it(`It removes pathPrefixes that are a single forward slash`, () => {
+    const action = {
+      type: `SET_SITE_CONFIG`,
+      payload: {
+        pathPrefix: `/`,
+      },
+    }
+    expect(reducer(undefined, action).pathPrefix).toBe(``)
+  })
+
   it(`It sets the pathPrefix to an empty string if it's not set`, () => {
     const action = {
       type: `SET_SITE_CONFIG`,

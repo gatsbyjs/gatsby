@@ -5,7 +5,7 @@ Adds syntax highlighting to code blocks in markdown files using
 
 ## Install
 
-`npm install --save gatsby-remark-prismjs`
+`npm install --save gatsby-transformer-remark gatsby-remark-prismjs`
 
 ## How to use
 

@@ -51,7 +51,6 @@
     "front-matter": "^2.1.0",
     "fs-extra": "^4.0.1",
     "gatsby-module-loader": "^2.0.0-alpha.1",
-    "gatsby-react-router-scroll": "^1.0.2",
     "gatsby-cli": "^1.1.11",
     "gatsby-react-router-scroll": "^1.0.3",
     "glob": "^7.1.1",

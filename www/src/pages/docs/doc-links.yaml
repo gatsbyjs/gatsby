@@ -47,7 +47,9 @@
     - title: Adding a List of Markdown Blog Posts*
       link: /docs/adding-a-list-of-markdown-blog-posts/
     - title: Adding Tags and Categories to Blog Posts*
-      link:: /docs/adding-tags-and-categories-to-blog-posts/
+      link: /docs/adding-tags-and-categories-to-blog-posts/
+    - title: Adding Markdown Pages*
+      link: /adding-markdown-pages/
     - title: Creating Dynamically-Rendered Navigation*
       link: /docs/creating-dynamically-rendered-navigation/
     - title: Dropping Images into Static Folders*

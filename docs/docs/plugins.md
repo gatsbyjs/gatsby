@@ -70,7 +70,7 @@ plugin.
 If the name is empty it is inferred from the plugin folder name.
 
 Like all gatsby-* files, the code is not being processed by Babel. If you
-want to use javascript syntax which isn't supported by your version of Node.js,
+want to use JavaScript syntax which isn't supported by your version of Node.js,
 you can place the files in a `src` subfolder and build them to the plugin folder root.
 
 ## Official plugins
@@ -133,7 +133,10 @@ you can place the files in a `src` subfolder and build them to the plugin folder
 * [gatsby-plugin-purify-css](https://github.com/rongierlach/gatsby-plugin-purify-css)
 * [gatsby-plugin-yandex-metrika](https://github.com/viatsko/gatsby-plugin-yandex-metrika)
 * [gatsby-plugin-klipse](https://github.com/ahmedelgabri/gatsby-plugin-klipse)
+* [gatsby-plugin-stripe-checkout](https://github.com/njosefbeck/gatsby-plugin-stripe-checkout)
+* [gatsby-plugin-stripe-elements](https://github.com/njosefbeck/gatsby-plugin-stripe-elements)
 * [gatsby-remark-emoji](https://github.com/Rulikkk/gatsby-remark-emoji)
 * [gatsby-remark-external-links](https://github.com/JLongley/gatsby-remark-external-links)
 * [gatsby-source-workable](https://github.com/tumblbug/gatsby-source-workable)
 * [gatsby-source-google-sheets](https://github.com/brandonmp/gatsby-source-google-sheets)
+* [gatsby-source-stripe](https://github.com/njosefbeck/gatsby-source-stripe)

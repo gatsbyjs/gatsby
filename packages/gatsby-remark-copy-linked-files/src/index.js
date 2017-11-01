@@ -24,7 +24,7 @@ module.exports = (
       isRelativeUrl(link.url) &&
       getNode(markdownNode.parent).internal.type === `File`
     ) {
-      const linkPath = path.join(getNode(markdownNode.parent).dir, link.url)
+      const linkPath = path.posix.join(getNode(markdownNode.parent).dir, link.url)
       const linkNode = _.find(files, file => {
         if (file && file.absolutePath) {
           return file.absolutePath === linkPath
@@ -32,7 +32,7 @@ module.exports = (
         return null
       })
       if (linkNode && linkNode.absolutePath) {
-        const newPath = path.join(
+        const newPath = path.posix.join(
           process.cwd(),
           `public`,
           `${linkNode.internal.contentDigest}.${linkNode.extension}`
@@ -43,7 +43,7 @@ module.exports = (
           return
         }
 
-        const relativePath = path.join(
+        const relativePath = path.posix.join(
           `/${linkNode.internal.contentDigest}.${linkNode.extension}`
         )
         link.url = `${relativePath}`
@@ -116,7 +116,7 @@ module.exports = (
       return
     }
 
-    const imagePath = path.join(getNode(markdownNode.parent).dir, image.url)
+    const imagePath = path.posix.join(getNode(markdownNode.parent).dir, image.url)
     const imageNode = _.find(files, file => {
       if (file && file.absolutePath) {
         return file.absolutePath === imagePath
