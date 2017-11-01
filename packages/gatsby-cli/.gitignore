@@ -1,5 +1,2 @@
 /lib
-/*.js
-!/bin.js
-/reporter
-yarn.lock
+/node_modules
