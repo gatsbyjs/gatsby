@@ -52,7 +52,7 @@ class DefaultLayout extends React.Component {
             </span>
           </div>
         </header>
-        <Container paddingBottom={0} paddingTop={rhythm(1)}>
+        <Container paddingBottom={0} paddingTop={rhythm(1 / 2)}>
           <Link to="/">
             <div css={{ width: 193, overflow: `hidden` }}>
               <h1
@@ -85,7 +85,7 @@ class DefaultLayout extends React.Component {
               css={{
                 color: `inherit`,
                 position: `relative`,
-                bottom: 37.5,
+                bottom: rhythm(1.5),
                 textDecoration: `none`,
                 fontSize: scale(0.25).fontSize,
                 ":hover": {

@@ -11,7 +11,6 @@ const RecipeTemplate = ({ data }) => (
       background: constants.paleYellow,
       padding: rhythm(1.5),
       paddingTop: 0,
-      marginTop: rhythm(1),
       marginBottom: rhythm(3),
     }}
   >
