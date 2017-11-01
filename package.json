@@ -68,6 +68,6 @@
       "npm run lint && npm run test-node && npm run test-integration",
     "watch": "lerna run watch --no-sort --stream --concurrency 999"
   },
-  "workspaces": ["packages/*"],
+  "workspaces": ["packages/*", "www"],
   "eslintIgnore": ["interfaces", "**/__tests__/fixtures/"]
 }

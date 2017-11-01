@@ -9,12 +9,7 @@
     "remark-math": "^0.2.4",
     "unist-util-visit": "^1.1.1"
   },
-  "keywords": [
-    "gatsby",
-    "gatsby-plugin",
-    "remark",
-    "katex"
-  ],
+  "keywords": ["gatsby", "gatsby-plugin", "remark", "katex"],
   "license": "MIT",
   "main": "index.js",
   "scripts": {
@@ -23,6 +18,7 @@
     "prepublish": "cross-env NODE_ENV=production npm run build"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "cross-env": "^5.0.5"
   }
 }
