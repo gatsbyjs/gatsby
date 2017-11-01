@@ -21,7 +21,6 @@ window.asyncRequires = asyncRequires
 window.___loader = loader
 window.matchPath = matchPath
 
-
 // Convert to a map for faster lookup in maybeRedirect()
 const redirectMap = redirects.reduce((map, redirect) => {
   map[redirect.fromPath] = redirect
