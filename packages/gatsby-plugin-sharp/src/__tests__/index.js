@@ -34,6 +34,20 @@ describe(`gatsby-plugin-sharp`, () => {
     it(`accounts for pixel density`, async () => {
       const result = await responsiveSizes({
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),
+        args: {
+          sizeByPixelDensity: true,
+        },
+      })
+
+      expect(result).toMatchSnapshot()
+    })
+
+    it(`can optionally ignore pixel density`, async () => {
+      const result = await responsiveSizes({
+        file: getFileObject(path.join(__dirname, `images/144-density.png`)),
+        args: {
+          sizeByPixelDensity: false,
+        },
       })
 
       expect(result).toMatchSnapshot()
