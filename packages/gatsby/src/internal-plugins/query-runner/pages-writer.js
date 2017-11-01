@@ -49,7 +49,7 @@ const writePages = async () => {
         jsonName: layout.jsonName,
       })
     }
-    json.push({ path: p.path, jsonName: p.jsonName })
+    json.push({ path: p.path, jsonName: p.jsonName, asyncSSR: p.asyncSSR })
   })
 
   pageLayouts = _.uniq(pageLayouts)

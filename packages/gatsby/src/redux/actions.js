@@ -112,7 +112,18 @@ actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
     layout = `index`
   }
 
+  // Ensure the page has a context object
+  if (!page.context) {
+    page.context = {}
+  }
+
+  // if asyncSSR wasn't defined, set to false
+  if (!page.asyncSSR) {
+    page.asyncSSR = false
+  }
+
   let internalPage: Page = {
+    asyncSSR,
     layout,
     jsonName,
     internalComponentName,
