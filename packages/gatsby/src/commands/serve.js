@@ -21,7 +21,7 @@ function startServer(program, launchPort) {
   server.connection({
     host: program.host,
     port: serverPort,
-    address: '0.0.0.0',
+    address: `0.0.0.0`,
   })
 
   server.route({
