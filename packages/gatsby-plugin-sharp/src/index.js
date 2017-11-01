@@ -399,7 +399,9 @@ async function responsiveSizes({ file, args = {} }) {
   // images are intended to be displayed at their native resolution.
   const { width, height, density } = await sharp(file.absolutePath).metadata()
   const pixelRatio =
-    options.sizeByPixelDensity && typeof density === `number` && density > 0 ? density / 72 : 1
+    options.sizeByPixelDensity && typeof density === `number` && density > 0
+      ? density / 72
+      : 1
   const presentationWidth = Math.min(
     options.maxWidth,
     Math.round(width / pixelRatio)
