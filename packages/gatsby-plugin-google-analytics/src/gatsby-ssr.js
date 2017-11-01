@@ -18,9 +18,7 @@ exports.onRenderBody = ({ setPostBodyComponents }, pluginOptions) => {
   ga('create', '${pluginOptions.trackingId}', 'auto');
   ${typeof pluginOptions.anonymize !== `undefined`
     ? `ga('set', 'anonymizeIp', 1);`
-    : ``}
-  ga('send', 'pageview');
-      `,
+    : ``}`,
         }}
       />,
     ])

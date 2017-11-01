@@ -13,7 +13,7 @@ are on the back burner btw until after v1 comes out).
 
 Plugins can extend Gatsby in many ways:
 
-* Sourcing data (e.g from the filesystem or an API or a database)
+* Sourcing data (e.g. from the filesystem or an API or a database)
 * Transforming data from one type to another (e.g. a markdown file to HTML)
 * Creating pages (e.g. a directory of markdown files all gets turned into pages with URLs derived from their file names).
 * Modifying webpack config (e.g. for styling options, adding support for other compile-to-js languages)
@@ -87,7 +87,7 @@ fin
 
 Once the initial bootstrap is finished, for the development server we start
 `webpack-dev-server` and a simple express server for serving files and for a
-production build, we start building the css then javascript then HTML with
+production build, we start building the CSS then JavaScript then HTML with
 webpack.
 
 During these processes there are various extension points where plugins can

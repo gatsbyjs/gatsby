@@ -644,7 +644,8 @@ async function notMemoizedtraceSVG({ file, args, fileArgs }) {
   }
 
   const tmpDir = require(`os`).tmpdir()
-  const tmpFilePath = `${tmpDir}/${file.name}-${crypto
+  const tmpFilePath = `${tmpDir}/${file.internal
+    .contentDigest}-${file.name}-${crypto
     .createHash(`md5`)
     .update(JSON.stringify(fileArgs))
     .digest(`hex`)}.${file.extension}`
