@@ -1,11 +1,13 @@
 {
   "name": "gatsby-cli",
-  "description": "Gatsby command-line interface for creating new sites and running Gatsby commands",
+  "description":
+    "Gatsby command-line interface for creating new sites and running Gatsby commands",
   "version": "1.1.14",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
-    "gatsby": "bin.js"
+    "gatsby": "./gatsby.js"
   },
+  "files": ["./gatsby.js", "lib"],
   "dependencies": {
     "babel-code-frame": "^6.26.0",
     "babel-runtime": "^6.26.0",
@@ -28,9 +30,7 @@
     "babel-cli": "^6.26.0",
     "cross-env": "^5.0.5"
   },
-  "keywords": [
-    "gatsby"
-  ],
+  "keywords": ["gatsby"],
   "license": "MIT",
   "main": "bin.js",
   "scripts": {

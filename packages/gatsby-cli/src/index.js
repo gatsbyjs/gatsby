@@ -1,8 +1,6 @@
-#!/usr/bin/env node
-
 // babel-preset-env doesn't find this import if you
 // use require() with backtick strings so use the es6 syntax
-import "babel-polyfill"
+import 'babel-polyfill'
 
 const createCli = require(`./create-cli`)
 const report = require(`./reporter`)
