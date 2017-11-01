@@ -1,26 +1,26 @@
 // @flow
-import path from "path"
+import path from 'path'
 const normalize = require(`normalize-path`)
-import glob from "glob"
+import glob from 'glob'
 
-import { validate } from "graphql"
-import { IRTransforms } from "relay-compiler"
-import ASTConvert from "relay-compiler/lib/ASTConvert"
-import RelayCompilerContext from "relay-compiler/lib/RelayCompilerContext"
-import filterContextForNode from "relay-compiler/lib/filterContextForNode"
+import { validate } from 'graphql'
+import { IRTransforms } from 'relay-compiler'
+import ASTConvert from 'relay-compiler/lib/ASTConvert'
+import GraphQLCompilerContext from 'relay-compiler/lib/GraphQLCompilerContext'
+import filterContextForNode from 'relay-compiler/lib/filterContextForNode'
 const _ = require(`lodash`)
 
-import { store } from "../../redux"
-import FileParser from "./file-parser"
-import QueryPrinter from "./query-printer"
+import { store } from '../../redux'
+import FileParser from './file-parser'
+import GraphQLIRPrinter from 'relay-compiler/lib/GraphQLIRPrinter'
 import {
   graphqlError,
   graphqlValidationError,
   multipleRootQueriesError,
-} from "./graphql-errors"
-import report from "gatsby-cli/lib/reporter"
+} from './graphql-errors'
+import report from 'gatsby-cli/lib/reporter'
 
-import type { DocumentNode, GraphQLSchema } from "graphql"
+import type { DocumentNode, GraphQLSchema } from 'graphql'
 
 const { printTransforms } = IRTransforms
 
@@ -59,6 +59,7 @@ const validationRules = [
 class Runner {
   baseDir: string
   schema: GraphQLSchema
+  fragmentsDir: string
 
   constructor(baseDir: string, fragmentsDir: string, schema: GraphQLSchema) {
     this.baseDir = baseDir
@@ -121,7 +122,7 @@ class Runner {
       })
     }
 
-    let compilerContext = new RelayCompilerContext(this.schema)
+    let compilerContext = new GraphQLCompilerContext(this.schema)
     try {
       compilerContext = compilerContext.addAll(
         ASTConvert.convertASTDocuments(this.schema, documents, validationRules)
@@ -156,7 +157,7 @@ class Runner {
 
       let text = filterContextForNode(printContext.getRoot(name), printContext)
         .documents()
-        .map(QueryPrinter.print)
+        .map(GraphQLIRPrinter.print)
         .join(`\n`)
 
       compiledNodes.set(filePath, {
@@ -169,6 +170,7 @@ class Runner {
     return compiledNodes
   }
 }
+export { Runner }
 
 export default async function compile(): Promise<Map<string, RootQuery>> {
   const { program, schema } = store.getState()

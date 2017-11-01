@@ -3,8 +3,12 @@
 
 [ignore]
 .*/test/.*
+.*/node_modules/documentation/.*
 .*/node_modules/typography/.*
 .*/node_modules/fbjs/.*
 .*/node_modules/react-side-effect/.*
+.*/node_modules/styled-components/.*
+.*/node_modules/preact/.*
+.*/node_modules/jss/.*
 .*/www/.*
 .*/examples/.*

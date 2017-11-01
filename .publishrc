@@ -1,3 +1,0 @@
-{
-  "prepublishScript": "./scripts/prepublish.sh"
-}
