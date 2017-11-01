@@ -35,7 +35,8 @@ class DefaultLayout extends React.Component {
                 css={{
                   fontSize: rhythm(1),
                 }}
-              />{` `}
+              />
+              {` `}
               <span css={{ lineHeight: rhythm(1.5) }}>
                 Search by keyword, ingredient, dish
               </span>
@@ -61,6 +62,7 @@ class DefaultLayout extends React.Component {
                   margin: 0,
                   fontFamily: `Rochester, serif`,
                   float: `right`,
+                  fontDisplay: `block`,
                 }}
               >
                 Umami
