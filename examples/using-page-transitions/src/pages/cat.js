@@ -11,6 +11,9 @@ const Cat = ({ transition }) => (
     <div>
       <Link to="/dog/">Go to dog</Link>
     </div>
+    <div>
+      <Link to="/long-page/">Go to long page</Link>
+    </div>
   </div>
 )
 
