@@ -19,6 +19,7 @@ type Job = {
   id: string,
 }
 type PageInput = {
+  asyncSSR: boolean,
   path: string,
   component: string,
   layout?: string,
@@ -32,6 +33,7 @@ type LayoutInput = {
 }
 
 type Page = {
+  asyncSSR: boolean,
   path: string,
   component: string,
   context: Object,
@@ -123,7 +125,7 @@ actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
   }
 
   let internalPage: Page = {
-    asyncSSR,
+    asyncSSR: page.asyncSSR,
     layout,
     jsonName,
     internalComponentName,
