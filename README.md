@@ -67,6 +67,7 @@ Websites built with Gatsby:
 * [JavaScript Stuff](https://www.javascriptstuff.com)
 * [GRANDstack - GraphQL, React, Apollo, Neo4j Database](http://grandstack.io/)
 * [GraphCMS's website](https://graphcms.com)
+* [Mannequin.io](https://mannequin.io) [(source)](https://github.com/LastCallMedia/Mannequin/tree/master/site)
 
 ## Docs
 
