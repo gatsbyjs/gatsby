@@ -285,7 +285,6 @@ function queueImageResizing({ file, args = {} }) {
     width = options.width
     height = options.height
     // Recalculate the aspectRatio for the cropped photo
-    // console.log(`using cropped to gen aspectRatio`, width, height)
     aspectRatio = width / height
   } else {
     // Use the aspect ratio of the image to calculate what will be the resulting
@@ -413,7 +412,7 @@ async function responsiveSizes({ file, args = {} }) {
 
   // If the users didn't set a default sizes, we'll make one.
   if (!options.sizes) {
-    options.sizes = `(max-width: ${options.maxWidth}px) 100vw, ${options.maxWidth}px`
+    options.sizes = `(max-width: ${presentationWidth}px) 100vw, ${presentationWidth}px`
   }
 
   // Create sizes (in width) for the image. If the max width of the container
