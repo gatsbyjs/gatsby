@@ -1,8 +1,8 @@
 /* @flow weak */
-import detect from "detect-port"
-import Hapi from "hapi"
-import opn from "opn"
-import rl from "readline"
+import detect from 'detect-port'
+import Hapi from 'hapi'
+import opn from 'opn'
+import rl from 'readline'
 
 const rlInterface = rl.createInterface({
   input: process.stdin,
@@ -21,6 +21,7 @@ function startServer(program, launchPort) {
   server.connection({
     host: program.host,
     port: serverPort,
+    address: '0.0.0.0',
   })
 
   server.route({
