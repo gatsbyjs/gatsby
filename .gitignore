@@ -1,3 +1,7 @@
+
+packages/*/yarn.lock
+packages/*/package-lock.json
+
 # Logs
 logs
 *.log
@@ -44,5 +48,4 @@ node_modules/
 # IDE specific
 .idea/
 .vscode/
-yarn.lock
-package-lock.json
+

@@ -8,7 +8,7 @@ Object {
       "completedAt": 1482363367071,
       "createdAt": 1482363367071,
       "id": "test job",
-      "plugin": Object {},
+      "plugin": null,
       "runTime": 0,
     },
   ],
@@ -20,7 +20,7 @@ Object {
   "payload": Object {
     "id": "test job",
   },
-  "plugin": Object {},
+  "plugin": null,
   "type": "CREATE_JOB",
 }
 `;
