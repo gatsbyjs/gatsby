@@ -85,6 +85,7 @@ plugin for Markdown content as gatsby-remark-images).
 * `maxWidth` (int, default: 800)
 * `maxHeight` (int)
 * `quality` (int, default: 50)
+* `sizeByPixelDensity` (bool, default: false)
 
 #### Returns
 
@@ -160,7 +161,7 @@ responsiveResolution(
 ```
 
 the source image colors will be converted to match a gradient color chosen based
-on each pixel's [relative luminance][4].  
+on each pixel's [relative luminance][4].
 Logic is borrowed from [react-duotone][5].
 
 #### tracedSVG
