@@ -32,12 +32,12 @@ module.exports = async (program: any) => {
       if (stats.hasErrors()) {
         let webpackErrors = stats.toJson().errors.filter(Boolean)
         return reject(
-          webpackErrors.length ?
-            createErrorFromString(webpackErrors[0], `${outputFile}.map`) :
-            new Error(
-              `There was an issue while building the site: ` +
-              `\n\n${stats.toString()}`
-            )
+          webpackErrors.length
+            ? createErrorFromString(webpackErrors[0], `${outputFile}.map`)
+            : new Error(
+                `There was an issue while building the site: ` +
+                  `\n\n${stats.toString()}`
+              )
         )
       }
 

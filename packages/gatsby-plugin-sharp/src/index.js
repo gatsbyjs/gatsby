@@ -285,7 +285,7 @@ function queueImageResizing({ file, args = {} }) {
     width = options.width
     height = options.height
     // Recalculate the aspectRatio for the cropped photo
-    console.log(`using cropped to gen aspectRatio`, width, height)
+    // console.log(`using cropped to gen aspectRatio`, width, height)
     aspectRatio = width / height
   } else {
     // Use the aspect ratio of the image to calculate what will be the resulting
@@ -478,19 +478,6 @@ async function responsiveSizes({ file, args = {} }) {
     .join(`,\n`)
   const originalName = file.base
 
-  console.log(images)
-  console.log({
-    base64: base64Image.src,
-    aspectRatio: images[0].aspectRatio,
-    src: fallbackSrc,
-    srcSet,
-    sizes: options.sizes,
-    originalImg: originalImg,
-    originalName: originalName,
-    density,
-    presentationWidth,
-    presentationHeight,
-  })
   return {
     base64: base64Image.src,
     aspectRatio: images[0].aspectRatio,

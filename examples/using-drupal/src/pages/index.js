@@ -9,20 +9,21 @@ import constants from "../utils/constants"
 
 class IndexPage extends React.Component {
   render() {
-    console.log(this.props)
     const data = this.props.data
     const topRecipe = data.topRecipe.edges[0].node
     const nextTwoPromotedRecipes = data.nextTwoPromotedRecipes.edges.map(
       edge => edge.node
     )
-    console.log(nextTwoPromotedRecipes)
     const nextFourPromotedRecipes = data.nextFourPromotedRecipes.edges.map(
       edge => edge.node
     )
 
     const FirstPromoted = ({ recipe }) => (
-      <div
+      <Link
+        to={recipe.fields.slug}
         css={{
+          display: `block`,
+          color: `inherit`,
           border: `1px solid ${gray(80)}`,
           marginBottom: rhythm(1),
           "@media(min-width: 800px)": {
@@ -55,7 +56,7 @@ class IndexPage extends React.Component {
               .childImageSharp.sizes
           }
         />
-      </div>
+      </Link>
     )
 
     const PromotedCard = ({
@@ -64,8 +65,11 @@ class IndexPage extends React.Component {
       columns = 4,
       marginBottom = rhythm(1 / 2),
     }) => (
-      <div
+      <Link
+        to={recipe.fields.slug}
         css={{
+          color: `inherit`,
+          textDecoration: `none`,
           display: `inline-block`,
           border: `1px solid ${gray(80)}`,
           width: `calc(1/${columns}*100% - (1 - 1/${columns}) * ${rhythm(
@@ -104,7 +108,7 @@ class IndexPage extends React.Component {
           </h4>
           <h3>{recipe.title}</h3>
         </div>
-      </div>
+      </Link>
     )
 
     return (
@@ -147,7 +151,7 @@ class IndexPage extends React.Component {
                 finibus massa.
               </p>
               <p>
-                {" "}
+                {` `}
                 Suspendisse eget • leo sed • felis commodo • semper id • sed
                 erat
               </p>
@@ -212,6 +216,9 @@ export const pageQuery = graphql`
       edges {
         node {
           title
+          fields {
+            slug
+          }
           relationships {
             image {
               relationships {
@@ -238,6 +245,9 @@ export const pageQuery = graphql`
       edges {
         node {
           title
+          fields {
+            slug
+          }
           relationships {
             category {
               name
@@ -267,6 +277,9 @@ export const pageQuery = graphql`
       edges {
         node {
           title
+          fields {
+            slug
+          }
           relationships {
             category {
               name

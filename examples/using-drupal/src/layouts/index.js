@@ -35,7 +35,7 @@ class DefaultLayout extends React.Component {
                 css={{
                   fontSize: rhythm(1),
                 }}
-              />{" "}
+              />{` `}
               <span css={{ lineHeight: rhythm(1.5) }}>
                 Search by keyword, ingredient, dish
               </span>
@@ -52,28 +52,47 @@ class DefaultLayout extends React.Component {
           </div>
         </header>
         <Container paddingBottom={0} paddingTop={rhythm(1)}>
-          <div css={{ width: 193, overflow: `hidden` }}>
-            <h1
+          <Link to="/">
+            <div css={{ width: 193, overflow: `hidden` }}>
+              <h1
+                css={{
+                  color: gray(10),
+                  fontSize: scale(1.8).fontSize,
+                  margin: 0,
+                  fontFamily: `Rochester, serif`,
+                  float: `right`,
+                }}
+              >
+                Umami
+              </h1>
+              <h4
+                css={{
+                  color: gray(10),
+                  fontFamily: `"Josefin Sans", sans-serif`,
+                  marginBottom: 0,
+                  float: `right`,
+                }}
+              >
+                Food Magazine
+              </h4>
+            </div>
+          </Link>
+          <div css={{ float: `right` }}>
+            <Link
+              to="/recipes/"
               css={{
-                color: gray(10),
-                fontSize: scale(1.8).fontSize,
-                margin: 0,
-                fontFamily: `Rochester, serif`,
-                float: `right`,
+                color: `inherit`,
+                position: `relative`,
+                bottom: 37.5,
+                textDecoration: `none`,
+                fontSize: scale(0.25).fontSize,
+                ":hover": {
+                  textDecoration: `underline`,
+                },
               }}
             >
-              Umami
-            </h1>
-            <h4
-              css={{
-                color: gray(10),
-                fontFamily: `"Josefin Sans", sans-serif`,
-                marginBottom: 0,
-                float: `right`,
-              }}
-            >
-              Food Magazine
-            </h4>
+              Recipes
+            </Link>
           </div>
         </Container>
         {this.props.children()}
@@ -85,7 +104,7 @@ class DefaultLayout extends React.Component {
                 fictional magazine and publisher for illustrative purposes only
               </p>
               <p>
-                Read the{" "}
+                Read the{` `}
                 <a href="https://github.com/gatsbyjs/gatsby/tree/master/examples/using-drupal">
                   source for this website.
                 </a>
