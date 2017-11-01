@@ -15,14 +15,30 @@ Object {
   "aspectRatio": 2.0661764705882355,
   "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAYAAAC0VX7mAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAuUlEQVQoz9WRywqCYBCFff9lq6BFLSIQSoIW1UpIulDZ1VKS7GJiapGWl99cnH7sAdy4cTZzmJnzMcwwyDmYYgAHQYBZGKH2cjEOQ7S8d6r3hKS59/HB+0GqNxFB3fXA0hmReqq0ppAYxjfJd0MzSYp0w1yBPn3Idi+j0+2DF4awbCfTdL0ZEEYTlMoVsFwbjSaHqbj4A+M4xlraQZIVXHQdzuOZCbzbNlRNw3y5gnJQcTydYVpW2vsBqlELaS2F/80AAAAASUVORK5CYII=",
   "density": 144,
-  "originalImg": "/static/1234-f54e4.png",
+  "originalImg": "/static/1234-85b96.png",
   "originalName": undefined,
   "presentationHeight": 68,
   "presentationWidth": 141,
   "sizes": "(max-width: 141px) 100vw, 141px",
-  "src": "/static/1234-f54e4.png",
-  "srcSet": "/static/1234-a0d9a.png 200w,
-/static/1234-f54e4.png 281w",
+  "src": "/static/1234-85b96.png",
+  "srcSet": "/static/1234-7c9f5.png 200w,
+/static/1234-85b96.png 281w",
+}
+`;
+
+exports[`gatsby-plugin-sharp responsiveSizes can optionally ignore pixel density 1`] = `
+Object {
+  "aspectRatio": 2.0661764705882355,
+  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAYAAAC0VX7mAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAuUlEQVQoz9WRywqCYBCFff9lq6BFLSIQSoIW1UpIulDZ1VKS7GJiapGWl99cnH7sAdy4cTZzmJnzMcwwyDmYYgAHQYBZGKH2cjEOQ7S8d6r3hKS59/HB+0GqNxFB3fXA0hmReqq0ppAYxjfJd0MzSYp0w1yBPn3Idi+j0+2DF4awbCfTdL0ZEEYTlMoVsFwbjSaHqbj4A+M4xlraQZIVXHQdzuOZCbzbNlRNw3y5gnJQcTydYVpW2vsBqlELaS2F/80AAAAASUVORK5CYII=",
+  "density": 144,
+  "originalImg": "/static/1234-24ad8.png",
+  "originalName": undefined,
+  "presentationHeight": 136,
+  "presentationWidth": 281,
+  "sizes": "(max-width: 281px) 100vw, 281px",
+  "src": "/static/1234-24ad8.png",
+  "srcSet": "/static/1234-06d78.png 200w,
+/static/1234-24ad8.png 281w",
 }
 `;
 
