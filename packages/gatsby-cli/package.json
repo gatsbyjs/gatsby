@@ -7,7 +7,7 @@
     "gatsby": "./gatsby"
   },
   "files": [
-    "gatsby.js",
+    "gatsby",
     "lib"
   ],
   "dependencies": {
