@@ -276,7 +276,7 @@ function queueImageResizing({ file, args = {} }) {
   let height
   // Calculate the eventual width/height of the image.
   const dimensions = imageSize(file.absolutePath)
-  const aspectRatio = dimensions.width / dimensions.height
+  let aspectRatio = dimensions.width / dimensions.height
   const originalName = file.base
 
   // If the width/height are both set, we're cropping so just return
@@ -284,6 +284,8 @@ function queueImageResizing({ file, args = {} }) {
   if (options.width && options.height) {
     width = options.width
     height = options.height
+    // Recalculate the aspectRatio for the cropped photo
+    aspectRatio = width / height
   } else {
     // Use the aspect ratio of the image to calculate what will be the resulting
     // height.
