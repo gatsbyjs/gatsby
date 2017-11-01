@@ -38,7 +38,7 @@ type Page = {
   internalComponentName: string,
   jsonName: string,
   componentChunkName: string,
-  layout: string,
+  layout: ?string,
   updatedAt: number,
 }
 
@@ -101,17 +101,16 @@ actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
     jsonName = `index.json`
     internalComponentName = `ComponentIndex`
   }
-  let layout = page.layout
+  let layout = page.layout || null
   // If no layout is set we try fallback to `/src/layouts/index`.
   if (
-    !page.layout &&
-    !glob.sync(
+    !layout &&
+    glob.sync(
       joinPath(store.getState().program.directory, `src/layouts/index.*`)
-    ).length == 0
+    ).length
   ) {
     layout = `index`
   }
-  if (!layout) layout = `index`
 
   let internalPage: Page = {
     layout,
@@ -129,7 +128,7 @@ actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
   if (result.error) {
     console.log(chalk.blue.bgYellow(`The upserted page didn't pass validation`))
     console.log(chalk.bold.red(result.error))
-    console.log(page)
+    console.log(internalPage)
     return null
   }
 
@@ -655,7 +654,7 @@ actions.replaceComponentQuery = ({
  * @example
  * createJob({ id: `write file id: 123`, fileName: `something.jpeg` })
  */
-actions.createJob = (job: Job, plugin?: Plugin) => {
+actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
   return {
     type: `CREATE_JOB`,
     plugin,
@@ -672,7 +671,7 @@ actions.createJob = (job: Job, plugin?: Plugin) => {
  * @example
  * setJob({ id: `write file id: 123`, progress: 50 })
  */
-actions.setJob = (job: Job, plugin?: Plugin) => {
+actions.setJob = (job: Job, plugin?: ?Plugin = null) => {
   return {
     type: `SET_JOB`,
     plugin,
@@ -689,7 +688,7 @@ actions.setJob = (job: Job, plugin?: Plugin) => {
  * @example
  * endJob({ id: `write file id: 123` })
  */
-actions.endJob = (job: Job, plugin?: Plugin) => {
+actions.endJob = (job: Job, plugin?: ?Plugin = null) => {
   return {
     type: `END_JOB`,
     plugin,
