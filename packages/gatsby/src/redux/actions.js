@@ -1,6 +1,6 @@
 // @flow
-import Joi from 'joi'
-import chalk from 'chalk'
+import Joi from "joi"
+import chalk from "chalk"
 const _ = require(`lodash`)
 const { bindActionCreators } = require(`redux`)
 const { stripIndent } = require(`common-tags`)
@@ -10,8 +10,8 @@ const path = require(`path`)
 const { joinPath } = require(`../utils/path`)
 const { getNode, hasNodeChanged } = require(`./index`)
 const { store } = require(`./index`)
-import * as joiSchemas from '../joi-schemas/joi'
-import { generateComponentChunkName } from '../utils/js-chunk-names'
+import * as joiSchemas from "../joi-schemas/joi"
+import { generateComponentChunkName } from "../utils/js-chunk-names"
 
 const actions = {}
 
