@@ -245,7 +245,7 @@ const queue = {
       return pageResources
       // Production code path
     } else {
-      let page = findPage(path)
+      const page = findPage(path)
 
       if (!page) {
         console.log(`A page wasn't found for "${path}"`)
