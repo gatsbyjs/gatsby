@@ -32,7 +32,7 @@
   },
   "keywords": ["gatsby"],
   "license": "MIT",
-  "main": "bin.js",
+  "main": "lib/index.js",
   "scripts": {
     "build": "babel src --out-dir lib --ignore __tests__",
     "watch": "babel -w src --out-dir lib --ignore __tests__",
