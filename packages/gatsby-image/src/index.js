@@ -301,6 +301,8 @@ class Image extends React.Component {
             zIndex: 0,
             // Let users set component to be absolutely positioned.
             position: style.position === `absolute` ? `initial` : `relative`,
+            width: image.width,
+            height: image.height,
           }}
         >
           <div
