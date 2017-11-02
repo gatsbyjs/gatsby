@@ -13,7 +13,7 @@ const handlerP = fn => (...args) => {
 }
 
 function buildLocalCommands(cli, isLocalSite) {
-  const defaultHost = `localhost`
+  const defaultHost = `0.0.0.0`
   const directory = path.resolve(`.`)
 
   let siteInfo = { directory, browserslist: DEFAULT_BROWSERS }
