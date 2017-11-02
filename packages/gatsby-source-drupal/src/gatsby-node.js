@@ -133,10 +133,10 @@ exports.sourceNodes = async (
   await Promise.all(
     nodes.map(async node => {
       let fileNode
-      if (node.internal.type === `files`) {
+      if (node.internal.type === `files` || node.internal.type === `file__file`) {
         try {
           fileNode = await createRemoteFileNode({
-            url: node.uri,
+            url: baseUrl + node.url,
             store,
             cache,
             createNode,
