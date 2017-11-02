@@ -62,7 +62,7 @@ store.subscribe(() => {
   emitter.emit(lastAction.type, lastAction)
 })
 
-emitter.onAny(() => {
+emitter.on('*', () => {
   saveState(store.getState())
 })
 
