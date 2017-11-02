@@ -12,7 +12,7 @@
     "gatsby-plugin-google-analytics": "^1.0.11",
     "gatsby-plugin-offline": "latest",
     "gatsby-plugin-sharp": "^1.6.13",
-    "gatsby-source-drupal": "latest",
+    "gatsby-source-drupal": "^2.0.1",
     "gatsby-source-filesystem": "^1.5.5",
     "gatsby-transformer-sharp": "^1.6.13",
     "gray-percentage": "^2.0.0",
