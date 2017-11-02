@@ -20,7 +20,7 @@ is likely to navigate to.
 
 ## How to use
 
-In javascript:
+In JavaScript:
 
 ```jsx
 import Link from "gatsby-link"

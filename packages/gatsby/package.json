@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "React.js Static Site Generator",
-  "version": "1.9.85",
+  "version": "1.9.92",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./dist/bin/gatsby.js"
@@ -50,13 +50,13 @@
     "front-matter": "^2.1.0",
     "fs-extra": "^4.0.1",
     "gatsby-1-config-css-modules": "^1.0.4",
-    "gatsby-cli": "^1.1.13",
+    "gatsby-cli": "^1.1.17",
     "gatsby-module-loader": "^1.0.7",
     "gatsby-react-router-scroll": "^1.0.3",
     "glob": "^7.1.1",
-    "graphql": "^0.10.3",
+    "graphql": "^0.11.7",
     "graphql-relay": "^0.5.1",
-    "graphql-skip-limit": "^1.0.6",
+    "graphql-skip-limit": "^1.0.7",
     "gray-matter": "^2.1.0",
     "hapi": "^8.5.1",
     "history": "^4.6.2",
@@ -94,7 +94,7 @@
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
     "redux": "^3.6.0",
-    "relay-compiler": "1.3.0",
+    "relay-compiler": "^1.4.1",
     "remote-redux-devtools": "^0.5.7",
     "sift": "^3.2.6",
     "slash": "^1.0.0",
@@ -126,6 +126,9 @@
   },
   "engines": {
     "node": ">4.0.0"
+  },
+  "resolutions": {
+    "graphql": "^0.11.7"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby#readme",
   "keywords": [

@@ -70,7 +70,7 @@ plugin.
 If the name is empty it is inferred from the plugin folder name.
 
 Like all gatsby-* files, the code is not being processed by Babel. If you
-want to use javascript syntax which isn't supported by your version of Node.js,
+want to use JavaScript syntax which isn't supported by your version of Node.js,
 you can place the files in a `src` subfolder and build them to the plugin folder root.
 
 ## Official plugins

@@ -1,4 +1,5 @@
 const _ = require(`lodash`)
+const { oneLine } = require(`common-tags`)
 const moment = require(`moment`)
 
 module.exports = (state = { active: [], done: [] }, action) => {
@@ -44,11 +45,10 @@ module.exports = (state = { active: [], done: [] }, action) => {
       const completedAt = Date.now()
       const job = state.active.find(j => j.id === action.payload.id)
       if (!job) {
-        throw new Error(
-          `The plugin "${action.plugin
-            .name}" tried to end a job with the id "${action.payload
-            .id}" that either hasn't yet been created or has already been ended`
-        )
+        throw new Error(oneLine`
+          The plugin "${_.get(action, `plugin.name`, `anonymous`)}"
+          tried to end a job with the id "${action.payload.id}"
+          that either hasn't yet been created or has already been ended`)
       }
 
       return {
