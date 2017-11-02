@@ -3,8 +3,6 @@ const crypto = require(`crypto`)
 const _ = require(`lodash`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
-const makeTypeName = type => `drupal__${type.replace(/-/g, `_`)}`
-
 // Get content digest of node.
 const createContentDigest = obj =>
   crypto
@@ -12,31 +10,11 @@ const createContentDigest = obj =>
     .update(JSON.stringify(obj))
     .digest(`hex`)
 
-const processEntities = ents =>
-  ents.map(ent => {
-    const newEnt = {
-      id: ent.id,
-      internal: {
-        type: ent.type,
-      },
-      ...ent.attributes,
-      created: new Date(ent.attributes.created * 1000).toJSON(),
-      changed: new Date(ent.attributes.changed * 1000).toJSON(),
-    }
-    if (newEnt.revision_timestamp) {
-      newEnt.revision_timestamp = new Date(
-        newEnt.revision_timestamp * 1000
-      ).toJSON()
-    }
-
-    return newEnt
-  })
-
 exports.sourceNodes = async (
   { boundActionCreators, getNode, hasNodeChanged, store, cache },
   { baseUrl }
 ) => {
-  const { createNode, setPluginStatus, touchNode } = boundActionCreators
+  const { createNode } = boundActionCreators
 
   // Touch existing Drupal nodes so Gatsby doesn't garbage collect them.
   // _.values(store.getState().nodes)
@@ -76,10 +54,12 @@ exports.sourceNodes = async (
 
       const data = await getNext(url)
 
-      return {
+      const result = {
         type,
         data,
       }
+
+      result
     })
   )
 
