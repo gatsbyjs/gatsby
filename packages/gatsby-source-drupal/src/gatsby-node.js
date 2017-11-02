@@ -2,6 +2,7 @@ const axios = require(`axios`)
 const crypto = require(`crypto`)
 const _ = require(`lodash`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
+const { URL } = require(`url`)
 
 // Get content digest of node.
 const createContentDigest = obj =>
@@ -36,7 +37,6 @@ exports.sourceNodes = async (
   // }
 
   const data = await axios.get(`${baseUrl}/api`)
-  console.log(JSON.stringify(data.data, null, 4))
   const allData = await Promise.all(
     _.map(data.data.links, async (url, type) => {
       if (type === `self`) return
@@ -59,7 +59,8 @@ exports.sourceNodes = async (
         data,
       }
 
-      result
+      // eslint-disable-next-line consistent-return
+      return result
     })
   )
 
@@ -133,10 +134,15 @@ exports.sourceNodes = async (
   await Promise.all(
     nodes.map(async node => {
       let fileNode
-      if (node.internal.type === `files` || node.internal.type === `file__file`) {
+      if (
+        node.internal.type === `files` ||
+        node.internal.type === `file__file`
+      ) {
         try {
+          // Resolve w/ baseUrl if node.uri isn't absolute.
+          const url = new URL(node.uri, baseUrl)
           fileNode = await createRemoteFileNode({
-            url: baseUrl + node.url,
+            url: url.href,
             store,
             cache,
             createNode,
