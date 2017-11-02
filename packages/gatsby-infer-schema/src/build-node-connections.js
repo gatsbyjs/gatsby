@@ -10,9 +10,12 @@ const {
 } = require(`./infer-graphql-input-fields-from-fields`)
 const createSortField = require(`./create-sort-field`)
 const buildConnectionFields = require(`./build-connection-fields`)
-const { getNodes } = require(`../redux`)
 
-module.exports = (types: any) => {
+module.exports = (
+  types: any,
+  getNodes: () => any[],
+  createPageDependency: (arg: any) => void,
+) => {
   const connections = {}
 
   _.each(types, (type /* , fieldName*/) => {
@@ -87,7 +90,7 @@ module.exports = (types: any) => {
           connection: true,
           path,
           type: type.node.type,
-        })
+        }, createPageDependency)
       },
     }
   })

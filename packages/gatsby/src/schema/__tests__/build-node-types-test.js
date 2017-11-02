@@ -1,6 +1,10 @@
 const { graphql, GraphQLObjectType, GraphQLSchema } = require(`graphql`)
 const _ = require(`lodash`)
-const buildNodeTypes = require(`../build-node-types`)
+const { createPageDependency } = require(`../../redux/actions/add-page-dependency`)
+const apiRunner = require(`../../utils/api-runner-node`)
+const { joinPath } = require(`../../utils/path`)
+const buildNodeTypes = require(`gatsby-infer-schema/dist/build-node-types`)
+const reduxDeps = require(`../../redux`)
 
 describe(`build-node-types`, () => {
   let schema, store, types
@@ -44,7 +48,7 @@ describe(`build-node-types`, () => {
       },
     ].forEach(n => store.dispatch({ type: `CREATE_NODE`, payload: n }))
 
-    types = await buildNodeTypes()
+    types = await buildNodeTypes(createPageDependency, reduxDeps, joinPath, apiRunner)
     schema = new GraphQLSchema({
       query: new GraphQLObjectType({
         name: `RootQueryType`,

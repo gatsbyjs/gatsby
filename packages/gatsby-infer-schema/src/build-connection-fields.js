@@ -14,7 +14,7 @@ const {
 
 const { buildFieldEnumValues } = require(`./data-tree-utils`)
 
-module.exports = type => {
+module.exports = (type: any) => {
   const enumValues = buildFieldEnumValues(type.nodes)
   const { connectionType: groupConnection } = connectionDefinitions({
     name: _.camelCase(`${type.name} groupConnection`),
@@ -42,7 +42,7 @@ module.exports = type => {
           }),
         },
       },
-      resolve(connection, args) {
+      resolve(connection: any, args: any) {
         let fieldName = args.field
         if (_.includes(args.field, `___`)) {
           fieldName = args.field.replace(`___`, `.`)
@@ -62,7 +62,7 @@ module.exports = type => {
           }),
         },
       },
-      resolve(connection, args) {
+      resolve(connection: any, args: any) {
         const fieldName = args.field.replace(`___`, `.`)
         const connectionNodes = connection.edges.map(edge => edge.node)
 

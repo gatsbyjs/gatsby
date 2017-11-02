@@ -18,9 +18,6 @@ const normalize = require(`normalize-path`)
 const systemPath = require(`path`)
 const { oneLine } = require(`common-tags`)
 
-const { store, getNode, getNodes } = require(`../redux`)
-const { joinPath } = require(`../utils/path`)
-const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 const createTypeName = require(`./create-type-name`)
 const createKey = require(`./create-key`)
 const {
@@ -40,6 +37,12 @@ export type ProcessedNodeType = {
   node: GraphQLFieldConfig<*, *>,
   fieldsFromPlugins: any,
   nodeObjectType: GraphQLOutputType,
+}
+
+type reduxDeps = {
+  getNodes: () => any[],
+  getNode: (id: any) => any,
+  store: any,
 }
 
 const ISO_8601_FORMAT = [
@@ -66,7 +69,9 @@ function inferGraphQLType({
   exampleValue,
   selector,
   ...otherArgs
-}): ?GraphQLFieldConfig<*, *> {
+}, createPageDependency: (arg: any) => void,
+joinPath: (a: any, b: any) => any,
+redux: reduxDeps): ?GraphQLFieldConfig<*, *> {
   if (exampleValue == null || isEmptyObjectOrArray(exampleValue)) return null
   let fieldName = selector.split(`.`).pop()
 
@@ -85,7 +90,7 @@ function inferGraphQLType({
           ...otherArgs,
           exampleValue,
           selector,
-        }),
+        }, createPageDependency, joinPath, redux),
       })
       // Else if the values are simple values, just infer their type.
     } else {
@@ -93,7 +98,7 @@ function inferGraphQLType({
         ...otherArgs,
         exampleValue,
         selector,
-      })
+      }, createPageDependency, joinPath, redux)
       invariant(
         inferredType,
         `Could not infer graphQL type for value: ${exampleValue}`
@@ -176,7 +181,7 @@ function inferGraphQLType({
             ...otherArgs,
             exampleValue,
             selector,
-          }),
+          }, createPageDependency, joinPath, redux),
         }),
       }
     case `number`:
@@ -192,7 +197,9 @@ function inferFromMapping(
   value,
   mapping,
   fieldSelector,
-  types
+  types,
+  createPageDependency: (arg: any) => void,
+  redux: reduxDeps
 ): ?GraphQLFieldConfig<*, *> {
   const matchedTypes = types.filter(
     type => type.name === mapping[fieldSelector]
@@ -205,7 +212,7 @@ function inferFromMapping(
   const findNode = (fieldValue, path) => {
     const linkedType = mapping[fieldSelector]
     const linkedNode = _.find(
-      getNodes(),
+      redux.getNodes(),
       n => n.internal.type === linkedType && n.id === fieldValue
     )
     if (linkedNode) {
@@ -244,14 +251,16 @@ function inferFromMapping(
   }
 }
 
-function findLinkedNode(value, linkedField, path) {
+function findLinkedNode(value, linkedField, path,
+  createPageDependency: (arg: any) => void,
+  redux: reduxDeps) {
   let linkedNode
   // If the field doesn't link to the id, use that for searching.
   if (linkedField) {
-    linkedNode = getNodes().find(n => n[linkedField] === value)
+    linkedNode = redux.getNodes().find(n => n[linkedField] === value)
     // Else the field is linking to the node's id, the default.
   } else {
-    linkedNode = getNode(value)
+    linkedNode = redux.getNode(value)
   }
 
   if (linkedNode) {
@@ -261,18 +270,20 @@ function findLinkedNode(value, linkedField, path) {
   return null
 }
 
-function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
+function inferFromFieldName(value, selector, types,
+  createPageDependency: (arg: any) => void,
+  redux: reduxDeps): GraphQLFieldConfig<*, *> {
   let isArray = false
   if (_.isArray(value)) {
     isArray = true
     // Reduce values to nodes with unique types.
-    value = _.uniqBy(value, v => getNode(v).internal.type)
+    value = _.uniqBy(value, v => redux.getNode(v).internal.type)
   }
 
   const key = selector.split(`.`).pop()
   const [, , linkedField] = key.split(`___`)
 
-  const validateLinkedNode = linkedNode => {
+  const validateLinkedNode = (linkedNode: any) => {
     invariant(
       linkedNode,
       oneLine`
@@ -282,7 +293,7 @@ function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
       `
     )
   }
-  const validateField = (linkedNode, field) => {
+  const validateField = (linkedNode: any, field) => {
     invariant(
       field,
       oneLine`
@@ -294,11 +305,11 @@ function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
     )
   }
 
-  const findNodeType = node =>
+  const findNodeType = (node: any) =>
     types.find(type => type.name === node.internal.type)
 
   if (isArray) {
-    const linkedNodes = value.map(v => findLinkedNode(v))
+    const linkedNodes = value.map(v => findLinkedNode(v, undefined, undefined, createPageDependency, redux))
     linkedNodes.forEach(node => validateLinkedNode(node))
     const fields = linkedNodes.map(node => findNodeType(node))
     fields.forEach((field, i) => validateField(linkedNodes[i], field))
@@ -307,16 +318,22 @@ function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
     // If there's more than one type, we'll create a union type.
     if (fields.length > 1) {
       type = new GraphQLUnionType({
-        name: `Union_${key}_${fields.map(f => f.name).join(`__`)}`,
+        name: `Union_${key}_${fields.map((f: any) => f.name).join(`__`)}`,
         description: `Union interface for the field "${key}" for types [${fields
-          .map(f => f.name)
+          .map((f: any) => f.name)
           .join(`, `)}]`,
-        types: fields.map(f => f.nodeObjectType),
-        resolveType: data =>
-          fields.find(f => f.name == data.internal.type).nodeObjectType,
+        types: fields.map((f: any) => f.nodeObjectType),
+        resolveType: (data: any) => {
+          const obj = fields.find((f: any) => f.name == data.internal.type)
+          if (!obj) {
+            throw new Error(`Could not resolve type ${data.internal.type}`)
+          }
+
+          return (obj.nodeObjectType: any)
+        },
       })
     } else {
-      type = fields[0].nodeObjectType
+      type = (fields[0]: any).nodeObjectType
     }
 
     return {
@@ -325,7 +342,7 @@ function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
         let fieldValue = node[key]
         if (fieldValue) {
           return fieldValue.map(value =>
-            findLinkedNode(value, linkedField, b.path)
+            findLinkedNode(value, linkedField, b.path, createPageDependency, redux)
           )
         } else {
           return null
@@ -334,16 +351,16 @@ function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
     }
   }
 
-  const linkedNode = findLinkedNode(value, linkedField)
+  const linkedNode = findLinkedNode(value, linkedField, undefined, createPageDependency, redux)
   validateLinkedNode(linkedNode)
-  const field = findNodeType(linkedNode)
+  const field = (findNodeType(linkedNode): any)
   validateField(linkedNode, field)
   return {
     type: field.nodeObjectType,
     resolve: (node, a, b = {}) => {
       let fieldValue = node[key]
       if (fieldValue) {
-        const result = findLinkedNode(fieldValue, linkedField, b.path)
+        const result = findLinkedNode(fieldValue, linkedField, b.path, createPageDependency, redux)
         return result
       } else {
         return null
@@ -352,7 +369,7 @@ function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
   }
 }
 
-function findRootNode(node) {
+function findRootNode(node, getNode: (id: any) => any) {
   // Find the root node.
   let rootNode = node
   let whileCount = 0
@@ -378,7 +395,9 @@ function findRootNode(node) {
   return rootNode
 }
 
-function shouldInferFile(nodes, key, value) {
+function shouldInferFile(nodes, key, value,
+  joinPath: (a: any, b: any) => any,
+  redux: reduxDeps) {
   const looksLikeFile =
     _.isString(value) &&
     mime.lookup(value) !== `application/octet-stream` &&
@@ -452,7 +471,7 @@ function shouldInferFile(nodes, key, value) {
     }
   }
 
-  const rootNode = findRootNode(node)
+  const rootNode = findRootNode(node, redux.getNode)
 
   // Only nodes transformed (ultimately) from a File
   // can link to another File.
@@ -461,7 +480,7 @@ function shouldInferFile(nodes, key, value) {
   }
 
   const pathToOtherNode = normalize(joinPath(rootNode.dir, value))
-  const otherFileExists = getNodes().some(
+  const otherFileExists = redux.getNodes().some(
     n => n.absolutePath === pathToOtherNode
   )
   return otherFileExists
@@ -469,7 +488,9 @@ function shouldInferFile(nodes, key, value) {
 
 // Look for fields that are pointing at a file — if the field has a known
 // extension then assume it should be a file field.
-function inferFromUri(key, types, isArray) {
+function inferFromUri(key, types, isArray,
+  createPageDependency: (arg: any) => void,
+  redux: reduxDeps) {
   const fileField = types.find(type => type.name === `File`)
 
   if (!fileField) return null
@@ -494,7 +515,7 @@ function inferFromUri(key, types, isArray) {
 
         // Use that path to find the linked File node.
         const linkedFileNode = _.find(
-          getNodes(),
+          redux.getNodes(),
           n => n.internal.type === `File` && n.absolutePath === fileLinkPath
         )
         if (linkedFileNode) {
@@ -510,7 +531,7 @@ function inferFromUri(key, types, isArray) {
 
       // Find the File node for this node (we assume the node is something
       // like markdown which would be a child node of a File node).
-      const parentFileNode = findRootNode(node)
+      const parentFileNode = findRootNode(node, redux.getNode)
 
       // Find the linked File node(s)
       if (isArray) {
@@ -542,8 +563,11 @@ export function inferObjectStructureFromNodes({
   types,
   selector,
   exampleValue = extractFieldExamples(nodes),
-}: inferTypeOptions): GraphQLFieldConfigMap<*, *> {
-  const config = store.getState().config
+}: inferTypeOptions,
+createPageDependency: (arg: any) => void,
+joinPath: (a: any, b: any) => any,
+redux: reduxDeps): GraphQLFieldConfigMap<*, *> {
+  const config = redux.store.getState().config
   const isRoot = !selector
   const mapping = config && config.mapping
 
@@ -567,25 +591,25 @@ export function inferObjectStructureFromNodes({
     // First check for manual field => type mappings in the site's
     // gatsby-config.js
     if (mapping && _.includes(Object.keys(mapping), fieldSelector)) {
-      inferredField = inferFromMapping(value, mapping, fieldSelector, types)
+      inferredField = inferFromMapping(value, mapping, fieldSelector, types, createPageDependency, redux)
 
       // Second if the field has a suffix of ___node. We use then the value
       // (a node id) to find the node and use that node's type as the field
     } else if (_.includes(key, `___NODE`)) {
       ;[fieldName] = key.split(`___`)
-      inferredField = inferFromFieldName(value, nextSelector, types)
+      inferredField = inferFromFieldName(value, nextSelector, types, createPageDependency, redux)
 
       // Third if the field (whether a string or array of string(s)) is
       // pointing to a file (from another file).
     } else if (
       nodes[0].internal.type !== `File` &&
-      ((_.isString(value) && shouldInferFile(nodes, nextSelector, value)) ||
+      ((_.isString(value) && shouldInferFile(nodes, nextSelector, value, joinPath, redux)) ||
         (_.isArray(value) &&
           value.length === 1 &&
           _.isString(value[0]) &&
-          shouldInferFile(nodes, `${nextSelector}[0]`, value[0])))
+          shouldInferFile(nodes, `${nextSelector}[0]`, value[0], joinPath, redux)))
     ) {
-      inferredField = inferFromUri(key, types, _.isArray(value))
+      inferredField = inferFromUri(key, types, _.isArray(value), createPageDependency, redux)
     }
 
     // Finally our automatic inference of field value type.
@@ -595,7 +619,7 @@ export function inferObjectStructureFromNodes({
         types,
         exampleValue: value,
         selector: selector ? `${selector}.${key}` : key,
-      })
+      }, createPageDependency, joinPath, redux)
     }
 
     if (!inferredField) return
@@ -603,6 +627,9 @@ export function inferObjectStructureFromNodes({
     // Replace unsupported values
     inferredFields[createKey(fieldName)] = inferredField
   })
+
+  // help js-flow
+  inferredFields.__proto__ = null
 
   return inferredFields
 }

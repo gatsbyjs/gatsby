@@ -30,6 +30,7 @@ function typeFields(type): GraphQLInputFieldConfigMap {
       return {
         eq: { type: GraphQLBoolean },
         ne: { type: GraphQLBoolean },
+        __proto__: null,
       }
     case `string`:
       return {
@@ -37,19 +38,24 @@ function typeFields(type): GraphQLInputFieldConfigMap {
         ne: { type: GraphQLString },
         regex: { type: GraphQLString },
         glob: { type: GraphQLString },
+        __proto__: null,
       }
     case `int`:
       return {
         eq: { type: GraphQLInt },
         ne: { type: GraphQLInt },
+        __proto__: null,
       }
     case `float`:
       return {
         eq: { type: GraphQLFloat },
         ne: { type: GraphQLFloat },
+        __proto__: null,
       }
   }
-  return {}
+  return {
+    __proto__: null,
+  }
 }
 
 function inferGraphQLInputFields({

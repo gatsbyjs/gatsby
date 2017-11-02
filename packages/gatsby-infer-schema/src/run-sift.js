@@ -2,9 +2,9 @@
 const sift = require(`sift`)
 const _ = require(`lodash`)
 const { connectionFromArray } = require(`graphql-skip-limit`)
-const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 const prepareRegex = require(`./prepare-regex`)
 const Promise = require(`bluebird`)
+
 
 function awaitSiftField(fields, node, k) {
   const field = fields[k]
@@ -28,7 +28,8 @@ module.exports = ({
   type,
   connection = false,
   path = ``,
-}: Object) => {
+}: Object,
+createPageDependency: (arg: any) => void) => {
   // Clone args as for some reason graphql-js removes the constructor
   // from nested objects which breaks a check in sift.js.
   const clonedArgs = JSON.parse(JSON.stringify(args))

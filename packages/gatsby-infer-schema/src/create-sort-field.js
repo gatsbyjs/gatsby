@@ -42,6 +42,7 @@ module.exports = function createSortField(
             },
           }),
         },
+        __proto__: null,
       },
     }),
   }
