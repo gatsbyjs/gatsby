@@ -139,5 +139,6 @@ you can place the files in a `src` subfolder and build them to the plugin folder
 * [gatsby-remark-emoji](https://github.com/Rulikkk/gatsby-remark-emoji)
 * [gatsby-remark-external-links](https://github.com/JLongley/gatsby-remark-external-links)
 * [gatsby-source-workable](https://github.com/tumblbug/gatsby-source-workable)
+* [gatsby-source-github](https://github.com/mosch/gatsby-source-github)
 * [gatsby-source-google-sheets](https://github.com/brandonmp/gatsby-source-google-sheets)
 * [gatsby-source-stripe](https://github.com/njosefbeck/gatsby-source-stripe)
