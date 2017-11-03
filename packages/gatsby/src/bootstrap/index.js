@@ -295,6 +295,12 @@ module.exports = async (args: BootstrapArgs) => {
   await apiRunnerNode(`onPreExtractQueries`)
   activity.end()
 
+  // Update Schema for SitePage.
+  activity = report.activityTimer(`update schema`)
+  activity.start()
+  await require(`../schema`)()
+  activity.end()
+
   // Extract queries
   activity = report.activityTimer(`extract queries from components`)
   activity.start()
@@ -324,12 +330,6 @@ module.exports = async (args: BootstrapArgs) => {
   await writeRedirects()
   activity.end()
 
-  // Update Schema for SitePage.
-  activity = report.activityTimer(`update schema`)
-  activity.start()
-  await require(`../schema`)()
-  activity.end()
-
   const checkJobsDone = _.debounce(resolve => {
     const state = store.getState()
     if (state.jobs.active.length === 0) {
@@ -354,7 +354,16 @@ module.exports = async (args: BootstrapArgs) => {
   } else {
     return new Promise(resolve => {
       // Wait until all side effect jobs are finished.
-      emitter.on(`END_JOB`, () => checkJobsDone(resolve))
+      emitter.on(`END_JOB`, () => {
+        // onPostBootstrap
+        activity = report.activityTimer(`onPostBootstrap`)
+        activity.start()
+        apiRunnerNode(`onPostBootstrap`).then(() => {
+          activity.end()
+
+          return checkJobsDone(resolve)
+        })
+      })
     })
   }
 }

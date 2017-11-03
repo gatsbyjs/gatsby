@@ -276,7 +276,7 @@ function queueImageResizing({ file, args = {} }) {
   let height
   // Calculate the eventual width/height of the image.
   const dimensions = imageSize(file.absolutePath)
-  const aspectRatio = dimensions.width / dimensions.height
+  let aspectRatio = dimensions.width / dimensions.height
   const originalName = file.base
 
   // If the width/height are both set, we're cropping so just return
@@ -284,6 +284,8 @@ function queueImageResizing({ file, args = {} }) {
   if (options.width && options.height) {
     width = options.width
     height = options.height
+    // Recalculate the aspectRatio for the cropped photo
+    aspectRatio = width / height
   } else {
     // Use the aspect ratio of the image to calculate what will be the resulting
     // height.
@@ -390,6 +392,7 @@ async function responsiveSizes({ file, args = {} }) {
     duotone: false,
     pathPrefix: ``,
     toFormat: ``,
+    sizeByPixelDensity: false,
   }
   const options = _.defaults({}, args, defaultArgs)
   options.maxWidth = parseInt(options.maxWidth, 10)
@@ -398,7 +401,9 @@ async function responsiveSizes({ file, args = {} }) {
   // images are intended to be displayed at their native resolution.
   const { width, height, density } = await sharp(file.absolutePath).metadata()
   const pixelRatio =
-    typeof density === `number` && density > 0 ? density / 72 : 1
+    options.sizeByPixelDensity && typeof density === `number` && density > 0
+      ? density / 72
+      : 1
   const presentationWidth = Math.min(
     options.maxWidth,
     Math.round(width / pixelRatio)

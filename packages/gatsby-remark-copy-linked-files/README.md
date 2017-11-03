@@ -1,6 +1,6 @@
 # gatsby-remark-copy-linked-files
 
-Copies files linked to from markdown to your `public` folder.
+Copies local files linked to/from markdown to your `public` folder.
 
 ## Install
 

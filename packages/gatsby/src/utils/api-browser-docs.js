@@ -54,6 +54,11 @@ exports.replaceRouterComponent = true
 exports.replaceComponentRenderer = true
 
 /**
+ * Allow a plugin to replace the history object.
+ */
+exports.replaceHistory = true
+
+/**
  * Allow a plugin to wrap the root component.
  * @param {object} $0
  * @param {object} $0.Root The "Root" component built by Gatsby.

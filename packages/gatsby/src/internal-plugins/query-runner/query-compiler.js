@@ -5,14 +5,15 @@ import glob from "glob"
 
 import { validate } from "graphql"
 import { IRTransforms } from "relay-compiler"
+import RelayParser from "relay-compiler/lib/RelayParser"
 import ASTConvert from "relay-compiler/lib/ASTConvert"
-import RelayCompilerContext from "relay-compiler/lib/RelayCompilerContext"
+import GraphQLCompilerContext from "relay-compiler/lib/GraphQLCompilerContext"
 import filterContextForNode from "relay-compiler/lib/filterContextForNode"
 const _ = require(`lodash`)
 
 import { store } from "../../redux"
 import FileParser from "./file-parser"
-import QueryPrinter from "./query-printer"
+import GraphQLIRPrinter from "relay-compiler/lib/GraphQLIRPrinter"
 import {
   graphqlError,
   graphqlValidationError,
@@ -59,6 +60,7 @@ const validationRules = [
 class Runner {
   baseDir: string
   schema: GraphQLSchema
+  fragmentsDir: string
 
   constructor(baseDir: string, fragmentsDir: string, schema: GraphQLSchema) {
     this.baseDir = baseDir
@@ -121,10 +123,15 @@ class Runner {
       })
     }
 
-    let compilerContext = new RelayCompilerContext(this.schema)
+    let compilerContext = new GraphQLCompilerContext(this.schema)
     try {
       compilerContext = compilerContext.addAll(
-        ASTConvert.convertASTDocuments(this.schema, documents, validationRules)
+        ASTConvert.convertASTDocuments(
+          this.schema,
+          documents,
+          validationRules,
+          RelayParser.transform.bind(RelayParser)
+        )
       )
     } catch (error) {
       this.reportError(graphqlError(namePathMap, nameDefMap, error))
@@ -156,7 +163,7 @@ class Runner {
 
       let text = filterContextForNode(printContext.getRoot(name), printContext)
         .documents()
-        .map(QueryPrinter.print)
+        .map(GraphQLIRPrinter.print)
         .join(`\n`)
 
       compiledNodes.set(filePath, {
@@ -169,6 +176,7 @@ class Runner {
     return compiledNodes
   }
 }
+export { Runner }
 
 export default async function compile(): Promise<Map<string, RootQuery>> {
   const { program, schema } = store.getState()
