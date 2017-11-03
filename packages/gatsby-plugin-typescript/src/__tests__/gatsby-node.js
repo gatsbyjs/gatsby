@@ -26,6 +26,62 @@ describe(`gatsby-plugin-typescript`, () => {
     expect(lastCall).toMatchSnapshot()
   })
 
+  it(`passes the configuration to the ts-loader plugin`, () => {
+    const config = {
+      loader: jest.fn(),
+    }
+    const options = { compilerOptions: { foo: `bar` }, transpileOnly: false }
+
+    modifyWebpackConfig(
+      { config },
+      options
+    )
+
+    const expectedOptions = {
+      compilerOptions: {
+        target: `esnext`,
+        experimentalDecorators: true,
+        jsx: `react`,
+        foo: `bar`,
+        module: `commonjs`,
+      },
+      transpileOnly: false,
+    }
+
+    expect(config.loader).toHaveBeenCalledWith(`typescript`, {
+      test: /\.tsx?$/,
+      loaders: [
+        `babel?${JSON.stringify({ plugins: [``] })}`,
+        `ts-loader?${JSON.stringify(expectedOptions)}`,
+      ],
+    })
+  })
+
+  it(`uses default configuration for the ts-loader plugin when no config is provided`, () => {
+    const config = {
+      loader: jest.fn(),
+    }
+    modifyWebpackConfig({ config }, { compilerOptions: {} })
+
+    const expectedOptions = {
+      compilerOptions: {
+        target: `esnext`,
+        experimentalDecorators: true,
+        jsx: `react`,
+        module: `commonjs`,
+      },
+      transpileOnly: true,
+    }
+
+    expect(config.loader).toHaveBeenCalledWith(`typescript`, {
+      test: /\.tsx?$/,
+      loaders: [
+        `babel?${JSON.stringify({ plugins: [``] })}`,
+        `ts-loader?${JSON.stringify(expectedOptions)}`,
+      ],
+    })
+  })
+
   describe(`pre-processing`, () => {
     const opts = { compilerOptions: {} }
     it(`leaves non-tsx? files alone`, () => {

@@ -10,7 +10,7 @@ const compilerDefaults = {
 
 module.exports.resolvableExtensions = () => [`.ts`, `.tsx`]
 
-module.exports.modifyWebpackConfig = ({ config }, { compilerOptions }) => {
+module.exports.modifyWebpackConfig = ({ config }, { compilerOptions, transpileOnly = true }) => {
   // CommonJS to keep Webpack happy.
   const copts = Object.assign({}, compilerDefaults, compilerOptions, {
     module: `commonjs`,
@@ -18,7 +18,7 @@ module.exports.modifyWebpackConfig = ({ config }, { compilerOptions }) => {
 
   // React-land is rather undertyped; nontrivial TS projects will most likely
   // error (i.e., not build) at something or other.
-  const opts = { compilerOptions: copts, transpileOnly: true }
+  const opts = { compilerOptions: copts, transpileOnly }
 
   // Load gatsby babel plugin to extract graphql query
   const extractQueryPlugin = path.resolve(
