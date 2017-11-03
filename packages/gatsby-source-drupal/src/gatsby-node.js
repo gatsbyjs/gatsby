@@ -2,8 +2,7 @@ const axios = require(`axios`)
 const crypto = require(`crypto`)
 const _ = require(`lodash`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
-
-const makeTypeName = type => `drupal__${type.replace(/-/g, `_`)}`
+const { URL } = require(`url`)
 
 // Get content digest of node.
 const createContentDigest = obj =>
@@ -12,31 +11,11 @@ const createContentDigest = obj =>
     .update(JSON.stringify(obj))
     .digest(`hex`)
 
-const processEntities = ents =>
-  ents.map(ent => {
-    const newEnt = {
-      id: ent.id,
-      internal: {
-        type: ent.type,
-      },
-      ...ent.attributes,
-      created: new Date(ent.attributes.created * 1000).toJSON(),
-      changed: new Date(ent.attributes.changed * 1000).toJSON(),
-    }
-    if (newEnt.revision_timestamp) {
-      newEnt.revision_timestamp = new Date(
-        newEnt.revision_timestamp * 1000
-      ).toJSON()
-    }
-
-    return newEnt
-  })
-
 exports.sourceNodes = async (
   { boundActionCreators, getNode, hasNodeChanged, store, cache },
   { baseUrl }
 ) => {
-  const { createNode, setPluginStatus, touchNode } = boundActionCreators
+  const { createNode } = boundActionCreators
 
   // Touch existing Drupal nodes so Gatsby doesn't garbage collect them.
   // _.values(store.getState().nodes)
@@ -58,7 +37,6 @@ exports.sourceNodes = async (
   // }
 
   const data = await axios.get(`${baseUrl}/api`)
-  console.log(JSON.stringify(data.data, null, 4))
   const allData = await Promise.all(
     _.map(data.data.links, async (url, type) => {
       if (type === `self`) return
@@ -76,10 +54,13 @@ exports.sourceNodes = async (
 
       const data = await getNext(url)
 
-      return {
+      const result = {
         type,
         data,
       }
+
+      // eslint-disable-next-line consistent-return
+      return result
     })
   )
 
@@ -153,10 +134,15 @@ exports.sourceNodes = async (
   await Promise.all(
     nodes.map(async node => {
       let fileNode
-      if (node.internal.type === `files`) {
+      if (
+        node.internal.type === `files` ||
+        node.internal.type === `file__file`
+      ) {
         try {
+          // Resolve w/ baseUrl if node.uri isn't absolute.
+          const url = new URL(node.uri, baseUrl)
           fileNode = await createRemoteFileNode({
-            url: node.uri,
+            url: url.href,
             store,
             cache,
             createNode,
