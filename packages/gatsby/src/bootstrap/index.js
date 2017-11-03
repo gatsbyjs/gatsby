@@ -390,7 +390,16 @@ module.exports = async (args: BootstrapArgs) => {
   } else {
     return new Promise(resolve => {
       // Wait until all side effect jobs are finished.
-      emitter.on(`END_JOB`, () => checkJobsDone(resolve))
+      emitter.on(`END_JOB`, () => {
+        // onPostBootstrap
+        activity = report.activityTimer(`onPostBootstrap`)
+        activity.start()
+        apiRunnerNode(`onPostBootstrap`).then(() => {
+          activity.end()
+
+          return checkJobsDone(resolve)
+        })
+      })
     })
   }
 }

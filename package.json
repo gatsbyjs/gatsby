@@ -53,6 +53,7 @@
     "format-packages": "prettier-eslint --write \"packages/*/src/**/*.js\"",
     "format-scripts": "prettier-eslint --write \"scripts/**/*.js\"",
     "format-www": "prettier-eslint --write \"www/*.js\" \"www/src/**/*.js\"",
+    "jest": "jest",
     "lerna": "lerna",
     "lint": "eslint --ext .js,.jsx packages/**/src",
     "lint:flow": "babel-node scripts/flow-check.js",
@@ -61,7 +62,7 @@
     "publish-canary": "lerna publish --canary --yes",
     "publish-next": "lerna publish --npm-tag=next",
     "remotedev": "remotedev --hostname=localhost --port=19999",
-    "test": "yarn run lint && jest",
+    "test": "yarn lint && yarn jest",
     "test:update": "jest --updateSnapshot",
     "test:watch": "jest --watch",
     "test_bkup":
