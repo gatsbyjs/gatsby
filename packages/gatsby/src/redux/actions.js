@@ -15,13 +15,55 @@ import { generateComponentChunkName } from "../utils/js-chunk-names"
 
 const actions = {}
 
+type Job = {
+  id: string,
+}
+type PageInput = {
+  path: string,
+  component: string,
+  layout?: string,
+  context?: Object,
+}
+type LayoutInput = {
+  id?: string,
+  component: string,
+  layout?: string,
+  context?: Object,
+}
+
+type Page = {
+  path: string,
+  component: string,
+  context: Object,
+  internalComponentName: string,
+  jsonName: string,
+  componentChunkName: string,
+  layout: ?string,
+  updatedAt: number,
+}
+
+type Layout = {
+  id: any,
+  context: Object,
+  component: string,
+  componentWrapperPath: string,
+  componentChunkName: string,
+  internalComponentName: string,
+  jsonName: string,
+  isLayout: true,
+}
+
+type Plugin = {
+  name: string,
+}
+
 /**
  * Delete a page
  * @param {string} page a page object with at least the path set
  * @example
  * deletePage(page)
  */
-actions.deletePage = (page, plugin = ``) => {
+actions.deletePage = (page: PageInput) => {
   return {
     type: `DELETE_PAGE`,
     payload: page,
@@ -51,53 +93,55 @@ const pascalCase = _.flow(_.camelCase, _.upperFirst)
  *   },
  * })
  */
-actions.createPage = (page, plugin = ``, traceId) => {
-  page.componentChunkName = generateComponentChunkName(page.component)
-
+actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
   let jsonName = `${_.kebabCase(page.path)}.json`
   let internalComponentName = `Component${pascalCase(page.path)}`
+
   if (jsonName === `.json`) {
     jsonName = `index.json`
     internalComponentName = `ComponentIndex`
   }
-
+  let layout = page.layout || null
   // If no layout is set we try fallback to `/src/layouts/index`.
   if (
-    !page.layout &&
-    !glob.sync(
+    !layout &&
+    glob.sync(
       joinPath(store.getState().program.directory, `src/layouts/index.*`)
-    ).length == 0
+    ).length
   ) {
-    page.layout = `index`
+    layout = `index`
   }
 
-  page.jsonName = jsonName
-  page.internalComponentName = internalComponentName
-  page.updatedAt = Date.now()
-
-  // Ensure the page has a context object
-  if (!page.context) {
-    page.context = {}
+  let internalPage: Page = {
+    layout,
+    jsonName,
+    internalComponentName,
+    path: page.path,
+    component: page.component,
+    componentChunkName: generateComponentChunkName(page.component),
+    // Ensure the page has a context object
+    context: page.context || {},
+    updatedAt: Date.now(),
   }
 
-  const result = Joi.validate(page, joiSchemas.pageSchema)
+  const result = Joi.validate(internalPage, joiSchemas.pageSchema)
   if (result.error) {
     console.log(chalk.blue.bgYellow(`The upserted page didn't pass validation`))
     console.log(chalk.bold.red(result.error))
-    console.log(page)
+    console.log(internalPage)
     return null
   }
 
   // If the path doesn't have an initial forward slash, add it.
-  if (page.path[0] !== `/`) {
-    page.path = `/` + page.path
+  if (internalPage.path[0] !== `/`) {
+    internalPage.path = `/${internalPage.path}`
   }
 
   return {
     type: `CREATE_PAGE`,
     plugin,
     traceId,
-    payload: page,
+    payload: internalPage,
   }
 }
 
@@ -107,7 +151,7 @@ actions.createPage = (page, plugin = ``, traceId) => {
  * @example
  * deleteLayout(layout)
  */
-actions.deleteLayout = (layout, plugin = ``) => {
+actions.deleteLayout = (layout: Layout, plugin?: Plugin) => {
   return {
     type: `DELETE_LAYOUT`,
     payload: layout,
@@ -129,32 +173,39 @@ actions.deleteLayout = (layout, plugin = ``) => {
  *   }
  * })
  */
-actions.createLayout = (layout, plugin = ``, traceId) => {
-  layout.id = layout.id || path.parse(layout.component).name
-  layout.componentWrapperPath = joinPath(
+actions.createLayout = (
+  layout: LayoutInput,
+  plugin?: Plugin,
+  traceId?: string
+) => {
+  let id = layout.id || path.parse(layout.component).name
+  let componentWrapperPath = joinPath(
     store.getState().program.directory,
     `.cache`,
     `layouts`,
-    layout.id + `.js`
+    `${id}.js`
   )
-  layout.componentChunkName = generateComponentChunkName(layout.component)
-  layout.jsonName = `layout-${_.kebabCase(layout.id)}.json`
-  layout.internalComponentName = `Component-layout-${pascalCase(layout.id)}`
-  layout.isLayout = true
 
-  // Ensure the layout has a context object
-  if (!layout.context) {
-    layout.context = {}
+  let internalLayout: Layout = {
+    id,
+    componentWrapperPath,
+    isLayout: true,
+    jsonName: `layout-${_.kebabCase(id)}.json`,
+    internalComponentName: `Component-layout-${pascalCase(id)}`,
+    component: layout.component,
+    componentChunkName: generateComponentChunkName(layout.component),
+    // Ensure the page has a context object
+    context: layout.context || {},
   }
 
-  const result = Joi.validate(layout, joiSchemas.layoutSchema)
+  const result = Joi.validate(internalLayout, joiSchemas.layoutSchema)
 
   if (result.error) {
     console.log(
       chalk.blue.bgYellow(`The upserted layout didn't pass validation`)
     )
     console.log(chalk.bold.red(result.error))
-    console.log(layout)
+    console.log(internalLayout)
     return null
   }
 
@@ -162,7 +213,7 @@ actions.createLayout = (layout, plugin = ``, traceId) => {
     type: `CREATE_LAYOUT`,
     plugin,
     traceId,
-    payload: layout,
+    payload: internalLayout,
   }
 }
 
@@ -173,7 +224,7 @@ actions.createLayout = (layout, plugin = ``, traceId) => {
  * @example
  * deleteNode(node.id, node)
  */
-actions.deleteNode = (nodeId, node, plugin = ``) => {
+actions.deleteNode = (nodeId: string, node: any, plugin: Plugin) => {
   return {
     type: `DELETE_NODE`,
     plugin,
@@ -188,7 +239,7 @@ actions.deleteNode = (nodeId, node, plugin = ``) => {
  * @example
  * deleteNodes([`node1`, `node2`])
  */
-actions.deleteNodes = (nodes, plugin = ``) => {
+actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
   return {
     type: `DELETE_NODES`,
     plugin,
@@ -254,7 +305,7 @@ const typeOwners = {}
  *   }
  * })
  */
-actions.createNode = (node, plugin, traceId) => {
+actions.createNode = (node: any, plugin?: Plugin, traceId?: string) => {
   if (!_.isObject(node)) {
     return console.log(
       chalk.bold.red(
@@ -340,19 +391,22 @@ actions.createNode = (node, plugin, traceId) => {
     }
   })
 
+  const oldNode = getNode(node.id)
+
   // Ensure the plugin isn't creating a node type owned by another
   // plugin. Type "ownership" is first come first served.
-  if (!typeOwners[node.internal.type] && plugin) {
-    typeOwners[node.internal.type] = plugin.name
-  } else {
-    if (typeOwners[node.internal.type] !== plugin.name) {
-      throw new Error(
-        stripIndent`
-        The plugin "${plugin.name}" created a node of a type owned by another plugin.
+  if (plugin) {
+    let pluginName = plugin.name
+
+    if (!typeOwners[node.internal.type])
+      typeOwners[node.internal.type] = pluginName
+    else if (typeOwners[node.internal.type] !== pluginName)
+      throw new Error(stripIndent`
+        The plugin "${pluginName}" created a node of a type owned by another plugin.
 
         The node type "${node.internal.type}" is owned by "${typeOwners[
-          node.internal.type
-        ]}".
+        node.internal.type
+      ]}".
 
         If you copy and pasted code from elsewhere, you'll need to pick a new type name
         for your new node(s).
@@ -364,24 +418,20 @@ actions.createNode = (node, plugin, traceId) => {
         The plugin creating the node:
 
         ${JSON.stringify(plugin, null, 4)}
-      `
+      `)
+
+    // If the node has been created in the past, check that
+    // the current plugin is the same as the previous.
+    if (oldNode && oldNode.internal.owner !== pluginName) {
+      throw new Error(
+        stripIndent`
+        Nodes can only be updated by their owner. Node "${node.id}" is
+        owned by "${oldNode.internal.owner}" and another plugin "${pluginName}"
+        tried to update it.
+
+        `
       )
     }
-  }
-
-  const oldNode = getNode(node.id)
-
-  // If the node has been created in the past, check that
-  // the current plugin is the same as the previous.
-  if (oldNode && oldNode.internal.owner !== plugin.name) {
-    throw new Error(
-      stripIndent`
-      Nodes can only be updated by their owner. Node "${node.id}" is
-      owned by "${oldNode.internal.owner}" and another plugin "${plugin.name}"
-      tried to update it.
-
-      `
-    )
   }
 
   // Check if the node has already been processed.
@@ -412,7 +462,7 @@ actions.createNode = (node, plugin, traceId) => {
  * @example
  * touchNode(`a-node-id`)
  */
-actions.touchNode = (nodeId, plugin = ``) => {
+actions.touchNode = (nodeId: string, plugin?: Plugin) => {
   return {
     type: `TOUCH_NODE`,
     plugin,
@@ -420,6 +470,13 @@ actions.touchNode = (nodeId, plugin = ``) => {
   }
 }
 
+type CreateNodeInput = {
+  node: Object,
+  fieldName?: string,
+  fieldValue?: string,
+  name?: string,
+  value: any,
+}
 /**
  * Extend another node. The new node field is placed under the `fields`
  * key on the extended node object.
@@ -443,9 +500,9 @@ actions.touchNode = (nodeId, plugin = ``) => {
  * // The field value is now accessible at node.fields.happiness
  */
 actions.createNodeField = (
-  { node, name, value, fieldName, fieldValue },
-  plugin,
-  traceId
+  { node, name, value, fieldName, fieldValue }: CreateNodeInput,
+  plugin: Plugin,
+  traceId?: string
 ) => {
   if (fieldName) {
     console.warn(
@@ -506,7 +563,10 @@ actions.createNodeField = (
  * @example
  * createParentChildLink({ parent: parentNode, child: childNode })
  */
-actions.createParentChildLink = ({ parent, child }, plugin) => {
+actions.createParentChildLink = (
+  { parent, child }: { parent: any, child: any },
+  plugin?: Plugin
+) => {
   // Update parent
   parent.children.push(child.id)
   parent.children = _.uniq(parent.children)
@@ -527,7 +587,14 @@ actions.createParentChildLink = ({ parent, child }, plugin) => {
  * @param {string} $0.connection A connection type
  * @private
  */
-actions.createPageDependency = ({ path, nodeId, connection }, plugin = ``) => {
+actions.createPageDependency = (
+  {
+    path,
+    nodeId,
+    connection,
+  }: { path: string, nodeId: string, connection: string },
+  plugin: string = ``
+) => {
   return {
     type: `CREATE_COMPONENT_DEPENDENCY`,
     plugin,
@@ -545,7 +612,7 @@ actions.createPageDependency = ({ path, nodeId, connection }, plugin = ``) => {
  * @param {Array} paths the paths to delete.
  * @private
  */
-actions.deleteComponentsDependencies = paths => {
+actions.deleteComponentsDependencies = (paths: string[]) => {
   return {
     type: `DELETE_COMPONENTS_DEPENDENCIES`,
     payload: {
@@ -559,7 +626,13 @@ actions.deleteComponentsDependencies = paths => {
  * this to store the query with its component.
  * @private
  */
-actions.replaceComponentQuery = ({ query, componentPath }) => {
+actions.replaceComponentQuery = ({
+  query,
+  componentPath,
+}: {
+  query: string,
+  componentPath: string,
+}) => {
   return {
     type: `REPLACE_COMPONENT_QUERY`,
     payload: {
@@ -613,7 +686,7 @@ actions.replaceWebpackConfig = (config: Object) => {
  * @example
  * createJob({ id: `write file id: 123`, fileName: `something.jpeg` })
  */
-actions.createJob = (job, plugin = {}) => {
+actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
   return {
     type: `CREATE_JOB`,
     plugin,
@@ -630,7 +703,7 @@ actions.createJob = (job, plugin = {}) => {
  * @example
  * setJob({ id: `write file id: 123`, progress: 50 })
  */
-actions.setJob = (job, plugin = {}) => {
+actions.setJob = (job: Job, plugin?: ?Plugin = null) => {
   return {
     type: `SET_JOB`,
     plugin,
@@ -647,7 +720,7 @@ actions.setJob = (job, plugin = {}) => {
  * @example
  * endJob({ id: `write file id: 123` })
  */
-actions.endJob = (job, plugin = {}) => {
+actions.endJob = (job: Job, plugin?: ?Plugin = null) => {
   return {
     type: `END_JOB`,
     plugin,
@@ -663,7 +736,10 @@ actions.endJob = (job, plugin = {}) => {
  * @example
  * setPluginStatus({ lastFetched: Date.now() })
  */
-actions.setPluginStatus = (status, plugin) => {
+actions.setPluginStatus = (
+  status: { [key: string]: mixed },
+  plugin: Plugin
+) => {
   return {
     type: `SET_PLUGIN_STATUS`,
     plugin,

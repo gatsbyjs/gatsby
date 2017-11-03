@@ -1,20 +1,20 @@
 if (__POLYFILL__) {
   require(`core-js/modules/es6.promise`)
 }
-import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
-import React, { createElement } from "react"
-import ReactDOM from "react-dom"
-import { Router, Route, withRouter, matchPath } from "react-router-dom"
-import { ScrollContext } from "gatsby-react-router-scroll"
-import createHistory from "history/createBrowserHistory"
-import domReady from "domready"
-import emitter from "./emitter"
+import { apiRunner, apiRunnerAsync } from './api-runner-browser'
+import React, { createElement } from 'react'
+import ReactDOM from 'react-dom'
+import { Router, Route, withRouter, matchPath } from 'react-router-dom'
+import { ScrollContext } from 'gatsby-react-router-scroll'
+import domReady from 'domready'
+import history from './history'
+import emitter from './emitter'
 
-import pages from "./pages.json"
-import redirects from "./redirects.json"
-import ComponentRenderer from "./component-renderer"
-import asyncRequires from "./async-requires"
-import loader from "./loader"
+import pages from './pages.json'
+import redirects from './redirects.json'
+import ComponentRenderer from './component-renderer'
+import asyncRequires from './async-requires'
+import loader from './loader'
 
 window.asyncRequires = asyncRequires
 window.___emitter = emitter
@@ -24,8 +24,6 @@ window.matchPath = matchPath
 
 loader.addPagesArray(pages)
 loader.addProdRequires(asyncRequires)
-
-const history = createHistory()
 
 // Convert to a map for faster lookup in maybeRedirect()
 const redirectMap = redirects.reduce((map, redirect) => {

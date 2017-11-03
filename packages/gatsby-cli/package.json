@@ -1,11 +1,14 @@
 {
   "name": "gatsby-cli",
   "description": "Gatsby command-line interface for creating new sites and running Gatsby commands",
-  "version": "1.1.14",
+  "version": "1.1.18",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
-    "gatsby": "bin.js"
+    "gatsby": "lib/index.js"
   },
+  "files": [
+    "lib"
+  ],
   "dependencies": {
     "babel-code-frame": "^6.26.0",
     "babel-runtime": "^6.26.0",
@@ -32,7 +35,7 @@
     "gatsby"
   ],
   "license": "MIT",
-  "main": "bin.js",
+  "main": "lib/index.js",
   "scripts": {
     "build": "babel src --out-dir lib --ignore __tests__",
     "watch": "babel -w src --out-dir lib --ignore __tests__",

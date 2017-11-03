@@ -7,6 +7,7 @@
 .*/node_modules/emotion/.*
 .*/node_modules/fbjs/.*
 .*/node_modules/jss/.*
+.*/node_modules/preact/.*
 .*/node_modules/react-side-effect/.*
 .*/node_modules/styled-components/.*
 .*/node_modules/typography/.*
