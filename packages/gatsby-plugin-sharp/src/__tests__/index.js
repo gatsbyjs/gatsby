@@ -31,6 +31,15 @@ describe(`gatsby-plugin-sharp`, () => {
       expect(result.srcSet.indexOf(pathPrefix)).toBe(0)
     })
 
+    it(`keeps original file name`, async () => {
+      const result = await responsiveSizes({
+        file,
+      })
+
+      expect(result.src.indexOf(file.name)).toBe(8)
+      expect(result.srcSet.indexOf(file.name)).toBe(8)
+    })
+
     it(`accounts for pixel density`, async () => {
       const result = await responsiveSizes({
         file: getFileObject(path.join(__dirname, `images/144-density.png`)),
@@ -79,6 +88,7 @@ describe(`gatsby-plugin-sharp`, () => {
 function getFileObject(absolutePath) {
   return {
     id: `${absolutePath} absPath of file`,
+    name: `test`,
     absolutePath,
     extension: `png`,
     internal: {
