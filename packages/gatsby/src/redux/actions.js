@@ -33,6 +33,7 @@ type LayoutInput = {
 
 type Page = {
   path: string,
+  matchPath: ?string,
   component: string,
   context: Object,
   internalComponentName: string,
@@ -117,6 +118,7 @@ actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
     jsonName,
     internalComponentName,
     path: page.path,
+    matchPath: page.matchPath,
     component: page.component,
     componentChunkName: generateComponentChunkName(page.component),
     // Ensure the page has a context object
