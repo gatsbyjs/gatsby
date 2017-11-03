@@ -4,7 +4,10 @@ const {
   GraphQLList,
   GraphQLSchema,
 } = require(`graphql`)
-const { inferObjectStructureFromNodes } = require(`../infer-graphql-type`)
+const { inferObjectStructureFromNodes } = require(`gatsby-infer-schema/dist/infer-graphql-type`)
+const { createPageDependency } = require(`../../redux/actions/add-page-dependency`)
+const { joinPath } = require(`../../utils/path`)
+const redux = require(`../../redux`)
 
 function queryResult(nodes, fragment, { types = [] } = {}) {
   const schema = new GraphQLSchema({
@@ -20,7 +23,7 @@ function queryResult(nodes, fragment, { types = [] } = {}) {
                 fields: inferObjectStructureFromNodes({
                   nodes,
                   types: [{ name: `Test` }, ...types],
-                }),
+                }, createPageDependency, joinPath, redux),
               })
             ),
             resolve() {
@@ -188,7 +191,7 @@ describe(`GraphQL type inferance`, () => {
         },
       ],
       types: [{ name: `Test` }],
-    })
+    }, createPageDependency, joinPath, redux)
 
     expect(Object.keys(fields)).toHaveLength(2)
     expect(Object.keys(fields.foo.type.getFields())).toHaveLength(4)
@@ -210,7 +213,7 @@ describe(`GraphQL type inferance`, () => {
             fields: inferObjectStructureFromNodes({
               nodes: [{ id: `child_1`, hair: `brown` }],
               types: [{ name: `Child` }],
-            }),
+            }, createPageDependency, joinPath, redux),
           }),
         },
         {
@@ -220,7 +223,7 @@ describe(`GraphQL type inferance`, () => {
             fields: inferObjectStructureFromNodes({
               nodes: [{ id: `pet_1`, species: `dog` }],
               types: [{ name: `Pet` }],
-            }),
+            }, createPageDependency, joinPath, redux),
           }),
         },
       ]
@@ -273,7 +276,7 @@ describe(`GraphQL type inferance`, () => {
         inferObjectStructureFromNodes({
           nodes: [{ linked___NODE: `baz` }],
           types: [{ name: `Test` }],
-        })
+        }, createPageDependency, joinPath, redux)
       }).toThrow(
         `Encountered an error trying to infer a GraphQL type ` +
           `for: "linked___NODE". There is no corresponding node with the id ` +
@@ -291,7 +294,7 @@ describe(`GraphQL type inferance`, () => {
         inferObjectStructureFromNodes({
           nodes: [{ linked___NODE: `baz` }],
           types: [{ name: `Test` }],
-        })
+        }, createPageDependency, joinPath, redux)
       }).toThrow(
         `Encountered an error trying to infer a GraphQL type ` +
           `for: "linked___NODE". There is no corresponding GraphQL type ` +

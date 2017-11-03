@@ -38,7 +38,7 @@ function makeNullable(type: GraphQLInputType): GraphQLNullableInputType<any> {
 
 function convertToInputType(
   type: GraphQLType,
-  typeMap: Set
+  typeMap: Set<*>
 ): ?GraphQLInputType {
   // track types already processed in current tree, to avoid infinite recursion
   if (typeMap.has(type)) {
@@ -188,7 +188,7 @@ export function inferInputObjectStructureFromFields({
 
     // Add sorting (but only to the top level).
     if (typeName) {
-      extractFieldNamesFromInputField(key, inputType, sort)
+      extractFieldNamesFromInputField(key, (inputType: any), sort)
     }
   })
 

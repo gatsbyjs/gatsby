@@ -7,7 +7,6 @@ const {
   GraphQLList,
 } = require(`graphql`)
 
-const apiRunner = require(`../utils/api-runner-node`)
 const { inferObjectStructureFromNodes } = require(`./infer-graphql-type`)
 const {
   inferInputObjectStructureFromFields,
@@ -16,15 +15,24 @@ const {
   inferInputObjectStructureFromNodes,
 } = require(`./infer-graphql-input-fields`)
 const { nodeInterface } = require(`./node-interface`)
-const { getNodes, getNode, getNodeAndSavePathDependency } = require(`../redux`)
-const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 
 import type { ProcessedNodeType } from "./infer-graphql-type"
 
+type reduxDeps = {
+  getNodes: () => any[],
+  getNode: (id: any) => any,
+  getNodeAndSavePathDependency: (id: any, path: any) => any,
+  store: any,
+}
+
 type TypeMap = { [typeName: string]: ProcessedNodeType }
 
-module.exports = async () => {
-  const types = _.groupBy(getNodes(), node => node.internal.type)
+module.exports = async (
+  createPageDependency: (arg: any) => void,
+  redux: reduxDeps,
+  joinPath: (a: any, b: any) => any,
+  apiRunner: any) => {
+  const types = _.groupBy(redux.getNodes(), node => node.internal.type)
   const processedTypes: TypeMap = {}
 
   function createNodeFields(type: ProcessedNodeType) {
@@ -37,14 +45,14 @@ module.exports = async () => {
         type: nodeInterface,
         description: `The parent of this node.`,
         resolve(node, a, context) {
-          return getNodeAndSavePathDependency(node.parent, context.path)
+          return redux.getNodeAndSavePathDependency(node.parent, context.path)
         },
       },
       children: {
         type: new GraphQLList(nodeInterface),
         description: `The children of this node.`,
         resolve(node, a, { path }) {
-          return node.children.map(id => getNodeAndSavePathDependency(id, path))
+          return node.children.map(id => redux.getNodeAndSavePathDependency(id, path))
         },
       },
     }
@@ -52,7 +60,7 @@ module.exports = async () => {
     // Create children fields for each type of children e.g.
     // "childrenMarkdownRemark".
     const childNodesByType = _(type.nodes)
-      .flatMap(({ children }) => children.map(getNode))
+      .flatMap(({ children }) => children.map(redux.getNode))
       .groupBy(
         node => (node.internal ? _.camelCase(node.internal.type) : undefined)
       )
@@ -71,7 +79,7 @@ module.exports = async () => {
           description: `The children of this node of type ${childNodeType}`,
           resolve(node, a, { path }) {
             const filteredNodes = node.children
-              .map(id => getNode(id))
+              .map(redux.getNode)
               .filter(
                 ({ internal }) => _.camelCase(internal.type) === childNodeType
               )
@@ -89,7 +97,7 @@ module.exports = async () => {
           description: `The child of this node of type ${childNodeType}`,
           resolve(node, a, { path }) {
             const childNode = node.children
-              .map(id => getNode(id))
+              .map(redux.getNode)
               .find(
                 ({ internal }) => _.camelCase(internal.type) === childNodeType
               )
@@ -108,8 +116,8 @@ module.exports = async () => {
     const inferredFields = inferObjectStructureFromNodes({
       nodes: type.nodes,
       types: _.values(processedTypes),
-      allNodes: getNodes(),
-    })
+      allNodes: redux.getNodes(),
+    }, createPageDependency, joinPath, redux)
 
     return {
       ...defaultNodeFields,
@@ -126,7 +134,7 @@ module.exports = async () => {
 
     const fieldsFromPlugins = await apiRunner(`setFieldsOnGraphQLNodeType`, {
       type: intermediateType,
-      allNodes: getNodes(),
+      allNodes: redux.getNodes(),
       traceId: `initial-setFieldsOnGraphQLNodeType`,
     })
 
@@ -166,7 +174,7 @@ module.exports = async () => {
         resolve(a, args, context) {
           const runSift = require(`./run-sift`)
           const latestNodes = _.filter(
-            getNodes(),
+            redux.getNodes(),
             n => n.internal.type === typeName
           )
           if (!_.isObject(args)) {
@@ -177,7 +185,7 @@ module.exports = async () => {
             nodes: latestNodes,
             path: context.path ? context.path : `LAYOUT___${context.id}`,
             type: gqlType,
-          })
+          }, createPageDependency)
         },
       },
     }

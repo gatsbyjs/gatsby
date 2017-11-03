@@ -8,13 +8,16 @@ const {
 } = require(`graphql`)
 const { connectionArgs, connectionDefinitions } = require(`graphql-skip-limit`)
 
-const runSift = require(`../run-sift`)
-const { inferObjectStructureFromNodes } = require(`../infer-graphql-type`)
-const buildConnectionFields = require(`../build-connection-fields`)
+const runSift = require(`gatsby-infer-schema/dist/run-sift`)
+const { createPageDependency } = require(`../../redux/actions/add-page-dependency`)
+const { inferObjectStructureFromNodes } = require(`gatsby-infer-schema/dist/infer-graphql-type`)
+const buildConnectionFields = require(`gatsby-infer-schema/dist/build-connection-fields`)
 const {
   inferInputObjectStructureFromNodes,
-} = require(`../infer-graphql-input-fields`)
-const createSortField = require(`../create-sort-field`)
+} = require(`gatsby-infer-schema/dist/infer-graphql-input-fields`)
+const createSortField = require(`gatsby-infer-schema/dist/create-sort-field`)
+const { joinPath } = require(`../../utils/path`)
+const redux = require(`../../redux`)
 
 function queryResult(nodes, query, { types = [] } = {}) {
   const nodeType = new GraphQLObjectType({
@@ -22,7 +25,7 @@ function queryResult(nodes, query, { types = [] } = {}) {
     fields: inferObjectStructureFromNodes({
       nodes,
       types: [{ name: `Test` }, ...types],
-    }),
+    }, createPageDependency, joinPath, redux),
   })
 
   const { connectionType: nodeConnection } = connectionDefinitions({
@@ -64,7 +67,7 @@ function queryResult(nodes, query, { types = [] } = {}) {
                 nodes,
                 connection: true,
                 type: nodeType,
-              })
+              }, createPageDependency)
             },
           },
         }
