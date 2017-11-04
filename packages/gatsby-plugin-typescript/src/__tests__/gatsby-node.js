@@ -32,10 +32,7 @@ describe(`gatsby-plugin-typescript`, () => {
     }
     const options = { compilerOptions: { foo: `bar` }, transpileOnly: false }
 
-    modifyWebpackConfig(
-      { config },
-      options
-    )
+    modifyWebpackConfig({ config }, options)
 
     const expectedOptions = {
       compilerOptions: {
