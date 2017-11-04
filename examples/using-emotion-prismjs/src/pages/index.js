@@ -10,7 +10,9 @@ const indexContainer = css`
   margin: 0 auto 3rem;
 `
 
-const postContainer = css`margin-bottom: 0.5rem;`
+const postContainer = css`
+  margin-bottom: 0.5rem;
+`
 
 const titleContainer = css`
   background-color: #754f9a;
@@ -19,7 +21,9 @@ const titleContainer = css`
   color: #ffffff;
 `
 
-const postTitle = css`margin-bottom: ${rhythm(1 / 10)};`
+const postTitle = css`
+  margin-bottom: ${rhythm(1 / 10)};
+`
 
 const postDate = css`
   ${scale(-1 / 4)};

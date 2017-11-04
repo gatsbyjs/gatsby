@@ -10,7 +10,10 @@ const compilerDefaults = {
 
 module.exports.resolvableExtensions = () => [`.ts`, `.tsx`]
 
-module.exports.modifyWebpackConfig = ({ config }, { compilerOptions, transpileOnly = true }) => {
+module.exports.modifyWebpackConfig = (
+  { config },
+  { compilerOptions, transpileOnly = true }
+) => {
   // CommonJS to keep Webpack happy.
   const copts = Object.assign({}, compilerDefaults, compilerOptions, {
     module: `commonjs`,
