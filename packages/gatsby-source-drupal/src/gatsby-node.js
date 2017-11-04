@@ -140,7 +140,7 @@ exports.sourceNodes = async (
       ) {
         try {
           // Resolve w/ baseUrl if node.uri isn't absolute.
-          const url = new URL(node.uri, baseUrl)
+          const url = new URL(node.url, baseUrl)
           fileNode = await createRemoteFileNode({
             url: url.href,
             store,
