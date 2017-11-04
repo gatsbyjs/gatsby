@@ -86,6 +86,8 @@ module.exports = async (
           path: directory,
           filename: `[name].js`,
           publicPath: `http://${program.host}:${webpackPort}/`,
+          devtoolModuleFilenameTemplate: info =>
+            path.resolve(info.absoluteResourcePath).replace(/\\/g, `/`),
         }
       case `build-css`:
         // Webpack will always generate a resultant javascript file.
@@ -131,7 +133,7 @@ module.exports = async (
             require.resolve(`react-hot-loader/patch`),
             `${require.resolve(
               `webpack-hot-middleware/client`
-            )}?path=http://${program.host}:${webpackPort}/__webpack_hmr&reload=true`,
+            )}?path=http://${program.host}:${webpackPort}/__webpack_hmr&reload=true&overlay=false`,
             directoryPath(`.cache/app`),
           ],
         }
