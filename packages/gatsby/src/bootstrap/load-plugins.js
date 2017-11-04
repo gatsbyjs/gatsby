@@ -4,6 +4,8 @@ const fs = require(`fs`)
 const path = require(`path`)
 const crypto = require(`crypto`)
 const glob = require(`glob`)
+const resolveCwd = require(`resolve-cwd`)
+const readPkgUp = require(`read-pkg-up`)
 
 const { store } = require(`../redux`)
 const nodeAPIs = require(`../utils/api-node-docs`)
@@ -67,11 +69,11 @@ function resolvePlugin(pluginName) {
    * which should be located in node_modules.
    */
   try {
-    const resolvedPath = slash(path.dirname(require.resolve(pluginName)))
-
-    const packageJSON = JSON.parse(
-      fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
+    const resolvedPath = slash(
+      path.dirname(resolveCwd.silent(pluginName) || require.resolve(pluginName))
     )
+
+    const { pkg: packageJSON } = readPkgUp.sync({ cwd: resolvedPath })
 
     return {
       resolve: resolvedPath,

@@ -92,6 +92,8 @@
     "redux": "^3.6.0",
     "relay-compiler": "^1.4.1",
     "remote-redux-devtools": "^0.5.7",
+    "read-pkg-up": "^3.0.0",
+    "resolve-cwd": "^2.0.0",
     "serve": "^6.4.0",
     "sift": "^3.2.6",
     "signal-exit": "^3.0.2",

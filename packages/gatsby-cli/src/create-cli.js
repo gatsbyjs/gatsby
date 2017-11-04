@@ -1,6 +1,7 @@
 const path = require(`path`)
 const resolveCwd = require(`resolve-cwd`)
 const yargs = require(`yargs`)
+const readPkgUp = require(`read-pkg-up`)
 const report = require(`./reporter`)
 
 const DEFAULT_BROWSERS = [`> 1%`, `last 2 versions`, `IE >= 9`]
@@ -18,7 +19,7 @@ function buildLocalCommands(cli, isLocalSite) {
 
   let siteInfo = { directory, browserslist: DEFAULT_BROWSERS }
   if (isLocalSite) {
-    const json = require(path.join(directory, `package.json`))
+    const { pkg: json } = readPkgUp.sync()
     siteInfo.sitePackageJson = json
     siteInfo.browserslist = json.browserslist || siteInfo.browserslist
   }
@@ -145,10 +146,9 @@ function buildLocalCommands(cli, isLocalSite) {
 function isLocalGatsbySite() {
   let inGatsbySite = false
   try {
-    let { dependencies, devDependencies } = require(path.resolve(
-      `./package.json`
-    ))
+    const { pkg: { dependencies, devDependencies, gatsby } } = readPkgUp.sync()
     inGatsbySite =
+      gatsby ||
       (dependencies && dependencies.gatsby) ||
       (devDependencies && devDependencies.gatsby)
   } catch (err) {

@@ -21,6 +21,7 @@
     "hosted-git-info": "^2.5.0",
     "lodash": "^4.17.4",
     "pretty-error": "^2.1.1",
+    "read-pkg-up": "^3.0.0",
     "resolve-cwd": "^2.0.0",
     "source-map": "^0.5.7",
     "stack-trace": "^0.0.10",
