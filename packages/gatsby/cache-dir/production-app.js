@@ -138,7 +138,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
   const ComponentRendererWithRouter = withRouter(ComponentRenderer)
 
-  loader.getResourcesForPathname(window.location.pathname, () => {
+  // loader.getResourcesForPathname(window.location.pathname, () => {
     const Root = () =>
       createElement(
         AltRouter ? AltRouter : DefaultRouter,
@@ -184,5 +184,5 @@ apiRunnerAsync(`onClientEntry`).then(() => {
         }
       )
     )
-  })
+  // })
 })
