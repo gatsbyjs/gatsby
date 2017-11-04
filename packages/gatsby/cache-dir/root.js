@@ -12,7 +12,10 @@ import loader from "./loader"
 import * as ErrorOverlay from "react-error-overlay"
 
 // Report runtime errors
-ErrorOverlay.startReportingRuntimeErrors({ onError: () => {} })
+ErrorOverlay.startReportingRuntimeErrors({
+  onError: () => {},
+  filename: `/commons.js`,
+})
 ErrorOverlay.setEditorHandler(errorLocation =>
   window.fetch(
     `/__open-stack-frame-in-editor?fileName=` +
