@@ -222,10 +222,15 @@ const queue = {
         navigator.serviceWorker
           .getRegistrations()
           .then(function(registrations) {
-            for (let registration of registrations) {
-              registration.unregister()
+            // We would probably need this to
+            // prevent unnecessary reloading of the page
+            // while unregistering of ServiceWorker is not happening
+            if (registrations.length) {
+              for (let registration of registrations) {
+                registration.unregister()
+              }
+              window.location.reload()
             }
-            window.location.reload()
           })
       }
     }
