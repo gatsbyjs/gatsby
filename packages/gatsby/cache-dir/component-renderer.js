@@ -3,8 +3,8 @@ import PropTypes from "prop-types"
 import loader from "./loader"
 import emitter from "./emitter"
 import { apiRunner } from "./api-runner-browser"
-import DefaultLayout from './layouts'
-// const DefaultLayout = ({ children }) => <div>{children()}</div>
+
+const DefaultLayout = ({ children }) => <div>{children()}</div>
 
 // Pass pathname in as prop.
 // component will try fetching resources. If they exist,
@@ -12,8 +12,15 @@ import DefaultLayout from './layouts'
 class ComponentRenderer extends React.Component {
   constructor(props) {
     super()
+    let location = props.location
+
+    // This covers layout for when page not found, especially during production
+    if (!loader.getPage(location.pathname)) {
+      location = Object.assign({}, location, { ...location, pathname: `/404.html` })
+    }
+
     this.state = {
-      location: props.location,
+      location,
       pageResources: loader.getResourcesForPathname(props.location.pathname),
     }
   }
