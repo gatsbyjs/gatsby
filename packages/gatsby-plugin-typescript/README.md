@@ -16,6 +16,22 @@ plugins: [
   `gatsby-plugin-typescript`,
 ]
 ```
+Or with optional configuration:
+```javascript
+plugins: [
+  {
+    resolve: 'gatsby-plugin-typescript',
+    options: {
+      transpileOnly: true, // default
+      compilerOptions: {
+        target: `esnext`,
+        experimentalDecorators: true,
+        jsx: `react`,
+      }, // default
+    }
+  },
+]
+```
 
 `tsconfig.json`
 ```json

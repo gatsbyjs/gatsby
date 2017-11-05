@@ -15,14 +15,14 @@ Object {
   "aspectRatio": 2.0661764705882355,
   "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAYAAAC0VX7mAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAuUlEQVQoz9WRywqCYBCFff9lq6BFLSIQSoIW1UpIulDZ1VKS7GJiapGWl99cnH7sAdy4cTZzmJnzMcwwyDmYYgAHQYBZGKH2cjEOQ7S8d6r3hKS59/HB+0GqNxFB3fXA0hmReqq0ppAYxjfJd0MzSYp0w1yBPn3Idi+j0+2DF4awbCfTdL0ZEEYTlMoVsFwbjSaHqbj4A+M4xlraQZIVXHQdzuOZCbzbNlRNw3y5gnJQcTydYVpW2vsBqlELaS2F/80AAAAASUVORK5CYII=",
   "density": 144,
-  "originalImg": "/static/1234-85b96.png",
+  "originalImg": "/static/test-1234-85b96.png",
   "originalName": undefined,
   "presentationHeight": 68,
   "presentationWidth": 141,
   "sizes": "(max-width: 141px) 100vw, 141px",
-  "src": "/static/1234-85b96.png",
-  "srcSet": "/static/1234-7c9f5.png 200w,
-/static/1234-85b96.png 281w",
+  "src": "/static/test-1234-85b96.png",
+  "srcSet": "/static/test-1234-7c9f5.png 200w,
+/static/test-1234-85b96.png 281w",
 }
 `;
 
@@ -31,14 +31,14 @@ Object {
   "aspectRatio": 2.0661764705882355,
   "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAYAAAC0VX7mAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAuUlEQVQoz9WRywqCYBCFff9lq6BFLSIQSoIW1UpIulDZ1VKS7GJiapGWl99cnH7sAdy4cTZzmJnzMcwwyDmYYgAHQYBZGKH2cjEOQ7S8d6r3hKS59/HB+0GqNxFB3fXA0hmReqq0ppAYxjfJd0MzSYp0w1yBPn3Idi+j0+2DF4awbCfTdL0ZEEYTlMoVsFwbjSaHqbj4A+M4xlraQZIVXHQdzuOZCbzbNlRNw3y5gnJQcTydYVpW2vsBqlELaS2F/80AAAAASUVORK5CYII=",
   "density": 144,
-  "originalImg": "/static/1234-24ad8.png",
+  "originalImg": "/static/test-1234-24ad8.png",
   "originalName": undefined,
   "presentationHeight": 136,
   "presentationWidth": 281,
   "sizes": "(max-width: 281px) 100vw, 281px",
-  "src": "/static/1234-24ad8.png",
-  "srcSet": "/static/1234-06d78.png 200w,
-/static/1234-24ad8.png 281w",
+  "src": "/static/test-1234-24ad8.png",
+  "srcSet": "/static/test-1234-06d78.png 200w,
+/static/test-1234-24ad8.png 281w",
 }
 `;
 
@@ -47,12 +47,12 @@ Object {
   "aspectRatio": 1,
   "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAGElEQVQ4y2P4TwFgGNU8qnlU86jmgdUMAOBEq42KgAyMAAAAAElFTkSuQmCC",
   "density": 72,
-  "originalImg": "/static/1234-18c2a.png",
+  "originalImg": "/static/test-1234-18c2a.png",
   "originalName": undefined,
   "presentationHeight": 1,
   "presentationWidth": 1,
   "sizes": "(max-width: 1px) 100vw, 1px",
-  "src": "/static/1234-18c2a.png",
-  "srcSet": "/static/1234-18c2a.png 1w",
+  "src": "/static/test-1234-18c2a.png",
+  "srcSet": "/static/test-1234-18c2a.png 1w",
 }
 `;

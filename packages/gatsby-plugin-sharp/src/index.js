@@ -262,7 +262,7 @@ function queueImageResizing({ file, args = {} }) {
 
   const argsDigestShort = argsDigest.substr(argsDigest.length - 5)
 
-  const imgSrc = `/${file.internal
+  const imgSrc = `/${file.name}-${file.internal
     .contentDigest}-${argsDigestShort}.${fileExtension}`
   const filePath = path.join(process.cwd(), `public`, `static`, imgSrc)
 

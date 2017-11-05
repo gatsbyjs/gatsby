@@ -37,6 +37,20 @@ describe(`Add pages`, () => {
     expect(state).toMatchSnapshot()
   })
 
+  it(`allows you to add pages with matchPath`, () => {
+    const action = actions.createPage(
+      {
+        path: `/hi/`,
+        component: `/whatever/index.js`,
+        matchPath: `/hi-from-somewhere-else/`,
+      },
+      { id: `test`, name: `test` }
+    )
+    const state = reducer(undefined, action)
+    expect(action).toMatchSnapshot()
+    expect(state).toMatchSnapshot()
+  })
+
   it(`allows you to add multiple pages`, () => {
     const action = actions.createPage(
       {
