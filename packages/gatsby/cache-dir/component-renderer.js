@@ -3,8 +3,8 @@ import PropTypes from "prop-types"
 import loader from "./loader"
 import emitter from "./emitter"
 import { apiRunner } from "./api-runner-browser"
-
-const DefaultLayout = ({ children }) => <div>{children()}</div>
+import DefaultLayout from './layouts'
+// const DefaultLayout = ({ children }) => <div>{children()}</div>
 
 // Pass pathname in as prop.
 // component will try fetching resources. If they exist,
