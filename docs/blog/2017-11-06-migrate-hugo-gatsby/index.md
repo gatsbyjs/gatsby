@@ -1,23 +1,23 @@
 ---
 title: Migrate from Hugo to Gatsby
 date: 2017-11-06
-slug: migrate-hugo-gatsby
 author: "Kalin Chernev"
 ---
 
 ## Introduction
 
-As my recent evaluations of Gatsby were positive, I decided to migrate my personal blog.
+As my [recent evaluations of Gatsby](https://kalinchernev.github.io/learn-gatsbyjs) were positive, I decided to migrate my personal blog.
 
-Instead of quickly picking a ready theme with a lot of code I might not use, which I did during the previous migration from Medium to Hugo, this time, I decided to take a different route - making it right from scratch.
+Instead of quickly picking an already built theme with a lot of code I might not use—which I did during the previous migration from Medium to Hugo—this time, I decided to take a different route—building it from scratch.
 
 I focused on the process, looking for ways to make site building more generic and reusable.
 
 - Content migration
-- Programatic content creation in Gatsby
+- Programatic page creation in Gatsby
 - Manage styles with [`Typography.js`](http://kyleamathews.github.io/typography.js/)
-- Make pagination, and pages for tags.
-- Add admin panel with [NetlifyCMS](https://www.netlifycms.org/)
+- Automatic pagination
+- Tag pages
+- Add an admin panel with [NetlifyCMS](https://www.netlifycms.org/)
 
 This article will highlight lessons learned from the process, with the aim to provide high-level guidelines about patterns which can be applied in migrations from other static site generators to Gatsby.
 
@@ -27,19 +27,19 @@ This article will highlight lessons learned from the process, with the aim to pr
 
 As it's an older ecosystem, when you need a ready plugin or a theme for quick gratification, it's more likely to find something ready online for Hugo.
 
-Whereas, Gatsby is based on React, GraphQL, Webpack and the way of thinking is closer to how a developer would approach the problems from a single-page-application point of view.
+Gatsby, on the other hand, is based on React, GraphQL, Webpack and its way of thinking is closer to how a developer would approach the problems from a single-page-application point of view.
 
 Gatsby might feel a bit more "raw"—there are starters and typography.js, but not so many ready made solutions in the conventional sense. Probably the closest marketplace for themes compared to others is [gatsbythemes](https://gatsbythemes.com/) which is a young project.
 
 If you have landed at this article researching which tool is better for your job, take a look at [comparisons](https://www.slant.co/versus/1016/18503/~hugo_vs_gatsby-js) and keep in mind that selecting a [stack](https://stackshare.io/stackups/gatsby-vs-hugo) boils down to being effective with it.
 
-For me, using Gatsby is [valuable learning experience](https://kalinchernev.github.io/learn-gatsbyjs) and it has also been so easy to work with, it feels "unfair". For example, the plugin system of Gatsby keeps me sane and productive, even in cases where I know only the briefest overview concepts of Webpack, whereas others have spent hours and days configuring what I get out of the box.
+For me, using Gatsby is [valuable learning experience](https://kalinchernev.github.io/learn-gatsbyjs) and it has also been so easy to work with, it feels "unfair". For example, the plugin system of Gatsby keeps me sane and productive, even in cases where I know only the briefest overview concepts of Webpack. Without Gatsby, I might have spent hours and days configuring what Gatsby provides out of the box.
 
 Last, but not least, the biggest benefit of using Gatsby compared to Hugo, is the JavaScript tool-chain. Important tasks such as making a progressive web app, hot module reloading, etc are much easier in comparison to other static site generators.
 
 ### Content migration
 
-This task was easier than expected. The file structure is preserved between my previous blog and the current version. Both Hugo and Gatsby work well when markdown files are stored in flat at `content/post` folder.
+This task was easier than expected. The file structure is preserved between my previous blog and the current version. Both Hugo and Gatsby work well when markdown files are stored at a `content/post` folder.
 
 The only work I had to do on the content migration was to reformat the [frontmatter](https://gohugo.io/content-management/front-matter/). In Hugo, I used TOML, whereas `gatsby-transformer-remark` works only with YAML for the moment. Luckily, I still had the Hugo CLI on my system so could make use of its [build-in conversion tool](https://gohugo.io/commands/hugo_convert_toyaml/). The only issue I had was that sometimes titles were longer than 1 line and were not parse-able, so I just had to cut some words out where problematic.
 
@@ -341,7 +341,7 @@ The branch in this configuration has to match to deployment branch of Netlify se
 
 This is my admin page React component which is placed in `src/pages/admin` so that Gatsby delivers the HTML page at `/admin`.
 
-```jsx=
+```jsx
 import React from 'react';
 import Helmet from 'react-helmet';
 
