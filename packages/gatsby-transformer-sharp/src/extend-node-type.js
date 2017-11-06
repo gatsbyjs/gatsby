@@ -55,6 +55,7 @@ const DuotoneGradientType = new GraphQLInputObjectType({
     return {
       highlight: { type: GraphQLString },
       shadow: { type: GraphQLString },
+      blend: { type: GraphQLInt },
     }
   },
 })
