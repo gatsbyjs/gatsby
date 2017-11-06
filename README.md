@@ -70,6 +70,7 @@ Websites built with Gatsby:
 * [GraphCMS's website](https://graphcms.com)
 * [Mannequin.io](https://mannequin.io) [(source)](https://github.com/LastCallMedia/Mannequin/tree/master/site)
 * [Softin Sistemas](http://softin.com.br)
+* [Calpa's Blog](https://calpa.me) [(source)](https://github.com/calpa/blog)
 
 ## Docs
 
