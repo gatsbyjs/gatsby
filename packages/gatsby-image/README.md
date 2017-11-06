@@ -176,6 +176,7 @@ Pass in the data returned from the `sizes` object in your query via the `sizes` 
 | `style`                   | `object`        | Spread into the default styles in the wrapper div |
 | `position`                | `string`        | Defaults to `relative`. Pass in `absolute` to make the component `absolute` positioned |
 | `backgroundColor`         | `string|bool`   | Set a colored background placeholder. If true, uses "lightgray" for the color. You can also pass in any valid color string. |
+| `onLoad`                  | `func`          | A callback that is called when the full-size image has loaded.
 
 ## Some other stuff to be aware of
 
