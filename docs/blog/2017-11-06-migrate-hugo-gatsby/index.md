@@ -51,7 +51,7 @@ This is the official [documentation](https://www.gatsbyjs.org/docs/creating-and-
 
 This might sound way more complicated than what it is:
 
-```jsx=
+```jsx
 exports.createPages = ({ graphql, boundActionCreators }) => {
   const { createPage } = boundActionCreators;
   graphql(`
@@ -78,7 +78,7 @@ As you see, getting the list of posts can be done in a single query.
 
 The result of this query can later be handled by a "creator" function, which I prefer to keep in a separate module. For example, creating posts works like following:
 
-```jsx=
+```jsx
 const path = require(`path`);
 
 module.exports = (createPage, nodes) => {
@@ -149,7 +149,7 @@ module.exports = typography;
 
 and start the project again to see:
 
-![Screenshot of a styled blog post](https://i.imgur.com/jJqyQIi.png)
+![Screenshot of a styled blog post](jJqyQIi.png)
 
 As you can see, with minimal efforts, the styles are basically ready! :)
 
@@ -163,7 +163,7 @@ As usual, a good starting point was searching for example implementations availa
 
 I wanted to have different contexts than the plugin, so I took inspiration for both tags and pagination scenarios. I kept them as separate action creators and I just called them in the main creator function like this:
 
-```jsx=
+```jsx
 const createPostPages = require(`./gatsby-actions/createPostPages`);
 const createPaginatedPostsPages = require(`./gatsby-actions/createPaginatedPostsPages`);
 const createTagPages = require(`./gatsby-actions/createTagPages`);
@@ -195,7 +195,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 
 Easy to read, understand and mantain. The pagination module is a bit longer than the one of the posts:
 
-```jsx=
+```jsx
 const path = require(`path`);
 
 module.exports = (createPage, nodes) => {
@@ -236,7 +236,7 @@ module.exports = (createPage, nodes) => {
 
 Then, pull context information in the React component:
 
-```jsx=
+```jsx
 const BlogPagedIndex = ({ pathContext }) => {
   const { group, index, first, last } = pathContext;
   return (
@@ -265,11 +265,11 @@ const BlogPagedIndex = ({ pathContext }) => {
 export default BlogPagedIndex;
 ```
 
-This is a cut-down version of the component only for the blog post, do not copy with too much trust ...
+This is a cut-down version of the component only for the blog post, do not copy with too much trust…
 
-I have to be honest that I haven't made pagination in React/Redux, but I feel this pagination approach would be comparatively easier. Also, I want the pagination pages to be accessible at all times, not only on state change, so the content creation approach of building the list works well for me.
+I have to be honest—I haven't built pagination before with React/Redux, but I feel this pagination approach is easier. Also, I want the pagination pages to be accessible at all times, not only on state change, so the content creation approach of building the list works well for me.
 
-I will say again that I see this is "unfair" easy. It's probably the quickest implementation of pagination I've made in my life. I believe GraphQL pagination with caching and Redux, etc. would be a more sophisticated way to solve the problem ;)
+I will say again that I see this is "unfair" easy. It's probably the quickest implementation of pagination I've made in my life.
 
 For the list of tags and inner tags pages, the approach was similar but passing different context to the template component:
 
@@ -336,7 +336,7 @@ branch is my development/staging and `blog` is my production.
 
 The branch in this configuration has to match to deployment branch of Netlify service:
 
-![](https://i.imgur.com/Efubv8f.png)
+![](Efubv8f.png)
 
 
 This is my admin page React component which is placed in `src/pages/admin` so that Gatsby delivers the HTML page at `/admin`.
@@ -374,11 +374,11 @@ Any other location or file name will result in an error.
 
 So, here's how my admin panel looks:
 
-![Admin panel for Gatsby site](https://i.imgur.com/lHMSbxx.png)
+![Admin panel for Gatsby site](lHMSbxx.png)
 
 Creating a new draft post yields a pull request:
 
-![Draft post from NetlifyCMS](https://i.imgur.com/RcynQe3.png)
+![Draft post from NetlifyCMS](RcynQe3.png)
 
 Interesting part is that NetlifyCMS creates the pull request on my behalf with a given state of the branch. I could continue working on the content of the post when I'm offline (in an airplane) and push to the branch later when I'm back online to trigger a new [preview from Netlify](https://www.netlify.com/blog/2016/07/20/introducing-deploy-previews-in-netlify/). Only when I decide to, I merge latest changes for styles and PWA tweaks back to the post preview branch to see whole picture and approve the post, merging it to the main branch.
 
