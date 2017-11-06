@@ -1,12 +1,13 @@
 ---
 title: Migrate from Hugo to Gatsby
-date: 2017-11-XXT12:00:00.113Z
+date: 2017-11-06
 slug: migrate-hugo-gatsby
+author: "Kalin Chernev"
 ---
 
 ## Introduction
 
-As my recent evaluations of Gatsb were positive, I decided to migrate my personal blog.
+As my recent evaluations of Gatsby were positive, I decided to migrate my personal blog.
 
 Instead of quickly picking a ready theme with a lot of code I might not use, which I did during the previous migration from Medium to Hugo, this time, I decided to take a different route - making it right from scratch.
 
