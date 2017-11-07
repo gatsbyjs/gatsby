@@ -183,9 +183,9 @@ class Image extends React.Component {
       // The outer div is necessary to reset the z-index to 0.
       return (
         <div
-          className={`${outerWrapperClassName
-            ? outerWrapperClassName
-            : ``} gatsby-image-outer-wrapper`}
+          className={`${
+            outerWrapperClassName ? outerWrapperClassName : ``
+          } gatsby-image-outer-wrapper`}
           style={{
             zIndex: 0,
             // Let users set component to be absolutely positioned.
@@ -260,8 +260,10 @@ class Image extends React.Component {
                 opacity={
                   this.state.imgLoaded || this.props.fadeIn === false ? 1 : 0
                 }
-                onLoad={() =>
-                  this.state.IOSupported && this.setState({ imgLoaded: true })}
+                onLoad={() => {
+                  this.state.IOSupported && this.setState({ imgLoaded: true })
+                  this.props.onLoad && this.props.onLoad()
+                }}
               />
             )}
           </div>
@@ -294,9 +296,9 @@ class Image extends React.Component {
       // The outer div is necessary to reset the z-index to 0.
       return (
         <div
-          className={`${outerWrapperClassName
-            ? outerWrapperClassName
-            : ``} gatsby-image-outer-wrapper`}
+          className={`${
+            outerWrapperClassName ? outerWrapperClassName : ``
+          } gatsby-image-outer-wrapper`}
           style={{
             zIndex: 0,
             // Let users set component to be absolutely positioned.
@@ -358,7 +360,10 @@ class Image extends React.Component {
                 opacity={
                   this.state.imgLoaded || this.props.fadeIn === false ? 1 : 0
                 }
-                onLoad={() => this.setState({ imgLoaded: true })}
+                onLoad={() => {
+                  this.setState({ imgLoaded: true })
+                  this.props.onLoad && this.props.onLoad()
+                }}
               />
             )}
           </div>
@@ -391,6 +396,7 @@ Image.propTypes = {
   style: PropTypes.object,
   position: PropTypes.string,
   backgroundColor: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  onLoad: PropTypes.func,
 }
 
 export default Image

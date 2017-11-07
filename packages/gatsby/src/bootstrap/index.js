@@ -224,7 +224,9 @@ module.exports = async (args: BootstrapArgs) => {
     )
     .join(`,`)
 
-  browserAPIRunner = `var plugins = [${browserPluginsRequires}]\n${browserAPIRunner}`
+  browserAPIRunner = `var plugins = [${browserPluginsRequires}]\n${
+    browserAPIRunner
+  }`
 
   let sSRAPIRunner = ``
 
@@ -372,7 +374,14 @@ module.exports = async (args: BootstrapArgs) => {
       report.log(``)
       report.info(`bootstrap finished - ${process.uptime()} s`)
       report.log(``)
-      resolve({ graphqlRunner })
+
+      // onPostBootstrap
+      activity = report.activityTimer(`onPostBootstrap`)
+      activity.start()
+      apiRunnerNode(`onPostBootstrap`).then(() => {
+        activity.end()
+        resolve({ graphqlRunner })
+      })
     }
   }, 100)
 

@@ -32,7 +32,9 @@ const NavItem = ({ title, to }) => (
         whiteSpace: `nowrap`,
       },
       "& .nav-link-active, & .nav-link:hover": {
-        backgroundImage: `linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0) 1px, ${options.accentColor} 1px, ${options.accentColor} 2px, rgba(0, 0, 0, 0) 2px)`,
+        backgroundImage: `linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0) 1px, ${
+          options.accentColor
+        } 1px, ${options.accentColor} 2px, rgba(0, 0, 0, 0) 2px)`,
         color: options.accentColor,
         opacity: 1,
       },

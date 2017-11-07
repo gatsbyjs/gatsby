@@ -47,7 +47,7 @@
     "typeface-space-mono": "^0.0.40",
     "typeface-spectral": "^0.0.40",
     "typography-breakpoint-constants": "^0.15.10",
-    "typography-plugin-code": "0.15.x"
+    "typography-plugin-code": "^0.16.11"
   },
   "keywords": [
     "gatsby"
@@ -59,6 +59,7 @@
     "build": "gatsby build",
     "deploy": "gatsby build --prefix-paths && gh-pages -d public",
     "develop": "gatsby develop",
+    "serve": "gatsby serve",
     "test": "echo \"Error: no test specified\" && exit 1"
   }
 }

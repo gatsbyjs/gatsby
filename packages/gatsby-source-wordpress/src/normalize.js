@@ -47,7 +47,9 @@ function getValidKey({ key, verbose = false }) {
   if (changed && verbose)
     console.log(
       colorized.out(
-        `Object with key "${key}" breaks GraphQL naming convention. Renamed to "${nkey}"`,
+        `Object with key "${
+          key
+        }" breaks GraphQL naming convention. Renamed to "${nkey}"`,
         colorized.color.Font.FgRed
       )
     )
@@ -417,23 +419,23 @@ exports.createNodesFromEntities = ({ entities, createNode }) => {
     if (entity.acf) {
       _.each(entity.acf, (value, key) => {
         if (_.isArray(value) && value[0] && value[0].acf_fc_layout) {
-          entity.acf[`${key}_${entity.type}___NODE`] = entity.acf[
-            key
-          ].map((f, i) => {
-            const type = `WordPressAcf_${f.acf_fc_layout}`
-            delete f.acf_fc_layout
+          entity.acf[`${key}_${entity.type}___NODE`] = entity.acf[key].map(
+            (f, i) => {
+              const type = `WordPressAcf_${f.acf_fc_layout}`
+              delete f.acf_fc_layout
 
-            const acfChildNode = createACFChildNodes(
-              f,
-              entity.id + i,
-              key,
-              type,
-              children,
-              createNode
-            )
+              const acfChildNode = createACFChildNodes(
+                f,
+                entity.id + i,
+                key,
+                type,
+                children,
+                createNode
+              )
 
-            return acfChildNode.id
-          })
+              return acfChildNode.id
+            }
+          )
 
           delete entity.acf[key]
         }
