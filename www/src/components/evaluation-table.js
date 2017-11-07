@@ -118,8 +118,7 @@ class EvaluationTable extends Component {
                     />,
                     <div
                       dangerouslySetInnerHTML={{
-                        __html: `<span id="${row.node.Feature
-                          .toLowerCase()
+                        __html: `<span id="${row.node.Feature.toLowerCase()
                           .split(` `)
                           .join(`-`)}"></span>`,
                       }}

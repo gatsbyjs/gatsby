@@ -72,9 +72,9 @@ const options = {
       blockquote: {
         paddingLeft: rhythm(options.blockMarginBottom),
         marginLeft: 0,
-        borderLeft: `${rhythm(
-          options.blockMarginBottom / 4
-        )} solid ${presets.brandLighter}`,
+        borderLeft: `${rhythm(options.blockMarginBottom / 4)} solid ${
+          presets.brandLighter
+        }`,
       },
       hr: {
         backgroundColor: presets.brandLighter,
@@ -125,8 +125,9 @@ const options = {
         marginLeft: `${rhythm(-options.blockMarginBottom)}`,
         paddingRight: rhythm(options.blockMarginBottom),
         paddingLeft: `${rhythm(options.blockMarginBottom / 5 * 4)}`,
-        borderLeft: `${rhythm(options.blockMarginBottom / 5 * 1)} solid ${colors
-          .a[3]}`,
+        borderLeft: `${rhythm(options.blockMarginBottom / 5 * 1)} solid ${
+          colors.a[3]
+        }`,
         display: `block`,
       },
       ".gatsby-highlight::-webkit-scrollbar": {
@@ -161,8 +162,9 @@ const options = {
       ".main-body a": {
         color: `inherit`,
         textDecoration: `none`,
-        transition: `all ${presets.animation.speedFast} ${presets.animation
-          .curveDefault}`,
+        transition: `all ${presets.animation.speedFast} ${
+          presets.animation.curveDefault
+        }`,
         borderBottom: `1px solid ${presets.lightPurple}`,
         boxShadow: `inset 0 -2px 0px 0px ${presets.lightPurple}`,
         fontFamily: options.headerFontFamily.join(`,`),
