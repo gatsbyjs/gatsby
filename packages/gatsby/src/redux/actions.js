@@ -8,7 +8,7 @@ const glob = require(`glob`)
 const path = require(`path`)
 
 const { joinPath } = require(`../utils/path`)
-const { getNode, hasNodeChanged } = require(`./index`)
+const { getNode, hasNodeChanged, trackSubObjectsToRootNodeId } = require(`./index`)
 const { store } = require(`./index`)
 import * as joiSchemas from "../joi-schemas/joi"
 import { generateComponentChunkName } from "../utils/js-chunk-names"
@@ -366,32 +366,7 @@ actions.createNode = (node: any, plugin?: Plugin, traceId?: string) => {
     )
   }
 
-  // Add _PARENT recursively to sub-objects in nodes so we can use this to find
-  // the root node when running GraphQL queries. Yes this is lame. But it's
-  // because in GraphQL child nodes can't access their parent nodes so we use
-  // this _PARENT convention to get around this.
-  const addParentToSubObjects = (data, parentId) => {
-    _.each(data, (v, k) => {
-      if (_.isArray(v) && _.isObject(v[0])) {
-        _.each(v, o => addParentToSubObjects(o, parentId))
-      } else if (_.isObject(v)) {
-        addParentToSubObjects(v, parentId)
-      }
-    })
-    data._PARENT = parentId
-  }
-
-  _.each(node, (v, k) => {
-    // Ignore the node internal object.
-    if (k === `internal`) {
-      return
-    }
-    if (_.isArray(v) && _.isObject(v[0])) {
-      _.each(v, o => addParentToSubObjects(o, node.parent))
-    } else if (_.isObject(v)) {
-      addParentToSubObjects(v, node.parent)
-    }
-  })
+  trackSubObjectsToRootNodeId(node)
 
   const oldNode = getNode(node.id)
 
