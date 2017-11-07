@@ -8,7 +8,11 @@ const glob = require(`glob`)
 const path = require(`path`)
 
 const { joinPath } = require(`../utils/path`)
-const { getNode, hasNodeChanged, trackSubObjectsToRootNodeId } = require(`./index`)
+const {
+  getNode,
+  hasNodeChanged,
+  trackSubObjectsToRootNodeId,
+} = require(`./index`)
 const { store } = require(`./index`)
 import * as joiSchemas from "../joi-schemas/joi"
 import { generateComponentChunkName } from "../utils/js-chunk-names"
@@ -379,11 +383,13 @@ actions.createNode = (node: any, plugin?: Plugin, traceId?: string) => {
       typeOwners[node.internal.type] = pluginName
     else if (typeOwners[node.internal.type] !== pluginName)
       throw new Error(stripIndent`
-        The plugin "${pluginName}" created a node of a type owned by another plugin.
+        The plugin "${
+          pluginName
+        }" created a node of a type owned by another plugin.
 
-        The node type "${node.internal.type}" is owned by "${typeOwners[
-        node.internal.type
-      ]}".
+        The node type "${node.internal.type}" is owned by "${
+        typeOwners[node.internal.type]
+      }".
 
         If you copy and pasted code from elsewhere, you'll need to pick a new type name
         for your new node(s).

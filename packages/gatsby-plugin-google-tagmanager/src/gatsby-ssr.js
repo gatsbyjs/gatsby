@@ -26,7 +26,9 @@ exports.onRenderBody = (
         dangerouslySetInnerHTML={{
           __html: stripIndent`
             <iframe
-              src="https://www.googletagmanager.com/ns.html?id=${pluginOptions.id}"
+              src="https://www.googletagmanager.com/ns.html?id=${
+                pluginOptions.id
+              }"
               height="0"
               width="0"
               style="display: none; visibility: hidden"
