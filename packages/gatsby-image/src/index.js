@@ -183,9 +183,9 @@ class Image extends React.Component {
       // The outer div is necessary to reset the z-index to 0.
       return (
         <div
-          className={`${outerWrapperClassName
-            ? outerWrapperClassName
-            : ``} gatsby-image-outer-wrapper`}
+          className={`${
+            outerWrapperClassName ? outerWrapperClassName : ``
+          } gatsby-image-outer-wrapper`}
           style={{
             zIndex: 0,
             // Let users set component to be absolutely positioned.
@@ -296,9 +296,9 @@ class Image extends React.Component {
       // The outer div is necessary to reset the z-index to 0.
       return (
         <div
-          className={`${outerWrapperClassName
-            ? outerWrapperClassName
-            : ``} gatsby-image-outer-wrapper`}
+          className={`${
+            outerWrapperClassName ? outerWrapperClassName : ``
+          } gatsby-image-outer-wrapper`}
           style={{
             zIndex: 0,
             // Let users set component to be absolutely positioned.
