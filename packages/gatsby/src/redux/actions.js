@@ -64,7 +64,9 @@ type Plugin = {
 
 /**
  * Delete a page
- * @param {string} page a page object with at least the path set
+ * @param {Object} page a page object with at least the path set
+ * @param {string} page.path The path of the page
+ * @param {string} page.component The absolute path to the page component
  * @example
  * deletePage(page)
  */
