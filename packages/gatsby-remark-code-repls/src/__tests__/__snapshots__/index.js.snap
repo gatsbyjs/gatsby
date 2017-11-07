@@ -1,0 +1,151 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`gatsby-remark-code-repls Babel REPL generates a link for files in nested directories 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "<a href=\\"https://babeljs.io/repl/#?presets=react&code_lz=MYewdgzgLgBAZiEMC8MBEAjAhgJzQbiA\\" >",
+        },
+        Object {
+          "type": "text",
+          "value": "Babel",
+        },
+        Object {
+          "type": "html",
+          "value": "</a>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 45,
+          "line": 1,
+          "offset": 44,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 45,
+      "line": 1,
+      "offset": 44,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls Babel REPL generates a link for the specified example file 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "<a href=\\"https://babeljs.io/repl/#?presets=react&code_lz=MYewdgzgLgBAZiEMC8MBEAjAhgJzQbiA\\" >",
+        },
+        Object {
+          "type": "text",
+          "value": "Babel",
+        },
+        Object {
+          "type": "html",
+          "value": "</a>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 30,
+          "line": 1,
+          "offset": 29,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 30,
+      "line": 1,
+      "offset": 29,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls Babel REPL generates a link with the specified target 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "<a href=\\"https://babeljs.io/repl/#?presets=react&code_lz=MYewdgzgLgBAZiEMC8MBEAjAhgJzQbiA\\" target=\\"_blank\\">",
+        },
+        Object {
+          "type": "text",
+          "value": "Babel",
+        },
+        Object {
+          "type": "html",
+          "value": "</a>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 30,
+          "line": 1,
+          "offset": 29,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 30,
+      "line": 1,
+      "offset": 29,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;

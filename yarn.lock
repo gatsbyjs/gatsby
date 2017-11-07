@@ -7616,6 +7616,10 @@ ltcdr@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/ltcdr/-/ltcdr-2.2.1.tgz#5ab87ad1d4c1dab8e8c08bbf037ee0c1902287cf"
 
+lz-string@^1.4.4:
+  version "1.4.4"
+  resolved "https://registry.yarnpkg.com/lz-string/-/lz-string-1.4.4.tgz#c0d8eaf36059f705796e1e344811cf4c498d3a26"
+
 macaddress@^0.2.8:
   version "0.2.8"
   resolved "https://registry.yarnpkg.com/macaddress/-/macaddress-0.2.8.tgz#5904dc537c39ec6dbefeae902327135fa8511f12"
@@ -12710,6 +12714,12 @@ unist-util-generated@^1.1.0:
 unist-util-is@^2.0.0:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/unist-util-is/-/unist-util-is-2.1.1.tgz#0c312629e3f960c66e931e812d3d80e77010947b"
+
+unist-util-map@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/unist-util-map/-/unist-util-map-1.0.3.tgz#26a913d7cddb3cd3e9a886d135d37a3d1f54e514"
+  dependencies:
+    object-assign "^4.0.1"
 
 unist-util-modify-children@^1.0.0:
   version "1.1.1"
