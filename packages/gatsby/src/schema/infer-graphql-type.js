@@ -18,7 +18,7 @@ const normalize = require(`normalize-path`)
 const systemPath = require(`path`)
 const { oneLine } = require(`common-tags`)
 
-const { store, getNode, getNodes } = require(`../redux`)
+const { store, getNode, getNodes, getRootNodeId } = require(`../redux`)
 const { joinPath } = require(`../utils/path`)
 const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 const createTypeName = require(`./create-type-name`)
@@ -356,13 +356,14 @@ function findRootNode(node) {
   // Find the root node.
   let rootNode = node
   let whileCount = 0
+  let rootNodeId
   while (
-    (rootNode._PARENT || rootNode.parent) &&
-    (getNode(rootNode.parent) !== undefined || getNode(rootNode._PARENT)) &&
+    (rootNodeId = getRootNodeId(rootNode) || rootNode.parent) &&
+    (getNode(rootNode.parent) !== undefined || getNode(rootNodeId)) &&
     whileCount < 101
   ) {
-    if (rootNode._PARENT) {
-      rootNode = getNode(rootNode._PARENT)
+    if (rootNodeId) {
+      rootNode = getNode(rootNodeId)
     } else {
       rootNode = getNode(rootNode.parent)
     }
