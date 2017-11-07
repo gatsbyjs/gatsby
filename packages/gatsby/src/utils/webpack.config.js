@@ -1,7 +1,6 @@
 import { uniq, some } from "lodash"
-import fs from "fs"
 import path from "path"
-import dotenv from "dotenv"
+
 import StaticSiteGeneratorPlugin from "static-site-generator-webpack-plugin"
 import { StatsWriterPlugin } from "webpack-stats-plugin"
 import FriendlyErrorsWebpackPlugin from "friendly-errors-webpack-plugin"
@@ -12,8 +11,8 @@ const debug = require(`debug`)(`gatsby:webpack-config`)
 const WebpackMD5Hash = require(`webpack-md5-hash`)
 const GatsbyModulePlugin = require(`gatsby-module-loader/plugin`)
 const { withBasePath } = require(`./path`)
-
 const apiRunnerNode = require(`./api-runner-node`)
+const getEnv = require(`./get-env`)
 const createConfig = require(`./webpack-utils`)
 
 // Five stages or modes:
@@ -37,39 +36,6 @@ module.exports = async (
   const stage = suppliedStage
   const webpackConfig = await createConfig({ stage, program })
   const { rules, loaders, plugins } = webpackConfig
-
-  function processEnv(stage, defaultNodeEnv) {
-    debug(`Building env for "${stage}"`)
-    const env = process.env.NODE_ENV
-      ? process.env.NODE_ENV
-      : `${defaultNodeEnv}`
-    const envFile = path.join(process.cwd(), `./.env.${env}`)
-    let parsed = {}
-    try {
-      parsed = dotenv.parse(fs.readFileSync(envFile, { encoding: `utf8` }))
-    } catch (e) {
-      if (e && e.code !== `ENOENT`) {
-        console.log(e)
-      }
-    }
-    const envObject = Object.keys(parsed).reduce((acc, key) => {
-      acc[key] = JSON.stringify(parsed[key])
-      return acc
-    }, {})
-
-    const gatsbyVarObject = Object.keys(process.env).reduce((acc, key) => {
-      if (key.match(/^GATSBY_/)) {
-        acc[key] = JSON.stringify(process.env[key])
-      }
-      return acc
-    }, {})
-
-    // Don't allow overwriting of NODE_ENV, PUBLIC_DIR as to not break gatsby things
-    envObject.NODE_ENV = JSON.stringify(env)
-    envObject.PUBLIC_DIR = JSON.stringify(`${process.cwd()}/public`)
-
-    return Object.assign(envObject, gatsbyVarObject)
-  }
 
   debug(`Loading webpack config for stage "${stage}"`)
   function getOutput() {
@@ -122,9 +88,9 @@ module.exports = async (
         return {
           commons: [
             require.resolve(`react-hot-loader/patch`),
-            `${require.resolve(
-              `webpack-hot-middleware/client`
-            )}?path=http://${program.host}:${webpackPort}/__webpack_hmr&reload=true`,
+            `${require.resolve(`webpack-hot-middleware/client`)}?path=http://${
+              program.host
+            }:${webpackPort}/__webpack_hmr&reload=true`,
             directoryPath(`.cache/app`),
           ],
         }
@@ -160,7 +126,7 @@ module.exports = async (
       // optimizations for React) and whether prefixing links is enabled
       // (__PREFIX_PATHS__) and what the link prefix is (__PATH_PREFIX__).
       plugins.define({
-        "process.env": processEnv(stage, `development`),
+        "process.env": getEnv(),
         __PREFIX_PATHS__: program.prefixPaths,
         __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
         __POLYFILL__: store.getState().config.polyfill,
@@ -187,7 +153,9 @@ module.exports = async (
             compilationSuccessInfo: {
               messages: [
                 `Your site is running at http://localhost:${program.port}`,
-                `Your graphql debugger is running at http://localhost:${program.port}/___graphql`,
+                `Your graphql debugger is running at http://localhost:${
+                  program.port
+                }/___graphql`,
               ],
             },
           }),
@@ -269,12 +237,11 @@ module.exports = async (
           // this to add the needed javascript files to each HTML page.
           new StatsWriterPlugin(),
 
-
           // Minify Javascript.
           plugins.uglify(),
           new GatsbyModulePlugin(),
           plugins.namedModules(),
-          plugins.namedChunks((chunk) => {
+          plugins.namedChunks(chunk => {
             if (chunk.name) return chunk.name
             return chunk.modules
               .map(m => path.relative(m.context, m.request))
@@ -381,31 +348,7 @@ module.exports = async (
       // modules. But also make it possible to install modules within the src
       // directory if you need to install a specific version of a module for a
       // part of your site.
-      modules: [
-        `node_modules`,
-        directoryPath(`node_modules`),
-        directoryPath(`node_modules`, `gatsby/node_modules`),
-      ],
-    }
-  }
-
-  function getResolveLoader() {
-    const root = [path.resolve(directory, `node_modules`)]
-
-    const userLoaderDirectoryPath = path.resolve(directory, `loaders`)
-
-    try {
-      if (fs.statSync(userLoaderDirectoryPath).isDirectory()) {
-        root.push(userLoaderDirectoryPath)
-      }
-    } catch (e) {
-      if (e && e.code !== `ENOENT`) {
-        console.log(e)
-      }
-    }
-
-    return {
-      modules: [...root, path.join(__dirname, `../loaders`), `node_modules`],
+      modules: [`node_modules`, directoryPath(`node_modules`)],
     }
   }
 
@@ -426,7 +369,6 @@ module.exports = async (
     profile: stage === `production`,
     devtool: getDevtool(),
 
-    resolveLoader: getResolveLoader(),
     resolve: getResolve(),
 
     node: {

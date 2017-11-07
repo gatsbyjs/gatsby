@@ -70,5 +70,9 @@
     "watch": "lerna run watch --no-sort --stream --concurrency 999"
   },
   "workspaces": ["packages/*"],
-  "eslintIgnore": ["interfaces", "**/__tests__/fixtures/"]
+  "eslintIgnore": [
+    "interfaces",
+    "**/__tests__/fixtures/",
+    "flow-typed"
+  ]
 }
