@@ -207,7 +207,7 @@ Object {
       "children": Array [
         Object {
           "type": "html",
-          "value": "<a href=\\"https://babeljs.io/repl/#?presets=react&code_lz=MYewdgzgLgBAZiEMC8MBEAjAhgJzQbiA\\" target=\\"_blank\\">",
+          "value": "<a href=\\"https://babeljs.io/repl/#?presets=react&code_lz=MYewdgzgLgBAZiEMC8MBEAjAhgJzQbiA\\" target=\\"_blank\\" rel=\\"noreferrer\\">",
         },
         Object {
           "type": "text",
@@ -457,7 +457,7 @@ Object {
       "children": Array [
         Object {
           "type": "html",
-          "value": "<a href=\\"/codepen/file.js\\" target=\\"_blank\\">",
+          "value": "<a href=\\"/codepen/file.js\\" target=\\"_blank\\" rel=\\"noreferrer\\">",
         },
         Object {
           "type": "text",

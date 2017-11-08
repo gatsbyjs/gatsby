@@ -20,7 +20,7 @@ const compress = string =>
     .replace(/=+$/, ``) // Remove ending '='
 
 function createLinkNodes(text, href, target) {
-  target = target ? `target="${target}"` : ``
+  target = target ? `target="${target}" rel="noreferrer"` : ``
 
   return [
     {
