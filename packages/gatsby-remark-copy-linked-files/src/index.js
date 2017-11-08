@@ -12,13 +12,14 @@ module.exports = (
 ) => {
   const defaults = {
     ignoreFileExtensions: [`png`, `jpg`, `jpeg`, `bmp`, `tiff`],
+    destinationDir: `public`,
   }
 
   const options = _.defaults(pluginOptions, defaults)
 
   const filesToCopy = new Map()
-  // Copy linked files to the public directory and modify the AST to point to
-  // new location of the files.
+  // Copy linked files to the destination directory and modify the AST to point
+  // to new location of the files.
   const visitor = link => {
     if (
       isRelativeUrl(link.url) &&
@@ -37,7 +38,7 @@ module.exports = (
       if (linkNode && linkNode.absolutePath) {
         const newPath = path.posix.join(
           process.cwd(),
-          `public`,
+          options.destinationDir,
           `${linkNode.internal.contentDigest}.${linkNode.extension}`
         )
 
