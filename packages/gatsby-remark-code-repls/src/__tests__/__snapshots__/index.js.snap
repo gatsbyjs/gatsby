@@ -20,9 +20,9 @@ Object {
       ],
       "position": Position {
         "end": Object {
-          "column": 40,
+          "column": 35,
           "line": 1,
-          "offset": 39,
+          "offset": 34,
         },
         "indent": Array [],
         "start": Object {
@@ -36,9 +36,9 @@ Object {
   ],
   "position": Object {
     "end": Object {
-      "column": 40,
+      "column": 35,
       "line": 1,
-      "offset": 39,
+      "offset": 34,
     },
     "start": Object {
       "column": 1,
@@ -70,9 +70,9 @@ Object {
       ],
       "position": Position {
         "end": Object {
-          "column": 25,
+          "column": 20,
           "line": 1,
-          "offset": 24,
+          "offset": 19,
         },
         "indent": Array [],
         "start": Object {
@@ -86,9 +86,9 @@ Object {
   ],
   "position": Object {
     "end": Object {
-      "column": 25,
+      "column": 20,
       "line": 1,
-      "offset": 24,
+      "offset": 19,
     },
     "start": Object {
       "column": 1,
@@ -120,9 +120,9 @@ Object {
       ],
       "position": Position {
         "end": Object {
-          "column": 25,
+          "column": 20,
           "line": 1,
-          "offset": 24,
+          "offset": 19,
         },
         "indent": Array [],
         "start": Object {
@@ -136,9 +136,9 @@ Object {
   ],
   "position": Object {
     "end": Object {
-      "column": 25,
+      "column": 20,
       "line": 1,
-      "offset": 24,
+      "offset": 19,
     },
     "start": Object {
       "column": 1,
@@ -170,9 +170,9 @@ Object {
       ],
       "position": Position {
         "end": Object {
-          "column": 41,
+          "column": 36,
           "line": 1,
-          "offset": 40,
+          "offset": 35,
         },
         "indent": Array [],
         "start": Object {
@@ -186,9 +186,9 @@ Object {
   ],
   "position": Object {
     "end": Object {
-      "column": 41,
+      "column": 36,
       "line": 1,
-      "offset": 40,
+      "offset": 35,
     },
     "start": Object {
       "column": 1,
@@ -220,9 +220,9 @@ Object {
       ],
       "position": Position {
         "end": Object {
-          "column": 25,
+          "column": 20,
           "line": 1,
-          "offset": 24,
+          "offset": 19,
         },
         "indent": Array [],
         "start": Object {
@@ -236,9 +236,9 @@ Object {
   ],
   "position": Object {
     "end": Object {
-      "column": 25,
+      "column": 20,
       "line": 1,
-      "offset": 24,
+      "offset": 19,
     },
     "start": Object {
       "column": 1,

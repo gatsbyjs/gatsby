@@ -6,7 +6,6 @@ const { join } = require(`path`)
 const map = require(`unist-util-map`)
 
 const {
-  OPTION_DEFAULT_DIRECTORY,
   OPTION_DEFAULT_LINK_TEXT,
   PROTOCOL_BABEL,
   PROTOCOL_CODEPEN,
@@ -39,8 +38,12 @@ function createLinkNodes(text, href, target) {
   ]
 }
 
-module.exports = ({ markdownAST }, { defaultText = OPTION_DEFAULT_LINK_TEXT, directory = OPTION_DEFAULT_DIRECTORY, target } = {}) => {
-  if (!directory.endsWith(`/`)) {
+module.exports = ({ markdownAST }, { defaultText = OPTION_DEFAULT_LINK_TEXT, directory, target } = {}) => {
+  if (!directory) {
+    throw Error(`Required REPL option "directory" not specified`)
+  } else if (!fs.existsSync(directory)) {
+    throw Error(`Invalid REPL directory specified "${directory}"`)
+  } else if (!directory.endsWith(`/`)) {
     directory += `/`
   }
 
