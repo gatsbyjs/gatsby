@@ -94,7 +94,7 @@ export default class MarkdownPageFooter extends React.Component {
         >
           <EditIcon css={{ fontSize: 20, position: `relative`, top: -2 }} />
           {` `}
-          edit this page on Github
+          edit this page on GitHub
         </a>
       </div>,
     ]

@@ -310,7 +310,7 @@ Long story short, this is the `config.yml` configuration file:
 ```yaml
 backend:
   name: github
-  repo: kalinchernev/kalinchernev.github.io # Path to your Github repository
+  repo: kalinchernev/kalinchernev.github.io # Path to your GitHub repository
   branch: gatsby # Branch to update (master by default)
 
 publish_mode: editorial_workflow
