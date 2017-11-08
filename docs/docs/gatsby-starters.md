@@ -163,3 +163,7 @@ Community:
   * Styling with SCSS and [Typography.js](https://kyleamathews.github.io/typography.js/)
   * Easily configurable
   * And other good stuff (SEO, Offline Support, WebApp Manifest Support)
+
+* [gatsby-starter-bootstrap-netlify](https://github.com/konsumer/gatsby-starter-bootstrap-netlify)
+  Features:
+  * Very similar to [gatsby-starter-netlify-cms](https://github.com/AustinGreen/gatsby-starter-netlify-cms), slightly more configurable (eg set site-title in `gatsby-config`) with bootstrap/bootswatch instead of bulma
