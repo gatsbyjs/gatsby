@@ -132,7 +132,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     const markdownAST = remark.parse(`![some absolute image](${imagePath})`)
 
     it(`throws an error if the destination directory is not within 'public'`, async () => {
-      const invalidDestinationDir = `../../../../destination`
+      const invalidDestinationDir = `../destination`
       expect.assertions(1)
       return plugin(
         { files: getFiles(imagePath), markdownAST, markdownNode, getNode },
