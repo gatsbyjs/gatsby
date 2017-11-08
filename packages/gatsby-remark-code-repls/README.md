@@ -23,6 +23,11 @@ This plug-in reads source code that is stored alongside your Gatsby site and pas
     // eg examples/path/to/file.js
     directory: 'examples',
 
+    // Optional additional externals to load from CDN.
+    // This option only applies to REPLs that support it (eg Codepen).
+    // By default, only react and react-dom will be loaded.
+    externals: [],
+
     // Optional path to a custom redirect template.
     // The redirect page is only shown briefly,
     // But you can use this setting to override its CSS styling.

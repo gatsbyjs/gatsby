@@ -51,7 +51,7 @@ describe(`gatsby-remark-code-repls`, () => {
     it(`should error if provided an invalid examples directory`, () => {
       fs.existsSync.mockReturnValue(false)
 
-      expect(() => createPages({ createPage })).toThrow('Invalid REPL directory specified: "REPL"')
+      expect(() => createPages({ createPage })).toThrow(`Invalid REPL directory specified: "REPL"`)
     })
 
     it(`should warn about an empty examples directory`, () => {
@@ -98,6 +98,39 @@ describe(`gatsby-remark-code-repls`, () => {
       expect(
         () => createPages({ createPage }, { redirectTemplate: `foo/bar.js` })
       ).toThrow(`Invalid REPL redirectTemplate specified`)
+    })
+
+    it(`should load react and react-dom packages by default`, () => {
+      recursiveReaddir.mockReturnValue([`file.js`])
+
+      createPages({ createPage })
+
+      const { js_external } = JSON.parse(createPage.mock.calls[0][0].context.payload)
+
+      expect(js_external).toContain(`react.development.js`)
+      expect(js_external).toContain(`react-dom.development.js`)
+    })
+
+    it(`should load additional custom externals if specified`, () => {
+      recursiveReaddir.mockReturnValue([`file.js`])
+
+      createPages({ createPage }, { externals: [`foo.js`, `bar.js`] })
+
+      const { js_external } = JSON.parse(createPage.mock.calls[0][0].context.payload)
+
+      expect(js_external).toContain(`foo.js`)
+      expect(js_external).toContain(`bar.js`)
+    })
+
+    it(`should inject the required prop-types for the Codepen prefill API`, () => {
+      recursiveReaddir.mockReturnValue([`file.js`])
+
+      createPages({ createPage })
+
+      const { action, payload } = createPage.mock.calls[0][0].context
+
+      expect(action).toBeTruthy()
+      expect(payload).toBeTruthy()
     })
   })
 })

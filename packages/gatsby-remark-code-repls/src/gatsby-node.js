@@ -5,11 +5,12 @@ const { extname, resolve } = require(`path`)
 const recursiveReaddir = require(`recursive-readdir-synchronous`)
 
 const {
+  OPTION_DEFAULT_CODEPEN_EXTERNALS,
   OPTION_DEFAULT_LINK_TEXT,
   OPTION_DEFAULT_REDIRECT_TEMPLATE_PATH,
 } = require(`./constants`)
 
-exports.createPages = ({ createPage }, { directory = OPTION_DEFAULT_LINK_TEXT, redirectTemplate = OPTION_DEFAULT_REDIRECT_TEMPLATE_PATH } = {}) => {
+exports.createPages = ({ createPage }, { directory = OPTION_DEFAULT_LINK_TEXT, externals = [], redirectTemplate = OPTION_DEFAULT_REDIRECT_TEMPLATE_PATH } = {}) => {
   if (!fs.existsSync(directory)) {
     throw Error(`Invalid REPL directory specified: "${directory}"`)
   }
@@ -30,15 +31,34 @@ exports.createPages = ({ createPage }, { directory = OPTION_DEFAULT_LINK_TEXT, r
   }
 
   files.forEach(file => {
-    if (extname(file) === '.js' || extname(file) === '.jsx') {
+    if (extname(file) === `.js` || extname(file) === `.jsx`) {
       const slug = file.substring(0, file.length - extname(file).length)
       const code = fs.readFileSync(file, `utf8`)
+
+      // Mix default externals (like React) with user customs.
+      externals = [
+        ...OPTION_DEFAULT_CODEPEN_EXTERNALS,
+        ...externals,
+      ]
+
+      // Codepen configuration.
+      // https://blog.codepen.io/documentation/api/prefill/
+      const action = `https://codepen.io/pen/define`
+      const payload = JSON.stringify({
+        editors: `0010`,
+        html: `<div id="root"></div>`,
+        js: code,
+        js_external: externals.join(`;`),
+        js_pre_processor: `babel`,
+        layout: `left`,
+      })
 
       createPage({
         path: slug,
         component: resolve(redirectTemplate),
         context: {
-          code,
+          action,
+          payload,
         },
       })
     }

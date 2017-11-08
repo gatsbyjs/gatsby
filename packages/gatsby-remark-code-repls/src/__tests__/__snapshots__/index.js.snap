@@ -257,7 +257,7 @@ Object {
       "children": Array [
         Object {
           "type": "html",
-          "value": "<a href=\\"example-directory/path/to/nested/file.js\\" >",
+          "value": "<a href=\\"codepen/path/to/nested/file.js\\" >",
         },
         Object {
           "type": "text",
@@ -307,7 +307,7 @@ Object {
       "children": Array [
         Object {
           "type": "html",
-          "value": "<a href=\\"example-directory/file.js\\" >",
+          "value": "<a href=\\"codepen/file.js\\" >",
         },
         Object {
           "type": "text",
@@ -357,7 +357,7 @@ Object {
       "children": Array [
         Object {
           "type": "html",
-          "value": "<a href=\\"examples/file.js\\" >",
+          "value": "<a href=\\"codepen/file.js\\" >",
         },
         Object {
           "type": "text",
@@ -407,7 +407,7 @@ Object {
       "children": Array [
         Object {
           "type": "html",
-          "value": "<a href=\\"examples/file.js\\" >",
+          "value": "<a href=\\"codepen/file.js\\" >",
         },
         Object {
           "type": "text",
@@ -457,7 +457,7 @@ Object {
       "children": Array [
         Object {
           "type": "html",
-          "value": "<a href=\\"example-directory/file.js\\" target=\\"_blank\\">",
+          "value": "<a href=\\"codepen/file.js\\" target=\\"_blank\\">",
         },
         Object {
           "type": "text",
