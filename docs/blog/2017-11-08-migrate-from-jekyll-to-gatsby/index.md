@@ -1,7 +1,7 @@
 ---
 title: "Migrate from Jekyll to Gatsby"
 date: 2017-11-08
-author: “Nahuel Scotti”
+author: "Nahuel Scotti"
 ---
 
 # A bit of history
