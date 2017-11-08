@@ -34,7 +34,8 @@ This plug-in reads source code that is stored alongside your Gatsby site and pas
     redirectTemplate: `${__dirname}/src/redirect-template.js`),
     
     // Optional link target.
-    // eg <a href="..." target="_blank">...</a>
+    // Note that if a target is specified, "noreferrer" will also be added.
+    // eg <a href="..." target="_blank" rel="noreferrer">...</a>
     target: '_blank',
   },
 },
