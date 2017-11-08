@@ -7,6 +7,11 @@ const fs = require(`fs`)
 const Remark = require(`remark`)
 const plugin = require(`../`)
 
+const REMARK_TESTS = {
+  Babel: `babel-repl://`,
+  Codepen: `codepen://`,
+}
+
 const remark = new Remark()
 
 describe(`gatsby-remark-code-repls`, () => {
@@ -15,87 +20,57 @@ describe(`gatsby-remark-code-repls`, () => {
     fs.readFileSync.mockReturnValue(`const foo = "bar";`)
   })
 
-  describe(`Babel REPL`, () => {
-    it(`generates a link for the specified example file`, async () => {
-      const markdownAST = remark.parse(`[Babel](babel-repl://file.js)`)
+  Object.keys(REMARK_TESTS).forEach(name => {
+    describe(`${name} remark transform`, () => {
+      const protocol = REMARK_TESTS[name]
 
-      const transformed = plugin({ markdownAST }, { directory: `example-directory` })
+      it(`generates a link for the specified example file`, async () => {
+        const markdownAST = remark.parse(`[](${protocol}file.js)`)
 
-      expect(transformed).toMatchSnapshot()
-    })
+        const transformed = plugin({ markdownAST }, { directory: `example-directory` })
 
-    it(`generates a link with the specified target`, async () => {
-      const markdownAST = remark.parse(`[Babel](babel-repl://file.js)`)
+        expect(transformed).toMatchSnapshot()
+      })
 
-      const transformed = plugin({ markdownAST }, { directory: `example-directory`, target: `_blank` })
+      it(`generates a link with the specified target`, async () => {
+        const markdownAST = remark.parse(`[](${protocol}file.js)`)
 
-      expect(transformed).toMatchSnapshot()
-    })
+        const transformed = plugin({ markdownAST }, { directory: `example-directory`, target: `_blank` })
 
-    it(`generates a link for files in nested directories`, async () => {
-      const markdownAST = remark.parse(`[Babel](babel-repl://path/to/nested/file.js)`)
+        expect(transformed).toMatchSnapshot()
+      })
 
-      const transformed = plugin({ markdownAST }, { directory: `example-directory` })
+      it(`generates a link for files in nested directories`, async () => {
+        const markdownAST = remark.parse(`[](${protocol}path/to/nested/file.js)`)
 
-      expect(transformed).toMatchSnapshot()
-    })
+        const transformed = plugin({ markdownAST }, { directory: `example-directory` })
 
-    it(`errors if provided a link to a local file that does not exist`, async () => {
-      fs.existsSync.mockReturnValue(false)
+        expect(transformed).toMatchSnapshot()
+      })
 
-      const markdownAST = remark.parse(`[Babel](babel-repl://file.js)`)
+      it(`generates a link with the specified default text`, () => {
+        const markdownAST = remark.parse(`[](${protocol}file.js)`)
 
-      expect(() => plugin({ markdownAST })).toThrow()
-    })
-  })
+        const transformed = plugin({ markdownAST }, { defaultText: `Click me` })
 
-  describe(`Codepen`, () => {
-    it(`generates a link for the specified example file`, () => {
-      const markdownAST = remark.parse(`[Codepen](codepen://file.js)`)
+        expect(transformed).toMatchSnapshot()
+      })
 
-      const transformed = plugin({ markdownAST }, { directory: `example-directory` })
+      it(`generates a link with the specified inline text even if default text is specified`, () => {
+        const markdownAST = remark.parse(`[Custom link text](${protocol}file.js)`)
 
-      expect(transformed).toMatchSnapshot()
-    })
+        const transformed = plugin({ markdownAST }, { defaultText: `Click me` })
 
-    it(`generates a link with the specified target`, () => {
-      const markdownAST = remark.parse(`[Codepen](codepen://file.js)`)
+        expect(transformed).toMatchSnapshot()
+      })
 
-      const transformed = plugin({ markdownAST }, { directory: `example-directory`, target: `_blank` })
+      it(`errors if provided a link to a local file that does not exist`, async () => {
+        fs.existsSync.mockReturnValue(false)
 
-      expect(transformed).toMatchSnapshot()
-    })
+        const markdownAST = remark.parse(`[](${protocol}file.js)`)
 
-    it(`generates a link with the specified default text`, () => {
-      const markdownAST = remark.parse(`[](codepen://file.js)`)
-
-      const transformed = plugin({ markdownAST }, { defaultText: `Click me` })
-
-      expect(transformed).toMatchSnapshot()
-    })
-
-    it(`generates a link with the specified inline text even if default text is specified`, () => {
-      const markdownAST = remark.parse(`[Custom link text](codepen://file.js)`)
-
-      const transformed = plugin({ markdownAST }, { defaultText: `Click me` })
-
-      expect(transformed).toMatchSnapshot()
-    })
-
-    it(`generates a link for files in nested directories`, () => {
-      const markdownAST = remark.parse(`[Codepen](codepen://path/to/nested/file.js)`)
-
-      const transformed = plugin({ markdownAST }, { directory: `example-directory` })
-
-      expect(transformed).toMatchSnapshot()
-    })
-
-    it(`errors if provided a link to a local file that does not exist`, () => {
-      fs.existsSync.mockReturnValue(false)
-
-      const markdownAST = remark.parse(`[Codepen](codepen://file.js)`)
-
-      expect(() => plugin({ markdownAST })).toThrow()
+        expect(() => plugin({ markdownAST })).toThrow()
+      })
     })
   })
 })

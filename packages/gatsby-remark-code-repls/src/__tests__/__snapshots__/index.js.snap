@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`gatsby-remark-code-repls Babel REPL generates a link for files in nested directories 1`] = `
+exports[`gatsby-remark-code-repls Babel remark transform generates a link for files in nested directories 1`] = `
 Object {
   "children": Array [
     Object {
@@ -11,7 +11,7 @@ Object {
         },
         Object {
           "type": "text",
-          "value": "Babel",
+          "value": "REPL",
         },
         Object {
           "type": "html",
@@ -20,9 +20,9 @@ Object {
       ],
       "position": Position {
         "end": Object {
-          "column": 45,
+          "column": 40,
           "line": 1,
-          "offset": 44,
+          "offset": 39,
         },
         "indent": Array [],
         "start": Object {
@@ -36,9 +36,9 @@ Object {
   ],
   "position": Object {
     "end": Object {
-      "column": 45,
+      "column": 40,
       "line": 1,
-      "offset": 44,
+      "offset": 39,
     },
     "start": Object {
       "column": 1,
@@ -50,7 +50,7 @@ Object {
 }
 `;
 
-exports[`gatsby-remark-code-repls Babel REPL generates a link for the specified example file 1`] = `
+exports[`gatsby-remark-code-repls Babel remark transform generates a link for the specified example file 1`] = `
 Object {
   "children": Array [
     Object {
@@ -61,7 +61,7 @@ Object {
         },
         Object {
           "type": "text",
-          "value": "Babel",
+          "value": "REPL",
         },
         Object {
           "type": "html",
@@ -70,9 +70,9 @@ Object {
       ],
       "position": Position {
         "end": Object {
-          "column": 30,
+          "column": 25,
           "line": 1,
-          "offset": 29,
+          "offset": 24,
         },
         "indent": Array [],
         "start": Object {
@@ -86,9 +86,9 @@ Object {
   ],
   "position": Object {
     "end": Object {
-      "column": 30,
+      "column": 25,
       "line": 1,
-      "offset": 29,
+      "offset": 24,
     },
     "start": Object {
       "column": 1,
@@ -100,7 +100,107 @@ Object {
 }
 `;
 
-exports[`gatsby-remark-code-repls Babel REPL generates a link with the specified target 1`] = `
+exports[`gatsby-remark-code-repls Babel remark transform generates a link with the specified default text 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "<a href=\\"https://babeljs.io/repl/#?presets=react&code_lz=MYewdgzgLgBAZiEMC8MBEAjAhgJzQbiA\\" >",
+        },
+        Object {
+          "type": "text",
+          "value": "Click me",
+        },
+        Object {
+          "type": "html",
+          "value": "</a>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 25,
+          "line": 1,
+          "offset": 24,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 25,
+      "line": 1,
+      "offset": 24,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls Babel remark transform generates a link with the specified inline text even if default text is specified 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "<a href=\\"https://babeljs.io/repl/#?presets=react&code_lz=MYewdgzgLgBAZiEMC8MBEAjAhgJzQbiA\\" >",
+        },
+        Object {
+          "type": "text",
+          "value": "Custom link text",
+        },
+        Object {
+          "type": "html",
+          "value": "</a>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 41,
+          "line": 1,
+          "offset": 40,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 41,
+      "line": 1,
+      "offset": 40,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls Babel remark transform generates a link with the specified target 1`] = `
 Object {
   "children": Array [
     Object {
@@ -111,7 +211,7 @@ Object {
         },
         Object {
           "type": "text",
-          "value": "Babel",
+          "value": "REPL",
         },
         Object {
           "type": "html",
@@ -120,9 +220,9 @@ Object {
       ],
       "position": Position {
         "end": Object {
-          "column": 30,
+          "column": 25,
           "line": 1,
-          "offset": 29,
+          "offset": 24,
         },
         "indent": Array [],
         "start": Object {
@@ -136,9 +236,9 @@ Object {
   ],
   "position": Object {
     "end": Object {
-      "column": 30,
+      "column": 25,
       "line": 1,
-      "offset": 29,
+      "offset": 24,
     },
     "start": Object {
       "column": 1,
@@ -150,7 +250,7 @@ Object {
 }
 `;
 
-exports[`gatsby-remark-code-repls Codepen generates a link for files in nested directories 1`] = `
+exports[`gatsby-remark-code-repls Codepen remark transform generates a link for files in nested directories 1`] = `
 Object {
   "children": Array [
     Object {
@@ -161,7 +261,7 @@ Object {
         },
         Object {
           "type": "text",
-          "value": "Codepen",
+          "value": "REPL",
         },
         Object {
           "type": "html",
@@ -170,9 +270,9 @@ Object {
       ],
       "position": Position {
         "end": Object {
-          "column": 44,
+          "column": 37,
           "line": 1,
-          "offset": 43,
+          "offset": 36,
         },
         "indent": Array [],
         "start": Object {
@@ -186,9 +286,9 @@ Object {
   ],
   "position": Object {
     "end": Object {
-      "column": 44,
+      "column": 37,
       "line": 1,
-      "offset": 43,
+      "offset": 36,
     },
     "start": Object {
       "column": 1,
@@ -200,7 +300,7 @@ Object {
 }
 `;
 
-exports[`gatsby-remark-code-repls Codepen generates a link for the specified example file 1`] = `
+exports[`gatsby-remark-code-repls Codepen remark transform generates a link for the specified example file 1`] = `
 Object {
   "children": Array [
     Object {
@@ -211,7 +311,7 @@ Object {
         },
         Object {
           "type": "text",
-          "value": "Codepen",
+          "value": "REPL",
         },
         Object {
           "type": "html",
@@ -220,9 +320,9 @@ Object {
       ],
       "position": Position {
         "end": Object {
-          "column": 29,
+          "column": 22,
           "line": 1,
-          "offset": 28,
+          "offset": 21,
         },
         "indent": Array [],
         "start": Object {
@@ -236,9 +336,9 @@ Object {
   ],
   "position": Object {
     "end": Object {
-      "column": 29,
+      "column": 22,
       "line": 1,
-      "offset": 28,
+      "offset": 21,
     },
     "start": Object {
       "column": 1,
@@ -250,7 +350,7 @@ Object {
 }
 `;
 
-exports[`gatsby-remark-code-repls Codepen generates a link with the specified default text 1`] = `
+exports[`gatsby-remark-code-repls Codepen remark transform generates a link with the specified default text 1`] = `
 Object {
   "children": Array [
     Object {
@@ -300,7 +400,7 @@ Object {
 }
 `;
 
-exports[`gatsby-remark-code-repls Codepen generates a link with the specified inline text even if default text is specified 1`] = `
+exports[`gatsby-remark-code-repls Codepen remark transform generates a link with the specified inline text even if default text is specified 1`] = `
 Object {
   "children": Array [
     Object {
@@ -350,7 +450,7 @@ Object {
 }
 `;
 
-exports[`gatsby-remark-code-repls Codepen generates a link with the specified target 1`] = `
+exports[`gatsby-remark-code-repls Codepen remark transform generates a link with the specified target 1`] = `
 Object {
   "children": Array [
     Object {
@@ -361,7 +461,7 @@ Object {
         },
         Object {
           "type": "text",
-          "value": "Codepen",
+          "value": "REPL",
         },
         Object {
           "type": "html",
@@ -370,9 +470,9 @@ Object {
       ],
       "position": Position {
         "end": Object {
-          "column": 29,
+          "column": 22,
           "line": 1,
-          "offset": 28,
+          "offset": 21,
         },
         "indent": Array [],
         "start": Object {
@@ -386,9 +486,9 @@ Object {
   ],
   "position": Object {
     "end": Object {
-      "column": 29,
+      "column": 22,
       "line": 1,
-      "offset": 28,
+      "offset": 21,
     },
     "start": Object {
       "column": 1,
