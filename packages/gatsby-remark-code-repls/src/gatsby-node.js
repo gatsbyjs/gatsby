@@ -10,7 +10,9 @@ const {
   OPTION_DEFAULT_REDIRECT_TEMPLATE_PATH,
 } = require(`./constants`)
 
-exports.createPages = ({ createPage }, { directory = OPTION_DEFAULT_LINK_TEXT, externals = [], redirectTemplate = OPTION_DEFAULT_REDIRECT_TEMPLATE_PATH } = {}) => {
+exports.createPages = ({ boundActionCreators }, { directory = OPTION_DEFAULT_LINK_TEXT, externals = [], redirectTemplate = OPTION_DEFAULT_REDIRECT_TEMPLATE_PATH } = {}) => {
+  const { createPage } = boundActionCreators
+
   if (!fs.existsSync(directory)) {
     throw Error(`Invalid REPL directory specified: "${directory}"`)
   }
