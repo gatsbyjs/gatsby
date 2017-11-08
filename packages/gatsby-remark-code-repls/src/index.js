@@ -1,10 +1,13 @@
-const { existsSync, readFileSync } = require(`fs`)
+const fs = require(`fs`)
 const LZString = require(`lz-string`)
-const { join } = require(`path`)
+const path = require(`path`)
 const map = require(`unist-util-map`)
 
 const BABEL_REPL_PROTOCOL = `babel-repl://`
 const CODEPEN_PROTOCOL = `codepen://`
+
+const DEFAULT_LINK_TEXT = `REPL`
+const DEFAULT_DIRECTORY = `examples/`
 
 // Matches compression used in Babel REPL
 // https://github.com/babel/website/blob/master/js/repl/UriUtils.js
@@ -14,7 +17,7 @@ const compress = string =>
     .replace(/\//g, `_`) // Convert '/' to '_'
     .replace(/=+$/, ``) // Remove ending '='
 
-function createLink(text, href, target) {
+function createLinkNodes(text, href, target) {
   target = target ? `target="${target}"` : ``
 
   return [
@@ -33,42 +36,55 @@ function createLink(text, href, target) {
   ]
 }
 
-function verifyFile(path) {
-  if (!existsSync(path)) {
-    console.error(
-      `Invalid REPL link specified; no such file "${path}"`,
-    )
-    process.exit(1)
+module.exports = ({ markdownAST }, { defaultText = DEFAULT_LINK_TEXT, directory = DEFAULT_DIRECTORY, target } = {}) => {
+  if (!directory.endsWith(`/`)) {
+    directory += `/`
   }
-}
 
-module.exports = ({ markdownAST }, { directory, target }) => {
-  map(markdownAST, (node, index, parent) => {
-    if (!directory.endsWith(`/`)) {
-      directory += `/`
+  const getFilePath = (url, protocol, directory) => {
+    let filePath = url.replace(protocol, ``)
+    if (!filePath.endsWith(`.js`)) {
+      filePath += `.js`
     }
+    filePath = path.join(directory, filePath)
+    return filePath
+  }
 
+  const verifyFile = (path) => {
+    if (!fs.existsSync(path)) {
+      throw Error(`Invalid REPL link specified; no such file "${path}"`)
+    }
+  }
+
+  map(markdownAST, (node, index, parent) => {
     if (node.type === `link`) {
       if (node.url.startsWith(BABEL_REPL_PROTOCOL)) {
-        let filePath = node.url.replace(BABEL_REPL_PROTOCOL, directory)
-        if (!filePath.endsWith(`.js`)) {
-          filePath += `.js`
-        }
-        filePath = join(__dirname, `../..`, filePath)
+        const filePath = getFilePath(node.url, BABEL_REPL_PROTOCOL, directory)
 
         verifyFile(filePath)
 
-        const code = compress(readFileSync(filePath, `utf8`))
+        const code = compress(fs.readFileSync(filePath, `utf8`))
         const href = `https://babeljs.io/repl/#?presets=react&code_lz=${code}`
-        const text = node.children[0].value
+        const text = node.children.length === 0 ? defaultText : node.children[0].value
 
         parent.children.splice(
           index,
           1,
-          ...createLink(text, href, target),
+          ...createLinkNodes(text, href, target),
         )
       } else if (node.url.startsWith(CODEPEN_PROTOCOL)) {
-        // TODO
+        const filePath = getFilePath(node.url, CODEPEN_PROTOCOL, directory)
+
+        verifyFile(filePath)
+
+        const href = node.url.replace(CODEPEN_PROTOCOL, directory)
+        const text = node.children.length === 0 ? defaultText : node.children[0].value
+
+        parent.children.splice(
+          index,
+          1,
+          ...createLinkNodes(text, href, target),
+        )
       }
     }
 

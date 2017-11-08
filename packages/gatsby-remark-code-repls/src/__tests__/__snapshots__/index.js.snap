@@ -149,3 +149,253 @@ Object {
   "type": "root",
 }
 `;
+
+exports[`gatsby-remark-code-repls Codepen generates a link for files in nested directories 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "<a href=\\"example-directory/path/to/nested/file.js\\" >",
+        },
+        Object {
+          "type": "text",
+          "value": "Codepen",
+        },
+        Object {
+          "type": "html",
+          "value": "</a>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 44,
+          "line": 1,
+          "offset": 43,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 44,
+      "line": 1,
+      "offset": 43,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls Codepen generates a link for the specified example file 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "<a href=\\"example-directory/file.js\\" >",
+        },
+        Object {
+          "type": "text",
+          "value": "Codepen",
+        },
+        Object {
+          "type": "html",
+          "value": "</a>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 29,
+          "line": 1,
+          "offset": 28,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 29,
+      "line": 1,
+      "offset": 28,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls Codepen generates a link with the specified default text 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "<a href=\\"examples/file.js\\" >",
+        },
+        Object {
+          "type": "text",
+          "value": "Click me",
+        },
+        Object {
+          "type": "html",
+          "value": "</a>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 22,
+          "line": 1,
+          "offset": 21,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 22,
+      "line": 1,
+      "offset": 21,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls Codepen generates a link with the specified inline text even if default text is specified 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "<a href=\\"examples/file.js\\" >",
+        },
+        Object {
+          "type": "text",
+          "value": "Custom link text",
+        },
+        Object {
+          "type": "html",
+          "value": "</a>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 38,
+          "line": 1,
+          "offset": 37,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 38,
+      "line": 1,
+      "offset": 37,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls Codepen generates a link with the specified target 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "<a href=\\"example-directory/file.js\\" target=\\"_blank\\">",
+        },
+        Object {
+          "type": "text",
+          "value": "Codepen",
+        },
+        Object {
+          "type": "html",
+          "value": "</a>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 29,
+          "line": 1,
+          "offset": 28,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 29,
+      "line": 1,
+      "offset": 28,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
