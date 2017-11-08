@@ -1,0 +1,1 @@
+// TODO Implement simple redirect template

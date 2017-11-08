@@ -1,13 +1,16 @@
+'use strict'
+
 const fs = require(`fs`)
 const LZString = require(`lz-string`)
-const path = require(`path`)
+const { join } = require(`path`)
 const map = require(`unist-util-map`)
 
-const BABEL_REPL_PROTOCOL = `babel-repl://`
-const CODEPEN_PROTOCOL = `codepen://`
-
-const DEFAULT_LINK_TEXT = `REPL`
-const DEFAULT_DIRECTORY = `examples/`
+const {
+  OPTION_DEFAULT_DIRECTORY,
+  OPTION_DEFAULT_LINK_TEXT,
+  PROTOCOL_BABEL,
+  PROTOCOL_CODEPEN,
+} = require(`./constants`)
 
 // Matches compression used in Babel REPL
 // https://github.com/babel/website/blob/master/js/repl/UriUtils.js
@@ -36,7 +39,7 @@ function createLinkNodes(text, href, target) {
   ]
 }
 
-module.exports = ({ markdownAST }, { defaultText = DEFAULT_LINK_TEXT, directory = DEFAULT_DIRECTORY, target } = {}) => {
+module.exports = ({ markdownAST }, { defaultText = OPTION_DEFAULT_LINK_TEXT, directory = OPTION_DEFAULT_DIRECTORY, target } = {}) => {
   if (!directory.endsWith(`/`)) {
     directory += `/`
   }
@@ -46,7 +49,7 @@ module.exports = ({ markdownAST }, { defaultText = DEFAULT_LINK_TEXT, directory 
     if (!filePath.endsWith(`.js`)) {
       filePath += `.js`
     }
-    filePath = path.join(directory, filePath)
+    filePath = join(directory, filePath)
     return filePath
   }
 
@@ -58,8 +61,8 @@ module.exports = ({ markdownAST }, { defaultText = DEFAULT_LINK_TEXT, directory 
 
   map(markdownAST, (node, index, parent) => {
     if (node.type === `link`) {
-      if (node.url.startsWith(BABEL_REPL_PROTOCOL)) {
-        const filePath = getFilePath(node.url, BABEL_REPL_PROTOCOL, directory)
+      if (node.url.startsWith(PROTOCOL_BABEL)) {
+        const filePath = getFilePath(node.url, PROTOCOL_BABEL, directory)
 
         verifyFile(filePath)
 
@@ -72,12 +75,12 @@ module.exports = ({ markdownAST }, { defaultText = DEFAULT_LINK_TEXT, directory 
           1,
           ...createLinkNodes(text, href, target),
         )
-      } else if (node.url.startsWith(CODEPEN_PROTOCOL)) {
-        const filePath = getFilePath(node.url, CODEPEN_PROTOCOL, directory)
+      } else if (node.url.startsWith(PROTOCOL_CODEPEN)) {
+        const filePath = getFilePath(node.url, PROTOCOL_CODEPEN, directory)
 
         verifyFile(filePath)
 
-        const href = node.url.replace(CODEPEN_PROTOCOL, directory)
+        const href = node.url.replace(PROTOCOL_CODEPEN, directory)
         const text = node.children.length === 0 ? defaultText : node.children[0].value
 
         parent.children.splice(

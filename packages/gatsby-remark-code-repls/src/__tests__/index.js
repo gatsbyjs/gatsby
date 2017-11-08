@@ -1,15 +1,22 @@
-jest.mock(`fs`, () => {return {
-  existsSync: jest.fn(),
-  readFileSync: jest.fn(),
-}})
+jest.mock(`fs`, () => {
+  return {
+    existsSync: jest.fn(),
+    readFileSync: jest.fn(),
+  }
+})
 
 const fs = require(`fs`)
 const Remark = require(`remark`)
-const plugin = require(`../`)
+const plugin = require(`../index`)
+
+const {
+  PROTOCOL_BABEL,
+  PROTOCOL_CODEPEN,
+} = require(`../constants`)
 
 const REMARK_TESTS = {
-  Babel: `babel-repl://`,
-  Codepen: `codepen://`,
+  Babel: PROTOCOL_BABEL,
+  Codepen: PROTOCOL_CODEPEN,
 }
 
 const remark = new Remark()
@@ -80,7 +87,7 @@ describe(`gatsby-remark-code-repls`, () => {
 
         const markdownAST = remark.parse(`[](${protocol}file.js)`)
 
-        expect(() => plugin({ markdownAST })).toThrow()
+        expect(() => plugin({ markdownAST })).toThrow(`Invalid REPL link specified`)
       })
     })
   })
