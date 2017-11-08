@@ -80,7 +80,7 @@ module.exports = ({ markdownAST }, { defaultText = OPTION_DEFAULT_LINK_TEXT, dir
 
         verifyFile(filePath)
 
-        const href = node.url.replace(PROTOCOL_CODEPEN, `codepen/`)
+        const href = node.url.replace(PROTOCOL_CODEPEN, `/codepen/`)
         const text = node.children.length === 0 ? defaultText : node.children[0].value
 
         parent.children.splice(

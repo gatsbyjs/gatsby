@@ -9,7 +9,7 @@ class GatsbyRemarkCodeReplsRedirect extends Component {
   }
 
   render() {
-    const { action, payload } = this.props
+    const { action, payload } = this.props.pathContext
 
     return (
       <form
@@ -34,8 +34,10 @@ class GatsbyRemarkCodeReplsRedirect extends Component {
 }
 
 GatsbyRemarkCodeReplsRedirect.propTypes = {
-  action: PropTypes.string.isRequired,
-  payload: PropTypes.object.isRequired,
+  pathContext: PropTypes.shape({
+    action: PropTypes.string.isRequired,
+    payload: PropTypes.object.isRequired,
+  }).isRequired,
 }
 
 export default GatsbyRemarkCodeReplsRedirect

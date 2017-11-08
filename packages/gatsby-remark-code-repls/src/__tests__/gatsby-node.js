@@ -56,7 +56,7 @@ describe(`gatsby-remark-code-repls`, () => {
     it(`should error if provided an invalid examples directory`, () => {
       fs.existsSync.mockReturnValue(false)
 
-      expect(() => createPages(createPagesParams)).toThrow(`Invalid REPL directory specified: "REPL"`)
+      expect(() => createPages(createPagesParams)).toThrow(`Invalid REPL directory specified: "REPL/"`)
     })
 
     it(`should warn about an empty examples directory`, () => {
@@ -66,7 +66,7 @@ describe(`gatsby-remark-code-repls`, () => {
 
       createPages(createPagesParams)
 
-      expect(console.warn).toHaveBeenCalledWith(`Specified REPL directory "REPL" contains no files`)
+      expect(console.warn).toHaveBeenCalledWith(`Specified REPL directory "REPL/" contains no files`)
     })
 
     it(`should create redirect pages for the code in each example file`, () => {

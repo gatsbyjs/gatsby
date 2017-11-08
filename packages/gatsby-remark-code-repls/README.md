@@ -21,7 +21,7 @@ This plug-in reads source code that is stored alongside your Gatsby site and pas
 
     // Example code links are relative to this dir.
     // eg examples/path/to/file.js
-    directory: 'examples',
+    directory: `${__dirname}/examples/`,
 
     // Optional additional externals to load from CDN.
     // This option only applies to REPLs that support it (eg Codepen).
@@ -31,7 +31,7 @@ This plug-in reads source code that is stored alongside your Gatsby site and pas
     // Optional path to a custom redirect template.
     // The redirect page is only shown briefly,
     // But you can use this setting to override its CSS styling.
-    redirectTemplate: join(__dirname, 'src/redirect-template.js'),
+    redirectTemplate: `${__dirname}/src/redirect-template.js`),
     
     // Optional link target.
     // eg <a href="..." target="_blank">...</a>

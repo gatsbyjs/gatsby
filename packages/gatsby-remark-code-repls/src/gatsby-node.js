@@ -11,6 +11,10 @@ const {
 } = require(`./constants`)
 
 exports.createPages = ({ boundActionCreators }, { directory = OPTION_DEFAULT_LINK_TEXT, externals = [], redirectTemplate = OPTION_DEFAULT_REDIRECT_TEMPLATE_PATH } = {}) => {
+  if (!directory.endsWith(`/`)) {
+    directory += `/`
+  }
+
   const { createPage } = boundActionCreators
 
   if (!fs.existsSync(directory)) {
@@ -34,7 +38,9 @@ exports.createPages = ({ boundActionCreators }, { directory = OPTION_DEFAULT_LIN
 
   files.forEach(file => {
     if (extname(file) === `.js` || extname(file) === `.jsx`) {
-      const slug = file.substring(0, file.length - extname(file).length)
+      const slug = file
+        .substring(0, file.length - extname(file).length)
+        .replace(new RegExp(`^${directory}`), `codepen/`)
       const code = fs.readFileSync(file, `utf8`)
 
       // Mix default externals (like React) with user customs.
