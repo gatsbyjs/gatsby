@@ -164,6 +164,6 @@ Community:
   * Easily configurable
   * And other good stuff (SEO, Offline Support, WebApp Manifest Support)
 
-* [gatsby-starter-bootstrap-netlify](https://github.com/konsumer/gatsby-starter-bootstrap-netlify) [(demo)](https://gatsby-netlify-cms.netlify.com/)
+* [gatsby-starter-bootstrap-netlify](https://github.com/konsumer/gatsby-starter-bootstrap-netlify) [(demo)](https://gatsby-starter-bootstrap-netlify.netlify.com)
   Features:
   * Very similar to [gatsby-starter-netlify-cms](https://github.com/AustinGreen/gatsby-starter-netlify-cms), slightly more configurable (eg set site-title in `gatsby-config`) with bootstrap/bootswatch instead of bulma
