@@ -5,14 +5,38 @@ const path = require(`path`)
 const _ = require(`lodash`)
 const cheerio = require(`cheerio`)
 const sizeOf = require(`image-size`)
+const pathIsInside = require(`path-is-inside`)
+
+const DEFAULT_DESTINATION_DIR = `public`
+
+const invalidDestinationDirMessage = dir =>
+  `[gatsby-remark-copy-linked-files You have supplied an invalid destination directory. The destination directory must be within the '${
+    DEFAULT_DESTINATION_DIR
+  }' directory, but resolved to: ${dir}`
+
+const destinationDirIsValid = dir =>
+  pathIsInside(path.join(DEFAULT_DESTINATION_DIR, dir), DEFAULT_DESTINATION_DIR)
 
 module.exports = (
   { files, markdownNode, markdownAST, getNode },
-  pluginOptions
+  pluginOptions = {}
 ) => {
   const defaults = {
     ignoreFileExtensions: [`png`, `jpg`, `jpeg`, `bmp`, `tiff`],
-    destinationDir: `public`,
+    destinationDir: DEFAULT_DESTINATION_DIR,
+  }
+
+  // Validate supplied destination directory
+  const { destinationDir } = pluginOptions
+  if (destinationDir) {
+    if (destinationDirIsValid(destinationDir)) {
+      pluginOptions.destinationDir = path.join(
+        DEFAULT_DESTINATION_DIR,
+        destinationDir
+      )
+    } else {
+      return Promise.reject(invalidDestinationDirMessage(destinationDir))
+    }
   }
 
   const options = _.defaults(pluginOptions, defaults)
