@@ -16,8 +16,8 @@ This plug-in reads source code that is stored alongside your Gatsby site and pas
   resolve: 'gatsby-remark-code-repls',
   options: {
     defaultText: 'Click here', // (Optional) default link text
-    directory: 'examples', // Your example code is relative to this dir
-    target: '_blank', // (Optional) link target
+    directory: 'examples',     // Example code links are relative to this dir
+    target: '_blank',          // (Optional) link target
   },
 },
 ```

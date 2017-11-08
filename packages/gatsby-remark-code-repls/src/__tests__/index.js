@@ -16,7 +16,10 @@ const remark = new Remark()
 
 describe(`gatsby-remark-code-repls`, () => {
   beforeEach(() => {
+    fs.existsSync.mockReset()
     fs.existsSync.mockReturnValue(true)
+
+    fs.readFileSync.mockReset()
     fs.readFileSync.mockReturnValue(`const foo = "bar";`)
   })
 
@@ -62,6 +65,14 @@ describe(`gatsby-remark-code-repls`, () => {
         const transformed = plugin({ markdownAST }, { defaultText: `Click me` })
 
         expect(transformed).toMatchSnapshot()
+      })
+
+      it(`verifies example files relative to the specified directory`, () => {
+        const markdownAST = remark.parse(`[](${protocol}path/to/nested/file.js)`)
+
+        plugin({ markdownAST }, { directory: `my-examples` })
+
+        expect(fs.existsSync).toHaveBeenCalledWith(`my-examples/path/to/nested/file.js`)
       })
 
       it(`errors if provided a link to a local file that does not exist`, async () => {
