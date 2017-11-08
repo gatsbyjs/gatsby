@@ -12,7 +12,7 @@ const DEFAULT_DESTINATION_DIR = `public`
 const invalidDestinationDirMessage = dir =>
   `[gatsby-remark-copy-linked-files You have supplied an invalid destination directory. The destination directory must be within the '${
     DEFAULT_DESTINATION_DIR
-  }' directory, but resolved to: ${dir}`
+  }' directory, but was: ${dir}`
 
 const destinationDirIsValid = dir =>
   pathIsInside(path.join(DEFAULT_DESTINATION_DIR, dir), DEFAULT_DESTINATION_DIR)
