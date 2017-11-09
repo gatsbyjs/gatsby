@@ -180,7 +180,9 @@ module.exports = async (
             clearConsole: false,
             compilationSuccessInfo: {
               messages: [
-                `Your site is running at http://${program.host}:${program.port}`,
+                `Your site is running at http://${program.host}:${
+                  program.port
+                }`,
                 `Your graphql debugger is running at http://${program.host}:${
                   program.port
                 }/___graphql`,
