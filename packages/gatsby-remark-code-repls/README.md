@@ -27,7 +27,7 @@ These example files can be referenced via links in markdown that get transformed
 [Try it on CodePen](codepen://components-and-props/rendering-a-component)
 
 <!-- after -->
-<a href="/redirect-to-codepen/components-and-props/rendering-a-component" target="_blank" rel="noreferrer">
+<a href="/redirect-to-codepen/components-and-props/rendering-a-component">
   Try it on CodePen
 </a>
 
@@ -35,7 +35,7 @@ These example files can be referenced via links in markdown that get transformed
 [See it in Babel](babel://hello-world)
 
 <!-- after -->
-<a href="https://babeljs.io/repl/#?presets=react&code_lz=..." target="_blank">
+<a href="https://babeljs.io/repl/#?presets=react&code_lz=...">
   See it in Babel
 </a>
 ```
