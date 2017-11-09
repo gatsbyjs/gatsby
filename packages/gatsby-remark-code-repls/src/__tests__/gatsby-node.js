@@ -35,13 +35,19 @@ describe(`gatsby-remark-code-repls`, () => {
 
   describe(`gatsby-node`, () => {
     it(`should iterate over all JavaScript files in the examples directory`, () => {
-      recursiveReaddir.mockReturnValue([`root-file.js`, `path/to/nested/file.jsx`])
+      recursiveReaddir.mockReturnValue([
+        `root-file.js`,
+        `path/to/nested/file.jsx`,
+      ])
 
       createPages(createPagesParams)
 
       expect(fs.readFileSync).toHaveBeenCalledTimes(2)
       expect(fs.readFileSync).toHaveBeenCalledWith(`root-file.js`, `utf8`)
-      expect(fs.readFileSync).toHaveBeenCalledWith(`path/to/nested/file.jsx`, `utf8`)
+      expect(fs.readFileSync).toHaveBeenCalledWith(
+        `path/to/nested/file.jsx`,
+        `utf8`
+      )
     })
 
     it(`should ignore non JavaScript files in the examples directory`, () => {
@@ -56,7 +62,9 @@ describe(`gatsby-remark-code-repls`, () => {
     it(`should error if provided an invalid examples directory`, () => {
       fs.existsSync.mockReturnValue(false)
 
-      expect(() => createPages(createPagesParams)).toThrow(`Invalid REPL directory specified: "REPL/"`)
+      expect(() => createPages(createPagesParams)).toThrow(
+        `Invalid REPL directory specified: "REPL/"`
+      )
     })
 
     it(`should warn about an empty examples directory`, () => {
@@ -66,18 +74,23 @@ describe(`gatsby-remark-code-repls`, () => {
 
       createPages(createPagesParams)
 
-      expect(console.warn).toHaveBeenCalledWith(`Specified REPL directory "REPL/" contains no files`)
+      expect(console.warn).toHaveBeenCalledWith(
+        `Specified REPL directory "REPL/" contains no files`
+      )
     })
 
     it(`should create redirect pages for the code in each example file`, () => {
-      recursiveReaddir.mockReturnValue([`root-file.js`, `path/to/nested/file.jsx`])
+      recursiveReaddir.mockReturnValue([
+        `root-file.js`,
+        `path/to/nested/file.jsx`,
+      ])
 
       createPages(createPagesParams)
 
       expect(createPage).toHaveBeenCalledTimes(2)
       expect(createPage.mock.calls[0][0].path).toContain(`root-file`)
       expect(createPage.mock.calls[1][0].path).toContain(`path/to/nested/file`)
-   })
+    })
 
     it(`should use a default redirect template`, () => {
       recursiveReaddir.mockReturnValue([`file.js`])
@@ -85,7 +98,9 @@ describe(`gatsby-remark-code-repls`, () => {
       createPages(createPagesParams)
 
       expect(createPage).toHaveBeenCalledTimes(1)
-      expect(createPage.mock.calls[0][0].component).toContain(OPTION_DEFAULT_REDIRECT_TEMPLATE_PATH)
+      expect(createPage.mock.calls[0][0].component).toContain(
+        OPTION_DEFAULT_REDIRECT_TEMPLATE_PATH
+      )
     })
 
     it(`should use a specified redirect template override`, () => {
@@ -100,8 +115,8 @@ describe(`gatsby-remark-code-repls`, () => {
     it(`should error if an invalid redirect template is specified`, () => {
       fs.existsSync.mockImplementation(path => path !== `foo/bar.js`)
 
-      expect(
-        () => createPages(createPagesParams, { redirectTemplate: `foo/bar.js` })
+      expect(() =>
+        createPages(createPagesParams, { redirectTemplate: `foo/bar.js` })
       ).toThrow(`Invalid REPL redirectTemplate specified`)
     })
 
@@ -110,7 +125,9 @@ describe(`gatsby-remark-code-repls`, () => {
 
       createPages(createPagesParams)
 
-      const { js_external } = JSON.parse(createPage.mock.calls[0][0].context.payload)
+      const { js_external } = JSON.parse(
+        createPage.mock.calls[0][0].context.payload
+      )
 
       expect(js_external).toBe(``)
     })
@@ -120,7 +137,9 @@ describe(`gatsby-remark-code-repls`, () => {
 
       createPages(createPagesParams, { externals: [`foo.js`, `bar.js`] })
 
-      const { js_external } = JSON.parse(createPage.mock.calls[0][0].context.payload)
+      const { js_external } = JSON.parse(
+        createPage.mock.calls[0][0].context.payload
+      )
 
       expect(js_external).toContain(`foo.js`)
       expect(js_external).toContain(`bar.js`)

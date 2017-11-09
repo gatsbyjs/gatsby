@@ -1,4 +1,4 @@
-'use strict'
+"use strict"
 
 const fs = require(`fs`)
 const { extname, resolve } = require(`path`)
@@ -9,7 +9,14 @@ const {
   OPTION_DEFAULT_REDIRECT_TEMPLATE_PATH,
 } = require(`./constants`)
 
-exports.createPages = ({ boundActionCreators }, { directory = OPTION_DEFAULT_LINK_TEXT, externals = [], redirectTemplate = OPTION_DEFAULT_REDIRECT_TEMPLATE_PATH } = {}) => {
+exports.createPages = (
+  { boundActionCreators },
+  {
+    directory = OPTION_DEFAULT_LINK_TEXT,
+    externals = [],
+    redirectTemplate = OPTION_DEFAULT_REDIRECT_TEMPLATE_PATH,
+  } = {}
+) => {
   if (!directory.endsWith(`/`)) {
     directory += `/`
   }
@@ -21,7 +28,9 @@ exports.createPages = ({ boundActionCreators }, { directory = OPTION_DEFAULT_LIN
   }
 
   if (!fs.existsSync(redirectTemplate)) {
-    throw Error(`Invalid REPL redirectTemplate specified: "${redirectTemplate}"`)
+    throw Error(
+      `Invalid REPL redirectTemplate specified: "${redirectTemplate}"`
+    )
   }
 
   // TODO We could refactor this to use 'recursive-readdir' instead,
