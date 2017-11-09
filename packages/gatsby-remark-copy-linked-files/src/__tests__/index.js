@@ -153,7 +153,8 @@ describe(`gatsby-remark-copy-linked-files`, () => {
           destinationDir: validDestinationDir,
         }
       ).then(v => {
-        expect(v).toBeDefined()
+        const newPath = v[0]
+        expect(newPath).toContain(validDestinationDir)
       })
     })
   })
