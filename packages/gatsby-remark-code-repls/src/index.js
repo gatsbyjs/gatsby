@@ -1,4 +1,4 @@
-'use strict'
+"use strict"
 
 const fs = require(`fs`)
 const LZString = require(`lz-string`)
@@ -38,7 +38,10 @@ function createLinkNodes(text, href, target) {
   ]
 }
 
-module.exports = ({ markdownAST }, { defaultText = OPTION_DEFAULT_LINK_TEXT, directory, target } = {}) => {
+module.exports = (
+  { markdownAST },
+  { defaultText = OPTION_DEFAULT_LINK_TEXT, directory, target } = {}
+) => {
   if (!directory) {
     throw Error(`Required REPL option "directory" not specified`)
   } else if (!fs.existsSync(directory)) {
@@ -56,7 +59,7 @@ module.exports = ({ markdownAST }, { defaultText = OPTION_DEFAULT_LINK_TEXT, dir
     return filePath
   }
 
-  const verifyFile = (path) => {
+  const verifyFile = path => {
     if (!fs.existsSync(path)) {
       throw Error(`Invalid REPL link specified; no such file "${path}"`)
     }
@@ -71,26 +74,20 @@ module.exports = ({ markdownAST }, { defaultText = OPTION_DEFAULT_LINK_TEXT, dir
 
         const code = compress(fs.readFileSync(filePath, `utf8`))
         const href = `https://babeljs.io/repl/#?presets=react&code_lz=${code}`
-        const text = node.children.length === 0 ? defaultText : node.children[0].value
+        const text =
+          node.children.length === 0 ? defaultText : node.children[0].value
 
-        parent.children.splice(
-          index,
-          1,
-          ...createLinkNodes(text, href, target),
-        )
+        parent.children.splice(index, 1, ...createLinkNodes(text, href, target))
       } else if (node.url.startsWith(PROTOCOL_CODEPEN)) {
         const filePath = getFilePath(node.url, PROTOCOL_CODEPEN, directory)
 
         verifyFile(filePath)
 
         const href = node.url.replace(PROTOCOL_CODEPEN, `/redirect-to-codepen/`)
-        const text = node.children.length === 0 ? defaultText : node.children[0].value
+        const text =
+          node.children.length === 0 ? defaultText : node.children[0].value
 
-        parent.children.splice(
-          index,
-          1,
-          ...createLinkNodes(text, href, target),
-        )
+        parent.children.splice(index, 1, ...createLinkNodes(text, href, target))
       }
     }
 
