@@ -30,7 +30,7 @@ exports.sourceNodes = async (
     const userQueryResult = await client.request(query)
     // keywords workaround
     if (checkForFaultyFields(userQueryResult, faultyKeywords)) {
-      throw new Error(keywordsError)
+      reporter.panic(`gatsby-source-graphcms: ${keywordsError}`)
     }
     if (DEBUG_MODE) {
       const jsonUserQueryResult = JSON.stringify(userQueryResult, undefined, 2)
