@@ -5,7 +5,6 @@ const { extname, resolve } = require(`path`)
 const recursiveReaddir = require(`recursive-readdir-synchronous`)
 
 const {
-  OPTION_DEFAULT_CODEPEN_EXTERNALS,
   OPTION_DEFAULT_LINK_TEXT,
   OPTION_DEFAULT_REDIRECT_TEMPLATE_PATH,
 } = require(`./constants`)
@@ -42,12 +41,6 @@ exports.createPages = ({ boundActionCreators }, { directory = OPTION_DEFAULT_LIN
         .substring(0, file.length - extname(file).length)
         .replace(new RegExp(`^${directory}`), `codepen/`)
       const code = fs.readFileSync(file, `utf8`)
-
-      // Mix default externals (like React) with user customs.
-      externals = [
-        ...OPTION_DEFAULT_CODEPEN_EXTERNALS,
-        ...externals,
-      ]
 
       // Codepen configuration.
       // https://blog.codepen.io/documentation/api/prefill/

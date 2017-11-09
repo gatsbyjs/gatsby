@@ -105,18 +105,17 @@ describe(`gatsby-remark-code-repls`, () => {
       ).toThrow(`Invalid REPL redirectTemplate specified`)
     })
 
-    it(`should load react and react-dom packages by default`, () => {
+    it(`should not load any external packages by default`, () => {
       recursiveReaddir.mockReturnValue([`file.js`])
 
       createPages(createPagesParams)
 
       const { js_external } = JSON.parse(createPage.mock.calls[0][0].context.payload)
 
-      expect(js_external).toContain(`react.development.js`)
-      expect(js_external).toContain(`react-dom.development.js`)
+      expect(js_external).toBe(``)
     })
 
-    it(`should load additional custom externals if specified`, () => {
+    it(`should load custom externals if specified`, () => {
       recursiveReaddir.mockReturnValue([`file.js`])
 
       createPages(createPagesParams, { externals: [`foo.js`, `bar.js`] })

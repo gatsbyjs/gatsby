@@ -1,6 +1,6 @@
 # gatsby-remark-code-repls
 
-Gatsby plugin to auto-generate links to popular REPLs like [Babel](https://babeljs.io/repl/) and [Codepen](https://codepen.io/).
+Gatsby plug-in to auto-generate links to popular REPLs like [Babel](https://babeljs.io/repl/) and [Codepen](https://codepen.io/).
 
 This plug-in reads source code that is stored alongside your Gatsby site and passes it to the specified REPL when a user clicks the generated link.
 
@@ -23,9 +23,9 @@ This plug-in reads source code that is stored alongside your Gatsby site and pas
     // eg examples/path/to/file.js
     directory: `${__dirname}/examples/`,
 
-    // Optional additional externals to load from CDN.
+    // Optional externals to load from a CDN.
     // This option only applies to REPLs that support it (eg Codepen).
-    // By default, only react and react-dom will be loaded.
+    // eg '//unpkg.com/react/umd/react.development.js'
     externals: [],
 
     // Optional path to a custom redirect template.
