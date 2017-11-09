@@ -7,15 +7,15 @@ const cheerio = require(`cheerio`)
 const sizeOf = require(`image-size`)
 const pathIsInside = require(`path-is-inside`)
 
-const DEFAULT_DESTINATION_DIR = `public`
+const DEPLOY_DIR = `public`
 
-const invalidDestinationDirMessage = dir =>
-  `[gatsby-remark-copy-linked-files You have supplied an invalid destination directory. The destination directory must be within the '${
-    DEFAULT_DESTINATION_DIR
-  }' directory, but was: ${dir}`
+const invalidDestinationDirMessage = destinationDir =>
+  `[gatsby-remark-copy-linked-files] You have supplied an invalid destination directory. The destination directory must be within the '${
+    DEPLOY_DIR
+  }' directory, but was: '${destinationDir}'`
 
-const destinationDirIsValid = dir =>
-  pathIsInside(path.join(DEFAULT_DESTINATION_DIR, dir), DEFAULT_DESTINATION_DIR)
+const destinationDirIsValid = destinationDir =>
+  pathIsInside(path.join(DEPLOY_DIR, destinationDir), DEPLOY_DIR)
 
 module.exports = (
   { files, markdownNode, markdownAST, getNode },
@@ -23,20 +23,13 @@ module.exports = (
 ) => {
   const defaults = {
     ignoreFileExtensions: [`png`, `jpg`, `jpeg`, `bmp`, `tiff`],
-    destinationDir: DEFAULT_DESTINATION_DIR,
+    destinationDir: `/`,
   }
 
   // Validate supplied destination directory
   const { destinationDir } = pluginOptions
-  if (destinationDir) {
-    if (destinationDirIsValid(destinationDir)) {
-      pluginOptions.destinationDir = path.join(
-        DEFAULT_DESTINATION_DIR,
-        destinationDir
-      )
-    } else {
-      return Promise.reject(invalidDestinationDirMessage(destinationDir))
-    }
+  if (destinationDir && !destinationDirIsValid(destinationDir)) {
+    return Promise.reject(invalidDestinationDirMessage(destinationDir))
   }
 
   const options = _.defaults(pluginOptions, defaults)
@@ -62,17 +55,18 @@ module.exports = (
       if (linkNode && linkNode.absolutePath) {
         const newPath = path.posix.join(
           process.cwd(),
+          DEPLOY_DIR,
           options.destinationDir,
           `${linkNode.internal.contentDigest}.${linkNode.extension}`
         )
-
         // Prevent uneeded copying
         if (linkPath === newPath) {
           return
         }
 
         const relativePath = path.posix.join(
-          `/${linkNode.internal.contentDigest}.${linkNode.extension}`
+          options.destinationDir,
+          `${linkNode.internal.contentDigest}.${linkNode.extension}`
         )
         link.url = `${relativePath}`
 
@@ -270,6 +264,7 @@ module.exports = (
           console.error(`error copying file`, err)
         }
       }
+      return newPath
     })
   )
 }
