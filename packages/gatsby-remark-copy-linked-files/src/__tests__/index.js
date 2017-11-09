@@ -126,4 +126,35 @@ describe(`gatsby-remark-copy-linked-files`, () => {
 
     expect(fsExtra.copy).not.toHaveBeenCalled()
   })
+
+  describe(`options.destinationDir`, () => {
+    const imagePath = `images/sample-image.gif`
+    const markdownAST = remark.parse(`![some absolute image](${imagePath})`)
+
+    it(`throws an error if the destination directory is not within 'public'`, async () => {
+      const invalidDestinationDir = `../destination`
+      expect.assertions(1)
+      return plugin(
+        { files: getFiles(imagePath), markdownAST, markdownNode, getNode },
+        {
+          destinationDir: invalidDestinationDir,
+        }
+      ).catch(e => {
+        expect(e).toEqual(expect.stringContaining(invalidDestinationDir))
+      })
+    })
+
+    it(`doesn't throw an error if the destination directory is within 'public'`, async () => {
+      const validDestinationDir = `path/to/dir`
+      expect.assertions(1)
+      return plugin(
+        { files: getFiles(imagePath), markdownAST, markdownNode, getNode },
+        {
+          destinationDir: validDestinationDir,
+        }
+      ).then(v => {
+        expect(v).toBeDefined()
+      })
+    })
+  })
 })
