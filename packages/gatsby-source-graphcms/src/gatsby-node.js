@@ -5,7 +5,7 @@ import { extractTypeName } from "./util"
 import {
   faultyKeywords,
   keywordsError,
-  checkForFaultyFields
+  checkForFaultyFields,
 } from './faulty-keywords'
 
 const SOURCE_NAME = `GraphCMS`

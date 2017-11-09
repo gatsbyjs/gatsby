@@ -1,9 +1,9 @@
 import R from "ramda"
 
 export const faultyKeywords = [
-  'length',
-  'prototype',
-  'constructor'
+  `length`,
+  `prototype`,
+  `constructor`,
 ]
 
 export const keywordsError = `One or more of your project's fields has a name matching one of ( ${faultyKeywords} ) which due to current limitations has to change in order for the plugin to get all the data correctly`
