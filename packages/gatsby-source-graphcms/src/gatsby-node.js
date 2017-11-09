@@ -2,6 +2,11 @@ import { GraphQLClient } from "graphql-request"
 import R from "ramda"
 import crypto from "crypto"
 import { extractTypeName } from "./util"
+import {
+  faultyKeywords,
+  keywordsError,
+  checkForFaultyFields
+} from './faulty-keywords'
 
 const SOURCE_NAME = `GraphCMS`
 
@@ -23,6 +28,10 @@ exports.sourceNodes = async (
 
   if (query) {
     const userQueryResult = await client.request(query)
+    // keywords workaround
+    if (checkForFaultyFields(userQueryResult, faultyKeywords)) {
+      throw new Error(keywordsError)
+    }
     if (DEBUG_MODE) {
       const jsonUserQueryResult = JSON.stringify(userQueryResult, undefined, 2)
       console.log(`\ngatsby-source-graphcms: GraphQL query results: ${jsonUserQueryResult}`)
