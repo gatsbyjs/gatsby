@@ -35,7 +35,7 @@ class SiteIndex extends React.Component {
     sortedPages.forEach(page => {
       let frontmatter = page
 
-      if (frontmatter.layoutType == `post`) {
+      if (frontmatter.layoutType === `post`) {
         iteratorKey += 1
         pageLinks.push(
           <div className="box" key={iteratorKey}>
