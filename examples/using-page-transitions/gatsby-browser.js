@@ -29,7 +29,10 @@ class ReplaceComponentRenderer extends React.Component {
   }
 
   listenerHandler(event) {
-    const nextPageResources = this.props.loader.getResourcesForPathname(event.detail.pathname)
+    const nextPageResources = this.props.loader.getResourcesForPathname(
+      event.detail.pathname,
+      nextPageResources => this.setState({ nextPageResources })
+    ) || {}
     this.setState({ exiting: true, nextPageResources })
   }
 
