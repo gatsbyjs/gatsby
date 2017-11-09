@@ -10,6 +10,8 @@
   "dependencies": {
     "gatsby": "latest",
     "gatsby-link": "latest",
+    "gatsby-plugin-google-analytics": "latest",
+    "gatsby-plugin-offline": "latest",
     "history": "^4.7.2",
     "react-url-query": "^1.2.0"
   },
