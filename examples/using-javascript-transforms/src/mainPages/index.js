@@ -20,7 +20,7 @@ class SiteIndex extends React.Component {
         }
       } else if (typeof page.node.data === `object`) {
         if (
-          typeof page.node.data.written != `undefined` &&
+          typeof page.node.data.written !== `undefined` &&
           page.node.data.written !== ``
         ) {
           pageArray.push(page.node.data)
