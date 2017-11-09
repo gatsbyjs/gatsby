@@ -26,6 +26,7 @@ const swellQuery = `{
         record {
           tracks {
             id
+            aliasedLength: length
           }
         }
       }
@@ -39,7 +40,7 @@ it('returns true if the query contains a faulty keyword', async () => {
   expect(checkForFaultyFields(queryResult, faultyKeywords)).toBe(true)
 })
 
-it('returns false if the query does not contain any faulty keywords', async () => {
+it('returns false if the faulty keyword is aliased', async () => {
   expect.assertions(1)
   const queryResult = await client.request(swellQuery)
   expect(checkForFaultyFields(queryResult, faultyKeywords)).toBe(false)
