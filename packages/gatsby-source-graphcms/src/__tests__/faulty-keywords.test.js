@@ -1,7 +1,7 @@
-const { GraphQLClient } = require('graphql-request')
-const { faultyKeywords, checkForFaultyFields } = require('../faulty-keywords')
+const { GraphQLClient } = require(`graphql-request`)
+const { faultyKeywords, checkForFaultyFields } = require(`../faulty-keywords`)
 
-const endpoint = 'https://api.graphcms.com/simple/v1/vinylbase'
+const endpoint = `https://api.graphcms.com/simple/v1/vinylbase`
 const client = new GraphQLClient(endpoint)
 
 const faultyQuery = `{
