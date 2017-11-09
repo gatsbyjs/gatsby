@@ -10,7 +10,7 @@ const pathIsInside = require(`path-is-inside`)
 const DEPLOY_DIR = `public`
 
 const invalidDestinationDirMessage = destinationDir =>
-  `[gatsby-remark-copy-linked-files You have supplied an invalid destination directory. The destination directory must be within the '${
+  `[gatsby-remark-copy-linked-files] You have supplied an invalid destination directory. The destination directory must be within the '${
     DEPLOY_DIR
   }' directory, but was: '${destinationDir}'`
 
