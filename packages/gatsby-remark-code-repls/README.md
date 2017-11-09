@@ -27,7 +27,7 @@ These example files can be referenced via links in markdown that get transformed
 [Try it on CodePen](codepen://components-and-props/rendering-a-component)
 
 <!-- after -->
-<a href="/codepen/components-and-props/rendering-a-component" target="_blank">
+<a href="/redirect-to-codepen/components-and-props/rendering-a-component" target="_blank">
   Try it on CodePen
 </a>
 

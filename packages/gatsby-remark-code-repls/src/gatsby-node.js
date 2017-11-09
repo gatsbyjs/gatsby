@@ -39,7 +39,7 @@ exports.createPages = ({ boundActionCreators }, { directory = OPTION_DEFAULT_LIN
     if (extname(file) === `.js` || extname(file) === `.jsx`) {
       const slug = file
         .substring(0, file.length - extname(file).length)
-        .replace(new RegExp(`^${directory}`), `codepen/`)
+        .replace(new RegExp(`^${directory}`), `redirect-to-codepen/`)
       const code = fs.readFileSync(file, `utf8`)
 
       // Codepen configuration.
