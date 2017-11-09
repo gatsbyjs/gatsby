@@ -15,7 +15,7 @@ class SiteIndex extends React.Component {
     let pageArray = []
     pageRaw.forEach(page => {
       if (typeof page.node.frontmatter === `object`) {
-        if (typeof page.node.frontmatter.written != `undefined`) {
+        if (typeof page.node.frontmatter.written !== `undefined`) {
           pageArray.push(page.node.frontmatter)
         }
       } else if (typeof page.node.data === `object`) {
