@@ -7,15 +7,7 @@ Object {
       "children": Array [
         Object {
           "type": "html",
-          "value": "<a href=\\"https://babeljs.io/repl/#?presets=react&code_lz=MYewdgzgLgBAZiEMC8MBEAjAhgJzQbiA\\" >",
-        },
-        Object {
-          "type": "text",
-          "value": "REPL",
-        },
-        Object {
-          "type": "html",
-          "value": "</a>",
+          "value": "<a href=\\"https://babeljs.io/repl/#?presets=react&code_lz=MYewdgzgLgBAZiEMC8MBEAjAhgJzQbiA\\" >REPL</a>",
         },
       ],
       "position": Position {
@@ -57,15 +49,7 @@ Object {
       "children": Array [
         Object {
           "type": "html",
-          "value": "<a href=\\"https://babeljs.io/repl/#?presets=react&code_lz=MYewdgzgLgBAZiEMC8MBEAjAhgJzQbiA\\" >",
-        },
-        Object {
-          "type": "text",
-          "value": "REPL",
-        },
-        Object {
-          "type": "html",
-          "value": "</a>",
+          "value": "<a href=\\"https://babeljs.io/repl/#?presets=react&code_lz=MYewdgzgLgBAZiEMC8MBEAjAhgJzQbiA\\" >REPL</a>",
         },
       ],
       "position": Position {
@@ -107,15 +91,7 @@ Object {
       "children": Array [
         Object {
           "type": "html",
-          "value": "<a href=\\"https://babeljs.io/repl/#?presets=react&code_lz=MYewdgzgLgBAZiEMC8MBEAjAhgJzQbiA\\" >",
-        },
-        Object {
-          "type": "text",
-          "value": "Click me",
-        },
-        Object {
-          "type": "html",
-          "value": "</a>",
+          "value": "<a href=\\"https://babeljs.io/repl/#?presets=react&code_lz=MYewdgzgLgBAZiEMC8MBEAjAhgJzQbiA\\" >Click me</a>",
         },
       ],
       "position": Position {
@@ -157,15 +133,7 @@ Object {
       "children": Array [
         Object {
           "type": "html",
-          "value": "<a href=\\"https://babeljs.io/repl/#?presets=react&code_lz=MYewdgzgLgBAZiEMC8MBEAjAhgJzQbiA\\" >",
-        },
-        Object {
-          "type": "text",
-          "value": "Custom link text",
-        },
-        Object {
-          "type": "html",
-          "value": "</a>",
+          "value": "<a href=\\"https://babeljs.io/repl/#?presets=react&code_lz=MYewdgzgLgBAZiEMC8MBEAjAhgJzQbiA\\" >Custom link text</a>",
         },
       ],
       "position": Position {
@@ -207,15 +175,7 @@ Object {
       "children": Array [
         Object {
           "type": "html",
-          "value": "<a href=\\"https://babeljs.io/repl/#?presets=react&code_lz=MYewdgzgLgBAZiEMC8MBEAjAhgJzQbiA\\" target=\\"_blank\\" rel=\\"noreferrer\\">",
-        },
-        Object {
-          "type": "text",
-          "value": "REPL",
-        },
-        Object {
-          "type": "html",
-          "value": "</a>",
+          "value": "<a href=\\"https://babeljs.io/repl/#?presets=react&code_lz=MYewdgzgLgBAZiEMC8MBEAjAhgJzQbiA\\" target=\\"_blank\\" rel=\\"noreferrer\\">REPL</a>",
         },
       ],
       "position": Position {
@@ -257,15 +217,7 @@ Object {
       "children": Array [
         Object {
           "type": "html",
-          "value": "<a href=\\"/redirect-to-codepen/path/to/nested/file.js\\" >",
-        },
-        Object {
-          "type": "text",
-          "value": "REPL",
-        },
-        Object {
-          "type": "html",
-          "value": "</a>",
+          "value": "<a href=\\"/redirect-to-codepen/path/to/nested/file.js\\" >REPL</a>",
         },
       ],
       "position": Position {
@@ -307,15 +259,7 @@ Object {
       "children": Array [
         Object {
           "type": "html",
-          "value": "<a href=\\"/redirect-to-codepen/file.js\\" >",
-        },
-        Object {
-          "type": "text",
-          "value": "REPL",
-        },
-        Object {
-          "type": "html",
-          "value": "</a>",
+          "value": "<a href=\\"/redirect-to-codepen/file.js\\" >REPL</a>",
         },
       ],
       "position": Position {
@@ -357,15 +301,7 @@ Object {
       "children": Array [
         Object {
           "type": "html",
-          "value": "<a href=\\"/redirect-to-codepen/file.js\\" >",
-        },
-        Object {
-          "type": "text",
-          "value": "Click me",
-        },
-        Object {
-          "type": "html",
-          "value": "</a>",
+          "value": "<a href=\\"/redirect-to-codepen/file.js\\" >Click me</a>",
         },
       ],
       "position": Position {
@@ -407,15 +343,7 @@ Object {
       "children": Array [
         Object {
           "type": "html",
-          "value": "<a href=\\"/redirect-to-codepen/file.js\\" >",
-        },
-        Object {
-          "type": "text",
-          "value": "Custom link text",
-        },
-        Object {
-          "type": "html",
-          "value": "</a>",
+          "value": "<a href=\\"/redirect-to-codepen/file.js\\" >Custom link text</a>",
         },
       ],
       "position": Position {
@@ -457,15 +385,7 @@ Object {
       "children": Array [
         Object {
           "type": "html",
-          "value": "<a href=\\"/redirect-to-codepen/file.js\\" target=\\"_blank\\" rel=\\"noreferrer\\">",
-        },
-        Object {
-          "type": "text",
-          "value": "REPL",
-        },
-        Object {
-          "type": "html",
-          "value": "</a>",
+          "value": "<a href=\\"/redirect-to-codepen/file.js\\" target=\\"_blank\\" rel=\\"noreferrer\\">REPL</a>",
         },
       ],
       "position": Position {
