@@ -1,6 +1,6 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { addUrlProps, UrlQueryParamTypes } from 'react-url-query'
+import React from "react"
+import PropTypes from "prop-types"
+import { addUrlProps, UrlQueryParamTypes } from "react-url-query"
 
 /**
  * This example uses basic prop mapping, but also provides a `mapUrlToProps`
@@ -34,11 +34,8 @@ class ParamInput extends React.PureComponent {
     searchTerm: ``,
     maxLength: 8,
   }
-  handleChange = (e) => {
-    const {
-      onChangeSearchTerm,
-      maxLength,
-    } = this.props
+  handleChange = e => {
+    const { onChangeSearchTerm, maxLength } = this.props
     onChangeSearchTerm(e.target.value.substr(0, maxLength))
   }
   render() {
@@ -52,7 +49,12 @@ class ParamInput extends React.PureComponent {
       ...passedProps
     } = this.props
     return (
-      <input type="text" value={searchTerm} onChange={this.handleChange} {...passedProps} />
+      <input
+        type="text"
+        value={searchTerm}
+        onChange={this.handleChange}
+        {...passedProps}
+      />
     )
   }
 }
