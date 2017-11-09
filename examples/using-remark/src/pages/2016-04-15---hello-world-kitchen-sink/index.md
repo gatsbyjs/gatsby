@@ -27,20 +27,20 @@ The examples on this page cover the basic Markdown syntax and are adapted from
 
 ---
 
-This is intended as a quick reference and showcase. For more complete info, see [John Gruber's original spec](http://daringfireball.net/projects/markdown/) and the [Github-flavored Markdown info page](http://github.github.com/github-flavored-markdown/).
+This is intended as a quick reference and showcase. For more complete info, see [John Gruber's original spec](http://daringfireball.net/projects/markdown/) and the [GitHub-flavored Markdown info page](http://github.github.com/github-flavored-markdown/).
 
-##### Table of Contents  
-[Headers](#headers)  
-[Emphasis](#emphasis)  
-[Lists](#lists)  
-[Links](#links)  
-[Images](#images)  
-[Tables](#tables)  
-[Footnotes](#footnotes)  
-[Blockquotes](#blockquotes)  
-[Inline HTML](#html)  
-[Horizontal Rule](#hr)  
-[Line Breaks](#lines)  
+##### Table of Contents
+[Headers](#headers)
+[Emphasis](#emphasis)
+[Lists](#lists)
+[Links](#links)
+[Images](#images)
+[Tables](#tables)
+[Footnotes](#footnotes)
+[Blockquotes](#blockquotes)
+[Inline HTML](#html)
+[Horizontal Rule](#hr)
+[Line Breaks](#lines)
 
 <a name="headers"></a>
 
@@ -162,7 +162,7 @@ Or leave it empty and use the [link text itself].
 
 URLs and URLs in angle brackets will automatically get turned into links.
 http://www.example.com or <http://www.example.com> and sometimes
-example.com (but not on Github, for example).
+example.com (but not on GitHub, for example).
 
 Some text to show that the reference links can follow later.
 
@@ -185,7 +185,7 @@ Or leave it empty and use the [link text itself].
 
 URLs and URLs in angle brackets will automatically get turned into links.
 http://www.example.com or <http://www.example.com> and sometimes
-example.com (but not on Github, for example).
+example.com (but not on GitHub, for example).
 
 Some text to show that the reference links can follow later.
 
