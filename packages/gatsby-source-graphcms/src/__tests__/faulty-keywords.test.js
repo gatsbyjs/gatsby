@@ -34,13 +34,13 @@ const swellQuery = `{
   }
 }`
 
-it('returns true if the query contains a faulty keyword', async () => {
+it(`returns true if the query contains a faulty keyword`, async () => {
   expect.assertions(1)
   const queryResult = await client.request(faultyQuery)
   expect(checkForFaultyFields(queryResult, faultyKeywords)).toBe(true)
 })
 
-it('returns false if the faulty keyword is aliased', async () => {
+it(`returns false if the faulty keyword is aliased`, async () => {
   expect.assertions(1)
   const queryResult = await client.request(swellQuery)
   expect(checkForFaultyFields(queryResult, faultyKeywords)).toBe(false)
