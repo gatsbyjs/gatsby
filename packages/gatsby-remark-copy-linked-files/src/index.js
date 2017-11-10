@@ -22,13 +22,31 @@ const validateDestinationDir = dir =>
 const newFileName = linkNode =>
   `${linkNode.name}-${linkNode.internal.contentDigest}.${linkNode.extension}`
 
+const newPath = (linkNode, destinationDir) => {
+  if (destinationDir) {
+    return path.posix.join(
+      process.cwd(),
+      DEPLOY_DIR,
+      destinationDir,
+      newFileName(linkNode)
+    )
+  }
+  return path.posix.join(process.cwd(), DEPLOY_DIR, newFileName(linkNode))
+}
+
+const newLinkURL = (linkNode, destinationDir) => {
+  if (destinationDir) {
+    return path.posix.join(`/`, destinationDir, newFileName(linkNode))
+  }
+  return path.posix.join(`/`, newFileName(linkNode))
+}
+
 module.exports = (
   { files, markdownNode, markdownAST, getNode },
   pluginOptions = {}
 ) => {
   const defaults = {
     ignoreFileExtensions: [`png`, `jpg`, `jpeg`, `bmp`, `tiff`],
-    destinationDir: `/`,
   }
   const { destinationDir } = pluginOptions
   if (!validateDestinationDir(destinationDir))
@@ -55,22 +73,14 @@ module.exports = (
         return null
       })
       if (linkNode && linkNode.absolutePath) {
-        const newPath = path.posix.join(
-          process.cwd(),
-          DEPLOY_DIR,
-          options.destinationDir
-        )
+        const newFilePath = newPath(linkNode, options.destinationDir)
 
         // Prevent uneeded copying
-        if (linkPath === newPath) return
+        if (linkPath === newFilePath) return
 
-        const linkURL = path.posix.join(
-          `/`,
-          options.destinationDir,
-          newFileName(linkNode)
-        )
+        const linkURL = newLinkURL(linkNode, options.destinationDir)
         link.url = linkURL
-        filesToCopy.set(linkPath, newPath)
+        filesToCopy.set(linkPath, newFilePath)
       }
     }
   }
@@ -256,12 +266,12 @@ module.exports = (
   })
 
   return Promise.all(
-    Array.from(filesToCopy, async ([linkPath, newPath]) => {
+    Array.from(filesToCopy, async ([linkPath, newFilePath]) => {
       // Don't copy anything is the file already exists at the location.
-      if (!fsExtra.existsSync(newPath)) {
+      if (!fsExtra.existsSync(newFilePath)) {
         try {
-          await fsExtra.ensureDir(path.dirname(newPath))
-          await fsExtra.copy(linkPath, newPath)
+          await fsExtra.ensureDir(path.dirname(newFilePath))
+          await fsExtra.copy(linkPath, newFilePath)
         } catch (err) {
           console.error(`error copy ing file`, err)
         }

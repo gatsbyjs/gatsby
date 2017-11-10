@@ -17,6 +17,8 @@ const remark = new Remark().data(`settings`, {
   pedantic: true,
 })
 
+const imageURL = markdownAST => markdownAST.children[0].children[0].url
+
 describe(`gatsby-remark-copy-linked-files`, () => {
   afterEach(() => {
     fsExtra.copy.mockReset()
@@ -130,9 +132,9 @@ describe(`gatsby-remark-copy-linked-files`, () => {
 
   describe(`options.destinationDir`, () => {
     const imagePath = `images/sample-image.gif`
-    const markdownAST = remark.parse(`![some absolute image](${imagePath})`)
 
     it(`throws an error if the destination directory is not within 'public'`, async () => {
+      const markdownAST = remark.parse(`![some absolute image](${imagePath})`)
       const invalidDestinationDir = `../destination`
       expect.assertions(2)
       return plugin(
@@ -146,12 +148,14 @@ describe(`gatsby-remark-copy-linked-files`, () => {
       })
     })
 
-    it(`copies file to destinationDir within 'public'`, async () => {
+    it(`copies file to destinationDir when supplied`, async () => {
+      const markdownAST = remark.parse(`![some absolute image](${imagePath})`)
       const validDestinationDir = `path/to/dir`
-      const expectedNewDir = path.join(
+      const expectedNewPath = path.join(
         process.cwd(),
         `public`,
-        validDestinationDir
+        validDestinationDir,
+        `/undefined-undefined.gif`
       )
       expect.assertions(3)
       await plugin(
@@ -160,12 +164,31 @@ describe(`gatsby-remark-copy-linked-files`, () => {
           destinationDir: validDestinationDir,
         }
       ).then(v => {
-        console.dir()
         expect(v).toBeDefined()
-        expect(fsExtra.copy).toHaveBeenCalledWith(imagePath, expectedNewDir)
-        expect(markdownAST.children[0].children[0].url).toEqual(
+        expect(fsExtra.copy).toHaveBeenCalledWith(imagePath, expectedNewPath)
+        expect(imageURL(markdownAST)).toEqual(
           `/path/to/dir/undefined-undefined.gif`
         )
+      })
+    })
+
+    it(`copies file to root dir when not supplied'`, async () => {
+      const markdownAST = remark.parse(`![some absolute image](${imagePath})`)
+      const expectedNewPath = path.join(
+        process.cwd(),
+        `public`,
+        `/undefined-undefined.gif`
+      )
+      expect.assertions(3)
+      await plugin({
+        files: getFiles(imagePath),
+        markdownAST,
+        markdownNode,
+        getNode,
+      }).then(v => {
+        expect(v).toBeDefined()
+        expect(fsExtra.copy).toHaveBeenCalledWith(imagePath, expectedNewPath)
+        expect(imageURL(markdownAST)).toEqual(`/undefined-undefined.gif`)
       })
     })
   })
