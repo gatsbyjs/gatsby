@@ -86,7 +86,7 @@ If that's the case, wouldn't it be nice if we could have a Content Management Sy
 
 That would give us the best of both worlds, right?
 
-Well, a guy named [Kyle Matthews](https://github.com/KyleAMathews) already thought of that and created Gatsby.js.
+Well, a guy named [Kyle Mathews](https://github.com/KyleAMathews) already thought of that and created Gatsby.js.
 
 ## Generating static websites with React and Webpack
 
