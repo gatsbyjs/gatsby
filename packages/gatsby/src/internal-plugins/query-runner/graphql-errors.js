@@ -188,5 +188,12 @@ export function graphqlError(
     message += `${error.message.slice(21)}\n`
   }
 
+  if (
+    process.env.gatsby_log_level === `verbose` &&
+    error.message.match(/GraphQLParser/)
+  ) {
+    message += `${error.message}`
+  }
+
   return message
 }
