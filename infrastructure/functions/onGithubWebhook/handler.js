@@ -47,10 +47,12 @@ function getBranch(branch) {
 const createBranchIfDoesNotExist = branch =>
   getBranch(branch).then(result => {
     if (result.allBranches.length === 0) {
-      return createBranch(branch).then(
-        newBranch => newBranch.data.createBranch.id
-      )
+      return createBranch(branch).then(newBranch => {
+        console.log(`newBranch`, newBranch)
+        return newBranch.createBranch.id
+      })
     } else {
+      console.log(`allBranches`, result)
       return result.allBranches[0].id
     }
   })
@@ -59,7 +61,7 @@ const createCommit = (commit, branchId) => {
   hny.sendNow(Object.assign({ createCommit: true, branchId: branchId }, commit))
   return client.request(`
     mutation {
-      createCommit(author: "${commit.author}", hash: "${commit.sha}", message: "${commit.message}", branchIds: [${branchId}]) {
+      createCommit(author: "${commit.author}", hash: "${commit.sha}", message: "${commit.message}", branchIds: ["${branchId}"]) {
         id
       }
     }
