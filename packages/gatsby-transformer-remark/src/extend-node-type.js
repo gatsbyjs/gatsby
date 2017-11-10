@@ -1,4 +1,3 @@
-/*global __PREFIX_PATHS__, __PATH_PREFIX__ */
 const {
   GraphQLObjectType,
   GraphQLList,
@@ -35,21 +34,6 @@ const headingsCacheKey = node =>
 const tableOfContentsCacheKey = node =>
   `transformer-remark-markdown-toc-${node.internal
     .contentDigest}-${pluginsCacheStr}`
-
-// Borrowed from gatsby-link
-let pathPrefix = `/`
-// __PREFIX_PATHS__ isn't defined
-if (typeof __PREFIX_PATHS__ !== `undefined` && __PREFIX_PATHS__) {
-  pathPrefix = __PATH_PREFIX__
-}
-
-export function withPrefix(path) {
-  return normalizePath(pathPrefix + path)
-}
-
-function normalizePath(path) {
-  return path.replace(/^\/\//g, `/`)
-}
 
 module.exports = (
   { type, store, pathPrefix, getNode, cache },
@@ -199,7 +183,13 @@ module.exports = (
         if (tocAst.map) {
           const addSlugToUrl = function(node) {
             if (node.url) {
-              node.url = withPrefix(`${markdownNode.fields.slug}${node.url}`)
+              node.url = [
+                store.getState().config.pathPrefix,
+                markdownNode.fields.slug,
+                node.url,
+              ]
+                .join("/")
+                .replace(/\/\//g, `/`)
             }
             if (node.children) {
               node.children = node.children.map(node => addSlugToUrl(node))
