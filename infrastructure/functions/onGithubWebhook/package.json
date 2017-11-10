@@ -11,6 +11,7 @@
   "dependencies": {
     "axios": "^0.17.0",
     "flat": "^4.0.0",
+    "graphql-request": "^1.4.0",
     "libhoney": "^1.0.0-beta.10"
   }
 }
