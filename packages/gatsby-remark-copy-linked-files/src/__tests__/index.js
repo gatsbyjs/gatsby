@@ -151,7 +151,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     it(`copies file to destinationDir when supplied`, async () => {
       const markdownAST = remark.parse(`![some absolute image](${imagePath})`)
       const validDestinationDir = `path/to/dir`
-      const expectedNewPath = path.join(
+      const expectedNewPath = path.posix.join(
         process.cwd(),
         `public`,
         validDestinationDir,
@@ -174,7 +174,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
 
     it(`copies file to root dir when not supplied'`, async () => {
       const markdownAST = remark.parse(`![some absolute image](${imagePath})`)
-      const expectedNewPath = path.join(
+      const expectedNewPath = path.posix.join(
         process.cwd(),
         `public`,
         `/undefined-undefined.gif`
