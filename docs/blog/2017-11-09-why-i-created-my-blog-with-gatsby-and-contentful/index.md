@@ -8,10 +8,10 @@ I recently deployed my new blog at [halfelectronic.com](https://www.halfelectron
 
 There is certainly no shortage of options when it comes to platforms and CMSs to build a blog these days: From the more traditional, cumbersome and usually troublesome PHP based ones -- I'm looking at you Wordpress -- to the more minimal and modern ones like Ghost, Medium and Tumblr.
 
-However, in my experience,  I found that pretty much all of these options tipically force you to give up at least one of the following:
+However, in my experience,  I found that pretty much all of these options typically force you to give up at least one of the following:
 
 - Money: As in the money you spend per month keeping the blog up and running.
-- Time: As in the time you spend mantaining, scaling and securing the blog  infrastructure once it has been deployed (i.e. DevOps time).
+- Time: As in the time you spend maintaining, scaling and securing the blog infrastructure once it has been deployed (i.e. DevOps time).
 - Control: As in the degree of control you have over the blog's appearance, performance and architecture.
 
 This last point refers more than anything to online publishing platforms like Medium and Wordpress.com -- not to be confused with the self-hosted Wordpress alternative, which we'll discuss in a moment. And while that lack of control might not represent a problem to many bloggers, I often find it too limiting for my taste. I like to have my own domain, my own URL structures, my own color scheme and my own silly sidebar widgets which display what song I'm listening at the moment -- yeah, that's a thing I implemented 😁.
@@ -54,7 +54,7 @@ If you are managing your own server, did you configure Varnish correctly? What i
 
 Now, I'm not trying to be pessimistic here. These are very realistic scenarios that I regularly came across in my years of experience as a Wordpress developer.  Turns out that managing and scaling traditional monolithic LAMP stack applications is usually a time-consuming task, to say the least.
 
-You might decide to take the easy route and host your blog on a Wordpress specialized hosting service like [WpEngine](https://wpengine.com/), which will take care of all things related to security and scaling for you. But then you better be prepared to set aside $29 each month, which is what their cheapest plan costs.
+You might decide to take the easy route and host your blog on a Wordpress specialized hosting service like [WP Engine](https://wpengine.com/), which will take care of all things related to security and scaling for you. But then you better be prepared to set aside $29 each month, which is what their cheapest plan costs.
 
 I don't know about you, but spending $29 each month on a simple blog seems a little bit excessive to me, especially considering we could be spending next to nothing and end up with an infinitely more secure, scalable and faster website.
 
@@ -64,11 +64,11 @@ Say what?
 
 ## Enter the world of static site generators...
 
-If you are a developer, you probably are familiar with Static Site Generators, or you have at least come across a site that was built with one, even if you didn't realize it. Up until recently, they have been mostly used for documentation sites of open source projects, because they are very cheap to make and because you can host them for free on [Github Pages](https://pages.github.com/).
+If you are a developer, you probably are familiar with Static Site Generators, or you have at least come across a site that was built with one, even if you didn't realize it. Up until recently, they have been mostly used for documentation sites of open source projects, because they are very cheap to make and because you can host them for free on [GitHub Pages](https://pages.github.com/).
 
-For those very same reasons, developers also often use them to create their own personal blogs and portfolio sites, which only makes sense right? After all, if you are a developer you probably don't need a nice GUI to write Markdown posts and you are most likely comfortable enough with the terminal and with version control in order to generate and push an updated version of your blog to Github Pages manually.
+For those very same reasons, developers also often use them to create their own personal blogs and portfolio sites, which only makes sense right? After all, if you are a developer you probably don't need a nice GUI to write Markdown posts and you are most likely comfortable enough with the terminal and with version control in order to generate and push an updated version of your blog to GitHub Pages manually.
 
-Because they are just built with static assets, that means there are no databases to maintain or secure. Github is in itself our database, so to speak. That also means that our site is extremely unlikely to go down, regardless of the number of visitors we throw at it.
+Because they are just built with static assets, that means there are no databases to maintain or secure. GitHub is in itself our database, so to speak. That also means that our site is extremely unlikely to go down, regardless of the number of visitors we throw at it.
 
 All that sounds very nice and dandy, but unfortunately the web is not only made out of open source projects documentation sites and developer blogs -- although sometimes I wish it was!
 
@@ -90,7 +90,7 @@ Well, a guy named [Kyle Mathews](https://github.com/KyleAMathews) already though
 
 ## Generating static websites with React and Webpack
 
-A little disclaimer: I absolutely love React, so, when I first learned that there were some emerging Static Site Generators who leveraged only React and Webpack, I knew that I had to try at least one of them for the new upcoming blog I was planning to build. These projects were [Gatsby.js ](http://gatsbyjs.org/)and [Phenomic](https://phenomic.io/), and both were still quite young back then, neither of them having reached the 1.0 release yet.
+A little disclaimer: I absolutely love React, so, when I first learned that there were some emerging Static Site Generators who leveraged only React and Webpack, I knew that I had to try at least one of them for the new upcoming blog I was planning to build. These projects were [Gatsby.js ](http://gatsbyjs.org/) and [Phenomic](https://phenomic.io/), and both were still quite young back then, neither of them having reached the 1.0 release yet.
 
 Ironically I chose Phenomic, mainly because I liked what the guys from [Serverless.com ](http://serverless.com/)had done with their website at that time -- built using Phenomic.
 
@@ -98,13 +98,13 @@ So, I went ahead and built my blog using Phenomic. Overall, I thought it was a v
 
 However, at the end of the day, Phenomic was just another old-school Static Site Generator like [Jekyll](https://jekyllrb.com/) or [Hugo](https://gohugo.io/), in the sense that the only data it could handle was Markdown files.
 
-For a simple developer blog, Phenomic might have been enough, but it was definitely not something I could expect to use in more ambitious projects that were meant to be updated by non-technical clients. But to be fair, neither were all the rest of the Static Site Generators up to that point. Yes, Hugo is insanely fast at generating a lot of pages, and Jekyll has a very mature plugin ecosystem, but they're projects that focus on creating sites meant to be updated by developers. You just can't expect the average user to clone a Github repository, add a new Markdown file, add the post metadata in Front Matter format, commit the changes and push it upstream.
+For a simple developer blog, Phenomic might have been enough, but it was definitely not something I could expect to use in more ambitious projects that were meant to be updated by non-technical clients. But to be fair, neither were all the rest of the Static Site Generators up to that point. Yes, Hugo is insanely fast at generating a lot of pages, and Jekyll has a very mature plugin ecosystem, but they're projects that focus on creating sites meant to be updated by developers. You just can't expect the average user to clone a GitHub repository, add a new Markdown file, add the post metadata in Front Matter format, commit the changes and push it upstream.
 
 But then Gatsby.js hit the 1.0 release, and everything changed...
 
 ## Meeting Gatsby.js
 
-My first contact with the 1.0 release of Gatsby.js was thanks to the Facebook team behind the [React](http://reactjs.org/) documentation site. They decided to migrate their legacy Jekyll site to a completely new site built with Gatsby 1.0. Me, as the good React fanboy that I am, jumped at the first chance I had to submit a PR to help fix a couple of bugs on the site, and was even given the opportunity of setting up the [RSS feed](https://reactjs.org/feed.xml)!
+My first contact with the 1.0 release of Gatsby.js was thanks to the Facebook team behind the [React](http://reactjs.org/) documentation site. They decided to migrate their legacy Jekyll site to a completely new site built with Gatsby 1.0. I, as the good React fanboy that I am, jumped at the first chance I had to submit a PR to help fix a couple of bugs on the site, and was even given the opportunity of setting up the [RSS feed](https://reactjs.org/feed.xml)!
 
 In the process, I learned what the 1.0 release of Gatsby was all about, and I was completely mindblown.
 
@@ -112,7 +112,7 @@ In the process, I learned what the 1.0 release of Gatsby was all about, and I wa
 
 Not only did it have all the standard goodness of a typical React/Webpack static site generator (CSS Modules, PostCSS, Hot Reloading, etc), but more importantly, it integrated an incredibly ingenious GraphQL layer which allowed the developer to query and fetch data from practically everywhere on the web!
 
-For us developers, that means that we are no longer restricted to rely on local static Markdown files to store the data of our static sites -- althought that can still be done very efficiently as well.
+For us developers, that means that we are no longer restricted to rely on local static Markdown files to store the data of our static sites -- although that can still be done very efficiently as well.
 
 That data can also now be stored on any database or traditional storage device. We can then leverage GraphQL to retrieve it and render it in whatever shape or form we wish.
 
@@ -122,7 +122,7 @@ As good as this architecture sounded in my head, I knew that I had to test it fi
 
 Of course, in order to achieve this setup, there are still some key elements we haven't talked about. First of all, we need a CMS that allows both retrieving its entries via an HTTP endpoint, as well as setting up webhooks that can be triggered when those entries are created, updated or deleted. Fortunately, most popular CMSs nowadays already support those features, either natively or by installing plugins (i.e. [Wordpress REST API](https://wordpress.org/plugins/rest-api/)).
 
-Personally, however, I found the idea of maintaining a CMS server and a database just for my simple blog not very appealing. Yes, our decoupled architecture means that if our CMS server or database ever goes down our static frontend won't be affected at all, but we still need to pay to have that CMS server up and running listening for requests -- which won't be that many -- and we still need to spend some time securing that MySQL database. Being a "Serverless" architectures enthusiast, I set out to find a more "serverless" and economic approach to this issue. Fortunately, the Gaysby.js community had already found it in a powerful CMS called Contentful.
+Personally, however, I found the idea of maintaining a CMS server and a database just for my simple blog not very appealing. Yes, our decoupled architecture means that if our CMS server or database ever goes down our static frontend won't be affected at all, but we still need to pay to have that CMS server up and running listening for requests -- which won't be that many -- and we still need to spend some time securing that MySQL database. Being a "Serverless" architectures enthusiast, I set out to find a more "serverless" and economic approach to this issue. Fortunately, the Gatsby.js community had already found it in a powerful CMS called Contentful.
 
 ## Contentful to the rescue
 
@@ -134,7 +134,7 @@ All of that content is stored in their databases, which means that you don't hav
 
 <div style="width:100%;height:0;padding-bottom:75%;position:relative;"><iframe src="https://giphy.com/embed/aWRWTF27ilPzy" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/hooray-skeletor-aWRWTF27ilPzy">via GIPHY</a></p>
 
-Of course, there' a little catch. As most "(blank)-as-a-service" providers out there, Contentful is not always free. Although they have a very generous free tier which, in my opinion, is more than adequate for most static sites, once you go over that quota they will start charging you, so take that into consideration before choosing a CMS.
+Of course, there's a little catch. As most "(blank)-as-a-service" providers out there, Contentful is not always free. Although they have a very generous free tier which, in my opinion, is more than adequate for most static sites, once you go over that quota they will start charging you, so take that into consideration before choosing a CMS.
 
 In my particular case, I knew that Contentful was just exactly what I needed for my blog and so I proceed to set up all my Content Types (Posts, Categories, Tags, etc) and setup the Gatsby integration using the handy [gatsby-source-contentful](https://www.npmjs.com/package/gatsby-source-contentful) plugin that the Gatsby community created.
 
@@ -150,6 +150,6 @@ And so it was that my quest for having a very cheap, secure, fast, scalable, cus
 
 Personally I cannot wait to see how far can the limits of technologies like Gatsby.js can be stretched, and with the advent and spread of new architectural paradigms like Serverless, I predict it could be very far.
 
-But whatever that limit is, I am quite sure that this is a step in the right direction towards making the web a safer, faster and more enjoyable  experience for both developers and end-users.
+But whatever that limit is, I am quite sure that this is a step in the right direction towards making the web a safer, faster and more enjoyable experience for both developers and end-users.
 
 <div style="width:100%;height:0;padding-bottom:52%;position:relative;"><iframe src="https://giphy.com/embed/12xSrwKxHxB3BS" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/black-and-white-end-ending-12xSrwKxHxB3BS">via GIPHY</a></p>
