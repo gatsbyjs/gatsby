@@ -8,10 +8,6 @@ tags:
   - Kitchen Sink
   - Images
 ---
-<a href="http://example.com">HTML href</a>
-
-<small>Small text</small>
-
 ![](joshua-earle-234740.jpg)
 *Photo by [Joshua Earle](https://unsplash.com/@joshuaearle) via [Unsplash](https://unsplash.com/@joshuaearle?photo=-87JyMb9ZfU)*
 
