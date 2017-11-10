@@ -17,7 +17,7 @@ const client = new GraphQLClient(
   "https://api.graph.cool/simple/v1/cj8xuo77f0a3a0164y7jketkr",
   {
     headers: {
-      Authorization: process.env.GRAPHCOOL_TOKEN,
+      Authorization: `Bearer ${process.env.GRAPHCOOL_TOKEN}`,
     },
   }
 )
