@@ -45,12 +45,12 @@ Use a `.env` file or set environment variables directly to access the GraphCMS e
 Let's say you have a GraphQL type called `Post`. You would query it like so:
 
 ```graphql
-{  
+{
    allArtists {
       id
       name
       slug
-      picture { 
+      picture {
         id
         url
         height
@@ -66,33 +66,10 @@ Let's say you have a GraphQL type called `Post`. You would query it like so:
 
 ## Current limitations
 
-### Embedded fields aren't found by GraphQL
- 
-```
-Example:
-
-query getAllArtists {
-  allArtists {
-    name
-    id
-    records {
-      id
-      title
-      tracks {
-        id
-        title
-        length
-      }
-    }
-  }
-}
-```
-This query fed into the graphcms source plugin produces artists. name, id, records, id, and titles - but no "tracks", or the subfields within. They exist in the redux store json, but graphql can't seem to identify them. More investigation is needed.
- 
 ### Fields which have sub selections do not work
-    
+
 This one pertains to the introspection metaquery method.
-    
+
 Example:
 ```
     Artist {
@@ -102,9 +79,9 @@ Example:
 ```
 
 The metaQuery currently used is not capable of finding url from the above query, which will cause the query that fetches all data to fail. It will have to be modified. It looks like it will be a bit more difficult to find that url and add it to the query, as it might require making a __type query for each field of a Type that has subfields and then modifying the final query before firing it.
-    
+
 Errors can be seen here: https://github.com/Redmega/example_05_static_site_generation_with_gatsby
-        
+
 # TODOs
 
 1. Implement support for relationships/embedded fields
