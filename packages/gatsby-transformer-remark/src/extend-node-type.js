@@ -183,12 +183,8 @@ module.exports = (
         if (tocAst.map) {
           const addSlugToUrl = function(node) {
             if (node.url) {
-              node.url = [
-                store.getState().config.pathPrefix,
-                markdownNode.fields.slug,
-                node.url,
-              ]
-                .join("/")
+              node.url = [pathPrefix, markdownNode.fields.slug, node.url]
+                .join(`/`)
                 .replace(/\/\//g, `/`)
             }
             if (node.children) {
