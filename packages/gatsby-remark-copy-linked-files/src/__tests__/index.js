@@ -2,6 +2,7 @@ jest.mock(`fs-extra`, () => {
   return {
     existsSync: () => false,
     copy: jest.fn(),
+    ensureDir: jest.fn(),
   }
 })
 const Remark = require(`remark`)
@@ -133,7 +134,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
 
     it(`throws an error if the destination directory is not within 'public'`, async () => {
       const invalidDestinationDir = `../destination`
-      expect.assertions(1)
+      expect.assertions(2)
       return plugin(
         { files: getFiles(imagePath), markdownAST, markdownNode, getNode },
         {
@@ -141,19 +142,30 @@ describe(`gatsby-remark-copy-linked-files`, () => {
         }
       ).catch(e => {
         expect(e).toEqual(expect.stringContaining(invalidDestinationDir))
+        expect(fsExtra.copy).not.toHaveBeenCalled()
       })
     })
 
-    it(`doesn't throw an error if the destination directory is within 'public'`, async () => {
+    it(`copies file to destinationDir within 'public'`, async () => {
       const validDestinationDir = `path/to/dir`
-      expect.assertions(1)
-      return plugin(
+      const expectedNewDir = path.join(
+        process.cwd(),
+        `public`,
+        validDestinationDir
+      )
+      expect.assertions(3)
+      await plugin(
         { files: getFiles(imagePath), markdownAST, markdownNode, getNode },
         {
           destinationDir: validDestinationDir,
         }
       ).then(v => {
+        console.dir()
         expect(v).toBeDefined()
+        expect(fsExtra.copy).toHaveBeenCalledWith(imagePath, expectedNewDir)
+        expect(markdownAST.children[0].children[0].url).toEqual(
+          `/path/to/dir/undefined-undefined.gif`
+        )
       })
     })
   })

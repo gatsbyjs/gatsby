@@ -7,15 +7,21 @@ const cheerio = require(`cheerio`)
 const sizeOf = require(`image-size`)
 const pathIsInside = require(`path-is-inside`)
 
-const DEFAULT_DESTINATION_DIR = `public`
+const DEPLOY_DIR = `public`
 
 const invalidDestinationDirMessage = dir =>
-  `[gatsby-remark-copy-linked-files You have supplied an invalid destination directory. The destination directory must be within the '${
-    DEFAULT_DESTINATION_DIR
-  }' directory, but was: ${dir}`
+  `[gatsby-remark-copy-linked-files You have supplied an invalid destination directory. The destination directory must be a child but was: ${
+    dir
+  }`
 
-const destinationDirIsValid = dir =>
-  pathIsInside(path.join(DEFAULT_DESTINATION_DIR, dir), DEFAULT_DESTINATION_DIR)
+// dir must be a child
+const destinationDirIsValid = dir => !path.relative(`./`, dir).startsWith(`..`)
+
+const validateDestinationDir = dir =>
+  !dir || (dir && destinationDirIsValid(dir))
+
+const newFileName = linkNode =>
+  `${linkNode.name}-${linkNode.internal.contentDigest}.${linkNode.extension}`
 
 module.exports = (
   { files, markdownNode, markdownAST, getNode },
@@ -23,21 +29,11 @@ module.exports = (
 ) => {
   const defaults = {
     ignoreFileExtensions: [`png`, `jpg`, `jpeg`, `bmp`, `tiff`],
-    destinationDir: DEFAULT_DESTINATION_DIR,
+    destinationDir: `/`,
   }
-
-  // Validate supplied destination directory
   const { destinationDir } = pluginOptions
-  if (destinationDir) {
-    if (destinationDirIsValid(destinationDir)) {
-      pluginOptions.destinationDir = path.join(
-        DEFAULT_DESTINATION_DIR,
-        destinationDir
-      )
-    } else {
-      return Promise.reject(invalidDestinationDirMessage(destinationDir))
-    }
-  }
+  if (!validateDestinationDir(destinationDir))
+    return Promise.reject(invalidDestinationDirMessage(destinationDir))
 
   const options = _.defaults(pluginOptions, defaults)
 
@@ -62,20 +58,19 @@ module.exports = (
       if (linkNode && linkNode.absolutePath) {
         const newPath = path.posix.join(
           process.cwd(),
-          options.destinationDir,
-          `${linkNode.internal.contentDigest}.${linkNode.extension}`
+          DEPLOY_DIR,
+          options.destinationDir
         )
 
         // Prevent uneeded copying
-        if (linkPath === newPath) {
-          return
-        }
+        if (linkPath === newPath) return
 
-        const relativePath = path.posix.join(
-          `/${linkNode.internal.contentDigest}.${linkNode.extension}`
+        const linkURL = path.posix.join(
+          `/`,
+          options.destinationDir,
+          newFileName(linkNode)
         )
-        link.url = `${relativePath}`
-
+        link.url = linkURL
         filesToCopy.set(linkPath, newPath)
       }
     }
@@ -263,11 +258,13 @@ module.exports = (
 
   return Promise.all(
     Array.from(filesToCopy, async ([linkPath, newPath]) => {
+      // Don't copy anything is the file already exists at the location.
       if (!fsExtra.existsSync(newPath)) {
         try {
+          await fsExtra.ensureDir(path.dirname(newPath))
           await fsExtra.copy(linkPath, newPath)
         } catch (err) {
-          console.error(`error copying file`, err)
+          console.error(`error copy ing file`, err)
         }
       }
     })
