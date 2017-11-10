@@ -114,7 +114,7 @@ async function startServer(program) {
   app.get(`*`, (req, res, next) => {
     // Load file but ignore errors.
     res.sendFile(
-      directoryPath(`/public/${decodeURIComponent(req.url)}`),
+      directoryPath(`/public${decodeURIComponent(req.path)}`),
       err => {
         // No err so a file was sent successfully.
         if (!err || !err.path) {
