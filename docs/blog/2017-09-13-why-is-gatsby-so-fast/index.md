@@ -41,6 +41,8 @@ Slow loading sites tend to have many related performance problems.
 
 Ok, I've convinced you that site performance is important. You perhaps already have a site that you know is too slow. How to do you go about improving things?
 
+Our first task is to understand how to measure website performance. Only then can we make changes that we're confident are improving things.
+
 Let's discuss two key website performance metrics that summarize the most important parts of website performance. How quickly is your website visible (Speed Index) and how quickly is your site usable (Time to Interactive—TTI).
 
 ![reactnext-gatsby-performance.015](reactnext-gatsby-performance.015.png)
