@@ -23,7 +23,7 @@ const client = new GraphQLClient(
 function createBranch(branch) {
   hny.sendNow({ createBranch: branch })
   return client.request(`
-    {
+    mutation {
       createBranch(name: "${branch}", commits: []) {
         id
       }
@@ -33,7 +33,7 @@ function createBranch(branch) {
 
 function getBranch(branch) {
   return client.request(`
-    {
+    query {
       allBranches(filter: {name: "${branch}"}) {
         id
         name
@@ -56,7 +56,7 @@ const createBranchIfDoesNotExist = branch =>
 const createCommit = (commit, branchId) => {
   hny.sendNow(Object.assign({ createCommit: true, branchId: branchId }, commit))
   return client.request(`
-    {
+    mutation {
       createCommit(author: "${commit.author}", hash: "${commit.sha}", message: "${commit.message}", branchIds: [${branchId}]) {
         id
       }
