@@ -5,7 +5,6 @@ const path = require(`path`)
 const _ = require(`lodash`)
 const cheerio = require(`cheerio`)
 const sizeOf = require(`image-size`)
-const pathIsInside = require(`path-is-inside`)
 
 const DEPLOY_DIR = `public`
 
