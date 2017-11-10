@@ -54,7 +54,7 @@ const createBranchIfDoesNotExist = branch =>
   })
 
 const createCommit = (commit, branchId) => {
-  hny.sendNow({ createCommit: true, branchId, ...commit })
+  hny.sendNow(Object.assign({ createCommit: true, branchId: branchId }, commit))
   return client.request(`
     {
       createCommit(author: "${commit.author}", hash: "${commit.sha}", message: "${commit.message}", branchIds: [${branchId}]) {
