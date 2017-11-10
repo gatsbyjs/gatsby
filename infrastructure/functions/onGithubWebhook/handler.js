@@ -11,6 +11,8 @@ const hny = new Libhoney({
   dataset: "gatsbyjs-os.lambda.github-webhook",
 })
 
+console.log(`env vars`, process.env)
+
 const client = new GraphQLClient(
   "https://api.graph.cool/simple/v1/cj8xuo77f0a3a0164y7jketkr",
   {
