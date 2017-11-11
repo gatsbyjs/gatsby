@@ -136,7 +136,7 @@ class IndexPage extends Component {
             <article
               key={node.id}
               style={{
-                marginBottom: `2rem`,
+                marginBottom: `3rem`,
               }}
             >
               <h3 id={node.slug}>{node.title}</h3>
