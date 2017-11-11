@@ -11,25 +11,30 @@ export default async function writeRedirectsFile(pluginData, redirects) {
   // Map redirect data to the format Netlify expects
   // https://www.netlify.com/docs/redirects/
   redirects = redirects.map(redirect => {
+    const {
+      fromPath,
+      isPermanent,
+      redirectInBrowser,
+      toPath,
+      ...rest
+    } = redirect
+
     const pieces = [
-      redirect.fromPath,
-      redirect.toPath,
-      redirect.isPermanent ? 301 : 302, // Status
+      fromPath,
+      toPath,
+      isPermanent ? 301 : 302, // Status
     ]
 
-    const keyValuePairs = redirect.keyValuePairs
-    if (keyValuePairs) {
-      for (let key in keyValuePairs) {
-        const value = keyValuePairs[key]
+    for (let key in rest) {
+      const value = rest[key]
 
-        if (typeof value === `string` && value.indexOf(` `) >= 0) {
-          console.warn(
-            `Invalid redirect value "${value}" specified for key "${key}". ` +
-              `Values should not contain spaces as per Netlify documentation.`
-          )
-        } else {
-          pieces.push(`${key}=${value}`)
-        }
+      if (typeof value === `string` && value.indexOf(` `) >= 0) {
+        console.warn(
+          `Invalid redirect value "${value}" specified for key "${key}". ` +
+            `Values should not contain spaces.`
+        )
+      } else {
+        pieces.push(`${key}=${value}`)
       }
     }
 
