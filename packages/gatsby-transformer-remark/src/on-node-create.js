@@ -18,8 +18,6 @@ module.exports = async function onCreateNode({
     return
   }
 
-  let grayMatterOptions = {}
-
   const content = await loadNodeContent(node)
   let data = grayMatter(content, pluginOptions)
 
