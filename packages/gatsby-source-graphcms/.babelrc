@@ -1,0 +1,13 @@
+{
+  "plugins": ["transform-object-rest-spread"],
+  "presets": [
+    [
+      "env",
+      {
+        "targets": {
+          "node": "current"
+        }
+      }
+    ]
+  ]
+}
