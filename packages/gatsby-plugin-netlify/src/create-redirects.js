@@ -19,6 +19,8 @@ export default async function writeRedirectsFile(pluginData, redirects) {
       ...rest
     } = redirect
 
+    // The order of the first 3 parameters is significant.
+    // The order for rest params (key-value pairs) is arbitrary.
     const pieces = [
       fromPath,
       toPath,
