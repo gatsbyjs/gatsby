@@ -274,7 +274,8 @@ exports.createContentTypeNodes = ({
           return
         }
 
-        entryItemFields[entryItemFieldKey] = entryItemFields[entryItemFieldKey]
+        // Ensure contentful empty value is not undefined (to get past graphql schema errors)
+        entryItemFields[entryItemFieldKey] = entryItemFields[entryItemFieldKey] || ``
       })
 
       // Replace text fields with text nodes so we can process their markdown
