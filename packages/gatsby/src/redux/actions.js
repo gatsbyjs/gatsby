@@ -710,14 +710,16 @@ actions.setPluginStatus = (
  * @param {string} redirect.isPermanent This is a permanent redirect; defaults to temporary
  * @param {string} redirect.toPath URL of a created page (see `createPage`)
  * @param {string} redirect.redirectInBrowser Redirects are generally for redirecting legacy URLs to their new configuration. If you can't update your UI for some reason, set `redirectInBrowser` to true and Gatsby will handle redirecting in the client as well.
+ * @param {string} redirect.keyValuePairs Optional additional key-value pairs (eg `{Country: "x,y,z"}`, `{Language: "xx,yy"}`)
  * @example
  * createRedirect({ fromPath: '/old-url', toPath: '/new-url', isPermanent: true })
  */
 actions.createRedirect = ({
   fromPath,
   isPermanent = false,
-  toPath,
+  keyValuePairs,
   redirectInBrowser = false,
+  toPath,
 }) => {
   let pathPrefix = ``
   if (store.getState().program.prefixPaths) {
@@ -729,8 +731,9 @@ actions.createRedirect = ({
     payload: {
       fromPath: `${pathPrefix}${fromPath}`,
       isPermanent,
-      toPath: `${pathPrefix}${toPath}`,
+      keyValuePairs,
       redirectInBrowser,
+      toPath: `${pathPrefix}${toPath}`,
     },
   }
 }
