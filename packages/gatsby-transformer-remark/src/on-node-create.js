@@ -7,7 +7,7 @@ module.exports = async function onCreateNode({
   getNode,
   loadNodeContent,
   boundActionCreators,
-}) {
+}, pluginOptions) {
   const { createNode, createParentChildLink } = boundActionCreators
 
   // We only care about markdown content.
@@ -18,8 +18,10 @@ module.exports = async function onCreateNode({
     return
   }
 
+  let grayMatterOptions = {}
+
   const content = await loadNodeContent(node)
-  let data = grayMatter(content)
+  let data = grayMatter(content, pluginOptions)
 
   // Convert date objects to string. Otherwise there's type mismatches
   // during inference as some dates are strings and others date objects.
@@ -56,6 +58,8 @@ module.exports = async function onCreateNode({
     // user supplied field.
     parent: node.id,
   }
+
+  markdownNode.excerpt = data.excerpt
 
   // Add path to the markdown file path
   if (node.internal.type === `File`) {
