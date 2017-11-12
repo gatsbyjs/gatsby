@@ -14,7 +14,7 @@ export default async function writeRedirectsFile(pluginData, redirects) {
     const {
       fromPath,
       isPermanent,
-      redirectInBrowser,
+      redirectInBrowser, // eslint-disable-line no-unused-vars
       toPath,
       ...rest
     } = redirect
