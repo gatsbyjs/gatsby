@@ -316,6 +316,44 @@ export const pageQuery = graphql`
         ...GatsbyImageSharpSizes_tracedSVG
       }
     }
+    sizesGatsbyDuotone: imageSharp(id: { regex: "/gatsby.jpg/" }) {
+      sizes(
+        duotone: { highlight: "#f00e2e", shadow: "#192550" }
+        traceSVG: {
+          color: "#f00e2e"
+          turnPolicy: TURNPOLICY_MINORITY
+          blackOnWhite: false
+        }
+        toFormat: PNG
+      ) {
+        ...GatsbyImageSharpSizes_tracedSVG
+      }
+    }
+    sizesGatsby50PercentDuotone: imageSharp(id: { regex: "/gatsby.jpg/" }) {
+      sizes(
+        duotone: { highlight: "#f00e2e", shadow: "#192550", opacity: 50 }
+        traceSVG: {
+          color: "#f00e2e"
+          turnPolicy: TURNPOLICY_MINORITY
+          blackOnWhite: false
+        }
+        toFormat: PNG
+      ) {
+        ...GatsbyImageSharpSizes_tracedSVG
+      }
+    }
+    sizesGatsbyOriginal: imageSharp(id: { regex: "/gatsby.jpg/" }) {
+      sizes(
+        traceSVG: {
+          color: "#f00e2e"
+          turnPolicy: TURNPOLICY_MINORITY
+          blackOnWhite: false
+        }
+        toFormat: PNG
+      ) {
+        ...GatsbyImageSharpSizes_tracedSVG
+      }
+    }
     resolution: imageSharp(id: { regex: "/lol.jpg/" }) {
       resolutions(grayscale: true, width: 500) {
         ...GatsbyImageSharpResolutions_withWebp

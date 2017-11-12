@@ -143,8 +143,8 @@ allImageSharp {
 #### duotone
 
 Applys a "duotone" effect (see [I][1], [II][2], [III][3]) to the source image if
- given two hex colors `shadow` and `highlight` defining start and end color of
- the duotone gradient, e.g.
+given two hex colors `shadow` and `highlight` defining start and end color of
+the duotone gradient, e.g.
 
 ```javascript
 responsiveResolution(
@@ -161,8 +161,32 @@ responsiveResolution(
 ```
 
 the source image colors will be converted to match a gradient color chosen based
-on each pixel's [relative luminance][4].
+on each pixel's [relative luminance][4].  
 Logic is borrowed from [react-duotone][5].
+
+You can pass a third optional parameter, `opacity`:
+
+```javascript
+responsiveResolution(
+  width: 800,
+  duotone: {
+    highlight: "#f00e2e",
+    shadow: "#192550",
+    opacity: 50
+  }
+) {
+  src
+  srcSet
+  base64
+}
+```
+
+If set, a semi-transparent version of duotone'd image will be composited over
+the original image, allowing the original image and its colors to partially
+"shine through". _Heads up_: If the original image contains an alpha
+channel, the latter will be flattened before creating the composite.
+
+@todo overlayWith, alpha composition, maybe link original issue
 
 #### tracedSVG
 
