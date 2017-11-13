@@ -70,6 +70,7 @@ Websites built with Gatsby:
 * [GraphCMS's website](https://graphcms.com)
 * [Mannequin.io](https://mannequin.io) ([source](https://github.com/LastCallMedia/Mannequin/tree/master/site))
 * [API Platform](https://api-platform.com) ([source](https://github.com/api-platform/website))
+* [Bottender Docs](https://bottender.js.org/) ([source](https://github.com/bottenderjs/bottenderjs.github.io))
 
 ## Docs
 
