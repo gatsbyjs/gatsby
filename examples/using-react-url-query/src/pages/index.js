@@ -18,12 +18,14 @@ export default class IndexPage extends React.PureComponent {
           The example shows how to use{` `}
           <a href="https://github.com/pbeshai/react-url-query">
             react-url-query
-          </a>{` `}
+          </a>
+          {` `}
           for binding url query parameters to props.
         </p>
         <hr />
         <p>
-          The value of this input is reflected in the URL as the <code>t</code>{` `}
+          The value of this input is reflected in the URL as the <code>t</code>
+          {` `}
           query parameter (with a max length of 8).
         </p>
         <div>
@@ -31,7 +33,8 @@ export default class IndexPage extends React.PureComponent {
           <SearchInput id="search-input" style={{ marginLeft: `0.5em` }} />
         </div>
         <p>
-          The value of this input is reflected in the URL as the <code>n</code>{` `}
+          The value of this input is reflected in the URL as the <code>n</code>
+          {` `}
           query parameter.
         </p>
         <div>

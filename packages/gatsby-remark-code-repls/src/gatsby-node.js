@@ -3,6 +3,7 @@
 const fs = require(`fs`)
 const { extname, resolve } = require(`path`)
 const recursiveReaddir = require(`recursive-readdir-synchronous`)
+const normalizePath = require(`normalize-path`)
 
 const {
   OPTION_DEFAULT_LINK_TEXT,
@@ -65,7 +66,8 @@ exports.createPages = (
 
       createPage({
         path: slug,
-        component: resolve(redirectTemplate),
+        // Normalize the path so tests pass on Linux + Windows
+        component: normalizePath(resolve(redirectTemplate)),
         context: {
           action,
           payload,

@@ -6,6 +6,7 @@
   "dependencies": {
     "babel-runtime": "^6.26.0",
     "lz-string": "^1.4.4",
+    "normalize-path": "^2.1.1",
     "recursive-readdir-synchronous": "^0.0.3",
     "unist-util-map": "^1.0.3"
   },
