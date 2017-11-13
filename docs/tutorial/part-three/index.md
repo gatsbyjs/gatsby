@@ -115,7 +115,7 @@ export default ({ children }) =>
   </div>
 ```
 
-_Notice that unlike the `children` that is received on other React components, this `children` is a function and needs to be executed_
+_Notice that unlike most `children` props, the `children` prop passed to layout components is a function and needs to be executed_
 
 Stop `gatsby develop` and start it again for the new layout to take effect.
 
