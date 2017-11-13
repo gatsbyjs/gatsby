@@ -19,7 +19,7 @@ class Index extends React.Component {
             </li>
             <li>
               <a href="https://github.com/gatsbyjs/gatsby/tree/1.0/examples/using-sass">
-                Code for site on Github
+                Code for site on GitHub
               </a>
             </li>
           </ul>

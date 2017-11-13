@@ -1,0 +1,24 @@
+{
+  "name": "using-react-url-query",
+  "private": true,
+  "description": "Gatsby example site using using-react-url-query",
+  "author": {
+    "name": "Aaron Lampros",
+    "email": "alampros@gmail.com",
+    "url": "https://github.com/alampros"
+  },
+  "dependencies": {
+    "gatsby": "latest",
+    "gatsby-link": "latest",
+    "gatsby-plugin-google-analytics": "latest",
+    "gatsby-plugin-offline": "latest",
+    "history": "^4.7.2",
+    "react-url-query": "^1.2.0"
+  },
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build"
+  }
+}

@@ -114,7 +114,7 @@ async function startServer(program) {
   app.get(`*`, (req, res, next) => {
     // Load file but ignore errors.
     res.sendFile(
-      directoryPath(`/public/${decodeURIComponent(req.url)}`),
+      directoryPath(`/public${decodeURIComponent(req.path)}`),
       err => {
         // No err so a file was sent successfully.
         if (!err || !err.path) {
@@ -167,7 +167,9 @@ async function startServer(program) {
       if (err.code === `EADDRINUSE`) {
         // eslint-disable-next-line max-len
         report.panic(
-          `Unable to start Gatsby on port ${program.port} as there's already a process listing on that port.`
+          `Unable to start Gatsby on port ${
+            program.port
+          } as there's already a process listing on that port.`
         )
         return
       }
@@ -207,7 +209,9 @@ module.exports = (program: any) => {
 
     if (port !== _port) {
       // eslint-disable-next-line max-len
-      const question = `Something is already running at port ${port} \nWould you like to run the app at another port instead? [Y/n] `
+      const question = `Something is already running at port ${
+        port
+      } \nWould you like to run the app at another port instead? [Y/n] `
 
       return rlInterface.question(question, answer => {
         if (answer.length === 0 || answer.match(/^yes|y$/i)) {

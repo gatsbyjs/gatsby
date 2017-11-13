@@ -33,7 +33,9 @@ exports.modifyWebpackConfig = ({ config, stage }, options = {}) => {
     })
   } else if (options.use) {
     throw new Error(
-      `gatsby-plugin-stylus "use" option passed with ${options.use}. Pass an array of stylus plugins instead`
+      `gatsby-plugin-stylus "use" option passed with ${
+        options.use
+      }. Pass an array of stylus plugins instead`
     )
   }
   if (Array.isArray(options.import)) {
@@ -45,7 +47,9 @@ exports.modifyWebpackConfig = ({ config, stage }, options = {}) => {
     })
   } else if (options.import) {
     throw new Error(
-      `gatsby-plugin-stylus "import" option passed with ${options.import}. Pass an array of filenames instead`
+      `gatsby-plugin-stylus "import" option passed with ${
+        options.import
+      }. Pass an array of filenames instead`
     )
   }
 
