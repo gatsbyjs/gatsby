@@ -5,6 +5,7 @@ const path = require(`path`)
 const _ = require(`lodash`)
 const cheerio = require(`cheerio`)
 const sizeOf = require(`image-size`)
+const replaceString = require(`replace-string`)
 
 const DEPLOY_DIR = `public`
 
@@ -87,7 +88,7 @@ module.exports = (
 
   // Takes a node and generates the needed images and then returns
   // the needed HTML replacement for the image
-  const generateImagesAndUpdateNode = function(image) {
+  const generateImagesAndUpdateNode = function(image, node) {
     const imagePath = path.posix.join(
       getNode(markdownNode.parent).dir,
       image.attr(`src`)
@@ -107,7 +108,7 @@ module.exports = (
     // use that data to update our ref
     const link = { url: image.attr(`src`) }
     visitor(link)
-    image.attr(`src`, link.url)
+    node.value = replaceString(node.value, image.attr(`src`), link.url)
 
     let dimensions
 
@@ -189,7 +190,7 @@ module.exports = (
           return
         }
 
-        generateImagesAndUpdateNode(thisImg)
+        generateImagesAndUpdateNode(thisImg, node)
       } catch (err) {
         // Ignore
       }
@@ -221,7 +222,7 @@ module.exports = (
         // use that data to update our ref
         const link = { url: thisVideo.attr(`src`) }
         visitor(link)
-        thisVideo.attr(`src`, link.url)
+        node.value = replaceString(node.value, thisVideo.attr(`src`), link.url)
       } catch (err) {
         // Ignore
       }
@@ -253,7 +254,8 @@ module.exports = (
         // use that data to update our ref
         const link = { url: thisATag.attr(`href`) }
         visitor(link)
-        thisATag.attr(`href`, link.url)
+
+        node.value = replaceString(node.value, thisATag.attr(`href`), link.url)
       } catch (err) {
         // Ignore
       }
