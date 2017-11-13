@@ -16,7 +16,10 @@ class ComponentRenderer extends React.Component {
 
     // This covers layout for when page not found, especially during production
     if (!loader.getPage(location.pathname)) {
-      location = Object.assign({}, location, { ...location, pathname: `/404.html` })
+      location = Object.assign({}, location, {
+        ...location,
+        pathname: `/404.html`,
+      })
     }
 
     this.state = {
