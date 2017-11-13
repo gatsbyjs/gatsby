@@ -1,0 +1,47 @@
+{
+  "name": "using-remark-copy-linked-files",
+  "private": true,
+  "description": "Gatsby example site on gatsby-remark-copy-linked-files",
+  "author": "Florian Kissling <sechskilo@gmail.com>",
+  "dependencies": {
+    "gatsby": "^1.9.108",
+    "gatsby-link": "^1.6.24",
+    "gatsby-plugin-google-analytics": "^1.0.12",
+    "gatsby-plugin-offline": "^1.0.10",
+    "gatsby-plugin-react-helmet": "^1.0.8",
+    "gatsby-plugin-sharp": "^1.6.20",
+    "gatsby-plugin-typography": "^1.7.10",
+    "gatsby-remark-copy-linked-files": "^1.5.20",
+    "gatsby-remark-images": "^1.5.31",
+    "gatsby-remark-prismjs": "^1.2.9",
+    "gatsby-remark-responsive-iframe": "^1.4.14",
+    "gatsby-remark-smartypants": "^1.4.8",
+    "gatsby-source-filesystem": "^1.5.8",
+    "gatsby-transformer-remark": "^1.7.20",
+    "gatsby-transformer-sharp": "^1.6.13",
+    "hast-util-to-html": "^3.1.0",
+    "lodash": "^4.15.0",
+    "react-responsive-grid": "^0.3.3",
+    "typeface-merriweather": "^0.0.35",
+    "typeface-montserrat": "^0.0.37",
+    "typography-theme-wordpress-2016": "^0.15.1"
+  },
+  "devDependencies": {
+    "eslint": "^4.9.0",
+    "eslint-plugin-react": "^7.4.0",
+    "gh-pages": "^0.12.0",
+    "prettier": "^1.8.1"
+  },
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "dev": "gatsby develop",
+    "lint": "./node_modules/.bin/eslint --ext .js,.jsx --ignore-pattern public .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --trailing-comma es5 --no-semi --single-quote --write 'src/**/*.js'",
+    "develop": "gatsby develop",
+    "build": "gatsby build",
+    "deploy": "gatsby build --prefix-paths && gh-pages -d public",
+    "fix-semi": "eslint --quiet --ignore-pattern node_modules --ignore-pattern public --parser babel-eslint --no-eslintrc --rule '{\"semi\": [2, \"never\"], \"no-extra-semi\": [2]}' --fix gatsby-node.js"
+  }
+}

@@ -64,6 +64,7 @@ function extractError(error: Error): { message: string, docName: string } {
     if (matches.index === docRegex.lastIndex) docRegex.lastIndex++
     ;[, message, docName] = matches
   }
+  if (!message) message = error.toString()
   return { message, docName }
 }
 
