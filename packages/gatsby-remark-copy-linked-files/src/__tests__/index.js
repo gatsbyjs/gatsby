@@ -120,6 +120,23 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     expect(fsExtra.copy).toHaveBeenCalledTimes(2)
   })
 
+  it(`leaves HTML nodes alone`, async () => {
+    const openingTag = `<a href="http://example.com/">`
+
+    const markdownAST = remark.parse(`${openingTag}Link to example.com</a>`)
+
+    await plugin({
+      markdownAST,
+      markdownNode,
+      getNode,
+    }).then(() => {
+      // we expect the resulting markdownAST to consist
+      // of a paragraph with three children:
+      // openingTag, text, and closing tag
+      expect(markdownAST.children[0].children[0].value).toBe(openingTag)
+    })
+  })
+
   it(`leaves absolute file paths alone`, async () => {
     const path = `https://google.com/images/sample-image.gif`
 
