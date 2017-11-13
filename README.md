@@ -16,6 +16,7 @@ Websites built with Gatsby:
 * [React](https://reactjs.org/) ([source](https://github.com/reactjs/reactjs.org))
 * [Sourcegraph](https://about.sourcegraph.com)
 * [Simply](https://simply.co.za)
+* [The freeCodeCamp Guide](https://guide.freecodecamp.org)
 * [FloydHub's Blog](https://blog.floydhub.com)
 * [mParticle's Documentation](https://docs.mparticle.com)
 * [Segment's Blog](https://segment.com/blog/)
@@ -70,6 +71,9 @@ Websites built with Gatsby:
 * [GraphCMS's website](https://graphcms.com)
 * [Mannequin.io](https://mannequin.io) ([source](https://github.com/LastCallMedia/Mannequin/tree/master/site))
 * [API Platform](https://api-platform.com) ([source](https://github.com/api-platform/website))
+* [Bottender Docs](https://bottender.js.org/) ([source](https://github.com/bottenderjs/bottenderjs.github.io))
+* [How to GraphQL](https://www.howtographql.com/) ([source](https://github.com/howtographql/howtographql))
+* [greglobinski.com](https://greglobinski.com) ([source](https://github.com/greglobinski/greglobinski-com))
 
 ## Docs
 
