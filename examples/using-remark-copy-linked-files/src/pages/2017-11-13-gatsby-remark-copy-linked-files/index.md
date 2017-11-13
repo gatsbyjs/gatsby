@@ -32,15 +32,15 @@ Hegel is arguing that the reality is merely an a priori adjunct of non-naturalis
 
 <img src="./alex-holyoake-327106.jpg" style="width: 160px; float: right; margin: 0 0 1.8rem 1.8rem;"> And whereas in most professions these would be considerable drawbacks, in chartered accountancy, they're a positive boon. Image #2 should be floating `right`. We're not cheap--here's a HTML href <a href="http://example.com/">example.com</a> on top!
 
-__Paragraph in regular Markdown__ with inline image: ![inline image](./alex-holyoake-340782.jpg)
+__Paragraph tags with Markdown content__ with two HTML images inline, running across multiple lines: ![inline image](./alex-holyoake-340782.jpg)
 
 <p>
-  HTML Paragraph with one inline image:
+  HTML Paragraph with two inline images:
   <img src="./jakob-owens-262566.jpg">
   and another one: <img src="./alex-holyoake-327106.jpg">
 </p>
 
-## Hrefs
+## Links
 
 A HTML href on a single line:
 
@@ -71,10 +71,6 @@ Paragraph in regular Markdown and Markdown href: [Download PDF](Creativecommons-
 Here's a <span class="fail">Markdown image with space in filename</span>:
 
 ![](./alex-holyoake- 388538.jpg)
-
-Inline Markdown image with space in filename:
-
-This is the inline image: ![](./alex-holyoake- 388538.jpg) foo bar
 
 But: <span class="win">HTML image</span> with space in filename:
 
