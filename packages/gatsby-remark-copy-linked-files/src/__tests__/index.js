@@ -130,6 +130,20 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     expect(fsExtra.copy).toHaveBeenCalledTimes(2)
   })
 
+  it(`can copy HTML videos`, async () => {
+    const path = `videos/sample-video.mp4`
+
+    const markdownAST = remark.parse(
+      `<video controls="controls" autoplay="true" loop="true">\n<source type="video/mp4" src="${
+        path
+      }"></source>\n<p>Your browser does not support the video element.</p>\n</video>`
+    )
+
+    await plugin({ files: getFiles(path), markdownAST, markdownNode, getNode })
+
+    expect(fsExtra.copy).toHaveBeenCalled()
+  })
+
   it(`leaves HTML nodes alone`, async () => {
     const openingTag = `<a href="http://example.com/">`
 
