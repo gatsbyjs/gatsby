@@ -1,6 +1,6 @@
 import React, { createElement } from "react"
 import PropTypes from "prop-types"
-import loader from "./loader"
+import loader, { publicLoader } from "./loader"
 import emitter from "./emitter"
 import { apiRunner } from "./api-runner-browser"
 
@@ -105,6 +105,7 @@ class ComponentRenderer extends React.Component {
   render() {
     const pluginResponses = apiRunner(`replaceComponentRenderer`, {
       props: { ...this.props, pageResources: this.state.pageResources },
+      loader: publicLoader,
     })
     const replacementComponent = pluginResponses[0]
     // If page.

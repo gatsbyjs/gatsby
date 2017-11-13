@@ -6,19 +6,57 @@ const _ = require(`lodash`)
 const cheerio = require(`cheerio`)
 const sizeOf = require(`image-size`)
 
+const DEPLOY_DIR = `public`
+
+const invalidDestinationDirMessage = dir =>
+  `[gatsby-remark-copy-linked-files You have supplied an invalid destination directory. The destination directory must be a child but was: ${
+    dir
+  }`
+
+// dir must be a child
+const destinationDirIsValid = dir => !path.relative(`./`, dir).startsWith(`..`)
+
+const validateDestinationDir = dir =>
+  !dir || (dir && destinationDirIsValid(dir))
+
+const newFileName = linkNode =>
+  `${linkNode.name}-${linkNode.internal.contentDigest}.${linkNode.extension}`
+
+const newPath = (linkNode, destinationDir) => {
+  if (destinationDir) {
+    return path.posix.join(
+      process.cwd(),
+      DEPLOY_DIR,
+      destinationDir,
+      newFileName(linkNode)
+    )
+  }
+  return path.posix.join(process.cwd(), DEPLOY_DIR, newFileName(linkNode))
+}
+
+const newLinkURL = (linkNode, destinationDir) => {
+  if (destinationDir) {
+    return path.posix.join(`/`, destinationDir, newFileName(linkNode))
+  }
+  return path.posix.join(`/`, newFileName(linkNode))
+}
+
 module.exports = (
   { files, markdownNode, markdownAST, getNode },
-  pluginOptions
+  pluginOptions = {}
 ) => {
   const defaults = {
     ignoreFileExtensions: [`png`, `jpg`, `jpeg`, `bmp`, `tiff`],
   }
+  const { destinationDir } = pluginOptions
+  if (!validateDestinationDir(destinationDir))
+    return Promise.reject(invalidDestinationDirMessage(destinationDir))
 
   const options = _.defaults(pluginOptions, defaults)
 
   const filesToCopy = new Map()
-  // Copy linked files to the public directory and modify the AST to point to
-  // new location of the files.
+  // Copy linked files to the destination directory and modify the AST to point
+  // to new location of the files.
   const visitor = link => {
     if (
       isRelativeUrl(link.url) &&
@@ -35,30 +73,21 @@ module.exports = (
         return null
       })
       if (linkNode && linkNode.absolutePath) {
-        const newPath = path.posix.join(
-          process.cwd(),
-          `public`,
-          `${linkNode.internal.contentDigest}.${linkNode.extension}`
-        )
+        const newFilePath = newPath(linkNode, options.destinationDir)
 
         // Prevent uneeded copying
-        if (linkPath === newPath) {
-          return
-        }
+        if (linkPath === newFilePath) return
 
-        const relativePath = path.posix.join(
-          `/${linkNode.internal.contentDigest}.${linkNode.extension}`
-        )
-        link.url = `${relativePath}`
-
-        filesToCopy.set(linkPath, newPath)
+        const linkURL = newLinkURL(linkNode, options.destinationDir)
+        link.url = linkURL
+        filesToCopy.set(linkPath, newFilePath)
       }
     }
   }
 
   // Takes a node and generates the needed images and then returns
   // the needed HTML replacement for the image
-  const generateImagesAndUpdateNode = function(image) {
+  const generateImagesAndUpdateNode = function(image, node) {
     const imagePath = path.posix.join(
       getNode(markdownNode.parent).dir,
       image.attr(`src`)
@@ -78,7 +107,10 @@ module.exports = (
     // use that data to update our ref
     const link = { url: image.attr(`src`) }
     visitor(link)
-    image.attr(`src`, link.url)
+    node.value = node.value.replace(
+      new RegExp(image.attr(`src`), `g`),
+      link.url
+    )
 
     let dimensions
 
@@ -160,7 +192,7 @@ module.exports = (
           return
         }
 
-        generateImagesAndUpdateNode(thisImg)
+        generateImagesAndUpdateNode(thisImg, node)
       } catch (err) {
         // Ignore
       }
@@ -192,7 +224,10 @@ module.exports = (
         // use that data to update our ref
         const link = { url: thisVideo.attr(`src`) }
         visitor(link)
-        thisVideo.attr(`src`, link.url)
+        node.value = node.value.replace(
+          new RegExp(thisVideo.attr(`src`), `g`),
+          link.url
+        )
       } catch (err) {
         // Ignore
       }
@@ -224,25 +259,28 @@ module.exports = (
         // use that data to update our ref
         const link = { url: thisATag.attr(`href`) }
         visitor(link)
-        thisATag.attr(`href`, link.url)
+
+        node.value = node.value.replace(
+          new RegExp(thisATag.attr(`href`), `g`),
+          link.url
+        )
       } catch (err) {
         // Ignore
       }
     }
 
-    // Replace the image node with an inline HTML node.
-    node.type = `html`
-    node.value = $(`body`).html() // fix for cheerio v1
     return
   })
 
   return Promise.all(
-    Array.from(filesToCopy, async ([linkPath, newPath]) => {
-      if (!fsExtra.existsSync(newPath)) {
+    Array.from(filesToCopy, async ([linkPath, newFilePath]) => {
+      // Don't copy anything is the file already exists at the location.
+      if (!fsExtra.existsSync(newFilePath)) {
         try {
-          await fsExtra.copy(linkPath, newPath)
+          await fsExtra.ensureDir(path.dirname(newFilePath))
+          await fsExtra.copy(linkPath, newFilePath)
         } catch (err) {
-          console.error(`error copying file`, err)
+          console.error(`error copy ing file`, err)
         }
       }
     })

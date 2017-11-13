@@ -80,7 +80,9 @@ function maybeRedirect(pathname) {
 
     if (pageResources != null) {
       console.error(
-        `The route "${pathname}" matches both a page and a redirect; this is probably not intentional.`
+        `The route "${
+          pathname
+        }" matches both a page and a redirect; this is probably not intentional.`
       )
     }
 

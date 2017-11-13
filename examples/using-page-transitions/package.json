@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "author": "Steven Surgnier <stevensurgnier@gmail.com>",
   "dependencies": {
-    "gatsby": "^1.9.73",
+    "gatsby": "^1.9.102",
     "gatsby-link": "^1.6.22",
     "gatsby-plugin-react-helmet": "^1.0.8",
     "react-transition-group": "^2.2.1"

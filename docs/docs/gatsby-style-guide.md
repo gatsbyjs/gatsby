@@ -4,7 +4,7 @@ title: Gatsby Style Guide
 
 The Gatsby community is building out a more comprehensive Guides section. It will be full of relevant articles written to be easily understood by the awesome people who love building with Gatsby!
 
-We plan, write, and maintain these Guide articles on Github.
+We plan, write, and maintain these Guide articles on GitHub.
 
 ## Table of Contents
 - [What are Guide articles?](#what-are-guide-articles)
@@ -21,9 +21,9 @@ Guide articles can cover a broad range of topics. Please see the following examp
 
 We welcome your help writing these articles! You don't have to be an expert in a topic to write about it--this entire Guide is open source, so even if you make a mistake, another contributor will eventually correct it.
 
-If you’d like to help by writing an article, find a stub article in the Gatsby Guides (with an italicized title like this *Title*), write the article, then open a pull request (PR) in the Gatsby Github repo to replace the stub with your article.
+If you’d like to help by writing an article, find a stub article in the Gatsby Guides (with an italicized title like this *Title*), write the article, then open a pull request (PR) in the Gatsby GitHub repo to replace the stub with your article.
 
-If you can't find a stub about the topic you'd like to write about, you can open a PR in Github that creates the stub and includes your draft article. Feel free to ask us questions if you're not sure where to put a new article in the directory structure.
+If you can't find a stub about the topic you'd like to write about, you can open a PR in GitHub that creates the stub and includes your draft article. Feel free to ask us questions if you're not sure where to put a new article in the directory structure.
 
 Before you begin writing, make sure to read the article style guide below.
 
@@ -31,7 +31,7 @@ Before you begin writing, make sure to read the article style guide below.
 
 You can create a PR with your draft article (or edits on an existing article) in two ways:
 
-1. The easiest method is to use the GitHub interface. Read [these instructions](https://help.github.com/articles/editing-files-in-another-user-s-repository/) on how to create a draft article or propose edits in the Github interface.
+1. The easiest method is to use the GitHub interface. Read [these instructions](https://help.github.com/articles/editing-files-in-another-user-s-repository/) on how to create a draft article or propose edits in the GitHub interface.
 2. Go into the ["docs" folder](https://github.com/gatsbyjs/gatsby/tree/master/docs/docs) and find the article stub you'd like to write or edit. All stubs will be in an index.md file.
 3. Click the "Edit this file" pencil icon and make your changes to the file in GitHub-flavored Markdown.
 4. Scroll to the bottom of the screen and add a commit message explaining your changes. Then select the radio button option for "Create a new branch for this commit and start a pull request" and click "Propose file changes"
