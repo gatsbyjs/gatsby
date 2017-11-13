@@ -92,6 +92,16 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     expect(fsExtra.copy).toHaveBeenCalled()
   })
 
+  it(`can copy HTML file links`, async () => {
+    const path = `files/sample-file.txt`
+
+    const markdownAST = remark.parse(`<a href="${path}">link to file</a>`)
+
+    await plugin({ files: getFiles(path), markdownAST, markdownNode, getNode })
+
+    expect(fsExtra.copy).toHaveBeenCalled()
+  })
+
   it(`can copy HTML images`, async () => {
     const path = `images/sample-image.gif`
 
