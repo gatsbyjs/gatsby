@@ -162,7 +162,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
                   } else {
                     return createElement(ComponentRenderer, {
                       page: true,
-                      location: { pathname: `/404.html` }
+                      location: { pathname: `/404.html` },
                     })
                   }
                 },
