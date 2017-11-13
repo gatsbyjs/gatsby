@@ -1,4 +1,4 @@
-const loader = require(`../loader.js`)
+import loader from "../loader.js"
 
 describe(`Loader`, () => {
   beforeEach(() => {
