@@ -219,4 +219,39 @@ describe(`gatsby-remark-copy-linked-files`, () => {
       })
     })
   })
+
+  describe(`options.ignoreFileExtensions`, () => {
+    const pngImagePath = `images/sample-image.png`
+    const jpgImagePath = `images/sample-image.jpg`
+    const jpegImagePath = `images/sample-image.jpeg`
+    const bmpImagePath = `images/sample-image.bmp`
+    const tiffImagePath = `images/sample-image.tiff`
+
+    it(`optionally copies PNG, JPG/JPEG, BPM and TIFF files`, async () => {
+      const markdownAST = remark.parse(
+        `![PNG](${pngImagePath}) ![JPG](${jpgImagePath}) ![JPEG](${
+          jpegImagePath
+        }) ![BPM](${bmpImagePath}) ![TIFF](${tiffImagePath})`
+      )
+      await plugin(
+        {
+          files: [
+            ...getFiles(pngImagePath),
+            ...getFiles(jpgImagePath),
+            ...getFiles(jpegImagePath),
+            ...getFiles(bmpImagePath),
+            ...getFiles(tiffImagePath),
+          ],
+          markdownAST,
+          markdownNode,
+          getNode,
+        },
+        {
+          ignoreFileExtensions: [],
+        }
+      )
+
+      expect(fsExtra.copy).toHaveBeenCalledTimes(5)
+    })
+  })
 })
