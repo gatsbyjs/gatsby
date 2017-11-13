@@ -5,7 +5,6 @@ const path = require(`path`)
 const _ = require(`lodash`)
 const cheerio = require(`cheerio`)
 const sizeOf = require(`image-size`)
-const replaceString = require(`replace-string`)
 
 const DEPLOY_DIR = `public`
 
@@ -108,7 +107,10 @@ module.exports = (
     // use that data to update our ref
     const link = { url: image.attr(`src`) }
     visitor(link)
-    node.value = replaceString(node.value, image.attr(`src`), link.url)
+    node.value = node.value.replace(
+      new RegExp(image.attr(`src`), `g`),
+      link.url
+    )
 
     let dimensions
 
@@ -222,7 +224,10 @@ module.exports = (
         // use that data to update our ref
         const link = { url: thisVideo.attr(`src`) }
         visitor(link)
-        node.value = replaceString(node.value, thisVideo.attr(`src`), link.url)
+        node.value = node.value.replace(
+          new RegExp(thisVideo.attr(`src`), `g`),
+          link.url
+        )
       } catch (err) {
         // Ignore
       }
@@ -255,7 +260,10 @@ module.exports = (
         const link = { url: thisATag.attr(`href`) }
         visitor(link)
 
-        node.value = replaceString(node.value, thisATag.attr(`href`), link.url)
+        node.value = node.value.replace(
+          new RegExp(thisATag.attr(`href`), `g`),
+          link.url
+        )
       } catch (err) {
         // Ignore
       }
