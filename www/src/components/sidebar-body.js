@@ -28,8 +28,9 @@ const listStyles = {
         fontWeight: `normal`,
         position: `absolute`,
         transform: `scale(0.1)`,
-        transition: `all ${presets.animation.speedDefault} ${presets.animation
-          .curveDefault}`,
+        transition: `all ${presets.animation.speedDefault} ${
+          presets.animation.curveDefault
+        }`,
         [presets.Hd]: {
           height: 6,
           width: 6,

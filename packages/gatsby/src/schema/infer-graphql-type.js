@@ -18,7 +18,7 @@ const normalize = require(`normalize-path`)
 const systemPath = require(`path`)
 const { oneLine } = require(`common-tags`)
 
-const { store, getNode, getNodes } = require(`../redux`)
+const { store, getNode, getNodes, getRootNodeId } = require(`../redux`)
 const { joinPath } = require(`../utils/path`)
 const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 const createTypeName = require(`./create-type-name`)
@@ -287,8 +287,9 @@ function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
       field,
       oneLine`
         Encountered an error trying to infer a GraphQL type for: "${selector}".
-        There is no corresponding GraphQL type "${linkedNode.internal
-          .type}" available
+        There is no corresponding GraphQL type "${
+          linkedNode.internal.type
+        }" available
         to link to this node.
       `
     )
@@ -308,9 +309,9 @@ function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
     if (fields.length > 1) {
       type = new GraphQLUnionType({
         name: `Union_${key}_${fields.map(f => f.name).join(`__`)}`,
-        description: `Union interface for the field "${key}" for types [${fields
-          .map(f => f.name)
-          .join(`, `)}]`,
+        description: `Union interface for the field "${
+          key
+        }" for types [${fields.map(f => f.name).join(`, `)}]`,
         types: fields.map(f => f.nodeObjectType),
         resolveType: data =>
           fields.find(f => f.name == data.internal.type).nodeObjectType,
@@ -356,13 +357,14 @@ function findRootNode(node) {
   // Find the root node.
   let rootNode = node
   let whileCount = 0
+  let rootNodeId
   while (
-    (rootNode._PARENT || rootNode.parent) &&
-    (getNode(rootNode.parent) !== undefined || getNode(rootNode._PARENT)) &&
+    (rootNodeId = getRootNodeId(rootNode) || rootNode.parent) &&
+    (getNode(rootNode.parent) !== undefined || getNode(rootNodeId)) &&
     whileCount < 101
   ) {
-    if (rootNode._PARENT) {
-      rootNode = getNode(rootNode._PARENT)
+    if (rootNodeId) {
+      rootNode = getNode(rootNodeId)
     } else {
       rootNode = getNode(rootNode.parent)
     }

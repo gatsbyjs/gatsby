@@ -1,5 +1,5 @@
 ---
-title: How Gatsby Works with Github Pages
+title: How Gatsby Works with GitHub Pages
 ---
 
 This is a stub. Help our community expand it.

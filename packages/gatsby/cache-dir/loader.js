@@ -319,4 +319,8 @@ const queue = {
   indexOf: path => pathArray.length - pathArray.indexOf(path) - 1,
 }
 
-module.exports = queue
+export const publicLoader = {
+  getResourcesForPathname: queue.getResourcesForPathname,
+}
+
+export default queue

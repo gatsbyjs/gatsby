@@ -42,7 +42,8 @@ if (typeof window !== `undefined` && window.IntersectionObserver) {
       entries.forEach(entry => {
         listeners.forEach(l => {
           if (l[0] === entry.target) {
-            if (entry.isIntersecting) {
+            // Edge doesn't currently support isIntersecting, so also test for an intersectionRatio > 0
+            if (entry.isIntersecting || entry.intersectionRatio > 0) {
               io.unobserve(l[0])
               l[1]()
             }
@@ -183,9 +184,9 @@ class Image extends React.Component {
       // The outer div is necessary to reset the z-index to 0.
       return (
         <div
-          className={`${outerWrapperClassName
-            ? outerWrapperClassName
-            : ``} gatsby-image-outer-wrapper`}
+          className={`${
+            outerWrapperClassName ? outerWrapperClassName : ``
+          } gatsby-image-outer-wrapper`}
           style={{
             zIndex: 0,
             // Let users set component to be absolutely positioned.
@@ -260,8 +261,10 @@ class Image extends React.Component {
                 opacity={
                   this.state.imgLoaded || this.props.fadeIn === false ? 1 : 0
                 }
-                onLoad={() =>
-                  this.state.IOSupported && this.setState({ imgLoaded: true })}
+                onLoad={() => {
+                  this.state.IOSupported && this.setState({ imgLoaded: true })
+                  this.props.onLoad && this.props.onLoad()
+                }}
               />
             )}
           </div>
@@ -294,15 +297,13 @@ class Image extends React.Component {
       // The outer div is necessary to reset the z-index to 0.
       return (
         <div
-          className={`${outerWrapperClassName
-            ? outerWrapperClassName
-            : ``} gatsby-image-outer-wrapper`}
+          className={`${
+            outerWrapperClassName ? outerWrapperClassName : ``
+          } gatsby-image-outer-wrapper`}
           style={{
             zIndex: 0,
             // Let users set component to be absolutely positioned.
             position: style.position === `absolute` ? `initial` : `relative`,
-            width: image.width,
-            height: image.height,
           }}
         >
           <div
@@ -358,7 +359,10 @@ class Image extends React.Component {
                 opacity={
                   this.state.imgLoaded || this.props.fadeIn === false ? 1 : 0
                 }
-                onLoad={() => this.setState({ imgLoaded: true })}
+                onLoad={() => {
+                  this.setState({ imgLoaded: true })
+                  this.props.onLoad && this.props.onLoad()
+                }}
               />
             )}
           </div>
@@ -391,6 +395,7 @@ Image.propTypes = {
   style: PropTypes.object,
   position: PropTypes.string,
   backgroundColor: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  onLoad: PropTypes.func,
 }
 
 export default Image

@@ -1,6 +1,6 @@
 # gatsby-remark-autolink-headers
 
-Adds Github-style links to `MarkdownRemark` headers.
+Adds GitHub-style links to `MarkdownRemark` headers.
 
 ## Install
 
