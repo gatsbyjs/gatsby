@@ -64,7 +64,11 @@ function extractError(error: Error): { message: string, docName: string } {
     if (matches.index === docRegex.lastIndex) docRegex.lastIndex++
     ;[, message, docName] = matches
   }
-  if (!message) message = error.toString()
+
+  if (!message) {
+    message = error.toString()
+  }
+
   return { message, docName }
 }
 
@@ -179,7 +183,7 @@ export function graphqlError(
   let reportedMessage = `There was an error while compiling your site's GraphQL queries.
   ${message || error.message}
     `
-  
+
   if (error.message.match(/must be an instance of/)) {
     reportedMessage +=
       `This usually means that more than one instance of 'graphql' is installed ` +
@@ -189,5 +193,6 @@ export function graphqlError(
   if (error.message.match(/Duplicate document/)) {
     reportedMessage += `${error.message.slice(21)}\n`
   }
+
   return reportedMessage
 }
