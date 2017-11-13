@@ -92,6 +92,16 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     expect(fsExtra.copy).toHaveBeenCalled()
   })
 
+  it(`can copy HTML file links`, async () => {
+    const path = `files/sample-file.txt`
+
+    const markdownAST = remark.parse(`<a href="${path}">link to file</a>`)
+
+    await plugin({ files: getFiles(path), markdownAST, markdownNode, getNode })
+
+    expect(fsExtra.copy).toHaveBeenCalled()
+  })
+
   it(`can copy HTML images`, async () => {
     const path = `images/sample-image.gif`
 
@@ -118,6 +128,37 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     })
 
     expect(fsExtra.copy).toHaveBeenCalledTimes(2)
+  })
+
+  it(`can copy HTML videos`, async () => {
+    const path = `videos/sample-video.mp4`
+
+    const markdownAST = remark.parse(
+      `<video controls="controls" autoplay="true" loop="true">\n<source type="video/mp4" src="${
+        path
+      }"></source>\n<p>Your browser does not support the video element.</p>\n</video>`
+    )
+
+    await plugin({ files: getFiles(path), markdownAST, markdownNode, getNode })
+
+    expect(fsExtra.copy).toHaveBeenCalled()
+  })
+
+  it(`leaves HTML nodes alone`, async () => {
+    const openingTag = `<a href="http://example.com/">`
+
+    const markdownAST = remark.parse(`${openingTag}Link to example.com</a>`)
+
+    await plugin({
+      markdownAST,
+      markdownNode,
+      getNode,
+    }).then(() => {
+      // we expect the resulting markdownAST to consist
+      // of a paragraph with three children:
+      // openingTag, text, and closing tag
+      expect(markdownAST.children[0].children[0].value).toBe(openingTag)
+    })
   })
 
   it(`leaves absolute file paths alone`, async () => {
@@ -190,6 +231,41 @@ describe(`gatsby-remark-copy-linked-files`, () => {
         expect(fsExtra.copy).toHaveBeenCalledWith(imagePath, expectedNewPath)
         expect(imageURL(markdownAST)).toEqual(`/undefined-undefined.gif`)
       })
+    })
+  })
+
+  describe(`options.ignoreFileExtensions`, () => {
+    const pngImagePath = `images/sample-image.png`
+    const jpgImagePath = `images/sample-image.jpg`
+    const jpegImagePath = `images/sample-image.jpeg`
+    const bmpImagePath = `images/sample-image.bmp`
+    const tiffImagePath = `images/sample-image.tiff`
+
+    it(`optionally copies PNG, JPG/JPEG, BPM and TIFF files`, async () => {
+      const markdownAST = remark.parse(
+        `![PNG](${pngImagePath}) ![JPG](${jpgImagePath}) ![JPEG](${
+          jpegImagePath
+        }) ![BPM](${bmpImagePath}) ![TIFF](${tiffImagePath})`
+      )
+      await plugin(
+        {
+          files: [
+            ...getFiles(pngImagePath),
+            ...getFiles(jpgImagePath),
+            ...getFiles(jpegImagePath),
+            ...getFiles(bmpImagePath),
+            ...getFiles(tiffImagePath),
+          ],
+          markdownAST,
+          markdownNode,
+          getNode,
+        },
+        {
+          ignoreFileExtensions: [],
+        }
+      )
+
+      expect(fsExtra.copy).toHaveBeenCalledTimes(5)
     })
   })
 })
