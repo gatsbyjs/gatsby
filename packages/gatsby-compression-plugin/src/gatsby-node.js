@@ -1,4 +1,4 @@
-const CompressionPlugin = require("compression-webpack-plugin");
+const CompressionPlugin = require(`compression-webpack-plugin`)
 
 exports.modifyWebpackConfig = ({ config, stage }, options) => {
   switch (stage) {
@@ -7,8 +7,8 @@ exports.modifyWebpackConfig = ({ config, stage }, options) => {
     case `build-css`: {
       config.plugin(`compression`,
         CompressionPlugin,
-        [{asset: '[path].gz[query]', algorithm: 'gzip'}]
-      );
+        [{ asset: `[path].gz[query]`, algorithm: `gzip` }]
+      )
       return config
     }
     default: {
