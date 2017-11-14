@@ -42,7 +42,8 @@ if (typeof window !== `undefined` && window.IntersectionObserver) {
       entries.forEach(entry => {
         listeners.forEach(l => {
           if (l[0] === entry.target) {
-            if (entry.isIntersecting) {
+            // Edge doesn't currently support isIntersecting, so also test for an intersectionRatio > 0
+            if (entry.isIntersecting || entry.intersectionRatio > 0) {
               io.unobserve(l[0])
               l[1]()
             }
@@ -303,8 +304,6 @@ class Image extends React.Component {
             zIndex: 0,
             // Let users set component to be absolutely positioned.
             position: style.position === `absolute` ? `initial` : `relative`,
-            width: image.width,
-            height: image.height,
           }}
         >
           <div

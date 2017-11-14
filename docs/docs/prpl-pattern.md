@@ -26,3 +26,5 @@ This issue written at the start of Gatsby's 1.0 work provides further background
 Gatsby works to guarantee high performance.
 
 https://github.com/gatsbyjs/gatsby/issues/431
+
+This blog post also covers how we think about performance — ["Web Performance 101—also, why is Gatsby so fast?"](/blog/2017-09-13-why-is-gatsby-so-fast/)

@@ -31,7 +31,7 @@ class DocsPackagesTemplate extends React.Component {
               position: `absolute`,
             }}
           >
-            Browse source code for this package on Github
+            Browse source code for this package on GitHub
           </a>
         </strong>
         <div

@@ -31,7 +31,8 @@ const handleIntersection = (el, cb) => {
     entries.forEach(entry => {
       if (el === entry.target) {
         // Check if element is within viewport, remove listener, destroy observer, and run link callback.
-        if (entry.isIntersecting) {
+        // MSEdge doesn't currently support isIntersecting, so also test for  an intersectionRatio > 0
+        if (entry.isIntersecting || entry.intersectionRatio > 0) {
           io.unobserve(el)
           io.disconnect()
           cb()
