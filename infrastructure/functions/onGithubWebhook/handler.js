@@ -63,7 +63,7 @@ const createCommit = (commit, branchId) => {
     mutation {
       createCommit(authorName: "${commit.author.name}",authorUsername: "${commit
     .author.username}", authorEmail: "${commit.author
-    .email}", hash: "${commit.sha}", message: "${commit.message}", branchIds: ["${branchId}"]) {
+    .email}", hash: "${commit.tree_id}", message: "${commit.message}", branchIds: ["${branchId}"]) {
         id
       }
     }
