@@ -184,9 +184,12 @@ responsiveResolution(
 If set, a semi-transparent version of duotone'd image will be composited over
 the original image, allowing the original image and its colors to partially
 "shine through". _Heads up_: If the original image contains an alpha
-channel, the latter will be flattened before creating the composite.
+channel it will be [flattened][15] before creating the composite.
 
-@todo overlayWith, alpha composition, maybe link original issue
+This works by adding an alpha channel to the duotone'd image - then we let Sharp
+do its magic via [`overlayWith`](http://sharp.dimens.io/en/stable/api-composite/#overlaywith); quoting the Sharp documentation:
+
+> If the overlay image contains an alpha channel then composition with <a href="https://en.wikipedia.org/wiki/Alpha_compositing">premultiplication</a> will occur.
 
 #### tracedSVG
 
@@ -238,3 +241,4 @@ responsiveResolution(
 [12]: https://github.com/svg/svgo
 [13]: https://github.com/tooolbox/node-potrace#parameters
 [14]: https://github.com/oliver-moran/jimp
+[15]: http://sharp.dimens.io/en/stable/api-operation/#flatten
