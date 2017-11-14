@@ -327,9 +327,9 @@ Gatsbygram's `about.js` is a simple React component with no query.
 has an infinite scroll implementation to lazy load in image thumbnails.
 
 [Read pages/index.js on
-Github](https://github.com/gatsbyjs/gatsby/blob/master/examples/gatsbygram/src/pages/index.js)
+GitHub](https://github.com/gatsbyjs/gatsby/blob/master/examples/gatsbygram/src/pages/index.js)
 [Read pages/about.js on
-Github](https://github.com/gatsbyjs/gatsby/blob/master/examples/gatsbygram/src/pages/about.js)
+GitHub](https://github.com/gatsbyjs/gatsby/blob/master/examples/gatsbygram/src/pages/about.js)
 
 ## The Layout Component
 
@@ -378,7 +378,7 @@ sites as it has logic to show clicked images in either a modal on larger
 screens or on their own page on smaller screens.
 
 [Read Gatsbygram's Layout component on
-Github](https://github.com/gatsbyjs/gatsby/blob/master/examples/gatsbygram/src/layouts/index.js).
+GitHub](https://github.com/gatsbyjs/gatsby/blob/master/examples/gatsbygram/src/layouts/index.js).
 
 ## Client routing and pre-caching
 

@@ -316,7 +316,7 @@ const Diagram = ({ containerCSS }) => (
       >
         <ItemTitle>Static Web Host</ItemTitle>
         <ItemDescription>
-          Amazon S3, Netlify, Github Pages, Surge.sh, Aerobatic, Now.sh, & many
+          Amazon S3, Netlify, GitHub Pages, Surge.sh, Aerobatic, Now.sh, & many
           more
         </ItemDescription>
       </div>

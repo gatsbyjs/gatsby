@@ -64,7 +64,9 @@ type Plugin = {
 
 /**
  * Delete a page
- * @param {string} page a page object with at least the path set
+ * @param {Object} page a page object with at least the path set
+ * @param {string} page.path The path of the page
+ * @param {string} page.component The absolute path to the page component
  * @example
  * deletePage(page)
  */
@@ -710,12 +712,14 @@ actions.setPluginStatus = (
  * @param {string} redirect.redirectInBrowser Redirects are generally for redirecting legacy URLs to their new configuration. If you can't update your UI for some reason, set `redirectInBrowser` to true and Gatsby will handle redirecting in the client as well.
  * @example
  * createRedirect({ fromPath: '/old-url', toPath: '/new-url', isPermanent: true })
+ * createRedirect({ fromPath: '/url', toPath: '/zn-CH/url', Language: 'zn' })
  */
 actions.createRedirect = ({
   fromPath,
   isPermanent = false,
-  toPath,
   redirectInBrowser = false,
+  toPath,
+  ...rest
 }) => {
   let pathPrefix = ``
   if (store.getState().program.prefixPaths) {
@@ -727,8 +731,9 @@ actions.createRedirect = ({
     payload: {
       fromPath: `${pathPrefix}${fromPath}`,
       isPermanent,
-      toPath: `${pathPrefix}${toPath}`,
       redirectInBrowser,
+      toPath: `${pathPrefix}${toPath}`,
+      ...rest,
     },
   }
 }

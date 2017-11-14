@@ -16,6 +16,7 @@ Websites built with Gatsby:
 * [React](https://reactjs.org/) ([source](https://github.com/reactjs/reactjs.org))
 * [Sourcegraph](https://about.sourcegraph.com)
 * [Simply](https://simply.co.za)
+* [The freeCodeCamp Guide](https://guide.freecodecamp.org)
 * [FloydHub's Blog](https://blog.floydhub.com)
 * [mParticle's Documentation](https://docs.mparticle.com)
 * [Segment's Blog](https://segment.com/blog/)
@@ -69,6 +70,10 @@ Websites built with Gatsby:
 * [GRANDstack - GraphQL, React, Apollo, Neo4j Database](http://grandstack.io/)
 * [GraphCMS's website](https://graphcms.com)
 * [Mannequin.io](https://mannequin.io) ([source](https://github.com/LastCallMedia/Mannequin/tree/master/site))
+* [API Platform](https://api-platform.com) ([source](https://github.com/api-platform/website))
+* [Bottender Docs](https://bottender.js.org/) ([source](https://github.com/bottenderjs/bottenderjs.github.io))
+* [How to GraphQL](https://www.howtographql.com/) ([source](https://github.com/howtographql/howtographql))
+* [greglobinski.com](https://greglobinski.com) ([source](https://github.com/greglobinski/greglobinski-com))
 
 ## Docs
 
@@ -124,7 +129,7 @@ Support us with a monthly donation and help us continue our activities. [[Become
 
 ## Sponsors
 
-Become a sponsor and get your logo on our README on Github with a link to your site. [[Become a sponsor](https://opencollective.com/gatsby#sponsor)]
+Become a sponsor and get your logo on our README on GitHub with a link to your site. [[Become a sponsor](https://opencollective.com/gatsby#sponsor)]
 
 <a href="https://opencollective.com/gatsby/sponsor/0/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/0/avatar.svg"></a>
 <a href="https://opencollective.com/gatsby/sponsor/1/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/1/avatar.svg"></a>

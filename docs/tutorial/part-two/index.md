@@ -200,7 +200,7 @@ const typography = new Typography({ baseFontSize: '18px' })
 export default typography
 ```
 
-Then set this module to be used by `gatsby-plugin-typography` as its config.
+Then set this module to be used by `gatsby-plugin-typography` as its config in our `gatsby-config.js` file.
 
 ```javascript{2..9}
 module.exports = {

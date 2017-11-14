@@ -24,6 +24,30 @@ plugins: [
 ]
 ```
 
+### How to change the directory the files are added to.
+
+By default, all files will be copied to the root of the `public` dir, but you can choose a different location using the `destinationDir` option. Provide a path, relative to the `public` directory. The path must be within the public directory, so `path/to/dir` is fine, but `../../dir` is not.
+
+```
+// In your gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-transformer-remark`,
+    options: {
+      plugins: [
+        { 
+          resolve: 'gatsby-remark-copy-linked-files',
+          options: {
+            destinationDir: 'path/to/dir',
+          }
+        }
+      }
+    }
+  }
+]
+```
+
+
 ### How to override which file types are ignored
 
 ```javascript

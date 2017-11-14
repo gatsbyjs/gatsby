@@ -12,9 +12,9 @@ const typePrefix = `Contentful`
 const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 
 const getLocalizedField = ({ field, defaultLocale, locale }) => {
-  if (field[locale.code]) {
+  if (!_.isUndefined(field[locale.code])) {
     return field[locale.code]
-  } else if (field[locale.fallbackCode]) {
+  } else if (!_.isUndefined(field[locale.fallbackCode])) {
     return field[locale.fallbackCode]
   } else {
     return null
