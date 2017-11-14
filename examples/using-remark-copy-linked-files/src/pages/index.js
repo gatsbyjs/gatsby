@@ -1,23 +1,23 @@
-import React from 'react'
-import Link from 'gatsby-link'
-import get from 'lodash/get'
-import Helmet from 'react-helmet'
+import React from "react"
+import Link from "gatsby-link"
+import get from "lodash/get"
+import Helmet from "react-helmet"
 
-import Bio from '../components/Bio'
-import { rhythm } from '../utils/typography'
+import Bio from "../components/Bio"
+import { rhythm } from "../utils/typography"
 
 class BlogIndex extends React.Component {
   render() {
-    const siteTitle = get(this, 'props.data.site.siteMetadata.title')
-    const posts = get(this, 'props.data.allMarkdownRemark.edges')
+    const siteTitle = get(this, `props.data.site.siteMetadata.title`)
+    const posts = get(this, `props.data.allMarkdownRemark.edges`)
 
     return (
       <div>
         <Helmet title={siteTitle} />
         <Bio />
         {posts.map(post => {
-          if (post.node.frontmatter.path !== '/404/') {
-            const title = get(post, 'node.frontmatter.title') || post.node.path
+          if (post.node.frontmatter.path !== `/404/`) {
+            const title = get(post, `node.frontmatter.title`) || post.node.path
             return (
               <div key={post.node.frontmatter.path}>
                 <h3
@@ -26,7 +26,7 @@ class BlogIndex extends React.Component {
                   }}
                 >
                   <Link
-                    style={{ boxShadow: 'none' }}
+                    style={{ boxShadow: `none` }}
                     to={post.node.frontmatter.path}
                   >
                     {title}
