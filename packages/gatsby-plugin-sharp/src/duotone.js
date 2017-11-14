@@ -13,7 +13,7 @@ module.exports = async function duotone(duotone, format, clonedPipeline) {
     format = `jpeg`
   }
 
-  return await clonedPipeline
+  const duotoneImage = await clonedPipeline
     .raw()
     .toBuffer({ resolveWithObject: true })
     .then(({ data, info }) => {
@@ -34,6 +34,12 @@ module.exports = async function duotone(duotone, format, clonedPipeline) {
         raw: info,
       }).toFormat(format)
     })
+
+  if (duotone.opacity) {
+    return overlayDuotone(duotoneImage, clonedPipeline, duotone, format)
+  } else {
+    return duotoneImage
+  }
 }
 
 // @see https://github.com/nagelflorian/react-duotone/blob/master/src/hex-to-rgb.js
@@ -68,4 +74,35 @@ function createDuotoneGradient(primaryColorRGB, secondaryColorRGB) {
   }
 
   return duotoneGradient
+}
+
+async function overlayDuotone(duotoneImage, originalImage, duotone, format) {
+  const info = await duotoneImage
+    .flatten()
+    .metadata()
+    .then(info => info)
+  // see https://github.com/lovell/sharp/issues/859#issuecomment-311319149
+  const percentGrey = Math.round(duotone.opacity / 100 * 255)
+  const percentTransparency = Buffer.alloc(
+    info.width * info.height,
+    percentGrey
+  )
+
+  const duotoneWithTransparency = await duotoneImage
+    .joinChannel(percentTransparency, {
+      raw: { width: info.width, height: info.height, channels: 1 },
+    })
+    .raw()
+    .toBuffer()
+
+  return await originalImage
+    .overlayWith(duotoneWithTransparency, {
+      raw: { width: info.width, height: info.height, channels: 4 },
+    })
+    .toBuffer({ resolveWithObject: true })
+    .then(({ data, info }) =>
+      sharp(data, {
+        raw: info,
+      }).toFormat(format)
+    )
 }
