@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "React.js Static Site Generator",
-  "version": "1.9.110",
+  "version": "1.9.111",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./dist/bin/gatsby.js"
@@ -48,8 +48,8 @@
     "fs-extra": "^4.0.1",
     "gatsby-1-config-css-modules": "^1.0.6",
     "gatsby-cli": "^1.1.20",
-    "gatsby-module-loader": "^1.0.7",
-    "gatsby-react-router-scroll": "^1.0.3",
+    "gatsby-module-loader": "^1.0.8",
+    "gatsby-react-router-scroll": "^1.0.4",
     "glob": "^7.1.1",
     "graphql": "^0.11.7",
     "graphql-relay": "^0.5.1",
