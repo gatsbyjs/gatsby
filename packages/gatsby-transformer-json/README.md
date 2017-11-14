@@ -1,6 +1,6 @@
 # gatsby-transformer-json
 
-Parses JSON files. Supports arrays of objects and single objects.
+Parses raw JSON strings into JavaScript objects e.g. from JSON files. Supports arrays of objects and single objects.
 
 ## Install
 

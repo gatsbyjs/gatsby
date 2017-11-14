@@ -37,7 +37,7 @@ of working on the project and seeing it used successfully by many people
 on a wide variety of sites, I'm confident that Gatsby works.
 
 Since I open sourced Gatsby in 2015, it's collected over **8000 stars**
-on Github (by far the most stars on Github for a project of its type),
+on GitHub (by far the most stars on GitHub for a project of its type),
 been joined by **122 contributors**, and **downloaded 130,000** times!
 
 In mid-2016, I decided to [work full-time on
@@ -364,7 +364,7 @@ be used to build real sites.
 
 The first beta will be released in the coming weeks along with more
 documentation and a getting started tutorial. Subscribe to the [1.0 meta
-issue](https://github.com/gatsbyjs/gatsby/issues/419) on Github to get
+issue](https://github.com/gatsbyjs/gatsby/issues/419) on GitHub to get
 updates.
 
 This has been a super fun project to work on. I'm really interested to

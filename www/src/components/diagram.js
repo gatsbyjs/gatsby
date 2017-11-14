@@ -21,7 +21,11 @@ const stripeAnimation = css.keyframes({
 const stripeBg = {
   backgroundColor: presets.sidebar,
   backgroundSize: `${rhythm(stripeSize)} ${rhythm(stripeSize)}`,
-  backgroundImage: `linear-gradient(45deg, rgba(${stripeColor}) 25%, transparent 25%, transparent 50%, rgba(${stripeColor}) 50%, rgba(${stripeColor}) 75%, transparent 75%, transparent)`,
+  backgroundImage: `linear-gradient(45deg, rgba(${
+    stripeColor
+  }) 25%, transparent 25%, transparent 50%, rgba(${stripeColor}) 50%, rgba(${
+    stripeColor
+  }) 75%, transparent 75%, transparent)`,
   animation: `${stripeAnimation} 14s linear infinite`,
 }
 const lineAnimation = css.keyframes({
@@ -312,7 +316,7 @@ const Diagram = ({ containerCSS }) => (
       >
         <ItemTitle>Static Web Host</ItemTitle>
         <ItemDescription>
-          Amazon S3, Netlify, Github Pages, Surge.sh, Aerobatic, Now.sh, & many
+          Amazon S3, Netlify, GitHub Pages, Surge.sh, Aerobatic, Now.sh, & many
           more
         </ItemDescription>
       </div>
