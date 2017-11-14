@@ -139,9 +139,6 @@ const resolveResponsiveResolution = (image, options) => {
           if (!options.resizingBehavior) {
             options.resizingBehavior = `fill`
           }
-          if (!options.cropFocus) {
-            options.cropFocus = `faces`
-          }
         }
 
         // Create sizes (in width) for the image. If the width of the
@@ -302,9 +299,6 @@ const resolveResize = (image, options) =>
         if (options.height) {
           if (!options.resizingBehavior) {
             options.resizingBehavior = `fill`
-          }
-          if (!options.cropFocus) {
-            options.cropFocus = `faces`
           }
         }
 
