@@ -182,8 +182,23 @@ module.exports = (
       } else {
         const ast = await getAST(markdownNode)
         const tocAst = mdastToToc(ast)
+
         let toc
         if (tocAst.map) {
+          const addSlugToUrl = function(node) {
+            if (node.url) {
+              node.url = [pathPrefix, markdownNode.fields.slug, node.url]
+                .join(`/`)
+                .replace(/\/\//g, `/`)
+            }
+            if (node.children) {
+              node.children = node.children.map(node => addSlugToUrl(node))
+            }
+
+            return node
+          }
+          tocAst.map = addSlugToUrl(tocAst.map)
+
           toc = hastToHTML(toHAST(tocAst.map))
         } else {
           toc = ``
