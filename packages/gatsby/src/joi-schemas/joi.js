@@ -44,7 +44,9 @@ export const nodeSchema = Joi.object()
     parent: Joi.string()
       .allow(null)
       .required()
-      .error(() => `"parent" must be the "id" of another node or "null"`),
+      .error(
+        () => new Error(`"parent" must be the "id" of another node or "null"`)
+      ),
     fields: Joi.object(),
     internal: Joi.object().keys({
       contentDigest: Joi.string().required(),
