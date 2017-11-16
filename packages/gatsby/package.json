@@ -58,7 +58,7 @@
     "invariant": "^2.2.2",
     "is-relative": "^0.2.1",
     "is-relative-url": "^2.0.0",
-    "joi": "^9.1.1",
+    "joi": "12.x.x",
     "json-loader": "^0.5.2",
     "json-stringify-safe": "^5.0.1",
     "json5": "^0.5.0",
