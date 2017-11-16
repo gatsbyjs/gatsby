@@ -7,7 +7,7 @@ module.exports.prototype.apply = function(compiler) {
       hash
     ) {
       if (chunk.chunks.length > 0) {
-        var buf = []
+        let buf = []
 
         buf.push(``)
         buf.push(``)

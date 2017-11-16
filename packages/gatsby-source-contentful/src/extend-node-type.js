@@ -133,14 +133,11 @@ const resolveResponsiveResolution = (image, options) => {
           desiredAspectRatio = options.width / options.height
         }
 
-        // If the user selected a height (so cropping) and options for focus
-        // and fit aren't set, we'll set our defaults
+        // If the user selected a height (so cropping) and fit option
+        // is not set, we'll set our defaults
         if (options.height) {
           if (!options.resizingBehavior) {
             options.resizingBehavior = `fill`
-          }
-          if (!options.cropFocus) {
-            options.cropFocus = `faces`
           }
         }
 
@@ -297,14 +294,11 @@ const resolveResize = (image, options) =>
 
     getBase64ImageAndBasicMeasurements(image, options).then(
       ({ contentType, base64Str, width, height, aspectRatio }) => {
-        // If the user selected a height (so cropping) and options for focus
-        // and fit aren't set, we'll set our defaults
+        // If the user selected a height (so cropping) and fit option
+        // is not set, we'll set our defaults
         if (options.height) {
           if (!options.resizingBehavior) {
             options.resizingBehavior = `fill`
-          }
-          if (!options.cropFocus) {
-            options.cropFocus = `faces`
           }
         }
 
