@@ -173,7 +173,7 @@ export default ({ pathname }) => {
         >
           <a
             href="https://github.com/gatsbyjs/gatsby"
-            title="Github"
+            title="GitHub"
             css={{
               ...navItemStyles,
               ...socialIconsStyles,

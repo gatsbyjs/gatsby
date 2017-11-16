@@ -19,7 +19,7 @@ Gatsby at the time was still pre-1.0 but its workflow met my needs. I loved that
 
 Webpack loader —> React.js wrapper component —> static HTML page. Done.
 
-Well...done until I read this [Github Issue](https://github.com/gatsbyjs/gatsby/issues/420) … "New GraphQL data layer".
+Well...done until I read this [GitHub Issue](https://github.com/gatsbyjs/gatsby/issues/420) … "New GraphQL data layer".
 
 ![issue-420](issue-420.png) 
 

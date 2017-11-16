@@ -127,7 +127,7 @@ To do that, import the `<Link>` component from the `gatsby-link` package that wa
 
 Unlike the normal HTML `<a>` element, our `Link` component uses `to` for specifying the page you want to link to. Let's link to a page with the pathname of `/page-2/`. Try adding that. Once you're done, the page component should look like:
 
-```jsx{2,9-10}
+```jsx{2,9-12}
 import React from "react"
 import Link from "gatsby-link"
 
@@ -137,7 +137,9 @@ export default () =>
     <p>What a world.</p>
     <img src="http://lorempixel.com/400/200/" alt="" />
     <br />
-    <Link to="/page-2/">Link</Link>
+    <div>
+      <Link to="/page-2/">Link</Link>
+    </div>
   </div>
 ```
 
@@ -176,6 +178,25 @@ One nice thing about using Gatsby for building websites vs other tools is it's s
 Let's see how easy it is to add interactive elements to our pages.
 
 We'll start by creating a new link to a page at `/counter`/ from our original `index.js` page component `<Link to="/counter/">Counter</Link>`.
+
+```jsx{13-15}
+import React from "react"
+import Link from "gatsby-link"
+
+export default () =>
+  <div style={{ color: `tomato` }}>
+    <h1>Hello Gatsby!</h1>
+    <p>What a world.</p>
+    <img src="http://lorempixel.com/400/200/" alt="" />
+    <br />
+    <div>
+      <Link to="/page-2/">Link</Link>
+    </div>
+    <div>
+      <Link to="/counter/">Counter</Link>
+    </div>
+  </div>
+```
 
 Add that link, click on it, and then we'll create a "Hello World" page component for `/counter/` as before. But instead of using the "functional component" form as we did before, we'll create a "class" component.
 
@@ -218,7 +239,7 @@ So now we have everything we need to make a nice counter. Let's make it live.
 
 First we'll setup the component state.
 
-```jsx{4-7,12-13}
+```jsx{4-7,13}
 import React from "react"
 
 class Counter extends React.Component {
@@ -297,7 +318,7 @@ npm install --global surge
 Then build your site by running in the terminal at the root of your site:
 
 ```bash
-npm run build
+gatsby build
 ```
 
 Building should take 15-30 seconds. Take a look at the generated files by looking

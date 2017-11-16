@@ -1,8 +1,8 @@
 /**
  * Colorize the output
- * 
- * @param {any} msg 
- * @param {any} c 
+ *
+ * @param {any} msg
+ * @param {any} c
  */
 const out = (msg, c) => `${c}${msg}${color.Reset}`
 const color = {

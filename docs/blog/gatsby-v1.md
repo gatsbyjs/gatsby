@@ -24,8 +24,8 @@ Gatsby means no more compromising between developers, designers, and authors.
 
  In the last year, Gatsby community and usage have exploded. Milestones reached:
 
-* 196 code contributors on Github (with many more helping in [our chat room on Discord](https://discord.gg/0ZcbPKXt5bVoxkfV)).
-* 10,000 stars on Github
+* 196 code contributors on GitHub (with many more helping in [our chat room on Discord](https://discord.gg/0ZcbPKXt5bVoxkfV)).
+* 10,000 stars on GitHub
 * 1000 followers on Twitter
 * 500,000 NPM downloads (100,000 in the last month!!)
 
@@ -274,4 +274,4 @@ each others shoes as they rapidly iterate on features.
 
 ## Ending note
 
-Gatsby is just getting started. We're really looking forward to working with you! [See you on Github!](https://github.com/gatsbyjs/gatsby) 👋
+Gatsby is just getting started. We're really looking forward to working with you! [See you on GitHub!](https://github.com/gatsbyjs/gatsby) 👋

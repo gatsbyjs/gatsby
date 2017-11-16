@@ -5,7 +5,7 @@ title: Adding a Path Prefix
 Many sites are hosted at something other than the root of their domain.
 
 E.g. a Gatsby blog could live at `example.com/blog/` or a site could be
-hosted on Github pages at `example.github.io/my-gatsby-site/`
+hosted on GitHub pages at `example.github.io/my-gatsby-site/`
 
 Each of these sites need a prefix added to all paths on the site.  So a link
 to `/my-sweet-blog-post/` should be rewritten to `/blog/my-sweet-blog-post`.

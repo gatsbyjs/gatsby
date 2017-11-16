@@ -110,7 +110,9 @@ async function fetch({
     if (_verbose)
       console.log(
         colorized.out(
-          `Fetching the JSON data from ${validRoutes.length} valid API Routes...`,
+          `Fetching the JSON data from ${
+            validRoutes.length
+          } valid API Routes...`,
           colorized.color.Font.FgBlue
         )
       )

@@ -96,7 +96,9 @@ function transformLink(manifest, publicFolder, pathPrefix) {
         return `${prefix}${pathPrefix}${file}${suffix}`
       } else {
         throw new Error(
-          `Could not find the file specified in the Link header \`${header}\`.` +
+          `Could not find the file specified in the Link header \`${
+            header
+          }\`.` +
             `The gatsby-plugin-netlify is looking for a matching file (with or without a ` +
             `webpack hash). Check the public folder and your gatsby-config.js to ensure you are ` +
             `pointing to a public file.`
@@ -134,18 +136,18 @@ const validateUserOptions = pluginOptions => headers => {
     )
   }
 
-  ;[
-    `mergeSecurityHeaders`,
-    `mergeLinkHeaders`,
-    `mergeCachingHeaders`,
-  ].forEach(mergeOption => {
-    if (!_.isBoolean(pluginOptions[mergeOption])) {
-      throw new Error(
-        `The "${mergeOption}" option to gatsby-plugin-netlify must be a boolean. ` +
-          `Check your gatsby-config.js.`
-      )
+  ;[`mergeSecurityHeaders`, `mergeLinkHeaders`, `mergeCachingHeaders`].forEach(
+    mergeOption => {
+      if (!_.isBoolean(pluginOptions[mergeOption])) {
+        throw new Error(
+          `The "${
+            mergeOption
+          }" option to gatsby-plugin-netlify must be a boolean. ` +
+            `Check your gatsby-config.js.`
+        )
+      }
     }
-  })
+  )
 
   if (!_.isFunction(pluginOptions.transformHeaders)) {
     throw new Error(
