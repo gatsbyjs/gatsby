@@ -1,0 +1,15 @@
+---
+title: "A Default, 140 Character Excerpt"
+draft: false
+example: true
+author: Daisy Buchanan
+---
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed ullamcorper massa. Nunc pretium vulputate leo. Sed rutrum leo sit amet nisi vulputate ultrices. Nunc ut orci vitae leo sodales lobortis. Suspendisse potenti. In non nulla eget purus viverra tristique. Fusce mattis sodales tempor.
+
+Curabitur laoreet lectus nulla, sit amet egestas felis imperdiet et. Mauris bibendum augue rutrum nunc aliquet, at sollicitudin nibh porta. Integer at enim ut ex pharetra commodo nec eget ex. Duis nec laoreet ante, et porta eros. Praesent ultrices facilisis fringilla. Pellentesque non nisl a magna porta ornare. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis ultrices consectetur mi sed posuere. Vivamus in ultricies turpis.
+
+Cras et lectus venenatis, scelerisque nunc non, faucibus lacus. Nullam elementum convallis efficitur. Suspendisse cursus erat euismod dolor ultrices pellentesque. Vestibulum vehicula consequat mi vitae commodo. Proin tempus neque vel enim placerat eleifend. Nunc nulla risus, hendrerit quis diam a, mollis gravida sapien. Vestibulum ut pellentesque tortor. Nullam sodales felis quis lorem dapibus, sit amet rutrum mi pulvinar. Fusce sodales tortor eu ante placerat, et semper ante dapibus. Fusce egestas commodo velit, a sodales tortor interdum sit amet. Fusce dui est, pharetra eu vulputate pretium, consequat fringilla nunc.
+
+Quisque tempor, nulla et ornare condimentum, leo lectus venenatis ex, eu mollis est nibh quis ante. Sed faucibus sodales lacus, quis volutpat lectus vehicula sodales. Proin sit amet posuere nisl. Suspendisse porta bibendum orci in hendrerit. Quisque malesuada, quam ut eleifend feugiat, lacus augue imperdiet purus, non porttitor felis leo vel nunc. Sed nec purus eget mi maximus hendrerit. Aenean interdum rhoncus tellus, non euismod nunc. Maecenas suscipit, lectus porta tristique porttitor, odio dui pretium nisl, ut tincidunt mi mi eget tellus. Phasellus nec ultrices est. Sed dictum tincidunt euismod. Nunc nulla ante, euismod at hendrerit non, pellentesque in enim. Proin dignissim sit amet massa in suscipit. Aenean eget ipsum eget eros egestas suscipit eu ut mi. Sed sed felis orci. Duis sed turpis justo.
+
+Fusce semper sodales leo, at pulvinar dolor. Phasellus laoreet eros nec nisi fringilla, sit amet venenatis ipsum dapibus. Duis ornare ligula vitae dolor vestibulum, et porta mi lacinia. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In hac habitasse platea dictumst. Nam elementum pellentesque purus. Mauris posuere sagittis tortor, quis imperdiet magna dignissim et. Aliquam varius nibh quis sapien ornare aliquet. Nulla tristique dapibus magna, et luctus libero faucibus sit amet. Curabitur eleifend sed ex et pellentesque.

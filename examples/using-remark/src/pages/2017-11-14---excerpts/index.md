@@ -32,3 +32,5 @@ tags:
     }
 }
 ```
+
+You can see the results [here](/excerpt-example)

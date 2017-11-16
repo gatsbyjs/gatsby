@@ -7,6 +7,7 @@ import { rhythm, scale } from "../utils/typography"
 class Index extends React.Component {
   render() {
     const posts = this.props.data.allMarkdownRemark.edges
+    console.log(posts)
 
     return (
       <div>
@@ -59,6 +60,9 @@ class Index extends React.Component {
                 <Link to={post.node.fields.slug} className="link-underline">
                   {post.node.frontmatter.title}
                 </Link>
+                <p>
+                    {post.node.excerpt}
+                </p>
               </li>
             ))}
           </ul>
@@ -71,16 +75,9 @@ class Index extends React.Component {
 export default Index
 
 export const pageQuery = graphql`
-  query IndexQuery {
+  query ExcerptExampleQuery {
     allMarkdownRemark(
-      limit: 2000
-      sort: { fields: [frontmatter___date], order: DESC }
-      filter: { 
-        frontmatter: { 
-          draft: { ne: true }
-          example: { ne: true }
-        } 
-      }
+      filter: { frontmatter: { example: { eq: true } } }
     ) {
       edges {
         node {
@@ -89,8 +86,8 @@ export const pageQuery = graphql`
           }
           frontmatter {
             title
-            date(formatString: "MMMM DD, YYYY")
           }
+          excerpt
         }
       }
     }
