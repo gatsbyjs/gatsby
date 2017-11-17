@@ -2,6 +2,7 @@ const path = require(`path`)
 const resolveCwd = require(`resolve-cwd`)
 const yargs = require(`yargs`)
 const report = require(`./reporter`)
+const fs = require(`fs`)
 
 const DEFAULT_BROWSERS = [`> 1%`, `last 2 versions`, `IE >= 9`]
 
@@ -13,13 +14,15 @@ const handlerP = fn => (...args) => {
 }
 
 function buildLocalCommands(cli, isLocalSite) {
-  const defaultHost = `localhost`
+  const defaultHost = `0.0.0.0`
   const directory = path.resolve(`.`)
 
   let siteInfo = { directory, browserslist: DEFAULT_BROWSERS }
+  const useYarn = fs.existsSync(path.join(directory, `yarn.lock`))
   if (isLocalSite) {
     const json = require(path.join(directory, `package.json`))
     siteInfo.sitePackageJson = json
+    siteInfo.appName = json.name
     siteInfo.browserslist = json.browserslist || siteInfo.browserslist
   }
 
@@ -70,7 +73,7 @@ function buildLocalCommands(cli, isLocalSite) {
       report.verbose(`set gatsby_executing_command: "${command}"`)
 
       let localCmd = resolveLocalCommand(command)
-      let args = { ...argv, ...siteInfo }
+      let args = { ...argv, ...siteInfo, useYarn }
 
       report.verbose(`running command: ${command}`)
       return handler ? handler(args, localCmd) : localCmd(args)
