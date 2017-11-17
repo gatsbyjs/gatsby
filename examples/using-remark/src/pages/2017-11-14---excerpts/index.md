@@ -8,7 +8,7 @@ tags:
   - excerpts
 ---
 
-`gatsby-transformer-remark` allows you to get an excerpt from a markdown post. By default, it will grab the first 140 characters, but you can optionally specify a `pruneLength` in the graphql query.
+`gatsby-transformer-remark` allows you to get an excerpt from a markdown post. By default, it will prune the first 140 characters, but you can optionally specify a `pruneLength` in the graphql query.
 
 ```graphql
 {
@@ -22,7 +22,7 @@ tags:
 }
 ```
 
-`gatsby-transformer-remark` uses [gray-matter]() to parse markdown frontmatter. You can specify gray-matter's excerpt_separator, as well as any of the other gray-matter options mentioned [here](), in the `gatsby-config.js` file.
+You can also manually mark in your markdown where to stop excerpting—similar to Jekyl. `gatsby-transformer-remark` uses [gray-matter]() to parse markdown frontmatter, so you can specify an excerpt_separator, as well as any of the other options mentioned [here](), in the `gatsby-config.js` file.
 
 ```json
 {
@@ -32,5 +32,7 @@ tags:
     }
 }
 ```
+
+Any file that does not have the given excerpt_separator will fall back to the default pruning method.
 
 You can see the results [here](/excerpt-example)
