@@ -59,6 +59,8 @@ Gatsby allows you to [automatically prefix links](/docs/path-prefix/) for sites 
 
 This can create problems during development as pathnames won't be prefixed. To handle both, gatsby-link exports a helper function `withPrefix` that prepends the prefix during production but doesn't in development.
 
+This is only for pathnames you're constructing manually. The `<Link>` component handles prefixing automatically.
+
 ```jsx
 import { withPrefix } from "gatsby-link"
 
