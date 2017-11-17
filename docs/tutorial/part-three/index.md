@@ -29,7 +29,7 @@ import fairyGateTheme from "typography-theme-fairy-gates"
 
 const typography = new Typography(fairyGateTheme)
 
-module.exports = typography
+export default typography
 ```
 
 Then our site's `gatsby-config.js`
@@ -114,6 +114,8 @@ export default ({ children }) =>
     {children()}
   </div>
 ```
+
+_Notice that unlike most `children` props, the `children` prop passed to layout components is a function and needs to be executed_
 
 Stop `gatsby develop` and start it again for the new layout to take effect.
 

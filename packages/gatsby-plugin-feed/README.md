@@ -76,8 +76,7 @@ plugins: [
               }
             }
           `,
-          output: '/rss.xml',
-          feedTitle: 'My feed title'
+          output: '/rss.xml'
         }
       ]
     }

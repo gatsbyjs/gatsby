@@ -62,7 +62,7 @@ exports.sourceNodes = async ({ boundActionCreators }) => {
   const data = await fetch(REMOTE_API)
 
   // Process data into nodes.
-  // data.forEach(datum => createNode(processDatum(datum)))
+  data.forEach(datum => createNode(processDatum(datum)))
 
   // We're done, return.
   return

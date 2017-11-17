@@ -9,8 +9,8 @@ import getTransitionStyle from "./src/utils/getTransitionStyle"
 const timeout = 250
 const historyExitingEventType = `history::exiting`
 
-const getUserConfirmation = (message, callback) => {
-  const event = new CustomEvent(historyExitingEventType, { detail: { message } })
+const getUserConfirmation = (pathname, callback) => {
+  const event = new CustomEvent(historyExitingEventType, { detail: { pathname } })
   window.dispatchEvent(event)
   setTimeout(() => {
     callback(true)
@@ -18,18 +18,22 @@ const getUserConfirmation = (message, callback) => {
 }
 const history = createHistory({ getUserConfirmation })
 // block must return a string to conform
-history.block((location, action) => location.key)
+history.block((location, action) => location.pathname)
 exports.replaceHistory = () => history
 
 class ReplaceComponentRenderer extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { exiting: false }
+    this.state = { exiting: false, nextPageResources: {} }
     this.listenerHandler = this.listenerHandler.bind(this)
   }
 
   listenerHandler(event) {
-    this.setState({ exiting: true })
+    const nextPageResources = this.props.loader.getResourcesForPathname(
+      event.detail.pathname,
+      nextPageResources => this.setState({ nextPageResources })
+    ) || {}
+    this.setState({ exiting: true, nextPageResources })
   }
 
   componentDidMount() {
@@ -42,7 +46,7 @@ class ReplaceComponentRenderer extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.location.key !== nextProps.location.key) {
-      this.setState({ exiting: false })
+      this.setState({ exiting: false, nextPageResources: {} })
     }
   }
 
@@ -66,6 +70,7 @@ class ReplaceComponentRenderer extends React.Component {
             status,
             timeout,
             style: getTransitionStyle({ status, timeout }),
+            nextPageResources: this.state.nextPageResources,
           },
         })
       }
@@ -75,9 +80,9 @@ class ReplaceComponentRenderer extends React.Component {
 }
 
 // eslint-disable-next-line react/display-name
-exports.replaceComponentRenderer = ({ props }) => {
+exports.replaceComponentRenderer = ({ props, loader }) => {
   if (props.layout) {
     return undefined
   }
-  return createElement(ReplaceComponentRenderer, props)
+  return createElement(ReplaceComponentRenderer, { ...props, loader })
 }
