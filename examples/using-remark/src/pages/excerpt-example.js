@@ -18,21 +18,7 @@ class Index extends React.Component {
               marginBottom: rhythm(2),
             }}
           >
-            This example demonstrates{` `}
-            <a href="https://www.gatsbyjs.org/packages/gatsby-transformer-remark/">
-              gatsby-transformer-remark
-            </a>
-            {` `}
-            and its plugins. It uses{` `}
-            <a href="https://github.com/KyleAMathews/typography.js">
-              Typography.js
-            </a>
-            {` `}
-            and self-hosted fonts via the{` `}
-            <a href="https://github.com/KyleAMathews/typefaces">Typefaces</a>
-            {` `}
-            project.
-            {}
+            This page demonstrates the different types of excerpts you can use with gatsby-transformer-remark
           </h1>
           <ul
             css={{
