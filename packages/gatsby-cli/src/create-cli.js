@@ -22,7 +22,6 @@ function buildLocalCommands(cli, isLocalSite) {
   if (isLocalSite) {
     const json = require(path.join(directory, `package.json`))
     siteInfo.sitePackageJson = json
-    siteInfo.appName = json.name
     siteInfo.browserslist = json.browserslist || siteInfo.browserslist
   }
 
