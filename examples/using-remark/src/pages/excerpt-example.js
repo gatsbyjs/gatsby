@@ -7,7 +7,6 @@ import { rhythm, scale } from "../utils/typography"
 class Index extends React.Component {
   render() {
     const posts = this.props.data.allMarkdownRemark.edges
-    console.log(posts)
 
     return (
       <div>
