@@ -20,7 +20,7 @@ const formatWebpackMessages = require(`react-dev-utils/formatWebpackMessages`)
 const chalk = require(`chalk`)
 const address = require(`address`)
 
-const isInteractive = process.stdout.isTTY
+// const isInteractive = process.stdout.isTTY
 
 // Watch the static directory and copy files to public as they're added or
 // changed. Wait 10 seconds so copying doesn't interfer with the regular
@@ -173,7 +173,9 @@ async function startServer(program) {
       if (err.code === `EADDRINUSE`) {
         // eslint-disable-next-line max-len
         report.panic(
-          `Unable to start Gatsby on port ${program.port} as there's already a process listing on that port.`
+          `Unable to start Gatsby on port ${
+            program.port
+          } as there's already a process listing on that port.`
         )
         return
       }
@@ -210,9 +212,11 @@ module.exports = async (program: any) => {
 
       if (port !== _port) {
         // eslint-disable-next-line max-len
-        const question = `Something is already running at port ${port} \nWould you like to run the app at another port instead? [Y/n] `
+        const question = `Something is already running at port ${
+          port
+        } \nWould you like to run the app at another port instead? [Y/n] `
 
-        return rlInterface.question(question, answer => {
+        rlInterface.question(question, answer => {
           if (answer.length === 0 || answer.match(/^yes|y$/i)) {
             program.port = _port // eslint-disable-line no-param-reassign
           }
@@ -231,7 +235,7 @@ module.exports = async (program: any) => {
         resolve()
       })
 
-      return
+      return null
     })
   })
 

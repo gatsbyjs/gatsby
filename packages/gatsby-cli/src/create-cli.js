@@ -3,7 +3,6 @@ const resolveCwd = require(`resolve-cwd`)
 const yargs = require(`yargs`)
 const report = require(`./reporter`)
 const fs = require(`fs`)
-const os = require(`os`)
 
 const DEFAULT_BROWSERS = [`> 1%`, `last 2 versions`, `IE >= 9`]
 
@@ -45,7 +44,9 @@ function buildLocalCommands(cli, isLocalSite) {
         resolveCwd.silent(`gatsby/dist/utils/${command}`)
       if (!cmdPath)
         return report.panic(
-          `There was a problem loading the local ${command} command. Gatsby may not be installed.`
+          `There was a problem loading the local ${
+            command
+          } command. Gatsby may not be installed.`
         )
 
       report.verbose(`loading local command from: ${cmdPath}`)
@@ -53,7 +54,9 @@ function buildLocalCommands(cli, isLocalSite) {
     } catch (err) {
       cli.showHelp()
       return report.panic(
-        `There was a problem loading the local ${command} command. Gatsby may not be installed.`,
+        `There was a problem loading the local ${
+          command
+        } command. Gatsby may not be installed.`,
         err
       )
     }
