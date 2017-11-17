@@ -227,13 +227,13 @@ module.exports = async (program: any) => {
             resolve()
           })
         })
+      } else {
+        startServer(program).then(([c, l]) => {
+          compiler = c
+          listener = l
+          resolve()
+        })
       }
-
-      startServer(program).then(([c, l]) => {
-        compiler = c
-        listener = l
-        resolve()
-      })
 
       return null
     })
