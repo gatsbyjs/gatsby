@@ -143,8 +143,8 @@ allImageSharp {
 #### duotone
 
 Applys a "duotone" effect (see [I][1], [II][2], [III][3]) to the source image if
- given two hex colors `shadow` and `highlight` defining start and end color of
- the duotone gradient, e.g.
+given two hex colors `shadow` and `highlight` defining start and end color of
+the duotone gradient, e.g.
 
 ```javascript
 responsiveResolution(
@@ -161,8 +161,35 @@ responsiveResolution(
 ```
 
 the source image colors will be converted to match a gradient color chosen based
-on each pixel's [relative luminance][4].
+on each pixel's [relative luminance][4].  
 Logic is borrowed from [react-duotone][5].
+
+You can pass a third optional parameter, `opacity`:
+
+```javascript
+responsiveResolution(
+  width: 800,
+  duotone: {
+    highlight: "#f00e2e",
+    shadow: "#192550",
+    opacity: 50
+  }
+) {
+  src
+  srcSet
+  base64
+}
+```
+
+If set, a semi-transparent version of duotone'd image will be composited over
+the original image, allowing the original image and its colors to partially
+"shine through". _Heads up_: If the original image contains an alpha
+channel it will be [flattened][15] before creating the composite.
+
+This works by adding an alpha channel to the duotone'd image - then we let Sharp
+do its magic via [`overlayWith`](http://sharp.dimens.io/en/stable/api-composite/#overlaywith); quoting the Sharp documentation:
+
+> If the overlay image contains an alpha channel then composition with <a href="https://en.wikipedia.org/wiki/Alpha_compositing">premultiplication</a> will occur.
 
 #### tracedSVG
 
@@ -214,3 +241,4 @@ responsiveResolution(
 [12]: https://github.com/svg/svgo
 [13]: https://github.com/tooolbox/node-potrace#parameters
 [14]: https://github.com/oliver-moran/jimp
+[15]: http://sharp.dimens.io/en/stable/api-operation/#flatten

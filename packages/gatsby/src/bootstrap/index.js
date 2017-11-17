@@ -224,7 +224,9 @@ module.exports = async (args: BootstrapArgs) => {
     )
     .join(`,`)
 
-  browserAPIRunner = `var plugins = [${browserPluginsRequires}]\n${browserAPIRunner}`
+  browserAPIRunner = `var plugins = [${browserPluginsRequires}]\n${
+    browserAPIRunner
+  }`
 
   let sSRAPIRunner = ``
 
@@ -372,7 +374,14 @@ module.exports = async (args: BootstrapArgs) => {
       report.log(``)
       report.info(`bootstrap finished - ${process.uptime()} s`)
       report.log(``)
-      resolve({ graphqlRunner })
+
+      // onPostBootstrap
+      activity = report.activityTimer(`onPostBootstrap`)
+      activity.start()
+      apiRunnerNode(`onPostBootstrap`).then(() => {
+        activity.end()
+        resolve({ graphqlRunner })
+      })
     }
   }, 100)
 
@@ -390,16 +399,7 @@ module.exports = async (args: BootstrapArgs) => {
   } else {
     return new Promise(resolve => {
       // Wait until all side effect jobs are finished.
-      emitter.on(`END_JOB`, () => {
-        // onPostBootstrap
-        activity = report.activityTimer(`onPostBootstrap`)
-        activity.start()
-        apiRunnerNode(`onPostBootstrap`).then(() => {
-          activity.end()
-
-          return checkJobsDone(resolve)
-        })
-      })
+      emitter.on(`END_JOB`, () => checkJobsDone(resolve))
     })
   }
 }

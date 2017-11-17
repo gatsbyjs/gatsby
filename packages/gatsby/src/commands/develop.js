@@ -14,6 +14,7 @@ const copyStaticDirectory = require(`../utils/copy-static-directory`)
 const developHtml = require(`./develop-html`)
 const { withBasePath } = require(`../utils/path`)
 const report = require(`gatsby-cli/lib/reporter`)
+const launchEditor = require(`react-dev-utils/launchEditor`)
 
 // Watch the static directory and copy files to public as they're added or
 // changed. Wait 10 seconds so copying doesn't interfer with the regular
@@ -84,6 +85,10 @@ async function startServer(program) {
       graphiql: true,
     })
   )
+  app.get(`/__open-stack-frame-in-editor`, (req, res) => {
+    launchEditor(req.query.fileName, req.query.lineNumber)
+    res.end()
+  })
 
   app.use(express.static(__dirname + `/public`))
 
@@ -109,7 +114,7 @@ async function startServer(program) {
   app.get(`*`, (req, res, next) => {
     // Load file but ignore errors.
     res.sendFile(
-      directoryPath(`/public/${decodeURIComponent(req.url)}`),
+      directoryPath(`/public${decodeURIComponent(req.path)}`),
       err => {
         // No err so a file was sent successfully.
         if (!err || !err.path) {
@@ -162,7 +167,9 @@ async function startServer(program) {
       if (err.code === `EADDRINUSE`) {
         // eslint-disable-next-line max-len
         report.panic(
-          `Unable to start Gatsby on port ${program.port} as there's already a process listing on that port.`
+          `Unable to start Gatsby on port ${
+            program.port
+          } as there's already a process listing on that port.`
         )
         return
       }
@@ -202,7 +209,9 @@ module.exports = (program: any) => {
 
     if (port !== _port) {
       // eslint-disable-next-line max-len
-      const question = `Something is already running at port ${port} \nWould you like to run the app at another port instead? [Y/n] `
+      const question = `Something is already running at port ${
+        port
+      } \nWould you like to run the app at another port instead? [Y/n] `
 
       return rlInterface.question(question, answer => {
         if (answer.length === 0 || answer.match(/^yes|y$/i)) {

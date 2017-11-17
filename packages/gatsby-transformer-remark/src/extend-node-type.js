@@ -23,17 +23,21 @@ const remark2retext = require(`remark-retext`)
 
 let pluginsCacheStr = ``
 const astCacheKey = node =>
-  `transformer-remark-markdown-ast-${node.internal
-    .contentDigest}-${pluginsCacheStr}`
+  `transformer-remark-markdown-ast-${node.internal.contentDigest}-${
+    pluginsCacheStr
+  }`
 const htmlCacheKey = node =>
-  `transformer-remark-markdown-html-${node.internal
-    .contentDigest}-${pluginsCacheStr}`
+  `transformer-remark-markdown-html-${node.internal.contentDigest}-${
+    pluginsCacheStr
+  }`
 const headingsCacheKey = node =>
-  `transformer-remark-markdown-headings-${node.internal
-    .contentDigest}-${pluginsCacheStr}`
+  `transformer-remark-markdown-headings-${node.internal.contentDigest}-${
+    pluginsCacheStr
+  }`
 const tableOfContentsCacheKey = node =>
-  `transformer-remark-markdown-toc-${node.internal
-    .contentDigest}-${pluginsCacheStr}`
+  `transformer-remark-markdown-toc-${node.internal.contentDigest}-${
+    pluginsCacheStr
+  }`
 
 module.exports = (
   { type, store, pathPrefix, getNode, cache },
@@ -178,8 +182,23 @@ module.exports = (
       } else {
         const ast = await getAST(markdownNode)
         const tocAst = mdastToToc(ast)
+
         let toc
         if (tocAst.map) {
+          const addSlugToUrl = function(node) {
+            if (node.url) {
+              node.url = [pathPrefix, markdownNode.fields.slug, node.url]
+                .join(`/`)
+                .replace(/\/\//g, `/`)
+            }
+            if (node.children) {
+              node.children = node.children.map(node => addSlugToUrl(node))
+            }
+
+            return node
+          }
+          tocAst.map = addSlugToUrl(tocAst.map)
+
           toc = hastToHTML(toHAST(tocAst.map))
         } else {
           toc = ``

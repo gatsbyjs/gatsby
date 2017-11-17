@@ -5,7 +5,7 @@ title: "Deploying Gatsby"
 ## Tutorials for deploying on different static site hosts
 
 * [S3/Cloudfront](/docs/deploy-gatsby/#amazon-s3-and-cloudfront)
-* [Github Pages](/docs/deploy-gatsby/#github-pages)
+* [GitHub Pages](/docs/deploy-gatsby/#github-pages)
 
 ## Amazon S3 and Cloudfront
 
@@ -13,11 +13,11 @@ If you decide to host your Gatsby site on S3 with Cloudfront as CDN, you should 
 
 Without this change, [S3 doesn't look for index.html files when serving "clean urls"](https://forums.aws.amazon.com/message.jspa?messageID=314454). 
 
-## Github Pages
+## GitHub Pages
 
 ### Deploying a project page
 
-You can deploy sites on Github Pages with or without a custom domain. If you choose to use the default setup (without a custom domain), you will need to setup your site with [path prefixing](/docs/path-prefix/).
+You can deploy sites on GitHub Pages with or without a custom domain. If you choose to use the default setup (without a custom domain), you will need to setup your site with [path prefixing](/docs/path-prefix/).
 
 ### Use the NPM package `gh-pages` for deploying
 
@@ -39,11 +39,11 @@ module.exports = {
 }
 ```
 
-Now run `yarn deploy` or `npm run deploy`. Preview changes in your github page `https://username.github.io/project-name/`. You can also find the link to your site on Github under `Settings` > `Github Pages`. 
+Now run `yarn deploy` or `npm run deploy`. Preview changes in your GitHub page `https://username.github.io/project-name/`. You can also find the link to your site on GitHub under `Settings` > `GitHub Pages`.
 
 ### Deploying a user/organization site
 
-Unlike project pages, user/organization sites on Github live in a special repository dedicated to files for the site. The sites must be published from the `master` branch of the repository which means the site source files should be kept in a branch named `source` or something similar. We also don't need to prefix links like we do with project sites.
+Unlike project pages, user/organization sites on GitHub live in a special repository dedicated to files for the site. The sites must be published from the `master` branch of the repository which means the site source files should be kept in a branch named `source` or something similar. We also don't need to prefix links like we do with project sites.
 
 The repository for these sites requires a special name. See https://help.github.com/articles/user-organization-and-project-pages/ for documentation on naming your site's repository.
 

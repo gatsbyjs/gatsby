@@ -33,7 +33,13 @@ class DefaultLayout extends React.Component {
     const sidebarStyles = {
       borderRight: `1px solid ${colors.b[0]}`,
       backgroundColor: presets.sidebar,
-      boxShadow: `inset 0 4px 5px 0 rgba(116, 76, 158, ${presets.shadowKeyPenumbraOpacity}), inset 0 1px 10px 0 rgba(${presets.shadowColor}, ${presets.shadowAmbientShadowOpacity}), inset 0 2px 4px -1px rgba(${presets.shadowColor}, ${presets.shadowKeyUmbraOpacity})`,
+      boxShadow: `inset 0 4px 5px 0 rgba(116, 76, 158, ${
+        presets.shadowKeyPenumbraOpacity
+      }), inset 0 1px 10px 0 rgba(${presets.shadowColor}, ${
+        presets.shadowAmbientShadowOpacity
+      }), inset 0 2px 4px -1px rgba(${presets.shadowColor}, ${
+        presets.shadowKeyUmbraOpacity
+      })`,
       width: rhythm(10),
       display: `none`,
       position: `fixed`,

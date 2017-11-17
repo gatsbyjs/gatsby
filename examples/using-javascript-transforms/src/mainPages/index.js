@@ -15,13 +15,13 @@ class SiteIndex extends React.Component {
     let pageArray = []
     pageRaw.forEach(page => {
       if (typeof page.node.frontmatter === `object`) {
-        if (typeof page.node.frontmatter.written != `undefined`) {
+        if (typeof page.node.frontmatter.written !== `undefined`) {
           pageArray.push(page.node.frontmatter)
         }
       } else if (typeof page.node.data === `object`) {
         if (
-          typeof page.node.data.written != `undefined` &&
-          page.node.data.written != ``
+          typeof page.node.data.written !== `undefined` &&
+          page.node.data.written !== ``
         ) {
           pageArray.push(page.node.data)
         }
@@ -35,7 +35,7 @@ class SiteIndex extends React.Component {
     sortedPages.forEach(page => {
       let frontmatter = page
 
-      if (frontmatter.layoutType == `post`) {
+      if (frontmatter.layoutType === `post`) {
         iteratorKey += 1
         pageLinks.push(
           <div className="box" key={iteratorKey}>
