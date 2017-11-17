@@ -340,7 +340,7 @@ module.exports = async (program: any) => {
     // }
     // if (isSuccessful && (isInteractive || isFirstCompile)) {
     if (isSuccessful && isFirstCompile) {
-      printInstructions(program.appName, urls, program.useYarn)
+      printInstructions(program.sitePackageJson.name, urls, program.useYarn)
     }
 
     if (program.open) {
