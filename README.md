@@ -70,6 +70,7 @@ Websites built with Gatsby:
 * [GRANDstack - GraphQL, React, Apollo, Neo4j Database](http://grandstack.io/)
 * [GraphCMS's website](https://graphcms.com)
 * [Mannequin.io](https://mannequin.io) ([source](https://github.com/LastCallMedia/Mannequin/tree/master/site))
+* [Calpa's Blog](https://calpa.me) [(source)](https://github.com/calpa/blog)
 * [API Platform](https://api-platform.com) ([source](https://github.com/api-platform/website))
 * [Bottender Docs](https://bottender.js.org/) ([source](https://github.com/bottenderjs/bottenderjs.github.io))
 * [How to GraphQL](https://www.howtographql.com/) ([source](https://github.com/howtographql/howtographql))
