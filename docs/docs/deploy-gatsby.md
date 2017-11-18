@@ -17,7 +17,9 @@ Without this change, [S3 doesn't look for index.html files when serving "clean u
 
 ### Deploying a project page
 
-You can deploy sites on GitHub Pages with or without a custom domain. If you choose to use the default setup (without a custom domain), you will need to setup your site with [path prefixing](/docs/path-prefix/).
+You can deploy sites on GitHub Pages with or without a custom domain. If you choose to use the default setup (without a custom domain), or if you create a project site, you will need to setup your site with [path prefixing](/docs/path-prefix/).
+
+On Github, you get one site per GitHub account and organization, and unlimited project sites. So it is most likely you will be creating a project site. If you do not have an existing repository on Github that you plan to use, take the time now to create a new repository on Github. 
 
 ### Use the NPM package `gh-pages` for deploying
 
@@ -38,6 +40,7 @@ module.exports = {
   pathPrefix: `/project-name`,
 }
 ```
+If you have not yet initialized a git repository in your working gatsby site repo, set up git in your project with `git init`. Then tell Gatsby where to deploy your site by adding the git remote address with https or ssh. Here is how to do it with https: `git remote add origin git@github.com:username/project-name.git`.
 
 Now run `yarn deploy` or `npm run deploy`. Preview changes in your GitHub page `https://username.github.io/project-name/`. You can also find the link to your site on GitHub under `Settings` > `GitHub Pages`.
 
