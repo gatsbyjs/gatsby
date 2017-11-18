@@ -517,7 +517,7 @@ Styled Components lets you use actual CSS syntax inside your components.
 First, like normal, we'll install the Gatsby plugin for Styled Components.
 
 ```sh
-npm install --save gatsby-plugin-styled-components
+npm install --save gatsby-plugin-styled-components styled-components
 ```
 
 Then modify the `gatsby-config.js`. Before we can use Styled Components however, we'll need to remove the Glamor plugin and delete the Glamor component page we created. The two plugins conflict with each other as both want to take control during server rendering.
