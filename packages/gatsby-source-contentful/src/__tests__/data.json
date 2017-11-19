@@ -1446,6 +1446,66 @@
                         "en-US": "Shop for toys, games, educational aids"
                     }
                 }
+            },
+            {
+              "sys": {
+                "space": {
+                  "sys": {
+                    "type": "Link",
+                    "linkType": "Space",
+                    "id": "5wvb725fovi7"
+                  }
+                },
+                "id": "qUHfYUmG8o4MCaEWoukuu",
+                "type": "Entry",
+                "createdAt": "2017-11-17T13:33:08.292Z",
+                "updatedAt": "2017-11-17T13:33:09.688Z",
+                "createdBy": {
+                  "sys": {
+                    "type": "Link",
+                    "linkType": "User",
+                    "id": "2jNQ11AkTRw4aZ7RC5XD2m"
+                  }
+                },
+                "updatedBy": {
+                  "sys": {
+                    "type": "Link",
+                    "linkType": "User",
+                    "id": "2jNQ11AkTRw4aZ7RC5XD2m"
+                  }
+                },
+                "publishedCounter": 1,
+                "version": 2,
+                "publishedBy": {
+                  "sys": {
+                    "type": "Link",
+                    "linkType": "User",
+                    "id": "2jNQ11AkTRw4aZ7RC5XD2m"
+                  }
+                },
+                "publishedVersion": 1,
+                "firstPublishedAt": "2017-11-17T13:33:09.688Z",
+                "publishedAt": "2017-11-17T13:33:09.688Z",
+                "contentType": {
+                  "sys": {
+                    "type": "Link",
+                    "linkType": "ContentType",
+                    "id": "globalSettings"
+                  }
+                }
+              },
+              "fields": {
+                "translations": {
+                  "en-US": {
+                    "hello": "hello",
+                    "no": "no"
+                  },
+                  "de": {
+                    "hello": "hallo",
+                    "no": "nein"
+                  }
+                }
+              }
             }
         ],
         "assets": [
@@ -2160,6 +2220,62 @@
                     "omitted": false
                 }
             ]
+        },
+        {
+          "sys": {
+            "space": {
+              "sys": {
+                "type": "Link",
+                "linkType": "Space",
+                "id": "5wvb725fovi7"
+              }
+            },
+            "id": "globalSettings",
+            "type": "ContentType",
+            "createdAt": "2017-11-17T13:32:48.442Z",
+            "updatedAt": "2017-11-17T13:32:50.137Z",
+            "createdBy": {
+              "sys": {
+                "type": "Link",
+                "linkType": "User",
+                "id": "2jNQ11AkTRw4aZ7RC5XD2m"
+              }
+            },
+            "updatedBy": {
+              "sys": {
+                "type": "Link",
+                "linkType": "User",
+                "id": "2jNQ11AkTRw4aZ7RC5XD2m"
+              }
+            },
+            "publishedCounter": 1,
+            "version": 2,
+            "publishedBy": {
+              "sys": {
+                "type": "Link",
+                "linkType": "User",
+                "id": "2jNQ11AkTRw4aZ7RC5XD2m"
+              }
+            },
+            "publishedVersion": 1,
+            "firstPublishedAt": "2017-11-17T13:32:50.137Z",
+            "publishedAt": "2017-11-17T13:32:50.137Z"
+          },
+          "displayField": null,
+          "name": "GlobalSettings",
+          "description": null,
+          "fields": [
+            {
+              "id": "translations",
+              "name": "Translations",
+              "type": "Object",
+              "localized": true,
+              "required": false,
+              "validations": [],
+              "disabled": false,
+              "omitted": false
+            }
+          ]
         }
     ],
     "defaultLocale": "en-US",
