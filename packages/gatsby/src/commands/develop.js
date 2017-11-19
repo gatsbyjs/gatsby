@@ -234,8 +234,6 @@ module.exports = async (program: any) => {
           resolve()
         })
       }
-
-      return null
     })
   })
 
