@@ -256,7 +256,7 @@ module.exports = async (program: any) => {
     const isUnspecifiedHost = host === `0.0.0.0` || host === `::`
     let prettyHost, lanUrlForConfig, lanUrlForTerminal
     if (isUnspecifiedHost) {
-      prettyHost = `localhost`
+      prettyHost = `0.0.0.0`
       try {
         // This can only return an IPv4 address
         lanUrlForConfig = address.ip()
