@@ -31,7 +31,7 @@ Data can also live in file types like markdown, CSV, etc. as well as databases a
 
 **Gatsby's data layer lets us pull data from these (and any other source) directly into our components**—in the shape and form we want.
 
-## How Gatsby's data layer uses GraphQL to pull data into components 
+## How Gatsby's data layer uses GraphQL to pull data into components
 
 If you're familiar with the React world, there are many options for loading data into components. One of the most popular and robust of these is a technology called [GraphQL](http://graphql.org/).
 
@@ -66,9 +66,9 @@ export default () =>
   <div>
     <h1>Amazing Pandas Eating Things</h1>
     <div>
-      <img 
+      <img
         src="https://2.bp.blogspot.com/-BMP2l6Hwvp4/TiAxeGx4CTI/AAAAAAAAD_M/XlC_mY3SoEw/s1600/panda-group-eating-bamboo.jpg"
-        alt="Group of pandas eating bamboo" 
+        alt="Group of pandas eating bamboo"
       />
     </div>
   </div>
@@ -151,7 +151,7 @@ module.exports = {
 }
 ```
 
-Add the above files and then run `gatsby develop` like normal and you should see the following: 
+Add the above files and then run `gatsby develop` like normal and you should see the following:
 
 ![start](start.png)
 
@@ -268,6 +268,24 @@ So almost everywhere, changes you make will immediately take effect.
 
 Try editing the title in `siteMetadata`—change the title back to "Pandas Eating Lots". The change should show up very quickly in your browser.
 
+## Wait — where did the graphql tag come from?
+
+You may have noticed that we used a [tag function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Tagged_template_literals) called `graphql`, but we never actually _import_ a `graphql` tag. So... how does this not throw an error?
+
+The short answer is this: during the Gatsby build process, GraphQL queries are pulled out of the original source for parsing.
+
+The longer answer is a little more involved: Gatsby borrows a technique from [Relay](https://facebook.github.io/relay/) that converts our source code into an [abstract syntax tree (AST)](https://en.wikipedia.org/wiki/Abstract_syntax_tree) during the build step. All `graphql`-tagged templates are found in [`file-parser.js`](https://github.com/gatsbyjs/gatsby/blob/v1.6.3/packages/gatsby/src/internal-plugins/query-runner/file-parser.js#L63) and [`query-compiler.js`](https://github.com/gatsbyjs/gatsby/blob/v1.6.3/packages/gatsby/src/internal-plugins/query-runner/query-compiler.js), which effectively removes them from the original source code. This means that the `graphql` tag isn’t executed the way that we might expect, which is why there’s no error, despite the fact that we’re technically using an undefined tag in our source.
+
+This bit of “magic” causes issues with ESLint. To correct this, add the following to your `.eslintrc.json`:
+
+```json{2-4}
+{
+  "globals": {
+    "graphql": true
+  }
+}
+```
+
 ## Introducing Graph*i*QL
 
 Graph*i*QL is the GraphQL IDE. It's a powerful (and all-around awesome) tool you'll use often while building Gatsby websites.
@@ -323,7 +341,7 @@ module.exports = {
 
 Save that and restart the gatsby development server. Then open up Graph*i*QL again.
 
-If you bring up the autocomplete window you'll see:	
+If you bring up the autocomplete window you'll see:
 
 ![graphiql-filesystem](graphiql-filesystem.png)
 
