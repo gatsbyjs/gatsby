@@ -88,11 +88,13 @@ These plugins were tested. We welcome PRs adding support for data from other plu
 - [x] [ACF](https://www.advancedcustomfields.com/) The option `useACF: true` must be activated in your site's `gatsby-config.js`.
   *  You must have the plugin [acf-to-rest-api](https://github.com/airesvsg/acf-to-rest-api) installed in WordPress.
   *  Will pull the `acf: { ... }` fields's contents from any entity which has it attached (pages, posts, medias, ... you choose from in WordPress back-end while creating a Group of Fields).
-  *  [ACF Pro](https://www.advancedcustomfields.com/pro/) same as ACF : 
+  *  [ACF Pro](https://www.advancedcustomfields.com/pro/) same as ACF :
   *  Will work with [Flexible content](https://www.advancedcustomfields.com/resources/flexible-content/) and premium stuff like that (repeater, gallery, ...).
   *  Will pull the content attached to the [options page](https://www.advancedcustomfields.com/add-ons/options-page/).
 
 - [x] [WP-API-MENUS](https://wordpress.org/plugins/wp-api-menus/) which gives you the menus and menu locations endpoint.
+
+- [x] [WPML-REST-API](https://github.com/shawnhooper/wpml-rest-api) which adds the current locale and available translations to all post types.
 
 
 ## How to use Gatsby with Wordpress.com hosting
@@ -216,6 +218,62 @@ Mention the apparition of `childWordpressAcfField` in the query below :
         template
         acf {
          // use ___GraphiQL debugger and Ctrl+Spacebar to describe your model.
+        }
+      }
+    }
+  }
+```
+
+### Query posts with the WPML Fields Node
+```graphql
+  allWordpressPost {
+    edges {
+      node {
+        id
+        slug
+        title
+        content
+        excerpt
+        date
+        modified
+        author
+        featured_media
+        template
+        categories
+        tags
+        wpml_current_locale
+        wpml_translations {
+          locale
+          wordpress_id
+          post_title
+          href
+        }
+      }
+    }
+  }
+```
+
+### Query pages with the WPML Fields Node
+```graphql
+  allWordpressPage {
+    edges {
+      node {
+        id
+        title
+        content
+        excerpt
+        date
+        modified
+        slug
+        author
+        featured_media
+        template
+        wpml_current_locale
+        wpml_translations {
+          locale
+          wordpress_id
+          post_title
+          href
         }
       }
     }
