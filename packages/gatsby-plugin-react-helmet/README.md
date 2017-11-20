@@ -11,7 +11,7 @@ will get added to the static HTML pages Gatsby builds.
 
 ## Install
 
-`npm install --save gatsby-plugin-react-helmet`
+`npm install --save gatsby-plugin-react-helmet react-helmet`
 
 ## How to use
 
