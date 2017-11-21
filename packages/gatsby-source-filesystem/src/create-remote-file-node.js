@@ -3,9 +3,17 @@ const got = require(`got`)
 const crypto = require(`crypto`)
 const path = require(`path`)
 const { isWebUri } = require(`valid-url`)
+const mime = require(`mime`)
+const readChunk = require(`read-chunk`)
+const fileType = require(`file-type`)
 
 const { createFileNode } = require(`./create-file-node`)
 const cacheId = url => `create-remote-file-node-${url}`
+
+const getUrlWithoutQuery = url => {
+  const pos = url.indexOf(`?`)
+  return url.substring(0, pos != -1 ? pos : url.length)
+}
 
 module.exports = ({ url, store, cache, createNode }) =>
   new Promise(async (resolve, reject) => {
@@ -36,17 +44,22 @@ module.exports = ({ url, store, cache, createNode }) =>
       .createHash(`md5`)
       .update(url)
       .digest(`hex`)
+
+    // Question mark and ampersand are illegal filename characters. Strip
+    // GET query and question mark seperator from url. To get extension
+    // with allowed characters.
+    const urlWithoutQuery = getUrlWithoutQuery(url)
     const tmpFilename = path.join(
       store.getState().program.directory,
       `.cache`,
       `gatsby-source-filesystem`,
-      `tmp-` + digest + path.parse(url).ext
+      `tmp-` + digest + path.parse(urlWithoutQuery).ext
     )
-    const filename = path.join(
+    let filename = path.join(
       store.getState().program.directory,
       `.cache`,
       `gatsby-source-filesystem`,
-      digest + path.parse(url).ext
+      digest + path.parse(urlWithoutQuery).ext
     )
 
     // Fetch the file.
@@ -77,6 +90,22 @@ module.exports = ({ url, store, cache, createNode }) =>
       // Save the response headers for future requests.
       cache.set(cacheId(url), responseHeaders)
       if (statusCode === 200) {
+        const mimeTypeFromExtension = mime.lookup(tmpFilename)
+        if (mimeTypeFromExtension === `application/octet-stream`) {
+          // MIME type from extension not found
+          // (https://github.com/broofa/node-mime/tree/v1.4.0).
+          // Let's try detect MIME type by checking magic number
+          const buffer = readChunk.sync(tmpFilename, 0, 4100)
+          const type = fileType(buffer)
+          if (type) {
+            filename = path.join(
+              store.getState().program.directory,
+              `.cache`,
+              `gatsby-source-filesystem`,
+              digest + `.` + type.ext
+            )
+          }
+        }
         fs.moveSync(tmpFilename, filename, { overwrite: true })
       } else {
         fs.removeSync(tmpFilename)
