@@ -45,14 +45,26 @@ class ComponentRenderer extends React.Component {
         nextProps.location.pathname
       )
       if (!pageResources) {
+        let location = nextProps.location
+
+        // This edge case strictly cover for page not found.
+        // This attempt is to restore layout for page not found
+        // when back button is pushed after navigating to different page.
+        if (!loader.getPage(location.pathname)) {
+          location = Object.assign({}, location, {
+            ...location,
+            pathname: `/404.html`,
+          })
+        }
+
         // Page resources won't be set in cases where the browser back button
         // or forward button is pushed as we can't wait as normal for resources
         // to load before changing the page.
         loader.getResourcesForPathname(
-          nextProps.location.pathname,
+          location.pathname,
           pageResources => {
             this.setState({
-              location: nextProps.location,
+              location,
               pageResources,
             })
           }
