@@ -75,6 +75,7 @@ Websites built with Gatsby:
 * [Bottender Docs](https://bottender.js.org/) ([source](https://github.com/bottenderjs/bottenderjs.github.io))
 * [How to GraphQL](https://www.howtographql.com/) ([source](https://github.com/howtographql/howtographql))
 * [greglobinski.com](https://greglobinski.com) ([source](https://github.com/greglobinski/greglobinski-com))
+* [Vibert Thio's Portfolio](https://vibertthio.com/portfolio/)([source](https://github.com/vibertthio/portfolio))
 * [hunterchang.com](https://hunterchang.com) ([source](https://github.com/ChangoMan/hc-gatsby))
 
 ## Docs
