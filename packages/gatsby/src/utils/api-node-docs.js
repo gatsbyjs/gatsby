@@ -202,7 +202,7 @@ exports.onPostBuild = true
  *
  * See gatsby-transformer-remark and gatsby-source-contentful for examples.
  */
-exports.onPreExtractQueries =
+exports.onPreExtractQueries = true
 
 /**
  * Run after the schema has been created but before it's dispatched allowing you
