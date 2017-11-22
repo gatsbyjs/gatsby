@@ -19,6 +19,8 @@ let resourcesCount = {}
 const preferDefault = m => (m && m.default) || m
 let prefetcher
 let inInitialRender = true
+let fetchHistory = []
+const MAX_HISTORY = 5
 
 // Prefetcher logic
 if (process.env.NODE_ENV === `production`) {
@@ -75,6 +77,11 @@ const fetchResource = (resourceName, cb = () => {}) => {
     // Download the resource
     resourceFunction((err, executeChunk) => {
       resourceStrCache[resourceName] = executeChunk
+      fetchHistory.push({
+        resource: resourceName,
+        succeeded: !err,
+      })
+      fetchHistory = fetchHistory.slice(-MAX_HISTORY)
       cb(err, executeChunk)
     })
   }
@@ -95,6 +102,27 @@ const getResourceModule = (resourceName, cb) => {
         cb(err, module)
       }
     })
+  }
+}
+
+const appearsOnLine = () => {
+  const isOnLine = navigator.onLine;
+  if (typeof(isOnLine) === 'boolean') {
+    return isOnLine
+  }
+
+  // If no navigator.onLine support assume onLine if any of last N fetches succeeded
+  const succeededFetch = fetchHistory.find(entry => entry.succeeded)
+  return !!succeededFetch
+}
+
+const handleResourceLoadError = (path, message) => {
+  console.log(message)
+  if (
+    appearsOnLine()
+    && window.location.pathname.replace(/\/$/g, '') !== path.replace(/\/$/g, '')
+  ) {
+    window.location.pathname = path;
   }
 }
 
@@ -253,7 +281,8 @@ const queue = {
       const page = findPage(path)
 
       if (!page) {
-        console.log(`A page wasn't found for "${path}"`)
+        handleResourceLoadError(path, `A page wasn't found for "${path}"`)
+
         return cb()
       }
 
@@ -294,14 +323,14 @@ const queue = {
       }
       getResourceModule(page.componentChunkName, (err, c) => {
         if (err) {
-          console.log(`Loading the component for ${page.path} failed`)
+          handleResourceLoadError(page.path, `Loading the component for ${page.path} failed`)
         }
         component = c
         done()
       })
       getResourceModule(page.jsonName, (err, j) => {
         if (err) {
-          console.log(`Loading the JSON for ${page.path} failed`)
+          handleResourceLoadError(page.path, `Loading the JSON for ${page.path} failed`)
         }
         json = j
         done()
@@ -310,7 +339,7 @@ const queue = {
       page.layoutComponentChunkName &&
         getResourceModule(page.layoutComponentChunkName, (err, l) => {
           if (err) {
-            console.log(`Loading the Layout for ${page.path} failed`)
+            handleResourceLoadError(page.path, `Loading the Layout for ${page.path} failed`)
           }
           layout = l
           done()
