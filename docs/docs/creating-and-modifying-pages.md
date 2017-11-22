@@ -183,3 +183,57 @@ exports.onCreatePage = async ({ page, boundActionCreators }) => {
   })
 }
 ```
+
+### Using Subfolders for Root Pages
+
+By default, all root level pages require their corresponding `js` file located in the root of `/pages/`.
+
+You may wish to keep the root pages in a subfolder. You can do so by editing the `onCreatePage` function in `gatsby-node.js`.
+
+You can ensure this will only affect the root pages of your site by creating a RegEx to match the pages that contains the names of the single depth folders in the `pages` directory.
+
+Example:
+
+```javascript
+const path = require('path');
+const walk = require('walkdir');
+
+const rootPages = [];
+
+walk.sync(
+  path.join(__dirname, 'src', 'pages'),
+  {
+    max_depth: 1
+  },
+  (path) => rootPages.push(path.split('/').slice(-1)[0])
+);
+
+const rootPageRegExp = new RegExp(`^/(${rootPages.join('|')})/$`);
+
+exports.onCreatePage = async ({ page, boundActionCreators }) => {
+  const { createPage } = boundActionCreators;
+
+  return new Promise((resolve, reject) => {
+    if (page.path.match(rootPageRegExp)) {
+      if (/index/.test(page.path)) {
+        page.path = '/';
+      } else {
+        page.path = page.path.replace(/\//g, '');
+      }
+    }
+
+    createPage(page);
+    resolve();
+  });
+};
+```
+
+This code will ensure all root pages can have subfolders (which can contain other components, styles, etc)  in one logical place while still allowing for sub pages to be under them.
+
+Example folder structures:
+
+`/pages/index/index.js` -> becomes / due to extra if statement above
+`/pages/foo/index.js` -> becomes /foo/
+`/pages/foo/bar/index.js` -> becomes /foo/bar/
+`/pages/foo/bar/baz.js` -> becomes /foo/bar/baz/
+`/pages/foo/bar/zee/bar.js` -> becomes /foo/bar/zee/bar/zee
