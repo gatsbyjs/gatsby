@@ -10,6 +10,7 @@ const {
   OPTION_DEFAULT_LINK_TEXT,
   PROTOCOL_BABEL,
   PROTOCOL_CODEPEN,
+  PROTOCOL_CODE_SANDBOX,
 } = require(`./constants`)
 
 // Matches compression used in Babel REPL
@@ -78,6 +79,19 @@ module.exports = (
         verifyFile(filePath)
 
         const href = node.url.replace(PROTOCOL_CODEPEN, `/redirect-to-codepen/`)
+        const text =
+          node.children.length === 0 ? defaultText : node.children[0].value
+
+        convertNodeToLink(node, text, href, target)
+      } else if (node.url.startsWith(PROTOCOL_CODE_SANDBOX)) {
+        const filePath = getFilePath(node.url, PROTOCOL_CODE_SANDBOX, directory)
+
+        verifyFile(filePath)
+
+        const href = node.url.replace(
+          PROTOCOL_CODE_SANDBOX,
+          `/redirect-to-code-sandbox/`
+        )
         const text =
           node.children.length === 0 ? defaultText : node.children[0].value
 

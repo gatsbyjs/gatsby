@@ -9,11 +9,16 @@ const fs = require(`fs`)
 const Remark = require(`remark`)
 const plugin = require(`../index`)
 
-const { PROTOCOL_BABEL, PROTOCOL_CODEPEN } = require(`../constants`)
+const {
+  PROTOCOL_BABEL,
+  PROTOCOL_CODEPEN,
+  PROTOCOL_CODE_SANDBOX,
+} = require(`../constants`)
 
 const REMARK_TESTS = {
   Babel: PROTOCOL_BABEL,
   Codepen: PROTOCOL_CODEPEN,
+  CodeSandbox: PROTOCOL_CODE_SANDBOX,
 }
 
 const remark = new Remark()

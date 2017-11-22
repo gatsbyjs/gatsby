@@ -10,4 +10,5 @@ module.exports = {
   ),
   PROTOCOL_BABEL: `babel://`,
   PROTOCOL_CODEPEN: `codepen://`,
+  PROTOCOL_CODE_SANDBOX: `codesandbox://`,
 }

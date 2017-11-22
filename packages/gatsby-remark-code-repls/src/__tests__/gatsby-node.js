@@ -87,9 +87,11 @@ describe(`gatsby-remark-code-repls`, () => {
 
       createPages(createPagesParams)
 
-      expect(createPage).toHaveBeenCalledTimes(2)
+      expect(createPage).toHaveBeenCalledTimes(4) // 2x Codepen, 2x CodeSandbox
       expect(createPage.mock.calls[0][0].path).toContain(`root-file`)
-      expect(createPage.mock.calls[1][0].path).toContain(`path/to/nested/file`)
+      expect(createPage.mock.calls[1][0].path).toContain(`root-file`)
+      expect(createPage.mock.calls[2][0].path).toContain(`path/to/nested/file`)
+      expect(createPage.mock.calls[3][0].path).toContain(`path/to/nested/file`)
     })
 
     it(`should use a default redirect template`, () => {
@@ -97,7 +99,7 @@ describe(`gatsby-remark-code-repls`, () => {
 
       createPages(createPagesParams)
 
-      expect(createPage).toHaveBeenCalledTimes(1)
+      expect(createPage).toHaveBeenCalledTimes(2) // Codepen, CodeSandbox
       expect(createPage.mock.calls[0][0].component).toContain(
         OPTION_DEFAULT_REDIRECT_TEMPLATE_PATH
       )
@@ -108,7 +110,7 @@ describe(`gatsby-remark-code-repls`, () => {
 
       createPages(createPagesParams, { redirectTemplate: `foo/bar.js` })
 
-      expect(createPage).toHaveBeenCalledTimes(1)
+      expect(createPage).toHaveBeenCalledTimes(2) // Codepen, CodeSandbox
       expect(createPage.mock.calls[0][0].component).toContain(`foo/bar.js`)
     })
 
@@ -143,6 +145,22 @@ describe(`gatsby-remark-code-repls`, () => {
 
       expect(js_external).toContain(`foo.js`)
       expect(js_external).toContain(`bar.js`)
+    })
+
+    it(`should load custom NPM dependencies, with the correct versions, if specified`, () => {
+      recursiveReaddir.mockReturnValue([`file.js`])
+
+      createPages(createPagesParams, {
+        dependencies: [`react`, `react-dom@16.0.0`],
+      })
+
+      // CodeSandbox requires files to be specified as:
+      // { files: { <name>: { contents: '...' } } }
+      const payload = JSON.parse(createPage.mock.calls[1][0].context.payload)
+      const packageJSON = payload.files[`package.json`].contents
+
+      expect(packageJSON.dependencies.react).toContain(`latest`)
+      expect(packageJSON.dependencies[`react-dom`]).toContain(`16.0.0`)
     })
 
     it(`should inject the required prop-types for the Codepen prefill API`, () => {
