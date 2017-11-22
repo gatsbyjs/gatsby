@@ -354,7 +354,9 @@ exports.createAssetNodes = ({
     //
     // Get localized fields.
     localizedAsset.fields = {
-      file: getField(localizedAsset.fields.file),
+      file: localizedAsset.fields.file 
+        ? getField(localizedAsset.fields.file)
+        : null,
       title: localizedAsset.fields.title
         ? getField(localizedAsset.fields.title)
         : ``,
