@@ -28,9 +28,6 @@ module.exports = async () => {
     }
   })
 
-  // console.log(`got enhanced fields`, Object.keys(enhancedFields))
-  // console.log(`delme`, Object.keys(enhancedFields[0]))
-
   const connections = buildNodeConnections(_.values(typesGQL))
 
   // Pull off just the graphql node from each type object.
