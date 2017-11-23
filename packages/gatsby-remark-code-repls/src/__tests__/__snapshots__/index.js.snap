@@ -217,7 +217,7 @@ Object {
       "children": Array [
         Object {
           "type": "html",
-          "value": "<a href=\\"/redirect-to-code-sandbox/path/to/nested/file.js\\" >REPL</a>",
+          "value": "<a href=\\"https://codesandbox.io/api/v1/sandboxes/define?parameters=N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTxUC-ggDQgI5NgA9iCZCBqMGTRHIpxaAAjClS6gLzqAOiABGaAE5GA3CH4ixkggAtaAWyjN59RkhAAeFhAAbuoQLLpGZtq0RgB8vgD0AYExNoJAA\\" >REPL</a>",
         },
       ],
       "position": Position {
@@ -259,7 +259,7 @@ Object {
       "children": Array [
         Object {
           "type": "html",
-          "value": "<a href=\\"/redirect-to-code-sandbox/file.js\\" >REPL</a>",
+          "value": "<a href=\\"https://codesandbox.io/api/v1/sandboxes/define?parameters=N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTxUC-ggDQgI5NgA9iCZCBqMGTRHIpxaAAjClS6gLzqAOiABGaAE5GA3CH4ixkggAtaAWyjN59RkhAAeFhAAbuoQLLpGZtq0RgB8vgD0AYExNoJAA\\" >REPL</a>",
         },
       ],
       "position": Position {
@@ -301,7 +301,7 @@ Object {
       "children": Array [
         Object {
           "type": "html",
-          "value": "<a href=\\"/redirect-to-code-sandbox/file.js\\" >Click me</a>",
+          "value": "<a href=\\"https://codesandbox.io/api/v1/sandboxes/define?parameters=N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTxUC-ggDQgI5NgA9iCZCBqMGTRHIpxaAAjClS6gLzqAOiABGaAE5GA3CH4ixkggAtaAWyjN59RkhAAeFhAAbuoQLLpGZtq0RgB8vgD0AYExNoJAA\\" >Click me</a>",
         },
       ],
       "position": Position {
@@ -343,7 +343,7 @@ Object {
       "children": Array [
         Object {
           "type": "html",
-          "value": "<a href=\\"/redirect-to-code-sandbox/file.js\\" >Custom link text</a>",
+          "value": "<a href=\\"https://codesandbox.io/api/v1/sandboxes/define?parameters=N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTxUC-ggDQgI5NgA9iCZCBqMGTRHIpxaAAjClS6gLzqAOiABGaAE5GA3CH4ixkggAtaAWyjN59RkhAAeFhAAbuoQLLpGZtq0RgB8vgD0AYExNoJAA\\" >Custom link text</a>",
         },
       ],
       "position": Position {
@@ -385,7 +385,7 @@ Object {
       "children": Array [
         Object {
           "type": "html",
-          "value": "<a href=\\"/redirect-to-code-sandbox/file.js\\" target=\\"_blank\\" rel=\\"noreferrer\\">REPL</a>",
+          "value": "<a href=\\"https://codesandbox.io/api/v1/sandboxes/define?parameters=N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTxUC-ggDQgI5NgA9iCZCBqMGTRHIpxaAAjClS6gLzqAOiABGaAE5GA3CH4ixkggAtaAWyjN59RkhAAeFhAAbuoQLLpGZtq0RgB8vgD0AYExNoJAA\\" target=\\"_blank\\" rel=\\"noreferrer\\">REPL</a>",
         },
       ],
       "position": Position {
@@ -409,6 +409,90 @@ Object {
       "column": 26,
       "line": 1,
       "offset": 25,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls CodeSandbox remark transform supports custom dependencies config option for NPM module dependencies 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "<a href=\\"https://codesandbox.io/api/v1/sandboxes/define?parameters=N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTzMBOMTE0QgoaenCYAaEIOEBaFqQC2SEORgAPGSBT9SKBbQCeHBKICMAVgLWQAXyeyI5NluIXqdBiJA1yKQACMFJSIIBeIIAdEAAjNH5YgG5HFzdtAgALWhUoZgD6RnUAHhYIADcgiBYI2INSWliAPhKAenKK5scnIA\\" >REPL</a>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 41,
+          "line": 1,
+          "offset": 40,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 41,
+      "line": 1,
+      "offset": 40,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls CodeSandbox remark transform supports custom html config option for index html 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "<a href=\\"https://codesandbox.io/api/v1/sandboxes/define?parameters=N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTxUC-ggDQgI5NgA9iCZCBqMGTRHIpxaAAjClS6gLzqAOiABGaAE5GA3CH4ixkggAtaAWyjN59RkhAAeOOjk6hAsukZapEYAfL4A9AFo5FE2gkA\\" >REPL</a>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 41,
+          "line": 1,
+          "offset": 40,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 41,
+      "line": 1,
+      "offset": 40,
     },
     "start": Object {
       "column": 1,

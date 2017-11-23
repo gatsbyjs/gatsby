@@ -84,6 +84,11 @@ All example links are also verified to ensure that they reference valid example 
     // eg '//unpkg.com/react/umd/react.development.js'
     externals: [],
 
+    // Optional HTML contents to inject into REPL.
+    // This option only applies to REPLs that support it (eg Codepen, CodeSandbox).
+    // eg '<div id="root"></div>'
+    html: '',
+
     // Optional path to a custom redirect template.
     // The redirect page is only shown briefly,
     // But you can use this setting to override its CSS styling.
