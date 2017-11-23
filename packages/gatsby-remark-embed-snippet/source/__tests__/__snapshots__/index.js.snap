@@ -1,0 +1,714 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`gatsby-remark-embed-snippet CSS files should extract the correct Prism language 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "position": Position {
+            "end": Object {
+              "column": 28,
+              "line": 1,
+              "offset": 27,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 1,
+              "line": 1,
+              "offset": 0,
+            },
+          },
+          "type": "html",
+          "value": "<div class=\\"gatsby-highlight\\">
+        <pre class=\\"language-css\\"><code><span class=\\"token selector\\">html</span> <span class=\\"token punctuation\\">{</span> <span class=\\"token property\\">height</span><span class=\\"token punctuation\\">:</span> 100%<span class=\\"token punctuation\\">;</span> <span class=\\"token punctuation\\">}</span>
+</code></pre>
+        </div>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 28,
+          "line": 1,
+          "offset": 27,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 28,
+      "line": 1,
+      "offset": 27,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-embed-snippet CSS files should support highlight-line and highlight-next-line markers 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "position": Position {
+            "end": Object {
+              "column": 28,
+              "line": 1,
+              "offset": 27,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 1,
+              "line": 1,
+              "offset": 0,
+            },
+          },
+          "type": "html",
+          "value": "<div class=\\"gatsby-highlight\\">
+        <pre class=\\"language-css\\"><code><span class=\\"token selector\\">html</span> <span class=\\"token punctuation\\">{</span>
+<span class=\\"gatsby-highlight-code-line\\"><span class=\\"token property\\">height</span><span class=\\"token punctuation\\">:</span> 100%<span class=\\"token punctuation\\">;</span>
+</span><span class=\\"token punctuation\\">}</span>
+
+<span class=\\"token selector\\">*</span> <span class=\\"token punctuation\\">{</span>
+<span class=\\"gatsby-highlight-code-line\\"><span class=\\"token property\\">box-sizing</span><span class=\\"token punctuation\\">:</span> border-box<span class=\\"token punctuation\\">;</span>
+</span><span class=\\"token punctuation\\">}</span>
+</code></pre>
+        </div>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 28,
+          "line": 1,
+          "offset": 27,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 28,
+      "line": 1,
+      "offset": 27,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-embed-snippet HTML files should extract the correct Prism language 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "position": Position {
+            "end": Object {
+              "column": 29,
+              "line": 1,
+              "offset": 28,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 1,
+              "line": 1,
+              "offset": 0,
+            },
+          },
+          "type": "html",
+          "value": "<div class=\\"gatsby-highlight\\">
+        <pre class=\\"language-html\\"><code><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;</span>html</span><span class=\\"token punctuation\\">></span></span><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>html</span><span class=\\"token punctuation\\">></span></span>
+</code></pre>
+        </div>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 29,
+          "line": 1,
+          "offset": 28,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 29,
+      "line": 1,
+      "offset": 28,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-embed-snippet HTML files should support highlight-line and highlight-next-line markers 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "position": Position {
+            "end": Object {
+              "column": 29,
+              "line": 1,
+              "offset": 28,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 1,
+              "line": 1,
+              "offset": 0,
+            },
+          },
+          "type": "html",
+          "value": "<div class=\\"gatsby-highlight\\">
+        <pre class=\\"language-html\\"><code><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;</span>html</span><span class=\\"token punctuation\\">></span></span>
+<span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;</span>body</span><span class=\\"token punctuation\\">></span></span>
+<span class=\\"gatsby-highlight-code-line\\"><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;</span>h1</span><span class=\\"token punctuation\\">></span></span>highlight me<span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>h1</span><span class=\\"token punctuation\\">></span></span>
+</span><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;</span>p</span><span class=\\"token punctuation\\">></span></span>
+<span class=\\"gatsby-highlight-code-line\\">And me
+</span><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>p</span><span class=\\"token punctuation\\">></span></span>
+<span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>body</span><span class=\\"token punctuation\\">></span></span>
+<span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>html</span><span class=\\"token punctuation\\">></span></span>
+</code></pre>
+        </div>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 29,
+          "line": 1,
+          "offset": 28,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 29,
+      "line": 1,
+      "offset": 28,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-embed-snippet JavaScript files should extract the correct Prism language 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "position": Position {
+            "end": Object {
+              "column": 27,
+              "line": 1,
+              "offset": 26,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 1,
+              "line": 1,
+              "offset": 0,
+            },
+          },
+          "type": "html",
+          "value": "<div class=\\"gatsby-highlight\\">
+        <pre class=\\"language-jsx\\"><code><span class=\\"token keyword\\">const</span> foo <span class=\\"token operator\\">=</span> <span class=\\"token string\\">\\"bar\\"</span><span class=\\"token punctuation\\">;</span>
+</code></pre>
+        </div>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 27,
+          "line": 1,
+          "offset": 26,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 27,
+      "line": 1,
+      "offset": 26,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-embed-snippet JavaScript files should support highlight-line and highlight-next-line markers 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "position": Position {
+            "end": Object {
+              "column": 27,
+              "line": 1,
+              "offset": 26,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 1,
+              "line": 1,
+              "offset": 0,
+            },
+          },
+          "type": "html",
+          "value": "<div class=\\"gatsby-highlight\\">
+        <pre class=\\"language-jsx\\"><code><span class=\\"token keyword\\">import</span> React <span class=\\"token keyword\\">from</span> <span class=\\"token string\\">'react'</span><span class=\\"token punctuation\\">;</span>
+<span class=\\"token keyword\\">import</span> ReactDOM <span class=\\"token keyword\\">from</span> <span class=\\"token string\\">'react-dom'</span><span class=\\"token punctuation\\">;</span>
+
+<span class=\\"gatsby-highlight-code-line\\">ReactDOM<span class=\\"token punctuation\\">.</span><span class=\\"token function\\">render</span><span class=\\"token punctuation\\">(</span>
+</span><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;</span>h1</span><span class=\\"token punctuation\\">></span></span>Hello<span class=\\"token punctuation\\">,</span> world<span class=\\"token operator\\">!</span><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>h1</span><span class=\\"token punctuation\\">></span></span><span class=\\"token punctuation\\">,</span>
+document<span class=\\"token punctuation\\">.</span><span class=\\"token function\\">getElementById</span><span class=\\"token punctuation\\">(</span><span class=\\"token string\\">'root'</span><span class=\\"token punctuation\\">)</span>
+<span class=\\"gatsby-highlight-code-line\\"><span class=\\"token punctuation\\">)</span><span class=\\"token punctuation\\">;</span>
+</span></code></pre>
+        </div>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 27,
+          "line": 1,
+          "offset": 26,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 27,
+      "line": 1,
+      "offset": 26,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-embed-snippet Markdown files should extract the correct Prism language 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "position": Position {
+            "end": Object {
+              "column": 27,
+              "line": 1,
+              "offset": 26,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 1,
+              "line": 1,
+              "offset": 0,
+            },
+          },
+          "type": "html",
+          "value": "<div class=\\"gatsby-highlight\\">
+        <pre class=\\"language-markup\\"><code># Hi
+</code></pre>
+        </div>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 27,
+          "line": 1,
+          "offset": 26,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 27,
+      "line": 1,
+      "offset": 26,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-embed-snippet YAML files should extract the correct Prism language 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "position": Position {
+            "end": Object {
+              "column": 29,
+              "line": 1,
+              "offset": 28,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 1,
+              "line": 1,
+              "offset": 0,
+            },
+          },
+          "type": "html",
+          "value": "<div class=\\"gatsby-highlight\\">
+        <pre class=\\"language-yaml\\"><code><span class=\\"token key atrule\\">name</span><span class=\\"token punctuation\\">:</span> Brian Vaughn
+</code></pre>
+        </div>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 29,
+          "line": 1,
+          "offset": 28,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 29,
+      "line": 1,
+      "offset": 28,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-embed-snippet YAML files should support highlight-line and highlight-next-line markers 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "position": Position {
+            "end": Object {
+              "column": 29,
+              "line": 1,
+              "offset": 28,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 1,
+              "line": 1,
+              "offset": 0,
+            },
+          },
+          "type": "html",
+          "value": "<div class=\\"gatsby-highlight\\">
+        <pre class=\\"language-yaml\\"><code><span class=\\"gatsby-highlight-code-line\\"><span class=\\"token key atrule\\">foo</span><span class=\\"token punctuation\\">:</span> <span class=\\"token number\\">1</span>
+</span><span class=\\"token key atrule\\">bar</span><span class=\\"token punctuation\\">:</span> <span class=\\"token number\\">2</span>
+<span class=\\"gatsby-highlight-code-line\\"><span class=\\"token key atrule\\">baz</span><span class=\\"token punctuation\\">:</span> <span class=\\"token number\\">3</span>
+</span></code></pre>
+        </div>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 29,
+          "line": 1,
+          "offset": 28,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 29,
+      "line": 1,
+      "offset": 28,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-embed-snippet should convert embed inlineCode nodes to Prism code blocks 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "position": Position {
+            "end": Object {
+              "column": 27,
+              "line": 1,
+              "offset": 26,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 1,
+              "line": 1,
+              "offset": 0,
+            },
+          },
+          "type": "html",
+          "value": "<div class=\\"gatsby-highlight\\">
+        <pre class=\\"language-jsx\\"><code><span class=\\"token keyword\\">const</span> foo <span class=\\"token operator\\">=</span> <span class=\\"token string\\">\\"bar\\"</span><span class=\\"token punctuation\\">;</span>
+</code></pre>
+        </div>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 27,
+          "line": 1,
+          "offset": 26,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 27,
+      "line": 1,
+      "offset": 26,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-embed-snippet should not modify non-embed inlineCode nodes 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "position": Position {
+            "end": Object {
+              "column": 24,
+              "line": 1,
+              "offset": 23,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 1,
+              "line": 1,
+              "offset": 0,
+            },
+          },
+          "type": "inlineCode",
+          "value": "console.log(\\"hi\\")",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 24,
+          "line": 1,
+          "offset": 23,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 24,
+      "line": 1,
+      "offset": 23,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-embed-snippet unknown file extensions should set the correct default Prism language 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "position": Position {
+            "end": Object {
+              "column": 24,
+              "line": 1,
+              "offset": 23,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 1,
+              "line": 1,
+              "offset": 0,
+            },
+          },
+          "type": "html",
+          "value": "<div class=\\"gatsby-highlight\\">
+        <pre class=\\"language-none\\"><code>const foo = \\"bar\\";</code></pre>
+        </div>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 24,
+          "line": 1,
+          "offset": 23,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 24,
+      "line": 1,
+      "offset": 23,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
