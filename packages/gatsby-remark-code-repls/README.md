@@ -42,16 +42,16 @@ These example files can be referenced via links in markdown that get transformed
 [Try it on CodeSandbox](codesandbox://components-and-props/rendering-a-component)
 
 <!-- after -->
-<a href="/redirect-to-code-sandbox/components-and-props/rendering-a-component">
+<a href="https://codesandbox.io/api/v1/sandboxes/define?parameters=...">
   Try it on CodeSandbox
 </a>
 ```
 
 ### How does it work?
 
-Codepen and CodeSandbox links point to Gatsby pages (also created by this plug-in) that redirect using prefill APIs (eg [Codepen API docs](https://blog.codepen.io/documentation/api/prefill/)) to create a working, runnable demo with the linked example code.
+Codepen links point to Gatsby pages (also created by this plug-in) that redirect using the [Codepen prefill API](https://blog.codepen.io/documentation/api/prefill/) to create a working, runnable demo with the linked example code.
 
-Babel links use the [same URL compression schema used by the Babel REPL](https://github.com/babel/website/blob/c9dd1f516985f7267eb58c286789e0c66bc0a21d/js/repl/UriUtils.js#L22-L26) to embed the local code example in a URL that enables it to be viewed directly within the REPL.
+Babel and CodeSandbox links use the [same URL compression schema used by the Babel REPL](https://github.com/babel/website/blob/c9dd1f516985f7267eb58c286789e0c66bc0a21d/js/repl/UriUtils.js#L22-L26) to embed the local code example in a URL that enables it to be viewed directly within the target REPL.
 
 All example links are also verified to ensure that they reference valid example files. For example, if there is a link to `codepen://components-and-props/rendering-a-component`, this plug-in will verify that a file `components-and-props/rendering-a-component.js` exists within the specified examples directory. (This will avoid broken links at runtime.)
 
@@ -67,6 +67,7 @@ All example links are also verified to ensure that they reference valid example 
   resolve: 'gatsby-remark-code-repls',
   options: {
     // Optional default link text.
+    // Defaults to "REPL".
     // eg <a href="...">Click here</a>
     defaultText: 'Click here',
 
@@ -85,6 +86,7 @@ All example links are also verified to ensure that they reference valid example 
     externals: [],
 
     // Optional HTML contents to inject into REPL.
+    // Defaults to `<div id="root"></div>`.
     // This option only applies to REPLs that support it (eg Codepen, CodeSandbox).
     // eg '<div id="root"></div>'
     html: '',
