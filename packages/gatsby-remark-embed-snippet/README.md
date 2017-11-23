@@ -16,10 +16,10 @@ For example, given the following project directory structure:
 The following markdown syntax could be used to embed the contents of these files:
 ```md
 # Sample JavaScript
-```embed:sample-javascript-file.js```
+`embed:sample-javascript-file.js`
 
 # Sample HTML
-```embed:sample-html-file.html```
+`embed:sample-html-file.html`
 ```
 
 The resulting HTML for the above markdown would look something like this:

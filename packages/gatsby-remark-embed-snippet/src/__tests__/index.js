@@ -21,7 +21,7 @@ describe(`gatsby-remark-embed-snippet`, () => {
   })
 
   it('should error if missing required config options', () => {
-    const markdownAST = remark.parse('```embed:hello-world.js```')
+    const markdownAST = remark.parse('`embed:hello-world.js`')
 
     expect(
       () => plugin({ markdownAST })
@@ -33,7 +33,7 @@ describe(`gatsby-remark-embed-snippet`, () => {
   it('should error if the specified directory does not exist', () => {
     fs.existsSync.mockReturnValue(false)
 
-    const markdownAST = remark.parse('```embed:hello-world.js```')
+    const markdownAST = remark.parse('`embed:hello-world.js`')
 
     expect(
       () => plugin({ markdownAST }, { directory: `invalid` })
@@ -45,7 +45,7 @@ describe(`gatsby-remark-embed-snippet`, () => {
   it('should error if an invalid file path is specified', () => {
     fs.existsSync.mockImplementation(path => path !== `examples/hello-world.js`)
 
-    const markdownAST = remark.parse('```embed:hello-world.js```')
+    const markdownAST = remark.parse('`embed:hello-world.js`')
 
     expect(() =>
       plugin({ markdownAST }, { directory: `examples` })
@@ -53,14 +53,14 @@ describe(`gatsby-remark-embed-snippet`, () => {
   })
 
   it('should not modify non-embed inlineCode nodes', () => {
-    const markdownAST = remark.parse('```console.log("hi")```')
+    const markdownAST = remark.parse('`console.log("hi")`')
     const transformed = plugin({ markdownAST }, { directory: `examples` })
 
     expect(transformed).toMatchSnapshot()
   })
 
   it('should convert embed inlineCode nodes to Prism code blocks', () => {
-    const markdownAST = remark.parse('```embed:hello-world.js```')
+    const markdownAST = remark.parse('`embed:hello-world.js`')
     const transformed = plugin({ markdownAST }, { directory: `examples` })
 
     expect(transformed).toMatchSnapshot()
@@ -72,7 +72,7 @@ describe(`gatsby-remark-embed-snippet`, () => {
     })
 
     it('should extract the correct Prism language', () => {
-      const markdownAST = remark.parse('```embed:hello-world.css```')
+      const markdownAST = remark.parse('`embed:hello-world.css`')
       const transformed = plugin({ markdownAST }, {
         directory: `examples`,
       })
@@ -92,7 +92,7 @@ describe(`gatsby-remark-embed-snippet`, () => {
         }
       `.replace(/^ +/gm, '').trim())
 
-      const markdownAST = remark.parse('```embed:hello-world.css```')
+      const markdownAST = remark.parse('`embed:hello-world.css`')
       const transformed = plugin({ markdownAST }, {
         directory: `examples`,
       })
@@ -105,7 +105,7 @@ describe(`gatsby-remark-embed-snippet`, () => {
     it('should extract the correct Prism language', () => {
       fs.readFileSync.mockReturnValue(`<html></html>`)
 
-      const markdownAST = remark.parse('```embed:hello-world.html```')
+      const markdownAST = remark.parse('`embed:hello-world.html`')
       const transformed = plugin({ markdownAST }, {
         directory: `examples`,
       })
@@ -126,7 +126,7 @@ describe(`gatsby-remark-embed-snippet`, () => {
         </html>
       `.replace(/^ +/gm, '').trim())
 
-      const markdownAST = remark.parse('```embed:hello-world.html```')
+      const markdownAST = remark.parse('`embed:hello-world.html`')
       const transformed = plugin({ markdownAST }, {
         directory: `examples`,
       })
@@ -139,7 +139,7 @@ describe(`gatsby-remark-embed-snippet`, () => {
     it('should extract the correct Prism language', () => {
       fs.readFileSync.mockReturnValue(`const foo = "bar";`)
 
-      const markdownAST = remark.parse('```embed:hello-world.js```')
+      const markdownAST = remark.parse('`embed:hello-world.js`')
       const transformed = plugin({ markdownAST }, {
         directory: `examples`,
       })
@@ -159,7 +159,7 @@ describe(`gatsby-remark-embed-snippet`, () => {
         ); // highlight-line
       `.replace(/^ +/gm, '').trim())
 
-      const markdownAST = remark.parse('```embed:hello-world.js```')
+      const markdownAST = remark.parse('`embed:hello-world.js`')
       const transformed = plugin({ markdownAST }, {
         directory: `examples`,
       })
@@ -172,7 +172,7 @@ describe(`gatsby-remark-embed-snippet`, () => {
     it('should extract the correct Prism language', () => {
       fs.readFileSync.mockReturnValue(`# Hi`)
 
-      const markdownAST = remark.parse('```embed:hello-world.md```')
+      const markdownAST = remark.parse('`embed:hello-world.md`')
       const transformed = plugin({ markdownAST }, {
         directory: `examples`,
       })
@@ -187,7 +187,7 @@ describe(`gatsby-remark-embed-snippet`, () => {
     })
 
     it('should extract the correct Prism language', () => {
-      const markdownAST = remark.parse('```embed:hello-world.yaml```')
+      const markdownAST = remark.parse('`embed:hello-world.yaml`')
       const transformed = plugin({ markdownAST }, {
         directory: `examples`,
       })
@@ -203,7 +203,7 @@ describe(`gatsby-remark-embed-snippet`, () => {
         baz: 3
       `.replace(/^ +/gm, '').trim())
 
-      const markdownAST = remark.parse('```embed:hello-world.yaml```')
+      const markdownAST = remark.parse('`embed:hello-world.yaml`')
       const transformed = plugin({ markdownAST }, {
         directory: `examples`,
       })
@@ -214,7 +214,7 @@ describe(`gatsby-remark-embed-snippet`, () => {
 
   describe('unknown file extensions', () => {
     it('should set the correct default Prism language', () => {
-      const markdownAST = remark.parse('```embed:hello-world```')
+      const markdownAST = remark.parse('`embed:hello-world`')
       const transformed = plugin({ markdownAST }, {
         directory: `examples`,
       })
