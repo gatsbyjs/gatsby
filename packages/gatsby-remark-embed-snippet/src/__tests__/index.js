@@ -63,11 +63,9 @@ describe(`gatsby-remark-embed-snippet`, () => {
   })
 
   describe(`CSS files`, () => {
-    beforeEach(() => {
-      fs.readFileSync.mockReturnValue(`html { height: 100%; }`)
-    })
-
     it(`should extract the correct Prism language`, () => {
+      fs.readFileSync.mockReturnValue(`html { height: 100%; }`)
+
       const markdownAST = remark.parse(`\`embed:hello-world.css\``)
       const transformed = plugin(
         { markdownAST },
@@ -210,12 +208,53 @@ describe(`gatsby-remark-embed-snippet`, () => {
     })
   })
 
-  describe(`YAML files`, () => {
-    beforeEach(() => {
-      fs.readFileSync.mockReturnValue(`name: Brian Vaughn`)
+  describe(`shell scripts`, () => {
+    it(`should extract the correct Prism language`, () => {
+      fs.readFileSync.mockReturnValue(`pwd`)
+
+      const markdownAST = remark.parse(`\`embed:hello-world.sh\``)
+      const transformed = plugin(
+        { markdownAST },
+        {
+          directory: `examples`,
+        }
+      )
+
+      expect(transformed).toMatchSnapshot()
     })
 
+    it(`should support highlight-line and highlight-next-line markers`, () => {
+      fs.readFileSync.mockReturnValue(
+        `
+        # Yarn
+        yarn init
+        yarn add react react-dom # highlight-line
+
+        # NPM
+        npm init
+        # highlight-next-line
+        npm install --save react react-dom
+      `
+          .replace(/^ +/gm, ``)
+          .trim()
+      )
+
+      const markdownAST = remark.parse(`\`embed:hello-world.sh\``)
+      const transformed = plugin(
+        { markdownAST },
+        {
+          directory: `examples`,
+        }
+      )
+
+      expect(transformed).toMatchSnapshot()
+    })
+  })
+
+  describe(`YAML files`, () => {
     it(`should extract the correct Prism language`, () => {
+      fs.readFileSync.mockReturnValue(`name: Brian Vaughn`)
+
       const markdownAST = remark.parse(`\`embed:hello-world.yaml\``)
       const transformed = plugin(
         { markdownAST },

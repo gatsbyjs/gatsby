@@ -12,6 +12,7 @@ const highlightCode = require(`gatsby-remark-prismjs/highlight-code`)
 const FILE_EXTENSION_TO_LANGUAGE_MAP = {
   js: `jsx`,
   md: `markup`,
+  sh: `bash`,
 }
 
 const getLanguage = file => {
