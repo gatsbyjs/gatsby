@@ -168,3 +168,14 @@ Community:
   
   Features:
   * Very similar to [gatsby-starter-netlify-cms](https://github.com/AustinGreen/gatsby-starter-netlify-cms), slightly more configurable (eg set site-title in `gatsby-config`) with bootstrap/bootswatch instead of bulma
+  
+* [gatsby-styled-blog-starter](https://github.com/greglobinski/gatsby-styled-blog-starter) [(demo)](https://gsbs.greglobinski.com/)
+
+  Features:
+  * sidebar navigation
+  * look like an app
+  * page transitions
+  * pwa
+  * styling with styled-components
+  * easily restyled through theme object
+  * [README](https://github.com/greglobinski/gatsby-styled-blog-starter)  
