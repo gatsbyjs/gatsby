@@ -15,7 +15,7 @@ const FILE_EXTENSION_TO_LANGUAGE_MAP = {
 }
 
 const getLanguage = file => {
-  if (!file.includes('.')) {
+  if (!file.includes(`.`)) {
     return `none`
   }
 
@@ -28,10 +28,7 @@ const getLanguage = file => {
 
 module.exports = (
   { markdownAST },
-  {
-    classPrefix = `language-`,
-    directory,
-  } = {}
+  { classPrefix = `language-`, directory } = {}
 ) => {
   if (!directory) {
     throw Error(`Required option "directory" not specified`)
@@ -42,7 +39,7 @@ module.exports = (
   }
 
   visit(markdownAST, `inlineCode`, node => {
-    const {value} = node
+    const { value } = node
 
     if (value.startsWith(`embed:`)) {
       const file = value.substr(6)
@@ -60,9 +57,9 @@ module.exports = (
       const highlightLines = []
       const code = fs
         .readFileSync(path, `utf8`)
-        .split('\n')
+        .split(`\n`)
         .filter((line, index) => {
-          if (line.includes('highlight-next-line')) {
+          if (line.includes(`highlight-next-line`)) {
             // Although we're highlighting the next line,
             // We can use the current index since we also filter this lines.
             // (Highlight line numbers are 1-based).
@@ -75,18 +72,21 @@ module.exports = (
           return true
         })
         .map((line, index) => {
-          if (line.includes('highlight-line')) {
+          if (line.includes(`highlight-line`)) {
             // Mark this line for highlighting.
             // (Highlight line numbers are 1-based).
             highlightLines.push(index + 1)
 
             // Strip the highlight comment itself.
-            return line.replace(/\s+(\/\*|\/\/|<\!--|#)\s(highlight-line)\s*(\*\/|-->)*/, '')
+            return line.replace(
+              /\s+(\/\*|\/\/|<\!--|#)\s(highlight-line)\s*(\*\/|-->)*/,
+              ``
+            )
           }
 
           return line
         })
-        .join('\n')
+        .join(`\n`)
         .trim()
 
       // PrismJS's theme styles are targeting pre[class*="language-"]
@@ -102,7 +102,10 @@ module.exports = (
       // This supports custom user styling without causing Prism to
       // re-process our already-highlighted markup.
       // @see https://github.com/gatsbyjs/gatsby/issues/1486
-      const className = language.split(' ').map(token => `${classPrefix}${token}`).join(' ')
+      const className = language
+        .split(` `)
+        .map(token => `${classPrefix}${token}`)
+        .join(` `)
 
       // Replace the node with the markup we need to make 100% width highlighted code lines work
       node.type = `html`
