@@ -190,6 +190,36 @@ describe(`gatsby-remark-embed-snippet`, () => {
 
       expect(transformed).toMatchSnapshot()
     })
+
+    it(`should support JSX line highlight comments`, () => {
+      fs.readFileSync.mockReturnValue(
+        `
+        <div>
+          <button>Add Item</button> {/* highlight-line */}
+
+          {/* highlight-next-line 6 */}
+          <ReactCSSTransitionGroup
+            transitionName="example"
+            transitionEnterTimeout={500}
+            transitionLeaveTimeout={300}>
+            {items}
+          </ReactCSSTransitionGroup>
+        </div>
+      `
+          .replace(/^ +/gm, ``)
+          .trim()
+      )
+
+      const markdownAST = remark.parse(`\`embed:hello-world.js\``)
+      const transformed = plugin(
+        { markdownAST },
+        {
+          directory: `examples`,
+        }
+      )
+
+      expect(transformed).toMatchSnapshot()
+    })
   })
 
   describe(`Markdown files`, () => {
@@ -271,8 +301,9 @@ describe(`gatsby-remark-embed-snippet`, () => {
         `
         foo: 1 # highlight-line
         bar: 2
-        # highlight-next-line 
+        # highlight-next-line 2
         baz: 3
+        qux: 4
       `
           .replace(/^ +/gm, ``)
           .trim()

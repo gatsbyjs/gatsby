@@ -45,25 +45,32 @@ The resulting HTML for the above markdown would look something like this:
 
 ### Highlighting Lines
 
-You can also specify specific lines for Prism to highlight using `highlight-line` and `highlight-next-line` comments.
+You can also specify specific lines for Prism to highlight using `highlight-line` and `highlight-next-line` comments. You can specity a number after a `highlight-next-line` comment to highlight multiple lines.
 
 #### JavaScript example
 ```js
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-// highlight-next-line
+const name = "Brian"; // highlight-line
+
 ReactDOM.render(
-  <h1>Hello, world!</h1>,
+  <div>
+    {/* highlight-next-line 3 */}
+    <h1>
+      Hello, ${name}!
+    </h1>
+  </div>,
   document.getElementById('root')
-); // highlight-line
+);
 ```
 
 #### CSS example
 ```css
 html {
-  /* highlight-next-line */
+  /* highlight-next-line 2 */
   height: 100%;
+  width: 100%;
 }
 
 * {

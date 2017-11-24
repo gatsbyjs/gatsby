@@ -303,6 +303,73 @@ Object {
 }
 `;
 
+exports[`gatsby-remark-embed-snippet JavaScript files should support JSX line highlight comments 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "position": Position {
+            "end": Object {
+              "column": 23,
+              "line": 1,
+              "offset": 22,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 1,
+              "line": 1,
+              "offset": 0,
+            },
+          },
+          "type": "html",
+          "value": "<div class=\\"gatsby-highlight\\">
+        <pre class=\\"language-jsx\\"><code><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;</span>div</span><span class=\\"token punctuation\\">></span></span>
+<span class=\\"gatsby-highlight-code-line\\"><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;</span>button</span><span class=\\"token punctuation\\">></span></span>Add Item<span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>button</span><span class=\\"token punctuation\\">></span></span>
+</span>
+<span class=\\"gatsby-highlight-code-line\\"><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;</span>ReactCSSTransitionGroup</span>
+</span><span class=\\"gatsby-highlight-code-line\\"><span class=\\"token attr-name\\">transitionName</span><span class=\\"token attr-value\\"><span class=\\"token punctuation\\">=</span><span class=\\"token punctuation\\">\\"</span>example<span class=\\"token punctuation\\">\\"</span></span>
+</span><span class=\\"gatsby-highlight-code-line\\"><span class=\\"token attr-name\\">transitionEnterTimeout</span><span class=\\"token script language-javascript\\"><span class=\\"token punctuation\\">=</span><span class=\\"token punctuation\\">{</span><span class=\\"token number\\">500</span><span class=\\"token punctuation\\">}</span></span>
+</span><span class=\\"gatsby-highlight-code-line\\"><span class=\\"token attr-name\\">transitionLeaveTimeout</span><span class=\\"token script language-javascript\\"><span class=\\"token punctuation\\">=</span><span class=\\"token punctuation\\">{</span><span class=\\"token number\\">300</span><span class=\\"token punctuation\\">}</span></span><span class=\\"token punctuation\\">></span></span>
+</span><span class=\\"gatsby-highlight-code-line\\"><span class=\\"token punctuation\\">{</span>items<span class=\\"token punctuation\\">}</span>
+</span><span class=\\"gatsby-highlight-code-line\\"><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>ReactCSSTransitionGroup</span><span class=\\"token punctuation\\">></span></span>
+</span><span class=\\"token tag\\"><span class=\\"token tag\\"><span class=\\"token punctuation\\">&lt;/</span>div</span><span class=\\"token punctuation\\">></span></span>
+</code></pre>
+        </div>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 23,
+          "line": 1,
+          "offset": 22,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 23,
+      "line": 1,
+      "offset": 22,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
 exports[`gatsby-remark-embed-snippet JavaScript files should support highlight-line and highlight-next-line markers 1`] = `
 Object {
   "children": Array [
@@ -507,6 +574,7 @@ Object {
         <pre class=\\"language-yaml\\"><code><span class=\\"gatsby-highlight-code-line\\"><span class=\\"token key atrule\\">foo</span><span class=\\"token punctuation\\">:</span> <span class=\\"token number\\">1</span>
 </span><span class=\\"token key atrule\\">bar</span><span class=\\"token punctuation\\">:</span> <span class=\\"token number\\">2</span>
 <span class=\\"gatsby-highlight-code-line\\"><span class=\\"token key atrule\\">baz</span><span class=\\"token punctuation\\">:</span> <span class=\\"token number\\">3</span>
+</span><span class=\\"gatsby-highlight-code-line\\"><span class=\\"token key atrule\\">qux</span><span class=\\"token punctuation\\">:</span> <span class=\\"token number\\">4</span>
 </span></code></pre>
         </div>",
         },

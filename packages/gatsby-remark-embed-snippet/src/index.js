@@ -15,6 +15,8 @@ const FILE_EXTENSION_TO_LANGUAGE_MAP = {
   sh: `bash`,
 }
 
+const HIGHLIGHT_LINE_REGEX = /\s+(\{\/\*|\/\*|\/\/|<!--|#)\s(highlight-line)\s*(\*\/\}|\*\/|-->)*/
+
 const getLanguage = file => {
   if (!file.includes(`.`)) {
     return `none`
@@ -61,10 +63,19 @@ module.exports = (
         .split(`\n`)
         .filter((line, index) => {
           if (line.includes(`highlight-next-line`)) {
+            const match = line.match(/highlight-next-line ([0-9]+)/)
+            const count = match ? parseInt(match[1], 10) : 1
+
             // Although we're highlighting the next line,
             // We can use the current index since we also filter this lines.
             // (Highlight line numbers are 1-based).
-            highlightLines.push(index + 1)
+            for (
+              let lineNumber = index + 1;
+              lineNumber <= index + count;
+              lineNumber++
+            ) {
+              highlightLines.push(lineNumber)
+            }
 
             // Strip lines that contain the 'next-line comments' token.
             return false
@@ -79,10 +90,7 @@ module.exports = (
             highlightLines.push(index + 1)
 
             // Strip the highlight comment itself.
-            return line.replace(
-              /\s+(\/\*|\/\/|<!--|#)\s(highlight-line)\s*(\*\/|-->)*/,
-              ``
-            )
+            return line.replace(HIGHLIGHT_LINE_REGEX, ``)
           }
 
           return line
