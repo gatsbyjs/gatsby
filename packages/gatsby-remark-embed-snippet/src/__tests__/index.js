@@ -62,6 +62,28 @@ describe(`gatsby-remark-embed-snippet`, () => {
     expect(transformed).toMatchSnapshot()
   })
 
+  it(`should error if an invalid range expression is specified`, () => {
+    spyOn(console, `warn`)
+
+    fs.readFileSync.mockReturnValue(
+      `
+      // highlight-range 1
+      console.log("oops!");
+    `
+        .replace(/^ +/gm, ``)
+        .trim()
+    )
+
+    const markdownAST = remark.parse(`\`embed:hello-world.js\``)
+    const transformed = plugin({ markdownAST }, { directory: `examples` })
+
+    expect(transformed).toMatchSnapshot()
+
+    expect(console.warn).toHaveBeenCalledWith(
+      `Invalid match specified: "// highlight-range 1"`
+    )
+  })
+
   describe(`CSS files`, () => {
     it(`should extract the correct Prism language`, () => {
       fs.readFileSync.mockReturnValue(`html { height: 100%; }`)

@@ -74,6 +74,10 @@ module.exports = (
             return false
           } else if (line.includes(`highlight-range`)) {
             const match = line.match(/highlight-range{([^}]+)}/)
+            if (!match) {
+              console.warn(`Invalid match specified: "${line.trim()}"`)
+              return false
+            }
             const range = match[1]
 
             // Highlight line numbers are 1-based but so are offsets.
