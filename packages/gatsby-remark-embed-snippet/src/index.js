@@ -53,8 +53,9 @@ module.exports = (
         throw Error(`Invalid snippet specified; no such file "${path}"`)
       }
 
-      // Parse file contents and extract comments: highlight-line, highlight-next-line
-      // We support JS, HTML, CSS, and YAML style comments
+      // Parse file contents and extract highlight markers:
+      // highlight-line, highlight-next-line, highlight-range
+      // We support JS, JSX, HTML, CSS, and YAML style comments.
       // Turn them into an Array<number> format as expected by highlightCode().
       // The order if these operations is important!
       // Filtering next-line comments impacts line-numbers for same-line comments.
