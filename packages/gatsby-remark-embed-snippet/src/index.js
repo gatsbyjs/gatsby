@@ -79,7 +79,7 @@ module.exports = (
 
             // Strip the highlight comment itself.
             return line.replace(
-              /\s+(\/\*|\/\/|<\!--|#)\s(highlight-line)\s*(\*\/|-->)*/,
+              /\s+(\/\*|\/\/|<!--|#)\s(highlight-line)\s*(\*\/|-->)*/,
               ``
             )
           }
