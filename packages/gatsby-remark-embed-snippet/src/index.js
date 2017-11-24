@@ -2,6 +2,7 @@
 
 const fs = require(`fs`)
 const normalizePath = require(`normalize-path`)
+const rangeParser = require(`parse-numeric-range`)
 const visit = require(`unist-util-visit`)
 
 // HACK: It would be nice to find a better way to share this utility code.
@@ -63,21 +64,24 @@ module.exports = (
         .split(`\n`)
         .filter((line, index) => {
           if (line.includes(`highlight-next-line`)) {
-            const match = line.match(/highlight-next-line ([0-9]+)/)
-            const count = match ? parseInt(match[1], 10) : 1
-
             // Although we're highlighting the next line,
             // We can use the current index since we also filter this lines.
             // (Highlight line numbers are 1-based).
-            for (
-              let lineNumber = index + 1;
-              lineNumber <= index + count;
-              lineNumber++
-            ) {
-              highlightLines.push(lineNumber)
-            }
+            highlightLines.push(index + 1)
 
-            // Strip lines that contain the 'next-line comments' token.
+            // Strip lines that contain highlight-next-line comments.
+            return false
+          } else if (line.includes(`highlight-range`)) {
+            const match = line.match(/highlight-range{([^}]+)}/)
+            const range = match[1]
+
+            // Highlight line numbers are 1-based but so are offsets.
+            // Remember that the current line (index) will be removed.
+            rangeParser.parse(range).forEach(offset => {
+              highlightLines.push(index + offset)
+            })
+
+            // Strip lines that contain highlight-range comments.
             return false
           }
 

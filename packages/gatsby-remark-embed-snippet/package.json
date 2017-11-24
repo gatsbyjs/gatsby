@@ -7,6 +7,7 @@
     "babel-runtime": "^6.26.0",
     "gatsby-remark-prismjs": "^1.2.9",
     "normalize-path": "^2.1.1",
+    "parse-numeric-range": "^0.0.2",
     "unist-util-map": "^1.0.3"
   },
   "devDependencies": {

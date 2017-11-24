@@ -103,6 +103,30 @@ describe(`gatsby-remark-embed-snippet`, () => {
 
       expect(transformed).toMatchSnapshot()
     })
+
+    it(`should support highlight-range markers`, () => {
+      fs.readFileSync.mockReturnValue(
+        `
+        html {
+          /* highlight-range{1,2} */
+          height: 100%;
+          width: 100%;
+        }
+      `
+          .replace(/^ +/gm, ``)
+          .trim()
+      )
+
+      const markdownAST = remark.parse(`\`embed:hello-world.css\``)
+      const transformed = plugin(
+        { markdownAST },
+        {
+          directory: `examples`,
+        }
+      )
+
+      expect(transformed).toMatchSnapshot()
+    })
   })
 
   describe(`HTML files`, () => {
@@ -125,10 +149,37 @@ describe(`gatsby-remark-embed-snippet`, () => {
         `
         <html>
           <body>
-            <h1>highlight me</h1> <!-- highlight-line -->
+            <h1>highlighted</h1> <!-- highlight-line -->
             <p>
               <!-- highlight-next-line -->
-              And me
+              highlighted
+            </p>
+          </body>
+        </html>
+      `
+          .replace(/^ +/gm, ``)
+          .trim()
+      )
+
+      const markdownAST = remark.parse(`\`embed:hello-world.html\``)
+      const transformed = plugin(
+        { markdownAST },
+        {
+          directory: `examples`,
+        }
+      )
+
+      expect(transformed).toMatchSnapshot()
+    })
+
+    it(`should support highlight-range markers`, () => {
+      fs.readFileSync.mockReturnValue(
+        `
+        <html>
+          <body>
+            <!-- highlight-range{2} -->
+            <p>
+              highlighted
             </p>
           </body>
         </html>
@@ -191,19 +242,70 @@ describe(`gatsby-remark-embed-snippet`, () => {
       expect(transformed).toMatchSnapshot()
     })
 
+    it(`should support highlight-range markers`, () => {
+      fs.readFileSync.mockReturnValue(
+        `
+        // highlight-range{2,3}
+        ReactDOM.render(
+          <h1>Hello, world!</h1>,
+          document.getElementById('root')
+        );
+      `
+          .replace(/^ +/gm, ``)
+          .trim()
+      )
+
+      const markdownAST = remark.parse(`\`embed:hello-world.js\``)
+      const transformed = plugin(
+        { markdownAST },
+        {
+          directory: `examples`,
+        }
+      )
+
+      expect(transformed).toMatchSnapshot()
+    })
+
     it(`should support JSX line highlight comments`, () => {
       fs.readFileSync.mockReturnValue(
         `
         <div>
           <button>Add Item</button> {/* highlight-line */}
 
-          {/* highlight-next-line 6 */}
           <ReactCSSTransitionGroup
             transitionName="example"
             transitionEnterTimeout={500}
             transitionLeaveTimeout={300}>
+            {/* highlight-next-line */}
             {items}
           </ReactCSSTransitionGroup>
+        </div>
+      `
+          .replace(/^ +/gm, ``)
+          .trim()
+      )
+
+      const markdownAST = remark.parse(`\`embed:hello-world.js\``)
+      const transformed = plugin(
+        { markdownAST },
+        {
+          directory: `examples`,
+        }
+      )
+
+      expect(transformed).toMatchSnapshot()
+    })
+
+    it(`should support highlighting a range via JSX comments`, () => {
+      fs.readFileSync.mockReturnValue(
+        `
+        <ul>
+          {/* highlight-range{2-4} */}
+          <li>Not highlighted</li>
+          <li>Highlighted</li>
+          <li>Highlighted</li>
+          <li>Highlighted</li>
+          <li>Not highlighted</li>
         </div>
       `
           .replace(/^ +/gm, ``)
@@ -279,6 +381,30 @@ describe(`gatsby-remark-embed-snippet`, () => {
 
       expect(transformed).toMatchSnapshot()
     })
+
+    it(`should support highlight-range markers`, () => {
+      fs.readFileSync.mockReturnValue(
+        `
+        # highlight-range{2-3}
+        echo "not highlighted"
+        echo "highlighted"
+        echo "highlighted"
+        echo "not highlighted"
+      `
+          .replace(/^ +/gm, ``)
+          .trim()
+      )
+
+      const markdownAST = remark.parse(`\`embed:hello-world.sh\``)
+      const transformed = plugin(
+        { markdownAST },
+        {
+          directory: `examples`,
+        }
+      )
+
+      expect(transformed).toMatchSnapshot()
+    })
   })
 
   describe(`YAML files`, () => {
@@ -299,11 +425,34 @@ describe(`gatsby-remark-embed-snippet`, () => {
     it(`should support highlight-line and highlight-next-line markers`, () => {
       fs.readFileSync.mockReturnValue(
         `
-        foo: 1 # highlight-line
-        bar: 2
-        # highlight-next-line 2
-        baz: 3
-        qux: 4
+        foo: "highlighted" # highlight-line
+        bar: "not highlighted"
+        # highlight-next-line
+        baz: "highlighted"
+        qux: "not highlighted"
+      `
+          .replace(/^ +/gm, ``)
+          .trim()
+      )
+
+      const markdownAST = remark.parse(`\`embed:hello-world.yaml\``)
+      const transformed = plugin(
+        { markdownAST },
+        {
+          directory: `examples`,
+        }
+      )
+
+      expect(transformed).toMatchSnapshot()
+    })
+
+    it(`should support highlight-range markers`, () => {
+      fs.readFileSync.mockReturnValue(
+        `
+        # highlight-range{1,3}
+        foo: "highlighted"
+        bar: "not highlighted"
+        baz: "highlighted"
       `
           .replace(/^ +/gm, ``)
           .trim()

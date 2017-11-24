@@ -45,7 +45,7 @@ The resulting HTML for the above markdown would look something like this:
 
 ### Highlighting Lines
 
-You can also specify specific lines for Prism to highlight using `highlight-line` and `highlight-next-line` comments. You can specity a number after a `highlight-next-line` comment to highlight multiple lines.
+You can also specify specific lines for Prism to highlight using `highlight-line` and `highlight-next-line` comments. You can also specify a range of lines to highlight, relative to a `highlight-range` comment.
 
 #### JavaScript example
 ```js
@@ -56,7 +56,7 @@ const name = "Brian"; // highlight-line
 
 ReactDOM.render(
   <div>
-    {/* highlight-next-line 3 */}
+    {/* highlight-range{1-3} */}
     <h1>
       Hello, ${name}!
     </h1>
@@ -68,7 +68,7 @@ ReactDOM.render(
 #### CSS example
 ```css
 html {
-  /* highlight-next-line 2 */
+  /* highlight-range{1-2} */
   height: 100%;
   width: 100%;
 }
@@ -93,10 +93,11 @@ html {
 
 #### YAML example
 ```yaml
-foo: 1 # highlight-line
-bar: 2
-# highlight-next-line 
-baz: 3
+foo: "highlighted" # highlight-line
+bar: "not highlighted"
+# highlight-range{1-2}
+baz: "highlighted"
+quz: "highlighted"
 ```
 
 ## Installation
