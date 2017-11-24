@@ -4,9 +4,8 @@ const fs = require(`fs`)
 const normalizePath = require(`normalize-path`)
 const visit = require(`unist-util-visit`)
 
-// TODO: This is a terrible hack!
-// Let's find a real way to share this utility code between these 2 plug-ins?
-const highlightCode = require(`../../gatsby-remark-prismjs/src/highlight-code`)
+// HACK: It would be nice to find a better way to share this utility code.
+const highlightCode = require(`gatsby-remark-prismjs/highlight-code`)
 
 // Language defaults to extension.toLowerCase();
 // This map tracks languages that don't match their extension.
@@ -88,6 +87,7 @@ module.exports = (
           return line
         })
         .join('\n')
+        .trim()
 
       // PrismJS's theme styles are targeting pre[class*="language-"]
       // to apply its styles. We do the same here so that users
