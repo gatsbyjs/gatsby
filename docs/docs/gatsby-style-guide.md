@@ -15,7 +15,7 @@ We plan, write, and maintain these Guide articles on GitHub.
 
 # What are Guide articles?
 
-Guide articles can cover a broad range of topics. Please see the following examples: <a href="https://www.gatsbyjs.org/tutorial/part-one/" target="_blank">tutorials</a>, <a href="https://www.gatsbyjs.org/docs/browser-apis/" target="_blank">code documentation</a>, <a href="https://www.gatsbyjs.org/docs/prpl-pattern/" target="_blank">explanatory articles</a>, and <a href="https://www.gatsbyjs.org/docs/add-404-page/" target="_blank">focused guides</a>.
+Guide articles can cover a broad range of topics. Please see the following examples: [tutorials](/tutorial/part-one/), [code documentation](/docs/browser-apis/), [explanatory articles](/docs/prpl-pattern/), and [focused guides](/docs/add-404-page/).
 
 # What can I write an article about?
 
