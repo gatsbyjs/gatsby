@@ -27,7 +27,9 @@ async function onCreateNode({ node, boundActionCreators, loadNodeContent }) {
   const { createNode, createParentChildLink } = boundActionCreators
 
   // We only care about HJSON content.
-  if (node.internal.mediaType !== `application/hjson`) {
+  // NOTE the mime package does not recognize HJSON yet
+  // See RFC https://hjson.org/rfc.html#rfc.section.1.3
+  if (node.internal.mediaType !== `text/hjson` && node.internal.mediaType !== `application/hjson`) {
     return
   }
 
