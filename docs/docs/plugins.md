@@ -142,4 +142,6 @@ you can place the files in a `src` subfolder and build them to the plugin folder
 * [gatsby-source-github](https://github.com/mosch/gatsby-source-github)
 * [gatsby-source-google-sheets](https://github.com/brandonmp/gatsby-source-google-sheets)
 * [gatsby-source-stripe](https://github.com/njosefbeck/gatsby-source-stripe)
+* [gatsby-source-soundcloud](https://github.com/jedidiah/gatsby-source-soundcloud)
+* [gatsby-source-twitch](https://github.com/jedidiah/gatsby-source-twitch)
 * [gatsby-remark-graph](https://github.com/konsumer/gatsby-remark-graph)
