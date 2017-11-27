@@ -96,9 +96,9 @@ you can place the files in a `src` subfolder and build them to the plugin folder
 * [gatsby-plugin-typescript](/packages/gatsby-plugin-typescript/)
 * [gatsby-remark-autolink-headers](/packages/gatsby-remark-autolink-headers/)
 * [gatsby-remark-copy-linked-files](/packages/gatsby-remark-copy-linked-files/)
+* [gatsby-remark-images](/packages/gatsby-remark-images/)
 * [gatsby-remark-prismjs](/packages/gatsby-remark-prismjs/)
 * [gatsby-remark-responsive-iframe](/packages/gatsby-remark-responsive-iframe/)
-* [gatsby-remark-images](/packages/gatsby-remark-images/)
 * [gatsby-remark-smartypants](/packages/gatsby-remark-smartypants/)
 * [gatsby-source-contentful](/packages/gatsby-source-contentful/)
 * [gatsby-source-drupal](/packages/gatsby-source-drupal/)
@@ -113,13 +113,14 @@ you can place the files in a `src` subfolder and build them to the plugin folder
 * [gatsby-transformer-json](/packages/gatsby-transformer-json/)
 * [gatsby-transformer-remark](/packages/gatsby-transformer-remark/)
 * [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/)
-* [gatsby-transformer-yaml](/packages/gatsby-transformer-yaml/)
 * [gatsby-transformer-toml](/packages/gatsby-transformer-toml/)
+* [gatsby-transformer-yaml](/packages/gatsby-transformer-yaml/)
+
 
 ## Official components
 
-* [gatsby-link](/packages/gatsby-link/)
 * [gatsby-image](/packages/gatsby-image/)
+* [gatsby-link](/packages/gatsby-link/)
 
 ## Community Plugins
 
@@ -143,5 +144,7 @@ you can place the files in a `src` subfolder and build them to the plugin folder
 * [gatsby-remark-graph](https://github.com/konsumer/gatsby-remark-graph)
 * [gatsby-source-github](https://github.com/mosch/gatsby-source-github)
 * [gatsby-source-google-sheets](https://github.com/brandonmp/gatsby-source-google-sheets)
+* [gatsby-source-soundcloud](https://github.com/jedidiah/gatsby-source-soundcloud)
 * [gatsby-source-stripe](https://github.com/njosefbeck/gatsby-source-stripe)
+* [gatsby-source-twitch](https://github.com/jedidiah/gatsby-source-twitch)
 * [gatsby-source-workable](https://github.com/tumblbug/gatsby-source-workable)
