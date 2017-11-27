@@ -1,5 +1,6 @@
 [![Travis CI Build Status](https://travis-ci.org/gatsbyjs/gatsby.svg?branch=master)](https://travis-ci.org/gatsbyjs/gatsby)
 [![npm package](https://img.shields.io/npm/v/gatsby.svg?style=flat-square)](https://www.npmjs.org/package/gatsby)
+[![npm package](https://img.shields.io/npm/dm/gatsby.svg)](https://www.npmjs.org/package/gatsby)
 [![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/gatsby-js)
 [![gatsby channel on discord](https://img.shields.io/badge/discord-gatsby%40reactiflux-738bd7.svg?style=flat-square)](https://discord.gg/0ZcbPKXt5bVoxkfV)
 [![Twitter Follow](https://img.shields.io/twitter/follow/gatsbyjs.svg?style=social)](https://twitter.com/gatsbyjs)
@@ -85,7 +86,7 @@ Websites built with Gatsby:
 
 [Migrating from v0 to v1?](https://www.gatsbyjs.org/docs/migrating-from-v0-to-v1/)
 
-[v0 docs](/v0-README.md)
+[v0 docs](https://github.com/gatsbyjs/gatsby/blob/v0.12.48/docs/index.md)
 
 ## Packages
 
