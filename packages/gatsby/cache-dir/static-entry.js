@@ -33,7 +33,7 @@ const getPage = path => pages.find(page => page.path === path)
 const defaultLayout = props => <div>{props.children()}</div>
 
 const getLayout = page => {
-  const layout = syncRequires.layouts[page.layoutComponentChunkName]
+  const layout = syncRequires.layouts[page.layout]
   return layout ? layout : defaultLayout
 }
 
