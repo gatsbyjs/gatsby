@@ -176,3 +176,26 @@ Community:
   * Simple one page site that's perfect for personal portfolios
   * Fully Responsive
   * Styling with SCSS
+
+* [gatsby-starter-docs](https://github.com/ericwindmill/gatsby-starter-docs) [(demo)](https://gatsby-docs-starter.netlify.com/)
+  
+  Features:
+  * All the features from [gatsby-advanced-starter](https://github.com/Vagr9K/gatsby-advanced-starter), plus:
+  * Designed for Documentation / Tutorial Websites
+  * 'Table of Contents' Component: Auto generates ToC from posts - just follow the file frontmatter conventions from markdown files in 'lessons'. 
+  * Styled Components w/ ThemeProvider
+  * Basic UI
+  * A few extra components
+  * Custom prismjs theme
+  * React Icons
+
+* [gatsby-styled-blog-starter](https://github.com/greglobinski/gatsby-styled-blog-starter) [(demo)](https://gsbs.greglobinski.com/)
+
+  Features:
+  * sidebar navigation
+  * look like an app
+  * page transitions
+  * pwa
+  * styling with styled-components
+  * easily restyled through theme object
+  * [README](https://github.com/greglobinski/gatsby-styled-blog-starter)
