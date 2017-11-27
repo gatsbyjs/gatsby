@@ -122,6 +122,11 @@ Community:
   * Uses data from local json files
   * Contains Node.js server code for easy, secure, and fast hosting
 
+* [gatsby-starter-typescript](https://github.com/haysclark/gatsby-starter-typescript) [(demo)](https://haysclark.github.io/gatsby-starter-typescript/)
+
+  Features:
+  * TypeScript
+
 * [gatsby-starter-default-i18n](https://github.com/angeloocana/gatsby-starter-default-i18n) [(demo)](https://gatsby-starter-default-i18n.netlify.com)
 
   Features:
@@ -148,7 +153,7 @@ Community:
 * [gatsby-starter-netlify-cms](https://github.com/AustinGreen/gatsby-starter-netlify-cms) [(demo)](https://gatsby-netlify-cms.netlify.com/)
 
   Features:
-  * A simple blog built with Netlify CMS 
+  * A simple blog built with Netlify CMS
   * Basic directory organization
   * Uses [Bulma](https://bulma.io/) for styling
   * Visit [the repo](https://github.com/AustinGreen/gatsby-starter-netlify-cms) to learn how to set up authentication, and begin modeling your content.
@@ -165,7 +170,7 @@ Community:
   * And other good stuff (SEO, Offline Support, WebApp Manifest Support)
 
 * [gatsby-starter-bootstrap-netlify](https://github.com/konsumer/gatsby-starter-bootstrap-netlify) [(demo)](https://gatsby-starter-bootstrap-netlify.netlify.com)
-  
+
   Features:
   * Very similar to [gatsby-starter-netlify-cms](https://github.com/AustinGreen/gatsby-starter-netlify-cms), slightly more configurable (eg set site-title in `gatsby-config`) with bootstrap/bootswatch instead of bulma
 
@@ -176,3 +181,34 @@ Community:
   * Alternative for Kickstarter, GoFundMe, etc.
   * Secured Credit Card payments with Stripe
   * Storing of funding information in Firebase
+
+* [gatsby-starter-dimension](https://github.com/ChangoMan/gatsby-starter-dimension) [(demo)](http://gatsby-dimension.surge.sh/)
+  
+  Features:
+  * Based off of the Dimension site template. Designed by [HTML5 UP](https://html5up.net/dimension)
+  * Simple one page site that's perfect for personal portfolios
+  * Fully Responsive
+  * Styling with SCSS
+
+* [gatsby-starter-docs](https://github.com/ericwindmill/gatsby-starter-docs) [(demo)](https://gatsby-docs-starter.netlify.com/)
+  
+  Features:
+  * All the features from [gatsby-advanced-starter](https://github.com/Vagr9K/gatsby-advanced-starter), plus:
+  * Designed for Documentation / Tutorial Websites
+  * 'Table of Contents' Component: Auto generates ToC from posts - just follow the file frontmatter conventions from markdown files in 'lessons'. 
+  * Styled Components w/ ThemeProvider
+  * Basic UI
+  * A few extra components
+  * Custom prismjs theme
+  * React Icons
+
+* [gatsby-styled-blog-starter](https://github.com/greglobinski/gatsby-styled-blog-starter) [(demo)](https://gsbs.greglobinski.com/)
+
+  Features:
+  * sidebar navigation
+  * look like an app
+  * page transitions
+  * pwa
+  * styling with styled-components
+  * easily restyled through theme object
+  * [README](https://github.com/greglobinski/gatsby-styled-blog-starter)

@@ -203,7 +203,6 @@ module.exports = async (program: any) => {
     typeof program.port === `string` ? parseInt(program.port, 10) : program.port
 
   let compiler
-  let listener
   await new Promise(resolve => {
     detect(port, (err, _port) => {
       if (err) {
@@ -223,14 +222,12 @@ module.exports = async (program: any) => {
 
           startServer(program).then(([c, l]) => {
             compiler = c
-            listener = l
             resolve()
           })
         })
       } else {
         startServer(program).then(([c, l]) => {
           compiler = c
-          listener = l
           resolve()
         })
       }
