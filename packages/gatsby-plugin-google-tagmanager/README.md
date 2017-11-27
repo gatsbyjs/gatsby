@@ -14,10 +14,9 @@ plugins: [
     resolve: `gatsby-plugin-google-tagmanager`,
     options: {
       id: 'YOUR_GOOGLE_TAGMANAGER_ID',
-      // want GTM to render on dev? (localhost:8000)
-      // very common to have JS snippets specifically for dev env
-      // defaults to false; change this boolean to true to render on dev env
-      renderOnDev: false
+      // This value defaults to false but if you change it to true, 
+      // your GTM snippet will render in your development env.
+      includeInDevelopment: false
     },
   },
 ]
