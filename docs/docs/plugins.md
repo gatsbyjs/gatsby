@@ -126,6 +126,7 @@ you can place the files in a `src` subfolder and build them to the plugin folder
 
 * [gatsby-plugin-antd](https://github.com/bskimball/gatsby-plugin-antd)
 * [gatsby-plugin-copy](https://github.com/aquilio/gatsby-plugin-copy)
+* [gatsby-plugin-elasticlunr-search](https://github.com/andrew-codes/gatsby-plugin-elasticlunr-search)
 * [gatsby-plugin-google-fonts](https://github.com/didierfranc/gatsby-plugin-google-fonts)
 * [gatsby-plugin-i18n-readnext](https://github.com/angeloocana/gatsby-plugin-i18n-readnext)
 * [gatsby-plugin-i18n-tags](https://github.com/angeloocana/gatsby-plugin-i18n-tags)
