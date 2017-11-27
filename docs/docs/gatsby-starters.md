@@ -174,6 +174,14 @@ Community:
   Features:
   * Very similar to [gatsby-starter-netlify-cms](https://github.com/AustinGreen/gatsby-starter-netlify-cms), slightly more configurable (eg set site-title in `gatsby-config`) with bootstrap/bootswatch instead of bulma
 
+* [gatsby-starter-dimension](https://github.com/ChangoMan/gatsby-starter-dimension) [(demo)](http://gatsby-dimension.surge.sh/)
+  
+  Features:
+  * Based off of the Dimension site template. Designed by [HTML5 UP](https://html5up.net/dimension)
+  * Simple one page site that's perfect for personal portfolios
+  * Fully Responsive
+  * Styling with SCSS
+
 * [gatsby-starter-docs](https://github.com/ericwindmill/gatsby-starter-docs) [(demo)](https://gatsby-docs-starter.netlify.com/)
   
   Features:
@@ -195,4 +203,4 @@ Community:
   * pwa
   * styling with styled-components
   * easily restyled through theme object
-  * [README](https://github.com/greglobinski/gatsby-styled-blog-starter)  
+  * [README](https://github.com/greglobinski/gatsby-styled-blog-starter)
