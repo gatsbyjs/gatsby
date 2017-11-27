@@ -85,7 +85,7 @@ Websites built with Gatsby:
 
 [Migrating from v0 to v1?](https://www.gatsbyjs.org/docs/migrating-from-v0-to-v1/)
 
-[v0 docs](/v0-README.md)
+[v0 docs](https://github.com/gatsbyjs/gatsby/blob/v0.12.48/docs/index.md)
 
 ## Packages
 

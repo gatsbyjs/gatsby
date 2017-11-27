@@ -137,6 +137,7 @@ you can place the files in a `src` subfolder and build them to the plugin folder
 * [gatsby-plugin-stripe-checkout](https://github.com/njosefbeck/gatsby-plugin-stripe-checkout)
 * [gatsby-plugin-stripe-elements](https://github.com/njosefbeck/gatsby-plugin-stripe-elements)
 * [gatsby-plugin-yandex-metrika](https://github.com/viatsko/gatsby-plugin-yandex-metrika)
+* [gatsby-plugin-hotjar](https://github.com/pavloko/gatsby-plugin-hotjar)
 * [gatsby-remark-emoji](https://github.com/Rulikkk/gatsby-remark-emoji)
 * [gatsby-remark-external-links](https://github.com/JLongley/gatsby-remark-external-links)
 * [gatsby-remark-graph](https://github.com/konsumer/gatsby-remark-graph)
