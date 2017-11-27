@@ -86,7 +86,7 @@ const preferDefault = m => m && m.default || m
   syncRequires += `exports.layouts = {\n${pageLayouts
     .map(
       l =>
-        `  "${l.componentChunkName}": preferDefault(require("${
+        `  "${l.id}": preferDefault(require("${
           l.componentWrapperPath
         }"))`
     )
@@ -124,7 +124,7 @@ const preferDefault = m => m && m.default || m
   asyncRequires += `exports.layouts = {\n${pageLayouts
     .map(
       l =>
-        `  "${l.componentChunkName}": require("gatsby-module-loader?name=${
+        `  "${l.id}": require("gatsby-module-loader?name=${
           l.componentChunkName
         }!${l.componentWrapperPath}")`
     )
