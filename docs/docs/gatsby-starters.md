@@ -122,6 +122,11 @@ Community:
   * Uses data from local json files
   * Contains Node.js server code for easy, secure, and fast hosting
 
+* [gatsby-starter-typescript](https://github.com/haysclark/gatsby-starter-typescript) [(demo)](https://haysclark.github.io/gatsby-starter-typescript/)
+
+  Features:
+  * TypeScript
+
 * [gatsby-starter-default-i18n](https://github.com/angeloocana/gatsby-starter-default-i18n) [(demo)](https://gatsby-starter-default-i18n.netlify.com)
 
   Features:
@@ -148,7 +153,7 @@ Community:
 * [gatsby-starter-netlify-cms](https://github.com/AustinGreen/gatsby-starter-netlify-cms) [(demo)](https://gatsby-netlify-cms.netlify.com/)
 
   Features:
-  * A simple blog built with Netlify CMS 
+  * A simple blog built with Netlify CMS
   * Basic directory organization
   * Uses [Bulma](https://bulma.io/) for styling
   * Visit [the repo](https://github.com/AustinGreen/gatsby-starter-netlify-cms) to learn how to set up authentication, and begin modeling your content.
@@ -165,7 +170,7 @@ Community:
   * And other good stuff (SEO, Offline Support, WebApp Manifest Support)
 
 * [gatsby-starter-bootstrap-netlify](https://github.com/konsumer/gatsby-starter-bootstrap-netlify) [(demo)](https://gatsby-starter-bootstrap-netlify.netlify.com)
-  
+
   Features:
   * Very similar to [gatsby-starter-netlify-cms](https://github.com/AustinGreen/gatsby-starter-netlify-cms), slightly more configurable (eg set site-title in `gatsby-config`) with bootstrap/bootswatch instead of bulma
 
