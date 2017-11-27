@@ -174,6 +174,14 @@ Community:
   Features:
   * Very similar to [gatsby-starter-netlify-cms](https://github.com/AustinGreen/gatsby-starter-netlify-cms), slightly more configurable (eg set site-title in `gatsby-config`) with bootstrap/bootswatch instead of bulma
 
+* [open-crowd-fund](https://github.com/rwieruch/open-crowd-fund) [(demo)](https://www.roadtolearnreact.com/)
+
+  Features:
+  * Open source crowdfunding for your own ideas
+  * Alternative for Kickstarter, GoFundMe, etc.
+  * Secured Credit Card payments with Stripe
+  * Storing of funding information in Firebase
+
 * [gatsby-starter-dimension](https://github.com/ChangoMan/gatsby-starter-dimension) [(demo)](http://gatsby-dimension.surge.sh/)
   
   Features:
