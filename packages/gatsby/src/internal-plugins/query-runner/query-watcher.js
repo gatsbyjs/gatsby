@@ -63,11 +63,10 @@ const runQueriesForComponent = componentPath => {
       pages,
       4,
       (page, callback) => {
-        queryRunner(page, component)
-          .then(
-            result => callback(null, result),
-            error => callback(error)
-          )
+        queryRunner(page, component).then(
+          result => callback(null, result),
+          error => callback(error)
+        )
       },
       (error, result) => {
         error ? reject(error) : resolve(result)

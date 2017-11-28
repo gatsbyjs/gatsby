@@ -101,11 +101,10 @@ const runQueriesForIds = ids => {
           pl => pl.path === id || `LAYOUT___${pl.id}` === id
         )
         if (plObj) {
-          return queryRunner(plObj, state.components[plObj.component])
-            .then(
-              result => callback(null, result),
-              error => callback(error)
-            )
+          return queryRunner(plObj, state.components[plObj.component]).then(
+            result => callback(null, result),
+            error => callback(error)
+          )
         }
         return callback(null, null)
       },

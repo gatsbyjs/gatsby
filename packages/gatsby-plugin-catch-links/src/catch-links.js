@@ -25,10 +25,7 @@ module.exports = function(root, cb) {
     if (anchor.target && anchor.target.toLowerCase() !== `_self`) return true
 
     // Don't catch links pointed to the same page but with a hash.
-    if (
-      anchor.pathname === window.location.pathname &&
-      anchor.hash !== ``
-    ) {
+    if (anchor.pathname === window.location.pathname && anchor.hash !== ``) {
       return true
     }
 

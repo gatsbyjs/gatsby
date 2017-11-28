@@ -125,10 +125,13 @@ describe(`gatsby-remark-code-repls`, () => {
             `[](${protocol}path/to/nested/file.js)`
           )
 
-          const transformed = plugin({ markdownAST }, {
-            directory: `examples`,
-            html: `<span id="foo"></span>`,
-          })
+          const transformed = plugin(
+            { markdownAST },
+            {
+              directory: `examples`,
+              html: `<span id="foo"></span>`,
+            }
+          )
 
           expect(transformed).toMatchSnapshot()
         })
@@ -138,10 +141,13 @@ describe(`gatsby-remark-code-repls`, () => {
             `[](${protocol}path/to/nested/file.js)`
           )
 
-          const transformed = plugin({ markdownAST }, {
-            dependencies: [`react`, `react-dom@next`, `prop-types@15.5`],
-            directory: `examples`,
-          })
+          const transformed = plugin(
+            { markdownAST },
+            {
+              dependencies: [`react`, `react-dom@next`, `prop-types@15.5`],
+              directory: `examples`,
+            }
+          )
 
           expect(transformed).toMatchSnapshot()
         })

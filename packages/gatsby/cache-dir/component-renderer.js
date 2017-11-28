@@ -56,15 +56,12 @@ class ComponentRenderer extends React.Component {
         // Page resources won't be set in cases where the browser back button
         // or forward button is pushed as we can't wait as normal for resources
         // to load before changing the page.
-        loader.getResourcesForPathname(
-          location.pathname,
-          pageResources => {
-            this.setState({
-              location,
-              pageResources,
-            })
-          }
-        )
+        loader.getResourcesForPathname(location.pathname, pageResources => {
+          this.setState({
+            location,
+            pageResources,
+          })
+        })
       } else {
         this.setState({
           location: nextProps.location,
