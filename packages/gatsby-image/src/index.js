@@ -36,27 +36,32 @@ const inImageCache = props => {
 
 let io
 const listeners = []
-if (typeof window !== `undefined` && window.IntersectionObserver) {
-  io = new window.IntersectionObserver(
-    entries => {
-      entries.forEach(entry => {
-        listeners.forEach(l => {
-          if (l[0] === entry.target) {
-            // Edge doesn't currently support isIntersecting, so also test for an intersectionRatio > 0
-            if (entry.isIntersecting || entry.intersectionRatio > 0) {
-              io.unobserve(l[0])
-              l[1]()
+
+function getIO() {
+  if (typeof io === `undefined` && typeof window !== `undefined` && window.IntersectionObserver) {
+    io = new window.IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          listeners.forEach(l => {
+            if (l[0] === entry.target) {
+              // Edge doesn't currently support isIntersecting, so also test for an intersectionRatio > 0
+              if (entry.isIntersecting || entry.intersectionRatio > 0) {
+                io.unobserve(l[0])
+                l[1]()
+              }
             }
-          }
+          })
         })
-      })
-    },
-    { rootMargin: `200px` }
-  )
+      },
+      { rootMargin: `200px` }
+    )
+  }
+
+  return io
 }
 
 const listenToIntersections = (el, cb) => {
-  io.observe(el)
+  getIO().observe(el)
   listeners.push([el, cb])
 }
 
