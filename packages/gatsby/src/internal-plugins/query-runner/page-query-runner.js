@@ -6,7 +6,7 @@
  */
 
 const _ = require(`lodash`)
-const Promise = require(`bluebird`)
+const async = require(`async`)
 
 const { store, emitter } = require(`../../redux`)
 const queryRunner = require(`./query-runner`)
@@ -90,18 +90,30 @@ const runQueriesForIds = ids => {
     return Promise.resolve()
   }
   const state = store.getState()
-  return Promise.all(
-    ids.map(id => {
-      const pagesAndLayouts = [...state.pages, ...state.layouts]
-      const plObj = pagesAndLayouts.find(
-        pl => pl.path === id || `LAYOUT___${pl.id}` === id
-      )
-      if (plObj) {
-        return queryRunner(plObj, state.components[plObj.component])
+
+  return new Promise((resolve, reject) => {
+    async.mapLimit(
+      ids,
+      4,
+      (id, callback) => {
+        const pagesAndLayouts = [...state.pages, ...state.layouts]
+        const plObj = pagesAndLayouts.find(
+          pl => pl.path === id || `LAYOUT___${pl.id}` === id
+        )
+        if (plObj) {
+          return queryRunner(plObj, state.components[plObj.component])
+            .then(
+              result => callback(null, result),
+              error => callback(error)
+            )
+        }
+        return callback(null, null)
+      },
+      (error, result) => {
+        error ? reject(error) : resolve(result)
       }
-      return null
-    })
-  )
+    )
+  })
 }
 
 const findDirtyIds = actions => {
