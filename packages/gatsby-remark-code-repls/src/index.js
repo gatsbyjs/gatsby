@@ -8,11 +8,13 @@ const normalizePath = require(`normalize-path`)
 
 const {
   OPTION_DEFAULT_LINK_TEXT,
+  OPTION_DEFAULT_HTML,
   PROTOCOL_BABEL,
   PROTOCOL_CODEPEN,
+  PROTOCOL_CODE_SANDBOX,
 } = require(`./constants`)
 
-// Matches compression used in Babel REPL
+// Matches compression used in Babel and CodeSandbox REPLs
 // https://github.com/babel/website/blob/master/js/repl/UriUtils.js
 const compress = string =>
   LZString.compressToBase64(string)
@@ -34,7 +36,13 @@ function convertNodeToLink(node, text, href, target) {
 
 module.exports = (
   { markdownAST },
-  { defaultText = OPTION_DEFAULT_LINK_TEXT, directory, target } = {}
+  {
+    defaultText = OPTION_DEFAULT_LINK_TEXT,
+    dependencies = [],
+    directory,
+    html = OPTION_DEFAULT_HTML,
+    target,
+  } = {}
 ) => {
   if (!directory) {
     throw Error(`Required REPL option "directory" not specified`)
@@ -78,6 +86,48 @@ module.exports = (
         verifyFile(filePath)
 
         const href = node.url.replace(PROTOCOL_CODEPEN, `/redirect-to-codepen/`)
+        const text =
+          node.children.length === 0 ? defaultText : node.children[0].value
+
+        convertNodeToLink(node, text, href, target)
+      } else if (node.url.startsWith(PROTOCOL_CODE_SANDBOX)) {
+        const filePath = getFilePath(node.url, PROTOCOL_CODE_SANDBOX, directory)
+
+        verifyFile(filePath)
+
+        const code = fs.readFileSync(filePath, `utf8`)
+
+        // CodeSandbox GET API requires a list of "files" keyed by name
+        let parameters = {
+          files: {
+            "package.json": {
+              content: {
+                dependencies: dependencies.reduce((map, dependency) => {
+                  if (dependency.includes(`@`)) {
+                    const [name, version] = dependency.split(`@`)
+                    map[name] = version
+                  } else {
+                    map[dependency] = `latest`
+                  }
+                  return map
+                }, {}),
+              },
+            },
+            "index.js": {
+              content: code,
+            },
+            "index.html": {
+              content: html,
+            },
+          },
+        }
+
+        // This config JSON must then be lz-string compressed
+        parameters = compress(JSON.stringify(parameters))
+
+        const href = `https://codesandbox.io/api/v1/sandboxes/define?parameters=${
+          parameters
+        }`
         const text =
           node.children.length === 0 ? defaultText : node.children[0].value
 
