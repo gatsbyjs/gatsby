@@ -44,7 +44,7 @@ A basic directory structure of a project might look like this:
 
 ### Page components
 
-Components under `src/pages` become pages automatically with paths based on their file name. For example `src/pages/index.jsx` is mapped to `yoursite.com` and `src/pages/about.jsx` becomes `yoursite.com/about/`.
+Components under `src/pages` become pages automatically with paths based on their file name. For example `src/pages/index.jsx` is mapped to `yoursite.com` and `src/pages/about.jsx` becomes `yoursite.com/about/`.  Every `.js` or `.jsx` file in the pages directory must resolve to either a string or react component, otherwise your build will fail.
 
 Example:
 
