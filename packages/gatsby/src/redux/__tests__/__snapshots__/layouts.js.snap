@@ -13,6 +13,7 @@ Object {
     "internalComponentName": "Component-layout-Index",
     "isLayout": true,
     "jsonName": "layout-index.json",
+    "machineId": "layout---index",
     "pluginCreator___NODE": "Plugin test",
   },
   "plugin": Object {
@@ -36,6 +37,7 @@ Array [
     "internalComponentName": "Component-layout-Index",
     "isLayout": true,
     "jsonName": "layout-index.json",
+    "machineId": "layout---index",
     "pluginCreator___NODE": "Plugin test",
   },
 ]
@@ -52,6 +54,7 @@ Object {
     "internalComponentName": "Component-layout-Index",
     "isLayout": true,
     "jsonName": "layout-index.json",
+    "machineId": "layout---index",
     "pluginCreator___NODE": "Plugin test",
   },
   "plugin": Object {
@@ -73,6 +76,7 @@ Array [
     "internalComponentName": "Component-layout-Index",
     "isLayout": true,
     "jsonName": "layout-index.json",
+    "machineId": "layout---index",
     "pluginCreator___NODE": "Plugin test",
   },
 ]
@@ -89,6 +93,7 @@ Object {
     "internalComponentName": "Component-layout-TestId",
     "isLayout": true,
     "jsonName": "layout-test-id.json",
+    "machineId": "layout---test-id",
     "pluginCreator___NODE": "Plugin test",
   },
   "plugin": Object {
@@ -110,6 +115,7 @@ Array [
     "internalComponentName": "Component-layout-TestId",
     "isLayout": true,
     "jsonName": "layout-test-id.json",
+    "machineId": "layout---test-id",
     "pluginCreator___NODE": "Plugin test",
   },
 ]
@@ -126,6 +132,7 @@ Array [
     "internalComponentName": "Component-layout-Index",
     "isLayout": true,
     "jsonName": "layout-index.json",
+    "machineId": "layout---index",
     "pluginCreator___NODE": "Plugin test",
   },
   Object {
@@ -137,6 +144,7 @@ Array [
     "internalComponentName": "Component-layout-Pizza",
     "isLayout": true,
     "jsonName": "layout-pizza.json",
+    "machineId": "layout---pizza",
     "pluginCreator___NODE": "Plugin test",
   },
 ]
