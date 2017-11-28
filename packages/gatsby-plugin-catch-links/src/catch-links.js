@@ -27,7 +27,7 @@ module.exports = function(root, cb) {
     // Don't catch links pointed to the same page but with a hash.
     if (
       anchor.pathname === window.location.pathname &&
-      anchor.target.hash !== ``
+      anchor.hash !== ``
     ) {
       return true
     }

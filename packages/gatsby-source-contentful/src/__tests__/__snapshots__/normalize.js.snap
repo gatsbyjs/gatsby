@@ -1620,6 +1620,7 @@ Set {
   "wtrHxeu3zEoEce2MokCSi",
   "c10TkaLheGeQG6qQGqWYqUI",
   "c6s3iG2OVmoUcosmA8ocqsG",
+  "FAKE_ID_1phEMTm908mCCeYuSqCkyK",
 }
 `;
 
@@ -2195,6 +2196,36 @@ Array [
       "node_locale": "de",
       "parent": null,
       "title": "House icon",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "description": "",
+      "file": null,
+      "id": "FAKE_ID_1phEMTm908mCCeYuSqCkyK",
+      "internal": Object {
+        "contentDigest": "9cd202ba8ae3dd79494cd56c1ec453bc",
+        "type": "ContentfulAsset",
+      },
+      "node_locale": "en-US",
+      "parent": null,
+      "title": "",
+    },
+  ],
+  Array [
+    Object {
+      "children": Array [],
+      "description": "",
+      "file": null,
+      "id": "FAKE_ID_1phEMTm908mCCeYuSqCkyK___de",
+      "internal": Object {
+        "contentDigest": "b9803a73e3cb3df628b452fb0aa56e88",
+        "type": "ContentfulAsset",
+      },
+      "node_locale": "de",
+      "parent": null,
+      "title": "",
     },
   ],
 ]
