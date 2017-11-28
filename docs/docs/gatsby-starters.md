@@ -212,3 +212,10 @@ Community:
   * styling with styled-components
   * easily restyled through theme object
   * [README](https://github.com/greglobinski/gatsby-styled-blog-starter)
+  
+* [gatsby-starter-deck](https://github.com/fabe/gatsby-starter-deck) [(demo)](https://gatsby-deck.netlify.com/)
+
+  Features:
+  * Create presentations/slides using Gatsby.
+  * Offline support.
+  * Page transitions.
