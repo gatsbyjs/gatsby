@@ -14,10 +14,9 @@ class ComponentRenderer extends React.Component {
     super()
     let location = props.location
 
-    // This covers layout for when page not found, especially during production
+    // Set the pathname for 404 pages.
     if (!loader.getPage(location.pathname)) {
       location = Object.assign({}, location, {
-        ...location,
         pathname: `/404.html`,
       })
     }
@@ -47,12 +46,9 @@ class ComponentRenderer extends React.Component {
       if (!pageResources) {
         let location = nextProps.location
 
-        // This edge case strictly cover for page not found.
-        // This attempt is to restore layout for page not found
-        // when back button is pushed after navigating to different page.
+        // Set the pathname for 404 pages.
         if (!loader.getPage(location.pathname)) {
           location = Object.assign({}, location, {
-            ...location,
             pathname: `/404.html`,
           })
         }
