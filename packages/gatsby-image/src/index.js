@@ -38,7 +38,11 @@ let io
 const listeners = []
 
 function getIO() {
-  if (typeof io === `undefined` && typeof window !== `undefined` && window.IntersectionObserver) {
+  if (
+    typeof io === `undefined` &&
+    typeof window !== `undefined` &&
+    window.IntersectionObserver
+  ) {
     io = new window.IntersectionObserver(
       entries => {
         entries.forEach(entry => {
