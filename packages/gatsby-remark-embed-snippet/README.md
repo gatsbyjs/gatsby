@@ -7,22 +7,28 @@ Embeds the contents of specified files within Prism-formatted HTML blocks.
 ### Embedding Files
 
 For example, given the following project directory structure:
+
 ```
 ./examples/
 ├── sample-javascript-file.js
 ├── sample-html-file.html
 ```
 
-The following markdown syntax could be used to embed the contents of these files:
+The following markdown syntax could be used to embed the contents of these
+files:
+
 ```md
 # Sample JavaScript
+
 `embed:sample-javascript-file.js`
 
 # Sample HTML
+
 `embed:sample-html-file.html`
 ```
 
 The resulting HTML for the above markdown would look something like this:
+
 ```html
 <h1>Sample JavaScript</h1>
 <div class="gatsby-highlight">
@@ -45,27 +51,29 @@ The resulting HTML for the above markdown would look something like this:
 
 ### Highlighting Lines
 
-You can also specify specific lines for Prism to highlight using `highlight-line` and `highlight-next-line` comments. You can also specify a range of lines to highlight, relative to a `highlight-range` comment.
+You can also specify specific lines for Prism to highlight using
+`highlight-line` and `highlight-next-line` comments. You can also specify a
+range of lines to highlight, relative to a `highlight-range` comment.
 
 #### JavaScript example
-```js
-import React from 'react';
-import ReactDOM from 'react-dom';
 
-const name = "Brian"; // highlight-line
+```js
+import React from "react"
+import ReactDOM from "react-dom"
+
+const name = "Brian" // highlight-line
 
 ReactDOM.render(
   <div>
     {/* highlight-range{1-3} */}
-    <h1>
-      Hello, ${name}!
-    </h1>
+    <h1>Hello, ${name}!</h1>
   </div>,
-  document.getElementById('root')
-);
+  document.getElementById("root")
+)
 ```
 
 #### CSS example
+
 ```css
 html {
   /* highlight-range{1-2} */
@@ -79,6 +87,7 @@ html {
 ```
 
 #### HTML example
+
 ```html
 <html>
   <body>
@@ -92,6 +101,7 @@ html {
 ```
 
 #### YAML example
+
 ```yaml
 foo: "highlighted" # highlight-line
 bar: "not highlighted"

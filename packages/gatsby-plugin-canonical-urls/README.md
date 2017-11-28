@@ -2,9 +2,9 @@
 
 Add canonical links to HTML pages Gatsby generates.
 
-This implementation is primarily helpful for distinguishing between
-https/http, www/no-www but could possibly be extended to help with
-when sites add multiple paths to the same page.
+This implementation is primarily helpful for distinguishing between https/http,
+www/no-www but could possibly be extended to help with when sites add multiple
+paths to the same page.
 
 ## Install
 
@@ -19,8 +19,8 @@ plugins: [
     resolve: `gatsby-plugin-canonical-urls`,
     options: {
       siteUrl: `https://www.example.com`,
-    }
-  }
+    },
+  },
 ]
 ```
 
