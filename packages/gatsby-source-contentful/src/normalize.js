@@ -162,6 +162,28 @@ function createTextNode(node, key, text, createNode) {
 }
 exports.createTextNode = createTextNode
 
+function createJSONNode(node, key, content, createNode) {
+  const str = JSON.stringify(content)
+  const JSONNode = {
+    ...content,
+    id: `${node.id}${key}JSONNode`,
+    parent: node.id,
+    children: [],
+    internal: {
+      type: _.camelCase(`${node.internal.type} ${key} JSONNode`),
+      mediaType: `application/json`,
+      content: str,
+      contentDigest: digest(str),
+    },
+  }
+
+  node.children = node.children.concat([JSONNode.id])
+  createNode(JSONNode)
+
+  return JSONNode.id
+}
+exports.createJSONNode = createJSONNode
+
 exports.createContentTypeNodes = ({
   contentTypeItem,
   restrictedNodeFields,
@@ -294,6 +316,15 @@ exports.createContentTypeNodes = ({
         ).type
         if (fieldType === `Text`) {
           entryItemFields[`${entryItemFieldKey}___NODE`] = createTextNode(
+            entryNode,
+            entryItemFieldKey,
+            entryItemFields[entryItemFieldKey],
+            createNode
+          )
+
+          delete entryItemFields[entryItemFieldKey]
+        } else if (fieldType === `Object`) {
+          entryItemFields[`${entryItemFieldKey}___NODE`] = createJSONNode(
             entryNode,
             entryItemFieldKey,
             entryItemFields[entryItemFieldKey],
