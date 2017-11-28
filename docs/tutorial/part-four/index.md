@@ -7,6 +7,8 @@ Welcome to Part Four of the tutorial! Halfway through! Hope things are starting 
 
 But don't get too comfortable 😉. In this tutorial, we're headed to new territory which will require some brain stretching to fully understand. In the next two parts of the tutorial, we'll be diving into the Gatsby data layer! A powerful feature of Gatsby that lets you easily build sites from markdown, Wordpress, headless CMSs, and other data sources of all flavors.
 
+**NOTE:** Gatsby’s data layer is powered by GraphQL. If you’re new to GraphQL, this section may feel a little overwhelming. For a primer on GraphQL to help get you familiar with the how GraphQL works, we recommend [How to GraphQL](https://www.howtographql.com/).
+
 ## Recap of first half of the tutorial
 
 So far, we've been learning how to use React.js—how powerful it is to be able to create our *own* components to act as custom building blocks for websites.
