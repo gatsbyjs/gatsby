@@ -32,6 +32,11 @@ module.exports = function(root, cb) {
       return true
     }
 
+    // Dynamically created anchor links (href="#my-anchor") do not always have pathname on IE
+    if (anchor.pathname === ``) {
+      return true
+    }
+
     // Don't catch links pointed at what look like file extensions (other than
     // .htm/html extensions).
     if (anchor.pathname.search(/^.*\.((?!htm)[a-z0-9]{1,5})$/i) !== -1) {
