@@ -9,11 +9,16 @@ const fs = require(`fs`)
 const Remark = require(`remark`)
 const plugin = require(`../index`)
 
-const { PROTOCOL_BABEL, PROTOCOL_CODEPEN } = require(`../constants`)
+const {
+  PROTOCOL_BABEL,
+  PROTOCOL_CODEPEN,
+  PROTOCOL_CODE_SANDBOX,
+} = require(`../constants`)
 
 const REMARK_TESTS = {
   Babel: PROTOCOL_BABEL,
   Codepen: PROTOCOL_CODEPEN,
+  CodeSandbox: PROTOCOL_CODE_SANDBOX,
 }
 
 const remark = new Remark()
@@ -114,15 +119,33 @@ describe(`gatsby-remark-code-repls`, () => {
         )
       })
 
-      it(`errors if provided a link to a local file that does not exist`, async () => {
-        fs.existsSync.mockImplementation(path => path === `examples`)
+      if (protocol === PROTOCOL_CODE_SANDBOX) {
+        it(`supports custom html config option for index html`, () => {
+          const markdownAST = remark.parse(
+            `[](${protocol}path/to/nested/file.js)`
+          )
 
-        const markdownAST = remark.parse(`[](${protocol}file.js)`)
+          const transformed = plugin({ markdownAST }, {
+            directory: `examples`,
+            html: `<span id="foo"></span>`,
+          })
 
-        expect(() =>
-          plugin({ markdownAST }, { directory: `examples` })
-        ).toThrow(`Invalid REPL link specified`)
-      })
+          expect(transformed).toMatchSnapshot()
+        })
+
+        it(`supports custom dependencies config option for NPM module dependencies`, () => {
+          const markdownAST = remark.parse(
+            `[](${protocol}path/to/nested/file.js)`
+          )
+
+          const transformed = plugin({ markdownAST }, {
+            dependencies: [`react`, `react-dom@next`, `prop-types@15.5`],
+            directory: `examples`,
+          })
+
+          expect(transformed).toMatchSnapshot()
+        })
+      }
     })
   })
 })

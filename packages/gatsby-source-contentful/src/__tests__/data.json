@@ -1866,6 +1866,24 @@
                         }
                     }
                 }
+            },
+            {
+              "sys": {
+                "space": {
+                  "sys": {
+                    "type": "Link",
+                    "linkType": "Space",
+                    "id": "rocybtov1ozk"
+                  }
+                },
+                "type": "Asset",
+                "id": "FAKE_ID_1phEMTm908mCCeYuSqCkyK",
+                "revision": 0,
+                "createdAt": "2017-11-16T20:47:42.248Z",
+                "updatedAt": "2017-11-16T20:47:42.248Z",
+                "locale": "en-US"
+              },
+              "fields": {}
             }
         ],
         "deletedEntries": [],
