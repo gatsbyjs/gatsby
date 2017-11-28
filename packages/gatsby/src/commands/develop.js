@@ -145,7 +145,7 @@ async function startServer(program) {
 
   // Render an HTML page and serve it.
   app.use((req, res, next) => {
-    const parsedPath = parsePath(req.originalUrl)
+    const parsedPath = parsePath(req.path)
     if (parsedPath.extname === `` || parsedPath.extname.startsWith(`.html`)) {
       res.sendFile(directoryPath(`public/index.html`), err => {
         if (err) {
@@ -203,7 +203,6 @@ module.exports = async (program: any) => {
     typeof program.port === `string` ? parseInt(program.port, 10) : program.port
 
   let compiler
-  let listener
   await new Promise(resolve => {
     detect(port, (err, _port) => {
       if (err) {
@@ -223,14 +222,12 @@ module.exports = async (program: any) => {
 
           startServer(program).then(([c, l]) => {
             compiler = c
-            listener = l
             resolve()
           })
         })
       } else {
         startServer(program).then(([c, l]) => {
           compiler = c
-          listener = l
           resolve()
         })
       }
@@ -254,9 +251,8 @@ module.exports = async (program: any) => {
       })
 
     const isUnspecifiedHost = host === `0.0.0.0` || host === `::`
-    let prettyHost, lanUrlForConfig, lanUrlForTerminal
+    let lanUrlForConfig, lanUrlForTerminal
     if (isUnspecifiedHost) {
-      prettyHost = `localhost`
       try {
         // This can only return an IPv4 address
         lanUrlForConfig = address.ip()
@@ -278,14 +274,12 @@ module.exports = async (program: any) => {
       } catch (_e) {
         // ignored
       }
-    } else {
-      prettyHost = host
     }
     // TODO collect errors (GraphQL + Webpack) in Redux so we
     // can clear terminal and print them out on every compile.
     // Borrow pretty printing code from webpack plugin.
-    const localUrlForTerminal = prettyPrintUrl(prettyHost)
-    const localUrlForBrowser = formatUrl(prettyHost)
+    const localUrlForTerminal = prettyPrintUrl(host)
+    const localUrlForBrowser = formatUrl(host)
     return {
       lanUrlForConfig,
       lanUrlForTerminal,
@@ -318,11 +312,6 @@ module.exports = async (program: any) => {
     console.log()
   }
 
-  const host =
-    listener.address().address === `127.0.0.1`
-      ? `localhost`
-      : listener.address().address
-
   let isFirstCompile = true
   // "done" event fires when Webpack has finished recompiling the bundle.
   // Whether or not you have warnings or errors, you will get this event.
@@ -331,7 +320,7 @@ module.exports = async (program: any) => {
     // options so we are going to "massage" the warnings and errors and present
     // them in a readable focused way.
     const messages = formatWebpackMessages(stats.toJson({}, true))
-    const urls = prepareUrls(`http`, host, port)
+    const urls = prepareUrls(`http`, program.host, program.port)
     const isSuccessful = !messages.errors.length && !messages.warnings.length
     // if (isSuccessful) {
     // console.log(chalk.green(`Compiled successfully!`))
