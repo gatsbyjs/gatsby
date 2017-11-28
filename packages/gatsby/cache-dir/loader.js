@@ -66,11 +66,14 @@ const fetchResource = (resourceName, cb = () => {}) => {
     })
   } else {
     // Find resource
-    const resourceFunction =
-      resourceName.slice(0, 12) === `component---`
-        ? asyncRequires.components[resourceName] ||
-          asyncRequires.layouts[resourceName]
-        : asyncRequires.json[resourceName]
+    let resourceFunction
+    if (resourceName.slice(0, 12) === `component---`) {
+      resourceFunction = asyncRequires.components[resourceName]
+    } else if (resourceName.slice(0, 9) === `layout---`) {
+      resourceFunction = asyncRequires.layouts[resourceName]
+    } else {
+      resourceFunction = asyncRequires.json[resourceName]
+    }
 
     // Download the resource
     resourceFunction((err, executeChunk) => {
@@ -243,7 +246,7 @@ const queue = {
       const pageResources = {
         component: syncRequires.components[page.componentChunkName],
         json: syncRequires.json[page.jsonName],
-        layout: syncRequires.layouts[page.layoutComponentChunkName],
+        layout: syncRequires.layouts[page.layout],
         page,
       }
       cb(pageResources)
@@ -308,7 +311,7 @@ const queue = {
       })
 
       page.layoutComponentChunkName &&
-        getResourceModule(page.layoutComponentChunkName, (err, l) => {
+        getResourceModule(page.layout, (err, l) => {
           if (err) {
             console.log(`Loading the Layout for ${page.path} failed`)
           }

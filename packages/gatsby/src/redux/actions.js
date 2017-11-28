@@ -30,6 +30,7 @@ type PageInput = {
 }
 type LayoutInput = {
   id?: string,
+  machineId?: string,
   component: string,
   layout?: string,
   context?: Object,
@@ -187,6 +188,9 @@ actions.createLayout = (
   traceId?: string
 ) => {
   let id = layout.id || path.parse(layout.component).name
+  // Add a "machine" id as a universal ID to differentiate layout from
+  // page components.
+  const machineId = `layout---${id}`
   let componentWrapperPath = joinPath(
     store.getState().program.directory,
     `.cache`,
@@ -196,6 +200,7 @@ actions.createLayout = (
 
   let internalLayout: Layout = {
     id,
+    machineId,
     componentWrapperPath,
     isLayout: true,
     jsonName: `layout-${_.kebabCase(id)}.json`,
