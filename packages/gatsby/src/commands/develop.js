@@ -19,6 +19,7 @@ const launchEditor = require(`react-dev-utils/launchEditor`)
 const formatWebpackMessages = require(`react-dev-utils/formatWebpackMessages`)
 const chalk = require(`chalk`)
 const address = require(`address`)
+const sourceNodes = require(`../utils/source-nodes`)
 
 // const isInteractive = process.stdout.isTTY
 
@@ -91,6 +92,19 @@ async function startServer(program) {
       graphiql: true,
     })
   )
+
+  /**
+   * Refresh external data sources.
+   * If no GATSBY_REFRESH_TOKEN env var is available, then no Authorization header is required
+  **/
+  app.post(`/__refresh`, (req, res) => {
+    if (req.headers.authorization === process.env.GATSBY_REFRESH_TOKEN) {
+      console.log(`Refreshing source data`)
+      sourceNodes()
+    }
+    res.end()
+  })
+
   app.get(`/__open-stack-frame-in-editor`, (req, res) => {
     launchEditor(req.query.fileName, req.query.lineNumber)
     res.end()
