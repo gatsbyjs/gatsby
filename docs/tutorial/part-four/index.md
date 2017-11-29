@@ -13,9 +13,8 @@ powerful feature of Gatsby that lets you easily build sites from markdown,
 Wordpress, headless CMSs, and other data sources of all flavors.
 
 **NOTE:** Gatsby’s data layer is powered by GraphQL. If you’re new to GraphQL,
-this section may feel a little overwhelming. For a primer on GraphQL to help get
-you familiar with the how GraphQL works, we recommend
-[How to GraphQL](https://www.howtographql.com/).
+this section may feel a little overwhelming. For an in-depth tutorial on
+GraphQL, we recommend [How to GraphQL](https://www.howtographql.com/).
 
 ## Recap of first half of the tutorial
 
@@ -359,13 +358,13 @@ following to your `.eslintrc.json`:
 }
 ```
 
-## Introducing Graph*i*QL
+## Introducing Graph_i_QL
 
-Graph*i*QL is the GraphQL IDE. It's a powerful (and all-around awesome) tool
+Graph_i_QL is the GraphQL IDE. It's a powerful (and all-around awesome) tool
 you'll use often while building Gatsby websites.
 
 You can access it when your site's development server is running—normally at
-http://localhost:8000/___graphql.
+<http://localhost:8000/___graphql>.
 
 <video controls="controls" autoplay="true" loop="true">
   <source type="video/mp4" src="/graphiql-explore.mp4"></source>
@@ -374,9 +373,9 @@ http://localhost:8000/___graphql.
 
 Here we poke around the built-in `Site` "type" and see what fields are available
 on it—including the `siteMetadata` object we queried earlier. Try opening
-Graph*i*QL and play with your data! Press <kbd>Ctrl + Space</kbd> to bring up
+Graph_i_QL and play with your data! Press <kbd>Ctrl + Space</kbd> to bring up
 the autocomplete window and <kbd>Ctrl + Enter</kbd> to run the query. We'll be
-using Graph*i*QL a lot more through the remainder of the tutorial.
+using Graph_i_QL a lot more through the remainder of the tutorial.
 
 ## Source plugins
 
@@ -422,7 +421,7 @@ module.exports = {
 }
 ```
 
-Save that and restart the gatsby development server. Then open up Graph*i*QL
+Save that and restart the gatsby development server. Then open up Graph_i_QL
 again.
 
 If you bring up the autocomplete window you'll see:
@@ -449,8 +448,8 @@ The result is an array of File "nodes" (node is a fancy name for an object in a
 
 ## Build a page with a GraphQL query
 
-Building new pages with Gatsby often starts in Graph*i*QL. You first sketch out
-the data query by playing in Graph*i*QL then copy this to a React page component
+Building new pages with Gatsby often starts in Graph_i_QL. You first sketch out
+the data query by playing in Graph_i_QL then copy this to a React page component
 to start building the UI.
 
 Let's try this.
@@ -624,7 +623,7 @@ module.exports = {
 }
 ```
 
-Restart the development server then refresh (or open again) Graph*i*QL and look
+Restart the development server then refresh (or open again) Graph_i_QL and look
 at the autocomplete:
 
 ![markdown-autocomplete](markdown-autocomplete.png)
@@ -729,7 +728,7 @@ In our index page's query, change `allMarkdownRemark` to
 `allMarkdownRemark(sort: {fields: [frontmatter___date], order: DESC})`. Save
 this and the sort order should be fixed.
 
-Try opening Graph*i*QL and playing with different sort options. You can sort the
+Try opening Graph_i_QL and playing with different sort options. You can sort the
 `allFile` connection along with other connections.
 
 ## Programmatically creating pages from data
@@ -849,7 +848,7 @@ exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
 }
 ```
 
-Restart the development server and open or refresh Graph*i*QL. Then run this
+Restart the development server and open or refresh Graph_i_QL. Then run this
 query to see our new slugs.
 
 ```graphql
@@ -985,8 +984,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 Restart the development server and our pages will be created! An easy way to
 find new pages you create while developing is to go to a random path where
 Gatsby will helpfully show you a list of pages on the site. If you go to
-[http://localhost:8000/sdf](http://localhost:8000/sdf) you'll see the new pages
-we created.
+<http://localhost:8000/sdf> you'll see the new pages we created.
 
 ![new-pages](new-pages.png)
 
