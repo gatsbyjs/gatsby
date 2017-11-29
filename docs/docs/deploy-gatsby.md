@@ -6,6 +6,7 @@ title: "Deploying Gatsby"
 
 * [S3/Cloudfront](/docs/deploy-gatsby/#amazon-s3-and-cloudfront)
 * [GitHub Pages](/docs/deploy-gatsby/#github-pages)
+* [GitLab Pages](/docs/deploy-gatsby/#gitlab-pages)
 
 ## Amazon S3 and Cloudfront
 
@@ -88,6 +89,78 @@ script to your site's `package.json` file:
   "deploy": "gatsby build && gh-pages -d public --branch master",
 }
 ```
+
+## Gitlab Pages
+
+Gitlab Pages are similar to GitHub pages, perhaps even easier to setup. It also
+supports custom domain names and SSL certificates. The process of setting GitLab
+pages up is made a lot easier with GitLab's included continuous integration
+platform.
+
+Create a new GitLab repository, initialize your Gatsby project folder if you
+haven't already, and add the GitLab remote.
+
+```
+git init
+git remote add origin git@gitlab.com:examplerepository
+git add .
+git push -u origin master
+```
+
+To use GitLab's continuous integration (CI), you need to add a `.gitlab-ci.yml`
+configuration file. This can be added into your project folder, or once you have
+pushed the repository, you can add it with GitLab's website. The file needs to
+contain a few required fields:
+
+```
+image: node:latest
+
+# This folder is cached between builds
+# http://docs.gitlab.com/ce/ci/yaml/README.html#cache
+cache:
+  paths:
+  - node_modules/
+
+pages:
+  script:
+  - yarn install
+  - ./node_modules/.bin/gatsby build
+  artifacts:
+    paths:
+    - public
+  only:
+  - master
+```
+
+The CI platform uses Docker images/containers, so `image: node:latest` tells the
+CI to use the latest node image. `cache:` caches the node_modules folder
+inbetween builds, so subsequent builds should be a lot faster as it doesn't have
+to reinstall all the dependancies required. `pages:` Is simply the name of the
+CI stage. You can have multiple stages, e.g. 'Test', 'Build', 'Deploy' etc.
+`script:` starts the next part of the CI stage, telling it to start running the
+below scripts inside the image selected. We have used the `yarn install` and
+`./node_modules/.bin/gatsby build` which will install all dependancies, and
+start the static site build, respectively. We have used
+`./node_modules/.bin/gatsby build` because we then don't have to install
+gatsby-cli to build the image, as it has already been included and installed
+with `yarn install`. `artifacts:` and `paths:` are used to tell GitLab pages
+where the static files are kept. `only:` and `master` tells the CI to only run
+the above instructions when the master branch is deployed.
+
+Add that configuration, and with the next master branch push, your site should
+have been built correctly. This can be checked by going to your repository on
+GitLab, and selecting CI/CD in the sidebar. This will then show you a log of all
+jobs that have either succeeded or failed. You can click on the failed status,
+and then select the job to get more information about why your build may have
+failed.
+
+If all went well, you should now be able to access your site. It will be hosted
+under gitlab.io - for example if you have have a repository under your
+namespace, the url will be yourname.gitlab.io/examplerepository.
+
+Visit the
+[GitLab Pages](https://gitlab.com/help/user/project/pages/getting_started_part_one.md)
+to learn how to setup custom domains and find out about advanced configurations.
 
 ## Debugging tips
 
