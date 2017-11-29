@@ -8,8 +8,10 @@ tags:
   - linked files
   - local links
 ---
-![](denys-nevozhai-184452.jpg)
-*Photo by [Denys Nevozhai](https://unsplash.com/@dnevozhai) via [Unsplash](https://unsplash.com/@dnevozhai?photo=DlnK1KOREds)*
+
+![](denys-nevozhai-184452.jpg) _Photo by
+[Denys Nevozhai](https://unsplash.com/@dnevozhai) via
+[Unsplash](https://unsplash.com/@dnevozhai?photo=DlnK1KOREds)_
 
 ## Copying Linked Files
 
@@ -17,7 +19,8 @@ tags:
 your `public` folder.
 
 Let's try with a PDF, that you should be able to preview and/or download by
-clicking this link: [Creative Commons Informational Flyer.pdf](Creativecommons-informational-flyer_eng.pdf)
+clicking this link:
+[Creative Commons Informational Flyer.pdf](Creativecommons-informational-flyer_eng.pdf)
 
 ## Intercepting Local Links
 
@@ -25,7 +28,9 @@ clicking this link: [Creative Commons Informational Flyer.pdf](Creativecommons-i
 non-react pages and does a client-side `pushState` to avoid the browser having
 to refresh the page.
 
-Let's try linking to the "[Code and Syntax Highlighting with PrismJS](/code-and-syntax-highlighting/)" article…
+Let's try linking to the
+"[Code and Syntax Highlighting with PrismJS](/code-and-syntax-highlighting/)"
+article…
 
 [1]: https://www.gatsbyjs.org/packages/gatsby-remark-copy-linked-files/
 [2]: https://www.gatsbyjs.org/packages/gatsby-plugin-catch-links/

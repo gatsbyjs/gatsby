@@ -1,12 +1,13 @@
 # gatsby-source-lever
 
-Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from [Lever.co](https://www.lever.co/).
+Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from
+[Lever.co](https://www.lever.co/).
 
 ## Wish list
 
-- [x] gatsby source plugin for Lever.co
-- [x] tests
-- [ ] example site
+* [x] gatsby source plugin for Lever.co
+* [x] tests
+* [ ] example site
 
 ## Install
 
@@ -16,22 +17,23 @@ Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from [
 
 ```javascript
 // In your gatsby-config.js
-  plugins: [
-    {
-      resolve: 'gatsby-source-lever',
-      options: {
-        // Your Lever site instance name.
-        site: 'lever',
-        // Set verboseOutput to true to display a verbose output on `npm run develop` or `npm run build`
-        // It can help you debug specific API Endpoints problems
-        verboseOutput: false,
-      },
+plugins: [
+  {
+    resolve: "gatsby-source-lever",
+    options: {
+      // Your Lever site instance name.
+      site: "lever",
+      // Set verboseOutput to true to display a verbose output on `npm run develop` or `npm run build`
+      // It can help you debug specific API Endpoints problems
+      verboseOutput: false,
     },
-  ]
+  },
+]
 ```
 
 ### GraphQL Query to get all jobs
-```    graphql
+
+```graphql
   allLever {
     edges {
       node {
@@ -61,7 +63,8 @@ Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from [
 
 ## Site's `gatsby-node.js` example
 
-If you wish to create Gatsby Pages for each Lever.co jobs, you can modify your  `gatsby-node.js`.
+If you wish to create Gatsby Pages for each Lever.co jobs, you can modify your
+`gatsby-node.js`.
 
 ```javascript
 const _ = require(`lodash`)
@@ -80,8 +83,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     // ==== PAGES (LEVER) ====
     graphql(
       `
-      {
-
+        {
           allLever {
             edges {
               node {
@@ -89,9 +91,8 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
               }
             }
           }
-
-      }
-    `
+        }
+      `
     )
       .then(result => {
         if (result.errors) {
@@ -100,7 +101,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         }
 
         // Create Lever pages.
-        const pageTemplate = path.resolve('./src/templates/page.js')
+        const pageTemplate = path.resolve("./src/templates/page.js")
         // We want to create a detailed page for each
         // lever node. We'll just use the ID for the slug.
         _.each(result.data.allLever.edges, edge => {
