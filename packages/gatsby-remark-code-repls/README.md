@@ -1,15 +1,27 @@
 # gatsby-remark-code-repls
 
-This plug-in adds support for directly embedding code examples as links to popular REPLs such as [Babel](https://babeljs.io/repl/), [Codepen](https://codepen.io/), and [CodeSandbox](https://codesandbox.io/). This enables example code to be stored along side of, and revisioned with, your website content.
+This plug-in adds support for directly embedding code examples as links to
+popular REPLs such as [Babel](https://babeljs.io/repl/),
+[Codepen](https://codepen.io/), and [CodeSandbox](https://codesandbox.io/). This
+enables example code to be stored along side of, and revisioned with, your
+website content.
 
-This plug-in was created to solve a couple of problems the React team has faced with [reactjs.org](https://github.com/reactjs/reactjs.org):
-* Examples were stored separately from documentation (eg in Codepen) which made it more difficult to coordinate updates. (It was easy to forget to update an example when an API changes.)
-* Examples (eg Codepens) were owned by a single author, so the community couldn't contribute PRs to update them without forking and fragmenting ownership.
-* It was easy to create invalid links (eg Babel REPL links that _don't quite work).
+This plug-in was created to solve a couple of problems the React team has faced
+with [reactjs.org](https://github.com/reactjs/reactjs.org):
+
+* Examples were stored separately from documentation (eg in Codepen) which made
+  it more difficult to coordinate updates. (It was easy to forget to update an
+  example when an API changes.)
+* Examples (eg Codepens) were owned by a single author, so the community
+  couldn't contribute PRs to update them without forking and fragmenting
+  ownership.
+* It was easy to create invalid links (eg Babel REPL links that _don't quite
+  work).
 
 ## Overview
 
 For example, given the following project directory structure:
+
 ```
 ./examples/
 ├── components-and-props
@@ -20,7 +32,9 @@ For example, given the following project directory structure:
 ├── introducing-jsx.js
 ```
 
-These example files can be referenced via links in markdown that get transformed to HTML links that open the embedded code examples in a REPL. For example:
+These example files can be referenced via links in markdown that get transformed
+to HTML links that open the embedded code examples in a REPL. For example:
+
 ```html
 <!-- before -->
 [See it in Babel](babel://hello-world)
@@ -49,11 +63,21 @@ These example files can be referenced via links in markdown that get transformed
 
 ### How does it work?
 
-Codepen links point to Gatsby pages (also created by this plug-in) that redirect using the [Codepen prefill API](https://blog.codepen.io/documentation/api/prefill/) to create a working, runnable demo with the linked example code.
+Codepen links point to Gatsby pages (also created by this plug-in) that redirect
+using the
+[Codepen prefill API](https://blog.codepen.io/documentation/api/prefill/) to
+create a working, runnable demo with the linked example code.
 
-Babel and CodeSandbox links use the [same URL compression schema used by the Babel REPL](https://github.com/babel/website/blob/c9dd1f516985f7267eb58c286789e0c66bc0a21d/js/repl/UriUtils.js#L22-L26) to embed the local code example in a URL that enables it to be viewed directly within the target REPL.
+Babel and CodeSandbox links use the
+[same URL compression schema used by the Babel REPL](https://github.com/babel/website/blob/c9dd1f516985f7267eb58c286789e0c66bc0a21d/js/repl/UriUtils.js#L22-L26)
+to embed the local code example in a URL that enables it to be viewed directly
+within the target REPL.
 
-All example links are also verified to ensure that they reference valid example files. For example, if there is a link to `codepen://components-and-props/rendering-a-component`, this plug-in will verify that a file `components-and-props/rendering-a-component.js` exists within the specified examples directory. (This will avoid broken links at runtime.)
+All example links are also verified to ensure that they reference valid example
+files. For example, if there is a link to
+`codepen://components-and-props/rendering-a-component`, this plug-in will verify
+that a file `components-and-props/rendering-a-component.js` exists within the
+specified examples directory. (This will avoid broken links at runtime.)
 
 ## Installation
 
@@ -95,7 +119,7 @@ All example links are also verified to ensure that they reference valid example 
     // The redirect page is only shown briefly,
     // But you can use this setting to override its CSS styling.
     redirectTemplate: `${__dirname}/src/redirect-template.js`),
-    
+
     // Optional link target.
     // Note that if a target is specified, "noreferrer" will also be added.
     // eg <a href="..." target="_blank" rel="noreferrer">...</a>

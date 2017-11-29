@@ -9,14 +9,15 @@ support, process images, etc.
 For larger / complex sites, they let you modularize your site customizations
 into site-specific plugins.
 
-Gatsby has a large and growing set of plugins. See below for the [list
-of official plugins](#official-plugins). We'll eventually add support here for searching and browsing
-both official plugins and community plugins published on NPM.
+Gatsby has a large and growing set of plugins. See below for the
+[list of official plugins](#official-plugins). We'll eventually add support here
+for searching and browsing both official plugins and community plugins published
+on NPM.
 
 ## How to use?
 
-Plugins are just Node.js packages meaning you install them like anything else
-in node using NPM.
+Plugins are just Node.js packages meaning you install them like anything else in
+node using NPM.
 
 For example, `gatsby-transformer-json` is a package which adds support for JSON
 files to the Gatsby data layer.
@@ -30,14 +31,12 @@ to the plugins array like:
 
 ```javascript
 module.exports = {
-  plugins: [
-    `gatsby-transformer-json`,
-  ],
+  plugins: [`gatsby-transformer-json`],
 }
 ```
 
-Plugins can take options. See each plugin page below for more detailed documentation
-on using each plugin.
+Plugins can take options. See each plugin page below for more detailed
+documentation on using each plugin.
 
 ## Locally defined plugins
 
@@ -55,23 +54,25 @@ plugins
     └── package.json
 ```
 
-You still need to add the plugin to your `gatsby-config.js` like for plugins installed from NPM.
+You still need to add the plugin to your `gatsby-config.js` like for plugins
+installed from NPM.
 
 Each plugin requires a package.json file, but the minimum content is just an
-empty object `{}`. The `name` and `version` fields are read from the package file.
-The name is used to identify the plugin when it mutates the GraphQL data structure.
-The version is used to clear the cache when it changes.
+empty object `{}`. The `name` and `version` fields are read from the package
+file. The name is used to identify the plugin when it mutates the GraphQL data
+structure. The version is used to clear the cache when it changes.
 
 For local plugins it is best to leave the version field empty. Gatsby will
-generate an md5-hash from all gatsby-* file contents and use that as the version.
-This way the cache is automatically flushed when you change the code of your
-plugin.
+generate an md5-hash from all gatsby-\* file contents and use that as the
+version. This way the cache is automatically flushed when you change the code of
+your plugin.
 
 If the name is empty it is inferred from the plugin folder name.
 
-Like all gatsby-* files, the code is not being processed by Babel. If you
-want to use JavaScript syntax which isn't supported by your version of Node.js,
-you can place the files in a `src` subfolder and build them to the plugin folder root.
+Like all gatsby-\* files, the code is not being processed by Babel. If you want
+to use JavaScript syntax which isn't supported by your version of Node.js, you
+can place the files in a `src` subfolder and build them to the plugin folder
+root.
 
 ## Official plugins
 
@@ -115,7 +116,6 @@ you can place the files in a `src` subfolder and build them to the plugin folder
 * [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/)
 * [gatsby-transformer-toml](/packages/gatsby-transformer-toml/)
 * [gatsby-transformer-yaml](/packages/gatsby-transformer-yaml/)
-
 
 ## Official components
 

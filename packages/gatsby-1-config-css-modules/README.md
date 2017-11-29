@@ -1,11 +1,15 @@
 # gatsby-1-config-css-modules
+
 CSS Modules configuration for Gatsby v1 plugins
 
 ## Install
+
 `yarn add --dev gatsby-plugin-sass`
 
 ## How to use
+
 Example from [`gatsby-plugin-sass`](../gatsby-plugin-sass/):
+
 ```javascript
 // in gatsby-node.js
 const { cssModulesConfig } = require("gatsby-1-config-css-modules")
