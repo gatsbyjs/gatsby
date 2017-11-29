@@ -167,7 +167,7 @@ Let's do something crazy and add a list with another code example:
   > version 5 which included the cutting edge,
   > [fault-tolerant](https://en.wikipedia.org/wiki/Fault-tolerant) and highly
   > standards-compliant
-  > [Tasman](<https://en.wikipedia.org/wiki/Tasman_(layout_engine)>)
+  > [Tasman](<https://en.wikipedia.org/wiki/Tasman_(layout_engine)>) >
   > [layout engine](https://en.wikipedia.org/wiki/Layout_engine).
 
   Source: https://en.wikipedia.org/wiki/Internet_Explorer_for_Mac

@@ -9,8 +9,8 @@ Router's Link.
 
 You can set the `activeStyle` or `activeClassName` prop to add styling
 attributes to the rendered element when it matches the current URL, and Gatsby
-also supports React Router's props `exact`, `strict`, `isActive`, and `location`. If
-any of these props are set, then
+also supports React Router's props `exact`, `strict`, `isActive`, and
+`location`. If any of these props are set, then
 [React Router's NavLink component](https://github.com/ReactTraining/react-router/blob/master/packages/react-router-dom/docs/api/NavLink.md)
 will be used instead of the default `Link`.
 
