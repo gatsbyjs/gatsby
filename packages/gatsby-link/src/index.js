@@ -80,6 +80,8 @@ class GatsbyLink extends React.Component {
   }
 
   handleRef(ref) {
+    this.props.innerRef && this.props.innerRef(ref)
+
     if (this.state.IOSupported && ref) {
       // If IO supported and element reference found, setup Observer functionality
       handleIntersection(ref, () => {
@@ -153,8 +155,9 @@ class GatsbyLink extends React.Component {
 
 GatsbyLink.propTypes = {
   ...NavLinkPropTypes,
-  to: PropTypes.string.isRequired,
+  innerRef: PropTypes.func,
   onClick: PropTypes.func,
+  to: PropTypes.string.isRequired,
 }
 
 GatsbyLink.contextTypes = {
