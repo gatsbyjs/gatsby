@@ -25,7 +25,7 @@ Note: the various props that are rendered into pages _are_ required e.g.
 Also anything you render in the `html.js` component will _not_ be made "live" in
 the client like other components. If you want to dynamically update your
 `<head>` we recommend using
-[React Helmet](https://www.gatsbyjs.org/packages/gatsby-plugin-react-helmet/)
+[React Helmet](/packages/gatsby-plugin-react-helmet/)
 
 ### Target container
 
