@@ -8,17 +8,22 @@ that adds enhancements specific to Gatsby. All props are passed through to React
 Router's Link.
 
 You can set the `activeStyle` or `activeClassName` prop to add styling
-attributes to the rendered element when it matches the current URL. If either of
-these props are set, then
+attributes to the rendered element when it matches the current URL, and Gatsby
+also supports React Router's props `exact`, `strict`, `isActive`, and
+`location`. If any of these props are set, then
 [React Router's NavLink component](https://github.com/ReactTraining/react-router/blob/master/packages/react-router-dom/docs/api/NavLink.md)
-will be used instead of Link.
+will be used instead of the default `Link`.
 
 Gatsby does per-route code splitting. This means that when navigating to a new
 page, the code chunks necessary for that page might not be loaded. This is bad.
 Any unnecessary latency when changing pages should be avoided. So to avoid that
-Gatsby preloads code chunks and page data. Preloading is triggered by a link
-entering the viewport so it only prefetchs code/data chunks for pages the user
-is likely to navigate to.
+Gatsby preloads code chunks and page data.
+
+Preloading is triggered by a link entering the viewport; Gatsby uses
+`Link`/`NavLink`'s `innerRef` property to create a new InteractionObserver (on
+supported browsers) to monitor visible links. This way, Gatsby only prefetches
+code/data chunks for pages the user is likely to navigate to. You can also get
+access to the link element by passing in a `innerRef` prop.
 
 ## Install
 
@@ -38,6 +43,7 @@ render () {
       activeStyle={{
         color: 'red'
       }}
+      innerRef={(el) => { this.myLink = el }}
     >
     Another page
     </Link>
