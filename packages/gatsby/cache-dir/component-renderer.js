@@ -23,7 +23,7 @@ class ComponentRenderer extends React.Component {
 
     this.state = {
       location,
-      pageResources: loader.getResourcesForPathname(props.location.pathname),
+      pageResources: loader.getResourcesForPathname(location.pathname),
     }
   }
 
