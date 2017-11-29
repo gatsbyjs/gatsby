@@ -35,7 +35,7 @@ All frontmatter fields are converted into GraphQL fields. TODO link to docs on
 auto-inferring types/fields.
 
 This plugin adds additional fields to the `MarkdownRemark` GraphQL type
-including `html`, `excerpt`, `headers`, etc. Other Gatsby plugins can also add
+including `html`, `excerpt`, `headings`, etc. Other Gatsby plugins can also add
 additional fields.
 
 ## How to query
@@ -48,6 +48,10 @@ A sample GraphQL query to get MarkdownRemark nodes:
     edges {
       node {
         html
+        headings {
+          depth
+          value
+        }
         frontmatter {
           # Assumes you're using title in your frontmatter.
           title
