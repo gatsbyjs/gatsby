@@ -212,17 +212,17 @@ Here are specific formatting guidelines for any code:
 * Comments made should have a space between the comment characters and the
   comment themselves
 * GitHub-flavored markdown supports syntax highlighting in code blocks for many
-  programming languages. To use it, indicate the language after starting ```
+  programming languages. To use it, indicate the language after starting `````
 
   ```html
-       <div class="awesome" id="more-awesome">
-         <p>This is text in html</p>
-       </div>
+   <div class="awesome" id="more-awesome">
+     <p>This is text in html</p>
+   </div>
   ```
 
   ```javascript
   function logTheThings(stuff) {
-    console.log(stuff)
+    console.log(stuff);
   }
   ```
 
