@@ -68,7 +68,7 @@ tutorial.
 
 ```sh
 cd tutorial-part-one
-gatsby develop
+gatsby develop --host localhost
 ```
 
 You should see shortly some text that says `The development server is listening
