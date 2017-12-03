@@ -178,16 +178,12 @@ module.exports = async (
           new webpack.NamedModulesPlugin(),
           new FriendlyErrorsWebpackPlugin({
             clearConsole: false,
-            compilationSuccessInfo: {
-              messages: [
-                `Your site is running at http://${program.host}:${
-                  program.port
-                }`,
-                `Your graphql debugger is running at http://${program.host}:${
-                  program.port
-                }/___graphql`,
-              ],
-            },
+            // compilationSuccessInfo: {
+            // messages: [
+            // `You can now view your site in the browser running at http://${program.host}:${program.port}`,
+            // `Your graphql debugger is running at http://${program.host}:${program.port}/___graphql`,
+            // ],
+            // },
           }),
         ]
       case `develop-html`:

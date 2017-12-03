@@ -14,17 +14,16 @@ class ComponentRenderer extends React.Component {
     super()
     let location = props.location
 
-    // This covers layout for when page not found, especially during production
+    // Set the pathname for 404 pages.
     if (!loader.getPage(location.pathname)) {
       location = Object.assign({}, location, {
-        ...location,
         pathname: `/404.html`,
       })
     }
 
     this.state = {
       location,
-      pageResources: loader.getResourcesForPathname(props.location.pathname),
+      pageResources: loader.getResourcesForPathname(location.pathname),
     }
   }
 
@@ -45,18 +44,24 @@ class ComponentRenderer extends React.Component {
         nextProps.location.pathname
       )
       if (!pageResources) {
+        let location = nextProps.location
+
+        // Set the pathname for 404 pages.
+        if (!loader.getPage(location.pathname)) {
+          location = Object.assign({}, location, {
+            pathname: `/404.html`,
+          })
+        }
+
         // Page resources won't be set in cases where the browser back button
         // or forward button is pushed as we can't wait as normal for resources
         // to load before changing the page.
-        loader.getResourcesForPathname(
-          nextProps.location.pathname,
-          pageResources => {
-            this.setState({
-              location: nextProps.location,
-              pageResources,
-            })
-          }
-        )
+        loader.getResourcesForPathname(location.pathname, pageResources => {
+          this.setState({
+            location,
+            pageResources,
+          })
+        })
       } else {
         this.setState({
           location: nextProps.location,

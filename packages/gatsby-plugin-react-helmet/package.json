@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-react-helmet",
-  "version": "1.0.8",
+  "version": "2.0.2",
   "description": "Stub description for gatsby-plugin-react-helmet",
   "main": "index.js",
   "scripts": {
@@ -18,7 +18,9 @@
     "cross-env": "^5.0.5"
   },
   "dependencies": {
-    "babel-runtime": "^6.26.0",
-    "react-helmet": "^5.1.3"
+    "babel-runtime": "^6.26.0"
+  },
+  "peerDependencies": {
+    "react-helmet": ">=5.1.3"
   }
 }
