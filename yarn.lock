@@ -5535,6 +5535,10 @@ history@^4.6.2, history@^4.7.2:
     value-equal "^0.4.0"
     warning "^3.0.0"
 
+hjson@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/hjson/-/hjson-3.1.0.tgz#dd468d0a74fe227b79afd85b0df677433a633501"
+
 hmac-drbg@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/hmac-drbg/-/hmac-drbg-1.0.1.tgz#d2745701025a6c775a6c545793ed502fc0c649a1"
