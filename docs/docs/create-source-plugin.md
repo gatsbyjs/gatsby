@@ -52,10 +52,10 @@ What does the code look like?
 
 A source plugin is a normal NPM package. It has a package.json with optional
 dependencies as well as a `gatsby-node.js` where you implement Gatsby's Node.js
-APIs. Gatsby supports node versions back to Node 4 and as it's common to
-want to use more modern node.js and JavaScript syntax, many plugins write code
-in a `src` directory and compile the code. All plugins maintained in the Gatsby
-repo follow this pattern.
+APIs. Gatsby supports node versions back to Node 4 and as it's common to want to
+use more modern node.js and JavaScript syntax, many plugins write code in a
+`src` directory and compile the code. All plugins maintained in the Gatsby repo
+follow this pattern.
 
 Your `gatsby-node.js` should look something like:
 
