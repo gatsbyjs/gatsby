@@ -31,7 +31,7 @@ In the world of components, you instead create a `PrimaryButton` component with
 your button styles and use it throughout your site like:
 
 ```jsx
-;<PrimaryButton>Click me</PrimaryButton>
+<PrimaryButton>Click me</PrimaryButton>
 ```
 
 Components become the base building blocks of your site. Instead of being
