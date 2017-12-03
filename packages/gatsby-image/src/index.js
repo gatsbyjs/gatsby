@@ -220,17 +220,6 @@ class Image extends React.Component {
               }}
             />
 
-            {/* Show the original image during server-side rendering if JavaScript is disabled */}
-            <noscript>
-              <Img
-                alt={alt}
-                title={title}
-                srcSet={image.srcSet}
-                src={image.src}
-                sizes={image.sizes}
-              />
-            </noscript>
-
             {/* Show the blury base64 image. */}
             {image.base64 && (
               <Img
@@ -287,6 +276,17 @@ class Image extends React.Component {
                 }}
               />
             )}
+
+            {/* Show the original image during server-side rendering if JavaScript is disabled */}
+            <noscript>
+              <Img
+                alt={alt}
+                title={title}
+                srcSet={image.srcSet}
+                src={image.src}
+                sizes={image.sizes}
+              />
+            </noscript>
           </div>
         </div>
       )
@@ -331,18 +331,6 @@ class Image extends React.Component {
             style={divStyle}
             ref={this.handleRef}
           >
-            {/* Show the original image during server-side rendering if JavaScript is disabled */}
-            <noscript>
-              <Img
-                alt={alt}
-                title={title}
-                width={image.width}
-                height={image.height}
-                srcSet={image.srcSet}
-                src={image.src}
-              />
-            </noscript>
-
             {/* Show the blury base64 image. */}
             {image.base64 && (
               <Img
@@ -397,6 +385,18 @@ class Image extends React.Component {
                 }}
               />
             )}
+
+            {/* Show the original image during server-side rendering if JavaScript is disabled */}
+            <noscript>
+              <Img
+                alt={alt}
+                title={title}
+                width={image.width}
+                height={image.height}
+                srcSet={image.srcSet}
+                src={image.src}
+              />
+            </noscript>
           </div>
         </div>
       )
