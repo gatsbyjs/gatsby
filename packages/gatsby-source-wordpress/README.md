@@ -16,9 +16,8 @@ An example site for this plugin is available.
 -   Should work with any number of article and post (tested on a site with 900
     posts)
 -   Can authenticate to wordpress.com's API using OAuth 2 so media can be queried
--   Easily create responsive images in Gatsby from WordPress images using
-    `gatsby-transformer-sharp` and `gatsby-plugin-sharp` in your
-    `gatsby-config.js`
+-   Easily create responsive images in Gatsby from WordPress images. See [image
+    processing](#image-processing) section.
 
 ## WordPress and custom entities
 
@@ -323,6 +322,81 @@ Mention the apparition of `childWordpressAcfField` in the query below :
     }
   }
 ```
+
+### Image processing
+
+To use image processing you need `gatsby-transformer-sharp` and
+`gatsby-plugin-sharp` in your `gatsby-config.js`.
+
+You can apply image processing to:
+
+-   featured images (also known as post thumbnails),
+-   ACF fields:
+    -   Image field type (return value must be set to `Image Object` or `Image
+        URL` or field name must be `featured_media`),
+    -   Gallery field type.
+
+Image processing of inline images added in wordpress WYSIWIG editor is
+currently not supported.
+
+To access image processing in your queries you need to use this pattern:
+
+```
+imageFieldName {
+  localFile {
+    childImageSharp {
+      ...
+    }
+  }
+}
+```
+
+Full example:
+
+```graphql
+  allWordpressPost {
+    edges {
+      node {
+        title
+        featured_media {
+          localFile {
+            childImageSharp {
+              resolutions(width: 500, height: 300) {
+                ...GatsbyImageSharpResolutions_withWebp
+              }
+            }
+          }
+        }
+        acf {
+          image {
+            localFile {
+              childImageSharp {
+                sizes(maxWidth: 500) {
+                  ...GatsbyImageSharpSizes_withWebp
+                }
+              }
+            }
+          }
+          gallery {
+            localFile {
+              childImageSharp {
+                resize(width: 180, height: 180) {
+                  src
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+```
+
+To learn more about image processing check
+
+-   documentation of [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/),
+-   source code of [image processing example
+    site](https://github.com/gatsbyjs/gatsby/tree/master/examples/image-processing).
 
 ## Site's `gatsby-node.js` example
 
