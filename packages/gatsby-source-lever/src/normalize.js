@@ -98,7 +98,9 @@ function getValidKey({ key, verbose = false }) {
   }
   if (changed && verbose)
     console.log(
-      `Object with key "${key}" breaks GraphQL naming convention. Renamed to "${nkey}"`
+      `Object with key "${key}" breaks GraphQL naming convention. Renamed to "${
+        nkey
+      }"`
     )
 
   return nkey

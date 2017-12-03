@@ -16,7 +16,9 @@ class EvaluationCell extends Component {
           return `linear-gradient(90deg, transparent 50%, ${bgDefault} 50%)`
         }
         case `1`: {
-          return `linear-gradient(180deg, transparent 50%, ${bgDefault} 50%), linear-gradient(90deg, transparent 50%, ${bgDefault} 50%)`
+          return `linear-gradient(180deg, transparent 50%, ${
+            bgDefault
+          } 50%), linear-gradient(90deg, transparent 50%, ${bgDefault} 50%)`
         }
         case `0`: {
           return `none`

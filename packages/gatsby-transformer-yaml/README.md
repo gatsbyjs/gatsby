@@ -6,15 +6,14 @@ Parses YAML files. Supports arrays of objects and single objects.
 
 `npm install --save gatsby-transformer-yaml`
 
-You also need to have `gatsby-source-filesystem` installed and configured so it points to your files.
+You also need to have `gatsby-source-filesystem` installed and configured so it
+points to your files.
 
 ## How to use
 
 ```javascript
 // In your gatsby-config.js
-plugins: [
-  `gatsby-transformer-yaml`,
-]
+plugins: [`gatsby-transformer-yaml`]
 ```
 
 ## Parsing algorithm
@@ -24,8 +23,8 @@ or as single objects spread across multiple files.
 
 ### Array of Objects
 
-The algorithm for YAML arrays is to convert each item in the array into
-a node. The type of the node is based on the filename.
+The algorithm for YAML arrays is to convert each item in the array into a node.
+The type of the node is based on the filename.
 
 So if your project has a `letters.yaml` which looks like:
 
@@ -38,18 +37,18 @@ So if your project has a `letters.yaml` which looks like:
 Then the following three nodes would be created.
 
 ```javascript
-[
+;[
   {
-    value: 'a',
-    type: 'Letters',
+    value: "a",
+    type: "Letters",
   },
   {
-    value: 'b',
-    type: 'Letters',
+    value: "b",
+    type: "Letters",
   },
   {
-    value: 'c',
-    type: 'Letters',
+    value: "c",
+    type: "Letters",
   },
 ]
 ```
@@ -87,18 +86,18 @@ value: c
 Then the following three nodes would be created.
 
 ```javascript
-[
+;[
   {
-    value: 'a',
-    type: 'Letters',
+    value: "a",
+    type: "Letters",
   },
   {
-    value: 'b',
-    type: 'Letters',
+    value: "b",
+    type: "Letters",
   },
   {
-    value: 'c',
-    type: 'Letters',
+    value: "c",
+    type: "Letters",
   },
 ]
 ```
@@ -128,21 +127,20 @@ Which would return:
     edges: [
       {
         node: {
-          value: 'a'
-        }
+          value: "a",
+        },
       },
       {
         node: {
-          value: 'b'
-        }
+          value: "b",
+        },
       },
       {
         node: {
-          value: 'c'
-        }
-      }
+          value: "c",
+        },
+      },
     ]
   }
 }
 ```
-

@@ -11,8 +11,36 @@ export default async function writeRedirectsFile(pluginData, redirects) {
   // Map redirect data to the format Netlify expects
   // https://www.netlify.com/docs/redirects/
   redirects = redirects.map(redirect => {
-    const status = redirect.isPermanent ? 301 : 302
-    return `${redirect.fromPath}  ${redirect.toPath}  ${status}`
+    const {
+      fromPath,
+      isPermanent,
+      redirectInBrowser, // eslint-disable-line no-unused-vars
+      toPath,
+      ...rest
+    } = redirect
+
+    // The order of the first 3 parameters is significant.
+    // The order for rest params (key-value pairs) is arbitrary.
+    const pieces = [
+      fromPath,
+      toPath,
+      isPermanent ? 301 : 302, // Status
+    ]
+
+    for (let key in rest) {
+      const value = rest[key]
+
+      if (typeof value === `string` && value.indexOf(` `) >= 0) {
+        console.warn(
+          `Invalid redirect value "${value}" specified for key "${key}". ` +
+            `Values should not contain spaces.`
+        )
+      } else {
+        pieces.push(`${key}=${value}`)
+      }
+    }
+
+    return pieces.join(`  `)
   })
 
   let appendToFile = false

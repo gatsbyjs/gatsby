@@ -2,10 +2,11 @@
 
 Source plugin for pulling data (including images) into Gatsby from Drupal sites.
 
-Pulls data from Drupal 8 sites with the [Drupal JSONAPI
-module](https://www.drupal.org/project/jsonapi) installed.
+Pulls data from Drupal 8 sites with the
+[Drupal JSONAPI module](https://www.drupal.org/project/jsonapi) installed.
 
-An example site built with the headless Drupal distro [ContentaCMS](https://twitter.com/contentacms) is at
+An example site built with the headless Drupal distro
+[ContentaCMS](https://twitter.com/contentacms) is at
 https://using-drupal.gatsbyjs.org/
 
 ## Install
@@ -41,5 +42,3 @@ You can query nodes created from Drupal like the following:
   }
 }
 ```
-
-
