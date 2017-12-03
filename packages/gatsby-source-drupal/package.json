@@ -18,7 +18,7 @@
     "axios": "^0.16.1",
     "babel-runtime": "^6.26.0",
     "bluebird": "^3.5.0",
-    "gatsby-source-filesystem": "^1.5.9",
+    "gatsby-source-filesystem": "^2.0.0-alpha.2",
     "lodash": "^4.17.4"
   },
   "devDependencies": {

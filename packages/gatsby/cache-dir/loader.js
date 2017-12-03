@@ -9,7 +9,7 @@ let hasFetched = Object.create(null)
 let syncRequires = {}
 let asyncRequires = {}
 
-const fetchResource = (resourceName) => {
+const fetchResource = resourceName => {
   // Find resource
   let resourceFunction
   if (resourceName.slice(0, 12) === `component---`) {
@@ -25,7 +25,7 @@ const fetchResource = (resourceName) => {
   return resourceFunction()
 }
 
-const getResourceModule = (resourceName) =>
+const getResourceModule = resourceName =>
   fetchResource(resourceName).then(preferDefault)
 
 // Prefetcher logic
@@ -45,7 +45,6 @@ if (process.env.NODE_ENV === `production`) {
   })
 }
 
-
 // Note we're not actively using the path data atm. There
 // could be future optimizations however around trying to ensure
 // we load all resources for likely-to-be-visited paths.
@@ -58,7 +57,6 @@ const sortResourcesByCount = (a, b) => {
   else if (resourcesCount[a] < resourcesCount[b]) return -1
   else return 0
 }
-
 
 let findPage
 let pages = []
@@ -177,7 +175,6 @@ const queue = {
       }
       cb(pageResources)
       return pageResources
-
     }
     // Production code path
     const page = findPage(path)
@@ -208,9 +205,8 @@ const queue = {
     Promise.all([
       getResourceModule(page.componentChunkName),
       getResourceModule(page.jsonName),
-      getResourceModule(page.layoutComponentChunkName),
-    ])
-    .then(([component, json, layout] )=> {
+      page.layout && getResourceModule(page.layout),
+    ]).then(([component, json, layout]) => {
       const pageResources = { component, json, layout, page }
 
       pathScriptsCache[path] = pageResources
