@@ -1,10 +1,12 @@
 # gatsby-plugin-glamor
 
 Provide drop-in support for using the css-in-js library
-[Glamor](https://github.com/threepointone/glamor) including optimized
-server rendering.
+[Glamor](https://github.com/threepointone/glamor) including optimized server
+rendering.
 
-In addition, you can also use this plugin to make [`glamorous`](https://github.com/paypal/glamorous) 💄 work with server side rendering and start writing React components that carry their styles with them.
+In addition, you can also use this plugin to make
+[`glamorous`](https://github.com/paypal/glamorous) 💄 work with server side
+rendering and start writing React components that carry their styles with them.
 
 ## Install
 
@@ -15,19 +17,17 @@ In addition, you can also use this plugin to make [`glamorous`](https://github.c
 First add the plugin to your `gatsby-config.js`.
 
 ```javascript
-plugins: [
-  `gatsby-plugin-glamor`,
-]
+plugins: [`gatsby-plugin-glamor`]
 ```
 
-Glamor [provides many convenient ways to style your
-components](https://github.com/threepointone/glamor/blob/master/docs/howto.md).
+Glamor
+[provides many convenient ways to style your components](https://github.com/threepointone/glamor/blob/master/docs/howto.md).
 One particularly convenient (and suggested) way is to use its `css` prop. It
-works exactly the same as the [default `style`
-prop](https://facebook.github.io/react/docs/dom-elements.html#style) except it
-supports the entire CSS language. So things not supported by inline styles are
-supported with Glamor like pseudo-classes/-elements, `@media` queries,
-parent/child/contextual selectors, etc.
+works exactly the same as the
+[default `style` prop](https://facebook.github.io/react/docs/dom-elements.html#style)
+except it supports the entire CSS language. So things not supported by inline
+styles are supported with Glamor like pseudo-classes/-elements, `@media`
+queries, parent/child/contextual selectors, etc.
 
 ```jsx
 render () {
@@ -61,7 +61,7 @@ render () {
 }
 ```
 
-The `css` prop works on both the default DOM components as well as most
-custom components. Under the hood, Glamor converts the `css` prop to a
-`className` prop so the `css` prop will work as long as your or the 3rd
-party component you're using uses `className`.
+The `css` prop works on both the default DOM components as well as most custom
+components. Under the hood, Glamor converts the `css` prop to a `className` prop
+so the `css` prop will work as long as your or the 3rd party component you're
+using uses `className`.

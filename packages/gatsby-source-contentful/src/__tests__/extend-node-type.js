@@ -79,7 +79,9 @@ describe(`contentful extend node type`, () => {
       expect(resp.height).toBe(399)
     })
     it(`handles null`, async () => {
-      const resp = await resolveResponsiveResolution(nullFileImage, { width: 400 })
+      const resp = await resolveResponsiveResolution(nullFileImage, {
+        width: 400,
+      })
       expect(resp).toBe(null)
     })
   })
@@ -99,7 +101,9 @@ describe(`contentful extend node type`, () => {
       expect(resp).toMatchSnapshot()
     })
     it(`handles null`, async () => {
-      const resp = await resolveResponsiveSizes(nullFileImage, { maxWidth: 400 })
+      const resp = await resolveResponsiveSizes(nullFileImage, {
+        maxWidth: 400,
+      })
       expect(resp).toBe(null)
     })
   })

@@ -2,4 +2,5 @@
 
 https://using-css-modules.gatsbyjs.org
 
-Demonstrates using css modules in Gatsby with normal (Postcss) css and sass/scss.
+Demonstrates using css modules in Gatsby with normal (Postcss) css and
+sass/scss.
