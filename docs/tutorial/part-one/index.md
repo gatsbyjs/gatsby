@@ -154,7 +154,7 @@ page.
 First create the link to the new page.
 
 To do that, import the `<Link>` component from the `gatsby-link` package that
-was installed along with the starter.
+was installed along with Gatsby.
 
 Unlike the normal HTML `<a>` element, our `Link` component uses `to` for
 specifying the page you want to link to. Let's link to a page with the pathname

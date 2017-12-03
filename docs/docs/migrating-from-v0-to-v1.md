@@ -24,10 +24,8 @@ git mv utils src
 ## Replace react-router's Link component with gatsby-link
 
 `gatsby-link` is a wrapper for the `<Link>` component in react-router. It
-automatically prefixes urls and handles prefetching. Add `gatsby-link` to your
-project by running:
-
-`npm install --save gatsby-link`
+automatically prefixes urls and handles prefetching. `gatsby-link` is installed
+automatically with Gatsby.
 
 `gatsby-link` auto-detects whether to use a plain `<Link>` or `<NavLink>` based
 on what props you pass it. There's no need to wrap `<IndexLink>` because it was
