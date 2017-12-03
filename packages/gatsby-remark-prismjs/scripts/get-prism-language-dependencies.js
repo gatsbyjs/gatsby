@@ -3,7 +3,10 @@ const execSync = require(`child_process`).execSync
 const fs = require(`fs`)
 const path = require(`path`)
 
-const fileSavePath = path.resolve(__dirname, `../src/prism-language-dependencies.js`)
+const fileSavePath = path.resolve(
+  __dirname,
+  `../src/prism-language-dependencies.js`
+)
 
 function getVersion() {
   const prismInfo = JSON.parse(execSync(`npm ls prismjs --json`))
@@ -33,12 +36,16 @@ module.exports = ${JSON.stringify(languages, null, 2)}
 
 function requestData() {
   const version = getVersion()
-  const url = `https://raw.githubusercontent.com/PrismJS/prism/v${version}/components.js`
+  const url = `https://raw.githubusercontent.com/PrismJS/prism/v${
+    version
+  }/components.js`
 
   https
     .get(url, res => {
       if (res.statusCode !== 200) {
-        throw new Error(`Request Failed.\nRequest URL: ${url}\nStatus Code: ${res.statusCode}`)
+        throw new Error(
+          `Request Failed.\nRequest URL: ${url}\nStatus Code: ${res.statusCode}`
+        )
       }
 
       res.setEncoding(`utf8`)

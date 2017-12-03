@@ -1,6 +1,7 @@
 {
   "name": "using-emotion-prismjs",
-  "description": "Gatsby example using emotion and PrismJS Gatsby plugin for code snippet highlighting",
+  "description":
+    "Gatsby example using emotion and PrismJS Gatsby plugin for code snippet highlighting",
   "main": "n/a",
   "scripts": {
     "develop": "gatsby develop",

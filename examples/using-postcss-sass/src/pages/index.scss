@@ -13,7 +13,9 @@ $color: pink;
     list-style: none;
   }
 
-  li { display: inline-block; }
+  li {
+    display: inline-block;
+  }
 
   a {
     @include borderRadius(3px);

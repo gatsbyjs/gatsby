@@ -6,21 +6,15 @@ Gatsby makes it easy to programmatically control your pages.
 
 Pages can be created in three ways:
 
-* In your site's gatsby-node.js by implementing the API
-  [`createPages`](/docs/node-apis/#createPages)
+* In your site's gatsby-node.js by implementing the API [`createPages`](/docs/node-apis/#createPages)
 * Gatsby core automatically turns React components in `src/pages` into pages
 * Plugins can also implement `createPages` and create pages for you
 
-You can also implement the API [`onCreatePage`](/docs/node-apis/#onCreatePage)
-to modify pages created in core or plugins or to create client-only pages.
+You can also implement the API [`onCreatePage`](/docs/node-apis/#onCreatePage) to modify pages created in core or plugins or to create client-only pages.
 
 ## Debugging help
 
-To see what pages are being created by your code or plugins, you can query for
-page information while developing in Graph*i*QL. Paste the following query in
-the Graph*i*QL IDE for your site. The Graph*i*QL IDE is available when running
-your sites development server at `HOST:PORT/___graphql` e.g.
-`localhost:8000/___graphql`.
+To see what pages are being created by your code or plugins, you can query for page information while developing in Graph*i*QL. Paste the following query in the Graph*i*QL IDE for your site. The Graph*i*QL IDE is available when running your sites development server at `HOST:PORT/___graphql` e.g. `localhost:8000/___graphql`.
 
 ```graphql
 {
@@ -43,11 +37,9 @@ You can also query for any `context` data you or plugins added to pages.
 
 ## Creating pages in gatsby-node.js
 
-Often you will need to programmatically create pages. For example, you have
-markdown files where each should be a page.
+Often you will need to programmatically create pages. For example, you have markdown files where each should be a page.
 
-This example assumes that each markdown page has a "path" set in the frontmatter
-of the markdown file.
+This example assumes that each markdown page has a "path" set in the frontmatter of the markdown file.
 
 ```javascript
 // Implement the Gatsby API “createPages”. This is called once the
@@ -101,14 +93,11 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
 
 ## Modifying pages created by core or plugins
 
-Gatsby core and plugins can automatically create pages for you. Sometimes the
-default isn't quite what you want and you need to modify the created page
-objects.
+Gatsby core and plugins can automatically create pages for you. Sometimes the default isn't quite what you want and you need to modify the created page objects.
 
 ### Removing trailing slashes
 
-A common reason for needing to modify automatically created pages is to remove
-trailing slashes.
+A common reason for needing to modify automatically created pages is to remove trailing slashes.
 
 To do this, in your site's `gatsby-node.js` add code similar to the following:
 
@@ -138,10 +127,7 @@ exports.onCreatePage = ({ page, boundActionCreators }) => {
 
 ### Creating client-only routes
 
-If you're creating a "hybrid" Gatsby app with both statically rendered pages as
-well as client-only routes e.g. an app that combines marketing pages and your
-app that lives under `/app/*`, you want to add code to your `gatsby-node.js`
-like the following:
+If you're creating a "hybrid" Gatsby app with both statically rendered pages as well as client-only routes e.g. an app that combines marketing pages and your app that lives under `/app/*`, you want to add code to your `gatsby-node.js` like the following:
 
 ```javascript
 // Implement the Gatsby API “onCreatePage”. This is
@@ -164,11 +150,7 @@ exports.onCreatePage = async ({ page, boundActionCreators }) => {
 
 By default, all pages will use the layout found at `/layouts/index.js`.
 
-You may wish to choose a custom layout for certain pages (such as removing
-header and footer for landing pages). You can choose the layout component when
-creating pages with the `createPage` action by adding a layout key to the page
-object or modify pages created elsewhere using the `onCreatePage` API. All
-components in the `/layouts/` directory are automatically available.
+You may wish to choose a custom layout for certain pages (such as removing header and footer for landing pages). You can choose the layout component when creating pages with the `createPage` action by adding a layout key to the page object or modify pages created elsewhere using the `onCreatePage` API. All components in the `/layouts/` directory are automatically available.
 
 ```javascript
 // Implement the Gatsby API “onCreatePage”. This is

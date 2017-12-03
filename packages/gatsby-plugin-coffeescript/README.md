@@ -27,17 +27,11 @@ plugins: [
 
 ## Notes
 
-First, note that CoffeeScript + React is a troubled combination. This plugin
-relies upon deprecated modules that may someday prove to be dysfunctional or
-otherwise deficient.
+First, note that CoffeeScript + React is a troubled combination. This plugin relies upon deprecated modules that may someday prove to be dysfunctional or otherwise deficient.
 
-Furthermore, note that the installed version of CoffeeScript is @next. This is
-not optional - _named exports are required for page queries to work properly._
+Furthermore, note that the installed version of CoffeeScript is @next. This is not optional - _named exports are required for page queries to work properly._
 
-You will need to manually edit your `coffee-loader` installation and install
-`coffeescript` separately in your project directory to ensure that
-CoffeeScript@next is being loaded. The very first line of source in the former's
-`index.js` should be the following: note the lack of dash.
+You will need to manually edit your `coffee-loader` installation and install `coffeescript` separately in your project directory to ensure that CoffeeScript@next is being loaded. The very first line of source in the former's `index.js` should be the following: note the lack of dash.
 
 ```js
 var coffee = require("coffeescript")

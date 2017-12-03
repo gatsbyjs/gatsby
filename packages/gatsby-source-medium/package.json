@@ -1,6 +1,7 @@
 {
   "name": "gatsby-source-medium",
-  "description": "Gatsby source plugin for building websites using Medium as a data source",
+  "description":
+    "Gatsby source plugin for building websites using Medium as a data source",
   "version": "1.0.8",
   "author": "Robert Vogt <robert@smartive.ch>",
   "dependencies": {
@@ -11,9 +12,7 @@
     "babel-cli": "^6.26.0",
     "cross-env": "^5.0.5"
   },
-  "keywords": [
-    "gatsby"
-  ],
+  "keywords": ["gatsby"],
   "license": "MIT",
   "main": "index.js",
   "scripts": {

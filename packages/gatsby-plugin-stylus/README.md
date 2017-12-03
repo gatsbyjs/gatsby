@@ -20,15 +20,11 @@ plugins: [`gatsby-plugin-stylus`]
 
 ### With CSS Modules
 
-Using CSS modules requires no additional configuration. Simply prepend `.module`
-to the extension. For example: `App.styl` -> `App.module.styl`. Any file with
-the `module` extension will use CSS modules.
+Using CSS modules requires no additional configuration. Simply prepend `.module` to the extension. For example: `App.styl` -> `App.module.styl`. Any file with the `module` extension will use CSS modules.
 
 ### With Stylus plugins
 
-This plugin has the same API as
-[stylus-loader](https://github.com/shama/stylus-loader#stylus-plugins), which
-means you can add stylus plugins with `use`:
+This plugin has the same API as [stylus-loader](https://github.com/shama/stylus-loader#stylus-plugins), which means you can add stylus plugins with `use`:
 
 ```javascript
 // in gatsby-config.js

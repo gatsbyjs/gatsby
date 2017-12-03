@@ -1,7 +1,6 @@
 # gatsby-source-lever
 
-Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from
-[Lever.co](https://www.lever.co/).
+Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from [Lever.co](https://www.lever.co/).
 
 ## Wish list
 
@@ -63,8 +62,7 @@ plugins: [
 
 ## Site's `gatsby-node.js` example
 
-If you wish to create Gatsby Pages for each Lever.co jobs, you can modify your
-`gatsby-node.js`.
+If you wish to create Gatsby Pages for each Lever.co jobs, you can modify your `gatsby-node.js`.
 
 ```javascript
 const _ = require(`lodash`)

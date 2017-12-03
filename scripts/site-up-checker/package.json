@@ -1,7 +1,8 @@
 {
   "name": "site-up-checker",
   "version": "1.0.0",
-  "description": "Checks if our Gatsby example sites are up and pings Discord when one goes down",
+  "description":
+    "Checks if our Gatsby example sites are up and pings Discord when one goes down",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

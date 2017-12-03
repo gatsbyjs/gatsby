@@ -28,7 +28,9 @@ const client = new GraphQLClient(
 function createBuild(sha, commitObjId, url) {
   return client.request(`
     mutation {
-      createBuild(gitSha: "${sha}", result: BUILDING, url: "${url}", commitId: "${commitObjId}", logsIds: []) {
+      createBuild(gitSha: "${sha}", result: BUILDING, url: "${
+    url
+  }", commitId: "${commitObjId}", logsIds: []) {
         id
       }
     }

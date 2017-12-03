@@ -2,32 +2,23 @@
 title: Plugins
 ---
 
-Plugins are Node.js packages that implement Gatsby APIs. They enable you to
-easily solve common website build problems e.g. setup Sass, add markdown
-support, process images, etc.
+Plugins are Node.js packages that implement Gatsby APIs. They enable you to easily solve common website build problems e.g. setup Sass, add markdown support, process images, etc.
 
-For larger / complex sites, they let you modularize your site customizations
-into site-specific plugins.
+For larger / complex sites, they let you modularize your site customizations into site-specific plugins.
 
-Gatsby has a large and growing set of plugins. See below for the
-[list of official plugins](#official-plugins). We'll eventually add support here
-for searching and browsing both official plugins and community plugins published
-on NPM.
+Gatsby has a large and growing set of plugins. See below for the [list of official plugins](#official-plugins). We'll eventually add support here for searching and browsing both official plugins and community plugins published on NPM.
 
 ## How to use?
 
-Plugins are just Node.js packages meaning you install them like anything else in
-node using NPM.
+Plugins are just Node.js packages meaning you install them like anything else in node using NPM.
 
-For example, `gatsby-transformer-json` is a package which adds support for JSON
-files to the Gatsby data layer.
+For example, `gatsby-transformer-json` is a package which adds support for JSON files to the Gatsby data layer.
 
 To install it, in the root of your site you run:
 
 `npm install --save gatsby-transformer-json`
 
-Then in your site's `gatsby-config.js` you simply add `gatsby-transformer-json`
-to the plugins array like:
+Then in your site's `gatsby-config.js` you simply add `gatsby-transformer-json` to the plugins array like:
 
 ```javascript
 module.exports = {
@@ -35,17 +26,13 @@ module.exports = {
 }
 ```
 
-Plugins can take options. See each plugin page below for more detailed
-documentation on using each plugin.
+Plugins can take options. See each plugin page below for more detailed documentation on using each plugin.
 
 ## Locally defined plugins
 
-When you want to work on a new plugin, or maybe write one that is only relevant
-to your specific use-case, a locally defined plugin is more convenient than
-having to create an NPM package for it.
+When you want to work on a new plugin, or maybe write one that is only relevant to your specific use-case, a locally defined plugin is more convenient than having to create an NPM package for it.
 
-You can place the code in the `plugins` folder in the root of your project like
-this:
+You can place the code in the `plugins` folder in the root of your project like this:
 
 ```
 plugins
@@ -54,25 +41,15 @@ plugins
     └── package.json
 ```
 
-You still need to add the plugin to your `gatsby-config.js` like for plugins
-installed from NPM.
+You still need to add the plugin to your `gatsby-config.js` like for plugins installed from NPM.
 
-Each plugin requires a package.json file, but the minimum content is just an
-empty object `{}`. The `name` and `version` fields are read from the package
-file. The name is used to identify the plugin when it mutates the GraphQL data
-structure. The version is used to clear the cache when it changes.
+Each plugin requires a package.json file, but the minimum content is just an empty object `{}`. The `name` and `version` fields are read from the package file. The name is used to identify the plugin when it mutates the GraphQL data structure. The version is used to clear the cache when it changes.
 
-For local plugins it is best to leave the version field empty. Gatsby will
-generate an md5-hash from all gatsby-\* file contents and use that as the
-version. This way the cache is automatically flushed when you change the code of
-your plugin.
+For local plugins it is best to leave the version field empty. Gatsby will generate an md5-hash from all gatsby-\* file contents and use that as the version. This way the cache is automatically flushed when you change the code of your plugin.
 
 If the name is empty it is inferred from the plugin folder name.
 
-Like all gatsby-\* files, the code is not being processed by Babel. If you want
-to use JavaScript syntax which isn't supported by your version of Node.js, you
-can place the files in a `src` subfolder and build them to the plugin folder
-root.
+Like all gatsby-\* files, the code is not being processed by Babel. If you want to use JavaScript syntax which isn't supported by your version of Node.js, you can place the files in a `src` subfolder and build them to the plugin folder root.
 
 ## Official plugins
 

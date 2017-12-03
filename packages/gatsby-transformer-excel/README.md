@@ -15,9 +15,7 @@ plugins: [`gatsby-transformer-excel`]
 
 ## Parsing algorithm
 
-The parsing is powered by the [SheetJS / js-xlsx](https://git.io/xlsx) library.
-Each row of each worksheet is converted into a node whose keys are determined by
-the first row and whose type is determined by the name of the worksheet.
+The parsing is powered by the [SheetJS / js-xlsx](https://git.io/xlsx) library. Each row of each worksheet is converted into a node whose keys are determined by the first row and whose type is determined by the name of the worksheet.
 
 So if your project has a `letters.xlsx` with two worksheets:
 

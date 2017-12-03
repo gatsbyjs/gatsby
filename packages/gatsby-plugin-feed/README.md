@@ -22,8 +22,7 @@ plugins: [
 ]
 ```
 
-Above is the minimal configuration required to begin working. If you wish to
-customize the query being executed to retrieve nodes, try this:
+Above is the minimal configuration required to begin working. If you wish to customize the query being executed to retrieve nodes, try this:
 
 ```javascript
 // In your gatsby-config.js

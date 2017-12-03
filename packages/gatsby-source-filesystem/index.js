@@ -1,12 +1,12 @@
-"use strict";
+"use strict"
 
-var fs = require(`fs-extra`);
+var fs = require(`fs-extra`)
 
 function loadNodeContent(fileNode) {
-  return fs.readFile(fileNode.absolutePath, `utf-8`);
+  return fs.readFile(fileNode.absolutePath, `utf-8`)
 }
 
-exports.createFilePath = require(`./create-file-path`);
-exports.createRemoteFileNode = require(`./create-remote-file-node`);
+exports.createFilePath = require(`./create-file-path`)
+exports.createRemoteFileNode = require(`./create-remote-file-node`)
 
-exports.loadNodeContent = loadNodeContent;
+exports.loadNodeContent = loadNodeContent

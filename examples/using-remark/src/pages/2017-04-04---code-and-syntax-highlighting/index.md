@@ -8,13 +8,9 @@ tags:
   - Code Highlighting
 ---
 
-![](jeremy-bishop-262119.jpg) _Photo by
-[Jeremy Bishop](https://unsplash.com/@tidesinourveins) via
-[Unsplash](https://unsplash.com/?photo=XxpCNQ_w3is)_
+![](jeremy-bishop-262119.jpg) _Photo by [Jeremy Bishop](https://unsplash.com/@tidesinourveins) via [Unsplash](https://unsplash.com/?photo=XxpCNQ_w3is)_
 
-Code blocks are part of the Markdown spec, but syntax highlighting isn't.
-However, many renderers support syntax highlighting. In
-[gatsby-remark-prismjs][1], we use 🤔 [PrismJS][2].
+Code blocks are part of the Markdown spec, but syntax highlighting isn't. However, many renderers support syntax highlighting. In [gatsby-remark-prismjs][1], we use 🤔 [PrismJS][2].
 
 ## Inline code
 
@@ -26,13 +22,9 @@ Inline `code` has `back-ticks around` it.
 
 ## Code blocks
 
-In Markdown, blocks of code are either fenced by lines with three back-ticks
-<code>&#96;&#96;&#96;</code>, or are indented with four spaces. Fenced code
-blocks are easier to write and maintain, and only they support syntax
-highlighting by indicating a language.
+In Markdown, blocks of code are either fenced by lines with three back-ticks <code>&#96;&#96;&#96;</code>, or are indented with four spaces. Fenced code blocks are easier to write and maintain, and only they support syntax highlighting by indicating a language.
 
-To see the complete list of supported languages, and how to write language
-names, see the [PrismJS homepage][3].
+To see the complete list of supported languages, and how to write language names, see the [PrismJS homepage][3].
 
     ```javascript
     var s = "JavaScript syntax highlighting";
@@ -66,9 +58,7 @@ But let's throw in a <b>tag</b>.
 
 ## Line highlighting
 
-[gatsby-remark-prismjs][1] has its own line highlighting implementation which
-differs a bit from PrismJS's own. You can find out everything about it in the
-[corresponding README][1].
+[gatsby-remark-prismjs][1] has its own line highlighting implementation which differs a bit from PrismJS's own. You can find out everything about it in the [corresponding README][1].
 
     ```javascript{1-2,22}
     // In your gatsby-config.js
@@ -132,13 +122,10 @@ Let's do something crazy and add a list with another code example:
 
 * **A list item**
 
-  …and a paragraph! In my younger and more vulnerable years my father gave me
-  some advice that I’ve been turning over in my mind ever since.
+  …and a paragraph! In my younger and more vulnerable years my father gave me some advice that I’ve been turning over in my mind ever since.
 
   1. A nested numbered list
-  2. “Whenever you feel like criticizing any one,” he told me, “just remember
-     that all the people in this world haven’t had the advantages that you’ve
-     had.”
+  2. “Whenever you feel like criticizing any one,” he told me, “just remember that all the people in this world haven’t had the advantages that you’ve had.”
 
 * Roger that, now back to topic: _Highlighted code blocks work here, too:_
 
@@ -158,17 +145,9 @@ Let's do something crazy and add a list with another code example:
   /* End hide from IE-mac */
   ```
 
-  Wow, "IE-mac"?
-  [Yeah, that was a thing](https://en.wikipedia.org/wiki/Internet_Explorer_for_Mac)
-  back in the day … a good one at the time, too:
+  Wow, "IE-mac"? [Yeah, that was a thing](https://en.wikipedia.org/wiki/Internet_Explorer_for_Mac) back in the day … a good one at the time, too:
 
-  > Initial versions were developed from the same code base as Internet Explorer
-  > for Windows. Later versions diverged, particularly with the release of
-  > version 5 which included the cutting edge,
-  > [fault-tolerant](https://en.wikipedia.org/wiki/Fault-tolerant) and highly
-  > standards-compliant
-  > [Tasman](<https://en.wikipedia.org/wiki/Tasman_(layout_engine)>) >
-  > [layout engine](https://en.wikipedia.org/wiki/Layout_engine).
+  > Initial versions were developed from the same code base as Internet Explorer for Windows. Later versions diverged, particularly with the release of version 5 which included the cutting edge, [fault-tolerant](https://en.wikipedia.org/wiki/Fault-tolerant) and highly standards-compliant [Tasman](<https://en.wikipedia.org/wiki/Tasman_(layout_engine)>) > [layout engine](https://en.wikipedia.org/wiki/Layout_engine).
 
   Source: https://en.wikipedia.org/wiki/Internet_Explorer_for_Mac
 

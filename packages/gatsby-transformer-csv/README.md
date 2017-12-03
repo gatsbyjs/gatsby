@@ -13,9 +13,7 @@ Parses CSV files into JSON arrays.
 plugins: [`gatsby-transformer-csv`]
 ```
 
-Above is the minimal configuration required to begin working. Additional
-customization of the parsing process is possible using the parameters listed in
-[csvtojson](https://github.com/Keyang/node-csvtojson#parameters).
+Above is the minimal configuration required to begin working. Additional customization of the parsing process is possible using the parameters listed in [csvtojson](https://github.com/Keyang/node-csvtojson#parameters).
 
 ```javascript
 // In your gatsby-config.js

@@ -15,13 +15,9 @@ plugins: [`gatsby-transformer-toml`]
 
 ## Parsing algorithm
 
-This plugin is using NPM [toml](https://www.npmjs.com/package/toml) package to
-parse TOML documents. As long as your TOML is valid, you shouldn't have any
-issues.
+This plugin is using NPM [toml](https://www.npmjs.com/package/toml) package to parse TOML documents. As long as your TOML is valid, you shouldn't have any issues.
 
-Live demo of TOML to JSON conversion using
-[toml](https://www.npmjs.com/package/toml) is
-[here](http://binarymuse.github.io/toml-node/).
+Live demo of TOML to JSON conversion using [toml](https://www.npmjs.com/package/toml) is [here](http://binarymuse.github.io/toml-node/).
 
 If you have `user.toml` in you project, with contents like this:
 

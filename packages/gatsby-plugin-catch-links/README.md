@@ -1,7 +1,6 @@
 # gatsby-plugin-catch-links
 
-Intercepts local links from markdown and other non-react pages and does a
-client-side pushState to avoid the browser having to refresh the page.
+Intercepts local links from markdown and other non-react pages and does a client-side pushState to avoid the browser having to refresh the page.
 
 ## Install
 

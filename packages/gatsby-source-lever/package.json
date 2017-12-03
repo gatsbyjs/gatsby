@@ -12,12 +12,9 @@
     "uuid": "^3.1.0"
   },
   "deprecated": false,
-  "description": "Gatsby source plugin for building websites using the Lever.co Recruitment Software as a data source.",
-  "keywords": [
-    "gatsby",
-    "gatsby-plugin",
-    "gatsby-source-plugin"
-  ],
+  "description":
+    "Gatsby source plugin for building websites using the Lever.co Recruitment Software as a data source.",
+  "keywords": ["gatsby", "gatsby-plugin", "gatsby-source-plugin"],
   "license": "MIT",
   "name": "gatsby-source-lever",
   "scripts": {

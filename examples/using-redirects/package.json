@@ -1,7 +1,8 @@
 {
   "name": "using-redirects",
   "private": true,
-  "description": "Gatsby example site demonstrating using createRedirect for client-side, in browser redirection in Gatsby",
+  "description":
+    "Gatsby example site demonstrating using createRedirect for client-side, in browser redirection in Gatsby",
   "author": "Ricky de Laveaga <ricky@rdela.com>",
   "dependencies": {
     "gatsby": "latest",

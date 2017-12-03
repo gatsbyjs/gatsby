@@ -1,7 +1,6 @@
 # gatsby-plugin-jss
 
-Provide drop-in support for using the css-in-js library
-[JSS](https://github.com/cssinjs/react-jss) including server rendering.
+Provide drop-in support for using the css-in-js library [JSS](https://github.com/cssinjs/react-jss) including server rendering.
 
 ## Install
 

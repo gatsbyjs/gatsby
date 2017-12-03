@@ -1,7 +1,8 @@
 {
   "name": "gatsby-example-using-remark",
   "private": true,
-  "description": "Gatsby example site that demonstrates gatsby-transformer-remark and its plugins.",
+  "description":
+    "Gatsby example site that demonstrates gatsby-transformer-remark and its plugins.",
   "version": "1.0.0",
   "author": "Florian Kissling <sechskilo@gmail.com>",
   "dependencies": {

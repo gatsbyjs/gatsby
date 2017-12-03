@@ -2,9 +2,7 @@
 
 Add canonical links to HTML pages Gatsby generates.
 
-This implementation is primarily helpful for distinguishing between https/http,
-www/no-www but could possibly be extended to help with when sites add multiple
-paths to the same page.
+This implementation is primarily helpful for distinguishing between https/http, www/no-www but could possibly be extended to help with when sites add multiple paths to the same page.
 
 ## Install
 
@@ -24,8 +22,7 @@ plugins: [
 ]
 ```
 
-With the above configuration, the plugin will add to the head of every HTML page
-a `rel=canonical` e.g.
+With the above configuration, the plugin will add to the head of every HTML page a `rel=canonical` e.g.
 
 ```html
 <link rel="canonical" href="http://www.example.com/about-us/" />

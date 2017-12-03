@@ -1,8 +1,6 @@
 # gatsby-plugin-nprogress
 
-Automatically shows the [nprogress](http://ricostacruz.com/nprogress/) indicator
-when a page is delayed in loading (which Gatsby considers as one second after
-clicking on a link).
+Automatically shows the [nprogress](http://ricostacruz.com/nprogress/) indicator when a page is delayed in loading (which Gatsby considers as one second after clicking on a link).
 
 ## Install
 
@@ -25,8 +23,4 @@ plugins: [
 ]
 ```
 
-In addition to `color` – a configuration option specific to
-`gatsby-plugin-nprogress` that saves some time
-[customizing the nprogress CSS](https://github.com/rstacruz/nprogress#customization)
-to match your site colors – you may pass all available
-[nprogress configuration options](https://github.com/rstacruz/nprogress#configuration).
+In addition to `color` – a configuration option specific to `gatsby-plugin-nprogress` that saves some time [customizing the nprogress CSS](https://github.com/rstacruz/nprogress#customization) to match your site colors – you may pass all available [nprogress configuration options](https://github.com/rstacruz/nprogress#configuration).

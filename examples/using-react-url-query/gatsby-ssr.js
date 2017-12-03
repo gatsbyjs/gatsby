@@ -1,5 +1,5 @@
-import createHistory from 'history/createMemoryHistory'
-import { configureUrlQuery } from 'react-url-query'
+import createHistory from "history/createMemoryHistory"
+import { configureUrlQuery } from "react-url-query"
 
 const history = createHistory()
 

@@ -49,9 +49,7 @@
     "typography-breakpoint-constants": "^0.15.10",
     "typography-plugin-code": "^0.16.11"
   },
-  "keywords": [
-    "gatsby"
-  ],
+  "keywords": ["gatsby"],
   "license": "MIT",
   "main": "n/a",
   "private": true,

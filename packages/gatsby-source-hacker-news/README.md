@@ -1,7 +1,6 @@
 # gatsby-source-hacker-news
 
-Source plugin for pulling data into Gatsby from the
-[Hacker News API](https://github.com/HackerNews/API)
+Source plugin for pulling data into Gatsby from the [Hacker News API](https://github.com/HackerNews/API)
 
 ## Install
 

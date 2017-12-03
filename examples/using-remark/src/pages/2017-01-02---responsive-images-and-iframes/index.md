@@ -10,20 +10,15 @@ tags:
   - iFrames
 ---
 
-![](mikael-cho-214358.jpg) _Photo by [Mikael Cho](https://unsplash.com/@mikael)
-via [Unsplash](https://unsplash.com/@mikael?photo=_3TDkAttcaM)_
+![](mikael-cho-214358.jpg) _Photo by [Mikael Cho](https://unsplash.com/@mikael) via [Unsplash](https://unsplash.com/@mikael?photo=_3TDkAttcaM)_
 
-[gatsby-remark-images][1] and [gatsby-remark-responsive-iframe][2] are here to
-take care of all your basic Markdown image and iframe issues.
+[gatsby-remark-images][1] and [gatsby-remark-responsive-iframe][2] are here to take care of all your basic Markdown image and iframe issues.
 
 ## Images
 
-[gatsby-remark-images][1] provides _out-of-the-box progressive image loading_
-(as popularized by [Medium][3] and [Facebook][4]) for all local JPGs and PNGs in
-your Markdown documents.
+[gatsby-remark-images][1] provides _out-of-the-box progressive image loading_ (as popularized by [Medium][3] and [Facebook][4]) for all local JPGs and PNGs in your Markdown documents.
 
-You aren't just limited to markdown image tags either. You can either use
-markdown image tags:
+You aren't just limited to markdown image tags either. You can either use markdown image tags:
 
 ```
 ![](image.png)
@@ -35,10 +30,7 @@ Or HTML image tags:
 &lt;img src="image.png" alt=""&gt;
 ```
 
-Let's see some more photos by
-[Max Boettinger](https://unsplash.com/@maxboettinger)
-([I](https://unsplash.com/photos/T7Lnl3PFISM),
-[II](https://unsplash.com/@maxboettinger?photo=SUFS6CPjB5Q)):
+Let's see some more photos by [Max Boettinger](https://unsplash.com/@maxboettinger) ([I](https://unsplash.com/photos/T7Lnl3PFISM), [II](https://unsplash.com/@maxboettinger?photo=SUFS6CPjB5Q)):
 
 ![](max-boettinger-109436.jpg)
 
@@ -46,17 +38,13 @@ Let's see some more photos by
 
 ### What about retina images?
 
-Absolutely, these are supported too! Gatsby takes care to retain images' pixel
-density.
+Absolutely, these are supported too! Gatsby takes care to retain images' pixel density.
 
 ![Gandalf telling you that you should stay where you are](144-density.jpg)
 
 ### Okay, nice! But what about GIFs?
 
-Sadly, [Sharp](https://github.com/lovell/sharp) – the library that does the
-actual image processing for us in [gatsby-plugin-sharp][5] – is not able to
-write out the GIF file format. We will just copy them over for you, instead, and
-also do that with SVGs.
+Sadly, [Sharp](https://github.com/lovell/sharp) – the library that does the actual image processing for us in [gatsby-plugin-sharp][5] – is not able to write out the GIF file format. We will just copy them over for you, instead, and also do that with SVGs.
 
 An animated GIF of the Select2 Logo: ![Select2 Logo animation](select2-logo.gif)
 

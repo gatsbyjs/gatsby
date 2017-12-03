@@ -13,8 +13,7 @@ Parses Markdown files using [Remark](http://remark.js.org/).
 plugins: [`gatsby-transformer-remark`]
 ```
 
-A full explanation of how to use markdown in Gatsby can be found here:
-[Creating a Blog with Gatsby](https://www.gatsbyjs.org/blog/2017-07-19-creating-a-blog-with-gatsby/)
+A full explanation of how to use markdown in Gatsby can be found here: [Creating a Blog with Gatsby](https://www.gatsbyjs.org/blog/2017-07-19-creating-a-blog-with-gatsby/)
 
 ## Parsing algorithm
 
@@ -31,12 +30,9 @@ It recognizes files with the following extensions as Markdown:
 
 Each Markdown file is parsed into a node of type `MarkdownRemark`.
 
-All frontmatter fields are converted into GraphQL fields. TODO link to docs on
-auto-inferring types/fields.
+All frontmatter fields are converted into GraphQL fields. TODO link to docs on auto-inferring types/fields.
 
-This plugin adds additional fields to the `MarkdownRemark` GraphQL type
-including `html`, `excerpt`, `headings`, etc. Other Gatsby plugins can also add
-additional fields.
+This plugin adds additional fields to the `MarkdownRemark` GraphQL type including `html`, `excerpt`, `headings`, etc. Other Gatsby plugins can also add additional fields.
 
 ## How to query
 

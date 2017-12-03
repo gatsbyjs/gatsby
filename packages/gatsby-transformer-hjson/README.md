@@ -12,36 +12,30 @@ You also need to have `gatsby-source-filesystem` installed and configured so it 
 
 ```javascript
 // In your gatsby-config.js
-plugins: [
-  `gatsby-transformer-hjson`,
-]
+plugins: [`gatsby-transformer-hjson`]
 ```
 
 ## Parsing algorithm
 
-You can choose to structure your data as arrays of objects in individual files
-or as single objects spread across multiple files.
+You can choose to structure your data as arrays of objects in individual files or as single objects spread across multiple files.
 
 ### Array of Objects
 
-The algorithm for arrays is to convert each item in the array into
-a node.
+The algorithm for arrays is to convert each item in the array into a node.
 
 So if your project has a `letters.hjson` with `[{ value: a } { value: b } { value: c }]` then the following three nodes would be created.
 
 ```javascript
-[
-  { value: 'a', type: 'Letters' },
-  { value: 'b', type: 'Letters' },
-  { value: 'c', type: 'Letters' },
+;[
+  { value: "a", type: "Letters" },
+  { value: "b", type: "Letters" },
+  { value: "c", type: "Letters" },
 ]
 ```
 
 ### Single Object
 
-The algorithm for single JSON objects is to convert the object defined at the
-root of the file into a node. The type of the node is based on the name of the
-parent directory.
+The algorithm for single JSON objects is to convert the object defined at the root of the file into a node. The type of the node is based on the name of the parent directory.
 
 For example, lets say your project has a data layout like:
 
@@ -70,26 +64,25 @@ value: c
 Then the following three nodes would be created.
 
 ```javascript
-[
+;[
   {
-    value: 'a',
-    type: 'Letters',
+    value: "a",
+    type: "Letters",
   },
   {
-    value: 'b',
-    type: 'Letters',
+    value: "b",
+    type: "Letters",
   },
   {
-    value: 'c',
-    type: 'Letters',
+    value: "c",
+    type: "Letters",
   },
 ]
 ```
 
 ## How to query
 
-Regardless of whether you choose to structure your data in arrays of objects or
-single objects, you'd be able to query your letters like:
+Regardless of whether you choose to structure your data in arrays of objects or single objects, you'd be able to query your letters like:
 
 ```graphql
 {
@@ -111,19 +104,19 @@ Which would return:
     edges: [
       {
         node: {
-          value: 'a'
-        }
+          value: "a",
+        },
       },
       {
         node: {
-          value: 'b'
-        }
+          value: "b",
+        },
       },
       {
         node: {
-          value: 'c'
-        }
-      }
+          value: "c",
+        },
+      },
     ]
   }
 }

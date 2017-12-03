@@ -1,12 +1,8 @@
 # gatsby-plugin-offline
 
-Adds drop-in support for making a Gatsby site work offline and more resistant to
-bad network connections. It creates a service worker for the site and loads the
-service worker into the client.
+Adds drop-in support for making a Gatsby site work offline and more resistant to bad network connections. It creates a service worker for the site and loads the service worker into the client.
 
-If you're using this plugin with `gatsby-plugin-manifest` (recommended) this
-plugin should be listed _after_ that plugin so the manifest file can be included
-in the service worker.
+If you're using this plugin with `gatsby-plugin-manifest` (recommended) this plugin should be listed _after_ that plugin so the manifest file can be included in the service worker.
 
 ## Install
 
@@ -21,11 +17,9 @@ plugins: [`gatsby-plugin-offline`]
 
 ## Overriding options
 
-When adding this plugin to your `gatsby-config.js`, you can pass in options to
-override the default sw-precache config.
+When adding this plugin to your `gatsby-config.js`, you can pass in options to override the default sw-precache config.
 
-The default config is as following. Warning, you can break the offline support
-and AppCache setup by changing these options so tread carefully.
+The default config is as following. Warning, you can break the offline support and AppCache setup by changing these options so tread carefully.
 
 ```javascript
 const options = {

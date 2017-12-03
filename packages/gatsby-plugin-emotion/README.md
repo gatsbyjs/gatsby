@@ -1,8 +1,6 @@
 # gatsby-plugin-emotion
 
-Provide support for using the css-in-js library
-[Emotion](https://github.com/emotion-js/emotion) including server side
-rendering.
+Provide support for using the css-in-js library [Emotion](https://github.com/emotion-js/emotion) including server side rendering.
 
 ## Install
 

@@ -15,8 +15,7 @@ plugins: [`gatsby-transformer-javascript-static-exports`]
 
 ## Parsing algorithm
 
-The algorithm for uses babylon and traverse (from the babel family of code) to
-statically read the data exports.
+The algorithm for uses babylon and traverse (from the babel family of code) to statically read the data exports.
 
 In a .js file, export a data object to set your metadata variables, like so:
 
@@ -98,11 +97,9 @@ Which would return something like:
 }
 ```
 
-Any attribute on "data" across your js files will be exported. If a file is
-missing it, the value will be null.
+Any attribute on "data" across your js files will be exported. If a file is missing it, the value will be null.
 
-The error field will contain `false` or an object with error information just to
-give a surface level view of what the query is pulling out.
+The error field will contain `false` or an object with error information just to give a surface level view of what the query is pulling out.
 
 ```javascript
 "error": {

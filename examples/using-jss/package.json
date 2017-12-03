@@ -9,9 +9,7 @@
     "gatsby-link": "latest",
     "gatsby-plugin-jss": "latest"
   },
-  "keywords": [
-    "gatsby"
-  ],
+  "keywords": ["gatsby"],
   "license": "MIT",
   "main": "n/a",
   "scripts": {

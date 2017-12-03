@@ -14,8 +14,7 @@ For example, given the following project directory structure:
 ├── sample-html-file.html
 ```
 
-The following markdown syntax could be used to embed the contents of these
-files:
+The following markdown syntax could be used to embed the contents of these files:
 
 ```md
 # Sample JavaScript
@@ -51,9 +50,7 @@ The resulting HTML for the above markdown would look something like this:
 
 ### Highlighting Lines
 
-You can also specify specific lines for Prism to highlight using
-`highlight-line` and `highlight-next-line` comments. You can also specify a
-range of lines to highlight, relative to a `highlight-range` comment.
+You can also specify specific lines for Prism to highlight using `highlight-line` and `highlight-next-line` comments. You can also specify a range of lines to highlight, relative to a `highlight-range` comment.
 
 #### JavaScript example
 

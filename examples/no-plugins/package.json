@@ -1,7 +1,8 @@
 {
   "name": "gatsby-example-no-plugins",
   "private": true,
-  "description": "Gatsby example site that proves functionality without the use of plugins.",
+  "description":
+    "Gatsby example site that proves functionality without the use of plugins.",
   "version": "1.0.0",
   "author": "Scotty Eckenthal <scott.eckenthal@gmail.com>",
   "dependencies": {

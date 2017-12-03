@@ -1,7 +1,8 @@
 {
   "name": "gatsby-example-removing-trailing-slashes",
   "private": true,
-  "description": "Gatsby example site that shows how to remove trailing slashes from urls",
+  "description":
+    "Gatsby example site that shows how to remove trailing slashes from urls",
   "version": "1.0.0",
   "author": "Scotty Eckenthal <scott.eckenthal@gmail.com>",
   "dependencies": {

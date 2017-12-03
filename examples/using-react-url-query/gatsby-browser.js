@@ -1,6 +1,6 @@
-import React from 'react'
-import { Router } from 'react-router-dom'
-import { RouterToUrlQuery } from 'react-url-query'
+import React from "react"
+import { Router } from "react-router-dom"
+import { RouterToUrlQuery } from "react-url-query"
 
 exports.replaceRouterComponent = ({ history }) => {
   /**
@@ -9,9 +9,7 @@ exports.replaceRouterComponent = ({ history }) => {
    */
   const ConnectedRouterWrapper = ({ children }) => (
     <Router history={history}>
-      <RouterToUrlQuery>
-        {children}
-      </RouterToUrlQuery>
+      <RouterToUrlQuery>{children}</RouterToUrlQuery>
     </Router>
   )
 

@@ -15,11 +15,7 @@
     "babel-cli": "^6.26.0",
     "cross-env": "^5.0.5"
   },
-  "keywords": [
-    "gatsby",
-    "sass",
-    "scss"
-  ],
+  "keywords": ["gatsby", "sass", "scss"],
   "license": "MIT",
   "main": "index.js",
   "readme": "README.md",

@@ -1,18 +1,12 @@
 # gatsby-plugin-sharp
 
-Exposes several image processing functions built on the
-[Sharp image processing library](https://github.com/lovell/sharp). This is a
-low-level helper plugin generally used by other Gatsby plugins. You generally
-shouldn't be using this directly but might find it helpful if doing very custom
-image processing.
+Exposes several image processing functions built on the [Sharp image processing library](https://github.com/lovell/sharp). This is a low-level helper plugin generally used by other Gatsby plugins. You generally shouldn't be using this directly but might find it helpful if doing very custom image processing.
 
-It aims to provide excellent out-of-the box settings for processing common web
-image formats.
+It aims to provide excellent out-of-the box settings for processing common web image formats.
 
 For JPEGs it generates progressive images with a default quality level of 50.
 
-For PNGs it uses [pngquant](https://github.com/pornel/pngquant) to compress
-images. By default it uses a quality setting of [50-75].
+For PNGs it uses [pngquant](https://github.com/pornel/pngquant) to compress images. By default it uses a quality setting of [50-75].
 
 ## Install
 
@@ -47,8 +41,7 @@ plugins: [`gatsby-plugin-sharp`]
 
 ### responsiveResolution
 
-Automatically create sizes for different resolutions — we do 1x, 1.5x, 2x, and
-3x.
+Automatically create sizes for different resolutions — we do 1x, 1.5x, 2x, and 3x.
 
 #### Parameters
 
@@ -67,15 +60,9 @@ Automatically create sizes for different resolutions — we do 1x, 1.5x, 2x, and
 
 ### responsiveSizes
 
-Create sizes (in width) for the image. If the max width of the container for the
-rendered markdown file is 800px, the sizes would then be: 200, 400, 800, 1200,
-1600, 2400 – enough to provide close to the optimal image size for every device
-size / screen resolution.
+Create sizes (in width) for the image. If the max width of the container for the rendered markdown file is 800px, the sizes would then be: 200, 400, 800, 1200, 1600, 2400 – enough to provide close to the optimal image size for every device size / screen resolution.
 
-On top of that, responsiveSizes returns everything else (namely aspectRatio and
-a base64 image to use as a placeholder) you need to implement the "blur up"
-technique popularized by Medium and Facebook (and also available as a Gatsby
-plugin for Markdown content as gatsby-remark-images).
+On top of that, responsiveSizes returns everything else (namely aspectRatio and a base64 image to use as a placeholder) you need to implement the "blur up" technique popularized by Medium and Facebook (and also available as a Gatsby plugin for Markdown content as gatsby-remark-images).
 
 #### Parameters
 
@@ -95,8 +82,7 @@ plugin for Markdown content as gatsby-remark-images).
 
 ### Shared Options
 
-In addition to their individual parameters, all methods above share the
-following:
+In addition to their individual parameters, all methods above share the following:
 
 * `grayscale` (bool, default: false)
 * `duotone` (bool|obj, default: false)
@@ -105,14 +91,11 @@ following:
 
 #### toFormat
 
-Convert the source image to one of the following available options: `NO_CHANGE`,
-`JPG`, `PNG`, `WEBP`.
+Convert the source image to one of the following available options: `NO_CHANGE`, `JPG`, `PNG`, `WEBP`.
 
 #### cropFocus
 
-Change the cropping focus. Available options: `CENTER`, `NORTH`, `NORTHEAST`,
-`EAST`, `SOUTHEAST`, `SOUTH`, `SOUTHWEST`, `WEST`, `NORTHWEST`, `ENTROPY`,
-`ATTENTION`. See Sharp's [crop][6].
+Change the cropping focus. Available options: `CENTER`, `NORTH`, `NORTHEAST`, `EAST`, `SOUTHEAST`, `SOUTH`, `SOUTHWEST`, `WEST`, `NORTHWEST`, `ENTROPY`, `ATTENTION`. See Sharp's [crop][6].
 
 #### rotate
 
@@ -120,8 +103,7 @@ Rotate the image (after cropping). See Sharp's [rotate][7].
 
 #### grayscale
 
-Uses Sharp's [greyscale][8] to convert the source image to 8-bit greyscale, 256
-shades of grey, e.g.
+Uses Sharp's [greyscale][8] to convert the source image to 8-bit greyscale, 256 shades of grey, e.g.
 
 ```javascript
 allImageSharp {
@@ -139,9 +121,7 @@ allImageSharp {
 
 #### duotone
 
-Applys a "duotone" effect (see [I][1], [II][2], [III][3]) to the source image if
-given two hex colors `shadow` and `highlight` defining start and end color of
-the duotone gradient, e.g.
+Applys a "duotone" effect (see [I][1], [II][2], [III][3]) to the source image if given two hex colors `shadow` and `highlight` defining start and end color of the duotone gradient, e.g.
 
 ```javascript
 responsiveResolution(
@@ -157,8 +137,7 @@ responsiveResolution(
 }
 ```
 
-the source image colors will be converted to match a gradient color chosen based
-on each pixel's [relative luminance][4].\
+the source image colors will be converted to match a gradient color chosen based on each pixel's [relative luminance][4].\
 Logic is borrowed from [react-duotone][5].
 
 You can pass a third optional parameter, `opacity`:
@@ -178,29 +157,17 @@ responsiveResolution(
 }
 ```
 
-If set, a semi-transparent version of duotone'd image will be composited over
-the original image, allowing the original image and its colors to partially
-"shine through". _Heads up_: If the original image contains an alpha channel it
-will be [flattened][15] before creating the composite.
+If set, a semi-transparent version of duotone'd image will be composited over the original image, allowing the original image and its colors to partially "shine through". _Heads up_: If the original image contains an alpha channel it will be [flattened][15] before creating the composite.
 
-This works by adding an alpha channel to the duotone'd image - then we let Sharp
-do its magic via
-[`overlayWith`](http://sharp.dimens.io/en/stable/api-composite/#overlaywith);
-quoting the Sharp documentation:
+This works by adding an alpha channel to the duotone'd image - then we let Sharp do its magic via [`overlayWith`](http://sharp.dimens.io/en/stable/api-composite/#overlaywith); quoting the Sharp documentation:
 
-> If the overlay image contains an alpha channel then composition with
-> <a href="https://en.wikipedia.org/wiki/Alpha_compositing">premultiplication</a>
-> will occur.
+> If the overlay image contains an alpha channel then composition with <a href="https://en.wikipedia.org/wiki/Alpha_compositing">premultiplication</a> will occur.
 
 #### tracedSVG
 
-Generates a traced SVG of the image (see [the original GitHub issue][9]) and
-returns the SVG as "[optimized URL-encoded][10]" `data:` URI. It it used in
-[gatsby-image](https://www.gatsbyjs.org/packages/gatsby-image/) to provide an
-alternative to the default inline base64 placeholder image.
+Generates a traced SVG of the image (see [the original GitHub issue][9]) and returns the SVG as "[optimized URL-encoded][10]" `data:` URI. It it used in [gatsby-image](https://www.gatsbyjs.org/packages/gatsby-image/) to provide an alternative to the default inline base64 placeholder image.
 
-Uses [node-potrace][11] and [SVGO][12] under the hood. Default settings for
-node-potrace:
+Uses [node-potrace][11] and [SVGO][12] under the hood. Default settings for node-potrace:
 
 ```javascript
   {
@@ -211,8 +178,7 @@ node-potrace:
   }
 ```
 
-All [node-potrace `Potrace` parameters][13] are exposed and can be set via the
-`traceSVG` argument:
+All [node-potrace `Potrace` parameters][13] are exposed and can be set via the `traceSVG` argument:
 
 ```javascript
 responsiveResolution(

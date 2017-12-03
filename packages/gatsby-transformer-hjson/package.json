@@ -7,11 +7,7 @@
     "watch": "babel -w src --out-dir . --ignore __tests__",
     "prepublish": "cross-env NODE_ENV=production npm run build"
   },
-  "keywords": [
-    "gatsby",
-    "gatsby-plugin",
-    "hjson"
-  ],
+  "keywords": ["gatsby", "gatsby-plugin", "hjson"],
   "author": "Remi Barraquand <dev@remibarraquand.com>",
   "license": "MIT",
   "dependencies": {

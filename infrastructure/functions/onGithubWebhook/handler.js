@@ -61,9 +61,11 @@ const createCommit = (commit, branchId) => {
   hny.sendNow(Object.assign({ createCommit: true, branchId: branchId }, commit))
   return client.request(`
     mutation {
-      createCommit(authorName: "${commit.author.name}",authorUsername: "${commit
-    .author.username}", authorEmail: "${commit.author
-    .email}", hash: "${commit.tree_id}", message: "${commit.message}", branchIds: ["${branchId}"]) {
+      createCommit(authorName: "${commit.author.name}",authorUsername: "${
+    commit.author.username
+  }", authorEmail: "${commit.author.email}", hash: "${
+    commit.tree_id
+  }", message: "${commit.message}", branchIds: ["${branchId}"]) {
         id
       }
     }

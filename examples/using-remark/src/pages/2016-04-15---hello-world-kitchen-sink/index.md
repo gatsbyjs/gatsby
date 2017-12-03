@@ -9,37 +9,25 @@ tags:
   - Images
 ---
 
-![](joshua-earle-234740.jpg) _Photo by
-[Joshua Earle](https://unsplash.com/@joshuaearle) via
-[Unsplash](https://unsplash.com/@joshuaearle?photo=-87JyMb9ZfU)_
+![](joshua-earle-234740.jpg) _Photo by [Joshua Earle](https://unsplash.com/@joshuaearle) via [Unsplash](https://unsplash.com/@joshuaearle?photo=-87JyMb9ZfU)_
 
 **_Note how all headlines below show an anchor link when you hover them?_**\
-That's [gatsby-remark-autolink-headers][5] hooking up all `MarkdownRemark` headers
-with anchor links for us.
+That's [gatsby-remark-autolink-headers][5] hooking up all `MarkdownRemark` headers with anchor links for us.
 
 ## Markdown in Gatsby
 
-Markdown parsing in Gatsby is done with [gatsby-transformer-remark][1], which
-uses the excellent [remark][2] under the hood.\
-Alongside remark we also use [gatsby-remark-smartypants][6], which provides smart
-punctuation through [retext-smartypants][7].
+Markdown parsing in Gatsby is done with [gatsby-transformer-remark][1], which uses the excellent [remark][2] under the hood.\
+Alongside remark we also use [gatsby-remark-smartypants][6], which provides smart punctuation through [retext-smartypants][7].
 
-The examples on this page cover the basic Markdown syntax and are adapted from
-[Markdown Here's Cheatsheet][3] ([CC-BY][4]).
+The examples on this page cover the basic Markdown syntax and are adapted from [Markdown Here's Cheatsheet][3] ([CC-BY][4]).
 
 ---
 
-This is intended as a quick reference and showcase. For more complete info, see
-[John Gruber's original spec](http://daringfireball.net/projects/markdown/) and
-the
-[GitHub-flavored Markdown info page](http://github.github.com/github-flavored-markdown/).
+This is intended as a quick reference and showcase. For more complete info, see [John Gruber's original spec](http://daringfireball.net/projects/markdown/) and the [GitHub-flavored Markdown info page](http://github.github.com/github-flavored-markdown/).
 
 ##### Table of Contents
 
-[Headers](#headers) [Emphasis](#emphasis) [Lists](#lists) [Links](#links)
-[Images](#images) [Tables](#tables) [Footnotes](#footnotes)
-[Blockquotes](#blockquotes) [Inline HTML](#html) [Horizontal Rule](#hr)
-[Line Breaks](#lines)
+[Headers](#headers) [Emphasis](#emphasis) [Lists](#lists) [Links](#links) [Images](#images) [Tables](#tables) [Footnotes](#footnotes) [Blockquotes](#blockquotes) [Inline HTML](#html) [Horizontal Rule](#hr) [Line Breaks](#lines)
 
 <a name="headers"></a>
 
@@ -133,12 +121,9 @@ In this example, leading and trailing spaces are shown with with dots: ⋅
    1. Ordered sub-list
 4. And another item.
 
-You can have properly indented paragraphs within list items. Notice the blank
-line above, and the leading spaces (at least one, but we'll use three here to
-also align the raw Markdown).
+You can have properly indented paragraphs within list items. Notice the blank line above, and the leading spaces (at least one, but we'll use three here to also align the raw Markdown).
 
-To have a line break without a paragraph, you will need to use two trailing
-spaces.\
+To have a line break without a paragraph, you will need to use two trailing spaces.\
  Note that this line is separate, but within the same paragraph.
 
 * Unordered list can use asterisks
@@ -189,9 +174,7 @@ Some text to show that the reference links can follow later.
 
 Or leave it empty and use the [link text itself].
 
-URLs and URLs in angle brackets will automatically get turned into links.
-http://www.example.com or <http://www.example.com> and sometimes example.com
-(but not on GitHub, for example).
+URLs and URLs in angle brackets will automatically get turned into links. http://www.example.com or <http://www.example.com> and sometimes example.com (but not on GitHub, for example).
 
 Some text to show that the reference links can follow later.
 
@@ -217,8 +200,7 @@ Reference-style:
 
 Here's our logo (hover to see the title text):
 
-Inline-style:
-![alt text](https://pbs.twimg.com/profile_images/875556871427375106/Xuq8DypK_bigger.jpg "Logo Title Text 1")
+Inline-style: ![alt text](https://pbs.twimg.com/profile_images/875556871427375106/Xuq8DypK_bigger.jpg "Logo Title Text 1")
 
 Reference-style: ![alt text][logo]
 
@@ -228,9 +210,7 @@ Reference-style: ![alt text][logo]
 
 ## Tables
 
-Tables aren't part of the core Markdown spec, but they are part of our
-implementation. They are an easy way of adding tables to your email -- a task
-that would otherwise require copy-pasting from another application.
+Tables aren't part of the core Markdown spec, but they are part of our implementation. They are an easy way of adding tables to your email -- a task that would otherwise require copy-pasting from another application.
 
 ```no-highlight
 Colons can be used to align columns.
@@ -259,9 +239,7 @@ Colons can be used to align columns.
 | col 2 is      |   centered    |   $12 |
 | zebra stripes |   are neat    |    $1 |
 
-There must be at least 3 dashes separating each header cell. The outer pipes (|)
-are optional, and you don't need to make the raw Markdown line up prettily. You
-can also use inline Markdown.
+There must be at least 3 dashes separating each header cell. The outer pipes (|) are optional, and you don't need to make the raw Markdown line up prettily. You can also use inline Markdown.
 
 | Markdown | Less      | Pretty     |
 | -------- | --------- | ---------- |
@@ -272,8 +250,7 @@ can also use inline Markdown.
 
 ## Footnotes
 
-Footnotes are also not a core feature of markdown, but they're a common
-extension feature. The footnote syntax looks like this:
+Footnotes are also not a core feature of markdown, but they're a common extension feature. The footnote syntax looks like this:
 
 ```markdown
 This line has a footnote [^1]. Scroll down or click the link to see it.
@@ -296,14 +273,11 @@ Quote break.
 > This is a very long line that will still be quoted properly when it wraps. Oh boy let's keep writing to make sure this is long enough to actually wrap for everyone. Oh, you can *put* **Markdown** into a blockquote.
 ```
 
-> Blockquotes are very handy in email to emulate reply text. This line is part
-> of the same quote.
+> Blockquotes are very handy in email to emulate reply text. This line is part of the same quote.
 
 Quote break.
 
-> This is a very long line that will still be quoted properly when it wraps. Oh
-> boy let's keep writing to make sure this is long enough to actually wrap for
-> everyone. Oh, you can _put_ **Markdown** into a blockquote.
+> This is a very long line that will still be quoted properly when it wraps. Oh boy let's keep writing to make sure this is long enough to actually wrap for everyone. Oh, you can _put_ **Markdown** into a blockquote.
 
 <a name="html"></a>
 
@@ -380,12 +354,10 @@ This line is only separated by a single newline, so it's a separate line in the 
 
 Here's a line for us to start with.
 
-This line is separated from the one above by two newlines, so it will be a
-_separate paragraph_.
+This line is separated from the one above by two newlines, so it will be a _separate paragraph_.
 
 This line is also begins a separate paragraph, but...\
-This line is only separated by a single newline, so it's a separate line in the _same
-paragraph_.
+This line is only separated by a single newline, so it's a separate line in the _same paragraph_.
 
 [^1]: The footnote appears at the bottom of the page
 

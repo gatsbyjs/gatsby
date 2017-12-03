@@ -1,8 +1,6 @@
 # gatsby-plugin-styled-components
 
-A [Gatsby](https://github.com/gatsbyjs/gatsby) plugin for
-[styled-components](https://github.com/styled-components/styled-components) with
-built-in server-side rendering support.
+A [Gatsby](https://github.com/gatsbyjs/gatsby) plugin for [styled-components](https://github.com/styled-components/styled-components) with built-in server-side rendering support.
 
 ## Install
 
@@ -22,6 +20,4 @@ plugins: [`gatsby-plugin-styled-components`]
 
 #### v2.0.1
 
-`styled-components` is moved to a peer dependency. Installing the package
-alongside `gatsby-plugin-styled-components` is now required. Use `yarn add
-styled-components --save`
+`styled-components` is moved to a peer dependency. Installing the package alongside `gatsby-plugin-styled-components` is now required. Use `yarn add styled-components --save`

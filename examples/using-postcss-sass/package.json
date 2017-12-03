@@ -1,7 +1,8 @@
 {
   "name": "using-postcss-sass",
   "version": "1.0.0",
-  "description": "Example Gatsby website using the Gatsby plugin gatsby-plugin-postcss-sass",
+  "description":
+    "Example Gatsby website using the Gatsby plugin gatsby-plugin-postcss-sass",
   "main": "index.js",
   "scripts": {
     "develop": "gatsby develop",
