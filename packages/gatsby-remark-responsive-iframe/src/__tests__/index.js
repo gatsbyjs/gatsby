@@ -66,9 +66,13 @@ describe(`gatsby-remark-responsive-iframe`, () => {
 
   _.map(shouldntTransform, ([width, height]) => {
     ;[`iframe`, `object`].forEach(tag => {
-      it(`doesn't transform an ${tag} with dimensions: '${width}' '${height}'`, async () => {
+      it(`doesn't transform an ${tag} with dimensions: '${width}' '${
+        height
+      }'`, async () => {
         const markdownAST = remark.parse(`
-  <${tag} url="http://www.example.com/" width="${width}" height="${height}"></${tag}>
+  <${tag} url="http://www.example.com/" width="${width}" height="${height}"></${
+          tag
+        }>
       `)
         const transformed = await plugin({ markdownAST })
         // Note: Remark treats iframes (block level) and object (inline) tags

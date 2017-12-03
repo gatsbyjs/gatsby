@@ -1,5 +1,5 @@
 {
-  "dependencies": {
+  "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-eslint": "^7.2.3",
     "babel-jest": "^20.0.3",
@@ -31,7 +31,7 @@
     "jest-cli": "^20.0.4",
     "lerna": "^2.1.1",
     "plop": "^1.8.1",
-    "prettier": "^1.7.0",
+    "prettier": "^1.8.2",
     "prettier-eslint-cli": "4.2.x",
     "remotedev-server": "^0.2.3",
     "rimraf": "^2.6.1"
@@ -40,18 +40,15 @@
     "yarn": "^1.2.1"
   },
   "private": true,
-
   "scripts": {
     "bootstrap": "yarn && npm run check-versions && lerna run prepublish",
     "check-versions": "babel-node scripts/check-versions.js",
-    "format":
-      "npm run format-packages && npm run format-cache-dir && npm run format-www && npm run format-examples && npm run format-scripts",
-    "format-cache-dir":
-      "prettier-eslint --write \"packages/gatsby/cache-dir/*.js\"",
-    "format-examples":
-      "prettier-eslint --write \"examples/**/gatsby-node.js\" \"examples/**/gatsby-config.js\" \"examples/**/src/**/*.js\"",
+    "format": "npm run format-packages && npm run format-cache-dir && npm run format-www && npm run format-examples && npm run format-scripts && npm run format-markdown",
+    "format-cache-dir": "prettier-eslint --write \"packages/gatsby/cache-dir/*.js\"",
+    "format-examples": "prettier-eslint --write \"examples/**/gatsby-node.js\" \"examples/**/gatsby-config.js\" \"examples/**/src/**/*.js\"",
     "format-packages": "prettier-eslint --write \"packages/*/src/**/*.js\"",
     "format-scripts": "prettier-eslint --write \"scripts/**/*.js\"",
+    "format-markdown": "prettier --write \"**/*.md\"",
     "format-www": "prettier-eslint --write \"www/*.js\" \"www/src/**/*.js\"",
     "jest": "jest",
     "lerna": "lerna",
@@ -65,10 +62,14 @@
     "test": "yarn lint && yarn jest",
     "test:update": "jest --updateSnapshot",
     "test:watch": "jest --watch",
-    "test_bkup":
-      "npm run lint && npm run test-node && npm run test-integration",
+    "test_bkup": "npm run lint && npm run test-node && npm run test-integration",
     "watch": "lerna run watch --no-sort --stream --concurrency 999"
   },
-  "workspaces": ["packages/*"],
-  "eslintIgnore": ["interfaces", "**/__tests__/fixtures/"]
+  "workspaces": [
+    "packages/*"
+  ],
+  "eslintIgnore": [
+    "interfaces",
+    "**/__tests__/fixtures/"
+  ]
 }

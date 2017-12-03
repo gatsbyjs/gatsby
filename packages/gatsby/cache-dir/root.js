@@ -8,6 +8,39 @@ import pages from "./pages.json"
 import redirects from "./redirects.json"
 import ComponentRenderer from "./component-renderer"
 import loader from "./loader"
+
+import * as ErrorOverlay from "react-error-overlay"
+
+// Report runtime errors
+ErrorOverlay.startReportingRuntimeErrors({
+  onError: () => {},
+  filename: `/commons.js`,
+})
+ErrorOverlay.setEditorHandler(errorLocation =>
+  window.fetch(
+    `/__open-stack-frame-in-editor?fileName=` +
+      window.encodeURIComponent(errorLocation.fileName) +
+      `&lineNumber=` +
+      window.encodeURIComponent(errorLocation.lineNumber || 1)
+  )
+)
+
+if (window.__webpack_hot_middleware_reporter__ !== undefined) {
+  // Report build errors
+  window.__webpack_hot_middleware_reporter__.useCustomOverlay({
+    showProblems(type, obj) {
+      if (type !== `errors`) {
+        ErrorOverlay.dismissBuildError()
+        return
+      }
+      ErrorOverlay.reportBuildError(obj[0])
+    },
+    clear() {
+      ErrorOverlay.dismissBuildError()
+    },
+  })
+}
+
 loader.addPagesArray(pages)
 loader.addDevRequires(syncRequires)
 window.___loader = loader
@@ -47,7 +80,9 @@ function maybeRedirect(pathname) {
 
     if (pageResources != null) {
       console.error(
-        `The route "${pathname}" matches both a page and a redirect; this is probably not intentional.`
+        `The route "${
+          pathname
+        }" matches both a page and a redirect; this is probably not intentional.`
       )
     }
 

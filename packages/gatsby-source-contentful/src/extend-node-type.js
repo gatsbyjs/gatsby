@@ -69,7 +69,7 @@ const ImageCropFocusType = new GraphQLEnumType({
 const isImage = image =>
   _.includes(
     [`image/jpeg`, `image/jpg`, `image/png`, `image/webp`, `image/gif`],
-    image.file.contentType
+    _.get(image, `file.contentType`)
   )
 
 const getBase64Image = (imgUrl, args = {}) => {
@@ -124,213 +124,205 @@ const resolveResponsiveResolution = (image, options) => {
   if (!isImage(image)) return null
 
   return new Promise(resolve => {
-    getBase64ImageAndBasicMeasurements(
-      image,
-      options
-    ).then(({ contentType, base64Str, width, height, aspectRatio }) => {
-      let desiredAspectRatio = aspectRatio
+    getBase64ImageAndBasicMeasurements(image, options).then(
+      ({ contentType, base64Str, width, height, aspectRatio }) => {
+        let desiredAspectRatio = aspectRatio
 
-      // If we're cropping, calculate the specified aspect ratio.
-      if (options.height) {
-        desiredAspectRatio = options.width / options.height
-      }
-
-      // If the user selected a height (so cropping) and options for focus
-      // and fit aren't set, we'll set our defaults
-      if (options.height) {
-        if (!options.resizingBehavior) {
-          options.resizingBehavior = `fill`
+        // If we're cropping, calculate the specified aspect ratio.
+        if (options.height) {
+          desiredAspectRatio = options.width / options.height
         }
-        if (!options.cropFocus) {
-          options.cropFocus = `faces`
-        }
-      }
 
-      // Create sizes (in width) for the image. If the width of the
-      // image is 800px, the sizes would then be: 800, 1200, 1600,
-      // 2400.
-      //
-      // This is enough sizes to provide close to the optimal image size for every
-      // device size / screen resolution
-      let sizes = []
-      sizes.push(options.width)
-      sizes.push(options.width * 1.5)
-      sizes.push(options.width * 2)
-      sizes.push(options.width * 3)
-      sizes = sizes.map(Math.round)
-
-      // Filter out sizes larger than the image's width.
-      const filteredSizes = sizes.filter(size => size < width)
-
-      // Sort sizes for prettiness.
-      const sortedSizes = _.sortBy(filteredSizes)
-
-      // Create the srcSet.
-      const srcSet = sortedSizes
-        .map((size, i) => {
-          let resolution
-          switch (i) {
-            case 0:
-              resolution = `1x`
-              break
-            case 1:
-              resolution = `1.5x`
-              break
-            case 2:
-              resolution = `2x`
-              break
-            case 3:
-              resolution = `3x`
-              break
-            default:
+        // If the user selected a height (so cropping) and fit option
+        // is not set, we'll set our defaults
+        if (options.height) {
+          if (!options.resizingBehavior) {
+            options.resizingBehavior = `fill`
           }
-          const h = Math.round(size / desiredAspectRatio)
-          return `${createUrl(image.file.url, {
+        }
+
+        // Create sizes (in width) for the image. If the width of the
+        // image is 800px, the sizes would then be: 800, 1200, 1600,
+        // 2400.
+        //
+        // This is enough sizes to provide close to the optimal image size for every
+        // device size / screen resolution
+        let sizes = []
+        sizes.push(options.width)
+        sizes.push(options.width * 1.5)
+        sizes.push(options.width * 2)
+        sizes.push(options.width * 3)
+        sizes = sizes.map(Math.round)
+
+        // Filter out sizes larger than the image's width.
+        const filteredSizes = sizes.filter(size => size < width)
+
+        // Sort sizes for prettiness.
+        const sortedSizes = _.sortBy(filteredSizes)
+
+        // Create the srcSet.
+        const srcSet = sortedSizes
+          .map((size, i) => {
+            let resolution
+            switch (i) {
+              case 0:
+                resolution = `1x`
+                break
+              case 1:
+                resolution = `1.5x`
+                break
+              case 2:
+                resolution = `2x`
+                break
+              case 3:
+                resolution = `3x`
+                break
+              default:
+            }
+            const h = Math.round(size / desiredAspectRatio)
+            return `${createUrl(image.file.url, {
+              ...options,
+              width: size,
+              height: h,
+            })} ${resolution}`
+          })
+          .join(`,\n`)
+
+        let pickedHeight
+        if (options.height) {
+          pickedHeight = options.height
+        } else {
+          pickedHeight = options.width / desiredAspectRatio
+        }
+
+        return resolve({
+          base64: base64Str,
+          aspectRatio: aspectRatio,
+          width: Math.round(options.width),
+          height: Math.round(pickedHeight),
+          src: createUrl(image.file.url, {
             ...options,
-            width: size,
-            height: h,
-          })} ${resolution}`
+            width: options.width,
+          }),
+          srcSet,
         })
-        .join(`,\n`)
-
-      let pickedHeight
-      if (options.height) {
-        pickedHeight = options.height
-      } else {
-        pickedHeight = options.width / desiredAspectRatio
       }
-
-      return resolve({
-        base64: base64Str,
-        aspectRatio: aspectRatio,
-        width: Math.round(options.width),
-        height: Math.round(pickedHeight),
-        src: createUrl(image.file.url, {
-          ...options,
-          width: options.width,
-        }),
-        srcSet,
-      })
-    })
+    )
   })
 }
 exports.resolveResponsiveResolution = resolveResponsiveResolution
 
 const resolveResponsiveSizes = (image, options) => {
   if (!isImage(image)) return null
+
   return new Promise(resolve => {
-    getBase64ImageAndBasicMeasurements(
-      image,
-      options
-    ).then(({ contentType, base64Str, width, height, aspectRatio }) => {
-      let desiredAspectRatio = aspectRatio
+    getBase64ImageAndBasicMeasurements(image, options).then(
+      ({ contentType, base64Str, width, height, aspectRatio }) => {
+        let desiredAspectRatio = aspectRatio
 
-      // If we're cropping, calculate the specified aspect ratio.
-      if (options.maxHeight) {
-        desiredAspectRatio = options.maxWidth / options.maxHeight
-      }
+        // If we're cropping, calculate the specified aspect ratio.
+        if (options.maxHeight) {
+          desiredAspectRatio = options.maxWidth / options.maxHeight
+        }
 
-      // If the users didn't set a default sizes, we'll make one.
-      if (!options.sizes) {
-        options.sizes = `(max-width: ${options.maxWidth}px) 100vw, ${options.maxWidth}px`
-      }
+        // If the users didn't set a default sizes, we'll make one.
+        if (!options.sizes) {
+          options.sizes = `(max-width: ${options.maxWidth}px) 100vw, ${
+            options.maxWidth
+          }px`
+        }
 
-      // Create sizes (in width) for the image. If the max width of the container
-      // for the rendered markdown file is 800px, the sizes would then be: 200,
-      // 400, 800, 1200, 1600, 2400.
-      //
-      // This is enough sizes to provide close to the optimal image size for every
-      // device size / screen resolution
-      let sizes = []
-      sizes.push(options.maxWidth / 4)
-      sizes.push(options.maxWidth / 2)
-      sizes.push(options.maxWidth)
-      sizes.push(options.maxWidth * 1.5)
-      sizes.push(options.maxWidth * 2)
-      sizes.push(options.maxWidth * 3)
-      sizes = sizes.map(Math.round)
+        // Create sizes (in width) for the image. If the max width of the container
+        // for the rendered markdown file is 800px, the sizes would then be: 200,
+        // 400, 800, 1200, 1600, 2400.
+        //
+        // This is enough sizes to provide close to the optimal image size for every
+        // device size / screen resolution
+        let sizes = []
+        sizes.push(options.maxWidth / 4)
+        sizes.push(options.maxWidth / 2)
+        sizes.push(options.maxWidth)
+        sizes.push(options.maxWidth * 1.5)
+        sizes.push(options.maxWidth * 2)
+        sizes.push(options.maxWidth * 3)
+        sizes = sizes.map(Math.round)
 
-      // Filter out sizes larger than the image's maxWidth.
-      const filteredSizes = sizes.filter(size => size < width)
+        // Filter out sizes larger than the image's maxWidth.
+        const filteredSizes = sizes.filter(size => size < width)
 
-      // Add the original image to ensure the largest image possible
-      // is available for small images.
-      filteredSizes.push(width)
+        // Add the original image to ensure the largest image possible
+        // is available for small images.
+        filteredSizes.push(width)
 
-      // Sort sizes for prettiness.
-      const sortedSizes = _.sortBy(filteredSizes)
+        // Sort sizes for prettiness.
+        const sortedSizes = _.sortBy(filteredSizes)
 
-      // Create the srcSet.
-      const srcSet = sortedSizes
-        .map(width => {
-          const h = Math.round(width / desiredAspectRatio)
-          return `${createUrl(image.file.url, {
+        // Create the srcSet.
+        const srcSet = sortedSizes
+          .map(width => {
+            const h = Math.round(width / desiredAspectRatio)
+            return `${createUrl(image.file.url, {
+              ...options,
+              width,
+              height: h,
+            })} ${Math.round(width)}w`
+          })
+          .join(`,\n`)
+
+        return resolve({
+          base64: base64Str,
+          aspectRatio: aspectRatio,
+          src: createUrl(image.file.url, {
             ...options,
-            width,
-            height: h,
-          })} ${Math.round(width)}w`
+            width: options.maxWidth,
+            height: options.maxHeight,
+          }),
+          srcSet,
+          sizes: options.sizes,
         })
-        .join(`,\n`)
-
-      return resolve({
-        base64: base64Str,
-        aspectRatio: aspectRatio,
-        src: createUrl(image.file.url, {
-          ...options,
-          width: options.maxWidth,
-          height: options.maxHeight,
-        }),
-        srcSet,
-        sizes: options.sizes,
-      })
-    })
+      }
+    )
   })
 }
 exports.resolveResponsiveSizes = resolveResponsiveSizes
 
-const resolveResize = (image, options) =>
-  new Promise(resolve => {
-    if (!isImage(image)) {
-      resolve()
-      return
-    }
+const resolveResize = (image, options) => {
+  if (!isImage(image)) return null
 
-    getBase64ImageAndBasicMeasurements(
-      image,
-      options
-    ).then(({ contentType, base64Str, width, height, aspectRatio }) => {
-      // If the user selected a height (so cropping) and options for focus
-      // and fit aren't set, we'll set our defaults
-      if (options.height) {
-        if (!options.resizingBehavior) {
-          options.resizingBehavior = `fill`
+  return new Promise(resolve => {
+    getBase64ImageAndBasicMeasurements(image, options).then(
+      ({ contentType, base64Str, width, height, aspectRatio }) => {
+        // If the user selected a height (so cropping) and fit option
+        // is not set, we'll set our defaults
+        if (options.height) {
+          if (!options.resizingBehavior) {
+            options.resizingBehavior = `fill`
+          }
         }
-        if (!options.cropFocus) {
-          options.cropFocus = `faces`
+
+        if (options.base64) {
+          resolve(base64Str)
+          return
         }
-      }
 
-      if (options.base64) {
-        resolve(base64Str)
-        return
+        const pickedWidth = options.width
+        let pickedHeight
+        if (options.height) {
+          pickedHeight = options.height
+        } else {
+          pickedHeight = pickedWidth / aspectRatio
+        }
+        resolve({
+          src: createUrl(image.file.url, options),
+          width: Math.round(pickedWidth),
+          height: Math.round(pickedHeight),
+          aspectRatio,
+          base64: base64Str,
+        })
       }
-
-      const pickedWidth = options.width
-      let pickedHeight
-      if (options.height) {
-        pickedHeight = options.height
-      } else {
-        pickedHeight = pickedWidth / aspectRatio
-      }
-      resolve({
-        src: createUrl(image.file.url, options),
-        width: Math.round(pickedWidth),
-        height: Math.round(pickedHeight),
-        aspectRatio,
-        base64: base64Str,
-      })
-    })
+    )
   })
+}
 
 exports.resolveResize = resolveResize
 

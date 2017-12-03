@@ -18,22 +18,24 @@ Any file with the `module` extension will use CSS modules.
 
 ### With Stylus plugins
 
-This plugin has the same API as [stylus-loader](https://github.com/shama/stylus-loader#stylus-plugins), which means you can add stylus plugins with `use`:
+This plugin has the same API as
+[stylus-loader](https://github.com/shama/stylus-loader#stylus-plugins), which
+means you can add stylus plugins with `use`:
 
 ```javascript
 // in gatsby-config.js
-const rupture = require('rupture');
+const rupture = require("rupture")
 
 module.exports = {
   plugins: [
     {
-      resolve: 'gatsby-plugin-stylus',
+      resolve: "gatsby-plugin-stylus",
       options: {
         use: [rupture()],
       },
     },
   ],
-};
+}
 ```
 
 ### PostCSS plugins

@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-canonical-urls",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Stub description for gatsby-plugin-canonical-urls",
   "main": "index.js",
   "scripts": {

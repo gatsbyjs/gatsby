@@ -8,7 +8,11 @@ const glob = require(`glob`)
 const path = require(`path`)
 
 const { joinPath } = require(`../utils/path`)
-const { getNode, hasNodeChanged } = require(`./index`)
+const {
+  getNode,
+  hasNodeChanged,
+  trackSubObjectsToRootNodeId,
+} = require(`./index`)
 const { store } = require(`./index`)
 import * as joiSchemas from "../joi-schemas/joi"
 import { generateComponentChunkName } from "../utils/js-chunk-names"
@@ -26,6 +30,7 @@ type PageInput = {
 }
 type LayoutInput = {
   id?: string,
+  machineId?: string,
   component: string,
   layout?: string,
   context?: Object,
@@ -33,6 +38,7 @@ type LayoutInput = {
 
 type Page = {
   path: string,
+  matchPath: ?string,
   component: string,
   context: Object,
   internalComponentName: string,
@@ -59,7 +65,9 @@ type Plugin = {
 
 /**
  * Delete a page
- * @param {string} page a page object with at least the path set
+ * @param {Object} page a page object with at least the path set
+ * @param {string} page.path The path of the page
+ * @param {string} page.component The absolute path to the page component
  * @example
  * deletePage(page)
  */
@@ -117,6 +125,7 @@ actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
     jsonName,
     internalComponentName,
     path: page.path,
+    matchPath: page.matchPath,
     component: page.component,
     componentChunkName: generateComponentChunkName(page.component),
     // Ensure the page has a context object
@@ -179,6 +188,9 @@ actions.createLayout = (
   traceId?: string
 ) => {
   let id = layout.id || path.parse(layout.component).name
+  // Add a "machine" id as a universal ID to differentiate layout from
+  // page components.
+  const machineId = `layout---${id}`
   let componentWrapperPath = joinPath(
     store.getState().program.directory,
     `.cache`,
@@ -188,6 +200,7 @@ actions.createLayout = (
 
   let internalLayout: Layout = {
     id,
+    machineId,
     componentWrapperPath,
     isLayout: true,
     jsonName: `layout-${_.kebabCase(id)}.json`,
@@ -364,32 +377,7 @@ actions.createNode = (node: any, plugin?: Plugin, traceId?: string) => {
     )
   }
 
-  // Add _PARENT recursively to sub-objects in nodes so we can use this to find
-  // the root node when running GraphQL queries. Yes this is lame. But it's
-  // because in GraphQL child nodes can't access their parent nodes so we use
-  // this _PARENT convention to get around this.
-  const addParentToSubObjects = (data, parentId) => {
-    _.each(data, (v, k) => {
-      if (_.isArray(v) && _.isObject(v[0])) {
-        _.each(v, o => addParentToSubObjects(o, parentId))
-      } else if (_.isObject(v)) {
-        addParentToSubObjects(v, parentId)
-      }
-    })
-    data._PARENT = parentId
-  }
-
-  _.each(node, (v, k) => {
-    // Ignore the node internal object.
-    if (k === `internal`) {
-      return
-    }
-    if (_.isArray(v) && _.isObject(v[0])) {
-      _.each(v, o => addParentToSubObjects(o, node.parent))
-    } else if (_.isObject(v)) {
-      addParentToSubObjects(v, node.parent)
-    }
-  })
+  trackSubObjectsToRootNodeId(node)
 
   const oldNode = getNode(node.id)
 
@@ -402,11 +390,13 @@ actions.createNode = (node: any, plugin?: Plugin, traceId?: string) => {
       typeOwners[node.internal.type] = pluginName
     else if (typeOwners[node.internal.type] !== pluginName)
       throw new Error(stripIndent`
-        The plugin "${pluginName}" created a node of a type owned by another plugin.
+        The plugin "${
+          pluginName
+        }" created a node of a type owned by another plugin.
 
-        The node type "${node.internal.type}" is owned by "${typeOwners[
-        node.internal.type
-      ]}".
+        The node type "${node.internal.type}" is owned by "${
+        typeOwners[node.internal.type]
+      }".
 
         If you copy and pasted code from elsewhere, you'll need to pick a new type name
         for your new node(s).
@@ -759,12 +749,14 @@ actions.setPluginStatus = (
  * @param {string} redirect.redirectInBrowser Redirects are generally for redirecting legacy URLs to their new configuration. If you can't update your UI for some reason, set `redirectInBrowser` to true and Gatsby will handle redirecting in the client as well.
  * @example
  * createRedirect({ fromPath: '/old-url', toPath: '/new-url', isPermanent: true })
+ * createRedirect({ fromPath: '/url', toPath: '/zn-CH/url', Language: 'zn' })
  */
 actions.createRedirect = ({
   fromPath,
   isPermanent = false,
-  toPath,
   redirectInBrowser = false,
+  toPath,
+  ...rest
 }) => {
   let pathPrefix = ``
   if (store.getState().program.prefixPaths) {
@@ -776,8 +768,9 @@ actions.createRedirect = ({
     payload: {
       fromPath: `${pathPrefix}${fromPath}`,
       isPermanent,
-      toPath: `${pathPrefix}${toPath}`,
       redirectInBrowser,
+      toPath: `${pathPrefix}${toPath}`,
+      ...rest,
     },
   }
 }
