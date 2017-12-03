@@ -45,7 +45,10 @@ exports.createPages = (_, pluginOptions, cb) => {
         </p>
         <hr />
         <h2 css={{ marginBottom: rhythm(1 / 2) }}>Usage</h2>
-        <p css={{ marginBottom: rhythm(1) }}>Implement any of these APIs by exporting them from a file named <code>gatsby-node.js</code> in the root of your project.</p>
+        <p css={{ marginBottom: rhythm(1) }}>
+          Implement any of these APIs by exporting them from a file named{` `}
+          <code>gatsby-node.js</code> in the root of your project.
+        </p>
         <hr />
         <h2 css={{ marginBottom: rhythm(1 / 2) }}>APIs</h2>
         <ul css={{ ...scale(-1 / 5) }}>

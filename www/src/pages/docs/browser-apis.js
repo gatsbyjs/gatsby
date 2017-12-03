@@ -10,7 +10,10 @@ class BrowserAPIDocs extends React.Component {
       <Container>
         <h1 css={{ marginTop: 0 }}>Gatsby Browser APIs</h1>
         <h2 css={{ marginBottom: rhythm(1 / 2) }}>Usage</h2>
-        <p css={{ marginBottom: rhythm(1) }}>Implement any of these APIs by exporting them from a file named <code>gatsby-browser.js</code> in the root of your project.</p>
+        <p css={{ marginBottom: rhythm(1) }}>
+          Implement any of these APIs by exporting them from a file named{` `}
+          <code>gatsby-browser.js</code> in the root of your project.
+        </p>
         <hr />
         <h2 css={{ marginBottom: rhythm(1 / 2) }}>APIs</h2>
         <ul css={{ ...scale(-1 / 5) }}>

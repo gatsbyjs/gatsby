@@ -30,6 +30,7 @@ whenever you want to apply those styles e.g.
 In the world of components, you instead create a `PrimaryButton` component with
 your button styles and use it throughout your site like:
 
+<!-- prettier-ignore -->
 ```jsx
 <PrimaryButton>Click me</PrimaryButton>
 ```
@@ -110,9 +111,7 @@ plugins.
 Let's start by creating a new site. Similar to Part One, run the following to
 create a new site.
 
-```
-gatsby new tutorial-part-two https://github.com/gatsbyjs/gatsby-starter-hello-world
-```
+    gatsby new tutorial-part-two https://github.com/gatsbyjs/gatsby-starter-hello-world
 
 This creates a new site with the following structure.
 
