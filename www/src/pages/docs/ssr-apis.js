@@ -9,6 +9,9 @@ class SSRAPIs extends React.Component {
     return (
       <Container>
         <h1 css={{ marginTop: 0 }}>Gatsby Server Rendering APIs</h1>
+        <h2 css={{ marginBottom: rhythm(1 / 2) }}>Usage</h2>
+        <p css={{ marginBottom: rhythm(1) }}>Implement any of these APIs by exporting them from a file named <code>gatsby-ssr.js</code> in the root of your project.</p>
+        <hr />
         <h2 css={{ marginBottom: rhythm(1 / 2) }}>APIs</h2>
         <ul css={{ ...scale(-1 / 5) }}>
           {this.props.data.allDocumentationJs.edges.map(({ node }, i) => (
