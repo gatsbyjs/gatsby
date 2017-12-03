@@ -10,7 +10,7 @@
     "bluebird": "^3.5.0",
     "deep-map": "^1.5.0",
     "deep-map-keys": "^1.2.0",
-    "gatsby-source-filesystem": "^1.5.9",
+    "gatsby-source-filesystem": "^2.0.0-alpha.2",
     "json-stringify-safe": "^5.0.1",
     "lodash": "^4.17.4",
     "qs": "^6.4.0",

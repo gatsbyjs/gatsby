@@ -34,7 +34,8 @@
     "prettier": "^1.8.2",
     "prettier-eslint-cli": "4.2.x",
     "remotedev-server": "^0.2.3",
-    "rimraf": "^2.6.1"
+    "rimraf": "^2.6.1",
+    "yargs": "^10.0.3"
   },
   "engines": {
     "yarn": "^1.2.1"
@@ -66,7 +67,8 @@
     "watch": "lerna run watch --no-sort --stream --concurrency 999"
   },
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "www"
   ],
   "eslintIgnore": [
     "interfaces",
