@@ -20,6 +20,8 @@ const preferDefault = m => (m && m.default) || m
 let prefetcher
 let inInitialRender = true
 let fetchHistory = []
+const failedPaths = {}
+const failedResources = {}
 const MAX_HISTORY = 5
 
 // Prefetcher logic
@@ -84,6 +86,11 @@ const fetchResource = (resourceName, cb = () => {}) => {
         resource: resourceName,
         succeeded: !err,
       })
+
+      if (!failedResources[resourceName]) {
+        failedResources[resourceName] = err;
+      }
+
       fetchHistory = fetchHistory.slice(-MAX_HISTORY)
       cb(err, executeChunk)
     })
@@ -94,6 +101,10 @@ const getResourceModule = (resourceName, cb) => {
   if (resourceCache[resourceName]) {
     process.nextTick(() => {
       cb(null, resourceCache[resourceName])
+    })
+  } else if (failedResources[resourceName]) {
+    process.nextTick(() => {
+      cb(failedResources[resourceName])
     })
   } else {
     fetchResource(resourceName, (err, executeChunk) => {
@@ -121,6 +132,11 @@ const appearsOnLine = () => {
 
 const handleResourceLoadError = (path, message) => {
   console.log(message)
+
+  if (!failedPaths[path]) {
+    failedPaths[path] = message;
+  }
+
   if (
     appearsOnLine()
     && window.location.pathname.replace(/\/$/g, '') !== path.replace(/\/$/g, '')
@@ -281,6 +297,12 @@ const queue = {
       return pageResources
       // Production code path
     } else {
+      if (failedPaths[path]) {
+        handleResourceLoadError(path, `Previously detected load failure for "${path}"`)
+
+        return cb()
+      }
+
       const page = findPage(path)
 
       if (!page) {
