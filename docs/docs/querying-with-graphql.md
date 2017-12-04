@@ -54,13 +54,13 @@ Showing off sorting, filtering, picking fields, programmatic transformations
 - https://reactjs.org/blog/2015/05/01/graphql-introduction.html
 - ...
 
-## Advanced usages of GraphQL
+## Advanced readings on GraphQL
 
 - [GraphQL specification](https://facebook.github.io/graphql/October2016/)
 - [Interfaces and Unions](https://medium.com/the-graphqlhub/graphql-tour-interfaces-and-unions-7dd5be35de0d)
-- [Gatsby uses Relay](https://facebook.github.io/relay/docs/en/relay-compiler.html)
+- [Gatsby uses the Relay Compiler](https://facebook.github.io/relay/docs/en/relay-compiler.html)
 - ...
 
-## Live GraphQL explorer for GatsbyJS.org
+## TODO — create live GraphQL explorer for GatsbyJS.org
 
 * iFrame of graphiql instance for this site running on Heroku so people can run live queries.
