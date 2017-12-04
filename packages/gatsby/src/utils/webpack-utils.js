@@ -1,97 +1,182 @@
 // @flow
+const os = require(`os`)
 
 const autoprefixer = require(`autoprefixer`)
-const camelCase = require(`lodash/camelCase`)
 const ExtractTextPlugin = require(`extract-text-webpack-plugin`)
 const flexbugs = require(`postcss-flexbugs-fixes`)
-const webpack = require(`webpack`)
+const UglifyPlugin = require(`uglifyjs-webpack-plugin`)
 
+const builtinPlugins = require(`./webpack-plugins`)
 const genBabelConfig = require(`./babel-config`)
 
-const VENDOR_MODULE_REGEX = /(node_modules|bower_components)/
+type LoaderSpec = string | { loader: string, options?: Object }
+type LoaderResolver<T: Object> = (options?: T) => LoaderSpec
 
-type Stage = 'develop' | 'develop-html' | 'build-css' | 'build-html' | 'build-javascript';
-
-type LoaderSpec  = string | { loader: string, options?: Object };
-type LoaderResolver = (options: Object) => LoaderSpec;
+type Condition = string | RegExp | RegExp[]
 
 type Rule = {
-  test: RegExp,
-  use: LoaderSpec | LoaderSpec[],
-  exclude?: RegExp,
-  include?: RegExp,
-};
+  test?: Condition,
+  use: LoaderSpec[],
+  exclude?: Condition,
+  include?: Condition,
+}
 
-type PluginInstance = Object;
+type RuleFactory<T: Object> = (options?: T) => Rule
 
-type WebpackConfigUtils = {
-  loaders: {|
-    json: LoaderSpec,
-    yaml: LoaderSpec,
-    null: LoaderSpec,
-    file: LoaderResolver,
-    url: LoaderResolver,
+type ContextualRuleFactory = RuleFactory<*> & {
+  internal: RuleFactory<*>,
+  external: RuleFactory<*>,
+}
 
-    style: LoaderSpec,
-    css: LoaderResolver,
-    postcss: (options: {
-      browsers: string[],
-      plugins: Array<any> | (loader: any) => Array<any>,
-    }) => LoaderSpec,
+type PluginInstance = any
+type PluginFactory = (...args?: any) => PluginInstance
 
-    js: LoaderResolver,
-  |},
+type BuiltinPlugins = typeof builtinPlugins
 
-  rules: {|
-    yaml: () => Rule,
-    js: (options: Object) => Rule,
-    images: (options: Object) => Rule,
-    assets: (options: Object) => Rule,
-    css: (options: Object) => Rule,
-    cssModules: (options: Object) => Rule,
-  |},
+type Stage =
+  | "develop"
+  | "develop-html"
+  | "build-css"
+  | "build-html"
+  | "build-javascript"
 
-  plugins: {
-    uglify: (options: Object) => PluginInstance,
-    loaderOptions: (options: Object) => PluginInstance,
-    extractText: (options: Object) => PluginInstance,
-    moment: (options: Object) => PluginInstance,
-  }
-};
+/**
+ * Configuration options for `createUtils`
+ */
+export type WebpackUtilsOptions = { stage: Stage, program: any }
 
-module.exports = async (
-  {
-    stage,
-    program,
-  }: { stage: Stage, program: any }
-): Promise<WebpackConfigUtils> => {
+/**
+ * Utils that produce webpack `loader` objects
+ */
+export type LoaderUtils = {
+  json: LoaderResolver<*>,
+  yaml: LoaderResolver<*>,
+  null: LoaderResolver<*>,
+  raw: LoaderResolver<*>,
+
+  style: LoaderResolver<*>,
+  css: LoaderResolver<*>,
+  postcss: LoaderResolver<{
+    browsers?: string[],
+    plugins?: Array<any> | ((loader: any) => Array<any>),
+  }>,
+
+  file: LoaderResolver<*>,
+  url: LoaderResolver<*>,
+  js: LoaderResolver<*>,
+
+  imports: LoaderResolver<*>,
+  exports: LoaderResolver<*>,
+}
+
+/**
+ * Utils that prodcue webpack rule objects
+ */
+export type RuleUtils = {
+  /**
+   * Handles Javascript compilation via babel
+   */
+  js: RuleFactory<*>,
+  yaml: RuleFactory<*>,
+  fonts: RuleFactory<*>,
+  images: RuleFactory<*>,
+  audioVideo: RuleFactory<*>,
+
+  css: ContextualRuleFactory,
+  cssModules: RuleFactory<*>,
+  postcss: ContextualRuleFactory,
+}
+
+export type PluginUtils = BuiltinPlugins & {
+  extractText: PluginFactory,
+  uglify: PluginFactory,
+  moment: PluginFactory,
+}
+
+/**
+ * webpack atoms namespace
+ */
+export type WebpackUtils = {
+  loaders: LoaderUtils,
+
+  rules: RuleUtils,
+
+  plugins: PluginUtils,
+}
+
+/**
+ * A factory method that produces an atoms namespace
+ */
+module.exports = async ({
+  stage,
+  program,
+}: {
+  stage: Stage,
+  program: any,
+}): Promise<WebpackUtilsOptions> => {
+  const assetRelativeRoot = `static/`
+  const vendorRegex = /(node_modules|bower_components)/
+  const supportedBrowsers = program.browserlist
+
   const PRODUCTION = !stage.includes(`develop`)
-  const DEFAULT_BROWSERS = program.browserlist
 
   const babelConfig = await genBabelConfig(program, stage)
+
+  const makeExternalOnly = (original: RuleFactory<*>) => (
+    options = {}
+  ): Rule => {
+    let rule = original(options)
+    rule.include = vendorRegex
+    return rule
+  }
+
+  const makeInternalOnly = (original: RuleFactory<*>) => (
+    options = {}
+  ): Rule => {
+    let rule = original(options)
+    rule.exclude = vendorRegex
+    return rule
+  }
+
   let ident = 0
 
-  /**
-   * Loaders
-   */
-  const loaders = {
-    json: {
-      loader: require.resolve(`json-loader`),
+  const loaders: LoaderUtils = {
+    json: (options = {}) => {
+      return {
+        options,
+        loader: require.resolve(`json-loader`),
+      }
     },
 
-    yaml: {
-      loader: require.resolve(`yaml-loader`),
+    yaml: (options = {}) => {
+      return {
+        options,
+        loader: require.resolve(`yaml-loader`),
+      }
     },
 
-    null: {
-      loader: require.resolve(`null-loader`),
+    null: (options = {}) => {
+      return {
+        options,
+        loader: require.resolve(`null-loader`),
+      }
     },
 
-    style: {
-      loader: require.resolve(`style-loader`),
+    raw: (options = {}) => {
+      return {
+        options,
+        loader: require.resolve(`raw-loader`),
+      }
     },
 
-    css: (opts = {}) => {
+    style: (options = {}) => {
+      return {
+        options,
+        loader: require.resolve(`style-loader`),
+      }
+    },
+
+    css: (options = {}) => {
       return {
         loader: require.resolve(`css-loader`),
         options: {
@@ -100,21 +185,18 @@ module.exports = async (
           camelCase: `dashesOnly`,
           // https://github.com/webpack-contrib/css-loader/issues/406
           localIdentName: `[name]--[local]--[hash:base64:5]`,
-          ...opts,
+          ...options,
         },
       }
     },
 
-    postcss: ({
-      plugins,
-      browsers = DEFAULT_BROWSERS,
-      ...rest
-    } = {}) => {
+    postcss: (options = {}) => {
+      let { plugins, browsers = supportedBrowsers, ...postcssOpts } = options
+
       return {
         loader: require.resolve(`postcss-loader`),
         options: {
           ident: `postcss-${++ident}`,
-          sourceMap: !PRODUCTION,
           plugins: loader => {
             plugins =
               (typeof plugins === `function` ? plugins(loader) : plugins) || []
@@ -125,27 +207,31 @@ module.exports = async (
               ...plugins,
             ]
           },
-          ...rest,
+          ...postcssOpts,
         },
       }
     },
 
-    file: options => {return {
-      loader: require.resolve(`file-loader`),
-      options: {
-        name: `static/[name]-[hash:*].[ext]`,
-        ...options,
-      },
-    }},
+    file: (options = {}) => {
+      return {
+        loader: require.resolve(`url-loader`),
+        options: {
+          name: `${assetRelativeRoot}[name]-[hash].[ext]`,
+          ...options,
+        },
+      }
+    },
 
-    url: options => {return {
-      loader: require.resolve(`url-loader`),
-      options: {
-        limit: 10000,
-        name: `static/[name]-[hash:*].[ext]`,
-        ...options,
-      },
-    }},
+    url: (options = {}) => {
+      return {
+        loader: require.resolve(`url-loader`),
+        options: {
+          limit: 10000,
+          name: `${assetRelativeRoot}[name]-[hash].[ext]`,
+          ...options,
+        },
+      }
+    },
 
     js: (options = babelConfig) => {
       return {
@@ -153,219 +239,183 @@ module.exports = async (
         loader: require.resolve(`babel-loader`),
       }
     },
+
+    imports: (options = {}) => {
+      return {
+        options,
+        loader: require.resolve(`imports-loader`),
+      }
+    },
+
+    exports: (options = {}) => {
+      return {
+        options,
+        loader: require.resolve(`exports-loader`),
+      }
+    },
   }
 
   /**
    * Rules
    */
-  const rules = {
-    yaml: () => {return {
+  const rules = {}
+
+  /**
+   * Javascript loader via babel, excludes node_modules
+   */
+  {
+    let js = options => {
+      return {
+        test: /\.jsx?$/,
+        exclude: vendorRegex,
+        use: [loaders.js(options)],
+      }
+    }
+
+    rules.js = js
+  }
+
+  rules.yaml = () => {
+    return {
       test: /\.ya?ml/,
-      use: [loaders.json, loaders.yaml],
-    }},
+      use: [loaders.json(), loaders.yaml()],
+    }
+  }
 
-    /**
-     * Javascript loader via babel, excludes node_modules
-     *
-     * @param {object=} options Options passed to babel-loader
-     */
-    js: options => {return {
-      test: /\.jsx?$/,
-      exclude: VENDOR_MODULE_REGEX,
-      use: loaders.js(options),
-    }},
+  /**
+   * Font loader
+   */
+  rules.fonts = () => {
+    return {
+      use: [loaders.url()],
+      test: /\.(eot|otf|ttf|woff(2)?)(\?.*)?$/,
+    }
+  }
 
-    /**
-     * Loads image assets, inlines images via a data URI if they are below
-     * the size threshold
-     */
-    images: options => {return {
-      use: loaders.url(options),
-      test: /\.(svg|jpg|jpeg|png|gif|mp4|webm|wav|mp3|m4a|aac|oga)(\?.*)?$/,
-    }},
+  /**
+   * Loads image assets, inlines images via a data URI if they are below
+   * the size threshold
+   */
+  rules.images = () => {
+    return {
+      use: [loaders.url()],
+      test: /\.(ico|svg|jpg|jpeg|png|gif|webp)(\?.*)?$/,
+    }
+  }
 
-    /**
-     * Web font loader
-     */
-    assets: options => {return {
-      use: loaders.file(options),
-      test: /\.(ico|eot|otf|webp|pdf|ttf|woff(2)?)(\?.*)?$/,
-    }},
+  /**
+   * Loads audio or video assets
+   */
+  rules.audioVideo = () => {
+    return {
+      use: [loaders.file()],
+      test: /\.(mp4|webm|wav|mp3|m4a|aac|oga|flac)$/,
+    }
+  }
 
-    /**
-     * CSS style loader, excludes node_modules. Includes postCSS loader with
-     * some useful default plugins such as Autoprefixer. Borrowed from CRA.
-     */
-    css: ({ plugins, browsers = DEFAULT_BROWSERS, ...rest } = {}) => {
+  /**
+   * CSS style loader.
+   */
+  {
+    const css = ({ browsers, ...options } = {}) => {
       return {
         test: /\.css$/,
-        exclude: /\.module\.css$/,
         use: ExtractTextPlugin.extract({
-          fallback: loaders.style,
+          fallback: loaders.style(),
           use: [
-            loaders.css({ ...rest, importLoaders: 1 }),
-            loaders.postcss({ plugins, browsers }),
+            loaders.css({ ...options, importLoaders: 1 }),
+            loaders.postcss({ browsers }),
           ],
         }),
       }
-    },
+    }
 
     /**
-     * CSS style loader, _includes_ node_modules.
+     * CSS style loader, _excludes_ node_modules.
      */
-    cssModules: options => {
-      const rule = rules.css({ ...options, modules: true })
+    css.internal = makeInternalOnly(css)
+    css.external = makeExternalOnly(css)
+
+    const cssModules = options => {
+      const rule = css({ ...options, modules: true })
       delete rule.exclude
       rule.test = /\.module\.css$/
       return rule
-    },
+    }
+
+    rules.css = css
+    rules.cssModules = cssModules
   }
 
-  const pluginName = name => camelCase(name.replace(/Plugin$/, ``))
+  /**
+   * PostCSS loader.
+   */
+  {
+    const postcss = options => {
+      return {
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract({
+          fallback: loaders.style,
+          use: [loaders.css({ importLoaders: 1 }), loaders.postcss(options)],
+        }),
+      }
+    }
 
-  const plugins = {
     /**
-     * Minify javascript code without regard for IE8. Attempts
-     * to parallelize the work to save time. Generally only add in Production
+     * PostCSS loader, _excludes_ node_modules.
      */
-    uglify: () =>
-      new webpack.optimize.UglifyJsPlugin({
-        sourceMap: true,
+    postcss.internal = makeInternalOnly(postcss)
+    postcss.external = makeExternalOnly(postcss)
+    rules.postcss = postcss
+  }
+  /**
+   * Plugins
+   */
+  const plugins = { ...builtinPlugins }
+
+  /**
+   * Minify javascript code without regard for IE8. Attempts
+   * to parallelize the work to save time. Generally only add in Production
+   */
+  plugins.uglify = ({ uglifyOptions, ...options } = {}) =>
+    new UglifyPlugin({
+      parallel: {
+        cache: true,
+        workers: os.cpus().length - 1,
+      },
+      exclude: /\.min\.js/,
+      sourceMap: true,
+      uglifyOptions: {
         compress: {
-          screw_ie8: true, // React doesn't support IE8
-          warnings: false,
+          drop_console: true,
         },
-        mangle: {
-          screw_ie8: true,
-        },
-        output: {
-          comments: false,
-          screw_ie8: true,
-        },
-      }),
+        ie8: false,
+        ...uglifyOptions,
+      },
+      ...options,
+    })
 
-   /**
-    * The webpack2 shim plugin for passing options to loaders. Sets
-    * the minize and debug options to `true` in production (used by various loaders)
-    */
-    loaderOptions: options =>
-      new webpack.LoaderOptionsPlugin({
-        options,
-        minimize: PRODUCTION,
-        debug: !PRODUCTION,
-      }),
-
-    /**
-     * Extracts css requires into a single file;
-     * includes some reasonable defaults
-     */
-    extractText: options =>
-      new ExtractTextPlugin({
-        allChunks: true,
-
-        // Useful when using css modules, it assert a dependency order for how
-        // css is concated together. AS it is the default heuristic for ordering
-        // is require() order, but that is rarely indicative of the proper cascade
-        // order for component css files, and will cause issues when using "helper"
-        // files containing a lot of small composable classes
-        ignoreOrder: true,
-
-        // The extracted css is not needed for stage other than `build-css`
-        // but we extract at all build stages to avoid:
-        //  - adding extra weight to the js bundle in `build-javascript`
-        //  - errors in `build-html` caused by style-loader assuming a DOM exists
-        //
-        // TODO: these extra passes are costly on time and can be
-        // fixed in more optimal ways
-        disable: stage === `develop` || stage === `develop-html`,
-
-        ...options,
-      }),
-
-
-
-    // Moment.js includes 100s of KBs of extra localization data by
-    // default in Webpack that most sites don`t want. This line disables
-    // loading locale modules. This is a practical solution that requires
-    // the user to opt into importing specific locales.
-    // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
-    moment: () => new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-  }
+  /**
+   * Extracts css requires into a single file;
+   * includes some reasonable defaults
+   */
+  plugins.extractText = options =>
+    new ExtractTextPlugin({
+      filename: `[name]-[contenthash].css`,
+      allChunks: true,
+      disable: !PRODUCTION,
+      // Useful when using css modules
+      ignoreOrder: true,
+      ...options,
+    })
 
   plugins.extractText.extract = (...args) => ExtractTextPlugin.extract(...args)
 
-
-  // Re-export all the built-in plugins
-  ;[
-    `DefinePlugin`,
-    `NormalModuleReplacementPlugin`,
-    `ContextReplacementPlugin`,
-    `IgnorePlugin`,
-    `WatchIgnorePlugin`,
-    `BannerPlugin`,
-    `PrefetchPlugin`,
-    `AutomaticPrefetchPlugin`,
-    `ProvidePlugin`,
-    `HotModuleReplacementPlugin`,
-    `SourceMapDevToolPlugin`,
-    `EvalSourceMapDevToolPlugin`,
-    `EvalDevToolModulePlugin`,
-    `CachePlugin`,
-    `ExtendedAPIPlugin`,
-    `ExternalsPlugin`,
-    `JsonpTemplatePlugin`,
-    `LibraryTemplatePlugin`,
-    `LoaderTargetPlugin`,
-    `MemoryOutputFileSystem`,
-    `ProgressPlugin`,
-    `SetVarMainTemplatePlugin`,
-    `UmdMainTemplatePlugin`,
-    `NoErrorsPlugin`,
-    `NoEmitOnErrorsPlugin`,
-    `NewWatchingPlugin`,
-    `EnvironmentPlugin`,
-    `DllPlugin`,
-    `DllReferencePlugin`,
-    `LoaderOptionsPlugin`,
-    `NamedModulesPlugin`,
-    `NamedChunksPlugin`,
-    `HashedModuleIdsPlugin`,
-    `ModuleFilenameHelpers`,
-  ].forEach(plugin => {
-    if (!plugins[pluginName(plugin)])
-      plugins[pluginName(plugin)] = (...args) => new webpack[plugin](...args)
-  })
-  ;[
-    `AggressiveMergingPlugin`,
-    `AggressiveSplittingPlugin`,
-    `CommonsChunkPlugin`,
-    `ChunkModuleIdRangePlugin`,
-    `DedupePlugin`,
-    `LimitChunkCountPlugin`,
-    `MinChunkSizePlugin`,
-    `OccurrenceOrderPlugin`,
-    //`UglifyJsPlugin`
-  ].forEach(plugin => {
-    if (!plugins[pluginName(plugin)])
-      plugins[pluginName(plugin)] = (...args) =>
-        new webpack.optimize[plugin](...args)
-  })
-
+  plugins.moment = () => plugins.ignore(/^\.\/locale$/, /moment$/)
 
   return {
     loaders,
-    rules,
-
-    /**
-     * Common and core webpack plugins. All core webpack plugins are reexported as
-     * function factories, where the name is camelCased without the trailing "Plugin".
-     *
-     * So `new webpack.CommonsChunkPlugin(...)` becomes -> `plugins.commonsChunk(...)`
-     *
-     * @example
-     *
-     *   plugins.define({ DEV: true })
-     */
-    plugins,
+    rules: (rules: RuleUtils),
+    plugins: (plugins: PluginUtils),
   }
 }

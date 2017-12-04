@@ -1,10 +1,10 @@
-import { uniq, some } from 'lodash'
-import fs from 'fs'
-import path from 'path'
-import dotenv from 'dotenv'
-import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin'
-import { StatsWriterPlugin } from 'webpack-stats-plugin'
-import FriendlyErrorsWebpackPlugin from 'friendly-errors-webpack-plugin'
+import { uniq, some } from "lodash"
+import fs from "fs"
+import path from "path"
+import dotenv from "dotenv"
+import StaticSiteGeneratorPlugin from "static-site-generator-webpack-plugin"
+import { StatsWriterPlugin } from "webpack-stats-plugin"
+import FriendlyErrorsWebpackPlugin from "friendly-errors-webpack-plugin"
 
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
@@ -14,7 +14,7 @@ const GatsbyModulePlugin = require(`gatsby-module-loader/plugin`)
 const { withBasePath } = require(`./path`)
 
 const apiRunnerNode = require(`./api-runner-node`)
-const createConfig = require(`./webpack-utils`)
+const createUtils = require(`./webpack-utils`)
 
 // Five stages or modes:
 //   1) develop: for `gatsby develop` command, hot reload and CSS injection into page
@@ -35,8 +35,7 @@ module.exports = async (
   // We combine develop & develop-html stages for purposes of generating the
   // webpack config.
   const stage = suppliedStage
-  const webpackConfig = await createConfig({ stage, program })
-  const { rules, loaders, plugins } = webpackConfig
+  const { rules, loaders, plugins } = await createUtils({ stage, program })
 
   function processEnv(stage, defaultNodeEnv) {
     debug(`Building env for "${stage}"`)
@@ -155,14 +154,11 @@ module.exports = async (
     let configPlugins = [
       plugins.moment(),
 
-      // There seems to be a bug in file-loader that assumes this will be set.
-      plugins.loaderOptions({ fileLoader: {} }),
-
       // Add a few global variables. Set NODE_ENV to production (enables
       // optimizations for React) and whether prefixing links is enabled
       // (__PREFIX_PATHS__) and what the link prefix is (__PATH_PREFIX__).
       plugins.define({
-        'process.env': processEnv(stage, `development`),
+        "process.env": processEnv(stage, `development`),
         __PREFIX_PATHS__: program.prefixPaths,
         __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
         __POLYFILL__: store.getState().config.polyfill,
@@ -265,7 +261,7 @@ module.exports = async (
           // using a chunk name that doesn't exist creates a chunk with
           // just the runtime bits
           plugins.commonsChunk({
-            name: `webpack-runtime`,
+            name: `@@webpack-runtime`,
           }),
           // Write out mapping between chunk names and their hashed names. We use
           // this to add the needed javascript files to each HTML page.
@@ -310,10 +306,11 @@ module.exports = async (
     let configRules = [
       rules.js(),
       rules.yaml(),
-      rules.assets(),
+      rules.fonts(),
       rules.images(),
+      rules.audioVideo(),
     ]
-
+    console.log(configRules[0])
     switch (stage) {
       case `develop`:
       case `build-css`:
