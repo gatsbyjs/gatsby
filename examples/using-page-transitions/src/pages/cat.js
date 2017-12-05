@@ -3,13 +3,16 @@ import React from "react"
 import Link from "gatsby-link"
 
 const Cat = ({ transition }) => (
-  <div style={transition.style}>
+  <div style={transition && transition.style}>
     <h1>meow</h1>
     <div>
       <Link to="/">Go to home</Link>
     </div>
     <div>
       <Link to="/dog/">Go to dog</Link>
+    </div>
+    <div>
+      <Link to="/long-page/">Go to long page</Link>
     </div>
   </div>
 )

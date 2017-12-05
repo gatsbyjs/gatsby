@@ -1,5 +1,6 @@
 /* @flow */
 
+const url = require(`url`)
 const chokidar = require(`chokidar`)
 const express = require(`express`)
 const graphqlHTTP = require(`express-graphql`)
@@ -14,6 +15,12 @@ const copyStaticDirectory = require(`../utils/copy-static-directory`)
 const developHtml = require(`./develop-html`)
 const { withBasePath } = require(`../utils/path`)
 const report = require(`gatsby-cli/lib/reporter`)
+const launchEditor = require(`react-dev-utils/launchEditor`)
+const formatWebpackMessages = require(`react-dev-utils/formatWebpackMessages`)
+const chalk = require(`chalk`)
+const address = require(`address`)
+
+// const isInteractive = process.stdout.isTTY
 
 // Watch the static directory and copy files to public as they're added or
 // changed. Wait 10 seconds so copying doesn't interfer with the regular
@@ -83,6 +90,10 @@ async function startServer(program) {
       graphiql: true,
     })
   )
+  app.get(`/__open-stack-frame-in-editor`, (req, res) => {
+    launchEditor(req.query.fileName, req.query.lineNumber)
+    res.end()
+  })
 
   app.use(express.static(__dirname + `/public`))
 
@@ -108,7 +119,7 @@ async function startServer(program) {
   app.get(`*`, (req, res, next) => {
     // Load file but ignore errors.
     res.sendFile(
-      directoryPath(`/public/${decodeURIComponent(req.url)}`),
+      directoryPath(`/public${decodeURIComponent(req.path)}`),
       err => {
         // No err so a file was sent successfully.
         if (!err || !err.path) {
@@ -133,7 +144,7 @@ async function startServer(program) {
 
   // Render an HTML page and serve it.
   app.use((req, res, next) => {
-    const parsedPath = parsePath(req.originalUrl)
+    const parsedPath = parsePath(req.path)
     if (parsedPath.extname === `` || parsedPath.extname.startsWith(`.html`)) {
       res.sendFile(directoryPath(`public/index.html`), err => {
         if (err) {
@@ -161,20 +172,14 @@ async function startServer(program) {
       if (err.code === `EADDRINUSE`) {
         // eslint-disable-next-line max-len
         report.panic(
-          `Unable to start Gatsby on port ${program.port} as there's already a process listing on that port.`
+          `Unable to start Gatsby on port ${
+            program.port
+          } as there's already a process listing on that port.`
         )
         return
       }
 
       report.panic(`There was a problem starting the development server`, err)
-    }
-
-    if (program.open) {
-      const host =
-        listener.address().address === `127.0.0.1`
-          ? `localhost`
-          : listener.address().address
-      require(`opn`)(`http://${host}:${listener.address().port}`)
     }
   })
 
@@ -187,31 +192,177 @@ async function startServer(program) {
     await createIndexHtml()
     io.to(`clients`).emit(`reload`)
   })
+
+  return [compiler, listener]
 }
 
-module.exports = (program: any) => {
+module.exports = async (program: any) => {
   const detect = require(`detect-port`)
   const port =
     typeof program.port === `string` ? parseInt(program.port, 10) : program.port
 
-  detect(port, (err, _port) => {
-    if (err) {
-      report.panic(err)
-    }
+  let compiler
+  await new Promise(resolve => {
+    detect(port, (err, _port) => {
+      if (err) {
+        report.panic(err)
+      }
 
-    if (port !== _port) {
-      // eslint-disable-next-line max-len
-      const question = `Something is already running at port ${port} \nWould you like to run the app at another port instead? [Y/n] `
+      if (port !== _port) {
+        // eslint-disable-next-line max-len
+        const question = `Something is already running at port ${
+          port
+        } \nWould you like to run the app at another port instead? [Y/n] `
 
-      return rlInterface.question(question, answer => {
-        if (answer.length === 0 || answer.match(/^yes|y$/i)) {
-          program.port = _port // eslint-disable-line no-param-reassign
-        }
+        rlInterface.question(question, answer => {
+          if (answer.length === 0 || answer.match(/^yes|y$/i)) {
+            program.port = _port // eslint-disable-line no-param-reassign
+          }
 
-        return startServer(program)
+          startServer(program).then(([c, l]) => {
+            compiler = c
+            resolve()
+          })
+        })
+      } else {
+        startServer(program).then(([c, l]) => {
+          compiler = c
+          resolve()
+        })
+      }
+    })
+  })
+
+  function prepareUrls(protocol, host, port) {
+    const formatUrl = hostname =>
+      url.format({
+        protocol,
+        hostname,
+        port,
+        pathname: `/`,
       })
+    const prettyPrintUrl = hostname =>
+      url.format({
+        protocol,
+        hostname,
+        port: chalk.bold(port),
+        pathname: `/`,
+      })
+
+    const isUnspecifiedHost = host === `0.0.0.0` || host === `::`
+    let lanUrlForConfig, lanUrlForTerminal
+    if (isUnspecifiedHost) {
+      try {
+        // This can only return an IPv4 address
+        lanUrlForConfig = address.ip()
+        if (lanUrlForConfig) {
+          // Check if the address is a private ip
+          // https://en.wikipedia.org/wiki/Private_network#Private_IPv4_address_spaces
+          if (
+            /^10[.]|^172[.](1[6-9]|2[0-9]|3[0-1])[.]|^192[.]168[.]/.test(
+              lanUrlForConfig
+            )
+          ) {
+            // Address is private, format it for later use
+            lanUrlForTerminal = prettyPrintUrl(lanUrlForConfig)
+          } else {
+            // Address is not private, so we will discard it
+            lanUrlForConfig = undefined
+          }
+        }
+      } catch (_e) {
+        // ignored
+      }
+    }
+    // TODO collect errors (GraphQL + Webpack) in Redux so we
+    // can clear terminal and print them out on every compile.
+    // Borrow pretty printing code from webpack plugin.
+    const localUrlForTerminal = prettyPrintUrl(host)
+    const localUrlForBrowser = formatUrl(host)
+    return {
+      lanUrlForConfig,
+      lanUrlForTerminal,
+      localUrlForTerminal,
+      localUrlForBrowser,
+    }
+  }
+
+  function printInstructions(appName, urls, useYarn) {
+    console.log()
+    console.log(`You can now view ${chalk.bold(appName)} in the browser.`)
+    console.log()
+
+    if (urls.lanUrlForTerminal) {
+      console.log(
+        `  ${chalk.bold(`Local:`)}            ${urls.localUrlForTerminal}`
+      )
+      console.log(
+        `  ${chalk.bold(`On Your Network:`)}  ${urls.lanUrlForTerminal}`
+      )
+    } else {
+      console.log(`  ${urls.localUrlForTerminal}`)
     }
 
-    return startServer(program)
+    console.log()
+    console.log(`Note that the development build is not optimized.`)
+    console.log(
+      `To create a production build, use ` + `${chalk.cyan(`gatsby build`)}`
+    )
+    console.log()
+  }
+
+  let isFirstCompile = true
+  // "done" event fires when Webpack has finished recompiling the bundle.
+  // Whether or not you have warnings or errors, you will get this event.
+  compiler.plugin(`done`, stats => {
+    // We have switched off the default Webpack output in WebpackDevServer
+    // options so we are going to "massage" the warnings and errors and present
+    // them in a readable focused way.
+    const messages = formatWebpackMessages(stats.toJson({}, true))
+    const urls = prepareUrls(`http`, program.host, program.port)
+    const isSuccessful = !messages.errors.length && !messages.warnings.length
+    // if (isSuccessful) {
+    // console.log(chalk.green(`Compiled successfully!`))
+    // }
+    // if (isSuccessful && (isInteractive || isFirstCompile)) {
+    if (isSuccessful && isFirstCompile) {
+      printInstructions(program.sitePackageJson.name, urls, program.useYarn)
+    }
+
+    if (program.open) {
+      require(`opn`)(urls.localUrlForBrowser)
+    }
+
+    isFirstCompile = false
+
+    // If errors exist, only show errors.
+    // if (messages.errors.length) {
+    // // Only keep the first error. Others are often indicative
+    // // of the same problem, but confuse the reader with noise.
+    // if (messages.errors.length > 1) {
+    // messages.errors.length = 1
+    // }
+    // console.log(chalk.red("Failed to compile.\n"))
+    // console.log(messages.errors.join("\n\n"))
+    // return
+    // }
+
+    // Show warnings if no errors were found.
+    // if (messages.warnings.length) {
+    // console.log(chalk.yellow("Compiled with warnings.\n"))
+    // console.log(messages.warnings.join("\n\n"))
+
+    // // Teach some ESLint tricks.
+    // console.log(
+    // "\nSearch for the " +
+    // chalk.underline(chalk.yellow("keywords")) +
+    // " to learn more about each warning."
+    // )
+    // console.log(
+    // "To ignore, add " +
+    // chalk.cyan("// eslint-disable-next-line") +
+    // " to the line before.\n"
+    // )
+    // }
   })
 }

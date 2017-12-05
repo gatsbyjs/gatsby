@@ -3,21 +3,26 @@ const Promise = require(`bluebird`)
 const _ = require(`lodash`)
 const { composeWithDevTools } = require(`remote-redux-devtools`)
 const fs = require(`fs`)
-const EventEmitter = require(`eventemitter2`)
+const mitt = require(`mitt`)
 const stringify = require(`json-stringify-safe`)
 
 // Create event emitter for actions
-const emitter = new EventEmitter()
+const emitter = mitt()
 
 // Reducers
 const reducers = require(`./reducers`)
 
 // Read from cache the old node data.
 let initialState = {}
+const rootNodeMap = new WeakMap()
 try {
   initialState = JSON.parse(
     fs.readFileSync(`${process.cwd()}/.cache/redux-state.json`)
   )
+
+  _.each(initialState.nodes, (id, node) => {
+    trackSubObjectsToRootNodeId(node)
+  })
 } catch (e) {
   // ignore errors.
 }
@@ -62,7 +67,7 @@ store.subscribe(() => {
   emitter.emit(lastAction.type, lastAction)
 })
 
-emitter.onAny(() => {
+emitter.on(`*`, () => {
   saveState(store.getState())
 })
 
@@ -113,6 +118,26 @@ exports.getNodeAndSavePathDependency = (id, path) => {
   createPageDependency({ path, nodeId: id })
   return node
 }
+
+exports.getRootNodeId = node => rootNodeMap.get(node)
+
+const addParentToSubObjects = (data, parentId) => {
+  if (_.isPlainObject(data) || _.isArray(data)) {
+    _.each(data, o => addParentToSubObjects(o, parentId))
+    rootNodeMap.set(data, parentId)
+  }
+}
+
+const trackSubObjectsToRootNodeId = node => {
+  _.each(node, (v, k) => {
+    // Ignore the node internal object.
+    if (k === `internal`) {
+      return
+    }
+    addParentToSubObjects(v, node.parent)
+  })
+}
+exports.trackSubObjectsToRootNodeId = trackSubObjectsToRootNodeId
 
 // Start plugin runner which listens to the store
 // and invokes Gatsby API based on actions.

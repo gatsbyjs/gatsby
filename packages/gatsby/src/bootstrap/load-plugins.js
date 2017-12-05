@@ -254,13 +254,20 @@ module.exports = async (config = {}) => {
       )
       let message = `\n — `
       if (bady.pluginName == `default-site-plugin`) {
-        message += `Your site's gatsby-node.js is exporting a variable named "${bady.exportName}" which isn't an API.`
+        message += `Your site's gatsby-node.js is exporting a variable named "${
+          bady.exportName
+        }" which isn't an API.`
       } else {
-        message += `The plugin "${bady.pluginName}@${bady.pluginVersion}" is exporting a variable named "${bady.exportName}" which isn't an API.`
+        message += `The plugin "${bady.pluginName}@${
+          bady.pluginVersion
+        }" is exporting a variable named "${
+          bady.exportName
+        }" which isn't an API.`
       }
       if (similarities.bestMatch.rating > 0.5) {
-        message += ` Perhaps you meant to export "${similarities.bestMatch
-          .target}"?`
+        message += ` Perhaps you meant to export "${
+          similarities.bestMatch.target
+        }"?`
       }
 
       console.log(message)

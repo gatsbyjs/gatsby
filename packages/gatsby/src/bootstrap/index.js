@@ -295,6 +295,12 @@ module.exports = async (args: BootstrapArgs) => {
   await apiRunnerNode(`onPreExtractQueries`)
   activity.end()
 
+  // Update Schema for SitePage.
+  activity = report.activityTimer(`update schema`)
+  activity.start()
+  await require(`../schema`)()
+  activity.end()
+
   // Extract queries
   activity = report.activityTimer(`extract queries from components`)
   activity.start()
@@ -324,19 +330,20 @@ module.exports = async (args: BootstrapArgs) => {
   await writeRedirects()
   activity.end()
 
-  // Update Schema for SitePage.
-  activity = report.activityTimer(`update schema`)
-  activity.start()
-  await require(`../schema`)()
-  activity.end()
-
   const checkJobsDone = _.debounce(resolve => {
     const state = store.getState()
     if (state.jobs.active.length === 0) {
       report.log(``)
       report.info(`bootstrap finished - ${process.uptime()} s`)
       report.log(``)
-      resolve({ graphqlRunner })
+
+      // onPostBootstrap
+      activity = report.activityTimer(`onPostBootstrap`)
+      activity.start()
+      apiRunnerNode(`onPostBootstrap`).then(() => {
+        activity.end()
+        resolve({ graphqlRunner })
+      })
     }
   }, 100)
 

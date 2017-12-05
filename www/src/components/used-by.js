@@ -44,8 +44,9 @@ const UsedBy = () => (
       paddingTop: rhythm(1),
       paddingBottom: rhythm(1),
       marginBottom: rhythm(3),
-      transition: `padding-top ${presets.animation.speedFast} ${presets
-        .animation.curveDefault}`,
+      transition: `padding-top ${presets.animation.speedFast} ${
+        presets.animation.curveDefault
+      }`,
       order: `3`,
       flexGrow: `1`,
       transform: `translateZ(0)`,

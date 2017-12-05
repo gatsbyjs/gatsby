@@ -177,6 +177,12 @@ class IndexRoute extends React.Component {
                       css={{ marginBottom: rhythm(2) }}
                     />
                   ))}
+                  <CtaButton
+                    to="/blog/"
+                    overrideCSS={{ marginBottom: rhythm(2) }}
+                  >
+                    Read More
+                  </CtaButton>
                 </Container>
               </div>
             </Cards>
@@ -210,7 +216,7 @@ export const pageQuery = graphql`
       limit: 3
       filter: {
         frontmatter: { draft: { ne: true } }
-        fileAbsolutePath: { regex: "/blog/" }
+        fileAbsolutePath: { regex: "/docs.blog/" }
       }
     ) {
       edges {

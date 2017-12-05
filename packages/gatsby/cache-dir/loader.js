@@ -9,20 +9,23 @@ let hasFetched = Object.create(null)
 let syncRequires = {}
 let asyncRequires = {}
 
-const fetchResource = (resourceName) => {
+const fetchResource = resourceName => {
   // Find resource
-  const resourceFunction =
-    resourceName.startsWith(`component---`)
-      ? asyncRequires.components[resourceName] ||
-        asyncRequires.layouts[resourceName]
-      : asyncRequires.json[resourceName]
+  let resourceFunction
+  if (resourceName.slice(0, 12) === `component---`) {
+    resourceFunction = asyncRequires.components[resourceName]
+  } else if (resourceName.slice(0, 9) === `layout---`) {
+    resourceFunction = asyncRequires.layouts[resourceName]
+  } else {
+    resourceFunction = asyncRequires.json[resourceName]
+  }
 
   // Download the resource
   hasFetched[resourceName] = true
   return resourceFunction()
 }
 
-const getResourceModule = (resourceName) =>
+const getResourceModule = resourceName =>
   fetchResource(resourceName).then(preferDefault)
 
 // Prefetcher logic
@@ -42,7 +45,6 @@ if (process.env.NODE_ENV === `production`) {
   })
 }
 
-
 // Note we're not actively using the path data atm. There
 // could be future optimizations however around trying to ensure
 // we load all resources for likely-to-be-visited paths.
@@ -55,7 +57,6 @@ const sortResourcesByCount = (a, b) => {
   else if (resourcesCount[a] < resourcesCount[b]) return -1
   else return 0
 }
-
 
 let findPage
 let pages = []
@@ -148,10 +149,15 @@ const queue = {
         navigator.serviceWorker
           .getRegistrations()
           .then(function(registrations) {
-            for (let registration of registrations) {
-              registration.unregister()
+            // We would probably need this to
+            // prevent unnecessary reloading of the page
+            // while unregistering of ServiceWorker is not happening
+            if (registrations.length) {
+              for (let registration of registrations) {
+                registration.unregister()
+              }
+              window.location.reload()
             }
-            window.location.reload()
           })
       }
     }
@@ -164,12 +170,11 @@ const queue = {
       const pageResources = {
         component: syncRequires.components[page.componentChunkName],
         json: syncRequires.json[page.jsonName],
-        layout: syncRequires.layouts[page.layoutComponentChunkName],
+        layout: syncRequires.layouts[page.layout],
         page,
       }
       cb(pageResources)
       return pageResources
-
     }
     // Production code path
     const page = findPage(path)
@@ -200,9 +205,8 @@ const queue = {
     Promise.all([
       getResourceModule(page.componentChunkName),
       getResourceModule(page.jsonName),
-      getResourceModule(page.layoutComponentChunkName),
-    ])
-    .then(([component, json, layout] )=> {
+      page.layout && getResourceModule(page.layout),
+    ]).then(([component, json, layout]) => {
       const pageResources = { component, json, layout, page }
 
       pathScriptsCache[path] = pageResources
@@ -221,4 +225,8 @@ const queue = {
   ___resources: () => resourcesArray.slice().reverse(),
 }
 
-module.exports = queue
+export const publicLoader = {
+  getResourcesForPathname: queue.getResourcesForPathname,
+}
+
+export default queue

@@ -1,10 +1,10 @@
-import { uniq, some } from "lodash"
-import fs from "fs"
-import path from "path"
-import dotenv from "dotenv"
-import StaticSiteGeneratorPlugin from "static-site-generator-webpack-plugin"
-import { StatsWriterPlugin } from "webpack-stats-plugin"
-import FriendlyErrorsWebpackPlugin from "friendly-errors-webpack-plugin"
+import { uniq, some } from 'lodash'
+import fs from 'fs'
+import path from 'path'
+import dotenv from 'dotenv'
+import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin'
+import { StatsWriterPlugin } from 'webpack-stats-plugin'
+import FriendlyErrorsWebpackPlugin from 'friendly-errors-webpack-plugin'
 
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
@@ -79,6 +79,8 @@ module.exports = async (
           path: directory,
           filename: `[name].js`,
           publicPath: `http://${program.host}:${webpackPort}/`,
+          devtoolModuleFilenameTemplate: info =>
+            path.resolve(info.absoluteResourcePath).replace(/\\/g, `/`),
         }
       case `build-css`:
         // Webpack will always generate a resultant javascript file.
@@ -122,9 +124,9 @@ module.exports = async (
         return {
           commons: [
             require.resolve(`react-hot-loader/patch`),
-            `${require.resolve(
-              `webpack-hot-middleware/client`
-            )}?path=http://${program.host}:${webpackPort}/__webpack_hmr&reload=true`,
+            `${require.resolve(`webpack-hot-middleware/client`)}?path=http://${
+              program.host
+            }:${webpackPort}/__webpack_hmr&reload=true&overlay=false`,
             directoryPath(`.cache/app`),
           ],
         }
@@ -160,7 +162,7 @@ module.exports = async (
       // optimizations for React) and whether prefixing links is enabled
       // (__PREFIX_PATHS__) and what the link prefix is (__PATH_PREFIX__).
       plugins.define({
-        "process.env": processEnv(stage, `development`),
+        'process.env': processEnv(stage, `development`),
         __PREFIX_PATHS__: program.prefixPaths,
         __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
         __POLYFILL__: store.getState().config.polyfill,
@@ -184,12 +186,12 @@ module.exports = async (
           plugins.namedModules(),
           new FriendlyErrorsWebpackPlugin({
             clearConsole: false,
-            compilationSuccessInfo: {
-              messages: [
-                `Your site is running at http://localhost:${program.port}`,
-                `Your graphql debugger is running at http://localhost:${program.port}/___graphql`,
-              ],
-            },
+            // compilationSuccessInfo: {
+            // messages: [
+            // `You can now view your site in the browser running at http://${program.host}:${program.port}`,
+            // `Your graphql debugger is running at http://${program.host}:${program.port}/___graphql`,
+            // ],
+            // },
           }),
         ])
         break
@@ -269,12 +271,11 @@ module.exports = async (
           // this to add the needed javascript files to each HTML page.
           new StatsWriterPlugin(),
 
-
           // Minify Javascript.
           plugins.uglify(),
           new GatsbyModulePlugin(),
           plugins.namedModules(),
-          plugins.namedChunks((chunk) => {
+          plugins.namedChunks(chunk => {
             if (chunk.name) return chunk.name
             return chunk.modules
               .map(m => path.relative(m.context, m.request))
@@ -304,25 +305,6 @@ module.exports = async (
   }
 
   function getModule(config) {
-    const browsers = program.browserslist
-    const postcssPlugins = loader => [
-      require(`postcss-import`)({ root: loader.resourcePath }),
-      require(`postcss-cssnext`)({
-        browsers,
-        features: {
-          rem: false, // only needed for <= ie8
-          autoprefixer: false, // handled already
-        },
-      }),
-      require(`postcss-browser-reporter`),
-      require(`postcss-reporter`),
-    ]
-
-    const cssRule = rules.css({ plugins: postcssPlugins })
-    const cssModulesRule = rules.cssModules({
-      plugins: postcssPlugins,
-    })
-
     // Common config for every env.
     // prettier-ignore
     let configRules = [
@@ -334,11 +316,8 @@ module.exports = async (
 
     switch (stage) {
       case `develop`:
-        configRules = configRules.concat([cssRule, cssModulesRule])
-        break
-
       case `build-css`:
-        configRules = configRules.concat([cssRule, cssModulesRule])
+        configRules = configRules.concat([rules.css(), rules.cssModules()])
         break
 
       case `build-html`:
@@ -350,10 +329,10 @@ module.exports = async (
         // prettier-ignore
         configRules = configRules.concat([
           {
-            ...cssRule,
+            ...rules.css(),
             use: loaders.null,
           },
-          cssModulesRule,
+          rules.cssModules(),
         ])
         break
 
@@ -364,7 +343,7 @@ module.exports = async (
         //
         // It's also necessary to process CSS Modules so your JS knows the
         // classNames to use.
-        configRules = configRules.concat([cssRule, cssModulesRule])
+        configRules = configRules.concat([rules.css(), rules.cssModules()])
         break
     }
 

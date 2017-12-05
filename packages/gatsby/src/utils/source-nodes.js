@@ -13,10 +13,7 @@ const { deleteNodes } = boundActionCreators
 function discoverPluginsWithoutNodes(storeState) {
   // Discover which plugins implement APIs which may create nodes
   const nodeCreationPlugins = _.without(
-    _.union(
-      storeState.apiToPlugins.sourceNodes,
-      storeState.apiToPlugins.onCreateNode
-    ),
+    _.union(storeState.apiToPlugins.sourceNodes),
     `default-site-plugin`
   )
   // Find out which plugins own already created nodes

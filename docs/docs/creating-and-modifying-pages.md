@@ -6,18 +6,21 @@ Gatsby makes it easy to programmatically control your pages.
 
 Pages can be created in three ways:
 
-* In your site's gatsby-node.js by implementing the API [`createPages`](/docs/node-apis/#createPages)
+* In your site's gatsby-node.js by implementing the API
+  [`createPages`](/docs/node-apis/#createPages)
 * Gatsby core automatically turns React components in `src/pages` into pages
 * Plugins can also implement `createPages` and create pages for you
 
-You can also implement the API [`onCreatePage`](/docs/node-apis/#onCreatePage) to
-modify pages created in core or plugins or to create client-only pages.
+You can also implement the API [`onCreatePage`](/docs/node-apis/#onCreatePage)
+to modify pages created in core or plugins or to create client-only pages.
 
 ## Debugging help
 
-To see what pages are being created by your code or plugins, you can query
-for page information while developing in Graph*i*QL. Paste the following
-query in the Graph*i*QL IDE for your site. The Graph*i*QL IDE is available when running your sites development server at `HOST:PORT/___graphql` e.g. `localhost:8000/___graphql`.
+To see what pages are being created by your code or plugins, you can query for
+page information while developing in Graph*i*QL. Paste the following query in
+the Graph*i*QL IDE for your site. The Graph*i*QL IDE is available when running
+your sites development server at `HOST:PORT/___graphql` e.g.
+`localhost:8000/___graphql`.
 
 ```graphql
 {
@@ -58,18 +61,18 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
     resolve(
       graphql(
         `
-      {
-        allMarkdownRemark(limit: 1000) {
-          edges {
-            node {
-              frontmatter {
-                path
+          {
+            allMarkdownRemark(limit: 1000) {
+              edges {
+                node {
+                  frontmatter {
+                    path
+                  }
+                }
               }
             }
           }
-        }
-      }
-    `
+        `
       ).then(result => {
         if (result.errors) {
           reject(result.errors)
@@ -77,7 +80,7 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
 
         // Create pages for each markdown file.
         result.data.allMarkdownRemark.edges.forEach(({ node }) => {
-          const path = node.frontmatter.path;
+          const path = node.frontmatter.path
           createPage({
             path,
             component: blogPostTemplate,
@@ -87,7 +90,7 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
             // as a GraphQL variable to query for data from the markdown file.
             context: {
               path,
-            }
+            },
           })
         })
       })
@@ -98,16 +101,16 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
 
 ## Modifying pages created by core or plugins
 
-Gatsby core and plugins can automatically create pages for you. Sometimes
-the default isn't quite what you want and you need to modify the created
-page objects.
+Gatsby core and plugins can automatically create pages for you. Sometimes the
+default isn't quite what you want and you need to modify the created page
+objects.
 
 ### Removing trailing slashes
+
 A common reason for needing to modify automatically created pages is to remove
 trailing slashes.
 
-To do this, in your site's `gatsby-node.js` add code
-similar to the following:
+To do this, in your site's `gatsby-node.js` add code similar to the following:
 
 ```javascript
 // Implement the Gatsby API “onCreatePage”. This is
@@ -117,17 +120,15 @@ exports.onCreatePage = ({ page, boundActionCreators }) => {
 
   return new Promise((resolve, reject) => {
     // Remove trailing slash
-    const oldPath = page.path
-    // Removing '/' would result in a path that's
-    // an empty string which is invalid
-    page.path = (page.path === `/`) ? page.path : page.path.replace(/\/$/, ``)
-    if (page.path !== oldPath) {
+    const newPage = Object.assign({}, page, {
+      path: page.path === `/` ? page.path : page.path.replace(/\/$/, ``),
+    })
 
+    if (newPage.path !== page.path) {
       // Remove the old page
-      deletePage({ path: oldPath })
-
+      deletePage(page)
       // Add the new page
-      createPage(page)
+      createPage(newPage)
     }
 
     resolve()
@@ -137,9 +138,9 @@ exports.onCreatePage = ({ page, boundActionCreators }) => {
 
 ### Creating client-only routes
 
-If you're creating a "hybrid" Gatsby app with both statically rendered pages
-as well as client-only routes e.g. an app that combines marketing pages and
-your app that lives under `/app/*`, you want to add code to your `gatsby-node.js`
+If you're creating a "hybrid" Gatsby app with both statically rendered pages as
+well as client-only routes e.g. an app that combines marketing pages and your
+app that lives under `/app/*`, you want to add code to your `gatsby-node.js`
 like the following:
 
 ```javascript
@@ -147,7 +148,7 @@ like the following:
 // called after every page is created.
 exports.onCreatePage = async ({ page, boundActionCreators }) => {
   const { createPage } = boundActionCreators
-  
+
   // page.matchPath is a special key that's used for matching pages
   // only on the client.
   if (page.path.match(/^\/app/)) {
@@ -163,7 +164,11 @@ exports.onCreatePage = async ({ page, boundActionCreators }) => {
 
 By default, all pages will use the layout found at `/layouts/index.js`.
 
-You may wish to choose a custom layout for certain pages (such as removing header and footer for landing pages). You can choose the layout component when creating pages with the `createPage` action by adding a layout key to the page object or modify pages created elsewhere using the `onCreatePage` API. All components in the `/layouts/` directory are automatically available.
+You may wish to choose a custom layout for certain pages (such as removing
+header and footer for landing pages). You can choose the layout component when
+creating pages with the `createPage` action by adding a layout key to the page
+object or modify pages created elsewhere using the `onCreatePage` API. All
+components in the `/layouts/` directory are automatically available.
 
 ```javascript
 // Implement the Gatsby API “onCreatePage”. This is

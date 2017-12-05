@@ -2,13 +2,14 @@ const fs = require(`fs-extra`)
 const got = require(`got`)
 const crypto = require(`crypto`)
 const path = require(`path`)
+const { isWebUri } = require(`valid-url`)
 
 const { createFileNode } = require(`./create-file-node`)
 const cacheId = url => `create-remote-file-node-${url}`
 
 module.exports = ({ url, store, cache, createNode }) =>
   new Promise(async (resolve, reject) => {
-    if (!url) {
+    if (!url || isWebUri(url) === undefined) {
       resolve()
       return
     }

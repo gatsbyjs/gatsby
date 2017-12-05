@@ -5,7 +5,7 @@ Adds syntax highlighting to code blocks in markdown files using
 
 ## Install
 
-`npm install --save gatsby-remark-prismjs`
+`npm install --save gatsby-transformer-remark gatsby-remark-prismjs`
 
 ## How to use
 
@@ -26,12 +26,12 @@ plugins: [
             // you may use this to prevent Prism from re-processing syntax.
             // This is an uncommon use-case though;
             // If you're unsure, it's best to use the default value.
-            classPrefix: 'language-',
+            classPrefix: "language-",
           },
         },
-      ]
-    }
-  }
+      ],
+    },
+  },
 ]
 ```
 
@@ -39,23 +39,22 @@ plugins: [
 
 #### Required: Pick a PrismJS theme or create your own
 
-PrismJS ships with a number of [themes][5] (previewable on the
-[PrismJS website][6]) that you can easily include in your Gatsby
-site, or you can build your own by copying and modifying an example
-(which is what we've done for [gatsbyjs.org](https://gatsbyjs.org)).
+PrismJS ships with a number of [themes][5] (previewable on the [PrismJS
+website][6]) that you can easily include in your Gatsby site, or you can build
+your own by copying and modifying an example (which is what we've done for
+[gatsbyjs.org](https://gatsbyjs.org)).
 
-To load a theme, just require its CSS file in your `layouts/index.js` file,
-e.g.
+To load a theme, just require its CSS file in your `layouts/index.js` file, e.g.
 
 ```javascript
 // layouts/index.js
-require('prismjs/themes/prism-solarizedlight.css')
+require("prismjs/themes/prism-solarizedlight.css")
 ```
 
 #### Optional: Add line highlighting styles
 
-If you want to highlight lines of code, you also need to add some additional
-CSS that targets our _custom line highlighting implementation_ (which slightly
+If you want to highlight lines of code, you also need to add some additional CSS
+that targets our _custom line highlighting implementation_ (which slightly
 differs from PrismJS's own plugin for that – more on that later).
 
 For simple line highlights similar to PrismJS's, try:
@@ -78,9 +77,8 @@ highlighted line runs wider than the surrounding code block container (causing a
 horizontal scrollbar), its background won't be drawn for the initially hidden,
 overflowing part. :(
 
-We saw others fix that problem and decided to do so, too.
-Just add the following CSS along your PrismJS theme and the styles for
-`.gatsby-highlight-code-line`:
+We saw others fix that problem and decided to do so, too. Just add the following
+CSS along your PrismJS theme and the styles for `.gatsby-highlight-code-line`:
 
 ```css
 /**
@@ -90,7 +88,7 @@ Just add the following CSS along your PrismJS theme and the styles for
 .gatsby-highlight {
   background-color: #fdf6e3;
   border-radius: 0.3em;
-  margin: .5em 0;
+  margin: 0.5em 0;
   padding: 1em;
   overflow: auto;
 }
@@ -155,17 +153,18 @@ Just add the following CSS along your PrismJS theme and the styles for
 
 ### Line highlighting
 
-Please note that we do _not_ use PrismJS's [line highlighting
-plugin](http://prismjs.com/plugins/line-highlight/). Here's why:
+Please note that we do _not_ use PrismJS's
+[line highlighting plugin](http://prismjs.com/plugins/line-highlight/). Here's
+why:
 
-* [PrismJS plugins][3] assume you're running
-  things client side, but we are _build-time folks_.
-* PrismJS's line highlighting plugin [implementation][1] does not allow
-  for solid background colors or 100% wide backgrounds that are
-  drawn beyond the _visible part_ of the container when content is overflowing.
+* [PrismJS plugins][3] assume you're running things client side, but we are
+  _build-time folks_.
+* PrismJS's line highlighting plugin [implementation][1] does not allow for
+  solid background colors or 100% wide backgrounds that are drawn beyond the
+  _visible part_ of the container when content is overflowing.
 
-Our approach follows the [Pygments-based][2] implementation of the
-[React Tutorial/Documentation][4] for line highlights:
+Our approach follows the [Pygments-based][2] implementation of the [React
+Tutorial/Documentation][4] for line highlights:
 
 * It uses a wrapper element `<div class="gatsby-highlight">` around the
   PrismJS-formatted `<pre><code>`-blocks.`.

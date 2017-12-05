@@ -73,13 +73,17 @@ class BlogPostTemplate extends React.Component {
             {post.frontmatter.image && (
               <meta
                 name="og:image"
-                content={post.frontmatter.image.childImageSharp.resize.src}
+                content={`https://gatsbyjs.org${
+                  post.frontmatter.image.childImageSharp.resize.src
+                }`}
               />
             )}
             {post.frontmatter.image && (
               <meta
                 name="twitter:image"
-                content={post.frontmatter.image.childImageSharp.resize.src}
+                content={`https://gatsbyjs.org${
+                  post.frontmatter.image.childImageSharp.resize.src
+                }`}
               />
             )}
             <meta name="og:type" content="article" />
