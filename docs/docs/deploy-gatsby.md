@@ -178,7 +178,8 @@ or alternatively
 Uncaught Error: Minified React error #32; visit http://facebook.github.io/react/docs/error-decoder.html?invariant=32&args[]=## for the full message or use the non-minified dev environment for full errors and additional helpful warnings.
 ```
 
-This is a new problem when dealing with static sites built with React. React
-uses HTML comments to help identify locations of components that do not render
-anything. If you are using a CDN that minifies your HTML, it will eliminate the
-HTML comments used by react to take control of the page on the client.
+This is a new problem when dealing with static sites built with React. This is
+not caused by Gatsby. React uses HTML comments to help identify locations
+of components that do not render anything. If you are using a CDN that minifies
+your HTML, it will eliminate the HTML comments used by React to take control of
+the page on the client. Cloudflare is a CDN that minifies HTML by default.
