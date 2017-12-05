@@ -142,6 +142,25 @@ function buildLocalCommands(cli, isLocalSite) {
 
     handler: getCommandHandler(`serve`),
   })
+
+  cli.command({
+    command: `graphiql`,
+    desc: `Start graphiql.`,
+    builder: _ =>
+    _.option(`H`, {
+      alias: `host`,
+      type: `string`,
+      default: defaultHost,
+      describe: `Set host. Defaults to ${defaultHost}`,
+    })
+      .option(`p`, {
+        alias: `port`,
+        type: `string`,
+        default: `9000`,
+        describe: `Set port. Defaults to 9000`,
+      }),
+    handler: getCommandHandler(`graphiql`),
+  })
 }
 
 function isLocalGatsbySite() {
