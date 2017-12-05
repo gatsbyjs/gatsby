@@ -14,7 +14,6 @@
   Before opening an issue, take a look at the Issues section (https://github.com/gatsbyjs/gatsby/issues)
   and make sure that you're not going to open an existing one. If doesn't exist, then use the
   template below.
-
 -->
 
 ## Description
@@ -26,11 +25,11 @@ Node.js version:
 Operating System:
 
 ### File contents (if changed):
-`gatsby-config.js`: ``` ```
-`package.json`: ``` ```
-`gatsby-node.js`: ``` ```
-`gatsby-browser.js`: ``` ```
-`gatsby-ssr.js`: ``` ```
+`gatsby-config.js`: <!-- code block or not changed -->
+`package.json`: <!-- code block or not changed -->
+`gatsby-node.js`: <!-- code block or not changed -->
+`gatsby-browser.js`: <!-- code block or not changed -->
+`gatsby-ssr.js`: <!-- code block or not changed -->
 
 ### Actual result
 What happened.
