@@ -144,8 +144,8 @@ function buildLocalCommands(cli, isLocalSite) {
   })
 
   cli.command({
-    command: `graphiql`,
-    desc: `Start graphiql.`,
+    command: `data-explorer`,
+    desc: `Start Gatsby's data explorer.`,
     builder: _ =>
     _.option(`H`, {
       alias: `host`,
@@ -159,7 +159,7 @@ function buildLocalCommands(cli, isLocalSite) {
         default: `9000`,
         describe: `Set port. Defaults to 9000`,
       }),
-    handler: getCommandHandler(`graphiql`),
+    handler: getCommandHandler(`data-explorer`),
   })
 }
 
