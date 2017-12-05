@@ -6,7 +6,7 @@ const { store } = require(`../redux`)
 const bootstrap = require(`../bootstrap`)
 
 module.exports = async (program: any) => {
-  let { port } = program
+  let { port, host } = program
   port = typeof port === `string` ? parseInt(port, 10) : port
 
   // bootstrap to ensure schema is in the store
@@ -21,7 +21,7 @@ module.exports = async (program: any) => {
     })
   )
 
-  console.log(`GraphiQL running at`, `http://${program.host}:${port}`)
-  app.listen(port)
+  console.log(`GraphiQL running at`, `http://${host}:${port}`)
+  app.listen(port, host)
 }
 
