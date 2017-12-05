@@ -379,10 +379,8 @@ module.exports = async ({
    */
   plugins.uglify = ({ uglifyOptions, ...options } = {}) =>
     new UglifyPlugin({
-      parallel: {
-        cache: true,
-        workers: os.cpus().length - 1,
-      },
+      cache: true,
+      parallel: os.cpus().length - 1,
       exclude: /\.min\.js/,
       sourceMap: true,
       uglifyOptions: {
