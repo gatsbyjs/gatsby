@@ -8,6 +8,8 @@ Gatsby's GraphQL queries. It combines
 capabilities with advanced image loading techniques to easily and completely
 optimize image loading for your sites.
 
+*Warning: gatsby-image is **not** a drop-in replacement for `<img/>`. It's optimized for fixed width/height images and images that stretch the full-width of a container. Some ways you can use `<img/>` won't work with gatsby-image.*
+
 **[Demo](https://using-gatsby-image.gatsbyjs.org)**
 
 ## Problem
