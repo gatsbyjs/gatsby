@@ -40,7 +40,7 @@ Okay, now back to some static hurdles.
 
 # A Problem of Content
 
-Our site has a lot of content that needs to be maintained by non-developers. Its ~300 articles need to be created and edited by my co-workers.
+Our site has a lot of content (~300 articles) that needs to be maintained by non-developers, my co-workers.
 This meant we needed an approachable interface for copy and content editing. I wanted to make it as convenient as logging into Wordpress and publishing from there, without the Wordpress. So the publishing experience couldn’t rely on creating a file and committing changes to a git repo.
 
 >Sidebar: There is [Gatsby-Source-Wordpress](https://www.gatsbyjs.org/packages/gatsby-source-wordpress/) plugin that pulls in content via a Wordpress API. However, to me, this was not appealing because I was trying to avoid hosting a traditional CMS entirely.
@@ -49,9 +49,9 @@ This meant we needed an approachable interface for copy and content editing. I w
 
 Contentful is a hosted headless CMS with a fantastic user experience. It’s similar to having a backend like Wordpress, but you are fully responsible for the front-end layer. The beauty of Contentful is threefold. 
 
-* Intuitive and Attractive UI 
-* Simple Content Modeling
-* [Free Tier](https://www.contentful.com/pricing/)
+* Intuitive and attractive UI 
+* Simple content modeling
+* [Free tier](https://www.contentful.com/pricing/)
 
 Dealing with the back-end of Contentful is refreshing and the content modeling really leads the pack when compared to other headless content management systems. It doesn’t feel like something that just gets the job done, it’s actually really nice to use. They also just pushed some [great new changes](https://www.contentful.com/blog/2017/11/28/work-smarter-with-our-new-search-features/) that made it even easier to search and filter our articles on the back-end.
 
@@ -59,22 +59,19 @@ Contentful also happens to offer a [generous free tier](https://www.contentful.c
 
 With that salesy pitch out of the way, how does Contentful work within our Gatsby site?
 
-
 Our documentation exists in 40 different parent topics and numerous articles in each topic. The largest challenge with this was creating topic-based navigation.
 
 ![Roll Call Docs](rollcall-docs.png)
 
 Gatsby’s data handling makes these problems easy to manage by simplifying how you get data to your site from external sources. It’s not _entirely_ unique from other static site generators in that regard — other generators utilize plugins for grabbing content as well, but how you deal with actually pulling it into your React components/pages with GraphQL is beautiful. 
 
-
-After you install the `gatsby-source-contentful` [plugin](https://www.gatsbyjs.org/packages/gatsby-source-contentful/) and assign your Contentful API credentials inside the gatsby-config file, the fun begins.
-
+After you install the `gatsby-source-contentful` [plugin](https://www.gatsbyjs.org/packages/gatsby-source-contentful/) with NPM and add your Contentful API credentials to the gatsby-config file, the fun begins.
 
 Every time you run Gatsby with the `develop` command or do a new build with the `build` command, the plugin fetches any new content from the Contentful API. All this data is then available and ready to query locally in your development environment. This means you can start pulling in Contentful assets and content (assets = images/media, content = pages/articles/text/markdown, etc.) using GraphQL queries right inside the template files.
 
 >Sidenote: I had created a blog for my wife with Gatsby prior to this doc site, so I had a little experience with the Gatsby APIs. But I still consider myself a complete newbie when it comes to GraphQL. Lucky for me, Gatsby’s tutorials and community are awesome at answering questions or handling general usage issues.
 
-In a single GraphQL query I was able to pull in all the topics and related article titles set up in my Contentful Content Model for navigation. So, leveraging React and some GraphQL, I was able to create a dynamically generated sidebar menu based off the content that got pulled in from Contentful. I have to say, it feels so freeing being about to create static content with dynamic data like this.
+In a single GraphQL query I was able to pull in all the topics and related article titles set up in my Contentful Content Model for navigation. By leveraging React and some GraphQL, I was able to create a dynamically generated sidebar menu based off the content that got pulled in from Contentful. I have to say, it feels so freeing being about to create static content with dynamic data like this.
 
 The articles themselves are written in markdown in the Contentful editor. They get converted to HTML via a transformer plugin within Gatsby.  The markdown editing in Contentful is quite practical with standard WYSIWYG-like editor features. I haven’t heard any complaints from my co-workers.
 
@@ -129,8 +126,8 @@ Netlify recently changed [their pricing](https://www.netlify.com/pricing/) to im
 * Free to use for personal/commercial project (seriously great free tier)
 * Push button HTTPS via Let’s Encrypt built in
 * Fast Global CDN
-* Support for Custom Domains
-* Atomic Deploys
+* Support for custom domains
+* Atomic deploys
 * A crazy-cool, integrated build engine
 * [And a lot more....](https://www.netlify.com/features/)
 * Did I mention you get all this for FREE?
