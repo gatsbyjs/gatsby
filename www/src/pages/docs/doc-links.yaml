@@ -2,6 +2,8 @@
   items:
     - title: Getting Started
       link: /docs/
+    - title: Awesome Gatsby
+      link: /docs/awesome-gatsby/
     - title: Migrating from v0 to v1
       link: /docs/migrating-from-v0-to-v1/
     - title: Building with Components
