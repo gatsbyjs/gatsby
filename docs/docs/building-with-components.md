@@ -61,20 +61,20 @@ Example:
 `src/pages/about.jsx`
 
 ```jsx
-import React, { Component } from "react"
+import React, { Component } from "react";
 
 class AboutPage extends Component {
   render() {
-    const config = this.props.data.site.siteMetadata
+    const config = this.props.data.site.siteMetadata;
     return (
       <div className="about-container">
         <p>About me.</p>
       </div>
-    )
+    );
   }
 }
 
-export default AboutPage
+export default AboutPage;
 ```
 
 ### Page template components
@@ -92,22 +92,22 @@ introduction to programmatically creating pages.
 Example:
 
 ```jsx
-import React from "react"
+import React from "react";
 
 class BlogPostTemplate extends React.Component {
   render() {
-    const post = this.props.data.markdownRemark
+    const post = this.props.data.markdownRemark;
 
     return (
       <div>
         <h1>{post.frontmatter.title}</h1>
         <div dangerouslySetInnerHTML={{ __html: post.html }} />
       </div>
-    )
+    );
   }
 }
 
-export default BlogPostTemplate
+export default BlogPostTemplate;
 
 export const pageQuery = graphql`
   query BlogPostBySlug($slug: String!) {
@@ -118,7 +118,7 @@ export const pageQuery = graphql`
       }
     }
   }
-`
+`;
 ```
 
 ### Layout components
@@ -129,12 +129,12 @@ portions of pages that are shared across pages like headers and footers.
 Example:
 
 ```jsx
-import React from "react"
-import Navigation from "../components/Navigation/Navigation.jsx"
+import React from "react";
+import Navigation from "../components/Navigation/Navigation.jsx";
 
 export default class Template extends React.Component {
   render() {
-    return <Navigation>{this.props.children()}</Navigation>
+    return <Navigation>{this.props.children()}</Navigation>;
   }
 }
 ```
@@ -154,28 +154,28 @@ have an html.js.
 Example:
 
 ```jsx
-import React from "react"
-import favicon from "./favicon.png"
+import React from "react";
+import favicon from "./favicon.png";
 
-let inlinedStyles = ""
+let inlinedStyles = "";
 if (process.env.NODE_ENV === "production") {
   try {
-    inlinedStyles = require("!raw-loader!../public/styles.css")
+    inlinedStyles = require("!raw-loader!../public/styles.css");
   } catch (e) {
-    console.log(e)
+    console.log(e);
   }
 }
 
 export default class HTML extends React.Component {
   render() {
-    let css
+    let css;
     if (process.env.NODE_ENV === "production") {
       css = (
         <style
           id="gatsby-inlined-css"
           dangerouslySetInnerHTML={{ __html: inlinedStyles }}
         />
-      )
+      );
     }
     return (
       <html lang="en">
@@ -197,7 +197,7 @@ export default class HTML extends React.Component {
           {this.props.postBodyComponents}
         </body>
       </html>
-    )
+    );
   }
 }
 ```

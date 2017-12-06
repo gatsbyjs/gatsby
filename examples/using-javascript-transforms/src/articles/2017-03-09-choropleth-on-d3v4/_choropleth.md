@@ -39,10 +39,10 @@ graph.setup = (selection, measurements) => {
   let svg = selection
     .append("svg")
     .attr("width", measurements.width)
-    .attr("height", measurements.width / 1.6)
+    .attr("height", measurements.width / 1.6);
 
-  return svg
-}
+  return svg;
+};
 ```
 
 Nullam id mollis justo. Sed malesuada interdum purus id commodo. Fusce finibus

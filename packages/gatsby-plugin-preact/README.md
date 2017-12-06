@@ -14,5 +14,5 @@ React.
 
 ```javascript
 // In your gatsby-config.js
-plugins: [`gatsby-plugin-preact`]
+plugins: [`gatsby-plugin-preact`];
 ```

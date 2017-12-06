@@ -67,7 +67,7 @@ module.exports = {
   siteMetadata: {
     title: `My Sweet Gatsby Site!`,
   },
-}
+};
 ```
 
 and a minimal query would look like
@@ -123,10 +123,7 @@ Here's an example of migrating a markdown wrapper to Gatsby v1.
 
 Install Gatsby plugins for handling markdown files.
 
-`npm install --save gatsby-source-filesystem@next gatsby-transformer-remark@next
-gatsby-remark-copy-linked-files@next gatsby-remark-prismjs@next
-gatsby-remark-responsive-iframe@next gatsby-remark-images@next
-gatsby-remark-smartypants@next gatsby-plugin-sharp@next`
+`npm install --save gatsby-source-filesystem@next gatsby-transformer-remark@next gatsby-remark-copy-linked-files@next gatsby-remark-prismjs@next gatsby-remark-responsive-iframe@next gatsby-remark-images@next gatsby-remark-smartypants@next gatsby-plugin-sharp@next`
 
 Next add them to your `gatsby-config.js` file. Make your config file look
 something like the following:
@@ -165,7 +162,7 @@ module.exports = {
     },
     `gatsby-plugin-sharp`,
   ],
-}
+};
 ```
 
 ### Create slugs for markdown files
@@ -177,26 +174,26 @@ Here's how you do that.
 
 ```javascript
 // In your gatsby-node.js
-const path = require("path")
+const path = require("path");
 
 exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
-  const { createNodeField } = boundActionCreators
-  let slug
+  const { createNodeField } = boundActionCreators;
+  let slug;
   if (node.internal.type === `MarkdownRemark`) {
-    const fileNode = getNode(node.parent)
-    const parsedFilePath = path.parse(fileNode.relativePath)
+    const fileNode = getNode(node.parent);
+    const parsedFilePath = path.parse(fileNode.relativePath);
     if (parsedFilePath.name !== `index` && parsedFilePath.dir !== ``) {
-      slug = `/${parsedFilePath.dir}/${parsedFilePath.name}/`
+      slug = `/${parsedFilePath.dir}/${parsedFilePath.name}/`;
     } else if (parsedFilePath.dir === ``) {
-      slug = `/${parsedFilePath.name}/`
+      slug = `/${parsedFilePath.name}/`;
     } else {
-      slug = `/${parsedFilePath.dir}/`
+      slug = `/${parsedFilePath.dir}/`;
     }
 
     // Add slug as a field on the node.
-    createNodeField({ node, name: `slug`, value: slug })
+    createNodeField({ node, name: `slug`, value: slug });
   }
-}
+};
 ```
 
 Now we can create pages for each markdown file using our slug. In the same
@@ -204,11 +201,11 @@ Now we can create pages for each markdown file using our slug. In the same
 
 ```javascript
 exports.createPages = ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators
+  const { createPage } = boundActionCreators;
 
   return new Promise((resolve, reject) => {
-    const pages = []
-    const blogPost = path.resolve("src/templates/blog-post.js")
+    const pages = [];
+    const blogPost = path.resolve("src/templates/blog-post.js");
     // Query for all markdown "nodes" and for the slug we previously created.
     resolve(
       graphql(
@@ -227,8 +224,8 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         `
       ).then(result => {
         if (result.errors) {
-          console.log(result.errors)
-          reject(result.errors)
+          console.log(result.errors);
+          reject(result.errors);
         }
 
         // Create blog posts pages.
@@ -239,14 +236,14 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
             context: {
               slug: edge.node.fields.slug,
             },
-          })
-        })
+          });
+        });
 
-        return
+        return;
       })
-    )
-  })
-}
+    );
+  });
+};
 ```
 
 So we've now generated the pathname or slug for each markdown page as well as
@@ -261,22 +258,22 @@ specifying the data needs of the component. As a start, make the component look
 like the following. You can make it more complex once the basics are working.
 
 ```javascript
-import React from "react"
+import React from "react";
 
 class BlogPostTemplate extends React.Component {
   render() {
-    const post = this.props.data.markdownRemark
+    const post = this.props.data.markdownRemark;
 
     return (
       <div>
         <h1>{post.frontmatter.title}</h1>
         <div dangerouslySetInnerHTML={{ __html: post.html }} />
       </div>
-    )
+    );
   }
 }
 
-export default BlogPostTemplate
+export default BlogPostTemplate;
 
 export const pageQuery = graphql`
   query BlogPostBySlug($slug: String!) {
@@ -287,7 +284,7 @@ export const pageQuery = graphql`
       }
     }
   }
-`
+`;
 ```
 
 At the bottom of the file you'll notice the graphql query. This is how pages and
@@ -300,8 +297,7 @@ but in the meantime, check out http://graphql.org/ and play around on Gatsby's
 built-in GraphQL IDE (Graph*i*QL) which can be reached when you start the
 development server.
 
-At this point you should have working markdown pages when you run `gatsby
-develop`! Now start gradually adding back what you had in your wrapper component
+At this point you should have working markdown pages when you run `gatsby develop`! Now start gradually adding back what you had in your wrapper component
 adding HTML elements, styles, and extending the GraphQL query as needed.
 
 Repeat this process for other wrapper components you were using.
@@ -317,18 +313,18 @@ Also the target div now must have an id of `___gatsby`. So the body section of
 your `html.js` should look like:
 
 ```jsx
-;<body>
+<body>
   <div id="___gatsby" dangerouslySetInnerHTML={{ __html: this.props.body }} />
   {this.props.postBodyComponents}
-</body>
+</body>;
 ```
 
-## _template.js is now src/layouts/index.js
+## \_template.js is now src/layouts/index.js
 
 You should be able to copy your `_template.js` file directly making only one
 change making `this.props.children` a function call so `this.props.children()`.
 The rational for this change is described
 [in this PR comment](https://github.com/gatsbyjs/gatsby/pull/940#issuecomment-300878300).
 
-Nested layouts (similar to the nested _template feature) are _not_ supported yet
+Nested layouts (similar to the nested _template feature) are \_not_ supported yet
 but are on the roadmap for v1.

@@ -13,7 +13,7 @@ points to your files.
 
 ```javascript
 // In your gatsby-config.js
-plugins: [`gatsby-transformer-yaml`]
+plugins: [`gatsby-transformer-yaml`];
 ```
 
 ## Parsing algorithm
@@ -37,7 +37,7 @@ So if your project has a `letters.yaml` which looks like:
 Then the following three nodes would be created.
 
 ```javascript
-;[
+[
   {
     value: "a",
     type: "Letters",
@@ -50,7 +50,7 @@ Then the following three nodes would be created.
     value: "c",
     type: "Letters",
   },
-]
+];
 ```
 
 ### Single Object
@@ -86,7 +86,7 @@ value: c
 Then the following three nodes would be created.
 
 ```javascript
-;[
+[
   {
     value: "a",
     type: "Letters",
@@ -99,7 +99,7 @@ Then the following three nodes would be created.
     value: "c",
     type: "Letters",
   },
-]
+];
 ```
 
 ## How to query
@@ -140,7 +140,7 @@ Which would return:
           value: "c",
         },
       },
-    ]
+    ];
   }
 }
 ```
