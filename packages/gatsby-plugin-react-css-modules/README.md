@@ -29,7 +29,7 @@ plugins: [
       exclude: `\/global\/`,
     },
   },
-]
+];
 ```
 
 Files must be named using the pattern `filename.module.css` for Gatsby to treat

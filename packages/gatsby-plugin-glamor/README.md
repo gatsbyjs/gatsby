@@ -17,7 +17,7 @@ rendering and start writing React components that carry their styles with them.
 First add the plugin to your `gatsby-config.js`.
 
 ```javascript
-plugins: [`gatsby-plugin-glamor`]
+plugins: [`gatsby-plugin-glamor`];
 ```
 
 Glamor

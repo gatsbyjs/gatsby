@@ -11,5 +11,5 @@ client-side pushState to avoid the browser having to refresh the page.
 
 ```javascript
 // In your gatsby-config.js
-plugins: [`gatsby-plugin-catch-links`]
+plugins: [`gatsby-plugin-catch-links`];
 ```

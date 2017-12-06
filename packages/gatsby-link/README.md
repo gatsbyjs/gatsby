@@ -80,16 +80,16 @@ This is only for pathnames you're constructing manually. The `<Link>` component
 handles prefixing automatically.
 
 ```jsx
-import { withPrefix } from "gatsby-link"
+import { withPrefix } from "gatsby-link";
 
 const IndexLayout = ({ children, location }) => {
-  const isHomepage = location.pathname === withPrefix("/")
+  const isHomepage = location.pathname === withPrefix("/");
 
   return (
     <div>
       <h1>Welcome {isHomepage ? "home" : "aboard"}!</h1>
       {children()}
     </div>
-  )
-}
+  );
+};
 ```

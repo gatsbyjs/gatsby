@@ -29,8 +29,7 @@ see compilation errors such as `node-gyp` or `sharp` or `binding.gyp not found`.
 
 If you suspect this is your problem, download the
 [Visual Studio Community 2015 Package](https://www.visualstudio.com/products/visual-studio-community-vs)
-and install only the part of the package that interests us : `Programming
-languages > Visual C++ > Common tools for Visual Studio 2015`. Be sure to
+and install only the part of the package that interests us : `Programming languages > Visual C++ > Common tools for Visual Studio 2015`. Be sure to
 download the 2015 version of VS Community, not the 2017 version (see Note 1
 below) ; you'll have to use the
 [search bar on the VS site](https://www.visualstudio.com/products/visual-studio-community-vs)

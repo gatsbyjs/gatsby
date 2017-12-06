@@ -20,7 +20,7 @@ config.
 // In your gatsby-config.js
 plugins: [
   `gatsby-plugin-netlify`, // make sure to put last in the array
-]
+];
 ```
 
 ## Configuration
@@ -43,7 +43,7 @@ plugins: [
       transformHeaders: (headers, path) => headers, // optional transform for manipulating headers under each path (e.g.sorting), etc.
     },
   },
-]
+];
 ```
 
 ### Headers
