@@ -125,9 +125,7 @@ module.exports = (
         // This config JSON must then be lz-string compressed
         parameters = compress(JSON.stringify(parameters))
 
-        const href = `https://codesandbox.io/api/v1/sandboxes/define?parameters=${
-          parameters
-        }`
+        const href = `https://codesandbox.io/api/v1/sandboxes/define?parameters=${parameters}`
         const text =
           node.children.length === 0 ? defaultText : node.children[0].value
 

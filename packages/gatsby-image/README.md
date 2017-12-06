@@ -8,6 +8,10 @@ Gatsby's GraphQL queries. It combines
 capabilities with advanced image loading techniques to easily and completely
 optimize image loading for your sites.
 
+_Warning: gatsby-image is **not** a drop-in replacement for `<img/>`. It's
+optimized for fixed width/height images and images that stretch the full-width
+of a container. Some ways you can use `<img/>` won't work with gatsby-image._
+
 **[Demo](https://using-gatsby-image.gatsbyjs.org)**
 
 ## Problem
@@ -55,15 +59,15 @@ effect as well as lazy loading of images further down the screen.
 This is what a component using `gatsby-images` looks like.
 
 ```jsx
-import React from "react"
-import Img from "gatsby-image"
+import React from "react";
+import Img from "gatsby-image";
 
 export default ({ data }) => (
   <div>
     <h1>Hello gatsby-image</h1>
     <Img resolutions={data.file.childImageSharp.resolutions} />
   </div>
-)
+);
 
 export const query = graphql`
   query GatsbyImageSampleQuery {
@@ -77,7 +81,7 @@ export const query = graphql`
       }
     }
   }
-`
+`;
 ```
 
 ## Two types of responsive images

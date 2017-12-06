@@ -14,9 +14,7 @@ const client = new GraphQLClient(
 function sendReview(thumbsUp, relativePath) {
   return client.request(`
     mutation {
-      createReview(input: {thumbsUp: ${thumbsUp}, relativePath: "${
-    relativePath
-  }", clientMutationId: "1"}) {
+      createReview(input: {thumbsUp: ${thumbsUp}, relativePath: "${relativePath}", clientMutationId: "1"}) {
         review {
           id
         }

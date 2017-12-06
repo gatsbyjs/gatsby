@@ -15,7 +15,7 @@ Provides drop-in support for Stylus with or without CSS Modules
 
 ```javascript
 // in gatsby-config.js
-plugins: [`gatsby-plugin-stylus`]
+plugins: [`gatsby-plugin-stylus`];
 ```
 
 ### With CSS Modules
@@ -32,7 +32,7 @@ means you can add stylus plugins with `use`:
 
 ```javascript
 // in gatsby-config.js
-const rupture = require("rupture")
+const rupture = require("rupture");
 
 module.exports = {
   plugins: [
@@ -43,5 +43,5 @@ module.exports = {
       },
     },
   ],
-}
+};
 ```

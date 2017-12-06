@@ -70,8 +70,7 @@ If you prefer to write locally before submitting a PR, then follow these steps:
 3. Add a remote upstream so git knows where the official Gatsby Guides
    repository is located by running the command `git remote add upstream`
    _incomplete code here_
-4. Create a new branch for your work with the command `git checkout -b
-   NEW-BRANCH-NAME`. Try to name your branch in a way that describes your
+4. Create a new branch for your work with the command `git checkout -b NEW-BRANCH-NAME`. Try to name your branch in a way that describes your
    article topic, like `fix/ArticleHTMLElements`
 5. Write your article, commit your changes locally, and push your new branch to
    GitHub with the command `git push origin NEW-BRANCH-NAME`
@@ -79,8 +78,7 @@ If you prefer to write locally before submitting a PR, then follow these steps:
 
 Make sure to maintain your local fork going forward so it stays up-to-date with
 the Gatsby guides repository. The next time you want to contribute, checkout
-your local `master` branch and run the command `git pull --rebase upstream
-master` before creating a new branch. This will grab all the changes on the
+your local `master` branch and run the command `git pull --rebase upstream master` before creating a new branch. This will grab all the changes on the
 official master branch without making an additional commit in your local
 repository.
 
@@ -90,9 +88,7 @@ Finally, if you want to run a version of the guides repository locally, follow
 these steps:
 
 1. Ensure you have the yarn package manager installed `npm install -g yarn`
-2. Fork this repository 👇 `git clone
-   https://github.com/YOUR-GITHUB-USERNAME/guides.git` `cd guides` `yarn
-   install` `yarn run dev`
+2. Fork this repository 👇 `git clone https://github.com/YOUR-GITHUB-USERNAME/guides.git` `cd guides` `yarn install` `yarn run dev`
 
 In this project we are using `yarn` because
 [`Netlify`](https://www.netlify.com/) builds our site with `yarn`.
@@ -222,7 +218,7 @@ Here are specific formatting guidelines for any code:
 
   ```javascript
   function logTheThings(stuff) {
-    console.log(stuff)
+    console.log(stuff);
   }
   ```
 
