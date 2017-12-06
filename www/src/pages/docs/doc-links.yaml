@@ -2,26 +2,22 @@
   items:
     - title: Getting Started
       link: /docs/
-    - title: Awesome Gatsby
-      link: /docs/awesome-gatsby/
-    - title: Migrating from v0 to v1
-      link: /docs/migrating-from-v0-to-v1/
-    - title: Building with Components
-      link: /docs/building-with-components/
-    - title: Querying with GraphQL*
-      link: /docs/querying-with-graphql/
-    - title: Lifecycle APIs
-      link: /docs/gatsby-lifecycle-apis/
+    - title: Using Starters
+      link: /docs/gatsby-starters/
     - title: Deploying
       link: /docs/deploy-gatsby/
-    - title: Starters
-      link: /docs/gatsby-starters/
+- title: Core Concepts
+  items:
+    - title: Building with Components
+      link: /docs/building-with-components/
+    - title: Lifecycle APIs
+      link: /docs/gatsby-lifecycle-apis/
     - title: Plugins
       link: /docs/plugins/
     - title: PRPL Pattern
       link: /docs/prpl-pattern/
-    - title: Gatsby on Windows
-      link: /docs/gatsby-on-windows/
+    - title: Querying with GraphQL*
+      link: /docs/querying-with-graphql/
 - title: Guides
   items:
     - title: 404 Pages
@@ -42,6 +38,10 @@
       link: /docs/debugging-html-builds/
     - title: Environment Variables
       link: /docs/environment-variables/
+    - title: Gatsby on Windows
+      link: /docs/gatsby-on-windows/
+    - title: Migrating from v0 to v1
+      link: /docs/migrating-from-v0-to-v1/
     - title: Path Prefix
       link: /docs/path-prefix/
     - title: Proxying API Requests
@@ -60,6 +60,8 @@
       link: /docs/how-gatsby-works-with-github-pages/
 - title: Reference
   items:
+    - title: Awesome Gatsby
+      link: /docs/awesome-gatsby/
     - title: Node Interface
       link: /docs/node-interface/
     - title: API Specification
