@@ -13,7 +13,7 @@ Provides drop-in support for SASS/SCSS stylesheets
 
 ```javascript
 // in gatsby-config.js
-plugins: [`gatsby-plugin-sass`]
+plugins: [`gatsby-plugin-sass`];
 ```
 
 ## Options
@@ -33,5 +33,5 @@ plugins: [
       precision: 8,
     },
   },
-]
+];
 ```

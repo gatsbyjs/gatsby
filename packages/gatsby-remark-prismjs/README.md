@@ -32,7 +32,7 @@ plugins: [
       ],
     },
   },
-]
+];
 ```
 
 ### Include CSS
@@ -48,7 +48,7 @@ To load a theme, just require its CSS file in your `layouts/index.js` file, e.g.
 
 ```javascript
 // layouts/index.js
-require("prismjs/themes/prism-solarizedlight.css")
+require("prismjs/themes/prism-solarizedlight.css");
 ```
 
 #### Optional: Add line highlighting styles

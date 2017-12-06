@@ -14,7 +14,7 @@ module.exports = {
     prefix: "/api",
     url: "http://dev-mysite.com/api/",
   },
-}
+};
 ```
 
 This way, when you `fetch('/api/todos')` in development, the development server

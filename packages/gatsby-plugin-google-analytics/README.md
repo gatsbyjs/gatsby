@@ -19,7 +19,7 @@ plugins: [
       anonymize: true,
     },
   },
-]
+];
 ```
 
 ## The "anonymize" option

@@ -22,7 +22,7 @@ images. By default it uses a quality setting of [50-75].
 
 ```javascript
 // In your gatsby-config.js
-plugins: [`gatsby-plugin-sharp`]
+plugins: [`gatsby-plugin-sharp`];
 ```
 
 ## Methods

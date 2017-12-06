@@ -13,7 +13,7 @@ built-in server-side rendering support.
 Edit `gatsby-config.js`
 
 ```javascript
-plugins: [`gatsby-plugin-styled-components`]
+plugins: [`gatsby-plugin-styled-components`];
 ```
 
 ### Breaking changes history

@@ -36,7 +36,7 @@ plugins: [
       path: `${__dirname}/src/data/`,
     },
   },
-]
+];
 ```
 
 ## How to query

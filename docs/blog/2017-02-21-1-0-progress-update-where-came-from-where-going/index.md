@@ -165,8 +165,8 @@ navigate around, Gatsby loads the JavaScript needed for each route.
 This means that one page with heavy imports:
 
 ```javascript
-import d3 from "d3"
-import threejs from "react-threejs"
+import d3 from "d3";
+import threejs from "react-threejs";
 ```
 
 ...won't affect the performance of the rest of the site.
@@ -281,11 +281,11 @@ the blog posts. Included with the component is an exported `pageQuery`.
 
 ```javascript
 // A simple React component for rendering a blog page.
-import React from "react"
+import React from "react";
 
 class BlogPostTemplate extends React.Component {
   render() {
-    ;<div>
+    <div>
       <h1>{this.props.data.markdown.frontmatter.title}</h1>
       <small>{this.props.data.markdown.frontmatter.date}</small>
       <div
@@ -293,11 +293,11 @@ class BlogPostTemplate extends React.Component {
           __html: this.props.data.markdown.html,
         }}
       />
-    </div>
+    </div>;
   }
 }
 
-export default BlogPostTemplate
+export default BlogPostTemplate;
 
 export const pageQuery = `
   query BlogPost($slug: String!) {
@@ -311,7 +311,7 @@ export const pageQuery = `
       }
     }
   }
-`
+`;
 ```
 
 All data parsing and processing is plugin-driven. So in time, any imaginable

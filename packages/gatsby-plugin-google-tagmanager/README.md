@@ -20,5 +20,5 @@ plugins: [
       includeInDevelopment: false,
     },
   },
-]
+];
 ```

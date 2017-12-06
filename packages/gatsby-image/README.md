@@ -59,15 +59,15 @@ effect as well as lazy loading of images further down the screen.
 This is what a component using `gatsby-images` looks like.
 
 ```jsx
-import React from "react"
-import Img from "gatsby-image"
+import React from "react";
+import Img from "gatsby-image";
 
 export default ({ data }) => (
   <div>
     <h1>Hello gatsby-image</h1>
     <Img resolutions={data.file.childImageSharp.resolutions} />
   </div>
-)
+);
 
 export const query = graphql`
   query GatsbyImageSampleQuery {
@@ -81,7 +81,7 @@ export const query = graphql`
       }
     }
   }
-`
+`;
 ```
 
 ## Two types of responsive images

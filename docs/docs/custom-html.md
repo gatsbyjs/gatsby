@@ -34,9 +34,9 @@ If you see this error: `Uncaught Error: _registerComponent(...): Target containe
 `___gatsby` like:
 
 ```jsx
-;<div
+<div
   key={`body`}
   id="___gatsby"
   dangerouslySetInnerHTML={{ __html: this.props.body }}
-/>
+/>;
 ```
