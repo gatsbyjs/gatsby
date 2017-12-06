@@ -29,7 +29,10 @@ async function onCreateNode({ node, boundActionCreators, loadNodeContent }) {
   // We only care about HJSON content.
   // NOTE the mime package does not recognize HJSON yet
   // See RFC https://hjson.org/rfc.html#rfc.section.1.3
-  if (node.internal.mediaType !== `text/hjson` && node.internal.mediaType !== `application/hjson`) {
+  if (
+    node.internal.mediaType !== `text/hjson` &&
+    node.internal.mediaType !== `application/hjson`
+  ) {
     return
   }
 
