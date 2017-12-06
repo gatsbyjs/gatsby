@@ -2,7 +2,7 @@
 title: "Awesome Gatsby"
 ---
 
-A curated list to interesting Gatsby community projects and learning resources.
+A curated list of interesting Gatsby community projects and learning resources.
 
 ## [Site showcase](https://github.com/gatsbyjs/gatsby#showcase)
 
