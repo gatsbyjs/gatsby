@@ -5,14 +5,14 @@ exports.onCreatePage = ({ page, boundActionCreators }) => {
 
   return new Promise((resolve, reject) => {
     // Remove trailing slash
-    const oldPath = page.path
-    page.path = page.path === `/` ? page.path : page.path.replace(/\/$/, ``)
-    if (page.path !== oldPath) {
+    const newPage = Object.assign({}, page, {
+      path: page.path === `/` ? page.path : page.path.replace(/\/$/, ``),
+    })
+    if (newPage.path !== page.path) {
       // Remove the old page
-      deletePage({ path: oldPath })
-
+      deletePage(page)
       // Add the new page
-      createPage(page)
+      createPage(newPage)
     }
 
     resolve()

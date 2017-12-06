@@ -1,11 +1,11 @@
 import React from "react"
 import Helmet from "react-helmet"
-import GithubIcon from "react-icons/lib/go/mark-github"
 
-import { rhythm } from "../utils/typography"
+import MarkdownPageFooter from "../components/markdown-page-footer"
+
 import Container from "../components/container"
 
-const DocsTemplate = React.createClass({
+class DocsTemplate extends React.Component {
   render() {
     const page = this.props.data.markdownRemark
     return (
@@ -26,10 +26,11 @@ const DocsTemplate = React.createClass({
             __html: page.html,
           }}
         />
+        <MarkdownPageFooter page={page} />
       </Container>
     )
-  },
-})
+  }
+}
 
 export default DocsTemplate
 
@@ -42,6 +43,7 @@ export const pageQuery = graphql`
       frontmatter {
         title
       }
+      ...MarkdownPageFooter
     }
   }
 `

@@ -1,6 +1,5 @@
 const crypto = require(`crypto`)
 const deepMapKeys = require(`deep-map-keys`)
-const _ = require(`lodash`)
 const uuidv5 = require(`uuid/v5`)
 const stringify = require(`json-stringify-safe`)
 
@@ -99,7 +98,9 @@ function getValidKey({ key, verbose = false }) {
   }
   if (changed && verbose)
     console.log(
-      `Object with key "${key}" breaks GraphQL naming convention. Renamed to "${nkey}"`
+      `Object with key "${key}" breaks GraphQL naming convention. Renamed to "${
+        nkey
+      }"`
     )
 
   return nkey

@@ -1,4 +1,5 @@
 const chokidar = require(`chokidar`)
+const fs = require(`fs`)
 
 const { createId, createFileNode } = require(`./create-file-node`)
 
@@ -9,6 +10,18 @@ exports.sourceNodes = (
   const { createNode, deleteNode } = boundActionCreators
 
   let ready = false
+
+  // Validate that the path exists.
+  if (!fs.existsSync(pluginOptions.path)) {
+    console.log(`
+The path passed to gatsby-source-filesystem does not exist on your file system:
+
+${pluginOptions.path}
+
+Please pick a path to an existing directory.
+      `)
+    process.exit(1)
+  }
 
   const watcher = chokidar.watch(pluginOptions.path, {
     ignored: [
@@ -56,6 +69,21 @@ exports.sourceNodes = (
 
     // Also delete nodes for the file's transformed children nodes.
     node.children.forEach(childId => deleteNode(childId, getNode(childId)))
+  })
+
+  watcher.on(`addDir`, path => {
+    if (ready) {
+      reporter.info(`added directory at ${path}`)
+      createAndProcessNode(path).catch(err => reporter.error(err))
+    } else {
+      pathQueue.push(path)
+    }
+  })
+
+  watcher.on(`unlinkDir`, path => {
+    reporter.info(`directory deleted at ${path}`)
+    const node = getNode(createId(path))
+    deleteNode(node.id, node)
   })
 
   return new Promise((resolve, reject) => {

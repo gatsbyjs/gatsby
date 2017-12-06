@@ -1,7 +1,6 @@
 const reducer = require(`../reducers/pages`)
 const { actions } = require(`../actions`)
 
-const start = Date.now()
 Date.now = jest.fn(
   () =>
     // const diff = new Date().getTime() - start
@@ -30,6 +29,20 @@ describe(`Add pages`, () => {
         context: {
           id: 123,
         },
+      },
+      { id: `test`, name: `test` }
+    )
+    const state = reducer(undefined, action)
+    expect(action).toMatchSnapshot()
+    expect(state).toMatchSnapshot()
+  })
+
+  it(`allows you to add pages with matchPath`, () => {
+    const action = actions.createPage(
+      {
+        path: `/hi/`,
+        component: `/whatever/index.js`,
+        matchPath: `/hi-from-somewhere-else/`,
       },
       { id: `test`, name: `test` }
     )

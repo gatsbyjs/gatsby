@@ -1,11 +1,12 @@
 import React from "react"
 import Helmet from "react-helmet"
 
+import MarkdownPageFooter from "../components/markdown-page-footer"
 import { rhythm, scale } from "../utils/typography"
 import presets from "../utils/presets"
 import Container from "../components/container"
 
-const DocsTemplate = React.createClass({
+class DocsPackagesTemplate extends React.Component {
   render() {
     const packageName = this.props.data.markdownRemark.fields.title
     const page = this.props.data.markdownRemark
@@ -23,12 +24,14 @@ const DocsTemplate = React.createClass({
         </Helmet>
         <strong>
           <a
-            href={`https://github.com/gatsbyjs/gatsby/tree/master/packages/${packageName}`}
+            href={`https://github.com/gatsbyjs/gatsby/tree/master/packages/${
+              packageName
+            }`}
             css={{
               position: `absolute`,
             }}
           >
-            Browse source code for package on Github
+            Browse source code for this package on GitHub
           </a>
         </strong>
         <div
@@ -39,12 +42,13 @@ const DocsTemplate = React.createClass({
             __html: this.props.data.markdownRemark.html,
           }}
         />
+        <MarkdownPageFooter page={page} />
       </Container>
     )
-  },
-})
+  }
+}
 
-export default DocsTemplate
+export default DocsPackagesTemplate
 
 export const pageQuery = graphql`
   query TemplateDocsPackages($slug: String!) {
@@ -55,6 +59,7 @@ export const pageQuery = graphql`
       fields {
         title
       }
+      ...MarkdownPageFooter
     }
   }
 `

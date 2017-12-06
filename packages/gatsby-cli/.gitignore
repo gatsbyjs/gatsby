@@ -1,2 +1,2 @@
-/*.js
-yarn.lock
+/lib
+/node_modules

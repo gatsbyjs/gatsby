@@ -2,7 +2,7 @@ const select = require(`unist-util-select`)
 const path = require(`path`)
 const isRelativeUrl = require(`is-relative-url`)
 const _ = require(`lodash`)
-const { responsiveSizes } = require(`gatsby-plugin-sharp`)
+const { sizes } = require(`gatsby-plugin-sharp`)
 const Promise = require(`bluebird`)
 const cheerio = require(`cheerio`)
 const slash = require(`slash`)
@@ -56,12 +56,11 @@ module.exports = (
       return resolve()
     }
 
-    let responsiveSizesResult = await responsiveSizes({
+    let responsiveSizesResult = await sizes({
       file: imageNode,
       args: options,
     })
 
-    // console.log("responsiveSizesResult", responsiveSizesResult)
     // Calculate the paddingBottom %
     const ratio = `${1 / responsiveSizesResult.aspectRatio * 100}%`
 
@@ -84,15 +83,25 @@ module.exports = (
     let rawHTML = `
   <span
     class="gatsby-resp-image-wrapper"
-    style="position: relative; display: block; ${options.wrapperStyle}; max-width: ${presentationWidth}px; margin-left: auto; margin-right: auto;"
+    style="position: relative; display: block; ${
+      options.wrapperStyle
+    }; max-width: ${
+      presentationWidth
+    }px; margin-left: auto; margin-right: auto;"
   >
     <span
       class="gatsby-resp-image-background-image"
-      style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0; background-image: url('${responsiveSizesResult.base64}'); background-size: cover; display: block;"
+      style="padding-bottom: ${
+        ratio
+      }; position: relative; bottom: 0; left: 0; background-image: url('${
+      responsiveSizesResult.base64
+    }'); background-size: cover; display: block;"
     >
       <img
         class="gatsby-resp-image-image"
-        style="width: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px ${options.backgroundColor};"
+        style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px ${
+          options.backgroundColor
+        };"
         alt="${node.alt ? node.alt : defaultAlt}"
         title="${node.title ? node.title : ``}"
         src="${fallbackSrc}"
@@ -169,11 +178,15 @@ module.exports = (
             })
 
             for (let thisImg of imageRefs) {
-              //Get the details we need
+              // Get the details we need.
               let formattedImgTag = {}
               formattedImgTag.url = thisImg.attr(`src`)
               formattedImgTag.title = thisImg.attr(`title`)
               formattedImgTag.alt = thisImg.attr(`alt`)
+
+              if (!formattedImgTag.url) {
+                return resolve()
+              }
 
               const fileType = formattedImgTag.url.slice(-3)
 
@@ -197,7 +210,7 @@ module.exports = (
 
             // Replace the image node with an inline HTML node.
             node.type = `html`
-            node.value = $.html()
+            node.value = $(`body`).html() // fix for cheerio v1
 
             return resolve(node)
           })

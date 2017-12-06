@@ -19,15 +19,19 @@
 
 ## Packages
 
-This repository is a monorepo managed using [Lerna](https://github.com/lerna/lerna). This means that we publish [many packages](/packages) to NPM from the same codebase.
+This repository is a monorepo managed using
+[Lerna](https://github.com/lerna/lerna). This means that we publish
+[many packages](/packages) to NPM from the same codebase.
 
 ## Thanks
 
-Thanks to our many contributors and sponsors as well as the companies sponsoring our testing and hosting infrastructure, Travis CI, Appveyor, and Netlify.
+Thanks to our many contributors and sponsors as well as the companies sponsoring
+our testing and hosting infrastructure, Travis CI, Appveyor, and Netlify.
 
 ## Backers
 
-Support us with a monthly donation and help us continue our activities. [[Become a backer](https://opencollective.com/gatsby#backer)]
+Support us with a monthly donation and help us continue our activities.
+[[Become a backer](https://opencollective.com/gatsby#backer)]
 
 <a href="https://opencollective.com/gatsby/backer/0/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/0/avatar.svg"></a>
 <a href="https://opencollective.com/gatsby/backer/1/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/1/avatar.svg"></a>
@@ -60,10 +64,10 @@ Support us with a monthly donation and help us continue our activities. [[Become
 <a href="https://opencollective.com/gatsby/backer/28/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/28/avatar.svg"></a>
 <a href="https://opencollective.com/gatsby/backer/29/website" target="_blank"><img src="https://opencollective.com/gatsby/backer/29/avatar.svg"></a>
 
-
 ## Sponsors
 
-Become a sponsor and get your logo on our README on Github with a link to your site. [[Become a sponsor](https://opencollective.com/gatsby#sponsor)]
+Become a sponsor and get your logo on our README on GitHub with a link to your
+site. [[Become a sponsor](https://opencollective.com/gatsby#sponsor)]
 
 <a href="https://opencollective.com/gatsby/sponsor/0/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/0/avatar.svg"></a>
 <a href="https://opencollective.com/gatsby/sponsor/1/website" target="_blank"><img src="https://opencollective.com/gatsby/sponsor/1/avatar.svg"></a>

@@ -21,12 +21,16 @@ const stripeAnimation = css.keyframes({
 const stripeBg = {
   backgroundColor: presets.sidebar,
   backgroundSize: `${rhythm(stripeSize)} ${rhythm(stripeSize)}`,
-  backgroundImage: `linear-gradient(45deg, rgba(${stripeColor}) 25%, transparent 25%, transparent 50%, rgba(${stripeColor}) 50%, rgba(${stripeColor}) 75%, transparent 75%, transparent)`,
+  backgroundImage: `linear-gradient(45deg, rgba(${
+    stripeColor
+  }) 25%, transparent 25%, transparent 50%, rgba(${stripeColor}) 50%, rgba(${
+    stripeColor
+  }) 75%, transparent 75%, transparent)`,
   animation: `${stripeAnimation} 14s linear infinite`,
 }
 const lineAnimation = css.keyframes({
   to: {
-    strokeDashoffset: 1000,
+    strokeDashoffset: 10,
   },
 })
 
@@ -60,6 +64,7 @@ const SegmentTitle = ({ children }) => (
       ...scale(-2 / 5),
       lineHeight: 1,
       textTransform: `uppercase`,
+      transform: `translateZ(0)`,
     }}
   >
     {children}
@@ -73,17 +78,15 @@ const VerticalLine = () => (
     viewBox="0 0 20 30"
     css={{ margin: `0 auto`, display: `block` }}
   >
-    <line
-      className="path"
-      x1="10"
-      x2="10"
-      y1="110"
-      y2="-10"
-      stroke={presets.brandLight}
-      strokeWidth="3"
-      strokeLinecap="round"
-      strokeDasharray="0.5, 10"
-      css={{ animation: `${lineAnimation} 40s linear infinite` }}
+    <path
+      d="M10 40 L10 -10"
+      css={{
+        stroke: presets.brandLight,
+        strokeWidth: `3`,
+        strokeLinecap: `round`,
+        strokeDasharray: `0.5 10`,
+        animation: `${lineAnimation} 400ms linear infinite`,
+      }}
     />
   </svg>
 )
@@ -101,6 +104,7 @@ const borderAndBoxShadow = {
   width: `100%`,
   boxShadow: `0 5px 15px rgba(0,0,0,0.035)`,
   borderRadius: presets.radius,
+  transform: `translateZ(0)`,
 }
 
 const SourceItems = ({ children }) => (
@@ -200,6 +204,7 @@ const Gatsby = ({ children }) => (
         margin: 0,
         verticalAlign: `middle`,
       }}
+      alt="Gatsby"
     />
     <ItemDescription>
       <small
@@ -311,7 +316,7 @@ const Diagram = ({ containerCSS }) => (
       >
         <ItemTitle>Static Web Host</ItemTitle>
         <ItemDescription>
-          Amazon S3, Netlify, Github Pages, Surge.sh, Aerobatic, Now.sh, & many
+          Amazon S3, Netlify, GitHub Pages, Surge.sh, Aerobatic, Now.sh, & many
           more
         </ItemDescription>
       </div>

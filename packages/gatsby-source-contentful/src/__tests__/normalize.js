@@ -110,6 +110,31 @@ describe(`Gets field value based on current locale`, () => {
       })
     ).toBe(field[`de`])
   })
+  it(`Gets the specified locale if the field is falsey`, () => {
+    const falseyField = {
+      de: 0,
+      "en-US": false,
+    }
+    expect(
+      normalize.getLocalizedField({
+        field: falseyField,
+        defaultLocale: `en-US`,
+        locale: {
+          code: `en-US`,
+        },
+      })
+    ).toBe(falseyField[`en-US`])
+
+    expect(
+      normalize.getLocalizedField({
+        field: falseyField,
+        defaultLocale: `en-US`,
+        locale: {
+          code: `de`,
+        },
+      })
+    ).toBe(falseyField[`de`])
+  })
   it(`falls back to the locale's fallback locale if passed a locale that doesn't have a localized field`, () => {
     expect(
       normalize.getLocalizedField({
@@ -122,7 +147,7 @@ describe(`Gets field value based on current locale`, () => {
       })
     ).toBe(field[`de`])
   })
-  it(`falls back to the default locale if passed a locale that doesn't have a field nor a fallbackCode`, () => {
+  it(`returns null if passed a locale that doesn't have a field nor a fallbackCode`, () => {
     expect(
       normalize.getLocalizedField({
         field,
@@ -132,7 +157,7 @@ describe(`Gets field value based on current locale`, () => {
           fallbackCode: `null`,
         },
       })
-    ).toBe(field[`en-US`])
+    ).toEqual(null)
   })
 })
 

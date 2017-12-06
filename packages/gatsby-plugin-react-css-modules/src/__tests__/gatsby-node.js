@@ -17,7 +17,7 @@ describe(`gatsby-plugin-react-css-modules`, () => {
 
   it(`includes custom options when modifying babelrc`, () => {
     const options = {
-      exclude: `\/global\/`,
+      exclude: `/global/`,
       filetypes: {
         ".scss": { syntax: `postcss-scss` },
       },

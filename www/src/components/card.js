@@ -7,6 +7,7 @@ const Card = ({ children }) => (
     css={{
       boxSizing: `border-box`,
       display: `flex`,
+      transform: `translateZ(0)`,
       [presets.Tablet]: {
         flex: `0 0 50%`,
         maxWidth: `50%`,
@@ -35,6 +36,7 @@ const Card = ({ children }) => (
       css={{
         padding: rhythm(presets.gutters.default / 2),
         paddingBottom: 0,
+        transform: `translateZ(0)`,
         [presets.Mobile]: {
           padding: vP,
           paddingBottom: 0,

@@ -66,11 +66,14 @@ const fetchResource = (resourceName, cb = () => {}) => {
     })
   } else {
     // Find resource
-    const resourceFunction =
-      resourceName.slice(0, 12) === `component---`
-        ? asyncRequires.components[resourceName] ||
-          asyncRequires.layouts[resourceName]
-        : asyncRequires.json[resourceName]
+    let resourceFunction
+    if (resourceName.slice(0, 12) === `component---`) {
+      resourceFunction = asyncRequires.components[resourceName]
+    } else if (resourceName.slice(0, 9) === `layout---`) {
+      resourceFunction = asyncRequires.layouts[resourceName]
+    } else {
+      resourceFunction = asyncRequires.json[resourceName]
+    }
 
     // Download the resource
     resourceFunction((err, executeChunk) => {
@@ -222,10 +225,15 @@ const queue = {
         navigator.serviceWorker
           .getRegistrations()
           .then(function(registrations) {
-            for (let registration of registrations) {
-              registration.unregister()
+            // We would probably need this to
+            // prevent unnecessary reloading of the page
+            // while unregistering of ServiceWorker is not happening
+            if (registrations.length) {
+              for (let registration of registrations) {
+                registration.unregister()
+              }
+              window.location.reload()
             }
-            window.location.reload()
           })
       }
     }
@@ -234,11 +242,11 @@ const queue = {
     // so we just return with it immediately.
     if (process.env.NODE_ENV !== `production`) {
       const page = findPage(path)
-      if (!page) return
+      if (!page) return cb()
       const pageResources = {
         component: syncRequires.components[page.componentChunkName],
         json: syncRequires.json[page.jsonName],
-        layout: syncRequires.layouts[page.layoutComponentChunkName],
+        layout: syncRequires.layouts[page.layout],
         page,
       }
       cb(pageResources)
@@ -249,7 +257,7 @@ const queue = {
 
       if (!page) {
         console.log(`A page wasn't found for "${path}"`)
-        return
+        return cb()
       }
 
       // Use the path from the page so the pathScriptsCache uses
@@ -278,8 +286,8 @@ const queue = {
       // we move on.
       const done = () => {
         if (component && json && (!page.layoutComponentChunkName || layout)) {
-          pathScriptsCache[path] = { component, json, layout }
-          const pageResources = { component, json, layout }
+          pathScriptsCache[path] = { component, json, layout, page }
+          const pageResources = { component, json, layout, page }
           cb(pageResources)
           emitter.emit(`onPostLoadPageResources`, {
             page,
@@ -303,7 +311,7 @@ const queue = {
       })
 
       page.layoutComponentChunkName &&
-        getResourceModule(page.layoutComponentChunkName, (err, l) => {
+        getResourceModule(page.layout, (err, l) => {
           if (err) {
             console.log(`Loading the Layout for ${page.path} failed`)
           }
@@ -319,4 +327,8 @@ const queue = {
   indexOf: path => pathArray.length - pathArray.indexOf(path) - 1,
 }
 
-module.exports = queue
+export const publicLoader = {
+  getResourcesForPathname: queue.getResourcesForPathname,
+}
+
+export default queue

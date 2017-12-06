@@ -1,0 +1,17 @@
+{
+  "name": "using-styled-jsx",
+  "private": true,
+  "description": "Gatsby example site using using-styled-jsx",
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "dependencies": {
+    "gatsby": "latest",
+    "gatsby-link": "latest",
+    "gatsby-plugin-styled-jsx": "^1.0.7"
+  },
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build"
+  }
+}

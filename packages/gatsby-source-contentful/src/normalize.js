@@ -12,12 +12,12 @@ const typePrefix = `Contentful`
 const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 
 const getLocalizedField = ({ field, defaultLocale, locale }) => {
-  if (field[locale.code]) {
+  if (!_.isUndefined(field[locale.code])) {
     return field[locale.code]
-  } else if (field[locale.fallbackCode]) {
+  } else if (!_.isUndefined(field[locale.fallbackCode])) {
     return field[locale.fallbackCode]
   } else {
-    return field[defaultLocale]
+    return null
   }
 }
 
@@ -29,10 +29,12 @@ exports.getLocalizedField = getLocalizedField
 // If the id starts with a number, left-pad it with a c (for Contentful of
 // course :-))
 const fixId = id => {
+  if (!_.isString(id)) {
+    id = id.toString()
+  }
   if (!isNaN(id.slice(0, 1))) {
     return `c${id}`
   }
-
   return id
 }
 exports.fixId = fixId
@@ -160,6 +162,28 @@ function createTextNode(node, key, text, createNode) {
 }
 exports.createTextNode = createTextNode
 
+function createJSONNode(node, key, content, createNode) {
+  const str = JSON.stringify(content)
+  const JSONNode = {
+    ...content,
+    id: `${node.id}${key}JSONNode`,
+    parent: node.id,
+    children: [],
+    internal: {
+      type: _.camelCase(`${node.internal.type} ${key} JSONNode`),
+      mediaType: `application/json`,
+      content: str,
+      contentDigest: digest(str),
+    },
+  }
+
+  node.children = node.children.concat([JSONNode.id])
+  createNode(JSONNode)
+
+  return JSONNode.id
+}
+exports.createJSONNode = createJSONNode
+
 exports.createContentTypeNodes = ({
   contentTypeItem,
   restrictedNodeFields,
@@ -182,7 +206,9 @@ exports.createContentTypeNodes = ({
       const fieldName = contentTypeItemField.id
       if (restrictedNodeFields.includes(fieldName)) {
         console.log(
-          `Restricted field found for ContentType ${contentTypeItemId} and field ${fieldName}. Prefixing with ${conflictFieldPrefix}.`
+          `Restricted field found for ContentType ${
+            contentTypeItemId
+          } and field ${fieldName}. Prefixing with ${conflictFieldPrefix}.`
         )
         conflictFields.push(fieldName)
       }
@@ -253,6 +279,8 @@ exports.createContentTypeNodes = ({
 
       let entryNode = {
         id: mId(entryItem.sys.id),
+        createdAt: entryItem.sys.createdAt,
+        updatedAt: entryItem.sys.updatedAt,
         parent: contentTypeItemId,
         children: [],
         internal: {
@@ -295,6 +323,15 @@ exports.createContentTypeNodes = ({
           )
 
           delete entryItemFields[entryItemFieldKey]
+        } else if (fieldType === `Object`) {
+          entryItemFields[`${entryItemFieldKey}___NODE`] = createJSONNode(
+            entryNode,
+            entryItemFieldKey,
+            entryItemFields[entryItemFieldKey],
+            createNode
+          )
+
+          delete entryItemFields[entryItemFieldKey]
         }
       })
 
@@ -311,7 +348,7 @@ exports.createContentTypeNodes = ({
     // Create a node for each content type
     const contentTypeNode = {
       id: contentTypeItemId,
-      parent: `__SOURCE__`,
+      parent: null,
       children: [],
       name: contentTypeItem.name,
       displayField: contentTypeItem.displayField,
@@ -348,7 +385,9 @@ exports.createAssetNodes = ({
     //
     // Get localized fields.
     localizedAsset.fields = {
-      file: getField(localizedAsset.fields.file),
+      file: localizedAsset.fields.file
+        ? getField(localizedAsset.fields.file)
+        : null,
       title: localizedAsset.fields.title
         ? getField(localizedAsset.fields.title)
         : ``,
@@ -358,7 +397,7 @@ exports.createAssetNodes = ({
     }
     const assetNode = {
       id: mId(localizedAsset.sys.id),
-      parent: `__SOURCE__`,
+      parent: null,
       children: [],
       ...localizedAsset.fields,
       node_locale: locale.code,

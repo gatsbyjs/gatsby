@@ -15,6 +15,7 @@ export const gatsbyConfigSchema = Joi.object().keys({
 export const layoutSchema = Joi.object()
   .keys({
     id: Joi.string().required(),
+    machineId: Joi.string().required(),
     component: Joi.string().required(),
     componentWrapperPath: Joi.string().required(),
     componentChunkName: Joi.string().required(),
@@ -38,10 +39,16 @@ export const pageSchema = Joi.object()
 export const nodeSchema = Joi.object()
   .keys({
     id: Joi.string().required(),
-    children: Joi.array(Joi.string()).required(),
+    children: Joi.array()
+      .items(Joi.string(), Joi.object().forbidden())
+      .required(),
     parent: Joi.string()
       .allow(null)
-      .required(),
+      .required()
+      .error(
+        () =>
+          `"parent" must be the "id" of another node or if there is no parent (common), "null"`
+      ),
     fields: Joi.object(),
     internal: Joi.object().keys({
       contentDigest: Joi.string().required(),
@@ -49,7 +56,7 @@ export const nodeSchema = Joi.object()
       type: Joi.string().required(),
       owner: Joi.string().required(),
       fieldOwners: Joi.array(),
-      content: Joi.string().allow(""),
+      content: Joi.string().allow(``),
     }),
   })
   .unknown()

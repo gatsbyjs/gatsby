@@ -51,16 +51,16 @@ plugins: [
                 description: edge.node.excerpt,
                 url: site.siteMetadata.siteUrl + edge.node.fields.slug,
                 guid: site.siteMetadata.siteUrl + edge.node.fields.slug,
-                custom_elements: [{ 'content:encoded': edge.node.html }],
-              });
-            });
+                custom_elements: [{ "content:encoded": edge.node.html }],
+              })
+            })
           },
           query: `
             {
               allMarkdownRemark(
                 limit: 1000,
                 sort: { order: DESC, fields: [frontmatter___date] },
-                frontmatter: { draft: { ne: true } }
+                filter: {frontmatter: { draft: { ne: true } }}
               ) {
                 edges {
                   node {
@@ -76,10 +76,10 @@ plugins: [
               }
             }
           `,
-          output: '/rss.xml'
-        }
-      ]
-    }
-  }
+          output: "/rss.xml",
+        },
+      ],
+    },
+  },
 ]
 ```

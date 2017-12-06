@@ -1,0 +1,21 @@
+{
+  "name": "gatsby-example-redux",
+  "private": true,
+  "description": "Gatsby example site that shows use of redux.",
+  "version": "1.0.0",
+  "author": "Scotty Eckenthal <scott.eckenthal@gmail.com>",
+  "dependencies": {
+    "gatsby": "latest",
+    "gatsby-link": "latest",
+    "react-redux": "5.0.5",
+    "redux": "3.6.0"
+  },
+  "keywords": ["gatsby"],
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve"
+  }
+}

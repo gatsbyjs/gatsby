@@ -13,7 +13,7 @@ exports.sourceNodes = async ({
   getNode,
   hasNodeChanged,
 }) => {
-  const { createNode, updateSourcePluginStatus } = boundActionCreators
+  const { createNode } = boundActionCreators
 
   // Do the initial fetch
   console.time(`fetch HN data`)
@@ -161,8 +161,6 @@ fragment commentsFragment on HackerNewsItem {
 
     createCommentNodes(kids.kids, story.id)
   })
-
-  const ready = true
 
   return
 }

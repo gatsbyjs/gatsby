@@ -19,7 +19,7 @@ class IndexRoute extends React.Component {
         <h2>Using the Gatsby CLI</h2>
         <ol>
           <li>
-            Create a new site (with the blog starter).
+            Create a new site.
             {` `}
             <code>gatsby new gatsby-site</code>
           </li>

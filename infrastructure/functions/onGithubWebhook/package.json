@@ -1,0 +1,17 @@
+{
+  "name": "ongithubwebhook",
+  "version": "1.0.0",
+  "description": "",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.17.0",
+    "flat": "^4.0.0",
+    "graphql-request": "^1.4.0",
+    "libhoney": "^1.0.0-beta.10"
+  }
+}

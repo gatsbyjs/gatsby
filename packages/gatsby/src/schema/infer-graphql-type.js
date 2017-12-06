@@ -18,7 +18,7 @@ const normalize = require(`normalize-path`)
 const systemPath = require(`path`)
 const { oneLine } = require(`common-tags`)
 
-const { store, getNode, getNodes } = require(`../redux`)
+const { store, getNode, getNodes, getRootNodeId } = require(`../redux`)
 const { joinPath } = require(`../utils/path`)
 const { createPageDependency } = require(`../redux/actions/add-page-dependency`)
 const createTypeName = require(`./create-type-name`)
@@ -67,13 +67,13 @@ function inferGraphQLType({
   selector,
   ...otherArgs
 }): ?GraphQLFieldConfig<*, *> {
-  if (exampleValue == null || isEmptyObjectOrArray(exampleValue)) return
+  if (exampleValue == null || isEmptyObjectOrArray(exampleValue)) return null
   let fieldName = selector.split(`.`).pop()
 
   if (Array.isArray(exampleValue)) {
     exampleValue = exampleValue[0]
 
-    if (exampleValue == null) return
+    if (exampleValue == null) return null
 
     let headType
     // If the array contains objects, than treat them as "nodes"
@@ -127,21 +127,33 @@ function inferGraphQLType({
             measurement years, months, weeks, days, hours, minutes,
             and seconds.`,
         },
+        locale: {
+          type: GraphQLString,
+          description: oneLine`
+            Configures the locale Moment.js will use to format the date.
+          `,
+        },
       },
-      resolve(object, { fromNow, difference, formatString }) {
+      resolve(object, { fromNow, difference, formatString, locale = `en` }) {
         let date
         if (object[fieldName]) {
           date = JSON.parse(JSON.stringify(object[fieldName]))
         } else {
-          return
+          return null
         }
         if (formatString) {
-          return moment.utc(date, ISO_8601_FORMAT, true).format(formatString)
+          return moment
+            .utc(date, ISO_8601_FORMAT, true)
+            .locale(locale)
+            .format(formatString)
         } else if (fromNow) {
-          return moment.utc(date, ISO_8601_FORMAT, true).fromNow()
+          return moment
+            .utc(date, ISO_8601_FORMAT, true)
+            .locale(locale)
+            .fromNow()
         } else if (difference) {
           return moment().diff(
-            moment.utc(date, ISO_8601_FORMAT, true),
+            moment.utc(date, ISO_8601_FORMAT, true).locale(locale),
             difference
           )
         } else {
@@ -187,7 +199,7 @@ function inferFromMapping(
   )
   if (_.isEmpty(matchedTypes)) {
     console.log(`Couldn't find a matching node type for "${fieldSelector}"`)
-    return
+    return null
   }
 
   const findNode = (fieldValue, path) => {
@@ -200,6 +212,7 @@ function inferFromMapping(
       createPageDependency({ path, nodeId: linkedNode.id })
       return linkedNode
     }
+    return null
   }
 
   if (_.isArray(value)) {
@@ -242,11 +255,10 @@ function findLinkedNode(value, linkedField, path) {
   }
 
   if (linkedNode) {
-    if (path) {
-      createPageDependency({ path, nodeId: linkedNode.id })
-    }
+    if (path) createPageDependency({ path, nodeId: linkedNode.id })
     return linkedNode
   }
+  return null
 }
 
 function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
@@ -275,8 +287,9 @@ function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
       field,
       oneLine`
         Encountered an error trying to infer a GraphQL type for: "${selector}".
-        There is no corresponding GraphQL type "${linkedNode.internal
-          .type}" available
+        There is no corresponding GraphQL type "${
+          linkedNode.internal.type
+        }" available
         to link to this node.
       `
     )
@@ -296,9 +309,9 @@ function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
     if (fields.length > 1) {
       type = new GraphQLUnionType({
         name: `Union_${key}_${fields.map(f => f.name).join(`__`)}`,
-        description: `Union interface for the field "${key}" for types [${fields
-          .map(f => f.name)
-          .join(`, `)}]`,
+        description: `Union interface for the field "${
+          key
+        }" for types [${fields.map(f => f.name).join(`, `)}]`,
         types: fields.map(f => f.nodeObjectType),
         resolveType: data =>
           fields.find(f => f.name == data.internal.type).nodeObjectType,
@@ -344,12 +357,17 @@ function findRootNode(node) {
   // Find the root node.
   let rootNode = node
   let whileCount = 0
+  let rootNodeId
   while (
-    rootNode.parent &&
-    getNode(rootNode.parent) !== undefined &&
+    (rootNodeId = getRootNodeId(rootNode) || rootNode.parent) &&
+    (getNode(rootNode.parent) !== undefined || getNode(rootNodeId)) &&
     whileCount < 101
   ) {
-    rootNode = getNode(rootNode.parent)
+    if (rootNodeId) {
+      rootNode = getNode(rootNodeId)
+    } else {
+      rootNode = getNode(rootNode.parent)
+    }
     whileCount += 1
     if (whileCount > 100) {
       console.log(
@@ -363,13 +381,6 @@ function findRootNode(node) {
 }
 
 function shouldInferFile(nodes, key, value) {
-  // Find the node used for this example.
-  const node = nodes.find(n => _.get(n, key) === value)
-
-  if (!node) {
-    return false
-  }
-
   const looksLikeFile =
     _.isString(value) &&
     mime.lookup(value) !== `application/octet-stream` &&
@@ -380,6 +391,67 @@ function shouldInferFile(nodes, key, value) {
 
   if (!looksLikeFile) {
     return false
+  }
+
+  // Find the node used for this example.
+  let node = nodes.find(n => _.get(n, key) === value)
+
+  if (!node) {
+    // Try another search as our "key" isn't always correct e.g.
+    // it doesn't support arrays so the right key could be "a.b[0].c" but
+    // this function will get "a.b.c".
+    //
+    // We loop through every value of nodes until we find
+    // a match.
+    const visit = (current, selector = [], fn) => {
+      for (let i = 0, keys = Object.keys(current); i < keys.length; i++) {
+        const key = keys[i]
+        const value = current[key]
+
+        if (value === undefined || value === null) continue
+
+        if (typeof value === `object` || typeof value === `function`) {
+          visit(current[key], selector.concat([key]), fn)
+          continue
+        }
+
+        let proceed = fn(current[key], key, selector, current)
+
+        if (proceed === false) {
+          break
+        }
+      }
+    }
+
+    const isNormalInteger = str => /^\+?(0|[1-9]\d*)$/.test(str)
+
+    node = nodes.find(n => {
+      let isMatch = false
+      visit(n, [], (v, k, selector, parent) => {
+        if (v === value) {
+          // Remove integers as they're for arrays, which our passed
+          // in object path doesn't have.
+          const normalizedSelector = selector
+            .map(s => (isNormalInteger(s) ? `` : s))
+            .filter(s => s !== ``)
+          const fullSelector = `${normalizedSelector.join(`.`)}.${k}`
+          if (fullSelector === key) {
+            isMatch = true
+            return false
+          }
+        }
+
+        // Not a match so we continue
+        return true
+      })
+
+      return isMatch
+    })
+
+    // Still no node.
+    if (!node) {
+      return false
+    }
   }
 
   const rootNode = findRootNode(node)
@@ -399,13 +471,15 @@ function shouldInferFile(nodes, key, value) {
 
 // Look for fields that are pointing at a file — if the field has a known
 // extension then assume it should be a file field.
-function inferFromUri(key, types) {
+function inferFromUri(key, types, isArray) {
   const fileField = types.find(type => type.name === `File`)
 
-  if (!fileField) return
+  if (!fileField) return null
 
   return {
-    type: fileField.nodeObjectType,
+    type: isArray
+      ? new GraphQLList(fileField.nodeObjectType)
+      : fileField.nodeObjectType,
     resolve: (node, a, { path }) => {
       const fieldValue = node[key]
 
@@ -413,30 +487,38 @@ function inferFromUri(key, types) {
         return null
       }
 
-      // Find File node for this node (we assume the node is something
+      const findLinkedFileNode = relativePath => {
+        // Use the parent File node to create the absolute path to
+        // the linked file.
+        const fileLinkPath = normalize(
+          systemPath.resolve(parentFileNode.dir, relativePath)
+        )
+
+        // Use that path to find the linked File node.
+        const linkedFileNode = _.find(
+          getNodes(),
+          n => n.internal.type === `File` && n.absolutePath === fileLinkPath
+        )
+        if (linkedFileNode) {
+          createPageDependency({
+            path,
+            nodeId: linkedFileNode.id,
+          })
+          return linkedFileNode
+        } else {
+          return null
+        }
+      }
+
+      // Find the File node for this node (we assume the node is something
       // like markdown which would be a child node of a File node).
       const parentFileNode = findRootNode(node)
 
-      // Use the parent File node to create the absolute path to
-      // the linked file.
-      const fileLinkPath = normalize(
-        systemPath.resolve(parentFileNode.dir, fieldValue)
-      )
-
-      // Use that path to find the linked File node.
-      const linkedFileNode = _.find(
-        getNodes(),
-        n => n.internal.type === `File` && n.absolutePath === fileLinkPath
-      )
-
-      if (linkedFileNode) {
-        createPageDependency({
-          path,
-          nodeId: linkedFileNode.id,
-        })
-        return linkedFileNode
+      // Find the linked File node(s)
+      if (isArray) {
+        return fieldValue.map(relativePath => findLinkedFileNode(relativePath))
       } else {
-        return null
+        return findLinkedFileNode(fieldValue)
       }
     },
   }
@@ -495,12 +577,17 @@ export function inferObjectStructureFromNodes({
       ;[fieldName] = key.split(`___`)
       inferredField = inferFromFieldName(value, nextSelector, types)
 
-      // Third if the field is pointing to a file (from another file).
+      // Third if the field (whether a string or array of string(s)) is
+      // pointing to a file (from another file).
     } else if (
       nodes[0].internal.type !== `File` &&
-      shouldInferFile(nodes, nextSelector, value)
+      ((_.isString(value) && shouldInferFile(nodes, nextSelector, value)) ||
+        (_.isArray(value) &&
+          value.length === 1 &&
+          _.isString(value[0]) &&
+          shouldInferFile(nodes, `${nextSelector}[0]`, value[0])))
     ) {
-      inferredField = inferFromUri(key, types)
+      inferredField = inferFromUri(key, types, _.isArray(value))
     }
 
     // Finally our automatic inference of field value type.

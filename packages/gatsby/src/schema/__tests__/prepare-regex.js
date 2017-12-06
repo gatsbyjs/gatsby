@@ -8,6 +8,6 @@ describe(`Prepare regex for Sift.js`, () => {
     expect(prepareRegex(`/blue/i`)).toMatchSnapshot()
   })
   it(`handles slashes`, () => {
-    expect(prepareRegex(`/bl\/ue/i`)).toMatchSnapshot()
+    expect(prepareRegex(`/bl/ue/i`)).toMatchSnapshot()
   })
 })

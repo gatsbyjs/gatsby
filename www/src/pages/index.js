@@ -19,9 +19,8 @@ import FuturaParagraph from "../components/futura-paragraph"
 import CtaButton from "../components/cta-button"
 import TechWithIcon from "../components/tech-with-icon"
 
-const IndexRoute = React.createClass({
+class IndexRoute extends React.Component {
   render() {
-    console.log(this.props)
     const blogPosts = this.props.data.allMarkdownRemark
     return (
       <div css={{ position: `relative` }}>
@@ -178,6 +177,12 @@ const IndexRoute = React.createClass({
                       css={{ marginBottom: rhythm(2) }}
                     />
                   ))}
+                  <CtaButton
+                    to="/blog/"
+                    overrideCSS={{ marginBottom: rhythm(2) }}
+                  >
+                    Read More
+                  </CtaButton>
                 </Container>
               </div>
             </Cards>
@@ -185,8 +190,8 @@ const IndexRoute = React.createClass({
         </div>
       </div>
     )
-  },
-})
+  }
+}
 
 export default IndexRoute
 
@@ -199,7 +204,7 @@ export const pageQuery = graphql`
     }
     file(relativePath: { eq: "gatsby-explanation.png" }) {
       childImageSharp {
-        responsiveSizes(maxWidth: 870) {
+        sizes(maxWidth: 870) {
           src
           srcSet
           sizes
@@ -211,7 +216,7 @@ export const pageQuery = graphql`
       limit: 3
       filter: {
         frontmatter: { draft: { ne: true } }
-        fileAbsolutePath: { regex: "/blog/" }
+        fileAbsolutePath: { regex: "/docs.blog/" }
       }
     ) {
       edges {

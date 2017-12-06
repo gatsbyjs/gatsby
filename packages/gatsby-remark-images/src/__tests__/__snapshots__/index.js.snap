@@ -1,17 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`it transforms HTML img tags 1`] = `
-"<html><head></head><body>
+"
   <a class=\\"gatsby-resp-image-link\\" href=\\"not-a-real-dir/image/my-image.jpeg\\" style=\\"display: block\\" target=\\"_blank\\" rel=\\"noopener\\">
   
   <span class=\\"gatsby-resp-image-wrapper\\" style=\\"position: relative; display: block; ; max-width: 300px; margin-left: auto; margin-right: auto;\\">
     <span class=\\"gatsby-resp-image-background-image\\" style=\\"padding-bottom: 133.33333333333331%; position: relative; bottom: 0; left: 0; background-image: url(&apos;url(&apos;data:image/png;base64, iVBORw)&apos;); background-size: cover; display: block;\\">
-      <img class=\\"gatsby-resp-image-image\\" style=\\"width: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;\\" alt=\\"my image\\" title=\\"\\" src=\\"not-a-real-dir/image/my-image.jpeg\\" srcset=\\"not-a-real-dir/image/my-image.jpeg, not-a-real-dir/image/my-image.jpeg\\" sizes=\\"(max-width: 650px) 100vw, 650px\\">
+      <img class=\\"gatsby-resp-image-image\\" style=\\"width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;\\" alt=\\"my image\\" title=\\"\\" src=\\"not-a-real-dir/image/my-image.jpeg\\" srcset=\\"not-a-real-dir/image/my-image.jpeg, not-a-real-dir/image/my-image.jpeg\\" sizes=\\"(max-width: 650px) 100vw, 650px\\">
     </span>
   </span>
   
   </a>
-    </body></html>"
+    "
 `;
 
 exports[`it transforms images in markdown 1`] = `
@@ -34,7 +34,7 @@ exports[`it transforms images in markdown 1`] = `
     >
       <img
         class=\\"gatsby-resp-image-image\\"
-        style=\\"width: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;\\"
+        style=\\"width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;\\"
         alt=\\"image\\"
         title=\\"\\"
         src=\\"not-a-real-dir/images/my-image.jpeg\\"

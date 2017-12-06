@@ -1,4 +1,4 @@
-const { actions, boundActions } = require(`../actions`)
+const { actions } = require(`../actions`)
 const statusReducer = require(`../reducers/status`)
 
 Date.now = jest.fn(() => 1482363367071)

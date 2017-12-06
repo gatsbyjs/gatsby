@@ -85,6 +85,7 @@ export default ({ pathname }) => {
 
   return (
     <div
+      role="navigation"
       css={{
         borderBottom: `1px solid ${presets.veryLightPurple}`,
         backgroundColor: `rgba(255,255,255,0.975)`,
@@ -106,7 +107,6 @@ export default ({ pathname }) => {
           paddingLeft: rhythm(3 / 4),
           paddingRight: rhythm(3 / 4),
           ...gutters,
-          transition: `padding .1s ease-out`,
           fontFamily: typography.options.headerFontFamily.join(`,`),
           display: `flex`,
           alignItems: `center`,
@@ -133,6 +133,7 @@ export default ({ pathname }) => {
               marginRight: rhythm(2 / 4),
               verticalAlign: `middle`,
             }}
+            alt=""
           />
           <h1
             css={{
@@ -159,6 +160,7 @@ export default ({ pathname }) => {
           <NavItem linkTo="/docs/">Docs</NavItem>
           <NavItem linkTo="/tutorial/">Tutorial</NavItem>
           <NavItem linkTo="/community/">Community</NavItem>
+          <NavItem linkTo="/features/">Features</NavItem>
           <NavItem linkTo="/blog/">Blog</NavItem>
         </ul>
         <div
@@ -171,7 +173,7 @@ export default ({ pathname }) => {
         >
           <a
             href="https://github.com/gatsbyjs/gatsby"
-            title="Github"
+            title="GitHub"
             css={{
               ...navItemStyles,
               ...socialIconsStyles,

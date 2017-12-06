@@ -86,6 +86,8 @@ module.exports = async (
           path: directory,
           filename: `[name].js`,
           publicPath: `http://${program.host}:${webpackPort}/`,
+          devtoolModuleFilenameTemplate: info =>
+            path.resolve(info.absoluteResourcePath).replace(/\\/g, `/`),
         }
       case `build-css`:
         // Webpack will always generate a resultant javascript file.
@@ -129,9 +131,9 @@ module.exports = async (
         return {
           commons: [
             require.resolve(`react-hot-loader/patch`),
-            `${require.resolve(
-              `webpack-hot-middleware/client`
-            )}?path=http://${program.host}:${webpackPort}/__webpack_hmr&reload=true`,
+            `${require.resolve(`webpack-hot-middleware/client`)}?path=http://${
+              program.host
+            }:${webpackPort}/__webpack_hmr&reload=true&overlay=false`,
             directoryPath(`.cache/app`),
           ],
         }
@@ -176,12 +178,12 @@ module.exports = async (
           new webpack.NamedModulesPlugin(),
           new FriendlyErrorsWebpackPlugin({
             clearConsole: false,
-            compilationSuccessInfo: {
-              messages: [
-                `Your site is running at http://localhost:${program.port}`,
-                `Your graphql debugger is running at http://localhost:${program.port}/___graphql`,
-              ],
-            },
+            // compilationSuccessInfo: {
+            // messages: [
+            // `You can now view your site in the browser running at http://${program.host}:${program.port}`,
+            // `Your graphql debugger is running at http://${program.host}:${program.port}/___graphql`,
+            // ],
+            // },
           }),
         ]
       case `develop-html`:
@@ -259,8 +261,8 @@ module.exports = async (
                 `fbjs`,
                 `react-router`,
                 `react-router-dom`,
-                `react-router-scroll`,
-                `dom-helpers`, // Used in react-router-scroll
+                `gatsby-react-router-scroll`,
+                `dom-helpers`, // Used in gatsby-react-router-scroll
                 `path-to-regexp`,
                 `isarray`, // Used by path-to-regexp.
                 `scroll-behavior`,
@@ -277,7 +279,7 @@ module.exports = async (
               ]
               const isFramework = some(
                 vendorModuleList.map(vendor => {
-                  const regex = new RegExp(`\/node_modules\/${vendor}\/.*`, `i`)
+                  const regex = new RegExp(`/node_modules/${vendor}/.*`, `i`)
                   return regex.test(module.resource)
                 })
               )
@@ -323,7 +325,6 @@ module.exports = async (
           new webpack.optimize.OccurenceOrderPlugin(),
           new GatsbyModulePlugin(),
           // new WebpackStableModuleIdAndHash({ seed: 9, hashSize: 47 }),
-          new webpack.NamedModulesPlugin(),
           new HashedChunkIdsPlugin(),
         ]
       }
@@ -345,7 +346,7 @@ module.exports = async (
       modulesDirectories: [
         `node_modules`,
         directoryPath(`node_modules`),
-        directoryPath(`node_modules`, `gatsby/node_modules`),
+        directoryPath(`node_modules`, `gatsby`, `node_modules`),
       ],
     }
   }

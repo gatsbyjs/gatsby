@@ -69,13 +69,12 @@ const ImageCropFocusType = new GraphQLEnumType({
 const isImage = image =>
   _.includes(
     [`image/jpeg`, `image/jpg`, `image/png`, `image/webp`, `image/gif`],
-    image.file.contentType
+    _.get(image, `file.contentType`)
   )
 
 const getBase64Image = (imgUrl, args = {}) => {
   const requestUrl = `https:${imgUrl}?w=20`
   // TODO add caching.
-  const urlArgs = { width: 20, height: 20 / args.aspectRatio }
   return new Promise(resolve => {
     base64Img.requestBase64(requestUrl, (a, b, body) => {
       resolve(body)
@@ -122,25 +121,11 @@ const createUrl = (imgUrl, options = {}) => {
 exports.createUrl = createUrl
 
 const resolveResponsiveResolution = (image, options) => {
-  if (isImage(image)) {
-    return new Promise(resolve => {
-      getBase64ImageAndBasicMeasurements(
-        image,
-        options
-      ).then(({ contentType, base64Str, width, height, aspectRatio }) => {
-        // Special case handling gifs. Contentful's image api can't handle
-        // them so we just return them as is.
-        if (contentType === `image/gif`) {
-          return resolve({
-            base64: ``,
-            aspectRatio: aspectRatio,
-            width: Math.round(options.width),
-            height: Math.round(pickedHeight),
-            src: image.file.url,
-            srcSet: ``,
-          })
-        }
+  if (!isImage(image)) return null
 
+  return new Promise(resolve => {
+    getBase64ImageAndBasicMeasurements(image, options).then(
+      ({ contentType, base64Str, width, height, aspectRatio }) => {
         let desiredAspectRatio = aspectRatio
 
         // If we're cropping, calculate the specified aspect ratio.
@@ -148,14 +133,11 @@ const resolveResponsiveResolution = (image, options) => {
           desiredAspectRatio = options.width / options.height
         }
 
-        // If the user selected a height (so cropping) and options for focus
-        // and fit aren't set, we'll set our defaults
+        // If the user selected a height (so cropping) and fit option
+        // is not set, we'll set our defaults
         if (options.height) {
           if (!options.resizingBehavior) {
             options.resizingBehavior = `fill`
-          }
-          if (!options.cropFocus) {
-            options.cropFocus = `faces`
           }
         }
 
@@ -224,34 +206,18 @@ const resolveResponsiveResolution = (image, options) => {
           }),
           srcSet,
         })
-      })
-    })
-    return null
-  }
+      }
+    )
+  })
 }
 exports.resolveResponsiveResolution = resolveResponsiveResolution
 
 const resolveResponsiveSizes = (image, options) => {
-  if (isImage(image)) {
-    return new Promise(resolve => {
-      getBase64ImageAndBasicMeasurements(
-        image,
-        options
-      ).then(({ contentType, base64Str, width, height, aspectRatio }) => {
-        // Special case handling gifs. Contentful's image api can't handle
-        // them so we just return them as is.
-        if (contentType === `image/gif`) {
-          return resolve({
-            base64: ``,
-            srcSet: ``,
-            sizes: ``,
-            aspectRatio: aspectRatio,
-            width: Math.round(options.width),
-            height: Math.round(pickedHeight),
-            src: image.file.url,
-          })
-        }
+  if (!isImage(image)) return null
 
+  return new Promise(resolve => {
+    getBase64ImageAndBasicMeasurements(image, options).then(
+      ({ contentType, base64Str, width, height, aspectRatio }) => {
         let desiredAspectRatio = aspectRatio
 
         // If we're cropping, calculate the specified aspect ratio.
@@ -261,7 +227,9 @@ const resolveResponsiveSizes = (image, options) => {
 
         // If the users didn't set a default sizes, we'll make one.
         if (!options.sizes) {
-          options.sizes = `(max-width: ${options.maxWidth}px) 100vw, ${options.maxWidth}px`
+          options.sizes = `(max-width: ${options.maxWidth}px) 100vw, ${
+            options.maxWidth
+          }px`
         }
 
         // Create sizes (in width) for the image. If the max width of the container
@@ -292,7 +260,7 @@ const resolveResponsiveSizes = (image, options) => {
         // Create the srcSet.
         const srcSet = sortedSizes
           .map(width => {
-            const h = Math.round(width * desiredAspectRatio)
+            const h = Math.round(width / desiredAspectRatio)
             return `${createUrl(image.file.url, {
               ...options,
               width,
@@ -312,66 +280,49 @@ const resolveResponsiveSizes = (image, options) => {
           srcSet,
           sizes: options.sizes,
         })
-      })
-    })
-    return null
-  }
+      }
+    )
+  })
 }
 exports.resolveResponsiveSizes = resolveResponsiveSizes
 
-const resolveResize = (image, options) =>
-  new Promise(resolve => {
-    if (isImage(image)) {
-      getBase64ImageAndBasicMeasurements(
-        image,
-        options
-      ).then(({ contentType, base64Str, width, height, aspectRatio }) => {
-        // Special case handling gifs. Contentful's image api can't handle
-        // them so we just return them as is.
-        if (contentType === `image/gif`) {
-          return resolve({
-            base64: ``,
-            aspectRatio: aspectRatio,
-            width: Math.round(options.width),
-            height: Math.round(pickedHeight),
-            src: image.file.url,
-          })
-        }
+const resolveResize = (image, options) => {
+  if (!isImage(image)) return null
 
-        // If the user selected a height (so cropping) and options for focus
-        // and fit aren't set, we'll set our defaults
+  return new Promise(resolve => {
+    getBase64ImageAndBasicMeasurements(image, options).then(
+      ({ contentType, base64Str, width, height, aspectRatio }) => {
+        // If the user selected a height (so cropping) and fit option
+        // is not set, we'll set our defaults
         if (options.height) {
           if (!options.resizingBehavior) {
             options.resizingBehavior = `fill`
           }
-          if (!options.cropFocus) {
-            options.cropFocus = `faces`
-          }
         }
 
         if (options.base64) {
-          return resolve(base64Str)
-        } else {
-          const pickedWidth = options.width
-          let pickedHeight
-          if (options.height) {
-            pickedHeight = options.height
-          } else {
-            pickedHeight = pickedWidth / aspectRatio
-          }
-          resolve({
-            src: createUrl(image.file.url, options),
-            width: Math.round(pickedWidth),
-            height: Math.round(pickedHeight),
-            aspectRatio,
-            base64: base64Str,
-          })
+          resolve(base64Str)
+          return
         }
-      })
-    } else {
-      resolve()
-    }
+
+        const pickedWidth = options.width
+        let pickedHeight
+        if (options.height) {
+          pickedHeight = options.height
+        } else {
+          pickedHeight = pickedWidth / aspectRatio
+        }
+        resolve({
+          src: createUrl(image.file.url, options),
+          width: Math.round(pickedWidth),
+          height: Math.round(pickedHeight),
+          aspectRatio,
+          base64: base64Str,
+        })
+      }
+    )
   })
+}
 
 exports.resolveResize = resolveResize
 
@@ -381,7 +332,90 @@ exports.extendNodeType = ({ type }) => {
   }
 
   return {
+    resolutions: {
+      type: new GraphQLObjectType({
+        name: `ContentfulResolutions`,
+        fields: {
+          base64: { type: GraphQLString },
+          aspectRatio: { type: GraphQLFloat },
+          width: { type: GraphQLFloat },
+          height: { type: GraphQLFloat },
+          src: { type: GraphQLString },
+          srcSet: { type: GraphQLString },
+        },
+      }),
+      args: {
+        width: {
+          type: GraphQLInt,
+          defaultValue: 400,
+        },
+        height: {
+          type: GraphQLInt,
+        },
+        quality: {
+          type: GraphQLInt,
+          defaultValue: 50,
+        },
+        toFormat: {
+          type: ImageFormatType,
+          defaultValue: ``,
+        },
+        resizingBehavior: {
+          type: ImageResizingBehavior,
+        },
+        cropFocus: {
+          type: ImageCropFocusType,
+          defaultValue: null,
+        },
+      },
+      resolve(image, options, context) {
+        return resolveResponsiveResolution(image, options)
+      },
+    },
+    sizes: {
+      type: new GraphQLObjectType({
+        name: `ContentfulSizes`,
+        fields: {
+          base64: { type: GraphQLString },
+          aspectRatio: { type: GraphQLFloat },
+          src: { type: GraphQLString },
+          srcSet: { type: GraphQLString },
+          sizes: { type: GraphQLString },
+        },
+      }),
+      args: {
+        maxWidth: {
+          type: GraphQLInt,
+          defaultValue: 800,
+        },
+        maxHeight: {
+          type: GraphQLInt,
+        },
+        quality: {
+          type: GraphQLInt,
+          defaultValue: 50,
+        },
+        toFormat: {
+          type: ImageFormatType,
+          defaultValue: ``,
+        },
+        resizingBehavior: {
+          type: ImageResizingBehavior,
+        },
+        cropFocus: {
+          type: ImageCropFocusType,
+          defaultValue: null,
+        },
+        sizes: {
+          type: GraphQLString,
+        },
+      },
+      resolve(image, options, context) {
+        return resolveResponsiveSizes(image, options)
+      },
+    },
     responsiveResolution: {
+      deprecationReason: `We dropped the "responsive" part of the name to make it shorter https://github.com/gatsbyjs/gatsby/pull/2320/`,
       type: new GraphQLObjectType({
         name: `ContentfulResponsiveResolution`,
         fields: {
@@ -422,6 +456,7 @@ exports.extendNodeType = ({ type }) => {
       },
     },
     responsiveSizes: {
+      deprecationReason: `We dropped the "responsive" part of the name to make it shorter https://github.com/gatsbyjs/gatsby/pull/2320/`,
       type: new GraphQLObjectType({
         name: `ContentfulResponsiveSizes`,
         fields: {

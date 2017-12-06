@@ -13,6 +13,7 @@ function getAssignedIdenifier(path) {
     if (types.isVariableDeclarator(property.node)) return property.node.id.name
     property = property.parentPath
   }
+  return null
 }
 
 let fileCount = 0
