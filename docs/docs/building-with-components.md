@@ -6,7 +6,7 @@ title: Building with Components
 
 To use Gatsby, you will need a basic understanding of React components.
 
-The [official tutorial](https://facebook.github.io/react/tutorial/tutorial.html)
+The [official tutorial](https://reactjs.org/tutorial/tutorial.html)
 is a good place to start.
 
 ## Why React components?
