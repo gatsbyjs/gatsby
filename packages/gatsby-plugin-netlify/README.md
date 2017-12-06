@@ -1,7 +1,8 @@
 # gatsby-plugin-netlify
 
-Generates a `_headers` file and a `_redirects` file at the root of the public folder, to configure
+Automatically generates a `_headers` file and a `_redirects` file at the root of the public folder to configure
 [HTTP headers](https://www.netlify.com/docs/headers-and-basic-auth/) and [redirects](https://www.netlify.com/docs/redirects/) on Netlify.
+
 Notably, you can immediately enable HTTP/2 server push of critical Gatsby assets
 through the `Link` headers.
 
@@ -107,7 +108,7 @@ You can validate the `_headers` config through the
 
 ### Redirects
 
-You can create redirects using the [`createRedirect`](https://www.gatsbyjs.org/docs/bound-action-creators/#createRedirect) function. 
+You can create redirects using the [`createRedirect`](https://www.gatsbyjs.org/docs/bound-action-creators/#createRedirect) action. 
 
 An example:
 
