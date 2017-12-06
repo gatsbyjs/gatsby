@@ -50,8 +50,7 @@ project), `gatsby develop` (launch a hot-reload enabled web development server),
 etc.
 
 We can now begin the exciting task of _actually_ developing on the site, and
-creating a functional, modern blog. You'll generally want to use `gatsby
-develop` to launch the local development server to validate functionality as we
+creating a functional, modern blog. You'll generally want to use `gatsby develop` to launch the local development server to validate functionality as we
 progress through the steps.
 
 ## Adding necessary plugins
@@ -87,8 +86,7 @@ with the following command:
 yarn add gatsby-plugin-catch-links gatsby-plugin-react-helmet
 ```
 
-We're using [yarn][yarn], but npm can just as easily be used with `npm i --save
-[deps]`.
+We're using [yarn][yarn], but npm can just as easily be used with `npm i --save [deps]`.
 
 After installing each of these functional plugins, we'll edit
 `gatsby-config.js`, which Gatsby loads at build-time to implement the exposed

@@ -24,8 +24,7 @@ Open a terminal window. See
 [these instructions](http://www.macworld.co.uk/feature/mac-software/how-use-terminal-on-mac-3608274/)
 for Mac users and
 [these other instructions](https://www.quora.com/How-do-I-open-terminal-in-windows)
-for Windows users. In your terminal window, type `node --version` then `npm
---version`.
+for Windows users. In your terminal window, type `node --version` then `npm --version`.
 
 You should see something like:
 
@@ -71,8 +70,7 @@ cd tutorial-part-one
 gatsby develop
 ```
 
-You should see shortly some text that says `The development server is listening
-at:` [http://localhost:8000](http://localhost:8000). Open that address in your
+You should see shortly some text that says `The development server is listening at:` [http://localhost:8000](http://localhost:8000). Open that address in your
 browser and...
 
 ![Gatsby.js hello world](hello-world.png)

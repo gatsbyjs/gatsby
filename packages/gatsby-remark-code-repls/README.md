@@ -15,7 +15,7 @@ with [reactjs.org](https://github.com/reactjs/reactjs.org):
 * Examples (eg Codepens) were owned by a single author, so the community
   couldn't contribute PRs to update them without forking and fragmenting
   ownership.
-* It was easy to create invalid links (eg Babel REPL links that _don't quite
+* It was easy to create invalid links (eg Babel REPL links that \_don't quite
   work).
 
 ## Overview

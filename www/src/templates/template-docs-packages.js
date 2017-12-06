@@ -24,9 +24,7 @@ class DocsPackagesTemplate extends React.Component {
         </Helmet>
         <strong>
           <a
-            href={`https://github.com/gatsbyjs/gatsby/tree/master/packages/${
-              packageName
-            }`}
+            href={`https://github.com/gatsbyjs/gatsby/tree/master/packages/${packageName}`}
             css={{
               position: `absolute`,
             }}

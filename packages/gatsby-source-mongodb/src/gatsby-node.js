@@ -20,9 +20,9 @@ exports.sourceNodes = (
     authUrlPart = `${pluginOptions.auth.user}:${pluginOptions.auth.password}@`
 
   MongoClient.connect(
-    `mongodb://${authUrlPart}${serverOptions.address}:${serverOptions.port}/${
-      dbName
-    }`,
+    `mongodb://${authUrlPart}${serverOptions.address}:${
+      serverOptions.port
+    }/${dbName}`,
     function(err, db) {
       // Establish connection to db
       if (err) {

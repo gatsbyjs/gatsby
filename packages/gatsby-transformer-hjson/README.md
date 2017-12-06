@@ -26,11 +26,10 @@ or as single objects spread across multiple files.
 
 The algorithm for arrays is to convert each item in the array into a node.
 
-So if your project has a `letters.hjson` with `[{ value: a } { value: b } {
-value: c }]` then the following three nodes would be created.
+So if your project has a `letters.hjson` with `[{ value: a } { value: b } { value: c }]` then the following three nodes would be created.
 
 ```javascript
-[
+;[
   { value: "a", type: "Letters" },
   { value: "b", type: "Letters" },
   { value: "c", type: "Letters" },
@@ -68,7 +67,7 @@ value: c
 Then the following three nodes would be created.
 
 ```javascript
-[
+;[
   {
     value: "a",
     type: "Letters",

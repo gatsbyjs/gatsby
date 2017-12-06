@@ -742,7 +742,7 @@ Let's get started.
 So far, we've created pages by placing React components in `src/pages`. We'll
 now learn how to _programmatically_ create pages from _data_. Gatsby is _not_
 limited to making pages from files like many static site generators. Gatsby lets
-you use GraphQL to query your _data_ and _map_ the data to *pages*—all at build
+you use GraphQL to query your _data_ and _map_ the data to _pages_—all at build
 time. This is a really powerful idea. We'll be exploring its implications and
 ways to use it for the remainder of the tutorial.
 

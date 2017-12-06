@@ -101,9 +101,10 @@ exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
     )
 
     // create a new slug concatenating everything
-    const slug = `/${slugify(categories.concat([date]).join("-"), "/")}/${
-      title
-    }/`
+    const slug = `/${slugify(
+      categories.concat([date]).join("-"),
+      "/"
+    )}/${title}/`
 
     createNodeField({ node, name: `slug`, value: slug })
 

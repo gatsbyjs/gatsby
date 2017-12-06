@@ -6,29 +6,29 @@ WordPress sites using the
 
 An example site for this plugin is available.
 
--   [Demo](https://using-wordpress.gatsbyjs.org/)
--   [Example site source code](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress)
+* [Demo](https://using-wordpress.gatsbyjs.org/)
+* [Example site source code](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress)
 
 ## Features
 
--   Pulls data from self-hosted WordPress sites, hosted on wordpress.com or
-    wordpress.org
--   Should work with any number of article and post (tested on a site with 900
-    posts)
--   Can authenticate to wordpress.com's API using OAuth 2 so media can be queried
--   Easily create responsive images in Gatsby from WordPress images. See [image
-    processing](#image-processing) section.
+* Pulls data from self-hosted WordPress sites, hosted on wordpress.com or
+  wordpress.org
+* Should work with any number of article and post (tested on a site with 900
+  posts)
+* Can authenticate to wordpress.com's API using OAuth 2 so media can be queried
+* Easily create responsive images in Gatsby from WordPress images. See [image
+  processing](#image-processing) section.
 
 ## WordPress and custom entities
 
 This module currently pulls from WordPress the following entities:
 
--   [x] All entities are supported (posts, pages, tags, categories, media, types,
-        users, statuses, taxonomies, ...)
--   [x] Any new entity should be pulled as long the IDs are correct.
--   [x] [ACF Entities (Advanced Custom Fields)](https://www.advancedcustomfields.com/)
--   [x] Custom post types (any type you could have declared using WordPress'
-        `functions.php`)
+* [x] All entities are supported (posts, pages, tags, categories, media, types,
+      users, statuses, taxonomies, ...)
+* [x] Any new entity should be pulled as long the IDs are correct.
+* [x] [ACF Entities (Advanced Custom Fields)](https://www.advancedcustomfields.com/)
+* [x] Custom post types (any type you could have declared using WordPress'
+      `functions.php`)
 
 We welcome PRs adding support for data from other plugins.
 
@@ -93,32 +93,32 @@ plugins: [
 These plugins were tested. We welcome PRs adding support for data from other
 plugins.
 
--   [x] Custom Post Types : it will work seemlessly, no further option needs to be
-        activated. ("Show in REST API" setting needs to be set to true on the
-        custom post in the plugin settings for this to work. It's set to "false"
-        by default.)
+* [x] Custom Post Types : it will work seemlessly, no further option needs to be
+      activated. ("Show in REST API" setting needs to be set to true on the
+      custom post in the plugin settings for this to work. It's set to "false"
+      by default.)
 
--   [x] [ACF](https://www.advancedcustomfields.com/) The option `useACF: true`
-        must be activated in your site's `gatsby-config.js`.
+* [x] [ACF](https://www.advancedcustomfields.com/) The option `useACF: true`
+      must be activated in your site's `gatsby-config.js`.
 
-    -   You must have the plugin
-        [acf-to-rest-api](https://github.com/airesvsg/acf-to-rest-api) installed in
-        WordPress.
-    -   Will pull the `acf: { ... }` fields's contents from any entity which has it
-        attached (pages, posts, medias, ... you choose from in WordPress back-end
-        while creating a Group of Fields).
-    -   [ACF Pro](https://www.advancedcustomfields.com/pro/) same as ACF :
-    -   Will work with
-        [Flexible content](https://www.advancedcustomfields.com/resources/flexible-content/)
-        and premium stuff like that (repeater, gallery, ...).
-    -   Will pull the content attached to the
-        [options page](https://www.advancedcustomfields.com/add-ons/options-page/).
+  * You must have the plugin
+    [acf-to-rest-api](https://github.com/airesvsg/acf-to-rest-api) installed in
+    WordPress.
+  * Will pull the `acf: { ... }` fields's contents from any entity which has it
+    attached (pages, posts, medias, ... you choose from in WordPress back-end
+    while creating a Group of Fields).
+  * [ACF Pro](https://www.advancedcustomfields.com/pro/) same as ACF :
+  * Will work with
+    [Flexible content](https://www.advancedcustomfields.com/resources/flexible-content/)
+    and premium stuff like that (repeater, gallery, ...).
+  * Will pull the content attached to the
+    [options page](https://www.advancedcustomfields.com/add-ons/options-page/).
 
--   [x] [WP-API-MENUS](https://wordpress.org/plugins/wp-api-menus/) which gives
-        you the menus and menu locations endpoint.
+* [x] [WP-API-MENUS](https://wordpress.org/plugins/wp-api-menus/) which gives
+      you the menus and menu locations endpoint.
 
--   [x] [WPML-REST-API](https://github.com/shawnhooper/wpml-rest-api) which adds
-        the current locale and available translations to all post types.
+* [x] [WPML-REST-API](https://github.com/shawnhooper/wpml-rest-api) which adds
+      the current locale and available translations to all post types.
 
 ## How to use Gatsby with Wordpress.com hosting
 
@@ -181,23 +181,22 @@ Same thing for other type of entity (tag, media, categories, ...).
 In the following example, `${Manufacturer}` will be replaced by the endpoint
 prefix and `${Endpoint}` by the name of the endpoint.
 
-To know what's what, check the URL of the endpoint. You can set `verboseOutput:
-true` in order to get more information of what's executed by the source plugin
+To know what's what, check the URL of the endpoint. You can set `verboseOutput: true` in order to get more information of what's executed by the source plugin
 behind the scene.
 
 For example the following URL:
 `http://my-blog.wordpress.com/wp-json/acf/v2/options`
 
--   Manufacturer : `acf`
--   Endpoint : `options`
--   Final GraphQL Type : AllWordpressAcfOptions
+* Manufacturer : `acf`
+* Endpoint : `options`
+* Final GraphQL Type : AllWordpressAcfOptions
 
 For example the following URL:
 `http://my-blog.wordpress.com/wp-api-menus/v2/menu-locations`
 
--   Manufacturer : `wpapimenus`
--   Endpoint : `menulocations`
--   Final GraphQL Type : AllWordpressWpApiMenusMenuLocations
+* Manufacturer : `wpapimenus`
+* Endpoint : `menulocations`
+* Final GraphQL Type : AllWordpressWpApiMenusMenuLocations
 
 ```graphql
   allWordpress${Manufacturer}${Endpoint} {
@@ -330,11 +329,10 @@ To use image processing you need `gatsby-transformer-sharp` and
 
 You can apply image processing to:
 
--   featured images (also known as post thumbnails),
--   ACF fields:
-    -   Image field type (return value must be set to `Image Object` or `Image
-        URL` or field name must be `featured_media`),
-    -   Gallery field type.
+* featured images (also known as post thumbnails),
+* ACF fields:
+  * Image field type (return value must be set to `Image Object` or `Image URL` or field name must be `featured_media`),
+  * Gallery field type.
 
 Image processing of inline images added in wordpress WYSIWIG editor is
 currently not supported.
@@ -394,9 +392,9 @@ Full example:
 
 To learn more about image processing check
 
--   documentation of [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/),
--   source code of [image processing example
-    site](https://github.com/gatsbyjs/gatsby/tree/master/examples/image-processing).
+* documentation of [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/),
+* source code of [image processing example
+  site](https://github.com/gatsbyjs/gatsby/tree/master/examples/image-processing).
 
 ## Site's `gatsby-node.js` example
 

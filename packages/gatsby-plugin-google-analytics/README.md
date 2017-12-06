@@ -25,7 +25,7 @@ plugins: [
 ## The "anonymize" option
 
 Some countries (such as Germany) require you to use the
-[_anonymizeIP](https://support.google.com/analytics/answer/2763052) function for
+[\_anonymizeIP](https://support.google.com/analytics/answer/2763052) function for
 Google Analytics. Otherwise you are not allowed to use it. The option adds two
 blocks to the code:
 

@@ -211,9 +211,7 @@ module.exports = async (program: any) => {
 
       if (port !== _port) {
         // eslint-disable-next-line max-len
-        const question = `Something is already running at port ${
-          port
-        } \nWould you like to run the app at another port instead? [Y/n] `
+        const question = `Something is already running at port ${port} \nWould you like to run the app at another port instead? [Y/n] `
 
         rlInterface.question(question, answer => {
           if (answer.length === 0 || answer.match(/^yes|y$/i)) {

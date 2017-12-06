@@ -123,10 +123,7 @@ Here's an example of migrating a markdown wrapper to Gatsby v1.
 
 Install Gatsby plugins for handling markdown files.
 
-`npm install --save gatsby-source-filesystem@next gatsby-transformer-remark@next
-gatsby-remark-copy-linked-files@next gatsby-remark-prismjs@next
-gatsby-remark-responsive-iframe@next gatsby-remark-images@next
-gatsby-remark-smartypants@next gatsby-plugin-sharp@next`
+`npm install --save gatsby-source-filesystem@next gatsby-transformer-remark@next gatsby-remark-copy-linked-files@next gatsby-remark-prismjs@next gatsby-remark-responsive-iframe@next gatsby-remark-images@next gatsby-remark-smartypants@next gatsby-plugin-sharp@next`
 
 Next add them to your `gatsby-config.js` file. Make your config file look
 something like the following:
@@ -300,8 +297,7 @@ but in the meantime, check out http://graphql.org/ and play around on Gatsby's
 built-in GraphQL IDE (Graph*i*QL) which can be reached when you start the
 development server.
 
-At this point you should have working markdown pages when you run `gatsby
-develop`! Now start gradually adding back what you had in your wrapper component
+At this point you should have working markdown pages when you run `gatsby develop`! Now start gradually adding back what you had in your wrapper component
 adding HTML elements, styles, and extending the GraphQL query as needed.
 
 Repeat this process for other wrapper components you were using.
@@ -323,12 +319,12 @@ your `html.js` should look like:
 </body>
 ```
 
-## _template.js is now src/layouts/index.js
+## \_template.js is now src/layouts/index.js
 
 You should be able to copy your `_template.js` file directly making only one
 change making `this.props.children` a function call so `this.props.children()`.
 The rational for this change is described
 [in this PR comment](https://github.com/gatsbyjs/gatsby/pull/940#issuecomment-300878300).
 
-Nested layouts (similar to the nested _template feature) are _not_ supported yet
+Nested layouts (similar to the nested _template feature) are \_not_ supported yet
 but are on the roadmap for v1.
