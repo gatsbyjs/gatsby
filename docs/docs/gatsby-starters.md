@@ -277,3 +277,14 @@ Community:
   * Create presentations/slides using Gatsby.
   * Offline support.
   * Page transitions.
+  
+* [gatsby-starter-forty](https://github.com/ChangoMan/gatsby-starter-forty)
+  [(demo)](http://gatsby-forty.surge.sh/)
+
+  Features:
+
+  * Based off of the Forty site template. Designed by
+    [HTML5 UP](https://html5up.net/forty)
+  * Colorful homepage, and also includes a Landing Page and Generic Page components.
+  * Many elements are available, including buttons, forms, tables, and pagination.
+  * Styling with SCSS
