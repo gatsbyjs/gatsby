@@ -9,6 +9,24 @@ Parses YAML files. Supports arrays of objects and single objects.
 You also need to have `gatsby-source-filesystem` installed and configured so it
 points to your files.
 
+For example:
+
+```javascript
+module.exports = {
+  plugins: [
+    `gatsby-transformer-yaml`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `./src/data/`
+      }
+    }
+    ],
+}
+
+```
+Where `./src/data/` contains the `.yaml` files.
+
 ## How to use
 
 ```javascript
