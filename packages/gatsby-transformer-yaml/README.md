@@ -2,6 +2,8 @@
 
 Parses YAML files. Supports arrays of objects and single objects.
 
+Supported extensions: `.yaml`, `.yml`
+
 ## Install
 
 `npm install --save gatsby-transformer-yaml`
@@ -115,6 +117,8 @@ Then the following three nodes would be created.
 
 ## How to query
 
+You can query the nodes using `GraphQL`, like from the GraphiQL browser: `localhost:8000/___graphql`.
+
 Regardless of whether you choose to structure your data in arrays of objects or
 single objects, you'd be able to query your letters like:
 
@@ -155,3 +159,5 @@ Which would return:
   }
 }
 ```
+
+Please do __note__ that `allLettersYaml` __will not__ show up if you do not have any `.yaml` files.
