@@ -86,6 +86,8 @@ module.exports = async (
           path: directory,
           filename: `[name].js`,
           publicPath: `http://${program.host}:${webpackPort}/`,
+          devtoolModuleFilenameTemplate: info =>
+            path.resolve(info.absoluteResourcePath).replace(/\\/g, `/`),
         }
       case `build-css`:
         // Webpack will always generate a resultant javascript file.
@@ -129,9 +131,9 @@ module.exports = async (
         return {
           commons: [
             require.resolve(`react-hot-loader/patch`),
-            `${require.resolve(
-              `webpack-hot-middleware/client`
-            )}?path=http://${program.host}:${webpackPort}/__webpack_hmr&reload=true`,
+            `${require.resolve(`webpack-hot-middleware/client`)}?path=http://${
+              program.host
+            }:${webpackPort}/__webpack_hmr&reload=true&overlay=false`,
             directoryPath(`.cache/app`),
           ],
         }
@@ -176,12 +178,12 @@ module.exports = async (
           new webpack.NamedModulesPlugin(),
           new FriendlyErrorsWebpackPlugin({
             clearConsole: false,
-            compilationSuccessInfo: {
-              messages: [
-                `Your site is running at http://localhost:${program.port}`,
-                `Your graphql debugger is running at http://localhost:${program.port}/___graphql`,
-              ],
-            },
+            // compilationSuccessInfo: {
+            // messages: [
+            // `You can now view your site in the browser running at http://${program.host}:${program.port}`,
+            // `Your graphql debugger is running at http://${program.host}:${program.port}/___graphql`,
+            // ],
+            // },
           }),
         ]
       case `develop-html`:

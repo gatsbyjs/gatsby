@@ -12,6 +12,11 @@ class Index extends React.Component {
     const cropBottomLeft = this.props.data.cropBottomLeft.resize
     const cropEntropy = this.props.data.cropEntropy.resize
     const cropCenter = this.props.data.cropCenter.resize
+    const sizesDuotoneOriginal = this.props.data.sizesDuotoneOriginal.sizes
+    const sizesDuotone25 = this.props.data.sizesDuotone25.sizes
+    const sizesDuotone50 = this.props.data.sizesDuotone50.sizes
+    const sizesDuotone75 = this.props.data.sizesDuotone75.sizes
+    const sizesDuotone = this.props.data.sizesDuotone.sizes
 
     return (
       <div>
@@ -83,9 +88,9 @@ class Index extends React.Component {
           </code>
         </h3>
 
-        <ul style={styles.ul}>
+        <ul style={{ ...styles.ul, ...styles.row }}>
           {images.map(image => (
-            <li style={styles.thumbnail} key={image.node.resize.src}>
+            <li style={styles.column20} key={image.node.resize.src}>
               <img src={image.node.resize.src} />
             </li>
           ))}
@@ -114,11 +119,11 @@ class Index extends React.Component {
           see Mr. Gatsby toasting to us in the first thumbnail:
         </p>
 
-        <ul style={styles.ul}>
-          <li style={styles.thumbnail}>
+        <ul style={{ ...styles.ul, ...styles.row }}>
+          <li style={styles.column25}>
             <img src={cropDefault.src} />
           </li>
-          <li style={styles.thumbnail}>
+          <li style={styles.column25}>
             <img src={cropBottomLeft.src} />
             <p>
               <small>
@@ -126,7 +131,7 @@ class Index extends React.Component {
               </small>
             </p>
           </li>
-          <li style={styles.thumbnail}>
+          <li style={styles.column25}>
             <img src={cropEntropy.src} />
             <p>
               <small>
@@ -134,7 +139,7 @@ class Index extends React.Component {
               </small>
             </p>
           </li>
-          <li style={styles.thumbnail}>
+          <li style={styles.column25}>
             <img src={cropCenter.src} />
             <p>
               <small>
@@ -231,7 +236,44 @@ class Index extends React.Component {
             highlight: "#f00e2e", shadow: "#192550" {`}`}, toFormat: PNG)
           </small>
         </h3>
+
         <Img sizes={sizes} />
+
+        <h3 style={{ marginTop: rhythm(2) }}>
+          <small>
+            sizes(duotone:
+            {` `}
+            {`{ `}
+            highlight: "#0ec4f1", shadow: "#192550", opacity: 50 {`}`})
+          </small>
+        </h3>
+
+        <div style={styles.row}>
+          <div style={styles.column20}>
+            <Img sizes={sizesDuotoneOriginal} />
+          </div>
+          <div style={styles.column20}>
+            <Img sizes={sizesDuotone25} />
+          </div>
+          <div style={styles.column20}>
+            <Img sizes={sizesDuotone50} />
+          </div>
+          <div style={styles.column20}>
+            <Img sizes={sizesDuotone75} />
+          </div>
+          <div style={styles.column20}>
+            <Img sizes={sizesDuotone} />
+          </div>
+        </div>
+
+        <p>
+          By setting an optional third parameter{` `}
+          <code>opacity</code> for <code>duotone</code>, a semi-transparent
+          version of the duotone{`'`}d image will be composited over the
+          original allowing the original image and its colors to partially {`"`}shine
+          through{`"`}.
+        </p>
+
         <h2
           style={{
             paddingTop: rhythm(2),
@@ -273,19 +315,33 @@ class Index extends React.Component {
 
 const styles = {}
 
+styles.row = {
+  display: `flex`,
+  flexWrap: `wrap`,
+  margin: `8px -4px 1rem`,
+}
+
 styles.ul = {
-  marginLeft: rhythm(-3 / 4),
-  marginRight: rhythm(-3 / 4),
   padding: `0`,
   listStyle: `none`,
 }
 
-styles.thumbnail = {
+styles.column20 = {
+  flexShrink: 0,
+  flexGrow: 0,
   color: `#999`,
-  float: `left`,
-  marginLeft: rhythm(3 / 4),
-  marginRight: rhythm(3 / 4),
-  marginBottom: rhythm(6 / 4),
+  width: `20%`,
+  padding: `0 4px`,
+  margin: 0,
+}
+
+styles.column25 = {
+  flexShrink: 0,
+  flexGrow: 0,
+  color: `#999`,
+  width: `25%`,
+  padding: `0 4px`,
+  margin: 0,
 }
 
 export default Index
@@ -313,6 +369,55 @@ export const pageQuery = graphql`
         }
         toFormat: PNG
       ) {
+        ...GatsbyImageSharpSizes_tracedSVG
+      }
+    }
+    sizesDuotone: imageSharp(id: { regex: "/fecolormatrix-kanye-west.jpg/" }) {
+      sizes(
+        maxWidth: 120
+        duotone: { highlight: "#0ec4f1", shadow: "#192550" }
+        traceSVG: { color: "#1E2151" }
+      ) {
+        ...GatsbyImageSharpSizes_tracedSVG
+      }
+    }
+    sizesDuotone50: imageSharp(
+      id: { regex: "/fecolormatrix-kanye-west.jpg/" }
+    ) {
+      sizes(
+        maxWidth: 120
+        duotone: { highlight: "#0ec4f1", shadow: "#192550", opacity: 50 }
+        traceSVG: { color: "#A7DEF6" }
+      ) {
+        ...GatsbyImageSharpSizes_tracedSVG
+      }
+    }
+    sizesDuotone75: imageSharp(
+      id: { regex: "/fecolormatrix-kanye-west.jpg/" }
+    ) {
+      sizes(
+        maxWidth: 120
+        duotone: { highlight: "#0ec4f1", shadow: "#192550", opacity: 75 }
+        traceSVG: { color: "#0ec4f1" }
+      ) {
+        ...GatsbyImageSharpSizes_tracedSVG
+      }
+    }
+    sizesDuotone25: imageSharp(
+      id: { regex: "/fecolormatrix-kanye-west.jpg/" }
+    ) {
+      sizes(
+        maxWidth: 120
+        traceSVG: { color: "#D1EFFB" }
+        duotone: { highlight: "#0ec4f1", shadow: "#192550", opacity: 25 }
+      ) {
+        ...GatsbyImageSharpSizes_tracedSVG
+      }
+    }
+    sizesDuotoneOriginal: imageSharp(
+      id: { regex: "/fecolormatrix-kanye-west.jpg/" }
+    ) {
+      sizes(maxWidth: 120, traceSVG: { color: "#e7f7fe" }, toFormat: PNG) {
         ...GatsbyImageSharpSizes_tracedSVG
       }
     }

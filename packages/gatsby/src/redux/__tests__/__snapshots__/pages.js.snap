@@ -10,6 +10,7 @@ Array [
     "internalComponentName": "ComponentHi",
     "jsonName": "hi.json",
     "layout": null,
+    "matchPath": undefined,
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
@@ -23,6 +24,7 @@ Array [
     "internalComponentName": "ComponentHiPizza",
     "jsonName": "hi-pizza.json",
     "layout": null,
+    "matchPath": undefined,
     "path": "/hi/pizza/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
@@ -41,6 +43,7 @@ Object {
     "internalComponentName": "ComponentHi",
     "jsonName": "hi.json",
     "layout": null,
+    "matchPath": undefined,
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
@@ -65,6 +68,7 @@ Array [
     "internalComponentName": "ComponentHi",
     "jsonName": "hi.json",
     "layout": null,
+    "matchPath": undefined,
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
@@ -85,6 +89,7 @@ Object {
     "internalComponentName": "ComponentHi",
     "jsonName": "hi.json",
     "layout": null,
+    "matchPath": undefined,
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
@@ -111,6 +116,49 @@ Array [
     "internalComponentName": "ComponentHi",
     "jsonName": "hi.json",
     "layout": null,
+    "matchPath": undefined,
+    "path": "/hi/",
+    "pluginCreatorId": "test",
+    "pluginCreator___NODE": "test",
+    "updatedAt": 1482363367071,
+  },
+]
+`;
+
+exports[`Add pages allows you to add pages with matchPath 1`] = `
+Object {
+  "payload": Object {
+    "component": "/whatever/index.js",
+    "componentChunkName": "component---whatever-index-js",
+    "context": Object {},
+    "internalComponentName": "ComponentHi",
+    "jsonName": "hi.json",
+    "layout": null,
+    "matchPath": "/hi-from-somewhere-else/",
+    "path": "/hi/",
+    "pluginCreatorId": "test",
+    "pluginCreator___NODE": "test",
+    "updatedAt": 1482363367071,
+  },
+  "plugin": Object {
+    "id": "test",
+    "name": "test",
+  },
+  "traceId": undefined,
+  "type": "CREATE_PAGE",
+}
+`;
+
+exports[`Add pages allows you to add pages with matchPath 2`] = `
+Array [
+  Object {
+    "component": "/whatever/index.js",
+    "componentChunkName": "component---whatever-index-js",
+    "context": Object {},
+    "internalComponentName": "ComponentHi",
+    "jsonName": "hi.json",
+    "layout": null,
+    "matchPath": "/hi-from-somewhere-else/",
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",
@@ -131,6 +179,7 @@ Array [
     "internalComponentName": "ComponentHi",
     "jsonName": "hi.json",
     "layout": null,
+    "matchPath": undefined,
     "path": "/hi/",
     "pluginCreatorId": "test",
     "pluginCreator___NODE": "test",

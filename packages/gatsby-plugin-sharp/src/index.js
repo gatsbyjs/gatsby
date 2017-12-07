@@ -262,8 +262,9 @@ function queueImageResizing({ file, args = {} }) {
 
   const argsDigestShort = argsDigest.substr(argsDigest.length - 5)
 
-  const imgSrc = `/${file.internal
-    .contentDigest}-${argsDigestShort}.${fileExtension}`
+  const imgSrc = `/${file.name}-${
+    file.internal.contentDigest
+  }-${argsDigestShort}.${fileExtension}`
   const filePath = path.join(process.cwd(), `public`, `static`, imgSrc)
 
   // Create function to call when the image is finished.
@@ -524,7 +525,9 @@ async function resolutions({ file, args = {} }) {
     filteredSizes.push(dimensions.width)
     console.warn(
       `
-                 The requested width "${options.width}px" for a resolutions field for
+                 The requested width "${
+                   options.width
+                 }px" for a resolutions field for
                  the file ${file.absolutePath}
                  was wider than the actual image width of ${dimensions.width}px!
                  If possible, replace the current image with a larger one.
@@ -649,8 +652,9 @@ async function notMemoizedtraceSVG({ file, args, fileArgs }) {
   }
 
   const tmpDir = require(`os`).tmpdir()
-  const tmpFilePath = `${tmpDir}/${file.internal
-    .contentDigest}-${file.name}-${crypto
+  const tmpFilePath = `${tmpDir}/${file.internal.contentDigest}-${
+    file.name
+  }-${crypto
     .createHash(`md5`)
     .update(JSON.stringify(fileArgs))
     .digest(`hex`)}.${file.extension}`

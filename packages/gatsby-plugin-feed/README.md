@@ -51,7 +51,7 @@ plugins: [
                 description: edge.node.excerpt,
                 url: site.siteMetadata.siteUrl + edge.node.fields.slug,
                 guid: site.siteMetadata.siteUrl + edge.node.fields.slug,
-                custom_elements: [{ 'content:encoded': edge.node.html }],
+                custom_elements: [{ "content:encoded": edge.node.html }],
               });
             });
           },
@@ -76,11 +76,10 @@ plugins: [
               }
             }
           `,
-          output: '/rss.xml',
-          feedTitle: 'My feed title'
-        }
-      ]
-    }
-  }
-]
+          output: "/rss.xml",
+        },
+      ],
+    },
+  },
+];
 ```

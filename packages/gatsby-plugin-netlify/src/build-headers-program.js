@@ -134,18 +134,16 @@ const validateUserOptions = pluginOptions => headers => {
     )
   }
 
-  ;[
-    `mergeSecurityHeaders`,
-    `mergeLinkHeaders`,
-    `mergeCachingHeaders`,
-  ].forEach(mergeOption => {
-    if (!_.isBoolean(pluginOptions[mergeOption])) {
-      throw new Error(
-        `The "${mergeOption}" option to gatsby-plugin-netlify must be a boolean. ` +
-          `Check your gatsby-config.js.`
-      )
+  ;[`mergeSecurityHeaders`, `mergeLinkHeaders`, `mergeCachingHeaders`].forEach(
+    mergeOption => {
+      if (!_.isBoolean(pluginOptions[mergeOption])) {
+        throw new Error(
+          `The "${mergeOption}" option to gatsby-plugin-netlify must be a boolean. ` +
+            `Check your gatsby-config.js.`
+        )
+      }
     }
-  })
+  )
 
   if (!_.isFunction(pluginOptions.transformHeaders)) {
     throw new Error(

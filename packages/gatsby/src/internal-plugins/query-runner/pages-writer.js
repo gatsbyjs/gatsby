@@ -21,7 +21,7 @@ const writePages = async () => {
         {
           asyncSSR,
           componentChunkName,
-          layout,
+          layout: layoutOjb ? layoutOjb.machineId : layout,
           layoutComponentChunkName: layoutOjb && layoutOjb.componentChunkName,
           jsonName,
           path,
@@ -87,7 +87,9 @@ const preferDefault = m => m && m.default || m
   syncRequires += `exports.layouts = {\n${pageLayouts
     .map(
       l =>
-        `  "${l.componentChunkName}": preferDefault(require("${l.componentWrapperPath}"))`
+        `  "${l.machineId}": preferDefault(require("${
+          l.componentWrapperPath
+        }"))`
     )
     .join(`,\n`)}
 }`
@@ -103,16 +105,18 @@ const preferDefault = m => m && m.default || m
   asyncRequires += `exports.components = {\n${components
     .map(
       c =>
-        `  "${c.componentChunkName}": require("gatsby-module-loader?name=${c.componentChunkName}!${joinPath(
-          c.component
-        )}")`
+        `  "${c.componentChunkName}": require("gatsby-module-loader?name=${
+          c.componentChunkName
+        }!${joinPath(c.component)}")`
     )
     .join(`,\n`)}
 }\n\n`
   asyncRequires += `exports.json = {\n${json
     .map(
       j =>
-        `  "${j.jsonName}": require("gatsby-module-loader?name=${generatePathChunkName(
+        `  "${
+          j.jsonName
+        }": require("gatsby-module-loader?name=${generatePathChunkName(
           j.path
         )}!${joinPath(program.directory, `/.cache/json/`, j.jsonName)}")`
     )
@@ -121,7 +125,9 @@ const preferDefault = m => m && m.default || m
   asyncRequires += `exports.layouts = {\n${pageLayouts
     .map(
       l =>
-        `  "${l.componentChunkName}": require("gatsby-module-loader?name=${l.componentChunkName}!${l.componentWrapperPath}")`
+        `  "${l.machineId}": require("gatsby-module-loader?name=${
+          l.componentChunkName
+        }!${l.componentWrapperPath}")`
     )
     .join(`,\n`)}
 }`

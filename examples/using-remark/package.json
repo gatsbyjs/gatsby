@@ -14,7 +14,7 @@
     "gatsby-plugin-catch-links": "latest",
     "gatsby-plugin-glamor": "latest",
     "gatsby-plugin-sharp": "latest",
-    "gatsby-remark-autolink-headers": "latest",
+    "gatsby-remark-autolink-headers": "^1.4.8",
     "gatsby-remark-copy-linked-files": "latest",
     "gatsby-remark-images": "latest",
     "gatsby-remark-katex": "latest",

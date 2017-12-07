@@ -177,6 +177,12 @@ class IndexRoute extends React.Component {
                       css={{ marginBottom: rhythm(2) }}
                     />
                   ))}
+                  <CtaButton
+                    to="/blog/"
+                    overrideCSS={{ marginBottom: rhythm(2) }}
+                  >
+                    Read More
+                  </CtaButton>
                 </Container>
               </div>
             </Cards>
