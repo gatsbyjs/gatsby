@@ -46,9 +46,9 @@ The type of the node is based on the filename.
 So if your project has a `letters.yaml` which looks like:
 
 ```yaml
-- value: a
-- value: b
-- value: c
+- character: a
+- character: b
+- character: c
 ```
 
 Then the following three nodes would be created.
@@ -56,16 +56,13 @@ Then the following three nodes would be created.
 ```javascript
 [
   {
-    value: "a",
-    type: "Letters",
+    character: "a"
   },
   {
-    value: "b",
-    type: "Letters",
+    character: "b",
   },
   {
-    value: "c",
-    type: "Letters",
+    character: "c",
   },
 ];
 ```
@@ -89,15 +86,15 @@ data/
 Where each of `a.yml`, `b.yml` and `c.yml` look like:
 
 ```yaml
-value: a
+character: a
 ```
 
 ```yaml
-value: b
+character: b
 ```
 
 ```yaml
-value: c
+character: c
 ```
 
 Then the following three nodes would be created.
@@ -105,16 +102,13 @@ Then the following three nodes would be created.
 ```javascript
 [
   {
-    value: "a",
-    type: "Letters",
+    character: "a",
   },
   {
-    value: "b",
-    type: "Letters",
+    character: "b",
   },
   {
-    value: "c",
-    type: "Letters",
+    character: "c",
   },
 ];
 ```
