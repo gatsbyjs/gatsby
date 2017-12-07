@@ -6,10 +6,12 @@ Parses YAML files. Supports arrays of objects and single objects.
 
 `npm install --save gatsby-transformer-yaml`
 
-You also need to have `gatsby-source-filesystem` installed and configured so it
+__Note:__ You also need to have `gatsby-source-filesystem` installed and configured so it
 points to your files.
 
-For example:
+## How to use
+
+In your `gatsby-config.js`
 
 ```javascript
 module.exports = {
@@ -23,16 +25,9 @@ module.exports = {
     }
     ],
 }
-
 ```
+
 Where `./src/data/` contains the `.yaml` files.
-
-## How to use
-
-```javascript
-// In your gatsby-config.js
-plugins: [`gatsby-transformer-yaml`];
-```
 
 ## Parsing algorithm
 
