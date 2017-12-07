@@ -27,12 +27,16 @@ module.exports = {
 }
 ```
 
-Where `./src/data/` contains the `.yaml` files.
+Where the _source folder_ `./src/data/` contains the `.yaml` files.
 
 ## Parsing algorithm
 
 You can choose to structure your data as arrays of objects in individual files
 or as single objects spread across multiple files.
+
+The _source folder_ can contain either the following:
+  - __Array of Objects__: Where each file represents a collection. (_you probably want this one_)
+  - __Single Object__: Where each _subfolder_ represents a collection; each files represents one "record".
 
 ### Array of Objects
 
