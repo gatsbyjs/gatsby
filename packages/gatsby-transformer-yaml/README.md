@@ -120,7 +120,7 @@ single objects, you'd be able to query your letters like:
 
 ```graphql
 {
-  allLetters {
+  allLettersYaml {
     edges {
       node {
         value
@@ -134,21 +134,21 @@ Which would return:
 
 ```javascript
 {
-  allLetters: {
+  allLettersYaml: {
     edges: [
       {
         node: {
-          value: "a",
+          character: "a",
         },
       },
       {
         node: {
-          value: "b",
+          character: "b",
         },
       },
       {
         node: {
-          value: "c",
+          character: "c",
         },
       },
     ];
