@@ -128,6 +128,7 @@ Array [
 exports[`Add pages allows you to add pages with matchPath 1`] = `
 Object {
   "payload": Object {
+    "asyncSSR": false,
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
     "context": Object {},
@@ -152,6 +153,7 @@ Object {
 exports[`Add pages allows you to add pages with matchPath 2`] = `
 Array [
   Object {
+    "asyncSSR": false,
     "component": "/whatever/index.js",
     "componentChunkName": "component---whatever-index-js",
     "context": Object {},
