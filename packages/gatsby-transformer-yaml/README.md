@@ -4,6 +4,8 @@ Parses YAML files. Supports arrays of objects and single objects.
 
 Supported extensions: `.yaml`, `.yml`
 
+Both `.yaml` and `.yml` are treated in the same way. This document uses both of them interchangably.
+
 ## Install
 
 `npm install --save gatsby-transformer-yaml`
