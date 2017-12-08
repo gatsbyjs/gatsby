@@ -51,7 +51,7 @@ export const query = graphql`
   }
 `
 ```
-Using this query you start utilizing your fields in your component. This lists all posts and their tags
+Using this query you start utilizing your fields in your component. This example creates a blog front page that lists all posts and their tags
 ```jsx
 const IndexPage = ({ data }) => (
   <div>
@@ -175,4 +175,44 @@ const createTagPages = (createPage, edges) => {
       })
     });
 }
+```
+
+## Adding Tags To Your Blog Front Page
+The blog front page has a list of the tags, but it doesn't list to the tag pages. To do this, create a tag component at `src/components/tags.js`
+
+```jsx
+import React from 'react';
+import Link from 'gatsby-link';
+
+export default function Tags({ list = [] }) {
+  return (
+    <ul className="tag-list">
+      {list.map(tag =>
+        <li key={tag}>
+          <Link to={`/tags/${tag}`}>
+            {tag}
+          </Link>
+        </li>
+      )}
+    </ul>
+  );
+}
+```
+
+We can now utilize this new component on the blog home page by passing in our tags
+
+```jsx
+const IndexPage = ({ data }) => (
+  <div>
+    <h1>My Travel Blog</h1>
+      {data.allMarkdownRemark.edges.map(({ node }) =>
+        <div key={node.id}>
+          <h3>
+            {node.frontmatter.title}
+          </h3>
+          <Tags list={node.frontmatter.tags || []} />
+        </div>
+      )}
+  </div>
+)
 ```
