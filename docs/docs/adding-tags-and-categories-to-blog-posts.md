@@ -4,11 +4,11 @@ title: Adding Tags and Categories to Blog Posts
 
 Adding tags on your blog post is a simple way to organize related content together. 
 
-To add tags to your blog posts, you will first want to have your site set up to automatically turn your markdown pages into blog posts. To get your blog pages set up, see the [tutorial on Gatsby's data layer](tutorial/part-four/) and [Adding Markdown Pages](docs/adding-markdown-pages/). 
+To add tags to your blog posts, you will first want to have your site set up to  turn your markdown pages into blog posts. To get your blog pages set up, see the [tutorial on Gatsby's data layer](tutorial/part-four/) and [Adding Markdown Pages](docs/adding-markdown-pages/). 
 
 ## Adding `fields` to your blog post
 
-You add `fields` by putting them in the `frontmatter` of your Markdown files, which is the section at the top surrounded by dashes. You may already have a field like title. 
+Add `fields` by defining them in the `frontmatter` of your Markdown file. The `frontmatter` is the area at the top surrounded by dashes that includes post data like the title and date. 
 ```
 ---
 title: "A Trip To the Zoo"
@@ -18,7 +18,7 @@ title: "A Trip To the Zoo"
 I went to the zoo today. It was terrible.
 ```
 
-But instead of just having a string, you want your new `fields` to be arrays with comma seperated strings inside them. Here I've added two new `fields`: category and tags. 
+Fields can be strings, numbers, or arrays. Since a post can usually have many tags, it makes sense to define it as an array. Here there are two new `fields`: category and tags. 
 
 ```
 ---
@@ -30,8 +30,7 @@ tags: ["animals", "Chicago", "zoos"]
 I went to the zoo today. It was terrible.
 ```
 ## Querying your fields
-Once your fields exist you can query them in `graphql` where they will be accessible inside frontmatter
-
+Now these fields are available in the data layer. To use field data, query it using `graphql`. All fields are available to query inside `frontmatter`
 
 ```jsx
 export const query = graphql`
@@ -51,7 +50,8 @@ export const query = graphql`
   }
 `
 ```
-Using this query you start utilizing your fields in your component. This example creates a blog front page that lists all posts and their tags
+The query exposes the field data to the component. This example creates a blog front page that lists all posts and their tags.
+
 ```jsx
 const IndexPage = ({ data }) => (
   <div>
@@ -69,10 +69,11 @@ const IndexPage = ({ data }) => (
 ```
 
 ## Creating Tag Pages
-It is nice to have the tags listed next to posts, but it's even more useful to have a tag go to a tag post where all the other posts with that tag are listed. 
+Tag pages list all the tags or all items with a certain tag and are a great tool for organizing content. 
 
-First you will need a tag page template, this one is tags.js and is placed in `src/templates/tags.js`. It creates a page at tags that lists all tags as well as individual pages for each tag
-```jsx{4}
+First you will need a tag page template. In this example a tags template in `src/templates/tags.js` creates tags page at /tags and individual tag pages.
+
+```jsx
 import React from 'react';
 import GatsbyLink from 'gatsby-link';
 
@@ -129,7 +130,8 @@ export default function Tags({ pathContext }) {
 }
 ```
 
-But we also need to tell Gatsby to create the tag pages themselves, this just provides the template. To do that we head to `gatsby-node.js` to implement the the [`createPages`](/docs/node-apis/#createPages) API.
+But we also need to tell Gatsby to create the tag pages themselves.  In `gatsby-node.js`  call the the [`createPages`](/docs/node-apis/#createPages) API to make a page for every tag.
+
 ```javascript
 const path = require('path');
 const { createFilePath } = require(`gatsby-source-filesystem`)
@@ -178,7 +180,8 @@ const createTagPages = (createPage, edges) => {
 ```
 
 ## Adding Tags To Your Blog Front Page
-The blog front page has a list of the tags, but it doesn't list to the tag pages. To do this, create a tag component at `src/components/tags.js`
+The blog front page in the example, but it doesn't link to the tag pages. One way to to do this is by creating a tag component at `src/components/tags.js`
+
 
 ```jsx
 import React from 'react';
@@ -199,8 +202,7 @@ export default function Tags({ list = [] }) {
 }
 ```
 
-We can now utilize this new component on the blog home page by passing in our tags
-
+We can now use this new component on the blog home page by passing in our tags from the data layer: 
 ```jsx
 const IndexPage = ({ data }) => (
   <div>
