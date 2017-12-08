@@ -69,7 +69,7 @@ export default function onCreateNode(
 ) {
   const { createNode, createParentChildLink } = boundActionCreators
 
-  if (node.internal.mediaType !== `application/javascript`) return null
+  if (node.internal.mediaType !== `application/javascript` && node.internal.mediaType !== `text/jsx`) return null
 
   return loadNodeContent(node)
     .then(content => {
