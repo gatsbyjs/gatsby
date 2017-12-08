@@ -160,6 +160,94 @@ exports.onCreatePage = async ({ page, boundActionCreators }) => {
 };
 ```
 
+### Client Route Params
+
+In order to make a `detail` page at `/widgets/view/ID` and extract the `ID` param, we will need to configure client only routes.
+
+**Build config:**
+
+First configure `gatsby-node.js`:
+
+```javascript
+exports.onCreatePage = async ({ page, boundActionCreators }) => {
+  const { createPage } = boundActionCreators;
+
+  return new Promise((resolve, reject) => {
+    if (/view/.test(page.path)) {
+      // Gatsby paths have a trailing `/`
+      page.matchPath = `${page.path}:id`;
+    }
+
+    createPage(page);
+    resolve();
+  });
+};
+```
+
+**Client:**
+
+Extracting path params from the route on the client requires that you add a `react-router` `<Route>` in your component. 
+
+This can be made simpler by using a HOC:
+
+```javascript
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Route } from 'react-router-dom';
+
+// Pass in route config, and the Content component you want rendered
+export default (config, Content) => {
+  const GatsbyClientRoute = () => {
+    return (
+      <Route
+        {...config}
+        component={Content}
+      />
+    )
+  };
+
+  return GatsbyClientRoute;
+};
+```
+
+Use the HOC on the page component you want to access the path params:
+
+```javascript
+export default GatsbyClientRoute({path: '/widgets/view/:id'}, WidgetPage);
+```
+
+Full example page:
+
+```javascript
+import React from 'react';
+
+import GatsbyClientRoute from '<PATH_TO_SRC>/components/hocs/gatsby-client-route';
+
+class WidgetPageContent extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const { match } = this.props;
+    console.log(match.params.id);
+    return (
+      <div>
+        Widget: {match.params.id}
+      </div>
+    );
+  }
+};
+
+export default GatsbyClientRoute(
+	// NOTE this must match path.matchPath
+  {path: '/widgets/view/:id'},
+  WidgetPageContent
+);
+```
+
+Using the URL `http://localhost:8000/wigets/view/10` will console log `10` and the markup will say `Widget: 10`.
+
 ### Choosing the page layout
 
 By default, all pages will use the layout found at `/layouts/index.js`.
