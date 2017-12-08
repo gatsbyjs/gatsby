@@ -80,12 +80,20 @@ The repository for these sites requires a special name. See
 https://help.github.com/articles/user-organization-and-project-pages/ for
 documentation on naming your site's repository.
 
+If you wish to use custom domain with your `user.github.io` repo, you will need
+a `CNAME` file at the root directory level with the your custom domain url inside, 
+like so:
+
+```
+example.com
+```
+
 Like with project sites, add `gh-pages` as a `devDependency` and add a `deploy`
 script to your site's `package.json` file:
 
 ```
 "scripts": {
-  "deploy": "gatsby build && gh-pages -d public --branch master",
+  "deploy": "gatsby build && cp CNAME public/ && gh-pages -d public --branch master",
 }
 ```
 
