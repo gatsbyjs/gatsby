@@ -196,7 +196,7 @@ location ~ "([a-z]*)\/view\/(\d*)$" {
 }
 ```
 
-This directive will provide the `widgets/view/index.html` file for any request like (widgets)/view/1. It will also support other pages by matching the first level of the URL, example http://sitename/sprockets/view/1.
+This directive will provide the `widgets/view/index.html` file for any request like (widgets)/view/1. It will also support other pages by matching the first level of the URL, example `http://sitename/sprockets/view/1`.
 
 **Client:**
 
