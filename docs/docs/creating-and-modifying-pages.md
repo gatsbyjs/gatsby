@@ -241,7 +241,7 @@ class WidgetPageContent extends React.Component {
 };
 
 export default GatsbyClientRoute(
-	// NOTE this must match path.matchPath
+// NOTE this must match path.matchPath
   {path: '/widgets/view/:id'},
   WidgetPageContent
 );
