@@ -12,5 +12,5 @@ module.exports = {
   PROTOCOL_BABEL: `babel://`,
   PROTOCOL_CODEPEN: `codepen://`,
   PROTOCOL_CODE_SANDBOX: `codesandbox://`,
-  PROTOCOL_CODE_RAMDA: `ramda://`,
+  PROTOCOL_RAMDA: `ramda://`,
 }
