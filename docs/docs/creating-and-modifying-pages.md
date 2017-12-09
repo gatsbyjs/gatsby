@@ -162,7 +162,7 @@ exports.onCreatePage = async ({ page, boundActionCreators }) => {
 
 ### Client Route Params
 
-In order to make a `detail` page at `/widgets/view/ID` and extract the `ID` param, we will need to configure client only routes.
+In order to make a "detail" page at `/widgets/view/ID` resolve and extract the `ID` param, we will need to configure client only routes.
 
 **Build config:**
 
@@ -175,8 +175,7 @@ exports.onCreatePage = async ({ page, boundActionCreators }) => {
   return new Promise((resolve, reject) => {
     if (/view/.test(page.path)) {
       // Gatsby paths have a trailing `/`
-      page.path = `${page.path}:id`;
-      page.matchPath = page.path;
+      page.matchPath = `${page.path}:id`;
     }
 
     createPage(page);
@@ -184,6 +183,20 @@ exports.onCreatePage = async ({ page, boundActionCreators }) => {
   });
 };
 ```
+
+**Server:**
+
+When creating links to these view/id pages using react router or any pushstate the pages will resolve until the user hard refreshes the page. This is due to your backend server not knowing how to handle the route.
+
+Configuration is going to be required to make these pages work on production. Results may vary depending on deployment but a simple use case for NGINX:
+
+```
+location ~ "([a-z]*)\/view\/(\d*)$" {
+    try_files $uri /$1/view/index.html;
+}
+```
+
+This directive will provide the `widgets/view/index.html` file for any request like (widgets)/view/1. It will also support other pages by matching the first level of the URL, example http://sitename/sprockets/view/1.
 
 **Client:**
 
