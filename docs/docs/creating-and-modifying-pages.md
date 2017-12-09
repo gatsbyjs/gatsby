@@ -175,7 +175,8 @@ exports.onCreatePage = async ({ page, boundActionCreators }) => {
   return new Promise((resolve, reject) => {
     if (/view/.test(page.path)) {
       // Gatsby paths have a trailing `/`
-      page.matchPath = `${page.path}:id`;
+      page.path = `${page.path}:id`;
+      page.matchPath = page.path;
     }
 
     createPage(page);
