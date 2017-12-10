@@ -38,5 +38,5 @@ If you see this error: `Uncaught Error: _registerComponent(...): Target containe
   key={`body`}
   id="___gatsby"
   dangerouslySetInnerHTML={{ __html: this.props.body }}
-/>;
+/>
 ```
