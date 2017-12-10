@@ -42,15 +42,18 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     }
   })
 
-  it(`should only process javascript nodes`, () => {
+  it(`should only process javascript and jsx nodes`, () => {
     loadNodeContent = jest.fn(() => new Promise(() => {}))
 
     expect(run({ internal: { mediaType: `text/x-foo` } })).toBeNull()
     expect(
       run({ internal: { mediaType: `application/javascript` } })
     ).toBeDefined()
+    expect(
+      run({ internal: { mediaType: `text/jsx` } })
+    ).toBeDefined()
 
-    expect(loadNodeContent.mock.calls).toHaveLength(1)
+    expect(loadNodeContent.mock.calls).toHaveLength(2)
   })
 
   it(`should extract all components in a file`, async () => {
