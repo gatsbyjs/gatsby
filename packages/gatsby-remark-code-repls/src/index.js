@@ -138,7 +138,8 @@ module.exports = (
 
         verifyFile(filePath)
 
-        // Don't use `compress()` as the Ramda REPL won't understand the output. It uses URI to encode the code for its urls, so we do the same.
+        // Don't use `compress()` as the Ramda REPL won't understand the output.
+        // It uses URI to encode the code for its urls, so we do the same.
         const code = URI.encode(fs.readFileSync(filePath, `utf8`))
         const href = `http://ramdajs.com/repl/#?${code}`
         const text =
