@@ -49,9 +49,7 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     expect(
       run({ internal: { mediaType: `application/javascript` } })
     ).toBeDefined()
-    expect(
-      run({ internal: { mediaType: `text/jsx` } })
-    ).toBeDefined()
+    expect(run({ internal: { mediaType: `text/jsx` } })).toBeDefined()
 
     expect(loadNodeContent.mock.calls).toHaveLength(2)
   })
