@@ -211,9 +211,10 @@ import { Route } from 'react-router-dom';
 
 // Pass in route config, and the Content component you want rendered
 export default (config, Content) => {
-  const GatsbyClientRoute = () => {
+  const GatsbyClientRoute = (props) => {
     return (
       <Route
+        {...props}
         {...config}
         component={Content}
       />
