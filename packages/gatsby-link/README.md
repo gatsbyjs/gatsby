@@ -27,7 +27,7 @@ access to the link element by passing in a `innerRef` prop.
 
 ## Install
 
-Automatically installed with Gatsby: `npm install --save gatsby`
+`npm install --save gatsby-link`
 
 ## How to use
 

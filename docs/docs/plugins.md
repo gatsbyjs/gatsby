@@ -120,7 +120,7 @@ root.
 ## Official components
 
 * [gatsby-image](/packages/gatsby-image/)
-* [gatsby-link](/packages/gatsby-link/) [installed automatically]
+* [gatsby-link](/packages/gatsby-link/)
 
 ## Community Plugins
 
