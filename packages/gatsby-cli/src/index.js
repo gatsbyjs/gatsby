@@ -12,6 +12,11 @@ global.Promise = require(`bluebird`)
 const version = process.version
 const verDigit = Number(version.match(/\d+/)[0])
 
+const pkg = require(`../package.json`)
+const updateNotifier = require(`update-notifier`)
+// Check if update is available
+updateNotifier({ pkg }).notify()
+
 if (verDigit < 4) {
   report.panic(
     `Gatsby 1.0+ requires node.js v4 or higher (you have ${version}). \n` +

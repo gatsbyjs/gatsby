@@ -22,7 +22,7 @@ plugins: [
     resolve: `gatsby-source-drupal`,
     options: { baseUrl: `https://live-contentacms.pantheonsite.io/` },
   },
-]
+];
 ```
 
 ## How to query
