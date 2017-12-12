@@ -150,4 +150,3 @@ root.
 * [gatsby-source-stripe](https://github.com/njosefbeck/gatsby-source-stripe)
 * [gatsby-source-twitch](https://github.com/jedidiah/gatsby-source-twitch)
 * [gatsby-source-workable](https://github.com/tumblbug/gatsby-source-workable)
-

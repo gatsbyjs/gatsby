@@ -1,6 +1,6 @@
 {
   "name": "gatsby-transformer-hjson",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Gatsby transformer plugin for HJSON files",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
