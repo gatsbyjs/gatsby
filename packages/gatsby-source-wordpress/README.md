@@ -267,17 +267,17 @@ Mention the apparition of `childWordpressAcfField` in the query below :
 
 ### Query with ACF Flexible Content
 
-ACF Flexible Content returns array of objects with different types and are
+ACF Flexible Content returns an array of objects with different types and are
 handled differently than other fields.
 
-To access those fields instead of field name you need to use
-`[field_name]_[post_type]` field (if you have field named `page_builder` in
-your wordpress pages you would need to use `page_builder_page`).
+To access those fields, instead of using their field name, you need to use
+`[field_name]_[post_type]` (if you have field named `page_builder` in
+your WordPress pages you would need to use `page_builder_page`).
 
-To access data stored in that field you need to use of GraphQL
+To access data stored in these fields, you need to use GraphQL
 [inline fragments](http://graphql.org/learn/queries/#inline-fragments). This
-require you to know types of nodes. Easiest way to get types of nodes is to use
-`___GraphiQL` debugger and run below query (adjust post type and field name):
+require you to know types of nodes. The easiest way to get the types of nodes is to use
+`___GraphiQL` debugger and run the below query (adjust post type and field name):
 
 ```graphQL
   allWordpressPage {
@@ -294,7 +294,7 @@ require you to know types of nodes. Easiest way to get types of nodes is to use
   }
 ```
 
-When you have node type names you can use them to create inline fragments.
+When you have node type names, you can use them to create inline fragments.
 
 Full example:
 
