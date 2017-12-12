@@ -390,9 +390,7 @@ actions.createNode = (node: any, plugin?: Plugin, traceId?: string) => {
       typeOwners[node.internal.type] = pluginName
     else if (typeOwners[node.internal.type] !== pluginName)
       throw new Error(stripIndent`
-        The plugin "${
-          pluginName
-        }" created a node of a type owned by another plugin.
+        The plugin "${pluginName}" created a node of a type owned by another plugin.
 
         The node type "${node.internal.type}" is owned by "${
         typeOwners[node.internal.type]

@@ -22,7 +22,7 @@ plugins: [
     // options are passed directly to the compiler
     options: {},
   },
-]
+];
 ```
 
 ## Notes
@@ -40,5 +40,5 @@ CoffeeScript@next is being loaded. The very first line of source in the former's
 `index.js` should be the following: note the lack of dash.
 
 ```js
-var coffee = require("coffeescript")
+var coffee = require("coffeescript");
 ```

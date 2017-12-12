@@ -50,8 +50,7 @@ project), `gatsby develop` (launch a hot-reload enabled web development server),
 etc.
 
 We can now begin the exciting task of _actually_ developing on the site, and
-creating a functional, modern blog. You'll generally want to use `gatsby
-develop` to launch the local development server to validate functionality as we
+creating a functional, modern blog. You'll generally want to use `gatsby develop` to launch the local development server to validate functionality as we
 progress through the steps.
 
 ## Adding necessary plugins
@@ -87,8 +86,7 @@ with the following command:
 yarn add gatsby-plugin-catch-links gatsby-plugin-react-helmet
 ```
 
-We're using [yarn][yarn], but npm can just as easily be used with `npm i --save
-[deps]`.
+We're using [yarn][yarn], but npm can just as easily be used with `npm i --save [deps]`.
 
 After installing each of these functional plugins, we'll edit
 `gatsby-config.js`, which Gatsby loads at build-time to implement the exposed
@@ -257,15 +255,15 @@ We'll want to create the file `src/templates/blog-post.js` (please create the
 `src/templates` folder if it does not yet exist!).
 
 ```javascript
-import React from "react"
-import Helmet from "react-helmet"
+import React from "react";
+import Helmet from "react-helmet";
 
 // import '../css/blog-post.css'; // make it pretty!
 
 export default function Template({
   data, // this prop will be injected by the GraphQL query we'll write in a bit
 }) {
-  const { markdownRemark: post } = data // data.markdownRemark holds our post data
+  const { markdownRemark: post } = data; // data.markdownRemark holds our post data
   return (
     <div className="blog-post-container">
       <Helmet title={`Your Blog Name - ${post.frontmatter.title}`} />
@@ -277,7 +275,7 @@ export default function Template({
         />
       </div>
     </div>
-  )
+  );
 }
 ```
 
@@ -379,13 +377,13 @@ Gatsby, as detailed in its [Node API specification][node-spec]. However, we only
 care about one particular API in this instance, `createPages`.
 
 ```javascript
-const path = require("path")
+const path = require("path");
 
 exports.createPages = ({ boundActionCreators, graphql }) => {
-  const { createPage } = boundActionCreators
+  const { createPage } = boundActionCreators;
 
-  const blogPostTemplate = path.resolve(`src/templates/blog-post.js`)
-}
+  const blogPostTemplate = path.resolve(`src/templates/blog-post.js`);
+};
 ```
 
 Nothing super complex yet! We're using the `createPages` API (which Gatsby will
@@ -543,14 +541,14 @@ create `src/pages/tags.js`, the path `http://localhost:8000/tags/` will be
 available within the browser and the statically generated site.
 
 ```javascript
-import React from "react"
-import Link from "gatsby-link"
-import Helmet from "react-helmet"
+import React from "react";
+import Link from "gatsby-link";
+import Helmet from "react-helmet";
 
 // import '../css/index.css'; // add some style if you want!
 
 export default function Index({ data }) {
-  const { edges: posts } = data.allMarkdownRemark
+  const { edges: posts } = data.allMarkdownRemark;
   return (
     <div className="blog-posts">
       {posts
@@ -564,10 +562,10 @@ export default function Index({ data }) {
               <h2>{post.frontmatter.date}</h2>
               <p>{post.excerpt}</p>
             </div>
-          )
+          );
         })}
     </div>
-  )
+  );
 }
 
 export const pageQuery = graphql`
@@ -586,7 +584,7 @@ export const pageQuery = graphql`
       }
     }
   }
-`
+`;
 ```
 
 OK! So we've followed a similar approach to our blog post template, so this

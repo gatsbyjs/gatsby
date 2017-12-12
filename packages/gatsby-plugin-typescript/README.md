@@ -16,7 +16,7 @@ Provides drop-in support for TypeScript and TSX.
 `gatsby-config.js`
 
 ```javascript
-plugins: [`gatsby-plugin-typescript`]
+plugins: [`gatsby-plugin-typescript`];
 ```
 
 Or with optional configuration:
@@ -34,7 +34,7 @@ plugins: [
       }, // default
     },
   },
-]
+];
 ```
 
 `tsconfig.json`

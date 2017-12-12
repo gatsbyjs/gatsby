@@ -26,11 +26,11 @@ Errors while building static HTML files generally happen for two reasons.
 ```javascript
 // Requiring function causes error during builds
 // as the code tries to reference window
-const module = require("module") // Error
+const module = require("module"); // Error
 
 // Wrap the require in check for window
 if (typeof window !== `undefined`) {
-  const module = require("module") // Error
+  const module = require("module"); // Error
 }
 ```
 
@@ -52,7 +52,7 @@ exports.modifyWebpackConfig = ({ config, stage }) => {
     config.loader("null", {
       test: /bad-module/,
       loader: "null-loader",
-    })
+    });
   }
-}
+};
 ```

@@ -97,7 +97,7 @@ component and two page components.
 `src/pages/index.js`
 
 ```jsx
-import React from "react"
+import React from "react";
 
 export default () => (
   <div>
@@ -109,13 +109,13 @@ export default () => (
       />
     </div>
   </div>
-)
+);
 ```
 
 `src/pages/about.js`
 
 ```jsx
-import React from "react"
+import React from "react";
 
 export default () => (
   <div>
@@ -125,20 +125,20 @@ export default () => (
       photos and videos of pandas eating lots of food.
     </p>
   </div>
-)
+);
 ```
 
 `src/layouts/index.js`
 
 ```jsx
-import React from "react"
-import g from "glamorous"
-import { css } from "glamor"
-import Link from "gatsby-link"
+import React from "react";
+import g from "glamorous";
+import { css } from "glamor";
+import Link from "gatsby-link";
 
-import { rhythm } from "../utils/typography"
+import { rhythm } from "../utils/typography";
 
-const linkStyle = css({ float: `right` })
+const linkStyle = css({ float: `right` });
 
 export default ({ children }) => (
   <g.Div
@@ -161,18 +161,18 @@ export default ({ children }) => (
     </Link>
     {children()}
   </g.Div>
-)
+);
 ```
 
 `src/utils/typography.js`
 
 ```javascript
-import Typography from "typography"
-import kirkhamTheme from "typography-theme-kirkham"
+import Typography from "typography";
+import kirkhamTheme from "typography-theme-kirkham";
 
-const typography = new Typography(kirkhamTheme)
+const typography = new Typography(kirkhamTheme);
 
-module.exports = typography
+module.exports = typography;
 ```
 
 `gatsby-config.js` (must be in the root of your project, not under src)
@@ -188,7 +188,7 @@ module.exports = {
       },
     },
   ],
-}
+};
 ```
 
 Add the above files and then run `gatsby develop` like normal and you should see
@@ -650,13 +650,13 @@ Like with the `src/pages/my-files.js` page, replace `src/pages/index.js` with
 the following to add a query with some initial HTML and styling.
 
 ```jsx
-import React from "react"
-import g from "glamorous"
+import React from "react";
+import g from "glamorous";
 
-import { rhythm } from "../utils/typography"
+import { rhythm } from "../utils/typography";
 
 export default ({ data }) => {
-  console.log(data)
+  console.log(data);
   return (
     <div>
       <g.H1 display={"inline-block"} borderBottom={"1px solid"}>
@@ -673,8 +673,8 @@ export default ({ data }) => {
         </div>
       ))}
     </div>
-  )
-}
+  );
+};
 
 export const query = graphql`
   query IndexQuery {
@@ -692,7 +692,7 @@ export const query = graphql`
       }
     }
   }
-`
+`;
 ```
 
 Now the frontpage should look like:
@@ -742,7 +742,7 @@ Let's get started.
 So far, we've created pages by placing React components in `src/pages`. We'll
 now learn how to _programmatically_ create pages from _data_. Gatsby is _not_
 limited to making pages from files like many static site generators. Gatsby lets
-you use GraphQL to query your _data_ and _map_ the data to *pages*—all at build
+you use GraphQL to query your _data_ and _map_ the data to _pages_—all at build
 time. This is a really powerful idea. We'll be exploring its implications and
 ways to use it for the remainder of the tutorial.
 
@@ -763,8 +763,8 @@ Gatsby whenever a new node is created (or updated).
 
 ```javascript
 exports.onCreateNode = ({ node }) => {
-  console.log(node.internal.type)
-}
+  console.log(node.internal.type);
+};
 ```
 
 Stop and restart the development server. As you do, you'll see quite a few newly
@@ -924,11 +924,11 @@ Create a directory at `src/templates` and then add the following in a file named
 `src/templates/blog-post.js`.
 
 ```jsx
-import React from "react"
+import React from "react";
 
 export default () => {
-  return <div>Hello blog post</div>
-}
+  return <div>Hello blog post</div>;
+};
 ```
 
 Then update `gatsby-node.js`
@@ -996,17 +996,17 @@ Which is a bit boring. Let's pull in data from our markdown post. Change
 `src/templates/blog-post.js` to:
 
 ```jsx
-import React from "react"
+import React from "react";
 
 export default ({ data }) => {
-  const post = data.markdownRemark
+  const post = data.markdownRemark;
   return (
     <div>
       <h1>{post.frontmatter.title}</h1>
       <div dangerouslySetInnerHTML={{ __html: post.html }} />
     </div>
-  )
-}
+  );
+};
 
 export const query = graphql`
   query BlogPostQuery($slug: String!) {
@@ -1017,7 +1017,7 @@ export const query = graphql`
       }
     }
   }
-`
+`;
 ```
 
 And…

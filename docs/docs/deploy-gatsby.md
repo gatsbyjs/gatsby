@@ -62,8 +62,7 @@ module.exports = {
 If you have not yet initialized a git repository in your working gatsby site
 repo, set up git in your project with `git init`. Then tell Gatsby where to
 deploy your site by adding the git remote address with https or ssh. Here is how
-to do it with https: `git remote add origin
-git@github.com:username/project-name.git`.
+to do it with https: `git remote add origin git@github.com:username/project-name.git`.
 
 Now run `yarn deploy` or `npm run deploy`. Preview changes in your GitHub page
 `https://username.github.io/project-name/`. You can also find the link to your
@@ -178,7 +177,8 @@ or alternatively
 Uncaught Error: Minified React error #32; visit http://facebook.github.io/react/docs/error-decoder.html?invariant=32&args[]=## for the full message or use the non-minified dev environment for full errors and additional helpful warnings.
 ```
 
-This is a new problem when dealing with static sites built with React. React
-uses HTML comments to help identify locations of components that do not render
-anything. If you are using a CDN that minifies your HTML, it will eliminate the
-HTML comments used by react to take control of the page on the client.
+This is a new problem when dealing with static sites built with React. This is
+not caused by Gatsby. React uses HTML comments to help identify locations of
+components that do not render anything. If you are using a CDN that minifies
+your HTML, it will eliminate the HTML comments used by React to take control of
+the page on the client. Cloudflare is a CDN that minifies HTML by default.

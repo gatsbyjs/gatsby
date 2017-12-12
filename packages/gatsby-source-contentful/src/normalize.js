@@ -206,9 +206,7 @@ exports.createContentTypeNodes = ({
       const fieldName = contentTypeItemField.id
       if (restrictedNodeFields.includes(fieldName)) {
         console.log(
-          `Restricted field found for ContentType ${
-            contentTypeItemId
-          } and field ${fieldName}. Prefixing with ${conflictFieldPrefix}.`
+          `Restricted field found for ContentType ${contentTypeItemId} and field ${fieldName}. Prefixing with ${conflictFieldPrefix}.`
         )
         conflictFields.push(fieldName)
       }

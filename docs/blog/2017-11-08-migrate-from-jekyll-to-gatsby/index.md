@@ -44,7 +44,7 @@ matter block, so you don't have to change anything. You just need to install
 Then, in your `gatsby-config.js` file add:
 
 ```js
-plugins: ["gatsby-transformer-remark"]
+plugins: ["gatsby-transformer-remark"];
 ```
 
 ### Theme
@@ -88,29 +88,30 @@ extension API to tweak the slug:
 
 ```js
 exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
-  const { createNodeField } = boundActionCreators
+  const { createNodeField } = boundActionCreators;
 
   if (node.internal.type === `MarkdownRemark`) {
-    const { categories } = node.frontmatter
+    const { categories } = node.frontmatter;
 
-    const filename = createFilePath({ node, getNode, basePath: `pages` })
+    const filename = createFilePath({ node, getNode, basePath: `pages` });
 
     // get the date and title from the file name
     const [, date, title] = filename.match(
       /^\/([\d]{4}-[\d]{2}-[\d]{2})-{1}(.+)\/$/
-    )
+    );
 
     // create a new slug concatenating everything
-    const slug = `/${slugify(categories.concat([date]).join("-"), "/")}/${
-      title
-    }/`
+    const slug = `/${slugify(
+      categories.concat([date]).join("-"),
+      "/"
+    )}/${title}/`;
 
-    createNodeField({ node, name: `slug`, value: slug })
+    createNodeField({ node, name: `slug`, value: slug });
 
     // save the date for later use
-    createNodeField({ node, name: `date`, value: date })
+    createNodeField({ node, name: `date`, value: date });
   }
-}
+};
 ```
 
 ### Deploy

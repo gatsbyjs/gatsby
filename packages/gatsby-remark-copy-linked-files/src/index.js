@@ -9,9 +9,7 @@ const sizeOf = require(`image-size`)
 const DEPLOY_DIR = `public`
 
 const invalidDestinationDirMessage = dir =>
-  `[gatsby-remark-copy-linked-files You have supplied an invalid destination directory. The destination directory must be a child but was: ${
-    dir
-  }`
+  `[gatsby-remark-copy-linked-files You have supplied an invalid destination directory. The destination directory must be a child but was: ${dir}`
 
 // dir must be a child
 const destinationDirIsValid = dir => !path.relative(`./`, dir).startsWith(`..`)
