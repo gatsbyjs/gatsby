@@ -81,7 +81,7 @@ export const projectsPageQuery = graphql`
       }
     }
   }
-`
+`;
 ```
 
 Pulling blog posts was even easier! If you’d like to sort them by date, ID,
@@ -103,7 +103,7 @@ export const postQuery = graphql`
       }
     }
   }
-`
+`;
 ```
 
 ## Wrap up and future

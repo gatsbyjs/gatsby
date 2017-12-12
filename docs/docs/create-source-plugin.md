@@ -52,26 +52,26 @@ What does the code look like?
 
 A source plugin is a normal NPM package. It has a package.json with optional
 dependencies as well as a `gatsby-node.js` where you implement Gatsby's Node.js
-APIs. Gatsby supports back node versions back to Node 4 and as it's common to
-want to use more modern node.js and JavaScript syntax, many plugins write code
-in a `src` directory and compile the code. All plugins maintained in the Gatsby
-repo follow this pattern.
+APIs. Gatsby supports node versions back to Node 4 and as it's common to want to
+use more modern node.js and JavaScript syntax, many plugins write code in a
+`src` directory and compile the code. All plugins maintained in the Gatsby repo
+follow this pattern.
 
 Your `gatsby-node.js` should look something like:
 
 ```javascript
 exports.sourceNodes = async ({ boundActionCreators }) => {
-  const { createNode } = boundActionCreators
+  const { createNode } = boundActionCreators;
   // Create nodes here, generally by downloading data
   // from a remote API.
-  const data = await fetch(REMOTE_API)
+  const data = await fetch(REMOTE_API);
 
   // Process data into nodes.
-  data.forEach(datum => createNode(processDatum(datum)))
+  data.forEach(datum => createNode(processDatum(datum)));
 
   // We're done, return.
-  return
-}
+  return;
+};
 ```
 
 Puruse the [`sourceNodes`](/docs/node-apis/#sourceNodes) and

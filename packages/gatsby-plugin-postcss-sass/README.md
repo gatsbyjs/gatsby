@@ -23,5 +23,5 @@ plugins: [
       precision: 8, // SASS default: 5
     },
   },
-]
+];
 ```
