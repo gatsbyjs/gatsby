@@ -124,6 +124,7 @@ root.
 
 ## Community Plugins
 
+* [gatsby-plugin-accessibilityjs](https://github.com/alampros/gatsby-plugin-accessibilityjs)
 * [gatsby-plugin-antd](https://github.com/bskimball/gatsby-plugin-antd)
 * [gatsby-plugin-copy](https://github.com/aquilio/gatsby-plugin-copy)
 * [gatsby-plugin-elasticlunr-search](https://github.com/andrew-codes/gatsby-plugin-elasticlunr-search)
