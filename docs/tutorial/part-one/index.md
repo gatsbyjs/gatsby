@@ -375,7 +375,7 @@ Then finally deploy your site by publishing the generated files to surge.sh.
 You'll first need to create a (free) account by typing `surge`. Then run:
 
 ```bash
-surge public/
+surge public/ my-domain-name.surge.sh
 ```
 
 Once this finishes running, you should see in your terminal something like:
