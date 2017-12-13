@@ -1,5 +1,5 @@
 <!-- 
-  If you're reading this it means that you want to contribute to the project! Awesome and thanks!
+  If you're reading this... it means that you want to contribute to the project! Awesome and thanks!
   
   To make it easier for us to help you — please follow the suggested format below (as it makes sense).
   
