@@ -33,14 +33,23 @@ const fixId = id => {
     id = id.toString()
   }
   if (!isNaN(id.slice(0, 1))) {
-    return `c___${id}`
+    return `c${id}`
   }
   return id
 }
 exports.fixId = fixId
 
-exports.fixIds = object =>
-  deepMap(object, (v, k) => (k === `id` ? fixId(v) : v))
+exports.fixIds = object => {
+  const out = deepMap(object, (v, k) => (k === `id` ? fixId(v) : v))
+
+  return {
+    ...out,
+    sys: {
+      ...out.sys,
+      contentful_id: object.sys.id,
+    },
+  }
+}
 
 const makeId = ({ id, currentLocale, defaultLocale }) =>
   currentLocale === defaultLocale ? id : `${id}___${currentLocale}`
@@ -277,6 +286,7 @@ exports.createContentTypeNodes = ({
 
       let entryNode = {
         id: mId(entryItem.sys.id),
+        contentful_id: entryItem.sys.contentful_id,
         createdAt: entryItem.sys.createdAt,
         updatedAt: entryItem.sys.updatedAt,
         parent: contentTypeItemId,

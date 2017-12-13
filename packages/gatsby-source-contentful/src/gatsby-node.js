@@ -7,7 +7,14 @@ const fetchData = require(`./fetch`)
 const conflictFieldPrefix = `contentful`
 
 // restrictedNodeFields from here https://www.gatsbyjs.org/docs/node-interface/
-const restrictedNodeFields = [`id`, `children`, `parent`, `fields`, `internal`]
+const restrictedNodeFields = [
+  `children`,
+  `contentful_id`,
+  `fields`,
+  `id`,
+  `internal`,
+  `parent`,
+]
 
 exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeType
 
