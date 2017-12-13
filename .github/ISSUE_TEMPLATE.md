@@ -1,19 +1,15 @@
 <!-- 
-  If you reached here it means that you want to contribute to the project.
-  Thank you for contribute with Gatsby!
+  If you're reading this it means that you want to contribute to the project! Awesome and thanks!
   
-  The purpose of this document is to standardize the structure of new issues, so we can
-  track it easily. To make it easier for us to help you please enter detailed information below.
+  To make it easier for us to help you — please follow the suggested format below (as it makes sense).
   
   Useful Links:
   - Documentation: https://www.gatsbyjs.org/docs/
-  - Documentation (v0): https://github.com/gatsbyjs/gatsby/blob/v0.12.48/docs/index.md
   - How to Contribute: https://www.gatsbyjs.org/docs/how-to-contribute/
   - Become a Sponsor: https://opencollective.com/gatsby#sponsor
   
-  Before opening an issue, take a look at the Issues section (https://github.com/gatsbyjs/gatsby/issues)
-  and make sure that you're not going to open an existing one. If doesn't exist, then use the
-  template below.
+  Before opening a new issue, please search existing issues (https://github.com/gatsbyjs/gatsby/issues)
+  to double-check your issue isn't already known.
 -->
 
 ## Description
