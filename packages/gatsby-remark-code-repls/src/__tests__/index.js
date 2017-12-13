@@ -13,12 +13,14 @@ const {
   PROTOCOL_BABEL,
   PROTOCOL_CODEPEN,
   PROTOCOL_CODE_SANDBOX,
+  PROTOCOL_RAMDA,
 } = require(`../constants`)
 
 const REMARK_TESTS = {
   Babel: PROTOCOL_BABEL,
   Codepen: PROTOCOL_CODEPEN,
   CodeSandbox: PROTOCOL_CODE_SANDBOX,
+  Ramda: PROTOCOL_RAMDA,
 }
 
 const remark = new Remark()
