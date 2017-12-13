@@ -279,7 +279,7 @@ class Image extends React.Component {
 
             {/* Show the original image during server-side rendering if JavaScript is disabled */}
             <noscript>
-              <img
+              <Img
                 alt={alt}
                 title={title}
                 srcSet={image.srcSet}
@@ -388,7 +388,7 @@ class Image extends React.Component {
 
             {/* Show the original image during server-side rendering if JavaScript is disabled */}
             <noscript>
-              <img
+              <Img
                 alt={alt}
                 title={title}
                 width={image.width}
