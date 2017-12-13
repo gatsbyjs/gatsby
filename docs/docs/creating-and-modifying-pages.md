@@ -162,7 +162,9 @@ exports.onCreatePage = async ({ page, boundActionCreators }) => {
 
 ### Client Route Params
 
-In order to make a "detail" page at `/widgets/view/ID` resolve and extract the `ID` param, we will need to configure client only routes.
+Gatsby can create client-only routes which take paramaters. 
+
+We'll walk quickly through how to setup a route on your site like `/widgets/view/ID`.
 
 **Build config:**
 
@@ -173,6 +175,7 @@ exports.onCreatePage = async ({ page, boundActionCreators }) => {
   const { createPage } = boundActionCreators;
 
   return new Promise((resolve, reject) => {
+    // Add client route for all paths matching `/view/*`
     if (/view/.test(page.path)) {
       // Gatsby paths have a trailing `/`
       page.matchPath = `${page.path}:id`;
@@ -186,9 +189,9 @@ exports.onCreatePage = async ({ page, boundActionCreators }) => {
 
 **Server:**
 
-When creating links to these view/id pages using react router or any pushstate the pages will resolve until the user hard refreshes the page. This is due to your backend server not knowing how to handle the route.
+Links to these pages will work well client-side but fail if a user tries to visit a page directly (i.e. load the page from the server). This is due to your backend server not knowing how to handle the route.
 
-Configuration is going to be required to make these pages work on production. Results may vary depending on deployment but a simple use case for NGINX:
+Some server configuration is required to make these types of pages work in production. This configuration will vary depending on your server environment but here's a simple example configuration for NGINX:
 
 ```
 location ~ "([a-z]*)\/view\/(\d*)$" {
@@ -200,7 +203,7 @@ This directive will provide the `widgets/view/index.html` file for any request l
 
 **Client:**
 
-Extracting path params from the route on the client requires that you add a `react-router` `<Route>` in your component. 
+Extracting path params from the route on the client requires that you use the `react-router` `<Route>` in your component. 
 
 This can be made simpler by using a HOC:
 
