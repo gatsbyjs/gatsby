@@ -316,7 +316,7 @@ your `html.js` should look like:
 <body>
   <div id="___gatsby" dangerouslySetInnerHTML={{ __html: this.props.body }} />
   {this.props.postBodyComponents}
-</body>;
+</body>
 ```
 
 ## \_template.js is now src/layouts/index.js
