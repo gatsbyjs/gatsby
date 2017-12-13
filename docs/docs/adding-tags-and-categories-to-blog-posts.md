@@ -130,12 +130,11 @@ export default function Tags({ pathContext }) {
 }
 ```
 
-But we also need to tell Gatsby to create the tag pages themselves.  In `gatsby-node.js`  call the the [`createPages`](/docs/node-apis/#createPages) API to make a page for every tag.
+But we also need to tell Gatsby to create the tag pages themselves.  In `gatsby-node.js`  call the the [`createPages`](/docs/node-apis/#createPages) API to make a page for every tag. First create a function called `createTagPages`: 
 
 ```javascript
 const path = require('path');
 const { createFilePath } = require(`gatsby-source-filesystem`)
-
 
 const createTagPages = (createPage, edges) => {
   const tagTemplate = path.resolve(`src/templates/tags.js`);
@@ -178,6 +177,50 @@ const createTagPages = (createPage, edges) => {
     });
 }
 ```
+
+Then in `createPages` query using `graphql` for your fields and use that to call the new `createTagPages` function.
+```javascript
+exports.createPages = ({ graphql, boundActionCreators }) => {
+  const { createPage } = boundActionCreators
+  return new Promise((resolve, reject) => {
+    graphql(`
+    {
+      allMarkdownRemark {
+        edges {
+          node {
+            fields {
+              slug
+            }
+            frontmatter {
+              tags
+              title
+            }
+          }
+        }
+      }
+    }
+    `).then(result => {
+      console.log(result);
+      const posts = result.data.allMarkdownRemark.edges;
+      // call createTagPages
+      createTagPages(createPage, posts);
+      
+      // this is the original code used to create the pages from markdown posts
+      result.data.allMarkdownRemark.edges.map(({ node }) => {
+        createPage({
+          path: node.fields.slug,
+          component: path.resolve(`./src/templates/blog-post.js`),
+          context: {
+            slug: node.fields.slug,
+          },
+        })
+      })
+      resolve()
+    })
+  })
+}
+```
+This only creates tags pages, but the same method can be used for categories as well.
 
 ## Adding Tags To Your Blog Front Page
 The blog front page in the example, but it doesn't link to the tag pages. One way to to do this is by creating a tag component at `src/components/tags.js`
