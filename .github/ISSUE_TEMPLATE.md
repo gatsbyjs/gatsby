@@ -13,14 +13,17 @@
 -->
 
 ## Description
+
 Describe the issue or the enhancement that you want to see.
 
 ### Environment
-Gatsby version: 
-Node.js version: 
+
+Gatsby version:
+Node.js version:
 Operating System:
 
 ### File contents (if changed):
+
 `gatsby-config.js`: <!-- code block or not changed -->
 `package.json`: <!-- code block or not changed -->
 `gatsby-node.js`: <!-- code block or not changed -->
@@ -28,13 +31,19 @@ Operating System:
 `gatsby-ssr.js`: <!-- code block or not changed -->
 
 ### Actual result
+
 What happened.
 
 ### Expected behavior
+
 What should happen?
 
 ### Steps to reproduce
-1.
-2.
-3.
+
+1\.
+
+2\.
+
+3\.
+
 ...

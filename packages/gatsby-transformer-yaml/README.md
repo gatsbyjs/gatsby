@@ -10,7 +10,7 @@ Both `.yaml` and `.yml` are treated in the same way. This document uses both of 
 
 `npm install --save gatsby-transformer-yaml`
 
-__Note:__ You also need to have `gatsby-source-filesystem` installed and configured so it
+**Note:** You also need to have `gatsby-source-filesystem` installed and configured so it
 points to your files.
 
 ## How to use
@@ -24,11 +24,11 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `./src/data/`
-      }
-    }
-    ],
-}
+        path: `./src/data/`,
+      },
+    },
+  ],
+};
 ```
 
 Where the _source folder_ `./src/data/` contains the `.yaml` files.
@@ -39,8 +39,9 @@ You can choose to structure your data as arrays of objects in individual files
 or as single objects spread across multiple files.
 
 The _source folder_ can contain either the following:
-  - __Array of Objects__: Where each file represents a collection. (_you probably want this one_)
-  - __Single Object__: Where each _subfolder_ represents a collection; each files represents one "record".
+
+* **Array of Objects**: Where each file represents a collection. (_you probably want this one_)
+* **Single Object**: Where each _subfolder_ represents a collection; each files represents one "record".
 
 ### Array of Objects
 
@@ -60,7 +61,7 @@ Then the following three nodes would be created.
 ```javascript
 [
   {
-    character: "a"
+    character: "a",
   },
   {
     character: "b",
@@ -162,4 +163,4 @@ Which would return:
 }
 ```
 
-Please do __note__ that `allLettersYaml` __will not__ show up if you do not have any `.yaml` files.
+Please do **note** that `allLettersYaml` **will not** show up if you do not have any `.yaml` files.

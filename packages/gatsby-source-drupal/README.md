@@ -26,7 +26,7 @@ plugins: [
     resolve: `gatsby-source-drupal`,
     options: {
       baseUrl: `https://live-contentacms.pantheonsite.io/`,
-      apiBase: `api` // optional, defaults to `jsonapi`
+      apiBase: `api`, // optional, defaults to `jsonapi`
     },
   },
 ];
