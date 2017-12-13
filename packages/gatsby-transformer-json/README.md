@@ -14,7 +14,7 @@ points to your files.
 
 ```javascript
 // In your gatsby-config.js
-plugins: [`gatsby-transformer-json`]
+plugins: [`gatsby-transformer-json`];
 ```
 
 ## Parsing algorithm
@@ -26,15 +26,14 @@ or as single objects spread across multiple files.
 
 The algorithm for arrays is to convert each item in the array into a node.
 
-So if your project has a `letters.json` with `[{ "value": "a" }, { "value": "b"
-}, { "value": "c" }]` then the following three nodes would be created.
+So if your project has a `letters.json` with `[{ "value": "a" }, { "value": "b" }, { "value": "c" }]` then the following three nodes would be created.
 
 ```javascript
-;[
+[
   { value: "a", type: "Letters" },
   { value: "b", type: "Letters" },
   { value: "c", type: "Letters" },
-]
+];
 ```
 
 ### Single Object
@@ -70,7 +69,7 @@ Where each of `a.json`, `b.json` and `c.json` look like:
 Then the following three nodes would be created.
 
 ```javascript
-;[
+[
   {
     value: "a",
     type: "Letters",
@@ -83,7 +82,7 @@ Then the following three nodes would be created.
     value: "c",
     type: "Letters",
   },
-]
+];
 ```
 
 ## How to query
@@ -124,7 +123,7 @@ Which would return:
           value: "c",
         },
       },
-    ]
+    ];
   }
 }
 ```

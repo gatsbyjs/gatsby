@@ -134,9 +134,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     const path = `videos/sample-video.mp4`
 
     const markdownAST = remark.parse(
-      `<video controls="controls" autoplay="true" loop="true">\n<source type="video/mp4" src="${
-        path
-      }"></source>\n<p>Your browser does not support the video element.</p>\n</video>`
+      `<video controls="controls" autoplay="true" loop="true">\n<source type="video/mp4" src="${path}"></source>\n<p>Your browser does not support the video element.</p>\n</video>`
     )
 
     await plugin({ files: getFiles(path), markdownAST, markdownNode, getNode })
@@ -243,9 +241,7 @@ describe(`gatsby-remark-copy-linked-files`, () => {
 
     it(`optionally copies PNG, JPG/JPEG, BPM and TIFF files`, async () => {
       const markdownAST = remark.parse(
-        `![PNG](${pngImagePath}) ![JPG](${jpgImagePath}) ![JPEG](${
-          jpegImagePath
-        }) ![BPM](${bmpImagePath}) ![TIFF](${tiffImagePath})`
+        `![PNG](${pngImagePath}) ![JPG](${jpgImagePath}) ![JPEG](${jpegImagePath}) ![BPM](${bmpImagePath}) ![TIFF](${tiffImagePath})`
       )
       await plugin(
         {

@@ -10,7 +10,7 @@ Parses TOML files.
 
 ```javascript
 // In your gatsby-config.js
-plugins: [`gatsby-transformer-toml`]
+plugins: [`gatsby-transformer-toml`];
 ```
 
 ## Parsing algorithm

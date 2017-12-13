@@ -1,12 +1,12 @@
 {
   "name": "gatsby-plugin-less",
   "description": "Stub description for gatsby-plugin-less",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "author": "Ming Aldrich-Gan <mingaldrichgan@gmail.com>",
   "dependencies": {
     "babel-runtime": "^6.26.0",
     "extract-text-webpack-plugin": "^1.0.1",
-    "gatsby-1-config-css-modules": "^1.0.7",
+    "gatsby-1-config-css-modules": "^1.0.8",
     "less": "^2.7.2",
     "less-loader": "^3.0.0",
     "webpack": "^1.13.3"

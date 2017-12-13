@@ -71,7 +71,7 @@ module.exports = (locals, callback) => {
     ]),
   })
   htmlStr = renderToStaticMarkup(htmlElement)
-  htmlStr = `<!DOCTYPE html>\n${htmlStr}`
+  htmlStr = `<!DOCTYPE html>${htmlStr}`
 
   callback(null, htmlStr)
 }
