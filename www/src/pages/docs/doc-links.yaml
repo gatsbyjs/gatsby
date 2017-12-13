@@ -6,6 +6,8 @@
       link: /docs/gatsby-starters/
     - title: Deploying
       link: /docs/deploy-gatsby/
+    - title: Awesome Gatsby
+      link: /docs/awesome-gatsby/
 - title: Core Concepts
   items:
     - title: Building with Components
@@ -60,8 +62,6 @@
       link: /docs/how-gatsby-works-with-github-pages/
 - title: Reference
   items:
-    - title: Awesome Gatsby
-      link: /docs/awesome-gatsby/
     - title: Node Interface
       link: /docs/node-interface/
     - title: API Specification
