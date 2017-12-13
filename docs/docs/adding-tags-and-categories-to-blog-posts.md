@@ -29,6 +29,8 @@ tags: ["animals", "Chicago", "zoos"]
 
 I went to the zoo today. It was terrible.
 ```
+If `gatsby develop` is running, restart it so Gatsby can pick up the new fields.
+
 ## Querying your fields
 Now these fields are available in the data layer. To use field data, query it using `graphql`. All fields are available to query inside `frontmatter`
 
@@ -122,24 +124,24 @@ export default function Tags({ pathContext }) {
           );
         })}
       </ul>
-      <Link to="/">
-        All posts
-      </Link>
     </div>
   );
 }
 ```
 
-But we also need to tell Gatsby to create the tag pages themselves.  In `gatsby-node.js`  call the the [`createPages`](/docs/node-apis/#createPages) API to make a page for every tag. First create a function called `createTagPages`: 
+But we also need to tell Gatsby to create the tag pages themselves.  In `gatsby-node.js`  call the the [`createPages`](/docs/node-apis/#createPages) API to make a page for every tag. First create a function called `createTagPages`:  
 
 ```javascript
 const path = require('path');
-const { createFilePath } = require(`gatsby-source-filesystem`)
 
 const createTagPages = (createPage, edges) => {
+  // tell it to use our tags template
   const tagTemplate = path.resolve(`src/templates/tags.js`);
+  // create an empty object to store the posts
   const posts = {};
   console.log("creating posts");
+
+  // run through all nodes (our markdown posts) and add the tags to our post object
 
   edges
     .forEach(({ node }) => {
@@ -154,6 +156,7 @@ const createTagPages = (createPage, edges) => {
       }
     });
 
+  // create the tags page with the list of tags from our posts object
   createPage({
     path: '/tags',
     component: tagTemplate,
@@ -161,6 +164,8 @@ const createTagPages = (createPage, edges) => {
       posts
     }
   });
+
+  // for each of the tags in the post object, create a tag page
 
   Object.keys(posts)
     .forEach(tagName => {
@@ -182,6 +187,7 @@ Then in `createPages` query using `graphql` for your fields and use that to call
 ```javascript
 exports.createPages = ({ graphql, boundActionCreators }) => {
   const { createPage } = boundActionCreators
+  // add the tags to the query
   return new Promise((resolve, reject) => {
     graphql(`
     {
@@ -202,7 +208,8 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     `).then(result => {
       console.log(result);
       const posts = result.data.allMarkdownRemark.edges;
-      // call createTagPages
+
+      // call createTagPages with the result of posts
       createTagPages(createPage, posts);
       
       // this is the original code used to create the pages from markdown posts
