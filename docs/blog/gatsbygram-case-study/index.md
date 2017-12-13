@@ -352,7 +352,7 @@ Every page will be rendered as children of the `Layout` component:
 ```jsx
 <Layout>
   <Page />
-</Layout>;
+</Layout>
 ```
 
 Gatsbygram's layout component is somewhat more complicated than most sites as it

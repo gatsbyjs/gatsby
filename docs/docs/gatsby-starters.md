@@ -277,7 +277,7 @@ Community:
   * Create presentations/slides using Gatsby.
   * Offline support.
   * Page transitions.
-  
+
 * [gatsby-starter-forty](https://github.com/ChangoMan/gatsby-starter-forty)
   [(demo)](http://gatsby-forty.surge.sh/)
 
