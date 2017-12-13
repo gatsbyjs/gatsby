@@ -17,7 +17,8 @@
     "babel-runtime": "^6.26.0",
     "core-js": "^2.5.1",
     "react": "^16.0.0",
-    "react-dom": "^16.0.0"
+    "react-dom": "^16.0.0",
+    "resolve": "^1.5.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
