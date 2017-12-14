@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-netlify",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "A Gatsby plugin which generates a _headers file for netlify",
   "main": "index.js",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
