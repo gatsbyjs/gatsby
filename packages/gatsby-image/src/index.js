@@ -87,6 +87,21 @@ const isWebpSupported = () => {
   return isWebpSupportedCache
 }
 
+const noscriptImg = props => {
+  const {
+    opacity = ``,
+    src,
+    srcSet,
+    sizes = ``,
+    title = ``,
+    alt = ``,
+    width = ``,
+    height = ``,
+    transitionDelay = ``,
+  } = props
+  return `<img width=${width} height=${height} src="${src}" srcset="${srcSet}" alt="${alt}" title="${title}" sizes="${sizes}" style="position:absolute;top:0;left:0;transition:opacity 0.5s;transition-delay:${transitionDelay};opacity:${opacity};width:100%;height:100%;object-fit:cover;objectPosition:center"/>`
+}
+
 const Img = props => {
   const { opacity, onLoad, transitionDelay = ``, ...otherProps } = props
   return (
@@ -278,15 +293,11 @@ class Image extends React.Component {
             )}
 
             {/* Show the original image during server-side rendering if JavaScript is disabled */}
-            <noscript>
-              <Img
-                alt={alt}
-                title={title}
-                srcSet={image.srcSet}
-                src={image.src}
-                sizes={image.sizes}
-              />
-            </noscript>
+            <noscript
+              dangerouslySetInnerHTML={{
+                __html: noscriptImg({ alt, title, ...image }),
+              }}
+            />
           </div>
         </div>
       )
@@ -387,16 +398,17 @@ class Image extends React.Component {
             )}
 
             {/* Show the original image during server-side rendering if JavaScript is disabled */}
-            <noscript>
-              <Img
-                alt={alt}
-                title={title}
-                width={image.width}
-                height={image.height}
-                srcSet={image.srcSet}
-                src={image.src}
-              />
-            </noscript>
+            <noscript
+              dangerouslySetInnerHTML={{
+                __html: noscriptImg({
+                  alt,
+                  title,
+                  width: image.width,
+                  height: image.height,
+                  ...image,
+                }),
+              }}
+            />
           </div>
         </div>
       )
