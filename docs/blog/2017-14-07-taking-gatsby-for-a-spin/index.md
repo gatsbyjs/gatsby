@@ -5,11 +5,12 @@ author: "Arden de Raaij"
 image: "great-gatsby.jpg"
 excerpt: "A static site generator based on React, does that even make sense? GatsbyJS tries to answer this question with a hypermodern, feature-packed, *jamstacked* development tool that you can try out right now!"
 ---
-A static site generator based on React, does that even make sense? [GatsbyJS](https://gatsbyjs.org/) tries to answer this question with a hypermodern, feature-packed, *jamstacked* development tool that you can try out right now! In this post I'll give you a quick introduction and an overview of my own thoughts on Gatsby.
+
+A static site generator based on React, does that even make sense? [GatsbyJS](https://gatsbyjs.org/) tries to answer this question with a hypermodern, feature-packed, _jamstacked_ development tool that you can try out right now! In this post I'll give you a quick introduction and an overview of my own thoughts on Gatsby.
 
 ## Introducing: Gatsby
 
-Ever since I started following the [Gatsby Twitter account](https://twitter.com/gatsbyjs), I've wanted in on the action. It's not that I really *need* a new tool to create static sites, it's just that every developer tweeting about Gatsby seems to think it's the most exciting thing on the web since they learned they could combine the `marquee` and `blink` tag. Call it FOMO. Also, the sites that these developers have been showcasing were all so fast and snappy, I had to see what the buzz was about.
+Ever since I started following the [Gatsby Twitter account](https://twitter.com/gatsbyjs), I've wanted in on the action. It's not that I really _need_ a new tool to create static sites, it's just that every developer tweeting about Gatsby seems to think it's the most exciting thing on the web since they learned they could combine the `marquee` and `blink` tag. Call it FOMO. Also, the sites that these developers have been showcasing were all so fast and snappy, I had to see what the buzz was about.
 
 Let’s jump in. Here are some of the important features of Gatsby:
 
@@ -24,12 +25,15 @@ Gatsby was my first introduction to [GraphQL](http://graphql.org/learn/) and I'm
 ![Screenshot of GraphiQl](./grahiql_screenshot.png "GraphiQL")
 
 ### Progressive Web App and PRPL Pattern (Blazing fast)
+
 With an eye on the future, Gatsby already implements lots of Googles so called '**P**ush, **R**ender **P**re-Cache and **L**azy-load pattern (PRPL, I'm not sure if that acronym will catch on). Gatsby takes care of the pre-loading and code-splitting, which makes browsing around Gatsby sites an insanely fast experience. PRPL + the gatsby offline plugin mean that your site will be considered a PWA, will load insanely fast on any device and scores great in Google lighthouse. Read more on [PRPL](/docs/prpl-pattern/).
 
 ### Webpack and Plugins
+
 Can you say React without webpack? I can hardly say `hello world` without webpack anymore, although I'm still not sure how to configure it right on the first go. Gatsby comes with an extensive webpack configuration and you don't really need to touch if you don't want to. If you do, you can modify and add to the default configuration with a plugin or in the `gatsby-node` file. There's already a great range of plugins so most likely any webpack tweak is a plugin install away. With all the plenty of good examples, it’s often straightforward to write your own plugin too.
 
 ### Community
+
 Even though Gatsby is pretty new, the developers using it seem really involved. There are quite a few [articles on the Gatsby blog](/blog/). People seem to be happy to answer your Gatsby questions on Twitter and on Github you can ask anything without being shot down. Everyone is encouraged to contribute in form of plugins and pull requests, which gives me confidence that we'll see a lot of additions and improvements in the future.
 
 ## Some thoughts on Gatsby
@@ -71,9 +75,10 @@ export const query = graphql`
    }
 `;
 ```
+
 ### Deployment and content management can be so good!
 
-After reading some articles on the Gatsby site, I decided to set up my Gatsby hosting on a free plan from [Netlify](https://www.netlify.com/) (which is ridiculously generous by the way, what's the catch?) and that has been a fun experience. Netlify already supports Gatsby out of the box, which means you can configure automatic deploys with `git` in a few clicks. Every time I push to master, the site gets rebuild and uploaded by Netlify. *Magic*. There's also the possibility to configure staging servers based on your branches, so you can always test out your changes before merging to master and deploying. 
+After reading some articles on the Gatsby site, I decided to set up my Gatsby hosting on a free plan from [Netlify](https://www.netlify.com/) (which is ridiculously generous by the way, what's the catch?) and that has been a fun experience. Netlify already supports Gatsby out of the box, which means you can configure automatic deploys with `git` in a few clicks. Every time I push to master, the site gets rebuild and uploaded by Netlify. _Magic_. There's also the possibility to configure staging servers based on your branches, so you can always test out your changes before merging to master and deploying.
 
 But wait, there's more. If you use [Contentful](https://www.contentful.com/) as Content Management System and Netlify as your host, you can easily create a Webhook to trigger a rebuild on every content update! I haven't tried this myself yet, but [this posts](https://www.halfelectronic.com/post/setting-up-gatsby-js-contentful-and-netlify/) by [Fernando Poumián](https://twitter.com/fernandopoumian) is a great resource to get you going.
 
@@ -85,7 +90,7 @@ Did you see the SVG traced image before the image was loaded? If not, you're pro
 
 ### Keep an eye on the output
 
-I'll start by admitting that I haven't validated the HTML of my own site yet, but I'm sure it'll need some work. I feel like the combination of JSX and using loads of React Components can make the HTML output messy real quick . Combined with the use of Gatsby plugins that also manipulate your output, I'd say it's extra important to keep an eye out on the generated code. I understand that GatsbyJS is very much about the modern web, but that's why we've got *progressive enhancement*.
+I'll start by admitting that I haven't validated the HTML of my own site yet, but I'm sure it'll need some work. I feel like the combination of JSX and using loads of React Components can make the HTML output messy real quick . Combined with the use of Gatsby plugins that also manipulate your output, I'd say it's extra important to keep an eye out on the generated code. I understand that GatsbyJS is very much about the modern web, but that's why we've got _progressive enhancement_.
 
 ### When your favorite tool is a hammer…
 
