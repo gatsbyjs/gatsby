@@ -90,7 +90,6 @@ const findIdsWithoutDataDependencies = () => {
     ...notTrackedIds,
     ...seenIdsWithoutDataDependencies,
   ])
- )
 
   return notTrackedIds
 }
