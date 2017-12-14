@@ -35,7 +35,7 @@ plugins: [
             maxWidth: 590,
             // Remove the default behavior of adding a link to each
             // image.
-            linkImagesToOriginal: false,
+            linkImagesToOriginal: true,
             // Analyze images' pixel density to make decisions about
             // target image size. This is what GitHub is doing when
             // embedding images in tickets. This is a useful setting
@@ -48,7 +48,7 @@ plugins: [
             // will be rendered at 50px.
             //
             // Defaults to false.
-            sizeByPixelDensity: true,
+            sizeByPixelDensity: false,
           },
         },
       ],
