@@ -43,6 +43,20 @@ The usual contributing steps are:
 * Commit and push to your fork.
 * Create an pull request from your branch.
 
+### Contributing to the documentation.
+
+Gatsby, unsurprisingly uses Gatsby for it's documentation website. Here are the
+steps to add/modify documentation and preview it.
+
+* Clone the repo and navigate to `/www`
+* Run `yarn` to install all of the website's dependencies.
+* Run `gatsby develop` to preview the website in `http://localhost:8000`
+* The Markdown files for the documentation live in `/docs` folder. Make
+  additions or modifications here.
+* Make sure to double check your grammar and capitalise correctly.
+* Commit and push to your fork.
+* Create an pull request from your branch.
+
 ## Development tools
 
 ### Redux devtools
