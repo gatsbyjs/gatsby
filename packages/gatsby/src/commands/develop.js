@@ -326,10 +326,9 @@ module.exports = async (program: any) => {
     // if (isSuccessful && (isInteractive || isFirstCompile)) {
     if (isSuccessful && isFirstCompile) {
       printInstructions(program.sitePackageJson.name, urls, program.useYarn)
-    }
-
-    if (program.open) {
-      require(`opn`)(urls.localUrlForBrowser)
+      if (program.open) {
+        require(`opn`)(urls.localUrlForBrowser)
+      }
     }
 
     isFirstCompile = false

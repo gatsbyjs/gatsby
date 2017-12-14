@@ -6,6 +6,8 @@
       link: /docs/gatsby-starters/
     - title: Deploying
       link: /docs/deploy-gatsby/
+    - title: Awesome Gatsby
+      link: /docs/awesome-gatsby/
 - title: Core Concepts
   items:
     - title: Building with Components
@@ -46,12 +48,12 @@
       link: /docs/path-prefix/
     - title: Proxying API Requests
       link: /docs/api-proxy/
+    - title: Adding Markdown Pages
+      link: /docs/adding-markdown-pages/
     - title: Adding a List of Markdown Blog Posts*
       link: /docs/adding-a-list-of-markdown-blog-posts/
     - title: Adding Tags and Categories to Blog Posts*
       link: /docs/adding-tags-and-categories-to-blog-posts/
-    - title: Adding Markdown Pages*
-      link: /docs/adding-markdown-pages/
     - title: Creating Dynamically-Rendered Navigation*
       link: /docs/creating-dynamically-rendered-navigation/
     - title: Dropping Images into Static Folders*
@@ -60,8 +62,6 @@
       link: /docs/how-gatsby-works-with-github-pages/
 - title: Reference
   items:
-    - title: Awesome Gatsby
-      link: /docs/awesome-gatsby/
     - title: Node Interface
       link: /docs/node-interface/
     - title: API Specification

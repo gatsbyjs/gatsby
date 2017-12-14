@@ -118,8 +118,8 @@ Note,
 you can not currently use these fragments in the GraphiQL IDE.
 
 Plugins supporting `gatsby-image` currently include
-[gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/) and
-[gatsby-source-contentful](/packages/gatsby-source-contentful/).
+[gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/),
+[gatsby-source-contentful](/packages/gatsby-source-contentful/) and [gatsby-source-datocms](https://github.com/datocms/gatsby-source-datocms).
 
 Their fragments are:
 
@@ -145,6 +145,13 @@ Their fragments are:
 * `GatsbyContentfulSizes`
 * `GatsbyContentfulSizes_noBase64`
 
+### gatsby-source-datocms
+
+* `GatsbyDatoCmsResolutions`
+* `GatsbyDatoCmsResolutions_noBase64`
+* `GatsbyDatoCmsSizes`
+* `GatsbyDatoCmsSizes_noBase64`
+
 If you don't want to use the blur-up effect, choose the fragment with `noBase64`
 at the end. If you want to use the traced placeholder SVGs, choose the fragment
 with `tracedSVG` at the end.
@@ -154,7 +161,7 @@ format, use the `withWebp` fragments. If the browser doesn't support WebP,
 `gatsby-image` will fall back to the default image format.
 
 _Please see the
-[gatsby-plugin-sharp](https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/#tracedsvg)
+[gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/#tracedsvg)
 documentation for more information on `tracedSVG` and its configuration
 options._
 

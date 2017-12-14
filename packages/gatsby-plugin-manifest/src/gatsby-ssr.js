@@ -1,11 +1,12 @@
 import React from "react"
+import { withPrefix } from "gatsby-link"
 
 exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   setHeadComponents([
     <link
       key={`gatsby-plugin-manifest-link`}
       rel="manifest"
-      href="/manifest.json"
+      href={withPrefix(`/manifest.json`)}
     />,
     <meta
       key={`gatsby-plugin-manifest-meta`}

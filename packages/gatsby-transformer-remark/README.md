@@ -14,7 +14,7 @@ plugins: [`gatsby-transformer-remark`];
 ```
 
 A full explanation of how to use markdown in Gatsby can be found here:
-[Creating a Blog with Gatsby](https://www.gatsbyjs.org/blog/2017-07-19-creating-a-blog-with-gatsby/)
+[Creating a Blog with Gatsby](/blog/2017-07-19-creating-a-blog-with-gatsby/)
 
 ## Parsing algorithm
 
