@@ -62,6 +62,7 @@ const runQueuedActions = async () => {
 // query things in a 1/2 finished state.
 emitter.on(`API_RUNNING_QUEUE_EMPTY`, runQueuedActions)
 
+let seenIdsWithoutDataDependencies = []
 const findIdsWithoutDataDependencies = () => {
   const state = store.getState()
   const allTrackedIds = _.uniq(
@@ -75,13 +76,22 @@ const findIdsWithoutDataDependencies = () => {
 
   // Get list of paths not already tracked and run the queries for these
   // paths.
-  return _.difference(
+  const notTrackedIds = _.difference(
     [
       ...state.pages.map(p => p.path),
       ...state.layouts.map(l => `LAYOUT___${l.id}`),
     ],
-    allTrackedIds
+    [...allTrackedIds, ...seenIdsWithoutDataDependencies]
   )
+
+  // Add new IDs to our seen array so we don't keep trying to run queries for them.
+  // Pages/Layouts without queries can't be tracked.
+  seenIdsWithoutDataDependencies = _.uniq([
+    ...notTrackedIds,
+    ...seenIdsWithoutDataDependencies,
+  ])
+
+  return notTrackedIds
 }
 
 const runQueriesForIds = ids => {
@@ -105,8 +115,9 @@ const runQueriesForIds = ids => {
             result => callback(null, result),
             error => callback(error)
           )
+        } else {
+          return callback(null, null)
         }
-        return callback(null, null)
       },
       (error, result) => {
         error ? reject(error) : resolve(result)
