@@ -80,13 +80,12 @@ The repository for these sites requires a special name. See
 https://help.github.com/articles/user-organization-and-project-pages/ for
 documentation on naming your site's repository.
 
-Like with project sites, add `gh-pages` as a `devDependency` and add a `deploy`
-script to your site's `package.json` file:
+If you wish to link your custom domain with your `user.github.io` repo, you will need
+a `CNAME` file inside the `static` folder at the root directory level with the your
+custom domain url inside, like so:
 
 ```
-"scripts": {
-  "deploy": "gatsby build && gh-pages -d public --branch master",
-}
+your-custom-domain.com
 ```
 
 ## Gitlab Pages
