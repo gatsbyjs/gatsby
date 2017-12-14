@@ -21,7 +21,7 @@ plugins: [
       username: `username/publication`,
     },
   },
-]
+];
 ```
 
 ## How to query

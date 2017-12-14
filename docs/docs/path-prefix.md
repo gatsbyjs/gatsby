@@ -34,7 +34,7 @@ First define the prefix in your site's `gatsby-config.js`.
 module.exports = {
   // Note: it must *not* have a trailing slash.
   pathPrefix: `/blog`,
-}
+};
 ```
 
 Then pass `--prefix-paths` cmd option to Gatsby.

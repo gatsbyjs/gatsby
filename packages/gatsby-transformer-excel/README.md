@@ -10,7 +10,7 @@ Parses Excel files into JSON arrays.
 
 ```javascript
 // In your gatsby-config.js
-plugins: [`gatsby-transformer-excel`]
+plugins: [`gatsby-transformer-excel`];
 ```
 
 ## Parsing algorithm
@@ -44,12 +44,12 @@ So if your project has a `letters.xlsx` with two worksheets:
 the following nodes would be created:
 
 ```javascript
-;[
+[
   { letter: "a", value: 97, type: "LettersXlsxSheet1" },
   { letter: "b", value: 98, type: "LettersXlsxSheet1" },
   { letter: "A", value: 65, type: "LettersXlsxSheet2" },
   { letter: "B", value: 66, type: "LettersXlsxSheet2" },
-]
+];
 ```
 
 ## How to query

@@ -20,7 +20,7 @@ plugins: [
 ]
 ```
 
-Above is the minmal configuration required to have it work, however, note that
+Above is the minimal configuration required to have it work, however, note that
 the
 [default query](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-sitemap/src/internals.js)
 only retrieves nodes of type `MarkdownRemark`. Any parameter in `defaultOptions`

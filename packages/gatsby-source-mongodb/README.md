@@ -18,7 +18,7 @@ module.exports = {
       options: { dbName: `local`, collection: `documents` },
     },
   ],
-}
+};
 ```
 
 ### multiple collections
@@ -32,7 +32,7 @@ module.exports = {
       options: { dbName: `local`, collection: [`documents`, `vehicles`] },
     },
   ],
-}
+};
 ```
 
 ## Plugin options
