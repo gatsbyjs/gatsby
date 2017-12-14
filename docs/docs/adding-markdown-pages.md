@@ -27,14 +27,14 @@ For `gatsby-source-filesystem` we pass an object so we can set the file system p
 
 ```javascript
 plugins: [
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-            path: `${__dirname}/path/to/markdown/files`,
-            name: 'markdown-pages'
-        }
-    }
-]
+  {
+    resolve: `gatsby-source-filesystem`,
+    options: {
+      path: `${__dirname}/path/to/markdown/files`,
+      name: "markdown-pages",
+    },
+  },
+];
 ```
 
 Now that we've "sourced" the markdown files from the filesystem, we can now "transform" the markdown to HTML and the YAML frontmatter to JSON.
@@ -49,15 +49,15 @@ Add this to `gatsby-config.js` after the previously added `gatsby-source-filesys
 
 ```javascript
 plugins: [
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-            path: `${__dirname}/path/to/markdown/files`,
-            name: 'markdown-pages'
-        }
+  {
+    resolve: `gatsby-source-filesystem`,
+    options: {
+      path: `${__dirname}/path/to/markdown/files`,
+      name: "markdown-pages",
     },
-    `gatsby-transformer-remark`,
-]
+  },
+  `gatsby-transformer-remark`,
+];
 ```
 
 #### Note on creating markdown files.
@@ -78,13 +78,13 @@ Create a folder in the `/src` directory of your Gatsby application called `templ
 Now create a `blogTemplate.js` inside it with the following content.
 
 ```jsx
-import React from "react"
+import React from "react";
 
 export default function Template({
   data, // this prop will be injected by the GraphQL query below.
 }) {
-  const { markdownRemark } = data // data.markdownRemark holds our post data
-  const {frontMatter, html} = markdownRemark;
+  const { markdownRemark } = data; // data.markdownRemark holds our post data
+  const { frontMatter, html } = markdownRemark;
   return (
     <div className="blog-post-container">
       <div className="blog-post">
@@ -96,7 +96,7 @@ export default function Template({
         />
       </div>
     </div>
-  )
+  );
 }
 
 export const pageQuery = graphql`
@@ -110,13 +110,13 @@ export const pageQuery = graphql`
       }
     }
   }
-`
+`;
 ```
 
 Two things are important in the file above.
 
 1. A GraphQL query is made in the second half of the file to get the Markdown data. Gatsby has automagically given you all the Markdown metadata and HTML in this query's result.
-    **Note: To learn more about GraphQL, consider this [excellent resource](https://www.howtographql.com/)**
+   **Note: To learn more about GraphQL, consider this [excellent resource](https://www.howtographql.com/)**
 2. The result of the query is injected by Gatsby into the `Template` component as `data`. `markdownRemark` is the property that we find has all the details of the Markdown file. We can use that to construct a template for our blogpost view. Since it's a React component, you could style it with any of the recommended styling systems in Gatsby.
 
 ### Create static pages using Gatsby's Node API.
@@ -178,5 +178,3 @@ Check out tutorials listed on the [Awesome Gatsby](/docs/awesome-gatsby/#gatsby-
 ## Gatsby markdown starters
 
 There are a number of [Gatsby starters](/docs/gatsby-starters/) that come preconfigured to work with markdown.
-
-
