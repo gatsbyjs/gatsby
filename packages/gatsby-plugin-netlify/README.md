@@ -108,13 +108,13 @@ You can validate the `_headers` config through the
 
 ### Redirects
 
-You can create redirects using the [`createRedirect`](https://www.gatsbyjs.org/docs/bound-action-creators/#createRedirect) action. 
+You can create redirects using the [`createRedirect`](https://www.gatsbyjs.org/docs/bound-action-creators/#createRedirect) action.
 
 An example:
 
 ```javascript
-createRedirect({ fromPath: '/old-url', toPath: '/new-url', isPermanent: true })
-createRedirect({ fromPath: '/url', toPath: '/zn-CH/url', Language: 'zn' })
+createRedirect({ fromPath: "/old-url", toPath: "/new-url", isPermanent: true });
+createRedirect({ fromPath: "/url", toPath: "/zn-CH/url", Language: "zn" });
 ```
 
 You can also create a `_redirects` file in the `static` folder for the same affect. Any programmatically created redirects will be appended to the file.

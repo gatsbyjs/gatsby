@@ -1,6 +1,6 @@
 {
   "name": "gatsby-transformer-documentationjs",
-  "version": "1.4.7",
+  "version": "1.4.8",
   "description": "Gatsby transformer plugin which uses Documentation.js to extract JavaScript documentation",
   "main": "index.js",
   "scripts": {

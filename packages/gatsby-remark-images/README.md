@@ -9,7 +9,7 @@ In the processing, it make images responsive by:
 * Generating multiple versions of images at different widths and sets the
   `srcset` and `sizes` of the `img` element so regardless of the width of the
   device, the correct image is downloaded.
-* Useing the "blur up" technique popularized by [Medium][1] and [Facebook][2]
+* Using the "blur up" technique popularized by [Medium][1] and [Facebook][2]
   where a small 20px wide version of the image is shown as a placeholder until
   the actual image is downloaded.
 

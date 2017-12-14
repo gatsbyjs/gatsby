@@ -31,7 +31,7 @@
     "jest-cli": "^20.0.4",
     "lerna": "^2.1.1",
     "plop": "^1.8.1",
-    "prettier": "^1.9.1",
+    "prettier": "^1.9.2",
     "prettier-eslint-cli": "4.2.x",
     "remotedev-server": "^0.2.3",
     "rimraf": "^2.6.1"

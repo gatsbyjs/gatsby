@@ -146,14 +146,10 @@ module.exports = async (locals, callback) => {
       id="webpack-manifest"
       key="webpack-manifest"
       dangerouslySetInnerHTML={{
-        __html: `
-            //<![CDATA[
-            window.webpackManifest = ${chunkManifest}
-            //]]>
-            `,
-                }}
-            />
-        )
+        __html: `/*<![CDATA[*/window.webpackManifest=${chunkManifest}/*]]>*/`,
+      }}
+    />
+  )
 
         let stats
         try {
@@ -201,23 +197,19 @@ module.exports = async (locals, callback) => {
           )
         })
 
-        // Add script loader for page scripts to the head.
-        // Taken from https://www.html5rocks.com/en/tutorials/speed/script-loading/
-        const scriptsString = scripts.map(s => `"${s}"`).join(`,`)
-        headComponents.push(
-            <script
-                key={`script-loader`}
-                dangerouslySetInnerHTML={{
-                  __html: `
-  !function(e,t,r){function n(){for(;d[0]&&"loaded"==d[0][f];)c=d.shift(),c[o]=!i.parentNode.insertBefore(c,i)}for(var s,a,c,d=[],i=e.scripts[0],o="onreadystatechange",f="readyState";s=r.shift();)a=e.createElement(t),"async"in i?(a.async=!1,e.head.appendChild(a)):i[f]?(d.push(a),a[o]=n):e.write("<"+t+' src="'+s+'" defer></'+t+">"),a.src=s}(document,"script",[
-  ${scriptsString}
-])
-  `,
+  // Add script loader for page scripts to the head.
+  // Taken from https://www.html5rocks.com/en/tutorials/speed/script-loading/
+  const scriptsString = scripts.map(s => `"${s}"`).join(`,`)
+  headComponents.push(
+    <script
+      key={`script-loader`}
+      dangerouslySetInnerHTML={{
+        __html: `/*<![CDATA[*/!function(e,t,r){function n(){for(;d[0]&&"loaded"==d[0][f];)c=d.shift(),c[o]=!i.parentNode.insertBefore(c,i)}for(var s,a,c,d=[],i=e.scripts[0],o="onreadystatechange",f="readyState";s=r.shift();)a=e.createElement(t),"async"in i?(a.async=!1,e.head.appendChild(a)):i[f]?(d.push(a),a[o]=n):e.write("<"+t+' src="'+s+'" defer></'+t+">"),a.src=s}(document,"script",[${scriptsString}])/*]]>*/`,
       }}
     />
   )
 
-  const html = `<!DOCTYPE html>\n ${renderToStaticMarkup(
+  const html = `<!DOCTYPE html>${renderToStaticMarkup(
     <Html
       {...bodyProps}
       headComponents={headComponents}
