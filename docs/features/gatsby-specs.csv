@@ -55,7 +55,7 @@ Developer Experience,Maintenance & Extensibility,Serverless,3,3,2,2,"<p>Serverle
 ,Modern code syntax,Asset pipelines,3,1,1,0,"<p>Asset pipelines are the compilers of the web stack -- turning images and code in a variety of developer-friendly languages (SCSS, LESS, CSS modules, templates, JSX, JS modules, ES7, ES6, Typescript, Flow...) into minified, raw HTML, CSS and JS that browsers can parse.</p>
 
 <p>Gatsby provides asset pipelining out of the box through its build system on top of Webpack and Babel. Wordpress and Jekyll don't provide this, although you could set up your own. Squarespace has a limited and tightly controlled development environment (no local development) that doesn't allow for creating an asset pipeline.</p>"
-,,CSS Extensions (eg Sass),3,1,1,1,"Languages such as Sass and Less compile to CSS while offering support for variables, functions, hierarchal class definitions; libraries like glamor and aphrodite allow css to be colocated with JS and HTML in React. This solves problems in vanilla CSS like global namespacing, non-determinatism, dead code elimination and minification"
+,,CSS Extensions (eg Sass),3,3,1,1,"Languages such as Sass and Less compile to CSS while offering support for variables, functions, hierarchal class definitions; libraries like glamor and aphrodite allow css to be colocated with JS and HTML in React. This solves problems in vanilla CSS like global namespacing, non-determinatism, dead code elimination and minification"
 ,,Advanced Javascript syntax,3,1,1,0,"Javascript has become more powerful as a language in the last several years, making it easier to write code. These include:
 <ul>
 <li><b>Syntactic sugar</b>: arrow functions, destructuring, template strings, dynamic object property names.</li>

@@ -1,10 +1,16 @@
 # gatsby-plugin-react-css-modules
-Transforms `styleName` to `className` using compile time CSS module resolution. See the [babel-plugin-react-css-modules README](https://github.com/gajus/babel-plugin-react-css-modules/blob/master/README.md) for details.
+
+Transforms `styleName` to `className` using compile time CSS module resolution.
+See the
+[babel-plugin-react-css-modules README](https://github.com/gajus/babel-plugin-react-css-modules/blob/master/README.md)
+for details.
 
 ## Install
+
 `yarn add gatsby-plugin-react-css-modules`
 
 ## How to use
+
 ```javascript
 // In your gatsby-config.js
 plugins: [
@@ -23,7 +29,9 @@ plugins: [
       exclude: `\/global\/`,
     },
   },
-]
+];
 ```
 
-Files must be named using the pattern `filename.module.css` for Gatsby to treat them as CSS modules. You can change this behavior using a custom webpack config https://www.gatsbyjs.org/docs/add-custom-webpack-config/
+Files must be named using the pattern `filename.module.css` for Gatsby to treat
+them as CSS modules. You can change this behavior using a custom webpack config
+https://www.gatsbyjs.org/docs/add-custom-webpack-config/
