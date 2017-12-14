@@ -13,6 +13,7 @@ A curated list of interesting Gatsby community projects and learning resources.
 ## Gatsby tutorials
 
 * [Official tutorial](/tutorial/)
+* [Creating a blog with Gatsby](/blog/2017-07-19-creating-a-blog-with-gatsby/)
 * [Level Up Tutorials series on creating a blog](https://www.youtube.com/watch?v=b2H7fWhQcdE&list=PLLnpHn493BHHfoINKLELxDch3uJlSapxg)
 * [Giraffe Academy series on getting started with Gatsby](https://www.youtube.com/playlist?list=PLLAZ4kZ9dFpMXuwazIt4mWtTuqOHdjRlk)
 * [Egghead course — "Build a Blog with React and Markdown using Gatsby"](https://egghead.io/courses/build-a-blog-with-react-and-markdown-using-gatsby)
