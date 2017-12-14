@@ -48,6 +48,7 @@
     "fs-extra": "^4.0.1",
     "gatsby-1-config-css-modules": "^1.0.8",
     "gatsby-cli": "^1.1.27",
+    "gatsby-link": "^1.6.30",
     "gatsby-module-loader": "^1.0.9",
     "gatsby-react-router-scroll": "^1.0.6",
     "glob": "^7.1.1",
