@@ -88,7 +88,7 @@ const fetchResource = (resourceName, cb = () => {}) => {
       })
 
       if (!failedResources[resourceName]) {
-        failedResources[resourceName] = err;
+        failedResources[resourceName] = err
       }
 
       fetchHistory = fetchHistory.slice(-MAX_HISTORY)
@@ -120,8 +120,8 @@ const getResourceModule = (resourceName, cb) => {
 }
 
 const appearsOnLine = () => {
-  const isOnLine = navigator.onLine;
-  if (typeof(isOnLine) === 'boolean') {
+  const isOnLine = navigator.onLine
+  if (typeof isOnLine === `boolean`) {
     return isOnLine
   }
 
@@ -134,14 +134,14 @@ const handleResourceLoadError = (path, message) => {
   console.log(message)
 
   if (!failedPaths[path]) {
-    failedPaths[path] = message;
+    failedPaths[path] = message
   }
 
   if (
-    appearsOnLine()
-    && window.location.pathname.replace(/\/$/g, '') !== path.replace(/\/$/g, '')
+    appearsOnLine() &&
+    window.location.pathname.replace(/\/$/g, ``) !== path.replace(/\/$/g, ``)
   ) {
-    window.location.pathname = path;
+    window.location.pathname = path
   }
 }
 
@@ -298,7 +298,10 @@ const queue = {
       // Production code path
     } else {
       if (failedPaths[path]) {
-        handleResourceLoadError(path, `Previously detected load failure for "${path}"`)
+        handleResourceLoadError(
+          path,
+          `Previously detected load failure for "${path}"`
+        )
 
         return cb()
       }
@@ -348,14 +351,20 @@ const queue = {
       }
       getResourceModule(page.componentChunkName, (err, c) => {
         if (err) {
-          handleResourceLoadError(page.path, `Loading the component for ${page.path} failed`)
+          handleResourceLoadError(
+            page.path,
+            `Loading the component for ${page.path} failed`
+          )
         }
         component = c
         done()
       })
       getResourceModule(page.jsonName, (err, j) => {
         if (err) {
-          handleResourceLoadError(page.path, `Loading the JSON for ${page.path} failed`)
+          handleResourceLoadError(
+            page.path,
+            `Loading the JSON for ${page.path} failed`
+          )
         }
         json = j
         done()
@@ -364,7 +373,10 @@ const queue = {
       page.layoutComponentChunkName &&
         getResourceModule(page.layout, (err, l) => {
           if (err) {
-            handleResourceLoadError(page.path, `Loading the Layout for ${page.path} failed`)
+            handleResourceLoadError(
+              page.path,
+              `Loading the Layout for ${page.path} failed`
+            )
           }
           layout = l
           done()
