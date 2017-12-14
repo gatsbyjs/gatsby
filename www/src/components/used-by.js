@@ -3,7 +3,7 @@ import presets from "../utils/presets"
 import { vP, vPHd, vPVHd, vPVVHd } from "../components/gutters"
 import { FormidableIcon, FabricIcon, SegmentIcon } from "../assets/logos"
 
-const Icon = ({ icon, alt }) => (
+const Icon = ({ icon, alt, href }) => (
   <li
     css={{
       marginRight: rhythm(3 / 4),
@@ -18,20 +18,40 @@ const Icon = ({ icon, alt }) => (
       },
     }}
   >
-    <img
-      src={icon}
-      alt={alt}
+    <a
+      href={href}
+      target="_blank"
       css={{
-        margin: 0,
-        height: `calc(14px + 1vw)`,
-        [presets.Phablet]: {
-          height: `calc(9px + 1vw)`,
+        borderBottom: `0 !important`,
+        boxShadow: `none !important`,
+        background: `none !important`,
+        transition: `opacity ${presets.animation.speedFast} ${
+          presets.animation.curveDefault
+        }`,
+        opacity: 0.9,
+        ":hover": {
+          opacity: 1,
         },
-        [presets.Tablet]: {
-          height: `calc(12px + 1vw)`,
+        ":active": {
+          opacity: 0.8,
         },
       }}
-    />
+    >
+      <img
+        src={icon}
+        alt={alt}
+        css={{
+          margin: 0,
+          height: `calc(14px + 1vw)`,
+          [presets.Phablet]: {
+            height: `calc(9px + 1vw)`,
+          },
+          [presets.Tablet]: {
+            height: `calc(12px + 1vw)`,
+          },
+        }}
+      />
+    </a>
   </li>
 )
 
@@ -111,9 +131,17 @@ const UsedBy = () => (
           opacity: 0.75,
         }}
       >
-        <Icon icon={FabricIcon} alt="Fabric" />
-        <Icon icon={SegmentIcon} alt="Segment" />
-        <Icon icon={FormidableIcon} alt="Formidable" />
+        <Icon
+          icon={FabricIcon}
+          alt="Fabric"
+          href="https://meetfabric.com/careers"
+        />
+        <Icon icon={SegmentIcon} alt="Segment" href="https://segment.com" />
+        <Icon
+          icon={FormidableIcon}
+          alt="Formidable"
+          href="https://formidable.com"
+        />
       </ul>
     </div>
   </div>
