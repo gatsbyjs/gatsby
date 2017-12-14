@@ -161,7 +161,7 @@ format, use the `withWebp` fragments. If the browser doesn't support WebP,
 `gatsby-image` will fall back to the default image format.
 
 _Please see the
-[gatsby-plugin-sharp](https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/#tracedsvg)
+[gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/#tracedsvg)
 documentation for more information on `tracedSVG` and its configuration
 options._
 
