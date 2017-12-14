@@ -36,7 +36,7 @@ Let's jump in.
 
 **NOTE:** If you _don't_ already have a blog or want to create one from scratch
 there's a
-[tutorial for exactly that right here](https://www.gatsbyjs.org/blog/2017-07-19-creating-a-blog-with-gatsby/).
+[tutorial for exactly that right here](/blog/2017-07-19-creating-a-blog-with-gatsby/).
 
 Let's move some files around. Gatsby gives you a good amount of flexibility when
 it comes to file structure, but for consistency with the docs I'm going to use
