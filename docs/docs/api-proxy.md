@@ -14,13 +14,12 @@ module.exports = {
     prefix: "/api",
     url: "http://dev-mysite.com/api/",
   },
-}
+};
 ```
 
 This way, when you `fetch('/api/todos')` in development, the development server
 will recognize that it’s not a static asset, and will proxy your request to
 `http://dev-mysite.com/api/todos` as a fallback.
 
-Keep in mind that `proxy` only has effect in development (with `gatsby
-develop`), and it is up to you to ensure that URLs like `/api/todos` point to
+Keep in mind that `proxy` only has effect in development (with `gatsby develop`), and it is up to you to ensure that URLs like `/api/todos` point to
 the right place in production.

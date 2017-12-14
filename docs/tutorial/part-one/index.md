@@ -24,8 +24,7 @@ Open a terminal window. See
 [these instructions](http://www.macworld.co.uk/feature/mac-software/how-use-terminal-on-mac-3608274/)
 for Mac users and
 [these other instructions](https://www.quora.com/How-do-I-open-terminal-in-windows)
-for Windows users. In your terminal window, type `node --version` then `npm
---version`.
+for Windows users. In your terminal window, type `node --version` then `npm --version`.
 
 You should see something like:
 
@@ -71,8 +70,7 @@ cd tutorial-part-one
 gatsby develop
 ```
 
-You should see shortly some text that says `The development server is listening
-at:` [http://localhost:8000](http://localhost:8000). Open that address in your
+You should see shortly some text that says `The development server is listening at:` [http://localhost:8000](http://localhost:8000). Open that address in your
 browser and...
 
 ![Gatsby.js hello world](hello-world.png)
@@ -109,9 +107,9 @@ Try some other tricks, like the ones below:
    Try making your page component look like this:
 
 ```jsx
-import React from "react"
+import React from "react";
 
-export default () => <div style={{ color: `blue` }}>Hello Gatsby!</div>
+export default () => <div style={{ color: `blue` }}>Hello Gatsby!</div>;
 ```
 
 Change the color to "pink". Then to "tomato".
@@ -187,15 +185,15 @@ and create a React.js page component at `src/pages/page-2.js`.
 Make the second page component look something like:
 
 ```jsx
-import React from "react"
-import Link from "gatsby-link"
+import React from "react";
+import Link from "gatsby-link";
 
 export default () => (
   <div>
     <p>Hello world from my second Gatsby page</p>
     <Link to="/">back home</Link>
   </div>
-)
+);
 ```
 
 Save that and now you should be able to click back and forth between the two
@@ -241,15 +239,15 @@ for `/counter/` as before. But instead of using the "functional component" form
 as we did before, we'll create a "class" component.
 
 ```jsx
-import React from "react"
+import React from "react";
 
 class Counter extends React.Component {
   render() {
-    return <div>Hello Class Component</div>
+    return <div>Hello Class Component</div>;
   }
 }
 
-export default Counter
+export default Counter;
 ```
 
 The class form of React allows us to have component state. We'll need that for
