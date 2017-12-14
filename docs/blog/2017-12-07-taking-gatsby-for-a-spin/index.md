@@ -1,6 +1,6 @@
 ---
 title: Taking Gatsby for a spin
-date: "2017-13-06"
+date: "2017-12-06"
 author: "Arden de Raaij"
 image: "great-gatsby.jpg"
 excerpt: "A static site generator based on React, does that even make sense? GatsbyJS tries to answer this question with a hypermodern, feature-packed, *jamstacked* development tool that you can try out right now!"
