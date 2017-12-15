@@ -6,7 +6,7 @@ image: "great-gatsby.jpg"
 excerpt: "A static site generator based on React, does that even make sense? GatsbyJS tries to answer this question with a hypermodern, feature-packed, *jamstacked* development tool that you can try out right now!"
 ---
 
-A static site generator based on React, does that even make sense? [GatsbyJS](https://gatsbyjs.org/) tries to answer this question with a hypermodern, feature-packed, _jamstacked_ development tool that you can try out right now! In this post I'll give you a quick introduction and an overview of my own thoughts on Gatsby.
+A static site generator based on React, does that even make sense? [GatsbyJS](/) tries to answer this question with a hypermodern, feature-packed, _jamstacked_ development tool that you can try out right now! In this post I'll give you a quick introduction and an overview of my own thoughts on Gatsby.
 
 ## Introducing: Gatsby
 
@@ -16,7 +16,7 @@ Let’s jump in. Here are some of the important features of Gatsby:
 
 ### React
 
-GatsbyJS is based on React which means that you'll be writing almost everything in JavaScript / JSX. That doesn't mean though you need loads of React experience to start out with Gatsby The [tutorials](https://www.gatsbyjs.org/tutorial/) are a great resource and will teach you some React along the way. If you already like React, you'll most definitely enjoy creating static sites with Gatsby. As your final JavaScript bundle includes the React library, you can include React components as if it was a regular React app.
+GatsbyJS is based on React which means that you'll be writing almost everything in JavaScript / JSX. That doesn't mean though you need loads of React experience to start out with Gatsby The [tutorials](/tutorial/) are a great resource and will teach you some React along the way. If you already like React, you'll most definitely enjoy creating static sites with Gatsby. As your final JavaScript bundle includes the React library, you can include React components as if it was a regular React app.
 
 ### Graphql
 
