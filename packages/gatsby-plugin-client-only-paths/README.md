@@ -22,5 +22,5 @@ Then configure via `gatsby-config.js`:
     },
 ```
 
-In ths example, all paths prefixed by `/app/` will render the route described in
-`src/pages/app/index.js`.
+In this example, all paths prefixed by `/app/` will render the route described
+in `src/pages/app/index.js`.
