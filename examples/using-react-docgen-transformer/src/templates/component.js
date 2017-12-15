@@ -1,5 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
+import GatsbyLink from "gatsby-link"
 
 class ComponentTemplate extends React.Component {
   render() {
@@ -8,6 +9,9 @@ class ComponentTemplate extends React.Component {
     return (
       <div>
         <h1>{displayName}</h1>
+        <p>
+          <GatsbyLink to="/components/">[index]</GatsbyLink>
+        </p>
       </div>
     )
   }
