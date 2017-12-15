@@ -23,9 +23,9 @@ const colors = {
   },
 }
 
-const styles = ({ color } = {}) =>
+const styles = ({ backgroundColor } = {}) =>
   css({
-    backgroundColor: colors[color].primary,
+    backgroundColor: colors[backgroundColor].primary,
     color: `rgba(36, 47, 60, 0.66)`,
     display: `inline-block`,
     fontSize: `18px`,
@@ -35,20 +35,20 @@ const styles = ({ color } = {}) =>
     border: 0,
     cursor: `pointer`,
     "&:hover": {
-      backgroundColor: colors[color].hover,
+      backgroundColor: colors[backgroundColor].hover,
     },
   })
 
-const Button = ({ color, ...rest }) => (
-  <button className={styles({ color })} {...rest} />
+const Button = ({ backgroundColor, ...rest }) => (
+  <button className={styles({ backgroundColor })} {...rest} />
 )
 
 Button.propTypes = {
-  color: PropTypes.oneOf(Object.keys(colors)),
+  backgroundColor: PropTypes.oneOf(Object.keys(colors)),
 }
 
 Button.defaultProps = {
-  color: blue,
+  backgroundColor: blue,
 }
 
 export default Button
