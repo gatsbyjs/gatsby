@@ -1,7 +1,7 @@
 // Replacing '/' would result in empty string which is invalid
 const replacePath = _path => (_path === `/` ? _path : _path.replace(/\/$/, ``))
 
-exports.onCreatePage = ({ page, store, boundActionCreators }) => {
+exports.onCreatePage = ({ page, boundActionCreators }) => {
   const { createPage, deletePage } = boundActionCreators
 
   return new Promise(resolve => {
