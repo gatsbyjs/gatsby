@@ -142,25 +142,6 @@ function buildLocalCommands(cli, isLocalSite) {
 
     handler: getCommandHandler(`serve`),
   })
-
-  cli.command({
-    command: `data-explorer`,
-    desc: `Start Gatsby's data explorer.`,
-    builder: _ =>
-    _.option(`H`, {
-      alias: `host`,
-      type: `string`,
-      default: defaultHost,
-      describe: `Set host. Defaults to ${defaultHost}`,
-    })
-      .option(`p`, {
-        alias: `port`,
-        type: `string`,
-        default: `9000`,
-        describe: `Set port. Defaults to 9000`,
-      }),
-    handler: getCommandHandler(`data-explorer`),
-  })
 }
 
 function isLocalGatsbySite() {
