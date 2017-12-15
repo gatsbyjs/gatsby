@@ -112,6 +112,10 @@ trailing slashes.
 
 To do this, in your site's `gatsby-node.js` add code similar to the following:
 
+_Note: If you prefer, you can access this functionality through the
+[gatsby-plugin-remove-trailing-slashes](/packages/gatsby-plugin-remove-trailing-slashes/)
+plugin._
+
 ```javascript
 // Implement the Gatsby API “onCreatePage”. This is
 // called after every page is created.
