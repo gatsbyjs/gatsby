@@ -1,7 +1,7 @@
 # gatsby-plugin-remove-trailing-slashes
 
-This plugin simply removes your project's paths. For example,
-`yoursite.com/about/` becomes `yoursite.com/about`.
+This plugin simply removes trailing slashes from your project's paths. For
+example, `yoursite.com/about/` becomes `yoursite.com/about`.
 
 ## Usage
 
