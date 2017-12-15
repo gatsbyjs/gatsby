@@ -116,6 +116,7 @@ Websites built with Gatsby:
 * [Artivest's Public Website](https://artivest.co)
 * [William Owen UK](http://william-owen.co.uk)
 * [NYC Planning Labs (New York City Department of City Planning)](https://planninglabs.nyc)([source](https://github.com/nycplanning/labs-planninglabs-home))
+* [The State of European Tech 2017](https://2017.stateofeuropeantech.com)
 
 ## Docs
 
