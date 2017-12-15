@@ -89,6 +89,7 @@ root.
 * [gatsby-plugin-offline](/packages/gatsby-plugin-offline/)
 * [gatsby-plugin-preact](/packages/gatsby-plugin-preact/)
 * [gatsby-plugin-react-helmet](/packages/gatsby-plugin-react-helmet/)
+* [gatsby-plugin-remove-trailing-slashes](/packages/gatsby-plugin-remove-trailing-slashes/)
 * [gatsby-plugin-sass](/packages/gatsby-plugin-sass/)
 * [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/)
 * [gatsby-plugin-sitemap](/packages/gatsby-plugin-sitemap/)
