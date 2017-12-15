@@ -14,7 +14,9 @@ class ComponentTemplate extends React.Component {
 }
 
 ComponentTemplate.propTypes = {
-  data: PropTypes.object,
+  pathContext: PropTypes.shape({
+    displayName: PropTypes.string,
+  }),
 }
 
 export default ComponentTemplate
