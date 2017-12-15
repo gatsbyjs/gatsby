@@ -112,25 +112,24 @@ trailing slashes.
 
 To do this, in your site's `gatsby-node.js` add code similar to the following:
 
+_Note: there's also a plugin that will remove all trailing slashes from pages automatically
+[gatsby-plugin-remove-trailing-slashes](/packages/gatsby-plugin-remove-trailing-slashes/)
+plugin._
+
 ```javascript
 // Implement the Gatsby API “onCreatePage”. This is
 // called after every page is created.
 exports.onCreatePage = ({ page, boundActionCreators }) => {
   const { createPage, deletePage } = boundActionCreators;
-
-  return new Promise((resolve, reject) => {
-    // Remove trailing slash
-    const newPage = Object.assign({}, page, {
-      path: page.path === `/` ? page.path : page.path.replace(/\/$/, ``),
-    });
-
-    if (newPage.path !== page.path) {
-      // Remove the old page
-      deletePage(page);
-      // Add the new page
-      createPage(newPage);
+  return new Promise(resolve => {
+    const oldPage = Object.assign({}, page);
+    // Remove trailing slash unless page is /
+    page.path = _path => (_path === `/` ? _path : _path.replace(/\/$/, ``));
+    if (page.path !== oldPage.path) {
+      // Replace new page with old page
+      deletePage(oldPage);
+      createPage(page);
     }
-
     resolve();
   });
 };
