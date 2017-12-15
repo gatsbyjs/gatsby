@@ -44,6 +44,7 @@ const Button = ({ backgroundColor, ...rest }) => (
 )
 
 Button.propTypes = {
+  /** The color to use as the background */
   backgroundColor: PropTypes.oneOf(Object.keys(colors)),
 }
 
