@@ -6,7 +6,7 @@ class IndexComponent extends React.Component {
     return (
       <div>
         <h1>Hello, world!</h1>
-        <Button>Click me</Button>
+        <Button>Get Started</Button>
       </div>
     )
   }
