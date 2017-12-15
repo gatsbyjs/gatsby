@@ -112,7 +112,7 @@ trailing slashes.
 
 To do this, in your site's `gatsby-node.js` add code similar to the following:
 
-_Note: If you prefer, you can access this functionality through the
+_Note: there's also a plugin that will remove all trailing slashes from pages automatically
 [gatsby-plugin-remove-trailing-slashes](/packages/gatsby-plugin-remove-trailing-slashes/)
 plugin._
 
