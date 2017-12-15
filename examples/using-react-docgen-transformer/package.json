@@ -1,0 +1,16 @@
+{
+  "name": "using-react-docgen-transformer",
+  "private": true,
+  "description": "Gatsby example site using using-react-docgen-transformer",
+  "author": "scott.eckenthal@gmail.com",
+  "dependencies": {
+    "gatsby": "latest",
+    "gatsby-link": "latest"
+  },
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build"
+  }
+}
