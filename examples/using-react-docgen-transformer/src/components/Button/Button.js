@@ -11,26 +11,24 @@ const colors = {
     primary: `#A0CED9`,
     hover: `#92BCC6`,
   },
-
   [orange]: {
     primary: `#EAB69B`,
     hover: `#E8AF91`,
   },
-
   [green]: {
     primary: `#ADF7B6`,
     hover: `#9EE1A6`,
   },
 }
 
-const styles = ({ backgroundColor } = {}) =>
+const styles = ({ backgroundColor }) =>
   css({
     backgroundColor: colors[backgroundColor].primary,
     color: `rgba(36, 47, 60, 0.66)`,
     display: `inline-block`,
     fontSize: `18px`,
     padding: `16px 24px`,
-    minWidth: `278px`,
+    minWidth: `200px`,
     borderRadius: `3px`,
     border: 0,
     cursor: `pointer`,
