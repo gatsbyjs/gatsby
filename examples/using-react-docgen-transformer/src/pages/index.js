@@ -1,15 +1,12 @@
 import React from "react"
-import Button from "../components/Button"
+import { Route, Redirect } from "react-router-dom"
 
-class IndexComponent extends React.Component {
+class Home extends React.Component {
   render() {
     return (
-      <div>
-        <h1>Hello, world!</h1>
-        <Button>Get Started</Button>
-      </div>
+      <Route exact path="/" render={() => <Redirect to="/components/" />} />
     )
   }
 }
 
-export default IndexComponent
+export default Home
