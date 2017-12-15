@@ -5,7 +5,9 @@
   "author": "scott.eckenthal@gmail.com",
   "dependencies": {
     "gatsby": "latest",
-    "gatsby-link": "latest"
+    "gatsby-link": "latest",
+    "gatsby-transformer-react-docgen": "^1.0.11",
+    "glamor": "^2.20.40"
   },
   "license": "MIT",
   "main": "n/a",
