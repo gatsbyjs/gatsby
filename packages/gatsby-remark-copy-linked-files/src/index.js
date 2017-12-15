@@ -168,6 +168,7 @@ module.exports = (
   // For each HTML Node
   visit(markdownAST, `html`, node => {
     const $ = cheerio.load(node.value)
+
     // Handle Images
     const imageRefs = []
     $(`img`).each(function() {
@@ -196,8 +197,8 @@ module.exports = (
       }
     }
 
-    const videoRefs = []
     // Handle video tags.
+    const videoRefs = []
     $(`video source`).each(function() {
       try {
         if (isRelativeUrl($(this).attr(`src`))) {
@@ -231,6 +232,39 @@ module.exports = (
       }
     }
 
+    // Handle audio tags.
+    const audioRefs = []
+    $(`audio source`).each(function() {
+      try {
+        if (isRelativeUrl($(this).attr(`src`))) {
+          audioRefs.push($(this))
+        }
+      } catch (err) {
+        // Ignore
+      }
+    })
+
+    for (let thisAudio of audioRefs) {
+      try {
+        const ext = thisAudio
+          .attr(`src`)
+          .split(`.`)
+          .pop()
+        if (options.ignoreFileExtensions.includes(ext)) {
+          return
+        }
+
+        const link = { url: thisAudio.attr(`src`) }
+        visitor(link)
+        node.value = node.value.replace(
+          new RegExp(thisAudio.attr(`src`), `g`),
+          link.url
+        )
+      } catch (err) {
+        // Ignore
+      }
+    }
+
     // Handle a tags.
     const aRefs = []
     $(`a`).each(function() {
@@ -253,8 +287,6 @@ module.exports = (
           return
         }
 
-        // The link object will be modified to the new location so we'll
-        // use that data to update our ref
         const link = { url: thisATag.attr(`href`) }
         visitor(link)
 

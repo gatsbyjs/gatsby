@@ -104,4 +104,5 @@ markdown HTML will be modified to point to it.
 
 * `<img />`
 * `<video />`
+* `<audio />`
 * `<a />`
