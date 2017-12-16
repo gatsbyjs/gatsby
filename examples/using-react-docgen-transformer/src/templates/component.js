@@ -2,9 +2,11 @@ import React from "react"
 import PropTypes from "prop-types"
 import GatsbyLink from "gatsby-link"
 
+import Example from "./components/Example"
+
 class ComponentTemplate extends React.Component {
   render() {
-    const { displayName, props } = this.props.pathContext
+    const { displayName, props, html } = this.props.pathContext
 
     return (
       <div>
@@ -36,6 +38,7 @@ class ComponentTemplate extends React.Component {
             </li>
           ))}
         </ul>
+        <Example html={html} />
         <p>
           <GatsbyLink to="/components/">[index]</GatsbyLink>
         </p>
@@ -48,6 +51,7 @@ ComponentTemplate.propTypes = {
   pathContext: PropTypes.shape({
     displayName: PropTypes.string,
     props: PropTypes.array,
+    html: PropTypes.string,
   }),
 }
 
