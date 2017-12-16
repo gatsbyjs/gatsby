@@ -5,30 +5,48 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 
   return new Promise((resolve, reject) => {
     resolve(
-      graphql(`
-        {
-          allComponentMetadata {
-            edges {
-              node {
-                displayName
-                props {
-                  name
-                  type {
-                    value
-                    raw
+      Promise.all([
+        graphql(`
+          {
+            allComponentMetadata {
+              edges {
+                node {
+                  displayName
+                  props {
                     name
+                    type {
+                      value
+                      raw
+                      name
+                    }
+                    description {
+                      text
+                    }
+                    required
                   }
-                  description {
-                    text
-                  }
-                  required
                 }
               }
             }
           }
-        }
-      `)
-        .then(result => {
+        `),
+        graphql(`
+          {
+            allMarkdownRemark(
+              filter: { fileAbsolutePath: { regex: "/README.md/" } }
+            ) {
+              edges {
+                node {
+                  fileAbsolutePath
+                  html
+                }
+              }
+            }
+          }
+        `),
+      ])
+        .then(([result, result2]) => {
+          console.log(result2.data.allMarkdownRemark.edges)
+
           if (result.errors) {
             reject(new Error(result.errors))
             return

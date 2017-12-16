@@ -12,5 +12,8 @@ module.exports = {
     {
       resolve: `gatsby-transformer-react-docgen`,
     },
+    {
+      resolve: `gatsby-transformer-remark`,
+    },
   ],
 }
