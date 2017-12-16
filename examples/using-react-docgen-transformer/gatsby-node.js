@@ -3,8 +3,6 @@ const path = require(`path`)
 exports.createPages = ({ graphql, boundActionCreators }) => {
   const { createPage } = boundActionCreators
 
-  console.log(`creating pages`)
-
   return new Promise((resolve, reject) => {
     resolve(
       graphql(`
