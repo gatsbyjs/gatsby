@@ -1,16 +1,14 @@
 # graphql-skip-limit
 
-This library provides helper functions for building Relay-style
-connections but with skip/limit style pagination instead of Relay's
-cursor-based pagination.
+This library provides helper functions for building Relay-style connections but
+with skip/limit style pagination instead of Relay's cursor-based pagination.
 
-It is built and maintained for the [React.js static site generator
-Gatsby](https://github.com/gatsbyjs/gatsby) to drive its GraphQL-based
-data layer.
+It is built and maintained for the
+[React.js static site generator Gatsby](https://github.com/gatsbyjs/gatsby) to
+drive its GraphQL-based data layer.
 
-It is a port from
-[graphql-relay](https://github.com/graphql/graphql-relay-js) so can be
-used in a similar fashion. See the tests in `src/connection/__tests__`
+It is a port from [graphql-relay](https://github.com/graphql/graphql-relay-js)
+so can be used in a similar fashion. See the tests in `src/connection/__tests__`
 for an example of using this library.
 
 Connections built with this library can be queried like the following:

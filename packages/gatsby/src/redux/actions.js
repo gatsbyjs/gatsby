@@ -30,6 +30,7 @@ type PageInput = {
 }
 type LayoutInput = {
   id?: string,
+  machineId?: string,
   component: string,
   layout?: string,
   context?: Object,
@@ -187,6 +188,9 @@ actions.createLayout = (
   traceId?: string
 ) => {
   let id = layout.id || path.parse(layout.component).name
+  // Add a "machine" id as a universal ID to differentiate layout from
+  // page components.
+  const machineId = `layout---${id}`
   let componentWrapperPath = joinPath(
     store.getState().program.directory,
     `.cache`,
@@ -196,6 +200,7 @@ actions.createLayout = (
 
   let internalLayout: Layout = {
     id,
+    machineId,
     componentWrapperPath,
     isLayout: true,
     jsonName: `layout-${_.kebabCase(id)}.json`,
@@ -385,9 +390,7 @@ actions.createNode = (node: any, plugin?: Plugin, traceId?: string) => {
       typeOwners[node.internal.type] = pluginName
     else if (typeOwners[node.internal.type] !== pluginName)
       throw new Error(stripIndent`
-        The plugin "${
-          pluginName
-        }" created a node of a type owned by another plugin.
+        The plugin "${pluginName}" created a node of a type owned by another plugin.
 
         The node type "${node.internal.type}" is owned by "${
         typeOwners[node.internal.type]
@@ -712,12 +715,14 @@ actions.setPluginStatus = (
  * @param {string} redirect.redirectInBrowser Redirects are generally for redirecting legacy URLs to their new configuration. If you can't update your UI for some reason, set `redirectInBrowser` to true and Gatsby will handle redirecting in the client as well.
  * @example
  * createRedirect({ fromPath: '/old-url', toPath: '/new-url', isPermanent: true })
+ * createRedirect({ fromPath: '/url', toPath: '/zn-CH/url', Language: 'zn' })
  */
 actions.createRedirect = ({
   fromPath,
   isPermanent = false,
-  toPath,
   redirectInBrowser = false,
+  toPath,
+  ...rest
 }) => {
   let pathPrefix = ``
   if (store.getState().program.prefixPaths) {
@@ -729,8 +734,9 @@ actions.createRedirect = ({
     payload: {
       fromPath: `${pathPrefix}${fromPath}`,
       isPermanent,
-      toPath: `${pathPrefix}${toPath}`,
       redirectInBrowser,
+      toPath: `${pathPrefix}${toPath}`,
+      ...rest,
     },
   }
 }

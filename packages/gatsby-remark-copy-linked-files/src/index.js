@@ -5,17 +5,39 @@ const path = require(`path`)
 const _ = require(`lodash`)
 const cheerio = require(`cheerio`)
 const sizeOf = require(`image-size`)
-const pathIsInside = require(`path-is-inside`)
 
 const DEPLOY_DIR = `public`
 
-const invalidDestinationDirMessage = destinationDir =>
-  `[gatsby-remark-copy-linked-files] You have supplied an invalid destination directory. The destination directory must be within the '${
-    DEPLOY_DIR
-  }' directory, but was: '${destinationDir}'`
+const invalidDestinationDirMessage = dir =>
+  `[gatsby-remark-copy-linked-files You have supplied an invalid destination directory. The destination directory must be a child but was: ${dir}`
 
-const destinationDirIsValid = destinationDir =>
-  pathIsInside(path.join(DEPLOY_DIR, destinationDir), DEPLOY_DIR)
+// dir must be a child
+const destinationDirIsValid = dir => !path.relative(`./`, dir).startsWith(`..`)
+
+const validateDestinationDir = dir =>
+  !dir || (dir && destinationDirIsValid(dir))
+
+const newFileName = linkNode =>
+  `${linkNode.name}-${linkNode.internal.contentDigest}.${linkNode.extension}`
+
+const newPath = (linkNode, destinationDir) => {
+  if (destinationDir) {
+    return path.posix.join(
+      process.cwd(),
+      DEPLOY_DIR,
+      destinationDir,
+      newFileName(linkNode)
+    )
+  }
+  return path.posix.join(process.cwd(), DEPLOY_DIR, newFileName(linkNode))
+}
+
+const newLinkURL = (linkNode, destinationDir) => {
+  if (destinationDir) {
+    return path.posix.join(`/`, destinationDir, newFileName(linkNode))
+  }
+  return path.posix.join(`/`, newFileName(linkNode))
+}
 
 module.exports = (
   { files, markdownNode, markdownAST, getNode },
@@ -23,14 +45,10 @@ module.exports = (
 ) => {
   const defaults = {
     ignoreFileExtensions: [`png`, `jpg`, `jpeg`, `bmp`, `tiff`],
-    destinationDir: `/`,
   }
-
-  // Validate supplied destination directory
   const { destinationDir } = pluginOptions
-  if (destinationDir && !destinationDirIsValid(destinationDir)) {
+  if (!validateDestinationDir(destinationDir))
     return Promise.reject(invalidDestinationDirMessage(destinationDir))
-  }
 
   const options = _.defaults(pluginOptions, defaults)
 
@@ -53,31 +71,21 @@ module.exports = (
         return null
       })
       if (linkNode && linkNode.absolutePath) {
-        const newPath = path.posix.join(
-          process.cwd(),
-          DEPLOY_DIR,
-          options.destinationDir,
-          `${linkNode.internal.contentDigest}.${linkNode.extension}`
-        )
+        const newFilePath = newPath(linkNode, options.destinationDir)
+
         // Prevent uneeded copying
-        if (linkPath === newPath) {
-          return
-        }
+        if (linkPath === newFilePath) return
 
-        const relativePath = path.posix.join(
-          options.destinationDir,
-          `${linkNode.internal.contentDigest}.${linkNode.extension}`
-        )
-        link.url = `${relativePath}`
-
-        filesToCopy.set(linkPath, newPath)
+        const linkURL = newLinkURL(linkNode, options.destinationDir)
+        link.url = linkURL
+        filesToCopy.set(linkPath, newFilePath)
       }
     }
   }
 
   // Takes a node and generates the needed images and then returns
   // the needed HTML replacement for the image
-  const generateImagesAndUpdateNode = function(image) {
+  const generateImagesAndUpdateNode = function(image, node) {
     const imagePath = path.posix.join(
       getNode(markdownNode.parent).dir,
       image.attr(`src`)
@@ -97,7 +105,10 @@ module.exports = (
     // use that data to update our ref
     const link = { url: image.attr(`src`) }
     visitor(link)
-    image.attr(`src`, link.url)
+    node.value = node.value.replace(
+      new RegExp(image.attr(`src`), `g`),
+      link.url
+    )
 
     let dimensions
 
@@ -157,6 +168,7 @@ module.exports = (
   // For each HTML Node
   visit(markdownAST, `html`, node => {
     const $ = cheerio.load(node.value)
+
     // Handle Images
     const imageRefs = []
     $(`img`).each(function() {
@@ -179,14 +191,14 @@ module.exports = (
           return
         }
 
-        generateImagesAndUpdateNode(thisImg)
+        generateImagesAndUpdateNode(thisImg, node)
       } catch (err) {
         // Ignore
       }
     }
 
-    const videoRefs = []
     // Handle video tags.
+    const videoRefs = []
     $(`video source`).each(function() {
       try {
         if (isRelativeUrl($(this).attr(`src`))) {
@@ -211,7 +223,43 @@ module.exports = (
         // use that data to update our ref
         const link = { url: thisVideo.attr(`src`) }
         visitor(link)
-        thisVideo.attr(`src`, link.url)
+        node.value = node.value.replace(
+          new RegExp(thisVideo.attr(`src`), `g`),
+          link.url
+        )
+      } catch (err) {
+        // Ignore
+      }
+    }
+
+    // Handle audio tags.
+    const audioRefs = []
+    $(`audio source`).each(function() {
+      try {
+        if (isRelativeUrl($(this).attr(`src`))) {
+          audioRefs.push($(this))
+        }
+      } catch (err) {
+        // Ignore
+      }
+    })
+
+    for (let thisAudio of audioRefs) {
+      try {
+        const ext = thisAudio
+          .attr(`src`)
+          .split(`.`)
+          .pop()
+        if (options.ignoreFileExtensions.includes(ext)) {
+          return
+        }
+
+        const link = { url: thisAudio.attr(`src`) }
+        visitor(link)
+        node.value = node.value.replace(
+          new RegExp(thisAudio.attr(`src`), `g`),
+          link.url
+        )
       } catch (err) {
         // Ignore
       }
@@ -239,32 +287,32 @@ module.exports = (
           return
         }
 
-        // The link object will be modified to the new location so we'll
-        // use that data to update our ref
         const link = { url: thisATag.attr(`href`) }
         visitor(link)
-        thisATag.attr(`href`, link.url)
+
+        node.value = node.value.replace(
+          new RegExp(thisATag.attr(`href`), `g`),
+          link.url
+        )
       } catch (err) {
         // Ignore
       }
     }
 
-    // Replace the image node with an inline HTML node.
-    node.type = `html`
-    node.value = $(`body`).html() // fix for cheerio v1
     return
   })
 
   return Promise.all(
-    Array.from(filesToCopy, async ([linkPath, newPath]) => {
-      if (!fsExtra.existsSync(newPath)) {
+    Array.from(filesToCopy, async ([linkPath, newFilePath]) => {
+      // Don't copy anything is the file already exists at the location.
+      if (!fsExtra.existsSync(newFilePath)) {
         try {
-          await fsExtra.copy(linkPath, newPath)
+          await fsExtra.ensureDir(path.dirname(newFilePath))
+          await fsExtra.copy(linkPath, newFilePath)
         } catch (err) {
-          console.error(`error copying file`, err)
+          console.error(`error copy ing file`, err)
         }
       }
-      return newPath
     })
   )
 }

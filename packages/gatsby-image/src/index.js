@@ -36,27 +36,36 @@ const inImageCache = props => {
 
 let io
 const listeners = []
-if (typeof window !== `undefined` && window.IntersectionObserver) {
-  io = new window.IntersectionObserver(
-    entries => {
-      entries.forEach(entry => {
-        listeners.forEach(l => {
-          if (l[0] === entry.target) {
-            // Edge doesn't currently support isIntersecting, so also test for an intersectionRatio > 0
-            if (entry.isIntersecting || entry.intersectionRatio > 0) {
-              io.unobserve(l[0])
-              l[1]()
+
+function getIO() {
+  if (
+    typeof io === `undefined` &&
+    typeof window !== `undefined` &&
+    window.IntersectionObserver
+  ) {
+    io = new window.IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          listeners.forEach(l => {
+            if (l[0] === entry.target) {
+              // Edge doesn't currently support isIntersecting, so also test for an intersectionRatio > 0
+              if (entry.isIntersecting || entry.intersectionRatio > 0) {
+                io.unobserve(l[0])
+                l[1]()
+              }
             }
-          }
+          })
         })
-      })
-    },
-    { rootMargin: `200px` }
-  )
+      },
+      { rootMargin: `200px` }
+    )
+  }
+
+  return io
 }
 
 const listenToIntersections = (el, cb) => {
-  io.observe(el)
+  getIO().observe(el)
   listeners.push([el, cb])
 }
 
@@ -76,6 +85,21 @@ const isWebpSupported = () => {
   }
 
   return isWebpSupportedCache
+}
+
+const noscriptImg = props => {
+  const {
+    opacity = ``,
+    src,
+    srcSet,
+    sizes = ``,
+    title = ``,
+    alt = ``,
+    width = ``,
+    height = ``,
+    transitionDelay = ``,
+  } = props
+  return `<img width=${width} height=${height} src="${src}" srcset="${srcSet}" alt="${alt}" title="${title}" sizes="${sizes}" style="position:absolute;top:0;left:0;transition:opacity 0.5s;transition-delay:${transitionDelay};opacity:${opacity};width:100%;height:100%;object-fit:cover;objectPosition:center"/>`
 }
 
 const Img = props => {
@@ -267,6 +291,13 @@ class Image extends React.Component {
                 }}
               />
             )}
+
+            {/* Show the original image during server-side rendering if JavaScript is disabled */}
+            <noscript
+              dangerouslySetInnerHTML={{
+                __html: noscriptImg({ alt, title, ...image }),
+              }}
+            />
           </div>
         </div>
       )
@@ -365,6 +396,19 @@ class Image extends React.Component {
                 }}
               />
             )}
+
+            {/* Show the original image during server-side rendering if JavaScript is disabled */}
+            <noscript
+              dangerouslySetInnerHTML={{
+                __html: noscriptImg({
+                  alt,
+                  title,
+                  width: image.width,
+                  height: image.height,
+                  ...image,
+                }),
+              }}
+            />
           </div>
         </div>
       )

@@ -309,9 +309,9 @@ function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
     if (fields.length > 1) {
       type = new GraphQLUnionType({
         name: `Union_${key}_${fields.map(f => f.name).join(`__`)}`,
-        description: `Union interface for the field "${
-          key
-        }" for types [${fields.map(f => f.name).join(`, `)}]`,
+        description: `Union interface for the field "${key}" for types [${fields
+          .map(f => f.name)
+          .join(`, `)}]`,
         types: fields.map(f => f.nodeObjectType),
         resolveType: data =>
           fields.find(f => f.name == data.internal.type).nodeObjectType,
