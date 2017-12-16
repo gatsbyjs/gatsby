@@ -4,7 +4,7 @@ import GatsbyLink from "gatsby-link"
 
 import Example from "./components/Example"
 
-class ComponentTemplate extends React.Component {
+class ComponentPage extends React.Component {
   render() {
     const { displayName, props, html } = this.props.pathContext
 
@@ -47,7 +47,7 @@ class ComponentTemplate extends React.Component {
   }
 }
 
-ComponentTemplate.propTypes = {
+ComponentPage.propTypes = {
   pathContext: PropTypes.shape({
     displayName: PropTypes.string,
     props: PropTypes.array,
@@ -55,4 +55,4 @@ ComponentTemplate.propTypes = {
   }),
 }
 
-export default ComponentTemplate
+export default ComponentPage

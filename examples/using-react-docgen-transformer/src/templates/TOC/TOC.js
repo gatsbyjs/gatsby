@@ -2,7 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import GatsbyLink from "gatsby-link"
 
-class IndexComponent extends React.Component {
+class TOC extends React.Component {
   render() {
     const { allComponents } = this.props.pathContext
     return (
@@ -20,7 +20,7 @@ class IndexComponent extends React.Component {
   }
 }
 
-IndexComponent.propTypes = {
+TOC.propTypes = {
   pathContext: PropTypes.shape({
     allComponents: PropTypes.arrayOf(
       PropTypes.shape({
@@ -31,4 +31,4 @@ IndexComponent.propTypes = {
   }).isRequired,
 }
 
-export default IndexComponent
+export default TOC
