@@ -4,6 +4,7 @@
   "description": "Gatsby example site using using-react-docgen-transformer",
   "author": "scott.eckenthal@gmail.com",
   "dependencies": {
+    "app-root-dir": "^1.0.2",
     "gatsby": "latest",
     "gatsby-link": "latest",
     "gatsby-source-filesystem": "^1.5.11",

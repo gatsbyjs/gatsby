@@ -1,4 +1,6 @@
 const path = require(`path`)
+const fs = require(`fs`)
+const appRootDir = require(`app-root-dir`).get()
 
 const componentTemplate = path.resolve(`src/templates/component.js`)
 const indexTemplate = path.resolve(`src/templates/index.js`)
@@ -14,6 +16,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
             allComponentMetadata {
               edges {
                 node {
+                  id
                   displayName
                   props {
                     name
@@ -60,6 +63,22 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
                 path: `/components/${edge.node.displayName.toLowerCase()}/`,
                 html: markdownResult.data.allMarkdownRemark.edges[i].node.html,
               })
+          )
+
+          const exportFileContents =
+            allComponents
+              .reduce((accumulator, { id, displayName }) => {
+                const absolutePath = id.replace(/ absPath of.*$/, ``)
+                accumulator.push(
+                  `export { default as ${displayName} } from "${absolutePath}"`
+                )
+                return accumulator
+              }, [])
+              .join(`\n`) + `\n`
+
+          fs.writeFileSync(
+            path.join(appRootDir, `.cache/components.js`),
+            exportFileContents
           )
 
           allComponents.forEach(data => {
