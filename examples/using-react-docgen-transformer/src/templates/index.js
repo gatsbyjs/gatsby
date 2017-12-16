@@ -1,4 +1,5 @@
 import React from "react"
+import PropTypes from "prop-types"
 import GatsbyLink from "gatsby-link"
 
 class IndexComponent extends React.Component {
@@ -17,6 +18,17 @@ class IndexComponent extends React.Component {
       </div>
     )
   }
+}
+
+IndexComponent.propTypes = {
+  pathContext: PropTypes.shape({
+    allComponents: PropTypes.arrayOf(
+      PropTypes.shape({
+        displayName: PropTypes.string.isRequired,
+        path: PropTypes.string.isRequired,
+      }).isRequired
+    ).isRequired,
+  }).isRequired,
 }
 
 export default IndexComponent
