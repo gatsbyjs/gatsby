@@ -22,6 +22,9 @@
     "node": true,
     "jest": true
   },
+  "globals": {
+    "spyOn": true
+  },
   "rules": {
     "no-console": "off",
     "valid-jsdoc": "off",

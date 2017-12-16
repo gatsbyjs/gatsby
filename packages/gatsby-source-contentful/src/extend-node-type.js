@@ -69,7 +69,7 @@ const ImageCropFocusType = new GraphQLEnumType({
 const isImage = image =>
   _.includes(
     [`image/jpeg`, `image/jpg`, `image/png`, `image/webp`, `image/gif`],
-    image.file.contentType
+    _.get(image, `file.contentType`)
   )
 
 const getBase64Image = (imgUrl, args = {}) => {
@@ -133,14 +133,11 @@ const resolveResponsiveResolution = (image, options) => {
           desiredAspectRatio = options.width / options.height
         }
 
-        // If the user selected a height (so cropping) and options for focus
-        // and fit aren't set, we'll set our defaults
+        // If the user selected a height (so cropping) and fit option
+        // is not set, we'll set our defaults
         if (options.height) {
           if (!options.resizingBehavior) {
             options.resizingBehavior = `fill`
-          }
-          if (!options.cropFocus) {
-            options.cropFocus = `faces`
           }
         }
 
@@ -217,6 +214,7 @@ exports.resolveResponsiveResolution = resolveResponsiveResolution
 
 const resolveResponsiveSizes = (image, options) => {
   if (!isImage(image)) return null
+
   return new Promise(resolve => {
     getBase64ImageAndBasicMeasurements(image, options).then(
       ({ contentType, base64Str, width, height, aspectRatio }) => {
@@ -288,23 +286,17 @@ const resolveResponsiveSizes = (image, options) => {
 }
 exports.resolveResponsiveSizes = resolveResponsiveSizes
 
-const resolveResize = (image, options) =>
-  new Promise(resolve => {
-    if (!isImage(image)) {
-      resolve()
-      return
-    }
+const resolveResize = (image, options) => {
+  if (!isImage(image)) return null
 
+  return new Promise(resolve => {
     getBase64ImageAndBasicMeasurements(image, options).then(
       ({ contentType, base64Str, width, height, aspectRatio }) => {
-        // If the user selected a height (so cropping) and options for focus
-        // and fit aren't set, we'll set our defaults
+        // If the user selected a height (so cropping) and fit option
+        // is not set, we'll set our defaults
         if (options.height) {
           if (!options.resizingBehavior) {
             options.resizingBehavior = `fill`
-          }
-          if (!options.cropFocus) {
-            options.cropFocus = `faces`
           }
         }
 
@@ -330,6 +322,7 @@ const resolveResize = (image, options) =>
       }
     )
   })
+}
 
 exports.resolveResize = resolveResize
 
