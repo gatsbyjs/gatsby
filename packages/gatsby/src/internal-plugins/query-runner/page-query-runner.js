@@ -6,10 +6,9 @@
  */
 
 const _ = require(`lodash`)
-const Promise = require(`bluebird`)
 
+const queue = require(`./query-queue`)
 const { store, emitter } = require(`../../redux`)
-const queryRunner = require(`./query-runner`)
 
 let queuedDirtyActions = []
 let active = false
@@ -62,6 +61,7 @@ const runQueuedActions = async () => {
 // query things in a 1/2 finished state.
 emitter.on(`API_RUNNING_QUEUE_EMPTY`, runQueuedActions)
 
+let seenIdsWithoutDataDependencies = []
 const findIdsWithoutDataDependencies = () => {
   const state = store.getState()
   const allTrackedIds = _.uniq(
@@ -75,33 +75,47 @@ const findIdsWithoutDataDependencies = () => {
 
   // Get list of paths not already tracked and run the queries for these
   // paths.
-  return _.difference(
+  const notTrackedIds = _.difference(
     [
       ...state.pages.map(p => p.path),
       ...state.layouts.map(l => `LAYOUT___${l.id}`),
     ],
-    allTrackedIds
+    [...allTrackedIds, ...seenIdsWithoutDataDependencies]
   )
+
+  // Add new IDs to our seen array so we don't keep trying to run queries for them.
+  // Pages/Layouts without queries can't be tracked.
+  seenIdsWithoutDataDependencies = _.uniq([
+    ...notTrackedIds,
+    ...seenIdsWithoutDataDependencies,
+  ])
+
+  return notTrackedIds
 }
 
 const runQueriesForIds = ids => {
-  ids = _.uniq(ids)
-  if (ids.length < 1) {
+  const state = store.getState()
+  const pagesAndLayouts = [...state.pages, ...state.layouts]
+  let didNotQueueItems = true
+  ids.forEach(id => {
+    const plObj = pagesAndLayouts.find(
+      pl => pl.path === id || `LAYOUT___${pl.id}` === id
+    )
+    if (plObj) {
+      didNotQueueItems = false
+      queue.push({ ...plObj, _id: plObj.id, id: plObj.jsonName })
+    }
+  })
+
+  if (didNotQueueItems || !ids || ids.length === 0) {
     return Promise.resolve()
   }
-  const state = store.getState()
-  return Promise.all(
-    ids.map(id => {
-      const pagesAndLayouts = [...state.pages, ...state.layouts]
-      const plObj = pagesAndLayouts.find(
-        pl => pl.path === id || `LAYOUT___${pl.id}` === id
-      )
-      if (plObj) {
-        return queryRunner(plObj, state.components[plObj.component])
-      }
-      return null
+
+  return new Promise(resolve => {
+    queue.on(`drain`, () => {
+      resolve()
     })
-  )
+  })
 }
 
 const findDirtyIds = actions => {

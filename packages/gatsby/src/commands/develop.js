@@ -145,7 +145,7 @@ async function startServer(program) {
 
   // Render an HTML page and serve it.
   app.use((req, res, next) => {
-    const parsedPath = parsePath(req.originalUrl)
+    const parsedPath = parsePath(req.path)
     if (parsedPath.extname === `` || parsedPath.extname.startsWith(`.html`)) {
       res.sendFile(directoryPath(`public/index.html`), err => {
         if (err) {
@@ -211,9 +211,7 @@ module.exports = async (program: any) => {
 
       if (port !== _port) {
         // eslint-disable-next-line max-len
-        const question = `Something is already running at port ${
-          port
-        } \nWould you like to run the app at another port instead? [Y/n] `
+        const question = `Something is already running at port ${port} \nWould you like to run the app at another port instead? [Y/n] `
 
         rlInterface.question(question, answer => {
           if (answer.length === 0 || answer.match(/^yes|y$/i)) {
@@ -328,10 +326,9 @@ module.exports = async (program: any) => {
     // if (isSuccessful && (isInteractive || isFirstCompile)) {
     if (isSuccessful && isFirstCompile) {
       printInstructions(program.sitePackageJson.name, urls, program.useYarn)
-    }
-
-    if (program.open) {
-      require(`opn`)(urls.localUrlForBrowser)
+      if (program.open) {
+        require(`opn`)(urls.localUrlForBrowser)
+      }
     }
 
     isFirstCompile = false
