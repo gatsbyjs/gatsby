@@ -13,6 +13,18 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
             edges {
               node {
                 displayName
+                props {
+                  name
+                  type {
+                    value
+                    raw
+                    name
+                  }
+                  description {
+                    text
+                  }
+                  required
+                }
               }
             }
           }
@@ -27,13 +39,10 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           const componentTemplate = path.resolve(`src/templates/component.js`)
           const indexTemplate = path.resolve(`src/templates/index.js`)
           const allComponents = result.data.allComponentMetadata.edges.map(
-            edge => {
-              const { displayName } = edge.node
-              return {
-                displayName,
-                path: `/components/${displayName.toLowerCase()}/`,
-              }
-            }
+            edge =>
+              Object.assign({}, edge.node, {
+                path: `/components/${edge.node.displayName.toLowerCase()}/`,
+              })
           )
 
           allComponents.forEach(data => {
