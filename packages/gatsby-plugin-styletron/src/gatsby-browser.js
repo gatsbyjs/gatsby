@@ -2,10 +2,12 @@ const React = require(`react`)
 const Styletron = require(`styletron-client`)
 const { StyletronProvider } = require(`styletron-react`)
 
-const styletron = new Styletron()
-
 exports.wrapRootComponent = ({ Root }) => () => (
-  <StyletronProvider styletron={styletron}>
-    <Root />
-  </StyletronProvider>
+  const styleElements = document.getElementsByClassName('_styletron_hydrate_')
+  const styletron = new Styletron(styleElements)
+  return (
+    <StyletronProvider styletron={styletron}>
+      <Root />
+    </StyletronProvider>
+  );
 )
