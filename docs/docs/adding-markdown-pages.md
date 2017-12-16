@@ -68,7 +68,7 @@ When you create a Markdown file, at the top of the file, add the block below. Yo
 ---
 path: "/blog/my-first-post"
 date: "2017-11-07"
-title: My first blog post"
+title: "My first blog post"
 ---
 ```
 
@@ -125,7 +125,7 @@ Gatsby exposes a powerful Node.js API, which allows for functionality such as cr
 
 Gatsby calls the `createPages` API (if present) at build time with injected parameters, `boundActionCreators` and `graphql`. Use the `graphql` to query Markdown file data as below. Next use `createPage` action creator to create a page for each of the Markdown files using the `blogTemplate.js` we created in the previous step.
 
-```
+```javascript
 const path = require('path');
 
 exports.createPages = ({ boundActionCreators, graphql }) => {
