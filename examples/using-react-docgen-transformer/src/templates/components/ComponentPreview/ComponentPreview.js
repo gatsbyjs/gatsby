@@ -2,12 +2,12 @@ import React from "react"
 import PropTypes from "prop-types"
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from "react-live"
 
-import Button from "../../../components/Button"
+import * as components from "../../../components"
 
 class ComponentPreview extends React.Component {
   render() {
     return (
-      <LiveProvider scope={{ Button }} code={this.props.code}>
+      <LiveProvider scope={components} code={this.props.code}>
         <LiveEditor />
         <LiveError />
         <LivePreview />
