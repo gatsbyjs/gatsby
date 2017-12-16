@@ -1,7 +1,7 @@
 const prepareRegex = require(`../prepare-regex`)
 
 describe(`Prepare regex for Sift.js`, () => {
-  it(`handles simple regex`, () => {
+  it(`handles basic regex`, () => {
     expect(prepareRegex(`/blue/`)).toMatchSnapshot()
   })
   it(`handles flags regex`, () => {

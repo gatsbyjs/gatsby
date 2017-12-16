@@ -109,14 +109,14 @@ declare module "commander" {
      *
      * Examples:
      *
-     *     // simple boolean defaulting to false
+     *     // boolean defaulting to false
      *     program.option('-p, --pepper', 'add pepper');
      *
      *     --pepper
      *     program.pepper
      *     // => Boolean
      *
-     *     // simple boolean defaulting to true
+     *     // boolean defaulting to true
      *     program.option('-C, --no-cheese', 'remove cheese');
      *
      *     program.cheese

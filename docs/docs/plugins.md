@@ -26,7 +26,7 @@ To install it, in the root of your site you run:
 
 `npm install --save gatsby-transformer-json`
 
-Then in your site's `gatsby-config.js` you simply add `gatsby-transformer-json`
+Then in your site's `gatsby-config.js` you add `gatsby-transformer-json`
 to the plugins array like:
 
 ```javascript

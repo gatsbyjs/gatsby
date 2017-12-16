@@ -37,7 +37,7 @@ recommended version for your operating system.
 
 ## Install the "Hello World" starter
 
-Gatsby uses "starters" for starting new projects. As the name suggests, starters
+Gatsby uses "starters" for starting new projects. Starters
 are partially built Gatsby sites pre-configured to help you get moving faster.
 There are several official starters and many others contributed from the Gatsby
 community! [See the Starters page for the full list](/docs/gatsby-starters/).
