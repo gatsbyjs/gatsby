@@ -1,8 +1,8 @@
-const { regexExcude404 } = require(`../internals`)
+const { regexExclude404 } = require(`../internals`)
 
 describe(`gatsby-plugin-sitemap`, () => {
   it(`regex for filtering out 404 pages`, () => {
-    const regex = new RegExp(regexExcude404)
+    const regex = new RegExp(regexExclude404)
 
     // 404 pages
     expect(regex.exec(`/404`)).toBeNull()
