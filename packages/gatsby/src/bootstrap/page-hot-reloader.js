@@ -61,6 +61,8 @@ const runCreatePages = async () => {
       deleteComponentsDependencies([page.path])
       deletePage(page)
     })
+
+  emitter.emit(`CREATE_PAGE_END`)
 }
 
 const debouncedCreatePages = _.debounce(runCreatePages, 100)

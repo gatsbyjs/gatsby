@@ -54,11 +54,6 @@ const writePages = async () => {
   pageLayouts = _.uniq(pageLayouts)
   components = _.uniqBy(components, c => c.componentChunkName)
 
-  await fs.writeFile(
-    joinPath(program.directory, `.cache/pages.json`),
-    JSON.stringify(pagesData, null, 4)
-  )
-
   // Create file with sync requires of layouts/components/json files.
   let syncRequires = `// prefer default export if available
 const preferDefault = m => m && m.default || m
@@ -93,10 +88,6 @@ const preferDefault = m => m && m.default || m
     .join(`,\n`)}
 }`
 
-  await fs.writeFile(
-    `${program.directory}/.cache/sync-requires.js`,
-    syncRequires
-  )
   // Create file with async requires of layouts/components/json files.
   let asyncRequires = `// prefer default export if available
 const preferDefault = m => m && m.default || m
@@ -131,10 +122,17 @@ const preferDefault = m => m && m.default || m
     .join(`,\n`)}
 }`
 
-  await fs.writeFile(
-    joinPath(program.directory, `.cache/async-requires.js`),
-    asyncRequires
-  )
+  await Promise.all([
+    fs.writeFile(
+      joinPath(program.directory, `.cache/pages.json`),
+      JSON.stringify(pagesData, null, 4)
+    ),
+    fs.writeFile(`${program.directory}/.cache/sync-requires.js`, syncRequires),
+    fs.writeFile(
+      joinPath(program.directory, `.cache/async-requires.js`),
+      asyncRequires
+    ),
+  ])
 
   return
 }
@@ -143,15 +141,19 @@ exports.writePages = writePages
 
 let bootstrapFinished = false
 let oldPages
-const debouncedWritePages = _.debounce(() => {
-  // Don't write pages again until bootstrap has finished.
-  if (bootstrapFinished && !_.isEqual(oldPages, store.getState().pages)) {
-    writePages()
-    oldPages = store.getState().pages
-  }
-}, 250)
+const debouncedWritePages = _.debounce(
+  () => {
+    // Don't write pages again until bootstrap has finished.
+    if (bootstrapFinished && !_.isEqual(oldPages, store.getState().pages)) {
+      writePages()
+      oldPages = store.getState().pages
+    }
+  },
+  500,
+  { leading: true }
+)
 
-emitter.on(`CREATE_PAGE`, () => {
+emitter.on(`CREATE_PAGE_END`, () => {
   debouncedWritePages()
 })
 emitter.on(`DELETE_PAGE`, () => {

@@ -24,4 +24,3 @@ module.exports = async (program: any) => {
   console.log(`Gatsby data explorer running at`, `http://${host}:${port}`)
   app.listen(port, host)
 }
-
