@@ -1,4 +1,4 @@
-
+yarn bootstrap
 yarn global add gatsby-dev-cli
 gatsby-dev --set-path-to-repo .
 
