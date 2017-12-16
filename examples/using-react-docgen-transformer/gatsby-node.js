@@ -1,5 +1,8 @@
 const path = require(`path`)
 
+const componentTemplate = path.resolve(`src/templates/component.js`)
+const indexTemplate = path.resolve(`src/templates/index.js`)
+
 exports.createPages = ({ graphql, boundActionCreators }) => {
   const { createPage } = boundActionCreators
 
@@ -44,20 +47,18 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           }
         `),
       ])
-        .then(([result, result2]) => {
-          console.log(result2.data.allMarkdownRemark.edges)
-
-          if (result.errors) {
-            reject(new Error(result.errors))
+        .then(([docgenResult, markdownResult]) => {
+          const errors = docgenResult.errors || markdownResult.errors
+          if (errors) {
+            reject(new Error(errors))
             return
           }
 
-          const componentTemplate = path.resolve(`src/templates/component.js`)
-          const indexTemplate = path.resolve(`src/templates/index.js`)
-          const allComponents = result.data.allComponentMetadata.edges.map(
-            edge =>
+          const allComponents = docgenResult.data.allComponentMetadata.edges.map(
+            (edge, i) =>
               Object.assign({}, edge.node, {
                 path: `/components/${edge.node.displayName.toLowerCase()}/`,
+                html: markdownResult.data.allMarkdownRemark.edges[i].node.html,
               })
           )
 
