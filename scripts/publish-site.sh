@@ -1,5 +1,5 @@
 yarn bootstrap
-yarn global add gatsby-dev-cli
+npm install -g gatsby-dev-cli
 gatsby-dev --set-path-to-repo .
 
 echo "=== Installing the website dependencies"
