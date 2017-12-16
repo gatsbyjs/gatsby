@@ -21,14 +21,34 @@ const colors = {
   },
 }
 
-const styles = ({ backgroundColor }) =>
-  css({
-    backgroundColor: colors[backgroundColor].primary,
-    color: `rgba(36, 47, 60, 0.66)`,
-    display: `inline-block`,
+const sm = `sm`
+const md = `md`
+const lg = `lg`
+
+const sizes = {
+  [sm]: {
+    fontSize: `14px`,
+    padding: `12px 20px`,
+    minWidth: `160px`,
+  },
+  [md]: {
     fontSize: `18px`,
     padding: `16px 24px`,
     minWidth: `200px`,
+  },
+  [lg]: {
+    fontSize: `22px`,
+    padding: `20px 28px`,
+    minWidth: `260px`,
+  },
+}
+
+const styles = ({ backgroundColor, size }) =>
+  css({
+    backgroundColor: colors[backgroundColor].primary,
+    ...sizes[size],
+    color: `rgba(36, 47, 60, 0.66)`,
+    display: `inline-block`,
     borderRadius: `3px`,
     border: 0,
     cursor: `pointer`,
@@ -37,17 +57,20 @@ const styles = ({ backgroundColor }) =>
     },
   })
 
-const Button = ({ backgroundColor, ...rest }) => (
-  <button className={styles({ backgroundColor })} {...rest} />
+const Button = ({ backgroundColor, size, ...rest }) => (
+  <button className={styles({ backgroundColor, size })} {...rest} />
 )
 
 Button.propTypes = {
   /** The color to use as the background */
   backgroundColor: PropTypes.oneOf(Object.keys(colors)),
+  /** The size of the button */
+  size: PropTypes.oneOf(Object.keys(sizes)),
 }
 
 Button.defaultProps = {
   backgroundColor: blue,
+  size: md,
 }
 
 export default Button
