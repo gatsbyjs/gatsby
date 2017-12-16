@@ -6,10 +6,9 @@
  */
 
 const _ = require(`lodash`)
-const async = require(`async`)
 
+const queue = require(`./query-queue`)
 const { store, emitter } = require(`../../redux`)
-const queryRunner = require(`./query-runner`)
 
 let queuedDirtyActions = []
 let active = false
@@ -95,34 +94,27 @@ const findIdsWithoutDataDependencies = () => {
 }
 
 const runQueriesForIds = ids => {
-  ids = _.uniq(ids)
-  if (ids.length < 1) {
+  const state = store.getState()
+  const pagesAndLayouts = [...state.pages, ...state.layouts]
+  let didNotQueueItems = true
+  ids.forEach(id => {
+    const plObj = pagesAndLayouts.find(
+      pl => pl.path === id || `LAYOUT___${pl.id}` === id
+    )
+    if (plObj) {
+      didNotQueueItems = false
+      queue.push({ ...plObj, _id: plObj.id, id: plObj.jsonName })
+    }
+  })
+
+  if (didNotQueueItems || !ids || ids.length === 0) {
     return Promise.resolve()
   }
-  const state = store.getState()
 
-  return new Promise((resolve, reject) => {
-    async.mapLimit(
-      ids,
-      4,
-      (id, callback) => {
-        const pagesAndLayouts = [...state.pages, ...state.layouts]
-        const plObj = pagesAndLayouts.find(
-          pl => pl.path === id || `LAYOUT___${pl.id}` === id
-        )
-        if (plObj) {
-          return queryRunner(plObj, state.components[plObj.component]).then(
-            result => callback(null, result),
-            error => callback(error)
-          )
-        } else {
-          return callback(null, null)
-        }
-      },
-      (error, result) => {
-        error ? reject(error) : resolve(result)
-      }
-    )
+  return new Promise(resolve => {
+    queue.on(`drain`, () => {
+      resolve()
+    })
   })
 }
 

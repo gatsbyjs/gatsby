@@ -10,12 +10,11 @@
 
 const _ = require(`lodash`)
 const chokidar = require(`chokidar`)
-const async = require(`async`)
 
 const { store } = require(`../../redux/`)
 const { boundActionCreators } = require(`../../redux/actions`)
 const queryCompiler = require(`./query-compiler`).default
-const queryRunner = require(`./query-runner`)
+const queue = require(`./query-queue`)
 const invariant = require(`invariant`)
 const normalize = require(`normalize-path`)
 
@@ -57,21 +56,12 @@ const runQueriesForComponent = componentPath => {
   boundActionCreators.deleteComponentsDependencies(
     pages.map(p => p.path || p.id)
   )
-  const component = store.getState().components[componentPath]
-  return new Promise((resolve, reject) => {
-    async.mapLimit(
-      pages,
-      4,
-      (page, callback) => {
-        queryRunner(page, component).then(
-          result => callback(null, result),
-          error => callback(error)
-        )
-      },
-      (error, result) => {
-        error ? reject(error) : resolve(result)
-      }
-    )
+  pages.forEach(page =>
+    queue.push({ ...page, _id: page.id, id: page.jsonName })
+  )
+
+  return new Promise(resolve => {
+    queue.on(`drain`, () => resolve())
   })
 }
 
