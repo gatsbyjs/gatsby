@@ -2,8 +2,10 @@ const path = require(`path`)
 const fs = require(`fs`)
 const appRootDir = require(`app-root-dir`).get()
 
-const componentTemplate = path.resolve(`src/templates/component.js`)
-const indexTemplate = path.resolve(`src/templates/index.js`)
+const componentPageTemplate = path.resolve(
+  `src/templates/ComponentPage/index.js`
+)
+const tableOfContentsTemplate = path.resolve(`src/templates/TOC/index.js`)
 
 exports.createPages = ({ graphql, boundActionCreators }) => {
   const { createPage } = boundActionCreators
@@ -88,14 +90,14 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
             })
             createPage({
               path,
-              component: componentTemplate,
+              component: componentPageTemplate,
               context,
             })
           })
 
           createPage({
             path: `/components/`,
-            component: indexTemplate,
+            component: tableOfContentsTemplate,
             context: {
               allComponents,
             },
