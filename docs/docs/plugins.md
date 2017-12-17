@@ -99,6 +99,7 @@ root.
 * [gatsby-remark-autolink-headers](/packages/gatsby-remark-autolink-headers/)
 * [gatsby-remark-copy-linked-files](/packages/gatsby-remark-copy-linked-files/)
 * [gatsby-remark-images](/packages/gatsby-remark-images/)
+* [gatsby-remark-katex](/packages/gatsby-remark-katex/)
 * [gatsby-remark-prismjs](/packages/gatsby-remark-prismjs/)
 * [gatsby-remark-responsive-iframe](/packages/gatsby-remark-responsive-iframe/)
 * [gatsby-remark-smartypants](/packages/gatsby-remark-smartypants/)
