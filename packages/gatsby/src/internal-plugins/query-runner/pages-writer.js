@@ -58,6 +58,15 @@ const writePages = async () => {
   let syncRequires = `// prefer default export if available
 const preferDefault = m => m && m.default || m
 \n\n`
+  syncRequires += `exports.layouts = {\n${pageLayouts
+    .map(
+      l =>
+        `  "${l.machineId}": preferDefault(require("${
+          l.componentWrapperPath
+        }"))`
+    )
+    .join(`,\n`)}
+}\n\n`
   syncRequires += `exports.components = {\n${components
     .map(
       c =>
@@ -75,15 +84,6 @@ const preferDefault = m => m && m.default || m
           `/.cache/json/`,
           j.jsonName
         )}")`
-    )
-    .join(`,\n`)}
-}\n\n`
-  syncRequires += `exports.layouts = {\n${pageLayouts
-    .map(
-      l =>
-        `  "${l.machineId}": preferDefault(require("${
-          l.componentWrapperPath
-        }"))`
     )
     .join(`,\n`)}
 }`
