@@ -6,12 +6,13 @@ import Example from "./components/Example"
 
 class ComponentPage extends React.Component {
   render() {
-    const { displayName, props, html } = this.props.pathContext
+    const { displayName, props, html, description } = this.props.pathContext
 
     return (
       <div>
         <h1>{displayName}</h1>
         <h2>Props/Methods</h2>
+        <p>{description.text}</p>
         <ul>
           {props.map(({ name, description, type, required }, index) => (
             <li key={index}>
@@ -49,10 +50,11 @@ class ComponentPage extends React.Component {
 
 ComponentPage.propTypes = {
   pathContext: PropTypes.shape({
-    displayName: PropTypes.string,
-    props: PropTypes.array,
-    html: PropTypes.string,
-  }),
+    displayName: PropTypes.string.isRequired,
+    props: PropTypes.array.isRequired,
+    html: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+  }).isRequired,
 }
 
 export default ComponentPage
