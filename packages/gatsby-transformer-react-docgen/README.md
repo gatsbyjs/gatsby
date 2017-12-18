@@ -20,7 +20,8 @@ module.exports = {
 }
 ```
 
-You'll also need to include a source-plugin, such as [gatsby-source-filesystem],
+You'll also need to include a source-plugin, such as
+[gatsby-source-filesystem](https://www.npmjs.com/package/gatsby-source-filesystem),
 so that the transformer has access to source data.
 
 ## How to query
