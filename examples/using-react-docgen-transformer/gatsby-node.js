@@ -20,6 +20,9 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
                 node {
                   id
                   displayName
+                  description {
+                    text
+                  }
                   props {
                     name
                     type {

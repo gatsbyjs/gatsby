@@ -57,6 +57,10 @@ const styles = ({ backgroundColor, size }) =>
     },
   })
 
+/**
+ * The `<Button>` is a foundational trigger component for capturing
+ * and guiding user-interaction.
+ */
 const Button = ({ backgroundColor, size, ...rest }) => (
   <button className={styles({ backgroundColor, size })} {...rest} />
 )
