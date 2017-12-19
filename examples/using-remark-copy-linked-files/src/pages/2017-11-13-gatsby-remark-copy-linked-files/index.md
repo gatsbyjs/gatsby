@@ -21,7 +21,7 @@ defined in `utils/typography.js`._</small>
 
 ## Images
 
-A simple Markdown image tag:
+A Markdown image tag:
 
 ![Markdown image tag](./alex-holyoake-388536.jpg)
 

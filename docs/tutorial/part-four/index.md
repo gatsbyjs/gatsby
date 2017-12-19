@@ -636,7 +636,7 @@ available on the `MarkdownRemark` node.
 
 Ok! Hopefully some basics are starting to fall into place. Source plugins bring
 data _into_ Gatsby's data system and _transformer_ plugins transform raw content
-brought by source plugins. This simple pattern can handle all data sourcing and
+brought by source plugins. This pattern can handle all data sourcing and
 data transformation you might need when building a Gatsby site.
 
 ## Create a list of our site's markdown files in `src/pages/index.js`
@@ -754,7 +754,7 @@ To create our markdown pages, we'll learn to use two Gatsby APIs
 [`createPages`](/docs/node-apis/#createPages). These are two workhorse APIs
 you'll see used in many sites and plugins.
 
-APIs are simple to implement. To implement an API, you simply export a function
+We do our best to make Gatsby APIs simple to implement. To implement an API, you export a function
 with the name of the API from `gatsby-node.js`.
 
 So let's do that. In the root of your site, create a file named
