@@ -52,7 +52,7 @@ const getPosts = maxId => {
     body.items
       .filter(item => item.type === `image`)
       .map(item => {
-        // Parse item to an object
+        // Parse item to a simple object
         return {
           id: get(item, `id`),
           code: get(item, `code`),
