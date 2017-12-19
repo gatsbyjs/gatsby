@@ -7,6 +7,7 @@ title: "Deploying Gatsby"
 * [S3/Cloudfront](/docs/deploy-gatsby/#amazon-s3-and-cloudfront)
 * [GitHub Pages](/docs/deploy-gatsby/#github-pages)
 * [GitLab Pages](/docs/deploy-gatsby/#gitlab-pages)
+* [Heroku](/docs/deploy-gatsby/#heroku)
 
 ## Amazon S3 and Cloudfront
 
@@ -159,6 +160,50 @@ namespace, the url will be yourname.gitlab.io/examplerepository.
 Visit the
 [GitLab Pages](https://gitlab.com/help/user/project/pages/getting_started_part_one.md)
 to learn how to setup custom domains and find out about advanced configurations.
+
+## Heroku
+
+You can use the [heroku buildpack static](https://github.com/heroku/heroku-buildpack-static) to handle the static files of your site.
+
+Set the `heroku/node.js` and `heroku-buildpack-static` buildpacks on your application creating an `app.json` file on the root of your project.
+
+```
+{
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    },
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-static"
+    }
+  ]
+}
+```
+
+Sometimes specifying buildpacks via the `app.json` file doesn't work. If this is your case try to add them in the Heroku dashboard or via the CLI.
+
+Add a `heroku-postbuild` script in your `package.json`:
+
+```
+{
+
+  // ...
+  "scripts": {
+    // ...
+    "heroku-postbuild": "gatsby build"
+    // ...
+  }
+  // ...
+}
+```
+
+Finally, add a `static.json` file in the root of your project to define the directory where your static assets will be. You can check all the options for this file in the [heroku-buildpack-static configuration](https://github.com/heroku/heroku-buildpack-static#configuration).
+
+```
+{
+  "root": "public/"
+}
+```
 
 ## Debugging tips
 
