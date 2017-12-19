@@ -186,7 +186,7 @@ Add a `heroku-postbuild` script in your `package.json`:
 
 ```
 {
- 
+
   // ...
   "scripts": {
     // ...
