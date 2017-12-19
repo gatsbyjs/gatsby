@@ -15,7 +15,7 @@ Plugins can extend Gatsby in many ways:
 
 * Sourcing data (e.g. from the filesystem or an API or a database)
 * Transforming data from one type to another (e.g. a markdown file to HTML)
-* Creating pages (e.g. a directory of markdown files get turned into pages
+* Creating pages (e.g. a directory of markdown files all gets turned into pages
   with URLs derived from their file names).
 * Modifying webpack config (e.g. for styling options, adding support for other
   compile-to-js languages)
