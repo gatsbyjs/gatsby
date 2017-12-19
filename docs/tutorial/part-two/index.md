@@ -308,7 +308,7 @@ Typography.js has more than 30 themes!
 ## Component CSS
 
 Gatsby has a wealth of options available for styling components. Let's explore
-three very popular and production-ready options. We'll build a simple page three
+three very popular and production-ready options. We'll build the same page three
 times to explore each styling option.
 
 Each is a variant on "CSS-in-JS"—which solves many of the problems with
@@ -447,7 +447,7 @@ Modules generates. They're guaranteed to be unique across your site. And because
 you have to import them to use the classes, there's never any question about
 where some CSS is being used.
 
-Let's use our styles to create a simple `User` component.
+Let's use our styles to create a `User` component.
 
 Let's create the new component inline in the `about-css-modules.js` page
 component. The general rule of thumb is if you use a component in multiple

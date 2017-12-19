@@ -25,28 +25,28 @@ Plugins can extend Gatsby in many ways:
   sitemap, RSS feed)
 
 A single plugin can use multiple APIs to accomplish its purpose. E.g. the plugin
-for the css-in-js library [Glamor ](/packages/gatsby-plugin-glamor/)
+for the css-in-js library [Glamor](/packages/gatsby-plugin-glamor/):
 
 1. modifies the webpack config to add its plugin
 2. adds a Babel plugin to replace React's default createElement
 3. modifies server rendering to extract out the critical CSS for each rendered
    page and inline the CSS in the `<head>` of that HTML page.
 
-Plugins can also depend on other plugins.
-[The Sharp plugin](/packages/gatsby-plugin-sharp/) exposes a number of
-high-level APIs for transforming images that several other Gatsby image plugins
-depend on. [gatsby-transformer-remark](/packages/gatsby-transformer-remark/)
-does basic markdown->html transformation but exposes an API to allow other
-plugins to intervene in the conversion process e.g.
+Plugins can also depend on other plugins. [The Sharp
+plugin](/packages/gatsby-plugin-sharp/) exposes a number of high-level APIs for
+transforming images that several other Gatsby image plugins depend on.
+[gatsby-transformer-remark](/packages/gatsby-transformer-remark/) does basic
+markdown->html transformation but exposes an API to allow other plugins to
+intervene in the conversion process e.g.
 [gatsby-remark-prismjs](/packages/gatsby-remark-prismjs/) which adds
 highlighting to code blocks.
 
-Transformer plugins are decoupled from source plugins. Transformer plugins
-simply look at the media type of new nodes created by source plugins to decide
-if they can transform it or not. Which means that a markdown transformer plugin
-can easily transform markdown from any source without any other configuration
-e.g. from file, a code comment, or external service like Trello which supports
-markdown in some of its data fields.
+Transformer plugins are decoupled from source plugins. Transformer plugins look
+at the media type of new nodes created by source plugins to decide if they can
+transform it or not. Which means that a markdown transformer plugin can
+transform markdown from any source without any other configuration e.g. from
+file, a code comment, or external service like Trello which supports markdown
+in some of its data fields.
 
 See
 [the full list of (official only for now — adding support for community plugins later) plugins](/docs/plugins/).
@@ -62,7 +62,7 @@ See
 * _Component extensions_ — extensions that are resolvable as components. `.js`
   and `.jsx` are supported by core. But plugins can add support for other
   compile-to-js languages.
-* _Dependency_ — Gatsby tracks automatically dependencies between different
+* _Dependency_ — Gatsby automatically tracks dependencies between different
   objects e.g. a page can depend on certain nodes. This allows for hot
   reloading, caching, incremental rebuilds, etc.
 * _Node_ — a data object
@@ -94,10 +94,7 @@ load site config -> load plugins -> source nodes -> transform nodes -> create
 graphql schema -> create pages -> compile component queries -> run queries ->
 fin
 
-Once the initial bootstrap is finished, for the development server we start
-`webpack-dev-server` and a simple express server for serving files and for a
-production build, we start building the CSS then JavaScript then HTML with
-webpack.
+Once the initial bootstrap is finished, we start `webpack-dev-server` and an express server for serving files for the development server, and for a production build, we start building the CSS then JavaScript then HTML with webpack.
 
 During these processes there are various extension points where plugins can
 intervene. All major processes have a `onPre` and `onPost` e.g. `onPreBootstrap`

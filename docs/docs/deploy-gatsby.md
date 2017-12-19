@@ -132,8 +132,8 @@ pages:
 
 The CI platform uses Docker images/containers, so `image: node:latest` tells the
 CI to use the latest node image. `cache:` caches the `node_modules` folder
-inbetween builds, so subsequent builds should be a lot faster as it doesn't have
-to reinstall all the dependancies required. `pages:` Is simply the name of the
+in between builds, so subsequent builds should be a lot faster as it doesn't have
+to reinstall all the dependancies required. `pages:` is the name of the
 CI stage. You can have multiple stages, e.g. 'Test', 'Build', 'Deploy' etc.
 `script:` starts the next part of the CI stage, telling it to start running the
 below scripts inside the image selected. We have used the `yarn install` and

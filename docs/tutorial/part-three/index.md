@@ -3,7 +3,7 @@ title: Gatsby.js Tutorial Part Three
 typora-copy-images-to: ./
 ---
 
-Gatsby lets you easily create "layout components". Layout components are
+Gatsby lets you create "layout components". Layout components are
 sections of your site that you want to share across multiple pages. For example,
 Gatsby sites will commonly have a layout component with a shared header and
 footer. Other common things to add to layouts are a sidebar and navigation menu.
@@ -116,7 +116,7 @@ Let's tackle these problems by creating our first layout component.
 First, create a new directory at `src/layouts`. All layout components have to be
 in this directory.
 
-Let's create a very simple layout component at `src/layouts/index.js`
+Let's create a very basic layout component at `src/layouts/index.js`
 
 ```jsx
 import React from "react";
@@ -186,9 +186,9 @@ export default ({ children }) =>
 
 ![with-navigation](with-navigation.png)
 
-And there we have it! A three page site with a simple global navigation.
+And there we have it! A three page site with a basic global navigation.
 
-With your new "layout component" powers, you can easily add headers, footers,
+With your new "layout component" powers, you can add headers, footers,
 global navigation, sidebars, etc. to your Gatsby sites.
 
 Continue on to

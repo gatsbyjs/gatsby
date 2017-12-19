@@ -211,7 +211,7 @@ export const postDetailFragment = graphql`
         # Here we query for *multiple* image thumbnails to be
         # created. So with no effort on our part, 100s of
         # thumbnails are created. This makes iterating on
-        # designs effortless as we simply change the args
+        # designs effortless as we change the args
         # for the query and we get new thumbnails.
         big: sizes(maxWidth: 640) {
           src

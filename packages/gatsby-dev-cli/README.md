@@ -1,7 +1,7 @@
 # gatsby-dev-cli
 
 A command-line tool for local Gatsby development. When doing development work on
-Gatsby core, this tool allows you to easily copy the changes to the various
+Gatsby core, this tool allows you to copy the changes to the various
 Gatsby packages to Gatsby sites that you're testing your changes on.
 
 ## Install
