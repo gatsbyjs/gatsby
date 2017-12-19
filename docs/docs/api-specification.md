@@ -32,15 +32,21 @@ for the css-in-js library [Glamor](/packages/gatsby-plugin-glamor/):
 3. modifies server rendering to extract out the critical CSS for each rendered
    page and inline the CSS in the `<head>` of that HTML page.
 
-Plugins can also depend on other plugins. [The Sharp plugin](/packages/gatsby-plugin-sharp/) exposes a number of
-high-level APIs for transforming images that several other Gatsby image plugins
-depend on. [gatsby-transformer-remark](/packages/gatsby-transformer-remark/)
-does basic markdown->html transformation but exposes an API to allow other
-plugins to intervene in the conversion process e.g.
+Plugins can also depend on other plugins. [The Sharp
+plugin](/packages/gatsby-plugin-sharp/) exposes a number of high-level APIs for
+transforming images that several other Gatsby image plugins depend on.
+[gatsby-transformer-remark](/packages/gatsby-transformer-remark/) does basic
+markdown->html transformation but exposes an API to allow other plugins to
+intervene in the conversion process e.g.
 [gatsby-remark-prismjs](/packages/gatsby-remark-prismjs/) which adds
 highlighting to code blocks.
 
-Transformer plugins are decoupled from source plugins. Transformer plugins look at the media type of new nodes created by source plugins to decide if they can transform it or not. Which means that a markdown transformer plugin can transform markdown from any source without any other configuration e.g. from file, a code comment, or external service like Trello which supports markdown in some of its data fields.
+Transformer plugins are decoupled from source plugins. Transformer plugins look
+at the media type of new nodes created by source plugins to decide if they can
+transform it or not. Which means that a markdown transformer plugin can
+transform markdown from any source without any other configuration e.g. from
+file, a code comment, or external service like Trello which supports markdown
+in some of its data fields.
 
 See
 [the full list of (official only for now — adding support for community plugins later) plugins](/docs/plugins/).
