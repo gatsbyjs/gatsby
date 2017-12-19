@@ -58,6 +58,15 @@ const writePages = async () => {
   let syncRequires = `// prefer default export if available
 const preferDefault = m => m && m.default || m
 \n\n`
+  syncRequires += `exports.layouts = {\n${pageLayouts
+    .map(
+      l =>
+        `  "${l.machineId}": preferDefault(require("${
+          l.componentWrapperPath
+        }"))`
+    )
+    .join(`,\n`)}
+}\n\n`
   syncRequires += `exports.components = {\n${components
     .map(
       c =>
@@ -75,15 +84,6 @@ const preferDefault = m => m && m.default || m
           `/.cache/json/`,
           j.jsonName
         )}")`
-    )
-    .join(`,\n`)}
-}\n\n`
-  syncRequires += `exports.layouts = {\n${pageLayouts
-    .map(
-      l =>
-        `  "${l.machineId}": preferDefault(require("${
-          l.componentWrapperPath
-        }"))`
     )
     .join(`,\n`)}
 }`
@@ -152,6 +152,18 @@ const debouncedWritePages = _.debounce(
   500,
   { leading: true }
 )
+emitter.on(`CREATE_PAGE`, () => {
+  // Ignore CREATE_PAGE until bootstrap is finished
+  // as this is called many many times during bootstrap and
+  // we can ignore them until CREATE_PAGE_END is called.
+  //
+  // After bootstrap, we need to listen for this as stateful page
+  // creators e.g. the internal plugin "component-page-creator"
+  // calls createPage directly so CREATE_PAGE_END won't get fired.
+  if (bootstrapFinished) {
+    debouncedWritePages()
+  }
+})
 
 emitter.on(`CREATE_PAGE_END`, () => {
   debouncedWritePages()

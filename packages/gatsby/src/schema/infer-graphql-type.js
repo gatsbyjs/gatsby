@@ -113,6 +113,11 @@ function inferGraphQLType({
       args: {
         formatString: {
           type: GraphQLString,
+          description: oneLine`
+            Format the date using Moment.js' date tokens e.g.
+          "date(formatString: "YYYY MMMM DD)"
+          See https://momentjs.com/docs/#/displaying/format/
+          for documentation for different tokens`,
         },
         fromNow: {
           type: GraphQLBoolean,
