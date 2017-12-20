@@ -11,34 +11,28 @@ class ComponentPage extends React.Component {
     return (
       <div>
         <h1>{displayName}</h1>
-        <h2>Props/Methods</h2>
         <p>{description.text}</p>
-        <ul>
-          {props.map(({ name, description, type, required }, index) => (
-            <li key={index}>
-              <p>
-                <strong>
-                  <em>{name}</em>
-                </strong>
-              </p>
-              <ul>
-                <li>
-                  <p>{description.text}</p>
-                </li>
-                <li>
-                  <p>
-                    <em>Type:</em> {type.name}
-                  </p>
-                </li>
-                <li>
-                  <p>
-                    <em>Required:</em> {String(required)}
-                  </p>
-                </li>
-              </ul>
-            </li>
-          ))}
-        </ul>
+        <h2>Props/Methods</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Type</th>
+              <th>Required</th>
+            </tr>
+          </thead>
+          <tbody>
+            {props.map(({ name, description, type, required }, index) => (
+              <tr key={index}>
+                <td>{name}</td>
+                <td>{description.text}</td>
+                <td>{type.name}</td>
+                <td>{String(Boolean(required))}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
         <Example html={html} />
         <p>
           <GatsbyLink to="/components/">[index]</GatsbyLink>
