@@ -43,19 +43,23 @@ const sizes = {
   },
 }
 
-const styles = ({ backgroundColor, size }) =>
-  css({
-    backgroundColor: colors[backgroundColor].primary,
-    ...sizes[size],
+const styles = ({ backgroundColor, size }) => {
+  const backgroundColorConfig =
+    colors[backgroundColor] || colors[Button.defaultProps.backgroundColor]
+  const sizeConfig = sizes[size] || sizes[Button.defaultProps.size]
+  return css({
+    backgroundColor: backgroundColorConfig.primary,
+    ...sizeConfig,
     color: `rgba(36, 47, 60, 0.66)`,
     display: `inline-block`,
     borderRadius: `3px`,
     border: 0,
     cursor: `pointer`,
     "&:hover": {
-      backgroundColor: colors[backgroundColor].hover,
+      backgroundColor: backgroundColorConfig.hover,
     },
   })
+}
 
 /**
  * The `<Button>` is a foundational trigger component for capturing
