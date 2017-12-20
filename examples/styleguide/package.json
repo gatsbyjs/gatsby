@@ -1,7 +1,7 @@
 {
-  "name": "using-react-docgen-transformer",
+  "name": "styleguide",
   "private": true,
-  "description": "Gatsby example site using using-react-docgen-transformer",
+  "description": "Gatsby example site demoing living-style-guide",
   "author": "scott.eckenthal@gmail.com",
   "dependencies": {
     "app-root-dir": "^1.0.2",
