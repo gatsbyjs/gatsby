@@ -2,7 +2,7 @@
 title: How Gatsby Works with GitHub Pages
 ---
 
-The easiest way to push a gatsby app to github pages is usigng a package called `gh-pages`.
+The easiest way to push a gatsby app to github pages is using a package called `gh-pages`.
 
 `yarn add --dev gh-pages`
 
