@@ -6,6 +6,12 @@ import * as components from "../../../../../.cache/components"
 
 import "./prism-theme.css"
 
+const editorStyles = {
+  backgroundColor: `#f2f2f2`,
+  boxSizing: `border-box`,
+  padding: `16px`,
+}
+
 class ComponentPreview extends React.Component {
   render() {
     return (
@@ -14,7 +20,7 @@ class ComponentPreview extends React.Component {
         code={this.props.code}
         mountStylesheet={false}
       >
-        <LiveEditor />
+        <LiveEditor style={editorStyles} />
         <LiveError />
         <LivePreview />
       </LiveProvider>
