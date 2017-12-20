@@ -88,14 +88,12 @@ const watch = rootDir => {
     queryCompiler().then(queries => {
       const components = store.getState().components
       queries.forEach(({ text }, id) => {
-        invariant(
-          components[id],
-          `${id} not found in the store components: ${JSON.stringify(
-            components
-          )}`
-        )
-
-        if (text !== components[id].query) {
+        // Queries can be parsed from non page/layout components e.g. components
+        // with fragments so ignore those.
+        //
+        // If the query has changed, set the new query in the store and run
+        // its queries.
+        if (components[id] && text !== components[id].query) {
           boundActionCreators.replaceComponentQuery({
             query: text,
             componentPath: id,
