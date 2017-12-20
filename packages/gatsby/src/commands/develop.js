@@ -303,6 +303,13 @@ module.exports = async (program: any) => {
     }
 
     console.log()
+    console.log(
+      `View GraphiQL, an in-browser IDE, to explore your site's data and schema`
+    )
+    console.log()
+    console.log(`  ${urls.localUrlForTerminal}___graphql`)
+
+    console.log()
     console.log(`Note that the development build is not optimized.`)
     console.log(
       `To create a production build, use ` + `${chalk.cyan(`gatsby build`)}`

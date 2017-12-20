@@ -26,7 +26,7 @@ To install it, in the root of your site you run:
 
 `npm install --save gatsby-transformer-json`
 
-Then in your site's `gatsby-config.js` you simply add `gatsby-transformer-json`
+Then in your site's `gatsby-config.js` you add `gatsby-transformer-json`
 to the plugins array like:
 
 ```javascript
@@ -99,6 +99,7 @@ root.
 * [gatsby-remark-autolink-headers](/packages/gatsby-remark-autolink-headers/)
 * [gatsby-remark-copy-linked-files](/packages/gatsby-remark-copy-linked-files/)
 * [gatsby-remark-images](/packages/gatsby-remark-images/)
+* [gatsby-remark-katex](/packages/gatsby-remark-katex/)
 * [gatsby-remark-prismjs](/packages/gatsby-remark-prismjs/)
 * [gatsby-remark-responsive-iframe](/packages/gatsby-remark-responsive-iframe/)
 * [gatsby-remark-smartypants](/packages/gatsby-remark-smartypants/)
@@ -136,11 +137,13 @@ root.
 * [gatsby-plugin-i18n](https://github.com/angeloocana/gatsby-plugin-i18n)
 * [gatsby-plugin-intercom-spa](https://github.com/toriihq/gatsby-plugin-intercom-spa)
 * [gatsby-plugin-klipse](https://github.com/ahmedelgabri/gatsby-plugin-klipse)
+* [gatsby-plugin-mixpanel](https://github.com/thomascarvalho/gatsby-plugin-mixpanel)
 * [gatsby-plugin-protoculture](https://github.com/atrauzzi/gatsby-plugin-protoculture)
 * [gatsby-plugin-purify-css](https://github.com/rongierlach/gatsby-plugin-purify-css)
 * [gatsby-plugin-segment-js](https://github.com/benjaminhoffman/gatsby-plugin-segment-js)
 * [gatsby-plugin-stripe-checkout](https://github.com/njosefbeck/gatsby-plugin-stripe-checkout)
 * [gatsby-plugin-stripe-elements](https://github.com/njosefbeck/gatsby-plugin-stripe-elements)
+* [gatsby-plugin-svgr](https://github.com/zabute/gatsby-plugin-svgr)
 * [gatsby-plugin-yandex-metrika](https://github.com/viatsko/gatsby-plugin-yandex-metrika)
 * [gatsby-remark-emoji](https://github.com/Rulikkk/gatsby-remark-emoji)
 * [gatsby-remark-external-links](https://github.com/JLongley/gatsby-remark-external-links)

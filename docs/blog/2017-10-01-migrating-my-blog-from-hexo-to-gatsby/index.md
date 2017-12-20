@@ -16,7 +16,7 @@ Gatsby!_
 ---
 
 **Abstract:** Gatsby is a great tool for building a blog. In part 1 I did the
-more simple task of migrating an existing React site to Gatsby. This time I
+more basic task of migrating an existing React site to Gatsby. This time I
 migrated my blog, which was a lot more involved and required a lot more
 Gatsby-specific knowledge.
 

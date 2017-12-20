@@ -45,7 +45,7 @@ Let's take a Wordpress self-hosted installation, for example, simply because
 it's the most common type of CMS out there and it's the one I have the most
 experience with.
 
-First of all, you are obviously going to need to host your blog on a server
+First of all, you are going to need to host your blog on a server
 running PHP and MySQL. No biggie right? After all, there are thousands and
 thousands of hosting companies out there who make a living out of provisioning
 shared hosting environments with PHP and MySQL every day. Evidently, those
