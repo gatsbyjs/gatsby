@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "React.js Static Site Generator",
-  "version": "1.9.144",
+  "version": "1.9.145",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./dist/bin/gatsby.js"
@@ -55,7 +55,7 @@
     "glob": "^7.1.1",
     "graphql": "^0.11.7",
     "graphql-relay": "^0.5.1",
-    "graphql-skip-limit": "^1.0.8",
+    "graphql-skip-limit": "^1.0.9",
     "history": "^4.6.2",
     "invariant": "^2.2.2",
     "is-relative": "^0.2.1",
