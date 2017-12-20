@@ -22,7 +22,7 @@
       link: /docs/querying-with-graphql/
 - title: Guides
   items:
-    - title: 404 Pages
+    - title: Add 404 Page
       link: /docs/add-404-page/
     - title: Adding Images, Fonts, and Files
       link: /docs/adding-images-fonts-files/
@@ -44,6 +44,8 @@
       link: /docs/environment-variables/
     - title: Gatsby on Windows
       link: /docs/gatsby-on-windows/
+    - title: How Gatsby Works with GitHub Pages
+      link: /docs/how-gatsby-works-with-github-pages/
     - title: Migrating from v0 to v1
       link: /docs/migrating-from-v0-to-v1/
     - title: Path Prefix
@@ -60,8 +62,6 @@
       link: /docs/creating-dynamically-rendered-navigation/
     - title: Dropping Images into Static Folders*
       link: /docs/dropping-images-into-static-folders/
-    - title: How Gatsby Works with GitHub Pages*
-      link: /docs/how-gatsby-works-with-github-pages/
 - title: Reference
   items:
     - title: Node Interface
