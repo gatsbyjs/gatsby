@@ -53,7 +53,9 @@ ComponentPage.propTypes = {
     displayName: PropTypes.string.isRequired,
     props: PropTypes.array.isRequired,
     html: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
+    description: PropTypes.shape({
+      text: PropTypes.string.isRequired,
+    }),
   }).isRequired,
 }
 
