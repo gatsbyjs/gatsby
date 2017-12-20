@@ -8,7 +8,7 @@ author: "Shannon Soper"
 
 After teaching college-level writing and training sales people for the last several years, I’d been contemplating a career change. Earlier this year on a car trip with my brother near the [red rock cliffs](https://utah.com/hiking/st-george) of southern Utah, he suggested that UX design could be a natural fit. After serious reflection, I applied to a UX bootcamp for this fall and got in.
 
-Fast-forward now to August where Kyle Mathews and I are sitting with friends in a dry grass field in Idaho, waiting for the solar eclipse. We’ve been friends since college, and he asked if I’d be interested in doing UX interviews for Gatsby. 
+Fast-forward now to August where Kyle Mathews and I are sitting with friends in a dry grass field in Idaho, waiting for the solar eclipse. We’ve been friends since college, and he asked if I’d be interested in doing UX interviews for Gatsby.
 
 I’d been watching Gatsby grow from the beginning and felt enthusiastic about the chance to dive deep into a project with passionate community members working on such an interesting project. I saw that UX research would help inform the community how to maintain and enhance Gatsby’s awesome developer experience.
 
@@ -37,7 +37,7 @@ Often I ask more pointed questions like the following:
 After several interviews, I added these questions to reflect recurring comments from interviewees:
 
 * What else do you think you might build with Gatsby in the future?
-* What could we do to make those future projects easier for you? 
+* What could we do to make those future projects easier for you?
 * Did you use any plugins? Starters? If so, how did you find them?
 * Have you built any plugins or starters? If so, what was that process like?
 
@@ -53,7 +53,7 @@ About 73% of interviewees are developers, with UX designers being the next bigge
 
 ### What types of sites do people build with Gatsby?
 
-Most sites built with Gatsby are blogs or a combined portfolio plus blog. Sites for work are the second most common type of site. 
+Most sites built with Gatsby are blogs or a combined portfolio plus blog. Sites for work are the second most common type of site.
 
 It was interesting to hear that people working on larger projects (most often for work) experienced pain points including how to build complex navigation and menu bars and how to handle complex workflows that involve multiple writers and editors.
 
@@ -69,15 +69,15 @@ The second most common pain point is GraphQL. About half of our interviewees sai
 
 Other salient feedback includes that people who have used WordPress for a long time are looking for other solutions and want Gatsby to play well with many kinds of CMSs. Finally, almost every interviewee loves the Gatsby development experience because it is smooth and fast. Here are some fun quotes:
 
-> You guys are pretty much nailing it. Just keep killin’ it, I guess! 
+> You guys are pretty much nailing it. Just keep killin’ it, I guess!
 >
 > – Alec Lomas, AZ, front-end dev and design
 
-> I’ve played around with static sites in Jekyll in the past, but I’ve always hit a pain point with how much functionality I could build into the different includes and partials and things that were starting to become popular with different templating languages. So I’ve always loved React for all the encapsulation of style and functionality. And components--but I never really knew how to use it. And Gatsby has been that first opportunity where everything comes together, everything can be in one system. My background is really design focused, so I think of a component library along those lines. Until Gatsby, I never really had a way to see how I could use that across all of our pages instead of relying on a content management library that was kind of slow to develop in. 
+> I’ve played around with static sites in Jekyll in the past, but I’ve always hit a pain point with how much functionality I could build into the different includes and partials and things that were starting to become popular with different templating languages. So I’ve always loved React for all the encapsulation of style and functionality. And components--but I never really knew how to use it. And Gatsby has been that first opportunity where everything comes together, everything can be in one system. My background is really design focused, so I think of a component library along those lines. Until Gatsby, I never really had a way to see how I could use that across all of our pages instead of relying on a content management library that was kind of slow to develop in.
 >
 > – David Luhr, UT, UX
 
-> If you ever decide to sell to consumers, I really think that the speed / responsiveness of Gatsby is a really good selling point. Like when I tried to sell my idea of building the new site in Gatsby (which would take a little longer compared to building it in Squarespace) to my husband, I simply showed him how quick it is to navigate around a Gatsby site and he was instantly sold. The explicit awareness that website speed matters a lot is currently kinda limited to Silicon Valley etc, but the benefits are definitely apparent as well to the average consumer. Pair that with stats around how speed increases conversions and it'd definitely be a pretty appealing offer to people. 
+> If you ever decide to sell to consumers, I really think that the speed / responsiveness of Gatsby is a really good selling point. Like when I tried to sell my idea of building the new site in Gatsby (which would take a little longer compared to building it in Squarespace) to my husband, I simply showed him how quick it is to navigate around a Gatsby site and he was instantly sold. The explicit awareness that website speed matters a lot is currently kinda limited to Silicon Valley etc, but the benefits are definitely apparent as well to the average consumer. Pair that with stats around how speed increases conversions and it'd definitely be a pretty appealing offer to people.
 >
 > – Juliette Pichot, Germany, web dev
 
@@ -104,8 +104,6 @@ We’re working on the final prototypes for the plugin search tool and welcome c
 * Follow the plugin search tool’s progress and contribute to it on the [Github issue](https://github.com/gatsbyjs/gatsby/issues/3003).
 * [Contact me here](https://twitter.com/shannonb_ux/status/938551014956732418) if you have feedback that differs from or provides deeper insight into any of the pain points this article mentions
 * Follow us on [Twitter](https://twitter.com/gatsbyjs)
-* Contribute to issues in the [Github repo](https://github.com/gatsbyjs/gatsby/issues) 
+* Contribute to issues in the [Github repo](https://github.com/gatsbyjs/gatsby/issues)
 
 Again, many thanks to all the community members who have contributed to this research and to making Gatsby awesome. Stay tuned for updates on the plugin search tool and future Gatsby UX research projects!
-
-

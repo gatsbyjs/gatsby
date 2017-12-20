@@ -97,11 +97,12 @@ async function startServer(program) {
    * Refresh external data sources.
    * This behavior is disabled by default, but the ENABLE_REFRESH_ENDPOINT env var enables it
    * If no GATSBY_REFRESH_TOKEN env var is available, then no Authorization header is required
-  **/
+   **/
   app.post(`/__refresh`, (req, res) => {
     const enableRefresh = process.env.ENABLE_GATSBY_REFRESH_ENDPOINT
     const refreshToken = process.env.GATSBY_REFRESH_TOKEN
-    const authorizedRefresh = (!refreshToken || req.headers.authorization === refreshToken)
+    const authorizedRefresh =
+      !refreshToken || req.headers.authorization === refreshToken
 
     if (enableRefresh && authorizedRefresh) {
       console.log(`Refreshing source data`)
