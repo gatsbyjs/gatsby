@@ -4,10 +4,16 @@ import { LiveProvider, LiveEditor, LiveError, LivePreview } from "react-live"
 
 import * as components from "../../../../../.cache/components"
 
+import "./prism-theme.css"
+
 class ComponentPreview extends React.Component {
   render() {
     return (
-      <LiveProvider scope={components} code={this.props.code}>
+      <LiveProvider
+        scope={components}
+        code={this.props.code}
+        mountStylesheet={false}
+      >
         <LiveEditor />
         <LiveError />
         <LivePreview />
