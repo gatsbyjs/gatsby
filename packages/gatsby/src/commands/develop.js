@@ -93,6 +93,13 @@ async function startServer(program) {
     })
   )
 
+  // Allow requests from any origin. Avoids CORS issues when using the `--host` flag.
+  app.use((req, res, next) => {
+    res.header(`Access-Control-Allow-Origin`, `*`)
+    res.header(`Access-Control-Allow-Headers`, `Origin, X-Requested-With, Content-Type, Accept`)
+    next()
+  })
+
   /**
    * Refresh external data sources.
    * This behavior is disabled by default, but the ENABLE_REFRESH_ENDPOINT env var enables it
