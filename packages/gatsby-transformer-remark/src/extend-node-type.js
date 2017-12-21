@@ -56,12 +56,19 @@ module.exports = (
       footnotes: true,
       pedantic: true,
     })
-
+    
     for (let plugin of pluginOptions.plugins) {
       const requiredPlugin = require(plugin.resolve)
       if (_.isFunction(requiredPlugin.setParserPlugins)) {
-        for (let parserPlugin of requiredPlugin.setParserPlugins()) {
-          remark = remark.use(parserPlugin)
+        for (let parserPlugin of requiredPlugin.setParserPlugins(
+          plugin.pluginOptions
+        )) {
+          if (_.isArray(parserPlugin)) {
+            const [parser, options] = parserPlugin
+            remark = remark.use(parser, options)
+          } else {
+            remark = remark.use(parserPlugin)
+          }
         }
       }
     }
