@@ -9,4 +9,5 @@ phases:
       - ls ../../*
       - ls ../../../*
       - ls ../../../../*
+      - ls ../../../../../*
       - node infrastructure/build-site.js
