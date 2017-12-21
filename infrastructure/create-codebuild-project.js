@@ -4,7 +4,7 @@ console.log(AWS.config)
 
 const codebuild = new AWS.CodeBuild({ apiVersion: `2016-10-06` })
 
-const key = `TESTING_CREATING_PROJECT3`
+const key = `TESTING_CREATING_PROJECT5`
 
 const params = {
   artifacts: {
@@ -12,7 +12,7 @@ const params = {
   },
   environment: {
     type: `LINUX_CONTAINER`,
-    image: `gatsbyjs/gatsby-dev-builds#infrastructure`,
+    image: `gatsbyjs/gatsby-dev-builds:infrastructure`,
     computeType: `BUILD_GENERAL1_SMALL`,
     privilegedMode: true,
   },
