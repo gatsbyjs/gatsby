@@ -4,7 +4,7 @@ console.log(AWS.config)
 
 const codebuild = new AWS.CodeBuild({ apiVersion: `2016-10-06` })
 
-const key = `TESTING_CREATING_PROJECT5`
+const key = `TESTING_CREATING_PROJECT6`
 
 const params = {
   artifacts: {
@@ -22,7 +22,7 @@ const params = {
     auth: {
       type: `OAUTH`,
     },
-    buildspec: `infrastructure/buildspec.yml`,
+    buildspec: ``,
     location: `https://github.com/gatsbyjs/gatsby.git`,
   },
   badgeEnabled: false,
