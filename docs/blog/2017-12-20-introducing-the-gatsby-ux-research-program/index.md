@@ -8,11 +8,11 @@ author: "Shannon Soper"
 
 After teaching college-level writing and training sales people for the last several years, I’d been contemplating a career change. Earlier this year on a car trip with my brother near the [red rock cliffs](https://utah.com/hiking/st-george) of southern Utah, he suggested that UX design could be a natural fit. After serious reflection, I applied to a UX bootcamp for this fall and got in.
 
-Fast-forward now to August where Kyle Mathews and I are sitting with friends in a dry grass field in Idaho, waiting for the solar eclipse. We’ve been friends since college, and he asked if I’d be interested in doing UX interviews for Gatsby.
+Fast-forward to August, when Kyle Mathews and I are sitting with friends in a dry grass field in Idaho, waiting for the solar eclipse. We’ve been friends since college, and he asked if I’d be interested in doing UX interviews for Gatsby.
 
-I’d been watching Gatsby grow from the beginning and felt enthusiastic about the chance to dive deep into a project with passionate community members working on such an interesting project. I saw that UX research would help inform the community how to maintain and enhance Gatsby’s awesome developer experience.
+I’d been watching Gatsby grow from the beginning and felt enthusiastic about the chance to dive deep into a project with passionate community members working on such an interesting project. I saw that UX research would help inform the community about how to maintain and enhance Gatsby’s awesome developer experience.
 
-Which this leads me to this blog post. Here I'll summarize the research I’ve done with GatsbyJS users the past few months and how it’s informing upcoming projects and design decisions. If you already use GatsbyJS, I hope you’ll compare your experience with the following results and [let me know](https://twitter.com/shannonb_ux/status/938551014956732418) if you have more feedback that is not reflected in our data. If you don’t use GatsbyJS and would like to, perhaps start with the [official tutorials](/tutorial/) and by following us on [Twitter](https://twitter.com/gatsbyjs).
+Which leads me to this blog post. Here I'll summarize the research I’ve done with GatsbyJS users the past few months and how it’s informing upcoming projects and design decisions. If you already use GatsbyJS, I hope you’ll compare your experience with the following results and [let me know](https://twitter.com/shannonb_ux/status/938551014956732418) if you have more feedback that is not reflected in our data. If you don’t use GatsbyJS and would like to, perhaps start with the [official tutorials](/tutorial/) and by following us on [Twitter](https://twitter.com/gatsbyjs).
 
 ## Why do UX research for Gatsby?
 
