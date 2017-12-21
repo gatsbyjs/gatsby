@@ -1,0 +1,24 @@
+{
+    "name": "gatsby-js-commit-build",
+    "description": "Build example sites on commits to Gatsby",
+    "source": {
+        "type": "GITHUB",
+        "location": "https://github.com/gatsbyjs/gatsby.git",
+        "buildspec": "",
+        "auth": {
+            "type": "OAUTH",
+            "resource": ""
+        }
+    },
+    "artifacts": {
+      "type": "NO_ARTIFACTS"
+    },
+    "environment": {
+        "type": "LINUX_CONTAINER",
+        "image": "gatsbyjs/gatsby-dev-builds",
+        "computeType": "BUILD_GENERAL1_SMALL",
+        "privilegedMode": true
+    },
+    "serviceRole": "arn:aws:iam::886436322012:role/CodeBuildServiceRoleGatsbyJSDev",
+    "timeoutInMinutes": 15
+}

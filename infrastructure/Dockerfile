@@ -10,4 +10,5 @@ COPY package.json gatsby/infrastructure/
 COPY yarn.lock gatsby/infrastructure/
 RUN cd gatsby/infrastructure && yarn
 COPY build-site.js gatsby/infrastructure/
+COPY buildspec.yml gatsby/infrastructure/
 CMD ["node", "gatsby/infrastructure/build-site.js"]

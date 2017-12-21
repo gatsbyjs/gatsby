@@ -1,9 +1,9 @@
-const shell = require("shelljs")
-const { spawn } = require("child_process")
-const path = require("path")
-const GraphQLClient = require("graphql-request").GraphQLClient
+const shell = require(`shelljs`)
+const { spawn } = require(`child_process`)
+const path = require(`path`)
+const GraphQLClient = require(`graphql-request`).GraphQLClient
 const queue = require(`async/queue`)
-const s3 = require("s3")
+const s3 = require(`s3`)
 
 const commitId = process.env.CODEBUILD_SOURCE_VERSION
 
@@ -11,13 +11,13 @@ const s3Client = s3.createClient({
   s3Options: {
     accessKeyId: process.env.accessKeyId,
     secretAccessKey: process.env.secretAccessKey,
-    region: "us-east-1",
-    endpoint: "s3.us-east-1.amazonaws.com",
+    region: `us-east-1`,
+    endpoint: `s3.us-east-1.amazonaws.com`,
   },
 })
 
 const client = new GraphQLClient(
-  "https://api.graph.cool/simple/v1/cj8xuo77f0a3a0164y7jketkr",
+  `https://api.graph.cool/simple/v1/cj8xuo77f0a3a0164y7jketkr`,
   {
     headers: {
       Authorization: `Bearer ${process.env.GRAPHCOOL_TOKEN}`,
@@ -58,8 +58,8 @@ function createLogLine(logLine, buildId, stderr = false) {
   )
 }
 
-const getCommitObjectByHash = commitId => {
-  return client
+const getCommitObjectByHash = commitId =>
+  client
     .request(
       `
       {
@@ -72,7 +72,6 @@ const getCommitObjectByHash = commitId => {
     `
     )
     .then(result => result.allCommits[0].id)
-}
 
 console.log(process.env)
 
@@ -82,7 +81,7 @@ var q = queue(function({ logLine, buildId, stderr }, callback) {
 
 const Main = async () => {
   if (!process.env.PATH_TO_SITE) {
-    console.log("Missing required environment variable PATH_TO_SITE")
+    console.log(`Missing required environment variable PATH_TO_SITE`)
     process.exit(1)
   }
 
@@ -123,23 +122,23 @@ const Main = async () => {
   child.on(`error`, err => console.log(`err:`, err))
   child.stdout.pipe(process.stdout)
   child.stderr.pipe(process.stderr)
-  child.stdout.on("data", data => {
+  child.stdout.on(`data`, data => {
     // Create new logline
-    q.push({ logLine: data.toString("utf8"), buildId })
+    q.push({ logLine: data.toString(`utf8`), buildId })
   })
-  child.stderr.on("data", data => {
+  child.stderr.on(`data`, data => {
     // Create new logline
-    q.push({ logLine: data.toString("utf8"), buildId, stderr: true })
+    q.push({ logLine: data.toString(`utf8`), buildId, stderr: true })
   })
 
   // On end
-  child.on("exit", (code, signal) => {
+  child.on(`exit`, (code, signal) => {
     console.log(
-      "child process exited with " + `code ${code} and signal ${signal}`
+      `child process exited with ` + `code ${code} and signal ${signal}`
     )
     // Gatsby build failed
     if (code !== 0) {
-      updateBuild(buildId, "FAILURE")
+      updateBuild(buildId, `FAILURE`)
       process.exit(code)
     }
     const publicDir = `${pathToSite}/public`
@@ -158,13 +157,13 @@ const Main = async () => {
     )
     upload.on(`error`, error => {
       console.error(error)
-      updateBuild(buildId, "FAILURE").then(() => {
+      updateBuild(buildId, `FAILURE`).then(() => {
         process.exit(code)
       })
     })
     // 2. Write final status of build and exit.
     upload.on(`end`, () => {
-      updateBuild(buildId, "SUCCESS").then(() => process.exit())
+      updateBuild(buildId, `SUCCESS`).then(() => process.exit())
     })
   })
 }
