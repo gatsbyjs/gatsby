@@ -10,7 +10,7 @@ But don't get too comfortable 😉. In this tutorial, we're headed to new
 territory which will require some brain stretching to fully understand. In the
 next two parts of the tutorial, we'll be diving into the Gatsby data layer! A
 powerful feature of Gatsby that lets you easily build sites from markdown,
-Wordpress, headless CMSs, and other data sources of all flavors.
+WordPress, headless CMSs, and other data sources of all flavors.
 
 **NOTE:** Gatsby’s data layer is powered by GraphQL. If you’re new to GraphQL,
 this section may feel a little overwhelming. For an in-depth tutorial on
@@ -43,9 +43,9 @@ Which is an _excellent_ way to build many websites. But, often you want to store
 data _outside_ components and then bring the data _into_ the component as
 needed.
 
-For example, if you're building a site with Wordpress (so other contributors
+For example, if you're building a site with WordPress (so other contributors
 have a nice interface for adding & maintaining content) and Gatsby, the _data_
-for the site (pages and posts) are in Wordpress and you _pull_ that data as
+for the site (pages and posts) are in WordPress and you _pull_ that data as
 needed into your components.
 
 Data can also live in file types like markdown, CSV, etc. as well as databases
@@ -383,8 +383,8 @@ Data in Gatsby sites can come literally from anywhere: APIs, databases, CMSs,
 local files, etc.
 
 Source plugins fetch data from their source. E.g. the filesystem source plugin
-knows how to fetch data from the file system. The Wordpress plugin knows how to
-fetch data from the Wordpress API.
+knows how to fetch data from the file system. The WordPress plugin knows how to
+fetch data from the WordPress API.
 
 Let's add [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) and
 explore how it works.
