@@ -150,6 +150,7 @@ root.
 * [gatsby-remark-flowchart](https://github.com/liudonghua123/gatsby-remark-flowchart)
 * [gatsby-remark-graph](https://github.com/konsumer/gatsby-remark-graph)
 * [gatsby-remark-sequence](https://github.com/liudonghua123/gatsby-remark-sequence)
+* [gatsby-source-airtable](https://github.com/kevzettler/gatsby-source-airtable)
 * [gatsby-source-datocms](https://github.com/datocms/gatsby-source-datocms)
 * [gatsby-source-github](https://github.com/mosch/gatsby-source-github)
 * [gatsby-source-google-sheets](https://github.com/brandonmp/gatsby-source-google-sheets)
