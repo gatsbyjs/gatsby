@@ -15,7 +15,6 @@ const { store } = require(`../../redux/`)
 const { boundActionCreators } = require(`../../redux/actions`)
 const queryCompiler = require(`./query-compiler`).default
 const queue = require(`./query-queue`)
-const invariant = require(`invariant`)
 const normalize = require(`normalize-path`)
 
 exports.extractQueries = () => {
