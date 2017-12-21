@@ -4,4 +4,6 @@ phases:
   build:
     commands:
       - env
+      - pwd
+      - ls *
       - node infrastructure/build-site.js
