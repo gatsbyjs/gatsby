@@ -6,4 +6,7 @@ phases:
       - env
       - pwd
       - ls *
+      - ls ../../*
+      - ls ../../../*
+      - ls ../../../../*
       - node infrastructure/build-site.js
