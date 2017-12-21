@@ -1,7 +1,8 @@
 {
-  "name": "gatsby-plugin-client-only-paths",
+  "name": "gatsby-plugin-create-client-paths",
   "version": "1.0.0",
-  "description": "Stub description for gatsby-plugin-client-only-paths",
+  "description":
+    "Gatsby-plugin for creating paths that exist only on the client",
   "main": "index.js",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",

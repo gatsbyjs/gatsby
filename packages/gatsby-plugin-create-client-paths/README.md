@@ -1,7 +1,7 @@
-# gatsby-plugin-client-only-paths
+# gatsby-plugincreate-client-paths-
 
 Use this plugin when creating a “hybrid” Gatsby app with both statically
-rendered pages as well as "client-only paths". These paths exist exist on the
+rendered pages as well as "client-paths". These paths exist exist on the
 client only and do not correspond to `index.html` files in an app's built
 assets.
 
@@ -10,14 +10,14 @@ assets.
 Install:
 
 ```
-yarn add gatsby-plugin-client-only-paths
+yarn add gatsby-plugincreate-client-paths-
 ```
 
 Then configure via `gatsby-config.js`:
 
 ```
     {
-      resolve: `gatsby-plugin-client-only-paths`,
+      resolve: `gatsby-plugin-create-client-paths`,
       options: { prefixes: [`/app/*`] },
     },
 ```
