@@ -77,6 +77,7 @@ root.
 ## Official plugins
 
 * [gatsby-plugin-catch-links](/packages/gatsby-plugin-catch-links/)
+* [gatsby-plugin-client-only-paths](/packages/gatsby-plugin-client-only-paths/)
 * [gatsby-plugin-coffeescript](/packages/gatsby-plugin-coffeescript/)
 * [gatsby-plugin-feed](/packages/gatsby-plugin-feed/)
 * [gatsby-plugin-glamor](/packages/gatsby-plugin-glamor/)
@@ -97,7 +98,9 @@ root.
 * [gatsby-plugin-twitter](/packages/gatsby-plugin-twitter/)
 * [gatsby-plugin-typescript](/packages/gatsby-plugin-typescript/)
 * [gatsby-remark-autolink-headers](/packages/gatsby-remark-autolink-headers/)
+* [gatsby-remark-code-repls](/packages/gatsby-remark-code-repls/)
 * [gatsby-remark-copy-linked-files](/packages/gatsby-remark-copy-linked-files/)
+* [gatsby-remark-embed-snippet](/packages/gatsby-remark-embed-snippet/)
 * [gatsby-remark-images](/packages/gatsby-remark-images/)
 * [gatsby-remark-katex](/packages/gatsby-remark-katex/)
 * [gatsby-remark-prismjs](/packages/gatsby-remark-prismjs/)
@@ -150,6 +153,7 @@ root.
 * [gatsby-remark-flowchart](https://github.com/liudonghua123/gatsby-remark-flowchart)
 * [gatsby-remark-graph](https://github.com/konsumer/gatsby-remark-graph)
 * [gatsby-remark-sequence](https://github.com/liudonghua123/gatsby-remark-sequence)
+* [gatsby-source-airtable](https://github.com/kevzettler/gatsby-source-airtable)
 * [gatsby-source-datocms](https://github.com/datocms/gatsby-source-datocms)
 * [gatsby-source-github](https://github.com/mosch/gatsby-source-github)
 * [gatsby-source-google-sheets](https://github.com/brandonmp/gatsby-source-google-sheets)
