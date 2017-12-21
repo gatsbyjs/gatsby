@@ -1,0 +1,23 @@
+{
+  "name": "styleguide",
+  "private": true,
+  "description": "Gatsby example site demoing living-style-guide",
+  "author": "scott.eckenthal@gmail.com",
+  "dependencies": {
+    "app-root-dir": "^1.0.2",
+    "gatsby": "latest",
+    "gatsby-link": "latest",
+    "gatsby-source-filesystem": "^1.5.11",
+    "gatsby-transformer-react-docgen": "^1.0.11",
+    "gatsby-transformer-remark": "^1.7.25",
+    "glamor": "^2.20.40",
+    "html-to-react": "^1.3.1",
+    "react-live": "^1.7.1"
+  },
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build"
+  }
+}
