@@ -134,7 +134,7 @@ exports.onCreatePage = ({ page, boundActionCreators }) => {
 };
 ```
 
-### Creating "client-paths"
+### Creating client paths
 
 If you're creating a "hybrid" Gatsby app with both statically rendered pages as
 well as client-only routes (e.g. an app that combines marketing pages and your
