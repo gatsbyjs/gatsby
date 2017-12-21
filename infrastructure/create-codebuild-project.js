@@ -12,7 +12,7 @@ const params = {
   },
   environment: {
     type: `LINUX_CONTAINER`,
-    image: `gatsbyjs/gatsby-dev-builds`,
+    image: `gatsbyjs/gatsby-dev-builds#infrastructure`,
     computeType: `BUILD_GENERAL1_SMALL`,
     privilegedMode: true,
   },
