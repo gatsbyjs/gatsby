@@ -55,7 +55,7 @@ module.exports = (
 
       // This method removes lines that contain only highlight directives,
       // eg 'highlight-next-line' or 'highlight-range' comments.
-      function filterDirectives(line, index) {
+      const filterDirectives = (line, index) => {
         if (line.includes(`highlight-next-line`)) {
           // Although we're highlighting the next line,
           // We can use the current index since we also filter this lines.
