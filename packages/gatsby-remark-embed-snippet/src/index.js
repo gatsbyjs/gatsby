@@ -100,9 +100,7 @@ module.exports = (
         .readFileSync(path, `utf8`)
         .split(`\n`)
         .filter((line, index) => {
-          index -= filteredLineOffset
-
-          const returnValue = filterDirectives(line, index)
+          const returnValue = filterDirectives(line, index - filteredLineOffset)
 
           if (!returnValue) {
             filteredLineOffset++
