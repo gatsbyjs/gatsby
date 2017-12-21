@@ -19,6 +19,7 @@ const launchEditor = require(`react-dev-utils/launchEditor`)
 const formatWebpackMessages = require(`react-dev-utils/formatWebpackMessages`)
 const chalk = require(`chalk`)
 const address = require(`address`)
+const sourceNodes = require(`../utils/source-nodes`)
 
 // const isInteractive = process.stdout.isTTY
 
@@ -91,6 +92,25 @@ async function startServer(program) {
       graphiql: true,
     })
   )
+
+  /**
+   * Refresh external data sources.
+   * This behavior is disabled by default, but the ENABLE_REFRESH_ENDPOINT env var enables it
+   * If no GATSBY_REFRESH_TOKEN env var is available, then no Authorization header is required
+   **/
+  app.post(`/__refresh`, (req, res) => {
+    const enableRefresh = process.env.ENABLE_GATSBY_REFRESH_ENDPOINT
+    const refreshToken = process.env.GATSBY_REFRESH_TOKEN
+    const authorizedRefresh =
+      !refreshToken || req.headers.authorization === refreshToken
+
+    if (enableRefresh && authorizedRefresh) {
+      console.log(`Refreshing source data`)
+      sourceNodes()
+    }
+    res.end()
+  })
+
   app.get(`/__open-stack-frame-in-editor`, (req, res) => {
     launchEditor(req.query.fileName, req.query.lineNumber)
     res.end()
@@ -301,6 +321,13 @@ module.exports = async (program: any) => {
     } else {
       console.log(`  ${urls.localUrlForTerminal}`)
     }
+
+    console.log()
+    console.log(
+      `View GraphiQL, an in-browser IDE, to explore your site's data and schema`
+    )
+    console.log()
+    console.log(`  ${urls.localUrlForTerminal}___graphql`)
 
     console.log()
     console.log(`Note that the development build is not optimized.`)

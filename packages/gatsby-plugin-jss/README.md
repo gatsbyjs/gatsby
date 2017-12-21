@@ -9,7 +9,7 @@ Provide drop-in support for using the css-in-js library
 
 ## How to use
 
-Simply add the plugin to your `gatsby-config.js`.
+Add the plugin to your `gatsby-config.js`.
 
 ```javascript
 plugins: [`gatsby-plugin-jss`];
