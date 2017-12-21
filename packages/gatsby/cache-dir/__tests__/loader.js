@@ -2,6 +2,8 @@ import loader from "../loader.js"
 
 describe(`Loader`, () => {
   beforeEach(() => {
+    delete global.__PATH_PREFIX__
+    delete global.__PREFIX_PATHS__
     loader.empty()
     loader.addPagesArray([
       {
@@ -66,5 +68,67 @@ describe(`Loader`, () => {
     loader.enqueue(`/about/`)
     loader.enqueue(`/about/me/`)
     expect(loader.getResources()).toMatchSnapshot()
+  })
+})
+
+describe(`Loader path prefixing`, () => {
+  let pagesArray
+
+  beforeEach(() => {
+    pagesArray = [
+      {
+        path: `/about/`,
+        componentChunkName: `page-component---src-pages-test-js`,
+        jsonName: `about.json`,
+      },
+      {
+        path: `/about/me/`,
+        componentChunkName: `page-component---src-pages-test-js`,
+        jsonName: `about-me.json`,
+      },
+    ]
+
+    loader.empty()
+  })
+
+  test(`path prefix present and enabled`, () => {
+    global.__PATH_PREFIX__ = `/foo`
+    global.__PREFIX_PATHS__ = true
+    loader.addPagesArray(pagesArray)
+    loader.enqueue(`/foo/about/`)
+    expect(loader.has(`/about/`)).toEqual(true)
+    expect(loader.has(`/foo/about/`)).toEqual(false)
+  })
+
+  test(`path prefix present but not enabled`, () => {
+    global.__PATH_PREFIX__ = `/foo`
+    delete global.__PREFIX_PATHS__
+    loader.addPagesArray(pagesArray)
+
+    // don't enqueue prefixed paths
+    loader.enqueue(`/foo/about/`)
+    expect(loader.has(`/about/`)).toEqual(false)
+    expect(loader.has(`/foo/about/`)).toEqual(false)
+
+    // do enqueue unprefixed paths
+    loader.enqueue(`/about/`)
+    expect(loader.has(`/about/`)).toEqual(true)
+    expect(loader.has(`/foo/about/`)).toEqual(false)
+  })
+
+  test(`path prefix missing but enabled`, () => {
+    delete global.__PATH_PREFIX__
+    global.__PREFIX_PATHS__ = true
+    loader.addPagesArray(pagesArray)
+
+    // don't enqueue prefixed paths
+    loader.enqueue(`/foo/about/`)
+    expect(loader.has(`/about/`)).toEqual(false)
+    expect(loader.has(`/foo/about/`)).toEqual(false)
+
+    // do enqueue unprefixed paths
+    loader.enqueue(`/about/`)
+    expect(loader.has(`/about/`)).toEqual(true)
+    expect(loader.has(`/foo/about/`)).toEqual(false)
   })
 })
