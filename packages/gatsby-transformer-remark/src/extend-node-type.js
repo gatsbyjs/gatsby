@@ -56,7 +56,7 @@ module.exports = (
       footnotes: true,
       pedantic: true,
     })
-    
+
     for (let plugin of pluginOptions.plugins) {
       const requiredPlugin = require(plugin.resolve)
       if (_.isFunction(requiredPlugin.setParserPlugins)) {
