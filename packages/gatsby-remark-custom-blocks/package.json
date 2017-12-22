@@ -1,6 +1,6 @@
 {
   "name": "gatsby-remark-custom-blocks",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Gatsby remark plugin for adding custom blocks in markdown",
   "main": "dist/index.js",
   "scripts": {
