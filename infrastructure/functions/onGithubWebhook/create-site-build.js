@@ -1,6 +1,6 @@
-var aws4 = require("hyper-aws4")
-var fetch = require("node-fetch")
-var Hyper = require("hyper-api")
+var aws4 = require(`hyper-aws4`)
+var fetch = require(`node-fetch`)
+var Hyper = require(`hyper-api`)
 
 let api = new Hyper({
   credential: {
@@ -19,14 +19,14 @@ module.exports = ({ pathToSite, commit }) => {
       `accessKeyId=${process.env.accessKeyId}`,
       `secretAccessKey=${process.env.secretAccessKey}`,
     ],
-    Image: "gatsbyjs/gatsby-dev-builds",
+    Image: `gatsbyjs/gatsby-dev-builds`,
     Labels: {
-      sh_hyper_instancetype: "m2",
+      sh_hyper_instancetype: `m2`,
     },
   }
 
   api
-    .post("/containers/create", config)
+    .post(`/containers/create`, config)
     .then(c => {
       console.log(c)
       setTimeout(() => {
