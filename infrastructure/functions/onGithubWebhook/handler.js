@@ -6,6 +6,8 @@ const Libhoney = require("libhoney").default
 const flatten = require("flat")
 const GraphQLClient = require("graphql-request").GraphQLClient
 
+const createBuildJob = require(`../../create-job`)
+
 const hny = new Libhoney({
   writeKey: process.env.HONEYCOMB_KEY,
   dataset: "gatsbyjs-os.lambda.github-webhook",
@@ -59,7 +61,13 @@ const createBranchIfDoesNotExist = branch =>
 
 const createCommit = (commit, branchId) => {
   hny.sendNow(Object.assign({ createCommit: true, branchId: branchId }, commit))
+
   // TODO create build jobs for www, examples/image-processing, examples/using-glamor, examples/using-excel
+  createBuildJob({ pathToSite: `www`, commit })
+  createBuildJob({ pathToSite: `examples/image-processing`, commit })
+  createBuildJob({ pathToSite: `examples/using-glamor`, commit })
+  createBuildJob({ pathToSite: `examples/using-excel`, commit })
+
   return client.request(`
     mutation {
       createCommit(authorName: "${commit.author.name}",authorUsername: "${
