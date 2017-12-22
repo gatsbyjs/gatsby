@@ -103,7 +103,7 @@ describe(`Loader path prefixing`, () => {
     loader.empty()
   })
 
-  test(`path prefix present and enabled`, () => {
+  test(`Path prefix present and enabled`, () => {
     global.__PATH_PREFIX__ = `/foo`
     global.__PREFIX_PATHS__ = true
     loader.addPagesArray(pagesArray)
@@ -112,7 +112,7 @@ describe(`Loader path prefixing`, () => {
     expect(loader.has(`/foo/about/`)).toEqual(false)
   })
 
-  test(`path prefix present but not enabled`, () => {
+  test(`Path prefix present but not enabled`, () => {
     global.__PATH_PREFIX__ = `/foo`
     delete global.__PREFIX_PATHS__
     loader.addPagesArray(pagesArray)
@@ -128,7 +128,7 @@ describe(`Loader path prefixing`, () => {
     expect(loader.has(`/foo/about/`)).toEqual(false)
   })
 
-  test(`path prefix missing but enabled`, () => {
+  test(`Path prefix missing but enabled`, () => {
     delete global.__PATH_PREFIX__
     global.__PREFIX_PATHS__ = true
     loader.addPagesArray(pagesArray)
