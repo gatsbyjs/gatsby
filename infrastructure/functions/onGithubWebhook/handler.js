@@ -6,7 +6,7 @@ const Libhoney = require("libhoney").default
 const flatten = require("flat")
 const GraphQLClient = require("graphql-request").GraphQLClient
 
-const createBuildJob = require(`../../create-job`)
+const createSiteBuild = require(`./create-site-build`)
 
 const hny = new Libhoney({
   writeKey: process.env.HONEYCOMB_KEY,
@@ -63,10 +63,10 @@ const createCommit = (commit, branchId) => {
   hny.sendNow(Object.assign({ createCommit: true, branchId: branchId }, commit))
 
   // TODO create build jobs for www, examples/image-processing, examples/using-glamor, examples/using-excel
-  createBuildJob({ pathToSite: `www`, commit })
-  createBuildJob({ pathToSite: `examples/image-processing`, commit })
-  createBuildJob({ pathToSite: `examples/using-glamor`, commit })
-  createBuildJob({ pathToSite: `examples/using-excel`, commit })
+  createSiteBuild({ pathToSite: `www`, commit })
+  createSiteBuild({ pathToSite: `examples/image-processing`, commit })
+  createSiteBuild({ pathToSite: `examples/using-glamor`, commit })
+  createSiteBuild({ pathToSite: `examples/using-excel`, commit })
 
   return client.request(`
     mutation {
