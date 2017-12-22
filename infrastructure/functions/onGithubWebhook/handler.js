@@ -79,10 +79,19 @@ const createCommit = (commit, branchId) => {
     .then(() =>
       // TODO create build jobs for www, examples/image-processing, examples/using-glamor, examples/using-excel
       Promise.all([
-        createSiteBuild({ pathToSite: `www`, commit }),
-        createSiteBuild({ pathToSite: `examples/image-processing`, commit }),
-        createSiteBuild({ pathToSite: `examples/using-glamor`, commit }),
-        createSiteBuild({ pathToSite: `examples/using-excel`, commit }),
+        createSiteBuild({ pathToSite: `www`, commit: commit.tree_id }),
+        createSiteBuild({
+          pathToSite: `examples/image-processing`,
+          commit: commit.tree_id,
+        }),
+        createSiteBuild({
+          pathToSite: `examples/using-glamor`,
+          commit: commit.tree_id,
+        }),
+        createSiteBuild({
+          pathToSite: `examples/using-excel`,
+          commit: commit.tree_id,
+        }),
       ])
     )
 }

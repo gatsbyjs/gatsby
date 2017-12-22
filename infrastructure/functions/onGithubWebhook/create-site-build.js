@@ -16,8 +16,8 @@ module.exports = ({ pathToSite, commit }) => {
       `GRAPHCOOL_TOKEN=${process.env.GRAPHCOOL_TOKEN}`,
       `CODEBUILD_SOURCE_VERSION=${commit}`,
       `COMMIT=${commit}`,
-      `accessKeyId=${process.env.accessKeyId}`,
-      `secretAccessKey=${process.env.secretAccessKey}`,
+      `accessKeyId=${process.env.AWS_ACCESS_KEY_ID}`,
+      `secretAccessKey=${process.env.AWS_SECRET_ACCESS_KEY}`,
     ],
     Image: `gatsbyjs/gatsby-dev-builds`,
     Labels: {
@@ -25,6 +25,7 @@ module.exports = ({ pathToSite, commit }) => {
     },
   }
 
+  console.log(config)
   return api
     .post(`/containers/create`, config)
     .then(c => {
