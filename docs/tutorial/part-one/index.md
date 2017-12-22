@@ -70,7 +70,7 @@ cd tutorial-part-one
 gatsby develop
 ```
 
-You should see shortly some text that says `The development server is listening at:` [http://localhost:8000](http://localhost:8000). Open that address in your
+You should shortly see some text that says `The development server is listening at:` [http://localhost:8000](http://localhost:8000). Open that address in your
 browser and...
 
 ![Gatsby.js hello world](hello-world.png)
@@ -90,13 +90,12 @@ Let's try it.
 You'll need code editing software for the next part of this tutorial.
 [VS Code](https://code.visualstudio.com/) is a nice one. With your code editor,
 open a folder on your computer called "tutorial-part-one." This folder was
-automatically created when you ran the previous terminal commands in the first
-part of this tutorial.
+automatically created when you ran one of the terminal commands above.
 
 Now that you've opened the "tutorial-part-one" folder in your code editing
 software, it's time to edit your website. In the code editing software, you'll
-need to find the `src/pages/index.js`. Once you find that, try changing "Hello
-world!" in the page component to "Hello Gatsby!". The text in your browser
+need to find `src/pages/index.js`. Once you find that, try changing "Hello
+world!" in the page component to "Hello Gatsby!". Once you save that change, the text in your browser
 should change within a second.
 
 Try some other tricks, like the ones below:
@@ -117,7 +116,7 @@ Change the color to "pink". Then to "tomato".
 2. Add some paragraph text.
 
 ```jsx{5-6}
-import React from "react"
+import React from "react";
 
 export default () =>
  <div style={{ color: `tomato` }}>
@@ -129,7 +128,7 @@ export default () =>
 3. Add an image
 
 ```jsx{7}
-import React from "react"
+import React from "react";
 
 export default () =>
  <div style={{ color: `tomato` }}>
@@ -160,8 +159,8 @@ of `/page-2/`. Try adding that. Once you're done, the page component should look
 like:
 
 ```jsx{2,9-12}
-import React from "react"
-import Link from "gatsby-link"
+import React from "react";
+import Link from "gatsby-link";
 
 export default () =>
   <div style={{ color: `tomato` }}>
@@ -216,8 +215,8 @@ We'll start by creating a new link to a page at `/counter`/ from our original
 `index.js` page component `<Link to="/counter/">Counter</Link>`.
 
 ```jsx{13-15}
-import React from "react"
-import Link from "gatsby-link"
+import React from "react";
+import Link from "gatsby-link";
 
 export default () =>
   <div style={{ color: `tomato` }}>
@@ -257,7 +256,7 @@ Let's continue to flesh out our counter. Let's add two buttons. One to increment
 and one to decrement the count of the counter.
 
 ```jsx{5-12}
-import React from "react"
+import React from "react";
 
 class Counter extends React.Component {
   render() {
@@ -280,7 +279,7 @@ So now we have everything we need to make a nice counter. Let's make it live.
 First we'll setup the component state.
 
 ```jsx{4-7,13}
-import React from "react"
+import React from "react";
 
 class Counter extends React.Component {
   constructor() {
@@ -308,7 +307,7 @@ We're now rendering the current count from the component state.
 Let's now change the state when we click on our buttons.
 
 ```jsx{14-19}
-import React from "react"
+import React from "react";
 
 class Counter extends React.Component {
   constructor() {
@@ -321,11 +320,11 @@ class Counter extends React.Component {
       <div>
         <h1>Counter</h1>
         <p>current count: {this.state.count}</p>
-        <button onClick={() => this.setState({ count: this.state.count + 1 })}>
-          plus
+        <button onClick={() => this.setState({ count: this.state.count + 
+          1 })}>plus
         </button>
-        <button onClick={() => this.setState({ count: this.state.count - 1 })}>
-          minus
+        <button onClick={() => this.setState({ count: this.state.count - 
+          1 })}>minus
         </button>
       </div>
     )
@@ -352,27 +351,28 @@ Let's try using [Surge](http://surge.sh/) for deploying our first Gatsby
 website. Surge is one of many "static site hosts" which make it really easy to
 deploy Gatsby sites.
 
-First install their terminal tool:
+If you haven't previously installed & setup Surge, open a new terminal window and install their terminal tool:
 
 ```bash
 npm install --global surge
+
+# Then create a (free) account with them
+surge
 ```
 
-Then build your site by running in the terminal at the root of your site:
+Next, build your site by running the following command in the terminal at the root of your site (tip: make sure you're running this command at the root of your site, in this case in the tutorial-part-one folder, which you can do by opening a new tab in the same window you used to run `gatsby develop`):
 
 ```bash
 gatsby build
 ```
 
-Building should take 15-30 seconds. Take a look at the generated files by
-looking at the `public` directory:
+Building should take 15-30 seconds. At this point, it's useful to take a look at the files that the `gatsby build` command just prepared to deploy. Take a look at a list of the generated files typing in the following command into the root of your site, which will let you look at the `public` directory:
 
 ```bash
 ls public
 ```
 
 Then finally deploy your site by publishing the generated files to surge.sh.
-You'll first need to create a (free) account by typing `surge`. Then run:
 
 ```bash
 surge public/
