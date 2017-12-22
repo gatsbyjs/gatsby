@@ -34,5 +34,6 @@ api
         .then(c => console.log(c))
         .catch(e => console.log(e))
     }, 2000)
+    // TODO attach then once it's stopped, delete the job.
   })
   .catch(e => console.log(e))
