@@ -25,16 +25,14 @@ module.exports = ({ pathToSite, commit }) => {
     },
   }
 
-  api
+  return api
     .post(`/containers/create`, config)
     .then(c => {
       console.log(c)
-      setTimeout(() => {
-        api
-          .post(`/containers/${c.Id}/start`)
-          .then(c => console.log(c))
-          .catch(e => console.log(e))
-      }, 2000)
+      return api
+        .post(`/containers/${c.Id}/start`)
+        .then(c => console.log(c))
+        .catch(e => console.log(e))
       // TODO attach then once it's stopped, delete the job.
     })
     .catch(e => console.log(e))
