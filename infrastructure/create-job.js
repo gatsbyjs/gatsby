@@ -14,6 +14,7 @@ const config = {
     `PATH_TO_SITE=${process.env.PATH_TO_SITE}`,
     `GRAPHCOOL_TOKEN=${process.env.GRAPHCOOL_TOKEN}`,
     `CODEBUILD_SOURCE_VERSION=${process.env.COMMIT}`,
+    `COMMIT=${process.env.COMMIT}`,
     `accessKeyId=${process.env.accessKeyId}`,
     `secretAccessKey=${process.env.secretAccessKey}`,
   ],
