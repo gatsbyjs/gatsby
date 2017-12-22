@@ -16,11 +16,11 @@ plugins: [
     options: {
       plugins: [
         {
-          resolve: 'gatsby-remark-custom-blocks',
+          resolve: "gatsby-remark-custom-blocks",
           options: {
             blocks: {
-              danger: 'custom-block-danger',
-              info: 'custom-block-info',
+              danger: "custom-block-danger",
+              info: "custom-block-info",
             },
           },
         },

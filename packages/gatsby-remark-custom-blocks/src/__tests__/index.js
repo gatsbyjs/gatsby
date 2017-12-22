@@ -23,8 +23,7 @@ describe(`gatsby-remark-custom-blocks`, () => {
 [[someType]]
 | content
 [[anotherType]]
-| content`
-    )
+| content`)
     expect(find(markdownAST, { type: `someTypeCustomBlock` })).toBeTruthy()
     expect(find(markdownAST, { type: `anotherTypeCustomBlock` })).toBeTruthy()
   })
