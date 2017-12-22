@@ -5,7 +5,7 @@ const GraphQLClient = require(`graphql-request`).GraphQLClient
 const queue = require(`async/queue`)
 const s3 = require(`s3`)
 
-const commitId = process.env.CODEBUILD_SOURCE_VERSION
+const commitId = process.env.CODEBUILD_SOURCE_VERSION.slice(0, 7)
 
 const s3Client = s3.createClient({
   s3Options: {
