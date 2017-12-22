@@ -112,9 +112,8 @@ trailing slashes.
 
 To do this, in your site's `gatsby-node.js` add code similar to the following:
 
-_Note: there's also a plugin that will remove all trailing slashes from pages automatically
-[gatsby-plugin-remove-trailing-slashes](/packages/gatsby-plugin-remove-trailing-slashes/)
-plugin._
+_Note: There's also a plugin that will remove all trailing slashes from pages automatically:
+[gatsby-plugin-remove-trailing-slashes](/packages/gatsby-plugin-remove-trailing-slashes/)_.
 
 ```javascript
 // Implement the Gatsby API “onCreatePage”. This is
@@ -138,9 +137,12 @@ exports.onCreatePage = ({ page, boundActionCreators }) => {
 ### Creating client-only routes
 
 If you're creating a "hybrid" Gatsby app with both statically rendered pages as
-well as client-only routes e.g. an app that combines marketing pages and your
-app that lives under `/app/*`, you want to add code to your `gatsby-node.js`
+well as client-only routes (e.g. an app that combines marketing pages and your
+app that lives under `/app/*`), you want to add code to your `gatsby-node.js`
 like the following:
+
+_Note: There's also a plugin that will set up the creation of client-paths automatically:
+[gatsby-plugin-create-client-paths](/packages/gatsby-plugin-create-client-paths/)_.
 
 ```javascript
 // Implement the Gatsby API “onCreatePage”. This is

@@ -53,6 +53,42 @@ module.exports = (
         throw Error(`Invalid snippet specified; no such file "${path}"`)
       }
 
+      // This method removes lines that contain only highlight directives,
+      // eg 'highlight-next-line' or 'highlight-range' comments.
+      function filterDirectives(line, index) {
+        if (line.includes(`highlight-next-line`)) {
+          // Although we're highlighting the next line,
+          // We can use the current index since we also filter this lines.
+          // (Highlight line numbers are 1-based).
+          highlightLines.push(index + 1)
+
+          // Strip lines that contain highlight-next-line comments.
+          return false
+        } else if (line.includes(`highlight-range`)) {
+          const match = line.match(/highlight-range{([^}]+)}/)
+          if (!match) {
+            console.warn(`Invalid match specified: "${line.trim()}"`)
+            return false
+          }
+          const range = match[1]
+
+          // Highlight line numbers are 1-based but so are offsets.
+          // Remember that the current line (index) will be removed.
+          rangeParser.parse(range).forEach(offset => {
+            highlightLines.push(index + offset)
+          })
+
+          // Strip lines that contain highlight-range comments.
+          return false
+        }
+
+        return true
+      }
+
+      // Track the number of lines we've filtered,
+      // So we can adjust the highlighted index accordingly.
+      let filteredLineOffset = 0
+
       // Parse file contents and extract highlight markers:
       // highlight-line, highlight-next-line, highlight-range
       // We support JS, JSX, HTML, CSS, and YAML style comments.
@@ -64,33 +100,13 @@ module.exports = (
         .readFileSync(path, `utf8`)
         .split(`\n`)
         .filter((line, index) => {
-          if (line.includes(`highlight-next-line`)) {
-            // Although we're highlighting the next line,
-            // We can use the current index since we also filter this lines.
-            // (Highlight line numbers are 1-based).
-            highlightLines.push(index + 1)
+          const returnValue = filterDirectives(line, index - filteredLineOffset)
 
-            // Strip lines that contain highlight-next-line comments.
-            return false
-          } else if (line.includes(`highlight-range`)) {
-            const match = line.match(/highlight-range{([^}]+)}/)
-            if (!match) {
-              console.warn(`Invalid match specified: "${line.trim()}"`)
-              return false
-            }
-            const range = match[1]
-
-            // Highlight line numbers are 1-based but so are offsets.
-            // Remember that the current line (index) will be removed.
-            rangeParser.parse(range).forEach(offset => {
-              highlightLines.push(index + offset)
-            })
-
-            // Strip lines that contain highlight-range comments.
-            return false
+          if (!returnValue) {
+            filteredLineOffset++
           }
 
-          return true
+          return returnValue
         })
         .map((line, index) => {
           if (line.includes(`highlight-line`)) {
