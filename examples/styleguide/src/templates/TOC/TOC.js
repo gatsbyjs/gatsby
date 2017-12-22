@@ -7,7 +7,7 @@ class TOC extends React.Component {
     const { allComponents } = this.props.pathContext
     return (
       <div>
-        <h1>Hello, world!</h1>
+        <h1>Component styleguide</h1>
         <ul>
           {allComponents.map(({ displayName, path }, index) => (
             <li key={index}>
