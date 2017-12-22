@@ -4,6 +4,11 @@ describe(`Loader`, () => {
   beforeEach(() => {
     delete global.__PATH_PREFIX__
     delete global.__PREFIX_PATHS__
+
+    // Workaround for Node 6 issue: https://github.com/facebook/jest/issues/5159
+    if (global.hasOwnProperty(`__PATH_PREFIX__`)) global.__PATH_PREFIX__ = undefined
+    if (global.hasOwnProperty(`__PREFIX_PATHS__`)) global.__PREFIX_PATHS__ = undefined
+
     loader.empty()
     loader.addPagesArray([
       {
@@ -75,6 +80,13 @@ describe(`Loader path prefixing`, () => {
   let pagesArray
 
   beforeEach(() => {
+    delete global.__PATH_PREFIX__
+    delete global.__PREFIX_PATHS__
+
+    // Workaround for Node 6 issue: https://github.com/facebook/jest/issues/5159
+    if (global.hasOwnProperty(`__PATH_PREFIX__`)) global.__PATH_PREFIX__ = undefined
+    if (global.hasOwnProperty(`__PREFIX_PATHS__`)) global.__PREFIX_PATHS__ = undefined
+
     pagesArray = [
       {
         path: `/about/`,
