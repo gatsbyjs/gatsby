@@ -25,7 +25,7 @@ module.exports = ({ pathToSite, commit }) => {
     },
   }
 
-  console.log(config)
+  console.log(`site build job config`, config)
   return api
     .post(`/containers/create`, config)
     .then(c => {
