@@ -351,13 +351,16 @@ Let's try using [Surge](http://surge.sh/) for deploying our first Gatsby
 website. Surge is one of many "static site hosts" which make it really easy to
 deploy Gatsby sites.
 
-If you've already installed Surge, go ahead and run it now at the root of your site by typing in `surge`. If you haven't installed Surge yet, open a new terminal window and install their terminal tool:
+If you haven't previously installed & setup Surge, open a new terminal window and install their terminal tool:
 
 ```bash
 npm install --global surge
+
+# Then create a (free) account with them
+surge
 ```
 
-Then, build your site by running the following command in the terminal at the root of your site (tip: make sure you're running this command at the root of your site, in this case in the tutorial-part-one folder, which you can do by opening a new tab in the same window you used to run `gatsby develop`):
+Next, build your site by running the following command in the terminal at the root of your site (tip: make sure you're running this command at the root of your site, in this case in the tutorial-part-one folder, which you can do by opening a new tab in the same window you used to run `gatsby develop`):
 
 ```bash
 gatsby build
@@ -370,7 +373,6 @@ ls public
 ```
 
 Then finally deploy your site by publishing the generated files to surge.sh.
-You'll first need to create a (free) account by running `surge` at the root of your site. Then run:
 
 ```bash
 surge public/
