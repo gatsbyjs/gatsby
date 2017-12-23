@@ -1,6 +1,6 @@
 {
   "name": "gatsby-remark-custom-blocks",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Gatsby remark plugin for adding custom blocks in markdown",
   "main": "index.js",
   "scripts": {
@@ -24,8 +24,8 @@
   ],
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "rimraf": "^2.6.2",
     "cross-env": "^5.0.5",
+    "rimraf": "^2.6.2",
     "unist-util-find": "^1.0.1"
   },
   "dependencies": {
