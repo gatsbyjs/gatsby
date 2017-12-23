@@ -2,10 +2,10 @@
   "name": "gatsby-remark-custom-blocks",
   "version": "1.0.1",
   "description": "Gatsby remark plugin for adding custom blocks in markdown",
-  "main": "dist/index.js",
+  "main": "index.js",
   "scripts": {
-    "prebuild": "rimraf dist",
-    "build": "yarn prebuild && babel --out-dir dist --ignore __tests__ src",
+    "prebuild": "rimraf index.js",
+    "build": "yarn prebuild && babel --out-dir . --ignore __tests__ src",
     "prepublish": "yarn build"
   },
   "repository": "https://github.com/AlahmadiQ8/gatsby-remark-custom-blocks",
@@ -19,7 +19,7 @@
   "license": "MIT",
   "private": false,
   "files": [
-    "dist",
+    "index.js",
     "README.md"
   ],
   "devDependencies": {
