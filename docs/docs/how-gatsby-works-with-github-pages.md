@@ -6,7 +6,7 @@ The easiest way to push a gatsby app to github pages is using a package called `
 
 `yarn add --dev gh-pages`
 
-## Github repository page
+## GitHub repository page
 
 Add a `deploy` script to `package.json`
 
@@ -28,7 +28,7 @@ We are using prefix paths because our website is inside a folder `http://usernam
 
 When you run `yarn run deploy` all contents of `public` folder will be moved to your repositorys `gh-pages` branch.
 
-## Github Organization or User page
+## GitHub Organization or User page
 
 First thing is to create a repository which should be named `username.github.io`.
 
@@ -43,4 +43,4 @@ In this case we dont need to specify `pathPrefix`, but our website needs to be p
     }
 ```
 
-After running `yarn run deplploy` you should see your website at `http://username.github.io`
+After running `yarn run deploy` you should see your website at `http://username.github.io`
