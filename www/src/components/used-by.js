@@ -133,14 +133,12 @@ const UsedBy = () => (
       >
         <Icon
           icon={FabricIcon}
-          alt="Fabric"
-          href="https://meetfabric.com/careers"
+          alt="Fabric logo"
         />
-        <Icon icon={SegmentIcon} alt="Segment" href="https://segment.com" />
+        <Icon icon={SegmentIcon} alt="Segment logo" />
         <Icon
           icon={FormidableIcon}
-          alt="Formidable"
-          href="https://formidable.com"
+          alt="Formidable logo"
         />
       </ul>
     </div>
