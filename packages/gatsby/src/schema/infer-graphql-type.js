@@ -498,16 +498,13 @@ function inferFromUri(key, types, isArray) {
       const findLinkedFileNode = relativePath => {
 
         var rootDir = ``
-        if(isRelative(relativePath)){
+        if(isAbsolute(relativePath)){
+          // For absolute paths use project root as rootDir
+          // TODO no hardcode of path (duh)
+          rootDir = `/home/zionis137/Desktop/demoAbsoluteFilePath/`
+        }else {
           // For relative paths use the parent path as rootDir
           rootDir = parentFileNode.dir
-        }else if(isAbsolute(relativePath)){
-          // For absolute paths use project root as rootDir
-          // ToDo no hardcode of path (duh)
-          rootDir = `/home/zionis137/Desktop/demoAbsoluteFilePath/`
-        }else{
-          // ToDo better error handling
-          console.log(`[ERROR] Strange file, no root dir found`)
         }
 
           // Use the rootDir to create the absolute path to the linked file.
