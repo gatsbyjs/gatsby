@@ -120,6 +120,8 @@ Websites built with Gatsby:
 * [Santa Compañía Creativa](https://santacc.es) ([source](https://github.com/DesarrolloWebSantaCC/santacc-web))
 * [Fabian Schultz' Portfolio](https://fabianschultz.com)
   ([source](https://github.com/fabe/site))
+* [Caddy smells like trees - Free-folk band official page](https://caddysmellsliketrees.ru)
+  ([source](https://github.com/podabed/caddysmellsliketrees.github.io))
 
 ## Docs
 
