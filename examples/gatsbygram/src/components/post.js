@@ -128,7 +128,7 @@ class Post extends React.Component {
 export default Post
 
 export const postFragment = graphql`
-  fragment Post_details on PostsJson {
+  fragment Post_details on posts_2 {
     id
     likes
     smallImage: image {

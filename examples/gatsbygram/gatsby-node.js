@@ -18,7 +18,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     // from static data that you can run queries against.
     //
     // Post is a data node type derived from data/posts.json
-    // which is created when scrapping Instagram. “allPostsJson”
+    // which is created when scrapping Instagram. “dataJson”
     // is a "connection" (a GraphQL convention for accessing
     // a list of nodes) gives us an easy way to query all
     // Post nodes.
@@ -26,11 +26,9 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
       graphql(
         `
           {
-            allPostsJson(limit: 1000) {
-              edges {
-                node {
-                  id
-                }
+            dataJson {
+              posts {
+                id
               }
             }
           }
@@ -46,7 +44,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         // Instagram post. Since the scrapped Instagram data
         // already includes an ID field, we just use that for
         // each page's path.
-        _.each(result.data.allPostsJson.edges, edge => {
+        _.each(result.data.dataJson.posts, post => {
           // Gatsby uses Redux to manage its internal state.
           // Plugins and sites can use functions like "createPage"
           // to interact with Gatsby.
@@ -55,10 +53,10 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
             // as a template component. The `context` is
             // optional but is often necessary so the template
             // can query data specific to each page.
-            path: `/${slug(edge.node.id)}/`,
+            path: `/${slug(post.id)}/`,
             component: slash(postTemplate),
             context: {
-              id: edge.node.id,
+              id: post.id,
             },
           })
         })

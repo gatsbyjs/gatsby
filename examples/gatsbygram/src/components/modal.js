@@ -164,7 +164,7 @@ class GatsbyGramModal extends React.Component {
 export default GatsbyGramModal
 
 export const modalFragment = graphql`
-  fragment Modal_posts on PostsJson {
+  fragment Modal_posts on posts_2 {
     id
   }
 `
