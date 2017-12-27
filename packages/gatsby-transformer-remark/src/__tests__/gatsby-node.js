@@ -157,14 +157,14 @@ Sed bibendum sem iaculis, pellentesque leo sed, imperdiet ante. Sed consequat ma
             node.content = content
 
             let createdNode 
-            const createNode = markdownNode => {
-                return queryResult([ markdownNode ], 
+            const createNode = markdownNode =>
+                queryResult([ markdownNode ], 
                 `
                     excerpt
                     frontmatter {
                         title
                     }
-                `,{ types: [ { name: `MarkdownRemark` } ], }).then(result => {
+                `,{ types: [ { name: `MarkdownRemark` } ] }).then(result => {
                     try {
                         createdNode = result.data.listNode[0]
                         expect(createdNode).toMatchSnapshot()
@@ -178,7 +178,6 @@ In quis lectus sed eros efficitur luctus. Morbi tempor, nisl eget feugiat tincid
                         done.fail(err)
                     }
                 })
-            }
 
             const createParentChildLink = jest.fn()
             const boundActionCreators = { createNode, createParentChildLink }
@@ -210,14 +209,14 @@ Sed bibendum sem iaculis, pellentesque leo sed, imperdiet ante. Sed consequat ma
             node.content = content
 
             let createdNode 
-            const createNode = markdownNode => {
-                return queryResult([ markdownNode ], 
+            const createNode = markdownNode => 
+                queryResult([ markdownNode ], 
                 `
                     excerpt
                     frontmatter {
                         title
                     }
-                `,{ types: [ { name: `MarkdownRemark` } ], }).then(result => {
+                `,{ types: [ { name: `MarkdownRemark` } ] }).then(result => {
                     try {
                         createdNode = result.data.listNode[0]
                         expect(createdNode).toMatchSnapshot()
@@ -227,7 +226,6 @@ Sed bibendum sem iaculis, pellentesque leo sed, imperdiet ante. Sed consequat ma
                         done.fail(err)
                     }
                 })
-            }
 
             const createParentChildLink = jest.fn()
             const boundActionCreators = { createNode, createParentChildLink }
