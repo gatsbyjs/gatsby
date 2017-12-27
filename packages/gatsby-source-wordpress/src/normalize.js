@@ -47,9 +47,7 @@ function getValidKey({ key, verbose = false }) {
   if (changed && verbose)
     console.log(
       colorized.out(
-        `Object with key "${
-          key
-        }" breaks GraphQL naming convention. Renamed to "${nkey}"`,
+        `Object with key "${key}" breaks GraphQL naming convention. Renamed to "${nkey}"`,
         colorized.color.Font.FgRed
       )
     )

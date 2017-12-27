@@ -4,6 +4,7 @@ import { NavLinkProps } from "react-router-dom";
 export interface GatsbyLinkProps extends NavLinkProps {
   to: string;
   onClick?: (event: any) => void
+  className?: string
 }
 
 export const navigateTo: (path: string) => void;
