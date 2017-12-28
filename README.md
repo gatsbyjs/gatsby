@@ -122,6 +122,7 @@ Websites built with Gatsby:
   ([source](https://github.com/fabe/site))
 * [Caddy smells like trees - Free-folk band official page](https://caddysmellsliketrees.ru)
   ([source](https://github.com/podabed/caddysmellsliketrees.github.io))
+* [BRIIM](https://bri.im/)
 
 ## Docs
 
