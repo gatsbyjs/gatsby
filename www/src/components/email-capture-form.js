@@ -19,10 +19,10 @@ class EmailCaptureForm extends React.Component {
     this.setState({ email: e.target.value })
   }
 
-  // Check whether the email address is valid
-  // 1) not an empty string
-  // 2) greater than 5 characters
-  // 3) includes both a `@` and `.`
+  // Check whether the email address is valid:
+  // not an empty string,
+  // greater than 5 characters,
+  // includes both `@` and `.`
   _isValidEmailAddress = email =>
     !!email && email.length > 5 && (email.includes(`@`) && email.includes(`.`))
 
