@@ -1,3 +1,7 @@
+import React from "react"
+import ReactDOM from "react-dom"
+import { MemoryRouter } from "react-router-dom"
+
 const getInstance = (props, pathPrefix = ``) => {
   Object.assign(global.window, {
     __PREFIX_PATHS__: pathPrefix ? true : false,
@@ -57,6 +61,74 @@ describe(`<Link />`, () => {
       )
 
       expect(instance.state.to).toEqual(`${pathPrefix}${to}`)
+    })
+  })
+
+  describe(`the location to link to`, () => {
+    global.___loader = {
+      enqueue: jest.fn(),
+    }
+
+    it(`accepts to as a string`, () => {
+      const location = `/courses?sort=name`
+
+      const node = document.createElement(`div`)
+      const Link = require(`../`).default
+
+      ReactDOM.render(
+        <MemoryRouter>
+          <Link to={location}>link</Link>
+        </MemoryRouter>,
+        node
+      )
+
+      const href = node.querySelector(`a`).getAttribute(`href`)
+
+      expect(href).toEqual(location)
+    })
+
+    it(`accepts a location "to" prop`, () => {
+      const location = {
+        pathname: `/courses`,
+        search: `?sort=name`,
+        hash: `#the-hash`,
+        state: { fromDashboard: true },
+      }
+
+      const node = document.createElement(`div`)
+      const Link = require(`../`).default
+
+      ReactDOM.render(
+        <MemoryRouter>
+          <Link to={location}>link</Link>
+        </MemoryRouter>,
+        node
+      )
+
+      const href = node.querySelector(`a`).getAttribute(`href`)
+
+      expect(href).toEqual(`/courses?sort=name#the-hash`)
+    })
+
+    it(`resolves to with no pathname using current location`, () => {
+      const location = {
+        search: `?sort=name`,
+        hash: `#the-hash`,
+      }
+
+      const node = document.createElement(`div`)
+      const Link = require(`../`).default
+
+      ReactDOM.render(
+        <MemoryRouter initialEntries={[`/somewhere`]}>
+          <Link to={location}>link</Link>
+        </MemoryRouter>,
+        node
+      )
+
+      const href = node.querySelector(`a`).getAttribute(`href`)
+
+      expect(href).toEqual(`/somewhere?sort=name#the-hash`)
     })
   })
 
