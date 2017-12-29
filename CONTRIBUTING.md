@@ -45,8 +45,19 @@ The usual contributing steps are:
 
 ### Contributing to the documentation.
 
-Gatsby, unsurprisingly uses Gatsby for it's documentation website. Here are the
-steps to add/modify documentation and preview it.
+Gatsby, unsurprisingly, uses Gatsby for it's documentation website.
+
+If you want to add/modify some documentation markdown to make a change in the
+website, go to the
+[docs folder on Github](https://github.com/gatsbyjs/gatsby/tree/master/docs) and
+use the inline editor to edit and then preview your changes. Github then allows
+you to commit the change and raise a PR right in the UI. This is the _easiest_
+way you can contribute to the project!
+
+However, if you want to make more changes to the website, that is, change
+layouts, add sections/pages, follow the steps below. You can then spin up your
+own instance of the Gatsby website and make/preview your changes before raising
+a pull request.
 
 * Clone the repo and navigate to `/www`
 * Run `yarn` to install all of the website's dependencies.
