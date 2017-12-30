@@ -555,7 +555,7 @@ module.exports = async (
 
   // Use the suppliedStage again to let plugins distinguish between
   // server rendering the html.js and the frontend development config.
-  const validatedConfig = await webpackModifyValidate(program, config, suppliedStage)
+  const validatedConfig = await webpackModifyValidate(program, config, babelConfig, suppliedStage)
 
   return validatedConfig
 }

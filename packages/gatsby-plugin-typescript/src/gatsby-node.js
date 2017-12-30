@@ -1,4 +1,3 @@
-const genBabelConfig = require(`gatsby/dist/utils/babel-config`)
 const { transpileModule } = require(`typescript`)
 
 const test = /\.tsx?$/
@@ -10,12 +9,10 @@ const compilerDefaults = {
 
 module.exports.resolvableExtensions = () => [`.ts`, `.tsx`]
 
-module.exports.modifyWebpackConfig = async (
-  { program, config, stage },
+module.exports.modifyWebpackConfig = (
+  { config, babelConfig },
   { compilerOptions, transpileOnly = true }
 ) => {
-  const babelConfig = await genBabelConfig(program, stage)
-
   // CommonJS to keep Webpack happy.
   const copts = Object.assign({}, compilerDefaults, compilerOptions, {
     module: `commonjs`,

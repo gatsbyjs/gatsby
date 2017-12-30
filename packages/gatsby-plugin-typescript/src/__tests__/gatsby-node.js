@@ -14,17 +14,13 @@ describe(`gatsby-plugin-typescript`, () => {
     expect(resolvableExtensions()).toMatchSnapshot()
   })
 
-  it(`modifies webpack config`, async () => {
-    const stage = ``
-    const program = {
-      directory: `.`,
-      browserslist: [],
-    }
+  it(`modifies webpack config`, () => {
+    const babelConfig = { "plugins":[``] }
     const config = {
       loader: jest.fn(),
     }
 
-    await modifyWebpackConfig({ program, config, stage }, { compilerOptions: {} })
+    modifyWebpackConfig({ config, babelConfig }, { compilerOptions: {} })
 
     expect(config.loader).toHaveBeenCalledTimes(1)
     const lastCall = config.loader.mock.calls.pop()
@@ -32,12 +28,13 @@ describe(`gatsby-plugin-typescript`, () => {
   })
 
   it(`passes the configuration to the ts-loader plugin`, () => {
+    const babelConfig = { "plugins":[``] }
     const config = {
       loader: jest.fn(),
     }
     const options = { compilerOptions: { foo: `bar` }, transpileOnly: false }
 
-    modifyWebpackConfig({ config }, options)
+    modifyWebpackConfig({ config, babelConfig }, options)
 
     const expectedOptions = {
       compilerOptions: {
@@ -60,10 +57,11 @@ describe(`gatsby-plugin-typescript`, () => {
   })
 
   it(`uses default configuration for the ts-loader plugin when no config is provided`, () => {
+    const babelConfig = { "plugins":[``] }
     const config = {
       loader: jest.fn(),
     }
-    modifyWebpackConfig({ config }, { compilerOptions: {} })
+    modifyWebpackConfig({ config, babelConfig }, { compilerOptions: {} })
 
     const expectedOptions = {
       compilerOptions: {
