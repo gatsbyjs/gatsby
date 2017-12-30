@@ -14,12 +14,17 @@ describe(`gatsby-plugin-typescript`, () => {
     expect(resolvableExtensions()).toMatchSnapshot()
   })
 
-  it(`modifies webpack config`, () => {
+  it(`modifies webpack config`, async () => {
+    const stage = ``
+    const program = {
+      directory: `.`,
+      browserslist: [],
+    }
     const config = {
       loader: jest.fn(),
     }
 
-    modifyWebpackConfig({ config }, { compilerOptions: {} })
+    await modifyWebpackConfig({ program, config, stage }, { compilerOptions: {} })
 
     expect(config.loader).toHaveBeenCalledTimes(1)
     const lastCall = config.loader.mock.calls.pop()
