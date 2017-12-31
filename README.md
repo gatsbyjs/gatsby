@@ -123,6 +123,8 @@ Websites built with Gatsby:
 * [Caddy smells like trees - Free-folk band official page](https://caddysmellsliketrees.ru)
   ([source](https://github.com/podabed/caddysmellsliketrees.github.io))
 * [BRIIM](https://bri.im/)
+* [KNW Photography](https://www.knw.io)
+  ([source](https://github.com/ryanwiemer/knw))
 
 ## Docs
 
