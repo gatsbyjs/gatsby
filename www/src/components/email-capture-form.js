@@ -10,8 +10,11 @@ import jsonp from "jsonp"
 const MAILCHIMP_URL = `https://gatsbyjs.us17.list-manage.com/subscribe/post-json?u=1dc33f19eb115f7ebe4afe5ee&amp;id=f366064ba7`
 
 class EmailCaptureForm extends React.Component {
-  state = {
-    email: ``,
+  constructor() {
+    super()
+    this.state = {
+      email: ``,
+    }
   }
 
   // Update state each time user edits their email address
@@ -20,12 +23,42 @@ class EmailCaptureForm extends React.Component {
   }
 
   // Check whether the email address is valid:
-  // not an empty string,
-  // greater than 5 characters,
-  // includes both `@` and `.`
+  // - not an empty string,
+  // - greater than 5 characters,
+  // - includes both `@` and `.`
   _isValidEmailAddress = email =>
     !!email && email.length > 5 && (email.includes(`@`) && email.includes(`.`))
 
+  // Using jsonp, post to MC server & handle its response
+  _postEmailToMailchimp = url => {
+    // jsonp lib takes an `endpoint`, {options}, & callback
+    jsonp(url, { param: `c` }, (err, data) => {
+      // network failures, timeouts, etc
+      if (err) {
+        this.setState({
+          status: `error`,
+          msg: err,
+        })
+
+      // Mailchimp errors & failures
+      } else if (data.result !== `success`) {
+        this.setState({
+          status: `error`,
+          msg: data.msg,
+        })
+
+      // Posted email successfully to Mailchimp
+      } else {
+        this.setState({
+          status: `success`,
+          msg: data.msg,
+        })
+      }
+    })
+  }
+
+  // On form submit, validate email
+  // then jsonp to Mailchimp, and update state
   _handleFormSubmit = e => {
     e.preventDefault()
     e.stopPropagation()
@@ -34,13 +67,14 @@ class EmailCaptureForm extends React.Component {
     if (!this._isValidEmailAddress(this.state.email)) {
       this.setState({
         status: `error`,
-        msg: `${this.state.email} is not a valid email address`,
+        msg: `"${this.state.email}" is not a valid email address`,
       })
       return
     }
 
     // Construct the url for our jsonp request
     // Query params must be in CAPS
+    // Capture pathname for better email targeting
     const url = `${MAILCHIMP_URL}
       &EMAIL=${encodeURIComponent(this.state.email)}
       &PATHNAME=${window.location.pathname}
@@ -51,33 +85,8 @@ class EmailCaptureForm extends React.Component {
         msg: null,
         status: `sending`,
       },
-      // setState callback (jsonp)
-      () =>
-        jsonp(
-          url,
-          {
-            param: `c`,
-          },
-          // jsonp callback
-          (err, data) => {
-            if (err) {
-              this.setState({
-                status: `error`,
-                msg: err,
-              })
-            } else if (data.result !== `success`) {
-              this.setState({
-                status: `error`,
-                msg: data.msg,
-              })
-            } else {
-              this.setState({
-                status: `success`,
-                msg: data.msg,
-              })
-            }
-          }
-        )
+      // jsonp request as setState callback
+      this._postEmailToMailchimp(url)
     )
   }
 
@@ -90,50 +99,56 @@ class EmailCaptureForm extends React.Component {
           borderRadius: `4px`,
           padding: `${rhythm(0.75)}`,
         }}
-        >
+      >
         {this.state.status === `success` ? (
           <div>Thank you! Youʼll receive your first email shortly.</div>
         ) : (
           <div>
             Enjoyed this post? Receive the next one in your inbox!
             <br />
-            <form id="email-capture" method="post" noValidate css={{margin: 0}}>
-                <div>
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="you@email.com"
-                    onChange={this._handleEmailChange}
-                    css={{
-                      marginTop: rhythm(0.3),
-                      padding: `${rhythm(0.3)} ${rhythm(0.3)} ${rhythm(
-                        0.3
-                      )} ${rhythm(0.7)}`,
-                      width: `250px`,
-                    }}
+            <form
+              id="email-capture"
+              method="post"
+              noValidate
+              css={{ margin: 0 }}
+            >
+              <div>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="you@email.com"
+                  onChange={this._handleEmailChange}
+                  css={{
+                    marginTop: rhythm(0.3),
+                    padding: `${rhythm(0.3)} ${rhythm(0.3)} ${rhythm(
+                      0.3
+                    )} ${rhythm(0.7)}`,
+                    width: `250px`,
+                    color: presets.bodyColor,
+                  }}
+                />
+                <button
+                  type="submit"
+                  onClick={this._handleFormSubmit}
+                  css={{
+                    borderRadius: `2px`,
+                    border: `2px solid ${presets.brand}`,
+                    backgroundColor: presets.brand,
+                    height: `43px`,
+                    cursor: `pointer`,
+                    padding: `0 ${rhythm(0.75)} 0 ${rhythm(0.75)}`,
+                    margin: `${rhythm(0.75)} 0 0 ${rhythm(0.75)}`,
+                  }}
+                >
+                  Subscribe
+                </button>
+                {this.state.status === `error` && (
+                  <div
+                    dangerouslySetInnerHTML={{ __html: this.state.msg }}
+                    css={{ marginTop: `${rhythm(0.5)}` }}
                   />
-                  <button
-                    type="submit"
-                    onClick={this._handleFormSubmit}
-                    css={{
-                      borderRadius: `2px`,
-                      border: `2px solid ${presets.brand}`,
-                      backgroundColor: presets.brand,
-                      color: `black`,
-                      height: `43px`,
-                      padding: `0 ${rhythm(0.75)} 0 ${rhythm(0.75)}`,
-                      margin: `${rhythm(0.75)} 0 0 ${rhythm(0.75)}`,
-                    }}
-                  >
-                    Subscribe
-                  </button>
-                  {this.state.status === `error` && (
-                    <div
-                      dangerouslySetInnerHTML={{ __html: this.state.msg }}
-                      css={{ marginTop: `${rhythm(0.5)}` }}
-                    />
-                  )}
-                </div>
+                )}
+              </div>
             </form>
           </div>
         )}
