@@ -33,7 +33,8 @@ The usual contributing steps are:
 * Run `npm run watch` from the root of the repo to first do an initial Babel
   build of all packages and then watch for changes to packages' source code and
   compile these changes on-the-fly as you work.
-* Install [gatsby-dev-cli](/packages/gatsby-dev-cli/) globally: `yarn global add gatsby-dev-cli`
+* Install [gatsby-dev-cli](/packages/gatsby-dev-cli/) globally: `yarn global add
+  gatsby-dev-cli`
 * For each of your Gatsby test sites, run the `gatsby-dev` command there to copy
   the built files from your cloned copy of Gatsby. It'll watch for your changes
   to Gatsby packages and copy them into the site. For more detailed instructions
@@ -47,10 +48,9 @@ The usual contributing steps are:
 
 Gatsby, unsurprisingly, uses Gatsby for it's documentation website.
 
-If you want to add/modify some documentation markdown to make a change in the
-website, go to the
+If you want to add/modify any Gatsby documentation, go to the
 [docs folder on Github](https://github.com/gatsbyjs/gatsby/tree/master/docs) and
-use the inline editor to edit and then preview your changes. Github then allows
+use the file editor to edit and then preview your changes. Github then allows
 you to commit the change and raise a PR right in the UI. This is the _easiest_
 way you can contribute to the project!
 
