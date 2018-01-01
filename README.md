@@ -125,6 +125,7 @@ Websites built with Gatsby:
 * [BRIIM](https://bri.im/)
 * [KNW Photography](https://www.knw.io)
   ([source](https://github.com/ryanwiemer/knw))
+* [NEON](http://neonrated.com)
 
 ## Docs
 
