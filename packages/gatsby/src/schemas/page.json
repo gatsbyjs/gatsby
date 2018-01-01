@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "properties": {
+    "path": { "type": "string" },
+    "matchPath": { "type": "string" },
+    "component": { "type": "string" },
+    "componentChunkName": { "type": "string" },
+    "context": { "type": "object" },
+    "pluginCreator___NODE": { "type": "string" },
+    "pluginCreatorName": { "type": "string" }
+  },
+  "additionalProperties": false,
+  "required": ["path", "component", "componentChunkName"]
+}

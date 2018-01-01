@@ -1,5 +1,5 @@
 // @flow
-import Joi from "joi"
+import Ajv from "ajv"
 import chalk from "chalk"
 const _ = require(`lodash`)
 const { bindActionCreators } = require(`redux`)
@@ -14,10 +14,17 @@ const {
   trackSubObjectsToRootNodeId,
 } = require(`./index`)
 const { store } = require(`./index`)
-import * as joiSchemas from "../joi-schemas/joi"
+import layoutSchema from "../schemas/layout.json"
+import nodeSchema from "../schemas/node.json"
+import pageSchema from "../schemas/page.json"
 import { generateComponentChunkName } from "../utils/js-chunk-names"
 
 const actions = {}
+
+const ajv = new Ajv()
+  .addSchema(layoutSchema, `layout`)
+  .addSchema(nodeSchema, `node`)
+  .addSchema(pageSchema, `page`)
 
 type Job = {
   id: string,
@@ -133,10 +140,10 @@ actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
     updatedAt: Date.now(),
   }
 
-  const result = Joi.validate(internalPage, joiSchemas.pageSchema)
-  if (result.error) {
+  const isValid = ajv.validate(`page`, internalPage)
+  if (!isValid) {
     console.log(chalk.blue.bgYellow(`The upserted page didn't pass validation`))
-    console.log(chalk.bold.red(result.error))
+    console.log(chalk.bold.red(ajv.errorsText()))
     console.log(internalPage)
     return null
   }
@@ -211,13 +218,13 @@ actions.createLayout = (
     context: layout.context || {},
   }
 
-  const result = Joi.validate(internalLayout, joiSchemas.layoutSchema)
+  const isValid = ajv.validate(`layout`, internalLayout)
 
-  if (result.error) {
+  if (!isValid) {
     console.log(
       chalk.blue.bgYellow(`The upserted layout didn't pass validation`)
     )
-    console.log(chalk.bold.red(result.error))
+    console.log(chalk.bold.red(ajv.errorsText()))
     console.log(internalLayout)
     return null
   }
@@ -348,10 +355,10 @@ actions.createNode = (node: any, plugin?: Plugin, traceId?: string) => {
     node.internal.owner = plugin.name
   }
 
-  const result = Joi.validate(node, joiSchemas.nodeSchema)
-  if (result.error) {
+  const isValid = ajv.validate(`node`, node)
+  if (!isValid) {
     console.log(chalk.bold.red(`The new node didn't pass validation`))
-    console.log(chalk.bold.red(result.error))
+    console.log(chalk.bold.red(ajv.errorsText()))
     console.log(node)
     return { type: `VALIDATION_ERROR`, error: true }
   }

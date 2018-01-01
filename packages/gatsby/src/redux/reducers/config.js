@@ -1,22 +1,25 @@
-const Joi = require(`joi`)
+const Ajv = require(`ajv`)
 const chalk = require(`chalk`)
 const _ = require(`lodash`)
 
-const { gatsbyConfigSchema } = require(`../../joi-schemas/joi`)
+const gatsbyConfigSchema = require(`../../schemas/gatsby-config.json`)
+
+const ajv = new Ajv()
+const validate = ajv.compile(gatsbyConfigSchema)
 
 module.exports = (state = {}, action) => {
   switch (action.type) {
     case `SET_SITE_CONFIG`: {
       // Validate the config.
-      const result = Joi.validate(action.payload, gatsbyConfigSchema)
+      const isValid = validate(action.payload)
       // TODO use Redux for capturing errors from different
       // parts of Gatsby so a) can capture richer errors and b) be
       // more flexible how to display them.
-      if (result.error) {
+      if (!isValid) {
         console.log(
           chalk.blue.bgYellow(`The site's gatsby-config.js failed validation`)
         )
-        console.log(chalk.bold.red(result.error))
+        console.log(chalk.bold.red(ajv.errorsText(validate.errors)))
         if (action.payload.linkPrefix) {
           console.log(`"linkPrefix" should be changed to "pathPrefix"`)
         }

@@ -10,6 +10,7 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
+    "ajv": "^5.5.2",
     "async": "^2.1.2",
     "babel-code-frame": "^6.22.0",
     "babel-core": "^6.24.1",
@@ -60,7 +61,6 @@
     "invariant": "^2.2.2",
     "is-relative": "^0.2.1",
     "is-relative-url": "^2.0.0",
-    "joi": "12.x.x",
     "json-loader": "^0.5.2",
     "json-stringify-safe": "^5.0.1",
     "json5": "^0.5.0",

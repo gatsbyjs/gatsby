@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "properties": {
+    "id": { "type": "string" },
+    "children": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "parent": { "type": ["string", "null"] },
+    "fields": { "type": "object" },
+    "internal": {
+      "type": "object",
+      "properties": {
+        "contentDigest": { "type": "string" },
+        "mediaType": { "type": "string" },
+        "type": { "type": "string" },
+        "owner": { "type": "string" },
+        "fieldOwners": { "type": "array" },
+        "content": { "type": "string" }
+      },
+      "required": ["contentDigest", "type", "owner"]
+    }
+  },
+  "required": ["id", "parent"]
+}
