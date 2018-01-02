@@ -257,7 +257,7 @@ module.exports = {
 }
 ```
 
-Stop `gatsby develop` by typing `ctrl+c` into the terminal window where the development process has been running. Then, run `gatsby develop` again to restart it. This will allow our plugin change to take effect.
+Stop `gatsby develop` by typing <kbd>Ctrl + c</kbd> into the terminal window where the development process has been running. Then, run `gatsby develop` again to restart it. This will allow our plugin change to take effect.
 
 Now, all the text font sizes should be slightly bigger. Try changing the
 `baseFontSize` to `24px` then `12px`. All elements get resized as their
