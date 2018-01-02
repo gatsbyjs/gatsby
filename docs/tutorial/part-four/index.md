@@ -870,7 +870,7 @@ Now that the slugs are created, we can create the pages.
 In the same `gatsby-node.js` file, add the following. Here we tell Gatsby about
 our pages—what are their paths, what template component do they use, etc.
 
-```javascript{15-35}
+```javascript{15-34}
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
 exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
@@ -886,7 +886,6 @@ exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
 }
 
 exports.createPages = ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators
   return new Promise((resolve, reject) => {
     graphql(`
       {
@@ -933,7 +932,7 @@ export default () => {
 
 Then update `gatsby-node.js`
 
-```javascript{1,32-41}
+```javascript{1,17,32-41}
 const path = require(`path`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
