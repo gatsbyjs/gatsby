@@ -21,7 +21,8 @@ GraphQL, we recommend [How to GraphQL](https://www.howtographql.com/).
 So far, we've been learning how to use React.js—how powerful it is to be able to
 create our _own_ components to act as custom building blocks for websites.
 
-We've also explored styling components using CSS Modules.
+We’ve also explored styling components using CSS Modules and CSS-in-JS, which
+lets us encapsulate CSS within our components.
 
 ## Data in Gatsby
 
