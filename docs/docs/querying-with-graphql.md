@@ -62,7 +62,7 @@ look for \`template literal blocks\` with `allNode{}` in them.
 
 * [GraphQL specification](https://facebook.github.io/graphql/October2016/)
 * [Interfaces and Unions](https://medium.com/the-graphqlhub/graphql-tour-interfaces-and-unions-7dd5be35de0d)
-* [Gatsby uses the Relay Compiler](https://facebook.github.io/relay/docs/en/relay-compiler.html)
+* [Gatsby uses the Relay Compiler](https://facebook.github.io/relay/docs/en/compiler-architecture.html)
 * ...
 
 ## TODO — create live GraphQL explorer for GatsbyJS.org

@@ -119,6 +119,15 @@ Websites built with Gatsby:
 * [The State of European Tech 2017](https://2017.stateofeuropeantech.com)
 * [Santa Compañía Creativa](https://santacc.es) ([source](https://github.com/DesarrolloWebSantaCC/santacc-web))
 * [Pravdomil](https://pravdomil.com) ([source](https://github.com/pravdomil/pravdomil.com))
+* [Fabian Schultz' Portfolio](https://fabianschultz.com)
+  ([source](https://github.com/fabe/site))
+* [Caddy smells like trees - Free-folk band official page](https://caddysmellsliketrees.ru)
+  ([source](https://github.com/podabed/caddysmellsliketrees.github.io))
+* [BRIIM](https://bri.im/)
+* [KNW Photography](https://www.knw.io)
+  ([source](https://github.com/ryanwiemer/knw))
+* [NEON](http://neonrated.com)
+* [manu.ninja](https://manu.ninja/) ([source](https://github.com/Lorti/manu.ninja))
 
 ## Docs
 

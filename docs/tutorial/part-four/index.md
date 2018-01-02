@@ -172,7 +172,7 @@ import kirkhamTheme from "typography-theme-kirkham";
 
 const typography = new Typography(kirkhamTheme);
 
-module.exports = typography;
+export default typography;
 ```
 
 `gatsby-config.js` (must be in the root of your project, not under src)
