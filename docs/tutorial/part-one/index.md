@@ -14,7 +14,7 @@ Sit down, buckle up, and let's get going!
 
 ## Check your development environment
 
-Let's check first that you have everything setup to start creating with Gatsby.
+Let's check first that you have everything set up to start creating with Gatsby.
 You will need a recent version of [Node.js](https://nodejs.org) installed.
 
 Node.js is a programming tool for running JavaScript on servers and in your
@@ -30,7 +30,7 @@ You should see something like:
 
 ![Check if node.js/npm is installed](check-versions.png)
 
-Gatsby supports versions of Node back to v4 and NPM to v3.
+Gatsby supports versions of Node back to v4 and npm to v3.
 
 If you don't have Node.js installed, go to https://nodejs.org/ and install the
 recommended version for your operating system.
@@ -56,7 +56,7 @@ gatsby new tutorial-part-one https://github.com/gatsbyjs/gatsby-starter-hello-wo
 ```
 
 This command downloads the files for the starter and then installs the needed
-NPM packages. It should take around 1.5-3 minutes to finish. It may look like
+npm packages. It should take around 1.5-3 minutes to finish. It may look like
 nothing is happening at first; be patient!
 
 Now let's try running Gatsby!
@@ -81,7 +81,7 @@ Too cool 😎
 
 Gatsby's development server is a "hot reloading" server, meaning any change you
 make to your React.js page components (and later we'll learn, your data files)
-will hot reload in the browser.
+will be immediately visible and/or loaded in the browser.
 
 This is huge because it makes development so much faster and fun.
 
@@ -89,10 +89,10 @@ Let's try it.
 
 You'll need code editing software for the next part of this tutorial.
 [VS Code](https://code.visualstudio.com/) is a nice one. With your code editor,
-open a folder on your computer called "tutorial-part-one." This folder was
-automatically created when you ran one of the terminal commands above.
+open the folder on your computer called "tutorial-part-one," which was
+automatically created when you ran the `gatsby new` terminal command above.
 
-Now that you've opened the "tutorial-part-one" folder in your code editing
+Once you've opened the "tutorial-part-one" folder in your code editing
 software, it's time to edit your website. In the code editing software, you'll
 need to find `src/pages/index.js`. Once you find that, try changing "Hello
 world!" in the page component to "Hello Gatsby!". Once you save that change, the text in your browser
@@ -138,7 +138,7 @@ export default () =>
  </div>
 ```
 
-Now your screen should look something like this.
+Now your screen should look something like this:
 
 ![Screen Shot 2017-06-03 at 11.57.10 AM](moving-along.png)
 
@@ -187,12 +187,11 @@ Make the second page component look something like:
 import React from "react";
 import Link from "gatsby-link";
 
-export default () => (
-  <div>
+export default () =>
+  return <div>
     <p>Hello world from my second Gatsby page</p>
     <Link to="/">back home</Link>
   </div>
-);
 ```
 
 Save that and now you should be able to click back and forth between the two
@@ -276,7 +275,7 @@ export default Counter
 
 So now we have everything we need to make a nice counter. Let's make it live.
 
-First we'll setup the component state.
+First we'll set up the component state.
 
 ```jsx{4-7,13}
 import React from "react";
@@ -320,10 +319,10 @@ class Counter extends React.Component {
       <div>
         <h1>Counter</h1>
         <p>current count: {this.state.count}</p>
-        <button onClick={() => this.setState({ count: this.state.count + 
+        <button onClick={() => this.setState({ count: this.state.count +
           1 })}>plus
         </button>
-        <button onClick={() => this.setState({ count: this.state.count - 
+        <button onClick={() => this.setState({ count: this.state.count -
           1 })}>minus
         </button>
       </div>
@@ -366,7 +365,7 @@ Next, build your site by running the following command in the terminal at the ro
 gatsby build
 ```
 
-Building should take 15-30 seconds. At this point, it's useful to take a look at the files that the `gatsby build` command just prepared to deploy. Take a look at a list of the generated files typing in the following command into the root of your site, which will let you look at the `public` directory:
+Building should take 15-30 seconds. At this point, it's useful to take a look at the files that the `gatsby build` command just prepared to deploy. Take a look at a list of the generated files by typing in the following terminal command into the root of your site, which will let you look at the `public` directory:
 
 ```bash
 ls public
