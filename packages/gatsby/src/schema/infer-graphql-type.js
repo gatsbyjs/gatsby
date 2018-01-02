@@ -14,6 +14,8 @@ const moment = require(`moment`)
 const mime = require(`mime`)
 const isRelative = require(`is-relative`)
 const isRelativeUrl = require(`is-relative-url`)
+const isAbsolute = require(`is-absolute`)
+const isAbsoluteUrl = require(`is-absolute-url`)
 const normalize = require(`normalize-path`)
 const systemPath = require(`path`)
 const { oneLine } = require(`common-tags`)
@@ -391,8 +393,9 @@ function shouldInferFile(nodes, key, value) {
     mime.lookup(value) !== `application/octet-stream` &&
     // domains ending with .com
     mime.lookup(value) !== `application/x-msdownload` &&
-    isRelative(value) &&
-    isRelativeUrl(value)
+    (     (isRelative(value) && isRelativeUrl(value))
+      ||  (isAbsolute(value) && isAbsoluteUrl(value))
+    )
 
   if (!looksLikeFile) {
     return false
@@ -493,11 +496,21 @@ function inferFromUri(key, types, isArray) {
       }
 
       const findLinkedFileNode = relativePath => {
-        // Use the parent File node to create the absolute path to
-        // the linked file.
-        const fileLinkPath = normalize(
-          systemPath.resolve(parentFileNode.dir, relativePath)
-        )
+
+        var rootDir = ``
+        if(isAbsolute(relativePath)){
+          // For absolute paths use project root as rootDir
+          // TODO no hardcode of path (duh)
+          rootDir = `/home/zionis137/Desktop/demoAbsoluteFilePath/`
+        }else {
+          // For relative paths use the parent path as rootDir
+          rootDir = parentFileNode.dir
+        }
+
+          // Use the rootDir to create the absolute path to the linked file.
+          const fileLinkPath = normalize(
+            systemPath.join(rootDir, relativePath)
+          )
 
         // Use that path to find the linked File node.
         const linkedFileNode = _.find(
