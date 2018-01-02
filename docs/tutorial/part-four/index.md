@@ -172,7 +172,7 @@ import kirkhamTheme from "typography-theme-kirkham";
 
 const typography = new Typography(kirkhamTheme);
 
-module.exports = typography;
+export default typography;
 ```
 
 `gatsby-config.js` (must be in the root of your project, not under src)
@@ -870,7 +870,7 @@ Now that the slugs are created, we can create the pages.
 In the same `gatsby-node.js` file, add the following. Here we tell Gatsby about
 our pages—what are their paths, what template component do they use, etc.
 
-```javascript{15-35}
+```javascript{15-34}
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
 exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
@@ -886,7 +886,6 @@ exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
 }
 
 exports.createPages = ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators
   return new Promise((resolve, reject) => {
     graphql(`
       {
@@ -933,7 +932,7 @@ export default () => {
 
 Then update `gatsby-node.js`
 
-```javascript{1,32-41}
+```javascript{1,17,32-41}
 const path = require(`path`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
@@ -965,7 +964,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         }
       }
     `).then(result => {
-      result.data.allMarkdownRemark.edges.map(({ node }) => {
+      result.data.allMarkdownRemark.edges.forEach(({ node }) => {
         createPage({
           path: node.fields.slug,
           component: path.resolve(`./src/templates/blog-post.js`),

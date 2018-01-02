@@ -134,6 +134,7 @@ root.
 * [gatsby-plugin-copy](https://github.com/aquilio/gatsby-plugin-copy)
 * [gatsby-plugin-elasticlunr-search](https://github.com/andrew-codes/gatsby-plugin-elasticlunr-search)
 * [gatsby-plugin-google-fonts](https://github.com/didierfranc/gatsby-plugin-google-fonts)
+* [gatsby-plugin-gosquared](https://github.com/jongold/gatsby-plugin-gosquared)
 * [gatsby-plugin-hotjar](https://github.com/pavloko/gatsby-plugin-hotjar)
 * [gatsby-plugin-i18n-readnext](https://github.com/angeloocana/gatsby-plugin-i18n-readnext)
 * [gatsby-plugin-i18n-tags](https://github.com/angeloocana/gatsby-plugin-i18n-tags)
