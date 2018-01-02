@@ -126,6 +126,7 @@ Websites built with Gatsby:
 * [KNW Photography](https://www.knw.io)
   ([source](https://github.com/ryanwiemer/knw))
 * [NEON](http://neonrated.com)
+* [manu.ninja](https://manu.ninja/) ([source](https://github.com/Lorti/manu.ninja))
 
 ## Docs
 
