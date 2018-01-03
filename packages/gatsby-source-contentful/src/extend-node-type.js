@@ -10,6 +10,7 @@ const {
 const qs = require(`qs`)
 const base64Img = require(`base64-img`)
 const _ = require(`lodash`)
+const maxContentfulImageSize = 4000
 
 const ImageFormatType = new GraphQLEnumType({
   name: `ContentfulImageFormat`,
@@ -130,6 +131,7 @@ const resolveResponsiveResolution = (image, options) => {
 
         // If we're cropping, calculate the specified aspect ratio.
         if (options.height) {
+          options.height = Math.min(options.height, maxContentfulImageSize)
           desiredAspectRatio = options.width / options.height
         }
 
@@ -155,7 +157,7 @@ const resolveResponsiveResolution = (image, options) => {
         sizes = sizes.map(Math.round)
 
         // Filter out sizes larger than the image's width.
-        const filteredSizes = sizes.filter(size => size < width)
+        const filteredSizes = sizes.filter(size => size < width && size <= maxContentfulImageSize)
 
         // Sort sizes for prettiness.
         const sortedSizes = _.sortBy(filteredSizes)
@@ -222,6 +224,7 @@ const resolveResponsiveSizes = (image, options) => {
 
         // If we're cropping, calculate the specified aspect ratio.
         if (options.maxHeight) {
+          options.maxHeight = Math.min(options.maxHeight, maxContentfulImageSize)
           desiredAspectRatio = options.maxWidth / options.maxHeight
         }
 
@@ -248,7 +251,7 @@ const resolveResponsiveSizes = (image, options) => {
         sizes = sizes.map(Math.round)
 
         // Filter out sizes larger than the image's maxWidth.
-        const filteredSizes = sizes.filter(size => size < width)
+        const filteredSizes = sizes.filter(size => size < width && size <= maxContentfulImageSize)
 
         // Add the original image to ensure the largest image possible
         // is available for small images.
@@ -295,6 +298,8 @@ const resolveResize = (image, options) => {
         // If the user selected a height (so cropping) and fit option
         // is not set, we'll set our defaults
         if (options.height) {
+          options.height = Math.min(options.height, maxContentfulImageSize)
+
           if (!options.resizingBehavior) {
             options.resizingBehavior = `fill`
           }
