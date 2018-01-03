@@ -35,7 +35,7 @@ What is data?
 A very computer science-y answer would be: data is things like `"strings"`,
 integers (`42`), objects (`{ pizza: true }`), etc.
 
-For the purpose of working in Gatsby, however, a more useful answer is 
+For the purpose of working in Gatsby, however, a more useful answer is
 "everything that lives outside a React component".
 
 So far, we've been writing text and adding images _directly_ in components.

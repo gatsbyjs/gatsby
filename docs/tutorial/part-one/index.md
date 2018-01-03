@@ -187,11 +187,12 @@ Make the second page component look something like:
 import React from "react";
 import Link from "gatsby-link";
 
-export default () =>
-  return <div>
+export default () => (
+  <div>
     <p>Hello world from my second Gatsby page</p>
     <Link to="/">back home</Link>
   </div>
+);
 ```
 
 Save that and now you should be able to click back and forth between the two
