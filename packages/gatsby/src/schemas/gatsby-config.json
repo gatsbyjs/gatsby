@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "properties": {
+    "polyfill": { "type": "boolean" },
+    "siteMetadata": { "type": "object" },
+    "pathPrefix": { "type": "string" },
+    "mapping": { "type": "object" },
+    "plugins": { "type": "array" },
+    "proxy": {
+      "type": "object",
+      "properties": {
+        "prefix": { "type": "string" },
+        "url": { "type": "string" }
+      },
+      "required": ["prefix", "url"]
+    }
+  }
+}

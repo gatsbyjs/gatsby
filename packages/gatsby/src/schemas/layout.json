@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "id": { "type": "string" },
+    "machineId": { "type": "string" },
+    "component": { "type": "string" },
+    "componentWrapperPath": { "type": "string" },
+    "componentChunkName": { "type": "string" },
+    "isLayout": { "type": "boolean" },
+    "context": { "type": "object" }
+  },
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "machineId",
+    "component",
+    "componentWrapperPath",
+    "componentChunkName",
+    "isLayout"
+  ]
+}
