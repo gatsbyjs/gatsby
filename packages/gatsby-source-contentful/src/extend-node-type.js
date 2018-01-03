@@ -157,7 +157,7 @@ const resolveResponsiveResolution = (image, options) => {
         sizes = sizes.map(Math.round)
 
         // Filter out sizes larger than the image's width.
-        const filteredSizes = sizes.filter(size => size < width && size < maxContentfulImageSize)
+        const filteredSizes = sizes.filter(size => size < width && size <= maxContentfulImageSize)
 
         // Sort sizes for prettiness.
         const sortedSizes = _.sortBy(filteredSizes)
@@ -251,7 +251,7 @@ const resolveResponsiveSizes = (image, options) => {
         sizes = sizes.map(Math.round)
 
         // Filter out sizes larger than the image's maxWidth.
-        const filteredSizes = sizes.filter(size => size < width && size < maxContentfulImageSize)
+        const filteredSizes = sizes.filter(size => size < width && size <= maxContentfulImageSize)
 
         // Add the original image to ensure the largest image possible
         // is available for small images.
