@@ -76,6 +76,7 @@ root.
 
 ## Official plugins
 
+* [gatsby-plugin-canonical-urls](/packages/gatsby-plugin-canonical-urls/)
 * [gatsby-plugin-catch-links](/packages/gatsby-plugin-catch-links/)
 * [gatsby-plugin-create-client-paths](/packages/gatsby-plugin-create-client-paths/)
 * [gatsby-plugin-coffeescript](/packages/gatsby-plugin-coffeescript/)
