@@ -1,7 +1,7 @@
 # gatsby-dev-cli
 
-A command-line tool for local Gatsby development. When doing development work
-on Gatsby core, this tool allows you to easily copy the changes to the various
+A command-line tool for local Gatsby development. When doing development work on
+Gatsby core, this tool allows you to copy the changes to the various
 Gatsby packages to Gatsby sites that you're testing your changes on.
 
 ## Install
@@ -45,10 +45,11 @@ packages you want to link by using the `--packages` option:
 
 #### `--scan-once`
 
-With this flag, the tool will do an initial scan and copy and then quit. This
-is useful for setting up automated testing/builds of Gatsby sites from the latest
-code. Gatsby's main website (and example websites) are built from HEAD using this
-flag, see https://github.com/gatsbyjs/gatsby/blob/master/scripts/publish-site.sh.
+With this flag, the tool will do an initial scan and copy and then quit. This is
+useful for setting up automated testing/builds of Gatsby sites from the latest
+code. Gatsby's main website (and example websites) are built from HEAD using
+this flag, see
+https://github.com/gatsbyjs/gatsby/blob/master/scripts/publish-site.sh.
 
 #### `--quiet`
 

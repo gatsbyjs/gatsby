@@ -5,8 +5,6 @@ const LOCAL_IDENT_NAME = process.env.CSS_MODULES_LOCAL_IDENT_NAME || DEFAULT_LOC
 exports.LOCAL_IDENT_NAME = LOCAL_IDENT_NAME
 
 exports.cssModulesConfig = stage => {
-  const loader = `css?modules&minimize&importLoaders=1&localIdentName=${
-    LOCAL_IDENT_NAME
-  }`
+  const loader = `css?modules&minimize&importLoaders=1&localIdentName=${LOCAL_IDENT_NAME}`
   return stage.startsWith(`build`) ? loader : `${loader}&sourceMap`
 }

@@ -15,6 +15,7 @@ export const gatsbyConfigSchema = Joi.object().keys({
 export const layoutSchema = Joi.object()
   .keys({
     id: Joi.string().required(),
+    machineId: Joi.string().required(),
     component: Joi.string().required(),
     componentWrapperPath: Joi.string().required(),
     componentChunkName: Joi.string().required(),

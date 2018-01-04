@@ -23,21 +23,21 @@ const remark2retext = require(`remark-retext`)
 
 let pluginsCacheStr = ``
 const astCacheKey = node =>
-  `transformer-remark-markdown-ast-${node.internal.contentDigest}-${
-    pluginsCacheStr
-  }`
+  `transformer-remark-markdown-ast-${
+    node.internal.contentDigest
+  }-${pluginsCacheStr}`
 const htmlCacheKey = node =>
-  `transformer-remark-markdown-html-${node.internal.contentDigest}-${
-    pluginsCacheStr
-  }`
+  `transformer-remark-markdown-html-${
+    node.internal.contentDigest
+  }-${pluginsCacheStr}`
 const headingsCacheKey = node =>
-  `transformer-remark-markdown-headings-${node.internal.contentDigest}-${
-    pluginsCacheStr
-  }`
+  `transformer-remark-markdown-headings-${
+    node.internal.contentDigest
+  }-${pluginsCacheStr}`
 const tableOfContentsCacheKey = node =>
-  `transformer-remark-markdown-toc-${node.internal.contentDigest}-${
-    pluginsCacheStr
-  }`
+  `transformer-remark-markdown-toc-${
+    node.internal.contentDigest
+  }-${pluginsCacheStr}`
 
 module.exports = (
   { type, store, pathPrefix, getNode, cache },
@@ -60,8 +60,15 @@ module.exports = (
     for (let plugin of pluginOptions.plugins) {
       const requiredPlugin = require(plugin.resolve)
       if (_.isFunction(requiredPlugin.setParserPlugins)) {
-        for (let parserPlugin of requiredPlugin.setParserPlugins()) {
-          remark = remark.use(parserPlugin)
+        for (let parserPlugin of requiredPlugin.setParserPlugins(
+          plugin.pluginOptions
+        )) {
+          if (_.isArray(parserPlugin)) {
+            const [parser, options] = parserPlugin
+            remark = remark.use(parser, options)
+          } else {
+            remark = remark.use(parserPlugin)
+          }
         }
       }
     }

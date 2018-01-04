@@ -14,8 +14,7 @@ const chokidar = require(`chokidar`)
 const { store } = require(`../../redux/`)
 const { boundActionCreators } = require(`../../redux/actions`)
 const queryCompiler = require(`./query-compiler`).default
-const queryRunner = require(`./query-runner`)
-const invariant = require(`invariant`)
+const queue = require(`./query-queue`)
 const normalize = require(`normalize-path`)
 
 exports.extractQueries = () => {
@@ -56,8 +55,13 @@ const runQueriesForComponent = componentPath => {
   boundActionCreators.deleteComponentsDependencies(
     pages.map(p => p.path || p.id)
   )
-  const component = store.getState().components[componentPath]
-  return Promise.all(pages.map(p => queryRunner(p, component)))
+  pages.forEach(page =>
+    queue.push({ ...page, _id: page.id, id: page.jsonName })
+  )
+
+  return new Promise(resolve => {
+    queue.on(`drain`, () => resolve())
+  })
 }
 
 const getPagesForComponent = componentPath => {
@@ -83,14 +87,12 @@ const watch = rootDir => {
     queryCompiler().then(queries => {
       const components = store.getState().components
       queries.forEach(({ text }, id) => {
-        invariant(
-          components[id],
-          `${id} not found in the store components: ${JSON.stringify(
-            components
-          )}`
-        )
-
-        if (text !== components[id].query) {
+        // Queries can be parsed from non page/layout components e.g. components
+        // with fragments so ignore those.
+        //
+        // If the query has changed, set the new query in the store and run
+        // its queries.
+        if (components[id] && text !== components[id].query) {
           boundActionCreators.replaceComponentQuery({
             query: text,
             componentPath: id,
