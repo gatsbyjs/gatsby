@@ -8,8 +8,10 @@ const getInstance = (props, pathPrefix = ``) => {
     __PATH_PREFIX__: pathPrefix,
   })
 
+  const context = { router: { history: {} } }
+
   const Link = require(`../`).default
-  return new Link(props)
+  return new Link(props, context)
 }
 
 const getNavigateTo = () => {
@@ -31,8 +33,9 @@ const getWithPrefix = (pathPrefix = ``) => {
 describe(`<Link />`, () => {
   it(`does not fail to initialize when __PREFIX_PATHS__ is not defined`, () => {
     expect(() => {
+      const context = { router: { history: {} } }
       const Link = require(`../`).default
-      const link = new Link({}) //eslint-disable-line no-unused-vars
+      const link = new Link({}, context) //eslint-disable-line no-unused-vars
     }).not.toThrow()
   })
 
@@ -43,7 +46,7 @@ describe(`<Link />`, () => {
         to,
       })
 
-      expect(instance.state.to).toEqual(to)
+      expect(instance.state.to.pathname).toEqual(to)
     })
 
     /*
