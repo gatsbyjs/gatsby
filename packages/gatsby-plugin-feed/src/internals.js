@@ -13,8 +13,11 @@ export const runQuery = (handler, query) =>
   })
 
 export const defaultOptions = {
-  // Override if you want to manually specify the RSS "generator" tag.
-  generator: `GatsbyJS`,
+  // Any options defined in this object will be passed directly to node-rss
+  // as options. https://github.com/dylang/node-rss#feedoptions
+  feedOptions: {
+    generator: `GatsbyJS`,
+  },
 
   // Run a default query to gather some information about the site.
   query: `
@@ -31,8 +34,9 @@ export const defaultOptions = {
   `,
 
   // Setup an RSS object, merging on various feed-specific options.
-  setup: ({ query: { site: { siteMetadata }, ...rest } }) => {
+  setup: ({ query: { site: { siteMetadata }, ...rest }, feedOptions }) => {
     return {
+      ...feedOptions,
       ...siteMetadata,
       ...rest,
     }

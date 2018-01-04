@@ -15,7 +15,11 @@ module.exports = {
     `gatsby-transformer-remark`,
     {
       resolve: `gatsby-plugin-feed`,
-      options: {},
+      options: {
+        feedOptions: {
+          generator: `GatsbyJS RSS`,
+        },
+      },
     },
   ],
 }

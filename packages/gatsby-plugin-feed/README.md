@@ -31,6 +31,9 @@ plugins: [
   {
     resolve: `gatsby-plugin-feed`,
     options: {
+      feedOptions: {
+        generator: 'My Website',
+      },
       query: `
         {
           site {
