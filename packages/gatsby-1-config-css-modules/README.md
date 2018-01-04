@@ -1,10 +1,15 @@
 # gatsby-1-config-css-modules
-CSS Modules configuration for Gatsby v1 plugins
+CSS Modules configuration for Gatsby v1 plugins.
 
 ## Install
 `yarn add --dev gatsby-plugin-sass`
 
 ## How to use
+Node environment variables:
+- `CSS_MODULES_LOCAL_IDENT_NAME` - identify pattern for css modules classes generation (uses webpack syntax)
+  - default is `[path]---[name]---[local]---[hash:base64:5]`
+  - shorter alternative `[local]--[hash:base64:5]`
+
 Example from [`gatsby-plugin-sass`](../gatsby-plugin-sass/):
 ```javascript
 // in gatsby-node.js
