@@ -2,6 +2,7 @@ import React from "react"
 import { rhythm } from "../utils/typography"
 import presets from "../utils/presets"
 import jsonp from "jsonp"
+import { validate } from "email-validator"
 
 // Mailchimp endpoint
 // From: https://us17.admin.mailchimp.com/lists/integration/embeddedcode?id=XXXXXX
@@ -22,13 +23,6 @@ class EmailCaptureForm extends React.Component {
     this.setState({ email: e.target.value })
   }
 
-  // Check whether the email address is valid:
-  // - not an empty string,
-  // - greater than 5 characters,
-  // - includes both `@` and `.`
-  _isValidEmailAddress = email =>
-    !!email && email.length > 5 && (email.includes(`@`) && email.includes(`.`))
-
   // Using jsonp, post to MC server & handle its response
   _postEmailToMailchimp = url => {
     // jsonp lib takes an `endpoint`, {options}, & callback
@@ -40,14 +34,14 @@ class EmailCaptureForm extends React.Component {
           msg: err,
         })
 
-      // Mailchimp errors & failures
+        // Mailchimp errors & failures
       } else if (data.result !== `success`) {
         this.setState({
           status: `error`,
           msg: data.msg,
         })
 
-      // Posted email successfully to Mailchimp
+        // Posted email successfully to Mailchimp
       } else {
         this.setState({
           status: `success`,
@@ -64,7 +58,7 @@ class EmailCaptureForm extends React.Component {
     e.stopPropagation()
 
     // If email is not valid, break early
-    if (!this._isValidEmailAddress(this.state.email)) {
+    if (!validate(this.state.email)) {
       this.setState({
         status: `error`,
         msg: `"${this.state.email}" is not a valid email address`,
@@ -97,7 +91,7 @@ class EmailCaptureForm extends React.Component {
           border: `2px solid ${presets.brand}`,
           backgroundColor: presets.veryLightPurple,
           borderRadius: `4px`,
-          padding: `${rhythm(0.75)}`,
+          padding: `${rhythm(1 / 2)}`,
         }}
       >
         {this.state.status === `success` ? (
@@ -119,10 +113,10 @@ class EmailCaptureForm extends React.Component {
                   placeholder="you@email.com"
                   onChange={this._handleEmailChange}
                   css={{
-                    marginTop: rhythm(0.3),
-                    padding: `${rhythm(0.3)} ${rhythm(0.3)} ${rhythm(
-                      0.3
-                    )} ${rhythm(0.7)}`,
+                    marginTop: rhythm(1 / 4),
+                    padding: `${rhythm(1 / 4)} ${rhythm(1 / 4)} ${rhythm(
+                      1 / 4
+                    )} ${rhythm(1 / 2)}`,
                     width: `250px`,
                     color: presets.bodyColor,
                   }}
@@ -132,12 +126,12 @@ class EmailCaptureForm extends React.Component {
                   onClick={this._handleFormSubmit}
                   css={{
                     borderRadius: `2px`,
-                    border: `2px solid ${presets.brand}`,
+                    border: `${rhythm(1 / 4)} solid ${presets.brand}`,
                     backgroundColor: presets.brand,
                     height: `43px`,
                     cursor: `pointer`,
-                    padding: `0 ${rhythm(0.75)} 0 ${rhythm(0.75)}`,
-                    margin: `${rhythm(0.75)} 0 0 ${rhythm(0.75)}`,
+                    padding: `0 ${rhythm(1 / 2)} 0 ${rhythm(1 / 2)}`,
+                    margin: `${rhythm(1 / 2)} 0 0 ${rhythm(1 / 2)}`,
                   }}
                 >
                   Subscribe
@@ -145,7 +139,7 @@ class EmailCaptureForm extends React.Component {
                 {this.state.status === `error` && (
                   <div
                     dangerouslySetInnerHTML={{ __html: this.state.msg }}
-                    css={{ marginTop: `${rhythm(0.5)}` }}
+                    css={{ marginTop: `${rhythm(1 / 2)}` }}
                   />
                 )}
               </div>
