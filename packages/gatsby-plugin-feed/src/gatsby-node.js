@@ -1,20 +1,26 @@
 import path from 'path'
 import deepmerge from 'deepmerge'
 
-import { defaultOptions, runQuery, writeFile } from './internals'
+import {
+  defaultOptions,
+  isFunction,
+  runQuery,
+  writeFile,
+} from './internals'
 import createFeed from './createFeed'
 import serialize from './serialize'
+import setup from './setup'
 
 const publicPath = `./public`
 
-exports.onPostBuild = async ({ graphql }, pluginOptions) => {
-  delete pluginOptions.plugins
+exports.onPostBuild = async ({ graphql }, userOptions) => {
+  delete userOptions.plugins
 
   // Merge default options with user options,
   // overriding the defaults.
-  const options = {
+  const pluginOptions = {
     ...defaultOptions,
-    ...pluginOptions,
+    ...userOptions,
   }
 
   // If there is a top-level query to execute, do so,
@@ -22,15 +28,15 @@ exports.onPostBuild = async ({ graphql }, pluginOptions) => {
   // The resulting data will be used to generate the default
   // no-configuration-required feed, or will be deep-merged
   // with the result of any custom feed's query.
-  if (options.query) {
-    options.query = await runQuery(graphql, options.query)
+  if (pluginOptions.query) {
+    pluginOptions.query = await runQuery(graphql, pluginOptions.query)
   }
 
-  return Promise.all(options.feeds.map(async (feed) => {
+  return Promise.all(pluginOptions.feeds.map(async (feed) => {
     // Each feed's inherits the result of the global query
-    const feedOptions = {
+    let feedOptions = {
       ...feed,
-      query: options.query,
+      query: pluginOptions.query,
     }
 
     // Each feed may specify a query of its own. If this
@@ -41,11 +47,24 @@ exports.onPostBuild = async ({ graphql }, pluginOptions) => {
       feedOptions.query = deepmerge(feedOptions.query, feedQuery)
     }
 
+    // Each feed may provide a `setup` function for the purpose
+    // of remapping feed options before they are passed to node-rss
+    const metadata = isFunction(feed.setup) ?
+      feed.setup(feedOptions.query) :
+      setup(feedOptions.query)
+
     // Create the feed instance
-    const outputFeed = createFeed(feedOptions)
+    const outputFeed = createFeed({
+      metadata,
+      entries: feedOptions.query.entries,
+      output: feedOptions.output,
+    })
 
     // Then serialize each feed item and add it to the feed
-    const items = serialize(feedOptions)
+    const items = isFunction(feed.serialize) ?
+      feed.serialize(feedOptions.query) :
+      serialize(feedOptions.query)
+
     items.forEach(i => outputFeed.item(i))
 
     // Finally, write the feed file to disk

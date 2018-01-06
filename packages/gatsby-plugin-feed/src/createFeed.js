@@ -1,5 +1,4 @@
 import url from 'url'
-import deepmerge from 'deepmerge'
 import RSS from 'rss'
 
 const defaultOptions = {
@@ -8,17 +7,12 @@ const defaultOptions = {
 }
 
 export default function createFeed({
-  query: {
-    site: {
-      siteMetadata,
-    },
-    entries,
-    ...rest
-  },
+  metadata,
+  entries,
   output,
 }) {
-  // Ensure that siteMetadata is not undefined
-  const metadata = siteMetadata || {}
+  // Provide a couple of defaults that will
+  // override the node-rss defaults
   const options = { ...defaultOptions }
 
   // Assign the default feed options. Note that we can skip existence
@@ -45,11 +39,8 @@ export default function createFeed({
     }
   }
 
-  // @TODO: is this useful? We should think of an example that would use this.
-  const context = deepmerge(rest, options)
-
   // Return an instance of node-rss with our options
-  return new RSS(context)
+  return new RSS(options)
 }
 
 function hasMedia(nodes) {
