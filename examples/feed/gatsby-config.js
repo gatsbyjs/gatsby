@@ -3,6 +3,7 @@ module.exports = {
     title: `GatsbyJS RSS`,
     description: `A blog with RSS powered by GatsbyJS.`,
     siteUrl: `https://gatsbyjs.org`,
+    audioFeedTitle: `Audio RSS`,
   },
   plugins: [
     {
@@ -16,9 +17,20 @@ module.exports = {
     {
       resolve: `gatsby-plugin-feed`,
       options: {
-        feedOptions: {
-          generator: `GatsbyJS RSS`,
-        },
+        feeds: [{
+          output: `audio.xml`,
+          query: `
+            {
+              site {
+                siteMetadata {
+                  title: audioFeedTitle
+                }
+              }
+            }
+          `,
+        }, {
+          output: `journal.xml`,
+        }],
       },
     },
   ],

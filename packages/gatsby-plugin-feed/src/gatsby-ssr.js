@@ -2,12 +2,12 @@ import React from "react"
 import { defaultOptions } from "./internals"
 
 exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
-  const { feeds } = {
+  const options = {
     ...defaultOptions,
     ...pluginOptions,
   }
 
-  const links = feeds.map(({ output }, i) => {
+  const links = options.feeds.map(({ output }, i) => {
     if (output.charAt(0) !== `/`) {
       output = `/` + output
     }
