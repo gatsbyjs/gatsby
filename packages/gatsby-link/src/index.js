@@ -132,6 +132,9 @@ class GatsbyLink extends React.Component {
               if (element !== null) {
                 element.scrollIntoView()
                 return true
+              }else{
+                window.scrollTo(0,0)
+                return true
               }
             }
 
