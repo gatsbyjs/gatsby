@@ -1,5 +1,5 @@
 import url from 'url'
-import { defaultsDeep, get } from 'lodash'
+import deepmerge from 'deepmerge'
 import RSS from 'rss'
 
 const defaultOptions = {
@@ -46,7 +46,7 @@ export default function createFeed({
   }
 
   // @TODO: is this useful? We should think of an example that would use this.
-  const context = defaultsDeep(options, rest)
+  const context = deepmerge(rest, options)
 
   // Return an instance of node-rss with our options
   return new RSS(context)
@@ -54,11 +54,7 @@ export default function createFeed({
 
 function hasMedia(nodes) {
   const node = (Array.isArray(nodes) ? nodes : [nodes])[0]
-  const media = get(node, `frontmatter.media`)
+  const hasMedia = node && node.frontmatter && node.frontmatter.media
 
-  if (node && media) {
-    console.log(media)
-  }
-
-  return false
+  return hasMedia
 }
