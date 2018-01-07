@@ -124,6 +124,10 @@ export const pageQuery = graphql`
 `src/layouts/index.jsx` (optional) wraps page components. You can use it for
 portions of pages that are shared across pages like headers and footers.
 
+You can use the `location` prop to render conditionally based on the page you
+are rendering. Alternately, you can use the
+[createPages API](/docs/docs/creating-and-modifying-pages.md).
+
 Example:
 
 ```jsx
@@ -132,7 +136,11 @@ import Navigation from "../components/Navigation/Navigation.jsx";
 
 export default class Template extends React.Component {
   render() {
-    return <Navigation>{this.props.children()}</Navigation>;
+    if (this.props.location.pathname !== '/') {
+      return <Navigation>{this.props.children()}</Navigation>;
+    }
+  
+    return this.props.children();
   }
 }
 ```
