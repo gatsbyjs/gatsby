@@ -3,7 +3,7 @@ title: Glamor
 ---
 
 Let's create a page using
-[Glamor](https://github.com/threepointone/glamor). It might be useful for you to explore CSS Modules and even Styled Components in Part Two fo the tutorials to see how Glamor compares as a styling method.
+[Glamor](https://github.com/threepointone/glamor). It might be useful for you to explore [CSS Modules](/tutorial/part-two/) and [Styled Components](/styled-components.md) to see how Glamor compares as a styling method.
 
 Glamor lets you write _real_ CSS inline in your components using the same Object
 CSS syntax React supports for the `style` prop.
