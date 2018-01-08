@@ -163,6 +163,6 @@ GatsbyLink.contextTypes = {
 
 export default GatsbyLink
 
-export const navigateTo = pathname => {
-  window.___navigateTo(withPrefix(pathname))
+export const navigateTo = {pathname, options = {}} => {
+  window.___navigateTo(options.prefixed ? pathname : withPrefix(pathname))
 }
