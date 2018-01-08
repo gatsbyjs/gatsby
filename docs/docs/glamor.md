@@ -6,7 +6,11 @@ Let's create a page using
 [Glamor](https://github.com/threepointone/glamor). It might be useful for you to explore [CSS Modules](/tutorial/part-two/) and [Styled Components](/styled-components.md) to see how Glamor compares as a styling method.
 
 Glamor lets you write _real_ CSS inline in your components using the same Object
-CSS syntax React supports for the `style` prop.
+CSS syntax React supports for the `style` prop. Glamor is a variant on "CSS-in-JS"—which solves many of the problems with traditional CSS.
+
+One of the most important problems they solve is selector name collisions. With traditional CSS, you have to be careful not to overwrite CSS selectors used elsewhere in a site because all CSS selectors live in the same global namespace. This unfortunate restriction can lead to elaborate (and often confusing) selector naming schemes.
+
+With CSS-in-JS, you avoid all that as CSS selectors are scoped automatically to their component. Styles are tightly coupled with their components. This makes it very easy to know how to edit a component's CSS as there's never any confusion about how and where CSS is being used.
 
 First, install the Gatsby plugin for Glamor.
 

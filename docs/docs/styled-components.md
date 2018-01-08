@@ -4,7 +4,11 @@ title: Styled Components
 
 [Styled Components](https://www.styled-components.com/) is an example of using CSS-in-JS. It might be useful for you to explore [CSS Modules](/tutorial/part-two/) and [Glamor](/glamor.md) to see how Styled Components compares as a styling method.
 
-Styled Components lets you use actual CSS syntax inside your components.
+Styled Components lets you use actual CSS syntax inside your components. Like Glamor, Styled Components is a variant on "CSS-in-JS"—which solves many of the problems with traditional CSS.
+
+One of the most important problems they solve is selector name collisions. With traditional CSS, you have to be careful not to overwrite CSS selectors used elsewhere in a site because all CSS selectors live in the same global namespace. This unfortunate restriction can lead to elaborate (and often confusing) selector naming schemes.
+
+With CSS-in-JS, you avoid all that as CSS selectors are scoped automatically to their component. Styles are tightly coupled with their components. This makes it very easy to know how to edit a component's CSS as there's never any confusion about how and where CSS is being used.
 
 First, we'll install the Gatsby plugin for Styled Components.
 
