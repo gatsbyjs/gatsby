@@ -129,6 +129,7 @@ Websites built with Gatsby:
 * [NEON](http://neonrated.com)
 * [A4 纸网](http://www.a4z.cn)([source](https://github.com/hiooyUI/hiooyui.github.io))
 * [manu.ninja](https://manu.ninja/) ([source](https://github.com/Lorti/manu.ninja))
+* [Kris Hedstrom's Portfolio](https://k-create.com/) ([source](https://github.com/kristofferh/kristoffer))
 
 ## Docs
 
