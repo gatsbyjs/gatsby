@@ -125,8 +125,7 @@ export const pageQuery = graphql`
 portions of pages that are shared across pages like headers and footers.
 
 You can use the `location` prop to render conditionally based on the page
-URL. Alternately, you can use the
-[createPages API](/docs/docs/creating-and-modifying-pages.md).
+URL.
 
 Example:
 
@@ -138,9 +137,9 @@ export default class Template extends React.Component {
   render() {
     if (this.props.location.pathname !== '/') {
       return <Navigation>{this.props.children()}</Navigation>;
+    } else {  
+      return this.props.children();
     }
-  
-    return this.props.children();
   }
 }
 ```
