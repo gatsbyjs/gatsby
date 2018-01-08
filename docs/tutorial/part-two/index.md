@@ -307,11 +307,9 @@ Typography.js has more than 30 themes!
 
 ## Component CSS
 
-Gatsby has a wealth of options available for styling components. Let's explore
-the most popular method: CSS modules.
-
-Note: CSS-in-JS is another viable method for styling components which solves many of the problems with
-traditional CSS. We don't have room to focus on it in this tutorial, so we'll point you to the following resources for backgroung reading on CSS-in-JS:
+Gatsby has a wealth of options available for styling components. For the sake of efficiency, let's explore
+the most popular method: CSS modules. To learn two alternative ways to use CSS with Gatsby, click here to read the guides about [Glamor](/docs/glamor.md) and [Styled Components](/docs/styled-components.md). These styling options use CSS-in-JS, which solves many of the problems with
+traditional CSS. We'll also point you to the following resources for background reading on CSS-in-JS:
 
 [Christopher "vjeux" Chedeau's 2014 presentation that sparked this movement](https://speakerdeck.com/vjeux/react-css-in-js)
 as well as
