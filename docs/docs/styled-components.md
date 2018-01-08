@@ -2,18 +2,18 @@
 title: Styled Components
 ---
 
-[Styled Components](https://www.styled-components.com/) is an example of using CSS-in-JS.
+[Styled Components](https://www.styled-components.com/) is an example of using CSS-in-JS. It might be useful for you to explore [CSS Modules](/tutorial/part-two/) and [Glamor](/glamor.md) to see how Styled Components compares as a styling method.
 
 Styled Components lets you use actual CSS syntax inside your components.
 
-First, like normal, we'll install the Gatsby plugin for Styled Components.
+First, we'll install the Gatsby plugin for Styled Components.
 
 ```sh
 npm install --save gatsby-plugin-styled-components styled-components
 ```
 
-Then modify the `gatsby-config.js`. Before we can use Styled Components however,
-we'll need to remove the Glamor plugin and delete the Glamor component page we
+Then modify the `gatsby-config.js`. If you've previously used the Glamor plugin in this site,
+you'll need to remove the Glamor plugin and delete the Glamor component page we
 created. The two plugins conflict with each other as both want to take control
 during server rendering.
 
