@@ -3,12 +3,12 @@ title: Glamor
 ---
 
 Let's create a page using
-[Glamor](https://github.com/threepointone/glamor).
+[Glamor](https://github.com/threepointone/glamor). It might be useful for you to explore CSS Modules and even Styled Components in Part Two fo the tutorials to see how Glamor compares as a styling method.
 
 Glamor lets you write _real_ CSS inline in your components using the same Object
 CSS syntax React supports for the `style` prop.
 
-First install the Gatsby plugin for Glamor.
+First, install the Gatsby plugin for Glamor.
 
 ```shell
 npm install --save gatsby-plugin-glamor
@@ -47,7 +47,7 @@ export default () => (
 );
 ```
 
-Let's add the same inline `User` component but this time using Glamor's `css`
+Let's add the same inline `User` component that you would use for CSS Modules, but this time using Glamor's `css`
 prop.
 
 ```jsx{5-27,33-40}
@@ -96,6 +96,6 @@ export default () =>
   </Container>
 ```
 
-The final Glamor page should look identical to the CSS Modules page.
+If you are using Glamor in Part Two of the tutorials, the final Glamor page should look identical to the CSS Modules page.
 
 ![glamor-example](glamor-example.png)
