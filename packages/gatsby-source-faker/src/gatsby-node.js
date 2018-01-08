@@ -1,5 +1,5 @@
-const faker = require("faker")
-const crypto = require("crypto")
+const faker = require(`faker`)
+const crypto = require(`crypto`)
 
 exports.sourceNodes = ({ boundActionCreators }, pluginOptions) => {
   const { createNode } = boundActionCreators
