@@ -21,8 +21,10 @@
     Customizing html.js: /docs/custom-html/
     Debugging HTML Builds: /docs/debugging-html-builds/
     Environment Variables: /docs/environment-variables/
+    Glamor: /docs/glamor/
     Path Prefix: /docs/path-prefix/
     Proxying API Requests: /docs/api-proxy/
+    Styled Components: /docs/styled-components/
 - title: Reference
   links:
     Node Interface: /docs/node-interface/
