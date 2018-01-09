@@ -4,6 +4,7 @@ import Helmet from "react-helmet"
 import Navigation from "../components/navigation"
 import MobileNavigation from "../components/navigation-mobile"
 import SidebarBody from "../components/sidebar-body"
+import SearchBar from "../components/searchbar-body"
 import tutorialSidebar from "../pages/docs/tutorial-links.yml"
 import docsSidebar from "../pages/docs/doc-links.yaml"
 import featuresSidebar from "../pages/docs/features-links.yaml"
@@ -29,8 +30,14 @@ class DefaultLayout extends React.Component {
       this.props.location.pathname.slice(0, 6) === `/docs/` ||
       this.props.location.pathname.slice(0, 10) === `/packages/` ||
       this.props.location.pathname.slice(0, 10) === `/tutorial/` ||
+<<<<<<< HEAD
       this.props.location.pathname.slice(0, 9) === `/features`
     const isSearchSource = hasSidebar
+=======
+      this.props.location.pathname.slice(0, 9) === `/features` ||
+      this.props.location.pathname.slice(0, 8) === `/plugins`
+
+>>>>>>> Add plugins.js and searchbar-body.js for searching and displaying gatsby plugins
     const sidebarStyles = {
       borderRight: `1px solid ${colors.ui.light}`,
       backgroundColor: colors.ui.whisper,
@@ -67,6 +74,40 @@ class DefaultLayout extends React.Component {
       },
     }
 
+    const searchbarStyles = {
+      borderRight: `1px solid ${colors.b[0]}`,
+      backgroundColor: presets.sidebar,
+      boxShadow: `inset 0 4px 5px 0 rgba(116, 76, 158, ${
+        presets.shadowKeyPenumbraOpacity
+      }), inset 0 1px 10px 0 rgba(${presets.shadowColor}, ${
+        presets.shadowAmbientShadowOpacity
+      }), inset 0 2px 4px -1px rgba(${presets.shadowColor}, ${
+        presets.shadowKeyUmbraOpacity
+      })`,
+      width: rhythm(17),
+      padding: rhythm(1),
+      display: `none`,
+      position: `fixed`,
+      top: `calc(${presets.headerHeight} - 1px)`,
+      zIndex: 1,
+      height: `calc(100vh - ${presets.headerHeight} + 1px)`,
+      WebkitOverflowScrolling: `touch`,
+      "::-webkit-scrollbar": {
+        width: `6px`,
+        height: `6px`,
+      },
+      "::-webkit-scrollbar-thumb": {
+        background: presets.lightPurple,
+      },
+      "::-webkit-scrollbar-track": {
+        background: presets.brandLighter,
+      },
+      [presets.Desktop]: {
+        width: rhythm(17),
+        padding: rhythm(1),
+      },
+    }
+
     return (
       <div>
         <Helmet defaultTitle={`GatsbyJS`} titleTemplate={`%s | GatsbyJS`}>
@@ -93,8 +134,7 @@ class DefaultLayout extends React.Component {
               ...sidebarStyles,
               [presets.Tablet]: {
                 display:
-                  this.props.location.pathname.slice(0, 6) === `/docs/` ||
-                  this.props.location.pathname.slice(0, 10) === `/packages/`
+                  this.props.location.pathname.slice(0, 6) === `/docs/`
                     ? `block`
                     : `none`,
               },
@@ -102,6 +142,23 @@ class DefaultLayout extends React.Component {
           >
             <SidebarBody yaml={docsSidebar} />
           </div>
+
+          {/* This is for the searchbar template */}
+          <div
+            css={{
+              ...searchbarStyles,
+              [presets.Tablet]: {
+                display:
+                  this.props.location.pathname.slice(0, 8) === `/plugins` ||
+                  this.props.location.pathname.slice(0, 10) === `/packages/`
+                    ? `block`
+                    : `none`,
+              },
+            }}
+          >
+            <SearchBar />
+          </div>
+
           {/* TODO Move this under docs/tutorial/index.js once Gatsby supports multiple levels
                of layouts */}
           <div
@@ -130,16 +187,43 @@ class DefaultLayout extends React.Component {
           >
             <SidebarBody yaml={featuresSidebar} />
           </div>
+
           <div
             css={{
               [presets.Tablet]: {
                 paddingLeft: hasSidebar ? rhythm(10) : 0,
+                display:
+                  this.props.location.pathname.slice(0, 9) !== `/packages` &&
+                  this.props.location.pathname.slice(0, 8) !== `/plugins`
+
+                   ? `block`
+                   : `none`,
               },
               [presets.Desktop]: {
                 paddingLeft: hasSidebar ? rhythm(12) : 0,
               },
             }}
             className={isSearchSource && `docSearch-content`}
+          >
+            {this.props.children()}
+          </div>
+
+          {/* This div displays the contents of any plugin page*/}
+
+          <div
+            css={{
+              [presets.Tablet]: {
+                paddingLeft: hasSidebar ? rhythm(18) : 0,
+                display:
+                  this.props.location.pathname.slice(0, 9) === `/packages` ||
+                  this.props.location.pathname.slice(0, 8) === `/plugins`
+                   ? `block`
+                   : `none`,
+              },
+              [presets.Desktop]: {
+                paddingLeft: hasSidebar ? rhythm(18) : 0,
+              },
+            }}
           >
             {this.props.children()}
           </div>
