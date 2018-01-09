@@ -203,7 +203,7 @@ class DefaultLayout extends React.Component {
           </div>
 
           {/* This div displays the contents of any plugin page*/}
-
+          
           <div
             css={{
               [presets.Tablet]: {
