@@ -288,3 +288,24 @@ Community:
   * Colorful homepage, and also includes a Landing Page and Generic Page components.
   * Many elements are available, including buttons, forms, tables, and pagination.
   * Styling with SCSS
+
+* [gatsby-firebase-authentication](https://github.com/rwieruch/gatsby-firebase-authentication) [(demo)](https://react-firebase-authentication.wieruch.com/)
+
+  Features:
+
+  * Sign In, Sign Up, Sign Out
+  * Password Forget
+  * Password Change
+  * Protected Routes with Authorization
+  * Realtime Database with Users
+
+* [gatsby-starter-ceevee](https://github.com/amandeepmittal/gatsby-starter-ceevee) [(demo)](http://gatsby-starter-ceevee.surge.sh/)
+
+Features:
+
+* Based on the Ceevee site template, design by [Styleshout](https://www.styeshout.com/)
+* Single Page Resume/Portfolio site
+* Target audience Developers, Designers, etc.
+* Used CSS Modules, easy to manipulate
+* FontAwsome Library for icons
+* Responsive Design, optimized for Mobile devices

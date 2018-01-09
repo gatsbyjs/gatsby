@@ -1,11 +1,9 @@
 # Gatsby example websites
 
-Example websites site on one or the other end of the spectrum from very simple
+Example websites sit on one or the other end of the spectrum from very basic
 to complex/complete.
 
-Simple websites are to demonstrate a specific technology/plugin/technique to
-help understanding how to accomplish a simple task. They should be named
-`using-*` e.g. `using-sass`.
+A basic example websites is should be used to demonstrate a specific technology/plugin/technique to help other developers understand how to accomplish task. They should be named `using-*` e.g. `using-sass`.
 
 Complex/complete websites are for studying how to build more complex websites.
 

@@ -3,7 +3,7 @@
 import type { Connection, ConnectionArguments } from "./connectiontypes"
 
 /**
- * A simple function that accepts an array and connection arguments, and returns
+ * A function that accepts an array and connection arguments, and returns
  * a connection object for use in GraphQL. It uses array offsets as pagination,
  * so pagination will only work if the array is static.
  */

@@ -1,6 +1,7 @@
 import React, { createElement } from "react"
 import pageFinderFactory from "./find-page"
 import emitter from "./emitter"
+import stripPrefix from "./strip-prefix"
 let findPage
 
 let syncRequires = {}
@@ -14,6 +15,7 @@ let pages = []
 // we load all resources for likely-to-be-visited paths.
 let pathArray = []
 let pathCount = {}
+let pathPrefix = ``
 let resourcesArray = []
 let resourcesCount = {}
 const preferDefault = m => (m && m.default) || m
@@ -153,12 +155,15 @@ const queue = {
     resourcesCount = {}
     resourcesArray = []
     pages = []
+    pathPrefix = ``
   },
   addPagesArray: newPages => {
     pages = newPages
-    let pathPrefix = ``
-    if (typeof __PREFIX_PATHS__ !== `undefined`) {
-      pathPrefix = __PATH_PREFIX__
+    if (
+      typeof __PREFIX_PATHS__ !== `undefined` &&
+      typeof __PATH_PREFIX__ !== `undefined`
+    ) {
+      if (__PREFIX_PATHS__ === true) pathPrefix = __PATH_PREFIX__
     }
     findPage = pageFinderFactory(newPages, pathPrefix)
   },
@@ -168,9 +173,10 @@ const queue = {
   addProdRequires: prodRequires => {
     asyncRequires = prodRequires
   },
-  dequeue: path => pathArray.pop(),
-  enqueue: path => {
+  dequeue: () => pathArray.pop(),
+  enqueue: rawPath => {
     // Check page exists.
+    const path = stripPrefix(rawPath, pathPrefix)
     if (!pages.some(p => p.path === path)) {
       return false
     }

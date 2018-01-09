@@ -112,25 +112,23 @@ trailing slashes.
 
 To do this, in your site's `gatsby-node.js` add code similar to the following:
 
+_Note: There's also a plugin that will remove all trailing slashes from pages automatically:
+[gatsby-plugin-remove-trailing-slashes](/packages/gatsby-plugin-remove-trailing-slashes/)_.
+
 ```javascript
 // Implement the Gatsby API “onCreatePage”. This is
 // called after every page is created.
 exports.onCreatePage = ({ page, boundActionCreators }) => {
   const { createPage, deletePage } = boundActionCreators;
-
-  return new Promise((resolve, reject) => {
-    // Remove trailing slash
-    const newPage = Object.assign({}, page, {
-      path: page.path === `/` ? page.path : page.path.replace(/\/$/, ``),
-    });
-
-    if (newPage.path !== page.path) {
-      // Remove the old page
-      deletePage(page);
-      // Add the new page
-      createPage(newPage);
+  return new Promise(resolve => {
+    const oldPage = Object.assign({}, page);
+    // Remove trailing slash unless page is /
+    page.path = _path => (_path === `/` ? _path : _path.replace(/\/$/, ``));
+    if (page.path !== oldPage.path) {
+      // Replace new page with old page
+      deletePage(oldPage);
+      createPage(page);
     }
-
     resolve();
   });
 };
@@ -139,9 +137,12 @@ exports.onCreatePage = ({ page, boundActionCreators }) => {
 ### Creating client-only routes
 
 If you're creating a "hybrid" Gatsby app with both statically rendered pages as
-well as client-only routes e.g. an app that combines marketing pages and your
-app that lives under `/app/*`, you want to add code to your `gatsby-node.js`
+well as client-only routes (e.g. an app that combines marketing pages and your
+app that lives under `/app/*`), you want to add code to your `gatsby-node.js`
 like the following:
+
+_Note: There's also a plugin that will set up the creation of client-paths declaratively:
+[gatsby-plugin-create-client-paths](/packages/gatsby-plugin-create-client-paths/)_.
 
 ```javascript
 // Implement the Gatsby API “onCreatePage”. This is
