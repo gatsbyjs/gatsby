@@ -144,13 +144,22 @@ class DefaultLayout extends React.Component {
               ...searchbarStyles,
               [presets.Tablet]: {
                 display:
+<<<<<<< HEAD
                   this.props.location.pathname.slice(0, 9) === `/packages`
+=======
+                  this.props.location.pathname.slice(0, 8) === `/plugins` ||
+                  this.props.location.pathname.slice(0, 10) === `/packages/`
+>>>>>>> Add plugins.js and searchbar-body.js for searching and displaying gatsby plugins
                     ? `block`
                     : `none`,
               },
             }}
           >
+<<<<<<< HEAD
             <SearchBar history={this.props.history} />
+=======
+            <SearchBar />
+>>>>>>> Add plugins.js and searchbar-body.js for searching and displaying gatsby plugins
           </div>
 
           {/* TODO Move this under docs/tutorial/index.js once Gatsby supports multiple levels
@@ -188,7 +197,12 @@ class DefaultLayout extends React.Component {
 <<<<<<< HEAD
                 paddingLeft: hasSidebar ? rhythm(10) : 0,
                 display:
+<<<<<<< HEAD
                   this.props.location.pathname.slice(0, 9) !== `/packages`
+=======
+                  this.props.location.pathname.slice(0, 9) !== `/packages` &&
+                  this.props.location.pathname.slice(0, 8) !== `/plugins`
+>>>>>>> Add plugins.js and searchbar-body.js for searching and displaying gatsby plugins
 
                    ? `block`
                    : `none`,
@@ -209,6 +223,7 @@ class DefaultLayout extends React.Component {
               [presets.Tablet]: {
                 paddingLeft: hasSidebar ? rhythm(18) : 0,
                 display:
+<<<<<<< HEAD
                   this.props.location.pathname.slice(0, 9) === `/packages`
                    ? `block`
                    : `none`,
@@ -218,6 +233,15 @@ class DefaultLayout extends React.Component {
               },
               [presets.Desktop]: {
                 paddingLeft: leftPadding(12),
+=======
+                  this.props.location.pathname.slice(0, 9) === `/packages` ||
+                  this.props.location.pathname.slice(0, 8) === `/plugins`
+                   ? `block`
+                   : `none`,
+              },
+              [presets.Desktop]: {
+                paddingLeft: hasSidebar ? rhythm(18) : 0,
+>>>>>>> Add plugins.js and searchbar-body.js for searching and displaying gatsby plugins
               },
             }}
           >
