@@ -3,7 +3,7 @@
 import { print, visit, GraphQLError, getLocation } from "graphql"
 import babelCodeFrame from "babel-code-frame"
 import _ from "lodash"
-import report from "../../reporter"
+import report from "gatsby-cli/lib/reporter"
 
 type RelayGraphQLError = Error & { validationErrors?: Object }
 
@@ -64,6 +64,11 @@ function extractError(error: Error): { message: string, docName: string } {
     if (matches.index === docRegex.lastIndex) docRegex.lastIndex++
     ;[, message, docName] = matches
   }
+
+  if (!message) {
+    message = error.toString()
+  }
+
   return { message, docName }
 }
 
@@ -175,18 +180,19 @@ export function graphqlError(
     )
   }
 
-  message = `There was an error while compiling your site's GraphQL queries.
-  ${message}
+  let reportedMessage = `There was an error while compiling your site's GraphQL queries.
+  ${message || error.message}
     `
+
   if (error.message.match(/must be an instance of/)) {
-    message +=
+    reportedMessage +=
       `This usually means that more than one instance of 'graphql' is installed ` +
       `in your node_modules. Remove all but the top level one or run \`npm dedupe\` to fix it.`
   }
 
   if (error.message.match(/Duplicate document/)) {
-    message += `${error.message.slice(21)}\n`
+    reportedMessage += `${error.message.slice(21)}\n`
   }
 
-  return message
+  return reportedMessage
 }

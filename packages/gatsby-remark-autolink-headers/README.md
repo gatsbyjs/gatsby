@@ -1,6 +1,6 @@
 # gatsby-remark-autolink-headers
 
-Adds Github-style links to `MarkdownRemark` headers.
+Adds GitHub-style links to `MarkdownRemark` headers.
 
 ## Install
 
@@ -14,10 +14,8 @@ plugins: [
   {
     resolve: `gatsby-transformer-remark`,
     options: {
-      plugins: [
-        `gatsby-remark-autolink-headers`,
-      ]
-    }
-  }
-]
+      plugins: [`gatsby-remark-autolink-headers`],
+    },
+  },
+];
 ```

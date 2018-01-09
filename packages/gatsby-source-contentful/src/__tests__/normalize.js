@@ -11,7 +11,14 @@ let resolvable
 let foreignReferenceMap
 const conflictFieldPrefix = `contentful_test`
 // restrictedNodeFields from here https://www.gatsbyjs.org/docs/node-interface/
-const restrictedNodeFields = [`id`, `children`, `parent`, `fields`, `internal`]
+const restrictedNodeFields = [
+  `id`,
+  `children`,
+  `contentful_id`,
+  `parent`,
+  `fields`,
+  `internal`,
+]
 
 describe(`Process contentful data`, () => {
   it(`builds entry list`, () => {
@@ -50,7 +57,7 @@ describe(`Process contentful data`, () => {
         contentTypeItem,
         restrictedNodeFields,
         conflictFieldPrefix,
-        entries: entryList[i],
+        entries: entryList[i].map(normalize.fixIds),
         createNode,
         resolvable,
         foreignReferenceMap,
@@ -110,6 +117,31 @@ describe(`Gets field value based on current locale`, () => {
       })
     ).toBe(field[`de`])
   })
+  it(`Gets the specified locale if the field is falsey`, () => {
+    const falseyField = {
+      de: 0,
+      "en-US": false,
+    }
+    expect(
+      normalize.getLocalizedField({
+        field: falseyField,
+        defaultLocale: `en-US`,
+        locale: {
+          code: `en-US`,
+        },
+      })
+    ).toBe(falseyField[`en-US`])
+
+    expect(
+      normalize.getLocalizedField({
+        field: falseyField,
+        defaultLocale: `en-US`,
+        locale: {
+          code: `de`,
+        },
+      })
+    ).toBe(falseyField[`de`])
+  })
   it(`falls back to the locale's fallback locale if passed a locale that doesn't have a localized field`, () => {
     expect(
       normalize.getLocalizedField({
@@ -122,7 +154,7 @@ describe(`Gets field value based on current locale`, () => {
       })
     ).toBe(field[`de`])
   })
-  it(`falls back to the default locale if passed a locale that doesn't have a field nor a fallbackCode`, () => {
+  it(`returns null if passed a locale that doesn't have a field nor a fallbackCode`, () => {
     expect(
       normalize.getLocalizedField({
         field,
@@ -132,7 +164,7 @@ describe(`Gets field value based on current locale`, () => {
           fallbackCode: `null`,
         },
       })
-    ).toBe(field[`en-US`])
+    ).toEqual(null)
   })
 })
 

@@ -6,6 +6,7 @@ const {
   GraphQLString,
   GraphQLFloat,
   GraphQLInt,
+  GraphQLID,
   GraphQLList,
   GraphQLEnumType,
   GraphQLNonNull,
@@ -18,7 +19,7 @@ const {
 import type { GraphQLInputType, GraphQLType } from "graphql"
 
 const _ = require(`lodash`)
-const report = require(`../reporter`)
+const report = require(`gatsby-cli/lib/reporter`)
 const createTypeName = require(`./create-type-name`)
 const createKey = require(`./create-key`)
 
@@ -35,22 +36,35 @@ function makeNullable(type: GraphQLInputType): GraphQLNullableInputType<any> {
   return type
 }
 
-function convertToInputType(type: GraphQLType): ?GraphQLInputType {
+function convertToInputType(
+  type: GraphQLType,
+  typeMap: Set
+): ?GraphQLInputType {
+  // track types already processed in current tree, to avoid infinite recursion
+  if (typeMap.has(type)) {
+    return null
+  }
+  const nextTypeMap = new Set(Array.from(typeMap).concat([type]))
+
   if (type instanceof GraphQLScalarType || type instanceof GraphQLEnumType) {
     return type
   } else if (type instanceof GraphQLObjectType) {
+    const fields = _.transform(type.getFields(), (out, fieldConfig, key) => {
+      const type = convertToInputType(fieldConfig.type, nextTypeMap)
+      if (type) out[key] = { type }
+    })
+    if (Object.keys(fields).length === 0) {
+      return null
+    }
     return new GraphQLInputObjectType({
       name: createTypeName(`${type.name}InputObject`),
-      fields: _.transform(type.getFields(), (out, fieldConfig, key) => {
-        const type = convertToInputType(fieldConfig.type)
-        if (type) out[key] = { type }
-      }),
+      fields,
     })
   } else if (type instanceof GraphQLList) {
-    let innerType = convertToInputType(type.ofType)
+    let innerType = convertToInputType(type.ofType, nextTypeMap)
     return innerType ? new GraphQLList(makeNullable(innerType)) : null
   } else if (type instanceof GraphQLNonNull) {
-    let innerType = convertToInputType(type.ofType)
+    let innerType = convertToInputType(type.ofType, nextTypeMap)
     return innerType ? new GraphQLNonNull(makeNullable(innerType)) : null
   } else {
     let message = type ? `for type: ${type.name}` : ``
@@ -75,6 +89,10 @@ const scalarFilterMap = {
   Float: {
     eq: { type: GraphQLFloat },
     ne: { type: GraphQLFloat },
+  },
+  ID: {
+    eq: { type: GraphQLID },
+    ne: { type: GraphQLID },
   },
   String: {
     eq: { type: GraphQLString },
@@ -160,7 +178,7 @@ export function inferInputObjectStructureFromFields({
   const sort = []
 
   _.each(fields, (fieldConfig, key) => {
-    const inputType = convertToInputType(fieldConfig.type)
+    const inputType = convertToInputType(fieldConfig.type, new Set())
     const inputFilter =
       inputType && convertToInputFilter(_.upperFirst(key), inputType)
 

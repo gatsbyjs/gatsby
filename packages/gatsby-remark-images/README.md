@@ -4,14 +4,14 @@ Processes images in markdown so they can be used in the production build.
 
 In the processing, it make images responsive by:
 
-* Adding an elastic container to hold the size of the image while it
-  loads to avoid layout jumps.
+* Adding an elastic container to hold the size of the image while it loads to
+  avoid layout jumps.
 * Generating multiple versions of images at different widths and sets the
   `srcset` and `sizes` of the `img` element so regardless of the width of the
   device, the correct image is downloaded.
-* Useing the "blur up" technique popularized by [Medium][1] and [Facebook][2]
-  where a small 20px wide version of the image is shown as a placeholder
-  until the actual image is downloaded.
+* Using the "blur up" technique popularized by [Medium][1] and [Facebook][2]
+  where a small 20px wide version of the image is shown as a placeholder until
+  the actual image is downloaded.
 
 ## Install
 
@@ -35,13 +35,26 @@ plugins: [
             maxWidth: 590,
             // Remove the default behavior of adding a link to each
             // image.
-            linkImagesToOriginal: false,
+            linkImagesToOriginal: true,
+            // Analyze images' pixel density to make decisions about
+            // target image size. This is what GitHub is doing when
+            // embedding images in tickets. This is a useful setting
+            // for documentation pages with a lot of screenshots.
+            // It can have unintended side effects on high pixel
+            // density artworks.
+            //
+            // Example: A screenshot made on a retina screen with a
+            // resolution of 144 (e.g. Macbook) and a width of 100px,
+            // will be rendered at 50px.
+            //
+            // Defaults to false.
+            sizeByPixelDensity: false,
           },
         },
-      ]
-    }
-  }
-]
+      ],
+    },
+  },
+];
 ```
 
 [1]: https://jmperezperez.com/medium-image-progressive-loading-placeholder/

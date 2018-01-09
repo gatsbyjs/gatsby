@@ -6,7 +6,17 @@ const colorized = require(`./output-color`)
  * @param {any} e
  */
 function httpExceptionHandler(e) {
-  const { status, statusText, data: { message } } = e.response
+  const { response, code } = e
+  if (!response) {
+    console.log(
+      colorized.out(
+        `The request failed with error code "${code}"`,
+        colorized.color.Font.FgRed
+      )
+    )
+    return
+  }
+  const { status, statusText, data: { message } } = response
   console.log(
     colorized.out(
       `The server response was "${status} ${statusText}"`,

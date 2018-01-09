@@ -2,13 +2,14 @@ const fs = require(`fs-extra`)
 const got = require(`got`)
 const crypto = require(`crypto`)
 const path = require(`path`)
+const { isWebUri } = require(`valid-url`)
 
 const { createFileNode } = require(`./create-file-node`)
 const cacheId = url => `create-remote-file-node-${url}`
 
 module.exports = ({ url, store, cache, createNode }) =>
   new Promise(async (resolve, reject) => {
-    if (!url) {
+    if (!url || isWebUri(url) === undefined) {
       resolve()
       return
     }
@@ -83,7 +84,11 @@ module.exports = ({ url, store, cache, createNode }) =>
 
       // Create the file node and return.
       createFileNode(filename, {}).then(fileNode => {
-        createNode(fileNode)
+        // Override the default plugin as gatsby-source-filesystem needs to
+        // be the owner of File nodes or there'll be conflicts if any other
+        // File nodes are created through normal usages of
+        // gatsby-source-filesystem.
+        createNode(fileNode, { name: `gatsby-source-filesystem` })
         resolve(fileNode)
       })
     })

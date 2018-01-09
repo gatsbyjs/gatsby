@@ -15,7 +15,7 @@ const { graphql } = require(`graphql`)
 const { store, emitter } = require(`../redux`)
 const loadPlugins = require(`./load-plugins`)
 const { initCache } = require(`../utils/cache`)
-const report = require(`../reporter`)
+const report = require(`gatsby-cli/lib/reporter`)
 
 // Show stack trace on unhandled promises.
 process.on(`unhandledRejection`, (reason, p) => {
@@ -40,9 +40,17 @@ const {
 
 const preferDefault = m => (m && m.default) || m
 
-module.exports = async (program: any) => {
-  // Fix program directory path for windows env.
-  program.directory = slash(program.directory)
+type BootstrapArgs = {
+  directory: string,
+  prefixPaths?: boolean,
+}
+
+module.exports = async (args: BootstrapArgs) => {
+  const program = {
+    ...args,
+    // Fix program directory path for windows env.
+    directory: slash(args.directory),
+  }
 
   store.dispatch({
     type: `SET_PROGRAM`,
@@ -53,7 +61,12 @@ module.exports = async (program: any) => {
   // pages from previous builds to stick around.
   let activity = report.activityTimer(`delete html files from previous builds`)
   activity.start()
-  await del([`public/*.html`, `public/**/*.html`])
+  await del([
+    `public/*.html`,
+    `public/**/*.html`,
+    `!public/static`,
+    `!public/static/**/*.html`,
+  ])
   activity.end()
 
   // Try opening the site's gatsby-config.js file.
@@ -156,6 +169,11 @@ module.exports = async (program: any) => {
     })
     await fs.ensureDirSync(`${program.directory}/.cache/json`)
     await fs.ensureDirSync(`${program.directory}/.cache/layouts`)
+
+    // Ensure .cache/fragments exists and is empty. We want fragments to be
+    // added on every run in response to data as fragments can only be added if
+    // the data used to create the schema they're dependent on is available.
+    await fs.emptyDir(`${program.directory}/.cache/fragments`)
   } catch (err) {
     report.panic(`Unable to copy site files to .cache`, err)
   }
@@ -307,6 +325,18 @@ module.exports = async (program: any) => {
     waitForCascadingActions: true,
   })
   activity.end()
+
+  activity = report.activityTimer(`onPreExtractQueries`)
+  activity.start()
+  await apiRunnerNode(`onPreExtractQueries`)
+  activity.end()
+
+  // Update Schema for SitePage.
+  activity = report.activityTimer(`update schema`)
+  activity.start()
+  await require(`../schema`)()
+  activity.end()
+
   // Extract queries
   activity = report.activityTimer(`extract queries from components`)
   activity.start()
@@ -336,19 +366,20 @@ module.exports = async (program: any) => {
   await writeRedirects()
   activity.end()
 
-  // Update Schema for SitePage.
-  activity = report.activityTimer(`update schema`)
-  activity.start()
-  await require(`../schema`)()
-  activity.end()
-
   const checkJobsDone = _.debounce(resolve => {
     const state = store.getState()
     if (state.jobs.active.length === 0) {
       report.log(``)
       report.info(`bootstrap finished - ${process.uptime()} s`)
       report.log(``)
-      resolve({ graphqlRunner })
+
+      // onPostBootstrap
+      activity = report.activityTimer(`onPostBootstrap`)
+      activity.start()
+      apiRunnerNode(`onPostBootstrap`).then(() => {
+        activity.end()
+        resolve({ graphqlRunner })
+      })
     }
   }, 100)
 

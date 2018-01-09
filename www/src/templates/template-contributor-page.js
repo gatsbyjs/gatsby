@@ -1,4 +1,5 @@
 import React from "react"
+import Img from "gatsby-image"
 
 import Container from "../components/container"
 import BlogPostPreviewItem from "../components/blog-post-preview-item"
@@ -18,11 +19,8 @@ class ContributorPageTemplate extends React.Component {
           }}
         >
           <div>
-            <img
-              src={contributor.avatar.childImageSharp.responsiveResolution.src}
-              srcSet={
-                contributor.avatar.childImageSharp.responsiveResolution.srcSet
-              }
+            <Img
+              resolutions={contributor.avatar.childImageSharp.resolutions}
               css={{
                 height: rhythm(2.3),
                 width: rhythm(2.3),
@@ -87,9 +85,13 @@ export const pageQuery = graphql`
       twitter
       avatar {
         childImageSharp {
-          responsiveResolution(width: 63, height: 63, quality: 75) {
-            src
-            srcSet
+          resolutions(
+            width: 63
+            height: 63
+            quality: 75
+            traceSVG: { turdSize: 10, background: "#f6f2f8", color: "#e0d6eb" }
+          ) {
+            ...GatsbyImageSharpResolutions_tracedSVG
           }
         }
       }

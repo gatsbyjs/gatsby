@@ -5,7 +5,8 @@ Creates `ImageSharp` nodes from image types that are supported by the
 fields in their GraphQL types for processing your images in a variety of ways
 including resizing, cropping, and creating responsive images.
 
-[Live demo](https://image-processing.gatsbyjs.org/) ([source](https://github.com/gatsbyjs/gatsby/tree/master/examples/image-processing))
+[Live demo](https://image-processing.gatsbyjs.org/)
+([source](https://github.com/gatsbyjs/gatsby/tree/master/examples/image-processing))
 
 ## Install
 
@@ -15,9 +16,7 @@ including resizing, cropping, and creating responsive images.
 
 ```javascript
 // In your gatsby-config.js
-plugins: [
-  `gatsby-transformer-sharp`,
-]
+plugins: [`gatsby-transformer-sharp`];
 ```
 
 ## Parsing algorithm
@@ -30,6 +29,5 @@ It recognizes files with the following extensions as images.
 * webp
 * tif
 * tiff
-* svg
 
 Each image file is parsed into a node of type `ImageSharp`.

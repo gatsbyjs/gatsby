@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 import PostIcons from "../components/PostIcons"
+import Img from "gatsby-image"
 
 import { rhythm } from "../utils/typography"
 
@@ -21,14 +22,12 @@ class PostTemplate extends Component {
                 <div key={`${i} image-gallery`}>
                   <h2>ACF Image Gallery</h2>
                   {layout.pictures.map(({ picture }) => {
-                    const img =
-                      picture.localFile.childImageSharp.responsiveSizes
+                    const img = picture.localFile.childImageSharp.sizes
                     return (
-                      <img
+                      <Img
+                        css={{ marginBottom: rhythm(1) }}
                         key={img.src}
-                        src={img.src}
-                        srcSet={img.srcSet}
-                        sizes={img.sizes}
+                        sizes={img}
                       />
                     )
                   })}
@@ -36,11 +35,15 @@ class PostTemplate extends Component {
               )
             }
             if (layout.__typename === `WordPressAcf_post_photo`) {
-              const img = layout.photo.localFile.childImageSharp.responsiveSizes
+              const img = layout.photo.localFile.childImageSharp.sizes
               return (
                 <div key={`${i}-photo`}>
                   <h2>ACF Post Photo</h2>
-                  <img src={img.src} srcSet={img.srcSet} sizes={img.sizes} />
+                  <Img
+                    css={{ marginBottom: rhythm(1) }}
+                    src={img.src}
+                    sizes={img}
+                  />
                 </div>
               )
             }
@@ -72,10 +75,8 @@ export const pageQuery = graphql`
             photo {
               localFile {
                 childImageSharp {
-                  responsiveSizes(maxWidth: 680) {
-                    src
-                    srcSet
-                    sizes
+                  sizes(maxWidth: 680) {
+                    ...GatsbyImageSharpSizes
                   }
                 }
               }
@@ -86,10 +87,8 @@ export const pageQuery = graphql`
               picture {
                 localFile {
                   childImageSharp {
-                    responsiveSizes(maxWidth: 680) {
-                      src
-                      srcSet
-                      sizes
+                    sizes(maxWidth: 680) {
+                      ...GatsbyImageSharpSizes
                     }
                   }
                 }

@@ -48,19 +48,6 @@ module.exports = async function onCreateNode({
     },
   }
 
-  // Add _PARENT to sub-object in the frontmatter so we can
-  // use this to find the root markdown node when running GraphQL
-  // queries. Yes this is lame. But it's because in GraphQL child nodes
-  // can't access their parent nodes so we use this _PARENT convention
-  // to get around this.
-  _.each(data.data, (v, k) => {
-    if (_.isArray(v) && _.isObject(v[0])) {
-      data.data[k] = v.map(o => {
-        return { ...o, _PARENT: node.id }
-      })
-    }
-  })
-
   markdownNode.frontmatter = {
     title: ``, // always include a title
     ...data.data,

@@ -1,8 +1,9 @@
 # gatsby-remark-responsive-iframe
 
-Wraps iframes (e.g. embedded YouTube videos) in markdown files in a
-responsive elastic container so the iframes always span 100% of
-the width of their container.
+Wraps iframes or objects (e.g. embedded YouTube videos) within markdown files in
+a responsive elastic container with a fixed aspect ratio. This ensures that the
+iframe or object will scale proportionally and to the full width of its
+container.
 
 ## Install
 
@@ -16,17 +17,20 @@ plugins: [
   {
     resolve: `gatsby-transformer-remark`,
     options: {
-      plugins: [
-        `gatsby-remark-responsive-iframe`,
-      ]
-    }
-  }
-]
+      plugins: [`gatsby-remark-responsive-iframe`],
+    },
+  },
+];
 ```
 
 ### Usage in Markdown
 
-This plugin requires a `width` and `height` attribute on the iframe for setting the aspect ratio. Example usage: 
+This plugin requires both `width` and `height` attributes to be set on the
+iframe or object tag so that the correct aspect ratio can be calculated. Both
+unitless and pixel values are supported. If any other value is detected (for
+example a percentage width), the wrapper will not be applied.
+
+Example usage:
 
     This is a beautiful iframe:
 

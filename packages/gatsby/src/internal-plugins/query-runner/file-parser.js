@@ -6,7 +6,7 @@ const crypto = require(`crypto`)
 import traverse from "babel-traverse"
 const babylon = require(`babylon`)
 
-const report = require(`../../reporter`)
+const report = require(`gatsby-cli/lib/reporter`)
 const { getGraphQLTag } = require(`../../utils/babel-plugin-extract-graphql`)
 
 import type { DocumentNode, DefinitionNode } from "graphql"
@@ -70,8 +70,7 @@ async function parseToAst(filePath, fileStr) {
         `There was a problem parsing "${filePath}"; any GraphQL ` +
           `fragments or queries in this file were not processed. \n` +
           `This may indicate a syntax error in the code, or it may be a file type ` +
-          `That Gatsby does not know how to parse.`,
-        error
+          `That Gatsby does not know how to parse.`
       )
     }
   }
@@ -117,8 +116,13 @@ const cache = {}
 
 export default class FileParser {
   async parseFile(file: string): Promise<?DocumentNode> {
-    // TODO figure out why fs-extra isn't returning a promise
-    const text = fs.readFileSync(file, `utf8`)
+    let text
+    try {
+      text = await fs.readFile(file, `utf8`)
+    } catch (err) {
+      report.error(`There was a problem reading the file: ${file}`, err)
+      return null
+    }
 
     if (text.indexOf(`graphql`) === -1) return null
     const hash = crypto

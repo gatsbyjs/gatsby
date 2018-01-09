@@ -1,18 +1,17 @@
 # gatsby-plugin-manifest
 
-Adds support for shipping a manifest.json with your site. The web
-application manifest is a simple JSON file that lets users (on Android
-Chrome — [support in MS Edge & Firefox is under
-development](http://caniuse.com/#feat=web-app-manifest)) save your web
-application to their smartphone home screen so it behaves similar to
-native apps.
+Adds support for shipping a manifest.json with your site. The web application
+manifest is a JSON file that lets users (on Android Chrome —
+[support in MS Edge & Firefox is under development](http://caniuse.com/#feat=web-app-manifest))
+save your web application to their smartphone home screen so it behaves similar
+to native apps.
 
 This article from the Chrome DevRel team is a good intro to the web app
 manifest—https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
 
-If you're using this plugin together with `gatsby-plugin-offline`
-(recommended), this plugin should be listed *before* the offline plugin
-so that it can cache the created manifest.json.
+If you're using this plugin together with `gatsby-plugin-offline` (recommended),
+this plugin should be listed _before_ the offline plugin so that it can cache
+the created manifest.json.
 
 ## Install
 
@@ -50,6 +49,7 @@ plugins: [
       ],
     },
   },
-]
+];
 ```
+
 To create `manifest.json`, you need to run `gatsby build`.

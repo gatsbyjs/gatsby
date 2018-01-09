@@ -1,17 +1,17 @@
 # gatsby-source-drupal
 
-Source plugin for pulling data into Gatsby from Drupal sites.
+Source plugin for pulling data (including images) into Gatsby from Drupal sites.
 
-Pulls data from Drupal sites with the [Drupal JSONAPI
-module](https://www.drupal.org/project/jsonapi) installed.
+Pulls data from Drupal 8 sites with the
+[Drupal JSONAPI module](https://www.drupal.org/project/jsonapi) installed.
 
-An example site for using this plugin is at
+An example site built with the headless Drupal distro
+[ContentaCMS](https://twitter.com/contentacms) is at
 https://using-drupal.gatsbyjs.org/
 
-## Status
-
-This module is at prototype-level. It currently only pulls from Drupal article
-nodes and users. TODOs include making it work with all node types.
+`apiBase` Option allows changing the API entry point depending on the version of
+jsonapi used by your Drupal instance. The default value is `jsonapi`, which has
+been used since jsonapi version `8.x-1.0-alpha4`.
 
 ## Install
 
@@ -25,10 +25,11 @@ plugins: [
   {
     resolve: `gatsby-source-drupal`,
     options: {
-      baseUrl: `http://dev-gatsbyjs-d8.pantheonsite.io`,
+      baseUrl: `https://live-contentacms.pantheonsite.io/`,
+      apiBase: `api`, // optional, defaults to `jsonapi`
     },
   },
-]
+];
 ```
 
 ## How to query
@@ -37,19 +38,14 @@ You can query nodes created from Drupal like the following:
 
 ```graphql
 {
-  allDrupalNodeArticle {
+  allArticle {
     edges {
       node {
         title
-        nid
+        internalId
         created(formatString: "DD-MMM-YYYY")
-        author {
-          name
-        }
       }
     }
   }
 }
 ```
-
-

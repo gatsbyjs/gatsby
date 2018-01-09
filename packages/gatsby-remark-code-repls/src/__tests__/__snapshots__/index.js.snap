@@ -1,0 +1,925 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`gatsby-remark-code-repls Babel remark transform generates a link for files in nested directories 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "<a href=\\"https://babeljs.io/repl/#?presets=react&code_lz=MYewdgzgLgBAZiEMC8MBEAjAhgJzQbiA\\" >REPL</a>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 35,
+          "line": 1,
+          "offset": 34,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 35,
+      "line": 1,
+      "offset": 34,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls Babel remark transform generates a link for the specified example file 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "<a href=\\"https://babeljs.io/repl/#?presets=react&code_lz=MYewdgzgLgBAZiEMC8MBEAjAhgJzQbiA\\" >REPL</a>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 20,
+          "line": 1,
+          "offset": 19,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 20,
+      "line": 1,
+      "offset": 19,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls Babel remark transform generates a link with the specified default text 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "<a href=\\"https://babeljs.io/repl/#?presets=react&code_lz=MYewdgzgLgBAZiEMC8MBEAjAhgJzQbiA\\" >Click me</a>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 20,
+          "line": 1,
+          "offset": 19,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 20,
+      "line": 1,
+      "offset": 19,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls Babel remark transform generates a link with the specified inline text even if default text is specified 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "<a href=\\"https://babeljs.io/repl/#?presets=react&code_lz=MYewdgzgLgBAZiEMC8MBEAjAhgJzQbiA\\" >Custom link text</a>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 36,
+          "line": 1,
+          "offset": 35,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 36,
+      "line": 1,
+      "offset": 35,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls Babel remark transform generates a link with the specified target 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "<a href=\\"https://babeljs.io/repl/#?presets=react&code_lz=MYewdgzgLgBAZiEMC8MBEAjAhgJzQbiA\\" target=\\"_blank\\" rel=\\"noreferrer\\">REPL</a>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 20,
+          "line": 1,
+          "offset": 19,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 20,
+      "line": 1,
+      "offset": 19,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls CodeSandbox remark transform generates a link for files in nested directories 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "<a href=\\"https://codesandbox.io/api/v1/sandboxes/define?parameters=N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTxUC-ggDQgI5NgA9iCZCBqMGTRHIpxaAAjClS6gLzqAOiABGaAE5GA3CH4ixkggAtaAWyjN59RkhAAeFhAAbuoQLLpGZtq0RgB8vgD0AYExNoJAA\\" >REPL</a>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 41,
+          "line": 1,
+          "offset": 40,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 41,
+      "line": 1,
+      "offset": 40,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls CodeSandbox remark transform generates a link for the specified example file 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "<a href=\\"https://codesandbox.io/api/v1/sandboxes/define?parameters=N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTxUC-ggDQgI5NgA9iCZCBqMGTRHIpxaAAjClS6gLzqAOiABGaAE5GA3CH4ixkggAtaAWyjN59RkhAAeFhAAbuoQLLpGZtq0RgB8vgD0AYExNoJAA\\" >REPL</a>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 26,
+          "line": 1,
+          "offset": 25,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 26,
+      "line": 1,
+      "offset": 25,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls CodeSandbox remark transform generates a link with the specified default text 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "<a href=\\"https://codesandbox.io/api/v1/sandboxes/define?parameters=N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTxUC-ggDQgI5NgA9iCZCBqMGTRHIpxaAAjClS6gLzqAOiABGaAE5GA3CH4ixkggAtaAWyjN59RkhAAeFhAAbuoQLLpGZtq0RgB8vgD0AYExNoJAA\\" >Click me</a>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 26,
+          "line": 1,
+          "offset": 25,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 26,
+      "line": 1,
+      "offset": 25,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls CodeSandbox remark transform generates a link with the specified inline text even if default text is specified 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "<a href=\\"https://codesandbox.io/api/v1/sandboxes/define?parameters=N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTxUC-ggDQgI5NgA9iCZCBqMGTRHIpxaAAjClS6gLzqAOiABGaAE5GA3CH4ixkggAtaAWyjN59RkhAAeFhAAbuoQLLpGZtq0RgB8vgD0AYExNoJAA\\" >Custom link text</a>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 42,
+          "line": 1,
+          "offset": 41,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 42,
+      "line": 1,
+      "offset": 41,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls CodeSandbox remark transform generates a link with the specified target 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "<a href=\\"https://codesandbox.io/api/v1/sandboxes/define?parameters=N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTxUC-ggDQgI5NgA9iCZCBqMGTRHIpxaAAjClS6gLzqAOiABGaAE5GA3CH4ixkggAtaAWyjN59RkhAAeFhAAbuoQLLpGZtq0RgB8vgD0AYExNoJAA\\" target=\\"_blank\\" rel=\\"noreferrer\\">REPL</a>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 26,
+          "line": 1,
+          "offset": 25,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 26,
+      "line": 1,
+      "offset": 25,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls CodeSandbox remark transform supports custom dependencies config option for NPM module dependencies 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "<a href=\\"https://codesandbox.io/api/v1/sandboxes/define?parameters=N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTzMBOMTE0QgoaenCYAaEIOEBaFqQC2SEORgAPGSBT9SKBbQCeHBKICMAVgLWQAXyeyI5NluIXqdBiJA1yKQACMFJSIIBeIIAdEAAjNH5YgG5HFzdtAgALWhUoZgD6RnUAHhYIADcgiBYI2INSWliAPhKAenKK5scnIA\\" >REPL</a>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 41,
+          "line": 1,
+          "offset": 40,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 41,
+      "line": 1,
+      "offset": 40,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls CodeSandbox remark transform supports custom html config option for index html 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "<a href=\\"https://codesandbox.io/api/v1/sandboxes/define?parameters=N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTxUC-ggDQgI5NgA9iCZCBqMGTRHIpxaAAjClS6gLzqAOiABGaAE5GA3CH4ixkggAtaAWyjN59RkhAAeOOjk6hAsukZapEYAfL4A9AFo5FE2gkA\\" >REPL</a>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 41,
+          "line": 1,
+          "offset": 40,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 41,
+      "line": 1,
+      "offset": 40,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls Codepen remark transform generates a link for files in nested directories 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "<a href=\\"/redirect-to-codepen/path/to/nested/file.js\\" >REPL</a>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 37,
+          "line": 1,
+          "offset": 36,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 37,
+      "line": 1,
+      "offset": 36,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls Codepen remark transform generates a link for the specified example file 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "<a href=\\"/redirect-to-codepen/file.js\\" >REPL</a>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 22,
+          "line": 1,
+          "offset": 21,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 22,
+      "line": 1,
+      "offset": 21,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls Codepen remark transform generates a link with the specified default text 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "<a href=\\"/redirect-to-codepen/file.js\\" >Click me</a>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 22,
+          "line": 1,
+          "offset": 21,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 22,
+      "line": 1,
+      "offset": 21,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls Codepen remark transform generates a link with the specified inline text even if default text is specified 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "<a href=\\"/redirect-to-codepen/file.js\\" >Custom link text</a>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 38,
+          "line": 1,
+          "offset": 37,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 38,
+      "line": 1,
+      "offset": 37,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls Codepen remark transform generates a link with the specified target 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "<a href=\\"/redirect-to-codepen/file.js\\" target=\\"_blank\\" rel=\\"noreferrer\\">REPL</a>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 22,
+          "line": 1,
+          "offset": 21,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 22,
+      "line": 1,
+      "offset": 21,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls Ramda remark transform generates a link for files in nested directories 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "<a href=\\"http://ramdajs.com/repl/#?const%20foo%20%3D%20%22bar%22%3B\\" >REPL</a>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 35,
+          "line": 1,
+          "offset": 34,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 35,
+      "line": 1,
+      "offset": 34,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls Ramda remark transform generates a link for the specified example file 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "<a href=\\"http://ramdajs.com/repl/#?const%20foo%20%3D%20%22bar%22%3B\\" >REPL</a>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 20,
+          "line": 1,
+          "offset": 19,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 20,
+      "line": 1,
+      "offset": 19,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls Ramda remark transform generates a link with the specified default text 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "<a href=\\"http://ramdajs.com/repl/#?const%20foo%20%3D%20%22bar%22%3B\\" >Click me</a>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 20,
+          "line": 1,
+          "offset": 19,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 20,
+      "line": 1,
+      "offset": 19,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls Ramda remark transform generates a link with the specified inline text even if default text is specified 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "<a href=\\"http://ramdajs.com/repl/#?const%20foo%20%3D%20%22bar%22%3B\\" >Custom link text</a>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 36,
+          "line": 1,
+          "offset": 35,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 36,
+      "line": 1,
+      "offset": 35,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls Ramda remark transform generates a link with the specified target 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "<a href=\\"http://ramdajs.com/repl/#?const%20foo%20%3D%20%22bar%22%3B\\" target=\\"_blank\\" rel=\\"noreferrer\\">REPL</a>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 20,
+          "line": 1,
+          "offset": 19,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 20,
+      "line": 1,
+      "offset": 19,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
