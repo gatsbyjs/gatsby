@@ -7,14 +7,10 @@ import typography from "../utils/typography"
 
 function Search(){
   return (
-    <div className="container" css={{
-      display: `flex`,
-      flexDirection: `column`,
-    }}>
+    <div className="container">
       <div css={{
         display: `flex`,
         justifyContent: `center`,
-        color: `red`,
       }}>
       <SearchBox
         translations={{placeholder: 'Search Gatsby Library by keyword'}}
