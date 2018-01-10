@@ -3,6 +3,23 @@ import PropTypes from "prop-types"
 import { rhythm } from "../utils/typography"
 import presets from "../utils/presets"
 
+import { css } from "glamor"
+
+// Override default search result styles
+css.global(`.algolia-docsearch-suggestion--highlight`, {
+  backgroundColor: `${presets.lightPurple} !important`,
+  boxShadow: `inset 0 -2px 0 0 ${presets.lightPurple} !important`,
+  color: `black !important`,
+  fontWeight: `bold`,
+})
+css.global(`.algolia-docsearch-suggestion--subcategory-column`, {
+  color: `black !important`,
+})
+css.global(
+  `.algolia-autocomplete .ds-dropdown-menu .ds-suggestion.ds-cursor .algolia-docsearch-suggestion:not(.suggestion-layout-simple) .algolia-docsearch-suggestion--content`,
+  { backgroundColor: `${presets.brandLighter} !important` }
+)
+
 class SearchForm extends Component {
   constructor() {
     super()
