@@ -16,6 +16,10 @@ const updateAfter = 700
 const Search = ({searchState}) => {
   const emptySearchBox = searchState.length > 0 ? false : true
 
+<<<<<<< HEAD
+=======
+const Search = () => {
+>>>>>>> Removed package-lock.json and renamed plugins.js to packages.js
   return (
     <div className="container">
       <div css={{
