@@ -6,6 +6,20 @@ Object {
     "listNode": Array [
       Object {
         "aBoolean": true,
+        "aNestedArray": Array [
+          Array [
+            1,
+            2,
+            3,
+            4,
+          ],
+          Array [
+            5,
+            6,
+            7,
+            8,
+          ],
+        ],
         "anArray": Array [
           1,
           2,
@@ -60,6 +74,14 @@ Object {
       },
       Object {
         "aBoolean": null,
+        "aNestedArray": Array [
+          Array [
+            1,
+            2,
+            3,
+            4,
+          ],
+        ],
         "anArray": Array [
           1,
           2,
