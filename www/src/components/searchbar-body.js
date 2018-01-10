@@ -5,7 +5,7 @@ import Link from 'gatsby-link'
 
 import typography from "../utils/typography"
 
-function Search(){
+const Search = () => {
   return (
     <div className="container">
       <div css={{
@@ -49,7 +49,7 @@ function Search(){
   )
 }
 
-function Result({ hit }){
+const Result = ({ hit }) => {
   return (
     <div css={{
       borderBottom: `1px solid grey`,
