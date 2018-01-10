@@ -3,7 +3,7 @@ import Link from "gatsby-link"
 import GithubIcon from "react-icons/lib/go/mark-github"
 import TwitterIcon from "react-icons/lib/fa/twitter"
 
-import SearchForm from '../components/search-form'
+import SearchForm from "../components/search-form"
 import DiscordIcon from "../components/discord"
 import logo from "../gatsby-negative.svg"
 import typography, { rhythm, scale } from "../utils/typography"
@@ -176,7 +176,9 @@ export default ({ pathname }) => {
             marginLeft: `auto`,
           }}
         >
-          {!isHomepage && <SearchForm key="SearchForm" styles={{ ...navItemStyles }}/>}
+          {!isHomepage && (
+            <SearchForm key="SearchForm" styles={{ ...navItemStyles }} />
+          )}
           <a
             href="https://github.com/gatsbyjs/gatsby"
             title="GitHub"
