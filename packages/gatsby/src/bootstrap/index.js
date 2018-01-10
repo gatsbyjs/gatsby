@@ -393,7 +393,6 @@ module.exports = async (args: BootstrapArgs) => {
     report.log(``)
     report.info(`bootstrap finished - ${process.uptime()} s`)
     report.log(``)
-    process.exit()
     return { graphqlRunner }
   } else {
     return new Promise(resolve => {
