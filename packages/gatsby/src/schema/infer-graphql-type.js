@@ -139,31 +139,34 @@ function inferGraphQLType({
           `,
         },
       },
-      resolve(object, { fromNow, difference, formatString, locale = `en` }) {
+      resolve(object, args) {
         let date
         if (object[fieldName]) {
           date = JSON.parse(JSON.stringify(object[fieldName]))
         } else {
           return null
         }
-        if (formatString) {
-          return moment
-            .utc(date, ISO_8601_FORMAT, true)
-            .locale(locale)
-            .format(formatString)
-        } else if (fromNow) {
-          return moment
-            .utc(date, ISO_8601_FORMAT, true)
-            .locale(locale)
-            .fromNow()
-        } else if (difference) {
-          return moment().diff(
-            moment.utc(date, ISO_8601_FORMAT, true).locale(locale),
-            difference
-          )
-        } else {
-          return date
+        if (_.isPlainObject(args)) {
+          const { fromNow, difference, formatString, locale = `en` } = args
+          if (formatString) {
+            return moment
+              .utc(date, ISO_8601_FORMAT, true)
+              .locale(locale)
+              .format(formatString)
+          } else if (fromNow) {
+            return moment
+              .utc(date, ISO_8601_FORMAT, true)
+              .locale(locale)
+              .fromNow()
+          } else if (difference) {
+            return moment().diff(
+              moment.utc(date, ISO_8601_FORMAT, true).locale(locale),
+              difference
+            )
+          }
         }
+
+        return date
       },
     }
   }
