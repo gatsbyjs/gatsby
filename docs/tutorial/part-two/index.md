@@ -312,7 +312,7 @@ one very popular method: CSS Modules.
 
 ### CSS-in-JS
 
-While we won't cover CSS-in-JS in this initial tutorial, we encourage you to explore CSS-in-JS libraries as these solve many of the problems with traditional CSS plus help make your React components even smarter. There are mini-tutorials for two libraries, [Glamor](/docs/glamor.md) and [Styled Components](/docs/styled-components.md). Check out the following resources for background reading on CSS-in-JS:
+While we won't cover CSS-in-JS in this initial tutorial, we encourage you to explore CSS-in-JS libraries as these solve many of the problems with traditional CSS plus help make your React components even smarter. There are mini-tutorials for two libraries, [Glamor](/docs/glamor/) and [Styled Components](/docs/styled-components/). Check out the following resources for background reading on CSS-in-JS:
 
 [Christopher "vjeux" Chedeau's 2014 presentation that sparked this movement](https://speakerdeck.com/vjeux/react-css-in-js)
 as well as
