@@ -21,6 +21,18 @@ describe(`Add pages`, () => {
     expect(state).toMatchSnapshot()
   })
 
+  it(`adds an initial forward slash if the user doesn't`, () => {
+    const action = actions.createPage(
+      {
+        path: `hi/`,
+        component: `/whatever/index.js`,
+      },
+      { id: `test`, name: `test` }
+    )
+    const state = reducer(undefined, action)
+    expect(state[0].path).toEqual(`/hi/`)
+  })
+
   it(`allows you to add pages with context`, () => {
     const action = actions.createPage(
       {
