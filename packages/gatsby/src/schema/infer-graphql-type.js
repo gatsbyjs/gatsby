@@ -107,7 +107,7 @@ function inferGraphQLType({
   // Check if this is a date.
   // All the allowed ISO 8601 date-time formats used.
   const momentDate = moment.utc(exampleValue, ISO_8601_FORMAT, true)
-  if (momentDate.isValid()) {
+  if (momentDate.isValid() && typeof exampleValue !== `number`) {
     return {
       type: GraphQLString,
       args: {
