@@ -16,6 +16,8 @@ plugins: [`gatsby-transformer-remark`];
 A full explanation of how to use markdown in Gatsby can be found here:
 [Creating a Blog with Gatsby](/blog/2017-07-19-creating-a-blog-with-gatsby/)
 
+There are many Gatsby Remark plugins which you can install to customize how Markdown is processed. Many of them are demoed at https://using-remark.gatsbyjs.org/. See also the [source code for using-remark](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-remark).
+
 ## Parsing algorithm
 
 It recognizes files with the following extensions as Markdown:
