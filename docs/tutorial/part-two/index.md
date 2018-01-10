@@ -108,7 +108,7 @@ plugins.
 
 ## Installing your first Gatsby plugin
 
-Let's start by creating a new site. At this point it probably makes sense to close the terminal window(s) you used to build tutorial-part-one so that you don't accidentally start building tutorial-part-two in the wrong place. If you don't close tutorial-part-one prior to building tutorial-part-two, you will see that tutorial-part-two appears at localhost:8001 instead of localhost:8000. 
+Let's start by creating a new site. At this point it probably makes sense to close the terminal window(s) you used to build tutorial-part-one so that you don't accidentally start building tutorial-part-two in the wrong place. If you don't close tutorial-part-one prior to building tutorial-part-two, you will see that tutorial-part-two appears at localhost:8001 instead of localhost:8000.
 
 Similar to part one, open a new terminal window and run the following to create a new site:
 
@@ -485,8 +485,6 @@ export default () =>
 The finished page should now look like:
 
 ![css-modules-final](css-modules-final.png)
-
-
 
 ### Other CSS options
 
