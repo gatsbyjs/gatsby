@@ -2,12 +2,10 @@ const grayMatter = require(`gray-matter`)
 const crypto = require(`crypto`)
 const _ = require(`lodash`)
 
-module.exports = async function onCreateNode({
-  node,
-  getNode,
-  loadNodeContent,
-  boundActionCreators,
-}, pluginOptions) {
+module.exports = async function onCreateNode(
+  { node, getNode, loadNodeContent, boundActionCreators },
+  pluginOptions
+) {
   const { createNode, createParentChildLink } = boundActionCreators
 
   // We only care about markdown content.

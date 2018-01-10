@@ -18,7 +18,8 @@ class Index extends React.Component {
               marginBottom: rhythm(2),
             }}
           >
-            This page demonstrates the different types of excerpts you can use with gatsby-transformer-remark
+            This page demonstrates the different types of excerpts you can use
+            with gatsby-transformer-remark
           </h1>
           <ul
             css={{
@@ -45,9 +46,7 @@ class Index extends React.Component {
                 <Link to={post.node.fields.slug} className="link-underline">
                   {post.node.frontmatter.title}
                 </Link>
-                <p>
-                    {post.node.excerpt}
-                </p>
+                <p>{post.node.excerpt}</p>
               </li>
             ))}
           </ul>
@@ -61,9 +60,7 @@ export default Index
 
 export const pageQuery = graphql`
   query ExcerptExampleQuery {
-    allMarkdownRemark(
-      filter: { frontmatter: { example: { eq: true } } }
-    ) {
+    allMarkdownRemark(filter: { frontmatter: { example: { eq: true } } }) {
       edges {
         node {
           fields {
