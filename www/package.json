@@ -47,7 +47,7 @@
     "mitt": "^1.1.2",
     "parse-filepath": "^1.0.1",
     "react-icons": "^2.2.7",
-    "react-instantsearch": "^4.4.0",
+    "react-instantsearch": "^4.4.1",
     "slash": "^1.0.0",
     "typeface-space-mono": "^0.0.40",
     "typeface-spectral": "^0.0.40",
