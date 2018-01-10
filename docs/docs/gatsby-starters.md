@@ -309,3 +309,13 @@ Features:
 * Used CSS Modules, easy to manipulate
 * FontAwsome Library for icons
 * Responsive Design, optimized for Mobile devices
+
+* [gatsby-starter-product-guy](https://github.com/amandeepmittal/gatsby-starter-product-guy) [(demo)](http://gatsby-starter-product-guy.surge.sh/)
+
+Features:
+
+* Single Page
+* A portfolio Developers and Product launchers alike
+* Using [Typography.js](kyleamathews.github.io/typography.js/) easy to switch fonts
+* All your Project/Portfolio Data in Markdown, server by GraphQL
+* Responsive Design, optimized for Mobile devices
