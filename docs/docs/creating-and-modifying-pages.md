@@ -141,7 +141,7 @@ well as client-only routes (e.g. an app that combines marketing pages and your
 app that lives under `/app/*`), you want to add code to your `gatsby-node.js`
 like the following:
 
-_Note: There's also a plugin that will set up the creation of client-paths automatically:
+_Note: There's also a plugin that will set up the creation of client-paths declaratively:
 [gatsby-plugin-create-client-paths](/packages/gatsby-plugin-create-client-paths/)_.
 
 ```javascript
