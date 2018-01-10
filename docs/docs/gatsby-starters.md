@@ -87,6 +87,20 @@ Community:
   * Navigation between posts with a previous/next post button
   * Tags and tag navigation
 
+* [gatsby-starter-casper](https://github.com/haysclark/gatsby-starter-casper)
+  [(demo)](https://haysclark.github.io/gatsby-starter-casper/)
+
+  Features:
+
+  * Page pagination
+  * CSS
+  * Tags
+  * Google Analytics
+  * Offline support
+  * Web App Manifest
+  * SEO
+  * [Full list here!](https://github.com/haysclark/gatsby-starter-casper#features)
+
 * [gatsby-advanced-starter](https://github.com/Vagr9K/gatsby-advanced-starter)
   [(demo)](https://vagr9k.github.io/gatsby-advanced-starter/)
 
