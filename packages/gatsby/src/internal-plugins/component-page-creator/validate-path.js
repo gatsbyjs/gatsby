@@ -16,6 +16,6 @@ module.exports = path => {
     parsedPath.name.slice(0, 1) !== `_` &&
     parsedPath.name.slice(0, 9) !== `template-` &&
     !tsDeclarationExtTest.test(parsedPath.base) &&
-    !isTestFile(path)
+    !isTestFile(parsedPath.base)
   )
 }
