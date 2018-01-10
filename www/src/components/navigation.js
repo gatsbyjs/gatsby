@@ -158,7 +158,9 @@ export default ({ pathname }) => {
               listStyle: `none`,
               flexGrow: 1,
               overflowX: `auto`,
-              maskImage: `linear-gradient(to right, transparent, white 20px, white 90%, transparent)`,
+              maskImage: `linear-gradient(to right, transparent, white ${rhythm(
+                1 / 8
+              )}, white 98%, transparent)`,
             },
           }}
         >
