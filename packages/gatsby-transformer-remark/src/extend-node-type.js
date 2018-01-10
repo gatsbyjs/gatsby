@@ -82,6 +82,7 @@ module.exports = (
           n => n.internal.type === `File`
         )
         const ast = await new Promise((resolve, reject) => {
+          // Use Bluebird's Promise function "each" to run remark plugins serially.
           Promise.each(pluginOptions.plugins, plugin => {
             const requiredPlugin = require(plugin.resolve)
             if (_.isFunction(requiredPlugin.mutateSource)) {
@@ -132,6 +133,7 @@ module.exports = (
             const files = _.values(store.getState().nodes).filter(
               n => n.internal.type === `File`
             )
+            // Use Bluebird's Promise function "each" to run remark plugins serially.
             Promise.each(pluginOptions.plugins, plugin => {
               const requiredPlugin = require(plugin.resolve)
               if (_.isFunction(requiredPlugin)) {
