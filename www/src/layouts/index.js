@@ -45,7 +45,6 @@ class DefaultLayout extends React.Component {
       position: `fixed`,
       top: `calc(${presets.headerHeight} - 1px)`,
       overflowY: `auto`,
-      zIndex: 1,
       height: `calc(100vh - ${presets.headerHeight} + 1px)`,
       WebkitOverflowScrolling: `touch`,
       "::-webkit-scrollbar": {
