@@ -44,6 +44,8 @@
       link: /docs/environment-variables/
     - title: Gatsby on Windows
       link: /docs/gatsby-on-windows/
+    - title: Using CSS-in-JS library Glamor
+      link: /docs/glamor/
     - title: How Gatsby Works with GitHub Pages
       link: /docs/how-gatsby-works-with-github-pages/
     - title: Migrating from v0 to v1
@@ -52,6 +54,8 @@
       link: /docs/path-prefix/
     - title: Proxying API Requests
       link: /docs/api-proxy/
+    - title: Using CSS-in-JS library Styled Components 
+      link: /docs/styled-components/
     - title: Adding Markdown Pages
       link: /docs/adding-markdown-pages/
     - title: Adding a List of Markdown Blog Posts*
