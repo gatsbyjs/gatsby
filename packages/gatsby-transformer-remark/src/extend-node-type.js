@@ -280,9 +280,11 @@ module.exports = (
           },
         },
         resolve(markdownNode, { pruneLength }) {
+          if (markdownNode.excerpt) {
+            return Promise.resolve(markdownNode.excerpt)
+          }
           return getAST(markdownNode).then(ast => {
             const excerptNodes = []
-
             visit(ast, node => {
               if (node.type === `text` || node.type === `inlineCode`) {
                 excerptNodes.push(node.value)
