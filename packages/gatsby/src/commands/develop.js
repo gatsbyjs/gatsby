@@ -176,7 +176,7 @@ async function startServer(program) {
   // Render an HTML page and serve it.
   app.use((req, res, next) => {
     const parsedPath = parsePath(req.path)
-    if (parsedPath.extname === `` || parsedPath.extname.startsWith(`.html`)) {
+    if (parsedPath.extname === `` || parsedPath.extname.startsWith(`.html`) || parsedPath.path.endsWith(`/`)) {
       res.sendFile(directoryPath(`public/index.html`), err => {
         if (err) {
           res.status(500).end()
