@@ -344,6 +344,37 @@ describe(`gatsby-remark-embed-snippet`, () => {
 
       expect(transformed).toMatchSnapshot()
     })
+
+    it(`should support multiple highlight directives within a single file`, () => {
+      fs.readFileSync.mockReturnValue(
+        `
+        let notHighlighted;
+        // highlight-range{1}
+        let highlighted;
+
+        notHighlighted = 1;
+
+        // highlight-next-line
+        highlighted = 2;
+
+        // highlight-range{2}
+        notHighlighted = 3;
+        highlighted = 4;
+      `
+          .replace(/^ +/gm, ``)
+          .trim()
+      )
+
+      const markdownAST = remark.parse(`\`embed:hello-world.js\``)
+      const transformed = plugin(
+        { markdownAST },
+        {
+          directory: `examples`,
+        }
+      )
+
+      expect(transformed).toMatchSnapshot()
+    })
   })
 
   describe(`Markdown files`, () => {

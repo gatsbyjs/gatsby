@@ -87,12 +87,12 @@ programatic creation of pages explained in the next section.
 ### Programatic page creation
 
 This is the official
-[documentation](https://www.gatsbyjs.org/docs/creating-and-modifying-pages/),
+[documentation](/docs/creating-and-modifying-pages/),
 plus there is a
-[tutorial](https://www.gatsbyjs.org/tutorial/part-four/#data-in-gatsby) which
+[tutorial](/tutorial/part-four/#data-in-gatsby) which
 gives examples. Basically, I had to create a `gatsby-node.js` file which exports
 `createPages` method using the `createPage` action from
-[`boundActionCreators`](https://www.gatsbyjs.org/docs/bound-action-creators/).
+[`boundActionCreators`](/docs/bound-action-creators/).
 
 This might sound way more complicated than what it is:
 
@@ -155,13 +155,13 @@ keep my previous URLs of existing content the same in the new system.
 
 The display of the data is handled by a React component acting as a template. My
 case is nothing different than the
-[official documentation](https://www.gatsbyjs.org/docs/building-with-components/#page-template-components).
+[official documentation](/docs/building-with-components/#page-template-components).
 
 ### Adding styles
 
 Now that the system displays the content, it's time to style it. I decided to go
 for the
-[`typography.js` route](https://www.gatsbyjs.org/tutorial/part-two/#typographyjs).
+[`typography.js` route](/tutorial/part-two/#typographyjs).
 The approach is well documented and you can also see
 [previews of the themes online](http://kyleamathews.github.io/typography.js/).
 

@@ -108,7 +108,7 @@ You can validate the `_headers` config through the
 
 ### Redirects
 
-You can create redirects using the [`createRedirect`](https://www.gatsbyjs.org/docs/bound-action-creators/#createRedirect) action.
+You can create redirects using the [`createRedirect`](/docs/bound-action-creators/#createRedirect) action.
 
 An example:
 

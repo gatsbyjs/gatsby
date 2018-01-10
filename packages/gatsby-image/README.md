@@ -49,7 +49,7 @@ processing capabilities powered by GraphQL and Sharp. To produce perfect images,
 you need only:
 
 1. Import `gatsby-image` and use it in place of the built-in `img`
-2. Write a simple GraphQL query using one of the included GraphQL "fragments"
+2. Write a GraphQL query using one of the included GraphQL "fragments"
    which specify the fields needed by `gatsby-image`.
 
 The GraphQL query creates multiple thumbnails with optimized JPEG and PNG
@@ -161,7 +161,7 @@ format, use the `withWebp` fragments. If the browser doesn't support WebP,
 `gatsby-image` will fall back to the default image format.
 
 _Please see the
-[gatsby-plugin-sharp](https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/#tracedsvg)
+[gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/#tracedsvg)
 documentation for more information on `tracedSVG` and its configuration
 options._
 

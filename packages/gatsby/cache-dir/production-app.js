@@ -8,6 +8,7 @@ import { Router, Route, withRouter, matchPath } from "react-router-dom"
 import { ScrollContext } from "gatsby-react-router-scroll"
 import domReady from "domready"
 import history from "./history"
+window.___history = history
 import emitter from "./emitter"
 window.___emitter = emitter
 import pages from "./pages.json"
@@ -101,9 +102,11 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     action: history.action,
   })
 
+  let initialAttachDone = false
   function attachToHistory(history) {
-    if (!window.___history) {
+    if (!window.___history || initialAttachDone === false) {
       window.___history = history
+      initialAttachDone = true
 
       history.listen((location, action) => {
         if (!maybeRedirect(location.pathname)) {
