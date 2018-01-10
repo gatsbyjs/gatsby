@@ -110,7 +110,7 @@ plugins.
 
 Let's start by creating a new site. At this point it probably makes sense to close the terminal window(s) you used to build tutorial-part-one so that you don't accidentally start building tutorial-part-two in the wrong place. If you don't close tutorial-part-one prior to building tutorial-part-two, you will see that tutorial-part-two appears at localhost:8001 instead of localhost:8000. 
 
-Similar to Part One, open a new terminal window and run the following to create a new site:
+Similar to part one, open a new terminal window and run the following to create a new site:
 
     gatsby new tutorial-part-two https://github.com/gatsbyjs/gatsby-starter-hello-world
 
@@ -230,7 +230,7 @@ Ah, this is starting to look nice!
 What we're seeing here is the default CSS Typography.js produces. We can easily
 customize it, however. Let's do that.
 
-In your site, create a new directory at `src/utils` (hint: in code editors, creating a new directory looks like creating a new folder). In that directory, create a file named
+In your site, create a new directory at `src/utils`. In that directory, create a file named
 `typography.js`. In that file, add the following code.
 
 ```javascript
