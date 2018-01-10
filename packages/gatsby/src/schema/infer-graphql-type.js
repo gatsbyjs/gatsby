@@ -76,9 +76,9 @@ function inferGraphQLType({
     if (exampleValue == null) return null
 
     let headType
-    // If the array contains objects, than treat them as "nodes"
+    // If the array contains non-array objects, than treat them as "nodes"
     // and create an object type.
-    if (_.isObject(exampleValue)) {
+    if (_.isObject(exampleValue) && !_.isArray(exampleValue)) {
       headType = new GraphQLObjectType({
         name: createTypeName(fieldName),
         fields: inferObjectStructureFromNodes({
@@ -87,7 +87,7 @@ function inferGraphQLType({
           selector,
         }),
       })
-      // Else if the values are simple values, just infer their type.
+      // Else if the values are simple values or arrays, just infer their type.
     } else {
       let inferredType = inferGraphQLType({
         ...otherArgs,
