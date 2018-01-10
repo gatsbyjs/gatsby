@@ -65,7 +65,6 @@ import React, { Component } from "react";
 
 class AboutPage extends Component {
   render() {
-    const config = this.props.data.site.siteMetadata;
     return (
       <div className="about-container">
         <p>About me.</p>
@@ -125,6 +124,9 @@ export const pageQuery = graphql`
 `src/layouts/index.jsx` (optional) wraps page components. You can use it for
 portions of pages that are shared across pages like headers and footers.
 
+You can use the `location` prop to render conditionally based on the page
+URL.
+
 Example:
 
 ```jsx
@@ -133,7 +135,11 @@ import Navigation from "../components/Navigation/Navigation.jsx";
 
 export default class Template extends React.Component {
   render() {
-    return <Navigation>{this.props.children()}</Navigation>;
+    if (this.props.location.pathname !== "/") {
+      return <Navigation>{this.props.children()}</Navigation>;
+    } else {
+      return this.props.children();
+    }
   }
 }
 ```

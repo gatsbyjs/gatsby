@@ -76,6 +76,7 @@ root.
 
 ## Official plugins
 
+* [gatsby-plugin-canonical-urls](/packages/gatsby-plugin-canonical-urls/)
 * [gatsby-plugin-catch-links](/packages/gatsby-plugin-catch-links/)
 * [gatsby-plugin-create-client-paths](/packages/gatsby-plugin-create-client-paths/)
 * [gatsby-plugin-coffeescript](/packages/gatsby-plugin-coffeescript/)
@@ -133,7 +134,9 @@ root.
 * [gatsby-plugin-antd](https://github.com/bskimball/gatsby-plugin-antd)
 * [gatsby-plugin-copy](https://github.com/aquilio/gatsby-plugin-copy)
 * [gatsby-plugin-elasticlunr-search](https://github.com/andrew-codes/gatsby-plugin-elasticlunr-search)
+* [gatsby-plugin-fastclick](https://github.com/escaladesports/gatsby-plugin-fastclick)
 * [gatsby-plugin-google-fonts](https://github.com/didierfranc/gatsby-plugin-google-fonts)
+* [gatsby-plugin-gosquared](https://github.com/jongold/gatsby-plugin-gosquared)
 * [gatsby-plugin-hotjar](https://github.com/pavloko/gatsby-plugin-hotjar)
 * [gatsby-plugin-i18n-readnext](https://github.com/angeloocana/gatsby-plugin-i18n-readnext)
 * [gatsby-plugin-i18n-tags](https://github.com/angeloocana/gatsby-plugin-i18n-tags)
@@ -146,7 +149,9 @@ root.
 * [gatsby-plugin-segment-js](https://github.com/benjaminhoffman/gatsby-plugin-segment-js)
 * [gatsby-plugin-stripe-checkout](https://github.com/njosefbeck/gatsby-plugin-stripe-checkout)
 * [gatsby-plugin-stripe-elements](https://github.com/njosefbeck/gatsby-plugin-stripe-elements)
+* [gatsby-plugin-svg-sprite](https://github.com/marcobiedermann/gatsby-plugin-svg-sprite)
 * [gatsby-plugin-svgr](https://github.com/zabute/gatsby-plugin-svgr)
+* [gatsby-plugin-typescript-css-modules](https://github.com/jcreamer898/gatsby-plugin-typescript-css-modules)
 * [gatsby-plugin-yandex-metrika](https://github.com/viatsko/gatsby-plugin-yandex-metrika)
 * [gatsby-remark-emoji](https://github.com/Rulikkk/gatsby-remark-emoji)
 * [gatsby-remark-external-links](https://github.com/JLongley/gatsby-remark-external-links)
@@ -161,3 +166,9 @@ root.
 * [gatsby-source-stripe](https://github.com/njosefbeck/gatsby-source-stripe)
 * [gatsby-source-twitch](https://github.com/jedidiah/gatsby-source-twitch)
 * [gatsby-source-workable](https://github.com/tumblbug/gatsby-source-workable)
+
+## Community Library
+
+* [gatsby-node-helpers](https://github.com/angeloashmore/gatsby-node-helpers)
+* [gatsby-paginate](https://github.com/pixelstew/gatsby-paginate)
+* [gatsby-pagination](https://github.com/infinitedescent/gatsby-pagination)
