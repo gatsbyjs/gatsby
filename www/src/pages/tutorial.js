@@ -24,8 +24,7 @@ export default () => (
       <li>
         <Link to="/tutorial/part-two/">
           Introduction to using CSS in Gatsby
-        </Link>. Explore libraries like Typography.js, CSS Modules, Glamor, and
-        Styled Components.
+        </Link>. Explore libraries like Typography.js and CSS Modules.
       </li>
       <li>
         <Link to="/tutorial/part-three/">
