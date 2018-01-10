@@ -324,8 +324,7 @@ Community:
   * FontAwsome Library for icons
   * Responsive Design, optimized for Mobile devices
 
-
-* [gatsby-starter-product-guy](https://github.com/amandeepmittal/gatsby-starter-product-guy) [(demo)](http://gatsby-starter-product-guy.surge.sh/)
+- [gatsby-starter-product-guy](https://github.com/amandeepmittal/gatsby-starter-product-guy) [(demo)](http://gatsby-starter-product-guy.surge.sh/)
 
   Features:
 
