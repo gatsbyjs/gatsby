@@ -53,6 +53,28 @@ describe(`JavaScript page creator`, () => {
     expect(files.filter(file => validatePath(file.path)).length).toEqual(2)
   })
 
+  it(`filters out test files`, () => {
+    const files = [
+      {
+        path: `__tests__/something.test.js`,
+      },
+      {
+        path: `foo.spec.js`,
+      },
+      {
+        path: `bar.test.js`,
+      },
+      {
+        path: `page.js`,
+      },
+      {
+        path: `page.jsx`,
+      },
+    ]
+
+    expect(files.filter(file => validatePath(file.path)).length).toEqual(2)
+  })
+
   describe(`create-path`, () => {
     it(`should create unix paths`, () => {
       const basePath = `/a/`
