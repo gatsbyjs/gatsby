@@ -118,6 +118,16 @@ describe(`GraphQL type inferance`, () => {
     expect(result.data.listNode[0].number).toEqual(1.1)
   })
 
+  it(`handles integer with valid date format`, async () => {
+    let result = await queryResult(
+      [{ number: 2018 }, { number: 1987 }],
+      `
+        number
+      `
+    )
+    expect(result.data.listNode[0].number).toEqual(2018)
+  })
+
   it(`handles date objects`, async () => {
     let result = await queryResult(
       [
