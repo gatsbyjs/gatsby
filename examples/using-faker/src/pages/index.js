@@ -2,8 +2,7 @@ import React from "react"
 import Link from "gatsby-link"
 import "./index.css"
 
-const IndexPage = ({ data }) => {
-  return (
+const IndexPage = ({ data }) => (
     <div>
       <div className="page-grid">
         <div className="address-section">
@@ -36,7 +35,6 @@ const IndexPage = ({ data }) => {
       </div>
     </div>
   )
-}
 
 export default IndexPage
 

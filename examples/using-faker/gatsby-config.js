@@ -8,24 +8,24 @@ module.exports = {
       resolve: `gatsby-source-faker`,
       options: {
         schema: {
-          name: ["firstName", "lastName"],
-          address: ["streetAddress", "streetName", "city", "state", "zipCode"],
-          internet: ["email"],
-          lorem: ["paragraph"],
-          phone: ["phoneNumber"],
+          name: [`firstName`, `lastName`],
+          address: [`streetAddress`, `streetName`, `city`, `state`, `zipCode`],
+          internet: [`email`],
+          lorem: [`paragraph`],
+          phone: [`phoneNumber`],
         },
         count: 1,
-        type: "PersonalData",
+        type: `PersonalData`,
       },
     },
     {
       resolve: `gatsby-source-faker`,
       options: {
         schema: {
-          company: ["companyName", "companySuffix"],
+          company: [`companyName`, `companySuffix`],
         },
         count: 3,
-        type: "CompanyData",
+        type: `CompanyData`,
       },
     },
   ],
