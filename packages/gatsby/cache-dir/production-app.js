@@ -1,20 +1,24 @@
 if (__POLYFILL__) {
   require(`core-js/modules/es6.promise`)
 }
-import { apiRunner, apiRunnerAsync } from './api-runner-browser'
-import React, { createElement } from 'react'
-import ReactDOM from 'react-dom'
-import { Router, Route, withRouter, matchPath } from 'react-router-dom'
-import { ScrollContext } from 'gatsby-react-router-scroll'
-import domReady from 'domready'
-import history from './history'
-import emitter from './emitter'
 
-import pages from './pages.json'
-import redirects from './redirects.json'
-import ComponentRenderer from './component-renderer'
-import asyncRequires from './async-requires'
-import loader from './loader'
+import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
+import React, { createElement } from "react"
+import ReactDOM from "react-dom"
+import { Router, Route, withRouter, matchPath } from "react-router-dom"
+import { ScrollContext } from "gatsby-react-router-scroll"
+import domReady from "domready"
+import history from "./history"
+window.___history = history
+import emitter from "./emitter"
+window.___emitter = emitter
+import pages from "./pages.json"
+import redirects from "./redirects.json"
+import ComponentRenderer from "./component-renderer"
+import asyncRequires from "./async-requires"
+import loader from "./loader"
+loader.addPagesArray(pages)
+loader.addProdRequires(asyncRequires)
 
 window.asyncRequires = asyncRequires
 window.___emitter = emitter
@@ -105,9 +109,11 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     action: history.action,
   })
 
+  let initialAttachDone = false
   function attachToHistory(history) {
-    if (!window.___history) {
+    if (!window.___history || initialAttachDone === false) {
       window.___history = history
+      initialAttachDone = true
 
       history.listen((location, action) => {
         if (!maybeRedirect(location.pathname)) {

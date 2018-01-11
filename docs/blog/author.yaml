@@ -50,3 +50,16 @@
   bio: Full Stack Web Developer - https://www.halfelectronic.com
   avatar: avatars/fernando-poumian.jpeg
   twitter: "@fernandopoumian"
+- id: Josh Weaver
+  bio: Developer at By the Book, Inc. Enjoys technology, writing and playing music. Can't turn down a decent board game.
+  avatar: avatars/josh-weaver.jpg
+  twitter: "@3cordguy"
+- id: Arden de Raaij
+  bio: Web Developer based in Lisbon, Portugal
+  avatar: avatars/arden-de-raaij.jpg
+  twitter: "@ardennl"
+- id: Shannon Soper
+  bio: Lives and works in Provo, UT doing UX research for GatsbyJS, music teaching / performance, and keeping up with her dog’s Instagram fans @dgtrwatson. Her background is in persuasive writing & speaking and she enjoys teaching college-level writing courses on the side.
+  avatar: avatars/shannon-soper.jpg
+  twitter: "@shannonb_ux"
+

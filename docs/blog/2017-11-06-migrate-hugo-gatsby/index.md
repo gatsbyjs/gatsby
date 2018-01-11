@@ -87,18 +87,18 @@ programatic creation of pages explained in the next section.
 ### Programatic page creation
 
 This is the official
-[documentation](https://www.gatsbyjs.org/docs/creating-and-modifying-pages/),
+[documentation](/docs/creating-and-modifying-pages/),
 plus there is a
-[tutorial](https://www.gatsbyjs.org/tutorial/part-four/#data-in-gatsby) which
+[tutorial](/tutorial/part-four/#data-in-gatsby) which
 gives examples. Basically, I had to create a `gatsby-node.js` file which exports
 `createPages` method using the `createPage` action from
-[`boundActionCreators`](https://www.gatsbyjs.org/docs/bound-action-creators/).
+[`boundActionCreators`](/docs/bound-action-creators/).
 
 This might sound way more complicated than what it is:
 
 ```jsx
 exports.createPages = ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators
+  const { createPage } = boundActionCreators;
   graphql(`
     {
       allMarkdownRemark {
@@ -114,10 +114,10 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
       }
     }
   `).then(result => {
-    const posts = result.data.allMarkdownRemark.edges
+    const posts = result.data.allMarkdownRemark.edges;
     // Create content programatically here
-  })
-}
+  });
+};
 ```
 
 As you see, getting the list of posts can be done in a single query.
@@ -127,10 +127,10 @@ prefer to keep in a separate module. For example, creating posts works like
 following:
 
 ```jsx
-const path = require(`path`)
+const path = require(`path`);
 
 module.exports = (createPage, nodes) => {
-  const template = path.resolve(`src/templates/post.js`)
+  const template = path.resolve(`src/templates/post.js`);
 
   nodes.map(({ node }) => {
     if (node.frontmatter.slug) {
@@ -140,10 +140,10 @@ module.exports = (createPage, nodes) => {
         context: {
           slug: node.frontmatter.slug,
         },
-      })
+      });
     }
-  })
-}
+  });
+};
 ```
 
 I re-use the `slug` field of the frontmatter of my existing structure. I don't
@@ -155,13 +155,13 @@ keep my previous URLs of existing content the same in the new system.
 
 The display of the data is handled by a React component acting as a template. My
 case is nothing different than the
-[official documentation](https://www.gatsbyjs.org/docs/building-with-components/#page-template-components).
+[official documentation](/docs/building-with-components/#page-template-components).
 
 ### Adding styles
 
 Now that the system displays the content, it's time to style it. I decided to go
 for the
-[`typography.js` route](https://www.gatsbyjs.org/tutorial/part-two/#typographyjs).
+[`typography.js` route](/tutorial/part-two/#typographyjs).
 The approach is well documented and you can also see
 [previews of the themes online](http://kyleamathews.github.io/typography.js/).
 
@@ -233,12 +233,12 @@ both tags and pagination scenarios. I kept them as separate action creators and
 I just called them in the main creator function like this:
 
 ```jsx
-const createPostPages = require(`./gatsby-actions/createPostPages`)
-const createPaginatedPostsPages = require(`./gatsby-actions/createPaginatedPostsPages`)
-const createTagPages = require(`./gatsby-actions/createTagPages`)
+const createPostPages = require(`./gatsby-actions/createPostPages`);
+const createPaginatedPostsPages = require(`./gatsby-actions/createPaginatedPostsPages`);
+const createTagPages = require(`./gatsby-actions/createTagPages`);
 
 exports.createPages = ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators
+  const { createPage } = boundActionCreators;
   graphql(`
     {
       allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
@@ -254,41 +254,41 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
       }
     }
   `).then(result => {
-    const posts = result.data.allMarkdownRemark.edges
-    createPostPages(createPage, posts)
-    createPaginatedPostsPages(createPage, posts)
-    createTagPages(createPage, posts)
-  })
-}
+    const posts = result.data.allMarkdownRemark.edges;
+    createPostPages(createPage, posts);
+    createPaginatedPostsPages(createPage, posts);
+    createTagPages(createPage, posts);
+  });
+};
 ```
 
 Easy to read, understand and mantain. The pagination module is a bit longer than
 the one of the posts:
 
 ```jsx
-const path = require(`path`)
+const path = require(`path`);
 
 module.exports = (createPage, nodes) => {
-  const template = path.resolve(`src/templates/postList.js`)
-  const paginateSize = 10
+  const template = path.resolve(`src/templates/postList.js`);
+  const paginateSize = 10;
 
   // Split posts into arrays of length equal to number posts on each page/paginateSize
   const groupedPages = nodes
     .map((node, index) => {
       return index % paginateSize === 0
         ? nodes.slice(index, index + paginateSize)
-        : null
+        : null;
     })
-    .filter(item => item)
+    .filter(item => item);
 
   // Create new indexed route for each array
   groupedPages.forEach((group, index, groups) => {
-    const pageIndex = index === 0 ? `` : index + 1
-    const paginationRoute = `/blog/${pageIndex}`
+    const pageIndex = index === 0 ? `` : index + 1;
+    const paginationRoute = `/blog/${pageIndex}`;
     // Avoid showing `Previous` link on first page - passed to context
-    const first = index === 0 ? true : false
+    const first = index === 0 ? true : false;
     // Avoid showing `Next` link if this is the last page - passed to context
-    const last = index === groups.length - 1 ? true : false
+    const last = index === groups.length - 1 ? true : false;
 
     return createPage({
       path: paginationRoute,
@@ -299,9 +299,9 @@ module.exports = (createPage, nodes) => {
         last,
         index: index + 1,
       },
-    })
-  })
-}
+    });
+  });
+};
 ```
 
 Then, pull context information in the React component:
@@ -358,7 +358,7 @@ createPage({
   context: {
     posts,
   },
-})
+});
 ```
 
 For the inner tag page:
@@ -372,7 +372,7 @@ createPage({
     post,
     tag: tagName,
   },
-})
+});
 ```
 
 ### Admin panel
@@ -425,8 +425,8 @@ This is my admin page React component which is placed in `src/pages/admin` so
 that Gatsby delivers the HTML page at `/admin`.
 
 ```jsx
-import React from "react"
-import Helmet from "react-helmet"
+import React from "react";
+import Helmet from "react-helmet";
 
 const AdminPage = () => (
   <div className="admin">
@@ -446,9 +446,9 @@ const AdminPage = () => (
       />
     </Helmet>
   </div>
-)
+);
 
-export default AdminPage
+export default AdminPage;
 ```
 
 In order for NetlifyCMS script to find the configuration file correctly,

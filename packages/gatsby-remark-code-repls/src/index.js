@@ -1,5 +1,7 @@
 "use strict"
 
+const URI = require(`urijs`)
+
 const fs = require(`fs`)
 const LZString = require(`lz-string`)
 const { join } = require(`path`)
@@ -12,6 +14,7 @@ const {
   PROTOCOL_BABEL,
   PROTOCOL_CODEPEN,
   PROTOCOL_CODE_SANDBOX,
+  PROTOCOL_RAMDA,
 } = require(`./constants`)
 
 // Matches compression used in Babel and CodeSandbox REPLs
@@ -125,12 +128,22 @@ module.exports = (
         // This config JSON must then be lz-string compressed
         parameters = compress(JSON.stringify(parameters))
 
-        const href = `https://codesandbox.io/api/v1/sandboxes/define?parameters=${
-          parameters
-        }`
+        const href = `https://codesandbox.io/api/v1/sandboxes/define?parameters=${parameters}`
         const text =
           node.children.length === 0 ? defaultText : node.children[0].value
 
+        convertNodeToLink(node, text, href, target)
+      } else if (node.url.startsWith(PROTOCOL_RAMDA)) {
+        const filePath = getFilePath(node.url, PROTOCOL_RAMDA, directory)
+
+        verifyFile(filePath)
+
+        // Don't use `compress()` as the Ramda REPL won't understand the output.
+        // It uses URI to encode the code for its urls, so we do the same.
+        const code = URI.encode(fs.readFileSync(filePath, `utf8`))
+        const href = `http://ramdajs.com/repl/#?${code}`
+        const text =
+          node.children.length === 0 ? defaultText : node.children[0].value
         convertNodeToLink(node, text, href, target)
       }
     }

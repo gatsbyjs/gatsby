@@ -81,7 +81,7 @@ works, but I have it working, so cool”. Easy to update — check.
 
 I'm not the type of person to settle on “It's working so don't touch anything”.
 So I started digging into how Gatsby 1.x works—particular the
-[data layer](https://www.gatsbyjs.org/tutorial/part-four/#data-in-gatsby).
+[data layer](/tutorial/part-four/#data-in-gatsby).
 
 Things really clicked when I read this part about the GraphiQL IDE and watched
 how to drill down on the data.

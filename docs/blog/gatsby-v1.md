@@ -162,7 +162,7 @@ the blog posts. Included with the component is an exported `pageQuery`.
 
 ```jsx
 // A simple React component for rendering a blog page.
-import React from "react"
+import React from "react";
 
 class BlogPostTemplate extends React.Component {
   render() {
@@ -176,11 +176,11 @@ class BlogPostTemplate extends React.Component {
           }}
         />
       </div>
-    )
+    );
   }
 }
 
-export default BlogPostTemplate
+export default BlogPostTemplate;
 
 export const pageQuery = graphql`
   query BlogPost($slug: String!) {
@@ -194,7 +194,7 @@ export const pageQuery = graphql`
       }
     }
   }
-`
+`;
 ```
 
 All data sourcing and transforming is plugin-driven. So in time, any imaginable
@@ -276,8 +276,8 @@ you navigate around, Gatsby loads in the code needed for each route.
 This means that one page with heavy imports:
 
 ```javascript
-import d3 from "d3"
-import threejs from "react-threejs"
+import d3 from "d3";
+import threejs from "react-threejs";
 ```
 
 ...won't affect the performance of the rest of the site.
@@ -296,8 +296,8 @@ along with a modern css-in-js library
 uses [Redux](http://redux.js.org/) to communicate with their Django API.
 
 The marketing portion of the site loads quickly with minimal JavaScript. When a
-potential customer goes to sign-up for the app, there's no *awkward jump from
-the marketing website to the web app*—just a simple page change which seamlessly
+potential customer goes to sign-up for the app, there's no _awkward jump from
+the marketing website to the web app_—just a simple page change which seamlessly
 loads in the needed JavaScript. The _team is sharing components and styles
 across the site_ without stepping on each others shoes as they rapidly iterate
 on features.

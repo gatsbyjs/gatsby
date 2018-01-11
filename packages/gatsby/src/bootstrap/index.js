@@ -16,7 +16,7 @@ const loadPlugins = require(`./load-plugins`)
 const { initCache } = require(`../utils/cache`)
 const report = require(`gatsby-cli/lib/reporter`)
 
-type ApiType = 'browser' | 'ssr';
+type ApiType = "browser" | "ssr"
 
 const {
   extractQueries,
@@ -178,10 +178,12 @@ module.exports = async (args: BootstrapArgs) => {
   // out api-runners for them.
   function getPluginsForType(type: ApiType) {
     return flattenedPlugins
-      .map(plugin => {return {
-        resolve: glob.sync(`${plugin.resolve}/gatsby-${type}*`)[0],
-        options: plugin.pluginOptions,
-      }})
+      .map(plugin => {
+        return {
+          resolve: glob.sync(`${plugin.resolve}/gatsby-${type}*`)[0],
+          options: plugin.pluginOptions,
+        }
+      })
       .filter(plugin => plugin.resolve)
   }
 
@@ -200,11 +202,15 @@ module.exports = async (args: BootstrapArgs) => {
       report.stripIndent`
         var preferDefault = m => (m && m.default) || m;
         var plugins = [
-          ${plugins.map(({ options, resolve }) => `
+          ${plugins
+            .map(
+              ({ options, resolve }) => `
           {
             plugin: preferDefault(require('${resolve}')),
             options: ${JSON.stringify(options)},
-          }`).join(`,`)}
+          }`
+            )
+            .join(`,`)}
         ];
 
         ${src}

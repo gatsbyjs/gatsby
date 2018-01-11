@@ -19,6 +19,7 @@ const launchEditor = require(`react-dev-utils/launchEditor`)
 const formatWebpackMessages = require(`react-dev-utils/formatWebpackMessages`)
 const chalk = require(`chalk`)
 const address = require(`address`)
+const sourceNodes = require(`../utils/source-nodes`)
 
 // const isInteractive = process.stdout.isTTY
 
@@ -90,6 +91,35 @@ async function startServer(program) {
       graphiql: true,
     })
   )
+
+  // Allow requests from any origin. Avoids CORS issues when using the `--host` flag.
+  app.use((req, res, next) => {
+    res.header(`Access-Control-Allow-Origin`, `*`)
+    res.header(
+      `Access-Control-Allow-Headers`,
+      `Origin, X-Requested-With, Content-Type, Accept`
+    )
+    next()
+  })
+
+  /**
+   * Refresh external data sources.
+   * This behavior is disabled by default, but the ENABLE_REFRESH_ENDPOINT env var enables it
+   * If no GATSBY_REFRESH_TOKEN env var is available, then no Authorization header is required
+   **/
+  app.post(`/__refresh`, (req, res) => {
+    const enableRefresh = process.env.ENABLE_GATSBY_REFRESH_ENDPOINT
+    const refreshToken = process.env.GATSBY_REFRESH_TOKEN
+    const authorizedRefresh =
+      !refreshToken || req.headers.authorization === refreshToken
+
+    if (enableRefresh && authorizedRefresh) {
+      console.log(`Refreshing source data`)
+      sourceNodes()
+    }
+    res.end()
+  })
+
   app.get(`/__open-stack-frame-in-editor`, (req, res) => {
     launchEditor(req.query.fileName, req.query.lineNumber)
     res.end()
@@ -145,7 +175,11 @@ async function startServer(program) {
   // Render an HTML page and serve it.
   app.use((req, res, next) => {
     const parsedPath = parsePath(req.path)
-    if (parsedPath.extname === `` || parsedPath.extname.startsWith(`.html`)) {
+    if (
+      parsedPath.extname === `` ||
+      parsedPath.extname.startsWith(`.html`) ||
+      parsedPath.path.endsWith(`/`)
+    ) {
       res.sendFile(directoryPath(`public/index.html`), err => {
         if (err) {
           res.status(500).end()
@@ -210,9 +244,7 @@ module.exports = async (program: any) => {
 
       if (port !== _port) {
         // eslint-disable-next-line max-len
-        const question = `Something is already running at port ${
-          port
-        } \nWould you like to run the app at another port instead? [Y/n] `
+        const question = `Something is already running at port ${port} \nWould you like to run the app at another port instead? [Y/n] `
 
         rlInterface.question(question, answer => {
           if (answer.length === 0 || answer.match(/^yes|y$/i)) {
@@ -304,6 +336,13 @@ module.exports = async (program: any) => {
     }
 
     console.log()
+    console.log(
+      `View GraphiQL, an in-browser IDE, to explore your site's data and schema`
+    )
+    console.log()
+    console.log(`  ${urls.localUrlForTerminal}___graphql`)
+
+    console.log()
     console.log(`Note that the development build is not optimized.`)
     console.log(
       `To create a production build, use ` + `${chalk.cyan(`gatsby build`)}`
@@ -327,10 +366,9 @@ module.exports = async (program: any) => {
     // if (isSuccessful && (isInteractive || isFirstCompile)) {
     if (isSuccessful && isFirstCompile) {
       printInstructions(program.sitePackageJson.name, urls, program.useYarn)
-    }
-
-    if (program.open) {
-      require(`opn`)(urls.localUrlForBrowser)
+      if (program.open) {
+        require(`opn`)(urls.localUrlForBrowser)
+      }
     }
 
     isFirstCompile = false

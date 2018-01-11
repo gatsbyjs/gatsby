@@ -6,7 +6,7 @@ title: Building with Components
 
 To use Gatsby, you will need a basic understanding of React components.
 
-The [official tutorial](https://facebook.github.io/react/tutorial/tutorial.html)
+The [official tutorial](https://reactjs.org/tutorial/tutorial.html)
 is a good place to start.
 
 ## Why React components?
@@ -61,27 +61,25 @@ Example:
 `src/pages/about.jsx`
 
 ```jsx
-import React, { Component } from "react"
+import React, { Component } from "react";
 
 class AboutPage extends Component {
   render() {
-    const config = this.props.data.site.siteMetadata
     return (
       <div className="about-container">
         <p>About me.</p>
       </div>
-    )
+    );
   }
 }
 
-export default AboutPage
+export default AboutPage;
 ```
 
 ### Page template components
 
 You can programmatically create pages using "page template components". All
-pages are React components but very often these components are fairly simple
-wrappers around data from files or other sources.
+pages are React components but very often these components are just wrappers around data from files or other sources.
 
 `src/templates/post.jsx` is an example of a page component. It queries GraphQL
 for markdown data and then renders the page using this data.
@@ -92,22 +90,22 @@ introduction to programmatically creating pages.
 Example:
 
 ```jsx
-import React from "react"
+import React from "react";
 
 class BlogPostTemplate extends React.Component {
   render() {
-    const post = this.props.data.markdownRemark
+    const post = this.props.data.markdownRemark;
 
     return (
       <div>
         <h1>{post.frontmatter.title}</h1>
         <div dangerouslySetInnerHTML={{ __html: post.html }} />
       </div>
-    )
+    );
   }
 }
 
-export default BlogPostTemplate
+export default BlogPostTemplate;
 
 export const pageQuery = graphql`
   query BlogPostBySlug($slug: String!) {
@@ -118,7 +116,7 @@ export const pageQuery = graphql`
       }
     }
   }
-`
+`;
 ```
 
 ### Layout components
@@ -126,15 +124,22 @@ export const pageQuery = graphql`
 `src/layouts/index.jsx` (optional) wraps page components. You can use it for
 portions of pages that are shared across pages like headers and footers.
 
+You can use the `location` prop to render conditionally based on the page
+URL.
+
 Example:
 
 ```jsx
-import React from "react"
-import Navigation from "../components/Navigation/Navigation.jsx"
+import React from "react";
+import Navigation from "../components/Navigation/Navigation.jsx";
 
 export default class Template extends React.Component {
   render() {
-    return <Navigation>{this.props.children()}</Navigation>
+    if (this.props.location.pathname !== "/") {
+      return <Navigation>{this.props.children()}</Navigation>;
+    } else {
+      return this.props.children();
+    }
   }
 }
 ```
@@ -154,28 +159,28 @@ have an html.js.
 Example:
 
 ```jsx
-import React from "react"
-import favicon from "./favicon.png"
+import React from "react";
+import favicon from "./favicon.png";
 
-let inlinedStyles = ""
+let inlinedStyles = "";
 if (process.env.NODE_ENV === "production") {
   try {
-    inlinedStyles = require("!raw-loader!../public/styles.css")
+    inlinedStyles = require("!raw-loader!../public/styles.css");
   } catch (e) {
-    console.log(e)
+    console.log(e);
   }
 }
 
 export default class HTML extends React.Component {
   render() {
-    let css
+    let css;
     if (process.env.NODE_ENV === "production") {
       css = (
         <style
           id="gatsby-inlined-css"
           dangerouslySetInnerHTML={{ __html: inlinedStyles }}
         />
-      )
+      );
     }
     return (
       <html lang="en">
@@ -197,7 +202,7 @@ export default class HTML extends React.Component {
           {this.props.postBodyComponents}
         </body>
       </html>
-    )
+    );
   }
 }
 ```

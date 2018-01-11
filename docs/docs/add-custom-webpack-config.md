@@ -71,6 +71,5 @@ exports.modifyWebpackConfig = ({ stage, rules, loaders, plugins, boundActionCrea
       })
     ]
   })
-
 };
 ```

@@ -1,7 +1,8 @@
 # gatsby-plugin-netlify
 
-Generates a `_headers` file at the root of the public folder, to configure
-[HTTP headers on netlify](https://www.netlify.com/docs/headers-and-basic-auth/).
+Automatically generates a `_headers` file and a `_redirects` file at the root of the public folder to configure
+[HTTP headers](https://www.netlify.com/docs/headers-and-basic-auth/) and [redirects](https://www.netlify.com/docs/redirects/) on Netlify.
+
 Notably, you can immediately enable HTTP/2 server push of critical Gatsby assets
 through the `Link` headers.
 
@@ -20,7 +21,7 @@ config.
 // In your gatsby-config.js
 plugins: [
   `gatsby-plugin-netlify`, // make sure to put last in the array
-]
+];
 ```
 
 ## Configuration
@@ -43,13 +44,13 @@ plugins: [
       transformHeaders: (headers, path) => headers, // optional transform for manipulating headers under each path (e.g.sorting), etc.
     },
   },
-]
+];
 ```
 
 ### Headers
 
 The headers object represents a JS version of the
-[netlify `_headers` file format](https://www.netlify.com/docs/headers-and-basic-auth/).
+[Netlify `_headers` file format](https://www.netlify.com/docs/headers-and-basic-auth/).
 You should pass in a object with string keys (representing the paths) and an
 array of strings for each header.
 
@@ -80,7 +81,7 @@ able to reference assets imported through javascript in the `static` folder.
 Do not specify the public path in the config, as the plugin will provide it for
 you.
 
-The netlify `_headers` file does not inherit headers, and it will replace any
+The Netlify `_headers` file does not inherit headers, and it will replace any
 matching headers it finds in more specific routes. For example, if you add a
 link to the the root wildcard path (`/*`), it will be replaced by any more
 specific path. If you want a resource to put linked across the site, you will
@@ -103,4 +104,26 @@ have to add to every path. To make this easier, the plugin provides the
 ```
 
 You can validate the `_headers` config through the
-[netlify playground app](https://play.netlify.com/headers).
+[Netlify playground app](https://play.netlify.com/headers).
+
+### Redirects
+
+You can create redirects using the [`createRedirect`](/docs/bound-action-creators/#createRedirect) action.
+
+An example:
+
+```javascript
+createRedirect({ fromPath: "/old-url", toPath: "/new-url", isPermanent: true });
+createRedirect({ fromPath: "/url", toPath: "/zn-CH/url", Language: "zn" });
+```
+
+You can also create a `_redirects` file in the `static` folder for the same affect. Any programmatically created redirects will be appended to the file.
+
+```sh
+# my manually set redirects
+/home              /
+/blog/my-post.php  /blog/my-post
+```
+
+You can validate the `_redirects` config through the
+[Netlify playground app](https://play.netlify.com/redirects).

@@ -6,7 +6,7 @@ Gatsby uses a React component to server render the `<head>` and other parts of
 the HTML outside of the core Gatsby application.
 
 Most sites should use the default `html.js` shipped with Gatsby. But if you need
-to customize your site's html.js, simply copy the default one into your source
+to customize your site's html.js, copy the default one into your source
 tree by running:
 
 ```shell
@@ -29,13 +29,12 @@ the client like other components. If you want to dynamically update your
 
 ### Target container
 
-If you see this error: `Uncaught Error: _registerComponent(...): Target
-container is not a DOM element.` it means your `html.js` is missing the required
+If you see this error: `Uncaught Error: _registerComponent(...): Target container is not a DOM element.` it means your `html.js` is missing the required
 "target container". Inside your `<body>` you must have a div with an id of
 `___gatsby` like:
 
 ```jsx
-;<div
+<div
   key={`body`}
   id="___gatsby"
   dangerouslySetInnerHTML={{ __html: this.props.body }}

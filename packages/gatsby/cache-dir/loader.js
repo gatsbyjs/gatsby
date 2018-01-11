@@ -1,5 +1,6 @@
 import pageFinderFactory from "./find-page"
 import emitter from "./emitter"
+import stripPrefix from "./strip-prefix"
 
 const preferDefault = m => (m && m.default) || m
 
@@ -8,6 +9,11 @@ let inInitialRender = true
 let hasFetched = Object.create(null)
 let syncRequires = {}
 let asyncRequires = {}
+let pathPrefix = ``
+let fetchHistory = []
+const failedPaths = {}
+const failedResources = {}
+const MAX_HISTORY = 5
 
 const fetchResource = resourceName => {
   // Find resource
@@ -22,7 +28,27 @@ const fetchResource = resourceName => {
 
   // Download the resource
   hasFetched[resourceName] = true
-  return resourceFunction()
+  return new Promise(resolve => {
+    const fetchPromise = resourceFunction()
+    let failed = false
+    return fetchPromise
+      .catch(() => {
+        failed = true
+      })
+      .then(() => {
+        fetchHistory.push({
+          resource: resourceName,
+          succeeded: failed,
+        })
+
+        if (!failedResources[resourceName]) {
+          failedResources[resourceName] = failed
+        }
+
+        fetchHistory = fetchHistory.slice(-MAX_HISTORY)
+        console.log(`fetchHistory`, fetchHistory)
+      })
+  })
 }
 
 const getResourceModule = resourceName =>
@@ -43,6 +69,32 @@ if (process.env.NODE_ENV === `production`) {
   emitter.on(`onPostLoadPageResources`, e => {
     prefetcher.onPostLoadPageResources(e)
   })
+}
+
+const appearsOnLine = () => {
+  const isOnLine = navigator.onLine
+  if (typeof isOnLine === `boolean`) {
+    return isOnLine
+  }
+
+  // If no navigator.onLine support assume onLine if any of last N fetches succeeded
+  const succeededFetch = fetchHistory.find(entry => entry.succeeded)
+  return !!succeededFetch
+}
+
+const handleResourceLoadError = (path, message) => {
+  console.log(message)
+
+  if (!failedPaths[path]) {
+    failedPaths[path] = message
+  }
+
+  if (
+    appearsOnLine() &&
+    window.location.pathname.replace(/\/$/g, ``) !== path.replace(/\/$/g, ``)
+  ) {
+    window.location.pathname = path
+  }
 }
 
 // Note we're not actively using the path data atm. There
@@ -69,13 +121,16 @@ const queue = {
     resourcesCount = Object.create(null)
     resourcesArray = []
     pages = []
+    pathPrefix = ``
   },
 
   addPagesArray: newPages => {
     pages = newPages
-    let pathPrefix = ``
-    if (typeof __PREFIX_PATHS__ !== `undefined`) {
-      pathPrefix = __PATH_PREFIX__
+    if (
+      typeof __PREFIX_PATHS__ !== `undefined` &&
+      typeof __PATH_PREFIX__ !== `undefined`
+    ) {
+      if (__PREFIX_PATHS__ === true) pathPrefix = __PATH_PREFIX__
     }
     findPage = pageFinderFactory(newPages, pathPrefix)
   },
@@ -87,11 +142,9 @@ const queue = {
   },
 
   dequeue: () => resourcesArray.pop(),
-
-  // dequeue: path => pathArray.pop(),
-
-  enqueue: path => {
+  enqueue: rawPath => {
     // Check page exists.
+    const path = stripPrefix(rawPath, pathPrefix)
     if (!pages.some(p => p.path === path)) {
       return false
     }
@@ -156,6 +209,7 @@ const queue = {
               for (let registration of registrations) {
                 registration.unregister()
               }
+
               window.location.reload()
             }
           })
@@ -177,6 +231,14 @@ const queue = {
       return pageResources
     }
     // Production code path
+    if (failedPaths[path]) {
+      handleResourceLoadError(
+        path,
+        `Previously detected load failure for "${path}"`
+      )
+
+      return cb()
+    }
     const page = findPage(path)
 
     if (!page) {
@@ -196,11 +258,50 @@ const queue = {
           page,
           pageResources: pathScriptsCache[path],
         })
+        return pathScriptsCache[path]
+      })
+
+      emitter.emit(`onPreLoadPageResources`, { path })
+      // Nope, we need to load resource(s)
+      let component
+      let json
+      let layout
+      // Load the component/json/layout and parallel and call this
+      // function when they're done loading. When both are loaded,
+      // we move on.
+      const done = () => {
+        if (component && json && (!page.layoutComponentChunkName || layout)) {
+          pathScriptsCache[path] = { component, json, layout, page }
+          const pageResources = { component, json, layout, page }
+          cb(pageResources)
+          emitter.emit(`onPostLoadPageResources`, {
+            page,
+            pageResources,
+          })
+        }
+      }
+      getResourceModule(page.componentChunkName, (err, c) => {
+        if (err) {
+          handleResourceLoadError(
+            page.path,
+            `Loading the component for ${page.path} failed`
+          )
+        }
+        component = c
+        done()
+      })
+      getResourceModule(page.jsonName, (err, j) => {
+        if (err) {
+          handleResourceLoadError(
+            page.path,
+            `Loading the JSON for ${page.path} failed`
+          )
+        }
+        json = j
+        done()
       })
       return pathScriptsCache[path]
     }
-
-    emitter.emit(`onPreLoadPageResources`, { path })
 
     Promise.all([
       getResourceModule(page.componentChunkName),

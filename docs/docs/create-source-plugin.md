@@ -61,20 +61,20 @@ Your `gatsby-node.js` should look something like:
 
 ```javascript
 exports.sourceNodes = async ({ boundActionCreators }) => {
-  const { createNode } = boundActionCreators
+  const { createNode } = boundActionCreators;
   // Create nodes here, generally by downloading data
   // from a remote API.
-  const data = await fetch(REMOTE_API)
+  const data = await fetch(REMOTE_API);
 
   // Process data into nodes.
-  data.forEach(datum => createNode(processDatum(datum)))
+  data.forEach(datum => createNode(processDatum(datum)));
 
   // We're done, return.
-  return
-}
+  return;
+};
 ```
 
-Puruse the [`sourceNodes`](/docs/node-apis/#sourceNodes) and
+Peruse the [`sourceNodes`](/docs/node-apis/#sourceNodes) and
 [`createNode`](/docs/bound-action-creators/#createNode) docs for detailed
 documentation on implementing those APIs.
 
@@ -93,3 +93,10 @@ But at a high-level, these are the jobs of a source plugin:
   Gatsby when you're done sourcing nodes. Otherwise either Gatsby will continue
   on before you're done sourcing or hang while waiting for you to indicate
   you're finished.
+
+[`gatsby-node-helpers`](https://github.com/angeloashmore/gatsby-node-helpers),
+a community-made NPM package, can help when writing source plugins. This
+package provides a set of helper functions to generate Node objects with the
+required fields. This includes automatically generating fields like node IDs
+and the `contentDigest` MD5 hash, keeping your code focused on data gathering,
+not boilerplate.

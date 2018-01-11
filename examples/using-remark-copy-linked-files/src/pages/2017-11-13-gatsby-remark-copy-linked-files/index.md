@@ -21,7 +21,7 @@ defined in `utils/typography.js`._</small>
 
 ## Images
 
-A simple Markdown image tag:
+A Markdown image tag:
 
 ![Markdown image tag](./alex-holyoake-388536.jpg)
 
@@ -111,8 +111,16 @@ HTML video tag with `source` and a fallback paragraph,
 However doing the same in just one line of HTML fails--\
 Video, <span class="fail">single line</span>:
 
-<video controls="controls" autoplay="true" loop="true"><source type="video/mp4" src="gatsbygram.mp4"></source><p>Your
-browser does not support the video element.</p></video>
+<video controls="controls" autoplay="true" loop="true"><source type="video/mp4" src="gatsbygram.mp4"></source><p>Your browser does not support the video element.</p></video>
+
+### Embedding Audio
+
+HTML audio tag with `source` and a fallback paragraph (MP3 via [doria.fi](https://www.doria.fi/handle/10024/72376), public domain):
+
+<audio controls="controls">
+  <source type="audio/mp3" src="RAI-GramophoneGC-82979-01-1-001.mp3"></source>
+  <p>Your browser does not support the audio element.</p>
+</audio>
 
 ## gatsby-config.js
 

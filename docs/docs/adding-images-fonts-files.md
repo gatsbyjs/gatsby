@@ -17,17 +17,17 @@ jpeg, png, gif, mp4, webm, wav, mp3, m4a, aac, and oga.
 Here is an example:
 
 ```js
-import React from "react"
-import logo from "./logo.png" // Tell Webpack this JS file uses this image
+import React from "react";
+import logo from "./logo.png"; // Tell Webpack this JS file uses this image
 
-console.log(logo) // /logo.84287d09.png
+console.log(logo); // /logo.84287d09.png
 
 function Header() {
   // Import result is the URL of your image
-  return <img src={logo} alt="Logo" />
+  return <img src={logo} alt="Logo" />;
 }
 
-export default Header
+export default Header;
 ```
 
 This ensures that when the project is built, Webpack will correctly move the

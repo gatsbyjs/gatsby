@@ -76,9 +76,9 @@ function inferGraphQLType({
     if (exampleValue == null) return null
 
     let headType
-    // If the array contains objects, than treat them as "nodes"
+    // If the array contains non-array objects, than treat them as "nodes"
     // and create an object type.
-    if (_.isObject(exampleValue)) {
+    if (_.isObject(exampleValue) && !_.isArray(exampleValue)) {
       headType = new GraphQLObjectType({
         name: createTypeName(fieldName),
         fields: inferObjectStructureFromNodes({
@@ -87,7 +87,7 @@ function inferGraphQLType({
           selector,
         }),
       })
-      // Else if the values are simple values, just infer their type.
+      // Else if the values are simple values or arrays, just infer their type.
     } else {
       let inferredType = inferGraphQLType({
         ...otherArgs,
@@ -107,12 +107,17 @@ function inferGraphQLType({
   // Check if this is a date.
   // All the allowed ISO 8601 date-time formats used.
   const momentDate = moment.utc(exampleValue, ISO_8601_FORMAT, true)
-  if (momentDate.isValid()) {
+  if (momentDate.isValid() && typeof exampleValue !== `number`) {
     return {
       type: GraphQLString,
       args: {
         formatString: {
           type: GraphQLString,
+          description: oneLine`
+            Format the date using Moment.js' date tokens e.g.
+          "date(formatString: "YYYY MMMM DD)"
+          See https://momentjs.com/docs/#/displaying/format/
+          for documentation for different tokens`,
         },
         fromNow: {
           type: GraphQLBoolean,
@@ -134,31 +139,34 @@ function inferGraphQLType({
           `,
         },
       },
-      resolve(object, { fromNow, difference, formatString, locale = `en` }) {
+      resolve(object, args) {
         let date
         if (object[fieldName]) {
           date = JSON.parse(JSON.stringify(object[fieldName]))
         } else {
           return null
         }
-        if (formatString) {
-          return moment
-            .utc(date, ISO_8601_FORMAT, true)
-            .locale(locale)
-            .format(formatString)
-        } else if (fromNow) {
-          return moment
-            .utc(date, ISO_8601_FORMAT, true)
-            .locale(locale)
-            .fromNow()
-        } else if (difference) {
-          return moment().diff(
-            moment.utc(date, ISO_8601_FORMAT, true).locale(locale),
-            difference
-          )
-        } else {
-          return date
+        if (_.isPlainObject(args)) {
+          const { fromNow, difference, formatString, locale = `en` } = args
+          if (formatString) {
+            return moment
+              .utc(date, ISO_8601_FORMAT, true)
+              .locale(locale)
+              .format(formatString)
+          } else if (fromNow) {
+            return moment
+              .utc(date, ISO_8601_FORMAT, true)
+              .locale(locale)
+              .fromNow()
+          } else if (difference) {
+            return moment().diff(
+              moment.utc(date, ISO_8601_FORMAT, true).locale(locale),
+              difference
+            )
+          }
         }
+
+        return date
       },
     }
   }
@@ -309,9 +317,9 @@ function inferFromFieldName(value, selector, types): GraphQLFieldConfig<*, *> {
     if (fields.length > 1) {
       type = new GraphQLUnionType({
         name: `Union_${key}_${fields.map(f => f.name).join(`__`)}`,
-        description: `Union interface for the field "${
-          key
-        }" for types [${fields.map(f => f.name).join(`, `)}]`,
+        description: `Union interface for the field "${key}" for types [${fields
+          .map(f => f.name)
+          .join(`, `)}]`,
         types: fields.map(f => f.nodeObjectType),
         resolveType: data =>
           fields.find(f => f.name == data.internal.type).nodeObjectType,

@@ -7,6 +7,7 @@ title: "Deploying Gatsby"
 * [S3/Cloudfront](/docs/deploy-gatsby/#amazon-s3-and-cloudfront)
 * [GitHub Pages](/docs/deploy-gatsby/#github-pages)
 * [GitLab Pages](/docs/deploy-gatsby/#gitlab-pages)
+* [Heroku](/docs/deploy-gatsby/#heroku)
 
 ## Amazon S3 and Cloudfront
 
@@ -62,8 +63,7 @@ module.exports = {
 If you have not yet initialized a git repository in your working gatsby site
 repo, set up git in your project with `git init`. Then tell Gatsby where to
 deploy your site by adding the git remote address with https or ssh. Here is how
-to do it with https: `git remote add origin
-git@github.com:username/project-name.git`.
+to do it with https: `git remote add origin git@github.com:username/project-name.git`.
 
 Now run `yarn deploy` or `npm run deploy`. Preview changes in your GitHub page
 `https://username.github.io/project-name/`. You can also find the link to your
@@ -81,13 +81,12 @@ The repository for these sites requires a special name. See
 https://help.github.com/articles/user-organization-and-project-pages/ for
 documentation on naming your site's repository.
 
-Like with project sites, add `gh-pages` as a `devDependency` and add a `deploy`
-script to your site's `package.json` file:
+If you wish to link your custom domain with your `user.github.io` repo, you will need
+a `CNAME` file inside the `static` folder at the root directory level with the your
+custom domain url inside, like so:
 
 ```
-"scripts": {
-  "deploy": "gatsby build && gh-pages -d public --branch master",
-}
+your-custom-domain.com
 ```
 
 ## Gitlab Pages
@@ -134,8 +133,8 @@ pages:
 
 The CI platform uses Docker images/containers, so `image: node:latest` tells the
 CI to use the latest node image. `cache:` caches the `node_modules` folder
-inbetween builds, so subsequent builds should be a lot faster as it doesn't have
-to reinstall all the dependancies required. `pages:` Is simply the name of the
+in between builds, so subsequent builds should be a lot faster as it doesn't have
+to reinstall all the dependancies required. `pages:` is the name of the
 CI stage. You can have multiple stages, e.g. 'Test', 'Build', 'Deploy' etc.
 `script:` starts the next part of the CI stage, telling it to start running the
 below scripts inside the image selected. We have used the `yarn install` and
@@ -162,6 +161,50 @@ Visit the
 [GitLab Pages](https://gitlab.com/help/user/project/pages/getting_started_part_one.md)
 to learn how to setup custom domains and find out about advanced configurations.
 
+## Heroku
+
+You can use the [heroku buildpack static](https://github.com/heroku/heroku-buildpack-static) to handle the static files of your site.
+
+Set the `heroku/node.js` and `heroku-buildpack-static` buildpacks on your application creating an `app.json` file on the root of your project.
+
+```
+{
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    },
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-static"
+    }
+  ]
+}
+```
+
+Sometimes specifying buildpacks via the `app.json` file doesn't work. If this is your case try to add them in the Heroku dashboard or via the CLI.
+
+Add a `heroku-postbuild` script in your `package.json`:
+
+```
+{
+
+  // ...
+  "scripts": {
+    // ...
+    "heroku-postbuild": "gatsby build"
+    // ...
+  }
+  // ...
+}
+```
+
+Finally, add a `static.json` file in the root of your project to define the directory where your static assets will be. You can check all the options for this file in the [heroku-buildpack-static configuration](https://github.com/heroku/heroku-buildpack-static#configuration).
+
+```
+{
+  "root": "public/"
+}
+```
+
 ## Debugging tips
 
 ### Don't minify HTML
@@ -178,7 +221,8 @@ or alternatively
 Uncaught Error: Minified React error #32; visit http://facebook.github.io/react/docs/error-decoder.html?invariant=32&args[]=## for the full message or use the non-minified dev environment for full errors and additional helpful warnings.
 ```
 
-This is a new problem when dealing with static sites built with React. React
-uses HTML comments to help identify locations of components that do not render
-anything. If you are using a CDN that minifies your HTML, it will eliminate the
-HTML comments used by react to take control of the page on the client.
+This is a new problem when dealing with static sites built with React. This is
+not caused by Gatsby. React uses HTML comments to help identify locations of
+components that do not render anything. If you are using a CDN that minifies
+your HTML, it will eliminate the HTML comments used by React to take control of
+the page on the client. Cloudflare is a CDN that minifies HTML by default.

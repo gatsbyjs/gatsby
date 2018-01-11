@@ -14,5 +14,5 @@ script.
 
 ```javascript
 // In your gatsby-config.js
-plugins: [`gatsby-plugin-twitter`]
+plugins: [`gatsby-plugin-twitter`];
 ```

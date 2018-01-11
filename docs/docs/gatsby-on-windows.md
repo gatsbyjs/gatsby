@@ -17,6 +17,8 @@ Build Tools 2015, provided free of charge by Microsoft. These tools are required
 to compile popular native modules. It will also install Python 2.7, configuring
 your machine and npm appropriately.
 
+If your `windows-buld-tools` installation stalls after Visual Studio Build Tools finishes, [this remedy](https://github.com/felixrieseberg/windows-build-tools/issues/47#issuecomment-296881488) might help.
+
 ### If `npm install` still fails...
 
 Sometimes the `windows-build-tools` won't properly install the required
@@ -29,8 +31,7 @@ see compilation errors such as `node-gyp` or `sharp` or `binding.gyp not found`.
 
 If you suspect this is your problem, download the
 [Visual Studio Community 2015 Package](https://www.visualstudio.com/products/visual-studio-community-vs)
-and install only the part of the package that interests us : `Programming
-languages > Visual C++ > Common tools for Visual Studio 2015`. Be sure to
+and install only the part of the package that interests us : `Programming languages > Visual C++ > Common tools for Visual Studio 2015`. Be sure to
 download the 2015 version of VS Community, not the 2017 version (see Note 1
 below) ; you'll have to use the
 [search bar on the VS site](https://www.visualstudio.com/products/visual-studio-community-vs)

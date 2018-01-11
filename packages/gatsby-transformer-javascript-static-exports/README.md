@@ -10,7 +10,7 @@ Parses JavaScript files to extract data from exports.
 
 ```javascript
 // In your gatsby-config.js
-plugins: [`gatsby-transformer-javascript-static-exports`]
+plugins: [`gatsby-transformer-javascript-static-exports`];
 ```
 
 ## Parsing algorithm
@@ -45,7 +45,7 @@ export const data = {
   path: "choropleth-on-d3v4",
   category: "data science",
   description: "Things about the choropleth.",
-}
+};
 ```
 
 ## How to query

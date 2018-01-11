@@ -1,10 +1,15 @@
 # gatsby-remark-code-repls
 
-This plug-in adds support for directly embedding code examples as links to
-popular REPLs such as [Babel](https://babeljs.io/repl/),
-[Codepen](https://codepen.io/), and [CodeSandbox](https://codesandbox.io/). This
-enables example code to be stored along side of, and revisioned with, your
-website content.
+This plug-in adds support for generating links to popular REPLs, using code in
+local files to populate the contents of the REPL. This enables example code to
+be stored along side of, and revisioned with, your website content.
+
+It currently supports:
+
+* [Babel](https://babeljs.io/repl/)
+* [Codepen](https://codepen.io/)
+* [CodeSandbox](https://codesandbox.io/)
+* [Ramda](http://ramdajs.com/repl)
 
 This plug-in was created to solve a couple of problems the React team has faced
 with [reactjs.org](https://github.com/reactjs/reactjs.org):
@@ -15,7 +20,7 @@ with [reactjs.org](https://github.com/reactjs/reactjs.org):
 * Examples (eg Codepens) were owned by a single author, so the community
   couldn't contribute PRs to update them without forking and fragmenting
   ownership.
-* It was easy to create invalid links (eg Babel REPL links that _don't quite
+* It was easy to create invalid links (eg Babel REPL links that \_don't quite
   work).
 
 ## Overview
@@ -72,6 +77,9 @@ Babel and CodeSandbox links use the
 [same URL compression schema used by the Babel REPL](https://github.com/babel/website/blob/c9dd1f516985f7267eb58c286789e0c66bc0a21d/js/repl/UriUtils.js#L22-L26)
 to embed the local code example in a URL that enables it to be viewed directly
 within the target REPL.
+
+Ramda links use basic URL encoding to embed the local code example in a URL that
+enables it to be viewed directly within Ramda's REPL.
 
 All example links are also verified to ensure that they reference valid example
 files. For example, if there is a link to
