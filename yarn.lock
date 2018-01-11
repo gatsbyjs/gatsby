@@ -11084,12 +11084,6 @@ sc-simple-broker@~2.1.0:
   dependencies:
     sc-channel "~1.1.0"
 
-schema-utils@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/schema-utils/-/schema-utils-0.3.0.tgz#f5877222ce3e931edae039f17eb3716e7137f8cf"
-  dependencies:
-    ajv "^5.0.0"
-
 scroll-behavior@^0.9.1:
   version "0.9.4"
   resolved "https://registry.yarnpkg.com/scroll-behavior/-/scroll-behavior-0.9.4.tgz#73b4a0eae3e59c0b8f3b6fc1ff78f054a513e79c"
@@ -11963,12 +11957,11 @@ strong-log-transformer@^1.0.6:
     moment "^2.6.0"
     through "^2.3.4"
 
-style-loader@^0.19.1:
-  version "0.19.1"
-  resolved "https://registry.yarnpkg.com/style-loader/-/style-loader-0.19.1.tgz#591ffc80bcefe268b77c5d9ebc0505d772619f85"
+style-loader@^0.13.0:
+  version "0.13.2"
+  resolved "https://registry.yarnpkg.com/style-loader/-/style-loader-0.13.2.tgz#74533384cf698c7104c7951150b49717adc2f3bb"
   dependencies:
     loader-utils "^1.0.2"
-    schema-utils "^0.3.0"
 
 styled-jsx@^1.0.10:
   version "1.0.11"
