@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
+import { navigateTo } from "gatsby-link"
 import { rhythm } from "../utils/typography"
 import presets from "../utils/presets"
 
@@ -26,6 +27,21 @@ class SearchForm extends Component {
     this.state = { enabled: true }
   }
 
+  /**
+   * Replace the default selection event, allowing us to do client-side
+   * navigation thus avoiding a full page refresh.
+   *
+   * Ref: https://github.com/algolia/autocomplete.js#events
+   */
+  autocompleteSelected(e){
+    e.stopPropagation()
+    // Use an anchor tag to parse the absolute url (from autocomplete.js) into a relative url
+    // eslint-disable-next-line no-undef
+    const a = document.createElement(`a`)
+    a.href = e._args[0].url
+    navigateTo(`${a.pathname}${a.hash}`)
+  }
+
   componentDidMount() {
     if (
       typeof window === `undefined` || // eslint-disable-line no-undef
@@ -35,6 +51,9 @@ class SearchForm extends Component {
       this.setState({ enabled: false })
       return
     }
+
+    // eslint-disable-next-line no-undef
+    window.addEventListener(`autocomplete:selected`, this.autocompleteSelected, true)
 
     // eslint-disable-next-line no-undef
     window.docsearch({
