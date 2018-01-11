@@ -2,7 +2,7 @@
 title: Styled Components
 ---
 
-[Styled Components](https://www.styled-components.com/) is an example of using CSS-in-JS. It might be useful for you to explore [CSS Modules](/tutorial/part-two/) and [Glamor](/glamor/) to see how Styled Components compares as a styling method.
+[Styled Components](https://www.styled-components.com/) is an example of using CSS-in-JS. It might be useful for you to explore [CSS Modules](/tutorial/part-two/) and [Glamor](../glamor/) to see how Styled Components compares as a styling method.
 
 Styled Components lets you use actual CSS syntax inside your components. Like Glamor, Styled Components is a variant on "CSS-in-JS"—which solves many of the problems with traditional CSS.
 
