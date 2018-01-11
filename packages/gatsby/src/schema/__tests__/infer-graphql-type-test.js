@@ -81,7 +81,7 @@ describe(`GraphQL type inferance`, () => {
       id: `boo`,
       name: `The Mad Wax`,
       type: `Test`,
-      hair: 2,
+      hair: 2048,
       date: `1984-10-12`,
       anArray: [1, 2, 5, 4],
       aNestedArray: [[1, 2, 3, 4]],
