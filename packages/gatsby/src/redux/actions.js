@@ -133,17 +133,17 @@ actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
     updatedAt: Date.now(),
   }
 
+  // If the path doesn't have an initial forward slash, add it.
+  if (internalPage.path[0] !== `/`) {
+    internalPage.path = `/${internalPage.path}`
+  }
+
   const result = Joi.validate(internalPage, joiSchemas.pageSchema)
   if (result.error) {
     console.log(chalk.blue.bgYellow(`The upserted page didn't pass validation`))
     console.log(chalk.bold.red(result.error))
     console.log(internalPage)
     return null
-  }
-
-  // If the path doesn't have an initial forward slash, add it.
-  if (internalPage.path[0] !== `/`) {
-    internalPage.path = `/${internalPage.path}`
   }
 
   return {
@@ -390,9 +390,7 @@ actions.createNode = (node: any, plugin?: Plugin, traceId?: string) => {
       typeOwners[node.internal.type] = pluginName
     else if (typeOwners[node.internal.type] !== pluginName)
       throw new Error(stripIndent`
-        The plugin "${
-          pluginName
-        }" created a node of a type owned by another plugin.
+        The plugin "${pluginName}" created a node of a type owned by another plugin.
 
         The node type "${node.internal.type}" is owned by "${
         typeOwners[node.internal.type]

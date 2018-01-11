@@ -684,6 +684,72 @@ Object {
 }
 `;
 
+exports[`gatsby-remark-embed-snippet JavaScript files should support multiple highlight directives within a single file 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "position": Position {
+            "end": Object {
+              "column": 23,
+              "line": 1,
+              "offset": 22,
+            },
+            "indent": Array [],
+            "start": Object {
+              "column": 1,
+              "line": 1,
+              "offset": 0,
+            },
+          },
+          "type": "html",
+          "value": "<div class=\\"gatsby-highlight\\">
+        <pre class=\\"language-jsx\\"><code><span class=\\"token keyword\\">let</span> notHighlighted<span class=\\"token punctuation\\">;</span>
+<span class=\\"gatsby-highlight-code-line\\"><span class=\\"token keyword\\">let</span> highlighted<span class=\\"token punctuation\\">;</span>
+</span>
+notHighlighted <span class=\\"token operator\\">=</span> <span class=\\"token number\\">1</span><span class=\\"token punctuation\\">;</span>
+
+<span class=\\"gatsby-highlight-code-line\\">highlighted <span class=\\"token operator\\">=</span> <span class=\\"token number\\">2</span><span class=\\"token punctuation\\">;</span>
+</span>
+notHighlighted <span class=\\"token operator\\">=</span> <span class=\\"token number\\">3</span><span class=\\"token punctuation\\">;</span>
+<span class=\\"gatsby-highlight-code-line\\">highlighted <span class=\\"token operator\\">=</span> <span class=\\"token number\\">4</span><span class=\\"token punctuation\\">;</span>
+</span></code></pre>
+        </div>",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 23,
+          "line": 1,
+          "offset": 22,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 23,
+      "line": 1,
+      "offset": 22,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
 exports[`gatsby-remark-embed-snippet Markdown files should extract the correct Prism language 1`] = `
 Object {
   "children": Array [

@@ -18,5 +18,5 @@ attributes, etc. will get added to the static HTML pages Gatsby builds.
 Just add the plugin to the plugins array in your `gatsby-config.js`
 
 ```javascript
-plugins: [`gatsby-plugin-react-helmet`]
+plugins: [`gatsby-plugin-react-helmet`];
 ```

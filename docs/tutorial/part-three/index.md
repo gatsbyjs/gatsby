@@ -3,7 +3,7 @@ title: Gatsby.js Tutorial Part Three
 typora-copy-images-to: ./
 ---
 
-Gatsby lets you easily create "layout components". Layout components are
+Gatsby lets you create "layout components". Layout components are
 sections of your site that you want to share across multiple pages. For example,
 Gatsby sites will commonly have a layout component with a shared header and
 footer. Other common things to add to layouts are a sidebar and navigation menu.
@@ -13,32 +13,31 @@ the header at the top are part of gatsbyjs.org's layout component.
 
 Let's dive in and explore Gatsby layouts.
 
-First, create a new site for this part of the tutorial. We'll use the "hello
-world" starter again.
+First, create a new site for this part of the tutorial (and, as we mentioned in Part Two, at this point it's probably a good idea to close the terminal window(s) and project files from previous parts of the tutorial, to keep things clean on your desktop). We'll use the "hello world" starter again:
 
 ```shell
 gatsby new tutorial-part-three https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
-Once the site is finished installing, install `gatsby-plugin-typography`. For
-the Typography.js theme, let's try this time the "Fairy Gates" typography theme.
+Once the site is finished installing, install `gatsby-plugin-typography`. For a reminder of how to do this, see Part Two of the tutorials. For
+the Typography.js theme, let's try the "Fairy Gates" typography theme this time:
 
 ```shell
 npm install --save gatsby-plugin-typography typography-theme-fairy-gates
 ```
 
-Create the typography config file at `src/utils/typography.js`
+Create a `src/utils` directory, and then create the typography config file at `src/utils/typography.js`:
 
 ```javascript
-import Typography from "typography"
-import fairyGateTheme from "typography-theme-fairy-gates"
+import Typography from "typography";
+import fairyGateTheme from "typography-theme-fairy-gates";
 
-const typography = new Typography(fairyGateTheme)
+const typography = new Typography(fairyGateTheme);
 
-export default typography
+export default typography;
 ```
 
-Then our site's `gatsby-config.js`
+Then edit our site's `gatsby-config.js` at the root of the site:
 
 ```javascript
 module.exports = {
@@ -50,7 +49,7 @@ module.exports = {
       },
     },
   ],
-}
+};
 ```
 
 Now, let's add a few different pages: a front page, an about page, and a contact
@@ -59,7 +58,7 @@ page.
 `src/pages/index.js`
 
 ```jsx
-import React from "react"
+import React from "react";
 
 export default () => (
   <div>
@@ -69,26 +68,26 @@ export default () => (
       websites.
     </p>
   </div>
-)
+);
 ```
 
 `src/pages/about.js`
 
 ```jsx
-import React from "react"
+import React from "react";
 
 export default () => (
   <div>
     <h1>About me</h1>
     <p>I’m good enough, I’m smart enough, and gosh darn it, people like me!</p>
   </div>
-)
+);
 ```
 
 `src/pages/contact.js`
 
 ```jsx
-import React from "react"
+import React from "react";
 
 export default () => (
   <div>
@@ -97,7 +96,7 @@ export default () => (
       <a href="mailto:me@example.com">me@example.com</a>
     </p>
   </div>
-)
+);
 ```
 
 ![no-layout](no-layout.png)
@@ -116,16 +115,16 @@ Let's tackle these problems by creating our first layout component.
 First, create a new directory at `src/layouts`. All layout components have to be
 in this directory.
 
-Let's create a very simple layout component at `src/layouts/index.js`
+Let's create a very basic layout component at `src/layouts/index.js`:
 
 ```jsx
-import React from "react"
+import React from "react";
 
 export default ({ children }) => (
   <div style={{ margin: `0 auto`, maxWidth: 650, padding: `0 1rem` }}>
     {children()}
   </div>
-)
+);
 ```
 
 _Notice that unlike most `children` props, the `children` prop passed to layout
@@ -135,13 +134,13 @@ Stop `gatsby develop` and start it again for the new layout to take effect.
 
 ![with-layout2](with-layout2.png)
 
-Sweet, the layout is working as now our text is centered and constrained to a
-column 650 pixels wide as we specified.
+Sweet, the layout is working! Now, our text is centered and constrained to a
+column 650 pixels wide, as we specified.
 
-Let's now add our site title.
+Let's now add our site title:
 
 ```jsx{5}
-import React from "react"
+import React from "react";
 
 export default ({ children }) =>
   <div style={{ margin: `0 auto`, maxWidth: 650, padding: `0 1rem` }}>
@@ -155,11 +154,11 @@ If we go to any of our three pages we'll see the same title added e.g. the
 
 ![with-title](with-title.png)
 
-Let's add navigation links to each of our three pages.
+Let's add navigation links to each of our three pages:
 
 ```jsx{2-9,12-22}
-import React from "react"
-import Link from "gatsby-link"
+import React from "react";
+import Link from "gatsby-link";
 
 const ListLink = props =>
   <li style={{ display: `inline-block`, marginRight: `1rem` }}>
@@ -186,9 +185,9 @@ export default ({ children }) =>
 
 ![with-navigation](with-navigation.png)
 
-And there we have it! A three page site with a simple global navigation.
+And there we have it! A three page site with a basic global navigation.
 
-With your new "layout component" powers, you can easily add headers, footers,
+With your new "layout component" powers, you can add headers, footers,
 global navigation, sidebars, etc. to your Gatsby sites.
 
 Continue on to

@@ -8,10 +8,10 @@ Adds the Lodash webpack & Babel plugins for easy modular, small Lodash builds.
 
 ## How to use
 
-Simply add the plugin to your `gatsby-config.js`.
+Add the plugin to your `gatsby-config.js`.
 
 ```javascript
-plugins: [`gatsby-plugin-lodash`]
+plugins: [`gatsby-plugin-lodash`];
 ```
 
 By default this plugin enables all
@@ -27,5 +27,5 @@ plugins: [
       disabledFeatures: [`shorthands`, `cloning`],
     },
   },
-]
+];
 ```

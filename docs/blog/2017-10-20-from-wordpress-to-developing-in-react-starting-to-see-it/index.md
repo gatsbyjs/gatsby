@@ -20,7 +20,7 @@ developer on a project.
 
 So I decided to dive into learning React with a few courses and some
 experimentation. I had the aim of building a site in
-[Gatsby.js](https://www.gatsbyjs.org/ "Blazing-fast static site generator for React")
+[Gatsby.js](/ "Blazing-fast static site generator for React")
 as a test for doing projects built entirely in React.
 
 ## Letting Go
@@ -52,17 +52,17 @@ makes groking easier. I have my layout, template and config modules at hand in
 the folder structure, without duplication.
 
 ```js
-import React from "react"
+import React from "react";
 // Template for blog page
 export default ({ data }) => {
-  const post = data.markdownRemark
+  const post = data.markdownRemark;
   return (
     <div>
       <h1>{post.frontmatter.title}</h1>
       <div dangerouslySetInnerHTML={{ __html: post.html }} />
     </div>
-  )
-}
+  );
+};
 // The data query
 export const query = graphql`
   query BlogPostQuery($slug: String!) {
@@ -74,7 +74,7 @@ export const query = graphql`
       }
     }
   }
-`
+`;
 ```
 
 Whilst this might _look_ weird, it actually makes it much easier to understand
@@ -111,7 +111,7 @@ export const query = graphql`
       }
     }
   }
-`
+`;
 ```
 
 Aside from those pesky tick characters, which are sometimes hard to spot for a
@@ -129,7 +129,7 @@ focus on context without having to grok SCSS again, reducing mental friction.
 
 ## My Project
 
-Following the [tutorial on Gatsbyjs](https://www.gatsbyjs.org/tutorial/) I built
+Following the [tutorial on Gatsbyjs](/tutorial/) I built
 up my project from scratch, breaking things profusely at first, but it honestly
 didn’t take long to gain confidence enough so that I launched my first site at
 [freebabylon5.com](https://freebabylon5.com "Our last, best hope of getting back on the air")
@@ -137,7 +137,7 @@ recently.
 
 Be warned: the tutorial isn’t quite finished yet, you might be better off
 starting with
-[one of the starter kits already available](https://www.gatsbyjs.org/docs/gatsby-starters/),
+[one of the starter kits already available](/docs/gatsby-starters/),
 so that you get `react-helmet` and active links implemented, the 2 things I had
 to learn independently.
 
@@ -163,7 +163,7 @@ hacked.
 
 Using GatsbyJS with its “Bring Your Own Data” strategy makes perfect sense, and
 we’re about to start building our first Gatsby client site using the plugin
-[`gatsby-source-wordpress`](https://www.gatsbyjs.org/packages/gatsby-source-wordpress/ "WordPress content into Gatsby")
+[`gatsby-source-wordpress`](/packages/gatsby-source-wordpress/ "WordPress content into Gatsby")
 to pull in our data and build a totally secure website with some pretty
 impressive gains on loading time. We’ll also sleep better at night knowing
 insecurities in WordPress are no longer putting our clients at risk.

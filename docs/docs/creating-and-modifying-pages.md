@@ -53,10 +53,10 @@ of the markdown file.
 // Implement the Gatsby API “createPages”. This is called once the
 // data layer is bootstrapped to let plugins create pages from data.
 exports.createPages = ({ boundActionCreators, graphql }) => {
-  const { createPage } = boundActionCreators
+  const { createPage } = boundActionCreators;
 
   return new Promise((resolve, reject) => {
-    const blogPostTemplate = path.resolve(`src/templates/blog-post.js`)
+    const blogPostTemplate = path.resolve(`src/templates/blog-post.js`);
     // Query for markdown nodes to use in creating pages.
     resolve(
       graphql(
@@ -75,12 +75,12 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
         `
       ).then(result => {
         if (result.errors) {
-          reject(result.errors)
+          reject(result.errors);
         }
 
         // Create pages for each markdown file.
         result.data.allMarkdownRemark.edges.forEach(({ node }) => {
-          const path = node.frontmatter.path
+          const path = node.frontmatter.path;
           createPage({
             path,
             component: blogPostTemplate,
@@ -91,12 +91,12 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
             context: {
               path,
             },
-          })
-        })
+          });
+        });
       })
-    )
-  })
-}
+    );
+  });
+};
 ```
 
 ## Modifying pages created by core or plugins
@@ -112,52 +112,53 @@ trailing slashes.
 
 To do this, in your site's `gatsby-node.js` add code similar to the following:
 
+_Note: There's also a plugin that will remove all trailing slashes from pages automatically:
+[gatsby-plugin-remove-trailing-slashes](/packages/gatsby-plugin-remove-trailing-slashes/)_.
+
 ```javascript
 // Implement the Gatsby API “onCreatePage”. This is
 // called after every page is created.
 exports.onCreatePage = ({ page, boundActionCreators }) => {
-  const { createPage, deletePage } = boundActionCreators
-
-  return new Promise((resolve, reject) => {
-    // Remove trailing slash
-    const newPage = Object.assign({}, page, {
-      path: page.path === `/` ? page.path : page.path.replace(/\/$/, ``),
-    })
-
-    if (newPage.path !== page.path) {
-      // Remove the old page
-      deletePage(page)
-      // Add the new page
-      createPage(newPage)
+  const { createPage, deletePage } = boundActionCreators;
+  return new Promise(resolve => {
+    const oldPage = Object.assign({}, page);
+    // Remove trailing slash unless page is /
+    page.path = _path => (_path === `/` ? _path : _path.replace(/\/$/, ``));
+    if (page.path !== oldPage.path) {
+      // Replace new page with old page
+      deletePage(oldPage);
+      createPage(page);
     }
-
-    resolve()
-  })
-}
+    resolve();
+  });
+};
 ```
 
 ### Creating client-only routes
 
 If you're creating a "hybrid" Gatsby app with both statically rendered pages as
-well as client-only routes e.g. an app that combines marketing pages and your
-app that lives under `/app/*`, you want to add code to your `gatsby-node.js`
+well as client-only routes (e.g. an app that combines marketing pages and your
+app that lives under `/app/*`), you want to add code to your `gatsby-node.js`
 like the following:
+
+_Note: There's also a plugin that will set up the creation of client-paths declaratively:
+[gatsby-plugin-create-client-paths](/packages/gatsby-plugin-create-client-paths/)_.
 
 ```javascript
 // Implement the Gatsby API “onCreatePage”. This is
 // called after every page is created.
 exports.onCreatePage = async ({ page, boundActionCreators }) => {
-  const { createPage } = boundActionCreators
+  const { createPage } = boundActionCreators;
 
   // page.matchPath is a special key that's used for matching pages
   // only on the client.
   if (page.path.match(/^\/app/)) {
-    page.matchPath = "/app/:path"
+    page.matchPath = "/app/:path";
 
     // Update the page.
-    createPage(page)
+    createPage(page);
   }
-}
+};
 ```
 
 ### Choosing the page layout
@@ -174,18 +175,18 @@ components in the `/layouts/` directory are automatically available.
 // Implement the Gatsby API “onCreatePage”. This is
 // called after every page is created.
 exports.onCreatePage = async ({ page, boundActionCreators }) => {
-  const { createPage } = boundActionCreators
+  const { createPage } = boundActionCreators;
 
   return new Promise((resolve, reject) => {
     if (page.path.match(/^\/landing-page/)) {
       // It's assumed that `landingPage.js` exists in the `/layouts/` directory
-      page.layout = "landingPage"
+      page.layout = "landingPage";
 
       // Update the page.
-      createPage(page)
+      createPage(page);
     }
 
-    resolve()
-  })
-}
+    resolve();
+  });
+};
 ```

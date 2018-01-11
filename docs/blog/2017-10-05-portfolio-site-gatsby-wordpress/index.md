@@ -54,7 +54,7 @@ will I query it?
 
 The answer... [GraphQL](http://graphql.org/). Gatsby ships with it and through
 an npm install of a
-[gatsby-source plugin](https://www.gatsbyjs.org/docs/plugins/) of your choice
+[gatsby-source plugin](/docs/plugins/) of your choice
 and a tiny bit of a config, you can start querying in no time. I was amazed with
 how simple queries are using GraphQL. You look at them and you go "Huh, that's
 it? Really?". Gatsby even ships with an in-browser query tester so you can see
@@ -81,7 +81,7 @@ export const projectsPageQuery = graphql`
       }
     }
   }
-`
+`;
 ```
 
 Pulling blog posts was even easier! If you’d like to sort them by date, ID,
@@ -103,13 +103,13 @@ export const postQuery = graphql`
       }
     }
   }
-`
+`;
 ```
 
 ## Wrap up and future
 
 In just a few weekends I managed to rebuild my portfolio site with the blog I
-wanted. I'd highly recommend [Gatsby](https://www.gatsbyjs.org/tutorial/) for
+wanted. I'd highly recommend [Gatsby](/tutorial/) for
 anyone who has started getting acquainted with React. Before I started this
 project I didn't know a lot about:
 

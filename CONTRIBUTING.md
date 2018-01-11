@@ -33,14 +33,37 @@ The usual contributing steps are:
 * Run `npm run watch` from the root of the repo to first do an initial Babel
   build of all packages and then watch for changes to packages' source code and
   compile these changes on-the-fly as you work.
-* Install [gatsby-dev-cli](/packages/gatsby-dev-cli/) globally: `yarn global add
-  gatsby-dev-cli`
+* Install [gatsby-dev-cli](/packages/gatsby-dev-cli/) globally: `yarn global add gatsby-dev-cli`
 * For each of your Gatsby test sites, run the `gatsby-dev` command there to copy
   the built files from your cloned copy of Gatsby. It'll watch for your changes
   to Gatsby packages and copy them into the site. For more detailed instructions
   see the [gatsby-dev-cli README](/packages/gatsby-dev-cli/)
 * Add tests and code for your changes.
 * Once you're done, make sure all tests still pass: `yarn test`
+* Commit and push to your fork.
+* Create an pull request from your branch.
+
+### Contributing to the documentation.
+
+Gatsby, unsurprisingly, uses Gatsby for it's documentation website.
+
+If you want to add/modify any Gatsby documentation, go to the
+[docs folder on Github](https://github.com/gatsbyjs/gatsby/tree/master/docs) and
+use the file editor to edit and then preview your changes. Github then allows
+you to commit the change and raise a PR right in the UI. This is the _easiest_
+way you can contribute to the project!
+
+However, if you want to make more changes to the website, that is, change
+layouts, add sections/pages, follow the steps below. You can then spin up your
+own instance of the Gatsby website and make/preview your changes before raising
+a pull request.
+
+* Clone the repo and navigate to `/www`
+* Run `yarn` to install all of the website's dependencies.
+* Run `gatsby develop` to preview the website in `http://localhost:8000`
+* The Markdown files for the documentation live in `/docs` folder. Make
+  additions or modifications here.
+* Make sure to double check your grammar and capitalise correctly.
 * Commit and push to your fork.
 * Create an pull request from your branch.
 

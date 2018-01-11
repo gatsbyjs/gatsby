@@ -87,6 +87,20 @@ Community:
   * Navigation between posts with a previous/next post button
   * Tags and tag navigation
 
+* [gatsby-starter-casper](https://github.com/haysclark/gatsby-starter-casper)
+  [(demo)](https://haysclark.github.io/gatsby-starter-casper/)
+
+  Features:
+
+  * Page pagination
+  * CSS
+  * Tags
+  * Google Analytics
+  * Offline support
+  * Web App Manifest
+  * SEO
+  * [Full list here!](https://github.com/haysclark/gatsby-starter-casper#features)
+
 * [gatsby-advanced-starter](https://github.com/Vagr9K/gatsby-advanced-starter)
   [(demo)](https://vagr9k.github.io/gatsby-advanced-starter/)
 
@@ -277,3 +291,45 @@ Community:
   * Create presentations/slides using Gatsby.
   * Offline support.
   * Page transitions.
+
+* [gatsby-starter-forty](https://github.com/ChangoMan/gatsby-starter-forty)
+  [(demo)](http://gatsby-forty.surge.sh/)
+
+  Features:
+
+  * Based off of the Forty site template. Designed by
+    [HTML5 UP](https://html5up.net/forty)
+  * Colorful homepage, and also includes a Landing Page and Generic Page components.
+  * Many elements are available, including buttons, forms, tables, and pagination.
+  * Styling with SCSS
+
+* [gatsby-firebase-authentication](https://github.com/rwieruch/gatsby-firebase-authentication) [(demo)](https://react-firebase-authentication.wieruch.com/)
+
+  Features:
+
+  * Sign In, Sign Up, Sign Out
+  * Password Forget
+  * Password Change
+  * Protected Routes with Authorization
+  * Realtime Database with Users
+
+* [gatsby-starter-ceevee](https://github.com/amandeepmittal/gatsby-starter-ceevee) [(demo)](http://gatsby-starter-ceevee.surge.sh/)
+
+  Features:
+
+  * Based on the Ceevee site template, design by [Styleshout](https://www.styeshout.com/)
+  * Single Page Resume/Portfolio site
+  * Target audience Developers, Designers, etc.
+  * Used CSS Modules, easy to manipulate
+  * FontAwsome Library for icons
+  * Responsive Design, optimized for Mobile devices
+
+- [gatsby-starter-product-guy](https://github.com/amandeepmittal/gatsby-starter-product-guy) [(demo)](http://gatsby-starter-product-guy.surge.sh/)
+
+  Features:
+
+  * Single Page
+  * A portfolio Developers and Product launchers alike
+  * Using [Typography.js](kyleamathews.github.io/typography.js/) easy to switch fonts
+  * All your Project/Portfolio Data in Markdown, server by GraphQL
+  * Responsive Design, optimized for Mobile devices

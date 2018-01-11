@@ -114,13 +114,18 @@ module.exports = ({
         ? 0
         : sift.indexOf({ $and: siftArgs }, myNodes)
 
-      // Create dependency between resulting node and the path.
-      createPageDependency({
-        path,
-        nodeId: myNodes[index].id,
-      })
+      // If a node is found, create a dependency between the resulting node and
+      // the path.
+      if (index !== -1) {
+        createPageDependency({
+          path,
+          nodeId: myNodes[index].id,
+        })
 
-      return myNodes[index]
+        return myNodes[index]
+      } else {
+        return null
+      }
     }
 
     let result = _.isEmpty(siftArgs)

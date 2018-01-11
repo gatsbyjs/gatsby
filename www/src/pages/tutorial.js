@@ -24,8 +24,7 @@ export default () => (
       <li>
         <Link to="/tutorial/part-two/">
           Introduction to using CSS in Gatsby
-        </Link>. Explore libraries like Typography.js, CSS Modules, Glamor, and
-        Styled Components.
+        </Link>. Explore libraries like Typography.js and CSS Modules.
       </li>
       <li>
         <Link to="/tutorial/part-three/">
@@ -40,7 +39,7 @@ export default () => (
         {` `}
         Explore source & transformer plugins. Get introduced to programmatic
         pages and how to write GraphQL queries. In this part of the tutorial
-        we'll build a simple markdown blog.
+        we'll build a bare-bones markdown blog.
       </li>
       <li>
         Finishing and deploying a website. React Helmet. We walk through how to

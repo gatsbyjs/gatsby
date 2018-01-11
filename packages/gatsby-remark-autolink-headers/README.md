@@ -17,5 +17,5 @@ plugins: [
       plugins: [`gatsby-remark-autolink-headers`],
     },
   },
-]
+];
 ```

@@ -21,7 +21,7 @@ plugins: [
       siteUrl: `https://www.example.com`,
     },
   },
-]
+];
 ```
 
 With the above configuration, the plugin will add to the head of every HTML page

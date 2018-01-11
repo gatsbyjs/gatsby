@@ -23,21 +23,21 @@ const remark2retext = require(`remark-retext`)
 
 let pluginsCacheStr = ``
 const astCacheKey = node =>
-  `transformer-remark-markdown-ast-${node.internal.contentDigest}-${
-    pluginsCacheStr
-  }`
+  `transformer-remark-markdown-ast-${
+    node.internal.contentDigest
+  }-${pluginsCacheStr}`
 const htmlCacheKey = node =>
-  `transformer-remark-markdown-html-${node.internal.contentDigest}-${
-    pluginsCacheStr
-  }`
+  `transformer-remark-markdown-html-${
+    node.internal.contentDigest
+  }-${pluginsCacheStr}`
 const headingsCacheKey = node =>
-  `transformer-remark-markdown-headings-${node.internal.contentDigest}-${
-    pluginsCacheStr
-  }`
+  `transformer-remark-markdown-headings-${
+    node.internal.contentDigest
+  }-${pluginsCacheStr}`
 const tableOfContentsCacheKey = node =>
-  `transformer-remark-markdown-toc-${node.internal.contentDigest}-${
-    pluginsCacheStr
-  }`
+  `transformer-remark-markdown-toc-${
+    node.internal.contentDigest
+  }-${pluginsCacheStr}`
 
 module.exports = (
   { type, store, pathPrefix, getNode, cache },
@@ -60,8 +60,15 @@ module.exports = (
     for (let plugin of pluginOptions.plugins) {
       const requiredPlugin = require(plugin.resolve)
       if (_.isFunction(requiredPlugin.setParserPlugins)) {
-        for (let parserPlugin of requiredPlugin.setParserPlugins()) {
-          remark = remark.use(parserPlugin)
+        for (let parserPlugin of requiredPlugin.setParserPlugins(
+          plugin.pluginOptions
+        )) {
+          if (_.isArray(parserPlugin)) {
+            const [parser, options] = parserPlugin
+            remark = remark.use(parser, options)
+          } else {
+            remark = remark.use(parserPlugin)
+          }
         }
       }
     }
@@ -75,23 +82,22 @@ module.exports = (
           n => n.internal.type === `File`
         )
         const ast = await new Promise((resolve, reject) => {
-          Promise.all(
-            pluginOptions.plugins.map(plugin => {
-              const requiredPlugin = require(plugin.resolve)
-              if (_.isFunction(requiredPlugin.mutateSource)) {
-                return requiredPlugin.mutateSource(
-                  {
-                    markdownNode,
-                    files,
-                    getNode,
-                  },
-                  plugin.pluginOptions
-                )
-              } else {
-                return Promise.resolve()
-              }
-            })
-          ).then(() => {
+          // Use Bluebird's Promise function "each" to run remark plugins serially.
+          Promise.each(pluginOptions.plugins, plugin => {
+            const requiredPlugin = require(plugin.resolve)
+            if (_.isFunction(requiredPlugin.mutateSource)) {
+              return requiredPlugin.mutateSource(
+                {
+                  markdownNode,
+                  files,
+                  getNode,
+                },
+                plugin.pluginOptions
+              )
+            } else {
+              return Promise.resolve()
+            }
+          }).then(() => {
             const markdownAST = remark.parse(markdownNode.internal.content)
 
             // source => parse (can order parsing for dependencies) => typegen
@@ -127,25 +133,24 @@ module.exports = (
             const files = _.values(store.getState().nodes).filter(
               n => n.internal.type === `File`
             )
-            Promise.all(
-              pluginOptions.plugins.map(plugin => {
-                const requiredPlugin = require(plugin.resolve)
-                if (_.isFunction(requiredPlugin)) {
-                  return requiredPlugin(
-                    {
-                      markdownAST,
-                      markdownNode,
-                      getNode,
-                      files,
-                      pathPrefix,
-                    },
-                    plugin.pluginOptions
-                  )
-                } else {
-                  return Promise.resolve()
-                }
-              })
-            ).then(() => {
+            // Use Bluebird's Promise function "each" to run remark plugins serially.
+            Promise.each(pluginOptions.plugins, plugin => {
+              const requiredPlugin = require(plugin.resolve)
+              if (_.isFunction(requiredPlugin)) {
+                return requiredPlugin(
+                  {
+                    markdownAST,
+                    markdownNode,
+                    getNode,
+                    files,
+                    pathPrefix,
+                  },
+                  plugin.pluginOptions
+                )
+              } else {
+                return Promise.resolve()
+              }
+            }).then(() => {
               resolve(markdownAST)
             })
           })
@@ -275,9 +280,11 @@ module.exports = (
           },
         },
         resolve(markdownNode, { pruneLength }) {
+          if (markdownNode.excerpt) {
+            return Promise.resolve(markdownNode.excerpt)
+          }
           return getAST(markdownNode).then(ast => {
             const excerptNodes = []
-
             visit(ast, node => {
               if (node.type === `text` || node.type === `inlineCode`) {
                 excerptNodes.push(node.value)

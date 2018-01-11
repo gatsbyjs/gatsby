@@ -26,13 +26,13 @@ To install it, in the root of your site you run:
 
 `npm install --save gatsby-transformer-json`
 
-Then in your site's `gatsby-config.js` you simply add `gatsby-transformer-json`
+Then in your site's `gatsby-config.js` you add `gatsby-transformer-json`
 to the plugins array like:
 
 ```javascript
 module.exports = {
   plugins: [`gatsby-transformer-json`],
-}
+};
 ```
 
 Plugins can take options. See each plugin page below for more detailed
@@ -76,7 +76,9 @@ root.
 
 ## Official plugins
 
+* [gatsby-plugin-canonical-urls](/packages/gatsby-plugin-canonical-urls/)
 * [gatsby-plugin-catch-links](/packages/gatsby-plugin-catch-links/)
+* [gatsby-plugin-create-client-paths](/packages/gatsby-plugin-create-client-paths/)
 * [gatsby-plugin-coffeescript](/packages/gatsby-plugin-coffeescript/)
 * [gatsby-plugin-feed](/packages/gatsby-plugin-feed/)
 * [gatsby-plugin-glamor](/packages/gatsby-plugin-glamor/)
@@ -89,6 +91,7 @@ root.
 * [gatsby-plugin-offline](/packages/gatsby-plugin-offline/)
 * [gatsby-plugin-preact](/packages/gatsby-plugin-preact/)
 * [gatsby-plugin-react-helmet](/packages/gatsby-plugin-react-helmet/)
+* [gatsby-plugin-remove-trailing-slashes](/packages/gatsby-plugin-remove-trailing-slashes/)
 * [gatsby-plugin-sass](/packages/gatsby-plugin-sass/)
 * [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/)
 * [gatsby-plugin-sitemap](/packages/gatsby-plugin-sitemap/)
@@ -96,8 +99,11 @@ root.
 * [gatsby-plugin-twitter](/packages/gatsby-plugin-twitter/)
 * [gatsby-plugin-typescript](/packages/gatsby-plugin-typescript/)
 * [gatsby-remark-autolink-headers](/packages/gatsby-remark-autolink-headers/)
+* [gatsby-remark-code-repls](/packages/gatsby-remark-code-repls/)
 * [gatsby-remark-copy-linked-files](/packages/gatsby-remark-copy-linked-files/)
+* [gatsby-remark-embed-snippet](/packages/gatsby-remark-embed-snippet/)
 * [gatsby-remark-images](/packages/gatsby-remark-images/)
+* [gatsby-remark-katex](/packages/gatsby-remark-katex/)
 * [gatsby-remark-prismjs](/packages/gatsby-remark-prismjs/)
 * [gatsby-remark-responsive-iframe](/packages/gatsby-remark-responsive-iframe/)
 * [gatsby-remark-smartypants](/packages/gatsby-remark-smartypants/)
@@ -124,28 +130,46 @@ root.
 
 ## Community Plugins
 
+* [gatsby-plugin-accessibilityjs](https://github.com/alampros/gatsby-plugin-accessibilityjs)
 * [gatsby-plugin-antd](https://github.com/bskimball/gatsby-plugin-antd)
 * [gatsby-plugin-copy](https://github.com/aquilio/gatsby-plugin-copy)
 * [gatsby-plugin-elasticlunr-search](https://github.com/andrew-codes/gatsby-plugin-elasticlunr-search)
+* [gatsby-plugin-fastclick](https://github.com/escaladesports/gatsby-plugin-fastclick)
 * [gatsby-plugin-google-fonts](https://github.com/didierfranc/gatsby-plugin-google-fonts)
+* [gatsby-plugin-gosquared](https://github.com/jongold/gatsby-plugin-gosquared)
+* [gatsby-plugin-hotjar](https://github.com/pavloko/gatsby-plugin-hotjar)
 * [gatsby-plugin-i18n-readnext](https://github.com/angeloocana/gatsby-plugin-i18n-readnext)
 * [gatsby-plugin-i18n-tags](https://github.com/angeloocana/gatsby-plugin-i18n-tags)
 * [gatsby-plugin-i18n](https://github.com/angeloocana/gatsby-plugin-i18n)
 * [gatsby-plugin-intercom-spa](https://github.com/toriihq/gatsby-plugin-intercom-spa)
 * [gatsby-plugin-klipse](https://github.com/ahmedelgabri/gatsby-plugin-klipse)
+* [gatsby-plugin-mixpanel](https://github.com/thomascarvalho/gatsby-plugin-mixpanel)
 * [gatsby-plugin-protoculture](https://github.com/atrauzzi/gatsby-plugin-protoculture)
-* [gatsby-plugin-segment-js](https://github.com/benjaminhoffman/gatsby-plugin-segment-js)
 * [gatsby-plugin-purify-css](https://github.com/rongierlach/gatsby-plugin-purify-css)
+* [gatsby-plugin-segment-js](https://github.com/benjaminhoffman/gatsby-plugin-segment-js)
 * [gatsby-plugin-stripe-checkout](https://github.com/njosefbeck/gatsby-plugin-stripe-checkout)
 * [gatsby-plugin-stripe-elements](https://github.com/njosefbeck/gatsby-plugin-stripe-elements)
+* [gatsby-plugin-svg-sprite](https://github.com/marcobiedermann/gatsby-plugin-svg-sprite)
+* [gatsby-plugin-svgr](https://github.com/zabute/gatsby-plugin-svgr)
+* [gatsby-plugin-typescript-css-modules](https://github.com/jcreamer898/gatsby-plugin-typescript-css-modules)
 * [gatsby-plugin-yandex-metrika](https://github.com/viatsko/gatsby-plugin-yandex-metrika)
-* [gatsby-plugin-hotjar](https://github.com/pavloko/gatsby-plugin-hotjar)
 * [gatsby-remark-emoji](https://github.com/Rulikkk/gatsby-remark-emoji)
 * [gatsby-remark-external-links](https://github.com/JLongley/gatsby-remark-external-links)
+* [gatsby-remark-flowchart](https://github.com/liudonghua123/gatsby-remark-flowchart)
 * [gatsby-remark-graph](https://github.com/konsumer/gatsby-remark-graph)
+* [gatsby-remark-sequence](https://github.com/liudonghua123/gatsby-remark-sequence)
+* [gatsby-source-airtable](https://github.com/kevzettler/gatsby-source-airtable)
+* [gatsby-source-behance](https://github.com/LeKoArts/gatsby-source-behance)
+* [gatsby-source-datocms](https://github.com/datocms/gatsby-source-datocms)
 * [gatsby-source-github](https://github.com/mosch/gatsby-source-github)
 * [gatsby-source-google-sheets](https://github.com/brandonmp/gatsby-source-google-sheets)
 * [gatsby-source-soundcloud](https://github.com/jedidiah/gatsby-source-soundcloud)
 * [gatsby-source-stripe](https://github.com/njosefbeck/gatsby-source-stripe)
 * [gatsby-source-twitch](https://github.com/jedidiah/gatsby-source-twitch)
 * [gatsby-source-workable](https://github.com/tumblbug/gatsby-source-workable)
+
+## Community Library
+
+* [gatsby-node-helpers](https://github.com/angeloashmore/gatsby-node-helpers)
+* [gatsby-paginate](https://github.com/pixelstew/gatsby-paginate)
+* [gatsby-pagination](https://github.com/infinitedescent/gatsby-pagination)
