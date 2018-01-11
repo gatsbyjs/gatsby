@@ -1,7 +1,6 @@
-jest.mock(`../resolve`, () => (
-  (module) => `/resolved/path/${module}`
-))
+jest.mock(`../resolve`, () => module => `/resolved/path/${module}`)
 
+const babelPluginRemoveQueries = require(`babel-plugin-remove-graphql-queries`)
 const {
   resolvableExtensions,
   modifyWebpackConfig,
@@ -9,30 +8,48 @@ const {
 } = require(`../gatsby-node`)
 
 describe(`gatsby-plugin-typescript`, () => {
+  let args
+
+  function getLoader() {
+    const call = args.boundActionCreators.setWebpackConfig.mock.calls[0]
+    return call[0].module.rules[0]
+  }
+
+  beforeEach(() => {
+    const boundActionCreators = {
+      setWebpackConfig: jest.fn(),
+    }
+    const loaders = { js: jest.fn(() => `babel-loader`) }
+    args = { boundActionCreators, loaders }
+  })
+
   it(`returns correct extensions`, () => {
     expect(resolvableExtensions()).toMatchSnapshot()
   })
 
   it(`modifies webpack config`, () => {
-    const boundActionCreators = {
-      setWebpackConfig: jest.fn(),
-    }
-    const loaders = { js: () => `babel-loader` }
+    modifyWebpackConfig(args, { compilerOptions: {} })
 
-    modifyWebpackConfig({ boundActionCreators, loaders }, { compilerOptions: {} })
-
-    expect(boundActionCreators.setWebpackConfig).toHaveBeenCalledTimes(1)
-    const lastCall = boundActionCreators.setWebpackConfig.mock.calls.pop()
+    expect(args.boundActionCreators.setWebpackConfig).toHaveBeenCalledTimes(1)
+    const lastCall = args.boundActionCreators.setWebpackConfig.mock.calls.pop()
     expect(lastCall).toMatchSnapshot()
   })
 
+  it(`adds the remove graphql queries plugin`, () => {
+    modifyWebpackConfig(args, { compilerOptions: {} })
+
+    expect(args.loaders.js).toHaveBeenCalledTimes(1)
+    const lastCall = args.loaders.js.mock.calls.pop()
+
+    expect(lastCall[0]).toEqual({
+      plugins: [babelPluginRemoveQueries],
+    })
+  })
+
   it(`passes the configuration to the ts-loader plugin`, () => {
-    const config = {
-      loader: jest.fn(),
-    }
     const options = { compilerOptions: { foo: `bar` }, transpileOnly: false }
 
-    modifyWebpackConfig({ config }, options)
+    modifyWebpackConfig(args, options)
 
     const expectedOptions = {
       compilerOptions: {
@@ -40,41 +57,44 @@ describe(`gatsby-plugin-typescript`, () => {
         experimentalDecorators: true,
         jsx: `react`,
         foo: `bar`,
-        module: `commonjs`,
+        module: `es6`,
       },
       transpileOnly: false,
     }
 
-    expect(config.loader).toHaveBeenCalledWith(`typescript`, {
+    expect(getLoader()).toEqual({
       test: /\.tsx?$/,
-      loaders: [
-        `babel?${JSON.stringify({ plugins: [``] })}`,
-        `ts-loader?${JSON.stringify(expectedOptions)}`,
+      use: [
+        `babel-loader`,
+        {
+          loader: `/resolved/path/ts-loader`,
+          options: expectedOptions,
+        },
       ],
     })
   })
 
   it(`uses default configuration for the ts-loader plugin when no config is provided`, () => {
-    const config = {
-      loader: jest.fn(),
-    }
-    modifyWebpackConfig({ config }, { compilerOptions: {} })
+    modifyWebpackConfig(args, { compilerOptions: {} })
 
     const expectedOptions = {
       compilerOptions: {
         target: `esnext`,
         experimentalDecorators: true,
         jsx: `react`,
-        module: `commonjs`,
+        module: `es6`,
       },
       transpileOnly: true,
     }
 
-    expect(config.loader).toHaveBeenCalledWith(`typescript`, {
+    expect(getLoader()).toEqual({
       test: /\.tsx?$/,
-      loaders: [
-        `babel?${JSON.stringify({ plugins: [``] })}`,
-        `ts-loader?${JSON.stringify(expectedOptions)}`,
+      use: [
+        `babel-loader`,
+        {
+          loader: `/resolved/path/ts-loader`,
+          options: expectedOptions,
+        },
       ],
     })
   })
