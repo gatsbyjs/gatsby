@@ -12,7 +12,7 @@ is a good place to start.
 ## Why React components?
 
 React's component architecture simplifies building large websites by encouraging
-modularity, reusabilty, and clear abstraction. React has a large ecosystem of
+modularity, reusability, and clear abstraction. React has a large ecosystem of
 open source components, tutorials, and tooling that can be used seamlessly for
 building sites with Gatsby. Gatsby is built to behave almost exactly like a
 normal React application.
