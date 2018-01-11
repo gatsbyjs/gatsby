@@ -2,40 +2,39 @@
 title: Styled Components
 ---
 
-[Styled Components](https://www.styled-components.com/) is an example of using CSS-in-JS. It might be useful for you to explore [CSS Modules](/tutorial/part-two/) and [Glamor](../glamor/) to see how Styled Components compares as a styling method.
+In this guide, we'll walk through setting up a site with the CSS-in-JS library [Styled Components](https://www.styled-components.com/).
 
-Styled Components lets you use actual CSS syntax inside your components. Like Glamor, Styled Components is a variant on "CSS-in-JS"—which solves many of the problems with traditional CSS.
+Styled Components lets you use actual CSS syntax inside your components. Styled Components is a variant on "CSS-in-JS"—which solves many of the problems with traditional CSS.
 
 One of the most important problems they solve is selector name collisions. With traditional CSS, you have to be careful not to overwrite CSS selectors used elsewhere in a site because all CSS selectors live in the same global namespace. This unfortunate restriction can lead to elaborate (and often confusing) selector naming schemes.
 
 With CSS-in-JS, you avoid all that as CSS selectors are scoped automatically to their component. Styles are tightly coupled with their components. This makes it very easy to know how to edit a component's CSS as there's never any confusion about how and where CSS is being used.
 
-First, we'll install the Gatsby plugin for Styled Components.
+First, open a new terminal window and run the following to create a new site:
+
+```shell
+gatsby new styled-components-tutorial https://github.com/gatsbyjs/gatsby-starter-hello-world
+```
+
+Second, we'll install the Gatsby plugin for Styled Components.
 
 ```sh
 npm install --save gatsby-plugin-styled-components styled-components
 ```
 
-Then modify the `gatsby-config.js`. If you've previously used the Glamor plugin in this site,
-you'll need to remove the Glamor plugin and delete the Glamor component page we
-created. The two plugins conflict with each other as both want to take control
-during server rendering.
+And then add it to your site's `gatsby-config.js`:
 
-```javascript{9}
+```javascript
 module.exports = {
   plugins: [
-    {
-      resolve: `gatsby-plugin-typography`,
-      options: {
-        pathToConfigModule: `src/utils/typography.js`,
-      },
-    },
     `gatsby-plugin-styled-components`,
   ],
 }
 ```
 
-Then at `src/pages/about-styled-components.js` create:
+Then in your terminal run `gatsby develop` to start the Gatsby development server.
+
+Now let's create a sample Styled Components page at `src/pages/index.js`:
 
 ```jsx
 import React from "react";

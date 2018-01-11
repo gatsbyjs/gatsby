@@ -2,8 +2,7 @@
 title: Glamor
 ---
 
-Let's create a page using
-[Glamor](https://github.com/threepointone/glamor). It might be useful for you to explore [CSS Modules](/tutorial/part-two/#css-modules) and [Styled Components](../styled-components/) to see how Glamor compares as a styling method.
+In this guide, we'll walk through setting up a site with the CSS-in-JS library [Glamor](https://github.com/threepointone/glamor).
 
 Glamor lets you write _real_ CSS inline in your components using the same Object
 CSS syntax React supports for the `style` prop. Glamor is a variant on "CSS-in-JS"—which solves many of the problems with traditional CSS.
@@ -12,31 +11,32 @@ One of the most important problems they solve is selector name collisions. With 
 
 With CSS-in-JS, you avoid all that as CSS selectors are scoped automatically to their component. Styles are tightly coupled with their components. This makes it very easy to know how to edit a component's CSS as there's never any confusion about how and where CSS is being used.
 
-First, install the Gatsby plugin for Glamor.
+First, open a new terminal window and run the following to create a new site:
+
+```shell
+gatsby new glamor-tutorial https://github.com/gatsbyjs/gatsby-starter-hello-world
+```
+
+
+Second, install the Gatsby plugin for Glamor.
 
 ```shell
 npm install --save gatsby-plugin-glamor
 ```
 
-And then add it to your `gatsby-config.js`
+And then add it to your site's `gatsby-config.js`:
 
-```javascript{9}
+```javascript
 module.exports = {
   plugins: [
-    {
-      resolve: `gatsby-plugin-typography`,
-      options: {
-        pathToConfigModule: `src/utils/typography.js`,
-      },
-    },
     `gatsby-plugin-glamor`,
   ],
 }
 ```
 
-Restart `gatsby develop` again to enable the Glamor plugin.
+Then in your terminal run `gatsby develop` to start the Gatsby development server.
 
-Now create the Glamor page at `src/pages/about-glamor.js`
+Now let's create a sample Glamor page at `src/pages/index.js`
 
 ```jsx
 import React from "react";
@@ -51,8 +51,7 @@ export default () => (
 );
 ```
 
-Let's add the same inline `User` component that you would use for CSS Modules, but this time using Glamor's `css`
-prop.
+Let's add a inline `User` component using Glamor's `css` prop.
 
 ```jsx{5-27,33-40}
 import React from "react"
@@ -100,6 +99,6 @@ export default () =>
   </Container>
 ```
 
-If you are using Glamor in Part Two of the tutorials, the final Glamor page should look identical to the CSS Modules page.
+### Final result
 
-![glamor-example](glamor-example.png)
+![glamor page](../tutorial/part-two/glamor-example.png)

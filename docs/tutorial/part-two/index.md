@@ -112,7 +112,9 @@ Let's start by creating a new site. At this point it probably makes sense to clo
 
 Similar to part one, open a new terminal window and run the following to create a new site:
 
-    gatsby new tutorial-part-two https://github.com/gatsbyjs/gatsby-starter-hello-world
+```shell
+gatsby new tutorial-part-two https://github.com/gatsbyjs/gatsby-starter-hello-world
+```
 
 This creates a new site with the following structure.
 
