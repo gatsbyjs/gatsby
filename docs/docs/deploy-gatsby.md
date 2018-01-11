@@ -105,7 +105,7 @@ git remote add origin git@gitlab.com:examplerepository
 git add .
 git push -u origin master
 ```
-You can deploy sites on Gitlab Pages with or without a custom domain. If you choose to use the default setup (without a custom domain), or if you create a project site, you will need to setup your site with path prefixing. If adding acustom domain, you can skip the Path Prefix step, and remove `--prefix-paths` from the gitlab-ci.yml file.
+You can deploy sites on Gitlab Pages with or without a custom domain. If you choose to use the default setup (without a custom domain), or if you create a project site, you will need to setup your site with path prefixing. If adding a custom domain, you can skip the Path Prefix step, and remove `--prefix-paths` from the gitlab-ci.yml file.
 
 ### Path Prefix
 As the site will be hosted under yourname.gitlab.io/examplerepository/, you will need to configure Gatsby to use the Path Prefix plugin.
