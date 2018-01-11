@@ -30,10 +30,6 @@
           link: /tutorial/part-two/#component-css
         - title: CSS Modules
           link: /tutorial/part-two/#css-modules
-        - title: Glamor
-          link: /tutorial/part-two/#glamor
-        - title: Styled Components
-          link: /tutorial/part-two/#styled-components
     - title: Part Three
       link: /tutorial/part-three/
       items:
