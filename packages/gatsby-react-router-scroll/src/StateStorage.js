@@ -6,7 +6,7 @@ export default class SessionStorage {
     const stateKey = this.getStateKey(location, key)
 
     try {
-      const value = sessionStorage.getItem(stateKey)
+      const value = window.sessionStorage.getItem(stateKey)
       return JSON.parse(value)
     } catch (e) {
       console.warn(
@@ -30,7 +30,7 @@ export default class SessionStorage {
     const storedValue = JSON.stringify(value)
 
     try {
-      sessionStorage.setItem(stateKey, storedValue)
+      window.sessionStorage.setItem(stateKey, storedValue)
     } catch (e) {
       if (window && window[GATSBY_ROUTER_SCROLL_STATE]) {
         window[GATSBY_ROUTER_SCROLL_STATE][stateKey] = JSON.parse(storedValue)
@@ -46,8 +46,9 @@ export default class SessionStorage {
   }
 
   getStateKey(location, key) {
-    const locationKey = location.key
-    const stateKeyBase = `${STATE_KEY_PREFIX}${locationKey}`
+    const locationPath = location.pathname
+    const strippedLocationPath = locationPath.endsWith(`/`) ? locationPath.slice(0, -1) : locationPath
+    const stateKeyBase = `${STATE_KEY_PREFIX}${strippedLocationPath}`
     return key === null || typeof key === `undefined`
       ? stateKeyBase
       : `${stateKeyBase}|${key}`
