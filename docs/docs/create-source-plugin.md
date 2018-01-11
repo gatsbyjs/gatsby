@@ -74,7 +74,7 @@ exports.sourceNodes = async ({ boundActionCreators }) => {
 };
 ```
 
-Puruse the [`sourceNodes`](/docs/node-apis/#sourceNodes) and
+Peruse the [`sourceNodes`](/docs/node-apis/#sourceNodes) and
 [`createNode`](/docs/bound-action-creators/#createNode) docs for detailed
 documentation on implementing those APIs.
 
