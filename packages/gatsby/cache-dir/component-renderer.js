@@ -106,6 +106,10 @@ class ComponentRenderer extends React.Component {
       return true
     }
 
+    if (this.props != nextProps) {
+      return true
+    }
+
     // Check if location has changed on a page using internal routing
     // via matchPath configuration.
     if (
