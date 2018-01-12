@@ -1,9 +1,10 @@
-const _ = require(`lodash`),
-  crypto = require(`crypto`)
+const _ = require(`lodash`)
+const crypto = require(`crypto`)
+const { createId } = require(`./utils`)
 
 module.exports = function(node, key, text, mediaType, createNode) {
   const str = _.isString(text) ? text : ` `
-  const id = `${node.id}${key}MappingNode`
+  const id = createId(`${node.id}${key}MappingNode`)
   const mappingNode = {
     id: id,
     parent: node.id,

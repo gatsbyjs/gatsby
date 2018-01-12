@@ -2,15 +2,15 @@ const slash = require(`slash`)
 const path = require(`path`)
 const fs = require(`fs-extra`)
 const mime = require(`mime`)
+const uuidv5 = require(`uuid/v5`)
 const prettyBytes = require(`pretty-bytes`)
 
 const md5File = require(`bluebird`).promisify(require(`md5-file`))
 const crypto = require(`crypto`)
 
-const createId = path => {
-  const slashed = slash(path)
-  return `${slashed} absPath of file`
-}
+const seedConstant = `e217350b-0a7c-4bbc-bd32-962f66804869`
+const createId = path =>
+  uuidv5(slash(path), uuidv5(`filesystem`, seedConstant))
 
 exports.createId = createId
 

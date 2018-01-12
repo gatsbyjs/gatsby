@@ -1,12 +1,17 @@
 const axios = require(`axios`)
 const crypto = require(`crypto`)
 const url = require(`url`)
+const uuidv5 = require(`uuid/v5`)
 const _ = require(`lodash`)
 
 const get = query =>
   axios.get(
     `https://www.graphqlhub.com/graphql?query=${encodeURIComponent(query)}`
   )
+
+const seedConstant = `0edc7ebd-28ac-4035-84fe-6ea49361d2a7`
+const createId = (id) =>
+  uuidv5(id, uuidv5(`hacker-news`, seedConstant))
 
 exports.sourceNodes = async ({
   actions,
@@ -100,6 +105,7 @@ fragment commentsFragment on HackerNewsItem {
 
     const storyNode = {
       ...kidLessStory,
+      id: createId(kidLessStory.id),
       children: kids.kids.map(k => k.id),
       parent: `__SOURCE__`,
       content: storyStr,
@@ -131,6 +137,7 @@ fragment commentsFragment on HackerNewsItem {
         }
         let commentNode = {
           ..._.omit(comment, `kids`),
+          id: createId(comment.id),
           children: comment.kids.map(k => k.id),
           parent,
           internal: {
@@ -154,12 +161,12 @@ fragment commentsFragment on HackerNewsItem {
         createNode(commentNode)
 
         if (comment.kids.length > 0) {
-          createCommentNodes(comment.kids, comment.id, depth + 1)
+          createCommentNodes(comment.kids, commentNode.id, depth + 1)
         }
       })
     }
 
-    createCommentNodes(kids.kids, story.id)
+    createCommentNodes(kids.kids, storyNode.id)
   })
 
   return

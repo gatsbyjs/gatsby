@@ -1,5 +1,10 @@
 import crypto from "crypto"
 import parseMetadata from "./parse"
+const uuidv5 = require(`uuid/v5`)
+
+const seedConstant = `fbc5cfa8-c4eb-4198-8908-1d07676253fd`
+const createId = (id) =>
+  uuidv5(id, uuidv5(`react-docgen`, seedConstant))
 
 const digest = str =>
   crypto
@@ -15,7 +20,7 @@ function createDescriptionNode(node, entry, actions) {
   const { createNode } = actions
 
   const descriptionNode = {
-    id: descId(node.id),
+    id: createId(descId(node.id)),
     parent: node.id,
     children: [],
     text: entry.description,
@@ -44,7 +49,7 @@ function createPropNodes(node, component, actions) {
 
     let propNode = {
       ...prop,
-      id: propNodeId,
+      id: createId(propNodeId),
       children: [],
       parent: node.id,
       parentType: prop.type,
@@ -87,7 +92,7 @@ export default function onCreateNode(
         let metadataNode = {
           ...component,
           props: null, // handled by the prop node creation
-          id: nodeId,
+          id: createId(nodeId),
           children: [],
           parent: node.id,
           internal: {

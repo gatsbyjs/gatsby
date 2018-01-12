@@ -1,6 +1,11 @@
 const grayMatter = require(`gray-matter`)
 const crypto = require(`crypto`)
 const _ = require(`lodash`)
+const uuidv5 = require(`uuid/v5`)
+
+const seedConstant = `704ee576-0847-4c15-9e3f-ea9489050eea`
+const createId = (id) =>
+  uuidv5(id, uuidv5(`remark`, seedConstant))
 
 module.exports = async function onCreateNode(
   { node, getNode, loadNodeContent, actions },
@@ -36,7 +41,7 @@ module.exports = async function onCreateNode(
     .update(JSON.stringify(data))
     .digest(`hex`)
   const markdownNode = {
-    id: `${node.id} >>> MarkdownRemark`,
+    id: createId(`${node.id} >>> MarkdownRemark`),
     children: [],
     parent: node.id,
     internal: {

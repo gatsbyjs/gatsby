@@ -2,6 +2,11 @@ const Promise = require(`bluebird`)
 const csv = require(`csvtojson`)
 const _ = require(`lodash`)
 const crypto = require(`crypto`)
+const uuidv5 = require(`uuid/v5`)
+
+const seedConstant = `c045f1f1-e335-425e-bc1b-694014b90b24`
+const createId = (id) =>
+  uuidv5(id, uuidv5(`csv`, seedConstant))
 
 const convertToJson = (data, options) =>
   new Promise((res, rej) => {
@@ -39,7 +44,7 @@ async function onCreateNode(
 
       return {
         ...obj,
-        id: obj.id ? obj.id : `${node.id} [${i}] >>> CSV`,
+        id: createId(obj.id ? obj.id : `${node.id} [${i}] >>> CSV`),
         children: [],
         parent: node.id,
         internal: {

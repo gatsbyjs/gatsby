@@ -4,7 +4,7 @@ exports[`transformer-react-doc-gen: onCreateNode should extract out a descriptio
 Array [
   Object {
     "children": Array [],
-    "id": "documentationJS node_1 comment #0--DocumentationJSComponentDescription--comment.description",
+    "id": "33d884cc-e1a5-5ead-b31c-397e9818fd60",
     "internal": Object {
       "content": "A pretty cool jsdoc example
 ",
@@ -16,7 +16,7 @@ Array [
   },
   Object {
     "children": Array [],
-    "id": "documentationJS node_1 comment #0--DocumentationJSComponentDescription--apple",
+    "id": "bc6537d5-5132-5a28-a33d-bfb150b6ebea",
     "internal": Object {
       "content": "A nice crispy apple
 ",
@@ -29,7 +29,7 @@ Array [
   Object {
     "children": Array [],
     "commentNumber": 0,
-    "description___NODE": "documentationJS node_1 comment #0--DocumentationJSComponentDescription--comment.description",
+    "description___NODE": "33d884cc-e1a5-5ead-b31c-397e9818fd60",
     "examples": Array [
       Object {
         "highlighted": "<span class=\\"token keyword\\">const</span> apple <span class=\\"token operator\\">=</span> <span class=\\"token function\\">require</span><span class=\\"token punctuation\\">(</span><span class=\\"token string\\">'apple'</span><span class=\\"token punctuation\\">)</span>
@@ -38,16 +38,16 @@ Array [
 apple()",
       },
     ],
-    "id": "documentationJS node_1 comment #0",
+    "id": "10ffcf6d-2631-596d-8605-bafaaea0a7a2",
     "internal": Object {
-      "contentDigest": "b635e85506044a6cdcebbcd7fda00b7d",
+      "contentDigest": "1a9078244ac0a441f51ef5662920fac6",
       "type": "DocumentationJs",
     },
     "kind": "constant",
     "name": "apple",
     "params": Array [
       Object {
-        "description___NODE": "documentationJS node_1 comment #0--DocumentationJSComponentDescription--apple",
+        "description___NODE": "bc6537d5-5132-5a28-a33d-bfb150b6ebea",
         "name": "apple",
         "title": "param",
         "type": Object {

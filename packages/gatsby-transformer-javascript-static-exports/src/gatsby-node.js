@@ -2,6 +2,11 @@ const _ = require(`lodash`)
 const crypto = require(`crypto`)
 const babylon = require(`babylon`)
 const traverse = require(`babel-traverse`).default
+const uuidv5 = require(`uuid/v5`)
+
+const seedConstant = `5e935dbb-cdb4-4051-b696-f5e58b942e0b`
+const createId = (id) =>
+  uuidv5(id, uuidv5(`javascript-static-exports`, seedConstant))
 
 async function onCreateNode({
   node,
@@ -116,7 +121,7 @@ async function onCreateNode({
       .digest(`hex`)
 
     const nodeData = {
-      id: `${node.id} >>> JSFrontmatter`,
+      id: createId(`${node.id} >>> JSFrontmatter`),
       children: [],
       parent: node.id,
       node: { ...node },

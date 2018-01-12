@@ -7,7 +7,7 @@ Array [
       "blue": true,
       "children": Array [],
       "funny": "yup",
-      "id": "whatever [Sheet1 0] >>> csv",
+      "id": "a80cf8c7-9321-5444-b819-7db21df03543",
       "internal": Object {
         "contentDigest": "73901821b17d5aa9dd6026181f73b64c",
         "type": "TestCsv__Sheet1",
@@ -20,7 +20,7 @@ Array [
       "blue": false,
       "children": Array [],
       "funny": "nope",
-      "id": "whatever [Sheet1 1] >>> csv",
+      "id": "f6e6b6f2-ff08-5b32-9947-c0654a5e05bb",
       "internal": Object {
         "contentDigest": "f624311d932d73dcd416d2a8bea2b67d",
         "type": "TestCsv__Sheet1",
@@ -31,7 +31,7 @@ Array [
   Array [
     Object {
       "children": Array [],
-      "id": "whatever [0] >>> csv",
+      "id": "87891cd6-0888-536e-89b8-e6f1faa2f04f",
       "internal": Object {
         "contentDigest": "10c867561d207bc7dae0455d3cccad5b",
         "type": "TestCsv",
@@ -50,7 +50,7 @@ Array [
         "blue": true,
         "children": Array [],
         "funny": "yup",
-        "id": "whatever [Sheet1 0] >>> csv",
+        "id": "a80cf8c7-9321-5444-b819-7db21df03543",
         "internal": Object {
           "contentDigest": "73901821b17d5aa9dd6026181f73b64c",
           "type": "TestCsv__Sheet1",
@@ -80,7 +80,7 @@ FALSE,nope
         "blue": false,
         "children": Array [],
         "funny": "nope",
-        "id": "whatever [Sheet1 1] >>> csv",
+        "id": "f6e6b6f2-ff08-5b32-9947-c0654a5e05bb",
         "internal": Object {
           "contentDigest": "f624311d932d73dcd416d2a8bea2b67d",
           "type": "TestCsv__Sheet1",
@@ -108,7 +108,7 @@ FALSE,nope
     Object {
       "child": Object {
         "children": Array [],
-        "id": "whatever [0] >>> csv",
+        "id": "87891cd6-0888-536e-89b8-e6f1faa2f04f",
         "internal": Object {
           "contentDigest": "10c867561d207bc7dae0455d3cccad5b",
           "type": "TestCsv",

@@ -1,5 +1,10 @@
 const axios = require(`axios`)
 const crypto = require(`crypto`)
+const uuidv5 = require(`uuid/v5`)
+
+const seedConstant = `65af5498-9351-48cc-acfb-12ac247eeab5`
+const createId = (id) =>
+  uuidv5(id, uuidv5(`medium`, seedConstant))
 
 const fetch = username => {
   const url = `https://medium.com/${username}/latest?format=json`
@@ -67,7 +72,7 @@ exports.sourceNodes = async ({ actions }, { username }) => {
       const node = Object.assign(
         resource,
         {
-          id: resource.id ? resource.id : resource.userId,
+          id: createId(resource.id ? resource.id : resource.userId),
           parent: `__SOURCE__`,
           children: [],
           internal: {

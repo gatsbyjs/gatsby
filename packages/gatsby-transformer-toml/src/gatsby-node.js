@@ -1,6 +1,11 @@
 const toml = require(`toml`)
 const _ = require(`lodash`)
 const crypto = require(`crypto`)
+const uuidv5 = require(`uuid/v5`)
+
+const seedConstant = `fd0d46f9-cd86-4c38-8f3e-fb623a5c2696`
+const createId = (id) =>
+  uuidv5(id, uuidv5(`toml`, seedConstant))
 
 async function onCreateNode({ node, actions, loadNodeContent }) {
   const { createNode, createParentChildLink } = actions
@@ -26,7 +31,7 @@ async function onCreateNode({ node, actions, loadNodeContent }) {
 
   const newNode = {
     ...parsedContent,
-    id: parsedContent.id ? parsedContent.id : `${node.id} >>> TOML`,
+    id: createId(parsedContent.id ? parsedContent.id : `${node.id} >>> TOML`),
     children: [],
     parent: node.id,
     internal: {

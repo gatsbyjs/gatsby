@@ -2,6 +2,7 @@ const MongoClient = require(`mongodb`).MongoClient
 const crypto = require(`crypto`)
 const createMappingChildNodes = require(`./mapping`)
 const _ = require(`lodash`)
+const { createId } = require(`./utils`)
 
 exports.sourceNodes = (
   { actions, getNode, hasNodeChanged },
@@ -66,7 +67,7 @@ function createNodes(
       var node = {
         // Data for the node.
         ...item,
-        id: `${id}`,
+        id: createId(`${id}`),
         parent: `__${collectionName}__`,
         children: [],
         internal: {

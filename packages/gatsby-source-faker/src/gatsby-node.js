@@ -1,5 +1,10 @@
 const faker = require(`faker`)
 const crypto = require(`crypto`)
+const uuidv5 = require(`uuid/v5`)
+
+const seedConstant = `2f268b09-35a2-4ddf-8047-2f04d04c33f3`
+const createId = (id) =>
+  uuidv5(id, uuidv5(`faker`, seedConstant))
 
 exports.sourceNodes = ({ actions }, pluginOptions) => {
   const { createNode } = actions
@@ -20,7 +25,7 @@ exports.sourceNodes = ({ actions }, pluginOptions) => {
       .digest(`hex`)
 
     const nodeBase = {
-      id: JSON.stringify(faker.random.number()),
+      id: createId(JSON.stringify(faker.random.number())),
       parent: null,
       children: [],
       internal: {

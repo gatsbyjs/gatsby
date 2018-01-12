@@ -2,6 +2,11 @@ const jsYaml = require(`js-yaml`)
 const _ = require(`lodash`)
 const crypto = require(`crypto`)
 const path = require(`path`)
+const uuidv5 = require(`uuid/v5`)
+
+const seedConstant = `45a851c6-12b6-42b6-bbad-dc6757d013a8`
+const createId = (id) =>
+  uuidv5(id, uuidv5(`yaml`, seedConstant))
 
 async function onCreateNode({ node, actions, loadNodeContent }) {
   function transformObject(obj, id, type) {
@@ -12,7 +17,7 @@ async function onCreateNode({ node, actions, loadNodeContent }) {
       .digest(`hex`)
     const yamlNode = {
       ...obj,
-      id,
+      id: createId(id),
       children: [],
       parent: node.id,
       internal: {
