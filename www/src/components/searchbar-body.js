@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { InstantSearch, Hits, SearchBox, Stats, RefinementList } from 'react-instantsearch/dom'
+import { connectHits } from 'react-instantsearch/connectors';
 import distanceInWords from 'date-fns/distance_in_words'
 import presets from "../utils/presets"
 import Link from 'gatsby-link'
@@ -51,99 +52,21 @@ const Search = () => {
           background: presets.brandLighter,
         },
       }}>
-        <Hits hitComponent={Result} />
+        <CustomHits />
+        {/* <Hits hitComponent={Result} /> */}
       </div>
       <div>
         <h3 css={{
           fontSize: rhythm(.75),
           textAlign: `center`,
-        }}>Search by <Link to={`https://www.algolia.com/`} style={{color: `#5c2965`, border: `none`, boxShadow: `none`}}>Algolia</Link></h3>
+        }}>Search by <Link to={`https://www.algolia.com/`} style={{color: `#744C9E`, border: `none`, boxShadow: `none`}}>Algolia</Link></h3>
       </div>
     </div>
   )
 }
 
-// class ResultClass extends Component {
-//   constructor(props){
-//     super(props)
-//     this.state = { selected: false}
-//   }
-//
-//   componentWillReceivedProps(nextProps){
-//     if (window.location.pathname === `/packages/${this.props.hit.name}`){
-//       this.setState({ selected: true})
-//     }
-//   }
-//
-//   render(){
-//     console.log(this.props);
-//     const lastUpdated = `${distanceInWords(new Date(this.props.hit.modified), new Date())} ago`;
-//     const selected = window.location.pathname === `/packages/${this.props.hit.name}`;
-//     return (
-//       <Link
-//         to={`/packages/${this.props.hit.name}`}
-//         style={{
-//         display: `block`,
-//         fontFamily: typography.options.bodyFontFamily.join(`,`),
-//         fontWeight: `400`,
-//         backgroundColor: selected ? `#743272` : `#fafafa`,
-//         padding: rhythm(.5),
-//       }}>
-//         <div
-//           css={{
-//             fontFamily: typography.options.headerFontFamily.join(`,`),
-//             fontWeight: `bold`,
-//             display: `inline-block`,
-//             color: `white`,
-//             backgroundColor: `#696969`,
-//             padding: `3px 6px 3px 6px`,
-//           }}
-//           >
-//             {this.props.hit.name}
-//         </div>
-//
-//         <span
-//           css={{
-//             paddingLeft: rhythm(1),
-//             fontSize: rhythm(.5),
-//           }}
-//           >
-//           {this.props.hit.humanDownloadsLast30Days}
-//         </span>
-//
-//         <div css={{
-//           fontSize: rhythm(.6),
-//           lineHeight: rhythm(3/4),
-//           paddingTop: rhythm(3/4),
-//         }}>
-//           {this.props.hit.description}
-//         </div>
-//
-//         <div css={{
-//           fontSize: rhythm(.5),
-//           color: `#D3D3D3`
-//         }}>
-//           {this.props.hit.keywords.join(", ")}
-//         </div>
-//
-//         <div
-//           css={{
-//             display: `flex`,
-//             borderBottom: `1 px solid grey`,
-//           }}
-//           >
-//           <img
-//             width="20"
-//             height="20"
-//             src={this.props.hit.lastPublisher.avatar} />
-//             {this.props.hit.lastPublisher.name} {lastUpdated}
-//         </div>
-//       </Link>
-//     )
-//   }
-// }
-
-const Result = ({ hit }) => {
+const Result = ({ hit, selected }) => {
+  const select = selected() === hit.name
   const lastUpdated = `${distanceInWords(new Date(hit.modified), new Date())} ago`;
   return (
     <Link
@@ -152,6 +75,8 @@ const Result = ({ hit }) => {
       display: `block`,
       fontFamily: typography.options.bodyFontFamily.join(`,`),
       fontWeight: `400`,
+      color: select? `white` : `black`,
+      backgroundColor: select ? `#744C9E` : `white`,
       padding: rhythm(.5),
     }}>
       <div
@@ -207,6 +132,20 @@ const Result = ({ hit }) => {
     </Link>
   )
 }
+
+const currentLocation = () => {
+  return location.pathname.slice(10);
+}
+
+
+const CustomHits = connectHits(({ hits }) => (
+  <div>
+
+    {hits.map(hit =>
+      <Result key={hit.objectID} hit={hit} selected={currentLocation} />
+    )}
+  </div>
+))
 
 // This is experimental
 const updateAfter = 700
