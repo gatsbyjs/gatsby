@@ -53,6 +53,7 @@ describe(`GraphQL type inferance`, () => {
       hair: 1,
       date: `1012-11-01`,
       anArray: [1, 2, 3, 4],
+      aNestedArray: [[1, 2, 3, 4], [5, 6, 7, 8]],
       anObjectArray: [
         { aString: `some string`, aNumber: 2, aBoolean: true },
         { aString: `some string`, aNumber: 2, anArray: [1, 2] },
@@ -83,6 +84,7 @@ describe(`GraphQL type inferance`, () => {
       hair: 2,
       date: `1984-10-12`,
       anArray: [1, 2, 5, 4],
+      aNestedArray: [[1, 2, 3, 4]],
       anObjectArray: [{ anotherObjectArray: [{ baz: `quz` }] }],
       frontmatter: {
         date: `1984-10-12`,
@@ -114,6 +116,16 @@ describe(`GraphQL type inferance`, () => {
       `
     )
     expect(result.data.listNode[0].number).toEqual(1.1)
+  })
+
+  it(`handles integer with valid date format`, async () => {
+    let result = await queryResult(
+      [{ number: 2018 }, { number: 1987 }],
+      `
+        number
+      `
+    )
+    expect(result.data.listNode[0].number).toEqual(2018)
   })
 
   it(`handles date objects`, async () => {
@@ -333,6 +345,7 @@ describe(`GraphQL type inferance`, () => {
       `
         hair,
         anArray,
+        aNestedArray,
         anObjectArray {
           aNumber,
           aBoolean,
