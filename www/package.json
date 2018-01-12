@@ -47,8 +47,6 @@
     "lodash": "^4.16.6",
     "mitt": "^1.1.2",
     "parse-filepath": "^1.0.1",
-    "prop-types": "^15.6.0",
-    "qs": "^6.5.1",
     "react-icons": "^2.2.7",
     "react-instantsearch": "^4.4.1",
     "slash": "^1.0.0",
