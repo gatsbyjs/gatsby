@@ -56,7 +56,7 @@
     "gatsby-module-loader": "^2.0.0-alpha.f20ac0ed",
     "gatsby-react-router-scroll": "^1.1.0-alpha.f20ac0ed",
     "glob": "^7.1.1",
-    "graphql": "^0.12.3",
+    "graphql": "^0.11.7",
     "graphql-relay": "^0.5.1",
     "graphql-skip-limit": "^1.1.0-alpha.f20ac0ed",
     "history": "^4.6.2",

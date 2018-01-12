@@ -6,7 +6,7 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "cross-env": "^5.0.5",
-    "graphql": "^0.10.3"
+    "graphql": "^0.11.7"
   },
   "keywords": [
     "gatsby",
