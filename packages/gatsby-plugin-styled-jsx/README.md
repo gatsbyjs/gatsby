@@ -4,7 +4,7 @@ Provides drop-in support for [styled-jsx](https://github.com/zeit/styled-jsx).
 
 ## Install
 
-`yarn add gatsby-plugin-styled-jsx`
+`yarn add styled-jsx gatsby-plugin-styled-jsx`
 
 ## How to use
 
