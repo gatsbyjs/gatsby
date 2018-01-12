@@ -184,6 +184,7 @@ class DefaultLayout extends React.Component {
           <div
             css={{
               [presets.Tablet]: {
+<<<<<<< HEAD
                 paddingLeft: hasSidebar ? rhythm(10) : 0,
                 display:
                   this.props.location.pathname.slice(0, 9) !== `/packages`
@@ -210,9 +211,12 @@ class DefaultLayout extends React.Component {
                   this.props.location.pathname.slice(0, 9) === `/packages`
                    ? `block`
                    : `none`,
+=======
+                paddingLeft: leftPadding(10),
+>>>>>>> Fix doubling-up layout bug, add border to hits component, add margin to text in packages
               },
               [presets.Desktop]: {
-                paddingLeft: hasSidebar ? rhythm(18) : 0,
+                paddingLeft: leftPadding(12),
               },
             }}
           >
