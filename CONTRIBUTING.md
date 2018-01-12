@@ -34,15 +34,11 @@ The usual contributing steps are:
   build of all packages and then watch for changes to packages' source code and
   compile these changes on-the-fly as you work.
 * Install [gatsby-dev-cli](/packages/gatsby-dev-cli/) globally: `yarn global add gatsby-dev-cli`
+* Run `yarn install` in each of the sites you're testing with.
 * For each of your Gatsby test sites, run the `gatsby-dev` command there to copy
   the built files from your cloned copy of Gatsby. It'll watch for your changes
   to Gatsby packages and copy them into the site. For more detailed instructions
   see the [gatsby-dev-cli README](/packages/gatsby-dev-cli/)
-* In each of your test sites' directories, run `yarn install`
-* In your test site(s), run `gatsby develop`
-  - this _may_ cause your `.cache` directory to be reset. if you don't see your
-    changes, editing the source files in your clone will cause them to be copied
-    over to your test site again.
 * Add tests and code for your changes.
 * Once you're done, make sure all tests still pass: `yarn test`
 * Commit and push to your fork.
