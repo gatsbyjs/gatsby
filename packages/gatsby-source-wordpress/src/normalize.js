@@ -1,3 +1,5 @@
+import { setTimeout } from 'timers';
+
 const crypto = require(`crypto`)
 const deepMapKeys = require(`deep-map-keys`)
 const _ = require(`lodash`)
@@ -233,6 +235,39 @@ exports.mapTagsCategoriesToTaxonomies = entities =>
     }
     return e
   })
+
+exports.searchReplaceContentUrls = async function ({ entities, searchReplace: [search, replace] }) {
+
+  if (!Array.isArray(searchReplace) && searchReplace.length !== 2) {
+    return entities
+  }
+
+  const _blacklist = [
+    '_links',
+    '__type'
+  ]
+
+  const blacklistProperties = function (obj = {}, blacklist = {}) {
+    for (var i = 0; i < blacklist.length; i++) {
+        eval(`delete obj.${blacklist[i]}`)
+    }
+
+    return obj
+  }
+
+  const final = entities.map(async entity => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        var whiteListedEntities = JSON.stringify(blacklistProperties(entity, _blacklist))
+        var replacedString = whiteListedEntities.replace(new RegExp(search, 'g'), replace)
+        var parsed = JSON.parse(replacedString)
+        resolve(_.defaultsDeep(parsed, entity))
+      }, 0)
+    })
+  })
+
+  return await Promise.all(final)
+}
 
 exports.mapEntitiesToMedia = entities => {
   const media = entities.filter(e => e.__type === `wordpress__wp_media`)
