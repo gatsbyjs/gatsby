@@ -28,7 +28,7 @@ class DefaultLayout extends React.Component {
     const isHomepage = this.props.location.pathname == `/`
     const hasSidebar =
       this.props.location.pathname.slice(0, 6) === `/docs/` ||
-      this.props.location.pathname.slice(0, 10) === `/packages/` ||
+      this.props.location.pathname.slice(0, 9) === `/packages` ||
       this.props.location.pathname.slice(0, 10) === `/tutorial/` ||
       this.props.location.pathname.slice(0, 9) === `/features`
     const isSearchSource = hasSidebar
@@ -143,14 +143,13 @@ class DefaultLayout extends React.Component {
               ...searchbarStyles,
               [presets.Tablet]: {
                 display:
-                  this.props.location.pathname.slice(0, 8) === `/plugins` ||
-                  this.props.location.pathname.slice(0, 10) === `/packages/`
+                  this.props.location.pathname.slice(0, 9) === `/packages`
                     ? `block`
                     : `none`,
               },
             }}
           >
-            <SearchBar />
+            <SearchBar history={this.props.history} />
           </div>
 
           {/* TODO Move this under docs/tutorial/index.js once Gatsby supports multiple levels
@@ -187,8 +186,7 @@ class DefaultLayout extends React.Component {
               [presets.Tablet]: {
                 paddingLeft: hasSidebar ? rhythm(10) : 0,
                 display:
-                  this.props.location.pathname.slice(0, 9) !== `/packages` &&
-                  this.props.location.pathname.slice(0, 8) !== `/plugins`
+                  this.props.location.pathname.slice(0, 9) !== `/packages`
 
                    ? `block`
                    : `none`,
@@ -203,14 +201,13 @@ class DefaultLayout extends React.Component {
           </div>
 
           {/* This div displays the contents of any plugin page*/}
-          
+
           <div
             css={{
               [presets.Tablet]: {
                 paddingLeft: hasSidebar ? rhythm(18) : 0,
                 display:
-                  this.props.location.pathname.slice(0, 9) === `/packages` ||
-                  this.props.location.pathname.slice(0, 8) === `/plugins`
+                  this.props.location.pathname.slice(0, 9) === `/packages`
                    ? `block`
                    : `none`,
               },
