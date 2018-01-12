@@ -5,7 +5,11 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "bluebird": "^3.5.1",
+<<<<<<< HEAD
     "email-validator": "^1.1.1",
+=======
+    "date-fns": "^1.29.0",
+>>>>>>> Add algolia-npm search and url syncing
     "gatsby": "^1.9.77",
     "gatsby-image": "^1.0.14",
     "gatsby-link": "^1.6.23",
@@ -46,6 +50,8 @@
     "lodash": "^4.16.6",
     "mitt": "^1.1.2",
     "parse-filepath": "^1.0.1",
+    "prop-types": "^15.6.0",
+    "qs": "^6.5.1",
     "react-icons": "^2.2.7",
     "react-instantsearch": "^4.4.1",
     "slash": "^1.0.0",
