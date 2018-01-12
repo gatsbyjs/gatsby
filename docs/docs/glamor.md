@@ -17,7 +17,6 @@ First, open a new terminal window and run the following to create a new site:
 gatsby new glamor-tutorial https://github.com/gatsbyjs/gatsby-starter-hello-world
 ```
 
-
 Second, install the Gatsby plugin for Glamor.
 
 ```shell
@@ -28,10 +27,8 @@ And then add it to your site's `gatsby-config.js`:
 
 ```javascript
 module.exports = {
-  plugins: [
-    `gatsby-plugin-glamor`,
-  ],
-}
+  plugins: [`gatsby-plugin-glamor`],
+};
 ```
 
 Then in your terminal run `gatsby develop` to start the Gatsby development server.
