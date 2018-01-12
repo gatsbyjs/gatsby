@@ -30,7 +30,7 @@ class Plugins extends Component {
           <h1
             css={{
               fontSize: rhythm(1),
-              marginTop: rhythm(0.25),
+              marginTop: rhythm(1/4),
               marginLeft: rhythm(1),
               marginRight: rhythm(1),
               textAlign: `center`,
@@ -39,8 +39,9 @@ class Plugins extends Component {
             >Welcome to the Gatsby Plugin and Starter Library!</h1>
               <p
                 css={{
-                  width: rhythm(18),
-                  fontSize: rhythm(0.75),
+                  marginLeft: rhythm(3),
+                  marginRight: rhythm(3),
+                  fontSize: rhythm(3/4),
                 }}>
                 Please use the search bar and filters to find starters
                 that will make your blazing-fast site even more awesome.
