@@ -22,7 +22,6 @@ const formatWebpackMessages = require(`react-dev-utils/formatWebpackMessages`)
 const chalk = require(`chalk`)
 const address = require(`address`)
 const sourceNodes = require(`../utils/source-nodes`)
-const findInFiles = require('find-in-files');
 
 // const isInteractive = process.stdout.isTTY
 
