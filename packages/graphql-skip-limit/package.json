@@ -20,7 +20,6 @@
     "prepublish": "cross-env NODE_ENV=production npm run build"
   },
   "dependencies": {
-    "babel-runtime": "^6.26.0",
-    "graphql": "^0.11.7"
+    "babel-runtime": "^6.26.0"
   }
 }
