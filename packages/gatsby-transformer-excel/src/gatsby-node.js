@@ -11,10 +11,10 @@ function _loadNodeContent(fileNode, fallback) {
 }
 
 async function onCreateNode(
-  { node, boundActionCreators, loadNodeContent },
+  { node, actions, loadNodeContent },
   options
 ) {
-  const { createNode, createParentChildLink } = boundActionCreators
+  const { createNode, createParentChildLink } = actions
   const extensions = `xls|xlsx|xlsm|xlsb|xml|xlw|xlc|csv|txt|dif|sylk|slk|prn|ods|fods|uos|dbf|wks|123|wq1|qpw|htm|html`.split(
     `|`
   )

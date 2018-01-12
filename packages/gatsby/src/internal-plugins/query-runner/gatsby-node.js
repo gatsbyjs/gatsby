@@ -39,10 +39,10 @@ const handlePageOrLayout = store => pageOrLayout => {
   watchComponent(component.componentPath)
 }
 
-exports.onCreatePage = ({ page, store, boundActionCreators }) => {
+exports.onCreatePage = ({ page, store }) => {
   handlePageOrLayout(store)(page)
 }
 
-exports.onCreateLayout = ({ layout, store, boundActionCreators }) => {
+exports.onCreateLayout = ({ layout, store }) => {
   handlePageOrLayout(store)(layout)
 }

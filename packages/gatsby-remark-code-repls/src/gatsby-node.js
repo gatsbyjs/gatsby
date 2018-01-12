@@ -12,7 +12,7 @@ const {
 } = require(`./constants`)
 
 exports.createPages = (
-  { boundActionCreators },
+  { actions },
   {
     directory = OPTION_DEFAULT_LINK_TEXT,
     externals = [],
@@ -24,7 +24,7 @@ exports.createPages = (
     directory += `/`
   }
 
-  const { createPage } = boundActionCreators
+  const { createPage } = actions
 
   if (!fs.existsSync(directory)) {
     throw Error(`Invalid REPL directory specified: "${directory}"`)

@@ -18,7 +18,7 @@ let _auth
 let _perPage
 
 exports.sourceNodes = async (
-  { boundActionCreators, getNode, store, cache },
+  { actions, getNode, store, cache },
   {
     baseUrl,
     protocol,
@@ -29,7 +29,7 @@ exports.sourceNodes = async (
     perPage = 100,
   }
 ) => {
-  const { createNode } = boundActionCreators
+  const { createNode } = actions
   _verbose = verboseOutput
   _siteURL = `${protocol}://${baseUrl}`
   _useACF = useACF

@@ -4,11 +4,11 @@ const createMappingChildNodes = require(`./mapping`)
 const _ = require(`lodash`)
 
 exports.sourceNodes = (
-  { boundActionCreators, getNode, hasNodeChanged },
+  { actions, getNode, hasNodeChanged },
   pluginOptions,
   done
 ) => {
-  const { createNode } = boundActionCreators
+  const { createNode } = actions
 
   let serverOptions = pluginOptions.server || {
     address: `localhost`,

@@ -2,7 +2,7 @@ const _ = require(`lodash`)
 const crypto = require(`crypto`)
 const path = require(`path`)
 
-async function onCreateNode({ node, boundActionCreators, loadNodeContent }) {
+async function onCreateNode({ node, actions, loadNodeContent }) {
   function transformObject(obj, id, type) {
     const objStr = JSON.stringify(obj)
     const contentDigest = crypto
@@ -23,7 +23,7 @@ async function onCreateNode({ node, boundActionCreators, loadNodeContent }) {
     createParentChildLink({ parent: node, child: jsonNode })
   }
 
-  const { createNode, createParentChildLink } = boundActionCreators
+  const { createNode, createParentChildLink } = actions
 
   // We only care about JSON content.
   if (node.internal.mediaType !== `application/json`) {

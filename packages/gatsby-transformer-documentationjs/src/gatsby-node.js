@@ -27,9 +27,9 @@ function createDescriptionNode(
   docNodeId,
   markdownStr,
   name,
-  boundActionCreators
+  actions
 ) {
-  const { createNode } = boundActionCreators
+  const { createNode } = actions
 
   const descriptionNode = {
     id: descriptionId(docNodeId, name),
@@ -56,9 +56,9 @@ function createDescriptionNode(
 exports.onCreateNode = async ({
   node,
   loadNodeContent,
-  boundActionCreators,
+  actions,
 }) => {
-  const { createNode, createParentChildLink } = boundActionCreators
+  const { createNode, createParentChildLink } = actions
 
   if (
     node.internal.mediaType !== `application/javascript` ||
@@ -93,7 +93,7 @@ exports.onCreateNode = async ({
           commentId(node.id, i),
           stringifyMarkdownAST(docsJson.description),
           `comment.description`,
-          boundActionCreators
+          actions
         )
       }
 
@@ -104,7 +104,7 @@ exports.onCreateNode = async ({
             commentId(node.id, i),
             stringifyMarkdownAST(param.description),
             param.name,
-            boundActionCreators
+            actions
           )
           delete param.description
         }
@@ -138,7 +138,7 @@ exports.onCreateNode = async ({
               commentId(node.id, i),
               stringifyMarkdownAST(ret.description),
               ret.title,
-              boundActionCreators
+              actions
             )
           }
 

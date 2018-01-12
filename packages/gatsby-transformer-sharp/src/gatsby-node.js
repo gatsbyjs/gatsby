@@ -6,7 +6,6 @@ exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`)
 exports.onPreExtractQueries = async ({
   store,
   getNodes,
-  boundActionCreators,
 }) => {
   const program = store.getState().program
 

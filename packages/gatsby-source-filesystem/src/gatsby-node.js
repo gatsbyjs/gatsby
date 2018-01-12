@@ -4,10 +4,10 @@ const fs = require(`fs`)
 const { createId, createFileNode } = require(`./create-file-node`)
 
 exports.sourceNodes = (
-  { boundActionCreators, getNode, hasNodeChanged, reporter },
+  { actions, getNode, hasNodeChanged, reporter },
   pluginOptions
 ) => {
-  const { createNode, deleteNode } = boundActionCreators
+  const { createNode, deleteNode } = actions
 
   let ready = false
 

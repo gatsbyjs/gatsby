@@ -12,10 +12,10 @@ const createContentDigest = obj =>
     .digest(`hex`)
 
 exports.sourceNodes = async (
-  { boundActionCreators, getNode, hasNodeChanged, store, cache },
+  { actions, getNode, hasNodeChanged, store, cache },
   { baseUrl, apiBase }
 ) => {
-  const { createNode } = boundActionCreators
+  const { createNode } = actions
 
   // Default apiBase to `jsonapi`
   apiBase = apiBase || `jsonapi`

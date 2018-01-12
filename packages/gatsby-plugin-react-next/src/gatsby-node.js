@@ -6,10 +6,10 @@ const rootReact = resolve.sync(`react`, {
 })
 const React = require(rootReact)
 
-exports.modifyWebpackConfig = ({ boundActionCreators, plugins }) => {
+exports.modifyWebpackConfig = ({ actions, plugins }) => {
   if (React.version.slice(0, 2) === `16`) return
 
-  boundActionCreators.setWebpackConfig({
+  actions.setWebpackConfig({
     resolve: {
       alias: {
         react: `gatsby-plugin-react-next/node_modules/react`,

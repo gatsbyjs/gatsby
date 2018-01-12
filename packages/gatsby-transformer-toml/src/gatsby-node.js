@@ -2,8 +2,8 @@ const toml = require(`toml`)
 const _ = require(`lodash`)
 const crypto = require(`crypto`)
 
-async function onCreateNode({ node, boundActionCreators, loadNodeContent }) {
-  const { createNode, createParentChildLink } = boundActionCreators
+async function onCreateNode({ node, actions, loadNodeContent }) {
+  const { createNode, createParentChildLink } = actions
   // Filter out non-toml content
   // Currently TOML files are considered 'application/octet-stream' in 'mime-db'
   // Hence the extension test instead of mediaType test

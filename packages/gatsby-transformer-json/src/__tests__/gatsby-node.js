@@ -28,12 +28,12 @@ describe(`Process JSON nodes correctly`, () => {
 
     const createNode = jest.fn()
     const createParentChildLink = jest.fn()
-    const boundActionCreators = { createNode, createParentChildLink }
+    const actions = { createNode, createParentChildLink }
 
     await onCreateNode({
       node,
       loadNodeContent,
-      boundActionCreators,
+      actions,
     }).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
       expect(createParentChildLink.mock.calls).toMatchSnapshot()
@@ -49,12 +49,12 @@ describe(`Process JSON nodes correctly`, () => {
 
     const createNode = jest.fn()
     const createParentChildLink = jest.fn()
-    const boundActionCreators = { createNode, createParentChildLink }
+    const actions = { createNode, createParentChildLink }
 
     await onCreateNode({
       node,
       loadNodeContent,
-      boundActionCreators,
+      actions,
     }).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
       expect(createParentChildLink.mock.calls).toMatchSnapshot()
@@ -72,12 +72,12 @@ describe(`Process JSON nodes correctly`, () => {
 
     const createNode = jest.fn()
     const createParentChildLink = jest.fn()
-    const boundActionCreators = { createNode, createParentChildLink }
+    const actions = { createNode, createParentChildLink }
 
     await onCreateNode({
       node,
       loadNodeContent,
-      boundActionCreators,
+      actions,
     }).then(() => {
       expect(createNode.mock.calls[0][0].id).toEqual(`foo`)
     })
@@ -94,12 +94,12 @@ describe(`Process JSON nodes correctly`, () => {
 
     const createNode = jest.fn()
     const createParentChildLink = jest.fn()
-    const boundActionCreators = { createNode, createParentChildLink }
+    const actions = { createNode, createParentChildLink }
 
     await onCreateNode({
       node,
       loadNodeContent,
-      boundActionCreators,
+      actions,
     }).then(() => {
       const ids = createNode.mock.calls.map(object => object[0].id)
       // Test that they're unique

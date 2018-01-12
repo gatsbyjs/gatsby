@@ -3,10 +3,10 @@ const crypto = require(`crypto`)
 const _ = require(`lodash`)
 
 module.exports = async function onCreateNode(
-  { node, getNode, loadNodeContent, boundActionCreators },
+  { node, getNode, loadNodeContent, actions },
   pluginOptions
 ) {
-  const { createNode, createParentChildLink } = boundActionCreators
+  const { createNode, createParentChildLink } = actions
 
   // We only care about markdown content.
   if (
