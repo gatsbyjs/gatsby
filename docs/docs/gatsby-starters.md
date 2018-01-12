@@ -333,3 +333,15 @@ Community:
   * Using [Typography.js](kyleamathews.github.io/typography.js/) easy to switch fonts
   * All your Project/Portfolio Data in Markdown, server by GraphQL
   * Responsive Design, optimized for Mobile devices
+
+* [gatsby-starter-strata](https://github.com/ChangoMan/gatsby-starter-strata)
+  [(demo)](http://gatsby-strata.surge.sh/)
+
+  Features:
+
+  * Based off of the Strata site template. Designed by
+    [HTML5 UP](https://html5up.net/strata)
+  * Super Simple, single page portfolio site
+  * Lightbox style React photo gallery
+  * Fully Responsive
+  * Styling with SCSS
