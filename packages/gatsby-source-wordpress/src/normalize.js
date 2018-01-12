@@ -1,4 +1,4 @@
-const { setTimeout } = require('timers')
+const { setTimeout } = require(`timers`)
 const crypto = require(`crypto`)
 const deepMapKeys = require(`deep-map-keys`)
 const _ = require(`lodash`)
