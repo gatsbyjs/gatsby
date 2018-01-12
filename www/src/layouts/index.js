@@ -32,7 +32,18 @@ class DefaultLayout extends React.Component {
       this.props.location.pathname.slice(0, 9) === `/packages` ||
       this.props.location.pathname.slice(0, 10) === `/tutorial/` ||
       this.props.location.pathname.slice(0, 9) === `/features`
-    const isSearchSource = hasSidebar
+
+    const leftPadding = (rhythmSize) => {
+      if (this.props.location.pathname.slice(0, 9) === `/packages`){
+        return rhythm(18);
+      } else if (hasSidebar){
+        return rhythm(rhythmSize)
+      } else {
+        return 0;
+      }
+    }
+
+
     const sidebarStyles = {
       borderRight: `1px solid ${colors.ui.light}`,
       backgroundColor: colors.ui.whisper,
@@ -185,36 +196,10 @@ class DefaultLayout extends React.Component {
           <div
             css={{
               [presets.Tablet]: {
-                  this.props.location.pathname.slice(0, 9) !== `/packages`
-                   ? `block`
-                   : `none`,
-              },
-              [presets.Desktop]: {
-                paddingLeft: hasSidebar ? rhythm(12) : 0,
-              },
-            }}
-            className={isSearchSource && `docSearch-content`}
-          >
-            {this.props.children()}
-          </div>
-
-          {/* This div displays the contents of any plugin page*/}
-
-          <div
-            css={{
-              [presets.Tablet]: {
-                paddingLeft: hasSidebar ? rhythm(18) : 0,
-                display:
                 paddingLeft: leftPadding(10),
               },
               [presets.Desktop]: {
                 paddingLeft: leftPadding(12),
-                  this.props.location.pathname.slice(0, 9) === `/packages` ||
-                   ? `block`
-                   : `none`,
-              },
-              [presets.Desktop]: {
-                paddingLeft: hasSidebar ? rhythm(18) : 0,
               },
             }}
           >

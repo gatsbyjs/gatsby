@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { InstantSearch, Hits, SearchBox, Stats, RefinementList } from 'react-instantsearch/dom'
-import { connectHits } from 'react-instantsearch/connectors';
 import distanceInWords from 'date-fns/distance_in_words'
 import presets from "../utils/presets"
 import Link from 'gatsby-link'
@@ -53,35 +52,31 @@ const Search = ({searchState}) => {
          }}
        />
      </div>
-
      <div css={{
        borderTop: `2px solid #F5F3F7`,
        borderBottom: `2px solid #F5F3F7`,
        borderLeft: `2px solid #F5F3F7`,
      }}>
-
-        <div css={{
-          backgroundColor: `white`,
-          height: `calc(100vh - 225px)`,
-          border: `2 px solid red`,
-          overflowY: `scroll`,
-          WebkitOverflowScrolling: `touch`,
-          "::-webkit-scrollbar": {
-            width: `6px`,
-            height: `6px`,
-          },
-          "::-webkit-scrollbar-thumb": {
-            background: presets.lightPurple,
-          },
-          "::-webkit-scrollbar-track": {
-            background: presets.brandLighter,
-          },
-        }}>
-          <Hits hitComponent={Result} />
-        </div>
-
+      <div css={{
+        backgroundColor: `white`,
+        height: `calc(100vh - 275px)`,
+        border: `2 px solid red`,
+        overflowY: `scroll`,
+        WebkitOverflowScrolling: `touch`,
+        "::-webkit-scrollbar": {
+          width: `6px`,
+          height: `6px`,
+        },
+        "::-webkit-scrollbar-thumb": {
+          background: presets.lightPurple,
+        },
+        "::-webkit-scrollbar-track": {
+          background: presets.brandLighter,
+        },
+      }}>
+        <Hits hitComponent={Result} />
+      </div>
     </div>
-
       <div>
         <h3 css={{
           fontSize: rhythm(.55),
@@ -94,8 +89,8 @@ const Search = ({searchState}) => {
   )
 }
 
-const Result = ({ hit, selected }) => {
-  const select = selected() === hit.name
+const Result = ({ hit }) => {
+  const selected = location.pathname.slice(10) === hit.name
   const lastUpdated = `${distanceInWords(new Date(hit.modified), new Date())} ago`;
   return (
     <Link
@@ -104,8 +99,8 @@ const Result = ({ hit, selected }) => {
       display: `block`,
       fontFamily: typography.options.bodyFontFamily.join(`,`),
       fontWeight: `400`,
-      color: select? `white` : `black`,
-      backgroundColor: select ? `#744C9E` : `white`,
+      color: selected? `white` : `black`,
+      backgroundColor: selected ? `#744C9E` : `white`,
       padding: rhythm(.5),
     }}>
       <div
@@ -195,10 +190,10 @@ const Result = ({ hit, selected }) => {
   )
 }
 
-const currentLocation = () => {
-  return location.pathname.slice(10);
-}
 
+// This is for the urlSync
+const updateAfter = 700
+//
 
 class SearchBar extends Component {
   constructor(props){
