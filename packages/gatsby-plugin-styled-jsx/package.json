@@ -12,10 +12,12 @@
   "keywords": ["gatsby", "styled-jsx"],
   "license": "MIT",
   "dependencies": {
-    "babel-runtime": "^6.26.0",
-    "styled-jsx": "^2.2.1"
+    "babel-runtime": "^6.26.0"
   },
   "devDependencies": {
     "cross-env": "^5.0.5"
+  },
+  "peerDependencies": {
+    "styled-jsx": "^2.2.1"
   }
 }
