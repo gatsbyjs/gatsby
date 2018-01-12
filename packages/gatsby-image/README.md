@@ -68,6 +68,7 @@ npm install --save gatsby-plugin-sharp
 ```
 
 Then in your `gatsby-config.js`:
+
 ```
 plugins: [
   `gatsby-transformer-sharp`,

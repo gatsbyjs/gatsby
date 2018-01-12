@@ -26,10 +26,8 @@ And then add it to your site's `gatsby-config.js`:
 
 ```javascript
 module.exports = {
-  plugins: [
-    `gatsby-plugin-styled-components`,
-  ],
-}
+  plugins: [`gatsby-plugin-styled-components`],
+};
 ```
 
 Then in your terminal run `gatsby develop` to start the Gatsby development server.
