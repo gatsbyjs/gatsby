@@ -35,10 +35,10 @@ const fetchResource = resourceName => {
       .catch(() => {
         failed = true
       })
-      .then(() => {
+      .then(component => {
         fetchHistory.push({
           resource: resourceName,
-          succeeded: failed,
+          succeeded: !failed,
         })
 
         if (!failedResources[resourceName]) {
@@ -46,7 +46,8 @@ const fetchResource = resourceName => {
         }
 
         fetchHistory = fetchHistory.slice(-MAX_HISTORY)
-        console.log(`fetchHistory`, fetchHistory)
+
+        resolve(component)
       })
   })
 }
@@ -243,7 +244,7 @@ const queue = {
 
     if (!page) {
       console.log(`A page wasn't found for "${path}"`)
-      return null
+      return cb()
     }
 
     // Use the path from the page so the pathScriptsCache uses
@@ -258,6 +259,7 @@ const queue = {
           page,
           pageResources: pathScriptsCache[path],
         })
+        cb(pathScriptsCache[path])
         return pathScriptsCache[path]
       })
 
@@ -300,6 +302,7 @@ const queue = {
         json = j
         done()
       })
+      cb(pathScriptsCache[path])
       return pathScriptsCache[path]
     }
 

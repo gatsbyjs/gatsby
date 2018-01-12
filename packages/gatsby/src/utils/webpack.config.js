@@ -270,7 +270,13 @@ module.exports = async (
           new StatsWriterPlugin(),
 
           // Minify Javascript.
-          plugins.uglify(),
+          plugins.uglify({
+            uglifyOptions: {
+              compress: {
+                drop_console: false,
+              },
+            },
+          }),
           new GatsbyModulePlugin(),
           plugins.namedModules(),
           plugins.namedChunks(chunk => {

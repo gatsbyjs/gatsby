@@ -11,7 +11,6 @@
     "gatsby-plugin-glamor": "canary",
     "gatsby-plugin-react-helmet": "canary",
     "gatsby-plugin-sharp": "canary",
-    "gatsby-plugin-styled-components": "canary",
     "gatsby-plugin-typography": "canary",
     "gatsby-source-wordpress": "canary",
     "gatsby-transformer-sharp": "canary",

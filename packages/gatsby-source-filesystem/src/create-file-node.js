@@ -44,7 +44,7 @@ exports.createFileNode = async (pathToFile, pluginOptions = {}) => {
     const contentDigest = await md5File(slashedFile.absolutePath)
     internal = {
       contentDigest,
-      mediaType: mime.lookup(slashedFile.ext),
+      mediaType: mime.getType(slashedFile.ext),
       type: `File`,
     }
   }

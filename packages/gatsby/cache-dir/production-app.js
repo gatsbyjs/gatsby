@@ -183,7 +183,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
     const NewRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
     domReady(() => {
-      ReactDOM.render(
+      ReactDOM.hydrate(
         <NewRoot />,
         typeof window !== `undefined`
           ? document.getElementById(`___gatsby`)
