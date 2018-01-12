@@ -1,8 +1,8 @@
 const path = require(`path`)
 
 // Create a slug for each recipe and set it as a field on the node.
-exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
-  const { createNodeField } = boundActionCreators
+exports.onCreateNode = ({ node, getNode, actions }) => {
+  const { createNodeField } = actions
   if (node.internal.type === `recipes`) {
     const slug = `/recipes/${node.internalId}/`
     createNodeField({
@@ -15,8 +15,8 @@ exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
 
 // Implement the Gatsby API “createPages”. This is called once the
 // data layer is bootstrapped to let plugins create pages from data.
-exports.createPages = ({ boundActionCreators, graphql }) => {
-  const { createPage } = boundActionCreators
+exports.createPages = ({ actions, graphql }) => {
+  const { createPage } = actions
 
   return new Promise((resolve, reject) => {
     const recipeTemplate = path.resolve(`src/templates/recipe.js`)
