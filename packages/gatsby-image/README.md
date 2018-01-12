@@ -105,6 +105,8 @@ export const query = graphql`
 `;
 ```
 
+For another explanation of how to get started with gatsby-image, see this blog post by community member Kyle Gill [Image Optimization Made Easy with Gatsby.js](https://medium.com/@kyle.robert.gill/ridiculously-easy-image-optimization-with-gatsby-js-59d48e15db6e)
+
 ## Two types of responsive images
 
 There are two types of responsive images supported by gatsby-image.
