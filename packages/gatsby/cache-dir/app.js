@@ -70,8 +70,8 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   }
 })
 
-function supportsServiceWorkers(location, navigator){
-  if (location.hostname === `localhost` || location.protocol === `https:`){
+function supportsServiceWorkers(location, navigator) {
+  if (location.hostname === `localhost` || location.protocol === `https:`) {
     return `serviceWorker` in navigator
   }
   return false
