@@ -1,6 +1,6 @@
 {
   "name": "gatsby-module-loader",
-  "version": "1.0.9",
+  "version": "2.0.0-alpha.1",
   "description": "_Based on https://github.com/webpack/bundle-loader and https://github.com/NekR/async-module-loader_",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,9 @@
   "license": "MIT",
   "dependencies": {
     "babel-runtime": "^6.26.0",
-    "loader-utils": "^0.2.16"
+    "common-tags": "^1.4.0",
+    "dedent": "^0.7.0",
+    "loader-utils": "^1.0.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

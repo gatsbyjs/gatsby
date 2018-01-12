@@ -20,13 +20,14 @@ module.exports = async (program: any) => {
   )
 
   return new Promise((resolve, reject) => {
-    webpack(compilerConfig.resolve()).run((e, stats) => {
+    webpack(compilerConfig).run((e, stats) => {
       if (e) {
         return reject(e)
       }
       const outputFile = `${directory}/public/render-page.js`
       if (stats.hasErrors()) {
         let webpackErrors = stats.toJson().errors
+        console.log(`here`, webpackErrors[0])
         return reject(
           createErrorFromString(webpackErrors[0], `${outputFile}.map`)
         )

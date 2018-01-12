@@ -1,4 +1,4 @@
-import colors from "./colors"
+const colors = require(`./colors`);
 
 module.exports = {
   mobile: `(min-width: 400px)`,

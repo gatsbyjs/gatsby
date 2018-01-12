@@ -1,0 +1,27 @@
+{
+  "name": "gatsby-example-using-asciidoc",
+  "private": true,
+  "description": "Gatsby example site using the Asciidoc transformer plugin",
+  "version": "1.0.0",
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "dependencies": {
+    "asciidoctor.js": "^1.5.6-preview.1",
+    "gatsby": "latest",
+    "gatsby-link": "latest",
+    "gatsby-plugin-google-analytics": "latest",
+    "gatsby-plugin-offline": "latest",
+    "gatsby-source-filesystem": "latest",
+    "lodash": "^4.16.4",
+    "react-typography": "^0.15.0",
+    "slash": "^1.0.0",
+    "typography": "^0.15.8",
+    "typography-breakpoint-constants": "^0.14.0"
+  },
+  "keywords": ["gatsby"],
+  "license": "MIT",
+  "main": "n/a",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build"
+  }
+}

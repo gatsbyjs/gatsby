@@ -9,7 +9,7 @@ import {
   MIN_LARGER_DISPLAY_MEDIA_QUERY,
 } from "typography-breakpoint-constants"
 
-const options = {
+const _options = {
   headerFontFamily: [
     `Futura PT`,
     `-apple-system`,
@@ -297,6 +297,7 @@ const options = {
   },
 }
 
-const typography = new Typography(options)
+const typography = new Typography(_options)
 
+export const { scale, rhythm, options } = typography
 export default typography

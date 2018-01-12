@@ -1,60 +1,67 @@
-import ExtractTextPlugin from "extract-text-webpack-plugin"
-import { cssModulesConfig } from "gatsby-1-config-css-modules"
 
-exports.modifyWebpackConfig = ({ config, stage }) => {
-  const lessFiles = /\.less$/
-  const lessModulesFiles = /\.module\.less$/
+exports.modifyWebpackConfig = (
+  { boundActionCreators, stage, rules, plugins, loaders },
+  { postCssPlugins, ...lessOptions }
+) => {
+  const { setWebpackConfig } = boundActionCreators
+  const PRODUCTION = stage !== `develop`
+
+  const lessLoader = {
+    loader: require.resolve(`less-loader`),
+    options: {
+      sourceMap: !PRODUCTION,
+      ...lessOptions,
+    },
+  }
+
+  const lessRule = {
+    test: /\.less$/,
+    exclude: /\.module\.less$/,
+    use: plugins.extractText.extract({
+      fallback: loaders.style,
+      use: [
+        loaders.css({ importLoaders: 1 }),
+        loaders.postcss({ plugins: postCssPlugins }),
+        lessLoader,
+      ],
+    }),
+  }
+  const lessRuleModules = {
+    test: /\.module\.less$/,
+    use: plugins.extractText.extract({
+      fallback: loaders.style,
+      use: [
+        loaders.css({ modules: true, importLoaders: 1 }),
+        loaders.postcss({ plugins: postCssPlugins }),
+        lessLoader,
+      ],
+    }),
+  }
+
+  let configRules = []
 
   switch (stage) {
-    case `develop`: {
-      config.loader(`less`, {
-        test: lessFiles,
-        exclude: lessModulesFiles,
-        loaders: [`style`, `css`, `less`],
-      })
+    case `develop`:
+    case `build-css`:
+    case `build-javascript`:
+      configRules = configRules.concat([lessRule, lessRuleModules])
+      break
 
-      config.loader(`lessModules`, {
-        test: lessModulesFiles,
-        loaders: [`style`, cssModulesConfig(stage), `less`],
-      })
-      return config
-    }
-    case `build-css`: {
-      config.loader(`less`, {
-        test: lessFiles,
-        exclude: lessModulesFiles,
-        loader: ExtractTextPlugin.extract([`css?minimize`, `less`]),
-      })
-
-      config.loader(`lessModules`, {
-        test: lessModulesFiles,
-        loader: ExtractTextPlugin.extract(`style`, [
-          cssModulesConfig(stage),
-          `less`,
-        ]),
-      })
-      return config
-    }
-    case `develop-html`:
     case `build-html`:
-    case `build-javascript`: {
-      config.loader(`less`, {
-        test: lessFiles,
-        exclude: lessModulesFiles,
-        loader: `null`,
-      })
-
-      config.loader(`lessModules`, {
-        test: lessModulesFiles,
-        loader: ExtractTextPlugin.extract(`style`, [
-          cssModulesConfig(stage),
-          `less`,
-        ]),
-      })
-      return config
-    }
-    default: {
-      return config
-    }
+    case `develop-html`:
+      configRules = configRules.concat([
+        {
+          ...lessRule,
+          use: loaders.null,
+        },
+        lessRuleModules,
+      ])
+      break
   }
+
+  setWebpackConfig({
+    module: {
+      rules: configRules,
+    },
+  })
 }

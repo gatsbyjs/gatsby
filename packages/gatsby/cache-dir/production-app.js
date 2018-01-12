@@ -1,6 +1,7 @@
 if (__POLYFILL__) {
   require(`core-js/modules/es6.promise`)
 }
+
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import React, { createElement } from "react"
 import ReactDOM from "react-dom"
@@ -18,9 +19,15 @@ import asyncRequires from "./async-requires"
 import loader from "./loader"
 loader.addPagesArray(pages)
 loader.addProdRequires(asyncRequires)
+
 window.asyncRequires = asyncRequires
+window.___emitter = emitter
 window.___loader = loader
+
 window.matchPath = matchPath
+
+loader.addPagesArray(pages)
+loader.addProdRequires(asyncRequires)
 
 // Convert to a map for faster lookup in maybeRedirect()
 const redirectMap = redirects.reduce((map, redirect) => {
@@ -175,7 +182,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       )
 
     const NewRoot = apiRunner(`wrapRootComponent`, { Root }, Root)[0]
-    domReady(() =>
+    domReady(() => {
       ReactDOM.render(
         <NewRoot />,
         typeof window !== `undefined`
@@ -185,6 +192,6 @@ apiRunnerAsync(`onClientEntry`).then(() => {
           apiRunner(`onInitialClientRender`)
         }
       )
-    )
+    })
   })
 })

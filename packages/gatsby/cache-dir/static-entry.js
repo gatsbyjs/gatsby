@@ -12,7 +12,7 @@ let Html
 try {
   Html = require(`../src/html`)
 } catch (err) {
-  if (testRequireError(`..\/src\/html`, err)) {
+  if (testRequireError(`../src/html`, err)) {
     Html = require(`./default-html`)
   } else {
     console.log(
@@ -23,6 +23,8 @@ try {
     process.exit()
   }
 }
+
+Html = Html && Html.__esModule ? Html.default : Html
 
 const pathChunkName = path => {
   const name = path === `/` ? `index` : kebabCase(path)
@@ -137,19 +139,6 @@ module.exports = (locals, callback) => {
     bodyHtml,
   })
 
-  // Add the chunk-manifest as a head component.
-  const chunkManifest = require(`!raw!../public/chunk-manifest.json`)
-
-  headComponents.unshift(
-    <script
-      id="webpack-manifest"
-      key="webpack-manifest"
-      dangerouslySetInnerHTML={{
-        __html: `/*<![CDATA[*/window.webpackManifest=${chunkManifest}/*]]>*/`,
-      }}
-    />
-  )
-
   let stats
   try {
     stats = require(`../public/stats.json`)
@@ -160,6 +149,7 @@ module.exports = (locals, callback) => {
   // Create paths to scripts
   const page = pages.find(page => page.path === locals.path)
   const scripts = [
+    `webpack-runtime`,
     `commons`,
     `app`,
     pathChunkName(locals.path),

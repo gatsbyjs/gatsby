@@ -3,24 +3,25 @@
 exports[`gatsby-plugin-coffeescript contains coffee script extensions 1`] = `
 Array [
   ".coffee",
-  ".cjsx",
 ]
 `;
 
-exports[`gatsby-plugin-coffeescript pre processing transforms .cjsx files 1`] = `
-"(function() {
-  var React;
-
-  React = require('react');
-
-  module.exports = class extends React.Component({
-      render: function() {
-        return React.createElement(\\"div\\", null, React.createElement(\\"h1\\", null, \\"Hello World\\"));
-      }
-    }) {};
-
-}).call(this);
-"
+exports[`gatsby-plugin-coffeescript modifies webpack config with cofeescript extensions 1`] = `
+Array [
+  Object {
+    "module": Object {
+      "rules": Array [
+        Object {
+          "test": /\\\\\\.coffee\\$/,
+          "use": Array [
+            "babel-loader",
+            "/resolved/path/coffee-loader",
+          ],
+        },
+      ],
+    },
+  },
+]
 `;
 
 exports[`gatsby-plugin-coffeescript pre processing transforms .coffee files 1`] = `

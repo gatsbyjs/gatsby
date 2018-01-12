@@ -3,6 +3,7 @@
 }
 
 .link {
+  display: inline-flex;
   border-bottom: 3rem red dotted;
   font-size: 10rem;
   line-height: 1.5;
