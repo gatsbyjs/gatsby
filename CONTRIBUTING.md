@@ -65,7 +65,7 @@ a pull request.
   additions or modifications here.
 * Make sure to double check your grammar and capitalise correctly.
 * Commit and push to your fork.
-* Create an pull request from your branch.
+* Create a pull request from your branch.
 
 ## Development tools
 
