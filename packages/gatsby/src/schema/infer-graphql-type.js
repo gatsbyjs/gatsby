@@ -43,10 +43,8 @@ export type ProcessedNodeType = {
 }
 
 const ISO_8601_FORMAT = [
-  `YYYY`,
   `YYYY-MM`,
   `YYYY-MM-DD`,
-  `YYYYMMDD`,
   `YYYY-MM-DDTHHZ`,
   `YYYY-MM-DDTHH:mmZ`,
   `YYYY-MM-DDTHHmmZ`,
@@ -59,7 +57,6 @@ const ISO_8601_FORMAT = [
   `YYYY-[W]WW-E`,
   `YYYY[W]WWE`,
   `YYYY-DDDD`,
-  `YYYYDDDD`,
 ]
 
 function inferGraphQLType({
