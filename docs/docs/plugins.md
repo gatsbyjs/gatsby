@@ -159,6 +159,7 @@ root.
 * [gatsby-remark-graph](https://github.com/konsumer/gatsby-remark-graph)
 * [gatsby-remark-sequence](https://github.com/liudonghua123/gatsby-remark-sequence)
 * [gatsby-source-airtable](https://github.com/kevzettler/gatsby-source-airtable)
+* [gatsby-source-behance](https://github.com/LeKoArts/gatsby-source-behance)
 * [gatsby-source-datocms](https://github.com/datocms/gatsby-source-datocms)
 * [gatsby-source-github](https://github.com/mosch/gatsby-source-github)
 * [gatsby-source-google-sheets](https://github.com/brandonmp/gatsby-source-google-sheets)
@@ -166,3 +167,9 @@ root.
 * [gatsby-source-stripe](https://github.com/njosefbeck/gatsby-source-stripe)
 * [gatsby-source-twitch](https://github.com/jedidiah/gatsby-source-twitch)
 * [gatsby-source-workable](https://github.com/tumblbug/gatsby-source-workable)
+
+## Community Library
+
+* [gatsby-node-helpers](https://github.com/angeloashmore/gatsby-node-helpers)
+* [gatsby-paginate](https://github.com/pixelstew/gatsby-paginate)
+* [gatsby-pagination](https://github.com/infinitedescent/gatsby-pagination)

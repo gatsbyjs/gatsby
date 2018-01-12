@@ -1,3 +1,5 @@
+require(`v8-compile-cache`)
+
 import { uniq, some } from "lodash"
 import fs from "fs"
 import path from "path"
