@@ -10,7 +10,7 @@
     "babel-runtime": "^6.26.0",
     "coffee-loader": "^0.7.3",
     "coffee-react-transform": "^5.0.0",
-    "coffeescript": "next"
+    "coffeescript": "^2.1.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
