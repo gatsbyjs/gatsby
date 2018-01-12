@@ -19,3 +19,4 @@ A curated list of interesting Gatsby community projects and learning resources.
 * [Egghead course — "Build a Blog with React and Markdown using Gatsby"](https://egghead.io/courses/build-a-blog-with-react-and-markdown-using-gatsby)
 * [Build a photo site with Gatsby — 6 part tutorial](https://jeremey.blog/gatsby-photo/)
 * [Blazing fast website with Gatsby and Contentful series](https://www.youtube.com/watch?v=Ek4o40w1tH4&list=PL8KiuH6vpACV-F7jXribe4YveGBhBeG9A)
+* [Image Optimization Made Easy with Gatsby.js](https://medium.com/@kyle.robert.gill/ridiculously-easy-image-optimization-with-gatsby-js-59d48e15db6e)

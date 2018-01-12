@@ -31,7 +31,7 @@ Ideally you would:
   show a preview of the image while it loads
 * Hold the image position so your page doesn't jump while images load
 
-Doing this consistantly across a site feels like sisyphean labor. You manually
+Doing this consistently across a site feels like sisyphean labor. You manually
 optimize your images and then… several images are swapped in at the last minute
 or a design-tweak shaves 100px of width off your images.
 
@@ -55,6 +55,27 @@ you need only:
 The GraphQL query creates multiple thumbnails with optimized JPEG and PNG
 compression. The `gatsby-image` component automatically sets up the "blur-up"
 effect as well as lazy loading of images further down the screen.
+
+## Install
+
+`npm install --save gatsby-image`
+
+Depending on the gatsby starter you used, you may need to include [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/) and [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/) as well, and make sure they are installed and included in your gatsby-config.
+
+```
+npm install --save gatsby-transformer-sharp
+npm install --save gatsby-plugin-sharp
+```
+
+Then in your `gatsby-config.js`:
+```
+plugins: [
+  `gatsby-transformer-sharp`,
+  `gatsby-plugin-sharp`
+];
+```
+
+## How to use
 
 This is what a component using `gatsby-images` looks like.
 
@@ -83,6 +104,8 @@ export const query = graphql`
   }
 `;
 ```
+
+For another explanation of how to get started with gatsby-image, see this blog post by community member Kyle Gill [Image Optimization Made Easy with Gatsby.js](https://medium.com/@kyle.robert.gill/ridiculously-easy-image-optimization-with-gatsby-js-59d48e15db6e)
 
 ## Two types of responsive images
 
