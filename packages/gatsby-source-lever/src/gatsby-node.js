@@ -4,10 +4,10 @@ const normalize = require(`./normalize`)
 const typePrefix = `lever__`
 
 exports.sourceNodes = async (
-  { boundActionCreators, getNode, store, cache },
+  { actions, getNode, store, cache },
   { site, verboseOutput }
 ) => {
-  const { createNode } = boundActionCreators
+  const { createNode } = actions
 
   let entities = await fetch({
     site,

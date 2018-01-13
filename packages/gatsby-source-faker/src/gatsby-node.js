@@ -1,8 +1,8 @@
 const faker = require(`faker`)
 const crypto = require(`crypto`)
 
-exports.sourceNodes = ({ boundActionCreators }, pluginOptions) => {
-  const { createNode } = boundActionCreators
+exports.sourceNodes = ({ actions }, pluginOptions) => {
+  const { createNode } = actions
   const { schema, count, type } = pluginOptions
   for (let i = 0; i < count; i++) {
     let item = {}

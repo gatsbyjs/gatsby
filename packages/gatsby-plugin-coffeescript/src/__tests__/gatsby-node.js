@@ -14,17 +14,17 @@ describe(`gatsby-plugin-coffeescript`, () => {
   })
 
   it(`modifies webpack config with cofeescript extensions`, () => {
-    const boundActionCreators = {
+    const actions = {
       setWebpackConfig: jest.fn(),
     }
     const loaders = { js: () => `babel-loader` }
 
-    modifyWebpackConfig({ boundActionCreators, loaders })
+    modifyWebpackConfig({ actions, loaders })
 
-    expect(boundActionCreators.setWebpackConfig)
+    expect(actions.setWebpackConfig)
       .toHaveBeenCalledTimes(resolvableExtensions().length)
 
-    const lastCall = boundActionCreators.setWebpackConfig.mock.calls.pop()
+    const lastCall = actions.setWebpackConfig.mock.calls.pop()
     expect(lastCall).toMatchSnapshot()
   })
 

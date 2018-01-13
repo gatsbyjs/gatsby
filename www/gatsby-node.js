@@ -6,8 +6,9 @@ const fs = require(`fs-extra`)
 const slash = require(`slash`)
 const slugify = require(`limax`)
 
-exports.createPages = ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators
+exports.createPages = ({ graphql, actions }) => {
+  const { createPage, createRedirect } = actions
+
   return new Promise((resolve, reject) => {
     const docsTemplate = path.resolve(`src/templates/template-docs-markdown.js`)
     const blogPostTemplate = path.resolve(`src/templates/template-blog-post.js`)
@@ -17,6 +18,21 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     const packageTemplate = path.resolve(
       `src/templates/template-docs-packages.js`
     )
+
+    createRedirect({
+      fromPath: `/docs/bound-action-creators/`,
+      isPermanent: true,
+      redirectInBrowser: true,
+      toPath: `/docs/actions/`,
+    })
+
+    createRedirect({
+      fromPath: `/docs/bound-action-creators`,
+      isPermanent: true,
+      redirectInBrowser: true,
+      toPath: `/docs/actions`,
+    })
+
     // Query for markdown nodes to use in creating pages.
     resolve(
       graphql(
@@ -123,8 +139,8 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 }
 
 // Create slugs for files.
-exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
-  const { createNodeField } = boundActionCreators
+exports.onCreateNode = ({ node, actions, getNode }) => {
+  const { createNodeField } = actions
   let slug
   if (node.internal.type === `File`) {
     const parsedFilePath = parseFilepath(node.relativePath)

@@ -24,7 +24,7 @@ describe(`Process XML nodes correctly`, () => {
             <genre>Computer</genre>
             <price>44.95</price>
             <publish_date>2000-10-01</publish_date>
-            <description>An in-depth look at creating applications 
+            <description>An in-depth look at creating applications
             with XML.</description>
          </book>
          <book id="bk102">
@@ -33,8 +33,8 @@ describe(`Process XML nodes correctly`, () => {
             <genre>Fantasy</genre>
             <price>5.95</price>
             <publish_date>2000-12-16</publish_date>
-            <description>A former architect battles corporate zombies, 
-            an evil sorceress, and her own childhood to become queen 
+            <description>A former architect battles corporate zombies,
+            an evil sorceress, and her own childhood to become queen
             of the world.</description>
          </book>
       </catalog>
@@ -44,12 +44,12 @@ describe(`Process XML nodes correctly`, () => {
   it(`correctly creates nodes from XML`, async () => {
     const createNode = jest.fn()
     const createParentChildLink = jest.fn()
-    const boundActionCreators = { createNode, createParentChildLink }
+    const actions = { createNode, createParentChildLink }
 
     await onCreateNode({
       node,
       loadNodeContent,
-      boundActionCreators,
+      actions,
     }).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
       expect(createParentChildLink.mock.calls).toMatchSnapshot()
@@ -60,12 +60,12 @@ describe(`Process XML nodes correctly`, () => {
   it(`should set the node id to the attribute id if specified`, async () => {
     const createNode = jest.fn()
     const createParentChildLink = jest.fn()
-    const boundActionCreators = { createNode, createParentChildLink }
+    const actions = { createNode, createParentChildLink }
 
     await onCreateNode({
       node,
       loadNodeContent,
-      boundActionCreators,
+      actions,
     }).then(() => {
       expect(createNode.mock.calls[0][0].id).toEqual(`bk101`)
     })

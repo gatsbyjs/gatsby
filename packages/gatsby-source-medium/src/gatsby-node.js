@@ -25,8 +25,8 @@ const convertTimestamps = (nextObj, prevObj, prevKey) => {
 
 const strip = payload => payload.replace(prefix, ``)
 
-exports.sourceNodes = async ({ boundActionCreators }, { username }) => {
-  const { createNode } = boundActionCreators
+exports.sourceNodes = async ({ actions }, { username }) => {
+  const { createNode } = actions
 
   try {
     const result = await fetch(username)

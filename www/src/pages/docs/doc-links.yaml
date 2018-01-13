@@ -54,7 +54,7 @@
       link: /docs/api-proxy/
     - title: Using CSS-in-JS library Glamor
       link: /docs/glamor/
-    - title: Using CSS-in-JS library Styled Components 
+    - title: Using CSS-in-JS library Styled Components
       link: /docs/styled-components/
     - title: Adding Markdown Pages
       link: /docs/adding-markdown-pages/
@@ -72,8 +72,8 @@
       link: /docs/node-interface/
     - title: API Specification
       link: /docs/api-specification/
-    - title: Bound Action Creators
-      link: /docs/bound-action-creators/
+    - title: Actions
+      link: /docs/actions/
     - title: Gatsby Browser APIs
       link: /docs/browser-apis/
     - title: Gatsby Node APIs

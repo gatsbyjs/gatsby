@@ -89,12 +89,12 @@ Where oh where is my little pony?
       })
     }
     const createParentChildLink = jest.fn()
-    const boundActionCreators = { createNode, createParentChildLink }
+    const actions = { createNode, createParentChildLink }
 
     await onCreateNode({
       node,
       loadNodeContent,
-      boundActionCreators,
+      actions,
     })
   })
 })

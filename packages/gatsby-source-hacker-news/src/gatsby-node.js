@@ -9,11 +9,11 @@ const get = query =>
   )
 
 exports.sourceNodes = async ({
-  boundActionCreators,
+  actions,
   getNode,
   hasNodeChanged,
 }) => {
-  const { createNode } = boundActionCreators
+  const { createNode } = actions
 
   // Do the initial fetch
   console.time(`fetch HN data`)
