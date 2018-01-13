@@ -65,9 +65,8 @@ two ways:
 If you prefer to write locally before submitting a PR, then follow these steps:
 
 1. Fork this repository
-2. Copy it to your local machine by running the command `git clone`
-   `https://github.com/YOUR-GITHUB-USERNAME/guides.git`
-3. Add a remote upstream so git knows where the official Gatsby Guides
+2. Copy your fork to your local machine.
+3. Add a remote upstream so git knows where the official Gatsby
    repository is located by running the command `git remote add upstream`
    _incomplete code here_
 4. Create a new branch for your work with the command `git checkout -b NEW-BRANCH-NAME`. Try to name your branch in a way that describes your
@@ -88,10 +87,9 @@ Finally, if you want to run a version of the guides repository locally, follow
 these steps:
 
 1. Ensure you have the yarn package manager installed `npm install -g yarn`
-2. Fork this repository 👇 `git clone https://github.com/YOUR-GITHUB-USERNAME/guides.git` `cd guides` `yarn install` `yarn run dev`
-
-In this project we are using `yarn` because
-[`Netlify`](https://www.netlify.com/) builds our site with `yarn`.
+2. Install the Gatsby cli `yarn add --global gatsby-cli`
+3. Follow the steps above to fork and clone the Gatsby repo.
+4. Enter the `www` directory where gatsbyjs.org is and install its dependencies `yarn install` then run `gatsby develop`.
 
 ## Article style guide
 
