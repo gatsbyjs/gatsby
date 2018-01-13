@@ -10,9 +10,9 @@ const digest = str =>
 const propsId = (parentId, name) => `${parentId}--ComponentProp-${name}`
 const descId = parentId => `${parentId}--ComponentDescription`
 
-function createDescriptionNode(node, entry, boundActionCreators) {
+function createDescriptionNode(node, entry, actions) {
   if (!entry.description) return node
-  const { createNode } = boundActionCreators
+  const { createNode } = actions
 
   const descriptionNode = {
     id: descId(node.id),
@@ -34,8 +34,8 @@ function createDescriptionNode(node, entry, boundActionCreators) {
   return node
 }
 
-function createPropNodes(node, component, boundActionCreators) {
-  const { createNode } = boundActionCreators
+function createPropNodes(node, component, actions) {
+  const { createNode } = actions
   let children = new Array(component.props.length)
 
   component.props.forEach((prop, i) => {
@@ -54,7 +54,7 @@ function createPropNodes(node, component, boundActionCreators) {
       },
     }
     children[i] = propNode.id
-    propNode = createDescriptionNode(propNode, prop, boundActionCreators)
+    propNode = createDescriptionNode(propNode, prop, actions)
     createNode(propNode)
   })
 
@@ -64,10 +64,10 @@ function createPropNodes(node, component, boundActionCreators) {
 }
 
 export default function onCreateNode(
-  { node, loadNodeContent, boundActionCreators },
+  { node, loadNodeContent, actions },
   pluginOptions
 ) {
-  const { createNode, createParentChildLink } = boundActionCreators
+  const { createNode, createParentChildLink } = actions
 
   if (
     node.internal.mediaType !== `application/javascript` &&
@@ -100,12 +100,12 @@ export default function onCreateNode(
         metadataNode = createPropNodes(
           metadataNode,
           component,
-          boundActionCreators
+          actions
         )
         metadataNode = createDescriptionNode(
           metadataNode,
           component,
-          boundActionCreators
+          actions
         )
         createNode(metadataNode)
       })

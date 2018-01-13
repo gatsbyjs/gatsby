@@ -1,7 +1,7 @@
 
 // Add Glamor support
-exports.modifyWebpackConfig = ({ boundActionCreators, plugins }) =>
-  boundActionCreators.setWebpackConfig({
+exports.modifyWebpackConfig = ({ actions, plugins }) =>
+  actions.setWebpackConfig({
     plugins: [
       plugins.provide({
         Glamor: `glamor/react`,

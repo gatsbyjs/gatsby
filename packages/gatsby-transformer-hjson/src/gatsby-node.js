@@ -3,7 +3,7 @@ const crypto = require(`crypto`)
 const path = require(`path`)
 const HJSON = require(`hjson`)
 
-async function onCreateNode({ node, boundActionCreators, loadNodeContent }) {
+async function onCreateNode({ node, actions, loadNodeContent }) {
   function transformObject(obj, id, type) {
     const objStr = JSON.stringify(obj)
     const contentDigest = crypto
@@ -24,7 +24,7 @@ async function onCreateNode({ node, boundActionCreators, loadNodeContent }) {
     createParentChildLink({ parent: node, child: jsonNode })
   }
 
-  const { createNode, createParentChildLink } = boundActionCreators
+  const { createNode, createParentChildLink } = actions
 
   // We only care about HJSON content.
   // NOTE the mime package does not recognize HJSON yet

@@ -13,11 +13,11 @@ const validatePath = require(`./validate-path`)
 // algorithm is glob /layouts directory for js/jsx/cjsx files *not*
 // underscored
 exports.createLayouts = async (
-  { store, boundActionCreators },
+  { store, actions },
   options,
   doneCb
 ) => {
-  const { createLayout, deleteLayout } = boundActionCreators
+  const { createLayout, deleteLayout } = actions
   const program = store.getState().program
   const layoutDirectory = systemPath.posix.join(
     program.directory,

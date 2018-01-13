@@ -11,16 +11,16 @@ describe(`gatsby-plugin-typescript`, () => {
   let args
 
   function getLoader() {
-    const call = args.boundActionCreators.setWebpackConfig.mock.calls[0]
+    const call = args.actions.setWebpackConfig.mock.calls[0]
     return call[0].module.rules[0]
   }
 
   beforeEach(() => {
-    const boundActionCreators = {
+    const actions = {
       setWebpackConfig: jest.fn(),
     }
     const loaders = { js: jest.fn(() => `babel-loader`) }
-    args = { boundActionCreators, loaders }
+    args = { actions, loaders }
   })
 
   it(`returns correct extensions`, () => {
@@ -30,8 +30,8 @@ describe(`gatsby-plugin-typescript`, () => {
   it(`modifies webpack config`, () => {
     modifyWebpackConfig(args, { compilerOptions: {} })
 
-    expect(args.boundActionCreators.setWebpackConfig).toHaveBeenCalledTimes(1)
-    const lastCall = args.boundActionCreators.setWebpackConfig.mock.calls.pop()
+    expect(args.actions.setWebpackConfig).toHaveBeenCalledTimes(1)
+    const lastCall = args.actions.setWebpackConfig.mock.calls.pop()
     expect(lastCall).toMatchSnapshot()
   })
 

@@ -9,8 +9,8 @@ const validatePrefixEntry = prefix => {
   }
 }
 
-exports.onCreatePage = ({ page, store, boundActionCreators }, { prefixes }) => {
-  const { createPage } = boundActionCreators
+exports.onCreatePage = ({ page, store, actions }, { prefixes }) => {
+  const { createPage } = actions
   const re = {}
   prefixes.forEach(validatePrefixEntry)
 

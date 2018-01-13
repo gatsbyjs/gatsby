@@ -8,16 +8,15 @@ class ActionCreatorsDocs extends React.Component {
   render() {
     return (
       <Container>
-        <h1 css={{ marginTop: 0 }}>Bound Action Creators</h1>
+        <h1 css={{ marginTop: 0 }}>Actions</h1>
         <p>
           Gatsby uses
           {` `}
           <a href="http://redux.js.org">Redux</a>
           {` `}
           internally to manage state. When you implement a Gatsby API, you're
-          passed a collection of "Bound Action Creators" (functions which create
-          and dispatch Redux actions when called) which you can use to
-          manipulate state on your site.
+          passed a collection of actions (equivalent to boundActionCreators in redux)
+          which you can use to manipulate state on your site.
         </p>
         <h2 css={{ marginBottom: rhythm(1 / 2) }}>Functions</h2>
         <ul css={{ ...scale(-1 / 5) }}>

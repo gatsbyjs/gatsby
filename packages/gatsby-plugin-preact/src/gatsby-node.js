@@ -1,9 +1,9 @@
-exports.modifyWebpackConfig = ({ stage, boundActionCreators }) => {
+exports.modifyWebpackConfig = ({ stage, actions }) => {
   // Requiring the server version of React-dom is hardcoded right now
   // in the development server. So we'll just avoid loading Preact there
   // for now.
   if (stage !== `develop-html`) {
-    boundActionCreators.setWebpackConfig({
+    actions.setWebpackConfig({
       resolve: {
         alias: {
           react: `preact-compat`,

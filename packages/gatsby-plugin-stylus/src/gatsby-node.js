@@ -20,10 +20,10 @@
  * ],
  */
 exports.modifyWebpackConfig = (
-  { boundActionCreators, stage, rules, plugins, loaders },
+  { actions, stage, rules, plugins, loaders },
   { postCssPlugins, ...stylusOptions }
 ) => {
-  const { setWebpackConfig } = boundActionCreators
+  const { setWebpackConfig } = actions
   const PRODUCTION = stage !== `develop`
 
   const stylusLoader = {

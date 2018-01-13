@@ -6,10 +6,10 @@ const traverse = require(`babel-traverse`).default
 async function onCreateNode({
   node,
   getNode,
-  boundActionCreators,
+  actions,
   loadNodeContent,
 }) {
-  const { createNode, createParentChildLink } = boundActionCreators
+  const { createNode, createParentChildLink } = actions
 
   // This only processes javascript files.
   if (node.internal.mediaType !== `application/javascript`) {

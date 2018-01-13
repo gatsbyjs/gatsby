@@ -2,7 +2,7 @@ const webpackLodashPlugin = require(`lodash-webpack-plugin`)
 
 // Add Lodash webpack plugin
 exports.modifyWebpackConfig = (
-  { boundActionCreators, stage },
+  { actions, stage },
   { disabledFeatures = [] }
 ) => {
   if (stage !== `build-javascript`) return
@@ -30,7 +30,7 @@ exports.modifyWebpackConfig = (
     delete features[feature]
   })
 
-  boundActionCreators.setWebpackConfig({
+  actions.setWebpackConfig({
     plugins: [new webpackLodashPlugin(features)],
   })
 }

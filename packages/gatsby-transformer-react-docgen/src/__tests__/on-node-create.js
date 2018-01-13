@@ -13,13 +13,13 @@ const readFile = file =>
   })
 
 describe(`transformer-react-doc-gen: onCreateNode`, () => {
-  let loadNodeContent, boundActionCreators, node, createdNodes, updatedNodes
+  let loadNodeContent, actions, node, createdNodes, updatedNodes
   let run = (node, opts = {}) =>
     onCreateNode(
       {
         node,
         loadNodeContent,
-        boundActionCreators,
+        actions,
       },
       opts
     )
@@ -36,7 +36,7 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
       __fixture: `classes.js`,
     }
     loadNodeContent = jest.fn(node => readFile(node.__fixture))
-    boundActionCreators = {
+    actions = {
       createNode: jest.fn(n => createdNodes.push(n)),
       createParentChildLink: jest.fn(n => updatedNodes.push(n)),
     }

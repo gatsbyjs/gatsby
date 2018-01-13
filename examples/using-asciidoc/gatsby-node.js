@@ -9,8 +9,8 @@ const crypto = require(`crypto`)
 // called after the Gatsby bootstrap is finished so you have
 // access to any information necessary to programatically
 // create pages.
-exports.createPages = ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators
+exports.createPages = ({ graphql, actions }) => {
+  const { createPage } = actions
   return new Promise((resolve, reject) => {
     // The “graphql” function allows us to run arbitrary
     // queries against the local Drupal graphql schema. Think of
@@ -61,10 +61,10 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 
 exports.onCreateNode = async ({
   node,
-  boundActionCreators,
+  actions,
   loadNodeContent,
 }) => {
-  const { createNode, createParentChildLink } = boundActionCreators
+  const { createNode, createParentChildLink } = actions
   if (node.extension === `adoc`) {
     const content = await loadNodeContent(node)
     const html = asciidoc.convert(content)

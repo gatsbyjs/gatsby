@@ -15,11 +15,11 @@ const validatePath = require(`./validate-path`)
 // underscored. Then create url w/ our path algorithm *unless* user
 // takes control of that page component in gatsby-node.
 exports.createPagesStatefully = async (
-  { store, boundActionCreators },
+  { store, actions },
   options,
   doneCb
 ) => {
-  const { createPage, deletePage } = boundActionCreators
+  const { createPage, deletePage } = actions
   const program = store.getState().program
   const pagesDirectory = systemPath.posix.join(program.directory, `/src/pages`)
   const exts = program.extensions.map(e => `${e.slice(1)}`).join(`,`)

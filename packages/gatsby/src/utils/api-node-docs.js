@@ -10,10 +10,10 @@ exports.resolvableExtensions = true
  * sourcing and transformation of nodes plus creation of the GraphQL schema are
  * complete so you can query your data in order to create pages.
  *
- * See also [the documentation for the boundActionCreator `createPage`](/docs/bound-action-creators/#createPage).
+ * See also [the documentation for the action `createPage`](/docs/actions/#createPage).
  * @example
- * exports.createPages = ({ graphql, boundActionCreators }) => {
- *   const { createPage } = boundActionCreators
+ * exports.createPages = ({ graphql, actions }) => {
+ *   const { createPage } = actions
  *   return new Promise((resolve, reject) => {
  *     const blogPostTemplate = path.resolve(`src/templates/blog-post.js`)
  *     // Query for markdown nodes to use in creating pages.
@@ -79,10 +79,10 @@ exports.createPagesStatefully = true
  * sourcing and transformation of nodes plus creation of the GraphQL schema are
  * complete so you can query your data in order to create layouts.
  *
- * See also the documentation for [`createLayout`](/docs/bound-action-creators/#createLayout).
+ * See also the documentation for [`createLayout`](/docs/actions/#createLayout).
  * @example
- * exports.createLayouts = ({ graphql, boundActionCreators }) => {
- *  boundActionCreators.createLayout({
+ * exports.createLayouts = ({ graphql, actions }) => {
+ *  actions.createLayout({
  *    component: path.resolve(`src/templates/custom-layout.js`),
  *    id: 'custom', // optional - if not provided the filename will be used as id
  *   })
@@ -93,10 +93,10 @@ exports.createLayouts = true
 /**
  * Extension point to tell plugins to source nodes.
  *
- * See also the documentation for [`createNode`](/docs/bound-action-creators/#createNode).
+ * See also the documentation for [`createNode`](/docs/actions/#createNode).
  * @example
- * exports.sourceNodes = ({ boundActionCreators }) => {
- *   const { createNode } = boundActionCreators
+ * exports.sourceNodes = ({ actions }) => {
+ *   const { createNode } = actions
  *   // Create nodes here.
  * }
  */
@@ -106,11 +106,11 @@ exports.sourceNodes = true
  * Called when a new node is created. Plugins wishing to extend or
  * transform nodes created by other plugins should implement this API.
  *
- * See also the documentation for [`createNode`](/docs/bound-action-creators/#createNode)
- * and [`createNodeField`](/docs/bound-action-creators/#createNodeField)
+ * See also the documentation for [`createNode`](/docs/actions/#createNode)
+ * and [`createNodeField`](/docs/actions/#createNodeField)
  * @example
- * exports.onCreateNode = ({ node, boundActionCreators }) => {
- *   const { createNode, createNodeField } = boundActionCreators
+ * exports.onCreateNode = ({ node, actions }) => {
+ *   const { createNode, createNodeField } = actions
  *   // Transform the new node here and create a new node or
  *   // create a new node field.
  * }
@@ -169,7 +169,7 @@ exports.modifyBabelrc = true
 /**
  * Let plugins extend/mutate the site's webpack configuration.
  *
- * See also the documentation for [`setWebpackConfig`](/docs/bound-action-creators/#setWebpackConfig).
+ * See also the documentation for [`setWebpackConfig`](/docs/actions/#setWebpackConfig).
  *
  * @param {object} $0
  * @param {'develop' | 'develop-html' | 'build-css' | 'build-javascript' | 'build-html'} $0.stage The current build stage
@@ -177,12 +177,12 @@ exports.modifyBabelrc = true
  * @param {object} $0.rules A set of preconfigured webpack config rules
  * @param {object} $0.loaders A set of preconfigured webpack config loaders
  * @param {object} $0.plugins A set of preconfigured webpack config plugins
- * @param {object} $0.boundActionCreators
+ * @param {object} $0.actions
  * @example
  * exports.modifyBabelrc = ({
- *  getConfig, stage, loaders, boundActionCreators
+ *  getConfig, stage, loaders, actions
  * }) => {
- *   boundActionCreators.setWebpackConfig({
+ *   actions.setWebpackConfig({
  *     module: {
  *       rules: [
  *         {

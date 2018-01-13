@@ -1,6 +1,8 @@
 /* @flow */
 
 const url = require(`url`)
+const glob = require(`glob`)
+const fs = require(`fs`)
 const chokidar = require(`chokidar`)
 const express = require(`express`)
 const graphqlHTTP = require(`express-graphql`)
@@ -350,6 +352,19 @@ module.exports = async (program: any) => {
     console.log()
   }
 
+  function printDeprecationWarnings() {
+    const files = glob
+      .sync("{,!(node_modules|public)/**/}*.js")
+      .filter(file => fs.readFileSync(file).indexOf("boundActionCreators") !== -1)
+
+    if (files.length) {
+      console.log(`${chalk.cyan(`boundActionCreators`)} ${chalk.yellow(`is deprecated but was found in the following files:`)}`)
+      console.log()
+      files.forEach(file => console.log(file))
+      console.log()
+    }
+  }
+
   let isFirstCompile = true
   // "done" event fires when Webpack has finished recompiling the bundle.
   // Whether or not you have warnings or errors, you will get this event.
@@ -366,6 +381,7 @@ module.exports = async (program: any) => {
     // if (isSuccessful && (isInteractive || isFirstCompile)) {
     if (isSuccessful && isFirstCompile) {
       printInstructions(program.sitePackageJson.name, urls, program.useYarn)
+      printDeprecationWarnings()
       if (program.open) {
         require(`opn`)(urls.localUrlForBrowser)
       }

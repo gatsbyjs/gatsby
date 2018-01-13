@@ -70,6 +70,7 @@ const runAPI = (plugin, api, args) => {
         ...args,
         pathPrefix,
         boundActionCreators: doubleBoundActionCreators,
+        actions: doubleBoundActionCreators,
         loadNodeContent,
         store,
         getNodes,

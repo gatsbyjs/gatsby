@@ -13,7 +13,7 @@ const compilerDefaults = {
 module.exports.resolvableExtensions = () => [`.ts`, `.tsx`]
 
 module.exports.modifyWebpackConfig = (
-  { boundActionCreators, loaders },
+  { actions, loaders },
   { compilerOptions, ...options }
 ) => {
   // Gatsby removes graphql queries from source code because they queries are
@@ -32,7 +32,7 @@ module.exports.modifyWebpackConfig = (
     ...options,
   }
 
-  boundActionCreators.setWebpackConfig({
+  actions.setWebpackConfig({
     module: {
       rules: [
         {

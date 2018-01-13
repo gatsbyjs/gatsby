@@ -40,8 +40,8 @@ function transformPackageJson(json) {
   return json
 }
 
-exports.sourceNodes = ({ boundActionCreators, store }) => {
-  const { createNode } = boundActionCreators
+exports.sourceNodes = ({ actions, store }) => {
+  const { createNode } = actions
   const state = store.getState()
   const { program } = state
   const { flattenedPlugins } = state
@@ -131,8 +131,8 @@ exports.sourceNodes = ({ boundActionCreators, store }) => {
 
 const createPageId = path => `SitePage ${path}`
 
-exports.onCreatePage = ({ page, boundActionCreators }) => {
-  const { createNode } = boundActionCreators
+exports.onCreatePage = ({ page, actions }) => {
+  const { createNode } = actions
 
   // Add page.
   createNode({
