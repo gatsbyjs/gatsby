@@ -2,7 +2,21 @@
 title: Adding a List of Markdown Blog Posts
 ---
 
-Once you have added Markdown pages to your site, you are just one step away from being able to list your posts on a dedicated page.
+Once you have added Markdown pages to your site, you are just one step away from being able to list your posts on a dedicated index page.
+
+### Creating posts
+
+As described [here](/docs/docs/adding-markdown-pages.md), you will have to create your posts in Markdown files which will look like this:
+
+```md
+---
+path: "/blog/my-first-post"
+date: "2017-11-07"
+title: "My first blog post"
+---
+
+Has anyone heard about GatsbyJS yet?
+```
 
 ### Creating the page
 
@@ -15,7 +29,7 @@ const IndexPage = ({ data: { allMarkdownRemark: { edges } } }) => {
   const Posts = edges
     .filter(edge => !!edge.node.frontmatter.date) // You can filter your posts based on some criteria
     .map(edge => (
-      <Post key={edge.node.id} post={edge.node.frontmatter} />
+      <Post key={edge.node.id} post={edge.node} />
     ));
 
   return <div>{Posts}</div>;
@@ -29,6 +43,20 @@ export default IndexPage;
 The only thing left to do is to provide the data to your component with a GraphQL query.
 
 ```js
+import React from 'react';
+
+const IndexPage = ({ data: { allMarkdownRemark: { edges } } }) => {
+  const Posts = edges
+    .filter(edge => !!edge.node.frontmatter.date) // You can filter your posts based on some criteria
+    .map(edge => (
+      <Post key={edge.node.id} post={edge.node} />
+    ));
+
+  return <div>{Posts}</div>;
+};
+
+export default IndexPage;
+
 export const pageQuery = graphql`
   query IndexQuery {
     allMarkdownRemark(sort: { order: DESC, fields: [frontmatter___date] }) {
@@ -37,7 +65,7 @@ export const pageQuery = graphql`
           id
           excerpt(pruneLength: 250)
           frontmatter {
-            date
+            date(formatString: "MMMM DD, YYYY")
             path
             title
           }
