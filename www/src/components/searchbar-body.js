@@ -64,7 +64,7 @@ const Search = () => {
         <h3 css={{
           fontSize: rhythm(.75),
           textAlign: `center`,
-        }}>Search by <Link to={`https://www.algolia.com/`} style={{color: `#744C9E`, border: `none`, boxShadow: `none`}}>Algolia</Link></h3>
+        }}>Search by <a href={`https://www.algolia.com/`} style={{color: `#744C9E`, border: `none`, boxShadow: `none`}}>Algolia</a></h3>
       </div>
     </div>
   )
