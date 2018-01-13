@@ -7,6 +7,13 @@ const prettyBytes = require(`pretty-bytes`)
 const md5File = require(`bluebird`).promisify(require(`md5-file`))
 const crypto = require(`crypto`)
 
+const createId = path => {
+  const slashed = slash(path)
+  return `${slashed} absPath of file`
+}
+
+exports.createId = createId
+
 exports.createFileNode = async (pathToFile, pluginOptions = {}) => {
   const slashed = slash(pathToFile)
   const parsedSlashed = path.parse(slashed)
@@ -49,7 +56,7 @@ exports.createFileNode = async (pathToFile, pluginOptions = {}) => {
       // Don't actually make the File id the absolute path as otherwise
       // people will use the id for that and ids shouldn't be treated as
       // useful information.
-      id: pathToFile,
+      id: createId(pathToFile),
       children: [],
       parent: `___SOURCE___`,
       internal,

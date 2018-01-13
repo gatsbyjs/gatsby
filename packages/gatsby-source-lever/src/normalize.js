@@ -130,7 +130,7 @@ exports.standardizeDates = entities =>
 
 exports.createGatsbyIds = entities =>
   entities.map(e => {
-    e.id = e.lever_id
+    e.id = e.lever_id.toString()
     return e
   })
 
