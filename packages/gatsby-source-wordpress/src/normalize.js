@@ -1,4 +1,3 @@
-const { setTimeout } = require(`timers`)
 const crypto = require(`crypto`)
 const deepMapKeys = require(`deep-map-keys`)
 const _ = require(`lodash`)
@@ -235,9 +234,9 @@ exports.mapTagsCategoriesToTaxonomies = entities =>
     return e
   })
 
-exports.searchReplaceContentUrls = async function ({ entities, searchReplace }) {
+exports.searchReplaceContentUrls = function ({ entities, searchReplace }) {
 
-  if (!Array.isArray(searchReplace) && searchReplace.length !== 2) {
+  if (!Array.isArray(searchReplace) || searchReplace.length !== 2) {
     return entities
   }
 
@@ -248,25 +247,34 @@ exports.searchReplaceContentUrls = async function ({ entities, searchReplace }) 
     `__type`,
   ]
 
-  const blacklistProperties = function (obj = {}, blacklist = {}) {
+  const blacklistProperties = function (obj = {}, blacklist = []) {
     for (var i = 0; i < blacklist.length; i++) {
-        eval(`delete obj.${blacklist[i]}`)
+        delete obj[blacklist[i]]
     }
 
     return obj
   }
 
-  const final = entities.map(async (entity) => new Promise((resolve, reject) => {
-      setTimeout(() => {
-        var whiteListedEntities = JSON.stringify(blacklistProperties(entity, _blacklist))
-        var replacedString = whiteListedEntities.replace(new RegExp(search, `g`), replace)
-        var parsed = JSON.parse(replacedString)
-        resolve(_.defaultsDeep(parsed, entity))
-      }, 0)
-    })
-  )
+  return entities.map(function (entity) {
+    const original = Object.assign({}, entity)
 
-  return await Promise.all(final)
+    try {
+      var whiteList = blacklistProperties(entity, _blacklist)
+      var replaceable = JSON.stringify(whiteList)
+      var replaced = replaceable.replace(new RegExp(search, `g`), replace)
+      var parsed = JSON.parse(replaced)
+    } catch (e) {
+      console.log(
+        colorized.out(
+          e.message,
+          colorized.color.Font.FgRed
+        )
+      )
+      return original
+    }
+
+    return _.defaultsDeep(parsed, original)
+  })
 }
 
 exports.mapEntitiesToMedia = entities => {
