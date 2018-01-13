@@ -81,7 +81,6 @@ const Search = ({searchState}) => {
         <h3 css={{
           fontSize: rhythm(.55),
           textAlign: `center`,
-          margin: rhythm(.75),
         }}>Search by <a href={`https://www.algolia.com/`} style={{color: `#744C9E`, border: `none`, boxShadow: `none`}}>Algolia</a></h3>
       </div>
 
