@@ -4,10 +4,29 @@ title: "Deploying Gatsby"
 
 ## Tutorials for deploying on different static site hosts
 
+* [Netlify](/docs/deploy-gatsby/#netlify)
 * [S3/Cloudfront](/docs/deploy-gatsby/#amazon-s3-and-cloudfront)
 * [GitHub Pages](/docs/deploy-gatsby/#github-pages)
 * [GitLab Pages](/docs/deploy-gatsby/#gitlab-pages)
 * [Heroku](/docs/deploy-gatsby/#heroku)
+
+## Netlify
+
+Netlify is an excellent option for deploying Gatsby sites. Netlify is a unified
+platform that automates your code to create high-performant, easily maintainable
+sites and web apps. They provide continuous deployment (Git-triggered builds),
+an intelligent, global CDN, full DNS (including custom domains), automated
+HTTPS, asset acceleration, and a lot more.
+
+Their free tier includes unlimited personal and commercial projects, HTTPS,
+continuous deployment from public or private repos and more.
+
+### Deploying to Netlify
+
+To deploy your Gatsby site to Netlify, go to the [create a new
+site](https://app.netlify.com/start) page, select your project repo from GitHub,
+GitLab, or Bitbucket, and follow the prompts.
+
 
 ## Amazon S3 and Cloudfront
 
