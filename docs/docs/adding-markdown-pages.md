@@ -81,15 +81,18 @@ Now create a `blogTemplate.js` inside it with the following content.
 import React from "react";
 
 export default function Template({
-  data, // this prop will be injected by the GraphQL query below.
+  pathContext: { // this prop will be injected by the GraphQL query in the next section
+    excerpt,
+    id,
+    html,
+    frontmatter: { date, path, title },
+  },
 }) {
-  const { markdownRemark } = data; // data.markdownRemark holds our post data
-  const { frontmatter, html } = markdownRemark;
   return (
     <div className="blog-post-container">
       <div className="blog-post">
-        <h1>{frontmatter.title}</h1>
-        <h2>{frontmatter.date}</h2>
+        <h1>{title}</h1>
+        <h2>{date}</h2>
         <div
           className="blog-post-content"
           dangerouslySetInnerHTML={{ __html: html }}
@@ -98,26 +101,10 @@ export default function Template({
     </div>
   );
 }
-
-export const pageQuery = graphql`
-  query BlogPostByPath($path: String!) {
-    markdownRemark(frontmatter: { path: { eq: $path } }) {
-      html
-      frontmatter {
-        date(formatString: "MMMM DD, YYYY")
-        path
-        title
-      }
-    }
-  }
-`;
 ```
 
-Two things are important in the file above.
-
-1. A GraphQL query is made in the second half of the file to get the Markdown data. Gatsby has automagically given you all the Markdown metadata and HTML in this query's result.
-   **Note: To learn more about GraphQL, consider this [excellent resource](https://www.howtographql.com/)**
-2. The result of the query is injected by Gatsby into the `Template` component as `data`. `markdownRemark` is the property that we find has all the details of the Markdown file. We can use that to construct a template for our blogpost view. Since it's a React component, you could style it with any of the recommended styling systems in Gatsby.
+Something to note in the file above:
+The data received by the component comes directly from the query we will see in the section below. We can use it to construct a template for our blogpost view. Since it's a React component, you could style it with any of the recommended styling systems in Gatsby.
 
 ### Create static pages using Gatsby's Node API.
 
@@ -145,7 +132,7 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
             html
             id
             frontmatter {
-              date
+              date(formatString: "MMMM DD, YYYY")
               path
               title
             }
@@ -158,11 +145,16 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
       return Promise.reject(result.errors);
     }
 
-    result.data.allMarkdownRemark.edges.forEach(({ node }) => {
+    result.data.allMarkdownRemark.edges.forEach(({ node: { excerpt, html, id, frontmatter } }) => {
       createPage({
-        path: node.frontmatter.path,
+        path: frontmatter.path,
         component: blogPostTemplate,
-        context: {}, // additional data can be passed via context
+        context: {
+          excerpt,
+          html,
+          id,
+          frontmatter,
+        },
       });
     });
   });
