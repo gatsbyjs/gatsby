@@ -1,11 +1,6 @@
 const _ = require(`lodash`)
 const crypto = require(`crypto`)
 const path = require(`path`)
-const uuidv5 = require(`uuid/v5`)
-
-const seedConstant = `be95fb73-9191-42df-8d08-fdcd69eb27ce`
-const createId = (id) =>
-  uuidv5(id, uuidv5(`json`, seedConstant))
 
 async function onCreateNode({ node, actions, loadNodeContent }) {
   function transformObject(obj, id, type) {
@@ -16,7 +11,7 @@ async function onCreateNode({ node, actions, loadNodeContent }) {
       .digest(`hex`)
     const jsonNode = {
       ...obj,
-      id: createId(id),
+      id,
       children: [],
       parent: node.id,
       internal: {

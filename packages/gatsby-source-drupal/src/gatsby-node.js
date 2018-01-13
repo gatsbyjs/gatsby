@@ -1,7 +1,6 @@
 const axios = require(`axios`)
 const crypto = require(`crypto`)
 const _ = require(`lodash`)
-const uuidv5 = require(`uuid/v5`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 const { URL } = require(`url`)
 
@@ -11,10 +10,6 @@ const createContentDigest = obj =>
     .createHash(`md5`)
     .update(JSON.stringify(obj))
     .digest(`hex`)
-
-const seedConstant = `a83a659b-f99b-4a0e-8153-bf04085e0e52`
-const createId = (id) =>
-  uuidv5(id, uuidv5(`drupal`, seedConstant))
 
 exports.sourceNodes = async (
   { actions, getNode, hasNodeChanged, store, cache },
@@ -108,7 +103,7 @@ exports.sourceNodes = async (
 
     _.each(contentType.data, datum => {
       const node = {
-        id: createId(datum.id),
+        id: datum.id,
         parent: null,
         children: [],
         ...datum.attributes,

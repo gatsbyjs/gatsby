@@ -7,7 +7,7 @@ Array [
       "blue": true,
       "children": Array [],
       "funny": "yup",
-      "id": "f0c08ade-1e52-5eb8-9f2d-e8e05b0db352",
+      "id": "foo",
       "internal": Object {
         "contentDigest": "8838e569ae02d98806532310fb2a577a",
         "type": "FooHJson",
@@ -26,7 +26,7 @@ Array [
         "blue": true,
         "children": Array [],
         "funny": "yup",
-        "id": "f0c08ade-1e52-5eb8-9f2d-e8e05b0db352",
+        "id": "foo",
         "internal": Object {
           "contentDigest": "8838e569ae02d98806532310fb2a577a",
           "type": "FooHJson",
@@ -62,7 +62,7 @@ Array [
       "blue": true,
       "children": Array [],
       "funny": "yup",
-      "id": "f0c08ade-1e52-5eb8-9f2d-e8e05b0db352",
+      "id": "foo",
       "internal": Object {
         "contentDigest": "8838e569ae02d98806532310fb2a577a",
         "type": "NodeNameHJson",
@@ -75,7 +75,7 @@ Array [
       "blue": false,
       "children": Array [],
       "funny": "nope",
-      "id": "593b64d4-5b38-556a-b3b8-897a6c51050a",
+      "id": "whatever [1] >>> HJSON",
       "internal": Object {
         "contentDigest": "f624311d932d73dcd416d2a8bea2b67d",
         "type": "NodeNameHJson",
@@ -94,7 +94,7 @@ Array [
         "blue": true,
         "children": Array [],
         "funny": "yup",
-        "id": "f0c08ade-1e52-5eb8-9f2d-e8e05b0db352",
+        "id": "foo",
         "internal": Object {
           "contentDigest": "8838e569ae02d98806532310fb2a577a",
           "type": "NodeNameHJson",
@@ -131,7 +131,7 @@ Array [
         "blue": false,
         "children": Array [],
         "funny": "nope",
-        "id": "593b64d4-5b38-556a-b3b8-897a6c51050a",
+        "id": "whatever [1] >>> HJSON",
         "internal": Object {
           "contentDigest": "f624311d932d73dcd416d2a8bea2b67d",
           "type": "NodeNameHJson",

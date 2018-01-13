@@ -20,8 +20,7 @@
     "underscore.string": "^3.3.4",
     "unified": "^6.1.5",
     "unist-util-select": "^1.5.0",
-    "unist-util-visit": "^1.1.1",
-    "uuid": "^3.1.0"
+    "unist-util-visit": "^1.1.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

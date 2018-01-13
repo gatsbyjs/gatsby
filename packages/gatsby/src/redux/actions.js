@@ -8,6 +8,7 @@ const glob = require(`glob`)
 const path = require(`path`)
 
 const { joinPath } = require(`../utils/path`)
+const { createUuid } = require(`../utils/uuid`)
 const {
   getNode,
   hasNodeChanged,
@@ -343,9 +344,10 @@ actions.createNode = (node: any, plugin?: Plugin, traceId?: string) => {
     process.exit(1)
   }
 
-  // Add the plugin name to the internal object.
+  // Add the plugin name to the internal object and generate uuid for the id
   if (plugin) {
     node.internal.owner = plugin.name
+    node.id = createUuid(node.id, plugin.name)
   }
 
   const result = Joi.validate(node, joiSchemas.nodeSchema)

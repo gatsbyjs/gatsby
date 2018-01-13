@@ -7,7 +7,7 @@ Array [
       "blue": true,
       "children": Array [],
       "funny": "yup",
-      "id": "bf1f2445-c1d3-52c6-af60-e1f82f0ee962",
+      "id": "whatever >>> YAML",
       "internal": Object {
         "contentDigest": "73901821b17d5aa9dd6026181f73b64c",
         "type": "BarYaml",
@@ -26,7 +26,7 @@ Array [
         "blue": true,
         "children": Array [],
         "funny": "yup",
-        "id": "bf1f2445-c1d3-52c6-af60-e1f82f0ee962",
+        "id": "whatever >>> YAML",
         "internal": Object {
           "contentDigest": "73901821b17d5aa9dd6026181f73b64c",
           "type": "BarYaml",
@@ -59,7 +59,7 @@ Array [
       "blue": true,
       "children": Array [],
       "funny": "yup",
-      "id": "7d3f3d70-8cd0-5b65-93e9-e26a5dcb6557",
+      "id": "whatever [0] >>> YAML",
       "internal": Object {
         "contentDigest": "73901821b17d5aa9dd6026181f73b64c",
         "type": "TestYaml",
@@ -72,7 +72,7 @@ Array [
       "blue": false,
       "children": Array [],
       "funny": "nope",
-      "id": "26104a18-ac2b-5240-979b-0e63ab0f6f58",
+      "id": "whatever [1] >>> YAML",
       "internal": Object {
         "contentDigest": "f624311d932d73dcd416d2a8bea2b67d",
         "type": "TestYaml",
@@ -91,7 +91,7 @@ Array [
         "blue": true,
         "children": Array [],
         "funny": "yup",
-        "id": "7d3f3d70-8cd0-5b65-93e9-e26a5dcb6557",
+        "id": "whatever [0] >>> YAML",
         "internal": Object {
           "contentDigest": "73901821b17d5aa9dd6026181f73b64c",
           "type": "TestYaml",
@@ -121,7 +121,7 @@ Array [
         "blue": false,
         "children": Array [],
         "funny": "nope",
-        "id": "26104a18-ac2b-5240-979b-0e63ab0f6f58",
+        "id": "whatever [1] >>> YAML",
         "internal": Object {
           "contentDigest": "f624311d932d73dcd416d2a8bea2b67d",
           "type": "TestYaml",

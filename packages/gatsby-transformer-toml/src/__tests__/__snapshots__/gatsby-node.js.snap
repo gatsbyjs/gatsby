@@ -5,7 +5,7 @@ Array [
   Array [
     Object {
       "children": Array [],
-      "id": "33f41a62-d294-5bb0-90ce-07802ec1983b",
+      "id": "whatever >>> TOML",
       "internal": Object {
         "contentDigest": "9ce7919cb3f607a0542bac4aa46136b6",
         "type": "",
@@ -43,7 +43,7 @@ Array [
     Object {
       "child": Object {
         "children": Array [],
-        "id": "33f41a62-d294-5bb0-90ce-07802ec1983b",
+        "id": "whatever >>> TOML",
         "internal": Object {
           "contentDigest": "9ce7919cb3f607a0542bac4aa46136b6",
           "type": "",

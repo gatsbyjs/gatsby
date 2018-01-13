@@ -2,11 +2,6 @@ const XLSX = require(`xlsx`)
 const fs = require(`fs-extra`)
 const _ = require(`lodash`)
 const crypto = require(`crypto`)
-const uuidv5 = require(`uuid/v5`)
-
-const seedConstant = `85fa2772-bc5b-4746-acde-cea3d7d3be92`
-const createId = (id) =>
-  uuidv5(id, uuidv5(`excel`, seedConstant))
 
 // read files as `binary` from file system
 function _loadNodeContent(fileNode, fallback) {
@@ -44,7 +39,7 @@ async function onCreateNode(
 
         return {
           ...obj,
-          id: createId(obj.id ? obj.id : `${node.id} [${n} ${i}] >>> ${node.extension}`),
+          id: obj.id ? obj.id : `${node.id} [${n} ${i}] >>> ${node.extension}`,
           children: [],
           parent: node.id,
           internal: {
@@ -70,7 +65,7 @@ async function onCreateNode(
         .digest(`hex`)
 
       const z = {
-        id: createId(`${node.id} [${idx}] >>> ${node.extension}`),
+        id: `${node.id} [${idx}] >>> ${node.extension}`,
         children: [],
         parent: node.id,
         internal: {

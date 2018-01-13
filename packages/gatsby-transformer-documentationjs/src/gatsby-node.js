@@ -8,11 +8,6 @@ const digest = str =>
 const remark = require(`remark`)
 const _ = require(`lodash`)
 const Prism = require(`prismjs`)
-const uuidv5 = require(`uuid/v5`)
-
-const seedConstant = `4f4f47ec-a1bb-439b-a379-5120c248a7fc`
-const createId = (id) =>
-  uuidv5(id, uuidv5(`documentationjs`, seedConstant))
 
 const stringifyMarkdownAST = (node = ``) => {
   if (_.isString(node)) {
@@ -37,7 +32,7 @@ function createDescriptionNode(
   const { createNode } = actions
 
   const descriptionNode = {
-    id: createId(descriptionId(docNodeId, name)),
+    id: descriptionId(docNodeId, name),
     parent: node.id,
     children: [],
     internal: {
@@ -168,7 +163,7 @@ exports.onCreateNode = async ({
       const docNode = {
         ...picked,
         commentNumber: i,
-        id: createId(commentId(node.id, i)),
+        id: commentId(node.id, i),
         parent: node.id,
         children: [],
         internal: {

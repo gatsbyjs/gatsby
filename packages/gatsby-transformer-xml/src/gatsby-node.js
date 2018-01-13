@@ -1,11 +1,6 @@
 const parseXml = require(`xml-parser`)
 const crypto = require(`crypto`)
 const _ = require(`lodash`)
-const uuidv5 = require(`uuid/v5`)
-
-const seedConstant = `9ca35fc8-a717-456f-9416-f49c6b67f157`
-const createId = (id) =>
-  uuidv5(id, uuidv5(`xml`, seedConstant))
 
 async function onCreateNode({ node, actions, loadNodeContent }) {
   const { createNode, createParentChildLink } = actions
@@ -28,7 +23,7 @@ async function onCreateNode({ node, actions, loadNodeContent }) {
     }
     return {
       ...obj,
-      id: createId(obj.attributes.id ? obj.attributes.id : `${node.id} [${i}] >>> XML`),
+      id: obj.attributes.id ? obj.attributes.id : `${node.id} [${i}] >>> XML`,
       parent: node.id,
       children: [],
       internal: {

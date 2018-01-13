@@ -2,7 +2,6 @@ const _ = require(`lodash`)
 const crypto = require(`crypto`)
 const stringify = require(`json-stringify-safe`)
 const deepMap = require(`deep-map`)
-const uuidv5 = require(`uuid/v5`)
 
 const digest = str =>
   crypto
@@ -57,12 +56,8 @@ const makeId = ({ id, currentLocale, defaultLocale }) =>
 
 exports.makeId = makeId
 
-const seedConstant = `771c7145-8bec-48c9-8c4d-8eecc19bd253`
-const createId = (id) =>
-  uuidv5(id, uuidv5(`contentful`, seedConstant))
-
 const makeMakeId = ({ currentLocale, defaultLocale }) => id =>
-  createId(makeId({ id, currentLocale, defaultLocale }))
+  makeId({ id, currentLocale, defaultLocale })
 
 exports.buildEntryList = ({ contentTypeItems, currentSyncData }) =>
   contentTypeItems.map(contentType =>

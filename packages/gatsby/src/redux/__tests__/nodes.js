@@ -1,6 +1,7 @@
 const { actions } = require(`../actions`)
 const nodeReducer = require(`../reducers/nodes`)
 const nodeTouchedReducer = require(`../reducers/nodes-touched`)
+const { createUuid } = require(`../../utils/uuid`)
 
 describe(`Create and update nodes`, () => {
   it(`allows creating nodes`, () => {
@@ -59,9 +60,10 @@ describe(`Create and update nodes`, () => {
     )
     let state = nodeReducer(undefined, action)
     state = nodeReducer(state, updateAction)
-    expect(state[`hi`].pickle).toEqual(false)
-    expect(state[`hi`].deep.array[0]).toEqual(1)
-    expect(state[`hi`].deep2.boom).toEqual(`foo`)
+    const uuid = createUuid(`hi`, `tests`)
+    expect(state[uuid].pickle).toEqual(false)
+    expect(state[uuid].deep.array[0]).toEqual(1)
+    expect(state[uuid].deep2.boom).toEqual(`foo`)
   })
 
   it(`allows deleting nodes`, () => {
@@ -81,11 +83,12 @@ describe(`Create and update nodes`, () => {
       },
       { name: `tests` }
     )
-    const deleteAction = actions.deleteNode(`hi`)
+    const uuid = createUuid(`hi`, `tests`)
+    const deleteAction = actions.deleteNode(uuid)
 
     let state = nodeReducer(undefined, action)
     state = nodeReducer(state, deleteAction)
-    expect(state[`hi`]).toBeUndefined()
+    expect(state[uuid]).toBeUndefined()
   })
 
   it(`nodes that are added are also "touched"`, () => {
@@ -103,7 +106,8 @@ describe(`Create and update nodes`, () => {
       { name: `tests` }
     )
     let state = nodeTouchedReducer(undefined, action)
-    expect(state[`hi`]).toBe(true)
+    const uuid = createUuid(`hi`, `tests`)
+    expect(state[uuid]).toBe(true)
   })
 
   it(`allows adding fields to nodes`, () => {
@@ -121,10 +125,11 @@ describe(`Create and update nodes`, () => {
       { name: `tests` }
     )
     let state = nodeReducer(undefined, action)
+    const uuid = createUuid(`hi`, `tests`)
 
     const addFieldAction = actions.createNodeField(
       {
-        node: state[`hi`],
+        node: state[uuid],
         name: `joy`,
         value: `soul's delight`,
       },
@@ -149,10 +154,11 @@ describe(`Create and update nodes`, () => {
       { name: `tests` }
     )
     let state = nodeReducer(undefined, action)
+    const uuid = createUuid(`hi`, `tests`)
 
     const addFieldAction = actions.createNodeField(
       {
-        node: state[`hi`],
+        node: state[uuid],
         name: `joy`,
         value: `soul's delight`,
       },
@@ -163,7 +169,7 @@ describe(`Create and update nodes`, () => {
     function callActionCreator() {
       actions.createNodeField(
         {
-          node: state[`hi`],
+          node: state[uuid],
           name: `joy`,
           value: `soul's delight`,
         },

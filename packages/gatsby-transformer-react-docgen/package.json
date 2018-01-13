@@ -21,8 +21,7 @@
     "babel-types": "^6.24.1",
     "common-tags": "^1.4.0",
     "graphql-type-json": "^0.1.4",
-    "react-docgen": "^2.15.0",
-    "uuid": "^3.1.0"
+    "react-docgen": "^2.15.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

@@ -2,17 +2,10 @@ const slash = require(`slash`)
 const path = require(`path`)
 const fs = require(`fs-extra`)
 const mime = require(`mime`)
-const uuidv5 = require(`uuid/v5`)
 const prettyBytes = require(`pretty-bytes`)
 
 const md5File = require(`bluebird`).promisify(require(`md5-file`))
 const crypto = require(`crypto`)
-
-const seedConstant = `e217350b-0a7c-4bbc-bd32-962f66804869`
-const createId = path =>
-  uuidv5(slash(path), uuidv5(`filesystem`, seedConstant))
-
-exports.createId = createId
 
 exports.createFileNode = async (pathToFile, pluginOptions = {}) => {
   const slashed = slash(pathToFile)
@@ -56,7 +49,7 @@ exports.createFileNode = async (pathToFile, pluginOptions = {}) => {
       // Don't actually make the File id the absolute path as otherwise
       // people will use the id for that and ids shouldn't be treated as
       // useful information.
-      id: createId(pathToFile),
+      id: pathToFile,
       children: [],
       parent: `___SOURCE___`,
       internal,
