@@ -243,6 +243,12 @@ exports.searchReplaceContentUrls = function ({ entities, searchReplace }) {
     typeof searchReplace.sourceUrl !== `string` ||
     typeof searchReplace.replacementUrl !== `string`
   ) {
+    console.log(
+      colorized.out(
+        `Invalid Search and Replace option`,
+        colorized.color.Font.FgRed
+      )
+    )
     return entities
   }
 
