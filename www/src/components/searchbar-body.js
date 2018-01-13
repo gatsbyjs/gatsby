@@ -14,14 +14,14 @@ const Search = () => {
         justifyContent: `center`,
       }}>
       <SearchBox
-        translations={{placeholder: 'Search Gatsby Library by keyword'}}
+        translations={{placeholder: 'Search Gatsby Library'}}
       />
       </div>
       <div css={{
         display: `none`
       }}>
         <RefinementList attributeName="keywords"
-          defaultRefinement={["gatsby-plugin"]}
+          defaultRefinement={["gatsby-component", "gatsby-plugin"]}
         />
       </div>
      <div css={{
