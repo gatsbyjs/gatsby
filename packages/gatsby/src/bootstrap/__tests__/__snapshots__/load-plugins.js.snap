@@ -66,10 +66,7 @@ Array [
   Object {
     "id": "Plugin query-runner",
     "name": "query-runner",
-    "nodeAPIs": Array [
-      "onCreatePage",
-      "onCreateLayout",
-    ],
+    "nodeAPIs": Array [],
     "pluginOptions": Object {
       "plugins": Array [],
     },
@@ -163,10 +160,7 @@ Array [
   Object {
     "id": "Plugin query-runner",
     "name": "query-runner",
-    "nodeAPIs": Array [
-      "onCreatePage",
-      "onCreateLayout",
-    ],
+    "nodeAPIs": Array [],
     "pluginOptions": Object {
       "plugins": Array [],
     },

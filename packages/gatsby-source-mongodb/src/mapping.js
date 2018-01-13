@@ -1,5 +1,5 @@
-const _ = require(`lodash`),
-  crypto = require(`crypto`)
+const _ = require(`lodash`)
+const crypto = require(`crypto`)
 
 module.exports = function(node, key, text, mediaType, createNode) {
   const str = _.isString(text) ? text : ` `

@@ -2,12 +2,12 @@
 
 exports[`Create and update nodes allows adding fields to nodes 1`] = `
 Object {
-  "hi": Object {
+  "5efdeb8d-5d6b-5989-8387-faa6426ba350": Object {
     "children": Array [],
     "fields": Object {
       "joy": "soul's delight",
     },
-    "id": "hi",
+    "id": "5efdeb8d-5d6b-5989-8387-faa6426ba350",
     "internal": Object {
       "contentDigest": "hasdfljds",
       "fieldOwners": Object {
@@ -26,7 +26,7 @@ exports[`Create and update nodes allows creating nodes 1`] = `
 Object {
   "payload": Object {
     "children": Array [],
-    "id": "hi",
+    "id": "5efdeb8d-5d6b-5989-8387-faa6426ba350",
     "internal": Object {
       "contentDigest": "hasdfljds",
       "owner": "tests",
@@ -45,9 +45,9 @@ Object {
 
 exports[`Create and update nodes allows creating nodes 2`] = `
 Object {
-  "hi": Object {
+  "5efdeb8d-5d6b-5989-8387-faa6426ba350": Object {
     "children": Array [],
-    "id": "hi",
+    "id": "5efdeb8d-5d6b-5989-8387-faa6426ba350",
     "internal": Object {
       "contentDigest": "hasdfljds",
       "owner": "tests",
@@ -62,7 +62,7 @@ Object {
 exports[`Create and update nodes throws error if a field is updated by a plugin not its owner 1`] = `
 "A plugin tried to update a node field that it doesn't own:
 
-Node id: hi
+Node id: 5efdeb8d-5d6b-5989-8387-faa6426ba350
 Plugin: test2
 name: joy
 value: soul's delight"
@@ -79,7 +79,7 @@ exports[`Create and update nodes throws error if a node is created by a plugin n
         The node object passed to \\"createNode\\":
 
         {
-    \\"id\\": \\"hi2\\",
+    \\"id\\": \\"852da241-f941-5790-b83e-7a0134a7ef8c\\",
     \\"children\\": [],
     \\"parent\\": \\"test\\",
     \\"internal\\": {
@@ -107,7 +107,7 @@ exports[`Create and update nodes throws error if a node sets a value on "fields"
       Node:
 
       {
-    \\"id\\": \\"hi\\",
+    \\"id\\": \\"b5af0cd2-bfc2-533d-b737-d21f086f4de4\\",
     \\"children\\": [],
     \\"parent\\": \\"test\\",
     \\"fields\\": {

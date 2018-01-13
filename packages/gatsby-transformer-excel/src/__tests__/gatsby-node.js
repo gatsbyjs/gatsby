@@ -43,30 +43,6 @@ describe(`Process  nodes correctly`, () => {
     })
   })
 
-  it(`If the object has an id, it uses that as the id instead of the auto-generated one`, async () => {
-    const data = [
-      [`id`, `blue`, `funny`],
-      [`foo`, true, `yup`],
-      [void 0, false, `nope`],
-    ]
-    const csv = XLSX.utils.sheet_to_csv(
-      XLSX.utils.aoa_to_sheet(data, { raw: true })
-    )
-    node.content = csv
-
-    const createNode = jest.fn()
-    const createParentChildLink = jest.fn()
-    const actions = { createNode, createParentChildLink }
-
-    await onCreateNode({
-      node,
-      loadNodeContent,
-      actions,
-    }).then(() => {
-      expect(createNode.mock.calls[0][0].id).toEqual(`foo`)
-    })
-  })
-
   it(`the different objects shouldn't get the same ID even if they have the same content`, async () => {
     const data = [
       [`id`, `blue`, `funny`, `green`],

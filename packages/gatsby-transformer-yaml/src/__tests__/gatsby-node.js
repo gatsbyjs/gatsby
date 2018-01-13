@@ -60,26 +60,6 @@ describe(`Process YAML nodes correctly`, () => {
     })
   })
 
-  it(`If the object has an id, it uses that as the id instead of the auto-generated one`, async () => {
-    const data = [
-      { id: `foo`, blue: true, funny: `yup` },
-      { blue: false, funny: `nope` },
-    ]
-    node.content = yaml.safeDump(data)
-
-    const createNode = jest.fn()
-    const createParentChildLink = jest.fn()
-    const actions = { createNode, createParentChildLink }
-
-    await onCreateNode({
-      node,
-      loadNodeContent,
-      actions,
-    }).then(() => {
-      expect(createNode.mock.calls[0][0].id).toEqual(`foo`)
-    })
-  })
-
   it(`the different objects shouldn't get the same ID even if they have the same content`, async () => {
     const data = [
       { id: `foo`, blue: true, funny: `yup` },

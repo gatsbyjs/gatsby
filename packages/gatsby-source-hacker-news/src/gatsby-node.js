@@ -154,12 +154,12 @@ fragment commentsFragment on HackerNewsItem {
         createNode(commentNode)
 
         if (comment.kids.length > 0) {
-          createCommentNodes(comment.kids, comment.id, depth + 1)
+          createCommentNodes(comment.kids, commentNode.id, depth + 1)
         }
       })
     }
 
-    createCommentNodes(kids.kids, story.id)
+    createCommentNodes(kids.kids, storyNode.id)
   })
 
   return

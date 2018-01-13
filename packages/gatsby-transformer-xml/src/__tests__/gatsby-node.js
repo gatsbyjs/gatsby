@@ -57,17 +57,4 @@ describe(`Process XML nodes correctly`, () => {
       expect(createParentChildLink).toHaveBeenCalledTimes(2)
     })
   })
-  it(`should set the node id to the attribute id if specified`, async () => {
-    const createNode = jest.fn()
-    const createParentChildLink = jest.fn()
-    const actions = { createNode, createParentChildLink }
-
-    await onCreateNode({
-      node,
-      loadNodeContent,
-      actions,
-    }).then(() => {
-      expect(createNode.mock.calls[0][0].id).toEqual(`bk101`)
-    })
-  })
 })
