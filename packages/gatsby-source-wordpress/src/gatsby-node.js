@@ -27,7 +27,7 @@ exports.sourceNodes = async (
     auth = {},
     verboseOutput,
     perPage = 100,
-    searchReplace = [],
+    searchAndReplaceURLs = {},
   }
 ) => {
   const { createNode } = boundActionCreators
@@ -96,7 +96,7 @@ exports.sourceNodes = async (
   // Search and replace Content Urls
   entities = normalize.searchReplaceContentUrls({ 
     entities, 
-    searchReplace,
+    searchAndReplaceURLs,
   })
 
   // creates nodes for each entry

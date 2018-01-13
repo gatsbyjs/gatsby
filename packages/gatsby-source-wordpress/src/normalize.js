@@ -234,25 +234,19 @@ exports.mapTagsCategoriesToTaxonomies = entities =>
     return e
   })
 
-exports.searchReplaceContentUrls = function ({ entities, searchReplace }) {
+exports.searchReplaceContentUrls = function ({ entities, searchAndReplaceURLs }) {
 
   if (
-    !(_.isPlainObject(searchReplace)) ||
-    !(_.has(searchReplace, `sourceUrl`)) || 
-    !(_.has(searchReplace, `replacementUrl`)) || 
-    typeof searchReplace.sourceUrl !== `string` ||
-    typeof searchReplace.replacementUrl !== `string`
+    !(_.isPlainObject(searchAndReplaceURLs)) ||
+    !(_.has(searchAndReplaceURLs, `sourceUrl`)) || 
+    !(_.has(searchAndReplaceURLs, `replacementUrl`)) || 
+    typeof searchAndReplaceURLs.sourceUrl !== `string` ||
+    typeof searchAndReplaceURLs.replacementUrl !== `string`
   ) {
-    console.log(
-      colorized.out(
-        `Invalid Search and Replace option`,
-        colorized.color.Font.FgRed
-      )
-    )
     return entities
   }
 
-  const { sourceUrl, replacementUrl } = searchReplace
+  const { sourceUrl, replacementUrl } = searchAndReplaceURLs
 
   const _blacklist = [
     `_links`,
