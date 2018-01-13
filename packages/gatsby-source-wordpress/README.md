@@ -84,7 +84,10 @@ plugins: [
       // It can help you debug specific API Endpoints problems
       verboseOutput: false,
       // Search and Replace Urls across WordPress content
-      searchReplace: ["https://source-url.com", "https://replacement-url.com"]
+      searchReplace: {
+        sourceUrl: "https://source-url.com", 
+        replacementUrl: "https://replacement-url.com"
+      }
     },
   },
 ];

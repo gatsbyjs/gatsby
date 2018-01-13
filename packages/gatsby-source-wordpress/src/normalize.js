@@ -236,11 +236,17 @@ exports.mapTagsCategoriesToTaxonomies = entities =>
 
 exports.searchReplaceContentUrls = function ({ entities, searchReplace }) {
 
-  if (!Array.isArray(searchReplace) || searchReplace.length !== 2) {
+  if (
+    !(_.isPlainObject(searchReplace)) ||
+    !(_.has(searchReplace, `sourceUrl`)) || 
+    !(_.has(searchReplace, `replacementUrl`)) || 
+    typeof searchReplace.sourceUrl !== `string` ||
+    typeof searchReplace.replacementUrl !== `string`
+  ) {
     return entities
   }
 
-  const [search, replace] = searchReplace
+  const { sourceUrl, replacementUrl } = searchReplace
 
   const _blacklist = [
     `_links`,
@@ -261,7 +267,7 @@ exports.searchReplaceContentUrls = function ({ entities, searchReplace }) {
     try {
       var whiteList = blacklistProperties(entity, _blacklist)
       var replaceable = JSON.stringify(whiteList)
-      var replaced = replaceable.replace(new RegExp(search, `g`), replace)
+      var replaced = replaceable.replace(new RegExp(sourceUrl, `g`), replacementUrl)
       var parsed = JSON.parse(replaced)
     } catch (e) {
       console.log(
