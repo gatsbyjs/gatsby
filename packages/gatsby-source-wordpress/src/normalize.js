@@ -234,6 +234,55 @@ exports.mapTagsCategoriesToTaxonomies = entities =>
     return e
   })
 
+exports.searchReplaceContentUrls = function ({ entities, searchAndReplaceContentUrls }) {
+
+  if (
+    !(_.isPlainObject(searchAndReplaceContentUrls)) ||
+    !(_.has(searchAndReplaceContentUrls, `sourceUrl`)) || 
+    !(_.has(searchAndReplaceContentUrls, `replacementUrl`)) || 
+    typeof searchAndReplaceContentUrls.sourceUrl !== `string` ||
+    typeof searchAndReplaceContentUrls.replacementUrl !== `string`
+  ) {
+    return entities
+  }
+
+  const { sourceUrl, replacementUrl } = searchAndReplaceContentUrls
+
+  const _blacklist = [
+    `_links`,
+    `__type`,
+  ]
+
+  const blacklistProperties = function (obj = {}, blacklist = []) {
+    for (var i = 0; i < blacklist.length; i++) {
+        delete obj[blacklist[i]]
+    }
+
+    return obj
+  }
+
+  return entities.map(function (entity) {
+    const original = Object.assign({}, entity)
+
+    try {
+      var whiteList = blacklistProperties(entity, _blacklist)
+      var replaceable = JSON.stringify(whiteList)
+      var replaced = replaceable.replace(new RegExp(sourceUrl, `g`), replacementUrl)
+      var parsed = JSON.parse(replaced)
+    } catch (e) {
+      console.log(
+        colorized.out(
+          e.message,
+          colorized.color.Font.FgRed
+        )
+      )
+      return original
+    }
+
+    return _.defaultsDeep(parsed, original)
+  })
+}
+
 exports.mapEntitiesToMedia = entities => {
   const media = entities.filter(e => e.__type === `wordpress__wp_media`)
 
