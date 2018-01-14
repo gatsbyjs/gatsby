@@ -142,7 +142,6 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
         edges {
           node {
             frontmatter {
-              date
               path
             }
           }
