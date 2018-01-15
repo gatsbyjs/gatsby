@@ -211,10 +211,7 @@ error-prone, especially as sites get larger and more complex. It's much better t
 store the title in one place and then _pull_ that title into components whenever
 we need it.
 
-To solve this, Gatsby supports the following pattern for adding site "metadata"—like
-the title.
-
-We add this data to the `gatsby-config.js` file. Let's add our site title to
+To solve this, we can add site "metadata" — like page title or description — to the `gatsby-config.js` file. Let's add our site title to
 `gatsby-config.js` file and then query it from our layout and about page!
 
 Edit your `gatsby-config.js`:
@@ -706,7 +703,7 @@ seem to really enjoy bananas!
 
 ![two-posts](two-posts.png)
 
-Which looks great! Except…the order of the posts is wrong.
+Which looks great! Except… the order of the posts is wrong.
 
 But this is easy to fix. When querying a connection of some type, you can pass a
 variety of arguments to the query. You can `sort` and `filter` nodes, set how

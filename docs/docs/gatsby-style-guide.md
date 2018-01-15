@@ -195,8 +195,8 @@ to read.
 # Formatting example code
 
 Readers will likely use Guide articles as a quick reference to look up syntax.
-Articles should have a bare-bones, real-world example that show common-use cases of
-that syntax.
+Articles should be a basic, real-world example that show common use cases of
+its syntax.
 
 Here are specific formatting guidelines for any code:
 
