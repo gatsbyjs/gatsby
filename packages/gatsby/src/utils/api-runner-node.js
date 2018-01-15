@@ -144,10 +144,10 @@ module.exports = async (api, args = {}, pluginSource) =>
 
     apisRunning.push(apiRunInstance)
 
+    let pluginName = null
     mapSeries(
       noSourcePluginPlugins,
       (plugin, callback) => {
-        let pluginName = null
         if (plugin.name === `default-site-plugin`) {
           pluginName = `gatsby-node.js`
         } else {
