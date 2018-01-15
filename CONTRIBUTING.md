@@ -34,6 +34,7 @@ The usual contributing steps are:
   build of all packages and then watch for changes to packages' source code and
   compile these changes on-the-fly as you work.
 * Install [gatsby-dev-cli](/packages/gatsby-dev-cli/) globally: `yarn global add gatsby-dev-cli`
+* Run `yarn install` in each of the sites you're testing with.
 * For each of your Gatsby test sites, run the `gatsby-dev` command there to copy
   the built files from your cloned copy of Gatsby. It'll watch for your changes
   to Gatsby packages and copy them into the site. For more detailed instructions
@@ -65,7 +66,7 @@ a pull request.
   additions or modifications here.
 * Make sure to double check your grammar and capitalise correctly.
 * Commit and push to your fork.
-* Create an pull request from your branch.
+* Create a pull request from your branch.
 
 ## Development tools
 

@@ -4,10 +4,29 @@ title: "Deploying Gatsby"
 
 ## Tutorials for deploying on different static site hosts
 
+* [Netlify](/docs/deploy-gatsby/#netlify)
 * [S3/Cloudfront](/docs/deploy-gatsby/#amazon-s3-and-cloudfront)
 * [GitHub Pages](/docs/deploy-gatsby/#github-pages)
 * [GitLab Pages](/docs/deploy-gatsby/#gitlab-pages)
 * [Heroku](/docs/deploy-gatsby/#heroku)
+
+## Netlify
+
+Netlify is an excellent option for deploying Gatsby sites. Netlify is a unified
+platform that automates your code to create high-performant, easily maintainable
+sites and web apps. They provide continuous deployment (Git-triggered builds),
+an intelligent, global CDN, full DNS (including custom domains), automated
+HTTPS, asset acceleration, and a lot more.
+
+Their free tier includes unlimited personal and commercial projects, HTTPS,
+continuous deployment from public or private repos and more.
+
+### Deploying to Netlify
+
+To deploy your Gatsby site to Netlify, go to the [create a new
+site](https://app.netlify.com/start) page, select your project repo from GitHub,
+GitLab, or Bitbucket, and follow the prompts.
+
 
 ## Amazon S3 and Cloudfront
 
@@ -106,6 +125,26 @@ git add .
 git push -u origin master
 ```
 
+You can deploy sites on Gitlab Pages with or without a custom domain. If you choose to use the default setup (without a custom domain), or if you create a project site, you will need to setup your site with path prefixing. If adding a custom domain, you can skip the Path Prefix step, and remove `--prefix-paths` from the gitlab-ci.yml file.
+
+### Path Prefix
+
+As the site will be hosted under yourname.gitlab.io/examplerepository/, you will need to configure Gatsby to use the Path Prefix plugin.
+
+In the `gatsby-config.js`, set the `pathPrefix` to be added to your site's link
+paths. The `pathPrefix` should be the project name in your repository. (ex.
+`https://gitlab.com/yourname/examplerepository/` - your `pathPrefix` should be
+`/examplerepository`). See
+[the docs page on path prefixing for more](/docs/path-prefix/).
+
+```
+module.exports = {
+  pathPrefix: `/examplerepository`,
+}
+```
+
+### Build and deploy with Gitlab CI
+
 To use GitLab's continuous integration (CI), you need to add a `.gitlab-ci.yml`
 configuration file. This can be added into your project folder, or once you have
 pushed the repository, you can add it with GitLab's website. The file needs to
@@ -123,7 +162,7 @@ cache:
 pages:
   script:
   - yarn install
-  - ./node_modules/.bin/gatsby build
+  - ./node_modules/.bin/gatsby build --prefix-paths
   artifacts:
     paths:
     - public
@@ -138,11 +177,13 @@ to reinstall all the dependancies required. `pages:` is the name of the
 CI stage. You can have multiple stages, e.g. 'Test', 'Build', 'Deploy' etc.
 `script:` starts the next part of the CI stage, telling it to start running the
 below scripts inside the image selected. We have used the `yarn install` and
-`./node_modules/.bin/gatsby build` which will install all dependancies, and
-start the static site build, respectively. We have used
-`./node_modules/.bin/gatsby build` because we then don't have to install
+`./node_modules/.bin/gatsby build --prefix-paths` which will install all dependancies, and
+start the static site build, respectively.
+
+We have used
+`./node_modules/.bin/gatsby build --prefix-paths` because we then don't have to install
 gatsby-cli to build the image, as it has already been included and installed
-with `yarn install`. `artifacts:` and `paths:` are used to tell GitLab pages
+with `yarn install`. We have included `--prefix-paths` as when running the command _without_ that flag, Gatsby ignores your pathPrefix. `artifacts:` and `paths:` are used to tell GitLab pages
 where the static files are kept. `only:` and `master` tells the CI to only run
 the above instructions when the master branch is deployed.
 
