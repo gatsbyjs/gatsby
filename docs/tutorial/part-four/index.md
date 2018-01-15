@@ -73,7 +73,7 @@ In Gatsby, GraphQL enables components to declare and receive the data they need.
 ## Our first GraphQL query
 
 Let's create another new site for this part of the tutorial like in the previous
-parts. We're going to build a simple Markdown blog called "Pandas Eating Lots".
+parts. We're going to build a Markdown blog called "Pandas Eating Lots".
 It's dedicated to showing off the best pictures & videos of Pandas eating lots
 of food. Along the way we'll be dipping our toes into GraphQL and Gatsby's
 Markdown support.
@@ -197,7 +197,7 @@ the following:
 
 ![start](start.png)
 
-We have another simple site with a layout and two pages.
+We have another small site with a layout and two pages.
 
 Now let's start querying 😋
 
@@ -211,7 +211,7 @@ error-prone, especially as sites get larger and more complex. It's much better t
 store the title in one place and then _pull_ that title into components whenever
 we need it.
 
-To solve this, Gatsby supports a simple pattern for adding site "metadata"—like
+To solve this, Gatsby supports the following pattern for adding site "metadata"—like
 the title.
 
 We add this data to the `gatsby-config.js` file. Let's add our site title to
@@ -1078,7 +1078,7 @@ export const query = graphql`
 `
 ```
 
-And there we go! A working (albeit quite simple still) blog!
+And there we go! A working, albeit small, blog!
 
 Try playing more with the site. Try adding some more Markdown files. Explore
 querying other data from the `MarkdownRemark` nodes and adding them to the

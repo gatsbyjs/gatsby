@@ -298,7 +298,7 @@ export const pageQuery = `
 
 In addition to creating pages for our Instagram photos, we want to make an index
 page for browsing all photos. To build this index page, Gatsby lets us create
-pages using simple React.js components.
+pages using React.js components.
 
 ```
 pages/
@@ -310,7 +310,7 @@ These React component pages can query the Gatsbygram GraphQL schema for data and
 are automatically converted into their own pages at `gatsbygram.gatsbyjs.org/`
 and `gatsbygram.gatsbyjs.org/about/`.
 
-Gatsbygram's `about.js` is a simple React component with no query. `index.js` is
+Gatsbygram's `about.js` is a plain React component with no query. `index.js` is
 more complex. It queries for thumbnails for all images and has an infinite
 scroll implementation to lazy load in image thumbnails.
 
@@ -325,7 +325,7 @@ your header, footer, and default page structure. It is also used as the
 "[app shell](https://developers.google.com/web/updates/2015/11/app-shell)" when
 loading your site from a service worker.
 
-A simple layout component might look something like this.
+A small layout component might look something like this.
 
 ```jsx
 import React from "react";

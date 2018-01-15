@@ -57,7 +57,7 @@ If you want to highlight lines of code, you also need to add some additional CSS
 that targets our _custom line highlighting implementation_ (which slightly
 differs from PrismJS's own plugin for that – more on that later).
 
-For simple line highlights similar to PrismJS's, try:
+For line highlights similar to PrismJS's, try:
 
 ```css
 .gatsby-highlight-code-line {

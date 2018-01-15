@@ -77,7 +77,7 @@ Community:
 
   * Bootstrap CSS framework
   * Single column layout
-  * Simple components: SiteNavi, SitePost, SitePage
+  * Basic components: SiteNavi, SitePost, SitePage
 
 * [gatsby-blog-starter-kit](https://github.com/dschau/gatsby-blog-starter-kit)
 

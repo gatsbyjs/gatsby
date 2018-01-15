@@ -202,11 +202,11 @@ pages!
 
 ## Interactive page
 
-One nice thing about using Gatsby for building websites vs other tools is it's
-so easy to add interactivity to your pages. React.js was designed for
+One nice thing about using Gatsby for building websites vs. other tools is itʼs
+so easier to add interactivity to your pages. React.js was designed for
 Facebook.com and is used on many other world-class web applications.
 
-Let's see how easy it is to add interactive elements to our pages.
+Let's see how much easier it is to add interactive elements to our pages.
 
 We'll start by creating a new link to a page at `/counter`/ from our original
 `index.js` page component `<Link to="/counter/">Counter</Link>`.
@@ -339,8 +339,8 @@ changes the count.
 
 ## Deploying Gatsby.js websites on the web
 
-Gatsby.js is a _static site generator_ which makes deploying Gatsby sites to the
-web really easy. There are no servers to setup or complicated databases to
+Gatsby.js is a _static site generator_, which makes deploying Gatsby sites to the
+web really easier. There are no servers to setup or complicated databases to
 deploy. Instead, the Gatsby `build` command produces a directory of static HTML
 and JavaScript files which you can deploy to a static site hosting service.
 

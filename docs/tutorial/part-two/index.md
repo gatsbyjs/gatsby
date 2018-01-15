@@ -17,7 +17,7 @@ within the same file.
 While a seemingly simple change, it has profound implications for how you think
 about building websites.
 
-Take the simple example of creating a custom button. In the past you would
+Take the example of creating a custom button. In the past you would
 create a CSS class (perhaps `.primary-button`) with your custom styles and then
 whenever you want to apply those styles e.g.
 
@@ -101,7 +101,7 @@ JavaScript code) that others can then use when building Gatsby sites.
 There's already dozens of plugins! Check them out at the
 [plugins section of the site](/docs/plugins/).
 
-Gatsby plugins are easy to install and use. In almost every Gatsby site you
+Our goal with Gatsby plugins is to make them easy to install and use. In almost every Gatsby site you
 build, you will be installing plugins. While working through the rest of the
 tutorial, you'll have many opportunities to practice installing and using
 plugins.
@@ -376,7 +376,7 @@ Your page should now look like:
 
 ![css-modules-1](css-modules-1.png)
 
-Let's create a simple list of people with names, avatars, and short latin
+Let's create a list of people with names, avatars, and short latin
 biographies.
 
 First, let's create the file for the CSS at
