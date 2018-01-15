@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "puppeteer": "^1.0.0",
+    "tar": "^4.2.0",
+    "tmp": "0.0.33"
+  },
+  "devDependencies": {
+    "aws-sdk": "^2.181.0"
+  }
+}
