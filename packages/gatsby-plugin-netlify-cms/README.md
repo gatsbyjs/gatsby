@@ -16,9 +16,7 @@ site](https://netlifycms.org).
 Add the Netlify CMS plugin in your `gatsby-config.js`:
 
 ```javascript
-plugins: [
-  `gatsby-plugin-netlify-cms`,
-];
+plugins: [`gatsby-plugin-netlify-cms`];
 ```
 
 Then add your Netlify CMS [configuration
@@ -45,24 +43,24 @@ plugins: [
       modulePath: `${__dirname}/src/cms/cms.js`,
     },
   },
-]
+];
 ```
 
 The js module might look like this:
 
 ```javascript
 // Your module must at least include these three imports
-import React from 'react'
-import CMS from 'netlify-cms'
-import 'netlify-cms/dist/cms.css'
+import React from "react";
+import CMS from "netlify-cms";
+import "netlify-cms/dist/cms.css";
 
 // Let's say you've created widget and preview components for a custom image
 // gallery widget in separate files
-import ImageGalleryWidget from './image-gallery-widget.js'
-import ImageGalleryPreview from './image-gallery-preview.js'
+import ImageGalleryWidget from "./image-gallery-widget.js";
+import ImageGalleryPreview from "./image-gallery-preview.js";
 
 // Register the imported widget:
-CMS.registerWidget('image-gallery', ImageGalleryWidget, ImageGalleryPreview)
+CMS.registerWidget("image-gallery", ImageGalleryWidget, ImageGalleryPreview);
 ```
 
 ## Support

@@ -23,15 +23,13 @@ Has anyone heard about GatsbyJS yet?
 The first step will be to create the page which will display your posts, in `src/pages/`. You can for example use `index.js`.
 
 ```js
-import React from 'react';
-import PostLink from '../components/post-link'
+import React from "react";
+import PostLink from "../components/post-link";
 
 const IndexPage = ({ data: { allMarkdownRemark: { edges } } }) => {
   const Posts = edges
     .filter(edge => !!edge.node.frontmatter.date) // You can filter your posts based on some criteria
-    .map(edge => (
-      <PostLink key={edge.node.id} post={edge.node} />
-    ));
+    .map(edge => <PostLink key={edge.node.id} post={edge.node} />);
 
   return <div>{Posts}</div>;
 };
@@ -44,15 +42,13 @@ export default IndexPage;
 The only thing left to do is to provide the data to your component with a GraphQL query.
 
 ```js
-import React from 'react';
-import PostLink from '../components/post-link'
+import React from "react";
+import PostLink from "../components/post-link";
 
 const IndexPage = ({ data: { allMarkdownRemark: { edges } } }) => {
   const Posts = edges
     .filter(edge => !!edge.node.frontmatter.date) // You can filter your posts based on some criteria
-    .map(edge => (
-      <PostLink key={edge.node.id} post={edge.node} />
-    ));
+    .map(edge => <PostLink key={edge.node.id} post={edge.node} />);
 
   return <div>{Posts}</div>;
 };
