@@ -60,9 +60,9 @@
       link: /docs/styled-components/
     - title: Adding Markdown Pages
       link: /docs/adding-markdown-pages/
-    - title: Adding a List of Markdown Blog Posts*
+    - title: Adding a List of Markdown Blog Posts
       link: /docs/adding-a-list-of-markdown-blog-posts/
-    - title: Adding Tags and Categories to Blog Posts*
+    - title: Adding Tags and Categories to Blog Posts
       link: /docs/adding-tags-and-categories-to-blog-posts/
     - title: Creating Dynamically-Rendered Navigation*
       link: /docs/creating-dynamically-rendered-navigation/

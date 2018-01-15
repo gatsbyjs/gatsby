@@ -35,7 +35,7 @@ siteMetadata: {
 },
 plugins: [
   {
-    resolve: `gatsby-plugin-sitemap`
+    resolve: `gatsby-plugin-sitemap`,
     options: {
       output: `/some-other-sitemap.xml`,
       query: `
