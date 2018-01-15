@@ -1,8 +1,13 @@
 import NProgress from "nprogress"
 
-exports.onClientEntry = (a, pluginOptions = { color: `#29d` }) => {
+const defaultOptions = { color: `#29d` }
+
+exports.onClientEntry = (a, pluginOptions = defaultOptions) => {
+  // Merge default options with user defined options via `gatsby-config.js`
+  const options = { ...defaultOptions, ...pluginOptions }
+
   window.___emitter.on(`onDelayedLoadPageResources`, () => {
-    NProgress.configure(pluginOptions)
+    NProgress.configure(options)
     NProgress.start()
   })
   window.___emitter.on(`onPostLoadPageResources`, () => {
@@ -14,7 +19,7 @@ exports.onClientEntry = (a, pluginOptions = { color: `#29d` }) => {
     pointer-events: none;
 }
 #nprogress .bar {
-    background: ${pluginOptions.color};
+    background: ${options.color};
     position: fixed;
     z-index: 1031;
     top: 0;
@@ -28,7 +33,7 @@ exports.onClientEntry = (a, pluginOptions = { color: `#29d` }) => {
     right: 0px;
     width: 100px;
     height: 100%;
-    box-shadow: 0 0 10px ${pluginOptions.color}, 0 0 5px ${pluginOptions.color};
+    box-shadow: 0 0 10px ${options.color}, 0 0 5px ${options.color};
     opacity: 1.0;
     -webkit-transform: rotate(3deg) translate(0px, -4px);
     -ms-transform: rotate(3deg) translate(0px, -4px);
@@ -46,8 +51,8 @@ exports.onClientEntry = (a, pluginOptions = { color: `#29d` }) => {
     height: 18px;
     box-sizing: border-box;
     border: solid 2px transparent;
-    border-top-color: ${pluginOptions.color};
-    border-left-color: ${pluginOptions.color};
+    border-top-color: ${options.color};
+    border-left-color: ${options.color};
     border-radius: 50%;
     -webkit-animation: nprogress-spinner 400ms linear infinite;
     animation: nprogress-spinner 400ms linear infinite;
