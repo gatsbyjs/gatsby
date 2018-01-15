@@ -14,11 +14,12 @@ const writePages = async () => {
   let { program, pages, layouts } = store.getState()
   // Write out pages.json
   const pagesData = pages.reduce(
-    (mem, { path, matchPath, componentChunkName, layout, jsonName }) => {
+    (mem, { path, matchPath, componentChunkName, layout, jsonName, asyncSSR }) => {
       const layoutOjb = getLayoutById(layouts)(layout)
       return [
         ...mem,
         {
+          asyncSSR,
           componentChunkName,
           layout: layoutOjb ? layoutOjb.machineId : layout,
           layoutComponentChunkName: layoutOjb && layoutOjb.componentChunkName,
@@ -48,7 +49,7 @@ const writePages = async () => {
         jsonName: layout.jsonName,
       })
     }
-    json.push({ path: p.path, jsonName: p.jsonName })
+    json.push({ path: p.path, jsonName: p.jsonName, asyncSSR: p.asyncSSR })
   })
 
   pageLayouts = _.uniq(pageLayouts)

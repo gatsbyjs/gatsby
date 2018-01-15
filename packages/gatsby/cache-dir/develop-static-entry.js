@@ -1,7 +1,7 @@
 import React from "react"
 import { renderToStaticMarkup } from "react-dom/server"
 import { merge } from "lodash"
-import apiRunner from "./api-runner-ssr"
+import { apiRunnerSync } from "./api-runner-ssr"
 import testRequireError from "./test-require-error"
 
 let HTML
@@ -50,7 +50,7 @@ module.exports = (locals, callback) => {
     bodyProps = merge({}, bodyProps, props)
   }
 
-  apiRunner(`onRenderBody`, {
+  apiRunnerSync(`onRenderBody`, {
     setHeadComponents,
     setHtmlAttributes,
     setBodyAttributes,

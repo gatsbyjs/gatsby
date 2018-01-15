@@ -23,6 +23,7 @@ type Job = {
   id: string,
 }
 type PageInput = {
+  asyncSSR: boolean,
   path: string,
   component: string,
   layout?: string,
@@ -37,6 +38,7 @@ type LayoutInput = {
 }
 
 type Page = {
+  asyncSSR: boolean,
   path: string,
   matchPath: ?string,
   component: string,
@@ -120,7 +122,18 @@ actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
     layout = `index`
   }
 
+  // Ensure the page has a context object
+  if (!page.context) {
+    page.context = {}
+  }
+
+  // if asyncSSR wasn't defined, set to false
+  if (!page.asyncSSR) {
+    page.asyncSSR = false
+  }
+
   let internalPage: Page = {
+    asyncSSR: page.asyncSSR,
     layout,
     jsonName,
     internalComponentName,
