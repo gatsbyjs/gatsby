@@ -94,8 +94,8 @@ exports.sourceNodes = async (
   })
 
   // Search and replace Content Urls
-  entities = normalize.searchReplaceContentUrls({ 
-    entities, 
+  entities = normalize.searchReplaceContentUrls({
+    entities,
     searchAndReplaceContentUrls,
   })
 

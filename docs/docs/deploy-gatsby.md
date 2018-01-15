@@ -27,7 +27,6 @@ To deploy your Gatsby site to Netlify, go to the [create a new
 site](https://app.netlify.com/start) page, select your project repo from GitHub,
 GitLab, or Bitbucket, and follow the prompts.
 
-
 ## Amazon S3 and Cloudfront
 
 If you decide to host your Gatsby site on S3 with Cloudfront as CDN, you should

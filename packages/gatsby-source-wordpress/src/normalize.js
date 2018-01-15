@@ -234,12 +234,14 @@ exports.mapTagsCategoriesToTaxonomies = entities =>
     return e
   })
 
-exports.searchReplaceContentUrls = function ({ entities, searchAndReplaceContentUrls }) {
-
+exports.searchReplaceContentUrls = function({
+  entities,
+  searchAndReplaceContentUrls,
+}) {
   if (
-    !(_.isPlainObject(searchAndReplaceContentUrls)) ||
-    !(_.has(searchAndReplaceContentUrls, `sourceUrl`)) || 
-    !(_.has(searchAndReplaceContentUrls, `replacementUrl`)) || 
+    !_.isPlainObject(searchAndReplaceContentUrls) ||
+    !_.has(searchAndReplaceContentUrls, `sourceUrl`) ||
+    !_.has(searchAndReplaceContentUrls, `replacementUrl`) ||
     typeof searchAndReplaceContentUrls.sourceUrl !== `string` ||
     typeof searchAndReplaceContentUrls.replacementUrl !== `string`
   ) {
@@ -248,34 +250,29 @@ exports.searchReplaceContentUrls = function ({ entities, searchAndReplaceContent
 
   const { sourceUrl, replacementUrl } = searchAndReplaceContentUrls
 
-  const _blacklist = [
-    `_links`,
-    `__type`,
-  ]
+  const _blacklist = [`_links`, `__type`]
 
-  const blacklistProperties = function (obj = {}, blacklist = []) {
+  const blacklistProperties = function(obj = {}, blacklist = []) {
     for (var i = 0; i < blacklist.length; i++) {
-        delete obj[blacklist[i]]
+      delete obj[blacklist[i]]
     }
 
     return obj
   }
 
-  return entities.map(function (entity) {
+  return entities.map(function(entity) {
     const original = Object.assign({}, entity)
 
     try {
       var whiteList = blacklistProperties(entity, _blacklist)
       var replaceable = JSON.stringify(whiteList)
-      var replaced = replaceable.replace(new RegExp(sourceUrl, `g`), replacementUrl)
+      var replaced = replaceable.replace(
+        new RegExp(sourceUrl, `g`),
+        replacementUrl
+      )
       var parsed = JSON.parse(replaced)
     } catch (e) {
-      console.log(
-        colorized.out(
-          e.message,
-          colorized.color.Font.FgRed
-        )
-      )
+      console.log(colorized.out(e.message, colorized.color.Font.FgRed))
       return original
     }
 
