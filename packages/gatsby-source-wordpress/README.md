@@ -85,9 +85,9 @@ plugins: [
       verboseOutput: false,
       // Search and Replace Urls across WordPress content
       searchAndReplaceContentUrls: {
-        sourceUrl: "https://source-url.com", 
-        replacementUrl: "https://replacement-url.com"
-      }
+        sourceUrl: "https://source-url.com",
+        replacementUrl: "https://replacement-url.com",
+      },
     },
   },
 ];

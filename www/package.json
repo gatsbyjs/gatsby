@@ -5,6 +5,7 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "bluebird": "^3.5.1",
+    "email-validator": "^1.1.1",
     "gatsby": "^1.9.77",
     "gatsby-image": "^1.0.14",
     "gatsby-link": "^1.6.23",
@@ -38,6 +39,7 @@
     "gatsby-transformer-yaml": "^1.5.7",
     "graphql-request": "^1.4.0",
     "gray-percentage": "^2.0.0",
+    "jsonp": "^0.2.1",
     "limax": "^1.5.0",
     "lodash": "^4.16.6",
     "mitt": "^1.1.2",
@@ -47,7 +49,8 @@
     "typeface-space-mono": "^0.0.40",
     "typeface-spectral": "^0.0.40",
     "typography-breakpoint-constants": "^0.15.10",
-    "typography-plugin-code": "^0.16.11"
+    "typography-plugin-code": "^0.16.11",
+    "validator": "^9.2.0"
   },
   "keywords": [
     "gatsby"
