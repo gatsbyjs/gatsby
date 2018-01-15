@@ -2,8 +2,8 @@ import NProgress from "nprogress"
 
 const defaultOptions = { color: `#29d` }
 
-exports.onClientEntry = (a, pluginOptions = defaultOptions) => {
-  // Merge default options with user defined options via `gatsby-config.js`
+exports.onClientEntry = (a, pluginOptions = {}) => {
+  // Merge default options with user defined options in `gatsby-config.js`
   const options = { ...defaultOptions, ...pluginOptions }
 
   window.___emitter.on(`onDelayedLoadPageResources`, () => {
