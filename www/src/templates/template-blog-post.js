@@ -8,7 +8,7 @@ import Img from "gatsby-image"
 import presets from "../utils/presets"
 import typography, { rhythm, scale, options } from "../utils/typography"
 import Container from "../components/container"
-import EmailCaptureForm from '../components/email-capture-form'
+import EmailCaptureForm from "../components/email-capture-form"
 
 class BlogPostTemplate extends React.Component {
   render() {

@@ -3,6 +3,12 @@ import { rhythm } from "../utils/typography"
 import presets from "../utils/presets"
 import jsonp from "jsonp"
 import { validate } from "email-validator"
+import { css } from "glamor"
+
+let stripeAnimation = css.keyframes({
+  "0%": { backgroundPosition: `0 0` },
+  "100%": { backgroundPosition: `30px 60px` },
+})
 
 // Mailchimp endpoint
 // From: https://us17.admin.mailchimp.com/lists/integration/embeddedcode?id=XXXXXX
@@ -88,18 +94,16 @@ class EmailCaptureForm extends React.Component {
     return (
       <div
         css={{
-          border: `2px solid ${presets.brand}`,
-          backgroundColor: presets.veryLightPurple,
-          borderRadius: `4px`,
-          padding: `${rhythm(1 / 2)}`,
+          borderTop: `2px solid ${presets.brandLight}`,
+          marginTop: rhythm(3),
+          paddingTop: `${rhythm(1)}`,
         }}
       >
         {this.state.status === `success` ? (
           <div>Thank you! Youʼll receive your first email shortly.</div>
         ) : (
           <div>
-            Enjoyed this post? Receive the next one in your inbox!
-            <br />
+            <p>Enjoyed this post? Receive the next one in your inbox!</p>
             <form
               id="email-capture"
               method="post"
@@ -113,10 +117,7 @@ class EmailCaptureForm extends React.Component {
                   placeholder="you@email.com"
                   onChange={this._handleEmailChange}
                   css={{
-                    marginTop: rhythm(1 / 4),
-                    padding: `${rhythm(1 / 4)} ${rhythm(1 / 4)} ${rhythm(
-                      1 / 4
-                    )} ${rhythm(1 / 2)}`,
+                    padding: rhythm(1 / 2),
                     width: `250px`,
                     color: presets.bodyColor,
                   }}
@@ -126,12 +127,17 @@ class EmailCaptureForm extends React.Component {
                   onClick={this._handleFormSubmit}
                   css={{
                     borderRadius: `2px`,
-                    border: `${rhythm(1 / 4)} solid ${presets.brand}`,
-                    backgroundColor: presets.brand,
-                    height: `43px`,
+                    border: `1px solid ${presets.brand}`,
                     cursor: `pointer`,
-                    padding: `0 ${rhythm(1 / 2)} 0 ${rhythm(1 / 2)}`,
+                    padding: rhythm(1 / 2),
                     margin: `${rhythm(1 / 2)} 0 0 ${rhythm(1 / 2)}`,
+                    ":hover": {
+                      backgroundSize: `30px 30px`,
+                      backgroundColor: presets.brand,
+                      backgroundImage: `linear-gradient(45deg, rgba(0,0,0, 0.1) 25%, transparent 25%, transparent 50%, rgba(0,0,0, 0.1) 50%, rgba(0,0,0, 0.1) 75%, transparent 75%, transparent)`,
+                      color: `#fff`,
+                      animation: `${stripeAnimation} 2.8s linear infinite`,
+                    },
                   }}
                 >
                   Subscribe
