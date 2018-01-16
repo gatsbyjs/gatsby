@@ -15,7 +15,7 @@ In the processing, it make images responsive by:
 
 ## Install
 
-`npm install --save gatsby-remark-images`
+`npm install --save gatsby-remark-images gatsby-plugin-sharp`
 
 ## How to use
 
@@ -26,6 +26,7 @@ plugins: [
     resolve: `gatsby-transformer-remark`,
     options: {
       plugins: [
+        `gatsby-plugin-sharp`,
         {
           resolve: `gatsby-remark-images`,
           options: {
