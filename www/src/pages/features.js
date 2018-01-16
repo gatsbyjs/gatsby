@@ -156,7 +156,7 @@ const FeaturesHeader = () => (
   </div>
 )
 
-const getFeaturesData = function (data) {
+const getFeaturesData = function(data) {
   const sections = (data || [])
     .map((row, i) => (row.node.Category ? i : -1))
     .filter(rowNum => rowNum !== -1)

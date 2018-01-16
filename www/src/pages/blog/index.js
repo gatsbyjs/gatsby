@@ -72,11 +72,11 @@ class BlogPostsIndex extends React.Component {
                   marginRight: rhythm(-options.blockMarginBottom * 2),
                   transition: `transform ${presets.animation.speedDefault} ${
                     presets.animation.curveDefault
-                    },  box-shadow ${presets.animation.speedDefault} ${
+                  },  box-shadow ${presets.animation.speedDefault} ${
                     presets.animation.curveDefault
-                    }, padding ${presets.animation.speedDefault} ${
+                  }, padding ${presets.animation.speedDefault} ${
                     presets.animation.curveDefault
-                    }`,
+                  }`,
                   "&:hover": {
                     transform: `translateY(-4px)`,
                     boxShadow: `0 10px 42px rgba(25, 17, 34, 0.1)`,
