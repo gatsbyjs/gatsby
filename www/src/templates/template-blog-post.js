@@ -57,7 +57,9 @@ class BlogPostTemplate extends React.Component {
             <title>{post.frontmatter.title}</title>
             <link
               rel="author"
-              href={`https://gatsbyjs.org${post.frontmatter.author.slug}`}
+              href={`https://gatsbyjs.org${
+                post.frontmatter.author.fields.slug
+              }`}
             />
             <meta
               name="description"
