@@ -195,8 +195,8 @@ to read.
 # Formatting example code
 
 Readers will likely use Guide articles as a quick reference to look up syntax.
-Articles should have simple real-world examples that show common-use cases of
-that syntax.
+Articles should have a basic, real-world example that shows common use cases of
+its syntax.
 
 Here are specific formatting guidelines for any code:
 
@@ -258,7 +258,7 @@ it in a clear, accurate, and objective manner. You'll likely go through several
 rounds of proofreading and editing before you're happy with your writing.
 
 Use the [Hemingway App](http://www.hemingwayapp.com/). There’s nothing magical
-about this simple tool, but it will automatically detect widely agreed-upon
+about this tool, but it will automatically detect widely agreed-upon
 style issues:
 
 * passive voice

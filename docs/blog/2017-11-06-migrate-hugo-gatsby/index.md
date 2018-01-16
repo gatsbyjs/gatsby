@@ -89,8 +89,8 @@ programatic creation of pages explained in the next section.
 This is the official
 [documentation](/docs/creating-and-modifying-pages/),
 plus there is a
-[tutorial](/tutorial/part-four/#data-in-gatsby) which
-gives examples. Basically, I had to create a `gatsby-node.js` file which exports
+[tutorial](/tutorial/part-four/#data-in-gatsby), which
+gives examples. In sum, I created a `gatsby-node.js` file which exports
 `createPages` method using the `createPage` action from
 [`boundActionCreators`](/docs/bound-action-creators/).
 
@@ -165,7 +165,7 @@ for the
 The approach is well documented and you can also see
 [previews of the themes online](http://kyleamathews.github.io/typography.js/).
 
-Steps were quite easy:
+Steps were:
 
 Add `gatsby-plugin-typography` and `typography-theme-moraga` (for example) and
 "enable" the plugin in the `gatsby-config.js` file:
