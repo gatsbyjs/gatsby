@@ -205,7 +205,7 @@ pages!
 One nice thing about using Gatsby for building websites vs. other tools is itʼs easier to add interactivity to your pages. React.js was designed for
 Facebook.com and is used on many other world-class web applications.
 
-Let's see how much easier it is to add interactive elements to our pages.
+Let's see how easy it is to add interactive elements to our pages.
 
 We'll start by creating a new link to a page at `/counter`/ from our original
 `index.js` page component `<Link to="/counter/">Counter</Link>`.
