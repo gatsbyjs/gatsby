@@ -18,11 +18,11 @@
       link: /docs/plugins/
     - title: PRPL Pattern
       link: /docs/prpl-pattern/
-    - title: Querying with GraphQL*
+    - title: Querying data with GraphQL
       link: /docs/querying-with-graphql/
 - title: Guides
   items:
-    - title: Add 404 Page
+    - title: Adding a 404 Page
       link: /docs/add-404-page/
     - title: Adding Images, Fonts, and Files
       link: /docs/adding-images-fonts-files/

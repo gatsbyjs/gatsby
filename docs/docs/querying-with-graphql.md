@@ -1,71 +1,181 @@
 ---
-title: Querying with GraphQL
+title: Querying data with GraphQL
 ---
 
-> This page is a work in progress.
+There are many options for loading data into React components. One of the most
+popular and powerful of these is a technology called
+[GraphQL](http://graphql.org/).
 
-# What is GraphQL?
+GraphQL was invented at Facebook to help product engineers _pull_ needed data into
+React components.
 
-graphql.org describes it as "...a query language for APIs and a runtime for
-fulfilling those queries with your existing data".
+GraphQL is a **q**uery **l**anguage (the _QL_ part of its name). If you're
+familiar with SQL, it works in a very similar way. Using a special syntax, you describe
+the data you want in your component and then that data is given
+to you.
 
-Gatsby uses GraphQL to create a consistent interface between your static site
-and your data sources, where data sources can be anything from local markdown
-files to a remote API.
+Gatsby uses GraphQL to enable [page and layout
+components](/docs/building-with-components/) to declare what data they and their
+sub-components need. Gatsby then handles making sure that data is available in
+the browser when needed by your components.
 
-Gatsby describes your data by creating GraphQL _schemas_ from your data sources.
+## What does a GraphQL query look like?
 
-GraphQL _queries_ can then be associated with your Gatsby pages, ensuring each
-page receives exactly the data it needs.
+GraphQL lets you ask for the exact data you need. Queries look like JSON:
 
-# Why GraphQL?
+```graphql
+{
+  site {
+    siteMetadata {
+      title
+    }
+  }
+}
+```
 
-* As Gatsby runs on both server (at build time) & client, need way to specify
-  which data is needed.
-* This is a _build-time only_ use of GraphQL. You don't need to run a GraphQL
-  server in production.
-* Convenient way to describe data requirements of component.
-* Why query colocation rocks
-* Uses the Relay Modern compiler behind the scenes
+Which returns:
 
-# Basic Terminology
+```json
+{
+  "site": {
+    "siteMetadata": {
+      "title": "A Gatsby site!"
+    }
+  }
+}
+```
 
-* Types based on file type + way data can be transformed
-* Connections
-* Shallow intro to how data layer works e.g. source and transformer plugins.
-* Compare to webpack loaders — like loaders except create schema that can then
-  be queried.
-* Named queries?
-* Using query parameters to manipulate results?
+A basic page component with a GraphQL query might look like this:
 
-# Example queries
+```jsx
+import React from "react";
 
-Showing off sorting, filtering, picking fields, programmatic transformations
+export default ({ data }) => (
+  <div>
+    <h1>About {data.site.siteMetadata.title}</h1>
+    <p>We're a very cool website you should return to often.</p>
+  </div>
+);
 
-[Some example queries from Gatsby's tests](https://github.com/gatsbyjs/gatsby/blob/52e36b9994a86fc473cd2f966ab6b6f87ee8eedb/packages/gatsby/src/schema/__tests__/infer-graphql-input-type-test.js#L116-L432) -
-look for \`template literal blocks\` with `allNode{}` in them.
+export const query = graphql`
+  query AboutQuery {
+    site {
+      siteMetadata {
+        title
+      }
+    }
+  }
+`;
+```
 
-...
+The result of the query is automatically inserted into your React component
+on the `data` prop. GraphQL and Gatsby lets you ask for data and then
+immediately start using it.
 
-# Further reading
+## How to learn GraphQL
 
-## Getting started with GraphQL
+Gatsby might be the first time you've seen GraphQL! We hope you love it as much
+as we do and find it useful for all your projects.
+
+When starting out with GraphQL, we recommend the following two tutorials:
+
+* https://www.howtographql.com/
+* http://graphql.org/learn/
+
+[The official Gatsby tutorial](/tutorial/part-four/) also includes an introduction to using GraphQL specifically with Gatsby.
+
+## How does GraphQL and Gatsby work together?
+
+One of the great things about GraphQL is how flexible it is. People use GraphQL
+with [many different programming languages](http://graphql.org/code/) and for web and native apps.
+
+Most people using GraphQL run it on a server to respond live to requests for
+data from clients. You define a schema (a schema is a formal way of describing
+the shape of your data) for your GraphQL server and then your GraphQL resolvers
+retrieve data from databases and/or other APIs.
+
+Gatsby is unique that it uses GraphQL at _build-time_ and _not_ for live
+sites. This means you don't need to run additional services (e.g. a database
+and node.js service) to use GraphQL for production websites.
+
+Gatsby is a great framework for building apps so it's possible and encouraged
+to pair Gatsby's native build-time GraphQL with GraphQL queries running against
+a live GraphQL server from the browser.
+
+## Where does Gatsby's GraphQL schema come from?
+
+Most usages of GraphQL involve manually creating a GraphQL schema.
+
+With Gatsby, we instead use plugins which fetch data from different sources
+which we use to automatically _infer_ a GraphQL schema.
+
+If you give Gatsby data that looks like:
+
+```json
+{
+  "title": "A long long time ago"
+}
+```
+
+Gatsby will create a schema that looks something like:
+
+```
+title: String
+```
+
+This makes it easy to pull data from anywhere and immediately start writing
+GraphQL queries against your data.
+
+This _can_ cause confusion though as some data sources allow you to define
+a schema but parts of that schema might still not be recreated in Gatsby if
+there's not yet any data added for that part of the schema.
+
+## Powerful data transformations
+
+GraphQL enables another unique feature of Gatsby — it lets you control data transformations with arguments to your queries. Some examples.
+
+### Formatting dates
+
+People often store dates like "2018-01-05" but want to display the date in some other form like "January 5th, 2018". One way of doing this is to load a date formatting JavaScript library into the browser. With Gatsby's GraphQL layer you can instead do the formatting at query time like:
+
+```graphql
+{
+  date(formatString: "MMMM Do, YYYY")
+}
+```
+
+### Markdown
+
+Gatsby has _transformer_ plugins which can transform data from one form to another. A common example is markdown. If you install [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/) then in your queries, you can specify you want the transformed HTML version instead of markdown:
+
+```graphql
+markdownRemark {
+  html
+}
+```
+
+### Images
+
+Gatsby has rich support for processing images. Responsive images are a big part of the modern web and typically involve creating 5+ sized thumbnails per photo. With Gatsby's [`gatsby-transformer-sharp`](/packages/gatsby-transformer-sharp/), you can _query_ your images for responsive versions. The query automatically creates all the needed responsive thumbnails and returns `src` and `srcSet` fields to add to your image element.
+
+Combined with a special Gatsby image component, [gatsby-image](/packages/gatsby-image/), you have a very powerful set of primatives for building sites with images.
+
+See also the following blog posts:
+
+* [Making Website Building Fun](/blog/2017-10-16-making-website-building-fun/)
+* [Image Optimization Made Easy with Gatsby.js](https://medium.com/@kyle.robert.gill/ridiculously-easy-image-optimization-with-gatsby-js-59d48e15db6e)
+
+## Further reading
+
+### Getting started with GraphQL
 
 * http://graphql.org/learn/
-* https://services.github.com/on-demand/graphql/
-* https://apis.guru/graphql-voyager/
 * https://www.howtographql.com/
 * https://reactjs.org/blog/2015/05/01/graphql-introduction.html
-* ...
+* https://services.github.com/on-demand/graphql/
 
-## Advanced readings on GraphQL
+### Advanced readings on GraphQL
 
 * [GraphQL specification](https://facebook.github.io/graphql/October2016/)
 * [Interfaces and Unions](https://medium.com/the-graphqlhub/graphql-tour-interfaces-and-unions-7dd5be35de0d)
-* [Gatsby uses the Relay Compiler](https://facebook.github.io/relay/docs/en/compiler-architecture.html)
-* ...
-
-## TODO — create live GraphQL explorer for GatsbyJS.org
-
-* iFrame of graphiql instance for this site running on Heroku so people can run
-  live queries.
+* [Relay Compiler (which Gatsby uses to process queries)](https://facebook.github.io/relay/docs/en/compiler-architecture.html)
