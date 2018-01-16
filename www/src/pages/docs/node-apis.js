@@ -1,4 +1,5 @@
 import React from "react"
+import Helmet from "react-helmet"
 
 import Functions from "../../components/function-list"
 import { rhythm, scale } from "../../utils/typography"
@@ -8,6 +9,9 @@ class NodeAPIDocs extends React.Component {
   render() {
     return (
       <Container>
+        <Helmet>
+          <title>Node APIs</title>
+        </Helmet>
         <h1 css={{ marginTop: 0 }}>Gatsby Node APIs</h1>
         <p>
           Gatsby gives plugins and site builders many APIs for controlling your
