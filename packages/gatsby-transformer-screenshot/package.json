@@ -14,8 +14,8 @@
     "build": "babel src --out-dir . --ignore __tests__",
     "watch": "babel -w src --out-dir . --ignore __tests__",
     "prepublish": "cross-env NODE_ENV=production npm run build",
-    "lambda-package": "npm run lambda-package-prepare && cp chrome/headless_shell.tar.gz lambda && cd lambda && zip -rq ../lambda-package.zip .",
-    "lambda-package-prepare": "npm run build && cp lambda-package.json lambda/package.json && cd lambda && PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1 npm install --production"
+    "build-lambda-package": "npm run prepare-lambda-package && cp chrome/headless_shell.tar.gz lambda && cd lambda && zip -rq ../lambda-package.zip .",
+    "prepare-lambda-package": "npm run build && cp lambda-package.json lambda/package.json && cd lambda && PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1 npm install --production"
   },
   "keywords": [
     "gatsby",

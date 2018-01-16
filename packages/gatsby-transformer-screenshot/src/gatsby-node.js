@@ -60,7 +60,7 @@ the name of the AWS Lambda function to invoke.
         } else {
           // Screenshot hasn't yet expired, touch the image node
           // to prevent garbage collection
-          touchNode(n.imageFile___NODE)
+          touchNode(n.screenshotFile___NODE)
         }
       })
   )
@@ -135,7 +135,7 @@ const createScreenshotNode = async ({
     internal: {
       type: `Screenshot`,
     },
-    imageFile___NODE: fileNode.id,
+    screenshotFile___NODE: fileNode.id,
   }
 
   screenshotNode.internal.contentDigest = createContentDigest(screenshotNode)
