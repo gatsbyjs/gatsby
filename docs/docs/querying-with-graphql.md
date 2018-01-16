@@ -68,7 +68,9 @@ export const query = graphql`
 `;
 ```
 
-The result of the query is automatically inserted into your React component on the `data` prop. GraphQL and Gatsby lets ask for data and then immediately start using it.
+The result of the query is automatically inserted into your React component
+on the `data` prop. GraphQL and Gatsby lets you ask for data and then
+immediately start using it.
 
 ## How to learn GraphQL
 
