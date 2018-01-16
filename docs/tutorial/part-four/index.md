@@ -56,11 +56,11 @@ directly into our components**—in the shape and form we want.
 
 ## How Gatsby's data layer uses GraphQL to pull data into components
 
-If you're familiar with the React world, there are many options for loading data
-into components. One of the most popular and robust of these is a technology
-called [GraphQL](http://graphql.org/).
+There are many options for loading data into React components. One of the most
+popular and powerful of these is a technology called
+[GraphQL](http://graphql.org/).
 
-GraphQL was invented at Facebook to help product engineers pull needed data into
+GraphQL was invented at Facebook to help product engineers _pull_ needed data into
 components.
 
 GraphQL is a **q**uery **l**anguage (the _QL_ part of its name). If you're
@@ -68,7 +68,7 @@ familiar with SQL, it works in a very similar way. Using a special syntax, you d
 the data you want in your component and then that data is given
 to you.
 
-In Gatsby, GraphQL enables components to declare and receive the data they need.
+Gatsby uses GraphQL to enable components to declare the data they need.
 
 ## Our first GraphQL query
 

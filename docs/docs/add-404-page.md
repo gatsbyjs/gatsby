@@ -1,5 +1,5 @@
 ---
-title: "Add 404 Page"
+title: "Adding a 404 Page"
 ---
 
 Adding a 404 page is easy. First, create a page whose path matches the regex
