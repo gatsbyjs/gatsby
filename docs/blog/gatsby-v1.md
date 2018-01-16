@@ -297,7 +297,7 @@ uses [Redux](http://redux.js.org/) to communicate with their Django API.
 
 The marketing portion of the site loads quickly with minimal JavaScript. When a
 potential customer goes to sign-up for the app, there's no _awkward jump from
-the marketing website to the web app_—just a page change which seamlessly
+the marketing website to the web app_—just a simple page change which seamlessly
 loads in the needed JavaScript. The _team is sharing components and styles
 across the site_ without stepping on each others shoes as they rapidly iterate
 on features.
