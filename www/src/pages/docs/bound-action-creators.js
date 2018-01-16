@@ -1,4 +1,5 @@
 import React from "react"
+import Helmet from "react-helmet"
 
 import Functions from "../../components/function-list"
 import { rhythm, scale } from "../../utils/typography"
@@ -8,6 +9,9 @@ class ActionCreatorsDocs extends React.Component {
   render() {
     return (
       <Container>
+        <Helmet>
+          <title>Bound Action Creators</title>
+        </Helmet>
         <h1 css={{ marginTop: 0 }}>Bound Action Creators</h1>
         <p>
           Gatsby uses
