@@ -8,7 +8,7 @@ Styled Components lets you use actual CSS syntax inside your components. Styled 
 
 One of the most important problems they solve is selector name collisions. With traditional CSS, you have to be careful not to overwrite CSS selectors used elsewhere in a site because all CSS selectors live in the same global namespace. This unfortunate restriction can lead to elaborate (and often confusing) selector naming schemes.
 
-With CSS-in-JS, you avoid all that as CSS selectors are scoped automatically to their component. Styles are tightly coupled with their components. This makes it very easy to know how to edit a component's CSS as there's never any confusion about how and where CSS is being used.
+With CSS-in-JS, you avoid all that as CSS selectors are scoped automatically to their component. Styles are tightly coupled with their components. This makes it much easier to know how to edit a component's CSS as there's never any confusion about how and where CSS is being used.
 
 First, open a new terminal window and run the following to create a new site:
 

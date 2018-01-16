@@ -522,7 +522,7 @@ If you've worked with GraphQL before this should look very familiar. In fact, as
 you can see the string type is imported directly from GraphQL and not from
 Gatsby.
 
-Basically you check the type of node and if it's a type your interested in you
+You check the type of node and if it's a type youʼre interested in you
 resolve with some fields. Fields in GraphQL require a `type` and a way to
 `resolve` the value.
 
