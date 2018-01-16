@@ -17,7 +17,8 @@ exports.getBrowser = (() => {
         dumpio: !!exports.DEBUG,
         ignoreHTTPSErrors: true,
       })
-      debugLog(async b => `launch done: ${await browser.version()}`)
+      const version = await browser.version();
+      debugLog(async b => `launch done: ${version}`)
     }
     return browser
   }
