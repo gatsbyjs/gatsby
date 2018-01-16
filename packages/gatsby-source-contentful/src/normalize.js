@@ -238,6 +238,7 @@ exports.createContentTypeNodes = ({
       Object.keys(entryItemFields).forEach(entryItemFieldKey => {
         if (entryItemFields[entryItemFieldKey]) {
           const entryItemFieldValue = entryItemFields[entryItemFieldKey]
+
           if (Array.isArray(entryItemFieldValue)) {
             if (
               entryItemFieldValue[0].sys &&
@@ -262,6 +263,12 @@ exports.createContentTypeNodes = ({
             entryItemFields[`${entryItemFieldKey}___NODE`] = mId(
               entryItemFieldValue.sys.id
             )
+            delete entryItemFields[entryItemFieldKey]
+          } else if (
+            entryItemFieldValue &&
+            entryItemFieldValue.sys &&
+            entryItemFieldValue.sys.type === `Link`
+          ) {
             delete entryItemFields[entryItemFieldKey]
           }
         }
