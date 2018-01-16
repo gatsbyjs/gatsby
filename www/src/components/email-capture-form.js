@@ -1,5 +1,5 @@
 import React from "react"
-import { rhythm } from "../utils/typography"
+import { rhythm, options } from "../utils/typography"
 import presets from "../utils/presets"
 import jsonp from "jsonp"
 import { validate } from "email-validator"
@@ -9,6 +9,23 @@ let stripeAnimation = css.keyframes({
   "0%": { backgroundPosition: `0 0` },
   "100%": { backgroundPosition: `30px 60px` },
 })
+
+const formInputDefaultStyles = {
+  backgroundColor: `#fff`,
+  border: `1px solid ${presets.lightPurple}`,
+  borderRadius: presets.radius,
+  color: presets.bodyColor,
+  fontFamily: options.headerFontFamily.join(`,`),
+  padding: rhythm(1 / 2),
+  verticalAlign: `middle`,
+  transition: `all ${presets.animation.speedDefault} ${
+    presets.animation.curveDefault
+  }`,
+  "::placeholder": {
+    color: presets.brandLight,
+    opacity: 1,
+  },
+}
 
 // Mailchimp endpoint
 // From: https://us17.admin.mailchimp.com/lists/integration/embeddedcode?id=XXXXXX
@@ -117,26 +134,40 @@ class EmailCaptureForm extends React.Component {
                   placeholder="you@email.com"
                   onChange={this._handleEmailChange}
                   css={{
-                    padding: rhythm(1 / 2),
+                    ...formInputDefaultStyles,
                     width: `250px`,
-                    color: presets.bodyColor,
+                    ":focus": {
+                      color: presets.bodyColor,
+                      borderColor: presets.brand,
+                      outline: 0,
+                      boxShadow: `0 0 0 0.2rem rgba(${
+                        presets.shadowColor
+                      }, .25)`,
+                    },
                   }}
                 />
                 <button
                   type="submit"
                   onClick={this._handleFormSubmit}
                   css={{
-                    borderRadius: `2px`,
-                    border: `1px solid ${presets.brand}`,
+                    ...formInputDefaultStyles,
+                    borderColor: presets.brand,
+                    color: presets.brand,
                     cursor: `pointer`,
-                    padding: rhythm(1 / 2),
-                    margin: `${rhythm(1 / 2)} 0 0 ${rhythm(1 / 2)}`,
-                    ":hover": {
+                    fontWeight: `bold`,
+                    marginLeft: rhythm(1 / 2),
+                    ":hover, &:focus": {
                       backgroundSize: `30px 30px`,
                       backgroundColor: presets.brand,
                       backgroundImage: `linear-gradient(45deg, rgba(0,0,0, 0.1) 25%, transparent 25%, transparent 50%, rgba(0,0,0, 0.1) 50%, rgba(0,0,0, 0.1) 75%, transparent 75%, transparent)`,
                       color: `#fff`,
                       animation: `${stripeAnimation} 2.8s linear infinite`,
+                    },
+                    ":focus": {
+                      outline: 0,
+                      boxShadow: `0 0 0 0.2rem rgba(${
+                        presets.shadowColor
+                      },.25)`,
                     },
                   }}
                 >
