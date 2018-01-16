@@ -2,7 +2,7 @@
 title: "Add 404 Page"
 ---
 
-To create a  404 page create a page whose path matches the regex
+To create a 404 page create a page whose path matches the regex
 `/404*`. Most often you'll want to create a React component page at
 `src/pages/404.js`.
 
