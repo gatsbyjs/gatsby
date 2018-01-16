@@ -339,7 +339,7 @@ changes the count.
 ## Deploying Gatsby.js websites on the web
 
 Gatsby.js is a _static site generator_, which makes deploying Gatsby sites to the
-web easier. There are no servers to setup or complicated databases to
+web much easier vs. traditional CMSs. There are no servers to setup or complicated databases to
 deploy. Instead, the Gatsby `build` command produces a directory of static HTML
 and JavaScript files which you can deploy to a static site hosting service.
 
