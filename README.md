@@ -133,7 +133,7 @@ Websites built with Gatsby:
 * [Chocolate free website](https://chocolate-free.com/) ([source](https://github.com/Khaledgarbaya/chocolate-free-website))
 * [Charles Pinnix Website](https://www.charlespinnix.com/)
 * [Verious](https://www.verious.io/) ([source](https://github.com/cpinnix/verious))
-* [Developer Ecosystem](https://www.developerecosystem.com/) 
+* [Developer Ecosystem](https://www.developerecosystem.com/)
 
 ## Docs
 
