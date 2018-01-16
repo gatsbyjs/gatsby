@@ -21,7 +21,7 @@ exports.onPreBootstrap = (
 
   if (!pluginOptions.lambdaName) {
     console.log(`
-gatsby-plugin-screenshot requires a lambdaName option. Please specify
+gatsby-transformer-screenshot requires a lambdaName option. Please specify
 the name of the AWS Lambda function to invoke.
     `)
     process.exit(1)

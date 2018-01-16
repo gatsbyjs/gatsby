@@ -1,4 +1,4 @@
-# gatsby-plugin-screenshot
+# gatsby-transformer-screenshot
 
 Plugin for creating screenshots of website URLs using an AWS Lambda
 Function. This plugin looks for `SitesYaml` nodes with a `url`
@@ -9,7 +9,7 @@ property, and creates `Screenshot` nodes with an `imageFile` field.
 
 ## Install
 
-`npm install gatsby-plugin-screenshot`
+`npm install gatsby-transformer-screenshot`
 
 ## How to use
 
@@ -17,7 +17,7 @@ property, and creates `Screenshot` nodes with an `imageFile` field.
 // in your gatsby-config.js
 plugins: [
   {
-    resolve: `gatsby-plugin-screenshot`,
+    resolve: `gatsby-transformer-screenshot`,
     options: {
       lambdaName: `gatsby-screenshot-lambda`,
       region: 'us-west-2',
