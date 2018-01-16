@@ -1,4 +1,5 @@
 import React from "react"
+import Helmet from "react-helmet"
 
 import Functions from "../../components/function-list"
 import { rhythm, scale } from "../../utils/typography"
@@ -8,6 +9,9 @@ class BrowserAPIDocs extends React.Component {
   render() {
     return (
       <Container>
+        <Helmet>
+          <title>Browser APIs</title>
+        </Helmet>
         <h1 css={{ marginTop: 0 }}>Gatsby Browser APIs</h1>
         <h2 css={{ marginBottom: rhythm(1 / 2) }}>Usage</h2>
         <p css={{ marginBottom: rhythm(1) }}>

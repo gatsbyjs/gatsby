@@ -1,9 +1,14 @@
 import React from "react"
+import Helmet from "react-helmet"
 import Link from "gatsby-link"
+
 import Container from "../components/container"
 
 export default () => (
   <Container>
+    <Helmet>
+      <title>Tutorial</title>
+    </Helmet>
     <h1 css={{ marginTop: 0 }}>Gatsby.js Tutorial</h1>
     <p>
       Hi! We’re so happy you decided to try using Gatsby. This tutorial has (or
