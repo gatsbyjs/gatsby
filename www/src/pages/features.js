@@ -1,4 +1,6 @@
 import React, { Component } from "react"
+import Helmet from "react-helmet"
+
 import EvaluationTable from "../components/evaluation-table"
 import EvaluationCell from "../components/evaluation-cell"
 import FuturaParagraph from "../components/futura-paragraph"
@@ -67,6 +69,9 @@ const LegendTable = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Features</title>
+      </Helmet>
       <div
         css={{
           border: `1px solid ${legendBorderColor}`,
@@ -151,7 +156,7 @@ const FeaturesHeader = () => (
   </div>
 )
 
-const getFeaturesData = function(data) {
+const getFeaturesData = function (data) {
   const sections = (data || [])
     .map((row, i) => (row.node.Category ? i : -1))
     .filter(rowNum => rowNum !== -1)
