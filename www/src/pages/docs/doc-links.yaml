@@ -18,11 +18,11 @@
       link: /docs/plugins/
     - title: PRPL Pattern
       link: /docs/prpl-pattern/
-    - title: Querying with GraphQL*
+    - title: Querying data with GraphQL
       link: /docs/querying-with-graphql/
 - title: Guides
   items:
-    - title: Add 404 Page
+    - title: Adding a 404 Page
       link: /docs/add-404-page/
     - title: Adding Images, Fonts, and Files
       link: /docs/adding-images-fonts-files/
@@ -44,6 +44,8 @@
       link: /docs/environment-variables/
     - title: Gatsby on Windows
       link: /docs/gatsby-on-windows/
+    - title: Managing Content with Netlify CMS
+      link: /docs/netlify-cms/
     - title: How Gatsby Works with GitHub Pages
       link: /docs/how-gatsby-works-with-github-pages/
     - title: Migrating from v0 to v1
@@ -58,9 +60,9 @@
       link: /docs/styled-components/
     - title: Adding Markdown Pages
       link: /docs/adding-markdown-pages/
-    - title: Adding a List of Markdown Blog Posts*
+    - title: Adding a List of Markdown Blog Posts
       link: /docs/adding-a-list-of-markdown-blog-posts/
-    - title: Adding Tags and Categories to Blog Posts*
+    - title: Adding Tags and Categories to Blog Posts
       link: /docs/adding-tags-and-categories-to-blog-posts/
     - title: Creating Dynamically-Rendered Navigation*
       link: /docs/creating-dynamically-rendered-navigation/

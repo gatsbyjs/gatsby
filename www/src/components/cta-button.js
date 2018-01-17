@@ -33,13 +33,19 @@ const CtaButton = ({ to, overrideCSS, children }) => (
         fontWeight: `normal`,
         backgroundColor: `transparent`,
         backgroundSize: `30px 30px`,
-        transiton: `all .15s ease-out`,
-        ":hover": {
+        transition: `all ${presets.animation.speedDefault} ${
+          presets.animation.curveDefault
+        }`,
+        ":hover, &:focus": {
           backgroundSize: `30px 30px`,
           backgroundColor: presets.brand,
           backgroundImage: `linear-gradient(45deg, rgba(0,0,0, 0.1) 25%, transparent 25%, transparent 50%, rgba(0,0,0, 0.1) 50%, rgba(0,0,0, 0.1) 75%, transparent 75%, transparent)`,
           color: `#fff`,
           animation: `${stripeAnimation} 2.8s linear infinite`,
+        },
+        ":focus": {
+          outline: 0,
+          boxShadow: `0 0 0 0.2rem rgba(${presets.shadowColor}, .25)`,
         },
         ":after": {
           content: ``,

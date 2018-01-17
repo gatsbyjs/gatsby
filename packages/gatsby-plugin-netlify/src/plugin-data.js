@@ -36,7 +36,7 @@ export default function makePluginData(store, assetsManifest, pathPrefix) {
   const chunkManifest = normalizeStats(stats)
   const pages = applyLayouts(storePages, layouts)
 
-  // We combine the manifest of JS and the manifest of assets to make a simple lookup table.
+  // We combine the manifest of JS and the manifest of assets to make a lookup table.
   const manifest = { ...assetsManifest, ...chunkManifest }
 
   return {
