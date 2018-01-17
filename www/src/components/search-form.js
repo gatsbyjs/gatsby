@@ -20,6 +20,82 @@ css.global(
   `.algolia-autocomplete .ds-dropdown-menu .ds-suggestion.ds-cursor .algolia-docsearch-suggestion:not(.suggestion-layout-simple) .algolia-docsearch-suggestion--content`,
   { backgroundColor: `${presets.brandLighter} !important` }
 )
+css.global(`.algolia-autocomplete .ds-dropdown-menu`,{
+  position: `fixed !important`,
+  top: `${rhythm(2)} !important`,
+  left: `${rhythm(0.5)} !important`,
+  right: `${rhythm(0.5)} !important`,
+  minWidth: `calc(100vw - ${rhythm(1)})`,
+  maxWidth: `calc(100vw - 2rem)`,
+  maxHeight: `calc(100vh - 5rem)`,
+  display: `block`,
+})
+css.global(`.algolia-autocomplete.algolia-autocomplete-right .ds-dropdown-menu, .algolia-autocomplete.algolia-autocomplete-left .ds-dropdown-menu`, {
+  left: `${rhythm(0.5)} !important`,
+  right: `${rhythm(0.5)} !important`,
+})
+css.global(`.algolia-autocomplete.algolia-autocomplete-right .ds-dropdown-menu::before`, {
+  right: rhythm(5),
+})
+css.global(`.algolia-autocomplete.algolia-autocomplete-left .ds-dropdown-menu::before`, {
+  left: rhythm(7),
+})
+
+// use css.insert() for media query with global CSS
+css.insert(`@media ${presets.phablet}{
+  .algolia-autocomplete .algolia-docsearch-suggestion .algolia-docsearch-suggestion--subcategory-column {
+    color: black;
+    font-weight: 400;
+    width: 30%;
+    text-align: right;
+    padding: ${rhythm(0.5)} ${rhythm(1)} ${rhythm(0.5)} 0;
+  }
+  .algolia-autocomplete .algolia-docsearch-suggestion--subcategory-column:before {
+    content: "";
+    position: absolute;
+    display: block !important;
+    top: 0;
+    height: 100%;
+    width: 1px;
+    background: #ddd;
+    right: 0;
+  }
+  .algolia-autocomplete .algolia-docsearch-suggestion--subcategory-column:after {
+    display: none;
+  }
+  .algolia-autocomplete .algolia-docsearch-suggestion--content {
+    width: 70%;
+    max-width: 70%;
+    display: block;
+    padding: ${rhythm(0.5)} 0 ${rhythm(0.5)} ${rhythm(1)} !important;
+  }
+  .algolia-autocomplete .algolia-docsearch-suggestion--content:before {
+    content: "";
+    position: absolute;
+    display: block !important;
+    top: 0;
+    height: 100%;
+    width: 1px;
+    background: #ddd;
+    left: -1px;
+  }
+}`)
+
+css.insert(`@media ${presets.tablet}{
+  .algolia-autocomplete .ds-dropdown-menu {
+    top: 100% !important;
+    position: absolute !important;
+    max-width: 600px !important;
+    min-width: 500px !important;
+  }
+  .algolia-autocomplete.algolia-autocomplete-right .ds-dropdown-menu {
+    right: 0 !important;
+    left: inherit !important;
+  }
+  .algolia-autocomplete.algolia-autocomplete-right .ds-dropdown-menu::before {
+    right: ${rhythm(2)};
+  }
+}`)
 
 class SearchForm extends Component {
   constructor() {
