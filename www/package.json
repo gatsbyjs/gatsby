@@ -7,6 +7,7 @@
     "bluebird": "^3.5.1",
     "email-validator": "^1.1.1",
     "date-fns": "^1.29.0",
+    "email-validator": "^1.1.1",
     "gatsby": "^1.9.77",
     "gatsby-image": "^1.0.14",
     "gatsby-link": "^1.6.23",
