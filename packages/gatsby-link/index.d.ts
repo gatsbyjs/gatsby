@@ -5,7 +5,7 @@ export interface GatsbyLinkProps extends NavLinkProps {
   onClick?: (event: any) => void
   className?: string
   style?: any
-  to: string
+  to: any
 }
 
 export const navigateTo: (path: string) => void
