@@ -159,7 +159,7 @@ Gatsby has rich support for processing images. Responsive images are a big part 
 
 Combined with a special Gatsby image component, [gatsby-image](/packages/gatsby-image/), you have a very powerful set of primatives for building sites with images.
 
-This is what a component using `gatsby-images` looks like:
+This is what a component using `gatsby-image` looks like:
 
 ```jsx
 import React from "react";
