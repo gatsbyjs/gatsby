@@ -589,10 +589,12 @@ export function inferObjectStructureFromNodes({
       // pointing to a file (from another file).
     } else if (
       nodes[0].internal.type !== `File` &&
-      ((_.isString(value) && shouldInferFile(nodes, nextSelector, value)) ||
+      ((_.isString(value) &&
+        !_.isEmpty(value) &&
+        shouldInferFile(nodes, nextSelector, value)) ||
         (_.isArray(value) &&
-          value.length === 1 &&
           _.isString(value[0]) &&
+          !_.isEmpty(value[0]) &&
           shouldInferFile(nodes, `${nextSelector}[0]`, value[0])))
     ) {
       inferredField = inferFromUri(key, types, _.isArray(value))
