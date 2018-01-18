@@ -72,6 +72,7 @@ export default class HTML extends React.Component {
             href={`/safari-pinned-tab.svg`}
             color="#5bbad5"
           />
+          <script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
           {css}
         </head>
         <body {...this.props.bodyAttributes}>
@@ -80,6 +81,7 @@ export default class HTML extends React.Component {
             dangerouslySetInnerHTML={{ __html: this.props.body }}
           />
           {this.props.postBodyComponents}
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
         </body>
       </html>
     )

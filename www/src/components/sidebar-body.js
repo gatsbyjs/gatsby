@@ -189,6 +189,7 @@ class SidebarBody extends React.Component {
         css={{
           padding: isInline ? 0 : rhythm(3 / 4),
         }}
+        className="docSearch-sidebar"
       >
         {menu.map((section, index) => (
           <div

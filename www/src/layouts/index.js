@@ -30,6 +30,7 @@ class DefaultLayout extends React.Component {
       this.props.location.pathname.slice(0, 10) === `/packages/` ||
       this.props.location.pathname.slice(0, 10) === `/tutorial/` ||
       this.props.location.pathname.slice(0, 9) === `/features`
+    const isSearchSource = hasSidebar
     const sidebarStyles = {
       borderRight: `1px solid ${colors.b[0]}`,
       backgroundColor: presets.sidebar,
@@ -45,7 +46,6 @@ class DefaultLayout extends React.Component {
       position: `fixed`,
       top: `calc(${presets.headerHeight} - 1px)`,
       overflowY: `auto`,
-      zIndex: 1,
       height: `calc(100vh - ${presets.headerHeight} + 1px)`,
       WebkitOverflowScrolling: `touch`,
       "::-webkit-scrollbar": {
@@ -136,6 +136,7 @@ class DefaultLayout extends React.Component {
                 paddingLeft: hasSidebar ? rhythm(12) : 0,
               },
             }}
+            className={isSearchSource && `docSearch-content`}
           >
             {this.props.children()}
           </div>
