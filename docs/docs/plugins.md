@@ -90,6 +90,7 @@ root.
 * [gatsby-plugin-netlify-cms](/packages/gatsby-plugin-netlify-cms/)
 * [gatsby-plugin-nprogress](/packages/gatsby-plugin-nprogress/)
 * [gatsby-plugin-offline](/packages/gatsby-plugin-offline/)
+* [gatsby-plugin-postcss-sass](/packages/gatsby-plugin-postcss-sass)
 * [gatsby-plugin-preact](/packages/gatsby-plugin-preact/)
 * [gatsby-plugin-react-helmet](/packages/gatsby-plugin-react-helmet/)
 * [gatsby-plugin-remove-trailing-slashes](/packages/gatsby-plugin-remove-trailing-slashes/)
