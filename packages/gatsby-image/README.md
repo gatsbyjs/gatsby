@@ -78,7 +78,7 @@ plugins: [
 
 ## How to use
 
-This is what a component using `gatsby-images` looks like.
+This is what a component using `gatsby-image` looks like:
 
 ```jsx
 import React from "react";
@@ -95,7 +95,7 @@ export const query = graphql`
   query GatsbyImageSampleQuery {
     file(relativePath: { eq: "blog/avatars/kyle-mathews.jpeg" }) {
       childImageSharp {
-        # Specify the image processing steps right in the query
+        # Specify the image processing specifications right in the query.
         # Makes it trivial to update as your page's design changes.
         resolutions(width: 125, height: 125) {
           ...GatsbyImageSharpResolutions
