@@ -1,5 +1,6 @@
 import React from "react"
 import Link from "gatsby-link"
+import Helmet from "react-helmet"
 
 import SidebarBody from "../../components/sidebar-body"
 import docsSidebar from "./doc-links.yaml"
@@ -10,6 +11,9 @@ class IndexRoute extends React.Component {
   render() {
     return (
       <Container>
+        <Helmet>
+          <title>Docs</title>
+        </Helmet>
         <h1 css={{ marginTop: 0 }}>Get started</h1>
         <p>Gatsby is a blazing-fast static site generator for React.</p>
         <h2>Install Gatsby{`'`}s command line tool</h2>

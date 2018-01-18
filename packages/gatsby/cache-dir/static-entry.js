@@ -189,10 +189,22 @@ module.exports = (locals, callback) => {
       )
     })
 
-  // Add script loader for page scripts to the head.
+  // Add the chunk-manifest at the end of body element.
+  const chunkManifest = require(`!raw!../public/chunk-manifest.json`)
+  postBodyComponents.unshift(
+    <script
+      id="webpack-manifest"
+      key="webpack-manifest"
+      dangerouslySetInnerHTML={{
+        __html: `/*<![CDATA[*/window.webpackManifest=${chunkManifest}/*]]>*/`,
+      }}
+    />
+  )
+
+  // Add script loader for page scripts to the end of body element (after webpack manifest).
   // Taken from https://www.html5rocks.com/en/tutorials/speed/script-loading/
   const scriptsString = scripts.map(s => `"${s}"`).join(`,`)
-  headComponents.push(
+  postBodyComponents.push(
     <script
       key={`script-loader`}
       id={`gatsby-script-loader`}

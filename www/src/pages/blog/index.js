@@ -1,4 +1,6 @@
 import React from "react"
+import Helmet from "react-helmet"
+
 import Container from "../../components/container"
 import BlogPostPreviewItem from "../../components/blog-post-preview-item"
 
@@ -19,6 +21,9 @@ class BlogPostsIndex extends React.Component {
           },
         }}
       >
+        <Helmet>
+          <title>Blog</title>
+        </Helmet>
         <Container
           css={{
             [presets.Tablet]: {
