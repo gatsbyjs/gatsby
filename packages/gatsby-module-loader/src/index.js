@@ -21,7 +21,8 @@ module.exports.pitch = function(remainingRequest) {
   }
 
   const request = loaderUtils.stringifyRequest(this, `!!` + remainingRequest)
-  const chunkComment = chunkName && `/* webpackChunkName: ${JSON.stringify(chunkName)} */ `
+  const chunkComment =
+    chunkName && `/* webpackChunkName: ${JSON.stringify(chunkName)} */ `
 
   return `module.exports = () => import(${chunkComment}${request})`
 }

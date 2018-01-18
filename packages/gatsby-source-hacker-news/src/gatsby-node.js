@@ -8,11 +8,7 @@ const get = query =>
     `https://www.graphqlhub.com/graphql?query=${encodeURIComponent(query)}`
   )
 
-exports.sourceNodes = async ({
-  actions,
-  getNode,
-  hasNodeChanged,
-}) => {
+exports.sourceNodes = async ({ actions, getNode, hasNodeChanged }) => {
   const { createNode } = actions
 
   // Do the initial fetch

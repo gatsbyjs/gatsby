@@ -1,4 +1,3 @@
-
 // Add Glamor support
 exports.modifyWebpackConfig = ({ actions, plugins }) =>
   actions.setWebpackConfig({
@@ -8,7 +7,6 @@ exports.modifyWebpackConfig = ({ actions, plugins }) =>
       }),
     ],
   })
-
 
 // Add Glamor support
 exports.modifyBabelrc = ({ babelrc }) => {

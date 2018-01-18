@@ -33,12 +33,7 @@ exports.sourceNodes = async (
   { actions, getNodes, hasNodeChanged, store },
   { spaceId, accessToken, host }
 ) => {
-  const {
-    createNode,
-    deleteNodes,
-    touchNode,
-    setPluginStatus,
-  } = actions
+  const { createNode, deleteNodes, touchNode, setPluginStatus } = actions
 
   host = host || `cdn.contentful.com`
   // Get sync token if it exists.
@@ -178,10 +173,7 @@ exports.sourceNodes = async (
 // Check if there are any ContentfulAsset nodes and if gatsby-image is installed. If so,
 // add fragments for ContentfulAsset and gatsby-image. The fragment will cause an error
 // if there's not ContentfulAsset nodes and without gatsby-image, the fragment is useless.
-exports.onPreExtractQueries = async ({
-  store,
-  getNodes,
-}) => {
+exports.onPreExtractQueries = async ({ store, getNodes }) => {
   const program = store.getState().program
 
   const nodes = getNodes()

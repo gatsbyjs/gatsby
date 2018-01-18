@@ -1,4 +1,3 @@
-
 exports.modifyWebpackConfig = (
   { actions, stage, rules, plugins, loaders },
   { postCssPlugins, ...lessOptions }

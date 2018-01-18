@@ -1,4 +1,3 @@
-
 exports.modifyWebpackConfig = (
   { actions, stage, rules, plugins, loaders },
   { postCssPlugins, ...sassOptions }
@@ -19,7 +18,11 @@ exports.modifyWebpackConfig = (
     exclude: /\.module\.s(a|c)ss$/,
     use: plugins.extractText.extract({
       fallback: loaders.style,
-      use: [loaders.css({ importLoaders: 1 }), loaders.postcss({ plugins: postCssPlugins }), sassLoader],
+      use: [
+        loaders.css({ importLoaders: 1 }),
+        loaders.postcss({ plugins: postCssPlugins }),
+        sassLoader,
+      ],
     }),
   }
   const sassRuleModules = {

@@ -1,13 +1,13 @@
 require(`v8-compile-cache`)
 
-import { uniq, some } from "lodash"
-import fs from "fs"
-import path from "path"
-import dotenv from "dotenv"
-import StaticSiteGeneratorPlugin from "static-site-generator-webpack-plugin"
-import { StatsWriterPlugin } from "webpack-stats-plugin"
-import FriendlyErrorsWebpackPlugin from "friendly-errors-webpack-plugin"
-
+const { uniq, some } = require(`lodash`)
+const fs = require(`fs`)
+const path = require(`path`)
+const dotenv = require(`dotenv`)
+const StaticSiteGeneratorPlugin = require(`static-site-generator-webpack-plugin`)
+const { StatsWriterPlugin } = require(`webpack-stats-plugin`)
+const FriendlyErrorsWebpackPlugin = require(`friendly-errors-webpack-plugin`)
+const WatchMissingNodeModulesPlugin = require(`react-dev-utils/WatchMissingNodeModulesPlugin`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
 const debug = require(`debug`)(`gatsby:webpack-config`)
@@ -80,6 +80,9 @@ module.exports = async (
           path: directory,
           filename: `[name].js`,
           publicPath: `http://${program.host}:${webpackPort}/`,
+          // Add /* filename */ comments to generated require()s in the output.
+          pathinfo: true,
+          // Point sourcemap entries to original disk location (format as URL on Windows)
           devtoolModuleFilenameTemplate: info =>
             path.resolve(info.absoluteResourcePath).replace(/\\/g, `/`),
         }
@@ -177,6 +180,12 @@ module.exports = async (
           plugins.hotModuleReplacement(),
           plugins.noEmitOnErrors(),
 
+          // If you require a missing module and then `npm install` it, you still have
+          // to restart the development server for Webpack to discover it. This plugin
+          // makes the discovery automatic so you don't have to restart.
+          // See https://github.com/facebookincubator/create-react-app/issues/186
+          new WatchMissingNodeModulesPlugin(directoryPath(`node_modules`)),
+
           // Names module ids with their filepath. We use this in development
           // to make it easier to see what modules have hot reloaded, etc. as
           // the numerical IDs aren't useful. In production we use numerical module
@@ -184,12 +193,16 @@ module.exports = async (
           plugins.namedModules(),
           new FriendlyErrorsWebpackPlugin({
             clearConsole: false,
-            // compilationSuccessInfo: {
-            // messages: [
-            // `You can now view your site in the browser running at http://${program.host}:${program.port}`,
-            // `Your graphql debugger is running at http://${program.host}:${program.port}/___graphql`,
-            // ],
-            // },
+            compilationSuccessInfo: {
+              messages: [
+                `You can now view your site in the browser running at http://${
+                  program.host
+                }:${program.port}`,
+                `Your graphql debugger is running at http://${program.host}:${
+                  program.port
+                }/___graphql`,
+              ],
+            },
           }),
         ])
         break
@@ -409,6 +422,11 @@ module.exports = async (
     target: stage === `build-html` || stage === `develop-html` ? `node` : `web`,
     profile: stage === `production`,
     devtool: getDevtool(),
+    // Turn off performance hints as we (for now) don't want to show the normal
+    // webpack output anywhere.
+    performance: {
+      hints: false,
+    },
 
     resolveLoader: getResolveLoader(),
     resolve: getResolve(),

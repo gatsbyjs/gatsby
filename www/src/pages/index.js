@@ -21,6 +21,7 @@ import TechWithIcon from "../components/tech-with-icon"
 
 class IndexRoute extends React.Component {
   render() {
+    console.log(this.props)
     const blogPosts = this.props.data.allMarkdownRemark
     return (
       <div css={{ position: `relative` }}>

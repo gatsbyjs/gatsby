@@ -42,14 +42,14 @@ exports.createFileNode = async (pathToFile, pluginOptions = {}) => {
     }
   } else {
     const contentDigest = await md5File(slashedFile.absolutePath)
+    const mediaType = mime.getType(slashedFile.ext)
     internal = {
       contentDigest,
-      mediaType: mime.getType(slashedFile.ext),
       type: `File`,
+      mediaType: mediaType ? mediaType : `application/octet-stream`,
     }
   }
 
-  // console.log('createFileNode:stat', slashedFile.absolutePath)
   // Stringify date objects.
   return JSON.parse(
     JSON.stringify({

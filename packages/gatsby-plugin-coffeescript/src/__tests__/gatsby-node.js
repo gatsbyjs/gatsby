@@ -1,6 +1,4 @@
-jest.mock(`../resolve`, () => (
-  (module) => `/resolved/path/${module}`
-))
+jest.mock(`../resolve`, () => module => `/resolved/path/${module}`)
 
 const {
   resolvableExtensions,
@@ -21,8 +19,9 @@ describe(`gatsby-plugin-coffeescript`, () => {
 
     modifyWebpackConfig({ actions, loaders })
 
-    expect(actions.setWebpackConfig)
-      .toHaveBeenCalledTimes(resolvableExtensions().length)
+    expect(actions.setWebpackConfig).toHaveBeenCalledTimes(
+      resolvableExtensions().length
+    )
 
     const lastCall = actions.setWebpackConfig.mock.calls.pop()
     expect(lastCall).toMatchSnapshot()
