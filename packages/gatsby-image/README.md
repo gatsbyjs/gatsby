@@ -78,7 +78,7 @@ plugins: [
 
 ## How to use
 
-This is what a component using `gatsby-images` looks like:
+This is what a component using `gatsby-image` looks like:
 
 ```jsx
 import React from "react";
