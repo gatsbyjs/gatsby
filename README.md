@@ -135,6 +135,8 @@ Websites built with Gatsby:
 * [Verious](https://www.verious.io/) ([source](https://github.com/cpinnix/verious))
 * [Developer Ecosystem](https://www.developerecosystem.com/)
 * [Steve Meredith's Portfolio](http://www.steveeeie.io/)
+* [Ryan Wiemer's Portfolio](https://www.ryanwiemer.com)
+  ([source](https://github.com/ryanwiemer/rw))
 
 ## Docs
 
