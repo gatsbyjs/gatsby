@@ -7,20 +7,35 @@ import presets from "../utils/presets"
 import { css } from "glamor"
 
 // Override default search result styles
-css.global(`.algolia-docsearch-suggestion--highlight`, {
+css.global(`.searchWrap .algolia-docsearch-suggestion--highlight`, {
   backgroundColor: `${presets.lightPurple} !important`,
   boxShadow: `inset 0 -2px 0 0 ${presets.lightPurple} !important`,
-  color: `black !important`,
+  color: `black`,
   fontWeight: `bold`,
 })
-css.global(`.algolia-docsearch-suggestion--subcategory-column`, {
-  color: `black !important`,
+css.global(`.searchWrap .algolia-docsearch-suggestion .algolia-docsearch-suggestion--subcategory-column`, {
+  width: `100% !important`,
+})
+css.global(`.searchWrap .algolia-docsearch-suggestion--subcategory-column-text:after`, {
+  display: `none`,
 })
 css.global(
-  `.algolia-autocomplete .ds-dropdown-menu .ds-suggestion.ds-cursor .algolia-docsearch-suggestion:not(.suggestion-layout-simple) .algolia-docsearch-suggestion--content`,
+  `.searchWrap .algolia-autocomplete .ds-dropdown-menu .ds-suggestion.ds-cursor .algolia-docsearch-suggestion:not(.suggestion-layout-simple) .algolia-docsearch-suggestion--content`,
   { backgroundColor: `${presets.brandLighter} !important` }
 )
-css.global(`.algolia-autocomplete .ds-dropdown-menu`,{
+css.global(
+  `.searchWrap .algolia-docsearch-suggestion .algolia-docsearch-suggestion--content.algolia-docsearch-suggestion--no-results`,
+  {
+    maxWidth: `100%`,
+    paddingLeft: `0 !important`,
+    width: `100% !important`,
+  }
+)
+css.global(
+  `.searchWrap .algolia-docsearch-suggestion .algolia-docsearch-suggestion--content.algolia-docsearch-suggestion--no-results:before`,
+  { display: `none !important` }
+)
+css.global(`.searchWrap .algolia-autocomplete .ds-dropdown-menu`, {
   position: `fixed !important`,
   top: `${rhythm(2)} !important`,
   left: `${rhythm(0.5)} !important`,
@@ -30,27 +45,36 @@ css.global(`.algolia-autocomplete .ds-dropdown-menu`,{
   maxHeight: `calc(100vh - 5rem)`,
   display: `block`,
 })
-css.global(`.algolia-autocomplete.algolia-autocomplete-right .ds-dropdown-menu, .algolia-autocomplete.algolia-autocomplete-left .ds-dropdown-menu`, {
-  left: `${rhythm(0.5)} !important`,
-  right: `${rhythm(0.5)} !important`,
-})
-css.global(`.algolia-autocomplete.algolia-autocomplete-right .ds-dropdown-menu::before`, {
-  right: rhythm(5),
-})
-css.global(`.algolia-autocomplete.algolia-autocomplete-left .ds-dropdown-menu::before`, {
-  left: rhythm(7),
-})
+css.global(
+  `.searchWrap .algolia-autocomplete.algolia-autocomplete-right .ds-dropdown-menu, .algolia-autocomplete.algolia-autocomplete-left .ds-dropdown-menu`,
+  {
+    left: `${rhythm(0.5)} !important`,
+    right: `${rhythm(0.5)} !important`,
+  }
+)
+css.global(
+  `.searchWrap .algolia-autocomplete.algolia-autocomplete-right .ds-dropdown-menu::before`,
+  {
+    right: rhythm(5),
+  }
+)
+css.global(
+  `.searchWrap .algolia-autocomplete.algolia-autocomplete-left .ds-dropdown-menu::before`,
+  {
+    left: rhythm(7),
+  }
+)
 
 // use css.insert() for media query with global CSS
 css.insert(`@media ${presets.phablet}{
-  .algolia-autocomplete .algolia-docsearch-suggestion .algolia-docsearch-suggestion--subcategory-column {
-    color: black;
+  .searchWrap .algolia-autocomplete .algolia-docsearch-suggestion .algolia-docsearch-suggestion--subcategory-column {
     font-weight: 400;
-    width: 30%;
+    width: 30% !important;
     text-align: right;
+    opacity: 1;
     padding: ${rhythm(0.5)} ${rhythm(1)} ${rhythm(0.5)} 0;
   }
-  .algolia-autocomplete .algolia-docsearch-suggestion--subcategory-column:before {
+  .searchWrap .algolia-autocomplete .algolia-docsearch-suggestion--subcategory-column:before {
     content: "";
     position: absolute;
     display: block !important;
@@ -60,16 +84,16 @@ css.insert(`@media ${presets.phablet}{
     background: #ddd;
     right: 0;
   }
-  .algolia-autocomplete .algolia-docsearch-suggestion--subcategory-column:after {
+  .searchWrap .algolia-autocomplete .algolia-docsearch-suggestion--subcategory-column:after {
     display: none;
   }
-  .algolia-autocomplete .algolia-docsearch-suggestion--content {
-    width: 70%;
+  .searchWrap .algolia-autocomplete .algolia-docsearch-suggestion--content {
+    width: 70% !important;
     max-width: 70%;
     display: block;
     padding: ${rhythm(0.5)} 0 ${rhythm(0.5)} ${rhythm(1)} !important;
   }
-  .algolia-autocomplete .algolia-docsearch-suggestion--content:before {
+  .searchWrap .algolia-autocomplete .algolia-docsearch-suggestion--content:before {
     content: "";
     position: absolute;
     display: block !important;
@@ -82,17 +106,17 @@ css.insert(`@media ${presets.phablet}{
 }`)
 
 css.insert(`@media ${presets.tablet}{
-  .algolia-autocomplete .ds-dropdown-menu {
+  .searchWrap .algolia-autocomplete .ds-dropdown-menu {
     top: 100% !important;
     position: absolute !important;
     max-width: 600px !important;
     min-width: 500px !important;
   }
-  .algolia-autocomplete.algolia-autocomplete-right .ds-dropdown-menu {
+  .searchWrap .algolia-autocomplete.algolia-autocomplete-right .ds-dropdown-menu {
     right: 0 !important;
     left: inherit !important;
   }
-  .algolia-autocomplete.algolia-autocomplete-right .ds-dropdown-menu::before {
+  .searchWrap .algolia-autocomplete.algolia-autocomplete-right .ds-dropdown-menu::before {
     right: ${rhythm(2)};
   }
 }`)
@@ -109,7 +133,7 @@ class SearchForm extends Component {
    *
    * Ref: https://github.com/algolia/autocomplete.js#events
    */
-  autocompleteSelected(e){
+  autocompleteSelected(e) {
     e.stopPropagation()
     // Use an anchor tag to parse the absolute url (from autocomplete.js) into a relative url
     // eslint-disable-next-line no-undef
@@ -129,7 +153,11 @@ class SearchForm extends Component {
     }
 
     // eslint-disable-next-line no-undef
-    window.addEventListener(`autocomplete:selected`, this.autocompleteSelected, true)
+    window.addEventListener(
+      `autocomplete:selected`,
+      this.autocompleteSelected,
+      true
+    )
 
     // eslint-disable-next-line no-undef
     window.docsearch({
@@ -154,6 +182,7 @@ class SearchForm extends Component {
           marginLeft: rhythm(1 / 2),
           marginBottom: 0,
         }}
+        className="searchWrap"
       >
         <input
           id="doc-search"
