@@ -134,12 +134,40 @@ exports.onCreatePage = ({ page, boundActionCreators }) => {
 };
 ```
 
-### Creating client-only routes
+### Using client-only routes to create a hybrid or "app-shell" Gatsby app 
 
-If you're creating a "hybrid" Gatsby app with both statically rendered pages as
-well as client-only routes (e.g. an app that combines marketing pages and your
-app that lives under `/app/*`), you want to add code to your `gatsby-node.js`
-like the following:
+Gatsby can be used to create a hybrid, 
+_[app-shell](https://developers.google.com/web/fundamentals/architecture/app-shell) like_, app. 
+A hybrid Gatsby app is made up of both statically rendered pages and pages with both static and 
+dynamic components. 
+
+Pages that contain both static and dynamic components are created using **client-only routes**.
+
+An example architecture of a hybrid site could be:
+
+- **`/layouts/index.js`**
+  
+  Comprises `/components/header.js,footer.js` components that handle data from a [GraphQL query](https://www.gatsbyjs.org/tutorial/part-four/#our-first-graphql-query) and/or [data source](https://www.gatsbyjs.org/tutorial/part-four/#source-plugins). For example, a menu with items 
+  created from a CMS menu API.
+
+- **`/templates/page.js`**
+
+  Uses static template code and handles data from a GraphQL query and/or data source (like a CMS 
+  page API) to create a static page. For example, a static marketing page.
+
+- **`/pages/index.js`**, **`/pages/blog.js`**, **`/pages/index.js`**, **`/components/sidebar.js`**
+
+  These components:
+  - use static template code - **that gets statically generated**
+  - handle data a GraphQL query and/or data source (like CMS page, sidebar/widget, index/list 
+  API) - **that gets statically generated**
+  - handle data from a live source - **that remains dynamic** - utilising React methods like 
+  [componentDidMount](https://reactjs.org/docs/react-component.html#componentdidmount) and API 
+  calls to consume dynamic content. Data can also be interactive using usual React code.
+
+#### To create a client-only route (hybrid route)
+
+You want to add code to your `gatsby-node.js` like the following:
 
 _Note: There's also a plugin that will set up the creation of client-paths declaratively:
 [gatsby-plugin-create-client-paths](/packages/gatsby-plugin-create-client-paths/)_.
@@ -147,17 +175,23 @@ _Note: There's also a plugin that will set up the creation of client-paths decla
 ```javascript
 // Implement the Gatsby API “onCreatePage”. This is
 // called after every page is created.
+
 exports.onCreatePage = async ({ page, boundActionCreators }) => {
   const { createPage } = boundActionCreators;
-
-  // page.matchPath is a special key that's used for matching pages
-  // only on the client.
-  if (page.path.match(/^\/app/)) {
-    page.matchPath = "/app/:path";
-
-    // Update the page.
+  
+  // We want to create our hybrid (`client-only`) routes, by matching the 
+  // `page.path.match` and the `page.matchPath` special key that's used in 
+  // `client-only` React components.
+  
+  // So, if physical page path starts with `/blog` (so `/pages/blog.js`)
+  if (page.path.match(/^\/blog/)) { 
+  
+    // create a matchPath
+    page.matchPath = "/blog(/:path)"; 
+    
+    // create the Gatsby page
     createPage(page);
-  }
+ }
 };
 ```
 
