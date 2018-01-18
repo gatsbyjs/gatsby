@@ -106,7 +106,7 @@ a live GraphQL server from the browser.
 
 Most usages of GraphQL involve manually creating a GraphQL schema.
 
-With Gatsby, we use plugins which fetch data from different sources. We use that data from different sources
+With Gatsby, we use plugins which fetch data from different sources. We then use that data
 to automatically _infer_ a GraphQL schema.
 
 If you give Gatsby data that looks like this:
