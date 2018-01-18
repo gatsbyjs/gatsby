@@ -80,6 +80,7 @@ Community:
   * Basic components: SiteNavi, SitePost, SitePage
 
 * [gatsby-blog-starter-kit](https://github.com/dschau/gatsby-blog-starter-kit)
+[(demo)](https://dschau.github.io/gatsby-blog-starter-kit/)
 
   Features:
 
