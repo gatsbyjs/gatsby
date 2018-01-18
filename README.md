@@ -135,6 +135,7 @@ Websites built with Gatsby:
 * [Verious](https://www.verious.io/) ([source](https://github.com/cpinnix/verious))
 * [Developer Ecosystem](https://www.developerecosystem.com/)
 * [Steve Meredith's Portfolio](http://www.steveeeie.io/)
+* [Landing page of Put.io](https://put.io/)
 
 ## Docs
 
