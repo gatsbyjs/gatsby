@@ -77,9 +77,10 @@ Community:
 
   * Bootstrap CSS framework
   * Single column layout
-  * Simple components: SiteNavi, SitePost, SitePage
+  * Basic components: SiteNavi, SitePost, SitePage
 
 * [gatsby-blog-starter-kit](https://github.com/dschau/gatsby-blog-starter-kit)
+[(demo)](https://dschau.github.io/gatsby-blog-starter-kit/)
 
   Features:
 
@@ -345,3 +346,15 @@ Community:
   * Lightbox style React photo gallery
   * Fully Responsive
   * Styling with SCSS
+
+* [verious](https://github.com/cpinnix/verious-boilerplate)
+  [(demo)](https://www.verious.io/)
+
+  Features:
+
+  * Components only. Bring your own data, plugins, etc.
+  * Bootstrap inspired grid system with Container, Row, Column components.
+  * Simple Navigation and Dropdown components.
+  * Baseline grid built in with modular scale across viewports.
+  * Abstract measurements utilize REM for spacing.
+  * One font to rule them all: Helvetica.

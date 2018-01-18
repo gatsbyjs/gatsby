@@ -2,11 +2,11 @@ Category,Subcategory,Feature,Gatsby,Jekyll,Wordpress,Squarespace,Description
 Performance,Faster content delivery,Static content,3,3,1,2,"Can you build your site as 'static' files which can be deployed without a server, cached on CDN distributed throughout the globe?
 <ul>
 <li>Gatsby, like Jekyll and other static site generators, is built for this.</li>
-<li>Squarespace allows static content but <a href=""https://developers.squarespace.com/static-pages/"">doesn't allow it</a> to be edited with the CMS.</li> 
-<li>Wordpress allows it with <a href=""https://www.itsupportguides.com/knowledge-base/wordpress/wordpress-how-to-serve-static-content-from-a-cookieless-domain/"">some customization</a>.</li> 
+<li>Squarespace allows static content but <a href=""https://developers.squarespace.com/static-pages/"">doesn't allow it</a> to be edited with the CMS.</li>
+<li>Wordpress allows it with <a href=""https://www.itsupportguides.com/knowledge-base/wordpress/wordpress-how-to-serve-static-content-from-a-cookieless-domain/"">some customization</a>.</li>
 </ul>"
 ,,CDN,2,2,2,3,"<ul>
-<li>CDN-providing hosts like <a href=""www.netlify.com"" target=""_blank"">Netlify</a> support sites built on Gatsby and other static frameworks</li>
+<li>CDN-providing hosts like <a href=""https://www.netlify.com"" target=""_blank"">Netlify</a> support sites built on Gatsby and other static frameworks</li>
 <li>Wordpress allows this through <a href=""https://wordpress.org/plugins/cdn-enabler/"" target=""_blank"">plugins</a>.</li>
 <li>Site builders like Squarespace usually come with a CDN out of the box.</li>
 </ul>"
@@ -16,7 +16,7 @@ Performance,Faster content delivery,Static content,3,3,1,2,"Can you build your s
 <li><a href=""https://github.com/chiedo/gatsby-amp-starter-blog"" target=""_blank"">Gatsby</a>, <a href=""https://github.com/juusaw/amp-jekyll"">Jekyll</a>, and <a href=""https://wordpress.org/plugins/amp/"">Wordpress</a> all support this through plugins and starter kits.</li>
 <li>Squarespace <a href=""https://blog.squarespace.com/blog/now-supporting-accelerated-mobile-pages"" target=""_blank"">supports this</a>.
 </ul>"
-,Progressive Web,Offline access,3,2,2,0,"Offline access via service workers is one of the core principles of Progressive Web Apps, since many users -- especially in developing countries -- will be accessing your site over spotty connections. 
+,Progressive Web,Offline access,3,2,2,0,"Offline access via service workers is one of the core principles of Progressive Web Apps, since many users -- especially in developing countries -- will be accessing your site over spotty connections.
 
 Gatsby supports this out of the box; adoption is possible with <a href=""https://fossbytes.com/get-jekyll-blog-work-offline/"" target=""_blank"">Jekyll</a> and <a href=""https://wordpress.org/plugins/offline-content/"">Wordpress</a>. Squarespace <a href=""https://answers.squarespace.com/questions/56762/i-need-to-run-a-demo-of-my-squarespace-website-offline.html"">doesn't currently support</a> any offline access."
 ,,Prefetch linked pages,3,1,1,0,"<p>Gatsby supports content pre-fetching, out of the box. This means that when a page loads, the content needed to load the next link you click will be loaded in the background while you browse the page.</p>

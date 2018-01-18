@@ -147,17 +147,20 @@ module.exports = async (api, args = {}, pluginSource) =>
 
     apisRunning.push(apiRunInstance)
 
-    let currentPluginName = null
-
+    let pluginName = null
     mapSeries(
       noSourcePluginPlugins,
       (plugin, callback) => {
-        currentPluginName = plugin.name
+        if (plugin.name === `default-site-plugin`) {
+          pluginName = `gatsby-node.js`
+        } else {
+          pluginName = `Plugin ${plugin.name}`
+        }
         Promise.resolve(runAPI(plugin, api, args)).asCallback(callback)
       },
       (err, results) => {
         if (err) {
-          reporter.error(`Plugin ${currentPluginName} returned an error`, err)
+          reporter.error(`${pluginName} returned an error`, err)
         }
         // Remove runner instance
         apisRunning = apisRunning.filter(runner => runner !== apiRunInstance)

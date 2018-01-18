@@ -22,7 +22,7 @@ Surround your equation with `$` to generate a math equation in inline mode.
 $a^2 + b^2 = c^2$
 ```
 
-**Example output:** $a^2 + b^2 = c^2$`
+**Example output:** $a^2 + b^2 = c^2$
 
 ## Math Equations in Display Mode
 

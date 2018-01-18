@@ -8,6 +8,7 @@ import Img from "gatsby-image"
 import presets from "../utils/presets"
 import typography, { rhythm, scale, options } from "../utils/typography"
 import Container from "../components/container"
+import EmailCaptureForm from "../components/email-capture-form"
 
 class BlogPostTemplate extends React.Component {
   render() {
@@ -56,7 +57,9 @@ class BlogPostTemplate extends React.Component {
             <title>{post.frontmatter.title}</title>
             <link
               rel="author"
-              href={`https://gatsbyjs.org${post.frontmatter.author.slug}`}
+              href={`https://gatsbyjs.org${
+                post.frontmatter.author.fields.slug
+              }`}
             />
             <meta
               name="description"
@@ -200,6 +203,7 @@ class BlogPostTemplate extends React.Component {
               __html: this.props.data.markdownRemark.html,
             }}
           />
+          <EmailCaptureForm />
         </Container>
         <div
           css={{

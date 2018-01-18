@@ -56,7 +56,7 @@ query IndexQuery {
 
 The query fetches the title and tags for every blog post.
 
-Using this query, we can create an component for a blog front page that lists all posts and their tags.
+Using this query, we can create a component for a blog front page that lists all posts and their tags.
 
 ```jsx
 const IndexPage = ({ data }) => (

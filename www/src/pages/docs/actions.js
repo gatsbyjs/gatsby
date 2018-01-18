@@ -1,4 +1,5 @@
 import React from "react"
+import Helmet from "react-helmet"
 
 import Functions from "../../components/function-list"
 import { rhythm, scale } from "../../utils/typography"
@@ -8,6 +9,9 @@ class ActionCreatorsDocs extends React.Component {
   render() {
     return (
       <Container>
+        <Helmet>
+          <title>Actions</title>
+        </Helmet>
         <h1 css={{ marginTop: 0 }}>Actions</h1>
         <p>
           Gatsby uses
@@ -15,8 +19,8 @@ class ActionCreatorsDocs extends React.Component {
           <a href="http://redux.js.org">Redux</a>
           {` `}
           internally to manage state. When you implement a Gatsby API, you're
-          passed a collection of actions (equivalent to boundActionCreators in redux)
-          which you can use to manipulate state on your site.
+          passed a collection of actions (equivalent to boundActionCreators in
+          redux) which you can use to manipulate state on your site.
         </p>
         <h2 css={{ marginBottom: rhythm(1 / 2) }}>Functions</h2>
         <ul css={{ ...scale(-1 / 5) }}>

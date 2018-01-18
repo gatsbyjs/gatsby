@@ -87,6 +87,7 @@ root.
 * [gatsby-plugin-jss](/packages/gatsby-plugin-jss/)
 * [gatsby-plugin-manifest](/packages/gatsby-plugin-manifest/)
 * [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify/)
+* [gatsby-plugin-netlify-cms](/packages/gatsby-plugin-netlify-cms/)
 * [gatsby-plugin-nprogress](/packages/gatsby-plugin-nprogress/)
 * [gatsby-plugin-offline](/packages/gatsby-plugin-offline/)
 * [gatsby-plugin-preact](/packages/gatsby-plugin-preact/)
