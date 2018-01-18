@@ -37,10 +37,13 @@ module.exports.modifyWebpackConfig = (
       rules: [
         {
           test,
-          use: [jsLoader, {
-            loader: resolve(`ts-loader`),
-            options: typescriptOptions,
-          }],
+          use: [
+            jsLoader,
+            {
+              loader: resolve(`ts-loader`),
+              options: typescriptOptions,
+            },
+          ],
         },
       ],
     },

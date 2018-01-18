@@ -12,11 +12,7 @@ const validatePath = require(`./validate-path`)
 // Auto-create layouts.
 // algorithm is glob /layouts directory for js/jsx/cjsx files *not*
 // underscored
-exports.createLayouts = async (
-  { store, actions },
-  options,
-  doneCb
-) => {
+exports.createLayouts = async ({ store, actions }, options, doneCb) => {
   const { createLayout, deleteLayout } = actions
   const program = store.getState().program
   const layoutDirectory = systemPath.posix.join(

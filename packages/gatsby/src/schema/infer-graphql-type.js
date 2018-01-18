@@ -474,6 +474,18 @@ function shouldInferFile(nodes, key, value) {
   const otherFileExists = getNodes().some(
     n => n.absolutePath === pathToOtherNode
   )
+
+  if (key === `Category`) {
+    console.log(`looksLikeFile`, `key:`, key, `value:`, value)
+    console.log(`node`, node)
+    console.log(`rootNode.dir`, rootNode.dir)
+    console.log(`pathToOtherNode`, pathToOtherNode)
+    console.log(``)
+    console.log(``)
+    console.log(``)
+    console.log(`otherFileExists`, otherFileExists)
+  }
+
   return otherFileExists
 }
 

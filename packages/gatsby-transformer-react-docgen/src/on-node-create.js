@@ -97,16 +97,8 @@ export default function onCreateNode(
         }
 
         createParentChildLink({ parent: node, child: metadataNode })
-        metadataNode = createPropNodes(
-          metadataNode,
-          component,
-          actions
-        )
-        metadataNode = createDescriptionNode(
-          metadataNode,
-          component,
-          actions
-        )
+        metadataNode = createPropNodes(metadataNode, component, actions)
+        metadataNode = createDescriptionNode(metadataNode, component, actions)
         createNode(metadataNode)
       })
     })

@@ -15,10 +15,7 @@ const convertToJson = (data, options) =>
       })
   })
 
-async function onCreateNode(
-  { node, actions, loadNodeContent },
-  options
-) {
+async function onCreateNode({ node, actions, loadNodeContent }, options) {
   const { createNode, createParentChildLink } = actions
   // Filter out non-csv content
   if (node.extension !== `csv`) {

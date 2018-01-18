@@ -28,6 +28,7 @@ module.exports = async (pageOrLayout, component) => {
       ...pageOrLayout.context,
     })
   }
+  // console.log(`running query`, component.pathname, component.query, result)
 
   // If there's a graphql error then log the error. If we're building, also
   // quit.

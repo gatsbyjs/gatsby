@@ -171,7 +171,9 @@ module.exports = async function babelConfig(program, stage) {
     babelrc.plugins.unshift(`react-hot-loader/babel`)
   }
 
-  babelrc.plugins.unshift(require.resolve(`babel-plugin-remove-graphql-queries`))
+  babelrc.plugins.unshift(
+    require.resolve(`babel-plugin-remove-graphql-queries`)
+  )
 
   if (!babelrc.hasOwnProperty(`cacheDirectory`)) {
     babelrc.cacheDirectory = true

@@ -131,9 +131,9 @@ async function startServer(program) {
 
   app.use(
     require(`webpack-dev-middleware`)(compiler, {
-      noInfo: true,
-      quiet: true,
+      logLevel: `warn`,
       publicPath: devConfig.output.publicPath,
+      stats: `errors-only`,
     })
   )
 
@@ -354,11 +354,17 @@ module.exports = async (program: any) => {
 
   function printDeprecationWarnings() {
     const files = glob
-      .sync("{,!(node_modules|public)/**/}*.js")
-      .filter(file => fs.readFileSync(file).indexOf("boundActionCreators") !== -1)
+      .sync(`{,!(node_modules|public)/**/}*.js`)
+      .filter(
+        file => fs.readFileSync(file).indexOf(`boundActionCreators`) !== -1
+      )
 
     if (files.length) {
-      console.log(`${chalk.cyan(`boundActionCreators`)} ${chalk.yellow(`is deprecated but was found in the following files:`)}`)
+      console.log(
+        `${chalk.cyan(`boundActionCreators`)} ${chalk.yellow(
+          `is deprecated but was found in the following files:`
+        )}`
+      )
       console.log()
       files.forEach(file => console.log(file))
       console.log()

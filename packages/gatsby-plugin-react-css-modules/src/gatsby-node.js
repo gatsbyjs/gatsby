@@ -1,4 +1,3 @@
-
 exports.modifyBabelrc = ({ babelrc }, { plugins, ...options }) => {
   return {
     ...babelrc,
