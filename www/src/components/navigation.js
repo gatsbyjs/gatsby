@@ -3,6 +3,7 @@ import Link from "gatsby-link"
 import GithubIcon from "react-icons/lib/go/mark-github"
 import TwitterIcon from "react-icons/lib/fa/twitter"
 
+import SearchForm from "../components/search-form"
 import DiscordIcon from "../components/discord"
 import logo from "../gatsby-negative.svg"
 import typography, { rhythm, scale } from "../utils/typography"
@@ -117,8 +118,9 @@ export default ({ pathname }) => {
         <Link
           to="/"
           css={{
+            alignItems: `center`,
             color: `inherit`,
-            display: `inline-block`,
+            display: `flex`,
             textDecoration: `none`,
             marginRight: rhythm(0.5),
           }}
@@ -126,21 +128,21 @@ export default ({ pathname }) => {
           <img
             src={logo}
             css={{
-              display: `inline-block`,
               height: rhythm(1.2),
               width: rhythm(1.2),
               margin: 0,
               marginRight: rhythm(2 / 4),
-              verticalAlign: `middle`,
             }}
             alt=""
           />
           <h1
             css={{
               ...scale(2 / 5),
-              display: `inline-block`,
               margin: 0,
-              verticalAlign: `middle`,
+              display: `none`,
+              [presets.Mobile]: {
+                display: `block`,
+              },
             }}
           >
             Gatsby
@@ -150,10 +152,15 @@ export default ({ pathname }) => {
           css={{
             display: `none`,
             [presets.Tablet]: {
-              display: `block`,
+              display: `flex`,
               margin: 0,
               padding: 0,
               listStyle: `none`,
+              flexGrow: 1,
+              overflowX: `auto`,
+              maskImage: `linear-gradient(to right, transparent, white ${rhythm(
+                1 / 8
+              )}, white 98%, transparent)`,
             },
           }}
         >
@@ -165,12 +172,13 @@ export default ({ pathname }) => {
         </ul>
         <div
           css={{
-            marginLeft: isHomepage ? rhythm(1 / 2) : `auto`,
-            [presets.Phablet]: {
-              marginLeft: isHomepage ? `auto` : `auto`,
-            },
+            display: `flex`,
+            marginLeft: `auto`,
           }}
         >
+          {!isHomepage && (
+            <SearchForm key="SearchForm" styles={{ ...navItemStyles }} />
+          )}
           <a
             href="https://github.com/gatsbyjs/gatsby"
             title="GitHub"
