@@ -159,6 +159,33 @@ Gatsby has rich support for processing images. Responsive images are a big part 
 
 Combined with a special Gatsby image component, [gatsby-image](/packages/gatsby-image/), you have a very powerful set of primatives for building sites with images.
 
+This is what a component using `gatsby-image` looks like:
+
+```jsx
+import React from "react";
+import Img from "gatsby-image";
+
+export default ({ data }) => (
+  <div>
+    <h1>Hello gatsby-image</h1>
+    <Img resolutions={data.file.childImageSharp.resolutions} />
+  </div>
+);
+
+export const query = graphql`
+  query GatsbyImageSampleQuery {
+    file(relativePath: { eq: "blog/avatars/kyle-mathews.jpeg" }) {
+      childImageSharp {
+        # Specify the image processing specifications right in the query.
+        # Makes it trivial to update as your page's design changes.
+        resolutions(width: 125, height: 125) {
+          ...GatsbyImageSharpResolutions
+        }
+      }
+    }
+  }
+`;
+
 See also the following blog posts:
 
 * [Making Website Building Fun](/blog/2017-10-16-making-website-building-fun/)
