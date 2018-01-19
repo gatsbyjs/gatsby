@@ -92,7 +92,7 @@ export default ({ pathname }) => {
         backgroundColor: `rgba(255,255,255,0.975)`,
         position: isHomepage ? `absolute` : false,
         height: presets.headerHeight,
-        zIndex: `1`,
+        zIndex: `2`,
         left: 0,
         right: 0,
         [presets.Tablet]: {
