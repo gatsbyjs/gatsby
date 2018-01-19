@@ -28,6 +28,8 @@
       link: /docs/adding-images-fonts-files/
     - title: Browser Support
       link: /docs/browser-support/
+    - title: Building apps with Gatsby
+      link: /docs/building-apps-with-gatsby/
     - title: Caching
       link: /docs/caching/
     - title: Creating and Modifying Pages
