@@ -256,12 +256,13 @@ exports.createContentTypeNodes = ({
             entryItemFieldValue &&
             entryItemFieldValue.sys &&
             entryItemFieldValue.sys.type &&
-            entryItemFieldValue.sys.id &&
-            resolvable.has(entryItemFieldValue.sys.id)
+            entryItemFieldValue.sys.id
           ) {
-            entryItemFields[`${entryItemFieldKey}___NODE`] = mId(
-              entryItemFieldValue.sys.id
-            )
+            if (resolvable.has(entryItemFieldValue.sys.id)) {
+              entryItemFields[`${entryItemFieldKey}___NODE`] = mId(
+                entryItemFieldValue.sys.id
+              )
+            }
             delete entryItemFields[entryItemFieldKey]
           }
         }
