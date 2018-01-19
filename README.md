@@ -136,6 +136,8 @@ Websites built with Gatsby:
 * [Developer Ecosystem](https://www.developerecosystem.com/)
 * [Steve Meredith's Portfolio](http://www.steveeeie.io/)
 * [Landing page of Put.io](https://put.io/)
+* [Ryan Wiemer's Portfolio](https://www.ryanwiemer.com)
+  ([source](https://github.com/ryanwiemer/rw))
 
 ## Docs
 
