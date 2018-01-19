@@ -12,7 +12,7 @@ Pages can be created in three ways:
 * Plugins can also implement `createPages` and create pages for you
 
 You can also implement the API [`onCreatePage`](/docs/node-apis/#onCreatePage)
-to modify pages created in core or plugins or to create [hybrid pages (dynamic/client-only pages)](/docs/creating-hybrid-pages-with-static-and-dynamic-components).
+to modify pages created in core or plugins or to create [client-only routes](/docs/creating-client-only-routes/).
 
 ## Debugging help
 
