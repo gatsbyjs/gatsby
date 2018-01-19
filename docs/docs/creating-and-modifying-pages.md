@@ -161,6 +161,112 @@ exports.onCreatePage = async ({ page, boundActionCreators }) => {
 };
 ```
 
+### Client Route Params
+
+Gatsby can create client-only routes which take paramaters. 
+
+We'll walk quickly through how to setup a route on your site like `/widgets/view/ID`.
+
+**Build config:**
+
+First configure `gatsby-node.js`:
+
+```javascript
+exports.onCreatePage = async ({ page, boundActionCreators }) => {
+  const { createPage } = boundActionCreators;
+
+  return new Promise((resolve, reject) => {
+    // Add client route for all paths matching `/view/*`
+    if (/view/.test(page.path)) {
+      // Gatsby paths have a trailing `/`
+      page.matchPath = `${page.path}:id`;
+    }
+
+    createPage(page);
+    resolve();
+  });
+};
+```
+
+**Server:**
+
+Links to these pages will work well client-side but fail if a user tries to visit a page directly (i.e. load the page from the server). This is due to your backend server not knowing how to handle the route.
+
+Some server configuration is required to make these types of pages work in production. This configuration will vary depending on your server environment but here's a simple example configuration for NGINX:
+
+```
+location ~ "([a-z]*)\/view\/(\d*)$" {
+    try_files $uri /$1/view/index.html;
+}
+```
+
+This directive will provide the `widgets/view/index.html` file for any request like (widgets)/view/1. It will also support other pages by matching the first level of the URL, example `http://sitename/sprockets/view/1`.
+
+**Client:**
+
+Extracting path params from the route on the client requires that you use the `react-router` `<Route>` in your component. 
+
+This can be made simpler by using a HOC:
+
+```javascript
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Route } from 'react-router-dom';
+
+// Pass in route config, and the Content component you want rendered
+export default (config, Content) => {
+  const GatsbyClientRoute = (props) => {
+    return (
+      <Route
+        {...props}
+        {...config}
+        component={Content}
+      />
+    )
+  };
+
+  return GatsbyClientRoute;
+};
+```
+
+Use the HOC on the page component you want to access the path params:
+
+```javascript
+export default GatsbyClientRoute({path: '/widgets/view/:id'}, WidgetPage);
+```
+
+Full example page:
+
+```javascript
+import React from 'react';
+
+import GatsbyClientRoute from '<PATH_TO_SRC>/components/hocs/gatsby-client-route';
+
+class WidgetPageContent extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const { match } = this.props;
+    console.log(match.params.id);
+    return (
+      <div>
+        Widget: {match.params.id}
+      </div>
+    );
+  }
+};
+
+export default GatsbyClientRoute(
+// NOTE this must match path.matchPath
+  {path: '/widgets/view/:id'},
+  WidgetPageContent
+);
+```
+
+Using the URL `http://localhost:8000/wigets/view/10` will console log `10` and the markup will say `Widget: 10`.
+
 ### Choosing the page layout
 
 By default, all pages will use the layout found at `/layouts/index.js`.
