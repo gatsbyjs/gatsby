@@ -482,33 +482,4 @@ describe(`GraphQL Input args`, () => {
 
     expect(result).toMatchSnapshot()
   })
-
-  it(`filters on linked fields`, async () => {
-    const { store, getNodes } = require(`../../redux`)
-    const linkedNodeType = new GraphQLObjectType({
-      name: `Bar`,
-      fields: {
-        id: { type: GraphQLString },
-      },
-    })
-    let types = [{ name: `Bar`, nodeObjectType: linkedNodeType }]
-
-    store.dispatch({
-      type: `CREATE_NODE`,
-      payload: { id: `baz`, internal: { type: `Bar` } },
-    })
-
-    let result = await queryResult(
-      [...getNodes(), { linked___NODE: `baz`, foo: `bar` }],
-      `
-        {
-          allNode(filter: { linked: { id: { eq: "baz" } } }) {
-            edges { node { linked { id } } }
-          }
-        }
-      `,
-      { types }
-    )
-    expect(result.data.allNode.edges[0].node.linked.id).toEqual(`baz`)
-  })
 })

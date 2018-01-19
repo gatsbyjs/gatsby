@@ -19,8 +19,6 @@ const {
   isEmptyObjectOrArray,
 } = require(`./data-tree-utils`)
 
-const { findLinkedNode } = require(`./infer-graphql-type`)
-
 import type {
   GraphQLInputFieldConfig,
   GraphQLInputFieldConfigMap,
@@ -203,11 +201,8 @@ export function inferInputObjectStructureFromNodes({
     // setting traversing up not try to automatically infer them.
     if (isRoot && EXCLUDE_KEYS[key]) return
 
-    // Infer input arguments for linked nodes
-    if (_.includes(key, `___NODE`)) {
-      value = findLinkedNode(value)
-      ;[key] = key.split(`___`)
-    }
+    // Input arguments on linked fields aren't currently supported
+    if (_.includes(key, `___NODE`)) return
 
     let field = inferGraphQLInputFields({
       nodes,
