@@ -85,19 +85,19 @@ module.exports = (
     class="gatsby-resp-image-wrapper"
     style="position: relative; display: block; ${
       options.wrapperStyle
-      }; max-width: ${presentationWidth}px; margin-left: auto; margin-right: auto;"
+    }; max-width: ${presentationWidth}px; margin-left: auto; margin-right: auto;"
   >
     <span
       class="gatsby-resp-image-background-image"
       style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0; background-image: url('${
       responsiveSizesResult.base64
-      }'); background-size: cover; display: block;"
+    }'); background-size: cover; display: block;"
     >
       <img
         class="gatsby-resp-image-image"
         style="width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px ${
-      options.backgroundColor
-      };"
+          options.backgroundColor
+        };"
         alt="${node.alt ? node.alt : defaultAlt}"
         title="${node.title ? node.title : ``}"
         src="${fallbackSrc}"
@@ -218,6 +218,6 @@ module.exports = (
       )
     ).then(htmlImageNodes =>
       markdownImageNodes.concat(htmlImageNodes).filter(node => !!node)
-      )
     )
+  )
 }
