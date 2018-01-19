@@ -12,7 +12,7 @@ Pages can be created in three ways:
 * Plugins can also implement `createPages` and create pages for you
 
 You can also implement the API [`onCreatePage`](/docs/node-apis/#onCreatePage)
-to modify pages created in core or plugins or to create client-only pages.
+to modify pages created in core or plugins or to create [client-only routes](/docs/building-apps-with-gatsby/).
 
 ## Debugging help
 
@@ -131,33 +131,6 @@ exports.onCreatePage = ({ page, boundActionCreators }) => {
     }
     resolve();
   });
-};
-```
-
-### Creating client-only routes
-
-If you're creating a "hybrid" Gatsby app with both statically rendered pages as
-well as client-only routes (e.g. an app that combines marketing pages and your
-app that lives under `/app/*`), you want to add code to your `gatsby-node.js`
-like the following:
-
-_Note: There's also a plugin that will set up the creation of client-paths declaratively:
-[gatsby-plugin-create-client-paths](/packages/gatsby-plugin-create-client-paths/)_.
-
-```javascript
-// Implement the Gatsby API “onCreatePage”. This is
-// called after every page is created.
-exports.onCreatePage = async ({ page, boundActionCreators }) => {
-  const { createPage } = boundActionCreators;
-
-  // page.matchPath is a special key that's used for matching pages
-  // only on the client.
-  if (page.path.match(/^\/app/)) {
-    page.matchPath = "/app/:path";
-
-    // Update the page.
-    createPage(page);
-  }
 };
 ```
 
