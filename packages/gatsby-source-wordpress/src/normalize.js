@@ -390,7 +390,13 @@ exports.mapEntitiesToMedia = entities => {
 }
 
 // Downloads media files and removes "sizes" data as useless in Gatsby context.
-exports.downloadMediaFiles = async ({ entities, store, cache, createNode, _auth }) =>
+exports.downloadMediaFiles = async ({
+  entities,
+  store,
+  cache,
+  createNode,
+  _auth,
+}) =>
   Promise.all(
     entities.map(async e => {
       let fileNode

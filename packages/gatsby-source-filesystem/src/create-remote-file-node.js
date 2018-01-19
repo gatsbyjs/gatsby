@@ -27,7 +27,7 @@ module.exports = ({ url, store, cache, createNode, _auth }) =>
     // from a previous request.
     const cachedHeaders = await cache.get(cacheId(url))
     const headers = {
-        auth: _auth.htaccess_user + ':' + _auth.htaccess_pass
+      auth: _auth.htaccess_user + `:` + _auth.htaccess_pass,
     }
     if (cachedHeaders && cachedHeaders.etag) {
       headers[`If-None-Match`] = cachedHeaders.etag
