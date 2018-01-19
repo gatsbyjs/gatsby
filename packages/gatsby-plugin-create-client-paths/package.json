@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-create-client-paths",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Gatsby-plugin for creating paths that exist only on the client",
   "main": "index.js",
   "scripts": {
