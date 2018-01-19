@@ -203,7 +203,7 @@ export function inferInputObjectStructureFromNodes({
     // setting traversing up not try to automatically infer them.
     if (isRoot && EXCLUDE_KEYS[key]) return
 
-    // Input arguments on linked fields aren't currently supported
+    // Infer input arguments for linked nodes
     if (_.includes(key, `___NODE`)) {
       value = findLinkedNode(value)
       ;[key] = key.split(`___`)
