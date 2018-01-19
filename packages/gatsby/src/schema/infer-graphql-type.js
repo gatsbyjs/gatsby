@@ -252,7 +252,7 @@ function inferFromMapping(
   }
 }
 
-export function findLinkedNode(value, linkedField, path) {
+function findLinkedNode(value, linkedField, path) {
   let linkedNode
   // If the field doesn't link to the id, use that for searching.
   if (linkedField) {
