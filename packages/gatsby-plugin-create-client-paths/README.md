@@ -1,11 +1,6 @@
 # gatsby-plugin-create-client-paths
 
-Use this plugin to simplify creating a hybrid Gatsby app with both statically
-rendered pages as well as 
-[hybrid pages](https://www.gatsbyjs.org/docs/creating-hybrid-pages-with-static-and-dynamic-components) 
-(also known as "dynamic/client-only pages", "client-paths"). These paths exist 
-using dynamic routes, rendered on the client only and do not correspond to 
-`index.html` files in an app's built assets.
+Use this plugin to simplify creating a “hybrid” Gatsby app with both statically rendered pages as well as "client-paths". These paths exist on the client only and do not correspond to index.html files in an app's built assets.
 
 ## Usage
 
