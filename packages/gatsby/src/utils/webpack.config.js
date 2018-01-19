@@ -210,7 +210,7 @@ module.exports = async (
             __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
             __POLYFILL__: store.getState().config.polyfill,
           }),
-          new ExtractTextPlugin(`styles.css`, { allChunks: true }),
+          new ExtractTextPlugin(`styles-[chunkhash].css`, { allChunks: true }),
         ]
       case `build-html`:
         return [
