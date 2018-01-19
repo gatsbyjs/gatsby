@@ -19,6 +19,13 @@ components](/docs/building-with-components/) to declare what data they and their
 sub-components need. Then, Gatsby makes that data available in
 the browser when needed by your components.
 
+## Why is GraphQL so cool?
+
+* Eliminate frontend data boilerplate — no need to worry about requesting & waiting for data. Just ask for the data you need with a GraphQL query and it'll show up when you need it
+* Push frontend complexity into queries — many data transformations can be done at *build-time* within your GraphQL queries
+* It's the perfect data querying language for the often complex/nested data dependencies of modern applications
+* Improve performance by removing data bloat — GraphQL is a big part of why Gatsby is so fast as it enables lazy-loading the exact data in the exact form each view needs
+
 ## What does a GraphQL query look like?
 
 GraphQL lets you ask for the exact data you need. Queries look like JSON:
@@ -185,6 +192,7 @@ export const query = graphql`
     }
   }
 `;
+```
 
 See also the following blog posts:
 
