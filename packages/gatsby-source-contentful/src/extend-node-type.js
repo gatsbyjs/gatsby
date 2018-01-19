@@ -82,26 +82,40 @@ const getBase64Image = (imgUrl, args = {}) => {
   })
 }
 
+const getBasicMeasurements = (image, args) => {
+  let aspectRatio
+  if (args.width && args.height) {
+    aspectRatio = args.width / args.height
+  } else {
+    aspectRatio =
+      image.file.details.image.width / image.file.details.image.height
+  }
+
+  return {
+    contentType: image.file.contentType,
+    aspectRatio,
+    width: image.file.details.image.width,
+    height: image.file.details.image.height,
+  }
+}
+
 const getBase64ImageAndBasicMeasurements = (image, args) =>
   new Promise(resolve => {
-    getBase64Image(image.file.url, args).then(base64Str => {
-      let aspectRatio
-      if (args.width && args.height) {
-        aspectRatio = args.width / args.height
-      } else {
-        aspectRatio =
-          image.file.details.image.width / image.file.details.image.height
-      }
+    const basicMeasurements = getBasicMeasurements(image, args)
 
+    if (!(args.withBase64 || args.base64)) {
+      resolve(basicMeasurements)
+      return
+    }
+
+    getBase64Image(image.file.url, args).then(base64Str => {
       resolve({
-        contentType: image.file.contentType,
+        ...basicMeasurements,
         base64Str,
-        aspectRatio,
-        width: image.file.details.image.width,
-        height: image.file.details.image.height,
       })
     })
   })
+
 const createUrl = (imgUrl, options = {}) => {
   // Convert to Contentful names and filter out undefined/null values.
   const args = _.pickBy(
@@ -367,6 +381,10 @@ exports.extendNodeType = ({ type }) => {
           type: ImageCropFocusType,
           defaultValue: null,
         },
+        withBase64: {
+          type: GraphQLBoolean,
+          defaultValue: true,
+        },
       },
       resolve(image, options, context) {
         return resolveResponsiveResolution(image, options)
@@ -409,6 +427,10 @@ exports.extendNodeType = ({ type }) => {
         sizes: {
           type: GraphQLString,
         },
+        withBase64: {
+          type: GraphQLBoolean,
+          defaultValue: true,
+        },
       },
       resolve(image, options, context) {
         return resolveResponsiveSizes(image, options)
@@ -449,6 +471,10 @@ exports.extendNodeType = ({ type }) => {
         cropFocus: {
           type: ImageCropFocusType,
           defaultValue: null,
+        },
+        withBase64: {
+          type: GraphQLBoolean,
+          defaultValue: true,
         },
       },
       resolve(image, options, context) {
@@ -492,6 +518,10 @@ exports.extendNodeType = ({ type }) => {
         },
         sizes: {
           type: GraphQLString,
+        },
+        withBase64: {
+          type: GraphQLBoolean,
+          defaultValue: true,
         },
       },
       resolve(image, options, context) {
@@ -538,6 +568,10 @@ exports.extendNodeType = ({ type }) => {
         cropFocus: {
           type: ImageCropFocusType,
           defaultValue: null,
+        },
+        withBase64: {
+          type: GraphQLBoolean,
+          defaultValue: true,
         },
       },
       resolve(image, options, context) {
