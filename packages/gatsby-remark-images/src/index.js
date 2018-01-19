@@ -141,14 +141,16 @@ module.exports = (
             fileType !== `svg`
           ) {
             const rawHTML = await generateImagesAndUpdateNode(node, resolve)
-            // Replace the image node with an inline HTML node.
-            node.type = `html`
-            node.value = rawHTML
-            return resolve(node)
-          } else {
-            // Image isn't relative so there's nothing for us to do.
-            return resolve()
+
+            if (rawHTML != null) {
+              // Replace the image node with an inline HTML node.
+              node.type = `html`
+              node.value = rawHTML
+            }
           }
+
+          // Image isn't relative so there's nothing for us to do.
+          return resolve()
         })
     )
   ).then(markdownImageNodes =>
@@ -197,11 +199,14 @@ module.exports = (
                   formattedImgTag,
                   resolve
                 )
-                // Replace the image string
-                thisImg.replaceWith(rawHTML)
-              } else {
-                return resolve()
+
+                if (rawHTML != null) {
+                  // Replace the image string
+                  thisImg.replaceWith(rawHTML)
+                }
               }
+
+              return resolve()
             }
 
             // Replace the image node with an inline HTML node.
