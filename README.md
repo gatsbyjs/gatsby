@@ -138,6 +138,8 @@ Websites built with Gatsby:
 * [Landing page of Put.io](https://put.io/)
 * [Ryan Wiemer's Portfolio](https://www.ryanwiemer.com)
   ([source](https://github.com/ryanwiemer/rw))
+* [yerevancoder](https://yerevancoder.com)
+  ([source](https://github.com/yerevancoder/yerevancoder.github.io))
 
 ## Docs
 
