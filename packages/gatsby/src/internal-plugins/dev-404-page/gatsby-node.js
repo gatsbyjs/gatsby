@@ -8,7 +8,8 @@ exports.createPages = async ({ store, boundActionCreators }) => {
     const currentPath = path.join(__dirname, `./raw_dev-404-page.js`)
     const newPath = path.join(program.directory, `.cache`, `dev-404-page.js`)
 
-    fs.copySync(currentPath, newPath)
+    fs.copy(currentPath, newPath)
+      .catch(err => console.error(err))
 
     createPage({
       component: newPath,
