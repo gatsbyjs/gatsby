@@ -8,7 +8,6 @@ exports.onCreatePage = ({ page, boundActionCreators }) => {
     const oldPage = Object.assign({}, page)
     page.path = replacePath(page.path)
     if (page.path !== oldPage.path) {
-      deletePage(oldPage)
       createPage(page)
     }
     resolve()
