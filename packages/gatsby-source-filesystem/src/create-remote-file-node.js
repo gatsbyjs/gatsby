@@ -7,7 +7,7 @@ const { isWebUri } = require(`valid-url`)
 const { createFileNode } = require(`./create-file-node`)
 const cacheId = url => `create-remote-file-node-${url}`
 
-module.exports = ({ url, store, cache, createNode, _auth }) =>
+module.exports = ({ url, store, cache, createNode, auth = {} }) =>
   new Promise(async (resolve, reject) => {
     if (!url || isWebUri(url) === undefined) {
       resolve()
@@ -27,7 +27,7 @@ module.exports = ({ url, store, cache, createNode, _auth }) =>
     // from a previous request.
     const cachedHeaders = await cache.get(cacheId(url))
     const headers = {
-      auth: _auth.htaccess_user + `:` + _auth.htaccess_pass,
+      auth: auth.htaccess_user + `:` + auth.htaccess_pass,
     }
     if (cachedHeaders && cachedHeaders.etag) {
       headers[`If-None-Match`] = cachedHeaders.etag
