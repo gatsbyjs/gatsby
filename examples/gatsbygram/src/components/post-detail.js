@@ -9,8 +9,15 @@ class PostDetail extends React.Component {
   }
 
   render() {
-    const { bigImage, likes, id, weeksAgo, text } = this.props.post[0]
-    const { username, avatar } = this.props
+    const {
+      bigImage,
+      likes,
+      id,
+      username,
+      weeksAgo,
+      text,
+      avatar,
+    } = this.props.post
 
     const { big } = bigImage.childImageSharp
 
@@ -186,8 +193,10 @@ class PostDetail extends React.Component {
 export default PostDetail
 
 export const postDetailFragment = graphql`
-  fragment PostDetail_details on posts_2 {
+  fragment PostDetail_details on PostsJson {
     # Specify the fields from the post we need.
+    username
+    avatar
     likes
     id
     text

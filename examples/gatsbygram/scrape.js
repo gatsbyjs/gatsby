@@ -34,15 +34,11 @@ const bar = new ProgressBar(
 // Create the images directory
 mkdirp.sync(`./data/images`)
 
-const user = {
-  username: ``,
-  avatar: ``,
-  posts: [],
-}
+let posts = []
 
 // Write json
 const saveJSON = _ =>
-  fs.writeFileSync(`./data/posts.json`, JSON.stringify(user, ``, 2))
+  fs.writeFileSync(`./data/posts.json`, JSON.stringify(posts, '', 2))
 
 const getPosts = maxId => {
   let url = `https://www.instagram.com/${username}/?__a=1`
@@ -51,8 +47,6 @@ const getPosts = maxId => {
   request(url, { encoding: `utf8` }, (err, res, body) => {
     if (err) console.log(`error: ${err}`)
     body = JSON.parse(body)
-    user.username = get(body, `user.username`)
-    user.avatar = get(body, `user.profile_pic_url`)
     body.user.media.nodes
       .filter(item => item[`__typename`] === `GraphImage`)
       .map(item => {
@@ -67,21 +61,23 @@ const getPosts = maxId => {
           text: get(item, `caption`),
           media: get(item, `display_src`),
           image: `images/${item.code}.jpg`,
+          username: get(body, `user.username`),
+          avatar: get(body, `user.profile_pic_url`),
         }
       })
       .forEach(item => {
-        if (user.posts.length >= 100) return
+        if (posts.length >= 100) return
 
         // Download image locally and update progress bar
         bar.total++
         download(item.media, `./data/images/${item.code}.jpg`, _ => bar.tick())
 
         // Add item to posts
-        user.posts.push(item)
+        posts.push(item)
       })
 
     const lastId = get(body, `user.media.page_info.end_cursor`)
-    if (user.posts.length < 100 && lastId) getPosts(lastId)
+    if (posts.length < 100 && lastId) getPosts(lastId)
     else saveJSON()
   })
 }

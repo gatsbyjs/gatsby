@@ -17,7 +17,7 @@ class Index extends React.Component {
     location: PropTypes.object.isRequired,
     data: PropTypes.shape({
       user: PropTypes.object,
-      dataJson: PropTypes.object,
+      allPostsJson: PropTypes.object,
     }),
   }
   static contextTypes = {
@@ -64,11 +64,13 @@ class Index extends React.Component {
   }
 
   render() {
-    let { dataJson, user } = this.props.data
+    let { allPostsJson, user } = this.props.data
 
-    const posts = dataJson.posts
+    const posts = allPostsJson.edges.map(e => e.node)
 
     this.context.setPosts(posts)
+
+    user = user.edges[0].node
 
     return (
       <div
@@ -197,18 +199,24 @@ export default Index
 
 export const pageQuery = graphql`
   query allImages {
-    user: dataJson {
-      username
-      ...Avatar_user
+    user: allPostsJson(limit: 1) {
+      edges {
+        node {
+          username
+          ...Avatar_user
+        }
+      }
     }
-    dataJson {
-      posts {
-        id
-        text
-        weeksAgo: time(difference: "weeks")
-        ...Post_details
-        ...PostDetail_details
-        ...Modal_posts
+    allPostsJson {
+      edges {
+        node {
+          id
+          text
+          weeksAgo: time(difference: "weeks")
+          ...Post_details
+          ...PostDetail_details
+          ...Modal_posts
+        }
       }
     }
   }

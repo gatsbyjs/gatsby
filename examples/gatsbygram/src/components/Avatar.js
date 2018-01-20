@@ -41,7 +41,7 @@ Avatar.propTypes = propTypes
 
 export default Avatar
 export const userFragment = graphql`
-  fragment Avatar_user on DataJson {
+  fragment Avatar_user on PostsJson {
     avatar
     username
   }
