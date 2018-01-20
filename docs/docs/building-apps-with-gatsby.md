@@ -2,13 +2,13 @@
 title: "Building apps with Gatsby"
 ---
 
-Gatsby can be used to create fully dynamic apps. The default Gatsby app is made up of statically rendered pages. On this foundation, you can build what we call "hybrid" sites which adds dynamically rendered sections of pages and if needed, client-only routes.
+Gatsby is an excellent framework for building web apps. Gatsby has three types of pages. By default, Gatsby produces statically rendered pages. On this foundation, you can build what we call "hybrid" apps which add dynamically rendered sections of pages and if needed, client-only multi-page sections of the site.
 
 ## Statically rendered pages
 
 This is what Gatsby does by default. You create [components (layouts/pages/templates)](/docs/building-with-components/) that render [data you ask for in your GraphQL queries](/docs/querying-with-graphql/). Each page component is rendered to HTML when you build your Gatsby site as well as in the client as people click around the site.
 
-Content and behaviors on the page will look and act the same for every visitor until the next time you build the site.
+Content and behaviors on these pages will look and act the same for every visitor until the next time you build the site.
 
 ## Dynamic sections of pages
 
@@ -18,7 +18,8 @@ Some examples of how you could use this:
 
 * Load live data e.g. sports scores or the weather
 * Load data personalized to the user
-* Create interactive widgets e.g. allow a user to do searches or submit forms
+
+You can also use your React components to create interactive widgets e.g. allow a user to do searches or submit forms. Because Gatsby is just React, it's easy to blend static and interactive/dynamic models of building web sites.
 
 ## Client-only routes
 
