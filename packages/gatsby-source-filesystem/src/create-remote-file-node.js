@@ -26,9 +26,14 @@ module.exports = ({ url, store, cache, createNode, auth = {} }) =>
     // See if there's response headers for this url
     // from a previous request.
     const cachedHeaders = await cache.get(cacheId(url))
-    const headers = {
-      auth: auth.htaccess_user + `:` + auth.htaccess_pass,
+    const headers = {}
+
+    // Add htaccess authentication if passed in. This isn't particularly
+    // extensible. We should define a proper API that we validate.
+    if (auth && auth.htaccess_pass && auth.htaccess_user) {
+      headers.auth = `${auth.htaccess_user}:${auth.htaccess_pass}`
     }
+
     if (cachedHeaders && cachedHeaders.etag) {
       headers[`If-None-Match`] = cachedHeaders.etag
     }
