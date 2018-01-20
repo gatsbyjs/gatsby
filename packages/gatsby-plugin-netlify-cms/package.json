@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-netlify-cms",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A Gatsby plugin which generates the Netlify CMS single page app",
   "main": "index.js",
   "author": "Shawn Erquhart <shawn@erquh.art>",
