@@ -66,7 +66,7 @@ exports.sourceNodes = async ({ boundActionCreators }, { username }) => {
         .digest(`hex`)
 
       const links =
-        resource.type === `Post` || resource.type === `Collection`
+        resource.type === `Post`
           ? {
               author___NODE: resource.creatorId,
             }
