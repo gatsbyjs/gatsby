@@ -10,7 +10,7 @@ Today, the team and the city scored a huge victory when Amazon announced that Bo
 
 ![Amazon Boston homepage](./amazon-boston.jpg "Boston city")
 
-When Amazon announced in September that it was looking to build a new headquarters,  bringing 50,000 jobs and billions of investment to the chosen city, Boston’s city government jumped to throw their hat in the ring.
+When Amazon announced in September that it was looking to build a new headquarters, bringing 50,000 jobs and billions of investment to the chosen city, Boston’s city government jumped to throw their hat in the ring.
 
 As a technology hub, the city wanted to put their best digital foot forward, so they turned to the Boston.gov team to build a website as the city’s application — [amazon.boston.gov](http://amazon.boston.gov) .
 
