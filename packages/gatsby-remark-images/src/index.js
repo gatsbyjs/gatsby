@@ -52,6 +52,7 @@ module.exports = (
       }
       return null
     })
+
     if (!imageNode || !imageNode.absolutePath) {
       return resolve()
     }
@@ -142,15 +143,16 @@ module.exports = (
           ) {
             const rawHTML = await generateImagesAndUpdateNode(node, resolve)
 
-            if (rawHTML != null) {
+            if (rawHTML) {
               // Replace the image node with an inline HTML node.
               node.type = `html`
               node.value = rawHTML
             }
+            return resolve(node)
+          } else {
+            // Image isn't relative so there's nothing for us to do.
+            return resolve()
           }
-
-          // Image isn't relative so there's nothing for us to do.
-          return resolve()
         })
     )
   ).then(markdownImageNodes =>
@@ -200,13 +202,13 @@ module.exports = (
                   resolve
                 )
 
-                if (rawHTML != null) {
+                if (rawHTML) {
                   // Replace the image string
                   thisImg.replaceWith(rawHTML)
+                } else {
+                  return resolve()
                 }
               }
-
-              return resolve()
             }
 
             // Replace the image node with an inline HTML node.
