@@ -72,8 +72,10 @@ const isImage = image =>
     _.get(image, `file.contentType`)
   )
 
-const getBase64Image = (imgUrl, args = {}) => {
-  const requestUrl = `https:${imgUrl}?w=20`
+const getBase64Image = (imageProps) => {
+  if (!imageProps) return null
+
+  const requestUrl = `https:${imageProps.baseUrl}?w=20`
   // TODO add caching.
   return new Promise(resolve => {
     base64Img.requestBase64(requestUrl, (a, b, body) => {
@@ -82,7 +84,7 @@ const getBase64Image = (imgUrl, args = {}) => {
   })
 }
 
-const getBasicMeasurements = (image, args) => {
+const getBasicImageProps = (image, args) => {
   let aspectRatio
   if (args.width && args.height) {
     aspectRatio = args.width / args.height
@@ -92,6 +94,7 @@ const getBasicMeasurements = (image, args) => {
   }
 
   return {
+    baseUrl: image.file.url,
     contentType: image.file.contentType,
     aspectRatio,
     width: image.file.details.image.width,
@@ -120,7 +123,7 @@ exports.createUrl = createUrl
 const resolveResponsiveResolution = (image, options) => {
   if (!isImage(image)) return null
 
-  const { width, aspectRatio } = getBasicMeasurements(image, options)
+  const { baseUrl, width, aspectRatio } = getBasicImageProps(image, options)
 
   let desiredAspectRatio = aspectRatio
 
@@ -176,7 +179,7 @@ const resolveResponsiveResolution = (image, options) => {
         default:
       }
       const h = Math.round(size / desiredAspectRatio)
-      return `${createUrl(image.file.url, {
+      return `${createUrl(baseUrl, {
         ...options,
         width: size,
         height: h,
@@ -193,9 +196,10 @@ const resolveResponsiveResolution = (image, options) => {
 
   return {
     aspectRatio: aspectRatio,
+    baseUrl,
     width: Math.round(options.width),
     height: Math.round(pickedHeight),
-    src: createUrl(image.file.url, {
+    src: createUrl(baseUrl, {
       ...options,
       width: options.width,
     }),
@@ -328,7 +332,12 @@ exports.extendNodeType = ({ type }) => {
       type: new GraphQLObjectType({
         name: `ContentfulResolutions`,
         fields: {
-          // base64: { type: GraphQLString },
+          base64: {
+            type: GraphQLString,
+            resolve(imageProps) {
+              return getBase64Image(imageProps)
+            },
+          },
           aspectRatio: { type: GraphQLFloat },
           width: { type: GraphQLFloat },
           height: { type: GraphQLFloat },
