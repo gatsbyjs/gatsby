@@ -42,7 +42,7 @@ describe(`contentful extend node type`, () => {
 
   describe(`resolveResponsiveResolution`, () => {
     it(`generates responsive resolution data for images`, async () => {
-      const resp = await resolveResponsiveResolution(image, { width: 400, withBase64: true })
+      const resp = await resolveResponsiveResolution(image, { width: 400 })
       expect(resp.srcSet.length).toBeGreaterThan(1)
       expect(resp).toMatchSnapshot()
     })
@@ -51,7 +51,6 @@ describe(`contentful extend node type`, () => {
         width: 450,
         height: 399,
         quality: 50,
-        withBase64: false,
       })
       expect(resp.srcSet.length).toBeGreaterThan(1)
       expect(resp).toMatchSnapshot()
@@ -59,7 +58,6 @@ describe(`contentful extend node type`, () => {
     it(`If the height isn't specified it should be set keeping with the aspect ratio of the original image`, async () => {
       const resp = await resolveResponsiveResolution(image, {
         width: 450,
-        withBase64: true,
       })
       expect(resp.width).toBe(450)
       expect(resp.height).toBe(600)
@@ -68,7 +66,6 @@ describe(`contentful extend node type`, () => {
       const resp = await resolveResponsiveResolution(image, {
         width: 450,
         height: 399,
-        withBase64: true,
       })
       expect(resp.width).toBe(450)
       expect(resp.height).toBe(399)
@@ -77,7 +74,6 @@ describe(`contentful extend node type`, () => {
       const resp = await resolveResponsiveResolution(image, {
         width: 450.1,
         height: 399.1,
-        withBase64: true,
       })
       expect(resp.width).toBe(450)
       expect(resp.height).toBe(399)
@@ -85,14 +81,13 @@ describe(`contentful extend node type`, () => {
     it(`handles null`, async () => {
       const resp = await resolveResponsiveResolution(nullFileImage, {
         width: 400,
-        withBase64: true,
       })
       expect(resp).toBe(null)
     })
   })
   describe(`resolveResponsiveSizes`, () => {
     it(`generates responsive size data for images`, async () => {
-      const resp = await resolveResponsiveSizes(image, { maxWidth: 400, withBase64: true })
+      const resp = await resolveResponsiveSizes(image, { maxWidth: 400 })
       expect(resp.srcSet.length).toBeGreaterThan(1)
       expect(resp).toMatchSnapshot()
     })
@@ -101,7 +96,6 @@ describe(`contentful extend node type`, () => {
         maxWidth: 450,
         maxHeight: 399,
         quality: 50,
-        withBase64: false,
       })
       expect(resp.srcSet.length).toBeGreaterThan(1)
       expect(resp).toMatchSnapshot()
@@ -109,14 +103,13 @@ describe(`contentful extend node type`, () => {
     it(`handles null`, async () => {
       const resp = await resolveResponsiveSizes(nullFileImage, {
         maxWidth: 400,
-        withBase64: true,
       })
       expect(resp).toBe(null)
     })
   })
   describe(`resolveResize`, () => {
     it(`generates resized images`, async () => {
-      const resp = await resolveResize(image, { width: 400, withBase64: true })
+      const resp = await resolveResize(image, { width: 400 })
       expect(resp).toMatchSnapshot()
     })
     it(`generates resized images using all options`, async () => {
@@ -124,12 +117,11 @@ describe(`contentful extend node type`, () => {
         width: 450,
         height: 399,
         quality: 50,
-        withBase64: false,
       })
       expect(resp).toMatchSnapshot()
     })
     it(`handles null`, async () => {
-      const resp = await resolveResize(nullFileImage, { width: 400, withBase64: true })
+      const resp = await resolveResize(nullFileImage, { width: 400 })
       expect(resp).toBe(null)
     })
   })
