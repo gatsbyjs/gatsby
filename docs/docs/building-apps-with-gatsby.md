@@ -2,7 +2,7 @@
 title: "Building apps with Gatsby"
 ---
 
-Gatsby can be used to create fully dynamic apps. The default Gatsby app is made up of statically rendered pages. On this foundation, you can build what we call "hybrid" sites which adds dynamically rendered sections of pages and if needed, client-only routes. 
+Gatsby can be used to create fully dynamic apps. The default Gatsby app is made up of statically rendered pages. On this foundation, you can build what we call "hybrid" sites which adds dynamically rendered sections of pages and if needed, client-only routes.
 
 ## Statically rendered pages
 
