@@ -7,7 +7,7 @@ const { isWebUri } = require(`valid-url`)
 const { createFileNode } = require(`./create-file-node`)
 const cacheId = url => `create-remote-file-node-${url}`
 
-module.exports = ({ url, store, cache, createNode }) =>
+module.exports = ({ url, store, cache, createNode, _auth }) =>
   new Promise(async (resolve, reject) => {
     if (!url || isWebUri(url) === undefined) {
       resolve()
@@ -26,7 +26,9 @@ module.exports = ({ url, store, cache, createNode }) =>
     // See if there's response headers for this url
     // from a previous request.
     const cachedHeaders = await cache.get(cacheId(url))
-    const headers = {}
+    const headers = {
+      auth: _auth.htaccess_user + `:` + _auth.htaccess_pass,
+    }
     if (cachedHeaders && cachedHeaders.etag) {
       headers[`If-None-Match`] = cachedHeaders.etag
     }
@@ -53,7 +55,7 @@ module.exports = ({ url, store, cache, createNode }) =>
     let statusCode
     let responseHeaders
     let responseError = false
-    const responseStream = got.stream(url, { headers })
+    const responseStream = got.stream(url, headers)
     responseStream.pipe(fs.createWriteStream(tmpFilename))
     responseStream.on(`downloadProgress`, pro => console.log(pro))
 
