@@ -144,6 +144,5 @@ test(`it leaves non-relative HTML img tags alone`, async () => {
   `.trim()
 
   const nodes = await plugin(createPluginOptions(content, imagePath))
-
-  expect(nodes.length).toBe(0)
+  expect(nodes[0].value).toBe(content)
 })
