@@ -72,37 +72,6 @@ const isImage = image =>
     _.get(image, `file.contentType`)
   )
 
-const getBase64ImageOld = (imgUrl, args = {}) => {
-  const requestUrl = `https:${imgUrl}?w=20`
-  // TODO add caching.
-  return new Promise(resolve => {
-    base64Img.requestBase64(requestUrl, (a, b, body) => {
-      resolve(body)
-    })
-  })
-}
-
-const getBase64ImageAndBasicMeasurements = (image, args) =>
-  new Promise(resolve => {
-    getBase64ImageOld(image.file.url, args).then(base64Str => {
-      let aspectRatio
-      if (args.width && args.height) {
-        aspectRatio = args.width / args.height
-      } else {
-        aspectRatio =
-          image.file.details.image.width / image.file.details.image.height
-      }
-
-      resolve({
-        contentType: image.file.contentType,
-        base64Str,
-        aspectRatio,
-        width: image.file.details.image.width,
-        height: image.file.details.image.height,
-      })
-    })
-  })
-
 const getBase64Image = (imageProps) => {
   if (!imageProps) return null
 
@@ -312,39 +281,30 @@ exports.resolveResponsiveSizes = resolveResponsiveSizes
 const resolveResize = (image, options) => {
   if (!isImage(image)) return null
 
-  return new Promise(resolve => {
-    getBase64ImageAndBasicMeasurements(image, options).then(
-      ({ contentType, base64Str, width, height, aspectRatio }) => {
-        // If the user selected a height (so cropping) and fit option
-        // is not set, we'll set our defaults
-        if (options.height) {
-          if (!options.resizingBehavior) {
-            options.resizingBehavior = `fill`
-          }
-        }
+  const { baseUrl, aspectRatio } = getBasicImageProps(image, options)
 
-        if (options.base64) {
-          resolve(base64Str)
-          return
-        }
+  // If the user selected a height (so cropping) and fit option
+  // is not set, we'll set our defaults
+  if (options.height) {
+    if (!options.resizingBehavior) {
+      options.resizingBehavior = `fill`
+    }
+  }
 
-        const pickedWidth = options.width
-        let pickedHeight
-        if (options.height) {
-          pickedHeight = options.height
-        } else {
-          pickedHeight = pickedWidth / aspectRatio
-        }
-        resolve({
-          src: createUrl(image.file.url, options),
-          width: Math.round(pickedWidth),
-          height: Math.round(pickedHeight),
-          aspectRatio,
-          base64: base64Str,
-        })
-      }
-    )
-  })
+  const pickedWidth = options.width
+  let pickedHeight
+  if (options.height) {
+    pickedHeight = options.height
+  } else {
+    pickedHeight = pickedWidth / aspectRatio
+  }
+  return {
+    src: createUrl(image.file.url, options),
+    width: Math.round(pickedWidth),
+    height: Math.round(pickedHeight),
+    aspectRatio,
+    baseUrl,
+  }
 }
 
 exports.resolveResize = resolveResize
@@ -545,6 +505,12 @@ exports.extendNodeType = ({ type }) => {
       type: new GraphQLObjectType({
         name: `ContentfulResize`,
         fields: {
+          base64: {
+            type: GraphQLString,
+            resolve(imageProps) {
+              return getBase64Image(imageProps)
+            },
+          },
           src: { type: GraphQLString },
           width: { type: GraphQLInt },
           height: { type: GraphQLInt },
@@ -569,10 +535,6 @@ exports.extendNodeType = ({ type }) => {
         },
         resizingBehavior: {
           type: ImageResizingBehavior,
-        },
-        base64: {
-          type: GraphQLBoolean,
-          defaultValue: false,
         },
         toFormat: {
           type: ImageFormatType,
