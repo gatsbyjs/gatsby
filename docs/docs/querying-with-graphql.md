@@ -22,7 +22,7 @@ the browser when needed by your components.
 ## Why is GraphQL so cool?
 
 * Eliminate frontend data boilerplate — no need to worry about requesting & waiting for data. Just ask for the data you need with a GraphQL query and it'll show up when you need it
-* Push frontend complexity into queries — many data transformations can be done at *build-time* within your GraphQL queries
+* Push frontend complexity into queries — many data transformations can be done at _build-time_ within your GraphQL queries
 * It's the perfect data querying language for the often complex/nested data dependencies of modern applications
 * Improve performance by removing data bloat — GraphQL is a big part of why Gatsby is so fast as it enables lazy-loading the exact data in the exact form each view needs
 

@@ -91,6 +91,7 @@ exports.sourceNodes = async (
     store,
     cache,
     createNode,
+    _auth,
   })
 
   // Search and replace Content Urls
