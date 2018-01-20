@@ -7,7 +7,7 @@ const { isWebUri } = require(`valid-url`)
 const { createFileNode } = require(`./create-file-node`)
 const cacheId = url => `create-remote-file-node-${url}`
 
-module.exports = ({ url, store, cache, createNode, auth = {} }) =>
+module.exports = ({ url, store, cache, createNode, _auth = {} }) =>
   new Promise(async (resolve, reject) => {
     if (!url || isWebUri(url) === undefined) {
       resolve()
@@ -30,8 +30,8 @@ module.exports = ({ url, store, cache, createNode, auth = {} }) =>
 
     // Add htaccess authentication if passed in. This isn't particularly
     // extensible. We should define a proper API that we validate.
-    if (auth && auth.htaccess_pass && auth.htaccess_user) {
-      headers.auth = `${auth.htaccess_user}:${auth.htaccess_pass}`
+    if (_auth && _auth.htaccess_pass && _auth.htaccess_user) {
+      headers.auth = `${_auth.htaccess_user}:${_auth.htaccess_pass}`
     }
 
     if (cachedHeaders && cachedHeaders.etag) {
