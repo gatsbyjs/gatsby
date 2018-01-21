@@ -250,7 +250,12 @@ Finally, add a `static.json` file in the root of your project to define the dire
 
 In order to deploy your Gatsby project using [Now](https://zeit.co/now), you can do the following:
 
-1. Install a node server package (such as `serve`, or `http-server`) locally
+1. Install a node server package (such as `serve`, or `http-server`)
+
+```
+npm install --save serve
+```
+
 2. Add a `start` script to your `package.json` file, this is what Now will use to run your application:
 
 ```
