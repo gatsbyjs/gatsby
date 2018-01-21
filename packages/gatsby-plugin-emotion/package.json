@@ -8,10 +8,7 @@
     "watch": "babel -w src --out-dir . --ignore __tests__",
     "prepublish": "cross-env NODE_ENV=production npm run build"
   },
-  "keywords": [
-    "gatsby",
-    "emotion"
-  ],
+  "keywords": ["gatsby", "emotion"],
   "author": "Tegan Churchill <churchill.tegan@gmail.com>",
   "license": "MIT",
   "devDependencies": {
@@ -23,6 +20,7 @@
   },
   "peerDependencies": {
     "emotion": "7 || 8 ",
-    "emotion-server": "7 || 8"
+    "emotion-server": "7 || 8",
+    "gatsby": "^1.0.0"
   }
 }
