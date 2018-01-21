@@ -10,7 +10,7 @@ import { vP, vPHd, vPVHd, vPVVHd } from "../components/gutters"
 import FuturaParagraph from "../components/futura-paragraph"
 import TechWithIcon from "../components/tech-with-icon"
 
-const stripeColor = `249, 245, 255, 1`
+const stripeColor = `255, 255, 255, 0.9`
 const stripeSize = 15
 const stripeAnimation = css.keyframes({
   "0%": {
