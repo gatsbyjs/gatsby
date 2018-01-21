@@ -24,9 +24,9 @@ module.exports = {
   B500: `#9D7CBF`, // brandLight
   B400: ``,
   B300: `#e0d6eb`, // lightPurple
-  B200: `#F5F3F7`, // brandLighter
+  B200: `#f5f1f8`, // brandLighter, was #f5f3f7, sat by +14, matching brand
   B100: ``, // veryLightPurple, was #f6f2f8, replaced by B200
-  B50: `#fbfafc`, // sidebar
+  B50: `#faf8fc`, // sidebar, was #fbfafc, sat +14
   // bolder palette by @ArchieHicklin
   // @see https://github.com/gatsbyjs/gatsby/issues/1173#issuecomment-309415650
   accent: `#ffb238`, // "Mustard"
