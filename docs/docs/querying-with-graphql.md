@@ -16,8 +16,15 @@ to you.
 
 Gatsby uses GraphQL to enable [page and layout
 components](/docs/building-with-components/) to declare what data they and their
-sub-components need. Gatsby then handles making sure that data is available in
+sub-components need. Then, Gatsby makes that data available in
 the browser when needed by your components.
+
+## Why is GraphQL so cool?
+
+* Eliminate frontend data boilerplate — no need to worry about requesting & waiting for data. Just ask for the data you need with a GraphQL query and it'll show up when you need it
+* Push frontend complexity into queries — many data transformations can be done at _build-time_ within your GraphQL queries
+* It's the perfect data querying language for the often complex/nested data dependencies of modern applications
+* Improve performance by removing data bloat — GraphQL is a big part of why Gatsby is so fast as it enables lazy-loading the exact data in the exact form each view needs
 
 ## What does a GraphQL query look like?
 
@@ -33,7 +40,7 @@ GraphQL lets you ask for the exact data you need. Queries look like JSON:
 }
 ```
 
-Which returns:
+Which returns this:
 
 ```json
 {
@@ -69,12 +76,12 @@ export const query = graphql`
 ```
 
 The result of the query is automatically inserted into your React component
-on the `data` prop. GraphQL and Gatsby lets you ask for data and then
+on the `data` prop. GraphQL and Gatsby let you ask for data and then
 immediately start using it.
 
 ## How to learn GraphQL
 
-Gatsby might be the first time you've seen GraphQL! We hope you love it as much
+Your experience developing with Gatsby might be the first time you've seen GraphQL! We hope you love it as much
 as we do and find it useful for all your projects.
 
 When starting out with GraphQL, we recommend the following two tutorials:
@@ -84,18 +91,18 @@ When starting out with GraphQL, we recommend the following two tutorials:
 
 [The official Gatsby tutorial](/tutorial/part-four/) also includes an introduction to using GraphQL specifically with Gatsby.
 
-## How does GraphQL and Gatsby work together?
+## How do GraphQL and Gatsby work together?
 
 One of the great things about GraphQL is how flexible it is. People use GraphQL
 with [many different programming languages](http://graphql.org/code/) and for web and native apps.
 
-Most people using GraphQL run it on a server to respond live to requests for
+Most people run GraphQL on a server to respond live to requests for
 data from clients. You define a schema (a schema is a formal way of describing
 the shape of your data) for your GraphQL server and then your GraphQL resolvers
 retrieve data from databases and/or other APIs.
 
-Gatsby is unique that it uses GraphQL at _build-time_ and _not_ for live
-sites. This means you don't need to run additional services (e.g. a database
+Gatsby uses GraphQL at _build-time_ and _not_ for live
+sites. This is unique, and it means you don't need to run additional services (e.g. a database
 and node.js service) to use GraphQL for production websites.
 
 Gatsby is a great framework for building apps so it's possible and encouraged
@@ -106,10 +113,10 @@ a live GraphQL server from the browser.
 
 Most usages of GraphQL involve manually creating a GraphQL schema.
 
-With Gatsby, we instead use plugins which fetch data from different sources
-which we use to automatically _infer_ a GraphQL schema.
+With Gatsby, we use plugins which fetch data from different sources. We then use that data
+to automatically _infer_ a GraphQL schema.
 
-If you give Gatsby data that looks like:
+If you give Gatsby data that looks like this:
 
 ```json
 {
@@ -117,7 +124,7 @@ If you give Gatsby data that looks like:
 }
 ```
 
-Gatsby will create a schema that looks something like:
+Gatsby will create a schema that looks something like this:
 
 ```
 title: String
@@ -126,17 +133,16 @@ title: String
 This makes it easy to pull data from anywhere and immediately start writing
 GraphQL queries against your data.
 
-This _can_ cause confusion though as some data sources allow you to define
-a schema but parts of that schema might still not be recreated in Gatsby if
-there's not yet any data added for that part of the schema.
+This _can_ cause confusion as some data sources allow you to define
+a schema even when there's not any data added for parts or all of the schema. If parts of the data haven't been added, then those parts of the schema might not be recreated in Gatsby.
 
 ## Powerful data transformations
 
-GraphQL enables another unique feature of Gatsby — it lets you control data transformations with arguments to your queries. Some examples.
+GraphQL enables another unique feature of Gatsby — it lets you control data transformations with arguments to your queries. Some examples follow.
 
 ### Formatting dates
 
-People often store dates like "2018-01-05" but want to display the date in some other form like "January 5th, 2018". One way of doing this is to load a date formatting JavaScript library into the browser. With Gatsby's GraphQL layer you can instead do the formatting at query time like:
+People often store dates like "2018-01-05" but want to display the date in some other form like "January 5th, 2018". One way of doing this is to load a date-formatting JavaScript library into the browser. Or, with Gatsby's GraphQL layer, you can do the formatting at query-time like:
 
 ```graphql
 {
@@ -146,7 +152,7 @@ People often store dates like "2018-01-05" but want to display the date in some 
 
 ### Markdown
 
-Gatsby has _transformer_ plugins which can transform data from one form to another. A common example is markdown. If you install [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/) then in your queries, you can specify you want the transformed HTML version instead of markdown:
+Gatsby has _transformer_ plugins which can transform data from one form to another. A common example is markdown. If you install [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/), then in your queries, you can specify you want the transformed HTML version instead of markdown:
 
 ```graphql
 markdownRemark {
@@ -159,6 +165,34 @@ markdownRemark {
 Gatsby has rich support for processing images. Responsive images are a big part of the modern web and typically involve creating 5+ sized thumbnails per photo. With Gatsby's [`gatsby-transformer-sharp`](/packages/gatsby-transformer-sharp/), you can _query_ your images for responsive versions. The query automatically creates all the needed responsive thumbnails and returns `src` and `srcSet` fields to add to your image element.
 
 Combined with a special Gatsby image component, [gatsby-image](/packages/gatsby-image/), you have a very powerful set of primatives for building sites with images.
+
+This is what a component using `gatsby-image` looks like:
+
+```jsx
+import React from "react";
+import Img from "gatsby-image";
+
+export default ({ data }) => (
+  <div>
+    <h1>Hello gatsby-image</h1>
+    <Img resolutions={data.file.childImageSharp.resolutions} />
+  </div>
+);
+
+export const query = graphql`
+  query GatsbyImageSampleQuery {
+    file(relativePath: { eq: "blog/avatars/kyle-mathews.jpeg" }) {
+      childImageSharp {
+        # Specify the image processing specifications right in the query.
+        # Makes it trivial to update as your page's design changes.
+        resolutions(width: 125, height: 125) {
+          ...GatsbyImageSharpResolutions
+        }
+      }
+    }
+  }
+`;
+```
 
 See also the following blog posts:
 

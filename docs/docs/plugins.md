@@ -90,6 +90,7 @@ root.
 * [gatsby-plugin-netlify-cms](/packages/gatsby-plugin-netlify-cms/)
 * [gatsby-plugin-nprogress](/packages/gatsby-plugin-nprogress/)
 * [gatsby-plugin-offline](/packages/gatsby-plugin-offline/)
+* [gatsby-plugin-postcss-sass](/packages/gatsby-plugin-postcss-sass)
 * [gatsby-plugin-preact](/packages/gatsby-plugin-preact/)
 * [gatsby-plugin-react-helmet](/packages/gatsby-plugin-react-helmet/)
 * [gatsby-plugin-remove-trailing-slashes](/packages/gatsby-plugin-remove-trailing-slashes/)
@@ -133,6 +134,7 @@ root.
 
 * [gatsby-plugin-accessibilityjs](https://github.com/alampros/gatsby-plugin-accessibilityjs)
 * [gatsby-plugin-antd](https://github.com/bskimball/gatsby-plugin-antd)
+* [gatsby-plugin-bugherd](https://github.com/indigotree/gatsby-plugin-bugherd)
 * [gatsby-plugin-copy](https://github.com/aquilio/gatsby-plugin-copy)
 * [gatsby-plugin-elasticlunr-search](https://github.com/andrew-codes/gatsby-plugin-elasticlunr-search)
 * [gatsby-plugin-fastclick](https://github.com/escaladesports/gatsby-plugin-fastclick)
@@ -162,6 +164,7 @@ root.
 * [gatsby-source-airtable](https://github.com/kevzettler/gatsby-source-airtable)
 * [gatsby-source-behance](https://github.com/LeKoArts/gatsby-source-behance)
 * [gatsby-source-datocms](https://github.com/datocms/gatsby-source-datocms)
+* [gatsby-source-directus](https://github.com/iKonrad/gatsby-source-directus)
 * [gatsby-source-github](https://github.com/mosch/gatsby-source-github)
 * [gatsby-source-google-sheets](https://github.com/brandonmp/gatsby-source-google-sheets)
 * [gatsby-source-soundcloud](https://github.com/jedidiah/gatsby-source-soundcloud)

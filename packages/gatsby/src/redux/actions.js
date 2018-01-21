@@ -544,7 +544,11 @@ actions.createNodeField = (
 }
 
 /**
- * Creates a link between a parent and child node
+ * Creates a link between a parent and child node. This is used when you
+ * transform content from a node creating a new child node. You need to add
+ * this new child node to the `children` array of the parent but since you
+ * don't have direct access to the immutable parent node, use this action
+ * instead.
  * @param {Object} $0
  * @param {Object} $0.parent the parent node object
  * @param {Object} $0.child the child node object
