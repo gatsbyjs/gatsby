@@ -42,7 +42,7 @@ css.insert(`
   }
   
   .algolia-autocomplete .algolia-docsearch-suggestion--subcategory-column:before {
-    background: ${presets.B100} !important;
+    background: ${presets.B200} !important;
   }
 
   .algolia-autocomplete .algolia-docsearch-suggestion--subcategory-column:after {
@@ -117,7 +117,7 @@ css.insert(`
     padding: ${rhythm(0.25)} ${rhythm(0.5)} !important;
     margin-top: 0 !important;
     font-size: 0.9rem !important;
-    border-color: ${presets.B100} !important;
+    border-color: ${presets.B200} !important;
     color: ${presets.B700} !important;
     font-weight: bold !important;
   }
@@ -134,7 +134,7 @@ css.insert(`
     width: 100% !important;
     height: 30px !important;
     margin-top: 0 !important;
-    border-top: 1px dotted ${presets.B100} !important;
+    border-top: 1px dotted ${presets.B200} !important;
   }
 
   .algolia-autocomplete .algolia-docsearch-footer--logo {
@@ -175,7 +175,7 @@ css.insert(`
       top: 0 !important;
       height: 100% !important;
       width: 1px !important;
-      background: ${presets.B100} !important;
+      background: ${presets.B200} !important;
     }
 
     .algolia-autocomplete .algolia-docsearch-suggestion--subcategory-column:after {

@@ -95,7 +95,7 @@ const box = {
 }
 
 const borderAndBoxShadow = {
-  border: `1px solid ${presets.B100}`,
+  border: `1px solid ${presets.B200}`,
   background: `#fff`,
   width: `100%`,
   boxShadow: `0 5px 15px rgba(0,0,0,0.035)`,

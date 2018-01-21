@@ -133,7 +133,7 @@ class EvaluationTable extends Component {
                               cursor: j >= 0 ? `pointer` : `inherit`,
                             },
                             borderBottom: !showTooltip(s, i)
-                              ? `1px solid ${presets.B100}`
+                              ? `1px solid ${presets.B200}`
                               : `none`,
                             minWidth: 40,
                             paddingRight: 0,

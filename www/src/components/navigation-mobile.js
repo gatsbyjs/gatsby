@@ -42,7 +42,7 @@ export default () => (
       left: 0,
       right: 0,
       zIndex: 1,
-      borderTop: `1px solid ${presets.B100}`,
+      borderTop: `1px solid ${presets.B200}`,
       background: presets.B50,
       fontFamily: typography.options.headerFontFamily.join(`,`),
       [presets.Tablet]: {

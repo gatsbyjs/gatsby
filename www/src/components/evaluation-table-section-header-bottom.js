@@ -45,7 +45,7 @@ const renderSubHeader = props => (
           textAlign: `left`,
           verticalAlign: `middle`,
           fontFamily: options.headerFontFamily.join(`,`),
-          borderColor: presets.B100,
+          borderColor: presets.B200,
           "&&": {
             paddingTop: rhythm(1 / 4),
             paddingLeft: rhythm(1 / 4),

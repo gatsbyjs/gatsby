@@ -122,7 +122,7 @@ class IndexRoute extends React.Component {
                   borderTopLeftRadius: 0,
                   borderTopRightRadius: 0,
                   flex: `1 1 100%`,
-                  borderTop: `1px solid ${presets.B100}`,
+                  borderTop: `1px solid ${presets.B200}`,
                 }}
               />
 
@@ -147,7 +147,7 @@ class IndexRoute extends React.Component {
 
               <div
                 css={{
-                  borderTop: `1px solid ${presets.B100}`,
+                  borderTop: `1px solid ${presets.B200}`,
                   flex: `1 1 100%`,
                   [presets.Tablet]: {
                     paddingTop: rhythm(1),

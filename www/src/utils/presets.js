@@ -25,7 +25,7 @@ module.exports = {
   B400: ``,
   B300: `#e0d6eb`, // lightPurple
   B200: `#F5F3F7`, // brandLighter
-  B100: `#f6f2f8`, // veryLightPurple
+  B100: ``, // veryLightPurple, was #f6f2f8, replaced by B200
   B50: `#fbfafc`, // sidebar
   // bolder palette by @ArchieHicklin
   // @see https://github.com/gatsbyjs/gatsby/issues/1173#issuecomment-309415650

@@ -207,7 +207,7 @@ class BlogPostTemplate extends React.Component {
         </Container>
         <div
           css={{
-            borderTop: `1px solid ${presets.B100}`,
+            borderTop: `1px solid ${presets.B200}`,
             marginTop: rhythm(2),
             [presets.Tablet]: {
               marginTop: rhythm(2),
