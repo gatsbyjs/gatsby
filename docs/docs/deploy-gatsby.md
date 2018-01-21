@@ -9,6 +9,7 @@ title: "Deploying Gatsby"
 * [GitHub Pages](/docs/deploy-gatsby/#github-pages)
 * [GitLab Pages](/docs/deploy-gatsby/#gitlab-pages)
 * [Heroku](/docs/deploy-gatsby/#heroku)
+* [Now](/docs/deploy-gatsby/#now)
 
 ## Netlify
 
@@ -245,6 +246,19 @@ Finally, add a `static.json` file in the root of your project to define the dire
 }
 ```
 
+## Now
+
+In order to deploy your Gatsby project using [Now](https://zeit.co/now), you can do the following:
+
+1. Install a node server package (such as `serve`, or `http-server`) locally
+2. Add a `start` script to your `package.json` file, this is what Now will use to run your application:
+
+```
+"start": "serve public/"
+```
+
+3. Run `now` at the root of your Gatsby project, this will upload your project, run the `build` script, and then your `start` script.
+
 ## Debugging tips
 
 ### Don't minify HTML
@@ -266,3 +280,7 @@ not caused by Gatsby. React uses HTML comments to help identify locations of
 components that do not render anything. If you are using a CDN that minifies
 your HTML, it will eliminate the HTML comments used by React to take control of
 the page on the client. Cloudflare is a CDN that minifies HTML by default.
+
+```
+
+```
