@@ -80,7 +80,7 @@ Community:
   * Basic components: SiteNavi, SitePost, SitePage
 
 * [gatsby-blog-starter-kit](https://github.com/dschau/gatsby-blog-starter-kit)
-[(demo)](https://dschau.github.io/gatsby-blog-starter-kit/)
+  [(demo)](https://dschau.github.io/gatsby-blog-starter-kit/)
 
   Features:
 
@@ -358,3 +358,22 @@ Community:
   * Baseline grid built in with modular scale across viewports.
   * Abstract measurements utilize REM for spacing.
   * One font to rule them all: Helvetica.
+
+* [gatsby-starter-lumen](https://github.com/alxshelepenok/gatsby-starter-lumen)
+  [(demo)](https://lumen.netlify.com/)
+
+  Features:
+
+  * Lost Grid.
+  * Beautiful typography inspired by [matejlatin/Gutenberg](https://github.com/matejlatin/Gutenberg).
+  * [Mobile-First](https://medium.com/@mrmrs_/mobile-first-css-48bc4cc3f60f) approach in development.
+  * Stylesheet built using SASS and [BEM](http://getbem.com/naming/)-Style naming.
+  * Syntax highlighting in code blocks.
+  * Sidebar menu built using a configuration block.
+  * Archive organized by tags and categories.
+  * Automatic RSS generation.
+  * Automatic Sitemap generation.
+  * Offline support.
+  * Google Analytics support.
+  * Disqus Comments support.
+  

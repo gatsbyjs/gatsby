@@ -134,6 +134,9 @@ module.exports = async (config = {}) => {
 
   // Add internal plugins
   plugins.push(
+    processPlugin(path.join(__dirname, `../internal-plugins/dev-404-page`))
+  )
+  plugins.push(
     processPlugin(
       path.join(__dirname, `../internal-plugins/component-page-creator`)
     )
@@ -147,9 +150,6 @@ module.exports = async (config = {}) => {
     processPlugin(
       path.join(__dirname, `../internal-plugins/internal-data-bridge`)
     )
-  )
-  plugins.push(
-    processPlugin(path.join(__dirname, `../internal-plugins/dev-404-page`))
   )
   plugins.push(
     processPlugin(path.join(__dirname, `../internal-plugins/prod-404`))
