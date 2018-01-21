@@ -16,17 +16,16 @@ module.exports = {
   maxWidth: 35,
   maxWidthWithSidebar: 26,
   calm: `rgba(38, 32, 44, .5)`,
-  // palette by @SachaG
+  // original palette by @SachaG
   // @see https://www.figma.com/file/J6IYJEtdRmwJQOrcZ2DfvxDD/Gatsby
-  // brand replaced with #663399 rebeccapurple
-  B700: `#663399`, // brand
+  B700: `#663399`, // brand,        was #744c9e
   B600: ``,
-  B500: `#9D7CBF`, // brandLight
+  B500: `#966dc0`, // brandLight,   was #9D7CBF
   B400: ``,
-  B300: `#e0d6eb`, // lightPurple
-  B200: `#f5f1f8`, // brandLighter, was #f5f3f7, sat by +14, matching brand
-  B100: ``, // veryLightPurple, was #f6f2f8, replaced by B200
-  B50: `#faf8fc`, // sidebar, was #fbfafc, sat +14
+  B300: `#e6dbf0`, // lightPurple,  was #e0d6eb
+  B200: `#f5f0f9`, // brandLighter, was #f5f3f7
+  B100: ``, // veryLightPurple,     was #f6f2f8, replaced by B200
+  B50: `#faf8fc`, // sidebar,       was #fbfafc
   // bolder palette by @ArchieHicklin
   // @see https://github.com/gatsbyjs/gatsby/issues/1173#issuecomment-309415650
   accent: `#ffb238`, // "Mustard"
