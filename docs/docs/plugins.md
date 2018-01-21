@@ -167,6 +167,7 @@ root.
 * [gatsby-source-directus](https://github.com/iKonrad/gatsby-source-directus)
 * [gatsby-source-github](https://github.com/mosch/gatsby-source-github)
 * [gatsby-source-google-sheets](https://github.com/brandonmp/gatsby-source-google-sheets)
+* [gatsby-source-mesh](https://github.com/gentics/gatsby-source-mesh)
 * [gatsby-source-soundcloud](https://github.com/jedidiah/gatsby-source-soundcloud)
 * [gatsby-source-stripe](https://github.com/njosefbeck/gatsby-source-stripe)
 * [gatsby-source-twitch](https://github.com/jedidiah/gatsby-source-twitch)
