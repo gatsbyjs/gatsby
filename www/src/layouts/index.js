@@ -33,7 +33,7 @@ class DefaultLayout extends React.Component {
     const isSearchSource = hasSidebar
     const sidebarStyles = {
       borderRight: `1px solid ${colors.b[0]}`,
-      backgroundColor: presets.sidebar,
+      backgroundColor: presets.B50,
       boxShadow: `inset 0 4px 5px 0 rgba(102, 51, 153, ${
         presets.shadowKeyPenumbraOpacity
       }), inset 0 1px 10px 0 rgba(${presets.shadowColor}, ${
@@ -53,10 +53,10 @@ class DefaultLayout extends React.Component {
         height: `6px`,
       },
       "::-webkit-scrollbar-thumb": {
-        background: presets.lightPurple,
+        background: presets.B300,
       },
       "::-webkit-scrollbar-track": {
-        background: presets.brandLighter,
+        background: presets.B200,
       },
       [presets.Desktop]: {
         width: rhythm(12),

@@ -26,7 +26,7 @@ class EvaluationTable extends Component {
             // wordBreak: `break-all`,
             // display: `inline-block`,
             "&:hover": {
-              background: presets.lightPurple,
+              background: presets.B300,
             },
           }}
         >
@@ -133,7 +133,7 @@ class EvaluationTable extends Component {
                               cursor: j >= 0 ? `pointer` : `inherit`,
                             },
                             borderBottom: !showTooltip(s, i)
-                              ? `1px solid ${presets.veryLightPurple}`
+                              ? `1px solid ${presets.B100}`
                               : `none`,
                             minWidth: 40,
                             paddingRight: 0,

@@ -36,16 +36,16 @@ const renderSubHeader = props => (
         key={i}
         css={{
           display: `table-cell`,
-          background: `${presets.sidebar}`,
-          // borderLeft: i > 0 ? `1px solid ${presets.brandLighter}` : `none`,
-          // borderRight: i === 5 ? `1px solid ${presets.brandLighter}` : `none`,
+          background: `${presets.B50}`,
+          // borderLeft: i > 0 ? `1px solid ${presets.B200}` : `none`,
+          // borderRight: i === 5 ? `1px solid ${presets.B200}` : `none`,
           fontWeight: 600,
           ...scale(-1 / 9),
           lineHeight: 1.3,
           textAlign: `left`,
           verticalAlign: `middle`,
           fontFamily: options.headerFontFamily.join(`,`),
-          borderColor: presets.veryLightPurple,
+          borderColor: presets.B100,
           "&&": {
             paddingTop: rhythm(1 / 4),
             paddingLeft: rhythm(1 / 4),

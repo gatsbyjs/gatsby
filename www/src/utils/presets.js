@@ -15,15 +15,18 @@ module.exports = {
   VVHd: `@media (min-width: 1650px)`,
   maxWidth: 35,
   maxWidthWithSidebar: 26,
-  lightPurple: `#e0d6eb`,
-  veryLightPurple: `#f6f2f8`,
-  sidebar: `#fbfafc`,
   calm: `rgba(38, 32, 44, .5)`,
   // palette by @SachaG
   // @see https://www.figma.com/file/J6IYJEtdRmwJQOrcZ2DfvxDD/Gatsby
-  brand: `#663399`,
-  brandLight: `#9D7CBF`,
-  brandLighter: `#F5F3F7`,
+  // brand replaced with #663399 rebeccapurple
+  B700: `#663399`, // brand
+  B600: ``,
+  B500: `#9D7CBF`, // brandLight
+  B400: ``,
+  B300: `#e0d6eb`, // lightPurple
+  B200: `#F5F3F7`, // brandLighter
+  B100: `#f6f2f8`, // veryLightPurple
+  B50: `#fbfafc`, // sidebar
   // bolder palette by @ArchieHicklin
   // @see https://github.com/gatsbyjs/gatsby/issues/1173#issuecomment-309415650
   accent: `#ffb238`, // "Mustard"

@@ -21,7 +21,7 @@ class BlogPostTemplate extends React.Component {
         borderBottom: 0,
         fontFamily: options.headerFontFamily.join(`,`),
         fontWeight: `bold`,
-        color: presets.brand,
+        color: presets.B700,
       },
     }
     const prevNextLabelStyles = {
@@ -207,7 +207,7 @@ class BlogPostTemplate extends React.Component {
         </Container>
         <div
           css={{
-            borderTop: `1px solid ${presets.veryLightPurple}`,
+            borderTop: `1px solid ${presets.B100}`,
             marginTop: rhythm(2),
             [presets.Tablet]: {
               marginTop: rhythm(2),

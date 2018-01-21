@@ -15,7 +15,7 @@ const MobileNavItem = ({ linkTo, label, icon }) => (
   <Link
     to={linkTo}
     css={{
-      color: presets.brand,
+      color: presets.B700,
       fontSize: scale(-1 / 2).fontSize,
       letterSpacing: `0.0075rem`,
       lineHeight: 1,
@@ -42,8 +42,8 @@ export default () => (
       left: 0,
       right: 0,
       zIndex: 1,
-      borderTop: `1px solid ${presets.veryLightPurple}`,
-      background: presets.sidebar,
+      borderTop: `1px solid ${presets.B100}`,
+      background: presets.B50,
       fontFamily: typography.options.headerFontFamily.join(`,`),
       [presets.Tablet]: {
         display: `none`,

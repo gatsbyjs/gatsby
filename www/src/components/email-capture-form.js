@@ -12,7 +12,7 @@ let stripeAnimation = css.keyframes({
 
 const formInputDefaultStyles = {
   backgroundColor: `#fff`,
-  border: `1px solid ${presets.lightPurple}`,
+  border: `1px solid ${presets.B300}`,
   borderRadius: presets.radius,
   color: presets.bodyColor,
   fontFamily: options.headerFontFamily.join(`,`),
@@ -22,7 +22,7 @@ const formInputDefaultStyles = {
     presets.animation.curveDefault
   }`,
   "::placeholder": {
-    color: presets.brandLight,
+    color: presets.B500,
     opacity: 1,
   },
 }
@@ -111,7 +111,7 @@ class EmailCaptureForm extends React.Component {
     return (
       <div
         css={{
-          borderTop: `2px solid ${presets.brandLight}`,
+          borderTop: `2px solid ${presets.B500}`,
           marginTop: rhythm(3),
           paddingTop: `${rhythm(1)}`,
         }}
@@ -138,7 +138,7 @@ class EmailCaptureForm extends React.Component {
                     width: `250px`,
                     ":focus": {
                       color: presets.bodyColor,
-                      borderColor: presets.brand,
+                      borderColor: presets.B700,
                       outline: 0,
                       boxShadow: `0 0 0 0.2rem rgba(${
                         presets.shadowColor
@@ -151,14 +151,14 @@ class EmailCaptureForm extends React.Component {
                   onClick={this._handleFormSubmit}
                   css={{
                     ...formInputDefaultStyles,
-                    borderColor: presets.brand,
-                    color: presets.brand,
+                    borderColor: presets.B700,
+                    color: presets.B700,
                     cursor: `pointer`,
                     fontWeight: `bold`,
                     marginLeft: rhythm(1 / 2),
                     ":hover, &:focus": {
                       backgroundSize: `30px 30px`,
-                      backgroundColor: presets.brand,
+                      backgroundColor: presets.B700,
                       backgroundImage: `linear-gradient(45deg, rgba(0,0,0, 0.1) 25%, transparent 25%, transparent 50%, rgba(0,0,0, 0.1) 50%, rgba(0,0,0, 0.1) 75%, transparent 75%, transparent)`,
                       color: `#fff`,
                       animation: `${stripeAnimation} 2.8s linear infinite`,

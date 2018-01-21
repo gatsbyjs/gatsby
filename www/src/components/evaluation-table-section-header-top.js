@@ -30,7 +30,7 @@ const superHeader = () => (
           border: 0,
           // fontFamily: options.headerFontFamily.join(`,`),
           color: presets.calm,
-          background: presets.sidebar,
+          background: presets.B50,
           "&:first-child": {
             borderTopLeftRadius: presets.radiusLg,
             textAlign: `left`,

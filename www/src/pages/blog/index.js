@@ -16,7 +16,7 @@ class BlogPostsIndex extends React.Component {
       <div
         css={{
           [presets.Tablet]: {
-            background: presets.sidebar,
+            background: presets.B50,
             paddingBottom: rhythm(options.blockMarginBottom * 4),
           },
         }}

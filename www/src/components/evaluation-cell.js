@@ -42,7 +42,7 @@ class EvaluationCell extends Component {
       <div
         css={{
           ...basicStyling,
-          // border: `1px solid ${presets.brandLight}`,
+          // border: `1px solid ${presets.B500}`,
           backgroundColor:
             [`N/A`, `0`, ``].indexOf(this.props.num) !== -1
               ? bgDefault
