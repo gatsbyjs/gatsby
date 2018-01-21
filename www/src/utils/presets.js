@@ -21,7 +21,7 @@ module.exports = {
   calm: `rgba(38, 32, 44, .5)`,
   // palette by @SachaG
   // @see https://www.figma.com/file/J6IYJEtdRmwJQOrcZ2DfvxDD/Gatsby
-  brand: `#744C9E`,
+  brand: `#663399`,
   brandLight: `#9D7CBF`,
   brandLighter: `#F5F3F7`,
   // bolder palette by @ArchieHicklin

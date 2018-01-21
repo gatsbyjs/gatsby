@@ -34,7 +34,7 @@ class DefaultLayout extends React.Component {
     const sidebarStyles = {
       borderRight: `1px solid ${colors.b[0]}`,
       backgroundColor: presets.sidebar,
-      boxShadow: `inset 0 4px 5px 0 rgba(116, 76, 158, ${
+      boxShadow: `inset 0 4px 5px 0 rgba(102, 51, 153, ${
         presets.shadowKeyPenumbraOpacity
       }), inset 0 1px 10px 0 rgba(${presets.shadowColor}, ${
         presets.shadowAmbientShadowOpacity
