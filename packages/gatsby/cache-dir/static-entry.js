@@ -190,7 +190,7 @@ module.exports = (locals, callback) => {
     })
 
   // Add the chunk-manifest at the end of body element.
-  const chunkManifest = require(`!raw!../public/chunk-manifest.json`)
+  const chunkManifest = require(`!raw-loader!../public/chunk-manifest.json`)
   postBodyComponents.unshift(
     <script
       id="webpack-manifest"
