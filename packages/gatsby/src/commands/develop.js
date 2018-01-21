@@ -354,8 +354,8 @@ module.exports = async (program: any) => {
 
   function printDeprecationWarnings() {
     const files = glob
-      .sync("{,!(node_modules|public)/**/}*.js")
-      .filter(file => fs.readFileSync(file).indexOf("boundActionCreators") !== -1)
+      .sync(`{,!(node_modules|public)/**/}*.js`)
+      .filter(file => fs.readFileSync(file).indexOf(`boundActionCreators`) !== -1)
 
     if (files.length) {
       console.log(`${chalk.cyan(`boundActionCreators`)} ${chalk.yellow(`is deprecated but was found in the following files:`)}`)
