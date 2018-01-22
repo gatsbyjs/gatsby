@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import { navigateTo } from "gatsby-link"
 import { rhythm } from "../utils/typography"
 import presets from "../utils/presets"
+import hex2rgba from "hex2rgba"
 
 import { css } from "glamor"
 
@@ -16,7 +17,7 @@ css.insert(`
     min-width: calc(100vw - ${rhythm(1)}) !important;
     max-width: calc(100vw - 2rem) !important;
     max-height: calc(100vh - 5rem) !important;
-    box-shadow: 0 3px 10px 0.05rem rgba(${presets.shadowColor}, .25) !important;
+    box-shadow: 0 3px 10px 0.05rem ${hex2rgba(presets.B500, 0.25)} !important;
   }
 
   /* .searchWrap to beat docsearch.css' !important */

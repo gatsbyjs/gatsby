@@ -1,6 +1,7 @@
 import Link from "gatsby-link"
 import { rhythm, scale, options } from "../utils/typography"
 import presets from "../utils/presets"
+import hex2rgba from "hex2rgba"
 
 import { css } from "glamor"
 
@@ -45,7 +46,7 @@ const CtaButton = ({ to, overrideCSS, children }) => (
         },
         ":focus": {
           outline: 0,
-          boxShadow: `0 0 0 0.2rem rgba(${presets.shadowColor}, .25)`,
+          boxShadow: `0 0 0 0.2rem ${hex2rgba(presets.B500, 0.25)}`,
         },
         ":after": {
           content: ``,

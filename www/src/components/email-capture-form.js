@@ -4,6 +4,7 @@ import presets from "../utils/presets"
 import jsonp from "jsonp"
 import { validate } from "email-validator"
 import { css } from "glamor"
+import hex2rgba from "hex2rgba"
 
 let stripeAnimation = css.keyframes({
   "0%": { backgroundPosition: `0 0` },
@@ -140,9 +141,7 @@ class EmailCaptureForm extends React.Component {
                       color: presets.bodyColor,
                       borderColor: presets.B700,
                       outline: 0,
-                      boxShadow: `0 0 0 0.2rem rgba(${
-                        presets.shadowColor
-                      }, .25)`,
+                      boxShadow: `0 0 0 0.2rem ${hex2rgba(presets.B500, 0.25)}`,
                     },
                   }}
                 />
@@ -165,9 +164,7 @@ class EmailCaptureForm extends React.Component {
                     },
                     ":focus": {
                       outline: 0,
-                      boxShadow: `0 0 0 0.2rem rgba(${
-                        presets.shadowColor
-                      },.25)`,
+                      boxShadow: `0 0 0 0.2rem ${hex2rgba(presets.B500, 0.25)}`,
                     },
                   }}
                 >

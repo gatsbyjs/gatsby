@@ -9,6 +9,7 @@ import docsSidebar from "../pages/docs/doc-links.yaml"
 import featuresSidebar from "../pages/docs/features-links.yaml"
 import { rhythm, scale } from "../utils/typography"
 import presets from "../utils/presets"
+import hex2rgba from "hex2rgba"
 import "../css/prism-coy.css"
 
 // Import Futura PT typeface
@@ -33,13 +34,16 @@ class DefaultLayout extends React.Component {
     const sidebarStyles = {
       borderRight: `1px solid ${presets.B100}`,
       backgroundColor: presets.B50,
-      boxShadow: `inset 0 4px 5px 0 rgba(102, 51, 153, ${
+      boxShadow: `inset 0 4px 5px 0 ${hex2rgba(
+        presets.B700,
         presets.shadowKeyPenumbraOpacity
-      }), inset 0 1px 10px 0 rgba(${presets.shadowColor}, ${
+      )}, inset 0 1px 10px 0 ${hex2rgba(
+        presets.B500,
         presets.shadowAmbientShadowOpacity
-      }), inset 0 2px 4px -1px rgba(${presets.shadowColor}, ${
+      )}, inset 0 2px 4px -1px ${hex2rgba(
+        presets.B500,
         presets.shadowKeyUmbraOpacity
-      })`,
+      )}`,
       width: rhythm(10),
       display: `none`,
       position: `fixed`,
