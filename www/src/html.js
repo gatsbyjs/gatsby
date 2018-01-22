@@ -1,4 +1,5 @@
 import React from "react"
+import presets from "./utils/presets"
 
 let stylesStr
 if (process.env.NODE_ENV === `production`) {
@@ -70,7 +71,7 @@ export default class HTML extends React.Component {
           <link
             rel="mask-icon"
             href={`/safari-pinned-tab.svg`}
-            color="#5bbad5"
+            color={presets.B700}
           />
           <script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js" />
           {css}
