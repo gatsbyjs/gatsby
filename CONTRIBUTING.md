@@ -12,7 +12,34 @@ If you want your issue to be resolved quickly, please include in your issue:
   changes you've made there.
 
 ## Contributing
+We want contributing to Gatsby to be fun, enjoyable, and educational for anyone and everyone. Contributions go far beyond pull requests and commits; we are thrilled to receive a variety of other contributions including the following:
 
+* Blogging, speaking about, or creating tutorials about one of Gatsby's many features. Mention @gatsbyjs on Twitter and/or email shannon [at] gatsbyjs [dot] com so we can give pointers and tips (if you want them :) and help you spread the word. Please add your blog posts and videos of talks to our [Awesome Gatsby](/docs/awesome-gatsby/) page.
+* Submitting new documentation; titles in _italics_ on gatsbyjs.org are stubs and need contributions
+* Tweeting about things you build with @gatsbyjs (make sure to @ mention us!)
+* Submitting documentation updates, enhancements, designs, or bugfixes
+* Submitting spelling or grammar fixes
+* Adding unit or functional tests
+* Triaging GitHub issues -- especially determining whether an issue still persists or is reproducible
+* Searching for Gatsby on Discord or Spectrum and helping someone else who needs help
+* Teaching others how to contribute to Gatsby's repo!
+
+If you are worried or don't know where to start, you can always reach out to Shannon Soper(@shannonb_ux) on Twitter or simply submit an issue and a maintainer can help give you guidance!
+
+Looking to speak about Gatsby? We'd love to review your talk abstract/CFP! You can email it to shannon [at] gatsbyjs [dot] com and we can give pointers or tips!!!
+
+### Special Note on Issues
+If an issue is affecting you, start at the top of this list and complete as many tasks on the list as you can:
+1. If there is an issue, +1 the issue to indicate that it's affecting you
+2. If there's an issue and you can add more detail, write a comment describing how the bug is affecting OR if you can, write up a work-around for the bug
+3. If there's not an issue, write the most complete description of what's happening, preferably with link to a Gatsby site that reproduces the problem
+4. Offer to help fix the bug (and it's totally expected that you ask for help; open-source maintainers want to help contributors)
+5. Deliver a well-crafted, tested PR
+ 
+### Creating your own plugins and loaders
+If you create a loader or plugin, we would <3 for you to open source it, and put it on npm.
+
+### Contributing to the repo
 Gatsby uses a "monorepo" pattern to manage its many dependencies and relies on
 lerna and yarn to configure the repository for active development.
 
