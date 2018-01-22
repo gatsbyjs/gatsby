@@ -376,4 +376,18 @@ Community:
   * Offline support.
   * Google Analytics support.
   * Disqus Comments support.
-  
+
+* [gatsby-starter-strict](https://github.com/kripod/gatsby-starter-strict)
+  [(demo)](https://gatsby-starter-strict.netlify.com)
+
+  Features:
+
+  * A set of strict linting rules (based on the [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript))
+    * `lint` script
+  * Encourage automatic code formatting
+    * `format` script
+  * Prefer using [Yarn](https://yarnpkg.com) for package management
+  * Use [EditorConfig](http://editorconfig.org) to maintain consistent coding styles between different editors and IDEs
+  * Integration with [Visual Studio Code](https://code.visualstudio.com)
+    * Pre-configured auto-formatting on file save
+  * Based on [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default)
