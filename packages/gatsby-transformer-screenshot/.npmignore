@@ -34,8 +34,7 @@ decls
 examples
 
 # Lambda-related
-src/lambda
 lambda
-lambda-package.json
+lambda-dist
 chrome
 lambda-package.zip

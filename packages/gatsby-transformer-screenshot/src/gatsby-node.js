@@ -1,9 +1,9 @@
 const crypto = require(`crypto`)
-const AWS = require(`aws-sdk`)
+const axios = require(`axios`)
 const _ = require(`lodash`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
-var lambda
+const SCREENSHOT_ENDPOINT = `https://vuz0le7eki.execute-api.us-west-2.amazonaws.com/production/screenshot` // TODO: replace with version hosted on Gatsby AWS
 
 const createContentDigest = obj =>
   crypto
@@ -16,31 +16,6 @@ exports.onPreBootstrap = (
   pluginOptions
 ) => {
   const { createNode, touchNode } = boundActionCreators
-
-  // Set up the lambda service object based on configuration options
-
-  if (!pluginOptions.lambdaName) {
-    console.log(`
-gatsby-transformer-screenshot requires a lambdaName option. Please specify
-the name of the AWS Lambda function to invoke.
-    `)
-    process.exit(1)
-  }
-
-  const options = {
-    params: { FunctionName: pluginOptions.lambdaName },
-    apiVersion: `2015-03-31`,
-  }
-
-  if (pluginOptions.region) {
-    options.region = pluginOptions.region
-  }
-
-  if (pluginOptions.credentials) {
-    options.credentials = pluginOptions.credentials
-  }
-
-  lambda = new AWS.Lambda(options)
 
   // Check for updated screenshots
   // and prevent Gatsby from garbage collecting remote file nodes
@@ -88,28 +63,6 @@ exports.onCreateNode = async ({ node, boundActionCreators, store, cache }) => {
   })
 }
 
-const getScreenshot = url => {
-  const params = {
-    Payload: JSON.stringify({ url }),
-  }
-
-  return new Promise((resolve, reject) => {
-    lambda.invoke(params, (err, data) => {
-      if (err) reject(err)
-      else {
-        const payload = JSON.parse(data.Payload)
-
-        if (
-          typeof data.FunctionError === `string` &&
-          data.FunctionError.length > 0
-        )
-          reject(payload)
-        resolve(payload)
-      }
-    })
-  })
-}
-
 const createScreenshotNode = async ({
   url,
   parent,
@@ -117,10 +70,10 @@ const createScreenshotNode = async ({
   cache,
   createNode,
 }) => {
-  const screenshotResponse = await getScreenshot(url)
+  const screenshotResponse = await axios.post(SCREENSHOT_ENDPOINT, { url })
 
   const fileNode = await createRemoteFileNode({
-    url: screenshotResponse.url,
+    url: screenshotResponse.data.url,
     store,
     cache,
     createNode,
@@ -129,7 +82,7 @@ const createScreenshotNode = async ({
   const screenshotNode = {
     id: `${parent} >>> Screenshot`,
     url,
-    expires: screenshotResponse.expires,
+    expires: screenshotResponse.data.expires,
     parent,
     children: [],
     internal: {
