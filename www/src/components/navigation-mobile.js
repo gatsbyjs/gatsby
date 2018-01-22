@@ -7,7 +7,6 @@ import {
   DocsIcon,
   TutorialIcon,
 } from "../assets/mobile-nav-icons"
-import colors from "../utils/colors"
 import presets from "../utils/presets"
 import typography, { rhythm, scale, options } from "../utils/typography"
 
@@ -42,7 +41,7 @@ export default () => (
       left: 0,
       right: 0,
       zIndex: 1,
-      borderTop: `1px solid ${presets.B200}`,
+      borderTop: `1px solid ${presets.B100}`,
       background: presets.B50,
       fontFamily: typography.options.headerFontFamily.join(`,`),
       [presets.Tablet]: {

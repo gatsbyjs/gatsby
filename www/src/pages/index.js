@@ -2,7 +2,6 @@ import React from "react"
 import Link from "gatsby-link"
 
 import presets from "../utils/presets"
-import colors from "../utils/colors"
 import { rhythm, scale, options } from "../utils/typography"
 import { JSIcon, WebpackIcon, ReactJSIcon, GraphQLIcon } from "../assets/logos"
 import { vP, vPHd, vPVHd, vPVVHd } from "../components/gutters"
@@ -122,7 +121,7 @@ class IndexRoute extends React.Component {
                   borderTopLeftRadius: 0,
                   borderTopRightRadius: 0,
                   flex: `1 1 100%`,
-                  borderTop: `1px solid ${presets.B200}`,
+                  borderTop: `1px solid ${presets.B100}`,
                 }}
               />
 
@@ -147,7 +146,7 @@ class IndexRoute extends React.Component {
 
               <div
                 css={{
-                  borderTop: `1px solid ${presets.B200}`,
+                  borderTop: `1px solid ${presets.B100}`,
                   flex: `1 1 100%`,
                   [presets.Tablet]: {
                     paddingTop: rhythm(1),

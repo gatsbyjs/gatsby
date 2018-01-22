@@ -1,6 +1,18 @@
-import colors from "./colors"
+import chroma from "chroma-js"
+
+let palette = chroma
+  .scale([`#663399`, `#fbfafc`])
+  // .gamma(0.4)
+  .mode(`hsl`)
+  // .correctLightness()
+  .colors(10, `hsl`)
 
 module.exports = {
+  palette: palette,
+  gray: chroma
+    .scale([`#663399`, `#fbfafc`])
+    .mode(`lch`)
+    .colors(8),
   mobile: `(min-width: 400px)`,
   Mobile: `@media (min-width: 400px)`,
   phablet: `(min-width: 550px)`,
@@ -18,14 +30,11 @@ module.exports = {
   calm: `rgba(38, 32, 44, .5)`,
   // original palette by @SachaG
   // @see https://www.figma.com/file/J6IYJEtdRmwJQOrcZ2DfvxDD/Gatsby
-  B700: `#663399`, // brand,        was #744c9e
-  B600: ``,
-  B500: `#9D7CBF`, // brandLight,   was #9D7CBF
-  B400: ``,
-  B300: `#e0d6eb`, // lightPurple,  was #e0d6eb
-  B200: `#f5f3f7`, // brandLighter, was #f5f3f7
-  B100: ``, // veryLightPurple,     was #f6f2f8, replaced by B200
-  B50: `#fbfafc`, // sidebar,       was #fbfafc
+  B700: `#663399`, // brand, was #744c9e
+  B500: `#9D7CBF`, // brandLight
+  B200: `#e0d6eb`, // lightPurple
+  B100: `#f5f3f7`, // brandLighter, replacing veryLightPurple (the latter was #f6f2f8)
+  B50: `#fbfafc`, // sidebar
   // bolder palette by @ArchieHicklin
   // @see https://github.com/gatsbyjs/gatsby/issues/1173#issuecomment-309415650
   accent: `#ffb238`, // "Mustard"

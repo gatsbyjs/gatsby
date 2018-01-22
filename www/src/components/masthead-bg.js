@@ -31,7 +31,7 @@ const MastheadBg = () => (
         right: `auto`,
         width: vPOff,
         zIndex: -10,
-        background: presets.B200,
+        background: presets.B100,
         [presets.Hd]: {
           width: vPHdOff,
         },
@@ -64,7 +64,7 @@ const MastheadBg = () => (
         height: `100%`,
       }}
     >
-      <polygon fill={presets.B200} points="-5,-5 15,15 -5,15 " />
+      <polygon fill={presets.B100} points="-5,-5 15,15 -5,15 " />
     </svg>
     <style>
       {`

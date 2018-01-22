@@ -73,11 +73,11 @@ const options = {
         paddingLeft: rhythm(options.blockMarginBottom),
         marginLeft: 0,
         borderLeft: `${rhythm(options.blockMarginBottom / 4)} solid ${
-          presets.B200
+          presets.B100
         }`,
       },
       hr: {
-        backgroundColor: presets.B200,
+        backgroundColor: presets.B100,
       },
       "tt,code": {
         // background: `hsla(23, 60%, 97%, 1)`,
@@ -165,8 +165,8 @@ const options = {
         transition: `all ${presets.animation.speedFast} ${
           presets.animation.curveDefault
         }`,
-        borderBottom: `1px solid ${presets.B300}`,
-        boxShadow: `inset 0 -2px 0px 0px ${presets.B300}`,
+        borderBottom: `1px solid ${presets.B200}`,
+        boxShadow: `inset 0 -2px 0px 0px ${presets.B200}`,
         fontFamily: options.headerFontFamily.join(`,`),
         fontWeight: `bold`,
       },
@@ -174,7 +174,7 @@ const options = {
         fontSize: `102%`,
       },
       ".main-body a:hover": {
-        background: presets.B300,
+        background: presets.B200,
       },
       ".main-body a.anchor": {
         color: `inherit`,

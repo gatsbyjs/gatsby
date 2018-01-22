@@ -2,7 +2,6 @@ import React from "react"
 import { css } from "glamor"
 
 import { rhythm, scale, options } from "../utils/typography"
-import colors from "../utils/colors"
 import presets from "../utils/presets"
 import logo from "../gatsby-negative.svg"
 import { GraphQLIcon, ReactJSIcon } from "../assets/logos"
@@ -88,14 +87,14 @@ const VerticalLine = () => (
 )
 
 const box = {
-  border: `1px solid ${colors.b[0]}`,
+  border: `1px solid ${presets.B100}`,
   borderRadius: presets.radiusLg,
   padding: `${rhythm(1)} ${rhythm(1)} 0`,
   background: presets.B50,
 }
 
 const borderAndBoxShadow = {
-  border: `1px solid ${presets.B200}`,
+  border: `1px solid ${presets.B100}`,
   background: `#fff`,
   width: `100%`,
   boxShadow: `0 5px 15px rgba(0,0,0,0.035)`,

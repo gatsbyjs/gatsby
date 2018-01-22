@@ -61,7 +61,7 @@ export default ({ pathname }) => {
   const socialIconsStyles = {
     color: presets.B500,
     [presets.Phablet]: {
-      color: isHomepage ? presets.B200 : false,
+      color: isHomepage ? presets.B100 : false,
     },
   }
   const gutters = isHomepage
@@ -88,7 +88,7 @@ export default ({ pathname }) => {
     <div
       role="navigation"
       css={{
-        borderBottom: `1px solid ${presets.B200}`,
+        borderBottom: `1px solid ${presets.B100}`,
         backgroundColor: `rgba(255,255,255,0.975)`,
         position: isHomepage ? `absolute` : false,
         height: presets.headerHeight,

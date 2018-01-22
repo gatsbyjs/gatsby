@@ -12,7 +12,7 @@ let stripeAnimation = css.keyframes({
 
 const formInputDefaultStyles = {
   backgroundColor: `#fff`,
-  border: `1px solid ${presets.B300}`,
+  border: `1px solid ${presets.B200}`,
   borderRadius: presets.radius,
   color: presets.bodyColor,
   fontFamily: options.headerFontFamily.join(`,`),

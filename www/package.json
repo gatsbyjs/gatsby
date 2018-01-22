@@ -5,6 +5,7 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "bluebird": "^3.5.1",
+    "chroma-js": "gka/chroma.js",
     "email-validator": "^1.1.1",
     "gatsby": "^1.9.77",
     "gatsby-image": "^1.0.14",

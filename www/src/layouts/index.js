@@ -9,7 +9,6 @@ import docsSidebar from "../pages/docs/doc-links.yaml"
 import featuresSidebar from "../pages/docs/features-links.yaml"
 import { rhythm, scale } from "../utils/typography"
 import presets from "../utils/presets"
-import colors from "../utils/colors"
 import "../css/prism-coy.css"
 
 // Import Futura PT typeface
@@ -32,7 +31,7 @@ class DefaultLayout extends React.Component {
       this.props.location.pathname.slice(0, 9) === `/features`
     const isSearchSource = hasSidebar
     const sidebarStyles = {
-      borderRight: `1px solid ${colors.b[0]}`,
+      borderRight: `1px solid ${presets.B100}`,
       backgroundColor: presets.B50,
       boxShadow: `inset 0 4px 5px 0 rgba(102, 51, 153, ${
         presets.shadowKeyPenumbraOpacity
@@ -53,10 +52,10 @@ class DefaultLayout extends React.Component {
         height: `6px`,
       },
       "::-webkit-scrollbar-thumb": {
-        background: presets.B300,
+        background: presets.B200,
       },
       "::-webkit-scrollbar-track": {
-        background: presets.B200,
+        background: presets.B100,
       },
       [presets.Desktop]: {
         width: rhythm(12),

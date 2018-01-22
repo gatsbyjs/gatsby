@@ -8,7 +8,7 @@ import Container from "../components/container"
 import { options, rhythm } from "../utils/typography"
 import presets from "../utils/presets"
 
-const legendBorderColor = presets.B200
+const legendBorderColor = presets.B100
 
 const LegendTable = () => {
   const legendBallStyle = {
