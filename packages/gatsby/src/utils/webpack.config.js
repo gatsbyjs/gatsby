@@ -25,6 +25,16 @@ const genBabelConfig = require(`./babel-config`)
 const { withBasePath } = require(`./path`)
 const HashedChunkIdsPlugin = require(`./hashed-chunk-ids-plugin`)
 
+// Use separate extract-text-webpack-plugin instances for each stage per the docs
+const extractDevelopHtml = new ExtractTextPlugin(`build-html-styles.css`)
+const extractBuildHtml = new ExtractTextPlugin(`build-html-styles.css`, {
+  allChunks: true,
+})
+const extractBuildCss = new ExtractTextPlugin(`styles.css`, { allChunks: true })
+const extractBuildJavascript = new ExtractTextPlugin(`build-js-styles.css`, {
+  allChunks: true,
+})
+
 // Five stages or modes:
 //   1) develop: for `gatsby develop` command, hot reload and CSS injection into page
 //   2) develop-html: same as develop without react-hmre in the babel config for html renderer
@@ -200,7 +210,7 @@ module.exports = async (
             __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
             __POLYFILL__: store.getState().config.polyfill,
           }),
-          new ExtractTextPlugin(`build-html-styles.css`),
+          extractDevelopHtml,
         ]
       case `build-css`:
         return [
@@ -210,7 +220,7 @@ module.exports = async (
             __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
             __POLYFILL__: store.getState().config.polyfill,
           }),
-          new ExtractTextPlugin(`styles.css`, { allChunks: true }),
+          extractBuildCss,
         ]
       case `build-html`:
         return [
@@ -224,7 +234,7 @@ module.exports = async (
             __PATH_PREFIX__: JSON.stringify(store.getState().config.pathPrefix),
             __POLYFILL__: store.getState().config.polyfill,
           }),
-          new ExtractTextPlugin(`build-html-styles.css`, { allChunks: true }),
+          extractBuildHtml,
         ]
       case `build-javascript`: {
         // Get array of page template component names.
@@ -298,7 +308,7 @@ module.exports = async (
             __POLYFILL__: store.getState().config.polyfill,
           }),
           // Extract CSS so it doesn't get added to JS bundles.
-          new ExtractTextPlugin(`build-js-styles.css`, { allChunks: true }),
+          extractBuildJavascript,
           // Write out mapping between chunk names and their hashed names. We use
           // this to add the needed javascript files to each HTML page.
           new StatsWriterPlugin(),
@@ -435,13 +445,13 @@ module.exports = async (
         config.loader(`css`, {
           test: /\.css$/,
           exclude: [/\.module\.css$/],
-          loader: ExtractTextPlugin.extract([`css?minimize`, `postcss`]),
+          loader: extractBuildCss.extract([`css?minimize`, `postcss`]),
         })
 
         // CSS modules
         config.loader(`cssModules`, {
           test: /\.module\.css$/,
-          loader: ExtractTextPlugin.extract(`style`, [
+          loader: extractBuildCss.extract(`style`, [
             cssModulesConfig(stage),
             `postcss`,
           ]),
@@ -471,10 +481,10 @@ module.exports = async (
         // CSS modules
         config.loader(`cssModules`, {
           test: /\.module\.css$/,
-          loader: ExtractTextPlugin.extract(`style`, [
-            cssModulesConfig(stage),
-            `postcss`,
-          ]),
+          loader: (stage === `build-html`
+            ? extractBuildHtml
+            : extractDevelopHtml
+          ).extract(`style`, [cssModulesConfig(stage), `postcss`]),
         })
 
         return config
@@ -491,13 +501,13 @@ module.exports = async (
           test: /\.css$/,
           exclude: [/\.module\.css$/],
           // loader: `null`,
-          loader: ExtractTextPlugin.extract([`css`]),
+          loader: extractBuildJavascript.extract([`css`]),
         })
 
         // CSS modules
         config.loader(`cssModules`, {
           test: /\.module\.css$/,
-          loader: ExtractTextPlugin.extract(`style`, [
+          loader: extractBuildJavascript.extract(`style`, [
             cssModulesConfig(stage),
             `postcss`,
           ]),
