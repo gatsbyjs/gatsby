@@ -36,7 +36,7 @@ If an issue is affecting you, start at the top of this list and complete as many
 5. Deliver a well-crafted, tested PR
  
 ### Creating your own plugins and loaders
-If you create a loader or plugin, we would <3 for you to open source it, and put it on npm. We follow the x-loader, x-gatsby-plugin naming convention.
+If you create a loader or plugin, we would <3 for you to open source it, and put it on npm.
 
 ### Contributing to the repo
 Gatsby uses a "monorepo" pattern to manage its many dependencies and relies on
