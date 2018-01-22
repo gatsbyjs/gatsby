@@ -2,8 +2,8 @@ import colors from "./colors"
 
 module.exports = {
   ...colors.brand,
-  ...colors.mustard,
-  ...colors.calm,
+  accent: colors.accent,
+  calm: colors.calm,
   palette: colors.palette,
   mobile: `(min-width: 400px)`,
   Mobile: `@media (min-width: 400px)`,

@@ -69,9 +69,9 @@ const colors = {
     B200: `#e0d6eb`, // lightPurple
     B100: `#f5f3f7`, // brandLighter, replacing veryLightPurple (the latter was #f6f2f8)
     B50: `#fbfafc`, // sidebar
-    // bolder palette by @ArchieHicklin
-    // @see https://github.com/gatsbyjs/gatsby/issues/1173#issuecomment-309415650
   },
+  // bolder palette by @ArchieHicklin
+  // @see https://github.com/gatsbyjs/gatsby/issues/1173#issuecomment-309415650
   accent: `#ffb238`, // "Mustard",
   calm: `rgba(38, 32, 44, .5)`,
 }
