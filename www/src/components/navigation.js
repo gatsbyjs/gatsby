@@ -5,7 +5,7 @@ import TwitterIcon from "react-icons/lib/fa/twitter"
 
 import SearchForm from "../components/search-form"
 import DiscordIcon from "../components/discord"
-import logo from "../gatsby-negative.svg"
+import logo from "../logo.svg"
 import typography, { rhythm, scale } from "../utils/typography"
 import presets from "../utils/presets"
 import { vP, vPHd, vPVHd, vPVVHd } from "./gutters"
@@ -18,8 +18,8 @@ const navItemStyles = {
   textDecoration: `none`,
   textTransform: `uppercase`,
   letterSpacing: `0.03em`,
-  lineHeight: `calc(${presets.headerHeight} - 4px)`,
-  padding: `4px ${rhythm(0.5)} 0`,
+  lineHeight: `calc(${presets.headerHeight} - 6px)`,
+  padding: `6px ${rhythm(1 / 2)} 0`,
   position: `relative`,
   top: 0,
   transition: `color .15s ease-out`,
@@ -122,31 +122,18 @@ export default ({ pathname }) => {
             color: `inherit`,
             display: `flex`,
             textDecoration: `none`,
-            marginRight: rhythm(0.5),
+            marginRight: rhythm(1 / 2),
           }}
         >
           <img
             src={logo}
             css={{
-              height: rhythm(1.2),
-              width: rhythm(1.2),
+              height: 28,
+              width: `auto`,
               margin: 0,
-              marginRight: rhythm(2 / 4),
             }}
             alt=""
           />
-          <h1
-            css={{
-              ...scale(2 / 5),
-              margin: 0,
-              display: `none`,
-              [presets.Mobile]: {
-                display: `block`,
-              },
-            }}
-          >
-            Gatsby
-          </h1>
         </Link>
         <ul
           css={{

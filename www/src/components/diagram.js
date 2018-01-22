@@ -3,7 +3,7 @@ import { css } from "glamor"
 
 import { rhythm, scale, options } from "../utils/typography"
 import presets from "../utils/presets"
-import logo from "../gatsby-negative.svg"
+import logo from "../monogram.svg"
 import { GraphQLIcon, ReactJSIcon } from "../assets/logos"
 import { vP, vPHd, vPVHd, vPVVHd } from "../components/gutters"
 import FuturaParagraph from "../components/futura-paragraph"

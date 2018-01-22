@@ -1,6 +1,6 @@
 import presets from "../utils/presets"
 import React from "react"
-import logo from "../gatsby-negative.svg"
+import logo from "../monogram.svg"
 import jekyll from "../assets/jekyll.svg"
 import wordpress from "../assets/wordpress.png"
 import squarespace from "../assets/squarespace-compressed.png"
