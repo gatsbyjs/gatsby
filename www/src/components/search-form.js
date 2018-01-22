@@ -106,7 +106,7 @@ css.insert(`
   }
 
   .algolia-autocomplete .algolia-docsearch-suggestion .algolia-docsearch-suggestion--content.algolia-docsearch-suggestion--no-results .algolia-docsearch-suggestion--text {
-    color: rgb(38, 32, 44) !important;
+    color: inherit !important;
     font-weight: normal !important;
   }
 
