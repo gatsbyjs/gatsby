@@ -2,28 +2,26 @@
 title: "Building apps with Gatsby"
 ---
 
-Gatsby is an excellent framework for building web apps. Gatsby has three types of pages. By default, Gatsby produces statically rendered pages. On this foundation, you can build what we call "hybrid" apps which add dynamically rendered sections of pages and if needed, client-only multi-page sections of the site.
+Gatsby is an excellent framework for building web apps. You can use Gatsby to create personalized, logged-in experiences with two different methods. 
 
-## Statically rendered pages
+The first approach to to build "hybrid" app pages which are statically rendered with dynamic sections. The second is, if needed, add client-only multi-page sections of the site.
 
-This is what Gatsby does by default. You create [components (layouts/pages/templates)](/docs/building-with-components/) that render [data you ask for in your GraphQL queries](/docs/querying-with-graphql/). Each page component is rendered to HTML when you build your Gatsby site as well as in the client as people click around the site.
+## Hybrid app
 
-Content and behaviors on these pages will look and act the same for every visitor until the next time you build the site.
-
-## Dynamic sections of pages
-
-When your React components load in the browser, they can fetch and render data from APIs. The [React docs have a simple example of how to do this.](https://reactjs.org/docs/faq-ajax.html)
+With this method, Gatsby renders the initial page with shared page content -- then when your React components load in the browser, they can fetch and render data from APIs. The [React docs have a simple example of how to do this.](https://reactjs.org/docs/faq-ajax.html)
 
 Some examples of how you could use this:
 
-* Load live data e.g. sports scores or the weather
-* Load data personalized to the user
+* A news site with live data like sports scores or the weather
+* An e-commerce site with universal product pages and category pages, but also personalized recommendation sections
 
 You can also use your React components to create interactive widgets e.g. allow a user to do searches or submit forms. Because Gatsby is just React, it's easy to blend static and interactive/dynamic models of building web sites.
 
 ## Client-only routes
 
-Sometimes you want to create client-only portions of a site. A classic example would be a site that has a landing page, a login page, and then an app section for logged-in users. The logged-in section doesn't need to be server rendered as all data will be loaded live from your API after the user logs so it makes sense to make this portion of your site client-only.
+Often you want to create a site with client-only portions that are gated by authentication. 
+
+A classic example would be a site that has a landing page, various marketing pages, a login page, and then an app section for logged-in users. The logged-in section doesn't need to be server rendered as all data will be loaded live from your API after the user logs so it makes sense to make this portion of your site client-only.
 
 These routes will exist on the client only and will not correspond to index.html files in an app's built assets. If you wish people to visit client routes directly, you'll need to setup your server to handle these correctly.
 
