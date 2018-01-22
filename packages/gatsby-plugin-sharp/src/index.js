@@ -517,7 +517,7 @@ async function resolutions({ file, args = {} }) {
   sizes.push(options.width * 3)
   const dimensions = imageSize(file.absolutePath)
 
-  const filteredSizes = sizes.filter(size => size < dimensions.width)
+  const filteredSizes = sizes.filter(size => size <= dimensions.width)
 
   // If there's no sizes after filtering (e.g. image is smaller than what's
   // requested, add back the original so there's at least something)

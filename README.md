@@ -131,6 +131,15 @@ Websites built with Gatsby:
 * [manu.ninja](https://manu.ninja/) ([source](https://github.com/Lorti/manu.ninja))
 * [Kris Hedstrom's Portfolio](https://k-create.com/) ([source](https://github.com/kristofferh/kristoffer))
 * [Chocolate free website](https://chocolate-free.com/) ([source](https://github.com/Khaledgarbaya/chocolate-free-website))
+* [Charles Pinnix Website](https://www.charlespinnix.com/)
+* [Verious](https://www.verious.io/) ([source](https://github.com/cpinnix/verious))
+* [Developer Ecosystem](https://www.developerecosystem.com/)
+* [Steve Meredith's Portfolio](http://www.steveeeie.io/)
+* [Landing page of Put.io](https://put.io/)
+* [Ryan Wiemer's Portfolio](https://www.ryanwiemer.com)
+  ([source](https://github.com/ryanwiemer/rw))
+* [yerevancoder](https://yerevancoder.com)
+  ([source](https://github.com/yerevancoder/yerevancoder.github.io))
 
 ## Docs
 

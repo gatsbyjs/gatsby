@@ -3,6 +3,18 @@
 exports[`Load plugins Loads plugins defined with an object but without an option key 1`] = `
 Array [
   Object {
+    "id": "Plugin dev-404-page",
+    "name": "dev-404-page",
+    "nodeAPIs": Array [
+      "createPages",
+    ],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "version": "1.0.0",
+  },
+  Object {
     "id": "Plugin component-page-creator",
     "name": "component-page-creator",
     "nodeAPIs": Array [
@@ -32,18 +44,6 @@ Array [
     "nodeAPIs": Array [
       "sourceNodes",
       "onCreatePage",
-    ],
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "version": "1.0.0",
-  },
-  Object {
-    "id": "Plugin dev-404-page",
-    "name": "dev-404-page",
-    "nodeAPIs": Array [
-      "createPages",
     ],
     "pluginOptions": Object {
       "plugins": Array [],
@@ -100,6 +100,18 @@ Array [
 exports[`Load plugins load plugins for a site 1`] = `
 Array [
   Object {
+    "id": "Plugin dev-404-page",
+    "name": "dev-404-page",
+    "nodeAPIs": Array [
+      "createPages",
+    ],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "version": "1.0.0",
+  },
+  Object {
     "id": "Plugin component-page-creator",
     "name": "component-page-creator",
     "nodeAPIs": Array [
@@ -129,18 +141,6 @@ Array [
     "nodeAPIs": Array [
       "sourceNodes",
       "onCreatePage",
-    ],
-    "pluginOptions": Object {
-      "plugins": Array [],
-    },
-    "resolve": "",
-    "version": "1.0.0",
-  },
-  Object {
-    "id": "Plugin dev-404-page",
-    "name": "dev-404-page",
-    "nodeAPIs": Array [
-      "createPages",
     ],
     "pluginOptions": Object {
       "plugins": Array [],

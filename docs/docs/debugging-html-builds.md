@@ -30,7 +30,7 @@ const module = require("module"); // Error
 
 // Wrap the require in check for window
 if (typeof window !== `undefined`) {
-  const module = require("module"); // Error
+  const module = require("module");
 }
 ```
 
