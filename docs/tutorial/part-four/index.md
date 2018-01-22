@@ -734,6 +734,7 @@ time. This is a really powerful idea. We'll be exploring its implications and
 ways to use it for the remainder of the tutorial.
 
 Creating new pages has two steps:
+
 1. Generate the "path" or "slug" for the page.
 2. Create the page.
 
