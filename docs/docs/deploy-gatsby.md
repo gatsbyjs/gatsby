@@ -96,6 +96,12 @@ repository dedicated to files for the site. The sites must be published from the
 kept in a branch named `source` or something similar. We also don't need to
 prefix links like we do with project sites.
 
+```
+"scripts": {
+  "deploy": "gatsby build && gh-pages -b master -d public",
+}
+```
+
 The repository for these sites requires a special name. See
 https://help.github.com/articles/user-organization-and-project-pages/ for
 documentation on naming your site's repository.
