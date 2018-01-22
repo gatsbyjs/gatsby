@@ -227,6 +227,7 @@ class SearchForm extends Component {
   constructor() {
     super()
     this.state = { enabled: true }
+    this.autocompleteSelected = this.autocompleteSelected.bind(this)
     this.focusSearchInput = this.focusSearchInput.bind(this)
   }
 
@@ -242,6 +243,7 @@ class SearchForm extends Component {
     // eslint-disable-next-line no-undef
     const a = document.createElement(`a`)
     a.href = e._args[0].url
+    this.searchInput.blur()
     navigateTo(`${a.pathname}${a.hash}`)
   }
 
