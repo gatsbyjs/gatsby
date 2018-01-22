@@ -1,18 +1,10 @@
-import chroma from "chroma-js"
-
-let palette = chroma
-  .scale([`#663399`, `#fbfafc`])
-  // .gamma(0.4)
-  .mode(`hsl`)
-  // .correctLightness()
-  .colors(10, `hsl`)
+import colors from "./colors"
 
 module.exports = {
-  palette: palette,
-  gray: chroma
-    .scale([`#663399`, `#fbfafc`])
-    .mode(`lch`)
-    .colors(8),
+  ...colors.brand,
+  ...colors.mustard,
+  ...colors.calm,
+  palette: colors.palette,
   mobile: `(min-width: 400px)`,
   Mobile: `@media (min-width: 400px)`,
   phablet: `(min-width: 550px)`,
@@ -27,17 +19,6 @@ module.exports = {
   VVHd: `@media (min-width: 1650px)`,
   maxWidth: 35,
   maxWidthWithSidebar: 26,
-  calm: `rgba(38, 32, 44, .5)`,
-  // original palette by @SachaG
-  // @see https://www.figma.com/file/J6IYJEtdRmwJQOrcZ2DfvxDD/Gatsby
-  B700: `#663399`, // brand, was #744c9e
-  B500: `#9D7CBF`, // brandLight
-  B200: `#e0d6eb`, // lightPurple
-  B100: `#f5f3f7`, // brandLighter, replacing veryLightPurple (the latter was #f6f2f8)
-  B50: `#fbfafc`, // sidebar
-  // bolder palette by @ArchieHicklin
-  // @see https://github.com/gatsbyjs/gatsby/issues/1173#issuecomment-309415650
-  accent: `#ffb238`, // "Mustard"
   radius: 2,
   radiusLg: 4,
   gutters: {
