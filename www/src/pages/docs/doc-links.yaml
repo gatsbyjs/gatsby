@@ -84,6 +84,8 @@
       link: /docs/node-apis/
     - title: Gatsby SSR APIs
       link: /docs/ssr-apis/
+    - title: Gatsby Config
+      link: /docs/gatsby-config/
 - title: Contributing
   items:
     - title: How to Contribute
