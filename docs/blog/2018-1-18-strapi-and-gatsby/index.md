@@ -1,9 +1,7 @@
 ---
 title: "Building a static blog using Gatsby and Strapi"
 date: "2018-01-18"
-image: "toa-heftiba-274947.jpg"
 author: "Pierre Burgy"
-excerpt: "How to build a site using Gatsby and Strapi, a cross between a Node.js framework and a CMS"
 --- 
 
 ## Introduction
