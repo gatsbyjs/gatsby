@@ -733,8 +733,10 @@ you use GraphQL to query your _data_ and _map_ the data to _pages_—all at buil
 time. This is a really powerful idea. We'll be exploring its implications and
 ways to use it for the remainder of the tutorial.
 
-Creating new pages has two steps, 1) generate the "path" or "slug" for the page
-and 2) create the page.
+Creating new pages has two steps:
+
+1. Generate the "path" or "slug" for the page.
+2. Create the page.
 
 To create our Markdown pages, we'll learn to use two Gatsby APIs
 [`onCreateNode`](/docs/node-apis/#onCreateNode) and
