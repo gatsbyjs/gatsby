@@ -248,10 +248,10 @@ class SearchForm extends Component {
   }
 
   focusSearchInput(e) {
-   if (e.key !== `s`) return
-   if (document.activeElement === this.searchInput) return // eslint-disable-line no-undef
-   e.preventDefault()
-   this.searchInput.focus()
+    if (e.key !== `s`) return
+    if (document.activeElement === this.searchInput) return // eslint-disable-line no-undef
+    e.preventDefault()
+    this.searchInput.focus()
   }
 
   componentDidMount() {
@@ -339,7 +339,9 @@ class SearchForm extends Component {
           placeholder="Search docs"
           aria-label="Search docs"
           title="Hit 's' to search docs"
-          ref={(input) => { this.searchInput = input }}
+          ref={input => {
+            this.searchInput = input
+          }}
         />
       </form>
     ) : null
