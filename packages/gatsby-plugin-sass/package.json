@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-sass",
   "description": "Gatsby plugin to handle scss/sass files",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "author": "Daniel Farrell <daniel@mobelux.com>",
   "dependencies": {
     "babel-runtime": "^6.26.0",
@@ -18,7 +18,11 @@
   "peerDependencies": {
     "gatsby": "^1.0.0"
   },
-  "keywords": ["gatsby", "sass", "scss"],
+  "keywords": [
+    "gatsby",
+    "sass",
+    "scss"
+  ],
   "license": "MIT",
   "main": "index.js",
   "readme": "README.md",

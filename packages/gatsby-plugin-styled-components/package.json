@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-styled-components",
   "description": "Gatsby plugin to add support for styled components",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "author": "Guten Ye <ywzhaifei@gmail.com>",
   "dependencies": {
     "babel-runtime": "^6.26.0"
@@ -10,10 +10,14 @@
     "babel-cli": "^6.26.0"
   },
   "peerDependencies": {
-    "styled-components": ">= 2.0.0",
-    "gatsby": "^1.0.0"
+    "gatsby": "^1.0.0",
+    "styled-components": ">= 2.0.0"
   },
-  "keywords": ["gatsby", "gatsby-plugin", "styled-components"],
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "styled-components"
+  ],
   "license": "MIT",
   "main": "index.js",
   "scripts": {
