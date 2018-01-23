@@ -7,7 +7,7 @@ import SearchForm from "../components/search-form"
 import DiscordIcon from "../components/discord"
 import logo from "../logo.svg"
 import typography, { rhythm, scale } from "../utils/typography"
-import presets from "../utils/presets"
+import presets, { colors } from "../utils/presets"
 import { vP, vPHd, vPVHd, vPVVHd } from "./gutters"
 
 const navItemStyles = {
@@ -55,13 +55,13 @@ export default ({ pathname }) => {
     styles[presets.Tablet] = {
       borderBottomColor: `transparent`,
       position: isHomepage || isBlog ? `absolute` : `fixed`,
-      backgroundColor: presets.whisper,
+      backgroundColor: colors.ui.whisper,
     }
   }
   const socialIconsStyles = {
-    color: presets.lilac,
+    color: colors.lilac,
     [presets.Phablet]: {
-      color: isHomepage ? presets.light : false,
+      color: isHomepage ? colors.ui.light : false,
     },
   }
   const gutters = isHomepage
@@ -88,7 +88,7 @@ export default ({ pathname }) => {
     <div
       role="navigation"
       css={{
-        borderBottom: `1px solid ${presets.light}`,
+        borderBottom: `1px solid ${colors.ui.light}`,
         backgroundColor: `rgba(255,255,255,0.975)`,
         position: isHomepage ? `absolute` : false,
         height: presets.headerHeight,

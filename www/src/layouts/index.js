@@ -8,7 +8,7 @@ import tutorialSidebar from "../pages/docs/tutorial-links.yml"
 import docsSidebar from "../pages/docs/doc-links.yaml"
 import featuresSidebar from "../pages/docs/features-links.yaml"
 import { rhythm, scale } from "../utils/typography"
-import presets from "../utils/presets"
+import presets, { colors } from "../utils/presets"
 import hex2rgba from "hex2rgba"
 import "../css/prism-coy.css"
 
@@ -32,16 +32,16 @@ class DefaultLayout extends React.Component {
       this.props.location.pathname.slice(0, 9) === `/features`
     const isSearchSource = hasSidebar
     const sidebarStyles = {
-      borderRight: `1px solid ${presets.light}`,
-      backgroundColor: presets.whisper,
+      borderRight: `1px solid ${colors.ui.light}`,
+      backgroundColor: colors.ui.whisper,
       boxShadow: `inset 0 4px 5px 0 ${hex2rgba(
-        presets.brand,
+        colors.gatsby,
         presets.shadowKeyPenumbraOpacity
       )}, inset 0 1px 10px 0 ${hex2rgba(
-        presets.lilac,
+        colors.lilac,
         presets.shadowAmbientShadowOpacity
       )}, inset 0 2px 4px -1px ${hex2rgba(
-        presets.lilac,
+        colors.lilac,
         presets.shadowKeyUmbraOpacity
       )}`,
       width: rhythm(10),
@@ -56,10 +56,10 @@ class DefaultLayout extends React.Component {
         height: `6px`,
       },
       "::-webkit-scrollbar-thumb": {
-        background: presets.bright,
+        background: colors.ui.bright,
       },
       "::-webkit-scrollbar-track": {
-        background: presets.light,
+        background: colors.ui.light,
       },
       [presets.Desktop]: {
         width: rhythm(12),

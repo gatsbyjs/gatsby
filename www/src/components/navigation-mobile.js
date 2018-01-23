@@ -7,14 +7,14 @@ import {
   DocsIcon,
   TutorialIcon,
 } from "../assets/mobile-nav-icons"
-import presets from "../utils/presets"
+import presets, { colors } from "../utils/presets"
 import typography, { rhythm, scale, options } from "../utils/typography"
 
 const MobileNavItem = ({ linkTo, label, icon }) => (
   <Link
     to={linkTo}
     css={{
-      color: presets.brand,
+      color: colors.gatsby,
       fontSize: scale(-1 / 2).fontSize,
       letterSpacing: `0.0075rem`,
       lineHeight: 1,
@@ -41,8 +41,8 @@ export default () => (
       left: 0,
       right: 0,
       zIndex: 1,
-      borderTop: `1px solid ${presets.light}`,
-      background: presets.whisper,
+      borderTop: `1px solid ${colors.ui.light}`,
+      background: colors.ui.whisper,
       fontFamily: typography.options.headerFontFamily.join(`,`),
       [presets.Tablet]: {
         display: `none`,

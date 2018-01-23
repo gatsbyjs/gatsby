@@ -1,4 +1,4 @@
-import presets from "../utils/presets"
+import presets, { colors } from "../utils/presets"
 import React from "react"
 import logo from "../monogram.svg"
 import jekyll from "../assets/jekyll.svg"
@@ -36,16 +36,16 @@ const renderSubHeader = props => (
         key={i}
         css={{
           display: `table-cell`,
-          background: `${presets.whisper}`,
-          // borderLeft: i > 0 ? `1px solid ${presets.light}` : `none`,
-          // borderRight: i === 5 ? `1px solid ${presets.light}` : `none`,
+          background: `${colors.ui.whisper}`,
+          // borderLeft: i > 0 ? `1px solid ${colors.ui.light}` : `none`,
+          // borderRight: i === 5 ? `1px solid ${colors.ui.light}` : `none`,
           fontWeight: 600,
           ...scale(-1 / 9),
           lineHeight: 1.3,
           textAlign: `left`,
           verticalAlign: `middle`,
           fontFamily: options.headerFontFamily.join(`,`),
-          borderColor: presets.light,
+          borderColor: colors.ui.light,
           "&&": {
             paddingTop: rhythm(1 / 4),
             paddingLeft: rhythm(1 / 4),

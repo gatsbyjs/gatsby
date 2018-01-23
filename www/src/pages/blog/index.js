@@ -4,7 +4,7 @@ import Helmet from "react-helmet"
 import Container from "../../components/container"
 import BlogPostPreviewItem from "../../components/blog-post-preview-item"
 
-import presets from "../../utils/presets"
+import presets, { colors } from "../../utils/presets"
 import { rhythm, scale, options } from "../../utils/typography"
 import logo from "../../monogram.svg"
 
@@ -16,7 +16,7 @@ class BlogPostsIndex extends React.Component {
       <div
         css={{
           [presets.Tablet]: {
-            background: presets.whisper,
+            background: colors.ui.whisper,
             paddingBottom: rhythm(options.blockMarginBottom * 4),
           },
         }}
