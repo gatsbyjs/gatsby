@@ -5342,6 +5342,22 @@ gatsby-remark-smartypants@canary:
     retext-smartypants "^2.0.0"
     unist-util-visit "^1.1.1"
 
+gatsby-source-filesystem@^1.5.14:
+  version "1.5.14"
+  resolved "https://registry.yarnpkg.com/gatsby-source-filesystem/-/gatsby-source-filesystem-1.5.14.tgz#2d016615ca03e32f1ec0e453d4c7e87fd7966f15"
+  dependencies:
+    babel-cli "^6.26.0"
+    babel-runtime "^6.26.0"
+    bluebird "^3.5.0"
+    chokidar "^1.7.0"
+    fs-extra "^4.0.1"
+    got "^7.1.0"
+    md5-file "^3.1.1"
+    mime "^1.3.6"
+    pretty-bytes "^4.0.2"
+    slash "^1.0.0"
+    valid-url "^1.0.9"
+
 gatsby-source-filesystem@canary:
   version "2.0.0-alpha.aeb05561"
   resolved "https://registry.yarnpkg.com/gatsby-source-filesystem/-/gatsby-source-filesystem-2.0.0-alpha.aeb05561.tgz#486f348930b4b1dbbb18445aa7c89e13deb2d936"
