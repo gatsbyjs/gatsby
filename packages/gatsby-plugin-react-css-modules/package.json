@@ -1,8 +1,7 @@
 {
   "name": "gatsby-plugin-react-css-modules",
-  "version": "1.0.11",
-  "description":
-    "Gatsby plugin that transforms styleName to className using compile time CSS module resolution",
+  "version": "1.0.12",
+  "description": "Gatsby plugin that transforms styleName to className using compile time CSS module resolution",
   "main": "index.js",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
