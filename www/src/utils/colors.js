@@ -66,7 +66,7 @@ const colors = {
   // bolder palette by @ArchieHicklin
   // @see https://github.com/gatsbyjs/gatsby/issues/1173#issuecomment-309415650
   accent: `#ffb238`, // "Mustard",
-  calm: `rgba(38, 32, 44, .5)`,
+  calm: `rgba(38, 32, 44, .62)`,
 }
 
 let pointer = `a`
