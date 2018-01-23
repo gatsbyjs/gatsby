@@ -40,7 +40,7 @@ css.insert(`
     font-weight: normal !important;
     padding: ${rhythm(0.25)} ${rhythm(0.5)} !important;
   }
-  
+
   .algolia-autocomplete .algolia-docsearch-suggestion--subcategory-column:before {
     background: ${presets.veryLightPurple} !important;
   }
@@ -227,6 +227,8 @@ class SearchForm extends Component {
   constructor() {
     super()
     this.state = { enabled: true }
+    this.autocompleteSelected = this.autocompleteSelected.bind(this)
+    this.focusSearchInput = this.focusSearchInput.bind(this)
   }
 
   /**
@@ -241,7 +243,15 @@ class SearchForm extends Component {
     // eslint-disable-next-line no-undef
     const a = document.createElement(`a`)
     a.href = e._args[0].url
+    this.searchInput.blur()
     navigateTo(`${a.pathname}${a.hash}`)
+  }
+
+  focusSearchInput(e) {
+   if (e.key !== `s`) return
+   if (document.activeElement === this.searchInput) return // eslint-disable-line no-undef
+   e.preventDefault()
+   this.searchInput.focus()
   }
 
   componentDidMount() {
@@ -253,6 +263,9 @@ class SearchForm extends Component {
       this.setState({ enabled: false })
       return
     }
+
+    // eslint-disable-next-line no-undef
+    window.addEventListener(`keydown`, this.focusSearchInput)
 
     // eslint-disable-next-line no-undef
     window.addEventListener(
@@ -268,6 +281,11 @@ class SearchForm extends Component {
       inputSelector: `#doc-search`,
       debug: false,
     })
+  }
+
+  componentWillUnmount() {
+    // eslint-disable-next-line no-undef
+    window.removeEventListener(`keydown`, this.focusSearchInput)
   }
 
   render() {
@@ -320,6 +338,8 @@ class SearchForm extends Component {
           type="search"
           placeholder="Search docs"
           aria-label="Search docs"
+          title="Hit 's' to search docs"
+          ref={(input) => { this.searchInput = input }}
         />
       </form>
     ) : null
