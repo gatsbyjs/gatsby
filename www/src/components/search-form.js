@@ -312,63 +312,63 @@ class SearchForm extends Component {
         className="searchWrap"
         onSubmit={e => e.preventDefault()}
       >
-      <label css={{ position: `relative` }}>
-        <input
-          id="doc-search"
-          css={{
-            appearance: `none`,
-            backgroundColor: `transparent`,
-            border: 0,
-            color: colors.gatsby,
-            borderRadius: presets.radiusLg,
-            paddingTop: rhythm(1 / 8),
-            paddingRight: rhythm(1 / 4),
-            paddingBottom: rhythm(1 / 8),
-            paddingLeft: rhythm(1),
-            overflow: `hidden`,
-            width: rhythm(1),
-            transition: `width ${speedDefault} ${curveDefault}, background-color ${speedDefault} ${curveDefault}`,
-
-            ":focus": {
-              outline: 0,
-              backgroundColor: colors.ui.light,
+        <label css={{ position: `relative` }}>
+          <input
+            id="doc-search"
+            css={{
+              appearance: `none`,
+              backgroundColor: `transparent`,
+              border: 0,
               borderRadius: presets.radiusLg,
-              width: rhythm(5),
+              color: colors.gatsby,
+              paddingTop: rhythm(1 / 8),
+              paddingRight: rhythm(1 / 4),
+              paddingBottom: rhythm(1 / 8),
+              paddingLeft: rhythm(1),
+              overflow: `hidden`,
+              width: rhythm(1),
               transition: `width ${speedDefault} ${curveDefault}, background-color ${speedDefault} ${curveDefault}`,
-            },
+              ":focus": {
+                outline: 0,
+                backgroundColor: colors.ui.light,
+                borderRadius: presets.radiusLg,
+                width: rhythm(5),
+                transition: `width ${speedDefault} ${curveDefault}, background-color ${speedDefault} ${curveDefault}`,
+              },
 
-            [presets.Desktop]: {
-              backgroundColor: `#fff`,
-              width: rhythm(5),
-            },
-          }}
-          type="search"
-          placeholder="Search docs"
-          aria-label="Search docs"
-          title="Hit 's' to search docs"
-          onFocus={() => this.setState({ focussed: true })}
-          onBlur={() => this.setState({ focussed: false })}
-          ref={input => {
-            this.searchInput = input
-          }}
-        />
-        <SearchIcon
-          overrideCSS={{
-            ...iconStyles,
-            position: `absolute`,
-            left: `5px`,
-            top: `50%`,
-            width: `16px`,
-            height: `16px`,
-            fill: focussed ? presets.brandLight : false,
-            pointerEvents: `none`,
-            transition: `fill ${speedDefault} ${curveDefault}`,
-            transform: `translateY(-50%)`,
+              [presets.Desktop]: {
+                backgroundColor: `#fff`,
+                width: rhythm(5),
+              },
+            }}
+            type="search"
+            placeholder="Search docs"
+            aria-label="Search docs"
+            title="Hit 's' to search docs"
+            onFocus={() => this.setState({ focussed: true })}
+            onBlur={() => this.setState({ focussed: false })}
+            ref={input => {
+              this.searchInput = input
+            }}
+          />
+          <SearchIcon
+            overrideCSS={{
+              ...iconStyles,
+              position: `absolute`,
+              left: `5px`,
+              top: `50%`,
+              width: `16px`,
+              height: `16px`,
+              fill: focussed ? presets.brandLight : false,
+              pointerEvents: `none`,
+              transition: `fill ${speedDefault} ${curveDefault}`,
+              transform: `translateY(-50%)`,
 
-            [presets.Desktop]: {
-              fill: presets.brandLight,
-            },
-          }}/>
+              [presets.Desktop]: {
+                fill: presets.brandLight,
+              },
+            }}
+          />
         </label>
       </form>
     ) : null
