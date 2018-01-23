@@ -191,6 +191,8 @@ module.exports = (argv, handlers) => {
     })
     .wrap(cli.terminalWidth())
     .demandCommand(1, `Pass --help to see all available commands and options.`)
-    .showHelpOnFail(true, `A command is required.`)
+    .strict()
+    .showHelpOnFail(true)
+    .recommendCommands()
     .parse(argv.slice(2))
 }
