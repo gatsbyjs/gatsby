@@ -65,10 +65,9 @@ const colors = {
     whisper: `#fbfafc`, // sidebar
   },
   gray: {
-    dark: gray(10, 270),
-    copy: gray(24, 270),
-    calm: gray(62, 270),
-    bright: gray(10, 270),
+    dark: gray(8, 270),
+    copy: gray(12, 270),
+    calm: gray(46, 270),
   },
   // bolder palette by @ArchieHicklin
   // @see https://github.com/gatsbyjs/gatsby/issues/1173#issuecomment-309415650
