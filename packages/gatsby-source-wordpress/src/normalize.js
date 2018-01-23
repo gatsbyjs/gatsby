@@ -407,7 +407,7 @@ exports.downloadMediaFiles = async ({
             store,
             cache,
             createNode,
-            _auth,
+            auth: _auth,
           })
         } catch (e) {
           // Ignore
