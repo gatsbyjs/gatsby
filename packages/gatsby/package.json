@@ -90,9 +90,7 @@
     "postcss-loader": "^2.0.6",
     "postcss-reporter": "^5.0.0",
     "raw-loader": "^0.5.1",
-    "react": "^16.2.0",
     "react-dev-utils": "^4.2.1",
-    "react-dom": "^16.2.0",
     "react-error-overlay": "^3.0.0",
     "react-hot-loader": "^3.0.0-beta.6",
     "react-router": "^4.1.1",
@@ -120,6 +118,10 @@
     "webpack-merge": "^4.1.0",
     "webpack-stats-plugin": "^0.1.5",
     "yaml-loader": "^0.5.0"
+  },
+  "peerDependencies": {
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
