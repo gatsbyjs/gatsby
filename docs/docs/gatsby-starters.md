@@ -208,20 +208,36 @@ Community:
   * Visit [the repo](https://github.com/AustinGreen/gatsby-starter-netlify-cms)
     to learn how to set up authentication, and begin modeling your content.
 
-* [gatsby-starter-portfolio-emma](https://github.com/LeKoArts/gatsby-starter-portfolio-emma)
+* gatsby-starter-portfolio
+
+  The target audience are designers and photographers.
+  
+  - [gatsby-starter-portfolio-emma](https://github.com/LeKoArts/gatsby-starter-portfolio-emma)
   [(demo)](https://embalmer-glues-43220.netlify.com/)
+  
+    Features:
 
-  Features:
+    * Full-width photo grid-layout (with [gatsby-image](https://using-gatsby-image.gatsbyjs.org/))
+    * Minimalistic light theme with large images
+    * Create your projects in Markdown
+    * Styling with SCSS and
+      [Typography.js](https://kyleamathews.github.io/typography.js/)
+    * Easily configurable
+    * And other good stuff (SEO, Offline Support, WebApp Manifest Support)
+  
+  - [gatsby-starter-portfolio-emilia](https://github.com/LeKoArts/gatsby-starter-portfolio-emilia)
+  [(demo)](https://upbeat-edison-0598aa.netlify.com/)
+  
+    Features:
 
-  * Perfect for designers and photographers
-  * Full-width Photo Grid-Layout (Responsive Images through
-    [gatsby-image](https://using-gatsby-image.gatsbyjs.org/))
-  * Minimalistic light theme with large images
-  * Create your projects in Markdown
-  * Styling with SCSS and
-    [Typography.js](https://kyleamathews.github.io/typography.js/)
-  * Easily configurable
-  * And other good stuff (SEO, Offline Support, WebApp Manifest Support)
+    * Focus on big images (with [gatsby-image](https://using-gatsby-image.gatsbyjs.org/))
+    * Dark Theme with HeroPatterns Header
+    * CSS Grid and Styled Components
+    * One-Page layout with sub-pages for projects
+    * Easily configurable
+    * React Overdrive transitions
+    * Create your projects in Markdown
+    * And other good stuff (SEO, Offline Support, WebApp Manifest Support)
 
 * [gatsby-starter-bootstrap-netlify](https://github.com/konsumer/gatsby-starter-bootstrap-netlify)
   [(demo)](https://gatsby-starter-bootstrap-netlify.netlify.com)
