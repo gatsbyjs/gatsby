@@ -172,6 +172,7 @@ const options = {
       },
       ".post-body a": {
         fontSize: `102%`,
+        color: presets.brand,
       },
       ".main-body a:hover": {
         background: presets.bright,
