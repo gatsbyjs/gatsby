@@ -1,13 +1,17 @@
 {
   "name": "gatsby-plugin-google-analytics",
   "description": "Gatsby plugin to add google analytics onto a site",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "cross-env": "^5.0.5"
   },
-  "keywords": ["gatsby", "gatsby-plugin", "google analytics"],
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "google analytics"
+  ],
   "license": "MIT",
   "main": "index.js",
   "scripts": {

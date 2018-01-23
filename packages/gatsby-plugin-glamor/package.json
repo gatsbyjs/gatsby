@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-glamor",
   "description": "Gatsby plugin to add support for Glamor",
-  "version": "1.6.10",
+  "version": "1.6.11",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "babel-runtime": "^6.26.0",
@@ -14,7 +14,11 @@
   "peerDependencies": {
     "gatsby": "^1.0.0"
   },
-  "keywords": ["gatsby", "gatsby-plugin", "glamor"],
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "glamor"
+  ],
   "license": "MIT",
   "main": "index.js",
   "scripts": {

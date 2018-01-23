@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-less",
   "description": "Stub description for gatsby-plugin-less",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "author": "Ming Aldrich-Gan <mingaldrichgan@gmail.com>",
   "dependencies": {
     "babel-runtime": "^6.26.0",
@@ -18,7 +18,10 @@
   "peerDependencies": {
     "gatsby": "^1.0.0"
   },
-  "keywords": ["gatsby", "less"],
+  "keywords": [
+    "gatsby",
+    "less"
+  ],
   "license": "MIT",
   "main": "index.js",
   "scripts": {

@@ -1,8 +1,7 @@
 {
   "name": "gatsby-plugin-manifest",
-  "version": "1.0.12",
-  "description":
-    "Gatsby plugin which adds a manifest.json to make sites progressive web apps",
+  "version": "1.0.13",
+  "description": "Gatsby plugin which adds a manifest.json to make sites progressive web apps",
   "main": "index.js",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
