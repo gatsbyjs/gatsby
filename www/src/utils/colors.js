@@ -59,7 +59,7 @@ const colors = {
     // original palette by @SachaG
     // @see https://www.figma.com/file/J6IYJEtdRmwJQOrcZ2DfvxDD/Gatsby
     brand: `#663399`, // brand, was #744c9e
-    lilac: `#9966CC`, // brandLight
+    lilac: `#9D7CBF`, // brandLight
     bright: `#e0d6eb`, // lightPurple
     light: `#f5f3f7`, // brandLighter, replacing veryLightPurple (the latter was #f6f2f8)
     whisper: `#fbfafc`, // sidebar
