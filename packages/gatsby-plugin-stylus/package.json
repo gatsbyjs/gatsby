@@ -14,11 +14,10 @@
     "babel-cli": "^6.26.0",
     "cross-env": "^5.0.5"
   },
-  "keywords": [
-    "gatsby",
-    "gatsby-plugin",
-    "stylus"
-  ],
+  "peerDependencies": {
+    "gatsby": "^1.0.0"
+  },
+  "keywords": ["gatsby", "gatsby-plugin", "stylus"],
   "license": "MIT",
   "main": "./gatsby-node.js",
   "readme": "README.md",

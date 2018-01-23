@@ -3,9 +3,7 @@
   "version": "1.4.12",
   "description": "Adds TypeScript support for Gatsby layouts and pages.",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
-  "contributors": [
-    "Noah Lange <noahrlange@gmail.com>"
-  ],
+  "contributors": ["Noah Lange <noahrlange@gmail.com>"],
   "dependencies": {
     "babel-runtime": "^6.26.0",
     "ts-loader": "^2.0.3",
@@ -15,10 +13,10 @@
     "babel-cli": "^6.26.0",
     "cross-env": "^5.0.5"
   },
-  "keywords": [
-    "gatsby",
-    "typescript"
-  ],
+  "peerDependencies": {
+    "gatsby": "^1.0.0"
+  },
+  "keywords": ["gatsby", "typescript"],
   "license": "MIT",
   "main": "index.js",
   "scripts": {
