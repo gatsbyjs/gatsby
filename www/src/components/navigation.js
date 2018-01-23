@@ -1,11 +1,12 @@
 import React from "react"
 import Link from "gatsby-link"
 import GithubIcon from "react-icons/lib/go/mark-github"
-import TwitterIcon from "react-icons/lib/fa/twitter"
+// import TwitterIcon from "react-icons/lib/fa/twitter"
+// import DiscordIcon from "../components/discord"
 
 import SearchForm from "../components/search-form"
-import DiscordIcon from "../components/discord"
-import logo from "../logo.svg"
+
+import logo from "../gatsby-negative.svg"
 import typography, { rhythm, scale } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
 import { vP, vPHd, vPVHd, vPVVHd } from "./gutters"
