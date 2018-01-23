@@ -55,13 +55,13 @@ export default ({ pathname }) => {
     styles[presets.Tablet] = {
       borderBottomColor: `transparent`,
       position: isHomepage || isBlog ? `absolute` : `fixed`,
-      backgroundColor: presets.B50,
+      backgroundColor: presets.whisper,
     }
   }
   const socialIconsStyles = {
-    color: presets.B500,
+    color: presets.lilac,
     [presets.Phablet]: {
-      color: isHomepage ? presets.B100 : false,
+      color: isHomepage ? presets.light : false,
     },
   }
   const gutters = isHomepage
@@ -88,7 +88,7 @@ export default ({ pathname }) => {
     <div
       role="navigation"
       css={{
-        borderBottom: `1px solid ${presets.B100}`,
+        borderBottom: `1px solid ${presets.light}`,
         backgroundColor: `rgba(255,255,255,0.975)`,
         position: isHomepage ? `absolute` : false,
         height: presets.headerHeight,

@@ -28,9 +28,9 @@ const CtaButton = ({ to, overrideCSS, children }) => (
       },
       // Increase specificity
       "&&": {
-        border: `1px solid ${presets.B700}`,
+        border: `1px solid ${presets.brand}`,
         boxShadow: `none`,
-        color: presets.B700,
+        color: presets.brand,
         fontWeight: `normal`,
         backgroundColor: `transparent`,
         backgroundSize: `30px 30px`,
@@ -39,14 +39,14 @@ const CtaButton = ({ to, overrideCSS, children }) => (
         }`,
         ":hover, &:focus": {
           backgroundSize: `30px 30px`,
-          backgroundColor: presets.B700,
+          backgroundColor: presets.brand,
           backgroundImage: `linear-gradient(45deg, rgba(0,0,0, 0.1) 25%, transparent 25%, transparent 50%, rgba(0,0,0, 0.1) 50%, rgba(0,0,0, 0.1) 75%, transparent 75%, transparent)`,
           color: `#fff`,
           animation: `${stripeAnimation} 2.8s linear infinite`,
         },
         ":focus": {
           outline: 0,
-          boxShadow: `0 0 0 0.2rem ${hex2rgba(presets.B500, 0.25)}`,
+          boxShadow: `0 0 0 0.2rem ${hex2rgba(presets.lilac, 0.25)}`,
         },
         ":after": {
           content: ``,

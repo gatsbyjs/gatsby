@@ -49,7 +49,7 @@ const MastheadContent = () => (
       <h1
         css={{
           ...scale(0.7),
-          color: presets.B700,
+          color: presets.brand,
           lineHeight: 1,
           margin: 0,
           marginBottom: `1.2em`,

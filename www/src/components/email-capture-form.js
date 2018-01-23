@@ -13,7 +13,7 @@ let stripeAnimation = css.keyframes({
 
 const formInputDefaultStyles = {
   backgroundColor: `#fff`,
-  border: `1px solid ${presets.B200}`,
+  border: `1px solid ${presets.bright}`,
   borderRadius: presets.radius,
   color: presets.bodyColor,
   fontFamily: options.headerFontFamily.join(`,`),
@@ -23,7 +23,7 @@ const formInputDefaultStyles = {
     presets.animation.curveDefault
   }`,
   "::placeholder": {
-    color: presets.B500,
+    color: presets.lilac,
     opacity: 1,
   },
 }
@@ -112,7 +112,7 @@ class EmailCaptureForm extends React.Component {
     return (
       <div
         css={{
-          borderTop: `2px solid ${presets.B500}`,
+          borderTop: `2px solid ${presets.lilac}`,
           marginTop: rhythm(3),
           paddingTop: `${rhythm(1)}`,
         }}
@@ -139,9 +139,12 @@ class EmailCaptureForm extends React.Component {
                     width: `250px`,
                     ":focus": {
                       color: presets.bodyColor,
-                      borderColor: presets.B700,
+                      borderColor: presets.brand,
                       outline: 0,
-                      boxShadow: `0 0 0 0.2rem ${hex2rgba(presets.B500, 0.25)}`,
+                      boxShadow: `0 0 0 0.2rem ${hex2rgba(
+                        presets.lilac,
+                        0.25
+                      )}`,
                     },
                   }}
                 />
@@ -150,21 +153,24 @@ class EmailCaptureForm extends React.Component {
                   onClick={this._handleFormSubmit}
                   css={{
                     ...formInputDefaultStyles,
-                    borderColor: presets.B700,
-                    color: presets.B700,
+                    borderColor: presets.brand,
+                    color: presets.brand,
                     cursor: `pointer`,
                     fontWeight: `bold`,
                     marginLeft: rhythm(1 / 2),
                     ":hover, &:focus": {
                       backgroundSize: `30px 30px`,
-                      backgroundColor: presets.B700,
+                      backgroundColor: presets.brand,
                       backgroundImage: `linear-gradient(45deg, rgba(0,0,0, 0.1) 25%, transparent 25%, transparent 50%, rgba(0,0,0, 0.1) 50%, rgba(0,0,0, 0.1) 75%, transparent 75%, transparent)`,
                       color: `#fff`,
                       animation: `${stripeAnimation} 2.8s linear infinite`,
                     },
                     ":focus": {
                       outline: 0,
-                      boxShadow: `0 0 0 0.2rem ${hex2rgba(presets.B500, 0.25)}`,
+                      boxShadow: `0 0 0 0.2rem ${hex2rgba(
+                        presets.lilac,
+                        0.25
+                      )}`,
                     },
                   }}
                 >

@@ -1,5 +1,3 @@
-import chroma from "chroma-js"
-
 const colorStr = `
 #281505
 #042b1b
@@ -55,21 +53,16 @@ const colors = {
   a: [],
   b: [],
   c: [],
-  palette: chroma
-    .scale([`#663399`, `#fbfafc`])
-    // .gamma(0.4)
-    .mode(`hsl`)
-    // .correctLightness()
-    .colors(10, `hsl`),
   brand: {
     // original palette by @SachaG
     // @see https://www.figma.com/file/J6IYJEtdRmwJQOrcZ2DfvxDD/Gatsby
-    B700: `#663399`, // brand, was #744c9e
-    B500: `#9D7CBF`, // brandLight
-    B200: `#e0d6eb`, // lightPurple
-    B100: `#f5f3f7`, // brandLighter, replacing veryLightPurple (the latter was #f6f2f8)
-    B50: `#fbfafc`, // sidebar
+    brand: `#663399`, // brand, was #744c9e
+    lilac: `#9D7CBF`, // brandLight
+    bright: `#e0d6eb`, // lightPurple
+    light: `#f5f3f7`, // brandLighter, replacing veryLightPurple (the latter was #f6f2f8)
+    whisper: `#fbfafc`, // sidebar
   },
+  gray: {},
   // bolder palette by @ArchieHicklin
   // @see https://github.com/gatsbyjs/gatsby/issues/1173#issuecomment-309415650
   accent: `#ffb238`, // "Mustard",

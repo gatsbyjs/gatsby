@@ -61,7 +61,7 @@ class BlogPostPreviewItem extends React.Component {
                   "&&": {
                     fontWeight: `normal`,
                     ":hover": {
-                      color: presets.B700,
+                      color: presets.brand,
                       background: `transparent`,
                     },
                   },

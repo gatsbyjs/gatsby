@@ -18,7 +18,7 @@ const stripeAnimation = css.keyframes({
   "100%": { backgroundPosition: `0 0` },
 })
 const stripeBg = {
-  backgroundColor: presets.B50,
+  backgroundColor: presets.whisper,
   backgroundSize: `${rhythm(stripeSize)} ${rhythm(stripeSize)}`,
   backgroundImage: `linear-gradient(45deg, rgba(${stripeColor}) 25%, transparent 25%, transparent 50%, rgba(${stripeColor}) 50%, rgba(${stripeColor}) 75%, transparent 75%, transparent)`,
   animation: `${stripeAnimation} 14s linear infinite`,
@@ -76,7 +76,7 @@ const VerticalLine = () => (
     <path
       d="M10 40 L10 -10"
       css={{
-        stroke: presets.B500,
+        stroke: presets.lilac,
         strokeWidth: `3`,
         strokeLinecap: `round`,
         strokeDasharray: `0.5 10`,
@@ -87,14 +87,14 @@ const VerticalLine = () => (
 )
 
 const box = {
-  border: `1px solid ${presets.B100}`,
+  border: `1px solid ${presets.light}`,
   borderRadius: presets.radiusLg,
   padding: `${rhythm(1)} ${rhythm(1)} 0`,
-  background: presets.B50,
+  background: presets.whisper,
 }
 
 const borderAndBoxShadow = {
-  border: `1px solid ${presets.B100}`,
+  border: `1px solid ${presets.light}`,
   background: `#fff`,
   width: `100%`,
   boxShadow: `0 5px 15px rgba(0,0,0,0.035)`,
@@ -147,7 +147,7 @@ const SourceItem = ({ children }) => (
 const ItemTitle = ({ children }) => (
   <h3
     css={{
-      color: presets.B700,
+      color: presets.brand,
       margin: 0,
       fontStyle: `normal`,
       ...scale(0),
@@ -162,7 +162,7 @@ const ItemDescription = ({ children }) => (
     css={{
       lineHeight: 1.2,
       display: `block`,
-      color: presets.B500,
+      color: presets.lilac,
       [presets.Hd]: {
         fontSize: scale(-1 / 5).fontSize,
       },
@@ -212,7 +212,7 @@ const Gatsby = ({ children }) => (
       </small>
       <span
         css={{
-          color: presets.B700,
+          color: presets.brand,
         }}
       >
         <TechWithIcon icon={GraphQLIcon}>GraphQL</TechWithIcon>

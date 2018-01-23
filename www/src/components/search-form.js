@@ -17,7 +17,7 @@ css.insert(`
     min-width: calc(100vw - ${rhythm(1)}) !important;
     max-width: calc(100vw - 2rem) !important;
     max-height: calc(100vh - 5rem) !important;
-    box-shadow: 0 3px 10px 0.05rem ${hex2rgba(presets.B500, 0.25)} !important;
+    box-shadow: 0 3px 10px 0.05rem ${hex2rgba(presets.lilac, 0.25)} !important;
   }
 
   /* .searchWrap to beat docsearch.css' !important */
@@ -43,7 +43,7 @@ css.insert(`
   }
   
   .algolia-autocomplete .algolia-docsearch-suggestion--subcategory-column:before {
-    background: ${presets.B100} !important;
+    background: ${presets.light} !important;
   }
 
   .algolia-autocomplete .algolia-docsearch-suggestion--subcategory-column:after {
@@ -62,19 +62,19 @@ css.insert(`
 
   /* Caret */
   .algolia-autocomplete .ds-dropdown-menu::before {
-    border-top-color: ${presets.B200} !important;
-    border-right-color: ${presets.B200} !important;
+    border-top-color: ${presets.bright} !important;
+    border-right-color: ${presets.bright} !important;
   }
 
   .algolia-autocomplete .ds-dropdown-menu [class^="ds-dataset-"] {
     padding: 0 !important;
-    border-color: ${presets.B200} !important;
+    border-color: ${presets.bright} !important;
   }
 
   .algolia-autocomplete .algolia-docsearch-suggestion--highlight {
-    background-color: ${presets.B200} !important;
+    background-color: ${presets.bright} !important;
     box-shadow: 0 !important;
-    color: ${presets.B700} !important;
+    color: ${presets.brand} !important;
   }
 
   .algolia-autocomplete .algolia-docsearch-suggestion--text {
@@ -83,7 +83,7 @@ css.insert(`
 
   .algolia-autocomplete .algolia-docsearch-suggestion--text .algolia-docsearch-suggestion--highlight {
     background: transparent !important;
-    box-shadow: inset 0 -2px 0 0 ${presets.B700} !important;
+    box-shadow: inset 0 -2px 0 0 ${presets.brand} !important;
   }
 
   .algolia-autocomplete .algolia-docsearch-suggestion .algolia-docsearch-suggestion--subcategory-column {
@@ -91,7 +91,7 @@ css.insert(`
   }
 
   .algolia-autocomplete .ds-dropdown-menu .ds-suggestion.ds-cursor .algolia-docsearch-suggestion:not(.suggestion-layout-simple) .algolia-docsearch-suggestion--content {
-    background-color: ${presets.B100} !important;
+    background-color: ${presets.light} !important;
   }
 
   .algolia-autocomplete .algolia-docsearch-suggestion .algolia-docsearch-suggestion--content.algolia-docsearch-suggestion--no-results {
@@ -118,8 +118,8 @@ css.insert(`
     padding: ${rhythm(0.25)} ${rhythm(0.5)} !important;
     margin-top: 0 !important;
     font-size: 0.9rem !important;
-    border-color: ${presets.B100} !important;
-    color: ${presets.B700} !important;
+    border-color: ${presets.light} !important;
+    color: ${presets.brand} !important;
     font-weight: bold !important;
   }
 
@@ -135,7 +135,7 @@ css.insert(`
     width: 100% !important;
     height: 30px !important;
     margin-top: 0 !important;
-    border-top: 1px dotted ${presets.B100} !important;
+    border-top: 1px dotted ${presets.light} !important;
   }
 
   .algolia-autocomplete .algolia-docsearch-footer--logo {
@@ -176,7 +176,7 @@ css.insert(`
       top: 0 !important;
       height: 100% !important;
       width: 1px !important;
-      background: ${presets.B100} !important;
+      background: ${presets.light} !important;
     }
 
     .algolia-autocomplete .algolia-docsearch-suggestion--subcategory-column:after {
@@ -293,7 +293,7 @@ class SearchForm extends Component {
             appearance: `none`,
             background: `transparent`,
             border: 0,
-            color: presets.B700,
+            color: presets.brand,
             paddingTop: rhythm(1 / 8),
             paddingRight: rhythm(1 / 4),
             paddingBottom: rhythm(1 / 8),
@@ -309,7 +309,7 @@ class SearchForm extends Component {
 
             ":focus": {
               outline: 0,
-              backgroundColor: presets.B100,
+              backgroundColor: presets.light,
               borderRadius: presets.radiusLg,
               width: rhythm(5),
             },

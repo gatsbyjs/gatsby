@@ -11,18 +11,18 @@ const Card = ({ children }) => (
       [presets.Tablet]: {
         flex: `0 0 50%`,
         maxWidth: `50%`,
-        boxShadow: `0 1px 0 0 ${presets.B100}`,
+        boxShadow: `0 1px 0 0 ${presets.light}`,
         "&:nth-child(5),&:nth-child(6)": {
           boxShadow: `none`,
         },
         "&:nth-child(2n)": {
-          borderLeft: `1px solid ${presets.B100}`,
+          borderLeft: `1px solid ${presets.light}`,
         },
       },
       [presets.Hd]: {
         flex: `0 0 33.33333333%`,
         maxWidth: `33.33333333%`,
-        borderLeft: `1px solid ${presets.B100}`,
+        borderLeft: `1px solid ${presets.light}`,
         "&:nth-child(4)": {
           boxShadow: `none`,
         },

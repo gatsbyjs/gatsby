@@ -78,7 +78,7 @@ class IndexRoute extends React.Component {
                 </FuturaParagraph>
               </Card>
               <Card>
-                <CardHeadline css={{ color: presets.B700Dark }}>
+                <CardHeadline css={{ color: presets.brandDark }}>
                   Future-proof your website
                 </CardHeadline>
                 <FuturaParagraph>
@@ -91,7 +91,7 @@ class IndexRoute extends React.Component {
               </Card>
               <Card>
                 <CardHeadline>
-                  <em css={{ color: presets.B700, fontStyle: `normal` }}>
+                  <em css={{ color: presets.brand, fontStyle: `normal` }}>
                     Static
                   </em>
                   {` `}
@@ -121,7 +121,7 @@ class IndexRoute extends React.Component {
                   borderTopLeftRadius: 0,
                   borderTopRightRadius: 0,
                   flex: `1 1 100%`,
-                  borderTop: `1px solid ${presets.B100}`,
+                  borderTop: `1px solid ${presets.light}`,
                 }}
               />
 
@@ -146,7 +146,7 @@ class IndexRoute extends React.Component {
 
               <div
                 css={{
-                  borderTop: `1px solid ${presets.B100}`,
+                  borderTop: `1px solid ${presets.light}`,
                   flex: `1 1 100%`,
                   [presets.Tablet]: {
                     paddingTop: rhythm(1),
@@ -161,7 +161,7 @@ class IndexRoute extends React.Component {
                     css={{
                       textAlign: `left`,
                       marginTop: 0,
-                      color: presets.B700,
+                      color: presets.brand,
                       [presets.Tablet]: {
                         paddingBottom: rhythm(1),
                       },

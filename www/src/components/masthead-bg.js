@@ -31,7 +31,7 @@ const MastheadBg = () => (
         right: `auto`,
         width: vPOff,
         zIndex: -10,
-        background: presets.B100,
+        background: presets.light,
         [presets.Hd]: {
           width: vPHdOff,
         },
@@ -64,12 +64,12 @@ const MastheadBg = () => (
         height: `100%`,
       }}
     >
-      <polygon fill={presets.B100} points="-5,-5 15,15 -5,15 " />
+      <polygon fill={presets.light} points="-5,-5 15,15 -5,15 " />
     </svg>
     <style>
       {`
           .masthead-bg-right-light {
-            fill: ${presets.B700};
+            fill: ${presets.brand};
           }
           @media (max-width: 650px),
           (max-width: 768px) and (orientation:portrait) {
@@ -94,7 +94,7 @@ const MastheadBg = () => (
             }
 
             .masthead-bg-right-light {
-              fill: ${presets.B500};
+              fill: ${presets.lilac};
             }
           }
           ${presets.Hd}  {
@@ -128,14 +128,14 @@ const MastheadBg = () => (
           className="masthead-bg-right-light"
           width="10000%"
           height="10000%"
-          fill={presets.B500}
+          fill={presets.lilac}
           transform="rotate(45 100 50) translate(0 0)"
         />
         <rect
           className="masthead-bg-left-dark"
           width="10000%"
           height="10000%"
-          fill={presets.B700}
+          fill={presets.brand}
           transform="rotate(45 100 50) translate(1.25 0)"
         />
         {/*<polygon fill="blue" points="0,10 10,0 10,10" />*/}

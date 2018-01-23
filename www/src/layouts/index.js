@@ -32,16 +32,16 @@ class DefaultLayout extends React.Component {
       this.props.location.pathname.slice(0, 9) === `/features`
     const isSearchSource = hasSidebar
     const sidebarStyles = {
-      borderRight: `1px solid ${presets.B100}`,
-      backgroundColor: presets.B50,
+      borderRight: `1px solid ${presets.light}`,
+      backgroundColor: presets.whisper,
       boxShadow: `inset 0 4px 5px 0 ${hex2rgba(
-        presets.B700,
+        presets.brand,
         presets.shadowKeyPenumbraOpacity
       )}, inset 0 1px 10px 0 ${hex2rgba(
-        presets.B500,
+        presets.lilac,
         presets.shadowAmbientShadowOpacity
       )}, inset 0 2px 4px -1px ${hex2rgba(
-        presets.B500,
+        presets.lilac,
         presets.shadowKeyUmbraOpacity
       )}`,
       width: rhythm(10),
@@ -56,10 +56,10 @@ class DefaultLayout extends React.Component {
         height: `6px`,
       },
       "::-webkit-scrollbar-thumb": {
-        background: presets.B200,
+        background: presets.bright,
       },
       "::-webkit-scrollbar-track": {
-        background: presets.B100,
+        background: presets.light,
       },
       [presets.Desktop]: {
         width: rhythm(12),

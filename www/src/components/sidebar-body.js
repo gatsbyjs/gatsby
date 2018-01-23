@@ -5,7 +5,7 @@ import gray from "gray-percentage"
 import typography, { rhythm, scale, options } from "../utils/typography"
 import presets from "../utils/presets"
 
-const accentColor = presets.B700
+const accentColor = presets.brand
 const listStyles = {
   listStyle: `none`,
   margin: 0,
@@ -178,7 +178,7 @@ class SidebarBody extends React.Component {
         }
       : {
           fontSize: scale(-2 / 5).fontSize,
-          color: presets.B500,
+          color: presets.lilac,
           textTransform: `uppercase`,
           letterSpacing: `.15em`,
           fontWeight: `normal`,

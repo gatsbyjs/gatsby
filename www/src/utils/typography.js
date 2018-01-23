@@ -73,11 +73,11 @@ const options = {
         paddingLeft: rhythm(options.blockMarginBottom),
         marginLeft: 0,
         borderLeft: `${rhythm(options.blockMarginBottom / 4)} solid ${
-          presets.B100
+          presets.light
         }`,
       },
       hr: {
-        backgroundColor: presets.B100,
+        backgroundColor: presets.light,
       },
       "tt,code": {
         // background: `hsla(23, 60%, 97%, 1)`,
@@ -157,7 +157,7 @@ const options = {
       ".gatsby-resp-image-link + em a": {
         fontWeight: `normal`,
         fontFamily: options.headerFontFamily.join(`,`),
-        color: presets.B700,
+        color: presets.brand,
       },
       ".main-body a": {
         color: `inherit`,
@@ -165,8 +165,8 @@ const options = {
         transition: `all ${presets.animation.speedFast} ${
           presets.animation.curveDefault
         }`,
-        borderBottom: `1px solid ${presets.B200}`,
-        boxShadow: `inset 0 -2px 0px 0px ${presets.B200}`,
+        borderBottom: `1px solid ${presets.bright}`,
+        boxShadow: `inset 0 -2px 0px 0px ${presets.bright}`,
         fontFamily: options.headerFontFamily.join(`,`),
         fontWeight: `bold`,
       },
@@ -174,11 +174,11 @@ const options = {
         fontSize: `102%`,
       },
       ".main-body a:hover": {
-        background: presets.B200,
+        background: presets.bright,
       },
       ".main-body a.anchor": {
         color: `inherit`,
-        fill: presets.B700,
+        fill: presets.brand,
         textDecoration: `none`,
         borderBottom: `none`,
         boxShadow: `none`,
