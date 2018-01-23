@@ -15,11 +15,10 @@
     "babel-cli": "^6.26.0",
     "cross-env": "^5.0.5"
   },
-  "keywords": [
-    "gatsby",
-    "sass",
-    "scss"
-  ],
+  "peerDependencies": {
+    "gatsby": "^1.0.0"
+  },
+  "keywords": ["gatsby", "sass", "scss"],
   "license": "MIT",
   "main": "index.js",
   "readme": "README.md",
