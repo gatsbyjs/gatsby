@@ -1,3 +1,5 @@
+import gray from "gray-percentage"
+
 const colorStr = `
 #281505
 #042b1b
@@ -57,16 +59,20 @@ const colors = {
     // original palette by @SachaG
     // @see https://www.figma.com/file/J6IYJEtdRmwJQOrcZ2DfvxDD/Gatsby
     brand: `#663399`, // brand, was #744c9e
-    lilac: `#9D7CBF`, // brandLight
+    lilac: `#9966CC`, // brandLight
     bright: `#e0d6eb`, // lightPurple
     light: `#f5f3f7`, // brandLighter, replacing veryLightPurple (the latter was #f6f2f8)
     whisper: `#fbfafc`, // sidebar
   },
-  gray: {},
+  gray: {
+    dark: gray(10, 270),
+    copy: gray(24, 270),
+    calm: gray(62, 270),
+    bright: gray(10, 270),
+  },
   // bolder palette by @ArchieHicklin
   // @see https://github.com/gatsbyjs/gatsby/issues/1173#issuecomment-309415650
   accent: `#ffb238`, // "Mustard",
-  calm: `rgba(38, 32, 44, .62)`,
 }
 
 let pointer = `a`

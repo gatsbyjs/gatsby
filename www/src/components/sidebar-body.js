@@ -1,6 +1,5 @@
 import React from "react"
 import Link from "gatsby-link"
-import gray from "gray-percentage"
 
 import typography, { rhythm, scale, options } from "../utils/typography"
 import presets from "../utils/presets"
@@ -131,7 +130,7 @@ const SectionLink = props => {
       "& .nav-link": {
         borderBottom: `none`,
         boxShadow: `none`,
-        color: isDraft ? gray(50, 270) : gray(30, 270),
+        color: isDraft ? presets.gray.calm : presets.gray.text,
         fontWeight: `normal`,
         fontStyle: isDraft ? `italic` : false,
       },

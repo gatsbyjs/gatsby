@@ -1,11 +1,11 @@
 import React from "react"
-import gray from "gray-percentage"
 import EditIcon from "react-icons/lib/md/create"
 import CheckIcon from "react-icons/lib/md/thumb-up"
 import CrossIcon from "react-icons/lib/md/thumb-down"
 import { GraphQLClient } from "graphql-request"
 
 import { rhythm, scale } from "../utils/typography"
+import presets from "../utils/presets"
 
 const client = new GraphQLClient(
   `https://api.graph.cool/relay/v1/cj8xuo77f0a3a0164y7jketkr`
@@ -76,13 +76,15 @@ export default class MarkdownPageFooter extends React.Component {
             "&&": {
               float: `right`,
               display: `block`,
-              color: gray(60, 270),
+              color: presets.gray.calm,
               fontSize: scale(-1 / 5).fontSize,
+              fontWeight: "normal",
               border: `none`,
               boxShadow: `none`,
               padding: rhythm(1 / 2),
               "&:hover": {
-                background: gray(90),
+                background: "transparent",
+                color: presets.brand,
               },
             },
           }}
