@@ -78,9 +78,7 @@ class IndexRoute extends React.Component {
                 </FuturaParagraph>
               </Card>
               <Card>
-                <CardHeadline css={{ color: presets.brandDark }}>
-                  Future-proof your website
-                </CardHeadline>
+                <CardHeadline>Future-proof your website</CardHeadline>
                 <FuturaParagraph>
                   Don't build a website with last decade's tech. The future of
                   the web is mobile, JavaScript and APIs—the {` `}
