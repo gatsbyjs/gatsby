@@ -3,7 +3,7 @@ const axios = require(`axios`)
 const _ = require(`lodash`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
-const SCREENSHOT_ENDPOINT = `https://vuz0le7eki.execute-api.us-west-2.amazonaws.com/production/screenshot` // TODO: replace with version hosted on Gatsby AWS
+const SCREENSHOT_ENDPOINT = `https://h7iqvn4842.execute-api.us-east-2.amazonaws.com/prod/screenshot`
 
 const createContentDigest = obj =>
   crypto
