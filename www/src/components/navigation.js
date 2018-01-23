@@ -163,9 +163,7 @@ export default ({ pathname }) => {
             marginLeft: `auto`,
           }}
         >
-          {!isHomepage && (
-            <SearchForm key="SearchForm" styles={{ ...navItemStyles }} />
-          )}
+          <SearchForm key="SearchForm" iconStyles={{ ...socialIconsStyles }} />
           <a
             href="https://github.com/gatsbyjs/gatsby"
             title="GitHub"
@@ -176,6 +174,8 @@ export default ({ pathname }) => {
           >
             <GithubIcon style={{ verticalAlign: `text-top` }} />
           </a>
+          {/*
+          Can we still find a home for these icons somewhere?
           <a
             href="https://discord.gg/0ZcbPKXt5bZjGY5n"
             title="Discord"
@@ -197,6 +197,7 @@ export default ({ pathname }) => {
           >
             <TwitterIcon style={{ verticalAlign: `text-top` }} />
           </a>
+          */}
         </div>
       </div>
     </div>
