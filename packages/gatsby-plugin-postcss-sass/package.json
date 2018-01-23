@@ -1,6 +1,7 @@
 {
   "name": "gatsby-plugin-postcss-sass",
-  "description": "Gatsby plugin to handle scss/sass files with integrated support for also processing with Postcss plugins",
+  "description":
+    "Gatsby plugin to handle scss/sass files with integrated support for also processing with Postcss plugins",
   "version": "1.0.15",
   "author": "Scotty Eckenthal <scotty@meetfabric.com>",
   "dependencies": {
@@ -14,13 +15,10 @@
     "babel-cli": "^6.26.0",
     "cross-env": "^5.0.5"
   },
-  "keywords": [
-    "gatsby",
-    "gatsby-plugin",
-    "postcss",
-    "sass",
-    "scss"
-  ],
+  "peerDependencies": {
+    "gatsby": "^1.0.0"
+  },
+  "keywords": ["gatsby", "gatsby-plugin", "postcss", "sass", "scss"],
   "license": "MIT",
   "main": "index.js",
   "readme": "README.md",
