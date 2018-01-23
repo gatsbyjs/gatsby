@@ -10,7 +10,7 @@ package installed locally.
 
 ## Install
 
-`npm install --global gatsby-cli`
+`npm install --global gatsby-cli react react-dom`
 
 ## How to use
 
