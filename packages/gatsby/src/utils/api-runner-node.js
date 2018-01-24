@@ -62,6 +62,8 @@ const runAPI = (plugin, api, args) => {
     pathPrefix = store.getState().config.pathPrefix
   }
 
+  const namespacedCreateNodeId = id => createNodeId(id, plugin.name)
+
   const gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
   if (gatsbyNode[api]) {
     const apiCallArgs = [
@@ -77,7 +79,7 @@ const runAPI = (plugin, api, args) => {
         reporter,
         getNodeAndSavePathDependency,
         cache,
-        createNodeId,
+        createNodeId: namespacedCreateNodeId,
       },
       plugin.pluginOptions,
     ]
