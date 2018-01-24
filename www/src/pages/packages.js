@@ -43,7 +43,7 @@ class Plugins extends Component {
                   marginRight: rhythm(3),
                   fontSize: rhythm(3/4),
                 }}>
-                Please use the search bar and filters to find starters
+                Please use the search bar to find packages
                 that will make your blazing-fast site even more awesome.
               </p>
         </div>
