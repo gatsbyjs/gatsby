@@ -36,7 +36,7 @@ class Plugins extends Component {
               textAlign: `center`,
             }}
 
-            >Welcome to the Gatsby Plugin and Starter Library!</h1>
+            >Welcome to the Gatsby Package Library!</h1>
               <p
                 css={{
                   marginLeft: rhythm(3),

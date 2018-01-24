@@ -71,10 +71,11 @@ export default class HTML extends React.Component {
           <link
             rel="mask-icon"
             href={`/safari-pinned-tab.svg`}
-            color={colors.gatsby}
+            color="#5bbad5"
           />
 
           {css}
+
         </head>
         <body {...this.props.bodyAttributes}>
           <div

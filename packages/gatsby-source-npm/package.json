@@ -1,0 +1,13 @@
+{
+  "name": "gatsby-source-npm",
+  "version": "1.0.3",
+  "description": "Add readme files from npm registry to site",
+  "main": "index.js",
+  "keywords": "gatsby-plugin",
+  "scripts": {},
+  "author": "James Stack <james.a.stack@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "algoliasearch": "^3.24.9"
+  }
+}
