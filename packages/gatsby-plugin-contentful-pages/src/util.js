@@ -1,4 +1,6 @@
-const createAllQuery = (contentType, fieldsSubquery) => `
+const createAllQuery = (contentType, fields) => {
+  const fieldsSubquery = fields.length === 0 ? `*` : fields.join(` `)
+  return `
   {
     allContentful${contentType} {
       edges {
@@ -9,6 +11,7 @@ const createAllQuery = (contentType, fieldsSubquery) => `
     }
   }
 `
+}
 
 const getNodesFromAllQuery = rootQueryType => ({ data }) => {
   const edges = data[rootQueryType].edges
