@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { InstantSearch, Hits, SearchBox, Stats, RefinementList } from 'react-instantsearch/dom'
+import { InstantSearch, Hits, SearchBox, Stats, RefinementList, PoweredBy } from 'react-instantsearch/dom'
 import distanceInWords from 'date-fns/distance_in_words'
 import presets from "../utils/presets"
 import Link from 'gatsby-link'
@@ -174,7 +174,7 @@ const Result = ({ hit }) => {
       <div css={{
         fontSize: rhythm(.6),
         paddingTop: rhythm(.25),
-        lineHeight: rhythm(.75)
+        lineHeight: rhythm(.75),
       }}>
         {hit.description}
       </div>
@@ -239,17 +239,15 @@ class SearchBar extends Component {
   render(){
     return(
       <div>
-          <div>
-            <InstantSearch
-              apiKey="f54e21fa3a2a0160595bb058179bfb1e"
-              appId="OFCNCOG2CU"
-              indexName="npm-search"
-              searchState={this.state.searchState}
-              onSearchStateChange={this.onSearchStateChange.bind(this)}
-              >
-              <Search searchState={this.state.searchState.query} />
-            </InstantSearch>
-          </div>
+        <InstantSearch
+          apiKey="f54e21fa3a2a0160595bb058179bfb1e"
+          appId="OFCNCOG2CU"
+          indexName="npm-search"
+          searchState={this.state.searchState}
+          onSearchStateChange={this.onSearchStateChange.bind(this)}
+          >
+          <Search searchState={this.state.searchState.query} />
+        </InstantSearch>
       </div>
     )
   }
