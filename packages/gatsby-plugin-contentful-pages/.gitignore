@@ -34,5 +34,5 @@ decls
 examples
 
 # Compiled package files
-gatsby-node.js
-util.js
+/gatsby-node.js
+/util.js
