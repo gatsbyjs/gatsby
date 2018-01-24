@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { InstantSearch, Hits, SearchBox, Stats, RefinementList, PoweredBy } from 'react-instantsearch/dom'
 import distanceInWords from 'date-fns/distance_in_words'
-import presets from "../utils/presets"
+import presets, { colors } from "../utils/presets"
 import Link from 'gatsby-link'
 import DownloadsBlack from '../assets/down-arrow.svg'
 import DownloadsWhite from '../assets/down-arrow-white.svg'
@@ -70,10 +70,10 @@ const Search = ({searchState}) => {
             height: `6px`,
           },
           "::-webkit-scrollbar-thumb": {
-            background: presets.lightPurple,
+            background: colors.ui.bright,
           },
           "::-webkit-scrollbar-track": {
-            background: presets.brandLighter,
+            background: colors.ui.light,
           },
         }}>
           <Hits hitComponent={Result} />

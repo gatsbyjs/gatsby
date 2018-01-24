@@ -83,21 +83,24 @@ class DefaultLayout extends React.Component {
     }
 
     const searchbarStyles = {
-      borderRight: `1px solid ${colors.b[0]}`,
-      backgroundColor: presets.sidebar,
-      boxShadow: `inset 0 4px 5px 0 rgba(116, 76, 158, ${
+      borderRight: `1px solid ${colors.ui.light}`,
+      backgroundColor: colors.ui.whisper,
+      boxShadow: `inset 0 4px 5px 0 ${hex2rgba(
+        colors.gatsby,
         presets.shadowKeyPenumbraOpacity
-      }), inset 0 1px 10px 0 rgba(${presets.shadowColor}, ${
+      )}, inset 0 1px 10px 0 ${hex2rgba(
+        colors.lilac,
         presets.shadowAmbientShadowOpacity
-      }), inset 0 2px 4px -1px rgba(${presets.shadowColor}, ${
+      )}, inset 0 2px 4px -1px ${hex2rgba(
+        colors.lilac,
         presets.shadowKeyUmbraOpacity
-      })`,
+      )}`,
       width: rhythm(17),
       padding: rhythm(1),
       display: `none`,
       position: `fixed`,
       top: `calc(${presets.headerHeight} - 1px)`,
-      zIndex: 1,
+      overflowY: `auto`,
       height: `calc(100vh - ${presets.headerHeight} + 1px)`,
       WebkitOverflowScrolling: `touch`,
       "::-webkit-scrollbar": {
@@ -105,51 +108,17 @@ class DefaultLayout extends React.Component {
         height: `6px`,
       },
       "::-webkit-scrollbar-thumb": {
-        background: presets.lightPurple,
+        background: colors.ui.bright,
       },
       "::-webkit-scrollbar-track": {
-        background: presets.brandLighter,
+        background: colors.ui.light,
       },
       [presets.Desktop]: {
         width: rhythm(17),
         padding: rhythm(1),
       },
     }
-
-    const searchbarStyles = {
-      borderRight: `1px solid ${colors.b[0]}`,
-      backgroundColor: presets.sidebar,
-      boxShadow: `inset 0 4px 5px 0 rgba(116, 76, 158, ${
-        presets.shadowKeyPenumbraOpacity
-      }), inset 0 1px 10px 0 rgba(${presets.shadowColor}, ${
-        presets.shadowAmbientShadowOpacity
-      }), inset 0 2px 4px -1px rgba(${presets.shadowColor}, ${
-        presets.shadowKeyUmbraOpacity
-      })`,
-      width: rhythm(17),
-      padding: rhythm(1),
-      display: `none`,
-      position: `fixed`,
-      top: `calc(${presets.headerHeight} - 1px)`,
-      zIndex: 1,
-      height: `calc(100vh - ${presets.headerHeight} + 1px)`,
-      WebkitOverflowScrolling: `touch`,
-      "::-webkit-scrollbar": {
-        width: `6px`,
-        height: `6px`,
-      },
-      "::-webkit-scrollbar-thumb": {
-        background: presets.lightPurple,
-      },
-      "::-webkit-scrollbar-track": {
-        background: presets.brandLighter,
-      },
-      [presets.Desktop]: {
-        width: rhythm(17),
-        padding: rhythm(1),
-      },
-    }
-
+    
     return (
       <div>
         <Helmet defaultTitle={`GatsbyJS`} titleTemplate={`%s | GatsbyJS`}>
