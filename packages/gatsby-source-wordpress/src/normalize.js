@@ -142,7 +142,7 @@ exports.excludeUnknownEntities = entities =>
 
 exports.createGatsbyIds = (createNodeId, entities) =>
   entities.map(e => {
-    e.id = createNodeId(e.wordpress_id.toString())
+    e.id = createNodeId(`${e.__type}-${e.wordpress_id.toString()}`)
     return e
   })
 
