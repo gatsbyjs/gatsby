@@ -16,7 +16,9 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "babel-runtime": "^6.26.0",
+    "babel-runtime": "^6.26.0"
+  },
+  "peerDependencies": {
     "preact": "^8.2.5",
     "preact-compat": "^3.17.0"
   },
