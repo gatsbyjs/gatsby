@@ -100,7 +100,6 @@ class DefaultLayout extends React.Component {
       display: `none`,
       position: `fixed`,
       top: `calc(${presets.headerHeight} - 1px)`,
-      overflowY: `auto`,
       height: `calc(100vh - ${presets.headerHeight} + 1px)`,
       WebkitOverflowScrolling: `touch`,
       "::-webkit-scrollbar": {
@@ -118,7 +117,7 @@ class DefaultLayout extends React.Component {
         padding: rhythm(1),
       },
     }
-    
+
     return (
       <div>
         <Helmet defaultTitle={`GatsbyJS`} titleTemplate={`%s | GatsbyJS`}>
