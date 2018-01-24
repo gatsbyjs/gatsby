@@ -14,6 +14,7 @@ const updateAfter = 700
 //
 
 const Search = ({searchState}) => {
+  const emptySearchBox = searchState.length > 0 ? false : true
 
   return (
     <div className="container">
@@ -38,6 +39,7 @@ const Search = ({searchState}) => {
 
 
      <div css={{
+       opacity: emptySearchBox ? 0 : 1,
        height: rhythm(1.5),
        paddingTop: rhythm(.25),
        paddingBottom: rhythm(.25),
@@ -113,7 +115,6 @@ const Result = ({ hit }) => {
           css={{
             fontFamily: typography.options.headerFontFamily.join(`,`),
             fontWeight: `bold`,
-            padding: `3px 6px 3px 6px`,
           }}
           >
             {hit.name}
@@ -140,7 +141,8 @@ const Result = ({ hit }) => {
 
       <div css={{
         fontSize: rhythm(.6),
-        paddingTop: rhythm(1/2),
+        paddingTop: rhythm(.25),
+        lineHeight: rhythm(.75)
       }}>
         {hit.description}
       </div>
