@@ -1,9 +1,10 @@
 import React from "react"
 import { rhythm, options } from "../utils/typography"
-import presets from "../utils/presets"
+import presets, { colors } from "../utils/presets"
 import jsonp from "jsonp"
 import { validate } from "email-validator"
 import { css } from "glamor"
+import hex2rgba from "hex2rgba"
 
 let stripeAnimation = css.keyframes({
   "0%": { backgroundPosition: `0 0` },
@@ -12,9 +13,9 @@ let stripeAnimation = css.keyframes({
 
 const formInputDefaultStyles = {
   backgroundColor: `#fff`,
-  border: `1px solid ${presets.lightPurple}`,
+  border: `1px solid ${colors.ui.bright}`,
   borderRadius: presets.radius,
-  color: presets.bodyColor,
+  color: colors.brand,
   fontFamily: options.headerFontFamily.join(`,`),
   padding: rhythm(1 / 2),
   verticalAlign: `middle`,
@@ -22,7 +23,7 @@ const formInputDefaultStyles = {
     presets.animation.curveDefault
   }`,
   "::placeholder": {
-    color: presets.brandLight,
+    color: colors.lilac,
     opacity: 1,
   },
 }
@@ -111,7 +112,7 @@ class EmailCaptureForm extends React.Component {
     return (
       <div
         css={{
-          borderTop: `2px solid ${presets.brandLight}`,
+          borderTop: `2px solid ${colors.lilac}`,
           marginTop: rhythm(3),
           paddingTop: `${rhythm(1)}`,
         }}
@@ -137,12 +138,9 @@ class EmailCaptureForm extends React.Component {
                     ...formInputDefaultStyles,
                     width: `250px`,
                     ":focus": {
-                      color: presets.bodyColor,
-                      borderColor: presets.brand,
+                      borderColor: colors.gatsby,
                       outline: 0,
-                      boxShadow: `0 0 0 0.2rem rgba(${
-                        presets.shadowColor
-                      }, .25)`,
+                      boxShadow: `0 0 0 0.2rem ${hex2rgba(colors.lilac, 0.25)}`,
                     },
                   }}
                 />
@@ -151,23 +149,21 @@ class EmailCaptureForm extends React.Component {
                   onClick={this._handleFormSubmit}
                   css={{
                     ...formInputDefaultStyles,
-                    borderColor: presets.brand,
-                    color: presets.brand,
+                    borderColor: colors.gatsby,
+                    color: colors.gatsby,
                     cursor: `pointer`,
                     fontWeight: `bold`,
                     marginLeft: rhythm(1 / 2),
                     ":hover, &:focus": {
                       backgroundSize: `30px 30px`,
-                      backgroundColor: presets.brand,
+                      backgroundColor: colors.gatsby,
                       backgroundImage: `linear-gradient(45deg, rgba(0,0,0, 0.1) 25%, transparent 25%, transparent 50%, rgba(0,0,0, 0.1) 50%, rgba(0,0,0, 0.1) 75%, transparent 75%, transparent)`,
                       color: `#fff`,
                       animation: `${stripeAnimation} 2.8s linear infinite`,
                     },
                     ":focus": {
                       outline: 0,
-                      boxShadow: `0 0 0 0.2rem rgba(${
-                        presets.shadowColor
-                      },.25)`,
+                      boxShadow: `0 0 0 0.2rem ${hex2rgba(colors.lilac, 0.25)}`,
                     },
                   }}
                 >
