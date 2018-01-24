@@ -33,7 +33,6 @@ class DefaultLayout extends React.Component {
       this.props.location.pathname.slice(0, 10) === `/tutorial/` ||
       this.props.location.pathname.slice(0, 9) === `/features` ||
       this.props.location.pathname.slice(0, 8) === `/plugins`
-=======
       this.props.location.pathname.slice(0, 9) === `/features`
 
     const leftPadding = (rhythmSize) => {
@@ -79,6 +78,40 @@ class DefaultLayout extends React.Component {
       },
       [presets.Desktop]: {
         width: rhythm(12),
+        padding: rhythm(1),
+      },
+    }
+
+    const searchbarStyles = {
+      borderRight: `1px solid ${colors.b[0]}`,
+      backgroundColor: presets.sidebar,
+      boxShadow: `inset 0 4px 5px 0 rgba(116, 76, 158, ${
+        presets.shadowKeyPenumbraOpacity
+      }), inset 0 1px 10px 0 rgba(${presets.shadowColor}, ${
+        presets.shadowAmbientShadowOpacity
+      }), inset 0 2px 4px -1px rgba(${presets.shadowColor}, ${
+        presets.shadowKeyUmbraOpacity
+      })`,
+      width: rhythm(17),
+      padding: rhythm(1),
+      display: `none`,
+      position: `fixed`,
+      top: `calc(${presets.headerHeight} - 1px)`,
+      zIndex: 1,
+      height: `calc(100vh - ${presets.headerHeight} + 1px)`,
+      WebkitOverflowScrolling: `touch`,
+      "::-webkit-scrollbar": {
+        width: `6px`,
+        height: `6px`,
+      },
+      "::-webkit-scrollbar-thumb": {
+        background: presets.lightPurple,
+      },
+      "::-webkit-scrollbar-track": {
+        background: presets.brandLighter,
+      },
+      [presets.Desktop]: {
+        width: rhythm(17),
         padding: rhythm(1),
       },
     }
