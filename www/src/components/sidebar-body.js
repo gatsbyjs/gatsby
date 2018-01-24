@@ -1,11 +1,10 @@
 import React from "react"
 import Link from "gatsby-link"
-import gray from "gray-percentage"
 
 import typography, { rhythm, scale, options } from "../utils/typography"
-import presets from "../utils/presets"
+import presets, { colors } from "../utils/presets"
 
-const accentColor = presets.brand
+const accentColor = colors.gatsby
 const listStyles = {
   listStyle: `none`,
   margin: 0,
@@ -131,7 +130,7 @@ const SectionLink = props => {
       "& .nav-link": {
         borderBottom: `none`,
         boxShadow: `none`,
-        color: isDraft ? gray(50, 270) : gray(30, 270),
+        color: isDraft ? colors.gray.calm : colors.gray.text,
         fontWeight: `normal`,
         fontStyle: isDraft ? `italic` : false,
       },
@@ -178,7 +177,7 @@ class SidebarBody extends React.Component {
         }
       : {
           fontSize: scale(-2 / 5).fontSize,
-          color: presets.brandLight,
+          color: colors.lilac,
           textTransform: `uppercase`,
           letterSpacing: `.15em`,
           fontWeight: `normal`,

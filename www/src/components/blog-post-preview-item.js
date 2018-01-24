@@ -3,7 +3,7 @@ import Link from "gatsby-link"
 import Img from "gatsby-image"
 
 import typography, { rhythm, scale } from "../utils/typography"
-import presets from "../utils/presets"
+import presets, { colors } from "../utils/presets"
 
 class BlogPostPreviewItem extends React.Component {
   render() {
@@ -40,7 +40,7 @@ class BlogPostPreviewItem extends React.Component {
             css={{
               display: `inline-block`,
               fontFamily: typography.options.headerFontFamily.join(`,`),
-              color: presets.calm,
+              color: colors.gray.calm,
               ...scale(-2 / 5),
               [presets.Mobile]: {
                 ...scale(-1 / 5),
@@ -61,7 +61,7 @@ class BlogPostPreviewItem extends React.Component {
                   "&&": {
                     fontWeight: `normal`,
                     ":hover": {
-                      color: presets.brand,
+                      color: colors.gatsby,
                       background: `transparent`,
                     },
                   },
