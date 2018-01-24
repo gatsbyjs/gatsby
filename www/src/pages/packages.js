@@ -1,6 +1,6 @@
 import React, {Component} from "react"
 import Container from "../components/container"
-import logo from "../gatsby-negative.svg"
+import logo from "../monogram.svg"
 import { rhythm } from "../utils/typography"
 
 class Plugins extends Component {
