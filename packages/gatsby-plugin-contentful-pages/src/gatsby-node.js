@@ -9,9 +9,24 @@ const handleGraphQl = ({ data, errors }) => {
 
 const createRunner = graphql => query => graphql(query).then(handleGraphQl)
 
-const createPageObject = ({ component, map }) => fields => {
+const isFunction = val => typeof val === `function`
+const isString = val => typeof val === `string`
+
+const resolveOption = (optionName, optionValue, fields) => {
+  if (isFunction(optionValue)) {
+    return optionValue(fields)
+  }
+  if (isString(optionValue)) {
+    return optionValue
+  }
+
+  throw new TypeError(`INVALID_OPTION_TYPE_${optionName}`)
+}
+
+const createPageObject = ({ component: cValue, path: pValue }) => fields => {
   const { id } = fields
-  const path = map(fields)
+  const component = resolveOption(`component`, cValue, fields)
+  const path = resolveOption(`path`, pValue, fields)
   return {
     component,
     context: { id },
