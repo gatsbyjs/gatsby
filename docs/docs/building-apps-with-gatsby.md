@@ -6,7 +6,7 @@ Gatsby is an excellent framework for building web apps. You can use Gatsby to cr
 
 The first approach to to build "hybrid" app pages which are statically rendered with dynamic sections. The second is, if needed, add client-only multi-page sections of the site.
 
-## Hybrid app
+## Hybrid app pages
 
 With this method, Gatsby renders the initial page with shared page content -- then when your React components load in the browser, they can fetch and render data from APIs. The [React docs have a simple example of how to do this.](https://reactjs.org/docs/faq-ajax.html)
 
