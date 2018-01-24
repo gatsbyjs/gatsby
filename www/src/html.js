@@ -72,11 +72,9 @@ export default class HTML extends React.Component {
             href={`/safari-pinned-tab.svg`}
             color="#5bbad5"
           />
-          <link
-            rel="stylesheet"
-            href="https://unpkg.com/react-instantsearch-theme-algolia@4.0.0/style.min.css"
-          />
+
           {css}
+
         </head>
         <body {...this.props.bodyAttributes}>
           <div

@@ -12,6 +12,7 @@ import { rhythm, scale } from "../utils/typography"
 import presets from "../utils/presets"
 import colors from "../utils/colors"
 import "../css/prism-coy.css"
+import "../css/searchbox-style.css"
 
 // Import Futura PT typeface
 import "../fonts/Webfonts/futurapt_book_macroman/stylesheet.css"
