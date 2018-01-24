@@ -36,7 +36,7 @@ const createPageObject = ({ component: cValue, path: pValue }) => fields => {
 
 const getContentTypeEntries = async (
   gqlRunner,
-  { name, component, fields = `*`, map = d => d, prefix = `` } = {}
+  { name, fields = [], map = d => d } = {}
 ) => {
   if (!name) {
     throw new TypeError(`NO_CONTENT_TYPE`)
