@@ -1,5 +1,6 @@
 import React from "react"
 import Helmet from "react-helmet"
+import distanceInWords from 'date-fns/distance_in_words'
 
 import MarkdownPageFooter from "../components/markdown-page-footer"
 import { rhythm, scale } from "../utils/typography"
@@ -10,6 +11,11 @@ class DocsPackagesTemplate extends React.Component {
   render() {
     const packageName = this.props.data.markdownRemark.fields.title
     const page = this.props.data.markdownRemark
+    const metaData = this.props.data.npmPackage
+    const lastUpdated = `${distanceInWords(new Date(metaData.modified), new Date())} ago`;
+
+
+    console.log(this.props);
     return (
       <Container>
         <Helmet>
@@ -25,13 +31,38 @@ class DocsPackagesTemplate extends React.Component {
         <strong>
           <a
             href={`https://github.com/gatsbyjs/gatsby/tree/master/packages/${packageName}`}
-            css={{
-              position: `absolute`,
-            }}
           >
             Browse source code for this package on GitHub
           </a>
         </strong>
+
+        <div className="metadataHeader">
+
+          <div css={{
+            fontSize: rhythm(.5),
+            color: `#D3D3D3`,
+          }}>
+            {metaData.keywords.join(", ")}
+          </div>
+
+          <div
+            css={{
+              display: `flex`,
+              paddingTop: rhythm(.25),
+            }}
+            >
+            <img
+              width="20"
+              height="20"
+              src={metaData.lastPublisher.avatar}
+             />
+              <span css={{paddingLeft: rhythm(.25), fontSize: rhythm(.5), textTransform: `uppercase`}}>{metaData.lastPublisher.name}</span>
+              <span css={{paddingLeft: rhythm(.25), fontSize: rhythm(.5)}}>{lastUpdated}</span>
+          </div>
+
+
+        </div>
+
         <div
           css={{
             position: `relative`,
@@ -58,6 +89,28 @@ export const pageQuery = graphql`
         title
       }
       ...MarkdownPageFooter
+    }
+    npmPackage(slug: {eq: $slug}){
+      name
+      description
+      deprecated
+      keywords
+      lastPublisher{
+        name
+        avatar
+      }
+      modified
+      repository{
+        url
+        project
+        user
+      }
+      humanDownloadsLast30Days
+      readme{
+        childMarkdownRemark{
+          html
+        }
+      }
     }
   }
 `
