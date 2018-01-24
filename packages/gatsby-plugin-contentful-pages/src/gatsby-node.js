@@ -39,7 +39,7 @@ const getContentTypeEntries = async (
   { name, fields = [], map = d => d } = {}
 ) => {
   if (!name) {
-    throw new TypeError(`NO_CONTENT_TYPE`)
+    throw new TypeError(`MISSING_CONTENT_TYPE_NAME`)
   }
 
   const query = createAllQuery(name, fields)
