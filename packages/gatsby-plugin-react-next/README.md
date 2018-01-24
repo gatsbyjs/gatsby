@@ -7,7 +7,7 @@ site is drop-in upgrade to React 16.
 
 ## Install
 
-`npm install --save gatsby-plugin-react-next`
+`npm install --save gatsby-plugin-react-next react react-dom`
 
 ## How to use
 
