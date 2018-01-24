@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-netlify-cms",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A Gatsby plugin which generates the Netlify CMS single page app",
   "main": "index.js",
   "author": "Shawn Erquhart <shawn@erquh.art>",
@@ -24,5 +24,8 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "cross-env": "^5.1.3"
+  },
+  "peerDependencies": {
+    "gatsby": "^1.0.0"
   }
 }

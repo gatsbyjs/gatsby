@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-coffeescript",
   "description": "Adds CoffeeScript support for Gatsby layouts and pages.",
-  "version": "1.4.8",
+  "version": "1.4.9",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "contributors": [
     "Noah Lange <noahrlange@gmail.com>"
@@ -14,6 +14,9 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "cross-env": "^5.0.5"
+  },
+  "peerDependencies": {
+    "gatsby": "^1.0.0"
   },
   "keywords": [
     "gatsby",

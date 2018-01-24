@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-cxs",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Stub description for gatsby-plugin-cxs",
   "main": "index.js",
   "scripts": {
@@ -19,5 +19,8 @@
   },
   "dependencies": {
     "babel-runtime": "^6.26.0"
+  },
+  "peerDependencies": {
+    "gatsby": "^1.0.0"
   }
 }

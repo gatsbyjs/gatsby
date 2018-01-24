@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-jss",
-  "version": "1.5.9",
+  "version": "1.5.10",
   "description": "Gatsby plugin that adds SSR support for JSS",
   "main": "index.js",
   "scripts": {
@@ -22,5 +22,8 @@
   },
   "devDependencies": {
     "babel-cli": "^6.26.0"
+  },
+  "peerDependencies": {
+    "gatsby": "^1.0.0"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-twitter",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "Stub description for gatsby-plugin-twitter",
   "main": "index.js",
   "scripts": {
@@ -19,5 +19,8 @@
   },
   "dependencies": {
     "babel-runtime": "^6.26.0"
+  },
+  "peerDependencies": {
+    "gatsby": "^1.0.0"
   }
 }
