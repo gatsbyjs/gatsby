@@ -5,7 +5,7 @@ import ArrowForwardIcon from "react-icons/lib/md/arrow-forward"
 import ArrowBackIcon from "react-icons/lib/md/arrow-back"
 import Img from "gatsby-image"
 
-import presets from "../utils/presets"
+import presets, { colors } from "../utils/presets"
 import typography, { rhythm, scale, options } from "../utils/typography"
 import Container from "../components/container"
 import EmailCaptureForm from "../components/email-capture-form"
@@ -21,13 +21,13 @@ class BlogPostTemplate extends React.Component {
         borderBottom: 0,
         fontFamily: options.headerFontFamily.join(`,`),
         fontWeight: `bold`,
-        color: presets.brand,
+        color: colors.gatsby,
       },
     }
     const prevNextLabelStyles = {
       marginTop: 0,
       marginBottom: 0,
-      color: presets.calm,
+      color: colors.gray.calm,
       fontWeight: `normal`,
       ...scale(0),
       lineHeight: 1,
@@ -39,7 +39,7 @@ class BlogPostTemplate extends React.Component {
           fontFamily: typography.options.headerFontFamily.join(`,`),
           lineHeight: 1.3,
           margin: 0,
-          color: presets.calm,
+          color: colors.gray.calm,
           [presets.Mobile]: {
             ...scale(-1 / 5),
             lineHeight: 1.3,
@@ -207,7 +207,7 @@ class BlogPostTemplate extends React.Component {
         </Container>
         <div
           css={{
-            borderTop: `1px solid ${presets.veryLightPurple}`,
+            borderTop: `1px solid ${colors.ui.light}`,
             marginTop: rhythm(2),
             [presets.Tablet]: {
               marginTop: rhythm(2),

@@ -39,6 +39,7 @@
     "gatsby-transformer-yaml": "^1.5.7",
     "graphql-request": "^1.4.0",
     "gray-percentage": "^2.0.0",
+    "hex2rgba": "^0.0.1",
     "jsonp": "^0.2.1",
     "limax": "^1.5.0",
     "lodash": "^4.16.6",
