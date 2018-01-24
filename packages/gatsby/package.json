@@ -105,6 +105,7 @@
     "style-loader": "^0.13.0",
     "type-of": "^2.0.1",
     "url-loader": "^0.5.7",
+    "uuid": "^3.1.0",
     "v8-compile-cache": "^1.1.0",
     "webpack": "^1.13.3",
     "webpack-configurator": "^0.3.0",
