@@ -2,7 +2,7 @@ import React, {Component} from "react"
 import Container from "../components/container"
 import logo from "../monogram.svg"
 import { rhythm } from "../utils/typography"
-
+//
 class Packages extends Component {
   render(){
     return(
