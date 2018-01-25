@@ -6,13 +6,15 @@ author: "Shannon Soper"
 
 A poster of Starry Night by Vincent Van Gogh followed me to each new dorm room in college because I bought it the first year, and kept it until it ripped beyond repair. My sister (a professional artist) and I continuously debate the merits and demerits of reprinting great works of art like Van Gogh’s masterpiece. As much as I revere the original, I also love the fact that printing technology makes it easy to put Starry Night on tote bags, coffee mugs, posters, t-shirts, and more because it became more accessible to a wide range of people (without advanced printers and computers, the original painting could only be replicated and shared with more people through painstaking replication via the original medium: oil painting on a canvas).
 
-![Starry Night painting by Vincent Van Gogh](starry-night.jpeg))
+![Starry Night painting by Vincent Van Gogh](starry-night.jpeg)
 
 For the same reason, I’m also loving building a website with React and Contentful; together they allow things like images and text to easily appear in various formats across multiple platforms. It’s much faster and easier to resize and reuse the content you already have when you don’t have to painstakingly re-create for mobile, for web, etc. You basically just print it, again, and again, and again, in small and large and medium formats, in websites, mobile apps, multiple languages. Just...push a button on a printer to make copies. Easy, right?
 
 Well, easy if you already know React, at least. I wanted to make little site about my dog, Watson, yet didn’t know how to code. The background: sometimes a friend or family member babysits him, and I usually give them a printed paper with a list of the commands he knows and his hourly schedule (he’s not that high maintenance but he does need to eat and sleep :). It is time-consuming to either write instructions or update and print new guides for babysitters. Also, the number of commands he understands increases every day, and it seemed easier to update this list of commands on a website rather than edit and print new copies of my written guide. Finally, what if in three years there is some holographic embodiment of Alexa that can use my content to help future babysitters? Where will she need to pull content from? A React + Contentful combo seems likely to adapt easily to new technology like an Alexa babysitter.
 
 Here’s the site I built after learning the basics of Contentful and React: http://watson.surge.sh/. Following are instructions on how you can also build a site with Contentful and React with tips I learned while building my site.
+
+[Home page of the new site about my dog](watson-welcome-page.png)
 
 ## What is React? Why choose it?
 
@@ -51,7 +53,8 @@ module.exports = {
         pathToConfigModule: `src/utils/typography`,
       },
     },
-    //Next is where I include the gatsby-source-contentful plugin and include the spaceID and accessToken I got from my Contentful account.
+    //Here's where I include the gatsby-source-contentful plugin.
+    // And also I added the spaceID and accessToken I got from my Contentful account.
     {
       resolve: `gatsby-source-contentful`,
       options: {
@@ -69,16 +72,16 @@ Once Contentful and Gatsby were getting along well together, I created pages and
 
 Here’s an instance of a GraphiQL query that worked in there but not in the actual code. It needs to read `(sort: {field: [order]})` with the square brackets around the word "order" because there are multiple fields I can sort by; I had forgotten the brackets and GraphiQL said it would work, but then it didn't work. Here's the correct format:
 
-```jsx
+```graphql
 {
-allContentfulWatsonsEatingAndSleepSchedule (sort: {fields: [order]}) {
-edges {
-node {
-activityName
-time
-}
-}
-}
+  allContentfulWatsonsEatingAndSleepSchedule(sort: { fields: [order] }) {
+    edges {
+      node {
+        activityName
+        time
+      }
+    }
+  }
 }
 ```
 
@@ -93,7 +96,8 @@ import React from "react"
 
 export default ({ data }) => {
   console.log(data)
-  // The next line is where the code drills deeper into the data structure to finally get to photos, at the end of the line. In order to create the correct order here, follow the structure of the GraphQL query you already created and pay attention to which fields are objects and which are arrays.
+  // The next line is where the code drills deeper into the data structure to finally get to photos.
+  // In order to create the correct order here, follow the structure of the GraphQL query.
   const photos = data.allContentfulPhotoGallery.edges[0].node.photos
   console.log(photos)
 
@@ -105,10 +109,10 @@ export default ({ data }) => {
         <div>
           <br />
           <br />
-          // The next line is where the code drills deeper into the data
-          structure again to print a specific thing to the site. In this case,
-          I’m printing each photo to the site by using its URL. I got this
-          structure from the GraphQL query.
+          // The next line is where the code drills into the data structure //
+          to print a specific thing to the site. // In this case, I’m printing
+          each photo to the site by using its URL. // I got this structure from
+          the GraphQL query.
           <img src={photo.file.url} />
           <h3>{photo.title}</h3>
         </div>
@@ -119,7 +123,7 @@ export default ({ data }) => {
 
 export const query = graphql`
 query PhotoQuery {
-// starting here is where I just literally copied and pasted the query I created in GraphiQL
+// starting here is where I copied and pasted the query I created in GraphiQL.
     allContentfulPhotoGallery { 
         edges { 
             node { 
@@ -152,10 +156,9 @@ export default ({ data }) => {
         <div>
           <br />
           <h2>{trick.node.commandPhrase}</h2>
-          //This next bit of code was a little tricky. Definitely needed help
-          figuring out how to render HTML, and ended up using the
-          gatsby-transformer-remark plugin and this `dangerouslySetInnerHTML`
-          thing
+          // This next bit of code was a little tricky. // Definitely needed
+          help figuring out how to render HTML. // I ended up using
+          gatsby-transformer-remark plugin and this `dangerouslySetInnerHTML`.
           <div
             dangerouslySetInnerHTML={{
               __html: trick.node.commandDescription.childMarkdownRemark.html,
