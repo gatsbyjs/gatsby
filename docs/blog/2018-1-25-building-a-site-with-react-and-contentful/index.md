@@ -14,7 +14,7 @@ Well, easy if you already know React, at least. I wanted to make little site abo
 
 Here’s the site I built after learning the basics of Contentful and React: http://watson.surge.sh/. Following are instructions on how you can also build a site with Contentful and React with tips I learned while building my site.
 
-[Home page of the new site about my dog](watson-welcome-page.png)
+![Home page of the new site about my dog](watson-welcome-page.png)
 
 ## What is React? Why choose it?
 
