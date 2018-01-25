@@ -49,13 +49,12 @@ module.exports = async (
   webpackPort = 1500,
   pages = []
 ) => {
-  const babelStage = suppliedStage
   const directoryPath = withBasePath(directory)
 
   // We combine develop & develop-html stages for purposes of generating the
   // webpack config.
   const stage = suppliedStage
-  const babelConfig = await genBabelConfig(program, babelStage)
+  const babelConfig = await genBabelConfig(program, suppliedStage)
 
   function processEnv(stage, defaultNodeEnv) {
     debug(`Building env for "${stage}"`)
@@ -568,7 +567,7 @@ module.exports = async (
 
   // Use the suppliedStage again to let plugins distinguish between
   // server rendering the html.js and the frontend development config.
-  const validatedConfig = await webpackModifyValidate(config, suppliedStage)
+  const validatedConfig = await webpackModifyValidate(program, config, babelConfig, suppliedStage)
 
   return validatedConfig
 }
