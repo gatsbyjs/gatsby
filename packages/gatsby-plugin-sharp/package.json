@@ -14,7 +14,7 @@
     "lodash": "^4.17.4",
     "potrace": "^2.1.1",
     "progress": "^1.1.8",
-    "sharp": "^0.17.3",
+    "sharp": "^0.19.0",
     "svgo": "^0.7.2"
   },
   "devDependencies": {
