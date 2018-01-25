@@ -72,7 +72,7 @@ const isImage = image =>
     _.get(image, `file.contentType`)
   )
 
-const getBase64Image = (imageProps) => {
+const getBase64Image = imageProps => {
   if (!imageProps) return null
 
   const requestUrl = `https:${imageProps.baseUrl}?w=20`

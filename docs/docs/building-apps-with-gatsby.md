@@ -2,7 +2,7 @@
 title: "Building apps with Gatsby"
 ---
 
-Gatsby is an excellent framework for building web apps. You can use Gatsby to create personalized, logged-in experiences with two different methods. 
+Gatsby is an excellent framework for building web apps. You can use Gatsby to create personalized, logged-in experiences with two different methods.
 
 The first approach to to build "hybrid" app pages which are statically rendered with dynamic sections. The second is, if needed, add client-only multi-page sections of the site.
 
@@ -19,7 +19,7 @@ You can also use your React components to create interactive widgets e.g. allow 
 
 ## Client-only routes
 
-Often you want to create a site with client-only portions that are gated by authentication. 
+Often you want to create a site with client-only portions that are gated by authentication.
 
 A classic example would be a site that has a landing page, various marketing pages, a login page, and then an app section for logged-in users. The logged-in section doesn't need to be server rendered as all data will be loaded live from your API after the user logs so it makes sense to make this portion of your site client-only.
 

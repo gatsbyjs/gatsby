@@ -65,7 +65,7 @@ module.exports = {
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
   ],
-}
+};
 ```
 
 Once Contentful and Gatsby were getting along well together, I created pages and added a few other style-oriented plugins (Glamor and Typography) when I realized I wanted those. Then, I used GraphiQL to create queries that could pull my Contentful content into my site. After creating queries for each type of content I wanted (daily schedule, list of tricks & commands Watson knows, and a photo gallery), I saved each query in its corresponding page to see if anything broke. There were a few instances in which GraphiQL hadn’t let me know I had errors in the little ways I tried to sort data.
@@ -92,14 +92,14 @@ Once I got my GraphQL queries working, I called a couple friends for help render
 Following are more examples of pages I created. The code from the photo gallery page shows that I import React at the top, then I tell it to export data from Contentful by using the hierarchy in the GraphQL query. In the middle, the code shows how I’m using JS to also pull bits of data in to be rendered using the structure of the GraphQL query:
 
 ```jsx
-import React from "react"
+import React from "react";
 
 export default ({ data }) => {
-  console.log(data)
+  console.log(data);
   // The next line is where the code drills deeper into the data structure to finally get to photos.
   // In order to create the correct order here, follow the structure of the GraphQL query.
-  const photos = data.allContentfulPhotoGallery.edges[0].node.photos
-  console.log(photos)
+  const photos = data.allContentfulPhotoGallery.edges[0].node.photos;
+  console.log(photos);
 
   return (
     <div>
@@ -118,8 +118,8 @@ export default ({ data }) => {
         </div>
       ))}
     </div>
-  )
-}
+  );
+};
 
 export const query = graphql`
 query PhotoQuery {
@@ -136,18 +136,18 @@ query PhotoQuery {
                     } 
                 } 
             } 
-        }`
+        }`;
 ```
 
 A more complex page included the list of Tricks & Commands, because not all entries on Contentful included the same content. Some had photos, and some did not. Because of this, my friends helped me figure out a way to use JS to make sure we only requested a photo to be printed IF there really was a photo. For any entries without a photo, the computer could forgive it (just this once).
 
 ```jsx
-import React from "react"
+import React from "react";
 
 export default ({ data }) => {
-  const tricks = data.allContentfulTricksCommands.edges
-  console.log(tricks)
-  console.log(data)
+  const tricks = data.allContentfulTricksCommands.edges;
+  console.log(tricks);
+  console.log(data);
 
   return (
     <div>
@@ -173,8 +173,8 @@ export default ({ data }) => {
         </div>
       ))}
     </div>
-  )
-}
+  );
+};
 
 export const query = graphql`
   query CommandsQuery {
@@ -199,7 +199,7 @@ export const query = graphql`
       }
     }
   }
-`
+`;
 ```
 
 It was awesome to get this all working because it’s clear how fast it would be to add more content without having to write any fresh code. Amazing. For example, I could add 10 new tricks to Contentful, and just restart the dev server. Done.
