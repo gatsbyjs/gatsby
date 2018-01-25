@@ -1,7 +1,6 @@
 const crypto = require(`crypto`)
 const deepMapKeys = require(`deep-map-keys`)
 const _ = require(`lodash`)
-const uuidv5 = require(`uuid/v5`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
 const colorized = require(`./output-color`)
@@ -141,19 +140,9 @@ exports.liftRenderedField = entities =>
 exports.excludeUnknownEntities = entities =>
   entities.filter(e => e.wordpress_id) // Excluding entities without ID
 
-const seedConstant = `b2012db8-fafc-5a03-915f-e6016ff32086`
-const typeNamespaces = {}
-exports.createGatsbyIds = entities =>
+exports.createGatsbyIds = (createNodeId, entities) =>
   entities.map(e => {
-    let namespace
-    if (typeNamespaces[e.__type]) {
-      namespace = typeNamespaces[e.__type]
-    } else {
-      typeNamespaces[e.__type] = uuidv5(e.__type, seedConstant)
-      namespace = typeNamespaces[e.__type]
-    }
-
-    e.id = uuidv5(e.wordpress_id.toString(), namespace)
+    e.id = createNodeId(`${e.__type}-${e.wordpress_id.toString()}`)
     return e
   })
 
