@@ -1,5 +1,5 @@
 ---
-title: GraphQL interface
+title: GraphQL Reference
 ---
 
 ### Filters and Sorting
