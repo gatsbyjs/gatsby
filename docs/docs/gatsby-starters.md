@@ -210,9 +210,9 @@ Community:
 
 * [gatsby-starter-portfolio-emma](https://github.com/LeKoArts/gatsby-starter-portfolio-emma)
   [(demo)](https://embalmer-glues-43220.netlify.com/)
-  
+
   The target audience are designers and photographers.
-  
+
   Features:
 
   * Full-width photo grid-layout (with [gatsby-image](https://using-gatsby-image.gatsbyjs.org/))
@@ -222,12 +222,12 @@ Community:
     [Typography.js](https://kyleamathews.github.io/typography.js/)
   * Easily configurable
   * And other good stuff (SEO, Offline Support, WebApp Manifest Support)
-  
+
 * [gatsby-starter-portfolio-emilia](https://github.com/LeKoArts/gatsby-starter-portfolio-emilia)
   [(demo)](https://upbeat-edison-0598aa.netlify.com/)
-  
+
   The target audience are designers and photographers.
-  
+
   Features:
 
   * Focus on big images (with [gatsby-image](https://using-gatsby-image.gatsbyjs.org/))

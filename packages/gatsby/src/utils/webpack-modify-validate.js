@@ -17,9 +17,19 @@ const validationWhitelist = Joi.object({
   responsiveLoader: Joi.any(),
 })
 
-export default (async function ValidateWebpackConfig(program, config, babelConfig, stage) {
+export default (async function ValidateWebpackConfig(
+  program,
+  config,
+  babelConfig,
+  stage
+) {
   // We don't care about the return as plugins just mutate the config directly.
-  await apiRunnerNode(`modifyWebpackConfig`, { program, config, babelConfig, stage })
+  await apiRunnerNode(`modifyWebpackConfig`, {
+    program,
+    config,
+    babelConfig,
+    stage,
+  })
 
   // console.log(JSON.stringify(config, null, 4))
 
