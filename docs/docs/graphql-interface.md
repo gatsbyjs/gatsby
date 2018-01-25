@@ -52,3 +52,5 @@ query IndexQuery {
 
   Gatsby relies on [sift](https://www.npmjs.com/package/sift), enabling MongoDB query syntax for object filtering. This allows Gatsby to support operators like `eq`, `ne`, `in`, `regex`, querying nested fields through the `__` connector, and so forth.
 
+  A good video tutorial on this is [here](https://www.youtube.com/watch?v=Lg1bom99uGM).
+
