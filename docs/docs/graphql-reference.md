@@ -2,6 +2,8 @@
 title: GraphQL Reference
 ---
 
+*WIP!*
+
 ### Filters and Sorting
 
 Gatsby's implementation of GraphQL adds support for operators like sorting and filtering when components are fetching data.
