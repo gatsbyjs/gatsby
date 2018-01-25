@@ -75,33 +75,17 @@ function inferGraphQLType({
 
     if (exampleValue == null) return null
 
-    let headType
-    // If the array contains non-array objects, than treat them as "nodes"
-    // and create an object type.
-    if (_.isObject(exampleValue) && !_.isArray(exampleValue)) {
-      headType = new GraphQLObjectType({
-        name: createTypeName(fieldName),
-        fields: inferObjectStructureFromNodes({
-          ...otherArgs,
-          exampleValue,
-          selector,
-        }),
-      })
-      // Else if the values are simple values or arrays, just infer their type.
-    } else {
-      let inferredType = inferGraphQLType({
-        ...otherArgs,
-        exampleValue,
-        selector,
-      })
-      invariant(
-        inferredType,
-        `Could not infer graphQL type for value: ${exampleValue}`
-      )
+    let inferredType = inferGraphQLType({
+      ...otherArgs,
+      exampleValue,
+      selector,
+    })
+    invariant(
+      inferredType,
+      `Could not infer graphQL type for value: ${exampleValue}`
+    )
 
-      headType = inferredType.type
-    }
-    return { type: new GraphQLList(headType) }
+    return { type: new GraphQLList(inferredType.type) }
   }
 
   // Check if this is a date.
