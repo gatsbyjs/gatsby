@@ -36,13 +36,13 @@ const createPageObject = ({ component: cValue, path: pValue }) => fields => {
 
 const getContentTypeEntries = async (
   gqlRunner,
-  { name, fields = [], map = d => d } = {}
+  { name, subQuery, map = d => d } = {}
 ) => {
   if (!name) {
     throw new TypeError(`MISSING_CONTENT_TYPE_NAME`)
   }
 
-  const query = createAllQuery(name, fields)
+  const query = createAllQuery(name, subQuery)
   const data = await gqlRunner(query)
   return getNodesFor(name)(data).map(map)
 }
@@ -58,9 +58,9 @@ const createPages = async (
 ) => {
   const { createPage } = boundActionCreators
   const gqlRunner = createRunner(graphql)
-  const pageCollections = contentTypes.map(createContentTypePages(gqlRunner))
+  const pageCollections = await Promise.all(contentTypes.map(createContentTypePages(gqlRunner)))
   const allPageObjects = Array.prototype.concat(...pageCollections)
-  return allPageObjects.map(createPage, allPageObjects)
+  return allPageObjects.map(createPage)
 }
 
 exports.createPages = createPages

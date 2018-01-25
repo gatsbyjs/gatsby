@@ -1,0 +1,140 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`The util module createAllQuery should create a GraphQL query for a content type and a field subquery 1`] = `
+"
+  {
+    allContentfulProduct {
+      edges {
+        node {
+          
+      id
+      slug
+      tags
+      price
+      quantity
+    
+        }
+      }
+    }
+  }
+"
+`;
+
+exports[`The util module createAllQuery should create a GraphQL query for the entry ID, if no subQuery is passed  1`] = `
+"
+  {
+    allContentfulmyContentType {
+      edges {
+        node {
+          id
+        }
+      }
+    }
+  }
+"
+`;
+
+exports[`The util module getNodesFor should retrieve all entries for a content type from the props 1`] = `
+"[
+  {
+    \\"id\\": \\"c5KsDBWseXY6QegucYAoacS___de\\",
+    \\"slug\\": \\"playsam-streamliner-classic-car-espresso\\",
+    \\"tags\\": [
+      \\"wood\\",
+      \\"toy\\",
+      \\"car\\",
+      \\"sweden\\",
+      \\"design\\"
+    ],
+    \\"price\\": 44,
+    \\"quantity\\": 56
+  },
+  {
+    \\"id\\": \\"c3DVqIYj4dOwwcKu6sgqOgg___de\\",
+    \\"slug\\": \\"hudson-wall-cup\\",
+    \\"tags\\": [
+      \\"vase\\",
+      \\"flowers\\",
+      \\"accessories\\"
+    ],
+    \\"price\\": 11,
+    \\"quantity\\": 101
+  },
+  {
+    \\"id\\": \\"c6dbjWqNd9SqccegcqYq224___de\\",
+    \\"slug\\": \\"whisk-beater\\",
+    \\"tags\\": [
+      \\"kitchen\\",
+      \\"accessories\\",
+      \\"whisk\\",
+      \\"scandinavia\\",
+      \\"design\\"
+    ],
+    \\"price\\": 22,
+    \\"quantity\\": 89
+  },
+  {
+    \\"id\\": \\"c4BqrajvA8E6qwgkieoqmqO___de\\",
+    \\"slug\\": \\"soso-wall-clock\\",
+    \\"tags\\": [
+      \\"home décor\\",
+      \\"clocks\\",
+      \\"interior design\\",
+      \\"yellow\\",
+      \\"gifts\\"
+    ],
+    \\"price\\": 120,
+    \\"quantity\\": 3
+  },
+  {
+    \\"id\\": \\"c5KsDBWseXY6QegucYAoacS\\",
+    \\"slug\\": \\"playsam-streamliner-classic-car-espresso\\",
+    \\"tags\\": [
+      \\"wood\\",
+      \\"toy\\",
+      \\"car\\",
+      \\"sweden\\",
+      \\"design\\"
+    ],
+    \\"price\\": 44,
+    \\"quantity\\": 56
+  },
+  {
+    \\"id\\": \\"c3DVqIYj4dOwwcKu6sgqOgg\\",
+    \\"slug\\": \\"hudson-wall-cup\\",
+    \\"tags\\": [
+      \\"vase\\",
+      \\"flowers\\",
+      \\"accessories\\"
+    ],
+    \\"price\\": 11,
+    \\"quantity\\": 101
+  },
+  {
+    \\"id\\": \\"c6dbjWqNd9SqccegcqYq224\\",
+    \\"slug\\": \\"whisk-beater\\",
+    \\"tags\\": [
+      \\"kitchen\\",
+      \\"accessories\\",
+      \\"whisk\\",
+      \\"scandinavia\\",
+      \\"design\\"
+    ],
+    \\"price\\": 22,
+    \\"quantity\\": 89
+  },
+  {
+    \\"id\\": \\"c4BqrajvA8E6qwgkieoqmqO\\",
+    \\"slug\\": \\"soso-wall-clock\\",
+    \\"tags\\": [
+      \\"home décor\\",
+      \\"clocks\\",
+      \\"interior design\\",
+      \\"yellow\\",
+      \\"gifts\\"
+    ],
+    \\"price\\": 120,
+    \\"quantity\\": 3
+  }
+]"
+`;
