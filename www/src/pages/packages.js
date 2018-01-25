@@ -3,7 +3,7 @@ import Container from "../components/container"
 import logo from "../monogram.svg"
 import { rhythm } from "../utils/typography"
 
-class Plugins extends Component {
+class Packages extends Component {
   render(){
     return(
       <Container>
@@ -42,6 +42,7 @@ class Plugins extends Component {
                   marginLeft: rhythm(3),
                   marginRight: rhythm(3),
                   fontSize: rhythm(3/4),
+                  textAlign: `center`,
                 }}>
                 Please use the search bar to find packages
                 that will make your blazing-fast site even more awesome.
@@ -52,4 +53,4 @@ class Plugins extends Component {
   }
 }
 
-export default Plugins
+export default Packages
