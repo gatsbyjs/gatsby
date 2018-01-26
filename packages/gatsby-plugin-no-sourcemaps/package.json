@@ -1,0 +1,13 @@
+{
+  "name": "gatsby-plugin-no-sourcemaps",
+  "version": "0.0.1",
+  "description": "Disable sourcemaps when building javascript",
+  "main": "index.js",
+  "keywords": [
+    "gatsby",
+    "webpack",
+    "sourcemaps"
+  ],
+  "author": "Stuart Taylor <stuart@freecodecamp.org>",
+  "license": "MIT"
+}
