@@ -527,7 +527,7 @@ export function inferObjectStructureFromNodes({
         nodes,
         types,
         exampleValue: value,
-        selector: selector ? `${selector}.${key}` : key,
+        selector: nextSelector,
       })
     }
 
