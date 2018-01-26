@@ -186,10 +186,6 @@ module.exports = async (
           // See https://github.com/facebookincubator/create-react-app/issues/186
           new WatchMissingNodeModulesPlugin(directoryPath(`node_modules`)),
 
-          // Names module ids with their filepath. We use this in development
-          // to make it easier to see what modules have hot reloaded, etc. as
-          // the numerical IDs aren't useful. In production we use numerical module
-          // ids to reduce filesize.
           plugins.namedModules(),
           new FriendlyErrorsWebpackPlugin({
             clearConsole: false,
