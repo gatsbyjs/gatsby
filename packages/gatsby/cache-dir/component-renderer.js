@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import loader, { publicLoader } from "./loader"
 import emitter from "./emitter"
 import { apiRunner } from "./api-runner-browser"
-import _ from "lodash"
+import shallowCompare from "shallow-compare"
 
 const DefaultLayout = ({ children }) => <div>{children()}</div>
 
@@ -91,21 +91,21 @@ class ComponentRenderer extends React.Component {
     if (!nextState.pageResources) {
       return true
     }
-
     // Check if the component or json have changed.
     if (!this.state.pageResources && nextState.pageResources) {
       return true
     }
-
     if (
       this.state.pageResources.component !== nextState.pageResources.component
     ) {
       return true
     }
 
+
     if (this.state.pageResources.json !== nextState.pageResources.json) {
       return true
     }
+
 
     // Check if location has changed on a page using internal routing
     // via matchPath configuration.
@@ -118,28 +118,11 @@ class ComponentRenderer extends React.Component {
       return true
     }
 
-    if (Object.keys(this.props).length !== Object.keys(nextProps).length) {
-      return true;
-    }
-
-    // shallow object comparison, assume child object equality
-    const differentProps = Object.keys(this.props).filter(key => (
-      typeof this.props[key] !== "object" &&
-      this.props[key] !== nextProps[key]
-    ))
-
-    if (differentProps.length) {
-      return true
-    }
-
-    if (!_.isEqual(this.props.location, nextProps.location)) {
-      return true;
-    }
-
-    return false
+    return shallowCompare(this, nextProps, nextState)
   }
 
   render() {
+    console.log("222")
     const pluginResponses = apiRunner(`replaceComponentRenderer`, {
       props: { ...this.props, pageResources: this.state.pageResources },
       loader: publicLoader,
