@@ -4,11 +4,11 @@ date: "2018-01-25"
 author: "Shannon Soper"
 ---
 
-A poster of Starry Night by Vincent Van Gogh followed me to each new dorm room in college because I bought it the first year, and kept it until it ripped beyond repair. 
+A poster of _Starry Night_ by Vincent Van Gogh followed me to each new dorm room in college because I bought it the first year, and kept it until it ripped beyond repair. 
 
 My sister (a professional artist) and I continuously debate the merits and demerits of reprinting great works of art like Van Gogh’s masterpiece. 
 
-As much as I revere the original, I also love the fact that printing technology makes it easy to put Starry Night on tote bags, coffee mugs, posters, t-shirts, and more because it became more accessible to a wide range of people (without advanced printers and computers, the original painting could only be replicated and shared with more people through painstaking replication via the original medium: oil painting on a canvas).
+As much as I revere the original, I also love the fact that printing technology makes it easy to put _Starry Night_ on tote bags, coffee mugs, posters, t-shirts, and more because it became more accessible to a wide range of people (without advanced printers and computers, the original painting could only be replicated and shared with more people through painstaking replication via the original medium: oil painting on a canvas).
 
 ![Starry Night painting by Vincent Van Gogh](starry-night.jpeg)
 
@@ -18,11 +18,9 @@ It’s much faster and easier to resize and reuse the content you already have w
 
 Well, easy if you already know React, at least. I wanted to make little site about my dog, Watson, yet didn’t know how to code. 
 
-Sometimes a friend or family member babysits him, and I usually give them a printed paper with a list of the commands he knows and his hourly schedule (he’s not that high maintenance but he does need to eat and sleep :)
+Sometimes a friend or family member babysits him, and it is time-consuming to either write instructions or update and print new guides for babysitters since he learns new commands every day. A website seemed like a better way to manage this.
 
-It is time-consuming to either write instructions or update and print new guides for babysitters. Also, the number of commands he understands increases every day, and it seemed easier to update this list of commands on a website rather than edit and print new copies of my written guide. And what if in three years there is some holographic embodiment of Alexa that can use my content to help future babysitters? Where will she need to pull content from? A React + Contentful combo seems likely to adapt easily to new technology like an Alexa babysitter.
-
-Here’s the site I built after learning the basics of Contentful and React: http://watson.surge.sh/. Following are instructions on how you can also build a site with Contentful and React with tips I learned while building my site.
+Here’s the site I built for my dog's babysitters after learning the basics of Contentful and React: http://watson.surge.sh/. Following are instructions on how you can also build a site with Contentful and React with tips I learned while building my site.
 
 ![Home page of the new site about my dog](watson-welcome-page.png)
 
@@ -79,6 +77,8 @@ module.exports = {
   ],
 };
 ```
+
+## Creating pages and GraphQL queries
 
 Once Contentful and Gatsby were getting along well together, I created pages and added a few other style-oriented plugins (Glamor and Typography) when I realized I wanted those. Then, I used GraphiQL to create queries that could pull my Contentful content into my site. 
 
@@ -222,6 +222,8 @@ export const query = graphql`
 `;
 ```
 
+## Final thoughts
+
 It was awesome to get this all working because it’s clear how fast it would be to add more content without having to write any fresh code. Amazing. For example, I could add 10 new tricks to Contentful, and just restart the dev server. Done.
 
 Through a beginner’s lens, it seems like the bigger your team of editors and developers, the more you would want to reduce the amount of time it takes to change to content. 
@@ -234,4 +236,4 @@ So where does this leave me? My next step is to learn React better so I can do s
 
 Also, I’m still trying to figure out why sometimes field names aren’t updating in GraphiQL when they are changed in Contentful (restarting the dev server didn’t fix that).
 
-Now, for the most important question: who wants to babysit my dog? :)
+Now, for the most important question: who wants to babysit my dog? Alexa? Siri? Maybe someday. :)
