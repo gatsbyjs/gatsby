@@ -51,11 +51,11 @@ module.exports = async (pageOrLayout, component) => {
   }
 
   // Add the path/layout context onto the results.
-  let contextKey = `pathContext`
   if (!pageOrLayout.path) {
-    contextKey = `layoutContext`
+    result[`layoutContext`] = pageOrLayout.context
+  } else {
+    result[`pageContext`] = pageOrLayout.context
   }
-  result[contextKey] = pageOrLayout.context
   const resultJSON = JSON.stringify(result)
   const resultHash = md5(resultJSON)
   const resultPath = joinPath(

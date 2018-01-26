@@ -14,7 +14,7 @@ class TagRoute extends React.Component {
       <div>
         <h1>
           {this.props.data.allMarkdownRemark.totalCount}
-          {` `}posts tagged with “{this.props.pathContext.tag}”
+          {` `}posts tagged with “{this.props.pageContext.tag}”
         </h1>
         <ul>{postLinks}</ul>
         <p>
