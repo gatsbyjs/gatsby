@@ -4,6 +4,7 @@ import Helmet from "react-helmet"
 import Navigation from "../components/navigation"
 import MobileNavigation from "../components/navigation-mobile"
 import SidebarBody from "../components/sidebar-body"
+import SearchBar from "../components/searchbar-body"
 import tutorialSidebar from "../pages/docs/tutorial-links.yml"
 import docsSidebar from "../pages/docs/doc-links.yaml"
 import featuresSidebar from "../pages/docs/features-links.yaml"
@@ -11,6 +12,7 @@ import { rhythm, scale } from "../utils/typography"
 import presets, { colors } from "../utils/presets"
 import hex2rgba from "hex2rgba"
 import "../css/prism-coy.css"
+import "../css/searchbox-style.css"
 
 // Import Futura PT typeface
 import "../fonts/Webfonts/futurapt_book_macroman/stylesheet.css"
@@ -27,10 +29,23 @@ class DefaultLayout extends React.Component {
     const isHomepage = this.props.location.pathname == `/`
     const hasSidebar =
       this.props.location.pathname.slice(0, 6) === `/docs/` ||
-      this.props.location.pathname.slice(0, 10) === `/packages/` ||
+      this.props.location.pathname.slice(0, 9) === `/packages` ||
       this.props.location.pathname.slice(0, 10) === `/tutorial/` ||
+      this.props.location.pathname.slice(0, 9) === `/features` ||
+      this.props.location.pathname.slice(0, 8) === `/plugins`
       this.props.location.pathname.slice(0, 9) === `/features`
-    const isSearchSource = hasSidebar
+
+    const leftPadding = (rhythmSize) => {
+      if (this.props.location.pathname.slice(0, 9) === `/packages`){
+        return rhythm(18);
+      } else if (hasSidebar){
+        return rhythm(rhythmSize)
+      } else {
+        return 0;
+      }
+    }
+
+
     const sidebarStyles = {
       borderRight: `1px solid ${colors.ui.light}`,
       backgroundColor: colors.ui.whisper,
@@ -67,6 +82,42 @@ class DefaultLayout extends React.Component {
       },
     }
 
+    const searchbarStyles = {
+      borderRight: `1px solid ${colors.ui.light}`,
+      backgroundColor: colors.ui.whisper,
+      boxShadow: `inset 0 4px 5px 0 ${hex2rgba(
+        colors.gatsby,
+        presets.shadowKeyPenumbraOpacity
+      )}, inset 0 1px 10px 0 ${hex2rgba(
+        colors.lilac,
+        presets.shadowAmbientShadowOpacity
+      )}, inset 0 2px 4px -1px ${hex2rgba(
+        colors.lilac,
+        presets.shadowKeyUmbraOpacity
+      )}`,
+      width: rhythm(17),
+      padding: rhythm(1),
+      display: `none`,
+      position: `fixed`,
+      top: `calc(${presets.headerHeight} - 1px)`,
+      height: `calc(100vh - ${presets.headerHeight} + 1px)`,
+      WebkitOverflowScrolling: `touch`,
+      "::-webkit-scrollbar": {
+        width: `6px`,
+        height: `6px`,
+      },
+      "::-webkit-scrollbar-thumb": {
+        background: colors.ui.bright,
+      },
+      "::-webkit-scrollbar-track": {
+        background: colors.ui.light,
+      },
+      [presets.Desktop]: {
+        width: rhythm(17),
+        padding: rhythm(1),
+      },
+    }
+
     return (
       <div>
         <Helmet defaultTitle={`GatsbyJS`} titleTemplate={`%s | GatsbyJS`}>
@@ -93,8 +144,7 @@ class DefaultLayout extends React.Component {
               ...sidebarStyles,
               [presets.Tablet]: {
                 display:
-                  this.props.location.pathname.slice(0, 6) === `/docs/` ||
-                  this.props.location.pathname.slice(0, 10) === `/packages/`
+                  this.props.location.pathname.slice(0, 6) === `/docs/`
                     ? `block`
                     : `none`,
               },
@@ -102,6 +152,22 @@ class DefaultLayout extends React.Component {
           >
             <SidebarBody yaml={docsSidebar} />
           </div>
+
+          {/* This is for the searchbar template */}
+          <div
+            css={{
+              ...searchbarStyles,
+              [presets.Tablet]: {
+                display:
+                  this.props.location.pathname.slice(0, 9) === `/packages`
+                    ? `block`
+                    : `none`,
+              },
+            }}
+          >
+            <SearchBar history={this.props.history} />
+          </div>
+
           {/* TODO Move this under docs/tutorial/index.js once Gatsby supports multiple levels
                of layouts */}
           <div
@@ -130,16 +196,16 @@ class DefaultLayout extends React.Component {
           >
             <SidebarBody yaml={featuresSidebar} />
           </div>
+
           <div
             css={{
               [presets.Tablet]: {
-                paddingLeft: hasSidebar ? rhythm(10) : 0,
+                paddingLeft: leftPadding(10),
               },
               [presets.Desktop]: {
-                paddingLeft: hasSidebar ? rhythm(12) : 0,
+                paddingLeft: leftPadding(12),
               },
             }}
-            className={isSearchSource && `docSearch-content`}
           >
             {this.props.children()}
           </div>

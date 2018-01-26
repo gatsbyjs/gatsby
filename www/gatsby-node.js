@@ -6,6 +6,12 @@ const fs = require(`fs-extra`)
 const slash = require(`slash`)
 const slugify = require(`limax`)
 
+const localPackages = `../packages`
+const localPackagesArr = []
+fs.readdirSync(localPackages).forEach(file => {
+  localPackagesArr.push(file)
+})
+
 exports.createPages = ({ graphql, boundActionCreators }) => {
   const { createPage } = boundActionCreators
   return new Promise((resolve, reject) => {
@@ -16,6 +22,9 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     )
     const packageTemplate = path.resolve(
       `src/templates/template-docs-packages.js`
+    )
+    const remotePackageTemplate = path.resolve(
+      `src/templates/template-remote-packages.js`
     )
     // Query for markdown nodes to use in creating pages.
     resolve(
@@ -46,6 +55,21 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
                 node {
                   fields {
                     slug
+                  }
+                }
+              }
+            }
+            allNpmPackage{
+              edges {
+                node {
+                  id
+                  title
+                  readme {
+                    id
+                    childMarkdownRemark{
+                      id
+                      html
+                    }
                   }
                 }
               }
@@ -114,6 +138,20 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
               },
             })
           }
+        })
+
+        // Create package readme
+        result.data.allNpmPackage.edges.forEach(edge => {
+          const slug = `/packages/${edge.node.title}/`
+
+          createPage({
+            path: slug,
+            component: slash(packageTemplate),
+            context: {
+              slug,
+              id: edge.node.id
+            }
+          })
         })
 
         return
