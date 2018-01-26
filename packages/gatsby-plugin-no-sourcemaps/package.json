@@ -8,6 +8,6 @@
     "webpack",
     "sourcemaps"
   ],
-  "author": "Stuart taylor <stuart@freecodecamp.org>",
-  "license": "BSD-3-Clause"
+  "author": "Stuart Taylor <stuart@freecodecamp.org>",
+  "license": "MIT"
 }
