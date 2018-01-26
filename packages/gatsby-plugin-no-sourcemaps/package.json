@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-no-sourcemaps",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Disable sourcemaps when building javascript",
   "main": "index.js",
   "keywords": [
