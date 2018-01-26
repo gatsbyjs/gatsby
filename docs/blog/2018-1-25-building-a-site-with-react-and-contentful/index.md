@@ -4,11 +4,11 @@ date: "2018-01-25"
 author: "Shannon Soper"
 ---
 
-A poster of _Starry Night_ by Vincent Van Gogh followed me to each new dorm room in college because I bought it the first year, and kept it until it ripped beyond repair. 
+A poster of _Starry Night_ by Vincent Van Gogh followed me to each new dorm room in college because I bought it the first year and kept it until it ripped beyond repair. 
 
-My sister (a professional artist) and I continuously debate the merits and demerits of reprinting great works of art like Van Gogh’s masterpiece. 
+My sister (a professional artist) and I often debate the merits and demerits of reprinting great works of art, like Van Gogh’s masterpiece. 
 
-As much as I revere the original, I also love the fact that printing technology makes it easy to put _Starry Night_ on tote bags, coffee mugs, posters, t-shirts, and more because it became more accessible to a wide range of people (without advanced printers and computers, the original painting could only be replicated and shared with more people through painstaking replication via the original medium: oil painting on a canvas).
+As much as I revere the original, I also love the fact that printing technology makes it easy to put _Starry Night_ on tote bags, coffee mugs, posters, t-shirts, and more because it became more accessible to a wide range of people (without advanced printers and computers, the original painting could only be shared with more people through painstaking replication via the original medium: oil painting on a canvas).
 
 ![Starry Night painting by Vincent Van Gogh](starry-night.jpeg)
 
