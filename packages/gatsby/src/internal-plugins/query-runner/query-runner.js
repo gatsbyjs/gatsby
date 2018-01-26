@@ -54,7 +54,6 @@ module.exports = async (pageOrLayout, component) => {
   if (!pageOrLayout.path) {
     result[`layoutContext`] = pageOrLayout.context
   } else {
-    result[`pathContext`] = pageOrLayout.context // deprecated!
     result[`pageContext`] = pageOrLayout.context
   }
   const resultJSON = JSON.stringify(result)
