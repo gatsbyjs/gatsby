@@ -224,15 +224,11 @@ export const query = graphql`
 
 ## Final thoughts
 
-It was awesome to get this all working because it’s clear how fast it would be to add more content without having to write any fresh code. Amazing. For example, I could add 10 new tricks to Contentful, and just restart the dev server. Done.
+It was awesome to get this all working because it’s clear how fast it would be to add more content without having to write any fresh code. Amazing. For example, if I teach my dog 10 new dog tricks tomorrow, I could add these tricks to Contentful, restart the dev server, and have an up-to-date site. Done.
 
-Through a beginner’s lens, it seems like the bigger your team of editors and developers, the more you would want to reduce the amount of time it takes to change to content. 
+This workflow would be exponentially beneficial to bigger teams of editors and developers since it reduces the amount of legwork necessary to implement content changes. Does this mean that using React + Contentful means you’re working yourself out of a job? Not likely; it probably just means you’ll get to focus on improving old stuff and building new stuff instead of maintaining (yawn and ouch) old stuff.
 
-With React + Contentful, the workflow seems like it would be this: an editor changes a bit of content in Contentful and the developers just restart the dev server. That’s it. No need for developers to edit every page related to the edited content. 
-
-Oh wait, does this mean that using React + Contentful means you’re working yourself out of a job? Not likely; it probably just means you’ll get to focus on improving old stuff and building new stuff instead of maintaining (yawn and ouch) old stuff.
-
-So where does this leave me? My next step is to learn React better so I can do some fancy designs. I’d also like to see Contentful clarify their API docs and to see GraphiQL quit lying to me about how to sort things. 
+My next step is to learn React better so I can do some fancy designs. I’d also like to see Contentful clarify their API docs and to see GraphiQL quit lying to me about how to sort things. 
 
 Also, I’m still trying to figure out why sometimes field names aren’t updating in GraphiQL when they are changed in Contentful (restarting the dev server didn’t fix that).
 
