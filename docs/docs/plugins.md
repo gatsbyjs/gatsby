@@ -138,6 +138,7 @@ root.
 * [gatsby-plugin-copy](https://github.com/aquilio/gatsby-plugin-copy)
 * [gatsby-plugin-elasticlunr-search](https://github.com/andrew-codes/gatsby-plugin-elasticlunr-search)
 * [gatsby-plugin-fastclick](https://github.com/escaladesports/gatsby-plugin-fastclick)
+* [gatsby-plugin-favicon](https://github.com/Creatiwity/gatsby-plugin-favicon)
 * [gatsby-plugin-google-fonts](https://github.com/didierfranc/gatsby-plugin-google-fonts)
 * [gatsby-plugin-gosquared](https://github.com/jongold/gatsby-plugin-gosquared)
 * [gatsby-plugin-hotjar](https://github.com/pavloko/gatsby-plugin-hotjar)
