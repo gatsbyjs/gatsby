@@ -2,7 +2,7 @@
 title: Gatsby Config
 ---
 
-Site configuration options for a Gatsby site are placed in a file at the root of the project folder called `gatsby-config.js`. 
+Site configuration options for a Gatsby site are placed in a file at the root of the project folder called `gatsby-config.js`.
 
 _Note: There are many sample configs which may be helpful to reference in the different [Gatsby Example Websites](https://github.com/gatsbyjs/gatsby/tree/master/examples)._
 
@@ -28,7 +28,7 @@ module.exports = {
     siteUrl: `https://www.gatsbyjs.org`,
     description: `Blazing-fast static site generator for React`,
   },
-}
+};
 ```
 
 This way you can store it in one place, and pull it whenever you need it. If you ever need to update the info, you only have to change it here.
@@ -41,16 +41,16 @@ Plugins are Node.js packages that implement Gatsby APIs. The config file accepts
 
 ```javascript
 module.exports = {
-    plugins: [
-        `gatsby-plugin-react-helmet`,
-        {
-            resolve: `gatsby-source-filesystem`,
-            options: {
-                name: `docs`,
-                path: `${__dirname}/../docs/`,
-            },
-        },
-    ],
+  plugins: [
+    `gatsby-plugin-react-helmet`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `docs`,
+        path: `${__dirname}/../docs/`,
+      },
+    },
+  ],
 };
 ```
 
@@ -58,7 +58,7 @@ See more about [Plugins](/docs/plugins/) for more on utilizing plugins, and to s
 
 ## pathPrefix
 
-It's common for sites to be hosted somewhere other than the root of their domain. Say we have a Gatsby site at `example.com/blog/`. In this case, we would need a prefix (`/blog`) added to all paths on the site. 
+It's common for sites to be hosted somewhere other than the root of their domain. Say we have a Gatsby site at `example.com/blog/`. In this case, we would need a prefix (`/blog`) added to all paths on the site.
 
 ```javascript
 module.exports = {
@@ -71,14 +71,14 @@ See more about [Adding a Path Prefix](/docs/path-prefix/).
 
 ## polyfill
 
-Gatsby uses the ES6 Promise API. Because some browsers don't support this, Gatsby includes a Promise polyfill by default. 
+Gatsby uses the ES6 Promise API. Because some browsers don't support this, Gatsby includes a Promise polyfill by default.
 
 If you'd like to provide your own Promise polyfill, you can set `polyfill` to false.
 
 ```javascript
 module.exports = {
-  polyfill: false
-}
+  polyfill: false,
+};
 ```
 
 See more about [Browser Support](/docs/browser-support/#polyfills) in Gatsby.
@@ -97,7 +97,7 @@ module.exports = {
     prefix: "/api",
     url: "http://examplesite.com/api/",
   },
-}
+};
 ```
 
 See more about [Proxying API Requests in Development](/docs/api-proxy/).

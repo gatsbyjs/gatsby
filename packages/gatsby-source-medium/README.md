@@ -23,7 +23,9 @@ plugins: [
   },
 ];
 ```
+
 ###### Note
+
 Remember that if you are fetching a user, prepend your username with `@`.
 
 ## How to query

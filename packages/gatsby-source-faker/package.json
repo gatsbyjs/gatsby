@@ -1,6 +1,6 @@
 {
   "name": "gatsby-source-faker",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A gatsby plugin to get fake data for testing",
   "main": "index.js",
   "scripts": {
