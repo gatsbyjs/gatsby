@@ -157,7 +157,7 @@ class DefaultLayout extends React.Component {
               ...searchbarStyles,
               [presets.Tablet]: {
                 display:
-                  this.props.location.pathname.slice(0, 8) === `/packages`
+                  this.props.location.pathname.slice(0, 9) === `/packages`
                     ? `block`
                     : `none`,
               },

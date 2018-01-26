@@ -118,56 +118,24 @@ const Result = ({ hit }) => {
           }}
           >
             {hit.name}
-          </div>
+        </div>
 
-          <div
-            css={{
-              display: `flex`,
-              alignItems: `center`,
-              fontSize: rhythm(.5),
-            }}
-            >
-              {hit.humanDownloadsLast30Days}
-              <img width="10"
-                height="10"
-                css={{
-                  marginLeft: rhythm(.25),
-                  marginBottom: 0,
-                }}
-                src={selected ? DownloadsWhite : DownloadsBlack}></img>
-            </div>
-      </div>
-
-
-      <div css={{
-        display: `flex`,
-        justifyContent: `space-between`,
-      }}>
         <div
           css={{
-            fontFamily: typography.options.headerFontFamily.join(`,`),
-            fontWeight: `bold`,
+            display: `flex`,
+            alignItems: `center`,
+            fontSize: rhythm(.5),
           }}
           >
-            {hit.name}
-          </div>
-
-          <div
-            css={{
-              display: `flex`,
-              alignItems: `center`,
-              fontSize: rhythm(.5),
-            }}
-            >
-              {hit.humanDownloadsLast30Days}
-              <img width="10"
-                height="10"
-                css={{
-                  marginLeft: rhythm(.25),
-                  marginBottom: 0,
-                }}
-                src={selected ? DownloadsWhite : DownloadsBlack}></img>
-            </div>
+            {hit.humanDownloadsLast30Days}
+            <img width="10"
+              height="10"
+              css={{
+                marginLeft: rhythm(.25),
+                marginBottom: 0,
+              }}
+              src={selected ? DownloadsWhite : DownloadsBlack}></img>
+        </div>
       </div>
 
 
@@ -179,27 +147,6 @@ const Result = ({ hit }) => {
         {hit.description}
       </div>
 
-      {/* <div css={{
-        fontSize: rhythm(.5),
-        color: `#D3D3D3`,
-      }}>
-        {hit.keywords.join(", ")}
-      </div> */}
-
-      {/* <div
-        css={{
-          display: `flex`,
-          paddingTop: rhythm(.25),
-        }}
-        >
-        <img
-          width="20"
-          height="20"
-          src={hit.lastPublisher.avatar}
-         />
-          <span css={{paddingLeft: rhythm(.25), fontSize: rhythm(.5), textTransform: `uppercase`}}>{hit.lastPublisher.name}</span>
-          <span css={{paddingLeft: rhythm(.25), fontSize: rhythm(.5)}}>{lastUpdated}</span>
-      </div> */}
     </Link>
   )
 }
@@ -217,16 +164,6 @@ class SearchBar extends Component {
     return (this.props.history.location.search).slice(2);
   }
 
-  // Old way
-  // onSearchStateChange = searchState => {
-  //   clearTimeout(this.debouncedSetState);
-  //   this.debouncedSetState = setTimeout(() => {
-  //     this.props.history.replace(`/packages?=${searchState.query}`)
-  //   }, updateAfter);]
-  //   this.setState({ searchState })
-  // }
-
-  // New way
   updateHistory(value){
     this.props.history.replace(`/packages?=${value.query}`)
   }
