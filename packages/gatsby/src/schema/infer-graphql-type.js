@@ -40,10 +40,20 @@ export type ProcessedNodeType = {
 function inferGraphQLType({
   exampleValue,
   selector,
+  nodes,
+  types,
   ...otherArgs
 }): ?GraphQLFieldConfig<*, *> {
   if (exampleValue == null || isEmptyObjectOrArray(exampleValue)) return null
   let fieldName = selector.split(`.`).pop()
+
+  // Check this before checking for array as FileType has
+  // builtin support for inferring array of files and inferred
+  // array type will have faster resolver than resolving array
+  // of files separately.
+  if (FileType.shouldInfer(nodes, selector, exampleValue)) {
+    return _.isArray(exampleValue) ? FileType.getListType() : FileType.getType()
+  }
 
   if (Array.isArray(exampleValue)) {
     exampleValue = exampleValue[0]
@@ -54,6 +64,8 @@ function inferGraphQLType({
       ...otherArgs,
       exampleValue,
       selector,
+      nodes,
+      types,
     })
     invariant(
       inferredType,
@@ -100,6 +112,8 @@ function inferGraphQLType({
             ...otherArgs,
             exampleValue,
             selector,
+            nodes,
+            types,
           }),
         }),
       }
@@ -329,13 +343,6 @@ export function inferObjectStructureFromNodes({
     } else if (_.includes(key, `___NODE`)) {
       ;[fieldName] = key.split(`___`)
       inferredField = inferFromFieldName(value, nextSelector, types)
-
-      // Third if the field (whether a string or array of string(s)) is
-      // pointing to a file (from another file).
-    } else if (FileType.shouldInfer(nodes, nextSelector, value)) {
-      inferredField = _.isArray(value)
-        ? FileType.getListType()
-        : FileType.getType()
     }
 
     // Finally our automatic inference of field value type.
