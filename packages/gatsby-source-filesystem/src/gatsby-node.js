@@ -95,3 +95,5 @@ Please pick a path to an existing directory.
     })
   })
 }
+
+exports.setFieldsOnGraphQLNodeType = require(`./extend-file-node`)
