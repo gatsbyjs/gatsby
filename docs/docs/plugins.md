@@ -111,6 +111,7 @@ root.
 * [gatsby-remark-smartypants](/packages/gatsby-remark-smartypants/)
 * [gatsby-source-contentful](/packages/gatsby-source-contentful/)
 * [gatsby-source-drupal](/packages/gatsby-source-drupal/)
+* [gatsby-source-faker](/packages/gatsby-source-faker/)
 * [gatsby-source-filesystem](/packages/gatsby-source-filesystem/)
 * [gatsby-source-hacker-news](/packages/gatsby-source-hacker-news/)
 * [gatsby-source-lever](/packages/gatsby-source-lever/)
