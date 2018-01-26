@@ -211,16 +211,32 @@ Community:
 * [gatsby-starter-portfolio-emma](https://github.com/LeKoArts/gatsby-starter-portfolio-emma)
   [(demo)](https://embalmer-glues-43220.netlify.com/)
 
+  The target audience are designers and photographers.
+
   Features:
 
-  * Perfect for designers and photographers
-  * Full-width Photo Grid-Layout (Responsive Images through
-    [gatsby-image](https://using-gatsby-image.gatsbyjs.org/))
+  * Full-width photo grid-layout (with [gatsby-image](https://using-gatsby-image.gatsbyjs.org/))
   * Minimalistic light theme with large images
   * Create your projects in Markdown
   * Styling with SCSS and
     [Typography.js](https://kyleamathews.github.io/typography.js/)
   * Easily configurable
+  * And other good stuff (SEO, Offline Support, WebApp Manifest Support)
+
+* [gatsby-starter-portfolio-emilia](https://github.com/LeKoArts/gatsby-starter-portfolio-emilia)
+  [(demo)](https://upbeat-edison-0598aa.netlify.com/)
+
+  The target audience are designers and photographers.
+
+  Features:
+
+  * Focus on big images (with [gatsby-image](https://using-gatsby-image.gatsbyjs.org/))
+  * Dark Theme with HeroPatterns Header
+  * CSS Grid and Styled Components
+  * One-Page layout with sub-pages for projects
+  * Easily configurable
+  * React Overdrive transitions
+  * Create your projects in Markdown
   * And other good stuff (SEO, Offline Support, WebApp Manifest Support)
 
 * [gatsby-starter-bootstrap-netlify](https://github.com/konsumer/gatsby-starter-bootstrap-netlify)
@@ -376,4 +392,18 @@ Community:
   * Offline support.
   * Google Analytics support.
   * Disqus Comments support.
-  
+
+* [gatsby-starter-strict](https://github.com/kripod/gatsby-starter-strict)
+  [(demo)](https://gatsby-starter-strict.netlify.com)
+
+  Features:
+
+  * A set of strict linting rules (based on the [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript))
+    * `lint` script
+  * Encourage automatic code formatting
+    * `format` script
+  * Prefer using [Yarn](https://yarnpkg.com) for package management
+  * Use [EditorConfig](http://editorconfig.org) to maintain consistent coding styles between different editors and IDEs
+  * Integration with [Visual Studio Code](https://code.visualstudio.com)
+    * Pre-configured auto-formatting on file save
+  * Based on [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default)

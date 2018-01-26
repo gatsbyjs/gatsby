@@ -66,7 +66,7 @@ const copy = async (starterPath: string, rootPath: string) => {
 
 // Clones starter from URI.
 const clone = async (hostInfo: any, rootPath: string) => {
-  const url = hostInfo.git({ noCommittish: true })
+  const url = hostInfo.ssh({ noCommittish: true })
   const branch = hostInfo.committish ? `-b ${hostInfo.committish}` : ``
 
   report.info(`Creating new site from git: ${url}`)

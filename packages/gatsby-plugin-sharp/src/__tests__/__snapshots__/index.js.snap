@@ -13,7 +13,7 @@ Object {
 exports[`gatsby-plugin-sharp responsiveSizes accounts for pixel density 1`] = `
 Object {
   "aspectRatio": 2.0661764705882355,
-  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAYAAAC0VX7mAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAuUlEQVQoz9WRywqCYBCFff9lq6BFLSIQSoIW1UpIulDZ1VKS7GJiapGWl99cnH7sAdy4cTZzmJnzMcwwyDmYYgAHQYBZGKH2cjEOQ7S8d6r3hKS59/HB+0GqNxFB3fXA0hmReqq0ppAYxjfJd0MzSYp0w1yBPn3Idi+j0+2DF4awbCfTdL0ZEEYTlMoVsFwbjSaHqbj4A+M4xlraQZIVXHQdzuOZCbzbNlRNw3y5gnJQcTydYVpW2vsBqlELaS2F/80AAAAASUVORK5CYII=",
+  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAYAAAC0VX7mAAAACXBIWXMAABYlAAAWJQFJUiTwAAABAklEQVQoz61R7WrCQBDM+7+Cv1qhlIogoUWMoH8KrfgOLVXRKDV4d7kkl6/pbsxpqBIo9mBuZ7N3k51bB7TKsrwZVsexyS2rKerwFhYFVI1DnkMQOHIuCaLB+ayuwXlMaApXgvMoxjTU8MIQE4rMx8SnNffUkU/qM/bbiPAeRfgw5n8tB+QgO1kmUvwROdm0kYHmUNoe+NoU2wZTdVjQH7Isg9YRpFIXor8vpGmKjb/FQQgslit8fi3wvQ/OHXLhxRvDHY7Qd5+x3e2udmNzTUN4fZvhoddH566L+8cn9AZuVcvpLR3e9kEAISWEkDAmbRXkGCcJ1r4PRRNPEkPu9Kn2Azs0CqJYU3JKAAAAAElFTkSuQmCC",
   "density": 144,
   "originalImg": "/static/test-1234-85b96.png",
   "originalName": undefined,
@@ -29,7 +29,7 @@ Object {
 exports[`gatsby-plugin-sharp responsiveSizes can optionally ignore pixel density 1`] = `
 Object {
   "aspectRatio": 2.0661764705882355,
-  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAYAAAC0VX7mAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAuUlEQVQoz9WRywqCYBCFff9lq6BFLSIQSoIW1UpIulDZ1VKS7GJiapGWl99cnH7sAdy4cTZzmJnzMcwwyDmYYgAHQYBZGKH2cjEOQ7S8d6r3hKS59/HB+0GqNxFB3fXA0hmReqq0ppAYxjfJd0MzSYp0w1yBPn3Idi+j0+2DF4awbCfTdL0ZEEYTlMoVsFwbjSaHqbj4A+M4xlraQZIVXHQdzuOZCbzbNlRNw3y5gnJQcTydYVpW2vsBqlELaS2F/80AAAAASUVORK5CYII=",
+  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAYAAAC0VX7mAAAACXBIWXMAABYlAAAWJQFJUiTwAAABAklEQVQoz61R7WrCQBDM+7+Cv1qhlIogoUWMoH8KrfgOLVXRKDV4d7kkl6/pbsxpqBIo9mBuZ7N3k51bB7TKsrwZVsexyS2rKerwFhYFVI1DnkMQOHIuCaLB+ayuwXlMaApXgvMoxjTU8MIQE4rMx8SnNffUkU/qM/bbiPAeRfgw5n8tB+QgO1kmUvwROdm0kYHmUNoe+NoU2wZTdVjQH7Isg9YRpFIXor8vpGmKjb/FQQgslit8fi3wvQ/OHXLhxRvDHY7Qd5+x3e2udmNzTUN4fZvhoddH566L+8cn9AZuVcvpLR3e9kEAISWEkDAmbRXkGCcJ1r4PRRNPEkPu9Kn2Azs0CqJYU3JKAAAAAElFTkSuQmCC",
   "density": 144,
   "originalImg": "/static/test-1234-24ad8.png",
   "originalName": undefined,

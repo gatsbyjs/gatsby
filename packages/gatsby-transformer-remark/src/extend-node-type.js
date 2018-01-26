@@ -20,6 +20,8 @@ const parse = require(`remark-parse`)
 const stringify = require(`remark-stringify`)
 const english = require(`retext-english`)
 const remark2retext = require(`remark-retext`)
+const GraphQlJson = require(`graphql-type-json`)
+const stripPosition = require(`unist-util-remove-position`)
 
 let pluginsCacheStr = ``
 const astCacheKey = node =>
@@ -28,6 +30,10 @@ const astCacheKey = node =>
   }-${pluginsCacheStr}`
 const htmlCacheKey = node =>
   `transformer-remark-markdown-html-${
+    node.internal.contentDigest
+  }-${pluginsCacheStr}`
+const htmlAstCacheKey = node =>
+  `transformer-remark-markdown-html-ast-${
     node.internal.contentDigest
   }-${pluginsCacheStr}`
 const headingsCacheKey = node =>
@@ -213,19 +219,29 @@ module.exports = (
       }
     }
 
+    async function getHTMLAst(markdownNode) {
+      const cachedAst = await cache.get(htmlAstCacheKey(markdownNode))
+      if (cachedAst) {
+        return cachedAst
+      } else {
+        const ast = await getAST(markdownNode)
+        const htmlAst = toHAST(ast, { allowDangerousHTML: true })
+
+        // Save new HTML AST to cache and return
+        cache.set(htmlAstCacheKey(markdownNode), htmlAst)
+        return htmlAst
+      }
+    }
+
     async function getHTML(markdownNode) {
       const cachedHTML = await cache.get(htmlCacheKey(markdownNode))
       if (cachedHTML) {
         return cachedHTML
       } else {
-        const html = await new Promise((resolve, reject) => {
-          getAST(markdownNode).then(ast => {
-            resolve(
-              hastToHTML(toHAST(ast, { allowDangerousHTML: true }), {
-                allowDangerousHTML: true,
-              })
-            )
-          })
+        const ast = await getHTMLAst(markdownNode)
+        // Save new HTML to cache and return
+        const html = hastToHTML(ast, {
+          allowDangerousHTML: true,
         })
 
         // Save new HTML to cache and return
@@ -269,6 +285,14 @@ module.exports = (
         type: GraphQLString,
         resolve(markdownNode) {
           return getHTML(markdownNode)
+        },
+      },
+      htmlAst: {
+        type: GraphQlJson,
+        resolve(markdownNode) {
+          const ast = _.clone(getHTMLAst(markdownNode))
+          stripPosition(ast, true)
+          return ast
         },
       },
       excerpt: {

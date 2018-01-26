@@ -1,7 +1,6 @@
 import Typography from "typography"
 import CodePlugin from "typography-plugin-code"
-import presets from "./presets"
-import colors from "./colors"
+import presets, { colors } from "./presets"
 import {
   MOBILE_MEDIA_QUERY,
   TABLET_MEDIA_QUERY,
@@ -39,8 +38,8 @@ const _options = {
   baseFontSize: `18px`,
   baseLineHeight: 1.4,
   headerLineHeight: 1.075,
-  headerColor: `#26202c`,
-  bodyColor: `#3d3347`,
+  headerColor: colors.gray.dark,
+  bodyColor: colors.gray.copy,
   blockMarginBottom: 0.75,
   scaleRatio: 2,
   plugins: [new CodePlugin()],
@@ -73,11 +72,11 @@ const _options = {
         paddingLeft: rhythm(options.blockMarginBottom),
         marginLeft: 0,
         borderLeft: `${rhythm(options.blockMarginBottom / 4)} solid ${
-          presets.brandLighter
+          colors.ui.light
         }`,
       },
       hr: {
-        backgroundColor: presets.brandLighter,
+        backgroundColor: colors.ui.light,
       },
       "tt,code": {
         // background: `hsla(23, 60%, 97%, 1)`,
@@ -151,13 +150,13 @@ const _options = {
         display: `block`,
         textAlign: `center`,
         fontStyle: `normal`,
-        color: presets.calm,
+        color: colors.gray.calm,
         position: `relative`,
       },
       ".gatsby-resp-image-link + em a": {
         fontWeight: `normal`,
         fontFamily: options.headerFontFamily.join(`,`),
-        color: presets.brand,
+        color: colors.gatsby,
       },
       ".main-body a": {
         color: `inherit`,
@@ -165,20 +164,21 @@ const _options = {
         transition: `all ${presets.animation.speedFast} ${
           presets.animation.curveDefault
         }`,
-        borderBottom: `1px solid ${presets.lightPurple}`,
-        boxShadow: `inset 0 -2px 0px 0px ${presets.lightPurple}`,
+        borderBottom: `1px solid ${colors.ui.bright}`,
+        boxShadow: `inset 0 -2px 0px 0px ${colors.ui.bright}`,
         fontFamily: options.headerFontFamily.join(`,`),
         fontWeight: `bold`,
       },
       ".post-body a": {
         fontSize: `102%`,
+        color: colors.gatsby,
       },
       ".main-body a:hover": {
-        background: presets.lightPurple,
+        background: colors.ui.bright,
       },
       ".main-body a.anchor": {
         color: `inherit`,
-        fill: presets.brand,
+        fill: colors.gatsby,
         textDecoration: `none`,
         borderBottom: `none`,
         boxShadow: `none`,

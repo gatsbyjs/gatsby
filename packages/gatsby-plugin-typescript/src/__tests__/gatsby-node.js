@@ -28,7 +28,12 @@ describe(`gatsby-plugin-typescript`, () => {
   })
 
   it(`modifies webpack config`, () => {
-    modifyWebpackConfig(args, { compilerOptions: {} })
+    const babelConfig = { plugins: [``] }
+    const config = {
+      loader: jest.fn(),
+    }
+
+    modifyWebpackConfig({ config, babelConfig }, { compilerOptions: {} })
 
     expect(args.actions.setWebpackConfig).toHaveBeenCalledTimes(1)
     const lastCall = args.actions.setWebpackConfig.mock.calls.pop()
@@ -47,9 +52,13 @@ describe(`gatsby-plugin-typescript`, () => {
   })
 
   it(`passes the configuration to the ts-loader plugin`, () => {
+    const babelConfig = { plugins: [``] }
+    const config = {
+      loader: jest.fn(),
+    }
     const options = { compilerOptions: { foo: `bar` }, transpileOnly: false }
 
-    modifyWebpackConfig(args, options)
+    modifyWebpackConfig({ config, babelConfig }, options)
 
     const expectedOptions = {
       compilerOptions: {
@@ -75,7 +84,11 @@ describe(`gatsby-plugin-typescript`, () => {
   })
 
   it(`uses default configuration for the ts-loader plugin when no config is provided`, () => {
-    modifyWebpackConfig(args, { compilerOptions: {} })
+    const babelConfig = { plugins: [``] }
+    const config = {
+      loader: jest.fn(),
+    }
+    modifyWebpackConfig({ config, babelConfig }, { compilerOptions: {} })
 
     const expectedOptions = {
       compilerOptions: {

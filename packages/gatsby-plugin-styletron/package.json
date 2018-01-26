@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-styletron",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Stub description for gatsby-plugin-styletron",
   "main": "index.js",
   "scripts": {
@@ -22,5 +22,8 @@
     "styletron-client": "^3.0.0-rc.1",
     "styletron-react": "^3.0.0-rc.2",
     "styletron-server": "^3.0.0-rc.1"
+  },
+  "peerDependencies": {
+    "gatsby": "^1.0.0"
   }
 }

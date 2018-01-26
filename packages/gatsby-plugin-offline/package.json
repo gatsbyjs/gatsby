@@ -24,5 +24,8 @@
   "dependencies": {
     "babel-runtime": "^6.26.0",
     "sw-precache": "^5.0.0"
+  },
+  "peerDependencies": {
+    "gatsby": "^1.0.0"
   }
 }

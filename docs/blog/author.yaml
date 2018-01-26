@@ -66,3 +66,14 @@
   bio: Bay Area adoptee. Programmer, econ nerd, startup enthusiast
   avatar: avatars/sam-bhagwat.jpg
   twitter: "@calcsam"
+- id: Pierre Burgy
+  bio: Co-creator of Strapi. Node.js and APIs lover. Coding when not windsurfing.
+  avatar: avatars/pierre-burgy.jpeg
+  twitter: "@pierre_burgy"
+- id: Amberley Romo
+  bio: Developer based in Austin, TX.
+  avatar: avatars/amberley-romo.jpg
+  twitter: "@amberleyjohanna"
+- id: Robin Vasan
+  bio: Robin Vasan is an experienced early-stage venture investor and former repeat entrepreneur. His expertise covers the full life-cycle of building and scaling companies and he primarily invests in applications, cloud computing, open source, virtualization and security.
+  avatar: avatars/robin-vasan.jpg

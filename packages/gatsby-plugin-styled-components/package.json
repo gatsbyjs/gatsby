@@ -10,6 +10,7 @@
     "babel-cli": "^6.26.0"
   },
   "peerDependencies": {
+    "gatsby": "^1.0.0",
     "styled-components": ">= 2.0.0"
   },
   "keywords": [
