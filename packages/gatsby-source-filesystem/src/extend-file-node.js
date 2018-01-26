@@ -2,7 +2,7 @@ const { GraphQLString } = require(`graphql`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
 
-module.exports = ({ type, getNodeAndSavePathDependency, pathPrefix = "" }) => {
+module.exports = ({ type, getNodeAndSavePathDependency, pathPrefix = `` }) => {
   if (type.name !== `File`) {
     return {}
   }
