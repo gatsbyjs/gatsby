@@ -144,25 +144,34 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         result.data.allNpmPackage.edges.forEach(edge => {
           const slug = `/packages/${edge.node.title}/`
 
-          if (localPackagesArr.includes(edge.node.title)){
-            createPage({
-              path: slug,
-              component: slash(packageTemplate),
-              context: {
-                slug,
-                id: edge.node.id
-              }
-            })
-          } else {
-            createPage({
-              path: slug,
-              component: slash(remotePackageTemplate),
-              context: {
-                slug,
-                id: edge.node.id
-              }
-            })
-          }
+          createPage({
+            path: slug,
+            component: slash(packageTemplate),
+            context: {
+              slug,
+              id: edge.node.id
+            }
+          })
+
+          // if (localPackagesArr.includes(edge.node.title)){
+          //   createPage({
+          //     path: slug,
+          //     component: slash(packageTemplate),
+          //     context: {
+          //       slug,
+          //       id: edge.node.id
+          //     }
+          //   })
+          // } else {
+          //   createPage({
+          //     path: slug,
+          //     component: slash(remotePackageTemplate),
+          //     context: {
+          //       slug,
+          //       id: edge.node.id
+          //     }
+          //   })
+          // }
         })
 
         return
