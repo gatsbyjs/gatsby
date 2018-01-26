@@ -1,6 +1,6 @@
-import presets from "../utils/presets"
+import presets, { colors } from "../utils/presets"
 import React from "react"
-import logo from "../gatsby-negative.svg"
+import logo from "../monogram.svg"
 import jekyll from "../assets/jekyll.svg"
 import wordpress from "../assets/wordpress.png"
 import squarespace from "../assets/squarespace-compressed.png"
@@ -36,16 +36,16 @@ const renderSubHeader = props => (
         key={i}
         css={{
           display: `table-cell`,
-          background: `${presets.sidebar}`,
-          // borderLeft: i > 0 ? `1px solid ${presets.brandLighter}` : `none`,
-          // borderRight: i === 5 ? `1px solid ${presets.brandLighter}` : `none`,
+          background: `${colors.ui.whisper}`,
+          // borderLeft: i > 0 ? `1px solid ${colors.ui.light}` : `none`,
+          // borderRight: i === 5 ? `1px solid ${colors.ui.light}` : `none`,
           fontWeight: 600,
           ...scale(-1 / 9),
           lineHeight: 1.3,
           textAlign: `left`,
           verticalAlign: `middle`,
           fontFamily: options.headerFontFamily.join(`,`),
-          borderColor: presets.veryLightPurple,
+          borderColor: colors.ui.light,
           "&&": {
             paddingTop: rhythm(1 / 4),
             paddingLeft: rhythm(1 / 4),

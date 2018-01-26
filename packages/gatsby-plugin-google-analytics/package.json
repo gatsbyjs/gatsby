@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-google-analytics",
   "description": "Gatsby plugin to add google analytics onto a site",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -21,5 +21,8 @@
   },
   "dependencies": {
     "babel-runtime": "^6.26.0"
+  },
+  "peerDependencies": {
+    "gatsby": "^1.0.0"
   }
 }

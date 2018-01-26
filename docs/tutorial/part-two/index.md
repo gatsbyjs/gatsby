@@ -265,6 +265,8 @@ Now, all the text font sizes should be slightly bigger. Try changing the
 `baseFontSize` to `24px` then `12px`. All elements get resized as their
 `font-size` is based on the `baseFontSize`.
 
+_Note that if you use `gatsby-plugin-typography` with the default starter, you'll need to delete the default index.css used by that starter as it overrides the Typography.js CSS_
+
 There are
 [many themes available](https://github.com/KyleAMathews/typography.js#published-typographyjs-themes)
 for Typography.js. Let's try a couple. In your terminal at the root of your

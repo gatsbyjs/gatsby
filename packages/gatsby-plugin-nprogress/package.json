@@ -20,5 +20,8 @@
   "dependencies": {
     "babel-runtime": "^6.26.0",
     "nprogress": "^0.2.0"
+  },
+  "peerDependencies": {
+    "gatsby": "^1.0.0"
   }
 }

@@ -1,4 +1,4 @@
-import presets from "../utils/presets"
+import presets, { colors } from "../utils/presets"
 import { rhythm, scale, options } from "../utils/typography"
 import { vP, vPHd, vPVHd, vPVVHd } from "../components/gutters"
 
@@ -11,18 +11,18 @@ const Card = ({ children }) => (
       [presets.Tablet]: {
         flex: `0 0 50%`,
         maxWidth: `50%`,
-        boxShadow: `0 1px 0 0 ${presets.veryLightPurple}`,
+        boxShadow: `0 1px 0 0 ${colors.ui.light}`,
         "&:nth-child(5),&:nth-child(6)": {
           boxShadow: `none`,
         },
         "&:nth-child(2n)": {
-          borderLeft: `1px solid ${presets.veryLightPurple}`,
+          borderLeft: `1px solid ${colors.ui.light}`,
         },
       },
       [presets.Hd]: {
         flex: `0 0 33.33333333%`,
         maxWidth: `33.33333333%`,
-        borderLeft: `1px solid ${presets.veryLightPurple}`,
+        borderLeft: `1px solid ${colors.ui.light}`,
         "&:nth-child(4)": {
           boxShadow: `none`,
         },

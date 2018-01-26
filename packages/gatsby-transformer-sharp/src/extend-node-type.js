@@ -115,17 +115,25 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
       async resolve(image, fieldArgs, context) {
         const details = getNodeAndSavePathDependency(image.parent, context.path)
         const dimensions = sizeOf(details.absolutePath)
-        const imageName = `${image.internal.contentDigest}${details.ext}`
+        const imageName = `${details.name}-${image.internal.contentDigest}${
+          details.ext
+        }`
         const publicPath = path.join(
           process.cwd(),
           `public`,
-          `static/${imageName}`
+          `static`,
+          imageName
         )
 
         if (!fsExtra.existsSync(publicPath)) {
           fsExtra.copy(details.absolutePath, publicPath, err => {
             if (err) {
-              console.error(`error copying file`, err)
+              console.error(
+                `error copying file from ${
+                  details.absolutePath
+                } to ${publicPath}`,
+                err
+              )
             }
           })
         }
@@ -133,7 +141,7 @@ module.exports = ({ type, pathPrefix, getNodeAndSavePathDependency }) => {
         return {
           width: dimensions.width,
           height: dimensions.height,
-          src: `/static/` + imageName,
+          src: `${pathPrefix}/static/${imageName}`,
         }
       },
     },

@@ -9,6 +9,7 @@ title: "Deploying Gatsby"
 * [GitHub Pages](/docs/deploy-gatsby/#github-pages)
 * [GitLab Pages](/docs/deploy-gatsby/#gitlab-pages)
 * [Heroku](/docs/deploy-gatsby/#heroku)
+* [Now](/docs/deploy-gatsby/#now)
 
 ## Netlify
 
@@ -94,6 +95,12 @@ repository dedicated to files for the site. The sites must be published from the
 `master` branch of the repository which means the site source files should be
 kept in a branch named `source` or something similar. We also don't need to
 prefix links like we do with project sites.
+
+```
+"scripts": {
+  "deploy": "gatsby build && gh-pages -b master -d public",
+}
+```
 
 The repository for these sites requires a special name. See
 https://help.github.com/articles/user-organization-and-project-pages/ for
@@ -244,6 +251,24 @@ Finally, add a `static.json` file in the root of your project to define the dire
   "root": "public/"
 }
 ```
+
+## Now
+
+In order to deploy your Gatsby project using [Now](https://zeit.co/now), you can do the following:
+
+1. Install the Now CLI
+
+`npm install -g now`
+
+2. Install a node server package (such as `serve`, or `http-server`)
+
+`npm install --save serve`
+
+3. Add a `start` script to your `package.json` file, this is what Now will use to run your application:
+
+`"start": "serve public/"`
+
+4. Run `now` at the root of your Gatsby project, this will upload your project, run the `build` script, and then your `start` script.
 
 ## Debugging tips
 

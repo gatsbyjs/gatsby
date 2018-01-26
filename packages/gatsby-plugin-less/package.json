@@ -4,7 +4,8 @@
   "description": "Gatsby plugin to add support for using Less",
   "author": "monastic.panic@gmail.com",
   "keywords": [
-    "gatsby"
+    "gatsby",
+    "less"
   ],
   "license": "MIT",
   "dependencies": {
@@ -15,5 +16,13 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "cross-env": "^5.0.5"
+  },
+  "scripts": {
+    "build": "babel src --out-dir . --ignore __tests__",
+    "prepublish": "cross-env NODE_ENV=production npm run build",
+    "watch": "babel -w src --out-dir . --ignore __tests__"
+  },
+  "peerDependencies": {
+    "gatsby": "^1.0.0"
   }
 }

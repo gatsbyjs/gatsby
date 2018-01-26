@@ -1,6 +1,7 @@
 import Link from "gatsby-link"
 import { rhythm, scale, options } from "../utils/typography"
-import presets from "../utils/presets"
+import presets, { colors } from "../utils/presets"
+import hex2rgba from "hex2rgba"
 
 import { css } from "glamor"
 
@@ -27,9 +28,9 @@ const CtaButton = ({ to, overrideCSS, children }) => (
       },
       // Increase specificity
       "&&": {
-        border: `1px solid ${presets.brand}`,
+        border: `1px solid ${colors.gatsby}`,
         boxShadow: `none`,
-        color: presets.brand,
+        color: colors.gatsby,
         fontWeight: `normal`,
         backgroundColor: `transparent`,
         backgroundSize: `30px 30px`,
@@ -38,14 +39,14 @@ const CtaButton = ({ to, overrideCSS, children }) => (
         }`,
         ":hover, &:focus": {
           backgroundSize: `30px 30px`,
-          backgroundColor: presets.brand,
+          backgroundColor: colors.gatsby,
           backgroundImage: `linear-gradient(45deg, rgba(0,0,0, 0.1) 25%, transparent 25%, transparent 50%, rgba(0,0,0, 0.1) 50%, rgba(0,0,0, 0.1) 75%, transparent 75%, transparent)`,
           color: `#fff`,
           animation: `${stripeAnimation} 2.8s linear infinite`,
         },
         ":focus": {
           outline: 0,
-          boxShadow: `0 0 0 0.2rem rgba(${presets.shadowColor}, .25)`,
+          boxShadow: `0 0 0 0.2rem ${hex2rgba(colors.lilac, 0.25)}`,
         },
         ":after": {
           content: ``,

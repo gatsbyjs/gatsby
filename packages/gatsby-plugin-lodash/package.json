@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-lodash",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Easy modular Lodash builds. Adds the Lodash webpack & Babel plugins to your Gatsby build",
   "main": "index.js",
   "scripts": {
@@ -22,5 +22,8 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "cross-env": "^5.0.5"
+  },
+  "peerDependencies": {
+    "gatsby": "^1.0.0"
   }
 }

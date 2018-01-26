@@ -5,6 +5,7 @@ const typePrefix = `lever__`
 
 exports.sourceNodes = async (
   { actions, getNode, store, cache },
+  { actions, getNode, store, cache, createNodeId },
   { site, verboseOutput }
 ) => {
   const { createNode } = actions
@@ -27,7 +28,7 @@ exports.sourceNodes = async (
   entities = normalize.standardizeDates(entities)
 
   // creates Gatsby IDs for each entity
-  entities = normalize.createGatsbyIds(entities)
+  entities = normalize.createGatsbyIds(createNodeId, entities)
 
   // creates nodes for each entry
   normalize.createNodesFromEntities({ entities, createNode })

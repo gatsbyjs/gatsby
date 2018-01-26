@@ -18,6 +18,16 @@ const { withBasePath } = require(`./path`)
 const apiRunnerNode = require(`./api-runner-node`)
 const createUtils = require(`./webpack-utils`)
 
+// Use separate extract-text-webpack-plugin instances for each stage per the docs
+const extractDevelopHtml = new ExtractTextPlugin(`build-html-styles.css`)
+const extractBuildHtml = new ExtractTextPlugin(`build-html-styles.css`, {
+  allChunks: true,
+})
+const extractBuildCss = new ExtractTextPlugin(`styles.css`, { allChunks: true })
+const extractBuildJavascript = new ExtractTextPlugin(`build-js-styles.css`, {
+  allChunks: true,
+})
+
 // Five stages or modes:
 //   1) develop: for `gatsby develop` command, hot reload and CSS injection into page
 //   2) develop-html: same as develop without react-hmre in the babel config for html renderer

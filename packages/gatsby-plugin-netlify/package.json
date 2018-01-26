@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-netlify",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "A Gatsby plugin which generates a _headers file for netlify",
   "main": "index.js",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
@@ -31,5 +31,8 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "cross-env": "^5.0.5"
+  },
+  "peerDependencies": {
+    "gatsby": "^1.0.0"
   }
 }

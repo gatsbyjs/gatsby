@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-create-client-paths",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Gatsby-plugin for creating paths that exist only on the client",
   "main": "index.js",
   "scripts": {
@@ -19,5 +19,8 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "cross-env": "^5.0.5"
+  },
+  "peerDependencies": {
+    "gatsby": "^1.0.0"
   }
 }
