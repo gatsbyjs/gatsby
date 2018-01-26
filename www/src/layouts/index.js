@@ -31,6 +31,8 @@ class DefaultLayout extends React.Component {
       this.props.location.pathname.slice(0, 6) === `/docs/` ||
       this.props.location.pathname.slice(0, 9) === `/packages` ||
       this.props.location.pathname.slice(0, 10) === `/tutorial/` ||
+      this.props.location.pathname.slice(0, 9) === `/features` ||
+      this.props.location.pathname.slice(0, 8) === `/plugins`
       this.props.location.pathname.slice(0, 9) === `/features`
 
     const leftPadding = (rhythmSize) => {

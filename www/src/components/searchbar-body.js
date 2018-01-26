@@ -118,24 +118,24 @@ const Result = ({ hit }) => {
           }}
           >
             {hit.name}
-        </div>
+          </div>
 
-        <div
-          css={{
-            display: `flex`,
-            alignItems: `center`,
-            fontSize: rhythm(.5),
-          }}
-          >
-            {hit.humanDownloadsLast30Days}
-            <img width="10"
-              height="10"
-              css={{
-                marginLeft: rhythm(.25),
-                marginBottom: 0,
-              }}
-              src={selected ? DownloadsWhite : DownloadsBlack}></img>
-        </div>
+          <div
+            css={{
+              display: `flex`,
+              alignItems: `center`,
+              fontSize: rhythm(.5),
+            }}
+            >
+              {hit.humanDownloadsLast30Days}
+              <img width="10"
+                height="10"
+                css={{
+                  marginLeft: rhythm(.25),
+                  marginBottom: 0,
+                }}
+                src={selected ? DownloadsWhite : DownloadsBlack}></img>
+            </div>
       </div>
 
 

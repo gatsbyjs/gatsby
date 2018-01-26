@@ -12384,11 +12384,15 @@ source-map@0.5.x, source-map@^0.5.0, source-map@^0.5.3, source-map@^0.5.6, sourc
 =======
 >>>>>>> Add email-validator to package.json to merge with updated site
 =======
+<<<<<<< HEAD
 source-map@0.5.x, source-map@^0.5.0, source-map@^0.5.3, source-map@^0.5.6, source-map@^0.5.7, source-map@~0.5.1, source-map@~0.5.3, source-map@~0.5.6:
   version "0.5.7"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.5.7.tgz#8a039d2d1021d22d1ea14c80d8ea468ba2ef3fcc"
 
 >>>>>>> Update template-docs to account for both local and remote packages
+=======
+>>>>>>> 07123d709ac2b4be9527ae04298e7c4741e3c350
+>>>>>>> a4033252b0086e55182b52ac522ed5cef09aaaf7
 source-map@^0.4.2, source-map@^0.4.4, source-map@~0.4.1:
   version "0.4.4"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.4.4.tgz#eba4f5da9c0dc999de68032d8b4f76173652036b"
@@ -12400,12 +12404,22 @@ source-map@^0.6.1, source-map@~0.6.1:
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.6.1.tgz#74722af32e9614e9c287a8d0bbde48b5e2f1a263"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a4033252b0086e55182b52ac522ed5cef09aaaf7
 source-map@^0.6.1, source-map@~0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.6.1.tgz#74722af32e9614e9c287a8d0bbde48b5e2f1a263"
 
+<<<<<<< HEAD
 =======
 >>>>>>> Update template-docs to account for both local and remote packages
+=======
+source-map@^0.6.1, source-map@~0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.6.1.tgz#74722af32e9614e9c287a8d0bbde48b5e2f1a263"
+
+>>>>>>> a4033252b0086e55182b52ac522ed5cef09aaaf7
 sourcemapped-stacktrace@^1.1.6:
   version "1.1.8"
   resolved "https://registry.yarnpkg.com/sourcemapped-stacktrace/-/sourcemapped-stacktrace-1.1.8.tgz#6b7a3f1a6fb15f6d40e701e23ce404553480d688"
