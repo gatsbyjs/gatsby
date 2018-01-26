@@ -86,7 +86,7 @@ const pascalCase = _.flow(_.camelCase, _.upperFirst)
  * @param {string} page.path Any valid URL. Must start with a forward slash
  * @param {string} page.component The absolute path to the component for this page
  * @param {Object} page.context Context data for this page. Passed as props
- * to the component `this.props.pathContext` as well as to the graphql query
+ * to the component `this.props.pageContext` as well as to the graphql query
  * as graphql arguments.
  * @example
  * createPage({
