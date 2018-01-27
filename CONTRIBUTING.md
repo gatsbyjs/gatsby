@@ -78,7 +78,7 @@ The usual contributing steps are:
 
 ### Contributing to the documentation.
 
-Gatsby, unsurprisingly, uses Gatsby for it's documentation website.
+Gatsby, unsurprisingly, uses Gatsby for its documentation website.
 
 If you want to add/modify any Gatsby documentation, go to the
 [docs folder on Github](https://github.com/gatsbyjs/gatsby/tree/master/docs) and
