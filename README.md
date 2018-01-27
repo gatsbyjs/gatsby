@@ -144,6 +144,8 @@ Websites built with Gatsby:
 * [several levels](https://severallevels.io/) ([source](https://github.com/Harrison1/several-levels))
 * [Flooring Factories Outlets](https://www.flooringfactoriesoutlets.com/)
 * [Nortcast](https://nortcast.com/)
+* [VisitGemer](https://visitgemer.sk/)
+* [Nexit](https://nexit.sk/)
 
 ## Docs
 
