@@ -12,9 +12,6 @@ const propTypes = {
 class CategoryTemplate extends React.Component {
   render() {
     const category = this.props.data.contentfulCategory
-    console.log(`---`)
-    console.log(`HERE!`)
-    console.log(category)
     const { title: { title }, product, icon } = category
     const iconImg = icon.resolutions
     return (
