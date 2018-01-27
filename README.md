@@ -20,6 +20,7 @@ Websites built with Gatsby:
 * [Sourcegraph](https://about.sourcegraph.com)
 * [Simply](https://simply.co.za)
 * [The freeCodeCamp Guide](https://guide.freecodecamp.org)
+  ([source](https://github.com/freeCodeCamp/guides))
 * [FloydHub's Blog](https://blog.floydhub.com)
 * [mParticle's Documentation](https://docs.mparticle.com)
 * [Segment's Blog](https://segment.com/blog/)
@@ -41,7 +42,7 @@ Websites built with Gatsby:
   ([source](https://github.com/dvzrd/gatsby-sfiction))
 * [Ruben's Blog](https://vagr9k.me/) ([source](https://github.com/Vagr9K/Blog))
 * [Kostas Bariotis' Blog](https://kostasbariotis.com/)
-  ([source](https://github.com/kbariotis/kostasbariotis.com))
+  ([source](https://github.com/kbariotis/kostasbariotis.com
 * [Thao Am Private Enterprise](http://thaoam.com/)
 * [Bakadono](http://bakadono.com/)
 * [Travellers.cafe](https://travellers.cafe/)
