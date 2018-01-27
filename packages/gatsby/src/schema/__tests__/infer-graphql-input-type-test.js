@@ -78,6 +78,7 @@ function queryResult(nodes, query, { types = [] } = {}) {
 describe(`GraphQL Input args`, () => {
   const nodes = [
     {
+      index: 0,
       name: `The Mad Max`,
       hair: 1,
       date: `2006-07-22T22:39:53.000Z`,
@@ -103,9 +104,9 @@ describe(`GraphQL Input args`, () => {
       boolean: true,
     },
     {
+      index: 1,
       name: `The Mad Wax`,
       hair: 2,
-      date: `2006-07-22T22:39:53.000Z`,
       anArray: [1, 2, 5, 4],
       frontmatter: {
         date: `2006-07-22T22:39:53.000Z`,
@@ -116,9 +117,10 @@ describe(`GraphQL Input args`, () => {
       boolean: false,
     },
     {
+      index: 2,
       name: `The Mad Wax`,
       hair: 0,
-      date: `2006-07-22T22:39:53.000Z`,
+      date: `2006-07-29T22:39:53.000Z`,
       frontmatter: {
         date: `2006-07-22T22:39:53.000Z`,
         title: `The world of shave and adventure`,
@@ -373,6 +375,23 @@ describe(`GraphQL Input args`, () => {
     expect(result.errors).not.toBeDefined()
     expect(result.data.allNode.edges.length).toEqual(2)
     expect(result.data.allNode.edges[0].node.name).toEqual(`The Mad Wax`)
+  })
+
+  it(`filters date fields`, async () => {
+    let result = await queryResult(
+      nodes,
+      `
+        {
+          allNode(filter: {date: { ne: null }}) {
+            edges { node { index }}
+          }
+        }
+      `
+    )
+    expect(result.errors).not.toBeDefined()
+    expect(result.data.allNode.edges.length).toEqual(2)
+    expect(result.data.allNode.edges[0].node.index).toEqual(0)
+    expect(result.data.allNode.edges[1].node.index).toEqual(2)
   })
 
   it(`sorts results`, async () => {

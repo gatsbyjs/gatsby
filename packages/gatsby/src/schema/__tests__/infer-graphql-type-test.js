@@ -123,29 +123,6 @@ describe(`GraphQL type inferance`, () => {
     expect(result.data.listNode[0].number).toEqual(1.1)
   })
 
-  it(`handles integer with valid date format`, async () => {
-    let result = await queryResult(
-      [{ number: 2018 }, { number: 1987 }],
-      `
-        number
-      `
-    )
-    expect(result.data.listNode[0].number).toEqual(2018)
-  })
-
-  it(`handles date objects`, async () => {
-    let result = await queryResult(
-      [
-        { dateObject: new Date(Date.UTC(2012, 10, 5)) },
-        { dateObject: new Date(Date.UTC(2012, 10, 5)) },
-      ],
-      `
-        dateObject
-      `
-    )
-    expect(result).toMatchSnapshot()
-  })
-
   it(`filters out empty objects`, async () => {
     let result = await queryResult(
       [{ foo: {}, bar: `baz` }],
@@ -209,6 +186,57 @@ describe(`GraphQL type inferance`, () => {
 
     expect(Object.keys(fields)).toHaveLength(2)
     expect(Object.keys(fields.foo.type.getFields())).toHaveLength(4)
+  })
+
+  describe(`Handles dates`, () => {
+    it(`Handles integer with valid date format`, async () => {
+      let result = await queryResult(
+        [{ number: 2018 }, { number: 1987 }],
+        `
+          number
+        `
+      )
+      expect(result.data.listNode[0].number).toEqual(2018)
+    })
+
+    it(`Date type inference`, async () => {
+      let result = await queryResult(
+        [
+          { dateObject: new Date(Date.UTC(2012, 10, 5)) },
+          { dateObject: new Date(Date.UTC(2012, 10, 5)) },
+        ],
+        `
+          dateObject
+        `
+      )
+      expect(result).toMatchSnapshot()
+    })
+
+    it(`Infers from date strings`, async () => {
+      let result = await queryResult(
+        [{ date: `1012-11-01` }],
+        `
+          date(formatString:"DD.MM.YYYY")
+        `
+      )
+
+      expect(result.errors).not.toBeDefined()
+      expect(result.data.listNode[0].date).toEqual(`01.11.1012`)
+    })
+
+    it(`Infers from arrays of date strings`, async () => {
+      let result = await queryResult(
+        [{ date: [`1012-11-01`, `10390203`] }],
+        `
+          date(formatString:"DD.MM.YYYY")
+        `
+      )
+
+      expect(result.errors).not.toBeDefined()
+      expect(result.data.listNode[0].date.length).toEqual(2)
+      expect(result.data.listNode[0].date[0]).toEqual(`01.11.1012`)
+      expect(result.data.listNode[0].date[1]).toEqual(`03.02.1039`)
+    })
   })
 
   xdescribe(`Linked inference from config mappings`)
