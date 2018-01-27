@@ -11,5 +11,30 @@ module.exports = {
       },
     },
     `gatsby-transformer-remark`,
+    {
+      resolve: `gatsby-plugin-contentful-pages`,
+      options: {
+        contentTypes: [
+          /**
+           * Create pages for product content type.
+           */
+          {
+            name: `product`,
+            component: `./src/templates/product.js`,
+            path: ({ id }) => `/products/${id}/`,
+            subQuery: `id`,
+          },
+          /**
+           * Create pages for category content type.
+           */
+          {
+            name: `category`,
+            component: `./src/templates/category.js`,
+            path: ({ id }) => `/categories/${id}/`,
+            subQuery: `id`,
+          },
+        ],
+      },
+    },
   ],
 }
