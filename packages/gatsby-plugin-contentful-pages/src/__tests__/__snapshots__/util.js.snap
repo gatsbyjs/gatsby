@@ -23,7 +23,7 @@ exports[`The util module createAllQuery should create a GraphQL query for a cont
 exports[`The util module createAllQuery should create a GraphQL query for the entry ID, if no subQuery is passed  1`] = `
 "
   {
-    allContentfulmyContentType {
+    allContentfulMyContentType {
       edges {
         node {
           id

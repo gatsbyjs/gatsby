@@ -36,3 +36,4 @@ examples
 # Compiled package files
 /gatsby-node.js
 /util.js
+/__tests__

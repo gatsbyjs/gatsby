@@ -1,3 +1,5 @@
+const { resolve } = require(`path`)
+
 const { createAllQuery, getNodesFor } = require(`./util`)
 
 const handleGraphQl = ({ data, errors }) => {
@@ -25,13 +27,15 @@ const resolveOption = (optionName, optionValue, fields) => {
 
 const createPageObject = ({ component: cValue, path: pValue }) => fields => {
   const { id } = fields
-  const component = resolveOption(`component`, cValue, fields)
+  const component = resolve(resolveOption(`component`, cValue, fields))
   const path = resolveOption(`path`, pValue, fields)
-  return {
+
+  const pageObject = {
     component,
     context: { id },
     path,
   }
+  return pageObject
 }
 
 const getContentTypeEntries = async (
@@ -58,9 +62,20 @@ const createPages = async (
 ) => {
   const { createPage } = boundActionCreators
   const gqlRunner = createRunner(graphql)
-  const pageCollections = await Promise.all(contentTypes.map(createContentTypePages(gqlRunner)))
-  const allPageObjects = Array.prototype.concat(...pageCollections)
-  return allPageObjects.map(createPage)
+  try {
+    const pageCollections = await Promise.all(
+      contentTypes.map(createContentTypePages(gqlRunner))
+    )
+    const allPageObjects = Array.prototype.concat(...pageCollections)
+    allPageObjects.forEach(page => {
+      // Necessary, because create page seems to use `this` and
+      // is not bound.
+      createPage(page)
+    })
+    return
+  } catch (e) {
+    throw e
+  }
 }
 
 exports.createPages = createPages

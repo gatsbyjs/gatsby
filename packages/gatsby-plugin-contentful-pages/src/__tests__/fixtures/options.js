@@ -10,7 +10,7 @@ module.exports = {
         quantity
       `,
       path: ({ slug }) => `/${slug}`,
-      component: `path/to/component`
+      component: `path/to/component`,
     },
   ],
 }

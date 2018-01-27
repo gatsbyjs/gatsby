@@ -1,6 +1,8 @@
+const capitalize = str => `${str[0].toUpperCase()}${str.slice(1)}`
+
 const createAllQuery = (contentType, subQuery) => `
   {
-    allContentful${contentType} {
+    allContentful${capitalize(contentType)} {
       edges {
         node {
           ${subQuery || `id`}
@@ -16,7 +18,7 @@ const getNodesFromAllQuery = rootQueryType => ({ data }) => {
 }
 
 const getNodesFor = contentType =>
-  getNodesFromAllQuery(`allContentful${contentType}`)
+  getNodesFromAllQuery(`allContentful${capitalize(contentType)}`)
 
 module.exports = {
   createAllQuery,
