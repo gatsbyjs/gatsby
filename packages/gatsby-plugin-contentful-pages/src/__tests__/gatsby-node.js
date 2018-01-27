@@ -1,3 +1,13 @@
+jest.mock(
+  `path`,
+  () =>
+     {
+      return {
+        resolve: path => path,
+      }
+    }
+)
+
 const { createPages } = require(`../gatsby-node`)
 const PROPS = require(`./fixtures/all-query`)
 const options = require(`./fixtures/options`)
