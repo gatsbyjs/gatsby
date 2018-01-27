@@ -66,7 +66,15 @@ const copy = async (starterPath: string, rootPath: string) => {
 
 // Clones starter from URI.
 const clone = async (hostInfo: any, rootPath: string) => {
-  const url = hostInfo.ssh({ noCommittish: true })
+  let url
+  // Let people use private repos accessed over SSH.
+  if (hostInfo.getDefaultRepresentation() === `sshurl`) {
+    url = hostInfo.ssh({ noCommittish: true })
+    // Otherwise default to normal git syntax.
+  } else {
+    url = hostInfo.git({ noCommittish: true })
+  }
+
   const branch = hostInfo.committish ? `-b ${hostInfo.committish}` : ``
 
   report.info(`Creating new site from git: ${url}`)
