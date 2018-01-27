@@ -290,9 +290,10 @@ module.exports = (
       htmlAst: {
         type: GraphQlJson,
         resolve(markdownNode) {
-          const ast = _.clone(getHTMLAst(markdownNode))
-          stripPosition(ast, true)
-          return ast
+          return getHTMLAst(markdownNode).then(ast => {
+            const strippedAst = stripPosition(_.clone(ast), true)
+            return strippedAst
+          })
         },
       },
       excerpt: {
