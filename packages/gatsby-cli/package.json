@@ -41,5 +41,8 @@
     "build": "babel src --out-dir lib --ignore __tests__",
     "watch": "babel -w src --out-dir lib --ignore __tests__",
     "prepublish": "cross-env NODE_ENV=production npm run build"
+  },
+  "yargs": {
+    "boolean-negation": false
   }
 }
