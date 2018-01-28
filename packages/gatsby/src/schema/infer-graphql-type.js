@@ -333,7 +333,9 @@ export function inferObjectStructureFromNodes({
       // Third if the field (whether a string or array of string(s)) is
       // pointing to a file (from another file).
     } else if (FileType.shouldInfer(nodes, nextSelector, value)) {
-      inferredField = FileType.inferFromUri(key, types, _.isArray(value))
+      inferredField = _.isArray(value)
+        ? FileType.getListType()
+        : FileType.getType()
     }
 
     // Finally our automatic inference of field value type.

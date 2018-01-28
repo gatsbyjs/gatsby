@@ -12,6 +12,18 @@ const {
 } = require(`../../redux/actions/add-page-dependency`)
 const { joinPath } = require(`../../utils/path`)
 
+let type, listType
+
+export function setFileNodeRootType(fileNodeRootType) {
+  if (fileNodeRootType) {
+    type = createType(fileNodeRootType, false)
+    listType = createType(fileNodeRootType, true)
+  } else {
+    type = null
+    listType = null
+  }
+}
+
 function findRootNode(node) {
   // Find the root node.
   let rootNode = node
@@ -141,19 +153,13 @@ export function shouldInfer(nodes, selector, value) {
   )
 }
 
-// Look for fields that are pointing at a file — if the field has a known
-// extension then assume it should be a file field.
-export function inferFromUri(key, types, isArray) {
-  const fileField = types.find(type => type.name === `File`)
-
-  if (!fileField) return null
+function createType(fileNodeRootType, isArray) {
+  if (!fileNodeRootType) return null
 
   return {
-    type: isArray
-      ? new GraphQLList(fileField.nodeObjectType)
-      : fileField.nodeObjectType,
-    resolve: (node, a, { path }) => {
-      const fieldValue = node[key]
+    type: isArray ? new GraphQLList(fileNodeRootType) : fileNodeRootType,
+    resolve: (node, args, { path }, { fieldName }) => {
+      let fieldValue = node[fieldName]
 
       if (!fieldValue) {
         return null
@@ -194,4 +200,12 @@ export function inferFromUri(key, types, isArray) {
       }
     },
   }
+}
+
+export function getType() {
+  return type
+}
+
+export function getListType() {
+  return listType
 }
