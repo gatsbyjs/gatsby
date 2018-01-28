@@ -1,5 +1,10 @@
 const moment = require(`moment`)
-const { GraphQLString, GraphQLBoolean } = require(`graphql`)
+const {
+  GraphQLString,
+  GraphQLBoolean,
+  GraphQLScalarType,
+  Kind,
+} = require(`graphql`)
 const _ = require(`lodash`)
 const { oneLine } = require(`common-tags`)
 
@@ -30,8 +35,20 @@ export function shouldInfer(value) {
   return momentDate.isValid() && typeof value !== `number`
 }
 
+export const GraphQLDate = new GraphQLScalarType({
+  name: `Date`,
+  description: oneLine`
+    A date string, such as 2007-12-03, compliant with the ISO 8601 standard 
+    for representation of dates and times using the Gregorian calendar.`,
+  serialize: String,
+  parseValue: String,
+  parseLiteral(ast) {
+    return ast.kind === Kind.STRING ? ast.value : undefined
+  },
+})
+
 const type = Object.freeze({
-  type: GraphQLString,
+  type: GraphQLDate,
   args: {
     formatString: {
       type: GraphQLString,
