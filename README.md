@@ -32,6 +32,8 @@ Websites built with Gatsby:
   ([source](https://github.com/reasonml/reasonml.github.io))
 * [Bricolage.io](https://www.bricolage.io/)
   ([source](https://github.com/KyleAMathews/blog))
+* [Hack Club](https://hackclub.com/)
+  ([source](https://github.com/hackclub/site))
 * [Jamie Henson's Blog](http://jamiehenson.com/)
   ([source](https://github.com/jamiehenson/jh47-gatsby))
 * [Sean Coker's Blog](https://sean.is/)
