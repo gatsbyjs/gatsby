@@ -89,7 +89,7 @@ function inferGraphQLType({
   }
 
   if (DateType.shouldInfer(exampleValue)) {
-    return DateType.getType(fieldName)
+    return DateType.getType()
   }
 
   switch (typeof exampleValue) {

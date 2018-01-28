@@ -30,66 +30,68 @@ export function shouldInfer(value) {
   return momentDate.isValid() && typeof value !== `number`
 }
 
-export function getType(fieldName) {
-  return {
-    type: GraphQLString,
-    args: {
-      formatString: {
-        type: GraphQLString,
-        description: oneLine`
-          Format the date using Moment.js' date tokens e.g.
+const type = Object.freeze({
+  type: GraphQLString,
+  args: {
+    formatString: {
+      type: GraphQLString,
+      description: oneLine`
+        Format the date using Moment.js' date tokens e.g.
         "date(formatString: "YYYY MMMM DD)"
         See https://momentjs.com/docs/#/displaying/format/
         for documentation for different tokens`,
-      },
-      fromNow: {
-        type: GraphQLBoolean,
-        description: oneLine`
-          Returns a string generated with Moment.js' fromNow function`,
-      },
-      difference: {
-        type: GraphQLString,
-        description: oneLine`
-          Returns the difference between this date and the current time.
-          Defaults to miliseconds but you can also pass in as the
-          measurement years, months, weeks, days, hours, minutes,
-          and seconds.`,
-      },
-      locale: {
-        type: GraphQLString,
-        description: oneLine`
-          Configures the locale Moment.js will use to format the date.
-        `,
-      },
     },
-    resolve(object, args) {
-      let date
-      if (object[fieldName]) {
-        date = JSON.parse(JSON.stringify(object[fieldName]))
-      } else {
-        return null
-      }
-      if (_.isPlainObject(args)) {
-        const { fromNow, difference, formatString, locale = `en` } = args
-        if (formatString) {
-          return moment
-            .utc(date, ISO_8601_FORMAT, true)
-            .locale(locale)
-            .format(formatString)
-        } else if (fromNow) {
-          return moment
-            .utc(date, ISO_8601_FORMAT, true)
-            .locale(locale)
-            .fromNow()
-        } else if (difference) {
-          return moment().diff(
-            moment.utc(date, ISO_8601_FORMAT, true).locale(locale),
-            difference
-          )
-        }
-      }
+    fromNow: {
+      type: GraphQLBoolean,
+      description: oneLine`
+        Returns a string generated with Moment.js' fromNow function`,
+    },
+    difference: {
+      type: GraphQLString,
+      description: oneLine`
+        Returns the difference between this date and the current time.
+        Defaults to miliseconds but you can also pass in as the
+        measurement years, months, weeks, days, hours, minutes,
+        and seconds.`,
+    },
+    locale: {
+      type: GraphQLString,
+      description: oneLine`
+        Configures the locale Moment.js will use to format the date.`,
+    },
+  },
+  resolve(source, args, context, { fieldName }) {
+    let date
+    if (source[fieldName]) {
+      date = JSON.parse(JSON.stringify(source[fieldName]))
+    } else {
+      return null
+    }
 
-      return date
-    },
-  }
+    if (_.isPlainObject(args)) {
+      const { fromNow, difference, formatString, locale = `en` } = args
+      if (formatString) {
+        return moment
+          .utc(date, ISO_8601_FORMAT, true)
+          .locale(locale)
+          .format(formatString)
+      } else if (fromNow) {
+        return moment
+          .utc(date, ISO_8601_FORMAT, true)
+          .locale(locale)
+          .fromNow()
+      } else if (difference) {
+        return moment().diff(
+          moment.utc(date, ISO_8601_FORMAT, true).locale(locale),
+          difference
+        )
+      }
+    }
+
+    return date
+  },
+})
+
+export function getType() {
+  return type
 }
