@@ -55,53 +55,53 @@ Two alternative ways of handling static assets is described in the next sections
 
 ## Query for `File` in GraphQL queries using gatsby-source-filesystem
 
-You can query the `publicURL` field of `File` nodes found in your data layer to trigger copying those files to the public directory and get URLs to them. 
+You can query the `publicURL` field of `File` nodes found in your data layer to trigger copying those files to the public directory and get URLs to them.
 
 Examples:
 
 * Copy all `.pdf` files you have in your data layer to your build directory and return URLs to them:
-  
+
   ```graphql
-    {
-      allFile(filter:{extension: {eq: "pdf"}}) {
-        edges {
-          node {
-            publicURL
-          }
+  {
+    allFile(filter: { extension: { eq: "pdf" } }) {
+      edges {
+        node {
+          publicURL
         }
       }
     }
+  }
   ```
 
 * Copy post attachments defined in your Markdown files:
-  
+
   Link to your attachments in the markdown frontmatter:
-  
+
   ```markdown
   ---
   title: "Title of article"
-  attachments:
-    - "./assets.zip"
-    - "./presentation.pdf"
+attachments:
+  - "./assets.zip"
+  - "./presentation.pdf"
   ---
-  
+
   Hi, this is a great article.
   ```
-  
+
   In the article template component file, you can query for the attachments:
-  
+
   ```graphql
-    query TemplateBlogPost($slug: String!) {
-      markdownRemark(fields: { slug: { eq: $slug } }) {
-        html
-        frontmatter {
-          title
-          attachments {
-            publicURL
-          }
+  query TemplateBlogPost($slug: String!) {
+    markdownRemark(fields: { slug: { eq: $slug } }) {
+      html
+      frontmatter {
+        title
+        attachments {
+          publicURL
         }
       }
     }
+  }
   ```
 
 ## Using the `static` Folder
