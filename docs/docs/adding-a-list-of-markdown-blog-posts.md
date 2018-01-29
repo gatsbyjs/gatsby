@@ -6,7 +6,7 @@ Once you have added Markdown pages to your site, you are just one step away from
 
 ### Creating posts
 
-As described [here](/docs/docs/adding-markdown-pages.md), you will have to create your posts in Markdown files which will look like this:
+As described [here](/docs/adding-markdown-pages), you will have to create your posts in Markdown files which will look like this:
 
 ```md
 ---
