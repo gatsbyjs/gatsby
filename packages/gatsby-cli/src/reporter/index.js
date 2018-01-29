@@ -17,8 +17,8 @@ module.exports = Object.assign(reporter, {
   setVerbose(isVerbose = true) {
     this.isVerbose = !!isVerbose
   },
-  setNoColor(isNoColor = false){
-    if(isNoColor){
+  setNoColor(isNoColor = false) {
+    if (isNoColor) {
       errorFormatter.withoutColors()
     }
   },

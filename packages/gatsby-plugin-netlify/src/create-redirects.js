@@ -47,7 +47,9 @@ export default async function writeRedirectsFile(
     return pieces.join(`  `)
   })
 
-  rewrites = rewrites.map(({ fromPath, toPath }) => `${fromPath}  ${toPath}  200`)
+  rewrites = rewrites.map(
+    ({ fromPath, toPath }) => `${fromPath}  ${toPath}  200`
+  )
 
   let appendToFile = false
 
