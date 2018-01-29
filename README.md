@@ -149,6 +149,7 @@ Websites built with Gatsby:
 * [Nortcast](https://nortcast.com/)
 * [VisitGemer](https://visitgemer.sk/)
 * [Nexit](https://nexit.sk/)
+* [ERC dEX](https://ercdex.com)
 
 ## Docs
 
