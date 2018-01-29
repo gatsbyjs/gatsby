@@ -24,6 +24,10 @@ function getErrorFormatter() {
   prettyError.appendStyle({
     "pretty-error": {
       marginTop: 1,
+      background: `red`,
+    },
+    "pretty-error > trace > item > footer > addr": {
+      color: `cyan`,
     },
   })
 
