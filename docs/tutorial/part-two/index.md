@@ -256,7 +256,7 @@ module.exports = {
       },
     },
   ],
-}
+};
 ```
 
 Stop `gatsby develop` by typing <kbd>Ctrl + c</kbd> into the terminal window where the development process has been running. Then, run `gatsby develop` again to restart it. This will allow our plugin change to take effect.
@@ -282,9 +282,9 @@ To use the Bootstrap theme, change your typography code to:
 import Typography from "typography";
 import bootstrapTheme from "typography-theme-bootstrap";
 
-const typography = new Typography(bootstrapTheme)
+const typography = new Typography(bootstrapTheme);
 
-export default typography
+export default typography;
 ```
 
 ![typography-bootstrap](typography-bootstrap.png)
@@ -298,9 +298,9 @@ import Typography from "typography";
 // import bootstrapTheme from "typography-theme-bootstrap"
 import lawtonTheme from "typography-theme-lawton";
 
-const typography = new Typography(lawtonTheme)
+const typography = new Typography(lawtonTheme);
 
-export default typography
+export default typography;
 ```
 
 ![typography-lawton](typography-lawton.png)

@@ -96,6 +96,12 @@ repository dedicated to files for the site. The sites must be published from the
 kept in a branch named `source` or something similar. We also don't need to
 prefix links like we do with project sites.
 
+```
+"scripts": {
+  "deploy": "gatsby build && gh-pages -b master -d public",
+}
+```
+
 The repository for these sites requires a special name. See
 https://help.github.com/articles/user-organization-and-project-pages/ for
 documentation on naming your site's repository.
@@ -259,7 +265,6 @@ In order to deploy your Gatsby project using [Now](https://zeit.co/now), you can
 `npm install --save serve`
 
 3. Add a `start` script to your `package.json` file, this is what Now will use to run your application:
-
 
 `"start": "serve public/"`
 

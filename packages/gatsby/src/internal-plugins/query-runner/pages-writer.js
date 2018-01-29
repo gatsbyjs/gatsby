@@ -43,6 +43,15 @@ const writePages = async () => {
     })
     if (p.layout) {
       let layout = getLayoutById(layouts)(p.layout)
+
+      if (!layout) {
+        throw new Error(
+          `Could not find layout '${
+            p.layout
+          }'. Check if this file exists in 'src/layouts'.`
+        )
+      }
+
       pageLayouts.push(layout)
       json.push({
         jsonName: layout.jsonName,
@@ -129,13 +138,11 @@ const preferDefault = m => m && m.default || m
       .then(() => fs.move(tmp, destination, { overwrite: true }))
   }
 
-  await Promise.all([
+  return await Promise.all([
     writeAndMove(`pages.json`, JSON.stringify(pagesData, null, 4)),
     writeAndMove(`sync-requires.js`, syncRequires),
     writeAndMove(`async-requires.js`, asyncRequires),
   ])
-
-  return
 }
 
 exports.writePages = writePages

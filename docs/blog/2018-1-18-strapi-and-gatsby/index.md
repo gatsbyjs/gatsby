@@ -2,7 +2,7 @@
 title: "Building a static blog using Gatsby and Strapi"
 date: "2018-01-18"
 author: "Pierre Burgy"
---- 
+---
 
 ## Introduction
 
@@ -18,9 +18,9 @@ Static websites and PWA both have strong advantages which make us crave for a wa
 
 ### What is Gatsby?
 
-[Gatsby](https://www.gatsbyjs.org) is a *blazing-fast **website framework** for React*. It allows developers to build React-based websites within minutes. Whether you want to develop a blog or a corporate website, Gatsby will fill  your needs.
+[Gatsby](https://www.gatsbyjs.org) is a _blazing-fast **website framework** for React_. It allows developers to build React-based websites within minutes. Whether you want to develop a blog or a corporate website, Gatsby will fill your needs.
 
-<a href="https://www.gatsbyjs.org"><img style="width:50%" alt="Gatsby logo" src="/content/images/2018/01/34450329-a494355a-ed06-11e7-9d0a-30aefeb2fd57.jpg"></a>
+[![Gatsby Logo](logo-gatsby.jpg)](https://www.gatsbyjs.org)
 
 Because it is based on React, the website pages are never reloaded which makes the generated website super fast. A large set of plugins is available to let developers save time and get data from any source (Markdown files, CMS, etc.). Gatsby is strongly based on the ["node" interface](https://www.gatsbyjs.org/docs/node-interface/), which is the center of Gatsby's data system.
 
@@ -28,17 +28,17 @@ Created by [Kyle Mathews](https://twitter.com/kylemathews), the project has been
 
 ### What is Strapi?
 
-[Strapi](https://strapi.io) is the *most advanced **Node.js API Content Management Framework***. Halfway between a [Node.js framework and a headless CMS](https://strapi.io/overview), it saves weeks of API development time.
+[Strapi](https://strapi.io) is the \*most advanced **Node.js API Content Management Framework\***. Halfway between a [Node.js framework and a headless CMS](https://strapi.io/overview), it saves weeks of API development time.
 
-<a href="https://strapi.io"><img style="width:50%" src="/content/images/2018/01/logo-strapi-black-blue.png"></a>
+[![Gatsby Strapi](logo-strapi.png)](https://strapi.io)
 
 Thanks to its extensible plugin system, it provides a large set of built-in features: Admin Panel, Authentication & Permissions management, Content Management, API Generator, etc.
 
 Unlike others CMSs, **Strapi is 100% open-source**, which means:
 
- - **Strapi is completely free**.
- - You can **host it on your own servers**, so you own the data.
- - It is entirely **customisable and extensible**, thanks to the plugin system.
+* **Strapi is completely free**.
+* You can **host it on your own servers**, so you own the data.
+* It is entirely **customisable and extensible**, thanks to the plugin system.
 
 ## API Setup
 
@@ -48,27 +48,27 @@ To make the magic happen, let's create a Strapi API and add some content.
 
 #### Install Strapi
 
-*Requirements: please make sure [Node 8](https://nodejs.org/en/download/) (or higher) and [MongoDB](https://docs.mongodb.com/manual/installation/) are installed and running on your machine.*
+_Requirements: please make sure [Node 8](https://nodejs.org/en/download/) (or higher) and [MongoDB](https://docs.mongodb.com/manual/installation/) are installed and running on your machine._
 
 Install Strapi using npm:
 
-```
+```bash
 $ npm i strapi@alpha -g
 ```
 
-*Note: Strapi v3 is still an alpha version, but it will be fine for this tutorial.*
+_Note: Strapi v3 is still an alpha version, but it will be fine for this tutorial._
 
 #### Generate a Strapi project
 
 Create a directory named `gatsby-strapi-tutorial`:
 
-```
+```bash
 $ mkdir gatsby-strapi-tutorial
 ```
 
 Scaffold your API inside it through a single command line:
 
-```
+```bash
 $ cd gatsby-strapi-tutorial
 $ strapi new api
 ```
@@ -77,13 +77,13 @@ $ strapi new api
 
 Enter inside your project's folder:
 
-```
+```bash
 $ cd api
 ```
 
 Launch the Node.js server:
 
-```
+```bash
 $ strapi start
 ```
 
@@ -93,7 +93,7 @@ Starting now, you should be able to visit the admin panel of your project: http:
 
 Add your first user from the [registration page](http://localhost:1337/admin/plugins/users-permissions/auth/register).
 
-![Tutorial](/content/images/2018/01/Screen-Shot-2018-01-17-at-21.09.14.png)
+![Tutorial](strapi-register.png)
 
 #### Create a Content Type
 
@@ -101,20 +101,20 @@ Strapi APIs are based on a data structure called Content Types (equivalent of mo
 
 [Create a Content Type](http://localhost:1337/admin/plugins/content-type-builder/) named `article` with three fields: `title` (type `string`), `content` (type `text`) and `author` (type `relation`, many article to one user).
 
-![Tutorial](/content/images/2018/01/Screen-Shot-2018-01-17-at-15.17.40.png)
+![Tutorial](strapi-relations.png)
 
-![Tutorial](/content/images/2018/01/Screen-Shot-2018-01-17-at-21.11.50.png)
+![Tutorial](strapi-content-type-builder.png)
 
 #### Insert some entries
 
 Add some articles in the database. To do so, follow these instructions:
 
- 1. Visit the [articles list page](http://localhost:1337/admin/plugins/content-type-builder/models/article).
- 2. Click on `Add New Article`.
- 3. Insert values, link to an author and submit the form.
- 4. Create two other articles.
+1. Visit the [articles list page](http://localhost:1337/admin/plugins/content-type-builder/models/article).
+2. Click on `Add New Article`.
+3. Insert values, link to an author and submit the form.
+4. Create two other articles.
 
-![Tutorial](/content/images/2018/01/Screen-Shot-2018-01-17-at-21.14.36.png)
+![Tutorial](strapi-content-manager.png)
 
 #### Allow access
 
@@ -122,7 +122,7 @@ For security reasons, [API access](http://localhost:1337/article) is, by default
 
 The [author API access](http://localhost:1337/article) is also restricted. Authorize anonymous access by selecting the `find` (in "Users & Permissions" section) action and saving the form.
 
-![Tutorial](/content/images/2018/01/Screen-Shot-2018-01-17-at-21.29.59.png)
+![Tutorial](strapi-permissions.png)
 
 ## Static website development
 
@@ -132,7 +132,7 @@ Great job, our API is ready! We can start developing the static website.
 
 First, install Gatsby CLI:
 
-```
+```bash
 $ npm install --global gatsby-cli
 ```
 
@@ -140,7 +140,7 @@ $ npm install --global gatsby-cli
 
 In the folder `gatsby-strapi-tutorial` that you previously created, generate your brand new blog:
 
-```
+```bash
 $ gatsby new blog
 ```
 
@@ -148,13 +148,13 @@ $ gatsby new blog
 
 Enter in your project's folder:
 
-```
+```bash
 $ cd blog
 ```
 
 Start the server:
 
-```
+```bash
 $ gatsby develop
 ```
 
@@ -172,15 +172,15 @@ In this example, we are using Strapi. Obviously, we are going to need a source p
 
 Let's install it:
 
-```
+```bash
 $ npm install --save gatsby-source-strapi
 ```
 
 This plugin need some configurations. Replace the content of `gatsby-config.js` with:
 
-*Path: `gatsby-config.js`*
+_Path: `gatsby-config.js`_
 
-```
+```jsx
 module.exports = {
   siteMetadata: {
     title: `Gatsby Default Starter`,
@@ -191,14 +191,15 @@ module.exports = {
       resolve: `gatsby-source-strapi`,
       options: {
         apiURL: `http://localhost:1337`,
-        contentTypes: [ // List of the Content Types you want to be able to request from Gatsby.
+        contentTypes: [
+          // List of the Content Types you want to be able to request from Gatsby.
           `article`,
-          `user`
-        ]
+          `user`,
+        ],
       },
     },
   ],
-}
+};
 ```
 
 Then, restart the server to let Gatsby consider these updates.
@@ -207,11 +208,11 @@ Then, restart the server to let Gatsby consider these updates.
 
 First, we want to display the list of articles. To do so, add the following content in the existing home page file:
 
-*Path: `src/pages/index.js`*
+_Path: `src/pages/index.js`_
 
 ```jsx
-import React from 'react'
-import Link from 'gatsby-link'
+import React from "react";
+import Link from "gatsby-link";
 
 const IndexPage = ({ data }) => (
   <div>
@@ -230,9 +231,9 @@ const IndexPage = ({ data }) => (
     </ul>
     <Link to="/page-2/">Go to page 2</Link>
   </div>
-)
+);
 
-export default IndexPage
+export default IndexPage;
 
 export const pageQuery = graphql`
   query IndexQuery {
@@ -246,16 +247,16 @@ export const pageQuery = graphql`
       }
     }
   }
-`
+`;
 ```
 
 #### What are we doing here?
 
-At the end of the file, we export `pageQuery`,  a GraphQL query which requests the entire list of articles. As you can see, we require only the `id`, `title` and `content` fields, thanks to the precise GraphQL query language.
+At the end of the file, we export `pageQuery`, a GraphQL query which requests the entire list of articles. As you can see, we require only the `id`, `title` and `content` fields, thanks to the precise GraphQL query language.
 
 Then, we pass the `{ data }` destructured object as parameter of `IndexPage` and loop on its `allStrapiArticles` object to display the data.
 
-![Tutorial](/content/images/2018/01/Screen-Shot-2018-01-17-at-21.25.48.png)
+![Tutorial](gatsby-home.png)
 
 #### Tip: generate your GraphQL query in seconds!
 
@@ -267,24 +268,30 @@ Our website now starts looking like a blog which is a good thing. However, an im
 
 Let's create the template, containing a specific GraphQL request and defining the content displayed:
 
-*Path: `src/templates/article.js`*
-```
-import React from 'react'
-import Link from 'gatsby-link'
+_Path: `src/templates/article.js`_
+
+```jsx
+import React from "react";
+import Link from "gatsby-link";
 
 const ArticleTemplate = ({ data }) => (
   <div>
     <h1>{data.strapiArticle.title}</h1>
-    <p>by <Link to={`/authors/${data.strapiArticle.author.id}`}>{data.strapiArticle.author.username}</Link></p>
+    <p>
+      by{" "}
+      <Link to={`/authors/${data.strapiArticle.author.id}`}>
+        {data.strapiArticle.author.username}
+      </Link>
+    </p>
     <p>{data.strapiArticle.content}</p>
   </div>
-)
+);
 
-export default ArticleTemplate
+export default ArticleTemplate;
 
 export const query = graphql`
   query ArticleTemplate($id: String!) {
-    strapiArticle(id: {eq: $id}) {
+    strapiArticle(id: { eq: $id }) {
       title
       content
       author {
@@ -293,36 +300,40 @@ export const query = graphql`
       }
     }
   }
-`
+`;
 ```
 
 That looks fine, but at this point, Gatsby does not know when this template should be displayed. Each article needs a specific URL. So, we are going to inform Gatsby about the new URLs we need thanks to the [`createPage` function](https://www.gatsbyjs.org/docs/creating-and-modifying-pages).
 
 First, we are going to code a new function called `makeRequest` to execute the GraphQL request. Then, we export a function named `createPages` in which we get the list of articles and create a page for each of them. Here is the result:
 
-*Path: `gatsby-node.js`*
-```
+_Path: `gatsby-node.js`_
+
+```jsx
 const path = require(`path`);
 
-const makeRequest = (graphql, request) => new Promise((resolve, reject) => {
-  // Query for nodes to use in creating pages.
-  resolve(
-    graphql(request).then(result => {
-      if (result.errors) {
-        reject(result.errors)
-      }
+const makeRequest = (graphql, request) =>
+  new Promise((resolve, reject) => {
+    // Query for nodes to use in creating pages.
+    resolve(
+      graphql(request).then(result => {
+        if (result.errors) {
+          reject(result.errors);
+        }
 
-      return result;
-    })
-  )
-});
+        return result;
+      })
+    );
+  });
 
 // Implement the Gatsby API “createPages”. This is called once the
 // data layer is bootstrapped to let plugins create pages from data.
 exports.createPages = ({ boundActionCreators, graphql }) => {
   const { createPage } = boundActionCreators;
 
-  const getArticles = makeRequest(graphql, `
+  const getArticles = makeRequest(
+    graphql,
+    `
     {
       allStrapiArticle {
         edges {
@@ -332,7 +343,8 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
         }
       }
     }
-    `).then(result => {
+    `
+  ).then(result => {
     // Create pages for each article.
     result.data.allStrapiArticle.edges.forEach(({ node }) => {
       createPage({
@@ -341,8 +353,8 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
         context: {
           id: node.id,
         },
-      })
-    })
+      });
+    });
   });
 
   // Query for articles nodes to use in creating pages.
@@ -354,7 +366,7 @@ Restart the Gatsby server.
 
 From now on, you should be able to visit the detail page by clicking on URLs displayed on the homepage.
 
-![Tutorial](/content/images/2018/01/Screen-Shot-2018-01-17-at-21.26.46.png)
+![Tutorial](gatsby-article.png)
 
 ### Author view
 
@@ -362,10 +374,11 @@ Articles are written by authors. They deserve a dedicated page.
 
 The processes for creating author views and article pages are very similar. First, we create the template:
 
-*Path: `src/templates/user.js`*
-```
-import React from 'react'
-import Link from 'gatsby-link'
+_Path: `src/templates/user.js`_
+
+```jsx
+import React from "react";
+import Link from "gatsby-link";
 
 const UserTemplate = ({ data }) => (
   <div>
@@ -381,9 +394,9 @@ const UserTemplate = ({ data }) => (
       ))}
     </ul>
   </div>
-)
+);
 
-export default UserTemplate
+export default UserTemplate;
 
 export const query = graphql`
   query UserTemplate($id: String!) {
@@ -397,35 +410,38 @@ export const query = graphql`
       }
     }
   }
-`
+`;
 ```
 
 Second, we update the `gatsby-node.js` file to create the URLs:
 
-*Path: `gatsby-node.js`*
-```
+_Path: `gatsby-node.js`_
+
+```jsx
 const path = require(`path`);
 
-const makeRequest = (graphql, request) => new Promise((resolve, reject) => {
-  // Query for article nodes to use in creating pages.
-  resolve(
-    graphql(request).then(result => {
-      if (result.errors) {
-        reject(result.errors)
-      }
+const makeRequest = (graphql, request) =>
+  new Promise((resolve, reject) => {
+    // Query for article nodes to use in creating pages.
+    resolve(
+      graphql(request).then(result => {
+        if (result.errors) {
+          reject(result.errors);
+        }
 
-      return result;
-    })
-  )
-});
-
+        return result;
+      })
+    );
+  });
 
 // Implement the Gatsby API “createPages”. This is called once the
 // data layer is bootstrapped to let plugins create pages from data.
 exports.createPages = ({ boundActionCreators, graphql }) => {
   const { createPage } = boundActionCreators;
 
-  const getArticles = makeRequest(graphql, `
+  const getArticles = makeRequest(
+    graphql,
+    `
     {
       allStrapiArticle {
         edges {
@@ -435,7 +451,8 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
         }
       }
     }
-    `).then(result => {
+    `
+  ).then(result => {
     // Create pages for each article.
     result.data.allStrapiArticle.edges.forEach(({ node }) => {
       createPage({
@@ -444,11 +461,13 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
         context: {
           id: node.id,
         },
-      })
-    })
+      });
+    });
   });
 
-  const getAuthors = makeRequest(graphql, `
+  const getAuthors = makeRequest(
+    graphql,
+    `
     {
       allStrapiUser {
         edges {
@@ -458,7 +477,8 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
         }
       }
     }
-    `).then(result => {
+    `
+  ).then(result => {
     // Create pages for each user.
     result.data.allStrapiUser.edges.forEach(({ node }) => {
       createPage({
@@ -467,21 +487,18 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
         context: {
           id: node.id,
         },
-      })
-    })
+      });
+    });
   });
 
   // Queries for articles and authors nodes to use in creating pages.
-  return Promise.all([
-    getArticles,
-    getAuthors,
-  ])
+  return Promise.all([getArticles, getAuthors]);
 };
 ```
 
 Finally, restart the server and visit the author page from the article view's links.
 
-![Tutorial](/content/images/2018/01/Screen-Shot-2018-01-17-at-21.27.47.png)
+![Tutorial](gatsby-author.png)
 
 ## Conclusion
 
@@ -489,7 +506,7 @@ Congrats! You’ve successfully built a super fast and easy-to-maintain blog!
 
 Since the content is managed by Strapi, the authors can write article through a nice UI and developers only have to rebuilt the Gatsby blog in order to update the content.
 
-***Where to go next?***
+**_Where to go next?_**
 
 Feel free to continue this project to discover both Gatsby and Strapi advantages. Here are some features you can add: list of authors, article's categories, and comment system with the Strapi API or Disqus. You can also create other kind of websites (e-commerce shop, corporate website, etc.).
 

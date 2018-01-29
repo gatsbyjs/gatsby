@@ -85,6 +85,8 @@ const pascalCase = _.flow(_.camelCase, _.upperFirst)
  * @param {Object} page a page object
  * @param {string} page.path Any valid URL. Must start with a forward slash
  * @param {string} page.component The absolute path to the component for this page
+ * @param {string} page.layout The name of the layout for this page. By default
+ * `'index'` layout is used
  * @param {Object} page.context Context data for this page. Passed as props
  * to the component `this.props.pathContext` as well as to the graphql query
  * as graphql arguments.
@@ -708,9 +710,10 @@ actions.setPluginStatus = (
 }
 
 /**
- * Create a redirect from one page to another.  Redirect data can be used to
- * configure hosting environments like Netlify (automatically handled with the
- * [Netlify plugin](/packages/gatsby-plugin-netlify/)).
+ * Create a redirect from one page to another. Server redirects don't work out
+ * of the box. You must have a plugin setup to integrate the redirect data with
+ * your hosting technology e.g. the [Netlify
+ * plugin](/packages/gatsby-plugin-netlify/)).
  *
  * @param {Object} redirect Redirect data
  * @param {string} redirect.fromPath Any valid URL. Must start with a forward slash

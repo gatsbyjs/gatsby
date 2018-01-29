@@ -60,7 +60,8 @@ function buildLocalCommands(cli, isLocalSite) {
   function getCommandHandler(command, handler) {
     return argv => {
       report.setVerbose(!!argv.verbose)
-
+      report.setNoColor(!!argv.noColor)
+      
       process.env.gatsby_log_level = argv.verbose ? `verbose` : `normal`
       report.verbose(`set gatsby_log_level: "${process.env.gatsby_log_level}"`)
 
@@ -175,6 +176,12 @@ module.exports = (argv, handlers) => {
       describe: `Turn on verbose output`,
       global: true,
     })
+    .option(`no-color`,{
+      default: false,
+      type: `boolean`,
+      describe: `Turn off the color in output`,
+      global: true,
+    })
 
   buildLocalCommands(cli, isLocalSite)
 
@@ -191,6 +198,8 @@ module.exports = (argv, handlers) => {
     })
     .wrap(cli.terminalWidth())
     .demandCommand(1, `Pass --help to see all available commands and options.`)
-    .showHelpOnFail(true, `A command is required.`)
+    .strict()
+    .showHelpOnFail(true)
+    .recommendCommands()
     .parse(argv.slice(2))
 }
