@@ -1,0 +1,204 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`createPages should accept component name functions 1`] = `
+"[
+  {
+    \\"component\\": \\"woodtoycarswedendesign\\",
+    \\"context\\": {
+      \\"id\\": \\"c5KsDBWseXY6QegucYAoacS___de\\"
+    },
+    \\"path\\": \\"/playsam-streamliner-classic-car-espresso\\"
+  },
+  {
+    \\"component\\": \\"vaseflowersaccessories\\",
+    \\"context\\": {
+      \\"id\\": \\"c3DVqIYj4dOwwcKu6sgqOgg___de\\"
+    },
+    \\"path\\": \\"/hudson-wall-cup\\"
+  },
+  {
+    \\"component\\": \\"kitchenaccessorieswhiskscandinaviadesign\\",
+    \\"context\\": {
+      \\"id\\": \\"c6dbjWqNd9SqccegcqYq224___de\\"
+    },
+    \\"path\\": \\"/whisk-beater\\"
+  },
+  {
+    \\"component\\": \\"home décorclocksinterior designyellowgifts\\",
+    \\"context\\": {
+      \\"id\\": \\"c4BqrajvA8E6qwgkieoqmqO___de\\"
+    },
+    \\"path\\": \\"/soso-wall-clock\\"
+  },
+  {
+    \\"component\\": \\"woodtoycarswedendesign\\",
+    \\"context\\": {
+      \\"id\\": \\"c5KsDBWseXY6QegucYAoacS\\"
+    },
+    \\"path\\": \\"/playsam-streamliner-classic-car-espresso\\"
+  },
+  {
+    \\"component\\": \\"vaseflowersaccessories\\",
+    \\"context\\": {
+      \\"id\\": \\"c3DVqIYj4dOwwcKu6sgqOgg\\"
+    },
+    \\"path\\": \\"/hudson-wall-cup\\"
+  },
+  {
+    \\"component\\": \\"kitchenaccessorieswhiskscandinaviadesign\\",
+    \\"context\\": {
+      \\"id\\": \\"c6dbjWqNd9SqccegcqYq224\\"
+    },
+    \\"path\\": \\"/whisk-beater\\"
+  },
+  {
+    \\"component\\": \\"home décorclocksinterior designyellowgifts\\",
+    \\"context\\": {
+      \\"id\\": \\"c4BqrajvA8E6qwgkieoqmqO\\"
+    },
+    \\"path\\": \\"/soso-wall-clock\\"
+  }
+]"
+`;
+
+exports[`createPages should allow mapping of the entry data before creating the page object 1`] = `
+"[
+  {
+    \\"component\\": \\"path/to/component\\",
+    \\"context\\": {
+      \\"id\\": \\"c5KsDBWseXY6QegucYAoacS___de--foobar\\"
+    },
+    \\"path\\": \\"/playsam-streamliner-classic-car-espresso\\"
+  },
+  {
+    \\"component\\": \\"path/to/component\\",
+    \\"context\\": {
+      \\"id\\": \\"c3DVqIYj4dOwwcKu6sgqOgg___de--foobar\\"
+    },
+    \\"path\\": \\"/hudson-wall-cup\\"
+  },
+  {
+    \\"component\\": \\"path/to/component\\",
+    \\"context\\": {
+      \\"id\\": \\"c6dbjWqNd9SqccegcqYq224___de--foobar\\"
+    },
+    \\"path\\": \\"/whisk-beater\\"
+  },
+  {
+    \\"component\\": \\"path/to/component\\",
+    \\"context\\": {
+      \\"id\\": \\"c4BqrajvA8E6qwgkieoqmqO___de--foobar\\"
+    },
+    \\"path\\": \\"/soso-wall-clock\\"
+  },
+  {
+    \\"component\\": \\"path/to/component\\",
+    \\"context\\": {
+      \\"id\\": \\"c5KsDBWseXY6QegucYAoacS--foobar\\"
+    },
+    \\"path\\": \\"/playsam-streamliner-classic-car-espresso\\"
+  },
+  {
+    \\"component\\": \\"path/to/component\\",
+    \\"context\\": {
+      \\"id\\": \\"c3DVqIYj4dOwwcKu6sgqOgg--foobar\\"
+    },
+    \\"path\\": \\"/hudson-wall-cup\\"
+  },
+  {
+    \\"component\\": \\"path/to/component\\",
+    \\"context\\": {
+      \\"id\\": \\"c6dbjWqNd9SqccegcqYq224--foobar\\"
+    },
+    \\"path\\": \\"/whisk-beater\\"
+  },
+  {
+    \\"component\\": \\"path/to/component\\",
+    \\"context\\": {
+      \\"id\\": \\"c4BqrajvA8E6qwgkieoqmqO--foobar\\"
+    },
+    \\"path\\": \\"/soso-wall-clock\\"
+  }
+]"
+`;
+
+exports[`createPages should call graphql with query 1`] = `
+"
+  {
+    allContentfulProduct {
+      edges {
+        node {
+          
+        id
+        slug
+        tags
+        price
+        quantity
+      
+        }
+      }
+    }
+  }
+"
+`;
+
+exports[`createPages should create a page for each entry of each content type 1`] = `
+"[
+  {
+    \\"component\\": \\"path/to/component\\",
+    \\"context\\": {
+      \\"id\\": \\"c5KsDBWseXY6QegucYAoacS___de\\"
+    },
+    \\"path\\": \\"/playsam-streamliner-classic-car-espresso\\"
+  },
+  {
+    \\"component\\": \\"path/to/component\\",
+    \\"context\\": {
+      \\"id\\": \\"c3DVqIYj4dOwwcKu6sgqOgg___de\\"
+    },
+    \\"path\\": \\"/hudson-wall-cup\\"
+  },
+  {
+    \\"component\\": \\"path/to/component\\",
+    \\"context\\": {
+      \\"id\\": \\"c6dbjWqNd9SqccegcqYq224___de\\"
+    },
+    \\"path\\": \\"/whisk-beater\\"
+  },
+  {
+    \\"component\\": \\"path/to/component\\",
+    \\"context\\": {
+      \\"id\\": \\"c4BqrajvA8E6qwgkieoqmqO___de\\"
+    },
+    \\"path\\": \\"/soso-wall-clock\\"
+  },
+  {
+    \\"component\\": \\"path/to/component\\",
+    \\"context\\": {
+      \\"id\\": \\"c5KsDBWseXY6QegucYAoacS\\"
+    },
+    \\"path\\": \\"/playsam-streamliner-classic-car-espresso\\"
+  },
+  {
+    \\"component\\": \\"path/to/component\\",
+    \\"context\\": {
+      \\"id\\": \\"c3DVqIYj4dOwwcKu6sgqOgg\\"
+    },
+    \\"path\\": \\"/hudson-wall-cup\\"
+  },
+  {
+    \\"component\\": \\"path/to/component\\",
+    \\"context\\": {
+      \\"id\\": \\"c6dbjWqNd9SqccegcqYq224\\"
+    },
+    \\"path\\": \\"/whisk-beater\\"
+  },
+  {
+    \\"component\\": \\"path/to/component\\",
+    \\"context\\": {
+      \\"id\\": \\"c4BqrajvA8E6qwgkieoqmqO\\"
+    },
+    \\"path\\": \\"/soso-wall-clock\\"
+  }
+]"
+`;

@@ -1,0 +1,25 @@
+{
+  "name": "gatsby-plugin-contentful-pages",
+  "version": "1.0.0",
+  "description": "Creates pages from Contentful entries.",
+  "author": "Felix Jung <jung.felix@gmail.com>",
+  "contributors": [],
+  "dependencies": {
+    "babel-runtime": "^6.26.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "cross-env": "^5.0.5"
+  },
+  "keywords": [
+    "gatsby",
+    "contentful"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src --out-dir .",
+    "watch": "babel -w src --out-dir .",
+    "prepublish": "cross-env NODE_ENV=production npm run build"
+  }
+}

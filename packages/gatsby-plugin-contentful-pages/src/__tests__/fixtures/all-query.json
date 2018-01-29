@@ -1,0 +1,124 @@
+{
+  "data": {
+    "allContentfulProduct": {
+      "edges": [
+        {
+          "node": {
+            "id": "c5KsDBWseXY6QegucYAoacS___de",
+            "slug": "playsam-streamliner-classic-car-espresso",
+            "tags": [
+              "wood",
+              "toy",
+              "car",
+              "sweden",
+              "design"
+            ],
+            "price": 44,
+            "quantity": 56
+          }
+        },
+        {
+          "node": {
+            "id": "c3DVqIYj4dOwwcKu6sgqOgg___de",
+            "slug": "hudson-wall-cup",
+            "tags": [
+              "vase",
+              "flowers",
+              "accessories"
+            ],
+            "price": 11,
+            "quantity": 101
+          }
+        },
+        {
+          "node": {
+            "id": "c6dbjWqNd9SqccegcqYq224___de",
+            "slug": "whisk-beater",
+            "tags": [
+              "kitchen",
+              "accessories",
+              "whisk",
+              "scandinavia",
+              "design"
+            ],
+            "price": 22,
+            "quantity": 89
+          }
+        },
+        {
+          "node": {
+            "id": "c4BqrajvA8E6qwgkieoqmqO___de",
+            "slug": "soso-wall-clock",
+            "tags": [
+              "home décor",
+              "clocks",
+              "interior design",
+              "yellow",
+              "gifts"
+            ],
+            "price": 120,
+            "quantity": 3
+          }
+        },
+        {
+          "node": {
+            "id": "c5KsDBWseXY6QegucYAoacS",
+            "slug": "playsam-streamliner-classic-car-espresso",
+            "tags": [
+              "wood",
+              "toy",
+              "car",
+              "sweden",
+              "design"
+            ],
+            "price": 44,
+            "quantity": 56
+          }
+        },
+        {
+          "node": {
+            "id": "c3DVqIYj4dOwwcKu6sgqOgg",
+            "slug": "hudson-wall-cup",
+            "tags": [
+              "vase",
+              "flowers",
+              "accessories"
+            ],
+            "price": 11,
+            "quantity": 101
+          }
+        },
+        {
+          "node": {
+            "id": "c6dbjWqNd9SqccegcqYq224",
+            "slug": "whisk-beater",
+            "tags": [
+              "kitchen",
+              "accessories",
+              "whisk",
+              "scandinavia",
+              "design"
+            ],
+            "price": 22,
+            "quantity": 89
+          }
+        },
+        {
+          "node": {
+            "id": "c4BqrajvA8E6qwgkieoqmqO",
+            "slug": "soso-wall-clock",
+            "tags": [
+              "home décor",
+              "clocks",
+              "interior design",
+              "yellow",
+              "gifts"
+            ],
+            "price": 120,
+            "quantity": 3
+          }
+        }
+      ]
+    }
+  }
+}
