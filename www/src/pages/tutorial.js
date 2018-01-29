@@ -45,10 +45,6 @@ export default () => (
         pages and how to write GraphQL queries. In this part of the tutorial
         we'll build a bare-bones markdown blog.
       </li>
-      <li>
-        Finishing and deploying a website. React Helmet. We walk through how to
-        put the finishing touches on a website project.
-      </li>
     </ol>
   </Container>
 )
