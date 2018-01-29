@@ -122,7 +122,6 @@ class ComponentRenderer extends React.Component {
   }
 
   render() {
-    console.log("222")
     const pluginResponses = apiRunner(`replaceComponentRenderer`, {
       props: { ...this.props, pageResources: this.state.pageResources },
       loader: publicLoader,
