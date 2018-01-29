@@ -1,10 +1,14 @@
 import { HEADER_COMMENT } from "./constants"
 import { appendFile, exists, readFile, writeFile } from "fs-extra"
 
-export default async function writeRedirectsFile(pluginData, redirects) {
+export default async function writeRedirectsFile(
+  pluginData,
+  redirects,
+  rewrites
+) {
   const { publicFolder } = pluginData
 
-  if (!redirects.length) return null
+  if (!redirects.length && !rewrites.length) return null
 
   const FILE_PATH = publicFolder(`_redirects`)
 
@@ -43,6 +47,8 @@ export default async function writeRedirectsFile(pluginData, redirects) {
     return pieces.join(`  `)
   })
 
+  rewrites = rewrites.map(({ fromPath, toPath }) => `${fromPath}  ${toPath}  200`)
+
   let appendToFile = false
 
   // Websites may also have statically defined redirects
@@ -56,7 +62,7 @@ export default async function writeRedirectsFile(pluginData, redirects) {
     }
   }
 
-  const data = `${HEADER_COMMENT}\n\n${redirects.join(`\n`)}`
+  const data = `${HEADER_COMMENT}\n\n${[...redirects, ...rewrites].join(`\n`)}`
 
   return appendToFile
     ? appendFile(FILE_PATH, `\n\n${data}`)

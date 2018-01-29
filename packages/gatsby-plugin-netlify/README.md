@@ -42,6 +42,7 @@ plugins: [
       mergeLinkHeaders: true, // boolean to turn off the default gatsby js headers
       mergeCachingHeaders: true, // boolean to turn off the default caching headers
       transformHeaders: (headers, path) => headers, // optional transform for manipulating headers under each path (e.g.sorting), etc.
+      generateMatchPathRewrites: true, // boolean to turn off automatic creation of redirect rules for client only paths
     },
   },
 ];
@@ -127,3 +128,5 @@ You can also create a `_redirects` file in the `static` folder for the same affe
 
 You can validate the `_redirects` config through the
 [Netlify playground app](https://play.netlify.com/redirects).
+
+Redirect rules are automatically added for [client only paths](/docs/building-apps-with-gatsby/#client-only-routes). If those rules are conflicting with custom rules or if you want to have more control over them you can disable them in [configuration](#configuration) by setting `generateMatchPathRewrites` to `false`.
