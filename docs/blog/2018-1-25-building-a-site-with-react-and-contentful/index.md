@@ -4,19 +4,19 @@ date: "2018-01-25"
 author: "Shannon Soper"
 ---
 
-A poster of _Starry Night_ by Vincent Van Gogh followed me to each new dorm room in college because I bought it the first year and kept it until it ripped beyond repair. 
+A poster of _Starry Night_ by Vincent Van Gogh followed me to each new dorm room in college because I bought it the first year and kept it until it ripped beyond repair.
 
-My sister (a professional artist) and I often debate the merits and demerits of reprinting great works of art, like Van Gogh’s masterpiece. 
+My sister (a professional artist) and I often debate the merits and demerits of reprinting great works of art, like Van Gogh’s masterpiece.
 
 As much as I revere the original, I also love the fact that printing technology makes it easy to put _Starry Night_ on tote bags, coffee mugs, posters, t-shirts, and more because it became more accessible to a wide range of people (without advanced printers and computers, the original painting could only be shared with more people through painstaking replication via the original medium: oil painting on a canvas).
 
 ![Starry Night painting by Vincent Van Gogh](starry-night.jpeg)
 
-For the same reason, I’m also loving building a website with React and Contentful; together they allow things like images and text to easily appear in various formats across multiple platforms. 
+For the same reason, I’m also loving building a website with React and Contentful; together they allow things like images and text to easily appear in various formats across multiple platforms.
 
 It’s much faster and easier to resize and reuse the content you already have when you don’t have to painstakingly re-create for mobile, for web, etc. You basically just print it, again, and again, and again, in small and large and medium formats, in websites, mobile apps, multiple languages. Just...push a button on a printer to make copies. Easy, right?
 
-Well, easy if you already know React, at least. I wanted to make little site about my dog, Watson, yet didn’t know how to code. 
+Well, easy if you already know React, at least. I wanted to make little site about my dog, Watson, yet didn’t know how to code.
 
 Sometimes a friend or family member babysits him, and it is time-consuming to either write instructions or update and print new guides for babysitters since he learns new commands every day. A website seemed like a better way to manage this.
 
@@ -30,7 +30,7 @@ React is a JavaScript library for building user interfaces. React helps develope
 
 ## What is Contentful? Why choose it?
 
-Contentful is a headless Content Management System (CMS) that lets you organize your content into what could be called “modules,” or little bits of data that can be rearranged to appear nicely on mobile devices, tablets, computers, virtual reality devices (this is my own joke, but...maybe someday?) and more. 
+Contentful is a headless Content Management System (CMS) that lets you organize your content into what could be called “modules,” or little bits of data that can be rearranged to appear nicely on mobile devices, tablets, computers, virtual reality devices (this is my own joke, but...maybe someday?) and more.
 
 Actually, the way Contentful handles bits of content means that you can push content out when new technology develops without having to redesign and rewrite and rethink all of it for a new format.
 
@@ -80,7 +80,7 @@ module.exports = {
 
 ## Creating pages and GraphQL queries
 
-Once Contentful and Gatsby were getting along well together, I created pages and added a few other style-oriented plugins (Glamor and Typography) when I realized I wanted those. Then, I used GraphiQL to create queries that could pull my Contentful content into my site. 
+Once Contentful and Gatsby were getting along well together, I created pages and added a few other style-oriented plugins (Glamor and Typography) when I realized I wanted those. Then, I used GraphiQL to create queries that could pull my Contentful content into my site.
 
 After creating queries for each type of content I wanted (daily schedule, list of tricks & commands Watson knows, and a photo gallery), I saved each query in its corresponding page to see if anything broke. There were a few instances in which GraphiQL hadn’t let me know I had errors in the little ways I tried to sort data.
 
@@ -99,13 +99,13 @@ Here’s an instance of a GraphiQL query that worked in there but not in the act
 }
 ```
 
-Once I got my GraphQL queries working, I called a couple friends for help rendering the data to each page on my site. They called this “printing,” a word that I enjoyed because it reminded me of the Vincent Van Gogh poster I had. 
+Once I got my GraphQL queries working, I called a couple friends for help rendering the data to each page on my site. They called this “printing,” a word that I enjoyed because it reminded me of the Vincent Van Gogh poster I had.
 
 Basically, I had to create an object that could be referenced later, get stuff to appear in console so I could troubleshoot problems, and then just use the GraphQL query structure to drill down into the actual content I wanted to render on each page. Then I wrapped this all in some _light_ HTML formatting. Here's what it looks like on my site:
 
 ![What the finished daily schedule looks like on my site](daily-schedule-finished.png)
 
-Here are more examples of pages I created. The code from the photo gallery page shows that I import React at the top, then I tell it to export data from Contentful by using the hierarchy in the GraphQL query. 
+Here are more examples of pages I created. The code from the photo gallery page shows that I import React at the top, then I tell it to export data from Contentful by using the hierarchy in the GraphQL query.
 
 In the middle, the code shows how I’m using JS to also pull bits of data in to be rendered using the structure of the GraphQL query:
 
@@ -157,7 +157,7 @@ query PhotoQuery {
         }`;
 ```
 
-A more complex page included the list of Tricks & Commands, because not all entries on Contentful included the same content. 
+A more complex page included the list of Tricks & Commands, because not all entries on Contentful included the same content.
 
 Some had photos, and some did not. Because of this, my friends helped me figure out a way to use JS to make sure we only requested a photo to be printed IF there really was a photo. For any entries without a photo, the computer could forgive it (just this once).
 
@@ -228,7 +228,7 @@ It was awesome to get this all working because it’s clear how fast it would be
 
 This workflow would be exponentially beneficial to bigger teams of editors and developers since it reduces the amount of legwork necessary to implement content changes. Does this mean that using React + Contentful means you’re working yourself out of a job? Not likely; it probably just means you’ll get to focus on improving old stuff and building new stuff instead of maintaining (yawn and ouch) old stuff.
 
-My next step is to learn React better so I can do some fancy designs. I’d also like to see Contentful clarify their API docs and to see GraphiQL quit lying to me about how to sort things. 
+My next step is to learn React better so I can do some fancy designs. I’d also like to see Contentful clarify their API docs and to see GraphiQL quit lying to me about how to sort things.
 
 Also, I’m still trying to figure out why sometimes field names aren’t updating in GraphiQL when they are changed in Contentful (restarting the dev server didn’t fix that).
 
