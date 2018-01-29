@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import loader, { publicLoader } from "./loader"
 import emitter from "./emitter"
 import { apiRunner } from "./api-runner-browser"
+import shallowCompare from "shallow-compare"
 
 const DefaultLayout = ({ children }) => <div>{children()}</div>
 
@@ -90,21 +91,21 @@ class ComponentRenderer extends React.Component {
     if (!nextState.pageResources) {
       return true
     }
-
     // Check if the component or json have changed.
     if (!this.state.pageResources && nextState.pageResources) {
       return true
     }
-
     if (
       this.state.pageResources.component !== nextState.pageResources.component
     ) {
       return true
     }
 
+
     if (this.state.pageResources.json !== nextState.pageResources.json) {
       return true
     }
+
 
     // Check if location has changed on a page using internal routing
     // via matchPath configuration.
@@ -117,7 +118,7 @@ class ComponentRenderer extends React.Component {
       return true
     }
 
-    return false
+    return shallowCompare(this, nextProps, nextState)
   }
 
   render() {
