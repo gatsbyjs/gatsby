@@ -45,7 +45,7 @@ const writePages = async () => {
       let layout = getLayoutById(layouts)(p.layout)
 
       if (!layout) {
-        throw new Error(`Could not find layout '${p.layout}'. Check if such file exists in 'src/layouts'.`)
+        throw new Error(`Could not find layout '${p.layout}'. Check if this file exists in 'src/layouts'.`)
       }
 
       pageLayouts.push(layout)
