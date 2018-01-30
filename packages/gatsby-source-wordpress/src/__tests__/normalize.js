@@ -25,7 +25,7 @@ describe(`Process WordPress data`, () => {
   it(`creates Gatsby IDs for each entity`, () => {
     const createNodeId = jest.fn()
     createNodeId.mockReturnValue(`uuid-from-gatsby`)
-    entities = normalize.createGatsbyIds(entities, {createNodeId})
+    entities = normalize.createGatsbyIds(entities, { createNodeId })
     expect(entities).toMatchSnapshot()
   })
   it(`Creates map of types`, () => {
