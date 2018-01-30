@@ -110,7 +110,10 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
       history.listen((location, action) => {
         if (!maybeRedirect(location.pathname)) {
-          apiRunner(`onRouteUpdate`, { location, action })
+          // Make sure React has had a chance to flush to DOM first.
+          setTimeout(() => {
+            apiRunner(`onRouteUpdate`, { location, action })
+          }, 0)
         }
       })
     }
