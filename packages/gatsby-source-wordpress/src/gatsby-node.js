@@ -1,6 +1,7 @@
 const fetch = require(`./fetch`)
 const normalize = require(`./normalize`)
 const Normalizer = require(`./normalizer`)
+const _ = require(`lodash`)
 
 const typePrefix = `wordpress__`
 const refactoredEntityTypes = {
@@ -77,13 +78,19 @@ exports.sourceNodes = async (
     .set(normalize.searchReplaceContentUrls, 130)
 
   for (let i = 0; i < plugins.length; i++) {
-      const requiredPlugin = require(plugins[i].resolve)
-      normalizer = requiredPlugin.normalize(normalizer)
+    var requiredPlugin = require(plugins[i].resolve)
+
+    if (_.isFunction(requiredPlugin.normalize)) {
+      var pluginNormalizer = requiredPlugin.normalize(normalizer)
+      if (pluginNormalizer instanceof Normalizer) {
+        normalizer = pluginNormalizer
+      }
+    }
+
   }
 
   entities = await normalizer.normalize()
 
-  // creates nodes for each entry
   normalize.createNodesFromEntities({ entities, createNode })
 
   return

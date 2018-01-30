@@ -1,15 +1,32 @@
+const _ = require(`lodash`)
 
 class Normalizer {
 
+    /**
+     * Normalizer Constructor
+     * 
+     * @param  {Array} entitys
+     * @param  {Object} args
+     * @return {Object} this
+     */
     constructor(entitys, args) {
         this.entitys = entitys
         this.args = args
         this.normalizers = []
+        this.queue = []
     }
 
+    /**
+     * Set Normalizers
+     * 
+     * @param {Function} normalizer
+     * @param {null|Number} priority
+     * @return {Object}
+     */
     set(normalizer, priority = null) {
-        // if the priority is null push last
-        this.normalizers.push({
+        let property = priority === null ? `queue` : `normalizers`
+
+        this[property].push({
             normalizer,
             priority,
         })
@@ -17,20 +34,30 @@ class Normalizer {
         return this
     }
 
+    /**
+     * Normalize the entities
+     * 
+     * @return {Array}
+     */
     async normalize() {
-        let ordered = this.normalizers.sort((a, b) => a.priority - b.priority)
-
-        for (let i = 0; i < ordered.length; i++) {
-            var normalizedEntities = await ordered[i].normalizer(this.entitys, this.args)
-
-            if (typeof normalizedEntities !== `object`) {
-                continue
-            }
-
-            this.entitys = normalizedEntities
+        var normalizers = this.getNormalizers()
+        for (let i = 0; i < normalizers.length; i++) {
+            this.entitys = await normalizers[i].normalizer(this.entitys, this.args)
         }
 
         return this.entitys
+    }
+
+    /**
+     * Concat the queue and prioritised normalizers
+     * 
+     * @return {Array}
+     */
+    getNormalizers() {
+        return _.concat(
+            this.normalizers.sort((a, b) => a.priority - b.priority),
+            this.queue
+        )
     }
 
 }
