@@ -250,7 +250,10 @@ class SearchForm extends Component {
 
   focusSearchInput(e) {
     if (e.key !== `s`) return
-    if (document.activeElement === this.searchInput) return // eslint-disable-line no-undef
+
+    // ignore this shortcut whenever an <input> has focus
+    if (document.activeElement instanceof window.HTMLInputElement) return // eslint-disable-line no-undef
+
     e.preventDefault()
     this.searchInput.focus()
   }
