@@ -12,13 +12,13 @@ As much as I revere the original, I also love the fact that printing technology 
 
 ![Starry Night painting by Vincent Van Gogh](starry-night.jpeg)
 
-For the same reason, I’m also loving building a website with React and Contentful; together they allow things like images and text to easily appear in various formats across multiple platforms.
+For the same reason, building a website with React and Contentful has been great; together, they allow things like images and text to easily appear in various formats across multiple platforms.
 
 It’s much faster and easier to resize and reuse the content you already have when you don’t have to painstakingly re-create for mobile, for web, etc. You basically just print it, again, and again, and again, in small and large and medium formats, in websites, mobile apps, multiple languages. Just...push a button on a printer to make copies. Easy, right?
 
 Well, easy if you already know React, at least. I wanted to make little site about my dog, Watson, yet didn’t know how to code.
 
-Sometimes a friend or family member babysits him, and it is time-consuming to either write instructions or update and print new guides for babysitters since he learns new commands every day. A website seemed like a better way to manage this.
+Sometimes a friend or family member babysits him, and it's time-consuming to either write instructions or update and print new guides for babysitters since he learns new commands every day. A website seemed like a better way to manage this.
 
 Here’s the site I built for my dog's babysitters after learning the basics of Contentful and React: http://watson.surge.sh/. Following are instructions on how you can also build a site with Contentful and React with tips I learned while building my site.
 
@@ -32,11 +32,11 @@ React is a JavaScript library for building user interfaces. React helps develope
 
 Contentful is a headless Content Management System (CMS) that lets you organize your content into what could be called “modules,” or little bits of data that can be rearranged to appear nicely on mobile devices, tablets, computers, virtual reality devices (this is my own joke, but...maybe someday?) and more.
 
-Actually, the way Contentful handles bits of content means that you can push content out when new technology develops without having to redesign and rewrite and rethink all of it for a new format.
+Actually, the way Contentful handles bits of content means that you can push content out when new technology develops without having to redesign, rewrite, or rethink all of it for a new format.
 
 ## Pulling data in and pushing data out
 
-If I’d had a JSON file with content in it, I could pull it into Contentful using [contentful-import](https://github.com/contentful/contentful-import), which I found out by chatting with a nice person in the Contentful chat window. Since I was creating new content, I didn’t need this and just created content straight in Contentful. For the first minute or so, I couldn’t figure out what a “content model” could or should look like. Luckily, the free trial offers a sample project that I opened and after looking around it for a couple minutes, I was good to go.
+If you have a JSON file with content in it, you could pull it into Contentful using [contentful-import](https://github.com/contentful/contentful-import), which I found out by chatting with a nice person in the Contentful chat window. Since I was creating new content, I didn’t need this and just created content straight in Contentful. For the first minute or so, I couldn’t figure out what a “content model” could or should look like. Luckily, the free trial offers a sample project that I opened and after looking around it for a couple minutes, I was good to go.
 
 ![Creating a content type](creating-content-type.png)
 
@@ -99,15 +99,14 @@ Here’s an instance of a GraphiQL query that worked in there but not in the act
 }
 ```
 
+## Making data look nice on the site
 Once I got my GraphQL queries working, I called a couple friends for help rendering the data to each page on my site. They called this “printing,” a word that I enjoyed because it reminded me of the Vincent Van Gogh poster I had.
 
-Basically, I had to create an object that could be referenced later, get stuff to appear in console so I could troubleshoot problems, and then just use the GraphQL query structure to drill down into the actual content I wanted to render on each page. Then I wrapped this all in some _light_ HTML formatting. Here's what it looks like on my site:
+Here is one of the first pages I rendered into a table format:
 
 ![What the finished daily schedule looks like on my site](daily-schedule-finished.png)
 
-Here are more examples of pages I created. The code from the photo gallery page shows that I import React at the top, then I tell it to export data from Contentful by using the hierarchy in the GraphQL query.
-
-In the middle, the code shows how I’m using JS to also pull bits of data in to be rendered using the structure of the GraphQL query:
+Here are more examples of pages I created. This is the photo gallery page:
 
 ```jsx
 import React from "react";
@@ -157,9 +156,11 @@ query PhotoQuery {
         }`;
 ```
 
-A more complex page included the list of Tricks & Commands, because not all entries on Contentful included the same content.
+## More complex pages
 
-Some had photos, and some did not. Because of this, my friends helped me figure out a way to use JS to make sure we only requested a photo to be printed IF there really was a photo. For any entries without a photo, the computer could forgive it (just this once).
+The list of Tricks & Commands presented a complex challenge because not all entries on Contentful included the same content. For example, we got errors if we tried to query for a photo since some entires had photos and some did not. 
+
+Because each entry was inconsistent, my friends helped me figure out a way to use JS to make sure we only requested a photo to be printed IF the photo existed. And if a particular entry didn't have a photo, the computer could forgive it (just this once). Here is the code from that page:
 
 ```jsx
 import React from "react";
