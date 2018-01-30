@@ -2,7 +2,6 @@ import React from "react"
 import Helmet from "react-helmet"
 import distanceInWords from 'date-fns/distance_in_words'
 
-import MarkdownPageFooter from "../components/markdown-page-footer"
 import { rhythm, scale } from "../utils/typography"
 import presets from "../utils/presets"
 import Container from "../components/container"
@@ -84,7 +83,6 @@ class DocsPackagesTemplate extends React.Component {
             __html: html,
           }}
         />
-        {/* <MarkdownPageFooter page={page} /> */}
       </Container>
     )
   }

@@ -27,6 +27,10 @@ exports.sourceNodes = async ({ boundActionCreators }, {keywords}) => {
     hitsPerPage: 1000,
   })
 
+  // Currently the gatsby-transformer-remark plugin
+  // has a hard time with markdown that includes
+  // images -> for now this filters out those packages
+
   data.hits.forEach(hit => {
     if (hit.readme.includes("![")){
       return
@@ -51,14 +55,11 @@ exports.sourceNodes = async ({ boundActionCreators }, {keywords}) => {
     delete hit._highlightResult
     delete hit.versions
 
-    const modified = new Date(hit.modified)
-    const created = new Date(hit.created)
-    hit.modified = modified
-    hit.created = created
-
     const node = {
       ...hit,
       deprecated: `${hit.deprecated}`,
+      created: new Date(hit.created),
+      modified: new Date(hit.modified),
       id: parentId,
       parent: null,
       children: [],
