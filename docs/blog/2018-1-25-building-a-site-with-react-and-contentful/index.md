@@ -4,15 +4,15 @@ date: "2018-01-25"
 author: "Shannon Soper"
 ---
 
-A poster of _Starry Night_ by Vincent Van Gogh followed me to each new dorm room in college because I bought it the first year and kept it until it ripped beyond repair.
+A poster of _Starry Night_ by Vincent Van Gogh followed me to each new dorm room in college until it ripped beyond repair. I love that painting.
 
-My sister (a professional artist) and I often debate the merits and demerits of reprinting great works of art, like Van Gogh’s masterpiece.
+My poster of _Starry Night_ often led to debates with my sister (a professional artist) about the merits and demerits of reprinting great works of art.
 
-As much as I revere the original, I also love the fact that printing technology makes it easy to put _Starry Night_ on tote bags, coffee mugs, posters, t-shirts, and more because it became more accessible to a wide range of people (without advanced printers and computers, the original painting could only be shared with more people through painstaking replication via the original medium: oil painting on a canvas).
+As much as I revere the original, I also love that printing technology can put _Starry Night_ on tote bags, coffee mugs, posters, t-shirts, and more. Technology has made great art accessible to a wide range of people (without advanced printers and computers, original paintings can only be shared with people through painstaking replication via the original medium: oil painting on a canvas).
 
 ![Starry Night painting by Vincent Van Gogh](starry-night.jpeg)
 
-For the same reason, building a website with React and Contentful has been great; together, they allow things like images and text to easily appear in various formats across multiple platforms.
+For the same reason that I love seeing _Starry Night_ on a poster, I loved building a website with React and Contentful; together, they allow images and text to easily appear in various formats across multiple platforms.
 
 It’s much faster and easier to resize and reuse the content you already have when you don’t have to painstakingly re-create for mobile, for web, etc. You basically just print it, again, and again, and again, in small and large and medium formats, in websites, mobile apps, multiple languages. Just...push a button on a printer to make copies. Easy, right?
 
