@@ -30,7 +30,6 @@
     "jest": "^20.0.4",
     "jest-cli": "^20.0.4",
     "lerna": "^2.1.1",
-    "npm-run-all": "^4.1.2",
     "plop": "^1.8.1",
     "prettier": "^1.9.2",
     "prettier-eslint-cli": "4.2.x",
@@ -42,7 +41,7 @@
   },
   "private": true,
   "scripts": {
-    "bootstrap": "npm-run-all -s install check-versions prepublish",
+    "bootstrap": "npm-run-all -s install-local check-versions lerna-prepublish",
     "check-versions": "babel-node scripts/check-versions.js",
     "format": "npm-run-all -p format-packages format-cache-dir format-www format-examples format-scripts format-markdown",
     "format-cache-dir": "prettier-eslint --write \"packages/gatsby/cache-dir/*.js\"",
@@ -51,9 +50,10 @@
     "format-scripts": "prettier-eslint --write \"scripts/**/*.js\"",
     "format-markdown": "prettier --write \"**/*.md\" --semi",
     "format-www": "prettier-eslint --write \"www/*.js\" \"www/src/**/*.js\"",
-    "install": "yarn",
+    "install-local": "yarn",
     "jest": "jest",
     "lerna": "lerna",
+    "lerna-prepublish": "lerna run prepublish",
     "lint": "eslint --ext .js,.jsx packages/**/src",
     "lint:flow": "babel-node scripts/flow-check.js",
     "plop": "plop",
@@ -73,5 +73,8 @@
   "eslintIgnore": [
     "interfaces",
     "**/__tests__/fixtures/"
-  ]
+  ],
+  "dependencies": {
+    "npm-run-all": "4.1.2"
+  }
 }
