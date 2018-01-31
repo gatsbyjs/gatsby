@@ -4,7 +4,7 @@ date: "2018-01-25"
 author: "Shannon Soper"
 ---
 
-A poster of _Starry Night_ by Vincent Van Gogh followed me to each new dorm room in college until it ripped beyond repair. I love that painting.
+A poster of _Starry Night_ by Vincent Van Gogh followed me to each new dorm room in college until it ripped beyond repair. I loved that poster.
 
 My poster of _Starry Night_ often led to debates with my sister (a professional artist) about the merits and demerits of reprinting great works of art.
 
