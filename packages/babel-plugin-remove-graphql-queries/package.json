@@ -11,7 +11,8 @@
     "graphql": "^0.11.7"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0"
+    "@babel/cli": "^7.0.0-beta.38",
+    "@babel/core": "^7.0.0-beta.38"
   },
   "author": "Jason Quense <monastic.panic@gmail.com>",
   "license": "MIT"

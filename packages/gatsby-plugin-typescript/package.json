@@ -7,13 +7,13 @@
     "Noah Lange <noahrlange@gmail.com>"
   ],
   "dependencies": {
-    "babel-plugin-remove-graphql-queries": "^2.0.0-alpha.f20ac0ed",
-    "babel-runtime": "^6.26.0",
+    "@babel/runtime": "^7.0.0-beta.38",
     "ts-loader": "^2.0.3",
     "typescript": "^2.2.1"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
+    "@babel/cli": "^7.0.0-beta.38",
+    "@babel/core": "^7.0.0-beta.38",
     "cross-env": "^5.0.5"
   },
   "peerDependencies": {
