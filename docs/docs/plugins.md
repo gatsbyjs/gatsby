@@ -176,6 +176,7 @@ root.
 * [gatsby-plugin-protoculture](https://github.com/atrauzzi/gatsby-plugin-protoculture)
 * [gatsby-plugin-purify-css](https://github.com/rongierlach/gatsby-plugin-purify-css)
 * [gatsby-plugin-segment-js](https://github.com/benjaminhoffman/gatsby-plugin-segment-js)
+* [gatsby-plugin-sentry](https://github.com/octalmage/gatsby-plugin-sentry)
 * [gatsby-plugin-stripe-checkout](https://github.com/njosefbeck/gatsby-plugin-stripe-checkout)
 * [gatsby-plugin-stripe-elements](https://github.com/njosefbeck/gatsby-plugin-stripe-elements)
 * [gatsby-plugin-svg-sprite](https://github.com/marcobiedermann/gatsby-plugin-svg-sprite)
