@@ -3,7 +3,7 @@ const _ = require(`lodash`)
 const crypto = require(`crypto`)
 const path = require(`path`)
 
-async function onCreateNode({ node, actions, loadNodeContent }) {
+async function onCreateNode({ node, actions, loadNodeContent, createNodeId }) {
   function transformObject(obj, id, type) {
     const objStr = JSON.stringify(obj)
     const contentDigest = crypto
@@ -12,7 +12,7 @@ async function onCreateNode({ node, actions, loadNodeContent }) {
       .digest(`hex`)
     const yamlNode = {
       ...obj,
-      id,
+      id: createNodeId(id),
       children: [],
       parent: node.id,
       internal: {

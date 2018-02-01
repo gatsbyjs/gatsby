@@ -90,11 +90,14 @@ Where oh where is my little pony?
     }
     const createParentChildLink = jest.fn()
     const actions = { createNode, createParentChildLink }
+    const createNodeId = jest.fn()
+    createNodeId.mockReturnValue(`uuid-from-gatsby`)
 
     await onCreateNode({
       node,
       loadNodeContent,
       actions,
+      createNodeId,
     })
   })
 })

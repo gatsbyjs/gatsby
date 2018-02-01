@@ -13,10 +13,13 @@ describe(`Process image nodes correctly`, () => {
     const createNode = jest.fn()
     const createParentChildLink = jest.fn()
     const actions = { createNode, createParentChildLink }
+    const createNodeId = jest.fn()
+    createNodeId.mockReturnValue(`uuid-from-gatsby`)
 
     await onCreateNode({
       node,
       actions,
+      createNodeId,
     }).then(() => {
       expect(createNode.mock.calls).toMatchSnapshot()
       expect(createParentChildLink.mock.calls).toMatchSnapshot()

@@ -149,10 +149,10 @@ exports.buildForeignReferenceMap = ({
   return foreignReferenceMap
 }
 
-function createTextNode(node, key, text, createNode) {
+function createTextNode(node, key, text, createNode, createNodeId) {
   const str = _.isString(text) ? text : ` `
   const textNode = {
-    id: `${node.id}${key}TextNode`,
+    id: createNodeId(`${node.id}${key}TextNode`),
     parent: node.id,
     children: [],
     [key]: str,
@@ -171,11 +171,11 @@ function createTextNode(node, key, text, createNode) {
 }
 exports.createTextNode = createTextNode
 
-function createJSONNode(node, key, content, createNode) {
+function createJSONNode(node, key, content, createNode, createNodeId) {
   const str = JSON.stringify(content)
   const JSONNode = {
     ...content,
-    id: `${node.id}${key}JSONNode`,
+    id: createNodeId(`${node.id}${key}JSONNode`),
     parent: node.id,
     children: [],
     internal: {
@@ -199,6 +199,7 @@ exports.createContentTypeNodes = ({
   conflictFieldPrefix,
   entries,
   createNode,
+  createNodeId,
   resolvable,
   foreignReferenceMap,
   defaultLocale,
@@ -286,7 +287,7 @@ exports.createContentTypeNodes = ({
       }
 
       let entryNode = {
-        id: mId(entryItem.sys.id),
+        id: createNodeId(mId(entryItem.sys.id)),
         contentful_id: entryItem.sys.contentful_id,
         createdAt: entryItem.sys.createdAt,
         updatedAt: entryItem.sys.updatedAt,
@@ -328,7 +329,8 @@ exports.createContentTypeNodes = ({
             entryNode,
             entryItemFieldKey,
             entryItemFields[entryItemFieldKey],
-            createNode
+            createNode,
+            createNodeId,
           )
 
           delete entryItemFields[entryItemFieldKey]
@@ -337,7 +339,8 @@ exports.createContentTypeNodes = ({
             entryNode,
             entryItemFieldKey,
             entryItemFields[entryItemFieldKey],
-            createNode
+            createNode,
+            createNodeId,
           )
 
           delete entryItemFields[entryItemFieldKey]
@@ -356,7 +359,7 @@ exports.createContentTypeNodes = ({
 
     // Create a node for each content type
     const contentTypeNode = {
-      id: contentTypeItemId,
+      id: createNodeId(contentTypeItemId),
       parent: null,
       children: [],
       name: contentTypeItem.name,
@@ -382,6 +385,7 @@ exports.createContentTypeNodes = ({
 exports.createAssetNodes = ({
   assetItem,
   createNode,
+  createNodeId,
   defaultLocale,
   locales,
 }) => {
@@ -405,7 +409,7 @@ exports.createAssetNodes = ({
         : ``,
     }
     const assetNode = {
-      id: mId(localizedAsset.sys.id),
+      id: createNodeId(mId(localizedAsset.sys.id)),
       parent: null,
       children: [],
       ...localizedAsset.fields,

@@ -22,11 +22,11 @@ const commentId = (parentId, commentNumber) =>
 const descriptionId = (parentId, name) =>
   `${parentId}--DocumentationJSComponentDescription--${name}`
 
-function createDescriptionNode(node, docNodeId, markdownStr, name, actions) {
+function createDescriptionNode(node, docNodeId, markdownStr, name, actions, createNodeId) {
   const { createNode } = actions
 
   const descriptionNode = {
-    id: descriptionId(docNodeId, name),
+    id: createNodeId(descriptionId(docNodeId, name)),
     parent: node.id,
     children: [],
     internal: {
@@ -47,7 +47,7 @@ function createDescriptionNode(node, docNodeId, markdownStr, name, actions) {
  * Implement the onCreateNode API to create documentation.js nodes
  * @param {Object} super this is a super param
  */
-exports.onCreateNode = async ({ node, loadNodeContent, actions }) => {
+exports.onCreateNode = async ({ node, loadNodeContent, actions, createNodeId }) => {
   const { createNode, createParentChildLink } = actions
 
   if (
@@ -83,7 +83,8 @@ exports.onCreateNode = async ({ node, loadNodeContent, actions }) => {
           commentId(node.id, i),
           stringifyMarkdownAST(docsJson.description),
           `comment.description`,
-          actions
+          actions,
+          createNodeId
         )
       }
 
@@ -94,7 +95,8 @@ exports.onCreateNode = async ({ node, loadNodeContent, actions }) => {
             commentId(node.id, i),
             stringifyMarkdownAST(param.description),
             param.name,
-            actions
+            actions,
+            createNodeId
           )
           delete param.description
         }
@@ -128,7 +130,8 @@ exports.onCreateNode = async ({ node, loadNodeContent, actions }) => {
               commentId(node.id, i),
               stringifyMarkdownAST(ret.description),
               ret.title,
-              actions
+              actions,
+              createNodeId
             )
           }
 
@@ -153,7 +156,7 @@ exports.onCreateNode = async ({ node, loadNodeContent, actions }) => {
       const docNode = {
         ...picked,
         commentNumber: i,
-        id: commentId(node.id, i),
+        id: createNodeId(commentId(node.id, i)),
         parent: node.id,
         children: [],
         internal: {

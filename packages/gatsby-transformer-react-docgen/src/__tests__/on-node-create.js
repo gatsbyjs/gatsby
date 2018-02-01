@@ -14,12 +14,15 @@ const readFile = file =>
 
 describe(`transformer-react-doc-gen: onCreateNode`, () => {
   let loadNodeContent, actions, node, createdNodes, updatedNodes
+  const createNodeId = jest.fn()
+  createNodeId.mockReturnValue(`uuid-from-gatsby`)
   let run = (node, opts = {}) =>
     onCreateNode(
       {
         node,
         loadNodeContent,
         actions,
+        createNodeId,
       },
       opts
     )

@@ -13,7 +13,7 @@ const createContentDigest = obj =>
 
 exports.sourceNodes = async (
   { actions, getNode, hasNodeChanged, store, cache },
-  { baseUrl, apiBase }
+  { baseUrl, apiBase, createNodeId }
 ) => {
   const { createNode } = actions
 
@@ -103,7 +103,7 @@ exports.sourceNodes = async (
 
     _.each(contentType.data, datum => {
       const node = {
-        id: datum.id,
+        id: createNodeId(datum.id),
         parent: null,
         children: [],
         ...datum.attributes,

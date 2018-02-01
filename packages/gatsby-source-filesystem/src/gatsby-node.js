@@ -4,7 +4,7 @@ const fs = require(`fs`)
 const { createId, createFileNode } = require(`./create-file-node`)
 
 exports.sourceNodes = (
-  { actions, getNode, hasNodeChanged, reporter },
+  { actions, getNode, createNodeId, hasNodeChanged, reporter },
   pluginOptions
 ) => {
   const { createNode, deleteNode } = actions
@@ -36,7 +36,7 @@ Please pick a path to an existing directory.
   })
 
   const createAndProcessNode = path =>
-    createFileNode(path, pluginOptions).then(createNode)
+    createFileNode(path, createNodeId, pluginOptions).then(createNode)
 
   // For every path that is reported before the 'ready' event, we throw them
   // into a queue and then flush the queue when 'ready' event arrives.

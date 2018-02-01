@@ -3,7 +3,7 @@ const crypto = require(`crypto`)
 const _ = require(`lodash`)
 
 module.exports = async function onCreateNode(
-  { node, getNode, loadNodeContent, actions },
+  { node, getNode, loadNodeContent, actions, createNodeId },
   pluginOptions
 ) {
   const { createNode, createParentChildLink } = actions
@@ -36,7 +36,7 @@ module.exports = async function onCreateNode(
     .update(JSON.stringify(data))
     .digest(`hex`)
   const markdownNode = {
-    id: `${node.id} >>> MarkdownRemark`,
+    id: createNodeId(`${node.id} >>> MarkdownRemark`),
     children: [],
     parent: node.id,
     internal: {
