@@ -172,6 +172,7 @@ root.
 * [gatsby-plugin-i18n](https://github.com/angeloocana/gatsby-plugin-i18n)
 * [gatsby-plugin-intercom-spa](https://github.com/toriihq/gatsby-plugin-intercom-spa)
 * [gatsby-plugin-klipse](https://github.com/ahmedelgabri/gatsby-plugin-klipse)
+* [gatsby-plugin-meta-redirect](https://github.com/getchalk/gatsby-plugin-meta-redirect)
 * [gatsby-plugin-mixpanel](https://github.com/thomascarvalho/gatsby-plugin-mixpanel)
 * [gatsby-plugin-protoculture](https://github.com/atrauzzi/gatsby-plugin-protoculture)
 * [gatsby-plugin-purify-css](https://github.com/rongierlach/gatsby-plugin-purify-css)
