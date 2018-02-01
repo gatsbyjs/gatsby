@@ -150,6 +150,7 @@ Websites built with Gatsby:
 * [VisitGemer](https://visitgemer.sk/)
 * [Nexit](https://nexit.sk/)
 * [ERC dEX](https://ercdex.com)
+* [iContract Blog](https://blog.icontract.co.uk)
 
 ## Docs
 
