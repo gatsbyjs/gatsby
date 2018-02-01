@@ -157,7 +157,7 @@ class GatsbyLink extends React.Component {
             // loaded before continuing.
             if (process.env.NODE_ENV === `production`) {
               e.preventDefault()
-              window.___navigateTo(this.state.path)
+              window.___navigateTo(this.state.to)
             }
           }
 
