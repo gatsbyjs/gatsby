@@ -22,7 +22,7 @@ plugins: [
     resolve: `gatsby-plugin-less`,
     options: {
       theme: {
-        'text-color': `#fff`
+        "text-color": `#fff`,
       },
     },
   },
@@ -36,15 +36,16 @@ plugins: [
   {
     resolve: `gatsby-plugin-less`,
     options: {
-      theme: `./src/theme.js`
+      theme: `./src/theme.js`,
     },
   },
 ];
 ```
 
 In file `./src/theme.js`:
+
 ```javascript
 module.exports = {
-  'text-color': `#fff`
-}
+  "text-color": `#fff`,
+};
 ```

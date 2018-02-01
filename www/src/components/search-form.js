@@ -307,7 +307,7 @@ class SearchForm extends Component {
           marginBottom: 0,
         }}
         className="searchWrap"
-        onSubmit={(e) => e.preventDefault()}
+        onSubmit={e => e.preventDefault()}
       >
         <input
           id="doc-search"

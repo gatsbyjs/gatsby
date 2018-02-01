@@ -18,50 +18,47 @@ By using `rehype-react` with the `htmlAst` field, you can write custom React com
 Write the component the way you normally would. For example, here's a simple "Counter" component:
 
 ```js
-import React from "react"
+import React from "react";
 
 const counterStyle = {
   /* styles skipped for brevity */
-}
+};
 
 export default class Counter extends React.Component {
   static defaultProps = {
     initialvalue: 0,
-  }
+  };
 
   state = {
     value: Number(this.props.initialvalue),
-  }
+  };
 
   handleIncrement = () => {
     this.setState(state => {
       return {
         value: state.value + 1,
-      }
-    })
-  }
+      };
+    });
+  };
 
   handleDecrement = () => {
     this.setState(state => {
       return {
         value: state.value - 1,
-      }
-    })
-  }
+      };
+    });
+  };
 
   render() {
     return (
       <span style={counterStyle}>
-        <strong style={{ flex: `1 1` }}>
-          {this.state.value}
-        </strong>
+        <strong style={{ flex: `1 1` }}>{this.state.value}</strong>
         <button onClick={this.handleDecrement}>-1</button>
         <button onClick={this.handleIncrement}>+1</button>
       </span>
-    )
+    );
   }
 }
-
 ```
 
 ## Enabling the component
@@ -70,57 +67,59 @@ In order to display this component within a Markdown file, you'll need to add a 
 
 1. Install `rehype-react` as a dependency
 
-    ```bash
-    # If you use Yarn
-    yarn add rehype-react
+   ```bash
+   # If you use Yarn
+   yarn add rehype-react
 
-    # If you use npm
-    npm install --save rehype-react
-    ```
+   # If you use npm
+   npm install --save rehype-react
+   ```
 
 2. Import `rehype-react` and whichever components you wish to use
 
-    ```js
-    import rehypeReact from "rehype-react"
-    import Counter from "../components/Counter"
-    ```
+   ```js
+   import rehypeReact from "rehype-react";
+   import Counter from "../components/Counter";
+   ```
 
 3. Create a render function with references to your custom components
 
-    ```js
-    const renderAst = new rehypeReact({
-      createElement: React.createElement,
-      components: { "interactive-counter": Counter },
-    }).Compiler
-    ```
+   ```js
+   const renderAst = new rehypeReact({
+     createElement: React.createElement,
+     components: { "interactive-counter": Counter },
+   }).Compiler;
+   ```
 
-    I prefer to use hyphenated names to make it clear that it's a custom component.
+   I prefer to use hyphenated names to make it clear that it's a custom component.
 
 4. Render your content using `htmlAst` instead of `html`
 
-    This will look different depending on how you were previously referring to the post object retrieved from GraphQL, but in general you'll want to replace this:
+   This will look different depending on how you were previously referring to the post object retrieved from GraphQL, but in general you'll want to replace this:
 
-    ```js
-    <div dangerouslySetInnerHTML={{ __html: post.html }} />
-    ```
+   ```js
+   <div dangerouslySetInnerHTML={{ __html: post.html }} />
+   ```
 
-    with this:
+   with this:
 
-    ```js
-    {renderAst(post.htmlAst)}
-    ```
+   ```js
+   {
+     renderAst(post.htmlAst);
+   }
+   ```
 
 5. Change `html` to `htmlAst` in your `pageQuery`
 
-    ```graphql
-    # ...
-    markdownRemark(fields: { slug: { eq: $slug } }) {
-      htmlAst # previously `html`
+   ```graphql
+   # ...
+   markdownRemark(fields: { slug: { eq: $slug } }) {
+     htmlAst # previously `html`
 
-      # other fields...
-    }
-    # ...
-    ```
+     # other fields...
+   }
+   # ...
+   ```
 
 ## Using the component
 
@@ -164,9 +163,9 @@ HTML attribute names are not case-sensitive. `gatsby-transformer-remark` handles
 
 Any prop that gets its value from an attribute will always receive a string value. Your component is responsible for properly deserializing passed values.
 
-- Numbers are always passed as strings, even if the attribute is written without quotes: `<my-component value=37></my-component>` will still receive the string `"37"` as its value instead of the number `37`.
-- React lets you pass a prop without a value, and will interpret it to mean `true`; for example, if you write `<MyComponent isEnabled />` then the props would be `{ isEnabled: true }`. However, in your Markdown, an attribute without a value will not be interpreted as `true`; instead, it will be passed as the empty string `""`. Similarly, passing `somevalue=true` and `othervalue=false` will result in the string values `"true"` and `"false"`, respectively.
-- You can pass object values if you use `JSON.parse()` in your component to get the value out; just remember to enclose the value in single quotes to ensure it is parsed correctly (e.g. `<my-thing objectvalue='{"foo": "bar"}'></my-thing>`).
+* Numbers are always passed as strings, even if the attribute is written without quotes: `<my-component value=37></my-component>` will still receive the string `"37"` as its value instead of the number `37`.
+* React lets you pass a prop without a value, and will interpret it to mean `true`; for example, if you write `<MyComponent isEnabled />` then the props would be `{ isEnabled: true }`. However, in your Markdown, an attribute without a value will not be interpreted as `true`; instead, it will be passed as the empty string `""`. Similarly, passing `somevalue=true` and `othervalue=false` will result in the string values `"true"` and `"false"`, respectively.
+* You can pass object values if you use `JSON.parse()` in your component to get the value out; just remember to enclose the value in single quotes to ensure it is parsed correctly (e.g. `<my-thing objectvalue='{"foo": "bar"}'></my-thing>`).
 
 > Notice in the `Counter` example how the initial `value` has been cast using the `Number()` function.
 
@@ -174,8 +173,8 @@ Any prop that gets its value from an attribute will always receive a string valu
 
 Custom components embedded in Markdown enables many features that weren't possible before; here are some ideas, starting simple and getting complex:
 
-- Write a live countdown clock for an event such as Christmas, the Super Bowl, or someone's birthday. Suggested markup: `<countdown-clock> 2019-01-02T05:00:00.000Z </countdown-clock>`
-- Write a component that displays as a link with an informative hovercard. For example, you might want to write `<hover-card subject="ostrich"> ostriches </hover-card>` to show a link that lets you hover to get information on ostriches.
-- If your Gatsby site is for vacation photos, you might write a component that allows you to show a carousel of pictures, and perhaps a map that shows where each photo was taken.
-- Write a component that lets you add live code demos in your Markdown, using [component-playground](https://formidable.com/open-source/component-playground/) or something similar.
-- Write a component that wraps a [GFM table](./hello-world-kitchen-sink/#tables) and displays the data from the table in an interactive graph.
+* Write a live countdown clock for an event such as Christmas, the Super Bowl, or someone's birthday. Suggested markup: `<countdown-clock> 2019-01-02T05:00:00.000Z </countdown-clock>`
+* Write a component that displays as a link with an informative hovercard. For example, you might want to write `<hover-card subject="ostrich"> ostriches </hover-card>` to show a link that lets you hover to get information on ostriches.
+* If your Gatsby site is for vacation photos, you might write a component that allows you to show a carousel of pictures, and perhaps a map that shows where each photo was taken.
+* Write a component that lets you add live code demos in your Markdown, using [component-playground](https://formidable.com/open-source/component-playground/) or something similar.
+* Write a component that wraps a [GFM table](./hello-world-kitchen-sink/#tables) and displays the data from the table in an interactive graph.

@@ -52,7 +52,6 @@ There are currently some things to keep in mind when building your content model
 
 2. When using reference fields, be aware that this source plugin will automatically create the reverse reference. You do not need to create references on both content types. For simplicity, it is easier to put the reference field on the child in child/parent relationships.
 
-
 ## How to query
 
 Two standard data types will be available from Contentful: `ContentType` and

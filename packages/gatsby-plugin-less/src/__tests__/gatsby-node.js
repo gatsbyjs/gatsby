@@ -22,10 +22,10 @@ describe(`gatsby-plugin-less`, () => {
       loaderKeys: [`less`, `lessModules`],
       loaderConfig: {
         loaders: expect.arrayContaining([cssLoader, lessLoaderDevVars]),
-      },      
+      },
       options: {
         theme: {
-          'text-color': `#fff`,
+          "text-color": `#fff`,
         },
       },
     },
@@ -38,10 +38,10 @@ describe(`gatsby-plugin-less`, () => {
             expect.arrayContaining([cssLoader, lessLoaderProdVars]),
           ]),
         },
-      },      
+      },
       options: {
         theme: {
-          'text-color': `#fff`,
+          "text-color": `#fff`,
         },
       },
     },
@@ -57,7 +57,7 @@ describe(`gatsby-plugin-less`, () => {
       },
       options: {
         theme: {
-          'text-color': `#fff`,
+          "text-color": `#fff`,
         },
       },
     },
@@ -84,7 +84,7 @@ describe(`gatsby-plugin-less`, () => {
       loaderKeys: [`less`, `lessModules`],
       loaderConfig: {
         loaders: expect.arrayContaining([cssLoader, lessLoaderDevVars]),
-      },      
+      },
       options: {
         theme: filePathTheme,
       },
@@ -98,7 +98,7 @@ describe(`gatsby-plugin-less`, () => {
             expect.arrayContaining([cssLoader, lessLoaderProdVars]),
           ]),
         },
-      },      
+      },
       options: {
         theme: filePathTheme,
       },
@@ -140,7 +140,7 @@ describe(`gatsby-plugin-less`, () => {
       loaderKeys: [`less`, `lessModules`],
       loaderConfig: {
         loaders: expect.arrayContaining([cssLoader, lessLoaderDevNoVars]),
-      },      
+      },
     },
     {
       stages: [`build-css`],
@@ -151,7 +151,7 @@ describe(`gatsby-plugin-less`, () => {
             expect.arrayContaining([cssLoader, lessLoaderProdNoVars]),
           ]),
         },
-      },      
+      },
     },
     {
       stages: [`develop-html`, `build-html`, `build-javascript`],

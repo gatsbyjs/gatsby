@@ -134,7 +134,8 @@ const preferDefault = m => m && m.default || m
   const writeAndMove = (file, data) => {
     const destination = joinPath(program.directory, `.cache`, file)
     const tmp = `${destination}.${Date.now()}`
-    return fs.writeFile(tmp, data)
+    return fs
+      .writeFile(tmp, data)
       .then(() => fs.move(tmp, destination, { overwrite: true }))
   }
 
