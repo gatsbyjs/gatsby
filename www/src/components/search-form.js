@@ -298,7 +298,8 @@ class SearchForm extends Component {
 
   render() {
     const { enabled, focussed } = this.state
-    const { iconStyles } = this.props
+    const { iconStyles, isHomepage } = this.props
+
     return enabled ? (
       <form
         css={{
@@ -337,8 +338,19 @@ class SearchForm extends Component {
               },
 
               [presets.Desktop]: {
-                backgroundColor: `#fff`,
-                width: rhythm(5),
+                backgroundColor: !isHomepage && `#fff`,
+                color: colors.gatsby,
+                width: !isHomepage && rhythm(5),
+                ":focus": {
+                  backgroundColor: colors.ui.light,
+                  color:  colors.gatsby,
+                },
+              },
+
+              [presets.Hd]: {
+                backgroundColor: isHomepage && colors.lilac,
+                color: isHomepage && colors.ui.light,
+                width: isHomepage && rhythm(5),
               },
             }}
             type="search"
@@ -354,18 +366,18 @@ class SearchForm extends Component {
           <SearchIcon
             overrideCSS={{
               ...iconStyles,
+              fill: focussed && colors.gatsby,
               position: `absolute`,
               left: `5px`,
               top: `50%`,
               width: `16px`,
               height: `16px`,
-              fill: focussed ? presets.brandLight : false,
               pointerEvents: `none`,
               transition: `fill ${speedDefault} ${curveDefault}`,
               transform: `translateY(-50%)`,
 
-              [presets.Desktop]: {
-                fill: presets.brandLight,
+              [presets.Hd]: {
+                fill: focussed && isHomepage && colors.gatsby,
               },
             }}
           />
@@ -376,6 +388,7 @@ class SearchForm extends Component {
 }
 
 SearchForm.propTypes = {
+  isHomepage: PropTypes.bool,
   iconStyles: PropTypes.object,
 }
 
