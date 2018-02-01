@@ -184,6 +184,6 @@ GatsbyLink.contextTypes = {
 
 export default GatsbyLink
 
-export const navigateTo = pathname => {
-  window.___navigateTo(pathname)
+export const navigateTo = to => {
+  window.___navigateTo(to)
 }
