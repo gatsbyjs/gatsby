@@ -131,16 +131,17 @@ const preferDefault = m => m && m.default || m
     .join(`,\n`)}
 }`
 
+  const writeAndMove = (file, data) => {
+    const destination = joinPath(program.directory, `.cache`, file)
+    const tmp = `${destination}.${Date.now()}`
+    return fs.writeFile(tmp, data)
+      .then(() => fs.move(tmp, destination, { overwrite: true }))
+  }
+
   return await Promise.all([
-    fs.writeFile(
-      joinPath(program.directory, `.cache/pages.json`),
-      JSON.stringify(pagesData, null, 4)
-    ),
-    fs.writeFile(`${program.directory}/.cache/sync-requires.js`, syncRequires),
-    fs.writeFile(
-      joinPath(program.directory, `.cache/async-requires.js`),
-      asyncRequires
-    ),
+    writeAndMove(`pages.json`, JSON.stringify(pagesData, null, 4)),
+    writeAndMove(`sync-requires.js`, syncRequires),
+    writeAndMove(`async-requires.js`, asyncRequires),
   ])
 }
 
