@@ -1,6 +1,6 @@
 # gatsby-plugin-less
 
-Adds the ability to load and parse less to include in project your.
+Adds the ability to load and parse Less-flavored CSS.
 
 ## Install
 
