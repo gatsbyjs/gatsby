@@ -13,8 +13,7 @@ Parses Markdown files using [Remark](http://remark.js.org/).
 plugins: [`gatsby-transformer-remark`];
 ```
 
-A full explanation of how to use markdown in Gatsby can be found here:
-[Creating a Blog with Gatsby](/blog/2017-07-19-creating-a-blog-with-gatsby/)
+A full explanation of how to use markdown in Gatsby can be found in [Part-Four](https://www.gatsbyjs.org/tutorial/part-four/) of the [Gatsby Tutorial](https://www.gatsbyjs.org/tutorial/). Alternatively, there is a simple and easy explanation here: [Adding Markdown Pages](https://www.gatsbyjs.org/docs/adding-markdown-pages/).
 
 There are many Gatsby Remark plugins which you can install to customize how Markdown is processed. Many of them are demoed at https://using-remark.gatsbyjs.org/. See also the [source code for using-remark](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-remark).
 
