@@ -100,6 +100,7 @@ Here’s an instance of a GraphiQL query that worked in there but not in the act
 ```
 
 ## Making data look nice on the site
+
 Once I got my GraphQL queries working, I called a couple friends for help rendering the data to each page on my site. They called this “printing,” a word that I enjoyed because it reminded me of the Vincent Van Gogh poster I had.
 
 Here is one of the first pages I rendered into a table format:
@@ -158,7 +159,7 @@ query PhotoQuery {
 
 ## More complex pages
 
-The list of Tricks & Commands presented a complex challenge because not all entries on Contentful included the same content. For example, we got errors if we tried to query for a photo since some entires had photos and some did not. 
+The list of Tricks & Commands presented a complex challenge because not all entries on Contentful included the same content. For example, we got errors if we tried to query for a photo since some entires had photos and some did not.
 
 Because each entry was inconsistent, my friends helped me figure out a way to use JS to make sure we only requested a photo to be printed IF the photo existed. And if a particular entry didn't have a photo, the computer could forgive it (just this once). Here is the code from that page:
 

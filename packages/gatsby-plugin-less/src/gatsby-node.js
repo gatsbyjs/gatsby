@@ -1,6 +1,6 @@
-import ExtractTextPlugin from 'extract-text-webpack-plugin'
-import { cssModulesConfig } from 'gatsby-1-config-css-modules'
-import path from 'path'
+import ExtractTextPlugin from "extract-text-webpack-plugin"
+import { cssModulesConfig } from "gatsby-1-config-css-modules"
+import path from "path"
 
 exports.modifyWebpackConfig = ({ config, stage }, { theme }) => {
   const lessFiles = /\.less$/
@@ -13,13 +13,17 @@ exports.modifyWebpackConfig = ({ config, stage }, { theme }) => {
       const themeFile = require(path.resolve(theme))
       themeJson = JSON.stringify(themeFile)
     } catch (err) {
-      throw new Error(`Couldn't convert js to json object at path: '${theme}'\n${err}`)
+      throw new Error(
+        `Couldn't convert js to json object at path: '${theme}'\n${err}`
+      )
     }
   } else if (typeof theme === `object`) {
     try {
       themeJson = JSON.stringify(theme)
     } catch (err) {
-      throw new Error(`Couldn't convert javascript object to json object.\n${err}`)
+      throw new Error(
+        `Couldn't convert javascript object to json object.\n${err}`
+      )
     }
   }
 
