@@ -23,6 +23,7 @@
     "gatsby": "^1.0.0"
   },
   "dependencies": {
+    "@types/history": "^4.6.2",
     "@types/react-router-dom": "^4.2.2",
     "babel-runtime": "^6.26.0",
     "prop-types": "^15.5.8",

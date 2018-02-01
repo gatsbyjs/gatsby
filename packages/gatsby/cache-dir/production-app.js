@@ -7,6 +7,7 @@ import ReactDOM from "react-dom"
 import { Router, Route, withRouter, matchPath } from "react-router-dom"
 import { ScrollContext } from "gatsby-react-router-scroll"
 import domReady from "domready"
+import { createLocation } from "history"
 import history from "./history"
 window.___history = history
 import emitter from "./emitter"
@@ -50,7 +51,9 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     require(`./register-service-worker`)
   }
 
-  const navigateTo = pathname => {
+  const navigateTo = to => {
+    const location = createLocation(to, null, null, history.location)
+    let { pathname } = location
     const redirect = redirectMap[pathname]
 
     // If we're redirecting, just replace the passed in pathname
@@ -70,7 +73,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       if (e.page.path === loader.getPage(pathname).path) {
         emitter.off(`onPostLoadPageResources`, eventHandler)
         clearTimeout(timeoutId)
-        window.___history.push(pathname)
+        window.___history.push(location)
       }
     }
 
@@ -79,13 +82,13 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     const timeoutId = setTimeout(() => {
       emitter.off(`onPostLoadPageResources`, eventHandler)
       emitter.emit(`onDelayedLoadPageResources`, { pathname })
-      window.___history.push(pathname)
+      window.___history.push(location)
     }, 1000)
 
     if (loader.getResourcesForPathname(pathname)) {
       // The resources are already loaded so off we go.
       clearTimeout(timeoutId)
-      window.___history.push(pathname)
+      window.___history.push(location)
     } else {
       // They're not loaded yet so let's add a listener for when
       // they finish loading.
