@@ -316,12 +316,27 @@ module.exports = async (
     switch (stage) {
       case `develop`:
         return `cheap-module-source-map`
-      // use a normal `source-map` for the html phases since
+      // use a normal `source-map` for the develop-html phase since
       // it gives better line and column numbers
       case `develop-html`:
-      case `build-html`:
-      case `build-javascript`:
         return `source-map`
+
+      // Source maps expose too much information about the site so
+      // we don't generate them by default.
+      //
+      // You can easily enable them in your `gatsby-node.js` but make
+      // sure that your web server restricts access to them (e.g. with
+      // basic auth):
+      //
+      // exports.modifyWebpackConfig = ({ actions, stage }) => {
+      //   switch (stage) {
+      //     case `build-html`:
+      //     case 'build-javascript':
+      //       actions.setWebpackConfig({
+      //         devtool: 'source-map'
+      //       })
+      //   }
+      // }
       default:
         return false
     }
