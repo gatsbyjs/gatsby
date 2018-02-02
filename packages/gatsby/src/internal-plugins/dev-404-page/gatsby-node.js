@@ -29,4 +29,5 @@ exports.createPagesStatefully = async (
   } else {
     done()
   }
+  done()
 }
