@@ -27,4 +27,5 @@ exports.createPagesStatefully = async (
       .on(`change`, () => copy())
       .on(`ready`, () => done())
   }
+  done()
 }
