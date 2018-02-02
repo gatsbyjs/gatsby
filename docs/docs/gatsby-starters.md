@@ -407,3 +407,14 @@ Community:
   * Integration with [Visual Studio Code](https://code.visualstudio.com)
     * Pre-configured auto-formatting on file save
   * Based on [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default)
+
+* [gatsby-hampton-theme](https://github.com/davad/gatsby-hampton-theme)
+  [(demo)](http://dmwl.net/gatsby-hampton-theme)
+
+  Features:
+
+  * Eslint in dev mode with the airbnb config and prettier formatting rules
+  * [Emotion](https://github.com/emotion-js/emotion) for CSS-in-JS
+  * A basic blog, with posts under src/pages/blog
+  * A few basic components (Navigation, Layout, Link wrapper around `gatsby-link`))
+  * Based on [gatsby-starter-gatsbytheme](https://github.com/saschajullmann/gatsby-starter-gatsbythemes)
