@@ -2,10 +2,14 @@ import React, { Component } from "react"
 import PropTypes from "prop-types"
 import { navigateTo } from "gatsby-link"
 import { rhythm } from "../utils/typography"
+
 import presets, { colors } from "../utils/presets"
 import hex2rgba from "hex2rgba"
+import SearchIcon from './search-icon'
 
 import { css } from "glamor"
+
+const { curveDefault, speedDefault } = presets.animation
 
 // Override default search result styles (docsearch.css)
 css.insert(`
@@ -227,7 +231,7 @@ css.insert(`
 class SearchForm extends Component {
   constructor() {
     super()
-    this.state = { enabled: true }
+    this.state = { enabled: true, focussed: false }
     this.autocompleteSelected = this.autocompleteSelected.bind(this)
     this.focusSearchInput = this.focusSearchInput.bind(this)
   }
@@ -293,12 +297,12 @@ class SearchForm extends Component {
   }
 
   render() {
-    const { enabled } = this.state
-    const { styles } = this.props.styles
+    const { enabled, focussed } = this.state
+    const { iconStyles, isHomepage } = this.props
+
     return enabled ? (
       <form
         css={{
-          ...styles,
           display: `flex`,
           flex: `0 0 auto`,
           flexDirection: `row`,
@@ -309,52 +313,83 @@ class SearchForm extends Component {
         className="searchWrap"
         onSubmit={e => e.preventDefault()}
       >
-        <input
-          id="doc-search"
-          css={{
-            appearance: `none`,
-            background: `transparent`,
-            border: 0,
-            color: colors.gatsby,
-            paddingTop: rhythm(1 / 8),
-            paddingRight: rhythm(1 / 4),
-            paddingBottom: rhythm(1 / 8),
-            paddingLeft: rhythm(1),
-            backgroundImage: `url(/search.svg)`,
-            backgroundSize: `16px 16px`,
-            backgroundRepeat: `no-repeat`,
-            backgroundPositionY: `center`,
-            backgroundPositionX: `5px`,
-            overflow: `hidden`,
-            width: rhythm(1),
-            transition: `width 0.2s ease`,
-
-            ":focus": {
-              outline: 0,
-              backgroundColor: colors.ui.light,
+        <label css={{ position: `relative` }}>
+          <input
+            id="doc-search"
+            css={{
+              appearance: `none`,
+              backgroundColor: `transparent`,
+              border: 0,
               borderRadius: presets.radiusLg,
-              width: rhythm(5),
-            },
+              color: colors.gatsby,
+              paddingTop: rhythm(1 / 8),
+              paddingRight: rhythm(1 / 4),
+              paddingBottom: rhythm(1 / 8),
+              paddingLeft: rhythm(1),
+              overflow: `hidden`,
+              width: rhythm(1),
+              transition: `width ${speedDefault} ${curveDefault}, background-color ${speedDefault} ${curveDefault}`,
+              ":focus": {
+                outline: 0,
+                backgroundColor: colors.ui.light,
+                borderRadius: presets.radiusLg,
+                width: rhythm(5),
+                transition: `width ${speedDefault} ${curveDefault}, background-color ${speedDefault} ${curveDefault}`,
+              },
 
-            [presets.Desktop]: {
-              width: rhythm(5),
-            },
-          }}
-          type="search"
-          placeholder="Search docs"
-          aria-label="Search docs"
-          title="Hit 's' to search docs"
-          ref={input => {
-            this.searchInput = input
-          }}
-        />
+              [presets.Desktop]: {
+                backgroundColor: !isHomepage && `#fff`,
+                color: colors.gatsby,
+                width: !isHomepage && rhythm(5),
+                ":focus": {
+                  backgroundColor: colors.ui.light,
+                  color:  colors.gatsby,
+                },
+              },
+
+              [presets.Hd]: {
+                backgroundColor: isHomepage && colors.lilac,
+                color: isHomepage && colors.ui.light,
+                width: isHomepage && rhythm(5),
+              },
+            }}
+            type="search"
+            placeholder="Search docs"
+            aria-label="Search docs"
+            title="Hit 's' to search docs"
+            onFocus={() => this.setState({ focussed: true })}
+            onBlur={() => this.setState({ focussed: false })}
+            ref={input => {
+              this.searchInput = input
+            }}
+          />
+          <SearchIcon
+            overrideCSS={{
+              ...iconStyles,
+              fill: focussed && colors.gatsby,
+              position: `absolute`,
+              left: `5px`,
+              top: `50%`,
+              width: `16px`,
+              height: `16px`,
+              pointerEvents: `none`,
+              transition: `fill ${speedDefault} ${curveDefault}`,
+              transform: `translateY(-50%)`,
+
+              [presets.Hd]: {
+                fill: focussed && isHomepage && colors.gatsby,
+              },
+            }}
+          />
+        </label>
       </form>
     ) : null
   }
 }
 
 SearchForm.propTypes = {
-  styles: PropTypes.object,
+  isHomepage: PropTypes.bool,
+  iconStyles: PropTypes.object,
 }
 
 export default SearchForm
