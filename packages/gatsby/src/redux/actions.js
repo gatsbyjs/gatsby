@@ -112,7 +112,7 @@ actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
   if (!page.path) {
     const message = `${name} must set the page path when creating a page`
     // Don't log out when testing
-    if (!process.env.NODE_ENV === `test`) {
+    if (process.env.NODE_ENV !== `test`) {
       console.log(chalk.bold.red(message))
       console.log(``)
       console.log(page)
@@ -125,7 +125,7 @@ actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
   if (!page.component || !path.isAbsolute(page.component)) {
     const message = `${name} must set the absolute path to the page component when create creating a page`
     // Don't log out when testing
-    if (!process.env.NODE_ENV === `test`) {
+    if (process.env.NODE_ENV !== `test`) {
       console.log(chalk.bold.red(message))
       console.log(``)
       console.log(page)
