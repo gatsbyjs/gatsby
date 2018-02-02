@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-less",
   "description": "Adds the ability to load and parse less-files to include in project your",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "author": "Ming Aldrich-Gan <mingaldrichgan@gmail.com>",
   "contributors": [
     "Ole Martin Ruud <barskern@outlook.com> (barskern.github.io)"
