@@ -328,11 +328,11 @@ module.exports = async (
       // sure that your web server restricts access to them (e.g. with
       // basic auth):
       //
-      // exports.modifyWebpackConfig = ({ config, stage }) => {
+      // exports.modifyWebpackConfig = ({ actions, stage }) => {
       //   switch (stage) {
       //     case `build-html`:
       //     case 'build-javascript':
-      //       config.merge({
+      //       actions.setWebpackConfig({
       //         devtool: 'source-map'
       //       })
       //   }
