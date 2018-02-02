@@ -82,7 +82,7 @@ const clone = async (hostInfo: any, rootPath: string) => {
     url = hostInfo.ssh({ noCommittish: true })
     // Otherwise default to normal git syntax.
   } else {
-    url = hostInfo.git({ noCommittish: true })
+    url = hostInfo.https({ noCommittish: true })
   }
 
   const branch = hostInfo.committish ? `-b ${hostInfo.committish}` : ``
