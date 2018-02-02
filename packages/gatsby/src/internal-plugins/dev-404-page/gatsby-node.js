@@ -26,5 +26,7 @@ exports.createPagesStatefully = async (
       .watch(source)
       .on(`change`, () => copy())
       .on(`ready`, () => done())
+  } else {
+    done()
   }
 }
