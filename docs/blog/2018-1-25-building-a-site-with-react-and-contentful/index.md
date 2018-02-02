@@ -26,9 +26,13 @@ Here’s the site I built for my dog's babysitters after learning the basics of 
 
 ## What is React? Why choose it?
 
+![React logo](React-logo.png)
+
 React is a JavaScript library for building user interfaces. React helps developers and designers create composable UI components that painlessly adapt to data changes.
 
 ## What is Contentful? Why choose it?
+
+![Contentful logo](contentful-logo.png)
 
 Contentful is a headless Content Management System (CMS) that lets you organize your content into what could be called “modules,” or little bits of data that can be rearranged to appear nicely on mobile devices, tablets, computers, virtual reality devices (this is my own joke, but...maybe someday?) and more.
 
