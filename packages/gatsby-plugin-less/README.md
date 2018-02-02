@@ -11,7 +11,7 @@ Adds the ability to load and parse Less-flavored CSS.
 Add the plugin to your `gatsby-config.js`.
 
 ```javascript
-plugins: [`gatsby-plugin-plugin-less`];
+plugins: [`gatsby-plugin-less`];
 ```
 
 By default this plugin will compile `*.less` and `*.module.less` files. The plugin can also be used with `modifyVars` as it is explained [here](http://lesscss.org/usage/). By defining a javascript object you can overwrite less-variables. This can be useful when using a component library like [antd](https://ant.design/docs/react/introduce).
