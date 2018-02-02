@@ -46,6 +46,9 @@ const tableOfContentsCacheKey = node =>
     node.internal.contentDigest
   }-${pluginsCacheStr}`
 
+const withPathPrefix = (url, pathPrefix) =>
+  (pathPrefix + url).replace(/\/\//, `/`)
+
 module.exports = (
   { type, store, pathPrefix, getNode, cache },
   pluginOptions
@@ -106,6 +109,20 @@ module.exports = (
             }
           }).then(() => {
             const markdownAST = remark.parse(markdownNode.internal.content)
+
+            if (pathPrefix) {
+              // Ensure relative links include `pathPrefix`
+              visit(markdownAST, `link`, node => {
+                if (
+                  node.url &&
+                  node.url.startsWith(`/`) &&
+                  !node.url.startsWith(`//`) &&
+                  !node.url.startsWith(pathPrefix)
+              ) {
+                  node.url = withPathPrefix(node.url, pathPrefix)
+                }
+              })
+            }
 
             // source => parse (can order parsing for dependencies) => typegen
             //
