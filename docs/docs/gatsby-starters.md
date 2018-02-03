@@ -334,7 +334,7 @@ Community:
 
   Features:
 
-  * Based on the Ceevee site template, design by [Styleshout](https://www.styeshout.com/)
+  * Based on the Ceevee site template, design by [Styleshout](https://www.styleshout.com/)
   * Single Page Resume/Portfolio site
   * Target audience Developers, Designers, etc.
   * Used CSS Modules, easy to manipulate
