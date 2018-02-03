@@ -1,0 +1,45 @@
+{
+  "name": "gatsby-new-blog",
+  "version": "1.0.1",
+  "description": "new blog for your gatsby site",
+  "main": "index.js",
+  "author": {
+    "name": "fengshangwuqi",
+    "email": "fengshangwuqi@gmail.com"
+  },
+  "keywords": ["gatsby", "gatsby-plugin", "gatsby-blog", "gatsby-new-blog"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FengShangWuQi/gatsby-new-blog.git"
+  },
+  "files": ["bin", "lib"],
+  "scripts": {
+    "prepublishOnly": "npm run build && npm run changelog",
+    "build":
+      "rimraf lib && babel src --copy-files --ignore pages --source-maps --extensions .js --out-dir lib",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
+  },
+  "bin": {
+    "gatsby-new-blog": "./bin/gatsby-new-blog.js"
+  },
+  "dependencies": {
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "chalk": "^2.3.0",
+    "commander": "^2.13.0",
+    "config": "^1.29.2",
+    "figlet": "^1.2.0",
+    "fs-extra": "^5.0.0",
+    "inquirer": "^5.0.1",
+    "js-yaml": "^3.10.0",
+    "moment": "^2.20.1",
+    "pinyin": "^2.8.3",
+    "regexpu-core": "^4.1.3"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "conventional-changelog-cli": "^1.3.8",
+    "rimraf": "^2.6.2"
+  },
+  "license": "MIT"
+}
