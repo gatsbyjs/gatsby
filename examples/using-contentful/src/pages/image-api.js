@@ -202,6 +202,59 @@ export default props => {
           }}
         />
       </pre>
+      <h2>WebP Images</h2>
+      <p>
+        WebP is an image format that provides lossy and lossless compression
+        that may be better than JPEG or PNG. The <code>srcWebp</code> and{" "}
+        <code>srcSetWebp</code> fields are available for{" "}
+        <code>resolutions</code> and <code>sizes</code> queries.
+      </p>
+      <p>
+        WebP is currently only supported in{" "}
+        <a href="https://caniuse.com/#feat=webp">Chrome and Oprah browsers</a>,
+        and you'll want to fall back to another format for other clients. When
+        this query is used with{" "}
+        <a href="https://www.gatsbyjs.org/packages/gatsby-image/">
+          <code>gatsby-image</code>
+        </a>{" "}
+        WebP will be used automatically in browsers that support it.
+      </p>
+      {assets.map(({ node: { title, webp } }) => (
+        <Img
+          key={webp.src}
+          alt={title}
+          resolutions={webp}
+          style={{
+            marginRight: rhythm(1 / 2),
+            marginBottom: rhythm(1 / 2),
+            border: `1px solid tomato`,
+          }}
+        />
+      ))}
+      <h4>GraphQL query</h4>
+      <pre style={{ background: `#efeded`, padding: rhythm(3 / 4) }}>
+        <code
+          dangerouslySetInnerHTML={{
+            __html: `{
+  allContentfulAsset {
+    edges {
+      node {
+        title
+        resolutions(width: 100) {
+          width
+          height
+          src
+          srcSet
+          srcWebp
+          srcSetWebp
+        }
+      }
+    }
+  }
+}`,
+          }}
+        />
+      </pre>
     </div>
   )
 }
@@ -222,6 +275,9 @@ export const pageQuery = graphql`
           }
           resizing: resolutions(width: 100, height: 100) {
             ...GatsbyContentfulResolutions_noBase64
+          }
+          webp: resolutions(width: 100) {
+            ...GatsbyContentfulResolutions_withWebp_noBase64
           }
           sizes(maxWidth: 613) {
             ...GatsbyContentfulSizes_noBase64
