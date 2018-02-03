@@ -150,7 +150,10 @@ module.exports = (
     }
 
     // since dir will be undefined on non-files
-    if (getNode(markdownNode.parent).internal.type !== `File`) {
+    if (
+      markdownNode.parent &&
+      getNode(markdownNode.parent).internal.type !== `File`
+    ) {
       return
     }
 
