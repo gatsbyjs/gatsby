@@ -69,17 +69,20 @@ export default props => {
         You should prefer this operator over <code>resize</code>.
       </p>
       {assets.map(({ node: { title, resolutions } }) => (
-        <Img
-          key={resolutions.src}
-          alt={title}
-          resolutions={resolutions}
-          backgroundColor
-          style={{
-            marginRight: rhythm(1 / 2),
-            marginBottom: rhythm(1 / 2),
-            border: `1px solid tomato`,
-          }}
-        />
+        <div key={resolutions.src} style={{ display: "inline-block" }}>
+          <Img
+            key={resolutions.src}
+            alt={title}
+            resolutions={resolutions}
+            backgroundColor
+            style={{
+              marginRight: rhythm(1 / 2),
+              marginBottom: rhythm(1 / 2),
+              border: `1px solid tomato`,
+              display: "inline-block",
+            }}
+          />
+        </div>
       ))}
       <h4>GraphQL query</h4>
       <pre style={{ background: `#efeded`, padding: rhythm(3 / 4) }}>
@@ -123,16 +126,17 @@ export default props => {
         </a>
       </p>
       {assets.map(({ node: { title, resizing } }) => (
-        <Img
-          key={resizing.src}
-          alt={title}
-          resolutions={resizing}
-          style={{
-            marginRight: rhythm(1 / 2),
-            marginBottom: rhythm(1 / 2),
-            border: `1px solid tomato`,
-          }}
-        />
+        <div key={resizing.src} style={{ display: "inline-block" }}>
+          <Img
+            alt={title}
+            resolutions={resizing}
+            style={{
+              marginRight: rhythm(1 / 2),
+              marginBottom: rhythm(1 / 2),
+              border: `1px solid tomato`,
+            }}
+          />
+        </div>
       ))}
       <h4>GraphQL query</h4>
       <pre style={{ background: `#efeded`, padding: rhythm(3 / 4) }}>
@@ -220,16 +224,18 @@ export default props => {
         WebP will be used automatically in browsers that support it.
       </p>
       {assets.map(({ node: { title, webp } }) => (
-        <Img
-          key={webp.src}
-          alt={title}
-          resolutions={webp}
-          style={{
-            marginRight: rhythm(1 / 2),
-            marginBottom: rhythm(1 / 2),
-            border: `1px solid tomato`,
-          }}
-        />
+        <div key={webp.src} style={{ display: "inline-block" }}>
+          <Img
+            key={webp.src}
+            alt={title}
+            resolutions={webp}
+            style={{
+              marginRight: rhythm(1 / 2),
+              marginBottom: rhythm(1 / 2),
+              border: `1px solid tomato`,
+            }}
+          />
+        </div>
       ))}
       <h4>GraphQL query</h4>
       <pre style={{ background: `#efeded`, padding: rhythm(3 / 4) }}>
