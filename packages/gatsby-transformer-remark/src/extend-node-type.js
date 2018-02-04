@@ -46,6 +46,7 @@ const tableOfContentsCacheKey = node =>
     node.internal.contentDigest
   }-${pluginsCacheStr}`
 
+// ensure only one `/` in new url
 const withPathPrefix = (url, pathPrefix) =>
   (pathPrefix + url).replace(/\/\//, `/`)
 
