@@ -89,6 +89,7 @@
     "postcss-import": "^11.0.0",
     "postcss-loader": "^2.0.6",
     "postcss-reporter": "^5.0.0",
+    "prop-types": "^15.5.8",
     "raw-loader": "^0.5.1",
     "react": "^16.2.0",
     "react-dev-utils": "^4.2.1",
@@ -145,7 +146,7 @@
     "website"
   ],
   "license": "MIT",
-  "main": "index.js",
+  "main": "dist/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gatsbyjs/gatsby.git"
