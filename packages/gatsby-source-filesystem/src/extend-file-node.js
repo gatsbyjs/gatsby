@@ -11,6 +11,7 @@ module.exports = ({ type, getNodeAndSavePathDependency, pathPrefix = `` }) => {
     publicURL: {
       type: GraphQLString,
       args: {},
+      description: `Copy file to static directory and return public url to it`,
       resolve: (file, fieldArgs, context) => {
         const details = getNodeAndSavePathDependency(file.id, context.path)
         const fileName = `${file.name}-${file.internal.contentDigest}${

@@ -163,6 +163,7 @@ root.
 * [gatsby-plugin-elasticlunr-search](https://github.com/andrew-codes/gatsby-plugin-elasticlunr-search)
 * [gatsby-plugin-fastclick](https://github.com/escaladesports/gatsby-plugin-fastclick)
 * [gatsby-plugin-favicon](https://github.com/Creatiwity/gatsby-plugin-favicon)
+* [gatsby-plugin-fela](https://github.com/mmintel/gatsby-plugin-fela)
 * [gatsby-plugin-google-fonts](https://github.com/didierfranc/gatsby-plugin-google-fonts)
 * [gatsby-plugin-gosquared](https://github.com/jongold/gatsby-plugin-gosquared)
 * [gatsby-plugin-hotjar](https://github.com/pavloko/gatsby-plugin-hotjar)
@@ -171,10 +172,12 @@ root.
 * [gatsby-plugin-i18n](https://github.com/angeloocana/gatsby-plugin-i18n)
 * [gatsby-plugin-intercom-spa](https://github.com/toriihq/gatsby-plugin-intercom-spa)
 * [gatsby-plugin-klipse](https://github.com/ahmedelgabri/gatsby-plugin-klipse)
+* [gatsby-plugin-meta-redirect](https://github.com/getchalk/gatsby-plugin-meta-redirect)
 * [gatsby-plugin-mixpanel](https://github.com/thomascarvalho/gatsby-plugin-mixpanel)
 * [gatsby-plugin-protoculture](https://github.com/atrauzzi/gatsby-plugin-protoculture)
 * [gatsby-plugin-purify-css](https://github.com/rongierlach/gatsby-plugin-purify-css)
 * [gatsby-plugin-segment-js](https://github.com/benjaminhoffman/gatsby-plugin-segment-js)
+* [gatsby-plugin-sentry](https://github.com/octalmage/gatsby-plugin-sentry)
 * [gatsby-plugin-stripe-checkout](https://github.com/njosefbeck/gatsby-plugin-stripe-checkout)
 * [gatsby-plugin-stripe-elements](https://github.com/njosefbeck/gatsby-plugin-stripe-elements)
 * [gatsby-plugin-svg-sprite](https://github.com/marcobiedermann/gatsby-plugin-svg-sprite)
@@ -198,6 +201,7 @@ root.
 * [gatsby-source-soundcloud](https://github.com/jedidiah/gatsby-source-soundcloud)
 * [gatsby-source-stripe](https://github.com/njosefbeck/gatsby-source-stripe)
 * [gatsby-source-twitch](https://github.com/jedidiah/gatsby-source-twitch)
+* [gatsby-source-unsplash](https://github.com/vacas5/gatsby-source-unsplash)
 * [gatsby-source-workable](https://github.com/tumblbug/gatsby-source-workable)
 
 ## Community Library
