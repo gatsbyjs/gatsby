@@ -18,6 +18,22 @@ class BlogPostPreviewItem extends React.Component {
             {post.frontmatter.excerpt ? post.frontmatter.excerpt : post.excerpt}
           </p>
         </Link>
+        {/* margins below must be...
+
+            - equal on opposite sides
+
+            - at least
+              wrapping div:
+                marginBottom: rhythm(17 / 8), // 2.125
+                marginTop: rhythm(17 / 8), // 2.125
+              Img
+                marginLeft: rhythm(1 / 2), // 0.5
+                marginRight: rhythm(1 / 2), // 0.5
+
+            ...to prevent avatar hover twitching.
+
+            <3 @rdela
+        */}
         <div
           css={{
             display: `flex`,
@@ -25,17 +41,33 @@ class BlogPostPreviewItem extends React.Component {
             marginBottom: rhythm(2),
           }}
         >
+          <Link
+                to={post.frontmatter.author.fields.slug}
+                css={{
+                  boxShadow: `none !important`,
+                  borderBottom: `0 !important`,
+                  position: `relative`,
+                  zIndex: 1,
+                  "&&": {
+                    fontWeight: `normal`,
+                    ":hover": {
+                      background: `transparent`,
+                    },
+                  },
+                }}
+              >
           <Img
             alt=""
             resolutions={avatar}
             css={{
               borderRadius: `100%`,
               display: `inline-block`,
-              marginRight: rhythm(1 / 2),
-              marginBottom: 0,
+              // marginBottom: 0,
+              // marginTop: 0,
+              marginLeft: rhythm(1 / 32),
               verticalAlign: `top`,
             }}
-          />
+          /></Link>
           <div
             css={{
               display: `inline-block`,
@@ -54,15 +86,15 @@ class BlogPostPreviewItem extends React.Component {
               <Link
                 to={post.frontmatter.author.fields.slug}
                 css={{
-                  boxShadow: `none !important`,
-                  borderBottom: `0 !important`,
+                  color: `${colors.gatsby} !important`,
+                  fontSize: `102%`,
+                  marginLeft: rhythm(1 / 2),
                   position: `relative`,
                   zIndex: 1,
                   "&&": {
-                    fontWeight: `normal`,
+                    fontWeight: `bold`,
                     ":hover": {
-                      color: colors.gatsby,
-                      background: `transparent`,
+                      background: colors.ui.bright,
                     },
                   },
                 }}

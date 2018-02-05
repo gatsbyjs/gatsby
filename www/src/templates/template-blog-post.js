@@ -106,78 +106,95 @@ class BlogPostTemplate extends React.Component {
               content={post.frontmatter.rawDate}
             />
           </Helmet>
-          <header
-            css={{
-              display: `flex`,
-              marginTop: rhythm(-1 / 4),
-              marginBottom: rhythm(1),
-              [presets.Tablet]: {
-                marginTop: rhythm(1 / 2),
-                marginBottom: rhythm(2),
-              },
-            }}
-          >
-            <div
+          <header>
+            <h1
               css={{
-                flex: `0 0 auto`,
+                marginTop: 0,
+                [presets.Desktop]: {
+                  marginBottom: rhythm(5 / 4),
+                },
               }}
             >
-              <Img
-                resolutions={
-                  post.frontmatter.author.avatar.childImageSharp.resolutions
-                }
+              {this.props.data.markdownRemark.frontmatter.title}
+            </h1>
+            <div
+              css={{
+                display: `flex`,
+                marginTop: rhythm(1 / 4),
+                marginBottom: rhythm(1),
+                [presets.Tablet]: {
+                  marginTop: rhythm(1 / 2),
+                  marginBottom: rhythm(3 / 2),
+                },
+              }}
+            >
+              <div
                 css={{
-                  height: rhythm(2.3),
-                  width: rhythm(2.3),
-                  margin: 0,
-                  borderRadius: `100%`,
-                  display: `inline-block`,
-                  verticalAlign: `middle`,
+                  flex: `0 0 auto`,
                 }}
-              />
-            </div>
-            <div
-              css={{
-                flex: `1 1 auto`,
-                marginLeft: rhythm(1 / 2),
-              }}
-            >
-              <Link to={post.frontmatter.author.fields.slug}>
-                <h4
-                  css={{
-                    ...scale(0),
-                    fontWeight: 400,
-                    margin: 0,
-                  }}
-                >
-                  {post.frontmatter.author.id}
-                </h4>
-              </Link>
-              <BioLine>{post.frontmatter.author.bio}</BioLine>
-              <BioLine>
-                {post.timeToRead} min read · {post.frontmatter.date}
-                {post.frontmatter.canonicalLink && (
-                  <span>
-                    {` `}
-                    (originally published at{` `}
-                    <a href={post.frontmatter.canonicalLink}>
-                      {post.frontmatter.publishedAt}
-                    </a>)
-                  </span>
-                )}
-              </BioLine>
+              >
+                <Link to={post.frontmatter.author.fields.slug}>
+                  <Img
+                    resolutions={
+                      post.frontmatter.author.avatar.childImageSharp.resolutions
+                    }
+                    css={{
+                      height: rhythm(2.3),
+                      width: rhythm(2.3),
+                      margin: 0,
+                      borderRadius: `100%`,
+                      display: `inline-block`,
+                      verticalAlign: `middle`,
+                    }}
+                  />
+                </Link>
+              </div>
+              <div
+                css={{
+                  flex: `1 1 auto`,
+                  marginLeft: rhythm(1 / 2),
+                }}
+              >
+                <Link to={post.frontmatter.author.fields.slug}>
+                  <h4
+                    css={{
+                      ...scale(0),
+                      color: `${colors.gatsby} !important`,
+                      fontSize: `102%`,
+                      margin: `${rhythm(-1 / 16)} 0 ${rhythm(1 / 16)} 0`,
+                      textDecoration: `none`,
+                      width: `auto`,
+                    }}
+                  >
+                    <span css={{
+                      borderBottom: `1px solid ${colors.ui.bright}`,
+                      boxShadow: `inset 0 -2px 0 0 ${colors.ui.bright}`,
+                      transition: `all ${presets.animation.speedFast} ${
+                        presets.animation.curveDefault
+                      }`,
+                      "&:hover": {
+                        background: colors.ui.bright,
+                      },
+                    }}
+                      >{post.frontmatter.author.id}</span>
+                  </h4>
+                </Link>
+                <BioLine>{post.frontmatter.author.bio}</BioLine>
+                <BioLine>
+                  {post.timeToRead} min read · {post.frontmatter.date}
+                  {post.frontmatter.canonicalLink && (
+                    <span>
+                      {` `}
+                      (originally published at{` `}
+                      <a href={post.frontmatter.canonicalLink}>
+                        {post.frontmatter.publishedAt}
+                      </a>)
+                    </span>
+                  )}
+                </BioLine>
+              </div>
             </div>
           </header>
-          <h1
-            css={{
-              marginTop: 0,
-              [presets.Desktop]: {
-                marginBottom: rhythm(5 / 4),
-              },
-            }}
-          >
-            {this.props.data.markdownRemark.frontmatter.title}
-          </h1>
           {post.frontmatter.image &&
             !(post.frontmatter.showImageInArticle === false) && (
               <div
