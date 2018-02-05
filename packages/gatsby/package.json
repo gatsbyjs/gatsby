@@ -14,6 +14,8 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
+    "@types/history": "^4.6.2",
+    "@types/react-router-dom": "4.2.2",
     "async": "^2.1.2",
     "autoprefixer": "^7.1.2",
     "babel-code-frame": "^6.22.0",
