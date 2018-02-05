@@ -132,8 +132,8 @@ const addNotFoundRoute = () => {
   }
 }
 
-const navigateTo = pathname => {
-  window.___history.push(pathname)
+const navigateTo = to => {
+  window.___history.push(to)
 }
 
 window.___navigateTo = navigateTo

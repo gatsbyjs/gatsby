@@ -14,29 +14,31 @@ nodes from which you can query an HTML representation of the markdown.
 
 ```javascript
 // In your gatsby-config.js
-plugins: [
-  // You can have multiple instances of this plugin
-  // to read source nodes from different locations on your
-  // filesystem.
-  //
-  // The following sets up the Jekyll pattern of having a
-  // "pages" directory for Markdown files and a "data" directory
-  // for `.json`, `.yaml`, `.csv`.
-  {
-    resolve: `gatsby-source-filesystem`,
-    options: {
-      name: `pages`,
-      path: `${__dirname}/src/pages/`,
+module.exports = {
+  plugins: [
+    // You can have multiple instances of this plugin
+    // to read source nodes from different locations on your
+    // filesystem.
+    //
+    // The following sets up the Jekyll pattern of having a
+    // "pages" directory for Markdown files and a "data" directory
+    // for `.json`, `.yaml`, `.csv`.
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `pages`,
+        path: `${__dirname}/src/pages/`,
+      },
     },
-  },
-  {
-    resolve: `gatsby-source-filesystem`,
-    options: {
-      name: `data`,
-      path: `${__dirname}/src/data/`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `data`,
+        path: `${__dirname}/src/data/`,
+      },
     },
-  },
-];
+  ]
+}
 ```
 
 ## How to query

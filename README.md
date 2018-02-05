@@ -149,6 +149,9 @@ Websites built with Gatsby:
 * [Nortcast](https://nortcast.com/)
 * [VisitGemer](https://visitgemer.sk/)
 * [Nexit](https://nexit.sk/)
+* [ERC dEX](https://ercdex.com)
+* [iContract Blog](https://blog.icontract.co.uk)
+* [Dona Rita](https://donarita.co.uk) ([source](https://github.com/peduarte/dona-rita-website))
 
 ## Docs
 
