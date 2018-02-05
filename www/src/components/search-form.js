@@ -24,6 +24,10 @@ css.insert(`
     box-shadow: 0 3px 10px 0.05rem ${hex2rgba(colors.lilac, 0.25)} !important;
   }
 
+  .is-homepage .algolia-autocomplete .ds-dropdown-menu {
+    top: ${rhythm(2.5)} !important;
+  }
+
   /* .searchWrap to beat docsearch.css' !important */
   .searchWrap .algolia-autocomplete.algolia-autocomplete-right .ds-dropdown-menu,
   .searchWrap .algolia-autocomplete.algolia-autocomplete-left .ds-dropdown-menu {
@@ -193,6 +197,7 @@ css.insert(`
   }
 
   @media ${presets.tablet} {
+    .is-homepage .algolia-autocomplete .ds-dropdown-menu,
     .algolia-autocomplete .ds-dropdown-menu {
       top: 100% !important;
       position: absolute !important;
