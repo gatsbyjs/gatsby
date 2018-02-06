@@ -35,6 +35,11 @@ exports.onRouteUpdate = true
  * @param {object} $0
  * @param {object} $0.prevRouterProps The previous state of the router before the route change.
  * @param {object} $0.pathname The new pathname
+ * @example
+ * exports.shouldUpdateScroll = (prevRouterProps, pathname) => {
+ *   window.scrollTo(0, 0)  // upon navigation, scroll to top of page
+ *   return false
+ * };
  */
 exports.shouldUpdateScroll = true
 
