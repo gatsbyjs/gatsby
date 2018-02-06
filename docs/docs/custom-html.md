@@ -40,3 +40,18 @@ If you see this error: `Uncaught Error: _registerComponent(...): Target containe
   dangerouslySetInnerHTML={{ __html: this.props.body }}
 />
 ```
+
+### Adding custom JavaScript
+
+You can add custom JavaScript to your HTML document by using React's [dangerouslySetInnerHTML](https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml) attribute.
+
+```jsx
+<script
+    dangerouslySetInnerHTML={{
+        __html: `
+            var name = 'world';
+            console.log('Hello ' + name);
+        `
+    }}
+/>
+```
