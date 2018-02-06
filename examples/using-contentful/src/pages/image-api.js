@@ -220,7 +220,8 @@ export default props => {
         this query is used with{` `}
         <a href="https://www.gatsbyjs.org/packages/gatsby-image/">
           <code>gatsby-image</code>
-        </a>{` `}
+        </a>
+        {` `}
         WebP will be used automatically in browsers that support it.
       </p>
       {assets.map(({ node: { title, webp } }) => (

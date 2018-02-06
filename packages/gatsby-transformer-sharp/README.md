@@ -17,8 +17,8 @@ including resizing, cropping, and creating responsive images.
 ```javascript
 // In your gatsby-config.js
 module.exports = {
-  plugins: [`gatsby-transformer-sharp`]
-}
+  plugins: [`gatsby-transformer-sharp`],
+};
 ```
 
 ## Parsing algorithm
