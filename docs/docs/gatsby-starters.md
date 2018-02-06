@@ -432,3 +432,15 @@ Community:
   * Auto generated Navigation for your Wordpress Pages
   * Minimal UI and Styling -- made to customize.
   * Styled Components
+
+* [gatsby-starter-simple-landing](https://github.com/greglobinski/gatsby-starter-simple-landing)
+  [(demo)](https://gssl.greglobinski.com/)
+
+  Features:
+
+  * CSS-in-JS via [JSS](https://github.com/cssinjs/jss)
+  * easily restyled through theme object
+  * text content via Markdown files
+  * auto-generated sizes and types (png, webp) for background and hero images
+  * favicons generator
+  * webfonts with [webfontloader](https://github.com/typekit/webfontloader)
