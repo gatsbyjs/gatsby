@@ -51,6 +51,16 @@ const copy = async (starterPath: string, rootPath: string) => {
   if (!fs.existsSync(starterPath)) {
     throw new Error(`starter ${starterPath} doesn't exist`)
   }
+
+  if (starterPath === `.`) {
+    throw new Error(
+      `You can't create a starter from the existing directory. If you want to
+      create a new site in the current directory, the trailing dot isn't
+      necessary. If you want to create a new site from a local starter, run
+      something like "gatsby new new-gatsby-site ../my-gatsby-starter"`
+    )
+  }
+
   report.info(`Creating new site from local starter: ${starterPath}`)
 
   report.log(`Copying local starter to ${rootPath} ...`)
@@ -72,7 +82,7 @@ const clone = async (hostInfo: any, rootPath: string) => {
     url = hostInfo.ssh({ noCommittish: true })
     // Otherwise default to normal git syntax.
   } else {
-    url = hostInfo.git({ noCommittish: true })
+    url = hostInfo.https({ noCommittish: true })
   }
 
   const branch = hostInfo.committish ? `-b ${hostInfo.committish}` : ``

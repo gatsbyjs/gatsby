@@ -39,7 +39,7 @@ e.g. [Sass](/packages/gatsby-plugin-sass/),
 
 ## Example
 
-Here is an example adding support for **flexboxgrid** when processing css files.
+Here is an example that configures **flexboxgrid** when processing css files. Add this in `gatsby-node.js`:
 
 ```js
 exports.modifyWebpackConfig = ({ config, stage }) => {

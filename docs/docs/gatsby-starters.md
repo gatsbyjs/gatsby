@@ -209,7 +209,7 @@ Community:
     to learn how to set up authentication, and begin modeling your content.
 
 * [gatsby-starter-portfolio-emma](https://github.com/LeKoArts/gatsby-starter-portfolio-emma)
-  [(demo)](https://embalmer-glues-43220.netlify.com/)
+  [(demo)](https://portfolio-emma.netlify.com/)
 
   The target audience are designers and photographers.
 
@@ -224,7 +224,7 @@ Community:
   * And other good stuff (SEO, Offline Support, WebApp Manifest Support)
 
 * [gatsby-starter-portfolio-emilia](https://github.com/LeKoArts/gatsby-starter-portfolio-emilia)
-  [(demo)](https://upbeat-edison-0598aa.netlify.com/)
+  [(demo)](https://portfolio-emilia.netlify.com/)
 
   The target audience are designers and photographers.
 
@@ -334,7 +334,7 @@ Community:
 
   Features:
 
-  * Based on the Ceevee site template, design by [Styleshout](https://www.styeshout.com/)
+  * Based on the Ceevee site template, design by [Styleshout](https://www.styleshout.com/)
   * Single Page Resume/Portfolio site
   * Target audience Developers, Designers, etc.
   * Used CSS Modules, easy to manipulate
@@ -407,3 +407,28 @@ Community:
   * Integration with [Visual Studio Code](https://code.visualstudio.com)
     * Pre-configured auto-formatting on file save
   * Based on [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default)
+
+* [gatsby-hampton-theme](https://github.com/davad/gatsby-hampton-theme)
+  [(demo)](http://dmwl.net/gatsby-hampton-theme)
+
+  Features:
+
+  * Eslint in dev mode with the airbnb config and prettier formatting rules
+  * [Emotion](https://github.com/emotion-js/emotion) for CSS-in-JS
+  * A basic blog, with posts under src/pages/blog
+  * A few basic components (Navigation, Layout, Link wrapper around `gatsby-link`))
+  * Based on [gatsby-starter-gatsbytheme](https://github.com/saschajullmann/gatsby-starter-gatsbythemes)
+
+* [gatsby-wordpress-starter](https://github.com/ericwindmill/gatsby-starter-wordpress)
+  [(demo)](https://gatsby-wordpress-starter.netlify.com/)
+
+  Features:
+
+  * All the features from
+    [gatsby-advanced-starter](https://github.com/Vagr9K/gatsby-advanced-starter),
+    plus:
+  * Leverages the [WordPress plugin for Gatsby](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress) for data
+  * Configured to work with WordPress Advanced Custom Fields
+  * Auto generated Navigation for your Wordpress Pages
+  * Minimal UI and Styling -- made to customize.
+  * Styled Components
