@@ -385,32 +385,60 @@ exports.downloadMediaFiles = async ({
   cache,
   createNode,
   _auth,
-}) =>
-  Promise.all(
-    entities.map(async e => {
-      let fileNode
-      if (e.__type === `wordpress__wp_media`) {
-        try {
-          fileNode = await createRemoteFileNode({
-            url: e.source_url,
-            store,
-            cache,
-            createNode,
-            auth: _auth,
-          })
-        } catch (e) {
-          // Ignore
+}) => {
+  const remoteCache = {}
+  const cacheId = url => `gatsby-source-wordpress-remote-file-node-id-${url}`
+
+  const createMediaFileNodes = async () =>
+    Promise.all(
+      entities.map(async e => {
+        if (e.source_url && remoteCache[e.source_url]) {
+          return e
         }
-      }
 
-      if (fileNode) {
-        e.localFile___NODE = fileNode.id
-        delete e.media_details.sizes
-      }
+        let fileNode
+        if (e.__type === `wordpress__wp_media`) {
+          try {
+            remoteCache[e.source_url] = true
+            fileNode = await createRemoteFileNode({
+              url: e.source_url,
+              store,
+              cache,
+              createNode,
+              auth: _auth,
+            })
+          } catch (e) {
+            // Ignore
+          }
+        }
+        if (fileNode) {
+          await cache.set(cacheId(e.source_url), fileNode.id)
+        }
 
-      return e
-    })
-  )
+        return e
+      })
+    )
+
+  const mapLocalFileNodes = async () =>
+    Promise.all(
+      entities.map(async e => {
+        if (e.__type === `wordpress__wp_media`) {
+          const cachedNodeId = await cache.get(cacheId(e.source_url))
+          if (cachedNodeId) {
+            e.localFile___NODE = cachedNodeId
+            delete e.media_details.sizes
+          }
+        }
+
+        return e
+      })
+    )
+
+  entities = await createMediaFileNodes()
+  entities = await mapLocalFileNodes()
+
+  return entities
+}
 
 const createACFChildNodes = (
   obj,
