@@ -14,8 +14,6 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@types/history": "^4.6.2",
-    "@types/react-router-dom": "4.2.2",
     "async": "^2.1.2",
     "autoprefixer": "^7.1.2",
     "babel-code-frame": "^6.22.0",
@@ -91,7 +89,6 @@
     "postcss-import": "^11.0.0",
     "postcss-loader": "^2.0.6",
     "postcss-reporter": "^5.0.0",
-    "prop-types": "^15.5.8",
     "raw-loader": "^0.5.1",
     "react": "^16.2.0",
     "react-dev-utils": "^4.2.1",
