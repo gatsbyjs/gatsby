@@ -80,8 +80,12 @@ class Runner {
   async parseEverything() {
     // FIXME: this should all use gatsby's configuration to determine parsable
     // files (and how to parse them)
-    let files = glob.sync(`${this.fragmentsDir}/**/*.+(t|j)s?(x)`)
-    files = files.concat(glob.sync(`${this.baseDir}/**/*.+(t|j)s?(x)`))
+    let files = glob.sync(`${this.fragmentsDir}/**/*.+(t|j)s?(x)`, {
+      nodir: true,
+    })
+    files = files.concat(
+      glob.sync(`${this.baseDir}/**/*.+(t|j)s?(x)`, { nodir: true })
+    )
     files = files.filter(d => !d.match(/\.d\.ts$/))
     files = files.map(normalize)
 
