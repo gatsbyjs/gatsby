@@ -22,7 +22,7 @@ I found Gatsby a real pleasure. You can find tutorials on their site for setup a
 > __What-QL?__ GraphQL is a query language for APIs. Where in the WordPress Days I’d have to get the whole post just to display the title, with GraphQL I can tell the API to give me just the title.
 >[Their site is pretty handy too](http://graphql.org/).
 
-I got the site setup pretty quickly after learning about it. There’s a tonne of tutorials and instructional material around. And you can use as much or as little React as you want. There’s also a [massive list of available plugins](https://www.gatsbyjs.org/docs/plugins/), which is only going to grow.
+I got the site setup pretty quickly after learning about it. There’s a tonne of tutorials and instructional material around. And you can use as much or as little React as you want. There’s also a [massive list of available plugins](/docs/plugins/), which is only going to grow.
 
 So if you have any experience with React, or if you’re just getting started, this is a great choice. Gatsby doesn’t tell you how your code has to look. In fact it’s setup so you can use Markdown files for pages, but I didn’t fancy that, so I don’t. Simple as that! Likewise, if I want to scale this to build websites for other people, I don’t want to spend ages teaching them how to use Markdown, clone a git repo and add it to the git repo. Queue a Headless CMS.
 
@@ -78,7 +78,7 @@ I’m sure I don’t need to spend too much time telling you the benefits of Wor
 
 How does this hook up to our Gatsby build, then? Well if you have WordPress.com - WP’s free blogging platform - you can do it automatically for free. If you have WordPress.org - the big-brother that allows custom development - then you’ll need to host that somewhere (possibly free, but more likely paid-for if you get much traffic). My issue with the WP API is that I wanted something that would strip me of the usual server-database setup. But that’s what I’d need to run a WordPress.org CMS - even in a decoupled capacity. I really just one a one-stop-cloud-shop for my CMS like Contentful.
 
-The WordPress.com option is one to consider. They have a [developer blog](https://developer.wordpress.com/2016/11/11/wordpress-rest-api-on-wordpress-com/) about how to get started, which links to a really cool [API console](https://developer.wordpress.com/docs/api/console/) where you can experiment with the different types of requests you can make. In fact Gatsby makes this easier with the [`gatsby-source-wordpress` plugin](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress). In your Gatsby configuration file you set the URL of your WP install. Then in your WordPress site, [configure a new App](http://developer.wordpress.com/apps/), and your data is ready to be pulled down using a GraphQL Query.
+The WordPress.com option is one to consider. They have a [developer blog](https://developer.wordpress.com/2016/11/11/wordpress-rest-api-on-wordpress-com/) about how to get started, which links to a really cool [API console](https://developer.wordpress.com/docs/api/console/) where you can experiment with the different types of requests you can make. In fact Gatsby makes this easier with the [`gatsby-source-wordpress` plugin](/packages/gatsby-source-wordpress). In your Gatsby configuration file you set the URL of your WP install. Then in your WordPress site, [configure a new App](http://developer.wordpress.com/apps/), and your data is ready to be pulled down using a GraphQL Query.
 
 A lot of this information came from a [fantastic tutorial by Jeremey Duvall](https://jeremey.blog/gatsby-photo/). He goes through Gatsby, WordPress.com setup and hooking it up with GraphQL. It’s the whole setup right there.
 
@@ -91,7 +91,7 @@ We’ll be hearing more about Netlify in another article - their original produc
 
 One big difference from the others here is that the content in NetlifyCMS is kept in your Git repo, meaning that code and content are versioned together. You won’t ever lose content if you still have the repo, and you can see the history at the press of a button - same as you can with your code.
 
-[Gatsby has a handy tutorial for NetlifyCMS](https://www.gatsbyjs.org/docs/netlify-cms/) but they do stress that in order to save to Github etc, you will need your own server:
+[Gatsby has a handy tutorial for NetlifyCMS](/docs/netlify-cms/) but they do stress that in order to save to Github etc, you will need your own server:
 
 > To save your content in a Git repo, the repo will need to be hosted on a service like GitHub, and you’ll need a way to authenticate with that service so Netlify CMS can make changes through the service’s API. For most services, including GitHub, authentication will require a server.
 
