@@ -28,7 +28,7 @@ When content exists in a tight relationship with the presentation layer, adaptin
 > 'delivers' content to an application of some type. Its immediate consumer is code, and it’s assumed that
 > code will reformat the content for final delivery to a human." - Deane Barker
 
-To add to [Deane Barker's eloquent explanation in the quote above](https://gadgetopia.com/post/9743), a headless CMS only handles two things--content and managing that content through admin screens. This means that a separate presentation layer (or “head”) like GatsbyJS must reformat the content for delivery to a CDN and then final delivery to humans. 
+To add to [Deane Barker's eloquent explanation in the quote above](https://gadgetopia.com/post/9743), a headless CMS only handles two things--content and managing that content through admin screens. This means that a separate presentation layer (or “head”) like GatsbyJS must reformat the content for delivery to a CDN and then final delivery to humans.
 
 There are advantages to this separation between headless CMSs and the presentation layer. Their separation allows both to become highly specialized and efficient, similar to the highly functioning microwave in the Jetson’s house:
 

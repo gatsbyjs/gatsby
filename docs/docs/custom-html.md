@@ -47,11 +47,11 @@ You can add custom JavaScript to your HTML document by using React's [dangerousl
 
 ```jsx
 <script
-    dangerouslySetInnerHTML={{
-        __html: `
+  dangerouslySetInnerHTML={{
+    __html: `
             var name = 'world';
             console.log('Hello ' + name);
-        `
-    }}
+        `,
+  }}
 />
 ```
