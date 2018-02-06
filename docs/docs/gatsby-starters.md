@@ -418,3 +418,29 @@ Community:
   * A basic blog, with posts under src/pages/blog
   * A few basic components (Navigation, Layout, Link wrapper around `gatsby-link`))
   * Based on [gatsby-starter-gatsbytheme](https://github.com/saschajullmann/gatsby-starter-gatsbythemes)
+
+* [gatsby-wordpress-starter](https://github.com/ericwindmill/gatsby-starter-wordpress)
+  [(demo)](https://gatsby-wordpress-starter.netlify.com/)
+
+  Features:
+
+  * All the features from
+    [gatsby-advanced-starter](https://github.com/Vagr9K/gatsby-advanced-starter),
+    plus:
+  * Leverages the [WordPress plugin for Gatsby](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress) for data
+  * Configured to work with WordPress Advanced Custom Fields
+  * Auto generated Navigation for your Wordpress Pages
+  * Minimal UI and Styling -- made to customize.
+  * Styled Components
+
+* [gatsby-starter-simple-landing](https://github.com/greglobinski/gatsby-starter-simple-landing)
+  [(demo)](https://gssl.greglobinski.com/)
+
+  Features:
+
+  * CSS-in-JS via [JSS](https://github.com/cssinjs/jss)
+  * easily restyled through theme object
+  * text content via Markdown files
+  * auto-generated sizes and types (png, webp) for background and hero images
+  * favicons generator
+  * webfonts with [webfontloader](https://github.com/typekit/webfontloader)

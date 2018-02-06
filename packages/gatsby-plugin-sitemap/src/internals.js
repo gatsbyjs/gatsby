@@ -12,7 +12,7 @@ export const runQuery = (handler, query) =>
     return r.data
   })
 
-export const regexExclude404 = /^(?!\/(dev-404-page|404)).*$/
+export const regexExclude404AndOfflineShell = /^(?!\/(dev-404-page|404|offline-plugin-app-shell-fallback)).*$/
 
 export const defaultOptions = {
   query: `
@@ -26,7 +26,7 @@ export const defaultOptions = {
       allSitePage(
         filter: {
           path: {
-            regex: "${regexExclude404}"
+            regex: "${regexExclude404AndOfflineShell}"
           }
         }
       ) {
