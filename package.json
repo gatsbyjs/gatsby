@@ -42,7 +42,8 @@
   },
   "private": true,
   "scripts": {
-    "bootstrap": "npm-run-all -s install-local check-versions lerna-prepublish",
+    "bootstrap": "npm-run-all -s check-versions lerna-prepublish",
+    "prebootstrap": "yarn",
     "check-versions": "babel-node scripts/check-versions.js",
     "format": "npm-run-all -p format-packages format-cache-dir format-www format-examples format-scripts format-markdown",
     "format-cache-dir": "prettier-eslint --write \"packages/gatsby/cache-dir/*.js\"",
@@ -51,7 +52,6 @@
     "format-scripts": "prettier-eslint --write \"scripts/**/*.js\"",
     "format-markdown": "prettier --write \"**/*.md\" --semi",
     "format-www": "prettier-eslint --write \"www/*.js\" \"www/src/**/*.js\"",
-    "install-local": "yarn",
     "jest": "jest",
     "lerna": "lerna",
     "lerna-prepublish": "lerna run prepublish",
