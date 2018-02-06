@@ -5,7 +5,7 @@ import { rhythm } from "../utils/typography"
 
 import presets, { colors } from "../utils/presets"
 import hex2rgba from "hex2rgba"
-import SearchIcon from './search-icon'
+import SearchIcon from "./search-icon"
 
 import { css } from "glamor"
 
@@ -348,7 +348,7 @@ class SearchForm extends Component {
                 width: !isHomepage && rhythm(5),
                 ":focus": {
                   backgroundColor: colors.ui.light,
-                  color:  colors.gatsby,
+                  color: colors.gatsby,
                 },
               },
 

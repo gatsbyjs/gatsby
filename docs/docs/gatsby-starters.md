@@ -418,7 +418,7 @@ Community:
   * A basic blog, with posts under src/pages/blog
   * A few basic components (Navigation, Layout, Link wrapper around `gatsby-link`))
   * Based on [gatsby-starter-gatsbytheme](https://github.com/saschajullmann/gatsby-starter-gatsbythemes)
-  
+
 * [gatsby-wordpress-starter](https://github.com/ericwindmill/gatsby-starter-wordpress)
   [(demo)](https://gatsby-wordpress-starter.netlify.com/)
 

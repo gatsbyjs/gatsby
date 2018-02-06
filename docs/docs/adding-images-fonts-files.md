@@ -79,15 +79,17 @@ Examples:
 
   ```markdown
   ---
-  title: "Title of article"
-attachments:
-- "./assets.zip"
-- "./presentation.pdf"
-  ---
 
-  Hi, this is a great article.
+  title: "Title of article"
+  attachments:
   ```
 
+- "./assets.zip"
+- ## "./presentation.pdf"
+
+  Hi, this is a great article.
+
+  ````
   In the article template component file, you can query for the attachments:
 
   ```graphql

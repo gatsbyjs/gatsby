@@ -69,7 +69,7 @@ export default props => {
         You should prefer this operator over <code>resize</code>.
       </p>
       {assets.map(({ node: { title, resolutions } }) => (
-        <div key={resolutions.src} style={{ display: "inline-block" }}>
+        <div key={resolutions.src} style={{ display: `inline-block` }}>
           <Img
             key={resolutions.src}
             alt={title}
@@ -79,7 +79,7 @@ export default props => {
               marginRight: rhythm(1 / 2),
               marginBottom: rhythm(1 / 2),
               border: `1px solid tomato`,
-              display: "inline-block",
+              display: `inline-block`,
             }}
           />
         </div>
@@ -126,7 +126,7 @@ export default props => {
         </a>
       </p>
       {assets.map(({ node: { title, resizing } }) => (
-        <div key={resizing.src} style={{ display: "inline-block" }}>
+        <div key={resizing.src} style={{ display: `inline-block` }}>
           <Img
             alt={title}
             resolutions={resizing}
@@ -209,22 +209,22 @@ export default props => {
       <h2>WebP Images</h2>
       <p>
         WebP is an image format that provides lossy and lossless compression
-        that may be better than JPEG or PNG. The <code>srcWebp</code> and{" "}
-        <code>srcSetWebp</code> fields are available for{" "}
+        that may be better than JPEG or PNG. The <code>srcWebp</code> and{` `}
+        <code>srcSetWebp</code> fields are available for{` `}
         <code>resolutions</code> and <code>sizes</code> queries.
       </p>
       <p>
-        WebP is currently only supported in{" "}
+        WebP is currently only supported in{` `}
         <a href="https://caniuse.com/#feat=webp">Chrome and Oprah browsers</a>,
         and you'll want to fall back to another format for other clients. When
-        this query is used with{" "}
+        this query is used with{` `}
         <a href="https://www.gatsbyjs.org/packages/gatsby-image/">
           <code>gatsby-image</code>
-        </a>{" "}
+        </a>{` `}
         WebP will be used automatically in browsers that support it.
       </p>
       {assets.map(({ node: { title, webp } }) => (
-        <div key={webp.src} style={{ display: "inline-block" }}>
+        <div key={webp.src} style={{ display: `inline-block` }}>
           <Img
             key={webp.src}
             alt={title}
