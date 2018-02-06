@@ -15,12 +15,12 @@ The only thing as abundant than Headless CMS options is Static Site Generator op
 Gatsby pitches as a “Blazing-fast static site generator for React”. So if I can build sites, but also encompass some React knowledge, all the better right? And I’m always looking for side-projects and sites for others, so if I can get a JAMstack sorted quicker and easier than my previous WordPress stack, then all the better going forward! I thought it was best to start with my own site, to test the viability.
 
 > __What-stack?__ JAM stands for Javascript, API, Markup. There are lots of benefits to this type of site, but the one I’m interested in is that your CMS is detached from your site - no hefty WordPress build for your tiny blog site.
-[You can read more on the JAMstack website](https://jamstack.org/).
+>[You can read more on the JAMstack website](https://jamstack.org/).
 
 I found Gatsby a real pleasure. You can find tutorials on their site for setup and once you see the code it’s fairly simple. I can personally recommend [Scott Tolinski’s series - available on Youtube](https://www.youtube.com/watch?v=b2H7fWhQcdE&list=PLLnpHn493BHHfoINKLELxDch3uJlSapxg). Gatsby nicely wraps up React and React Router with a nice folder structure, webkit, ES6, SASS support and - importantly - GraphQL.
 
 > __What-QL?__ GraphQL is a query language for APIs. Where in the WordPress Days I’d have to get the whole post just to display the title, with GraphQL I can tell the API to give me just the title.
-[Their site is pretty handy too](http://graphql.org/).
+>[Their site is pretty handy too](http://graphql.org/).
 
 I got the site setup pretty quickly after learning about it. There’s a tonne of tutorials and instructional material around. And you can use as much or as little React as you want. There’s also a [massive list of available plugins](https://www.gatsbyjs.org/docs/plugins/), which is only going to grow.
 
@@ -69,7 +69,7 @@ Contentful looks like a fantastic service. It isn’t perfect but it checks all 
 
 ---
 
-![WP's REST API](wp.png)
+![WP's REST API](wp.jpeg)
 
 ### WordPress’ REST API
 Ever since I started coding I’ve used WordPress as a traditional CMS. I’m familiar with how it works, the terminology and documentation. I know that WordPress is very very well-documented. The API includes ACF - a plugin known to most if not all WP devs and theme builders - which opens the posts out to accept all sorts of different fields. In fact, one of my issues about Contentful was based on my much-longer-term experience with ACF and WP.
@@ -91,7 +91,7 @@ We’ll be hearing more about Netlify in another article - their original produc
 
 One big difference from the others here is that the content in NetlifyCMS is kept in your Git repo, meaning that code and content are versioned together. You won’t ever lose content if you still have the repo, and you can see the history at the press of a button - same as you can with your code.
 
-[Gatsby have a handy tutorial for NetlifyCMS](https://www.gatsbyjs.org/docs/netlify-cms/) but they do stress that in order to save to Github etc, you will need your own server:
+[Gatsby has a handy tutorial for NetlifyCMS](https://www.gatsbyjs.org/docs/netlify-cms/) but they do stress that in order to save to Github etc, you will need your own server:
 
 > To save your content in a Git repo, the repo will need to be hosted on a service like GitHub, and you’ll need a way to authenticate with that service so Netlify CMS can make changes through the service’s API. For most services, including GitHub, authentication will require a server.
 
