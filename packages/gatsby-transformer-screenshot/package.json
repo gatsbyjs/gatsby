@@ -1,6 +1,6 @@
 {
   "name": "gatsby-transformer-screenshot",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Gatsby transformer plugin that uses AWS Lambda to take screenshots of websites",
   "main": "index.js",
   "dependencies": {
