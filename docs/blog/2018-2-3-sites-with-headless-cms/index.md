@@ -6,7 +6,7 @@ author: "Shannon Soper"
 
 ## What is a traditional CMS?
 
-A traditional Content Management System (CMS)--like Wordpress, Drupal, or Joomla--manages three things for a website: content, admin screens, and presentation layer. These three things are tightly related, which has advantages. For example, there’s only one system to learn / one vendor relationship, and overall, there may be fewer choices to make. In addition, traditional CMSs have been around for so long that many teams are familiar with them and many websites are already be running on them. Both advantages.
+A traditional Content Management System (CMS)--like Wordpress, Drupal, or Joomla--manages three things for a website: content, admin screens, and presentation layer. These three things are tightly integrated, which has advantages. For example, there’s only one system to learn / one vendor relationship, and overall, there may be fewer choices to make. In addition, traditional CMSs have been around for so long that many teams are familiar with them and many websites are already be running on them. Both advantages.
 
 You can think of a traditional CMS like an old home built by one person and with custom fittings. Gorgeous, and expensive to maintain, like the home in _The Money Pit_ (1986) with Tom Hanks and Shelley Long.
 
@@ -16,9 +16,9 @@ Despite the advantages of this scenario, there are also some disadvantages which
 
 ### Slower load times AND expensive
 
-It is time-consuming and expensive to run a traditional CMS on [edge servers](https://www.cloudflare.com/learning/cdn/glossary/edge-server/) (servers running CDNs) so they’re typically database-driven. This results in load times that become slower the farther away you live from the servers. For example, people often observe that US websites run slowly in Australia. This is not imaginary; when someone in Australia accesses a US site built with a traditional CMS, it has to be sent from far-away servers.
+Most traditional CMSs can't run on [edge servers](https://www.cloudflare.com/learning/cdn/glossary/edge-server/) (servers running CDNs). This results in slower load times the farther away you live from the servers. For example, people often observe that US websites run slowly in Australia. This is not imaginary; when someone in Australia accesses a US site built with a traditional CMS, it has to be sent from far-away servers.
 
-### Hard to adapt to new formats
+### Hard to adapt content to new formats
 
 When content exists in a tight relationship with the presentation layer, adapting that content for new formats like smart watches, kiosks, and virtual reality can be challenging and expensive.
 
@@ -28,7 +28,7 @@ When content exists in a tight relationship with the presentation layer, adaptin
 > 'delivers' content to an application of some type. Its immediate consumer is code, and it’s assumed that
 > code will reformat the content for final delivery to a human." - Deane Barker
 
-To add to Deane Barker's eloquent explanation in the quote above, a headless CMS only handles two things--content and managing that content through admin screens. This means that a separate presentation layer (or “head”) like GatsbyJS must reformat the content for delivery to a CDN and then final delivery to humans. 
+To add to [Deane Barker's eloquent explanation in the quote above](https://gadgetopia.com/post/9743), a headless CMS only handles two things--content and managing that content through admin screens. This means that a separate presentation layer (or “head”) like GatsbyJS must reformat the content for delivery to a CDN and then final delivery to humans. 
 
 There are advantages to this separation between headless CMSs and the presentation layer. Their separation allows both to become highly specialized and efficient, similar to the highly functioning microwave in the Jetson’s house:
 
@@ -80,7 +80,7 @@ I filled out a form to get a free trial and heard back a while later with some q
 
 ### Contentful
 
-I already built this site http://watson.surge.sh/ with Contentful and talk about that experience [here](./building-a-site-with-react-and-contentful/). Another thing I like about Contentful, which I didn't mention in the other article, is how smooth it is to toggle between content models (categories of content types). Their recent product update says you can add images inline in chunks of text, which makes the editing experience feel more like using a WYSIWYG. This seems like it would make things easy on the editing side, although I haven't explored if this would affect image presentation.
+I already built this site http://watson.surge.sh/ with Contentful and talk about that experience [here](/blog/2018-1-25-building-a-site-with-react-and-contentful/). Another thing I like about Contentful, which I didn't mention in the other article, is how smooth it is to toggle between content models (categories of content types). Their recent product update says you can add images inline in chunks of text, which makes the editing experience feel more like using a WYSIWYG. This seems like it would make things easy on the editing side, although I haven't explored if this would affect image presentation.
 
 ### CloudCMS
 
