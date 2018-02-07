@@ -10,7 +10,7 @@ const createContentDigest = obj =>
     .update(JSON.stringify(obj))
     .digest(`hex`)
 
-exports.sourceNodes = async ({ boundActionCreators }, {keywords}) => {
+exports.sourceNodes = async ({ boundActionCreators }, { keywords }) => {
   const { createNode } = boundActionCreators
 
   console.log(`Grabbing NPM packages...`)
@@ -32,10 +32,9 @@ exports.sourceNodes = async ({ boundActionCreators }, {keywords}) => {
   // images -> for now this filters out those packages
 
   data.hits.forEach(hit => {
-    if (hit.readme.includes("![")){
+    if (hit.readme.includes(`![`)) {
       return
     }
-
 
     const parentId = `plugin ${hit.objectID}`
     const readmeNode = {
@@ -47,7 +46,7 @@ exports.sourceNodes = async ({ boundActionCreators }, {keywords}) => {
         type: `NPMPackageReadme`,
         mediaType: `text/markdown`,
         content: hit.readme,
-      }
+      },
     }
     readmeNode.internal.contentDigest = createContentDigest(readmeNode)
     // Remove unneeded data
@@ -74,7 +73,6 @@ exports.sourceNodes = async ({ boundActionCreators }, {keywords}) => {
     node.internal.contentDigest = createContentDigest(node)
     createNode(readmeNode)
     createNode(node)
-
   })
 
   return
