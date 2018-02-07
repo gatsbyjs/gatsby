@@ -119,8 +119,7 @@ module.exports = (
                 if (
                   node.url &&
                   node.url.startsWith(`/`) &&
-                  !node.url.startsWith(`//`) &&
-                  !node.url.startsWith(pathPrefix)
+                  !node.url.startsWith(`//`)
                 ) {
                   node.url = withPathPrefix(node.url, pathPrefix)
                 }
