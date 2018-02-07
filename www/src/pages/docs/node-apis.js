@@ -12,7 +12,9 @@ class NodeAPIDocs extends React.Component {
         <Helmet>
           <title>Node APIs</title>
         </Helmet>
-        <h1 css={{ marginTop: 0 }}>Gatsby Node APIs</h1>
+        <h1 id="gatsby-node-apis" css={{ marginTop: 0 }}>
+          Gatsby Node APIs
+        </h1>
         <p>
           Gatsby gives plugins and site builders many APIs for controlling your
           site.
