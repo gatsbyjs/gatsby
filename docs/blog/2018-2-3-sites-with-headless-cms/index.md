@@ -22,7 +22,6 @@ Most traditional CMSs can't run on [edge servers](https://www.cloudflare.com/lea
 
 When content exists in a tight relationship with the presentation layer, adapting that content for new formats like smart watches, kiosks, and virtual reality can be challenging and expensive.
 
-
 ## What is a headless CMS?
 
 > "A headless CMS does nothing but manage content. It doesn’t deliver content to humans at all. Rather, it
@@ -31,7 +30,7 @@ When content exists in a tight relationship with the presentation layer, adaptin
 
 To add to Deane Barker's eloquent explanation in the quote above (see his article [here](https://gadgetopia.com/post/9743)), a headless CMS only handles two things--content and managing that content through admin screens. This means that a separate presentation layer (or “head”) like GatsbyJS must reformat the content for delivery to a CDN and then final delivery to humans.
 
-*Note on how CMSs usually work:* Most headless CMSs require you to create various structures for your content, typically called "content models", and then enter content into that structure. Content can include words, images, URLs, lists, etc. Then, outside of the CMS, you push this content through a presentation layer (GraphQL queries are one way to do this pushing).
+_Note on how CMSs usually work:_ Most headless CMSs require you to create various structures for your content, typically called "content models", and then enter content into that structure. Content can include words, images, URLs, lists, etc. Then, outside of the CMS, you push this content through a presentation layer (GraphQL queries are one way to do this pushing).
 
 Following are some advantages to using a headless CMS.
 
@@ -49,7 +48,7 @@ The separation between a headless CMS and the presentation layer allows both to 
 
 ![The Jetson’s microwave shoots food at them and makes it so easy to eat!](the-jetsons.jpeg)
 
-When businesses specialize in one thing instead of several, they tend to become more time-efficient and can produce things at a lower cost. In human terms, this means that headless CMSs tend to cost you less than traditional CMSs, because they cost less up front or they take you less time to maintain. 
+When businesses specialize in one thing instead of several, they tend to become more time-efficient and can produce things at a lower cost. In human terms, this means that headless CMSs tend to cost you less than traditional CMSs, because they cost less up front or they take you less time to maintain.
 
 This specialization also means that headless CMSs perform well in scenarios in which a traditional CMS would prove inadequate. I’d like to point to Deane Barker’s [excellent article on use cases for headless CMSs](https://gadgetopia.com/post/9743), from which we've extracted a partial list:
 
@@ -60,7 +59,6 @@ This specialization also means that headless CMSs perform well in scenarios in w
 * All of the above! :)
 
 In all of these cases, a headless CMS is an excellent solution for you.
-
 
 ## Which headless CMS should I choose?
 
@@ -87,7 +85,6 @@ I already built this site http://watson.surge.sh/ with Contentful and talk about
 ### CloudCMS
 
 This system gives you lots of options when it comes to creating content. Maybe too many options. For example, the free trial account comes preloaded with a sample project. When I clicked on a sample book description, there was a list of about 12 hyperlinks and because of the sheer number of choices, and the fact that I'm unfamiliar with their terminology, I felt overwhelmed. Otherwise, this system has pixelated graphics and a workflow that was hard to navigate as an editor of content; it felt more like a series of rabbit holes instead of a flow. On the upside, some of the capabilities seem really useful, like a button that said "make it multilingual." Could it be that easy?
-
 
 ## Conclusion
 
