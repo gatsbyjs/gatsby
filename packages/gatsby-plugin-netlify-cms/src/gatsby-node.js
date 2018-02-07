@@ -29,16 +29,24 @@ function plugins(stage) {
   }
 }
 
+/**
+ * Exclude Netlify CMS styles from Gatsby CSS bundle. This relies on Gatsby
+ * using webpack-configurator for webpack config extension, and also on the
+ * target loader key being named "css" in Gatsby's webpack config.
+ */
+function excludeFromLoader(key, config) {
+  config.loader(key, {
+    exclude: [/\/node_modules\/netlify-cms\//],
+  })
+}
+
 function module(config, stage) {
   switch (stage) {
+    case `build-css`:
+      excludeFromLoader(`css`, config)
+      return config
     case `build-javascript`:
-      // Exclude Netlify CMS styles from Gatsby CSS bundle. This relies on
-      // Gatsby using webpack-configurator for webpack config extension, and
-      // also on the target loader key being named "css" in Gatsby's webpack
-      // config.
-      config.loader(`css`, {
-        exclude: [/\/node_modules\/netlify-cms\//],
-      })
+      excludeFromLoader(`css`, config)
 
       // Exclusively extract Netlify CMS styles to /cms.css (filename configured
       // above with plugin instantiation).

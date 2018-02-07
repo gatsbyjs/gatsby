@@ -22,6 +22,7 @@ const english = require(`retext-english`)
 const remark2retext = require(`remark-retext`)
 const GraphQlJson = require(`graphql-type-json`)
 const stripPosition = require(`unist-util-remove-position`)
+const hastReparseRaw = require(`hast-util-raw`)
 
 let pluginsCacheStr = ``
 const astCacheKey = node =>
@@ -290,9 +291,10 @@ module.exports = (
       htmlAst: {
         type: GraphQlJson,
         resolve(markdownNode) {
-          const ast = _.clone(getHTMLAst(markdownNode))
-          stripPosition(ast, true)
-          return ast
+          return getHTMLAst(markdownNode).then(ast => {
+            const strippedAst = stripPosition(_.clone(ast), true)
+            return hastReparseRaw(strippedAst)
+          })
         },
       },
       excerpt: {

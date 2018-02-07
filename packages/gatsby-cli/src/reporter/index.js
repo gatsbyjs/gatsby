@@ -17,7 +17,11 @@ module.exports = Object.assign(reporter, {
   setVerbose(isVerbose = true) {
     this.isVerbose = !!isVerbose
   },
-
+  setNoColor(isNoColor = false) {
+    if (isNoColor) {
+      errorFormatter.withoutColors()
+    }
+  },
   panic(...args) {
     this.error(...args)
     process.exit(1)

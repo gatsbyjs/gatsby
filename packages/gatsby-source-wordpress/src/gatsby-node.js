@@ -18,7 +18,7 @@ let _auth
 let _perPage
 
 exports.sourceNodes = async (
-  { boundActionCreators, getNode, store, cache },
+  { boundActionCreators, getNode, store, cache, createNodeId },
   {
     baseUrl,
     protocol,
@@ -71,7 +71,7 @@ exports.sourceNodes = async (
   entities = normalize.excludeUnknownEntities(entities)
 
   // Creates Gatsby IDs for each entity
-  entities = normalize.createGatsbyIds(entities)
+  entities = normalize.createGatsbyIds(createNodeId, entities)
 
   // Creates links between authors and user entities
   entities = normalize.mapAuthorsToUsers(entities)
