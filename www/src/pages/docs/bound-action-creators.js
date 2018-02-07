@@ -12,7 +12,9 @@ class ActionCreatorsDocs extends React.Component {
         <Helmet>
           <title>Bound Action Creators</title>
         </Helmet>
-        <h1 css={{ marginTop: 0 }}>Bound Action Creators</h1>
+        <h1 id="bound-action-creators" css={{ marginTop: 0 }}>
+          Bound Action Creators
+        </h1>
         <p>
           Gatsby uses
           {` `}
