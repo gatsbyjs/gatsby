@@ -39,7 +39,7 @@ export default IndexPage;
 
 ### Creating the GraphQL query
 
-The only thing left to do is to provide the data to your component with a GraphQL query.
+The only thing left to do is to provide the data to your component with a GraphQL query and create the `post-link` component. Let's add the GraphQL query so that `index.js` looks like this:
 
 ```js
 import React from "react";
@@ -72,6 +72,23 @@ export const pageQuery = graphql`
     }
   }
 `;
+```
+
+Last but not least, let's add a basic `post-link.js` to `src/components/`:
+
+```js
+import React from "react";
+import Link from "gatsby-link";
+
+const PostLink = ({ post }) => (
+  <div>
+    <Link to={post.frontmatter.path}>
+      {post.frontmatter.title} ({post.frontmatter.date})
+    </Link>
+  </div>
+);
+
+export default PostLink;
 ```
 
 This should get you a page with your posts sorted by descending date. You can further customise the `frontmatter` and the page component to get desired effects!
