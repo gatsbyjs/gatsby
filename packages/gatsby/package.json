@@ -145,7 +145,8 @@
     "website"
   ],
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "index.js",
+  "browser": "dist/browser.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gatsbyjs/gatsby.git"
