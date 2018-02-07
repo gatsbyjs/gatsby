@@ -3,7 +3,7 @@ import { renderToString, renderToStaticMarkup } from "react-dom/server"
 import { StaticRouter, Route, withRouter } from "react-router-dom"
 import { kebabCase, get, merge, isArray, isString } from "lodash"
 
-import apiRunner from "./api-runner-ssr"
+import { apiRunner } from "./api-runner-ssr"
 import pages from "./pages.json"
 import syncRequires from "./sync-requires"
 import testRequireError from "./test-require-error"
@@ -110,15 +110,19 @@ module.exports = (locals, callback) => {
   )
 
   // Let the site or plugin render the page component.
-  apiRunner(`replaceRenderer`, {
-    bodyComponent,
-    replaceBodyHTMLString,
-    setHeadComponents,
-    setHtmlAttributes,
-    setBodyAttributes,
-    setPreBodyComponents,
-    setPostBodyComponents,
-    setBodyProps,
+  apiRunner({
+    api: `replaceRenderer`,
+    args: {
+      bodyComponent,
+      replaceBodyHTMLString,
+      setHeadComponents,
+      setHtmlAttributes,
+      setBodyAttributes,
+      setPreBodyComponents,
+      setPostBodyComponents,
+      setBodyProps,
+    },
+    checkDupes: true,
   })
 
   // If no one stepped up, we'll handle it.
@@ -126,15 +130,18 @@ module.exports = (locals, callback) => {
     bodyHtml = renderToString(bodyComponent)
   }
 
-  apiRunner(`onRenderBody`, {
-    setHeadComponents,
-    setHtmlAttributes,
-    setBodyAttributes,
-    setPreBodyComponents,
-    setPostBodyComponents,
-    setBodyProps,
-    pathname: locals.path,
-    bodyHtml,
+  apiRunner({
+    api: `onRenderBody`,
+    args: {
+      setHeadComponents,
+      setHtmlAttributes,
+      setBodyAttributes,
+      setPreBodyComponents,
+      setPostBodyComponents,
+      setBodyProps,
+      pathname: locals.path,
+      bodyHtml,
+    },
   })
 
   let stats

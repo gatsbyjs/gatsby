@@ -234,6 +234,7 @@ module.exports = async (args: BootstrapArgs) => {
       plugin =>
         `{
       plugin: require('${plugin.resolve}'),
+      path: "${plugin.resolve}",
       options: ${JSON.stringify(plugin.options)},
     }`
     )
