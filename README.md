@@ -154,7 +154,6 @@ Websites built with Gatsby:
 * [Dona Rita](https://donarita.co.uk) ([source](https://github.com/peduarte/dona-rita-website))
 * [Andy Slezak](https://www.aslezak.com) ([source](https://github.com/amslezak))
 
-
 ## Docs
 
 **[View the docs on gatsbyjs.org](https://www.gatsbyjs.org/docs/)**
