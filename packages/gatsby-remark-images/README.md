@@ -34,22 +34,6 @@ plugins: [
             // the content container as this plugin uses this as the
             // base for generating different widths of each image.
             maxWidth: 590,
-            // Remove the default behavior of adding a link to each
-            // image.
-            linkImagesToOriginal: true,
-            // Analyze images' pixel density to make decisions about
-            // target image size. This is what GitHub is doing when
-            // embedding images in tickets. This is a useful setting
-            // for documentation pages with a lot of screenshots.
-            // It can have unintended side effects on high pixel
-            // density artworks.
-            //
-            // Example: A screenshot made on a retina screen with a
-            // resolution of 144 (e.g. Macbook) and a width of 100px,
-            // will be rendered at 50px.
-            //
-            // Defaults to false.
-            sizeByPixelDensity: false,
           },
         },
       ],
@@ -57,6 +41,24 @@ plugins: [
   },
 ];
 ```
+
+## Options
+
+| Name | Default | Description |
+| `maxWidth` | `650` | The `maxWidth` in pixels of the div where the markdown will be displayed. This value is used when deciding what the width of the various responsive thumbnails should be. |
+| `linkImagesToOriginal` | `true` | Add a link to each image to the original image. Sometimes people want to see a full-sized version of an image e.g. to see extra detail on a part of the image and this is a convenient and common pattern for enabling this. Set this option to false to disable this behavior. |
+| `sizeByPixelDensity` | `false` |
+Analyze images' pixel density to make decisions about target image
+size. This is what GitHub is doing when embedding images in
+tickets. This is a useful setting for documentation pages with
+a lot of screenshots. It can have unintended side effects on high
+pixel density artworks.
+
+Example: A screenshot made on a retina screen with a resolution of
+144 (e.g. Macbook) and a width of 100px, will be rendered at 50px.
+|
+| `wrapperStyle` | | Add custom styles to the div wrapping the responsive images. Use the syntax for the style attribute e.g. `margin-bottom:10px; background: red;` |
+| `backgroundColor` | `white` | Set the background color of the image to match the background image of your design |
 
 [1]: https://jmperezperez.com/medium-image-progressive-loading-placeholder/
 [2]: https://code.facebook.com/posts/991252547593574/the-technology-behind-preview-photos/
