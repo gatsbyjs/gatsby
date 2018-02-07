@@ -22,31 +22,36 @@ Most traditional CMSs can't run on [edge servers](https://www.cloudflare.com/lea
 
 When content exists in a tight relationship with the presentation layer, adapting that content for new formats like smart watches, kiosks, and virtual reality can be challenging and expensive.
 
+
 ## What is a headless CMS?
 
 > "A headless CMS does nothing but manage content. It doesn’t deliver content to humans at all. Rather, it
 > 'delivers' content to an application of some type. Its immediate consumer is code, and it’s assumed that
 > code will reformat the content for final delivery to a human." - Deane Barker
 
-To add to [Deane Barker's eloquent explanation in the quote above](https://gadgetopia.com/post/9743), a headless CMS only handles two things--content and managing that content through admin screens. This means that a separate presentation layer (or “head”) like GatsbyJS must reformat the content for delivery to a CDN and then final delivery to humans.
+To add to Deane Barker's eloquent explanation in the quote above (see his article [here](https://gadgetopia.com/post/9743)), a headless CMS only handles two things--content and managing that content through admin screens. This means that a separate presentation layer (or “head”) like GatsbyJS must reformat the content for delivery to a CDN and then final delivery to humans.
 
-There are advantages to this separation between headless CMSs and the presentation layer. Their separation allows both to become highly specialized and efficient, similar to the highly functioning microwave in the Jetson’s house:
+*Note on how CMSs usually work:* Most headless CMSs require you to create various structures for your content, typically called "content models", and then enter content into that structure. Content can include words, images, URLs, lists, etc. Then, outside of the CMS, you push this content through a presentation layer (GraphQL queries are one way to do this pushing).
 
-![The Jetson’s microwave shoots food at them and makes it so easy to eat!](the-jetsons.jpeg)
-
-Following are some more advantages to using a headless CMS.
+Following are some advantages to using a headless CMS.
 
 ### Faster load times AND cheaper?
 
 With much less time (and therefore less money), you can set up a headless CMS with a presentation layer like GatsbyJS and a CDN and get your site running on edge servers.
 
-The advantage of this method is faster load times for most sites, which can be illustrated by the previous Australia example. Let’s say a person in Australia accesses a US site built with a headless CMS and GatsbyJS; the site can run off of a closer server, so it will load quickly. This is an enormous advantage for both the user and for whomever created the site.
+Besides being faster and therefore less expensive to set up, this method also produces faster load times for most sites. Let’s say a person in Australia accesses a US site built with a headless CMS and GatsbyJS; the site can run off of a closer server, so it will load quickly. This is an enormous advantage for both the user and for whomever created the site.
 
 Faster load times can be taken to the next level with sites that run offline. I recently chatted with a friend in New Delhi who used GatsbyJS to build his blog to run offline, which is an incredible advantage for commuters who want to read while on public transportation with spotty internet access.
 
 ### Higher quality AND cheaper?
 
-Headless CMSs perform well in scenarios in which a traditional CMS would prove inadequate. I’d like to point to Deane Barker’s [excellent article on use cases for headless CMSs](https://gadgetopia.com/post/9743), from which we've extracted a partial list:
+The separation between a headless CMS and the presentation layer allows both to become highly specialized and efficient, similar to the food production system in the Jetson’s house:
+
+![The Jetson’s microwave shoots food at them and makes it so easy to eat!](the-jetsons.jpeg)
+
+When businesses specialize in one thing instead of several, they tend to become more time-efficient and can produce things at a lower cost. In human terms, this means that headless CMSs tend to cost you less than traditional CMSs, because they cost less up front or they take you less time to maintain. 
+
+This specialization also means that headless CMSs perform well in scenarios in which a traditional CMS would prove inadequate. I’d like to point to Deane Barker’s [excellent article on use cases for headless CMSs](https://gadgetopia.com/post/9743), from which we've extracted a partial list:
 
 * You need to gather content from disparate places and pull it together into one platform
 * You need to push content to various formats, including desktop sites, mobile sites, smart watches, ads, etc.
@@ -56,9 +61,6 @@ Headless CMSs perform well in scenarios in which a traditional CMS would prove i
 
 In all of these cases, a headless CMS is an excellent solution for you.
 
-### What is the editing experience like in a headless CMS?
-
-Most headless CMSs require you to create various structures for your content, typically called "content models", and then enter content into that structure. Content can include words, images, URLs, lists, etc. Then, outside of the CMS, you push this content through a presentation layer (GraphQL queries are one way to do this pushing).
 
 ## Which headless CMS should I choose?
 
@@ -85,6 +87,7 @@ I already built this site http://watson.surge.sh/ with Contentful and talk about
 ### CloudCMS
 
 This system gives you lots of options when it comes to creating content. Maybe too many options. For example, the free trial account comes preloaded with a sample project. When I clicked on a sample book description, there was a list of about 12 hyperlinks and because of the sheer number of choices, and the fact that I'm unfamiliar with their terminology, I felt overwhelmed. Otherwise, this system has pixelated graphics and a workflow that was hard to navigate as an editor of content; it felt more like a series of rabbit holes instead of a flow. On the upside, some of the capabilities seem really useful, like a button that said "make it multilingual." Could it be that easy?
+
 
 ## Conclusion
 
