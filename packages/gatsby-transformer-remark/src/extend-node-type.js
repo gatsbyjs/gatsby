@@ -25,26 +25,31 @@ const stripPosition = require(`unist-util-remove-position`)
 const hastReparseRaw = require(`hast-util-raw`)
 
 let pluginsCacheStr = ``
+let pathPrefixCacheStr = ``
 const astCacheKey = node =>
   `transformer-remark-markdown-ast-${
     node.internal.contentDigest
-  }-${pluginsCacheStr}`
+  }-${pluginsCacheStr}-${pathPrefixCacheStr}`
 const htmlCacheKey = node =>
   `transformer-remark-markdown-html-${
     node.internal.contentDigest
-  }-${pluginsCacheStr}`
+  }-${pluginsCacheStr}-${pathPrefixCacheStr}`
 const htmlAstCacheKey = node =>
   `transformer-remark-markdown-html-ast-${
     node.internal.contentDigest
-  }-${pluginsCacheStr}`
+  }-${pluginsCacheStr}-${pathPrefixCacheStr}`
 const headingsCacheKey = node =>
   `transformer-remark-markdown-headings-${
     node.internal.contentDigest
-  }-${pluginsCacheStr}`
+  }-${pluginsCacheStr}-${pathPrefixCacheStr}`
 const tableOfContentsCacheKey = node =>
   `transformer-remark-markdown-toc-${
     node.internal.contentDigest
-  }-${pluginsCacheStr}`
+  }-${pluginsCacheStr}-${pathPrefixCacheStr}`
+
+// ensure only one `/` in new url
+const withPathPrefix = (url, pathPrefix) =>
+  (pathPrefix + url).replace(/\/\//, `/`)
 
 module.exports = (
   { type, store, pathPrefix, getNode, cache },
@@ -55,6 +60,7 @@ module.exports = (
   }
 
   pluginsCacheStr = pluginOptions.plugins.map(p => p.name).join(``)
+  pathPrefixCacheStr = pathPrefix || ``
 
   return new Promise((resolve, reject) => {
     // Setup Remark.
@@ -106,6 +112,19 @@ module.exports = (
             }
           }).then(() => {
             const markdownAST = remark.parse(markdownNode.internal.content)
+
+            if (pathPrefix) {
+              // Ensure relative links include `pathPrefix`
+              visit(markdownAST, `link`, node => {
+                if (
+                  node.url &&
+                  node.url.startsWith(`/`) &&
+                  !node.url.startsWith(`//`)
+                ) {
+                  node.url = withPathPrefix(node.url, pathPrefix)
+                }
+              })
+            }
 
             // source => parse (can order parsing for dependencies) => typegen
             //
