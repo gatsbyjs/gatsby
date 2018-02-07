@@ -34,9 +34,6 @@ plugins: [
             // the content container as this plugin uses this as the
             // base for generating different widths of each image.
             maxWidth: 590,
-            //
-            // Defaults to false.
-            sizeByPixelDensity: false,
           },
         },
       ],
