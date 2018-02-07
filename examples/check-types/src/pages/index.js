@@ -1,6 +1,12 @@
 import React from "react"
 import PropTypes from "prop-types"
 
+const Bar = props => <div>bar: {props.hello}</div>
+
+Bar.propTypes = {
+  hello: PropTypes.string,
+}
+
 const Foo = props => {
   const newChildren = React.Children.map(
     props.children,
@@ -14,15 +20,10 @@ const Foo = props => {
   return <div>{newChildren}</div>
 }
 
-const Bar = props => <div>bar: {props.hello}</div>
-
-Bar.propTypes = {
-  hello: PropTypes.string,
-}
-
 const IndexComponent = () => (
   <Foo>
     <Bar />
   </Foo>
 )
+
 export default IndexComponent
