@@ -13,8 +13,8 @@ const apis = require(`./api-ssr-docs`)
  * For apis that have been implemented multiple times, return an array of paths
  * pointing to the file implementing `api`.
  *
- * @param {Array} pluginList
- * @param {String} api
+ * @param {array} pluginList
+ * @param {string} api
  */
 const duplicatedApis = (pluginList, api) => {
   let implementsApi = []
