@@ -22,7 +22,7 @@ Has anyone heard about GatsbyJS yet?
 
 The first step will be to create the page which will display your posts, in `src/pages/`. You can for example use `index.js`.
 
-```js
+```jsx
 import React from "react";
 import PostLink from "../components/post-link";
 
@@ -41,7 +41,7 @@ export default IndexPage;
 
 Second, you need to provide the data to your component with a GraphQL query. Let's add it, so that `index.js` looks like this:
 
-```js
+```jsx
 import React from "react";
 import PostLink from "../components/post-link";
 
@@ -78,7 +78,7 @@ export const pageQuery = graphql`
 
 The only thing left to do is to add the `PostLink` component. Create a new file `post-link.js` in `src/components/` and add the following:
 
-```js
+```jsx
 import React from "react";
 import Link from "gatsby-link";
 
