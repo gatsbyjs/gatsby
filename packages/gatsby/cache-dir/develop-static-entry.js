@@ -1,7 +1,6 @@
 import React from "react"
 import { renderToStaticMarkup } from "react-dom/server"
 import { merge } from "lodash"
-import apiRunner from "./api-runner-ssr"
 import testRequireError from "./test-require-error"
 
 let HTML
@@ -17,7 +16,6 @@ try {
 }
 
 module.exports = (locals, callback) => {
-  // const apiRunner = require(`${directory}/.cache/api-runner-ssr`)
   let headComponents = []
   let htmlAttributes = {}
   let bodyAttributes = {}
