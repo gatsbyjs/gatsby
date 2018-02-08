@@ -51,6 +51,9 @@ class ScrollContext extends React.Component {
       location: prevProps.location,
     }
 
+    // The "scroll-behavior" package expects the "action" to be on the location
+    // object so let's copy it over.
+    location.action = history.action
     this.scrollBehavior.updateScroll(prevRouterProps, { history, location })
   }
 

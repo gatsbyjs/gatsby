@@ -7,8 +7,19 @@ const { isWebUri } = require(`valid-url`)
 const { createFileNode } = require(`./create-file-node`)
 const cacheId = url => `create-remote-file-node-${url}`
 
-module.exports = ({ url, store, cache, createNode, auth = {} }) =>
-  new Promise(async (resolve, reject) => {
+/**
+ * Index of promises resolving to File node from remote url
+ */
+const processingCache = {}
+
+module.exports = ({ url, store, cache, createNode, auth = {} }) => {
+  // Check if we already requested node for this remote file
+  // and return stored promise if we did.
+  if (processingCache[url]) {
+    return processingCache[url]
+  }
+
+  return (processingCache[url] = new Promise(async (resolve, reject) => {
     if (!url || isWebUri(url) === undefined) {
       resolve()
       return
@@ -99,4 +110,5 @@ module.exports = ({ url, store, cache, createNode, auth = {} }) =>
         resolve(fileNode)
       })
     })
-  })
+  }))
+}

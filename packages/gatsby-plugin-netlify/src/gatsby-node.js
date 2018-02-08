@@ -35,8 +35,21 @@ exports.onPostBuild = async ({ store, pathPrefix }, userPluginOptions) => {
 
   const { redirects } = store.getState()
 
+  let rewrites = []
+  if (pluginOptions.generateMatchPathRewrites) {
+    const { pages } = store.getState()
+    rewrites = pages
+      .filter(page => page.matchPath && page.matchPath !== page.path)
+      .map(page => {
+        return {
+          fromPath: page.matchPath,
+          toPath: page.path,
+        }
+      })
+  }
+
   await Promise.all([
     buildHeadersProgram(pluginData, pluginOptions),
-    createRedirects(pluginData, redirects),
+    createRedirects(pluginData, redirects, rewrites),
   ])
 }

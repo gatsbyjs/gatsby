@@ -11,6 +11,12 @@ const localPackagesArr = []
 fs.readdirSync(localPackages).forEach(file => {
   localPackagesArr.push(file)
 })
+// convert a string like `/some/long/path/name-of-docs/` to `name-of-docs`
+const slugToAnchor = slug =>
+  slug
+    .split(`/`) // split on dir separators
+    .filter(item => item !== ``) // remove empty values
+    .pop() // take last item
 
 exports.createPages = ({ graphql, boundActionCreators }) => {
   const { createPage } = boundActionCreators
@@ -30,7 +36,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     resolve(
       graphql(
         `
-          {
+          query {
             allMarkdownRemark(
               sort: { order: DESC, fields: [frontmatter___date] }
               limit: 1000
@@ -59,14 +65,14 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
                 }
               }
             }
-            allNpmPackage{
+            allNpmPackage {
               edges {
                 node {
                   id
                   title
                   readme {
                     id
-                    childMarkdownRemark{
+                    childMarkdownRemark {
                       id
                       html
                     }
@@ -149,8 +155,8 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
             component: slash(packageTemplate),
             context: {
               slug,
-              id: edge.node.id
-            }
+              id: edge.node.id,
+            },
           })
         })
 
@@ -208,6 +214,7 @@ exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
       createNodeField({ node, name: `package`, value: true })
     }
     if (slug) {
+      createNodeField({ node, name: `anchor`, value: slugToAnchor(slug) })
       createNodeField({ node, name: `slug`, value: slug })
     }
   } else if (node.internal.type === `AuthorYaml`) {

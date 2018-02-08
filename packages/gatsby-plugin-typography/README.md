@@ -2,7 +2,6 @@
 
 A Gatsby plugin for utilizing the [Typography](https://kyleamathews.github.io/typography.js/) library with minimal configuration.
 
-
 See it in action in the [Tutorial](https://www.gatsbyjs.org/tutorial/part-two/)
 ([source](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typography))
 
@@ -15,12 +14,12 @@ See it in action in the [Tutorial](https://www.gatsbyjs.org/tutorial/part-two/)
 A typical `typography.js` file utilizing one of its themes might look like this:
 
 ```javascript
-import Typography from 'typography'
-import grandViewTheme from 'typography-theme-grand-view'
+import Typography from "typography";
+import grandViewTheme from "typography-theme-grand-view";
 
-const typography = new Typography(grandViewTheme)
+const typography = new Typography(grandViewTheme);
 
-export default typography
+export default typography;
 ```
 
 You then have to take the exported stylesheets and inline them in your entry file. Since a theme comes with two fonts, you also have to make sure you have the fonts available somehow.
@@ -32,12 +31,12 @@ By using `gatsby-plugin-typography` and specifying the path to your `typography.
 ```javascript
 // In your gatsby-config.js
 plugins: [
-    {
-      resolve: `gatsby-plugin-typography`,
-      options: {
-        pathToConfigModule: `src/utils/typography`
-      }
+  {
+    resolve: `gatsby-plugin-typography`,
+    options: {
+      pathToConfigModule: `src/utils/typography`,
     },
+  },
 ];
 ```
 
