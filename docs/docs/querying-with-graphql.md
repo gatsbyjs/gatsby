@@ -194,6 +194,40 @@ export const query = graphql`
 `;
 ```
 
+## Advanced
+
+### Fragments
+
+Notice that in the above example for [querying images](#images), we used `...GatsbyImageSharpResolutions`, which is a GraphQL Fragment, a reusable set of fields for query composition. You can read more about them [here](http://graphql.org/learn/queries/#fragments).
+
+If you wish to define your own fragments for use in your application, you can use named exports to export them in any Javascript file, and they will be automatically processed by Gatsby for use in your GraphQL queries.
+
+For example, I can put all of my helper fragments in `src/fragments/index.js`:
+
+```javascript
+// src/fragments/index.js
+
+export const markdownFrontmatterFragment = graphql`
+  fragment MarkdownFrontmatterFragment on MarkdownRemark {
+    frontmatter {
+      path
+      title
+      date(formatString: "MMMM DD, YYYY")
+    }
+  }
+`;
+```
+
+They can then be used in any GraphQL query after that!
+
+```graphql
+query PostByPath($path: String!) {
+  markdownRemark(frontmatter: { path: { eq: $path } }) {
+    ...MarkdownMetadataFragment
+  }
+}
+```
+
 See also the following blog posts:
 
 * [Making Website Building Fun](/blog/2017-10-16-making-website-building-fun/)
