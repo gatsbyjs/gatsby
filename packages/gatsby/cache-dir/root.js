@@ -111,7 +111,7 @@ function shouldUpdateScroll(prevRouterProps, { location: { pathname } }) {
 
 let noMatch
 for (let i = 0; i < pages.length; i++) {
-  if (pages[i].path === `/dev-404-page/`) {
+  if (/^\/dev-404-page/.test(pages[i].path)) {
     noMatch = pages[i]
     break
   }
