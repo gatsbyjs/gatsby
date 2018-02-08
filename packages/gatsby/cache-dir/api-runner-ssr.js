@@ -7,10 +7,10 @@
 const apis = require(`./api-ssr-docs`)
 
 /**
- * Some apis should only be implemented once. Given a list of plugins, and an
- * `api` to check, this will return [] for apis that are implemented 1 or 0 times.
+ * Some APIs should only be implemented once. Given a list of plugins, and an
+ * `api` to check, this will return [] for APIs that are implemented 1 or 0 times.
  *
- * For apis that have been implemented multiple times, return an array of paths
+ * For APIs that have been implemented multiple times, return an array of paths
  * pointing to the file implementing `api`.
  *
  * @param {array} pluginList
@@ -27,7 +27,7 @@ const duplicatedApis = (pluginList, api) => {
   return implementsApi // paths to dupes
 }
 
-// Run the specified api in any plugins that have implemented it
+// Run the specified API in any plugins that have implemented it
 const apiRunner = (api, args, defaultReturn) => {
   if (!apis[api]) {
     console.log(`This API doesn't exist`, api)
