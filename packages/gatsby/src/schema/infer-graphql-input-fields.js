@@ -19,6 +19,9 @@ const {
   isEmptyObjectOrArray,
 } = require(`./data-tree-utils`)
 
+const { findLinkedNode } = require(`./infer-graphql-type`)
+const { getNodes } = require(`../redux`)
+
 import type {
   GraphQLInputFieldConfig,
   GraphQLInputFieldConfigMap,
@@ -185,6 +188,8 @@ type InferInputOptions = {
   exampleValue?: Object,
 }
 
+const linkedNodeCache = {}
+
 export function inferInputObjectStructureFromNodes({
   nodes,
   typeName = ``,
@@ -196,13 +201,34 @@ export function inferInputObjectStructureFromNodes({
 
   prefix = isRoot ? typeName : prefix
 
-  _.each(exampleValue, (value, key) => {
+  _.each(exampleValue, (v, k) => {
+    let value = v
+    let key = k
     // Remove fields for traversing through nodes as we want to control
     // setting traversing up not try to automatically infer them.
     if (isRoot && EXCLUDE_KEYS[key]) return
 
-    // Input arguments on linked fields aren't currently supported
-    if (_.includes(key, `___NODE`)) return
+    if (_.includes(key, `___NODE`)) {
+      // TODO: Union the objects in array
+      const nodeToFind = _.isArray(value) ? value[0] : value
+      const linkedNode = findLinkedNode(nodeToFind)
+
+      // Get from cache if found, else store into it
+      if (linkedNodeCache[linkedNode.internal.type]) {
+        value = linkedNodeCache[linkedNode.internal.type]
+      } else {
+        const relatedNodes = getNodes().filter(node => node.internal.type === linkedNode.internal.type)
+        value = extractFieldExamples(relatedNodes)
+        value = _.omitBy(value, (_v, _k) => _.includes(_k, `___NODE`))
+        linkedNodeCache[linkedNode.internal.type] = value
+      }
+
+      if (_.isArray(value)) {
+        value = [value]
+      }
+
+      ;[key] = key.split(`___`)
+    }
 
     let field = inferGraphQLInputFields({
       nodes,
