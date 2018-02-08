@@ -266,7 +266,6 @@ In order to deploy your Gatsby project using [Now](https://zeit.co/now), you can
 
 3. Add a `start` script to your `package.json` file, this is what Now will use to run your application:
 
-
 `"start": "serve public/"`
 
 4. Run `now` at the root of your Gatsby project, this will upload your project, run the `build` script, and then your `start` script.

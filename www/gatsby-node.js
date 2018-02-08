@@ -6,6 +6,13 @@ const fs = require(`fs-extra`)
 const slash = require(`slash`)
 const slugify = require(`limax`)
 
+// convert a string like `/some/long/path/name-of-docs/` to `name-of-docs`
+const slugToAnchor = slug =>
+  slug
+    .split(`/`) // split on dir separators
+    .filter(item => item !== ``) // remove empty values
+    .pop() // take last item
+
 exports.createPages = ({ graphql, boundActionCreators }) => {
   const { createPage } = boundActionCreators
   return new Promise((resolve, reject) => {
@@ -170,6 +177,7 @@ exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
       createNodeField({ node, name: `package`, value: true })
     }
     if (slug) {
+      createNodeField({ node, name: `anchor`, value: slugToAnchor(slug) })
       createNodeField({ node, name: `slug`, value: slug })
     }
   } else if (node.internal.type === `AuthorYaml`) {

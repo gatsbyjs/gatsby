@@ -149,6 +149,14 @@ module.exports = (
       return
     }
 
+    // since dir will be undefined on non-files
+    if (
+      markdownNode.parent &&
+      getNode(markdownNode.parent).internal.type !== `File`
+    ) {
+      return
+    }
+
     const imagePath = path.posix.join(
       getNode(markdownNode.parent).dir,
       image.url

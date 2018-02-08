@@ -43,6 +43,15 @@ const writePages = async () => {
     })
     if (p.layout) {
       let layout = getLayoutById(layouts)(p.layout)
+
+      if (!layout) {
+        throw new Error(
+          `Could not find layout '${
+            p.layout
+          }'. Check if this file exists in 'src/layouts'.`
+        )
+      }
+
       pageLayouts.push(layout)
       json.push({
         jsonName: layout.jsonName,
@@ -122,19 +131,19 @@ const preferDefault = m => m && m.default || m
     .join(`,\n`)}
 }`
 
-  await Promise.all([
-    fs.writeFile(
-      joinPath(program.directory, `.cache/pages.json`),
-      JSON.stringify(pagesData, null, 4)
-    ),
-    fs.writeFile(`${program.directory}/.cache/sync-requires.js`, syncRequires),
-    fs.writeFile(
-      joinPath(program.directory, `.cache/async-requires.js`),
-      asyncRequires
-    ),
-  ])
+  const writeAndMove = (file, data) => {
+    const destination = joinPath(program.directory, `.cache`, file)
+    const tmp = `${destination}.${Date.now()}`
+    return fs
+      .writeFile(tmp, data)
+      .then(() => fs.move(tmp, destination, { overwrite: true }))
+  }
 
-  return
+  return await Promise.all([
+    writeAndMove(`pages.json`, JSON.stringify(pagesData, null, 4)),
+    writeAndMove(`sync-requires.js`, syncRequires),
+    writeAndMove(`async-requires.js`, asyncRequires),
+  ])
 }
 
 exports.writePages = writePages

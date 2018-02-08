@@ -16,19 +16,37 @@ const { boundActionCreators } = require(`../../redux/actions`)
 const queryCompiler = require(`./query-compiler`).default
 const queue = require(`./query-queue`)
 const normalize = require(`normalize-path`)
+const report = require(`gatsby-cli/lib/reporter`)
 
 exports.extractQueries = () => {
   const state = store.getState()
   const pagesAndLayouts = [...state.pages, ...state.layouts]
-  const components = _.uniq(pagesAndLayouts.map(p => p.component))
+  const components = _.uniq(pagesAndLayouts.map(p => normalize(p.component)))
   const queryCompilerPromise = queryCompiler().then(queries => {
-    components.forEach(component => {
-      const query = queries.get(normalize(component))
-      boundActionCreators.replaceComponentQuery({
-        query: query && query.text,
-        componentPath: component,
-      })
+    let queryWillNotRun = false
+
+    queries.forEach((query, component) => {
+      if (_.includes(components, component)) {
+        boundActionCreators.replaceComponentQuery({
+          query: query && query.text,
+          componentPath: component,
+        })
+      } else {
+        report.warn(
+          `GraphQL query in component "${component}" will not be run!`
+        )
+        queryWillNotRun = true
+      }
     })
+
+    if (queryWillNotRun) {
+      report.log(report.stripIndent`
+        Queries are only executed for Page or Layout components. Instead of a query,
+        co-locate a GraphQL fragment and compose that fragment into the query (or other
+        fragment) of the top-level page or layout that renders this component. For more
+        info on fragments and composition see: http://graphql.org/learn/queries/#fragments
+      `)
+    }
 
     return
   })

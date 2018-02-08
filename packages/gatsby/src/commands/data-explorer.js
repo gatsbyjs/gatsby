@@ -4,6 +4,7 @@ const express = require(`express`)
 const graphqlHTTP = require(`express-graphql`)
 const { store } = require(`../redux`)
 const bootstrap = require(`../bootstrap`)
+const { GraphQLSchema } = require(`graphql`)
 
 module.exports = async (program: any) => {
   let { port, host } = program
@@ -12,11 +13,18 @@ module.exports = async (program: any) => {
   // bootstrap to ensure schema is in the store
   await bootstrap(program)
 
+  const schema = store.getState().schema
+
+  console.log(
+    `Schema is instance of GraphQLSchema?`,
+    schema instanceof GraphQLSchema
+  )
+
   const app = express()
   app.use(
     `/`,
     graphqlHTTP({
-      schema: store.getState().schema,
+      schema,
       graphiql: true,
     })
   )

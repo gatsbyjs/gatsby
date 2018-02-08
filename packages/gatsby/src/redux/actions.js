@@ -85,6 +85,8 @@ const pascalCase = _.flow(_.camelCase, _.upperFirst)
  * @param {Object} page a page object
  * @param {string} page.path Any valid URL. Must start with a forward slash
  * @param {string} page.component The absolute path to the component for this page
+ * @param {string} page.layout The name of the layout for this page. By default
+ * `'index'` layout is used
  * @param {Object} page.context Context data for this page. Passed as props
  * to the component `this.props.pathContext` as well as to the graphql query
  * as graphql arguments.
@@ -102,6 +104,45 @@ const pascalCase = _.flow(_.camelCase, _.upperFirst)
  * })
  */
 actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
+  let noPageOrComponent = false
+  let name = `The plugin "${plugin.name}"`
+  if (plugin.name === `default-site-plugin`) {
+    name = `Your site's "gatsby-node.js"`
+  }
+  if (!page.path) {
+    const message = `${name} must set the page path when creating a page`
+    // Don't log out when testing
+    if (process.env.NODE_ENV !== `test`) {
+      console.log(chalk.bold.red(message))
+      console.log(``)
+      console.log(page)
+    } else {
+      return message
+    }
+    noPageOrComponent = true
+  }
+
+  if (!page.component || !path.isAbsolute(page.component)) {
+    const message = `${name} must set the absolute path to the page component when create creating a page`
+    // Don't log out when testing
+    if (process.env.NODE_ENV !== `test`) {
+      console.log(chalk.bold.red(message))
+      console.log(``)
+      console.log(page)
+    } else {
+      return message
+    }
+    noPageOrComponent = true
+  }
+
+  if (noPageOrComponent) {
+    console.log(``)
+    console.log(
+      `See the documentation for createPage https://www.gatsbyjs.org/docs/bound-action-creators/#createPage`
+    )
+    process.exit(1)
+  }
+
   let jsonName = `${_.kebabCase(page.path)}.json`
   let internalComponentName = `Component${pascalCase(page.path)}`
 
@@ -470,7 +511,7 @@ type CreateNodeInput = {
  * key on the extended node object.
  *
  * Once a plugin has claimed a field name the field name can't be used by
- * other plugins.  Also since node's are immutable, you can't mutate the node
+ * other plugins.  Also since nodes are immutable, you can't mutate the node
  * directly. So to extend another node, use this.
  * @param {Object} $0
  * @param {Object} $0.node the target node object
@@ -708,9 +749,10 @@ actions.setPluginStatus = (
 }
 
 /**
- * Create a redirect from one page to another.  Redirect data can be used to
- * configure hosting environments like Netlify (automatically handled with the
- * [Netlify plugin](/packages/gatsby-plugin-netlify/)).
+ * Create a redirect from one page to another. Server redirects don't work out
+ * of the box. You must have a plugin setup to integrate the redirect data with
+ * your hosting technology e.g. the [Netlify
+ * plugin](/packages/gatsby-plugin-netlify/)).
  *
  * @param {Object} redirect Redirect data
  * @param {string} redirect.fromPath Any valid URL. Must start with a forward slash

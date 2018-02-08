@@ -164,7 +164,7 @@ markdownRemark {
 
 Gatsby has rich support for processing images. Responsive images are a big part of the modern web and typically involve creating 5+ sized thumbnails per photo. With Gatsby's [`gatsby-transformer-sharp`](/packages/gatsby-transformer-sharp/), you can _query_ your images for responsive versions. The query automatically creates all the needed responsive thumbnails and returns `src` and `srcSet` fields to add to your image element.
 
-Combined with a special Gatsby image component, [gatsby-image](/packages/gatsby-image/), you have a very powerful set of primatives for building sites with images.
+Combined with a special Gatsby image component, [gatsby-image](/packages/gatsby-image/), you have a very powerful set of primitives for building sites with images.
 
 This is what a component using `gatsby-image` looks like:
 

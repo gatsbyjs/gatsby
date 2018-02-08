@@ -10,7 +10,7 @@ on January 18, 2018._
 
 Earlier this week I began rebuilding my blog using GatsbyJS + WordPress. As I familiarized with Gatsby, I found myself flipping through a million tabs, and I thought it might be useful to summarize concepts and to aggregate links I found helpful.
 
-I recently decided to tackle a redo of my blog. I wanted to do something different and I've been hearing a lot about GatsbyJS. A static site generator for React that I can easily pull my existing WordPress data for? Sold. I'll try it. 
+I recently decided to tackle a redo of my blog. I wanted to do something different and I've been hearing a lot about GatsbyJS. A static site generator for React that I can easily pull my existing WordPress data for? Sold. I'll try it.
 
 I generated a new site using the [default starter](https://github.com/gatsbyjs/gatsby-starter-default) and read through what it gave me. Assuming you have the [Gatsby CLI](/docs/) installed, run:
 
@@ -25,15 +25,16 @@ Essentially the Gatsby home base. The two things defined here initially (in the 
 ```javascript
 module.exports = {
   siteMetadata: {
-    title: 'Gatsby Default Starter',
+    title: "Gatsby Default Starter",
   },
-  plugins: ['gatsby-plugin-react-helmet'],
+  plugins: ["gatsby-plugin-react-helmet"],
 };
 ```
 
 See the [docs page on gatsby-config.js](/docs/gatsby-config/) for more.
 
 For the curious:
+
 * `gatsby-plugin-react-helmet` is a plugin the starter includes. It's a [document head manager for React](/packages/gatsby-plugin-react-helmet/).
 
 ##gatsby-node.js
@@ -93,7 +94,7 @@ I used the `gatsby-node.js` file from the plugin demo to get started. For my pur
 For example, below is the part of the demo `gatsby-node.js` file that iterates over all the WordPress post data.
 
 ```javascript
-const postTemplate = path.resolve(`./src/templates/post.js`)
+const postTemplate = path.resolve(`./src/templates/post.js`);
 
 _.each(result.data.allWordpressPost.edges, edge => {
   createPage({
@@ -101,13 +102,13 @@ _.each(result.data.allWordpressPost.edges, edge => {
     path: edge.node.slug,
     // specify the component template of your choice
     component: slash(postTemplate),
-    // In the ^template's GraphQL query, 'id' will be available 
+    // In the ^template's GraphQL query, 'id' will be available
     // as a GraphQL variable to query for this posts's data.
     context: {
-        id: edge.node.id,
-    }
-  })
-})
+      id: edge.node.id,
+    },
+  });
+});
 ```
 
 The [docs define a Gatsby page](/docs/api-specification/#concepts) as "a site page with a pathname, a template component, and optional graphql query and layout component." See the docs on the [createPage bound action creator](/docs/bound-action-creators/#createPage) and [guide on creating and modifying pages for more detail](/docs/creating-and-modifying-pages/).
@@ -133,6 +134,7 @@ If you include the "optional GraphQL query" noted above, the result of that quer
 While this isn't a tutorial -- more a guided walkthrough of me familiarizing and stepping through an initial Gatsby setup -- if you're following along with the [demo code](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress) you're probably close to (or already!) seeing your WordPress data populate your Gatsby dev site if you run `gatsby develop`!
 
 ##Sidenotes
+
 1. You [don't need to know GraphQL](https://github.com/gatsbyjs/gatsby/issues/1172#issuecomment-308634739) to get started with Gatsby. I didn't. It's been a good introduction.
 2. Gatsby makes heavy use of [plugins](/docs/plugins/) — both official and community — for a lot of things, from one that implements [Google Analytics](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics), to one that adds [GitHub's accessibility error scanner](https://github.com/alampros/gatsby-plugin-accessibilityjs) to all pages.
 3. Read through some of the source code. I particularly enjoyed reading through [the bootstrap process](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/bootstrap/index.js). (It's beautifully commented).
