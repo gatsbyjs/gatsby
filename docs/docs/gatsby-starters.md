@@ -46,7 +46,7 @@ Community:
   Features:
 
   * React-MD for Material design
-  * SASS/SCSS
+  * Sass/SCSS
   * Tags
   * Categories
   * Google Analytics
@@ -147,7 +147,7 @@ Community:
 
   * Barebones configuration for using the [Grommet](https://grommet.github.io/)
     design system
-  * Uses SASS (with CSS modules support)
+  * Uses Sass (with CSS modules support)
 
 * [gatsby-starter-basic](https://github.com/PrototypeInteractive/gatsby-react-boilerplate)
   [(demo)](https://prototypeinteractive.github.io/gatsby-react-boilerplate/)
@@ -155,8 +155,8 @@ Community:
   Features:
 
   * Basic configuration and folder structure
-  * Uses postcss and sass (with autoprefixer and pixrem)
-  * Uses bootstrap 4 grid
+  * Uses PostCSS and Sass (with autoprefixer and pixrem)
+  * Uses Bootstrap 4 grid
   * Leaves the styling to you
   * Uses data from local json files
   * Contains Node.js server code for easy, secure, and fast hosting
@@ -247,7 +247,7 @@ Community:
   * Very similar to
     [gatsby-starter-netlify-cms](https://github.com/AustinGreen/gatsby-starter-netlify-cms),
     slightly more configurable (eg set site-title in `gatsby-config`) with
-    bootstrap/bootswatch instead of bulma
+    Bootstrap/Bootswatch instead of bulma
 
 * [open-crowd-fund](https://github.com/rwieruch/open-crowd-fund)
   [(demo)](https://www.roadtolearnreact.com/)
@@ -383,7 +383,7 @@ Community:
   * Lost Grid.
   * Beautiful typography inspired by [matejlatin/Gutenberg](https://github.com/matejlatin/Gutenberg).
   * [Mobile-First](https://medium.com/@mrmrs_/mobile-first-css-48bc4cc3f60f) approach in development.
-  * Stylesheet built using SASS and [BEM](http://getbem.com/naming/)-Style naming.
+  * Stylesheet built using Sass and [BEM](http://getbem.com/naming/)-Style naming.
   * Syntax highlighting in code blocks.
   * Sidebar menu built using a configuration block.
   * Archive organized by tags and categories.
