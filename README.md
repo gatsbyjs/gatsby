@@ -153,6 +153,7 @@ Websites built with Gatsby:
 * [iContract Blog](https://blog.icontract.co.uk)
 * [Dona Rita](https://donarita.co.uk) ([source](https://github.com/peduarte/dona-rita-website))
 * [Andy Slezak](https://www.aslezak.com) ([source](https://github.com/amslezak))
+* [Odayaka](http://odayaka.net) ([source](https://github.com/odayakanaasa/odayaka))
 
 ## Docs
 
