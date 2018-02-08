@@ -54,7 +54,7 @@ Josh’s article provides a solution by way of using Contentful to manage conten
 *   Fully-customizable front end
 *   Article search and filters
 
-That seems like a pretty solid win for Contentful, right? Well, there are a few issues. 
+With such a robust set of features, it is easy to see why Contentful is a popular service. However, between a combination of having no prior experience with the platorm, and wanting to keep things simple, I ran into issues, and felt that it was _too_ robust for my project goals.
 
 While, a fully-customizable front end may seem really flexible, _**there is NOTHING set up when you create a new project.**_ You will have to create your own content models for blog posts and use GraphQL to query for each blog post type you set up. 
 
@@ -71,18 +71,25 @@ To spare you the details, I spent a few hours comparing my GraphQL queries to th
 
 Prose was originally created for Jekyll by the people at [Development Seed](https://developmentseed.org/).
 
-Here is their description:
+### Here is a summary:
 
-_“Prose provides a beautifully simple content authoring environment for CMS-free websites. It's a web-based interface for managing content on GitHub. Use it to create, edit, and delete files, and save your changes directly to GitHub. Host your website on GitHub Pages for free, or set up your own GitHub webhook server._
-
-_Prose has advanced support for Jekyll sites and markdown content. Prose detects markdown posts in Jekyll sites and provides syntax highlighting, a formatting toolbar, and draft previews in the site's full layout.”_
+*   Simple Content Authoring Environment
+*   Designed for CMS-Free Websites
+*   Web-based Interface for Managing Content Directly on Github
+*   Advanced Support for Markdown Content - Including Syntax Highlighting & Formatting Toolbar 
 
 Source: [Prose](http://prose.io/#about)
 
 So, a service that works on top of Github where I, or anyone with a Github account can quickly create and manage posts. Sick! 
 
-All you have to do is set up a repository for the website, share access to anyone on your team, log in via [Prose.io](http://prose.io/), select your repository, and you’re good to go. You can edit existing posts, preview posts, and commit any changes directly within the interface. 
+#### Follow these steps:
 
+1.  Set up a repository for the website.
+2.  Share access to the repo with anyone on your team.
+3.  Log in via [Prose.io](http://prose.io/).
+4.  Select your website's repo from the Prose interface.
+5.  Done. You can edit existing posts, preview posts, and commit any changes directly within the interface.
+set up a repository for the website
 
 <div style="width:100%;height:0;padding-bottom:55%;position:relative;"><iframe src="https://giphy.com/embed/l0HlDtKDqfGGQtwic"  width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed"  allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/emmys-emmy-awards-emmys-2016-l0HlDtKDqfGGQtwic">via GIPHY</a></p>
 
@@ -135,9 +142,7 @@ _**It just works.**_ 🤙🏼
 
 ## Concluding Thoughts
 
-Let me be clear: there is definitely a need for services such as Contentful. I just feel as though this process removes much of the overhead that is overkill for most projects. 
-
-With that said, this process has a few caveats related to working within Prose that I must address:
+With all of that said, this process has a few caveats related to working within Prose that I must address:
 
 1.  If you follow a folder structure enclosing an index.md file for your posts, you will need to add the new folder within the URL of the post
 2.  Inserting an image adds extra markup which you will need to remove for an image to show up within your post. Prose will upload the image within the same directory as your index.md file.
