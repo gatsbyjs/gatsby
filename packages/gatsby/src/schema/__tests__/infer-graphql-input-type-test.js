@@ -483,3 +483,81 @@ describe(`GraphQL Input args`, () => {
     expect(result).toMatchSnapshot()
   })
 })
+
+describe(`filtering on linked nodes`, () => {
+  let types
+  beforeEach(() => {
+    const { store } = require(`../../redux`)
+    types = [
+      {
+        name: `Child`,
+        nodeObjectType: new GraphQLObjectType({
+          name: `Child`,
+          fields: inferObjectStructureFromNodes({
+            nodes: [{ id: `child_1`, hair: `brown`, height: 101 }],
+            types: [{ name: `Child` }],
+          }),
+        }),
+      },
+      {
+        name: `Pet`,
+        nodeObjectType: new GraphQLObjectType({
+          name: `Pet`,
+          fields: inferObjectStructureFromNodes({
+            nodes: [{ id: `pet_1`, species: `dog` }],
+            types: [{ name: `Pet` }],
+          }),
+        }),
+      },
+    ]
+
+    store.dispatch({
+      type: `CREATE_NODE`,
+      payload: { id: `child_1`, internal: { type: `Child` }, hair: `brown` },
+    })
+    store.dispatch({
+      type: `CREATE_NODE`,
+      payload: { id: `child_2`, internal: { type: `Child` }, hair: `blonde`, height: 101 },
+    })
+    store.dispatch({
+      type: `CREATE_NODE`,
+      payload: { id: `pet_1`, internal: { type: `Pet` }, species: `dog` },
+    })
+  })
+
+  it(`filters on linked nodes via id`, async () => {
+    let result = await queryResult(
+      [{ linked___NODE: `child_2`, foo: `bar` }, { linked___NODE: `child_1`, foo: `baz` }],
+      `
+        {
+          allNode(filter: { linked: { hair: { eq: "blonde" } } }) {
+            edges { node { linked { hair, height }, foo } }
+          }
+        }
+      `,
+      { types }
+    )
+    expect(result.data.allNode.edges.length).toEqual(1)
+    expect(result.data.allNode.edges[0].node.linked.hair).toEqual(`blonde`)
+    expect(result.data.allNode.edges[0].node.linked.height).toEqual(101)
+    expect(result.data.allNode.edges[0].node.foo).toEqual(`bar`)
+  })
+
+  it(`returns all matching linked nodes`, async () => {
+    let result = await queryResult(
+      [{ linked___NODE: `child_2`, foo: `bar` }, { linked___NODE: `child_2`, foo: `baz` }],
+      `
+        {
+          allNode(filter: { linked: { hair: { eq: "blonde" } } }) {
+            edges { node { linked { hair, height }, foo } }
+          }
+        }
+      `,
+      { types }
+    )
+    expect(result.data.allNode.edges[0].node.linked.hair).toEqual(`blonde`)
+    expect(result.data.allNode.edges[0].node.linked.height).toEqual(101)
+    expect(result.data.allNode.edges[0].node.foo).toEqual(`bar`)
+    expect(result.data.allNode.edges[1].node.foo).toEqual(`baz`)
+  })
+})
