@@ -1,7 +1,7 @@
 const algoliasearch = require(`algoliasearch`)
 const crypto = require(`crypto`)
 
-var client = algoliasearch(`OFCNCOG2CU`, `f54e21fa3a2a0160595bb058179bfb1e`)
+const client = algoliasearch(`OFCNCOG2CU`, `f54e21fa3a2a0160595bb058179bfb1e`)
 var index = client.initIndex(`npm-search`)
 
 const createContentDigest = obj =>
@@ -27,7 +27,7 @@ exports.sourceNodes = async ({ boundActionCreators }, { keywords }) => {
     hitsPerPage: 1000,
   })
 
-  // Currently the gatsby-transformer-remark plugin
+  // TODO: Currently the gatsby-transformer-remark plugin
   // has a hard time with markdown that includes
   // images -> for now this filters out those packages
 
