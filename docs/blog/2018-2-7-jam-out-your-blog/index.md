@@ -11,13 +11,13 @@ If you’re reading this, chances are you’ve heard a thing or two about Gatsby
 
 ## Intro
 
-As a freelance developer, the business person inside of me is constantly looking for ways to streamline the development process. All the while the inner developer is always looking to use the most modern development experience. If you add this to working with non-technical content-creators, it becomes quite the balancing act. 
+As a freelance developer, the business person inside of me is constantly looking for ways to streamline the development process. At the same time, the inner developer is looking for the most modern development experience. If you add this working with non-technical content-creators, it becomes quite the balancing act. 
 
-I’m willing to assume that most readers have been here before and are currently cringing in unison. Luckily, I found a solution. 
+I’m willing to assume that many readers have been here before and are currently cringing in unison. Luckily, I found a solution. 
 
-The goal of the following article is to share a tool set that I found to work effectively at trying to bring order to the chaos. My goal is to provide a workflow that will be ideal for personal blogs and hand-off projects where some sort of a CMS is within the project's scope. 
+My goal here is to share a tool set helps bring order to my freelance chaos. I'll be walking through a workflow that's ideal for personal blogs and hand-off projects where some sort of a CMS is in scope. 
 
-As a preface, I will be referencing a wonderful article written by Josh Weaver, [Gatsby + Contentful + Netlify (and Algolia)](https://www.gatsbyjs.org/blog/2017-12-06-gatsby-plus-contentful-plus-netlify/). Josh’s article spoke to my goals and frustrations perfectly and inspired me to share this alternative approach. 
+I'll also be referencing a wonderful article written by Josh Weaver, [Gatsby + Contentful + Netlify (and Algolia)](https://www.gatsbyjs.org/blog/2017-12-06-gatsby-plus-contentful-plus-netlify/). Josh’s article spoke to my goals and frustrations perfectly and inspired me to share this alternative approach. 
 
 _**Let’s get into it.**_
 
@@ -27,15 +27,15 @@ _**Let’s get into it.**_
 
 ### Like Josh’s requirements, my list includes:
 
-*   Speed - this includes development, website performance, and deployment
-*   Development Experience - I want to use React and Webpack 
-*   Maintainability - ease with which anyone can create, update and delete posts
-*   Scalability - need to make sure that performance is not hindered by a growing needs
-*   Lean - simplify the tools and services use to a bare minimum
-*   Revision History - for accountability and allowing for versioning 
-*   Inexpensive Hosting - again, to maximize value and keep personal costs down
-*   NO WordPress - similarly, I don’t want to deal with updates, themes, hacks...etc
-*   Continuous Deployment - the site needs to always be up and running and current
+*   **Speed** - this includes development, website performance, and deployment
+*   **Development Experience** - I want to use React and Webpack 
+*   **Maintainability** - ease with which anyone can create, update and delete posts
+*   **Scalability** - need to make sure that performance is not hindered by a growing needs
+*   **Lean** - simplify the tools and services use to a bare minimum
+*   **Revision History** - for accountability and allowing for versioning 
+*   **Inexpensive Hosting** - again, to maximize value and keep personal costs down
+*   **NO WordPress** - similarly, I don’t want to deal with updates, themes, hacks...etc
+*   **Continuous Deployment** - the site needs to always be up and running and current
 
 For the sake of brevity, let's infer that speed, development experience, scalability and lack of WordPress will be handled by Gatsby and the JAMstack. If you’re unfamiliar, take a look at [http://jamstack.org/. ](http://jamstack.org/)
 
@@ -69,7 +69,7 @@ To spare you the details, I spent a few hours comparing my GraphQL queries to th
 
 ## Managing Content Via Github: Enter Prose.io
 
-Prose was originally created for Jekyll by the people at [Development Seed](https://developmentseed.org/).
+Prose was originally created for editing markdown files on GitHub by the people at [Development Seed](https://developmentseed.org/).
 
 ### Here is a summary:
 
