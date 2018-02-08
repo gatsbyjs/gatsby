@@ -20,7 +20,7 @@ production by creating a landing page very fast.
 
 Static site generators like Jekyll all work pretty similarly:
 
-* Describe your content in some common templating language ([Pug](pugjs.org),
+* Describe your content in some common templating language ([Pug](http://pugjs.org),
   [Handlebars](http://handlebarsjs.com), etc)
 * While in development, start a local web server and add file "watchers" that
   will listen for content changes and re-render the site
