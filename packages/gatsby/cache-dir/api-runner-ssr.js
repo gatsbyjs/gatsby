@@ -28,12 +28,12 @@ const duplicatedApis = (pluginList, api) => {
 }
 
 // Run the specified api in any plugins that have implemented it
-const apiRunner = ({ api, args, defaultReturn, checkDupes = false }) => {
+const apiRunner = (api, args, defaultReturn) => {
   if (!apis[api]) {
     console.log(`This API doesn't exist`, api)
   }
 
-  if (checkDupes) {
+  if (api === `replaceRenderer`) {
     const dupes = duplicatedApis(plugins, api)
     if (dupes.length > 0) {
       let m = `\nThe "${api}" api has been implemented multiple times. Only the last implementation will be used.`

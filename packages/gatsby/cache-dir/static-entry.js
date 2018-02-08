@@ -110,19 +110,15 @@ module.exports = (locals, callback) => {
   )
 
   // Let the site or plugin render the page component.
-  apiRunner({
-    api: `replaceRenderer`,
-    args: {
-      bodyComponent,
-      replaceBodyHTMLString,
-      setHeadComponents,
-      setHtmlAttributes,
-      setBodyAttributes,
-      setPreBodyComponents,
-      setPostBodyComponents,
-      setBodyProps,
-    },
-    checkDupes: true,
+  apiRunner(`replaceRenderer`, {
+    bodyComponent,
+    replaceBodyHTMLString,
+    setHeadComponents,
+    setHtmlAttributes,
+    setBodyAttributes,
+    setPreBodyComponents,
+    setPostBodyComponents,
+    setBodyProps,
   })
 
   // If no one stepped up, we'll handle it.
@@ -130,18 +126,15 @@ module.exports = (locals, callback) => {
     bodyHtml = renderToString(bodyComponent)
   }
 
-  apiRunner({
-    api: `onRenderBody`,
-    args: {
-      setHeadComponents,
-      setHtmlAttributes,
-      setBodyAttributes,
-      setPreBodyComponents,
-      setPostBodyComponents,
-      setBodyProps,
-      pathname: locals.path,
-      bodyHtml,
-    },
+  apiRunner(`onRenderBody`, {
+    setHeadComponents,
+    setHtmlAttributes,
+    setBodyAttributes,
+    setPreBodyComponents,
+    setPostBodyComponents,
+    setBodyProps,
+    pathname: locals.path,
+    bodyHtml,
   })
 
   let stats
