@@ -36,11 +36,11 @@ const apiRunner = (api, args, defaultReturn) => {
   if (api === `replaceRenderer`) {
     const dupes = duplicatedApis(plugins, api)
     if (dupes.length > 0) {
-      let m = `\nThe "${api}" api has been implemented multiple times. Only the last implementation will be used.`
-      let m2 = `This could be an error, see https://www.gatsbyjs.org/docs/debugging-replace-renderer-api.md for details.`
+      let m = `\nThe "${api}" API  is implemented by several enabled plugins.`
+      let m2 = `This could be an error, see https://www.gatsbyjs.org/docs/debugging-replace-renderer-api/ for details.`
       console.log(m)
       console.log(m2)
-      console.log(`Check the following files for "${api}" implementations:`)
+      console.log(`Check the following plugins for "${api}" implementations:`)
       dupes.map(d => console.log(d))
     }
   }
