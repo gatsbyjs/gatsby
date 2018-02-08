@@ -194,6 +194,11 @@ export const query = graphql`
 `;
 ```
 
+See also the following blog posts:
+
+* [Making Website Building Fun](/blog/2017-10-16-making-website-building-fun/)
+* [Image Optimization Made Easy with Gatsby.js](https://medium.com/@kyle.robert.gill/ridiculously-easy-image-optimization-with-gatsby-js-59d48e15db6e)
+
 ## Advanced
 
 ### Fragments
@@ -227,11 +232,6 @@ query PostByPath($path: String!) {
   }
 }
 ```
-
-See also the following blog posts:
-
-* [Making Website Building Fun](/blog/2017-10-16-making-website-building-fun/)
-* [Image Optimization Made Easy with Gatsby.js](https://medium.com/@kyle.robert.gill/ridiculously-easy-image-optimization-with-gatsby-js-59d48e15db6e)
 
 ## Further reading
 
