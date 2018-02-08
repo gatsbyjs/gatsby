@@ -99,7 +99,12 @@ function buildLocalCommands(cli, isLocalSite) {
           type: `boolean`,
           describe: `Open the site in your browser for you.`,
         }),
-    handler: getCommandHandler(`develop`),
+    handler: handlerP(
+      getCommandHandler(`develop`, (args, cmd) => {
+        process.env.NODE_ENV = process.env.NODE_ENV || `development`
+        return cmd(args)
+      })
+    ),
   })
 
   cli.command({
