@@ -83,6 +83,7 @@ class DocsPackagesTemplate extends React.Component {
             __html: html,
           }}
         />
+        <MarkdownPageFooter page={page} packagePage />
       </Container>
     )
   }
