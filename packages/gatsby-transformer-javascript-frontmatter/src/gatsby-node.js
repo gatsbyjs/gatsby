@@ -35,7 +35,7 @@ async function onCreateNode({
     ],
   }
 
-  let exportsData, data
+  let exportsData, frontmatter
   try {
     const ast = babylon.parse(code, options)
 
