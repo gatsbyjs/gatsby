@@ -3,10 +3,11 @@ import InsetPageLayout from "../components/Layouts/insetPage"
 
 class mdInsetPage extends React.Component {
   render() {
+    console.log(this)
     const { html } = this.props.data.markdownRemark
 
     return (
-      <InsetPageLayout>
+      <InsetPageLayout {...this.props}>
         <div className="box container content">
           <div dangerouslySetInnerHTML={{ __html: html }} />
         </div>
@@ -21,6 +22,9 @@ export const pageQuery = graphql`
   query markdownTemplateBySlug($slug: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
       html
+    }
+    site {
+      ...site_sitemetadata
     }
   }
 `

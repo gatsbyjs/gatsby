@@ -4,6 +4,7 @@ import MasterLayout from "./master"
 
 class InsetPageLayout extends React.Component {
   render() {
+    console.log(this)
     const siteMetadata = this.props.data.site
 
     return (
@@ -24,20 +25,17 @@ class InsetPageLayout extends React.Component {
 }
 
 export default InsetPageLayout
-/*
+
 export const pageQuery = graphql`
-  query InsetLayoutBySlug {
-    site {
-      siteMetadata {
-        title
-        siteDescr
-        siteAuthor
-        siteEmailUrl
-        siteEmailPretty
-        siteTwitterUrl
-        siteTwitterPretty
-      }
+  fragment site_sitemetadata on Site {
+    siteMetadata {
+      title
+      siteDescr
+      siteAuthor
+      siteEmailUrl
+      siteEmailPretty
+      siteTwitterUrl
+      siteTwitterPretty
     }
   }
 `
-*/

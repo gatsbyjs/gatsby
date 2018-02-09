@@ -3,6 +3,7 @@ import Link from "gatsby-link"
 import Helmet from "react-helmet"
 import sortBy from "lodash/sortBy"
 import moment from "moment"
+import InsetPageLayout from "../components/Layouts/insetPage"
 
 class SiteIndex extends React.Component {
   render() {
@@ -76,7 +77,11 @@ class SiteIndex extends React.Component {
       }
     })
 
-    return <div>{pageLinks}</div>
+    return (
+      <InsetPageLayout {...this.props}>
+        {pageLinks}
+      </InsetPageLayout>
+    )
   }
 }
 
@@ -120,6 +125,9 @@ export const pageQuery = graphql`
           timeToRead
         }
       }
+    }
+    site {
+      ...site_sitemetadata
     }
   }
 `

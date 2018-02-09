@@ -42,20 +42,17 @@ class BlogPostLayout extends React.Component {
 }
 
 export default BlogPostLayout
-/*
+
 export const pageQuery = graphql`
-  query BlogPostLayoutBySlug {
-    site {
-      siteMetadata {
-        title
-        siteDescr
-        siteAuthor
-        siteEmailUrl
-        siteEmailPretty
-        siteTwitterUrl
-        siteTwitterPretty
-      }
+  fragment sitemetadata on Site {
+    siteMetadata {
+      title
+      siteDescr
+      siteAuthor
+      siteEmailUrl
+      siteEmailPretty
+      siteTwitterUrl
+      siteTwitterPretty
     }
   }
 `
-*/

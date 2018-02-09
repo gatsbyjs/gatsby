@@ -31,6 +31,7 @@
     "gatsby-plugin-sass": "^1.0.16",
     "gatsby-remark-prismjs": "latest",
     "gatsby-source-filesystem": "latest",
+    "gatsby-transformer-javascript-frontmatter": "latest",
     "gatsby-transformer-remark": "latest",
     "moment": "^2.14.1",
     "normalize.css": "^7.0.0",
