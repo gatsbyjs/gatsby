@@ -217,7 +217,9 @@ export function inferInputObjectStructureFromNodes({
       if (linkedNodeCache[linkedNode.internal.type]) {
         value = linkedNodeCache[linkedNode.internal.type]
       } else {
-        const relatedNodes = getNodes().filter(node => node.internal.type === linkedNode.internal.type)
+        const relatedNodes = getNodes().filter(
+          node => node.internal.type === linkedNode.internal.type
+        )
         value = extractFieldExamples(relatedNodes)
         value = _.omitBy(value, (_v, _k) => _.includes(_k, `___NODE`))
         linkedNodeCache[linkedNode.internal.type] = value

@@ -1,4 +1,4 @@
-'use strict'
+"use strict"
 
 const glob = require(`glob`)
 const reducer = require(`../reducers/pages`)
@@ -15,8 +15,8 @@ glob.sync = jest.fn(() => ``)
 
 describe(`Add pages`, () => {
   const MOCK_FILE_INFO = {
-    '/whatever/index.js': `import React from 'react'; export default Page;`,
-    '/whatever2/index.js': `import React from 'react'; export default Page;`,
+    "/whatever/index.js": `import React from 'react'; export default Page;`,
+    "/whatever2/index.js": `import React from 'react'; export default Page;`,
   }
   beforeEach(() => {
     // Set up some mocked out file info before each test

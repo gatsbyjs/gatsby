@@ -174,7 +174,9 @@ const Root = () =>
                   pageResources,
                 })
               } else {
-                const dev404Page = pages.find(p => /^\/dev-404-page/.test(p.path))
+                const dev404Page = pages.find(p =>
+                  /^\/dev-404-page/.test(p.path)
+                )
                 return createElement(Route, {
                   key: `404-page`,
                   component: props =>

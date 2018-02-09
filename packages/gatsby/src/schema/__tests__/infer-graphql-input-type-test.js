@@ -536,7 +536,12 @@ describe(`filtering on linked nodes`, () => {
     })
     store.dispatch({
       type: `CREATE_NODE`,
-      payload: { id: `child_2`, internal: { type: `Child` }, hair: `blonde`, height: 101 },
+      payload: {
+        id: `child_2`,
+        internal: { type: `Child` },
+        hair: `blonde`,
+        height: 101,
+      },
     })
     store.dispatch({
       type: `CREATE_NODE`,
@@ -546,7 +551,10 @@ describe(`filtering on linked nodes`, () => {
 
   it(`filters on linked nodes via id`, async () => {
     let result = await queryResult(
-      [{ linked___NODE: `child_2`, foo: `bar` }, { linked___NODE: `child_1`, foo: `baz` }],
+      [
+        { linked___NODE: `child_2`, foo: `bar` },
+        { linked___NODE: `child_1`, foo: `baz` },
+      ],
       `
         {
           allNode(filter: { linked: { hair: { eq: "blonde" } } }) {
@@ -564,7 +572,10 @@ describe(`filtering on linked nodes`, () => {
 
   it(`returns all matching linked nodes`, async () => {
     let result = await queryResult(
-      [{ linked___NODE: `child_2`, foo: `bar` }, { linked___NODE: `child_2`, foo: `baz` }],
+      [
+        { linked___NODE: `child_2`, foo: `bar` },
+        { linked___NODE: `child_2`, foo: `baz` },
+      ],
       `
         {
           allNode(filter: { linked: { hair: { eq: "blonde" } } }) {

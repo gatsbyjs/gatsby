@@ -444,10 +444,10 @@ Community:
   * auto-generated sizes and types (png, webp) for background and hero images
   * favicons generator
   * webfonts with [webfontloader](https://github.com/typekit/webfontloader)
-  
+
 * [gatsby-orga](https://github.com/xiaoxinghu/gatsby-orga)
   [(demo)](https://xiaoxinghu.github.io/gatsby-orga/)
-  
+
   Features:
-  
+
   * Parses [org-mode](http://orgmode.org) files with [Orga](https://github.com/xiaoxinghu/orgajs).
