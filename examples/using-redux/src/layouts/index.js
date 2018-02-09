@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import Link from "gatsby-link"
+import { Link } from "gatsby"
 import { connect } from "react-redux"
 
 const Counter = ({ count, increment }) => (
