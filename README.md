@@ -156,6 +156,7 @@ Websites built with Gatsby:
 * [Odayaka](http://odayaka.net) ([source](https://github.com/odayakanaasa/odayaka))
 * [Ventura Digitalagentur Köln](https://www.ventura-digital.de)
 * [Cardiogram](https://cardiogr.am/)
+* [LaserTime Clinic](https://lasertime.ru) ([source](https://github.com/oleglegun/lasertime))
 
 ## Docs
 
