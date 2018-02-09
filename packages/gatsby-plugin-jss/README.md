@@ -5,7 +5,7 @@ Provide drop-in support for using the css-in-js library
 
 ## Install
 
-`npm install --save gatsby-plugin-jss`
+`npm install --save gatsby-plugin-jss react-jss`
 
 ## How to use
 

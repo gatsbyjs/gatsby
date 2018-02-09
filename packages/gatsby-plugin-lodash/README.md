@@ -4,7 +4,7 @@ Adds the Lodash webpack & Babel plugins for easy modular, small Lodash builds.
 
 ## Install
 
-`npm install --save gatsby-plugin-lodash`
+`npm install --save gatsby-plugin-lodash lodash`
 
 ## How to use
 

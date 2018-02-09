@@ -8,7 +8,7 @@ React.
 
 ## Install
 
-`npm install --save gatsby-plugin-preact`
+`npm install --save gatsby-plugin-preact preact preact-compat`
 
 ## How to use
 
