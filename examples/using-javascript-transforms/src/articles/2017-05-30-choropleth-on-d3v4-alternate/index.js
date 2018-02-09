@@ -200,7 +200,7 @@ let mergeData = (d1, d1key, d2, d2key) => {
 //  query for it here, and get the transformed html though because remark transforms
 //  any markdown based node.
 export const pageQuery = graphql`
-  query choroplethOnD3v4Alt($slug: String!) {
+  query choroplethOnD3v4Alt {
     markdownRemark(
       fields: {
         slug: { eq: "/2017-05-30-choropleth-on-d3v4-alternate/_choropleth/" }

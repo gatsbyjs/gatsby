@@ -36,7 +36,6 @@
     "gatsby-remark-smartypants": "latest",
     "gatsby-source-filesystem": "latest",
     "gatsby-source-contentful": "latest",
-    "gatsby-transformer-javascript-frontmatter": "latest",
     "gatsby-transformer-remark": "latest",
     "gatsby-transformer-sharp": "latest",
     "gatsby-transformer-yaml": "latest",

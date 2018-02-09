@@ -207,7 +207,7 @@ export const pageQuery = graphql`
     ) {
       html
     }
-    JavascriptFrontmatter(fields: { slug: { eq: $slug } }) {
+    javascriptFrontmatter(fields: { slug: { eq: $slug } }) {
       ...JSBlogPost_frontmatter
     }
   }
