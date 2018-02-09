@@ -1,8 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-
-const areComponentsEqual = (child, Component) =>
-  child.type === <Component />.type
+import isChildOfType from "gatsby-is-child-of-type"
 
 const Bar = props => <div>bar: {props.hello}</div>
 
@@ -14,7 +12,7 @@ const Foo = props => {
   const newChildren = React.Children.map(
     props.children,
     child =>
-      areComponentsEqual(child, Bar) ? (
+      isChildOfType(child, Bar) ? (
         React.cloneElement(child, { hello: `world` })
       ) : (
         <div>not same</div>
