@@ -4,8 +4,6 @@ import fs from "fs"
 import path from "path"
 import json5 from "json5"
 import _ from "lodash"
-import invariant from "invariant"
-import set from "lodash/set"
 import apiRunnerNode from "./api-runner-node"
 
 // TODO update this to store Babelrc config in Redux store.

@@ -1,11 +1,13 @@
-let ignore = ["dist"]
+let ignore = [`dist`]
 
-if (process.env !== "test") {
-  ignore = ignore.concat(["__tests__", "dist"])
+// Jest needs to compile this code, but generally we don't want this copied
+// to output folders
+if (process.env !== `test`) {
+  ignore.push(`__tests__`)
 }
 
 module.exports = {
   sourceMaps: true,
-  presets: ["./.babel-preset.js"],
+  presets: [`./.babel-preset.js`],
   ignore,
 }
