@@ -53,13 +53,12 @@ function findBabelPackage(directory) {
 module.exports = async function babelConfig(program, stage) {
   const { directory } = program
 
-  let babelrc = findBabelrc(directory) || findBabelPackage(directory) || {}
+  let babelrc = findBabelrc(directory) || findBabelPackage(directory)
 
   // If user doesn't have a custom babelrc, add defaults.
   if (!babelrc) {
     babelrc = {
       cacheDirectory: true,
-      plugins: [],
       presets: [
         [
           require.resolve(`@babel/preset-env`),
@@ -67,11 +66,15 @@ module.exports = async function babelConfig(program, stage) {
             loose: true,
             modules: false,
             useBuiltIns: `usage`,
-            shippedProposals: true,
+            shippedProposals: true, // includes async/await and Object spread/rest
             targets: { browsers: program.browserslist },
           },
         ],
         `@babel/react`,
+      ],
+      plugins: [
+        require.resolve(`@babel/plugin-proposal-class-properties`),
+        require.resolve(`@babel/plugin-syntax-dynamic-import`),
       ],
     }
   }
