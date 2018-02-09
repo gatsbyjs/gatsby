@@ -37,7 +37,7 @@ const typography = new Typography(fairyGateTheme);
 export default typography;
 ```
 
-Then create as well our site's `gatsby-config.js` at the root of the site:
+Then create our site's `gatsby-config.js` at the root of the site, and add the following code to it:
 
 ```javascript
 module.exports = {
