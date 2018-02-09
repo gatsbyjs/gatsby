@@ -79,6 +79,7 @@ function inferGraphQLInputFields({
         case `float`:
           inType = GraphQLFloat
           break
+        case `date`:
         case `string`:
           inType = GraphQLString
           break
@@ -129,6 +130,7 @@ function inferGraphQLInputFields({
         }),
       }
     }
+    case `date`:
     case `string`: {
       return {
         type: new GraphQLInputObjectType({
