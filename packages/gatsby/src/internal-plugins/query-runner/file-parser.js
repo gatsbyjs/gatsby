@@ -16,9 +16,8 @@ const BABYLON_OPTIONS = {
   allowImportExportEverywhere: true,
   allowReturnOutsideFunction: true,
   allowSuperOutsideMethod: true,
-  sourceType: `module`,
+  sourceType: `unambigious`,
   sourceFilename: true,
-  strictMode: false,
   plugins: [
     `jsx`,
     `flow`,
