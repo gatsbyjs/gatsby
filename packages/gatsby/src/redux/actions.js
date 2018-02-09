@@ -204,7 +204,8 @@ actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
     }
     if (
       !fileContent.includes(`export default`) &&
-      !fileContent.includes(`module.exports`)
+      !fileContent.includes(`module.exports`) &&
+      !fileContent.includes(`exports.default`)
     ) {
       includesDefaultExport = false
     }
