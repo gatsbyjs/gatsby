@@ -24,7 +24,7 @@ module.exports = {
         path: `${__dirname}/src/articles/`,
       },
     },
-    `gatsby-transformer-javascript-static-exports`,
+    `gatsby-transformer-javascript-frontmatter`,
     `gatsby-transformer-yaml`,
     {
       resolve: `gatsby-transformer-remark`,

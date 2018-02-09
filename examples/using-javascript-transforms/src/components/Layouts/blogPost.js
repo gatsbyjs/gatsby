@@ -25,7 +25,7 @@ class BlogPostLayout extends React.Component {
       <div>
         <MasterLayout {...this.props}>
           {home}
-          <div className="container">{this.props.children()}</div>
+          <div className="container">{this.props.children}</div>
           <div className="footer container">
             <hr />
             <p>
@@ -42,7 +42,7 @@ class BlogPostLayout extends React.Component {
 }
 
 export default BlogPostLayout
-
+/*
 export const pageQuery = graphql`
   query BlogPostLayoutBySlug {
     site {
@@ -58,3 +58,4 @@ export const pageQuery = graphql`
     }
   }
 `
+*/

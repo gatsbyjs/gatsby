@@ -35,8 +35,8 @@ export const blogPostFragment = graphql`
     }
   }
 
-  fragment JSBlogPost_data on JSFrontmatter {
-    data {
+  fragment JSBlogPost_frontmatter on JavascriptFrontmatter {
+    frontmatter {
       title
       path
       layoutType

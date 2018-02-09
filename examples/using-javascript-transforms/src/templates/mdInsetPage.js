@@ -1,13 +1,16 @@
 import React from "react"
+import InsetPageLayout from "../components/Layouts/insetPage"
 
 class mdInsetPage extends React.Component {
   render() {
     const { html } = this.props.data.markdownRemark
 
     return (
-      <div className="box container content">
-        <div dangerouslySetInnerHTML={{ __html: html }} />
-      </div>
+      <InsetPageLayout>
+        <div className="box container content">
+          <div dangerouslySetInnerHTML={{ __html: html }} />
+        </div>
+      </InsetPageLayout>
     )
   }
 }

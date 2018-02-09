@@ -1,5 +1,5 @@
 import React from "react"
-import SiteSidebar from "../components/SiteSidebar"
+import SiteSidebar from "../SiteSidebar"
 import MasterLayout from "./master"
 
 class InsetPageLayout extends React.Component {
@@ -14,7 +14,7 @@ class InsetPageLayout extends React.Component {
               <div className="column is-one-quarter">
                 <SiteSidebar {...this.props} />
               </div>
-              <div className="column">{this.props.children()}</div>
+              <div className="column">{this.props.children}</div>
             </div>
           </div>
         </MasterLayout>
@@ -24,7 +24,7 @@ class InsetPageLayout extends React.Component {
 }
 
 export default InsetPageLayout
-
+/*
 export const pageQuery = graphql`
   query InsetLayoutBySlug {
     site {
@@ -40,3 +40,4 @@ export const pageQuery = graphql`
     }
   }
 `
+*/
