@@ -8,7 +8,7 @@ See it in action in the [Tutorial](https://www.gatsbyjs.org/tutorial/part-two/)
 
 ## Install
 
-`npm install --save gatsby-plugin-typography`
+`npm install --save gatsby-plugin-typography react-typography typography`
 
 ## Why to use
 
