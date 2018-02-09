@@ -92,6 +92,8 @@
   items:
     - title: How to Contribute
       link: /docs/how-to-contribute/
+    - title: How to File an Issue
+      link: /docs/how-to-file-an-issue/
     - title: Gatsby Style Guide
       link: /docs/gatsby-style-guide/
     - title: Design Principles*
