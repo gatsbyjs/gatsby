@@ -5,9 +5,8 @@
   "version": "1.0.0-beta.6",
   "author": "Sebastien Fichot <fichot.sebastien@gmail.com>",
   "dependencies": {
-    "gatsby": "canary",
+    "gatsby": "latest",
     "gatsby-image": "canary",
-    "gatsby-link": "canary",
     "gatsby-plugin-glamor": "canary",
     "gatsby-plugin-react-helmet": "canary",
     "gatsby-plugin-sharp": "canary",

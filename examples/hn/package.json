@@ -7,7 +7,6 @@
   "dependencies": {
     "flat": "^2.0.1",
     "gatsby": "latest",
-    "gatsby-link": "latest",
     "gatsby-plugin-google-analytics": "latest",
     "gatsby-plugin-manifest": "latest",
     "gatsby-plugin-offline": "latest",
@@ -15,7 +14,9 @@
     "lodash": "^4.16.4",
     "slash": "^1.0.0"
   },
-  "keywords": ["gatsby"],
+  "keywords": [
+    "gatsby"
+  ],
   "license": "MIT",
   "main": "n/a",
   "scripts": {

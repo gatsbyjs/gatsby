@@ -5,9 +5,8 @@
   "version": "1.0.0",
   "author": "Florian Kissling <sechskilo@gmail.com>",
   "dependencies": {
-    "gatsby": "^1.9.112",
+    "gatsby": "latest",
     "gatsby-image": "^1.0.24",
-    "gatsby-link": "^1.6.27",
     "gatsby-plugin-google-analytics": "^1.0.12",
     "gatsby-plugin-offline": "latest",
     "gatsby-plugin-sharp": "^1.6.20",
@@ -18,7 +17,10 @@
     "typography": "^0.15.8",
     "typography-theme-bootstrap": "^0.15.10"
   },
-  "keywords": ["gatsby", "sharp"],
+  "keywords": [
+    "gatsby",
+    "sharp"
+  ],
   "license": "MIT",
   "main": "n/a",
   "scripts": {

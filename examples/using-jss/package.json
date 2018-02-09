@@ -6,7 +6,6 @@
   "author": "Vladimir Guguiev <wizardzloy@gmail.com>",
   "dependencies": {
     "gatsby": "latest",
-    "gatsby-link": "latest",
     "gatsby-plugin-jss": "latest"
   },
   "keywords": [

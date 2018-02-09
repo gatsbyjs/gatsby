@@ -4,8 +4,7 @@
   "description": "Gatsby example site using using-path-prefix",
   "author": "Kyle Mathews &lt;mathews.kyle@gmail.com&gt;",
   "dependencies": {
-    "gatsby": "latest",
-    "gatsby-link": "latest"
+    "gatsby": "latest"
   },
   "license": "MIT",
   "main": "n/a",
