@@ -32,6 +32,7 @@ function preset(context, options = {}) {
             useBuiltIns: "entry",
             shippedProposals: true,
             modules: "commonjs",
+            sourceType: "unambiguous",
           },
           browser ? browserConfig : nodeConfig
         ),
