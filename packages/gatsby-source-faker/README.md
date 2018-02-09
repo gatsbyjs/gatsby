@@ -1,6 +1,6 @@
 ## gatsby-source-faker
 
-This is a plugin that allows you to use (faker.js)[https://github.com/marak/Faker.js/] to generate fake data for gatsby sites. This could come in handy for creating example sites, documentation, or just to experiment with Gatsby.js
+This is a plugin that allows you to use [faker.js](https://github.com/marak/Faker.js/) to generate fake data for gatsby sites. This could come in handy for creating example sites, documentation, or just to experiment with Gatsby.js
 
 ### To use it
 

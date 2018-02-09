@@ -18,6 +18,16 @@ const { withBasePath } = require(`./path`)
 const apiRunnerNode = require(`./api-runner-node`)
 const createUtils = require(`./webpack-utils`)
 
+// Use separate extract-text-webpack-plugin instances for each stage per the docs
+const extractDevelopHtml = new ExtractTextPlugin(`build-html-styles.css`)
+const extractBuildHtml = new ExtractTextPlugin(`build-html-styles.css`, {
+  allChunks: true,
+})
+const extractBuildCss = new ExtractTextPlugin(`styles.css`, { allChunks: true })
+const extractBuildJavascript = new ExtractTextPlugin(`build-js-styles.css`, {
+  allChunks: true,
+})
+
 // Five stages or modes:
 //   1) develop: for `gatsby develop` command, hot reload and CSS injection into page
 //   2) develop-html: same as develop without react-hmre in the babel config for html renderer
@@ -186,10 +196,6 @@ module.exports = async (
           // See https://github.com/facebookincubator/create-react-app/issues/186
           new WatchMissingNodeModulesPlugin(directoryPath(`node_modules`)),
 
-          // Names module ids with their filepath. We use this in development
-          // to make it easier to see what modules have hot reloaded, etc. as
-          // the numerical IDs aren't useful. In production we use numerical module
-          // ids to reduce filesize.
           plugins.namedModules(),
           new FriendlyErrorsWebpackPlugin({
             clearConsole: false,

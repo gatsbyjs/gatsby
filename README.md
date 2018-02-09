@@ -5,7 +5,7 @@
 [![gatsby channel on discord](https://img.shields.io/badge/discord-gatsby%40reactiflux-738bd7.svg?style=flat-square)](https://discord.gg/0ZcbPKXt5bVoxkfV)
 [![Twitter Follow](https://img.shields.io/twitter/follow/gatsbyjs.svg?style=social)](https://twitter.com/gatsbyjs)
 
-<img alt="Gatsby" src="https://www.gatsbyjs.org/gatsby-negative.svg" width="100">
+<img alt="Gatsby" src="https://www.gatsbyjs.org/monogram.svg" width="100">
 
 # Gatsby
 
@@ -140,6 +140,10 @@ Websites built with Gatsby:
   ([source](https://github.com/ryanwiemer/rw))
 * [yerevancoder](https://yerevancoder.com)
   ([source](https://github.com/yerevancoder/yerevancoder.github.io))
+* [unrealcpp](https://unrealcpp.com/) ([source](https://github.com/Harrison1/unrealcpp-com))
+* [several levels](https://severallevels.io/) ([source](https://github.com/Harrison1/several-levels))
+* [Flooring Factories Outlets](https://www.flooringfactoriesoutlets.com/)
+* [Nortcast](https://nortcast.com/)
 
 ## Docs
 
