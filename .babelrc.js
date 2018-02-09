@@ -1,9 +1,9 @@
-let ignore = [`dist`]
+let ignore = [`**/dist/**`]
 
 // Jest needs to compile this code, but generally we don't want this copied
 // to output folders
 if (process.env !== `test`) {
-  ignore.push(`__tests__`)
+  ignore.push(`**/__tests__/**`)
 }
 
 module.exports = {

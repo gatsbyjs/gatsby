@@ -3,8 +3,8 @@
   "version": "2.1.0-alpha.f20ac0ed",
   "description": "Gatsby source plugin for building websites using the Drupal CMS as a data source",
   "scripts": {
-    "build": "babel src --out-dir . --ignore __tests__",
-    "watch": "babel -w src --out-dir . --ignore __tests__",
+    "build": "babel src --out-dir . --ignore **/__tests__/**",
+    "watch": "babel -w src --out-dir . --ignore **/__tests__/**",
     "prepublish": "cross-env NODE_ENV=production npm run build"
   },
   "keywords": [

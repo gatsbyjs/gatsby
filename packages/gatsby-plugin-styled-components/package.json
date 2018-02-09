@@ -23,6 +23,6 @@
   "main": "index.js",
   "scripts": {
     "prepublish": "npm run build",
-    "build": "babel src --out-dir . --ignore __tests__"
+    "build": "babel src --out-dir . --ignore **/__tests__/**"
   }
 }

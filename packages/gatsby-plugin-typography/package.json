@@ -9,8 +9,8 @@
     "typography": "^0.16.0"
   },
   "scripts": {
-    "build": "babel src --out-dir . --ignore __tests__",
-    "watch": "babel -w src --out-dir . --ignore __tests__",
+    "build": "babel src --out-dir . --ignore **/__tests__/**",
+    "watch": "babel -w src --out-dir . --ignore **/__tests__/**",
     "prepublish": "cross-env NODE_ENV=production npm run build"
   },
   "keywords": [
