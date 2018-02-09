@@ -207,10 +207,10 @@ Notice that in the above example for [querying images](#images), we used `...Gat
 
 If you wish to define your own fragments for use in your application, you can use named exports to export them in any Javascript file, and they will be automatically processed by Gatsby for use in your GraphQL queries.
 
-For example, I can put all of my helper fragments in `src/fragments/index.js`:
+For example if I put a fragment in a helper component, I can use that fragment in any other query:
 
 ```jsx
-// src/fragments/index.js
+// src/components/PostItem.js
 
 export const markdownFrontmatterFragment = graphql`
   fragment MarkdownFrontmatter on MarkdownRemark {
@@ -228,14 +228,14 @@ They can then be used in any GraphQL query after that!
 ```graphql
 query PostByPath($path: String!) {
   markdownRemark(frontmatter: { path: { eq: $path } }) {
-    ... MarkdownFrontmatter
+    ...MarkdownFrontmatter
   }
 }
 ```
 
-It’s good practice for your helper components to define and export a fragment for the data they need though. For example, on your index page might map over all of your posts to show them in a list.
+It’s good practice for your helper components to define and export a fragment for the data they need. For example, on your index page might map over all of your posts to show them in a list.
 
-```jsx{14-17,31-34}
+```jsx
 // src/pages/index.jsx
 
 import React from "react";
@@ -284,14 +284,13 @@ If the index component becomes too large, you might want to refactor it into sma
 
 import React from "react";
 
-export default ({ frontmatter: { title, date }}) => (
+export default ({ frontmatter: { title, date } }) => (
   <div>
     <h3>
-      {title}{" "}
-      <span>— {date}</span>
+      {title} <span>— {date}</span>
     </h3>
   </div>
-)
+);
 
 export const query = graphql`
   fragment IndexPostFragment on MarkdownRemark {
@@ -305,7 +304,7 @@ export const query = graphql`
 
 Now, we can use the component together with the exported fragment in our index page.
 
-```jsx{15}
+```jsx{28}
 // src/pages/index.jsx
 
 import React from "react";
