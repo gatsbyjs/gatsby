@@ -51,7 +51,9 @@ class choroplethAltBase extends React.Component {
     let html = data.html
 
     return (
-      <BlogPostChrome {...this.props.data.JavascriptFrontmatter.frontmatter}>
+      <BlogPostChrome {...{
+                frontmatter: this.props.data.javascriptFrontmatter.frontmatter,
+                site: this.props.data.site}}>
         <div className="section">
           <div className="container">
             <div id="states" />
@@ -208,6 +210,11 @@ export const pageQuery = graphql`
     ) {
       html
     }
-
+    javascriptFrontmatter {
+      ...JSBlogPost_frontmatter
+    }
+    site {
+      ...site_sitemetadata
+    }
   }
 `

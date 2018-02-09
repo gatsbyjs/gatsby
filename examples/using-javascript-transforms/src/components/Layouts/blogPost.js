@@ -7,7 +7,7 @@ import MasterLayout from "./master"
 
 class BlogPostLayout extends React.Component {
   render() {
-    let siteMetadata = this.props.data.site.siteMetadata
+    let siteMetadata = this.props.siteMetadata
 
     const home = (
       <div className="nav">
@@ -23,7 +23,7 @@ class BlogPostLayout extends React.Component {
 
     return (
       <div>
-        <MasterLayout {...this.props}>
+        <MasterLayout {...{data: {site: {siteMetadata: this.props.siteMetadata}}}}>
           {home}
           <div className="container">{this.props.children}</div>
           <div className="footer container">

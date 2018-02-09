@@ -5,9 +5,7 @@ import "../../static/css/base.scss"
 
 class MasterLayout extends React.Component {
   render() {
-    console.log(this)
     let siteMetadata = this.props.data.site.siteMetadata
-    let location = this.props.location.pathname
 
     return (
       <div className="MasterLayout">

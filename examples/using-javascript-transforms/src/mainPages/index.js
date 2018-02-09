@@ -7,7 +7,6 @@ import InsetPageLayout from "../components/Layouts/insetPage"
 
 class SiteIndex extends React.Component {
   render() {
-    console.log(this)
     const pageLinks = []
     let iteratorKey = 0
     let pageRaw = [

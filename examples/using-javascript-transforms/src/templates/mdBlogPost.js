@@ -1,20 +1,20 @@
 import React from "react"
 import moment from "moment"
 import BlogPostChrome from "../components/BlogPostChrome"
-import BlogPostLayout from "../components/Layouts/blogPost"
 
 class mdBlogPost extends React.Component {
   render() {
     const { html, frontmatter } = this.props.data.markdownRemark
 
     return (
-      <BlogPostLayout>
-        <BlogPostChrome {...frontmatter}>
-          <div className="container content">
-            <div dangerouslySetInnerHTML={{ __html: html }} />
-          </div>
-        </BlogPostChrome>
-      </BlogPostLayout>
+      <BlogPostChrome {...{
+                      frontmatter: this.props.data.markdownRemark.frontmatter,
+                      site: this.props.data.site
+                      }}>
+        <div className="container content">
+          <div dangerouslySetInnerHTML={{ __html: html }} />
+        </div>
+      </BlogPostChrome>
     )
   }
 }
@@ -26,6 +26,9 @@ export const pageQuery = graphql`
     markdownRemark(fields: { slug: { eq: $slug } }) {
       html
       ...MarkdownBlogPost_frontmatter
+    }
+    site {
+      ...site_sitemetadata
     }
   }
 `

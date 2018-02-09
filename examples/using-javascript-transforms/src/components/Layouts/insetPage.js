@@ -4,7 +4,6 @@ import MasterLayout from "./master"
 
 class InsetPageLayout extends React.Component {
   render() {
-    console.log(this)
     const siteMetadata = this.props.data.site
 
     return (

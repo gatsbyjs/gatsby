@@ -3,7 +3,6 @@ import InsetPageLayout from "../components/Layouts/insetPage"
 
 class mdInsetPage extends React.Component {
   render() {
-    console.log(this)
     const { html } = this.props.data.markdownRemark
 
     return (
