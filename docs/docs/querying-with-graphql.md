@@ -209,11 +209,11 @@ If you wish to define your own fragments for use in your application, you can us
 
 For example, I can put all of my helper fragments in `src/fragments/index.js`:
 
-```javascript
+```jsx
 // src/fragments/index.js
 
 export const markdownFrontmatterFragment = graphql`
-  fragment MarkdownFrontmatterFragment on MarkdownRemark {
+  fragment MarkdownFrontmatter on MarkdownRemark {
     frontmatter {
       path
       title
@@ -228,9 +228,117 @@ They can then be used in any GraphQL query after that!
 ```graphql
 query PostByPath($path: String!) {
   markdownRemark(frontmatter: { path: { eq: $path } }) {
-    ...MarkdownMetadataFragment
+    ... MarkdownFrontmatter
   }
 }
+```
+
+It’s good practice for your helper components to define and export a fragment for the data they need though. For example, on your index page might map over all of your posts to show them in a list.
+
+```jsx{14-17,31-34}
+// src/pages/index.jsx
+
+import React from "react";
+
+export default ({ data }) => {
+  return (
+    <div>
+		<h1>
+        Index page
+		</h1>
+      <h4>{data.allMarkdownRemark.totalCount} Posts</h4>
+      {data.allMarkdownRemark.edges.map(({ node }) => (
+        <div key={node.id}>
+          <h3>
+            {node.frontmatter.title}{" "}
+            <span>— {node.frontmatter.date}</span>
+          </h3>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export const query = graphql`
+  query IndexQuery {
+    allMarkdownRemark {
+      totalCount
+      edges {
+        node {
+          id
+          frontmatter {
+            title
+            date(formatString: "DD MMMM, YYYY")
+          }
+        }
+      }
+    }
+  }
+`;
+```
+
+If the index component becomes too large, you might want to refactor it into smaller components.
+
+```jsx
+// src/components/IndexPost.jsx
+
+import React from "react";
+
+export default ({ frontmatter: { title, date }}) => (
+  <div>
+    <h3>
+      {title}{" "}
+      <span>— {date}</span>
+    </h3>
+  </div>
+)
+
+export const query = graphql`
+  fragment IndexPostFragment on MarkdownRemark {
+    frontmatter {
+      title
+      date(formatString: "MMMM DD, YYYY")
+    }
+  }
+`;
+```
+
+Now, we can use the component together with the exported fragment in our index page.
+
+```jsx{15}
+// src/pages/index.jsx
+
+import React from "react";
+import IndexPost from "../components/IndexPost";
+
+export default ({ data }) => {
+  return (
+    <div>
+		<h1>
+        Index page
+		</h1>
+      <h4>{data.allMarkdownRemark.totalCount} Posts</h4>
+      {data.allMarkdownRemark.edges.map(({ node }) => (
+        <div key={node.id}>
+          <IndexPost frontmatter={node.frontmatter} />
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export const query = graphql`
+  query IndexQuery {
+    allMarkdownRemark {
+      totalCount
+      edges {
+        node {
+          ...IndexPostFragment
+        }
+      }
+    }
+  }
+`;
 ```
 
 ## Further reading
