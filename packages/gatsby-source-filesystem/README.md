@@ -58,3 +58,18 @@ You can query file nodes like the following:
   }
 }
 ```
+
+## Advanced usage
+
+If you wish to prevent `gatsby-source-filesystem` from ensuring that the given directory exists, you may set `skipPathCheck: true` to pass a glob or array of globs:
+
+```javascript
+{
+  resolve: `gatsby-source-filesystem`,
+  options: {
+    name: `pages`,
+    path: [`${__dirname}/README.md`, `${__dirname}/docs`],
+    skipPathCheck: true,
+  },
+},
+```
