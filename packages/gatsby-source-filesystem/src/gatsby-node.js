@@ -12,7 +12,7 @@ exports.sourceNodes = (
   let ready = false
 
   // Validate that the path exists.
-  if (!fs.existsSync(pluginOptions.path)) {
+  if (!fs.existsSync(pluginOptions.path) && pluginOptions.skipPathCheck !== true) {
     console.log(`
 The path passed to gatsby-source-filesystem does not exist on your file system:
 
