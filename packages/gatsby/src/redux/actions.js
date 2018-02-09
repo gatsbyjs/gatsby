@@ -6,7 +6,7 @@ const { bindActionCreators } = require(`redux`)
 const { stripIndent } = require(`common-tags`)
 const glob = require(`glob`)
 const path = require(`path`)
-
+const fs = require(`fs`)
 const { joinPath } = require(`../utils/path`)
 const {
   getNode,
@@ -185,6 +185,72 @@ actions.createPage = (page: PageInput, plugin?: Plugin, traceId?: string) => {
     console.log(chalk.bold.red(result.error))
     console.log(internalPage)
     return null
+  }
+
+  // Validate that the page component imports React and exports something
+  // (hopefully a component).
+  if (!internalPage.component.includes(`/.cache/`)) {
+    const fileContent = fs.readFileSync(internalPage.component, `utf-8`)
+    let notEmpty = true
+    let includesReactImport = true
+    let includesDefaultExport = true
+
+    if (fileContent === ``) {
+      notEmpty = false
+    }
+
+    if (!fileContent.includes(`React`)) {
+      includesReactImport = false
+    }
+    if (
+      !fileContent.includes(`export default`) &&
+      !fileContent.includes(`module.exports`)
+    ) {
+      includesDefaultExport = false
+    }
+    if (!notEmpty || !includesDefaultExport || !includesReactImport) {
+      const relativePath = path.relative(
+        store.getState().program.directory,
+        internalPage.component
+      )
+
+      if (!notEmpty) {
+        console.log(``)
+        console.log(
+          `You have an empty file in the "src/pages" directory at "${relativePath}". Please remove it or make it a valid component`
+        )
+        console.log(``)
+        process.exit(1)
+      }
+
+      console.log(``)
+      console.log(``)
+      console.log(
+        `The page component at "${relativePath}" didn't pass validation`
+      )
+
+      if (!includesReactImport) {
+        console.log(``)
+        console.log(
+          `You must import React at the top of the file for a React component to be valid`
+        )
+        console.log(``)
+        console.log(`Add the following to the top of the component:`)
+        console.log(``)
+        console.log(`    import React from 'react'`)
+        console.log(``)
+      }
+
+      if (!includesDefaultExport) {
+        console.log(``)
+        console.log(
+          `The page component must export a React component for it to be valid`
+        )
+        console.log(``)
+      }
+
+      process.exit(1)
+    }
   }
 
   return {
