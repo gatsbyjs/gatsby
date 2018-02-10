@@ -6,8 +6,10 @@ describe(`Loader`, () => {
     delete global.__PREFIX_PATHS__
 
     // Workaround for Node 6 issue: https://github.com/facebook/jest/issues/5159
-    if (global.hasOwnProperty(`__PATH_PREFIX__`)) global.__PATH_PREFIX__ = undefined
-    if (global.hasOwnProperty(`__PREFIX_PATHS__`)) global.__PREFIX_PATHS__ = undefined
+    if (global.hasOwnProperty(`__PATH_PREFIX__`))
+      global.__PATH_PREFIX__ = undefined
+    if (global.hasOwnProperty(`__PREFIX_PATHS__`))
+      global.__PREFIX_PATHS__ = undefined
 
     loader.empty()
     loader.addPagesArray([
@@ -97,8 +99,10 @@ describe(`Loader path prefixing`, () => {
     delete global.__PREFIX_PATHS__
 
     // Workaround for Node 6 issue: https://github.com/facebook/jest/issues/5159
-    if (global.hasOwnProperty(`__PATH_PREFIX__`)) global.__PATH_PREFIX__ = undefined
-    if (global.hasOwnProperty(`__PREFIX_PATHS__`)) global.__PREFIX_PATHS__ = undefined
+    if (global.hasOwnProperty(`__PATH_PREFIX__`))
+      global.__PATH_PREFIX__ = undefined
+    if (global.hasOwnProperty(`__PREFIX_PATHS__`))
+      global.__PREFIX_PATHS__ = undefined
 
     pagesArray = [
       {
@@ -121,8 +125,11 @@ describe(`Loader path prefixing`, () => {
     global.__PREFIX_PATHS__ = true
     loader.addPagesArray(pagesArray)
     loader.enqueue(`/foo/about/`)
-    expect(loader.has(`/about/`)).toEqual(true)
-    expect(loader.has(`/foo/about/`)).toEqual(false)
+
+    expect(loader.___resources()).toEqual([
+      `about.json`,
+      `page-component---src-pages-test-js`,
+    ])
   })
 
   test(`Path prefix present but not enabled`, () => {
@@ -130,15 +137,16 @@ describe(`Loader path prefixing`, () => {
     delete global.__PREFIX_PATHS__
     loader.addPagesArray(pagesArray)
 
-    // don't enqueue prefixed paths
+    // do not enqueue prefixed paths
     loader.enqueue(`/foo/about/`)
-    expect(loader.has(`/about/`)).toEqual(false)
-    expect(loader.has(`/foo/about/`)).toEqual(false)
+    expect(loader.___resources()).toEqual([])
 
     // do enqueue unprefixed paths
     loader.enqueue(`/about/`)
-    expect(loader.has(`/about/`)).toEqual(true)
-    expect(loader.has(`/foo/about/`)).toEqual(false)
+    expect(loader.___resources()).toEqual([
+      `about.json`,
+      `page-component---src-pages-test-js`,
+    ])
   })
 
   test(`Path prefix missing but enabled`, () => {
@@ -148,12 +156,13 @@ describe(`Loader path prefixing`, () => {
 
     // don't enqueue prefixed paths
     loader.enqueue(`/foo/about/`)
-    expect(loader.has(`/about/`)).toEqual(false)
-    expect(loader.has(`/foo/about/`)).toEqual(false)
+    expect(loader.___resources()).toEqual([])
 
     // do enqueue unprefixed paths
     loader.enqueue(`/about/`)
-    expect(loader.has(`/about/`)).toEqual(true)
-    expect(loader.has(`/foo/about/`)).toEqual(false)
+    expect(loader.___resources()).toEqual([
+      `about.json`,
+      `page-component---src-pages-test-js`,
+    ])
   })
 })

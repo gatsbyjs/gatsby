@@ -1,7 +1,7 @@
 const _ = require(`lodash`)
 const crypto = require(`crypto`)
 const babylon = require(`babylon`)
-const traverse = require(`babel-traverse`).default
+const traverse = require(`@babel/traverse`).default
 
 async function onCreateNode({ node, getNode, actions, loadNodeContent }) {
   const { createNode, createParentChildLink } = actions
@@ -13,20 +13,31 @@ async function onCreateNode({ node, getNode, actions, loadNodeContent }) {
 
   const code = await loadNodeContent(node)
   const options = {
-    sourceType: `module`,
+    sourceType: `unambigious`,
     allowImportExportEverywhere: true,
     plugins: [
       `jsx`,
+      `flow`,
       `doExpressions`,
       `objectRestSpread`,
       `decorators`,
       `classProperties`,
-      `exportExtensions`,
+      `classPrivateProperties`,
+      `classPrivateMethods`,
+      `exportDefaultFrom`,
+      `exportNamespaceFrom`,
       `asyncGenerators`,
       `functionBind`,
       `functionSent`,
       `dynamicImport`,
-      `flow`,
+      `numericSeparator`,
+      `optionalChaining`,
+      `importMeta`,
+      `bigInt`,
+      `optionalCatchBinding`,
+      `throwExpressions`,
+      `pipelineOperator`,
+      `nullishCoalescingOperator`,
     ],
   }
 
