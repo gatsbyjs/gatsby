@@ -65,6 +65,7 @@ module.exports = async function babelConfig(program, stage) {
             loose: true,
             modules: false,
             useBuiltIns: `usage`,
+            sourceType: `unambiguous`,
             shippedProposals: true, // includes async/await and Object spread/rest
             targets: { browsers: program.browserslist },
           },
@@ -105,6 +106,8 @@ module.exports = async function babelConfig(program, stage) {
     require.resolve(`babel-plugin-remove-graphql-queries`)
   )
 
+  console.log(`1`, babelrc)
+
   let modifiedConfig = await apiRunnerNode(`modifyBabelrc`, { babelrc })
 
   if (modifiedConfig.length > 0) {
@@ -116,5 +119,6 @@ module.exports = async function babelConfig(program, stage) {
 
   // Merge all together.
   const merged = _.defaultsDeep(modifiedConfig, babelrc)
+  console.log(`.babelrc test change`, JSON.stringify(merged, null, 4))
   return merged
 }

@@ -50,6 +50,7 @@
     "front-matter": "^2.1.0",
     "fs-extra": "^5.0.0",
     "gatsby-cli": "^1.1.28",
+    "gatsby-link": "^1.6.36",
     "gatsby-module-loader": "^2.0.0-alpha.1",
     "gatsby-react-router-scroll": "^1.0.8",
     "glob": "^7.1.1",
@@ -143,7 +144,7 @@
     "website"
   ],
   "license": "MIT",
-  "main": "index.js",
+  "main": "dist/browser.js",
   "peerDependencies": {
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
