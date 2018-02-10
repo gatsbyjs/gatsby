@@ -51,6 +51,7 @@ function preset(context, options = {}) {
         },
       ],
     ],
+    babelrc: false,
   }
 }
 
