@@ -157,6 +157,7 @@ Websites built with Gatsby:
 * [Ventura Digitalagentur Köln](https://www.ventura-digital.de)
 * [Cardiogram](https://cardiogr.am/)
 * [LaserTime Clinic](https://lasertime.ru) ([source](https://github.com/oleglegun/lasertime))
+* [Gatsby Manor - themes for GatsbyJS](https://gatsbymanor.com)
 
 ## Docs
 
