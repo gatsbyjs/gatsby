@@ -9,7 +9,7 @@ Array [
       },
       "children": Array [],
       "content": "",
-      "id": "uuid-from-gatsby",
+      "id": "bk101",
       "internal": Object {
         "contentDigest": "4fa0c7a57664d1566dba2f85176f62cf",
         "type": "NodeNameXml",
@@ -64,7 +64,7 @@ Array [
       },
       "children": Array [],
       "content": "",
-      "id": "uuid-from-gatsby",
+      "id": "bk102",
       "internal": Object {
         "contentDigest": "d01ca541dbe1148c59883a673342df9b",
         "type": "NodeNameXml",
@@ -126,7 +126,7 @@ Array [
         },
         "children": Array [],
         "content": "",
-        "id": "uuid-from-gatsby",
+        "id": "bk101",
         "internal": Object {
           "contentDigest": "4fa0c7a57664d1566dba2f85176f62cf",
           "type": "NodeNameXml",
@@ -218,7 +218,7 @@ Array [
         },
         "children": Array [],
         "content": "",
-        "id": "uuid-from-gatsby",
+        "id": "bk102",
         "internal": Object {
           "contentDigest": "d01ca541dbe1148c59883a673342df9b",
           "type": "NodeNameXml",
