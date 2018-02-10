@@ -1,3 +1,3 @@
-import Link, { withPrefix, navigateTo } from 'gatsby-link'
+import Link, { withPrefix, navigateTo } from "gatsby-link"
 
 export { Link, withPrefix, navigateTo }

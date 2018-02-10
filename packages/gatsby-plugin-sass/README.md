@@ -25,10 +25,10 @@ plugins: [
   {
     resolve: `gatsby-plugin-sass`,
     options: {
-      includePaths: ["absolute/path/a", "absolute/path/b"]
-    }
-  }
-]
+      includePaths: ["absolute/path/a", "absolute/path/b"],
+    },
+  },
+];
 ```
 
 ### With CSS Modules
@@ -46,18 +46,16 @@ in the plugin options
 ## Other Options
 
 SASS defaults to [5 digits of precision](https://github.com/sass/sass/issues/1122). If this is too low for you (e.g. [if you use Bootstrap](https://github.com/twbs/bootstrap-sass/blob/master/README.md#sass-number-precision)), you may configure it as follows:
+
 ```javascript
 // in gatsby-config.js
 plugins: [
   {
     resolve: `gatsby-plugin-sass`,
     options: {
-      postCssPlugins: [
-        somePostCssPlugin()
-      ],
+      postCssPlugins: [somePostCssPlugin()],
       precision: 8,
     },
   },
 ];
 ```
-

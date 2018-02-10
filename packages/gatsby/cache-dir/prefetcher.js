@@ -2,11 +2,9 @@
 
 type PrefetcherOptions = {
   fetchNextResource: () => ?Promise,
-};
+}
 
-module.exports = (
-  { fetchNextResource }: PrefetcherOptions
-) => {
+module.exports = ({ fetchNextResource }: PrefetcherOptions) => {
   let pagesLoading = []
   let current = null
   const clearCurrent = () => {
@@ -22,9 +20,7 @@ module.exports = (
       // Start another resource downloading.
       let next = fetchNextResource()
       if (!next) return
-      current = next
-        .then(clearCurrent, clearCurrent)
-        .then(enqueueUpdate)
+      current = next.then(clearCurrent, clearCurrent).then(enqueueUpdate)
     })
   }
 

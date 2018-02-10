@@ -52,18 +52,14 @@ and common cross-browser flexbox bugs. Normally you don't need to think about it
 you'd prefer to add additional postprocessing to your Stylus output you can sepecify plugins
 in the plugin options
 
-
 ```javascript
 // in gatsby-config.js
 plugins: [
   {
     resolve: `gatsby-plugin-stylus`,
     options: {
-      postCssPlugins: [
-        somePostCssPlugin()
-      ]
-    }
-  }
-]
+      postCssPlugins: [somePostCssPlugin()],
+    },
+  },
+];
 ```
-

@@ -14,7 +14,11 @@ const createId = path => {
 
 exports.createId = createId
 
-exports.createFileNode = async (pathToFile, createNodeId, pluginOptions = {}) => {
+exports.createFileNode = async (
+  pathToFile,
+  createNodeId,
+  pluginOptions = {}
+) => {
   const slashed = slash(pathToFile)
   const parsedSlashed = path.parse(slashed)
   const slashedFile = {

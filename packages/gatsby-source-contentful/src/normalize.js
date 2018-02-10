@@ -330,7 +330,7 @@ exports.createContentTypeNodes = ({
             entryItemFieldKey,
             entryItemFields[entryItemFieldKey],
             createNode,
-            createNodeId,
+            createNodeId
           )
 
           delete entryItemFields[entryItemFieldKey]
@@ -340,7 +340,7 @@ exports.createContentTypeNodes = ({
             entryItemFieldKey,
             entryItemFields[entryItemFieldKey],
             createNode,
-            createNodeId,
+            createNodeId
           )
 
           delete entryItemFields[entryItemFieldKey]

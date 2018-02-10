@@ -3,7 +3,13 @@ const crypto = require(`crypto`)
 const babylon = require(`babylon`)
 const traverse = require(`@babel/traverse`).default
 
-async function onCreateNode({ node, getNode, actions, loadNodeContent, createNodeId }) {
+async function onCreateNode({
+  node,
+  getNode,
+  actions,
+  loadNodeContent,
+  createNodeId,
+}) {
   const { createNode, createParentChildLink } = actions
 
   // This only processes javascript files.
